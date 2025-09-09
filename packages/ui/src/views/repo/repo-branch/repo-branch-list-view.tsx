@@ -1,6 +1,6 @@
 import { FC, useCallback, useMemo } from 'react'
 
-import { Dialog, IconV2, Layout, ListActions, NoData, Pagination, SearchInput, Text } from '@/components'
+import { Button, Dialog, IconV2, Layout, ListActions, NoData, Pagination, SearchInput, Text } from '@/components'
 import { useTranslation } from '@/context'
 import { createPaginationLinks } from '@/utils'
 import { SandboxLayout } from '@/views'
@@ -93,9 +93,11 @@ export const RepoBranchListView: FC<RepoBranchListViewProps> = ({
                 />
               </ListActions.Left>
               <ListActions.Right>
-                <Dialog.Trigger onClick={openCreateBranchDialog} size="md" variant="primary" theme="default">
-                  <IconV2 name="plus" />
-                  {t('views:repos.branches.createBranch', 'Create Branch')}
+                <Dialog.Trigger>
+                  <Button onClick={openCreateBranchDialog} size="md" variant="primary" theme="default">
+                    <IconV2 name="plus" />
+                    {t('views:repos.branches.createBranch', 'Create Branch')}
+                  </Button>
                 </Dialog.Trigger>
               </ListActions.Right>
             </ListActions.Root>

@@ -12,7 +12,7 @@ import { Aside } from "@astrojs/starlight/components";
 <DocsPage.ComponentExample
   client:only
   code={`<Dialog.Root>
-      <Dialog.Trigger asChild>
+      <Dialog.Trigger>
         <Button>Open Dialog</Button>
       </Dialog.Trigger>
       <Dialog.Content>
@@ -70,7 +70,7 @@ import { Dialog } from "@harnessio/ui/components";
 
 return (
   <Dialog.Root>
-    <Dialog.Trigger asChild>
+    <Dialog.Trigger>
       <Button>Open Dialog</Button>
     </Dialog.Trigger>
 
@@ -103,7 +103,7 @@ The `Dialog` component supports three sizes: `sm`, `md`, and `lg`:
   <div className="space-y-2">
     <h3 className="text-lg font-semibold">Small (Default)</h3>
     <Dialog.Root>
-      <Dialog.Trigger asChild>
+      <Dialog.Trigger>
         <Button>Small Dialog</Button>
       </Dialog.Trigger>
       <Dialog.Content size="sm">
@@ -121,7 +121,7 @@ The `Dialog` component supports three sizes: `sm`, `md`, and `lg`:
 <div className="space-y-2">
   <h3 className="text-lg font-semibold">Medium</h3>
   <Dialog.Root>
-    <Dialog.Trigger asChild>
+    <Dialog.Trigger>
       <Button>Medium Dialog</Button>
     </Dialog.Trigger>
     <Dialog.Content size="md">
@@ -139,7 +139,7 @@ The `Dialog` component supports three sizes: `sm`, `md`, and `lg`:
   <div className="space-y-2">
     <h3 className="text-lg font-semibold">Large</h3>
     <Dialog.Root>
-      <Dialog.Trigger asChild>
+      <Dialog.Trigger>
         <Button>Large Dialog</Button>
       </Dialog.Trigger>
       <Dialog.Content size="lg">
@@ -166,7 +166,7 @@ Headers can have themes `default`, `warning` and `danger` with matching icons:
   <div className="space-y-2">
     <h3 className="text-lg font-semibold">Default Theme</h3>
     <Dialog.Root>
-      <Dialog.Trigger asChild>
+      <Dialog.Trigger>
         <Button>Default</Button>
       </Dialog.Trigger>
       <Dialog.Content>
@@ -184,7 +184,7 @@ Headers can have themes `default`, `warning` and `danger` with matching icons:
   <div className="space-y-2">
     <h3 className="text-lg font-semibold">Warning Theme</h3>
     <Dialog.Root>
-      <Dialog.Trigger asChild>
+      <Dialog.Trigger>
         <Button>Warning</Button>
       </Dialog.Trigger>
       <Dialog.Content>
@@ -204,7 +204,7 @@ Headers can have themes `default`, `warning` and `danger` with matching icons:
   <div className="space-y-2">
     <h3 className="text-lg font-semibold">Danger Theme</h3>
     <Dialog.Root>
-      <Dialog.Trigger asChild>
+      <Dialog.Trigger>
         <Button>Danger</Button>
       </Dialog.Trigger>
       <Dialog.Content>
@@ -232,7 +232,7 @@ Headers can display a logo or an icon:
   client:only
   code={`<div className="flex flex-col gap-4">
     <Dialog.Root>
-    <Dialog.Trigger asChild>
+    <Dialog.Trigger>
       <Button>With Logo</Button>
     </Dialog.Trigger>
     <Dialog.Content>
@@ -250,7 +250,7 @@ Headers can display a logo or an icon:
   </Dialog.Root>
 
   <Dialog.Root>
-    <Dialog.Trigger asChild>
+    <Dialog.Trigger>
       <Button>With Icon</Button>
     </Dialog.Trigger>
     <Dialog.Content>
@@ -277,7 +277,7 @@ You can hide the close button in the top-right corner using the `hideClose` prop
   client:only
   code={`<div className="flex flex-col space-y-4">
   <Dialog.Root>
-    <Dialog.Trigger asChild>
+    <Dialog.Trigger>
       <Button>Open Dialog</Button>
     </Dialog.Trigger>
     <Dialog.Content hideClose>
@@ -301,7 +301,7 @@ The Body component automatically handles scrolling for long content:
   client:only
   code={`<div className="flex flex-col space-y-4">
   <Dialog.Root>
-    <Dialog.Trigger asChild>
+    <Dialog.Trigger>
       <Button>Default</Button>
     </Dialog.Trigger>
     <Dialog.Content>
@@ -326,7 +326,7 @@ The Body component automatically handles scrolling for long content:
   </Dialog.Root>
 
   <Dialog.Root>
-    <Dialog.Trigger asChild>
+    <Dialog.Trigger>
       <Button>Fixed Height</Button>
     </Dialog.Trigger>
     <Dialog.Content className="h-1/2">
@@ -634,6 +634,22 @@ Can be used inside `Footer` or as a standalone button to close the modal.
     {
       name: "children",
       description: "Button label",
+      required: true,
+      value: "ReactNode",
+    },
+  ]}
+/>
+
+### `Trigger`
+
+Used to open the dialog. Essential for registering the trigger element with the dialog focus manager.
+If a dialog is opened without the `Trigger` component (e.g., a dropdown item), focus will not return to the trigger element when the dialog is closed. To address this use `useCustomDialogTrigger` hook to register your custom trigger element.
+
+<DocsPage.PropsTable
+  props={[
+    {
+      name: "children",
+      description: "Trigger element (only one child allowed)",
       required: true,
       value: "ReactNode",
     },

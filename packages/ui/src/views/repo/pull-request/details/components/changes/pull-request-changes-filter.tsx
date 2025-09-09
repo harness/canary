@@ -246,9 +246,11 @@ export const PullRequestChangesFilter: React.FC<PullRequestChangesFilterProps> =
           )}
 
           {commitSuggestionsBatchCount > 0 && (
-            <Dialog.Trigger variant="outline" onClick={() => onCommitSuggestionsBatch()}>
-              Commit suggestion
-              <CounterBadge theme="info">{commitSuggestionsBatchCount}</CounterBadge>
+            <Dialog.Trigger>
+              <Button variant="outline" onClick={() => onCommitSuggestionsBatch()}>
+                Commit suggestion
+                <CounterBadge theme="info">{commitSuggestionsBatchCount}</CounterBadge>
+              </Button>
             </Dialog.Trigger>
           )}
           {!shouldHideReviewButton && currentUser && (

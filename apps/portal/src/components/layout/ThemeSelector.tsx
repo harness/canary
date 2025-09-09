@@ -1,6 +1,5 @@
 import {
   Button,
-  Dialog,
   DialogProvider,
   IconV2,
   ThemeDialog,
@@ -29,22 +28,20 @@ export function ThemeSelector() {
 
   return (
     <DialogProvider>
-      <TooltipProvider>
-        <ThemeDialog
-          open={open}
-          onOpenChange={setOpen}
-          setTheme={setTheme}
-          theme={theme}
+      <ThemeDialog
+        open={open}
+        onOpenChange={setOpen}
+        setTheme={setTheme}
+        theme={theme}
+      >
+        <Button
+          iconOnly
+          onClick={() => setOpen(true)}
+          tooltipProps={{ content: "Appearance settings" }}
         >
-          <Dialog.Trigger
-            iconOnly
-            onClick={() => setOpen(true)}
-            tooltipProps={{ content: "Appearance settings" }}
-          >
-            <IconV2 name="theme" />
-          </Dialog.Trigger>
-        </ThemeDialog>
-      </TooltipProvider>
+          <IconV2 name="theme" />
+        </Button>
+      </ThemeDialog>
     </DialogProvider>
   );
 }

@@ -73,9 +73,11 @@ export const PathActionBar: FC<PathActionBarProps> = ({
             </Button>
           )}
           {!!handleOpenCommitDialog && (
-            <Dialog.Trigger onClick={handleOpenCommitDialog}>
-              <IconV2 name="upload" />
-              Commit Changes
+            <Dialog.Trigger>
+              <Button onClick={handleOpenCommitDialog}>
+                <IconV2 name="upload" />
+                Commit Changes
+              </Button>
             </Dialog.Trigger>
           )}
         </Layout.Flex>

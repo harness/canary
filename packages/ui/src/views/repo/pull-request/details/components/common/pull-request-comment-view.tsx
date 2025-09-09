@@ -60,18 +60,20 @@ const PRCommentView: FC<PRCommentViewProps> = ({
       suggestionFooter={
         !isApplied && (
           <ButtonLayout className="flex-wrap">
-            <Dialog.Trigger
-              className="gap-x-2"
-              variant="outline"
-              onClick={() => {
-                onCommitSuggestion?.({
-                  check_sum: suggestionCheckSum,
-                  comment_id: commentItem.id
-                })
-              }}
-            >
-              {t('views:pullRequests.comments.commitSuggestion', 'Commit suggestion')}
-              {!!suggestionsBatch?.length && <CounterBadge theme="info">{suggestionsBatch.length}</CounterBadge>}
+            <Dialog.Trigger>
+              <Button
+                className="gap-x-2"
+                variant="outline"
+                onClick={() => {
+                  onCommitSuggestion?.({
+                    check_sum: suggestionCheckSum,
+                    comment_id: commentItem.id
+                  })
+                }}
+              >
+                {t('views:pullRequests.comments.commitSuggestion', 'Commit suggestion')}
+                {!!suggestionsBatch?.length && <CounterBadge theme="info">{suggestionsBatch.length}</CounterBadge>}
+              </Button>
             </Dialog.Trigger>
             {isInBatch ? (
               <Button variant="outline" theme="danger" onClick={() => removeSuggestionFromBatch?.(commentItem.id)}>

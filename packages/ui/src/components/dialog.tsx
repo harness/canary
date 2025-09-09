@@ -15,6 +15,7 @@ import {
 
 import { usePortal, useTranslation } from '@/context'
 import * as DialogPrimitive from '@radix-ui/react-dialog'
+import { Slot } from '@radix-ui/react-slot'
 import { cn } from '@utils/cn'
 import { cva, type VariantProps } from 'class-variance-authority'
 
@@ -330,28 +331,42 @@ Close.displayName = 'Dialog.Close'
  * Dialog trigger component is essential for opening dialogs.
  * It registers the trigger element with the dialog focus manager.
  */
-const Trigger = forwardRef<HTMLButtonElement, ButtonProps>(({ onClick, id, ...props }, ref) => {
-  const triggerId = useTriggerId(id)
-  const focusManager = useDialogFocusManager()
+const Trigger = forwardRef<HTMLButtonElement, HTMLAttributes<HTMLDivElement> & { children: ReactNode }>(
+  ({ onClick, id, children: _children, ...props }, ref) => {
+    const triggerId = useTriggerId(id)
+    const focusManager = useDialogFocusManager()
 
-  const dialogContext = useContext(DialogOpenContext)
-  const isInsideDialog = dialogContext !== undefined
+    const dialogContext = useContext(DialogOpenContext)
+    const isInsideDialog = dialogContext !== undefined
+    const childrenArray = Children.toArray(_children)
+    const childrenCount = childrenArray.length
+    let children = _children
 
-  const handleClick = (event: MouseEvent<HTMLButtonElement>) => {
-    if (focusManager) {
-      focusManager.registerTrigger({ triggerId, triggerElement: event.currentTarget })
+    if (childrenCount > 1) {
+      console.warn('Dialog.Trigger: Only one child is allowed')
+      children = <span>{children}</span>
     }
-    onClick?.(event)
+
+    const handleClick = (event: MouseEvent<HTMLDivElement>) => {
+      if (focusManager) {
+        focusManager.registerTrigger({ triggerId, triggerElement: event.currentTarget })
+      }
+      onClick?.(event)
+    }
+
+    const trigger = (
+      <Slot ref={ref} onClick={handleClick} {...props} id={triggerId}>
+        {children}
+      </Slot>
+    )
+
+    if (isInsideDialog && !onClick) {
+      return <DialogPrimitive.Trigger asChild>{trigger}</DialogPrimitive.Trigger>
+    }
+
+    return trigger
   }
-
-  const trigger = <Button ref={ref} onClick={handleClick} {...props} id={triggerId} />
-
-  if (isInsideDialog && !onClick) {
-    return <DialogPrimitive.Trigger asChild>{trigger}</DialogPrimitive.Trigger>
-  }
-
-  return trigger
-})
+)
 Trigger.displayName = 'DialogTrigger'
 
 const Dialog = {

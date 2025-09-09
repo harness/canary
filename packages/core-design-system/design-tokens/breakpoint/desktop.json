@@ -120,7 +120,7 @@
       },
       "$description": "Monospaced typography that ensures character alignment for technical content. Maintains consistent spacing and character width to preserve code formatting while integrating harmoniously with surrounding text.\n\nCommon uses: Code snippets and examples, Terminal command instructions, File paths and system references, API endpoints."
     },
-    "soft": {
+    "light": {
       "$type": "typography",
       "$value": {
         "fontFamily": "{fontFamily.default}",
@@ -165,7 +165,7 @@
         },
         "$description": "Emphasized component text for important interactive elements. Increases visual prominence without affecting component height. Ensures consistent vertical alignment within fixed-height UI elements."
       },
-      "soft": {
+      "light": {
         "$type": "typography",
         "$value": {
           "fontFamily": "{fontFamily.default}",
@@ -212,7 +212,7 @@
         "paragraphSpacing": "0.375rem"
       }
     },
-    "soft": {
+    "light": {
       "$type": "typography",
       "$value": {
         "fontFamily": "{fontFamily.default}",
@@ -267,7 +267,7 @@
           "letterSpacing": "{tracking.normal}"
         }
       },
-      "soft": {
+      "light": {
         "$type": "typography",
         "$value": {
           "fontFamily": "{fontFamily.default}",

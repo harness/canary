@@ -1,9 +1,9 @@
 import { FC } from 'react'
 
-import { Button, IconV2, Layout, Link, LogoV2, MoreActionsTooltip, StatusBadge, Text, TimeAgoCard } from '@/components'
+import { Button, IconV2, Layout, Link, MoreActionsTooltip, StatusBadge, Text, TimeAgoCard } from '@/components'
 import { useTranslation } from '@/context'
 
-import { ConnectorTypeToLogoNameMap } from '../connectors-list/utils'
+import { ConnectorsLogo } from '../components/connectors-logo'
 import { ConnectorDetailsHeaderProps } from './types'
 
 const DATE_FORMAT_OPTIONS = {
@@ -21,7 +21,6 @@ const ConnectorDetailsHeader: FC<ConnectorDetailsHeaderProps> = ({
 }) => {
   const { createdAt, lastModifiedAt, status, type } = connectorDetails
   const { t } = useTranslation()
-  const logoName = ConnectorTypeToLogoNameMap.get(type)
 
   return (
     <Layout.Vertical className="px-8" gap="sm">
@@ -31,7 +30,7 @@ const ConnectorDetailsHeader: FC<ConnectorDetailsHeaderProps> = ({
         </Link>
       ) : null}
       <Layout.Horizontal gap="xs" align="center">
-        {logoName ? <LogoV2 name={logoName} size="lg" /> : <IconV2 name="connectors" size="lg" />}
+        <ConnectorsLogo type={type} iconSize="xl" logoSize="lg" />
         <Text as="h1" variant="heading-section">
           {connectorDetails.name}
         </Text>

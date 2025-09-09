@@ -4,7 +4,6 @@ import {
   Button,
   Favorite,
   IconV2,
-  LogoV2,
   MoreActionsTooltip,
   NoData,
   Popover,
@@ -18,8 +17,9 @@ import { cn } from '@utils/cn'
 import { ExecutionState } from '@views/repo/pull-request'
 
 import { ConnectorStatusType, ConnectorTestConnectionDialog } from '../components/connector-test-connection-dialog'
+import { ConnectorsLogo } from '../components/connectors-logo'
 import { ConnectorListItem, ConnectorListProps } from './types'
-import { ConnectorDisplayNameMap, ConnectorTypeToLogoNameMap } from './utils'
+import { ConnectorDisplayNameMap } from './utils'
 
 const isStatusSuccess = (status?: string) => status?.toLowerCase() === ExecutionState.SUCCESS.toLowerCase()
 
@@ -127,8 +127,7 @@ export function ConnectorsList({
       <Table.Body>
         {connectors.map(connector => {
           const { name, identifier, type, spec, status, lastModifiedAt, createdAt, isFavorite } = connector
-          const connectorLogo = type ? ConnectorTypeToLogoNameMap.get(type) : undefined
-          const connectorType = type ? ConnectorDisplayNameMap.get(type) : ''
+          const connectorType = ConnectorDisplayNameMap.get(type)
           const connectorDetailUrl = toConnectorDetails?.({ identifier, type, spec, status, lastModifiedAt }) || ''
 
           return (
@@ -138,7 +137,7 @@ export function ConnectorsList({
               </Table.Cell>
               <Table.Cell className={CELL_MIN_WIDTH}>
                 <div className="flex w-full items-center gap-2">
-                  {connectorLogo ? <LogoV2 name={connectorLogo} size="sm" /> : <IconV2 name="connectors" size="lg" />}
+                  <ConnectorsLogo type={type} />
                   <Text truncate>{connectorType || ''}</Text>
                 </div>
               </Table.Cell>

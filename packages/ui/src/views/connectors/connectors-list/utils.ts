@@ -1,3 +1,4 @@
+import { IconV2NamesType } from '@components/icon-v2'
 import { LogoNameMapV2 } from '@components/logo-v2'
 
 import { ConnectorConfigType } from '../types'
@@ -16,6 +17,7 @@ export const ConnectorTypeToLogoNameMap: Map<ConnectorConfigType, keyof typeof L
   ['GcpKms', 'google'],
   ['AwsKms', 'aws'],
   ['TerraformCloud', 'terraform'],
+  ['Terraform', 'terraform'],
   ['Vault', 'hashicorp'],
   ['HttpHelmRepo', 'helm'],
   ['Rancher', 'rancher'],
@@ -39,6 +41,7 @@ export const ConnectorTypeToLogoNameMap: Map<ConnectorConfigType, keyof typeof L
   ['AzureArtifacts', 'azure'],
   ['Jenkins', 'jenkins'],
   ['Bamboo', 'bamboo'],
+  ['Spot', 'spot'],
   ['PagerDuty', 'pagerduty'],
   ['JDBC', 'java'],
   ['SumoLogic', 'sumo-logic'],
@@ -46,6 +49,12 @@ export const ConnectorTypeToLogoNameMap: Map<ConnectorConfigType, keyof typeof L
   ['Zoom', 'zoom'],
   ['MsTeams', 'ms-teams'],
   ['Confluence', 'confluence']
+])
+
+export const ConnectorTypeToIconNameMap: Map<ConnectorConfigType, IconV2NamesType> = new Map([
+  ['Pdc', 'physical-data-center'],
+  ['CustomHealth', 'health-shield']
+  // ['ErrorTracking', 'error-tracking']
 ])
 
 export const ConnectorDisplayNameMap: Map<ConnectorConfigType, string> = new Map([

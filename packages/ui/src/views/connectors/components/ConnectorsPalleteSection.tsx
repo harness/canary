@@ -1,10 +1,10 @@
-import { IconV2, LogoV2, Text } from '@/components'
+import { IconV2, Text } from '@/components'
 import { useTranslation } from '@/context'
 import { StepsPaletteContentLayout } from '@views/unified-pipeline-studio/components/palette-drawer/components/step-palette-content-layout'
 import { StepsPaletteItemLayout } from '@views/unified-pipeline-studio/components/palette-drawer/components/step-palette-item-layout'
 
-import { ConnectorTypeToLogoNameMap } from '../connectors-list/utils'
 import { AnyConnectorDefinition } from '../types'
+import { ConnectorsLogo } from './connectors-logo'
 
 export interface ConnectorsPaletteSectionProps {
   connectors: AnyConnectorDefinition[]
@@ -20,8 +20,6 @@ export function ConnectorsPaletteSection(props: ConnectorsPaletteSectionProps) {
     <StepsPaletteContentLayout.Section>
       {connectors?.length > 0 ? (
         connectors.map(connector => {
-          const logoName = ConnectorTypeToLogoNameMap.get(connector.type)
-
           return (
             <StepsPaletteContentLayout.SectionItem key={connector.type}>
               <StepsPaletteItemLayout.Root
@@ -30,7 +28,7 @@ export function ConnectorsPaletteSection(props: ConnectorsPaletteSectionProps) {
                 }}
               >
                 <StepsPaletteItemLayout.Left className="flex items-center">
-                  {logoName ? <LogoV2 name={logoName} size="md" /> : <IconV2 name="connectors" size="lg" />}
+                  <ConnectorsLogo type={connector.type} iconSize="xl" logoSize="md" />
                 </StepsPaletteItemLayout.Left>
                 <StepsPaletteItemLayout.Right>
                   <StepsPaletteItemLayout.Header>

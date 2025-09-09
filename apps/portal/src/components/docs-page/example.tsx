@@ -25,6 +25,7 @@ import {
   NavLink,
   Outlet,
   RouterProvider,
+  useMatches,
 } from "react-router-dom";
 
 type LiveProviderProps = ComponentProps<typeof LiveProvider>;
@@ -78,7 +79,12 @@ const Example: FC<ExampleProps> = ({
     {
       path: "*",
       element: (
-        <RouterContextProvider Link={Link} NavLink={NavLink} Outlet={Outlet}>
+        <RouterContextProvider
+          Link={Link}
+          NavLink={NavLink}
+          Outlet={Outlet}
+          useMatches={useMatches}
+        >
           <TranslationProvider>
             <LivePreview />
           </TranslationProvider>

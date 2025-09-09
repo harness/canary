@@ -100,7 +100,8 @@ export default {
       },
 
       '&:where(:not([disabled]):hover)': {
-        color: 'var(--cn-text-brand)'
+        // Adding important to override Blueprint reset CSS defaults
+        color: 'var(--cn-text-brand) !important'
       },
 
       '&:where(:not([disabled]):focus-visible)': {

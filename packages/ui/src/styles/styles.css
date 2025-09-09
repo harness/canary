@@ -498,7 +498,8 @@
 }
 
 /* Default focus outline */
-:where(:focus-visible) {
+:focus-visible,
+:focus {
   outline: var(--cn-focus);
 }
 

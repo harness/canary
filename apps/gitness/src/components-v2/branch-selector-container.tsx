@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react'
+import { forwardRef, useEffect, useState } from 'react'
 import { useParams } from 'react-router-dom'
 
 import { useFindRepositoryQuery, useListBranchesQuery, useListTagsQuery } from '@harnessio/code-service-client'
@@ -23,107 +23,119 @@ interface BranchSelectorContainerProps {
   disabled?: boolean
   autoSelectDefaultBranch?: boolean
 }
-export const BranchSelectorContainer: React.FC<BranchSelectorContainerProps> = ({
-  selectedBranch,
-  onSelectBranchorTag,
-  isBranchOnly = false,
-  dynamicWidth = false,
-  preSelectedTab,
-  setCreateBranchDialogOpen,
-  onBranchQueryChange,
-  branchPrefix,
-  className,
-  isUpdating,
-  disabled,
-  autoSelectDefaultBranch = true
-}) => {
-  const repoRef = useGetRepoRef()
-  const { spaceId, repoId } = useParams<PathParams>()
-  const [branchTagQuery, setBranchTagQuery] = useState<string | null>(null)
-  const [branchList, setBranchList] = useState<BranchData[]>([])
-  const [tagList, setTagList] = useState<BranchSelectorListItem[]>([])
+export const BranchSelectorContainer = forwardRef<HTMLButtonElement, BranchSelectorContainerProps>(
+  (
+    {
+      selectedBranch,
+      onSelectBranchorTag,
+      isBranchOnly = false,
+      dynamicWidth = false,
+      preSelectedTab,
+      setCreateBranchDialogOpen,
+      onBranchQueryChange,
+      branchPrefix,
+      className,
+      isUpdating,
+      disabled,
+      autoSelectDefaultBranch = true
+    },
+    ref
+  ) => {
+    const repoRef = useGetRepoRef()
+    const { spaceId, repoId } = useParams<PathParams>()
+    const [branchTagQuery, setBranchTagQuery] = useState<string | null>(null)
+    const [branchList, setBranchList] = useState<BranchData[]>([])
+    const [tagList, setTagList] = useState<BranchSelectorListItem[]>([])
 
-  const { data: { body: repository } = {} } = useFindRepositoryQuery({ repo_ref: repoRef })
+    const { data: { body: repository } = {} } = useFindRepositoryQuery({ repo_ref: repoRef })
 
-  const { data: { body: branches } = {}, refetch: refetchBranches } = useListBranchesQuery({
-    repo_ref: repoRef,
-    queryParams: {
-      include_commit: false,
-      sort: 'date',
-      order: orderSortDate.DESC,
-      limit: 30,
-      query: branchTagQuery ?? ''
-    }
-  })
+    const { data: { body: branches } = {}, refetch: refetchBranches } = useListBranchesQuery({
+      repo_ref: repoRef,
+      queryParams: {
+        include_commit: false,
+        sort: 'date',
+        order: orderSortDate.DESC,
+        limit: 30,
+        query: branchTagQuery ?? ''
+      }
+    })
 
-  const { data: { body: tags } = {} } = useListTagsQuery({
-    repo_ref: repoRef,
-    queryParams: {
-      include_commit: false,
-      sort: 'date',
-      order: orderSortDate.DESC,
-      limit: 30,
-      page: 1,
-      query: branchTagQuery ?? ''
-    }
-  })
+    const { data: { body: tags } = {} } = useListTagsQuery({
+      repo_ref: repoRef,
+      queryParams: {
+        include_commit: false,
+        sort: 'date',
+        order: orderSortDate.DESC,
+        limit: 30,
+        page: 1,
+        query: branchTagQuery ?? ''
+      }
+    })
 
-  useEffect(() => {
-    // Only auto-select default branch if no branch is currently selected
-    // This prevents the flakiness when the form is being updated
-    if (repository && !selectedBranch?.name && !isUpdating && autoSelectDefaultBranch) {
-      const defaultBranch = branches?.find(branch => branch.name === repository.default_branch)
+    useEffect(() => {
+      // Only auto-select default branch if no branch is currently selected
+      // This prevents the flakiness when the form is being updated
+      if (repository && !selectedBranch?.name && !isUpdating && autoSelectDefaultBranch) {
+        const defaultBranch = branches?.find(branch => branch.name === repository.default_branch)
 
-      onSelectBranchorTag(
-        { name: defaultBranch?.name ?? repository.default_branch ?? '', sha: defaultBranch?.sha ?? '', default: true },
-        BranchSelectorTab.BRANCHES
-      )
-    }
-  }, [repository, selectedBranch?.name, branches, onSelectBranchorTag, isUpdating, autoSelectDefaultBranch])
+        onSelectBranchorTag(
+          {
+            name: defaultBranch?.name ?? repository.default_branch ?? '',
+            sha: defaultBranch?.sha ?? '',
+            default: true
+          },
+          BranchSelectorTab.BRANCHES
+        )
+      }
+    }, [repository, selectedBranch?.name, branches, onSelectBranchorTag, isUpdating, autoSelectDefaultBranch])
 
-  useEffect(() => {
-    refetchBranches()
-  }, [refetchBranches])
+    useEffect(() => {
+      refetchBranches()
+    }, [refetchBranches])
 
-  useEffect(() => {
-    if (branches) {
-      setBranchList(transformBranchList(branches, repository?.default_branch))
-    }
-  }, [branches, repository?.default_branch, setBranchList, selectedBranch])
+    useEffect(() => {
+      if (branches) {
+        setBranchList(transformBranchList(branches, repository?.default_branch))
+      }
+    }, [branches, repository?.default_branch, setBranchList, selectedBranch])
 
-  useEffect(() => {
-    if (tags) {
-      setTagList(
-        tags.map(item => ({
-          name: item?.name || '',
-          sha: item?.sha || '',
-          default: false
-        }))
-      )
-    }
-  }, [setTagList, tags])
+    useEffect(() => {
+      if (tags) {
+        setTagList(
+          tags.map(item => ({
+            name: item?.name || '',
+            sha: item?.sha || '',
+            default: false
+          }))
+        )
+      }
+    }, [setTagList, tags])
 
-  useEffect(() => {
-    onBranchQueryChange?.(branchTagQuery ?? '')
-  }, [branchTagQuery, onBranchQueryChange])
+    useEffect(() => {
+      onBranchQueryChange?.(branchTagQuery ?? '')
+    }, [branchTagQuery, onBranchQueryChange])
 
-  return (
-    <BranchSelectorV2
-      className={className}
-      branchList={branchList}
-      tagList={tagList}
-      selectedBranchorTag={selectedBranch}
-      repoId={repoId ?? ''}
-      spaceId={spaceId ?? ''}
-      searchQuery={branchTagQuery ?? ''}
-      setSearchQuery={setBranchTagQuery}
-      onSelectBranch={onSelectBranchorTag}
-      isBranchOnly={isBranchOnly}
-      dynamicWidth={dynamicWidth}
-      preSelectedTab={preSelectedTab}
-      setCreateBranchDialogOpen={setCreateBranchDialogOpen}
-      branchPrefix={branchPrefix}
-      disabled={disabled}
-    />
-  )
-}
+    return (
+      <BranchSelectorV2
+        ref={ref}
+        className={className}
+        branchList={branchList}
+        tagList={tagList}
+        selectedBranchorTag={selectedBranch}
+        repoId={repoId ?? ''}
+        spaceId={spaceId ?? ''}
+        searchQuery={branchTagQuery ?? ''}
+        setSearchQuery={setBranchTagQuery}
+        onSelectBranch={onSelectBranchorTag}
+        isBranchOnly={isBranchOnly}
+        dynamicWidth={dynamicWidth}
+        preSelectedTab={preSelectedTab}
+        setCreateBranchDialogOpen={setCreateBranchDialogOpen}
+        branchPrefix={branchPrefix}
+        disabled={disabled}
+      />
+    )
+  }
+)
+
+BranchSelectorContainer.displayName = 'BranchSelectorContainer'

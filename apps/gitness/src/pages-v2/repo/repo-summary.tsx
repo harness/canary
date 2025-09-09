@@ -13,6 +13,7 @@ import {
   useSummaryQuery,
   useUpdateRepositoryMutation
 } from '@harnessio/code-service-client'
+import { useCustomDialogTrigger } from '@harnessio/ui/components'
 import { generateAlphaNumericHash } from '@harnessio/ui/utils'
 import {
   BranchSelectorListItem,
@@ -301,6 +302,12 @@ export default function RepoSummaryPage() {
 
   const isLoading = loading || isLoadingRepoDetails
 
+  const { triggerRef, registerTrigger } = useCustomDialogTrigger()
+  const toggleCreateBranchDialogOpen = (open: boolean) => {
+    registerTrigger()
+    setCreateBranchDialogOpen(open)
+  }
+
   return (
     <>
       <RepoSummaryView
@@ -333,8 +340,9 @@ export default function RepoSummaryPage() {
         refType={preSelectedTab}
         branchSelectorRenderer={
           <BranchSelectorContainer
+            ref={triggerRef}
             onSelectBranchorTag={selectBranchOrTag}
-            setCreateBranchDialogOpen={setCreateBranchDialogOpen}
+            setCreateBranchDialogOpen={toggleCreateBranchDialogOpen}
             selectedBranch={{ name: gitRefName, sha: repoDetails?.latest_commit?.sha || '' }}
             preSelectedTab={preSelectedTab}
             onBranchQueryChange={setBranchQueryForNewBranch}

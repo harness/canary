@@ -15,6 +15,7 @@ import {
   type PRListFilters
 } from '@harnessio/ui/views'
 
+import { useRoutes } from '../../framework/context/NavigationContext'
 import { useGetRepoRef } from '../../framework/hooks/useGetRepoPath'
 import { useMFEContext } from '../../framework/hooks/useMFEContext'
 import { useQueryState } from '../../framework/hooks/useQueryState'
@@ -28,6 +29,7 @@ import { buildPRFilters } from './pull-request-utils'
 import { usePullRequestListStore } from './stores/pull-request-list-store'
 
 export default function PullRequestListPage() {
+  const routes = useRoutes()
   const repoRef = useGetRepoRef() ?? ''
   const { setPullRequests, page, setPage, setOpenClosePullRequests, labelsQuery, prState, setPrState } =
     usePullRequestListStore()
@@ -280,6 +282,7 @@ export default function PullRequestListPage() {
       onLabelClick={onLabelClick}
       toPullRequest={({ prNumber }) => prNumber.toString()}
       scope={{ accountId, orgIdentifier, projectIdentifier }}
+      toBranch={({ branch }) => `${routes.toRepoFiles({ spaceId, repoId })}/${branch}`}
     />
   )
 }

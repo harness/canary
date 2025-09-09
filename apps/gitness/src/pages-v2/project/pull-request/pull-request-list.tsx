@@ -252,6 +252,7 @@ export default function PullRequestListPage() {
       setSearchQuery={setQuery}
       onClickPullRequest={handleOnClickPullRequest}
       scope={scope}
+      toBranch={({ branch, repoId }) => `${routes.toRepoFiles({ spaceId, repoId })}/${branch}`}
     />
   )
 }

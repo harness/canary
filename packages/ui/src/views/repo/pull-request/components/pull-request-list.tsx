@@ -95,7 +95,8 @@ export const PullRequestList: FC<PullRequestListProps> = ({
   onClickPullRequest,
   scope,
   dirtyNoDataContent: DirtyNoDataContent,
-  showScope = false
+  showScope = false,
+  toBranch
 }) => {
   const { identifier: repoId } = repo || {}
 
@@ -188,6 +189,8 @@ export const PullRequestList: FC<PullRequestListProps> = ({
                     sourceBranch={pullRequest.sourceBranch || ''}
                     timestamp={pullRequest.timestamp}
                     targetBranch={pullRequest.targetBranch || ''}
+                    toBranch={toBranch}
+                    repoId={pullRequest.repo?.identifier || ''}
                   />
                 )
               }

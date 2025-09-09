@@ -352,6 +352,57 @@ The Body component automatically handles scrolling for long content:
 </div>`}
 />
 
+### Keep focus on the custom trigger element
+
+If a dialog is opened without the `Trigger` component (e.g., a dropdown item), focus will not return to the trigger element when the dialog is closed. To address this use `useCustomDialogTrigger` hook to register your custom trigger element.
+
+<DocsPage.ComponentExample
+  client:only
+  code={`() => {
+    const [open, setOpen] = React.useState(false);
+    const { triggerRef, registerTrigger } = useCustomDialogTrigger();
+
+    const handleOpenDialog = () => {
+      registerTrigger();
+      setOpen(true);
+    };
+
+return (
+
+  <>
+    <DropdownMenu.Root>
+      <DropdownMenu.Trigger aria-label="options menu" ref={triggerRef} asChild>
+        <Button>Open Menu</Button>
+      </DropdownMenu.Trigger>
+
+      <DropdownMenu.Content>
+          <DropdownMenu.Item title="Open dialog" onSelect={handleOpenDialog} />
+      </DropdownMenu.Content>
+
+    </DropdownMenu.Root>
+
+    <Dialog.Root open={open} onOpenChange={setOpen}>
+      <Dialog.Content>
+        <Dialog.Header icon="plus-circle">
+          <Dialog.Title>Content</Dialog.Title>
+          <Dialog.Description>Dialog opened from the custom trigger</Dialog.Description>
+        </Dialog.Header>
+        <Dialog.Body>
+          <p className="font-body-normal">
+            Lorem ipsum dolor sit amet, consectetur adipiscing elit
+          </p>
+        </Dialog.Body>
+        <Dialog.Footer>
+          <Dialog.Close>Close</Dialog.Close>
+        </Dialog.Footer>
+      </Dialog.Content>
+
+    </Dialog.Root>
+
+</>
+)}`}
+/>
+
 ## `Anatomy`
 
 All parts of the `Dialog` component can be imported and composed as required.

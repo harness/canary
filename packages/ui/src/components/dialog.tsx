@@ -332,15 +332,13 @@ Close.displayName = 'Dialog.Close'
  * It registers the trigger element with the dialog focus manager.
  */
 const Trigger = forwardRef<HTMLButtonElement, HTMLAttributes<HTMLDivElement> & { children: ReactNode }>(
-  ({ onClick, id, children: _children, ...props }, ref) => {
+  ({ onClick, id, children, ...props }, ref) => {
     const triggerId = useTriggerId(id)
     const focusManager = useDialogFocusManager()
 
     const dialogContext = useContext(DialogOpenContext)
     const isInsideDialog = dialogContext !== undefined
-    const childrenArray = Children.toArray(_children)
-    const childrenCount = childrenArray.length
-    let children = _children
+    const childrenCount = Children.count(children)
 
     if (childrenCount > 1) {
       console.warn('Dialog.Trigger: Only one child is allowed')

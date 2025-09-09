@@ -43,31 +43,21 @@ export const BranchesList: FC<BranchListPageProps> = ({
     <Table.Root>
       <Table.Header>
         <Table.Row>
-          <Table.Head className="w-[33%]">
-            <Text variant="caption-strong">{t('views:repos.branch', 'Branch')}</Text>
-          </Table.Head>
-          <Table.Head className="w-[15%]">
-            <Text variant="caption-strong">{t('views:repos.update', 'Updated')}</Text>
-          </Table.Head>
+          <Table.Head className="w-[33%]">{t('views:repos.branch', 'Branch')}</Table.Head>
+          <Table.Head className="w-[15%]">{t('views:repos.update', 'Updated')}</Table.Head>
 
           {branches[0]?.checks && (
-            <Table.Head className="w-[15%]">
-              <Text variant="caption-strong">{t('views:repos.checkStatus', 'Check status')}</Text>
-            </Table.Head>
+            <Table.Head className="w-[15%]">{t('views:repos.checkStatus', 'Check status')}</Table.Head>
           )}
 
           <Table.Head className="w-[15%]" contentClassName="w-full">
             <Layout.Grid flow="column" columns="1fr auto 1fr" align="center" justify="center" gapX="2xs">
-              <Text variant="caption-strong" align="right">
-                {t('views:repos.behind', 'Behind')}
-              </Text>
+              <span className="text-right">{t('views:repos.behind', 'Behind')}</span>
               <Separator orientation="vertical" />
-              <Text variant="caption-strong">{t('views:repos.ahead', 'Ahead')}</Text>
+              <span>{t('views:repos.ahead', 'Ahead')}</span>
             </Layout.Grid>
           </Table.Head>
-          <Table.Head className="w-[15%] whitespace-nowrap">
-            <Text variant="caption-strong">{t('views:repos.pullRequest', 'Pull Request')}</Text>
-          </Table.Head>
+          <Table.Head className="w-[15%] whitespace-nowrap">{t('views:repos.pullRequest', 'Pull Request')}</Table.Head>
           <Table.Head className="w-[68px]" />
         </Table.Row>
       </Table.Header>

@@ -564,8 +564,8 @@ const PullRequestPanel = ({
   const headerRowBgClass = cn({
     'bg-cn-green-surface': prState === PrState.Success,
     'bg-cn-2': prState === PrState.Draft,
-    'bg-label-background-red': prState === PrState.Error,
-    'bg-cn-gray-soft': prState === PrState.Closed,
+    'bg-cn-red-surface': prState === PrState.Error,
+    'bg-cn-gray-surface': prState === PrState.Closed,
     'bg-cn-purple-surface': prState === PrState.Merged
   })
 

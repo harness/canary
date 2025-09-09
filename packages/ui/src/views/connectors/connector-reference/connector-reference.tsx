@@ -72,9 +72,9 @@ export const ConnectorReference: FC<ConnectorReferenceProps> = ({
         onClick={() => onSelect(entity)}
         thumbnail={
           connectorLogo ? (
-            <LogoV2 name={connectorLogo} size="xs" />
+            <LogoV2 name={connectorLogo} size="sm" />
           ) : (
-            <IconV2 name="connectors" size="xs" className="text-cn-3" />
+            <IconV2 name="connectors" size="md" className="text-cn-3" />
           )
         }
       >

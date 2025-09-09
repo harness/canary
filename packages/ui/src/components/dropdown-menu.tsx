@@ -452,7 +452,7 @@ interface DropdownMenuLogoItemProps extends Omit<DropdownMenuItemProps, 'prefix'
 }
 
 const DropdownMenuLogoItem = forwardRef<ElementRef<typeof DropdownMenuPrimitive.Item>, DropdownMenuLogoItemProps>(
-  ({ logo, ...props }, ref) => <DropdownMenuItem ref={ref} {...props} prefix={<LogoV2 name={logo} />} />
+  ({ logo, ...props }, ref) => <DropdownMenuItem ref={ref} {...props} prefix={<LogoV2 size="xs" name={logo} />} />
 )
 DropdownMenuLogoItem.displayName = displayNames.logoItem
 

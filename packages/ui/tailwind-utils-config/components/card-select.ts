@@ -90,9 +90,7 @@ export default {
     },
 
     '.cn-card-select-icon, .cn-card-select-logo': {
-      '@apply mr-3 shrink-0': '',
-      width: '1.5rem',
-      height: '1.5rem'
+      '@apply mr-3 shrink-0': ''
     },
 
     '.cn-card-select-content-container': {

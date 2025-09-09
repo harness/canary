@@ -138,7 +138,7 @@ export function ConnectorsList({
               </Table.Cell>
               <Table.Cell className={CELL_MIN_WIDTH}>
                 <div className="flex w-full items-center gap-2">
-                  {connectorLogo ? <LogoV2 name={connectorLogo} size="lg" /> : <IconV2 name="connectors" size="lg" />}
+                  {connectorLogo ? <LogoV2 name={connectorLogo} size="sm" /> : <IconV2 name="connectors" size="lg" />}
                   <Text truncate>{connectorType || ''}</Text>
                 </div>
               </Table.Cell>

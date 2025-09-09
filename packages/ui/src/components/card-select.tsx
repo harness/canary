@@ -168,8 +168,8 @@ const CardSelectItem = forwardRef<HTMLLabelElement, CardSelectItemProps>(
       >
         <div className="cn-card-select-content">
           <div className="cn-card-select-content-left">
-            {icon && <IconV2 name={icon} className="cn-card-select-icon" />}
-            {logo && !icon && <LogoV2 name={logo} className="cn-card-select-logo" />}
+            {icon && <IconV2 size="xl" name={icon} className="cn-card-select-icon" />}
+            {logo && !icon && <LogoV2 size="md" name={logo} className="cn-card-select-logo" />}
             <div className="cn-card-select-content-container">{children}</div>
           </div>
           {checked && <IconV2 size="md" name="check" className="cn-card-select-check" />}

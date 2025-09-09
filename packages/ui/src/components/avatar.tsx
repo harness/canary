@@ -22,7 +22,7 @@ export const avatarVariants = cva('cn-avatar', {
     }
   },
   defaultVariants: {
-    size: 'sm',
+    size: 'md',
     rounded: false
   }
 })

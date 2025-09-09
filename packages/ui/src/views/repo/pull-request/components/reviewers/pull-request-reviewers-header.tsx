@@ -1,6 +1,14 @@
 import { useMemo, useRef } from 'react'
 
-import { Button, DropdownMenu, IconV2, SearchInput, Text, useSearchableDropdownKeyboardNavigation } from '@/components'
+import {
+  Button,
+  DropdownMenu,
+  IconV2,
+  Layout,
+  SearchInput,
+  Text,
+  useSearchableDropdownKeyboardNavigation
+} from '@/components'
 import { useTranslation } from '@/context'
 import { PrincipalType } from '@/types'
 import { PRReviewer } from '@/views'
@@ -46,7 +54,7 @@ const ReviewersHeader = ({
   const handleCloseValuesView = useRef(debounce(() => handleSearchQuery(''), 300)).current
 
   return (
-    <div className="mb-0.5 flex items-center justify-between">
+    <Layout.Flex align="center" justify="between">
       <Text as="h5" variant="body-strong" color="foreground-1">
         {t('views:pullRequests.reviewers', 'Reviewers')}
       </Text>
@@ -94,7 +102,7 @@ const ReviewersHeader = ({
           })}
         </DropdownMenu.Content>
       </DropdownMenu.Root>
-    </div>
+    </Layout.Flex>
   )
 }
 

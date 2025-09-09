@@ -7,9 +7,10 @@ import { Tag, TagProps } from './tag'
 type CopyTagProps = TagProps & {
   actionIcon?: never
   onActionClick?: never
+  hideCopyButton?: boolean
 }
 
-export function CopyTag(props: CopyTagProps) {
+export function CopyTag({ hideCopyButton, ...props }: CopyTagProps) {
   const { value } = props
 
   const [copied, setCopied] = useState(false)
@@ -32,5 +33,7 @@ export function CopyTag(props: CopyTagProps) {
     })
   }, [value])
 
-  return <Tag {...props} actionIcon={copied ? 'check' : 'copy'} onActionClick={handleCopy} />
+  return (
+    <Tag {...props} actionIcon={!hideCopyButton ? (copied ? 'check' : 'copy') : undefined} onActionClick={handleCopy} />
+  )
 }

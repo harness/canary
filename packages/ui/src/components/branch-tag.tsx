@@ -7,6 +7,7 @@ interface BranchTagProps {
   spaceId?: string
   repoId?: string
   hideBranchIcon?: boolean
+  hideCopyButton?: boolean
   theme?: TagProps['theme']
   variant?: TagProps['variant']
   size?: TagProps['size']
@@ -17,6 +18,7 @@ const BranchTag: React.FC<BranchTagProps> = ({
   spaceId,
   repoId,
   hideBranchIcon,
+  hideCopyButton,
   theme = 'gray',
   variant = 'secondary',
   size = 'md'
@@ -29,6 +31,7 @@ const BranchTag: React.FC<BranchTagProps> = ({
         size={size}
         icon={hideBranchIcon ? undefined : 'git-branch'}
         value={branchName || ''}
+        hideCopyButton={hideCopyButton}
       />
     </Link>
   )

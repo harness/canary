@@ -1,7 +1,7 @@
 import { forwardRef } from 'react'
 
 import { useRouterContext } from '@/context'
-import { Button, ButtonVariants } from '@components/button'
+import { Button, ButtonProps, ButtonVariants } from '@components/button'
 import { DropdownMenu } from '@components/dropdown-menu'
 import { IconV2, type IconPropsV2 } from '@components/icon-v2'
 import { cn } from '@utils/cn'
@@ -17,6 +17,7 @@ export interface ActionData {
 }
 
 export interface MoreActionsTooltipProps {
+  theme?: ButtonProps['theme']
   actions: ActionData[]
   isInTable?: boolean
   iconName?: IconPropsV2['name']
@@ -30,7 +31,10 @@ export interface MoreActionsTooltipProps {
  * A component for displaying a button that, when clicked, shows a tooltip with a list of actions.
  */
 export const MoreActionsTooltip = forwardRef<HTMLButtonElement, MoreActionsTooltipProps>(
-  ({ actions, iconName = 'more-vert', sideOffset = 2, alignOffset = 0, className, buttonVariant = 'ghost' }, ref) => {
+  (
+    { theme, actions, iconName = 'more-vert', sideOffset = 2, alignOffset = 0, className, buttonVariant = 'ghost' },
+    ref
+  ) => {
     const { Link } = useRouterContext()
     if (!actions.length) return <></>
 
@@ -38,6 +42,7 @@ export const MoreActionsTooltip = forwardRef<HTMLButtonElement, MoreActionsToolt
       <DropdownMenu.Root>
         <DropdownMenu.Trigger ref={ref} asChild>
           <Button
+            theme={theme}
             className={cn('text-icons-1 hover:text-icons-2 data-[state=open]:text-icons-2')}
             variant={buttonVariant}
             iconOnly

@@ -190,6 +190,7 @@ export default function PullRequestConversationPage() {
     pullReqCommits: state.pullReqCommits,
     repoMetadata: state.repoMetadata
   }))
+  console.log('🚀 ~ PullRequestConversationPage ~ pullReqChecksDecision:', pullReqChecksDecision)
 
   const { currentUser: currentUserData } = useAppContext()
 

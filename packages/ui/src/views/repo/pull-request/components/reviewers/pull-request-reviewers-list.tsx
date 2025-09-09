@@ -1,4 +1,5 @@
 import { Alert } from '@components/alert'
+import { Layout } from '@components/layout'
 import { Text } from '@components/text'
 
 import { EnumPullReqReviewDecision, PullReqReviewDecision } from '../../pull-request.types'
@@ -28,13 +29,14 @@ const ReviewersList: React.FC<ReviewersListProps> = ({
   addReviewerError,
   removeReviewerError
 }) => (
-  <div className="flex flex-col gap-3">
-    {addReviewerError || removeReviewerError ? (
-      <Alert.Root theme="danger">
-        <Alert.Title>Failed to add reviewer</Alert.Title>
-        <Alert.Description>{addReviewerError ?? removeReviewerError}</Alert.Description>
-      </Alert.Root>
-    ) : null}
+  <Layout.Vertical gapY="md">
+    {addReviewerError ||
+      (removeReviewerError && (
+        <Alert.Root theme="danger">
+          <Alert.Title>Failed to add reviewer</Alert.Title>
+          <Alert.Description>{addReviewerError ?? removeReviewerError}</Alert.Description>
+        </Alert.Root>
+      ))}
 
     {reviewers.length ? (
       reviewers.map(({ reviewer, review_decision, sha }) => (
@@ -52,7 +54,7 @@ const ReviewersList: React.FC<ReviewersListProps> = ({
         No reviewers
       </Text>
     )}
-  </div>
+  </Layout.Vertical>
 )
 
 export { ReviewersList }

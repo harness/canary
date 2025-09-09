@@ -37,7 +37,7 @@ const PullRequestCheckSection = ({
   }
 
   return (
-    <Accordion.Item value={ACCORDION_VALUE}>
+    <Accordion.Item value={ACCORDION_VALUE} className="only:border-0">
       <Accordion.Trigger className="py-3">
         <Layout.Flex>
           <StackedList.Field

@@ -10,15 +10,15 @@ main {
 }
 
 .sl-container :is(h1):not(:where(.not-content *)) {
-  @apply text-4xl font-normal text-cn-foreground;
+  @apply text-4xl font-normal text-cn-1;
 }
 
 .sl-container :is(h2):not(:where(.not-content *)) {
-  @apply text-3xl font-normal text-cn-foreground;
+  @apply text-3xl font-normal text-cn-1;
 }
 
 .sl-container :is(h3):not(:where(.not-content *)) {
-  @apply text-2xl font-normal text-cn-foreground;
+  @apply text-2xl font-normal text-cn-1;
 }
 
 code {

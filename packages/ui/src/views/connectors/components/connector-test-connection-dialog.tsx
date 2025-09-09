@@ -1,6 +1,16 @@
-import { Alert, Button, Dialog, IconV2, Layout, MarkdownViewer, Progress, Text } from '@/components'
+import {
+  Alert,
+  Button,
+  Dialog,
+  IconV2,
+  Layout,
+  MarkdownViewer,
+  Progress,
+  StatusBadge,
+  StatusBadgeTheme,
+  Text
+} from '@/components'
 import { useTranslation } from '@/context'
-import { cn } from '@utils/cn'
 import { ExecutionState } from '@views/repo/pull-request'
 import { isEmpty } from 'lodash-es'
 
@@ -50,23 +60,21 @@ export const ConnectorTestConnectionDialog = ({
   const { t } = useTranslation()
 
   const ConnectivityStatus = ({ status }: { status: string }): JSX.Element => {
-    const getStatus = (): { status: string; color: string } | undefined => {
+    const getStatus = (): { status: string; theme: StatusBadgeTheme } | undefined => {
       switch (status) {
         case ExecutionState.SUCCESS.toLowerCase():
-          return { status: 'Success', color: 'bg-cn-foreground-success' }
+          return { status: 'Success', theme: 'success' }
         case ExecutionState.ERROR.toLowerCase():
-          return { status: 'Failed', color: 'bg-cn-foreground-danger' }
+          return { status: 'Failed', theme: 'danger' }
         case ExecutionState.RUNNING.toLowerCase():
-          return { status: 'Running', color: 'bg-cn-foreground-warning' }
+          return { status: 'Running', theme: 'warning' }
       }
     }
     const currentStatus = getStatus()
     return (
-      <div className="inline-flex items-center gap-2">
-        <div className={cn('size-2 rounded-full', currentStatus?.color)} />
-
-        <span className="text-cn-1">{currentStatus?.status}</span>
-      </div>
+      <StatusBadge variant="status" theme={currentStatus?.theme}>
+        {currentStatus?.status}
+      </StatusBadge>
     )
   }
 

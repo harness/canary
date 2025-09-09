@@ -1,6 +1,5 @@
-import { NoData, Skeleton, Table, TimeAgoCard } from '@/components'
+import { NoData, Skeleton, StatusBadge, StatusBadgeTheme, Table, TimeAgoCard } from '@/components'
 import { useTranslation } from '@/context'
-import { cn } from '@utils/cn'
 import { ExecutionState } from '@views/index'
 
 import { ConnectorActivityItem, ConnectorDetailsActivitiesListProps } from './types'
@@ -12,22 +11,21 @@ const Activity = ({ activity }: { activity: React.ReactNode }): JSX.Element => (
 )
 
 const ConnectivityStatus = ({ status }: { status: string }): JSX.Element => {
-  const getStatus = (): { status: string; color: string } | undefined => {
+  const getStatus = (): { status: string; theme: StatusBadgeTheme } | undefined => {
     switch (status) {
       case ExecutionState.SUCCESS.toLowerCase():
-        return { status: 'Success', color: 'bg-cn-foreground-success' }
+        return { status: 'Success', theme: 'success' }
       case ExecutionState.ERROR.toLowerCase():
-        return { status: 'Failed', color: 'bg-cn-foreground-danger' }
+        return { status: 'Failed', theme: 'danger' }
       case ExecutionState.RUNNING.toLowerCase():
-        return { status: 'Running', color: 'bg-cn-foreground-warning' }
+        return { status: 'Running', theme: 'warning' }
     }
   }
   const currentStatus = getStatus()
   return (
-    <div className="inline-flex items-center gap-2 py-2.5">
-      <div className={cn('size-2 rounded-full', currentStatus?.color)} />
-      <span className="text-cn-2 ">{currentStatus?.status}</span>
-    </div>
+    <StatusBadge variant="status" theme={currentStatus?.theme}>
+      {currentStatus?.status}
+    </StatusBadge>
   )
 }
 const ConnectorDetailsActivitiesList = ({ isLoading, activities }: ConnectorDetailsActivitiesListProps) => {

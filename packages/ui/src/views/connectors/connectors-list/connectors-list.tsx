@@ -8,6 +8,7 @@ import {
   NoData,
   Popover,
   Skeleton,
+  StatusBadge,
   Table,
   Text,
   TimeAgoCard
@@ -64,9 +65,10 @@ const ConnectivityStatus = ({ item }: { item: ConnectorListItem; connectorDetail
           </>
         }
       >
-        <Button className="gap-cn-4xs h-auto p-0 font-normal" variant="transparent">
-          <IconV2 name="circle" size="sm" color="danger" />
-          <Text color="inherit">{t('views:connectors.failure', 'Failed')}</Text>
+        <Button variant="transparent">
+          <StatusBadge theme="danger" variant="status">
+            {t('views:connectors.failure', 'Failed')}
+          </StatusBadge>
         </Button>
       </Popover>
 

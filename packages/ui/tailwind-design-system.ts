@@ -387,60 +387,6 @@ export default {
 
       colors: {
         // 👉 Remove this
-        'cn-foreground': {
-          1: 'lch(from var(--cn-text-1) l c h / <alpha-value>)',
-          2: 'lch(from var(--cn-text-2) l c h / <alpha-value>)',
-          3: 'lch(from var(--cn-text-3) l c h / <alpha-value>)',
-          success: 'var(--cn-text-success)',
-          danger: 'var(--cn-text-danger)',
-          warning: 'var(--cn-text-warning)',
-          // while migration --> accent -> brand
-          accent: 'var(--cn-comp-link-text)',
-          disabled: 'var(--cn-state-disabled-text)',
-          surface: {
-            gray: 'var(--cn-set-gray-surface-text)'
-          },
-          multitype: {
-            codebrackets: 'var(--cn-set-blue-surface-text)',
-            code: 'var(--cn-set-purple-surface-text)',
-            variables: 'var(--cn-set-orange-surface-text)'
-          },
-
-          // Remove
-          solidred: 'lch(from var(--cn-set-red-solid-text) l c h / <alpha-value>)',
-          primary: 'lch(from var(--cn-set-brand-solid-text) l c h / <alpha-value>)',
-          4: 'var(--cn-text-3)',
-          5: 'var(--cn-text-3)',
-          8: 'var(--cn-text-3)',
-          // DEFAULT - 1
-          DEFAULT: 'lch(from var(--cn-text-1) l c h / <alpha-value>)'
-        },
-
-        // 👉 Remove this
-        'cn-background': {
-          DEFAULT: 'lch(from var(--cn-bg-1) l c h / <alpha-value>)',
-          0: 'lch(from var(--cn-bg-0) l c h / <alpha-value>)',
-          1: 'lch(from var(--cn-bg-1) l c h / <alpha-value>)',
-          2: 'lch(from var(--cn-bg-2) l c h / <alpha-value>)',
-          3: 'lch(from var(--cn-bg-3) l c h / <alpha-value>)',
-          accent: 'lch(from var(--cn-set-brand-solid-bg) l c h / <alpha-value>)',
-          success: 'lch(from var(--cn-set-green-solid-bg) l c h / <alpha-value>)',
-          warning: 'lch(from var(--cn-set-yellow-solid-bg) l c h / <alpha-value>)',
-          backdrop: 'var(--cn-comp-dialog-backdrop)',
-          'diff-success': 'var(--cn-comp-diff-add-content)',
-          'diff-danger': 'var(--cn-comp-diff-del-content)',
-          solidred: 'lch(from var(--cn-set-red-solid-bg) l c h / <alpha-value>)',
-          softgray: 'lch(from var(--cn-set-gray-soft-bg) l c h / <alpha-value>)',
-          hover: 'var(--cn-state-hover)',
-          selected: 'var(--cn-state-selected)',
-          // avatar - remove once avatar component is completed
-          surface: {
-            'gray-hover': 'lch(from var(--cn-set-gray-surface-bg-hover) l c h / <alpha-value>)'
-          },
-          solidgray: 'lch(from var(--cn-set-gray-solid-bg) l c h / <alpha-value>)'
-        },
-
-        // 👉 Remove this
         toast: {
           background: {
             danger: 'hsla(var(--canary-toast-background-danger))'
@@ -698,15 +644,9 @@ export default {
     /** New design system Variants  */
 
     { pattern: /^border-cn-/ },
-
-    // 👉 Remove this after updating platform ui
-    { pattern: /^bg-cn-background-/ },
-    { pattern: /^text-cn-foreground-/ },
-    { pattern: /^hover:text-cn-foreground-/ },
-
     { pattern: /^text-cn-/ },
-    { pattern: /^bg-cn-/ },
     { pattern: /^hover:text-cn-/ },
+    { pattern: /^bg-cn-/ },
     { pattern: /^hover:bg-cn-/ },
 
     /** Existing Variants  */

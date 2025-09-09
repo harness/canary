@@ -34,6 +34,8 @@ const statusBadgeVariants = cva('cn-badge inline-flex w-fit items-center transit
   }
 })
 
+export type StatusBadgeTheme = VariantProps<typeof statusBadgeVariants>['theme']
+
 // Base props without theme-specific requirements
 type BadgeBaseProps = Omit<
   React.HTMLAttributes<HTMLDivElement>,
@@ -45,7 +47,7 @@ type BadgeBaseProps = Omit<
 
 // Status theme props (variant is required)
 type StatusBadgeStatusVariantProps = BadgeBaseProps & {
-  theme?: VariantProps<typeof statusBadgeVariants>['theme']
+  theme?: StatusBadgeTheme
   variant: 'status'
   pulse?: boolean
   icon?: never
@@ -53,7 +55,7 @@ type StatusBadgeStatusVariantProps = BadgeBaseProps & {
 
 // Other theme props (variant is required)
 type StatusBadgeOtherThemeProps = BadgeBaseProps & {
-  theme?: VariantProps<typeof statusBadgeVariants>['theme']
+  theme?: StatusBadgeTheme
   variant: NonNullable<Exclude<VariantProps<typeof statusBadgeVariants>['variant'], 'status' | 'counter'>> // Make variant required
   pulse?: never
 }

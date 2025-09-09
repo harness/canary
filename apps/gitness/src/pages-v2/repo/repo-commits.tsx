@@ -32,8 +32,7 @@ export default function RepoCommitsPage() {
     repo_ref: repoRef,
     queryParams: {
       page: queryPage,
-      git_ref: normalizeGitRef(fullGitRef),
-      include_stats: true
+      git_ref: normalizeGitRef(fullGitRef)
     }
   })
 

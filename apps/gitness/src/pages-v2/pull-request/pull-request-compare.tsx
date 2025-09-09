@@ -367,8 +367,7 @@ export const CreatePullRequest = () => {
         page: 0,
         limit: 20,
         after: normalizeGitRef(selectedTargetBranch?.name),
-        git_ref: normalizeGitRef(selectedSourceBranch?.name),
-        include_stats: true
+        git_ref: normalizeGitRef(selectedSourceBranch?.name)
       }
     },
     {

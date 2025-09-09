@@ -1,6 +1,6 @@
 import { FC, ReactNode } from 'react'
 
-import { IconV2, Layout, Link, Spacer, Text, TimeAgoCard } from '@/components'
+import { IconV2, Layout, Link, MoreActionsTooltip, Spacer, Text, TimeAgoCard } from '@/components'
 import { Tabs } from '@/components/tabs'
 import { useRouterContext, useTranslation } from '@/context'
 import { SandboxLayout } from '@views/layouts/SandboxLayout'
@@ -12,6 +12,8 @@ interface SecretDetailsLayoutProps {
   configurationView?: ReactNode
   referencesView?: ReactNode
   activityView?: ReactNode
+  onEdit?: (identifier: string) => void
+  onDelete?: (identifier: string) => void
 }
 
 enum SecretDetailsTabsKeys {
@@ -26,39 +28,65 @@ const DATE_FORMAT_OPTIONS = {
   year: 'numeric' as const
 }
 
-const getSecretInfo = (created?: string | number, lastUsed?: string | number, lastUpdated?: string | number) => {
+const getSecretInfo = (
+  created?: string | number,
+  lastUsed?: string | number,
+  lastUpdated?: string | number,
+  onEdit?: (identifier: string) => void,
+  onDelete?: (identifier: string) => void,
+  identifier?: string
+) => {
   return (
-    <Layout.Horizontal gap="3xl">
-      <Layout.Vertical gap="sm">
-        <Text variant="body-normal" className="text-cn-3">
-          Created
-        </Text>
-        {created ? (
-          <TimeAgoCard timestamp={created} dateTimeFormatOptions={DATE_FORMAT_OPTIONS} />
-        ) : (
-          <Text variant="body-normal">-</Text>
-        )}
-      </Layout.Vertical>
-      <Layout.Vertical gap="sm">
-        <Text variant="body-normal" className="text-cn-3">
-          Last used
-        </Text>
-        {lastUsed ? (
-          <TimeAgoCard timestamp={lastUsed} dateTimeFormatOptions={DATE_FORMAT_OPTIONS} />
-        ) : (
-          <Text variant="body-normal">-</Text>
-        )}
-      </Layout.Vertical>
-      <Layout.Vertical gap="sm">
-        <Text variant="body-normal" className="text-cn-3">
-          Last updated
-        </Text>
-        {lastUpdated ? (
-          <TimeAgoCard timestamp={lastUpdated} dateTimeFormatOptions={DATE_FORMAT_OPTIONS} />
-        ) : (
-          <Text variant="body-normal">-</Text>
-        )}
-      </Layout.Vertical>
+    <Layout.Horizontal justify="between" align="center">
+      <Layout.Horizontal gap="3xl">
+        <Layout.Vertical gap="sm">
+          <Text variant="body-normal" className="text-cn-3">
+            Created
+          </Text>
+          {created ? (
+            <TimeAgoCard timestamp={created} dateTimeFormatOptions={DATE_FORMAT_OPTIONS} />
+          ) : (
+            <Text variant="body-normal">-</Text>
+          )}
+        </Layout.Vertical>
+        <Layout.Vertical gap="sm">
+          <Text variant="body-normal" className="text-cn-3">
+            Last used
+          </Text>
+          {lastUsed ? (
+            <TimeAgoCard timestamp={lastUsed} dateTimeFormatOptions={DATE_FORMAT_OPTIONS} />
+          ) : (
+            <Text variant="body-normal">-</Text>
+          )}
+        </Layout.Vertical>
+        <Layout.Vertical gap="sm">
+          <Text variant="body-normal" className="text-cn-3">
+            Last updated
+          </Text>
+          {lastUpdated ? (
+            <TimeAgoCard timestamp={lastUpdated} dateTimeFormatOptions={DATE_FORMAT_OPTIONS} />
+          ) : (
+            <Text variant="body-normal">-</Text>
+          )}
+        </Layout.Vertical>
+      </Layout.Horizontal>
+      <MoreActionsTooltip
+        buttonVariant="outline"
+        actions={[
+          {
+            isDanger: false,
+            title: 'Edit secret',
+            iconName: 'edit-pencil',
+            onClick: () => onEdit?.(identifier ?? '')
+          },
+          {
+            isDanger: true,
+            title: 'Delete secret',
+            iconName: 'trash',
+            onClick: () => onDelete?.(identifier ?? '')
+          }
+        ]}
+      />
     </Layout.Horizontal>
   )
 }
@@ -68,7 +96,9 @@ export const SecretDetailsLayout: FC<SecretDetailsLayoutProps> = ({
   backButtonTo,
   configurationView,
   referencesView,
-  activityView
+  activityView,
+  onEdit,
+  onDelete
 }) => {
   const { t } = useTranslation()
   const { Switch, Route } = useRouterContext()
@@ -84,7 +114,7 @@ export const SecretDetailsLayout: FC<SecretDetailsLayoutProps> = ({
             <IconV2 name="ssh-key" size="lg" />
             <Text variant="heading-hero">{secret.name}</Text>
           </Layout.Horizontal>
-          {getSecretInfo(secret.createdAt, secret.updatedAt, secret.updatedAt)}
+          {getSecretInfo(secret.createdAt, secret.updatedAt, secret.updatedAt, onEdit, onDelete, secret.identifier)}
         </Layout.Vertical>
         <Spacer size={6} />
         <Tabs.NavRoot>

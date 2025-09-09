@@ -17,6 +17,7 @@ export interface SecretListItem {
   createdAt?: number
   updatedAt?: number
   description?: string
+  type?: string
   tags?: {
     [key: string]: string
   }

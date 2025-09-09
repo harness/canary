@@ -63,8 +63,24 @@ export const SecretEntityForm = forwardRef<SecretEntityFormHandle, SecretEntityF
     const resolver = useZodValidationResolver(secretsFormDefinition ?? { inputs: [] })
 
     const defaultSecretValues = useMemo(() => {
-      return getDefaultValuesFromFormDefinition(secretsFormDefinition ?? { inputs: [] })
-    }, [secretsFormDefinition])
+      const defaultValues = getDefaultValuesFromFormDefinition(secretsFormDefinition ?? { inputs: [] })
+      const connectorIdentifier = initialSecretValues?.secretManagerRef?.connector?.identifier
+
+      return {
+        ...defaultValues,
+        secret: defaultValues.secret
+          ? {
+              ...defaultValues.secret,
+              spec: {
+                ...(defaultValues.secret.spec || {}),
+                secretManagerIdentifier: connectorIdentifier
+              }
+            }
+          : undefined,
+        secretManagerRef: initialSecretValues?.secretManagerRef,
+        intent: EntityIntent.CREATE
+      }
+    }, [secretsFormDefinition, initialSecretValues?.secretManagerRef])
 
     useEffect(() => {
       if (intent === EntityIntent.EDIT && initialSecretValues) {
@@ -77,14 +93,17 @@ export const SecretEntityForm = forwardRef<SecretEntityFormHandle, SecretEntityF
               secretManagerIdentifier: initialSecretValues.spec?.secretManagerIdentifier
             },
             description: initialSecretValues.description,
-            tags: Object.keys(initialSecretValues.tags ?? {}).join(',')
+            tags: Object.keys(initialSecretValues.tags ?? {}).join(','),
+            type: initialSecretValues.type
           },
-          secretManagerRef: initialSecretValues?.secretManagerRef
+          secretManagerRef: initialSecretValues?.secretManagerRef,
+          intent: EntityIntent.EDIT
         }
 
         setSecretEditValues(mappedValues)
       }
     }, [initialSecretValues, secretsFormDefinition, intent])
+
     return (
       <RootForm
         defaultValues={intent === EntityIntent.EDIT ? secretEditValues : defaultSecretValues}

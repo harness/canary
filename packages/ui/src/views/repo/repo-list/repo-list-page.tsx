@@ -163,7 +163,7 @@ const SandboxRepoListPage: FC<RepoListPageProps> = ({
 
   const onFilterValueChange = (filterValues: RepoListFilters) => {
     onFilterChange(filterValues)
-
+    setQueryPage(1)
     filterOptions = buildFilterOptions()
 
     /**

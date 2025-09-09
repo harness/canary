@@ -123,7 +123,7 @@ export default function ReposListPage() {
 
   useEffect(() => {
     setQueryPage(1)
-  }, [query])
+  }, [query, favorite])
 
   const onFavoriteToggle = async ({ repoId, isFavorite }: { repoId: number; isFavorite: boolean }) => {
     try {

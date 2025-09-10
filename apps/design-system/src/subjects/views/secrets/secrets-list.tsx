@@ -1,6 +1,6 @@
 import { noop } from 'lodash-es'
 
-import { ConnectorListItem, SecretListPage } from '@harnessio/ui/views'
+import { SecretListPage } from '@harnessio/ui/views'
 
 import mockSecretManager from './mock-secret-manager.json'
 import mockSecretsList from './mock-secrets-data.json'
@@ -18,12 +18,10 @@ const SecretsListPage = (): JSX.Element => (
     }))}
     setSecretManagerSearchQuery={noop}
     isLoading={false}
-    secretManagerIdentifiers={
-      mockSecretManager.data.content.map(secretManager => ({
-        name: secretManager.connector.name,
-        identifier: secretManager.connector.identifier
-      })) as ConnectorListItem[]
-    }
+    secretManagerIdentifiers={mockSecretManager.data.content.map(secretManager => ({
+      name: secretManager.connector.name,
+      identifier: secretManager.connector.identifier
+    }))}
     isSecretManagerIdentifierLoading={false}
     setSearchQuery={noop}
     onEditSecret={noop}

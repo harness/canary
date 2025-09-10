@@ -1,7 +1,7 @@
 import { IFormDefinition } from '@harnessio/forms'
-import { IInputConfigWithConfigInterface, InputConfigType } from '@harnessio/ui/views'
+import { IInputConfigWithConfig, InputConfigType } from '@harnessio/ui/views'
 
-const metadataInputs: IInputConfigWithConfigInterface[] = [
+const metadataInputs: IInputConfigWithConfig[] = [
   {
     inputType: 'text',
     path: `secret.description`,
@@ -17,7 +17,7 @@ const metadataInputs: IInputConfigWithConfigInterface[] = [
   }
 ]
 
-const inputs: IInputConfigWithConfigInterface[] = [
+const inputs: IInputConfigWithConfig[] = [
   {
     inputType: 'text',
     label: 'Secret Manager',

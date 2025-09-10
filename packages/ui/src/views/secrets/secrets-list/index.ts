@@ -1,2 +1,2 @@
-export * from '@views/secrets/secrets-list/secrets-list-page'
-export * from '@views/secrets/secrets-list/types'
+export * from './secrets-list-page'
+export * from './types'

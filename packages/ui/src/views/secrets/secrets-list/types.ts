@@ -1,5 +1,4 @@
 import { SecretListFilters } from '@components/filters'
-import { ConnectorListItem } from '@views/connectors/connectors-list'
 
 interface RoutingProps {
   toSecretDetails: (secret: SecretListItem) => string
@@ -34,7 +33,11 @@ export interface SecretListPageProps extends SecretListProps {
   searchQuery?: string
   setSearchQuery: (query?: string) => void
   setSecretManagerSearchQuery: (query?: string) => void
-  secretManagerIdentifiers: Pick<ConnectorListItem, 'identifier' | 'name'>[]
+  // Will be updated from connectors list after migration to platform UI
+  secretManagerIdentifiers: {
+    identifier: string
+    name?: string
+  }[]
   isSecretManagerIdentifierLoading: boolean
   isError?: boolean
   errorMessage?: string

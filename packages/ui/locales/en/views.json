@@ -392,64 +392,7 @@
     "addFile": "Add file"
   },
   "search": "Search",
-  "connectors": {
-    "connector": "Connector",
-    "status": "Status",
-    "successfullConnection": "{{connector}} is connected and ready to use",
-    "validatingConnection": "Validating {{connector}} authentication and permissions",
-    "failedConnection": "{{connector}} connection failed",
-    "viewDocumentation": "View Documentation",
-    "activity": "Activity",
-    "time": "Time",
-    "connectorName": "Connector name",
-    "connectorId": "Connector ID",
-    "backToConnectors": "Back to connectors",
-    "created": "Created",
-    "updated": "Updated",
-    "connectionStatus": "Connection status",
-    "success": "Success",
-    "failure": "Failed",
-    "testConnection": "Test connection",
-    "editConnector": "Edit Connector",
-    "deleteConnector": "Delete Connector",
-    "configuration": "Configuration",
-    "references": "References",
-    "createNew": "Create Connector",
-    "errorEncountered": "Error Encountered",
-    "viewDetails": "View Details",
-    "id": "Connector ID",
-    "type": "Type",
-    "createdAt": "Created",
-    "edit": "Edit",
-    "delete": "Delete",
-    "filterOptions": {
-      "statusOption": {
-        "success": "Success",
-        "failure": "Failure",
-        "label": "Status",
-        "favorite": "Favorites"
-      },
-      "tagsOption": {
-        "label": "Tags"
-      },
-      "connectorIdentifierOption": {
-        "label": "Connector Identifier"
-      },
-      "descriptionOption": {
-        "label": "Description"
-      }
-    },
-    "activityHistory": "Activity history",
-    "viewConnectorDetails": "View Connector Details"
-  },
   "noData": {
-    "noActivities": "No activities yet",
-    "noActivitiesDescription": "There are no activities yet. ",
-    "errorApiTitle": "Failed to load {{type}}",
-    "errorApiDescription": "An error occurred while loading the data. Please try again and reload the page.",
-    "noEntities": "No entities yet",
-    "noEntitiesDescription": "There are no entities yet. ",
-    "noConnectors": "No connectors yet",
     "noDelegates": "There are no delegates in this project yet.",
     "noResults": "No search results",
     "checkSpelling": "Check your spelling and filter options,",
@@ -485,6 +428,8 @@
     "noCommitsHistory": "No commits history",
     "noCommitsHistoryDescription": "There isn't any commit history to show here for the selected user, time range, or current page.",
     "clearFilters": "Clear Filters",
+    "errorApiTitle": "Failed to load {{type}}",
+    "errorApiDescription": "An error occurred while loading the data. Please try again and reload the page.",
     "noRepos": "No repositories yet",
     "noReposProject": "There are no repositories in this project yet.",
     "createOrImportRepos": "Create new or import an existing repository.",
@@ -500,6 +445,11 @@
     "createSecret": "Create new secret.",
     "noUsers": "No Users Found",
     "noUsersDescription": "There are no users in this scope. Click on the button below to start adding them.",
+    "noActivities": "No activities yet",
+    "noActivitiesDescription": "There are no activities yet. ",
+    "noEntities": "No entities yet",
+    "noEntitiesDescription": "There are no entities yet. ",
+    "noConnectors": "No connectors yet",
     "rules": "No rules yet",
     "createTagRuleButton": "Create Tag Rule",
     "createTagRule": "Create Tag Rule",
@@ -510,28 +460,6 @@
     "commit": "Commit",
     "noLabels": "No labels yet",
     "noLabelsDescription": "Use labels to organize, prioritize, and categorize tasks efficiently."
-  },
-  "notFound": {
-    "button": "Reload Page",
-    "title": "Something went wrong…",
-    "descriptionWithType": "The requested page is not found. You can go back to view all {{type}} and manage your settings.",
-    "description": "The requested page is not found."
-  },
-  "common": {
-    "details": "Details",
-    "overview": "Overview",
-    "type": "Type",
-    "createdOn": "Created on",
-    "modifiedOn": "Modified on",
-    "manager": "Manager",
-    "lastActivity": "Last Activity",
-    "created": "Created"
-  },
-  "entityReference": {
-    "entity": "Entity",
-    "type": "Type",
-    "scope": "Scope",
-    "created": "Created"
   },
   "delegates": {
     "delegate": "Delegate",
@@ -747,6 +675,12 @@
     "activity": "Activity",
     "configurationView": "Secret Configuration"
   },
+  "notFound": {
+    "title": "Something went wrong…",
+    "descriptionWithType": "The requested page is not found. You can go back to view all {{type}} and manage your settings.",
+    "description": "The requested page is not found.",
+    "button": "Reload Page"
+  },
   "entity": {
     "cantDelete": "Can't delete {{entity}}",
     "cantDeleteMessage": "The {{entity}} [{{entityId}}] is being referenced in other entities. Please remove the referenced {{entity}} from affected entities before deleting.",
@@ -885,6 +819,39 @@
     "commitDetailsDiffDeletions": "deletions",
     "verified": "Verified"
   },
+  "connectors": {
+    "filterOptions": {
+      "statusOption": {
+        "favorite": "Favorites",
+        "success": "Success",
+        "failure": "Failure",
+        "label": "Status"
+      }
+    },
+    "connector": "Connector",
+    "viewConnectorDetails": "View Connector Details",
+    "status": "Status",
+    "viewDocumentation": "View Documentation",
+    "activity": "Activity",
+    "time": "Time",
+    "connectorName": "Connector name",
+    "connectorId": "Connector ID",
+    "success": "Success",
+    "failure": "Failed",
+    "editConnector": "Edit Connector",
+    "deleteConnector": "Delete Connector",
+    "configuration": "Configuration",
+    "references": "References",
+    "activityHistory": "Activity history",
+    "createNew": "Create Connector",
+    "errorEncountered": "Error Encountered",
+    "viewDetails": "View Details",
+    "id": "Connector ID",
+    "connectivityStatus": "Connectivity status",
+    "updated": "Last updated",
+    "delete": "Delete",
+    "created": "Created"
+  },
   "createTagDialog": {
     "validation": {
       "message": "Description is required"
@@ -920,6 +887,12 @@
     "timestamp": "Timestamp",
     "type": "Type"
   },
+  "entityReference": {
+    "entity": "Entity",
+    "type": "Type",
+    "scope": "Scope",
+    "created": "Created"
+  },
   "secrets": {
     "filterOptions": {
       "secretType": {
@@ -943,6 +916,16 @@
   },
   "secret": {
     "title": "Secret"
+  },
+  "common": {
+    "manager": "Manager",
+    "lastActivity": "Last Activity",
+    "details": "Details",
+    "overview": "Overview",
+    "type": "Type",
+    "createdOn": "Created on",
+    "modifiedOn": "Modified on",
+    "created": "Created"
   },
   "userManagement": {
     "createUser": {

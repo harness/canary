@@ -4,4 +4,4 @@ import FilterField from './filters-field'
 
 export { FilterSelect, FilterField, FilterBoxWrapper }
 
-export type * from './types'
+export * from './types'

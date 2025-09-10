@@ -383,65 +383,7 @@
     "addFile": "Ajouter un fichier"
   },
   "search": "Rechercher",
-  "connectors": {
-    "connector": "Connecteur",
-    "status": "Status",
-    "successfullConnection": "",
-    "validatingConnection": "",
-    "failedConnection": "",
-    "viewDocumentation": "Voir la documentation",
-    "activity": "Activité",
-    "time": "Heure",
-    "connectorName": "Connector name",
-    "connectorId": "Connector ID",
-    "backToConnectors": "Back to connectors",
-    "created": "Créé",
-    "updated": "Dernière mise à jour",
-    "connectionStatus": "Connection status",
-    "success": "Succès",
-    "failure": "Échec",
-    "testConnection": "Test Connection",
-    "editConnector": "modifier connecteur",
-    "deleteConnector": "supprimer connecteur",
-    "configuration": "Configuration",
-    "references": "Références",
-    "createNew": "Créer un connecteur",
-    "errorEncountered": "Erreur rencontrée",
-    "viewDetails": "Voir les détails",
-    "id": "ID du connecteur",
-    "type": "Type",
-    "createdAt": "Created",
-    "edit": "Edit",
-    "delete": "Supprimer",
-    "filterOptions": {
-      "statusOption": {
-        "success": "Succès",
-        "failure": "Échec",
-        "label": "Statut",
-        "favorite": "Favorites"
-      },
-      "tagsOption": {
-        "label": "Tags"
-      },
-      "connectorIdentifierOption": {
-        "label": "Connector Identifier"
-      },
-      "descriptionOption": {
-        "label": "Description"
-      }
-    },
-    "activityHistory": "Historique des activités",
-    "viewConnectorDetails": "Voir les détails du connecteur",
-    "connectivityStatus": "État de la connexion"
-  },
   "noData": {
-    "noActivities": "Aucune activité disponible",
-    "noActivitiesDescription": "Il n'y a pas d'activités disponibles.",
-    "errorApiTitle": "Échec du chargement de {{type}}",
-    "errorApiDescription": "Une erreur s'est produite lors du chargement des données. Veuillez réessayer et recharger la page.",
-    "noEntities": "Aucune entité disponible",
-    "noEntitiesDescription": "Il n'y a pas d'entités disponibles.",
-    "noConnectors": "Aucun connecteur pour le moment",
     "noDelegates": "There are no delegates in this project yet.",
     "noResults": "Aucun résultat de recherche",
     "checkSpelling": "Vérifiez votre orthographe et vos options de filtre,",
@@ -477,6 +419,8 @@
     "noCommitsHistory": "No commits history",
     "noCommitsHistoryDescription": "There isn't any commit history to show here for the selected user, time range, or current page.",
     "clearFilters": "Effacer les filtres",
+    "errorApiTitle": "Échec du chargement de {{type}}",
+    "errorApiDescription": "Une erreur s'est produite lors du chargement des données. Veuillez réessayer et recharger la page.",
     "noRepos": "Pas encore de dépôts",
     "noReposProject": "Il n'y a pas encore de dépôts dans ce projet.",
     "createOrImportRepos": "Créer un nouveau dépôt ou importer un dépôt existant.",
@@ -492,6 +436,11 @@
     "createSecret": "Créer un nouveau secret.",
     "noUsers": "Aucun utilisateur trouvé",
     "noUsersDescription": "Il n'y a aucun utilisateur dans ce périmètre. Cliquez sur le bouton ci-dessous pour commencer à les ajouter.",
+    "noActivities": "Aucune activité disponible",
+    "noActivitiesDescription": "Il n'y a pas d'activités disponibles.",
+    "noEntities": "Aucune entité disponible",
+    "noEntitiesDescription": "Il n'y a pas d'entités disponibles.",
+    "noConnectors": "Aucun connecteur pour le moment",
     "rules": "No rules yet",
     "createTagRuleButton": "Create Tag rule",
     "createTagRule": "Create Tag rule",
@@ -502,28 +451,6 @@
     "commit": "Validation",
     "noLabels": "No labels yet",
     "noLabelsDescription": "Use labels to organize, prioritize, and categorize tasks efficiently."
-  },
-  "notFound": {
-    "button": "Recharger la page",
-    "title": "Quelque chose s'est mal passé…",
-    "descriptionWithType": "La page demandée est introuvable. Vous pouvez revenir pour voir tous les {{type}} et gérer vos paramètres.",
-    "description": "La page demandée est introuvable."
-  },
-  "common": {
-    "details": "Details",
-    "overview": "Overview",
-    "type": "Type",
-    "createdOn": "Created on",
-    "modifiedOn": "Modified on",
-    "manager": "Manager",
-    "lastActivity": "Last Activity",
-    "created": "Created"
-  },
-  "entityReference": {
-    "entity": "Entity",
-    "type": "Type",
-    "scope": "Scope",
-    "created": "Created"
   },
   "delegates": {
     "delegate": "Delegate",
@@ -735,6 +662,12 @@
     "activity": "Activity",
     "configurationView": "Secret Configuration"
   },
+  "notFound": {
+    "title": "Quelque chose s'est mal passé…",
+    "descriptionWithType": "La page demandée est introuvable. Vous pouvez revenir pour voir tous les {{type}} et gérer vos paramètres.",
+    "description": "La page demandée est introuvable.",
+    "button": "Recharger la page"
+  },
   "entity": {
     "cantDelete": "Can't delete {{entity}}",
     "cantDeleteMessage": "The {{entity}} [{{entityId}}] is being referenced in other entities. Please remove the referenced {{entity}} from affected entities before deleting.",
@@ -872,6 +805,39 @@
     "commitDetailsDiffDeletions": "suppressions",
     "verified": "Vérifié"
   },
+  "connectors": {
+    "filterOptions": {
+      "statusOption": {
+        "favorite": "Favorites",
+        "success": "Succès",
+        "failure": "Échec",
+        "label": "Statut"
+      }
+    },
+    "connector": "Connecteur",
+    "viewConnectorDetails": "Voir les détails du connecteur",
+    "status": "Status",
+    "viewDocumentation": "Voir la documentation",
+    "activity": "Activité",
+    "time": "Heure",
+    "connectorName": "Connector name",
+    "connectorId": "Connector ID",
+    "success": "Succès",
+    "failure": "Échec",
+    "editConnector": "modifier connecteur",
+    "deleteConnector": "supprimer connecteur",
+    "configuration": "Configuration",
+    "references": "Références",
+    "activityHistory": "Historique des activités",
+    "createNew": "Créer un connecteur",
+    "errorEncountered": "Erreur rencontrée",
+    "viewDetails": "Voir les détails",
+    "id": "ID du connecteur",
+    "connectivityStatus": "État de la connexion",
+    "updated": "Dernière mise à jour",
+    "delete": "Supprimer",
+    "created": "Créé"
+  },
   "createTagDialog": {
     "validation": {
       "message": "Description is required"
@@ -907,6 +873,12 @@
     "timestamp": "Timestamp",
     "type": "Type"
   },
+  "entityReference": {
+    "entity": "Entity",
+    "type": "Type",
+    "scope": "Scope",
+    "created": "Created"
+  },
   "secrets": {
     "filterOptions": {
       "secretType": {
@@ -930,6 +902,16 @@
   },
   "secret": {
     "title": "Secret"
+  },
+  "common": {
+    "manager": "Manager",
+    "lastActivity": "Last Activity",
+    "details": "Details",
+    "overview": "Overview",
+    "type": "Type",
+    "createdOn": "Created on",
+    "modifiedOn": "Modified on",
+    "created": "Created"
   },
   "userManagement": {
     "createUser": {

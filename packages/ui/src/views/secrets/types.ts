@@ -1,4 +1,3 @@
-import { EntityIntent } from '@views/connectors'
 import { BaseEntityProps } from '@views/platform'
 
 import { FieldValues } from '@harnessio/forms'
@@ -21,6 +20,11 @@ export enum SecretCreationType {
 export enum SecretType {
   NEW = 'new',
   EXISTING = 'existing'
+}
+
+export enum EntityIntent {
+  CREATE = 'create',
+  EDIT = 'edit'
 }
 
 export interface SecretData {

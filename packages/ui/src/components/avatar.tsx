@@ -22,7 +22,7 @@ export const avatarVariants = cva('cn-avatar', {
     }
   },
   defaultVariants: {
-    size: 'md',
+    size: 'sm',
     rounded: false
   }
 })
@@ -37,7 +37,7 @@ export interface AvatarProps extends ComponentPropsWithoutRef<'span'> {
 }
 
 const Avatar = forwardRef<HTMLSpanElement, AvatarProps>(
-  ({ name, src, size = 'md', rounded = false, className, ...props }, ref) => {
+  ({ name, src, size = 'sm', rounded = false, className, ...props }, ref) => {
     const initials = getInitials(name || '')
 
     return (

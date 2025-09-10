@@ -709,7 +709,7 @@ const PullRequestPanel = ({
           <StackedList.Item paddingY="sm" disableHover>
             <Layout.Horizontal gap="sm" align="center" justify="between" className="w-full">
               <Layout.Horizontal align="center" wrap="wrap" gap="2xs">
-                <Avatar name={pullReqMetadata?.merger?.display_name || ''} size="sm" rounded />
+                <Avatar name={pullReqMetadata?.merger?.display_name || ''} rounded />
                 <Text variant="body-single-line-strong">{pullReqMetadata?.merger?.display_name}</Text>
                 <Text variant="body-single-line-normal">
                   {areRulesBypassed ? `bypassed rules and ${mergeMethod}` : `${mergeMethod}`} into

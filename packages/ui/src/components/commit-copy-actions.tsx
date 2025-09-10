@@ -16,7 +16,7 @@ export const CommitCopyActions = ({
   toPullRequestChange,
   size = 'xs'
 }: CommitCopyActionsProps) => {
-  const { copyButtonProps, CopyIcon } = useCopyButton({ copyData: sha, iconSize: '2xs', color: 'surfaceGray' })
+  const { copyButtonProps, CopyIcon } = useCopyButton({ copyData: sha, iconSize: '2xs', color: 'inherit' })
 
   const { navigate } = useRouterContext()
 

@@ -79,7 +79,7 @@ const SummaryPanel: FC<SummaryPanelProps> = ({
                 iconOnly
                 tooltipProps={{ content: 'More options' }}
               >
-                <IconV2 name="more-horizontal" size="2xs" className="text-icons-3" />
+                <IconV2 name="more-horizontal" size="2xs" />
               </Button>
             </DropdownMenu.Trigger>
             <DropdownMenu.Content align="end">

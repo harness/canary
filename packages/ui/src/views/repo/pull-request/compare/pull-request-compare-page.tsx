@@ -237,7 +237,7 @@ export const PullRequestComparePage: FC<PullRequestComparePageProps> = ({
               <Layout.Horizontal gap="xs" align="center">
                 {mergeability === true ? (
                   <>
-                    <IconV2 className="text-icons-success" name="check" size="2xs" />
+                    <IconV2 name="check" size="2xs" color="success" />
                     <Text variant="body-single-line-normal" color="success">
                       {t('views:pullRequests.compareChangesAbleToMerge', 'Able to merge.')}{' '}
                       <Text variant="body-single-line-normal" as="span" color="foreground-2">
@@ -253,7 +253,7 @@ export const PullRequestComparePage: FC<PullRequestComparePageProps> = ({
                   <>
                     {apiError === "head branch doesn't contain any new commits." ? (
                       <>
-                        <IconV2 name="xmark" size="2xs" className="text-icons-1" />
+                        <IconV2 name="xmark" size="2xs" className="text-cn-3" />
                         <Text variant="body-single-line-normal">
                           {t(
                             'views:pullRequests.compareChangesApiError',
@@ -263,7 +263,7 @@ export const PullRequestComparePage: FC<PullRequestComparePageProps> = ({
                       </>
                     ) : (
                       <>
-                        <IconV2 className="text-icons-danger" name="xmark" size="2xs" />
+                        <IconV2 color="danger" name="xmark" size="2xs" />
                         <Text variant="body-single-line-normal" color="danger">
                           {t('views:pullRequests.compareChangesCantMerge', 'Can’t be merged.')}{' '}
                           <span className="text-cn-2">
@@ -329,7 +329,7 @@ export const PullRequestComparePage: FC<PullRequestComparePageProps> = ({
             <div className="flex items-center gap-x-1.5">
               <div>
                 <Layout.Horizontal align="center">
-                  <IconV2 name="git-compare" size="xs" className="text-icons-success" />
+                  <IconV2 name="git-compare" size="xs" color="success" />
                   <div className="flex gap-x-1">
                     {/* TODO: add the name of the PR instead this placeholder */}
                     <Text color="foreground-1">{prBranchCombinationExists.title}</Text>

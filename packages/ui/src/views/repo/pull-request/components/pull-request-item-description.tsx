@@ -42,7 +42,7 @@ export const PullRequestItemDescription: FC<PullRequestItemDescriptionProps> = (
       {/* TODO: where did tasks go? */}
       {!!tasks && tasks > 0 && (
         <div className="flex items-center gap-0.5">
-          <IconV2 className="text-icons-1" size="2xs" name="tasks" />
+          <IconV2 className="text-cn-3" size="2xs" name="tasks" />
           <Text variant="body-single-line-normal">
             {tasks} task{tasks === 1 ? '' : 's'}
           </Text>

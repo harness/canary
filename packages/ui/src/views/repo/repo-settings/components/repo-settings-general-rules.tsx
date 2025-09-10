@@ -60,12 +60,12 @@ const Description: FC<DescriptionProps> = ({ targetPatternsCount, rulesAppliedCo
       <Layout.Flex align="center" gapX="3xs">
         {bypassAllowed ? (
           <>
-            <IconV2 className="text-icons-success" name="check" size="xs" />
+            <IconV2 color="success" name="check" size="xs" />
             <Text truncate>{t('views:repos.bypassAllowed', 'bypass allowed')}</Text>
           </>
         ) : (
           <>
-            <IconV2 className="text-icons-danger" name="warning-triangle" size="xs" />
+            <IconV2 color="danger" name="warning-triangle" size="xs" />
             <Text truncate>{t('views:repos.bypassNotAllowed', 'bypass not allowed')}</Text>
           </>
         )}
@@ -242,9 +242,9 @@ export const RepoSettingsGeneralRules: FC<RepoSettingsGeneralRulesProps> = ({
                   title={
                     <Layout.Grid flow="column" gapX="xs" align="center" className="w-fit">
                       {rule.state === 'active' ? (
-                        <IconV2 className="text-icons-success" name="check-circle" size="md" />
+                        <IconV2 color="success" name="check-circle" size="md" />
                       ) : (
-                        <IconV2 className="text-icons-9" name="prohibition" size="md" />
+                        <IconV2 color="neutral" name="prohibition" size="md" />
                       )}
                       <Text variant="heading-base" truncate>
                         {rule.identifier}

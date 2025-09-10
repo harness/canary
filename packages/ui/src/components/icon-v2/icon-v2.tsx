@@ -26,6 +26,8 @@ export const iconColorVariants = cva('', {
   }
 })
 
+export type IconV2Color = VariantProps<typeof iconColorVariants>['color']
+
 export const iconVariants = cva('cn-icon', {
   variants: {
     size: {
@@ -46,7 +48,7 @@ interface BaseIconPropsV2 extends Omit<SVGProps<SVGSVGElement>, 'color'> {
   size?: VariantProps<typeof iconVariants>['size']
   // incase size will be added through CSS
   skipSize?: boolean
-  color?: VariantProps<typeof iconColorVariants>['color']
+  color?: IconV2Color
 }
 
 interface IconDefaultPropsV2 extends BaseIconPropsV2 {

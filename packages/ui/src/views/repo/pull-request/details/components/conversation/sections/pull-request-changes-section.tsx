@@ -116,7 +116,7 @@ const PullRequestChangesSection: FC<PullRequestChangesSectionProps> = ({
                 </div>
               ) : (
                 <div className="flex items-center gap-x-2">
-                  <IconV2 size="lg" name="circle" className="fill-transparent text-icons-7" />
+                  <IconV2 size="lg" name="circle" className="fill-transparent text-cn-2" />
                   <span className="text-2 text-cn-1">
                     {`${latestApprovalArr?.length || minReqLatestApproval || ''} ${easyPluralize(latestApprovalArr?.length || minReqLatestApproval || 0, 'approval', 'approvals')} pending on latest changes`}
                   </span>

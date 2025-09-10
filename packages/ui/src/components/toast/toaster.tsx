@@ -11,12 +11,9 @@ export function Toaster() {
           <Layout.Horizontal gap="xs" align="center">
             {showIcon && (
               <>
-                {variant === 'success' && <IconV2 name="check" className="text-icons-success" size="2xs" />}
-                {variant === 'destructive' && (
-                  // --cn-comp-toast-danger-bg --cn-comp-toast-danger-text
-                  <IconV2 name="warning-triangle" size="2xs" className="text-toast-foreground-danger" />
-                )}
-                {variant === 'failed' && <IconV2 name="xmark" className="text-icons-danger" size="2xs" />}
+                {variant === 'success' && <IconV2 name="check" color="success" size="2xs" />}
+                {variant === 'destructive' && <IconV2 name="warning-triangle" size="2xs" color="danger" />}
+                {variant === 'failed' && <IconV2 name="xmark" color="danger" size="2xs" />}
               </>
             )}
             <Layout.Horizontal gap="xs" align="center">
@@ -30,7 +27,7 @@ export function Toaster() {
               className={cn(
                 variant === 'destructive'
                   ? 'text-toast-icons-danger-default hover:text-toast-icons-danger-hover'
-                  : 'text-icons-1 hover:text-icons-2'
+                  : 'text-cn-3 hover:text-cn-1'
               )}
             />
           )}

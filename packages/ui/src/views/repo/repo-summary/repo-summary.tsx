@@ -276,7 +276,7 @@ export function RepoSummaryView({
                           to={getReadmeEditPath()}
                           aria-label={t('views:repos.editReadme', 'Edit README.md')}
                         >
-                          <IconV2 name="edit-pencil" className="text-icons-3" size="sm" />
+                          <IconV2 name="edit-pencil" size="sm" />
                         </Link>
                       }
                       right
@@ -303,7 +303,7 @@ export function RepoSummaryView({
                         to={getReadmeCreationPath()}
                         aria-label={t('views:repos.createReadme', 'Create README.md')}
                       >
-                        <IconV2 name="plus" className="text-icons-3" size="sm" />
+                        <IconV2 name="plus" size="sm" />
                       </Link>
                     }
                     right

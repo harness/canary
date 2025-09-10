@@ -843,7 +843,7 @@ const PullRequestPanel = ({
                     className="flex items-center gap-x-1.5"
                     to={`${spaceId ? `/${spaceId}` : ''}/repos/${repoId}/files/${pullReqMetadata?.source_branch}`}
                   >
-                    <IconV2 name="git-branch" size="2xs" className="text-icons-9" />
+                    <IconV2 name="git-branch" size="2xs" className="text-cn-3" />
                     {pullReqMetadata?.source_branch}
                   </Link>
                 </StatusBadge>

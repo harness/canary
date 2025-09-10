@@ -37,7 +37,7 @@ export const RepoSidebar = ({
                 aria-label="Create file"
                 onClick={navigateToNewFile}
               >
-                <IconV2 name="plus" className="text-icons-3" />
+                <IconV2 name="plus" />
               </Button>
             )}
           </Layout.Grid>

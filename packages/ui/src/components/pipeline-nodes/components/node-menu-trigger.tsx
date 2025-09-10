@@ -23,7 +23,7 @@ export const NodeMenuTrigger: FC<NodeMenuTriggerProps> = ({ onEllipsisClick }) =
       onClick={onEllipsisClick}
       ignoreIconOnlyTooltip
     >
-      <IconV2 className="text-icons-2" name="more-horizontal" size="2xs" />
+      <IconV2 name="more-horizontal" size="2xs" />
     </Button>
   )
 }

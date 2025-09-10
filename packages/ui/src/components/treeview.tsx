@@ -15,22 +15,17 @@ type ExecutionDetail = {
 const getStatusIcon = (status: ExecutionState): React.ReactElement => {
   switch (status) {
     case ExecutionState.RUNNING:
-      return <IconV2 name="loader" className="animate-spin text-icons-warning" />
+      return <IconV2 name="loader" className="animate-spin" color="warning" />
     case ExecutionState.SUCCESS:
-      return <IconV2 name="check-circle-solid" className="text-icons-success" />
+      return <IconV2 name="check-circle-solid" color="success" />
     case ExecutionState.FAILURE:
-      return <IconV2 name="xmark-circle-solid" className="text-icons-danger" />
+      return <IconV2 name="xmark-circle-solid" color="danger" />
     case ExecutionState.WAITING_ON_DEPENDENCIES:
     case ExecutionState.PENDING:
-      return (
-        <div className="flex size-5 items-center justify-center">
-          <span className="size-4 rounded-full border border-icons-7" />
-        </div>
-      )
     case ExecutionState.SKIPPED:
     case ExecutionState.UNKNOWN:
     default:
-      return <IconV2 name="circle" />
+      return <IconV2 name="circle" color="neutral" />
   }
 }
 
@@ -212,7 +207,7 @@ const Folder = forwardRef<HTMLDivElement, FolderProps & React.HTMLAttributes<HTM
         >
           <IconV2
             name="nav-arrow-right"
-            className={cn('text-icons-1 mt-1', expendedItems?.includes(value) && 'rotate-90')}
+            className={cn('text-cn-3 mt-1', expendedItems?.includes(value) && 'rotate-90')}
             size="2xs"
           />
           <div className="flex w-full justify-between gap-x-2">

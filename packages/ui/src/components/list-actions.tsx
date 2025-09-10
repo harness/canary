@@ -21,6 +21,7 @@ interface DropdownProps {
 function Root({ children, className }: { children: ReactNode; className?: string }) {
   return <div className={cn('flex items-center justify-between gap-6', className)}>{children}</div>
 }
+Root.displayName = 'ListActions.Root'
 
 function Left({ children, className }: { children: ReactNode; className?: string }) {
   return <div className={cn('flex grow items-center gap-6', className)}>{children}</div>

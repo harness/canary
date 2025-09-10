@@ -109,7 +109,7 @@ const Root = forwardRef<HTMLInputElement, SearchBoxProps>(
         {hasSearchIcon && (
           <div
             className={cn(
-              'absolute left-px top-px z-10 rounded text-icons-1 h-[calc(100%-2px)] w-7 flex items-center justify-center'
+              'absolute left-px top-px z-10 rounded text-cn-3 h-[calc(100%-2px)] w-7 flex items-center justify-center'
             )}
           >
             <IconV2 name="search" className="ml-0.5" />

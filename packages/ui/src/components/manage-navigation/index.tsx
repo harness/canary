@@ -216,7 +216,7 @@ export const ManageNavigation = ({
                     as="li"
                   >
                     <Layout.Flex align="center" gap="xs" className="w-full grow">
-                      <IconV2 className="text-icons-4" name="clock" size="xs" />
+                      <IconV2 name="clock" size="xs" />
                       <Text color="foreground-1">{item.title}</Text>
                     </Layout.Flex>
 

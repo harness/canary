@@ -242,7 +242,7 @@ const PullRequestMergeSection = ({
                 <Layout.Vertical gap="xs" className="mt-1">
                   {conflictingFiles?.map(file => (
                     <Layout.Horizontal key={file} align="center" gap="xs" className="py-1.5">
-                      <IconV2 size="lg" className="text-icons-1" name="empty-page" />
+                      <IconV2 size="lg" className="text-cn-3" name="empty-page" />
                       <Text variant="body-normal">{file}</Text>
                     </Layout.Horizontal>
                   ))}

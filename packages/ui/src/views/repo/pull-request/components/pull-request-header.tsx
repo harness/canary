@@ -81,7 +81,7 @@ export const PullRequestHeader: React.FC<PullRequestTitleProps> = ({
               content: 'Edit'
             }}
           >
-            <IconV2 name="edit-pencil" className="text-icons-1 group-hover:text-icons-3" />
+            <IconV2 name="edit-pencil" />
           </Button>
         </Text>
 

@@ -36,7 +36,7 @@ const BranchCompareBanner: FC<BranchCompareBannerProps> = ({
   return (
     <Layout.Flex justify="between" align="center" gap="sm">
       <Layout.Flex gap="xs" align="center">
-        <IconV2 name="git-branch" size="sm" className="text-icons-success" />
+        <IconV2 name="git-branch" size="sm" color="success" />
         <Text variant="body-strong" color="foreground-1">
           <Link to={`${spaceId ? `/${spaceId}` : ''}/repos/${repoId}/summary/refs/heads/${branch.name}`}>
             <Text lineClamp={1} variant="body-single-line-strong" className="max-w-96">

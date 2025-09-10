@@ -37,7 +37,7 @@ const LineTitle: FC<
       <Link to={toRepoFileDetails?.({ path: `files/${commitSHA}/~/${text}` }) ?? ''} variant="secondary">
         {text}
       </Link>
-      <CopyButton name={text} color="gray" buttonVariant="ghost" className="relative z-10" />
+      <CopyButton name={text} buttonVariant="ghost" className="relative z-10" />
       {!!numAdditions && (
         <StatusBadge variant="outline" size="sm" theme="success">
           +{numAdditions}

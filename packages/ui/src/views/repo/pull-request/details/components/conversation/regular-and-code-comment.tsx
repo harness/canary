@@ -342,7 +342,7 @@ const PullRequestRegularAndCodeCommentInternal: FC<PullRequestRegularAndCodeComm
             <Link to={`../changes?commentId=${payload?.id}`} className="text-cn-1 font-medium leading-tight">
               {payload?.code_comment?.path}
             </Link>
-            <CopyButton name={payload?.code_comment?.path || ''} size="xs" color="gray" />
+            <CopyButton name={payload?.code_comment?.path || ''} size="xs" />
           </Layout.Horizontal>
         ),
         hideEditDelete: payload?.author?.uid !== currentUser?.uid,

@@ -126,7 +126,7 @@ export default {
       },
 
       '&:where(:not([disabled]):hover)': {
-        color: 'var(--cn-text-brand)'
+        color: 'var(--cn-text-brand) !important'
       }
     },
 

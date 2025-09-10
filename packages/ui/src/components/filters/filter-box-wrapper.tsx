@@ -61,7 +61,7 @@ const FilterBoxWrapper = ({
               {valueLabel}
             </Text>
           </Layout.Grid>
-          <IconV2 className="chevron-down text-icons-1" name="nav-arrow-down" size="2xs" />
+          <IconV2 className="chevron-down" name="nav-arrow-down" size="2xs" />
         </Button>
       </DropdownMenu.Trigger>
 

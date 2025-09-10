@@ -43,14 +43,7 @@ export const MoreActionsTooltip: FC<MoreActionsTooltipProps> = ({
   return (
     <DropdownMenu.Root>
       <DropdownMenu.Trigger asChild>
-        <Button
-          className={cn('text-icons-1 hover:text-icons-2 data-[state=open]:text-icons-2')}
-          variant={buttonVariant}
-          iconOnly
-          size="md"
-          aria-label="Show more actions"
-          ignoreIconOnlyTooltip
-        >
+        <Button variant={buttonVariant} iconOnly size="md" aria-label="Show more actions" ignoreIconOnlyTooltip>
           <IconV2 name={iconName} />
         </Button>
       </DropdownMenu.Trigger>

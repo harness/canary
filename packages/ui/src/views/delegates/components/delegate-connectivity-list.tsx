@@ -58,11 +58,7 @@ export function DelegateConnectivityList({
                 </Table.Cell>
                 <Table.Cell className="content-center truncate whitespace-nowrap">
                   <div className="inline-flex items-center gap-2">
-                    <IconV2
-                      name="circle"
-                      size="2xs"
-                      className={cn(activelyConnected ? 'text-icons-success' : 'text-icons-danger')}
-                    />
+                    <IconV2 name="circle" size="2xs" color={activelyConnected ? 'success' : 'danger'} />
                     {lastHeartBeat ? <TimeAgoCard timestamp={lastHeartBeat} /> : null}
                   </div>
                 </Table.Cell>
@@ -78,7 +74,7 @@ export function DelegateConnectivityList({
                     {isDelegateSelected(
                       [...defaultTo(groupImplicitSelectors, []), ...defaultTo(groupCustomSelectors, [])],
                       selectedTags || []
-                    ) && <IconV2 name="check" size="2xs" className="text-icons-success" />}
+                    ) && <IconV2 name="check" size="2xs" color="success" />}
                   </div>
                 </Table.Cell>
               </Table.Row>

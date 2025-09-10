@@ -402,27 +402,6 @@ export default {
           }
         },
 
-        // 👉 Remove this and replace with colors from textColor config above
-        icons: {
-          1: 'hsl(var(--canary-icon-01))',
-          2: 'hsl(var(--canary-icon-02))',
-          3: 'hsl(var(--canary-icon-03))',
-          4: 'hsl(var(--canary-icon-04))',
-          5: 'hsl(var(--canary-icon-05))',
-          6: 'hsl(var(--canary-icon-06))',
-          7: 'hsl(var(--canary-icon-07))',
-          8: 'hsl(var(--canary-icon-08))',
-          9: 'hsl(var(--canary-icon-09))',
-          10: 'hsl(var(--canary-icon-10))',
-          success: 'var(--cn-text-success)',
-          danger: 'hsl(var(--canary-icon-danger))',
-          warning: 'hsl(var(--canary-icon-warning))',
-          alert: 'hsl(var(--canary-icon-alert))',
-          accent: 'hsl(var(--canary-icon-accent))',
-          merged: 'hsl(var(--canary-icon-merged))',
-          risk: 'hsl(var(--canary-icon-risk))'
-        },
-
         // 👉 Remove this by checking all instances
         label: {
           foreground: {
@@ -652,8 +631,6 @@ export default {
     /** Existing Variants  */
     { pattern: /^bg-graph-/ },
 
-    { pattern: /^text-icons-/ },
-    { pattern: /^bg-icons-/ },
     // tags classes
     { pattern: /^bg-tag-background-/ },
     { pattern: /^text-tag-foreground-/ },
@@ -668,8 +645,6 @@ export default {
 
     // Hover classes
     { pattern: /^hover:bg-graph-/ },
-    { pattern: /^hover:text-icons-/ },
-    { pattern: /^hover:bg-icons-/ },
     { pattern: /^hover:text-toast-/ },
     // tags classes
     { pattern: /^hover:bg-tag-background-/ },

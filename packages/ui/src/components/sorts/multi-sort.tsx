@@ -64,14 +64,14 @@ const SortableItem = ({
   return (
     <div className={cn('relative', isDragging && 'z-10', 'flex items-center gap-x-2')} ref={setNodeRef} style={style}>
       <div className="cursor-grab rounded p-1 hover:bg-cn-3 active:cursor-grabbing" {...attributes} {...listeners}>
-        <IconV2 className="text-icons-1" name="grip-dots" size="2xs" />
+        <IconV2 className="text-cn-3" name="grip-dots" size="2xs" />
       </div>
 
       <DropdownMenu.Root>
         <DropdownMenu.Trigger asChild>
           <Button variant="outline" size="sm" className="gap-x-1.5">
             {sortOptions.find(opt => opt.value === sort.type)?.label}
-            <IconV2 className="chevron-down text-icons-1" name="nav-arrow-down" size="2xs" />
+            <IconV2 className="chevron-down" name="nav-arrow-down" size="2xs" />
           </Button>
         </DropdownMenu.Trigger>
         <DropdownMenu.Content align="start">
@@ -89,7 +89,7 @@ const SortableItem = ({
         <DropdownMenu.Trigger asChild>
           <Button variant="outline" size="sm" className="gap-x-1.5">
             {sortDirections.find(dir => dir.value === sort.direction)?.label}
-            <IconV2 className="chevron-down text-icons-1" name="nav-arrow-down" size="2xs" />
+            <IconV2 className="chevron-down" name="nav-arrow-down" size="2xs" />
           </Button>
         </DropdownMenu.Trigger>
         <DropdownMenu.Content align="start">
@@ -148,15 +148,12 @@ export default function MultiSort() {
       <DropdownMenu.Trigger asChild>
         <Button variant="secondary" className="gap-x-1.5">
           <IconV2
-            className={cn(
-              'text-icons-1',
-              getSortTriggerLabel(sortSelections, sortOptions).isDescending && 'rotate-180'
-            )}
+            className={cn(getSortTriggerLabel(sortSelections, sortOptions).isDescending && 'rotate-180')}
             name={getSortTriggerLabel(sortSelections, sortOptions).icon}
             size="2xs"
           />
           <span className="text-cn-1">{getSortTriggerLabel(sortSelections, sortOptions).label}</span>
-          <IconV2 className="chevron-down ml-3 text-icons-1" name="nav-arrow-down" size="2xs" />
+          <IconV2 className="chevron-down ml-3" name="nav-arrow-down" size="2xs" />
         </Button>
       </DropdownMenu.Trigger>
 

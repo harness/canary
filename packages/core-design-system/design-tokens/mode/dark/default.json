@@ -1386,7 +1386,7 @@
       },
       "hljs-name": {
         "$type": "color",
-        "$value": "{red.300}",
+        "$value": "{red.200}",
         "$description": "Color for HTML tag names and XML element names in syntax highlighting. Distinguishes markup structure from content."
       },
       "hljs-literal": {

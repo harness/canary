@@ -47,45 +47,20 @@ export function usePRChecksDecision({
     status: string
   }>({ title: '', content: '', color: '', status: '' })
 
-  const checks = [
-    {
-      bypassable: true,
-      required: false,
-      check: {
-        created: 0,
-        ended: 0,
-        id: 1,
-        identifier: 'some',
-        link: '',
-        metadata: {},
-        payload: {
-          data: {},
-          kind: 'pipeline',
-          version: '1.0.0'
-        },
-        reported_by: '',
-        started: 0,
-        status: 'success',
-        summary: 'some text',
-        updated: 0
-      }
-    }
-  ]
-
   const status = useMemo(() => {
     let _status: ExecutionState | undefined
     const _count = { ...DEFAULT_COUNTS }
-    const total = checks?.length
+    const total = data?.checks?.length
     // @ts-expect-error remove "@ts-expect-error" once CodeServiceClient Response for useChecksPullReqQuery is fixed
-    const { message: summaryMessage } = generateStatusSummary(checks)
+    const { message: summaryMessage } = generateStatusSummary(data?.checks)
     setSummaryText(summaryMessage)
     // @ts-expect-error remove "@ts-expect-error" once CodeServiceClient Response for useChecksPullReqQuery is fixed
-    const checkInfoData = determineStatusMessage(checks)
+    const checkInfoData = determineStatusMessage(data?.checks)
     if (checkInfoData) {
       setCheckInfo(checkInfoData)
     }
     if (total) {
-      for (const check of checks) {
+      for (const check of (data as Data).checks) {
         switch (check.check.status) {
           case ExecutionState.ERROR:
           case ExecutionState.FAILURE:
@@ -165,7 +140,7 @@ export function usePRChecksDecision({
     }
 
     return _status
-  }, [])
+  }, [data])
 
   // *******
   // NOTE: TODO: refactor this to make it more clear and readable
@@ -194,7 +169,7 @@ export function usePRChecksDecision({
     overallStatus: status,
     count,
     error,
-    data: { ...data, checks },
+    data,
     color,
     background,
     message,

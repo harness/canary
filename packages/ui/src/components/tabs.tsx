@@ -13,15 +13,14 @@ import {
   useRef,
   useState
 } from 'react'
-import type { UIMatch } from 'react-router-dom'
+import type { NavLinkRenderProps } from 'react-router-dom'
 
 import { CounterBadge } from '@/components/counter-badge'
 import { IconPropsV2, IconV2 } from '@/components/icon-v2'
 import { LogoPropsV2, LogoV2 } from '@/components/logo-v2'
 import { NavLinkProps, useRouterContext } from '@/context'
-import { afterFrames, getShadowActiveElement, useMergeRefs } from '@/utils'
+import { afterFrames, cn, getShadowActiveElement, useMergeRefs } from '@/utils'
 import * as TabsPrimitive from '@radix-ui/react-tabs'
-import { cn } from '@utils/cn'
 import { cva, type VariantProps } from 'class-variance-authority'
 
 const tabsListVariants = cva('cn-tabs-list', {
@@ -262,33 +261,11 @@ interface TabsTriggerComponent {
   displayName?: string
 }
 
-const normalize = (path: string) => {
-  return path !== '/' && path.endsWith('/') ? path.slice(0, -1) : path
-}
-
-/**
- * A method for determining the active tab for NavLink,
- * since we can’t use the native methods from react-router-dom due to different versions being used
- */
-const isActivePath = (value: TabsTriggerBaseProps['value'], matches: UIMatch[]) => {
-  const currentPath = normalize(
-    matches.length
-      ? matches[matches.length - 1].pathname
-      : typeof window !== 'undefined'
-        ? window.location.pathname
-        : '/'
-  )
-  const targetPath = normalize(value)
-
-  return currentPath === targetPath || currentPath.endsWith(targetPath)
-}
-
 const TabsTrigger = forwardRef<HTMLButtonElement | HTMLAnchorElement, TabsTriggerProps>((props, ref) => {
   const { className, children, value, icon, logo, counter, ...restProps } = props
   const { variant, activeClassName } = useContext(TabsListContext)
   const { type, activeTabValue, onValueChange } = useContext(TabsContext)
-  const { NavLink, useMatches } = useRouterContext()
-  const matches = useMatches()
+  const { NavLink, isRouterVersion5 } = useRouterContext()
 
   const iconSize = variant === 'ghost' || variant === 'outlined' ? 'xs' : 'sm'
   const logoSize: LogoPropsV2['size'] = 'xs'
@@ -303,7 +280,6 @@ const TabsTrigger = forwardRef<HTMLButtonElement | HTMLAnchorElement, TabsTrigge
   )
 
   if (type === 'tabsnav') {
-    const isActive = isActivePath(value, matches)
     const { linkProps, disabled, ..._restProps } = restProps as TabsTriggerLinkProps
 
     const handleClick = (e: MouseEvent) => {
@@ -315,17 +291,28 @@ const TabsTrigger = forwardRef<HTMLButtonElement | HTMLAnchorElement, TabsTrigge
       onValueChange?.(value)
     }
 
+    const versionsProps = isRouterVersion5
+      ? {
+          activeClassName: `cn-tabs-trigger-active ${activeClassName ?? ''}`,
+          className: cn(tabsTriggerVariants({ variant }), className)
+        }
+      : {
+          className: ({ isActive }: NavLinkRenderProps) => {
+            return cn(
+              tabsTriggerVariants({ variant }),
+              { 'cn-tabs-trigger-active': isActive, [activeClassName ?? '']: isActive },
+              className
+            )
+          }
+        }
+
     return (
       <NavLink
         role="tab"
         to={value}
         onClick={handleClick}
         aria-disabled={disabled}
-        className={cn(
-          tabsTriggerVariants({ variant }),
-          { 'cn-tabs-trigger-active': isActive, [activeClassName ?? '']: isActive },
-          className
-        )}
+        {...versionsProps}
         {...(linkProps as Omit<NavLinkProps, 'to' | 'className'>)}
         {...(_restProps as Omit<ComponentPropsWithoutRef<'a'>, 'href' | 'className'>)}
         ref={ref as Ref<HTMLAnchorElement>}

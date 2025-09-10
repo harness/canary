@@ -130,7 +130,7 @@ const defaultLocation: Location = { ...window.location, state: {}, key: '' }
 interface RouterContextType {
   Link: ComponentType<ComponentPropsWithRef<typeof LinkDefault>>
   NavLink: ComponentType<ComponentPropsWithRef<typeof NavLinkDefault>>
-  Outlet: ComponentType<OutletProps>
+  Outlet?: ComponentType<OutletProps>
   Switch: ComponentType<SwitchProps>
   Route: ComponentType<ExtendedRouteProps>
   location: Location
@@ -140,10 +140,11 @@ interface RouterContextType {
   useParams: typeof useParamsDefault
 }
 
+type UseRouterContextType = Required<RouterContextType> & { isRouterVersion5: boolean }
+
 const RouterContext = createContext<RouterContextType>({
   Link: LinkDefault,
   NavLink: NavLinkDefault,
-  Outlet: OutletDefault,
   Switch: SwitchDefault,
   Route: RouteDefault,
   location: defaultLocation,
@@ -153,13 +154,21 @@ const RouterContext = createContext<RouterContextType>({
   useParams: useParamsDefault
 })
 
-export const useRouterContext = () => useContext(RouterContext)
+export const useRouterContext = (): UseRouterContextType => {
+  const { Outlet, ...ctx } = useContext(RouterContext)
+
+  return {
+    ...ctx,
+    isRouterVersion5: !Outlet,
+    Outlet: Outlet ?? OutletDefault
+  }
+}
 
 export const RouterContextProvider = ({
   children,
   Link = LinkDefault,
   NavLink = NavLinkDefault,
-  Outlet = OutletDefault,
+  Outlet,
   Switch = SwitchDefault,
   Route = RouteDefault,
   location = defaultLocation,

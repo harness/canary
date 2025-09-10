@@ -116,10 +116,10 @@ const textVariantToElement: Record<
   'body-single-line-strong': { element: 'p', color: 'foreground-2' },
   'body-code': { element: 'pre', color: 'foreground-2' },
   'caption-normal': { element: 'span', color: 'foreground-2' },
-  'caption-soft': { element: 'span', color: 'foreground-2' },
+  'caption-light': { element: 'span', color: 'foreground-2' },
   'caption-strong': { element: 'span', color: 'foreground-2' },
   'caption-single-line-normal': { element: 'span', color: 'foreground-2' },
-  'caption-single-line-soft': { element: 'span', color: 'foreground-2' }
+  'caption-single-line-light': { element: 'span', color: 'foreground-2' }
 }
 
 const getTextNode = ({ as, variant = 'body-normal', asChild }: Pick<TextProps, 'as' | 'asChild' | 'variant'>) => {

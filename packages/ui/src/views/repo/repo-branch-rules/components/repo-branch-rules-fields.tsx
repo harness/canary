@@ -223,49 +223,49 @@ export const BranchSettingsRuleDefaultReviewersField: FC<
   principalsSearchQuery,
   handleSelectChangeForRule
 }) => {
-  const { t } = useTranslation()
-  const { validationMessage, selectOptions } = rule || {}
-  const { search: debouncedPrincipalsSearchQuery, handleStringSearchChange } = useDebounceSearch({
-    handleChangeSearchValue: setPrincipalsSearchQuery,
-    searchValue: principalsSearchQuery || ''
-  })
+    const { t } = useTranslation()
+    const { validationMessage, selectOptions } = rule || {}
+    const { search: debouncedPrincipalsSearchQuery, handleStringSearchChange } = useDebounceSearch({
+      handleChangeSearchValue: setPrincipalsSearchQuery,
+      searchValue: principalsSearchQuery || ''
+    })
 
-  const multiSelectOptions: MultiSelectOption[] = useMemo(() => {
-    return (
-      defaultReviewersOptions?.map(option => ({
-        id: option.id?.toString() || '',
-        key: option.display_name || '',
-        title: option.email
-      })) || []
-    )
-  }, [defaultReviewersOptions])
-
-  return (
-    <ControlGroup className={className}>
-      <MultiSelect
-        value={selectOptions?.map(option => ({
+    const multiSelectOptions: MultiSelectOption[] = useMemo(() => {
+      return (
+        defaultReviewersOptions?.map(option => ({
           id: option.id?.toString() || '',
-          key: option.key
-        }))}
-        placeholder={t('views:repos.selectDefaultReviewers', 'Select default reviewers')}
-        onChange={options => {
-          handleSelectChangeForRule(BranchRuleId.ENABLE_DEFAULT_REVIEWERS, options)
-        }}
-        options={multiSelectOptions}
-        searchQuery={debouncedPrincipalsSearchQuery}
-        setSearchQuery={handleStringSearchChange}
-        disallowCreation
-      />
-      {validationMessage && !isEmpty(validationMessage.message) && (
-        <Message theme={validationMessage.theme} className="mt-2">
-          {validationMessage.theme === MessageTheme.WARNING
-            ? t(`views:repos.${validationMessage.message}`)
-            : validationMessage.message}
-        </Message>
-      )}
-    </ControlGroup>
-  )
-}
+          key: option.display_name || '',
+          title: option.email
+        })) || []
+      )
+    }, [defaultReviewersOptions])
+
+    return (
+      <ControlGroup className={className}>
+        <MultiSelect
+          value={selectOptions?.map(option => ({
+            id: option.id?.toString() || '',
+            key: option.key
+          }))}
+          placeholder={t('views:repos.selectDefaultReviewers', 'Select default reviewers')}
+          onChange={options => {
+            handleSelectChangeForRule(BranchRuleId.ENABLE_DEFAULT_REVIEWERS, options)
+          }}
+          options={multiSelectOptions}
+          searchQuery={debouncedPrincipalsSearchQuery}
+          setSearchQuery={handleStringSearchChange}
+          disallowCreation
+        />
+        {validationMessage && !isEmpty(validationMessage.message) && (
+          <Message theme={validationMessage.theme} className="mt-2">
+            {validationMessage.theme === MessageTheme.WARNING
+              ? t(`views:repos.${validationMessage.message}`)
+              : validationMessage.message}
+          </Message>
+        )}
+      </ControlGroup>
+    )
+  }
 
 export const BranchSettingsRuleListField: FC<{
   rules: Rule[]
@@ -288,97 +288,97 @@ export const BranchSettingsRuleListField: FC<{
   setPrincipalsSearchQuery,
   principalsSearchQuery
 }) => {
-  const { t } = useTranslation()
-  const branchRules = getBranchRules(t)
-  return (
-    <Layout.Vertical gapY="xl">
-      <Text as="h4" variant="body-strong">
-        {t('views:repos.rulesTitle', 'Rules: select all that apply')}
-      </Text>
+    const { t } = useTranslation()
+    const branchRules = getBranchRules(t)
+    return (
+      <Layout.Vertical gapY="xl">
+        <Text as="h4" variant="body-strong">
+          {t('views:repos.rulesTitle', 'Rules: select all that apply')}
+        </Text>
 
-      <Layout.Vertical gapY="lg">
-        {branchRules.map((rule, index) => {
-          const matchingRule = rules.find(r => r.id === rule.id)
-          const {
-            checked: isChecked = false,
-            disabled: isDisabled = false,
-            hidden: isHidden = false
-          } = matchingRule || {}
+        <Layout.Vertical gapY="lg">
+          {branchRules.map((rule, index) => {
+            const matchingRule = rules.find(r => r.id === rule.id)
+            const {
+              checked: isChecked = false,
+              disabled: isDisabled = false,
+              hidden: isHidden = false
+            } = matchingRule || {}
 
-          return (
-            !isHidden && (
-              <Fragment key={rule.id}>
-                {index > 0 && <Separator className={cn('w-auto', rule.isNested && 'ml-[26px]')} />}
-                <Checkbox
-                  id={rule.id}
-                  checked={isChecked}
-                  onCheckedChange={checked => handleCheckboxChange(rule.id, checked === true)}
-                  disabled={isDisabled}
-                  label={rule.label}
-                  caption={rule.description}
-                  captionVariant="caption-soft"
-                  className={cn(rule.isNested && 'ml-[26px]')}
-                />
-
-                {/* Conditionally render the submenu if this rule has a submenu and is checked */}
-                {!!rule?.submenuOptions && !!rule?.submenuOptions.length && isChecked && (
-                  <Layout.Vertical className="ml-[26px]" gapY="md">
-                    {rule.submenuOptions.map(subOption => (
-                      <Checkbox
-                        key={`${rule.id}-${subOption.id}`}
-                        id={`${rule.id}-${subOption.id}`}
-                        checked={rules[index].submenu?.includes(subOption.id as MergeStrategy)}
-                        onCheckedChange={checked => handleSubmenuChange(rule.id, subOption.id, checked === true)}
-                        label={subOption.label}
-                      />
-                    ))}
-                  </Layout.Vertical>
-                )}
-
-                {!!rule?.hasSelect && isChecked && rule.id === BranchRuleId.STATUS_CHECKS && (
-                  <MultiSelect
-                    wrapperClassName="ml-[26px]"
-                    value={rules[index].selectOptions.map(option => ({ id: option?.id, key: option?.key }))}
-                    placeholder={t('views:repos.selectStatusesPlaceholder', 'Select status checks')}
-                    onChange={options => {
-                      handleSelectChangeForRule(rule.id, options)
-                    }}
-                    options={recentStatusChecks?.map(check => ({ id: check, key: check })) ?? []}
-                    disallowCreation
+            return (
+              !isHidden && (
+                <Fragment key={rule.id}>
+                  {index > 0 && <Separator className={cn('w-auto', rule.isNested && 'ml-[26px]')} />}
+                  <Checkbox
+                    id={rule.id}
+                    checked={isChecked}
+                    onCheckedChange={checked => handleCheckboxChange(rule.id, checked === true)}
+                    disabled={isDisabled}
+                    label={rule.label}
+                    caption={rule.description}
+                    captionVariant="caption-light"
+                    className={cn(rule.isNested && 'ml-[26px]')}
                   />
-                )}
 
-                {!!rule?.hasSelect && isChecked && rule.id === BranchRuleId.ENABLE_DEFAULT_REVIEWERS && (
-                  <BranchSettingsRuleDefaultReviewersField
-                    className="ml-[26px]"
-                    defaultReviewersOptions={defaultReviewersOptions}
-                    rule={rules[index]}
-                    setPrincipalsSearchQuery={setPrincipalsSearchQuery}
-                    principalsSearchQuery={principalsSearchQuery}
-                    handleSelectChangeForRule={handleSelectChangeForRule}
-                  />
-                )}
+                  {/* Conditionally render the submenu if this rule has a submenu and is checked */}
+                  {!!rule?.submenuOptions && !!rule?.submenuOptions.length && isChecked && (
+                    <Layout.Vertical className="ml-[26px]" gapY="md">
+                      {rule.submenuOptions.map(subOption => (
+                        <Checkbox
+                          key={`${rule.id}-${subOption.id}`}
+                          id={`${rule.id}-${subOption.id}`}
+                          checked={rules[index].submenu?.includes(subOption.id as MergeStrategy)}
+                          onCheckedChange={checked => handleSubmenuChange(rule.id, subOption.id, checked === true)}
+                          label={subOption.label}
+                        />
+                      ))}
+                    </Layout.Vertical>
+                  )}
 
-                {!!rule?.hasInput && isChecked && (
-                  <Input
-                    id="name"
-                    size="md"
-                    type="number"
-                    wrapperClassName={cn('ml-[26px]', { 'ml-[52px]': rule.isNested })}
-                    placeholder={
-                      rule.id === BranchRuleId.REQUIRE_MINIMUM_DEFAULT_REVIEWER_COUNT
-                        ? t('views:repos.enterMinDefaultReviewers', 'Enter minimum number of default reviewers')
-                        : t('views:repos.enterMinReviewers', 'Enter minimum number of reviewers')
-                    }
-                    value={rules[index].input || ''}
-                    onChange={e => handleInputChange(rule.id, e.target.value)}
-                  />
-                )}
-              </Fragment>
+                  {!!rule?.hasSelect && isChecked && rule.id === BranchRuleId.STATUS_CHECKS && (
+                    <MultiSelect
+                      wrapperClassName="ml-[26px]"
+                      value={rules[index].selectOptions.map(option => ({ id: option?.id, key: option?.key }))}
+                      placeholder={t('views:repos.selectStatusesPlaceholder', 'Select status checks')}
+                      onChange={options => {
+                        handleSelectChangeForRule(rule.id, options)
+                      }}
+                      options={recentStatusChecks?.map(check => ({ id: check, key: check })) ?? []}
+                      disallowCreation
+                    />
+                  )}
+
+                  {!!rule?.hasSelect && isChecked && rule.id === BranchRuleId.ENABLE_DEFAULT_REVIEWERS && (
+                    <BranchSettingsRuleDefaultReviewersField
+                      className="ml-[26px]"
+                      defaultReviewersOptions={defaultReviewersOptions}
+                      rule={rules[index]}
+                      setPrincipalsSearchQuery={setPrincipalsSearchQuery}
+                      principalsSearchQuery={principalsSearchQuery}
+                      handleSelectChangeForRule={handleSelectChangeForRule}
+                    />
+                  )}
+
+                  {!!rule?.hasInput && isChecked && (
+                    <Input
+                      id="name"
+                      size="md"
+                      type="number"
+                      wrapperClassName={cn('ml-[26px]', { 'ml-[52px]': rule.isNested })}
+                      placeholder={
+                        rule.id === BranchRuleId.REQUIRE_MINIMUM_DEFAULT_REVIEWER_COUNT
+                          ? t('views:repos.enterMinDefaultReviewers', 'Enter minimum number of default reviewers')
+                          : t('views:repos.enterMinReviewers', 'Enter minimum number of reviewers')
+                      }
+                      value={rules[index].input || ''}
+                      onChange={e => handleInputChange(rule.id, e.target.value)}
+                    />
+                  )}
+                </Fragment>
+              )
             )
-          )
-        })}
+          })}
+        </Layout.Vertical>
       </Layout.Vertical>
-    </Layout.Vertical>
-  )
-}
+    )
+  }

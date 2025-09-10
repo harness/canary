@@ -215,7 +215,7 @@ const SidebarItemTrigger = forwardRef<HTMLButtonElement | HTMLAnchorElement, Sid
 
         {withDescription && (
           <Text
-            variant="caption-single-line-soft"
+            variant="caption-single-line-light"
             color="foreground-3"
             className="cn-sidebar-item-content-description"
             truncate

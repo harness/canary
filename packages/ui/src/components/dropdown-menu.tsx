@@ -227,8 +227,8 @@ const DropdownBaseItem = ({
     {tag && <Tag {...tag} />}
 
     <div className="ml-auto">
-      {label && <Text variant="caption-soft">{label}</Text>}
-      {shortcut && <Text variant="caption-soft">{shortcut}</Text>}
+      {label && <Text variant="caption-light">{label}</Text>}
+      {shortcut && <Text variant="caption-light">{shortcut}</Text>}
       {checkmark && <IconV2 name="check" />}
       {withSubIndicator && <IconV2 name="nav-arrow-right" size="xs" />}
     </div>
@@ -237,7 +237,7 @@ const DropdownBaseItem = ({
 
 interface DropdownMenuItemProps
   extends Omit<DropdownBaseItemProps, 'withSubIndicator'>,
-    Omit<ComponentPropsWithoutRef<typeof DropdownMenuPrimitive.Item>, 'title' | 'prefix'> {
+  Omit<ComponentPropsWithoutRef<typeof DropdownMenuPrimitive.Item>, 'title' | 'prefix'> {
   prefix?: ReactNode
   subContentProps?: Omit<DropdownMenuContentProps, 'isSubContent'>
   subMenuProps?: ComponentPropsWithoutRef<typeof DropdownMenuPrimitive.Sub>
@@ -298,7 +298,7 @@ DropdownMenuItem.displayName = displayNames.item
 
 interface DropdownMenuCheckboxItemProps
   extends Omit<DropdownBaseItemProps, 'withSubIndicator'>,
-    Omit<ComponentPropsWithoutRef<typeof DropdownMenuPrimitive.CheckboxItem>, 'title' | 'onSelect'> {
+  Omit<ComponentPropsWithoutRef<typeof DropdownMenuPrimitive.CheckboxItem>, 'title' | 'onSelect'> {
   subContentProps?: Omit<DropdownMenuContentProps, 'isSubContent'>
   subMenuProps?: ComponentPropsWithoutRef<typeof DropdownMenuPrimitive.Sub>
 }
@@ -393,7 +393,7 @@ DropdownMenuCheckboxItem.displayName = displayNames.checkboxItem
 
 interface DropdownMenuRadioItemProps
   extends Omit<DropdownBaseItemProps, 'withSubIndicator'>,
-    Omit<ComponentPropsWithoutRef<typeof DropdownMenuPrimitive.RadioItem>, 'title'> {}
+  Omit<ComponentPropsWithoutRef<typeof DropdownMenuPrimitive.RadioItem>, 'title'> { }
 
 const DropdownMenuRadioGroup = forwardRef<
   ElementRef<typeof DropdownMenuPrimitive.RadioGroup>,
@@ -470,20 +470,20 @@ DropdownMenuIconItem.displayName = displayNames.iconItem
 
 interface DropdownMenuIndicatorItemProps extends Omit<DropdownMenuItemProps, 'prefix'> {
   color:
-    | 'gray'
-    | 'green'
-    | 'red'
-    | 'yellow'
-    | 'blue'
-    | 'purple'
-    | 'brown'
-    | 'cyan'
-    | 'indigo'
-    | 'lime'
-    | 'mint'
-    | 'orange'
-    | 'pink'
-    | 'violet'
+  | 'gray'
+  | 'green'
+  | 'red'
+  | 'yellow'
+  | 'blue'
+  | 'purple'
+  | 'brown'
+  | 'cyan'
+  | 'indigo'
+  | 'lime'
+  | 'mint'
+  | 'orange'
+  | 'pink'
+  | 'violet'
   pulse?: boolean
 }
 

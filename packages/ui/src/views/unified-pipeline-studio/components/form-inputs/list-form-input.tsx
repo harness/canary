@@ -105,6 +105,7 @@ function ListFormInputInternal(props: ListFormInputProps): JSX.Element {
                             remove(idx)
                           }}
                           disabled={readonly}
+                          tooltipProps={{ content: 'Remove' }}
                         >
                           <IconV2 name="trash" />
                         </Button>

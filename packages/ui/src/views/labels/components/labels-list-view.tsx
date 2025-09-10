@@ -124,6 +124,9 @@ export const LabelsListView: FC<LabelsListViewProps> = ({
                     iconOnly
                     onClick={e => toggleRow(label.key, e)}
                     className="mt-cn-2xs"
+                    tooltipProps={{
+                      content: 'Toggle details'
+                    }}
                   >
                     <IconV2 name={isExpanded ? 'nav-arrow-up' : 'nav-arrow-down'} />
                   </Button>

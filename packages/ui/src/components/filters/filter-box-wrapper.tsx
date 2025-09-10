@@ -75,6 +75,9 @@ const FilterBoxWrapper = ({
               size="2xs"
               onClick={handleRemoveFilter}
               aria-label={t('component:filter.delete', 'Delete filter')}
+              tooltipProps={{
+                content: t('component:filter.delete', 'Delete filter')
+              }}
             >
               <IconV2 name="trash" skipSize />
             </Button>

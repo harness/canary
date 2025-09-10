@@ -147,6 +147,7 @@ export const NumberInput = forwardRef<HTMLInputElement, NumberInputProps>(
                         onClick={handleIncrement}
                         disabled={disabled}
                         size="sm"
+                        ignoreIconOnlyTooltip
                       >
                         <IconV2 name="nav-arrow-up" size="xs" />
                       </Button>
@@ -160,6 +161,7 @@ export const NumberInput = forwardRef<HTMLInputElement, NumberInputProps>(
                         onClick={handleDecrement}
                         disabled={disabled}
                         size="sm"
+                        ignoreIconOnlyTooltip
                       >
                         <IconV2 name="nav-arrow-down" size="xs" />
                       </Button>

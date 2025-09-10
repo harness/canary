@@ -1,5 +1,6 @@
-import { ButtonHTMLAttributes, forwardRef } from 'react'
+import { ButtonHTMLAttributes, forwardRef, Fragment } from 'react'
 
+import { Tooltip, TooltipProps } from '@components/tooltip'
 import { Slot } from '@radix-ui/react-slot'
 import { cn } from '@utils/cn'
 import { filterChildrenByDisplayNames } from '@utils/utils'
@@ -90,16 +91,38 @@ const buttonVariants = cva('cn-button', {
   }
 })
 
-interface ButtonProps extends ButtonHTMLAttributes<HTMLButtonElement>, VariantProps<typeof buttonVariants> {
-  asChild?: boolean
-  loading?: boolean
-  rounded?: boolean
-  iconOnly?: boolean
+type ButtonTooltipProps = Pick<TooltipProps, 'title' | 'content' | 'side'>
+
+type CommonButtonProps = ButtonHTMLAttributes<HTMLButtonElement> &
+  VariantProps<typeof buttonVariants> & {
+    asChild?: boolean
+    loading?: boolean
+    rounded?: boolean
+  }
+
+type ButtonPropsIconOnlyRequired = {
+  iconOnly: true
+  ignoreIconOnlyTooltip?: false
+  tooltipProps: ButtonTooltipProps
 }
 
-export type ButtonThemes = VariantProps<typeof buttonVariants>['theme']
-export type ButtonVariants = VariantProps<typeof buttonVariants>['variant']
-export type ButtonSizes = VariantProps<typeof buttonVariants>['size']
+type ButtonPropsIconOnlyIgnored = {
+  iconOnly: true
+  ignoreIconOnlyTooltip: true
+  tooltipProps?: never
+}
+
+type ButtonPropsRegular = {
+  iconOnly?: false
+  tooltipProps?: ButtonTooltipProps
+  ignoreIconOnlyTooltip?: boolean
+}
+
+type ButtonProps = CommonButtonProps & (ButtonPropsIconOnlyRequired | ButtonPropsIconOnlyIgnored | ButtonPropsRegular)
+
+type ButtonThemes = VariantProps<typeof buttonVariants>['theme']
+type ButtonVariants = VariantProps<typeof buttonVariants>['variant']
+type ButtonSizes = VariantProps<typeof buttonVariants>['size']
 
 // add icon only aria attr if iconOnly is true
 
@@ -111,19 +134,21 @@ const Button = forwardRef<HTMLButtonElement, ButtonProps>(
       size = 'md',
       theme = 'default',
       rounded,
-      iconOnly: _iconOnly = false,
+      iconOnly: iconOnlyProp = false,
       asChild = false,
       loading,
       disabled,
       children: _children,
       type = 'button',
+      tooltipProps,
+      ignoreIconOnlyTooltip,
       ...props
     },
     ref
   ) => {
     const Comp = asChild ? Slot : 'button'
     const microSize = size === '2xs' || size === '3xs'
-    const iconOnly = _iconOnly || microSize
+    const iconOnly = iconOnlyProp || microSize
 
     const filteredChildren = iconOnly ? filterChildrenByDisplayNames(_children, [IconV2DisplayName])[0] : _children
 
@@ -137,7 +162,7 @@ const Button = forwardRef<HTMLButtonElement, ButtonProps>(
       filteredChildren
     )
 
-    return (
+    const ButtonComp = (
       <Comp
         className={cn(buttonVariants({ variant, size, theme, rounded, iconOnly, className }))}
         ref={ref}
@@ -148,8 +173,54 @@ const Button = forwardRef<HTMLButtonElement, ButtonProps>(
         {children}
       </Comp>
     )
+
+    if (tooltipProps && !ignoreIconOnlyTooltip) {
+      return (
+        <Tooltip hideArrow {...tooltipProps}>
+          {ButtonComp}
+        </Tooltip>
+      )
+    }
+
+    return ButtonComp
   }
 )
 Button.displayName = 'Button'
 
-export { Button, buttonVariants, type ButtonProps }
+/**
+ * Converts iconOnly into a literal and returns props ready to be spread into <Button />
+ * @param p
+ */
+type BtnIconOnly = Extract<ButtonProps, { iconOnly: true }>
+type BtnRegular = Extract<ButtonProps, { iconOnly?: false }>
+type ButtonLike = Omit<Partial<ButtonProps>, 'iconOnly' | 'ignoreIconOnlyTooltip'> & {
+  iconOnly?: boolean
+  ignoreIconOnlyTooltip?: boolean
+}
+
+const toButtonProps = (p: ButtonLike) => {
+  if (p?.iconOnly) {
+    return {
+      ...p,
+      iconOnly: true,
+      ignoreIconOnlyTooltip: (p as any)?.ignoreIconOnlyTooltip ?? false
+    } as BtnIconOnly
+  }
+
+  const { ignoreIconOnlyTooltip: _drop, ...rest } = p as any
+  return {
+    ...rest,
+    iconOnly: false
+  } as BtnRegular
+}
+
+export { Button, buttonVariants, toButtonProps }
+export type {
+  ButtonProps,
+  ButtonThemes,
+  ButtonVariants,
+  ButtonSizes,
+  ButtonTooltipProps,
+  ButtonPropsIconOnlyRequired,
+  ButtonPropsRegular
+}

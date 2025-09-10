@@ -51,6 +51,7 @@ const FilterSelect = <FilterKey extends string, CustomValue = Record<string, unk
                 onClick={() => {
                   setSearchQuery('')
                 }}
+                ignoreIconOnlyTooltip
               >
                 <IconV2 name="xmark" size="2xs" />
               </Button>

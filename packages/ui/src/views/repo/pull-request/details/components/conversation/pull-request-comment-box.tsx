@@ -78,7 +78,7 @@ interface ToolbarItem {
   icon: IconV2NamesType
   variant?: ButtonVariants
   action: ToolbarAction
-  title?: string
+  title: string
   size?: number
 }
 
@@ -456,25 +456,25 @@ export const PullRequestCommentBox = ({
 
   const toolbar: ToolbarItem[] = useMemo(() => {
     const aiButton: ToolbarItem[] = handleAiPullRequestSummary
-      ? [{ icon: 'ai-solid' as IconV2NamesType, variant: 'ai', action: ToolbarAction.AI_SUMMARY }]
+      ? [{ icon: 'ai-solid' as IconV2NamesType, variant: 'ai', action: ToolbarAction.AI_SUMMARY, title: 'AI Summary' }]
       : []
 
     const suggestionButton: ToolbarItem[] =
       diff !== '' && lineNumber !== undefined && lineFromNumber !== undefined
-        ? [{ icon: 'suggestion', action: ToolbarAction.SUGGESTION }]
+        ? [{ icon: 'suggestion', action: ToolbarAction.SUGGESTION, title: 'Add a suggestion' }]
         : []
 
     // TODO: Design system: Update icons once they are available in IconV2
     return [
       ...aiButton,
       ...suggestionButton,
-      { icon: 'header', action: ToolbarAction.HEADER },
-      { icon: 'bold', action: ToolbarAction.BOLD },
-      { icon: 'italic', action: ToolbarAction.ITALIC },
-      { icon: 'attachment', action: ToolbarAction.UPLOAD },
-      { icon: 'list', action: ToolbarAction.UNORDERED_LIST },
-      { icon: 'list-select', action: ToolbarAction.CHECK_LIST },
-      { icon: 'code', action: ToolbarAction.CODE_BLOCK }
+      { icon: 'header', action: ToolbarAction.HEADER, title: 'Heading' },
+      { icon: 'bold', action: ToolbarAction.BOLD, title: 'Bold' },
+      { icon: 'italic', action: ToolbarAction.ITALIC, title: 'Italic' },
+      { icon: 'attachment', action: ToolbarAction.UPLOAD, title: 'Attach files' },
+      { icon: 'list', action: ToolbarAction.UNORDERED_LIST, title: 'Unordered list' },
+      { icon: 'list-select', action: ToolbarAction.CHECK_LIST, title: 'Task list' },
+      { icon: 'code', action: ToolbarAction.CODE_BLOCK, title: 'Code' }
     ]
   }, [diff, lineNumber, lineFromNumber, handleAiPullRequestSummary])
 
@@ -728,6 +728,9 @@ export const PullRequestCommentBox = ({
                         iconOnly
                         disabled={showAiLoader}
                         onClick={() => handleActionClick(item.action, textComment, textSelection)}
+                        tooltipProps={{
+                          content: item.title
+                        }}
                       >
                         <IconV2 name={item.icon} />
                       </Button>

@@ -72,7 +72,13 @@ const SummaryPanel: FC<SummaryPanelProps> = ({
 
           <DropdownMenu.Root>
             <DropdownMenu.Trigger asChild>
-              <Button variant="ghost" size="xs" aria-label="More options" iconOnly>
+              <Button
+                variant="ghost"
+                size="xs"
+                aria-label="More options"
+                iconOnly
+                tooltipProps={{ content: 'More options' }}
+              >
                 <IconV2 name="more-horizontal" size="2xs" className="text-icons-3" />
               </Button>
             </DropdownMenu.Trigger>

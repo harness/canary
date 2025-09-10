@@ -122,7 +122,7 @@ const HeaderTitle = ({ ...props }: HeaderProps) => {
 
   const getStatusTextColor = (): TextProps['color'] => {
     if (isDraft) return 'foreground-1'
-    if (isClosed) return 'accent'
+    if (isClosed) return 'brand'
     if (isMerged) return 'merged'
 
     if (isOpen && (mergeable === false || ruleViolation || isFastForwardNotPossible)) {
@@ -521,6 +521,7 @@ const PullRequestPanel = ({
           disableHover
         >
           <StackedList.Field
+            className="min-w-fit max-w-fit"
             title={
               <HeaderTitle
                 isDraft={isDraft}
@@ -548,11 +549,12 @@ const PullRequestPanel = ({
             <>
               <StackedList.Field
                 right
+                className="grow [&>.cn-stacked-list-field-title]:overflow-visible"
                 title={
-                  <Layout.Horizontal align="center" justify="center" gap="sm">
-                    {!notBypassable && isMergeable && !isDraft && prPanelData.ruleViolation && (
+                  <Layout.Horizontal align="center" gap="sm" wrap="wrap">
+                    {
                       <Checkbox
-                        className="flex-1"
+                        className="!w-fit"
                         id="checkbox-bypass"
                         showOptionalLabel
                         checked={!!checkboxBypass}
@@ -564,7 +566,7 @@ const PullRequestPanel = ({
                         label="Bypass and merge anyway"
                         truncateLabel={false}
                       />
-                    )}
+                    }
 
                     {shouldShowMoreActions && (
                       <MoreActionsTooltip

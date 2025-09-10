@@ -74,7 +74,7 @@ export const textVariants = cva('', {
       warning: 'text-cn-warning',
       merged: 'text-cn-merged',
       danger: 'text-cn-danger',
-      accent: 'text-cn-brand'
+      brand: 'text-cn-brand'
     },
     lineClamp: {
       default: '',

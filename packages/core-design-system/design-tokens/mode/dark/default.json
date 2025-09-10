@@ -1213,7 +1213,7 @@
           }
         },
         "$type": "color",
-        "$value": "{green.300}",
+        "$value": "{green.400}",
         "$description": "Green background highlighting newly added code lines while maintaining readability."
       },
       "add-lineNumber": {
@@ -1221,13 +1221,13 @@
           "studio.tokens": {
             "modify": {
               "type": "alpha",
-              "value": "0.14",
+              "value": "0.18",
               "space": "lch"
             }
           }
         },
         "$type": "color",
-        "$value": "{green.300}",
+        "$value": "{green.400}",
         "$description": "Background for line numbers of added code, providing visual connection to added content."
       },
       "add-content-highlight": {
@@ -1241,7 +1241,7 @@
           }
         },
         "$type": "color",
-        "$value": "{green.300}",
+        "$value": "{green.400}",
         "$description": "Stronger emphasis color for specific character changes within added lines."
       },
       "add-widget": {
@@ -1265,7 +1265,7 @@
           }
         },
         "$type": "color",
-        "$value": "{red.400}",
+        "$value": "{red.500}",
         "$description": "Red background highlighting removed code lines without causing eye strain."
       },
       "del-lineNumber": {
@@ -1273,13 +1273,13 @@
           "studio.tokens": {
             "modify": {
               "type": "alpha",
-              "value": "0.14",
+              "value": "0.18",
               "space": "lch"
             }
           }
         },
         "$type": "color",
-        "$value": "{red.400}",
+        "$value": "{red.500}",
         "$description": "Background for line numbers of deleted code, connecting numbers to removed content."
       },
       "del-content-highlight": {
@@ -1293,7 +1293,7 @@
           }
         },
         "$type": "color",
-        "$value": "{red.400}",
+        "$value": "{red.500}",
         "$description": "Stronger emphasis color for specific character changes within deleted lines."
       },
       "plain-content": {
@@ -1327,7 +1327,7 @@
           }
         },
         "$type": "color",
-        "$value": "{blue.500}",
+        "$value": "{blue.600}",
         "$description": "Background for diff section headers ('hunks') that indicate which part of the file is displayed."
       },
       "hunk-lineNumber": {
@@ -1335,13 +1335,13 @@
           "studio.tokens": {
             "modify": {
               "type": "alpha",
-              "value": "0.14",
+              "value": "0.18",
               "space": "lch"
             }
           }
         },
         "$type": "color",
-        "$value": "{blue.500}",
+        "$value": "{blue.600}",
         "$description": "Background for line numbers in section headers."
       },
       "hunk-content-color": {
@@ -1366,37 +1366,37 @@
       },
       "hljs-keyword": {
         "$type": "color",
-        "$value": "{purple.800}",
+        "$value": "{purple.300}",
         "$description": "Color for programming language keywords in syntax highlighting. Emphasizes reserved words and language constructs."
       },
       "hljs-title-class": {
         "$type": "color",
-        "$value": "{yellow.700}",
+        "$value": "{yellow.200}",
         "$description": "Color for class names and type definitions in syntax highlighting. Highlights object-oriented programming constructs and custom types."
       },
       "hljs-string": {
         "$type": "color",
-        "$value": "{green.700}",
+        "$value": "{green.200}",
         "$description": "Color for string literals in syntax highlighting. Distinguishes text content and string values from other code elements."
       },
       "hljs-title-function": {
         "$type": "color",
-        "$value": "{blue.700}",
+        "$value": "{blue.200}",
         "$description": "Color for function names and method definitions in syntax highlighting. Emphasizes callable code blocks and procedures."
       },
       "hljs-name": {
         "$type": "color",
-        "$value": "{red.800}",
+        "$value": "{red.300}",
         "$description": "Color for HTML tag names and XML element names in syntax highlighting. Distinguishes markup structure from content."
       },
       "hljs-literal": {
         "$type": "color",
-        "$value": "{cyan.600}",
+        "$value": "{cyan.200}",
         "$description": "Color for literal values like numbers, booleans, and constants in syntax highlighting. Emphasizes fixed data values."
       },
       "hljs-attr": {
         "$type": "color",
-        "$value": "{orange.600}",
+        "$value": "{orange.300}",
         "$description": "Color for HTML/XML attributes and object properties in syntax highlighting. Highlights configurable element properties."
       }
     },
@@ -1550,12 +1550,12 @@
       },
       "fade-start": {
         "$type": "color",
-        "$value": "linear-gradient(0deg, {gradient.sidebar.fade} 0%, {bg.0} 100%)",
+        "$value": "linear-gradient(0deg, {gradient.sidebar.fade} 0%, {comp.sidebar.bg} 100%)",
         "$description": "Gradient fade effect for sidebar top edge. Creates smooth visual transition from sidebar content to background."
       },
       "fade-end": {
         "$type": "color",
-        "$value": "linear-gradient(0deg, {bg.0} 0%, {gradient.sidebar.fade} 100%)",
+        "$value": "linear-gradient(0deg, {bg.0} 0%, {comp.sidebar.bg} 100%)",
         "$description": "Gradient fade effect for sidebar bottom edge. Creates smooth visual transition from background to sidebar content."
       }
     },
@@ -2337,7 +2337,7 @@
           }
         },
         "$type": "color",
-        "$value": "{bg.0}"
+        "$value": "{comp.sidebar.bg}"
       }
     },
     "toast": {

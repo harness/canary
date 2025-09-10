@@ -22,14 +22,24 @@ type CommitsGroupedByDate = Record<string, TypesCommit[]>
 interface RoutingProps {
   toCommitDetails?: ({ sha }: { sha: string }) => string
   toPullRequest?: ({ pullRequestId }: { pullRequestId: number }) => string
+  toPullRequestChange?: ({ commitSHA }: { commitSHA: string }) => string
   toCode?: ({ sha }: { sha: string }) => string
 }
 interface CommitProps extends Partial<RoutingProps> {
   data?: TypesCommit[]
   className?: string
+  onPRCommitListing?: boolean
 }
 
-export const CommitsList: FC<CommitProps> = ({ data, toCommitDetails, toPullRequest, toCode, className }) => {
+export const CommitsList: FC<CommitProps> = ({
+  data,
+  toCommitDetails,
+  toPullRequest,
+  toPullRequestChange,
+  onPRCommitListing,
+  toCode,
+  className
+}) => {
   const entries = useMemo(() => {
     const commitsGroupedByDate = !data
       ? {}
@@ -67,7 +77,11 @@ export const CommitsList: FC<CommitProps> = ({ data, toCommitDetails, toPullRequ
                       className="items-start"
                       paddingY="sm"
                       key={commit?.sha || idx}
-                      to={`${toCommitDetails?.({ sha: commit?.sha || '' })}`}
+                      to={
+                        onPRCommitListing
+                          ? `${toPullRequestChange?.({ commitSHA: commit?.sha || '' })}`
+                          : `${toCommitDetails?.({ sha: commit?.sha || '' })}`
+                      }
                     >
                       <Layout.Grid flow="column" className="w-full" columns="1fr auto" gap="md">
                         <Layout.Vertical gap="2xs" className="truncate">

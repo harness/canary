@@ -6,6 +6,7 @@ import { CommitsList, IPullRequestCommitsStore, TypesCommit } from '@/views'
 
 interface RoutingProps {
   toCommitDetails?: ({ sha }: { sha: string }) => string
+  toPullRequestChange?: ({ commitSHA }: { commitSHA: string }) => string
   toCode?: ({ sha }: { sha: string }) => string
 }
 interface RepoPullRequestCommitsViewProps extends Partial<RoutingProps> {
@@ -15,6 +16,8 @@ interface RepoPullRequestCommitsViewProps extends Partial<RoutingProps> {
 const PullRequestCommitsView: FC<RepoPullRequestCommitsViewProps> = ({
   usePullRequestCommitsStore,
   toCommitDetails,
+  toPullRequestChange,
+
   toCode
 }) => {
   const { commitsList, xNextPage, xPrevPage, isFetchingCommits } = usePullRequestCommitsStore()
@@ -47,6 +50,8 @@ const PullRequestCommitsView: FC<RepoPullRequestCommitsViewProps> = ({
         <CommitsList
           toCode={toCode}
           toCommitDetails={toCommitDetails}
+          toPullRequestChange={toPullRequestChange}
+          onPRCommitListing
           className="mt-cn-xl"
           data={commitsList.map((item: TypesCommit) => ({
             sha: item.sha,

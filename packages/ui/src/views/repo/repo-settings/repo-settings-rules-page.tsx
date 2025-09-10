@@ -5,8 +5,8 @@ import { RepoSettingsGeneralRules } from './components/repo-settings-general-rul
 import { ErrorTypes, IRepoStore } from './types'
 
 interface RepoSettingsRulesPageProps {
-  handleRuleClick: (identifier: string) => void
-  openRulesAlertDeleteDialog: (identifier: string) => void
+  handleRuleClick: (identifier: string, scope: number) => void
+  openRulesAlertDeleteDialog: (identifier: string, scope: number) => void
   useRepoRulesStore: () => IRepoStore
   rulesSearchQuery: string
   setRulesSearchQuery: (query: string) => void

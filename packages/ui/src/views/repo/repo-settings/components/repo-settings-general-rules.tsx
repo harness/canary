@@ -77,8 +77,8 @@ const Description: FC<DescriptionProps> = ({ targetPatternsCount, rulesAppliedCo
 export interface RepoSettingsGeneralRulesProps {
   rules: RuleDataType[] | null
   apiError: { type: ErrorTypes; message: string } | null
-  handleRuleClick: (identifier: string) => void
-  openRulesAlertDeleteDialog: (identifier: string) => void
+  handleRuleClick: (identifier: string, scope: number) => void
+  openRulesAlertDeleteDialog: (identifier: string, scope: number) => void
   isLoading: boolean
   rulesSearchQuery?: string
   setRulesSearchQuery?: (query: string) => void
@@ -126,11 +126,7 @@ export const RepoSettingsGeneralRules: FC<RepoSettingsGeneralRulesProps> = ({
     e.preventDefault()
     e.stopPropagation()
 
-    if (rule.scope === 0) {
-      handleRuleClick(rule.identifier ?? '')
-    } else {
-      toProjectRuleDetails?.(rule.identifier ? `${rule.identifier}/edit` : '', rule.scope ?? 0)
-    }
+    toProjectRuleDetails?.(rule.identifier ?? '', rule.scope ?? 0)
   }
 
   if (!isShowRulesContent) {
@@ -226,13 +222,13 @@ export const RepoSettingsGeneralRules: FC<RepoSettingsGeneralRulesProps> = ({
                       {
                         title: t('views:rules.edit', 'Edit Rule'),
                         iconName: 'edit-pencil',
-                        onClick: () => handleRuleClick(`${rule.identifier}${rule.scope === 0 ? '' : '/edit'}`)
+                        onClick: () => handleRuleClick(rule.identifier ?? '', rule?.scope ?? 0)
                       },
                       {
                         isDanger: true,
                         title: t('views:rules.delete', 'Delete Rule'),
                         iconName: 'trash',
-                        onClick: () => openRulesAlertDeleteDialog(rule.identifier!)
+                        onClick: () => openRulesAlertDeleteDialog(rule.identifier!, rule?.scope ?? 0)
                       }
                     ]}
                   />

@@ -1,5 +1,4 @@
 import { useEffect, useState } from 'react'
-import { useNavigate } from 'react-router-dom'
 
 import { useQueryClient } from '@tanstack/react-query'
 
@@ -15,6 +14,7 @@ import { useQueryState } from '../../framework/hooks/useQueryState'
 import usePaginationQueryStateWithStore from '../../hooks/use-pagination-query-state-with-store'
 import { getTotalRulesApplied } from '../../utils/repo-branch-rules-utils'
 import { getScopedRuleUrl } from '../../utils/rule-url-utils'
+import { getSpaceRefByScope } from '../../utils/scope-url-utils'
 import { useProjectRulesStore } from './stores/project-rules-store'
 
 export const ProjectRulesListContainer = () => {
@@ -26,7 +26,6 @@ export const ProjectRulesListContainer = () => {
   const [showParentRules, setShowParentRules] = useState(false)
   const { queryPage } = usePaginationQueryStateWithStore({ page, setPage })
   const queryClient = useQueryClient()
-  const navigate = useNavigate()
   const { setRules } = useProjectRulesStore()
   const {
     routes: { toAccountSettings, toOrgSettings, toProjectSettings },
@@ -35,15 +34,15 @@ export const ProjectRulesListContainer = () => {
   } = useMFEContext()
 
   const [isRuleAlertDeleteDialogOpen, setRuleIsAlertDeleteDialogOpen] = useState(false)
-  const [alertDeleteParams, setAlertDeleteParams] = useState('')
+  const [alertDeleteParams, setAlertDeleteParams] = useState<{ identifier: string; scope: number } | null>(null)
   const [ruleTypeFilter, setRuleTypeFilter] = useState<OpenapiRuleType | null>(null)
   const [apiError, setApiError] = useState<{ type: ErrorTypes; message: string } | null>(null)
 
   const closeAlertDeleteDialog = () => {
     isRuleAlertDeleteDialogOpen && setRuleIsAlertDeleteDialogOpen(false)
   }
-  const openRulesAlertDeleteDialog = (identifier: string) => {
-    setAlertDeleteParams(identifier)
+  const openRulesAlertDeleteDialog = (identifier: string, scope: number) => {
+    setAlertDeleteParams({ identifier, scope })
     setRuleIsAlertDeleteDialogOpen(true)
   }
 
@@ -99,12 +98,26 @@ export const ProjectRulesListContainer = () => {
   }, [rulesData, setRules, headers])
 
   const handleDeleteRule = (identifier: string) => {
-    deleteRule({ rule_identifier: identifier })
+    deleteRule({
+      space_ref: `${getSpaceRefByScope(space_ref ?? '', alertDeleteParams?.scope ?? 0)}/+`,
+      rule_identifier: identifier
+    })
     queryClient.invalidateQueries(['ruleList', `${space_ref}/+`])
   }
 
-  const handleRuleEditClick = (identifier: string) => {
-    navigate(`${identifier}`)
+  const handleRuleEditClick = (identifier: string, scope: number) => {
+    getScopedRuleUrl({
+      scope,
+      identifier,
+      toCODEManageRepositories: routeUtils?.toCODEManageRepositories,
+      toCODERule: routeUtils?.toCODERule,
+      toAccountSettings,
+      toOrgSettings,
+      toProjectSettings,
+      accountId,
+      orgIdentifier,
+      projectIdentifier
+    })
   }
 
   return (
@@ -146,7 +159,7 @@ export const ProjectRulesListContainer = () => {
         onClose={closeAlertDeleteDialog}
         {...wrapConditionalObjectElement(
           {
-            identifier: alertDeleteParams,
+            identifier: alertDeleteParams?.identifier,
             deleteFn: handleDeleteRule,
             isLoading: isDeletingRule,
             error: apiError?.type === ErrorTypes.DELETE_RULE ? apiError : null,

@@ -92,11 +92,13 @@ export interface MFEContextProps {
     toCODEManageRepositories: ({
       space,
       ruleId,
-      settingSection
+      settingSection,
+      settingSectionMode
     }: {
       space: string
       ruleId: string
       settingSection: string
+      settingSectionMode?: string
     }) => void
   }>
   hooks: Hooks

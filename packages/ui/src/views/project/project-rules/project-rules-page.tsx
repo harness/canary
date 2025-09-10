@@ -12,9 +12,9 @@ export interface ProjectRulesPageProps {
   setSearchQuery: (query: string) => void
   page: number
   setPage: (page: number) => void
-  openRulesAlertDeleteDialog: (identifier: string) => void
+  openRulesAlertDeleteDialog: (identifier: string, scope: number) => void
   apiError: { type: ErrorTypes; message: string } | null
-  handleRuleClick: (identifier: string) => void
+  handleRuleClick: (identifier: string, scope: number) => void
   toProjectBranchRuleCreate?: () => string
   toProjectTagRuleCreate?: () => string
   showParentScopeLabelsCheckbox?: boolean

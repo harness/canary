@@ -36,28 +36,34 @@ export function getScopedRuleUrl({
   accountId,
   orgIdentifier,
   projectIdentifier,
-  settingSection = 'rules'
+  settingSection = 'rules',
+  settingSectionMode = 'edit'
 }: {
   scope: number
   identifier: string
   settingSection?: string
+  settingSectionMode?: string
   toCODEManageRepositories?: ({
     space,
     ruleId,
-    settingSection
+    settingSection,
+    settingSectionMode
   }: {
     space: string
     ruleId: string
     settingSection: string
+    settingSectionMode?: string
   }) => void
   toCODERule?: ({
     repoPath,
     ruleId,
-    settingSection
+    settingSection,
+    settingSectionMode
   }: {
     repoPath: string
     ruleId: string
     settingSection: string
+    settingSectionMode?: string
   }) => void
   toAccountSettings?: () => string
   toOrgSettings?: () => string
@@ -76,7 +82,8 @@ export function getScopedRuleUrl({
       toCODERule({
         repoPath,
         ruleId: identifier,
-        settingSection
+        settingSection,
+        settingSectionMode
       })
     } else {
       const url = toRepoBranchRule?.({ spaceId: spaceId ?? '', repoId: repoId ?? '', identifier }) ?? ''
@@ -90,7 +97,8 @@ export function getScopedRuleUrl({
     toCODEManageRepositories?.({
       space: `${accountId ?? ''}`,
       ruleId: identifier,
-      settingSection
+      settingSection,
+      settingSectionMode
     })
   }
 
@@ -99,7 +107,8 @@ export function getScopedRuleUrl({
     toCODEManageRepositories?.({
       space: `${accountId ?? ''}/${orgIdentifier ?? ''}`,
       ruleId: identifier,
-      settingSection
+      settingSection,
+      settingSectionMode
     })
   }
   if (scope === 3) {
@@ -108,7 +117,8 @@ export function getScopedRuleUrl({
     toCODEManageRepositories?.({
       space: `${accountId ?? ''}/${orgIdentifier ?? ''}/${projectIdentifier ?? ''}`,
       ruleId: identifier,
-      settingSection
+      settingSection,
+      settingSectionMode
     })
   }
 }

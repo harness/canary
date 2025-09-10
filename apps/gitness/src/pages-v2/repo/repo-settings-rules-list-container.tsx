@@ -8,7 +8,8 @@ import {
   RepoRuleDeleteErrorResponse,
   RepoRuleListErrorResponse,
   useRepoRuleDeleteMutation,
-  useRepoRuleListQuery
+  useRepoRuleListQuery,
+  useSpaceRuleDeleteMutation
 } from '@harnessio/code-service-client'
 import { DeleteAlertDialog } from '@harnessio/ui/components'
 import { ErrorTypes, RepoSettingsRulesPage } from '@harnessio/ui/views'
@@ -19,6 +20,7 @@ import { useGetRepoRef } from '../../framework/hooks/useGetRepoPath'
 import { useMFEContext } from '../../framework/hooks/useMFEContext'
 import { PathParams } from '../../RouteDefinitions'
 import { getScopedRuleUrl } from '../../utils/rule-url-utils'
+import { getSpaceRefByScope } from '../../utils/scope-url-utils'
 import { useRepoRulesStore } from './stores/repo-settings-store'
 
 export const RepoSettingsRulesListContainer = () => {
@@ -32,7 +34,7 @@ export const RepoSettingsRulesListContainer = () => {
   const [rulesSearchQuery, setRulesSearchQuery] = useState('')
   const [apiError, setApiError] = useState<{ type: ErrorTypes; message: string } | null>(null)
   const [isRuleAlertDeleteDialogOpen, setRuleIsAlertDeleteDialogOpen] = useState(false)
-  const [alertDeleteParams, setAlertDeleteParams] = useState('')
+  const [alertDeleteParams, setAlertDeleteParams] = useState<{ identifier: string; scope: number } | null>(null)
   const [parentScopeLabelsChecked, setParentScopeLabelsChecked] = useState(false)
   const [ruleTypeFilter, setRuleTypeFilter] = useState<OpenapiRuleType | null>(null)
 
@@ -40,8 +42,8 @@ export const RepoSettingsRulesListContainer = () => {
     isRuleAlertDeleteDialogOpen && setRuleIsAlertDeleteDialogOpen(false)
     setApiError(null)
   }
-  const openRulesAlertDeleteDialog = (identifier: string) => {
-    setAlertDeleteParams(identifier)
+  const openRulesAlertDeleteDialog = (identifier: string, scope: number) => {
+    setAlertDeleteParams({ identifier, scope })
     setRuleIsAlertDeleteDialogOpen(true)
   }
 
@@ -91,6 +93,23 @@ export const RepoSettingsRulesListContainer = () => {
     }
   )
 
+  const { mutate: deleteSpaceRule, isLoading: isDeletingSpaceRule } = useSpaceRuleDeleteMutation(
+    { space_ref: `${repoRef}/+` },
+    {
+      onSuccess: () => {
+        refetchRulesList()
+        setRuleIsAlertDeleteDialogOpen(false)
+        setApiError(null)
+      },
+      onError: error => {
+        queryClient.invalidateQueries(['ruleList', `${repoRef}/+`])
+
+        const message = error.message || 'Error deleting rule'
+        setApiError({ type: ErrorTypes.DELETE_RULE, message })
+      }
+    }
+  )
+
   useEffect(() => {
     if (rulesData) {
       setRules(rulesData)
@@ -98,12 +117,37 @@ export const RepoSettingsRulesListContainer = () => {
     }
   }, [rulesData, setRules])
 
-  const handleRuleClick = (identifier: string) => {
-    navigate(routes.toRepoBranchRule({ spaceId, repoId: repoName, identifier }))
+  const handleRuleClick = (identifier: string, scope: number) => {
+    // navigate(routes.toRepoBranchRule({ spaceId, repoId: repoName, identifier }))
+    return getScopedRuleUrl({
+      scope,
+      identifier,
+      toCODEManageRepositories: routeUtils.toCODEManageRepositories,
+      toCODERule: routeUtils.toCODERule,
+      toAccountSettings,
+      toOrgSettings,
+      toProjectSettings,
+      toRepoBranchRule: routes.toRepoBranchRule,
+      spaceId,
+      repoId: repoName,
+      accountId,
+      orgIdentifier,
+      projectIdentifier
+    })
   }
 
   const handleDeleteRule = (identifier: string) => {
-    deleteRule({ rule_identifier: identifier })
+    if (alertDeleteParams?.scope === 0) {
+      deleteRule({
+        repo_ref: `${getSpaceRefByScope(repoRef ?? '', alertDeleteParams?.scope ?? 0)}`,
+        rule_identifier: identifier
+      })
+    } else {
+      deleteSpaceRule({
+        space_ref: `${getSpaceRefByScope(repoRef ?? '', alertDeleteParams?.scope ?? 0)}/+`,
+        rule_identifier: identifier
+      })
+    }
     navigate(routes.toRepoBranchRules({ spaceId, repoId: repoName, identifier }))
   }
 
@@ -146,9 +190,9 @@ export const RepoSettingsRulesListContainer = () => {
       <DeleteAlertDialog
         open={isRuleAlertDeleteDialogOpen}
         onClose={closeAlertDeleteDialog}
-        identifier={alertDeleteParams}
+        identifier={alertDeleteParams?.identifier}
         deleteFn={handleDeleteRule}
-        isLoading={isDeletingRule}
+        isLoading={isDeletingRule || isDeletingSpaceRule}
         error={apiError?.type === ErrorTypes.DELETE_RULE ? apiError : null}
         type="rule"
       />

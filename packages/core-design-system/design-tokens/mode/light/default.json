@@ -37,6 +37,11 @@
       "$value": "{tuna.700}",
       "$description": "Reduced emphasis color for text and icons in secondary information. Creates visual hierarchy through lower contrast.\n\nCommon uses: Supporting text, metadata, secondary information, placeholders."
     },
+    "disabled": {
+      "$type": "color",
+      "$value": "{chrome.600}",
+      "$description": "Lowest emphasis text color for unavailable options. Creates visual differentiation between interactive and non-interactive elements.\n\nCommon uses: Disabled buttons, inactive form elements, unavailable options, placeholders."
+    },
     "success": {
       "$type": "color",
       "$value": "{set.green.soft.text}",
@@ -127,38 +132,6 @@
       "$type": "color",
       "$value": "{tuna.300}",
       "$description": "Strong overlay for emphasized selection states. Creates distinct visual indication of active or selected elements.\n\nCommon uses: Selected list items, active tabs, chosen options, current navigation item."
-    },
-    "disabled": {
-      "text": {
-        "$type": "color",
-        "$value": "{chrome.600}",
-        "$description": "Lowest emphasis text color for unavailable options. Creates visual differentiation between interactive and non-interactive elements.\n\nCommon uses: Disabled buttons, inactive form elements, unavailable options, placeholders."
-      },
-      "bg": {
-        "$type": "color",
-        "$value": "{chrome.50}",
-        "$description": "Muted background color for disabled elements. Reduces visual prominence of non-interactive elements in the UI.\n\nCommon uses: Disabled buttons, inactive form controls, unavailable options."
-      },
-      "border": {
-        "$type": "color",
-        "$value": "{border.3}",
-        "$description": "Muted border color for disabled element boundaries. Creates subtle containment while indicating non-interactive state.\n\nCommon uses: Disabled form inputs, inactive controls, unavailable action boundaries."
-      },
-      "text-selected": {
-        "$type": "color",
-        "$value": "{chrome.100}",
-        "$description": "Disabled text or icon element for selected component behavior."
-      },
-      "bg-selected": {
-        "$type": "color",
-        "$value": "{chrome.400}",
-        "$description": "Disabled background for selected component behavior."
-      },
-      "border-selected": {
-        "$type": "color",
-        "$value": "{chrome.400}",
-        "$description": "Disabled border for selected component behavior."
-      }
     }
   },
   "set": {

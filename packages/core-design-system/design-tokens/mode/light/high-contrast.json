@@ -3,7 +3,7 @@
     "0": {
       "$type": "color",
       "$value": "{chrome.50}",
-      "$description": "Level 0. Foundational layer used for page navigation and as a container for insets."
+      "$description": "Level 0 background - Foundational surface layer. Used for page navigation areas and as a container for elevated content (insets). Creates the base canvas that other elements sit upon.\n\nCommon uses: Page headers, navigation bars, sidebar backgrounds, main content containers."
     },
     "1": {
       "$type": "color",
@@ -55,7 +55,7 @@
     "merged": {
       "$type": "color",
       "$value": "{set.purple.surface.text}",
-      "$description": "Primary color for text and icons in merged content.\n\nCommon uses: Merge message text."
+      "$description": "Text color for merged content and pull request states. Provides distinct visual identity for merge-related information and completed integration states.\n\nCommon uses: Merge commit messages, pull request merged status, integration completion indicators, merged branch labels."
     },
     "disabled": {
       "$type": "color",
@@ -64,19 +64,20 @@
     },
     "brand": {
       "$type": "color",
-      "$value": "{blue.300}"
+      "$value": "{blue.500}",
+      "$description": "Primary brand color for text and icons. Used to reinforce brand identity and create visual connection to the product.\n\nCommon uses: Brand elements, primary links, brand-specific content, logo text."
     }
   },
   "border": {
     "1": {
       "$type": "color",
       "$value": "{chrome.700}",
-      "$description": "Enhanced border color for interactive states. Creates strong visual definition for important boundaries.\n\nCommon uses: Focus states, hover states, active elements, primary containers."
+      "$description": "High-contrast neutral border color for interactive states and emphasis. Provides strong visual definition without brand association for general UI interactions.\n\nCommon uses: Hover state borders, selected elements, interactive container outlines, emphasized dividers, modal boundaries."
     },
     "2": {
       "$type": "color",
       "$value": "{chrome.300}",
-      "$description": "Standard border color for general use. Provides balanced visual definition for common UI elements.\n\nCommon uses: Containers, cards, dividers, separators, default form inputs."
+      "$description": "Default border color for general UI elements. Provides balanced visual separation without overwhelming the interface. Optimized for readability and visual hierarchy.\n\nCommon uses: Card borders, form field outlines, table borders, content dividers, modal boundaries, section separators."
     },
     "3": {
       "$extensions": {
@@ -90,12 +91,12 @@
       },
       "$type": "color",
       "$value": "{chrome.200}",
-      "$description": "Softer border color for minimal separation. Creates subtle visual boundaries that don't dominate the UI.\n\nCommon uses: Subtle dividers, grouped content, secondary containers, table rows."
+      "$description": "Subtle border color for minimal visual separation. Creates gentle boundaries that organize content without adding visual weight. Ideal for maintaining clean, uncluttered interfaces.\n\nCommon uses: Table row separators, grouped list items, subtle content dividers, secondary container outlines, background element borders."
     },
     "brand": {
       "$type": "color",
       "$value": "{set.brand.solid.bg}",
-      "$description": "Focus state indicator color. Provides clear visual feedback for keyboard navigation and accessibility.\n\nCommon uses: Focus rings, keyboard navigation highlights, selection indicators."
+      "$description": "Brand-colored border for active states and focus indicators. Provides branded visual feedback for user interactions and meets accessibility requirements for focus visibility.\n\nCommon uses: Focus rings, active form field borders, primary button outlines, keyboard navigation highlights, selected interactive elements."
     },
     "success": {
       "$type": "color",
@@ -1144,13 +1145,13 @@
           "studio.tokens": {
             "modify": {
               "type": "alpha",
-              "value": "0.12",
+              "value": "0.15",
               "space": "lch"
             }
           }
         },
         "$type": "color",
-        "$value": "{green.400}",
+        "$value": "{lime.200}",
         "$description": "Green background highlighting newly added code lines while maintaining readability."
       },
       "add-lineNumber": {
@@ -1158,13 +1159,13 @@
           "studio.tokens": {
             "modify": {
               "type": "alpha",
-              "value": "0.2",
+              "value": "0.4",
               "space": "lch"
             }
           }
         },
         "$type": "color",
-        "$value": "{green.400}",
+        "$value": "{lime.200}",
         "$description": "Background for line numbers of added code, providing visual connection to added content."
       },
       "add-content-highlight": {
@@ -1172,13 +1173,13 @@
           "studio.tokens": {
             "modify": {
               "type": "alpha",
-              "value": "0.25",
+              "value": "0.4",
               "space": "lch"
             }
           }
         },
         "$type": "color",
-        "$value": "{green.400}",
+        "$value": "{lime.200}",
         "$description": "Stronger emphasis color for specific character changes within added lines."
       },
       "add-widget": {
@@ -1196,13 +1197,13 @@
           "studio.tokens": {
             "modify": {
               "type": "alpha",
-              "value": "0.12",
+              "value": "0.15",
               "space": "lch"
             }
           }
         },
         "$type": "color",
-        "$value": "{red.400}",
+        "$value": "{red.300}",
         "$description": "Red background highlighting removed code lines without causing eye strain."
       },
       "del-lineNumber": {
@@ -1210,13 +1211,13 @@
           "studio.tokens": {
             "modify": {
               "type": "alpha",
-              "value": "0.2",
+              "value": "0.4",
               "space": "lch"
             }
           }
         },
         "$type": "color",
-        "$value": "{red.400}",
+        "$value": "{red.300}",
         "$description": "Background for line numbers of deleted code, connecting numbers to removed content."
       },
       "del-content-highlight": {
@@ -1224,13 +1225,13 @@
           "studio.tokens": {
             "modify": {
               "type": "alpha",
-              "value": "0.25",
+              "value": "0.4",
               "space": "lch"
             }
           }
         },
         "$type": "color",
-        "$value": "{red.400}",
+        "$value": "{red.300}",
         "$description": "Stronger emphasis color for specific character changes within deleted lines."
       },
       "plain-content": {
@@ -1258,13 +1259,13 @@
           "studio.tokens": {
             "modify": {
               "type": "alpha",
-              "value": "0.12",
+              "value": "0.15",
               "space": "lch"
             }
           }
         },
         "$type": "color",
-        "$value": "{blue.400}",
+        "$value": "{blue.300}",
         "$description": "Background for diff section headers ('hunks') that indicate which part of the file is displayed."
       },
       "hunk-lineNumber": {
@@ -1272,13 +1273,13 @@
           "studio.tokens": {
             "modify": {
               "type": "alpha",
-              "value": "0.2",
+              "value": "0.4",
               "space": "lch"
             }
           }
         },
         "$type": "color",
-        "$value": "{blue.400}",
+        "$value": "{blue.300}",
         "$description": "Background for line numbers in section headers."
       },
       "hunk-content-color": {
@@ -1298,41 +1299,50 @@
       },
       "hljs-comment": {
         "$type": "color",
-        "$value": "{chrome.800}"
+        "$value": "{chrome.800}",
+        "$description": "Color for code comments in syntax highlighting. Provides reduced emphasis to distinguish explanatory text from executable code."
       },
       "hljs-keyword": {
         "$type": "color",
-        "$value": "{purple.800}"
+        "$value": "{purple.800}",
+        "$description": "Color for programming language keywords in syntax highlighting. Emphasizes reserved words and language constructs."
       },
       "hljs-title-class": {
         "$type": "color",
-        "$value": "{yellow.700}"
+        "$value": "{yellow.700}",
+        "$description": "Color for class names and type definitions in syntax highlighting. Highlights object-oriented programming constructs and custom types."
       },
       "hljs-string": {
         "$type": "color",
-        "$value": "{green.700}"
+        "$value": "{mint.700}",
+        "$description": "Color for string literals in syntax highlighting. Distinguishes text content and string values from other code elements."
       },
       "hljs-title-function": {
         "$type": "color",
-        "$value": "{blue.700}"
+        "$value": "{blue.700}",
+        "$description": "Color for function names and method definitions in syntax highlighting. Emphasizes callable code blocks and procedures."
       },
       "hljs-name": {
         "$type": "color",
-        "$value": "{red.800}"
+        "$value": "{red.800}",
+        "$description": "Color for HTML tag names and XML element names in syntax highlighting. Distinguishes markup structure from content."
       },
       "hljs-literal": {
         "$type": "color",
-        "$value": "{cyan.600}"
+        "$value": "{cyan.600}",
+        "$description": "Color for literal values like numbers, booleans, and constants in syntax highlighting. Emphasizes fixed data values."
       },
       "hljs-attr": {
         "$type": "color",
-        "$value": "{orange.600}"
+        "$value": "{orange.600}",
+        "$description": "Color for HTML/XML attributes and object properties in syntax highlighting. Highlights configurable element properties."
       }
     },
     "input": {
       "bg": {
         "$type": "color",
-        "$value": "{bg.3}"
+        "$value": "{bg.3}",
+        "$description": "Background color for form input fields. Provides clear visual distinction from surrounding content while maintaining readability and accessibility standards."
       }
     },
     "link": {
@@ -1641,56 +1651,68 @@
       "danger": {
         "bg": {
           "$type": "color",
-          "$value": "{red.150}"
+          "$value": "{red.150}",
+          "$description": "Background color for danger toast notifications. Provides visual context for error and critical messages."
         },
         "border": {
           "$type": "color",
-          "$value": "{red.300}"
+          "$value": "{red.300}",
+          "$description": "Border color for danger toast notifications. Creates definition and emphasis for critical messages."
         },
         "text": {
           "$type": "color",
-          "$value": "{pure.black}"
+          "$value": "{pure.black}",
+          "$description": "Text color for danger toast notifications. Ensures maximum readability for critical messages."
         },
         "fade": {
           "$type": "color",
-          "$value": "linear-gradient(0deg, {gradient.toast.danger.from} 42%, {gradient.toast.danger.to} 100%)"
+          "$value": "linear-gradient(0deg, {gradient.toast.danger.from} 42%, {gradient.toast.danger.to} 100%)",
+          "$description": "Gradient fade effect for danger toast notifications. Creates visual depth and emphasis for critical messages."
         },
         "transparent-btn": {
           "text": {
             "$type": "color",
-            "$value": "{pure.black}"
+            "$value": "{pure.black}",
+            "$description": "Text color for transparent buttons in danger toasts. Provides clear readability for secondary actions."
           },
           "text-hover": {
             "$type": "color",
-            "$value": "{chrome.850}"
+            "$value": "{chrome.850}",
+            "$description": "Hover text color for transparent buttons in danger toasts. Provides visual feedback for interactive elements."
           },
           "text-active": {
             "$type": "color",
-            "$value": "{chrome.850}"
+            "$value": "{chrome.850}",
+            "$description": "Active text color for transparent buttons in danger toasts. Indicates pressed state for interactive elements."
           }
         },
         "action-btn": {
           "text": {
             "$type": "color",
-            "$value": "{red.25}"
+            "$value": "{red.25}",
+            "$description": "Text color for action buttons in danger toasts. Provides high contrast for primary actions."
           },
           "bg": {
             "$type": "color",
-            "$value": "{pure.black}"
+            "$value": "{pure.black}",
+            "$description": "Background color for action buttons in danger toasts. Creates strong contrast for primary actions."
           },
           "bg-hover": {
             "$type": "color",
-            "$value": "{red.1000}"
+            "$value": "{red.1000}",
+            "$description": "Hover background color for action buttons in danger toasts. Provides visual feedback for interactive elements."
           },
           "bg-selected": {
             "$type": "color",
-            "$value": "{red.950}"
+            "$value": "{red.950}",
+            "$description": "Selected background color for action buttons in danger toasts. Indicates pressed state for interactive elements."
           }
         }
       },
       "fade": {
         "$type": "color",
-        "$value": "linear-gradient(0deg, {gradient.toast.default.from} 42%, {gradient.toast.default.to} 100%)"
+        "$value": "linear-gradient(0deg, {gradient.toast.default.from} 42%, {gradient.toast.default.to} 100%)",
+        "$description": "Default gradient fade effect for toast notifications. Creates visual depth and subtle emphasis for general messages."
       }
     }
   },

@@ -3,7 +3,7 @@
     "0": {
       "$type": "color",
       "$value": "{chrome.950}",
-      "$description": "Level 0. Foundational layer used for page navigation and as a container for insets."
+      "$description": "Level 0 background - Foundational surface layer. Used for page navigation areas and as a container for elevated content (insets). Creates the base canvas that other elements sit upon.\n\nCommon uses: Page headers, navigation bars, sidebar backgrounds, main content containers."
     },
     "1": {
       "$type": "color",
@@ -55,7 +55,7 @@
     "merged": {
       "$type": "color",
       "$value": "{set.purple.surface.text}",
-      "$description": "Primary color for text and icons in merged content.\n\nCommon uses: Merge message text."
+      "$description": "Text color for merged content and pull request states. Provides distinct visual identity for merge-related information and completed integration states.\n\nCommon uses: Merge commit messages, pull request merged status, integration completion indicators, merged branch labels."
     },
     "disabled": {
       "$type": "color",
@@ -64,7 +64,8 @@
     },
     "brand": {
       "$type": "color",
-      "$value": "{cyan.200}"
+      "$value": "{cyan.200}",
+      "$description": "Primary brand color for text and icons. Used to reinforce brand identity and create visual connection to the product.\n\nCommon uses: Brand elements, primary links, brand-specific content, logo text."
     }
   },
   "border": {
@@ -1327,41 +1328,50 @@
       },
       "hljs-comment": {
         "$type": "color",
-        "$value": "{chrome.300}"
+        "$value": "{chrome.300}",
+        "$description": "Color for code comments in syntax highlighting. Provides reduced emphasis to distinguish explanatory text from executable code."
       },
       "hljs-keyword": {
         "$type": "color",
-        "$value": "{purple.150}"
+        "$value": "{purple.150}",
+        "$description": "Color for programming language keywords in syntax highlighting. Emphasizes reserved words and language constructs."
       },
       "hljs-title-class": {
         "$type": "color",
-        "$value": "{yellow.100}"
+        "$value": "{yellow.100}",
+        "$description": "Color for class names and type definitions in syntax highlighting. Highlights object-oriented programming constructs and custom types."
       },
       "hljs-string": {
         "$type": "color",
-        "$value": "{green.100}"
+        "$value": "{green.100}",
+        "$description": "Color for string literals in syntax highlighting. Distinguishes text content and string values from other code elements."
       },
       "hljs-title-function": {
         "$type": "color",
-        "$value": "{blue.150}"
+        "$value": "{blue.150}",
+        "$description": "Color for function names and method definitions in syntax highlighting. Emphasizes callable code blocks and procedures."
       },
       "hljs-name": {
         "$type": "color",
-        "$value": "{red.150}"
+        "$value": "{red.150}",
+        "$description": "Color for HTML tag names and XML element names in syntax highlighting. Distinguishes markup structure from content."
       },
       "hljs-literal": {
         "$type": "color",
-        "$value": "{cyan.150}"
+        "$value": "{cyan.150}",
+        "$description": "Color for literal values like numbers, booleans, and constants in syntax highlighting. Emphasizes fixed data values."
       },
       "hljs-attr": {
         "$type": "color",
-        "$value": "{orange.200}"
+        "$value": "{orange.200}",
+        "$description": "Color for HTML/XML attributes and object properties in syntax highlighting. Highlights configurable element properties."
       }
     },
     "input": {
       "bg": {
         "$type": "color",
-        "$value": "{bg.2}"
+        "$value": "{bg.2}",
+        "$description": "Background color for form input fields. Provides clear visual distinction from surrounding content while maintaining readability and accessibility standards."
       }
     },
     "link": {
@@ -1670,56 +1680,68 @@
       "danger": {
         "bg": {
           "$type": "color",
-          "$value": "{red.800}"
+          "$value": "{red.800}",
+          "$description": "Background color for danger toast notifications. Provides visual context for error and critical messages."
         },
         "border": {
           "$type": "color",
-          "$value": "{red.600}"
+          "$value": "{red.600}",
+          "$description": "Border color for danger toast notifications. Creates definition and emphasis for critical messages."
         },
         "text": {
           "$type": "color",
-          "$value": "{red.25}"
+          "$value": "{red.25}",
+          "$description": "Text color for danger toast notifications. Ensures maximum readability for critical messages."
         },
         "fade": {
           "$type": "color",
-          "$value": "linear-gradient(0deg, {gradient.toast.danger.from} 42%, {gradient.toast.danger.to} 100%)"
+          "$value": "linear-gradient(0deg, {gradient.toast.danger.from} 42%, {gradient.toast.danger.to} 100%)",
+          "$description": "Gradient fade effect for danger toast notifications. Creates visual depth and emphasis for critical messages."
         },
         "transparent-btn": {
           "text": {
             "$type": "color",
-            "$value": "{red.25}"
+            "$value": "{red.25}",
+            "$description": "Text color for transparent buttons in danger toasts. Provides clear readability for secondary actions."
           },
           "text-hover": {
             "$type": "color",
-            "$value": "{red.50}"
+            "$value": "{red.50}",
+            "$description": "Hover text color for transparent buttons in danger toasts. Provides visual feedback for interactive elements."
           },
           "text-active": {
             "$type": "color",
-            "$value": "{red.100}"
+            "$value": "{red.100}",
+            "$description": "Active text color for transparent buttons in danger toasts. Indicates pressed state for interactive elements."
           }
         },
         "action-btn": {
           "text": {
             "$type": "color",
-            "$value": "{pure.black}"
+            "$value": "{pure.black}",
+            "$description": "Text color for action buttons in danger toasts. Provides high contrast for primary actions."
           },
           "bg": {
             "$type": "color",
-            "$value": "{red.25}"
+            "$value": "{red.25}",
+            "$description": "Background color for action buttons in danger toasts. Creates strong contrast for primary actions."
           },
           "bg-hover": {
             "$type": "color",
-            "$value": "{red.50}"
+            "$value": "{red.50}",
+            "$description": "Hover background color for action buttons in danger toasts. Provides visual feedback for interactive elements."
           },
           "bg-selected": {
             "$type": "color",
-            "$value": "{red.100}"
+            "$value": "{red.100}",
+            "$description": "Selected background color for action buttons in danger toasts. Indicates pressed state for interactive elements."
           }
         }
       },
       "fade": {
         "$type": "color",
-        "$value": "linear-gradient(0deg, {gradient.toast.default.from} 42%, {gradient.toast.default.to} 100%)"
+        "$value": "linear-gradient(0deg, {gradient.toast.default.from} 42%, {gradient.toast.default.to} 100%)",
+        "$description": "Default gradient fade effect for toast notifications. Creates visual depth and subtle emphasis for general messages."
       }
     }
   },

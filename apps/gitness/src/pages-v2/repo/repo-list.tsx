@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react'
+import { useEffect, useRef, useState } from 'react'
 import { useParams } from 'react-router-dom'
 
 import {
@@ -17,7 +17,7 @@ import { useGetSpaceURLParam } from '../../framework/hooks/useGetSpaceParam'
 import { useIsMFE } from '../../framework/hooks/useIsMFE'
 import { useMFEContext } from '../../framework/hooks/useMFEContext'
 import { useQueryState } from '../../framework/hooks/useQueryState'
-import usePaginationQueryStateWithStore from '../../hooks/use-pagination-query-state-with-store'
+import usePaginationQueryStateWithStore from '../../hooks/use-pagination-query-state-with-store-v2'
 import { PathParams } from '../../RouteDefinitions'
 import { PageResponseHeader } from '../../types'
 import { getRepoUrl, getScopeType } from '../../utils/scope-url-utils'
@@ -52,6 +52,9 @@ export default function ReposListPage() {
   const basename = `/ng${renderUrl}`
   const [sort, setSort] = useState<ListReposQueryQueryParams['sort']>('last_git_push')
   const [order, setOrder] = useState<ListReposQueryQueryParams['order']>('desc')
+
+  // Ref to track when we need to reset page due to filter changes
+  const shouldResetPageRef = useRef(false)
 
   const {
     data: { body: repoData, headers } = {},
@@ -88,6 +91,14 @@ export default function ReposListPage() {
       }
     }
   )
+
+  // Effect to reset page when filters change
+  useEffect(() => {
+    if (shouldResetPageRef.current) {
+      setQueryPage(1)
+      shouldResetPageRef.current = false
+    }
+  }, [favorite, recursive, sort, order, setQueryPage])
 
   useEffect(() => {
     const totalItems = parseInt(headers?.get(PageResponseHeader.xTotal) || '0')
@@ -196,14 +207,18 @@ export default function ReposListPage() {
       onFavoriteToggle={onFavoriteToggle}
       onFilterChange={({ favorite, recursive }: RepoListFilters) => {
         setFavorite(favorite ?? null)
+        shouldResetPageRef.current = true
+
         if (!recursive) return
 
         if (accountId && orgIdentifier && projectIdentifier) return
 
         if (accountId && orgIdentifier) {
           setRecursive(recursive.value === ExtendedScope.OrgProg)
+          shouldResetPageRef.current = true
         } else if (accountId) {
           setRecursive(recursive.value === ExtendedScope.All)
+          shouldResetPageRef.current = true
         }
       }}
       onSortChange={(sortValues: string) => {
@@ -213,6 +228,7 @@ export default function ReposListPage() {
 
         setSort(sortKey)
         setOrder(orderKey)
+        shouldResetPageRef.current = true
       }}
     />
   )

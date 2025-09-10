@@ -27,7 +27,7 @@ const useQueryState = <T = string>(
   useEffect(() => {
     const urlValue = parser.parse(searchParams.get(key))
     setValue(urlValue)
-  }, [searchParams, key, parser])
+  }, [searchParams, key])
 
   /**
    * Setter function to update both state and URL query parameter
@@ -53,7 +53,7 @@ const useQueryState = <T = string>(
       // Replace the current history entry to avoid creating a new browser history state
       setSearchParams(newParams, { replace: true })
     },
-    [key, setSearchParams, searchParams, parser]
+    [key, setSearchParams, parser]
   )
 
   return [value, setQuery]

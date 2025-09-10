@@ -1639,6 +1639,16 @@
         "$type": "color",
         "$value": "{text.3}",
         "$description": "Text color for sidebar group labels. Provides reduced emphasis for section headers and categorization."
+      },
+      "fade-start": {
+        "$type": "color",
+        "$value": "linear-gradient(0deg, {gradient.sidebar.fade} 0%, {bg.0} 100%)",
+        "$description": "Gradient fade effect for sidebar top edge. Creates smooth visual transition from sidebar content to background."
+      },
+      "fade-end": {
+        "$type": "color",
+        "$value": "linear-gradient(0deg, {bg.0} 0%, {gradient.sidebar.fade} 100%)",
+        "$description": "Gradient fade effect for sidebar bottom edge. Creates smooth visual transition from background to sidebar content."
       }
     },
     "tab": {

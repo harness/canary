@@ -389,22 +389,6 @@ export default {
       },
 
       colors: {
-        // 👉 Remove this
-        toast: {
-          background: {
-            danger: 'hsla(var(--canary-toast-background-danger))'
-          },
-          foreground: {
-            danger: 'hsla(var(--canary-toast-foreground-danger))'
-          },
-          icons: {
-            danger: {
-              default: 'hsla(var(--canary-toast-icon-danger-default))',
-              hover: 'hsla(var(--canary-toast-icon-danger-hover))'
-            }
-          }
-        },
-
         // 👉 Remove this by checking with pipeline team
         graph: {
           background: {
@@ -603,13 +587,9 @@ export default {
     { pattern: /^bg-tag-background-/ },
     { pattern: /^text-tag-foreground-/ },
     { pattern: /^border-tag-border-/ },
-    // toast classes
-    { pattern: /^bg-toast-/ },
-    { pattern: /^text-toast-/ },
 
     // Hover classes
     { pattern: /^hover:bg-graph-/ },
-    { pattern: /^hover:text-toast-/ },
     // tags classes
     { pattern: /^hover:bg-tag-background-/ },
     { pattern: /^hover:text-tag-foreground-/ },

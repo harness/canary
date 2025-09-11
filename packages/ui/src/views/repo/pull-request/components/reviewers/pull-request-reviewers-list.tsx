@@ -30,13 +30,12 @@ const ReviewersList: React.FC<ReviewersListProps> = ({
   removeReviewerError
 }) => (
   <Layout.Vertical gapY="md">
-    {addReviewerError ||
-      (removeReviewerError && (
-        <Alert.Root theme="danger">
-          <Alert.Title>Failed to add reviewer</Alert.Title>
-          <Alert.Description>{addReviewerError ?? removeReviewerError}</Alert.Description>
-        </Alert.Root>
-      ))}
+    {(addReviewerError || removeReviewerError) && (
+      <Alert.Root theme="danger">
+        <Alert.Title>Failed to add reviewer</Alert.Title>
+        <Alert.Description>{addReviewerError ?? removeReviewerError}</Alert.Description>
+      </Alert.Root>
+    )}
 
     {reviewers.length ? (
       reviewers.map(({ reviewer, review_decision, sha }) => (

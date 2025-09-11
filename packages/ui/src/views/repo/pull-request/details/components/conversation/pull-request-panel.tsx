@@ -552,7 +552,7 @@ const PullRequestPanel = ({
                 className="grow [&>.cn-stacked-list-field-title]:overflow-visible"
                 title={
                   <Layout.Horizontal align="center" gap="sm" wrap="wrap">
-                    {
+                    {!notBypassable && isMergeable && !isDraft && prPanelData.ruleViolation && (
                       <Checkbox
                         className="!w-fit"
                         id="checkbox-bypass"
@@ -566,7 +566,7 @@ const PullRequestPanel = ({
                         label="Bypass and merge anyway"
                         truncateLabel={false}
                       />
-                    }
+                    )}
 
                     {shouldShowMoreActions && (
                       <MoreActionsTooltip

@@ -81,7 +81,6 @@ export default function PullRequestChanges() {
     () => pullReqCommits?.commits?.map(commit => commit.sha as string),
     [pullReqCommits?.commits]
   )
-  const [diffMode, setDiffMode] = useState<DiffModeEnum>(DiffModeEnum.Split)
   const targetRef = useMemo(() => pullReqMetadata?.merge_base_sha, [pullReqMetadata?.merge_base_sha])
   const sourceRef = useMemo(() => pullReqMetadata?.source_sha, [pullReqMetadata?.source_sha])
   const prId = (pullRequestId && Number(pullRequestId)) || -1
@@ -93,8 +92,11 @@ export default function PullRequestChanges() {
   const isMfe = useIsMFE()
 
   const {
-    scope: { accountId }
+    scope: { accountId },
+    customHooks: { usePreferenceStore }
   } = useMFEContext()
+
+  const { preference: diffMode, setPreference: setDiffMode } = usePreferenceStore('USER', 'diffMode')
 
   const {
     data: { body: principals } = {},
@@ -605,7 +607,7 @@ export default function PullRequestChanges() {
         usePullRequestProviderStore={usePullRequestProviderStore}
         setDiffMode={setDiffMode}
         loadingReviewers={loadingReviewers}
-        diffMode={diffMode}
+        diffMode={diffMode || DiffModeEnum.Split}
         reviewers={reviewers}
         refetchReviewers={refetchReviewers}
         submitReview={submitReview}

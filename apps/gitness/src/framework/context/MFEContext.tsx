@@ -76,6 +76,7 @@ export interface MFEContextProps {
   }
   customHooks: Partial<{
     useGenerateToken: Unknown
+    usePreferenceStore: Unknown
   }>
   customUtils: Partial<{
     navigateToUserProfile: Unknown
@@ -107,17 +108,15 @@ export interface MFEContextProps {
   onRouteChange: (updatedLocationPathname: string) => void
 }
 
-export const MFEContext = createContext<MFEContextProps>({
+export const defaultContext: MFEContextProps = {
   scope: { accountId: '' },
-  parentContextObj: {
-    appStoreContext: createContext({
-      currentUserInfo: {
-        uuid: ''
-      }
-    })
-  },
   renderUrl: '',
-  customHooks: {},
+  parentContextObj: {
+    appStoreContext: createContext({ currentUserInfo: { uuid: '' } })
+  },
+  customHooks: {
+    usePreferenceStore: () => ({ preference: undefined, setPreference: noop })
+  },
   customUtils: {},
   routes: {},
   routeUtils: {},
@@ -125,4 +124,6 @@ export const MFEContext = createContext<MFEContextProps>({
   setMFETheme: noop,
   parentLocationPath: '',
   onRouteChange: noop
-})
+}
+
+export const MFEContext = createContext<MFEContextProps>(defaultContext)

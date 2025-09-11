@@ -6,12 +6,12 @@ import {
   CommitCopyActions,
   IconV2,
   Layout,
-  Link,
   NodeGroup,
   StackedList,
   Text,
   TimeAgoCard
 } from '@/components'
+import { useRouterContext } from '@/context'
 import { formatDate } from '@/utils'
 import { TypesCommit } from '@/views'
 
@@ -51,6 +51,8 @@ export const CommitsList: FC<CommitProps> = ({
 
     return Object.entries(commitsGroupedByDate)
   }, [data])
+
+  const { navigate } = useRouterContext()
 
   return (
     <div className={className}>
@@ -112,18 +114,19 @@ export const CommitsList: FC<CommitProps> = ({
                           <Layout.Horizontal gap="xs" align="center">
                             <CommitCopyActions sha={commit.sha} toCommitDetails={toCommitDetails} size="sm" />
                             <Button
-                              title="View repository at this point of history"
                               variant="outline"
                               size="sm"
-                              asChild
                               iconOnly
                               tooltipProps={{
                                 content: 'View repository at this point of history'
                               }}
+                              onClick={ev => {
+                                const finalNavigationString = toCode?.({ sha: commit.sha || '' }) || ''
+                                ev.stopPropagation()
+                                navigate(finalNavigationString)
+                              }}
                             >
-                              <Link to={toCode?.({ sha: commit?.sha || '' }) || ''}>
-                                <IconV2 name="code" />
-                              </Link>
+                              <IconV2 name="code-brackets" />
                             </Button>
                           </Layout.Horizontal>
                         )}

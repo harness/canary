@@ -60,9 +60,6 @@ export default {
     '&-caption-single-line-light': {
       font: 'var(--cn-caption-single-line-light)'
     },
-    '&-family-default': {
-      font: 'var(--cn-font-family-default)'
-    },
     '&-dialog-title': {
       font: 'var(--cn-comp-dialog-title)'
     }

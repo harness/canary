@@ -93,7 +93,13 @@ export const SecretEntityForm = forwardRef<SecretEntityFormHandle, SecretEntityF
               secretManagerIdentifier: initialSecretValues.spec?.secretManagerIdentifier
             },
             description: initialSecretValues.description,
-            tags: Object.keys(initialSecretValues.tags ?? {}).join(','),
+            tags: initialSecretValues.tags
+              ? Object.keys(initialSecretValues.tags).map(key => ({
+                  key,
+                  value: initialSecretValues.tags?.[key] || '',
+                  id: key
+                }))
+              : [],
             type: initialSecretValues.type
           },
           secretManagerRef: initialSecretValues?.secretManagerRef,

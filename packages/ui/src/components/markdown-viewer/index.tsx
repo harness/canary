@@ -150,7 +150,16 @@ export function MarkdownViewer({
         const TODO_LIST_ITEM_CLASS = 'task-list-item'
         const targetIsListItem = (event.target as HTMLElement).classList.contains(TODO_LIST_ITEM_CLASS)
         const target = (event.target as HTMLElement)?.closest?.(`.${TODO_LIST_ITEM_CLASS}`)
-        const input = target?.firstElementChild as HTMLInputElement
+
+        // Handle both DOM structures:
+        // 1. Without blank lines: <li><input>...</li>
+        // 2. With blank lines: <li><p><input>...</p></li>
+        const firstChild = target?.firstElementChild
+        const input =
+          firstChild?.tagName === 'INPUT'
+            ? (firstChild as HTMLInputElement)
+            : (firstChild?.querySelector('input[type="checkbox"]') as HTMLInputElement)
+
         const checked = targetIsListItem ? !input?.checked : input?.checked
         const checkboxIndex = parseInt(event.target.getAttribute('data-checkbox-index') || '0', 10)
         let currentCheckboxIndex = 0

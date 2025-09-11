@@ -1364,13 +1364,13 @@
           "studio.tokens": {
             "modify": {
               "type": "alpha",
-              "value": "0.12",
+              "value": "0.07",
               "space": "lch"
             }
           }
         },
         "$type": "color",
-        "$value": "{tuna.300}",
+        "$value": "{chrome.300}",
         "$description": "Hover color for header items. Creates distinct visual identification of interactive header elements."
       },
       "item-selected": {
@@ -1378,13 +1378,13 @@
           "studio.tokens": {
             "modify": {
               "type": "alpha",
-              "value": "0.14",
+              "value": "0.09",
               "space": "lch"
             }
           }
         },
         "$type": "color",
-        "$value": "{tuna.300}",
+        "$value": "{chrome.300}",
         "$description": "Selected color for header items. Creates distinct visual identification of interactive header elements."
       }
     },

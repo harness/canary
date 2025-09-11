@@ -1387,7 +1387,7 @@
           "studio.tokens": {
             "modify": {
               "type": "alpha",
-              "value": "0.12",
+              "value": "0.2",
               "space": "lch"
             }
           }
@@ -1401,7 +1401,7 @@
           "studio.tokens": {
             "modify": {
               "type": "alpha",
-              "value": "0.14",
+              "value": "0.26",
               "space": "lch"
             }
           }
@@ -1534,7 +1534,7 @@
             "studio.tokens": {
               "modify": {
                 "type": "alpha",
-                "value": "0.12",
+                "value": "0.2",
                 "space": "lch"
               }
             }
@@ -1548,7 +1548,7 @@
             "studio.tokens": {
               "modify": {
                 "type": "alpha",
-                "value": "0.14",
+                "value": "0.26",
                 "space": "lch"
               }
             }

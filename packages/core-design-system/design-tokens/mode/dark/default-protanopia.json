@@ -1526,7 +1526,7 @@
             }
           },
           "$type": "color",
-          "$value": "{chrome.600}",
+          "$value": "{tuna.300}",
           "$description": "Background color for sidebar items on hover. Provides subtle visual feedback for interactive elements."
         },
         "selected": {
@@ -1534,13 +1534,13 @@
             "studio.tokens": {
               "modify": {
                 "type": "alpha",
-                "value": "0.18",
+                "value": "0.14",
                 "space": "lch"
               }
             }
           },
           "$type": "color",
-          "$value": "{chrome.600}",
+          "$value": "{tuna.300}",
           "$description": "Background color for selected sidebar items. Indicates the current active navigation state with stronger emphasis than hover."
         }
       },
@@ -1561,7 +1561,7 @@
       },
       "fade-end": {
         "$type": "color",
-        "$value": "linear-gradient(0deg, {bg.0} 0%, {comp.sidebar.bg} 100%)",
+        "$value": "linear-gradient(0deg, {comp.sidebar.bg} 0%, {gradient.sidebar.fade} 100%)",
         "$description": "Gradient fade effect for sidebar bottom edge. Creates smooth visual transition from background to sidebar content."
       }
     },
@@ -1688,78 +1688,6 @@
           "$value": "{chrome.850}",
           "$description": "Border color for slider handles. Provides definition and contrast for the interactive control."
         }
-      }
-    },
-    "sidebar": {
-      "bg": {
-        "$type": "color",
-        "$value": "{bg.0}",
-        "$description": "Background color for the sidebar container. Provides foundational layer for navigation elements."
-      },
-      "item": {
-        "text": {
-          "$type": "color",
-          "$value": "{text.2}",
-          "$description": "Default text color for sidebar navigation items. Provides optimal readability for menu labels."
-        },
-        "text-hover": {
-          "$type": "color",
-          "$value": "{text.1}",
-          "$description": "Text color for sidebar items on hover state. Creates higher contrast for interactive feedback."
-        },
-        "text-selected": {
-          "$type": "color",
-          "$value": "{text.1}",
-          "$description": "Text color for selected sidebar items. Emphasizes the current active navigation state."
-        },
-        "hover": {
-          "$extensions": {
-            "studio.tokens": {
-              "modify": {
-                "type": "alpha",
-                "value": "0.12",
-                "space": "lch"
-              }
-            }
-          },
-          "$type": "color",
-          "$value": "{tuna.300}",
-          "$description": "Background color for sidebar items on hover. Provides subtle visual feedback for interactive elements."
-        },
-        "selected": {
-          "$extensions": {
-            "studio.tokens": {
-              "modify": {
-                "type": "alpha",
-                "value": "0.14",
-                "space": "lch"
-              }
-            }
-          },
-          "$type": "color",
-          "$value": "{tuna.300}",
-          "$description": "Background color for selected sidebar items. Indicates the current active navigation state with stronger emphasis than hover."
-        }
-      },
-      "separator": {
-        "$type": "color",
-        "$value": "{border.3}",
-        "$description": "Color for separator lines between sidebar sections. Creates visual grouping and hierarchy."
-      },
-      "group-label": {
-        "$type": "color",
-        "$value": "{text.3}",
-        "$description": "Text color for sidebar group labels. Provides reduced emphasis for section headers and categorization."
-      },
-      "fade-start": {
-        "$type": "color",
-        "$value": "linear-gradient(0deg, {gradient.sidebar.fade} 0%, {comp.sidebar.bg} 100%)",
-        "$description": "Gradient fade effect for sidebar top edge. Creates smooth visual transition from sidebar content to background."
-      },
-      "fade-end": {
-        "$type": "color",
-        "$value": "linear-gradient(0deg, {comp.sidebar.bg} 0%, {gradient.sidebar.fade} 100%)",
-        "$description": "Gradient fade effect for sidebar bottom edge. Creates smooth visual transition from background to sidebar content."
       }
     },
     "tab": {

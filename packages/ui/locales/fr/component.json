@@ -76,6 +76,9 @@
     "administration": "Administration",
     "account": "Compte"
   },
+  "dialog": {
+    "noDescription": "No description available"
+  },
   "deleteDialog": {
     "descriptionWithType": "This will permanently delete your {{type}} {{identifier}} and remove all data. This action cannot be undone.",
     "description": "This will permanently remove all data. This action cannot be undone.",

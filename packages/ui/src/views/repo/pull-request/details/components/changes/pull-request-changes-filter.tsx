@@ -1,6 +1,6 @@
 import { useEffect, useMemo, useState } from 'react'
 
-import { Button, CounterBadge, DropdownMenu, IconV2, Layout, SplitButton } from '@/components'
+import { Button, CounterBadge, Dialog, DropdownMenu, IconV2, Layout, SplitButton } from '@/components'
 import { useTranslation } from '@/context'
 import { TypesUser } from '@/types'
 import { ChangedFilesShortInfo, DiffModeOptions, TypesCommit } from '@/views'
@@ -245,13 +245,13 @@ export const PullRequestChangesFilter: React.FC<PullRequestChangesFilterProps> =
             </Button>
           )}
 
-          {commitSuggestionsBatchCount > 0 ? (
-            <Button variant="outline" onClick={() => onCommitSuggestionsBatch()}>
-              Commit suggestion
-              <CounterBadge theme="info">{commitSuggestionsBatchCount}</CounterBadge>
-            </Button>
-          ) : (
-            <></>
+          {commitSuggestionsBatchCount > 0 && (
+            <Dialog.Trigger>
+              <Button variant="outline" onClick={() => onCommitSuggestionsBatch()}>
+                Commit suggestion
+                <CounterBadge theme="info">{commitSuggestionsBatchCount}</CounterBadge>
+              </Button>
+            </Dialog.Trigger>
           )}
           {!shouldHideReviewButton && currentUser && (
             <SplitButton

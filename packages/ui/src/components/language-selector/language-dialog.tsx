@@ -32,7 +32,7 @@ const LanguageDialog: FC<LanguageDialogProps> = ({
 
   return (
     <Dialog.Root open={open} onOpenChange={onOpenChange}>
-      {!!children && <Dialog.Trigger asChild>{children}</Dialog.Trigger>}
+      {!!children && <Dialog.Trigger>{children}</Dialog.Trigger>}
       <Dialog.Content>
         <Dialog.Header>
           <Dialog.Title className="text-5 font-medium">Language</Dialog.Title>

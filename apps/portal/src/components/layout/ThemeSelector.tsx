@@ -1,5 +1,6 @@
 import {
   Button,
+  DialogProvider,
   IconV2,
   ThemeDialog,
   type ThemeDialogProps,
@@ -26,7 +27,7 @@ export function ThemeSelector() {
   }, [theme]);
 
   return (
-    <TooltipProvider>
+    <DialogProvider>
       <ThemeDialog
         open={open}
         onOpenChange={setOpen}
@@ -41,7 +42,7 @@ export function ThemeSelector() {
           <IconV2 name="theme" />
         </Button>
       </ThemeDialog>
-    </TooltipProvider>
+    </DialogProvider>
   );
 }
 

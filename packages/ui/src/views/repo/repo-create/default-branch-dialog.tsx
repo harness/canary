@@ -56,7 +56,7 @@ export const DefaultBranchDialog: FC<DefaultBranchDialogProps> = ({ formMethods 
       </Text>
 
       <Dialog.Root open={open} onOpenChange={handleOpenChange}>
-        <Dialog.Trigger asChild>
+        <Dialog.Trigger>
           <Button variant="outline">
             <IconV2 name="git-branch" />
             {branchValue}

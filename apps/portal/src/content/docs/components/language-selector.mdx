@@ -10,7 +10,7 @@ import { DocsPage } from "@/components/docs-page";
 
 <DocsPage.ComponentExample
   client:only
-  code={`<LanguageDialog onOpenChange={() => {}} onChange={() => {}} onSave={() => {}} onCancel={() => {}}><button>Select Language</button></LanguageDialog>`}
+  code={`<LanguageDialog onOpenChange={() => {}} onChange={() => {}} onSave={() => {}} onCancel={() => {}} supportedLanguages={[]}><button>Select Language</button></LanguageDialog>`}
 />
 
 ## Usage
@@ -46,6 +46,7 @@ function App() {
         onChange={handleChange}
         onSave={handleSave}
         onCancel={handleCancel}
+        supportedLanguages={[]}
       >
         <button onClick={() => setIsOpen(true)}>Select Language</button>
       </LanguageDialog>

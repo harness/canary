@@ -223,9 +223,11 @@ function FormWithZodAndReactHookForm() {
   /** 5️⃣ Use FormWrapper with formMethods and onSubmit */
   return (
     <Dialog.Root>
-    <Dialog.Trigger asChild>
-      <Button>Open Dialog with Form</Button>
-    </Dialog.Trigger>
+      <Dialog.Trigger>
+        <Button iconOnly onClick={() => setOpen(true)}>
+          <IconV2 name="theme" />
+        </Button>
+      </Dialog.Trigger>
 
     <Dialog.Content>
       <Dialog.Header>

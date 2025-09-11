@@ -77,7 +77,7 @@ const Content = forwardRef<HTMLDivElement, ContentProps>(({ title, children }, r
   })
 
   return (
-    <Dialog.Content onOpenAutoFocus={event => event.preventDefault()} ref={ref}>
+    <Dialog.Content ref={ref}>
       <Dialog.Header
         icon={
           context.theme === 'danger' ? 'xmark-circle' : context.theme === 'warning' ? 'warning-triangle' : undefined

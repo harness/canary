@@ -1,4 +1,4 @@
-import { FC } from 'react'
+import { FC, useCallback } from 'react'
 
 import {
   ActionData,
@@ -15,7 +15,8 @@ import {
   Table,
   Tag,
   Text,
-  TimeAgoCard
+  TimeAgoCard,
+  useCustomDialogTrigger
 } from '@/components'
 import { useTranslation } from '@/context'
 import { cn } from '@utils/cn'
@@ -34,6 +35,16 @@ export const BranchesList: FC<BranchListPageProps> = ({
   onDeleteBranch
 }) => {
   const { t } = useTranslation()
+
+  const { triggerRef, registerTrigger } = useCustomDialogTrigger()
+
+  const handleDeleteBranch = useCallback(
+    (branchName: string) => {
+      registerTrigger()
+      onDeleteBranch(branchName)
+    },
+    [onDeleteBranch, registerTrigger]
+  )
 
   if (isLoading) {
     return <Skeleton.Table countRows={12} countColumns={6} />
@@ -174,6 +185,7 @@ export const BranchesList: FC<BranchListPageProps> = ({
               </Table.Cell>
               <Table.Cell className="text-right">
                 <MoreActionsTooltip
+                  ref={triggerRef}
                   iconName="more-horizontal"
                   actions={[
                     // Don't show Compare option for default branch
@@ -194,7 +206,7 @@ export const BranchesList: FC<BranchListPageProps> = ({
                     {
                       isDanger: true,
                       title: t('views:repos.deleteBranch', 'Delete Branch'),
-                      onClick: () => onDeleteBranch(branch.name),
+                      onClick: () => handleDeleteBranch(branch.name),
                       iconName: 'trash'
                     }
                   ]}

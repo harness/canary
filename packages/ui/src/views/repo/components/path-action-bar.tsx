@@ -1,6 +1,6 @@
 import { FC } from 'react'
 
-import { Button, IconV2, Layout, PathBreadcrumbs, PathParts } from '@/components'
+import { Button, Dialog, IconV2, Layout, PathBreadcrumbs, PathParts } from '@/components'
 import { useRouterContext, useTranslation } from '@/context'
 import { BranchSelectorTab, CodeModes } from '@/views'
 
@@ -73,10 +73,12 @@ export const PathActionBar: FC<PathActionBarProps> = ({
             </Button>
           )}
           {!!handleOpenCommitDialog && (
-            <Button onClick={handleOpenCommitDialog}>
-              <IconV2 name="upload" />
-              Commit Changes
-            </Button>
+            <Dialog.Trigger>
+              <Button onClick={handleOpenCommitDialog}>
+                <IconV2 name="upload" />
+                Commit Changes
+              </Button>
+            </Dialog.Trigger>
           )}
         </Layout.Flex>
       )}

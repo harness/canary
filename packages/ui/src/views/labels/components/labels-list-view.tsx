@@ -135,11 +135,11 @@ export const LabelsListView: FC<LabelsListViewProps> = ({
               <Table.Cell className="align-top">
                 <Layout.Vertical align="start" gap="xs">
                   <LabelTag
-                    className="mt-cn-2xs"
+                    wrapperClassName="mt-cn-2xs"
                     scope={label.scope ?? 0}
                     labelKey={label.key}
                     color={label.color}
-                    labelValue={(valuesCount || '').toString()}
+                    value={(valuesCount || '').toString()}
                     withIndicator={label.type === LabelType.DYNAMIC}
                   />
 
@@ -150,7 +150,7 @@ export const LabelsListView: FC<LabelsListViewProps> = ({
                         scope={label.scope}
                         labelKey={label.key}
                         color={item?.color || label.color}
-                        labelValue={item.value}
+                        value={item.value}
                       />
                     ))}
                 </Layout.Vertical>

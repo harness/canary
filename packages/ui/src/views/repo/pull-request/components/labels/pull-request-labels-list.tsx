@@ -2,10 +2,14 @@ import { FC } from 'react'
 
 import { Text } from '@/components'
 import { useTranslation } from '@/context'
-import { LabelMarkerProps, LabelTag, PRListLabelType } from '@/views'
+import { LabelTag, LabelTagProps, PRListLabelType } from '@/views'
 import { cn } from '@utils/cn'
 
-type LabelListLabel = PRListLabelType & Pick<LabelMarkerProps, 'onDelete'>
+type LabelListLabel = PRListLabelType &
+  Omit<LabelTagProps, 'labelKey' | 'id' | 'value'> & {
+    onDelete?: () => void
+    value?: string
+  }
 
 interface LabelsListProps {
   labels: LabelListLabel[]
@@ -33,19 +37,10 @@ export const LabelsList: FC<LabelsListProps> = ({ labels, className, showReset, 
           scope={label.scope}
           color={label.color}
           labelKey={label.key}
-          labelValue={label.value || ''}
-          tagProps={{
-            size: 'sm',
-            onActionClick: label.onDelete,
-            actionIcon: showReset ? 'xmark' : undefined,
-            onClick: onClick
-              ? e => {
-                  e.stopPropagation()
-                  e.preventDefault()
-                  onClick?.(label)
-                }
-              : undefined
-          }}
+          value={label.value || ''}
+          onActionClick={label.onDelete}
+          actionIcon={showReset ? 'xmark' : undefined}
+          onClick={() => onClick?.(label)}
         />
       ))}
     </div>

@@ -112,16 +112,16 @@ export const LabelValueSelector: FC<LabelValueSelectorProps> = ({ label, handleA
             </Button>
           }
           prefix={
-            <LabelTag
-              className="border-0 pl-cn-xs"
-              scope={label.scope ?? 0}
-              color={label.color as ColorsEnum}
-              labelKey={label.key ?? ''}
-              tagProps={{
-                className: 'max-w-20',
-                size: 'sm'
-              }}
-            />
+            // to avoid styles from .cn-input-prefix
+            <div className="contents">
+              <LabelTag
+                wrapperClassName="border-0 pl-cn-xs"
+                scope={label.scope ?? 0}
+                color={label.color as ColorsEnum}
+                value={label.key ?? ''}
+                className="max-w-20"
+              />
+            </div>
           }
           {...wrapConditionalObjectElement({ maxLength: 50 }, !!label?.isCustom)}
         />

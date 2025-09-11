@@ -371,8 +371,7 @@ const PullRequestSystemComments: FC<SystemCommentProps> = ({
                   scope={scope as number}
                   color={(value_color ?? label_color) as ColorsEnum}
                   labelKey={label as string}
-                  labelValue={value as string}
-                  tagProps={{ size: 'sm' }}
+                  value={value as string}
                 />
                 <Text variant="body-single-line-normal" color="foreground-3">
                   label

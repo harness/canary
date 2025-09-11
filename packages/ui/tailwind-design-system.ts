@@ -402,41 +402,6 @@ export default {
           }
         },
 
-        // 👉 Remove this by checking all instances
-        label: {
-          foreground: {
-            red: 'var(--canary-label-foreground-red-01)',
-            green: 'var(--canary-label-foreground-green-01)',
-            yellow: 'var(--canary-label-foreground-yellow-01)',
-            blue: 'var(--canary-label-foreground-blue-01)',
-            pink: 'var(--canary-label-foreground-pink-01)',
-            purple: 'var(--canary-label-foreground-purple-01)',
-            violet: 'var(--canary-label-foreground-violet-01)',
-            indigo: 'var(--canary-label-foreground-indigo-01)',
-            cyan: 'var(--canary-label-foreground-cyan-01)',
-            orange: 'var(--canary-label-foreground-orange-01)',
-            brown: 'var(--canary-label-foreground-brown-01)',
-            mint: 'var(--canary-label-foreground-mint-01)',
-            lime: 'var(--canary-label-foreground-lime-01)'
-          },
-          background: {
-            cover: 'var(--canary-label-background-cover-01)',
-            red: 'var(--canary-label-background-red-01)',
-            green: 'var(--canary-label-background-green-01)',
-            yellow: 'var(--canary-label-background-yellow-01)',
-            blue: 'var(--canary-label-background-blue-01)',
-            pink: 'var(--canary-label-background-pink-01)',
-            purple: 'var(--canary-label-background-purple-01)',
-            violet: 'var(--canary-label-background-violet-01)',
-            indigo: 'var(--canary-label-background-indigo-01)',
-            cyan: 'var(--canary-label-background-cyan-01)',
-            orange: 'var(--canary-label-background-orange-01)',
-            brown: 'var(--canary-label-background-brown-01)',
-            mint: 'var(--canary-label-background-mint-01)',
-            lime: 'var(--canary-label-background-lime-01)'
-          }
-        },
-
         // 👉 Remove this by checking with pipeline team
         graph: {
           background: {
@@ -638,10 +603,6 @@ export default {
     // toast classes
     { pattern: /^bg-toast-/ },
     { pattern: /^text-toast-/ },
-    // label classes
-    { pattern: /^bg-label-background-/ },
-    { pattern: /^bg-label-foreground-/ }, // this is essential for the color select in the LabelFormColorAndNameGroup component
-    { pattern: /^text-label-foreground-/ },
 
     // Hover classes
     { pattern: /^hover:bg-graph-/ },
@@ -650,9 +611,6 @@ export default {
     { pattern: /^hover:bg-tag-background-/ },
     { pattern: /^hover:text-tag-foreground-/ },
     { pattern: /^hover:border-tag-border-/ },
-    // label classes
-    { pattern: /^hover:bg-label-background-/ },
-    { pattern: /^hover:text-label-foreground-/ },
     'stroke-borders-2',
     { pattern: /rounded-./ },
     { pattern: /border-./ },

@@ -171,9 +171,8 @@ export const LabelsHeader = ({
                         scope={label.scope ?? 0}
                         color={label.color as ILabelType['color']}
                         labelKey={label.key ?? ''}
-                        labelValue={(label.values?.length || '').toString()}
+                        value={(label.values?.length || '').toString()}
                         withIndicator={label.type === LabelType.DYNAMIC}
-                        tagProps={{ size: 'sm' }}
                       />
                     }
                     // TODO: add description when it is available from PR Labels call

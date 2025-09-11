@@ -1729,7 +1729,7 @@
         },
         "border": {
           "$type": "color",
-          "$value": "{red.400}",
+          "$value": "{red.600}",
           "$description": "Border color for danger toast notifications. Creates definition and emphasis for critical messages."
         },
         "text": {
@@ -1746,16 +1746,16 @@
           "text": {
             "$type": "color",
             "$value": "{red.25}",
-            "$description": "Text color for action buttons in danger toasts. Provides high contrast for primary actions."
+            "$description": "Text color for transparent buttons in danger toasts. Provides clear readability for secondary actions."
           },
           "text-hover": {
             "$type": "color",
-            "$value": "{pure.white}",
+            "$value": "{red.50}",
             "$description": "Hover text color for transparent buttons in danger toasts. Provides visual feedback for interactive elements."
           },
           "text-active": {
             "$type": "color",
-            "$value": "{pure.white}",
+            "$value": "{red.100}",
             "$description": "Active text color for transparent buttons in danger toasts. Indicates pressed state for interactive elements."
           }
         },
@@ -1763,7 +1763,7 @@
           "text": {
             "$type": "color",
             "$value": "{pure.black}",
-            "$description": "Text color for transparent buttons in danger toasts. Provides clear readability for secondary actions."
+            "$description": "Text color for action buttons in danger toasts. Provides high contrast for primary actions."
           },
           "bg": {
             "$type": "color",
@@ -1772,12 +1772,12 @@
           },
           "bg-hover": {
             "$type": "color",
-            "$value": "{pure.white}",
+            "$value": "{red.50}",
             "$description": "Hover background color for action buttons in danger toasts. Provides visual feedback for interactive elements."
           },
           "bg-selected": {
             "$type": "color",
-            "$value": "{red.25}",
+            "$value": "{red.100}",
             "$description": "Selected background color for action buttons in danger toasts. Indicates pressed state for interactive elements."
           }
         }

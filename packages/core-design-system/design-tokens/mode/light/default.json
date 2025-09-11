@@ -1741,12 +1741,12 @@
           },
           "text-hover": {
             "$type": "color",
-            "$value": "{red.850}",
+            "$value": "{chrome.850}",
             "$description": "Hover text color for transparent buttons in danger toasts. Provides visual feedback for interactive elements."
           },
           "text-active": {
             "$type": "color",
-            "$value": "{red.850}",
+            "$value": "{chrome.850}",
             "$description": "Active text color for transparent buttons in danger toasts. Indicates pressed state for interactive elements."
           }
         },
@@ -1763,12 +1763,12 @@
           },
           "bg-hover": {
             "$type": "color",
-            "$value": "{red.950}",
+            "$value": "{red.1000}",
             "$description": "Hover background color for action buttons in danger toasts. Provides visual feedback for interactive elements."
           },
           "bg-selected": {
             "$type": "color",
-            "$value": "{red.1000}",
+            "$value": "{red.950}",
             "$description": "Selected background color for action buttons in danger toasts. Indicates pressed state for interactive elements."
           }
         }

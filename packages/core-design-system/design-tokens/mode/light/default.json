@@ -1560,7 +1560,7 @@
       },
       "separator": {
         "$type": "color",
-        "$value": "{border.3}",
+        "$value": "{border.2}",
         "$description": "Color for separator lines between sidebar sections. Creates visual grouping and hierarchy."
       },
       "group-label": {

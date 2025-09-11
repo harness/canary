@@ -1,13 +1,19 @@
 import { DiffFile, DiffViewProps, SplitSide } from '@git-diff-view/react'
 
+export type Side = 'old' | 'new'
+
 export type LinesRange = {
-  side: 'old' | 'new'
+  side: Side
   start: number
   end: number
 }
 
 export interface ExtendedDiffViewProps<T> extends Omit<DiffViewProps<T>, 'extendData' | 'renderWidgetLine'> {
   scopeMultilineSelectionToOneHunk?: (lineRange: LinesRange) => LinesRange
+  scopeMultilineSelectionToOneBlockAndOneSide?: (
+    start: { old?: number; new?: number },
+    end: { old?: number; new?: number }
+  ) => LinesRange
   extendData?: {
     oldFile?: Record<
       string,

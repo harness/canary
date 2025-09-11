@@ -1,10 +1,13 @@
 .ExtendedDiffView-RowCell-Selected.diff-line-new-num,
-.ExtendedDiffView-RowCell-Selected.diff-line-old-num {
+.ExtendedDiffView-RowCell-Selected.diff-line-old-num,
+.ExtendedDiffView-RowCell-Selected.diff-line-num,
+.ExtendedDiffView-RowCell-Selected.diff-line-content {
   position: relative;
 }
 
 .ExtendedDiffView-RowCell-Selected.diff-line-new-num::after,
-.ExtendedDiffView-RowCell-Selected.diff-line-old-num::after {
+.ExtendedDiffView-RowCell-Selected.diff-line-old-num::after,
+.ExtendedDiffView-RowCell-Selected.diff-line-num::after {
   content: '';
   position: absolute;
   z-index: 1;
@@ -15,7 +18,8 @@
 }
 
 .ExtendedDiffView-RowCell-Selected.diff-line-new-num::before,
-.ExtendedDiffView-RowCell-Selected.diff-line-old-num::before {
+.ExtendedDiffView-RowCell-Selected.diff-line-old-num::before,
+.ExtendedDiffView-RowCell-Selected.diff-line-num::before {
   content: '';
   z-index: 2;
   position: absolute;
@@ -27,7 +31,8 @@
 }
 
 .ExtendedDiffView-RowCell-Selected.diff-line-new-content:after,
-.ExtendedDiffView-RowCell-Selected.diff-line-old-content:after {
+.ExtendedDiffView-RowCell-Selected.diff-line-old-content:after,
+.ExtendedDiffView-RowCell-Selected.diff-line-content:after {
   content: '';
   position: absolute;
   z-index: 1;

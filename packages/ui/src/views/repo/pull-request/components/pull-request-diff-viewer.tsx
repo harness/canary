@@ -23,7 +23,10 @@ import { debounce, get } from 'lodash-es'
 import { OverlayScrollbars } from 'overlayscrollbars'
 
 import PRCommentView from '../details/components/common/pull-request-comment-view'
-import { scopeLinesRangeToOneBlock } from '../details/components/conversation/diff-utils'
+import {
+  scopeLinesRangeToOneBlock,
+  scopeLinesRangeToOneBlockAndOneSide
+} from '../details/components/conversation/diff-utils'
 import PullRequestTimelineItem from '../details/components/conversation/pull-request-timeline-item'
 import { replaceMentionIdWithEmail } from '../details/components/conversation/utils'
 import { ExpandedCommentsContext, useExpandedCommentsContext } from '../details/context/pull-request-comments-context'
@@ -688,6 +691,12 @@ const PullRequestDiffViewer = ({
     [blocks]
   )
 
+  const scopeMultilineSelectionToOneBlockAndOneSide = useCallback(
+    (start: { old?: number; new?: number }, end: { old?: number; new?: number }) =>
+      blocks ? scopeLinesRangeToOneBlockAndOneSide(blocks, start, end) : null,
+    [blocks]
+  )
+
   return (
     <ExpandedCommentsContext.Provider value={contextValue}>
       <div data-diff-file-path={fileName}>
@@ -707,10 +716,10 @@ const PullRequestDiffViewer = ({
               diffViewMode={mode}
               registerHighlighter={highlighter}
               diffViewWrap={wrap}
-              // TODO: Remove 'mode === DiffModeEnum.Split' after the shadow dom is removed
               diffViewAddWidget={addWidget}
               diffViewTheme={isLightTheme ? 'light' : 'dark'}
               scopeMultilineSelectionToOneHunk={scopeMultilineSelectionToOneHunk}
+              scopeMultilineSelectionToOneBlockAndOneSide={scopeMultilineSelectionToOneBlockAndOneSide}
             />
           </div>
         )}

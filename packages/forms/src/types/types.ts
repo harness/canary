@@ -68,6 +68,8 @@ export interface IInputDefinition<T = unknown> {
    * Runtime inputs
    *
    * Note: In input has child input that can be runtime inputs we can define input components.
+   *
+   * @deprecated
    */
   runtimeInputs?: IInputDefinition<unknown>[]
   /**

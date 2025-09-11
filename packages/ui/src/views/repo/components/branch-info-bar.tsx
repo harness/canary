@@ -53,7 +53,7 @@ export const BranchInfoBar: FC<BranchInfoBarProps> = ({
           )}
           {hasBehind && (
             <StyledLink
-              to={`${spaceId ? `/${spaceId}` : ''}/repos/${repoId}/pulls/compare/${defaultBranchName}...${selectedBranchTag?.name}`}
+              to={`${spaceId ? `/${spaceId}` : ''}/repos/${repoId}/pulls/compare/${selectedBranchTag?.name}...${defaultBranchName}`}
             >
               {behind} {easyPluralize(behind, 'commit', 'commits')} behind
             </StyledLink>

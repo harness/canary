@@ -24,7 +24,7 @@ const Item = forwardRef<HTMLDivElement, ItemProps>(
     const { Link } = useRouterContext()
 
     const commonClassnames = cn(
-      'w-[fill-available] py-cn-2xs pr-1.5 rounded text-cn-2 hover:text-cn-1 hover:bg-cn-hover focus-visible:text-cn-1 focus-visible:bg-cn-hover focus-visible:outline-none',
+      'w-[stretch] py-cn-2xs pr-1.5 rounded text-cn-2 hover:text-cn-1 hover:bg-cn-hover focus-visible:text-cn-1 focus-visible:bg-cn-hover focus-visible:outline-none',
       {
         'bg-cn-selected text-cn-1': isActive,
         'grid items-center justify-start gap-cn-2xs grid-flow-col': !!link

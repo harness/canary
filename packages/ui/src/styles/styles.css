@@ -8,10 +8,6 @@
 
 @import 'highlight.js/styles/atom-one-dark.css';
 
-@tailwind base;
-@tailwind components;
-@tailwind utilities;
-
 @font-face {
   font-family: 'Inter';
   font-style: normal;
@@ -31,43 +27,6 @@
   font-style: normal;
   font-weight: 400;
   src: url('../fonts/JetBrainsMono-Regular.woff2') format('woff2');
-}
-
-@layer base {
-  body {
-    @apply bg-cn-0 text-cn-2 font-body-normal overscroll-y-none;
-  }
-}
-
-@layer utilities {
-  /*
-    Handy CSS class to prevent Input background color becomes yellow in Chrome on autofill.
-    Works as well with inputs with transparent background.
-
-    https://stackoverflow.com/questions/2781549/removing-input-background-colour-for-chrome-autocomplete
-  */
-  .remove-autocomplete-styles:-webkit-autofill,
-  .remove-autocomplete-styles:-webkit-autofill:hover,
-  .remove-autocomplete-styles:-webkit-autofill:focus {
-    transition:
-      background-color 5000s,
-      color 5000s;
-  }
-
-  .scrollbar-hidden {
-    -ms-overflow-style: none;
-    scrollbar-width: none;
-
-    &::-webkit-scrollbar {
-      display: none;
-    }
-  }
-
-  @supports (field-sizing: content) {
-    .field-sizing-content {
-      field-sizing: content;
-    }
-  }
 }
 
 :root,

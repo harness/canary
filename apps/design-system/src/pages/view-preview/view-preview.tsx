@@ -1,6 +1,6 @@
 import { FC, ReactNode } from 'react'
 
-import '@harnessio/ui/styles.css'
+import './styles.css'
 
 import { Navigate, Route, Routes } from 'react-router-dom'
 

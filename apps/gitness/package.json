@@ -63,6 +63,7 @@
     "@types/react-dom": "^17.0.3",
     "@vitejs/plugin-react-swc": "^3.7.2",
     "@vitest/coverage-istanbul": "^2.1.8",
+    "autoprefixer": "^10.4.20",
     "css-loader": "^7.1.2",
     "eslint": "^8.57.1",
     "eslint-plugin-react-hooks": "^5.1.0-rc.0",

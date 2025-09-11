@@ -1406,13 +1406,13 @@
           "studio.tokens": {
             "modify": {
               "type": "alpha",
-              "value": "0.07",
+              "value": "0.12",
               "space": "lch"
             }
           }
         },
         "$type": "color",
-        "$value": "{chrome.300}",
+        "$value": "{tuna.300}",
         "$description": "Hover color for header items. Creates distinct visual identification of interactive header elements."
       },
       "item-selected": {
@@ -1420,13 +1420,13 @@
           "studio.tokens": {
             "modify": {
               "type": "alpha",
-              "value": "0.09",
+              "value": "0.14",
               "space": "lch"
             }
           }
         },
         "$type": "color",
-        "$value": "{chrome.300}",
+        "$value": "{tuna.300}",
         "$description": "Selected color for header items. Creates distinct visual identification of interactive header elements."
       }
     },
@@ -1550,7 +1550,7 @@
             }
           },
           "$type": "color",
-          "$value": "{tuna.300}",
+          "$value": "{chrome.600}",
           "$description": "Background color for sidebar items on hover. Provides subtle visual feedback for interactive elements."
         },
         "selected": {
@@ -1558,13 +1558,13 @@
             "studio.tokens": {
               "modify": {
                 "type": "alpha",
-                "value": "0.14",
+                "value": "0.18",
                 "space": "lch"
               }
             }
           },
           "$type": "color",
-          "$value": "{tuna.300}",
+          "$value": "{chrome.600}",
           "$description": "Background color for selected sidebar items. Indicates the current active navigation state with stronger emphasis than hover."
         }
       },

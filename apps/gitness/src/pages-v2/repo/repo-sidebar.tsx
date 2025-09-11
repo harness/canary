@@ -9,7 +9,7 @@ import {
   useListPathsQuery,
   useListTagsQuery
 } from '@harnessio/code-service-client'
-import { Layout, SkeletonFileExplorer } from '@harnessio/ui/components'
+import { Layout, SkeletonFileExplorer, useCustomDialogTrigger } from '@harnessio/ui/components'
 import {
   BranchSelectorListItem,
   BranchSelectorTab,
@@ -43,6 +43,12 @@ export const RepoSidebar = () => {
   const [branchQueryForNewBranch, setBranchQueryForNewBranch] = useState<string>('')
   const [sidebarWidth, setSidebarWidth] = useLocalStorage<number>('sidebarWidth', SIDEBAR_MIN_WIDTH)
   const containerRef = useRef<HTMLDivElement>(null)
+
+  const { triggerRef, registerTrigger } = useCustomDialogTrigger()
+  const toggleCreateBranchDialogOpen = (open: boolean) => {
+    registerTrigger()
+    setCreateBranchDialogOpen(open)
+  }
 
   const {
     fullGitRef,
@@ -212,10 +218,11 @@ export const RepoSidebar = () => {
             repoRef={repoRef}
             branchSelectorRenderer={
               <BranchSelectorContainer
+                ref={triggerRef}
                 onSelectBranchorTag={selectBranchOrTag}
                 selectedBranch={{ name: gitRefName, sha: repoDetails?.body?.latest_commit?.sha || '' }}
                 preSelectedTab={preSelectedTab}
-                setCreateBranchDialogOpen={setCreateBranchDialogOpen}
+                setCreateBranchDialogOpen={toggleCreateBranchDialogOpen}
                 onBranchQueryChange={setBranchQueryForNewBranch}
               />
             }

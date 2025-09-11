@@ -1,6 +1,6 @@
-import { useMemo } from 'react'
+import { useCallback, useMemo } from 'react'
 
-import { Avatar, DropdownMenu, IconV2, MoreActionsTooltip, Table } from '@/components'
+import { Avatar, DropdownMenu, IconV2, MoreActionsTooltip, Table, useCustomDialogTrigger } from '@/components'
 import { useTranslation } from '@/context'
 import { MembersProps } from '@/views'
 import { getRolesData } from '@views/project/project-members/constants'
@@ -20,6 +20,15 @@ export const MembersList = ({ members, onDelete, onEdit }: MembersListProps) => 
     return roleOptions.find(it => it.uid === role)?.label || ''
   }
 
+  const { triggerRef, registerTrigger } = useCustomDialogTrigger()
+  const handleDeleteMember = useCallback(
+    (memberId: string) => {
+      registerTrigger()
+      onDelete(memberId)
+    },
+    [onDelete, registerTrigger]
+  )
+
   return (
     <Table.Root>
       <Table.Header>
@@ -37,17 +46,17 @@ export const MembersList = ({ members, onDelete, onEdit }: MembersListProps) => 
             <Table.Cell className="content-center">
               <div className="flex items-center gap-2">
                 <Avatar name={member.display_name} src={member.avatarUrl} rounded />
-                <span className="font-medium text-cn-1">{member.display_name}</span>
+                <span className="text-cn-1 font-medium">{member.display_name}</span>
               </div>
             </Table.Cell>
 
             {/* EMAIL */}
-            <Table.Cell className="content-center text-cn-2">{member.email}</Table.Cell>
+            <Table.Cell className="text-cn-2 content-center">{member.email}</Table.Cell>
 
             {/* ROLE */}
             <Table.Cell className="w-1/5 content-center">
               <DropdownMenu.Root>
-                <DropdownMenu.Trigger className="flex items-center gap-x-1.5 text-cn-2 hover:text-cn-1">
+                <DropdownMenu.Trigger className="text-cn-2 hover:text-cn-1 flex items-center gap-x-1.5">
                   {getRoleLabel(member.role)}
                   <IconV2 className="chevron-down text-cn-2" name="nav-solid-arrow-down" size="2xs" />
                 </DropdownMenu.Trigger>
@@ -66,12 +75,13 @@ export const MembersList = ({ members, onDelete, onEdit }: MembersListProps) => 
 
             <Table.Cell className="text-right">
               <MoreActionsTooltip
+                ref={triggerRef}
                 isInTable
                 actions={[
                   {
                     isDanger: true,
                     title: t('views:projectSettings.removeMember', 'Remove member'),
-                    onClick: () => onDelete(member.uid)
+                    onClick: () => handleDeleteMember(member.uid)
                   }
                 ]}
               />

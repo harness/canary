@@ -1,6 +1,6 @@
 import { FC, useMemo } from 'react'
 
-import { Button, ListActions, NoData, SearchBox, Spacer, Text } from '@/components'
+import { Button, Dialog, ListActions, NoData, SearchBox, Spacer, Text } from '@/components'
 import { useTranslation } from '@/context'
 import { useDebounceSearch } from '@/hooks'
 import { SandboxLayout } from '@/views'
@@ -83,13 +83,15 @@ export const ProjectMemberListView: FC<ProjectMemberListViewProps> = ({
                     />
                   </ListActions.Left>
                   <ListActions.Right>
-                    <Button
-                      onClick={() => {
-                        setIsInviteMemberDialogOpen(true)
-                      }}
-                    >
-                      {t('views:projectSettings.newMember', 'New member')}
-                    </Button>
+                    <Dialog.Trigger>
+                      <Button
+                        onClick={() => {
+                          setIsInviteMemberDialogOpen(true)
+                        }}
+                      >
+                        {t('views:projectSettings.newMember', 'New member')}
+                      </Button>
+                    </Dialog.Trigger>
                   </ListActions.Right>
                 </ListActions.Root>
 

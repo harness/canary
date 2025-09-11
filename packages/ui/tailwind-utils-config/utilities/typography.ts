@@ -33,6 +33,9 @@ export default {
     '&-caption-light': {
       font: 'var(--cn-caption-light)'
     },
+    '&-caption-strong': {
+      font: 'var(--cn-caption-strong)'
+    },
     '&-link-default': {
       font: 'var(--cn-comp-link-default)'
     },
@@ -50,6 +53,9 @@ export default {
     },
     '&-caption-single-line-normal': {
       font: 'var(--cn-caption-single-line-normal)'
+    },
+    '&-caption-single-line-strong': {
+      font: 'var(--cn-caption-single-line-strong)'
     },
     '&-caption-single-line-light': {
       font: 'var(--cn-caption-single-line-light)'

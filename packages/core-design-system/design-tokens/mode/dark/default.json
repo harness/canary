@@ -1400,6 +1400,36 @@
         "$description": "Color for HTML/XML attributes and object properties in syntax highlighting. Highlights configurable element properties."
       }
     },
+    "header": {
+      "item-hover": {
+        "$extensions": {
+          "studio.tokens": {
+            "modify": {
+              "type": "alpha",
+              "value": "0.12",
+              "space": "lch"
+            }
+          }
+        },
+        "$type": "color",
+        "$value": "{tuna.300}",
+        "$description": "Hover color for header items. Creates distinct visual identification of interactive header elements."
+      },
+      "item-selected": {
+        "$extensions": {
+          "studio.tokens": {
+            "modify": {
+              "type": "alpha",
+              "value": "0.14",
+              "space": "lch"
+            }
+          }
+        },
+        "$type": "color",
+        "$value": "{tuna.300}",
+        "$description": "Selected color for header items. Creates distinct visual identification of interactive header elements."
+      }
+    },
     "input": {
       "bg": {
         "$type": "color",

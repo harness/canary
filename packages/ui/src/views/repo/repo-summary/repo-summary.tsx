@@ -168,6 +168,7 @@ export function RepoSummaryView({
         gitRef={gitRef || selectedBranchOrTag?.name || ''}
         handleCreateToken={handleCreateToken}
         navigateToProfileKeys={navigateToProfileKeys}
+        defaultBranchName={repository?.default_branch ?? 'main'}
       />
     )
   }

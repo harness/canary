@@ -77,7 +77,7 @@ const PullRequestCheckSection = ({
                     </Text>
                   </Table.Cell>
                   <Table.Cell className="w-16">
-                    {check?.check?.status !== ExecutionState.PENDING && (
+                    {check?.check?.status !== ExecutionState.PENDING && !!check?.check?.link && (
                       <Link to={check?.check?.link || ''} target="_blank" rel="noopener noreferrer">
                         Details
                       </Link>

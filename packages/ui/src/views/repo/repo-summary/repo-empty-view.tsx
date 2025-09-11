@@ -8,6 +8,7 @@ interface RepoEmptyViewProps {
   httpUrl: string
   sshUrl: string
   gitRef: string
+  defaultBranchName: string
   tokenGenerationError?: string
   handleCreateToken: () => void
   navigateToProfileKeys?: () => void
@@ -19,6 +20,7 @@ export const RepoEmptyView: React.FC<RepoEmptyViewProps> = ({
   httpUrl,
   sshUrl,
   gitRef,
+  defaultBranchName,
   tokenGenerationError,
   handleCreateToken,
   navigateToProfileKeys
@@ -29,11 +31,11 @@ export const RepoEmptyView: React.FC<RepoEmptyViewProps> = ({
     return `
 \`\`\`shell
 cd ${repoName}
-git branch -M main
+git branch -M ${defaultBranchName}
 echo '# Hello World' >> README.md
 git add README.md
 git commit -m 'Initial commit'
-git push -u origin main
+git push -u origin ${defaultBranchName}
 \`\`\`
 `
   }
@@ -41,9 +43,9 @@ git push -u origin main
   const getExistingRepoMarkdown = () => {
     return `
 \`\`\`shell
-git remote add origin http://localhost:3000/git/${projName}/${repoName}.git
-git branch -M main
-git push -u origin main
+git remote add origin ${httpUrl}
+git branch -M ${defaultBranchName}
+git push -u origin ${defaultBranchName}
 \`\`\`
 `
   }

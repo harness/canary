@@ -43,7 +43,8 @@ export default {
     },
 
     '&:where([data-disabled="true"])': {
-      color: 'var(--cn-state-disabled-text)',
+      cursor: 'not-allowed',
+      '@apply opacity-cn-disabled': '',
 
       '&:hover, &:focus': {
         cursor: 'not-allowed'

@@ -42,14 +42,16 @@ export default {
       },
 
       '&::placeholder': {
-        color: 'var(--cn-state-disabled-text)'
+        color: 'var(--cn-text-disabled)',
+        '@apply font-body-light': ''
       },
 
       '&:where([disabled])': {
         cursor: 'not-allowed',
+        '@apply opacity-cn-disabled': '',
 
         '&::placeholder': {
-          color: 'var(--cn-state-disabled-text)'
+          color: 'var(--cn-text-disabled)'
         }
       },
 
@@ -82,10 +84,8 @@ export default {
       },
 
       '&:where(:has(input[disabled]))': {
-        backgroundColor: 'var(--cn-state-disabled-bg)',
-        borderColor: 'var(--cn-state-disabled-border)',
-        color: 'var(--cn-state-disabled-text)',
         cursor: 'not-allowed',
+        '@apply opacity-cn-disabled': '',
 
         ':where(hr)': {
           borderColor: 'inherit'
@@ -93,8 +93,7 @@ export default {
       },
 
       '&:where(:has(input[readonly]))': {
-        backgroundColor: 'var(--cn-state-disabled-bg)',
-        borderColor: 'var(--cn-state-disabled-border)'
+        backgroundColor: 'var(--cn-bg-2)'
       },
 
       '&:where(:hover):not(:has(input[disabled])):not(.cn-input-success, .cn-input-warning, .cn-input-danger)': {

@@ -12,7 +12,7 @@ export default {
     },
 
     '&:where(.cn-label-disabled), &:where(.cn-label-disabled) > .cn-label-optional': {
-      color: 'var(--cn-state-disabled-text)'
+      '@apply opacity-cn-disabled': ''
     },
 
     '&-container': {

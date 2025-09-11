@@ -1383,7 +1383,153 @@
     },
     "header": {
       "item-hover": {
-        {
+        "$extensions": {
+          "studio.tokens": {
+            "modify": {
+              "type": "alpha",
+              "value": "0.12",
+              "space": "lch"
+            }
+          }
+        },
+        "$type": "color",
+        "$value": "{tuna.300}",
+        "$description": "Hover color for header items. Creates distinct visual identification of interactive header elements."
+      },
+      "item-selected": {
+        "$extensions": {
+          "studio.tokens": {
+            "modify": {
+              "type": "alpha",
+              "value": "0.14",
+              "space": "lch"
+            }
+          }
+        },
+        "$type": "color",
+        "$value": "{tuna.300}",
+        "$description": "Selected color for header items. Creates distinct visual identification of interactive header elements."
+      }
+    },
+    "input": {
+      "bg": {
+        "$type": "color",
+        "$value": "{bg.3}",
+        "$description": "Background color for form input fields. Provides elevated surface that distinguishes interactive form elements from surrounding content."
+      }
+    },
+    "link": {
+      "text": {
+        "$type": "color",
+        "$value": "{blue.700}",
+        "$description": "Default color for text links. Creates distinct visual identification of interactive text elements."
+      },
+      "text-hover": {
+        "$type": "color",
+        "$value": "{blue.800}",
+        "$description": "Hover color for text links."
+      }
+    },
+    "pipeline": {
+      "arrow": {
+        "border": {
+          "$type": "color",
+          "$value": "{border.1}",
+          "$description": "Border color for pipeline connection arrows. Defines the visual path between pipeline components."
+        },
+        "running": {
+          "border": {
+            "$type": "color",
+            "$value": "linear-gradient(90deg, {gradient.pipeline.arrows.gradient-stop-1} 0%, {gradient.pipeline.arrows.gradient-stop-2} 50%, {gradient.pipeline.arrows.gradient-stop-3} 100%)",
+            "$description": "Gradient border color for active pipeline arrows. Visually indicates data flow between active pipeline components."
+          }
+        }
+      },
+      "card": {
+        "bg": {
+          "$type": "color",
+          "$value": "radial-gradient(90% 100% at 15% 0%,{gradient.pipeline.card.bg.gradient-from} 10%, {gradient.pipeline.card.bg.gradient-to} 75%)",
+          "$description": "Gradient background for pipeline cards. Creates a visually distinctive surface for pipeline visualization elements."
+        },
+        "border": {
+          "$type": "color",
+          "$value": "radial-gradient(90% 100% at 15% 0%,{gradient.pipeline.card.border.gradient-from} 10%, {gradient.pipeline.card.border.gradient-to} 75%)",
+          "$description": "Gradient border for pipeline cards. Enhances the visual depth and distinction of pipeline components."
+        },
+        "running": {
+          "border": {
+            "$type": "color",
+            "$value": "radial-gradient(604% 142% at 0% 0%, {gradient.pipeline.running.gradient-stop-1} 0%, {gradient.pipeline.running.gradient-stop-2} 30%, {gradient.pipeline.running.gradient-stop-3} 100%)",
+            "$description": "Animated gradient border for running pipeline states. Provides visual indication of active processing."
+          }
+        }
+      },
+      "card-canvas": {
+        "1": {
+          "bg": {
+            "$type": "color",
+            "$value": "{bg.1}",
+            "$description": "The background color for the primary/top-level canvas where pipeline components are arranged. Creates the base visual layer for the main workflow area."
+          },
+          "border": {
+            "$type": "color",
+            "$value": "{chrome.150}",
+            "$description": "Solid border for the outermost pipeline canvas elements. Defines the boundaries of the top-level workflow container."
+          }
+        },
+        "2": {
+          "bg": {
+            "$type": "color",
+            "$value": "{bg.2}",
+            "$description": "Background color for nested/secondary canvas elements that appear within the main workflow. Provides visual distinction for grouped pipeline components."
+          },
+          "border": {
+            "$type": "color",
+            "$value": "{chrome.200}",
+            "$description": "Border styling applied to nested canvas containers. Creates clear visual boundaries between different sections within the pipeline visualization."
+          }
+        }
+      },
+      "bg": {
+        "dotes": {
+          "$extensions": {
+            "studio.tokens": {
+              "modify": {
+                "type": "alpha",
+                "value": "0.6",
+                "space": "lch"
+              }
+            }
+          },
+          "$type": "color",
+          "$value": "{chrome.300}",
+          "$description": "Refers to the dotted pattern visible in the background of the workspace."
+        }
+      }
+    },
+    "sidebar": {
+      "bg": {
+        "$type": "color",
+        "$value": "{bg.0}",
+        "$description": "Background color for the sidebar container. Provides foundational layer for navigation elements."
+      },
+      "item": {
+        "text": {
+          "$type": "color",
+          "$value": "{text.2}",
+          "$description": "Default text color for sidebar navigation items. Provides optimal readability for menu labels."
+        },
+        "text-hover": {
+          "$type": "color",
+          "$value": "{text.1}",
+          "$description": "Text color for sidebar items on hover state. Creates higher contrast for interactive feedback."
+        },
+        "text-selected": {
+          "$type": "color",
+          "$value": "{text.1}",
+          "$description": "Text color for selected sidebar items. Emphasizes the current active navigation state."
+        },
+        "hover": {
           "$extensions": {
             "studio.tokens": {
               "modify": {
@@ -1395,9 +1541,9 @@
           },
           "$type": "color",
           "$value": "{tuna.300}",
-          "$description": "Hover color for header items. Creates distinct visual identification of interactive header elements."
+          "$description": "Background color for sidebar items on hover. Provides subtle visual feedback for interactive elements."
         },
-        "item-selected": {
+        "selected": {
           "$extensions": {
             "studio.tokens": {
               "modify": {
@@ -1409,546 +1555,611 @@
           },
           "$type": "color",
           "$value": "{tuna.300}",
-          "$description": "Selected color for header items. Creates distinct visual identification of interactive header elements."
+          "$description": "Background color for selected sidebar items. Indicates the current active navigation state with stronger emphasis than hover."
         }
       },
-      "input": {
-        "bg": {
-          "$type": "color",
-          "$value": "{bg.3}",
-          "$description": "Background color for form input fields. Provides elevated surface that distinguishes interactive form elements from surrounding content."
-        }
+      "separator": {
+        "$type": "color",
+        "$value": "{border.3}",
+        "$description": "Color for separator lines between sidebar sections. Creates visual grouping and hierarchy."
       },
-      "link": {
-        "text": {
-          "$type": "color",
-          "$value": "{blue.700}",
-          "$description": "Default color for text links. Creates distinct visual identification of interactive text elements."
-        },
-        "text-hover": {
-          "$type": "color",
-          "$value": "{blue.800}",
-          "$description": "Hover color for text links."
-        }
+      "group-label": {
+        "$type": "color",
+        "$value": "{text.3}",
+        "$description": "Text color for sidebar group labels. Provides reduced emphasis for section headers and categorization."
       },
-      "pipeline": {
-        "arrow": {
-          "border": {
-            "$type": "color",
-            "$value": "{border.1}",
-            "$description": "Border color for pipeline connection arrows. Defines the visual path between pipeline components."
-          },
-          "running": {
-            "border": {
-              "$type": "color",
-              "$value": "linear-gradient(90deg, {gradient.pipeline.arrows.gradient-stop-1} 0%, {gradient.pipeline.arrows.gradient-stop-2} 50%, {gradient.pipeline.arrows.gradient-stop-3} 100%)",
-              "$description": "Gradient border color for active pipeline arrows. Visually indicates data flow between active pipeline components."
-            }
-          }
-        },
-        "card": {
-          "bg": {
-            "$type": "color",
-            "$value": "radial-gradient(90% 100% at 15% 0%,{gradient.pipeline.card.bg.gradient-from} 10%, {gradient.pipeline.card.bg.gradient-to} 75%)",
-            "$description": "Gradient background for pipeline cards. Creates a visually distinctive surface for pipeline visualization elements."
-          },
-          "border": {
-            "$type": "color",
-            "$value": "radial-gradient(90% 100% at 15% 0%,{gradient.pipeline.card.border.gradient-from} 10%, {gradient.pipeline.card.border.gradient-to} 75%)",
-            "$description": "Gradient border for pipeline cards. Enhances the visual depth and distinction of pipeline components."
-          },
-          "running": {
-            "border": {
-              "$type": "color",
-              "$value": "radial-gradient(604% 142% at 0% 0%, {gradient.pipeline.running.gradient-stop-1} 0%, {gradient.pipeline.running.gradient-stop-2} 30%, {gradient.pipeline.running.gradient-stop-3} 100%)",
-              "$description": "Animated gradient border for running pipeline states. Provides visual indication of active processing."
-            }
-          }
-        },
-        "card-canvas": {
-          "1": {
-            "bg": {
-              "$type": "color",
-              "$value": "{bg.1}",
-              "$description": "The background color for the primary/top-level canvas where pipeline components are arranged. Creates the base visual layer for the main workflow area."
-            },
-            "border": {
-              "$type": "color",
-              "$value": "{chrome.150}",
-              "$description": "Solid border for the outermost pipeline canvas elements. Defines the boundaries of the top-level workflow container."
-            }
-          },
-          "2": {
-            "bg": {
-              "$type": "color",
-              "$value": "{bg.2}",
-              "$description": "Background color for nested/secondary canvas elements that appear within the main workflow. Provides visual distinction for grouped pipeline components."
-            },
-            "border": {
-              "$type": "color",
-              "$value": "{chrome.200}",
-              "$description": "Border styling applied to nested canvas containers. Creates clear visual boundaries between different sections within the pipeline visualization."
-            }
-          }
-        },
-        "bg": {
-          "dotes": {
-            "$extensions": {
-              "studio.tokens": {
-                "modify": {
-                  "type": "alpha",
-                  "value": "0.6",
-                  "space": "lch"
-                }
-              }
-            },
-            "$type": "color",
-            "$value": "{chrome.300}",
-            "$description": "Refers to the dotted pattern visible in the background of the workspace."
-          }
-        }
+      "fade-start": {
+        "$type": "color",
+        "$value": "linear-gradient(0deg, {gradient.sidebar.fade} 0%, {comp.sidebar.bg} 100%)",
+        "$description": "Gradient fade effect for sidebar top edge. Creates smooth visual transition from sidebar content to background."
       },
-      "sidebar": {
-        "bg": {
-          "$type": "color",
-          "$value": "{bg.0}",
-          "$description": "Background color for the sidebar container. Provides foundational layer for navigation elements."
-        },
+      "fade-end": {
+        "$type": "color",
+        "$value": "linear-gradient(0deg, {comp.sidebar.bg} 0%, {gradient.sidebar.fade} 100%)",
+        "$description": "Gradient fade effect for sidebar bottom edge. Creates smooth visual transition from background to sidebar content."
+      }
+    },
+    "scrollbar": {
+      "thumb": {
+        "$type": "color",
+        "$value": "{chrome.200}",
+        "$description": "Color for scrollbar thumb/handle elements. Provides subtle contrast against the scrollbar track for improved usability."
+      }
+    },
+    "selection": {
+      "unselected": {
         "item": {
-          "text": {
-            "$type": "color",
-            "$value": "{text.2}",
-            "$description": "Default text color for sidebar navigation items. Provides optimal readability for menu labels."
-          },
-          "text-hover": {
-            "$type": "color",
-            "$value": "{text.1}",
-            "$description": "Text color for sidebar items on hover state. Creates higher contrast for interactive feedback."
-          },
-          "text-selected": {
-            "$type": "color",
-            "$value": "{text.1}",
-            "$description": "Text color for selected sidebar items. Emphasizes the current active navigation state."
-          },
-          "hover": {
-            "$extensions": {
-              "studio.tokens": {
-                "modify": {
-                  "type": "alpha",
-                  "value": "0.12",
-                  "space": "lch"
-                }
-              }
-            },
-            "$type": "color",
-            "$value": "{tuna.300}",
-            "$description": "Background color for sidebar items on hover. Provides subtle visual feedback for interactive elements."
-          },
-          "selected": {
-            "$extensions": {
-              "studio.tokens": {
-                "modify": {
-                  "type": "alpha",
-                  "value": "0.14",
-                  "space": "lch"
-                }
-              }
-            },
-            "$type": "color",
-            "$value": "{tuna.300}",
-            "$description": "Background color for selected sidebar items. Indicates the current active navigation state with stronger emphasis than hover."
-          }
-        },
-        "separator": {
-          "$type": "color",
-          "$value": "{border.3}",
-          "$description": "Color for separator lines between sidebar sections. Creates visual grouping and hierarchy."
-        },
-        "group-label": {
           "$type": "color",
           "$value": "{text.3}",
-          "$description": "Text color for sidebar group labels. Provides reduced emphasis for section headers and categorization."
+          "$description": "Color for unselected items in selection controls. Provides readable but less emphasized styling for available options."
         },
-        "fade-start": {
+        "item-hover": {
           "$type": "color",
-          "$value": "linear-gradient(0deg, {gradient.sidebar.fade} 0%, {comp.sidebar.bg} 100%)",
-          "$description": "Gradient fade effect for sidebar top edge. Creates smooth visual transition from sidebar content to background."
+          "$value": "{text.2}"
         },
-        "fade-end": {
-          "$type": "color",
-          "$value": "linear-gradient(0deg, {comp.sidebar.bg} 0%, {gradient.sidebar.fade} 100%)",
-          "$description": "Gradient fade effect for sidebar bottom edge. Creates smooth visual transition from background to sidebar content."
-        }
-      },
-      "scrollbar": {
-        "thumb": {
-          "$type": "color",
-          "$value": "{chrome.200}",
-          "$description": "Color for scrollbar thumb/handle elements. Provides subtle contrast against the scrollbar track for improved usability."
-        }
-      },
-      "selection": {
-        "unselected": {
-          "item": {
-            "$type": "color",
-            "$value": "{text.3}",
-            "$description": "Color for unselected items in selection controls. Provides readable but less emphasized styling for available options."
-          },
-          "item-hover": {
-            "$type": "color",
-            "$value": "{text.2}"
-          },
-          "bg": {
-            "$type": "color",
-            "$value": "{bg.1}",
-            "$description": "Background color for unselected state in selection controls. Creates visual distinction from selected items."
-          },
-          "bg-hover": {
-            "$type": "color",
-            "$value": "{bg.2}"
-          },
-          "border": {
-            "$type": "color",
-            "$value": "{border.1}",
-            "$description": "Border color for unselected elements in selection controls. Defines the clickable area with a visible boundary."
-          },
-          "border-hover": {
-            "$type": "color",
-            "$value": "{border.brand}"
-          }
-        },
-        "selected": {
-          "item": {
-            "$type": "color",
-            "$value": "{set.brand.solid.text}",
-            "$description": "Color for selected items in selection controls. Creates high contrast against selected background state."
-          },
-          "bg": {
-            "$type": "color",
-            "$value": "{set.brand.solid.bg}",
-            "$description": "Background color for selected state in selection controls. Creates strong visual indication of active selection."
-          },
-          "bg-hover": {
-            "$type": "color",
-            "$value": "{set.brand.solid.bg-hover}"
-          },
-          "border": {
-            "$type": "color",
-            "$value": "{set.brand.solid.bg}",
-            "$description": "Border color for selected elements in selection controls. Reinforces the selected state with consistent styling."
-          },
-          "border-hover": {
-            "$type": "color",
-            "$value": "{set.brand.solid.bg-hover}"
-          }
-        }
-      },
-      "skeleton": {
         "bg": {
           "$type": "color",
-          "$value": "linear-gradient(90deg, {gradient.skeleton.gradient-stop-1} 0%, {gradient.skeleton.gradient-stop-2} 50%, {gradient.skeleton.gradient-stop-3} 100%)",
-          "$description": "Animation color that sweeps across skeleton elements. Creates a \"shimmer\" effect indicating content loading states."
+          "$value": "{bg.1}",
+          "$description": "Background color for unselected state in selection controls. Creates visual distinction from selected items."
         },
-        "mask": {
+        "bg-hover": {
           "$type": "color",
-          "$value": "linear-gradient(180deg, {gradient.skeleton.mask.from} 50%, {gradient.skeleton.mask.to} 100%)"
+          "$value": "{bg.2}"
+        },
+        "border": {
+          "$type": "color",
+          "$value": "{border.1}",
+          "$description": "Border color for unselected elements in selection controls. Defines the clickable area with a visible boundary."
+        },
+        "border-hover": {
+          "$type": "color",
+          "$value": "{border.brand}"
         }
       },
-      "slider": {
-        "track": {
-          "base": {
-            "$type": "color",
-            "$value": "{tuna.50}",
-            "$description": "Background color for slider tracks. Represents the full range of available values in an unselected state."
-          },
-          "progress": {
-            "$type": "color",
-            "$value": "{set.brand.solid.bg}",
-            "$description": "Filled portion color for slider tracks. Visually represents the selected value or range within the track."
-          },
-          "progress-stripes": {
-            "$extensions": {
-              "studio.tokens": {
-                "modify": {
-                  "type": "alpha",
-                  "value": "0.3",
-                  "space": "lch"
-                }
+      "selected": {
+        "item": {
+          "$type": "color",
+          "$value": "{set.brand.solid.text}",
+          "$description": "Color for selected items in selection controls. Creates high contrast against selected background state."
+        },
+        "bg": {
+          "$type": "color",
+          "$value": "{set.brand.solid.bg}",
+          "$description": "Background color for selected state in selection controls. Creates strong visual indication of active selection."
+        },
+        "bg-hover": {
+          "$type": "color",
+          "$value": "{set.brand.solid.bg-hover}"
+        },
+        "border": {
+          "$type": "color",
+          "$value": "{set.brand.solid.bg}",
+          "$description": "Border color for selected elements in selection controls. Reinforces the selected state with consistent styling."
+        },
+        "border-hover": {
+          "$type": "color",
+          "$value": "{set.brand.solid.bg-hover}"
+        }
+      }
+    },
+    "skeleton": {
+      "bg": {
+        "$type": "color",
+        "$value": "linear-gradient(90deg, {gradient.skeleton.gradient-stop-1} 0%, {gradient.skeleton.gradient-stop-2} 50%, {gradient.skeleton.gradient-stop-3} 100%)",
+        "$description": "Animation color that sweeps across skeleton elements. Creates a \"shimmer\" effect indicating content loading states."
+      },
+      "mask": {
+        "$type": "color",
+        "$value": "linear-gradient(180deg, {gradient.skeleton.mask.from} 50%, {gradient.skeleton.mask.to} 100%)"
+      }
+    },
+    "slider": {
+      "track": {
+        "base": {
+          "$type": "color",
+          "$value": "{tuna.50}",
+          "$description": "Background color for slider tracks. Represents the full range of available values in an unselected state."
+        },
+        "progress": {
+          "$type": "color",
+          "$value": "{set.brand.solid.bg}",
+          "$description": "Filled portion color for slider tracks. Visually represents the selected value or range within the track."
+        },
+        "progress-stripes": {
+          "$extensions": {
+            "studio.tokens": {
+              "modify": {
+                "type": "alpha",
+                "value": "0.3",
+                "space": "lch"
               }
-            },
-            "$type": "color",
-            "$value": "{pure.white}"
+            }
           },
-          "warning": {
-            "$type": "color",
-            "$value": "{set.yellow.solid.bg}"
-          },
-          "success": {
-            "$type": "color",
-            "$value": "{set.green.solid.bg}"
-          },
-          "danger": {
-            "$type": "color",
-            "$value": "{set.red.solid.bg}"
-          }
-        },
-        "handle": {
-          "bg": {
-            "$type": "color",
-            "$value": "{chrome.100}",
-            "$description": "Background color for slider handles. Creates a distinct, interactive element for adjusting values."
-          },
-          "border": {
-            "$type": "color",
-            "$value": "{chrome.900}",
-            "$description": "Border color for slider handles. Provides definition and contrast for the interactive control."
-          }
-        }
-      },
-      "tab": {
-        "selection-item": {
           "$type": "color",
-          "$value": "{pure.white}",
-          "$description": "Background color for selected tab items. Provides clear visual indication of the active tab state."
+          "$value": "{pure.white}"
+        },
+        "warning": {
+          "$type": "color",
+          "$value": "{set.yellow.solid.bg}"
+        },
+        "success": {
+          "$type": "color",
+          "$value": "{set.green.solid.bg}"
+        },
+        "danger": {
+          "$type": "color",
+          "$value": "{set.red.solid.bg}"
         }
       },
-      "toast": {
-        "danger": {
-          "bg": {
-            "$type": "color",
-            "$value": "{red.150}",
-            "$description": "Background color for danger toast notifications. Provides visual context for error and critical messages."
-          },
-          "border": {
-            "$type": "color",
-            "$value": "{red.300}",
-            "$description": "Border color for danger toast notifications. Creates definition and emphasis for critical messages."
-          },
-          "text": {
-            "$type": "color",
-            "$value": "{pure.black}",
-            "$description": "Text color for danger toast notifications. Ensures maximum readability for critical messages."
-          },
-          "fade": {
-            "$type": "color",
-            "$value": "linear-gradient(0deg, {gradient.toast.danger.from} 42%, {gradient.toast.danger.to} 100%)",
-            "$description": "Gradient fade effect for danger toast notifications. Creates visual depth and emphasis for critical messages."
-          },
-          "transparent-btn": {
-            "text": {
-              "$type": "color",
-              "$value": "{pure.black}",
-              "$description": "Text color for transparent buttons in danger toasts. Provides clear readability for secondary actions."
-            },
-            "text-hover": {
-              "$type": "color",
-              "$value": "{red.850}",
-              "$description": "Hover text color for transparent buttons in danger toasts. Provides visual feedback for interactive elements."
-            },
-            "text-active": {
-              "$type": "color",
-              "$value": "{red.850}",
-              "$description": "Active text color for transparent buttons in danger toasts. Indicates pressed state for interactive elements."
-            }
-          },
-          "action-btn": {
-            "text": {
-              "$type": "color",
-              "$value": "{red.25}",
-              "$description": "Text color for action buttons in danger toasts. Provides high contrast for primary actions."
-            },
-            "bg": {
-              "$type": "color",
-              "$value": "{pure.black}",
-              "$description": "Background color for action buttons in danger toasts. Creates strong contrast for primary actions."
-            },
-            "bg-hover": {
-              "$type": "color",
-              "$value": "{red.950}",
-              "$description": "Hover background color for action buttons in danger toasts. Provides visual feedback for interactive elements."
-            },
-            "bg-selected": {
-              "$type": "color",
-              "$value": "{red.1000}",
-              "$description": "Selected background color for action buttons in danger toasts. Indicates pressed state for interactive elements."
-            }
-          }
+      "handle": {
+        "bg": {
+          "$type": "color",
+          "$value": "{chrome.100}",
+          "$description": "Background color for slider handles. Creates a distinct, interactive element for adjusting values."
+        },
+        "border": {
+          "$type": "color",
+          "$value": "{chrome.900}",
+          "$description": "Border color for slider handles. Provides definition and contrast for the interactive control."
+        }
+      }
+    },
+    "tab": {
+      "selection-item": {
+        "$type": "color",
+        "$value": "{pure.white}",
+        "$description": "Background color for selected tab items. Provides clear visual indication of the active tab state."
+      }
+    },
+    "toast": {
+      "danger": {
+        "bg": {
+          "$type": "color",
+          "$value": "{red.150}",
+          "$description": "Background color for danger toast notifications. Provides visual context for error and critical messages."
+        },
+        "border": {
+          "$type": "color",
+          "$value": "{red.300}",
+          "$description": "Border color for danger toast notifications. Creates definition and emphasis for critical messages."
+        },
+        "text": {
+          "$type": "color",
+          "$value": "{pure.black}",
+          "$description": "Text color for danger toast notifications. Ensures maximum readability for critical messages."
         },
         "fade": {
           "$type": "color",
-          "$value": "linear-gradient(0deg, {gradient.toast.default.from} 42%, {gradient.toast.default.to} 100%)",
-          "$description": "Default gradient fade effect for toast notifications. Creates visual depth and subtle emphasis for general messages."
+          "$value": "linear-gradient(0deg, {gradient.toast.danger.from} 42%, {gradient.toast.danger.to} 100%)",
+          "$description": "Gradient fade effect for danger toast notifications. Creates visual depth and emphasis for critical messages."
+        },
+        "transparent-btn": {
+          "text": {
+            "$type": "color",
+            "$value": "{pure.black}",
+            "$description": "Text color for transparent buttons in danger toasts. Provides clear readability for secondary actions."
+          },
+          "text-hover": {
+            "$type": "color",
+            "$value": "{red.850}",
+            "$description": "Hover text color for transparent buttons in danger toasts. Provides visual feedback for interactive elements."
+          },
+          "text-active": {
+            "$type": "color",
+            "$value": "{red.850}",
+            "$description": "Active text color for transparent buttons in danger toasts. Indicates pressed state for interactive elements."
+          }
+        },
+        "action-btn": {
+          "text": {
+            "$type": "color",
+            "$value": "{red.25}",
+            "$description": "Text color for action buttons in danger toasts. Provides high contrast for primary actions."
+          },
+          "bg": {
+            "$type": "color",
+            "$value": "{pure.black}",
+            "$description": "Background color for action buttons in danger toasts. Creates strong contrast for primary actions."
+          },
+          "bg-hover": {
+            "$type": "color",
+            "$value": "{red.950}",
+            "$description": "Hover background color for action buttons in danger toasts. Provides visual feedback for interactive elements."
+          },
+          "bg-selected": {
+            "$type": "color",
+            "$value": "{red.1000}",
+            "$description": "Selected background color for action buttons in danger toasts. Indicates pressed state for interactive elements."
+          }
         }
-      }
-    },
-    "logo": {
-      "text": {
-        "$type": "color",
-        "$value": "{chrome.950}",
-        "$description": "Text color for Logo in sidebar navigation."
       },
-      "icon": {
+      "fade": {
         "$type": "color",
-        "$value": "{cyan.400}",
-        "$description": "Icon color for Logo in sidebar navigation."
+        "$value": "linear-gradient(0deg, {gradient.toast.default.from} 42%, {gradient.toast.default.to} 100%)",
+        "$description": "Default gradient fade effect for toast notifications. Creates visual depth and subtle emphasis for general messages."
       }
+    }
+  },
+  "logo": {
+    "text": {
+      "$type": "color",
+      "$value": "{chrome.950}",
+      "$description": "Text color for Logo in sidebar navigation."
     },
-    "shadow": {
-      "0": {
-        "$type": "boxShadow",
-        "$value": {
+    "icon": {
+      "$type": "color",
+      "$value": "{cyan.400}",
+      "$description": "Icon color for Logo in sidebar navigation."
+    }
+  },
+  "shadow": {
+    "0": {
+      "$type": "boxShadow",
+      "$value": {
+        "x": "0",
+        "y": "0",
+        "blur": "0",
+        "spread": "0",
+        "color": "{shadow-color.0}",
+        "type": "dropShadow"
+      },
+      "$description": "No shadow. \nCommon uses: Flat designs, disabled states, removing shadows on mobile."
+    },
+    "1": {
+      "$type": "boxShadow",
+      "$value": {
+        "x": "0",
+        "y": "1",
+        "blur": "2",
+        "spread": "0",
+        "color": "{shadow-color.1}",
+        "type": "dropShadow"
+      },
+      "$description": "Small shadow. \nCommon uses: Buttons in their rest state, form inputs, subtle UI elements."
+    },
+    "2": {
+      "$type": "boxShadow",
+      "$value": [
+        {
           "x": "0",
-          "y": "0",
-          "blur": "0",
+          "y": "1",
+          "blur": "3",
           "spread": "0",
-          "color": "{shadow-color.0}",
+          "color": "{shadow-color.2}",
           "type": "dropShadow"
         },
-        "$description": "No shadow. \nCommon uses: Flat designs, disabled states, removing shadows on mobile."
-      },
-      "1": {
-        "$type": "boxShadow",
-        "$value": {
+        {
           "x": "0",
           "y": "1",
           "blur": "2",
-          "spread": "0",
-          "color": "{shadow-color.1}",
+          "spread": "-1",
+          "color": "{shadow-color.2}",
           "type": "dropShadow"
-        },
-        "$description": "Small shadow. \nCommon uses: Buttons in their rest state, form inputs, subtle UI elements."
-      },
-      "2": {
-        "$type": "boxShadow",
-        "$value": [
-          {
-            "x": "0",
-            "y": "1",
-            "blur": "3",
-            "spread": "0",
-            "color": "{shadow-color.2}",
-            "type": "dropShadow"
-          },
-          {
-            "x": "0",
-            "y": "1",
-            "blur": "2",
-            "spread": "-1",
-            "color": "{shadow-color.2}",
-            "type": "dropShadow"
-          }
-        ],
-        "$description": "Default shadow. \nCommon uses: Cards, dropdowns, popovers in their default state."
-      },
-      "3": {
-        "$type": "boxShadow",
-        "$value": [
-          {
-            "x": "0",
-            "y": "4",
-            "blur": "6",
-            "spread": "-1",
-            "color": "{shadow-color.3}",
-            "type": "dropShadow"
-          },
-          {
-            "x": "0",
-            "y": "2",
-            "blur": "4",
-            "spread": "-2",
-            "color": "{shadow-color.3}",
-            "type": "dropShadow"
-          }
-        ],
-        "$description": "Medium shadow. \nCommon uses: Elevated cards, active buttons, interactive elements on hover."
-      },
-      "4": {
-        "$type": "boxShadow",
-        "$value": [
-          {
-            "x": "0",
-            "y": "10",
-            "blur": "15",
-            "spread": "-3",
-            "color": "{shadow-color.4}",
-            "type": "dropShadow"
-          },
-          {
-            "x": "0",
-            "y": "4",
-            "blur": "6",
-            "spread": "-4",
-            "color": "{shadow-color.4}",
-            "type": "dropShadow"
-          }
-        ],
-        "$description": "Large shadow. \nCommon uses: Modals, floating panels, navigation dropdowns."
-      },
-      "5": {
-        "$type": "boxShadow",
-        "$value": [
-          {
-            "x": "0",
-            "y": "20",
-            "blur": "25",
-            "spread": "-5",
-            "color": "{shadow-color.5}",
-            "type": "dropShadow"
-          },
-          {
-            "x": "0",
-            "y": "8",
-            "blur": "10",
-            "spread": "-6",
-            "color": "{shadow-color.5}",
-            "type": "dropShadow"
-          }
-        ],
-        "$description": "Extra large shadow. \nCommon uses: Large modals, sidebars, elevated content sections."
-      },
-      "6": {
-        "$type": "boxShadow",
-        "$value": {
+        }
+      ],
+      "$description": "Default shadow. \nCommon uses: Cards, dropdowns, popovers in their default state."
+    },
+    "3": {
+      "$type": "boxShadow",
+      "$value": [
+        {
           "x": "0",
-          "y": "25",
-          "blur": "50",
-          "spread": "-12",
-          "color": "{shadow-color.6}",
+          "y": "4",
+          "blur": "6",
+          "spread": "-1",
+          "color": "{shadow-color.3}",
           "type": "dropShadow"
         },
-        "$description": "Extra extra large shadow.\nCommon uses: This aggressive shadow is typically used sparingly in UI design, primarily for elements that need maximum visual emphasis and elevation."
-      },
-      "comp": {
-        "avatar": {
-          "inner": {
-            "$type": "boxShadow",
-            "$value": {
-              "x": "0",
-              "y": "0",
-              "blur": "0",
-              "spread": "0.6",
-              "color": "{comp.avatar.shadow}",
-              "type": "innerShadow"
-            }
-          }
+        {
+          "x": "0",
+          "y": "2",
+          "blur": "4",
+          "spread": "-2",
+          "color": "{shadow-color.3}",
+          "type": "dropShadow"
+        }
+      ],
+      "$description": "Medium shadow. \nCommon uses: Elevated cards, active buttons, interactive elements on hover."
+    },
+    "4": {
+      "$type": "boxShadow",
+      "$value": [
+        {
+          "x": "0",
+          "y": "10",
+          "blur": "15",
+          "spread": "-3",
+          "color": "{shadow-color.4}",
+          "type": "dropShadow"
         },
-        "ai": {
-          "inner": {
-            "$type": "boxShadow",
-            "$value": {
-              "x": "0",
-              "y": "7",
-              "blur": "16",
-              "spread": "0",
-              "color": "{set.ai.surface.inner}",
-              "type": "innerShadow"
-            }
+        {
+          "x": "0",
+          "y": "4",
+          "blur": "6",
+          "spread": "-4",
+          "color": "{shadow-color.4}",
+          "type": "dropShadow"
+        }
+      ],
+      "$description": "Large shadow. \nCommon uses: Modals, floating panels, navigation dropdowns."
+    },
+    "5": {
+      "$type": "boxShadow",
+      "$value": [
+        {
+          "x": "0",
+          "y": "20",
+          "blur": "25",
+          "spread": "-5",
+          "color": "{shadow-color.5}",
+          "type": "dropShadow"
+        },
+        {
+          "x": "0",
+          "y": "8",
+          "blur": "10",
+          "spread": "-6",
+          "color": "{shadow-color.5}",
+          "type": "dropShadow"
+        }
+      ],
+      "$description": "Extra large shadow. \nCommon uses: Large modals, sidebars, elevated content sections."
+    },
+    "6": {
+      "$type": "boxShadow",
+      "$value": {
+        "x": "0",
+        "y": "25",
+        "blur": "50",
+        "spread": "-12",
+        "color": "{shadow-color.6}",
+        "type": "dropShadow"
+      },
+      "$description": "Extra extra large shadow.\nCommon uses: This aggressive shadow is typically used sparingly in UI design, primarily for elements that need maximum visual emphasis and elevation."
+    },
+    "comp": {
+      "avatar": {
+        "inner": {
+          "$type": "boxShadow",
+          "$value": {
+            "x": "0",
+            "y": "0",
+            "blur": "0",
+            "spread": "0.6",
+            "color": "{comp.avatar.shadow}",
+            "type": "innerShadow"
+          }
+        }
+      },
+      "ai": {
+        "inner": {
+          "$type": "boxShadow",
+          "$value": {
+            "x": "0",
+            "y": "7",
+            "blur": "16",
+            "spread": "0",
+            "color": "{set.ai.surface.inner}",
+            "type": "innerShadow"
           }
         }
       }
+    }
+  },
+  "shadow-color": {
+    "0": {
+      "$extensions": {
+        "studio.tokens": {
+          "modify": {
+            "type": "alpha",
+            "value": "0",
+            "space": "lch"
+          }
+        }
+      },
+      "$type": "color",
+      "$value": "{tuna.800}",
+      "$description": "Transparent shadow color. Used when no shadow effect is desired."
     },
-    "shadow-color": {
-      "0": {
+    "1": {
+      "$extensions": {
+        "studio.tokens": {
+          "modify": {
+            "type": "alpha",
+            "value": "0.05",
+            "space": "lch"
+          }
+        }
+      },
+      "$type": "color",
+      "$value": "{tuna.800}",
+      "$description": "Light shadow color. Creates subtle depth for small UI elements."
+    },
+    "2": {
+      "$extensions": {
+        "studio.tokens": {
+          "modify": {
+            "type": "alpha",
+            "value": "0.05",
+            "space": "lch"
+          }
+        }
+      },
+      "$type": "color",
+      "$value": "{tuna.800}",
+      "$description": "Medium shadow color with 60% opacity. Provides balanced depth for common UI components."
+    },
+    "3": {
+      "$extensions": {
+        "studio.tokens": {
+          "modify": {
+            "type": "alpha",
+            "value": "0.05",
+            "space": "lch"
+          }
+        }
+      },
+      "$type": "color",
+      "$value": "{tuna.800}",
+      "$description": "Medium shadow color. Creates moderate depth for elevated components."
+    },
+    "4": {
+      "$extensions": {
+        "studio.tokens": {
+          "modify": {
+            "type": "alpha",
+            "value": "0.05",
+            "space": "lch"
+          }
+        }
+      },
+      "$type": "color",
+      "$value": "{tuna.800}",
+      "$description": "Deep shadow color. Provides significant depth for floating elements."
+    },
+    "5": {
+      "$extensions": {
+        "studio.tokens": {
+          "modify": {
+            "type": "alpha",
+            "value": "0.07",
+            "space": "lch"
+          }
+        }
+      },
+      "$type": "color",
+      "$value": "{tuna.800}",
+      "$description": "Very deep shadow color. Creates dramatic elevation for modal content."
+    },
+    "6": {
+      "$extensions": {
+        "studio.tokens": {
+          "modify": {
+            "type": "alpha",
+            "value": "0.1",
+            "space": "lch"
+          }
+        }
+      },
+      "$type": "color",
+      "$value": "{tuna.800}",
+      "$description": "Extremely deep shadow color. Provides maximum depth for highly elevated elements."
+    }
+  },
+  "ring": {
+    "danger": {
+      "$type": "boxShadow",
+      "$value": {
+        "x": "0",
+        "y": "0",
+        "blur": "0",
+        "spread": "4",
+        "color": "{set.red.soft.bg}",
+        "type": "dropShadow"
+      }
+    },
+    "danger-hover": {
+      "$type": "boxShadow",
+      "$value": {
+        "x": "0",
+        "y": "0",
+        "blur": "0",
+        "spread": "4",
+        "color": "{set.red.soft.bg-hover}",
+        "type": "dropShadow"
+      }
+    },
+    "selected": {
+      "$type": "boxShadow",
+      "$value": {
+        "x": "0",
+        "y": "0",
+        "blur": "0",
+        "spread": "4",
+        "color": "{set.brand.surface.bg}",
+        "type": "dropShadow"
+      }
+    },
+    "success": {
+      "$type": "boxShadow",
+      "$value": {
+        "x": "0",
+        "y": "0",
+        "blur": "0",
+        "spread": "4",
+        "color": "{set.green.soft.bg}",
+        "type": "dropShadow"
+      }
+    },
+    "success-hover": {
+      "$type": "boxShadow",
+      "$value": {
+        "x": "0",
+        "y": "0",
+        "blur": "0",
+        "spread": "4",
+        "color": "{set.green.soft.bg-hover}",
+        "type": "dropShadow"
+      }
+    },
+    "warning": {
+      "$type": "boxShadow",
+      "$value": {
+        "x": "0",
+        "y": "0",
+        "blur": "0",
+        "spread": "4",
+        "color": "{set.yellow.soft.bg}",
+        "type": "dropShadow"
+      }
+    },
+    "warning-hover": {
+      "$type": "boxShadow",
+      "$value": {
+        "x": "0",
+        "y": "0",
+        "blur": "0",
+        "spread": "4",
+        "color": "{set.yellow.soft.bg-hover}",
+        "type": "dropShadow"
+      }
+    }
+  },
+  "gradient": {
+    "ai": {
+      "gradient-stop-1": {
+        "$type": "color",
+        "$value": "{yellow.200}"
+      },
+      "gradient-stop-2": {
+        "$type": "color",
+        "$value": "{pink.300}"
+      },
+      "gradient-stop-3": {
+        "$type": "color",
+        "$value": "{purple.300}"
+      },
+      "gradient-stop-4": {
+        "$type": "color",
+        "$value": "{cyan.200}"
+      }
+    },
+    "ai-chat": {
+      "gradient-stop-1": {
+        "$type": "color",
+        "$value": "{cyan.200}"
+      },
+      "gradient-stop-2": {
+        "$type": "color",
+        "$value": "{indigo.400}"
+      },
+      "gradient-stop-3": {
+        "$type": "color",
+        "$value": "{violet.400}"
+      }
+    },
+    "alert": {
+      "fade-default": {
         "$extensions": {
           "studio.tokens": {
             "modify": {
@@ -1959,895 +2170,378 @@
           }
         },
         "$type": "color",
-        "$value": "{tuna.800}",
-        "$description": "Transparent shadow color. Used when no shadow effect is desired."
+        "$value": "{set.gray.soft.bg}"
       },
-      "1": {
+      "fade-danger": {
         "$extensions": {
           "studio.tokens": {
             "modify": {
               "type": "alpha",
-              "value": "0.05",
+              "value": "0",
               "space": "lch"
             }
           }
         },
         "$type": "color",
-        "$value": "{tuna.800}",
-        "$description": "Light shadow color. Creates subtle depth for small UI elements."
+        "$value": "{set.red.soft.bg}"
       },
-      "2": {
+      "fade-warning": {
         "$extensions": {
           "studio.tokens": {
             "modify": {
               "type": "alpha",
-              "value": "0.05",
+              "value": "0",
               "space": "lch"
             }
           }
         },
         "$type": "color",
-        "$value": "{tuna.800}",
-        "$description": "Medium shadow color with 60% opacity. Provides balanced depth for common UI components."
+        "$value": "{set.yellow.soft.bg}"
       },
-      "3": {
+      "fade-success": {
         "$extensions": {
           "studio.tokens": {
             "modify": {
               "type": "alpha",
-              "value": "0.05",
+              "value": "0",
               "space": "lch"
             }
           }
         },
         "$type": "color",
-        "$value": "{tuna.800}",
-        "$description": "Medium shadow color. Creates moderate depth for elevated components."
-      },
-      "4": {
-        "$extensions": {
-          "studio.tokens": {
-            "modify": {
-              "type": "alpha",
-              "value": "0.05",
-              "space": "lch"
-            }
-          }
-        },
-        "$type": "color",
-        "$value": "{tuna.800}",
-        "$description": "Deep shadow color. Provides significant depth for floating elements."
-      },
-      "5": {
-        "$extensions": {
-          "studio.tokens": {
-            "modify": {
-              "type": "alpha",
-              "value": "0.07",
-              "space": "lch"
-            }
-          }
-        },
-        "$type": "color",
-        "$value": "{tuna.800}",
-        "$description": "Very deep shadow color. Creates dramatic elevation for modal content."
-      },
-      "6": {
-        "$extensions": {
-          "studio.tokens": {
-            "modify": {
-              "type": "alpha",
-              "value": "0.1",
-              "space": "lch"
-            }
-          }
-        },
-        "$type": "color",
-        "$value": "{tuna.800}",
-        "$description": "Extremely deep shadow color. Provides maximum depth for highly elevated elements."
+        "$value": "{set.green.soft.bg}"
       }
     },
-    "ring": {
-      "danger": {
-        "$type": "boxShadow",
-        "$value": {
-          "x": "0",
-          "y": "0",
-          "blur": "0",
-          "spread": "4",
-          "color": "{set.red.soft.bg}",
-          "type": "dropShadow"
-        }
+    "skeleton": {
+      "gradient-stop-1": {
+        "$type": "color",
+        "$value": "{chrome.100}"
       },
-      "danger-hover": {
-        "$type": "boxShadow",
-        "$value": {
-          "x": "0",
-          "y": "0",
-          "blur": "0",
-          "spread": "4",
-          "color": "{set.red.soft.bg-hover}",
-          "type": "dropShadow"
-        }
+      "gradient-stop-2": {
+        "$type": "color",
+        "$value": "{chrome.50}"
       },
-      "selected": {
-        "$type": "boxShadow",
-        "$value": {
-          "x": "0",
-          "y": "0",
-          "blur": "0",
-          "spread": "4",
-          "color": "{set.brand.surface.bg}",
-          "type": "dropShadow"
-        }
+      "gradient-stop-3": {
+        "$type": "color",
+        "$value": "{chrome.100}"
       },
-      "success": {
-        "$type": "boxShadow",
-        "$value": {
-          "x": "0",
-          "y": "0",
-          "blur": "0",
-          "spread": "4",
-          "color": "{set.green.soft.bg}",
-          "type": "dropShadow"
-        }
-      },
-      "success-hover": {
-        "$type": "boxShadow",
-        "$value": {
-          "x": "0",
-          "y": "0",
-          "blur": "0",
-          "spread": "4",
-          "color": "{set.green.soft.bg-hover}",
-          "type": "dropShadow"
-        }
-      },
-      "warning": {
-        "$type": "boxShadow",
-        "$value": {
-          "x": "0",
-          "y": "0",
-          "blur": "0",
-          "spread": "4",
-          "color": "{set.yellow.soft.bg}",
-          "type": "dropShadow"
-        }
-      },
-      "warning-hover": {
-        "$type": "boxShadow",
-        "$value": {
-          "x": "0",
-          "y": "0",
-          "blur": "0",
-          "spread": "4",
-          "color": "{set.yellow.soft.bg-hover}",
-          "type": "dropShadow"
+      "mask": {
+        "from": {
+          "$type": "color",
+          "$value": "{pure.black}"
+        },
+        "to": {
+          "$extensions": {
+            "studio.tokens": {
+              "modify": {
+                "type": "alpha",
+                "value": "0",
+                "space": "lch"
+              }
+            }
+          },
+          "$type": "color",
+          "$value": "{pure.black}"
         }
       }
     },
-    "gradient": {
-      "ai": {
+    "pipeline": {
+      "running": {
         "gradient-stop-1": {
           "$type": "color",
-          "$value": "{yellow.200}"
+          "$value": "{blue.400}"
         },
         "gradient-stop-2": {
+          "$extensions": {
+            "studio.tokens": {
+              "modify": {
+                "type": "alpha",
+                "value": "0.4",
+                "space": "lch"
+              }
+            }
+          },
           "$type": "color",
-          "$value": "{pink.300}"
+          "$value": "{chrome.200}"
         },
         "gradient-stop-3": {
           "$type": "color",
-          "$value": "{purple.300}"
-        },
-        "gradient-stop-4": {
-          "$type": "color",
-          "$value": "{cyan.200}"
+          "$value": "{blue.400}"
         }
       },
-      "ai-chat": {
-        "gradient-stop-1": {
-          "$type": "color",
-          "$value": "{cyan.200}"
-        },
-        "gradient-stop-2": {
-          "$type": "color",
-          "$value": "{indigo.400}"
-        },
-        "gradient-stop-3": {
-          "$type": "color",
-          "$value": "{violet.400}"
-        }
-      },
-      "alert": {
-        "fade-default": {
-          "$extensions": {
-            "studio.tokens": {
-              "modify": {
-                "type": "alpha",
-                "value": "0",
-                "space": "lch"
-              }
-            }
-          },
-          "$type": "color",
-          "$value": "{set.gray.soft.bg}"
-        },
-        "fade-danger": {
-          "$extensions": {
-            "studio.tokens": {
-              "modify": {
-                "type": "alpha",
-                "value": "0",
-                "space": "lch"
-              }
-            }
-          },
-          "$type": "color",
-          "$value": "{set.red.soft.bg}"
-        },
-        "fade-warning": {
-          "$extensions": {
-            "studio.tokens": {
-              "modify": {
-                "type": "alpha",
-                "value": "0",
-                "space": "lch"
-              }
-            }
-          },
-          "$type": "color",
-          "$value": "{set.yellow.soft.bg}"
-        },
-        "fade-success": {
-          "$extensions": {
-            "studio.tokens": {
-              "modify": {
-                "type": "alpha",
-                "value": "0",
-                "space": "lch"
-              }
-            }
-          },
-          "$type": "color",
-          "$value": "{set.green.soft.bg}"
-        }
-      },
-      "skeleton": {
+      "arrows": {
         "gradient-stop-1": {
           "$type": "color",
           "$value": "{chrome.100}"
         },
         "gradient-stop-2": {
           "$type": "color",
-          "$value": "{chrome.50}"
+          "$value": "{blue.400}"
         },
         "gradient-stop-3": {
           "$type": "color",
-          "$value": "{chrome.100}"
-        },
-        "mask": {
-          "from": {
-            "$type": "color",
-            "$value": "{pure.black}"
-          },
-          "to": {
-            "$extensions": {
-              "studio.tokens": {
-                "modify": {
-                  "type": "alpha",
-                  "value": "0",
-                  "space": "lch"
-                }
-              }
-            },
-            "$type": "color",
-            "$value": "{pure.black}"
-          }
+          "$value": "{border.1}"
         }
       },
-      "pipeline": {
-        "running": {
-          "gradient-stop-1": {
+      "card": {
+        "bg": {
+          "gradient-from": {
             "$type": "color",
-            "$value": "{blue.400}"
+            "$value": "{pure.white}"
           },
-          "gradient-stop-2": {
-            "$extensions": {
-              "studio.tokens": {
-                "modify": {
-                  "type": "alpha",
-                  "value": "0.4",
-                  "space": "lch"
-                }
-              }
-            },
+          "gradient-to": {
+            "$type": "color",
+            "$value": "{pure.white}"
+          }
+        },
+        "border": {
+          "gradient-from": {
+            "$type": "color",
+            "$value": "{chrome.150}"
+          },
+          "gradient-to": {
             "$type": "color",
             "$value": "{chrome.200}"
-          },
-          "gradient-stop-3": {
+          }
+        }
+      },
+      "widget": {
+        "number": {
+          "gradient-from": {
             "$type": "color",
-            "$value": "{blue.400}"
+            "$value": "{chrome.500}"
+          },
+          "gradient-to": {
+            "$type": "color",
+            "$value": "{chrome.600}"
           }
         },
-        "arrows": {
-          "gradient-stop-1": {
-            "$type": "color",
-            "$value": "{chrome.100}"
-          },
-          "gradient-stop-2": {
-            "$type": "color",
-            "$value": "{blue.400}"
-          },
-          "gradient-stop-3": {
-            "$type": "color",
-            "$value": "{border.1}"
-          }
-        },
-        "card": {
-          "bg": {
+        "blob": {
+          "big": {
             "gradient-from": {
               "$type": "color",
-              "$value": "{pure.white}"
+              "$value": "{chrome.100}"
             },
             "gradient-to": {
               "$type": "color",
               "$value": "{pure.white}"
             }
           },
-          "border": {
+          "small": {
             "gradient-from": {
               "$type": "color",
               "$value": "{chrome.150}"
             },
             "gradient-to": {
               "$type": "color",
-              "$value": "{chrome.200}"
-            }
-          }
-        },
-        "widget": {
-          "number": {
-            "gradient-from": {
-              "$type": "color",
-              "$value": "{chrome.500}"
-            },
-            "gradient-to": {
-              "$type": "color",
-              "$value": "{chrome.600}"
-            }
-          },
-          "blob": {
-            "big": {
-              "gradient-from": {
-                "$type": "color",
-                "$value": "{chrome.100}"
-              },
-              "gradient-to": {
-                "$type": "color",
-                "$value": "{pure.white}"
-              }
-            },
-            "small": {
-              "gradient-from": {
-                "$type": "color",
-                "$value": "{chrome.150}"
-              },
-              "gradient-to": {
-                "$type": "color",
-                "$value": "{pure.white}"
-              }
-            }
-          }
-        }
-      },
-      "dialog": {
-        "fade": {
-          "$extensions": {
-            "studio.tokens": {
-              "modify": {
-                "type": "alpha",
-                "value": "0",
-                "space": "lch"
-              }
-            }
-          },
-          "$type": "color",
-          "$value": "{bg.2}"
-        }
-      },
-      "sidebar": {
-        "fade": {
-          "$extensions": {
-            "studio.tokens": {
-              "modify": {
-                "type": "alpha",
-                "value": "0",
-                "space": "lch"
-              }
-            }
-          },
-          "$type": "color",
-          "$value": "{comp.sidebar.bg}"
-        }
-      },
-      "toast": {
-        "default": {
-          "to": {
-            "$extensions": {
-              "studio.tokens": {
-                "modify": {
-                  "type": "alpha",
-                  "value": "0",
-                  "space": "lch"
-                }
-              }
-            },
-            "$type": "color",
-            "$value": "{bg.3}"
-          },
-          "from": {
-            "$type": "color",
-            "$value": "{bg.3}"
-          }
-        },
-        "danger": {
-          "to": {
-            "$extensions": {
-              "studio.tokens": {
-                "modify": {
-                  "type": "alpha",
-                  "value": "0",
-                  "space": "lch"
-                }
-              }
-            },
-            "$type": "color",
-            "$value": "{comp.toast.danger.bg}"
-          },
-          "from": {
-            "$type": "color",
-            "$value": "{comp.toast.danger.bg}"
-          }
-        }
-      },
-      "img": {
-        "empty-state": {
-          "bg": {
-            "stop-1": {
-              "$type": "color",
-              "$value": "{pure.white}"
-            },
-            "stop-2": {
-              "$type": "color",
-              "$value": "{pure.white}"
-            },
-            "stop-3": {
-              "$type": "color",
-              "$value": "{chrome.25}"
-            },
-            "stop-4": {
-              "$type": "color",
-              "$value": "{chrome.25}"
-            },
-            "stop-5": {
-              "$type": "color",
-              "$value": "{chrome.50}"
-            },
-            "stop-6": {
-              "$type": "color",
-              "$value": "{chrome.100}"
-            }
-          },
-          "border": {
-            "from": {
-              "$extensions": {
-                "studio.tokens": {
-                  "modify": {
-                    "type": "alpha",
-                    "value": "0.1",
-                    "space": "lch"
-                  }
-                }
-              },
-              "$type": "color",
-              "$value": "{pure.black}"
-            },
-            "to": {
-              "$extensions": {
-                "studio.tokens": {
-                  "modify": {
-                    "type": "alpha",
-                    "value": "0.02",
-                    "space": "lch"
-                  }
-                }
-              },
-              "$type": "color",
-              "$value": "{pure.black}"
-            }
-          },
-          "icon": {
-            "stop-1": {
-              "$type": "color",
-              "$value": "{chrome.200}"
-            },
-            "stop-2": {
-              "$type": "color",
-              "$value": "{chrome.300}"
-            },
-            "stop-3": {
-              "$type": "color",
-              "$value": "{chrome.400}"
-            }
-          },
-          "lines": {
-            "from": {
-              "$type": "color",
-              "$value": "{chrome.200}"
-            },
-            "to": {
-              "$type": "color",
               "$value": "{pure.white}"
             }
-          },
-          "logo": {
-            "from": {
-              "$type": "color",
-              "$value": "{chrome.1000}"
-            },
-            "to": {
-              "$type": "color",
-              "$value": "{chrome.700}"
-            }
-          },
-          "bubble-t": {
-            "bg": {
-              "from": {
-                "$type": "color",
-                "$value": "{chrome.50}"
-              },
-              "to": {
-                "$type": "color",
-                "$value": "{chrome.150}"
-              }
-            },
-            "icon": {
-              "from": {
-                "$type": "color",
-                "$value": "{chrome.600}"
-              },
-              "to": {
-                "$type": "color",
-                "$value": "{chrome.300}"
-              }
-            }
-          },
-          "bubble-b": {
-            "bg": {
-              "from": {
-                "$type": "color",
-                "$value": "{chrome.150}"
-              },
-              "to": {
-                "$type": "color",
-                "$value": "{chrome.50}"
-              }
-            },
-            "icon": {
-              "from": {
-                "$type": "color",
-                "$value": "{chrome.300}"
-              },
-              "to": {
-                "$type": "color",
-                "$value": "{chrome.600}"
-              }
-            }
           }
-        }
-      },
-      "flow": {
-        "onboard": {
-          "img-color-bubble": {
-            "default": {
-              "from": {
-                "$extensions": {
-                  "studio.tokens": {
-                    "modify": {
-                      "type": "alpha",
-                      "value": "0.6",
-                      "space": "lch"
-                    }
-                  }
-                },
-                "$type": "color",
-                "$value": "{cyan.200}"
-              },
-              "to": {
-                "$extensions": {
-                  "studio.tokens": {
-                    "modify": {
-                      "type": "alpha",
-                      "value": "0",
-                      "space": "lch"
-                    }
-                  }
-                },
-                "$type": "color",
-                "$value": "{pure.white}"
-              }
-            },
-            "danger": {
-              "from": {
-                "$extensions": {
-                  "studio.tokens": {
-                    "modify": {
-                      "type": "alpha",
-                      "value": "0.6",
-                      "space": "lch"
-                    }
-                  }
-                },
-                "$type": "color",
-                "$value": "{red.300}"
-              },
-              "to": {
-                "$extensions": {
-                  "studio.tokens": {
-                    "modify": {
-                      "type": "alpha",
-                      "value": "0",
-                      "space": "lch"
-                    }
-                  }
-                },
-                "$type": "color",
-                "$value": "{pure.white}"
-              }
-            }
-          },
-          "ellipse-t-1": {
-            "default": {
-              "from": {
-                "$extensions": {
-                  "studio.tokens": {
-                    "modify": {
-                      "type": "alpha",
-                      "value": "0.12",
-                      "space": "lch"
-                    }
-                  }
-                },
-                "$type": "color",
-                "$value": "{cyan.200}"
-              },
-              "to": {
-                "$extensions": {
-                  "studio.tokens": {
-                    "modify": {
-                      "type": "alpha",
-                      "value": "0",
-                      "space": "lch"
-                    }
-                  }
-                },
-                "$type": "color",
-                "$value": "{cyan.200}"
-              }
-            },
-            "danger": {
-              "from": {
-                "$extensions": {
-                  "studio.tokens": {
-                    "modify": {
-                      "type": "alpha",
-                      "value": "0.12",
-                      "space": "lch"
-                    }
-                  }
-                },
-                "$type": "color",
-                "$value": "{red.300}"
-              },
-              "to": {
-                "$extensions": {
-                  "studio.tokens": {
-                    "modify": {
-                      "type": "alpha",
-                      "value": "0",
-                      "space": "lch"
-                    }
-                  }
-                },
-                "$type": "color",
-                "$value": "{red.300}"
-              }
-            }
-          },
-          "ellipse-t-2": {
-            "default": {
-              "from": {
-                "$extensions": {
-                  "studio.tokens": {
-                    "modify": {
-                      "type": "alpha",
-                      "value": "0.10",
-                      "space": "lch"
-                    }
-                  }
-                },
-                "$type": "color",
-                "$value": "{cyan.200}"
-              },
-              "to": {
-                "$extensions": {
-                  "studio.tokens": {
-                    "modify": {
-                      "type": "alpha",
-                      "value": "0",
-                      "space": "lch"
-                    }
-                  }
-                },
-                "$type": "color",
-                "$value": "{cyan.200}"
-              }
-            },
-            "danger": {
-              "from": {
-                "$extensions": {
-                  "studio.tokens": {
-                    "modify": {
-                      "type": "alpha",
-                      "value": "0.10",
-                      "space": "lch"
-                    }
-                  }
-                },
-                "$type": "color",
-                "$value": "{red.300}"
-              },
-              "to": {
-                "$extensions": {
-                  "studio.tokens": {
-                    "modify": {
-                      "type": "alpha",
-                      "value": "0",
-                      "space": "lch"
-                    }
-                  }
-                },
-                "$type": "color",
-                "$value": "{red.300}"
-              }
-            }
-          },
-          "ellipse-b": {
-            "default": {
-              "from": {
-                "$extensions": {
-                  "studio.tokens": {
-                    "modify": {
-                      "type": "alpha",
-                      "value": "0.2",
-                      "space": "lch"
-                    }
-                  }
-                },
-                "$type": "color",
-                "$value": "{cyan.200}"
-              },
-              "to": {
-                "$extensions": {
-                  "studio.tokens": {
-                    "modify": {
-                      "type": "alpha",
-                      "value": "0",
-                      "space": "lch"
-                    }
-                  }
-                },
-                "$type": "color",
-                "$value": "{cyan.200}"
-              }
-            },
-            "danger": {
-              "from": {
-                "$extensions": {
-                  "studio.tokens": {
-                    "modify": {
-                      "type": "alpha",
-                      "value": "0.2",
-                      "space": "lch"
-                    }
-                  }
-                },
-                "$type": "color",
-                "$value": "{red.300}"
-              },
-              "to": {
-                "$extensions": {
-                  "studio.tokens": {
-                    "modify": {
-                      "type": "alpha",
-                      "value": "0",
-                      "space": "lch"
-                    }
-                  }
-                },
-                "$type": "color",
-                "$value": "{red.300}"
-              }
-            }
-          }
-        }
-      },
-      "ai-subtle": {
-        "gradient-stop-1": {
-          "$type": "color",
-          "$value": "{orange.50}"
-        },
-        "gradient-stop-2": {
-          "$type": "color",
-          "$value": "{pink.50}"
-        },
-        "gradient-stop-3": {
-          "$type": "color",
-          "$value": "{purple.50}"
-        },
-        "gradient-stop-4": {
-          "$type": "color",
-          "$value": "{cyan.50}"
         }
       }
     },
-    "disabled": {
-      "opacity": {
-        "$type": "opacity",
-        "$value": "{opacity.50}"
+    "dialog": {
+      "fade": {
+        "$extensions": {
+          "studio.tokens": {
+            "modify": {
+              "type": "alpha",
+              "value": "0",
+              "space": "lch"
+            }
+          }
+        },
+        "$type": "color",
+        "$value": "{bg.2}"
+      }
+    },
+    "sidebar": {
+      "fade": {
+        "$extensions": {
+          "studio.tokens": {
+            "modify": {
+              "type": "alpha",
+              "value": "0",
+              "space": "lch"
+            }
+          }
+        },
+        "$type": "color",
+        "$value": "{comp.sidebar.bg}"
+      }
+    },
+    "toast": {
+      "default": {
+        "to": {
+          "$extensions": {
+            "studio.tokens": {
+              "modify": {
+                "type": "alpha",
+                "value": "0",
+                "space": "lch"
+              }
+            }
+          },
+          "$type": "color",
+          "$value": "{bg.3}"
+        },
+        "from": {
+          "$type": "color",
+          "$value": "{bg.3}"
+        }
+      },
+      "danger": {
+        "to": {
+          "$extensions": {
+            "studio.tokens": {
+              "modify": {
+                "type": "alpha",
+                "value": "0",
+                "space": "lch"
+              }
+            }
+          },
+          "$type": "color",
+          "$value": "{comp.toast.danger.bg}"
+        },
+        "from": {
+          "$type": "color",
+          "$value": "{comp.toast.danger.bg}"
+        }
       }
     },
     "img": {
       "empty-state": {
         "bg": {
-          "$type": "color",
-          "$value": "radial-gradient(54% 83% at 50% 102%, {gradient.img.empty-state.bg.stop-1} 0%, {gradient.img.empty-state.bg.stop-2} 27%, {gradient.img.empty-state.bg.stop-3} 46%, {gradient.img.empty-state.bg.stop-4} 63%, {gradient.img.empty-state.bg.stop-5} 84%, {gradient.img.empty-state.bg.stop-6} 100%)"
+          "stop-1": {
+            "$type": "color",
+            "$value": "{pure.white}"
+          },
+          "stop-2": {
+            "$type": "color",
+            "$value": "{pure.white}"
+          },
+          "stop-3": {
+            "$type": "color",
+            "$value": "{chrome.25}"
+          },
+          "stop-4": {
+            "$type": "color",
+            "$value": "{chrome.25}"
+          },
+          "stop-5": {
+            "$type": "color",
+            "$value": "{chrome.50}"
+          },
+          "stop-6": {
+            "$type": "color",
+            "$value": "{chrome.100}"
+          }
         },
         "border": {
-          "$type": "color",
-          "$value": "linear-gradient(180deg, {gradient.img.empty-state.border.from} 0%, {gradient.img.empty-state.border.to} 100%)"
+          "from": {
+            "$extensions": {
+              "studio.tokens": {
+                "modify": {
+                  "type": "alpha",
+                  "value": "0.1",
+                  "space": "lch"
+                }
+              }
+            },
+            "$type": "color",
+            "$value": "{pure.black}"
+          },
+          "to": {
+            "$extensions": {
+              "studio.tokens": {
+                "modify": {
+                  "type": "alpha",
+                  "value": "0.02",
+                  "space": "lch"
+                }
+              }
+            },
+            "$type": "color",
+            "$value": "{pure.black}"
+          }
         },
         "icon": {
-          "$type": "color",
-          "$value": "radial-gradient(31.5% 52.5% at 50% 64%, {gradient.img.empty-state.icon.stop-1} 0%, {gradient.img.empty-state.icon.stop-2} 38%, {gradient.img.empty-state.icon.stop-3} 100%)"
+          "stop-1": {
+            "$type": "color",
+            "$value": "{chrome.200}"
+          },
+          "stop-2": {
+            "$type": "color",
+            "$value": "{chrome.300}"
+          },
+          "stop-3": {
+            "$type": "color",
+            "$value": "{chrome.400}"
+          }
         },
         "lines": {
-          "$type": "color",
-          "$value": "radial-gradient(60.84% 50% at 50% 50%, {gradient.img.empty-state.lines.from} 0%, {gradient.img.empty-state.lines.to} 100%)"
+          "from": {
+            "$type": "color",
+            "$value": "{chrome.200}"
+          },
+          "to": {
+            "$type": "color",
+            "$value": "{pure.white}"
+          }
         },
         "logo": {
-          "$type": "color",
-          "$value": "radial-gradient(87.5% 87.5% at 50% 50%, {gradient.img.empty-state.logo.from} 0%, {gradient.img.empty-state.logo.to} 100%)"
+          "from": {
+            "$type": "color",
+            "$value": "{chrome.1000}"
+          },
+          "to": {
+            "$type": "color",
+            "$value": "{chrome.700}"
+          }
         },
         "bubble-t": {
           "bg": {
-            "$type": "color",
-            "$value": "linear-gradient(44deg, {gradient.img.empty-state.bubble-t.bg.from} 11%, {gradient.img.empty-state.bubble-t.bg.to} 71%)"
+            "from": {
+              "$type": "color",
+              "$value": "{chrome.50}"
+            },
+            "to": {
+              "$type": "color",
+              "$value": "{chrome.150}"
+            }
           },
           "icon": {
-            "$type": "color",
-            "$value": "linear-gradient(225deg, {gradient.img.empty-state.bubble-t.icon.from} 8%, {gradient.img.empty-state.bubble-t.icon.to} 92%)"
+            "from": {
+              "$type": "color",
+              "$value": "{chrome.600}"
+            },
+            "to": {
+              "$type": "color",
+              "$value": "{chrome.300}"
+            }
           }
         },
         "bubble-b": {
           "bg": {
-            "$type": "color",
-            "$value": "linear-gradient(44deg, {gradient.img.empty-state.bubble-b.bg.from} 11%, {gradient.img.empty-state.bubble-b.bg.to} 71%)"
+            "from": {
+              "$type": "color",
+              "$value": "{chrome.150}"
+            },
+            "to": {
+              "$type": "color",
+              "$value": "{chrome.50}"
+            }
           },
           "icon": {
-            "$type": "color",
-            "$value": "linear-gradient(225deg, {gradient.img.empty-state.bubble-b.icon.from} 8%, {gradient.img.empty-state.bubble-b.icon.to} 92%)"
+            "from": {
+              "$type": "color",
+              "$value": "{chrome.300}"
+            },
+            "to": {
+              "$type": "color",
+              "$value": "{chrome.600}"
+            }
           }
         }
       }
@@ -2856,74 +2550,379 @@
       "onboard": {
         "img-color-bubble": {
           "default": {
-            "$type": "color",
-            "$value": "radial-gradient(50% 50% at 50% 50%, {gradient.flow.onboard.img-color-bubble.default.from} 0%, {gradient.flow.onboard.img-color-bubble.default.to} 100%)"
+            "from": {
+              "$extensions": {
+                "studio.tokens": {
+                  "modify": {
+                    "type": "alpha",
+                    "value": "0.6",
+                    "space": "lch"
+                  }
+                }
+              },
+              "$type": "color",
+              "$value": "{cyan.200}"
+            },
+            "to": {
+              "$extensions": {
+                "studio.tokens": {
+                  "modify": {
+                    "type": "alpha",
+                    "value": "0",
+                    "space": "lch"
+                  }
+                }
+              },
+              "$type": "color",
+              "$value": "{pure.white}"
+            }
           },
           "danger": {
-            "$type": "color",
-            "$value": "radial-gradient(50% 50% at 50% 50%, {gradient.flow.onboard.img-color-bubble.danger.from} 0%, {gradient.flow.onboard.img-color-bubble.danger.to} 100%)"
+            "from": {
+              "$extensions": {
+                "studio.tokens": {
+                  "modify": {
+                    "type": "alpha",
+                    "value": "0.6",
+                    "space": "lch"
+                  }
+                }
+              },
+              "$type": "color",
+              "$value": "{red.300}"
+            },
+            "to": {
+              "$extensions": {
+                "studio.tokens": {
+                  "modify": {
+                    "type": "alpha",
+                    "value": "0",
+                    "space": "lch"
+                  }
+                }
+              },
+              "$type": "color",
+              "$value": "{pure.white}"
+            }
           }
         },
         "ellipse-t-1": {
           "default": {
-            "$type": "color",
-            "$value": "radial-gradient(50% 50% at 50% 50%, {gradient.flow.onboard.ellipse-t-1.default.from} 26%, {gradient.flow.onboard.ellipse-t-1.default.to} 100%)"
+            "from": {
+              "$extensions": {
+                "studio.tokens": {
+                  "modify": {
+                    "type": "alpha",
+                    "value": "0.12",
+                    "space": "lch"
+                  }
+                }
+              },
+              "$type": "color",
+              "$value": "{cyan.200}"
+            },
+            "to": {
+              "$extensions": {
+                "studio.tokens": {
+                  "modify": {
+                    "type": "alpha",
+                    "value": "0",
+                    "space": "lch"
+                  }
+                }
+              },
+              "$type": "color",
+              "$value": "{cyan.200}"
+            }
           },
           "danger": {
-            "$type": "color",
-            "$value": "radial-gradient(50% 50% at 50% 50%, {gradient.flow.onboard.ellipse-t-1.danger.from} 26%, {gradient.flow.onboard.ellipse-t-1.danger.to} 100%)"
+            "from": {
+              "$extensions": {
+                "studio.tokens": {
+                  "modify": {
+                    "type": "alpha",
+                    "value": "0.12",
+                    "space": "lch"
+                  }
+                }
+              },
+              "$type": "color",
+              "$value": "{red.300}"
+            },
+            "to": {
+              "$extensions": {
+                "studio.tokens": {
+                  "modify": {
+                    "type": "alpha",
+                    "value": "0",
+                    "space": "lch"
+                  }
+                }
+              },
+              "$type": "color",
+              "$value": "{red.300}"
+            }
           }
         },
         "ellipse-t-2": {
           "default": {
-            "$type": "color",
-            "$value": "radial-gradient(50% 50% at 50% 50%, {gradient.flow.onboard.ellipse-t-2.default.from} 26%, {gradient.flow.onboard.ellipse-t-2.default.to} 100%)"
+            "from": {
+              "$extensions": {
+                "studio.tokens": {
+                  "modify": {
+                    "type": "alpha",
+                    "value": "0.10",
+                    "space": "lch"
+                  }
+                }
+              },
+              "$type": "color",
+              "$value": "{cyan.200}"
+            },
+            "to": {
+              "$extensions": {
+                "studio.tokens": {
+                  "modify": {
+                    "type": "alpha",
+                    "value": "0",
+                    "space": "lch"
+                  }
+                }
+              },
+              "$type": "color",
+              "$value": "{cyan.200}"
+            }
           },
           "danger": {
-            "$type": "color",
-            "$value": "radial-gradient(50% 50% at 50% 50%, {gradient.flow.onboard.ellipse-t-2.danger.from} 26%, {gradient.flow.onboard.ellipse-t-2.danger.to} 100%)"
+            "from": {
+              "$extensions": {
+                "studio.tokens": {
+                  "modify": {
+                    "type": "alpha",
+                    "value": "0.10",
+                    "space": "lch"
+                  }
+                }
+              },
+              "$type": "color",
+              "$value": "{red.300}"
+            },
+            "to": {
+              "$extensions": {
+                "studio.tokens": {
+                  "modify": {
+                    "type": "alpha",
+                    "value": "0",
+                    "space": "lch"
+                  }
+                }
+              },
+              "$type": "color",
+              "$value": "{red.300}"
+            }
           }
         },
         "ellipse-b": {
           "default": {
-            "$type": "color",
-            "$value": "radial-gradient(50% 50% at 50% 50%, {gradient.flow.onboard.ellipse-b.default.from} 26%, {gradient.flow.onboard.ellipse-b.default.to} 100%)"
+            "from": {
+              "$extensions": {
+                "studio.tokens": {
+                  "modify": {
+                    "type": "alpha",
+                    "value": "0.2",
+                    "space": "lch"
+                  }
+                }
+              },
+              "$type": "color",
+              "$value": "{cyan.200}"
+            },
+            "to": {
+              "$extensions": {
+                "studio.tokens": {
+                  "modify": {
+                    "type": "alpha",
+                    "value": "0",
+                    "space": "lch"
+                  }
+                }
+              },
+              "$type": "color",
+              "$value": "{cyan.200}"
+            }
           },
           "danger": {
-            "$type": "color",
-            "$value": "radial-gradient(50% 50% at 50% 50%, {gradient.flow.onboard.ellipse-b.danger.from} 26%, {gradient.flow.onboard.ellipse-b.danger.to} 100%)"
+            "from": {
+              "$extensions": {
+                "studio.tokens": {
+                  "modify": {
+                    "type": "alpha",
+                    "value": "0.2",
+                    "space": "lch"
+                  }
+                }
+              },
+              "$type": "color",
+              "$value": "{red.300}"
+            },
+            "to": {
+              "$extensions": {
+                "studio.tokens": {
+                  "modify": {
+                    "type": "alpha",
+                    "value": "0",
+                    "space": "lch"
+                  }
+                }
+              },
+              "$type": "color",
+              "$value": "{red.300}"
+            }
           }
         }
       }
     },
-    "icon": {
-      "devops": {
+    "ai-subtle": {
+      "gradient-stop-1": {
         "$type": "color",
-        "$value": "{mint.400}"
+        "$value": "{orange.50}"
       },
-      "testing": {
+      "gradient-stop-2": {
         "$type": "color",
-        "$value": "{orange.400}"
+        "$value": "{pink.50}"
       },
-      "security": {
+      "gradient-stop-3": {
         "$type": "color",
-        "$value": "{blue.500}"
+        "$value": "{purple.50}"
       },
-      "efficiency": {
+      "gradient-stop-4": {
         "$type": "color",
-        "$value": "{cyan.400}"
-      },
-      "platform": {
-        "$type": "color",
-        "$value": "{purple.400}"
-      }
-    },
-    "focus": {
-      "$type": "border",
-      "$value": {
-        "color": "{border.brand}",
-        "width": "{borderWidth.2}",
-        "style": "solid"
+        "$value": "{cyan.50}"
       }
     }
+  },
+  "disabled": {
+    "opacity": {
+      "$type": "opacity",
+      "$value": "{opacity.50}"
+    }
+  },
+  "img": {
+    "empty-state": {
+      "bg": {
+        "$type": "color",
+        "$value": "radial-gradient(54% 83% at 50% 102%, {gradient.img.empty-state.bg.stop-1} 0%, {gradient.img.empty-state.bg.stop-2} 27%, {gradient.img.empty-state.bg.stop-3} 46%, {gradient.img.empty-state.bg.stop-4} 63%, {gradient.img.empty-state.bg.stop-5} 84%, {gradient.img.empty-state.bg.stop-6} 100%)"
+      },
+      "border": {
+        "$type": "color",
+        "$value": "linear-gradient(180deg, {gradient.img.empty-state.border.from} 0%, {gradient.img.empty-state.border.to} 100%)"
+      },
+      "icon": {
+        "$type": "color",
+        "$value": "radial-gradient(31.5% 52.5% at 50% 64%, {gradient.img.empty-state.icon.stop-1} 0%, {gradient.img.empty-state.icon.stop-2} 38%, {gradient.img.empty-state.icon.stop-3} 100%)"
+      },
+      "lines": {
+        "$type": "color",
+        "$value": "radial-gradient(60.84% 50% at 50% 50%, {gradient.img.empty-state.lines.from} 0%, {gradient.img.empty-state.lines.to} 100%)"
+      },
+      "logo": {
+        "$type": "color",
+        "$value": "radial-gradient(87.5% 87.5% at 50% 50%, {gradient.img.empty-state.logo.from} 0%, {gradient.img.empty-state.logo.to} 100%)"
+      },
+      "bubble-t": {
+        "bg": {
+          "$type": "color",
+          "$value": "linear-gradient(44deg, {gradient.img.empty-state.bubble-t.bg.from} 11%, {gradient.img.empty-state.bubble-t.bg.to} 71%)"
+        },
+        "icon": {
+          "$type": "color",
+          "$value": "linear-gradient(225deg, {gradient.img.empty-state.bubble-t.icon.from} 8%, {gradient.img.empty-state.bubble-t.icon.to} 92%)"
+        }
+      },
+      "bubble-b": {
+        "bg": {
+          "$type": "color",
+          "$value": "linear-gradient(44deg, {gradient.img.empty-state.bubble-b.bg.from} 11%, {gradient.img.empty-state.bubble-b.bg.to} 71%)"
+        },
+        "icon": {
+          "$type": "color",
+          "$value": "linear-gradient(225deg, {gradient.img.empty-state.bubble-b.icon.from} 8%, {gradient.img.empty-state.bubble-b.icon.to} 92%)"
+        }
+      }
+    }
+  },
+  "flow": {
+    "onboard": {
+      "img-color-bubble": {
+        "default": {
+          "$type": "color",
+          "$value": "radial-gradient(50% 50% at 50% 50%, {gradient.flow.onboard.img-color-bubble.default.from} 0%, {gradient.flow.onboard.img-color-bubble.default.to} 100%)"
+        },
+        "danger": {
+          "$type": "color",
+          "$value": "radial-gradient(50% 50% at 50% 50%, {gradient.flow.onboard.img-color-bubble.danger.from} 0%, {gradient.flow.onboard.img-color-bubble.danger.to} 100%)"
+        }
+      },
+      "ellipse-t-1": {
+        "default": {
+          "$type": "color",
+          "$value": "radial-gradient(50% 50% at 50% 50%, {gradient.flow.onboard.ellipse-t-1.default.from} 26%, {gradient.flow.onboard.ellipse-t-1.default.to} 100%)"
+        },
+        "danger": {
+          "$type": "color",
+          "$value": "radial-gradient(50% 50% at 50% 50%, {gradient.flow.onboard.ellipse-t-1.danger.from} 26%, {gradient.flow.onboard.ellipse-t-1.danger.to} 100%)"
+        }
+      },
+      "ellipse-t-2": {
+        "default": {
+          "$type": "color",
+          "$value": "radial-gradient(50% 50% at 50% 50%, {gradient.flow.onboard.ellipse-t-2.default.from} 26%, {gradient.flow.onboard.ellipse-t-2.default.to} 100%)"
+        },
+        "danger": {
+          "$type": "color",
+          "$value": "radial-gradient(50% 50% at 50% 50%, {gradient.flow.onboard.ellipse-t-2.danger.from} 26%, {gradient.flow.onboard.ellipse-t-2.danger.to} 100%)"
+        }
+      },
+      "ellipse-b": {
+        "default": {
+          "$type": "color",
+          "$value": "radial-gradient(50% 50% at 50% 50%, {gradient.flow.onboard.ellipse-b.default.from} 26%, {gradient.flow.onboard.ellipse-b.default.to} 100%)"
+        },
+        "danger": {
+          "$type": "color",
+          "$value": "radial-gradient(50% 50% at 50% 50%, {gradient.flow.onboard.ellipse-b.danger.from} 26%, {gradient.flow.onboard.ellipse-b.danger.to} 100%)"
+        }
+      }
+    }
+  },
+  "icon": {
+    "devops": {
+      "$type": "color",
+      "$value": "{mint.400}"
+    },
+    "testing": {
+      "$type": "color",
+      "$value": "{orange.400}"
+    },
+    "security": {
+      "$type": "color",
+      "$value": "{blue.500}"
+    },
+    "efficiency": {
+      "$type": "color",
+      "$value": "{cyan.400}"
+    },
+    "platform": {
+      "$type": "color",
+      "$value": "{purple.400}"
+    }
+  },
+  "focus": {
+    "$type": "border",
+    "$value": {
+      "color": "{border.brand}",
+      "width": "{borderWidth.2}",
+      "style": "solid"
+    }
   }
+}

@@ -1,5 +1,4 @@
 import { IconV2, Layout, Toast, useToast } from '@/components'
-import { cn } from '@/utils/cn'
 
 export function Toaster() {
   const { toasts } = useToast()
@@ -22,15 +21,7 @@ export function Toaster() {
             </Layout.Horizontal>
           </Layout.Horizontal>
           {action}
-          {!action && (
-            <Toast.Close
-              className={cn(
-                variant === 'destructive'
-                  ? 'text-toast-icons-danger-default hover:text-toast-icons-danger-hover'
-                  : 'text-cn-3 hover:text-cn-1'
-              )}
-            />
-          )}
+          {!action && <Toast.Close />}
         </Toast.Root>
       ))}
       <Toast.Viewport />

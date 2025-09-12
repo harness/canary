@@ -103,10 +103,14 @@ export const BranchSelectorDropdown: FC<BranchSelectorDropdownProps> = ({
             {activeTab === BranchSelectorTab.BRANCHES ? (
               <Button
                 variant="link"
-                className="w-full whitespace-normal"
+                className="size-full min-w-0 flex-wrap"
                 onClick={() => setCreateBranchDialogOpen?.(true)}
               >
-                Create branch {searchQuery} from {selectedBranch?.name}
+                Create branch{' '}
+                <Text className="font-[inherit]" color="inherit" truncate>
+                  {searchQuery}
+                </Text>{' '}
+                from {selectedBranch?.name}
               </Button>
             ) : (
               <Text color="foreground-3">{t('views:noData.noResults', 'No search results')}</Text>

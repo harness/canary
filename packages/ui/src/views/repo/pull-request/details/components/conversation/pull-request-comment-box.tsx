@@ -4,8 +4,6 @@ import {
   DragEvent,
   Fragment,
   KeyboardEvent,
-  MouseEvent,
-  SyntheticEvent,
   useEffect,
   useMemo,
   useRef,

@@ -89,7 +89,17 @@ export interface MFEContextProps {
   routeUtils: Partial<{
     toCODERepository: ({ repoPath }: { repoPath: string }) => void
     toCODEPullRequest: ({ repoPath, pullRequestId }: { repoPath: string; pullRequestId: string }) => void
-    toCODERule: ({ repoPath, ruleId }: { repoPath: string; ruleId: string }) => void
+    toCODERule: ({
+      repoPath,
+      ruleId,
+      settingSection,
+      settingSectionMode
+    }: {
+      repoPath: string
+      ruleId?: string
+      settingSection?: string
+      settingSectionMode?: string
+    }) => void
     toCODEManageRepositories: ({
       space,
       ruleId,
@@ -97,8 +107,8 @@ export interface MFEContextProps {
       settingSectionMode
     }: {
       space: string
-      ruleId: string
-      settingSection: string
+      ruleId?: string
+      settingSection?: string
       settingSectionMode?: string
     }) => void
   }>

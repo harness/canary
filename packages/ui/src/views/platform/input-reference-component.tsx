@@ -1,6 +1,6 @@
 import { ReactNode } from 'react'
 
-import { Button, Caption, ControlGroup, IconPropsV2, IconV2, Label, LogoPropsV2, LogoV2, Text } from '@/components'
+import { Button, Caption, ControlGroup, IconPropsV2, IconV2, Label, LogoPropsV2, LogoV2 } from '@/components'
 import { cn } from '@utils/cn'
 import { cva, type VariantProps } from 'class-variance-authority'
 
@@ -184,9 +184,7 @@ export const InputReference = <T,>({
         <div className="flex w-full items-center justify-between px-3 py-2">
           {icon && <IconV2 className="mr-2.5" name={icon} />}
           {logo && <LogoV2 className="mr-2.5" name={logo} size="xs" />}
-          <Text lineClamp={1} color={hasValue ? undefined : 'disabled'}>
-            {displayContent}
-          </Text>
+          <div className={cn(`flex-1 truncate ${hasValue ? '' : 'text-cn-disabled'}`)}>{displayContent}</div>
           {hasValue && !disabled && (
             <div className="ml-3 flex items-center">
               <Button onClick={handleEdit} size="sm" variant="ghost" iconOnly tooltipProps={{ content: 'Edit' }}>

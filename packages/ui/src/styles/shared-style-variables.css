@@ -344,11 +344,7 @@
     --canary-icon-accent: var(--canary-blue-60);
     --canary-icon-risk: var(--canary-yellow-300);
     --canary-icon-merged: var(--canary-purple);
-    /* Toast */
-    --canary-toast-background-danger: var(--canary-red-60);
-    --canary-toast-foreground-danger: var(--canary-pure-white);
-    --canary-toast-icon-danger-default: var(--canary-pure-white);
-    --canary-toast-icon-danger-hover: var(--canary-pure-white) / 0.65;
+
     /* Tags */
     /* --canary-gray */
     --canary-tag-foreground-gray-01: var(--canary-grey-70);
@@ -528,12 +524,6 @@
     --canary-icon-merged: var(--canary-purple-700);
     --canary-sub-menu-icon-01: 240 4% 40%;
     --canary-sub-menu-icon-02: 240 5% 25%;
-
-    /* Toast */
-    --canary-toast-background-danger: var(--canary-red-60);
-    --canary-toast-foreground-danger: var(--canary-pure-white);
-    --canary-toast-icon-danger-default: var(--canary-pure-white);
-    --canary-toast-icon-danger-hover: var(--canary-pure-white) / 0.65;
 
     /* Tags */
     /* --gray */
@@ -735,7 +725,6 @@
     --canary-background-accent: 213 100% 47%;
     --canary-background-danger: 2 83% 93%;
     --canary-background-success: 129 68% 93%;
-    --canary-toast-background-danger: var(--canary-red-60);
 
     /* Borders */
     --canary-border-01: 240 5% 85%;
@@ -773,12 +762,6 @@
     --canary-icon-merged: 260 100% 67%;
     --canary-sub-menu-icon-01: 240 4% 40%;
     --canary-sub-menu-icon-02: 240 5% 25%;
-
-    /* Toast */
-    --canary-toast-background-danger: var(--canary-red-60);
-    --canary-toast-foreground-danger: var(--canary-pure-white);
-    --canary-toast-icon-danger-default: var(--canary-pure-white);
-    --canary-toast-icon-danger-hover: var(--canary-pure-white) / 0.65;
 
     /* Tags */
     /* --gray */
@@ -979,7 +962,6 @@
     --canary-background-accent: 213 100% 47%;
     --canary-background-danger: 2 83% 93%;
     --canary-background-success: 129 68% 93%;
-    --canary-toast-background-danger: var(--canary-red-60);
 
     /* Borders */
     --canary-border-01: 240 5% 85%;
@@ -1017,12 +999,6 @@
     --canary-icon-merged: 260 100% 67%;
     --canary-sub-menu-icon-01: 240 4% 40%;
     --canary-sub-menu-icon-02: 240 5% 25%;
-
-    /* Toast */
-    --canary-toast-background-danger: var(--canary-red-60);
-    --canary-toast-foreground-danger: var(--canary-pure-white);
-    --canary-toast-icon-danger-default: var(--canary-pure-white);
-    --canary-toast-icon-danger-hover: var(--canary-pure-white) / 0.65;
 
     /* Tags */
     /* --gray */
@@ -1223,7 +1199,6 @@
     --canary-background-accent: 213 100% 47%;
     --canary-background-danger: 2 83% 93%;
     --canary-background-success: 129 68% 93%;
-    --canary-toast-background-danger: var(--canary-red-60);
 
     /* Borders */
     --canary-border-01: 240 5% 85%;
@@ -1261,12 +1236,6 @@
     --canary-icon-merged: 260 100% 67%;
     --canary-sub-menu-icon-01: 240 4% 40%;
     --canary-sub-menu-icon-02: 240 5% 25%;
-
-    /* Toast */
-    --canary-toast-background-danger: var(--canary-red-60);
-    --canary-toast-foreground-danger: var(--canary-pure-white);
-    --canary-toast-icon-danger-default: var(--canary-pure-white);
-    --canary-toast-icon-danger-hover: var(--canary-pure-white) / 0.65;
 
     /* Tags */
     /* --gray */
@@ -1470,7 +1439,6 @@
     --canary-background-danger: var(--canary-red-65) / 0.1; /* red65/10 */
     --canary-background-success: 154 13% 10% / 0.4;
     --canary-background-accent: var(--canary-blue-70);
-    --canary-toast-background-danger: var(--canary-red-60);
 
     /* Button */
     --canary-button-background-danger-01: var(--canary-red-65) / 0.1; /* red65/10 */
@@ -1525,12 +1493,6 @@
     --canary-icon-merged: var(--canary-purple);
     --canary-sub-menu-icon-01: 0 0% 94%;
     --canary-sub-menu-icon-02: 0 0% 61%;
-
-    /* Toast */
-    --canary-toast-background-danger: var(--canary-red-60);
-    --canary-toast-foreground-danger: var(--canary-pure-white);
-    --canary-toast-icon-danger-default: var(--canary-pure-white);
-    --canary-toast-icon-danger-hover: var(--canary-pure-white) / 0.65;
 
     /* Tags */
     /* --canary-gray */
@@ -1713,7 +1675,6 @@
     --canary-background-accent: var(--canary-accent-600);
     --canary-background-danger: var(--canary-red-950);
     --canary-background-success: var(--canary-green-950);
-    --canary-toast-background-danger: var(--canary-red-60);
 
     /* Borders */
     --canary-border-01: var(--canary-base-chrome-850);
@@ -1751,12 +1712,6 @@
     --canary-icon-merged: var(--canary-purple-300);
     --canary-sub-menu-icon-01: 0 0% 94%;
     --canary-sub-menu-icon-02: 0 0% 61%;
-
-    /* Toast */
-    --canary-toast-background-danger: var(--canary-red-60);
-    --canary-toast-foreground-danger: var(--canary-pure-white);
-    --canary-toast-icon-danger-default: var(--canary-pure-white);
-    --canary-toast-icon-danger-hover: var(--canary-pure-white) / 0.65;
 
     /* Tags */
     /* --gray */
@@ -1958,7 +1913,6 @@
     --canary-background-accent: var(--canary-accent-600);
     --canary-background-danger: var(--canary-red-950);
     --canary-background-success: var(--canary-green-950);
-    --canary-toast-background-danger: var(--canary-red-60);
 
     /* Borders */
     --canary-border-01: var(--canary-base-chrome-700);
@@ -1996,12 +1950,6 @@
     --canary-icon-merged: var(--canary-purple-200);
     --canary-sub-menu-icon-01: 0 0% 94%;
     --canary-sub-menu-icon-02: 0 0% 61%;
-
-    /* Toast */
-    --canary-toast-background-danger: var(--canary-red-60);
-    --canary-toast-foreground-danger: var(--canary-pure-white);
-    --canary-toast-icon-danger-default: var(--canary-pure-white);
-    --canary-toast-icon-danger-hover: var(--canary-pure-white) / 0.65;
 
     /* Tags */
     /* --gray */
@@ -2202,7 +2150,6 @@
     --canary-background-accent: var(--canary-accent-600);
     --canary-background-danger: var(--canary-yellow-950);
     --canary-background-success: var(--canary-indigo-950);
-    --canary-toast-background-danger: var(--canary-red-60);
 
     /* Borders */
     --canary-border-01: var(--canary-base-chrome-850);
@@ -2240,12 +2187,6 @@
     --canary-icon-merged: var(--canary-purple-200);
     --canary-sub-menu-icon-01: 0 0% 94%;
     --canary-sub-menu-icon-02: 0 0% 61%;
-
-    /* Toast */
-    --canary-toast-background-danger: var(--canary-red-60);
-    --canary-toast-foreground-danger: var(--canary-pure-white);
-    --canary-toast-icon-danger-default: var(--canary-pure-white);
-    --canary-toast-icon-danger-hover: var(--canary-pure-white) / 0.65;
 
     /* Tags */
     /* --gray */

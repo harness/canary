@@ -43,14 +43,12 @@ export default {
     textAlign: 'start',
     '@apply transition-[box-shadow,border-color]': '',
 
-    '&:focus-visible': {
-      outline: 'none'
-    },
-
     '&:focus-visible, &:where([data-state="open"])': {
       borderColor: 'var(--cn-border-brand)',
       boxShadow: 'var(--cn-ring-selected)',
-      outline: 'none'
+
+      // Adding !important to override global :focus-visible
+      outline: 'none !important'
     },
 
     '&:where(:disabled)': {

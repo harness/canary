@@ -16,7 +16,7 @@ function createInputThemeStyles() {
         boxShadow: `var(--cn-ring-${theme}-hover)`
       },
 
-      '&:where(:focus)': {
+      '&:where(:focus-visible)': {
         borderColor: `var(--cn-border-${theme})`,
         boxShadow: `var(--cn-ring-${theme})`
       }
@@ -46,17 +46,15 @@ export default {
     resize: 'none',
 
     '&:focus-visible': {
-      outline: 'none'
+      borderColor: 'var(--cn-border-brand)',
+      boxShadow: 'var(--cn-ring-selected)',
+
+      // Adding !important to override global :focus-visible
+      outline: 'none !important'
     },
 
     '&::placeholder': {
       color: 'var(--cn-state-disabled-text)'
-    },
-
-    '&:where(:focus)': {
-      borderColor: 'var(--cn-border-brand)',
-      boxShadow: 'var(--cn-ring-selected)',
-      outline: 'none'
     },
 
     '&:where(:disabled)': {

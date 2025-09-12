@@ -142,7 +142,8 @@ export default {
       zIndex: '0 !important',
 
       '&:focus-within': {
-        outline: 'none'
+        // Adding !important to override global :focus-within
+        outline: 'none !important'
       }
     },
 

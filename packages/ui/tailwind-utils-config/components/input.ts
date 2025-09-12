@@ -37,7 +37,8 @@ export default {
       '@apply w-full text-inherit bg-transparent': '',
 
       '&:focus-visible': {
-        outline: 'none'
+        // Adding important to override global :focus-visible
+        outline: 'none !important'
       },
 
       '&::placeholder': {

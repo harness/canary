@@ -21,13 +21,16 @@ export function SecretActivityList({ secretActivity, isLoading }: SecretActivity
         withBorder
         imageName="no-data-cog"
         title={t('views:noData.noActivity', 'No secret activity yet')}
-        description={[t('views:noData.noActivity', 'There is no secret activity in this project yet.')]}
+        description={[t('views:noData.noSecretActivity', 'There is no secret activity yet.')]}
       />
     )
   }
 
   return (
-    <Table.Root className={isLoading ? '[mask-image:linear-gradient(to_bottom,black_30%,transparent_100%)]' : ''}>
+    <Table.Root
+      className={isLoading ? '[mask-image:linear-gradient(to_bottom,black_30%,transparent_100%)]' : ''}
+      disableHighlightOnHover
+    >
       <Table.Header>
         <Table.Row>
           <Table.Head className="w-2/5">{t('views:secretActivity.event', 'Event')}</Table.Head>

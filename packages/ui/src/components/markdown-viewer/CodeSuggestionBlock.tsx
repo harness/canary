@@ -34,11 +34,11 @@ export function CodeSuggestionBlock({ code, suggestionBlock }: CodeSuggestionBlo
   return (
     <>
       <code
-        className={`${language} code-highlight !bg-cn-diff-danger !pl-cn-md`}
+        className={`${language} code-highlight !bg-cn-diff-danger !py-cn-xs !pr-cn-sm !pl-cn-md`}
         dangerouslySetInnerHTML={{ __html: highlightedHtmlOld }}
       />
       <code
-        className={`${language} code-highlight !bg-cn-diff-success !pl-cn-md`}
+        className={`${language} code-highlight !bg-cn-diff-success !py-cn-xs !pr-cn-sm !pl-cn-md`}
         dangerouslySetInnerHTML={{ __html: highlightedHtmlNew }}
       />
     </>

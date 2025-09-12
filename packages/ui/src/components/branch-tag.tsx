@@ -1,4 +1,4 @@
-import { CopyTag, Link } from '@/components'
+import { CopyTag, Link, Tag } from '@/components'
 
 import type { TagProps } from './tag'
 
@@ -23,15 +23,16 @@ const BranchTag: React.FC<BranchTagProps> = ({
   variant = 'secondary',
   size = 'md'
 }) => {
+  const TagComponent = hideCopyButton ? Tag : CopyTag
+
   return (
     <Link noHoverUnderline to={`${spaceId ? `/${spaceId}` : ''}/repos/${repoId}/files/${branchName}`}>
-      <CopyTag
+      <TagComponent
         variant={variant}
         theme={theme}
         size={size}
         icon={hideBranchIcon ? undefined : 'git-branch'}
         value={branchName || ''}
-        hideCopyButton={hideCopyButton}
       />
     </Link>
   )

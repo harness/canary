@@ -1,4 +1,4 @@
-import { Button, IconV2, ListActions, SearchBox } from '@/components'
+import { Button, Dialog, IconV2, ListActions, SearchBox } from '@/components'
 import { useTranslation } from '@/context'
 import { DialogLabels } from '@/views/user-management/components/dialogs'
 import { useDialogData } from '@/views/user-management/components/dialogs/hooks/use-dialog-data'
@@ -22,10 +22,12 @@ export const Actions = () => {
         />
       </ListActions.Left>
       <ListActions.Right>
-        <Button onClick={() => handleDialogOpen(null, DialogLabels.CREATE_USER)}>
-          <IconV2 name="plus" />
-          {t('views:userManagement.newUserButton', 'Create User')}
-        </Button>
+        <Dialog.Trigger>
+          <Button onClick={() => handleDialogOpen(null, DialogLabels.CREATE_USER)}>
+            <IconV2 name="plus" />
+            {t('views:userManagement.newUserButton', 'Create User')}
+          </Button>
+        </Dialog.Trigger>
       </ListActions.Right>
     </ListActions.Root>
   )

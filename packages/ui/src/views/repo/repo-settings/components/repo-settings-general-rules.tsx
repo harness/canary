@@ -15,7 +15,8 @@ import {
   SplitButton,
   StackedList,
   Tag,
-  Text
+  Text,
+  useCustomDialogTrigger
 } from '@/components'
 import { Select } from '@/components/form-primitives/select'
 import { useRouterContext, useTranslation } from '@/context'
@@ -112,6 +113,15 @@ export const RepoSettingsGeneralRules: FC<RepoSettingsGeneralRulesProps> = ({
       setRulesSearchQuery?.(val)
     },
     [setRulesSearchQuery]
+  )
+
+  const { triggerRef, registerTrigger } = useCustomDialogTrigger()
+  const handleDeleteRule = useCallback(
+    (ruleId: string, scope: number) => {
+      registerTrigger()
+      openRulesAlertDeleteDialog(ruleId, scope)
+    },
+    [openRulesAlertDeleteDialog, registerTrigger]
   )
 
   const resetSearch = () => {
@@ -218,6 +228,7 @@ export const RepoSettingsGeneralRules: FC<RepoSettingsGeneralRulesProps> = ({
                 }}
                 actions={
                   <MoreActionsTooltip
+                    ref={triggerRef}
                     actions={[
                       {
                         title: t('views:rules.edit', 'Edit Rule'),
@@ -228,7 +239,7 @@ export const RepoSettingsGeneralRules: FC<RepoSettingsGeneralRulesProps> = ({
                         isDanger: true,
                         title: t('views:rules.delete', 'Delete Rule'),
                         iconName: 'trash',
-                        onClick: () => openRulesAlertDeleteDialog(rule.identifier!, rule?.scope ?? 0)
+                        onClick: () => handleDeleteRule(rule.identifier!, rule?.scope ?? 0)
                       }
                     ]}
                   />

@@ -11,7 +11,8 @@ import {
   Label,
   Radio,
   Skeleton,
-  Text
+  Text,
+  useCustomDialogTrigger
 } from '@/components'
 import { useTranslation } from '@/context'
 import { AccessLevel, ErrorTypes, errorTypes, generalSettingsFormSchema, RepoData, RepoUpdateData } from '@/views'
@@ -25,7 +26,7 @@ export const RepoSettingsGeneralForm: FC<{
   isLoadingRepoData: boolean
   isUpdatingRepoData: boolean
   isRepoUpdateSuccess: boolean
-  branchSelectorRenderer: React.ComponentType<BranchSelectorContainerProps>
+  branchSelectorRenderer: React.ComponentType<BranchSelectorContainerProps & React.RefAttributes<HTMLButtonElement>>
   setCreateBranchDialogOpen: (open: boolean) => void
   onBranchQueryChange: (query: string) => void
 }> = ({
@@ -42,6 +43,12 @@ export const RepoSettingsGeneralForm: FC<{
   const { t } = useTranslation()
   const [isSubmitted, setIsSubmitted] = useState<boolean>(false)
   const BranchSelector = branchSelectorRenderer
+
+  const { triggerRef, registerTrigger } = useCustomDialogTrigger()
+  const toggleCreateBranchDialogOpen = (open: boolean) => {
+    registerTrigger()
+    setCreateBranchDialogOpen(open)
+  }
 
   const formMethods = useForm<RepoUpdateData>({
     resolver: zodResolver(generalSettingsFormSchema),
@@ -140,6 +147,7 @@ export const RepoSettingsGeneralForm: FC<{
       <ControlGroup>
         <Label>{t('views:repos.defaultBranch', 'Default Branch')}</Label>
         <BranchSelector
+          ref={triggerRef}
           onSelectBranchorTag={value => {
             handleSelectChange('branch', value.name)
           }}
@@ -147,7 +155,7 @@ export const RepoSettingsGeneralForm: FC<{
           selectedBranch={{ name: branchValue, sha: '' }}
           isUpdating={isUpdatingRepoData}
           disabled={isUpdatingRepoData}
-          setCreateBranchDialogOpen={setCreateBranchDialogOpen}
+          setCreateBranchDialogOpen={toggleCreateBranchDialogOpen}
           onBranchQueryChange={onBranchQueryChange}
           className="w-fit max-w-full"
         />

@@ -1,6 +1,6 @@
 import { FC } from 'react'
 
-import { Alert, Button, Fieldset, FormSeparator, Layout, Legend, Text } from '@/components'
+import { Alert, Button, Dialog, Fieldset, FormSeparator, Layout, Legend, Text } from '@/components'
 import { useTranslation } from '@/context'
 import { ApiErrorType } from '@/views'
 
@@ -61,9 +61,11 @@ const SettingsAccountKeysPage: FC<SettingsAccountKeysPageProps> = ({
                 'Personal access tokens allow you to authenticate with the API.'
               )}
             />
-            <Button type="button" variant="outline" onClick={openTokenDialog}>
-              {t('views:profileSettings.addToken', 'Add new token')}
-            </Button>
+            <Dialog.Trigger>
+              <Button type="button" variant="outline" onClick={openTokenDialog}>
+                {t('views:profileSettings.addToken', 'Add new token')}
+              </Button>
+            </Dialog.Trigger>
           </div>
           {error?.type === ApiErrorType.TokenFetch ? (
             <ErrorMessage message={error.message} />
@@ -88,9 +90,11 @@ const SettingsAccountKeysPage: FC<SettingsAccountKeysPageProps> = ({
                 'SSH keys allow you to establish a secure connection to your code repository.'
               )}
             />
-            <Button variant="outline" type="button" onClick={openSshKeyDialog}>
-              {t('views:profileSettings.addSshKey', 'Add new SSH key')}
-            </Button>
+            <Dialog.Trigger>
+              <Button variant="outline" type="button" onClick={openSshKeyDialog}>
+                {t('views:profileSettings.addSshKey', 'Add new SSH key')}
+              </Button>
+            </Dialog.Trigger>
           </div>
           {error?.type === ApiErrorType.KeyFetch ? (
             <ErrorMessage message={error.message} />

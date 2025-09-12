@@ -92,7 +92,8 @@ export default {
         'cn-brand': {
           DEFAULT: 'lch(from var(--cn-set-brand-solid-bg) l c h / <alpha-value>)',
           hover: 'lch(from var(--cn-set-brand-solid-bg-hover) l c h / <alpha-value>)',
-          selected: 'lch(from var(--cn-set-brand-solid-bg-selected) l c h / <alpha-value>)'
+          selected: 'lch(from var(--cn-set-brand-solid-bg-selected) l c h / <alpha-value>)',
+          surface: 'lch(from var(--cn-set-brand-surface-bg) l c h / <alpha-value>)'
         },
 
         // States

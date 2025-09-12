@@ -595,26 +595,15 @@ export const PullRequestCommentBox = ({
     setCommentAndSelection(e.target.value, selection)
   }
 
-  const onSelecionChange = (e: SyntheticEvent<HTMLTextAreaElement>): void => {
-    const textAreaElement = e.target as HTMLTextAreaElement
+  const onSelect = (): void => {
+    const textAreaElement = textAreaRef.current!
     const selection = { start: textAreaElement.selectionStart, end: textAreaElement.selectionEnd }
 
     setSelection(selection)
   }
 
-  const onMouseUp = (e: MouseEvent<HTMLTextAreaElement>): void => {
-    onSelecionChange(e)
-  }
-
   const onKeyUp = (e: KeyboardEvent<HTMLTextAreaElement>): void => {
     switch (e.code) {
-      case 'ArrowUp':
-      case 'ArrowDown':
-      case 'ArrowLeft':
-      case 'ArrowRight': {
-        onSelecionChange(e)
-        break
-      }
       case 'Enter': {
         const commentMetadata = parseComment(textComment, textSelection)
         const textLinesSelectionStartIndexBeforeEnter = commentMetadata.comment.textLinesSelectionStartIndex - 1
@@ -695,9 +684,9 @@ export const PullRequestCommentBox = ({
                   setComment(value)
                 }}
                 onChange={e => onCommentChange(e)}
+                onSelect={e => onSelect()}
                 onKeyUp={e => onKeyUp(e)}
                 onKeyDown={e => onKeyDown(e)}
-                onMouseUp={e => onMouseUp(e)}
                 onPaste={e => {
                   if (e.clipboardData.files.length > 0) {
                     handlePasteForUpload(e)

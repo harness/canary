@@ -1,6 +1,6 @@
 import { ReactNode } from 'react'
 
-import { Button, Caption, ControlGroup, IconPropsV2, IconV2, Label } from '@/components'
+import { Button, Caption, ControlGroup, IconPropsV2, IconV2, Label, LogoPropsV2, LogoV2, Text } from '@/components'
 import { cn } from '@utils/cn'
 import { cva, type VariantProps } from 'class-variance-authority'
 
@@ -71,6 +71,11 @@ export interface InputReferenceProps<T> extends VariantProps<typeof inputReferen
   icon?: IconPropsV2['name']
 
   /**
+   * Logo to display at the start of the input
+   */
+  logo?: LogoPropsV2['name']
+
+  /**
    * Label text to display above the input
    */
   label?: string
@@ -89,6 +94,16 @@ export interface InputReferenceProps<T> extends VariantProps<typeof inputReferen
    * Suffix element to display at the end of the input
    */
   suffix?: ReactNode
+
+  /**
+   * Whether to show the reset button
+   */
+  showReset?: boolean
+
+  /**
+   * Function called when the open (arrow) icon is clicked
+   */
+  onOpen?: () => void
 }
 
 /**
@@ -105,11 +120,14 @@ export const InputReference = <T,>({
   disabled = false,
   className,
   icon,
+  logo,
   label,
   caption,
   optional = false,
   renderValue,
   suffix,
+  showReset = true,
+  onOpen,
   wrapperClassName = '',
   ...props
 }: InputReferenceProps<T>) => {
@@ -126,6 +144,15 @@ export const InputReference = <T,>({
     e.stopPropagation()
     if (onEdit) {
       onEdit()
+    } else if (onClick) {
+      onClick()
+    }
+  }
+
+  const handleOpen = (e: React.MouseEvent) => {
+    e.stopPropagation()
+    if (onOpen) {
+      onOpen()
     } else if (onClick) {
       onClick()
     }
@@ -156,16 +183,26 @@ export const InputReference = <T,>({
       >
         <div className="flex w-full items-center justify-between px-3 py-2">
           {icon && <IconV2 className="mr-2.5" name={icon} />}
-          <div className="flex-1 truncate">{displayContent}</div>
+          {logo && <LogoV2 className="mr-2.5" name={logo} size="xs" />}
+          <Text lineClamp={1} color={hasValue ? undefined : 'disabled'}>
+            {displayContent}
+          </Text>
           {hasValue && !disabled && (
             <div className="ml-3 flex items-center">
               <Button onClick={handleEdit} size="sm" variant="ghost" iconOnly tooltipProps={{ content: 'Edit' }}>
                 <IconV2 name="edit-pencil" />
               </Button>
-              <Button onClick={handleClear} size="sm" variant="ghost" iconOnly ignoreIconOnlyTooltip>
-                <IconV2 name="xmark" className="text-cn-danger" />
-              </Button>
+              {showReset && (
+                <Button onClick={handleClear} size="sm" variant="ghost" iconOnly ignoreIconOnlyTooltip>
+                  <IconV2 name="xmark" color="danger" />
+                </Button>
+              )}
             </div>
+          )}
+          {!!onOpen && !disabled && (
+            <Button onClick={handleOpen} size="sm" variant="ghost" iconOnly tooltipProps={{ content: 'Open' }}>
+              <IconV2 name="nav-arrow-right" />
+            </Button>
           )}
         </div>
         {suffix ? (

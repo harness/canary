@@ -137,8 +137,8 @@ export const LabelsListView: FC<LabelsListViewProps> = ({
                   <LabelTag
                     wrapperClassName="mt-cn-2xs"
                     scope={label.scope ?? 0}
-                    labelKey={label.key}
-                    color={label.color}
+                    label={label.key}
+                    theme={label.color}
                     value={(valuesCount || '').toString()}
                     withIndicator={label.type === LabelType.DYNAMIC}
                   />
@@ -148,8 +148,8 @@ export const LabelsListView: FC<LabelsListViewProps> = ({
                       <LabelTag
                         key={item.id}
                         scope={label.scope}
-                        labelKey={label.key}
-                        color={item?.color || label.color}
+                        label={label.key}
+                        theme={item?.color || label.color}
                         value={item.value}
                       />
                     ))}

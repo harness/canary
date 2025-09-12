@@ -4,30 +4,19 @@ import { getScopeType, IconV2, Layout, scopeTypeToIconMap, Tag, TagProps } from 
 
 import { ILabelType } from '../types'
 
-export type LabelTagProps = Omit<TagProps, 'label' | 'theme' | 'icon' | 'variant'> & {
+export type LabelTagProps = Omit<TagProps, 'icon' | 'variant' | 'color'> & {
   scope?: ILabelType['scope']
-  color: ILabelType['color']
-  labelKey?: ILabelType['key']
   withIndicator?: boolean
   wrapperClassName?: string
 }
 
-export const LabelTag: FC<LabelTagProps> = ({
-  scope,
-  color,
-  labelKey,
-  withIndicator = false,
-  wrapperClassName,
-  ...tagProps
-}) => (
-  <Layout.Grid gap="xs" align="center" columns="auto auto" className={wrapperClassName}>
+export const LabelTag: FC<LabelTagProps> = ({ scope, withIndicator = false, wrapperClassName, ...tagProps }) => (
+  <Layout.Grid gap="xs" align="center" columns={withIndicator ? 'auto auto' : 'auto'} className={wrapperClassName}>
     <Tag
       size="sm"
       icon={scope !== undefined ? scopeTypeToIconMap[getScopeType(scope)] : undefined}
       variant="secondary"
-      theme={color}
-      label={labelKey}
-      className="grid grid-flow-col content-center"
+      className="grid grid-flow-col"
       labelClassName="grid grid-flow-col content-center"
       valueClassName="grid grid-flow-col content-center"
       {...tagProps}

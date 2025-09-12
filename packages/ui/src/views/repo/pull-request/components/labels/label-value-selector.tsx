@@ -11,7 +11,7 @@ import {
 } from '@/components'
 import { useTranslation } from '@/context'
 import { wrapConditionalObjectElement } from '@/utils'
-import { ColorsEnum, EnumLabelColor, HandleAddLabelType, LabelTag, TypesLabelValueInfo } from '@/views'
+import { EnumLabelColor, HandleAddLabelType, LabelTag, TypesLabelValueInfo } from '@/views'
 
 import { LabelsWithValueType } from './pull-request-labels-header'
 
@@ -115,9 +115,9 @@ export const LabelValueSelector: FC<LabelValueSelectorProps> = ({ label, handleA
             // to avoid styles from .cn-input-prefix
             <div className="contents">
               <LabelTag
-                wrapperClassName="border-0 pl-cn-xs"
+                wrapperClassName="ml-cn-xs"
                 scope={label.scope ?? 0}
-                color={label.color as ColorsEnum}
+                theme={label.color}
                 value={label.key ?? ''}
                 className="max-w-20"
               />

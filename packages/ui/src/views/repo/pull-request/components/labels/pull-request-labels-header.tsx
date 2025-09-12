@@ -169,8 +169,8 @@ export const LabelsHeader = ({
                     title={
                       <LabelTag
                         scope={label.scope ?? 0}
-                        color={label.color as ILabelType['color']}
-                        labelKey={label.key ?? ''}
+                        theme={label.color}
+                        label={label.key ?? ''}
                         value={(label.values?.length || '').toString()}
                         withIndicator={label.type === LabelType.DYNAMIC}
                       />

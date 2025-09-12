@@ -35,8 +35,8 @@ export const LabelsList: FC<LabelsListProps> = ({ labels, className, showReset, 
         <LabelTag
           key={label.key}
           scope={label.scope}
-          color={label.color}
-          labelKey={label.key}
+          theme={label.color}
+          label={label.key}
           value={label.value || ''}
           onActionClick={label.onDelete}
           actionIcon={showReset ? 'xmark' : undefined}

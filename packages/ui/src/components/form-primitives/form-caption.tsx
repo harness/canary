@@ -32,8 +32,7 @@ export const FormCaption = forwardRef<HTMLParagraphElement, PropsWithChildren<Fo
      */
     const effectiveIconName = theme === 'danger' ? 'xmark-circle' : 'warning-triangle'
 
-    const getColor = (theme: ThemeVariants, disabled?: boolean): TextColorVariants => {
-      if (disabled) return 'disabled'
+    const getColor = (theme: ThemeVariants): TextColorVariants => {
       const colorMap: Record<ThemeVariants, TextColorVariants> = {
         default: 'foreground-3',
         success: 'success',
@@ -44,7 +43,18 @@ export const FormCaption = forwardRef<HTMLParagraphElement, PropsWithChildren<Fo
     }
 
     return (
-      <Text variant={variant} color={getColor(theme, disabled)} className={cn('cn-caption', className)} ref={ref}>
+      <Text
+        variant={variant}
+        color={getColor(theme)}
+        className={cn(
+          'cn-caption',
+          {
+            'opacity-cn-disabled': disabled
+          },
+          className
+        )}
+        ref={ref}
+      >
         {canShowIcon && <IconV2 name={effectiveIconName} size="md" />}
         <span>{children}</span>
       </Text>

@@ -171,8 +171,8 @@ export function CommandPaletteWrapper() {
                     <Text color="foreground-1">{label}</Text>
                     {shortcut && (
                       <CommandPalette.Shortcut>
-                        <Text variant="caption-soft">{shortcut[0]}</Text>
-                        <Text variant="caption-soft">{shortcut[1]}</Text>
+                        <Text variant="caption-light">{shortcut[0]}</Text>
+                        <Text variant="caption-light">{shortcut[1]}</Text>
                       </CommandPalette.Shortcut>
                     )}
                   </CommandPalette.Item>

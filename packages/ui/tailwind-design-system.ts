@@ -19,6 +19,9 @@ export default {
       }
     },
     extend: {
+      opacity: {
+        'cn-disabled': 'var(--cn-disabled-opacity)'
+      },
       size: {
         'cn-0': 'var(--cn-size-0)',
         'cn-1': 'var(--cn-size-1)',
@@ -195,7 +198,7 @@ export default {
         'cn-danger': 'var(--cn-text-danger)',
         'cn-warning': 'var(--cn-text-warning)',
         'cn-merged': 'var(--cn-text-merged)',
-        'cn-disabled': 'var(--cn-state-disabled-text)',
+        'cn-disabled': 'var(--cn-text-disabled)',
 
         // logo colors
         'cn-logo-icon': 'var(--cn-logo-icon)',

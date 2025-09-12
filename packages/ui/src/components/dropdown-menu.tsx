@@ -227,8 +227,8 @@ const DropdownBaseItem = ({
     {tag && <Tag {...tag} />}
 
     <div className="ml-auto">
-      {label && <Text variant="caption-soft">{label}</Text>}
-      {shortcut && <Text variant="caption-soft">{shortcut}</Text>}
+      {label && <Text variant="caption-light">{label}</Text>}
+      {shortcut && <Text variant="caption-light">{shortcut}</Text>}
       {checkmark && <IconV2 name="check" />}
       {withSubIndicator && <IconV2 name="nav-arrow-right" size="xs" />}
     </div>

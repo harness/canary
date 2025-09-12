@@ -114,7 +114,7 @@ export default {
     },
 
     '&-tagline': {
-      font: 'var(--cn-caption-soft)',
+      font: 'var(--cn-caption-light)',
       color: 'var(--cn-text-2)'
     },
 

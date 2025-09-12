@@ -43,9 +43,12 @@ export default {
     },
 
     '&:where([disabled]), &:has([disabled])': {
-      backgroundColor: 'var(--cn-state-disabled-bg)',
-      borderColor: 'var(--cn-state-disabled-border)',
-      cursor: 'not-allowed'
+      cursor: 'not-allowed',
+      '@apply opacity-cn-disabled': '',
+
+      ' + .cn-radio-item-label-wrapper': {
+        '@apply opacity-cn-disabled': ''
+      }
     },
 
     '&:where([data-state=checked]), &:has([data-state=checked])': {
@@ -58,8 +61,8 @@ export default {
       },
 
       '&:where([disabled])': {
-        backgroundColor: 'var(--cn-state-disabled-bg-selected)',
-        borderColor: 'var(--cn-state-disabled-border-selected)'
+        cursor: 'not-allowed',
+        '@apply opacity-cn-disabled': ''
       }
     }
   },
@@ -81,11 +84,12 @@ export default {
     backgroundColor: 'var(--cn-comp-selection-selected-item)',
 
     '&:where([disabled])': {
-      backgroundColor: 'var(--cn-state-disabled-text)'
+      cursor: 'not-allowed',
+      '@apply opacity-cn-disabled': ''
     },
 
     '&:where([data-state=checked][disabled])': {
-      backgroundColor: 'var(--cn-state-disabled-text-selected)'
+      '@apply opacity-cn-disabled': ''
     }
   }
 }

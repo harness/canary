@@ -7,7 +7,7 @@ export type ShortcutProps = PropsWithoutRef<TextProps>
 
 export const Shortcut = forwardRef<HTMLElement, ShortcutProps>(({ children, className, ...props }, ref) => {
   return (
-    <Text ref={ref} variant="caption-soft" className={cn('cn-shortcut', className)} {...props}>
+    <Text ref={ref} variant="caption-light" className={cn('cn-shortcut', className)} {...props}>
       {children}
     </Text>
   )

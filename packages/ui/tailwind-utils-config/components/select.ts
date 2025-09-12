@@ -52,13 +52,11 @@ export default {
     },
 
     '&:where(:disabled)': {
-      backgroundColor: 'var(--cn-state-disabled-bg)',
-      borderColor: 'var(--cn-state-disabled-border)',
-      color: 'var(--cn-state-disabled-text)',
       cursor: 'not-allowed',
+      '@apply opacity-cn-disabled': '',
 
       '.cn-select-indicator-icon': {
-        color: 'var(--cn-state-disabled-text)'
+        color: 'var(--cn-text-disabled)'
       }
     },
 

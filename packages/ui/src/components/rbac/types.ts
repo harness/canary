@@ -11,17 +11,12 @@ export interface Resource {
 }
 
 export enum ResourceType {
-  CODE_REPOSITORY = 'CODE_REPOSITORY',
-  CONNECTOR = 'CONNECTOR'
+  CODE_REPOSITORY = 'CODE_REPOSITORY'
 }
 
 export enum PermissionIdentifier {
   CODE_REPO_CREATE = 'code_repo_create',
-  CODE_REPO_DELETE = 'code_repo_delete',
-  UPDATE_CONNECTOR = 'core_connector_edit',
-  DELETE_CONNECTOR = 'core_connector_delete',
-  VIEW_CONNECTOR = 'core_connector_view',
-  ACCESS_CONNECTOR = 'core_connector_access'
+  CODE_REPO_DELETE = 'code_repo_delete'
 }
 
 export interface PermissionsRequest {
@@ -37,8 +32,7 @@ interface RBACProps {
  * Types for RBAC-enabled components.
  * These components will automatically handle RBAC checks based on the provided `rbac` prop.
  */
-export interface RbacButtonProps extends Omit<ButtonProps, 'resource' | 'tooltipProps' | 'iconOnly'>, RBACProps {
-  iconOnly?: boolean
+export interface RbacButtonProps extends Omit<ButtonProps, 'resource' | 'tooltipProps'>, RBACProps {
   tooltip?: Pick<TooltipProps, 'title' | 'content'>
 }
 

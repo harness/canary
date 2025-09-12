@@ -3,8 +3,7 @@ import { useEffect, useRef, useState } from 'react'
 import { CounterBadge } from '@components/counter-badge'
 import { DropdownMenu } from '@components/dropdown-menu'
 import { SearchInput } from '@components/inputs'
-import { ColorsEnum, ILabelType, LabelValueType } from '@views/labels'
-import { LabelMarker } from '@views/labels/components/label-marker'
+import { ColorsEnum, ILabelType, LabelTag, LabelValueType } from '@views/labels'
 
 export type LabelsValue = Record<
   string,
@@ -87,7 +86,7 @@ export function LabelsFilter({
               key={option.id}
               onBlur={() => updateFocusState(option.id, 'parent', false)}
               onFocus={() => updateFocusState(option.id, 'parent', true)}
-              title={<LabelMarker color={option.color} label={option.key} value={String(option.value_count)} />}
+              title={<LabelTag theme={option.color} label={option.key} value={String(option.value_count)} />}
               checked={value[option.id]?.valueId ? 'indeterminate' : !!value[option.id]}
               subMenuProps={{
                 open: open[option.id] as boolean,
@@ -133,20 +132,20 @@ export function LabelsFilter({
               >
                 <DropdownMenu.RadioItem
                   value={ANY_LABEL_VALUE}
-                  title={<LabelMarker color={option.color} label={option.key} value={ANY_LABEL_VALUE} />}
+                  title={<LabelTag theme={option.color} label={option.key} value={ANY_LABEL_VALUE} />}
                 />
                 {valueOptions[option.key]?.map(value => (
                   <DropdownMenu.RadioItem
                     key={value.id}
                     value={String(value.id)}
-                    title={<LabelMarker color={option.color} label={option.key} value={value.value} />}
+                    title={<LabelTag theme={value.color} label={option.key} value={value.value} />}
                   />
                 ))}
               </DropdownMenu.RadioGroup>
             </DropdownMenu.CheckboxItem>
           ) : (
             <DropdownMenu.CheckboxItem
-              title={<LabelMarker color={option.color} label={option.key} />}
+              title={<LabelTag theme={option.color} value={option.key} />}
               checked={!!value[option.id]}
               key={option.id}
               onCheckedChange={selectedValue => {
@@ -167,7 +166,7 @@ export function LabelsFilter({
           )
         )}
 
-      {description && <div className="mx-2 my-4 text-sm text-cn-3">{description}</div>}
+      {description && <div className="text-cn-3 mx-2 my-4 text-sm">{description}</div>}
     </>
   )
 }
@@ -233,7 +232,7 @@ export function filterLabelRenderer({ selectedValue, labelOptions, valueOptions 
   return (
     <div className="flex w-max items-center gap-1">
       {label.key && label.color && (
-        <LabelMarker key={labelId} color={label.color} label={label.key} value={value?.value || ''} />
+        <LabelTag key={labelId} theme={label.color} label={label.key} value={value?.value || ''} />
       )}
 
       {selectedLabels.length > CNT_BAGDE_THRESHOLD && (

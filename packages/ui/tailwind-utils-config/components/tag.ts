@@ -52,7 +52,7 @@ function createTagVariantStyles(variant: 'outline' | 'secondary'): CSSRuleObject
 
       // ICON STYLES
       '.cn-tag-icon': {
-        color: `var(--cn-set-${theme}-${isOutline ? 'surface-text' : 'soft-text'})`
+        color: `var(--cn-set-${theme}-${isOutline ? 'surface-text' : 'soft-text'}) !important`
       }
     }
 

@@ -632,11 +632,11 @@
     "split": "Diviser",
     "unified": "Unifié",
     "comments": {
-      "suggestionApplied": "Suggestion applied",
-      "codeSuggestion": "Code suggestion",
       "commitSuggestion": "Commit suggestion",
       "removeSuggestion": "Remove suggestion from batch",
-      "addSuggestion": "Add suggestion to batch"
+      "addSuggestion": "Add suggestion to batch",
+      "suggestionApplied": "Suggestion applied",
+      "codeSuggestion": "Code suggestion"
     },
     "deleted": "Supprimé",
     "searchUsers": "Rechercher des utilisateurs",

@@ -1,4 +1,4 @@
-import { CSSProperties, ReactNode, useCallback, useEffect, useMemo, useRef } from 'react'
+import { CSSProperties, memo, ReactNode, useCallback, useEffect, useMemo, useRef } from 'react'
 
 import { CopyButton, Text } from '@/components'
 import MarkdownPreview from '@uiw/react-markdown-preview'
@@ -36,7 +36,7 @@ type MarkdownViewerProps = {
   isLoading?: boolean
 }
 
-export function MarkdownViewer({
+const MarkdownViewerLocal = ({
   source,
   maxHeight,
   withBorder = false,
@@ -48,7 +48,7 @@ export function MarkdownViewer({
   suggestionTitle,
   suggestionFooter,
   isLoading = false
-}: MarkdownViewerProps) {
+}: MarkdownViewerProps) => {
   const { navigate } = useRouterContext()
   const refRootHref = useMemo(() => document.getElementById('repository-ref-root')?.getAttribute('href'), [])
   const ref = useRef<HTMLDivElement>(null)
@@ -323,3 +323,9 @@ export function MarkdownViewer({
     </div>
   )
 }
+
+MarkdownViewerLocal.displayName = 'MarkdownViewer'
+
+const MarkdownViewer = memo(MarkdownViewerLocal)
+
+export { MarkdownViewer }

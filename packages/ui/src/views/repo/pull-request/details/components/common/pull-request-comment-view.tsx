@@ -1,4 +1,4 @@
-import { FC } from 'react'
+import { FC, useMemo } from 'react'
 
 import { Button, ButtonLayout, CounterBadge, Dialog, MarkdownViewer } from '@/components'
 import { useTranslation } from '@/context'
@@ -27,8 +27,17 @@ const PRCommentView: FC<PRCommentViewProps> = ({
   parentItem
 }) => {
   const { t } = useTranslation()
-  const pathSegments = commentItem?.payload?.code_comment?.path?.split('/') || []
-  const fileLang = filenameToLanguage?.(pathSegments.pop() || '') || ''
+  const pathSegments = useMemo(() => commentItem?.payload?.code_comment?.path?.split('/') || [], [commentItem])
+  const fileLang = useMemo(
+    () => filenameToLanguage?.(pathSegments.pop() || '') || '',
+    [filenameToLanguage, pathSegments]
+  )
+  const source = useMemo(
+    () => commentItem.codeBlockContent ?? (parentItem?.codeBlockContent || ''),
+    [commentItem.codeBlockContent, parentItem]
+  )
+
+  const suggestionBlock = useMemo(() => ({ source, lang: fileLang }), [fileLang, source])
 
   const appliedCheckSum = commentItem?.payload?.metadata?.suggestions?.applied_check_sum ?? ''
   const checkSums = commentItem?.payload?.metadata?.suggestions?.check_sums ?? []
@@ -41,60 +50,48 @@ const PRCommentView: FC<PRCommentViewProps> = ({
     commentItem?.payload?.mentions || {}
   )
 
+  const suggestionFooter = useMemo(
+    () => (
+      <ButtonLayout className="flex-wrap">
+        <Dialog.Trigger>
+          <Button
+            className="gap-x-2"
+            variant="outline"
+            onClick={() => onCommitSuggestion?.({ check_sum: suggestionCheckSum, comment_id: commentItem.id })}
+          >
+            {t('views:pullRequests.comments.commitSuggestion', 'Commit suggestion')}
+            {!!suggestionsBatch?.length && <CounterBadge theme="info">{suggestionsBatch.length}</CounterBadge>}
+          </Button>
+        </Dialog.Trigger>
+        {isInBatch ? (
+          <Button variant="outline" theme="danger" onClick={() => removeSuggestionFromBatch?.(commentItem.id)}>
+            {t('views:pullRequests.comments.removeSuggestion', 'Remove suggestion from batch')}
+          </Button>
+        ) : (
+          <Button
+            variant="outline"
+            onClick={() => addSuggestionToBatch?.({ check_sum: suggestionCheckSum, comment_id: commentItem.id })}
+          >
+            {t('views:pullRequests.comments.addSuggestion', 'Add suggestion to batch')}
+          </Button>
+        )}
+      </ButtonLayout>
+    ),
+    [commentItem.id, isInBatch, suggestionCheckSum, suggestionsBatch?.length]
+  )
+
   return (
     <MarkdownViewer
       markdownClassName="pr-section"
       source={formattedComment || ''}
-      suggestionBlock={{
-        source:
-          commentItem.codeBlockContent ??
-          (parentItem && parentItem.codeBlockContent ? parentItem.codeBlockContent : ''),
-        lang: fileLang
-      }}
+      suggestionBlock={suggestionBlock}
       suggestionCheckSum={suggestionCheckSum}
       suggestionTitle={
         appliedCheckSum && appliedCheckSum === suggestionCheckSum
           ? t('views:pullRequests.comments.suggestionApplied', 'Suggestion applied')
           : t('views:pullRequests.comments.codeSuggestion', 'Code suggestion')
       }
-      suggestionFooter={
-        !isApplied && (
-          <ButtonLayout className="flex-wrap">
-            <Dialog.Trigger>
-              <Button
-                className="gap-x-2"
-                variant="outline"
-                onClick={() => {
-                  onCommitSuggestion?.({
-                    check_sum: suggestionCheckSum,
-                    comment_id: commentItem.id
-                  })
-                }}
-              >
-                {t('views:pullRequests.comments.commitSuggestion', 'Commit suggestion')}
-                {!!suggestionsBatch?.length && <CounterBadge theme="info">{suggestionsBatch.length}</CounterBadge>}
-              </Button>
-            </Dialog.Trigger>
-            {isInBatch ? (
-              <Button variant="outline" theme="danger" onClick={() => removeSuggestionFromBatch?.(commentItem.id)}>
-                {t('views:pullRequests.comments.removeSuggestion', 'Remove suggestion from batch')}
-              </Button>
-            ) : (
-              <Button
-                variant="outline"
-                onClick={() =>
-                  addSuggestionToBatch?.({
-                    check_sum: suggestionCheckSum,
-                    comment_id: commentItem.id
-                  })
-                }
-              >
-                {t('views:pullRequests.comments.addSuggestion', 'Add suggestion to batch')}
-              </Button>
-            )}
-          </ButtonLayout>
-        )
-      }
+      suggestionFooter={!isApplied && suggestionFooter}
     />
   )
 }

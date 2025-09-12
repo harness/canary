@@ -10,7 +10,8 @@ import {
   Link,
   Separator,
   Text,
-  TimeAgoCard
+  TimeAgoCard,
+  useCustomDialogTrigger
 } from '@/components'
 import { useTranslation } from '@/context'
 
@@ -43,12 +44,18 @@ const SummaryPanel: FC<SummaryPanelProps> = ({
   saveDescription,
   updateRepoError,
   isEditDialogOpen,
-  setEditDialogOpen
+  setEditDialogOpen: _setEditDialogOpen
 }) => {
   const { t } = useTranslation()
 
+  const { triggerRef, registerTrigger } = useCustomDialogTrigger()
+  const setEditDialogOpen = () => {
+    registerTrigger()
+    _setEditDialogOpen(true)
+  }
+
   const onClose = () => {
-    setEditDialogOpen(false)
+    _setEditDialogOpen(false)
   }
   const onSave = (description: string) => {
     saveDescription(description)
@@ -73,6 +80,7 @@ const SummaryPanel: FC<SummaryPanelProps> = ({
           <DropdownMenu.Root>
             <DropdownMenu.Trigger asChild>
               <Button
+                ref={triggerRef}
                 variant="ghost"
                 size="xs"
                 aria-label="More options"
@@ -84,7 +92,7 @@ const SummaryPanel: FC<SummaryPanelProps> = ({
             </DropdownMenu.Trigger>
             <DropdownMenu.Content align="end">
               <DropdownMenu.Item
-                onClick={() => setEditDialogOpen(true)}
+                onClick={setEditDialogOpen}
                 title={
                   description?.length
                     ? t('views:repos.summary.summaryPanel.editDescription', 'Edit description')

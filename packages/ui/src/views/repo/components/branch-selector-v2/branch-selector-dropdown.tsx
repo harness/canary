@@ -1,6 +1,18 @@
 import { FC, KeyboardEvent, useMemo, useState } from 'react'
 
-import { Button, Command, IconV2, Layout, Link, Popover, SearchInput, Tabs, Tag, Text } from '@/components'
+import {
+  Button,
+  Command,
+  DropdownMenu,
+  IconV2,
+  Layout,
+  Link,
+  Popover,
+  SearchInput,
+  Tabs,
+  Tag,
+  Text
+} from '@/components'
 import { useTranslation } from '@/context'
 import { BranchSelectorDropdownProps, BranchSelectorTab, getBranchSelectorLabels } from '@/views'
 
@@ -86,16 +98,31 @@ export const BranchSelectorDropdown: FC<BranchSelectorDropdownProps> = ({
           </Layout.Grid>
         </div>
 
-        {filteredItems.length === 0 && (
+        {filteredItems.length === 0 && setCreateBranchDialogOpen && (
           <div className="px-cn-xs py-cn-xl text-center">
             {activeTab === BranchSelectorTab.BRANCHES ? (
-              <Button variant="link" className="w-full break-words" onClick={() => setCreateBranchDialogOpen?.(true)}>
-                Create branch {searchQuery} from {selectedBranch?.name}
+              <Button
+                variant="link"
+                className="size-full min-w-0 flex-wrap"
+                onClick={() => setCreateBranchDialogOpen?.(true)}
+              >
+                Create branch{' '}
+                <Text className="font-[inherit]" color="inherit" truncate>
+                  {searchQuery}
+                </Text>{' '}
+                from {selectedBranch?.name}
               </Button>
             ) : (
               <Text color="foreground-3">{t('views:noData.noResults', 'No search results')}</Text>
             )}
           </div>
+        )}
+
+        {filteredItems.length === 0 && !setCreateBranchDialogOpen && (
+          // renders text element
+          <DropdownMenu.NoOptions>
+            {t('views:repos.branchDoesNotExist', 'Branch does not exist.')}
+          </DropdownMenu.NoOptions>
         )}
 
         <Command.List scrollAreaProps={{ className: 'max-h-[180px] p-cn-3xs' }}>

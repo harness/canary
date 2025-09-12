@@ -1,6 +1,16 @@
 import { FC } from 'react'
 
-import { Alert, Button, CopyButton, IconV2, Layout, Popover, Tabs, TextInput } from '@/components'
+import {
+  Alert,
+  Button,
+  CopyButton,
+  IconV2,
+  Layout,
+  Popover,
+  Tabs,
+  TextInput,
+  useCustomDialogTrigger
+} from '@/components'
 import { useTranslation } from '@/context'
 
 export interface CloneRepoDialogProps {
@@ -18,15 +28,21 @@ export enum CloneRepoTabs {
 export const CloneRepoDialog: FC<CloneRepoDialogProps> = ({
   httpsUrl,
   sshUrl,
-  handleCreateToken,
+  handleCreateToken: _handleCreateToken,
   tokenGenerationError
 }) => {
   const { t } = useTranslation()
+  const { triggerRef, registerTrigger } = useCustomDialogTrigger()
+
+  const handleCreateToken = () => {
+    registerTrigger()
+    _handleCreateToken()
+  }
 
   return (
     <Popover.Root>
       <Popover.Trigger asChild>
-        <Button>
+        <Button ref={triggerRef}>
           <IconV2 name="copy" size="sm" />
           {t('views:repos.cloneRepo', 'Clone Repository')}
         </Button>
@@ -38,7 +54,7 @@ export const CloneRepoDialog: FC<CloneRepoDialogProps> = ({
         hideArrow
       >
         <Tabs.Root defaultValue={CloneRepoTabs.HTTPS}>
-          <Tabs.List className="-mx-[var(--cn-popover-py)] px-[var(--cn-popover-py)] mb-cn-sm" variant="overlined">
+          <Tabs.List className="mb-cn-sm -mx-[var(--cn-popover-py)] px-[var(--cn-popover-py)]" variant="overlined">
             <Tabs.Trigger value={CloneRepoTabs.HTTPS}>{t('views:repos.cloneHttps', 'HTTPS')}</Tabs.Trigger>
             <Tabs.Trigger value={CloneRepoTabs.SSH} disabled={!sshUrl}>
               {t('views:repos.cloneSsh', 'SSH')}

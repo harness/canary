@@ -34,6 +34,7 @@
     "dismiss": "Dismiss",
     "compareBranchesToSeeChanges": "Compare branches to see your changes.",
     "noNewCommits": "No new commits yet",
+    "branchDoesNotExist": "Branch does not exist.",
     "default": "Default",
     "viewAll": "View all {{type}}",
     "branchesLowercase": "branches",

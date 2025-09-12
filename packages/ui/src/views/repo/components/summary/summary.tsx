@@ -106,7 +106,7 @@ export const Summary = ({
     <>
       {!hideHeader && <FileLastChangeBar toCommitDetails={toCommitDetails} {...latestFile} />}
 
-      <Table.Root>
+      <Table.Root tableClassName="table-fixed">
         {!hideHeader && (
           <Table.Header>
             <Table.Row>
@@ -172,9 +172,9 @@ export const Summary = ({
                   </Text>
                 </div>
               </Table.Cell>
-              <Table.Cell>
+              <Table.Cell title={file.lastCommitMessage}>
                 {file.lastCommitMessage ? (
-                  <Text className="line-clamp-1">{file.lastCommitMessage}</Text>
+                  <Text lineClamp={1}>{file.lastCommitMessage}</Text>
                 ) : (
                   <Skeleton.Box className="h-5 w-full" />
                 )}

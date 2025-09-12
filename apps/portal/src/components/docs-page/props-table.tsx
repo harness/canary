@@ -1,6 +1,8 @@
 import type { FC } from "react";
 
 import { Table } from "@harnessio/ui/components";
+import { Link, NavLink, Outlet, useMatches } from "react-router-dom";
+import { RouterContextProvider } from "@harnessio/ui/context";
 
 interface PropDescription {
   name: string;
@@ -15,26 +17,33 @@ export interface PropsTableProps {
 }
 
 const PropsTable: FC<PropsTableProps> = ({ props }) => (
-  <Table.Root className="not-content">
-    <Table.Header>
-      <Table.Row>
-        <Table.Head className="font-black">Prop</Table.Head>
-        <Table.Head className="font-black">Required</Table.Head>
-        <Table.Head className="font-black">Default</Table.Head>
-        <Table.Head className="font-black">Type</Table.Head>
-      </Table.Row>
-    </Table.Header>
-    <Table.Body>
-      {props.map(({ name, required, defaultValue, description, value }) => (
-        <Table.Row key={name}>
-          <Table.Cell title={description}>{name}</Table.Cell>
-          <Table.Cell>{required ? "true" : "false"}</Table.Cell>
-          <Table.Cell className="font-body-code">{defaultValue}</Table.Cell>
-          <Table.Cell className="font-body-code">{value}</Table.Cell>
+  <RouterContextProvider
+    Link={Link}
+    NavLink={NavLink}
+    Outlet={Outlet}
+    useMatches={useMatches}
+  >
+    <Table.Root className="not-content">
+      <Table.Header>
+        <Table.Row>
+          <Table.Head className="font-black">Prop</Table.Head>
+          <Table.Head className="font-black">Required</Table.Head>
+          <Table.Head className="font-black">Default</Table.Head>
+          <Table.Head className="font-black">Type</Table.Head>
         </Table.Row>
-      ))}
-    </Table.Body>
-  </Table.Root>
+      </Table.Header>
+      <Table.Body>
+        {props.map(({ name, required, defaultValue, description, value }) => (
+          <Table.Row key={name}>
+            <Table.Cell title={description}>{name}</Table.Cell>
+            <Table.Cell>{required ? "true" : "false"}</Table.Cell>
+            <Table.Cell className="font-body-code">{defaultValue}</Table.Cell>
+            <Table.Cell className="font-body-code">{value}</Table.Cell>
+          </Table.Row>
+        ))}
+      </Table.Body>
+    </Table.Root>
+  </RouterContextProvider>
 );
 
 export default PropsTable;

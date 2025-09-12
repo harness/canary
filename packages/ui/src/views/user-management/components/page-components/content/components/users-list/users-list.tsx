@@ -1,4 +1,6 @@
-import { Avatar, MoreActionsTooltip, Skeleton, StatusBadge, Table } from '@/components'
+import { useCallback } from 'react'
+
+import { Avatar, MoreActionsTooltip, Skeleton, StatusBadge, Table, useCustomDialogTrigger } from '@/components'
 import { DialogLabels } from '@/views/user-management/components/dialogs'
 import { useDialogData } from '@/views/user-management/components/dialogs/hooks/use-dialog-data'
 import { ErrorState } from '@/views/user-management/components/page-components/content/components/users-list/components/error-state'
@@ -18,6 +20,15 @@ export const UsersList = () => {
   const { loadingStates, errorStates } = useStates()
   const { isFetchingUsers } = loadingStates
   const { fetchUsersError } = errorStates
+
+  const { triggerRef, registerTrigger } = useCustomDialogTrigger()
+  const handleToggleDialog = useCallback(
+    (user: UsersProps | null, dialogType: DialogLabels) => {
+      registerTrigger()
+      handleDialogOpen(user, dialogType)
+    },
+    [handleDialogOpen, registerTrigger]
+  )
 
   if (isFetchingUsers) {
     return <Skeleton.List />
@@ -75,24 +86,25 @@ export const UsersList = () => {
 
                 <Table.Cell className="text-right">
                   <MoreActionsTooltip
+                    ref={triggerRef}
                     isInTable
                     actions={[
                       {
                         title: user.admin ? 'Remove admin' : 'Set as Admin',
-                        onClick: () => handleDialogOpen(user, DialogLabels.TOGGLE_ADMIN)
+                        onClick: () => handleToggleDialog(user, DialogLabels.TOGGLE_ADMIN)
                       },
                       {
                         title: 'Reset password',
-                        onClick: () => handleDialogOpen(user, DialogLabels.RESET_PASSWORD)
+                        onClick: () => handleToggleDialog(user, DialogLabels.RESET_PASSWORD)
                       },
                       {
                         title: 'Edit user',
-                        onClick: () => handleDialogOpen(user, DialogLabels.EDIT_USER)
+                        onClick: () => handleToggleDialog(user, DialogLabels.EDIT_USER)
                       },
                       {
                         isDanger: true,
                         title: 'Delete user',
-                        onClick: () => handleDialogOpen(user, DialogLabels.DELETE_USER)
+                        onClick: () => handleToggleDialog(user, DialogLabels.DELETE_USER)
                       }
                     ]}
                   />

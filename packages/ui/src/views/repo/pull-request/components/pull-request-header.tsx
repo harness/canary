@@ -1,6 +1,17 @@
 import { useCallback, useState } from 'react'
 
-import { Avatar, BranchTag, Button, IconV2, Layout, Separator, StatusBadge, Text, TimeAgoCard } from '@/components'
+import {
+  Avatar,
+  BranchTag,
+  Button,
+  Dialog,
+  IconV2,
+  Layout,
+  Separator,
+  StatusBadge,
+  Text,
+  TimeAgoCard
+} from '@/components'
 import { cn } from '@utils/cn'
 import { BranchSelectorContainerProps } from '@views/repo'
 
@@ -69,20 +80,22 @@ export const PullRequestHeader: React.FC<PullRequestTitleProps> = ({
           <Text as="span" variant="heading-section" color="foreground-3" className="ml-cn-xs inline-block">
             #{number}
           </Text>
-          <Button
-            className="ml-cn-xs group inline-flex"
-            variant="ghost"
-            iconOnly
-            aria-label="Edit"
-            onClick={() => {
-              setIsEditing(true)
-            }}
-            tooltipProps={{
-              content: 'Edit'
-            }}
-          >
-            <IconV2 name="edit-pencil" />
-          </Button>
+          <Dialog.Trigger>
+            <Button
+              className="ml-cn-xs group inline-flex"
+              variant="ghost"
+              iconOnly
+              aria-label="Edit"
+              onClick={() => {
+                setIsEditing(true)
+              }}
+              tooltipProps={{
+                content: 'Edit'
+              }}
+            >
+              <IconV2 name="edit-pencil" />
+            </Button>
+          </Dialog.Trigger>
         </Text>
 
         <Layout.Horizontal gap="sm" align="center">

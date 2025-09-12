@@ -1,6 +1,6 @@
-import { FC } from 'react'
+import { FC, useCallback } from 'react'
 
-import { IconV2, MoreActionsTooltip, Skeleton, Table, TimeAgoCard } from '@/components'
+import { IconV2, MoreActionsTooltip, Skeleton, Table, TimeAgoCard, useCustomDialogTrigger } from '@/components'
 import { useTranslation } from '@/context'
 
 import { KeysList } from '../types'
@@ -13,6 +13,15 @@ interface ProfileKeysListProps {
 
 export const ProfileKeysList: FC<ProfileKeysListProps> = ({ publicKeys, isLoading, openAlertDeleteDialog }) => {
   const { t } = useTranslation()
+
+  const { triggerRef, registerTrigger } = useCustomDialogTrigger()
+  const handleDeleteKey = useCallback(
+    (keyId: string) => {
+      registerTrigger()
+      openAlertDeleteDialog({ identifier: keyId, type: 'key' })
+    },
+    [openAlertDeleteDialog, registerTrigger]
+  )
 
   return (
     <Table.Root
@@ -55,12 +64,13 @@ export const ProfileKeysList: FC<ProfileKeysListProps> = ({ publicKeys, isLoadin
                 </Table.Cell>
                 <Table.Cell className="content-center text-right">
                   <MoreActionsTooltip
+                    ref={triggerRef}
                     isInTable
                     actions={[
                       {
                         isDanger: true,
                         title: t('views:profileSettings.deleteSshKey', 'Delete SSH key'),
-                        onClick: () => openAlertDeleteDialog({ identifier: key.identifier!, type: 'key' })
+                        onClick: () => handleDeleteKey(key.identifier!)
                       }
                     ]}
                   />

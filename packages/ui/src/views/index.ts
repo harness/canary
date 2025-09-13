@@ -76,9 +76,6 @@ export * from './platform'
 // sidebar-view
 export * from './sidebar-view/sidebar-view'
 
-// delegates
-export * from './delegates'
-
 // search
 export * from './search'
 

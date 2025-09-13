@@ -11,23 +11,27 @@ interface BaseItemProps {
 
 interface DefaultItemProps extends BaseItemProps, GridProps {
   link?: never
+  isFolder?: boolean
 }
 
 interface LinkItemProps extends BaseItemProps, Omit<LinkProps, 'to'> {
   link?: LinkProps['to']
+  isFolder?: boolean
 }
 
 type ItemProps = DefaultItemProps | LinkItemProps
 
 const Item = forwardRef<HTMLDivElement, ItemProps>(
-  ({ className, children, icon, isActive, link, ...props }: ItemProps, ref) => {
+  ({ className, children, icon, isActive, link, isFolder, ...props }: ItemProps, ref) => {
     const { Link } = useRouterContext()
 
     const commonClassnames = cn(
-      'w-[fill-available] py-cn-2xs pr-1.5 rounded text-cn-2 hover:text-cn-1 hover:bg-cn-hover focus-visible:text-cn-1 focus-visible:bg-cn-hover focus-visible:outline-none',
+      'w-[fill-available] py-cn-2xs pr-1.5 rounded text-cn-2 hover:text-cn-1 focus-visible:text-cn-1 focus-visible:bg-cn-hover focus-visible:outline-none',
       {
-        'bg-cn-selected text-cn-1': isActive,
-        'grid items-center justify-start gap-cn-2xs grid-flow-col': !!link
+        'text-cn-1': isActive,
+        'grid items-center justify-start gap-cn-2xs grid-flow-col': !!link,
+        'bg-cn-selected': !isFolder && isActive,
+        'hover:bg-cn-hover': !isFolder
       },
       className
     )
@@ -81,6 +85,7 @@ function FolderItem({ children, value = '', isActive, content, link, level }: Fo
       isActive={isActive}
       style={{ marginLeft: `calc(-16px * ${level + 1} - 8px)`, paddingLeft: `calc(16px * ${level + 1} + 8px)` }}
       link={link}
+      isFolder
     >
       {children}
     </Item>
@@ -88,13 +93,18 @@ function FolderItem({ children, value = '', isActive, content, link, level }: Fo
 
   return (
     <Accordion.Item value={value} className="border-none ">
-      <Accordion.Trigger
-        className=" bg-cn-1 pl-cn-2xs mb-cn-4xs relative z-[1] p-0 [&>.cn-accordion-trigger-indicator]:mt-0 [&>.cn-accordion-trigger-indicator]:-rotate-90 [&>.cn-accordion-trigger-indicator]:self-center [&>.cn-accordion-trigger-indicator]:data-[state=open]:-rotate-0"
-        indicatorProps={{ size: '2xs' }}
-        asChild
+      <Layout.Flex
+        className={cn('file-explorer-header', {
+          'bg-cn-selected': isActive
+        })}
       >
+        <Accordion.Trigger
+          className="hover:bg-cn-separator pl-cn-2xs relative z-[1] h-full rounded-l p-0 [&>.cn-accordion-trigger-indicator]:mt-0 [&>.cn-accordion-trigger-indicator]:-rotate-90 [&>.cn-accordion-trigger-indicator]:self-center [&>.cn-accordion-trigger-indicator]:data-[state=open]:-rotate-0"
+          indicatorProps={{ size: '2xs', className: 'flex' }}
+          asChild
+        ></Accordion.Trigger>
         {itemElement}
-      </Accordion.Trigger>
+      </Layout.Flex>
 
       {!!content && (
         <Accordion.Content

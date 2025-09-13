@@ -5,7 +5,7 @@ import { useIsMounted } from '@hooks/use-is-mounted'
 import { useResizeObserver } from '@hooks/use-resize-observer'
 import { cn } from '@utils/cn'
 
-const BLOCK_HEIGHT = '--block-height'
+export const BLOCK_HEIGHT = '--block-height'
 const AUTO = 'auto'
 const RESET_MIN_HEIGHT_TIMEOUT = 2000
 interface InViewDiffRendererProps {

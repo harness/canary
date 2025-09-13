@@ -410,6 +410,7 @@ export const PullRequestAccordion: React.FC<{
                   filenameToLanguage={filenameToLanguage}
                   toggleConversationStatus={toggleConversationStatus}
                   collapseDiff={() => setCollapsed(true)}
+                  isFullDiff={useFullDiff}
                 />
               </>
             )}

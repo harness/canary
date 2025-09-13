@@ -1,6 +1,7 @@
-import { useCallback, useEffect, useRef, useState } from 'react'
+import { useCallback, useEffect, useMemo, useRef, useState } from 'react'
+import { useInView } from 'react-intersection-observer'
 
-import { Avatar, Layout, Separator, Tag, Text, TextInput, TimeAgoCard } from '@/components'
+import { Avatar, Layout, MarkdownViewer, Separator, Tag, Text, TextInput, TimeAgoCard } from '@/components'
 import { useTheme, useTranslation } from '@/context'
 import { TypesUser } from '@/types'
 import {
@@ -16,8 +17,9 @@ import {
 } from '@/views'
 import { DiffFile, DiffModeEnum, DiffViewProps, SplitSide } from '@git-diff-view/react'
 import { useCustomEventListener } from '@hooks/use-event-listener'
-import { useMemoryCleanup } from '@hooks/use-memory-cleanup'
+// import { useIsMounted } from '@hooks/use-is-mounted'
 import { getInitials } from '@utils/stringUtils'
+import { createRequestIdleCallbackTaskPool } from '@utils/task'
 import { DiffBlock } from 'diff2html/lib/types'
 import { debounce, get } from 'lodash-es'
 import { OverlayScrollbars } from 'overlayscrollbars'
@@ -77,6 +79,7 @@ interface PullRequestDiffviewerProps {
   handleUpload?: HandleUploadType
   collapseDiff?: () => void
   principalProps: PrincipalPropsType
+  isFullDiff?: boolean
 }
 
 const PullRequestDiffViewer = ({
@@ -103,66 +106,39 @@ const PullRequestDiffViewer = ({
   filenameToLanguage,
   toggleConversationStatus,
   handleUpload,
-  collapseDiff,
   principalProps
+  // isFullDiff = false
 }: PullRequestDiffviewerProps) => {
   const { t } = useTranslation()
   const ref = useRef<{ getDiffFileInstance: () => DiffFile }>(null)
   const [, setLoading] = useState(false)
   const highlighter = useDiffHighlighter({ setLoading })
-  const reactWrapRef = useRef<HTMLDivElement>(null)
-  const reactRef = useRef<HTMLDivElement | null>(null)
-  const highlightRef = useRef(highlight)
-  highlightRef.current = highlight
   const [diffFileInstance, setDiffFileInstance] = useState<DiffFile>()
   const overlayScrollbarsInstances = useRef<OverlayScrollbars[]>([])
-  const diffInstanceRef = useRef<HTMLDivElement | null>(null)
-  const [isInView, setIsInView] = useState(false)
   const [principalsMentionMap, setPrincipalsMentionMap] = useState<PrincipalsMentionMap>({})
   const { isLightTheme } = useTheme()
+  // const isMounted = useIsMounted()
+  const reactWrapRef = useRef<HTMLDivElement>(null)
+  const reactRef = useRef<HTMLDivElement | null>(null)
+  const contentRef = useRef<HTMLDivElement | null>(null)
+  const contentHeightRef = useRef<number | null>(null)
+  const resizeObserverRef = useRef<ResizeObserver | null>(null)
+  const { ref: inViewRef, inView } = useInView({
+    rootMargin: '20000px 0px 20000px 0px',
+    // threshold: [0, 0.05], // Require 5% visibility to trigger
+    initialInView: true,
+    triggerOnce: false, // Allow re-triggering as user scrolls
+    delay: 1000 // Increased delay to prevent rapid oscillation
+  })
+  const { scheduleTask, cancelTask } = createRequestIdleCallbackTaskPool()
+
+  // State to track what should be rendered, managed via requestAnimationFrame
+  const [renderedComponent, setRenderedComponent] = useState<JSX.Element | null>(null)
+  const pendingTaskRef = useRef<number | null>(null)
 
   useEffect(() => {
-    const observer = new IntersectionObserver(
-      ([entry]) => {
-        setIsInView(entry.isIntersecting)
-      },
-      {
-        root: null, // Use the viewport as the root
-        rootMargin: '0px',
-        threshold: 0.1 // Trigger when 10% of the element is visible
-      }
-    )
-
-    const currentRef = diffInstanceRef.current
-    if (currentRef) {
-      observer.observe(currentRef)
-    }
-
-    return () => {
-      if (currentRef) {
-        observer.unobserve(currentRef)
-      }
-    }
-  }, [])
-
-  const cleanup = useCallback(() => {
-    // clean up diff instance if it is not in view
-    if (!isInView && diffFileInstance) {
-      const diffRect = diffInstanceRef.current?.getBoundingClientRect()
-      // check if diff is below viewport and collapse it, collapsing a diff on top of viewport impacts scroll position
-      if (diffRect?.top && diffRect?.top >= (window.innerHeight || document.documentElement.clientHeight)) {
-        collapseDiff?.()
-      }
-    }
-  }, [diffFileInstance, isInView, collapseDiff])
-
-  // Use memory cleanup hook
-  useMemoryCleanup(cleanup)
-
-  // Cleanup on unmount
-  useEffect(() => {
-    return cleanup
-  }, [])
+    console.log('file - inView changed to', fileName, inView)
+  }, [inView, fileName])
 
   const [quoteReplies, setQuoteReplies] = useState<Record<number, { text: string }>>({})
 
@@ -306,6 +282,51 @@ const PullRequestDiffViewer = ({
       }
     }
   }, [diffFileInstance, scrollBar, wrap, mode])
+
+  // Height preservation to prevent scroll jumping when switching between inView states
+  // Height preservation to prevent scroll jumping when switching between inView states
+  useEffect(() => {
+    const container = contentRef.current
+    if (!container) return
+
+    if (renderedComponent && diffFileInstance) {
+      // When ExtendedDiffView is rendered, track its height changes
+      const resizeObserver = new ResizeObserver(
+        debounce(entries => {
+          for (const entry of entries) {
+            const { height } = entry.contentRect
+            if (height > 0) {
+              contentHeightRef.current = height
+              // Set CSS custom property for height tracking
+              container.style.setProperty('--content-height', `${height}px`)
+            }
+          }
+        }, 100)
+      )
+
+      resizeObserver.observe(container)
+      resizeObserverRef.current = resizeObserver
+      return () => {
+        resizeObserver.disconnect()
+        if (resizeObserverRef.current === resizeObserver) {
+          resizeObserverRef.current = null
+        }
+      }
+    } else {
+      // When switching to MarkdownViewer, ensure height is preserved
+      if (renderedComponent === memoizedMarkdown && contentHeightRef.current && container) {
+        container.style.minHeight = `${contentHeightRef.current}px`
+      }
+    }
+
+    // Cleanup function
+    return () => {
+      if (resizeObserverRef.current) {
+        resizeObserverRef.current.disconnect()
+        resizeObserverRef.current = null
+      }
+    }
+  }, [renderedComponent, diffFileInstance])
 
   const setDiffInstanceCb = useCallback(
     debounce((fileName: string, lang: string, diffString: string, content?: string) => {
@@ -688,30 +709,81 @@ const PullRequestDiffViewer = ({
     [blocks]
   )
 
+  const memoizedDiff = useMemo(
+    () => (
+      /* eslint-disable-next-line @typescript-eslint/ban-ts-comment */
+      // @ts-expect-error ExtendedDiffView generic type compatibility issue with Thread[] interface
+      <ExtendedDiffView<Thread[]>
+        ref={ref}
+        className="bg-tr w-full text-cn-1"
+        renderWidgetLine={renderWidgetLine}
+        renderExtendLine={renderExtendLine}
+        diffFile={diffFileInstance}
+        extendData={extend}
+        diffViewFontSize={fontsize}
+        diffViewHighlight={highlight}
+        diffViewMode={mode}
+        registerHighlighter={highlighter}
+        diffViewWrap={wrap}
+        diffViewAddWidget={addWidget}
+        diffViewTheme={isLightTheme ? 'light' : 'dark'}
+        scopeMultilineSelectionToOneHunk={scopeMultilineSelectionToOneHunk}
+      />
+    ),
+    [
+      renderWidgetLine,
+      renderExtendLine,
+      diffFileInstance,
+      extend,
+      fontsize,
+      highlight,
+      highlighter,
+      isLightTheme,
+      mode,
+      scopeMultilineSelectionToOneHunk,
+      wrap,
+      addWidget
+    ]
+  )
+
+  const memoizedMarkdown = useMemo(() => <MarkdownViewer source={data || ''} />, [data])
+  // Use requestAnimationFrame to smooth transitions between diff and markdown
+  useEffect(() => {
+    // Cancel any pending render task
+    if (pendingTaskRef.current) {
+      cancelTask(pendingTaskRef.current)
+      pendingTaskRef.current = null
+    }
+
+    // Schedule new render task that handles the actual rendering decision
+    pendingTaskRef.current = scheduleTask(() => {
+      const targetComponent = inView ? memoizedDiff : memoizedMarkdown
+      setRenderedComponent(targetComponent)
+      pendingTaskRef.current = null
+    })
+
+    return () => {
+      if (pendingTaskRef.current) {
+        cancelTask(pendingTaskRef.current)
+        pendingTaskRef.current = null
+      }
+    }
+  }, [inView, memoizedDiff, memoizedMarkdown, scheduleTask, cancelTask])
+
   return (
     <ExpandedCommentsContext.Provider value={contextValue}>
-      <div data-diff-file-path={fileName}>
+      <div data-diff-file-path={fileName} ref={inViewRef}>
         {diffFileInstance && (
-          <div ref={diffInstanceRef}>
-            {/* eslint-disable-next-line @typescript-eslint/ban-ts-comment */}
-            {/* @ts-ignore */}
-            <ExtendedDiffView<Thread[]>
-              ref={ref}
-              className="bg-tr w-full text-cn-1"
-              renderWidgetLine={renderWidgetLine}
-              renderExtendLine={renderExtendLine}
-              diffFile={diffFileInstance}
-              extendData={extend}
-              diffViewFontSize={fontsize}
-              diffViewHighlight={highlight}
-              diffViewMode={mode}
-              registerHighlighter={highlighter}
-              diffViewWrap={wrap}
-              // TODO: Remove 'mode === DiffModeEnum.Split' after the shadow dom is removed
-              diffViewAddWidget={addWidget}
-              diffViewTheme={isLightTheme ? 'light' : 'dark'}
-              scopeMultilineSelectionToOneHunk={scopeMultilineSelectionToOneHunk}
-            />
+          <div
+            ref={contentRef}
+            style={{
+              minHeight:
+                renderedComponent === memoizedMarkdown && contentHeightRef.current
+                  ? `${contentHeightRef.current}px`
+                  : undefined
+            }}
+          >
+            {renderedComponent}
           </div>
         )}
       </div>

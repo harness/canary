@@ -44,22 +44,22 @@
     },
     "success": {
       "$type": "color",
-      "$value": "{set.green.soft.text}",
+      "$value": "{set.green.secondary.text}",
       "$description": "Primary color for text and icons in success content. Communicates positive outcomes and completion states.\n\nCommon uses: Success message text, completion text, positive indicators."
     },
     "danger": {
       "$type": "color",
-      "$value": "{set.red.soft.text}",
+      "$value": "{set.red.secondary.text}",
       "$description": "Primary color for text and icons in error content. Communicates problems, warnings, and destructive actions.\n\nCommon uses: Error message text, validation text, destructive action labels."
     },
     "warning": {
       "$type": "color",
-      "$value": "{set.yellow.soft.text}",
+      "$value": "{set.yellow.secondary.text}",
       "$description": "Primary color for text and icons in warning content. Communicates caution and potential issues requiring attention.\n\nCommon uses: Warning message text, alert text, important notifications."
     },
     "merged": {
       "$type": "color",
-      "$value": "{set.purple.surface.text}",
+      "$value": "{set.purple.outline.text}",
       "$description": "Text color for merged content and pull request states. Provides distinct visual identity for merge-related information and completed integration states.\n\nCommon uses: Merge commit messages, pull request merged status, integration completion indicators, merged branch labels."
     },
     "brand": {
@@ -100,17 +100,17 @@
     },
     "success": {
       "$type": "color",
-      "$value": "{set.green.solid.bg}",
+      "$value": "{set.green.primary.bg}",
       "$description": "Border color for success containers. Reinforces positive status through visual framing.\n\nCommon uses: Success alert borders, confirmation boundaries, completed state indicators."
     },
     "danger": {
       "$type": "color",
-      "$value": "{set.red.solid.bg}",
+      "$value": "{set.red.primary.bg}",
       "$description": "Border color for error containers. Emphasizes critical information through visual framing.\n\nCommon uses: Error alert borders, validation boundaries, destructive action containers."
     },
     "warning": {
       "$type": "color",
-      "$value": "{set.yellow.solid.bg}",
+      "$value": "{set.yellow.primary.bg}",
       "$description": "Border color for warning containers. Frames cautionary information with distinct boundary.\n\nCommon uses: Warning alert borders, notice boundaries, attention-requiring elements."
     }
   },
@@ -146,7 +146,7 @@
   },
   "set": {
     "brand": {
-      "solid": {
+      "primary": {
         "text": {
           "$type": "color",
           "$value": "{pure.black}",
@@ -168,7 +168,7 @@
           "$description": "Selected state background color for active brand items."
         }
       },
-      "soft": {
+      "secondary": {
         "text": {
           "$type": "color",
           "$value": "{blue.100}",
@@ -190,7 +190,7 @@
           "$description": "Selected state background color for active brand subtle items."
         }
       },
-      "surface": {
+      "outline": {
         "text": {
           "$type": "color",
           "$value": "{blue.50}",
@@ -219,7 +219,7 @@
       }
     },
     "ai": {
-      "surface": {
+      "outline": {
         "text": {
           "$type": "color",
           "$value": "{text.1}",
@@ -260,7 +260,7 @@
       }
     },
     "gray": {
-      "solid": {
+      "primary": {
         "text": {
           "$type": "color",
           "$value": "{chrome.1000}",
@@ -282,7 +282,7 @@
           "$description": "Selected state background color for prominent gray surfaces."
         }
       },
-      "soft": {
+      "secondary": {
         "text": {
           "$type": "color",
           "$value": "{chrome.100}",
@@ -304,7 +304,7 @@
           "$description": "Selected state background color for active soft gray items."
         }
       },
-      "surface": {
+      "outline": {
         "text": {
           "$type": "color",
           "$value": "{chrome.150}",
@@ -333,7 +333,7 @@
       }
     },
     "green": {
-      "solid": {
+      "primary": {
         "text": {
           "$type": "color",
           "$value": "{green.1000}",
@@ -355,7 +355,7 @@
           "$description": "Background color for prominent green surfaces."
         }
       },
-      "soft": {
+      "secondary": {
         "text": {
           "$type": "color",
           "$value": "{green.150}",
@@ -377,7 +377,7 @@
           "$description": "Background color for subdued green surfaces."
         }
       },
-      "surface": {
+      "outline": {
         "text": {
           "$type": "color",
           "$value": "{green.150}",
@@ -406,7 +406,7 @@
       }
     },
     "red": {
-      "solid": {
+      "primary": {
         "text": {
           "$type": "color",
           "$value": "{red.1000}",
@@ -428,7 +428,7 @@
           "$description": "Background color for prominent red surfaces."
         }
       },
-      "soft": {
+      "secondary": {
         "text": {
           "$type": "color",
           "$value": "{red.200}",
@@ -450,7 +450,7 @@
           "$description": "Selected state for background color for subdued red surfaces."
         }
       },
-      "surface": {
+      "outline": {
         "text": {
           "$type": "color",
           "$value": "{red.200}",
@@ -479,7 +479,7 @@
       }
     },
     "yellow": {
-      "solid": {
+      "primary": {
         "text": {
           "$type": "color",
           "$value": "{yellow.1000}",
@@ -499,7 +499,7 @@
           "$value": "{yellow.150}"
         }
       },
-      "soft": {
+      "secondary": {
         "text": {
           "$type": "color",
           "$value": "{yellow.150}",
@@ -521,7 +521,7 @@
           "$description": "Selected state for background color for subdued yellow surfaces."
         }
       },
-      "surface": {
+      "outline": {
         "text": {
           "$type": "color",
           "$value": "{yellow.150}",
@@ -550,7 +550,7 @@
       }
     },
     "blue": {
-      "solid": {
+      "primary": {
         "text": {
           "$type": "color",
           "$value": "{blue.1000}",
@@ -570,7 +570,7 @@
           "$value": "{blue.150}"
         }
       },
-      "soft": {
+      "secondary": {
         "text": {
           "$type": "color",
           "$value": "{blue.150}",
@@ -591,7 +591,7 @@
           "$value": "{blue.900}"
         }
       },
-      "surface": {
+      "outline": {
         "text": {
           "$type": "color",
           "$value": "{blue.150}",
@@ -620,7 +620,7 @@
       }
     },
     "purple": {
-      "solid": {
+      "primary": {
         "text": {
           "$type": "color",
           "$value": "{purple.1000}",
@@ -640,7 +640,7 @@
           "$value": "{purple.150}"
         }
       },
-      "soft": {
+      "secondary": {
         "text": {
           "$type": "color",
           "$value": "{purple.150}",
@@ -662,7 +662,7 @@
           "$description": "Hover background color for subdued purple surfaces."
         }
       },
-      "surface": {
+      "outline": {
         "text": {
           "$type": "color",
           "$value": "{purple.150}",
@@ -691,7 +691,7 @@
       }
     },
     "brown": {
-      "solid": {
+      "primary": {
         "text": {
           "$type": "color",
           "$value": "{brown.1000}",
@@ -703,7 +703,7 @@
           "$description": "Background color for prominent brown surfaces."
         }
       },
-      "soft": {
+      "secondary": {
         "text": {
           "$type": "color",
           "$value": "{brown.150}",
@@ -720,7 +720,7 @@
           "$description": "Hover background color for subdued brown surfaces."
         }
       },
-      "surface": {
+      "outline": {
         "text": {
           "$type": "color",
           "$value": "{brown.150}",
@@ -744,7 +744,7 @@
       }
     },
     "cyan": {
-      "solid": {
+      "primary": {
         "text": {
           "$type": "color",
           "$value": "{cyan.1000}",
@@ -756,7 +756,7 @@
           "$description": "Background color for prominent cyan surfaces."
         }
       },
-      "soft": {
+      "secondary": {
         "text": {
           "$type": "color",
           "$value": "{cyan.150}",
@@ -773,7 +773,7 @@
           "$description": "Hover background color for subdued cyan surfaces."
         }
       },
-      "surface": {
+      "outline": {
         "text": {
           "$type": "color",
           "$value": "{cyan.150}",
@@ -797,7 +797,7 @@
       }
     },
     "indigo": {
-      "solid": {
+      "primary": {
         "text": {
           "$type": "color",
           "$value": "{indigo.1000}",
@@ -809,7 +809,7 @@
           "$description": "Background color for prominent indigo surfaces."
         }
       },
-      "soft": {
+      "secondary": {
         "text": {
           "$type": "color",
           "$value": "{indigo.150}",
@@ -826,7 +826,7 @@
           "$description": "Hover background color for subdued indigo surfaces."
         }
       },
-      "surface": {
+      "outline": {
         "text": {
           "$type": "color",
           "$value": "{indigo.150}",
@@ -850,7 +850,7 @@
       }
     },
     "lime": {
-      "solid": {
+      "primary": {
         "text": {
           "$type": "color",
           "$value": "{lime.1000}",
@@ -862,7 +862,7 @@
           "$description": "Background color for prominent lime surfaces."
         }
       },
-      "soft": {
+      "secondary": {
         "text": {
           "$type": "color",
           "$value": "{lime.150}",
@@ -879,7 +879,7 @@
           "$description": "Hover background color for subdued lime surfaces."
         }
       },
-      "surface": {
+      "outline": {
         "text": {
           "$type": "color",
           "$value": "{lime.150}",
@@ -1120,19 +1120,19 @@
       "fade": {
         "default": {
           "$type": "color",
-          "$value": "linear-gradient(0deg, {set.gray.soft.bg} 42%, {gradient.alert.fade-default} 100%)"
+          "$value": "linear-gradient(0deg, {set.gray.secondary.bg} 42%, {gradient.alert.fade-default} 100%)"
         },
         "danger": {
           "$type": "color",
-          "$value": "linear-gradient(0deg, {set.red.soft.bg} 42%, {gradient.alert.fade-danger} 100%)"
+          "$value": "linear-gradient(0deg, {set.red.secondary.bg} 42%, {gradient.alert.fade-danger} 100%)"
         },
         "warning": {
           "$type": "color",
-          "$value": "linear-gradient(0deg, {set.yellow.soft.bg} 42%, {gradient.alert.fade-warning} 100%)"
+          "$value": "linear-gradient(0deg, {set.yellow.secondary.bg} 42%, {gradient.alert.fade-warning} 100%)"
         },
         "success": {
           "$type": "color",
-          "$value": "linear-gradient(0deg, {set.green.soft.bg} 42%, {gradient.alert.fade-success} 100%)"
+          "$value": "linear-gradient(0deg, {set.green.secondary.bg} 42%, {gradient.alert.fade-success} 100%)"
         }
       }
     },
@@ -1246,12 +1246,12 @@
       },
       "add-widget": {
         "$type": "color",
-        "$value": "{set.brand.solid.bg}",
+        "$value": "{set.brand.primary.bg}",
         "$description": "Background for interactive UI elements related to added content."
       },
       "add-widget-color": {
         "$type": "color",
-        "$value": "{set.brand.solid.text}",
+        "$value": "{set.brand.primary.text}",
         "$description": "Text/icon color for add-related interactive elements, ensuring readability."
       },
       "del-content": {
@@ -1629,26 +1629,26 @@
       "selected": {
         "item": {
           "$type": "color",
-          "$value": "{set.brand.solid.text}",
+          "$value": "{set.brand.primary.text}",
           "$description": "Color for selected items in selection controls. Creates high contrast against selected background state."
         },
         "bg": {
           "$type": "color",
-          "$value": "{set.brand.solid.bg}",
+          "$value": "{set.brand.primary.bg}",
           "$description": "Background color for selected state in selection controls. Creates strong visual indication of active selection."
         },
         "bg-hover": {
           "$type": "color",
-          "$value": "{set.brand.solid.bg-hover}"
+          "$value": "{set.brand.primary.bg-hover}"
         },
         "border": {
           "$type": "color",
-          "$value": "{set.brand.solid.bg}",
+          "$value": "{set.brand.primary.bg}",
           "$description": "Border color for selected elements in selection controls. Reinforces the selected state with consistent styling."
         },
         "border-hover": {
           "$type": "color",
-          "$value": "{set.brand.solid.bg-hover}"
+          "$value": "{set.brand.primary.bg-hover}"
         }
       }
     },
@@ -1672,7 +1672,7 @@
         },
         "progress": {
           "$type": "color",
-          "$value": "{set.brand.solid.bg}",
+          "$value": "{set.brand.primary.bg}",
           "$description": "Filled portion color for slider tracks. Visually represents the selected value or range within the track."
         },
         "progress-stripes": {
@@ -1690,15 +1690,15 @@
         },
         "warning": {
           "$type": "color",
-          "$value": "{set.yellow.solid.bg}"
+          "$value": "{set.yellow.primary.bg}"
         },
         "success": {
           "$type": "color",
-          "$value": "{set.green.solid.bg}"
+          "$value": "{set.green.primary.bg}"
         },
         "danger": {
           "$type": "color",
-          "$value": "{set.red.solid.bg}"
+          "$value": "{set.red.primary.bg}"
         }
       },
       "handle": {
@@ -1948,7 +1948,7 @@
             "y": "7",
             "blur": "16",
             "spread": "0",
-            "color": "{set.ai.surface.inner}",
+            "color": "{set.ai.outline.inner}",
             "type": "innerShadow"
           }
         }
@@ -2063,7 +2063,7 @@
         "y": "0",
         "blur": "0",
         "spread": "4",
-        "color": "{set.red.soft.bg}",
+        "color": "{set.red.secondary.bg}",
         "type": "dropShadow"
       }
     },
@@ -2074,7 +2074,7 @@
         "y": "0",
         "blur": "0",
         "spread": "4",
-        "color": "{set.red.soft.bg-hover}",
+        "color": "{set.red.secondary.bg-hover}",
         "type": "dropShadow"
       }
     },
@@ -2085,7 +2085,7 @@
         "y": "0",
         "blur": "0",
         "spread": "4",
-        "color": "{set.brand.surface.bg}",
+        "color": "{set.brand.outline.bg}",
         "type": "dropShadow"
       }
     },
@@ -2096,7 +2096,7 @@
         "y": "0",
         "blur": "0",
         "spread": "4",
-        "color": "{set.green.soft.bg}",
+        "color": "{set.green.secondary.bg}",
         "type": "dropShadow"
       }
     },
@@ -2107,7 +2107,7 @@
         "y": "0",
         "blur": "0",
         "spread": "4",
-        "color": "{set.green.soft.bg-hover}",
+        "color": "{set.green.secondary.bg-hover}",
         "type": "dropShadow"
       }
     },
@@ -2118,7 +2118,7 @@
         "y": "0",
         "blur": "0",
         "spread": "4",
-        "color": "{set.yellow.soft.bg}",
+        "color": "{set.yellow.secondary.bg}",
         "type": "dropShadow"
       }
     },
@@ -2129,7 +2129,7 @@
         "y": "0",
         "blur": "0",
         "spread": "4",
-        "color": "{set.yellow.soft.bg-hover}",
+        "color": "{set.yellow.secondary.bg-hover}",
         "type": "dropShadow"
       }
     }
@@ -2179,7 +2179,7 @@
           }
         },
         "$type": "color",
-        "$value": "{set.gray.soft.bg}"
+        "$value": "{set.gray.secondary.bg}"
       },
       "fade-danger": {
         "$extensions": {
@@ -2192,7 +2192,7 @@
           }
         },
         "$type": "color",
-        "$value": "{set.red.soft.bg}"
+        "$value": "{set.red.secondary.bg}"
       },
       "fade-warning": {
         "$extensions": {
@@ -2205,7 +2205,7 @@
           }
         },
         "$type": "color",
-        "$value": "{set.yellow.soft.bg}"
+        "$value": "{set.yellow.secondary.bg}"
       },
       "fade-success": {
         "$extensions": {
@@ -2218,7 +2218,7 @@
           }
         },
         "$type": "color",
-        "$value": "{set.green.soft.bg}"
+        "$value": "{set.green.secondary.bg}"
       }
     },
     "skeleton": {

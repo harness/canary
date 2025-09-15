@@ -44,22 +44,22 @@
     },
     "success": {
       "$type": "color",
-      "$value": "{set.green.soft.text}",
+      "$value": "{set.green.secondary.text}",
       "$description": "Primary color for text and icons in success content. Communicates positive outcomes and completion states.\n\nCommon uses: Success message text, completion text, positive indicators."
     },
     "danger": {
       "$type": "color",
-      "$value": "{set.red.soft.text}",
+      "$value": "{set.red.secondary.text}",
       "$description": "Primary color for text and icons in error content. Communicates problems, warnings, and destructive actions.\n\nCommon uses: Error message text, validation text, destructive action labels."
     },
     "warning": {
       "$type": "color",
-      "$value": "{set.yellow.soft.text}",
+      "$value": "{set.yellow.secondary.text}",
       "$description": "Primary color for text and icons in warning content. Communicates caution and potential issues requiring attention.\n\nCommon uses: Warning message text, alert text, important notifications."
     },
     "merged": {
       "$type": "color",
-      "$value": "{set.purple.surface.text}",
+      "$value": "{set.purple.outline.text}",
       "$description": "Text color for merged content and pull request states. Provides distinct visual identity for merge-related information and completed integration states.\n\nCommon uses: Merge commit messages, pull request merged status, integration completion indicators, merged branch labels."
     },
     "brand": {
@@ -86,22 +86,22 @@
     },
     "brand": {
       "$type": "color",
-      "$value": "{set.brand.solid.bg}",
+      "$value": "{set.brand.primary.bg}",
       "$description": "Focus state indicator color. Provides clear visual feedback for keyboard navigation and accessibility.\n\nCommon uses: Focus rings, keyboard navigation highlights, selection indicators."
     },
     "success": {
       "$type": "color",
-      "$value": "{set.green.solid.bg}",
+      "$value": "{set.green.primary.bg}",
       "$description": "Border color for success containers. Reinforces positive status through visual framing.\n\nCommon uses: Success alert borders, confirmation boundaries, completed state indicators."
     },
     "danger": {
       "$type": "color",
-      "$value": "{set.red.solid.bg}",
+      "$value": "{set.red.primary.bg}",
       "$description": "Border color for error containers. Emphasizes critical information through visual framing.\n\nCommon uses: Error alert borders, validation boundaries, destructive action containers."
     },
     "warning": {
       "$type": "color",
-      "$value": "{set.yellow.solid.bg}",
+      "$value": "{set.yellow.primary.bg}",
       "$description": "Border color for warning containers. Frames cautionary information with distinct boundary.\n\nCommon uses: Warning alert borders, notice boundaries, attention-requiring elements."
     }
   },
@@ -1078,19 +1078,19 @@
       "fade": {
         "default": {
           "$type": "color",
-          "$value": "linear-gradient(0deg, {set.gray.soft.bg} 42%, {gradient.alert.fade-default} 100%)"
+          "$value": "linear-gradient(0deg, {set.gray.secondary.bg} 42%, {gradient.alert.fade-default} 100%)"
         },
         "danger": {
           "$type": "color",
-          "$value": "linear-gradient(0deg, {set.red.soft.bg} 42%, {gradient.alert.fade-danger} 100%)"
+          "$value": "linear-gradient(0deg, {set.red.secondary.bg} 42%, {gradient.alert.fade-danger} 100%)"
         },
         "warning": {
           "$type": "color",
-          "$value": "linear-gradient(0deg, {set.yellow.soft.bg} 42%, {gradient.alert.fade-warning} 100%)"
+          "$value": "linear-gradient(0deg, {set.yellow.secondary.bg} 42%, {gradient.alert.fade-warning} 100%)"
         },
         "success": {
           "$type": "color",
-          "$value": "linear-gradient(0deg, {set.green.soft.bg} 42%, {gradient.alert.fade-success} 100%)"
+          "$value": "linear-gradient(0deg, {set.green.secondary.bg} 42%, {gradient.alert.fade-success} 100%)"
         }
       }
     },
@@ -1204,12 +1204,12 @@
       },
       "add-widget": {
         "$type": "color",
-        "$value": "{set.brand.solid.bg}",
+        "$value": "{set.brand.primary.bg}",
         "$description": "Background for interactive UI elements related to added content."
       },
       "add-widget-color": {
         "$type": "color",
-        "$value": "{set.brand.solid.text}",
+        "$value": "{set.brand.primary.text}",
         "$description": "Text/icon color for add-related interactive elements, ensuring readability."
       },
       "del-content": {
@@ -1524,26 +1524,26 @@
       "selected": {
         "item": {
           "$type": "color",
-          "$value": "{set.brand.solid.text}",
+          "$value": "{set.brand.primary.text}",
           "$description": "Color for selected items in selection controls. Creates high contrast against selected background state."
         },
         "bg": {
           "$type": "color",
-          "$value": "{set.brand.solid.bg}",
+          "$value": "{set.brand.primary.bg}",
           "$description": "Background color for selected state in selection controls. Creates strong visual indication of active selection."
         },
         "bg-hover": {
           "$type": "color",
-          "$value": "{set.brand.solid.bg-hover}"
+          "$value": "{set.brand.primary.bg-hover}"
         },
         "border": {
           "$type": "color",
-          "$value": "{set.brand.solid.bg}",
+          "$value": "{set.brand.primary.bg}",
           "$description": "Border color for selected elements in selection controls. Reinforces the selected state with consistent styling."
         },
         "border-hover": {
           "$type": "color",
-          "$value": "{set.brand.solid.bg-hover}"
+          "$value": "{set.brand.primary.bg-hover}"
         }
       }
     },
@@ -1567,7 +1567,7 @@
         },
         "progress": {
           "$type": "color",
-          "$value": "{set.brand.solid.bg}",
+          "$value": "{set.brand.primary.bg}",
           "$description": "Filled portion color for slider tracks. Visually represents the selected value or range within the track."
         },
         "progress-stripes": {
@@ -1585,15 +1585,15 @@
         },
         "warning": {
           "$type": "color",
-          "$value": "{set.yellow.solid.bg}"
+          "$value": "{set.yellow.primary.bg}"
         },
         "success": {
           "$type": "color",
-          "$value": "{set.green.solid.bg}"
+          "$value": "{set.green.primary.bg}"
         },
         "danger": {
           "$type": "color",
-          "$value": "{set.red.solid.bg}"
+          "$value": "{set.red.primary.bg}"
         }
       },
       "handle": {
@@ -2017,7 +2017,7 @@
         "y": "0",
         "blur": "0",
         "spread": "4",
-        "color": "{set.red.soft.bg}",
+        "color": "{set.red.secondary.bg}",
         "type": "dropShadow"
       }
     },
@@ -2028,7 +2028,7 @@
         "y": "0",
         "blur": "0",
         "spread": "4",
-        "color": "{set.red.soft.bg-hover}",
+        "color": "{set.red.secondary.bg-hover}",
         "type": "dropShadow"
       }
     },
@@ -2039,7 +2039,7 @@
         "y": "0",
         "blur": "0",
         "spread": "4",
-        "color": "{set.gray.soft.bg}",
+        "color": "{set.gray.secondary.bg}",
         "type": "dropShadow"
       }
     },
@@ -2050,7 +2050,7 @@
         "y": "0",
         "blur": "0",
         "spread": "4",
-        "color": "{set.green.soft.bg}",
+        "color": "{set.green.secondary.bg}",
         "type": "dropShadow"
       }
     },
@@ -2061,7 +2061,7 @@
         "y": "0",
         "blur": "0",
         "spread": "4",
-        "color": "{set.green.soft.bg-hover}",
+        "color": "{set.green.secondary.bg-hover}",
         "type": "dropShadow"
       }
     },
@@ -2072,7 +2072,7 @@
         "y": "0",
         "blur": "0",
         "spread": "4",
-        "color": "{set.yellow.soft.bg}",
+        "color": "{set.yellow.secondary.bg}",
         "type": "dropShadow"
       }
     },
@@ -2083,7 +2083,7 @@
         "y": "0",
         "blur": "0",
         "spread": "4",
-        "color": "{set.yellow.soft.bg-hover}",
+        "color": "{set.yellow.secondary.bg-hover}",
         "type": "dropShadow"
       }
     }
@@ -2133,7 +2133,7 @@
           }
         },
         "$type": "color",
-        "$value": "{set.gray.soft.bg}"
+        "$value": "{set.gray.secondary.bg}"
       },
       "fade-danger": {
         "$extensions": {
@@ -2146,7 +2146,7 @@
           }
         },
         "$type": "color",
-        "$value": "{set.red.soft.bg}"
+        "$value": "{set.red.secondary.bg}"
       },
       "fade-warning": {
         "$extensions": {
@@ -2159,7 +2159,7 @@
           }
         },
         "$type": "color",
-        "$value": "{set.yellow.soft.bg}"
+        "$value": "{set.yellow.secondary.bg}"
       },
       "fade-success": {
         "$extensions": {
@@ -2172,7 +2172,7 @@
           }
         },
         "$type": "color",
-        "$value": "{set.green.soft.bg}"
+        "$value": "{set.green.secondary.bg}"
       }
     },
     "skeleton": {

@@ -108,13 +108,10 @@ export const LabelsListView: FC<LabelsListViewProps> = ({
 
           return (
             <Table.Row
-              className="cursor-pointer"
               key={label.id}
-              onClick={() => {
-                if (toRepoLabelDetails) {
-                  toRepoLabelDetails({ labelId: label.key, scope: label.scope })
-                }
-              }}
+              {...(toRepoLabelDetails
+                ? { onClick: () => toRepoLabelDetails({ labelId: label.key, scope: label.scope }) }
+                : {})}
             >
               <Table.Cell className="pr-0 align-top">
                 {valuesCount > 0 && (

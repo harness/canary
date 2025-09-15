@@ -384,8 +384,45 @@
     "addFile": "Ajouter un fichier"
   },
   "search": "Rechercher",
+  "execution": {
+    "summary": "Résumé",
+    "logs": "Journaux",
+    "graph": "Graphique",
+    "inputs": "Entrées",
+    "opa": "Évaluations de politique",
+    "artifacts": "Artéfacts",
+    "tests": "Tests",
+    "sto": "Tests de sécurité",
+    "secrets": "Secrets"
+  },
+  "labelData": {
+    "form": {
+      "colorValuePlaceholder": "Enter value name",
+      "colorLabelPlaceholder": "Enter label name",
+      "removeValue": "Remove a value",
+      "editTitle": "Label details",
+      "createTitle": "Create a label",
+      "labelName": "Label name",
+      "valueName": "Label value",
+      "addValue": "Add a value",
+      "allowUsersCheckboxLabel": "Allow users to add values",
+      "previewLabel": "Label preview",
+      "previewDynamicValue": "*can be added by users*"
+    },
+    "table": {
+      "name": "Name",
+      "created": "Created in",
+      "description": "Description"
+    },
+    "edit": "Edit label",
+    "delete": "Delete label",
+    "title": "Labels",
+    "showParentLabels": "Show labels from parent scopes",
+    "createLabel": "Create label",
+    "newLabel": "Create Label",
+    "create": "Create labels"
+  },
   "noData": {
-    "noDelegates": "There are no delegates in this project yet.",
     "noResults": "Aucun résultat de recherche",
     "checkSpelling": "Vérifiez votre orthographe et vos options de filtre,",
     "changeSearch": "ou recherchez un autre mot-clé.",
@@ -437,6 +474,7 @@
     "createSecret": "Créer un nouveau secret.",
     "noUsers": "Aucun utilisateur trouvé",
     "noUsersDescription": "Il n'y a aucun utilisateur dans ce périmètre. Cliquez sur le bouton ci-dessous pour commencer à les ajouter.",
+    "noDelegates": "There are no delegates in this project yet.",
     "noActivities": "Aucune activité disponible",
     "noActivitiesDescription": "Il n'y a pas d'activités disponibles.",
     "noEntities": "Aucune entité disponible",
@@ -452,84 +490,6 @@
     "commit": "Validation",
     "noLabels": "No labels yet",
     "noLabelsDescription": "Use labels to organize, prioritize, and categorize tasks efficiently."
-  },
-  "delegates": {
-    "delegate": "Delegate",
-    "heartbeat": "Heartbeat",
-    "selected": "Selected",
-    "anyDelegate": "Any delegate",
-    "useAnyDelegate": "Use any available delegate",
-    "delegateTags": "Delegate with tags",
-    "useDelegateTags": "Use delegate with following tags",
-    "enterTags": "Enter tags",
-    "testDelegate": "Test Delegate connectivity",
-    "delegateMatches": "Matches:",
-    "connectDelegates": "Connect ",
-    "noDelegatesInstalled": "Haven't installed a delegate yet?",
-    "installDelegate": "Install Delegate"
-  },
-  "createProject": {
-    "backButton": "Retour",
-    "validation": {
-      "nameNoEmpty": "Le champ ne peut pas être vide",
-      "nameMinLength": "Le nom du projet doit contenir au moins 4 caractères"
-    },
-    "title": "Créez votre nouveau projet",
-    "description": "Organisez vos dépôts, pipelines et plus encore.",
-    "form": {
-      "name": "Nom du projet",
-      "namePlaceholder": "Entrez le nom de votre projet",
-      "description": "Description",
-      "descriptionPlaceholder": "Entrez une description (facultatif)"
-    },
-    "create": {
-      "projectCreation": "Création du projet...",
-      "createProject": "Créer le projet"
-    },
-    "or": "ou",
-    "importProject": "Importer un projet",
-    "logout": {
-      "question": "Voulez-vous utiliser un autre compte ?",
-      "link": "Se déconnecter"
-    }
-  },
-  "execution": {
-    "summary": "Résumé",
-    "logs": "Journaux",
-    "graph": "Graphique",
-    "inputs": "Entrées",
-    "opa": "Évaluations de politique",
-    "artifacts": "Artéfacts",
-    "tests": "Tests",
-    "sto": "Tests de sécurité",
-    "secrets": "Secrets"
-  },
-  "labelData": {
-    "form": {
-      "colorValuePlaceholder": "Enter value name",
-      "colorLabelPlaceholder": "Enter label name",
-      "removeValue": "Remove a value",
-      "editTitle": "Label details",
-      "createTitle": "Create a label",
-      "labelName": "Label name",
-      "valueName": "Label value",
-      "addValue": "Add a value",
-      "allowUsersCheckboxLabel": "Allow users to add values",
-      "previewLabel": "Label preview",
-      "previewDynamicValue": "*can be added by users*"
-    },
-    "table": {
-      "name": "Name",
-      "created": "Created in",
-      "description": "Description"
-    },
-    "edit": "Edit label",
-    "delete": "Delete label",
-    "title": "Labels",
-    "showParentLabels": "Show labels from parent scopes",
-    "createLabel": "Create label",
-    "newLabel": "Create Label",
-    "create": "Create labels"
   },
   "projectSettings": {
     "newLabels": "Create label",
@@ -745,6 +705,31 @@
     "generalTab": "Général",
     "keysTab": "Clés et Jetons",
     "saving": "Enregistrement..."
+  },
+  "createProject": {
+    "validation": {
+      "nameNoEmpty": "Le champ ne peut pas être vide",
+      "nameMinLength": "Le nom du projet doit contenir au moins 4 caractères"
+    },
+    "backButton": "Retour",
+    "title": "Créez votre nouveau projet",
+    "description": "Organisez vos dépôts, pipelines et plus encore.",
+    "form": {
+      "name": "Nom du projet",
+      "namePlaceholder": "Entrez le nom de votre projet",
+      "description": "Description",
+      "descriptionPlaceholder": "Entrez une description (facultatif)"
+    },
+    "create": {
+      "projectCreation": "Création du projet...",
+      "createProject": "Créer le projet"
+    },
+    "or": "ou",
+    "importProject": "Importer un projet",
+    "logout": {
+      "question": "Voulez-vous utiliser un autre compte ?",
+      "link": "Se déconnecter"
+    }
   },
   "forms": {
     "selectMember": "",
@@ -994,6 +979,21 @@
       "editUser": "Modifier l'utilisateur",
       "deleteUser": "Supprimer l'utilisateur"
     }
+  },
+  "delegates": {
+    "delegate": "Delegate",
+    "heartbeat": "Heartbeat",
+    "selected": "Selected",
+    "anyDelegate": "Any delegate",
+    "useAnyDelegate": "Use any available delegate",
+    "delegateTags": "Delegate with tags",
+    "useDelegateTags": "Use delegate with following tags",
+    "enterTags": "Enter tags",
+    "testDelegate": "Test Delegate connectivity",
+    "delegateMatches": "Matches:",
+    "connectDelegates": "Connect ",
+    "noDelegatesInstalled": "Haven't installed a delegate yet?",
+    "installDelegate": "Install Delegate"
   },
   "code": "Code"
 }

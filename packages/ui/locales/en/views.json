@@ -393,8 +393,45 @@
     "addFile": "Add file"
   },
   "search": "Search",
+  "execution": {
+    "summary": "Summary",
+    "logs": "Logs",
+    "graph": "Graph",
+    "inputs": "Inputs",
+    "opa": "Policy evaluations",
+    "artifacts": "Artifacts",
+    "tests": "Tests",
+    "sto": "Security tests",
+    "secrets": "Secrets"
+  },
+  "labelData": {
+    "form": {
+      "colorValuePlaceholder": "Enter value name",
+      "colorLabelPlaceholder": "Enter label name",
+      "removeValue": "Remove a value",
+      "editTitle": "Label details",
+      "createTitle": "Create a label",
+      "labelName": "Label name",
+      "valueName": "Label value",
+      "addValue": "Add a value",
+      "allowUsersCheckboxLabel": "Allow users to add values",
+      "previewLabel": "Label preview",
+      "previewDynamicValue": "*can be added by users*"
+    },
+    "table": {
+      "name": "Name",
+      "created": "Created in",
+      "description": "Description"
+    },
+    "edit": "Edit Label",
+    "delete": "Delete Label",
+    "title": "Labels",
+    "showParentLabels": "Show labels from parent scopes",
+    "createLabel": "Create Label",
+    "newLabel": "Create Label",
+    "create": "Create Labels"
+  },
   "noData": {
-    "noDelegates": "There are no delegates in this project yet.",
     "noResults": "No search results",
     "checkSpelling": "Check your spelling and filter options,",
     "changeSearch": "or search for a different keyword.",
@@ -446,6 +483,7 @@
     "createSecret": "Create new secret.",
     "noUsers": "No Users Found",
     "noUsersDescription": "There are no users in this scope. Click on the button below to start adding them.",
+    "noDelegates": "There are no delegates in this project yet.",
     "noActivities": "No activities yet",
     "noActivitiesDescription": "There are no activities yet. ",
     "noEntities": "No entities yet",
@@ -461,84 +499,6 @@
     "commit": "Commit",
     "noLabels": "No labels yet",
     "noLabelsDescription": "Use labels to organize, prioritize, and categorize tasks efficiently."
-  },
-  "delegates": {
-    "delegate": "Delegate",
-    "heartbeat": "Heartbeat",
-    "selected": "Selected",
-    "anyDelegate": "Any Delegate",
-    "useAnyDelegate": "Use any available delegate",
-    "delegateTags": "Delegate with tags",
-    "useDelegateTags": "Use delegate with following tags",
-    "enterTags": "Enter tags",
-    "testDelegate": "Test Delegate connectivity",
-    "delegateMatches": "Matches: ",
-    "connectDelegates": "Connect ",
-    "noDelegatesInstalled": "Haven't installed a delegate yet?",
-    "installDelegate": "Install delegate"
-  },
-  "createProject": {
-    "backButton": "Back",
-    "validation": {
-      "nameNoEmpty": "The field can’t be blank",
-      "nameMinLength": "The project name should be at least 4 characters"
-    },
-    "title": "Create your new project",
-    "description": "Organize your repositories, pipelines and more.",
-    "form": {
-      "name": "Project name",
-      "namePlaceholder": "Enter your project name",
-      "description": "Description",
-      "descriptionPlaceholder": "Enter a description (optional)"
-    },
-    "create": {
-      "projectCreation": "Creating project...",
-      "createProject": "Create project"
-    },
-    "or": "or",
-    "importProject": "Import project",
-    "logout": {
-      "question": "Want to use a different account?",
-      "link": "Log out"
-    }
-  },
-  "execution": {
-    "summary": "Summary",
-    "logs": "Logs",
-    "graph": "Graph",
-    "inputs": "Inputs",
-    "opa": "Policy evaluations",
-    "artifacts": "Artifacts",
-    "tests": "Tests",
-    "sto": "Security tests",
-    "secrets": "Secrets"
-  },
-  "labelData": {
-    "form": {
-      "colorValuePlaceholder": "Enter value name",
-      "colorLabelPlaceholder": "Enter label name",
-      "removeValue": "Remove a value",
-      "editTitle": "Label details",
-      "createTitle": "Create a label",
-      "labelName": "Label name",
-      "valueName": "Label value",
-      "addValue": "Add a value",
-      "allowUsersCheckboxLabel": "Allow users to add values",
-      "previewLabel": "Label preview",
-      "previewDynamicValue": "*can be added by users*"
-    },
-    "table": {
-      "name": "Name",
-      "created": "Created in",
-      "description": "Description"
-    },
-    "edit": "Edit Label",
-    "delete": "Delete Label",
-    "title": "Labels",
-    "showParentLabels": "Show labels from parent scopes",
-    "createLabel": "Create Label",
-    "newLabel": "Create Label",
-    "create": "Create Labels"
   },
   "projectSettings": {
     "newLabels": "Create Label",
@@ -758,6 +718,31 @@
     "saving": "Saving...",
     "generalTab": "General",
     "keysTab": "Keys and Tokens"
+  },
+  "createProject": {
+    "validation": {
+      "nameNoEmpty": "The field can’t be blank",
+      "nameMinLength": "The project name should be at least 4 characters"
+    },
+    "backButton": "Back",
+    "title": "Create your new project",
+    "description": "Organize your repositories, pipelines and more.",
+    "form": {
+      "name": "Project name",
+      "namePlaceholder": "Enter your project name",
+      "description": "Description",
+      "descriptionPlaceholder": "Enter a description (optional)"
+    },
+    "create": {
+      "projectCreation": "Creating project...",
+      "createProject": "Create project"
+    },
+    "or": "or",
+    "importProject": "Import project",
+    "logout": {
+      "question": "Want to use a different account?",
+      "link": "Log out"
+    }
   },
   "forms": {
     "selectMember": "Select member",
@@ -1008,6 +993,21 @@
       "editUser": "Edit user",
       "deleteUser": "Delete user"
     }
+  },
+  "delegates": {
+    "delegate": "Delegate",
+    "heartbeat": "Heartbeat",
+    "selected": "Selected",
+    "anyDelegate": "Any Delegate",
+    "useAnyDelegate": "Use any available delegate",
+    "delegateTags": "Delegate with tags",
+    "useDelegateTags": "Use delegate with following tags",
+    "enterTags": "Enter tags",
+    "testDelegate": "Test Delegate connectivity",
+    "delegateMatches": "Matches: ",
+    "connectDelegates": "Connect ",
+    "noDelegatesInstalled": "Haven't installed a delegate yet?",
+    "installDelegate": "Install delegate"
   },
   "code": "Code"
 }

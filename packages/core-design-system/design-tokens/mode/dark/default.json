@@ -903,7 +903,7 @@
       }
     },
     "mint": {
-      "solid": {
+      "primary": {
         "text": {
           "$type": "color",
           "$value": "{mint.1000}",
@@ -915,7 +915,7 @@
           "$description": "Background color for prominent mint surfaces."
         }
       },
-      "soft": {
+      "secondary": {
         "text": {
           "$type": "color",
           "$value": "{mint.150}",
@@ -932,7 +932,7 @@
           "$description": "Hover background color for subdued mint surfaces."
         }
       },
-      "surface": {
+      "outline": {
         "text": {
           "$type": "color",
           "$value": "{mint.150}",
@@ -956,7 +956,7 @@
       }
     },
     "orange": {
-      "solid": {
+      "primary": {
         "text": {
           "$type": "color",
           "$value": "{orange.1000}",

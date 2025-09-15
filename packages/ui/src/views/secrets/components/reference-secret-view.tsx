@@ -1,4 +1,4 @@
-import { Button, Caption, TextInput } from '@/components'
+import { Button, Caption, IconV2, TextInput } from '@/components'
 
 interface ReferenceSecretViewProps {
   onTest: (value: string) => void
@@ -17,7 +17,8 @@ export const ReferenceSecretView: React.FC<ReferenceSecretViewProps> = ({ onTest
             placeholder="Enter reference secret value"
           />
         </div>
-        <Button onClick={() => onTest(value)} variant="ghost">
+        <Button onClick={() => onTest(value)} variant="primary">
+          <IconV2 name="clipboard-check" />
           Test
         </Button>
       </div>

@@ -898,9 +898,10 @@
         "label": "Type"
       }
     },
-    "createNew": "Create Secret",
+    "newSecret": "New Secret",
     "edit": "Edit Secret",
     "delete": "Delete Secret",
+    "createNew": "Create Secret",
     "secretsTitle": "Secrets"
   },
   "secret": {

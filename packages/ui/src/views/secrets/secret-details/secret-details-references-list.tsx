@@ -27,7 +27,10 @@ export function SecretReferencesList({ secretReferences, isLoading }: SecretRefe
   }
 
   return (
-    <Table.Root className={isLoading ? '[mask-image:linear-gradient(to_bottom,black_30%,transparent_100%)]' : ''}>
+    <Table.Root
+      className={isLoading ? '[mask-image:linear-gradient(to_bottom,black_30%,transparent_100%)]' : ''}
+      size="relaxed"
+    >
       <Table.Header>
         <Table.Row>
           <Table.Head className="w-2/5">{t('views:entityReference.entity', 'Entity')}</Table.Head>

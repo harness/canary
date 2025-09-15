@@ -35,10 +35,13 @@ export function SecretList({
   }
 
   return (
-    <Table.Root className={isLoading ? '[mask-image:linear-gradient(to_bottom,black_30%,transparent_100%)]' : ''}>
+    <Table.Root
+      className={isLoading ? '[mask-image:linear-gradient(to_bottom,black_30%,transparent_100%)]' : ''}
+      size="compact"
+    >
       <Table.Header>
         <Table.Row>
-          <Table.Head className="w-full max-w-[470px]">{t('views:secret.title', 'Name')}</Table.Head>
+          <Table.Head className="w-full">{t('views:secret.title', 'Name')}</Table.Head>
           <Table.Head className={CELL_MIN_WIDTH}>{t('views:common.manager', 'Secrets Manager')}</Table.Head>
           <Table.Head className={CELL_MIN_WIDTH}>{t('views:common.lastActivity', 'Last Activity')}</Table.Head>
           <Table.Head></Table.Head>
@@ -60,6 +63,7 @@ export function SecretList({
             </Table.Cell>
             <Table.Cell className={cn(CELL_MIN_WIDTH_ICON, 'text-center')} disableLink>
               <MoreActionsTooltip
+                iconName="more-horizontal"
                 isInTable
                 actions={[
                   {

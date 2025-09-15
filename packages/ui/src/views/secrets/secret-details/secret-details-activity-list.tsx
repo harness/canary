@@ -30,6 +30,7 @@ export function SecretActivityList({ secretActivity, isLoading }: SecretActivity
     <Table.Root
       className={isLoading ? '[mask-image:linear-gradient(to_bottom,black_30%,transparent_100%)]' : ''}
       disableHighlightOnHover
+      size="relaxed"
     >
       <Table.Header>
         <Table.Row>

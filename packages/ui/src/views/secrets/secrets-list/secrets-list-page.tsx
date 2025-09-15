@@ -87,9 +87,7 @@ const SecretListPage: FC<SecretListPageProps> = ({
   return (
     <SandboxLayout.Main>
       <SandboxLayout.Content className={cn({ 'h-full': !isLoading && !secrets.length && !searchQuery })}>
-        <Text as="h1" variant="heading-section">
-          Secrets
-        </Text>
+        <Text variant="heading-hero">Secrets</Text>
         <Spacer size={6} />
         <FilterGroup<SecretListFilters, keyof SecretListFilters>
           simpleSortConfig={{
@@ -102,7 +100,7 @@ const SecretListPage: FC<SecretListPageProps> = ({
           headerAction={
             <Button onClick={onCreate}>
               <IconV2 name="plus" />
-              {t('views:secrets.createNew', 'Create Secret')}
+              {t('views:secrets.newSecret', 'New Secret')}
             </Button>
           }
           filterOptions={SECRET_FILTER_OPTIONS}

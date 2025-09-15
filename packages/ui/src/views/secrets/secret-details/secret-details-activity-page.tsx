@@ -73,7 +73,9 @@ const SecretActivityPage: FC<SecretActivityPageProps> = ({
   }
 
   return (
-    <SandboxLayout.Content className={cn({ 'h-full': !isLoading && !secretActivity.length && !searchQuery }, 'px-0')}>
+    <SandboxLayout.Content
+      className={cn({ 'h-full': !isLoading && !secretActivity.length && !searchQuery }, 'px-0 mt-4')}
+    >
       <ListActions.Root className="mb-1">
         <ListActions.Left>
           <SearchBox.Root

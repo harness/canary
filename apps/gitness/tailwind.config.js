@@ -1,12 +1,7 @@
 /** @type {import('tailwindcss').Config} */
-import tailwind from '@harnessio/ui/tailwind.config'
-import path from 'path'
+
+import { uiTailwindPreset } from '@harnessio/ui/tailwind.config'
 
 export default {
-  presets: [
-    {
-      ...tailwind,
-      content: [path.join(__dirname, 'node_modules/@harnessio/ui/{src,tailwind-utils-config}/**/*.{ts,tsx}'), './src/**/*.{ts,tsx}']
-    }
-  ]
+  presets: [uiTailwindPreset(['src/**/*.{ts,tsx}'])]
 }

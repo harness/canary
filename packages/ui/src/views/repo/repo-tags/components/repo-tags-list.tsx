@@ -123,7 +123,8 @@ export const RepoTagsList: FC<RepoTagsListProps> = ({
                     {t('views:noData.createNewTag', 'Create Tag')}
                   </>
                 ),
-                onClick: onOpenCreateTagDialog
+                onClick: onOpenCreateTagDialog,
+                isDialogTrigger: true
               }
         }
       />

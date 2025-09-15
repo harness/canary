@@ -1,8 +1,9 @@
-import { Dispatch, FC, ReactNode, SetStateAction } from 'react'
+import { Dispatch, FC, Fragment, ReactNode, SetStateAction } from 'react'
 
 import {
   Button,
   ButtonProps,
+  Dialog,
   IconPropsV2,
   IconV2,
   Illustration,
@@ -25,11 +26,13 @@ export interface NoDataProps {
     icon?: IconPropsV2['name']
     label: ReactNode | string
     to?: string
+    isDialogTrigger?: boolean
   }
   secondaryButton?: ButtonProps & {
     icon?: IconPropsV2['name']
     label: ReactNode | string
     to?: string
+    isDialogTrigger?: boolean
   }
   withBorder?: boolean
   loadState?: string
@@ -59,6 +62,9 @@ export const NoData: FC<NoDataProps> = ({
   splitButton
 }) => {
   const { NavLink } = useRouterContext()
+
+  const PrimaryWrapper = primaryButton?.isDialogTrigger ? Dialog.Trigger : Fragment
+  const SecondaryWrapper = secondaryButton?.isDialogTrigger ? Dialog.Trigger : Fragment
 
   return (
     <Layout.Vertical
@@ -93,10 +99,12 @@ export const NoData: FC<NoDataProps> = ({
                   </NavLink>
                 </Button>
               ) : (
-                <Button {...toButtonProps(omit(primaryButton, ['label', 'icon']) as ButtonProps)}>
-                  {primaryButton.icon && <IconV2 name={primaryButton.icon} size="sm" />}
-                  {primaryButton.label}
-                </Button>
+                <PrimaryWrapper>
+                  <Button {...toButtonProps(omit(primaryButton, ['label', 'icon']) as ButtonProps)}>
+                    {primaryButton.icon && <IconV2 name={primaryButton.icon} size="sm" />}
+                    {primaryButton.label}
+                  </Button>
+                </PrimaryWrapper>
               ))}
             {secondaryButton &&
               (secondaryButton.to ? (
@@ -111,10 +119,12 @@ export const NoData: FC<NoDataProps> = ({
                   </NavLink>
                 </Button>
               ) : (
-                <Button variant="outline" {...toButtonProps(omit(secondaryButton, ['label', 'icon']) as ButtonProps)}>
-                  {secondaryButton.icon && <IconV2 name={secondaryButton.icon} size="sm" />}
-                  {secondaryButton.label}
-                </Button>
+                <SecondaryWrapper>
+                  <Button variant="outline" {...toButtonProps(omit(secondaryButton, ['label', 'icon']) as ButtonProps)}>
+                    {secondaryButton.icon && <IconV2 name={secondaryButton.icon} size="sm" />}
+                    {secondaryButton.label}
+                  </Button>
+                </SecondaryWrapper>
               ))}
             {splitButton && (
               <SplitButton<string>

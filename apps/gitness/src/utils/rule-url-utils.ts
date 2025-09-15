@@ -14,9 +14,9 @@ export function getScopedRuleUrl({
   repoId,
   accountId,
   orgIdentifier,
-  projectIdentifier
-  // settingSection = 'rules',
-  // settingSectionMode = 'edit'
+  projectIdentifier,
+  settingSection = 'rules',
+  settingSectionMode = 'edit'
 }: {
   scope: number
   identifier: string
@@ -54,6 +54,12 @@ export function getScopedRuleUrl({
   orgIdentifier?: string
   projectIdentifier?: string
 }) {
+  // For settingSection 'labels', we don't need the /edit suffix, for 'rules' we do
+  const sectionPath =
+    settingSection === 'labels'
+      ? `${settingSection}/${identifier}`
+      : `${settingSection}/${identifier}/${settingSectionMode}`
+
   if (scope === 0) {
     const repoPath = [accountId, orgIdentifier, projectIdentifier, repoId].filter(Boolean).join('/')
 
@@ -61,7 +67,7 @@ export function getScopedRuleUrl({
       toCODERule({
         repoPath,
         // ruleId: identifier,
-        settingSection: `rules/${identifier}/edit`
+        settingSection: sectionPath
         // settingSectionMode
       })
     }
@@ -71,7 +77,7 @@ export function getScopedRuleUrl({
     toCODEManageRepositories?.({
       space: `${accountId ?? ''}`,
       // ruleId: identifier,
-      settingSection: `rules/${identifier}/edit`
+      settingSection: sectionPath
       // settingSectionMode
     })
   }
@@ -80,7 +86,7 @@ export function getScopedRuleUrl({
     toCODEManageRepositories?.({
       space: `${accountId ?? ''}/${orgIdentifier ?? ''}`,
       // ruleId: identifier,
-      settingSection: `rules/${identifier}/edit`
+      settingSection: sectionPath
       // settingSectionMode
     })
   }
@@ -88,7 +94,7 @@ export function getScopedRuleUrl({
     toCODEManageRepositories?.({
       space: `${accountId ?? ''}/${orgIdentifier ?? ''}/${projectIdentifier ?? ''}`,
       // ruleId: identifier,
-      settingSection: `rules/${identifier}/edit`
+      settingSection: sectionPath
       // settingSectionMode
     })
   }

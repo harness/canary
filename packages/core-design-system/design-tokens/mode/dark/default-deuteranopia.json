@@ -37,6 +37,11 @@
       "$value": "{chrome.500}",
       "$description": "Reduced emphasis color for text and icons in secondary information. Creates visual hierarchy through lower contrast.\n\nCommon uses: Supporting text, metadata, secondary information, placeholders."
     },
+    "4": {
+      "$type": "color",
+      "$value": "{chrome.700}",
+      "$description": "Lowest emphasis text color for unavailable options. Creates visual differentiation between interactive and non-interactive elements.\n\nCommon uses: Disabled buttons, inactive form elements, unavailable options."
+    },
     "success": {
       "$type": "color",
       "$value": "{set.green.soft.text}",
@@ -56,11 +61,6 @@
       "$type": "color",
       "$value": "{set.purple.surface.text}",
       "$description": "Text color for merged content and pull request states. Provides distinct visual identity for merge-related information and completed integration states.\n\nCommon uses: Merge commit messages, pull request merged status, integration completion indicators, merged branch labels."
-    },
-    "disabled": {
-      "$type": "color",
-      "$value": "{chrome.700}",
-      "$description": "Lowest emphasis text color for unavailable options. Creates visual differentiation between interactive and non-interactive elements.\n\nCommon uses: Disabled buttons, inactive form elements, unavailable options."
     },
     "brand": {
       "$type": "color",

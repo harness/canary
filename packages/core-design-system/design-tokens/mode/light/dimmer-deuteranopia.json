@@ -155,7 +155,7 @@
   },
   "set": {
     "brand": {
-      "solid": {
+      "primary": {
         "text": {
           "$type": "color",
           "$value": "{chrome.50}",
@@ -177,7 +177,7 @@
           "$description": "Selected state background color for active brand items."
         }
       },
-      "soft": {
+      "secondary": {
         "text": {
           "$type": "color",
           "$value": "{pure.black}",
@@ -199,7 +199,7 @@
           "$description": "Selected state background color for active brand subtle items."
         }
       },
-      "surface": {
+      "outline": {
         "text": {
           "$type": "color",
           "$value": "{chrome.800}",
@@ -228,7 +228,7 @@
       }
     },
     "ai": {
-      "surface": {
+      "outline": {
         "text": {
           "$type": "color",
           "$value": "{chrome.950}",
@@ -260,7 +260,7 @@
       }
     },
     "gray": {
-      "solid": {
+      "primary": {
         "text": {
           "$type": "color",
           "$value": "{chrome.50}",
@@ -282,7 +282,7 @@
           "$description": "Selected state background color for prominent gray surfaces."
         }
       },
-      "soft": {
+      "secondary": {
         "text": {
           "$type": "color",
           "$value": "{chrome.800}",
@@ -304,7 +304,7 @@
           "$description": "Selected state background color for active soft gray items."
         }
       },
-      "surface": {
+      "outline": {
         "text": {
           "$type": "color",
           "$value": "{chrome.700}",
@@ -333,7 +333,7 @@
       }
     },
     "green": {
-      "solid": {
+      "primary": {
         "text": {
           "$type": "color",
           "$value": "{pure.white}",
@@ -345,7 +345,7 @@
           "$description": "Background color for prominent green surfaces."
         }
       },
-      "soft": {
+      "secondary": {
         "text": {
           "$type": "color",
           "$value": "{cyan.600}",
@@ -367,7 +367,7 @@
           "$description": "Background color for subdued green surfaces."
         }
       },
-      "surface": {
+      "outline": {
         "text": {
           "$type": "color",
           "$value": "{cyan.600}",
@@ -396,7 +396,7 @@
       }
     },
     "red": {
-      "solid": {
+      "primary": {
         "text": {
           "$type": "color",
           "$value": "{pure.white}",
@@ -408,7 +408,7 @@
           "$description": "Background color for prominent red surfaces."
         }
       },
-      "soft": {
+      "secondary": {
         "text": {
           "$type": "color",
           "$value": "{orange.600}",
@@ -430,7 +430,7 @@
           "$description": "Selected state for background color for subdued red surfaces."
         }
       },
-      "surface": {
+      "outline": {
         "text": {
           "$type": "color",
           "$value": "{orange.600}",
@@ -459,7 +459,7 @@
       }
     },
     "yellow": {
-      "solid": {
+      "primary": {
         "text": {
           "$type": "color",
           "$value": "{pure.black}",
@@ -471,7 +471,7 @@
           "$description": "Background color for prominent yellow surfaces."
         }
       },
-      "soft": {
+      "secondary": {
         "text": {
           "$type": "color",
           "$value": "{yellow.600}",
@@ -493,7 +493,7 @@
           "$description": "Selected state for background color for subdued yellow surfaces."
         }
       },
-      "surface": {
+      "outline": {
         "text": {
           "$type": "color",
           "$value": "{yellow.600}",
@@ -522,7 +522,7 @@
       }
     },
     "blue": {
-      "solid": {
+      "primary": {
         "text": {
           "$type": "color",
           "$value": "{pure.white}",
@@ -534,7 +534,7 @@
           "$description": "Background color for prominent blue surfaces."
         }
       },
-      "soft": {
+      "secondary": {
         "text": {
           "$type": "color",
           "$value": "{blue.600}",
@@ -551,7 +551,7 @@
           "$description": "Hover background color for subdued blue surfaces."
         }
       },
-      "surface": {
+      "outline": {
         "text": {
           "$type": "color",
           "$value": "{blue.600}",
@@ -580,7 +580,7 @@
       }
     },
     "purple": {
-      "solid": {
+      "primary": {
         "text": {
           "$type": "color",
           "$value": "{pure.white}",
@@ -592,7 +592,7 @@
           "$description": "Background color for prominent purple surfaces."
         }
       },
-      "soft": {
+      "secondary": {
         "text": {
           "$type": "color",
           "$value": "{cyan.600}",
@@ -609,7 +609,7 @@
           "$description": "Hover background color for subdued purple surfaces."
         }
       },
-      "surface": {
+      "outline": {
         "text": {
           "$type": "color",
           "$value": "{cyan.600}",
@@ -638,7 +638,7 @@
       }
     },
     "brown": {
-      "solid": {
+      "primary": {
         "text": {
           "$type": "color",
           "$value": "{purple.1000}",
@@ -650,7 +650,7 @@
           "$description": "Background color for prominent purple surfaces."
         }
       },
-      "soft": {
+      "secondary": {
         "text": {
           "$type": "color",
           "$value": "{brown.600}",
@@ -667,7 +667,7 @@
           "$description": "Hover background color for subdued brown surfaces."
         }
       },
-      "surface": {
+      "outline": {
         "text": {
           "$type": "color",
           "$value": "{brown.600}",
@@ -691,7 +691,7 @@
       }
     },
     "cyan": {
-      "solid": {
+      "primary": {
         "text": {
           "$type": "color",
           "$value": "{purple.1000}",
@@ -703,7 +703,7 @@
           "$description": "Background color for prominent purple surfaces."
         }
       },
-      "soft": {
+      "secondary": {
         "text": {
           "$type": "color",
           "$value": "{cyan.600}",
@@ -720,7 +720,7 @@
           "$description": "Hover background color for subdued cyan surfaces."
         }
       },
-      "surface": {
+      "outline": {
         "text": {
           "$type": "color",
           "$value": "{cyan.600}",
@@ -744,7 +744,7 @@
       }
     },
     "indigo": {
-      "solid": {
+      "primary": {
         "text": {
           "$type": "color",
           "$value": "{purple.1000}",
@@ -756,7 +756,7 @@
           "$description": "Background color for prominent purple surfaces."
         }
       },
-      "soft": {
+      "secondary": {
         "text": {
           "$type": "color",
           "$value": "{indigo.600}",
@@ -773,7 +773,7 @@
           "$description": "Hover background color for subdued indigo surfaces."
         }
       },
-      "surface": {
+      "outline": {
         "text": {
           "$type": "color",
           "$value": "{indigo.600}",
@@ -797,7 +797,7 @@
       }
     },
     "lime": {
-      "solid": {
+      "primary": {
         "text": {
           "$type": "color",
           "$value": "{purple.1000}",
@@ -809,7 +809,7 @@
           "$description": "Background color for prominent purple surfaces."
         }
       },
-      "soft": {
+      "secondary": {
         "text": {
           "$type": "color",
           "$value": "{cyan.600}",
@@ -826,7 +826,7 @@
           "$description": "Hover background color for subdued lime surfaces."
         }
       },
-      "surface": {
+      "outline": {
         "text": {
           "$type": "color",
           "$value": "{cyan.600}",
@@ -850,7 +850,7 @@
       }
     },
     "mint": {
-      "solid": {
+      "primary": {
         "text": {
           "$type": "color",
           "$value": "{purple.1000}",
@@ -862,7 +862,7 @@
           "$description": "Background color for prominent purple surfaces."
         }
       },
-      "soft": {
+      "secondary": {
         "text": {
           "$type": "color",
           "$value": "{cyan.600}",
@@ -879,7 +879,7 @@
           "$description": "Hover background color for subdued mint surfaces."
         }
       },
-      "surface": {
+      "outline": {
         "text": {
           "$type": "color",
           "$value": "{cyan.600}",
@@ -903,7 +903,7 @@
       }
     },
     "orange": {
-      "solid": {
+      "primary": {
         "text": {
           "$type": "color",
           "$value": "{purple.1000}",
@@ -915,7 +915,7 @@
           "$description": "Background color for prominent purple surfaces."
         }
       },
-      "soft": {
+      "secondary": {
         "text": {
           "$type": "color",
           "$value": "{orange.600}",
@@ -932,7 +932,7 @@
           "$description": "Hover background color for subdued orange surfaces."
         }
       },
-      "surface": {
+      "outline": {
         "text": {
           "$type": "color",
           "$value": "{orange.600}",
@@ -956,7 +956,7 @@
       }
     },
     "pink": {
-      "solid": {
+      "primary": {
         "text": {
           "$type": "color",
           "$value": "{purple.1000}",
@@ -968,7 +968,7 @@
           "$description": "Background color for prominent purple surfaces."
         }
       },
-      "soft": {
+      "secondary": {
         "text": {
           "$type": "color",
           "$value": "{pink.600}",
@@ -985,7 +985,7 @@
           "$description": "Hover background color for subdued pink surfaces."
         }
       },
-      "surface": {
+      "outline": {
         "text": {
           "$type": "color",
           "$value": "{pink.600}",
@@ -1009,7 +1009,7 @@
       }
     },
     "violet": {
-      "solid": {
+      "primary": {
         "text": {
           "$type": "color",
           "$value": "{purple.1000}",
@@ -1021,7 +1021,7 @@
           "$description": "Background color for prominent purple surfaces."
         }
       },
-      "soft": {
+      "secondary": {
         "text": {
           "$type": "color",
           "$value": "{violet.600}",
@@ -1038,7 +1038,7 @@
           "$description": "Hover background color for subdued violet surfaces."
         }
       },
-      "surface": {
+      "outline": {
         "text": {
           "$type": "color",
           "$value": "{violet.600}",

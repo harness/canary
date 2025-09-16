@@ -5,7 +5,8 @@ export default {
     gap: 'var(--cn-link-gap-md)',
     width: 'fit-content',
     '@apply font-link-default': '',
-    textDecoration: 'underline transparent',
+    textDecorationLine: 'none',
+    textDecorationColor: 'transparent',
     textUnderlineOffset: '4px',
     transitionProperty: 'color, text-decoration-color',
     transitionDuration: '0.15s',
@@ -33,7 +34,8 @@ export default {
       },
 
       '&:hover, &:where([data-hovered="true"])': {
-        textDecorationColor: 'inherit'
+        textDecorationLine: 'underline !important',
+        textDecorationColor: 'inherit !important'
       },
 
       '&:focus-visible': {
@@ -52,7 +54,7 @@ export default {
     },
 
     '&:where(.cn-link-no-underline):hover': {
-      textDecorationColor: 'transparent'
+      textDecorationLine: 'none !important'
     }
   }
 }

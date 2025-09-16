@@ -32,6 +32,34 @@ const accordionVariants = cva('cn-accordion', {
   }
 })
 
+const accordionTriggerVariants = cva('cn-accordion-trigger', {
+  variants: {
+    cardSize: {
+      default: '',
+      sm: 'cn-accordion-trigger-card-sm',
+      md: 'cn-accordion-trigger-card-md',
+      lg: 'cn-accordion-trigger-card-lg'
+    }
+  },
+  defaultVariants: {
+    cardSize: 'default'
+  }
+})
+
+const accordionContentVariants = cva('cn-accordion-content-container', {
+  variants: {
+    cardSize: {
+      default: '',
+      sm: 'cn-accordion-content-container-card-sm',
+      md: 'cn-accordion-content-container-card-md',
+      lg: 'cn-accordion-content-container-card-lg'
+    }
+  },
+  defaultVariants: {
+    cardSize: 'default'
+  }
+})
+
 interface AccordionContextType {
   indicatorPosition: 'left' | 'right'
   variant: 'default' | 'card'
@@ -87,7 +115,7 @@ const AccordionItem = forwardRef<ElementRef<typeof AccordionPrimitive.Item>, Acc
 
     if (variant === 'card') {
       return (
-        <Card.Root size={cardSize} className="w-full" wrapperClassname="!py-0">
+        <Card.Root size={cardSize} className="w-full" wrapperClassname="!p-0">
           <AccordionPrimitive.Item ref={ref} className="w-full" {...props} />
         </Card.Root>
       )
@@ -108,7 +136,7 @@ type AccordionTriggerProps = ComponentPropsWithoutRef<typeof AccordionPrimitive.
 
 const AccordionTrigger = forwardRef<ElementRef<typeof AccordionPrimitive.Trigger>, AccordionTriggerProps>(
   ({ className, children, suffix, prefix, indicatorProps, headerClassName, asChild, ...props }, ref) => {
-    const { indicatorPosition } = useContext(AccordionContext)
+    const { indicatorPosition, variant, cardSize } = useContext(AccordionContext)
 
     const Indicator = () => (
       <IconV2
@@ -125,7 +153,7 @@ const AccordionTrigger = forwardRef<ElementRef<typeof AccordionPrimitive.Trigger
       <AccordionPrimitive.Header className={headerClassName}>
         <AccordionPrimitive.Trigger
           ref={ref}
-          className={cn('cn-accordion-trigger', className)}
+          className={cn(accordionTriggerVariants({ cardSize: variant === 'card' ? cardSize : 'default' }), className)}
           asChild={asChild}
           {...props}
         >
@@ -150,15 +178,21 @@ type AccordionContentProps = ComponentPropsWithoutRef<typeof AccordionPrimitive.
 }
 
 const AccordionContent = forwardRef<ElementRef<typeof AccordionPrimitive.Content>, AccordionContentProps>(
-  ({ className, children, containerClassName, ...props }, ref) => (
-    <AccordionPrimitive.Content
-      ref={ref}
-      className={cn('cn-accordion-content-container', containerClassName)}
-      {...props}
-    >
-      <div className={cn('cn-accordion-content', className)}>{children}</div>
-    </AccordionPrimitive.Content>
-  )
+  ({ className, children, containerClassName, ...props }, ref) => {
+    const { cardSize, variant } = useContext(AccordionContext)
+    return (
+      <AccordionPrimitive.Content
+        ref={ref}
+        className={cn(
+          accordionContentVariants({ cardSize: variant === 'card' ? cardSize : 'default' }),
+          containerClassName
+        )}
+        {...props}
+      >
+        <div className={cn('cn-accordion-content', className)}>{children}</div>
+      </AccordionPrimitive.Content>
+    )
+  }
 )
 AccordionContent.displayName = AccordionPrimitive.Content.displayName
 

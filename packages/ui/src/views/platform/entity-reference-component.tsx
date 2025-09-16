@@ -1,7 +1,6 @@
 import { useCallback } from 'react'
 
-import { Checkbox, IconV2, ListActions, SearchBox, Skeleton, StackedList } from '@/components'
-import { useDebounceSearch } from '@hooks/use-debounce-search'
+import { Checkbox, IconV2, Layout, SearchInput, Skeleton, StackedList } from '@/components'
 import { cn } from '@utils/cn'
 
 import { EntityReferenceFilter } from './components/entity-reference-filter'
@@ -98,10 +97,6 @@ export function EntityReference<T extends BaseEntityProps, S = string, F = strin
   // Custom entity comparison
   compareFn
 }: EntityReferenceProps<T, S, F>): JSX.Element {
-  const { search, handleSearchChange } = useDebounceSearch({
-    handleChangeSearchValue,
-    searchValue
-  })
   const handleSelectEntity = useCallback(
     (entity: T) => {
       if (enableMultiSelect) {
@@ -132,8 +127,8 @@ export function EntityReference<T extends BaseEntityProps, S = string, F = strin
   const defaultEntityRenderer = ({ entity, isSelected, onSelect, showCheckbox }: EntityRendererProps<T>) => {
     return (
       <StackedList.Item
-        className={cn({ 'bg-cn-hover': isSelected })}
-        paddingY="sm"
+        className={cn({ 'bg-cn-selected': isSelected })}
+        paddingY="xs"
         onClick={() => onSelect?.(entity)}
         thumbnail={showCheckbox ? <Checkbox checked={isSelected} onCheckedChange={() => onSelect?.(entity)} /> : null}
       >
@@ -143,23 +138,27 @@ export function EntityReference<T extends BaseEntityProps, S = string, F = strin
   }
 
   const parentFolderRenderer = ({ parentFolder, onSelect }: ParentFolderRendererProps<S>) => {
+    if (!parentFolder) return null
     return (
       <StackedList.Item
-        paddingY="sm"
+        paddingY="xs"
+        className="gap-x-cn-xs"
         onClick={() => onSelect?.(parentFolder)}
-        thumbnail={<IconV2 name="folder" size="xs" className="text-cn-3" />}
+        thumbnail={<IconV2 name="folder" size="md" className="text-cn-2" />}
       >
-        <StackedList.Field title=".." />
+        <StackedList.Field title="..." />
       </StackedList.Item>
     )
   }
 
   const childFolderRenderer = ({ folder, onSelect }: ChildFolderRendererProps<F>) => {
+    if (!folder) return null
     return (
       <StackedList.Item
-        paddingY="sm"
+        paddingY="xs"
+        className="gap-x-cn-xs"
         onClick={() => onSelect?.(folder)}
-        thumbnail={<IconV2 name="folder" size="xs" className="text-cn-3" />}
+        thumbnail={<IconV2 name="folder" size="md" className="text-cn-2" />}
       >
         <StackedList.Field className="grid capitalize" title={String(folder)} />
       </StackedList.Item>
@@ -168,24 +167,20 @@ export function EntityReference<T extends BaseEntityProps, S = string, F = strin
 
   return (
     <>
-      <div className="flex h-full flex-col gap-2">
+      <Layout.Vertical gapY="lg">
         {showFilter && (
-          <ListActions.Root className="gap-2">
-            <ListActions.Left>
-              <SearchBox.Root
-                width="full"
-                className={cn({ 'max-w-96': filterTypes })}
-                value={search}
-                handleChange={handleSearchChange}
-                placeholder="Search"
-              />
-            </ListActions.Left>
+          <Layout.Horizontal gapX="sm">
+            <SearchInput
+              width="full"
+              className={cn({ 'max-w-96': filterTypes })}
+              value={searchValue}
+              onChange={handleChangeSearchValue}
+              placeholder="Search"
+            />
             {filterTypes && (
-              <ListActions.Right>
-                <EntityReferenceFilter onFilterChange={onFilterChange} filterTypes={filterTypes} defaultValue={'all'} />
-              </ListActions.Right>
+              <EntityReferenceFilter onFilterChange={onFilterChange} filterTypes={filterTypes} defaultValue={'all'} />
             )}
-          </ListActions.Root>
+          </Layout.Horizontal>
         )}
         {isLoading ? (
           <Skeleton.List />
@@ -209,7 +204,7 @@ export function EntityReference<T extends BaseEntityProps, S = string, F = strin
             compareFn={compareFn}
           />
         )}
-      </div>
+      </Layout.Vertical>
     </>
   )
 }

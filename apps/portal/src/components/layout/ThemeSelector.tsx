@@ -48,7 +48,11 @@ export function ThemeSelector() {
 
 export default function ThemeSelectorWrapper() {
   if (typeof window !== "undefined") {
-    return <ThemeSelector />;
+    return (
+      <TooltipProvider>
+        <ThemeSelector />
+      </TooltipProvider>
+    );
   }
 
   return (

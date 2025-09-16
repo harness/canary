@@ -9,6 +9,7 @@ import { LogoV2, LogoV2NamesType } from './logo-v2'
 type CardSelectType = 'single' | 'multiple'
 
 interface CardSelectRootProps<T> {
+  className?: string
   type: CardSelectType
   name?: string
   value?: T extends 'single' ? unknown : unknown[]
@@ -72,6 +73,7 @@ const cardSelectVariants = cva('cn-card-select-root', {
 })
 
 function CardSelectRoot<T extends CardSelectType>({
+  className,
   type,
   layout = 'vertical',
   gap = 'md',
@@ -120,7 +122,7 @@ function CardSelectRoot<T extends CardSelectType>({
       }}
     >
       <div
-        className={cardSelectVariants({ layout, gap })}
+        className={cardSelectVariants({ layout, gap, className })}
         role={type === 'single' ? 'radiogroup' : 'group'}
         style={
           {

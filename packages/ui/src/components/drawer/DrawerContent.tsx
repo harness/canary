@@ -1,4 +1,4 @@
-import { ComponentPropsWithoutRef, ElementRef, forwardRef } from 'react'
+import { ComponentPropsWithoutRef, ElementRef, forwardRef, useRef } from 'react'
 
 import { Button, IconV2 } from '@/components'
 import { usePortal } from '@/context'
@@ -42,9 +42,19 @@ export type DrawerContentProps = ComponentPropsWithoutRef<typeof DrawerPrimitive
 
 export const DrawerContent = forwardRef<ElementRef<typeof DrawerPrimitive.Content>, DrawerContentProps>(
   (
-    { className, children, size = 'sm', hideClose = false, overlayClassName, forceWithOverlay = false, ...props },
+    {
+      className,
+      children,
+      size = 'sm',
+      hideClose = false,
+      overlayClassName,
+      forceWithOverlay = false,
+      onOpenAutoFocus,
+      ...props
+    },
     ref
   ) => {
+    const triggerRef = useRef<HTMLButtonElement>(null)
     const { portalContainer } = usePortal()
     const { direction, modal } = useDrawerContext()
 
@@ -58,7 +68,14 @@ export const DrawerContent = forwardRef<ElementRef<typeof DrawerPrimitive.Conten
           className
         )}
         {...props}
+        onOpenAutoFocus={e => {
+          e.preventDefault()
+          onOpenAutoFocus?.(e)
+          if (!triggerRef.current || onOpenAutoFocus) return
+          triggerRef.current.focus()
+        }}
       >
+        <button className="sr-only" ref={triggerRef} aria-hidden="true" tabIndex={-1} />
         {!hideClose && (
           <DrawerPrimitive.Close asChild>
             <Button className="cn-drawer-close-button" variant="transparent" iconOnly ignoreIconOnlyTooltip>

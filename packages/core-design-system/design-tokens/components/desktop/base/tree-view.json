@@ -1,0 +1,8 @@
+{
+  "item": {
+    "height": {
+      "$type": "sizing",
+      "$value": "{size.9}"
+    }
+  }
+}

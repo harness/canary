@@ -968,7 +968,7 @@
           "$description": "Background color for solid orange surfaces."
         }
       },
-      "soft": {
+      "secondary": {
         "text": {
           "$type": "color",
           "$value": "{orange.200}",
@@ -985,7 +985,7 @@
           "$description": "Hover background color for subdued orange surfaces."
         }
       },
-      "surface": {
+      "outline": {
         "text": {
           "$type": "color",
           "$value": "{orange.200}",
@@ -1009,7 +1009,7 @@
       }
     },
     "pink": {
-      "solid": {
+      "primary": {
         "text": {
           "$type": "color",
           "$value": "{pink.1000}",
@@ -1021,7 +1021,7 @@
           "$description": "Background color for prominent pink surfaces."
         }
       },
-      "soft": {
+      "secondary": {
         "text": {
           "$type": "color",
           "$value": "{pink.150}",
@@ -1038,7 +1038,7 @@
           "$description": "Hover background color for subdued pink surfaces."
         }
       },
-      "surface": {
+      "outline": {
         "text": {
           "$type": "color",
           "$value": "{pink.150}",
@@ -1062,7 +1062,7 @@
       }
     },
     "violet": {
-      "solid": {
+      "primary": {
         "text": {
           "$type": "color",
           "$value": "{violet.1000}",
@@ -1074,7 +1074,7 @@
           "$description": "Background color for prominent violet surfaces."
         }
       },
-      "soft": {
+      "secondary": {
         "text": {
           "$type": "color",
           "$value": "{violet.150}",
@@ -1091,7 +1091,7 @@
           "$description": "Hover background color for subdued violet surfaces."
         }
       },
-      "surface": {
+      "outline": {
         "text": {
           "$type": "color",
           "$value": "{violet.150}",

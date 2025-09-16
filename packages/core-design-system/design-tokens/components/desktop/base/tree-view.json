@@ -1,8 +1,16 @@
 {
-  "item": {
+  "tree-item": {
     "height": {
       "$type": "sizing",
       "$value": "{size.9}"
+    },
+    "gap": {
+      "$type": "spacing",
+      "$value": "{spacing.1-half}"
+    },
+    "container": {
+      "$type": "spacing",
+      "$value": "{spacing.2}"
     }
   }
 }

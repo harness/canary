@@ -7,8 +7,21 @@ import { useRootFormContext } from '../hooks/useRootFormikContext'
 //import { useRootFormikContext } from '../context/RootFormikContext'
 import type { InputProps } from './InputComponent'
 
+const InputComponentWrapper = ({
+  children,
+  withoutWrapper = false
+}: {
+  withoutWrapper?: boolean
+  children: JSX.Element | null
+}) => {
+  if (withoutWrapper || !children) return children
+
+  return <div>{children}</div>
+}
+
 export interface InputComponentRendererProps<T = unknown> extends InputProps<T> {
   children?: React.ReactNode
+  withoutWrapper?: boolean
 }
 
 export function InputComponentRenderer<T = unknown>({
@@ -18,7 +31,8 @@ export function InputComponentRenderer<T = unknown>({
   onChange,
   readonly,
   initialValues,
-  input
+  input,
+  withoutWrapper = false
 }: InputComponentRendererProps<T>): JSX.Element | null {
   const { formState, watch } = useFormContext()
   const { fixedValues = {} /*getValuesWithDependencies*/ } = {} as any // useRootFormikContext()
@@ -65,12 +79,12 @@ export function InputComponentRenderer<T = unknown>({
   }, [commonProps, input.after, input.before, inputComponent, isVisible, formState.errors])
 
   if (!inputComponent) {
-    return <p>Input component not found (internal type: {input.inputType as string})</p>
+    return (
+      <InputComponentWrapper withoutWrapper={withoutWrapper}>
+        <p>Input component not found (internal type: {input.inputType as string})</p>
+      </InputComponentWrapper>
+    )
   }
 
-  if (isVisible) {
-    return component
-  }
-
-  return null
+  return <InputComponentWrapper withoutWrapper={withoutWrapper}>{component}</InputComponentWrapper>
 }

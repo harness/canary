@@ -40,7 +40,7 @@ const componentsMap: Record<
     Header: EntityFormLayout.Header,
     Title: EntityFormLayout.Title,
     Description: EntityFormLayout.Description,
-    Body: Fragment,
+    Body: EntityFormLayout.Form,
     Footer: EntityFormLayout.Footer
   }
 }
@@ -111,9 +111,7 @@ export const UnifiedPipelineStudioPipelineConfigForm = (props: UnifiedPipelineSt
             </ButtonLayout.Root> */}
           </Header>
           <Body>
-            <EntityFormLayout.Form>
-              <RenderForm className="space-y-6" factory={inputComponentFactory} inputs={pipelineFormDefinition} />
-            </EntityFormLayout.Form>
+            <RenderForm className="space-y-6" factory={inputComponentFactory} inputs={pipelineFormDefinition} />
           </Body>
           <Footer>
             <ButtonLayout.Root>

@@ -131,7 +131,7 @@
         }
       },
       "$type": "color",
-      "$value": "{chrome.600}",
+      "$value": "{blue.200}",
       "$description": "Strong overlay for emphasized selection states. Creates distinct visual indication of active or selected elements.\n\nCommon uses: Selected list items, active tabs, chosen options, current navigation item."
     }
   },

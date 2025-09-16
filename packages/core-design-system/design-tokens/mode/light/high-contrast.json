@@ -134,13 +134,13 @@
         "studio.tokens": {
           "modify": {
             "type": "alpha",
-            "value": "0.09",
+            "value": "0.11",
             "space": "lch"
           }
         }
       },
       "$type": "color",
-      "$value": "{tuna.300}",
+      "$value": "{blue.150}",
       "$description": "Strong overlay for emphasized selection states. Creates distinct visual indication of active or selected elements.\n\nCommon uses: Selected list items, active tabs, chosen options, current navigation item."
     }
   },

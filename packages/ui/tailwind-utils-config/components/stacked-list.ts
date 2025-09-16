@@ -47,7 +47,7 @@ export default {
         '@apply hover:bg-cn-hover cursor-pointer duration-150 ease-in-out': ''
       },
 
-      '&-link': {
+      '&-clickable-block': {
         '@apply absolute inset-0 w-full rounded-3 !z-0': ''
       },
 
@@ -59,9 +59,9 @@ export default {
         '@apply flex items-center': ''
       },
 
-      '&-with-link': {
+      '&-clickable': {
         'a, button': {
-          '&:where(:not(.cn-stacked-list-item-link))': {
+          '&:where(:not(.cn-stacked-list-item-clickable-block))': {
             '@apply z-10 relative': ''
           }
         }

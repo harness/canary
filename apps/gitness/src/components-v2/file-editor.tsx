@@ -240,12 +240,11 @@ export const FileEditor: FC<FileEditorProps> = ({ repoDetails, defaultBranch, lo
         <Tabs.Content value="edit" className="grow min-h-0">
           {loading && <Loader />}
 
-          {!loading && !isNew && !contentRevision.code && <Loader />}
-          {!loading && (isNew || contentRevision.code) && (
+          {!loading && (
             <CodeEditor
               height="100%"
               language={language}
-              codeRevision={contentRevision}
+              codeRevision={{ ...contentRevision }}
               onCodeRevisionChange={valueRevision => setContentRevision(valueRevision ?? { code: '' })}
               themeConfig={themeConfig}
               theme={monacoTheme}

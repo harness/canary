@@ -109,7 +109,7 @@
     "hover": {
       "$extensions": {
         "studio.tokens": {
-          "modify": {
+          "primary": {
             "type": "alpha",
             "value": "0.12",
             "space": "lch"
@@ -123,7 +123,7 @@
     "selected": {
       "$extensions": {
         "studio.tokens": {
-          "modify": {
+          "primary": {
             "type": "alpha",
             "value": "0.08",
             "space": "lch"
@@ -238,7 +238,7 @@
         "inner": {
           "$extensions": {
             "studio.tokens": {
-              "modify": {
+              "primary": {
                 "type": "alpha",
                 "value": "0.35",
                 "space": "lch"
@@ -346,7 +346,7 @@
           "$description": "Background color for prominent green surfaces."
         }
       },
-      "soft": {
+      "secondary": {
         "text": {
           "$type": "color",
           "$value": "{mint.150}",
@@ -368,7 +368,7 @@
           "$description": "Background color for subdued green surfaces."
         }
       },
-      "surface": {
+      "outline": {
         "text": {
           "$type": "color",
           "$value": "{mint.150}",
@@ -1098,7 +1098,7 @@
       "shadow": {
         "$extensions": {
           "studio.tokens": {
-            "modify": {
+            "primary": {
               "type": "alpha",
               "value": "0.25",
               "space": "lch"
@@ -1120,7 +1120,7 @@
       "backdrop": {
         "$extensions": {
           "studio.tokens": {
-            "modify": {
+            "primary": {
               "type": "alpha",
               "value": "0.5",
               "space": "lch"
@@ -1134,7 +1134,7 @@
       "backdrop-nested": {
         "$extensions": {
           "studio.tokens": {
-            "modify": {
+            "primary": {
               "type": "alpha",
               "value": "0.35",
               "space": "lch"
@@ -1163,7 +1163,7 @@
       "add-content": {
         "$extensions": {
           "studio.tokens": {
-            "modify": {
+            "primary": {
               "type": "alpha",
               "value": "0.12",
               "space": "lch"
@@ -1177,7 +1177,7 @@
       "add-lineNumber": {
         "$extensions": {
           "studio.tokens": {
-            "modify": {
+            "primary": {
               "type": "alpha",
               "value": "0.2",
               "space": "lch"
@@ -1191,7 +1191,7 @@
       "add-content-highlight": {
         "$extensions": {
           "studio.tokens": {
-            "modify": {
+            "primary": {
               "type": "alpha",
               "value": "0.25",
               "space": "lch"
@@ -1215,7 +1215,7 @@
       "del-content": {
         "$extensions": {
           "studio.tokens": {
-            "modify": {
+            "primary": {
               "type": "alpha",
               "value": "0.12",
               "space": "lch"
@@ -1229,7 +1229,7 @@
       "del-lineNumber": {
         "$extensions": {
           "studio.tokens": {
-            "modify": {
+            "primary": {
               "type": "alpha",
               "value": "0.2",
               "space": "lch"
@@ -1243,7 +1243,7 @@
       "del-content-highlight": {
         "$extensions": {
           "studio.tokens": {
-            "modify": {
+            "primary": {
               "type": "alpha",
               "value": "0.25",
               "space": "lch"
@@ -1277,7 +1277,7 @@
       "hunk-content": {
         "$extensions": {
           "studio.tokens": {
-            "modify": {
+            "primary": {
               "type": "alpha",
               "value": "0.12",
               "space": "lch"
@@ -1291,7 +1291,7 @@
       "hunk-lineNumber": {
         "$extensions": {
           "studio.tokens": {
-            "modify": {
+            "primary": {
               "type": "alpha",
               "value": "0.2",
               "space": "lch"
@@ -1362,7 +1362,7 @@
       "item-hover": {
         "$extensions": {
           "studio.tokens": {
-            "modify": {
+            "primary": {
               "type": "alpha",
               "value": "0.12",
               "space": "lch"
@@ -1376,7 +1376,7 @@
       "item-selected": {
         "$extensions": {
           "studio.tokens": {
-            "modify": {
+            "primary": {
               "type": "alpha",
               "value": "0.18",
               "space": "lch"
@@ -1471,7 +1471,7 @@
         "dotes": {
           "$extensions": {
             "studio.tokens": {
-              "modify": {
+              "primary": {
                 "type": "alpha",
                 "value": "0.6",
                 "space": "lch"
@@ -1509,7 +1509,7 @@
         "hover": {
           "$extensions": {
             "studio.tokens": {
-              "modify": {
+              "primary": {
                 "type": "alpha",
                 "value": "0.12",
                 "space": "lch"
@@ -1523,7 +1523,7 @@
         "selected": {
           "$extensions": {
             "studio.tokens": {
-              "modify": {
+              "primary": {
                 "type": "alpha",
                 "value": "0.18",
                 "space": "lch"
@@ -1645,7 +1645,7 @@
         "progress-stripes": {
           "$extensions": {
             "studio.tokens": {
-              "modify": {
+              "primary": {
                 "type": "alpha",
                 "value": "0.35",
                 "space": "lch"
@@ -1913,7 +1913,7 @@
     "0": {
       "$extensions": {
         "studio.tokens": {
-          "modify": {
+          "primary": {
             "type": "alpha",
             "value": "0",
             "space": "lch"
@@ -1927,7 +1927,7 @@
     "1": {
       "$extensions": {
         "studio.tokens": {
-          "modify": {
+          "primary": {
             "type": "alpha",
             "value": "0.6",
             "space": "lch"
@@ -1941,7 +1941,7 @@
     "2": {
       "$extensions": {
         "studio.tokens": {
-          "modify": {
+          "primary": {
             "type": "alpha",
             "value": "0.6",
             "space": "lch"
@@ -1955,7 +1955,7 @@
     "3": {
       "$extensions": {
         "studio.tokens": {
-          "modify": {
+          "primary": {
             "type": "alpha",
             "value": "0.5",
             "space": "lch"
@@ -1969,7 +1969,7 @@
     "4": {
       "$extensions": {
         "studio.tokens": {
-          "modify": {
+          "primary": {
             "type": "alpha",
             "value": "0.5",
             "space": "lch"
@@ -1983,7 +1983,7 @@
     "5": {
       "$extensions": {
         "studio.tokens": {
-          "modify": {
+          "primary": {
             "type": "alpha",
             "value": "0.5",
             "space": "lch"
@@ -1997,7 +1997,7 @@
     "6": {
       "$extensions": {
         "studio.tokens": {
-          "modify": {
+          "primary": {
             "type": "alpha",
             "value": "0.6",
             "space": "lch"
@@ -2125,7 +2125,7 @@
       "fade-default": {
         "$extensions": {
           "studio.tokens": {
-            "modify": {
+            "primary": {
               "type": "alpha",
               "value": "0",
               "space": "lch"
@@ -2138,7 +2138,7 @@
       "fade-danger": {
         "$extensions": {
           "studio.tokens": {
-            "modify": {
+            "primary": {
               "type": "alpha",
               "value": "0",
               "space": "lch"
@@ -2151,7 +2151,7 @@
       "fade-warning": {
         "$extensions": {
           "studio.tokens": {
-            "modify": {
+            "primary": {
               "type": "alpha",
               "value": "0",
               "space": "lch"
@@ -2164,7 +2164,7 @@
       "fade-success": {
         "$extensions": {
           "studio.tokens": {
-            "modify": {
+            "primary": {
               "type": "alpha",
               "value": "0",
               "space": "lch"
@@ -2196,7 +2196,7 @@
         "to": {
           "$extensions": {
             "studio.tokens": {
-              "modify": {
+              "primary": {
                 "type": "alpha",
                 "value": "0",
                 "space": "lch"
@@ -2217,7 +2217,7 @@
         "gradient-stop-2": {
           "$extensions": {
             "studio.tokens": {
-              "modify": {
+              "primary": {
                 "type": "alpha",
                 "value": "0.4",
                 "space": "lch"
@@ -2307,7 +2307,7 @@
       "fade": {
         "$extensions": {
           "studio.tokens": {
-            "modify": {
+            "primary": {
               "type": "alpha",
               "value": "0",
               "space": "lch"
@@ -2322,7 +2322,7 @@
       "fade": {
         "$extensions": {
           "studio.tokens": {
-            "modify": {
+            "primary": {
               "type": "alpha",
               "value": "0",
               "space": "lch"
@@ -2338,7 +2338,7 @@
         "to": {
           "$extensions": {
             "studio.tokens": {
-              "modify": {
+              "primary": {
                 "type": "alpha",
                 "value": "0",
                 "space": "lch"
@@ -2357,7 +2357,7 @@
         "to": {
           "$extensions": {
             "studio.tokens": {
-              "modify": {
+              "primary": {
                 "type": "alpha",
                 "value": "0",
                 "space": "lch"
@@ -2405,7 +2405,7 @@
           "from": {
             "$extensions": {
               "studio.tokens": {
-                "modify": {
+                "primary": {
                   "type": "alpha",
                   "value": "0.1",
                   "space": "lch"
@@ -2418,7 +2418,7 @@
           "to": {
             "$extensions": {
               "studio.tokens": {
-                "modify": {
+                "primary": {
                   "type": "alpha",
                   "value": "0.01",
                   "space": "lch"
@@ -2516,7 +2516,7 @@
             "from": {
               "$extensions": {
                 "studio.tokens": {
-                  "modify": {
+                  "primary": {
                     "type": "alpha",
                     "value": "0.6",
                     "space": "lch"
@@ -2529,7 +2529,7 @@
             "to": {
               "$extensions": {
                 "studio.tokens": {
-                  "modify": {
+                  "primary": {
                     "type": "alpha",
                     "value": "0",
                     "space": "lch"
@@ -2544,7 +2544,7 @@
             "from": {
               "$extensions": {
                 "studio.tokens": {
-                  "modify": {
+                  "primary": {
                     "type": "alpha",
                     "value": "0.6",
                     "space": "lch"
@@ -2557,7 +2557,7 @@
             "to": {
               "$extensions": {
                 "studio.tokens": {
-                  "modify": {
+                  "primary": {
                     "type": "alpha",
                     "value": "0",
                     "space": "lch"
@@ -2574,7 +2574,7 @@
             "from": {
               "$extensions": {
                 "studio.tokens": {
-                  "modify": {
+                  "primary": {
                     "type": "alpha",
                     "value": "0.06",
                     "space": "lch"
@@ -2587,7 +2587,7 @@
             "to": {
               "$extensions": {
                 "studio.tokens": {
-                  "modify": {
+                  "primary": {
                     "type": "alpha",
                     "value": "0",
                     "space": "lch"
@@ -2602,7 +2602,7 @@
             "from": {
               "$extensions": {
                 "studio.tokens": {
-                  "modify": {
+                  "primary": {
                     "type": "alpha",
                     "value": "0.06",
                     "space": "lch"
@@ -2615,7 +2615,7 @@
             "to": {
               "$extensions": {
                 "studio.tokens": {
-                  "modify": {
+                  "primary": {
                     "type": "alpha",
                     "value": "0",
                     "space": "lch"
@@ -2632,7 +2632,7 @@
             "from": {
               "$extensions": {
                 "studio.tokens": {
-                  "modify": {
+                  "primary": {
                     "type": "alpha",
                     "value": "0.08",
                     "space": "lch"
@@ -2645,7 +2645,7 @@
             "to": {
               "$extensions": {
                 "studio.tokens": {
-                  "modify": {
+                  "primary": {
                     "type": "alpha",
                     "value": "0",
                     "space": "lch"
@@ -2660,7 +2660,7 @@
             "from": {
               "$extensions": {
                 "studio.tokens": {
-                  "modify": {
+                  "primary": {
                     "type": "alpha",
                     "value": "0.08",
                     "space": "lch"
@@ -2673,7 +2673,7 @@
             "to": {
               "$extensions": {
                 "studio.tokens": {
-                  "modify": {
+                  "primary": {
                     "type": "alpha",
                     "value": "0",
                     "space": "lch"
@@ -2690,7 +2690,7 @@
             "from": {
               "$extensions": {
                 "studio.tokens": {
-                  "modify": {
+                  "primary": {
                     "type": "alpha",
                     "value": "0.08",
                     "space": "lch"
@@ -2703,7 +2703,7 @@
             "to": {
               "$extensions": {
                 "studio.tokens": {
-                  "modify": {
+                  "primary": {
                     "type": "alpha",
                     "value": "0",
                     "space": "lch"
@@ -2718,7 +2718,7 @@
             "from": {
               "$extensions": {
                 "studio.tokens": {
-                  "modify": {
+                  "primary": {
                     "type": "alpha",
                     "value": "0.08",
                     "space": "lch"
@@ -2731,7 +2731,7 @@
             "to": {
               "$extensions": {
                 "studio.tokens": {
-                  "modify": {
+                  "primary": {
                     "type": "alpha",
                     "value": "0",
                     "space": "lch"

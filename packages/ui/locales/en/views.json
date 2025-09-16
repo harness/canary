@@ -483,9 +483,9 @@
     "noSecretReferences": "No secret references yet",
     "noSecretReferencesDescription": "There are no references to this secret yet.",
     "noSecrets": "No secrets yet",
-    "createSecret": "Create new secret.",
     "noUsers": "No Users Found",
     "noUsersDescription": "There are no users in this scope. Click on the button below to start adding them.",
+    "createSecret": "Create new secret.",
     "noDelegates": "There are no delegates in this project yet.",
     "noActivities": "No activities yet",
     "noActivitiesDescription": "There are no activities yet. ",
@@ -898,11 +898,11 @@
         "label": "Type"
       }
     },
-    "newSecret": "New Secret",
+    "secretsTitle": "Secrets",
+    "createNew": "Create Secret",
     "edit": "Edit Secret",
     "delete": "Delete Secret",
-    "createNew": "Create Secret",
-    "secretsTitle": "Secrets"
+    "newSecret": "New Secret"
   },
   "secret": {
     "title": "Secret"

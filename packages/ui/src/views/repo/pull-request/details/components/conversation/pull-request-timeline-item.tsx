@@ -10,7 +10,8 @@ import {
   MoreActionsTooltip,
   NodeGroup,
   Text,
-  TextInput
+  TextInput,
+  useCustomDialogTrigger
 } from '@/components'
 import {
   HandleUploadType,
@@ -80,6 +81,12 @@ const ItemHeader: FC<ItemHeaderProps> = memo(
     isReply = false,
     isResolved = false
   }) => {
+    const { triggerRef, registerTrigger } = useCustomDialogTrigger()
+    const handleDeleteCommentWithTrigger = useCallback(() => {
+      registerTrigger()
+      handleDeleteComment?.()
+    }, [handleDeleteComment, registerTrigger])
+
     const actions: Array<{
       title: string
       onClick: () => void
@@ -109,7 +116,7 @@ const ItemHeader: FC<ItemHeaderProps> = memo(
         ? [
             {
               title: `Delete ${isReply ? 'reply' : 'comment'}`,
-              onClick: () => handleDeleteComment?.(),
+              onClick: handleDeleteCommentWithTrigger,
               isDanger: true,
               iconName: 'trash' as const
             }
@@ -147,7 +154,13 @@ const ItemHeader: FC<ItemHeaderProps> = memo(
           </Layout.Horizontal>
         </Text>
         {isComment && !isDeleted && !isResolved && (
-          <MoreActionsTooltip iconName="more-horizontal" sideOffset={4} alignOffset={0} actions={actions} />
+          <MoreActionsTooltip
+            ref={triggerRef}
+            iconName="more-horizontal"
+            sideOffset={4}
+            alignOffset={0}
+            actions={actions}
+          />
         )}
       </Layout.Horizontal>
     )

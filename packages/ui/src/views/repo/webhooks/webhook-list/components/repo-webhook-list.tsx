@@ -1,4 +1,6 @@
-import { Layout, MoreActionsTooltip, StatusBadge, Switch, Table, Text } from '@/components'
+import { useCallback } from 'react'
+
+import { Layout, MoreActionsTooltip, StatusBadge, Switch, Table, Text, useCustomDialogTrigger } from '@/components'
 import { useRouterContext, useTranslation } from '@/context'
 import { WebhookType } from '@/views'
 
@@ -19,6 +21,15 @@ export function RepoWebhookList({
 }: RepoWebhookListProps) {
   const { t } = useTranslation()
   const { navigate } = useRouterContext()
+
+  const { triggerRef, registerTrigger } = useCustomDialogTrigger()
+  const handleDeleteWebhook = useCallback(
+    (webhookId: number) => {
+      registerTrigger()
+      openDeleteWebhookDialog(webhookId)
+    },
+    [openDeleteWebhookDialog, registerTrigger]
+  )
 
   return (
     <>
@@ -59,6 +70,7 @@ export function RepoWebhookList({
 
                 <Table.Cell>
                   <MoreActionsTooltip
+                    ref={triggerRef}
                     iconName="more-horizontal"
                     actions={[
                       {
@@ -70,7 +82,7 @@ export function RepoWebhookList({
                         isDanger: true,
                         iconName: 'trash',
                         title: t('views:webhookData.delete', 'Delete Webhook'),
-                        onClick: () => openDeleteWebhookDialog(webhook.id)
+                        onClick: () => handleDeleteWebhook(webhook.id)
                       }
                     ]}
                   />

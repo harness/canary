@@ -1,6 +1,17 @@
-import { FC, useState } from 'react'
+import { FC, useCallback, useState } from 'react'
 
-import { Button, getScopeType, IconV2, Layout, MoreActionsTooltip, NoData, ScopeTag, Table, Text } from '@/components'
+import {
+  Button,
+  getScopeType,
+  IconV2,
+  Layout,
+  MoreActionsTooltip,
+  NoData,
+  ScopeTag,
+  Table,
+  Text,
+  useCustomDialogTrigger
+} from '@/components'
 import { useTranslation } from '@/context'
 import { cn } from '@/utils'
 import { ILabelType, LabelTag, LabelType, LabelValuesType } from '@/views'
@@ -43,6 +54,15 @@ export const LabelsListView: FC<LabelsListViewProps> = ({
       [key]: !prev[key]
     }))
   }
+
+  const { triggerRef, registerTrigger } = useCustomDialogTrigger()
+  const handleDeleteLabelWithTrigger = useCallback(
+    (labelKey: string) => {
+      registerTrigger()
+      handleDeleteLabel(labelKey)
+    },
+    [handleDeleteLabel, registerTrigger]
+  )
 
   if (!labels.length) {
     if (searchQuery) {
@@ -166,6 +186,7 @@ export const LabelsListView: FC<LabelsListViewProps> = ({
               </Table.Cell>
               <Table.Cell className="align-top">
                 <MoreActionsTooltip
+                  ref={triggerRef}
                   isInTable
                   iconName="more-horizontal"
                   actions={[
@@ -178,7 +199,7 @@ export const LabelsListView: FC<LabelsListViewProps> = ({
                       isDanger: true,
                       title: t('views:labelData.delete', 'Delete label'),
                       iconName: 'trash',
-                      onClick: () => handleDeleteLabel(label.key)
+                      onClick: () => handleDeleteLabelWithTrigger(label.key)
                     }
                   ]}
                 />

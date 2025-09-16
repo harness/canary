@@ -1,5 +1,3 @@
-import { MouseEvent } from 'react'
-
 import {
   Favorite,
   IconV2,
@@ -132,10 +130,7 @@ export function RepoList({
     )
   }
 
-  const handleOnClickRepo = (repo: RepositoryType) => (e: MouseEvent<HTMLAnchorElement>) => {
-    e.preventDefault()
-    e.stopPropagation()
-
+  const handleOnClickRepo = (repo: RepositoryType) => {
     if (repo.importing) return
 
     onClickRepo?.(repo)
@@ -155,9 +150,11 @@ export function RepoList({
               />
             )
           }
-          linkProps={{
-            onClick: e => handleOnClickRepo?.(repo)(e)
-          }}
+          {...(onClickRepo
+            ? {
+                onClick: () => handleOnClickRepo(repo)
+              }
+            : {})}
         >
           <StackedList.Field
             title={

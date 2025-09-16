@@ -113,7 +113,7 @@ const RepoWebhookExecutionsPage: FC<RepoWebhookExecutionsPageProps> = ({
                         </StatusBadge>
                       </Table.Cell>
 
-                      <Table.Cell className="relative" linkProps={{ className: 'justify-end' }}>
+                      <Table.Cell className="relative">
                         <TimeAgoCard timestamp={execution.created ?? Date.now()} />
                       </Table.Cell>
                     </Table.Row>

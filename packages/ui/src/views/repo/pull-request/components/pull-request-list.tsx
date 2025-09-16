@@ -1,4 +1,4 @@
-import { FC, MouseEvent, useMemo } from 'react'
+import { FC, useMemo } from 'react'
 
 import { IconV2, NoData, StackedList } from '@/components'
 import { useTranslation } from '@/context'
@@ -119,11 +119,9 @@ export const PullRequestList: FC<PullRequestListProps> = ({
   /**
    * Prioritize the `toPullRequest` prop if provided, otherwise use the on click handler.
    */
-  const prLinkClickHandler = (e: MouseEvent, pullRequest: PullRequest) => {
+  const prLinkClickHandler = (pullRequest: PullRequest) => {
     if (toPullRequest) return
 
-    e.preventDefault()
-    e.stopPropagation()
     onClickPullRequest?.({
       prNumber: pullRequest.number,
       repo: { name: pullRequest.repo?.identifier || '', path: pullRequest.repo?.path || '' }
@@ -155,14 +153,16 @@ export const PullRequestList: FC<PullRequestListProps> = ({
         <StackedList.Item
           key={`${pullRequest.number}-${pullRequest.repo?.path}`}
           paddingY="sm"
-          to={
-            toPullRequest && pullRequest.number
-              ? (toPullRequest({ prNumber: pullRequest.number, repoId: pullRequest.repo?.identifier }) ?? '')
-              : ''
-          }
-          linkProps={{
-            onClick: e => prLinkClickHandler(e, pullRequest)
-          }}
+          {...(toPullRequest && pullRequest.number
+            ? {
+                to: toPullRequest({ prNumber: pullRequest.number, repoId: pullRequest.repo?.identifier })
+              }
+            : {})}
+          {...(onClickPullRequest
+            ? {
+                onClick: () => prLinkClickHandler(pullRequest)
+              }
+            : {})}
         >
           {!!pullRequest.number && (
             <StackedList.Field

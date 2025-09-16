@@ -1,4 +1,4 @@
-import { FC, MouseEvent, useCallback, useMemo } from 'react'
+import { FC, useCallback, useMemo } from 'react'
 import { Fragment } from 'react/jsx-runtime'
 
 import {
@@ -132,10 +132,7 @@ export const RepoSettingsGeneralRules: FC<RepoSettingsGeneralRulesProps> = ({
     return !!rules?.length || !!rulesSearchQuery?.length
   }, [rulesSearchQuery, rules])
 
-  const handleToProjectRuleDetails = (e: MouseEvent<HTMLAnchorElement>, rule: RuleDataType) => {
-    e.preventDefault()
-    e.stopPropagation()
-
+  const handleToProjectRuleDetails = (rule: RuleDataType) => {
     toProjectRuleDetails?.(rule.identifier ?? '', rule.scope ?? 0)
   }
 
@@ -223,9 +220,7 @@ export const RepoSettingsGeneralRules: FC<RepoSettingsGeneralRulesProps> = ({
               <StackedList.Item
                 key={rule.identifier}
                 className="pr-cn-xs"
-                linkProps={{
-                  onClick: e => handleToProjectRuleDetails(e, rule)
-                }}
+                onClick={() => handleToProjectRuleDetails(rule)}
                 actions={
                   <MoreActionsTooltip
                     ref={triggerRef}

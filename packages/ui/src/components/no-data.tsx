@@ -63,8 +63,8 @@ export const NoData: FC<NoDataProps> = ({
 }) => {
   const { NavLink } = useRouterContext()
 
-  const PrimaryWrapper = primaryButton?.isDialogTrigger ? Dialog.Trigger : Fragment
-  const SecondaryWrapper = secondaryButton?.isDialogTrigger ? Dialog.Trigger : Fragment
+  const PrimaryDialogTrigger = primaryButton?.isDialogTrigger ? Dialog.Trigger : Fragment
+  const SecondaryDialogTrigger = secondaryButton?.isDialogTrigger ? Dialog.Trigger : Fragment
 
   return (
     <Layout.Vertical
@@ -99,12 +99,12 @@ export const NoData: FC<NoDataProps> = ({
                   </NavLink>
                 </Button>
               ) : (
-                <PrimaryWrapper>
+                <PrimaryDialogTrigger>
                   <Button {...toButtonProps(omit(primaryButton, ['label', 'icon']) as ButtonProps)}>
                     {primaryButton.icon && <IconV2 name={primaryButton.icon} size="sm" />}
                     {primaryButton.label}
                   </Button>
-                </PrimaryWrapper>
+                </PrimaryDialogTrigger>
               ))}
             {secondaryButton &&
               (secondaryButton.to ? (
@@ -119,12 +119,12 @@ export const NoData: FC<NoDataProps> = ({
                   </NavLink>
                 </Button>
               ) : (
-                <SecondaryWrapper>
+                <SecondaryDialogTrigger>
                   <Button variant="outline" {...toButtonProps(omit(secondaryButton, ['label', 'icon']) as ButtonProps)}>
                     {secondaryButton.icon && <IconV2 name={secondaryButton.icon} size="sm" />}
                     {secondaryButton.label}
                   </Button>
-                </SecondaryWrapper>
+                </SecondaryDialogTrigger>
               ))}
             {splitButton && (
               <SplitButton<string>

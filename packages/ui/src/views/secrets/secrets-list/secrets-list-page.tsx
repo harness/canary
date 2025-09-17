@@ -1,4 +1,4 @@
-import { FC, useMemo, useRef } from 'react'
+import { FC, useCallback, useMemo, useRef } from 'react'
 
 import { Button, IconV2, Layout, NoData, Pagination, SecretListFilters, Text } from '@/components'
 import { useRouterContext, useTranslation } from '@/context'
@@ -53,6 +53,7 @@ const SecretListPage: FC<SecretListPageProps> = ({
   const onFilterValueChange = (filterValues: SecretListFilters) => {
     // Pass filter values to parent component if onFilterChange is provided
     onFilterChange?.(filterValues)
+    goToPage(1)
   }
 
   const handleResetFiltersQueryAndPages = () => {
@@ -61,6 +62,14 @@ const SecretListPage: FC<SecretListPageProps> = ({
     setSearchQuery('')
     goToPage(1)
   }
+
+  const handleSearch = useCallback(
+    (query: string) => {
+      setSearchQuery(query.length ? query : '')
+      goToPage(1)
+    },
+    [setSearchQuery, goToPage]
+  )
 
   const isDirtyList = useMemo(() => {
     return currentPage !== 1 || !!searchQuery || secretManagerFilterOptions.length === 0
@@ -113,7 +122,7 @@ const SecretListPage: FC<SecretListPageProps> = ({
               }}
               ref={filterRef}
               onFilterValueChange={onFilterValueChange}
-              handleInputChange={(value: string) => setSearchQuery(value)}
+              handleInputChange={handleSearch}
               headerAction={
                 <Button onClick={onCreate}>
                   <IconV2 name="plus" />

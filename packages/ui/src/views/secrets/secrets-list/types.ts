@@ -28,7 +28,7 @@ export interface SecretListProps extends Partial<RoutingProps> {
   onEditSecret: (secret: SecretListItem) => void
   onDeleteSecret: (secretId: string) => void
   handleResetFiltersQueryAndPages?: () => void
-  isDirtyList: boolean
+  isDirtyList?: boolean
   onCreateSecret?: () => void
 }
 

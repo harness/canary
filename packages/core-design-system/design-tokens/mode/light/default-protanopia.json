@@ -44,17 +44,17 @@
     },
     "success": {
       "$type": "color",
-      "$value": "{set.green.secondary.text}",
+      "$value": "{set.success.secondary.text}",
       "$description": "Primary color for text and icons in success content. Communicates positive outcomes and completion states. Using blue instead of green for protanopia visibility.\n\nCommon uses: Success message text, completion text, positive indicators."
     },
     "danger": {
       "$type": "color",
-      "$value": "{set.red.secondary.text}",
+      "$value": "{set.danger.secondary.text}",
       "$description": "Primary color for text and icons in error content. Communicates problems, warnings, and destructive actions.\n\nCommon uses: Error message text, validation text, destructive action labels."
     },
     "warning": {
       "$type": "color",
-      "$value": "{set.yellow.secondary.text}",
+      "$value": "{set.warning.secondary.text}",
       "$description": "Primary color for text and icons in warning content. Communicates caution and potential issues requiring attention.\n\nCommon uses: Warning message text, alert text, important notifications."
     },
     "merged": {
@@ -100,17 +100,17 @@
     },
     "success": {
       "$type": "color",
-      "$value": "{set.green.primary.bg}",
+      "$value": "{set.success.primary.bg}",
       "$description": "Border color for success containers. Reinforces positive status through visual framing. Using blue instead of green for protanopia visibility.\n\nCommon uses: Success alert borders, confirmation boundaries, completed state indicators."
     },
     "danger": {
       "$type": "color",
-      "$value": "{set.red.primary.bg}",
+      "$value": "{set.danger.primary.bg}",
       "$description": "Border color for error containers. Emphasizes critical information through visual framing.\n\nCommon uses: Error alert borders, validation boundaries, destructive action containers."
     },
     "warning": {
       "$type": "color",
-      "$value": "{set.yellow.primary.bg}",
+      "$value": "{set.warning.primary.bg}",
       "$description": "Border color for warning containers. Frames cautionary information with distinct boundary.\n\nCommon uses: Warning alert borders, notice boundaries, attention-requiring elements."
     }
   },
@@ -323,7 +323,7 @@
         }
       }
     },
-    "green": {
+    "success": {
       "primary": {
         "text": {
           "$type": "color",
@@ -386,7 +386,7 @@
         }
       }
     },
-    "red": {
+    "danger": {
       "primary": {
         "text": {
           "$type": "color",
@@ -449,7 +449,7 @@
         }
       }
     },
-    "yellow": {
+    "warning": {
       "primary": {
         "text": {
           "$type": "color",
@@ -1062,15 +1062,15 @@
         },
         "danger": {
           "$type": "color",
-          "$value": "linear-gradient(0deg, {set.red.secondary.bg} 42%, {gradient.alert.fade-danger} 100%)"
+          "$value": "linear-gradient(0deg, {set.danger.secondary.bg} 42%, {gradient.alert.fade-danger} 100%)"
         },
         "warning": {
           "$type": "color",
-          "$value": "linear-gradient(0deg, {set.yellow.secondary.bg} 42%, {gradient.alert.fade-warning} 100%)"
+          "$value": "linear-gradient(0deg, {set.warning.secondary.bg} 42%, {gradient.alert.fade-warning} 100%)"
         },
         "success": {
           "$type": "color",
-          "$value": "linear-gradient(0deg, {set.green.secondary.bg} 42%, {gradient.alert.fade-success} 100%)"
+          "$value": "linear-gradient(0deg, {set.success.secondary.bg} 42%, {gradient.alert.fade-success} 100%)"
         }
       }
     },
@@ -1637,15 +1637,15 @@
         },
         "warning": {
           "$type": "color",
-          "$value": "{set.yellow.primary.bg}"
+          "$value": "{set.warning.primary.bg}"
         },
         "success": {
           "$type": "color",
-          "$value": "{set.green.primary.bg}"
+          "$value": "{set.success.primary.bg}"
         },
         "danger": {
           "$type": "color",
-          "$value": "{set.red.primary.bg}"
+          "$value": "{set.danger.primary.bg}"
         }
       },
       "handle": {
@@ -1997,7 +1997,7 @@
         "y": "0",
         "blur": "0",
         "spread": "4",
-        "color": "{set.red.secondary.bg}",
+        "color": "{set.danger.secondary.bg}",
         "type": "dropShadow"
       }
     },
@@ -2008,7 +2008,7 @@
         "y": "0",
         "blur": "0",
         "spread": "4",
-        "color": "{set.red.secondary.bg-hover}",
+        "color": "{set.danger.secondary.bg-hover}",
         "type": "dropShadow"
       }
     },
@@ -2030,7 +2030,7 @@
         "y": "0",
         "blur": "0",
         "spread": "4",
-        "color": "{set.green.secondary.bg}",
+        "color": "{set.success.secondary.bg}",
         "type": "dropShadow"
       }
     },
@@ -2041,7 +2041,7 @@
         "y": "0",
         "blur": "0",
         "spread": "4",
-        "color": "{set.green.secondary.bg-hover}",
+        "color": "{set.success.secondary.bg-hover}",
         "type": "dropShadow"
       }
     },
@@ -2052,7 +2052,7 @@
         "y": "0",
         "blur": "0",
         "spread": "4",
-        "color": "{set.yellow.secondary.bg}",
+        "color": "{set.warning.secondary.bg}",
         "type": "dropShadow"
       }
     },
@@ -2063,7 +2063,7 @@
         "y": "0",
         "blur": "0",
         "spread": "4",
-        "color": "{set.yellow.secondary.bg-hover}",
+        "color": "{set.warning.secondary.bg-hover}",
         "type": "dropShadow"
       }
     }
@@ -2126,7 +2126,7 @@
           }
         },
         "$type": "color",
-        "$value": "{set.red.secondary.bg}"
+        "$value": "{set.danger.secondary.bg}"
       },
       "fade-warning": {
         "$extensions": {
@@ -2139,7 +2139,7 @@
           }
         },
         "$type": "color",
-        "$value": "{set.yellow.secondary.bg}"
+        "$value": "{set.warning.secondary.bg}"
       },
       "fade-success": {
         "$extensions": {
@@ -2152,7 +2152,7 @@
           }
         },
         "$type": "color",
-        "$value": "{set.green.secondary.bg}"
+        "$value": "{set.success.secondary.bg}"
       }
     },
     "skeleton": {

@@ -2,7 +2,7 @@
   "tree-item": {
     "height": {
       "$type": "sizing",
-      "$value": "{size.9}"
+      "$value": "{size.8}"
     },
     "gap": {
       "$type": "spacing",
@@ -10,15 +10,45 @@
     },
     "py": {
       "$type": "spacing",
-      "$value": "{spacing.2}"
+      "$value": "{spacing.1-half}"
     },
-    "px": {
+    "pr": {
       "$type": "spacing",
-      "$value": "{spacing.1}"
+      "$value": "{spacing.1-half}"
     },
     "radius": {
       "$type": "borderRadius",
       "$value": "{rounded.4}"
+    },
+    "pl": {
+      "0": {
+        "$type": "spacing",
+        "$value": "{tree-item.base-margin-step}*0"
+      },
+      "1": {
+        "$type": "spacing",
+        "$value": "{tree-item.base-margin-step}*1"
+      },
+      "2": {
+        "$type": "spacing",
+        "$value": "{tree-item.base-margin-step}*2"
+      },
+      "3": {
+        "$type": "spacing",
+        "$value": "{tree-item.base-margin-step}*3"
+      },
+      "4": {
+        "$type": "spacing",
+        "$value": "{tree-item.base-margin-step}*4"
+      },
+      "5": {
+        "$type": "spacing",
+        "$value": "{tree-item.base-margin-step}*5"
+      }
+    },
+    "base-margin-step": {
+      "$type": "spacing",
+      "$value": "{spacing.6}"
     }
   }
 }

@@ -1,6 +1,7 @@
-import { useCallback } from 'react'
+import { useCallback, useRef } from 'react'
 
 import { Checkbox, IconV2, Layout, SearchInput, Skeleton, StackedList } from '@/components'
+import { afterFrames } from '@utils/after-frames'
 import { cn } from '@utils/cn'
 
 import { EntityReferenceFilter } from './components/entity-reference-filter'
@@ -35,9 +36,6 @@ export interface CommonEntityReferenceProps<T extends BaseEntityProps, S = strin
   // Custom renderers
   renderEntity?: (props: EntityRendererProps<T>) => React.ReactNode
   isLoading?: boolean
-
-  // Error
-  apiError?: string | null
 
   // Search
   searchValue?: string
@@ -87,9 +85,6 @@ export function EntityReference<T extends BaseEntityProps, S = string, F = strin
   renderEntity,
   isLoading = false,
 
-  // Error
-  apiError,
-
   // Search
   searchValue = '',
   handleChangeSearchValue,
@@ -97,6 +92,8 @@ export function EntityReference<T extends BaseEntityProps, S = string, F = strin
   // Custom entity comparison
   compareFn
 }: EntityReferenceProps<T, S, F>): JSX.Element {
+  const inputRef = useRef<HTMLInputElement>(null)
+
   const handleSelectEntity = useCallback(
     (entity: T) => {
       if (enableMultiSelect) {
@@ -120,6 +117,7 @@ export function EntityReference<T extends BaseEntityProps, S = string, F = strin
   const handleScopeChange = useCallback(
     (direction: DirectionEnum) => {
       onScopeChange?.(direction)
+      afterFrames(() => inputRef.current?.focus())
     },
     [onScopeChange]
   )
@@ -127,7 +125,7 @@ export function EntityReference<T extends BaseEntityProps, S = string, F = strin
   const defaultEntityRenderer = ({ entity, isSelected, onSelect, showCheckbox }: EntityRendererProps<T>) => {
     return (
       <StackedList.Item
-        className={cn({ 'bg-cn-selected': isSelected })}
+        className={cn({ 'bg-cn-selected first:!rounded-none min-h-12': isSelected })}
         paddingY="xs"
         onClick={() => onSelect?.(entity)}
         thumbnail={showCheckbox ? <Checkbox checked={isSelected} onCheckedChange={() => onSelect?.(entity)} /> : null}
@@ -142,7 +140,7 @@ export function EntityReference<T extends BaseEntityProps, S = string, F = strin
     return (
       <StackedList.Item
         paddingY="xs"
-        className="gap-x-cn-xs"
+        className="gap-x-cn-xs min-h-12 first:!rounded-none"
         onClick={() => onSelect?.(parentFolder)}
         thumbnail={<IconV2 name="folder" size="md" className="text-cn-2" />}
       >
@@ -156,7 +154,7 @@ export function EntityReference<T extends BaseEntityProps, S = string, F = strin
     return (
       <StackedList.Item
         paddingY="xs"
-        className="gap-x-cn-xs"
+        className="gap-x-cn-xs min-h-12 first:!rounded-none"
         onClick={() => onSelect?.(folder)}
         thumbnail={<IconV2 name="folder" size="md" className="text-cn-2" />}
       >
@@ -171,11 +169,13 @@ export function EntityReference<T extends BaseEntityProps, S = string, F = strin
         {showFilter && (
           <Layout.Horizontal gapX="sm">
             <SearchInput
+              ref={inputRef}
               width="full"
               className={cn({ 'max-w-96': filterTypes })}
-              value={searchValue}
+              defaultValue={searchValue}
               onChange={handleChangeSearchValue}
               placeholder="Search"
+              autoFocus
             />
             {filterTypes && (
               <EntityReferenceFilter onFilterChange={onFilterChange} filterTypes={filterTypes} defaultValue={'all'} />
@@ -198,7 +198,6 @@ export function EntityReference<T extends BaseEntityProps, S = string, F = strin
             defaultEntityRenderer={defaultEntityRenderer}
             parentFolderRenderer={parentFolderRenderer}
             childFolderRenderer={childFolderRenderer}
-            apiError={apiError}
             showBreadcrumbEllipsis={showBreadcrumbEllipsis}
             enableMultiSelect={enableMultiSelect}
             compareFn={compareFn}

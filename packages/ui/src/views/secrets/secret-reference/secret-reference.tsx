@@ -8,7 +8,6 @@ export interface SecretReferenceProps {
   childFolder: string | null
   parentFolder: string | null
   currentFolder: string | null
-  apiError?: string | null
 
   // State
   selectedEntity: SecretItem | null
@@ -35,7 +34,6 @@ export const SecretReference: React.FC<SecretReferenceProps> = ({
   childFolder,
   parentFolder,
   currentFolder,
-  apiError,
 
   // State
   selectedEntity,
@@ -84,7 +82,6 @@ export const SecretReference: React.FC<SecretReferenceProps> = ({
         childFolder={childFolder}
         isLoading={isLoading}
         currentFolder={currentFolder}
-        apiError={apiError}
         showBreadcrumbEllipsis={showBreadcrumbEllipsis}
         filterTypes={secretsFilterTypes}
         onFilterChange={onFilterChange}

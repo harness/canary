@@ -1,6 +1,6 @@
 {
   "name": "@harnessio/forms",
-  "version": "0.1.1",
+  "version": "0.1.2",
   "description": "Harness Forms Library",
   "scripts": {
     "playground": "vite dev --config vite.config.playground.ts",

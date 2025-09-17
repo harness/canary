@@ -24,7 +24,6 @@ export interface EntityReferenceListProps<T extends BaseEntityProps, S = string,
   defaultEntityRenderer: (props: EntityRendererProps<T>) => React.ReactNode
   parentFolderRenderer: (props: ParentFolderRendererProps<S>) => React.ReactNode
   childFolderRenderer: (props: ChildFolderRendererProps<F>) => React.ReactNode
-  apiError?: string | null
   showBreadcrumbEllipsis?: boolean
   enableMultiSelect?: boolean
   compareFn?: (entity1: T, entity2: T) => boolean
@@ -43,7 +42,6 @@ export function EntityReferenceList<T extends BaseEntityProps, S = string, F = s
   defaultEntityRenderer,
   parentFolderRenderer,
   childFolderRenderer,
-  apiError,
   showBreadcrumbEllipsis = false,
   enableMultiSelect = false,
   compareFn
@@ -63,7 +61,13 @@ export function EntityReferenceList<T extends BaseEntityProps, S = string, F = s
             {!!parentFolder && (
               <>
                 <Breadcrumb.Item className="text-cn-3 hover:!text-cn-1">
-                  <Breadcrumb.Link onClick={() => handleScopeChange(DirectionEnum.PARENT)} href="#">
+                  <Breadcrumb.Link
+                    onClick={e => {
+                      e.preventDefault()
+                      handleScopeChange(DirectionEnum.PARENT)
+                    }}
+                    href="#"
+                  >
                     {parentFolder}
                   </Breadcrumb.Link>
                 </Breadcrumb.Item>
@@ -116,8 +120,8 @@ export function EntityReferenceList<T extends BaseEntityProps, S = string, F = s
             })}
           </>
         ) : (
-          <StackedList.Item>
-            <StackedList.Field title={apiError || 'No entities found'} />
+          <StackedList.Item disableHover>
+            <StackedList.Field title="No entities found" titleColor="foreground-3" />
           </StackedList.Item>
         )}
       </ScrollArea>

@@ -160,7 +160,6 @@ export const SecretsPage = ({
             onCancel={handleCancel}
             showBreadcrumbEllipsis={activeScope === ScopeEnum.PROJECT}
             isLoading={false}
-            apiError="Could not fetch secrets, unauthorized"
             searchValue={search}
             handleChangeSearchValue={setSearch}
             isDrawer

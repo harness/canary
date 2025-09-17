@@ -2,7 +2,7 @@ import { ComponentPropsWithoutRef, ElementRef, forwardRef, useRef } from 'react'
 
 import { Button, IconV2 } from '@/components'
 import { usePortal } from '@/context'
-import { cn } from '@/utils'
+import { cn, useMergeRefs } from '@/utils'
 import { cva, VariantProps } from 'class-variance-authority'
 import { Drawer as DrawerPrimitive } from 'vaul'
 
@@ -52,11 +52,12 @@ export const DrawerContent = forwardRef<ElementRef<typeof DrawerPrimitive.Conten
       onOpenAutoFocus,
       ...props
     },
-    ref
+    _ref
   ) => {
-    const triggerRef = useRef<HTMLButtonElement>(null)
+    const contentRef = useRef<HTMLDivElement>(null)
     const { portalContainer } = usePortal()
     const { direction, modal } = useDrawerContext()
+    const ref = useMergeRefs([_ref, contentRef])
 
     const withCustomOverlay = forceWithOverlay && modal === false
 
@@ -71,11 +72,10 @@ export const DrawerContent = forwardRef<ElementRef<typeof DrawerPrimitive.Conten
         onOpenAutoFocus={e => {
           e.preventDefault()
           onOpenAutoFocus?.(e)
-          if (!triggerRef.current || onOpenAutoFocus) return
-          triggerRef.current.focus()
+          if (!contentRef.current || onOpenAutoFocus) return
+          contentRef.current.focus()
         }}
       >
-        <button className="sr-only" ref={triggerRef} aria-hidden="true" tabIndex={-1} />
         {!hideClose && (
           <DrawerPrimitive.Close asChild>
             <Button className="cn-drawer-close-button" variant="transparent" iconOnly ignoreIconOnlyTooltip>

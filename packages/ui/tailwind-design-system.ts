@@ -97,10 +97,15 @@ export default {
 
         // Brand colors
         'cn-brand': {
-          DEFAULT: 'lch(from var(--cn-set-brand-solid-bg) l c h / <alpha-value>)',
-          hover: 'lch(from var(--cn-set-brand-solid-bg-hover) l c h / <alpha-value>)',
-          selected: 'lch(from var(--cn-set-brand-solid-bg-selected) l c h / <alpha-value>)',
-          surface: 'lch(from var(--cn-set-brand-surface-bg) l c h / <alpha-value>)'
+          primary: 'lch(from var(--cn-set-brand-primary-bg) l c h / <alpha-value>)',
+          'primary-hover': 'lch(from var(--cn-set-brand-primary-bg-hover) l c h / <alpha-value>)',
+          'primary-selected': 'lch(from var(--cn-set-brand-primary-bg-selected) l c h / <alpha-value>)',
+          secondary: 'lch(from var(--cn-set-brand-secondary-bg) l c h / <alpha-value>)',
+          'secondary-hover': 'lch(from var(--cn-set-brand-secondary-bg-hover) l c h / <alpha-value>)',
+          'secondary-selected': 'lch(from var(--cn-set-brand-secondary-bg-selected) l c h / <alpha-value>)',
+          outline: 'lch(from var(--cn-set-brand-outline-bg) l c h / <alpha-value>)',
+          'outline-hover': 'lch(from var(--cn-set-brand-outline-bg-hover) l c h / <alpha-value>)',
+          'outline-selected': 'lch(from var(--cn-set-brand-outline-bg-selected) l c h / <alpha-value>)'
         },
 
         'cn-input': 'var(--cn-comp-input-bg)',
@@ -118,82 +123,82 @@ export default {
          * These colors should be used along with their text pairs
          *
          * Example:
-         * ✅ .text-cn-green-solid + .bg-cn-green-solid
-         * ✅ .text-cn-green-soft + .bg-cn-green-soft
-         * ✅ .text-cn-green-surface + .bg-cn-green-surface + .border-cn-green-surface
+         * ✅ .text-cn-success-primary + .bg-cn-success-primary
+         * ✅ .text-cn-success-secondary + .bg-cn-success-secondary
+         * ✅ .text-cn-success-outline + .bg-cn-success-outline + .border-cn-success-outline
          *
-         * ❌ .text-cn-green-solid + .bg-cn-green-soft
-         * ❌ .text-cn-green-solid + .bg-cn-green-surface
+         * ❌ .text-cn-success-primary + .bg-cn-success-secondary
+         * ❌ .text-cn-success-primary + .bg-cn-success-outline
          */
-        'cn-green': {
-          solid: 'var(--cn-set-green-solid-bg)',
-          soft: 'var(--cn-set-green-soft-bg)',
-          surface: 'var(--cn-set-green-surface-bg)'
+        'cn-success': {
+          primary: 'var(--cn-set-success-primary-bg)',
+          secondary: 'var(--cn-set-success-secondary-bg)',
+          outline: 'var(--cn-set-success-outline-bg)'
         },
         'cn-gray': {
-          solid: 'var(--cn-set-gray-solid-bg)',
-          soft: 'lch(from var(--cn-set-gray-soft-bg) l c h / <alpha-value>)',
-          surface: 'var(--cn-set-gray-surface-bg)'
+          primary: 'var(--cn-set-gray-primary-bg)',
+          secondary: 'lch(from var(--cn-set-gray-secondary-bg) l c h / <alpha-value>)',
+          outline: 'var(--cn-set-gray-outline-bg)'
         },
-        'cn-red': {
-          solid: 'var(--cn-set-red-solid-bg)',
-          soft: 'var(--cn-set-red-soft-bg)',
-          surface: 'var(--cn-set-red-surface-bg)'
+        'cn-danger': {
+          primary: 'var(--cn-set-danger-primary-bg)',
+          secondary: 'var(--cn-set-danger-secondary-bg)',
+          outline: 'var(--cn-set-danger-outline-bg)'
         },
-        'cn-yellow': {
-          solid: 'var(--cn-set-yellow-solid-bg)',
-          soft: 'var(--cn-set-yellow-soft-bg)',
-          surface: 'var(--cn-set-yellow-surface-bg)'
+        'cn-warning': {
+          primary: 'var(--cn-set-warning-primary-bg)',
+          secondary: 'var(--cn-set-warning-secondary-bg)',
+          outline: 'var(--cn-set-warning-outline-bg)'
         },
         'cn-blue': {
-          solid: 'var(--cn-set-blue-solid-bg)',
-          soft: 'var(--cn-set-blue-soft-bg)',
-          surface: 'var(--cn-set-blue-surface-bg)'
+          primary: 'var(--cn-set-blue-primary-bg)',
+          secondary: 'var(--cn-set-blue-secondary-bg)',
+          outline: 'var(--cn-set-blue-outline-bg)'
         },
         'cn-purple': {
-          solid: 'var(--cn-set-purple-solid-bg)',
-          soft: 'var(--cn-set-purple-soft-bg)',
-          surface: 'var(--cn-set-purple-surface-bg)'
+          primary: 'var(--cn-set-purple-primary-bg)',
+          secondary: 'var(--cn-set-purple-secondary-bg)',
+          outline: 'var(--cn-set-purple-outline-bg)'
         },
         'cn-brown': {
-          solid: 'var(--cn-set-brown-solid-bg)',
-          soft: 'var(--cn-set-brown-soft-bg)',
-          surface: 'var(--cn-set-brown-surface-bg)'
+          primary: 'var(--cn-set-brown-primary-bg)',
+          secondary: 'var(--cn-set-brown-secondary-bg)',
+          outline: 'var(--cn-set-brown-outline-bg)'
         },
         'cn-cyan': {
-          solid: 'var(--cn-set-cyan-solid-bg)',
-          soft: 'var(--cn-set-cyan-soft-bg)',
-          surface: 'var(--cn-set-cyan-surface-bg)'
+          primary: 'var(--cn-set-cyan-primary-bg)',
+          secondary: 'var(--cn-set-cyan-secondary-bg)',
+          outline: 'var(--cn-set-cyan-outline-bg)'
         },
         'cn-indigo': {
-          solid: 'var(--cn-set-indigo-solid-bg)',
-          soft: 'var(--cn-set-indigo-soft-bg)',
-          surface: 'var(--cn-set-indigo-surface-bg)'
+          primary: 'var(--cn-set-indigo-primary-bg)',
+          secondary: 'var(--cn-set-indigo-secondary-bg)',
+          outline: 'var(--cn-set-indigo-outline-bg)'
         },
         'cn-lime': {
-          solid: 'var(--cn-set-lime-solid-bg)',
-          soft: 'var(--cn-set-lime-soft-bg)',
-          surface: 'var(--cn-set-lime-surface-bg)'
+          primary: 'var(--cn-set-lime-primary-bg)',
+          secondary: 'var(--cn-set-lime-secondary-bg)',
+          outline: 'var(--cn-set-lime-outline-bg)'
         },
         'cn-mint': {
-          solid: 'var(--cn-set-mint-solid-bg)',
-          soft: 'var(--cn-set-mint-soft-bg)',
-          surface: 'var(--cn-set-mint-surface-bg)'
+          primary: 'var(--cn-set-mint-primary-bg)',
+          secondary: 'var(--cn-set-mint-secondary-bg)',
+          outline: 'var(--cn-set-mint-outline-bg)'
         },
         'cn-orange': {
-          solid: 'var(--cn-set-orange-solid-bg)',
-          soft: 'var(--cn-set-orange-soft-bg)',
-          surface: 'var(--cn-set-orange-surface-bg)'
+          primary: 'var(--cn-set-orange-primary-bg)',
+          secondary: 'var(--cn-set-orange-secondary-bg)',
+          outline: 'var(--cn-set-orange-outline-bg)'
         },
         'cn-pink': {
-          solid: 'var(--cn-set-pink-solid-bg)',
-          soft: 'var(--cn-set-pink-soft-bg)',
-          surface: 'var(--cn-set-pink-surface-bg)'
+          primary: 'var(--cn-set-pink-primary-bg)',
+          secondary: 'var(--cn-set-pink-secondary-bg)',
+          outline: 'var(--cn-set-pink-outline-bg)'
         },
         'cn-violet': {
-          solid: 'var(--cn-set-violet-solid-bg)',
-          soft: 'var(--cn-set-violet-soft-bg)',
-          surface: 'var(--cn-set-violet-surface-bg)'
+          primary: 'var(--cn-set-violet-primary-bg)',
+          secondary: 'var(--cn-set-violet-secondary-bg)',
+          outline: 'var(--cn-set-violet-outline-bg)'
         }
       },
       textColor: {
@@ -204,9 +209,6 @@ export default {
         'cn-3': 'lch(from var(--cn-text-3) l c h / <alpha-value>)',
 
         // status
-        'cn-success': 'var(--cn-text-success)',
-        'cn-danger': 'var(--cn-text-danger)',
-        'cn-warning': 'var(--cn-text-warning)',
         'cn-merged': 'var(--cn-text-merged)',
         'cn-disabled': 'var(--cn-text-disabled)',
 
@@ -220,93 +222,96 @@ export default {
 
         // use only for icons
         'cn-icon': {
-          danger: 'var(--cn-set-red-solid-bg)',
-          warning: 'var(--cn-set-yellow-solid-bg)',
-          success: 'var(--cn-set-green-solid-bg)',
-          info: 'var(--cn-set-blue-solid-bg)',
-          merged: 'var(--cn-set-purple-solid-bg)'
+          danger: 'var(--cn-set-danger-primary-bg)',
+          warning: 'var(--cn-set-warning-primary-bg)',
+          success: 'var(--cn-set-success-primary-bg)',
+          info: 'var(--cn-set-blue-primary-bg)',
+          merged: 'var(--cn-set-purple-primary-bg)'
         },
 
         /**
          * These colors should be used along with their bg pairs
          *
          * Example:
-         * ✅ .text-cn-green-solid + .bg-cn-green-solid
-         * ✅ .text-cn-green-soft + .bg-cn-green-soft
-         * ✅ .text-cn-green-surface + .bg-cn-green-surface + .border-cn-green-surface
+         * ✅ .text-cn-success-primary + .bg-cn-success-primary
+         * ✅ .text-cn-success-secondary + .bg-cn-success-secondary
+         * ✅ .text-cn-success-outline + .bg-cn-success-outline + .border-cn-success-outline
          *
-         * ❌ .text-cn-green-solid + .bg-cn-green-soft
-         * ❌ .text-cn-green-solid + .bg-cn-green-surface
+         * ❌ .text-cn-success-primary + .bg-cn-success-secondary
+         * ❌ .text-cn-success-primary + .bg-cn-success-outline
          */
-        'cn-green': {
-          solid: 'var(--cn-set-green-solid-text)',
-          soft: 'var(--cn-set-green-soft-text)',
-          surface: 'var(--cn-set-green-surface-text)'
+        'cn-success': {
+          DEFAULT: 'var(--cn-text-success)',
+          primary: 'var(--cn-set-success-primary-text)',
+          secondary: 'var(--cn-set-success-secondary-text)',
+          outline: 'var(--cn-set-success-outline-text)'
         },
         'cn-gray': {
-          solid: 'var(--cn-set-gray-solid-text)',
-          soft: 'var(--cn-set-gray-soft-text)',
-          surface: 'var(--cn-set-gray-surface-text)'
+          primary: 'var(--cn-set-gray-primary-text)',
+          secondary: 'var(--cn-set-gray-secondary-text)',
+          outline: 'var(--cn-set-gray-outline-text)'
         },
-        'cn-red': {
-          solid: 'var(--cn-set-red-solid-text)',
-          soft: 'var(--cn-set-red-soft-text)',
-          surface: 'var(--cn-set-red-surface-text)'
+        'cn-danger': {
+          DEFAULT: 'var(--cn-text-danger)',
+          primary: 'var(--cn-set-danger-primary-text)',
+          secondary: 'var(--cn-set-danger-secondary-text)',
+          outline: 'var(--cn-set-danger-outline-text)'
         },
-        'cn-yellow': {
-          solid: 'var(--cn-set-yellow-solid-text)',
-          soft: 'var(--cn-set-yellow-soft-text)',
-          surface: 'var(--cn-set-yellow-surface-text)'
+        'cn-warning': {
+          DEFAULT: 'var(--cn-text-warning)',
+          primary: 'var(--cn-set-warning-primary-text)',
+          secondary: 'var(--cn-set-warning-secondary-text)',
+          outline: 'var(--cn-set-warning-outline-text)'
         },
         'cn-blue': {
-          solid: 'var(--cn-set-blue-solid-text)',
-          soft: 'var(--cn-set-blue-soft-text)',
-          surface: 'var(--cn-set-blue-surface-text)'
+          primary: 'var(--cn-set-blue-primary-text)',
+          secondary: 'var(--cn-set-blue-secondary-text)',
+          outline: 'var(--cn-set-blue-outline-text)'
         },
         'cn-purple': {
-          solid: 'var(--cn-set-purple-solid-text)',
-          soft: 'var(--cn-set-purple-soft-text)',
-          surface: 'var(--cn-set-purple-surface-text)'
+          primary: 'var(--cn-set-purple-primary-text)',
+          secondary: 'var(--cn-set-purple-secondary-text)',
+          outline: 'var(--cn-set-purple-outline-text)'
         },
         'cn-brown': {
-          solid: 'var(--cn-set-brown-solid-text)',
-          soft: 'var(--cn-set-brown-soft-text)',
-          surface: 'var(--cn-set-brown-surface-text)'
+          primary: 'var(--cn-set-brown-primary-text)',
+          secondary: 'var(--cn-set-brown-secondary-text)',
+          outline: 'var(--cn-set-brown-outline-text)'
         },
         'cn-cyan': {
-          solid: 'var(--cn-set-cyan-solid-text)',
-          soft: 'var(--cn-set-cyan-soft-text)',
-          surface: 'var(--cn-set-cyan-surface-text)'
+          primary: 'var(--cn-set-cyan-primary-text)',
+          secondary: 'var(--cn-set-cyan-secondary-text)',
+          outline: 'var(--cn-set-cyan-outline-text)'
         },
         'cn-indigo': {
-          solid: 'var(--cn-set-indigo-solid-text)',
-          soft: 'var(--cn-set-indigo-soft-text)',
-          surface: 'var(--cn-set-indigo-surface-text)'
+          primary: 'var(--cn-set-indigo-primary-text)',
+          secondary: 'var(--cn-set-indigo-secondary-text)',
+          outline: 'var(--cn-set-indigo-outline-text)'
         },
         'cn-lime': {
-          solid: 'var(--cn-set-lime-solid-text)',
-          soft: 'var(--cn-set-lime-soft-text)',
-          surface: 'var(--cn-set-lime-surface-text)'
+          primary: 'var(--cn-set-lime-primary-text)',
+          secondary: 'var(--cn-set-lime-secondary-text)',
+          outline: 'var(--cn-set-lime-outline-text)'
         },
         'cn-mint': {
-          solid: 'var(--cn-set-mint-solid-text)',
-          soft: 'var(--cn-set-mint-soft-text)',
-          surface: 'var(--cn-set-mint-surface-text)'
+          primary: 'var(--cn-set-mint-primary-text)',
+          secondary: 'var(--cn-set-mint-secondary-text)',
+          outline: 'var(--cn-set-mint-outline-text)'
         },
         'cn-orange': {
-          solid: 'var(--cn-set-orange-solid-text)',
-          soft: 'var(--cn-set-orange-soft-text)',
-          surface: 'var(--cn-set-orange-surface-text)'
+          primary: 'var(--cn-set-orange-primary-text)',
+          secondary: 'var(--cn-set-orange-secondary-text)',
+          outline: 'var(--cn-set-orange-outline-text)'
         },
         'cn-pink': {
-          solid: 'var(--cn-set-pink-solid-text)',
-          soft: 'var(--cn-set-pink-soft-text)',
-          surface: 'var(--cn-set-pink-surface-text)'
+          primary: 'var(--cn-set-pink-primary-text)',
+          secondary: 'var(--cn-set-pink-secondary-text)',
+          outline: 'var(--cn-set-pink-outline-text)'
         },
         'cn-violet': {
-          solid: 'var(--cn-set-violet-solid-text)',
-          soft: 'var(--cn-set-violet-soft-text)',
-          surface: 'var(--cn-set-violet-surface-text)'
+          primary: 'var(--cn-set-violet-primary-text)',
+          secondary: 'var(--cn-set-violet-secondary-text)',
+          outline: 'var(--cn-set-violet-outline-text)'
         }
       },
       borderColor: {
@@ -322,60 +327,60 @@ export default {
         'cn-disabled': 'lch(from var(--cn-state-disabled-border) l c h / <alpha-value>)',
 
         // status borders
-        'cn-warning': 'var(--cn-border-warning)',
-        'cn-danger': 'var(--cn-border-danger)',
-        'cn-success': 'var(--cn-border-success)',
         'cn-brand': 'var(--cn-border-brand)',
 
         /**
-         * These colors should be used along with their text and bg surface pairs
+         * These colors should be used along with their text and bg outline pairs
          *
          * Example:
-         * ✅ .text-cn-green-surface + .bg-cn-green-surface + .border-cn-green-surface
+         * ✅ .text-cn-success-outline + .bg-cn-success-outline + .border-cn-success-outline
          *
-         * ❌ .text-cn-green-surface + .bg-cn-green-surface + .border-cn-red-surface
+         * ❌ .text-cn-success-outline + .bg-cn-success-outline + .border-cn-danger-outline
          */
-        'cn-green': {
-          surface: 'var(--cn-set-green-surface-border)'
+        'cn-success': {
+          DEFAULT: 'var(--cn-border-success)',
+          outline: 'var(--cn-set-success-outline-border)'
         },
         'cn-gray': {
-          surface: 'var(--cn-set-gray-surface-border)'
+          outline: 'var(--cn-set-gray-outline-border)'
         },
-        'cn-red': {
-          surface: 'var(--cn-set-red-surface-border)'
+        'cn-danger': {
+          DEFAULT: 'var(--cn-border-danger)',
+          outline: 'var(--cn-set-danger-outline-border)'
         },
-        'cn-yellow': {
-          surface: 'var(--cn-set-yellow-surface-border)'
+        'cn-warning': {
+          DEFAULT: 'var(--cn-border-warning)',
+          outline: 'var(--cn-set-warning-outline-border)'
         },
         'cn-blue': {
-          surface: 'var(--cn-set-blue-surface-border)'
+          outline: 'var(--cn-set-blue-outline-border)'
         },
         'cn-purple': {
-          surface: 'var(--cn-set-purple-surface-border)'
+          outline: 'var(--cn-set-purple-outline-border)'
         },
         'cn-brown': {
-          surface: 'var(--cn-set-brown-surface-border)'
+          outline: 'var(--cn-set-brown-outline-border)'
         },
         'cn-cyan': {
-          surface: 'var(--cn-set-cyan-surface-border)'
+          outline: 'var(--cn-set-cyan-outline-border)'
         },
         'cn-indigo': {
-          surface: 'var(--cn-set-indigo-surface-border)'
+          outline: 'var(--cn-set-indigo-outline-border)'
         },
         'cn-lime': {
-          surface: 'var(--cn-set-lime-surface-border)'
+          outline: 'var(--cn-set-lime-outline-border)'
         },
         'cn-mint': {
-          surface: 'var(--cn-set-mint-surface-border)'
+          outline: 'var(--cn-set-mint-outline-border)'
         },
         'cn-orange': {
-          surface: 'var(--cn-set-orange-surface-border)'
+          outline: 'var(--cn-set-orange-outline-border)'
         },
         'cn-pink': {
-          surface: 'var(--cn-set-pink-surface-border)'
+          outline: 'var(--cn-set-pink-outline-border)'
         },
         'cn-violet': {
-          surface: 'var(--cn-set-violet-surface-border)'
+          outline: 'var(--cn-set-violet-outline-border)'
         }
       },
       outlineOffset: {
@@ -438,7 +443,7 @@ export default {
 
         // 👉 Check this and remove it
         'commit-list-bullet':
-          '0px 0px 3px 0.5px hsla(var(--cn-set-brand-solid-bg) / 0.2), 0px 0px 8px 1px hsla(var(--cn-set-brand-solid-bg) / 0.3)'
+          '0px 0px 3px 0.5px hsla(var(--cn-set-brand-primary-bg) / 0.2), 0px 0px 8px 1px hsla(var(--cn-set-brand-primary-bg) / 0.3)'
       },
       // Remove borderColor - removing the Default is causing border issues in dark mode
 

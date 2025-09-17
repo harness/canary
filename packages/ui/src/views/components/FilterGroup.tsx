@@ -122,7 +122,7 @@ const FilterGroupInner = <
             <ListActions.Left>
               <SearchInput
                 width="full"
-                inputContainerClassName="max-w-[360px]"
+                inputContainerClassName="max-w-80"
                 ref={searchRef}
                 defaultValue={searchValue || ''}
                 onChange={handleInputChange}

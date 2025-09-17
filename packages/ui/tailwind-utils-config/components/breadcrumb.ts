@@ -20,12 +20,12 @@ export default {
 
   '.cn-breadcrumb-sm': {
     gap: 'var(--cn-spacing-0)',
-    '@apply font-caption-soft': '',
+    '@apply font-caption-light': '',
     '& .cn-breadcrumb-item': {
       height: 'var(--cn-size-4-half)'
     },
     '& .cn-breadcrumb-item:last-child, & .cn-breadcrumb-page:last-child': {
-      '@apply font-caption-soft': '',
+      '@apply font-caption-light': '',
       borderRadius: 'var(--cn-size-5)',
       color: 'var(--cn-set-brand-solid-bg)'
     }

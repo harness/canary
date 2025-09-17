@@ -16,7 +16,7 @@ function createInputThemeStyles() {
         boxShadow: `var(--cn-ring-${theme}-hover)`
       },
 
-      '&:where(:focus)': {
+      '&:where(:focus-visible)': {
         borderColor: `var(--cn-border-${theme})`,
         boxShadow: `var(--cn-ring-${theme})`
       }
@@ -46,32 +46,29 @@ export default {
     resize: 'none',
 
     '&:focus-visible': {
-      outline: 'none'
+      borderColor: 'var(--cn-border-brand)',
+      boxShadow: 'var(--cn-ring-selected)',
+
+      // Adding !important to override global :focus-visible
+      outline: 'none !important'
     },
 
     '&::placeholder': {
-      color: 'var(--cn-state-disabled-text)'
-    },
-
-    '&:where(:focus)': {
-      borderColor: 'var(--cn-border-brand)',
-      boxShadow: 'var(--cn-ring-selected)',
-      outline: 'none'
+      color: 'var(--cn-text-disabled)',
+      '@apply font-body-light': ''
     },
 
     '&:where(:disabled)': {
-      backgroundColor: 'var(--cn-state-disabled-bg)',
-      borderColor: 'var(--cn-state-disabled-border)',
-      color: 'var(--cn-state-disabled-text)',
+      '@apply opacity-cn-disabled': '',
       cursor: 'not-allowed',
 
       '&::placeholder': {
-        color: 'var(--cn-state-disabled-text)'
+        color: 'var(--cn-text-disabled)'
       }
     },
 
     '&:where(:readonly)': {
-      backgroundColor: 'var(--cn-state-disabled-bg)',
+      backgroundColor: 'var(--cn-bg-2)',
       borderColor: 'var(--cn-state-disabled-border)'
     },
 
@@ -104,7 +101,7 @@ export default {
       },
 
       '&:where(.cn-textarea-counter-disabled)': {
-        color: 'var(--cn-state-disabled-text)'
+        '@apply opacity-cn-disabled': ''
       }
     }
   }

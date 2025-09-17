@@ -1,4 +1,4 @@
-import { FC } from 'react'
+import { FC, useCallback } from 'react'
 
 import {
   ActionData,
@@ -12,7 +12,8 @@ import {
   Skeleton,
   Table,
   Text,
-  TimeAgoCard
+  TimeAgoCard,
+  useCustomDialogTrigger
 } from '@/components'
 import { useTranslation } from '@/context'
 import { BranchSelectorListItem, CommitTagType, RepoTagsStore } from '@/views'
@@ -41,11 +42,29 @@ export const RepoTagsList: FC<RepoTagsListProps> = ({
   const { t } = useTranslation()
   const { tags: tagsList } = useRepoTagsStore()
 
+  const { triggerRef, registerTrigger } = useCustomDialogTrigger()
+
+  const handleDeleteTag = useCallback(
+    (tagName: string) => {
+      registerTrigger()
+      onDeleteTag(tagName)
+    },
+    [onDeleteTag, registerTrigger]
+  )
+
+  const handleOpenCreateBranchDialog = useCallback(
+    (tag: CommitTagType) => {
+      registerTrigger()
+      onOpenCreateBranchDialog(tag)
+    },
+    [onOpenCreateBranchDialog, registerTrigger]
+  )
+
   const getTableActions = (tag: CommitTagType): ActionData[] => [
     {
       iconName: 'git-branch',
       title: t('views:repos.tags.createBranch', 'Create Branch'),
-      onClick: () => onOpenCreateBranchDialog(tag)
+      onClick: () => handleOpenCreateBranchDialog(tag)
     },
     {
       iconName: 'folder',
@@ -56,7 +75,7 @@ export const RepoTagsList: FC<RepoTagsListProps> = ({
       iconName: 'trash',
       isDanger: true,
       title: t('views:repos.deleteTag', 'Delete Tag'),
-      onClick: () => onDeleteTag(tag.name)
+      onClick: () => handleDeleteTag(tag.name)
     }
   ]
 
@@ -104,7 +123,8 @@ export const RepoTagsList: FC<RepoTagsListProps> = ({
                     {t('views:noData.createNewTag', 'Create Tag')}
                   </>
                 ),
-                onClick: onOpenCreateTagDialog
+                onClick: onOpenCreateTagDialog,
+                isDialogTrigger: true
               }
         }
       />
@@ -166,6 +186,7 @@ export const RepoTagsList: FC<RepoTagsListProps> = ({
             </Table.Cell>
             <Table.Cell className="text-right">
               <MoreActionsTooltip
+                ref={triggerRef}
                 actions={getTableActions(tag).map(action => ({
                   ...action,
                   to: action?.to?.replace('${tag.name}', tag.name)

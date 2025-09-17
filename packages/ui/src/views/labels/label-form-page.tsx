@@ -197,17 +197,17 @@ export const LabelFormPage: FC<LabelFormPageProps> = ({
 
               <Layout.Vertical gap="xs" align="start">
                 <LabelTag
-                  color={color}
-                  labelKey={key.length ? key : t('views:labelData.form.labelName', 'Label name')}
-                  labelValue={values.length > 0 ? String(values.length) : ''}
+                  theme={color}
+                  label={key.length ? key : t('views:labelData.form.labelName', 'Label name')}
+                  value={values.length > 0 ? String(values.length) : ''}
                   withIndicator={isDynamic}
                 />
                 {values.map((value, idx) => (
                   <LabelTag
                     key={`${value.value}-${idx}`}
-                    color={value.color}
-                    labelKey={key.length ? key : t('views:labelData.form.labelName', 'Label name')}
-                    labelValue={value.value.length ? value.value : t('views:labelData.form.valueName', 'Label value')}
+                    theme={value.color}
+                    label={key.length ? key : t('views:labelData.form.labelName', 'Label name')}
+                    value={value.value.length ? value.value : t('views:labelData.form.valueName', 'Label value')}
                   />
                 ))}
               </Layout.Vertical>

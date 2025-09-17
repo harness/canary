@@ -9,7 +9,7 @@ type CopyTagProps = TagProps & {
   onActionClick?: never
 }
 
-export function CopyTag(props: CopyTagProps) {
+export function CopyTag({ ...props }: CopyTagProps) {
   const { value } = props
 
   const [copied, setCopied] = useState(false)

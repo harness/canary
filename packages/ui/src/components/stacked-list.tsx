@@ -59,6 +59,7 @@ interface ListItemProps extends ComponentProps<'div'>, VariantProps<typeof stack
   asChild?: boolean
   to?: string
   linkProps?: Omit<LinkProps, 'to'>
+  onClick?: () => void
 }
 
 const ListItem = ({
@@ -72,21 +73,31 @@ const ListItem = ({
   disableHover = false,
   paddingX = 'md',
   paddingY = 'md',
+  onClick,
   ...props
 }: ListItemProps) => {
   const Comp = asChild ? Slot : ('div' as any)
   const withLink = !!to || !!linkProps
+  const withButton = !to && !linkProps && !!onClick
 
   return (
     <Comp
       className={cn(
         stackedListItemVariants({ paddingX, paddingY, disableHover }),
-        { 'cn-stacked-list-item-with-link': withLink },
+        { 'cn-stacked-list-item-clickable': withLink },
         className
       )}
       {...props}
     >
-      {withLink && <Link className="cn-stacked-list-item-link" to={to || ''} {...(linkProps || {})} />}
+      {withLink && (
+        <Link
+          className="cn-stacked-list-item-clickable-block"
+          to={to || ''}
+          {...(linkProps || {})}
+          onClick={() => onClick?.()}
+        />
+      )}
+      {withButton && <button className="cn-stacked-list-item-clickable-block" onClick={() => onClick?.()} />}
       {thumbnail && <div className="cn-stacked-list-item-thumbnail">{thumbnail}</div>}
       <Slottable>{children}</Slottable>
       {actions && <div className="cn-stacked-list-item-actions">{actions}</div>}

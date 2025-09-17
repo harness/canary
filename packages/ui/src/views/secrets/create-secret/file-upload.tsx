@@ -1,6 +1,6 @@
 import { ChangeEvent, useRef } from 'react'
 
-import { Button, IconV2, Input, Text } from '@/components'
+import { Button, Card, IconV2, Input, Layout, Text } from '@/components'
 
 export interface FileUploadProps {
   selectedFile?: File
@@ -24,7 +24,11 @@ export function FileUpload({ selectedFile, onFileChange, error, accept }: FileUp
     }
   }
 
-  const removeFile = () => {
+  const removeFile = (e?: React.MouseEvent) => {
+    if (e) {
+      e.preventDefault()
+      e.stopPropagation()
+    }
     onFileChange(undefined)
     if (fileInputRef.current) {
       fileInputRef.current.value = ''
@@ -47,59 +51,42 @@ export function FileUpload({ selectedFile, onFileChange, error, accept }: FileUp
 
   return (
     <div>
-      <div
-        className="rounded-md border-2 border-dashed border-cn-2 p-4"
-        onDragOver={handleDragOver}
-        onDrop={handleDrop}
-      >
+      {!selectedFile ? (
         <div
-          className="flex flex-col items-center justify-center gap-2 py-3"
-          onClick={openFileInput}
-          role="button"
-          tabIndex={0}
+          className="rounded-md border-2 border-dashed border-cn-2 p-cn-xl"
+          onDragOver={handleDragOver}
+          onDrop={handleDrop}
         >
-          {!selectedFile ? (
-            <>
-              <IconV2 name="upload" />
-              <Text color="foreground-1">Click to browse or drag and drop a file</Text>
-              <Text>Up to 50MB</Text>
-            </>
-          ) : (
-            <div className="flex w-full flex-col">
-              <div className="flex items-center justify-between">
-                <span className="text-sm text-cn-2">
-                  Selected: {selectedFile.name} ({Math.round(selectedFile.size / 1024)} KB)
-                </span>
-                <div className="flex gap-2">
-                  <Button
-                    type="button"
-                    variant="outline"
-                    size="sm"
-                    onClick={e => {
-                      e.stopPropagation()
-                      openFileInput()
-                    }}
-                  >
-                    Change
-                  </Button>
-                  <Button
-                    type="button"
-                    variant="secondary"
-                    theme="danger"
-                    size="sm"
-                    onClick={e => {
-                      e.stopPropagation()
-                      removeFile()
-                    }}
-                  >
-                    Remove
-                  </Button>
-                </div>
-              </div>
-            </div>
-          )}
+          <div className="flex flex-col gap-2 items-center" onClick={openFileInput} role="button" tabIndex={0}>
+            <IconV2 name="cloud-upload" size="xl" className="mb-4" />
+            <Text variant="heading-base">Click to browse or drag and drop a file</Text>
+            <Text variant="body-single-line-normal">Up to 50MB</Text>
+          </div>
         </div>
-      </div>
+      ) : (
+        <Card.Root orientation="horizontal" size="sm" className="w-full" wrapperClassname="w-full">
+          <Card.Content className="w-full">
+            <Layout.Flex direction="row" align="center" justify="between" className="w-full">
+              <Layout.Flex direction="row" gap="xs" align="center">
+                <div className="p-2 bg-cn-1 rounded border">
+                  <IconV2 name="page" size="lg" />
+                </div>
+                <Layout.Vertical align="start" gap="none">
+                  <Text variant="body-strong" color="foreground-1">
+                    {selectedFile?.name}
+                  </Text>
+                  <Text variant="body-normal" color="foreground-3">
+                    {Math.round(selectedFile?.size / 1024)} KB
+                  </Text>
+                </Layout.Vertical>
+              </Layout.Flex>
+              <Button variant="ghost" iconOnly onClick={e => removeFile(e)} ignoreIconOnlyTooltip>
+                <IconV2 name="xmark" size="md" />
+              </Button>
+            </Layout.Flex>
+          </Card.Content>
+        </Card.Root>
+      )}
       {error && <div className="mt-1 text-sm text-cn-danger">{error}</div>}
 
       {/* Hidden file input */}

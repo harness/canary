@@ -1,6 +1,6 @@
 import { FC, ReactNode } from 'react'
 
-import { IconV2, Layout, Link, MoreActionsTooltip, Spacer, Text, TimeAgoCard } from '@/components'
+import { Layout, Link, MoreActionsTooltip, Spacer, Text, TimeAgoCard } from '@/components'
 import { Tabs } from '@/components/tabs'
 import { useRouterContext, useTranslation } from '@/context'
 import { SandboxLayout } from '@views/layouts/SandboxLayout'
@@ -37,7 +37,7 @@ const getSecretInfo = (
   identifier?: string
 ) => {
   return (
-    <Layout.Horizontal justify="between" align="center">
+    <Layout.Horizontal justify="between" align="center" className="mt-2">
       <Layout.Horizontal gap="3xl">
         <Layout.Vertical gap="sm">
           <Text variant="body-normal" className="text-cn-3">
@@ -106,12 +106,11 @@ export const SecretDetailsLayout: FC<SecretDetailsLayoutProps> = ({
   return (
     <SandboxLayout.Main fullWidth>
       <SandboxLayout.Content>
-        <Layout.Vertical gap="xl">
+        <Layout.Vertical gap="md">
           <Link size="sm" prefixIcon to={backButtonTo?.() ?? ''}>
             {t('views:secretDetails.backToSecrets', 'Back to secrets')}
           </Link>
           <Layout.Horizontal align="center">
-            <IconV2 name="ssh-key" size="lg" />
             <Text variant="heading-hero">{secret.name}</Text>
           </Layout.Horizontal>
           {getSecretInfo(secret.createdAt, secret.updatedAt, secret.updatedAt, onEdit, onDelete, secret.identifier)}

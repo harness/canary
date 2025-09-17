@@ -1,20 +1,20 @@
 {
   "header": {
     "height": {
-      "value": "{size.11}",
-      "type": "sizing"
+      "$type": "sizing",
+      "$value": "{size.11}"
     },
     "pl": {
-      "value": "{spacing.5}",
-      "type": "spacing"
+      "$type": "spacing",
+      "$value": "{spacing.5}"
     },
     "pr": {
-      "value": "{spacing.1-half}",
-      "type": "spacing"
+      "$type": "spacing",
+      "$value": "{spacing.1-half}"
     },
     "py": {
-      "value": "{spacing.2}",
-      "type": "spacing"
+      "$type": "spacing",
+      "$value": "{spacing.2}"
     }
   }
 }

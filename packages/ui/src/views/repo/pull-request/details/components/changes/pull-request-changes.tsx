@@ -197,7 +197,7 @@ function PullRequestChangesInternal({
         setInitiatedJumpToDiff(true)
       }
     }
-  }, [commentId, diffPathQuery, data])
+  }, [commentId, diffPathQuery, data, initiatedJumpToDiff])
 
   // Cleanup timeout on unmount
   useEffect(() => {

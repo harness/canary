@@ -1,4 +1,4 @@
-import { IconV2, Layout, NoData, Skeleton, Table, Text, TimeAgoCard } from '@/components'
+import { IconV2, Layout, NoData, ScopeTag, Skeleton, Table, Text, TimeAgoCard } from '@/components'
 import { useTranslation } from '@/context'
 
 import { SecretReference } from './types'
@@ -20,17 +20,17 @@ export function SecretReferencesList({ secretReferences, isLoading }: SecretRefe
       <NoData
         withBorder
         imageName="no-data-cog"
-        title={t('views:noData.noSecrets', 'No secrets yet')}
-        description={[
-          t('views:noData.noSecrets', 'There are no secrets in this project yet.'),
-          t('views:noData.createSecret', 'Create new secret.')
-        ]}
+        title={t('views:noData.noSecretReferences', 'No secret references yet')}
+        description={[t('views:noData.noSecretReferencesDescription', 'There are no references to this secret yet.')]}
       />
     )
   }
 
   return (
-    <Table.Root className={isLoading ? '[mask-image:linear-gradient(to_bottom,black_30%,transparent_100%)]' : ''}>
+    <Table.Root
+      className={isLoading ? '[mask-image:linear-gradient(to_bottom,black_30%,transparent_100%)]' : ''}
+      size="relaxed"
+    >
       <Table.Header>
         <Table.Row>
           <Table.Head className="w-2/5">{t('views:entityReference.entity', 'Entity')}</Table.Head>
@@ -41,7 +41,7 @@ export function SecretReferencesList({ secretReferences, isLoading }: SecretRefe
       </Table.Header>
       <Table.Body>
         {secretReferences.map(reference => (
-          <Table.Row key={reference.name} className="cursor-pointer">
+          <Table.Row key={reference.name} className="cursor-pointer" to={reference.rowLink}>
             <Table.Cell className="w-2/4 content-center truncate">
               <Text variant="body-normal" className="text-cn-2" truncate>
                 {reference.name}
@@ -49,13 +49,15 @@ export function SecretReferencesList({ secretReferences, isLoading }: SecretRefe
             </Table.Cell>
             <Table.Cell>
               <Layout.Horizontal>
-                <IconV2 name="connectors" size="sm" />
+                <IconV2 name={reference.iconType} size="sm" fallback="connectors" />
                 <Text variant="body-normal" className="text-cn-2">
                   {reference.type}
                 </Text>
               </Layout.Horizontal>
             </Table.Cell>
-            <Table.Cell className="content-center">{reference.scope}</Table.Cell>
+            <Table.Cell className="content-center">
+              <ScopeTag scopeType={reference.scope} scopedPath={reference.scopedPath} />
+            </Table.Cell>
             <Table.Cell className="content-center">
               {reference?.createdAt ? (
                 <TimeAgoCard

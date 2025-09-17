@@ -55,7 +55,7 @@ export default {
 
     // Container highlight on hover
     '&:where(.cn-table-v2-highlight-hover) tbody > tr': {
-      '&:hover, &:has(.cn-table-v2-cell-link:focus-visible)': {
+      '&:hover, &:has(.cn-table-v2-cell-clickable-block:focus-visible)': {
         backgroundColor: 'var(--cn-state-hover)'
       }
     },
@@ -73,13 +73,13 @@ export default {
       '@apply border-b border-cn-3 transition-colors overflow-hidden': '',
       '@apply last:border-b-0': '',
 
-      '&:has(.cn-table-v2-cell-link:focus-visible)': {
+      '&:has(.cn-table-v2-cell-clickable-block:focus-visible)': {
         outline: 'var(--cn-focus)',
         outlineOffset: 'calc(2px*-1)'
       },
 
       '&:where(.row-link-no-underline)': {
-        '@apply [&_.cn-table-v2-cell-link]:no-underline': ''
+        '@apply [&_.cn-table-v2-cell-clickable-block]:no-underline': ''
       },
 
       '&:where([data-checked=true])': {
@@ -136,13 +136,14 @@ export default {
     },
 
     // Cell link
-    '&-cell-link': {
+    '&-cell-clickable-block': {
       position: 'absolute !important',
       inset: '0',
       zIndex: '0 !important',
 
       '&:focus-within': {
-        outline: 'none'
+        // Adding !important to override global :focus-within
+        outline: 'none !important'
       }
     },
 

@@ -39,24 +39,26 @@ export default {
     },
 
     '&:where([disabled])': {
-      backgroundColor: `var(--cn-state-disabled-bg)`,
-      borderColor: `var(--cn-state-disabled-border)`,
-      cursor: 'not-allowed'
+      cursor: 'not-allowed',
+      '@apply opacity-cn-disabled': '',
+
+      ' + .cn-switch-label-wrapper': {
+        '@apply opacity-cn-disabled': ''
+      }
     },
 
     '&:where([data-state=checked])': {
       backgroundColor: `var(--cn-comp-selection-selected-bg)`,
       borderColor: `var(--cn-comp-selection-selected-border)`,
 
-      '&:hover': {
+      '&:where(:not([disabled])):hover': {
         backgroundColor: `var(--cn-comp-selection-selected-bg-hover)`,
         borderColor: `var(--cn-comp-selection-selected-border-hover)`
       }
     },
 
     '&:where([data-state=checked][disabled])': {
-      backgroundColor: `var(--cn-state-disabled-bg-selected)`,
-      borderColor: `var(--cn-state-disabled-border-selected)`
+      '@apply opacity-cn-disabled': ''
     }
   },
 
@@ -73,7 +75,8 @@ export default {
     backgroundColor: `var(--cn-comp-selection-unselected-item)`,
 
     '&:where([disabled])': {
-      backgroundColor: `var(--cn-state-disabled-text)`
+      cursor: 'not-allowed',
+      '@apply opacity-cn-disabled': ''
     },
 
     '&:where([data-state=checked])': {
@@ -82,7 +85,7 @@ export default {
     },
 
     '&:where([data-state=checked][disabled])': {
-      backgroundColor: `var(--cn-state-disabled-text-selected)`
+      '@apply opacity-cn-disabled': ''
     }
   },
 
@@ -90,7 +93,7 @@ export default {
     font: 'var(--cn-body-normal) !important',
     color: 'var(--cn-text-1) !important',
     '&:where([disabled])': {
-      color: 'var(--cn-state-disabled-text) !important'
+      '@apply opacity-cn-disabled': ''
     },
     '@apply truncate': ''
   },
@@ -99,7 +102,7 @@ export default {
     font: 'var(--cn-body-normal)',
     color: 'var(--cn-text-2)',
     '&:where(.disabled)': {
-      color: 'var(--cn-state-disabled-text)'
+      '@apply opacity-cn-disabled': ''
     },
     '@apply truncate': ''
   }

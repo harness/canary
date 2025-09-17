@@ -25,6 +25,7 @@ import {
   NavLink,
   Outlet,
   RouterProvider,
+  useMatches,
 } from "react-router-dom";
 
 type LiveProviderProps = ComponentProps<typeof LiveProvider>;
@@ -78,51 +79,59 @@ const Example: FC<ExampleProps> = ({
     {
       path: "*",
       element: (
-        <RouterContextProvider Link={Link} NavLink={NavLink} Outlet={Outlet}>
-          <TranslationProvider>
-            <LivePreview />
-          </TranslationProvider>
-        </RouterContextProvider>
+        <TranslationProvider>
+          <LivePreview />
+        </TranslationProvider>
       ),
     },
   ]);
 
   return (
-    <DialogProvider>
-      <TooltipProvider>
-        <div className="bg-cn-1 not-content my-12 overflow-hidden rounded-md border">
-          <LiveProvider
-            code={currentCode}
-            scope={scopeWithLayout}
-            enableTypeScript
-          >
-            <div
-              className={cn("grid place-items-center p-12", contentClassName)}
+    <RouterContextProvider
+      Link={Link}
+      NavLink={NavLink}
+      Outlet={Outlet}
+      useMatches={useMatches}
+    >
+      <DialogProvider>
+        <TooltipProvider>
+          <div className="bg-cn-1 not-content my-12 overflow-hidden rounded-md border">
+            <LiveProvider
+              code={currentCode}
+              scope={scopeWithLayout}
+              enableTypeScript
             >
-              <RouterProvider router={router} />
-            </div>
-            {!hideCode && (
-              <details className="example-expand bg-cn-2 relative border-t p-3">
-                <CopyButton
-                  buttonVariant="transparent"
-                  className="absolute right-3 top-3"
-                  name={currentCode}
-                />
-                <summary className="flex cursor-pointer select-none items-center gap-1 text-sm">
-                  <IconV2 name="nav-arrow-right" className="disclosure-icon" />
-                  Show code
-                </summary>
-                <LiveEditor
-                  theme={isLightTheme ? themes.vsLight : themes.vsDark}
-                  className="font-body-code line-numbers p-1 text-sm leading-6"
-                  onChange={setCurrentCode}
-                />
-              </details>
-            )}
-          </LiveProvider>
-        </div>
-      </TooltipProvider>
-    </DialogProvider>
+              <div
+                className={cn("grid place-items-center p-12", contentClassName)}
+              >
+                <RouterProvider router={router} />
+              </div>
+              {!hideCode && (
+                <details className="example-expand bg-cn-2 relative border-t p-3">
+                  <CopyButton
+                    buttonVariant="transparent"
+                    className="absolute right-3 top-3"
+                    name={currentCode}
+                  />
+                  <summary className="flex cursor-pointer select-none items-center gap-1 text-sm">
+                    <IconV2
+                      name="nav-arrow-right"
+                      className="disclosure-icon"
+                    />
+                    Show code
+                  </summary>
+                  <LiveEditor
+                    theme={isLightTheme ? themes.vsLight : themes.vsDark}
+                    className="font-body-code line-numbers p-1 text-sm leading-6"
+                    onChange={setCurrentCode}
+                  />
+                </details>
+              )}
+            </LiveProvider>
+          </div>
+        </TooltipProvider>
+      </DialogProvider>
+    </RouterContextProvider>
   );
 };
 

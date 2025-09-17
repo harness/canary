@@ -28,7 +28,8 @@ export default {
       borderBottom: '1px solid var(--cn-border-3)',
 
       '&:where([data-disabled]) [class*="cn-accordion"]': {
-        color: 'var(--cn-state-disabled-text)'
+        cursor: 'not-allowed',
+        '@apply opacity-cn-disabled': ''
       }
     },
 

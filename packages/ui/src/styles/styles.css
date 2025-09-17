@@ -456,12 +456,6 @@
   }
 }
 
-/* Default focus outline */
-:focus-visible,
-:focus {
-  outline: var(--cn-focus);
-}
-
 mark {
   background: var(--cn-set-brand-solid-bg);
   color: var(--cn-set-brand-solid-text);
@@ -588,4 +582,11 @@ mark {
 
 .settings-form-width {
   width: 570px;
+}
+
+.file-explorer-header {
+  /* has-[:hover]:bg-cn-selected rounded */
+  &:has(:hover) {
+    @apply bg-cn-hover rounded;
+  }
 }

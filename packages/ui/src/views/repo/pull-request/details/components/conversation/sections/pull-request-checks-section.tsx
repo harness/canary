@@ -37,7 +37,7 @@ const PullRequestCheckSection = ({
   }
 
   return (
-    <Accordion.Item value={ACCORDION_VALUE}>
+    <Accordion.Item value={ACCORDION_VALUE} className="only:border-0">
       <Accordion.Trigger className="py-3">
         <Layout.Flex>
           <StackedList.Field
@@ -77,7 +77,7 @@ const PullRequestCheckSection = ({
                     </Text>
                   </Table.Cell>
                   <Table.Cell className="w-16">
-                    {check?.check?.status !== ExecutionState.PENDING && (
+                    {check?.check?.status !== ExecutionState.PENDING && !!check?.check?.link && (
                       <Link to={check?.check?.link || ''} target="_blank" rel="noopener noreferrer">
                         Details
                       </Link>

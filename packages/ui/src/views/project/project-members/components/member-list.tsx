@@ -1,6 +1,6 @@
-import { useMemo } from 'react'
+import { useCallback, useMemo } from 'react'
 
-import { Avatar, DropdownMenu, IconV2, MoreActionsTooltip, Table } from '@/components'
+import { Avatar, DropdownMenu, IconV2, MoreActionsTooltip, Table, useCustomDialogTrigger } from '@/components'
 import { useTranslation } from '@/context'
 import { MembersProps } from '@/views'
 import { getRolesData } from '@views/project/project-members/constants'
@@ -19,6 +19,15 @@ export const MembersList = ({ members, onDelete, onEdit }: MembersListProps) => 
   const getRoleLabel = (role: string) => {
     return roleOptions.find(it => it.uid === role)?.label || ''
   }
+
+  const { triggerRef, registerTrigger } = useCustomDialogTrigger()
+  const handleDeleteMember = useCallback(
+    (memberId: string) => {
+      registerTrigger()
+      onDelete(memberId)
+    },
+    [onDelete, registerTrigger]
+  )
 
   return (
     <Table.Root>
@@ -66,12 +75,13 @@ export const MembersList = ({ members, onDelete, onEdit }: MembersListProps) => 
 
             <Table.Cell className="text-right">
               <MoreActionsTooltip
+                ref={triggerRef}
                 isInTable
                 actions={[
                   {
                     isDanger: true,
                     title: t('views:projectSettings.removeMember', 'Remove member'),
-                    onClick: () => onDelete(member.uid)
+                    onClick: () => handleDeleteMember(member.uid)
                   }
                 ]}
               />

@@ -4,7 +4,11 @@ import plugin from 'tailwindcss/plugin'
 import type { PluginAPI, Config as TailwindConfig } from 'tailwindcss/types/config'
 
 import { ComponentStyles } from './tailwind-utils-config/components'
-import { typography as typographyStyles } from './tailwind-utils-config/utilities'
+import {
+  borders as borderStyles,
+  padding as paddingStyles,
+  typography as typographyStyles
+} from './tailwind-utils-config/utilities'
 
 export default {
   darkMode: ['class'],
@@ -19,6 +23,9 @@ export default {
       }
     },
     extend: {
+      opacity: {
+        'cn-disabled': 'var(--cn-disabled-opacity)'
+      },
       size: {
         'cn-0': 'var(--cn-size-0)',
         'cn-1': 'var(--cn-size-1)',
@@ -65,6 +72,9 @@ export default {
         'cn-3-half': 'var(--cn-size-3-half)',
         'cn-4-half': 'var(--cn-size-4-half)'
       },
+      height: {
+        'cn-input-md': 'var(--cn-input-size-md)'
+      },
       minHeight: {
         'cn-textarea': '7lh'
       },
@@ -89,8 +99,11 @@ export default {
         'cn-brand': {
           DEFAULT: 'lch(from var(--cn-set-brand-solid-bg) l c h / <alpha-value>)',
           hover: 'lch(from var(--cn-set-brand-solid-bg-hover) l c h / <alpha-value>)',
-          selected: 'lch(from var(--cn-set-brand-solid-bg-selected) l c h / <alpha-value>)'
+          selected: 'lch(from var(--cn-set-brand-solid-bg-selected) l c h / <alpha-value>)',
+          surface: 'lch(from var(--cn-set-brand-surface-bg) l c h / <alpha-value>)'
         },
+
+        'cn-input': 'var(--cn-comp-input-bg)',
 
         // States
         'cn-hover': 'var(--cn-state-hover)',
@@ -195,7 +208,7 @@ export default {
         'cn-danger': 'var(--cn-text-danger)',
         'cn-warning': 'var(--cn-text-warning)',
         'cn-merged': 'var(--cn-text-merged)',
-        'cn-disabled': 'var(--cn-state-disabled-text)',
+        'cn-disabled': 'var(--cn-text-disabled)',
 
         // logo colors
         'cn-logo-icon': 'var(--cn-logo-icon)',
@@ -386,57 +399,6 @@ export default {
       },
 
       colors: {
-        // 👉 Remove this
-        toast: {
-          background: {
-            danger: 'hsla(var(--canary-toast-background-danger))'
-          },
-          foreground: {
-            danger: 'hsla(var(--canary-toast-foreground-danger))'
-          },
-          icons: {
-            danger: {
-              default: 'hsla(var(--canary-toast-icon-danger-default))',
-              hover: 'hsla(var(--canary-toast-icon-danger-hover))'
-            }
-          }
-        },
-
-        // 👉 Remove this by checking all instances
-        label: {
-          foreground: {
-            red: 'var(--canary-label-foreground-red-01)',
-            green: 'var(--canary-label-foreground-green-01)',
-            yellow: 'var(--canary-label-foreground-yellow-01)',
-            blue: 'var(--canary-label-foreground-blue-01)',
-            pink: 'var(--canary-label-foreground-pink-01)',
-            purple: 'var(--canary-label-foreground-purple-01)',
-            violet: 'var(--canary-label-foreground-violet-01)',
-            indigo: 'var(--canary-label-foreground-indigo-01)',
-            cyan: 'var(--canary-label-foreground-cyan-01)',
-            orange: 'var(--canary-label-foreground-orange-01)',
-            brown: 'var(--canary-label-foreground-brown-01)',
-            mint: 'var(--canary-label-foreground-mint-01)',
-            lime: 'var(--canary-label-foreground-lime-01)'
-          },
-          background: {
-            cover: 'var(--canary-label-background-cover-01)',
-            red: 'var(--canary-label-background-red-01)',
-            green: 'var(--canary-label-background-green-01)',
-            yellow: 'var(--canary-label-background-yellow-01)',
-            blue: 'var(--canary-label-background-blue-01)',
-            pink: 'var(--canary-label-background-pink-01)',
-            purple: 'var(--canary-label-background-purple-01)',
-            violet: 'var(--canary-label-background-violet-01)',
-            indigo: 'var(--canary-label-background-indigo-01)',
-            cyan: 'var(--canary-label-background-cyan-01)',
-            orange: 'var(--canary-label-background-orange-01)',
-            brown: 'var(--canary-label-background-brown-01)',
-            mint: 'var(--canary-label-background-mint-01)',
-            lime: 'var(--canary-label-background-lime-01)'
-          }
-        },
-
         // 👉 Remove this by checking with pipeline team
         graph: {
           background: {
@@ -490,7 +452,12 @@ export default {
         6: 'var(--cn-rounded-6)',
         7: 'var(--cn-rounded-7)',
         none: 'var(--cn-rounded-none)',
-        full: 'var(--cn-rounded-full)'
+        full: 'var(--cn-rounded-full)',
+
+        /**
+         * Component specific borderRadius
+         */
+        'cn-input': 'var(--cn-input-radius)'
       },
       fontSize: {
         0: 'var(--cn-font-size-0)',
@@ -556,16 +523,15 @@ export default {
      *
      */
     plugin(({ addUtilities }) => {
+      addUtilities(paddingStyles)
       addUtilities(typographyStyles)
+      addUtilities(borderStyles)
     }),
     plugin(({ addComponents }) => {
       addComponents(ComponentStyles)
     }),
     tailwindcssAnimate,
     typography,
-    function ({ addUtilities }: PluginAPI) {
-      addUtilities({})
-    },
     function ({ addComponents, theme, e }: PluginAPI) {
       const hoverClasses: Record<string, Record<string, string>> = {}
 
@@ -631,28 +597,8 @@ export default {
     /** Existing Variants  */
     { pattern: /^bg-graph-/ },
 
-    // tags classes
-    { pattern: /^bg-tag-background-/ },
-    { pattern: /^text-tag-foreground-/ },
-    { pattern: /^border-tag-border-/ },
-    // toast classes
-    { pattern: /^bg-toast-/ },
-    { pattern: /^text-toast-/ },
-    // label classes
-    { pattern: /^bg-label-background-/ },
-    { pattern: /^bg-label-foreground-/ }, // this is essential for the color select in the LabelFormColorAndNameGroup component
-    { pattern: /^text-label-foreground-/ },
-
     // Hover classes
     { pattern: /^hover:bg-graph-/ },
-    { pattern: /^hover:text-toast-/ },
-    // tags classes
-    { pattern: /^hover:bg-tag-background-/ },
-    { pattern: /^hover:text-tag-foreground-/ },
-    { pattern: /^hover:border-tag-border-/ },
-    // label classes
-    { pattern: /^hover:bg-label-background-/ },
-    { pattern: /^hover:text-label-foreground-/ },
     'stroke-borders-2',
     { pattern: /rounded-./ },
     { pattern: /border-./ },

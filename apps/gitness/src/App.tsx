@@ -8,6 +8,7 @@ import { DialogProvider, Toast, TooltipProvider } from '@harnessio/ui/components
 import { TranslationProvider } from '@harnessio/ui/context'
 
 import { ExitConfirmProvider } from './framework/context/ExitConfirmContext'
+import { defaultContext, MFEContext } from './framework/context/MFEContext'
 import { NavigationProvider } from './framework/context/NavigationContext'
 import { ThemeProvider } from './framework/context/ThemeContext'
 import { queryClient } from './framework/queryClient'
@@ -36,24 +37,26 @@ export default function App() {
   const { t } = useTranslationStore()
 
   return (
-    <I18nextProvider i18n={i18n}>
-      <ThemeProvider defaultTheme="dark-std-std">
-        <TranslationProvider t={t}>
-          <QueryClientProvider client={queryClient}>
-            <Toast.Provider>
-              <TooltipProvider>
-                <DialogProvider>
-                  <ExitConfirmProvider>
-                    <NavigationProvider routes={routes}>
-                      <RouterProvider router={router} />
-                    </NavigationProvider>
-                  </ExitConfirmProvider>
-                </DialogProvider>
-              </TooltipProvider>
-            </Toast.Provider>
-          </QueryClientProvider>
-        </TranslationProvider>
-      </ThemeProvider>
-    </I18nextProvider>
+    <MFEContext.Provider value={defaultContext}>
+      <I18nextProvider i18n={i18n}>
+        <ThemeProvider defaultTheme="dark-std-std">
+          <TranslationProvider t={t}>
+            <QueryClientProvider client={queryClient}>
+              <Toast.Provider>
+                <TooltipProvider>
+                  <DialogProvider>
+                    <ExitConfirmProvider>
+                      <NavigationProvider routes={routes}>
+                        <RouterProvider router={router} />
+                      </NavigationProvider>
+                    </ExitConfirmProvider>
+                  </DialogProvider>
+                </TooltipProvider>
+              </Toast.Provider>
+            </QueryClientProvider>
+          </TranslationProvider>
+        </ThemeProvider>
+      </I18nextProvider>
+    </MFEContext.Provider>
   )
 }

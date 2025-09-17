@@ -4,8 +4,6 @@ import {
   DragEvent,
   Fragment,
   KeyboardEvent,
-  MouseEvent,
-  SyntheticEvent,
   useEffect,
   useMemo,
   useRef,
@@ -37,10 +35,12 @@ import {
 } from '@/views'
 import { cn } from '@utils/cn'
 import { getErrorMessage } from '@utils/utils'
+import { SideWithBoth } from '@views/repo/pull-request/components/extended-diff-view/extended-diff-view-types'
 import { isEmpty, isUndefined } from 'lodash-es'
 
 import { getLinesFromBlocks } from './diff-utils'
 import { PullRequestCommentTextarea } from './pull-request-comment-textarea'
+import { PullRequestCommentingOn } from './pull-request-commenting-on'
 import { replaceMentionEmailWithDisplayName, replaceMentionEmailWithId } from './utils'
 
 interface ParsedSelection extends TextSelection {
@@ -95,6 +95,8 @@ export interface PullRequestCommentBoxProps {
   diff?: string
   lineNumber?: number
   lineFromNumber?: number
+  lineSide?: SideWithBoth
+  lineFromSide?: SideWithBoth
   sideKey?: 'oldFile' | 'newFile'
   setComment: (comment: string) => void
   currentUser?: string
@@ -139,6 +141,8 @@ export const PullRequestCommentBox = ({
   sideKey,
   lineNumber,
   lineFromNumber,
+  lineSide,
+  lineFromSide,
   comment: initialComment,
   setComment,
   isEditMode,
@@ -595,26 +599,16 @@ export const PullRequestCommentBox = ({
     setCommentAndSelection(e.target.value, selection)
   }
 
-  const onSelecionChange = (e: SyntheticEvent<HTMLTextAreaElement>): void => {
-    const textAreaElement = e.target as HTMLTextAreaElement
-    const selection = { start: textAreaElement.selectionStart, end: textAreaElement.selectionEnd }
+  const onSelect = (): void => {
+    if (textAreaRef.current) {
+      const selection = { start: textAreaRef.current.selectionStart, end: textAreaRef.current.selectionEnd }
 
-    setSelection(selection)
-  }
-
-  const onMouseUp = (e: MouseEvent<HTMLTextAreaElement>): void => {
-    onSelecionChange(e)
+      setSelection(selection)
+    }
   }
 
   const onKeyUp = (e: KeyboardEvent<HTMLTextAreaElement>): void => {
     switch (e.code) {
-      case 'ArrowUp':
-      case 'ArrowDown':
-      case 'ArrowLeft':
-      case 'ArrowRight': {
-        onSelecionChange(e)
-        break
-      }
       case 'Enter': {
         const commentMetadata = parseComment(textComment, textSelection)
         const textLinesSelectionStartIndexBeforeEnter = commentMetadata.comment.textLinesSelectionStartIndex - 1
@@ -654,146 +648,147 @@ export const PullRequestCommentBox = ({
   return (
     <Layout.Horizontal align="start" className={cn('gap-x-3', className)} data-comment-editor-shown="true">
       {!inReplyMode && !isEditMode && !hideAvatar && avatar}
-      <Layout.Vertical
-        gap="md"
-        className={cn('p-4 pt-3 flex-1 w-full', {
-          'border rounded-md': !inReplyMode || isEditMode,
-          'bg-cn-1': !inReplyMode,
-          'bg-cn-2 border-t': inReplyMode
-        })}
-      >
-        <Tabs.Root defaultValue={TABS_KEYS.WRITE} value={activeTab} onValueChange={handleTabChange}>
-          <Tabs.List
-            className="-mx-4 mb-cn-md px-4"
-            activeClassName={inReplyMode ? 'bg-cn-2' : 'bg-cn-1'}
-            variant="overlined"
-          >
-            <Tabs.Trigger value={TABS_KEYS.WRITE}>Write</Tabs.Trigger>
-            <Tabs.Trigger value={TABS_KEYS.PREVIEW}>Preview</Tabs.Trigger>
-          </Tabs.List>
-
-          <Tabs.Content value={TABS_KEYS.WRITE}>
-            <div
-              className="relative"
-              onDrop={handleDrop}
-              onDragOver={e => e.preventDefault()}
-              onDragEnter={handleDragEnter}
-              onDragLeave={handleDragLeave}
-              ref={dropZoneRef}
+      <Layout.Vertical gap="xs" className="w-full">
+        <PullRequestCommentingOn from={lineFromNumber} to={lineNumber} fromSide={lineFromSide} toSide={lineSide} />
+        <Layout.Vertical
+          gap="md"
+          className={cn('p-4 pt-3 flex-1 w-full', {
+            'border rounded-md': !inReplyMode || isEditMode,
+            'bg-cn-1': !inReplyMode,
+            'bg-cn-2 border-t': inReplyMode
+          })}
+        >
+          <Tabs.Root defaultValue={TABS_KEYS.WRITE} value={activeTab} onValueChange={handleTabChange}>
+            <Tabs.List
+              className="-mx-4 mb-cn-md px-4"
+              activeClassName={inReplyMode ? 'bg-cn-2' : 'bg-cn-1'}
+              variant="overlined"
             >
-              <PullRequestCommentTextarea
-                resizable
-                ref={textAreaRef}
-                placeholder={textareaPlaceholder ?? 'Add your comment here'}
-                className="min-h-32 pb-cn-3xl text-cn-1"
-                autoFocus={!!autofocus || !!inReplyMode}
-                principalProps={principalProps}
-                setPrincipalsMentionMap={setPrincipalsMentionMap}
-                value={textComment}
-                setValue={value => {
-                  setTextComment(value)
-                  setComment(value)
-                }}
-                onChange={e => onCommentChange(e)}
-                onKeyUp={e => onKeyUp(e)}
-                onKeyDown={e => onKeyDown(e)}
-                onMouseUp={e => onMouseUp(e)}
-                onPaste={e => {
-                  if (e.clipboardData.files.length > 0) {
-                    handlePasteForUpload(e)
-                  }
-                }}
-              />
+              <Tabs.Trigger value={TABS_KEYS.WRITE}>Write</Tabs.Trigger>
+              <Tabs.Trigger value={TABS_KEYS.PREVIEW}>Preview</Tabs.Trigger>
+            </Tabs.List>
 
-              {showAiLoader && (
-                <div className="absolute inset-0 flex cursor-wait items-center justify-center">
-                  <IconV2 size="lg" className="animate-spin" name="loader" />
-                </div>
-              )}
-              {isDragging && (
-                <div className="absolute inset-1 z-[100] cursor-copy rounded-sm border border-dashed border-cn-2" />
-              )}
-
-              <Layout.Flex
-                align="center"
-                gap="4xs"
-                className="absolute bottom-px left-px w-[calc(100%-20px)] rounded bg-cn-1 p-cn-3xs"
+            <Tabs.Content value={TABS_KEYS.WRITE}>
+              <div
+                className="relative"
+                onDrop={handleDrop}
+                onDragOver={e => e.preventDefault()}
+                onDragEnter={handleDragEnter}
+                onDragLeave={handleDragLeave}
+                ref={dropZoneRef}
               >
-                {toolbar.map((item, index) => {
-                  return (
-                    <Fragment key={`${textComment}-${index}`}>
-                      <Button
-                        size="sm"
-                        variant={item.variant ?? 'ghost'}
-                        iconOnly
-                        disabled={showAiLoader}
-                        onClick={() => handleActionClick(item.action, textComment, textSelection)}
-                        tooltipProps={{
-                          content: item.title
-                        }}
-                      >
-                        <IconV2 name={item.icon} />
-                      </Button>
-                    </Fragment>
-                  )
-                })}
-              </Layout.Flex>
-            </div>
-          </Tabs.Content>
-          <Tabs.Content className="w-full" value={TABS_KEYS.PREVIEW}>
-            <div className="min-h-32 w-full">
-              {textComment ? (
-                <MarkdownViewer
-                  markdownClassName="pr-section bg-transparent w-full"
-                  source={replaceMentionEmailWithDisplayName(textComment, principalsMentionMap)}
+                <PullRequestCommentTextarea
+                  resizable
+                  ref={textAreaRef}
+                  placeholder={textareaPlaceholder ?? 'Add your comment here'}
+                  className="min-h-12 pb-cn-3xl text-cn-1"
+                  autoFocus={!!autofocus || !!inReplyMode}
+                  principalProps={principalProps}
+                  setPrincipalsMentionMap={setPrincipalsMentionMap}
+                  value={textComment}
+                  setValue={value => {
+                    setTextComment(value)
+                    setComment(value)
+                  }}
+                  onChange={e => onCommentChange(e)}
+                  onKeyUp={e => onKeyUp(e)}
+                  onKeyDown={e => onKeyDown(e)}
+                  onSelect={() => onSelect()}
+                  onPaste={e => {
+                    if (e.clipboardData.files.length > 0) {
+                      handlePasteForUpload(e)
+                    }
+                  }}
                 />
-              ) : (
-                <Text variant="body-normal" color="foreground-1">
-                  Nothing to preview
-                </Text>
-              )}
-            </div>
-          </Tabs.Content>
-        </Tabs.Root>
+                {showAiLoader && (
+                  <div className="absolute inset-0 flex cursor-wait items-center justify-center">
+                    <IconV2 size="lg" className="animate-spin" name="loader" />
+                  </div>
+                )}
+                {isDragging && (
+                  <div className="absolute inset-1 z-[100] cursor-copy rounded-sm border border-dashed border-cn-2" />
+                )}
+                <Layout.Flex
+                  align="center"
+                  gap="4xs"
+                  className="absolute bottom-px left-px w-[calc(100%-20px)] rounded bg-cn-1 p-cn-3xs"
+                >
+                  {toolbar.map((item, index) => {
+                    return (
+                      <Fragment key={`${textComment}-${index}`}>
+                        <Button
+                          size="sm"
+                          variant={item.variant ?? 'ghost'}
+                          iconOnly
+                          disabled={showAiLoader}
+                          onClick={() => handleActionClick(item.action, textComment, textSelection)}
+                          tooltipProps={{
+                            content: item.title
+                          }}
+                        >
+                          <IconV2 name={item.icon} />
+                        </Button>
+                      </Fragment>
+                    )
+                  })}
+                </Layout.Flex>
+              </div>
+            </Tabs.Content>
+            <Tabs.Content className="w-full" value={TABS_KEYS.PREVIEW}>
+              <div className="min-h-32 w-full">
+                {textComment ? (
+                  <MarkdownViewer
+                    markdownClassName="pr-section bg-transparent w-full"
+                    source={replaceMentionEmailWithDisplayName(textComment, principalsMentionMap)}
+                  />
+                ) : (
+                  <Text variant="body-normal" color="foreground-1">
+                    Nothing to preview
+                  </Text>
+                )}
+              </div>
+            </Tabs.Content>
+          </Tabs.Root>
 
-        <Layout.Flex align="center" justify="between">
-          {activeTab === TABS_KEYS.WRITE && (
-            <>
-              <input
-                type="file"
-                accept="image/*,video/*"
-                ref={fileInputRef}
-                className="hidden"
-                onChange={handleFileChange}
-              />
-              <Button variant="ghost" onClick={handleFileSelect}>
-                <IconV2 name="attachment-image" />
-                Attach files
-              </Button>
-            </>
-          )}
-
-          {onSaveComment ? (
-            <Layout.Flex align="center" justify="end" gap="sm" className="ml-auto">
-              {(inReplyMode || isEditMode) && (
-                <Button variant="secondary" onClick={handleCancelComment}>
-                  Cancel
+          <Layout.Flex align="center" justify="between">
+            {activeTab === TABS_KEYS.WRITE && (
+              <>
+                <input
+                  type="file"
+                  accept="image/*,video/*"
+                  ref={fileInputRef}
+                  className="hidden"
+                  onChange={handleFileChange}
+                />
+                <Button variant="ghost" onClick={handleFileSelect}>
+                  <IconV2 name="attachment-image" />
+                  Attach files
                 </Button>
-              )}
+              </>
+            )}
 
-              <Button loading={parentIsLoading || isLoading} onClick={handleSaveComment}>
-                {buttonTitle || 'Comment'}
-              </Button>
-            </Layout.Flex>
-          ) : null}
-        </Layout.Flex>
+            {onSaveComment ? (
+              <Layout.Flex align="center" justify="end" gap="sm" className="ml-auto">
+                {(inReplyMode || isEditMode) && (
+                  <Button variant="secondary" onClick={handleCancelComment}>
+                    Cancel
+                  </Button>
+                )}
 
-        {commentError && (
-          <Alert.Root theme="danger">
-            <Alert.Title>Failed to perform comment operation</Alert.Title>
-            <Alert.Description>{commentError}</Alert.Description>
-          </Alert.Root>
-        )}
+                <Button loading={parentIsLoading || isLoading} onClick={handleSaveComment}>
+                  {buttonTitle || 'Comment'}
+                </Button>
+              </Layout.Flex>
+            ) : null}
+          </Layout.Flex>
+
+          {commentError && (
+            <Alert.Root theme="danger">
+              <Alert.Title>Failed to perform comment operation</Alert.Title>
+              <Alert.Description>{commentError}</Alert.Description>
+            </Alert.Root>
+          )}
+        </Layout.Vertical>
       </Layout.Vertical>
     </Layout.Horizontal>
   )

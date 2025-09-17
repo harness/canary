@@ -6,7 +6,7 @@ export default {
     '&:hover:not(.cn-card-disabled)': {
       borderColor: 'var(--cn-border-1)'
     },
-    '@apply flex overflow-hidden': '',
+    '@apply flex overflow-hidden select-none': '',
 
     '&:where(.cn-card-sm)': {
       borderRadius: 'var(--cn-card-sm-radius)',

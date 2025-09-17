@@ -47,10 +47,10 @@ export const typographyVariantConfig = {
   'body-single-line-strong': 'font-body-single-line-strong',
   'body-code': 'font-body-code',
   'caption-normal': 'font-caption-normal',
-  'caption-soft': 'font-caption-soft',
+  'caption-light': 'font-caption-light',
   'caption-strong': 'font-caption-strong',
   'caption-single-line-normal': 'font-caption-single-line-normal',
-  'caption-single-line-soft': 'font-caption-single-line-soft'
+  'caption-single-line-light': 'font-caption-single-line-light'
 }
 
 export const textVariants = cva('', {
@@ -74,7 +74,7 @@ export const textVariants = cva('', {
       warning: 'text-cn-warning',
       merged: 'text-cn-merged',
       danger: 'text-cn-danger',
-      accent: 'text-cn-brand'
+      brand: 'text-cn-brand'
     },
     lineClamp: {
       default: '',
@@ -116,10 +116,10 @@ const textVariantToElement: Record<
   'body-single-line-strong': { element: 'p', color: 'foreground-2' },
   'body-code': { element: 'pre', color: 'foreground-2' },
   'caption-normal': { element: 'span', color: 'foreground-2' },
-  'caption-soft': { element: 'span', color: 'foreground-2' },
+  'caption-light': { element: 'span', color: 'foreground-2' },
   'caption-strong': { element: 'span', color: 'foreground-2' },
   'caption-single-line-normal': { element: 'span', color: 'foreground-2' },
-  'caption-single-line-soft': { element: 'span', color: 'foreground-2' }
+  'caption-single-line-light': { element: 'span', color: 'foreground-2' }
 }
 
 const getTextNode = ({ as, variant = 'body-normal', asChild }: Pick<TextProps, 'as' | 'asChild' | 'variant'>) => {

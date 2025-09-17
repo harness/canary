@@ -1,6 +1,6 @@
-import { FC } from 'react'
+import { FC, useCallback } from 'react'
 
-import { IconV2, MoreActionsTooltip, Skeleton, Table, TimeAgoCard } from '@/components'
+import { IconV2, MoreActionsTooltip, Skeleton, Table, TimeAgoCard, useCustomDialogTrigger } from '@/components'
 import { useTranslation } from '@/context'
 
 import { TokensList } from '../types'
@@ -13,6 +13,15 @@ interface ProfileTokensListProps {
 
 export const ProfileTokensList: FC<ProfileTokensListProps> = ({ tokens, isLoading, openAlertDeleteDialog }) => {
   const { t } = useTranslation()
+
+  const { triggerRef, registerTrigger } = useCustomDialogTrigger()
+  const handleDeleteToken = useCallback(
+    (tokenId: string) => {
+      registerTrigger()
+      openAlertDeleteDialog({ identifier: tokenId, type: 'token' })
+    },
+    [openAlertDeleteDialog, registerTrigger]
+  )
 
   return (
     <Table.Root
@@ -56,13 +65,14 @@ export const ProfileTokensList: FC<ProfileTokensListProps> = ({ tokens, isLoadin
                 </Table.Cell>
                 <Table.Cell className="content-center text-right">
                   <MoreActionsTooltip
+                    ref={triggerRef}
                     isInTable
                     actions={[
                       {
                         isDanger: true,
                         title: t('views:profileSettings.deleteToken', 'Delete token'),
                         onClick: () => {
-                          openAlertDeleteDialog({ identifier: token.identifier!, type: 'token' })
+                          handleDeleteToken(token.identifier!)
                         }
                       }
                     ]}

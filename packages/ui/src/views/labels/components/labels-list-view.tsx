@@ -1,6 +1,17 @@
-import { FC, useState } from 'react'
+import { FC, useCallback, useState } from 'react'
 
-import { Button, getScopeType, IconV2, Layout, MoreActionsTooltip, NoData, ScopeTag, Table, Text } from '@/components'
+import {
+  Button,
+  getScopeType,
+  IconV2,
+  Layout,
+  MoreActionsTooltip,
+  NoData,
+  ScopeTag,
+  Table,
+  Text,
+  useCustomDialogTrigger
+} from '@/components'
 import { useTranslation } from '@/context'
 import { cn } from '@/utils'
 import { ILabelType, LabelTag, LabelType, LabelValuesType } from '@/views'
@@ -43,6 +54,15 @@ export const LabelsListView: FC<LabelsListViewProps> = ({
       [key]: !prev[key]
     }))
   }
+
+  const { triggerRef, registerTrigger } = useCustomDialogTrigger()
+  const handleDeleteLabelWithTrigger = useCallback(
+    (labelKey: string) => {
+      registerTrigger()
+      handleDeleteLabel(labelKey)
+    },
+    [handleDeleteLabel, registerTrigger]
+  )
 
   if (!labels.length) {
     if (searchQuery) {
@@ -108,13 +128,10 @@ export const LabelsListView: FC<LabelsListViewProps> = ({
 
           return (
             <Table.Row
-              className="cursor-pointer"
               key={label.id}
-              onClick={() => {
-                if (toRepoLabelDetails) {
-                  toRepoLabelDetails({ labelId: label.key, scope: label.scope })
-                }
-              }}
+              {...(toRepoLabelDetails
+                ? { onClick: () => toRepoLabelDetails({ labelId: label.key, scope: label.scope }) }
+                : {})}
             >
               <Table.Cell className="pr-0 align-top">
                 {valuesCount > 0 && (
@@ -135,11 +152,11 @@ export const LabelsListView: FC<LabelsListViewProps> = ({
               <Table.Cell className="align-top">
                 <Layout.Vertical align="start" gap="xs">
                   <LabelTag
-                    className="mt-cn-2xs"
+                    wrapperClassName="mt-cn-2xs"
                     scope={label.scope ?? 0}
-                    labelKey={label.key}
-                    color={label.color}
-                    labelValue={(valuesCount || '').toString()}
+                    label={label.key}
+                    theme={label.color}
+                    value={(valuesCount || '').toString()}
                     withIndicator={label.type === LabelType.DYNAMIC}
                   />
 
@@ -148,9 +165,9 @@ export const LabelsListView: FC<LabelsListViewProps> = ({
                       <LabelTag
                         key={item.id}
                         scope={label.scope}
-                        labelKey={label.key}
-                        color={item?.color || label.color}
-                        labelValue={item.value}
+                        label={label.key}
+                        theme={item?.color || label.color}
+                        value={item.value}
                       />
                     ))}
                 </Layout.Vertical>
@@ -169,6 +186,7 @@ export const LabelsListView: FC<LabelsListViewProps> = ({
               </Table.Cell>
               <Table.Cell className="align-top">
                 <MoreActionsTooltip
+                  ref={triggerRef}
                   isInTable
                   iconName="more-horizontal"
                   actions={[
@@ -181,7 +199,7 @@ export const LabelsListView: FC<LabelsListViewProps> = ({
                       isDanger: true,
                       title: t('views:labelData.delete', 'Delete label'),
                       iconName: 'trash',
-                      onClick: () => handleDeleteLabel(label.key)
+                      onClick: () => handleDeleteLabelWithTrigger(label.key)
                     }
                   ]}
                 />

@@ -76,6 +76,7 @@ export interface MFEContextProps {
   }
   customHooks: Partial<{
     useGenerateToken: Unknown
+    usePreferenceStore: Unknown
   }>
   customUtils: Partial<{
     navigateToUserProfile: Unknown
@@ -88,7 +89,17 @@ export interface MFEContextProps {
   routeUtils: Partial<{
     toCODERepository: ({ repoPath }: { repoPath: string }) => void
     toCODEPullRequest: ({ repoPath, pullRequestId }: { repoPath: string; pullRequestId: string }) => void
-    toCODERule: ({ repoPath, ruleId }: { repoPath: string; ruleId: string }) => void
+    toCODERule: ({
+      repoPath,
+      ruleId,
+      settingSection,
+      settingSectionMode
+    }: {
+      repoPath: string
+      ruleId?: string
+      settingSection?: string
+      settingSectionMode?: string
+    }) => void
     toCODEManageRepositories: ({
       space,
       ruleId,
@@ -96,8 +107,8 @@ export interface MFEContextProps {
       settingSectionMode
     }: {
       space: string
-      ruleId: string
-      settingSection: string
+      ruleId?: string
+      settingSection?: string
       settingSectionMode?: string
     }) => void
   }>
@@ -107,17 +118,15 @@ export interface MFEContextProps {
   onRouteChange: (updatedLocationPathname: string) => void
 }
 
-export const MFEContext = createContext<MFEContextProps>({
+export const defaultContext: MFEContextProps = {
   scope: { accountId: '' },
-  parentContextObj: {
-    appStoreContext: createContext({
-      currentUserInfo: {
-        uuid: ''
-      }
-    })
-  },
   renderUrl: '',
-  customHooks: {},
+  parentContextObj: {
+    appStoreContext: createContext({ currentUserInfo: { uuid: '' } })
+  },
+  customHooks: {
+    usePreferenceStore: () => ({ preference: undefined, setPreference: noop })
+  },
   customUtils: {},
   routes: {},
   routeUtils: {},
@@ -125,4 +134,6 @@ export const MFEContext = createContext<MFEContextProps>({
   setMFETheme: noop,
   parentLocationPath: '',
   onRouteChange: noop
-})
+}
+
+export const MFEContext = createContext<MFEContextProps>(defaultContext)

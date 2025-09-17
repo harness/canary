@@ -9,16 +9,11 @@ import {
   ThHTMLAttributes
 } from 'react'
 
+import { FlexProps, IconV2, Layout, Separator, Text, Tooltip, type LinkProps, type TooltipProps } from '@/components'
 import { useRouterContext } from '@/context'
-import { cn } from '@utils/cn'
+import { cn } from '@/utils'
 import { cva, type VariantProps } from 'class-variance-authority'
-
-import { IconV2 } from './icon-v2'
-import { FlexProps, Layout } from './layout'
-import { type LinkProps } from './link'
-import { Separator } from './separator'
-import { Text } from './text'
-import { Tooltip, type TooltipProps } from './tooltip'
+import omit from 'lodash-es/omit'
 
 export const tableVariants = cva('cn-table-v2', {
   variants: {
@@ -87,46 +82,49 @@ const TableRow = forwardRef<HTMLTableRowElement, TableRowProps>(({ className, se
 
     let child = _child
 
-    if ((_child.type as any).displayName === 'TableHead') {
-      if (index === 0) {
-        child = cloneElement(child, {
-          hideDivider: true
-        } as TableHeadProps)
-      }
-
-      if (index > 0 && _child.props.hideDivider === undefined) {
-        child = cloneElement(child, {
-          hideDivider: false
-        } as TableHeadProps)
-      }
+    if (child.type === TableHead && index === 0) {
+      child = cloneElement(child, {
+        hideDivider: true
+      } as TableHeadProps)
     }
 
-    if (props.to || props.linkProps) {
+    if (props.to || props.linkProps || props?.onClick) {
       if (child.props.disableLink) return child
 
       const currentTabIndex = isFirstLink ? 0 : -1
 
-      if (child.props.to || child.props.linkProps) {
+      if (child.props?.to || child.props?.linkProps || child.props?.onClick) {
         const updatedChild = cloneElement(child, {
-          linkProps: { ...child.props.linkProps, tabIndex: currentTabIndex }
+          ...(child.props?.to ? { to: child.props.to } : {}),
+          ...(child.props?.linkProps ? { linkProps: child.props.linkProps } : {}),
+          tabIndex: currentTabIndex,
+          onClick: child.props?.onClick
         } as any)
         isFirstLink = false
         return updatedChild
       }
 
       const updatedChild = cloneElement(child, {
-        to: props.to,
-        linkProps: { ...props.linkProps, tabIndex: currentTabIndex }
+        ...(props?.to ? { to: props.to } : {}),
+        ...(props?.linkProps ? { linkProps: props.linkProps } : {}),
+        tabIndex: currentTabIndex,
+        onClick: props?.onClick
       } as any)
 
       isFirstLink = false
       return updatedChild
     }
+
     return child
   })
 
   return (
-    <tr ref={ref} className={cn('cn-table-v2-row', className)} data-checked={selected ? 'true' : undefined} {...props}>
+    <tr
+      ref={ref}
+      className={cn('cn-table-v2-row', className)}
+      data-checked={selected ? 'true' : undefined}
+      {...omit(props, ['onClick'])}
+    >
       {rowChildren}
     </tr>
   )
@@ -159,7 +157,7 @@ const TableHead = forwardRef<HTMLTableCellElement, TableHeadProps>(
       sortable,
       children,
       tooltipProps,
-      hideDivider,
+      hideDivider = false,
       containerProps,
       contentClassName,
       ...props
@@ -221,25 +219,29 @@ interface TableCellProps extends TdHTMLAttributes<HTMLTableCellElement> {
   to?: string
   linkProps?: Omit<LinkProps, 'to'>
   disableLink?: boolean
+  onClick?: () => void
 }
 
 const TableCell = forwardRef<HTMLTableCellElement, TableCellProps>(
-  ({ className, to, linkProps, children, disableLink = false, ...props }, ref) => {
+  ({ className, to, linkProps, children, disableLink = false, onClick, tabIndex, ...props }, ref) => {
     const { Link } = useRouterContext()
-    const shouldRenderLink = !disableLink && (to || linkProps)
-
-    if (shouldRenderLink) {
-      return (
-        <td ref={ref} className={cn('cn-table-v2-cell', className)} {...props}>
-          <Link to={to || ''} {...(linkProps || {})} className={cn('cn-table-v2-cell-link', linkProps?.className)} />
-
-          {children}
-        </td>
-      )
-    }
+    const shouldRenderLink = !disableLink && (!!to || !!linkProps)
+    const shouldRenderButton = !disableLink && !to && !linkProps && !!onClick
 
     return (
       <td ref={ref} className={cn('cn-table-v2-cell', className)} {...props}>
+        {shouldRenderLink && (
+          <Link
+            to={to || ''}
+            {...(linkProps || {})}
+            className={cn('cn-table-v2-cell-clickable-block', linkProps?.className)}
+            onClick={() => onClick?.()}
+            tabIndex={tabIndex}
+          />
+        )}
+        {shouldRenderButton && (
+          <button className="cn-table-v2-cell-clickable-block" onClick={() => onClick?.()} tabIndex={tabIndex} />
+        )}
         {children}
       </td>
     )

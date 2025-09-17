@@ -24,7 +24,13 @@ export const ViewOnlyItem = ({ label, value }: { label: string; value: ReactNode
       {label}
     </Text>
     <Text color="foreground-1" as="dd">
-      {typeof value === 'string' ? <Text key="label">{value}</Text> : value}
+      {typeof value === 'string' ? (
+        <Text key="label" className="break-words">
+          {value}
+        </Text>
+      ) : (
+        value
+      )}
     </Text>
   </Layout.Grid>
 )

@@ -5,6 +5,7 @@ import {
   FocusEvent,
   forwardRef,
   KeyboardEvent,
+  MouseEvent,
   ReactNode,
   Ref,
   useContext,
@@ -12,14 +13,14 @@ import {
   useRef,
   useState
 } from 'react'
+import type { NavLinkRenderProps } from 'react-router-dom'
 
 import { CounterBadge } from '@/components/counter-badge'
 import { IconPropsV2, IconV2 } from '@/components/icon-v2'
 import { LogoPropsV2, LogoV2 } from '@/components/logo-v2'
 import { NavLinkProps, useRouterContext } from '@/context'
-import { afterFrames, getShadowActiveElement, useMergeRefs } from '@/utils'
+import { afterFrames, cn, getShadowActiveElement, useMergeRefs } from '@/utils'
 import * as TabsPrimitive from '@radix-ui/react-tabs'
-import { cn } from '@utils/cn'
 import { cva, type VariantProps } from 'class-variance-authority'
 
 const tabsListVariants = cva('cn-tabs-list', {
@@ -264,7 +265,7 @@ const TabsTrigger = forwardRef<HTMLButtonElement | HTMLAnchorElement, TabsTrigge
   const { className, children, value, icon, logo, counter, ...restProps } = props
   const { variant, activeClassName } = useContext(TabsListContext)
   const { type, activeTabValue, onValueChange } = useContext(TabsContext)
-  const { NavLink } = useRouterContext()
+  const { NavLink, isRouterVersion5 } = useRouterContext()
 
   const iconSize = variant === 'ghost' || variant === 'outlined' ? 'xs' : 'sm'
   const logoSize: LogoPropsV2['size'] = 'xs'
@@ -281,7 +282,7 @@ const TabsTrigger = forwardRef<HTMLButtonElement | HTMLAnchorElement, TabsTrigge
   if (type === 'tabsnav') {
     const { linkProps, disabled, ..._restProps } = restProps as TabsTriggerLinkProps
 
-    const handleClick = (e: React.MouseEvent) => {
+    const handleClick = (e: MouseEvent) => {
       if (disabled) {
         e.preventDefault()
         e.stopPropagation()
@@ -290,19 +291,28 @@ const TabsTrigger = forwardRef<HTMLButtonElement | HTMLAnchorElement, TabsTrigge
       onValueChange?.(value)
     }
 
+    const versionsProps = isRouterVersion5
+      ? {
+          activeClassName: `cn-tabs-trigger-active ${activeClassName ?? ''}`,
+          className: cn(tabsTriggerVariants({ variant }), className)
+        }
+      : {
+          className: ({ isActive }: NavLinkRenderProps) => {
+            return cn(
+              tabsTriggerVariants({ variant }),
+              { 'cn-tabs-trigger-active': isActive, [activeClassName ?? '']: isActive },
+              className
+            )
+          }
+        }
+
     return (
       <NavLink
         role="tab"
         to={value}
         onClick={handleClick}
         aria-disabled={disabled}
-        className={({ isActive }) => {
-          return cn(
-            tabsTriggerVariants({ variant }),
-            { 'cn-tabs-trigger-active': isActive, [activeClassName ?? '']: isActive },
-            className
-          )
-        }}
+        {...versionsProps}
         {...(linkProps as Omit<NavLinkProps, 'to' | 'className'>)}
         {...(_restProps as Omit<ComponentPropsWithoutRef<'a'>, 'href' | 'className'>)}
         ref={ref as Ref<HTMLAnchorElement>}

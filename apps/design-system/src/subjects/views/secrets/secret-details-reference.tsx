@@ -2,8 +2,9 @@ import { FC } from 'react'
 
 import { noop } from '@utils/viewUtils'
 
+import { IconV2NamesType } from '@harnessio/ui/components'
 // Import directly from the package path
-import { SecretReferencesPage } from '@harnessio/ui/views'
+import { ScopeType, SecretReferencesPage } from '@harnessio/ui/views'
 
 // Mock data for secret references
 const mockSecretReferences = [
@@ -12,24 +13,33 @@ const mockSecretReferences = [
     name: 'Pipeline: Main Build',
     type: 'pipeline',
     path: '/org/project/pipelines/main-build',
-    scope: 'Project',
-    createdAt: 1744726246997
+    scope: 'Project' as ScopeType,
+    createdAt: 1744726246997,
+    scopedPath: '/org/project/pipelines/main-build',
+    iconType: 'pipeline' as IconV2NamesType,
+    rowLink: '/org/project/pipelines/main-build'
   },
   {
     id: 'ref-2',
     name: 'Pipeline: Deploy to Production',
     type: 'pipeline',
     path: '/org/project/pipelines/deploy-prod',
-    scope: 'Project',
-    createdAt: 1744726246997
+    scope: 'Project' as ScopeType,
+    createdAt: 1744726246997,
+    scopedPath: '/org/project/pipelines/deploy-prod',
+    iconType: 'pipeline' as IconV2NamesType,
+    rowLink: '/org/project/pipelines/deploy-prod'
   },
   {
     id: 'ref-3',
     name: 'Connector: GitHub',
     type: 'connector',
     path: '/org/project/connectors/github',
-    scope: 'Account',
-    createdAt: 1744726246997
+    scope: 'Account' as ScopeType,
+    createdAt: 1744726246997,
+    scopedPath: '/org/project/connectors/github',
+    iconType: 'connector' as IconV2NamesType,
+    rowLink: '/org/project/connectors/github'
   }
 ]
 

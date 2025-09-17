@@ -77,9 +77,12 @@ export default {
     },
 
     '&:where([disabled])': {
-      backgroundColor: 'var(--cn-state-disabled-bg)',
-      borderColor: 'var(--cn-state-disabled-border)',
-      cursor: 'not-allowed'
+      cursor: 'not-allowed',
+      '@apply opacity-cn-disabled': '',
+
+      '+ .cn-checkbox-label-wrapper': {
+        '@apply opacity-cn-disabled': ''
+      }
     },
 
     '&:where([data-state=checked])': {
@@ -88,8 +91,8 @@ export default {
     },
 
     '&:where([data-state=checked][disabled])': {
-      backgroundColor: 'var(--cn-state-disabled-bg-selected)',
-      borderColor: 'var(--cn-state-disabled-border-selected)'
+      cursor: 'not-allowed',
+      '@apply opacity-cn-disabled': ''
     },
 
     '&:where([data-state=indeterminate])': {
@@ -104,8 +107,8 @@ export default {
     },
 
     '&:where([data-state=indeterminate][disabled])': {
-      backgroundColor: 'var(--cn-state-disabled-bg-selected)',
-      borderColor: 'var(--cn-state-disabled-border-selected)'
+      cursor: 'not-allowed',
+      '@apply opacity-cn-disabled': ''
     }
   },
 
@@ -113,15 +116,13 @@ export default {
     color: 'var(--cn-comp-selection-selected-item)',
 
     '&:where([disabled])': {
-      color: 'var(--cn-state-disabled-text)'
+      cursor: 'not-allowed',
+      '@apply opacity-cn-disabled': ''
     },
 
-    '&:where([data-state=checked][disabled])': {
-      color: 'var(--cn-state-disabled-text-selected)'
-    },
-
-    '&:where([data-state=indeterminate][disabled])': {
-      color: 'var(--cn-state-disabled-text-selected)'
+    '&:where([data-state=checked][disabled], [data-state=indeterminate][disabled])': {
+      cursor: 'not-allowed',
+      '@apply opacity-cn-disabled': ''
     }
   },
 
@@ -133,7 +134,8 @@ export default {
     font: 'var(--cn-body-normal) !important',
     color: 'var(--cn-text-1) !important',
     '&:where(.disabled)': {
-      color: 'var(--cn-state-disabled-text) !important'
+      cursor: 'not-allowed',
+      '@apply opacity-cn-disabled': ''
     }
   },
 
@@ -141,7 +143,8 @@ export default {
     font: 'var(--cn-body-normal)',
     color: 'var(--cn-text-2)',
     '&:where(.disabled)': {
-      color: 'var(--cn-state-disabled-text)'
+      cursor: 'not-allowed',
+      '@apply opacity-cn-disabled': ''
     },
     '@apply truncate': ''
   }

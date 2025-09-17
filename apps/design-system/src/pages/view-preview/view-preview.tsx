@@ -7,8 +7,6 @@ import { Navigate, Route, Routes } from 'react-router-dom'
 import { ProfileSettingsViewWrapper } from '@/pages/view-preview/profile-settings-view-wrapper.tsx'
 import { RepoSettingsViewWrapper } from '@/pages/view-preview/repo-settings-view-wrapper'
 import DataTableDemo from '@subjects/views/data-table-demo'
-import { DelegateConnectivityWrapper } from '@subjects/views/delegates/delegate-connectivity'
-import { DelegateSelector } from '@subjects/views/delegates/delegate-selector'
 import DraggableCardsDemo from '@subjects/views/draggable-cards-demo'
 import ExecutionListWrapper from '@subjects/views/execution-list/execution-list'
 import { LabelsForm } from '@subjects/views/labels/labels-form'
@@ -545,14 +543,6 @@ export const viewPreviews: Record<string, ViewPreviewGroup> = {
       'secret-details': {
         label: 'Secret Details Page',
         element: <SecretDetailsLayoutWrapper />
-      },
-      'delegate-selector': {
-        label: 'Delegate Selector',
-        element: <DelegateSelector />
-      },
-      'delegate-connectivity': {
-        label: 'Delegate Connectivity',
-        element: <DelegateConnectivityWrapper />
       },
       'draggable-cards-demo': {
         label: 'Draggable Cards Demo',

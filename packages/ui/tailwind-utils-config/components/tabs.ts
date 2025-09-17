@@ -131,8 +131,8 @@ export default {
     },
 
     '&:where([disabled]), &:where([aria-disabled="true"])': {
-      color: 'var(--cn-state-disabled-text)',
-      cursor: 'not-allowed'
+      cursor: 'not-allowed',
+      '@apply opacity-cn-disabled': ''
     }
   }
 }

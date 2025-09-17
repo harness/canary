@@ -1,4 +1,4 @@
-import { CSSProperties, ReactNode, useCallback, useEffect, useMemo, useRef } from 'react'
+import { CSSProperties, memo, ReactNode, useCallback, useEffect, useMemo, useRef } from 'react'
 
 import { CopyButton, Text } from '@/components'
 import MarkdownPreview from '@uiw/react-markdown-preview'
@@ -36,7 +36,7 @@ type MarkdownViewerProps = {
   isLoading?: boolean
 }
 
-export function MarkdownViewer({
+const MarkdownViewerLocal = ({
   source,
   maxHeight,
   withBorder = false,
@@ -48,7 +48,7 @@ export function MarkdownViewer({
   suggestionTitle,
   suggestionFooter,
   isLoading = false
-}: MarkdownViewerProps) {
+}: MarkdownViewerProps) => {
   const { navigate } = useRouterContext()
   const refRootHref = useMemo(() => document.getElementById('repository-ref-root')?.getAttribute('href'), [])
   const ref = useRef<HTMLDivElement>(null)
@@ -150,7 +150,16 @@ export function MarkdownViewer({
         const TODO_LIST_ITEM_CLASS = 'task-list-item'
         const targetIsListItem = (event.target as HTMLElement).classList.contains(TODO_LIST_ITEM_CLASS)
         const target = (event.target as HTMLElement)?.closest?.(`.${TODO_LIST_ITEM_CLASS}`)
-        const input = target?.firstElementChild as HTMLInputElement
+
+        // Handle both DOM structures:
+        // 1. Without blank lines: <li><input>...</li>
+        // 2. With blank lines: <li><p><input>...</p></li>
+        const firstChild = target?.firstElementChild
+        const input =
+          firstChild?.tagName === 'INPUT'
+            ? (firstChild as HTMLInputElement)
+            : (firstChild?.querySelector('input[type="checkbox"]') as HTMLInputElement)
+
         const checked = targetIsListItem ? !input?.checked : input?.checked
         const checkboxIndex = parseInt(event.target.getAttribute('data-checkbox-index') || '0', 10)
         let currentCheckboxIndex = 0
@@ -314,3 +323,9 @@ export function MarkdownViewer({
     </div>
   )
 }
+
+MarkdownViewerLocal.displayName = 'MarkdownViewer'
+
+const MarkdownViewer = memo(MarkdownViewerLocal)
+
+export { MarkdownViewer }

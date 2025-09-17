@@ -136,7 +136,7 @@ export const LineTitle: React.FC<LineTitleProps> = ({
           </Button>
           <Link
             to={toRepoFileDetails?.({ path: `files/${currentRefForDiff || sourceBranch}/~/${linkPath}` }) ?? ''}
-            className="font-medium leading-tight text-cn-1"
+            className="font-medium leading-tight text-cn-1 min-w-0 break-all"
           >
             {displayText}
           </Link>

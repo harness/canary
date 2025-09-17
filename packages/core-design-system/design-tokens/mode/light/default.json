@@ -189,7 +189,7 @@
         },
         "bg": {
           "$type": "color",
-          "$value": "{blue.50}",
+          "$value": "{blue.25}",
           "$description": "Background color for primary brand items with minimum emphasis."
         },
         "border": {

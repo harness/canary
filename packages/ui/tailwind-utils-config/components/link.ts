@@ -27,16 +27,28 @@ export default {
 
     '&:where([data-disabled="false"])': {
       '&:where(.cn-link-default)': {
-        '&:hover, &:where([data-hovered="true"])': {
-          // Adding important to override Blueprint reset CSS defaults
+        /**
+         * If a Link component is used with Button component with "asChild",
+         * prevent color change on hover
+         *
+         * !important is added to override Blueprint reset CSS defaults
+         */
+        '&:not(.cn-button):hover, &:not(.cn-button):where([data-hovered="true"])': {
           color: 'var(--cn-comp-link-text-hover) !important'
         }
       },
 
-      '&:hover, &:where([data-hovered="true"])': {
-        textDecorationLine: 'underline !important',
-        textDecorationColor: 'inherit !important'
-      },
+      /**
+       * If a Link component is used with Button component with "asChild",
+       * remove underline on hover
+       *
+       * !important is added to override Blueprint reset CSS defaults
+       */
+      '&:not(.cn-button):not(.cn-link-no-underline):hover, &:not(.cn-button):not(.cn-link-no-underline):where([data-hovered="true"])':
+        {
+          textDecorationLine: 'underline !important',
+          textDecorationColor: 'inherit !important'
+        },
 
       '&:focus-visible': {
         outline: 'var(--cn-focus)',

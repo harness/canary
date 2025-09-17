@@ -584,17 +584,8 @@ export default {
     /** Existing Variants  */
     { pattern: /^bg-graph-/ },
 
-    // tags classes
-    { pattern: /^bg-tag-background-/ },
-    { pattern: /^text-tag-foreground-/ },
-    { pattern: /^border-tag-border-/ },
-
     // Hover classes
     { pattern: /^hover:bg-graph-/ },
-    // tags classes
-    { pattern: /^hover:bg-tag-background-/ },
-    { pattern: /^hover:text-tag-foreground-/ },
-    { pattern: /^hover:border-tag-border-/ },
     'stroke-borders-2',
     { pattern: /rounded-./ },
     { pattern: /border-./ },

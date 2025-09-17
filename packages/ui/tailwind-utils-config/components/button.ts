@@ -291,14 +291,6 @@ export default {
       '&:where(:not(:disabled, .cn-button-disabled):hover, :not(:disabled, .cn-button-disabled):active)': {
         color: 'var(--cn-text-1)'
       }
-    },
-
-    /**
-     * If a Link component is used in a Button component with "asChild",
-     * remove underline on hover
-     *  */
-    '&:where(.cn-link:hover)': {
-      textDecorationLine: 'none !important'
     }
   }
 }

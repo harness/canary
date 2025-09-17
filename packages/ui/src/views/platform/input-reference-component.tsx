@@ -5,12 +5,12 @@ import { cn } from '@utils/cn'
 import { cva, type VariantProps } from 'class-variance-authority'
 
 const inputReferenceVariants = cva(
-  'flex h-9 min-h-9 cursor-pointer items-center rounded bg-cn-2 text-cn-1 transition-colors',
+  'h-cn-input-md border-cn-input rounded-cn-input bg-cn-input text-cn-1 flex cursor-pointer select-none items-center transition-colors',
   {
     variants: {
       state: {
-        default: 'border border-cn-2',
-        disabled: 'cursor-not-allowed border border-cn-1 bg-cn-3 text-cn-3'
+        default: '',
+        disabled: 'opacity-cn-disabled cursor-not-allowed'
       }
     },
     defaultVariants: {
@@ -181,10 +181,16 @@ export const InputReference = <T,>({
         }}
         {...props}
       >
-        <div className="flex w-full items-center justify-between px-3 py-2">
+        <div className="flex w-full items-center justify-between pl-cn-input-md">
           {icon && <IconV2 className="mr-2.5" name={icon} />}
           {logo && <LogoV2 className="mr-2.5" name={logo} size="xs" />}
-          <div className={cn(`flex-1 truncate ${hasValue ? '' : 'text-cn-disabled'}`)}>{displayContent}</div>
+          <div
+            className={cn(`flex-1 truncate`, {
+              'text-cn-disabled': !hasValue
+            })}
+          >
+            {displayContent}
+          </div>
           {hasValue && !disabled && (
             <div className="ml-3 flex items-center">
               <Button onClick={handleEdit} size="sm" variant="ghost" iconOnly tooltipProps={{ content: 'Edit' }}>

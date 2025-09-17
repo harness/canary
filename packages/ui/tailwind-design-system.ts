@@ -4,7 +4,11 @@ import plugin from 'tailwindcss/plugin'
 import type { PluginAPI, Config as TailwindConfig } from 'tailwindcss/types/config'
 
 import { ComponentStyles } from './tailwind-utils-config/components'
-import { typography as typographyStyles } from './tailwind-utils-config/utilities'
+import {
+  borders as borderStyles,
+  padding as paddingStyles,
+  typography as typographyStyles
+} from './tailwind-utils-config/utilities'
 
 export default {
   darkMode: ['class'],
@@ -68,6 +72,9 @@ export default {
         'cn-3-half': 'var(--cn-size-3-half)',
         'cn-4-half': 'var(--cn-size-4-half)'
       },
+      height: {
+        'cn-input-md': 'var(--cn-input-size-md)'
+      },
       minHeight: {
         'cn-textarea': '7lh'
       },
@@ -95,6 +102,8 @@ export default {
           selected: 'lch(from var(--cn-set-brand-solid-bg-selected) l c h / <alpha-value>)',
           surface: 'lch(from var(--cn-set-brand-surface-bg) l c h / <alpha-value>)'
         },
+
+        'cn-input': 'var(--cn-comp-input-bg)',
 
         // States
         'cn-hover': 'var(--cn-state-hover)',
@@ -443,7 +452,12 @@ export default {
         6: 'var(--cn-rounded-6)',
         7: 'var(--cn-rounded-7)',
         none: 'var(--cn-rounded-none)',
-        full: 'var(--cn-rounded-full)'
+        full: 'var(--cn-rounded-full)',
+
+        /**
+         * Component specific borderRadius
+         */
+        'cn-input': 'var(--cn-input-radius)'
       },
       fontSize: {
         0: 'var(--cn-font-size-0)',
@@ -509,16 +523,15 @@ export default {
      *
      */
     plugin(({ addUtilities }) => {
+      addUtilities(paddingStyles)
       addUtilities(typographyStyles)
+      addUtilities(borderStyles)
     }),
     plugin(({ addComponents }) => {
       addComponents(ComponentStyles)
     }),
     tailwindcssAnimate,
     typography,
-    function ({ addUtilities }: PluginAPI) {
-      addUtilities({})
-    },
     function ({ addComponents, theme, e }: PluginAPI) {
       const hoverClasses: Record<string, Record<string, string>> = {}
 

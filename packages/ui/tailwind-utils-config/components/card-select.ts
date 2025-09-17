@@ -28,7 +28,7 @@ export default {
   },
 
   '.cn-card-select-item': {
-    '@apply relative cursor-pointer transition-all flex items-center': '',
+    '@apply relative cursor-pointer transition-all flex items-center select-none': '',
     borderWidth: 'var(--cn-card-border)',
     borderStyle: 'solid',
     borderColor: 'var(--cn-border-2)',

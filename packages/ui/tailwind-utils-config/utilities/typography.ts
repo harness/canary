@@ -1,4 +1,4 @@
-export default {
+export const typography = {
   '.font': {
     '&-heading-hero': {
       font: 'var(--cn-heading-hero)'

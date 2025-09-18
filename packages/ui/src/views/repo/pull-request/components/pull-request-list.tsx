@@ -188,6 +188,7 @@ export const PullRequestList: FC<PullRequestListProps> = ({
                     tasks={pullRequest.tasks}
                     sourceBranch={pullRequest.sourceBranch || ''}
                     timestamp={pullRequest.timestamp}
+                    state={pullRequest.state || ('opened' as EnumPullReqState)}
                     targetBranch={pullRequest.targetBranch || ''}
                     toBranch={toBranch}
                     repoId={pullRequest.repo?.identifier || ''}

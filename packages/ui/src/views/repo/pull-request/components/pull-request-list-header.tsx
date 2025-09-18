@@ -62,7 +62,7 @@ export const PullRequestListHeader: FC<PullRequestListHeaderProps> = ({
             'text-cn-danger': headerFilter.includes('closed'),
             'text-cn-3': !headerFilter.includes('closed')
           })}
-          name="check"
+          name="git-pull-request-closed"
         />
         <Text
           color={headerFilter.includes('closed') ? 'foreground-1' : 'foreground-3'}

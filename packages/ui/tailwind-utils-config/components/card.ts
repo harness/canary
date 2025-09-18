@@ -79,7 +79,7 @@ export default {
     },
 
     '&:where(.cn-card-selected)': {
-      backgroundColor: 'var(--cn-set-brand-soft-bg)',
+      backgroundColor: 'var(--cn-set-brand-secondary-bg)',
       borderColor: 'var(--cn-border-accent)'
     },
     '&:where(.cn-card-disabled)': {

@@ -46,7 +46,7 @@ export default {
 
     '&:where([data-state="checked"])': {
       borderColor: 'var(--cn-border-brand)',
-      background: 'var(--cn-set-brand-soft-bg)'
+      background: 'var(--cn-set-brand-secondary-bg)'
     },
 
     '.cn-card-select-content': {

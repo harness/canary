@@ -232,15 +232,15 @@ const getDataFromPullReqMetadata = (pullReqMetadata?: TypesPullReq) => {
 
 export interface PullRequestPanelProps
   extends Omit<
-      PullRequestChangesSectionProps,
-      | 'reqNoChangeReq'
-      | 'reqCodeOwnerApproval'
-      | 'minApproval'
-      | 'reqCodeOwnerLatestApproval'
-      | 'minReqLatestApproval'
-      | 'accordionValues'
-    >,
-    Partial<PullRequestRoutingProps> {
+    PullRequestChangesSectionProps,
+    | 'reqNoChangeReq'
+    | 'reqCodeOwnerApproval'
+    | 'minApproval'
+    | 'reqCodeOwnerLatestApproval'
+    | 'minReqLatestApproval'
+    | 'accordionValues'
+  >,
+  Partial<PullRequestRoutingProps> {
   handleRebaseBranch: () => void
   handlePrState: (state: string) => void
   handleViewUnresolvedComments: () => void
@@ -490,11 +490,11 @@ const PullRequestPanel = ({
 
   const prState = getPrState()
   const headerRowBgClass = cn({
-    'bg-cn-green-surface': prState === PrState.Success,
+    'bg-cn-success-outline': prState === PrState.Success,
     'bg-cn-1': prState === PrState.Draft,
-    'bg-cn-red-surface': prState === PrState.Error,
-    'bg-cn-brand-surface': prState === PrState.Closed,
-    'bg-cn-purple-surface': prState === PrState.Merged
+    'bg-cn-danger-outline': prState === PrState.Error,
+    'bg-cn-brand-outline': prState === PrState.Closed,
+    'bg-cn-purple-outline': prState === PrState.Merged
   })
 
   const shouldShowConfirmation = actions && !pullReqMetadata?.closed && (showActionBtn || isMerging || mergeInitiated)
@@ -577,12 +577,12 @@ const PullRequestPanel = ({
                         actions={[
                           ...(!isDraft
                             ? [
-                                {
-                                  title: 'Mark as draft',
-                                  onClick: () => handlePrState('draft'),
-                                  iconName: 'page-edit' as const
-                                }
-                              ]
+                              {
+                                title: 'Mark as draft',
+                                onClick: () => handlePrState('draft'),
+                                iconName: 'page-edit' as const
+                              }
+                            ]
                             : []),
                           {
                             title: 'Close pull request',
@@ -591,12 +591,12 @@ const PullRequestPanel = ({
                           },
                           ...(isRebasable
                             ? [
-                                {
-                                  title: 'Rebase',
-                                  onClick: () => handleRebaseBranch(),
-                                  iconName: 'git-rebase' as const
-                                }
-                              ]
+                              {
+                                title: 'Rebase',
+                                onClick: () => handleRebaseBranch(),
+                                iconName: 'git-rebase' as const
+                              }
+                            ]
                             : [])
                         ]}
                       />

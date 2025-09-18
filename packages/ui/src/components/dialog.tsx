@@ -29,7 +29,8 @@ const contentVariants = cva('cn-modal-dialog-content', {
     size: {
       sm: 'cn-modal-dialog-sm',
       md: 'cn-modal-dialog-md',
-      lg: 'cn-modal-dialog-lg'
+      lg: 'cn-modal-dialog-lg',
+      max: 'cn-modal-dialog-max'
     }
   },
   defaultVariants: {
@@ -166,7 +167,7 @@ const Root = ({ children, open, ...props }: ModalDialogRootProps) => {
 }
 
 interface ContentProps extends DialogPrimitive.DialogContentProps, VariantProps<typeof contentVariants> {
-  size?: 'sm' | 'md' | 'lg'
+  size?: 'sm' | 'md' | 'lg' | 'max'
   hideClose?: boolean
 }
 

@@ -54,6 +54,7 @@ import { useAPIPath } from '../../hooks/useAPIPath.ts'
 import { PathParams } from '../../RouteDefinitions'
 import { SSEEvent } from '../../types.ts'
 import { filenameToLanguage, normalizeGitRef } from '../../utils/git-utils'
+import { createImageUrlTransform } from '../../utils/path-utils.ts'
 import { usePrConversationLabels } from './hooks/use-pr-conversation-labels'
 import { usePrFilters } from './hooks/use-pr-filters'
 import { usePRCommonInteractions } from './hooks/usePRCommonInteractions'
@@ -838,6 +839,15 @@ export default function PullRequestConversationPage() {
     }
   }, [filtersData, activities])
 
+  const imageUrlTransform = useMemo(
+    () =>
+      createImageUrlTransform({
+        repoRef,
+        apiPath: getApiPath
+      }),
+    [repoRef, getApiPath]
+  )
+
   /**
    * Memoize overviewProps
    */
@@ -870,7 +880,8 @@ export default function PullRequestConversationPage() {
       toCode: ({ sha }: { sha: string }) => `${routes.toRepoFiles({ spaceId, repoId })}/${sha}`,
       spaceId,
       repoId,
-      isUpdatingPR
+      isUpdatingPR,
+      imageUrlTransform
     }),
     [
       routes,
@@ -891,7 +902,8 @@ export default function PullRequestConversationPage() {
       handleUpload,
       spaceId,
       repoId,
-      isUpdatingPR
+      isUpdatingPR,
+      imageUrlTransform
     ]
   )
 

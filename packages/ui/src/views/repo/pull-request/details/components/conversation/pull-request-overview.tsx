@@ -60,6 +60,7 @@ export interface PullRequestOverviewProps
   spaceId?: string
   repoId?: string
   isUpdatingPR?: boolean
+  imageUrlTransform?: (url: string) => string
 }
 
 export const PullRequestOverview: FC<PullRequestOverviewProps> = ({
@@ -87,7 +88,8 @@ export const PullRequestOverview: FC<PullRequestOverviewProps> = ({
   toPullRequestChange,
   toCode,
   principalProps,
-  isUpdatingPR
+  isUpdatingPR,
+  imageUrlTransform
 }) => {
   /**
    * Get sorted model of Data props
@@ -194,6 +196,7 @@ export const PullRequestOverview: FC<PullRequestOverviewProps> = ({
             prNum={`#${pullReqMetadata?.number}`}
             description={pullReqMetadata?.description}
             isUpdatingPR={isUpdatingPR}
+            imageUrlTransform={imageUrlTransform}
           />
         )}
 

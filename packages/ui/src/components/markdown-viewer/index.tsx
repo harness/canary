@@ -34,6 +34,7 @@ type MarkdownViewerProps = {
   suggestionTitle?: string
   suggestionFooter?: ReactNode
   isLoading?: boolean
+  imageUrlTransform?: (src: string) => string
 }
 
 const MarkdownViewerLocal = ({
@@ -47,7 +48,8 @@ const MarkdownViewerLocal = ({
   onCheckboxChange,
   suggestionTitle,
   suggestionFooter,
-  isLoading = false
+  isLoading = false,
+  imageUrlTransform
 }: MarkdownViewerProps) => {
   const { navigate } = useRouterContext()
   const refRootHref = useMemo(() => document.getElementById('repository-ref-root')?.getAttribute('href'), [])
@@ -220,6 +222,42 @@ const MarkdownViewerLocal = ({
             [rehypeExternalLinks, { rel: ['nofollow noreferrer noopener'], target: '_blank' }]
           ]}
           components={{
+            img: ({
+              alt,
+              src: originalSrc,
+              ...props
+            }: {
+              alt?: string
+              src?: string
+              node?: any
+              [key: string]: any
+            }) => {
+              // Process the image source to handle relative paths
+              let src = originalSrc || ''
+
+              // Handle relative image paths
+              if (imageUrlTransform) {
+                src = imageUrlTransform(src)
+              }
+
+              // XSS Protection: Sanitize props
+              const safeProps = { ...props }
+              delete safeProps.node
+              delete safeProps.dangerouslySetInnerHTML
+              delete safeProps.onLoad
+              delete safeProps.onError
+
+              // Remove string-based event handlers
+              const eventHandlerProps = Object.keys(safeProps).filter(
+                prop => prop.startsWith('on') && typeof safeProps[prop] === 'string'
+              )
+              eventHandlerProps.forEach(prop => delete safeProps[prop])
+
+              // Sanitize alt text
+              const altText = typeof alt === 'string' ? alt.replace(/[<>]/g, '') : ''
+
+              return <img src={src} alt={altText} {...safeProps} />
+            },
             input: ({ type, checked, ...props }) => {
               // checkbox inputs
               if (type === 'checkbox') {

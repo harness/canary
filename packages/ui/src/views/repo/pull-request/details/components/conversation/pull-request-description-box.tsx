@@ -19,6 +19,7 @@ export interface PullRequestDescBoxProps {
   handleUpload: HandleUploadType
   principalProps: PrincipalPropsType
   isUpdatingPR?: boolean
+  imageUrlTransform?: (url: string) => string
 }
 
 const PullRequestDescBox: FC<PullRequestDescBoxProps> = ({
@@ -32,7 +33,8 @@ const PullRequestDescBox: FC<PullRequestDescBoxProps> = ({
   handleUpload,
   handleAiPullRequestSummary,
   principalProps,
-  isUpdatingPR
+  isUpdatingPR,
+  imageUrlTransform
 }) => {
   const [comment, setComment] = useState(description || '')
   const [edit, setEdit] = useState(false)
@@ -138,6 +140,7 @@ const PullRequestDescBox: FC<PullRequestDescBoxProps> = ({
                     handleUpdateDescription(title || '', updatedDescription)
                   }}
                   isLoading={isUpdatingPR}
+                  imageUrlTransform={imageUrlTransform}
                 />
               )}
             </Text>

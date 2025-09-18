@@ -40,3 +40,42 @@ export function getFileExtension(filename: string): string {
   }
   return filename.substring(lastDotIndex + 1)
 }
+
+interface createImageUrlTransformProps {
+  repoRef: string
+  apiPath: (path: string) => string
+}
+
+export const createImageUrlTransform = ({ repoRef, apiPath }: createImageUrlTransformProps) => {
+  return (src: string): string => {
+    // XSS Protection: Validate the source before processing
+    if (src && /^javascript:/i.test(src)) {
+      console.error('Potentially malicious image source detected:', src)
+      return ''
+    }
+
+    // Handle relative image paths
+    if (
+      src &&
+      !src.startsWith('/') &&
+      !src.startsWith('http:') &&
+      !src.startsWith('https:') &&
+      !src.startsWith('data:')
+    ) {
+      try {
+        // Normalize paths that start with ./
+        if (src.startsWith('./')) {
+          src = src.replace('./', '')
+        }
+
+        if (repoRef) {
+          return apiPath(`/api/v1/repos/${repoRef}/raw/${src}`)
+        }
+      } catch (e) {
+        console.error('Error processing relative image path:', e)
+      }
+    }
+
+    return src
+  }
+}

@@ -98,6 +98,7 @@ export interface RepoSummaryViewProps extends Partial<RoutingProps> {
   prCandidateBranches?: TypesBranchTable[]
   showContributeBtn?: boolean
   scheduleFileMetaFetch?: (paths: string[]) => void
+  imageUrlTransform?: (url: string) => string
 }
 
 export function RepoSummaryView({
@@ -131,6 +132,7 @@ export function RepoSummaryView({
   refType = BranchSelectorTab.BRANCHES,
   showContributeBtn,
   scheduleFileMetaFetch,
+  imageUrlTransform,
   ...props
 }: RepoSummaryViewProps) {
   const { t } = useTranslation()
@@ -284,7 +286,12 @@ export function RepoSummaryView({
                     />
                   </StackedList.Header>
                 </StackedList.Root>
-                <MarkdownViewer source={readmeInfo.content} withBorder className="text-wrap" />
+                <MarkdownViewer
+                  source={readmeInfo.content}
+                  withBorder
+                  className="text-wrap"
+                  imageUrlTransform={imageUrlTransform}
+                />
               </>
             ) : (
               // No README content - show Create README prompt

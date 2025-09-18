@@ -127,7 +127,7 @@ export const SecretEntityForm = forwardRef<SecretEntityFormHandle, SecretEntityF
           return (
             <>
               <RenderForm
-                className="max-w-xl space-y-4"
+                className="max-w-xl space-y-cn-xl"
                 factory={inputComponentFactory}
                 inputs={secretsFormDefinition ?? { inputs: [] }}
               />

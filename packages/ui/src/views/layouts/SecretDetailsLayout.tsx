@@ -1,6 +1,6 @@
 import { FC, ReactNode } from 'react'
 
-import { Layout, Link, MoreActionsTooltip, Spacer, Text, TimeAgoCard } from '@/components'
+import { Layout, Link, MoreActionsTooltip, Spacer, Text, TimeAgoCard, useCustomDialogTrigger } from '@/components'
 import { Tabs } from '@/components/tabs'
 import { useRouterContext, useTranslation } from '@/context'
 import { SandboxLayout } from '@views/layouts/SandboxLayout'
@@ -28,7 +28,7 @@ const DATE_FORMAT_OPTIONS = {
   year: 'numeric' as const
 }
 
-const getSecretInfo = (
+const useGetSecretInfo = (
   created?: string | number,
   lastUsed?: string | number,
   lastUpdated?: string | number,
@@ -36,6 +36,12 @@ const getSecretInfo = (
   onDelete?: (identifier: string) => void,
   identifier?: string
 ) => {
+  const { triggerRef, registerTrigger } = useCustomDialogTrigger()
+  const handleDelete = (id: string) => {
+    registerTrigger()
+    onDelete?.(id)
+  }
+
   return (
     <Layout.Horizontal justify="between" align="center" className="mt-2">
       <Layout.Horizontal gap="3xl">
@@ -71,6 +77,7 @@ const getSecretInfo = (
         </Layout.Vertical>
       </Layout.Horizontal>
       <MoreActionsTooltip
+        ref={triggerRef}
         buttonVariant="outline"
         actions={[
           {
@@ -83,7 +90,7 @@ const getSecretInfo = (
             isDanger: true,
             title: 'Delete secret',
             iconName: 'trash',
-            onClick: () => onDelete?.(identifier ?? '')
+            onClick: () => handleDelete(identifier ?? '')
           }
         ]}
       />
@@ -113,7 +120,7 @@ export const SecretDetailsLayout: FC<SecretDetailsLayoutProps> = ({
           <Layout.Horizontal align="center">
             <Text variant="heading-hero">{secret.name}</Text>
           </Layout.Horizontal>
-          {getSecretInfo(secret.createdAt, secret.updatedAt, secret.updatedAt, onEdit, onDelete, secret.identifier)}
+          {useGetSecretInfo(secret.createdAt, secret.updatedAt, secret.updatedAt, onEdit, onDelete, secret.identifier)}
         </Layout.Vertical>
         <Spacer size={6} />
         <Tabs.NavRoot>

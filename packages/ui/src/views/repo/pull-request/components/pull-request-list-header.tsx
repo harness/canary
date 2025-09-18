@@ -9,6 +9,7 @@ interface PullRequestListHeaderProps {
   mergedPRs?: number
   openPRs?: number
   onClick: (value: EnumPullReqState) => void
+  isLoading?: boolean
 }
 
 export const PullRequestListHeader: FC<PullRequestListHeaderProps> = ({
@@ -16,18 +17,19 @@ export const PullRequestListHeader: FC<PullRequestListHeaderProps> = ({
   closedPRs,
   mergedPRs,
   openPRs,
-  onClick
+  onClick,
+  isLoading
 }) => {
   return (
     <Tabs.Root value={headerFilter[0]} onValueChange={value => onClick(value as EnumPullReqState)}>
       <Tabs.List variant="ghost">
-        <Tabs.Trigger value="open" icon="git-pull-request">
+        <Tabs.Trigger value="open" icon="git-pull-request" disabled={isLoading}>
           {openPRs} Open
         </Tabs.Trigger>
-        <Tabs.Trigger value="closed" icon="git-pull-request-closed">
+        <Tabs.Trigger value="closed" icon="git-pull-request-closed" disabled={isLoading}>
           {closedPRs} Closed
         </Tabs.Trigger>
-        <Tabs.Trigger value="merged" icon="git-merge">
+        <Tabs.Trigger value="merged" icon="git-merge" disabled={isLoading}>
           {mergedPRs} Merged
         </Tabs.Trigger>
       </Tabs.List>

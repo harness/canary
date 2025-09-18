@@ -163,7 +163,7 @@ export default {
         color: 'var(--cn-text-1)',
         backgroundColor: 'var(--cn-state-hover)'
       },
-      '&:where(:active:not(:disabled, .cn-button-disabled))': {
+      '&:where(:active:not(:disabled, .cn-button-disabled)), &:where(.cn-button-active), &:where([data-state=open])': {
         color: 'var(--cn-text-1)',
         backgroundColor: 'var(--cn-state-selected)'
       }

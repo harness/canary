@@ -232,15 +232,15 @@ const getDataFromPullReqMetadata = (pullReqMetadata?: TypesPullReq) => {
 
 export interface PullRequestPanelProps
   extends Omit<
-    PullRequestChangesSectionProps,
-    | 'reqNoChangeReq'
-    | 'reqCodeOwnerApproval'
-    | 'minApproval'
-    | 'reqCodeOwnerLatestApproval'
-    | 'minReqLatestApproval'
-    | 'accordionValues'
-  >,
-  Partial<PullRequestRoutingProps> {
+      PullRequestChangesSectionProps,
+      | 'reqNoChangeReq'
+      | 'reqCodeOwnerApproval'
+      | 'minApproval'
+      | 'reqCodeOwnerLatestApproval'
+      | 'minReqLatestApproval'
+      | 'accordionValues'
+    >,
+    Partial<PullRequestRoutingProps> {
   handleRebaseBranch: () => void
   handlePrState: (state: string) => void
   handleViewUnresolvedComments: () => void
@@ -577,12 +577,12 @@ const PullRequestPanel = ({
                         actions={[
                           ...(!isDraft
                             ? [
-                              {
-                                title: 'Mark as draft',
-                                onClick: () => handlePrState('draft'),
-                                iconName: 'page-edit' as const
-                              }
-                            ]
+                                {
+                                  title: 'Mark as draft',
+                                  onClick: () => handlePrState('draft'),
+                                  iconName: 'page-edit' as const
+                                }
+                              ]
                             : []),
                           {
                             title: 'Close pull request',
@@ -591,12 +591,12 @@ const PullRequestPanel = ({
                           },
                           ...(isRebasable
                             ? [
-                              {
-                                title: 'Rebase',
-                                onClick: () => handleRebaseBranch(),
-                                iconName: 'git-rebase' as const
-                              }
-                            ]
+                                {
+                                  title: 'Rebase',
+                                  onClick: () => handleRebaseBranch(),
+                                  iconName: 'git-rebase' as const
+                                }
+                              ]
                             : [])
                         ]}
                       />

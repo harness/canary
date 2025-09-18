@@ -191,12 +191,12 @@ export const BranchesList: FC<BranchListPageProps> = ({
                     // Don't show Compare option for default branch
                     ...(!branch?.behindAhead?.default
                       ? [
-                        {
-                          title: t('views:repos.compare', 'Compare'),
-                          to: toPullRequestCompare?.({ diffRefs: `${defaultBranch}...${branch.name}` }) || '',
-                          iconName: 'git-pull-request'
-                        } as ActionData
-                      ]
+                          {
+                            title: t('views:repos.compare', 'Compare'),
+                            to: toPullRequestCompare?.({ diffRefs: `${defaultBranch}...${branch.name}` }) || '',
+                            iconName: 'git-pull-request'
+                          } as ActionData
+                        ]
                       : []),
                     {
                       title: t('views:repos.browse', 'Browse'),

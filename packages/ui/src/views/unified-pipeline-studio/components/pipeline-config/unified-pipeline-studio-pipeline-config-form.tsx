@@ -111,7 +111,7 @@ export const UnifiedPipelineStudioPipelineConfigForm = (props: UnifiedPipelineSt
             </ButtonLayout.Root> */}
           </Header>
           <Body>
-            <RenderForm className="space-y-6" factory={inputComponentFactory} inputs={pipelineFormDefinition} />
+            <RenderForm className="space-y-cn-xl" factory={inputComponentFactory} inputs={pipelineFormDefinition} />
           </Body>
           <Footer>
             <ButtonLayout.Root>

@@ -49,7 +49,7 @@ export default function VisualView(props: VisualViewProps) {
           rootFormRef.current = rootForm
         }
 
-        return <RenderForm className="space-y-6" factory={inputComponentFactory} inputs={formDefinition} />
+        return <RenderForm className="space-y-cn-xl" factory={inputComponentFactory} inputs={formDefinition} />
       }}
     </RootForm>
   )

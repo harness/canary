@@ -257,7 +257,7 @@ export const UnifiedPipelineStudioEntityForm = (props: UnifiedPipelineStudioEnti
               ) : loading ? (
                 <Skeleton.List />
               ) : (
-                <RenderForm className="space-y-6" factory={inputComponentFactory} inputs={formDefinition} />
+                <RenderForm className="space-y-cn-xl" factory={inputComponentFactory} inputs={formDefinition} />
               )}
             </Body>
             <Footer>

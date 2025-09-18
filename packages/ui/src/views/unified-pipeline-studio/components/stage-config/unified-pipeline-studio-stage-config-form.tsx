@@ -125,7 +125,7 @@ export const UnifiedPipelineStudioStageConfigForm = (props: UnifiedPipelineStudi
               </Description>
             </Header>
             <Body>
-              <RenderForm className="space-y-6" factory={inputComponentFactory} inputs={stageFormDefinition} />
+              <RenderForm className="space-y-cn-xl" factory={inputComponentFactory} inputs={stageFormDefinition} />
             </Body>
             <Footer>
               <ButtonLayout.Root>

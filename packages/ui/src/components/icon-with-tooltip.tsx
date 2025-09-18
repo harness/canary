@@ -3,7 +3,7 @@ import { PropsWithoutRef } from 'react'
 import { IconPropsV2, IconV2, Tooltip, TooltipProps } from '@/components'
 import { cn } from '@/utils'
 
-export interface InformerProps extends Omit<TooltipProps, 'children'> {
+export interface IconWithTooltipProps extends Omit<TooltipProps, 'children'> {
   className?: string
   /**
    * If disabled, the tooltip will not be shown
@@ -12,7 +12,7 @@ export interface InformerProps extends Omit<TooltipProps, 'children'> {
   iconProps?: IconPropsV2
 }
 
-export const Informer = ({ className, disabled, iconProps, ...props }: InformerProps) => (
+export const IconWithTooltip = ({ className, disabled, iconProps, ...props }: IconWithTooltipProps) => (
   <Tooltip {...props}>
     <button className={cn({ 'pointer-events-none': disabled }, className)} disabled={disabled}>
       <IconV2 name="info-circle" {...(iconProps as PropsWithoutRef<IconPropsV2>)} />

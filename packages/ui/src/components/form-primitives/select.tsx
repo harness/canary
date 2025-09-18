@@ -154,8 +154,8 @@ function SelectInner<T = string>(
     wrapperClassName,
     size,
     orientation,
-    informerProps,
-    informerContent,
+    tooltipContent,
+    tooltipProps,
     labelSuffix,
     ...props
   }: SelectProps<T>,
@@ -371,8 +371,8 @@ function SelectInner<T = string>(
               optional={optional}
               htmlFor={id}
               suffix={labelSuffix}
-              informerProps={informerProps}
-              informerContent={informerContent}
+              tooltipProps={tooltipProps}
+              tooltipContent={tooltipContent}
             >
               {label}
             </Label>

@@ -1,6 +1,6 @@
 import { ComponentPropsWithoutRef, ElementRef, forwardRef, ReactNode } from 'react'
 
-import { Informer, InformerProps } from '@/components'
+import { IconWithTooltip, IconWithTooltipProps } from '@/components'
 import { NonEmptyReactNode } from '@/types'
 import * as LabelPrimitive from '@radix-ui/react-label'
 import { cn } from '@utils/cn'
@@ -8,13 +8,13 @@ import { cn } from '@utils/cn'
 export type LabelProps = Omit<ComponentPropsWithoutRef<typeof LabelPrimitive.Root>, 'color'> & {
   disabled?: boolean
   optional?: boolean
-  informerProps?: InformerProps
-  informerContent?: NonEmptyReactNode
+  tooltipProps?: IconWithTooltipProps
+  tooltipContent?: NonEmptyReactNode
   suffix?: ReactNode
 }
 
 const Label = forwardRef<ElementRef<typeof LabelPrimitive.Root>, LabelProps>(
-  ({ className, children, optional, disabled, informerContent, informerProps, suffix, ...props }, ref) => {
+  ({ className, children, optional, disabled, tooltipContent, tooltipProps, suffix, ...props }, ref) => {
     if (!children) return null
 
     const LabelComponent = ({ className }: { className?: string }) => (
@@ -28,13 +28,18 @@ const Label = forwardRef<ElementRef<typeof LabelPrimitive.Root>, LabelProps>(
       </LabelPrimitive.Root>
     )
 
-    if (informerContent || suffix) {
+    if (tooltipContent || suffix) {
       return (
         <span className={cn('cn-label-container', className)}>
           <LabelComponent />
 
-          {informerContent && (
-            <Informer {...informerProps} className="cn-label-informer" disabled={disabled} content={informerContent} />
+          {tooltipContent && (
+            <IconWithTooltip
+              {...tooltipProps}
+              className="cn-label-tooltip"
+              disabled={disabled}
+              content={tooltipContent}
+            />
           )}
 
           {suffix}

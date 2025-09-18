@@ -92,8 +92,8 @@ const RadioRoot = forwardRef<ElementRef<typeof RadioGroupPrimitive.Root>, RadioP
       error,
       wrapperClassName,
       orientation,
-      informerProps,
-      informerContent,
+      tooltipContent,
+      tooltipProps,
       caption,
       optional,
       labelSuffix,
@@ -113,8 +113,8 @@ const RadioRoot = forwardRef<ElementRef<typeof RadioGroupPrimitive.Root>, RadioP
                 <Label
                   optional={optional}
                   suffix={labelSuffix}
-                  informerProps={informerProps}
-                  informerContent={informerContent}
+                  tooltipContent={tooltipContent}
+                  tooltipProps={tooltipProps}
                 >
                   {label}
                 </Label>

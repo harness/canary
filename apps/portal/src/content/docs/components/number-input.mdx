@@ -203,6 +203,29 @@ For warnings, set `theme="warning"` and provide the warning message via the `war
   </Layout.Vertical>`}
 />
 
+## With Tooltip
+
+`tooltipContent` is used to display the content of the tooltip. `tooltipProps` is used to pass additional props to the tooltip.
+
+<DocsPage.ComponentExample
+  client:only
+  code={`
+  <Layout.Vertical gap="xl" className="min-w-[400px]">
+    <NumberInput
+      id="tooltip-input"
+      label="Tooltip Input"
+      defaultValue={15}
+      tooltipContent="Tooltip content"
+      tooltipProps={{
+        disabled: false,
+        iconProps: {
+          name: 'info-circle',
+        },
+      }}
+    />
+  </Layout.Vertical>`}
+/>
+
 ## Orientation
 
 The `NumberInput` component accepts an optional `orientation` prop, which defines the layout direction of the input and its label.
@@ -220,7 +243,7 @@ Available options are `horizontal` and `vertical` (default).
 ## API Reference
 
 ```typescript
-interface InformerProps extends Omit<TooltipProps, "children"> {
+interface IconWithTooltipProps extends Omit<TooltipProps, "children"> {
   className?: string;
   /**
    * If disabled, the tooltip will not be shown
@@ -387,16 +410,16 @@ interface InformerProps extends Omit<TooltipProps, "children"> {
       value: "boolean",
     },
     {
-      name: "informerContent",
-      description: "Content to display in the label informer tooltip.",
+      name: "tooltipContent",
+      description: "Content to display in the label tooltip.",
       required: false,
       value: "Exclude<ReactNode, boolean | null | undefined>",
     },
     {
-      name: "informerProps",
-      description: "Additional props for configuring the informer tooltip.",
+      name: "tooltipProps",
+      description: "Additional props for configuring the tooltip.",
       required: false,
-      value: "InformerProps",
+      value: "IconWithTooltipProps",
     },
     {
       name: "labelSuffix",

@@ -610,6 +610,37 @@ The `Select` component supports two sizes: `default` and `sm`. The default size 
 }`}
 />
 
+## With Tooltip
+
+`tooltipContent` is used to display the content of the tooltip. `tooltipProps` is used to pass additional props to the tooltip.
+
+<DocsPage.ComponentExample
+  client:only
+  code={`() => {
+    const [value, setValue] = React.useState('banana');
+
+    return (
+      <Layout.Vertical gap="xl" className="min-w-[400px]">
+        <Select
+          label="Tooltip Input"
+          placeholder="Enter the value"
+          tooltipContent="This is a tooltip"
+          tooltipProps={{
+            disabled: false,
+          }}
+          options={[
+            { label: 'Apple', value: 'apple' },
+            { label: 'Banana', value: 'banana' },
+            { label: 'Orange', value: 'orange' },
+            { label: 'Strawberry', value: 'strawberry' },
+          ]}
+        />
+      </Layout.Vertical>
+    );
+
+}`}
+/>
+
 ## Orientation
 
 The `Select` component accepts an optional `orientation` prop, which defines the layout direction of the input and its label.
@@ -715,6 +746,18 @@ The `Select` component is the main component for creating dropdown selections.
       description: "Callback fired when selection changes.",
       required: false,
       value: "(value: T) => void",
+    },
+    {
+      name: "tooltipContent",
+      description: "Content to display in the label tooltip.",
+      required: false,
+      value: "Exclude<ReactNode, boolean | null | undefined>",
+    },
+    {
+      name: "tooltipProps",
+      description: "Additional props for configuring the tooltip.",
+      required: false,
+      value: "IconWithTooltipProps",
     },
     {
       name: "onSelectedChange",

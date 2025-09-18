@@ -128,7 +128,7 @@ export const BranchesList: FC<BranchListPageProps> = ({
                       size="2xs"
                     />
 
-                    <Text variant="body-single-line-strong" className="text-cn-gray-surface">
+                    <Text variant="body-single-line-strong" className="text-cn-gray-outline">
                       <span>{branch?.checks?.done || 0}</span>
                       <span>/</span>
                       <span>{branch?.checks?.total || 0}</span>
@@ -191,12 +191,12 @@ export const BranchesList: FC<BranchListPageProps> = ({
                     // Don't show Compare option for default branch
                     ...(!branch?.behindAhead?.default
                       ? [
-                          {
-                            title: t('views:repos.compare', 'Compare'),
-                            to: toPullRequestCompare?.({ diffRefs: `${defaultBranch}...${branch.name}` }) || '',
-                            iconName: 'git-pull-request'
-                          } as ActionData
-                        ]
+                        {
+                          title: t('views:repos.compare', 'Compare'),
+                          to: toPullRequestCompare?.({ diffRefs: `${defaultBranch}...${branch.name}` }) || '',
+                          iconName: 'git-pull-request'
+                        } as ActionData
+                      ]
                       : []),
                     {
                       title: t('views:repos.browse', 'Browse'),

@@ -34,7 +34,7 @@ const Description = ({
         </div>
       )}
       {sha && (
-        <div className="flex h-4 items-center gap-1 rounded bg-cn-gray-soft px-1.5 text-1 text-cn-1">
+        <div className="flex h-4 items-center gap-1 rounded bg-cn-gray-secondary px-1.5 text-1 text-cn-1">
           <IconV2 className="text-cn-3" size="2xs" name="git-commit" />
           {sha?.slice(0, 7)}
         </div>

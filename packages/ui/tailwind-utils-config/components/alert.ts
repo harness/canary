@@ -7,22 +7,22 @@ const themeStyleMapper: Record<
   { backgroundColor: string; color: string; fadeBgColor: string }
 > = {
   info: {
-    backgroundColor: 'gray-soft',
+    backgroundColor: 'gray-secondary',
     color: 'text-2',
     fadeBgColor: 'default'
   },
   danger: {
-    backgroundColor: 'red-soft',
+    backgroundColor: 'danger-secondary',
     color: 'text-danger',
     fadeBgColor: 'danger'
   },
   warning: {
-    backgroundColor: 'yellow-soft',
+    backgroundColor: 'warning-secondary',
     color: 'text-warning',
     fadeBgColor: 'warning'
   },
   success: {
-    backgroundColor: 'green-soft',
+    backgroundColor: 'success-secondary',
     color: 'text-success',
     fadeBgColor: 'success'
   }
@@ -58,7 +58,7 @@ export default {
     paddingRight: 'var(--cn-alert-pr)',
     borderRadius: 'var(--cn-alert-radius)',
     minWidth: 'var(--cn-alert-min-width)',
-    backgroundColor: 'var(--cn-set-gray-soft-bg)',
+    backgroundColor: 'var(--cn-set-gray-secondary-bg)',
     color: 'var(--cn-text-1)',
     '@apply w-full flex relative': '',
 

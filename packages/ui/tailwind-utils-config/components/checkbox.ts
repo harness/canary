@@ -63,7 +63,7 @@ export default {
 
         '&:where(.cn-checkbox-error)': {
           '&:hover': {
-            backgroundColor: 'var(--cn-set-red-solid-bg)',
+            backgroundColor: 'var(--cn-set-danger-primary-bg)',
             borderColor: 'var(--cn-border-danger)',
             boxShadow: `var(--cn-ring-danger-hover)`
           }
@@ -100,7 +100,7 @@ export default {
       borderColor: 'var(--cn-comp-selection-selected-border)',
 
       '&:where(.cn-checkbox-error)': {
-        backgroundColor: 'var(--cn-set-red-solid-bg)',
+        backgroundColor: 'var(--cn-set-danger-primary-bg)',
         borderColor: 'var(--cn-border-danger)',
         boxShadow: `var(--cn-ring-danger)`
       }
@@ -127,7 +127,7 @@ export default {
   },
 
   '.cn-checkbox-error .cn-checkbox-indicator:where([data-state=indeterminate])': {
-    color: `var(--cn-set-red-solid-text)`
+    color: `var(--cn-set-danger-primary-text)`
   },
 
   '.cn-checkbox-label': {

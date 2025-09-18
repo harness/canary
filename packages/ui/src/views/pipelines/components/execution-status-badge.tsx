@@ -17,11 +17,11 @@ export const ExecutionStatusBadge: React.FC<IExecutionStatusBadgeProps> = props 
     case PipelineExecutionStatus.PENDING:
       return minimal ? (
         <div className="flex items-center gap-1">
-          <div className="size-2 rounded-full bg-cn-gray-soft" />
+          <div className="size-2 rounded-full bg-cn-gray-secondary" />
           <span className="text-cn-disabled">Pending</span>
         </div>
       ) : (
-        <div className="flex items-center gap-1 rounded-md border border-solid border-cn-1 bg-cn-gray-soft/[0.1] px-1 py-0.5">
+        <div className="flex items-center gap-1 rounded-md border border-solid border-cn-1 bg-cn-gray-secondary/[0.1] px-1 py-0.5">
           <div className="flex items-center gap-0.5">
             <IconV2 name="clock-solid" />
             <span className="text-cn-disabled">Pending</span>
@@ -64,11 +64,11 @@ export const ExecutionStatusBadge: React.FC<IExecutionStatusBadgeProps> = props 
     case PipelineExecutionStatus.SUCCESS:
       return minimal ? (
         <div className="flex items-center gap-1">
-          <div className="size-2 rounded-full bg-cn-green-solid" />
+          <div className="size-2 rounded-full bg-cn-success-primary" />
           <span className="text-cn-success">Success</span>
         </div>
       ) : (
-        <div className="flex items-center gap-1 rounded-md border border-solid border-cn-success bg-cn-green-solid/[0.1] px-1 py-0.5">
+        <div className="flex items-center gap-1 rounded-md border border-solid border-cn-success bg-cn-success-primary/[0.1] px-1 py-0.5">
           <div className="flex items-center gap-0.5 text-cn-success">
             <IconV2 name="check-circle-solid" color="success" />
             <span>Success</span>

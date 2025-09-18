@@ -11,7 +11,7 @@ const Badge: React.FC<ExecutionStatusProps & BadgeProps> = props => {
     case ExecutionState.PENDING:
       return minimal ? (
         <div className="flex items-center gap-1">
-          <div className="size-2 rounded-full bg-cn-gray-soft" />
+          <div className="size-2 rounded-full bg-cn-gray-secondary" />
           <span className="text-cn-disabled">Pending</span>
         </div>
       ) : (
@@ -26,7 +26,7 @@ const Badge: React.FC<ExecutionStatusProps & BadgeProps> = props => {
     case ExecutionState.RUNNING:
       return minimal ? (
         <div className="flex items-center gap-1">
-          <div className="size-2 animate-pulse rounded-full bg-cn-yellow-solid duration-1000" />
+          <div className="size-2 animate-pulse rounded-full bg-cn-warning-primary duration-1000" />
           <span className="text-studio-3">Running</span>
         </div>
       ) : (

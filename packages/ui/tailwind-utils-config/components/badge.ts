@@ -78,7 +78,7 @@ export default {
     '&:where(:not(.cn-badge-status, .cn-badge-ghost))': {
       height: 'var(--cn-badge-size-md)',
       borderRadius: 'var(--cn-badge-radius)',
-      border: 'var(--cn-badge-border) solid var(--cn-set-gray-surface-border)',
+      border: 'var(--cn-badge-border) solid var(--cn-set-gray-outline-border)',
 
       '&:where(.cn-badge-sm)': {
         height: 'var(--cn-badge-size-sm)'
@@ -94,10 +94,10 @@ export default {
     },
 
     '&:where(.cn-badge-counter)': {
-      color: 'var(--cn-set-gray-surface-text)',
+      color: 'var(--cn-set-gray-outline-text)',
       borderRadius: 'var(--cn-badge-counter-radius)',
-      borderColor: 'var(--cn-set-gray-surface-border)',
-      backgroundColor: 'var(--cn-set-gray-surface-bg)',
+      borderColor: 'var(--cn-set-gray-outline-border)',
+      backgroundColor: 'var(--cn-set-gray-outline-bg)',
       height: 'var(--cn-badge-counter-size-sm)',
       paddingBlock: 'var(--cn-badge-counter-py)',
       paddingInline: 'var(--cn-badge-counter-px)',
@@ -112,7 +112,7 @@ export default {
       '> .cn-badge-indicator': {
         width: 'var(--cn-badge-indicator-size-sm)',
         height: 'var(--cn-badge-indicator-size-sm)',
-        backgroundColor: 'var(--cn-set-gray-solid-bg)'
+        backgroundColor: 'var(--cn-set-gray-primary-bg)'
       }
     },
 

@@ -43,7 +43,7 @@ const Message: React.FC<MessageProps> = ({ self, time, avatar, actions, children
       >
         <div
           className={cn('text-cn-3 leading-relaxed', {
-            'px-3 py-2 bg-cn-gray-soft rounded-lg': self
+            'px-3 py-2 bg-cn-gray-secondary rounded-lg': self
           })}
         >
           {children}

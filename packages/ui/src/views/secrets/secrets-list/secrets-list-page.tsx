@@ -75,6 +75,8 @@ const SecretListPage: FC<SecretListPageProps> = ({
     return currentPage !== 1 || !!searchQuery || secretManagerFilterOptions.length === 0
   }, [currentPage, searchQuery])
 
+  const isEmpty = !isLoading && !secrets.length && !isDirtyList
+
   if (isError) {
     return (
       <NoData
@@ -113,39 +115,57 @@ const SecretListPage: FC<SecretListPageProps> = ({
             {t('views:secrets.secretsTitle', 'Secrets')}
           </Text>
 
-          <Layout.Vertical gap="md" className="flex-1">
-            <FilterGroup<SecretListFilters, keyof SecretListFilters>
-              simpleSortConfig={{
-                sortOptions: SECRET_SORT_OPTIONS,
-                onSortChange,
-                defaultSort: 'lastModifiedAt,DESC'
+          {isEmpty && (
+            <NoData
+              imageName="no-data-cog"
+              title={t('views:noData.noSecrets', 'No secrets yet')}
+              description={[t('views:noData.noSecrets', 'There are no secrets in this project yet.')]}
+              primaryButton={{
+                label: (
+                  <>
+                    <IconV2 name="plus" />
+                    {t('views:secrets.createNew', 'Create Secret')}
+                  </>
+                ),
+                onClick: onCreate
               }}
-              ref={filterRef}
-              onFilterValueChange={onFilterValueChange}
-              handleInputChange={handleSearch}
-              headerAction={
-                <Button onClick={onCreate}>
-                  <IconV2 name="plus" />
-                  {t('views:secrets.createNew', 'Create Secret')}
-                </Button>
-              }
-              filterOptions={SECRET_FILTER_OPTIONS}
             />
+          )}
 
-            <Layout.Vertical gap="none" className="flex-1">
-              <SecretList
-                secrets={secrets}
-                isLoading={isLoading}
-                onDeleteSecret={onDeleteSecret}
-                {...props}
-                handleResetFiltersQueryAndPages={handleResetFiltersQueryAndPages}
-                isDirtyList={isDirtyList}
-                onCreateSecret={onCreate}
+          {!isEmpty && (
+            <Layout.Vertical gap="md" className="flex-1">
+              <FilterGroup<SecretListFilters, keyof SecretListFilters>
+                simpleSortConfig={{
+                  sortOptions: SECRET_SORT_OPTIONS,
+                  onSortChange,
+                  defaultSort: 'lastModifiedAt,DESC'
+                }}
+                ref={filterRef}
+                onFilterValueChange={onFilterValueChange}
+                handleInputChange={handleSearch}
+                headerAction={
+                  <Button onClick={onCreate}>
+                    <IconV2 name="plus" />
+                    {t('views:secrets.createNew', 'Create Secret')}
+                  </Button>
+                }
+                filterOptions={SECRET_FILTER_OPTIONS}
               />
 
-              <Pagination totalItems={totalItems} pageSize={pageSize} currentPage={currentPage} goToPage={goToPage} />
+              <Layout.Vertical gap="none" className="flex-1">
+                <SecretList
+                  secrets={secrets}
+                  isLoading={isLoading}
+                  onDeleteSecret={onDeleteSecret}
+                  {...props}
+                  handleResetFiltersQueryAndPages={handleResetFiltersQueryAndPages}
+                  isDirtyList={isDirtyList}
+                />
+
+                <Pagination totalItems={totalItems} pageSize={pageSize} currentPage={currentPage} goToPage={goToPage} />
+              </Layout.Vertical>
             </Layout.Vertical>
-          </Layout.Vertical>
+          )}
         </Layout.Vertical>
       </SandboxLayout.Content>
     </SandboxLayout.Main>

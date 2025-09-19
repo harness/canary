@@ -16,6 +16,7 @@ const SecretsListPage = (): JSX.Element => (
       updatedAt: secret.updatedAt,
       createdAt: secret.createdAt
     }))}
+    isDirtyList={false}
     setSecretManagerSearchQuery={noop}
     isLoading={false}
     secretManagerIdentifiers={mockSecretManager.data.content.map(secretManager => ({

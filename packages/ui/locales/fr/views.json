@@ -474,9 +474,9 @@
     "noSecretReferences": "No secret references yet",
     "noSecretReferencesDescription": "There are no references to this secret yet.",
     "noSecrets": "Il n'y a pas encore de secrets dans ce projet.",
-    "createSecret": "Créer un nouveau secret.",
     "noUsers": "Aucun utilisateur trouvé",
     "noUsersDescription": "Il n'y a aucun utilisateur dans ce périmètre. Cliquez sur le bouton ci-dessous pour commencer à les ajouter.",
+    "createSecret": "Créer un nouveau secret.",
     "noDelegates": "There are no delegates in this project yet.",
     "noActivities": "Aucune activité disponible",
     "noActivitiesDescription": "Il n'y a pas d'activités disponibles.",
@@ -884,11 +884,11 @@
         "label": "Type"
       }
     },
-    "newSecret": "New Secret",
+    "secretsTitle": "Secrets",
+    "createNew": "Créer un secret",
     "edit": "Edit Secret",
     "delete": "Supprimer le secret",
-    "createNew": "Créer un secret",
-    "secretsTitle": "Secrets"
+    "newSecret": "New Secret"
   },
   "secret": {
     "title": "Secret"

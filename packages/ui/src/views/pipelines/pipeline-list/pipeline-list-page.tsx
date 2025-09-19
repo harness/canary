@@ -1,6 +1,6 @@
 import { FC } from 'react'
 
-import { Button, ListActions, Pagination, SearchBox, Spacer, Text } from '@/components'
+import { Button, Dialog, ListActions, Pagination, SearchBox, Spacer, Text } from '@/components'
 import { useDebounceSearch } from '@/hooks'
 import { SandboxLayout } from '@/views'
 
@@ -61,7 +61,9 @@ const PipelineListPage: FC<IPipelineListPageProps> = ({
                 />
               </ListActions.Left>
               <ListActions.Right>
-                <Button onClick={handleCreatePipeline}>Create pipeline</Button>
+                <Dialog.Trigger>
+                  <Button onClick={handleCreatePipeline}>Create pipeline</Button>
+                </Dialog.Trigger>
               </ListActions.Right>
             </ListActions.Root>
             <Spacer size={5} />

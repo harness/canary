@@ -41,6 +41,21 @@ export default {
       padding: 'var(--cn-accordion-sm-py) 0',
       color: 'var(--cn-text-2)',
 
+      '&-card': {
+        '&-sm': {
+          paddingInline: 'var(--cn-card-sm-px)',
+          borderRadius: 'var(--cn-card-sm-radius)'
+        },
+        '&-md': {
+          paddingInline: 'var(--cn-card-md-px)',
+          borderRadius: 'var(--cn-card-md-radius)'
+        },
+        '&-lg': {
+          paddingInline: 'var(--cn-card-lg-px)',
+          borderRadius: 'var(--cn-card-lg-radius)'
+        }
+      },
+
       '&:hover:not([data-disabled])': {
         '.cn-accordion-trigger-indicator': {
           color: 'var(--cn-text-1)'
@@ -48,7 +63,8 @@ export default {
       },
 
       '&:where(:focus-visible:not([data-disabled]))': {
-        outline: 'var(--cn-focus)'
+        outline: 'var(--cn-focus)',
+        '@apply outline-offset-cn-tight': ''
       },
 
       '&:where([data-state="open"])': {
@@ -84,7 +100,21 @@ export default {
       '@apply font-body-normal': '',
 
       '&-container': {
+        marginTop: '-4px',
+        paddingTop: '4px',
         overflow: 'hidden',
+
+        '&-card': {
+          '&-sm': {
+            paddingInline: 'var(--cn-card-sm-px)'
+          },
+          '&-md': {
+            paddingInline: 'var(--cn-card-md-px)'
+          },
+          '&-lg': {
+            paddingInline: 'var(--cn-card-lg-px)'
+          }
+        },
 
         '&:where([data-state="open"])': {
           '@apply animate-accordion-down': ''

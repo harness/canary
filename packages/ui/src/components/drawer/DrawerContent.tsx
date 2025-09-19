@@ -1,8 +1,8 @@
-import { ComponentPropsWithoutRef, ElementRef, forwardRef } from 'react'
+import { ComponentPropsWithoutRef, ElementRef, forwardRef, useRef } from 'react'
 
 import { Button, IconV2 } from '@/components'
 import { usePortal } from '@/context'
-import { cn } from '@/utils'
+import { cn, useMergeRefs } from '@/utils'
 import { cva, VariantProps } from 'class-variance-authority'
 import { Drawer as DrawerPrimitive } from 'vaul'
 
@@ -42,11 +42,22 @@ export type DrawerContentProps = ComponentPropsWithoutRef<typeof DrawerPrimitive
 
 export const DrawerContent = forwardRef<ElementRef<typeof DrawerPrimitive.Content>, DrawerContentProps>(
   (
-    { className, children, size = 'sm', hideClose = false, overlayClassName, forceWithOverlay = false, ...props },
-    ref
+    {
+      className,
+      children,
+      size = 'sm',
+      hideClose = false,
+      overlayClassName,
+      forceWithOverlay = false,
+      onOpenAutoFocus,
+      ...props
+    },
+    _ref
   ) => {
+    const contentRef = useRef<HTMLDivElement>(null)
     const { portalContainer } = usePortal()
     const { direction, modal } = useDrawerContext()
+    const ref = useMergeRefs([_ref, contentRef])
 
     const withCustomOverlay = forceWithOverlay && modal === false
 
@@ -58,6 +69,12 @@ export const DrawerContent = forwardRef<ElementRef<typeof DrawerPrimitive.Conten
           className
         )}
         {...props}
+        onOpenAutoFocus={e => {
+          e.preventDefault()
+          onOpenAutoFocus?.(e)
+          if (!contentRef.current || onOpenAutoFocus) return
+          contentRef.current.focus()
+        }}
       >
         {!hideClose && (
           <DrawerPrimitive.Close asChild>

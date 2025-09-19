@@ -21,9 +21,9 @@ import { DocsPage } from "@/components/docs-page";
       <StackedList.Item
         thumbnail={<IconV2 name="connectors" size="xs" />}
         actions={<Button>Action</Button>}
-        to="/"
+        onClick={() => console.log('clicked')}
       >
-        <StackedList.Field title="Item 1" description="Description 1" />
+        <StackedList.Field title="Clickable item" description="Description 1" />
       </StackedList.Item>
 
       <StackedList.Item
@@ -31,16 +31,16 @@ import { DocsPage } from "@/components/docs-page";
         actions={<Button>Action</Button>}
         to="/"
       >
-        <StackedList.Field title="Item 2" description="Description 2" />
+        <StackedList.Field title="Item with link" description="Description 2" />
         <StackedList.Field title="additional text" right />
       </StackedList.Item>
 
       <StackedList.Item
         thumbnail={<IconV2 name="check" size="xs" />}
         actions={<Button>Action</Button>}
-        to="/"
+        disableHover
       >
-        <StackedList.Field title="Item 3" description="Description 3" />
+        <StackedList.Field title="Non-clickable item" description="Description 3" />
       </StackedList.Item>
     </StackedList.Root>
 

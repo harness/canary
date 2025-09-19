@@ -48,7 +48,7 @@ export default {
       },
 
       '&-clickable-block': {
-        '@apply absolute inset-0 w-full rounded-3 !z-0': ''
+        '@apply absolute inset-0 w-full rounded-3 !z-0 outline-offset-cn-tight': ''
       },
 
       '&-thumbnail': {

@@ -43,6 +43,7 @@ export function InputComponentRenderer<T = unknown>({
   const commonProps = useMemo(
     () => ({
       path,
+      key: path,
       initialValues,
       onUpdate,
       onChange,

@@ -19,11 +19,11 @@ export interface EntityRendererProps<T extends BaseEntityProps> {
 }
 
 export interface ParentFolderRendererProps<S = string> {
-  parentFolder: S
+  parentFolder?: S | null
   onSelect: (scope: S) => void
 }
 
 export interface ChildFolderRendererProps<F = string> {
-  folder: F
+  folder?: F | null
   onSelect: (folder: F) => void
 }

@@ -1,15 +1,6 @@
 import { useCallback } from 'react'
 
-import {
-  IconV2,
-  MoreActionsTooltip,
-  NoData,
-  Skeleton,
-  Table,
-  Text,
-  TimeAgoCard,
-  useCustomDialogTrigger
-} from '@/components'
+import { MoreActionsTooltip, NoData, Skeleton, Table, Text, TimeAgoCard, useCustomDialogTrigger } from '@/components'
 import { useTranslation } from '@/context'
 import { cn } from '@utils/cn'
 
@@ -25,8 +16,7 @@ export function SecretList({
   onDeleteSecret,
   onEditSecret,
   handleResetFiltersQueryAndPages,
-  isDirtyList,
-  onCreateSecret
+  isDirtyList
 }: SecretListProps): JSX.Element {
   const { t } = useTranslation()
 
@@ -44,8 +34,8 @@ export function SecretList({
     return <Skeleton.Table countRows={12} countColumns={5} />
   }
 
-  if (!secrets.length) {
-    return isDirtyList ? (
+  if (!secrets.length && isDirtyList) {
+    return (
       <NoData
         withBorder
         imageName="no-search-magnifying-glass"
@@ -58,22 +48,6 @@ export function SecretList({
           icon: 'trash',
           label: t('views:noData.clearFilters', 'Clear filters'),
           onClick: handleResetFiltersQueryAndPages
-        }}
-      />
-    ) : (
-      <NoData
-        withBorder
-        imageName="no-data-cog"
-        title={t('views:noData.noSecrets', 'No secrets yet')}
-        description={[t('views:noData.noSecrets', 'There are no secrets in this project yet.')]}
-        primaryButton={{
-          label: (
-            <>
-              <IconV2 name="plus" />
-              {t('views:secrets.createNew', 'Create Secret')}
-            </>
-          ),
-          onClick: onCreateSecret
         }}
       />
     )

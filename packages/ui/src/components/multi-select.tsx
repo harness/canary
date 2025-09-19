@@ -220,23 +220,73 @@ export const MultiSelect = forwardRef<MultiSelectRef, MultiSelectProps>(
             }
           }
           if (e.key === 'Enter' && input.value && !disallowCreation) {
-            // Perform case-insensitive comparison to prevent duplicate options with different casing
-            // This ensures that 'React' and 'react' would be considered the same option
-            if (
-              !options?.some(option => option.key.toLowerCase() === input.value.toLowerCase()) &&
-              (!availableOptions || availableOptions.length === 0) &&
-              !getSelectedOptions().some(s => s.key.toLowerCase() === input.value.toLowerCase())
-            ) {
-              const newOption = createOptionFromInput(input.value)
-              const newOptions = [...getSelectedOptions(), newOption]
-              if (isControlled) {
-                onChange?.(newOptions)
-              } else {
-                setSelected(newOptions)
+            const inputValue = input.value.trim()
+            // Handle comma-separated input
+            if (inputValue.includes(',')) {
+              const parts = inputValue
+                .split(',')
+                .map(part => part.trim())
+                .filter(part => part.length > 0)
+              if (parts.length > 0) {
+                // Key-based deduplication - last occurrence wins
+                const optionsByKey = new Map<string, string>()
+                for (const part of parts) {
+                  const option = createOptionFromInput(part)
+                  optionsByKey.set(option.key, part)
+                }
+                const uniqueParts = Array.from(optionsByKey.values())
+                const newOptions = uniqueParts.map(part => createOptionFromInput(part))
+
+                const updatedOptions = [...getSelectedOptions()]
+                // Remove existing options with same keys
+                for (const newOption of newOptions) {
+                  const existingIndex = updatedOptions.findIndex(option => option.key === newOption.key)
+                  if (existingIndex !== -1) {
+                    updatedOptions.splice(existingIndex, 1)
+                  }
+                }
+                updatedOptions.push(...newOptions)
+
+                if (isControlled) {
+                  onChange?.(updatedOptions)
+                } else {
+                  setSelected(updatedOptions)
+                }
+                setInputValue('')
+                setSearchQuery?.('')
+                e.preventDefault()
               }
-              setInputValue('')
-              setSearchQuery?.('')
-              e.preventDefault()
+            } else {
+              // Single option creation
+              const newOption = createOptionFromInput(inputValue)
+              const key = newOption.key
+              const existingIndex = getSelectedOptions().findIndex(option => option.key === key)
+              if (existingIndex !== -1) {
+                const updatedOptions = [...getSelectedOptions()]
+                updatedOptions[existingIndex] = newOption
+                if (isControlled) {
+                  onChange?.(updatedOptions)
+                } else {
+                  setSelected(updatedOptions)
+                }
+                setInputValue('')
+                setSearchQuery?.('')
+                e.preventDefault()
+              } else {
+                const isDuplicate =
+                  options?.some(option => option.key === key) || (availableOptions && availableOptions.length > 0)
+                if (!isDuplicate) {
+                  const newOptions = [...getSelectedOptions(), newOption]
+                  if (isControlled) {
+                    onChange?.(newOptions)
+                  } else {
+                    setSelected(newOptions)
+                  }
+                  setInputValue('')
+                  setSearchQuery?.('')
+                  e.preventDefault()
+                }
+              }
             }
           }
           if (e.key === 'Escape') {

@@ -1,4 +1,4 @@
-import { FC, Fragment } from 'react'
+import { FC } from 'react'
 
 import { Skeleton, StackedList } from '@/components'
 import { cn } from '@utils/cn'
@@ -26,9 +26,10 @@ export const SkeletonList: FC<SkeletonListProps> = ({
   onlyItems
 }) => {
   const { item, leftTitle, leftDescription, rightTitle, rightDescription, actions } = classNames
-  const Wrapper = onlyItems ? Fragment : StackedList.Root
+  const Wrapper = onlyItems ? 'div' : StackedList.Root
+
   return (
-    <Wrapper className={cn('cn-skeleton-list', className)}>
+    <Wrapper className={cn({ 'cn-skeleton-list': !onlyItems }, className)}>
       {Array.from({ length: linesCount }).map((_, index) => (
         <StackedList.Item
           key={index}

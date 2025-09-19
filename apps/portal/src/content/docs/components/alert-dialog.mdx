@@ -17,7 +17,7 @@ import { Aside } from "@astrojs/starlight/components";
       onConfirm={() => console.log('Confirmed')}
       theme="danger"
     >
-      <AlertDialog.Trigger asChild>
+      <AlertDialog.Trigger>
         <Button>Delete Pipeline</Button>
       </AlertDialog.Trigger>
 
@@ -41,7 +41,7 @@ return (
     onConfirm={() => handleDelete()}
     theme="danger"
   >
-    <AlertDialog.Trigger asChild>
+    <AlertDialog.Trigger>
       <Button>Delete Item</Button>
     </AlertDialog.Trigger>
 
@@ -60,31 +60,32 @@ return (
   client:only
   code={`<div className="flex items-center justify-center gap-4">
     <AlertDialog.Root onConfirm={() => {}}>
-      <AlertDialog.Trigger asChild>
+      <AlertDialog.Trigger>
         <Button>Default Theme</Button>
       </AlertDialog.Trigger>
       <AlertDialog.Content title="Confirm Action">
         This is a standard confirmation dialog.
       </AlertDialog.Content>
     </AlertDialog.Root>
-    
+
     <AlertDialog.Root onConfirm={() => {}} theme="warning">
-      <AlertDialog.Trigger asChild>
+      <AlertDialog.Trigger>
         <Button>Warning Theme</Button>
       </AlertDialog.Trigger>
       <AlertDialog.Content title="Warning">
         This action might have consequences.
       </AlertDialog.Content>
     </AlertDialog.Root>
-    
+
     <AlertDialog.Root onConfirm={() => {}} theme="danger">
-      <AlertDialog.Trigger asChild>
+      <AlertDialog.Trigger>
         <Button>Danger Theme</Button>
       </AlertDialog.Trigger>
       <AlertDialog.Content title="Delete Resource">
         This action cannot be undone.
       </AlertDialog.Content>
     </AlertDialog.Root>
+
   </div>`}
 />
 
@@ -97,7 +98,7 @@ return (
     theme="danger"
     loading
   >
-    <AlertDialog.Trigger asChild>
+    <AlertDialog.Trigger>
       <Button>Show Loading</Button>
     </AlertDialog.Trigger>
     <AlertDialog.Content title="Processing">
@@ -193,16 +194,10 @@ The main container for the alert dialog content.
 
 ### `Trigger`
 
-Wraps a control element that opens the dialog. Use `asChild` prop to customize the trigger element.
+Wraps a control element that opens the dialog.
 
 <DocsPage.PropsTable
   props={[
-    {
-      name: "asChild",
-      value: "boolean",
-      description:
-        "When true, component will render its child instead of a button",
-    },
     {
       name: "children",
       value: "ReactNode",

@@ -1,5 +1,6 @@
 import {
   Children,
+  ComponentType,
   createContext,
   forwardRef,
   HTMLAttributes,
@@ -148,12 +149,42 @@ interface DialogOpenContextValue {
 }
 
 const DialogOpenContext = createContext<DialogOpenContextValue | undefined>(undefined)
-const useDialogOpen = () => {
+const useDialogOpenContext = () => {
   const context = useContext(DialogOpenContext)
   if (!context) {
-    throw new Error('useDialogOpen must be used within a DialogOpenProvider')
+    throw new Error('useDialogOpenContext must be used within a DialogProvider')
   }
   return context
+}
+
+const useRegisterDialog = () => {
+  const focusManager = useDialogFocusManager()
+  const [triggerId, setTriggerId] = useState<string>('')
+  const { open } = useDialogOpenContext()
+
+  const handleCloseAutoFocus = useCallback(() => {
+    if (focusManager) {
+      focusManager.restoreFocus(triggerId)
+    }
+  }, [focusManager, triggerId])
+
+  useEffect(() => {
+    if (focusManager && open) {
+      const triggerId = focusManager.getLastTrigger()?.triggerId
+      if (!triggerId) return
+      setTriggerId(triggerId)
+    }
+  }, [open])
+
+  useEffect(() => {
+    return () => {
+      if (focusManager) {
+        focusManager.unregisterTrigger(triggerId)
+      }
+    }
+  }, [])
+
+  return { handleCloseAutoFocus }
 }
 
 const Root = ({ children, open, ...props }: ModalDialogRootProps) => {
@@ -172,33 +203,17 @@ interface ContentProps extends DialogPrimitive.DialogContentProps, VariantProps<
 }
 
 const Content = forwardRef<HTMLDivElement, ContentProps>(
-  ({ children, className, size = 'sm', hideClose = false, ...props }, ref) => {
+  ({ children, className, size = 'sm', hideClose = false, onCloseAutoFocus: _onCloseAutoFocus, ...props }, ref) => {
     const { portalContainer } = usePortal()
-    const focusManager = useDialogFocusManager()
-    const [triggerId, setTriggerId] = useState<string>('')
-    const { open } = useDialogOpen()
+    const { handleCloseAutoFocus } = useRegisterDialog()
 
-    const handleCloseAutoFocus = useCallback(() => {
-      if (focusManager) {
-        focusManager.restoreFocus(triggerId)
-      }
-    }, [focusManager, triggerId])
-
-    useEffect(() => {
-      if (focusManager && open) {
-        const triggerId = focusManager.getLastTrigger()?.triggerId
-        if (!triggerId) return
-        setTriggerId(triggerId)
-      }
-    }, [open])
-
-    useEffect(() => {
-      return () => {
-        if (focusManager) {
-          focusManager.unregisterTrigger(triggerId)
-        }
-      }
-    }, [])
+    const onCloseAutoFocus = useCallback(
+      (e: Event) => {
+        handleCloseAutoFocus()
+        _onCloseAutoFocus?.(e)
+      },
+      [_onCloseAutoFocus, handleCloseAutoFocus]
+    )
 
     return (
       <DialogPrimitive.Portal container={portalContainer}>
@@ -209,8 +224,8 @@ const Content = forwardRef<HTMLDivElement, ContentProps>(
           <DialogPrimitive.Content
             ref={ref}
             className={cn(contentVariants({ size }), className)}
-            onCloseAutoFocus={handleCloseAutoFocus}
             {...props}
+            onCloseAutoFocus={onCloseAutoFocus}
           >
             {!hideClose && (
               <DialogPrimitive.Close asChild>
@@ -332,40 +347,50 @@ Close.displayName = 'Dialog.Close'
  * Dialog trigger component is essential for opening dialogs.
  * It registers the trigger element with the dialog focus manager.
  */
-const Trigger = forwardRef<HTMLButtonElement, HTMLAttributes<HTMLDivElement> & { children: ReactNode }>(
-  ({ onClick, id, children, ...props }, ref) => {
-    const triggerId = useTriggerId(id)
-    const focusManager = useDialogFocusManager()
+const TriggerBase = forwardRef<
+  HTMLButtonElement,
+  HTMLAttributes<HTMLDivElement> & { children: ReactNode; TriggerComponent: ComponentType<{ asChild?: boolean }> }
+>(({ onClick, id, children, TriggerComponent, ...props }, ref) => {
+  const triggerId = useTriggerId(id)
+  const focusManager = useDialogFocusManager()
 
-    const dialogContext = useContext(DialogOpenContext)
-    const isInsideDialog = dialogContext !== undefined
-    const childrenCount = Children.count(children)
+  const dialogContext = useContext(DialogOpenContext)
+  const isInsideDialog = dialogContext !== undefined
+  const childrenCount = Children.count(children)
 
-    if (childrenCount > 1) {
-      console.warn('Dialog.Trigger: Only one child is allowed')
-      children = <span>{children}</span>
-    }
-
-    const handleClick = (event: MouseEvent<HTMLDivElement>) => {
-      if (focusManager) {
-        focusManager.registerTrigger({ triggerId, triggerElement: event.currentTarget })
-      }
-      onClick?.(event)
-    }
-
-    const trigger = (
-      <Slot ref={ref} onClick={handleClick} {...props} id={triggerId}>
-        {children}
-      </Slot>
-    )
-
-    if (isInsideDialog && !onClick) {
-      return <DialogPrimitive.Trigger asChild>{trigger}</DialogPrimitive.Trigger>
-    }
-
-    return trigger
+  if (childrenCount > 1) {
+    console.warn('Dialog.Trigger: Only one child is allowed')
+    children = <span>{children}</span>
   }
-)
+
+  const handleClick = (event: MouseEvent<HTMLDivElement>) => {
+    if (focusManager) {
+      focusManager.registerTrigger({ triggerId, triggerElement: event.currentTarget })
+    }
+    onClick?.(event)
+  }
+
+  const trigger = (
+    <Slot ref={ref} onClick={handleClick} {...props} id={triggerId}>
+      {children}
+    </Slot>
+  )
+
+  if (isInsideDialog && !onClick) {
+    return <TriggerComponent asChild>{trigger}</TriggerComponent>
+  }
+
+  return trigger
+})
+TriggerBase.displayName = 'DialogTriggerBase'
+
+const Trigger = forwardRef<HTMLButtonElement, HTMLAttributes<HTMLDivElement>>(({ children, ...props }, ref) => {
+  return (
+    <TriggerBase ref={ref} {...props} TriggerComponent={DialogPrimitive.Trigger}>
+      {children}
+    </TriggerBase>
+  )
+})
 Trigger.displayName = 'DialogTrigger'
 
 const Dialog = {
@@ -380,4 +405,4 @@ const Dialog = {
   Footer
 }
 
-export { Dialog, DialogProvider, useCustomDialogTrigger }
+export { Dialog, DialogProvider, useCustomDialogTrigger, useRegisterDialog, DialogOpenContext, TriggerBase }

@@ -74,7 +74,8 @@ export const PipelineList = ({
         description={['There are no pipelines in this project yet.', 'Create new one.']}
         primaryButton={{
           label: 'Create pipeline',
-          onClick: handleCreatePipeline
+          onClick: handleCreatePipeline,
+          isDialogTrigger: true
         }}
       />
     )

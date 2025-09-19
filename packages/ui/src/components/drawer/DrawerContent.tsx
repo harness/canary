@@ -1,8 +1,9 @@
-import { ComponentPropsWithoutRef, ElementRef, forwardRef, useRef } from 'react'
+import { ComponentPropsWithoutRef, ElementRef, forwardRef, useCallback, useRef } from 'react'
 
 import { Button, IconV2 } from '@/components'
 import { usePortal } from '@/context'
 import { cn, useMergeRefs } from '@/utils'
+import { useRegisterDialog } from '@components/dialog'
 import { cva, VariantProps } from 'class-variance-authority'
 import { Drawer as DrawerPrimitive } from 'vaul'
 
@@ -50,6 +51,7 @@ export const DrawerContent = forwardRef<ElementRef<typeof DrawerPrimitive.Conten
       overlayClassName,
       forceWithOverlay = false,
       onOpenAutoFocus,
+      onCloseAutoFocus: _onCloseAutoFocus,
       ...props
     },
     _ref
@@ -58,6 +60,16 @@ export const DrawerContent = forwardRef<ElementRef<typeof DrawerPrimitive.Conten
     const { portalContainer } = usePortal()
     const { direction, modal } = useDrawerContext()
     const ref = useMergeRefs([_ref, contentRef])
+
+    const { handleCloseAutoFocus } = useRegisterDialog()
+
+    const onCloseAutoFocus = useCallback(
+      (e: Event) => {
+        handleCloseAutoFocus()
+        _onCloseAutoFocus?.(e)
+      },
+      [_onCloseAutoFocus, handleCloseAutoFocus]
+    )
 
     const withCustomOverlay = forceWithOverlay && modal === false
 
@@ -69,6 +81,7 @@ export const DrawerContent = forwardRef<ElementRef<typeof DrawerPrimitive.Conten
           className
         )}
         {...props}
+        onCloseAutoFocus={onCloseAutoFocus}
         onOpenAutoFocus={e => {
           e.preventDefault()
           onOpenAutoFocus?.(e)

@@ -132,7 +132,7 @@ export const SidebarView = ({
             ))}
 
             <Drawer.Root direction="left" open={showMoreMenu} onOpenChange={handleMoreMenu} modal={false}>
-              <Drawer.Trigger asChild>
+              <Drawer.Trigger>
                 <Sidebar.Item
                   title={t('component:navbar.more', 'More')}
                   icon="menu-more-horizontal"
@@ -195,7 +195,7 @@ export const SidebarView = ({
             )}
 
             <Drawer.Root direction="left" open={showSettingMenu} onOpenChange={handleSettingsMenu} modal={false}>
-              <Drawer.Trigger asChild>
+              <Drawer.Trigger>
                 <Sidebar.Item
                   title={t('component:navbar.settings', 'Settings')}
                   icon="settings"

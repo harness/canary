@@ -77,7 +77,7 @@ export function StepNodeComponent({
 
   return (
     <Drawer.Root>
-      <Drawer.Trigger asChild>{stepNode}</Drawer.Trigger>
+      <Drawer.Trigger>{stepNode}</Drawer.Trigger>
       <Drawer.Content size="md">
         <Drawer.Header className="p-0">
           <ExecutionHeader
@@ -129,7 +129,7 @@ export function ApprovalStepNodeComponent({
 
   return (
     <Drawer.Root>
-      <Drawer.Trigger asChild>{approvalNode}</Drawer.Trigger>
+      <Drawer.Trigger>{approvalNode}</Drawer.Trigger>
       <Drawer.Content>
         <Drawer.Header>
           <Drawer.Title>Approval</Drawer.Title>

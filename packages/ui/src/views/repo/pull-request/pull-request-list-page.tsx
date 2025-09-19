@@ -10,7 +10,6 @@ import {
   NoData,
   Pagination,
   SearchInput,
-  Skeleton,
   Spacer,
   StackedList,
   Text
@@ -271,10 +270,6 @@ const PullRequestListPage: FC<PullRequestPageProps> = ({
     ) : undefined
 
   const renderListContent = () => {
-    if (isLoading) {
-      return <Skeleton.List />
-    }
-
     if (noData) {
       return hasActiveFilters ? (
         <StackedList.Root className="grow place-content-center">{renderDirtyNoDataContent()}</StackedList.Root>
@@ -307,6 +302,7 @@ const PullRequestListPage: FC<PullRequestPageProps> = ({
 
     return (
       <PullRequestListContent
+        isLoading={isLoading}
         repo={repository}
         spaceId={spaceId}
         pullRequests={pullRequests || []}

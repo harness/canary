@@ -267,7 +267,7 @@ const TabsTrigger = forwardRef<HTMLButtonElement | HTMLAnchorElement, TabsTrigge
   const { type, activeTabValue, onValueChange } = useContext(TabsContext)
   const { NavLink, isRouterVersion5 } = useRouterContext()
 
-  const iconSize = variant === 'ghost' || variant === 'outlined' ? 'xs' : 'sm'
+  const iconSize = 'sm'
   const logoSize: LogoPropsV2['size'] = 'xs'
 
   const TabTriggerContent = () => (

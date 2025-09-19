@@ -291,6 +291,7 @@ export interface PullRequestListProps extends Partial<RoutingProps> {
   scope: Scope
   showScope?: boolean
   dirtyNoDataContent?: ReactNode
+  isLoading?: boolean
 }
 
 export type PRListFilters = {

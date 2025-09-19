@@ -1,6 +1,6 @@
 import { FC, useMemo } from 'react'
 
-import { IconV2, NoData, StackedList } from '@/components'
+import { IconV2, NoData, Skeleton, StackedList } from '@/components'
 import { useTranslation } from '@/context'
 import { cn } from '@/utils'
 import { EnumPullReqState, PullRequest, PullRequestListProps } from '@/views'
@@ -96,7 +96,8 @@ export const PullRequestList: FC<PullRequestListProps> = ({
   scope,
   dirtyNoDataContent: DirtyNoDataContent,
   showScope = false,
-  toBranch
+  toBranch,
+  isLoading
 }) => {
   const { identifier: repoId } = repo || {}
 
@@ -131,11 +132,12 @@ export const PullRequestList: FC<PullRequestListProps> = ({
   const isEmptyState = !pullRequests.length && !!state
 
   return (
-    <StackedList.Root className={isEmptyState ? 'flex flex-col grow' : ''}>
+    <StackedList.Root className={cn({ 'flex grow flex-col': isEmptyState, 'cn-skeleton-list': isLoading })}>
       <StackedList.Header className={cn({ 'grow-0': isEmptyState })}>
         <StackedList.Field
           title={
             <PullRequestListHeader
+              isLoading={isLoading}
               onClick={onHeaderFilterClick}
               headerFilter={headerFilter}
               openPRs={openPRs}
@@ -146,59 +148,63 @@ export const PullRequestList: FC<PullRequestListProps> = ({
         />
       </StackedList.Header>
 
+      {isLoading && <Skeleton.List onlyItems />}
+
       {isEmptyState &&
+        !isLoading &&
         (DirtyNoDataContent ? DirtyNoDataContent : <EmptyStateView repoId={repoId} spaceId={spaceId} state={state} />)}
 
-      {pullRequests.map(pullRequest => (
-        <StackedList.Item
-          key={`${pullRequest.number}-${pullRequest.repo?.path}`}
-          paddingY="sm"
-          {...(toPullRequest && pullRequest.number
-            ? {
-                to: toPullRequest({ prNumber: pullRequest.number, repoId: pullRequest.repo?.identifier })
-              }
-            : {})}
-          {...(onClickPullRequest
-            ? {
-                onClick: () => prLinkClickHandler(pullRequest)
-              }
-            : {})}
-        >
-          {!!pullRequest.number && (
-            <StackedList.Field
-              className="gap-cn-2xs"
-              disableTruncate
-              title={
-                pullRequest.name && (
-                  <PullRequestItemTitle
-                    pullRequest={pullRequest}
-                    onLabelClick={onLabelClick}
-                    scope={scope}
-                    showScope={showScope}
-                  />
-                )
-              }
-              description={
-                pullRequest.author &&
-                typeof pullRequest.author === 'string' && (
-                  <PullRequestItemDescription
-                    number={pullRequest.number}
-                    author={pullRequest.author}
-                    reviewRequired={pullRequest.reviewRequired}
-                    tasks={pullRequest.tasks}
-                    sourceBranch={pullRequest.sourceBranch || ''}
-                    timestamp={pullRequest.timestamp}
-                    state={pullRequest.state || ('opened' as EnumPullReqState)}
-                    targetBranch={pullRequest.targetBranch || ''}
-                    toBranch={toBranch}
-                    repoId={pullRequest.repo?.identifier || ''}
-                  />
-                )
-              }
-            />
-          )}
-        </StackedList.Item>
-      ))}
+      {!isLoading &&
+        pullRequests.map(pullRequest => (
+          <StackedList.Item
+            key={`${pullRequest.number}-${pullRequest.repo?.path}`}
+            paddingY="sm"
+            {...(toPullRequest && pullRequest.number
+              ? {
+                  to: toPullRequest({ prNumber: pullRequest.number, repoId: pullRequest.repo?.identifier })
+                }
+              : {})}
+            {...(onClickPullRequest
+              ? {
+                  onClick: () => prLinkClickHandler(pullRequest)
+                }
+              : {})}
+          >
+            {!!pullRequest.number && (
+              <StackedList.Field
+                className="gap-cn-2xs"
+                disableTruncate
+                title={
+                  pullRequest.name && (
+                    <PullRequestItemTitle
+                      pullRequest={pullRequest}
+                      onLabelClick={onLabelClick}
+                      scope={scope}
+                      showScope={showScope}
+                    />
+                  )
+                }
+                description={
+                  pullRequest.author &&
+                  typeof pullRequest.author === 'string' && (
+                    <PullRequestItemDescription
+                      number={pullRequest.number}
+                      author={pullRequest.author}
+                      reviewRequired={pullRequest.reviewRequired}
+                      tasks={pullRequest.tasks}
+                      sourceBranch={pullRequest.sourceBranch || ''}
+                      timestamp={pullRequest.timestamp}
+                      state={pullRequest.state || ('opened' as EnumPullReqState)}
+                      targetBranch={pullRequest.targetBranch || ''}
+                      toBranch={toBranch}
+                      repoId={pullRequest.repo?.identifier || ''}
+                    />
+                  )
+                }
+              />
+            )}
+          </StackedList.Item>
+        ))}
     </StackedList.Root>
   )
 }

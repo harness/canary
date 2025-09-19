@@ -1,7 +1,8 @@
 import { ReactNode } from 'react'
 
-import { Button, Caption, ControlGroup, IconPropsV2, IconV2, Label, LogoPropsV2, LogoV2 } from '@/components'
+import { Button, Caption, ControlGroup, IconPropsV2, IconV2, Label, LogoPropsV2, LogoV2, Tag } from '@/components'
 import { cn } from '@utils/cn'
+import { ScopeType } from '@views/common'
 import { cva, type VariantProps } from 'class-variance-authority'
 
 const inputReferenceVariants = cva(
@@ -104,6 +105,11 @@ export interface InputReferenceProps<T> extends VariantProps<typeof inputReferen
    * Function called when the open (arrow) icon is clicked
    */
   onOpen?: () => void
+
+  /**
+   * Scope of the input reference, if passed
+   */
+  scope?: 'account' | 'org' | 'project'
 }
 
 /**
@@ -129,6 +135,7 @@ export const InputReference = <T,>({
   showReset = true,
   onOpen,
   wrapperClassName = '',
+  scope,
   ...props
 }: InputReferenceProps<T>) => {
   // Determine what to display: rendered value if value exists, otherwise placeholder
@@ -193,6 +200,17 @@ export const InputReference = <T,>({
           </div>
           {hasValue && !disabled && (
             <div className="ml-3 flex items-center">
+              {scope && (
+                <Tag
+                  value={
+                    scope === 'account'
+                      ? ScopeType.Account
+                      : scope === 'org'
+                        ? ScopeType.Organization
+                        : ScopeType.Project
+                  }
+                />
+              )}
               <Button onClick={handleEdit} size="sm" variant="ghost" iconOnly tooltipProps={{ content: 'Edit' }}>
                 <IconV2 name="edit-pencil" />
               </Button>

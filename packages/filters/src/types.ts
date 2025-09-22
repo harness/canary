@@ -2,6 +2,7 @@ export interface FilterType<T = any> {
   value?: T
   query?: string
   state: FilterStatus
+  persistInURL?: boolean
 }
 
 export interface FilterConfig<T = any> {

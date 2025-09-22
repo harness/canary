@@ -24979,7 +24979,6 @@
       "components/desktop/base/dialog": "enabled",
       "components/desktop/base/pagination": "enabled",
       "components/desktop/base/progress": "enabled",
-      "components/desktop/base/popover": "enabled",
       "components/desktop/base/toast": "enabled",
       "components/desktop/base/tree-view": "enabled",
       "components/desktop/base/header": "enabled"

@@ -138,7 +138,7 @@ export const PullRequestList: FC<PullRequestListProps> = ({
           title={
             <PullRequestListHeader
               isLoading={isLoading}
-              onClick={onHeaderFilterClick}
+              onChange={onHeaderFilterClick}
               headerFilter={headerFilter}
               openPRs={openPRs}
               mergedPRs={mergedPRs}

@@ -8,7 +8,7 @@ interface PullRequestListHeaderProps {
   closedPRs?: number
   mergedPRs?: number
   openPRs?: number
-  onClick: (value: EnumPullReqState) => void
+  onChange: (value: EnumPullReqState) => void
   isLoading?: boolean
 }
 
@@ -23,7 +23,7 @@ export const PullRequestListHeader: FC<PullRequestListHeaderProps> = ({
   closedPRs,
   mergedPRs,
   openPRs,
-  onClick,
+  onChange,
   isLoading
 }) => {
   const [loadingSource, setLoadingSource] = useState<EnumTabState | null>(null)
@@ -36,7 +36,7 @@ export const PullRequestListHeader: FC<PullRequestListHeaderProps> = ({
 
   const handleChange = (value: string) => {
     setLoadingSource(value as EnumTabState)
-    onClick(value as EnumPullReqState)
+    onChange(value as EnumPullReqState)
   }
 
   useEffect(() => {

@@ -203,7 +203,7 @@ export const MultiSelect = forwardRef<MultiSelectRef, MultiSelectProps>(
             for (const [key, value] of Object.entries(csvObject)) {
               const newOption = {
                 key,
-                value: value === key ? undefined : value, // Only set value if it's different from key
+                value: value === key ? key : value, // Use key as value for simple tags, actual value for key:value pairs
                 id: value === key ? key : `${key}:${value}`
               }
 

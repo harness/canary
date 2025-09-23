@@ -1,17 +1,16 @@
 import { CSSRuleObject } from 'tailwindcss/types/config'
 
 /** Variants */
-const variants = ['solid', 'soft', 'surface', 'ghost'] as const
+const variants = ['primary', 'secondary', 'outline', 'ghost'] as const
 
-const themes = ['success', 'danger', 'muted', 'primary'] as const
+const themes = ['success', 'danger', 'default'] as const
 
 const sizes = ['3xs', '2xs', 'xs', 'sm', 'md'] as const
 
 const themeStyleMapper: Record<(typeof themes)[number], string> = {
-  success: 'green',
-  danger: 'red',
-  muted: 'gray',
-  primary: 'brand'
+  success: 'success',
+  danger: 'danger',
+  default: 'gray'
 }
 
 function createButtonVariantStyles() {
@@ -26,47 +25,49 @@ function createButtonVariantStyles() {
 
       /**
        * Ghost variant has no background and border.
-       * It displays text color as same as surface variant.
-       * Hover and active states are added for ghost variant based on surface variant.
+       * It displays text color as same as outline variant.
+       * Hover and active states are added for ghost variant based on outline variant.
        */
       if (variant === 'ghost') {
-        style[`color`] = `var(--cn-set-${themeStyle}-surface-text)`
+        style[`color`] = `var(--cn-set-${themeStyle}-outline-text)`
         style[`&:hover:not(:disabled, .cn-button-disabled)`] = {
-          backgroundColor: `var(--cn-set-${themeStyle}-surface-bg-hover)`
+          backgroundColor: `var(--cn-set-${themeStyle}-outline-bg-hover)`
         }
 
         style[`&:active:not(:disabled, .cn-button-disabled), &:where(.cn-button-active), &:where([data-state=open])`] =
-        {
-          backgroundColor: `var(--cn-set-${themeStyle}-surface-bg-selected)`
-        }
+          {
+            backgroundColor: `var(--cn-set-${themeStyle}-outline-bg-selected)`
+          }
       } else {
+        const themeStyleForVariant = variant === 'primary' && theme === 'default' ? 'brand' : themeStyle
+
         // Default styles
-        style[`backgroundColor`] = `var(--cn-set-${themeStyle}-${variant}-bg)`
-        style[`color`] = `var(--cn-set-${themeStyle}-${variant}-text) !important`
+        style[`backgroundColor`] = `var(--cn-set-${themeStyleForVariant}-${variant}-bg)`
+        style[`color`] = `var(--cn-set-${themeStyleForVariant}-${variant}-text) !important`
         style[`borderColor`] =
-          `var(--cn-set-${themeStyle}-${variant}-border, var(--cn-set-${themeStyle}-${variant}-bg))`
+          `var(--cn-set-${themeStyleForVariant}-${variant}-border, var(--cn-set-${themeStyleForVariant}-${variant}-bg))`
 
         // Hover styles
         style[`&:hover:not(:disabled, .cn-button-disabled)`] =
-          variant === 'surface'
+          variant === 'outline'
             ? {
-              backgroundColor: `var(--cn-set-${themeStyle}-${variant}-bg-hover, var(--cn-set-${themeStyle}-${variant}-bg))`
-            }
+                backgroundColor: `var(--cn-set-${themeStyleForVariant}-${variant}-bg-hover, var(--cn-set-${themeStyleForVariant}-${variant}-bg))`
+              }
             : {
-              backgroundColor: `var(--cn-set-${themeStyle}-${variant}-bg-hover, var(--cn-set-${themeStyle}-${variant}-bg))`,
-              borderColor: `var(--cn-set-${themeStyle}-${variant}-bg-hover, var(--cn-set-${themeStyle}-${variant}-bg))`
-            }
+                backgroundColor: `var(--cn-set-${themeStyleForVariant}-${variant}-bg-hover, var(--cn-set-${themeStyleForVariant}-${variant}-bg))`,
+                borderColor: `var(--cn-set-${themeStyleForVariant}-${variant}-bg-hover, var(--cn-set-${themeStyleForVariant}-${variant}-bg))`
+              }
 
         // Active styles
         style[`&:active:not(:disabled, .cn-button-disabled), &:where(.cn-button-active), &:where([data-state=open])`] =
-          variant === 'surface'
+          variant === 'outline'
             ? {
-              backgroundColor: `var(--cn-set-${themeStyle}-${variant}-bg-selected, var(--cn-set-${themeStyle}-${variant}-bg))`
-            }
+                backgroundColor: `var(--cn-set-${themeStyleForVariant}-${variant}-bg-selected, var(--cn-set-${themeStyleForVariant}-${variant}-bg))`
+              }
             : {
-              backgroundColor: `var(--cn-set-${themeStyle}-${variant}-bg-selected, var(--cn-set-${themeStyle}-${variant}-bg))`,
-              borderColor: `var(--cn-set-${themeStyle}-${variant}-bg-selected, var(--cn-set-${themeStyle}-${variant}-bg))`
-            }
+                backgroundColor: `var(--cn-set-${themeStyleForVariant}-${variant}-bg-selected, var(--cn-set-${themeStyleForVariant}-${variant}-bg))`,
+                borderColor: `var(--cn-set-${themeStyleForVariant}-${variant}-bg-selected, var(--cn-set-${themeStyleForVariant}-${variant}-bg))`
+              }
 
         separatorStyles[`&:where(.cn-button-split-dropdown.cn-button-${variant}.cn-button-${theme})`] = {
           '&::before': {
@@ -74,7 +75,7 @@ function createButtonVariantStyles() {
              * Some variants don't have separator
              * Hence adding border color for separator
              *  */
-            backgroundColor: `var(--cn-set-${themeStyle}-${variant}-text)`,
+            backgroundColor: `var(--cn-set-${themeStyleForVariant}-${variant}-text)`,
             opacity: 'var(--cn-opacity-20)'
           }
         }

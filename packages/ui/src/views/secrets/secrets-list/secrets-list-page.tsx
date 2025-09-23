@@ -1,10 +1,10 @@
-import { FC } from 'react'
+import { FC, useCallback, useMemo, useRef } from 'react'
 
-import { Button, IconV2, NoData, Pagination, SecretListFilters, Spacer, Text } from '@/components'
+import { Button, IconV2, Layout, NoData, Pagination, SecretListFilters, Text } from '@/components'
 import { useRouterContext, useTranslation } from '@/context'
 import { SandboxLayout } from '@/views'
 import { cn } from '@utils/cn'
-import FilterGroup from '@views/components/FilterGroup'
+import FilterGroup, { FilterGroupRef } from '@views/components/FilterGroup'
 
 import { getSecretListFilterOptions, SECRET_SORT_OPTIONS } from './filter-options'
 import { SecretList } from './secrets-list'
@@ -32,6 +32,7 @@ const SecretListPage: FC<SecretListPageProps> = ({
 }) => {
   const { t } = useTranslation()
   const { navigate } = useRouterContext()
+  const filterRef = useRef<FilterGroupRef>(null)
 
   const secretManagerFilterOptions = secretManagerIdentifiers.map(secretManager => {
     return {
@@ -52,7 +53,29 @@ const SecretListPage: FC<SecretListPageProps> = ({
   const onFilterValueChange = (filterValues: SecretListFilters) => {
     // Pass filter values to parent component if onFilterChange is provided
     onFilterChange?.(filterValues)
+    goToPage(1)
   }
+
+  const handleResetFiltersQueryAndPages = () => {
+    filterRef.current?.resetSearch?.()
+    filterRef.current?.resetFilters?.()
+    setSearchQuery('')
+    goToPage(1)
+  }
+
+  const handleSearch = useCallback(
+    (query: string) => {
+      setSearchQuery(query.length ? query : '')
+      goToPage(1)
+    },
+    [setSearchQuery, goToPage]
+  )
+
+  const isDirtyList = useMemo(() => {
+    return currentPage !== 1 || !!searchQuery || secretManagerFilterOptions.length === 0
+  }, [currentPage, searchQuery])
+
+  const isEmpty = !isLoading && !secrets.length && !isDirtyList
 
   if (isError) {
     return (
@@ -87,28 +110,63 @@ const SecretListPage: FC<SecretListPageProps> = ({
   return (
     <SandboxLayout.Main>
       <SandboxLayout.Content className={cn({ 'h-full': !isLoading && !secrets.length && !searchQuery })}>
-        <Text variant="heading-hero">Secrets</Text>
-        <Spacer size={6} />
-        <FilterGroup<SecretListFilters, keyof SecretListFilters>
-          simpleSortConfig={{
-            sortOptions: SECRET_SORT_OPTIONS,
-            onSortChange,
-            defaultSort: 'lastModifiedAt,DESC'
-          }}
-          onFilterValueChange={onFilterValueChange}
-          handleInputChange={(value: string) => setSearchQuery(value)}
-          headerAction={
-            <Button onClick={onCreate}>
-              <IconV2 name="plus" />
-              {t('views:secrets.newSecret', 'New Secret')}
-            </Button>
-          }
-          filterOptions={SECRET_FILTER_OPTIONS}
-        />
-        <Spacer size={4} />
-        <SecretList secrets={secrets} isLoading={isLoading} onDeleteSecret={onDeleteSecret} {...props} />
-        <Spacer size={8} />
-        <Pagination totalItems={totalItems} pageSize={pageSize} currentPage={currentPage} goToPage={goToPage} />
+        <Layout.Vertical gap="xl" className="flex-1">
+          <Text as="h1" variant="heading-hero">
+            {t('views:secrets.secretsTitle', 'Secrets')}
+          </Text>
+
+          {isEmpty && (
+            <NoData
+              imageName="no-data-cog"
+              title={t('views:noData.noSecrets', 'No secrets yet')}
+              description={[t('views:noData.noSecrets', 'There are no secrets in this project yet.')]}
+              primaryButton={{
+                label: (
+                  <>
+                    <IconV2 name="plus" />
+                    {t('views:secrets.createNew', 'Create Secret')}
+                  </>
+                ),
+                onClick: onCreate
+              }}
+            />
+          )}
+
+          {!isEmpty && (
+            <Layout.Vertical gap="md" className="flex-1">
+              <FilterGroup<SecretListFilters, keyof SecretListFilters>
+                simpleSortConfig={{
+                  sortOptions: SECRET_SORT_OPTIONS,
+                  onSortChange,
+                  defaultSort: 'lastModifiedAt,DESC'
+                }}
+                ref={filterRef}
+                onFilterValueChange={onFilterValueChange}
+                handleInputChange={handleSearch}
+                headerAction={
+                  <Button onClick={onCreate}>
+                    <IconV2 name="plus" />
+                    {t('views:secrets.createNew', 'Create Secret')}
+                  </Button>
+                }
+                filterOptions={SECRET_FILTER_OPTIONS}
+              />
+
+              <Layout.Vertical gap="none" className="flex-1">
+                <SecretList
+                  secrets={secrets}
+                  isLoading={isLoading}
+                  onDeleteSecret={onDeleteSecret}
+                  {...props}
+                  handleResetFiltersQueryAndPages={handleResetFiltersQueryAndPages}
+                  isDirtyList={isDirtyList}
+                />
+
+                <Pagination totalItems={totalItems} pageSize={pageSize} currentPage={currentPage} goToPage={goToPage} />
+              </Layout.Vertical>
+            </Layout.Vertical>
+          )}
+        </Layout.Vertical>
       </SandboxLayout.Content>
     </SandboxLayout.Main>
   )

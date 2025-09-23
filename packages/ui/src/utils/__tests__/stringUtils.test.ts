@@ -35,53 +35,93 @@ describe('getInitials', () => {
 
 describe('csvToObject', () => {
   it('should handle empty input', () => {
-    expect(csvToObject('')).toEqual({})
-    expect(csvToObject('   ')).toEqual({})
-    expect(csvToObject(null as any)).toEqual({})
-    expect(csvToObject(undefined as any)).toEqual({})
+    expect(csvToObject('')).toEqual({ data: {}, metadata: {} })
+    expect(csvToObject('   ')).toEqual({ data: {}, metadata: {} })
+    expect(csvToObject(null as any)).toEqual({ data: {}, metadata: {} })
+    expect(csvToObject(undefined as any)).toEqual({ data: {}, metadata: {} })
   })
 
   it('should handle single input', () => {
-    expect(csvToObject('a')).toEqual({ a: 'a' })
+    expect(csvToObject('a')).toEqual({ data: { a: 'a' }, metadata: { a: false } })
   })
 
   it('should handle comma-separated input', () => {
-    expect(csvToObject('a,b,c')).toEqual({ a: 'a', b: 'b', c: 'c' })
+    expect(csvToObject('a,b,c')).toEqual({
+      data: { a: 'a', b: 'b', c: 'c' },
+      metadata: { a: false, b: false, c: false }
+    })
   })
 
   it('should handle key-value pairs', () => {
-    expect(csvToObject('a:1,b:2,c:3')).toEqual({ a: '1', b: '2', c: '3' })
+    expect(csvToObject('a:1,b:2,c:3')).toEqual({
+      data: { a: '1', b: '2', c: '3' },
+      metadata: { a: true, b: true, c: true }
+    })
   })
 
   it('should handle mixed simple and key-value pairs', () => {
-    expect(csvToObject('a,b:2,c')).toEqual({ a: 'a', b: '2', c: 'c' })
+    expect(csvToObject('a,b:2,c')).toEqual({
+      data: { a: 'a', b: '2', c: 'c' },
+      metadata: { a: false, b: true, c: false }
+    })
   })
 
   it('should trim whitespace from parts', () => {
-    expect(csvToObject(' a , b , c ')).toEqual({ a: 'a', b: 'b', c: 'c' })
+    expect(csvToObject(' a , b , c ')).toEqual({
+      data: { a: 'a', b: 'b', c: 'c' },
+      metadata: { a: false, b: false, c: false }
+    })
   })
 
   it('should filter out empty parts', () => {
-    expect(csvToObject('a,,b,,c')).toEqual({ a: 'a', b: 'b', c: 'c' })
+    expect(csvToObject('a,,b,,c')).toEqual({
+      data: { a: 'a', b: 'b', c: 'c' },
+      metadata: { a: false, b: false, c: false }
+    })
   })
 
   it('should handle duplicate keys with last occurrence winning', () => {
-    expect(csvToObject('a:1,a:2,a:3')).toEqual({ a: '3' })
+    expect(csvToObject('a:1,a:2,a:3')).toEqual({ data: { a: '3' }, metadata: { a: true } })
   })
 
   it('should handle duplicate simple values with last occurrence winning', () => {
-    expect(csvToObject('a,a,a')).toEqual({ a: 'a' })
+    expect(csvToObject('a,a,a')).toEqual({ data: { a: 'a' }, metadata: { a: false } })
   })
 
   it('should handle mixed duplicates with last occurrence winning', () => {
-    expect(csvToObject('a:1,a,b:2,b')).toEqual({ a: 'a', b: 'b' })
+    expect(csvToObject('a:1,a,b:2,b')).toEqual({ data: { a: 'a', b: 'b' }, metadata: { a: false, b: false } })
   })
 
   it('should handle case-sensitive keys', () => {
-    expect(csvToObject('a:1,A:2')).toEqual({ a: '1', A: '2' })
+    expect(csvToObject('a:1,A:2')).toEqual({ data: { a: '1', A: '2' }, metadata: { a: true, A: true } })
   })
 
   it('should handle empty values in key-value pairs', () => {
-    expect(csvToObject('a:,b:2')).toEqual({ a: '', b: '2' })
+    expect(csvToObject('a:,b:2')).toEqual({ data: { a: '', b: '2' }, metadata: { a: true, b: true } })
+  })
+
+  it('should handle key-value pairs where key and value are the same', () => {
+    expect(csvToObject('abc:abc')).toEqual({ data: { abc: 'abc' }, metadata: { abc: true } })
+  })
+
+  it('should handle mixed cases with same key-value pairs', () => {
+    expect(csvToObject('abc:abc,def:def')).toEqual({
+      data: { abc: 'abc', def: 'def' },
+      metadata: { abc: true, def: true }
+    })
+  })
+
+  it('should handle URLs with multiple colons by splitting only at first colon', () => {
+    expect(csvToObject('url:https://abc.com')).toEqual({
+      data: { url: 'https://abc.com' },
+      metadata: { url: true }
+    })
+  })
+
+  it('should handle multiple colons in key-value pairs', () => {
+    expect(csvToObject('a:b:c:d')).toEqual({
+      data: { a: 'b:c:d' },
+      metadata: { a: true }
+    })
   })
 })

@@ -196,15 +196,16 @@ export const MultiSelect = forwardRef<MultiSelectRef, MultiSelectProps>(
           if (e.key === 'Enter' && input.value && !disallowCreation) {
             const inputValue = input.value.trim()
             // Handle comma-separated input or single option
-            const csvObject = csvToObject(inputValue)
+            const { data: csvData, metadata: csvMetadata } = csvToObject(inputValue)
             const updatedOptions = getSelectedOptions()
 
             // Process each key-value pair from the CSV object
-            for (const [key, value] of Object.entries(csvObject)) {
+            for (const [key, value] of Object.entries(csvData)) {
+              const wasKeyValuePair = csvMetadata[key] // Use metadata from csvToObject
               const newOption = {
                 key,
-                value: value === key ? undefined : value, // Set value to undefined for simple tags, actual value for key:value pairs
-                id: value === key ? key : `${key}:${value}`
+                value: wasKeyValuePair ? value : undefined, // Set value only for genuine key:value pairs
+                id: wasKeyValuePair ? `${key}:${value}` : key
               }
 
               const existingIndex = updatedOptions.findIndex(option => option.key === newOption.key)

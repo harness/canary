@@ -12,12 +12,14 @@ export const getInitials = (name: string, length = 2) => {
 }
 
 /**
- * Converts comma-separated values to a generic object with key-based deduplication
+ * Converts comma-separated values to a structured object with metadata
  * @param inputValue The comma-separated string (e.g., "a,b,c" or "a:1,a:2,a:3")
- * @returns Record<string, string> with deduplication applied (last occurrence wins)
+ * @returns Object with data and metadata about key-value pairs
  */
-export const csvToObject = (inputValue: string): Record<string, string> => {
-  if (!inputValue?.trim()) return {}
+export const csvToObject = (
+  inputValue: string
+): { data: Record<string, string>; metadata: Record<string, boolean> } => {
+  if (!inputValue?.trim()) return { data: {}, metadata: {} }
 
   // Split by comma, trim whitespace, and filter out empty strings
   const parts = inputValue
@@ -26,20 +28,27 @@ export const csvToObject = (inputValue: string): Record<string, string> => {
     .filter(part => part.length > 0)
 
   // Early return if no valid parts
-  if (parts.length === 0) return {}
+  if (parts.length === 0) return { data: {}, metadata: {} }
 
   // Key-based deduplication - last occurrence wins
-  const result: Record<string, string> = {}
+  const data: Record<string, string> = {}
+  const metadata: Record<string, boolean> = {}
+
   for (const part of parts) {
     if (part.includes(':')) {
-      const [key, value] = part.split(':', 2)
+      const colonIndex = part.indexOf(':')
+      const key = part.substring(0, colonIndex)
+      const value = part.substring(colonIndex + 1)
       if (key && key.trim()) {
-        result[key.trim()] = value ? value.trim() : ''
+        const trimmedKey = key.trim()
+        data[trimmedKey] = value ? value.trim() : ''
+        metadata[trimmedKey] = true // This was a key-value pair
       }
     } else {
-      result[part] = part
+      data[part] = part
+      metadata[part] = false // This was a simple tag
     }
   }
 
-  return result
+  return { data, metadata }
 }

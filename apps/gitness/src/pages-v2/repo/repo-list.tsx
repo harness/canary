@@ -8,7 +8,7 @@ import {
   useDeleteRepositoryMutation,
   useListReposQuery
 } from '@harnessio/code-service-client'
-import { determineScope, Toast, useToast } from '@harnessio/ui/components'
+import { Button, determineScope, Layout, Toast, toastV2, useToast } from '@harnessio/ui/components'
 import { useRouterContext } from '@harnessio/ui/context'
 import { ExtendedScope, RepoListFilters, RepositoryType, SandboxRepoListPage } from '@harnessio/ui/views'
 
@@ -190,47 +190,106 @@ export default function ReposListPage() {
   }
 
   return (
-    <SandboxRepoListPage
-      scope={scope}
-      useRepoStore={useRepoStore}
-      isLoading={isFetching}
-      isError={isError}
-      errorMessage={error?.message}
-      queryFilterValues={{ favorite: favorite, recursive: recursive }}
-      searchQuery={query}
-      setSearchQuery={setQuery}
-      setQueryPage={setQueryPage}
-      onClickRepo={handleOnClickRepo}
-      toCreateRepo={() => routes.toCreateRepo({ spaceId })}
-      toImportRepo={() => routes.toImportRepo({ spaceId })}
-      toImportMultipleRepos={() => routes.toImportMultipleRepos({ spaceId })}
-      onFavoriteToggle={onFavoriteToggle}
-      onFilterChange={({ favorite, recursive }: RepoListFilters) => {
-        setFavorite(favorite ?? null)
-        shouldResetPageRef.current = true
-
-        if (!recursive) return
-
-        if (accountId && orgIdentifier && projectIdentifier) return
-
-        if (accountId && orgIdentifier) {
-          setRecursive(recursive.value === ExtendedScope.OrgProg)
+    <>
+      <Layout.Flex gap="md">
+        <Button
+          onClick={() =>
+            toastV2({
+              title: 'Toast title',
+              description: Array.from({ length: Math.floor(Math.random() * 1000) + 1 })
+                .map(() => 'a')
+                .join(''),
+              options: {
+                duration: 100000,
+                dismissible: true
+              }
+            })
+          }
+        >
+          Show Toast
+        </Button>
+        <Button
+          onClick={() =>
+            toastV2.danger({
+              title: 'Toast title',
+              description: 'Toast description',
+              options: {
+                duration: 100000
+              }
+            })
+          }
+        >
+          Show Danger Toast
+        </Button>
+        <Button
+          onClick={() =>
+            toastV2.info({
+              title: 'Toast title',
+              description: 'Toast description',
+              options: {
+                duration: 100000
+              }
+            })
+          }
+        >
+          Show Info Toast
+        </Button>
+        <Button
+          onClick={() =>
+            toastV2.success({
+              title: 'Toast title',
+              description: 'Toast description',
+              options: {
+                duration: 100000
+              }
+            })
+          }
+        >
+          Show Success Toast
+        </Button>
+      </Layout.Flex>
+      <SandboxRepoListPage
+        scope={scope}
+        useRepoStore={useRepoStore}
+        isLoading={isFetching}
+        isError={isError}
+        errorMessage={error?.message}
+        queryFilterValues={{ favorite: favorite, recursive: recursive }}
+        searchQuery={query}
+        setSearchQuery={setQuery}
+        setQueryPage={setQueryPage}
+        onClickRepo={handleOnClickRepo}
+        toCreateRepo={() => routes.toCreateRepo({ spaceId })}
+        toImportRepo={() => routes.toImportRepo({ spaceId })}
+        toImportMultipleRepos={() => routes.toImportMultipleRepos({ spaceId })}
+        onFavoriteToggle={onFavoriteToggle}
+        onFilterChange={({ favorite, recursive }: RepoListFilters) => {
+          setFavorite(favorite ?? null)
           shouldResetPageRef.current = true
-        } else if (accountId) {
-          setRecursive(recursive.value === ExtendedScope.All)
-          shouldResetPageRef.current = true
-        }
-      }}
-      onSortChange={(sortValues: string) => {
-        const [type, direction] = sortValues?.split(',') || []
-        const sortKey = type as ListReposQueryQueryParams['sort']
-        const orderKey = direction as ListReposQueryQueryParams['order']
 
-        setSort(sortKey)
-        setOrder(orderKey)
-        shouldResetPageRef.current = true
-      }}
-    />
+          if (!recursive) return
+
+          if (accountId && orgIdentifier && projectIdentifier) return
+
+          if (accountId && orgIdentifier) {
+            setRecursive(recursive.value === ExtendedScope.OrgProg)
+            shouldResetPageRef.current = true
+          } else if (accountId) {
+            setRecursive(recursive.value === ExtendedScope.All)
+            shouldResetPageRef.current = true
+          }
+        }}
+        onSortChange={(sortValues: string) => {
+          const [type, direction] = sortValues?.split(',') || []
+          const sortKey = type as ListReposQueryQueryParams['sort']
+          const orderKey = direction as ListReposQueryQueryParams['order']
+
+          setSort(sortKey)
+          setOrder(orderKey)
+          shouldResetPageRef.current = true
+        }}
+      />
+    </>
   )
 }
 

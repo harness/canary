@@ -101,3 +101,6 @@ export * from './form-input'
 export * from './favorite'
 export * from './scope'
 export * from './rbac'
+
+// Toast v2
+export * from './toast-v2'

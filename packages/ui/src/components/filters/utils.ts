@@ -36,7 +36,13 @@ export const getFilterLabelValue = <
       return options?.find(option => option.value === filterValue?.value)?.label
     }
     case FilterFieldTypes.MultiSelect: {
-      return (filter.value as CheckboxOptions[])?.map(option => option.label).join(', ')
+      const options = filterOption.filterFieldConfig?.options
+      return (filter.value as CheckboxOptions[])
+        ?.map(
+          selectedOption =>
+            options?.find(option => option.value === selectedOption.value)?.label || selectedOption.value
+        )
+        .join(', ')
     }
     case FilterFieldTypes.Text: {
       return filter.value as string

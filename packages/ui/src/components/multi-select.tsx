@@ -321,7 +321,7 @@ export const MultiSelect = forwardRef<MultiSelectRef, MultiSelectProps>(
                 }}
                 onKeyDown={noop}
                 role="textbox"
-                tabIndex={disabled ? -1 : 0}
+                tabIndex={-1}
                 aria-label={placeholder}
               >
                 <div className="cn-multi-select-tag-wrapper">

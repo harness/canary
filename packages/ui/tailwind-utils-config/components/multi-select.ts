@@ -67,6 +67,10 @@ export default {
         '&::placeholder': {
           color: 'var(--cn-state-disabled-text)'
         }
+      },
+
+      '&:where(:focus-visible)': {
+        outline: 'none !important'
       }
     },
 

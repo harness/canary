@@ -6,7 +6,7 @@ import { ScopeType } from '@views/common'
 import { cva, type VariantProps } from 'class-variance-authority'
 
 const inputReferenceVariants = cva(
-  'h-cn-input-md border-cn-input rounded-cn-input bg-cn-input text-cn-1 flex cursor-pointer select-none items-center transition-colors',
+  'h-cn-input-md border-cn-input rounded-cn-input bg-cn-input text-cn-1 flex cursor-pointer select-none items-center transition-colors outline-offset-cn-tight',
   {
     variants: {
       state: {

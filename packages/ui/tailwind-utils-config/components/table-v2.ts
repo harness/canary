@@ -75,7 +75,7 @@ export default {
 
       '&:has(.cn-table-v2-cell-clickable-block:focus-visible)': {
         outline: 'var(--cn-focus)',
-        outlineOffset: 'calc(2px*-1)'
+        '@apply outline-offset-cn-tight': ''
       },
 
       '&:where(.row-link-no-underline)': {

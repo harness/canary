@@ -82,6 +82,10 @@ export default {
     '&:where(.cn-card-disabled)': {
       opacity: `var(--cn-disabled-opacity)`,
       '@apply cursor-not-allowed': ''
+    },
+
+    '&:where(:focus-visible)': {
+      '@apply outline-offset-cn-tight': ''
     }
   }
 }

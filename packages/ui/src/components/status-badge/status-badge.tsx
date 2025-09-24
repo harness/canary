@@ -7,9 +7,9 @@ import { cva, type VariantProps } from 'class-variance-authority'
 const statusBadgeVariants = cva('cn-badge inline-flex w-fit items-center transition-colors', {
   variants: {
     variant: {
-      primary: 'cn-badge-solid',
-      secondary: 'cn-badge-soft',
-      outline: 'cn-badge-surface',
+      primary: 'cn-badge-primary',
+      secondary: 'cn-badge-secondary',
+      outline: 'cn-badge-outline',
       ghost: 'cn-badge-ghost',
       status: 'cn-badge-status'
     },

@@ -1,16 +1,15 @@
 import { CSSRuleObject } from 'tailwindcss/types/config'
 
 /** Variants */
-const variants = ['solid', 'soft', 'surface', 'status', 'ghost'] as const
+const variants = ['primary', 'secondary', 'outline', 'status', 'ghost'] as const
 
-const themes = ['success', 'info', 'warning', 'danger', 'primary', 'muted', 'merged'] as const
+const themes = ['success', 'info', 'warning', 'danger', 'muted', 'merged'] as const
 
 const themeStyleMapper: Record<Exclude<(typeof themes)[number], 'ai'>, string> = {
-  success: 'green',
+  success: 'success',
   info: 'blue',
-  warning: 'yellow',
-  danger: 'red',
-  primary: 'brand',
+  warning: 'warning',
+  danger: 'danger',
   muted: 'gray',
   merged: 'purple'
 }
@@ -30,7 +29,7 @@ function createBadgeVariantStyles() {
          * "ghost" variant has no background and border.
          * It displays text color as same as surface variant.
          */
-        style[`color`] = `var(--cn-set-${themeStyle}-surface-text)`
+        style[`color`] = `var(--cn-set-${themeStyle}-outline-text)`
         combinationStyles[`&:where(.cn-badge-${variant}.cn-badge-${theme})`] = style
       } else if (variant !== 'status') {
         /**
@@ -45,7 +44,7 @@ function createBadgeVariantStyles() {
       } else {
         // Add status circle styles for each theme
         statusCircleStyles[`&.cn-badge-status.cn-badge-${theme} > .cn-badge-indicator`] = {
-          backgroundColor: `var(--cn-set-${themeStyle}-solid-bg)`
+          backgroundColor: `var(--cn-set-${themeStyle}-primary-bg)`
         }
       }
     })

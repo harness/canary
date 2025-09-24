@@ -33,6 +33,7 @@ export interface SecretReferenceProps {
     goToPage?: (page: number) => void
     pageSize?: number
   }
+  showFilter?: boolean
 }
 
 // Component for selecting existing secrets
@@ -61,7 +62,8 @@ export const SecretReference: React.FC<SecretReferenceProps> = ({
   isDrawer = false,
 
   // Pagination
-  paginationProps
+  paginationProps,
+  showFilter = true
 }) => {
   // Custom entity renderer for secrets
   const renderEntity = (props: EntityRendererProps<SecretItem>) => {
@@ -99,6 +101,7 @@ export const SecretReference: React.FC<SecretReferenceProps> = ({
         searchValue={searchValue}
         handleChangeSearchValue={handleChangeSearchValue}
         paginationProps={paginationProps}
+        showFilter={showFilter}
       />
 
       {!isDrawer && (

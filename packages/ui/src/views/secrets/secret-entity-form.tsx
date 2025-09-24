@@ -65,12 +65,14 @@ export const SecretEntityForm = forwardRef<SecretEntityFormHandle, SecretEntityF
     const defaultSecretValues = useMemo(() => {
       const defaultValues = getDefaultValuesFromFormDefinition(secretsFormDefinition ?? { inputs: [] })
       const connectorIdentifier = initialSecretValues?.secretManagerRef?.connector?.identifier
+      const initialType = initialSecretValues?.type
 
       return {
         ...defaultValues,
         secret: defaultValues.secret
           ? {
               ...defaultValues.secret,
+              type: initialType,
               spec: {
                 ...(defaultValues.secret.spec || {}),
                 secretManagerIdentifier: connectorIdentifier
@@ -80,7 +82,7 @@ export const SecretEntityForm = forwardRef<SecretEntityFormHandle, SecretEntityF
         secretManagerRef: initialSecretValues?.secretManagerRef,
         intent: EntityIntent.CREATE
       }
-    }, [secretsFormDefinition, initialSecretValues?.secretManagerRef])
+    }, [secretsFormDefinition, initialSecretValues?.secretManagerRef, initialSecretValues?.type])
 
     useEffect(() => {
       if (intent === EntityIntent.EDIT && initialSecretValues) {

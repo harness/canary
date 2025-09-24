@@ -181,22 +181,20 @@ export function EntityReference<T extends BaseEntityProps, S = string, F = strin
   return (
     <>
       <Layout.Vertical gapY="lg">
-        {showFilter && (
-          <Layout.Horizontal gapX="sm">
-            <SearchInput
-              ref={inputRef}
-              width="full"
-              className={cn({ 'max-w-96': filterTypes })}
-              defaultValue={searchValue}
-              onChange={handleChangeSearchValue}
-              placeholder="Search"
-              autoFocus
-            />
-            {filterTypes && (
-              <EntityReferenceFilter onFilterChange={onFilterChange} filterTypes={filterTypes} defaultValue={'all'} />
-            )}
-          </Layout.Horizontal>
-        )}
+        <Layout.Horizontal gapX="sm">
+          <SearchInput
+            ref={inputRef}
+            width="full"
+            className={cn({ 'max-w-96': filterTypes })}
+            defaultValue={searchValue}
+            onChange={handleChangeSearchValue}
+            placeholder="Search"
+            autoFocus
+          />
+          {showFilter && filterTypes && (
+            <EntityReferenceFilter onFilterChange={onFilterChange} filterTypes={filterTypes} defaultValue={'all'} />
+          )}
+        </Layout.Horizontal>
         {isLoading ? (
           <Skeleton.List />
         ) : (

@@ -25219,8 +25219,6 @@
       "toast.border": "ba042be44a9bc38c9fdeb3cba715202af38ed47a",
       "toast.title-min-height": "5d17e758724aa1208dae52e8a40e4a1fdf3d8215",
       "toast.fade-height": "e01a3bd12f8819914728ac1c363777aedd3d772c",
-      "toast.max-width": "c4211c12c5d3f5bac6b12b41352d1441351d45ca",
-      "toast.min-width": "8f87dafbd2beefe44384d6eaf7c44e22535aaa40",
       "tree-item.height": "bc50b4d1dbd622b2eebe7ce5ca90f15a41b06ed6",
       "tree-item.gap": "987bfa7134f783974dc687bdefb08c8e22d9f7c4",
       "tree-item.py": "c3264096f58438b9335331e04dbaaff50b320481",
@@ -25250,7 +25248,8 @@
       "sidebar.sub-group.px": "5006092a42bb07d1e40ae23b2baec1ee97f03ffd",
       "sidebar.sub-group.gap": "9c76d68347b2aca71369c29fde8ddb2cf4025352",
       "sidebar.sub-group.gap-container": "f2269f7a180523905595ea301ed4c1c399a865d6",
-      "sidebar.fade-height": "d974d168b6370cd747308079692dd5fbf860311d"
+      "sidebar.fade-height": "d974d168b6370cd747308079692dd5fbf860311d",
+      "toast.width": "c4211c12c5d3f5bac6b12b41352d1441351d45ca"
     },
     "group": "breakpoint"
   }

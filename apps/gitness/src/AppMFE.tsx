@@ -19,6 +19,8 @@ import { getMFERoutes } from './routes'
 
 import './styles.css'
 
+import { cn } from '@harnessio/ui/utils'
+
 interface AppMFEProps extends MFEContextProps {
   on401?: () => void
   useMFEThemeContext: () => { theme: string; setTheme: (newTheme: string) => void }
@@ -86,7 +88,7 @@ export default function AppMFE({
   const { t } = useTranslationStore()
 
   return (
-    <div id="code-mfe-root" className={theme.toLowerCase()} ref={portalRef}>
+    <div id="code-mfe-root" className={cn(theme.toLowerCase(), 'harnessio-ui-lib')} ref={portalRef}>
       <PortalProvider portalContainer={portalContainer}>
         <MFEContext.Provider
           value={{

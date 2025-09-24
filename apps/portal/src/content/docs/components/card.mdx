@@ -114,7 +114,7 @@ The `position` prop controls where the image is placed within the card layout. I
 
 ## States
 
-The `Card` component supports `selected` and `disabled` states:
+The `Card` component supports `selected`, `disabled` and `withHover` states:
 
 <DocsPage.ComponentExample
   client:only
@@ -124,6 +124,10 @@ The `Card` component supports `selected` and `disabled` states:
       <Card.Content>Active state</Card.Content>
     </Card.Root>
     <Card.Root disabled>
+      <Card.Title>Disabled Card</Card.Title>
+      <Card.Content>Inactive state</Card.Content>
+    </Card.Root>
+    <Card.Root withHover={false}">
       <Card.Title>Disabled Card</Card.Title>
       <Card.Content>Inactive state</Card.Content>
     </Card.Root>
@@ -186,6 +190,13 @@ The root component for the card.
       required: false,
       value: "boolean",
       defaultValue: "false",
+    },
+    {
+      name: "withHover",
+      description: "Whether the card is hoverable or not.",
+      required: false,
+      value: "boolean",
+      defaultValue: "true",
     },
     {
       name: "className",

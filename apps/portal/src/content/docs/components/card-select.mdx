@@ -20,7 +20,7 @@ import { DocsPage } from "@/components/docs-page";
         <CardSelect.Title>Option 2</CardSelect.Title>
       </CardSelect.Item>
     </CardSelect.Root>
-  
+
     <CardSelect.Root type="multiple" defaultValue={["one"]} onValueChange={console.log}>
       <CardSelect.Item value="one">
         <CardSelect.Title>Option A</CardSelect.Title>
@@ -155,6 +155,21 @@ Control the gap between cards using the `gap` prop:
 <DocsPage.ComponentExample
   client:only
   code={`<div className="flex flex-col space-y-8">
+    <div className="flex flex-col space-y-2">
+      <h1 className="text-lg font-semibold">XS Gap</h1>
+      <CardSelect.Root type="single" gap="xs" layout="horizontal">
+        <CardSelect.Item value="xs-1">
+          <CardSelect.Title>XS 1</CardSelect.Title>
+        </CardSelect.Item>
+        <CardSelect.Item value="xs-2">
+          <CardSelect.Title>XS 2</CardSelect.Title>
+        </CardSelect.Item>
+        <CardSelect.Item value="xs-3">
+          <CardSelect.Title>XS 3</CardSelect.Title>
+        </CardSelect.Item>
+      </CardSelect.Root>
+    </div>
+
     <div className="flex flex-col space-y-2">
       <h1 className="text-lg font-semibold">Small Gap</h1>
       <CardSelect.Root type="single" gap="sm" layout="horizontal">
@@ -315,7 +330,7 @@ The `CardSelect.Root` is the top-level wrapper that controls selection state.
       name: "gap",
       description: "Space between cards.",
       required: false,
-      value: "'sm' | 'md' | 'lg'",
+      value: "'xs' | 'sm' | 'md' | 'lg'",
       defaultValue: "'md'",
     },
     {

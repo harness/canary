@@ -3,7 +3,7 @@ export default {
     border: 'var(--cn-card-border) solid var(--cn-border-2)',
     borderRadius: 'var(--cn-card-md-radius)',
     backgroundColor: 'var(--cn-bg-2)',
-    '&:hover:not(.cn-card-disabled)': {
+    '&:hover:not(.cn-card-disabled):not(.cn-card-disabled-hover)': {
       borderColor: 'var(--cn-border-1)'
     },
     '@apply flex overflow-hidden select-none': '',
@@ -33,7 +33,7 @@ export default {
 
     '.cn-card-title': {
       color: 'var(--cn-text-1)',
-      '@apply font-heading-base': ''
+      '@apply font-body-strong': ''
     },
 
     '.cn-card-content': {

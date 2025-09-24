@@ -25,6 +25,10 @@ const cardVariants = cva('cn-card', {
     disabled: {
       true: 'cn-card-disabled',
       false: ''
+    },
+    withHover: {
+      true: '',
+      false: 'cn-card-disabled-hover'
     }
   },
   defaultVariants: {
@@ -48,6 +52,7 @@ const CardRoot = forwardRef<HTMLDivElement, CardRootProps>(
       size = 'md',
       selected = false,
       disabled = false,
+      withHover = true,
       orientation = 'vertical',
       position = 'start',
       children,
@@ -80,7 +85,8 @@ const CardRoot = forwardRef<HTMLDivElement, CardRootProps>(
             orientation,
             position,
             selected,
-            disabled
+            disabled,
+            withHover
           }),
           className
         )}

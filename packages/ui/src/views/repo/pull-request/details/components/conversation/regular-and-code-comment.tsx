@@ -209,7 +209,7 @@ const PullRequestRegularAndCodeCommentInternal: FC<PullRequestRegularAndCodeComm
   const { isExpanded: getIsExpanded } = useExpandedComments()
 
   const renderContentItemsBlock = () => (
-    <div className="px-4 pt-4">
+    <div>
       {commentItems?.map((commentItem, idx) => {
         const expandedKey = payload?.id || commentItem?.id || 0
         const isExpanded = !payload?.resolved || getIsExpanded(expandedKey)
@@ -251,6 +251,8 @@ const PullRequestRegularAndCodeCommentInternal: FC<PullRequestRegularAndCodeComm
               isResolved: !!payload?.resolved,
               hideReplySection: true,
               isComment: true,
+              isFirst: idx === 0,
+              isSecond: idx === 1,
               isLast: (commentItems?.length || 0) - 1 === idx,
               onCopyClick,
               commentId: commentItem.id,
@@ -265,6 +267,7 @@ const PullRequestRegularAndCodeCommentInternal: FC<PullRequestRegularAndCodeComm
               ) : editModes[componentId] ? (
                 <PullRequestCommentBox
                   autofocus
+                  className={cn({ 'flex-1': idx === 0 })}
                   principalsMentionMap={principalsMentionMap}
                   setPrincipalsMentionMap={setPrincipalsMentionMap}
                   principalProps={principalProps}

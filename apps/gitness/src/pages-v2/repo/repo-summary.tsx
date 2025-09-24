@@ -59,7 +59,8 @@ export default function RepoSummaryPage() {
 
   const { currentUser } = useAppContext()
   const isMFE = useIsMFE()
-  const { customHooks, customUtils } = useMFEContext()
+  const { customHooks, customUtils, hooks } = useMFEContext()
+  const { CODE_SSH_ENABLED: isSSHEnabled } = hooks?.useFeatureFlags?.()
 
   const { toRepoCommits } = useRepoCommits()
   const {
@@ -369,6 +370,7 @@ export default function RepoSummaryPage() {
         showContributeBtn={showContributeBtn}
         scheduleFileMetaFetch={scheduleFileMetaFetch}
         imageUrlTransform={imageUrlTransform}
+        isSSHEnabled={isSSHEnabled}
       />
       <CreateBranchDialog
         open={isCreateBranchDialogOpen}

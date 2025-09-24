@@ -331,8 +331,9 @@ export const PullRequestComparePage: FC<PullRequestComparePageProps> = ({
                 <Layout.Horizontal align="center">
                   <IconV2 name="git-compare" size="xs" color="success" />
                   <div className="flex gap-x-1">
-                    {/* TODO: add the name of the PR instead this placeholder */}
-                    <Text color="foreground-1">{prBranchCombinationExists.title}</Text>
+                    <Text color="foreground-1" className="min-w-0 break-all">
+                      {prBranchCombinationExists.title}
+                    </Text>
                     <span className="text-cn-2">{`#${prBranchCombinationExists.number}`}</span>
                   </div>
                 </Layout.Horizontal>

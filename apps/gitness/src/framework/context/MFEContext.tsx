@@ -56,9 +56,19 @@ export declare const useLogout: () => UseLogoutReturn
 
 export declare const usePermission: (permissionsRequest?: PermissionsRequest, deps?: Array<any>) => Array<boolean>
 
+export enum FeatureFlag {
+  SEMANTIC_SEARCH_ENABLED = 'SEMANTIC_SEARCH_ENABLED'
+}
+
+export declare const useFeatureFlag: (flag: FeatureFlag) => boolean
+
+export declare const useFeatureFlags: Unknown
+
 export interface Hooks {
   useLogout?: typeof useLogout
   usePermission?: typeof usePermission
+  useFeatureFlag?: typeof useFeatureFlag
+  useFeatureFlags?: typeof useFeatureFlags
 }
 
 /**************/

@@ -193,6 +193,8 @@ export interface TimelineItemProps {
   contentHeader?: ReactNode
   content?: ReactNode
   icon?: ReactNode
+  isFirst?: boolean
+  isSecond?: boolean
   isLast?: boolean
   isComment?: boolean
   hideIconBorder?: boolean
@@ -234,6 +236,8 @@ const PullRequestTimelineItem: FC<TimelineItemProps> = ({
   contentHeader,
   content,
   icon,
+  isFirst = false,
+  isSecond = false,
   isLast = false,
   hideReplySection = false,
   contentWrapperClassName,
@@ -335,7 +339,7 @@ const PullRequestTimelineItem: FC<TimelineItemProps> = ({
     if (contentElement.props?.children?.length) {
       // If content is an array of comments, take the first one
       const [firstComment] = Children.toArray(contentElement.props.children)
-      return <div className="px-cn-md pt-cn-md [&_[data-connector]]:hidden">{firstComment}</div>
+      return <div className="[&_[data-connector]]:hidden">{firstComment}</div>
     }
 
     // If content is a single element, return as is
@@ -349,15 +353,41 @@ const PullRequestTimelineItem: FC<TimelineItemProps> = ({
     </Button>
   )
 
+  if (isFirst) {
+    return (
+      <div id={id} className={cn('pl-cn-md py-cn-md pr-cn-xs', { 'border-b': isExpanded })}>
+        <div className="flex w-full items-center justify-between gap-x-2">
+          <ItemHeader
+            isDeleted={isDeleted}
+            onEditClick={onEditClick}
+            onCopyClick={onCopyClick}
+            isComment={isComment}
+            isReply={isReply}
+            isNotCodeComment={isNotCodeComment}
+            handleDeleteComment={handleOpenDeleteDialog}
+            commentId={commentId}
+            isResolved={isResolved}
+            description={renderContent()}
+            onQuoteReply={() => {
+              setHideReplyHere?.(true)
+              if (parentCommentId) onQuoteReply?.(parentCommentId, data ?? '')
+            }}
+            hideEditDelete={hideEditDelete}
+          />
+        </div>
+      </div>
+    )
+  }
+
   return (
     <>
-      <div id={id}>
+      <div id={id} className={cn('pl-cn-md pr-cn-xs', { 'pt-cn-md': isSecond })}>
         <NodeGroup.Root className={cn(getThreadSpacingClasses(threadIndex, totalThreads, isLast), wrapperClassName)}>
-          {!!icon && <NodeGroup.Icon>{icon}</NodeGroup.Icon>}
+          {!!icon && <NodeGroup.Icon wrapperClassName="self-auto size-auto">{icon}</NodeGroup.Icon>}
           <NodeGroup.Title className={titleClassName}>
             {/* Ensure that header has at least one item */}
             {!!header.length && (
-              <div className="flex w-full items-center justify-between gap-x-cn-md">
+              <div className="gap-x-cn-md flex w-full items-center justify-between">
                 <ItemHeader
                   isDeleted={isDeleted}
                   onEditClick={onEditClick}
@@ -380,7 +410,7 @@ const PullRequestTimelineItem: FC<TimelineItemProps> = ({
             )}
           </NodeGroup.Title>
           {!!content && (
-            <NodeGroup.Content className={cn('overflow-auto', contentWrapperClassName)}>
+            <NodeGroup.Content className={cn('overflow-auto', contentWrapperClassName, { 'pr-cn-xs': isComment })}>
               <div className={cn('border rounded-md overflow-hidden', contentClassName)}>
                 {!!contentHeader && (
                   <Layout.Horizontal align="center" justify="between" className={cn('p-2 px-cn-md bg-cn-2')}>
@@ -475,7 +505,9 @@ const PullRequestTimelineItem: FC<TimelineItemProps> = ({
               </div>
             </NodeGroup.Content>
           )}
-          {!isLast && <NodeGroup.Connector className="left-[0.8rem] top-0" />}
+          {!isLast && (
+            <NodeGroup.Connector className={cn('left-[0.8rem] top-0 bottom-[-10px]', { 'top-[10px]': isSecond })} />
+          )}
         </NodeGroup.Root>
       </div>
 

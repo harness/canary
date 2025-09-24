@@ -25,14 +25,16 @@ function Root({ className, children }: NodeGroupRootProps) {
 function Icon({
   children,
   simpleNodeIcon,
-  className
+  className,
+  wrapperClassName
 }: {
   children?: ReactNode
   simpleNodeIcon?: boolean
   className?: string
+  wrapperClassName?: string
 }) {
   return (
-    <div className="col-start-1 row-start-1 size-full self-start">
+    <div className={cn('col-start-1 row-start-1 size-full self-start', wrapperClassName)}>
       <div
         className={cn(
           {

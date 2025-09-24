@@ -19,6 +19,7 @@ export type SecretListFilters = {
   secretTypes?: CheckboxOptions[]
   secretManagerIdentifiers?: CheckboxOptions[]
   description?: string
+  tags?: string
 }
 
 export interface CheckboxOptions {

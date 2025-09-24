@@ -7,12 +7,11 @@ export default {
   '.cn-toast': {
     paddingBlock: 'var(--cn-toast-py)',
     paddingInline: 'var(--cn-toast-px)',
-    minWidth: 'var(--cn-toast-min-width)',
-    maxWidth: 'var(--cn-toast-max-width)',
+    width: 'var(--cn-toast-max-width)',
     borderRadius: 'var(--cn-toast-radius)',
     borderWidth: 'var(--cn-toast-border)',
     boxShadow: 'var(--cn-shadow-3)',
-    '@apply relative bg-cn-3 border-cn-2': '',
+    '@apply relative bg-cn-3 border-cn-2 text-cn-1': '',
 
     ':where(.cn-toast-title)': {
       minHeight: 'var(--cn-toast-title-min-height)'
@@ -26,21 +25,27 @@ export default {
       '@apply relative grid grid-rows-[0fr]': '',
 
       '&-expanded': {
-        overflow: 'visible',
         paddingBottom: 'calc(var(--cn-spacing-3) + var(--cn-btn-size-md))',
         '@apply grid-rows-[1fr]': ''
       }
     },
-    ':where(.cn-toast-description)': {
-      minHeight: 'var(--cn-toast-title-min-height)'
+
+    '.cn-toast-description': {
+      minHeight: 'var(--cn-toast-title-min-height)',
+      '@apply text-cn-2': ''
     },
 
     '&.cn-toast-danger': {
       backgroundColor: 'var(--cn-comp-toast-danger-bg)',
       borderColor: 'var(--cn-comp-toast-danger-border)',
+      color: 'var(--cn-comp-toast-danger-text)',
 
       '.cn-toast-fade-overlay': {
         background: 'var(--cn-comp-toast-danger-fade)'
+      },
+
+      '.cn-toast-description': {
+        '@apply text-inherit': ''
       }
     },
 

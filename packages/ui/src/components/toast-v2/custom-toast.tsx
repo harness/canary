@@ -8,11 +8,13 @@ import { Text } from '@components/text'
 import { useResizeObserver } from '@hooks/use-resize-observer'
 import { cn } from '@utils/cn'
 import { cva, VariantProps } from 'class-variance-authority'
+import { Action, toast as sonnerToast } from 'sonner'
 
 const toastVariants = cva('cn-toast', {
   variants: {
     variant: {
       default: '',
+      loading: '',
       danger: 'cn-toast-danger',
       info: 'cn-toast-info',
       success: 'cn-toast-success'
@@ -24,22 +26,28 @@ const toastVariants = cva('cn-toast', {
 })
 
 interface CustomToastProps {
+  toastId: string | number
   variant?: VariantProps<typeof toastVariants>['variant']
-  title?: string
-  description: ReactNode
+  title: string
+  description?: ReactNode
   onClose?: () => void
   className?: string
   closeButton?: boolean
+  action?: Action
+  promise?: Promise<any>
 }
 
 const MAX_HEIGHT = 100
 
 export function CustomToast({
+  toastId,
   variant = 'default',
   title,
   description,
   onClose,
-  closeButton = true
+  closeButton = true,
+  action,
+  promise
 }: CustomToastProps) {
   const { t } = useTranslation()
 
@@ -61,28 +69,51 @@ export function CustomToast({
     100
   )
 
+  if (promise) {
+    promise.finally(() => sonnerToast.dismiss(toastId))
+  }
+
   const titleIcon = useMemo(() => {
     switch (variant) {
-      case 'default':
-        return null
       case 'danger':
         return <IconV2 size="lg" name="warning-triangle" />
       case 'info':
         return <IconV2 size="lg" name="info-circle" />
       case 'success':
         return <IconV2 color="success" size="lg" name="check-circle" />
+      case 'loading':
+        return <IconV2 className="animate-spin" size="lg" name="loader" />
+      default:
+        return null
     }
   }, [variant])
 
   return (
-    <Layout.Vertical className={toastVariants({ variant })}>
-      <Layout.Flex justify="between" className="cn-toast-title">
-        <Layout.Horizontal align="center" gap="xs">
+    <Layout.Vertical gap="xs" className={toastVariants({ variant })}>
+      <Layout.Flex align="center" gap="2xs" justify="between" className="cn-toast-title">
+        <Layout.Horizontal className="flex-1" align="center" gap="xs">
           {titleIcon}
-          <Text>{title}</Text>
+          <Text variant="body-strong" color="inherit">
+            {title}
+          </Text>
         </Layout.Horizontal>
+
+        {action && (
+          <Button
+            size="sm"
+            // TODO: remove this cast
+            title={action.label as string}
+            onClick={e => {
+              action.onClick?.(e)
+              sonnerToast.dismiss(toastId)
+            }}
+          >
+            {action.label}
+          </Button>
+        )}
+
         {closeButton && (
-          <Button size="3xs" ignoreIconOnlyTooltip title="Close" variant="transparent" iconOnly onClick={onClose}>
+          <Button size="xs" ignoreIconOnlyTooltip title="Close" variant="transparent" iconOnly onClick={onClose}>
             <IconV2 size="xs" name="xmark" />
           </Button>
         )}
@@ -93,7 +124,9 @@ export function CustomToast({
           ref={contentRef}
           className={cn('cn-toast-description-container', { 'cn-toast-description-container-expanded': isExpanded })}
         >
-          <Text className="cn-toast-description">{description}</Text>
+          <Text variant="body-normal" className="cn-toast-description">
+            {description}
+          </Text>
 
           {showExpandButton && (
             <>

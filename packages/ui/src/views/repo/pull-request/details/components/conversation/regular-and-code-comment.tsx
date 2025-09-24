@@ -253,6 +253,8 @@ const PullRequestRegularAndCodeCommentInternal: FC<PullRequestRegularAndCodeComm
               isComment: true,
               isFirst: idx === 0,
               isSecond: idx === 1,
+              mainWrapperClassName: cn('pl-cn-md pr-cn-xs', { 'pt-cn-md': idx === 1 }),
+              contentWrapperClassName: 'pr-cn-xs',
               isLast: (commentItems?.length || 0) - 1 === idx,
               onCopyClick,
               commentId: commentItem.id,

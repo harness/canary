@@ -202,6 +202,7 @@ export interface TimelineItemProps {
   contentWrapperClassName?: string
   contentClassName?: string
   replyBoxClassName?: string
+  mainWrapperClassName?: string
   wrapperClassName?: string
   titleClassName?: string
   handleSaveComment?: (comment: string, parentId?: number) => Promise<void>
@@ -246,6 +247,7 @@ const PullRequestTimelineItem: FC<TimelineItemProps> = ({
   handleSaveComment,
   commentId,
   parentCommentId,
+  mainWrapperClassName,
   wrapperClassName,
   titleClassName,
   isComment,
@@ -381,7 +383,7 @@ const PullRequestTimelineItem: FC<TimelineItemProps> = ({
 
   return (
     <>
-      <div id={id} className={cn('pl-cn-md pr-cn-xs', { 'pt-cn-md': isSecond })}>
+      <div id={id} className={mainWrapperClassName}>
         <NodeGroup.Root className={cn(getThreadSpacingClasses(threadIndex, totalThreads, isLast), wrapperClassName)}>
           {!!icon && <NodeGroup.Icon wrapperClassName="self-auto size-auto">{icon}</NodeGroup.Icon>}
           <NodeGroup.Title className={titleClassName}>
@@ -410,7 +412,7 @@ const PullRequestTimelineItem: FC<TimelineItemProps> = ({
             )}
           </NodeGroup.Title>
           {!!content && (
-            <NodeGroup.Content className={cn('overflow-auto', contentWrapperClassName, { 'pr-cn-xs': isComment })}>
+            <NodeGroup.Content className={cn('overflow-auto', contentWrapperClassName)}>
               <div className={cn('border rounded-md overflow-hidden', contentClassName)}>
                 {!!contentHeader && (
                   <Layout.Horizontal align="center" justify="between" className={cn('p-2 px-cn-md bg-cn-2')}>

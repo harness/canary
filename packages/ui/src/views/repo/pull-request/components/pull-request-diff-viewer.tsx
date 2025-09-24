@@ -372,7 +372,7 @@ const PullRequestDiffViewer = ({
       const commentText = newComments[commentKey] ?? ''
 
       return (
-        <div className="flex w-full flex-col bg-cn-1 p-4">
+        <div className="bg-cn-1 flex w-full flex-col p-4">
           <PullRequestCommentBox
             autofocus
             handleUpload={handleUpload}
@@ -468,7 +468,7 @@ const PullRequestDiffViewer = ({
                   )
                 }
                 content={
-                  <div className="px-4 pt-4">
+                  <div>
                     <PullRequestTimelineItem
                       isReply={false}
                       mentions={parent?.payload?.mentions}
@@ -481,6 +481,8 @@ const PullRequestDiffViewer = ({
                       handleSaveComment={handleSaveComment}
                       isLast={replies.length === 0}
                       hideReplySection
+                      mainWrapperClassName="px-4 pt-4"
+                      isSecond={idx === 0}
                       isResolved={!!parent.payload?.resolved}
                       isComment
                       replyBoxClassName=""
@@ -571,6 +573,8 @@ const PullRequestDiffViewer = ({
                               key={reply.id}
                               payload={parent?.payload}
                               id={replyIdAttr}
+                              mainWrapperClassName="px-4"
+                              isSecond={idx === 0}
                               principalProps={principalProps}
                               parentCommentId={parent?.id}
                               isLast={isLastComment}
@@ -708,7 +712,7 @@ const PullRequestDiffViewer = ({
             {/* @ts-ignore */}
             <ExtendedDiffView<Thread[]>
               ref={ref}
-              className="bg-tr w-full text-cn-1"
+              className="bg-tr text-cn-1 w-full"
               renderWidgetLine={renderWidgetLine}
               renderExtendLine={renderExtendLine}
               diffFile={diffFileInstance}

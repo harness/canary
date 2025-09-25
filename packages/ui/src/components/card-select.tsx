@@ -1,7 +1,7 @@
 import { createContext, forwardRef, HTMLAttributes, ReactNode, useContext, useState } from 'react'
 
 import { cn } from '@utils/cn'
-import { cva, VariantProps } from 'class-variance-authority'
+import { cva, type VariantProps } from 'class-variance-authority'
 
 import { IconV2, IconV2NamesType } from './icon-v2'
 import { LogoV2, LogoV2NamesType } from './logo-v2'

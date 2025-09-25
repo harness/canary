@@ -2,12 +2,12 @@ export default {
   '.cn-popover': {
     '&-content': {
       display: 'grid',
-      minWidth: 'var(--cn-tooltip-min)',
-      maxWidth: 'var(--cn-tooltip-max)',
-      padding: 'var(--cn-tooltip-py) var(--cn-tooltip-px)',
+      minWidth: 'var(--cn-popover-min)',
+      maxWidth: 'var(--cn-popover-max)',
+      padding: 'var(--cn-popover-py) var(--cn-popover-px)',
       gap: 'var(--cn-popover-gap)',
       borderRadius: 'var(--cn-popover-radius)',
-      border: 'var(--cn-tooltip-border) solid var(--cn-border-3)',
+      border: 'var(--cn-popover-border) solid var(--cn-border-3)',
       backgroundColor: 'var(--cn-bg-3)',
       boxShadow: 'var(--cn-shadow-2)',
       color: 'var(--cn-text-1)',

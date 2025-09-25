@@ -449,6 +449,7 @@ const PullRequestDiffViewer = ({
                 hideEditDelete={parent?.payload?.author?.uid !== currentUser?.uid}
                 isComment
                 replyBoxClassName="p-4"
+                footerBoxClassName="p-4"
                 hideReplyHere={hideReplyHeres[parent?.id]}
                 setHideReplyHere={state => toggleReplyBox(state, parent?.id)}
                 isResolved={!!parent.payload?.resolved}
@@ -482,10 +483,8 @@ const PullRequestDiffViewer = ({
                       isLast={replies.length === 0}
                       hideReplySection
                       mainWrapperClassName="px-4 pt-4"
-                      isSecond={idx === 0}
                       isResolved={!!parent.payload?.resolved}
                       isComment
-                      replyBoxClassName=""
                       handleDeleteComment={() => deleteComment?.(parent?.id) || Promise.resolve()}
                       onEditClick={() => toggleEditMode(componentId, parent?.payload?.payload?.text || '')}
                       data={parent?.payload?.payload?.text}
@@ -574,7 +573,6 @@ const PullRequestDiffViewer = ({
                               payload={parent?.payload}
                               id={replyIdAttr}
                               mainWrapperClassName="px-4"
-                              isSecond={idx === 0}
                               principalProps={principalProps}
                               parentCommentId={parent?.id}
                               isLast={isLastComment}

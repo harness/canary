@@ -2,16 +2,6 @@ export default {
   '.cn-card-select-root': {
     display: 'grid',
 
-    '&:where(.cn-card-select-gap-sm)': {
-      gap: 'var(--cn-layout-sm)'
-    },
-    '&:where(.cn-card-select-gap-md)': {
-      gap: 'var(--cn-layout-md)'
-    },
-    '&:where(.cn-card-select-gap-lg)': {
-      gap: 'var(--cn-layout-lg)'
-    },
-
     '&:where(.cn-card-select-horizontal)': {
       '@apply w-full auto-cols-max grid-flow-col overflow-x-auto': ''
     },

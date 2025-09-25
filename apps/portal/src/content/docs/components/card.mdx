@@ -114,7 +114,7 @@ The `position` prop controls where the image is placed within the card layout. I
 
 ## States
 
-The `Card` component supports `selected` and `disabled` states:
+The `Card` component supports `selected`, `disabled` and `interactive` states:
 
 <DocsPage.ComponentExample
   client:only
@@ -126,6 +126,10 @@ The `Card` component supports `selected` and `disabled` states:
     <Card.Root disabled>
       <Card.Title>Disabled Card</Card.Title>
       <Card.Content>Inactive state</Card.Content>
+    </Card.Root>
+    <Card.Root interactive={false}>
+      <Card.Title>Interactive Card</Card.Title>
+      <Card.Content>Not interactive state</Card.Content>
     </Card.Root>
   </div>`}
 />
@@ -186,6 +190,13 @@ The root component for the card.
       required: false,
       value: "boolean",
       defaultValue: "false",
+    },
+    {
+      name: "interactive",
+      description: "Whether the card is interactive or not.",
+      required: false,
+      value: "boolean",
+      defaultValue: "true",
     },
     {
       name: "className",

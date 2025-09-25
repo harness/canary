@@ -61,9 +61,10 @@ const cardSelectVariants = cva('cn-card-select-root', {
       grid: 'cn-card-select-grid'
     },
     gap: {
-      sm: 'cn-card-select-gap-sm',
-      md: 'cn-card-select-gap-md',
-      lg: 'cn-card-select-gap-lg'
+      xs: 'gap-cn-xs',
+      sm: 'gap-cn-sm',
+      md: 'gap-cn-md',
+      lg: 'gap-cn-lg'
     }
   },
   defaultVariants: {

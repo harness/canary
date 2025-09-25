@@ -84,7 +84,7 @@ const ListItem = ({
     <Comp
       className={cn(
         stackedListItemVariants({ paddingX, paddingY, disableHover }),
-        { 'cn-stacked-list-item-clickable': withLink },
+        { 'cn-stacked-list-item-clickable': withLink || withButton },
         className
       )}
       {...props}

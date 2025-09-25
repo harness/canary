@@ -60,7 +60,7 @@ export const RepoCommitDetailsView: FC<RepoCommitDetailsViewProps> = ({
                 toPullRequest={toPullRequest}
                 commitMessage={commitData?.title}
                 title={commitData?.title}
-                textProps={{ variant: 'body-code' }}
+                textProps={{ variant: 'body-normal', color: 'foreground-1' }}
               />
 
               <Button variant="outline" asChild>

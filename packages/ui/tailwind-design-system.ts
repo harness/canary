@@ -210,7 +210,7 @@ export default {
 
         // status
         'cn-merged': 'var(--cn-text-merged)',
-        'cn-disabled': 'var(--cn-text-disabled)',
+        'cn-disabled': 'var(--cn-text-4)',
 
         // logo colors
         'cn-logo-icon': 'var(--cn-logo-icon)',

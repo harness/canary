@@ -35,6 +35,8 @@ interface CustomToastProps {
   closeButton?: boolean
   action?: Action
   promise?: Promise<any>
+  successMessage?: string
+  errorMessage?: string
 }
 
 const MAX_HEIGHT = 100
@@ -47,15 +49,20 @@ export function CustomToast({
   onClose,
   closeButton = true,
   action,
-  promise
+  promise = undefined,
+  successMessage,
+  errorMessage
 }: CustomToastProps) {
   const { t } = useTranslation()
+
+  const [internalVariant, setInternalVariant] = useState(variant)
+  const [internalTitle, setInternalTitle] = useState(title)
 
   const contentRef = useRef<HTMLDivElement>(null)
   const [isOverflowing, setIsOverflowing] = useState(false)
   const [isExpanded, setIsExpanded] = useState(false)
 
-  const showExpandButton = isOverflowing
+  const showExpandButton = description && isOverflowing
 
   const toggleExpand = useCallback(() => setIsExpanded(prev => !prev), [])
 
@@ -70,11 +77,24 @@ export function CustomToast({
   )
 
   if (promise) {
-    promise.finally(() => sonnerToast.dismiss(toastId))
+    promise
+      .then(() => {
+        setInternalVariant('success')
+        setInternalTitle(successMessage ?? title)
+      })
+      .catch(() => {
+        setInternalVariant('danger')
+        setInternalTitle(errorMessage ?? title)
+      })
+      .finally(() => {
+        setTimeout(() => {
+          sonnerToast.dismiss(toastId)
+        }, 7000)
+      })
   }
 
   const titleIcon = useMemo(() => {
-    switch (variant) {
+    switch (internalVariant) {
       case 'danger':
         return <IconV2 size="lg" name="warning-triangle" />
       case 'info':
@@ -86,15 +106,15 @@ export function CustomToast({
       default:
         return null
     }
-  }, [variant])
+  }, [internalVariant])
 
   return (
-    <Layout.Vertical gap="xs" className={toastVariants({ variant })}>
+    <Layout.Vertical gap="xs" className={toastVariants({ variant: internalVariant })}>
       <Layout.Flex align="center" gap="2xs" justify="between" className="cn-toast-title">
         <Layout.Horizontal className="flex-1" align="center" gap="xs">
           {titleIcon}
           <Text variant="body-strong" color="inherit">
-            {title}
+            {internalTitle}
           </Text>
         </Layout.Horizontal>
 
@@ -122,33 +142,35 @@ export function CustomToast({
       {description && (
         <div
           ref={contentRef}
-          className={cn('cn-toast-description-container', { 'cn-toast-description-container-expanded': isExpanded })}
+          className={cn('cn-toast-description-container', {
+            'cn-toast-description-container-expanded': isExpanded
+          })}
         >
-          <Text variant="body-normal" className="cn-toast-description">
+          <Text variant="body-normal" className={cn('cn-toast-description')}>
             {description}
           </Text>
-
-          {showExpandButton && (
-            <>
-              <Button
-                variant="transparent"
-                className="cn-toast-expand-button"
-                onClick={toggleExpand}
-                aria-expanded={isExpanded}
-              >
-                {isExpanded ? t('component:alert.showLess', 'Show less') : t('component:alert.showMore', 'Show more')}
-                <IconV2
-                  className={cn({
-                    'cn-toast-expand-button-icon-rotate-180': isExpanded
-                  })}
-                  name="nav-arrow-down"
-                />
-              </Button>
-
-              <div className={cn('cn-toast-fade-overlay', { 'cn-toast-fade-overlay-not-visible': isExpanded })} />
-            </>
-          )}
         </div>
+      )}
+
+      {showExpandButton && (
+        <>
+          <Button
+            variant="transparent"
+            className="cn-toast-expand-button"
+            onClick={toggleExpand}
+            aria-expanded={isExpanded}
+          >
+            {isExpanded ? t('component:alert.showLess', 'Show less') : t('component:alert.showMore', 'Show more')}
+            <IconV2
+              className={cn({
+                'cn-toast-expand-button-icon-rotate-180': isExpanded
+              })}
+              name="nav-arrow-down"
+            />
+          </Button>
+
+          <div className={cn('cn-toast-fade-overlay', { 'cn-toast-fade-overlay-not-visible': isExpanded })} />
+        </>
       )}
     </Layout.Vertical>
   )

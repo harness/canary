@@ -14,7 +14,9 @@ export type LoadingToastParamsType = Omit<ToastParamsType, 'description' | 'opti
   options?: Omit<ToastOptions, 'duration' | 'action' | 'dismissible'>
 }
 
-export type PromiseToastParamsType = Omit<ToastParamsType, 'options'> & {
+export type PromiseToastParamsType = Omit<ToastParamsType, 'description' | 'options'> & {
+  successMessage?: string
+  errorMessage?: string
   options?: Omit<ToastOptions, 'duration'>
 }
 

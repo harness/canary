@@ -18,20 +18,19 @@ export default {
     },
 
     '.cn-toast-description-container': {
-      // TODO: Update it with proper min height from design system
-      minHeight: '100px',
+      maxHeight: '100px',
       overflow: 'hidden',
-      transition: 'grid-template-rows 0.2s ease-out',
-      '@apply relative grid grid-rows-[0fr]': '',
+      transition: 'max-height 0.2s ease-out',
+      '@apply relative': '',
 
       '&-expanded': {
-        paddingBottom: 'calc(var(--cn-spacing-3) + var(--cn-btn-size-md))',
-        '@apply grid-rows-[1fr]': ''
+        maxHeight: '300px',
+        overflowY: 'auto',
+        paddingBottom: 'var(--cn-spacing-2)'
       }
     },
 
     '.cn-toast-description': {
-      minHeight: 'var(--cn-toast-title-min-height)',
       '@apply text-cn-2': ''
     },
 
@@ -55,7 +54,7 @@ export default {
       height: 'var(--cn-toast-fade-height)',
       opacity: '1',
       transition: 'opacity 0.2s linear',
-      '@apply absolute bottom-0 left-0 right-0 pointer-events-none': '',
+      '@apply absolute bottom-5 left-0 right-0 pointer-events-none': '',
 
       '&-not-visible': {
         visibility: 'hidden',
@@ -69,8 +68,7 @@ export default {
     },
 
     '&-expand-button': {
-      '@apply absolute bottom-0 left-0 z-[1]': '',
-
+      '@apply justify-start z-[1]': '',
       '&-icon-rotate-180': {
         transform: 'rotate(180deg)',
         transition: 'transform 0.2s ease-out'

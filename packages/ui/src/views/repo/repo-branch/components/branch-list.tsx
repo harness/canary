@@ -158,7 +158,7 @@ export const BranchesList: FC<BranchListPageProps> = ({
                   >
                     {/* TODO: Merged state is not shown in the branch list, because the PR gets removed from 'branch.pullRequests' */}
                     <StatusBadge
-                      variant="outline"
+                      variant="primary"
                       size="md"
                       theme={
                         getPrState(

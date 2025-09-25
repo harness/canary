@@ -1,0 +1,32 @@
+{
+  "popover": {
+    "radius": {
+      "$type": "borderRadius",
+      "$value": "{rounded.3}"
+    },
+    "py": {
+      "$type": "spacing",
+      "$value": "{spacing.3}"
+    },
+    "px": {
+      "$type": "spacing",
+      "$value": "{spacing.3}"
+    },
+    "gap": {
+      "$type": "spacing",
+      "$value": "{spacing.2}"
+    },
+    "max": {
+      "$type": "sizing",
+      "$value": "{size.90}"
+    },
+    "min": {
+      "$type": "sizing",
+      "$value": "{size.6}"
+    },
+    "border": {
+      "$type": "borderWidth",
+      "$value": "{borderWidth.1}"
+    }
+  }
+}

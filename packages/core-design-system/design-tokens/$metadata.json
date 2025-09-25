@@ -51,6 +51,7 @@
     "components/desktop/base/progress",
     "components/desktop/base/tag",
     "components/desktop/base/tooltip",
+    "components/desktop/base/popover",
     "components/desktop/base/toast",
     "components/desktop/base/tree-view",
     "components/desktop/base/sidebar",

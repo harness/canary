@@ -51,6 +51,7 @@ interface ItemHeaderProps {
   avatar?: ReactNode
   name?: string
   isComment?: boolean
+  hasActionsInHeader?: boolean
   description?: ReactNode
   timestamp?: number
   selectStatus?: ReactNode
@@ -83,7 +84,8 @@ const ItemHeader: FC<ItemHeaderProps> = memo(
     onQuoteReply,
     hideEditDelete,
     isReply = false,
-    isResolved = false
+    isResolved = false,
+    hasActionsInHeader = false
   }) => {
     const { triggerRef, registerTrigger } = useCustomDialogTrigger()
     const handleDeleteCommentWithTrigger = useCallback(() => {
@@ -162,9 +164,10 @@ const ItemHeader: FC<ItemHeaderProps> = memo(
             </Text>
           </Layout.Horizontal>
         </Text>
-        {isComment && !isDeleted && !isResolved && (
+        {(isComment || hasActionsInHeader) && !isDeleted && !isResolved && (
           <MoreActionsTooltip
             ref={triggerRef}
+            buttonSize="sm"
             iconName="more-horizontal"
             sideOffset={4}
             alignOffset={0}
@@ -193,8 +196,8 @@ export interface TimelineItemProps {
   contentHeader?: ReactNode
   content?: ReactNode
   icon?: ReactNode
-  isFirst?: boolean
-  isSecond?: boolean
+  isFirstCommentAsHeader?: boolean
+  hasActionsInHeader?: boolean
   isLast?: boolean
   isComment?: boolean
   hideIconBorder?: boolean
@@ -202,6 +205,7 @@ export interface TimelineItemProps {
   contentWrapperClassName?: string
   contentClassName?: string
   replyBoxClassName?: string
+  footerBoxClassName?: string
   mainWrapperClassName?: string
   wrapperClassName?: string
   titleClassName?: string
@@ -237,13 +241,14 @@ const PullRequestTimelineItem: FC<TimelineItemProps> = ({
   contentHeader,
   content,
   icon,
-  isFirst = false,
-  isSecond = false,
+  isFirstCommentAsHeader = false,
+  hasActionsInHeader = false,
   isLast = false,
   hideReplySection = false,
   contentWrapperClassName,
   contentClassName,
   replyBoxClassName,
+  footerBoxClassName,
   handleSaveComment,
   commentId,
   parentCommentId,
@@ -355,29 +360,30 @@ const PullRequestTimelineItem: FC<TimelineItemProps> = ({
     </Button>
   )
 
-  if (isFirst) {
+  const renderDeleteDialog = () => (
+    <DeleteAlertDialog
+      open={isDeleteDialogOpen}
+      onClose={() => {
+        setIsDeleteDialogOpen(false)
+      }}
+      deleteFn={handleConfirmDeleteComment}
+      error={isDeletingError}
+      message={`This will permanently delete this ${isReply ? 'reply' : 'comment'}.`}
+      type={isReply ? 'reply' : 'comment'}
+      identifier={String(commentId) ?? undefined}
+      isLoading={isDeletingComment}
+    />
+  )
+
+  if (isFirstCommentAsHeader) {
     return (
-      <div id={id} className={cn('pl-cn-md py-cn-md pr-cn-xs', { 'border-b': isExpanded })}>
-        <div className="flex w-full items-center justify-between gap-x-2">
-          <ItemHeader
-            isDeleted={isDeleted}
-            onEditClick={onEditClick}
-            onCopyClick={onCopyClick}
-            isComment={isComment}
-            isReply={isReply}
-            isNotCodeComment={isNotCodeComment}
-            handleDeleteComment={handleOpenDeleteDialog}
-            commentId={commentId}
-            isResolved={isResolved}
-            description={renderContent()}
-            onQuoteReply={() => {
-              setHideReplyHere?.(true)
-              if (parentCommentId) onQuoteReply?.(parentCommentId, data ?? '')
-            }}
-            hideEditDelete={hideEditDelete}
-          />
+      <>
+        <div id={id} className={cn('px-cn-md py-cn-md', { 'border-b': isExpanded })}>
+          {renderContent()}
         </div>
-      </div>
+
+        {renderDeleteDialog()}
+      </>
     )
   }
 
@@ -395,6 +401,7 @@ const PullRequestTimelineItem: FC<TimelineItemProps> = ({
                   onEditClick={onEditClick}
                   onCopyClick={onCopyClick}
                   isComment={isComment}
+                  hasActionsInHeader={hasActionsInHeader}
                   isReply={isReply}
                   isNotCodeComment={isNotCodeComment}
                   handleDeleteComment={handleOpenDeleteDialog}
@@ -482,7 +489,7 @@ const PullRequestTimelineItem: FC<TimelineItemProps> = ({
                         />
                       </div>
                     )}
-                    <div className={cn('flex items-center gap-x-cn-md border-t', replyBoxClassName)}>
+                    <div className={cn('flex items-center gap-x-4 border-t', footerBoxClassName)}>
                       <Button
                         variant="outline"
                         onClick={() => {
@@ -507,24 +514,11 @@ const PullRequestTimelineItem: FC<TimelineItemProps> = ({
               </div>
             </NodeGroup.Content>
           )}
-          {!isLast && (
-            <NodeGroup.Connector className={cn('left-[0.8rem] top-0 bottom-[-10px]', { 'top-[10px]': isSecond })} />
-          )}
+          {!isLast && <NodeGroup.Connector className={cn('left-[0.8rem] top-1 bottom-[-10px]')} />}
         </NodeGroup.Root>
       </div>
 
-      <DeleteAlertDialog
-        open={isDeleteDialogOpen}
-        onClose={() => {
-          setIsDeleteDialogOpen(false)
-        }}
-        deleteFn={handleConfirmDeleteComment}
-        error={isDeletingError}
-        message={`This will permanently delete this ${isReply ? 'reply' : 'comment'}.`}
-        type={isReply ? 'reply' : 'comment'}
-        identifier={String(commentId) ?? undefined}
-        isLoading={isDeletingComment}
-      />
+      {renderDeleteDialog()}
     </>
   )
 }

@@ -7,8 +7,8 @@ export default {
 
     '&:where(.cn-card-interactive)': {
       '&:hover:not(.cn-card-disabled)': {
-        borderColor: 'var(--cn-border-1)'
-      },
+        borderColor: 'var(--cn-border-brand)'
+      }
     },
 
     '&:where(.cn-card-sm)': {
@@ -79,7 +79,7 @@ export default {
     },
 
     '&:where(.cn-card-selected)': {
-      backgroundColor: 'var(--cn-set-brand-soft-bg)',
+      backgroundColor: 'var(--cn-set-brand-secondary-bg)',
       borderColor: 'var(--cn-border-accent)'
     },
     '&:where(.cn-card-disabled)': {

@@ -76,7 +76,7 @@
       "$type": "typography",
       "$value": {
         "fontFamily": "{fontFamily.default}",
-        "fontWeight": "{fontWeight.default.normal.600}",
+        "fontWeight": "{fontWeight.default.normal.500}",
         "fontSize": "{fontSize.2}",
         "lineHeight": "{lineHeight.2.snug}",
         "letterSpacing": "{tracking.normal}"
@@ -96,6 +96,18 @@
         "paragraphSpacing": "0.375rem"
       },
       "$description": "Core reading typography optimized for extended content consumption. Balances character density, line height, and spacing to reduce eye fatigue across different screen sizes and reading environments.\n\nCommon uses: Main content, Product descriptions."
+    },
+    "normal-line-through": {
+      "$type": "typography",
+      "$value": {
+        "fontFamily": "{fontFamily.default}",
+        "fontWeight": "{fontWeight.default.normal.400}",
+        "fontSize": "{fontSize.2}",
+        "lineHeight": "{lineHeight.2.snug}",
+        "letterSpacing": "{tracking.tight}",
+        "paragraphSpacing": "0.375rem",
+        "textDecoration": "{textDecoration.line-through}"
+      }
     },
     "strong": {
       "$type": "typography",

@@ -69,10 +69,10 @@ export default {
       '@apply font-body-strong': '',
 
       '&:where(:not([disabled]).cn-tabs-trigger-active)': {
-        backgroundColor: 'var(--cn-set-gray-soft-bg)',
+        backgroundColor: 'var(--cn-set-gray-secondary-bg)',
         borderRadius: 'var(--cn-tabs-item-radius)',
-        borderColor: 'var(--cn-set-gray-soft-bg)',
-        color: 'var(--cn-set-gray-soft-text)',
+        borderColor: 'var(--cn-set-gray-secondary-bg)',
+        color: 'var(--cn-set-gray-secondary-text)',
         boxShadow: 'var(--cn-shadow-1)'
       },
 

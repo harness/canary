@@ -6,8 +6,8 @@ import { cva, type VariantProps } from 'class-variance-authority'
 const counterBadgeVariants = cva('cn-badge cn-badge-counter inline-flex w-fit items-center', {
   variants: {
     variant: {
-      outline: 'cn-badge-surface',
-      secondary: 'cn-badge-soft'
+      outline: 'cn-badge-outline',
+      secondary: 'cn-badge-secondary'
     },
     theme: {
       default: 'cn-badge-muted',

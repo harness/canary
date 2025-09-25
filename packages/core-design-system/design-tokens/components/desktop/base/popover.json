@@ -14,7 +14,7 @@
     },
     "gap": {
       "$type": "spacing",
-      "$value": "{spacing.2}"
+      "$value": "{spacing.1-half}"
     },
     "max": {
       "$type": "sizing",

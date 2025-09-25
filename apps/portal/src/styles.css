@@ -22,7 +22,7 @@ main {
 }
 
 code {
-  @apply bg-cn-gray-soft !important;
+  @apply bg-cn-gray-secondary !important;
 }
 
 .content-panel {

@@ -1,0 +1,66 @@
+{
+  "tree-item": {
+    "height": {
+      "$type": "sizing",
+      "$value": "{size.8}"
+    },
+    "gap": {
+      "$type": "spacing",
+      "$value": "{spacing.1-half}"
+    },
+    "py": {
+      "$type": "spacing",
+      "$value": "{spacing.1-half}"
+    },
+    "pr": {
+      "$type": "spacing",
+      "$value": "{spacing.1-half}"
+    },
+    "radius": {
+      "$type": "borderRadius",
+      "$value": "{rounded.4}"
+    },
+    "pl": {
+      "0": {
+        "$type": "spacing",
+        "$value": "{tree-item.base-margin-step}*0"
+      },
+      "1": {
+        "$type": "spacing",
+        "$value": "{tree-item.base-margin-step}*1"
+      },
+      "2": {
+        "$type": "spacing",
+        "$value": "{tree-item.base-margin-step}*2"
+      },
+      "3": {
+        "$type": "spacing",
+        "$value": "{tree-item.base-margin-step}*3"
+      },
+      "4": {
+        "$type": "spacing",
+        "$value": "{tree-item.base-margin-step}*4"
+      },
+      "5": {
+        "$type": "spacing",
+        "$value": "{tree-item.base-margin-step}*5"
+      },
+      "6": {
+        "$type": "spacing",
+        "$value": "{tree-item.base-margin-step}*6"
+      },
+      "7": {
+        "$type": "spacing",
+        "$value": "{tree-item.base-margin-step}*7"
+      },
+      "8": {
+        "$type": "spacing",
+        "$value": "{tree-item.base-margin-step}*8"
+      }
+    },
+    "base-margin-step": {
+      "$type": "spacing",
+      "$value": "{spacing.6}"
+    }
+  }
+}

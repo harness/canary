@@ -42,7 +42,7 @@ export default {
       },
 
       '&::placeholder': {
-        color: 'var(--cn-text-disabled)',
+        color: 'var(--cn-text-4)',
         '@apply font-body-light': ''
       },
 
@@ -51,7 +51,7 @@ export default {
         '@apply opacity-cn-disabled': '',
 
         '&::placeholder': {
-          color: 'var(--cn-text-disabled)'
+          color: 'var(--cn-text-3)'
         }
       },
 

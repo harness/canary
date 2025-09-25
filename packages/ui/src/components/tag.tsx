@@ -21,16 +21,16 @@ const tagVariants = cva('cn-tag', {
       blue: 'cn-tag-blue',
       brown: 'cn-tag-brown',
       cyan: 'cn-tag-cyan',
-      green: 'cn-tag-green',
+      green: 'cn-tag-success',
       indigo: 'cn-tag-indigo',
       lime: 'cn-tag-lime',
       mint: 'cn-tag-mint',
       orange: 'cn-tag-orange',
       pink: 'cn-tag-pink',
       purple: 'cn-tag-purple',
-      red: 'cn-tag-red',
+      red: 'cn-tag-danger',
       violet: 'cn-tag-violet',
-      yellow: 'cn-tag-yellow'
+      yellow: 'cn-tag-warning'
     },
     rounded: {
       true: 'cn-tag-rounded'

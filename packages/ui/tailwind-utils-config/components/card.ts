@@ -3,10 +3,13 @@ export default {
     border: 'var(--cn-card-border) solid var(--cn-border-2)',
     borderRadius: 'var(--cn-card-md-radius)',
     backgroundColor: 'var(--cn-bg-2)',
-    '&:hover:not(.cn-card-disabled):not(.cn-card-disabled-hover)': {
-      borderColor: 'var(--cn-border-1)'
-    },
     '@apply flex overflow-hidden select-none': '',
+
+    '&:where(.cn-card-interactive)': {
+      '&:hover:not(.cn-card-disabled)': {
+        borderColor: 'var(--cn-border-1)'
+      },
+    },
 
     '&:where(.cn-card-sm)': {
       borderRadius: 'var(--cn-card-sm-radius)',
@@ -33,7 +36,7 @@ export default {
 
     '.cn-card-title': {
       color: 'var(--cn-text-1)',
-      '@apply font-body-strong': ''
+      '@apply font-heading-small': ''
     },
 
     '.cn-card-content': {

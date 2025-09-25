@@ -120,6 +120,7 @@ export function CustomToast({
 
         {action && (
           <Button
+            className="cn-toast-action-button"
             size="sm"
             // TODO: remove this cast
             title={action.label as string}

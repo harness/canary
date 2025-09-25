@@ -1,6 +1,6 @@
 import { Action, ExternalToast } from 'sonner'
 
-type ToastOptions = Omit<ExternalToast, 'action'> & {
+type ToastOptions = Pick<ExternalToast, 'action' | 'duration' | 'dismissible'> & {
   action?: Action
 }
 
@@ -11,10 +11,11 @@ export type ToastParamsType = {
 }
 
 export type LoadingToastParamsType = Omit<ToastParamsType, 'description' | 'options'> & {
-  options?: Omit<ToastOptions, 'duration' | 'action' | 'dismissible'>
+  options?: Omit<ToastOptions, 'duration' | 'dismissible'>
 }
 
-export type PromiseToastParamsType = Omit<ToastParamsType, 'description' | 'options'> & {
+export type PromiseToastParamsType = Omit<ToastParamsType, 'title' | 'description' | 'options'> & {
+  loadingMessage: string
   successMessage?: string
   errorMessage?: string
   options?: Omit<ToastOptions, 'duration'>

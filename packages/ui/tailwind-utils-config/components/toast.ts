@@ -11,7 +11,12 @@ export default {
     borderRadius: 'var(--cn-toast-radius)',
     borderWidth: 'var(--cn-toast-border)',
     boxShadow: 'var(--cn-shadow-3)',
+    userSelect: 'none',
     '@apply relative bg-cn-3 border-cn-2 text-cn-1': '',
+
+    '&:has(.cn-toast-description-container-expanded)': {
+      paddingBottom: 'calc(var(--cn-spacing-3) + var(--cn-btn-size-md))'
+    },
 
     ':where(.cn-toast-title)': {
       minHeight: 'var(--cn-toast-title-min-height)'
@@ -45,6 +50,14 @@ export default {
 
       '.cn-toast-description': {
         '@apply text-inherit': ''
+      },
+
+      // Danger toast action button styles
+      '.cn-toast-action-button': {
+        backgroundColor: 'var(--cn-comp-toast-danger-action-btn-bg) !important',
+        borderColor: 'var(--cn-comp-toast-danger-action-btn-bg) !important',
+        color: 'var(--cn-comp-toast-danger-action-btn-text) !important',
+        marginLeft: 'var(--cn-spacing-4)'
       }
     },
 
@@ -54,7 +67,7 @@ export default {
       height: 'var(--cn-toast-fade-height)',
       opacity: '1',
       transition: 'opacity 0.2s linear',
-      '@apply absolute bottom-5 left-0 right-0 pointer-events-none': '',
+      '@apply absolute bottom-0.5 left-0.5 right-0.5 pointer-events-none': '',
 
       '&-not-visible': {
         visibility: 'hidden',
@@ -68,7 +81,7 @@ export default {
     },
 
     '&-expand-button': {
-      '@apply justify-start z-[1]': '',
+      '@apply absolute bottom-0 z-[1]': '',
       '&-icon-rotate-180': {
         transform: 'rotate(180deg)',
         transition: 'transform 0.2s ease-out'

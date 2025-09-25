@@ -6,13 +6,12 @@ import { LoadingToastParamsType, PromiseToastParamsType, ToastParamsType, ToastP
 const DEFAULT_DURATION = 10_000
 
 const defaultToast = ({ title, description, options = {} }: ToastParamsType) => {
-  const { dismissible, duration, position, action, className } = options
+  const { dismissible, duration, action } = options
   return sonnerToast.custom(
     t => (
       <CustomToast
         toastId={t}
         title={title}
-        className={className}
         description={description}
         onClose={() => sonnerToast.dismiss(t)}
         closeButton={dismissible}
@@ -21,20 +20,18 @@ const defaultToast = ({ title, description, options = {} }: ToastParamsType) => 
     ),
     {
       duration: duration || DEFAULT_DURATION,
-      dismissible: dismissible !== false,
-      position
+      dismissible: dismissible !== false
     }
   )
 }
 
 const infoToast = ({ title, description, options = {} }: ToastParamsType) => {
-  const { dismissible, duration, position, action, className } = options
+  const { dismissible, duration, action } = options
   return sonnerToast.custom(
     t => (
       <CustomToast
         toastId={t}
         title={title}
-        className={className}
         description={description}
         onClose={() => sonnerToast.dismiss(t)}
         closeButton={dismissible}
@@ -44,20 +41,18 @@ const infoToast = ({ title, description, options = {} }: ToastParamsType) => {
     ),
     {
       duration: duration || DEFAULT_DURATION,
-      dismissible: dismissible !== false,
-      position
+      dismissible: dismissible !== false
     }
   )
 }
 
 const successToast = ({ title, description, options = {} }: ToastParamsType) => {
-  const { dismissible, duration, position, action, className } = options
+  const { dismissible, duration, action } = options
   return sonnerToast.custom(
     t => (
       <CustomToast
         toastId={t}
         title={title}
-        className={className}
         description={description}
         onClose={() => sonnerToast.dismiss(t)}
         closeButton={dismissible}
@@ -67,20 +62,18 @@ const successToast = ({ title, description, options = {} }: ToastParamsType) => 
     ),
     {
       duration: duration || DEFAULT_DURATION,
-      dismissible: dismissible !== false,
-      position
+      dismissible: dismissible !== false
     }
   )
 }
 
 const dangerToast = ({ title, description, options = {} }: ToastParamsType) => {
-  const { dismissible, duration, position, action, className } = options
+  const { dismissible, duration, action } = options
   return sonnerToast.custom(
     t => (
       <CustomToast
         toastId={t}
         title={title}
-        className={className}
         variant="danger"
         description={description}
         onClose={() => sonnerToast.dismiss(t)}
@@ -90,44 +83,42 @@ const dangerToast = ({ title, description, options = {} }: ToastParamsType) => {
     ),
     {
       duration: duration || DEFAULT_DURATION,
-      dismissible: dismissible !== false,
-      position
+      dismissible: dismissible !== false
     }
   )
 }
 
 const loadingToast = ({ title, options = {} }: LoadingToastParamsType) => {
-  const { position, className } = options
+  const { action } = options
   return sonnerToast.custom(
     t => (
       <CustomToast
         toastId={t}
         variant="loading"
         title={title}
-        className={className}
         closeButton={false}
         onClose={() => sonnerToast.dismiss(t)}
+        action={action}
       />
     ),
     {
-      dismissible: false,
-      position
+      duration: Number.POSITIVE_INFINITY,
+      dismissible: false
     }
   )
 }
 
 const promiseToast = (
   promise: ToastPromiseType,
-  { title, successMessage, errorMessage, options = {} }: PromiseToastParamsType
+  { loadingMessage, successMessage, errorMessage, options = {} }: PromiseToastParamsType
 ) => {
-  const { dismissible, position, action, className } = options
+  const { dismissible, action } = options
   return sonnerToast.custom(
     t => (
       <CustomToast
         toastId={t}
         variant="loading"
-        title={title}
-        className={className}
+        title={loadingMessage}
         onClose={() => sonnerToast.dismiss(t)}
         closeButton={dismissible}
         promise={promise}
@@ -138,7 +129,6 @@ const promiseToast = (
     ),
     {
       dismissible: dismissible !== false,
-      position,
       duration: Number.POSITIVE_INFINITY
     }
   )
@@ -149,5 +139,8 @@ export const toast = Object.assign(defaultToast, {
   info: infoToast,
   loading: loadingToast,
   success: successToast,
-  promise: promiseToast
+  promise: promiseToast,
+
+  // to dismiss a toast manually
+  dismiss: sonnerToast.dismiss
 })

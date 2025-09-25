@@ -1,17 +1,21 @@
+import { cn } from '@utils/cn'
 import { Toaster, type ToasterProps } from 'sonner'
 
-type ToasterV2Props = Pick<ToasterProps, 'richColors' | 'position' | 'duration'>
+type ToasterV2Props = Pick<ToasterProps, 'richColors' | 'position' | 'duration' | 'className'>
 
-export function ToasterV2({ richColors = false, position = 'bottom-right', duration = 5000 }: ToasterV2Props) {
+export function ToasterV2({
+  richColors = false,
+  position = 'bottom-right',
+  duration = 5000,
+  className
+}: ToasterV2Props) {
   return (
     <Toaster
       richColors={richColors}
       position={position}
       duration={duration}
       visibleToasts={3}
-      className="cn-toast-wrapper"
-      // offset={{ right: 0, bottom: 0 }}
-      //   Toast styles will be applied through design system
+      className={cn('cn-toast-wrapper', className)}
       toastOptions={{
         style: {
           background: 'transparent',

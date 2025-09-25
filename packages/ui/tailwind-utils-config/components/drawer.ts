@@ -6,6 +6,7 @@ export default {
       borderColor: 'var(--cn-border-3)',
       borderRadius: 'var(--cn-drawer-radius)',
       boxShadow: 'var(--cn-shadow-5)',
+      overflow: 'hidden',
       '@apply fixed flex flex-col z-50 border': '',
 
       '&:where(.cn-drawer-content-right), &:where(.cn-drawer-content-left)': {
@@ -138,15 +139,13 @@ export default {
       '&:before': {
         height: 'var(--cn-drawer-fade-height)',
         background: 'var(--cn-comp-dialog-fade-start)',
-        pointerEvents: 'none',
-        borderTopLeftRadius: 'var(--cn-drawer-radius)'
+        pointerEvents: 'none'
       },
 
       '&:after': {
         height: 'var(--cn-drawer-fade-height)',
         background: 'var(--cn-comp-dialog-fade-end)',
-        pointerEvents: 'none',
-        borderBottomLeftRadius: 'var(--cn-drawer-radius)'
+        pointerEvents: 'none'
       },
 
       '&:where(.cn-drawer-body-wrap-top)': {

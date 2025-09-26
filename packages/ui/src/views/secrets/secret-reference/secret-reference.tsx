@@ -1,4 +1,4 @@
-import { Button, ButtonLayout, EntityFormLayout, Spacer } from '@/components'
+import { Button, ButtonLayout } from '@/components'
 import { DirectionEnum, EntityReference, EntityRendererProps, SecretItem, secretsFilterTypes } from '@/views'
 
 export interface SecretReferenceProps {
@@ -68,8 +68,6 @@ export const SecretReference: React.FC<SecretReferenceProps> = ({
 }) => {
   return (
     <div className="flex flex-col">
-      <EntityFormLayout.Title>Secrets list</EntityFormLayout.Title>
-      <Spacer size={5} />
       <EntityReference<SecretItem>
         entities={secretsData}
         selectedEntity={selectedEntity}

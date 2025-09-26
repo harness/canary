@@ -159,7 +159,7 @@ export function EntityReference<T extends BaseEntityProps, S = string, F = strin
         onClick={() => onSelect?.(parentFolder)}
         thumbnail={<IconV2 name="folder" size="md" className="text-cn-2" />}
       >
-        <StackedList.Field title="..." />
+        <StackedList.Field title=".." />
       </StackedList.Item>
     )
   }

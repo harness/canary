@@ -69,7 +69,7 @@ export function FileUpload({ selectedFile, onFileChange, error, accept }: FileUp
             <Layout.Flex direction="row" align="center" justify="between" className="w-full">
               <Layout.Flex direction="row" gap="xs" align="center">
                 <div className="p-2 bg-cn-1 rounded border">
-                  <IconV2 name="page" size="lg" />
+                  <IconV2 name="empty-page" size="lg" />
                 </div>
                 <Layout.Vertical align="start" gap="none">
                   <Text variant="body-strong" color="foreground-1">

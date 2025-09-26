@@ -48,6 +48,7 @@ import Npm from './logos/npm.svg'
 import Oci from './logos/oci.svg'
 import OpenShift from './logos/open-shift.svg'
 import OpenTofu from './logos/open-tofu.svg'
+import Opsgenie from './logos/opsgenie.svg'
 import Pagerduty from './logos/pagerduty.svg'
 import Prometheus from './logos/prometheus.svg'
 import Python from './logos/python.svg'
@@ -111,6 +112,7 @@ export const LogoNameMapV2 = {
   oci: Oci,
   'open-shift': OpenShift,
   'open-tofu': OpenTofu,
+  opsgenie: Opsgenie,
   pagerduty: Pagerduty,
   prometheus: Prometheus,
   python: Python,

@@ -580,7 +580,7 @@ const PullRequestPanel = ({
                                 {
                                   title: 'Mark as draft',
                                   onClick: () => handlePrState('draft'),
-                                  iconName: 'page-edit' as const
+                                  iconName: 'edit-pencil' as const
                                 }
                               ]
                             : []),

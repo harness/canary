@@ -201,7 +201,7 @@ export const BranchesList: FC<BranchListPageProps> = ({
                     {
                       title: t('views:repos.browse', 'Browse'),
                       to: toCode?.({ branchName: branch.name }) || '',
-                      iconName: 'page'
+                      iconName: 'empty-page'
                     },
                     {
                       isDanger: true,

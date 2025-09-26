@@ -130,12 +130,12 @@ export function CommandPaletteWrapper() {
       {
         label: 'Canary',
         url: '/canary/repos/petstore-app/summary',
-        icon: () => renderIcon('page')
+        icon: () => renderIcon('empty-page')
       },
       {
         label: 'Paypal',
         url: '/canary/repos/real-world/summary',
-        icon: () => renderIcon('page')
+        icon: () => renderIcon('empty-page')
       }
     ],
     [PageKey.PIPELINES]: [

@@ -27,13 +27,12 @@ export interface SecretReferenceProps {
   renderEntity?: (props: EntityRendererProps<SecretItem>) => React.ReactNode
 
   // Pagination
-  paginationProps?: {
-    totalItems?: number
-    currentPage?: number
-    goToPage?: (page: number) => void
-    pageSize?: number
-  }
   showFilter?: boolean
+  paginationProps?: {
+    handleLoadMore: () => void
+    isLastPage?: boolean
+    isLoading?: boolean
+  }
 }
 
 // Component for selecting existing secrets
@@ -83,8 +82,8 @@ export const SecretReference: React.FC<SecretReferenceProps> = ({
         onFilterChange={onFilterChange}
         searchValue={searchValue}
         handleChangeSearchValue={handleChangeSearchValue}
-        paginationProps={paginationProps}
         showFilter={showFilter}
+        paginationProps={paginationProps}
       />
 
       {!isDrawer && (

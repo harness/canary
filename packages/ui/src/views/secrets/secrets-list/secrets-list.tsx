@@ -70,7 +70,11 @@ export function SecretList({
               <Text truncate>{secret.identifier}</Text>
             </Table.Cell>
             <Table.Cell className={CELL_MIN_WIDTH}>
-              <Text truncate>{secret.spec?.secretManagerIdentifier}</Text>
+              <Text truncate>
+                {secret.spec?.secretManagerIdentifier === 'harnessSecretManager'
+                  ? 'Harness'
+                  : secret.spec?.secretManagerIdentifier}
+              </Text>
             </Table.Cell>
             <Table.Cell className={CELL_MIN_WIDTH}>
               {secret?.updatedAt ? (

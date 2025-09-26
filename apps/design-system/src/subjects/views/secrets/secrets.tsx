@@ -164,10 +164,9 @@ export const SecretsPage = ({
             handleChangeSearchValue={setSearch}
             isDrawer
             paginationProps={{
-              totalItems: 20,
-              currentPage: 1,
-              goToPage: page => console.log('Go to page:', page),
-              pageSize: 10
+              handleLoadMore: () => console.log('Load more'),
+              isLastPage: false,
+              isLoading: false
             }}
           />
         )

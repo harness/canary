@@ -102,8 +102,6 @@ const BaseComp: FC<BaseCompProps> = ({
       principalsMentionMap={principalsMentionMap}
       setPrincipalsMentionMap={setPrincipalsMentionMap}
       principalProps={principalProps}
-      replyBoxClassName="p-4"
-      footerBoxClassName="p-4"
       id={`comment-${payload?.id}`}
       handleUpload={handleUpload}
       data={payload?.text}
@@ -253,7 +251,10 @@ const PullRequestRegularAndCodeCommentInternal: FC<PullRequestRegularAndCodeComm
               hideReplySection: true,
               isComment: true,
               isFirstCommentAsHeader: idx === 0,
-              mainWrapperClassName: cn('pl-cn-md pr-cn-xs', { 'pt-cn-md': idx === 1 }),
+              mainWrapperClassName: cn('pl-cn-md pr-cn-xs', {
+                'pt-cn-sm': idx === 1,
+                'pb-cn-sm': idx === commentItems.length - 1
+              }),
               contentWrapperClassName: 'pr-cn-xs',
               isLast: (commentItems?.length || 0) - 1 === idx,
               onCopyClick,
@@ -358,7 +359,7 @@ const PullRequestRegularAndCodeCommentInternal: FC<PullRequestRegularAndCodeComm
           </Layout.Horizontal>
         ),
         hideEditDelete: payload?.author?.uid !== currentUser?.uid,
-        replyBoxClassName: cn('p-4', { 'border-none': commentItems.length === 1 }),
+        replyBoxClassName: cn({ 'border-none': commentItems.length === 1 }),
         content: (
           <div className="flex flex-col">
             {!!startingLine && (
@@ -425,7 +426,7 @@ const PullRequestRegularAndCodeCommentInternal: FC<PullRequestRegularAndCodeComm
         handleSaveComment,
         content: renderContentItemsBlock(),
         hideEditDelete: payload?.author?.uid !== currentUser?.uid,
-        replyBoxClassName: cn('p-4', { 'border-none': commentItems.length === 1 })
+        replyBoxClassName: cn({ 'border-none': commentItems.length === 1 })
       }}
     />
   )

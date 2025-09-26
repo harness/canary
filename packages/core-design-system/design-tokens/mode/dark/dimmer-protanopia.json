@@ -2767,7 +2767,7 @@
   "disabled": {
     "opacity": {
       "$type": "opacity",
-      "$value": "{opacity.50}"
+      "$value": "{opacity.60}"
     }
   },
   "img": {

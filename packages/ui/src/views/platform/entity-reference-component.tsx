@@ -99,7 +99,6 @@ export function EntityReference<T extends BaseEntityProps, S = string, F = strin
   compareFn,
 
   // Pagination
-  // paginationProps,
   paginationProps
 }: EntityReferenceProps<T, S, F>): JSX.Element {
   const inputRef = useRef<HTMLInputElement>(null)

@@ -116,7 +116,7 @@ const PullRequestCompareDiffList: FC<PullRequestCompareDiffListProps> = ({
           <DraggableSidebarDivider width={sidebarWidth} setWidth={setSidebarWidth} containerRef={containerRef} />
         </Layout.Flex>
       )}
-      <Layout.Flex className={cn('p-0', showExplorer ? 'pl-cn-lg' : '')} direction="column">
+      <Layout.Flex className={cn('p-0', showExplorer ? 'pl-cn-sm' : '')} direction="column">
         <ListActions.Root className="layer-high bg-cn-1 pt-cn-lg sticky top-[var(--cn-breadcrumbs-height)] gap-x-5 pb-2">
           <ListActions.Left>
             <Button

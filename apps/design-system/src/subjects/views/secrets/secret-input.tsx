@@ -15,7 +15,7 @@ export const SecretInputExample = () => {
         placeholder={<Link to="#"> Please select a secret</Link>}
         value={selectedSecret}
         label="Select a Secret"
-        icon="key"
+        iconProps={{ name: 'key' }}
         onClick={() => {
           setIsDrawerOpen(true)
         }}
@@ -25,7 +25,6 @@ export const SecretInputExample = () => {
         onClear={() => setSelectedSecret(null)}
         renderValue={secret => secret.name}
         className="mb-8 max-w-xs"
-        scope="account"
       />
       <SecretsPage
         isDrawerOpen={isDrawerOpen}

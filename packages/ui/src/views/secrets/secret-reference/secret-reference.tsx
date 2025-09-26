@@ -1,5 +1,4 @@
-import { Button, ButtonLayout, EntityFormLayout, Spacer, StackedList } from '@/components'
-import { cn } from '@/utils'
+import { Button, ButtonLayout, EntityFormLayout, Spacer } from '@/components'
 import { DirectionEnum, EntityReference, EntityRendererProps, SecretItem, secretsFilterTypes } from '@/views'
 
 export interface SecretReferenceProps {
@@ -25,6 +24,7 @@ export interface SecretReferenceProps {
   handleChangeSearchValue: (val: string) => void
 
   isDrawer?: boolean
+  renderEntity?: (props: EntityRendererProps<SecretItem>) => React.ReactNode
 
   // Pagination
   paginationProps?: {
@@ -60,27 +60,12 @@ export const SecretReference: React.FC<SecretReferenceProps> = ({
   handleChangeSearchValue,
 
   isDrawer = false,
+  renderEntity,
 
   // Pagination
   paginationProps,
   showFilter = true
 }) => {
-  // Custom entity renderer for secrets
-  const renderEntity = (props: EntityRendererProps<SecretItem>) => {
-    const { entity, isSelected, onSelect } = props
-
-    return (
-      <StackedList.Item
-        className={cn({ 'bg-cn-hover': isSelected })}
-        paddingY="sm"
-        onClick={() => onSelect(entity)}
-        // thumbnail={<IconV2 name="lock" size="xs" className="ml-2 text-cn-3" />}
-      >
-        <StackedList.Field title={entity.secret.name} />
-      </StackedList.Item>
-    )
-  }
-
   return (
     <div className="flex flex-col">
       <EntityFormLayout.Title>Secrets list</EntityFormLayout.Title>

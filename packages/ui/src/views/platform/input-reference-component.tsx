@@ -1,8 +1,19 @@
 import { ReactNode } from 'react'
 
-import { Button, Caption, ControlGroup, IconPropsV2, IconV2, Label, LogoPropsV2, LogoV2, Tag } from '@/components'
+import {
+  ButtonGroup,
+  Caption,
+  ControlGroup,
+  DropdownMenu,
+  IconPropsV2,
+  IconV2,
+  Label,
+  Layout,
+  LogoPropsV2,
+  LogoV2,
+  Text
+} from '@/components'
 import { cn } from '@utils/cn'
-import { ScopeType } from '@views/common'
 import { cva, type VariantProps } from 'class-variance-authority'
 
 const inputReferenceVariants = cva(
@@ -69,7 +80,11 @@ export interface InputReferenceProps<T> extends VariantProps<typeof inputReferen
   /**
    * Icon to display at the start of the input
    */
-  icon?: IconPropsV2['name']
+  iconProps?: {
+    name: IconPropsV2['name']
+    size?: IconPropsV2['size']
+    color?: IconPropsV2['color']
+  }
 
   /**
    * Logo to display at the start of the input
@@ -105,11 +120,6 @@ export interface InputReferenceProps<T> extends VariantProps<typeof inputReferen
    * Function called when the open (arrow) icon is clicked
    */
   onOpen?: () => void
-
-  /**
-   * Scope of the input reference, if passed
-   */
-  scope?: 'account' | 'org' | 'project'
 }
 
 /**
@@ -125,17 +135,15 @@ export const InputReference = <T,>({
   onClear,
   disabled = false,
   className,
-  icon,
+  iconProps,
   logo,
   label,
   caption,
   optional = false,
   renderValue,
   suffix,
-  showReset = true,
   onOpen,
   wrapperClassName = '',
-  scope,
   ...props
 }: InputReferenceProps<T>) => {
   // Determine what to display: rendered value if value exists, otherwise placeholder
@@ -174,77 +182,77 @@ export const InputReference = <T,>({
           {label}
         </Label>
       )}
-      <div
-        onClick={disabled ? undefined : onClick}
-        className={cn(inputReferenceVariants({ state }), className)}
-        role="button"
-        tabIndex={disabled ? -1 : 0}
-        aria-disabled={disabled}
-        onKeyDown={e => {
-          if (disabled) return
-          if (e.key === 'Enter' || e.key === ' ') {
-            onClick?.()
-          }
-        }}
-        {...props}
-      >
-        <div className="flex w-full items-center justify-between pl-cn-input-md">
-          {icon && <IconV2 className="mr-2.5" name={icon} />}
-          {logo && <LogoV2 className="mr-2.5" name={logo} size="xs" />}
-          <div
-            className={cn(`flex-1 truncate`, {
-              'text-cn-disabled': !hasValue
-            })}
-          >
-            {displayContent}
-          </div>
-          {hasValue && !disabled && (
-            <div className="ml-3 flex items-center">
-              {scope && (
-                <Tag
-                  value={
-                    scope === 'account'
-                      ? ScopeType.Account
-                      : scope === 'org'
-                        ? ScopeType.Organization
-                        : ScopeType.Project
-                  }
-                />
-              )}
-              <Button onClick={handleEdit} size="sm" variant="ghost" iconOnly tooltipProps={{ content: 'Edit' }}>
-                <IconV2 name="edit-pencil" />
-              </Button>
-              {showReset && (
-                <Button onClick={handleClear} size="sm" variant="ghost" iconOnly ignoreIconOnlyTooltip>
-                  <IconV2 name="xmark" color="danger" />
-                </Button>
-              )}
+      <Layout.Horizontal className="w-full">
+        <div
+          onClick={disabled ? undefined : onClick}
+          className={cn(inputReferenceVariants({ state }), className, 'flex-1')}
+          role="button"
+          tabIndex={disabled ? -1 : 0}
+          aria-disabled={disabled}
+          onKeyDown={e => {
+            if (disabled) return
+            if (e.key === 'Enter' || e.key === ' ') {
+              onClick?.()
+            }
+          }}
+          {...props}
+        >
+          <div className="flex w-full items-center justify-between pl-cn-input-md">
+            {iconProps && <IconV2 className="mr-2.5" {...iconProps} fallback="circle" />}
+            {logo && <LogoV2 className="mr-2.5" name={logo} size="xs" />}
+            <div
+              className={cn(`flex-1 truncate`, {
+                'text-cn-disabled': !hasValue
+              })}
+            >
+              {displayContent}
             </div>
-          )}
-          {!!onOpen && !disabled && (
-            <Button onClick={handleOpen} size="sm" variant="ghost" iconOnly tooltipProps={{ content: 'Open' }}>
-              <IconV2 name="nav-arrow-right" />
-            </Button>
-          )}
-        </div>
-        {suffix ? (
-          <div
-            className="aspect-1 flex h-full items-center justify-center rounded-l-none border-l border-inherit"
-            // Don't trigger onClick of the parent div when suffix is clicked
-            onPointerDown={e => {
-              e.stopPropagation()
-            }}
-            onKeyDown={e => {
-              if (e.key === 'Enter' || e.key === ' ') {
-                e.stopPropagation()
-              }
-            }}
-            role="none"
-          >
-            {suffix}
           </div>
-        ) : null}
-      </div>
+          {suffix ? (
+            <div
+              className="aspect-1 flex h-full items-center justify-center rounded-l-none border-l border-inherit"
+              // Don't trigger onClick of the parent div when suffix is clicked
+              onPointerDown={e => {
+                e.stopPropagation()
+              }}
+              onKeyDown={e => {
+                if (e.key === 'Enter' || e.key === ' ') {
+                  e.stopPropagation()
+                }
+              }}
+              role="none"
+            >
+              {suffix}
+            </div>
+          ) : null}
+        </div>
+        {!!hasValue && !disabled && (
+          <ButtonGroup
+            iconOnly
+            size="md"
+            buttonsProps={[
+              {
+                children: <IconV2 name="more-vert" />,
+                dropdownProps: {
+                  content: (
+                    <>
+                      <DropdownMenu.IconItem title="Replace" icon="refresh-double" onClick={handleOpen} />
+                      <DropdownMenu.IconItem title="Edit" icon="edit-pencil" onClick={handleEdit} />
+                      <DropdownMenu.IconItem
+                        title={<Text color="danger">Clear</Text>}
+                        icon="trash"
+                        onClick={handleClear}
+                        iconClassName="text-cn-danger"
+                      />
+                    </>
+                  )
+                }
+              }
+            ]}
+          />
+        )}
+      </Layout.Horizontal>
+
       {caption && <Caption className="mt-1.5">{caption}</Caption>}
     </ControlGroup>
   )

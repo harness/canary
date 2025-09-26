@@ -1,3 +1,5 @@
+import { ReactNode } from 'react'
+
 import { Action, ExternalToast } from 'sonner'
 
 type ToastOptions = Pick<ExternalToast, 'action' | 'duration' | 'dismissible'> & {
@@ -6,7 +8,7 @@ type ToastOptions = Pick<ExternalToast, 'action' | 'duration' | 'dismissible'> &
 
 export type ToastParamsType = {
   title: string
-  description: string
+  description?: ReactNode
   options?: ToastOptions
 }
 

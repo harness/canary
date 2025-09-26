@@ -126,7 +126,6 @@ export function CustomToast({
             title={action.label as string}
             onClick={e => {
               action.onClick?.(e)
-              sonnerToast.dismiss(toastId)
             }}
           >
             {action.label}

@@ -1,6 +1,8 @@
+import { useEffect } from 'react'
 import { useNavigate } from 'react-router-dom'
 
 import { ImportRepositoryRequestBody, useImportRepositoryMutation } from '@harnessio/code-service-client'
+import { toast } from '@harnessio/ui/components'
 import { ImportRepoFormFields, RepoImportPage as RepoImportPageView } from '@harnessio/ui/views'
 
 import { useRoutes } from '../../framework/context/NavigationContext'
@@ -14,7 +16,7 @@ export const ImportRepo = () => {
   const spaceURL = useGetSpaceURLParam()
   const navigate = useNavigate()
   const { mutate: importRepoMutation, error, isLoading } = useImportRepositoryMutation({})
-  const { setImportRepoIdentifier } = useRepoStore()
+  const { setImportRepoIdentifier, setImportToastId, importToastId } = useRepoStore()
   useRepoImportWithPubSub()
 
   const onSubmit = async (data: ImportRepoFormFields) => {
@@ -48,18 +50,24 @@ export const ImportRepo = () => {
     )
   }
 
+  useEffect(() => {
+    if (error) {
+      toast.dismiss(importToastId ?? undefined)
+      setImportRepoIdentifier(null)
+      setImportToastId(null)
+    }
+  }, [error, importToastId, setImportRepoIdentifier, setImportToastId])
+
   const onCancel = () => {
     navigate(routes.toRepositories({ spaceId: spaceURL }))
   }
 
   return (
-    <>
-      <RepoImportPageView
-        onFormSubmit={onSubmit}
-        onFormCancel={onCancel}
-        isLoading={isLoading}
-        apiErrorsValue={error?.message?.toString()}
-      />
-    </>
+    <RepoImportPageView
+      onFormSubmit={onSubmit}
+      onFormCancel={onCancel}
+      isLoading={isLoading}
+      apiErrorsValue={error?.message?.toString()}
+    />
   )
 }

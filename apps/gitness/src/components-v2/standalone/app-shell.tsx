@@ -1,7 +1,7 @@
 import { FC, useEffect, useMemo } from 'react'
 import { Outlet, useParams } from 'react-router-dom'
 
-import { NavbarItemType, ToasterV2, useSidebar } from '@harnessio/ui/components'
+import { NavbarItemType, Toaster, useSidebar } from '@harnessio/ui/components'
 import { useTranslation } from '@harnessio/ui/context'
 import { MainContentLayout } from '@harnessio/ui/views'
 
@@ -78,7 +78,7 @@ export const AppShell: FC = () => {
           <Outlet />
         </MainContentLayout>
       </AppSideBar>
-      <ToasterV2 />
+      <Toaster />
     </>
   )
 }

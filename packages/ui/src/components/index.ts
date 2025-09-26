@@ -20,7 +20,6 @@ export * from './no-data'
 export * from './tabs'
 export * from './command'
 export * from './search-files'
-export * from './toast'
 export * from './link'
 export * from './commit-copy-actions'
 export * from './accordion/accordion'
@@ -102,5 +101,5 @@ export * from './favorite'
 export * from './scope'
 export * from './rbac'
 
-// Toast v2
-export * from './toast-v2'
+// Sonner Toast
+export * from './toast'

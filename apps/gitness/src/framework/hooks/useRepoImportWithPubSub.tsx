@@ -2,7 +2,7 @@ import { useCallback, useEffect } from 'react'
 import { useParams } from 'react-router-dom'
 
 import { RepoRepositoryOutput } from '@harnessio/code-service-client'
-import { Link, useToast } from '@harnessio/ui/components'
+import { Link, toast } from '@harnessio/ui/components'
 
 import { useRepoStore } from '../../pages-v2/repo/stores/repo-list-store'
 import { transformRepoList } from '../../pages-v2/repo/transform-utils/repo-list-transform'
@@ -12,7 +12,6 @@ import { useRoutes } from '../context/NavigationContext'
 import { eventManager } from '../event/EventManager'
 
 export const useRepoImportWithPubSub = () => {
-  const { update, toast } = useToast()
   const routes = useRoutes()
   const { spaceId } = useParams<PathParams>()
 
@@ -23,22 +22,19 @@ export const useRepoImportWithPubSub = () => {
 
       if (importToastId && importRepoIdentifier && importRepoIdentifier === eventData.identifier) {
         try {
-          update({
-            id: importToastId,
-            open: false
-          })
+          toast.dismiss(importToastId)
         } catch (error) {
           console.error('No toast to dismiss:', error)
         }
 
-        toast({
+        toast.success({
           title: 'Successfully imported',
           description: (
             <Link to={routes.toRepoSummary({ spaceId, repoId: importRepoIdentifier })}>{importRepoIdentifier}</Link>
           ),
-          action: null,
-          duration: 5000,
-          variant: 'success'
+          options: {
+            duration: 5000
+          }
         })
 
         const transformedRepo = transformRepoList([eventData])
@@ -48,21 +44,25 @@ export const useRepoImportWithPubSub = () => {
         setImportToastId(null)
       }
     },
-    [routes, spaceId, toast, update]
+    [routes, spaceId]
   )
 
   const handleError = useCallback(() => {
     const { importToastId } = useRepoStore.getState()
 
     if (importToastId) {
-      update({
-        id: importToastId,
+      try {
+        toast.dismiss(importToastId)
+      } catch (error) {
+        console.error('No toast to dismiss:', error)
+      }
+
+      toast.danger({
         title: 'Import failed',
-        variant: 'failed',
-        action: null
+        description: 'Failed to import repository'
       })
     }
-  }, [update])
+  }, [])
 
   useEffect(() => {
     eventManager.subscribe(SSEEvent.REPO_IMPORTED, handleImportEvent)

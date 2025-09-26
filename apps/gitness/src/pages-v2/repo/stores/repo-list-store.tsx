@@ -10,7 +10,7 @@ export const useRepoStore = create<RepoStore>(set => ({
   isRepoStillImporting: false,
   page: 1,
   importToastId: null,
-  setImportToastId: (id: string | null) => set({ importToastId: id }),
+  setImportToastId: (id: string | number | null) => set({ importToastId: id }),
   setPage: page => set({ page }),
 
   setRepositories: (data: RepositoryType[], totalItems: number, pageSize: number) => {

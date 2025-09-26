@@ -1,7 +1,7 @@
 import { memo } from 'react'
 import { Outlet } from 'react-router-dom'
 
-import { ToasterV2 } from '@harnessio/ui/components'
+import { Toaster } from '@harnessio/ui/components'
 import { MainContentLayout } from '@harnessio/ui/views'
 
 import { useGetSpaceURLParam } from '../../framework/hooks/useGetSpaceParam'
@@ -23,9 +23,7 @@ export const AppShellMFE = memo(() => {
       <MainContentLayout className="text-cn-2" withBreadcrumbs={breadcrumbs.length > 0}>
         <Outlet />
       </MainContentLayout>
-
-      {/* Sonner toast */}
-      <ToasterV2 />
+      <Toaster />
     </>
   )
 })

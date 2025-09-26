@@ -7,16 +7,16 @@ beta: true
 import { Code, Card, Aside } from "@astrojs/starlight/components";
 import { DocsPage } from "../../../components/docs-page";
 
-`toastV2` is a toast component that is used to display notifications to the user. It is handled by `ToasterV2` component, that is added in the root of the app.
+`toast` is a toast component that is used to display notifications to the user. It is handled by `Toaster` component, that is added in the root of the app.
 
-To show a simple toast, use the `toastV2` function.
+To show a simple toast, use the `toast` function.
 
 <DocsPage.ComponentExample
   client:only
   code={`
     <Button
       onClick={() =>
-        toastV2({
+        toast({
           title: 'Toast title',
           description: Array.from({ length: Math.floor(Math.random() * 1000) + 1 })
             .map(() => 'a')
@@ -39,7 +39,7 @@ To show a simple toast, use the `toastV2` function.
 
 <Code
   code={`
-    toastV2({
+    toast({
       title: 'Toast title',
       description: 'Toast description',
       options: {
@@ -63,15 +63,15 @@ To show a simple toast, use the `toastV2` function.
 
 ## Toast types
 
-`toastV2` can be used to show different types of toasts.
+`toast` can be used to show different types of toasts.
 
 <ol>
-  <li>- Default toast (`toastV2`)</li>
-  <li>- Success toast (`toastV2.success`)</li>
-  <li>- Danger toast (`toastV2.danger`)</li>
-  <li>- Info toast (`toastV2.info`)</li>
-  <li>- Loading toast (`toastV2.loading`)</li>
-  <li>- Promise toast (`toastV2.promise`)</li>
+  <li>- Default toast (`toast`)</li>
+  <li>- Success toast (`toast.success`)</li>
+  <li>- Danger toast (`toast.danger`)</li>
+  <li>- Info toast (`toast.info`)</li>
+  <li>- Loading toast (`toast.loading`)</li>
+  <li>- Promise toast (`toast.promise`)</li>
 </ol>
 
 <Card title="Points to Note">
@@ -81,7 +81,7 @@ To show a simple toast, use the `toastV2` function.
   <li>- If <code>duration</code> is not provided, the toast will be closed after <strong>10 seconds</strong> by default.</li>
   <li>- Close button in toast will be hidden only if <code>dismissible</code> is set to false in <code>options</code>. By default, it is set to true.</li>
   <li>- Action button can be added to toast by providing <code>action</code> in <code>options</code>.</li>
-  <li>- Clicking of action button will close the toast and execute the callback function provided in <code>action</code>.</li>
+  <li>- Clicking of action button will execute the callback function provided in <code>action</code> and will not close the toast by default. If you want to close the toast after clicking the action button, you can use <code>toast.dismiss</code> in the callback function.</li>
   <li>- Promise toast and Loading toast cannot be dismissed by the user, it will be closed after the promise is resolved or rejected (Promise toast) or when the work in progress task is completed (Loading toast).</li>
   <li>- Promise toast and Loading toast cannot display a <code>description</code></li>
 </ol>
@@ -96,7 +96,7 @@ To show a simple toast, use the `toastV2` function.
   code={`
     <Button
       onClick={() =>
-        toastV2.success({
+        toast.success({
           title: 'Toast title',
           description: "Lorem ipsum dolor sit amet, consectetur adipisicing elit. Magni magnam quibusdam fugit saepe voluptates aperiam perspiciatis ipsam! Ad cupiditate, tempora aspernatur a, veritatis, rem maxime est aliquam natus iure vero. Lorem ipsum dolor sit amet, consectetur adipisicing elit. Dignissimos quis reprehenderit quas! Praesentium, delectus perferendis? Dicta, reiciendis? Sint ipsa necessitatibus natus, magni, delectus consequuntur, aperiam asperiores in quasi commodi doloribus?",
           options: {
@@ -122,7 +122,7 @@ To show a simple toast, use the `toastV2` function.
   code={`
     <Button
       onClick={() =>
-        toastV2.danger({
+        toast.danger({
           title: 'Toast title',
           description: "Lorem ipsum dolor sit amet, consectetur adipisicing elit. Magni magnam quibusdam fugit saepe voluptates aperiam perspiciatis ipsam! Ad cupiditate, tempora aspernatur a, veritatis, rem maxime est aliquam natus iure vero.",
           options: {
@@ -148,7 +148,7 @@ To show a simple toast, use the `toastV2` function.
   code={`
     <Button
       onClick={() =>
-        toastV2.info({
+        toast.info({
           title: 'Toast title',
           description: "Lorem ipsum dolor sit amet, consectetur adipisicing elit. Magni magnam quibusdam fugit saepe voluptates aperiam perspiciatis ipsam! Ad cupiditate, tempora aspernatur a, veritatis, rem maxime est aliquam natus iure vero.",
           options: {
@@ -164,7 +164,7 @@ To show a simple toast, use the `toastV2` function.
 ### Loading toast
 
 <Aside type="caution">
-  Loading toast needs to be closed manually. use `toastV2.dismiss` to close the
+  Loading toast needs to be closed manually. use `toast.dismiss` to close the
   toast using the toast id.
 </Aside>
 
@@ -173,13 +173,13 @@ To show a simple toast, use the `toastV2` function.
   code={`
     <Button
       onClick={() => {
-        const _toastId = toastV2.loading({
+        const _toastId = toast.loading({
           title: 'Loading data...',
           options: {
             action: {
               label: 'Close',
               onClick: () => {
-                toastV2.dismiss(_toastId)
+                toast.dismiss(_toastId)
               }
             }
           }
@@ -203,19 +203,19 @@ Promise toast accepts a **promise** as its **first argument** and an **options o
 <DocsPage.ComponentExample
   client:only
   code={`
-() => {
-  return <Button
-    onClick={() =>
-      toastV2.promise(new Promise((resolve, reject) => {
-      const random = Math.random()
-      setTimeout(() => {
-        if (random > 0.5) {
-          resolve('Promise resolved')
-        } else {
-          reject('Promise rejected')
-        }
-      }, 5000)
-    }), {
+() => (
+  <Button
+    onClick={() => {
+      const _toastId = toast.promise(new Promise((resolve, reject) => {
+        const random = Math.random()
+        setTimeout(() => {
+          if (random > 0.5) {
+            resolve('Promise resolved')
+          } else {
+            reject('Promise rejected')
+          }
+        }, 5000)
+      }), {
         loadingMessage: 'Promise in progress',
         successMessage: 'Promise resolved successfully',
         errorMessage: 'Promise rejected',
@@ -224,18 +224,17 @@ Promise toast accepts a **promise** as its **first argument** and an **options o
             label: 'Action',
             onClick: () => {
               console.log('Action')
+              toast.dismiss(_toastId)
             },
           },
         },
       })
     }
-
->
-
+    }
+  >
     Show promise toast
-
   </Button>
-}
+)
 `}
 />
 

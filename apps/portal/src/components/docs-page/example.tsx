@@ -10,7 +10,7 @@ import {
   CopyButton,
   DialogProvider,
   IconV2,
-  ToasterV2,
+  Toaster,
   TooltipProvider,
 } from "@harnessio/ui/components";
 import { cn } from "@harnessio/ui/utils";
@@ -131,7 +131,7 @@ const Example: FC<ExampleProps> = ({
             </LiveProvider>
           </div>
         </TooltipProvider>
-        <ToasterV2 className="not-content" />
+        <Toaster className="not-content" />
       </DialogProvider>
     </RouterContextProvider>
   );

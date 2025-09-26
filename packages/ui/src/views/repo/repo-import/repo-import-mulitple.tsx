@@ -1,6 +1,7 @@
 import { useForm, type SubmitHandler } from 'react-hook-form'
 
 import {
+  Alert,
   Button,
   ButtonLayout,
   ControlGroup,
@@ -262,7 +263,13 @@ export function RepoImportMultiplePage({
             </ControlGroup>
           </Fieldset>
 
-          {!!apiErrorsValue && <span className="text-2 text-cn-danger">{apiErrorsValue}</span>}
+          {!!apiErrorsValue && (
+            <Alert.Root theme="danger" expandable>
+              <Alert.Title>Import failed</Alert.Title>
+              <Alert.Description>{apiErrorsValue}</Alert.Description>
+            </Alert.Root>
+          )}
+
           {/* SUBMIT BUTTONS */}
           <Fieldset>
             <ControlGroup>

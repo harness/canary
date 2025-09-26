@@ -118,7 +118,9 @@ export const SecretDetailsLayout: FC<SecretDetailsLayoutProps> = ({
             {t('views:secretDetails.backToSecrets', 'Back to secrets')}
           </Link>
           <Layout.Horizontal align="center">
-            <Text variant="heading-hero">{secret.name}</Text>
+            <Text variant="heading-hero" className="break-all">
+              {secret.name}
+            </Text>
           </Layout.Horizontal>
           {useGetSecretInfo(secret.createdAt, secret.updatedAt, secret.updatedAt, onEdit, onDelete, secret.identifier)}
         </Layout.Vertical>

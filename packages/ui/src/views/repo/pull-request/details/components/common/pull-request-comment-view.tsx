@@ -64,7 +64,7 @@ const PRCommentView: FC<PRCommentViewProps> = ({
           </Button>
         </Dialog.Trigger>
         {isInBatch ? (
-          <Button variant="outline" theme="danger" onClick={() => removeSuggestionFromBatch?.(commentItem.id)}>
+          <Button theme="danger" onClick={() => removeSuggestionFromBatch?.(commentItem.id)}>
             {t('views:pullRequests.comments.removeSuggestion', 'Remove suggestion from batch')}
           </Button>
         ) : (

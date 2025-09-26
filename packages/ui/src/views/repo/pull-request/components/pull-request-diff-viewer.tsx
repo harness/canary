@@ -17,6 +17,7 @@ import {
 import { DiffFile, DiffModeEnum, DiffViewProps, SplitSide } from '@git-diff-view/react'
 import { useCustomEventListener } from '@hooks/use-event-listener'
 import { useMemoryCleanup } from '@hooks/use-memory-cleanup'
+import { cn } from '@utils/cn'
 import { getInitials } from '@utils/stringUtils'
 import { DiffBlock } from 'diff2html/lib/types'
 import { debounce, get } from 'lodash-es'
@@ -443,13 +444,12 @@ const PullRequestDiffViewer = ({
                 parentCommentId={parent.id}
                 handleSaveComment={handleSaveComment}
                 isLast={true}
-                contentWrapperClassName="col-start-1 row-start-1 col-end-3 row-end-3 px-4 pb-2"
+                mainWrapperClassName="pl-cn-md pr-cn-xs"
+                contentWrapperClassName="col-start-1 row-start-1 col-end-3 row-end-3 pr-cn-xs"
                 header={[]}
                 currentUser={currentUser?.display_name}
                 hideEditDelete={parent?.payload?.author?.uid !== currentUser?.uid}
                 isComment
-                replyBoxClassName="p-4"
-                footerBoxClassName="p-4"
                 hideReplyHere={hideReplyHeres[parent?.id]}
                 setHideReplyHere={state => toggleReplyBox(state, parent?.id)}
                 isResolved={!!parent.payload?.resolved}
@@ -464,7 +464,7 @@ const PullRequestDiffViewer = ({
                       <Text as="span" variant="body-strong" color="foreground-1">
                         {parent.payload?.resolver?.display_name}
                       </Text>
-                      &nbsp; marked this conversation as resolved.
+                      &nbsp;marked this conversation as resolved.
                     </Text>
                   )
                 }
@@ -482,7 +482,8 @@ const PullRequestDiffViewer = ({
                       handleSaveComment={handleSaveComment}
                       isLast={replies.length === 0}
                       hideReplySection
-                      mainWrapperClassName="px-4 pt-4"
+                      mainWrapperClassName="pl-cn-md pr-cn-xs pt-cn-sm"
+                      contentWrapperClassName="pr-cn-xs"
                       isResolved={!!parent.payload?.resolved}
                       isComment
                       handleDeleteComment={() => deleteComment?.(parent?.id) || Promise.resolve()}
@@ -572,7 +573,10 @@ const PullRequestDiffViewer = ({
                               key={reply.id}
                               payload={parent?.payload}
                               id={replyIdAttr}
-                              mainWrapperClassName="px-4"
+                              mainWrapperClassName={cn('pl-cn-md pr-cn-xs', {
+                                'pb-cn-sm': idx === replies.length - 1
+                              })}
+                              contentWrapperClassName="pr-cn-xs"
                               principalProps={principalProps}
                               parentCommentId={parent?.id}
                               isLast={isLastComment}

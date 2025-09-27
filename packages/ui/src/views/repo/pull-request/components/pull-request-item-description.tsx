@@ -2,7 +2,7 @@ import { FC } from 'react'
 
 import { IconV2, Layout, Link, Separator, Tag, TagProps, Text, TimeAgoCard } from '@/components'
 
-import { PullRequestPageProps } from '../pull-request.types'
+import { EnumPullReqState, PullRequestPageProps } from '../pull-request.types'
 
 interface PullRequestItemDescriptionProps extends Pick<PullRequestPageProps, 'toBranch'> {
   number: number
@@ -11,6 +11,7 @@ interface PullRequestItemDescriptionProps extends Pick<PullRequestPageProps, 'to
   author: string
   sourceBranch: string
   timestamp: string
+  state: EnumPullReqState
   targetBranch: string
   repoId: string
 }
@@ -22,6 +23,7 @@ export const PullRequestItemDescription: FC<PullRequestItemDescriptionProps> = (
   sourceBranch,
   targetBranch,
   timestamp,
+  state,
   toBranch,
   repoId
 }) => {
@@ -35,7 +37,8 @@ export const PullRequestItemDescription: FC<PullRequestItemDescriptionProps> = (
   return (
     <div className="text-2 text-cn-2 inline-flex flex-wrap max-w-full items-center gap-1.5 pl-[22px]">
       <Text variant="body-single-line-normal">
-        {`#${number}`} opened <TimeAgoCard timestamp={timestamp} dateTimeFormatOptions={{ dateStyle: 'medium' }} /> by{' '}
+        {`#${number} ${state === ('open' as EnumPullReqState) ? 'opened' : state} `}
+        <TimeAgoCard timestamp={timestamp} dateTimeFormatOptions={{ dateStyle: 'medium' }} /> by{' '}
         <span className="inline-block max-w-[200px] truncate align-text-bottom">{author}</span>
       </Text>
 

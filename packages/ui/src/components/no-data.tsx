@@ -100,7 +100,7 @@ export const NoData: FC<NoDataProps> = ({
                 </Button>
               ) : (
                 <PrimaryDialogTrigger>
-                  <Button {...toButtonProps(omit(primaryButton, ['label', 'icon']) as ButtonProps)}>
+                  <Button {...toButtonProps(omit(primaryButton, ['label', 'icon', 'isDialogTrigger']) as ButtonProps)}>
                     {primaryButton.icon && <IconV2 name={primaryButton.icon} size="sm" />}
                     {primaryButton.label}
                   </Button>
@@ -120,7 +120,10 @@ export const NoData: FC<NoDataProps> = ({
                 </Button>
               ) : (
                 <SecondaryDialogTrigger>
-                  <Button variant="outline" {...toButtonProps(omit(secondaryButton, ['label', 'icon']) as ButtonProps)}>
+                  <Button
+                    variant="outline"
+                    {...toButtonProps(omit(secondaryButton, ['label', 'icon', 'isDialogTrigger']) as ButtonProps)}
+                  >
                     {secondaryButton.icon && <IconV2 name={secondaryButton.icon} size="sm" />}
                     {secondaryButton.label}
                   </Button>

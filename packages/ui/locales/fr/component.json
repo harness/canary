@@ -101,6 +101,7 @@
     "inputPlaceholder": "Filtrer par...",
     "buttonLabel": "Réinitialiser les filtres",
     "defaultLabel": "Filtrer",
+    "saveFilter": "Save Filter",
     "reset": "Réinitialiser",
     "add-filter": "Ajouter un filtre",
     "is": "est",

@@ -128,7 +128,7 @@ export const BranchesList: FC<BranchListPageProps> = ({
                       size="2xs"
                     />
 
-                    <Text variant="body-single-line-strong" className="text-cn-gray-surface">
+                    <Text variant="body-single-line-strong" className="text-cn-gray-outline">
                       <span>{branch?.checks?.done || 0}</span>
                       <span>/</span>
                       <span>{branch?.checks?.total || 0}</span>
@@ -158,7 +158,7 @@ export const BranchesList: FC<BranchListPageProps> = ({
                   >
                     {/* TODO: Merged state is not shown in the branch list, because the PR gets removed from 'branch.pullRequests' */}
                     <StatusBadge
-                      variant="outline"
+                      variant="primary"
                       size="md"
                       theme={
                         getPrState(
@@ -201,7 +201,7 @@ export const BranchesList: FC<BranchListPageProps> = ({
                     {
                       title: t('views:repos.browse', 'Browse'),
                       to: toCode?.({ branchName: branch.name }) || '',
-                      iconName: 'page'
+                      iconName: 'empty-page'
                     },
                     {
                       isDanger: true,

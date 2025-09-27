@@ -21,6 +21,9 @@ import ListControlBar from '@views/repo/components/list-control-bar'
 
 import { createFilters, FilterRefType } from '@harnessio/filters'
 
+import SaveFiltersDialog, { SaveFiltersDialogProps } from './save-filters-dialog'
+import SavedFilters from './SavedFilters'
+
 interface FilterGroupProps<
   T extends Record<string, unknown>,
   V extends keyof T & string,
@@ -35,6 +38,12 @@ interface FilterGroupProps<
   handleInputChange: (value: string) => void
   filterOptions: FilterOptionConfig<V, CustomValue>[]
   headerAction?: ReactNode
+  savedFiltersConfig?: {
+    savedFilterKey?: string
+    savedFiltersOptions: { value: string; label: string }[]
+    onSaveFilters: SaveFiltersDialogProps['onSubmit']
+    getSavedFiltersValues: (savedFilterId: string) => Promise<T>
+  }
 }
 
 export type FilterGroupRef = {
@@ -58,10 +67,17 @@ const FilterGroupInner = <
     filterOptions,
     multiSortConfig,
     simpleSortConfig,
+    savedFiltersConfig,
     handleFilterOpen
   } = props
 
   const { t } = useTranslation()
+  const {
+    savedFilterKey = 'filterIdentifier',
+    savedFiltersOptions,
+    onSaveFilters,
+    getSavedFiltersValues
+  } = savedFiltersConfig ?? {}
 
   const FilterHandler = useMemo(() => createFilters<T>(), [])
   const filtersRef = useRef<FilterRefType<T> | null>(null)
@@ -113,6 +129,12 @@ const FilterGroupInner = <
         setSelectedFiltersCnt(filterValues.length)
         onFilterSelectionChange?.(filterValues)
       }}
+      savedFiltersConfig={{
+        getSavedFilters: (savedFilterId: string) => {
+          return getSavedFiltersValues?.(savedFilterId)
+        },
+        savedFilterKey
+      }}
       onChange={onFilterValueChange}
       view="dropdown"
     >
@@ -131,6 +153,9 @@ const FilterGroupInner = <
             </ListActions.Left>
             <ListActions.Right>
               <Layout.Horizontal gap="md">
+                {!!savedFiltersOptions?.length && (
+                  <SavedFilters savedFilterKey={savedFilterKey} options={savedFiltersOptions} />
+                )}
                 <FilterHandler.Dropdown>
                   {(addFilter, availableFilters, resetFilters) => {
                     return (
@@ -196,6 +221,7 @@ const FilterGroupInner = <
                   {(addFilter, availableFilters: Extract<keyof T, string>[], resetFilters) => (
                     <div className="flex items-center gap-x-4">
                       {filterOptionsRenderer({ addFilter, resetFilters, availableFilters })}
+                      {onSaveFilters && <SaveFiltersDialog onSubmit={onSaveFilters} />}
                     </div>
                   )}
                 </FilterHandler.Dropdown>

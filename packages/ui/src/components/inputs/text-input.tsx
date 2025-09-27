@@ -19,8 +19,8 @@ const TextInput = forwardRef<HTMLInputElement, TextInputProps>((props, ref) => {
     wrapperClassName,
     disabled,
     orientation,
-    informerProps,
-    informerContent,
+    tooltipProps,
+    tooltipContent,
     ...restProps
   } = props
   const isHorizontal = orientation === 'horizontal'
@@ -41,8 +41,8 @@ const TextInput = forwardRef<HTMLInputElement, TextInputProps>((props, ref) => {
               optional={optional}
               htmlFor={inputId}
               suffix={labelSuffix}
-              informerProps={informerProps}
-              informerContent={informerContent}
+              tooltipProps={tooltipProps}
+              tooltipContent={tooltipContent}
             >
               {label}
             </Label>

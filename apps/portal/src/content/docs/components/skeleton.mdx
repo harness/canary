@@ -192,6 +192,24 @@ The `Skeleton.List` component is a placeholder for list items. It can be used to
   </div>`}
 />
 
+You can use the `onlyItems` prop to render only skeleton list items without `StackedList.Root`.
+
+> Note: Don't forget to add the `cn-skeleton-list` className to the parent `StackedList.Root` for correct styling.
+
+<DocsPage.ComponentExample
+  client:only
+  code={`<div className="w-[600px] grid gap-8">
+    <StackedList.Root className='cn-skeleton-list'>
+      <StackedList.Header>
+        <StackedList.Field title="Header" />
+      </StackedList.Header>
+
+      <Skeleton.List linesCount={2} onlyItems />
+    </StackedList.Root>
+
+  </div>`}
+/>
+
 ### Skeleton Table
 
 The `Skeleton.Table` component is a placeholder for table elements. It can be used to indicate loading states for table content. `countRows` can be used to specify the number of rows in the skeleton table. `countColumns` can be used to specify the number of columns in the skeleton table.
@@ -359,6 +377,14 @@ The `Skeleton.Table` component is a placeholder for table elements. It can be us
       name: "hasActions",
       description:
         "Defines whether the skeleton list has right skeleton square",
+      required: false,
+      value: "boolean",
+      defaultValue: "false",
+    },
+    {
+      name: "onlyItems",
+      description:
+        "Defines whether to render only skeleton list items without StackedList.Root",
       required: false,
       value: "boolean",
       defaultValue: "false",

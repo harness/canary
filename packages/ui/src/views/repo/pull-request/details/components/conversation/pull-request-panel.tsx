@@ -490,11 +490,11 @@ const PullRequestPanel = ({
 
   const prState = getPrState()
   const headerRowBgClass = cn({
-    'bg-cn-green-surface': prState === PrState.Success,
+    'bg-cn-success-outline': prState === PrState.Success,
     'bg-cn-1': prState === PrState.Draft,
-    'bg-cn-red-surface': prState === PrState.Error,
-    'bg-cn-brand-surface': prState === PrState.Closed,
-    'bg-cn-purple-surface': prState === PrState.Merged
+    'bg-cn-danger-outline': prState === PrState.Error,
+    'bg-cn-brand-outline': prState === PrState.Closed,
+    'bg-cn-purple-outline': prState === PrState.Merged
   })
 
   const shouldShowConfirmation = actions && !pullReqMetadata?.closed && (showActionBtn || isMerging || mergeInitiated)
@@ -580,7 +580,7 @@ const PullRequestPanel = ({
                                 {
                                   title: 'Mark as draft',
                                   onClick: () => handlePrState('draft'),
-                                  iconName: 'page-edit' as const
+                                  iconName: 'edit-pencil' as const
                                 }
                               ]
                             : []),

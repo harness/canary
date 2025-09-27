@@ -31,6 +31,7 @@ import { useRoutes } from '../../framework/context/NavigationContext'
 import { useGetRepoRef } from '../../framework/hooks/useGetRepoPath'
 import { useIsMFE } from '../../framework/hooks/useIsMFE'
 import { useMFEContext } from '../../framework/hooks/useMFEContext'
+import { useAPIPath } from '../../hooks/useAPIPath'
 import { useGitRef } from '../../hooks/useGitRef'
 import { useRepoCommits } from '../../hooks/useRepoCommits'
 import { useRepoFileContentDetails } from '../../hooks/useRepoFileContentDetails'
@@ -43,6 +44,7 @@ import {
   REFS_BRANCH_PREFIX,
   REFS_TAGS_PREFIX
 } from '../../utils/git-utils'
+import { createImageUrlTransform } from '../../utils/path-utils'
 
 export default function RepoSummaryPage() {
   const routes = useRoutes()
@@ -308,6 +310,16 @@ export default function RepoSummaryPage() {
     setCreateBranchDialogOpen(open)
   }
 
+  const apiPath = useAPIPath()
+  const imageUrlTransform = useMemo(
+    () =>
+      createImageUrlTransform({
+        repoRef,
+        apiPath
+      }),
+    [repoRef, apiPath]
+  )
+
   return (
     <>
       <RepoSummaryView
@@ -356,6 +368,7 @@ export default function RepoSummaryPage() {
         toRepoPullRequests={() => routes.toRepoPullRequests({ spaceId, repoId })}
         showContributeBtn={showContributeBtn}
         scheduleFileMetaFetch={scheduleFileMetaFetch}
+        imageUrlTransform={imageUrlTransform}
       />
       <CreateBranchDialog
         open={isCreateBranchDialogOpen}

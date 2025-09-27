@@ -15,7 +15,7 @@ export const SecretInputExample = () => {
         placeholder={<Link to="#"> Please select a secret</Link>}
         value={selectedSecret}
         label="Select a Secret"
-        icon="key"
+        iconProps={{ name: 'key' }}
         onClick={() => {
           setIsDrawerOpen(true)
         }}

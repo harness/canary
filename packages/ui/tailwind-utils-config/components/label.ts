@@ -7,7 +7,7 @@ export default {
     gap: 'var(--cn-spacing-half)',
     color: 'var(--cn-text-1)',
 
-    '&-informer': {
+    '&-tooltip': {
       color: 'var(--cn-text-1)'
     },
 

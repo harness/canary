@@ -11,9 +11,9 @@ import { IconV2, IconV2DisplayName } from './icon-v2'
 const buttonVariants = cva('cn-button', {
   variants: {
     variant: {
-      primary: '',
-      secondary: '',
-      outline: 'cn-button-surface',
+      primary: 'cn-button-primary',
+      secondary: 'cn-button-secondary',
+      outline: 'cn-button-outline',
       ai: 'cn-button-ai',
       ghost: 'cn-button-ghost',
       link: 'cn-button-link',
@@ -35,55 +35,11 @@ const buttonVariants = cva('cn-button', {
     },
 
     theme: {
-      default: '',
+      default: 'cn-button-default',
       success: 'cn-button-success',
       danger: 'cn-button-danger'
     }
   },
-  compoundVariants: [
-    // Primary
-    {
-      variant: 'primary',
-      theme: 'default',
-      class: 'cn-button-solid cn-button-primary'
-    },
-    {
-      variant: 'primary',
-      theme: 'success',
-      class: 'cn-button-solid cn-button-success'
-    },
-    {
-      variant: 'primary',
-      theme: 'danger',
-      class: 'cn-button-solid cn-button-danger'
-    },
-
-    // Secondary
-    {
-      variant: 'secondary',
-      theme: 'default',
-      class: 'cn-button-muted cn-button-soft'
-    },
-    // Secondary
-    {
-      variant: 'secondary',
-      theme: 'success',
-      class: 'cn-button-success cn-button-soft'
-    },
-    // Secondary
-    {
-      variant: 'secondary',
-      theme: 'danger',
-      class: 'cn-button-danger cn-button-soft'
-    },
-
-    // Default Outline
-    {
-      variant: 'outline',
-      theme: 'default',
-      class: 'cn-button-muted'
-    }
-  ],
   defaultVariants: {
     variant: 'primary',
     size: 'md',

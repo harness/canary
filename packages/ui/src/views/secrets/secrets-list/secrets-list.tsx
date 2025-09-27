@@ -1,4 +1,6 @@
-import { MoreActionsTooltip, NoData, Skeleton, Table, Text, TimeAgoCard } from '@/components'
+import { useCallback } from 'react'
+
+import { MoreActionsTooltip, NoData, Skeleton, Table, Text, TimeAgoCard, useCustomDialogTrigger } from '@/components'
 import { useTranslation } from '@/context'
 import { cn } from '@utils/cn'
 
@@ -12,33 +14,47 @@ export function SecretList({
   isLoading,
   toSecretDetails,
   onDeleteSecret,
-  onEditSecret
+  onEditSecret,
+  handleResetFiltersQueryAndPages,
+  isDirtyList
 }: SecretListProps): JSX.Element {
   const { t } = useTranslation()
+
+  const { triggerRef, registerTrigger } = useCustomDialogTrigger()
+
+  const handleDeleteSecret = useCallback(
+    (secretId: string) => {
+      registerTrigger()
+      onDeleteSecret(secretId)
+    },
+    [onDeleteSecret, registerTrigger]
+  )
 
   if (isLoading) {
     return <Skeleton.Table countRows={12} countColumns={5} />
   }
 
-  if (!secrets.length) {
+  if (!secrets.length && isDirtyList) {
     return (
       <NoData
         withBorder
-        imageName="no-data-cog"
-        title={t('views:noData.noSecrets', 'No secrets yet')}
+        imageName="no-search-magnifying-glass"
+        title={t('views:noData.noResults', 'No search results')}
         description={[
-          t('views:noData.noSecrets', 'There are no secrets in this project yet.'),
-          t('views:noData.createSecret', 'Create new secret.')
+          t('views:noData.checkSpelling', 'Check your spelling and filter options,'),
+          t('views:noData.changeSearch', 'or search for a different keyword.')
         ]}
+        secondaryButton={{
+          icon: 'trash',
+          label: t('views:noData.clearFilters', 'Clear filters'),
+          onClick: handleResetFiltersQueryAndPages
+        }}
       />
     )
   }
 
   return (
-    <Table.Root
-      className={isLoading ? '[mask-image:linear-gradient(to_bottom,black_30%,transparent_100%)]' : ''}
-      size="compact"
-    >
+    <Table.Root size="compact">
       <Table.Header>
         <Table.Row>
           <Table.Head className="w-full">{t('views:secret.title', 'Name')}</Table.Head>
@@ -50,7 +66,7 @@ export function SecretList({
       <Table.Body>
         {secrets.map(secret => (
           <Table.Row key={secret.identifier} to={toSecretDetails?.(secret)}>
-            <Table.Cell className="w-full max-w-[470px]">
+            <Table.Cell className="w-full max-w-[470px]" title={secret.identifier}>
               <Text truncate>{secret.identifier}</Text>
             </Table.Cell>
             <Table.Cell className={CELL_MIN_WIDTH}>
@@ -65,6 +81,7 @@ export function SecretList({
               <MoreActionsTooltip
                 iconName="more-horizontal"
                 isInTable
+                ref={triggerRef}
                 actions={[
                   {
                     title: t('views:secrets.edit', 'Edit Secret'),
@@ -75,7 +92,7 @@ export function SecretList({
                     isDanger: true,
                     title: t('views:secrets.delete', 'Delete Secret'),
                     iconName: 'trash',
-                    onClick: () => onDeleteSecret(secret.identifier)
+                    onClick: () => handleDeleteSecret(secret.identifier)
                   }
                 ]}
               />

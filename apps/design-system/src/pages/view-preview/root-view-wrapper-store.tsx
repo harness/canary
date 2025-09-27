@@ -215,7 +215,7 @@ export const useRootViewWrapperStore = () => {
         },
         {
           id: 23,
-          iconName: 'page',
+          iconName: 'empty-page',
           title: 'File Store',
           to: '/delegates'
         },
@@ -332,7 +332,7 @@ export const useRootViewWrapperStore = () => {
       items: [
         {
           id: 39,
-          iconName: 'externaltickets',
+          iconName: 'external-tickets',
           title: 'External Tickets',
           to: '/external-tickets'
         }

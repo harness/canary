@@ -4,6 +4,7 @@ import { useRouterContext } from '@/context'
 import { Button, ButtonProps, ButtonVariants } from '@components/button'
 import { DropdownMenu } from '@components/dropdown-menu'
 import { IconV2, type IconPropsV2 } from '@components/icon-v2'
+import { Tooltip, TooltipProps } from '@components/tooltip'
 import { cn } from '@utils/cn'
 
 import { Text } from './text'
@@ -14,6 +15,8 @@ export interface ActionData {
   title: string
   onClick?: () => void
   isDanger?: boolean
+  disabled?: boolean
+  tooltip?: Pick<TooltipProps, 'title' | 'content'>
 }
 
 export interface MoreActionsTooltipProps {
@@ -59,14 +62,15 @@ export const MoreActionsTooltip = forwardRef<HTMLButtonElement, MoreActionsToolt
           sideOffset={sideOffset}
           alignOffset={alignOffset}
         >
-          {actions.map((action, idx) =>
-            action.to ? (
+          {actions.map((action, idx) => {
+            const actionItem = action.to ? (
               <Link
                 key={`${action.title}-${idx}`}
                 to={action.to}
                 onClick={e => {
                   e.stopPropagation()
                 }}
+                style={{ pointerEvents: action.disabled ? 'none' : undefined }}
               >
                 {action.iconName ? (
                   <DropdownMenu.IconItem
@@ -77,6 +81,7 @@ export const MoreActionsTooltip = forwardRef<HTMLButtonElement, MoreActionsToolt
                         {action.title}
                       </Text>
                     }
+                    disabled={action.disabled}
                   />
                 ) : (
                   <DropdownMenu.Item
@@ -85,6 +90,7 @@ export const MoreActionsTooltip = forwardRef<HTMLButtonElement, MoreActionsToolt
                         {action.title}
                       </Text>
                     }
+                    disabled={action.disabled}
                   />
                 )}
               </Link>
@@ -102,6 +108,7 @@ export const MoreActionsTooltip = forwardRef<HTMLButtonElement, MoreActionsToolt
                   e.stopPropagation()
                   action?.onClick?.()
                 }}
+                disabled={action.disabled}
               />
             ) : (
               <DropdownMenu.Item
@@ -115,9 +122,12 @@ export const MoreActionsTooltip = forwardRef<HTMLButtonElement, MoreActionsToolt
                   e.stopPropagation()
                   action?.onClick?.()
                 }}
+                disabled={action.disabled}
               />
             )
-          )}
+
+            return action.tooltip ? <Tooltip {...action.tooltip}>{actionItem}</Tooltip> : actionItem
+          })}
         </DropdownMenu.Content>
       </DropdownMenu.Root>
     )

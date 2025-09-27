@@ -154,6 +154,35 @@ The radio group can be marked as error via the `error` prop on `Radio.Root`.
 }`}
 />
 
+## With Tooltip
+
+`tooltipContent` is used to display the content of the tooltip. `tooltipProps` is used to pass additional props to the tooltip.
+
+<DocsPage.ComponentExample
+  client:only
+  code={`() => {
+    const [group1Value, setGroup1Value] = React.useState('option1');
+
+        return (
+          <Layout.Vertical gap="xl" className="min-w-[400px]">
+            <Radio.Root
+                value={group1Value}
+                onValueChange={setGroup1Value}
+                label="With Tooltip"
+                tooltipContent="This is a tooltip"
+                tooltipProps={{
+                  disabled: false,
+                }}
+              >
+              <Radio.Item value="option1" label="Option 1" caption="Caption text" />
+              <Radio.Item value="option2" label="Option 2" caption="Caption text" />
+            </Radio.Root>
+          </Layout.Vertical>
+        );
+      }`}
+
+/>
+
 ## Orientation
 
 The `Radio.Root` component accepts an optional `orientation` prop, which defines the layout direction of the radio and its group label.
@@ -202,7 +231,7 @@ The `Radio.Root` provides the necessary context for managing grouped selections.
 ### `Root`
 
 ```typescript
-interface InformerProps extends Omit<TooltipProps, "children"> {
+interface IconWithTooltipProps extends Omit<TooltipProps, "children"> {
   className?: string;
   /**
    * If disabled, the tooltip will not be shown
@@ -276,17 +305,16 @@ interface InformerProps extends Omit<TooltipProps, "children"> {
       value: "boolean",
     },
     {
-      name: "informerContent",
-      description:
-        "Content to display in the radio group label informer tooltip.",
+      name: "tooltipContent",
+      description: "Content to display in the radio group label tooltip.",
       required: false,
       value: "Exclude<ReactNode, boolean | null | undefined>",
     },
     {
-      name: "informerProps",
-      description: "Additional props for configuring the informer tooltip.",
+      name: "tooltipProps",
+      description: "Additional props for configuring the tooltip.",
       required: false,
-      value: "InformerProps",
+      value: "IconWithTooltipProps",
     },
     {
       name: "labelSuffix",

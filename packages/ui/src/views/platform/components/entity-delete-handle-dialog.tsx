@@ -5,11 +5,11 @@ import { useTranslation } from '@/context'
 
 interface EntityDeleteHandleDialogProps {
   isOpen: boolean
-  onClose: () => void
-  forceDeleteCallback: () => void
-  onViewReferences: () => void
   entityType: string
   entityId: string
+  onClose: () => void
+  onViewReferences: () => void
+  forceDeleteCallback?: () => void
   customMessage?: string
   customWarning?: string
   isLoading?: boolean
@@ -30,12 +30,13 @@ export const EntityDeleteHandleDialog = ({
 }: EntityDeleteHandleDialogProps): JSX.Element => {
   const { t } = useTranslation()
   const [forcedDeleteEnabled, setForcedDeleteEnabled] = useState<boolean>(false)
+
   return (
     <AlertDialog.Root
       theme="danger"
       open={isOpen}
       onOpenChange={onClose}
-      onConfirm={forceDeleteCallback}
+      onConfirm={forceDeleteCallback || (() => {})}
       loading={isLoading}
     >
       <AlertDialog.Content
@@ -59,14 +60,16 @@ export const EntityDeleteHandleDialog = ({
           <Button variant="link" onClick={onViewReferences}>
             {t('views:entity.viewReferences', 'View references')}
           </Button>
-          <Checkbox
-            id="force-delete"
-            checked={forcedDeleteEnabled}
-            onCheckedChange={(checked: boolean) => setForcedDeleteEnabled(checked)}
-            label={t('views:entity.forceDelete', `Forcefully delete this ${entityType} now`, {
-              entity: entityType
-            })}
-          />
+          {forceDeleteCallback && (
+            <Checkbox
+              id="force-delete"
+              checked={forcedDeleteEnabled}
+              onCheckedChange={(checked: boolean) => setForcedDeleteEnabled(checked)}
+              label={t('views:entity.forceDelete', `Forcefully delete this ${entityType} now`, {
+                entity: entityType
+              })}
+            />
+          )}
           {forcedDeleteEnabled && (
             <Alert.Root theme="warning">
               <Alert.Description>

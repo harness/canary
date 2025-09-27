@@ -23,6 +23,7 @@ interface FiltersContextType<T extends Record<string, unknown>> {
   removeFilter: (filterKey: keyof T) => void
   resetFilters: () => void
   addFilter: (filterKey: keyof T) => void
+  applySavedFilter: (savedFilterId: string) => void
   getFilterValue: (filterKey: keyof T) => any
   updateFilter: (filterKey: keyof T, parsedValue: any, value: any) => void
   addInitialFilters: (filtersConfig: Record<keyof T, InitializeFiltersConfigType<T>>) => void
@@ -35,10 +36,14 @@ interface FiltersProps<T extends Record<string, unknown>> {
   allFiltersSticky?: boolean
   onFilterSelectionChange?: (filters: (keyof T)[]) => void
   onChange?: (filters: T) => void
+  savedFiltersConfig?: {
+    savedFilterKey: string
+    getSavedFilters: (savedFilterId: string) => Promise<Partial<T>> | Partial<T> | undefined
+  }
 }
 
 const Filters = forwardRef(function Filters<T extends Record<string, unknown>>(
-  { children, allFiltersSticky, onChange, onFilterSelectionChange }: FiltersProps<T>,
+  { children, allFiltersSticky, onChange, onFilterSelectionChange, savedFiltersConfig }: FiltersProps<T>,
   ref: React.Ref<FilterRefType<T>>
 ) {
   type FilterKeys = keyof T
@@ -48,17 +53,22 @@ const Filters = forwardRef(function Filters<T extends Record<string, unknown>>(
     {} as Record<FilterKeys, FilterConfig>
   )
   const { searchParams, updateURL: routerUpdateURL } = useRouter()
+  const { savedFilterKey, getSavedFilters } = savedFiltersConfig || {}
   const initialFiltersRef = useRef<Record<FilterKeys, FilterType> | undefined>(undefined)
 
-  const updateURL = (params: URLSearchParams) => {
-    // merge params into search params and update the URL.
+  // merge params into search params
+  const updateFilterParams = (params: URLSearchParams) => {
     const paramsOtherthanFilters: URLSearchParams = new URLSearchParams()
     searchParams.forEach((value, key) => {
       if (!filtersMap[key as FilterKeys]) {
         paramsOtherthanFilters.append(key, value)
       }
     })
-    const mergedParams = mergeURLSearchParams(paramsOtherthanFilters, params)
+    return mergeURLSearchParams(paramsOtherthanFilters, params)
+  }
+
+  const updateURL = (params: URLSearchParams) => {
+    const mergedParams = updateFilterParams(params)
     routerUpdateURL(mergedParams, true)
   }
 
@@ -136,6 +146,59 @@ const Filters = forwardRef(function Filters<T extends Record<string, unknown>>(
     updateURL(new URLSearchParams(query))
   }
 
+  /**
+   * Applies a saved filter to the filters map and updates the filters order.
+   * @param savedFilterId The ID of the saved filter to apply.
+   * @param shouldResetFilters Whether to reset all filters before applying the saved filter.
+   */
+  const applySavedFilter = async (savedFilterId: string, shouldResetFilters = true) => {
+    const filterValues = await getSavedFilters?.(savedFilterId)
+
+    if (!filterValues) {
+      return
+    }
+
+    // Reset all filters before applying the saved filter to ensure we start with a clean state
+    // We pass false to shouldResetSavedFilter to keep the saved filter in the URL
+    if (shouldResetFilters) {
+      resetFilters(undefined, false)
+    }
+    const updatedFiltersMap = Object.keys(filterValues).reduce<Record<FilterKeys, FilterType<T[keyof T]>>>(
+      (acc, filterKey: FilterKeys) => {
+        const parser = filtersConfig[filterKey]?.parser
+        const value = filterValues[filterKey]
+        const parsedValue = parser ? parser.serialize(value) : value
+
+        acc[filterKey] = getUpdatedFilter(parsedValue, value, false)
+        return acc
+      },
+      {} as Record<FilterKeys, FilterType<T[keyof T]>>
+    )
+    setFiltersOrder(prev => {
+      const updatedFiltersOrder = Object.keys(updatedFiltersMap)
+      return shouldResetFilters ? updatedFiltersOrder : [...prev, ...updatedFiltersOrder]
+    })
+    setFiltersMap(prev => {
+      const newFiltersMap = Object.keys(prev).reduce<Record<FilterKeys, FilterType>>(
+        (acc, filterKey: FilterKeys) => {
+          acc[filterKey] = prev[filterKey]
+          if (acc[filterKey].state !== FilterStatus.FILTER_APPLIED && updatedFiltersMap[filterKey]) {
+            acc[filterKey] = updatedFiltersMap[filterKey]
+          }
+          return acc
+        },
+        {} as Record<FilterKeys, FilterType>
+      )
+      onChange?.(getValues(newFiltersMap))
+      return newFiltersMap
+    })
+    if (savedFilterKey) {
+      const updatedSearchParams = new URLSearchParams(shouldResetFilters ? '' : searchParams)
+      updatedSearchParams.set(savedFilterKey, savedFilterId)
+      updateURL(updatedSearchParams)
+    }
+  }
+
   const initializeFilters = (initialFiltersConfig: Record<FilterKeys, InitializeFiltersConfigType<T>>) => {
     debug('Adding initial filters: %O', filtersMap)
 
@@ -208,6 +271,11 @@ const Filters = forwardRef(function Filters<T extends Record<string, unknown>>(
 
     // remove setVisibleFilters
     initialFiltersRef.current = map
+
+    const savedFilterId = savedFilterKey ? searchParams.get(savedFilterKey) : null
+    if (savedFilterId) {
+      applySavedFilter(savedFilterId, false)
+    }
   }
 
   useEffect(() => {
@@ -278,12 +346,13 @@ const Filters = forwardRef(function Filters<T extends Record<string, unknown>>(
     state: FilterStatus.VISIBLE
   })
 
-  const getUpdatedFilter = (parsedValue: any, value: any): FilterType => {
+  const getUpdatedFilter = (parsedValue: any, value: any, persistInURL = true): FilterType => {
     const isValueNullable = isNullable(parsedValue)
     return {
       value: value,
       query: isValueNullable ? undefined : parsedValue,
-      state: isValueNullable ? FilterStatus.VISIBLE : FilterStatus.FILTER_APPLIED
+      state: isValueNullable ? FilterStatus.VISIBLE : FilterStatus.FILTER_APPLIED,
+      persistInURL
     }
   }
 
@@ -297,7 +366,7 @@ const Filters = forwardRef(function Filters<T extends Record<string, unknown>>(
     }, {} as T)
   }
 
-  const resetFilters = (filters?: FilterKeys[]) => {
+  const resetFilters = (filters?: FilterKeys[], shouldResetSavedFilter = true) => {
     // add only sticky filters and remove other filters.
     // remove values also from sticky filters
     const updatedFiltersMap = { ...filtersMap }
@@ -333,7 +402,12 @@ const Filters = forwardRef(function Filters<T extends Record<string, unknown>>(
 
     const query = createQueryString(newFiltersOrder, updatedFiltersMap)
     debug('Updating URL with query: %s', query)
-    updateURL(new URLSearchParams(query))
+    const resetedFiltersSearchParams = updateFilterParams(new URLSearchParams(query))
+
+    if (shouldResetSavedFilter && savedFilterKey) {
+      resetedFiltersSearchParams.delete(savedFilterKey)
+    }
+    routerUpdateURL(resetedFiltersSearchParams, true)
   }
 
   useImperativeHandle(ref, () => ({
@@ -361,6 +435,7 @@ const Filters = forwardRef(function Filters<T extends Record<string, unknown>>(
           getFilterValue,
           addFilter,
           updateFilter,
+          applySavedFilter,
           addInitialFilters: initializeFilters
         } as any
       }

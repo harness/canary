@@ -61,8 +61,8 @@ const Textarea = forwardRef<HTMLTextAreaElement, TextareaProps>(
       labelSuffix,
       size,
       orientation,
-      informerProps,
-      informerContent,
+      tooltipProps,
+      tooltipContent,
       wrapperClassName,
       autoFocus,
       autoResize = false,
@@ -127,8 +127,8 @@ const Textarea = forwardRef<HTMLTextAreaElement, TextareaProps>(
                   optional={optional}
                   htmlFor={id}
                   suffix={labelSuffix}
-                  informerProps={informerProps}
-                  informerContent={informerContent}
+                  tooltipProps={tooltipProps}
+                  tooltipContent={tooltipContent}
                 >
                   {label}
                 </Label>

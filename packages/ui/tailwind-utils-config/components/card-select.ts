@@ -2,16 +2,6 @@ export default {
   '.cn-card-select-root': {
     display: 'grid',
 
-    '&:where(.cn-card-select-gap-sm)': {
-      gap: 'var(--cn-layout-sm)'
-    },
-    '&:where(.cn-card-select-gap-md)': {
-      gap: 'var(--cn-layout-md)'
-    },
-    '&:where(.cn-card-select-gap-lg)': {
-      gap: 'var(--cn-layout-lg)'
-    },
-
     '&:where(.cn-card-select-horizontal)': {
       '@apply w-full auto-cols-max grid-flow-col overflow-x-auto': ''
     },
@@ -33,7 +23,7 @@ export default {
     borderStyle: 'solid',
     borderColor: 'var(--cn-border-2)',
     borderRadius: 'var(--cn-card-md-radius)',
-    backgroundColor: 'var(--cn-bg-2)',
+    backgroundColor: 'var(--cn-bg-1)',
     paddingTop: 'var(--cn-card-check-md-py)',
     paddingBottom: 'var(--cn-card-check-md-py)',
     paddingLeft: 'var(--cn-card-check-md-pl)',
@@ -56,7 +46,7 @@ export default {
 
     '&:where([data-state="checked"])': {
       borderColor: 'var(--cn-border-brand)',
-      background: 'var(--cn-set-brand-soft-bg)'
+      background: 'var(--cn-set-brand-outline-bg)'
     },
 
     '.cn-card-select-content': {

@@ -160,10 +160,15 @@ export const SecretsPage = ({
             onCancel={handleCancel}
             showBreadcrumbEllipsis={activeScope === ScopeEnum.PROJECT}
             isLoading={false}
-            apiError="Could not fetch secrets, unauthorized"
             searchValue={search}
             handleChangeSearchValue={setSearch}
             isDrawer
+            paginationProps={{
+              totalItems: 20,
+              currentPage: 1,
+              goToPage: page => console.log('Go to page:', page),
+              pageSize: 10
+            }}
           />
         )
       default:

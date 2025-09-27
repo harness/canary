@@ -1,7 +1,6 @@
-import { FC } from 'react'
+import { FC, useEffect, useRef, useState } from 'react'
 
-import { Button, IconV2, Layout, Text } from '@/components'
-import { cn } from '@/utils'
+import { Tabs } from '@/components'
 import { EnumPullReqState, PRState } from '@/views'
 
 interface PullRequestListHeaderProps {
@@ -9,7 +8,14 @@ interface PullRequestListHeaderProps {
   closedPRs?: number
   mergedPRs?: number
   openPRs?: number
-  onClick: (value: EnumPullReqState) => void
+  onChange: (value: EnumPullReqState) => void
+  isLoading?: boolean
+}
+
+enum EnumTabState {
+  Open = 'open',
+  Closed = 'closed',
+  Merged = 'merged'
 }
 
 export const PullRequestListHeader: FC<PullRequestListHeaderProps> = ({
@@ -17,60 +23,57 @@ export const PullRequestListHeader: FC<PullRequestListHeaderProps> = ({
   closedPRs,
   mergedPRs,
   openPRs,
-  onClick
+  onChange,
+  isLoading
 }) => {
+  const [loadingSource, setLoadingSource] = useState<EnumTabState | null>(null)
+
+  const tabRefs: Record<EnumTabState, React.RefObject<HTMLButtonElement>> = {
+    [EnumTabState.Open]: useRef<HTMLButtonElement>(null),
+    [EnumTabState.Closed]: useRef<HTMLButtonElement>(null),
+    [EnumTabState.Merged]: useRef<HTMLButtonElement>(null)
+  }
+
+  const handleChange = (value: string) => {
+    setLoadingSource(value as EnumTabState)
+    onChange(value as EnumPullReqState)
+  }
+
+  useEffect(() => {
+    if (!isLoading && loadingSource) {
+      tabRefs[loadingSource].current?.focus()
+      setLoadingSource(null)
+    }
+  }, [isLoading, loadingSource])
+
   return (
-    <Layout.Horizontal gap="lg">
-      {/*
-        TODO: Design system: Currently we dont have exact button replacement for this.
-        sm ghost variant button is adding more space between buttons because of the px padding.
-        Have to check with design team.
-       */}
-      <Button onClick={() => onClick('open')} size={'xs'} variant={'transparent'}>
-        <IconV2
-          className={cn({
-            'text-cn-success': headerFilter.includes('open'),
-            'text-cn-3': !headerFilter.includes('open')
-          })}
-          name="git-pull-request"
-        />
-        <Text
-          color={headerFilter.includes('open') ? 'foreground-1' : 'foreground-3'}
-          variant={headerFilter.includes('open') ? 'body-single-line-strong' : 'body-single-line-normal'}
+    <Tabs.Root value={headerFilter[0]} onValueChange={handleChange}>
+      <Tabs.List variant="ghost">
+        <Tabs.Trigger
+          ref={tabRefs[EnumTabState.Open]}
+          value={EnumTabState.Open}
+          icon="git-pull-request"
+          disabled={isLoading}
         >
           {openPRs} Open
-        </Text>
-      </Button>
-      <Button onClick={() => onClick('merged')} size={'xs'} variant="transparent">
-        <IconV2
-          className={cn({
-            'text-cn-merged': headerFilter.includes('merged'),
-            'text-cn-3': !headerFilter.includes('merged')
-          })}
-          name="git-merge"
-        />
-        <Text
-          color={headerFilter.includes('merged') ? 'foreground-1' : 'foreground-3'}
-          variant={headerFilter.includes('merged') ? 'body-single-line-strong' : 'body-single-line-normal'}
-        >
-          {mergedPRs} Merged
-        </Text>
-      </Button>
-      <Button onClick={() => onClick('closed')} size={'xs'} variant="transparent">
-        <IconV2
-          className={cn({
-            'text-cn-danger': headerFilter.includes('closed'),
-            'text-cn-3': !headerFilter.includes('closed')
-          })}
-          name="check"
-        />
-        <Text
-          color={headerFilter.includes('closed') ? 'foreground-1' : 'foreground-3'}
-          variant={headerFilter.includes('closed') ? 'body-single-line-strong' : 'body-single-line-normal'}
+        </Tabs.Trigger>
+        <Tabs.Trigger
+          ref={tabRefs[EnumTabState.Closed]}
+          value={EnumTabState.Closed}
+          icon="git-pull-request-closed"
+          disabled={isLoading}
         >
           {closedPRs} Closed
-        </Text>
-      </Button>
-    </Layout.Horizontal>
+        </Tabs.Trigger>
+        <Tabs.Trigger
+          ref={tabRefs[EnumTabState.Merged]}
+          value={EnumTabState.Merged}
+          icon="git-merge"
+          disabled={isLoading}
+        >
+          {mergedPRs} Merged
+        </Tabs.Trigger>
+      </Tabs.List>
+    </Tabs.Root>
   )
 }

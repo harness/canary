@@ -43,6 +43,13 @@ export default {
     },
     '&.cn-modal-dialog-lg': {
       '--cn-dialog-width': `min(calc(100vw - (var(--cn-dialog-safezone) * 2)), var(--cn-dialog-lg))`
+    },
+    '&.cn-modal-dialog-max': {
+      '--cn-dialog-width': '80vw',
+      width: 'var(--cn-dialog-width)',
+      height: 'auto', // let content decide height until it reaches max
+      maxWidth: '80vw',
+      maxHeight: '80vh'
     }
   },
 

@@ -119,7 +119,7 @@ export const PullRequestHeader: React.FC<PullRequestTitleProps> = ({
               <Text variant="body-single-line-normal">from</Text>
               <BranchTag branchName={source_branch || ''} spaceId={spaceId || ''} repoId={repoId || ''} />
               <Separator orientation="vertical" className="mx-0.5 h-4" />
-              <TimeAgoCard timestamp={created} />
+              <TimeAgoCard timestamp={merged || created} />
             </Layout.Horizontal>
           </Layout.Horizontal>
         </Layout.Horizontal>

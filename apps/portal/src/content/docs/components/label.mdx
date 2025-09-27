@@ -13,7 +13,7 @@ import { DocsPage } from "../../../components/docs-page";
   code={`
     <div className="flex flex-col gap-4">
       <Label htmlFor="name">Name</Label>
-      <input id="name" type="text" />
+      <TextInput id="name" type="text" />
     </div>
 `}
 />
@@ -28,7 +28,7 @@ import { Label } from '@harnessio/ui/components'
 return (
   <>
     <Label htmlFor="username">Username</Label>
-    <input id="username" type="text" />
+    <TextInput id="username" type="text" />
   </>
 )
 ```
@@ -40,29 +40,47 @@ return (
   code={`
     <div className="flex flex-col gap-4">
       <Label htmlFor="email" optional>Email</Label>
-      <input id="email" type="email" />
+      <TextInput id="email" type="email" />
     </div>
   `}
 />
 
-## With informer
+## With tooltip (Informer)
 
 The `Label` component supports displaying a tooltip with additional information.
-Use the `informerContent` prop to provide the tooltip content, and pass additional configuration via the `informerProps` prop.
+Use the `tooltipContent` prop to provide the tooltip content, and pass additional configuration via the `tooltipProps` prop.
 
 <DocsPage.ComponentExample
   client:only
   code={`
+  <Layout.Vertical gap="xl">
     <div className="flex flex-col gap-4">
       <Label
         htmlFor="2"
-        informerContent="Content here"
+        tooltipContent="Content here"
       >
-        Description
+        Default icon
       </Label>
-      <input id="2" type="text" />
+      <TextInput id="2" type="text" />
     </div>
-  `}
+    <div className="flex flex-col gap-4">
+      <Label
+        htmlFor="3"
+        tooltipContent="Content here"
+        tooltipProps={{
+          disabled: false,
+          iconProps: {
+            name: 'warning-triangle',
+            color: 'warning'
+          },
+        }}
+      >
+        Custom icon
+      </Label>
+      <TextInput id="3" type="text" />
+    </div>
+  </Layout.Vertical>
+`}
 />
 
 ## Suffix
@@ -73,7 +91,7 @@ Use the `informerContent` prop to provide the tooltip content, and pass addition
     <div className="flex flex-col gap-4">
       <Label
         htmlFor="2"
-        informerContent="Content here"
+        tooltipContent="Content here"
         suffix={
           <Button size="xs" iconOnly>
             <IconV2 name="plus" skipSize />
@@ -90,7 +108,7 @@ Use the `informerContent` prop to provide the tooltip content, and pass addition
 ## API Reference
 
 ```typescript
-interface InformerProps extends Omit<TooltipProps, "children"> {
+interface IconWithTooltipProps extends Omit<TooltipProps, "children"> {
   className?: string;
   /**
    * If disabled, the tooltip will not be shown
@@ -128,16 +146,16 @@ interface InformerProps extends Omit<TooltipProps, "children"> {
       value: "ReactNode",
     },
     {
-      name: "informerContent",
-      description: "Content to display in the informer tooltip.",
+      name: "tooltipContent",
+      description: "Content to display in the tooltip.",
       required: false,
       value: "Exclude<ReactNode, boolean | null | undefined>",
     },
     {
-      name: "informerProps",
-      description: "Additional props for configuring the informer tooltip.",
+      name: "tooltipProps",
+      description: "Additional props for configuring the tooltip.",
       required: false,
-      value: "InformerProps",
+      value: "IconWithTooltipProps",
     },
     {
       name: "suffix",

@@ -42,6 +42,15 @@ export const usePullRequestListStore = create<PullRequestListStore>(set => ({
   setPrState: (prState: Array<PRState>) => set({ prState }),
 
   setPullRequests: (data, headers) => {
+    const getDisplayTimestamp = (item: PullRequestInterface): string => {
+      let validTimestamp = 0
+      if (item.state === 'open') validTimestamp = item?.created ?? 0
+      else if (item.state === 'closed') validTimestamp = item?.closed ?? 0
+      else if (item.state === 'merged') validTimestamp = item?.merged ?? 0
+
+      return validTimestamp ? new Date(validTimestamp).toISOString() : ''
+    }
+
     const transformedPullRequests: PullRequest[] = data.map(item => ({
       repo: { identifier: item.repo?.identifier || '', path: item.repo?.path || '' },
       is_draft: item?.is_draft,
@@ -54,10 +63,10 @@ export const usePullRequestListStore = create<PullRequestListStore>(set => ({
       reviewRequired: !item?.is_draft,
       sourceBranch: item?.source_branch,
       targetBranch: item?.target_branch,
-      timestamp: item?.created ? new Date(item.created).toISOString() : '',
+      timestamp: getDisplayTimestamp(item),
       comments: item?.stats?.conversations,
       state: item?.state,
-      updated: item?.updated ? item?.updated : 0,
+      updated: item?.updated ?? 0,
       labels:
         item?.labels?.map(label => ({
           key: label?.key || '',

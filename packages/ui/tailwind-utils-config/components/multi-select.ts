@@ -56,6 +56,7 @@ export default {
     },
 
     '&-input': {
+      minWidth: '50px',
       '@apply flex-1 bg-transparent text-inherit outline-none w-full': '',
       '&::placeholder': {
         color: 'var(--cn-text-3)'
@@ -66,6 +67,10 @@ export default {
         '&::placeholder': {
           color: 'var(--cn-state-disabled-text)'
         }
+      },
+
+      '&:where(:focus-visible)': {
+        outline: 'none !important'
       }
     },
 

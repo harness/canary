@@ -115,7 +115,7 @@ export const LabelValueSelector: FC<LabelValueSelectorProps> = ({ label, handleA
             // to avoid styles from .cn-input-prefix
             <div className="contents">
               <LabelTag
-                wrapperClassName="ml-cn-xs"
+                wrapperClassName="mx-cn-xs"
                 scope={label.scope ?? 0}
                 theme={label.color}
                 value={label.key ?? ''}

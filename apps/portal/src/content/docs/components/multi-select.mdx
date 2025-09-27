@@ -123,6 +123,32 @@ The `MultiSelect` component integrates seamlessly with form elements like labels
 `}
 />
 
+## With Tooltip
+
+`tooltipContent` is used to display the content of the tooltip. `tooltipProps` is used to pass additional props to the tooltip.
+
+<DocsPage.ComponentExample
+  client:only
+  code={`
+  <Layout.Vertical gap="xl" className="min-w-[400px]">
+    <MultiSelect
+      label="Tooltip Input"
+      placeholder="Enter the value"
+      tooltipContent="This is a tooltip"
+      tooltipProps={{
+        disabled: false,
+      }}
+      options={[
+        { key: 'nextjs', id: 'nextjs' },
+        { key: 'Vite', id: 'vite' },
+        { key: 'Nuxt', id: 'nuxt' },
+        { key: 'Vue', id: 'vue' },
+      ]}
+    />
+  </Layout.Vertical>
+`}
+/>
+
 ## Orientation
 
 The `MultiSelect` component accepts an optional `orientation` prop, which defines the layout direction of the input and its label.
@@ -297,6 +323,18 @@ interface MultiSelectOption {
       description: "Error message (sets theme to 'danger').",
       required: false,
       value: "string",
+    },
+    {
+      name: "tooltipContent",
+      description: "Content to display in the label tooltip.",
+      required: false,
+      value: "Exclude<ReactNode, boolean | null | undefined>",
+    },
+    {
+      name: "tooltipProps",
+      description: "Additional props for configuring the tooltip.",
+      required: false,
+      value: "IconWithTooltipProps",
     },
     {
       name: "warning",

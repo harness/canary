@@ -26,7 +26,7 @@ const Description = ({ sha, description, version }: { sha?: string; description?
         </div>
       )}
       {sha && (
-        <div className="bg-cn-gray-soft text-1 text-cn-1 flex h-4 items-center gap-1 rounded px-1.5">
+        <div className="bg-cn-gray-secondary text-1 text-cn-1 flex h-4 items-center gap-1 rounded px-1.5">
           <IconV2 className="text-cn-3" size="2xs" name="git-commit" />
           {sha?.slice(0, 7)}
         </div>
@@ -74,7 +74,8 @@ export const PipelineList = ({
         description={['There are no pipelines in this project yet.', 'Create new one.']}
         primaryButton={{
           label: 'Create pipeline',
-          onClick: handleCreatePipeline
+          onClick: handleCreatePipeline,
+          isDialogTrigger: true
         }}
       />
     )

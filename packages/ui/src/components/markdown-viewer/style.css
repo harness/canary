@@ -233,7 +233,8 @@
     }
 
     code {
-      @apply font-body-code px-cn-2xs py-cn-4xs !text-cn-blue-soft text-nowrap rounded border-0 bg-[var(--cn-set-brand-surface-bg)] before:hidden after:hidden;
+      @apply font-body-code px-cn-2xs py-cn-4xs !text-cn-blue-secondary text-nowrap rounded border-0 bg-[var(--cn-set-brand-outline-bg)] before:hidden after:hidden;
+      font-variant-ligatures: none;
     }
 
     :is(h1, h2, h3, h4, h5, h6) > code {

@@ -209,7 +209,7 @@ export const getNavbarMenuData: GetNavbarMenuData = ({ t, spaceId, repoId, route
       },
       {
         id: 23,
-        iconName: 'page',
+        iconName: 'empty-page',
         title: t('component:navbar.file-store'),
         to: routes.toFileStore()
       },
@@ -326,7 +326,7 @@ export const getNavbarMenuData: GetNavbarMenuData = ({ t, spaceId, repoId, route
     items: [
       {
         id: 39,
-        iconName: 'externaltickets',
+        iconName: 'external-tickets',
         title: t('component:navbar.external-tickets'),
         to: routes.toExternalTickets()
       }

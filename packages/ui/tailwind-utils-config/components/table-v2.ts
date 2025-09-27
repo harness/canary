@@ -65,7 +65,7 @@ export default {
 
     // Footer
     '&-footer': {
-      '@apply bg-cn-gray-soft/50 border-t font-medium [&>tr]:last:border-b-0': ''
+      '@apply border-t font-medium [&>tr]:last:border-b-0': ''
     },
 
     // Row
@@ -75,7 +75,7 @@ export default {
 
       '&:has(.cn-table-v2-cell-clickable-block:focus-visible)': {
         outline: 'var(--cn-focus)',
-        outlineOffset: 'calc(2px*-1)'
+        '@apply outline-offset-cn-tight': ''
       },
 
       '&:where(.row-link-no-underline)': {

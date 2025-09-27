@@ -1,4 +1,4 @@
-import { FC } from 'react'
+import { FC, useMemo } from 'react'
 
 import { Button, IconV2, Layout, Link, Popover, Link as StyledLink, Tag, Text } from '@/components'
 import { useTranslation } from '@/context'
@@ -31,6 +31,50 @@ export const BranchInfoBar: FC<BranchInfoBarProps> = ({
   const hasBehind = !!behind
   const hasAhead = !!ahead
 
+  const compareUrls = useMemo(() => {
+    const baseUrl = `${spaceId ? `/${spaceId}` : ''}/repos/${repoId}/pulls/compare`
+    return {
+      aheadCompare: `${baseUrl}/${defaultBranchName}...${selectedBranchTag?.name}`,
+      behindCompare: `${baseUrl}/${selectedBranchTag?.name}...${defaultBranchName}`
+    }
+  }, [spaceId, repoId, defaultBranchName, selectedBranchTag?.name])
+
+  const defaultBranchUrl = useMemo(
+    () => `${spaceId ? `/${spaceId}` : ''}/repos/${repoId}/files/${defaultBranchName}`,
+    [spaceId, repoId, defaultBranchName]
+  )
+
+  const statusContent = useMemo(() => {
+    const refTypeName = refType === BranchSelectorTab.TAGS ? 'tag' : 'branch'
+
+    if (!hasAhead && !hasBehind) {
+      return `This ${refTypeName} is up to date with`
+    }
+
+    const message: React.ReactNode[] = [`This ${refTypeName} is `]
+
+    if (hasAhead) {
+      message.push(
+        <StyledLink key="ahead" to={compareUrls.aheadCompare}>
+          {ahead} {easyPluralize(ahead, 'commit', 'commits')} ahead of
+        </StyledLink>
+      )
+      if (hasBehind) {
+        message.push(', ')
+      }
+    }
+
+    if (hasBehind) {
+      message.push(
+        <StyledLink key="behind" to={compareUrls.behindCompare}>
+          {behind} {easyPluralize(behind, 'commit', 'commits')} behind
+        </StyledLink>
+      )
+    }
+
+    return message
+  }, [refType, ahead, behind, compareUrls])
+
   return (
     <Layout.Flex
       className="border-cn-2 bg-cn-2 min-h-[3.25rem] rounded-md border py-2 pl-4 pr-2"
@@ -38,33 +82,12 @@ export const BranchInfoBar: FC<BranchInfoBarProps> = ({
       justify="between"
       gapX="xs"
     >
-      <Text color="foreground-1">
-        <span className="mr-cn-2xs">
-          This {refType === BranchSelectorTab.TAGS ? 'tag' : 'branch'} is{' '}
-          {hasAhead && (
-            <>
-              <StyledLink
-                to={`${spaceId ? `/${spaceId}` : ''}/repos/${repoId}/pulls/compare/${defaultBranchName}...${selectedBranchTag?.name}`}
-              >
-                {ahead} {easyPluralize(ahead, 'commit', 'commits')} ahead of
-              </StyledLink>
-              {hasBehind && ', '}
-            </>
-          )}
-          {hasBehind && (
-            <StyledLink
-              to={`${spaceId ? `/${spaceId}` : ''}/repos/${repoId}/pulls/compare/${selectedBranchTag?.name}...${defaultBranchName}`}
-            >
-              {behind} {easyPluralize(behind, 'commit', 'commits')} behind
-            </StyledLink>
-          )}
-          {!hasAhead && !hasBehind && 'up to date with'}
-        </span>
-
-        <Link noHoverUnderline to={`${spaceId ? `/${spaceId}` : ''}/repos/${repoId}/files/${defaultBranchName}`}>
+      <Layout.Horizontal align="center" gap="xs">
+        <Text color="foreground-1">{statusContent}</Text>
+        <Link noHoverUnderline to={defaultBranchUrl}>
           <Tag variant="secondary" theme="gray" icon="git-branch" value={defaultBranchName} className="align-middle" />
         </Link>
-      </Text>
+      </Layout.Horizontal>
 
       {showContributeBtn && (
         <Popover.Root>
@@ -109,11 +132,7 @@ export const BranchInfoBar: FC<BranchInfoBarProps> = ({
 
               {hasAhead && (
                 <Button className="w-full" variant="outline" asChild>
-                  <Link
-                    noHoverUnderline
-                    variant="secondary"
-                    to={`${spaceId ? `/${spaceId}` : ''}/repos/${repoId}/pulls/compare/${defaultBranchName}...${selectedBranchTag?.name}`}
-                  >
+                  <Link noHoverUnderline variant="secondary" to={compareUrls.aheadCompare}>
                     Compare
                   </Link>
                 </Button>

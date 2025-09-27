@@ -1,26 +1,25 @@
 import { createContext, forwardRef, HTMLAttributes, ReactNode, useContext, useState } from 'react'
 
 import { cn } from '@utils/cn'
-import { cva } from 'class-variance-authority'
+import { cva, type VariantProps } from 'class-variance-authority'
 
 import { IconV2, IconV2NamesType } from './icon-v2'
 import { LogoV2, LogoV2NamesType } from './logo-v2'
 
 type CardSelectType = 'single' | 'multiple'
 
-interface CardSelectRootProps<T> {
+type CardSelectRootProps<T> = {
+  className?: string
   type: CardSelectType
   name?: string
   value?: T extends 'single' ? unknown : unknown[]
   defaultValue?: T extends 'single' ? unknown : unknown[]
   onValueChange?: T extends 'single' ? (val: unknown) => void : (val: unknown[]) => void
   disabled?: boolean
-  layout?: 'horizontal' | 'vertical' | 'grid'
-  gap?: 'sm' | 'md' | 'lg'
   rows?: number
   cols?: number
   children: ReactNode
-}
+} & VariantProps<typeof cardSelectVariants>
 
 interface CardSelectItemProps extends HTMLAttributes<HTMLInputElement> {
   value: unknown
@@ -60,9 +59,10 @@ const cardSelectVariants = cva('cn-card-select-root', {
       grid: 'cn-card-select-grid'
     },
     gap: {
-      sm: 'cn-card-select-gap-sm',
-      md: 'cn-card-select-gap-md',
-      lg: 'cn-card-select-gap-lg'
+      xs: 'gap-cn-xs',
+      sm: 'gap-cn-sm',
+      md: 'gap-cn-md',
+      lg: 'gap-cn-lg'
     }
   },
   defaultVariants: {
@@ -72,6 +72,7 @@ const cardSelectVariants = cva('cn-card-select-root', {
 })
 
 function CardSelectRoot<T extends CardSelectType>({
+  className,
   type,
   layout = 'vertical',
   gap = 'md',
@@ -120,7 +121,7 @@ function CardSelectRoot<T extends CardSelectType>({
       }}
     >
       <div
-        className={cardSelectVariants({ layout, gap })}
+        className={cardSelectVariants({ layout, gap, className })}
         role={type === 'single' ? 'radiogroup' : 'group'}
         style={
           {

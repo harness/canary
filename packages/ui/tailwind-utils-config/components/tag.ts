@@ -17,20 +17,27 @@ const themes = [
   'yellow'
 ] as const
 
-const getHoverStyles = (theme: (typeof themes)[number], isOutline: boolean) => ({
-  backgroundColor: `var(--cn-set-${theme}-${isOutline ? 'surface-bg-hover' : 'soft-bg-hover'})`,
-  borderColor: `var(--cn-set-${theme}-${isOutline ? 'surface-border' : 'soft-bg-hover'})`
+const themeColorMapper: Record<'green' | 'red' | 'yellow', string> = {
+  green: 'success',
+  red: 'danger',
+  yellow: 'warning'
+}
+
+const getHoverStyles = (theme: string, isOutline: boolean) => ({
+  backgroundColor: `var(--cn-set-${theme}-${isOutline ? 'outline-bg-hover' : 'secondary-bg-hover'})`,
+  borderColor: `var(--cn-set-${theme}-${isOutline ? 'outline-border' : 'secondary-bg-hover'})`
 })
 
 function createTagVariantStyles(variant: 'outline' | 'secondary'): CSSRuleObject {
   const styles: CSSRuleObject = {}
 
-  themes.forEach(theme => {
+  themes.forEach(_theme => {
+    const theme = themeColorMapper[_theme as 'green' | 'red' | 'yellow'] ?? _theme
     const isOutline = variant === 'outline'
     const style: CSSRuleObject = {
-      color: `var(--cn-set-${theme}-${isOutline ? 'surface-text' : 'soft-text'})`,
-      backgroundColor: `var(--cn-set-${theme}-${isOutline ? 'surface-bg' : 'soft-bg'})`,
-      borderColor: `var(--cn-set-${theme}-${isOutline ? 'surface-border' : 'soft-bg'})`,
+      color: `var(--cn-set-${theme}-${isOutline ? 'outline-text' : 'secondary-text'})`,
+      backgroundColor: `var(--cn-set-${theme}-${isOutline ? 'outline-bg' : 'secondary-bg'})`,
+      borderColor: `var(--cn-set-${theme}-${isOutline ? 'outline-border' : 'secondary-bg'})`,
 
       '&.cn-tag-hoverable:hover:not(.cn-tag-split *)': getHoverStyles(theme, isOutline),
       '&:where(.cn-tag-split-left)': {
@@ -38,21 +45,21 @@ function createTagVariantStyles(variant: 'outline' | 'secondary'): CSSRuleObject
       },
       '&:where(.cn-tag-split-right)': isOutline
         ? {
-            borderColor: `var(--cn-set-${theme}-soft-bg)`,
+            borderColor: `var(--cn-set-${theme}-secondary-bg)`,
             '.cn-tag-split.cn-tag-split-hoverable:hover &': {
-              borderColor: `var(--cn-set-${theme}-soft-bg-hover)`
+              borderColor: `var(--cn-set-${theme}-secondary-bg-hover)`
             }
           }
         : {
-            backgroundColor: `var(--cn-set-${theme}-surface-bg)`,
+            backgroundColor: `var(--cn-set-${theme}-outline-bg)`,
             '.cn-tag-split.cn-tag-split-hoverable:hover &': {
-              backgroundColor: `var(--cn-set-${theme}-surface-bg-hover)`
+              backgroundColor: `var(--cn-set-${theme}-outline-bg-hover)`
             }
           },
 
       // ICON STYLES
       '.cn-tag-icon': {
-        color: `var(--cn-set-${theme}-${isOutline ? 'surface-text' : 'soft-text'}) !important`
+        color: `var(--cn-set-${theme}-${isOutline ? 'outline-text' : 'secondary-text'}) !important`
       }
     }
 

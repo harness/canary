@@ -16,7 +16,7 @@ export const LabelTag: FC<LabelTagProps> = ({ scope, withIndicator = false, wrap
       size="sm"
       icon={scope !== undefined ? scopeTypeToIconMap[getScopeType(scope)] : undefined}
       variant="secondary"
-      className="grid grid-flow-col"
+      className="grid grid-flow-col content-center"
       labelClassName="grid grid-flow-col content-center"
       valueClassName="grid grid-flow-col content-center"
       {...tagProps}

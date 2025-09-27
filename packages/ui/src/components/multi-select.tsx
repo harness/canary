@@ -145,8 +145,8 @@ export const MultiSelect = forwardRef<MultiSelectRef, MultiSelectProps>(
       optional,
       wrapperClassName,
       orientation,
-      informerProps,
-      informerContent,
+      tooltipProps,
+      tooltipContent,
       labelSuffix
     }: MultiSelectProps,
     ref: Ref<MultiSelectRef>
@@ -292,8 +292,8 @@ export const MultiSelect = forwardRef<MultiSelectRef, MultiSelectProps>(
                 optional={optional}
                 htmlFor={id}
                 suffix={labelSuffix}
-                informerProps={informerProps}
-                informerContent={informerContent}
+                tooltipProps={tooltipProps}
+                tooltipContent={tooltipContent}
               >
                 {label}
               </Label>
@@ -321,7 +321,7 @@ export const MultiSelect = forwardRef<MultiSelectRef, MultiSelectProps>(
                 }}
                 onKeyDown={noop}
                 role="textbox"
-                tabIndex={disabled ? -1 : 0}
+                tabIndex={-1}
                 aria-label={placeholder}
               >
                 <div className="cn-multi-select-tag-wrapper">

@@ -39,7 +39,10 @@ export const createQueryString = <T extends Record<string, unknown>>(
   updatedFiltersMap: Record<keyof T, FilterType>
 ) => {
   const query = visibleFilters.reduce((acc, key) => {
-    if (updatedFiltersMap[key]?.state === FilterStatus.FILTER_APPLIED) {
+    if (
+      updatedFiltersMap[key]?.state === FilterStatus.FILTER_APPLIED &&
+      updatedFiltersMap[key]?.persistInURL !== false
+    ) {
       // Add & if there's already an existing query
       const stringKey = key as string
       return acc

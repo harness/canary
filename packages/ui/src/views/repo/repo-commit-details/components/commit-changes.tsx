@@ -34,7 +34,11 @@ const LineTitle: FC<
 > = ({ text, numAdditions, numDeletions, toRepoFileDetails, commitSHA }) => {
   return (
     <div className="flex w-full max-w-full items-center gap-2">
-      <Link to={toRepoFileDetails?.({ path: `files/${commitSHA}/~/${text}` }) ?? ''} variant="secondary">
+      <Link
+        to={toRepoFileDetails?.({ path: `files/${commitSHA}/~/${text}` }) ?? ''}
+        variant="secondary"
+        className="min-w-0 break-all"
+      >
         {text}
       </Link>
       <CopyButton name={text} buttonVariant="ghost" className="relative z-10" />

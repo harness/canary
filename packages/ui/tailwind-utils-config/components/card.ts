@@ -2,11 +2,14 @@ export default {
   '.cn-card': {
     border: 'var(--cn-card-border) solid var(--cn-border-2)',
     borderRadius: 'var(--cn-card-md-radius)',
-    backgroundColor: 'var(--cn-bg-2)',
-    '&:hover:not(.cn-card-disabled)': {
-      borderColor: 'var(--cn-border-1)'
-    },
+    backgroundColor: 'var(--cn-bg-1)',
     '@apply flex overflow-hidden select-none': '',
+
+    '&:where(.cn-card-interactive)': {
+      '&:hover:not(.cn-card-disabled)': {
+        borderColor: 'var(--cn-border-brand)'
+      }
+    },
 
     '&:where(.cn-card-sm)': {
       borderRadius: 'var(--cn-card-sm-radius)',
@@ -33,7 +36,7 @@ export default {
 
     '.cn-card-title': {
       color: 'var(--cn-text-1)',
-      '@apply font-heading-base': ''
+      '@apply font-heading-small': ''
     },
 
     '.cn-card-content': {
@@ -76,12 +79,16 @@ export default {
     },
 
     '&:where(.cn-card-selected)': {
-      backgroundColor: 'var(--cn-set-brand-soft-bg)',
-      borderColor: 'var(--cn-border-accent)'
+      backgroundColor: 'var(--cn-set-brand-outline-bg)',
+      borderColor: 'var(--cn-border-brand)'
     },
     '&:where(.cn-card-disabled)': {
       opacity: `var(--cn-disabled-opacity)`,
       '@apply cursor-not-allowed': ''
+    },
+
+    '&:where(:focus-visible)': {
+      '@apply outline-offset-cn-tight': ''
     }
   }
 }

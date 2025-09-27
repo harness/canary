@@ -46,13 +46,13 @@
       "$type": "sizing",
       "$value": "{size.20}"
     },
-    "max-width": {
+    "width": {
       "$type": "sizing",
       "$value": "400px"
     },
-    "min-width": {
+    "max-height": {
       "$type": "sizing",
-      "$value": "240px"
+      "$value": "400px"
     }
   }
 }

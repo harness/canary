@@ -161,7 +161,8 @@ const PullRequestConversation: FC<PullRequestConversationProps> = ({ state }) =>
           suggestionsBatch: [],
           removeSuggestionFromBatch: noop,
           filenameToLanguage: noop,
-          handleUpload: noop
+          handleUpload: noop,
+          imageUrlTransform: () => ''
         }}
         commentBoxProps={{
           comment,

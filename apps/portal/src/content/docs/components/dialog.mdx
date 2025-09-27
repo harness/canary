@@ -95,7 +95,7 @@ return (
 
 ### Sizes
 
-The `Dialog` component supports three sizes: `sm`, `md`, and `lg`:
+The `Dialog` component offers four size options: `sm`, `md`, `lg`, and `max` (which sets the dialog to 80% of the viewport's width and height).
 
 <DocsPage.ComponentExample
   client:only
@@ -136,17 +136,51 @@ The `Dialog` component supports three sizes: `sm`, `md`, and `lg`:
   </Dialog.Root>
 </div>
 
+<div className="space-y-2">
+  <h3 className="text-lg font-semibold">Large</h3>
+  <Dialog.Root>
+    <Dialog.Trigger>
+      <Button>Large Dialog</Button>
+    </Dialog.Trigger>
+    <Dialog.Content size="lg">
+      <Dialog.Header>
+        <Dialog.Title>Large Dialog</Dialog.Title>
+      </Dialog.Header>
+      <Dialog.Description>Maximum width for complex content</Dialog.Description>
+      <Dialog.Footer>
+        <Dialog.Close>Close</Dialog.Close>
+      </Dialog.Footer>
+    </Dialog.Content>
+  </Dialog.Root>
+</div>
+
   <div className="space-y-2">
-    <h3 className="text-lg font-semibold">Large</h3>
+    <h3 className="text-lg font-semibold">Maximized</h3>
     <Dialog.Root>
       <Dialog.Trigger>
-        <Button>Large Dialog</Button>
+        <Button>Maximized Dialog</Button>
       </Dialog.Trigger>
-      <Dialog.Content size="lg">
+      <Dialog.Content size="max">
         <Dialog.Header>
-          <Dialog.Title>Large Dialog</Dialog.Title>
+          <Dialog.Title>Maximized Dialog
+        </Dialog.Title>
         </Dialog.Header>
-        <Dialog.Description>Maximum width for complex content</Dialog.Description>
+        <Dialog.Description>Dialog is 80% wide and auto-height up to 80% of the viewport.
+        </Dialog.Description>
+        <Dialog.Body>
+        <p>
+          This maximized dialog is ideal for displaying large forms, tables, or dashboards. You can place any content here, such as:
+        </p>
+        <ul>
+          <li>Complex forms with multiple fields</li>
+          <li>Data tables or grids</li>
+          <li>Embedded charts or visualizations</li>
+          <li>Multi-step workflows</li>
+        </ul>
+        <p>
+          The dialog will automatically handle scrolling if the content exceeds the available space.
+        </p>
+        </Dialog.Body>
         <Dialog.Footer>
           <Dialog.Close>Close</Dialog.Close>
         </Dialog.Footer>

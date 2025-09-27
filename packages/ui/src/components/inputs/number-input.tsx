@@ -34,8 +34,8 @@ export const NumberInput = forwardRef<HTMLInputElement, NumberInputProps>(
       suffix,
       orientation,
       labelSuffix,
-      informerProps,
-      informerContent,
+      tooltipProps,
+      tooltipContent,
       readOnly,
       ...props
     },
@@ -109,8 +109,8 @@ export const NumberInput = forwardRef<HTMLInputElement, NumberInputProps>(
                 optional={optional}
                 htmlFor={inputId}
                 suffix={labelSuffix}
-                informerProps={informerProps}
-                informerContent={informerContent}
+                tooltipProps={tooltipProps}
+                tooltipContent={tooltipContent}
               >
                 {label}
               </Label>

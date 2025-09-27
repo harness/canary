@@ -102,6 +102,7 @@
     "inputPlaceholder": "Filter by...",
     "buttonLabel": "Reset filters",
     "defaultLabel": "Filter",
+    "saveFilter": "Save Filter",
     "reset": "Reset",
     "add-filter": "Add filter",
     "is": "is",

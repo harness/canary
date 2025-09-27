@@ -1,20 +1,24 @@
-import type { InputFactory } from '../../core/factory/InputFactory'
-import type { IInputDefinition } from '../../types/types'
-import { Row } from '../Row/Row'
+import { InputComponentRenderer, type InputFactory } from '../../core'
+import type { IInputDefinition } from '../../types'
 
 export function RenderInputs(props: {
   items: IInputDefinition[]
   factory: InputFactory
   withoutWrapper?: boolean
 }): JSX.Element {
-  const { items, factory, withoutWrapper } = props
+  const { items, ...restProps } = props
 
   return (
     <>
-      {items.map(input => {
-        const key = `${input.inputType}_${input.path}_${input.label}`
-        return <Row key={key} input={input} factory={factory} withoutWrapper={withoutWrapper} />
-      })}
+      {items.map(input => (
+        <InputComponentRenderer
+          key={`${input.inputType}_${input.path}_${input.label}`}
+          input={input}
+          path={input.path}
+          readonly={false}
+          {...restProps}
+        />
+      ))}
     </>
   )
 }

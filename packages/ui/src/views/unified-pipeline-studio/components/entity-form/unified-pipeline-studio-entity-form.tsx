@@ -40,7 +40,7 @@ const componentsMap: Record<
     Header: EntityFormLayout.Header,
     Title: EntityFormLayout.Title,
     Description: EntityFormLayout.Description,
-    Body: 'div',
+    Body: EntityFormLayout.Form,
     Footer: EntityFormLayout.Footer
   }
 }
@@ -252,15 +252,13 @@ export const UnifiedPipelineStudioEntityForm = (props: UnifiedPipelineStudioEnti
               {/* <StepFormSection.Title>General</StepFormSection.Title> */}
               {/* <StepFormSection.Description>Read documentation to learn more.</StepFormSection.Description> */}
               {/* </StepFormSection.Header> */}
-              <EntityFormLayout.Form>
-                {error?.message ? (
-                  <Text color="danger">{error.message}</Text>
-                ) : loading ? (
-                  <Skeleton.List />
-                ) : (
-                  <RenderForm className="space-y-5" factory={inputComponentFactory} inputs={formDefinition} />
-                )}
-              </EntityFormLayout.Form>
+              {error?.message ? (
+                <Text color="danger">{error.message}</Text>
+              ) : loading ? (
+                <Skeleton.List />
+              ) : (
+                <RenderForm className="space-y-cn-xl" factory={inputComponentFactory} inputs={formDefinition} />
+              )}
             </Body>
             <Footer>
               <ButtonLayout.Root>

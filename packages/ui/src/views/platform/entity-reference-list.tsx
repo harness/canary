@@ -1,7 +1,6 @@
 import { Fragment } from 'react'
 
-import { Breadcrumb, IconV2, ScrollArea, StackedList, Text } from '@/components'
-import { cn } from '@utils/cn'
+import { Breadcrumb, ScrollArea, StackedList } from '@/components'
 
 import {
   BaseEntityProps,
@@ -25,7 +24,6 @@ export interface EntityReferenceListProps<T extends BaseEntityProps, S = string,
   defaultEntityRenderer: (props: EntityRendererProps<T>) => React.ReactNode
   parentFolderRenderer: (props: ParentFolderRendererProps<S>) => React.ReactNode
   childFolderRenderer: (props: ChildFolderRendererProps<F>) => React.ReactNode
-  apiError?: string | null
   showBreadcrumbEllipsis?: boolean
   enableMultiSelect?: boolean
   compareFn?: (entity1: T, entity2: T) => boolean
@@ -44,7 +42,6 @@ export function EntityReferenceList<T extends BaseEntityProps, S = string, F = s
   defaultEntityRenderer,
   parentFolderRenderer,
   childFolderRenderer,
-  apiError,
   showBreadcrumbEllipsis = false,
   enableMultiSelect = false,
   compareFn
@@ -53,57 +50,41 @@ export function EntityReferenceList<T extends BaseEntityProps, S = string, F = s
     <StackedList.Root>
       {/* Breadcrumb header */}
       <StackedList.Header className="sticky top-0" paddingY="sm">
-        <Breadcrumb.Root>
+        <Breadcrumb.Root className="font-body-normal">
           <Breadcrumb.List>
             {!!showBreadcrumbEllipsis && (
               <>
-                <Breadcrumb.Item>
-                  <Breadcrumb.Ellipsis className="ml-1 h-0 w-4" />
-                </Breadcrumb.Item>
-                <Breadcrumb.Separator>
-                  <IconV2 name="nav-arrow-right" size="2xs" className="scale-75" />
-                </Breadcrumb.Separator>
+                <Breadcrumb.Ellipsis className="text-cn-disabled" />
+                <Breadcrumb.Separator className="text-cn-disabled" />
               </>
             )}
             {!!parentFolder && (
               <>
-                <Breadcrumb.Item className={cn('items-center justify-center', { 'ml-1': !showBreadcrumbEllipsis })}>
-                  <Breadcrumb.Link className="cursor-pointer" onClick={() => handleScopeChange(DirectionEnum.PARENT)}>
-                    <Text variant="body-normal">{parentFolder}</Text>
+                <Breadcrumb.Item className="text-cn-3 hover:!text-cn-1">
+                  <Breadcrumb.Link
+                    onClick={e => {
+                      e.preventDefault()
+                      handleScopeChange(DirectionEnum.PARENT)
+                    }}
+                    href="#"
+                  >
+                    {parentFolder}
                   </Breadcrumb.Link>
                 </Breadcrumb.Item>
-                <Breadcrumb.Separator>
-                  <IconV2 name="nav-arrow-right" size="2xs" className="scale-75" />
-                </Breadcrumb.Separator>
+                <Breadcrumb.Separator className="text-cn-disabled" />
               </>
             )}
-            <Breadcrumb.Page className={cn('cursor-pointer', { 'ml-1': !parentFolder })}>
-              <Text variant="body-normal">{currentFolder}</Text>
-            </Breadcrumb.Page>
+            <Breadcrumb.Page className="last:!text-cn-1 text-cn-3 hover:!text-cn-1">{currentFolder}</Breadcrumb.Page>
           </Breadcrumb.List>
         </Breadcrumb.Root>
       </StackedList.Header>
 
-      <ScrollArea className="max-h-[calc(100vh-530px)] overflow-y-auto">
+      <ScrollArea className="max-h-[calc(100vh-530px)]">
         {/* scopes */}
-        {parentFolder ? (
-          <>
-            {parentFolderRenderer({
-              parentFolder,
-              onSelect: () => handleScopeChange(DirectionEnum.PARENT)
-            })}
-          </>
-        ) : null}
+        {parentFolderRenderer({ parentFolder, onSelect: () => handleScopeChange(DirectionEnum.PARENT) })}
 
         {/* folders */}
-        {childFolder ? (
-          <>
-            {childFolderRenderer({
-              folder: childFolder,
-              onSelect: () => handleScopeChange(DirectionEnum.CHILD)
-            })}
-          </>
-        ) : null}
+        {childFolderRenderer({ folder: childFolder, onSelect: () => handleScopeChange(DirectionEnum.CHILD) })}
 
         {/* entities */}
         {entities.length > 0 ? (
@@ -139,8 +120,8 @@ export function EntityReferenceList<T extends BaseEntityProps, S = string, F = s
             })}
           </>
         ) : (
-          <StackedList.Item>
-            <StackedList.Field title={apiError || 'No entities found'} />
+          <StackedList.Item disableHover>
+            <StackedList.Field title="No entities found" titleColor="foreground-3" />
           </StackedList.Item>
         )}
       </ScrollArea>

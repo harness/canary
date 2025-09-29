@@ -236,6 +236,7 @@ import KeyBack from './icons/key-back.svg'
 import Key from './icons/key.svg'
 import LabelSolid from './icons/label-solid.svg'
 import Label from './icons/label.svg'
+import Lamp from './icons/lamp.svg'
 import LaptopDevMode from './icons/laptop-dev-mode.svg'
 import LineSpace from './icons/line-space.svg'
 import ListSelect from './icons/list-select.svg'
@@ -680,6 +681,7 @@ export const IconNameMapV2 = {
   key: Key,
   'label-solid': LabelSolid,
   label: Label,
+  lamp: Lamp,
   'laptop-dev-mode': LaptopDevMode,
   'line-space': LineSpace,
   'list-select': ListSelect,

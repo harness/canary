@@ -24,9 +24,9 @@ type TError = Error | { message?: string }
 
 export default function SearchPage() {
   const getApiPath = useAPIPath()
-  const { scope, hooks } = useMFEContext()
+  const { scope, customHooks } = useMFEContext()
   const { repoId } = useParams()
-  const { SEMANTIC_SEARCH_ENABLED: semanticSearchEnabled } = hooks?.useFeatureFlags?.()
+  const { SEMANTIC_SEARCH_ENABLED: semanticSearchEnabled } = customHooks?.useFeatureFlags?.()
 
   const [searchQuery, setSearchQuery] = useQueryState('query')
   const [selectedRepoId, setSelectedRepoId] = useQueryState('repo')

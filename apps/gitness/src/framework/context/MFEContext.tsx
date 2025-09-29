@@ -62,15 +62,10 @@ export enum FeatureFlag {
   CODE_SECURITY_SCANNING_ON_PUSH = 'CODE_SECURITY_SCANNING_ON_PUSH'
 }
 
-export declare const useFeatureFlag: (flag: FeatureFlag) => boolean
-
-export declare const useFeatureFlags: Unknown
+export declare const useFeatureFlags: () => Partial<Record<FeatureFlag, boolean>>
 
 export interface Hooks {
-  useLogout?: typeof useLogout
   usePermission?: typeof usePermission
-  useFeatureFlag?: typeof useFeatureFlag
-  useFeatureFlags?: typeof useFeatureFlags
 }
 
 /**************/
@@ -89,6 +84,7 @@ export interface MFEContextProps {
   customHooks: Partial<{
     useGenerateToken: Unknown
     usePreferenceStore: Unknown
+    useFeatureFlags: Unknown
   }>
   customUtils: Partial<{
     navigateToUserProfile: Unknown
@@ -137,7 +133,8 @@ export const defaultContext: MFEContextProps = {
     appStoreContext: createContext({ currentUserInfo: { uuid: '' } })
   },
   customHooks: {
-    usePreferenceStore: () => ({ preference: undefined, setPreference: noop })
+    usePreferenceStore: () => ({ preference: undefined, setPreference: noop }),
+    useFeatureFlags: () => ({})
   },
   customUtils: {},
   routes: {},

@@ -59,8 +59,9 @@ export default function RepoSummaryPage() {
 
   const { currentUser } = useAppContext()
   const isMFE = useIsMFE()
-  const { customHooks, customUtils, hooks } = useMFEContext()
-  const { CODE_SSH_ENABLED: isSSHEnabled } = hooks?.useFeatureFlags?.()
+  const { customHooks, customUtils } = useMFEContext()
+
+  const { CODE_SSH_ENABLED: isSSHEnabled } = customHooks?.useFeatureFlags?.()
 
   const { toRepoCommits } = useRepoCommits()
   const {

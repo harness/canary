@@ -60,8 +60,8 @@ export const RepoSettingsGeneralPageContainer = () => {
   const [isCreateBranchDialogOpen, setCreateBranchDialogOpen] = useState(false)
   const [branchQueryForNewBranch, setBranchQueryForNewBranch] = useState<string>('')
   const isMfe = useIsMFE()
-  const { hooks } = useMFEContext()
-  const { CODE_SECURITY_SCANNING_ON_PUSH: isSecurityScanningOnPushEnabled } = hooks?.useFeatureFlags?.()
+  const { customHooks } = useMFEContext()
+  const { CODE_SECURITY_SCANNING_ON_PUSH: isSecurityScanningOnPushEnabled } = customHooks?.useFeatureFlags?.()
 
   const closeAlertDeleteDialog = () => {
     isRepoAlertDeleteDialogOpen && setRepoIsAlertDeleteDialogOpen(false)

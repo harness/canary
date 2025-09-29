@@ -552,6 +552,7 @@
     "compareChangesDraftTitle": "Créer une pull request en brouillon",
     "compareChangesDraftDescription": "Ne demande pas de révision de code et ne peut pas être fusionnée.",
     "compareChangesCreatedButton": "Pull request créée",
+    "expandSidebar": "Expand Sidebar",
     "compareChangesFormTitleLabel": "Add a title",
     "compareChangesFormTitlePlaceholder": "Saisissez le titre de la pull request",
     "compareChangesFormDescriptionHeading": "Add a description",
@@ -594,7 +595,6 @@
     "approve": "Approuver",
     "approved": "Approuvée",
     "changereq": "Changement Demandé",
-    "expandSidebar": "Expand Sidebar",
     "split": "Diviser",
     "unified": "Unifié",
     "comments": {

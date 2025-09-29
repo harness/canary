@@ -561,6 +561,7 @@
     "compareChangesDraftTitle": "Create Draft Pull request",
     "compareChangesDraftDescription": "Does not request code reviews and cannot be merged.",
     "compareChangesCreatedButton": "Pull Request Created",
+    "expandSidebar": "Expand Sidebar",
     "compareChangesFormTitleLabel": "Add a title",
     "compareChangesFormTitlePlaceholder": "Enter pull request title",
     "compareChangesFormDescriptionHeading": "Add a description",
@@ -603,7 +604,6 @@
     "approve": "Approve",
     "approved": "Approved",
     "changereq": "Changes Requested",
-    "expandSidebar": "Expand Sidebar",
     "split": "Split",
     "unified": "Unified",
     "comments": {

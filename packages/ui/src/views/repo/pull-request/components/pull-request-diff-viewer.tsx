@@ -373,7 +373,7 @@ const PullRequestDiffViewer = ({
       const commentText = newComments[commentKey] ?? ''
 
       return (
-        <div className="bg-cn-1 flex w-full flex-col p-4">
+        <div className="bg-cn-1 p-cn-md flex w-full flex-col">
           <PullRequestCommentBox
             autofocus
             handleUpload={handleUpload}

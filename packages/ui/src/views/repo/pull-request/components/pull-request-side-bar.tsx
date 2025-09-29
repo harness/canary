@@ -74,7 +74,7 @@ export const PullRequestSideBar: FC<PullRequestSideBarProps> = ({
 }) => {
   return (
     <Layout.Vertical gap="md">
-      <Layout.Vertical gap="2xs">
+      <Layout.Vertical gap="xs">
         <ReviewersHeader
           currentUserId={currentUserId}
           usersList={usersList}
@@ -95,7 +95,7 @@ export const PullRequestSideBar: FC<PullRequestSideBarProps> = ({
         />
       </Layout.Vertical>
       {!isCreatingPr ? (
-        <Layout.Vertical gap="2xs">
+        <Layout.Vertical gap="xs">
           <LabelsHeader
             labelsList={labelsList}
             labelsValues={labelsValues}

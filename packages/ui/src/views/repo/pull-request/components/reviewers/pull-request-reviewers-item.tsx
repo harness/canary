@@ -1,4 +1,4 @@
-import { Avatar, IconV2 } from '@/components'
+import { Avatar, IconV2, Layout } from '@/components'
 import { PullReqReviewDecision, ReviewerItemProps } from '@/views'
 
 import { ReviewerInfo } from './reviewer-info'
@@ -20,15 +20,13 @@ const ReviewerItem = ({ reviewer, reviewDecision, sha, sourceSHA, processReviewD
     }
   }
   return (
-    <div key={reviewer?.id} className="flex items-center justify-between space-x-2">
-      <div className="flex items-center space-x-2 overflow-hidden">
-        <Avatar name={reviewer?.display_name} rounded />
+    <Layout.Horizontal key={reviewer?.id} align="center" justify="between" gap="sm">
+      <Layout.Horizontal align="center" gap="xs">
+        <Avatar name={reviewer?.display_name} rounded size="md" />
         <ReviewerInfo display_name={reviewer?.display_name || ''} email={reviewer?.email || ''} />
-      </div>
-      <div className="px-1.5">
-        {updatedReviewDecision && getReviewDecisionIcon(updatedReviewDecision as PullReqReviewDecision)}
-      </div>
-    </div>
+      </Layout.Horizontal>
+      <div>{updatedReviewDecision && getReviewDecisionIcon(updatedReviewDecision as PullReqReviewDecision)}</div>
+    </Layout.Horizontal>
   )
 }
 

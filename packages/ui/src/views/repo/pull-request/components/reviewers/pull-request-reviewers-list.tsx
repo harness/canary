@@ -29,7 +29,7 @@ const ReviewersList: React.FC<ReviewersListProps> = ({
   addReviewerError,
   removeReviewerError
 }) => (
-  <Layout.Vertical gapY="md">
+  <Layout.Vertical gapY="md" className="pr-cn-3xs">
     {(addReviewerError || removeReviewerError) && (
       <Alert.Root theme="danger">
         <Alert.Title>Failed to add reviewer</Alert.Title>

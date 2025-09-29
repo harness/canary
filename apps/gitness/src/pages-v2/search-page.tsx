@@ -151,7 +151,6 @@ export default function SearchPage() {
   ])
 
   useEffect(() => {
-    console.log({ semanticSearchEnabled })
     setShowSemanticSearch(!!semanticSearchEnabled)
   }, [semanticSearchEnabled])
 

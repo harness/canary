@@ -1,14 +1,15 @@
 import { Layout } from '@components/layout'
 import { Text } from '@components/text'
-import { isEmpty } from 'lodash-es'
 
-import { PaginationProps } from './pagination'
+import { PaginationItems } from './components/pagination-items'
 import { PaginationPrimitive } from './pagination-primitive'
+import { type PaginationProps } from './types'
 
-export function PaginationV2({
+export function DataPagination({
   totalItems,
   pageSize,
   currentPage,
+  hidePageNumbers = true,
   goToPage,
   getPageLink,
   hasNext,
@@ -34,9 +35,9 @@ export function PaginationV2({
   }
 
   return (
-    <Layout.Horizontal className="w-full" align="center" justify="between">
+    <Layout.Horizontal className="w-full mt-cn-xl" align="center" justify="between">
       <div>
-        {!isEmpty(totalPages) && !isEmpty(currentPage) && (
+        {totalPages && currentPage && (
           <Text>
             Page {currentPage} of {totalPages}
           </Text>
@@ -51,10 +52,25 @@ export function PaginationV2({
               href={getPageLink?.(currentPage > 1 ? currentPage - 1 : currentPage)}
               disabled={currentPage === 1}
             />
+
+            {/* Pagination Items */}
+            {!hidePageNumbers && totalPages && (
+              <ul className="cn-pagination-content gap-cn-xs">
+                <PaginationItems
+                  variant="data"
+                  totalPages={totalPages}
+                  currentPage={currentPage}
+                  getPageLink={getPageLink}
+                  goToPage={goToPage ? handleGoToPage : undefined}
+                  truncateLimit={5}
+                />
+              </ul>
+            )}
+
             <PaginationPrimitive.NextV2
-              onClick={goToPage ? handleGoToPage(currentPage > 1 ? currentPage - 1 : undefined) : undefined}
-              href={getPageLink?.(currentPage > 1 ? currentPage - 1 : currentPage)}
-              disabled={currentPage === 1}
+              onClick={goToPage ? handleGoToPage(currentPage < totalPages ? currentPage + 1 : undefined) : undefined}
+              href={getPageLink?.(currentPage < totalPages ? currentPage + 1 : currentPage)}
+              disabled={currentPage === totalPages}
             />
           </>
         ) : (
@@ -71,18 +87,6 @@ export function PaginationV2({
             />
           </>
         )}
-
-        {/* <PaginationPrimitive.PreviousV2
-          onClick={goToPage ? handleGoToPage(currentPage > 1 ? currentPage - 1 : undefined) : undefined}
-          href={getPageLink?.(currentPage > 1 ? currentPage - 1 : currentPage)}
-          disabled={currentPage === 1}
-        />
-
-        <PaginationPrimitive.NextV2
-          onClick={goToPage ? handleGoToPage(currentPage < totalPages ? currentPage + 1 : undefined) : undefined}
-          href={getPageLink?.(currentPage < totalPages ? currentPage + 1 : currentPage)}
-          disabled={currentPage === totalPages}
-        /> */}
       </Layout.Horizontal>
     </Layout.Horizontal>
   )

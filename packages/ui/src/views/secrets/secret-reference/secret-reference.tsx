@@ -1,4 +1,4 @@
-import { Button, ButtonLayout, EntityFormLayout, Spacer } from '@/components'
+import { Button, ButtonLayout } from '@/components'
 import { DirectionEnum, EntityReference, EntityRendererProps, SecretItem, secretsFilterTypes } from '@/views'
 
 export interface SecretReferenceProps {
@@ -27,13 +27,12 @@ export interface SecretReferenceProps {
   renderEntity?: (props: EntityRendererProps<SecretItem>) => React.ReactNode
 
   // Pagination
-  paginationProps?: {
-    totalItems?: number
-    currentPage?: number
-    goToPage?: (page: number) => void
-    pageSize?: number
-  }
   showFilter?: boolean
+  paginationProps?: {
+    handleLoadMore: () => void
+    isLastPage?: boolean
+    isLoading?: boolean
+  }
 }
 
 // Component for selecting existing secrets
@@ -68,8 +67,6 @@ export const SecretReference: React.FC<SecretReferenceProps> = ({
 }) => {
   return (
     <div className="flex flex-col">
-      <EntityFormLayout.Title>Secrets list</EntityFormLayout.Title>
-      <Spacer size={5} />
       <EntityReference<SecretItem>
         entities={secretsData}
         selectedEntity={selectedEntity}
@@ -85,8 +82,8 @@ export const SecretReference: React.FC<SecretReferenceProps> = ({
         onFilterChange={onFilterChange}
         searchValue={searchValue}
         handleChangeSearchValue={handleChangeSearchValue}
-        paginationProps={paginationProps}
         showFilter={showFilter}
+        paginationProps={paginationProps}
       />
 
       {!isDrawer && (

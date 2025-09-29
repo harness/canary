@@ -1,6 +1,6 @@
 import { useCallback, useRef } from 'react'
 
-import { Checkbox, IconV2, Layout, Pagination, SearchInput, Skeleton, StackedList } from '@/components'
+import { Checkbox, IconV2, Layout, SearchInput, StackedList } from '@/components'
 import { afterFrames } from '@utils/after-frames'
 import { cn } from '@utils/cn'
 
@@ -44,16 +44,10 @@ export interface CommonEntityReferenceProps<T extends BaseEntityProps, S = strin
   // Custom entity comparison
   compareFn?: (entity1: T, entity2: T) => boolean
 
-  // Pagination
   paginationProps?: {
-    totalItems?: number
-    pageSize?: number
-    currentPage?: number
-    goToPage?: (page: number) => void
-    onPrevious?: () => void
-    onNext?: () => void
-    getPrevPageLink?: () => string
-    getNextPageLink?: () => string
+    handleLoadMore: () => void
+    isLastPage?: boolean
+    isLoading?: boolean
   }
 }
 
@@ -159,7 +153,7 @@ export function EntityReference<T extends BaseEntityProps, S = string, F = strin
         onClick={() => onSelect?.(parentFolder)}
         thumbnail={<IconV2 name="folder" size="md" className="text-cn-2" />}
       >
-        <StackedList.Field title="..." />
+        <StackedList.Field title=".." />
       </StackedList.Item>
     )
   }
@@ -195,56 +189,27 @@ export function EntityReference<T extends BaseEntityProps, S = string, F = strin
             <EntityReferenceFilter onFilterChange={onFilterChange} filterTypes={filterTypes} defaultValue={'all'} />
           )}
         </Layout.Horizontal>
-        {isLoading ? (
-          <Skeleton.List />
-        ) : (
-          <>
-            <EntityReferenceList<T, S, F>
-              entities={entities}
-              selectedEntity={selectedEntity}
-              selectedEntities={selectedEntities}
-              parentFolder={parentFolder}
-              childFolder={childFolder}
-              currentFolder={currentFolder}
-              handleSelectEntity={handleSelectEntity}
-              handleScopeChange={handleScopeChange}
-              renderEntity={renderEntity}
-              defaultEntityRenderer={defaultEntityRenderer}
-              parentFolderRenderer={parentFolderRenderer}
-              childFolderRenderer={childFolderRenderer}
-              showBreadcrumbEllipsis={showBreadcrumbEllipsis}
-              enableMultiSelect={enableMultiSelect}
-              compareFn={compareFn}
-            />
-            {paginationProps?.getPrevPageLink && paginationProps?.getNextPageLink ? (
-              <Pagination
-                indeterminate={true}
-                getPrevPageLink={paginationProps.getPrevPageLink}
-                getNextPageLink={paginationProps.getNextPageLink}
-                hasPrevious={true}
-                hasNext={true}
-              />
-            ) : paginationProps?.onPrevious && paginationProps?.onNext ? (
-              <Pagination
-                indeterminate={true}
-                onPrevious={paginationProps.onPrevious}
-                onNext={paginationProps.onNext}
-                hasPrevious={true}
-                hasNext={true}
-              />
-            ) : paginationProps?.totalItems &&
-              paginationProps?.pageSize &&
-              paginationProps?.currentPage &&
-              paginationProps?.goToPage ? (
-              <Pagination
-                totalItems={paginationProps.totalItems}
-                pageSize={paginationProps.pageSize}
-                currentPage={paginationProps.currentPage}
-                goToPage={paginationProps.goToPage}
-              />
-            ) : null}
-          </>
-        )}
+        <>
+          <EntityReferenceList<T, S, F>
+            entities={entities}
+            selectedEntity={selectedEntity}
+            selectedEntities={selectedEntities}
+            parentFolder={parentFolder}
+            childFolder={childFolder}
+            currentFolder={currentFolder}
+            handleSelectEntity={handleSelectEntity}
+            handleScopeChange={handleScopeChange}
+            renderEntity={renderEntity}
+            defaultEntityRenderer={defaultEntityRenderer}
+            parentFolderRenderer={parentFolderRenderer}
+            childFolderRenderer={childFolderRenderer}
+            showBreadcrumbEllipsis={showBreadcrumbEllipsis}
+            enableMultiSelect={enableMultiSelect}
+            compareFn={compareFn}
+            isLoading={isLoading}
+            paginationProps={paginationProps}
+          />
+        </>
       </Layout.Vertical>
     </>
   )

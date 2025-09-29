@@ -35,6 +35,27 @@ import { DocsPage } from "@/components/docs-page";
 
 }`} />
 
+### Data variant Pagination
+
+<DocsPage.ComponentExample
+  client:only
+  code={`() => {
+    const [currentPage, setCurrentPage] = React.useState(1)
+
+    return (
+        <div className="w-[550px]">
+            <Pagination
+                variant="data"
+                totalItems={100}
+                pageSize={10}
+                currentPage={currentPage}
+                goToPage={setCurrentPage}
+            />
+        </div>
+    )
+
+}`} />
+
 ### Determinate Pagination with Hidden Page Numbers
 
 <DocsPage.ComponentExample
@@ -193,6 +214,13 @@ return (
       description: "Translation function",
       required: true,
       value: "TFunction",
+    },
+    {
+      name: "variant",
+      description: "Variant of the pagination component",
+      required: false,
+      value: "'default' | 'data'",
+      defaultValue: "'default'",
     },
     {
       name: "className",

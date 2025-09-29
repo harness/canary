@@ -668,11 +668,15 @@ export const PullRequestCommentBox = ({
         <PullRequestCommentingOn from={lineFromNumber} to={lineNumber} fromSide={lineFromSide} toSide={lineSide} />
         <Layout.Vertical
           gap="md"
-          className={cn('p-4 pt-3 flex-1 w-full', {
-            'border rounded-md': !inReplyMode || isEditMode,
-            'bg-cn-1': !inReplyMode,
-            'bg-cn-2 border-t': inReplyMode
-          }, wrapperClassName)}
+          className={cn(
+            'p-cn-md pt-cn-sm flex-1 w-full',
+            {
+              'border rounded-md': !inReplyMode || isEditMode,
+              'bg-cn-1': !inReplyMode,
+              'bg-cn-2 border-t': inReplyMode
+            },
+            wrapperClassName
+          )}
         >
           <Tabs.Root defaultValue={TABS_KEYS.WRITE} value={activeTab} onValueChange={handleTabChange}>
             <Tabs.List

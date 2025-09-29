@@ -265,7 +265,7 @@ const PullRequestChangesPage: FC<RepoPullRequestChangesPageProps> = ({
         </Layout.Flex>
       )}
       <SandboxLayout.Main>
-        <SandboxLayout.Content className={cn('flex flex-col p-0', showExplorer ? 'pl-cn-lg' : '')}>
+        <SandboxLayout.Content className={cn('flex flex-col p-0', showExplorer ? 'pl-cn-sm' : '')}>
           <PullRequestChangesFilter
             active={''}
             isApproving={isApproving}

@@ -25,7 +25,8 @@ const ReviewerItem = ({ reviewer, reviewDecision, sha, sourceSHA, processReviewD
         <Avatar name={reviewer?.display_name} rounded size="md" />
         <ReviewerInfo display_name={reviewer?.display_name || ''} email={reviewer?.email || ''} />
       </Layout.Horizontal>
-      <div>{updatedReviewDecision && getReviewDecisionIcon(updatedReviewDecision as PullReqReviewDecision)}</div>
+
+      {updatedReviewDecision && getReviewDecisionIcon(updatedReviewDecision as PullReqReviewDecision)}
     </Layout.Horizontal>
   )
 }

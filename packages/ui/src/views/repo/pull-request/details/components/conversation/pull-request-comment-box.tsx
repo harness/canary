@@ -89,6 +89,7 @@ interface CommentHistory {
 
 export interface PullRequestCommentBoxProps {
   className?: string
+  wrapperClassName?: string
   comment: string
   lang?: string
   blocks?: DiffBlock[]
@@ -130,6 +131,7 @@ const TABS_KEYS = {
 //  TODO: will have to eventually implement a commenting and reply system similiar to gitness
 export const PullRequestCommentBox = ({
   className,
+  wrapperClassName,
   onSaveComment,
   currentUser,
   inReplyMode = false,
@@ -670,7 +672,7 @@ export const PullRequestCommentBox = ({
             'border rounded-md': !inReplyMode || isEditMode,
             'bg-cn-1': !inReplyMode,
             'bg-cn-2 border-t': inReplyMode
-          })}
+          }, wrapperClassName)}
         >
           <Tabs.Root defaultValue={TABS_KEYS.WRITE} value={activeTab} onValueChange={handleTabChange}>
             <Tabs.List

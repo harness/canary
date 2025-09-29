@@ -462,6 +462,7 @@ const PullRequestTimelineItem: FC<TimelineItemProps> = ({
                         principalProps={principalProps}
                         handleUpload={handleUpload}
                         inReplyMode
+                        wrapperClassName={replyBoxClassName}
                         onSaveComment={formattedComment => {
                           return handleSaveComment?.(formattedComment, parentCommentId)
                             .then(() => {

@@ -9,9 +9,9 @@ export interface RepoStore {
   pageSize: number
   page: number
   importRepoIdentifier: string | null
-  importToastId: string | null
+  importToastId: string | number | null
 
-  setImportToastId: (id: string | null) => void
+  setImportToastId: (id: string | number | null) => void
   setPage: (page: number) => void
   setRepositories: (data: RepositoryType[], totalItems: number, pageSize: number) => void
   updateRepository: (repo: RepositoryType) => void

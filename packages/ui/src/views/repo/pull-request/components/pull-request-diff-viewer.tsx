@@ -574,7 +574,7 @@ const PullRequestDiffViewer = ({
                               payload={parent?.payload}
                               id={replyIdAttr}
                               mainWrapperClassName={cn('pl-cn-md pr-cn-xs', {
-                                'pb-cn-sm': idx === replies.length - 1
+                                'pb-cn-sm': isLastComment
                               })}
                               contentWrapperClassName="pr-cn-xs"
                               principalProps={principalProps}

@@ -5,6 +5,7 @@ import { afterFrames } from '@utils/after-frames'
 import { cn } from '@utils/cn'
 
 import { EntityReferenceFilter } from './components/entity-reference-filter'
+import { EntityReferenceSort } from './components/entity-reference-sort'
 import { EntityReferenceList } from './entity-reference-list'
 import {
   BaseEntityProps,
@@ -27,9 +28,12 @@ export interface CommonEntityReferenceProps<T extends BaseEntityProps, S = strin
   // Callbacks
   onScopeChange: (direction: DirectionEnum) => void
   onFilterChange?: (filter: string) => void
+  onFavoriteChange?: (favorite: boolean) => void
 
   // UI Configuration
   showFilter?: boolean
+  showSort?: boolean
+  enableFavorite?: boolean
   showBreadcrumbEllipsis?: boolean
   filterTypes?: Record<string, string>
 
@@ -80,9 +84,12 @@ export function EntityReference<T extends BaseEntityProps, S = string, F = strin
   onSelectEntity,
   onScopeChange,
   onFilterChange,
+  onFavoriteChange,
 
   // configs
   showFilter = true,
+  showSort = false,
+  enableFavorite = true,
   showBreadcrumbEllipsis = false,
   filterTypes,
   enableMultiSelect,
@@ -185,6 +192,13 @@ export function EntityReference<T extends BaseEntityProps, S = string, F = strin
             placeholder="Search"
             autoFocus
           />
+          {showSort && (
+            <EntityReferenceSort
+              onSortChange={onFilterChange}
+              onFavoriteChange={onFavoriteChange}
+              enableFavorite={enableFavorite}
+            />
+          )}
           {showFilter && filterTypes && (
             <EntityReferenceFilter onFilterChange={onFilterChange} filterTypes={filterTypes} defaultValue={'all'} />
           )}

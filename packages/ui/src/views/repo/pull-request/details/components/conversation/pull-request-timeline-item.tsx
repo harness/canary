@@ -459,6 +459,7 @@ const PullRequestTimelineItem: FC<TimelineItemProps> = ({
                     {hideReplyHere ? (
                       <PullRequestCommentBox
                         buttonTitle="Reply"
+                        isReply
                         principalsMentionMap={principalsMentionMap}
                         setPrincipalsMentionMap={setPrincipalsMentionMap}
                         principalProps={principalProps}
@@ -474,6 +475,10 @@ const PullRequestTimelineItem: FC<TimelineItemProps> = ({
                               throw e
                             })
                         }}
+                        toggleConversationStatus={() =>
+                          toggleConversationStatus?.(isResolved ? 'active' : 'resolved', parentCommentId)
+                        }
+                        isResolved={isResolved}
                         onCancelClick={() => {
                           setHideReplyHere?.(false)
                         }}

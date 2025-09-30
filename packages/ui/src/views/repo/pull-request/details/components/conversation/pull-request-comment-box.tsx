@@ -41,6 +41,7 @@ import { isEmpty, isUndefined } from 'lodash-es'
 import { getLinesFromBlocks } from './diff-utils'
 import { PullRequestCommentTextarea } from './pull-request-comment-textarea'
 import { PullRequestCommentingOn } from './pull-request-commenting-on'
+import ReplySplitButton from './sections/components/reply-split-button'
 import { replaceMentionEmailWithDisplayName, replaceMentionEmailWithId } from './utils'
 
 interface ParsedSelection extends TextSelection {
@@ -117,6 +118,9 @@ export interface PullRequestCommentBoxProps {
   setPrincipalsMentionMap?: React.Dispatch<React.SetStateAction<PrincipalsMentionMap>>
   preserveCommentOnSave?: boolean
   buttonTitle?: string
+  isReply?: boolean
+  isResolved?: boolean
+  toggleConversationStatus?: () => void
   textareaPlaceholder?: string
   allowEmptyValue?: boolean
   hideAvatar?: boolean
@@ -158,7 +162,9 @@ export const PullRequestCommentBox = ({
   textareaPlaceholder,
   allowEmptyValue = false,
   hideAvatar = false,
-
+  isReply = false,
+  isResolved = false,
+  toggleConversationStatus,
   isLoading: parentIsLoading = false
 }: PullRequestCommentBoxProps) => {
   const [__file, setFile] = useState<File>()
@@ -217,12 +223,14 @@ export const PullRequestCommentBox = ({
     onCancelClick && onCancelClick()
   }
 
-  const handleSaveComment = () => {
+  const handleSaveComment = (): Promise<void> => {
+  return new Promise((resolve, reject) => {
     const newComment = textComment.trim()
 
     if (onSaveComment && (allowEmptyValue || newComment)) {
       setParentComment(newComment)
       setCommentError(null)
+
       const formattedComment = replaceMentionEmailWithId(newComment, principalsMentionMap)
       const onSaveCommentReturn = onSaveComment(formattedComment)
 
@@ -231,18 +239,24 @@ export const PullRequestCommentBox = ({
         onSaveCommentReturn
           .then(() => {
             clearComment()
+            resolve()
           })
           .catch(e => {
             setCommentError(getErrorMessage(e, 'Failed to save comment'))
+            reject(e)
           })
           .finally(() => {
             setIsLoading(false)
           })
       } else {
         clearComment()
+        resolve()
       }
+    } else {
+      resolve()
     }
-  }
+  })
+}
 
   const avatar = useMemo(() => {
     return <Avatar name={currentUser} rounded />
@@ -641,7 +655,7 @@ export const PullRequestCommentBox = ({
     }
   }
 
-  const onKeyDown = (e: KeyboardEvent<HTMLTextAreaElement>): void => {
+  const onKeyDown = (e: KeyboardEvent<HTMLTextAreaElement>): Promise<void> | void => {
     if (e.key === 'Enter' && e.metaKey) {
       return handleSaveComment()
     }
@@ -790,9 +804,20 @@ export const PullRequestCommentBox = ({
                   </Button>
                 )}
 
-                <Button loading={parentIsLoading || isLoading} onClick={handleSaveComment}>
-                  {buttonTitle || 'Comment'}
-                </Button>
+                {!isReply && (
+                  <Button loading={parentIsLoading || isLoading} onClick={handleSaveComment}>
+                    {buttonTitle || 'Comment'}
+                  </Button>
+                )}
+
+                {isReply && (
+                  <ReplySplitButton
+                    isLoading={parentIsLoading || isLoading}
+                    isResolved={isResolved}
+                    handleSaveComment={handleSaveComment}
+                    toggleConversationStatus={toggleConversationStatus}
+                  />
+                )}
               </Layout.Flex>
             ) : null}
           </Layout.Flex>

@@ -251,7 +251,7 @@ const PullRequestRegularAndCodeCommentInternal: FC<PullRequestRegularAndCodeComm
               hideReplySection: true,
               isComment: true,
               isFirstCommentAsHeader: idx === 0,
-              mainWrapperClassName: cn('pl-cn-md pr-cn-xs', {
+              mainWrapperClassName: cn('pl-cn-3xl pr-cn-xs', {
                 'pt-cn-sm': idx === 1,
                 'pb-cn-sm': idx === commentItems.length - 1
               }),

@@ -159,9 +159,11 @@ const ItemHeader: FC<ItemHeaderProps> = memo(
                 <TimeAgoCard timestamp={timestamp} />
               </>
             )}
-            <Text variant="body-single-line-normal" color="foreground-3">
-              {selectStatus}
-            </Text>
+            {selectStatus && (
+              <Text variant="body-single-line-normal" color="foreground-3">
+                {selectStatus}
+              </Text>
+            )}
           </Layout.Horizontal>
         </Text>
         {(isComment || hasActionsInHeader) && !isDeleted && !isResolved && (
@@ -479,7 +481,12 @@ const PullRequestTimelineItem: FC<TimelineItemProps> = ({
                         setComment={setComment}
                       />
                     ) : (
-                      <div className={cn('flex items-center gap-cn-sm border-t bg-cn-2 p-cn-xs', replyBoxClassName)}>
+                      <div
+                        className={cn(
+                          'flex items-center gap-cn-sm border-t bg-cn-2 px-cn-md py-cn-xs',
+                          replyBoxClassName
+                        )}
+                      >
                         {!!currentUser && <Avatar name={currentUser} rounded />}
                         <TextInput
                           wrapperClassName="flex-1"

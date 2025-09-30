@@ -7,6 +7,7 @@ export default {
       borderRadius: 'var(--cn-drawer-radius)',
       boxShadow: 'var(--cn-shadow-5)',
       overflow: 'hidden',
+      outline: 'none',
       '@apply fixed flex flex-col z-50 border': '',
 
       '&:where(.cn-drawer-content-right), &:where(.cn-drawer-content-left)': {

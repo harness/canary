@@ -89,9 +89,12 @@ export function SecretList({
                 ref={triggerRef}
                 actions={[
                   {
-                    title: t('views:secrets.edit', 'Edit Secret'),
+                    title: t('views:secrets.edit', 'Edit secret'),
                     iconName: 'edit-pencil',
-                    onClick: () => onEditSecret(secret),
+                    onClick: () => {
+                      registerTrigger()
+                      onEditSecret(secret)
+                    },
                     rbac: {
                       resource: {
                         resourceType: ResourceType.SECRET,
@@ -102,7 +105,7 @@ export function SecretList({
                   },
                   {
                     isDanger: true,
-                    title: t('views:secrets.delete', 'Delete Secret'),
+                    title: t('views:secrets.delete', 'Delete secret'),
                     iconName: 'trash',
                     onClick: () => handleDeleteSecret(secret.identifier),
                     rbac: {

@@ -625,6 +625,31 @@
     "fileNoChanges": "Fichier sans modifications.",
     "binaryNotShown": "Fichier binaire non affiché."
   },
+  "secrets": {
+    "edit": "Edit secret",
+    "delete": "Supprimer le secret",
+    "filterOptions": {
+      "secretType": {
+        "label": "Secret Type"
+      },
+      "secretManagerOption": {
+        "label": "Secret Manager Identifier",
+        "placeholder": "Select Secret Manager"
+      },
+      "descriptionOption": {
+        "label": "Description"
+      },
+      "tagsOption": {
+        "label": "Tags"
+      },
+      "typeOption": {
+        "label": "Type"
+      }
+    },
+    "secretsTitle": "Secrets",
+    "createNew": "Créer un secret",
+    "newSecret": "New Secret"
+  },
   "secretDetails": {
     "backToSecrets": "Back to secrets",
     "configuration": "Configuration",
@@ -873,31 +898,6 @@
     "type": "Type",
     "scope": "Scope",
     "created": "Created"
-  },
-  "secrets": {
-    "filterOptions": {
-      "secretType": {
-        "label": "Secret Type"
-      },
-      "secretManagerOption": {
-        "label": "Secret Manager Identifier",
-        "placeholder": "Select Secret Manager"
-      },
-      "descriptionOption": {
-        "label": "Description"
-      },
-      "tagsOption": {
-        "label": "Tags"
-      },
-      "typeOption": {
-        "label": "Type"
-      }
-    },
-    "secretsTitle": "Secrets",
-    "createNew": "Créer un secret",
-    "edit": "Edit Secret",
-    "delete": "Supprimer le secret",
-    "newSecret": "New Secret"
   },
   "secret": {
     "title": "Secret"

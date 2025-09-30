@@ -1,5 +1,6 @@
 import { type FC, useMemo } from "react";
 import * as components from "@harnessio/ui/components";
+import * as contexts from "@harnessio/ui/context";
 import Example, { type ExampleProps } from "./example";
 
 export type ComponentExampleProps = Omit<ExampleProps, "scope"> & {
@@ -14,7 +15,7 @@ const ComponentExample: FC<ComponentExampleProps> = ({
   hideCode,
 }) => {
   const combinedScope = useMemo<ExampleProps["scope"]>(
-    () => ({ ...components, ...scope }),
+    () => ({ ...components, ...contexts, ...scope }),
     [scope],
   );
 

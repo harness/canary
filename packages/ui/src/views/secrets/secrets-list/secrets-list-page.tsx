@@ -10,7 +10,7 @@ import {
   SecretListFilters,
   Text
 } from '@/components'
-import { useComponents, useRouterContext, useTranslation } from '@/context'
+import { useComponents, useCustomDialogTrigger, useRouterContext, useTranslation } from '@/context'
 import { SandboxLayout } from '@/views'
 import { cn } from '@utils/cn'
 import FilterGroup, { FilterGroupRef } from '@views/components/FilterGroup'
@@ -43,6 +43,9 @@ const SecretListPage: FC<SecretListPageProps> = ({
   const { navigate } = useRouterContext()
   const filterRef = useRef<FilterGroupRef>(null)
   const { RbacButton } = useComponents()
+
+  const { triggerRef: noDataTriggerRef, registerTrigger: registerNoDataTrigger } = useCustomDialogTrigger()
+  const { triggerRef, registerTrigger } = useCustomDialogTrigger()
 
   const secretManagerFilterOptions = secretManagerIdentifiers.map(secretManager => {
     return {
@@ -103,12 +106,8 @@ const SecretListPage: FC<SecretListPageProps> = ({
             )
         ]}
         primaryButton={{
-          label: (
-            <>
-              <IconV2 name="refresh" />
-              {t('views:notFound.button', 'Reload Page')}
-            </>
-          ),
+          icon: 'refresh',
+          label: t('views:notFound.button', 'Reload Page'),
           onClick: () => {
             navigate(0) // Reload the page
           }
@@ -131,13 +130,13 @@ const SecretListPage: FC<SecretListPageProps> = ({
               title={t('views:noData.noSecrets', 'No secrets yet')}
               description={[t('views:noData.noSecrets', 'There are no secrets in this project yet.')]}
               primaryButton={{
-                label: (
-                  <>
-                    <IconV2 name="plus" />
-                    {t('views:secrets.createNew', 'Create Secret')}
-                  </>
-                ),
-                onClick: onCreate
+                ref: noDataTriggerRef,
+                icon: 'plus',
+                label: t('views:secrets.createNew', 'Create Secret'),
+                onClick: () => {
+                  onCreate?.()
+                  registerNoDataTrigger()
+                }
               }}
             />
           )}
@@ -155,7 +154,11 @@ const SecretListPage: FC<SecretListPageProps> = ({
                 handleInputChange={handleSearch}
                 headerAction={
                   <RbacButton
-                    onClick={onCreate}
+                    ref={triggerRef}
+                    onClick={() => {
+                      onCreate?.()
+                      registerTrigger()
+                    }}
                     rbac={{
                       resource: { resourceType: ResourceType.SECRET },
                       permissions: [PermissionIdentifier.UPDATE_SECRET]

@@ -224,39 +224,39 @@ export const PullRequestCommentBox = ({
   }
 
   const handleSaveComment = (): Promise<void> => {
-  return new Promise((resolve, reject) => {
-    const newComment = textComment.trim()
+    return new Promise((resolve, reject) => {
+      const newComment = textComment.trim()
 
     if (onSaveComment && (allowEmptyValue || newComment)) {
       setParentComment(newComment)
       setCommentError(null)
 
-      const formattedComment = replaceMentionEmailWithId(newComment, principalsMentionMap)
-      const onSaveCommentReturn = onSaveComment(formattedComment)
+        const formattedComment = replaceMentionEmailWithId(newComment, principalsMentionMap)
+        const onSaveCommentReturn = onSaveComment(formattedComment)
 
-      if (onSaveCommentReturn instanceof Promise) {
-        setIsLoading(true)
-        onSaveCommentReturn
-          .then(() => {
-            clearComment()
-            resolve()
-          })
-          .catch(e => {
-            setCommentError(getErrorMessage(e, 'Failed to save comment'))
-            reject(e)
-          })
-          .finally(() => {
-            setIsLoading(false)
-          })
+        if (onSaveCommentReturn instanceof Promise) {
+          setIsLoading(true)
+          onSaveCommentReturn
+            .then(() => {
+              clearComment()
+              resolve()
+            })
+            .catch(e => {
+              setCommentError(getErrorMessage(e, 'Failed to save comment'))
+              reject(e)
+            })
+            .finally(() => {
+              setIsLoading(false)
+            })
+        } else {
+          clearComment()
+          resolve()
+        }
       } else {
-        clearComment()
         resolve()
       }
-    } else {
-      resolve()
-    }
-  })
-}
+    })
+  }
 
   const avatar = useMemo(() => {
     return <Avatar name={currentUser} rounded />

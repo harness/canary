@@ -12,10 +12,9 @@ import {
   Skeleton,
   Table,
   Text,
-  TimeAgoCard,
-  useCustomDialogTrigger
+  TimeAgoCard
 } from '@/components'
-import { useTranslation } from '@/context'
+import { useCustomDialogTrigger, useTranslation } from '@/context'
 import { BranchSelectorListItem, CommitTagType, RepoTagsStore } from '@/views'
 
 interface RepoTagsListProps {
@@ -41,7 +40,6 @@ export const RepoTagsList: FC<RepoTagsListProps> = ({
 }) => {
   const { t } = useTranslation()
   const { tags: tagsList } = useRepoTagsStore()
-
   const { triggerRef, registerTrigger } = useCustomDialogTrigger()
 
   const handleDeleteTag = useCallback(

@@ -10,10 +10,9 @@ import {
   Link,
   Separator,
   Text,
-  TimeAgoCard,
-  useCustomDialogTrigger
+  TimeAgoCard
 } from '@/components'
-import { useTranslation } from '@/context'
+import { useCustomDialogTrigger, useTranslation } from '@/context'
 
 import { EditRepoDetails } from './edit-repo-details-dialog'
 

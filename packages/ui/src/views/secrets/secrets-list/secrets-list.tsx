@@ -1,7 +1,7 @@
 import { useCallback } from 'react'
 
-import { MoreActionsTooltip, NoData, Skeleton, Table, Text, TimeAgoCard, useCustomDialogTrigger } from '@/components'
-import { useTranslation } from '@/context'
+import { MoreActionsTooltip, NoData, Skeleton, Table, Text, TimeAgoCard } from '@/components'
+import { useCustomDialogTrigger, useTranslation } from '@/context'
 import { cn } from '@utils/cn'
 
 import { SecretListProps } from './types'

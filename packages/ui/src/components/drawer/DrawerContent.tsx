@@ -1,9 +1,8 @@
 import { ComponentPropsWithoutRef, ElementRef, forwardRef, useCallback, useRef } from 'react'
 
 import { Button, IconV2 } from '@/components'
-import { usePortal } from '@/context'
+import { usePortal, useRegisterDialog } from '@/context'
 import { cn, useMergeRefs } from '@/utils'
-import { useRegisterDialog } from '@components/dialog'
 import { cva, VariantProps } from 'class-variance-authority'
 import { Drawer as DrawerPrimitive } from 'vaul'
 

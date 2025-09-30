@@ -1,6 +1,6 @@
 import { forwardRef, HTMLAttributes } from 'react'
 
-import { TriggerBase } from '@components/dialog'
+import { TriggerBase } from '@/context'
 import { Drawer as DrawerPrimitive } from 'vaul'
 
 export const DrawerTrigger = forwardRef<HTMLButtonElement, HTMLAttributes<HTMLDivElement>>(

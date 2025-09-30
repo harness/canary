@@ -652,17 +652,16 @@ Contains [`Drawer.Trigger`](#trigger) and [`Drawer.Content`](#content) component
 
 ### `Trigger`
 
-An optional button that opens the drawer.
+Used to open a drawer. Essential for registering the trigger element with the dialog focus manager.
+If a drawer is opened without the `Trigger` component (e.g., a dropdown item), focus will not return to the trigger element when the drawer is closed. To address this use `useCustomDialogTrigger` hook to register your custom trigger element.
 
 <DocsPage.PropsTable
   props={[
     {
-      name: "asChild",
-      description:
-        "Change the default rendered element for the one passed as a child, merging their props and behavior.",
-      required: false,
-      value: "boolean",
-      defaultValue: "false",
+      name: "children",
+      description: "Trigger element (only one child allowed)",
+      required: true,
+      value: "ReactNode",
     },
   ]}
 />

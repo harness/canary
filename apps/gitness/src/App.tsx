@@ -4,8 +4,8 @@ import { createBrowserRouter, RouterProvider } from 'react-router-dom'
 import { QueryClientProvider } from '@tanstack/react-query'
 
 import { CodeServiceAPIClient } from '@harnessio/code-service-client'
-import { DialogProvider, TooltipProvider } from '@harnessio/ui/components'
-import { TranslationProvider } from '@harnessio/ui/context'
+import { TooltipProvider } from '@harnessio/ui/components'
+import { DialogProvider, TranslationProvider } from '@harnessio/ui/context'
 
 import { ExitConfirmProvider } from './framework/context/ExitConfirmContext'
 import { defaultContext, MFEContext } from './framework/context/MFEContext'

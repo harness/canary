@@ -1,7 +1,6 @@
 import { ComponentProps, useEffect, useRef, useState } from 'react'
 
-import { usePortal } from '@/context'
-import { DialogOpenContext } from '@components/dialog'
+import { DialogOpenContext, usePortal } from '@/context'
 import { Drawer as DrawerPrimitive } from 'vaul'
 import styleText from 'vaul/style.css?raw'
 

@@ -1,11 +1,11 @@
 import {
   Button,
-  DialogProvider,
   IconV2,
   ThemeDialog,
   type ThemeDialogProps,
   TooltipProvider,
 } from "@harnessio/ui/components";
+import { DialogProvider } from "@harnessio/ui/context";
 import { useEffect, useState } from "react";
 
 export function ThemeSelector() {

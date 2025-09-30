@@ -260,6 +260,7 @@ const PullRequestChangesPage: FC<RepoPullRequestChangesPageProps> = ({
                 unchangedPercentage: item.unchangedPercentage || 0
               })) || []
             }
+            setShowExplorer={setShowExplorer}
           />
           <DraggableSidebarDivider width={sidebarWidth} setWidth={setSidebarWidth} containerRef={containerRef} />
         </Layout.Flex>

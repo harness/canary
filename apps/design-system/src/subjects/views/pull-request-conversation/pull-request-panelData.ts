@@ -879,6 +879,83 @@ export const mockReviewers = [
   }
 ]
 
+export const mockUserGroupReviewers = [
+  {
+    created: 1759127567835,
+    updated: 1759127567835,
+    user_group: {
+      id: 530,
+      identifier: 'Admins',
+      name: 'Admins',
+      description: '',
+      scope: 2
+    },
+    added_by: {
+      id: 655,
+      uid: '5YDhXWC-TqOTM--CxGXWRA',
+      display_name: 'Admin',
+      email: 'admin@harness.io',
+      type: 'user',
+      created: 1700120847770,
+      updated: 1700120847770
+    },
+    user_decisions: [
+      {
+        decision: 'pending',
+        reviewer: {
+          id: 59,
+          uid: 'ec9UfvFwTf663F47Hlqxbg',
+          display_name: 'Abhinav Singh',
+          email: 'abhinav.singh@harness.io',
+          type: 'user',
+          created: 1697617589873,
+          updated: 1697617589873
+        },
+        updated: 1759135188157
+      }
+    ],
+    decision: 'pending'
+  },
+  {
+    created: 1759134911269,
+    updated: 1759134911269,
+    user_group: {
+      id: 529,
+      identifier: '_project_all_users',
+      name: 'All Project Users',
+      description: 'Harness managed User Group containing all the users in the project.',
+      scope: 3
+    },
+    added_by: {
+      id: 655,
+      uid: '5YDhXWC-TqOTM--CxGXWRA',
+      display_name: 'Admin',
+      email: 'admin@harness.io',
+      type: 'user',
+      created: 1700120847770,
+      updated: 1700120847770
+    },
+    user_decisions: [
+      {
+        decision: 'approved',
+        sha: '9f9a3026cf74ecfacbcd2fa9fd3e79b6d998a332',
+        reviewer: {
+          id: 326,
+          uid: 'Wg1dSTw7TQGF11l4o0ITbA',
+          display_name: 'Ritik Kapoor',
+          email: 'ritik.kapoor@harness.io',
+          type: 'user',
+          created: 1699526765453,
+          updated: 1699526765453
+        },
+        updated: 1759135713660
+      }
+    ],
+    decision: 'approved',
+    sha: '9f9a3026cf74ecfacbcd2fa9fd3e79b6d998a332'
+  }
+]
+
 export const mockLabelList: ILabelType[] = [
   {
     id: 1,

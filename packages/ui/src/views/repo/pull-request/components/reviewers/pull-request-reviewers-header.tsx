@@ -10,18 +10,21 @@ import {
   useSearchableDropdownKeyboardNavigation
 } from '@/components'
 import { useTranslation } from '@/context'
-import { PrincipalType } from '@/types'
-import { PRReviewer } from '@/views'
+import { EnumBypassListType, NormalizedPrincipal, PRReviewer } from '@/views'
+import { getIcon } from '@views/repo/repo-branch-rules/utils'
 import { debounce } from 'lodash-es'
 
 import { ReviewerInfo } from './reviewer-info'
 
 interface ReviewersHeaderProps {
-  usersList?: PrincipalType[]
+  usersList?: NormalizedPrincipal[]
   reviewers: PRReviewer[]
-  addReviewers?: (id?: number) => void
-  handleDelete: (id: number) => void
-  currentUserId?: string
+  userGroupReviewers: PRReviewer[]
+  addReviewer?: (id?: number) => void
+  addUserGroupReviewer?: (id?: number) => void
+  handleDelete?: (id: number) => void
+  handleUserGroupReviewerDelete?: (id: number) => void
+  authorId?: number
   searchQuery: string
   setSearchQuery: (query: string) => void
   isReviewersLoading?: boolean
@@ -30,9 +33,12 @@ interface ReviewersHeaderProps {
 const ReviewersHeader = ({
   usersList,
   reviewers,
-  addReviewers,
+  userGroupReviewers,
+  addReviewer,
+  addUserGroupReviewer,
   handleDelete,
-  currentUserId,
+  handleUserGroupReviewerDelete,
+  authorId,
   searchQuery,
   setSearchQuery,
   isReviewersLoading
@@ -40,8 +46,8 @@ const ReviewersHeader = ({
   const { t } = useTranslation()
 
   const filteredUsersList = useMemo(() => {
-    return usersList ? usersList.filter(user => user?.uid !== currentUserId) : []
-  }, [currentUserId, usersList])
+    return usersList ? usersList.filter(user => user?.id !== authorId) : []
+  }, [authorId, usersList])
 
   const { searchInputRef, handleSearchKeyDown, getItemProps } = useSearchableDropdownKeyboardNavigation({
     itemsLength: filteredUsersList.length
@@ -84,19 +90,30 @@ const ReviewersHeader = ({
             <DropdownMenu.NoOptions>{t('views:pullRequests.noUsers', 'No users found.')}</DropdownMenu.NoOptions>
           )}
 
-          {filteredUsersList.map(({ display_name, email, id, uid }, index) => {
-            const isSelected = reviewers.find(reviewer => reviewer?.reviewer?.id === id)
+          {filteredUsersList.map(({ display_name, email_or_identifier, id, type }, index) => {
+            const isSelected = [...reviewers, ...userGroupReviewers].find(reviewer => reviewer?.reviewer?.id === id)
             const { ref, onKeyDown } = getItemProps(index)
+            const commonProps = {
+              ref,
+              title: <ReviewerInfo display_name={display_name || ''} email={email_or_identifier || ''} />,
+              checkmark: !!isSelected,
+              key: `${type}-${id}`,
+              onKeyDown
+            }
 
-            return (
+            return type === EnumBypassListType.USER_GROUP ? (
+              <DropdownMenu.IconItem
+                {...commonProps}
+                icon={getIcon(type)}
+                iconSize={'lg'}
+                iconClassName={'ml-cn-4xs'}
+                onClick={() => (isSelected ? handleUserGroupReviewerDelete?.(id) : addUserGroupReviewer?.(id))}
+              />
+            ) : (
               <DropdownMenu.AvatarItem
-                ref={ref}
+                {...commonProps}
                 name={display_name}
-                title={<ReviewerInfo display_name={display_name || ''} email={email || ''} />}
-                checkmark={!!isSelected}
-                key={uid ?? index}
-                onClick={() => (isSelected ? handleDelete(id as number) : addReviewers?.(id))}
-                onKeyDown={onKeyDown}
+                onClick={() => (isSelected ? handleDelete?.(id) : addReviewer?.(id))}
               />
             )
           })}

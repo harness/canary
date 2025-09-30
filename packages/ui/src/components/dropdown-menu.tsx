@@ -459,11 +459,16 @@ DropdownMenuLogoItem.displayName = displayNames.logoItem
 interface DropdownMenuIconItemProps extends Omit<DropdownMenuItemProps, 'prefix'> {
   icon: IconPropsV2['name']
   iconClassName?: string
+  iconSize?: IconPropsV2['size']
 }
 
 const DropdownMenuIconItem = forwardRef<ElementRef<typeof DropdownMenuPrimitive.Item>, DropdownMenuIconItemProps>(
-  ({ icon, iconClassName, ...props }, ref) => (
-    <DropdownMenuItem ref={ref} {...props} prefix={<IconV2 name={icon} className={iconClassName} fallback="stop" />} />
+  ({ icon, iconClassName, iconSize, ...props }, ref) => (
+    <DropdownMenuItem
+      ref={ref}
+      {...props}
+      prefix={<IconV2 name={icon} className={iconClassName} size={iconSize} fallback="stop" />}
+    />
   )
 )
 DropdownMenuIconItem.displayName = displayNames.iconItem

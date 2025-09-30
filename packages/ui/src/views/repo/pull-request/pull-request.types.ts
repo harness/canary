@@ -1,7 +1,15 @@
 import { ReactNode } from 'react'
 
 import { PrincipalType, UsererrorError } from '@/types'
-import { ColorsEnum, ILabelsStore, LabelType, RepositoryType, Scope, TypesBranchTable } from '@/views'
+import {
+  ColorsEnum,
+  EnumBypassListType,
+  ILabelsStore,
+  LabelType,
+  RepositoryType,
+  Scope,
+  TypesBranchTable
+} from '@/views'
 import { CheckboxOptions } from '@components/filters'
 import { ComboBoxOptions } from '@components/filters/filters-bar/actions/variants/combo-box'
 
@@ -165,7 +173,7 @@ export interface TypesPullReqStats {
 }
 
 export interface PRReviewer {
-  reviewer: { display_name: string; id: number; email: string }
+  reviewer: { display_name: string; id: number; email: string; type: EnumBypassListType }
   review_decision?: EnumPullReqReviewDecision
   sha?: string
 }

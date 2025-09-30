@@ -232,10 +232,6 @@ export function extractSpecificViolations(violationsData: any, rule: string) {
 export const checkIfOutdatedSha = (reviewedSHA?: string, sourceSHA?: string) =>
   reviewedSHA !== sourceSHA || reviewedSHA !== sourceSHA ? true : false
 
-export function capitalizeFirstLetter(str: string) {
-  return str.charAt(0).toUpperCase() + str.slice(1).toLowerCase()
-}
-
 // find code owner request decision from given entries
 export const findChangeReqDecisions = (
   entries: TypesCodeOwnerEvaluationEntry[] | null | undefined,

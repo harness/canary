@@ -1,13 +1,13 @@
 import { FC } from 'react'
 
 import { Layout, LinkProps } from '@/components'
-import { PrincipalType } from '@/types'
 import {
   EnumPullReqReviewDecision,
   HandleAddLabelType,
   ILabelType,
   LabelAssignmentType,
   LabelValuesType,
+  NormalizedPrincipal,
   PRReviewer,
   PullReqReviewDecision,
   TypesScopesLabels
@@ -18,6 +18,7 @@ import { ReviewersHeader, ReviewersList } from './reviewers'
 
 export interface PullRequestSideBarProps {
   reviewers?: PRReviewer[]
+  userGroupReviewers?: PRReviewer[]
   processReviewDecision: (
     review_decision: EnumPullReqReviewDecision,
     reviewedSHA?: string,
@@ -26,11 +27,13 @@ export interface PullRequestSideBarProps {
   pullRequestMetadata?: { source_sha: string }
   refetchReviewers: () => void
   handleDelete: (id: number) => void
-  addReviewers?: (id?: number) => void
+  handleUserGroupReviewerDelete: (id: number) => void
+  addReviewer?: (id?: number) => void
+  addUserGroupReviewer?: (id?: number) => void
   addReviewerError?: string
   removeReviewerError?: string
-  usersList?: PrincipalType[]
-  currentUserId?: string
+  usersList?: NormalizedPrincipal[]
+  authorId?: number
   searchQuery: string
   setSearchQuery: (query: string) => void
   labelsList?: ILabelType[]
@@ -50,13 +53,16 @@ export interface PullRequestSideBarProps {
 export const PullRequestSideBar: FC<PullRequestSideBarProps> = ({
   usersList,
   reviewers = [],
+  userGroupReviewers = [],
   pullRequestMetadata,
   processReviewDecision,
   handleDelete,
+  handleUserGroupReviewerDelete,
   addReviewerError,
   removeReviewerError,
-  addReviewers,
-  currentUserId,
+  addReviewer,
+  addUserGroupReviewer,
+  authorId,
   searchQuery,
   setSearchQuery,
   labelsList = [],
@@ -76,17 +82,21 @@ export const PullRequestSideBar: FC<PullRequestSideBarProps> = ({
     <Layout.Vertical gap="md">
       <Layout.Vertical gap="xs">
         <ReviewersHeader
-          currentUserId={currentUserId}
+          authorId={authorId}
           usersList={usersList}
           reviewers={reviewers}
-          addReviewers={addReviewers}
+          userGroupReviewers={userGroupReviewers}
+          addReviewer={addReviewer}
+          addUserGroupReviewer={addUserGroupReviewer}
           handleDelete={handleDelete}
+          handleUserGroupReviewerDelete={handleUserGroupReviewerDelete}
           searchQuery={searchQuery}
           setSearchQuery={setSearchQuery}
           isReviewersLoading={isReviewersLoading}
         />
         <ReviewersList
           reviewers={reviewers}
+          userGroupReviewers={userGroupReviewers}
           pullRequestMetadata={pullRequestMetadata}
           processReviewDecision={processReviewDecision}
           handleDelete={handleDelete}

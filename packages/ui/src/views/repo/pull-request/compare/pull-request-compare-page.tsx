@@ -20,6 +20,7 @@ import { zodResolver } from '@hookform/resolvers/zod'
 import { ICommitSelectorStore } from '@views/repo/components/commit-selector/types'
 import PullRequestCompareButton from '@views/repo/pull-request/compare/components/pull-request-compare-button'
 import PullRequestCompareForm from '@views/repo/pull-request/compare/components/pull-request-compare-form'
+import { combineAndNormalizePrincipalsAndGroups } from '@views/repo/repo-branch-rules/utils'
 import { noop } from 'lodash-es'
 import { z } from 'zod'
 
@@ -80,8 +81,11 @@ export interface PullRequestComparePageProps extends Partial<RoutingProps> {
   currentUser?: TypesUser
 
   reviewers?: PRReviewer[]
+  userGroupReviewers?: PRReviewer[]
   handleAddReviewer: (id?: number) => void
+  handleAddUserGroupReviewer: (id?: number) => void
   handleDeleteReviewer: (id?: number) => void
+  handleDeleteUserGroupReviewer: (id?: number) => void
   handleUpload?: HandleUploadType
   desc?: string
   setDesc: (desc: string) => void
@@ -121,8 +125,11 @@ export const PullRequestComparePage: FC<PullRequestComparePageProps> = ({
 
   principalProps,
   reviewers,
+  userGroupReviewers,
   handleAddReviewer,
+  handleAddUserGroupReviewer,
   handleDeleteReviewer,
+  handleDeleteUserGroupReviewer,
   toCommitDetails,
   toCode,
   handleUpload,
@@ -388,16 +395,22 @@ export const PullRequestComparePage: FC<PullRequestComparePageProps> = ({
                       <PullRequestSideBar
                         isReviewersLoading={principalProps?.isPrincipalsLoading}
                         isLabelsLoading={isLabelsLoading}
-                        addReviewers={handleAddReviewer}
-                        currentUserId={currentUser?.uid}
+                        addReviewer={handleAddReviewer}
+                        addUserGroupReviewer={handleAddUserGroupReviewer}
+                        authorId={currentUser?.id}
                         pullRequestMetadata={{ source_sha: '' }}
                         processReviewDecision={mockProcessReviewDecision}
                         refetchReviewers={noop}
                         handleDelete={handleDeleteReviewer}
+                        handleUserGroupReviewerDelete={handleDeleteUserGroupReviewer}
                         reviewers={reviewers ?? []}
+                        userGroupReviewers={userGroupReviewers ?? []}
                         searchQuery={principalProps?.searchPrincipalsQuery || ''}
                         setSearchQuery={principalProps?.setSearchPrincipalsQuery || noop}
-                        usersList={principalProps?.principals}
+                        usersList={combineAndNormalizePrincipalsAndGroups(
+                          principalProps?.principals ?? [],
+                          principalProps?.userGroups ?? []
+                        )}
                         labelsList={labelsList}
                         labelsValues={labelsValues}
                         PRLabels={PRLabels}

@@ -6,6 +6,7 @@ import {
   ColorsEnum,
   CommentItem,
   CommentType,
+  easyPluralize,
   GeneralPayload,
   LabelActivity,
   LabelTag,
@@ -100,6 +101,13 @@ const PullRequestSystemComments: FC<SystemCommentProps> = ({
     const mentionsMap = payloadMain?.mentions ?? {}
     return uniqueList.map(id => mentionsMap[id]?.display_name ?? '')
   }, [payloadMain?.metadata?.mentions?.ids, payloadMain?.mentions])
+
+  const userGroupsDisplayNameList = useMemo(() => {
+    const ids = payloadMain?.metadata?.mentions?.user_group_ids ?? []
+    const uniqueList = [...new Set(ids)]
+    const mentionsMap = payloadMain?.user_group_mentions ?? {}
+    return uniqueList.map(id => mentionsMap[id]?.name ?? '')
+  }, [payloadMain?.metadata?.mentions?.user_group_ids, payloadMain?.user_group_mentions])
 
   const principalNameList = useMemo(() => {
     const checkList = (payloadMain?.payload as any)?.principal_ids ?? []
@@ -299,7 +307,7 @@ const PullRequestSystemComments: FC<SystemCommentProps> = ({
           icon: <IconV2 name="edit-pencil" size="xs" />
         }
 
-      case CommentType.REVIEW_DELETE: {
+      case CommentType.REVIEWER_DELETE: {
         const mentionId = metadata?.mentions?.ids?.[0] ?? 0
         const mentionDisplayName = mentions?.[mentionId]?.display_name ?? ''
 
@@ -327,7 +335,30 @@ const PullRequestSystemComments: FC<SystemCommentProps> = ({
         }
       }
 
-      case CommentType.REVIEW_ADD: {
+      case CommentType.USER_GROUP_REVIEWER_DELETE: {
+        const userGroupReviewers = formatListWithAndFragment(userGroupsDisplayNameList)
+
+        return {
+          header: {
+            description: (
+              <>
+                <Text variant="body-single-line-normal" color="foreground-3">
+                  <>
+                    removed the request for review from user group &nbsp;
+                    <Text as="span" variant="body-single-line-normal" color="foreground-1">
+                      {userGroupReviewers}
+                    </Text>
+                  </>
+                </Text>
+                <TimeAgoCard timestamp={created} />
+              </>
+            )
+          },
+          icon: <IconV2 name="edit-pencil" size="xs" />
+        }
+      }
+
+      case CommentType.REVIEWER_ADD: {
         const activityMentions = formatListWithAndFragment(displayNameList)
         const principalMentions = formatListWithAndFragment(principalNameList)
 
@@ -348,6 +379,39 @@ const PullRequestSystemComments: FC<SystemCommentProps> = ({
                   <>
                     requested a review from {principalMentions} as&nbsp;
                     {principalNameList?.length > 1 ? 'default reviewers' : 'default reviewer'}
+                  </>
+                )}
+              </>
+            )
+          },
+          icon: <IconV2 name="eye" size="xs" />
+        }
+      }
+
+      case CommentType.USER_GROUP_REVIEWER_ADD: {
+        const userGroupReviewers = formatListWithAndFragment(userGroupsDisplayNameList)
+        const requestedText = (
+          <>
+            requested a review from {easyPluralize(userGroupsDisplayNameList.length, 'user group', 'user groups')}
+            {userGroupReviewers}
+          </>
+        )
+
+        return {
+          header: {
+            description: (
+              <>
+                {reviewer_type === ReviewerAddActivity.REQUESTED && <>{requestedText}</>}
+                {reviewer_type === ReviewerAddActivity.CODEOWNERS && (
+                  <>
+                    {requestedText} as&nbsp;
+                    {easyPluralize(userGroupsDisplayNameList.length, 'code owner', 'code owners')}
+                  </>
+                )}
+                {reviewer_type === ReviewerAddActivity.DEFAULT && (
+                  <>
+                    {requestedText} as&nbsp;
+                    {easyPluralize(userGroupsDisplayNameList.length, 'default reviewer', 'default reviewers')}
                   </>
                 )}
               </>

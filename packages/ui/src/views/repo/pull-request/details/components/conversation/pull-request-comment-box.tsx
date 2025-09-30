@@ -227,9 +227,9 @@ export const PullRequestCommentBox = ({
     return new Promise((resolve, reject) => {
       const newComment = textComment.trim()
 
-    if (onSaveComment && (allowEmptyValue || newComment)) {
-      setParentComment(newComment)
-      setCommentError(null)
+      if (onSaveComment && (allowEmptyValue || newComment)) {
+        setParentComment(newComment)
+        setCommentError(null)
 
         const formattedComment = replaceMentionEmailWithId(newComment, principalsMentionMap)
         const onSaveCommentReturn = onSaveComment(formattedComment)

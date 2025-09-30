@@ -73,13 +73,18 @@ export default {
         'cn-4-half': 'var(--cn-size-4-half)'
       },
       height: {
-        'cn-input-md': 'var(--cn-input-size-md)'
+        'cn-input-md': 'var(--cn-input-size-md)',
+        'cn-header': 'var(--cn-header-height)'
       },
       minHeight: {
         'cn-textarea': '7lh'
       },
       maxHeight: {
         'cn-textarea': '35lh'
+      },
+      width: {
+        // Get this from design system
+        'cn-search-input-max-width': '320px'
       },
       backgroundColor: {
         DEFAULT: 'lch(from var(--cn-bg-1) l c h / <alpha-value>)',
@@ -609,6 +614,9 @@ export default {
     { pattern: /border-./ },
     // Important: used for generating max-width of SandboxLayout.Content
     { pattern: /max-w-./ },
-    { pattern: /^(p|px|py|pt|pb|pl|pr|m|mx|my|mt|mb|ml|mr|gap(?:-[xy])?)-cn-.+$/ }
+    { pattern: /^(p|px|py|pt|pb|pl|pr|m|mx|my|mt|mb|ml|mr|gap(?:-[xy])?)-cn-.+$/ },
+
+    { pattern: /^h-cn-/ },
+    { pattern: /^w-cn-/ }
   ]
 } satisfies TailwindConfig

@@ -10,9 +10,9 @@ import {
   MoreActionsTooltip,
   NodeGroup,
   Text,
-  TextInput,
-  useCustomDialogTrigger
+  TextInput
 } from '@/components'
+import { useCustomDialogTrigger } from '@/context'
 import {
   HandleUploadType,
   PrincipalPropsType,

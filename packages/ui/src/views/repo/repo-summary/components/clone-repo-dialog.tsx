@@ -1,17 +1,7 @@
 import { FC } from 'react'
 
-import {
-  Alert,
-  Button,
-  CopyButton,
-  IconV2,
-  Layout,
-  Popover,
-  Tabs,
-  TextInput,
-  useCustomDialogTrigger
-} from '@/components'
-import { useTranslation } from '@/context'
+import { Alert, Button, CopyButton, IconV2, Layout, Popover, Tabs, TextInput } from '@/components'
+import { useCustomDialogTrigger, useTranslation } from '@/context'
 
 export interface CloneRepoDialogProps {
   sshUrl?: string

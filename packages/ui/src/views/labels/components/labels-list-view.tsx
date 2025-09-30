@@ -1,18 +1,7 @@
 import { FC, useCallback, useState } from 'react'
 
-import {
-  Button,
-  getScopeType,
-  IconV2,
-  Layout,
-  MoreActionsTooltip,
-  NoData,
-  ScopeTag,
-  Table,
-  Text,
-  useCustomDialogTrigger
-} from '@/components'
-import { useTranslation } from '@/context'
+import { Button, getScopeType, IconV2, Layout, MoreActionsTooltip, NoData, ScopeTag, Table, Text } from '@/components'
+import { useCustomDialogTrigger, useTranslation } from '@/context'
 import { cn } from '@/utils'
 import { ILabelType, LabelTag, LabelType, LabelValuesType } from '@/views'
 

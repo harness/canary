@@ -1,8 +1,8 @@
 import { FC, ReactNode } from 'react'
 
-import { Layout, Link, MoreActionsTooltip, Spacer, Text, TimeAgoCard, useCustomDialogTrigger } from '@/components'
+import { Layout, Link, MoreActionsTooltip, Spacer, Text, TimeAgoCard } from '@/components'
 import { Tabs } from '@/components/tabs'
-import { useRouterContext, useTranslation } from '@/context'
+import { useCustomDialogTrigger, useRouterContext, useTranslation } from '@/context'
 import { SandboxLayout } from '@views/layouts/SandboxLayout'
 import { SecretListItem } from '@views/secrets'
 

@@ -9,7 +9,8 @@ import {
   useListPathsQuery,
   useListTagsQuery
 } from '@harnessio/code-service-client'
-import { Layout, SkeletonFileExplorer, useCustomDialogTrigger } from '@harnessio/ui/components'
+import { Layout, SkeletonFileExplorer } from '@harnessio/ui/components'
+import { useCustomDialogTrigger } from '@harnessio/ui/context'
 import {
   BranchSelectorListItem,
   BranchSelectorTab,

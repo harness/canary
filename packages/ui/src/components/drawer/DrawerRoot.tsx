@@ -1,6 +1,6 @@
 import { ComponentProps, useEffect, useRef, useState } from 'react'
 
-import { usePortal } from '@/context'
+import { DialogOpenContext, usePortal } from '@/context'
 import { Drawer as DrawerPrimitive } from 'vaul'
 import styleText from 'vaul/style.css?raw'
 
@@ -71,10 +71,12 @@ export const DrawerRoot = ({
     <DrawerContext.Provider
       value={{ direction, nested, isParentOpen: isParentOpen || open || isTriggerOpen, modal: props?.modal ?? true }}
     >
-      <RootComponent handleOnly {...rootProps} container={portalContainer as HTMLElement} data-root="drawer">
-        {nested && FakeTriggers}
-        {children}
-      </RootComponent>
+      <DialogOpenContext.Provider value={{ open }}>
+        <RootComponent handleOnly {...rootProps} container={portalContainer as HTMLElement} data-root="drawer">
+          {nested && FakeTriggers}
+          {children}
+        </RootComponent>
+      </DialogOpenContext.Provider>
     </DrawerContext.Provider>
   )
 }

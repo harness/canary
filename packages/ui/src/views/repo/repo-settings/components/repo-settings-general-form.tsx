@@ -11,10 +11,9 @@ import {
   Label,
   Radio,
   Skeleton,
-  Text,
-  useCustomDialogTrigger
+  Text
 } from '@/components'
-import { useTranslation } from '@/context'
+import { useCustomDialogTrigger, useTranslation } from '@/context'
 import { AccessLevel, ErrorTypes, errorTypes, generalSettingsFormSchema, RepoData, RepoUpdateData } from '@/views'
 import { BranchSelectorContainerProps } from '@/views/repo/components'
 import { zodResolver } from '@hookform/resolvers/zod'

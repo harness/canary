@@ -13,7 +13,7 @@ import {
   useSummaryQuery,
   useUpdateRepositoryMutation
 } from '@harnessio/code-service-client'
-import { useCustomDialogTrigger } from '@harnessio/ui/components'
+import { useCustomDialogTrigger } from '@harnessio/ui/context'
 import { generateAlphaNumericHash } from '@harnessio/ui/utils'
 import {
   BranchSelectorListItem,

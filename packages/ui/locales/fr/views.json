@@ -882,6 +882,9 @@
       "descriptionOption": {
         "label": "Description"
       },
+      "tagsOption": {
+        "label": "Tags"
+      },
       "typeOption": {
         "label": "Type"
       }

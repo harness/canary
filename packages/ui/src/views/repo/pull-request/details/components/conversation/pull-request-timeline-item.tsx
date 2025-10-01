@@ -424,7 +424,11 @@ const PullRequestTimelineItem: FC<TimelineItemProps> = ({
             <NodeGroup.Content className={cn('overflow-auto', contentWrapperClassName)}>
               <div className={cn('border rounded-md overflow-hidden', contentClassName)}>
                 {!!contentHeader && (
-                  <Layout.Horizontal align="center" justify="between" className={cn('px-cn-md py-cn-sm bg-cn-2')}>
+                  <Layout.Horizontal
+                    align="center"
+                    justify="between"
+                    className={cn('px-cn-md py-cn-sm bg-cn-2', { 'border-b': isExpanded })}
+                  >
                     {contentHeader}
                     {isResolved && renderToggleButton()}
                   </Layout.Horizontal>
@@ -519,10 +523,15 @@ const PullRequestTimelineItem: FC<TimelineItemProps> = ({
                         color="foreground-3"
                       >
                         {/* TODO: need to identify the author who resolved the conversation */}
-                        <Text as="span" variant="body-strong" color="foreground-1">
+                        <Text
+                          className="[overflow-wrap:break-word]"
+                          as="span"
+                          variant="body-strong"
+                          color="foreground-1"
+                        >
                           {payload?.resolver?.display_name}
-                        </Text>
-                        &nbsp;marked this conversation as resolved.
+                        </Text>{' '}
+                        marked this conversation as resolved.
                       </Text>
                     )}
                   </>

@@ -208,7 +208,7 @@ const PullRequestRegularAndCodeCommentInternal: FC<PullRequestRegularAndCodeComm
   const { isExpanded: getIsExpanded } = useExpandedComments()
 
   const renderContentItemsBlock = () => (
-    <div>
+    <>
       {commentItems?.map((commentItem, idx) => {
         const expandedKey = payload?.id || commentItem?.id || 0
         const isExpanded = !payload?.resolved || getIsExpanded(expandedKey)
@@ -300,7 +300,7 @@ const PullRequestRegularAndCodeCommentInternal: FC<PullRequestRegularAndCodeComm
           />
         )
       })}
-    </div>
+    </>
   )
 
   return isCode ? (
@@ -367,18 +367,20 @@ const PullRequestRegularAndCodeCommentInternal: FC<PullRequestRegularAndCodeComm
                 <div className="ml-16 w-full px-8 py-1">{startingLine}</div>
               </div>
             )}
-            <PullRequestDiffViewer
-              principalProps={principalProps}
-              handleUpload={handleUpload}
-              data={removeLastPlus(codeDiffSnapshot)}
-              fileName={payload?.code_comment?.path ?? ''}
-              lang={(payload?.code_comment?.path && payload?.code_comment?.path.split('.').pop()) || ''}
-              fontsize={fontsize}
-              highlight={highlight}
-              mode={DiffModeEnum.Unified}
-              wrap={wrap}
-              addWidget={false}
-            />
+            <div className="border-b">
+              <PullRequestDiffViewer
+                principalProps={principalProps}
+                handleUpload={handleUpload}
+                data={removeLastPlus(codeDiffSnapshot)}
+                fileName={payload?.code_comment?.path ?? ''}
+                lang={(payload?.code_comment?.path && payload?.code_comment?.path.split('.').pop()) || ''}
+                fontsize={fontsize}
+                highlight={highlight}
+                mode={DiffModeEnum.Unified}
+                wrap={wrap}
+                addWidget={false}
+              />
+            </div>
             {renderContentItemsBlock()}
           </div>
         )

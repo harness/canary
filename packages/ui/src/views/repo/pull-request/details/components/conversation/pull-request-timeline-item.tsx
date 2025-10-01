@@ -380,7 +380,7 @@ const PullRequestTimelineItem: FC<TimelineItemProps> = ({
   if (isFirstCommentAsHeader) {
     return (
       <>
-        <div id={id} className={cn('px-cn-md py-cn-lg', { 'border-b': isExpanded })}>
+        <div id={id} className={cn('px-cn-md py-cn-lg', { 'border-b': isExpanded, '-order-1': isNotCodeComment })}>
           {renderContent()}
         </div>
 

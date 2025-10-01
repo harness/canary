@@ -1,12 +1,14 @@
-import { ComponentPropsWithoutRef, forwardRef, ReactNode, Ref, useCallback, useEffect, useState } from 'react'
+import { ComponentPropsWithoutRef, forwardRef, ReactNode, Ref, useCallback, useEffect, useMemo, useState } from 'react'
 
 import {
   Avatar,
   AvatarProps,
+  Button,
   DropdownMenu,
   DropdownMenuItemProps,
   IconPropsV2,
   IconV2,
+  IconV2NamesType,
   Layout,
   LogoPropsV2,
   LogoV2,
@@ -14,7 +16,8 @@ import {
   StatusBadge,
   StatusBadgeProps,
   Text,
-  Tooltip
+  Tooltip,
+  type ButtonProps
 } from '@/components'
 import { NavLinkProps, useRouterContext } from '@/context'
 import { filterChildrenByDisplayNames } from '@/utils'
@@ -29,11 +32,19 @@ interface SidebarBadgeProps extends Omit<StatusBadgeProps, 'children' | 'size' |
   content?: ReactNode
 }
 
+type SidebarItemActionButtonPropsType = ButtonProps & {
+  title?: string
+  iconName?: IconV2NamesType
+  iconProps?: Omit<IconPropsV2, 'ref' | 'name' | 'fallback'>
+  onClick: React.MouseEventHandler<HTMLButtonElement>
+}
+
 interface SidebarItemCommonProps extends ComponentPropsWithoutRef<'button'> {
   title: string
   description?: string
   tooltip?: ReactNode
   active?: boolean
+  actionButtons?: SidebarItemActionButtonPropsType[]
 }
 
 interface SidebarItemWithChildrenProps extends SidebarItemCommonProps {
@@ -151,6 +162,7 @@ const SidebarItemTrigger = forwardRef<HTMLButtonElement | HTMLAnchorElement, Sid
       toggleSubmenu,
       withRightIndicator,
       active,
+      actionButtons,
       ...restProps
     } = props
 
@@ -158,6 +170,7 @@ const SidebarItemTrigger = forwardRef<HTMLButtonElement | HTMLAnchorElement, Sid
     const withDescription = !!description
     const withActionMenu = state === 'expanded' && !!actionMenuItems && actionMenuItems.length > 0
     const withDropdownMenu = !!dropdownMenuContent
+    const withActionButtons = !!actionButtons
     const withRightElement = withActionMenu || withDropdownMenu || !!badge || withSubmenu || withRightIndicator
 
     const badgeCommonProps: Pick<StatusBadgeProps, 'size' | 'theme' | 'className'> = {
@@ -174,12 +187,31 @@ const SidebarItemTrigger = forwardRef<HTMLButtonElement | HTMLAnchorElement, Sid
     const sidebarItemClassName = cn('cn-sidebar-item', { 'cn-sidebar-item-big': withDescription }, className)
     const buttonRef = ref as Ref<HTMLButtonElement>
 
+    const actionButtonsContent = useMemo(() => {
+      if (!withActionButtons) return null
+
+      return (
+        <Layout.Horizontal gap="none" className="cn-sidebar-item-content-action-buttons">
+          {actionButtons?.map((buttonProps, index) => {
+            const { title, iconOnly = true, iconName, iconProps, ...rest } = buttonProps
+            return (
+              <Button key={index} size="2xs" variant="ghost" iconOnly={iconOnly} {...rest}>
+                {iconName && <IconV2 name={iconName} {...iconProps} />}
+                {title}
+              </Button>
+            )
+          })}
+        </Layout.Horizontal>
+      )
+    }, [actionButtons])
+
     const renderContent = () => (
       <Layout.Grid
         className={cn('cn-sidebar-item-content', {
-          'cn-sidebar-item-content-w-description': withDescription,
-          'cn-sidebar-item-content-w-r-element': withRightElement,
-          'cn-sidebar-item-content-complete': withDescription && withRightElement
+          'cn-sidebar-item-content-w-description': withDescription && !withRightElement,
+          'cn-sidebar-item-content-w-r-element': withRightElement && !withDescription,
+          'cn-sidebar-item-content-complete': withDescription && withRightElement,
+          'cn-sidebar-item-content-only-action-buttons': withActionButtons && !withDescription && !withRightElement
         })}
       >
         {(withIcon || withFallback) &&
@@ -249,6 +281,9 @@ const SidebarItemTrigger = forwardRef<HTMLButtonElement | HTMLAnchorElement, Sid
             {badge.content}
           </StatusBadge>
         )}
+
+        {/* Action buttons */}
+        {actionButtonsContent}
 
         {withRightIndicator && <IconV2 name="nav-arrow-right" className="cn-sidebar-item-content-right-element" />}
 

@@ -1,12 +1,32 @@
-import { ForwardedRef, forwardRef, ReactNode } from 'react'
+import { ForwardedRef, forwardRef, ReactNode, useMemo } from 'react'
 
-import { Accordion, GridProps, IconPropsV2, IconV2, Layout, Text, Tooltip, TooltipProps } from '@/components'
+import {
+  Accordion,
+  Button,
+  ButtonProps,
+  GridProps,
+  IconPropsV2,
+  IconV2,
+  IconV2NamesType,
+  Layout,
+  Text,
+  Tooltip,
+  TooltipProps
+} from '@/components'
 import { LinkProps, useRouterContext } from '@/context'
 import { cn } from '@utils/cn'
+
+type SidebarItemActionButtonPropsType = ButtonProps & {
+  title?: string
+  iconName?: IconV2NamesType
+  iconProps?: Omit<IconPropsV2, 'ref' | 'name' | 'fallback'>
+  onClick: React.MouseEventHandler<HTMLButtonElement>
+}
 
 interface BaseItemProps {
   icon: NonNullable<IconPropsV2['name']>
   isActive?: boolean
+  actionButtons?: SidebarItemActionButtonPropsType[]
 }
 
 interface DefaultItemProps extends BaseItemProps, GridProps {
@@ -22,8 +42,26 @@ interface LinkItemProps extends BaseItemProps, Omit<LinkProps, 'to'> {
 type ItemProps = DefaultItemProps | LinkItemProps
 
 const Item = forwardRef<HTMLDivElement, ItemProps>(
-  ({ className, children, icon, isActive, link, isFolder, ...props }: ItemProps, ref) => {
+  ({ className, children, icon, isActive, link, isFolder, actionButtons, ...props }: ItemProps, ref) => {
     const { Link } = useRouterContext()
+
+    const actionButtonsContent = useMemo(() => {
+      if (!actionButtons) return null
+
+      return (
+        <Layout.Horizontal gap="none">
+          {actionButtons?.map((buttonProps, index) => {
+            const { title, iconOnly = true, iconName, iconProps, ...rest } = buttonProps
+            return (
+              <Button key={index} size="2xs" variant="ghost" iconOnly={iconOnly} {...rest}>
+                {iconName && <IconV2 name={iconName} {...iconProps} />}
+                {title}
+              </Button>
+            )
+          })}
+        </Layout.Horizontal>
+      )
+    }, [actionButtons])
 
     const commonClassnames = cn(
       'w-[fill-available] py-cn-2xs pr-1.5 rounded text-cn-2 hover:text-cn-1 focus-visible:text-cn-1 focus-visible:bg-cn-hover focus-visible:outline-none',
@@ -31,7 +69,8 @@ const Item = forwardRef<HTMLDivElement, ItemProps>(
         'text-cn-1': isActive,
         'grid items-center justify-start gap-cn-2xs grid-flow-col': !!link,
         'bg-cn-selected': !isFolder && isActive,
-        'hover:bg-cn-hover': !isFolder
+        'hover:bg-cn-hover': !isFolder,
+        'grid-cols-[auto_1fr_auto]': !!actionButtonsContent
       },
       className
     )
@@ -43,10 +82,11 @@ const Item = forwardRef<HTMLDivElement, ItemProps>(
         className={commonClassnames}
         {...(props as Omit<LinkItemProps, 'to'>)}
       >
-        <IconV2 className="text-inherit" name={icon} size="md" />
-        <Text className="text-inherit" truncate>
+        <IconV2 name={icon} size="md" />
+        <Text align="left" color="inherit" truncate>
           {children}
         </Text>
+        {actionButtonsContent}
       </Link>
     ) : (
       <Layout.Grid
@@ -59,10 +99,11 @@ const Item = forwardRef<HTMLDivElement, ItemProps>(
         as="button"
         {...(props as DefaultItemProps)}
       >
-        <IconV2 className="text-inherit" name={icon} size="md" />
-        <Text className="text-inherit" truncate>
+        <IconV2 name={icon} size="md" />
+        <Text align="left" color="inherit" truncate>
           {children}
         </Text>
+        {actionButtonsContent}
       </Layout.Grid>
     )
   }
@@ -166,4 +207,4 @@ function Root({ children, onValueChange, value }: RootProps) {
   )
 }
 
-export { Root, FileItem, FolderItem }
+export { Root, FileItem, FolderItem, Item }

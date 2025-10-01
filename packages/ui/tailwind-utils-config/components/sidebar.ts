@@ -200,17 +200,35 @@ export default {
         borderRadius: 'var(--cn-sidebar-item-radius)',
         '@apply duration-150 transition-[padding,row-gap,column-gap] ease-linear': '',
 
+        '&-only-action-buttons': {
+          gridTemplateAreas: '"icon title action-buttons"',
+          gridTemplateColumns: 'var(--cn-icon-size-sm) 1fr auto'
+        },
+
         '&-w-description': {
           gridTemplateAreas: `
             "icon title"
             "icon description"
           `,
-          gridTemplateColumns: 'var(--cn-icon-size-lg) 1fr'
+          gridTemplateColumns: 'var(--cn-icon-size-lg) 1fr',
+
+          '&:has(.cn-sidebar-item-content-action-buttons)': {
+            gridTemplateAreas: `
+            "icon title action-buttons"
+            "icon description action-buttons"
+          `,
+            gridTemplateColumns: 'var(--cn-icon-size-lg) 1fr auto'
+          }
         },
 
         '&-w-r-element': {
           gridTemplateAreas: '"icon title elem"',
-          gridTemplateColumns: 'var(--cn-icon-size-sm) 1fr auto'
+          gridTemplateColumns: 'var(--cn-icon-size-sm) 1fr auto',
+
+          '&:has(.cn-sidebar-item-content-action-buttons)': {
+            gridTemplateAreas: '"icon title action-buttons elem"',
+            gridTemplateColumns: 'var(--cn-icon-size-sm) 1fr auto auto'
+          }
         },
 
         '&-complete': {
@@ -218,7 +236,15 @@ export default {
             "icon title       elem"
             "icon description elem"
           `,
-          gridTemplateColumns: 'var(--cn-icon-size-lg) 1fr'
+          gridTemplateColumns: 'var(--cn-icon-size-lg) 1fr',
+
+          '&:has(.cn-sidebar-item-content-action-buttons)': {
+            gridTemplateAreas: `
+            "icon title action-buttons elem"
+            "icon description action-buttons elem"
+          `,
+            gridTemplateColumns: 'var(--cn-icon-size-lg) 1fr auto auto'
+          }
         },
 
         '&-icon': {
@@ -260,6 +286,11 @@ export default {
 
         '&-right-element': {
           gridArea: 'elem'
+        },
+
+        // cn-sidebar-item-content-action-buttons
+        '&-action-buttons': {
+          gridArea: 'action-buttons'
         },
 
         '&-action-item-placeholder': {

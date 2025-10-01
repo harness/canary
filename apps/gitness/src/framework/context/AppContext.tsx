@@ -11,10 +11,10 @@ import {
   updateUser,
   UpdateUserErrorResponse
 } from '@harnessio/code-service-client'
+import { useLocalStorage, UserPreference } from '@harnessio/ui/hooks'
 import { ProfileSettingsErrorType } from '@harnessio/ui/views'
 
 import { useIsMFE } from '../hooks/useIsMFE'
-import useLocalStorage from '../hooks/useLocalStorage'
 import usePageTitle from '../hooks/usePageTitle'
 
 interface AppContextType {
@@ -51,7 +51,7 @@ const AppContext = createContext<AppContextType>({
 export const AppProvider: FC<{ children: ReactNode }> = memo(({ children }) => {
   usePageTitle()
   const isMFE = useIsMFE()
-  const [currentUser, setCurrentUser] = useLocalStorage<TypesUser>('currentUser', {})
+  const [currentUser, setCurrentUser] = useLocalStorage<TypesUser>(UserPreference.CURRENT_USER, {})
   const [spaces, setSpaces] = useState<TypesSpace[]>([])
   const [isSpacesLoading, setSpacesIsLoading] = useState(false)
   const [isLoadingUser, setIsLoadingUser] = useState(false)

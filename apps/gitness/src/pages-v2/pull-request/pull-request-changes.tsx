@@ -22,6 +22,7 @@ import {
   useRawDiffQuery,
   useReviewerListPullReqQuery
 } from '@harnessio/code-service-client'
+import { useLocalStorage, UserPreference } from '@harnessio/ui/hooks'
 import {
   CommitFilterItemProps,
   CreateCommentPullReqRequest,
@@ -81,7 +82,7 @@ export default function PullRequestChanges() {
     () => pullReqCommits?.commits?.map(commit => commit.sha as string),
     [pullReqCommits?.commits]
   )
-  const [diffMode, setDiffMode] = useState<DiffModeEnum>(DiffModeEnum.Split)
+  const [diffMode, setDiffMode] = useLocalStorage<DiffModeEnum>(UserPreference.DIFF_VIEW_STYLE, DiffModeEnum.Split)
   const targetRef = useMemo(() => pullReqMetadata?.merge_base_sha, [pullReqMetadata?.merge_base_sha])
   const sourceRef = useMemo(() => pullReqMetadata?.source_sha, [pullReqMetadata?.source_sha])
   const prId = (pullRequestId && Number(pullRequestId)) || -1

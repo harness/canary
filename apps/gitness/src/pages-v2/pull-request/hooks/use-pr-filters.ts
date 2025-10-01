@@ -1,8 +1,15 @@
-import { useMemo, useState } from 'react'
+import { useMemo } from 'react'
+
+import { useLocalStorage, UserPreference } from '@harnessio/ui/hooks'
 
 import { orderSortDate, PRCommentFilterType } from './types'
 
-const dateFilters = [
+interface FilterOption {
+  label: string
+  value: string
+}
+
+const dateFilters: FilterOption[] = [
   {
     label: 'First added',
     value: orderSortDate.ASC
@@ -13,7 +20,7 @@ const dateFilters = [
   }
 ]
 
-const activityFilters = [
+const activityFilters: FilterOption[] = [
   {
     label: 'Show everything',
     value: PRCommentFilterType.SHOW_EVERYTHING
@@ -37,8 +44,14 @@ const activityFilters = [
 ]
 
 export const usePrFilters = () => {
-  const [dateOrderSort, setDateOrderSort] = useState<{ label: string; value: string }>(dateFilters[0])
-  const [activityFilter, setActivityFilter] = useState<{ label: string; value: string }>(activityFilters[0])
+  const [dateOrderSort, setDateOrderSort] = useLocalStorage<FilterOption>(
+    UserPreference.PULL_REQUEST_ACTIVITY_ORDER,
+    dateFilters[0]
+  )
+  const [activityFilter, setActivityFilter] = useLocalStorage<FilterOption>(
+    UserPreference.PULL_REQUEST_ACTIVITY_FILTER,
+    activityFilters[0]
+  )
 
   return useMemo(
     () => ({

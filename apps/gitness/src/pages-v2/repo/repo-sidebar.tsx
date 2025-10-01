@@ -11,6 +11,7 @@ import {
 } from '@harnessio/code-service-client'
 import { Layout, SkeletonFileExplorer } from '@harnessio/ui/components'
 import { useCustomDialogTrigger } from '@harnessio/ui/context'
+import { useLocalStorage, UserPreference } from '@harnessio/ui/hooks'
 import {
   BranchSelectorListItem,
   BranchSelectorTab,
@@ -25,7 +26,6 @@ import { CreateBranchDialog } from '../../components-v2/create-branch-dialog'
 import Explorer from '../../components-v2/FileExplorer'
 import { useRoutes } from '../../framework/context/NavigationContext'
 import { useGetRepoRef } from '../../framework/hooks/useGetRepoPath'
-import useLocalStorage from '../../framework/hooks/useLocalStorage'
 import { useGitRef } from '../../hooks/useGitRef'
 import { PathParams } from '../../RouteDefinitions'
 import { FILE_SEPARATOR, normalizeGitRef, REFS_BRANCH_PREFIX, REFS_TAGS_PREFIX } from '../../utils/git-utils'
@@ -42,7 +42,7 @@ export const RepoSidebar = () => {
   const navigate = useNavigate()
   const [isCreateBranchDialogOpen, setCreateBranchDialogOpen] = useState(false)
   const [branchQueryForNewBranch, setBranchQueryForNewBranch] = useState<string>('')
-  const [sidebarWidth, setSidebarWidth] = useLocalStorage<number>('sidebarWidth', SIDEBAR_MIN_WIDTH)
+  const [sidebarWidth, setSidebarWidth] = useLocalStorage<number>(UserPreference.SIDEBAR_WIDTH, SIDEBAR_MIN_WIDTH)
   const containerRef = useRef<HTMLDivElement>(null)
 
   const { triggerRef, registerTrigger } = useCustomDialogTrigger()

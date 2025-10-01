@@ -1,11 +1,12 @@
 import { useEffect } from 'react'
 
+import { useLocalStorage, UserPreference } from '@harnessio/ui/hooks'
+
 import { useAppContext } from '../context/AppContext'
-import useLocalStorage from './useLocalStorage'
 
 export function useSelectedSpaceId(value?: string) {
   const { spaces } = useAppContext()
-  const [spaceId, setSpaceId] = useLocalStorage('spaceId', value)
+  const [spaceId, setSpaceId] = useLocalStorage(UserPreference.SPACE_ID, value)
 
   useEffect(() => {
     if (value) {

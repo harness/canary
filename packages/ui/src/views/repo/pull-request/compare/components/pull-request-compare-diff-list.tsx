@@ -2,6 +2,7 @@ import { FC, RefObject, useCallback, useEffect, useMemo, useRef, useState } from
 
 import { Button, IconV2, Layout, ListActions } from '@/components'
 import { useTranslation } from '@/context'
+import { useLocalStorage, UserPreference } from '@/hooks'
 import { TypesUser } from '@/types'
 import {
   ChangedFilesShortInfo,
@@ -48,7 +49,7 @@ const PullRequestCompareDiffList: FC<PullRequestCompareDiffListProps> = ({
   toRepoFileDetails
 }) => {
   const { t } = useTranslation()
-  const [diffMode, setDiffMode] = useState<DiffModeEnum>(DiffModeEnum.Split)
+  const [diffMode, setDiffMode] = useLocalStorage<DiffModeEnum>(UserPreference.DIFF_VIEW_STYLE, DiffModeEnum.Split)
   const handleDiffModeChange = (value: string) => {
     setDiffMode(value === 'Split' ? DiffModeEnum.Split : DiffModeEnum.Unified)
   }
@@ -61,11 +62,7 @@ const PullRequestCompareDiffList: FC<PullRequestCompareDiffListProps> = ({
 
   useEffect(() => {
     if (diffData.length > 0) {
-      const itemsToOpen: string[] = []
-      diffData.map(diffItem => {
-        itemsToOpen.push(diffItem.text)
-      })
-      setOpenItems(itemsToOpen)
+      setOpenItems(diffData.map(diffItem => diffItem.text))
     }
   }, [diffData])
 
@@ -124,7 +121,7 @@ const PullRequestCompareDiffList: FC<PullRequestCompareDiffListProps> = ({
           align="center"
           justify="between"
           gap="xl"
-          className="layer-high bg-cn-1 pt-cn-xl sticky top-[var(--cn-breadcrumbs-height)] pb-2"
+          className="layer-high bg-cn-1 pt-cn-xl sticky top-[var(--cn-breadcrumbs-height)] pb-cn-xs"
         >
           <Layout.Horizontal className="grow" align="center">
             {!showExplorer && (
@@ -162,7 +159,7 @@ const PullRequestCompareDiffList: FC<PullRequestCompareDiffListProps> = ({
                 detectionMargin={calculateDetectionMargin(diffData?.length)}
               >
                 {diffsBlock?.map((item, index) => (
-                  <div className="pt-2" key={item.filePath}>
+                  <div className="pt-cn-xs" key={item.filePath}>
                     <InViewDiffRenderer
                       key={item.filePath}
                       blockName={innerBlockName(item?.filePath ?? (blockIndex + index).toString())}

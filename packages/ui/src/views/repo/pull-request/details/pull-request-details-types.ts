@@ -660,7 +660,8 @@ export enum CommentType {
   REVIEWER_DELETE = 'reviewer-delete',
   USER_GROUP_REVIEWER_DELETE = 'user-group-reviewer-delete',
   LABEL_MODIFY = 'label-modify',
-  BRANCH_RESTORE = 'branch-restore'
+  BRANCH_RESTORE = 'branch-restore',
+  TARGET_BRANCH_CHANGE = 'target-branch-change'
 }
 
 export enum LabelActivity {

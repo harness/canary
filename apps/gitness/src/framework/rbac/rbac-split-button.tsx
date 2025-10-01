@@ -2,7 +2,14 @@ import { RbacSplitButtonProps, rbacTooltip, Resource, SplitButton, Tooltip } fro
 
 import { useMFEContext } from '../hooks/useMFEContext'
 
-export const RbacSplitButton = <T extends string>({ rbac, variant, tooltip, ...rest }: RbacSplitButtonProps<T>) => {
+export const RbacSplitButton = <T extends string>({
+  rbac,
+  buttonRbac,
+  dropdownRbac,
+  variant,
+  tooltip,
+  ...rest
+}: RbacSplitButtonProps<T>) => {
   const { hooks } = useMFEContext()
 
   /**
@@ -16,8 +23,30 @@ export const RbacSplitButton = <T extends string>({ rbac, variant, tooltip, ...r
       })
       ?.some(Boolean) ?? true
 
+  const hasButtonPermission =
+    hooks
+      .usePermission?.({
+        resource: buttonRbac?.resource ?? ({} as Resource),
+        permissions: buttonRbac?.permissions ?? []
+      })
+      ?.some(Boolean) ?? true
+
+  const hasDropdownPermission =
+    hooks
+      .usePermission?.({
+        resource: dropdownRbac?.resource ?? ({} as Resource),
+        permissions: dropdownRbac?.permissions ?? []
+      })
+      ?.some(Boolean) ?? true
+
   const button = (
-    <SplitButton<T> {...rest} variant={variant === 'outline' ? 'outline' : undefined} disabled={!hasPermission} />
+    <SplitButton<T>
+      {...rest}
+      variant={variant === 'outline' ? 'outline' : undefined}
+      disabled={!hasPermission}
+      disableButton={!hasButtonPermission}
+      disableDropdown={!hasDropdownPermission}
+    />
   )
 
   return !hasPermission ? (
@@ -25,6 +54,10 @@ export const RbacSplitButton = <T extends string>({ rbac, variant, tooltip, ...r
       {button}
     </Tooltip>
   ) : (
+    /*
+     * TODO: When a user provides separate RBAC for the button vs dropdown, we want to add separate tooltips in
+     *       SplitButton, however that component does not support separate tooltips yet.
+     */
     button
   )
 }

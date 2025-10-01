@@ -34,6 +34,11 @@ export interface RBACProps {
   rbac?: PermissionsRequest
 }
 
+export interface RBACSplitProps extends RBACProps {
+  buttonRbac?: PermissionsRequest
+  dropdownRbac?: PermissionsRequest
+}
+
 /**
  * Types for RBAC-enabled components.
  * These components will automatically handle RBAC checks based on the provided `rbac` prop.
@@ -43,7 +48,7 @@ export interface RbacButtonProps extends Omit<ButtonProps, 'resource' | 'tooltip
 }
 
 export type RbacSplitButtonProps<T extends string> = SplitButtonProps<T> &
-  RBACProps & { tooltip?: Pick<TooltipProps, 'title' | 'content'> }
+  RBACSplitProps & { tooltip?: Pick<TooltipProps, 'title' | 'content'> }
 
 export interface RbacMoreActionsTooltipActionData extends ActionData, RBACProps {}
 

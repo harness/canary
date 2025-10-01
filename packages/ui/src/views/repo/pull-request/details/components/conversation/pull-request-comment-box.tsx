@@ -41,7 +41,7 @@ import { isEmpty, isUndefined } from 'lodash-es'
 import { getLinesFromBlocks } from './diff-utils'
 import { PullRequestCommentTextarea } from './pull-request-comment-textarea'
 import { PullRequestCommentingOn } from './pull-request-commenting-on'
-import ReplySplitButton from './sections/components/reply-split-button'
+import { ReplySplitButton } from './sections/components/reply-split-button'
 import { replaceMentionEmailWithDisplayName, replaceMentionEmailWithId } from './utils'
 
 interface ParsedSelection extends TextSelection {

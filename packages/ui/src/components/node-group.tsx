@@ -11,7 +11,12 @@ interface NodeGroupRootProps {
 
 function Root({ className, children }: NodeGroupRootProps) {
   return (
-    <div className={cn('relative grid grid-cols-[28px_1fr] grid-rows-[auto_1fr] items-center gap-cn-xs', className)}>
+    <div
+      className={cn(
+        'relative grid grid-cols-[28px_1fr] grid-rows-[auto_1fr] items-center gap-x-cn-xs gap-y-cn-3xs',
+        className
+      )}
+    >
       {children}
     </div>
   )

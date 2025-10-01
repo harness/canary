@@ -14,7 +14,7 @@ enum REPLY_TYPE {
   REPLY_WITH_ACTION = 'REPLY_WITH_ACTION'
 }
 
-const ReplySplitButton: FC<ReplySplitButtonProps> = ({
+export const ReplySplitButton: FC<ReplySplitButtonProps> = ({
   isLoading,
   isResolved = false,
   handleSaveComment,
@@ -77,5 +77,3 @@ const ReplySplitButton: FC<ReplySplitButtonProps> = ({
     </>
   )
 }
-
-export default ReplySplitButton

@@ -272,7 +272,7 @@ export const RepoSettingsGeneralPageContainer = () => {
         secret_scanning_enabled: data.secretScanning,
         principal_committer_match: data.verifyCommitterIdentity,
         // @ts-expect-error vulnerability_scanning_mode is not defined in the type from the API
-        vulnerability_scanning_mode: data.vulnerabilityScanning ? 'detect' : 'disabled'
+        vulnerability_scanning_mode: data.vulnerabilityScanning
       }
     })
   }

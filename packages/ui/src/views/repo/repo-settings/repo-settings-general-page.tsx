@@ -79,7 +79,7 @@ export const RepoSettingsGeneralPage: FC<RepoSettingsGeneralPageProps> = ({
           showVulnerabilityScanning={showVulnerabilityScanning}
           securityScanning={securityScanning}
           verifyCommitterIdentity={verifyCommitterIdentity}
-          vulnerabilityScanning={vulnerabilityScanning === 'detect'}
+          vulnerabilityScanning={vulnerabilityScanning}
           handleUpdateSecuritySettings={handleUpdateSecuritySettings}
           apiError={apiError}
           isUpdatingSecuritySettings={loadingStates.isUpdatingSecuritySettings}

@@ -10,7 +10,7 @@ import {
   TypesUserGroupInfo
 } from '@harnessio/code-service-client'
 import { PrincipalType } from '@harnessio/ui/types'
-import { RepoBranchSettingsFormFields, RepoData, RuleDataType } from '@harnessio/ui/views'
+import { RepoBranchSettingsFormFields, RepoData, RuleDataType, VulnerabilityScanningType } from '@harnessio/ui/views'
 
 import { getTotalRulesApplied, transformDataFromApi } from '../../../utils/repo-branch-rules-utils'
 
@@ -24,7 +24,7 @@ interface IRepoStore {
   recentStatusChecks: ListStatusCheckRecentOkResponse | null
   verifyCommitterIdentity: boolean
   gitLfsEnabled: boolean
-  vulnerabilityScanning: 'detect' | 'disabled'
+  vulnerabilityScanning: VulnerabilityScanningType
   setRepoData: (data: FindRepositoryOkResponse) => void
   setRules: (data: RepoRuleListOkResponse) => void
   setSecurityScanning: (enabled: boolean) => void
@@ -34,7 +34,7 @@ interface IRepoStore {
   setPrincipals: (data: ListPrincipalsOkResponse | null) => void
   setRecentStatusChecks: (data: ListStatusCheckRecentOkResponse | null) => void
   setVerifyCommitterIdentity: (enabled: boolean) => void
-  setVulnerabilityScanning: (enabled: 'detect' | 'disabled') => void
+  setVulnerabilityScanning: (enabled: VulnerabilityScanningType) => void
 }
 
 export const useRepoRulesStore = create<IRepoStore>(set => ({
@@ -55,7 +55,7 @@ export const useRepoRulesStore = create<IRepoStore>(set => ({
   principals: null,
   userGroups: null,
   recentStatusChecks: null,
-  vulnerabilityScanning: 'disabled',
+  vulnerabilityScanning: VulnerabilityScanningType.DISABLED,
 
   // Actions
   setRepoData: repoData =>

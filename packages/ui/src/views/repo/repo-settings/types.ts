@@ -39,10 +39,16 @@ export enum ErrorTypes {
 export type RepoUpdateData = z.infer<typeof generalSettingsFormSchema>
 export * from './components/repo-settings-general-features'
 
+export enum VulnerabilityScanningType {
+  DETECT = 'detect',
+  BLOCK = 'block',
+  DISABLED = 'disabled'
+}
+
 export interface SecurityScanning {
   secretScanning: boolean
   verifyCommitterIdentity: boolean
-  vulnerabilityScanning: boolean
+  vulnerabilityScanning: VulnerabilityScanningType
 }
 
 export interface RuleDataType {
@@ -60,7 +66,7 @@ export interface IRepoStore {
   rules: RuleDataType[] | null
   securityScanning: boolean
   verifyCommitterIdentity: boolean
-  vulnerabilityScanning: string
+  vulnerabilityScanning: VulnerabilityScanningType
   gitLfsEnabled: boolean
   presetRuleData: RepoBranchSettingsFormFields | null
   principals: PrincipalType[] | null

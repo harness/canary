@@ -1,4 +1,4 @@
-import { IRepoStore } from '@harnessio/ui/views'
+import { IRepoStore, VulnerabilityScanningType } from '@harnessio/ui/views'
 
 export const useRepoRulesStore = (): IRepoStore => ({
   repoData: {
@@ -21,7 +21,7 @@ export const useRepoRulesStore = (): IRepoStore => ({
   verifyCommitterIdentity: false,
   gitLfsEnabled: false,
   presetRuleData: null,
-  vulnerabilityScanning: 'disabled',
+  vulnerabilityScanning: VulnerabilityScanningType.DISABLED,
   principals: [
     {
       id: 4,

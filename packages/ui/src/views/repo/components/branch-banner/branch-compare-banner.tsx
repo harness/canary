@@ -14,66 +14,33 @@ interface BranchCompareBannerProps {
   defaultBranchName?: string
   repoId?: string
   spaceId?: string
-  onDismiss?: (branchName: string) => void
 }
 
-const BranchCompareBanner: FC<BranchCompareBannerProps> = ({
-  branch,
-  defaultBranchName,
-  repoId,
-  spaceId,
-  onDismiss
-}) => {
+const BranchCompareBanner: FC<BranchCompareBannerProps> = ({ branch, defaultBranchName, repoId, spaceId }) => {
   const { t } = useTranslation()
   const { Link } = useRouterContext()
 
-  const handleDismiss = () => {
-    if (onDismiss && branch.name) {
-      onDismiss(branch.name)
-    }
-  }
-
   return (
     <Layout.Flex justify="between" align="center" gap="sm">
-      <Layout.Flex gap="xs" align="center">
+      <Layout.Grid gap="2xs" align="center" flow="column">
         <IconV2 name="git-branch" size="sm" color="success" />
-        <Text variant="body-strong" color="foreground-1">
+        <Text truncate>
           <Link to={`${spaceId ? `/${spaceId}` : ''}/repos/${repoId}/summary/refs/heads/${branch.name}`}>
-            <Text lineClamp={1} variant="body-single-line-strong" className="max-w-96">
-              {branch.name}
-            </Text>
+            {branch.name}
           </Link>
         </Text>
-        <Text variant="body-single-line-normal" color="foreground-2">
+        <Text wrap="nowrap">
           {t('views:repos.hadRecentPushes', 'had recent pushes ')}
-          <TimeAgoCard
-            timestamp={branch.updated}
-            textProps={{ variant: 'body-single-line-normal', color: 'foreground-2', truncate: true }}
-          />
+          <TimeAgoCard timestamp={branch.updated} textProps={{ color: 'foreground-2', truncate: true }} />
         </Text>
-      </Layout.Flex>
-      <Layout.Flex gap="xs" align="center">
-        <Button variant="primary" asChild>
-          <Link
-            to={`${spaceId ? `/${spaceId}` : ''}/repos/${repoId}/pulls/compare/${defaultBranchName}...${branch.name}`}
-          >
-            {t('views:repos.compareAndPullRequest', 'Compare & pull request')}
-          </Link>
-        </Button>
-        <Button
-          size="xs"
-          variant="ghost"
-          iconOnly
-          onClick={handleDismiss}
-          aria-label={t('views:repos.dismiss', 'Dismiss')}
-          title={t('views:repos.dismiss', 'Dismiss')}
-          tooltipProps={{
-            content: t('views:repos.dismiss', 'Dismiss')
-          }}
+      </Layout.Grid>
+      <Button variant="primary" theme="success" asChild>
+        <Link
+          to={`${spaceId ? `/${spaceId}` : ''}/repos/${repoId}/pulls/compare/${defaultBranchName}...${branch.name}`}
         >
-          <IconV2 name="xmark" size="xs" />
-        </Button>
-      </Layout.Flex>
+          {t('views:repos.compareAndPullRequest', 'Compare & pull request')}
+        </Link>
+      </Button>
     </Layout.Flex>
   )
 }

@@ -1,4 +1,4 @@
-import { RbacSplitButtonProps, Resource, SplitButton, Tooltip } from '@harnessio/ui/components'
+import { RbacSplitButtonProps, rbacTooltip, Resource, SplitButton, Tooltip } from '@harnessio/ui/components'
 
 import { useMFEContext } from '../hooks/useMFEContext'
 
@@ -21,7 +21,7 @@ export const RbacSplitButton = <T extends string>({ rbac, variant, tooltip, ...r
   )
 
   return !hasPermission ? (
-    <Tooltip title={tooltip?.title ?? 'You are missing the permission for this action.'} content={tooltip?.content}>
+    <Tooltip title={tooltip?.title ?? rbacTooltip} content={tooltip?.content}>
       {button}
     </Tooltip>
   ) : (

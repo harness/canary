@@ -1,3 +1,6 @@
+import { RefAttributes } from 'react'
+
+import { ActionData, MoreActionsTooltipProps } from '@/components'
 import { ButtonProps } from '@components/button'
 import { SplitButtonProps } from '@components/split-button'
 import { TooltipProps } from '@components/tooltip'
@@ -11,12 +14,15 @@ export interface Resource {
 }
 
 export enum ResourceType {
-  CODE_REPOSITORY = 'CODE_REPOSITORY'
+  CODE_REPOSITORY = 'CODE_REPOSITORY',
+  SECRET = 'SECRET'
 }
 
 export enum PermissionIdentifier {
   CODE_REPO_CREATE = 'code_repo_create',
-  CODE_REPO_DELETE = 'code_repo_delete'
+  CODE_REPO_DELETE = 'code_repo_delete',
+  UPDATE_SECRET = 'core_secret_edit',
+  DELETE_SECRET = 'core_secret_delete'
 }
 
 export interface PermissionsRequest {
@@ -24,7 +30,7 @@ export interface PermissionsRequest {
   permissions: PermissionIdentifier[]
 }
 
-interface RBACProps {
+export interface RBACProps {
   rbac?: PermissionsRequest
 }
 
@@ -38,3 +44,13 @@ export interface RbacButtonProps extends Omit<ButtonProps, 'resource' | 'tooltip
 
 export type RbacSplitButtonProps<T extends string> = SplitButtonProps<T> &
   RBACProps & { tooltip?: Pick<TooltipProps, 'title' | 'content'> }
+
+export interface RbacMoreActionsTooltipActionData extends ActionData, RBACProps {}
+
+export interface RbacMoreActionsTooltipProps
+  extends Omit<MoreActionsTooltipProps, 'actions'>,
+    RefAttributes<HTMLButtonElement> {
+  actions: RbacMoreActionsTooltipActionData[]
+}
+
+export const rbacTooltip = 'You are missing the permission for this action.'

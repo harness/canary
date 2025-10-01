@@ -1,8 +1,8 @@
 import { FC, ReactNode } from 'react'
 
-import { Layout, Link, MoreActionsTooltip, Spacer, Text, TimeAgoCard } from '@/components'
+import { Layout, Link, PermissionIdentifier, ResourceType, Spacer, Text, TimeAgoCard } from '@/components'
 import { Tabs } from '@/components/tabs'
-import { useCustomDialogTrigger, useRouterContext, useTranslation } from '@/context'
+import { useComponents, useCustomDialogTrigger, useRouterContext, useTranslation } from '@/context'
 import { SandboxLayout } from '@views/layouts/SandboxLayout'
 import { SecretListItem } from '@views/secrets'
 
@@ -36,6 +36,7 @@ const useGetSecretInfo = (
   onDelete?: (identifier: string) => void,
   identifier?: string
 ) => {
+  const { RbacMoreActionsTooltip } = useComponents()
   const { triggerRef, registerTrigger } = useCustomDialogTrigger()
   const handleDelete = (id: string) => {
     registerTrigger()
@@ -76,7 +77,7 @@ const useGetSecretInfo = (
           )}
         </Layout.Vertical>
       </Layout.Horizontal>
-      <MoreActionsTooltip
+      <RbacMoreActionsTooltip
         ref={triggerRef}
         buttonVariant="outline"
         actions={[
@@ -84,13 +85,27 @@ const useGetSecretInfo = (
             isDanger: false,
             title: 'Edit secret',
             iconName: 'edit-pencil',
-            onClick: () => onEdit?.(identifier ?? '')
+            onClick: () => onEdit?.(identifier ?? ''),
+            rbac: {
+              resource: {
+                resourceType: ResourceType.SECRET,
+                resourceIdentifier: identifier
+              },
+              permissions: [PermissionIdentifier.UPDATE_SECRET]
+            }
           },
           {
             isDanger: true,
             title: 'Delete secret',
             iconName: 'trash',
-            onClick: () => handleDelete(identifier ?? '')
+            onClick: () => handleDelete(identifier ?? ''),
+            rbac: {
+              resource: {
+                resourceType: ResourceType.SECRET,
+                resourceIdentifier: identifier
+              },
+              permissions: [PermissionIdentifier.DELETE_SECRET]
+            }
           }
         ]}
       />

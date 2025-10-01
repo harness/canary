@@ -1,7 +1,16 @@
 import { FC, useCallback, useMemo, useRef } from 'react'
 
-import { Button, IconV2, Layout, NoData, Pagination, SecretListFilters, Text } from '@/components'
-import { useRouterContext, useTranslation } from '@/context'
+import {
+  IconV2,
+  Layout,
+  NoData,
+  Pagination,
+  PermissionIdentifier,
+  ResourceType,
+  SecretListFilters,
+  Text
+} from '@/components'
+import { useComponents, useRouterContext, useTranslation } from '@/context'
 import { SandboxLayout } from '@/views'
 import { cn } from '@utils/cn'
 import FilterGroup, { FilterGroupRef } from '@views/components/FilterGroup'
@@ -33,6 +42,7 @@ const SecretListPage: FC<SecretListPageProps> = ({
   const { t } = useTranslation()
   const { navigate } = useRouterContext()
   const filterRef = useRef<FilterGroupRef>(null)
+  const { RbacButton } = useComponents()
 
   const secretManagerFilterOptions = secretManagerIdentifiers.map(secretManager => {
     return {
@@ -144,10 +154,16 @@ const SecretListPage: FC<SecretListPageProps> = ({
                 onFilterValueChange={onFilterValueChange}
                 handleInputChange={handleSearch}
                 headerAction={
-                  <Button onClick={onCreate}>
+                  <RbacButton
+                    onClick={onCreate}
+                    rbac={{
+                      resource: { resourceType: ResourceType.SECRET },
+                      permissions: [PermissionIdentifier.UPDATE_SECRET]
+                    }}
+                  >
                     <IconV2 name="plus" />
                     {t('views:secrets.createNew', 'Create Secret')}
-                  </Button>
+                  </RbacButton>
                 }
                 filterOptions={SECRET_FILTER_OPTIONS}
               />

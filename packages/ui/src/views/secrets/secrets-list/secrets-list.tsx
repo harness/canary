@@ -1,7 +1,7 @@
 import { useCallback } from 'react'
 
-import { MoreActionsTooltip, NoData, Skeleton, Table, Text, TimeAgoCard } from '@/components'
-import { useCustomDialogTrigger, useTranslation } from '@/context'
+import { NoData, PermissionIdentifier, ResourceType, Skeleton, Table, Text, TimeAgoCard } from '@/components'
+import { useComponents, useCustomDialogTrigger, useTranslation } from '@/context'
 import { cn } from '@utils/cn'
 
 import { SecretListProps } from './types'
@@ -21,6 +21,7 @@ export function SecretList({
   const { t } = useTranslation()
 
   const { triggerRef, registerTrigger } = useCustomDialogTrigger()
+  const { RbacMoreActionsTooltip } = useComponents()
 
   const handleDeleteSecret = useCallback(
     (secretId: string) => {
@@ -82,7 +83,7 @@ export function SecretList({
               ) : null}
             </Table.Cell>
             <Table.Cell className={cn(CELL_MIN_WIDTH_ICON, 'text-center')} disableLink>
-              <MoreActionsTooltip
+              <RbacMoreActionsTooltip
                 iconName="more-horizontal"
                 isInTable
                 ref={triggerRef}
@@ -90,13 +91,27 @@ export function SecretList({
                   {
                     title: t('views:secrets.edit', 'Edit Secret'),
                     iconName: 'edit-pencil',
-                    onClick: () => onEditSecret(secret)
+                    onClick: () => onEditSecret(secret),
+                    rbac: {
+                      resource: {
+                        resourceType: ResourceType.SECRET,
+                        resourceIdentifier: secret.identifier
+                      },
+                      permissions: [PermissionIdentifier.UPDATE_SECRET]
+                    }
                   },
                   {
                     isDanger: true,
                     title: t('views:secrets.delete', 'Delete Secret'),
                     iconName: 'trash',
-                    onClick: () => handleDeleteSecret(secret.identifier)
+                    onClick: () => handleDeleteSecret(secret.identifier),
+                    rbac: {
+                      resource: {
+                        resourceType: ResourceType.SECRET,
+                        resourceIdentifier: secret.identifier
+                      },
+                      permissions: [PermissionIdentifier.DELETE_SECRET]
+                    }
                   }
                 ]}
               />

@@ -149,7 +149,7 @@ export default {
     '&-item': {
       maxWidth: '100%',
       overflow: 'hidden',
-      '@apply duration-150 transition-[max-width,margin-left] ease-linear': '',
+      '@apply duration-150 transition-[max-width,margin-left,padding] ease-linear': '',
 
       '&-big': {
         maxWidth: '100%'
@@ -218,7 +218,7 @@ export default {
             "icon title       elem"
             "icon description elem"
           `,
-          gridTemplateColumns: 'var(--cn-icon-size-lg) 1fr'
+          gridTemplateColumns: 'var(--cn-avatar-size-lg) 1fr'
         },
 
         '&-icon': {
@@ -345,6 +345,10 @@ export default {
         width: 'var(--cn-size-14)'
       },
 
+      '& .cn-input-prefix': {
+        '@apply ml-0': ''
+      },
+
       '.cn-sidebar-group': {
         '--sidebar-group-label-scale': '0'
       },
@@ -356,8 +360,7 @@ export default {
         },
 
         '&-content': {
-          rowGap: '0',
-          columnGap: '0',
+          '@apply grid-cols-[1fr] px-0 justify-items-center gap-0': '',
 
           '&-title, &-description, &-badge, &-right-element, &-action-item-placeholder': {
             maxWidth: '0',

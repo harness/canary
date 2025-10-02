@@ -1,4 +1,4 @@
-import { ReactNode } from 'react'
+import { ForwardedRef, forwardRef, ReactNode, Ref } from 'react'
 
 import {
   ButtonGroup,
@@ -102,6 +102,8 @@ export interface InputReferenceProps<T> extends VariantProps<typeof inputReferen
    * Function called when the open (arrow) icon is clicked
    */
   onOpen?: () => void
+
+  dropdownTriggerRef?: Ref<HTMLButtonElement>
 }
 
 /**
@@ -109,29 +111,33 @@ export interface InputReferenceProps<T> extends VariantProps<typeof inputReferen
  * InputReference element that can trigger actions like opening a drawer, modal, or dropdown.
  * It supports generic types for values.
  */
-export const InputReference = <T,>({
-  placeholder,
-  value,
-  onClick,
-  onEdit,
-  onClear,
-  disabled = false,
-  className,
-  iconProps,
-  logo,
-  label,
-  caption,
-  optional = false,
-  renderValue,
-  suffix,
-  onOpen,
-  wrapperClassName = '',
-  orientation = 'vertical',
-  labelSuffix,
-  tooltipProps,
-  tooltipContent,
-  ...props
-}: InputReferenceProps<T>) => {
+const InputReferenceInner = <T,>(
+  {
+    placeholder,
+    value,
+    onClick,
+    onEdit,
+    onClear,
+    disabled = false,
+    className,
+    iconProps,
+    logo,
+    label,
+    caption,
+    optional = false,
+    renderValue,
+    suffix,
+    onOpen,
+    wrapperClassName = '',
+    orientation = 'vertical',
+    labelSuffix,
+    tooltipProps,
+    tooltipContent,
+    dropdownTriggerRef,
+    ...props
+  }: InputReferenceProps<T>,
+  ref: ForwardedRef<HTMLDivElement>
+) => {
   // Determine what to display: rendered value if value exists, otherwise placeholder
   const hasValue = value !== null && value !== undefined
   const displayContent = hasValue ? (renderValue ? renderValue(value as T) : value) : placeholder
@@ -184,6 +190,7 @@ export const InputReference = <T,>({
       <ControlGroup.InputWrapper>
         <Layout.Horizontal gap="sm" className="w-full">
           <div
+            ref={ref}
             onClick={disabled ? undefined : onClick}
             className={cn(inputReferenceVariants({ state }), className)}
             role="button"
@@ -235,6 +242,7 @@ export const InputReference = <T,>({
               size="md"
               buttonsProps={[
                 {
+                  ref: dropdownTriggerRef,
                   children: <IconV2 name="more-vert" />,
                   dropdownProps: {
                     contentProps: {
@@ -264,3 +272,9 @@ export const InputReference = <T,>({
     </ControlGroup.Root>
   )
 }
+
+const InputReference = forwardRef(InputReferenceInner) as <T>(
+  props: InputReferenceProps<T> & { ref?: ForwardedRef<HTMLDivElement> }
+) => ReturnType<typeof InputReferenceInner>
+
+export { InputReference }

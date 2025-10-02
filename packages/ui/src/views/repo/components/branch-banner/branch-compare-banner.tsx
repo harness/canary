@@ -14,11 +14,24 @@ interface BranchCompareBannerProps {
   defaultBranchName?: string
   repoId?: string
   spaceId?: string
+  onDismiss?: (branchName: string) => void
 }
 
-const BranchCompareBanner: FC<BranchCompareBannerProps> = ({ branch, defaultBranchName, repoId, spaceId }) => {
+const BranchCompareBanner: FC<BranchCompareBannerProps> = ({
+  branch,
+  defaultBranchName,
+  repoId,
+  spaceId,
+  onDismiss
+}) => {
   const { t } = useTranslation()
   const { Link: RouterLink } = useRouterContext()
+
+  const handleDismiss = () => {
+    if (onDismiss && branch.name) {
+      onDismiss(branch.name)
+    }
+  }
 
   return (
     <Layout.Flex justify="between" align="center" gap="sm">
@@ -35,13 +48,28 @@ const BranchCompareBanner: FC<BranchCompareBannerProps> = ({ branch, defaultBran
           <TimeAgoCard timestamp={branch.updated} textProps={{ color: 'foreground-2', truncate: true }} />
         </Text>
       </Layout.Grid>
-      <Button variant="primary" theme="success" asChild>
-        <RouterLink
-          to={`${spaceId ? `/${spaceId}` : ''}/repos/${repoId}/pulls/compare/${defaultBranchName}...${branch.name}`}
+      <Layout.Flex gap="xs" align="center">
+        <Button variant="primary" theme="success" asChild>
+          <RouterLink
+            to={`${spaceId ? `/${spaceId}` : ''}/repos/${repoId}/pulls/compare/${defaultBranchName}...${branch.name}`}
+          >
+            {t('views:repos.compareAndPullRequest', 'Compare & pull request')}
+          </RouterLink>
+        </Button>
+        <Button
+          size="xs"
+          variant="ghost"
+          iconOnly
+          onClick={handleDismiss}
+          aria-label={t('views:repos.dismiss', 'Dismiss')}
+          title={t('views:repos.dismiss', 'Dismiss')}
+          tooltipProps={{
+            content: t('views:repos.dismiss', 'Dismiss')
+          }}
         >
-          {t('views:repos.compareAndPullRequest', 'Compare & pull request')}
-        </RouterLink>
-      </Button>
+          <IconV2 name="xmark" size="xs" />
+        </Button>
+      </Layout.Flex>
     </Layout.Flex>
   )
 }

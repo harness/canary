@@ -31,6 +31,7 @@
     "createTagRuleButton": "Create Tag Rule",
     "hadRecentPushes": "had recent pushes ",
     "compareAndPullRequest": "Compare & pull request",
+    "dismiss": "Dismiss",
     "compareBranchesToSeeChanges": "Compare branches to see your changes.",
     "noNewCommits": "No new commits yet",
     "branchDoesNotExist": "Branch does not exist.",
@@ -365,7 +366,6 @@
         "invalid": "Invalid"
       }
     },
-    "dismiss": "Dismiss",
     "updateRule": "Update rule",
     "updatingRule": "Updating rule...",
     "createBranchButton": "Create branch",

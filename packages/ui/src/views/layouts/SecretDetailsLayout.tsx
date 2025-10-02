@@ -37,10 +37,16 @@ const useGetSecretInfo = (
   identifier?: string
 ) => {
   const { RbacMoreActionsTooltip } = useComponents()
+  const { t } = useTranslation()
   const { triggerRef, registerTrigger } = useCustomDialogTrigger()
   const handleDelete = (id: string) => {
     registerTrigger()
     onDelete?.(id)
+  }
+
+  const handleEdit = (id: string) => {
+    registerTrigger()
+    onEdit?.(id)
   }
 
   return (
@@ -83,9 +89,9 @@ const useGetSecretInfo = (
         actions={[
           {
             isDanger: false,
-            title: 'Edit secret',
+            title: t('views:secrets.edit', 'Edit secret'),
             iconName: 'edit-pencil',
-            onClick: () => onEdit?.(identifier ?? ''),
+            onClick: () => handleEdit(identifier ?? ''),
             rbac: {
               resource: {
                 resourceType: ResourceType.SECRET,
@@ -96,7 +102,7 @@ const useGetSecretInfo = (
           },
           {
             isDanger: true,
-            title: 'Delete secret',
+            title: t('views:secrets.delete', 'Delete secret'),
             iconName: 'trash',
             onClick: () => handleDelete(identifier ?? ''),
             rbac: {

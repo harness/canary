@@ -1,4 +1,4 @@
-import { Dispatch, FC, Fragment, ReactNode, SetStateAction } from 'react'
+import { Dispatch, FC, Fragment, ReactNode, Ref, SetStateAction } from 'react'
 
 import {
   Button,
@@ -23,12 +23,14 @@ export interface NoDataProps {
   imageSize?: number
   description: string[]
   primaryButton?: ButtonProps & {
+    ref?: Ref<HTMLButtonElement>
     icon?: IconPropsV2['name']
     label: ReactNode | string
     to?: string
     isDialogTrigger?: boolean
   }
   secondaryButton?: ButtonProps & {
+    ref?: Ref<HTMLButtonElement>
     icon?: IconPropsV2['name']
     label: ReactNode | string
     to?: string

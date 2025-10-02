@@ -5,7 +5,7 @@ import React, { createContext, ReactNode, RefAttributes, useContext } from 'reac
 import { RbacButtonProps, RbacMoreActionsTooltipProps, RbacSplitButtonProps } from '@components/rbac'
 
 interface ComponentContextValue {
-  RbacButton: React.ComponentType<RbacButtonProps>
+  RbacButton: React.ComponentType<RbacButtonProps & RefAttributes<HTMLButtonElement>>
   RbacSplitButton: <T extends string>(props: RbacSplitButtonProps<T>) => JSX.Element
   RbacMoreActionsTooltip: React.ForwardRefExoticComponent<
     RbacMoreActionsTooltipProps & RefAttributes<HTMLButtonElement>

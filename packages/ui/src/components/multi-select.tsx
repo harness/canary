@@ -24,6 +24,7 @@ import {
   Tag
 } from '@/components'
 import { generateAlphaNumericHash } from '@/utils'
+import { csvToObject } from '@/utils/stringUtils'
 import { useDebounceSearch } from '@hooks/use-debounce-search'
 import { cn } from '@utils/cn'
 import { cva, VariantProps } from 'class-variance-authority'
@@ -66,33 +67,6 @@ export interface MultiSelectOption {
     | 'violet'
     | 'yellow'
   onReset?: () => void
-}
-
-/**
- * Creates a new MultiSelectOption from an input string
- * Handles both simple values and key:value format
- * @param inputValue The string value entered by the user
- * @returns A properly formatted MultiSelectOption
- */
-const createOptionFromInput = (inputValue: string): MultiSelectOption => {
-  // Handle key:value format (e.g. "category:frontend")
-  if (inputValue.includes(':')) {
-    const [key, value] = inputValue.split(':', 2)
-
-    if (key && key.trim()) {
-      return {
-        key: key.trim(),
-        value: value ? value.trim() : '',
-        id: inputValue
-      }
-    }
-  }
-
-  // Default case: use input as the key
-  return {
-    key: inputValue,
-    id: inputValue
-  }
 }
 
 export interface MultiSelectProps extends CommonInputsProp {
@@ -220,24 +194,40 @@ export const MultiSelect = forwardRef<MultiSelectRef, MultiSelectProps>(
             }
           }
           if (e.key === 'Enter' && input.value && !disallowCreation) {
-            // Perform case-insensitive comparison to prevent duplicate options with different casing
-            // This ensures that 'React' and 'react' would be considered the same option
-            if (
-              !options?.some(option => option.key.toLowerCase() === input.value.toLowerCase()) &&
-              (!availableOptions || availableOptions.length === 0) &&
-              !getSelectedOptions().some(s => s.key.toLowerCase() === input.value.toLowerCase())
-            ) {
-              const newOption = createOptionFromInput(input.value)
-              const newOptions = [...getSelectedOptions(), newOption]
-              if (isControlled) {
-                onChange?.(newOptions)
-              } else {
-                setSelected(newOptions)
+            const inputValue = input.value.trim()
+            // Handle comma-separated input or single option
+            const { data: csvData, metadata: csvMetadata } = csvToObject(inputValue)
+            const updatedOptions = getSelectedOptions()
+
+            // Process each key-value pair from the CSV object
+            for (const [key, value] of Object.entries(csvData)) {
+              const wasKeyValuePair = csvMetadata[key] // Use metadata from csvToObject
+              const newOption = {
+                key,
+                value: wasKeyValuePair ? value : undefined, // Set value only for genuine key:value pairs
+                id: wasKeyValuePair ? `${key}:${value}` : key
               }
-              setInputValue('')
-              setSearchQuery?.('')
-              e.preventDefault()
+
+              const existingIndex = updatedOptions.findIndex(option => option.key === newOption.key)
+
+              if (existingIndex !== -1) {
+                // Replace existing option
+                updatedOptions[existingIndex] = newOption
+              } else {
+                // Add new option
+                updatedOptions.push(newOption)
+              }
             }
+
+            // Update state and clear input
+            if (isControlled) {
+              onChange?.(updatedOptions)
+            } else {
+              setSelected(updatedOptions)
+            }
+            setInputValue('')
+            setSearchQuery?.('')
+            e.preventDefault()
           }
           if (e.key === 'Escape') {
             input.blur()

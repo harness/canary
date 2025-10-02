@@ -207,9 +207,9 @@ const PullRequestRegularAndCodeCommentInternal: FC<PullRequestRegularAndCodeComm
 
   const { isExpanded: getIsExpanded } = useExpandedComments()
 
-  const renderContentItemsBlock = () => (
+  const renderContentItemsBlock = (items: CommentItem<TypesPullReqActivity>[], isFirstCommentAsHeader?: boolean) => (
     <>
-      {commentItems?.map((commentItem, idx) => {
+      {items?.map((commentItem, idx) => {
         const expandedKey = payload?.id || commentItem?.id || 0
         const isExpanded = !payload?.resolved || getIsExpanded(expandedKey)
 
@@ -250,13 +250,14 @@ const PullRequestRegularAndCodeCommentInternal: FC<PullRequestRegularAndCodeComm
               isResolved: !!payload?.resolved,
               hideReplySection: true,
               isComment: true,
-              isFirstCommentAsHeader: idx === 0,
+              isFirstCommentAsHeader: isFirstCommentAsHeader ?? idx === 0,
               mainWrapperClassName: cn('pl-cn-3xl pr-cn-xs', {
-                'pt-cn-sm': idx === 1,
-                'pb-cn-sm': idx === commentItems.length - 1
+                'pt-cn-sm': idx === 1 || isFirstCommentAsHeader === false,
+
+                'pb-cn-sm': idx === items.length - 1
               }),
               contentWrapperClassName: 'pr-cn-xs',
-              isLast: (commentItems?.length || 0) - 1 === idx,
+              isLast: (items?.length || 0) - 1 === idx,
               onCopyClick,
               commentId: commentItem.id,
               isDeleted: !!commentItem.deleted,
@@ -350,12 +351,14 @@ const PullRequestRegularAndCodeCommentInternal: FC<PullRequestRegularAndCodeComm
         isLast,
         handleSaveComment,
         isNotCodeComment: true,
+        isFirstCommentAsHeader: false,
+        renderFirstCommentBlock: renderContentItemsBlock([commentItems[0]]),
         contentHeader: (
           <Layout.Horizontal gap="sm" align="center">
             <Link to={`../changes?commentId=${payload?.id}`} className="text-cn-1 font-medium leading-tight">
               {payload?.code_comment?.path}
             </Link>
-            <CopyButton name={payload?.code_comment?.path || ''} size="xs" />
+            <CopyButton buttonVariant="ghost" size="xs" name={payload?.code_comment?.path || ''} />
           </Layout.Horizontal>
         ),
         hideEditDelete: payload?.author?.uid !== currentUser?.uid,
@@ -381,7 +384,7 @@ const PullRequestRegularAndCodeCommentInternal: FC<PullRequestRegularAndCodeComm
                 addWidget={false}
               />
             </div>
-            {renderContentItemsBlock()}
+            {renderContentItemsBlock(commentItems.slice(1), false)}
           </div>
         )
       }}
@@ -426,7 +429,7 @@ const PullRequestRegularAndCodeCommentInternal: FC<PullRequestRegularAndCodeComm
         icon: <IconV2 name="pr-comment" size="xs" />,
         isLast,
         handleSaveComment,
-        content: renderContentItemsBlock(),
+        content: renderContentItemsBlock(commentItems),
         hideEditDelete: payload?.author?.uid !== currentUser?.uid,
         replyBoxClassName: cn({ 'border-none': commentItems.length === 1 })
       }}

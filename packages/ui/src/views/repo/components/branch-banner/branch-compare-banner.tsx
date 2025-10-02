@@ -1,6 +1,6 @@
 import { FC } from 'react'
 
-import { Button, IconV2, Layout, Text, TimeAgoCard } from '@/components'
+import { Button, IconV2, Layout, Link, Text, TimeAgoCard } from '@/components'
 import { useRouterContext, useTranslation } from '@/context'
 import { TypesBranchTable } from '@/views'
 
@@ -25,7 +25,7 @@ const BranchCompareBanner: FC<BranchCompareBannerProps> = ({
   onDismiss
 }) => {
   const { t } = useTranslation()
-  const { Link } = useRouterContext()
+  const { Link: RouterLink } = useRouterContext()
 
   const handleDismiss = () => {
     if (onDismiss && branch.name) {
@@ -35,30 +35,26 @@ const BranchCompareBanner: FC<BranchCompareBannerProps> = ({
 
   return (
     <Layout.Flex justify="between" align="center" gap="sm">
-      <Layout.Flex gap="xs" align="center">
+      <Layout.Grid gap="2xs" align="center" flow="column">
         <IconV2 name="git-branch" size="sm" color="success" />
-        <Text variant="body-strong" color="foreground-1">
-          <Link to={`${spaceId ? `/${spaceId}` : ''}/repos/${repoId}/summary/refs/heads/${branch.name}`}>
-            <Text lineClamp={1} variant="body-single-line-strong" className="max-w-96">
-              {branch.name}
-            </Text>
-          </Link>
-        </Text>
-        <Text variant="body-single-line-normal" color="foreground-2">
+        <Link
+          to={`${spaceId ? `/${spaceId}` : ''}/repos/${repoId}/summary/refs/heads/${branch.name}`}
+          className="font-body-strong text-cn-1 inline-block w-auto truncate"
+        >
+          {branch.name}
+        </Link>
+        <Text wrap="nowrap">
           {t('views:repos.hadRecentPushes', 'had recent pushes ')}
-          <TimeAgoCard
-            timestamp={branch.updated}
-            textProps={{ variant: 'body-single-line-normal', color: 'foreground-2', truncate: true }}
-          />
+          <TimeAgoCard timestamp={branch.updated} textProps={{ color: 'foreground-2', truncate: true }} />
         </Text>
-      </Layout.Flex>
+      </Layout.Grid>
       <Layout.Flex gap="xs" align="center">
-        <Button variant="primary" asChild>
-          <Link
+        <Button variant="primary" theme="success" asChild>
+          <RouterLink
             to={`${spaceId ? `/${spaceId}` : ''}/repos/${repoId}/pulls/compare/${defaultBranchName}...${branch.name}`}
           >
             {t('views:repos.compareAndPullRequest', 'Compare & pull request')}
-          </Link>
+          </RouterLink>
         </Button>
         <Button
           size="xs"

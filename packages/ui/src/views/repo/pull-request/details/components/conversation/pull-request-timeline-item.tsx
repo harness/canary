@@ -197,6 +197,7 @@ export interface TimelineItemProps {
   currentUser?: string
   contentHeader?: ReactNode
   content?: ReactNode
+  renderFirstCommentBlock?: ReactNode
   icon?: ReactNode
   isFirstCommentAsHeader?: boolean
   hasActionsInHeader?: boolean
@@ -282,7 +283,8 @@ const PullRequestTimelineItem: FC<TimelineItemProps> = ({
   mentions,
   payload,
   threadIndex,
-  totalThreads
+  totalThreads,
+  renderFirstCommentBlock
 }) => {
   const [comment, setComment] = useState('')
   const { isExpanded: getIsExpanded, toggleExpanded } = useExpandedComments()
@@ -380,7 +382,7 @@ const PullRequestTimelineItem: FC<TimelineItemProps> = ({
   if (isFirstCommentAsHeader) {
     return (
       <>
-        <div id={id} className={cn('px-cn-md py-cn-lg', { 'border-b': isExpanded, '-order-1': isNotCodeComment })}>
+        <div id={id} className={cn('px-cn-md py-cn-lg', { 'border-b': isExpanded })}>
           {renderContent()}
         </div>
 
@@ -416,13 +418,15 @@ const PullRequestTimelineItem: FC<TimelineItemProps> = ({
                   }}
                   hideEditDelete={hideEditDelete}
                 />
-                {isResolved && !isComment && !contentHeader && renderToggleButton()}
+                {isResolved && !isComment && (!contentHeader || isNotCodeComment) && renderToggleButton()}
               </div>
             )}
           </NodeGroup.Title>
           {!!content && (
             <NodeGroup.Content className={cn('overflow-auto', contentWrapperClassName)}>
               <div className={cn('border rounded-md overflow-hidden', contentClassName)}>
+                {!!renderFirstCommentBlock && isExpanded && renderFirstCommentBlock}
+
                 {!!contentHeader && (
                   <Layout.Horizontal
                     align="center"
@@ -430,7 +434,7 @@ const PullRequestTimelineItem: FC<TimelineItemProps> = ({
                     className={cn('px-cn-md py-cn-sm bg-cn-2', { 'border-b': isExpanded })}
                   >
                     {contentHeader}
-                    {isResolved && renderToggleButton()}
+                    {isResolved && !isNotCodeComment && renderToggleButton()}
                   </Layout.Horizontal>
                 )}
 

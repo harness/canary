@@ -42,7 +42,11 @@ export default {
 
     '&-header': {
       padding:
-        'var(--cn-sidebar-header-pt) var(--cn-sidebar-container-px) var(--cn-sidebar-header-pb) var(--cn-sidebar-container-px)'
+        'var(--cn-sidebar-header-pt) var(--cn-sidebar-container-px) var(--cn-sidebar-header-pb) var(--cn-sidebar-container-px)',
+
+      '& .cn-input-prefix': {
+        '@apply transition-[margin-left,width] duration-150 ease-linear': ''
+      }
     },
 
     '&-content': {
@@ -398,6 +402,7 @@ export default {
       },
 
       '& .cn-input-prefix': {
+        width: '33px',
         '@apply ml-0': ''
       },
 
@@ -416,7 +421,7 @@ export default {
         },
 
         '&-content': {
-          '@apply grid-cols-[1fr] px-0 justify-items-center gap-0': '',
+          '@apply pl-cn-xs': '',
 
           '&-title, &-description, &-badge, &-right-element, &-action-item-placeholder, &-action-buttons': {
             maxWidth: '0',

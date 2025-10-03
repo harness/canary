@@ -678,12 +678,14 @@ export const CreatePullRequest = () => {
         branchSelectorRenderer={
           <Layout.Horizontal gapX="3xs" align="center">
             <BranchSelectorContainer
+              className="max-w-80"
               onSelectBranchorTag={branchTagName => handleSelectTargetBranchOrTag(branchTagName)}
               selectedBranch={selectedTargetBranch}
               branchPrefix="base"
             />
             <IconV2 name="arrow-left" />
             <BranchSelectorContainer
+              className="max-w-80"
               onSelectBranchorTag={branchTagName => handleSelectSourceBranchOrTag(branchTagName)}
               selectedBranch={selectedSourceBranch}
               branchPrefix="compare"

@@ -72,7 +72,7 @@ export const NoData: FC<NoDataProps> = ({
       align="center"
       justify="center"
       className={cn(
-        'h-full w-full my-auto py-cn-4xl',
+        'h-full w-full my-auto py-cn-4xl px-cn-2xl',
         { 'h-auto grow border border-cn-3 rounded-md': withBorder },
         className
       )}

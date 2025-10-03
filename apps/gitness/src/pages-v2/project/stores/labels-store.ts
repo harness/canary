@@ -16,6 +16,8 @@ export const useLabelsStore = create<ILabelsStore>(set => ({
   setLabels: (labels: ILabelType[], paginationData: { totalItems: number; pageSize: number }) =>
     set({ labels, ...paginationData }),
 
+  setPageSize: (pageSize: number) => set({ pageSize, page: 1 }),
+
   addLabel: (label: ILabelType) => set(state => ({ labels: [...state.labels, label] })),
 
   deleteLabel: (key: string) => set(state => ({ labels: state.labels.filter(label => label.key !== key) })),

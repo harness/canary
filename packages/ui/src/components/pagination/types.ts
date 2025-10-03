@@ -14,8 +14,9 @@ type DeterminatePaginationProps = PaginationBaseProps &
   DeterminatePaginationNavProps & {
     totalItems: number
     pageSize: number
+    setPageSize?: (size: number) => void
     currentPage: number
-    hidePageNumbers?: boolean
+    showPageNumbers?: boolean
     indeterminate?: false
 
     hasPrevious?: never
@@ -36,8 +37,9 @@ type IndeterminatePaginationProps = PaginationBaseProps &
     getPageLink?: never
     totalItems?: never
     pageSize?: never
+    setPageSize?: never
     currentPage?: never
-    hidePageNumbers?: never
+    showPageNumbers?: never
   }
 
 export type PaginationProps = DeterminatePaginationProps | IndeterminatePaginationProps

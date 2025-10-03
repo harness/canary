@@ -2,7 +2,7 @@ import { DataPagination } from './pagination-data'
 import { DefaultPagination } from './pagination-default'
 import { type ParentPaginationProps } from './types'
 
-export function Pagination({ variant = 'default', ...props }: ParentPaginationProps) {
+export function Pagination({ variant = 'data', ...props }: ParentPaginationProps) {
   switch (variant) {
     case 'default':
       return <DefaultPagination {...props} />

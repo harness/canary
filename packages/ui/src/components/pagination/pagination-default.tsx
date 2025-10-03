@@ -2,7 +2,6 @@ import { FC } from 'react'
 
 import { cn } from '@utils/cn'
 
-import { PaginationItems } from './components/pagination-items'
 import { PaginationPrimitive } from './pagination-primitive'
 import { PaginationProps } from './types'
 
@@ -19,7 +18,7 @@ export const DefaultPagination: FC<PaginationProps> = ({
   getNextPageLink,
   onPrevious,
   onNext,
-  hidePageNumbers = false,
+  showPageNumbers = false,
   indeterminate = false
 }) => {
   const handleGoToPage = (selectedPage?: number) => (e: React.MouseEvent) => {
@@ -42,7 +41,7 @@ export const DefaultPagination: FC<PaginationProps> = ({
         {!indeterminate && totalPages && currentPage ? (
           <PaginationPrimitive.Content
             className={cn({
-              'cn-pagination-hide-pages': hidePageNumbers
+              'cn-pagination-hide-pages': showPageNumbers
             })}
           >
             {/* Previous Button */}
@@ -55,7 +54,7 @@ export const DefaultPagination: FC<PaginationProps> = ({
             </PaginationPrimitive.Item>
 
             {/* Pagination Items */}
-            {!hidePageNumbers && totalPages && (
+            {/* {!showPageNumbers && totalPages && (
               <PaginationItems
                 totalPages={totalPages}
                 currentPage={currentPage}
@@ -63,7 +62,7 @@ export const DefaultPagination: FC<PaginationProps> = ({
                 goToPage={goToPage ? handleGoToPage : undefined}
                 truncateLimit={5}
               />
-            )}
+            )} */}
 
             {/* Next Button */}
             <PaginationPrimitive.Item className="cn-pagination-item-next">

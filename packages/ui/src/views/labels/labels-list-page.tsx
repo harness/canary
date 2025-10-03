@@ -33,6 +33,7 @@ export const LabelsListPage: FC<LabelsListPageProps> = ({
     labels: spaceLabels,
     totalItems,
     pageSize,
+    setPageSize,
     page,
     setPage,
     isLoading,
@@ -104,7 +105,13 @@ export const LabelsListPage: FC<LabelsListPageProps> = ({
               values={spaceValues}
               toRepoLabelDetails={toRepoLabelDetails}
             />
-            <Pagination totalItems={totalItems} pageSize={pageSize} currentPage={page} goToPage={setPage} />
+            <Pagination
+              totalItems={totalItems}
+              pageSize={pageSize}
+              setPageSize={setPageSize}
+              currentPage={page}
+              goToPage={setPage}
+            />
           </Layout.Vertical>
         )}
       </Layout.Vertical>

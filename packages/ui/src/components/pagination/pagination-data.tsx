@@ -1,15 +1,16 @@
+import { Select } from '@components/form-primitives'
 import { Layout } from '@components/layout'
+import { Separator } from '@components/separator'
 import { Text } from '@components/text'
 
-import { PaginationItems } from './components/pagination-items'
 import { PaginationPrimitive } from './pagination-primitive'
 import { type PaginationProps } from './types'
 
 export function DataPagination({
   totalItems,
   pageSize,
+  setPageSize,
   currentPage,
-  hidePageNumbers = true,
   goToPage,
   getPageLink,
   hasNext,
@@ -29,18 +30,46 @@ export function DataPagination({
 
   const totalPages = indeterminate || !totalItems || !pageSize ? undefined : Math.ceil(totalItems / pageSize)
 
-  // Render nothing if `totalPages` is absent or <= 1, and both `nextPage` and `previousPage` are absent
-  if ((!totalPages || totalPages <= 1) && hasNext === undefined && hasPrevious === undefined) {
+  // Render nothing if `totalPages` is absent, and both `nextPage` and `previousPage` are absent
+  if (!totalPages && hasNext === undefined && hasPrevious === undefined) {
     return null
   }
 
+  const renderItemsPerPageBlock = () => {
+    if (!totalPages || !currentPage || indeterminate || !setPageSize) return null
+
+    return (
+      <Layout.Horizontal align="center" gap="xs">
+        <Select
+          options={[
+            { label: '10', value: 10 },
+            { label: '25', value: 25 },
+            { label: '50', value: 50 }
+          ]}
+          value={pageSize}
+          onChange={value => {
+            setPageSize?.(value)
+          }}
+          size="sm"
+        />
+        <Text>items per page</Text>
+      </Layout.Horizontal>
+    )
+  }
+
   return (
-    <Layout.Horizontal className="w-full mt-cn-xl" align="center" justify="between">
+    <Layout.Horizontal className="mt-cn-xl w-full" align="center" justify="between">
       <div>
         {totalPages && currentPage && (
-          <Text>
-            Page {currentPage} of {totalPages}
-          </Text>
+          <Layout.Horizontal align="center" gap="md">
+            {renderItemsPerPageBlock()}
+
+            <Separator orientation="vertical" className="h-8" />
+
+            <Text>
+              Page {currentPage} of {totalPages}
+            </Text>
+          </Layout.Horizontal>
         )}
       </div>
 
@@ -54,7 +83,7 @@ export function DataPagination({
             />
 
             {/* Pagination Items */}
-            {!hidePageNumbers && totalPages && (
+            {/* {!showPageNumbers && totalPages && (
               <ul className="cn-pagination-content gap-cn-xs">
                 <PaginationItems
                   variant="data"
@@ -65,7 +94,7 @@ export function DataPagination({
                   truncateLimit={5}
                 />
               </ul>
-            )}
+            )} */}
 
             <PaginationPrimitive.NextV2
               onClick={goToPage ? handleGoToPage(currentPage < totalPages ? currentPage + 1 : undefined) : undefined}

@@ -42,7 +42,11 @@ export default {
 
     '&-header': {
       padding:
-        'var(--cn-sidebar-header-pt) var(--cn-sidebar-container-px) var(--cn-sidebar-header-pb) var(--cn-sidebar-container-px)'
+        'var(--cn-sidebar-header-pt) var(--cn-sidebar-container-px) var(--cn-sidebar-header-pb) var(--cn-sidebar-container-px)',
+
+      '& .cn-input-prefix': {
+        '@apply transition-[margin-left,width] duration-150 ease-linear': ''
+      }
     },
 
     '&-content': {
@@ -149,7 +153,7 @@ export default {
     '&-item': {
       maxWidth: '100%',
       overflow: 'hidden',
-      '@apply duration-150 transition-[max-width,margin-left] ease-linear': '',
+      '@apply duration-150 transition-[max-width,margin-left,padding] ease-linear': '',
 
       '&-big': {
         maxWidth: '100%'
@@ -218,7 +222,7 @@ export default {
             "icon title       elem"
             "icon description elem"
           `,
-          gridTemplateColumns: 'var(--cn-icon-size-lg) 1fr'
+          gridTemplateColumns: 'var(--cn-avatar-size-lg) 1fr'
         },
 
         '&-icon': {
@@ -345,6 +349,11 @@ export default {
         width: 'var(--cn-size-14)'
       },
 
+      '& .cn-input-prefix': {
+        width: '33px',
+        '@apply ml-0': ''
+      },
+
       '.cn-sidebar-group': {
         '--sidebar-group-label-scale': '0'
       },
@@ -356,8 +365,7 @@ export default {
         },
 
         '&-content': {
-          rowGap: '0',
-          columnGap: '0',
+          '@apply pl-cn-xs': '',
 
           '&-title, &-description, &-badge, &-right-element, &-action-item-placeholder': {
             maxWidth: '0',

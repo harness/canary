@@ -22,7 +22,7 @@ import {
   useListUsergroupsQuery,
   useRawDiffQuery
 } from '@harnessio/code-service-client'
-import { IconV2 } from '@harnessio/ui/components'
+import { IconV2, Layout } from '@harnessio/ui/components'
 import {
   BranchSelectorListItem,
   CommitSelectorListItem,
@@ -209,7 +209,7 @@ export const CreatePullRequest = () => {
 
   useEffect(() => {
     // Set isBranchSelected to false if source and target branches are the same, otherwise true
-    if (selectedSourceBranch && selectedTargetBranch && selectedSourceBranch.name !== selectedTargetBranch.name) {
+    if (selectedSourceBranch && selectedTargetBranch) {
       setIsBranchSelected(true)
     } else {
       setIsBranchSelected(false)
@@ -612,7 +612,6 @@ export const CreatePullRequest = () => {
         isLabelsLoading={isLabelsLoading}
         onSelectCommit={selectCommit}
         isBranchSelected={isBranchSelected}
-        setIsBranchSelected={setIsBranchSelected}
         onFormSubmit={onSubmit}
         onFormCancel={onCancel}
         apiError={apiError}
@@ -677,7 +676,7 @@ export const CreatePullRequest = () => {
         searchLabelQuery={searchLabel}
         setSearchLabelQuery={setSearchLabel}
         branchSelectorRenderer={
-          <>
+          <Layout.Horizontal gapX="3xs" align="center">
             <BranchSelectorContainer
               onSelectBranchorTag={branchTagName => handleSelectTargetBranchOrTag(branchTagName)}
               selectedBranch={selectedTargetBranch}
@@ -690,11 +689,12 @@ export const CreatePullRequest = () => {
               branchPrefix="compare"
               autoSelectDefaultBranch={false}
             />
-          </>
+          </Layout.Horizontal>
         }
         onGetFullDiff={onGetFullDiff}
         toRepoFileDetails={toRepoFileDetails}
         sourceBranch={selectedSourceBranch?.name}
+        targetBranch={selectedTargetBranch?.name}
       />
     )
   }

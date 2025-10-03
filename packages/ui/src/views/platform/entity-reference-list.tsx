@@ -134,6 +134,7 @@ export function EntityReferenceList<T extends BaseEntityProps, S = string, F = s
                   variant="outline"
                   onClick={paginationProps?.handleLoadMore}
                   loading={paginationProps?.isLoading}
+                  size="sm"
                 >
                   Load more
                 </Button>

@@ -137,10 +137,10 @@ export const NumberInput = forwardRef<HTMLInputElement, NumberInputProps>(
               (!isStepperDisabled || !!suffix) && (
                 <div className="flex">
                   {!isStepperDisabled ? (
-                    <div className="flex flex-col">
+                    <div className="flex flex-col overflow-hidden rounded-r-cn-input">
                       <Button
                         tabIndex={-1}
-                        className="shrink"
+                        className="shrink rounded-none"
                         aria-label="Increment value"
                         variant="ghost"
                         iconOnly
@@ -154,7 +154,7 @@ export const NumberInput = forwardRef<HTMLInputElement, NumberInputProps>(
                       <hr />
                       <Button
                         tabIndex={-1}
-                        className="shrink"
+                        className="shrink rounded-none"
                         aria-label="Decrement value"
                         variant="ghost"
                         iconOnly

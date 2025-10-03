@@ -1,6 +1,6 @@
 import { FC, useEffect, useState } from 'react'
 
-import { Avatar, Button, DropdownMenu, IconV2, Layout, MarkdownViewer, Text, TimeAgoCard } from '@/components'
+import { Avatar, Button, IconV2, Layout, MarkdownViewer, MoreActionsTooltip, Text, TimeAgoCard } from '@/components'
 import { HandleAiPullRequestSummaryType, HandleUploadType, PrincipalPropsType } from '@/views'
 import { noop } from 'lodash-es'
 
@@ -45,27 +45,18 @@ const PullRequestDescBox: FC<PullRequestDescBoxProps> = ({
     }
   }, [description])
 
-  const moreTooltip = () => {
-    return (
-      <DropdownMenu.Root>
-        <DropdownMenu.Trigger asChild>
-          <Button size="sm" variant="ghost" className="rotate-90 px-2 py-1">
-            <IconV2 name="more-vert" size="2xs" />
-          </Button>
-        </DropdownMenu.Trigger>
-        <DropdownMenu.Content align="end">
-          <DropdownMenu.IconItem
-            icon="edit-pencil"
-            title="Edit description"
-            onClick={e => {
-              setEdit(true)
-              e.stopPropagation()
-            }}
-          />
-        </DropdownMenu.Content>
-      </DropdownMenu.Root>
-    )
+  const handleEditClick = () => {
+    setEdit(true)
   }
+
+  const actions = [
+    {
+      title: 'Edit description',
+      onClick: handleEditClick,
+      iconName: 'edit-pencil' as const
+    }
+  ]
+
   return (
     <PullRequestTimelineItem
       // PR Description feature doesn't support mentions
@@ -91,7 +82,14 @@ const PullRequestDescBox: FC<PullRequestDescBoxProps> = ({
                 </Text>
                 <TimeAgoCard timestamp={createdAt} />
               </Layout.Horizontal>
-              {moreTooltip()}
+
+              <MoreActionsTooltip
+                buttonSize="sm"
+                iconName="more-horizontal"
+                sideOffset={4}
+                alignOffset={0}
+                actions={actions}
+              />
             </Layout.Horizontal>
           )
         }
@@ -99,7 +97,7 @@ const PullRequestDescBox: FC<PullRequestDescBoxProps> = ({
       hideReplySection
       contentClassName="pb-0"
       content={
-        <div className="py-3 px-4">
+        <div className="px-4 py-3">
           {/* Edit mode */}
           {edit ? (
             <PullRequestCommentBox
@@ -172,6 +170,5 @@ const PullRequestDescBox: FC<PullRequestDescBoxProps> = ({
     />
   )
 }
-PullRequestDescBox.displayName = 'PullRequestDescBox'
 
 export default PullRequestDescBox

@@ -102,7 +102,6 @@ const BaseComp: FC<BaseCompProps> = ({
       principalsMentionMap={principalsMentionMap}
       setPrincipalsMentionMap={setPrincipalsMentionMap}
       principalProps={principalProps}
-      replyBoxClassName="p-4"
       id={`comment-${payload?.id}`}
       handleUpload={handleUpload}
       data={payload?.text}
@@ -208,9 +207,9 @@ const PullRequestRegularAndCodeCommentInternal: FC<PullRequestRegularAndCodeComm
 
   const { isExpanded: getIsExpanded } = useExpandedComments()
 
-  const renderContentItemsBlock = () => (
-    <div className="px-4 pt-4">
-      {commentItems?.map((commentItem, idx) => {
+  const renderContentItemsBlock = (items: CommentItem<TypesPullReqActivity>[], isFirstCommentAsHeader?: boolean) => (
+    <>
+      {items?.map((commentItem, idx) => {
         const expandedKey = payload?.id || commentItem?.id || 0
         const isExpanded = !payload?.resolved || getIsExpanded(expandedKey)
 
@@ -251,7 +250,14 @@ const PullRequestRegularAndCodeCommentInternal: FC<PullRequestRegularAndCodeComm
               isResolved: !!payload?.resolved,
               hideReplySection: true,
               isComment: true,
-              isLast: (commentItems?.length || 0) - 1 === idx,
+              isFirstCommentAsHeader: isFirstCommentAsHeader ?? idx === 0,
+              mainWrapperClassName: cn('pl-cn-3xl pr-cn-xs', {
+                'pt-cn-sm': idx === 1 || isFirstCommentAsHeader === false,
+
+                'pb-cn-sm': idx === items.length - 1
+              }),
+              contentWrapperClassName: 'pr-cn-xs',
+              isLast: (items?.length || 0) - 1 === idx,
               onCopyClick,
               commentId: commentItem.id,
               isDeleted: !!commentItem.deleted,
@@ -265,6 +271,7 @@ const PullRequestRegularAndCodeCommentInternal: FC<PullRequestRegularAndCodeComm
               ) : editModes[componentId] ? (
                 <PullRequestCommentBox
                   autofocus
+                  className={cn({ 'flex-1': idx === 0 })}
                   principalsMentionMap={principalsMentionMap}
                   setPrincipalsMentionMap={setPrincipalsMentionMap}
                   principalProps={principalProps}
@@ -294,7 +301,7 @@ const PullRequestRegularAndCodeCommentInternal: FC<PullRequestRegularAndCodeComm
           />
         )
       })}
-    </div>
+    </>
   )
 
   return isCode ? (
@@ -332,20 +339,30 @@ const PullRequestRegularAndCodeCommentInternal: FC<PullRequestRegularAndCodeComm
           : {}
       }
       customProps={{
+        hasActionsInHeader: true,
+        onCopyClick,
+        onEditClick: () => toggleEditMode(`activity-comment-${payload?.id}`, payload?.text || ''),
+        commentId: payload?.id,
+        handleDeleteComment: () => handleDeleteComment(payload?.id || 0),
+        isDeleted: !!payload?.deleted,
+        titleClassName: '!flex max-w-full',
         isResolved: !!payload?.resolved,
         icon: <IconV2 name="eye" size="xs" />,
         isLast,
         handleSaveComment,
         isNotCodeComment: true,
+        isFirstCommentAsHeader: false,
+        renderFirstCommentBlock: renderContentItemsBlock([commentItems[0]]),
         contentHeader: (
           <Layout.Horizontal gap="sm" align="center">
             <Link to={`../changes?commentId=${payload?.id}`} className="text-cn-1 font-medium leading-tight">
               {payload?.code_comment?.path}
             </Link>
-            <CopyButton name={payload?.code_comment?.path || ''} size="xs" />
+            <CopyButton buttonVariant="ghost" size="xs" name={payload?.code_comment?.path || ''} />
           </Layout.Horizontal>
         ),
         hideEditDelete: payload?.author?.uid !== currentUser?.uid,
+        replyBoxClassName: cn({ 'border-none': commentItems.length === 1 }),
         content: (
           <div className="flex flex-col">
             {!!startingLine && (
@@ -353,19 +370,21 @@ const PullRequestRegularAndCodeCommentInternal: FC<PullRequestRegularAndCodeComm
                 <div className="ml-16 w-full px-8 py-1">{startingLine}</div>
               </div>
             )}
-            <PullRequestDiffViewer
-              principalProps={principalProps}
-              handleUpload={handleUpload}
-              data={removeLastPlus(codeDiffSnapshot)}
-              fileName={payload?.code_comment?.path ?? ''}
-              lang={(payload?.code_comment?.path && payload?.code_comment?.path.split('.').pop()) || ''}
-              fontsize={fontsize}
-              highlight={highlight}
-              mode={DiffModeEnum.Unified}
-              wrap={wrap}
-              addWidget={false}
-            />
-            {renderContentItemsBlock()}
+            <div className="border-b">
+              <PullRequestDiffViewer
+                principalProps={principalProps}
+                handleUpload={handleUpload}
+                data={removeLastPlus(codeDiffSnapshot)}
+                fileName={payload?.code_comment?.path ?? ''}
+                lang={(payload?.code_comment?.path && payload?.code_comment?.path.split('.').pop()) || ''}
+                fontsize={fontsize}
+                highlight={highlight}
+                mode={DiffModeEnum.Unified}
+                wrap={wrap}
+                addWidget={false}
+              />
+            </div>
+            {renderContentItemsBlock(commentItems.slice(1), false)}
           </div>
         )
       }}
@@ -399,13 +418,20 @@ const PullRequestRegularAndCodeCommentInternal: FC<PullRequestRegularAndCodeComm
           : {}
       }
       customProps={{
+        hasActionsInHeader: true,
+        onCopyClick,
+        onEditClick: () => toggleEditMode(`activity-comment-${payload?.id}`, payload?.text || ''),
+        commentId: payload?.id,
+        handleDeleteComment: () => handleDeleteComment(payload?.id || 0),
+        isDeleted: !!payload?.deleted,
         titleClassName: '!flex max-w-full',
         isResolved: !!payload?.resolved,
         icon: <IconV2 name="pr-comment" size="xs" />,
         isLast,
         handleSaveComment,
-        content: renderContentItemsBlock(),
-        hideEditDelete: payload?.author?.uid !== currentUser?.uid
+        content: renderContentItemsBlock(commentItems),
+        hideEditDelete: payload?.author?.uid !== currentUser?.uid,
+        replyBoxClassName: cn({ 'border-none': commentItems.length === 1 })
       }}
     />
   )

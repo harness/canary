@@ -21,6 +21,7 @@ interface NavbarItemType {
   description?: string
   to: string
   permanentlyPinned?: boolean
+  subItems?: NavbarItemType[]
 }
 
 export enum UserMenuKeys {

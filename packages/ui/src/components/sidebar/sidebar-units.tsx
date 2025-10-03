@@ -9,7 +9,17 @@ import {
   useMemo
 } from 'react'
 
-import { Button, IconV2, ScrollArea, Separator, Sheet, Text, useScrollArea } from '@/components'
+import {
+  Button,
+  IconV2,
+  IconV2NamesType,
+  Layout,
+  ScrollArea,
+  Separator,
+  Sheet,
+  Text,
+  useScrollArea
+} from '@/components'
 import { useTranslation } from '@/context'
 import { cn } from '@utils/cn'
 
@@ -154,15 +164,30 @@ export const SidebarContent = (props: ComponentProps<typeof ScrollArea>) => {
 
 export interface SidebarGroupProps extends ComponentPropsWithoutRef<'div'> {
   label?: string
+  actionIcon?: IconV2NamesType
+  onActionClick?: () => void
 }
 
 export const SidebarGroup = forwardRef<HTMLDivElement, SidebarGroupProps>(
-  ({ className, children, label, ...props }, ref) => (
+  ({ className, children, label, actionIcon = 'list', onActionClick, ...props }, ref) => (
     <div ref={ref} role="group" className={cn('cn-sidebar-group', className)} {...props}>
       {label && (
-        <Text variant="caption-single-line-normal" as="h6" className="cn-sidebar-group-label" color="foreground-3">
-          {label}
-        </Text>
+        <Layout.Horizontal className="cn-sidebar-group-header" align="center" justify="between">
+          <Text variant="caption-single-line-normal" as="h6" className="cn-sidebar-group-label" color="foreground-3">
+            {label}
+          </Text>
+          {onActionClick && (
+            <Button
+              className="cn-sidebar-group-header-action-button"
+              size="xs"
+              iconOnly
+              onClick={onActionClick}
+              variant="ghost"
+            >
+              <IconV2 size="xs" name={actionIcon} />
+            </Button>
+          )}
+        </Layout.Horizontal>
       )}
       {children}
     </div>

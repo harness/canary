@@ -94,14 +94,26 @@ export default {
       padding: 'var(--cn-sidebar-group-py) 0',
 
       '&-label': {
-        padding:
-          'calc(var(--cn-sidebar-item-py) * var(--sidebar-group-label-scale)) calc(var(--cn-sidebar-item-px) * var(--sidebar-group-label-scale))',
         opacity: 'var(--sidebar-group-label-scale)',
         maxHeight: 'calc(44px * var(--sidebar-group-label-scale))',
         transform: 'max(0.6, scale(var(--sidebar-group-label-scale)))',
         justifySelf: 'start',
         overflow: 'hidden',
         '@apply duration-150 transition-[max-height,padding,opacity,transform] ease-linear': ''
+      },
+
+      '&-header': {
+        padding:
+          'calc(var(--cn-sidebar-item-py) * var(--sidebar-group-label-scale)) calc(var(--cn-sidebar-item-px) * var(--sidebar-group-label-scale))',
+        '&-action-button': {
+          '@apply opacity-0 transition-opacity duration-150': ''
+        },
+
+        '&:hover, &:focus-within': {
+          '.cn-sidebar-group-header-action-button': {
+            '@apply opacity-100': ''
+          }
+        }
       }
     },
 
@@ -179,6 +191,12 @@ export default {
 
             '.cn-sidebar-item-action-menu': {
               opacity: '1'
+            }
+          },
+
+          '&:hover, &:focus-within': {
+            '.cn-sidebar-item-content-action-buttons': {
+              display: 'flex !important'
             }
           }
         },
@@ -290,6 +308,7 @@ export default {
 
         // cn-sidebar-item-content-action-buttons
         '&-action-buttons': {
+          display: 'none !important',
           gridArea: 'action-buttons'
         },
 

@@ -193,9 +193,20 @@ const SidebarItemTrigger = forwardRef<HTMLButtonElement | HTMLAnchorElement, Sid
       return (
         <Layout.Horizontal gap="none" className="cn-sidebar-item-content-action-buttons">
           {actionButtons?.map((buttonProps, index) => {
-            const { title, iconOnly = true, iconName, iconProps, ...rest } = buttonProps
+            const { title, iconOnly = true, iconName, iconProps, onClick: actionButtonOnClick, ...rest } = buttonProps
             return (
-              <Button key={index} size="2xs" variant="ghost" iconOnly={iconOnly} {...rest}>
+              <Button
+                key={index}
+                size="2xs"
+                variant="ghost"
+                iconOnly={iconOnly}
+                onClick={e => {
+                  e.preventDefault()
+                  e.stopPropagation()
+                  actionButtonOnClick(e)
+                }}
+                {...rest}
+              >
                 {iconName && <IconV2 name={iconName} {...iconProps} />}
                 {title}
               </Button>

@@ -35,48 +35,6 @@ import { DocsPage } from "@/components/docs-page";
 
 }`} />
 
-### Data variant Pagination
-
-<DocsPage.ComponentExample
-  client:only
-  code={`() => {
-    const [currentPage, setCurrentPage] = React.useState(1)
-
-    return (
-        <div className="w-[550px]">
-            <Pagination
-                variant="data"
-                totalItems={100}
-                pageSize={10}
-                currentPage={currentPage}
-                goToPage={setCurrentPage}
-            />
-        </div>
-    )
-
-}`} />
-
-### Determinate Pagination with Hidden Page Numbers
-
-<DocsPage.ComponentExample
-  client:only
-  code={`() => {
-    const [currentPage, setCurrentPage] = React.useState(1)
-
-    return (
-        <div className="w-[550px]">
-            <Pagination
-                totalItems={100}
-                pageSize={10}
-                currentPage={currentPage}
-                goToPage={setCurrentPage}
-                hidePageNumbers
-            />
-        </div>
-    )
-
-}`} />
-
 ### Determinate Pagination with Links
 
 <DocsPage.ComponentExample
@@ -95,6 +53,28 @@ import { DocsPage } from "@/components/docs-page";
                 pageSize={10}
                 currentPage={currentPage}
                 getPageLink={getPageLink}
+            />
+        </div>
+    )
+
+}`} />
+
+### Determinate Pagination with Page size select
+
+<DocsPage.ComponentExample
+  client:only
+  code={`() => {
+    const [currentPage, setCurrentPage] = React.useState(1)
+    const [pageSize, setPageSize] = React.useState(10)
+
+    return (
+        <div className="w-[550px]">
+            <Pagination
+                totalItems={100}
+                pageSize={pageSize}
+                setPageSize={setPageSize}
+                currentPage={currentPage}
+                goToPage={setCurrentPage}
             />
         </div>
     )
@@ -250,14 +230,21 @@ return (
       value: "number",
     },
     {
+      name: "setPageSize",
+      description:
+        "Function to set the number of items per page (used with determinate pagination)",
+      required: false,
+      value: "(size: number) => void",
+    },
+    {
       name: "currentPage",
       description: "Current page number (used with determinate pagination)",
       required: false,
       value: "number",
     },
     {
-      name: "hidePageNumbers",
-      description: "Hide page numbers and only show prev/next buttons",
+      name: "showPageNumbers",
+      description: "Show page numbers instead of only prev/next buttons",
       required: false,
       value: "boolean",
       defaultValue: "false",

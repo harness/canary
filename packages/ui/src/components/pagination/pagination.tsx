@@ -1,12 +1,124 @@
-import { DataPagination } from './pagination-data'
-import { DefaultPagination } from './pagination-default'
-import { type ParentPaginationProps } from './types'
+import { Select } from '@components/form-primitives'
+import { Layout } from '@components/layout'
+import { Separator } from '@components/separator'
+import { Text } from '@components/text'
 
-export function Pagination({ variant = 'default', ...props }: ParentPaginationProps) {
-  switch (variant) {
-    case 'default':
-      return <DefaultPagination {...props} />
-    case 'data':
-      return <DataPagination {...props} />
+import { PaginationPrimitive } from './pagination-primitive'
+import { type PaginationProps } from './types'
+
+export function Pagination({
+  totalItems,
+  pageSize,
+  setPageSize,
+  currentPage,
+  goToPage,
+  getPageLink,
+  hasNext,
+  hasPrevious,
+  getPrevPageLink,
+  getNextPageLink,
+  onPrevious,
+  onNext,
+  indeterminate = false
+}: PaginationProps) {
+  const handleGoToPage = (selectedPage?: number) => (e: React.MouseEvent) => {
+    e.preventDefault()
+    if (!selectedPage) return
+
+    goToPage?.(selectedPage)
   }
+
+  const totalPages = indeterminate || !totalItems || !pageSize ? undefined : Math.ceil(totalItems / pageSize)
+
+  // Render nothing if `totalPages` is absent, and both `nextPage` and `previousPage` are absent
+  if (!totalPages && hasNext === undefined && hasPrevious === undefined) {
+    return null
+  }
+
+  const renderItemsPerPageBlock = () => {
+    if (!totalPages || !currentPage || indeterminate || !setPageSize) return null
+
+    return (
+      <>
+        <Layout.Horizontal align="center" gap="xs">
+          <Select
+            options={[
+              { label: '10', value: 10 },
+              { label: '25', value: 25 },
+              { label: '50', value: 50 }
+            ]}
+            value={pageSize}
+            onChange={value => {
+              setPageSize?.(value)
+            }}
+            size="sm"
+          />
+          <Text>items per page</Text>
+        </Layout.Horizontal>
+
+        <Separator orientation="vertical" className="h-8" />
+      </>
+    )
+  }
+
+  return (
+    <Layout.Horizontal className="mt-cn-xl w-full" align="center" justify="between">
+      <div>
+        {totalPages && currentPage && (
+          <Layout.Horizontal align="center" gap="md">
+            {renderItemsPerPageBlock()}
+
+            <Text>
+              Page {currentPage} of {totalPages}
+            </Text>
+          </Layout.Horizontal>
+        )}
+      </div>
+
+      <Layout.Horizontal gap="xs">
+        {!indeterminate && totalPages && currentPage ? (
+          <>
+            <PaginationPrimitive.PreviousV2
+              onClick={goToPage ? handleGoToPage(currentPage > 1 ? currentPage - 1 : undefined) : undefined}
+              href={getPageLink?.(currentPage > 1 ? currentPage - 1 : currentPage)}
+              disabled={currentPage === 1}
+            />
+
+            {/* Pagination Items */}
+            {/* {!showPageNumbers && totalPages && (
+              <ul className="cn-pagination-content gap-cn-xs">
+                <PaginationItems
+                  variant="data"
+                  totalPages={totalPages}
+                  currentPage={currentPage}
+                  getPageLink={getPageLink}
+                  goToPage={goToPage ? handleGoToPage : undefined}
+                  truncateLimit={5}
+                />
+              </ul>
+            )} */}
+
+            <PaginationPrimitive.NextV2
+              onClick={goToPage ? handleGoToPage(currentPage < totalPages ? currentPage + 1 : undefined) : undefined}
+              href={getPageLink?.(currentPage < totalPages ? currentPage + 1 : currentPage)}
+              disabled={currentPage === totalPages}
+            />
+          </>
+        ) : (
+          <>
+            <PaginationPrimitive.PreviousV2
+              href={hasPrevious ? getPrevPageLink?.() : undefined}
+              onClick={onPrevious}
+              disabled={!hasPrevious}
+            />
+            <PaginationPrimitive.NextV2
+              href={hasNext ? getNextPageLink?.() : undefined}
+              onClick={onNext}
+              disabled={!hasNext}
+            />
+          </>
+        )}
+      </Layout.Horizontal>
+    </Layout.Horizontal>
+  )
 }

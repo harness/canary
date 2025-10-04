@@ -11,7 +11,7 @@ import { DraggableItem } from './draggable-item'
 interface ManageNavigationProps {
   pinnedItems: NavbarItemType[]
   // Might be needed for search later
-  navbarMenuData: MenuGroupType[]
+  navbarMenuData?: MenuGroupType[]
   showManageNavigation: boolean
   recentItems: NavbarItemType[]
   onSave: (recentItems: NavbarItemType[], currentPinnedItems: NavbarItemType[]) => void
@@ -125,7 +125,9 @@ export const ManageNavigation = ({
               Pinned
             </Text>
             {!currentPinnedItems.length ? (
-              <Text color="foreground-3">No pinned items</Text>
+              <Text align="center" className="mt-cn-md" color="foreground-3">
+                No pinned items
+              </Text>
             ) : (
               <DndContext
                 onDragEnd={handleDragEnd}

@@ -209,12 +209,13 @@ export default {
 
       '&-content': {
         rowGap: 'var(--cn-spacing-1)',
+        minHeight: 'var(--cn-sidebar-item-min)',
         columnGap: 'var(--cn-sidebar-item-gap)',
         justifyItems: 'start',
         alignItems: 'center',
         gridTemplateColumns: 'var(--cn-icon-size-sm) 1fr',
         gridTemplateAreas: '"icon title"',
-        padding: 'var(--cn-sidebar-item-py) var(--cn-sidebar-item-px)',
+        paddingInline: 'var(--cn-sidebar-item-px)',
         borderRadius: 'var(--cn-sidebar-item-radius)',
         '@apply duration-150 transition-[padding,row-gap,column-gap] ease-linear': '',
 
@@ -229,6 +230,7 @@ export default {
             "icon description"
           `,
           gridTemplateColumns: 'var(--cn-icon-size-lg) 1fr',
+          paddingBlock: 'var(--cn-sidebar-item-py)',
 
           '&:has(.cn-sidebar-item-content-action-buttons)': {
             gridTemplateAreas: `
@@ -255,6 +257,7 @@ export default {
             "icon description elem"
           `,
           gridTemplateColumns: 'var(--cn-icon-size-lg) 1fr',
+          paddingBlock: 'var(--cn-sidebar-item-py)',
 
           '&:has(.cn-sidebar-item-content-action-buttons)': {
             gridTemplateAreas: `

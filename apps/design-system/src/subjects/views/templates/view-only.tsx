@@ -200,7 +200,7 @@ export const ViewOnlyView = () => {
           </Tabs.List>
         </Tabs.NavRoot>
 
-        <Widgets.Root isTwoColumn>
+        <Widgets.Root>
           <Widgets.Item title="Connector details">
             {dataMock.map((props, index) => (
               <ViewOnly key={index} {...props} />

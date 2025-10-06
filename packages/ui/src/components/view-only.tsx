@@ -84,8 +84,8 @@ export const ViewOnly = ({ className, title, data, layout = 'columns' }: ViewOnl
   const rightColumnData = isLayoutColumns ? splitArray(data)[1] : null
 
   return (
-    <Layout.Grid ref={contentRef} className={cn('group', className)}>
-      <Text variant="heading-base" as="h4" className="mb-4">
+    <Layout.Grid ref={contentRef} gap="md" className={cn('group', className)}>
+      <Text variant="heading-base" as="h4">
         {title}
       </Text>
 
@@ -93,24 +93,17 @@ export const ViewOnly = ({ className, title, data, layout = 'columns' }: ViewOnl
         as="dl"
         flow="column"
         align="start"
+        gapX="lg"
         {...wrapConditionalObjectElement({ columns: '1fr auto 1fr' }, isLayoutColumns)}
       >
-        <Layout.Grid className="gap-y-3.5">{leftColumnData.map(item => renderItem(item))}</Layout.Grid>
+        <Layout.Grid gapY="sm">{leftColumnData.map(item => renderItem(item))}</Layout.Grid>
 
-        {isLayoutColumns && (
-          <Separator orientation="vertical" className={cn('ml-4 mr-5', { invisible: !isSeparatorVisible })} />
-        )}
+        {isLayoutColumns && <Separator orientation="vertical" className={cn({ invisible: !isSeparatorVisible })} />}
 
-        {!!rightColumnData && (
-          <Layout.Grid className="gap-y-3.5">{rightColumnData.map(item => renderItem(item))}</Layout.Grid>
-        )}
+        {!!rightColumnData && <Layout.Grid gapY="sm">{rightColumnData.map(item => renderItem(item))}</Layout.Grid>}
       </Layout.Grid>
 
-      <div className="group-last:hidden">
-        <Spacer size={5} />
-        <Separator />
-        <Spacer size={5} />
-      </div>
+      <Separator className="group-last:hidden mb-cn-md" />
     </Layout.Grid>
   )
 }

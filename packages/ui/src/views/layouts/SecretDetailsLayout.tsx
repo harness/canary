@@ -1,11 +1,11 @@
 import { FC, ReactNode } from 'react'
 
-import {Layout, Link, PermissionIdentifier, ResourceType, Spacer, StatsPanel, Text, TimeAgoCard} from '@/components'
+import { Layout, Link, PermissionIdentifier, ResourceType, Spacer, StatsPanel, Text, TimeAgoCard } from '@/components'
 import { Tabs } from '@/components/tabs'
 import { useComponents, useCustomDialogTrigger, useRouterContext, useTranslation } from '@/context'
+import { Page } from '@/views'
 import { SandboxLayout } from '@views/layouts/SandboxLayout'
 import { SecretListItem } from '@views/secrets'
-import {Page} from "@/views";
 
 interface SecretDetailsLayoutProps {
   secret: SecretListItem
@@ -132,98 +132,98 @@ export const SecretDetailsLayout: FC<SecretDetailsLayoutProps> = ({
 
   return (
     <Page.Root>
-        <Page.Header
-            backLink={{
-                linkText: t('views:secretDetails.backToSecrets', 'Back to secrets'),
-                linkProps: { to: backButtonTo?.() ?? '' }
-            }}
-            title={secret?.name ?? ''}
-            moreActions={[
-                {
-                    title: t('views:secrets.edit', 'Edit secret'),
-                    iconName: 'edit-pencil',
-                    onClick: () => onEdit?.(secret.identifier),
-                    rbac: {
-                        resource: {
-                            resourceType: ResourceType.SECRET,
-                            resourceIdentifier: secret.identifier
-                        },
-                        permissions: [PermissionIdentifier.UPDATE_SECRET]
-                    }
-                },
-                {
-                    isDanger: true,
-                    title: t('views:secrets.delete', 'Delete secret'),
-                    iconName: 'trash',
-                    onClick: () => onDelete?.(secret.identifier),
-                    rbac: {
-                        resource: {
-                            resourceType: ResourceType.SECRET,
-                            resourceIdentifier: secret.identifier
-                        },
-                        permissions: [PermissionIdentifier.DELETE_SECRET]
-                    }
-                }
-            ]}
-        >
-            <StatsPanel
-                data={[
-                    {
-                        label: 'Created',
-                        value: secret?.createdAt ?
-                            <TimeAgoCard timestamp={secret.createdAt} dateTimeFormatOptions={DATE_FORMAT_OPTIONS} /> :
-                            undefined
-                    },
-                    {
-                        label: 'Last used',
-                        value: secret?.updatedAt ?
-                            <TimeAgoCard timestamp={secret.updatedAt} dateTimeFormatOptions={DATE_FORMAT_OPTIONS} /> :
-                            undefined
-                    },
-                    {
-                        label: 'Last updated',
-                        value: secret?.updatedAt ?
-                            <TimeAgoCard timestamp={secret.updatedAt} dateTimeFormatOptions={DATE_FORMAT_OPTIONS} /> :
-                            undefined
-                    }
-                ]}
-            />
-        </Page.Header>
-        <Page.Content>
-      <Tabs.NavRoot>
-        <Tabs.List className="cn-sandbox-layout-tabs mb-cn-3xl" variant="overlined">
-          <Tabs.Trigger value={SecretDetailsTabsKeys.OVERVIEW}>
-            {t('views:secretDetails.configuration', 'Configuration')}
-          </Tabs.Trigger>
+      <Page.Header
+        backLink={{
+          linkText: t('views:secretDetails.backToSecrets', 'Back to secrets'),
+          linkProps: { to: backButtonTo?.() ?? '' }
+        }}
+        title={secret?.name ?? ''}
+        moreActions={[
+          {
+            title: t('views:secrets.edit', 'Edit secret'),
+            iconName: 'edit-pencil',
+            onClick: () => onEdit?.(secret.identifier),
+            rbac: {
+              resource: {
+                resourceType: ResourceType.SECRET,
+                resourceIdentifier: secret.identifier
+              },
+              permissions: [PermissionIdentifier.UPDATE_SECRET]
+            }
+          },
+          {
+            isDanger: true,
+            title: t('views:secrets.delete', 'Delete secret'),
+            iconName: 'trash',
+            onClick: () => onDelete?.(secret.identifier),
+            rbac: {
+              resource: {
+                resourceType: ResourceType.SECRET,
+                resourceIdentifier: secret.identifier
+              },
+              permissions: [PermissionIdentifier.DELETE_SECRET]
+            }
+          }
+        ]}
+      >
+        <StatsPanel
+          data={[
+            {
+              label: 'Created',
+              value: secret?.createdAt ? (
+                <TimeAgoCard timestamp={secret.createdAt} dateTimeFormatOptions={DATE_FORMAT_OPTIONS} />
+              ) : undefined
+            },
+            {
+              label: 'Last used',
+              value: secret?.updatedAt ? (
+                <TimeAgoCard timestamp={secret.updatedAt} dateTimeFormatOptions={DATE_FORMAT_OPTIONS} />
+              ) : undefined
+            },
+            {
+              label: 'Last updated',
+              value: secret?.updatedAt ? (
+                <TimeAgoCard timestamp={secret.updatedAt} dateTimeFormatOptions={DATE_FORMAT_OPTIONS} />
+              ) : undefined
+            }
+          ]}
+        />
+      </Page.Header>
+      <Page.Content>
+        <Tabs.NavRoot>
+          <Tabs.List className="cn-sandbox-layout-tabs mb-cn-3xl" variant="overlined">
+            <Tabs.Trigger value={SecretDetailsTabsKeys.OVERVIEW}>
+              {t('views:secretDetails.configuration', 'Configuration')}
+            </Tabs.Trigger>
 
-          <Tabs.Trigger value={SecretDetailsTabsKeys.REFERENCES}>
-            {t('views:secretDetails.references', 'References')}
-          </Tabs.Trigger>
+            <Tabs.Trigger value={SecretDetailsTabsKeys.REFERENCES}>
+              {t('views:secretDetails.references', 'References')}
+            </Tabs.Trigger>
 
-          <Tabs.Trigger value={SecretDetailsTabsKeys.RUNTIME_USAGE}>
-            {t('views:secretDetails.activity', 'Activity')}
-          </Tabs.Trigger>
-        </Tabs.List>
-      </Tabs.NavRoot>
+            <Tabs.Trigger value={SecretDetailsTabsKeys.RUNTIME_USAGE}>
+              {t('views:secretDetails.activity', 'Activity')}
+            </Tabs.Trigger>
+          </Tabs.List>
+        </Tabs.NavRoot>
 
-      <Switch>
-        <Route
+        <Switch>
+          <Route
             path="/overview"
             render={() =>
-                configurationView || (
-                    <SandboxLayout.Content>
-                      {/* Default Configuration View */}
-                      <Text variant="body-normal">
-                        {t('views:secretDetails.configurationView', 'Secret Configuration')}
-                      </Text>
-                    </SandboxLayout.Content>
-                )
+              configurationView || (
+                <SandboxLayout.Content>
+                  {/* Default Configuration View */}
+                  <Text variant="body-normal">
+                    {t('views:secretDetails.configurationView', 'Secret Configuration')}
+                  </Text>
+                </SandboxLayout.Content>
+              )
             }
-        />
-        <Route path="/references">{referencesView}</Route>
-        <Route path="/runtime-usage">{activityView}</Route>
-      </Switch>
-        </Page.Content>
+          />
+          <Route path="/references">{referencesView}</Route>
+          <Route path="/runtime-usage">{activityView}</Route>
+        </Switch>
+      </Page.Content>
     </Page.Root>
   )
 }

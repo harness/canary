@@ -5,10 +5,12 @@ import { Toggle } from '@/components'
 interface FavoriteIconProps {
   isFavorite?: boolean
   onFavoriteToggle: (isFavorite: boolean) => void
+  className?: string
 }
 
-const Favorite: FC<FavoriteIconProps> = ({ isFavorite = false, onFavoriteToggle }) => (
+const Favorite: FC<FavoriteIconProps> = ({ isFavorite = false, onFavoriteToggle, className }) => (
   <Toggle
+    className={className}
     iconOnly
     size="sm"
     variant="transparent"
@@ -26,4 +28,4 @@ const Favorite: FC<FavoriteIconProps> = ({ isFavorite = false, onFavoriteToggle 
   />
 )
 
-export { Favorite }
+export { Favorite, type FavoriteIconProps }

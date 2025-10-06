@@ -1,9 +1,12 @@
-import {ButtonHTMLAttributes, FC, ReactNode, useMemo} from 'react'
+import { ButtonHTMLAttributes, FC, MouseEvent, MouseEventHandler, ReactNode, useMemo } from 'react'
 import type { LinkProps } from 'react-router-dom'
 
 import {
   Button,
   ButtonLayout,
+  Dialog,
+  Favorite,
+  FavoriteIconProps,
   Layout,
   Link,
   LogoPropsV2,
@@ -11,8 +14,9 @@ import {
   RbacMoreActionsTooltipActionData,
   Text
 } from '@/components'
+import { useComponents, useCustomDialogTrigger } from '@/context'
 import { SandboxLayout } from '@/views'
-import {useComponents, useCustomDialogTrigger} from "@/context";
+import omit from 'lodash-es/omit'
 
 export interface PageHeaderBackProps {
   linkText: string
@@ -22,6 +26,7 @@ export interface PageHeaderBackProps {
 export interface PageHeaderButtonProps {
   props?: ButtonHTMLAttributes<HTMLButtonElement>
   text: ReactNode
+  isDialogTrigger?: boolean
 }
 
 export interface PageHeaderProps {
@@ -32,20 +37,33 @@ export interface PageHeaderProps {
   children?: ReactNode
   button?: PageHeaderButtonProps
   moreActions?: RbacMoreActionsTooltipActionData[]
+  favoriteProps?: Omit<FavoriteIconProps, 'className'>
 }
 
-const Header: FC<PageHeaderProps> = ({ backLink, logoName, title, description, children, button, moreActions }) => {
+const Header: FC<PageHeaderProps> = ({
+  backLink,
+  logoName,
+  title,
+  description,
+  children,
+  button,
+  moreActions,
+  favoriteProps
+}) => {
   const { RbacMoreActionsTooltip } = useComponents()
   const { triggerRef, registerTrigger } = useCustomDialogTrigger()
+  const { triggerRef: buttonTriggerRef, registerTrigger: buttonRegisterTest } = useCustomDialogTrigger()
 
   const UpdatedMoreActions = useMemo(() => {
     if (!moreActions) return moreActions
 
     return moreActions.map(action => {
-      const onClick = !action?.onClick ? undefined : () => {
-        registerTrigger()
-        action.onClick?.()
-      }
+      const onClick = !action?.onClick
+        ? undefined
+        : () => {
+            registerTrigger()
+            action.onClick?.()
+          }
 
       return {
         ...action,
@@ -53,6 +71,27 @@ const Header: FC<PageHeaderProps> = ({ backLink, logoName, title, description, c
       }
     })
   }, [moreActions, registerTrigger])
+
+  const buttonClickHandler = (e: MouseEvent<HTMLButtonElement>) => {
+    buttonRegisterTest()
+    button?.props?.onClick?.(e)
+  }
+
+  const getButton = () => {
+    if (!button) return null
+
+    const ButtonComp = (
+      <Button ref={buttonTriggerRef} {...omit(button?.props, ['onClick'])} onClick={buttonClickHandler}>
+        {button.text}
+      </Button>
+    )
+
+    if (button?.isDialogTrigger) {
+      return <Dialog.Trigger>{ButtonComp}</Dialog.Trigger>
+    }
+
+    return ButtonComp
+  }
 
   return (
     <Layout.Horizontal justify="between" gap="xl" className="mb-cn-xl">
@@ -64,10 +103,11 @@ const Header: FC<PageHeaderProps> = ({ backLink, logoName, title, description, c
             </Link>
           )}
           <Layout.Flex gap="xs">
-            {!!logoName && <LogoV2 name={logoName} size="lg" />}
+            {!!logoName && <LogoV2 className="mt-cn-4xs" name={logoName} size="md" />}
             <Text as="h1" variant="heading-section">
               {title}
             </Text>
+            {!!favoriteProps && <Favorite className="mt-cn-4xs" {...favoriteProps} />}
           </Layout.Flex>
         </Layout.Vertical>
         {!!description && <Text>{description}</Text>}
@@ -76,13 +116,9 @@ const Header: FC<PageHeaderProps> = ({ backLink, logoName, title, description, c
 
       {(!!button || !!UpdatedMoreActions) && (
         <ButtonLayout className="self-end">
-          {!!button && <Button {...button?.props}>{button.text}</Button>}
+          {getButton()}
           {!!UpdatedMoreActions && (
-            <RbacMoreActionsTooltip
-                ref={triggerRef}
-                actions={UpdatedMoreActions}
-                buttonVariant="outline"
-            />
+            <RbacMoreActionsTooltip ref={triggerRef} actions={UpdatedMoreActions} buttonVariant="outline" />
           )}
         </ButtonLayout>
       )}

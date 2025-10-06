@@ -2,6 +2,7 @@ import { Select } from '@components/form-primitives'
 import { Layout } from '@components/layout'
 import { Separator } from '@components/separator'
 import { Text } from '@components/text'
+import { cn } from '@utils/cn'
 
 import { PaginationPrimitive } from './pagination-primitive'
 import { type PaginationProps } from './types'
@@ -19,7 +20,8 @@ export function Pagination({
   getNextPageLink,
   onPrevious,
   onNext,
-  indeterminate = false
+  indeterminate = false,
+  className
 }: PaginationProps) {
   const handleGoToPage = (selectedPage?: number) => (e: React.MouseEvent) => {
     e.preventDefault()
@@ -62,7 +64,7 @@ export function Pagination({
   }
 
   return (
-    <Layout.Horizontal className="mt-cn-xl w-full" align="center" justify="between">
+    <Layout.Horizontal className={cn('mt-cn-xl w-full', className)} align="center" justify="between">
       <div>
         {totalPages && currentPage && (
           <Layout.Horizontal align="center" gap="md">
@@ -78,7 +80,7 @@ export function Pagination({
       <Layout.Horizontal gap="xs">
         {!indeterminate && totalPages && currentPage ? (
           <>
-            <PaginationPrimitive.PreviousV2
+            <PaginationPrimitive.Previous
               onClick={goToPage ? handleGoToPage(currentPage > 1 ? currentPage - 1 : undefined) : undefined}
               href={getPageLink?.(currentPage > 1 ? currentPage - 1 : currentPage)}
               disabled={currentPage === 1}
@@ -98,7 +100,7 @@ export function Pagination({
               </ul>
             )} */}
 
-            <PaginationPrimitive.NextV2
+            <PaginationPrimitive.Next
               onClick={goToPage ? handleGoToPage(currentPage < totalPages ? currentPage + 1 : undefined) : undefined}
               href={getPageLink?.(currentPage < totalPages ? currentPage + 1 : currentPage)}
               disabled={currentPage === totalPages}
@@ -106,12 +108,12 @@ export function Pagination({
           </>
         ) : (
           <>
-            <PaginationPrimitive.PreviousV2
+            <PaginationPrimitive.Previous
               href={hasPrevious ? getPrevPageLink?.() : undefined}
               onClick={onPrevious}
               disabled={!hasPrevious}
             />
-            <PaginationPrimitive.NextV2
+            <PaginationPrimitive.Next
               href={hasNext ? getNextPageLink?.() : undefined}
               onClick={onNext}
               disabled={!hasNext}

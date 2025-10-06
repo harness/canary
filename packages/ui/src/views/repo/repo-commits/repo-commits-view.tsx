@@ -109,28 +109,27 @@ export const RepoCommitsView: FC<RepoCommitsViewProps> = ({
                 )}
 
                 {commitsList?.length && (
-                  <CommitsList
-                    data={commitsList}
-                    toCode={toCode}
-                    toCommitDetails={toCommitDetails}
-                    toPullRequest={toPullRequest}
-                    className="ml-1"
-                  />
+                  <div>
+                    <CommitsList
+                      data={commitsList}
+                      toCode={toCode}
+                      toCommitDetails={toCommitDetails}
+                      toPullRequest={toPullRequest}
+                      className="ml-1"
+                    />
+
+                    <Pagination
+                      indeterminate
+                      hasNext={xNextPage > 0}
+                      hasPrevious={xPrevPage > 0}
+                      getPrevPageLink={getPrevPageLink}
+                      getNextPageLink={getNextPageLink}
+                    />
+                  </div>
                 )}
               </>
             )}
           </Layout.Flex>
-
-          {commitsList?.length && (
-            <Pagination
-              className="!mt-0"
-              indeterminate
-              hasNext={xNextPage > 0}
-              hasPrevious={xPrevPage > 0}
-              getPrevPageLink={getPrevPageLink}
-              getNextPageLink={getNextPageLink}
-            />
-          )}
         </Layout.Flex>
       </SandboxLayout.Content>
     </SandboxLayout.Main>

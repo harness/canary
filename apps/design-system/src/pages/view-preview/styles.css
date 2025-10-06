@@ -1,5 +1,6 @@
-@import '@harnessio/ui/styles.css';
 
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+@import '@harnessio/ui/styles.css';

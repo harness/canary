@@ -1,12 +1,9 @@
-/* src/styles.css */
-/* Monaco styles and fonts are included by monaco-editor-webpack-plugin. No separate import needed. */
-/* @import './styles/monaco-styles.css'; */
-@import '@harnessio/ui/markdown-preview-styles.css';
-
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
 
+/* Monaco styles and fonts are included by monaco-editor-webpack-plugin. No separate import needed. */
+@import '@harnessio/ui/markdown-preview-styles.css';
 @import '@harnessio/ui/styles.css';
 /* Escape styling from blueprint.css */
 

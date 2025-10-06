@@ -136,7 +136,7 @@ export const LineTitle: React.FC<LineTitleProps> = ({
           </Button>
           <Link
             to={toRepoFileDetails?.({ path: `files/${currentRefForDiff || sourceBranch}/~/${linkPath}` }) ?? ''}
-            className="font-medium leading-tight text-cn-1 min-w-0 break-all"
+            className="text-cn-1 min-w-0 break-all font-medium leading-tight"
           >
             {displayText}
           </Link>
@@ -205,6 +205,7 @@ export const PullRequestAccordion: React.FC<{
   hideViewedCheckbox?: boolean
   addWidget?: boolean
   currentRefForDiff?: string
+  commentLayout?: 'compact' | 'default'
 }> = ({
   header,
   diffMode,
@@ -236,7 +237,8 @@ export const PullRequestAccordion: React.FC<{
   principalProps,
   hideViewedCheckbox = false,
   addWidget = true,
-  currentRefForDiff
+  currentRefForDiff,
+  commentLayout
 }) => {
   const { t: _ts } = useTranslation()
   const { highlight, wrap, fontsize } = useDiffConfig()
@@ -412,6 +414,7 @@ export const PullRequestAccordion: React.FC<{
                   filenameToLanguage={filenameToLanguage}
                   toggleConversationStatus={toggleConversationStatus}
                   collapseDiff={() => setCollapsed(true)}
+                  layout={commentLayout}
                 />
               </>
             )}

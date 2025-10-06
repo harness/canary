@@ -178,6 +178,11 @@
   display: block;
 }
 
+.diff-line-extend-new-content {
+  vertical-align: top;
+  border-left-width: 1px;
+}
+
 .diff-tailwindcss-wrapper {
   .diff-line-widget-new-content,
   .diff-line-widget-new-placeholder,

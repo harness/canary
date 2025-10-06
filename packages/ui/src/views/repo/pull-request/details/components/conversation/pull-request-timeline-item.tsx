@@ -237,6 +237,7 @@ export interface TimelineItemProps {
   payload?: TypesPullReqActivity
   threadIndex?: number
   totalThreads?: number
+  layout?: 'compact' | 'default'
 }
 
 const PullRequestTimelineItem: FC<TimelineItemProps> = ({
@@ -284,7 +285,8 @@ const PullRequestTimelineItem: FC<TimelineItemProps> = ({
   payload,
   threadIndex,
   totalThreads,
-  renderFirstCommentBlock
+  renderFirstCommentBlock,
+  layout = 'default'
 }) => {
   const [comment, setComment] = useState('')
   const { isExpanded: getIsExpanded, toggleExpanded } = useExpandedComments()
@@ -356,6 +358,8 @@ const PullRequestTimelineItem: FC<TimelineItemProps> = ({
     // If content is a single element, return as is
     return content
   }
+
+  const isCompactLayout = layout === 'compact'
 
   const renderToggleButton = () => (
     <Button variant="transparent" onClick={handleToggleExpanded}>
@@ -457,6 +461,7 @@ const PullRequestTimelineItem: FC<TimelineItemProps> = ({
                     }}
                     comment={comment}
                     setComment={setComment}
+                    layout={layout}
                   />
                 ) : (
                   renderContent()
@@ -492,11 +497,13 @@ const PullRequestTimelineItem: FC<TimelineItemProps> = ({
                         }}
                         comment={comment}
                         setComment={setComment}
+                        layout={layout}
                       />
                     ) : (
                       <div
                         className={cn(
                           'flex items-center gap-cn-sm border-t bg-cn-2 px-cn-md py-cn-xs',
+                          { 'gap-cn-xs px-cn-sm': isCompactLayout },
                           replyBoxClassName
                         )}
                       >

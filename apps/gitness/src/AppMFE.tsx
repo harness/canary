@@ -5,8 +5,8 @@ import { createBrowserRouter, RouterProvider } from 'react-router-dom'
 import { QueryClientProvider } from '@tanstack/react-query'
 
 import { CodeServiceAPIClient } from '@harnessio/code-service-client'
-import { DialogProvider, Toast, TooltipProvider } from '@harnessio/ui/components'
-import { PortalProvider, TranslationProvider } from '@harnessio/ui/context'
+import { TooltipProvider } from '@harnessio/ui/components'
+import { DialogProvider, PortalProvider, TranslationProvider } from '@harnessio/ui/context'
 
 import { ExitConfirmProvider } from './framework/context/ExitConfirmContext'
 import { MFEContext, MFEContextProps } from './framework/context/MFEContext'
@@ -109,17 +109,15 @@ export default function AppMFE({
             <ThemeProvider defaultTheme={theme === 'Light' ? 'light-std-std' : 'dark-std-std'}>
               <TranslationProvider t={t}>
                 <QueryClientProvider client={queryClient}>
-                  <Toast.Provider>
-                    <TooltipProvider>
-                      <DialogProvider>
-                        <ExitConfirmProvider>
-                          <NavigationProvider routes={mfeRoutes}>
-                            <RouterProvider router={router} key={renderUrl} />
-                          </NavigationProvider>
-                        </ExitConfirmProvider>
-                      </DialogProvider>
-                    </TooltipProvider>
-                  </Toast.Provider>
+                  <TooltipProvider>
+                    <DialogProvider>
+                      <ExitConfirmProvider>
+                        <NavigationProvider routes={mfeRoutes}>
+                          <RouterProvider router={router} key={renderUrl} />
+                        </NavigationProvider>
+                      </ExitConfirmProvider>
+                    </DialogProvider>
+                  </TooltipProvider>
                 </QueryClientProvider>
               </TranslationProvider>
             </ThemeProvider>

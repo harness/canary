@@ -104,15 +104,17 @@ const CommitsAccordion: FC<{
               <div className="rounded-b-3 overflow-hidden border-t bg-transparent">
                 {(fileDeleted || isDiffTooLarge || fileUnchanged || header?.isBinary) && !showHiddenDiff ? (
                   <Layout.Vertical align="center" className="w-full py-5">
-                    <Button
-                      className="text-cn-brand"
-                      variant="link"
-                      size="sm"
-                      aria-label="show diff"
-                      onClick={() => setShowHiddenDiff(true)}
-                    >
-                      {_ts('views:pullRequests.showDiff')}
-                    </Button>
+                    {!fileUnchanged && (
+                      <Button
+                        className="text-cn-brand"
+                        variant="link"
+                        size="sm"
+                        aria-label="show diff"
+                        onClick={() => setShowHiddenDiff(true)}
+                      >
+                        {_ts('views:pullRequests.showDiff')}
+                      </Button>
+                    )}
                     <span>
                       {fileDeleted
                         ? _ts('views:pullRequests.deletedFileDiff')

@@ -1,7 +1,7 @@
 import { useCallback, useMemo } from 'react'
 
-import { Avatar, DropdownMenu, IconV2, MoreActionsTooltip, Table, useCustomDialogTrigger } from '@/components'
-import { useTranslation } from '@/context'
+import { Avatar, DropdownMenu, IconV2, MoreActionsTooltip, Table } from '@/components'
+import { useCustomDialogTrigger, useTranslation } from '@/context'
 import { MembersProps } from '@/views'
 import { getRolesData } from '@views/project/project-members/constants'
 

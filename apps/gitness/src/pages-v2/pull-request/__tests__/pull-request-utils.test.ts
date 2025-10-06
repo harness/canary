@@ -1,9 +1,10 @@
+import { capitalize } from 'lodash-es'
+
 import { TypesCodeOwnerEvaluationEntry, TypesOwnerEvaluation, TypesPrincipalInfo } from '@harnessio/code-service-client'
 import { generateAlphaNumericHash } from '@harnessio/ui/utils'
 
 import {
   buildPRFilters,
-  capitalizeFirstLetter,
   changedFileId,
   checkIfOutdatedSha,
   determineStatusMessage,
@@ -162,7 +163,7 @@ describe('checkIfOutdatedSha', () => {
 
 describe('capitalizeFirstLetter', () => {
   it('should capitalize the first letter of a string', () => {
-    const result = capitalizeFirstLetter('hello')
+    const result = capitalize('hello')
     expect(result).toBe('Hello')
   })
 })

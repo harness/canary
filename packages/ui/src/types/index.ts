@@ -8,6 +8,7 @@ export interface TypesUser {
   created?: number
   display_name?: string
   email?: string
+  id?: number
   uid?: string
   updated?: number
   url?: string

@@ -1,17 +1,17 @@
 import { FC, useEffect } from 'react'
 import { useForm } from 'react-hook-form'
 
-import { Checkbox, ControlGroup, Layout, Message, MessageTheme, Skeleton, Text } from '@/components'
+import { CardSelect, Checkbox, ControlGroup, Layout, Message, MessageTheme, Skeleton, Text } from '@/components'
 import { useTranslation } from '@/context'
 import { zodResolver } from '@hookform/resolvers/zod'
 import { z } from 'zod'
 
-import { ErrorTypes } from '../types'
+import { ErrorTypes, VulnerabilityScanningType } from '../types'
 
 const formSchema = z.object({
   secretScanning: z.boolean(),
   verifyCommitterIdentity: z.boolean(),
-  vulnerabilityScanning: z.boolean()
+  vulnerabilityScanning: z.nativeEnum(VulnerabilityScanningType)
 })
 
 export type RepoSettingsSecurityFormFields = z.infer<typeof formSchema>
@@ -19,7 +19,7 @@ export type RepoSettingsSecurityFormFields = z.infer<typeof formSchema>
 interface RepoSettingsSecurityFormProps {
   securityScanning: boolean
   verifyCommitterIdentity: boolean
-  vulnerabilityScanning: boolean
+  vulnerabilityScanning: VulnerabilityScanningType
   apiError: { type: ErrorTypes; message: string } | null
   handleUpdateSecuritySettings: (data: RepoSettingsSecurityFormFields) => void
   isUpdatingSecuritySettings: boolean
@@ -66,8 +66,8 @@ export const RepoSettingsSecurityForm: FC<RepoSettingsSecurityFormProps> = ({
     })()
   }
 
-  const onVulnerabilityScanningCheckboxChange = (checked: boolean) => {
-    setValue('vulnerabilityScanning', checked)
+  const onVulnerabilityScanningChange = (mode: VulnerabilityScanningType) => {
+    setValue('vulnerabilityScanning', mode)
     handleSubmit(data => {
       handleUpdateSecuritySettings(data)
     })()
@@ -116,9 +116,13 @@ export const RepoSettingsSecurityForm: FC<RepoSettingsSecurityFormProps> = ({
           {showVulnerabilityScanning && (
             <ControlGroup>
               <Checkbox
-                checked={watch('vulnerabilityScanning')}
+                checked={watch('vulnerabilityScanning') !== VulnerabilityScanningType.DISABLED}
                 id="vulnerability-scanning"
-                onCheckedChange={onVulnerabilityScanningCheckboxChange}
+                onCheckedChange={(checked: boolean) =>
+                  onVulnerabilityScanningChange(
+                    checked ? VulnerabilityScanningType.DETECT : VulnerabilityScanningType.DISABLED
+                  )
+                }
                 disabled={isDisabled}
                 title={tooltipMessage}
                 label={t('views:repos.vulnerabilityScanning', 'Vulnerability scanning')}
@@ -130,6 +134,36 @@ export const RepoSettingsSecurityForm: FC<RepoSettingsSecurityFormProps> = ({
               />
               {errors.vulnerabilityScanning && (
                 <Message theme={MessageTheme.ERROR}>{errors.vulnerabilityScanning.message?.toString()}</Message>
+              )}
+
+              {watch('vulnerabilityScanning') !== VulnerabilityScanningType.DISABLED && (
+                <CardSelect.Root
+                  type="single"
+                  value={watch('vulnerabilityScanning')}
+                  onValueChange={(value: unknown) => onVulnerabilityScanningChange(value as VulnerabilityScanningType)}
+                  disabled={isDisabled}
+                  className="pl-cn-xl"
+                  gap="xs"
+                >
+                  <CardSelect.Item value={VulnerabilityScanningType.DETECT} disabled={isDisabled}>
+                    <CardSelect.Title>{t('views:repos.detectVulnerabilities', 'Detect')}</CardSelect.Title>
+                    <CardSelect.Description>
+                      {t(
+                        'views:repos.detectVulnerabilitiesDescription',
+                        'passive vulnerability will report errors but not block'
+                      )}
+                    </CardSelect.Description>
+                  </CardSelect.Item>
+                  <CardSelect.Item value={VulnerabilityScanningType.BLOCK} disabled={isDisabled}>
+                    <CardSelect.Title>{t('views:repos.blockVulnerabilities', 'Block')}</CardSelect.Title>
+                    <CardSelect.Description>
+                      {t(
+                        'views:repos.blockVulnerabilitiesDescription',
+                        'active vulnerability blocks commit if any vulnerability is found'
+                      )}
+                    </CardSelect.Description>
+                  </CardSelect.Item>
+                </CardSelect.Root>
               )}
             </ControlGroup>
           )}

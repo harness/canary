@@ -8,7 +8,7 @@ import {
   useDeleteRepositoryMutation,
   useListReposQuery
 } from '@harnessio/code-service-client'
-import { determineScope, Toast, useToast } from '@harnessio/ui/components'
+import { determineScope, toast } from '@harnessio/ui/components'
 import { useRouterContext } from '@harnessio/ui/context'
 import { ExtendedScope, RepoListFilters, RepositoryType, SandboxRepoListPage } from '@harnessio/ui/views'
 
@@ -40,7 +40,6 @@ export default function ReposListPage() {
     importToastId,
     setImportToastId
   } = useRepoStore()
-  const { toast, dismiss } = useToast()
   const isMFE = useIsMFE()
   const { navigate } = useRouterContext()
 
@@ -84,7 +83,7 @@ export default function ReposListPage() {
     {},
     {
       onSuccess: () => {
-        dismiss(importToastId ?? '')
+        toast.dismiss(importToastId ?? '')
         setImportToastId(null)
         setImportRepoIdentifier(null)
         refetchListRepos()
@@ -111,28 +110,32 @@ export default function ReposListPage() {
   }, [repoData, headers, setRepositories])
 
   useEffect(() => {
+    if (isCancellingImport) {
+      toast.dismiss(importToastId ?? undefined)
+      setImportToastId(null)
+      setImportRepoIdentifier(null)
+    }
+  }, [isCancellingImport, importToastId, setImportToastId, setImportRepoIdentifier])
+
+  useEffect(() => {
     if (importRepoIdentifier && !importToastId) {
-      const { id } = toast({
-        title: `Import in progress`,
-        description: importRepoIdentifier,
-        duration: Infinity,
-        action: (
-          <Toast.Action
-            onClick={() => {
+      const importToastId = toast.loading({
+        title: `Import ${importRepoIdentifier} in progress`,
+        options: {
+          action: {
+            label: 'Cancel import',
+            onClick: () => {
               deleteRepository({
                 queryParams: {},
                 repo_ref: `${spaceURL}/${importRepoIdentifier}/+`
               })
-            }}
-            altText="Cancel import"
-          >
-            {isCancellingImport ? 'Canceling...' : 'Cancel'}
-          </Toast.Action>
-        )
+            }
+          }
+        }
       })
-      setImportToastId(id)
+      setImportToastId(importToastId)
     }
-  }, [importRepoIdentifier, setImportRepoIdentifier])
+  }, [importRepoIdentifier, setImportRepoIdentifier, deleteRepository, importToastId, spaceURL, setImportToastId])
 
   const onFavoriteToggle = async ({ repoId, isFavorite }: { repoId: number; isFavorite: boolean }) => {
     try {

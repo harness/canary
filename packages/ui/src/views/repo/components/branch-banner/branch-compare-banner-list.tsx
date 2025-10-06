@@ -31,7 +31,10 @@ export const BranchCompareBannerList: FC<BranchCompareBannerListProps> = ({
     return null
   }
   return (
-    <Layout.Grid className="overflow-hidden rounded-3 border border-cn-success bg-cn-1 px-4 py-3.5" gap="sm">
+    <Layout.Grid
+      className="rounded-3 border-cn-success bg-cn-success-outline px-cn-md py-cn-sm overflow-hidden border"
+      gap="sm"
+    >
       {visibleCandidates?.map((branch, index) => (
         <>
           <BranchCompareBanner
@@ -41,7 +44,7 @@ export const BranchCompareBannerList: FC<BranchCompareBannerListProps> = ({
             spaceId={spaceId}
             onDismiss={handleDismiss}
           />
-          {index < visibleCandidates.length - 1 && <Separator />}
+          {index < visibleCandidates.length - 1 && <Separator className="bg-cn-success-primary" />}
         </>
       ))}
     </Layout.Grid>

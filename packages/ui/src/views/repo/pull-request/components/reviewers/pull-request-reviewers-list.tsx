@@ -1,16 +1,14 @@
 import { Alert } from '@components/alert'
 import { Layout } from '@components/layout'
 import { Text } from '@components/text'
+import { isEmpty } from 'lodash-es'
 
-import { EnumPullReqReviewDecision, PullReqReviewDecision } from '../../pull-request.types'
+import { EnumPullReqReviewDecision, PRReviewer, PullReqReviewDecision } from '../../pull-request.types'
 import { ReviewerItem } from './pull-request-reviewers-item'
 
 interface ReviewersListProps {
-  reviewers: {
-    reviewer?: { display_name?: string; id?: number }
-    review_decision?: EnumPullReqReviewDecision
-    sha?: string
-  }[]
+  reviewers: PRReviewer[]
+  userGroupReviewers: PRReviewer[]
   pullRequestMetadata?: { source_sha: string }
   processReviewDecision: (
     review_decision: EnumPullReqReviewDecision,
@@ -24,12 +22,13 @@ interface ReviewersListProps {
 
 const ReviewersList: React.FC<ReviewersListProps> = ({
   reviewers,
+  userGroupReviewers,
   pullRequestMetadata,
   processReviewDecision,
   addReviewerError,
   removeReviewerError
 }) => (
-  <Layout.Vertical gapY="md">
+  <Layout.Vertical gapY="md" className="pr-cn-3xs">
     {(addReviewerError || removeReviewerError) && (
       <Alert.Root theme="danger">
         <Alert.Title>Failed to add reviewer</Alert.Title>
@@ -37,8 +36,8 @@ const ReviewersList: React.FC<ReviewersListProps> = ({
       </Alert.Root>
     )}
 
-    {reviewers.length ? (
-      reviewers.map(({ reviewer, review_decision, sha }) => (
+    {!isEmpty(reviewers) || !isEmpty(userGroupReviewers) ? (
+      [...userGroupReviewers, ...reviewers].map(({ reviewer, review_decision, sha }) => (
         <ReviewerItem
           key={reviewer?.id}
           reviewer={reviewer}

@@ -15,10 +15,9 @@ import {
   Table,
   Tag,
   Text,
-  TimeAgoCard,
-  useCustomDialogTrigger
+  TimeAgoCard
 } from '@/components'
-import { useTranslation } from '@/context'
+import { useCustomDialogTrigger, useTranslation } from '@/context'
 import { cn } from '@utils/cn'
 import { getChecksState, getPrState } from '@views/repo/pull-request/utils'
 

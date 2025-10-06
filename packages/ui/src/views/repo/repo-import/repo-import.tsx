@@ -2,6 +2,7 @@ import { useEffect } from 'react'
 import { useForm, type SubmitHandler } from 'react-hook-form'
 
 import {
+  Alert,
   Button,
   ButtonLayout,
   ControlGroup,
@@ -244,7 +245,12 @@ export function RepoImportPage({ onFormSubmit, onFormCancel, isLoading, apiError
             optional
           />
 
-          {!!apiErrorsValue && <span className="text-2 text-cn-danger">{apiErrorsValue}</span>}
+          {!!apiErrorsValue && (
+            <Alert.Root theme="danger" expandable>
+              <Alert.Title>Import failed</Alert.Title>
+              <Alert.Description>{apiErrorsValue}</Alert.Description>
+            </Alert.Root>
+          )}
 
           {/* SUBMIT BUTTONS */}
           <Fieldset className="mt-6">

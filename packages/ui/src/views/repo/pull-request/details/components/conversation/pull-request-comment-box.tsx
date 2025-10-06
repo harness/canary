@@ -143,8 +143,8 @@ export const PullRequestCommentBox = ({
   lineFromNumber,
   lineSide,
   lineFromSide,
-  comment: initialComment,
-  setComment,
+  comment: parentComment,
+  setComment: setParentComment,
   isEditMode,
   handleUpload,
   handleAiPullRequestSummary,
@@ -164,8 +164,7 @@ export const PullRequestCommentBox = ({
   const fileInputRef = useRef<HTMLInputElement | null>(null)
   const textAreaRef = useRef<HTMLTextAreaElement | null>(null)
   const [isDragging, setIsDragging] = useState(false)
-  const [textComment, setTextComment] = useState(initialComment)
-  const [textSelection, setTextSelection] = useState({ start: initialComment.length, end: initialComment.length })
+  const [textComment, setTextComment] = useState(parentComment)
   const [showAiLoader, setShowAiLoader] = useState(false)
   const dropZoneRef = useRef<HTMLDivElement>(null)
   const [isLoading, setIsLoading] = useState(false)
@@ -174,7 +173,7 @@ export const PullRequestCommentBox = ({
 
   const initialCommentHistory: CommentHistory = {
     comment: textComment,
-    selection: textSelection
+    selection: { start: textComment.length, end: textComment.length }
   }
   const [commentHistory, setCommentHistory] = useState<CommentHistory[]>([initialCommentHistory])
   const [commentFuture, setCommentFuture] = useState<CommentHistory[]>([])
@@ -182,12 +181,11 @@ export const PullRequestCommentBox = ({
   const hasInitialized = useRef(false)
 
   useEffect(() => {
-    if (initialComment && !hasInitialized.current) {
-      setTextComment(initialComment)
-      setTextSelection({ start: initialComment.length, end: initialComment.length })
+    if (parentComment && !hasInitialized.current) {
+      setCommentAndSelection(parentComment, { start: parentComment.length, end: parentComment.length })
       hasInitialized.current = true
     }
-  }, [initialComment])
+  }, [parentComment])
 
   const {
     principalsMentionMap,
@@ -208,7 +206,7 @@ export const PullRequestCommentBox = ({
 
   const clearComment = () => {
     if (!preserveCommentOnSave) {
-      setComment('')
+      setParentComment('')
       setCommentAndSelection('', { start: 0, end: 0 }) // Clear the comment box after saving
     }
   }
@@ -221,7 +219,7 @@ export const PullRequestCommentBox = ({
     const newComment = textComment.trim()
 
     if (onSaveComment && (allowEmptyValue || newComment)) {
-      setComment(newComment)
+      setParentComment(newComment)
       setCommentError(null)
       const formattedComment = replaceMentionEmailWithId(newComment, principalsMentionMap)
       const onSaveCommentReturn = onSaveComment(formattedComment)
@@ -251,7 +249,7 @@ export const PullRequestCommentBox = ({
   const handleUploadCallback = (file: File) => {
     setFile(file)
 
-    handleUpload?.(file, setTextComment, textComment, textSelection)
+    handleUpload?.(file, setTextComment, textComment, currentSelection())
   }
 
   const handleFileSelect = () => {
@@ -320,12 +318,6 @@ export const PullRequestCommentBox = ({
         })
     }
   }
-
-  useEffect(() => {
-    if (textAreaRef.current) {
-      textAreaRef.current.setSelectionRange(textSelection.start, textSelection.end)
-    }
-  }, [textComment, textSelection])
 
   const parseComment = (
     originalComment: string,
@@ -482,7 +474,10 @@ export const PullRequestCommentBox = ({
     ]
   }, [diff, lineNumber, lineFromNumber, handleAiPullRequestSummary])
 
-  const handleActionClick = (type: ToolbarAction, comment: string, selection: TextSelection) => {
+  const handleActionClick = (type: ToolbarAction) => {
+    const selection: TextSelection = currentSelection()
+    const comment: string = textComment
+
     switch (type) {
       case ToolbarAction.AI_SUMMARY:
         handleAiSummary(selection)
@@ -548,9 +543,12 @@ export const PullRequestCommentBox = ({
     const current = commentHistory.pop() ?? initialCommentHistory
     const undo = commentHistory.pop() ?? current
 
-    !isUndefined(undo) &&
-      !isUndefined(current) &&
-      setCommentAndSelection(undo.comment, undo.selection, [...commentHistory, undo], [...commentFuture, current])
+    if (!isUndefined(undo) && !isUndefined(current)) {
+      setCommentAndSelection(undo.comment, undo.selection)
+
+      setCommentHistory([...commentHistory, undo])
+      setCommentFuture([...commentFuture, current])
+    }
   }
 
   const handleRedo = (e: KeyboardEvent<HTMLTextAreaElement>): void => {
@@ -562,63 +560,79 @@ export const PullRequestCommentBox = ({
 
     const redo = commentFuture.pop()
 
-    !isUndefined(redo) && setCommentAndSelection(redo.comment, redo.selection, [...commentHistory, redo], commentFuture)
-  }
+    if (!isUndefined(redo)) {
+      setCommentAndSelection(redo.comment, redo.selection)
 
-  const setSelection = (selection: TextSelection, skipSetHistory: boolean = false): void => {
-    if (textAreaRef.current) {
-      textAreaRef.current.setSelectionRange(selection.start, selection.end)
-      setTextSelection({ start: selection.start, end: selection.end })
-
-      !skipSetHistory && setCommentHistory([...commentHistory, { comment: textComment, selection: selection }])
+      setCommentHistory([...commentHistory, redo])
+      setCommentFuture(commentFuture)
     }
   }
 
-  const setCommentAndSelection = (
-    comment: string,
-    selection: TextSelection,
-    replaceHistory?: CommentHistory[],
-    replaceFuture?: CommentHistory[]
-  ): void => {
-    setTextComment(comment)
+  const pushHistory = (current: CommentHistory): void => {
+    setCommentHistory([...commentHistory, current])
+  }
 
-    setSelection({ start: selection.start, end: selection.end }, true)
+  const currentSelection = (): TextSelection => {
+    const textAreaElement = textAreaRef.current
 
-    const current = {
+    return textAreaElement
+      ? {
+          start: textAreaElement.selectionStart,
+          end: textAreaElement.selectionEnd
+        }
+      : { start: textComment.length, end: textComment.length }
+  }
+
+  const setCommentAndSelection = (comment: string, selection: TextSelection): void => {
+    setComment(comment)
+
+    pushHistory({
       comment: comment,
       selection: selection
-    }
+    })
 
-    setCommentHistory(replaceHistory ?? [...commentHistory, current])
-    setCommentFuture(replaceFuture ? replaceFuture : [])
+    setTimeout(() => {
+      /*
+       * Note: Setting the comment value on the textarea causes the textarea to set its internal selection index
+       *       to the end of the passed in value. This also causes its onSelect event to fire with the new (wrong)
+       *       selection. To work around this, we call setSelection on the next event loop so after the textarea
+       *       sets the wrong selection we update it to be correct. The alternative is maintaining our own selection
+       *       state, but that gets a bit messy having two sources of truth.
+       */
+      setSelection({ start: selection.start, end: selection.end })
+    })
   }
 
-  const onCommentChange = (e: ChangeEvent<HTMLTextAreaElement>): void => {
-    const selection = { start: e.target.selectionStart, end: e.target.selectionEnd }
-
-    setCommentAndSelection(e.target.value, selection)
+  const setSelection = (selection: TextSelection): void => {
+    textAreaRef.current && textAreaRef.current.setSelectionRange(selection.start, selection.end)
   }
 
-  const onSelect = (): void => {
-    if (textAreaRef.current) {
-      const selection = { start: textAreaRef.current.selectionStart, end: textAreaRef.current.selectionEnd }
+  const setComment = (comment: string): void => {
+    setTextComment(comment)
+    setParentComment(comment) // Only required because the "Compare changes" screen has an external close button
+  }
 
-      setSelection(selection)
-    }
+  const onCommentChange = (comment: string): void => {
+    setComment(comment)
+
+    pushHistory({
+      comment: comment,
+      selection: currentSelection()
+    })
   }
 
   const onKeyUp = (e: KeyboardEvent<HTMLTextAreaElement>): void => {
     switch (e.code) {
       case 'Enter': {
-        const commentMetadata = parseComment(textComment, textSelection)
+        const commentMetadata = parseComment(textComment, currentSelection())
         const textLinesSelectionStartIndexBeforeEnter = commentMetadata.comment.textLinesSelectionStartIndex - 1
         const lineBeforeEnter = commentMetadata.comment.textLines.at(textLinesSelectionStartIndexBeforeEnter) ?? ''
 
         if (isListString(lineBeforeEnter)) {
-          handleActionClick(ToolbarAction.UNORDERED_LIST, textComment, textSelection)
+          handleActionClick(ToolbarAction.UNORDERED_LIST)
         }
         if (isListSelectString(lineBeforeEnter)) {
-          handleActionClick(ToolbarAction.CHECK_LIST, textComment, textSelection)
+          handleActionClick(ToolbarAction.CHECK_LIST)
         }
         break
       }
@@ -686,14 +700,9 @@ export const PullRequestCommentBox = ({
                   principalProps={principalProps}
                   setPrincipalsMentionMap={setPrincipalsMentionMap}
                   value={textComment}
-                  setValue={value => {
-                    setTextComment(value)
-                    setComment(value)
-                  }}
-                  onChange={e => onCommentChange(e)}
-                  onKeyUp={e => onKeyUp(e)}
-                  onKeyDown={e => onKeyDown(e)}
-                  onSelect={() => onSelect()}
+                  setValue={onCommentChange}
+                  onKeyUp={onKeyUp}
+                  onKeyDown={onKeyDown}
                   onPaste={e => {
                     if (e.clipboardData.files.length > 0) {
                       handlePasteForUpload(e)
@@ -721,7 +730,7 @@ export const PullRequestCommentBox = ({
                           variant={item.variant ?? 'ghost'}
                           iconOnly
                           disabled={showAiLoader}
-                          onClick={() => handleActionClick(item.action, textComment, textSelection)}
+                          onClick={() => handleActionClick(item.action)}
                           tooltipProps={{
                             content: item.title
                           }}

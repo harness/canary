@@ -1,6 +1,7 @@
 import { PrincipalType, UsererrorError } from '@/types'
 import {
   EnumPullReqReviewDecision,
+  PRReviewer,
   PullReqReviewDecision,
   RepoRepositoryOutput,
   TypesListCommitResponse,
@@ -186,6 +187,7 @@ export interface TypesPullReqActivity {
   text?: string
   type?: EnumPullReqActivityType
   updated?: number
+  user_group_mentions?: { [key: string]: TypesUserGroupInfo }
 }
 
 export type EnumPrincipalType = 'service' | 'serviceaccount' | 'user'
@@ -242,6 +244,7 @@ export interface TypesPullReqActivityMetadata {
 
 export interface TypesPullReqActivityMentionsMetadata {
   ids?: number[]
+  user_group_ids?: number[]
 }
 export interface TypesPullReqActivitySuggestionsMetadata {
   applied_check_sum?: string
@@ -273,6 +276,9 @@ export type EnumPullReqActivityType =
   | 'label-modify'
   | 'branch-restore'
   | 'target-branch-change'
+  | 'title-change'
+  | 'user-group-reviewer-add'
+  | 'user-group-reviewer-delete'
 
 export enum ReviewerAddActivity {
   REQUESTED = 'requested',
@@ -512,7 +518,7 @@ export interface ApprovalItems {
 export type ButtonEnum = 'success' | 'muted' | 'default' | 'error' | 'warning' | null | undefined
 export type EnumPullReqReviewDecisionExtended = EnumPullReqReviewDecision | 'outdated'
 export interface ReviewerItemProps {
-  reviewer?: { display_name?: string; id?: number; email?: string }
+  reviewer?: PRReviewer['reviewer']
   reviewDecision?: EnumPullReqReviewDecision
   sha?: string
   sourceSHA?: string
@@ -646,13 +652,16 @@ export enum CommentType {
   TITLE_CHANGE = 'title-change',
   REVIEW_SUBMIT = 'review-submit',
   MERGE = 'merge',
-  REVIEW_DELETE = 'reviewer-delete',
   BRANCH_UPDATE = 'branch-update',
   BRANCH_DELETE = 'branch-delete',
   STATE_CHANGE = 'state-change',
-  REVIEW_ADD = 'reviewer-add',
+  REVIEWER_ADD = 'reviewer-add',
+  USER_GROUP_REVIEWER_ADD = 'user-group-reviewer-add',
+  REVIEWER_DELETE = 'reviewer-delete',
+  USER_GROUP_REVIEWER_DELETE = 'user-group-reviewer-delete',
   LABEL_MODIFY = 'label-modify',
-  BRANCH_RESTORE = 'branch-restore'
+  BRANCH_RESTORE = 'branch-restore',
+  TARGET_BRANCH_CHANGE = 'target-branch-change'
 }
 
 export enum LabelActivity {
@@ -701,6 +710,7 @@ export type PrincipalsMentionMap = Record<string, TypesPrincipalInfo>
 
 export interface PrincipalPropsType {
   principals?: PrincipalType[]
+  userGroups?: TypesUserGroupInfo[]
   searchPrincipalsQuery?: string
   setSearchPrincipalsQuery?: (query: string) => void
   isPrincipalsLoading?: boolean

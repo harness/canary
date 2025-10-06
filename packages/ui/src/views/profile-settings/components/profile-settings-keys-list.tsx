@@ -1,7 +1,7 @@
 import { FC, useCallback } from 'react'
 
-import { IconV2, MoreActionsTooltip, Skeleton, Table, TimeAgoCard, useCustomDialogTrigger } from '@/components'
-import { useTranslation } from '@/context'
+import { IconV2, MoreActionsTooltip, Skeleton, Table, TimeAgoCard } from '@/components'
+import { useCustomDialogTrigger, useTranslation } from '@/context'
 
 import { KeysList } from '../types'
 

@@ -45,6 +45,11 @@ export const getSecretListFilterOptions = (
       label: t('views:secrets.filterOptions.descriptionOption.label', 'Description'),
       value: 'description',
       type: FilterFieldTypes.Text
+    },
+    {
+      label: t('views:secrets.filterOptions.tagsOption.label', 'Tags'),
+      value: 'tags',
+      type: FilterFieldTypes.Text
     }
   ]
 }

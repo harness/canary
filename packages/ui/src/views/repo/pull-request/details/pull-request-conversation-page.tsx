@@ -15,6 +15,7 @@ import {
   PullRequestSideBarProps,
   SandboxLayout
 } from '@/views'
+import { combineAndNormalizePrincipalsAndGroups } from '@views/repo/repo-branch-rules/utils'
 import { noop } from 'lodash-es'
 
 import { ExpandedCommentsContext, useExpandedCommentsContext } from './context/pull-request-comments-context'
@@ -75,7 +76,10 @@ export const PullRequestConversationPage: FC<PullRequestConversationPageProps> =
               isReviewersLoading={principalProps?.isPrincipalsLoading}
               searchQuery={principalProps?.searchPrincipalsQuery || ''}
               setSearchQuery={principalProps?.setSearchPrincipalsQuery || noop}
-              usersList={principalProps?.principals}
+              usersList={combineAndNormalizePrincipalsAndGroups(
+                principalProps?.principals ?? [],
+                principalProps?.userGroups ?? []
+              )}
             />
           </SandboxLayout.Content>
         </SandboxLayout.Column>

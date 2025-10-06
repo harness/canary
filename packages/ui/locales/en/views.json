@@ -229,6 +229,10 @@
     "secretScanningDescription": "Block commits containing secrets like passwords, API keys and tokens.",
     "vulnerabilityScanning": "Vulnerability scanning",
     "vulnerabilityScanningDescription": "Scan incoming commits for known vulnerabilities.",
+    "detectVulnerabilities": "Detect",
+    "detectVulnerabilitiesDescription": "Passive vulnerability will report errors but not block",
+    "blockVulnerabilities": "Block",
+    "blockVulnerabilitiesDescription": "Active vulnerability blocks commit if any vulnerability is found",
     "verifyCommitterIdentity": "Verify committer identity",
     "verifyCommitterIdentityDescription": "Block commits not committed by the user pushing the changes.",
     "generalSettings": "General settings",
@@ -561,6 +565,7 @@
     "compareChangesDraftTitle": "Create Draft Pull request",
     "compareChangesDraftDescription": "Does not request code reviews and cannot be merged.",
     "compareChangesCreatedButton": "Pull Request Created",
+    "expandSidebar": "Expand Sidebar",
     "compareChangesFormTitleLabel": "Add a title",
     "compareChangesFormTitlePlaceholder": "Enter pull request title",
     "compareChangesFormDescriptionHeading": "Add a description",
@@ -596,6 +601,7 @@
     "noLabelsSidebar": "No labels",
     "changedSinceLastView": "Changed since last viewed",
     "markViewed": "Viewed",
+    "collapseSidebar": "Collapse Sidebar",
     "deletedComment": "This comment was deleted.",
     "reviewers": "Reviewers",
     "noUsers": "No users found.",
@@ -631,6 +637,31 @@
     "largeDiff": "Large diffs are not rendered by default.",
     "fileNoChanges": "File without changes.",
     "binaryNotShown": "Binary file not shown."
+  },
+  "secrets": {
+    "edit": "Edit secret",
+    "delete": "Delete secret",
+    "filterOptions": {
+      "secretType": {
+        "label": "Secret Type"
+      },
+      "secretManagerOption": {
+        "label": "Secret Manager Identifier",
+        "placeholder": "Select Secret Manager"
+      },
+      "descriptionOption": {
+        "label": "Description"
+      },
+      "tagsOption": {
+        "label": "Tags"
+      },
+      "typeOption": {
+        "label": "Type"
+      }
+    },
+    "secretsTitle": "Secrets",
+    "createNew": "Create Secret",
+    "newSecret": "New Secret"
   },
   "secretDetails": {
     "backToSecrets": "Back to secrets",
@@ -881,28 +912,6 @@
     "type": "Type",
     "scope": "Scope",
     "created": "Created"
-  },
-  "secrets": {
-    "filterOptions": {
-      "secretType": {
-        "label": "Secret Type"
-      },
-      "secretManagerOption": {
-        "label": "Secret Manager Identifier",
-        "placeholder": "Select Secret Manager"
-      },
-      "descriptionOption": {
-        "label": "Description"
-      },
-      "typeOption": {
-        "label": "Type"
-      }
-    },
-    "secretsTitle": "Secrets",
-    "createNew": "Create Secret",
-    "edit": "Edit Secret",
-    "delete": "Delete Secret",
-    "newSecret": "New Secret"
   },
   "secret": {
     "title": "Secret"

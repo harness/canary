@@ -1,6 +1,7 @@
 import { useCallback } from 'react'
 
-import { Avatar, MoreActionsTooltip, Skeleton, StatusBadge, Table, useCustomDialogTrigger } from '@/components'
+import { Avatar, MoreActionsTooltip, Skeleton, StatusBadge, Table } from '@/components'
+import { useCustomDialogTrigger } from '@/context'
 import { DialogLabels } from '@/views/user-management/components/dialogs'
 import { useDialogData } from '@/views/user-management/components/dialogs/hooks/use-dialog-data'
 import { ErrorState } from '@/views/user-management/components/page-components/content/components/users-list/components/error-state'

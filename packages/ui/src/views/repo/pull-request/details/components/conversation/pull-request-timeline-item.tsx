@@ -9,10 +9,12 @@ import {
   Layout,
   MoreActionsTooltip,
   NodeGroup,
+  Separator,
   Text,
   TextInput,
-  useCustomDialogTrigger
+  TimeAgoCard
 } from '@/components'
+import { useCustomDialogTrigger } from '@/context'
 import {
   HandleUploadType,
   PrincipalPropsType,
@@ -50,6 +52,7 @@ interface ItemHeaderProps {
   name?: string
   isComment?: boolean
   description?: ReactNode
+  timestamp?: number
   selectStatus?: ReactNode
   onEditClick?: () => void
   onCopyClick?: (commentId?: number, isNotCodeComment?: boolean) => void
@@ -71,6 +74,7 @@ const ItemHeader: FC<ItemHeaderProps> = memo(
     avatar,
     name,
     description = null,
+    timestamp,
     selectStatus,
     isComment,
     handleDeleteComment,
@@ -147,7 +151,12 @@ const ItemHeader: FC<ItemHeaderProps> = memo(
              * ============
              */}
             {description}
-
+            {timestamp && (
+              <>
+                <Separator orientation="vertical" className="mx-0.5 h-4" />
+                <TimeAgoCard timestamp={timestamp} />
+              </>
+            )}
             <Text variant="body-single-line-normal" color="foreground-3">
               {selectStatus}
             </Text>
@@ -171,6 +180,7 @@ ItemHeader.displayName = 'ItemHeader'
 interface TimelineItemPropsHeaderType {
   avatar?: ReactNode
   name?: string
+  timestamp?: number
   description?: ReactNode
   selectStatus?: ReactNode
 }
@@ -325,7 +335,7 @@ const PullRequestTimelineItem: FC<TimelineItemProps> = ({
     if (contentElement.props?.children?.length) {
       // If content is an array of comments, take the first one
       const [firstComment] = Children.toArray(contentElement.props.children)
-      return <div className="px-4 pt-4 [&_[data-connector]]:hidden">{firstComment}</div>
+      return <div className="px-cn-md pt-cn-md [&_[data-connector]]:hidden">{firstComment}</div>
     }
 
     // If content is a single element, return as is
@@ -347,7 +357,7 @@ const PullRequestTimelineItem: FC<TimelineItemProps> = ({
           <NodeGroup.Title className={titleClassName}>
             {/* Ensure that header has at least one item */}
             {!!header.length && (
-              <div className="flex w-full items-center justify-between gap-x-2">
+              <div className="flex w-full items-center justify-between gap-x-cn-md">
                 <ItemHeader
                   isDeleted={isDeleted}
                   onEditClick={onEditClick}
@@ -373,7 +383,7 @@ const PullRequestTimelineItem: FC<TimelineItemProps> = ({
             <NodeGroup.Content className={cn('overflow-auto', contentWrapperClassName)}>
               <div className={cn('border rounded-md overflow-hidden', contentClassName)}>
                 {!!contentHeader && (
-                  <Layout.Horizontal align="center" justify="between" className={cn('p-2 px-4 bg-cn-2')}>
+                  <Layout.Horizontal align="center" justify="between" className={cn('p-2 px-cn-md bg-cn-2')}>
                     {contentHeader}
                     {isResolved && renderToggleButton()}
                   </Layout.Horizontal>
@@ -429,7 +439,7 @@ const PullRequestTimelineItem: FC<TimelineItemProps> = ({
                         setComment={setComment}
                       />
                     ) : (
-                      <div className={cn('flex items-center gap-3 border-t bg-cn-2', replyBoxClassName)}>
+                      <div className={cn('flex items-center gap-cn-sm border-t bg-cn-2', replyBoxClassName)}>
                         {!!currentUser && <Avatar name={currentUser} rounded />}
                         <TextInput
                           wrapperClassName="flex-1"
@@ -440,7 +450,7 @@ const PullRequestTimelineItem: FC<TimelineItemProps> = ({
                         />
                       </div>
                     )}
-                    <div className={cn('flex items-center gap-x-4 border-t', replyBoxClassName)}>
+                    <div className={cn('flex items-center gap-x-cn-md border-t', replyBoxClassName)}>
                       <Button
                         variant="outline"
                         onClick={() => {

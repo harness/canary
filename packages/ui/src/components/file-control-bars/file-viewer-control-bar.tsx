@@ -10,9 +10,9 @@ import {
   Tabs,
   Tag,
   Text,
-  useCustomDialogTrigger,
   ViewTypeValue
 } from '@/components'
+import { useCustomDialogTrigger } from '@/context'
 import { BranchSelectorTab } from '@views/repo/components/branch-selector-v2/types'
 
 export interface FileViewerControlBarProps {

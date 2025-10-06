@@ -8,12 +8,13 @@ import {
 import { LiveEditor, LivePreview, LiveProvider } from "react-live";
 import {
   CopyButton,
-  DialogProvider,
   IconV2,
+  Toaster,
   TooltipProvider,
 } from "@harnessio/ui/components";
 import { cn } from "@harnessio/ui/utils";
 import {
+  DialogProvider,
   RouterContextProvider,
   TranslationProvider,
 } from "@harnessio/ui/context";
@@ -130,6 +131,7 @@ const Example: FC<ExampleProps> = ({
             </LiveProvider>
           </div>
         </TooltipProvider>
+        <Toaster className="not-content" />
       </DialogProvider>
     </RouterContextProvider>
   );

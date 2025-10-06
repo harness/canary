@@ -1,9 +1,12 @@
-import { Avatar, IconV2 } from '@/components'
-import { PullReqReviewDecision, ReviewerItemProps } from '@/views'
+import { Avatar, IconV2, Layout } from '@/components'
+import { EnumBypassListType, PullReqReviewDecision, ReviewerItemProps } from '@/views'
+import { getIcon } from '@views/repo/repo-branch-rules/utils'
 
 import { ReviewerInfo } from './reviewer-info'
 
 const ReviewerItem = ({ reviewer, reviewDecision, sha, sourceSHA, processReviewDecision }: ReviewerItemProps) => {
+  const { id, type, display_name, email } = reviewer || {}
+
   const updatedReviewDecision = reviewDecision && processReviewDecision(reviewDecision, sha, sourceSHA)
   const getReviewDecisionIcon = (decision: PullReqReviewDecision) => {
     switch (decision) {
@@ -20,15 +23,18 @@ const ReviewerItem = ({ reviewer, reviewDecision, sha, sourceSHA, processReviewD
     }
   }
   return (
-    <div key={reviewer?.id} className="flex items-center justify-between space-x-2">
-      <div className="flex items-center space-x-2 overflow-hidden">
-        <Avatar name={reviewer?.display_name} rounded />
-        <ReviewerInfo display_name={reviewer?.display_name || ''} email={reviewer?.email || ''} />
-      </div>
-      <div className="px-1.5">
-        {updatedReviewDecision && getReviewDecisionIcon(updatedReviewDecision as PullReqReviewDecision)}
-      </div>
-    </div>
+    <Layout.Horizontal key={id} align="center" justify="between" gap="sm">
+      <Layout.Horizontal align="center" gap="xs">
+        {type === EnumBypassListType.USER ? (
+          <Avatar name={display_name || ''} rounded />
+        ) : (
+          <IconV2 name={getIcon(type as EnumBypassListType)} size={'lg'} fallback="stop" className={'ml-cn-4xs'} />
+        )}
+        <ReviewerInfo display_name={display_name || ''} email={email || ''} />
+      </Layout.Horizontal>
+
+      {updatedReviewDecision && getReviewDecisionIcon(updatedReviewDecision as PullReqReviewDecision)}
+    </Layout.Horizontal>
   )
 }
 

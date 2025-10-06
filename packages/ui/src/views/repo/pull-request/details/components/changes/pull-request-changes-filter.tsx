@@ -164,17 +164,24 @@ export const PullRequestChangesFilter: React.FC<PullRequestChangesFilterProps> =
     <Layout.Horizontal
       align="center"
       justify="between"
-      className="layer-high bg-cn-1 pt-cn-lg sticky top-[var(--cn-breadcrumbs-height)] gap-x-5 pb-2"
+      gap="xl"
+      className="layer-high bg-cn-1 pt-cn-xl sticky top-[var(--cn-breadcrumbs-height)] pb-2"
     >
-      <Layout.Horizontal className="grow gap-x-5" align="center">
-        <Button
-          size="md"
-          title={showExplorer ? 'Collapse Sidebar' : 'Expand Sidebar'}
-          variant="transparent"
-          onClick={() => setShowExplorer(!showExplorer)}
-        >
-          <IconV2 name={showExplorer ? 'collapse-sidebar' : 'expand-sidebar'} size="md" />
-        </Button>
+      <Layout.Horizontal className="grow" align="center">
+        {!showExplorer && (
+          <Button
+            variant="outline"
+            onClick={() => setShowExplorer(true)}
+            iconOnly
+            tooltipProps={{
+              content: t('views:pullRequests.expandSidebar', 'Expand Sidebar')
+            }}
+            title={t('views:pullRequests.expandSidebar', 'Expand Sidebar')}
+          >
+            <IconV2 name="expand-sidebar" />
+          </Button>
+        )}
+
         <DropdownMenu.Root>
           <DropdownMenu.Trigger className="group flex items-center gap-x-1.5" asChild>
             <Button size="sm" variant="transparent">
@@ -224,7 +231,7 @@ export const PullRequestChangesFilter: React.FC<PullRequestChangesFilterProps> =
         <ChangedFilesShortInfo diffData={diffData} diffStats={pullReqStats} goToDiff={goToDiff} />
       </Layout.Horizontal>
 
-      <Layout.Horizontal className="gap-x-7">
+      <Layout.Horizontal gap="xl">
         {selectedCommits[0].value === 'ALL' && (
           <FileViewGauge.Root>
             <div className="py-1">

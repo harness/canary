@@ -338,7 +338,7 @@ export const PullRequestAccordion: React.FC<{
       <Accordion.Item value={header?.text ?? ''} className="rounded-3 border-none">
         <Accordion.Trigger
           className="rounded-t-3 bg-cn-2 px-4 py-2 [&>.cn-accordion-trigger-indicator]:m-0 [&>.cn-accordion-trigger-indicator]:self-center"
-          headerClassName="z-[18] sticky top-[119px] border-cn-2 border rounded-t-3"
+          headerClassName="z-[18] sticky top-[123px] border-cn-2 border rounded-t-3"
         >
           <LineTitle
             header={header}
@@ -359,15 +359,17 @@ export const PullRequestAccordion: React.FC<{
           <div className="bg-transparent">
             {(fileDeleted || isDiffTooLarge || fileUnchanged || header?.isBinary) && !showHiddenDiff ? (
               <Layout.Vertical align="center" className="py-5">
-                <Button
-                  className="text-cn-brand"
-                  variant="link"
-                  size="sm"
-                  aria-label="show diff"
-                  onClick={() => setShowHiddenDiff(true)}
-                >
-                  {_ts('views:pullRequests.showDiff')}
-                </Button>
+                {!fileUnchanged && (
+                  <Button
+                    className="text-cn-brand"
+                    variant="link"
+                    size="sm"
+                    aria-label="show diff"
+                    onClick={() => setShowHiddenDiff(true)}
+                  >
+                    {_ts('views:pullRequests.showDiff')}
+                  </Button>
+                )}
                 <Text variant="body-strong">
                   {fileDeleted
                     ? _ts('views:pullRequests.deletedFileDiff')

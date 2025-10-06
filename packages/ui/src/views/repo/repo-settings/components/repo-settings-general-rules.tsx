@@ -15,11 +15,10 @@ import {
   SplitButton,
   StackedList,
   Tag,
-  Text,
-  useCustomDialogTrigger
+  Text
 } from '@/components'
 import { Select } from '@/components/form-primitives/select'
-import { useRouterContext, useTranslation } from '@/context'
+import { useCustomDialogTrigger, useRouterContext, useTranslation } from '@/context'
 import { ErrorTypes, RuleDataType, ScopeType } from '@/views'
 
 // Utility function to map numeric scope to ScopeType enum

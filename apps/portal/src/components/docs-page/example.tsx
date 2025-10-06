@@ -131,7 +131,6 @@ const Example: FC<ExampleProps> = ({
             </LiveProvider>
           </div>
         </TooltipProvider>
-        <Toaster className="not-content" />
       </DialogProvider>
     </RouterContextProvider>
   );

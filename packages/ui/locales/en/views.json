@@ -447,8 +447,10 @@
     "inviteMembers": "There are no members in this project. Click on the button below to start adding them.",
     "noRules": "No rules yet",
     "noRulesDescription": "There are no rules in this project. Click on the button below to start adding rules.",
-    "noCommitsYet": "No commits yet",
-    "noCommitsYetDescription": "Your commits will appear here once they're made. Start committing to see your changes reflected.",
+    "pullRequests": {
+      "noNewCommits": "There isn’t anything to compare",
+      "noNewCommitsDescription": "{{source}} and {{target}} are identical."
+    },
     "compareChanges": "Compare and review just about anything",
     "compareChangesDescription": "Branches and commit ranges can be reviewed within the same repository.",
     "title": {
@@ -468,7 +470,9 @@
     "createBranchDescription": "Your branches will appear here once they're created.",
     "startBranchDescription": "Start branching to see your work organized.",
     "noCommitsHistory": "No commits history",
+    "noCommitsYet": "No commits yet",
     "noCommitsHistoryDescription": "There isn't any commit history to show here for the selected user, time range, or current page.",
+    "noCommitsYetDescription": "Your commits will appear here once they're made. Start committing to see your changes reflected.",
     "clearFilters": "Clear Filters",
     "errorApiTitle": "Failed to load {{type}}",
     "errorApiDescription": "An error occurred while loading the data. Please try again and reload the page.",
@@ -584,7 +588,6 @@
     "compareChangesCantMergeDescription": "You can still create the pull request.",
     "compareChangesDiscussChanges": "Discuss and review the changes in this comparison with others.",
     "compareChangesDiscussChangesLink": "Learn about pull requests.",
-    "compareChangesChooseDifferent": "Choose different branches above to discuss and review changes.",
     "compareChangesViewPRLink": "View pull request",
     "compareChangesTabOverview": "Overview",
     "compareChangesTabCommits": "Commits",
@@ -617,6 +620,7 @@
       "suggestionApplied": "Suggestion applied",
       "codeSuggestion": "Code suggestion"
     },
+    "compareChangesChooseDifferent": "Choose different branches above to discuss and review changes.",
     "deleted": "Deleted",
     "searchUsers": "Search users",
     "compareChangesFormDescriptionLabel": "Description",

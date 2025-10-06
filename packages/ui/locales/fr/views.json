@@ -438,8 +438,10 @@
     "inviteMembers": "",
     "noRules": "No rules yet",
     "noRulesDescription": "There are no rules in this project. Click on the button below to start adding rules.",
-    "noCommitsYet": "No commits yet",
-    "noCommitsYetDescription": "Your commits will appear here once they're made. Start committing to see your changes reflected.",
+    "pullRequests": {
+      "noNewCommits": "There isn’t anything to compare",
+      "noNewCommitsDescription": "{{source}} and {{target}} are identical."
+    },
     "compareChanges": "Comparez et révisez pratiquement tout",
     "compareChangesDescription": "Branches, tags, plages de commits et périodes. Dans le même dépôt et entre les forks.",
     "title": {
@@ -459,7 +461,9 @@
     "createBranchDescription": "Vos branches apparaîtront ici une fois créées.",
     "startBranchDescription": "Commencez à créer des branches pour voir votre travail organisé.",
     "noCommitsHistory": "No commits history",
+    "noCommitsYet": "No commits yet",
     "noCommitsHistoryDescription": "There isn't any commit history to show here for the selected user, time range, or current page.",
+    "noCommitsYetDescription": "Your commits will appear here once they're made. Start committing to see your changes reflected.",
     "clearFilters": "Effacer les filtres",
     "errorApiTitle": "Échec du chargement de {{type}}",
     "errorApiDescription": "Une erreur s'est produite lors du chargement des données. Veuillez réessayer et recharger la page.",
@@ -575,7 +579,6 @@
     "compareChangesCantMergeDescription": "Vous pouvez quand même créer la pull request.",
     "compareChangesDiscussChanges": "Discutez et révisez les modifications de cette comparaison avec d'autres.",
     "compareChangesDiscussChangesLink": "En savoir plus sur les pull requests.",
-    "compareChangesChooseDifferent": "Choisissez différentes branches ou forks ci-dessus pour discuter et réviser les modifications.",
     "compareChangesViewPRLink": "Voir la pull request",
     "compareChangesTabOverview": "Aperçu",
     "compareChangesTabCommits": "Commits",
@@ -608,6 +611,7 @@
       "suggestionApplied": "Suggestion applied",
       "codeSuggestion": "Code suggestion"
     },
+    "compareChangesChooseDifferent": "Choisissez différentes branches ou forks ci-dessus pour discuter et réviser les modifications.",
     "deleted": "Supprimé",
     "searchUsers": "Rechercher des utilisateurs",
     "compareChangesFormDescriptionLabel": "Description",

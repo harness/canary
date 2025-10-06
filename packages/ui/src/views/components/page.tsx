@@ -1,19 +1,18 @@
-import { ButtonHTMLAttributes, FC, ReactNode } from 'react'
+import {ButtonHTMLAttributes, FC, ReactNode, useMemo} from 'react'
 import type { LinkProps } from 'react-router-dom'
 
 import {
   Button,
   ButtonLayout,
-  DropdownMenu,
-  DropdownMenuItemProps,
-  IconV2,
   Layout,
   Link,
   LogoPropsV2,
   LogoV2,
+  RbacMoreActionsTooltipActionData,
   Text
 } from '@/components'
 import { SandboxLayout } from '@/views'
+import {useComponents, useCustomDialogTrigger} from "@/context";
 
 export interface PageHeaderBackProps {
   linkText: string
@@ -32,13 +31,32 @@ export interface PageHeaderProps {
   description?: ReactNode
   children?: ReactNode
   button?: PageHeaderButtonProps
-  moreActions?: DropdownMenuItemProps[]
+  moreActions?: RbacMoreActionsTooltipActionData[]
 }
 
 const Header: FC<PageHeaderProps> = ({ backLink, logoName, title, description, children, button, moreActions }) => {
+  const { RbacMoreActionsTooltip } = useComponents()
+  const { triggerRef, registerTrigger } = useCustomDialogTrigger()
+
+  const UpdatedMoreActions = useMemo(() => {
+    if (!moreActions) return moreActions
+
+    return moreActions.map(action => {
+      const onClick = !action?.onClick ? undefined : () => {
+        registerTrigger()
+        action.onClick?.()
+      }
+
+      return {
+        ...action,
+        onClick
+      }
+    })
+  }, [moreActions, registerTrigger])
+
   return (
-    <Layout.Flex justify="between" gap="xl" className="mb-10">
-      <Layout.Vertical className="gap-[var(--cn-spacing-5)]">
+    <Layout.Horizontal justify="between" gap="xl" className="mb-cn-xl">
+      <Layout.Vertical gap="xl">
         <Layout.Vertical>
           {!!backLink && (
             <Link prefixIcon {...backLink.linkProps}>
@@ -56,27 +74,19 @@ const Header: FC<PageHeaderProps> = ({ backLink, logoName, title, description, c
         {children}
       </Layout.Vertical>
 
-      {(!!button || !!moreActions) && (
+      {(!!button || !!UpdatedMoreActions) && (
         <ButtonLayout className="self-end">
           {!!button && <Button {...button?.props}>{button.text}</Button>}
-          {!!moreActions && (
-            <DropdownMenu.Root>
-              <DropdownMenu.Trigger aria-label="More actions" asChild>
-                <Button variant="outline" iconOnly tooltipProps={{ content: 'More actions' }}>
-                  <IconV2 name="more-vert" />
-                </Button>
-              </DropdownMenu.Trigger>
-
-              <DropdownMenu.Content align="end">
-                {moreActions.map((action, index) => (
-                  <DropdownMenu.Item key={index} {...action} />
-                ))}
-              </DropdownMenu.Content>
-            </DropdownMenu.Root>
+          {!!UpdatedMoreActions && (
+            <RbacMoreActionsTooltip
+                ref={triggerRef}
+                actions={UpdatedMoreActions}
+                buttonVariant="outline"
+            />
           )}
         </ButtonLayout>
       )}
-    </Layout.Flex>
+    </Layout.Horizontal>
   )
 }
 Header.displayName = 'PageHeader'

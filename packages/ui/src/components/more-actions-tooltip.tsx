@@ -51,7 +51,9 @@ export const MoreActionsTooltip = forwardRef<HTMLButtonElement, MoreActionsToolt
             iconOnly
             size="md"
             aria-label="Show more actions"
-            ignoreIconOnlyTooltip
+            tooltipProps={{
+              content: 'Show more actions'
+            }}
           >
             <IconV2 name={iconName} />
           </Button>

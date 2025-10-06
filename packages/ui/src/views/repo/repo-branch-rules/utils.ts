@@ -3,7 +3,8 @@ import { EnumBypassListType, NormalizedPrincipal } from './types'
 
 export function combineAndNormalizePrincipalsAndGroups(
   principals: TypesPrincipalInfo[] | null,
-  userGroups?: TypesUserGroupInfo[] | null
+  userGroups?: TypesUserGroupInfo[] | null,
+  notSorted?: boolean
 ): NormalizedPrincipal[] {
   const normalizedData: NormalizedPrincipal[] = []
 
@@ -30,6 +31,8 @@ export function combineAndNormalizePrincipalsAndGroups(
       })
     })
   }
+
+  if (notSorted) return normalizedData
 
   return normalizedData.sort((a, b) => a.display_name.localeCompare(b.display_name))
 }

@@ -1,18 +1,10 @@
 import { FC, useMemo } from 'react'
 
 import { IconV2, StatusBadge, Table } from '@/components'
-import { CodeOwnersSectionProps, PullReqReviewDecision, TypesOwnerEvaluation } from '@/views'
+import { CodeOwnersSectionProps, PullReqReviewDecision } from '@/views'
 import { isEmpty } from 'lodash-es'
 
-import { AvatarItem, AvatarUser } from './commons'
-
-const mapEvaluationsToUsers = (evaluations: TypesOwnerEvaluation[]): AvatarUser[] => {
-  return evaluations.map(({ owner }) => ({
-    id: owner?.id,
-    display_name: owner?.display_name,
-    email: owner?.email
-  }))
-}
+import { ReviewersPanel } from './reviewers-panel'
 
 export const CodeOwnersSection: FC<CodeOwnersSectionProps> = ({
   codeOwners,
@@ -111,7 +103,7 @@ export const CodeOwnersSection: FC<CodeOwnersSectionProps> = ({
   return (
     <>
       <div className="flex items-center justify-between">
-        {codeOwnerChangeReqEntries && codeOwnerChangeReqEntries?.length > 0 ? (
+        {!isEmpty(codeOwnerChangeReqEntries) ? (
           <div className="flex items-center gap-x-2">
             <IconV2
               size="lg"
@@ -141,26 +133,34 @@ export const CodeOwnersSection: FC<CodeOwnersSectionProps> = ({
           </Table.Header>
           <Table.Body>
             {codeOwners?.evaluation_entries?.map(entry => {
-              const changeReqEvaluations = entry?.owner_evaluations?.filter(
-                evaluation => evaluation.review_decision === PullReqReviewDecision.changeReq
-              )
-              const approvedEvaluations = entry?.owner_evaluations?.filter(
-                evaluation =>
-                  evaluation.review_decision === PullReqReviewDecision.approved &&
-                  (reqCodeOwnerLatestApproval ? evaluation.review_sha === pullReqMetadata?.source_sha : true)
-              )
+              const changeReqEvaluations = entry?.owner_evaluations
+                ?.filter(evaluation => evaluation.review_decision === PullReqReviewDecision.changeReq)
+                .map(evaluation => evaluation.owner || {})
+
+              const approvedEvaluations = entry?.owner_evaluations
+                ?.filter(
+                  evaluation =>
+                    evaluation.review_decision === PullReqReviewDecision.approved &&
+                    (reqCodeOwnerLatestApproval ? evaluation.review_sha === pullReqMetadata?.source_sha : true)
+                )
+                .map(evaluation => evaluation.owner || {})
+
               return (
                 <Table.Row key={entry.pattern} className="cursor-pointer">
                   <Table.Cell>{entry?.pattern}</Table.Cell>
                   <Table.Cell>
-                    {entry?.owner_evaluations && <AvatarItem users={mapEvaluationsToUsers(entry?.owner_evaluations)} />}
+                    <ReviewersPanel
+                      principals={entry?.owner_evaluations?.map(evaluation => evaluation.owner || {})}
+                      userGroups={entry?.user_group_owner_evaluations?.map(ev => ({
+                        identifier: ev?.id || '',
+                        name: ev?.name || ev?.id
+                      }))}
+                    />
                   </Table.Cell>
                   <Table.Cell>
-                    {changeReqEvaluations && <AvatarItem users={mapEvaluationsToUsers(changeReqEvaluations)} />}
+                    {changeReqEvaluations && <ReviewersPanel principals={changeReqEvaluations} />}
                   </Table.Cell>
-                  <Table.Cell>
-                    {approvedEvaluations && <AvatarItem users={mapEvaluationsToUsers(approvedEvaluations)} />}
-                  </Table.Cell>
+                  <Table.Cell>{approvedEvaluations && <ReviewersPanel principals={approvedEvaluations} />}</Table.Cell>
                 </Table.Row>
               )
             })}

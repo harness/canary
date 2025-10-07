@@ -402,7 +402,6 @@ export default {
       },
 
       '& .cn-input-prefix': {
-        width: '33px',
         '@apply ml-0': ''
       },
 

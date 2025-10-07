@@ -82,6 +82,7 @@ export function Pagination({
               disabled={currentPage === 1}
             />
 
+            {/* It is page number logic, and it can be used later if needed. */}
             {/* Pagination Items */}
             {/* {!showPageNumbers && totalPages && (
               <ul className="cn-pagination-content gap-cn-xs">

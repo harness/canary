@@ -1,6 +1,6 @@
 import * as React from 'react'
 
-import { useRouterContext, useTranslation } from '@/context'
+import { useRouterContext } from '@/context'
 import { IconV2 } from '@components/icon-v2'
 import { cn } from '@utils/cn'
 
@@ -30,6 +30,7 @@ type PaginationPrimitiveLinkGeneralProps = {
 
 interface PaginationPrimitiveLinkProps extends Omit<PaginationPrimitiveLinkGeneralProps, 't'> {
   disabled?: boolean
+  iconOnly?: boolean
 }
 
 const PaginationPrimitiveLink = ({
@@ -40,6 +41,7 @@ const PaginationPrimitiveLink = ({
   ref,
   disabled = false,
   onClick,
+  iconOnly,
   ...props
 }: PaginationPrimitiveLinkProps) => {
   const { Link: LinkBase } = useRouterContext()
@@ -50,13 +52,13 @@ const PaginationPrimitiveLink = ({
   if (onClick) {
     return (
       <Button
-        rounded
+        ignoreIconOnlyTooltip
+        iconOnly={iconOnly}
         ref={ref as React.Ref<HTMLButtonElement>}
-        variant="ghost"
+        variant="outline"
         disabled={disabled}
         onClick={onClick}
         className={cn(
-          'cn-pagination-button',
           {
             'cn-button-active': isActive,
             'cn-button-disabled': disabled
@@ -74,8 +76,7 @@ const PaginationPrimitiveLink = ({
     <LinkBase
       to={href as string}
       className={cn(
-        buttonVariants({ variant: 'ghost', rounded: true }),
-        'cn-pagination-button',
+        buttonVariants({ variant: 'outline', rounded: false, iconOnly }),
         {
           'cn-button-active': isActive,
           'cn-button-disabled': disabled
@@ -92,6 +93,7 @@ const PaginationPrimitiveLink = ({
     </LinkBase>
   )
 }
+
 PaginationPrimitiveLink.displayName = 'PaginationPrimitiveLink'
 
 const PaginationPrimitivePrevious = ({
@@ -100,17 +102,16 @@ const PaginationPrimitivePrevious = ({
   href = '#',
   ...props
 }: PaginationPrimitiveLinkGeneralProps) => {
-  const { t } = useTranslation()
   return (
     <PaginationPrimitiveLink
       aria-label="Go to previous page"
       disabled={disabled}
       className={className}
       href={href}
+      iconOnly
       {...props}
     >
       <IconV2 name="nav-arrow-left" />
-      <span>{t('component:pagination.previous', 'Prev')}</span>
     </PaginationPrimitiveLink>
   )
 }
@@ -122,16 +123,15 @@ const PaginationPrimitiveNext = ({
   href = '#',
   ...props
 }: PaginationPrimitiveLinkGeneralProps) => {
-  const { t } = useTranslation()
   return (
     <PaginationPrimitiveLink
       aria-label="Go to next page"
       disabled={disabled}
       className={className}
       href={href}
+      iconOnly
       {...props}
     >
-      <span>{t('component:pagination.next', 'Next')}</span>
       <IconV2 name="nav-arrow-right" />
     </PaginationPrimitiveLink>
   )

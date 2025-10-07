@@ -181,10 +181,6 @@
     }
   },
   "cancel": "Cancel",
-  "pagination": {
-    "previous": "Prev",
-    "next": "Next"
-  },
   "searchFile": {
     "noFile": "No file found."
   },
@@ -236,6 +232,10 @@
     },
     "notAllowed": "Cannot create tag",
     "bypassButton": "Bypass rules and create tag"
+  },
+  "pagination": {
+    "previous": "Prev",
+    "next": "Next"
   },
   "layout": {
     "table": "Table",

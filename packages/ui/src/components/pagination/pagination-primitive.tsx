@@ -5,7 +5,6 @@ import { IconV2 } from '@components/icon-v2'
 import { cn } from '@utils/cn'
 
 import { Button, buttonVariants } from '../button'
-import { ParentPaginationProps } from './types'
 
 const PaginationPrimitiveRoot = ({ className, ...props }: React.ComponentProps<'nav'>) => (
   <nav role="navigation" aria-label="pagination" className={cn('cn-pagination-root', className)} {...props} />
@@ -31,7 +30,6 @@ type PaginationPrimitiveLinkGeneralProps = {
 
 interface PaginationPrimitiveLinkProps extends Omit<PaginationPrimitiveLinkGeneralProps, 't'> {
   disabled?: boolean
-  variant?: ParentPaginationProps['variant']
   iconOnly?: boolean
 }
 
@@ -44,7 +42,6 @@ const PaginationPrimitiveLink = ({
   disabled = false,
   onClick,
   iconOnly,
-  variant = 'default',
   ...props
 }: PaginationPrimitiveLinkProps) => {
   const { Link: LinkBase } = useRouterContext()
@@ -52,22 +49,17 @@ const PaginationPrimitiveLink = ({
     throw new Error('PaginationPrimitiveLink must have either onClick or href')
   }
 
-  const buttonVariant = variant === 'default' ? 'ghost' : 'outline'
-  const isButtonRounded = variant === 'default' ? true : false
-
   if (onClick) {
     return (
       <Button
         ignoreIconOnlyTooltip
         iconOnly={iconOnly}
-        rounded={isButtonRounded}
         ref={ref as React.Ref<HTMLButtonElement>}
-        variant={buttonVariant}
+        variant="outline"
         disabled={disabled}
         onClick={onClick}
         className={cn(
           {
-            'cn-pagination-button': variant === 'default',
             'cn-button-active': isActive,
             'cn-button-disabled': disabled
           },
@@ -84,9 +76,8 @@ const PaginationPrimitiveLink = ({
     <LinkBase
       to={href as string}
       className={cn(
-        buttonVariants({ variant: buttonVariant, rounded: isButtonRounded, iconOnly }),
+        buttonVariants({ variant: 'outline', rounded: false, iconOnly }),
         {
-          'cn-pagination-button': variant === 'default',
           'cn-button-active': isActive,
           'cn-button-disabled': disabled
         },
@@ -113,7 +104,6 @@ const PaginationPrimitivePrevious = ({
 }: PaginationPrimitiveLinkGeneralProps) => {
   return (
     <PaginationPrimitiveLink
-      variant="data"
       aria-label="Go to previous page"
       disabled={disabled}
       className={className}
@@ -135,7 +125,6 @@ const PaginationPrimitiveNext = ({
 }: PaginationPrimitiveLinkGeneralProps) => {
   return (
     <PaginationPrimitiveLink
-      variant="data"
       aria-label="Go to next page"
       disabled={disabled}
       className={className}

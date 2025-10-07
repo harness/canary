@@ -86,7 +86,6 @@ export function Pagination({
             {/* {!showPageNumbers && totalPages && (
               <ul className="cn-pagination-content gap-cn-xs">
                 <PaginationItems
-                  variant="data"
                   totalPages={totalPages}
                   currentPage={currentPage}
                   getPageLink={getPageLink}

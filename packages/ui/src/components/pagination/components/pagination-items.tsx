@@ -1,7 +1,6 @@
 import { FC } from 'react'
 
 import { PaginationPrimitive } from '../pagination-primitive'
-import { ParentPaginationProps } from '../types'
 
 interface PaginationItemsProps {
   totalPages: number
@@ -9,15 +8,13 @@ interface PaginationItemsProps {
   goToPage?: (pageNum: number) => (e: React.MouseEvent) => void
   getPageLink?: (pageNum: number) => string
   truncateLimit: number
-  variant?: ParentPaginationProps['variant']
 }
 export const PaginationItems: FC<PaginationItemsProps> = ({
   totalPages,
   currentPage,
   goToPage,
   getPageLink,
-  truncateLimit,
-  variant = 'default'
+  truncateLimit
 }) => {
   // Calculate how many siblings to show around the current page
   // The total visible pages would be: first + last + current + (siblings * 2) + 2 ellipses (at most)
@@ -45,12 +42,7 @@ export const PaginationItems: FC<PaginationItemsProps> = ({
   // Always show the first page
   items.push(
     <PaginationPrimitive.Item key={1} className="cn-pagination-pages">
-      <PaginationPrimitive.Link
-        variant={variant}
-        href={getPageLink?.(1)}
-        onClick={goToPage?.(1)}
-        isActive={currentPage === 1}
-      >
+      <PaginationPrimitive.Link href={getPageLink?.(1)} onClick={goToPage?.(1)} isActive={currentPage === 1}>
         1
       </PaginationPrimitive.Link>
     </PaginationPrimitive.Item>
@@ -69,12 +61,7 @@ export const PaginationItems: FC<PaginationItemsProps> = ({
   for (let i = leftBound; i <= rightBound; i++) {
     items.push(
       <PaginationPrimitive.Item key={i} className="cn-pagination-pages">
-        <PaginationPrimitive.Link
-          variant={variant}
-          isActive={currentPage === i}
-          href={getPageLink?.(i)}
-          onClick={goToPage?.(i)}
-        >
+        <PaginationPrimitive.Link isActive={currentPage === i} href={getPageLink?.(i)} onClick={goToPage?.(i)}>
           {i}
         </PaginationPrimitive.Link>
       </PaginationPrimitive.Item>
@@ -95,7 +82,6 @@ export const PaginationItems: FC<PaginationItemsProps> = ({
     items.push(
       <PaginationPrimitive.Item key={totalPages} className="cn-pagination-pages">
         <PaginationPrimitive.Link
-          variant={variant}
           href={getPageLink?.(totalPages)}
           onClick={goToPage?.(totalPages)}
           isActive={currentPage === totalPages}

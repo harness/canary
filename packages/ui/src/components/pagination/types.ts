@@ -45,7 +45,3 @@ type IndeterminatePaginationProps = PaginationBaseProps &
   }
 
 export type PaginationProps = DeterminatePaginationProps | IndeterminatePaginationProps
-
-export type ParentPaginationProps = PaginationProps & {
-  variant?: 'default' | 'data'
-}

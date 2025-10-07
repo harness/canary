@@ -1,4 +1,4 @@
-import { FC, ReactNode } from 'react'
+import { FC } from 'react'
 
 import { Layout, Text } from '@/components'
 
@@ -10,9 +10,9 @@ export const StatsPanel: FC<StatsPanelProps> = ({ data }) => {
   if (!data.length) return null
 
   return (
-    <Layout.Flex wrap="wrap" gap="md" className="gap-x-[var(--cn-spacing-11)]">
+    <Layout.Flex wrap="wrap" gap="3xl">
       {data.map((stat, index) => (
-        <Layout.Vertical gap="xs" key={index}>
+        <Layout.Vertical gap="sm" key={index}>
           <Text color="foreground-3">{stat.label}</Text>
           <Text color="foreground-1">{stat?.value ? stat.value : '-'}</Text>
         </Layout.Vertical>

@@ -1,4 +1,4 @@
-import { ButtonHTMLAttributes, FC, MouseEvent, MouseEventHandler, ReactNode, useMemo } from 'react'
+import { ButtonHTMLAttributes, FC, MouseEvent, ReactNode, useMemo } from 'react'
 import type { LinkProps } from 'react-router-dom'
 
 import {

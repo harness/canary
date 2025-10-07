@@ -1,6 +1,6 @@
 import { isValidElement, ReactNode, useCallback, useLayoutEffect, useRef, useState } from 'react'
 
-import { Layout, Separator, Spacer, Text } from '@/components'
+import { Layout, Separator, Text } from '@/components'
 import { useResizeObserver } from '@/hooks'
 import { cn, wrapConditionalObjectElement } from '@/utils'
 
@@ -25,7 +25,7 @@ export const ViewOnlyItem = ({ label, value }: { label: string; value: ReactNode
     </Text>
     <Text color="foreground-1" as="dd">
       {typeof value === 'string' ? (
-        <Text key="label" className="break-words">
+        <Text key="label" color="inherit" className="break-words">
           {value}
         </Text>
       ) : (

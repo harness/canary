@@ -174,12 +174,12 @@ export const ViewOnlyView = () => {
               label: 'Created',
               value: <TimeAgoCard timestamp="Dec 6, 2024" dateTimeFormatOptions={{ dateStyle: 'medium' }} />
             },
-            { label: 'Last updated', value: null },
+            { label: 'Last updated', value: undefined },
             {
               label: 'Last status check',
               value: <TimeAgoCard timestamp="Jun 6, 2025" dateTimeFormatOptions={{ dateStyle: 'medium' }} />
             },
-            { label: 'Last successful check', value: null },
+            { label: 'Last successful check', value: undefined },
             {
               label: 'Connection status',
               value: (

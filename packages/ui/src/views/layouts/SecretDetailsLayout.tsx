@@ -1,11 +1,8 @@
 import { FC, ReactNode } from 'react'
 
-import { Layout, Link, PermissionIdentifier, ResourceType, Spacer, StatsPanel, Text, TimeAgoCard } from '@/components'
-import { Tabs } from '@/components/tabs'
-import { useComponents, useCustomDialogTrigger, useRouterContext, useTranslation } from '@/context'
-import { Page } from '@/views'
-import { SandboxLayout } from '@views/layouts/SandboxLayout'
-import { SecretListItem } from '@views/secrets'
+import { PermissionIdentifier, ResourceType, StatsPanel, Tabs, Text, TimeAgoCard } from '@/components'
+import { useRouterContext, useTranslation } from '@/context'
+import { Page, type SecretListItem } from '@/views'
 
 interface SecretDetailsLayoutProps {
   secret: SecretListItem
@@ -27,95 +24,6 @@ const DATE_FORMAT_OPTIONS = {
   month: 'short' as const,
   day: 'numeric' as const,
   year: 'numeric' as const
-}
-
-const useGetSecretInfo = (
-  created?: string | number,
-  lastUsed?: string | number,
-  lastUpdated?: string | number,
-  onEdit?: (identifier: string) => void,
-  onDelete?: (identifier: string) => void,
-  identifier?: string
-) => {
-  const { RbacMoreActionsTooltip } = useComponents()
-  const { t } = useTranslation()
-  const { triggerRef, registerTrigger } = useCustomDialogTrigger()
-  const handleDelete = (id: string) => {
-    registerTrigger()
-    onDelete?.(id)
-  }
-
-  const handleEdit = (id: string) => {
-    registerTrigger()
-    onEdit?.(id)
-  }
-
-  return (
-    <Layout.Horizontal justify="between" align="center" className="mt-cn-xs">
-      <Layout.Horizontal gap="3xl">
-        <Layout.Vertical gap="sm">
-          <Text color="foreground-3">Created</Text>
-          {created ? (
-            <TimeAgoCard timestamp={created} dateTimeFormatOptions={DATE_FORMAT_OPTIONS} />
-          ) : (
-            <Text variant="body-normal">-</Text>
-          )}
-        </Layout.Vertical>
-        <Layout.Vertical gap="sm">
-          <Text variant="body-normal" className="text-cn-3">
-            Last used
-          </Text>
-          {lastUsed ? (
-            <TimeAgoCard timestamp={lastUsed} dateTimeFormatOptions={DATE_FORMAT_OPTIONS} />
-          ) : (
-            <Text variant="body-normal">-</Text>
-          )}
-        </Layout.Vertical>
-        <Layout.Vertical gap="sm">
-          <Text variant="body-normal" className="text-cn-3">
-            Last updated
-          </Text>
-          {lastUpdated ? (
-            <TimeAgoCard timestamp={lastUpdated} dateTimeFormatOptions={DATE_FORMAT_OPTIONS} />
-          ) : (
-            <Text variant="body-normal">-</Text>
-          )}
-        </Layout.Vertical>
-      </Layout.Horizontal>
-      <RbacMoreActionsTooltip
-        ref={triggerRef}
-        buttonVariant="outline"
-        actions={[
-          {
-            isDanger: false,
-            title: t('views:secrets.edit', 'Edit secret'),
-            iconName: 'edit-pencil',
-            onClick: () => handleEdit(identifier ?? ''),
-            rbac: {
-              resource: {
-                resourceType: ResourceType.SECRET,
-                resourceIdentifier: identifier
-              },
-              permissions: [PermissionIdentifier.UPDATE_SECRET]
-            }
-          },
-          {
-            isDanger: true,
-            title: t('views:secrets.delete', 'Delete secret'),
-            iconName: 'trash',
-            onClick: () => handleDelete(identifier ?? ''),
-            rbac: {
-              resource: {
-                resourceType: ResourceType.SECRET,
-                resourceIdentifier: identifier
-              },
-              permissions: [PermissionIdentifier.DELETE_SECRET]
-            }
-          }
-        ]}
-      />
-    </Layout.Horizontal>
-  )
 }
 
 export const SecretDetailsLayout: FC<SecretDetailsLayoutProps> = ({
@@ -169,19 +77,27 @@ export const SecretDetailsLayout: FC<SecretDetailsLayoutProps> = ({
         <StatsPanel
           data={[
             {
-              label: 'Created',
+              label: t('views:secretDetails.created', 'Created'),
               value: secret?.createdAt ? (
-                <TimeAgoCard timestamp={secret.createdAt} dateTimeFormatOptions={DATE_FORMAT_OPTIONS} />
+                <TimeAgoCard
+                  timestamp={secret.createdAt}
+                  dateTimeFormatOptions={DATE_FORMAT_OPTIONS}
+                  textProps={{ color: 'foreground-1' }}
+                />
               ) : undefined
             },
             {
-              label: 'Last used',
+              label: t('views:secretDetails.lastUsed', 'Last used'),
               value: secret?.updatedAt ? (
-                <TimeAgoCard timestamp={secret.updatedAt} dateTimeFormatOptions={DATE_FORMAT_OPTIONS} />
+                <TimeAgoCard
+                  timestamp={secret.updatedAt}
+                  dateTimeFormatOptions={DATE_FORMAT_OPTIONS}
+                  textProps={{ color: 'foreground-1' }}
+                />
               ) : undefined
             },
             {
-              label: 'Last updated',
+              label: t('views:secretDetails.lastUpdated', 'Last updated'),
               value: secret?.updatedAt ? (
                 <TimeAgoCard timestamp={secret.updatedAt} dateTimeFormatOptions={DATE_FORMAT_OPTIONS} />
               ) : undefined
@@ -211,12 +127,8 @@ export const SecretDetailsLayout: FC<SecretDetailsLayoutProps> = ({
             path="/overview"
             render={() =>
               configurationView || (
-                <SandboxLayout.Content>
-                  {/* Default Configuration View */}
-                  <Text variant="body-normal">
-                    {t('views:secretDetails.configurationView', 'Secret Configuration')}
-                  </Text>
-                </SandboxLayout.Content>
+                /* Default Configuration View */
+                <Text variant="body-normal">{t('views:secretDetails.configurationView', 'Secret Configuration')}</Text>
               )
             }
           />

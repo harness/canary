@@ -72,7 +72,31 @@ import { DocsPage } from "@/components/docs-page";
             <Pagination
                 totalItems={100}
                 pageSize={pageSize}
-                setPageSize={setPageSize}
+                onPageSizeChange={setPageSize}
+                currentPage={currentPage}
+                goToPage={setCurrentPage}
+            />
+        </div>
+    )
+
+}`} />
+
+### Determinate Pagination with custom page size values. Default value [10, 25, 50].
+
+<DocsPage.ComponentExample
+  client:only
+  code={`() => {
+    const customOptions = [2, 5, 15]
+    const [currentPage, setCurrentPage] = React.useState(1)
+    const [pageSize, setPageSize] = React.useState(customOptions[0])
+
+    return (
+        <div className="w-[550px]">
+            <Pagination
+                totalItems={100}
+                pageSize={pageSize}
+                pageSizeOptions={customOptions}
+                onPageSizeChange={setPageSize}
                 currentPage={currentPage}
                 goToPage={setCurrentPage}
             />
@@ -230,7 +254,14 @@ return (
       value: "number",
     },
     {
-      name: "setPageSize",
+      name: "pageSizeOptions",
+      description: "Options for items per page select",
+      defaultValue: "[10, 25, 50]",
+      required: false,
+      value: "number[]"
+    },
+    {
+      name: "onPageSizeChange",
       description:
         "Function to set the number of items per page (used with determinate pagination)",
       required: false,

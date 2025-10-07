@@ -10,7 +10,8 @@ import { type PaginationProps } from './types'
 export function Pagination({
   totalItems,
   pageSize,
-  setPageSize,
+  onPageSizeChange,
+  pageSizeOptions = [10, 25, 50],
   currentPage,
   goToPage,
   getPageLink,
@@ -37,24 +38,19 @@ export function Pagination({
     return null
   }
 
+  const handleChangePageSize = (value: number) => {
+    onPageSizeChange?.(value)
+  }
+
   const renderItemsPerPageBlock = () => {
-    if (!totalPages || !currentPage || indeterminate || !setPageSize) return null
+    if (!onPageSizeChange) return null
+
+    const options = pageSizeOptions.map(option => ({ label: option, value: option }))
 
     return (
       <>
         <Layout.Horizontal align="center" gap="xs">
-          <Select
-            options={[
-              { label: '10', value: 10 },
-              { label: '25', value: 25 },
-              { label: '50', value: 50 }
-            ]}
-            value={pageSize}
-            onChange={value => {
-              setPageSize?.(value)
-            }}
-            size="sm"
-          />
+          <Select options={options} value={pageSize} onChange={handleChangePageSize} size="sm" />
           <Text>items per page</Text>
         </Layout.Horizontal>
 

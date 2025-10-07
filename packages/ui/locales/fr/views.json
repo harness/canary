@@ -629,6 +629,16 @@
     "fileNoChanges": "Fichier sans modifications.",
     "binaryNotShown": "Fichier binaire non affiché."
   },
+  "secretDetails": {
+    "backToSecrets": "Back to secrets",
+    "created": "Created",
+    "lastUsed": "Last used",
+    "lastUpdated": "Last updated",
+    "configuration": "Configuration",
+    "references": "References",
+    "activity": "Activity",
+    "configurationView": "Secret Configuration"
+  },
   "secrets": {
     "edit": "Edit secret",
     "delete": "Supprimer le secret",
@@ -653,13 +663,6 @@
     "secretsTitle": "Secrets",
     "createNew": "Créer un secret",
     "newSecret": "New Secret"
-  },
-  "secretDetails": {
-    "backToSecrets": "Back to secrets",
-    "configuration": "Configuration",
-    "references": "References",
-    "activity": "Activity",
-    "configurationView": "Secret Configuration"
   },
   "notFound": {
     "title": "Quelque chose s'est mal passé…",

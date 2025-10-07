@@ -54,11 +54,7 @@ const Item: FC<WidgetsItemProps> = ({ children, title, moreLink, isWidgetTable =
         )}
       </Layout.Flex>
       <div
-        className={cn(
-          '[contain:inline-size]',
-          { 'border border-cn-3 rounded-3 p-[var(--cn-spacing-5)]': !isWidgetTable },
-          className
-        )}
+        className={cn('[contain:inline-size]', { 'border border-cn-3 rounded-3 p-cn-lg': !isWidgetTable }, className)}
       >
         <ScrollArea classNameContent="w-full">{children}</ScrollArea>
       </div>

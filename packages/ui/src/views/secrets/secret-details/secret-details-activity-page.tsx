@@ -3,8 +3,6 @@ import { FC } from 'react'
 import { IconV2, ListActions, NoData, Pagination, SearchBox, Spacer } from '@/components'
 import { useRouterContext, useTranslation } from '@/context'
 import { useDebounceSearch } from '@/hooks'
-import { cn } from '@utils/cn'
-import { SandboxLayout } from '@views/layouts/SandboxLayout'
 
 import { SecretActivityList } from './secret-details-activity-list'
 import { SecretActivity } from './types'
@@ -73,9 +71,7 @@ const SecretActivityPage: FC<SecretActivityPageProps> = ({
   }
 
   return (
-    <SandboxLayout.Content
-      className={cn({ 'h-full': !isLoading && !secretActivity.length && !searchQuery }, 'px-0 mt-4')}
-    >
+    <>
       <ListActions.Root className="mb-1">
         <ListActions.Left>
           <SearchBox.Root
@@ -89,9 +85,8 @@ const SecretActivityPage: FC<SecretActivityPageProps> = ({
       </ListActions.Root>
       <Spacer size={4} />
       <SecretActivityList secretActivity={secretActivity} isLoading={isLoading} />
-      <Spacer size={8} />
       <Pagination totalItems={totalItems} pageSize={pageSize} currentPage={currentPage} goToPage={goToPage} />
-    </SandboxLayout.Content>
+    </>
   )
 }
 

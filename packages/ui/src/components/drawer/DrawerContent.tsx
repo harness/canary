@@ -12,6 +12,7 @@ import { DrawerOverlay } from './DrawerOverlay'
 const drawerContentVariants = cva('cn-drawer-content', {
   variants: {
     size: {
+      '2xs': 'cn-drawer-content-2xs',
       xs: 'cn-drawer-content-xs',
       sm: 'cn-drawer-content-sm',
       md: 'cn-drawer-content-md',

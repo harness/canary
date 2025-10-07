@@ -7,11 +7,11 @@ import { closestCenter, DndContext } from '@dnd-kit/core'
 import { SortableContext } from '@dnd-kit/sortable'
 
 import { DraggableItem } from './draggable-item'
-import { ManageNavigationSearch } from './manage-navigation-search'
 
 interface ManageNavigationProps {
   pinnedItems: NavbarItemType[]
-  navbarMenuData: MenuGroupType[]
+  // Might be needed for search later
+  navbarMenuData?: MenuGroupType[]
   showManageNavigation: boolean
   recentItems: NavbarItemType[]
   onSave: (recentItems: NavbarItemType[], currentPinnedItems: NavbarItemType[]) => void
@@ -24,19 +24,9 @@ const filterRecentItems = (pinnedItems: NavbarItemType[], recentItems: NavbarIte
   return recentItems.filter(item => !pinnedItems.some(pinnedItem => pinnedItem.id === item.id))
 }
 
-const filterMenuData = (menuData: MenuGroupType[], pinnedItems: NavbarItemType[]): MenuGroupType[] => {
-  return menuData
-    .map(group => ({
-      ...group,
-      items: group.items.filter(item => !pinnedItems.some(pinnedItem => pinnedItem.id === item.id))
-    }))
-    .filter(group => group.items.length > 0)
-}
-
 export const ManageNavigation = ({
   pinnedItems,
   recentItems,
-  navbarMenuData,
   showManageNavigation,
   onSave,
   onClose,
@@ -121,16 +111,14 @@ export const ManageNavigation = ({
         </Dialog.Header>
 
         <Dialog.Body>
-          <ManageNavigationSearch
-            navbarMenuData={filterMenuData(navbarMenuData, currentPinnedItems)}
-            addToPinnedItems={addToPinnedItems}
-          />
           <Layout.Grid gapY="xs">
             <Text variant="body-single-line-normal" color="foreground-3">
               Pinned
             </Text>
             {!currentPinnedItems.length ? (
-              <Text color="foreground-3">No pinned items</Text>
+              <Text align="center" className="mt-cn-md" color="foreground-3">
+                No pinned items
+              </Text>
             ) : (
               <DndContext
                 onDragEnd={handleDragEnd}

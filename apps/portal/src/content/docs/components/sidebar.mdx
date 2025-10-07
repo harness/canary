@@ -45,19 +45,35 @@ code={`() => {
                   { title: 'Duplicate' },
                   { title: 'Delete' }
                 ]}
+                actionButtons={[
+                  {  iconName: 'plus' },
+                  {  iconName: 'pin' },
+                ]}
               />
               <Sidebar.Item
                 icon="pipeline"
                 title="Pipelines"
+                actionButtons={[
+                  {  iconName: 'plus' },
+                  {  iconName: 'pin' },
+                ]}
               />
               <Sidebar.Item
                 icon="service-accounts"
                 title="User Management"
                 badge="3"
+                actionButtons={[
+                  {  iconName: 'plus' },
+                  {  iconName: 'pin' },
+                ]}
               />
               <Sidebar.Item
                 icon="folder"
                 title="Projects"
+                actionButtons={[
+                  {  iconName: 'plus' },
+                  {  iconName: 'pin' },
+                ]}
               >
                 <Sidebar.MenuSubItem title="Project Alpha" to="/projects/alpha" />
                 <Sidebar.MenuSubItem title="Project Beta" to="/projects/beta" />
@@ -76,6 +92,10 @@ code={`() => {
                 icon="clock"
                 title="Recent Activity"
                 description="View your recent actions"
+                actionButtons={[
+                  {  iconName: 'plus' },
+                  {  iconName: 'pin' },
+                ]}
               />
             </Sidebar.Group>
 
@@ -103,6 +123,10 @@ code={`() => {
               title="Settings"
               to="/settings"
               withRightIndicator
+              actionButtons={[
+                  {  iconName: 'plus' },
+                  {  iconName: 'pin' },
+                ]}
             />
           </Sidebar.Content>
 

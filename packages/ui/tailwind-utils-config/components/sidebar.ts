@@ -94,14 +94,26 @@ export default {
       padding: 'var(--cn-sidebar-group-py) 0',
 
       '&-label': {
-        padding:
-          'calc(var(--cn-sidebar-item-py) * var(--sidebar-group-label-scale)) calc(var(--cn-sidebar-item-px) * var(--sidebar-group-label-scale))',
         opacity: 'var(--sidebar-group-label-scale)',
         maxHeight: 'calc(44px * var(--sidebar-group-label-scale))',
         transform: 'max(0.6, scale(var(--sidebar-group-label-scale)))',
         justifySelf: 'start',
         overflow: 'hidden',
         '@apply duration-150 transition-[max-height,padding,opacity,transform] ease-linear': ''
+      },
+
+      '&-header': {
+        padding:
+          'calc(var(--cn-sidebar-item-py) * var(--sidebar-group-label-scale)) calc(var(--cn-sidebar-item-px) * var(--sidebar-group-label-scale))',
+        '&-action-button': {
+          '@apply opacity-0 transition-opacity duration-150': ''
+        },
+
+        '&:hover, &:focus-within': {
+          '.cn-sidebar-group-header-action-button': {
+            '@apply opacity-100': ''
+          }
+        }
       }
     },
 
@@ -180,6 +192,12 @@ export default {
             '.cn-sidebar-item-action-menu': {
               opacity: '1'
             }
+          },
+
+          '&:hover, &:focus-within': {
+            '.cn-sidebar-item-content-action-buttons': {
+              display: 'flex !important'
+            }
           }
         },
 
@@ -191,26 +209,46 @@ export default {
 
       '&-content': {
         rowGap: 'var(--cn-spacing-1)',
+        minHeight: 'var(--cn-sidebar-item-min)',
         columnGap: 'var(--cn-sidebar-item-gap)',
         justifyItems: 'start',
         alignItems: 'center',
         gridTemplateColumns: 'var(--cn-icon-size-sm) 1fr',
         gridTemplateAreas: '"icon title"',
-        padding: 'var(--cn-sidebar-item-py) var(--cn-sidebar-item-px)',
+        paddingInline: 'var(--cn-sidebar-item-px)',
         borderRadius: 'var(--cn-sidebar-item-radius)',
         '@apply duration-150 transition-[padding,row-gap,column-gap] ease-linear': '',
+
+        '&-only-action-buttons': {
+          gridTemplateAreas: '"icon title action-buttons"',
+          gridTemplateColumns: 'var(--cn-icon-size-sm) 1fr auto'
+        },
 
         '&-w-description': {
           gridTemplateAreas: `
             "icon title"
             "icon description"
           `,
-          gridTemplateColumns: 'var(--cn-icon-size-lg) 1fr'
+          gridTemplateColumns: 'var(--cn-icon-size-lg) 1fr',
+          paddingBlock: 'var(--cn-sidebar-item-py)',
+
+          '&:has(.cn-sidebar-item-content-action-buttons)': {
+            gridTemplateAreas: `
+            "icon title action-buttons"
+            "icon description action-buttons"
+          `,
+            gridTemplateColumns: 'var(--cn-icon-size-lg) 1fr auto'
+          }
         },
 
         '&-w-r-element': {
           gridTemplateAreas: '"icon title elem"',
-          gridTemplateColumns: 'var(--cn-icon-size-sm) 1fr auto'
+          gridTemplateColumns: 'var(--cn-icon-size-sm) 1fr auto',
+
+          '&:has(.cn-sidebar-item-content-action-buttons)': {
+            gridTemplateAreas: '"icon title action-buttons elem"',
+            gridTemplateColumns: 'var(--cn-icon-size-sm) 1fr auto auto'
+          }
         },
 
         '&-complete': {
@@ -218,7 +256,16 @@ export default {
             "icon title       elem"
             "icon description elem"
           `,
-          gridTemplateColumns: 'var(--cn-icon-size-lg) 1fr'
+          gridTemplateColumns: 'var(--cn-icon-size-lg) 1fr',
+          paddingBlock: 'var(--cn-sidebar-item-py)',
+
+          '&:has(.cn-sidebar-item-content-action-buttons)': {
+            gridTemplateAreas: `
+            "icon title action-buttons elem"
+            "icon description action-buttons elem"
+          `,
+            gridTemplateColumns: 'var(--cn-icon-size-lg) 1fr auto auto'
+          }
         },
 
         '&-icon': {
@@ -260,6 +307,11 @@ export default {
 
         '&-right-element': {
           gridArea: 'elem'
+        },
+
+        '&-action-buttons': {
+          display: 'none !important',
+          gridArea: 'action-buttons'
         },
 
         '&-action-item-placeholder': {
@@ -346,7 +398,11 @@ export default {
       },
 
       '.cn-sidebar-group': {
-        '--sidebar-group-label-scale': '0'
+        '--sidebar-group-label-scale': '0',
+
+        '&-header': {
+          display: 'none'
+        }
       },
 
       '.cn-sidebar-item': {
@@ -359,7 +415,7 @@ export default {
           rowGap: '0',
           columnGap: '0',
 
-          '&-title, &-description, &-badge, &-right-element, &-action-item-placeholder': {
+          '&-title, &-description, &-badge, &-right-element, &-action-item-placeholder, &-action-buttons': {
             maxWidth: '0',
             padding: '0',
             opacity: '0',

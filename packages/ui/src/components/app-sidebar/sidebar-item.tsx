@@ -1,4 +1,4 @@
-import { NavbarItemType, Sidebar } from '@/components'
+import { NavbarItemType, Sidebar, SidebarItemProps } from '@/components'
 import { useTranslation } from '@/context'
 import { wrapConditionalArrayElements } from '@utils/mergeUtils'
 
@@ -9,6 +9,8 @@ interface NavbarItemProps {
   handleRemoveRecentMenuItem: (item: NavbarItemType) => void
   handleCustomNav: () => void
   disabled?: boolean
+  actionButtons?: SidebarItemProps['actionButtons']
+  hideMenuItems?: boolean
 }
 
 export const AppSidebarItem = ({
@@ -17,7 +19,9 @@ export const AppSidebarItem = ({
   handleChangePinnedMenuItem,
   handleRemoveRecentMenuItem,
   handleCustomNav,
-  disabled = false
+  disabled = false,
+  actionButtons,
+  hideMenuItems = false
 }: NavbarItemProps) => {
   const { t } = useTranslation()
 
@@ -39,12 +43,14 @@ export const AppSidebarItem = ({
 
   return (
     <Sidebar.Item
+      end
       title={item.title}
       to={item.to || ''}
       icon={item.iconName}
-      actionMenuItems={actionMenuItems}
+      actionMenuItems={hideMenuItems ? undefined : actionMenuItems}
       disabled={disabled}
-      end
+      actionButtons={actionButtons}
     />
   )
 }
+AppSidebarItem.displayName = 'AppSidebarItem'

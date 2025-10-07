@@ -74,7 +74,15 @@ type ButtonPropsRegular = {
   ignoreIconOnlyTooltip?: boolean
 }
 
-type ButtonProps = CommonButtonProps & (ButtonPropsIconOnlyRequired | ButtonPropsIconOnlyIgnored | ButtonPropsRegular)
+// base type that accepts boolean | undefined for iconOnly
+type ButtonPropsBase = {
+  iconOnly?: boolean | undefined
+  tooltipProps?: ButtonTooltipProps
+  ignoreIconOnlyTooltip?: boolean
+}
+
+type ButtonProps = CommonButtonProps &
+  (ButtonPropsIconOnlyRequired | ButtonPropsIconOnlyIgnored | ButtonPropsRegular | ButtonPropsBase)
 
 type ButtonThemes = VariantProps<typeof buttonVariants>['theme']
 type ButtonVariants = VariantProps<typeof buttonVariants>['variant']

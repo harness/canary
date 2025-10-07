@@ -1,0 +1,656 @@
+---
+title: FileExplorer
+description: FileExplorer component for displaying hierarchical file and folder structures
+---
+
+The `FileExplorer` component is used to display file and folder hierarchies in a collapsible/expandable structure. It supports features like active states, links, nested levels, and tooltips.
+
+import { DocsPage } from "@/components/docs-page";
+
+<DocsPage.ComponentExample
+  client:only
+  code={`() => {
+  const [expandedFolders, setExpandedFolders] = React.useState(['folder-1']);
+
+return <FileExplorer.Root value={expandedFolders} onValueChange={setExpandedFolders}>
+
+<FileExplorer.FolderItem
+  value="folder-1"
+  level={0}
+  content={
+    <FileExplorer.Root
+      value={expandedFolders}
+      onValueChange={setExpandedFolders}
+    >
+      <FileExplorer.FileItem
+        actionButtons={[
+          {
+            title: "Make Default",
+            onClick: () => console.log("Open clicked"),
+            iconOnly: false,
+            size: "xs",
+            variant: "outline",
+          },
+          {
+            iconName: "plus",
+            onClick: () => console.log("Open clicked"),
+          },
+        ]}
+        level={1}
+      >
+        README.md
+      </FileExplorer.FileItem>
+      <FileExplorer.FileItem level={1}>package.json</FileExplorer.FileItem>
+    </FileExplorer.Root>
+  }
+>
+  src
+</FileExplorer.FolderItem>
+
+  </FileExplorer.Root>
+}`}
+/>
+
+## Usage
+
+```typescript jsx
+import { FileExplorer } from '@harnessio/ui/components'
+
+//...
+
+const [expandedFolders, setExpandedFolders] = useState(['src']);
+
+return (
+  <FileExplorer.Root value={expandedFolders} onValueChange={setExpandedFolders}>
+    <FileExplorer.FolderItem
+      value="src"
+      level={0}
+      content={
+        <FileExplorer.Root value={expandedFolders} onValueChange={setExpandedFolders}>
+          <FileExplorer.FileItem level={1}>index.ts</FileExplorer.FileItem>
+          <FileExplorer.FileItem level={1}>App.tsx</FileExplorer.FileItem>
+        </FileExplorer.Root>
+      }
+    >
+      src
+    </FileExplorer.FolderItem>
+  </FileExplorer.Root>
+)
+```
+
+## Basic File Explorer
+
+Create a simple file explorer with folders and files. The explorer automatically handles expand/collapse interactions.
+
+<DocsPage.ComponentExample
+  client:only
+  code={`() => {
+  const [expanded, setExpanded] = React.useState(['root']);
+
+return <FileExplorer.Root value={expanded} onValueChange={setExpanded}>
+
+<FileExplorer.FolderItem
+  value="root"
+  level={0}
+  content={
+    <FileExplorer.Root value={expanded} onValueChange={setExpanded}>
+      <FileExplorer.FileItem level={1}>index.html</FileExplorer.FileItem>
+      <FileExplorer.FileItem level={1}>styles.css</FileExplorer.FileItem>
+      <FileExplorer.FileItem level={1}>script.js</FileExplorer.FileItem>
+    </FileExplorer.Root>
+  }
+>
+  public
+</FileExplorer.FolderItem>
+
+  </FileExplorer.Root>
+}`}
+/>
+
+## Nested Folders
+
+You can nest folders within folders to create deep hierarchies.
+
+<DocsPage.ComponentExample
+  client:only
+  code={`() => {
+  const [expanded, setExpanded] = React.useState(['src', 'components']);
+
+return <FileExplorer.Root value={expanded} onValueChange={setExpanded}>
+
+<FileExplorer.FolderItem
+  value="src"
+  level={0}
+  content={
+    <FileExplorer.Root value={expanded} onValueChange={setExpanded}>
+      <FileExplorer.FolderItem
+        value="components"
+        level={1}
+        content={
+          <FileExplorer.Root value={expanded} onValueChange={setExpanded}>
+            <FileExplorer.FileItem level={2}>Button.tsx</FileExplorer.FileItem>
+            <FileExplorer.FileItem level={2}>Input.tsx</FileExplorer.FileItem>
+            <FileExplorer.FileItem level={2}>Modal.tsx</FileExplorer.FileItem>
+          </FileExplorer.Root>
+        }
+      >
+        components
+      </FileExplorer.FolderItem>
+      <FileExplorer.FolderItem
+        value="utils"
+        level={1}
+        content={
+          <FileExplorer.Root value={expanded} onValueChange={setExpanded}>
+            <FileExplorer.FileItem level={2}>helpers.ts</FileExplorer.FileItem>
+            <FileExplorer.FileItem level={2}>
+              constants.ts
+            </FileExplorer.FileItem>
+          </FileExplorer.Root>
+        }
+      >
+        utils
+      </FileExplorer.FolderItem>
+      <FileExplorer.FileItem level={1}>index.ts</FileExplorer.FileItem>
+    </FileExplorer.Root>
+  }
+>
+  src
+</FileExplorer.FolderItem>
+
+  </FileExplorer.Root>
+}`}
+/>
+
+## With Active State
+
+Highlight the currently active file or folder using the `isActive` prop.
+
+<DocsPage.ComponentExample
+  client:only
+  code={`() => {
+  const [expanded, setExpanded] = React.useState(['src']);
+  const [activeFile, setActiveFile] = React.useState('app-tsx');
+
+return <FileExplorer.Root value={expanded} onValueChange={setExpanded}>
+
+<FileExplorer.FolderItem
+  value="src"
+  level={0}
+  content={
+    <FileExplorer.Root value={expanded} onValueChange={setExpanded}>
+      <FileExplorer.FileItem
+        level={1}
+        isActive={activeFile === "index-ts"}
+        onClick={() => setActiveFile("index-ts")}
+      >
+        index.ts
+      </FileExplorer.FileItem>
+      <FileExplorer.FileItem
+        level={1}
+        isActive={activeFile === "app-tsx"}
+        onClick={() => setActiveFile("app-tsx")}
+      >
+        App.tsx
+      </FileExplorer.FileItem>
+      <FileExplorer.FileItem
+        level={1}
+        isActive={activeFile === "main-tsx"}
+        onClick={() => setActiveFile("main-tsx")}
+      >
+        main.tsx
+      </FileExplorer.FileItem>
+    </FileExplorer.Root>
+  }
+>
+  src
+</FileExplorer.FolderItem>
+
+  </FileExplorer.Root>
+}`}
+/>
+
+## With Links
+
+Make files and folders navigable by providing the `link` prop.
+
+<DocsPage.ComponentExample
+  client:only
+  code={`() => {
+  const [expanded, setExpanded] = React.useState(['docs']);
+
+return <FileExplorer.Root value={expanded} onValueChange={setExpanded}>
+
+<FileExplorer.FolderItem
+  value="docs"
+  level={0}
+  link="/docs"
+  content={
+    <FileExplorer.Root value={expanded} onValueChange={setExpanded}>
+      <FileExplorer.FileItem level={1} link="/docs/introduction">
+        introduction.md
+      </FileExplorer.FileItem>
+      <FileExplorer.FileItem level={1} link="/docs/getting-started">
+        getting-started.md
+      </FileExplorer.FileItem>
+      <FileExplorer.FileItem level={1} link="/docs/api">
+        api.md
+      </FileExplorer.FileItem>
+    </FileExplorer.Root>
+  }
+>
+  docs
+</FileExplorer.FolderItem>
+
+  </FileExplorer.Root>
+}`}
+/>
+
+## With Tooltips
+
+Add tooltips to files for additional information.
+
+<DocsPage.ComponentExample
+  client:only
+  code={`() => {
+  const [expanded, setExpanded] = React.useState(['config']);
+
+return <FileExplorer.Root value={expanded} onValueChange={setExpanded}>
+
+<FileExplorer.FolderItem
+  value="config"
+  level={0}
+  content={
+    <FileExplorer.Root value={expanded} onValueChange={setExpanded}>
+      <FileExplorer.FileItem level={1} tooltip="Main configuration file">
+        config.json
+      </FileExplorer.FileItem>
+      <FileExplorer.FileItem level={1} tooltip="Environment variables">
+        .env
+      </FileExplorer.FileItem>
+      <FileExplorer.FileItem level={1} tooltip="TypeScript configuration">
+        tsconfig.json
+      </FileExplorer.FileItem>
+    </FileExplorer.Root>
+  }
+>
+  config
+</FileExplorer.FolderItem>
+
+  </FileExplorer.Root>
+}`}
+/>
+
+## Active Folder
+
+You can also highlight folders using the `isActive` prop.
+
+<DocsPage.ComponentExample
+  client:only
+  code={`() => {
+  const [expanded, setExpanded] = React.useState(['src', 'components']);
+
+return <FileExplorer.Root value={expanded} onValueChange={setExpanded}>
+
+<FileExplorer.FolderItem
+  value="src"
+  level={0}
+  content={
+    <FileExplorer.Root value={expanded} onValueChange={setExpanded}>
+      <FileExplorer.FolderItem
+        value="components"
+        level={1}
+        isActive={true}
+        content={
+          <FileExplorer.Root value={expanded} onValueChange={setExpanded}>
+            <FileExplorer.FileItem level={2}>Header.tsx</FileExplorer.FileItem>
+            <FileExplorer.FileItem level={2}>Footer.tsx</FileExplorer.FileItem>
+          </FileExplorer.Root>
+        }
+      >
+        components
+      </FileExplorer.FolderItem>
+      <FileExplorer.FileItem level={1}>App.tsx</FileExplorer.FileItem>
+    </FileExplorer.Root>
+  }
+>
+  src
+</FileExplorer.FolderItem>
+
+  </FileExplorer.Root>
+}`}
+/>
+
+## Complex Example - Full Project Structure
+
+This comprehensive example demonstrates all features of the FileExplorer component including:
+
+- Multiple nested folder levels
+- Active file highlighting
+- Links for navigation
+- Tooltips for additional context
+- Mixed file and folder structures
+- Click handlers for file selection
+
+<DocsPage.ComponentExample
+  client:only
+  code={`() => {
+  const [expanded, setExpanded] = React.useState([
+    'project-root',
+    'src',
+    'components',
+    'styles'
+  ]);
+  const [activeFile, setActiveFile] = React.useState('button-tsx');
+
+return <FileExplorer.Root value={expanded} onValueChange={setExpanded}>
+
+<FileExplorer.FolderItem
+value="project-root"
+level={0}
+content={
+<FileExplorer.Root value={expanded} onValueChange={setExpanded}>
+{/* Source Directory */}
+<FileExplorer.FolderItem
+value="src"
+level={1}
+link="/src"
+content={
+<FileExplorer.Root value={expanded} onValueChange={setExpanded}>
+{/* Components Folder */}
+<FileExplorer.FolderItem
+value="components"
+level={2}
+isActive={activeFile.includes('component')}
+content={
+<FileExplorer.Root value={expanded} onValueChange={setExpanded}>
+<FileExplorer.FileItem
+level={3}
+isActive={activeFile === 'button-tsx'}
+onClick={() => setActiveFile('button-tsx')}
+link="/src/components/button"
+tooltip="Reusable button component" >
+Button.tsx
+</FileExplorer.FileItem>
+<FileExplorer.FileItem
+level={3}
+isActive={activeFile === 'input-tsx'}
+onClick={() => setActiveFile('input-tsx')}
+link="/src/components/input"
+tooltip="Form input component" >
+Input.tsx
+</FileExplorer.FileItem>
+<FileExplorer.FileItem
+level={3}
+isActive={activeFile === 'modal-tsx'}
+onClick={() => setActiveFile('modal-tsx')}
+link="/src/components/modal"
+tooltip="Modal dialog component" >
+Modal.tsx
+</FileExplorer.FileItem>
+<FileExplorer.FileItem
+level={3}
+tooltip="Component exports" >
+index.ts
+</FileExplorer.FileItem>
+</FileExplorer.Root>
+} >
+components
+</FileExplorer.FolderItem>
+
+                {/* Styles Folder */}
+                <FileExplorer.FolderItem
+                  value="styles"
+                  level={2}
+                  content={
+                    <FileExplorer.Root value={expanded} onValueChange={setExpanded}>
+                      <FileExplorer.FileItem level={3} tooltip="Global styles">globals.css</FileExplorer.FileItem>
+                      <FileExplorer.FileItem level={3} tooltip="CSS variables">variables.css</FileExplorer.FileItem>
+                      <FileExplorer.FileItem level={3} tooltip="Utility classes">utils.css</FileExplorer.FileItem>
+                    </FileExplorer.Root>
+                  }
+                >
+                  styles
+                </FileExplorer.FolderItem>
+
+                {/* Utils Folder */}
+                <FileExplorer.FolderItem
+                  value="utils"
+                  level={2}
+                  content={
+                    <FileExplorer.Root value={expanded} onValueChange={setExpanded}>
+                      <FileExplorer.FileItem level={3} tooltip="Helper functions">helpers.ts</FileExplorer.FileItem>
+                      <FileExplorer.FileItem level={3} tooltip="API client">api.ts</FileExplorer.FileItem>
+                      <FileExplorer.FileItem level={3} tooltip="Form validation">validation.ts</FileExplorer.FileItem>
+                    </FileExplorer.Root>
+                  }
+                >
+                  utils
+                </FileExplorer.FolderItem>
+
+                {/* Hooks Folder */}
+                <FileExplorer.FolderItem
+                  value="hooks"
+                  level={2}
+                  content={
+                    <FileExplorer.Root value={expanded} onValueChange={setExpanded}>
+                      <FileExplorer.FileItem level={3}>useAuth.ts</FileExplorer.FileItem>
+                      <FileExplorer.FileItem level={3}>useForm.ts</FileExplorer.FileItem>
+                      <FileExplorer.FileItem level={3}>useDebounce.ts</FileExplorer.FileItem>
+                    </FileExplorer.Root>
+                  }
+                >
+                  hooks
+                </FileExplorer.FolderItem>
+
+                {/* Root src files */}
+                <FileExplorer.FileItem
+                  level={2}
+                  isActive={activeFile === 'app-tsx'}
+                  onClick={() => setActiveFile('app-tsx')}
+                  tooltip="Main application component"
+                >
+                  App.tsx
+                </FileExplorer.FileItem>
+                <FileExplorer.FileItem level={2} tooltip="Application entry point">main.tsx</FileExplorer.FileItem>
+                <FileExplorer.FileItem level={2} tooltip="Type definitions">types.ts</FileExplorer.FileItem>
+              </FileExplorer.Root>
+            }
+          >
+            src
+          </FileExplorer.FolderItem>
+
+          {/* Public Directory */}
+          <FileExplorer.FolderItem
+            value="public"
+            level={1}
+            content={
+              <FileExplorer.Root value={expanded} onValueChange={setExpanded}>
+                <FileExplorer.FileItem level={2} tooltip="App favicon">favicon.ico</FileExplorer.FileItem>
+                <FileExplorer.FileItem level={2} tooltip="Main HTML file">index.html</FileExplorer.FileItem>
+                <FileExplorer.FileItem level={2} tooltip="Web manifest">manifest.json</FileExplorer.FileItem>
+              </FileExplorer.Root>
+            }
+          >
+            public
+          </FileExplorer.FolderItem>
+
+          {/* Tests Directory */}
+          <FileExplorer.FolderItem
+            value="tests"
+            level={1}
+            content={
+              <FileExplorer.Root value={expanded} onValueChange={setExpanded}>
+                <FileExplorer.FileItem level={2}>Button.test.tsx</FileExplorer.FileItem>
+                <FileExplorer.FileItem level={2}>Input.test.tsx</FileExplorer.FileItem>
+                <FileExplorer.FileItem level={2}>setup.ts</FileExplorer.FileItem>
+              </FileExplorer.Root>
+            }
+          >
+            tests
+          </FileExplorer.FolderItem>
+
+          {/* Root config files */}
+          <FileExplorer.FileItem level={1} tooltip="Package dependencies">package.json</FileExplorer.FileItem>
+          <FileExplorer.FileItem level={1} tooltip="TypeScript config">tsconfig.json</FileExplorer.FileItem>
+          <FileExplorer.FileItem level={1} tooltip="Vite configuration">vite.config.ts</FileExplorer.FileItem>
+          <FileExplorer.FileItem level={1} tooltip="ESLint config">.eslintrc.json</FileExplorer.FileItem>
+          <FileExplorer.FileItem level={1} tooltip="Environment variables">.env</FileExplorer.FileItem>
+          <FileExplorer.FileItem level={1} tooltip="Project documentation">README.md</FileExplorer.FileItem>
+        </FileExplorer.Root>
+      }
+    >
+      my-project
+    </FileExplorer.FolderItem>
+
+  </FileExplorer.Root>
+}`}
+/>
+
+## API Reference
+
+### Root Component Props
+
+<DocsPage.PropsTable
+  props={[
+    {
+      name: "value",
+      description: "Array of folder IDs that are currently expanded.",
+      required: true,
+      value: "string[]",
+    },
+    {
+      name: "onValueChange",
+      description:
+        "Callback function when expanded folders change. Receives the new array of expanded folder IDs.",
+      required: true,
+      value: "(value: string | string[]) => void",
+    },
+    {
+      name: "children",
+      description: "Child FolderItem and FileItem components.",
+      required: true,
+      value: "React.ReactNode",
+    },
+  ]}
+/>
+
+### FolderItem Component Props
+
+<DocsPage.PropsTable
+  props={[
+    {
+      name: "children",
+      description: "Display name of the folder.",
+      required: true,
+      value: "React.ReactNode",
+    },
+    {
+      name: "level",
+      description:
+        "Nesting level of the folder (0 for root level, 1 for first nested level, etc.). Affects indentation.",
+      required: true,
+      value: "number",
+    },
+    {
+      name: "value",
+      description:
+        "Unique identifier for the folder (used for accordion expand/collapse state).",
+      required: false,
+      defaultValue: "''",
+      value: "string",
+    },
+    {
+      name: "isActive",
+      description:
+        "Whether the folder is currently active/selected. Shows a highlighted background.",
+      required: false,
+      value: "boolean",
+    },
+    {
+      name: "content",
+      description:
+        "Child elements (FileItem or FolderItem components) to display when the folder is expanded.",
+      required: false,
+      value: "React.ReactNode",
+    },
+    {
+      name: "link",
+      description:
+        "Navigation link for the folder. If provided, clicking the folder will navigate to this link.",
+      required: false,
+      value: "string",
+    },
+  ]}
+/>
+
+### FileItem Component Props
+
+<DocsPage.PropsTable
+  props={[
+    {
+      name: "children",
+      description: "Display name of the file.",
+      required: true,
+      value: "React.ReactNode",
+    },
+    {
+      name: "level",
+      description:
+        "Nesting level of the file (1 for root level files, 2 for first nested level, etc.). Affects indentation.",
+      required: true,
+      value: "number",
+    },
+    {
+      name: "isActive",
+      description:
+        "Whether the file is currently active/selected. Shows a highlighted background.",
+      required: false,
+      value: "boolean",
+    },
+    {
+      name: "link",
+      description:
+        "Navigation link for the file. If provided, clicking the file will navigate to this link.",
+      required: false,
+      value: "string",
+    },
+    {
+      name: "onClick",
+      description:
+        "Click handler for the file. Called when the file is clicked.",
+      required: false,
+      value: "() => void",
+    },
+    {
+      name: "tooltip",
+      description: "Tooltip content to display when hovering over the file.",
+      required: false,
+      value: "React.ReactNode",
+    },
+  ]}
+/>
+
+## Best Practices
+
+### Level Numbering
+
+- **Folders**: Start at `level={0}` for root folders, increment by 1 for each nesting level
+- **Files**: Start at `level={1}` for files directly under root folders, increment by 1 for each nesting level
+
+### State Management
+
+```typescript
+// Initialize with folders you want expanded by default
+const [expanded, setExpanded] = useState(['src', 'components']);
+
+// The Root component will handle the expand/collapse state
+<Root value={expanded} onValueChange={setExpanded}>
+  ...
+</Root>
+```
+
+### Performance Tips
+
+- Use `React.memo()` for FileItem components if you have a large file tree
+- Keep track of active file in state to avoid unnecessary re-renders
+- Use the `value` prop on FolderItem to uniquely identify folders for proper accordion behavior

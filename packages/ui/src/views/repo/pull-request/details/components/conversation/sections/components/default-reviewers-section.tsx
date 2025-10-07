@@ -10,7 +10,7 @@ import {
 } from '@/views'
 import { isEmpty } from 'lodash-es'
 
-import { AvatarItem } from './commons'
+import { ReviewersPanel } from './reviewers-panel'
 
 interface DefaultReviewersSectionProps {
   defaultReviewersData?: DefaultReviewersDataProps
@@ -119,12 +119,14 @@ export const DefaultReviewersSection: FC<DefaultReviewersSectionProps> = ({ defa
                 return (
                   <Table.Row key={index} className="cursor-pointer">
                     <Table.Cell>{getDefaultReviewersApprovalCount(data)}</Table.Cell>
-                    <Table.Cell>{data?.principals && <AvatarItem users={data.principals} />}</Table.Cell>
+                    <Table.Cell>{data?.principals && <ReviewersPanel principals={data.principals} />}</Table.Cell>
                     <Table.Cell>
-                      {defaultReviewersChangeRequested && <AvatarItem users={defaultReviewersChangeRequested} />}
+                      {defaultReviewersChangeRequested && (
+                        <ReviewersPanel principals={defaultReviewersChangeRequested} />
+                      )}
                     </Table.Cell>
                     <Table.Cell>
-                      {defaultReviewersApproved && <AvatarItem users={defaultReviewersApproved} />}
+                      {defaultReviewersApproved && <ReviewersPanel principals={defaultReviewersApproved} />}
                     </Table.Cell>
                   </Table.Row>
                 )

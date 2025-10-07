@@ -535,7 +535,7 @@ export interface TypesCodeOwnerEvaluation {
 }
 
 export interface TypesOwnerEvaluation {
-  owner?: Partial<PrincipalType>
+  owner?: TypesPrincipalInfo
   review_decision?: EnumPullReqReviewDecision
   review_sha?: string
 }

@@ -7,6 +7,7 @@ import { IProjectRulesStore, IRepoStore, repoBranchSettingsFormSchema } from '@/
 import { zodResolver } from '@hookform/resolvers/zod'
 import { cn } from '@utils/index'
 
+import { areRulesValid, combineAndNormalizePrincipalsAndGroups } from '../utils'
 import {
   BranchSettingsRuleBypassListField,
   BranchSettingsRuleDescriptionField,
@@ -15,8 +16,7 @@ import {
   BranchSettingsRuleTargetPatternsField,
   BranchSettingsRuleToggleField
 } from './components/repo-branch-rules-fields'
-import { IBranchRulesStore, PatternsButtonType, RepoBranchSettingsFormFields } from './types'
-import { combineAndNormalizePrincipalsAndGroups } from './utils'
+import { EnumBypassListType, IBranchRulesStore, PatternsButtonType, RepoBranchSettingsFormFields } from './types'
 
 type BranchSettingsErrors = {
   principals: string | null
@@ -93,6 +93,10 @@ export const RepoBranchSettingsRulesPage: FC<RepoBranchSettingsRulesPageProps> =
   const { rules } = useBranchRulesStore()
 
   const onSubmit: SubmitHandler<RepoBranchSettingsFormFields> = data => {
+    if (!areRulesValid(rules)) {
+      return
+    }
+
     const formData = { ...data, rules }
     handleRuleUpdate(formData)
   }
@@ -182,7 +186,10 @@ export const RepoBranchSettingsRulesPage: FC<RepoBranchSettingsRulesPageProps> =
 
           <BranchSettingsRuleListField
             rules={rules}
-            defaultReviewersOptions={principals?.filter(principal => principal.type === 'user')}
+            defaultReviewersOptions={combineAndNormalizePrincipalsAndGroups(
+              principals?.filter(principal => principal.type === EnumBypassListType.USER) || [],
+              userGroups
+            )}
             setPrincipalsSearchQuery={setPrincipalsSearchQuery}
             principalsSearchQuery={principalsSearchQuery}
             recentStatusChecks={recentStatusChecks}

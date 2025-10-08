@@ -15,7 +15,7 @@ import {
   PullRequestSideBarProps,
   SandboxLayout
 } from '@/views'
-import { combineAndNormalizePrincipalsAndGroups } from '@views/repo/repo-branch-rules/utils'
+import { combineAndNormalizePrincipalsAndGroups } from '@views/repo/utils'
 import { noop } from 'lodash-es'
 
 import { ExpandedCommentsContext, useExpandedCommentsContext } from './context/pull-request-comments-context'

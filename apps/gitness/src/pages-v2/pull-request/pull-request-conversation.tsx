@@ -66,7 +66,6 @@ import { usePrFilters } from './hooks/use-pr-filters'
 import { usePRCommonInteractions } from './hooks/usePRCommonInteractions'
 import {
   checkIfOutdatedSha,
-  defaultReviewerResponseWithDecision,
   extractInfoForPRPanelChanges,
   extractInfoFromRuleViolationArr,
   findChangeReqDecisions,
@@ -614,17 +613,13 @@ export default function PullRequestConversationPage() {
     }
   }, [commentId, isScrolledToComment, prPanelData.PRStateLoading, activityData])
 
-  const defaultReviewersData: DefaultReviewersDataProps = useMemo(() => {
-    const updatedDefaultApprovals = combinedReviewers
-      ? defaultReviewerResponseWithDecision(combinedReviewers?.reviewers || [], prPanelData?.defaultReviewersApprovals)
-      : prPanelData?.defaultReviewersApprovals
-
-    return {
-      ...getUnifiedDefaultReviewersState(updatedDefaultApprovals),
-      updatedDefaultApprovals,
+  const defaultReviewersData: DefaultReviewersDataProps = useMemo(
+    () => ({
+      ...getUnifiedDefaultReviewersState(prPanelData?.defaultReviewersApprovals),
       defaultReviewersApprovals: prPanelData?.defaultReviewersApprovals
-    }
-  }, [combinedReviewers, prPanelData?.defaultReviewersApprovals])
+    }),
+    [prPanelData?.defaultReviewersApprovals]
+  )
 
   const changesInfo = useMemo(() => {
     return extractInfoForPRPanelChanges({

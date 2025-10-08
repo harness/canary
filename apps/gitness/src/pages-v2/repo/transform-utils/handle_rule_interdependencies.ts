@@ -1,14 +1,17 @@
 import { MessageTheme } from '@harnessio/ui/components'
-import { BranchRuleId, Rule } from '@harnessio/ui/views'
+import { BranchRuleId, EnumBypassListType, Rule } from '@harnessio/ui/views'
 
 export const getDefaultReviewersValidationMessage = (
   minDefaultReviewerCount: number,
-  defaultReviewersCount: number
+  defaultReviewersCount: number,
+  defaultUGReviewersCount?: number
 ): { message: string; theme: MessageTheme } => {
   const validationMessage = {
     message: '',
     theme: MessageTheme.DEFAULT
   }
+
+  if (defaultUGReviewersCount && defaultUGReviewersCount > 0) return validationMessage
 
   if (minDefaultReviewerCount === defaultReviewersCount) {
     if (defaultReviewersCount === 1) {
@@ -43,14 +46,14 @@ export const handleRuleInterdependencies = (ruleId: string, rules: Rule[]): Rule
   const requirePRRule = ruleMap[BranchRuleId.REQUIRE_PULL_REQUEST]
   const blockForcePushRule = ruleMap[BranchRuleId.BLOCK_FORCE_PUSH]
   const enableDefaultReviewersRule = ruleMap[BranchRuleId.ENABLE_DEFAULT_REVIEWERS]
-  const reqiureMinDefaultReviewers = ruleMap[BranchRuleId.REQUIRE_MINIMUM_DEFAULT_REVIEWER_COUNT]
+  const requireMinDefaultReviewers = ruleMap[BranchRuleId.REQUIRE_MINIMUM_DEFAULT_REVIEWER_COUNT]
 
   if (
     !blockUpdateRule ||
     !requirePRRule ||
     !blockForcePushRule ||
     !enableDefaultReviewersRule ||
-    !reqiureMinDefaultReviewers
+    !requireMinDefaultReviewers
   ) {
     return rules
   }
@@ -62,14 +65,19 @@ export const handleRuleInterdependencies = (ruleId: string, rules: Rule[]): Rule
     (ruleId === BranchRuleId.REQUIRE_MINIMUM_DEFAULT_REVIEWER_COUNT ||
       ruleId === BranchRuleId.ENABLE_DEFAULT_REVIEWERS) &&
     enableDefaultReviewersRule.checked &&
-    reqiureMinDefaultReviewers.checked
+    requireMinDefaultReviewers.checked
   ) {
-    const minDefaultReviewerCount = Number(reqiureMinDefaultReviewers.input)
-    const defaultReviewersCount = enableDefaultReviewersRule.selectOptions?.length || 0
+    const minDefaultReviewerCount = Number(requireMinDefaultReviewers.input)
+    const defaultReviewersCount =
+      enableDefaultReviewersRule.selectOptions?.filter(it => it.icon === EnumBypassListType.USER)?.length || 0
 
     newRules[getIndex(BranchRuleId.ENABLE_DEFAULT_REVIEWERS)] = {
       ...enableDefaultReviewersRule,
-      validationMessage: getDefaultReviewersValidationMessage(minDefaultReviewerCount, defaultReviewersCount)
+      validationMessage: getDefaultReviewersValidationMessage(
+        minDefaultReviewerCount,
+        defaultReviewersCount,
+        enableDefaultReviewersRule.selectOptions?.length - defaultReviewersCount
+      )
     }
   }
 
@@ -79,7 +87,7 @@ export const handleRuleInterdependencies = (ruleId: string, rules: Rule[]): Rule
       const isHidden = !enableDefaultReviewersRule.checked
 
       newRules[getIndex(BranchRuleId.REQUIRE_MINIMUM_DEFAULT_REVIEWER_COUNT)] = {
-        ...reqiureMinDefaultReviewers,
+        ...requireMinDefaultReviewers,
         hidden: isHidden
       }
       break

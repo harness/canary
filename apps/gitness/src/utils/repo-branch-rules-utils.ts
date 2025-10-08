@@ -4,7 +4,8 @@ import {
   OpenapiRuleDefinition,
   RepoRuleAddRequestBody,
   RepoRuleGetOkResponse,
-  TypesPrincipalInfo
+  TypesPrincipalInfo,
+  TypesUserGroupInfo
 } from '@harnessio/code-service-client'
 import { MessageTheme, MultiSelectOption } from '@harnessio/ui/components'
 import {
@@ -44,15 +45,28 @@ const getDetailsByIds = (ids: number[], objMap: { [key: string]: TypesPrincipalI
     .map(user => ({
       id: String(user.id),
       key: user.display_name || '',
-      value: user.email || ''
+      value: user.email || '',
+      icon: 'user'
+    }))
+}
+
+const getUGDetailsByIds = (ids: number[], objMap: { [key: string]: TypesUserGroupInfo }): MultiSelectOption[] => {
+  return ids
+    .map(id => objMap[id])
+    .filter(Boolean)
+    .map(ug => ({
+      id: String(ug.id),
+      key: ug.name || '',
+      value: ug.identifier || '',
+      icon: 'group-1'
     }))
 }
 
 // Util to transform API response into expected-form format for branch-rules-edit
-
 const extractBranchRules = (data: RepoRuleGetOkResponse): Rule[] => {
   const rules = []
   const users = data?.users || {}
+  const useGroups = data?.user_groups || {}
 
   for (const rule of ruleIds) {
     let checked = false
@@ -65,71 +79,80 @@ const extractBranchRules = (data: RepoRuleGetOkResponse): Rule[] => {
     let submenu: MergeStrategy[] = []
     let selectOptions: MultiSelectOption[] = []
     let input: string = ''
-    const definition = data?.definition as OpenapiRuleDefinition
+    const { lifecycle, pullreq } = (data?.definition || {}) as OpenapiRuleDefinition
 
     switch (rule) {
       case BranchRuleId.BLOCK_BRANCH_CREATION:
-        checked = definition?.lifecycle?.create_forbidden || false
+        checked = lifecycle?.create_forbidden || false
         break
       case BranchRuleId.BLOCK_BRANCH_DELETION:
-        checked = definition?.lifecycle?.delete_forbidden || false
+        checked = lifecycle?.delete_forbidden || false
         break
       case BranchRuleId.BLOCK_BRANCH_UPDATE:
-        checked = (definition?.lifecycle?.update_forbidden && definition?.pullreq?.merge?.block) || false
+        checked = (lifecycle?.update_forbidden && pullreq?.merge?.block) || false
         break
       case BranchRuleId.BLOCK_FORCE_PUSH:
-        checked = definition?.lifecycle?.update_force_forbidden || definition?.lifecycle?.update_forbidden || false
-        disabled = definition?.lifecycle?.update_forbidden || false
+        checked = lifecycle?.update_force_forbidden || lifecycle?.update_forbidden || false
+        disabled = lifecycle?.update_forbidden || false
         break
       case BranchRuleId.REQUIRE_PULL_REQUEST:
-        checked = (definition?.lifecycle?.update_forbidden && !definition?.pullreq?.merge?.block) || false
-        disabled = (definition?.lifecycle?.update_forbidden && definition?.pullreq?.merge?.block) || false
+        checked = (lifecycle?.update_forbidden && !pullreq?.merge?.block) || false
+        disabled = (lifecycle?.update_forbidden && pullreq?.merge?.block) || false
         break
       case BranchRuleId.ENABLE_DEFAULT_REVIEWERS:
-        checked = (definition?.pullreq?.reviewers?.default_reviewer_ids?.length ?? 0) > 0
-        selectOptions = getDetailsByIds(definition?.pullreq?.reviewers?.default_reviewer_ids || [], users)
+        checked =
+          (pullreq?.reviewers?.default_reviewer_ids?.length ?? 0) +
+            (pullreq?.reviewers?.default_user_group_reviewer_ids?.length ?? 0) >
+          0
+        selectOptions = [
+          ...getDetailsByIds(pullreq?.reviewers?.default_reviewer_ids || [], users),
+          ...getUGDetailsByIds(pullreq?.reviewers?.default_user_group_reviewer_ids || [], useGroups)
+        ]
         validationMessage = getDefaultReviewersValidationMessage(
-          definition?.pullreq?.approvals?.require_minimum_default_reviewer_count ?? 0,
-          definition?.pullreq?.reviewers?.default_reviewer_ids?.length ?? 0
+          pullreq?.approvals?.require_minimum_default_reviewer_count ?? 0,
+          pullreq?.reviewers?.default_reviewer_ids?.length ?? 0,
+          pullreq?.reviewers?.default_user_group_reviewer_ids?.length
         )
         break
       case BranchRuleId.REQUIRE_MINIMUM_DEFAULT_REVIEWER_COUNT:
-        checked = (definition?.pullreq?.approvals?.require_minimum_default_reviewer_count ?? 0) > 0
-        input = definition?.pullreq?.approvals?.require_minimum_default_reviewer_count?.toString() || ''
-        hidden = !definition?.pullreq?.reviewers?.default_reviewer_ids?.length
+        checked = (pullreq?.approvals?.require_minimum_default_reviewer_count ?? 0) > 0
+        input = pullreq?.approvals?.require_minimum_default_reviewer_count?.toString() || ''
+        hidden =
+          !pullreq?.reviewers?.default_reviewer_ids?.length &&
+          !pullreq?.reviewers?.default_user_group_reviewer_ids?.length
         break
       case BranchRuleId.REQUIRE_CODE_REVIEW:
-        checked = (definition?.pullreq?.approvals?.require_minimum_count ?? 0) > 0
-        input = definition?.pullreq?.approvals?.require_minimum_count?.toString() || ''
+        checked = (pullreq?.approvals?.require_minimum_count ?? 0) > 0
+        input = pullreq?.approvals?.require_minimum_count?.toString() || ''
         break
       case BranchRuleId.AUTO_ADD_CODE_OWNERS:
-        checked = definition?.pullreq?.reviewers?.request_code_owners || false
+        checked = pullreq?.reviewers?.request_code_owners || false
         break
       case BranchRuleId.REQUIRE_CODE_OWNERS:
-        checked = definition?.pullreq?.approvals?.require_code_owners || false
+        checked = pullreq?.approvals?.require_code_owners || false
         break
       case BranchRuleId.REQUIRE_LATEST_COMMIT:
-        checked = definition?.pullreq?.approvals?.require_latest_commit || false
+        checked = pullreq?.approvals?.require_latest_commit || false
         break
       case BranchRuleId.REQUIRE_NO_CHANGE_REQUEST:
-        checked = definition?.pullreq?.approvals?.require_no_change_request || false
+        checked = pullreq?.approvals?.require_no_change_request || false
         break
       case BranchRuleId.COMMENTS:
-        checked = definition?.pullreq?.comments?.require_resolve_all || false
+        checked = pullreq?.comments?.require_resolve_all || false
         break
       case BranchRuleId.STATUS_CHECKS:
-        checked = (definition?.pullreq?.status_checks?.require_identifiers?.length ?? 0) > 0
-        selectOptions = (definition?.pullreq?.status_checks?.require_identifiers || []).map(check => ({
+        checked = (pullreq?.status_checks?.require_identifiers?.length ?? 0) > 0
+        selectOptions = (pullreq?.status_checks?.require_identifiers || []).map(check => ({
           id: check,
           key: check
         }))
         break
       case BranchRuleId.MERGE:
-        checked = (definition?.pullreq?.merge?.strategies_allowed?.length ?? 0) > 0
-        submenu = (definition?.pullreq?.merge?.strategies_allowed as MergeStrategy[]) || []
+        checked = (pullreq?.merge?.strategies_allowed?.length ?? 0) > 0
+        submenu = (pullreq?.merge?.strategies_allowed as MergeStrategy[]) || []
         break
       case BranchRuleId.DELETE_BRANCH:
-        checked = definition?.pullreq?.merge?.delete_branch || false
+        checked = pullreq?.merge?.delete_branch || false
         break
 
       default:
@@ -161,56 +184,54 @@ export const transformDataFromApi = (data: RepoRuleGetOkResponse): RepoBranchSet
 
   const rules = extractBranchRules(data)
 
-  const bypass = data?.definition?.bypass?.user_ids
-    ? data?.definition?.bypass?.user_ids.reduce<RepoBranchSettingsFormFields['bypass']>((acc, userId) => {
-        const user = data?.users?.[userId]
+  const { definition, description, identifier, state, pattern, users, user_groups } = data || {}
 
+  const bypass = definition?.bypass?.user_ids
+    ? definition?.bypass?.user_ids.reduce<RepoBranchSettingsFormFields['bypass']>((acc, userId) => {
+        const user = users?.[userId]
         if (user) {
           acc.push({
             id: userId,
             key: user?.display_name || '',
-            type: (user.type || 'user') as EnumBypassListType,
+            type: (user.type as EnumBypassListType) || EnumBypassListType.USER,
             title: user?.email || '',
-            icon: user?.type === 'user' ? 'user' : 'service-accounts'
+            icon: user?.type === EnumBypassListType.USER ? 'user' : 'service-accounts'
           })
         }
-
         return acc
       }, [])
     : []
 
-  const bypassUserGroups = data?.definition?.bypass?.user_group_ids
-    ? data?.definition?.bypass?.user_group_ids.reduce<RepoBranchSettingsFormFields['bypass']>((acc, userGroupId) => {
-        const userGroup = data?.user_groups?.[userGroupId]
-
+  const bypassUserGroups = definition?.bypass?.user_group_ids
+    ? definition?.bypass?.user_group_ids.reduce<RepoBranchSettingsFormFields['bypass']>((acc, userGroupId) => {
+        const userGroup = user_groups?.[userGroupId]
         if (userGroup) {
           acc.push({
             id: userGroupId,
             key: userGroup?.name || '',
-            type: 'user_group' as EnumBypassListType,
+            type: EnumBypassListType.USER_GROUP,
             title: userGroup?.identifier || '',
             icon: 'group-1'
           })
         }
-
         return acc
       }, [])
     : []
+
   return {
-    identifier: data.identifier || '',
-    description: data.description || '',
+    identifier: identifier || '',
+    description: description || '',
     pattern: '',
     patterns: formatPatterns,
     rules: rules,
-    state: data.state === 'active',
+    state: state === 'active',
     bypass: [...bypass, ...bypassUserGroups],
-    default: data?.pattern?.default,
-    repo_owners: data?.definition?.bypass?.repo_owners
+    default: pattern?.default,
+    repo_owners: definition?.bypass?.repo_owners
   }
 }
 
 // Util to transform form format to expected-API format for branch-rules-edit
-
 export const transformFormOutput = (formOutput: RepoBranchSettingsFormFields): RepoRuleAddRequestBody => {
   const rulesMap = formOutput.rules.reduce<Record<string, Rule>>((acc, rule) => {
     acc[rule.id] = rule
@@ -284,7 +305,14 @@ export const transformFormOutput = (formOutput: RepoBranchSettingsFormFields): R
         reviewers: {
           request_code_owners: rulesMap[BranchRuleId.AUTO_ADD_CODE_OWNERS]?.checked || false,
           default_reviewer_ids: rulesMap[BranchRuleId.ENABLE_DEFAULT_REVIEWERS]?.checked
-            ? rulesMap[BranchRuleId.ENABLE_DEFAULT_REVIEWERS].selectOptions.map(option => parseInt(String(option.id)))
+            ? rulesMap[BranchRuleId.ENABLE_DEFAULT_REVIEWERS].selectOptions
+                .filter(it => it.icon === EnumBypassListType.USER)
+                .map(option => parseInt(String(option.id)))
+            : [],
+          default_user_group_reviewer_ids: rulesMap[BranchRuleId.ENABLE_DEFAULT_REVIEWERS]?.checked
+            ? rulesMap[BranchRuleId.ENABLE_DEFAULT_REVIEWERS].selectOptions
+                .filter(it => it.icon !== EnumBypassListType.USER)
+                .map(option => parseInt(String(option.id)))
             : []
         }
       }

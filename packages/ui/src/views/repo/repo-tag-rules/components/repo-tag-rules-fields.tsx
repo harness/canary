@@ -16,7 +16,7 @@ import { Separator } from '@/components/separator'
 import { useTranslation } from '@/context'
 import { useDebounceSearch } from '@hooks/use-debounce-search'
 import { EnumBypassListType, NormalizedPrincipal, PatternsButtonType } from '@views/repo/repo-branch-rules/types'
-import { getIcon } from '@views/repo/repo-branch-rules/utils'
+import { getIcon } from '@views/repo/utils'
 
 import { TagFieldProps, TagRule } from '../types'
 import { getTagRules } from './repo-tag-rules-data'

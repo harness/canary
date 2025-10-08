@@ -11,7 +11,7 @@ import {
 } from '@/components'
 import { useTranslation } from '@/context'
 import { EnumBypassListType, NormalizedPrincipal, PRReviewer } from '@/views'
-import { getIcon } from '@views/repo/repo-branch-rules/utils'
+import { getIcon } from '@views/repo/utils'
 import { debounce } from 'lodash-es'
 
 import { ReviewerInfo } from './reviewer-info'

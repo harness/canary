@@ -1,5 +1,7 @@
-import { TypesPrincipalInfo, TypesUserGroupInfo } from '../pull-request'
-import { EnumBypassListType, NormalizedPrincipal } from './types'
+import { MessageTheme } from '@components/form-primitives'
+
+import { TypesPrincipalInfo, TypesUserGroupInfo } from './pull-request'
+import { EnumBypassListType, NormalizedPrincipal, Rule } from './repo-branch-rules/types'
 
 export function combineAndNormalizePrincipalsAndGroups(
   principals: TypesPrincipalInfo[] | null,
@@ -35,6 +37,10 @@ export function combineAndNormalizePrincipalsAndGroups(
   if (notSorted) return normalizedData
 
   return normalizedData.sort((a, b) => a.display_name.localeCompare(b.display_name))
+}
+
+export const areRulesValid = (rules: Rule[]) => {
+  return !rules.some(rule => rule.validationMessage.theme === MessageTheme.ERROR)
 }
 
 export const getIcon = (type: EnumBypassListType) => {

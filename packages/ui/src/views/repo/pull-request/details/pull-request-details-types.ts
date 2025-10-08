@@ -74,17 +74,11 @@ export interface PullReqChecksDecisionData {
 
 export interface DefaultReviewersApprovalsData {
   current_count?: number
+  evaluations?: TypesReviewerEvaluation[] | null
   minimum_required_count?: number
   minimum_required_count_latest?: number
-  principals?: TypesPrincipalInfo[] | PrincipalInfoWithReviewDecision[] | null
-}
-
-/**
- * Interface for the principal info with review decision
- */
-export interface PrincipalInfoWithReviewDecision extends TypesPrincipalInfo {
-  review_decision?: string
-  review_sha?: string
+  principals?: TypesPrincipalInfo[] | null
+  user_groups?: TypesUserGroupInfo[] | null
 }
 
 /**
@@ -95,8 +89,6 @@ export interface DefaultReviewersDataProps {
   defReviewerApprovalRequiredByRule: boolean
   defReviewerApprovedChanges: boolean
   defReviewerApprovedLatestChanges: boolean
-  changesRequestedByDefaultReviewers?: PrincipalInfoWithReviewDecision[]
-  updatedDefaultApprovals?: DefaultReviewersApprovalsData[]
   defaultReviewersApprovals?: DefaultReviewersApprovalsData[]
 }
 
@@ -222,6 +214,12 @@ export interface TypesPullReqReviewer {
   sha?: string
   type?: EnumPullReqReviewerType
   updated?: number
+}
+
+export interface TypesReviewerEvaluation {
+  decision?: EnumPullReqReviewDecision
+  reviewer?: TypesPrincipalInfo
+  sha?: string
 }
 
 export interface TypesCodeCommentFields {

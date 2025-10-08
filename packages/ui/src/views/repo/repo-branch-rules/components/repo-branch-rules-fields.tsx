@@ -19,7 +19,6 @@ import {
 } from '@/components'
 import { Separator } from '@/components/separator'
 import { useTranslation } from '@/context'
-import { PrincipalType } from '@/types'
 import {
   BranchRuleId,
   EnumBypassListType,
@@ -34,7 +33,7 @@ import { useDebounceSearch } from '@hooks/use-debounce-search'
 import { cn } from '@utils/cn'
 import { isEmpty } from 'lodash-es'
 
-import { getIcon } from '../utils'
+import { getIcon } from '../../utils'
 
 export const BranchSettingsRuleToggleField: FC<FieldProps> = ({ register, watch, setValue }) => {
   const { t } = useTranslation()
@@ -210,7 +209,7 @@ export const BranchSettingsRuleDefaultReviewersField: FC<
   FieldProps & {
     className?: string
     rule?: Rule
-    defaultReviewersOptions?: PrincipalType[] | null
+    defaultReviewersOptions?: NormalizedPrincipal[] | null
     principalsSearchQuery?: string
     setPrincipalsSearchQuery?: (val: string) => void
     handleSelectChangeForRule: (ruleId: string, options: MultiSelectOption[]) => void
@@ -233,9 +232,11 @@ export const BranchSettingsRuleDefaultReviewersField: FC<
   const multiSelectOptions: MultiSelectOption[] = useMemo(() => {
     return (
       defaultReviewersOptions?.map(option => ({
-        id: option.id?.toString() || '',
+        id: option.id!,
+
         key: option.display_name || '',
-        title: option.email
+        icon: getIcon(option.type),
+        title: option.email_or_identifier
       })) || []
     )
   }, [defaultReviewersOptions])
@@ -245,6 +246,7 @@ export const BranchSettingsRuleDefaultReviewersField: FC<
       <MultiSelect
         value={selectOptions?.map(option => ({
           id: option.id?.toString() || '',
+          icon: option.icon,
           key: option.key
         }))}
         placeholder={t('views:repos.selectDefaultReviewers', 'Select default reviewers')}
@@ -270,7 +272,7 @@ export const BranchSettingsRuleDefaultReviewersField: FC<
 export const BranchSettingsRuleListField: FC<{
   rules: Rule[]
   recentStatusChecks?: string[] | null
-  defaultReviewersOptions?: PrincipalType[] | null
+  defaultReviewersOptions?: NormalizedPrincipal[] | null
   handleCheckboxChange: (ruleId: string, checked: boolean) => void
   handleSubmenuChange: (ruleId: string, subOptionId: string, checked: boolean) => void
   handleSelectChangeForRule: (ruleId: string, checks: MultiSelectOption[]) => void

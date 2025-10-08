@@ -20,7 +20,7 @@ import { zodResolver } from '@hookform/resolvers/zod'
 import { ICommitSelectorStore } from '@views/repo/components/commit-selector/types'
 import PullRequestCompareButton from '@views/repo/pull-request/compare/components/pull-request-compare-button'
 import PullRequestCompareForm from '@views/repo/pull-request/compare/components/pull-request-compare-form'
-import { combineAndNormalizePrincipalsAndGroups } from '@views/repo/repo-branch-rules/utils'
+import { combineAndNormalizePrincipalsAndGroups } from '@views/repo/utils'
 import { noop } from 'lodash-es'
 import { z } from 'zod'
 

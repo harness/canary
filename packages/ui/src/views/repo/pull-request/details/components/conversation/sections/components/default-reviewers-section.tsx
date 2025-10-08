@@ -5,7 +5,6 @@ import {
   DefaultReviewersApprovalsData,
   DefaultReviewersDataProps,
   getDefaultReviewersApprovalCount,
-  PrincipalInfoWithReviewDecision,
   PullReqReviewDecision
 } from '@/views'
 import { isEmpty } from 'lodash-es'
@@ -22,8 +21,7 @@ export const DefaultReviewersSection: FC<DefaultReviewersSectionProps> = ({ defa
     defReviewerApprovalRequiredByRule = false,
     defReviewerApprovedChanges = false,
     defReviewerApprovedLatestChanges = false,
-    defaultReviewersApprovals = [],
-    updatedDefaultApprovals = []
+    defaultReviewersApprovals = []
   } = defaultReviewersData || {}
 
   const defaultReviewerStatus = useMemo(() => {
@@ -100,33 +98,34 @@ export const DefaultReviewersSection: FC<DefaultReviewersSectionProps> = ({ defa
             </Table.Row>
           </Table.Header>
           <Table.Body>
-            {updatedDefaultApprovals
+            {defaultReviewersApprovals
               ?.filter(
                 (data: DefaultReviewersApprovalsData) =>
                   data.minimum_required_count || data.minimum_required_count_latest
               ) // only consider response with min default reviewers required (>0)
               .map((data: DefaultReviewersApprovalsData, index: number) => {
                 // changes requested by default reviewers
-                const defaultReviewersChangeRequested = (data?.principals as PrincipalInfoWithReviewDecision[])?.filter(
-                  principal => principal?.review_decision === PullReqReviewDecision.changeReq
-                )
-
+                const defaultReviewersChangeRequested = data?.evaluations
+                  ?.filter(ev => ev?.decision === PullReqReviewDecision.changeReq)
+                  .map(ev => ev?.reviewer || {})
                 // approved by default reviewers
-                const defaultReviewersApproved = (data?.principals as PrincipalInfoWithReviewDecision[])?.filter(
-                  principal => principal?.review_decision === PullReqReviewDecision.approved
-                )
+                const defaultReviewersApproved = data?.evaluations
+                  ?.filter(ev => ev?.decision === PullReqReviewDecision.approved)
+                  .map(ev => ev?.reviewer || {})
 
                 return (
                   <Table.Row key={index} className="cursor-pointer">
                     <Table.Cell>{getDefaultReviewersApprovalCount(data)}</Table.Cell>
-                    <Table.Cell>{data?.principals && <ReviewersPanel principals={data.principals} />}</Table.Cell>
+                    <Table.Cell>
+                      <ReviewersPanel principals={data.principals || []} userGroups={data.user_groups || []} />
+                    </Table.Cell>
                     <Table.Cell>
                       {defaultReviewersChangeRequested && (
-                        <ReviewersPanel principals={defaultReviewersChangeRequested} />
+                        <ReviewersPanel principals={defaultReviewersChangeRequested || []} />
                       )}
                     </Table.Cell>
                     <Table.Cell>
-                      {defaultReviewersApproved && <ReviewersPanel principals={defaultReviewersApproved} />}
+                      {defaultReviewersApproved && <ReviewersPanel principals={defaultReviewersApproved || []} />}
                     </Table.Cell>
                   </Table.Row>
                 )

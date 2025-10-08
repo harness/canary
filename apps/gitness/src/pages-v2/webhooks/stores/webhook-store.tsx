@@ -15,6 +15,7 @@ export const useWebhookStore = create<WebhookStore>(set => ({
   page: 1,
   webhookExecutionPage: 1,
   setPage: page => set({ page }),
+  setPageSize: (pageSize: number) => set({ pageSize, page: 1 }),
   webhookLoading: false,
   executions: null,
   executionId: null,

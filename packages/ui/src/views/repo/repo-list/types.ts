@@ -13,6 +13,7 @@ export interface RepoStore {
 
   setImportToastId: (id: string | number | null) => void
   setPage: (page: number) => void
+  setPageSize: (pageSize: number) => void
   setRepositories: (data: RepositoryType[], totalItems: number, pageSize: number) => void
   updateRepository: (repo: RepositoryType) => void
   setImportRepoIdentifier: (identifier: string | null) => void

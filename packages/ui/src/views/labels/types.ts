@@ -152,6 +152,7 @@ export interface ILabelsStore {
   addLabel: (label: ILabelType) => void
   deleteLabel: (key: string) => void
   setPage: (page: number) => void
+  setPageSize: (pageSize: number) => void
 
   setValues: (values: LabelValuesType) => void
   setRepoSpaceRef: (values: SetRepoSpaceRefProps) => void

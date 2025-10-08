@@ -80,7 +80,8 @@ const PullRequestListPage: FC<PullRequestPageProps> = ({
     closedPullReqs,
     setLabelsQuery,
     setPrState,
-    prState
+    prState,
+    setPageSize
   } = usePullRequestListStore()
 
   const { t } = useTranslation()
@@ -542,7 +543,13 @@ const PullRequestListPage: FC<PullRequestPageProps> = ({
             />
           )
         ) : (
-          <Pagination totalItems={totalItems} pageSize={pageSize} currentPage={page} goToPage={setPage} />
+          <Pagination
+            totalItems={totalItems}
+            pageSize={pageSize}
+            onPageSizeChange={setPageSize}
+            currentPage={page}
+            goToPage={setPage}
+          />
         )}
       </SandboxLayout.Content>
     </SandboxLayout.Main>

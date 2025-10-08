@@ -1,6 +1,6 @@
 import { Dispatch, FC, MouseEvent, SetStateAction, useMemo, useState } from 'react'
 
-import { Accordion, Button, Card, CopyButton, CopyTag, IconV2, Layout, Link, StackedList, Text } from '@/components'
+import { Accordion, BranchTag, Button, IconV2, Layout, Link, MarkdownViewer, Separator, Text } from '@/components'
 import { cn } from '@utils/cn'
 import { PanelAccordionShowButton } from '@views/repo/pull-request/details/components/conversation/sections/panel-accordion-show-button'
 import { isEmpty } from 'lodash-es'
@@ -15,33 +15,21 @@ interface StepInfoProps {
 }
 
 const StepInfo: FC<StepInfoProps> = item => {
+  const code = `
+\`\`\`
+${item.code}
+\`\`\`
+    `
   return (
-    <li>
-      <Layout.Horizontal gap="2xs">
-        <Text as="h3" variant="body-strong" className="flex-none">
+    <Layout.Vertical gap="xs" as="li">
+      <Text color="foreground-1">
+        <Text variant="body-strong" color="inherit">
           {item.step}
-        </Text>
-        <Layout.Vertical className="w-[90%] max-w-full" gap="xs">
-          <Text variant="body-normal">{item.description}</Text>
-          {item.code ? (
-            <Layout.Horizontal
-              align="center"
-              justify="between"
-              className="border border-cn-2 rounded-md px-1.5 py-1.5 mt-1 mb-3"
-            >
-              <Text variant="body-normal" className="font-body-code">
-                {item.code}
-              </Text>
-              <CopyButton name={item.code} size="xs" />
-            </Layout.Horizontal>
-          ) : item.comment ? (
-            <Text variant="body-normal" className="my-1">
-              {item.comment}
-            </Text>
-          ) : null}
-        </Layout.Vertical>
-      </Layout.Horizontal>
-    </li>
+        </Text>{' '}
+        {item.description}
+      </Text>
+      {item.code ? <MarkdownViewer source={code} /> : item.comment ? <Text>{item.comment}</Text> : null}
+    </Layout.Vertical>
   )
 }
 
@@ -67,6 +55,8 @@ interface PullRequestMergeSectionProps {
   handleRebaseBranch?: () => void
   isRebasing?: boolean
   selectedMergeMethod?: string
+  repoId?: string
+  spaceId?: string
 }
 const PullRequestMergeSection = ({
   unchecked,
@@ -77,7 +67,9 @@ const PullRequestMergeSection = ({
   setAccordionValues,
   handleRebaseBranch,
   isRebasing,
-  selectedMergeMethod
+  selectedMergeMethod,
+  repoId,
+  spaceId
 }: PullRequestMergeSectionProps) => {
   const [showCommandLineInfo, setShowCommandLineInfo] = useState(false)
 
@@ -134,144 +126,134 @@ const PullRequestMergeSection = ({
   ]
 
   const handleCommandLineClick = (e?: MouseEvent<HTMLButtonElement>) => {
+    e?.preventDefault()
     e?.stopPropagation()
 
     setAccordionValues(prevState => [...prevState, ACCORDION_VALUE])
     setShowCommandLineInfo(prevState => !prevState)
   }
 
-  // Helper function to render branch tags
-  const renderBranchTags = () => (
-    <span className="inline-flex items-center gap-1">
-      <span>Merge the latest changes from</span>
-      <CopyTag variant="secondary" theme="gray" icon="git-branch" value={pullReqMetadata?.target_branch || ''} />
-      <span>into</span>
-      <CopyTag variant="secondary" theme="gray" icon="git-branch" value={pullReqMetadata?.source_branch || ''} />
-    </span>
-  )
-
   return (
     <>
       <Accordion.Item value={ACCORDION_VALUE} className="border-0">
         <Accordion.Trigger
-          className={cn('py-3', { '[&>.cn-accordion-trigger-indicator]:hidden': mergeable || unchecked })}
-        >
-          <Layout.Flex>
-            <StackedList.Field
-              title={
-                <LineTitle
-                  textClassName={isConflicted ? 'text-cn-danger' : ''}
-                  text={
-                    unchecked
-                      ? 'Merge check in progress...'
-                      : !mergeable
-                        ? 'Conflicts found in this branch'
-                        : `This branch has no conflicts with ${pullReqMetadata?.target_branch} branch`
-                  }
-                  icon={
-                    unchecked ? (
-                      <IconV2 size="lg" name="clock-solid" color="warning" />
-                    ) : (
-                      <IconV2
-                        size="lg"
-                        color={mergeable ? 'success' : 'danger'}
-                        name={mergeable ? 'check-circle-solid' : 'warning-triangle-solid'}
-                      />
-                    )
-                  }
-                />
-              }
-              description={
-                <>
-                  {unchecked && <LineDescription text={'Checking for ability to merge automatically...'} />}
-                  {isConflicted && (
-                    <LineDescription
-                      text={
-                        <>
-                          Use the&nbsp;
-                          <Button variant="link" onClick={handleCommandLineClick} asChild className="h-4">
-                            <span
-                              role="button"
-                              tabIndex={0}
-                              aria-label="Open command line"
-                              onKeyDown={e => {
-                                if (e.key === 'Enter' || e.key === ' ') {
-                                  e.stopPropagation()
-                                  handleCommandLineClick()
-                                }
-                              }}
-                            >
-                              command line
-                            </span>
-                          </Button>
-                          &nbsp;to resolve conflicts
-                        </>
-                      }
-                    />
-                  )}
-                </>
-              }
-            />
+          className="py-cn-sm"
+          indicatorProps={{ className: cn('self-center mt-0', { hidden: mergeable || unchecked }) }}
+          suffix={
             <PanelAccordionShowButton
               isShowButton={isConflicted}
               value={ACCORDION_VALUE}
               accordionValues={accordionValues}
             />
-          </Layout.Flex>
+          }
+        >
+          <Layout.Grid gapY="4xs">
+            <LineTitle
+              textClassName={isConflicted ? 'text-cn-danger' : ''}
+              text={
+                unchecked
+                  ? 'Merge check in progress...'
+                  : !mergeable
+                    ? 'Conflicts found in this branch'
+                    : `This branch has no conflicts with ${pullReqMetadata?.target_branch} branch`
+              }
+              icon={
+                unchecked ? (
+                  <IconV2 size="lg" name="clock-solid" color="warning" />
+                ) : (
+                  <IconV2
+                    size="lg"
+                    color={mergeable ? 'success' : 'danger'}
+                    name={mergeable ? 'check-circle-solid' : 'warning-triangle-solid'}
+                  />
+                )
+              }
+            />
+            {unchecked && <LineDescription text={'Checking for ability to merge automatically...'} />}
+            {isConflicted && (
+              <LineDescription
+                text={
+                  <>
+                    Use the&nbsp;
+                    <Button
+                      variant="link"
+                      onClick={handleCommandLineClick}
+                      className="relative z-10 h-auto"
+                      aria-label="Open command line"
+                    >
+                      command line
+                    </Button>
+                    &nbsp;to resolve conflicts
+                  </>
+                }
+              />
+            )}
+          </Layout.Grid>
         </Accordion.Trigger>
         {isConflicted && (
-          <Accordion.Content className="ml-7">
-            <>
+          <Accordion.Content className="pt-cn-3xs ml-7">
+            <Layout.Vertical gapY="md">
               {showCommandLineInfo && (
-                <Card.Root className="mb-3.5 bg-transparent border-cn-3" size="sm">
-                  <Card.Content className="px-4 py-2">
-                    <Layout.Vertical gap="sm">
-                      <Text variant="heading-small">Resolve conflicts via command line</Text>
-                      <ol className="flex flex-col gap-y-0.5">
-                        {stepMap.map(item => (
-                          <StepInfo key={item.step} {...item} />
-                        ))}
-                      </ol>
-                    </Layout.Vertical>
-                  </Card.Content>
-                </Card.Root>
+                <Layout.Vertical gap="sm">
+                  <Text variant="heading-small">Resolve conflicts via command line</Text>
+                  <Layout.Vertical gapY="md" as="ol">
+                    {stepMap.map(item => (
+                      <StepInfo key={item.step} {...item} />
+                    ))}
+                  </Layout.Vertical>
+                </Layout.Vertical>
               )}
-              <Text variant="body-normal">Conflicting files {conflictingFiles?.length || 0}</Text>
-
               {!isEmpty(conflictingFiles) && (
-                <Layout.Vertical gap="xs" className="mt-1">
+                <Layout.Vertical gapY="sm">
+                  <Text variant="body-single-line-normal">{`Conflicting files (${conflictingFiles?.length || 0})`}</Text>
+
                   {conflictingFiles?.map(file => (
-                    <Layout.Horizontal key={file} align="center" gap="xs" className="py-1.5">
-                      <IconV2 size="lg" className="text-cn-3" name="empty-page" />
-                      <Text variant="body-normal">{file}</Text>
-                    </Layout.Horizontal>
+                    <Text
+                      key={file}
+                      variant="body-single-line-normal"
+                      color="foreground-1"
+                      className="gap-cn-2xs flex items-center"
+                    >
+                      <IconV2 size="md" className="text-cn-2" name="empty-page" />
+                      {file}
+                    </Text>
                   ))}
                 </Layout.Vertical>
               )}
-            </>
+            </Layout.Vertical>
           </Accordion.Content>
         )}
       </Accordion.Item>
 
-      {/* Fast-Forward merge error section - Using proper StackedList.Item */}
       {fastForwardState.isFastForwardNotPossible && (
-        <StackedList.Item className="!border-t" paddingX="0" paddingY="sm" disableHover>
-          <StackedList.Field
-            title={
+        <>
+          <Separator />
+          <Layout.Horizontal align="center" justify="between" gapX="2xs" className="py-cn-sm">
+            <Layout.Vertical gapY="4xs">
               <LineTitle
                 textClassName="text-cn-danger"
                 text="This branch is out-of-date with the base branch"
                 icon={<IconV2 size="lg" color="danger" name="warning-triangle-solid" />}
               />
-            }
-            description={<LineDescription text={renderBranchTags()} />}
-          />
-          {handleRebaseBranch && (
-            <Button theme="default" variant="primary" onClick={handleRebaseBranch} loading={isRebasing} size="md">
-              Update with rebase
-            </Button>
-          )}
-        </StackedList.Item>
+              <LineDescription
+                text={
+                  <Layout.Horizontal gap="2xs">
+                    <Text color="foreground-3">Merge the latest changes from</Text>
+                    <BranchTag branchName={pullReqMetadata?.target_branch || ''} spaceId={spaceId} repoId={repoId} />
+                    <Text color="foreground-3">into</Text>
+                    <BranchTag branchName={pullReqMetadata?.source_branch || ''} spaceId={spaceId} repoId={repoId} />
+                  </Layout.Horizontal>
+                }
+              />
+            </Layout.Vertical>
+
+            {handleRebaseBranch && (
+              <Button theme="default" variant="outline" onClick={handleRebaseBranch} loading={isRebasing}>
+                Update with rebase
+              </Button>
+            )}
+          </Layout.Horizontal>
+        </>
       )}
     </>
   )

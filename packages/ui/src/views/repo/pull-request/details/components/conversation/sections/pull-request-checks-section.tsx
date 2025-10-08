@@ -1,5 +1,5 @@
-import { Accordion, IconV2, Layout, Link, StackedList, StatusBadge, Table, Text } from '@/components'
-import { timeDistance } from '@/utils'
+import { Accordion, IconV2, Layout, Link, StatusBadge, Text } from '@/components'
+import { cn, timeDistance } from '@/utils'
 import { EnumCheckStatus, ExecutionState, TypesPullReqCheck } from '@/views'
 import { PanelAccordionShowButton } from '@views/repo/pull-request/details/components/conversation/sections/panel-accordion-show-button'
 
@@ -27,7 +27,7 @@ const PullRequestCheckSection = ({
       case ExecutionState.BLOCKED:
         return <IconV2 size="lg" color="warning" name="clock-solid" />
       case ExecutionState.RUNNING:
-        return <IconV2 size="lg" color="warning" className="animate-spin" name="loader" />
+        return <IconV2 size="lg" className="animate-spin" name="loader" />
       case ExecutionState.FAILURE:
       case ExecutionState.ERROR:
         return <IconV2 size="lg" color="danger" name={isTitle ? 'warning-triangle-solid' : 'xmark-circle-solid'} />
@@ -38,63 +38,68 @@ const PullRequestCheckSection = ({
 
   return (
     <Accordion.Item value={ACCORDION_VALUE} className="only:border-0">
-      <Accordion.Trigger className="py-3">
-        <Layout.Flex>
-          <StackedList.Field
-            title={<LineTitle text={checksInfo.header} icon={getStatusIcon(checksInfo.status, true)} />}
-            description={<LineDescription text={checksInfo.content} />}
-          />
-          <PanelAccordionShowButton isShowButton value={ACCORDION_VALUE} accordionValues={accordionValues} />
-        </Layout.Flex>
+      <Accordion.Trigger
+        className="py-cn-sm"
+        suffix={<PanelAccordionShowButton isShowButton value={ACCORDION_VALUE} accordionValues={accordionValues} />}
+        indicatorProps={{ className: 'self-center mt-0' }}
+      >
+        <Layout.Grid gapY="4xs">
+          <LineTitle text={checksInfo.header} icon={getStatusIcon(checksInfo.status, true)} />
+          <LineDescription text={checksInfo.content} />
+        </Layout.Grid>
       </Accordion.Trigger>
-      <Accordion.Content className="pl-3">
-        <Table.Root className="ml-4 rounded-none border-0 border-t">
-          <Table.Body>
-            {checkData.map(check => {
-              const time = timeDistance(check?.check?.created, check?.check?.updated)
-              return (
-                <Table.Row key={check.check?.identifier}>
-                  <Table.Cell className="w-80 pl-0">
-                    <Layout.Horizontal align="center" gap="2xs">
-                      {getStatusIcon(check?.check?.status as EnumCheckStatus)}
-                      <Text color="foreground-1" truncate className="overflow-hidden">
-                        {check?.check?.identifier}
-                      </Text>
-                    </Layout.Horizontal>
-                  </Table.Cell>
-                  <Table.Cell className="w-72">
-                    <Text color="foreground-3">
-                      {check?.check?.status === ExecutionState.SUCCESS ||
-                      check?.check?.status === ExecutionState.FAILURE_IGNORED
-                        ? `Succeeded in ${time}`
-                        : check?.check?.status === ExecutionState.FAILURE
-                          ? `Failed in ${time}`
-                          : check?.check?.status === ExecutionState.RUNNING
-                            ? 'Running...'
-                            : check?.check?.status === ExecutionState.PENDING
-                              ? 'Pending...'
-                              : `Errored in ${time}`}
-                    </Text>
-                  </Table.Cell>
-                  <Table.Cell className="w-16">
-                    {check?.check?.status !== ExecutionState.PENDING && !!check?.check?.link && (
-                      <Link to={check?.check?.link || ''} target="_blank" rel="noopener noreferrer">
-                        Details
-                      </Link>
-                    )}
-                  </Table.Cell>
-                  <Table.Cell className="w-20">
-                    {check?.required && (
-                      <StatusBadge variant="outline" size="sm">
-                        <Text color="foreground-3">Required</Text>
-                      </StatusBadge>
-                    )}
-                  </Table.Cell>
-                </Table.Row>
-              )
-            })}
-          </Table.Body>
-        </Table.Root>
+      <Accordion.Content>
+        <Layout.Vertical className="ml-7" gap="none">
+          {checkData.map(check => {
+            const time = timeDistance(check?.check?.created, check?.check?.updated)
+            return (
+              <Layout.Grid
+                key={check.check?.identifier}
+                flow="column"
+                align="center"
+                columns="1fr 1fr auto"
+                className="py-cn-sm border-t"
+              >
+                <Layout.Horizontal align="center" gap="2xs" className="truncate">
+                  {getStatusIcon(check?.check?.status as EnumCheckStatus)}
+                  <Text color="foreground-1" truncate>
+                    {check?.check?.identifier}
+                  </Text>
+                </Layout.Horizontal>
+
+                <Text color="foreground-3">
+                  {check?.check?.status === ExecutionState.SUCCESS ||
+                  check?.check?.status === ExecutionState.FAILURE_IGNORED
+                    ? `Succeeded in ${time}`
+                    : check?.check?.status === ExecutionState.FAILURE
+                      ? `Failed in ${time}`
+                      : check?.check?.status === ExecutionState.RUNNING
+                        ? 'Running...'
+                        : check?.check?.status === ExecutionState.PENDING
+                          ? 'Pending...'
+                          : `Errored in ${time}`}
+                </Text>
+
+                <Layout.Horizontal gap="2xl" align="center">
+                  <StatusBadge variant="outline" size="sm" className={cn({ invisible: !check?.required })}>
+                    Required
+                  </StatusBadge>
+                  <Link
+                    to={check?.check?.link || ''}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className={cn({
+                      'invisible pointer-events-none':
+                        check?.check?.status === ExecutionState.PENDING || !check?.check?.link
+                    })}
+                  >
+                    Details
+                  </Link>
+                </Layout.Horizontal>
+              </Layout.Grid>
+            )
+          })}
+        </Layout.Vertical>
       </Accordion.Content>
     </Accordion.Item>
   )

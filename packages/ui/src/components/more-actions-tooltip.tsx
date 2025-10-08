@@ -29,6 +29,7 @@ export interface MoreActionsTooltipProps {
   className?: string
   buttonVariant?: ButtonVariants
   buttonSize?: ButtonSizes
+  disabled?: boolean
 }
 
 /**
@@ -44,7 +45,8 @@ export const MoreActionsTooltip = forwardRef<HTMLButtonElement, MoreActionsToolt
       alignOffset = 0,
       className,
       buttonVariant = 'ghost',
-      buttonSize = 'md'
+      buttonSize = 'md',
+      disabled = false
     },
     ref
   ) => {
@@ -53,7 +55,7 @@ export const MoreActionsTooltip = forwardRef<HTMLButtonElement, MoreActionsToolt
 
     return (
       <DropdownMenu.Root>
-        <DropdownMenu.Trigger ref={ref} asChild>
+        <DropdownMenu.Trigger ref={ref} disabled={disabled} asChild>
           <Button
             theme={theme}
             className={cn('text-icons-1 hover:text-icons-2 data-[state=open]:text-icons-2')}

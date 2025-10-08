@@ -12,6 +12,7 @@ interface SecretDetailsLayoutProps {
   activityView?: ReactNode
   onEdit?: (identifier: string) => void
   onDelete?: (identifier: string) => void
+  isLoading?: boolean
 }
 
 enum SecretDetailsTabsKeys {
@@ -33,7 +34,8 @@ export const SecretDetailsLayout: FC<SecretDetailsLayoutProps> = ({
   referencesView,
   activityView,
   onEdit,
-  onDelete
+  onDelete,
+  isLoading = false
 }) => {
   const { t } = useTranslation()
   const { Switch, Route } = useRouterContext()
@@ -41,6 +43,7 @@ export const SecretDetailsLayout: FC<SecretDetailsLayoutProps> = ({
   return (
     <Page.Root>
       <Page.Header
+        isLoading={isLoading}
         backLink={{
           linkText: t('views:secretDetails.backToSecrets', 'Back to secrets'),
           linkProps: { to: backButtonTo?.() ?? '' }
@@ -75,6 +78,7 @@ export const SecretDetailsLayout: FC<SecretDetailsLayoutProps> = ({
         ]}
       >
         <StatsPanel
+          isLoading={isLoading}
           data={[
             {
               label: t('views:secretDetails.created', 'Created'),

@@ -12,6 +12,7 @@ import {
   LogoPropsV2,
   LogoV2,
   RbacMoreActionsTooltipActionData,
+  Skeleton,
   Text
 } from '@/components'
 import { useComponents, useCustomDialogTrigger } from '@/context'
@@ -38,6 +39,7 @@ export interface PageHeaderProps {
   button?: PageHeaderButtonProps
   moreActions?: RbacMoreActionsTooltipActionData[]
   favoriteProps?: Omit<FavoriteIconProps, 'className'>
+  isLoading?: boolean
 }
 
 const Header: FC<PageHeaderProps> = ({
@@ -48,7 +50,8 @@ const Header: FC<PageHeaderProps> = ({
   children,
   button,
   moreActions,
-  favoriteProps
+  favoriteProps,
+  isLoading = false
 }) => {
   const { RbacMoreActionsTooltip } = useComponents()
   const { triggerRef, registerTrigger } = useCustomDialogTrigger()
@@ -81,7 +84,12 @@ const Header: FC<PageHeaderProps> = ({
     if (!button) return null
 
     const ButtonComp = (
-      <Button ref={buttonTriggerRef} {...omit(button?.props, ['onClick'])} onClick={buttonClickHandler}>
+      <Button
+        ref={buttonTriggerRef}
+        {...omit(button?.props, ['onClick'])}
+        onClick={buttonClickHandler}
+        disabled={isLoading}
+      >
         {button.text}
       </Button>
     )
@@ -103,11 +111,20 @@ const Header: FC<PageHeaderProps> = ({
             </Link>
           )}
           <Layout.Flex gap="xs">
-            {!!logoName && <LogoV2 className="mt-cn-4xs" name={logoName} size="md" />}
-            <Text as="h1" variant="heading-section">
-              {title}
-            </Text>
-            {!!favoriteProps && <Favorite className="mt-cn-4xs" {...favoriteProps} />}
+            {isLoading ? (
+              <>
+                <Skeleton.Logo className="mt-cn-4xs" size="md" />
+                <Skeleton.Typography className="w-80" variant="heading-section" />
+              </>
+            ) : (
+              <>
+                {!!logoName && <LogoV2 className="mt-cn-4xs" name={logoName} size="md" />}
+                <Text as="h1" variant="heading-section">
+                  {title}
+                </Text>
+              </>
+            )}
+            {!!favoriteProps && !isLoading && <Favorite className="mt-cn-4xs" {...favoriteProps} />}
           </Layout.Flex>
         </Layout.Vertical>
         {!!description && <Text>{description}</Text>}
@@ -118,7 +135,12 @@ const Header: FC<PageHeaderProps> = ({
         <ButtonLayout className="self-end">
           {getButton()}
           {!!UpdatedMoreActions && (
-            <RbacMoreActionsTooltip ref={triggerRef} actions={UpdatedMoreActions} buttonVariant="outline" />
+            <RbacMoreActionsTooltip
+              ref={triggerRef}
+              actions={UpdatedMoreActions}
+              buttonVariant="outline"
+              disabled={isLoading}
+            />
           )}
         </ButtonLayout>
       )}

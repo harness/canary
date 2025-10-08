@@ -1,3 +1,5 @@
+import { useEffect, useState } from 'react'
+
 import {
   IconV2,
   Layout,
@@ -138,9 +140,22 @@ const dataMock: ViewOnlyProps[] = [
 ]
 
 export const ViewOnlyView = () => {
+  const [isLoading, setIsLoading] = useState(true)
+
+  useEffect(() => {
+    const t = setTimeout(() => {
+      setIsLoading(false)
+    }, 10000)
+
+    return () => {
+      if (t) clearTimeout(t)
+    }
+  }, [])
+
   return (
     <Page.Root>
       <Page.Header
+        isLoading={isLoading}
         backLink={{
           linkText: 'Back to connectors',
           linkProps: { to: '/' }
@@ -169,6 +184,7 @@ export const ViewOnlyView = () => {
           <Tag variant="secondary" value="+3 labels" theme="violet" />
         </Layout.Flex>
         <StatsPanel
+          isLoading={isLoading}
           data={[
             {
               label: 'Created',
@@ -203,7 +219,7 @@ export const ViewOnlyView = () => {
         <Widgets.Root>
           <Widgets.Item title="Connector details">
             {dataMock.map((props, index) => (
-              <ViewOnly key={index} {...props} />
+              <ViewOnly key={index} {...props} isLoading={isLoading} />
             ))}
           </Widgets.Item>
 
@@ -214,7 +230,7 @@ export const ViewOnlyView = () => {
             }}
           >
             {dataMock.slice(0, 2).map((props, index) => (
-              <ViewOnly key={index} {...props} />
+              <ViewOnly key={index} {...props} isLoading={isLoading} />
             ))}
           </Widgets.Item>
 

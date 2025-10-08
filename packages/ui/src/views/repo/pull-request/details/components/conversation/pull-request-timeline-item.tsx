@@ -374,7 +374,7 @@ const PullRequestTimelineItem: FC<TimelineItemProps> = ({
       error={isDeletingError}
       message={`This will permanently delete this ${isReply ? 'reply' : 'comment'}.`}
       type={isReply ? 'reply' : 'comment'}
-      identifier={String(commentId) ?? undefined}
+      identifier={String(commentId)}
       isLoading={isDeletingComment}
     />
   )

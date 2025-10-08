@@ -29,10 +29,16 @@ import { useExpandedComments } from '../../context/pull-request-comments-context
 import { replaceEmailAsKey } from './utils'
 
 //Utility function to calculate thread spacing based on position
-const getThreadSpacingClasses = (threadIndex?: number, totalThreads?: number, isLast?: boolean) => {
+const getThreadSpacingClasses = (
+  threadIndex?: number,
+  totalThreads?: number,
+  isLast?: boolean,
+  isCompactLayout?: boolean
+) => {
   if (threadIndex === undefined || totalThreads === undefined) {
     return {
       'pb-cn-md': !isLast,
+      'pb-cn-sm': !isLast && isCompactLayout,
       'pb-cn-xs': isLast
     }
   }
@@ -398,7 +404,9 @@ const PullRequestTimelineItem: FC<TimelineItemProps> = ({
   return (
     <>
       <div id={id} className={mainWrapperClassName}>
-        <NodeGroup.Root className={cn(getThreadSpacingClasses(threadIndex, totalThreads, isLast), wrapperClassName)}>
+        <NodeGroup.Root
+          className={cn(getThreadSpacingClasses(threadIndex, totalThreads, isLast, isCompactLayout), wrapperClassName)}
+        >
           {!!icon && <NodeGroup.Icon wrapperClassName="self-auto size-auto">{icon}</NodeGroup.Icon>}
           <NodeGroup.Title className={titleClassName}>
             {/* Ensure that header has at least one item */}

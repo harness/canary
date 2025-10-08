@@ -3,8 +3,7 @@ import { SubmitHandler, useForm } from 'react-hook-form'
 
 import { Button, ButtonLayout, FormSeparator, FormWrapper, Layout, Text } from '@/components'
 import { useRouterContext, useTranslation } from '@/context'
-import { UsererrorError } from '@/types'
-import { IProjectRulesStore, IRepoStore, RepoRepositoryOutput, RepositoryType } from '@/views'
+import { IProjectRulesStore, IRepoStore } from '@/views'
 import { zodResolver } from '@hookform/resolvers/zod'
 import { cn } from '@utils/cn'
 
@@ -146,13 +145,7 @@ export const RepoTagSettingsRulesPage: FC<RepoTagSettingsRulesPageProps> = ({
 
         <Layout.Vertical gapY="3xl">
           {projectScope && (
-            <TargetRepoSelectorForTag
-              watch={watch}
-              setValue={setValue}
-              register={register}
-              errors={errors}
-              repoQueryObj={repoQueryObj}
-            />
+            <TargetRepoSelectorForTag watch={watch} setValue={setValue} errors={errors} repoQueryObj={repoQueryObj} />
           )}
           <TagSettingsRuleTargetPatternsField watch={watch} setValue={setValue} register={register} errors={errors} />
 

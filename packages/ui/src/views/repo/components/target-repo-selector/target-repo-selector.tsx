@@ -1,4 +1,4 @@
-import { FC, useCallback, useEffect, useState } from 'react'
+import { FC, useCallback, useState } from 'react'
 import { FieldErrors, UseFormRegister, UseFormSetValue, UseFormWatch } from 'react-hook-form'
 
 import {
@@ -16,7 +16,6 @@ import {
   SearchInput,
   Skeleton,
   SplitButton,
-  StatusBadge,
   Table,
   Text
 } from '@/components'
@@ -125,7 +124,7 @@ const TargetRepoSelectorBase: FC<TargetRepoSelectorBaseProps> = ({
   repoQueryObj
 }) => {
   const { t } = useTranslation()
-  const { repositories, refetchListRepos, isFetching, isError, error, query, setQuery } = repoQueryObj || {}
+  const { repositories, isFetching, query, setQuery } = repoQueryObj || {}
   const [isDrawerOpen, setIsDrawerOpen] = useState(false)
   const [selectedRepos, setSelectedRepos] = useState<SelectedRepo[]>([])
   const [selectedRepoOption, setSelectedRepoOption] = useState<TargetReposButtonType>(
@@ -334,7 +333,6 @@ const TargetRepoSelectorBase: FC<TargetRepoSelectorBaseProps> = ({
 // BRANCH RULES WRAPPER
 // ============================================================================
 interface TargetRepoSelectorForBranchProps {
-  register: UseFormRegister<RepoBranchSettingsFormFields>
   errors?: FieldErrors<RepoBranchSettingsFormFields>
   watch: UseFormWatch<RepoBranchSettingsFormFields>
   setValue: UseFormSetValue<RepoBranchSettingsFormFields>
@@ -342,7 +340,6 @@ interface TargetRepoSelectorForBranchProps {
 }
 
 export const TargetRepoSelectorForBranch: FC<TargetRepoSelectorForBranchProps> = ({
-  register,
   watch,
   setValue,
   repoQueryObj
@@ -389,19 +386,13 @@ export const TargetRepoSelectorForBranch: FC<TargetRepoSelectorForBranchProps> =
 // TAG RULES WRAPPER
 // ============================================================================
 interface TargetRepoSelectorForTagProps {
-  register: UseFormRegister<RepoTagSettingsFormFields>
   errors?: FieldErrors<RepoTagSettingsFormFields>
   watch: UseFormWatch<RepoTagSettingsFormFields>
   setValue: UseFormSetValue<RepoTagSettingsFormFields>
   repoQueryObj?: RepoQueryObject
 }
 
-export const TargetRepoSelectorForTag: FC<TargetRepoSelectorForTagProps> = ({
-  register,
-  watch,
-  setValue,
-  repoQueryObj
-}) => {
+export const TargetRepoSelectorForTag: FC<TargetRepoSelectorForTagProps> = ({ watch, setValue, repoQueryObj }) => {
   const patterns = watch('repoPatterns') || []
   const targetRepos = watch('targetRepos') || []
   const repoPattern = watch('repoPattern') || ''

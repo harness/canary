@@ -178,7 +178,6 @@ export const RepoBranchSettingsRulesPage: FC<RepoBranchSettingsRulesPageProps> =
             <TargetRepoSelectorForBranch
               watch={watch}
               setValue={setValue}
-              register={register}
               errors={errors}
               repoQueryObj={repoQueryObj}
             />

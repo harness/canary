@@ -4,6 +4,7 @@ import { useNavigate, useParams } from 'react-router-dom'
 import {
   TypesUserGroupInfo,
   useListPrincipalsQuery,
+  useListReposQuery,
   useListStatusCheckRecentSpaceQuery,
   useListUsergroupsQuery,
   useSpaceRuleAddMutation,
@@ -96,7 +97,7 @@ export const ProjectTagRulesContainer = () => {
       type: isMFE ? ['user', 'serviceaccount'] : ['user'],
       ...(isMFE && { inherited: true }),
       query: principalsSearchQuery,
-      // @ts-expect-error : BE issue - not implemnted
+      // @ts-expect-error : BE issue - not implemented
       accountIdentifier: accountId,
       orgIdentifier,
       projectIdentifier
@@ -227,6 +228,26 @@ export const ProjectTagRulesContainer = () => {
     ? t('views:pullRequests.selectUsersUGAndServiceAccounts', 'Select users, user groups and service accounts')
     : t('views:pullRequests.selectUsers', 'Select users')
 
+  const [query, setQuery] = useState<string | null>('')
+  const {
+    data: { body: repoData } = {},
+    refetch: refetchListRepos,
+    isFetching,
+    isError,
+    error
+  } = useListReposQuery(
+    {
+      queryParams: {
+        query: query ?? '',
+        recursive: true
+      },
+      space_ref: `${spaceRef}/+`
+    },
+    {
+      retry: 5
+    }
+  )
+
   return (
     <SandboxLayout.Content>
       <RepoTagSettingsRulesPage
@@ -242,6 +263,15 @@ export const ProjectTagRulesContainer = () => {
         isSubmitSuccess={isSubmitSuccess}
         bypassListPlaceholder={searchPlaceholder}
         projectScope
+        repoQueryObj={{
+          repositories: repoData ?? [],
+          refetchListRepos,
+          isFetching,
+          isError,
+          error,
+          query,
+          setQuery
+        }}
       />
     </SandboxLayout.Content>
   )

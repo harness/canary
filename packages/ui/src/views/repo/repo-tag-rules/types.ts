@@ -2,7 +2,7 @@ import { FieldErrors, UseFormRegister, UseFormSetValue, UseFormWatch } from 'rea
 
 import { z } from 'zod'
 
-import { EnumBypassListType, PatternsButtonType } from '../repo-branch-rules/types'
+import { EnumBypassListType, PatternsButtonType, TargetReposButtonType } from '../repo-branch-rules/types'
 
 export type RepoTagSettingsFormFields = z.infer<typeof repoTagSettingsFormSchema>
 
@@ -54,6 +54,30 @@ export const repoTagSettingsFormSchema = z.object({
       option: z.enum([PatternsButtonType.INCLUDE, PatternsButtonType.EXCLUDE])
     })
   ),
+  repoPattern: z.string(),
+  repoPatterns: z.array(
+    z.object({
+      pattern: z.string(),
+      option: z.enum([PatternsButtonType.INCLUDE, PatternsButtonType.EXCLUDE])
+    })
+  ),
+  targetRepos: z
+    .array(
+      z.object({
+        id: z.number(),
+        type: z.nativeEnum(TargetReposButtonType),
+        info: z
+          .object({
+            id: z.number().optional(),
+            parent_id: z.number().optional(),
+            identifier: z.string().optional(),
+            path: z.string().optional(),
+            default_branch: z.string().optional()
+          })
+          .optional()
+      })
+    )
+    .optional(),
   bypass: z.array(
     z.object({
       id: z.number(),

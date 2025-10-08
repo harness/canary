@@ -5,6 +5,7 @@ import {
   ControlGroup,
   Fieldset,
   FormInput,
+  IconV2,
   Input,
   Label,
   Layout,
@@ -115,6 +116,7 @@ export const BranchSettingsRuleTargetPatternsField: FC<
               }
             ]}
           >
+            <IconV2 name={selectedOption === PatternsButtonType.INCLUDE ? 'plus-circle' : 'xmark-circle'} />
             {t(`views:repos.${selectedOption.toLowerCase()}`, `${selectedOption}`)}
           </SplitButton>
         </Layout.Grid>

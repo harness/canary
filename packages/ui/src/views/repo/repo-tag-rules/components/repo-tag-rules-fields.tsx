@@ -5,6 +5,7 @@ import {
   ControlGroup,
   Fieldset,
   FormInput,
+  IconV2,
   Label,
   Layout,
   MultiSelectOption,
@@ -110,6 +111,7 @@ export const TagSettingsRuleTargetPatternsField: FC<TagFieldProps> = ({ setValue
               }
             ]}
           >
+            <IconV2 name={selectedOption === PatternsButtonType.INCLUDE ? 'plus-circle' : 'xmark-circle'} />
             {t(`views:repos.${selectedOption.toLowerCase()}`, `${selectedOption}`)}
           </SplitButton>
         </Layout.Grid>

@@ -5,6 +5,7 @@ import {
   RepoRuleAddRequestBody,
   RepoRuleGetOkResponse,
   TypesPrincipalInfo,
+  TypesRepositoryCore,
   TypesUserGroupInfo
 } from '@harnessio/code-service-client'
 import { MessageTheme, MultiSelectOption } from '@harnessio/ui/components'
@@ -14,7 +15,8 @@ import {
   MergeStrategy,
   PatternsButtonType,
   RepoBranchSettingsFormFields,
-  Rule
+  Rule,
+  TargetReposButtonType
 } from '@harnessio/ui/views'
 
 import { getDefaultReviewersValidationMessage } from '../pages-v2/repo/transform-utils/handle_rule_interdependencies'
@@ -174,6 +176,30 @@ const extractBranchRules = (data: RepoRuleGetOkResponse): Rule[] => {
   return rules
 }
 
+const getTargetRepos = (
+  ids: number[],
+  type: TargetReposButtonType,
+  repositories: { [key: number]: TypesRepositoryCore }
+): RepoBranchSettingsFormFields['targetRepos'] => {
+  return ids.reduce<RepoBranchSettingsFormFields['targetRepos']>((acc, id: number) => {
+    const repoInfo = repositories[id]
+    if (repoInfo) {
+      acc?.push({
+        id,
+        type,
+        info: {
+          id: repoInfo.id ?? -1,
+          path: repoInfo.path ?? '',
+          identifier: repoInfo.identifier ?? '',
+          default_branch: repoInfo.default_branch ?? '',
+          parent_id: repoInfo.parent_id ?? -1
+        }
+      })
+    }
+    return acc
+  }, [])
+}
+
 export const transformDataFromApi = (data: RepoRuleGetOkResponse): RepoBranchSettingsFormFields => {
   const includedPatterns = data?.pattern?.include || []
   const excludedPatterns = data?.pattern?.exclude || []
@@ -181,6 +207,30 @@ export const transformDataFromApi = (data: RepoRuleGetOkResponse): RepoBranchSet
     ...includedPatterns.map(pat => ({ pattern: pat, option: PatternsButtonType.INCLUDE })),
     ...excludedPatterns.map(pat => ({ pattern: pat, option: PatternsButtonType.EXCLUDE }))
   ]
+
+  const repoPatternsExcluded = data?.repo_target?.exclude?.patterns || []
+  const repoPatternsIncluded = data?.repo_target?.include?.patterns || []
+
+  const repoTargetsPattern = [
+    ...repoPatternsIncluded.map(pat => ({ pattern: pat, option: PatternsButtonType.INCLUDE })),
+    ...repoPatternsExcluded.map(pat => ({ pattern: pat, option: PatternsButtonType.EXCLUDE }))
+  ]
+
+  const targetReposIncluded =
+    getTargetRepos(
+      data?.repo_target?.include?.ids || [],
+      TargetReposButtonType.SELECT_INCLUDED,
+      data?.repositories || {}
+    ) || []
+
+  const targetReposExcluded =
+    getTargetRepos(
+      data?.repo_target?.exclude?.ids || [],
+      TargetReposButtonType.SELECT_EXCLUDED,
+      data?.repositories || {}
+    ) || []
+
+  const targetRepos = [...targetReposIncluded, ...targetReposExcluded]
 
   const rules = extractBranchRules(data)
 
@@ -223,6 +273,9 @@ export const transformDataFromApi = (data: RepoRuleGetOkResponse): RepoBranchSet
     description: description || '',
     pattern: '',
     patterns: formatPatterns,
+    repoPattern: '',
+    repoPatterns: repoTargetsPattern,
+    targetRepos: targetRepos ?? [],
     rules: rules,
     state: state === 'active',
     bypass: [...bypass, ...bypassUserGroups],
@@ -250,6 +303,25 @@ export const transformFormOutput = (formOutput: RepoBranchSettingsFormFields): R
     { include: [], exclude: [] }
   )
 
+  const { include: repoInclude, exclude: repoExclude } = formOutput.repoPatterns.reduce<{
+    include: string[]
+    exclude: string[]
+  }>(
+    (acc, currentPattern) => {
+      if (currentPattern.option === PatternsButtonType.INCLUDE) {
+        acc.include.push(currentPattern.pattern)
+      } else if (currentPattern.option === PatternsButtonType.EXCLUDE) {
+        acc.exclude.push(currentPattern.pattern)
+      }
+      return acc
+    },
+    { include: [], exclude: [] }
+  )
+
+  const includedRepoIds =
+    formOutput.targetRepos?.filter(it => it.type === TargetReposButtonType.SELECT_INCLUDED).map(it => it.id) || []
+  const excludedRepoIds =
+    formOutput.targetRepos?.filter(it => it.type === TargetReposButtonType.SELECT_EXCLUDED).map(it => it.id) || []
   return {
     identifier: formOutput.identifier,
     type: 'branch',
@@ -259,6 +331,16 @@ export const transformFormOutput = (formOutput: RepoBranchSettingsFormFields): R
       default: formOutput.default || false,
       include,
       exclude
+    },
+    repo_target: {
+      include: {
+        ids: includedRepoIds,
+        patterns: repoInclude
+      },
+      exclude: {
+        ids: excludedRepoIds,
+        patterns: repoExclude
+      }
     },
     definition: {
       bypass: {

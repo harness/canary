@@ -49,6 +49,7 @@ export interface SecretListPageProps extends SecretListProps {
   totalItems: number
   pageSize: number
   goToPage: (page: number) => void
+  setPageSize?: (size: number) => void
   onFilterChange?: (filters: SecretListFilters) => void
   onSortChange?: (sort: string) => void
   scope: Scope

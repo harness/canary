@@ -22,11 +22,10 @@ export const ProjectRulesListContainer = () => {
   const space_ref = useGetSpaceURLParam()
 
   const [query, setQuery] = useQueryState('query')
-  const [page, setPage] = useState(1)
   const [showParentRules, setShowParentRules] = useState(false)
+  const { setRules, pageSize, page, setPage } = useProjectRulesStore()
   const { queryPage } = usePaginationQueryStateWithStore({ page, setPage })
   const queryClient = useQueryClient()
-  const { setRules } = useProjectRulesStore()
   const {
     routes: { toAccountSettings, toOrgSettings, toProjectSettings },
     routeUtils,
@@ -56,6 +55,7 @@ export const ProjectRulesListContainer = () => {
       page: queryPage,
       query: query ?? '',
       inherited: showParentRules,
+      limit: pageSize,
       // @ts-expect-error BE expects an array but the API only works with a string
       type: ruleTypeFilter ? ruleTypeFilter : undefined
     }
@@ -128,8 +128,6 @@ export const ProjectRulesListContainer = () => {
         searchQuery={query}
         setSearchQuery={setQuery}
         openRulesAlertDeleteDialog={openRulesAlertDeleteDialog}
-        page={page}
-        setPage={setPage}
         apiError={apiError}
         handleRuleClick={handleRuleEditClick}
         toProjectBranchRuleCreate={() => routes.toProjectBranchRuleCreate({ spaceId: space_ref })}

@@ -19,6 +19,7 @@ export interface IMemberListStore {
     { totalItems, pageSize }: { totalItems: number; pageSize: number }
   ) => void
   setPage: (page: number) => void
+  setPageSize: (pageSize: number) => void
 }
 
 export const useMemberListStore = create<IMemberListStore>(set => ({
@@ -43,5 +44,6 @@ export const useMemberListStore = create<IMemberListStore>(set => ({
       totalItems,
       pageSize
     }),
-  setPage: page => set({ page })
+  setPage: page => set({ page }),
+  setPageSize: (pageSize: number) => set({ pageSize, page: 1 })
 }))

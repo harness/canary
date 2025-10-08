@@ -30,7 +30,7 @@ const RepoWebhookListPage: FC<RepoWebhookListPageProps> = ({
 }) => {
   const { t } = useTranslation()
   const { navigate, Link } = useRouterContext()
-  const { webhooks, totalItems, pageSize, page, setPage, error } = useWebhookStore()
+  const { webhooks, totalItems, pageSize, page, setPage, error, setPageSize } = useWebhookStore()
 
   const handleSearchChange = useCallback(
     (val: string) => {
@@ -141,7 +141,13 @@ const RepoWebhookListPage: FC<RepoWebhookListPageProps> = ({
               handleEnableWebhook={handleEnableWebhook}
               toRepoWebhookDetails={toRepoWebhookDetails}
             />
-            <Pagination totalItems={totalItems} pageSize={pageSize} currentPage={page} goToPage={setPage} />
+            <Pagination
+              totalItems={totalItems}
+              pageSize={pageSize}
+              onPageSizeChange={setPageSize}
+              currentPage={page}
+              goToPage={setPage}
+            />
           </div>
         )}
       </Layout.Vertical>

@@ -25,6 +25,7 @@ export interface IPipelineListStore {
   pageSize: number
   page: number
   setPage: (page: number) => void
+  setPageSize: (size: number) => void
 }
 
 interface RoutingProps {

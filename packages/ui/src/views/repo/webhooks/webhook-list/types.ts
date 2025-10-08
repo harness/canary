@@ -29,6 +29,7 @@ export interface WebhookStore {
   webhooks: WebhookType[] | null
   totalItems: number
   pageSize: number
+  setPageSize: (size: number) => void
   executionId: number | null
   webhookExecutionPage: number
   preSetWebhookData: CreateWebhookFormFields | null

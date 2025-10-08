@@ -20,6 +20,7 @@ export const useLabelsStore = create<ILabelsStore>(set => ({
 
   deleteLabel: (key: string) => set(state => ({ labels: state.labels.filter(label => label.key !== key) })),
   setPage: (page: number) => set({ page }),
+  setPageSize: (pageSize: number) => set({ pageSize, page: 1 }),
 
   setIsLoading: (isLoading: boolean) => set({ isLoading }),
 

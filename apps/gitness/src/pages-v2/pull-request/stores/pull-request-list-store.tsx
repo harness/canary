@@ -21,6 +21,7 @@ interface PullRequestListStore {
   prState: Array<PRState>
   setPrState: (prState: Array<PRState>) => void
   setPage: (page: number) => void
+  setPageSize: (pageSize: number) => void
   setLabelsQuery: (query: string) => void
   setPullRequests: (data: PullRequestInterface[], headers?: Headers) => void
   setOpenClosePullRequests: (openPullReqs: number, closedPullReqs: number, mergedPullReqs: number) => void
@@ -29,7 +30,7 @@ interface PullRequestListStore {
 export const usePullRequestListStore = create<PullRequestListStore>(set => ({
   pullRequests: null,
   totalItems: 0,
-  pageSize: 30,
+  pageSize: 10,
   page: 1,
   prState: ['open'],
   openPullReqs: 0,
@@ -38,6 +39,7 @@ export const usePullRequestListStore = create<PullRequestListStore>(set => ({
   labels: [],
   labelsQuery: '',
   setPage: page => set({ page }),
+  setPageSize: (pageSize: number) => set({ pageSize, page: 1 }),
 
   setPrState: (prState: Array<PRState>) => set({ prState }),
 

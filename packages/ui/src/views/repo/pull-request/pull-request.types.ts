@@ -64,6 +64,7 @@ export interface PullRequestListStore {
   prState: Array<PRState>
   setPrState: (prState: Array<PRState>) => void
   setPage: (page: number) => void
+  setPageSize: (pageSize: number) => void
   setLabelsQuery: (query: string) => void
   openPullReqs: number
   closedPullReqs: number

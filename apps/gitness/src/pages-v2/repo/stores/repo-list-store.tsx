@@ -6,13 +6,13 @@ export const useRepoStore = create<RepoStore>(set => ({
   repositories: null,
   importRepoIdentifier: null,
   totalItems: 0,
-  pageSize: 0,
+  pageSize: 10,
   isRepoStillImporting: false,
   page: 1,
   importToastId: null,
   setImportToastId: (id: string | number | null) => set({ importToastId: id }),
   setPage: page => set({ page }),
-
+  setPageSize: (pageSize: number) => set({ pageSize, page: 1 }),
   setRepositories: (data: RepositoryType[], totalItems: number, pageSize: number) => {
     set({
       repositories: data,

@@ -10,8 +10,6 @@ export interface ProjectRulesPageProps {
   isLoading: boolean
   searchQuery: string
   setSearchQuery: (query: string) => void
-  page: number
-  setPage: (page: number) => void
   openRulesAlertDeleteDialog: (identifier: string, scope: number) => void
   apiError: { type: ErrorTypes; message: string } | null
   handleRuleClick: (identifier: string, scope: number) => void
@@ -29,8 +27,6 @@ export const ProjectRulesPage: FC<ProjectRulesPageProps> = ({
   isLoading,
   searchQuery,
   setSearchQuery,
-  page,
-  setPage,
   openRulesAlertDeleteDialog,
   apiError,
   handleRuleClick,
@@ -45,7 +41,7 @@ export const ProjectRulesPage: FC<ProjectRulesPageProps> = ({
 }) => {
   const { t } = useTranslation()
   const { navigate } = useRouterContext()
-  const { rules: rulesData, pageSize, totalItems } = useProjectRulesStore()
+  const { rules: rulesData, pageSize, totalItems, setPageSize, page, setPage } = useProjectRulesStore()
 
   const isDirtyList = useMemo(() => {
     return page !== 1 || !!searchQuery
@@ -120,7 +116,13 @@ export const ProjectRulesPage: FC<ProjectRulesPageProps> = ({
           />
         </Layout.Vertical>
 
-        <Pagination totalItems={totalItems} pageSize={pageSize} currentPage={page} goToPage={setPage} />
+        <Pagination
+          totalItems={totalItems}
+          pageSize={pageSize}
+          onPageSizeChange={setPageSize}
+          currentPage={page}
+          goToPage={setPage}
+        />
       </SandboxLayout.Content>
     </SandboxLayout.Main>
   )

@@ -18,7 +18,7 @@ import { useAdminListUsersStore } from './stores/admin-list-store'
 export const UserManagementPageContainer = () => {
   const queryClient = useQueryClient()
 
-  const { setUsers, setPaginationFromHeaders, setPage, page, password } = useAdminListUsersStore()
+  const { setUsers, setPaginationFromHeaders, setPage, page, password, pageSize } = useAdminListUsersStore()
 
   const [query, setQuery] = useQueryState('query')
   const { queryPage } = usePaginationQueryStateWithStore({ page, setPage })
@@ -30,6 +30,7 @@ export const UserManagementPageContainer = () => {
   } = useAdminListUsersQuery({
     queryParams: {
       page: queryPage,
+      limit: pageSize,
       // TODO: add search functionality by query parameter
       //@ts-expect-error - query is not typed
       query: query ?? ''

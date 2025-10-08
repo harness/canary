@@ -10,4 +10,5 @@ export type ProjectMembersListProps = Pick<
   pageSize: number
   page: number
   setPage: (val: number) => void
+  setPageSize: (val: number) => void
 }

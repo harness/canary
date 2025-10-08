@@ -23,6 +23,7 @@ export interface IExecutionListStore {
   pageSize: number
   page: number
   setPage: (page: number) => void
+  setPageSize: (size: number) => void
 }
 
 export interface IExecutionListPageProps {

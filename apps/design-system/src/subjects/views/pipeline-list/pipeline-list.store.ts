@@ -61,5 +61,6 @@ export const usePipelineListStore = (): IPipelineListStore => ({
   setPage: noop,
   setPipelinesData: noop,
   totalItems: 10,
-  pageSize: 10
+  pageSize: 10,
+  setPageSize: noop
 })

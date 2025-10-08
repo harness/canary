@@ -17,7 +17,7 @@ const PipelineListPage: FC<IPipelineListPageProps> = ({
   handleCreatePipeline,
   toPipelineDetails
 }) => {
-  const { pipelines, totalItems, pageSize, page, setPage } = usePipelineListStore()
+  const { pipelines, totalItems, pageSize, page, setPage, setPageSize } = usePipelineListStore()
 
   const {
     search: searchInput,
@@ -78,7 +78,13 @@ const PipelineListPage: FC<IPipelineListPageProps> = ({
           toPipelineDetails={toPipelineDetails}
         />
         <Spacer size={8} />
-        <Pagination totalItems={totalItems} pageSize={pageSize} currentPage={page} goToPage={setPage} />
+        <Pagination
+          totalItems={totalItems}
+          pageSize={pageSize}
+          onPageSizeChange={setPageSize}
+          currentPage={page}
+          goToPage={setPage}
+        />
       </SandboxLayout.Content>
     </SandboxLayout.Main>
   )

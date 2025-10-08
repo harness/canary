@@ -82,7 +82,10 @@ export interface IProjectRulesStore {
   recentStatusChecks: string[] | null
   totalItems: number
   pageSize: number
+  page: number
 
+  setPage: (page: number) => void
+  setPageSize: (size: number) => void
   setRules: (data: RuleDataType[], headers?: Headers) => void
   setPresetRuleData: (data: RepoBranchSettingsFormFields | null) => void
   setPrincipals: (data: PrincipalType[] | null) => void

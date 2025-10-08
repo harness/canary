@@ -43,6 +43,7 @@ export const repoWebhooksListStore: RepoWebhooksListStore = {
     setWebhookLoading: (_: boolean) => {},
     page: 1,
     setPage: (_: number) => {},
+    setPageSize: (_: number) => {},
     setTotalPages: (_: Headers | undefined) => {},
     setWebhooks: (_data: ListRepoWebhooksOkResponse) => {},
     preSetWebhookData: null,

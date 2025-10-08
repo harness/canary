@@ -1,5 +1,5 @@
 import { FC, useCallback, useState } from 'react'
-import { FieldErrors, UseFormRegister, UseFormSetValue, UseFormWatch } from 'react-hook-form'
+import { FieldErrors, UseFormSetValue, UseFormWatch } from 'react-hook-form'
 
 import {
   Button,

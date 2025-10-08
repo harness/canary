@@ -208,26 +208,6 @@ export const ProjectTagRulesContainer = () => {
     }
   }, [recentStatusChecks, setRecentStatusChecks])
 
-  const errors = {
-    principals: principalsError?.message || null,
-    userGroups: userGroupsError?.message || null,
-    statusChecks: statusChecksError?.message || null,
-    addRule: addRuleError?.message || null,
-    updateRule: updateRuleError?.message || null
-  }
-
-  if (!!ruleIdentifier && fetchRuleIsLoading) {
-    return <Skeleton.Form className="mt-7" />
-  }
-
-  if (!!ruleIdentifier && !!fetchRuleError) {
-    return <NotFoundPage pageTypeText="rules" />
-  }
-
-  const searchPlaceholder = isMFE
-    ? t('views:pullRequests.selectUsersUGAndServiceAccounts', 'Select users, user groups and service accounts')
-    : t('views:pullRequests.selectUsers', 'Select users')
-
   const [query, setQuery] = useState<string | null>('')
   const {
     data: { body: repoData } = {},
@@ -247,6 +227,26 @@ export const ProjectTagRulesContainer = () => {
       retry: 5
     }
   )
+
+  const errors = {
+    principals: principalsError?.message || null,
+    userGroups: userGroupsError?.message || null,
+    statusChecks: statusChecksError?.message || null,
+    addRule: addRuleError?.message || null,
+    updateRule: updateRuleError?.message || null
+  }
+
+  if (!!ruleIdentifier && fetchRuleIsLoading) {
+    return <Skeleton.Form className="mt-7" />
+  }
+
+  if (!!ruleIdentifier && !!fetchRuleError) {
+    return <NotFoundPage pageTypeText="rules" />
+  }
+
+  const searchPlaceholder = isMFE
+    ? t('views:pullRequests.selectUsersUGAndServiceAccounts', 'Select users, user groups and service accounts')
+    : t('views:pullRequests.selectUsers', 'Select users')
 
   return (
     <SandboxLayout.Content>

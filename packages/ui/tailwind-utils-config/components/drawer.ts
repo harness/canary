@@ -118,7 +118,8 @@ export default {
 
     '&-title': {
       font: 'var(--cn-comp-dialog-title)',
-      color: 'var(--cn-text-1)'
+      color: 'var(--cn-text-1)',
+      wordBreak: 'break-word'
     },
 
     '&-tagline': {
@@ -135,7 +136,8 @@ export default {
       '@apply size-full': '',
 
       '&-content': {
-        padding: 'var(--cn-drawer-container)'
+        padding: 'var(--cn-drawer-container)',
+        overflowX: 'hidden'
       }
     },
 

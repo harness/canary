@@ -1,3 +1,5 @@
+import { isUndefined } from 'lodash-es'
+
 import { RbacSplitButtonProps, rbacTooltip, Resource, SplitButton, Tooltip } from '@harnessio/ui/components'
 
 import { useMFEContext } from '../hooks/useMFEContext'
@@ -15,29 +17,32 @@ export const RbacSplitButton = <T extends string>({
   /**
    *  Enable the button only if the user has at least one required permission; otherwise, disable it.
    */
-  const hasPermission =
-    hooks
-      .usePermission?.({
-        resource: rbac?.resource ?? ({} as Resource),
-        permissions: rbac?.permissions ?? []
-      })
-      ?.some(Boolean) ?? true
+  const hasPermission = isUndefined(rbac)
+    ? true
+    : (hooks
+        .usePermission?.({
+          resource: rbac.resource ?? ({} as Resource),
+          permissions: rbac.permissions ?? []
+        })
+        ?.some(Boolean) ?? true)
 
-  const hasButtonPermission =
-    hooks
-      .usePermission?.({
-        resource: buttonRbac?.resource ?? ({} as Resource),
-        permissions: buttonRbac?.permissions ?? []
-      })
-      ?.some(Boolean) ?? true
+  const hasButtonPermission = isUndefined(buttonRbac)
+    ? true
+    : (hooks
+        .usePermission?.({
+          resource: buttonRbac.resource ?? ({} as Resource),
+          permissions: buttonRbac.permissions ?? []
+        })
+        ?.some(Boolean) ?? true)
 
-  const hasDropdownPermission =
-    hooks
-      .usePermission?.({
-        resource: dropdownRbac?.resource ?? ({} as Resource),
-        permissions: dropdownRbac?.permissions ?? []
-      })
-      ?.some(Boolean) ?? true
+  const hasDropdownPermission = isUndefined(dropdownRbac)
+    ? true
+    : (hooks
+        .usePermission?.({
+          resource: dropdownRbac.resource ?? ({} as Resource),
+          permissions: dropdownRbac.permissions ?? []
+        })
+        ?.some(Boolean) ?? true)
 
   const button = (
     <SplitButton<T>

@@ -41,6 +41,7 @@ import { isEmpty, isUndefined } from 'lodash-es'
 import { getLinesFromBlocks } from './diff-utils'
 import { PullRequestCommentTextarea } from './pull-request-comment-textarea'
 import { PullRequestCommentingOn } from './pull-request-commenting-on'
+import { ReplySplitButton } from './sections/components/reply-split-button'
 import { replaceMentionEmailWithDisplayName, replaceMentionEmailWithId } from './utils'
 
 interface ParsedSelection extends TextSelection {
@@ -89,6 +90,7 @@ interface CommentHistory {
 
 export interface PullRequestCommentBoxProps {
   className?: string
+  wrapperClassName?: string
   comment: string
   lang?: string
   blocks?: DiffBlock[]
@@ -116,6 +118,9 @@ export interface PullRequestCommentBoxProps {
   setPrincipalsMentionMap?: React.Dispatch<React.SetStateAction<PrincipalsMentionMap>>
   preserveCommentOnSave?: boolean
   buttonTitle?: string
+  isReply?: boolean
+  isResolved?: boolean
+  toggleConversationStatus?: () => void
   textareaPlaceholder?: string
   allowEmptyValue?: boolean
   hideAvatar?: boolean
@@ -130,6 +135,7 @@ const TABS_KEYS = {
 //  TODO: will have to eventually implement a commenting and reply system similiar to gitness
 export const PullRequestCommentBox = ({
   className,
+  wrapperClassName,
   onSaveComment,
   currentUser,
   inReplyMode = false,
@@ -156,7 +162,9 @@ export const PullRequestCommentBox = ({
   textareaPlaceholder,
   allowEmptyValue = false,
   hideAvatar = false,
-
+  isReply = false,
+  isResolved = false,
+  toggleConversationStatus,
   isLoading: parentIsLoading = false
 }: PullRequestCommentBoxProps) => {
   const [__file, setFile] = useState<File>()
@@ -215,31 +223,39 @@ export const PullRequestCommentBox = ({
     onCancelClick && onCancelClick()
   }
 
-  const handleSaveComment = () => {
-    const newComment = textComment.trim()
+  const handleSaveComment = (): Promise<void> => {
+    return new Promise((resolve, reject) => {
+      const newComment = textComment.trim()
 
-    if (onSaveComment && (allowEmptyValue || newComment)) {
-      setParentComment(newComment)
-      setCommentError(null)
-      const formattedComment = replaceMentionEmailWithId(newComment, principalsMentionMap)
-      const onSaveCommentReturn = onSaveComment(formattedComment)
+      if (onSaveComment && (allowEmptyValue || newComment)) {
+        setParentComment(newComment)
+        setCommentError(null)
 
-      if (onSaveCommentReturn instanceof Promise) {
-        setIsLoading(true)
-        onSaveCommentReturn
-          .then(() => {
-            clearComment()
-          })
-          .catch(e => {
-            setCommentError(getErrorMessage(e, 'Failed to save comment'))
-          })
-          .finally(() => {
-            setIsLoading(false)
-          })
+        const formattedComment = replaceMentionEmailWithId(newComment, principalsMentionMap)
+        const onSaveCommentReturn = onSaveComment(formattedComment)
+
+        if (onSaveCommentReturn instanceof Promise) {
+          setIsLoading(true)
+          onSaveCommentReturn
+            .then(() => {
+              clearComment()
+              resolve()
+            })
+            .catch(e => {
+              setCommentError(getErrorMessage(e, 'Failed to save comment'))
+              reject(e)
+            })
+            .finally(() => {
+              setIsLoading(false)
+            })
+        } else {
+          clearComment()
+          resolve()
+        }
       } else {
-        clearComment()
+        resolve()
       }
-    }
+    })
   }
 
   const avatar = useMemo(() => {
@@ -639,7 +655,7 @@ export const PullRequestCommentBox = ({
     }
   }
 
-  const onKeyDown = (e: KeyboardEvent<HTMLTextAreaElement>): void => {
+  const onKeyDown = (e: KeyboardEvent<HTMLTextAreaElement>): Promise<void> | void => {
     if (e.key === 'Enter' && e.metaKey) {
       return handleSaveComment()
     }
@@ -665,16 +681,20 @@ export const PullRequestCommentBox = ({
       <Layout.Vertical gap="xs" className="w-full">
         <PullRequestCommentingOn from={lineFromNumber} to={lineNumber} fromSide={lineFromSide} toSide={lineSide} />
         <Layout.Vertical
-          gap="md"
-          className={cn('p-4 pt-3 flex-1 w-full', {
-            'border rounded-md': !inReplyMode || isEditMode,
-            'bg-cn-1': !inReplyMode,
-            'bg-cn-2 border-t': inReplyMode
-          })}
+          gap="xs"
+          className={cn(
+            'px-cn-md pt-cn-2xs pb-cn-sm flex-1 w-full',
+            {
+              'border rounded-md': !inReplyMode || isEditMode,
+              'bg-cn-1': !inReplyMode,
+              'bg-cn-2 border-t': inReplyMode
+            },
+            wrapperClassName
+          )}
         >
           <Tabs.Root defaultValue={TABS_KEYS.WRITE} value={activeTab} onValueChange={handleTabChange}>
             <Tabs.List
-              className="-mx-4 mb-cn-md px-4"
+              className="-mx-cn-md mb-cn-xs px-cn-md"
               activeClassName={inReplyMode ? 'bg-cn-2' : 'bg-cn-1'}
               variant="overlined"
             >
@@ -784,9 +804,20 @@ export const PullRequestCommentBox = ({
                   </Button>
                 )}
 
-                <Button loading={parentIsLoading || isLoading} onClick={handleSaveComment}>
-                  {buttonTitle || 'Comment'}
-                </Button>
+                {!isReply && (
+                  <Button loading={parentIsLoading || isLoading} onClick={handleSaveComment}>
+                    {buttonTitle || 'Comment'}
+                  </Button>
+                )}
+
+                {isReply && (
+                  <ReplySplitButton
+                    isLoading={parentIsLoading || isLoading}
+                    isResolved={isResolved}
+                    handleSaveComment={handleSaveComment}
+                    toggleConversationStatus={toggleConversationStatus}
+                  />
+                )}
               </Layout.Flex>
             ) : null}
           </Layout.Flex>

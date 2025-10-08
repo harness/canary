@@ -32,18 +32,18 @@ import { replaceEmailAsKey } from './utils'
 const getThreadSpacingClasses = (threadIndex?: number, totalThreads?: number, isLast?: boolean) => {
   if (threadIndex === undefined || totalThreads === undefined) {
     return {
-      'pb-cn-sm': !isLast,
-      'pb-cn-md': isLast
+      'pb-cn-md': !isLast,
+      'pb-cn-xs': isLast
     }
   }
   const isFirstThread = threadIndex === 0
   const isLastThread = threadIndex === totalThreads - 1
   const isSingleThread = totalThreads === 1
   return {
-    'pt-4 pb-2': isSingleThread, // Single conversation: lines to conversation to lines
-    'pt-4 pb-1': isFirstThread && !isSingleThread, // First: lines to conversation
-    'pt-1 pb-1': !isFirstThread && !isLastThread, // Middle: conversation to conversation
-    'pt-1 pb-2': isLastThread && !isSingleThread // Last: conversation to lines
+    'py-cn-xs': isSingleThread, // Single conversation: lines to conversation to lines
+    'pt-cn-xs pb-cn-3xs': isFirstThread && !isSingleThread, // First: lines to conversation
+    'pt-cn-3xs pb-cn-3xs': !isFirstThread && !isLastThread, // Middle: conversation to conversation
+    'pt-cn-3xs pb-cn-xs': isLastThread && !isSingleThread // Last: conversation to lines
   }
 }
 
@@ -51,6 +51,7 @@ interface ItemHeaderProps {
   avatar?: ReactNode
   name?: string
   isComment?: boolean
+  hasActionsInHeader?: boolean
   description?: ReactNode
   timestamp?: number
   selectStatus?: ReactNode
@@ -83,7 +84,8 @@ const ItemHeader: FC<ItemHeaderProps> = memo(
     onQuoteReply,
     hideEditDelete,
     isReply = false,
-    isResolved = false
+    isResolved = false,
+    hasActionsInHeader = false
   }) => {
     const { triggerRef, registerTrigger } = useCustomDialogTrigger()
     const handleDeleteCommentWithTrigger = useCallback(() => {
@@ -157,14 +159,17 @@ const ItemHeader: FC<ItemHeaderProps> = memo(
                 <TimeAgoCard timestamp={timestamp} />
               </>
             )}
-            <Text variant="body-single-line-normal" color="foreground-3">
-              {selectStatus}
-            </Text>
+            {selectStatus && (
+              <Text variant="body-single-line-normal" color="foreground-3">
+                {selectStatus}
+              </Text>
+            )}
           </Layout.Horizontal>
         </Text>
-        {isComment && !isDeleted && !isResolved && (
+        {(isComment || hasActionsInHeader) && !isDeleted && !isResolved && (
           <MoreActionsTooltip
             ref={triggerRef}
+            buttonSize="sm"
             iconName="more-horizontal"
             sideOffset={4}
             alignOffset={0}
@@ -192,7 +197,10 @@ export interface TimelineItemProps {
   currentUser?: string
   contentHeader?: ReactNode
   content?: ReactNode
+  renderFirstCommentBlock?: ReactNode
   icon?: ReactNode
+  isFirstCommentAsHeader?: boolean
+  hasActionsInHeader?: boolean
   isLast?: boolean
   isComment?: boolean
   hideIconBorder?: boolean
@@ -200,6 +208,8 @@ export interface TimelineItemProps {
   contentWrapperClassName?: string
   contentClassName?: string
   replyBoxClassName?: string
+  footerBoxClassName?: string
+  mainWrapperClassName?: string
   wrapperClassName?: string
   titleClassName?: string
   handleSaveComment?: (comment: string, parentId?: number) => Promise<void>
@@ -234,14 +244,18 @@ const PullRequestTimelineItem: FC<TimelineItemProps> = ({
   contentHeader,
   content,
   icon,
+  isFirstCommentAsHeader = false,
+  hasActionsInHeader = false,
   isLast = false,
   hideReplySection = false,
   contentWrapperClassName,
   contentClassName,
   replyBoxClassName,
+  footerBoxClassName,
   handleSaveComment,
   commentId,
   parentCommentId,
+  mainWrapperClassName,
   wrapperClassName,
   titleClassName,
   isComment,
@@ -269,7 +283,8 @@ const PullRequestTimelineItem: FC<TimelineItemProps> = ({
   mentions,
   payload,
   threadIndex,
-  totalThreads
+  totalThreads,
+  renderFirstCommentBlock
 }) => {
   const [comment, setComment] = useState('')
   const { isExpanded: getIsExpanded, toggleExpanded } = useExpandedComments()
@@ -335,7 +350,7 @@ const PullRequestTimelineItem: FC<TimelineItemProps> = ({
     if (contentElement.props?.children?.length) {
       // If content is an array of comments, take the first one
       const [firstComment] = Children.toArray(contentElement.props.children)
-      return <div className="px-cn-md pt-cn-md [&_[data-connector]]:hidden">{firstComment}</div>
+      return <div className="[&_[data-connector]]:hidden">{firstComment}</div>
     }
 
     // If content is a single element, return as is
@@ -349,20 +364,48 @@ const PullRequestTimelineItem: FC<TimelineItemProps> = ({
     </Button>
   )
 
+  const renderDeleteDialog = () => (
+    <DeleteAlertDialog
+      open={isDeleteDialogOpen}
+      onClose={() => {
+        setIsDeleteDialogOpen(false)
+      }}
+      deleteFn={handleConfirmDeleteComment}
+      error={isDeletingError}
+      message={`This will permanently delete this ${isReply ? 'reply' : 'comment'}.`}
+      type={isReply ? 'reply' : 'comment'}
+      identifier={String(commentId)}
+      isLoading={isDeletingComment}
+    />
+  )
+
+  if (isFirstCommentAsHeader) {
+    return (
+      <>
+        <div id={id} className={cn('px-cn-md py-cn-lg', { 'border-b': isExpanded })}>
+          {renderContent()}
+        </div>
+
+        {renderDeleteDialog()}
+      </>
+    )
+  }
+
   return (
     <>
-      <div id={id}>
+      <div id={id} className={mainWrapperClassName}>
         <NodeGroup.Root className={cn(getThreadSpacingClasses(threadIndex, totalThreads, isLast), wrapperClassName)}>
-          {!!icon && <NodeGroup.Icon>{icon}</NodeGroup.Icon>}
+          {!!icon && <NodeGroup.Icon wrapperClassName="self-auto size-auto">{icon}</NodeGroup.Icon>}
           <NodeGroup.Title className={titleClassName}>
             {/* Ensure that header has at least one item */}
             {!!header.length && (
-              <div className="flex w-full items-center justify-between gap-x-cn-md">
+              <div className="gap-x-cn-md flex w-full items-center justify-between">
                 <ItemHeader
                   isDeleted={isDeleted}
                   onEditClick={onEditClick}
                   onCopyClick={onCopyClick}
                   isComment={isComment}
+                  hasActionsInHeader={hasActionsInHeader}
                   isReply={isReply}
                   isNotCodeComment={isNotCodeComment}
                   handleDeleteComment={handleOpenDeleteDialog}
@@ -375,17 +418,23 @@ const PullRequestTimelineItem: FC<TimelineItemProps> = ({
                   }}
                   hideEditDelete={hideEditDelete}
                 />
-                {isResolved && !isComment && !contentHeader && renderToggleButton()}
+                {isResolved && !isComment && (!contentHeader || isNotCodeComment) && renderToggleButton()}
               </div>
             )}
           </NodeGroup.Title>
           {!!content && (
             <NodeGroup.Content className={cn('overflow-auto', contentWrapperClassName)}>
               <div className={cn('border rounded-md overflow-hidden', contentClassName)}>
+                {!!renderFirstCommentBlock && isExpanded && renderFirstCommentBlock}
+
                 {!!contentHeader && (
-                  <Layout.Horizontal align="center" justify="between" className={cn('p-2 px-cn-md bg-cn-2')}>
+                  <Layout.Horizontal
+                    align="center"
+                    justify="between"
+                    className={cn('px-cn-md py-cn-sm bg-cn-2', { 'border-b': isExpanded })}
+                  >
                     {contentHeader}
-                    {isResolved && renderToggleButton()}
+                    {isResolved && !isNotCodeComment && renderToggleButton()}
                   </Layout.Horizontal>
                 )}
 
@@ -418,11 +467,13 @@ const PullRequestTimelineItem: FC<TimelineItemProps> = ({
                     {hideReplyHere ? (
                       <PullRequestCommentBox
                         buttonTitle="Reply"
+                        isReply
                         principalsMentionMap={principalsMentionMap}
                         setPrincipalsMentionMap={setPrincipalsMentionMap}
                         principalProps={principalProps}
                         handleUpload={handleUpload}
                         inReplyMode
+                        wrapperClassName={replyBoxClassName}
                         onSaveComment={formattedComment => {
                           return handleSaveComment?.(formattedComment, parentCommentId)
                             .then(() => {
@@ -432,6 +483,10 @@ const PullRequestTimelineItem: FC<TimelineItemProps> = ({
                               throw e
                             })
                         }}
+                        toggleConversationStatus={() =>
+                          toggleConversationStatus?.(isResolved ? 'active' : 'resolved', parentCommentId)
+                        }
+                        isResolved={isResolved}
                         onCancelClick={() => {
                           setHideReplyHere?.(false)
                         }}
@@ -439,7 +494,12 @@ const PullRequestTimelineItem: FC<TimelineItemProps> = ({
                         setComment={setComment}
                       />
                     ) : (
-                      <div className={cn('flex items-center gap-cn-sm border-t bg-cn-2', replyBoxClassName)}>
+                      <div
+                        className={cn(
+                          'flex items-center gap-cn-sm border-t bg-cn-2 px-cn-md py-cn-xs',
+                          replyBoxClassName
+                        )}
+                      >
                         {!!currentUser && <Avatar name={currentUser} rounded />}
                         <TextInput
                           wrapperClassName="flex-1"
@@ -448,49 +508,46 @@ const PullRequestTimelineItem: FC<TimelineItemProps> = ({
                           onClick={() => setHideReplyHere?.(true)}
                           onChange={e => setComment(e.target.value)}
                         />
+                        <Button
+                          variant="outline"
+                          onClick={() => {
+                            toggleConversationStatus?.(isResolved ? 'active' : 'resolved', parentCommentId)
+                          }}
+                        >
+                          <IconV2 name={isResolved ? 'bubble-upload' : 'chat-bubble-check'} />
+                          {isResolved ? 'Unresolve' : 'Resolve'}
+                        </Button>
                       </div>
                     )}
-                    <div className={cn('flex items-center gap-x-cn-md border-t', replyBoxClassName)}>
-                      <Button
-                        variant="outline"
-                        onClick={() => {
-                          toggleConversationStatus?.(isResolved ? 'active' : 'resolved', parentCommentId)
-                        }}
+                    {isResolved && (
+                      <Text
+                        className={cn('border-t px-cn-md py-cn-sm text-ellipsis overflow-hidden', footerBoxClassName)}
+                        align="right"
+                        variant="body-normal"
+                        color="foreground-3"
                       >
-                        {isResolved ? 'Unresolve conversation' : 'Resolve conversation'}
-                      </Button>
-
-                      {isResolved && (
-                        <Text variant="body-normal" color="foreground-3">
-                          {/* TODO: need to identify the author who resolved the conversation */}
-                          <Text as="span" variant="body-strong" color="foreground-1">
-                            {payload?.resolver?.display_name}
-                          </Text>
-                          &nbsp; marked this conversation as resolved.
-                        </Text>
-                      )}
-                    </div>
+                        {/* TODO: need to identify the author who resolved the conversation */}
+                        <Text
+                          className="[overflow-wrap:break-word]"
+                          as="span"
+                          variant="body-strong"
+                          color="foreground-1"
+                        >
+                          {payload?.resolver?.display_name}
+                        </Text>{' '}
+                        marked this conversation as resolved.
+                      </Text>
+                    )}
                   </>
                 )}
               </div>
             </NodeGroup.Content>
           )}
-          {!isLast && <NodeGroup.Connector className="left-[0.8rem] top-0" />}
+          {!isLast && <NodeGroup.Connector className={cn('left-[0.8rem] top-1 bottom-[-10px]')} />}
         </NodeGroup.Root>
       </div>
 
-      <DeleteAlertDialog
-        open={isDeleteDialogOpen}
-        onClose={() => {
-          setIsDeleteDialogOpen(false)
-        }}
-        deleteFn={handleConfirmDeleteComment}
-        error={isDeletingError}
-        message={`This will permanently delete this ${isReply ? 'reply' : 'comment'}.`}
-        type={isReply ? 'reply' : 'comment'}
-        identifier={String(commentId) ?? undefined}
-        isLoading={isDeletingComment}
-      />
+      {renderDeleteDialog()}
     </>
   )
 }

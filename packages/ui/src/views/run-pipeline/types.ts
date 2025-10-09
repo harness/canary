@@ -57,6 +57,7 @@ export interface PipelineInput {
 
 export interface PipelineInputDefinition extends PipelineInput {
   ui?: InputUIConfig
+  warning?: string
 }
 
 export interface InputUIConfig {

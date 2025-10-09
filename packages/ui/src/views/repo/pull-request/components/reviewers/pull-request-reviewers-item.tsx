@@ -1,4 +1,4 @@
-import { Avatar, IconV2, Layout } from '@/components'
+import { Avatar, Button, IconV2, Layout } from '@/components'
 import { EnumBypassListType, PullReqReviewDecision, ReviewerItemProps } from '@/views'
 import { getIcon } from '@views/repo/utils'
 
@@ -19,12 +19,19 @@ const getReviewDecisionIcon = (decision: PullReqReviewDecision) => {
   }
 }
 
-const ReviewerItem = ({ reviewer, reviewDecision, sha, sourceSHA, processReviewDecision }: ReviewerItemProps) => {
+const ReviewerItem = ({
+  reviewer,
+  reviewDecision,
+  sha,
+  sourceSHA,
+  processReviewDecision,
+  handleDelete
+}: ReviewerItemProps) => {
   const { id, type, display_name, email } = reviewer || {}
   const updatedReviewDecision = reviewDecision && processReviewDecision(reviewDecision, sha, sourceSHA)
 
   return (
-    <Layout.Horizontal key={id} align="center" justify="between" gap="sm">
+    <Layout.Horizontal key={id} align="center" justify="between" gap="sm" className="group">
       <Layout.Horizontal align="center" gap="xs">
         {type === EnumBypassListType.USER ? (
           <Avatar name={display_name || ''} rounded />
@@ -34,7 +41,20 @@ const ReviewerItem = ({ reviewer, reviewDecision, sha, sourceSHA, processReviewD
         <ReviewerInfo display_name={display_name || ''} email={email || ''} />
       </Layout.Horizontal>
 
-      {updatedReviewDecision && getReviewDecisionIcon(updatedReviewDecision as PullReqReviewDecision)}
+      <div className="relative">
+        <Button
+          className="absolute -inset-px z-0 opacity-0 group-focus-within:opacity-100 group-hover:opacity-100"
+          onClick={() => (id ? handleDelete(id) : null)}
+          size="2xs"
+          variant="transparent"
+          iconOnly
+        >
+          <IconV2 name="xmark" skipSize />
+        </Button>
+        <div className="relative z-[1] group-focus-within:-z-[1] group-focus-within:opacity-0 group-hover:-z-[1] group-hover:opacity-0">
+          {updatedReviewDecision && getReviewDecisionIcon(updatedReviewDecision as PullReqReviewDecision)}
+        </div>
+      </div>
     </Layout.Horizontal>
   )
 }

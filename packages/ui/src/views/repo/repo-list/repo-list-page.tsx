@@ -106,7 +106,7 @@ const SandboxRepoListPage: FC<RepoListPageProps> = ({
       type: FilterFieldTypes.Checkbox,
       sticky: true,
       filterFieldConfig: {
-        label: <IconV2 name="star-solid" size="md" className="text-cn-icon-warning cursor-pointer" />
+        label: <IconV2 name="pin-solid" size="md" className="cursor-pointer" />
       },
       parser: booleanParser
     }

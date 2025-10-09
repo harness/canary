@@ -1,6 +1,7 @@
 import { FC } from 'react'
 
 import { Toggle } from '@/components'
+import { cn } from '@/utils/cn'
 
 interface FavoriteIconProps {
   isFavorite?: boolean
@@ -10,20 +11,16 @@ interface FavoriteIconProps {
 
 const Favorite: FC<FavoriteIconProps> = ({ isFavorite = false, onFavoriteToggle, className }) => (
   <Toggle
-    className={className}
+    className={cn('hover:bg-cn-hover', className)}
     iconOnly
     size="sm"
     variant="transparent"
     selectedVariant="primary"
     selected={isFavorite}
-    prefixIcon={isFavorite ? 'star-solid' : 'star'}
-    prefixIconProps={{
-      className: isFavorite ? 'text-cn-icon-warning' : 'text-cn-2',
-      size: '2xs'
-    }}
+    prefixIcon={isFavorite ? 'pin-solid' : 'pin'}
     onChange={(selected: boolean) => onFavoriteToggle(selected)}
     tooltipProps={{
-      content: isFavorite ? 'Remove from favorite' : 'Add to favorite'
+      content: isFavorite ? 'Unpin' : 'Pin'
     }}
   />
 )

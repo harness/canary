@@ -61,7 +61,7 @@ export const EntityReferenceSort: React.FC<EntityReferenceSortProps> = ({
               handleFavoriteChange(isChecked)
             }}
           />
-          <IconV2 name="star-solid" size="lg" className="text-cn-icon-warning" />
+          <IconV2 name="pin-solid" size="md" />
         </Button>
       )}
       <DropdownMenu.Root>

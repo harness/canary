@@ -70,6 +70,11 @@ export enum PatternsButtonType {
   EXCLUDE = 'Exclude'
 }
 
+export enum TargetReposButtonType {
+  SELECT_INCLUDED = 'Select Included',
+  SELECT_EXCLUDED = 'Select Excluded'
+}
+
 export enum EnumBypassListType {
   SERVICE = 'service',
   SERVICEACCOUNT = 'serviceaccount',
@@ -102,6 +107,30 @@ export const repoBranchSettingsFormSchema = z.object({
       option: z.enum([PatternsButtonType.INCLUDE, PatternsButtonType.EXCLUDE])
     })
   ),
+  repoPattern: z.string(),
+  repoPatterns: z.array(
+    z.object({
+      pattern: z.string(),
+      option: z.enum([PatternsButtonType.INCLUDE, PatternsButtonType.EXCLUDE])
+    })
+  ),
+  targetRepos: z
+    .array(
+      z.object({
+        id: z.number(),
+        type: z.nativeEnum(TargetReposButtonType),
+        info: z
+          .object({
+            id: z.number().optional(),
+            parent_id: z.number().optional(),
+            identifier: z.string().optional(),
+            path: z.string().optional(),
+            default_branch: z.string().optional()
+          })
+          .optional()
+      })
+    )
+    .optional(),
   state: z.boolean(),
   bypass: z.array(
     z.object({

@@ -1,6 +1,7 @@
+import { UsererrorError } from '@/types'
 import { MessageTheme } from '@components/form-primitives'
 
-import { TypesPrincipalInfo, TypesUserGroupInfo } from './pull-request'
+import { RepoRepositoryOutput, TypesPrincipalInfo, TypesUserGroupInfo } from './pull-request'
 import { EnumBypassListType, NormalizedPrincipal, Rule } from './repo-branch-rules/types'
 
 export function combineAndNormalizePrincipalsAndGroups(
@@ -54,4 +55,14 @@ export const getIcon = (type: EnumBypassListType) => {
     default:
       return 'user'
   }
+}
+
+export interface RepoQueryObject {
+  repositories: RepoRepositoryOutput[]
+  refetchListRepos: () => void
+  isFetching: boolean
+  isError: boolean
+  error: UsererrorError | null
+  query: string | null
+  setQuery: (query: string | null) => void
 }

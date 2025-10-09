@@ -55,6 +55,11 @@ const mockFormOutput = {
     { pattern: 'main/*', option: PatternsButtonType.INCLUDE },
     { pattern: 'main/excluded', option: PatternsButtonType.EXCLUDE }
   ],
+  repoPattern: '',
+  repoPatterns: [
+    { pattern: 'repo/*', option: PatternsButtonType.INCLUDE },
+    { pattern: 'repo/excluded', option: PatternsButtonType.EXCLUDE }
+  ],
   state: true,
   bypass: [
     { id: 1, key: 'User One', type: EnumBypassListType.USER, email: 'user1@example.com', icon: 'user' },

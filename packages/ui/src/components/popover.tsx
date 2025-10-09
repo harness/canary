@@ -88,7 +88,7 @@ PopoverContent.displayName = PopoverPrimitive.Content.displayName
 type TriggerType = 'click' | 'hover'
 
 interface PopoverProps
-  extends PropsWithChildren<Omit<PopoverContentProps, 'children' | 'content'>>,
+  extends PropsWithChildren<Omit<PopoverContentProps, 'children' | 'content' | 'onCloseAutoFocus' | 'onOpenAutoFocus'>>,
     Omit<ComponentPropsWithoutRef<typeof PopoverPrimitive.Root>, 'children' | 'modal'> {
   content: ReactNode
   triggerType?: TriggerType
@@ -110,6 +110,7 @@ const PopoverComponent = ({
   const [internalOpen, setInternalOpen] = useState(defaultOpen || false)
   const hoverTimeoutRef = useRef<NodeJS.Timeout | null>(null)
   const closeTimeoutRef = useRef<NodeJS.Timeout | null>(null)
+  const triggerRef = useRef<HTMLButtonElement | null>(null)
 
   useEffect(() => {
     return () => {
@@ -162,10 +163,18 @@ const PopoverComponent = ({
 
   return (
     <Popover.Root open={open} onOpenChange={handleOpenChange}>
+      <button ref={triggerRef} className="sr-only" aria-hidden="true" />
       <Popover.Trigger {...evenTriggerProps} asChild>
         {children}
       </Popover.Trigger>
-      <Popover.Content {...evenTriggerProps} {...props}>
+      <Popover.Content
+        {...evenTriggerProps}
+        onCloseAutoFocus={(e: Event) => {
+          e.preventDefault()
+          triggerRef.current?.focus()
+        }}
+        {...props}
+      >
         {content}
       </Popover.Content>
     </Popover.Root>

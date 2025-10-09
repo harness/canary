@@ -114,7 +114,7 @@
     "i18next-browser-languagedetector": "^8.0.0",
     "input-otp": "^1.2.4",
     "lodash-es": "^4.17.21",
-    "monaco-editor": "^0.40.0",
+    "monaco-editor": "^0.44.0",
     "overlayscrollbars": "^2.10.0",
     "react-day-picker": "^8.10.1",
     "react-hook-form": "^7.28.0",

@@ -39,7 +39,8 @@ module.exports = {
         test: /\.(woff|woff2|eot|ttf|otf)$/, // handle Monaco's codicon.ttf
         type: 'asset/resource',
         generator: {
-          filename: 'fonts/[name][ext]'
+          // Add [hash] to avoid multiple chunks writing to the same filename
+          filename: 'fonts/[name].[contenthash:6][ext]'
         }
       }
     ]
@@ -52,18 +53,11 @@ module.exports = {
         './MicroFrontendApp': './src/AppMFE.tsx'
       },
       shared: {
-        react: {
-          singleton: true,
-          requiredVersion: false
-        },
-        'react-dom': {
-          singleton: true,
-          requiredVersion: false
-        }
+        react: { singleton: true, requiredVersion: false },
+        'react-dom': { singleton: true, requiredVersion: false }
       }
     }),
     new MonacoWebpackPlugin({
-      // available options are documented at https://github.com/Microsoft/monaco-editor-webpack-plugin#options
       languages: [
         'abap',
         'apex',
@@ -163,6 +157,19 @@ module.exports = {
   output: {
     filename: '[name].[contenthash:6].js',
     path: __dirname + '/dist',
-    clean: true
+    clean: true,
+    assetModuleFilename: 'fonts/[name].[contenthash:6][ext]' // global fallback for assets
+  },
+  optimization: {
+    splitChunks: {
+      chunks: 'all', // ensures assets like fonts are not duplicated across chunks
+      cacheGroups: {
+        fonts: {
+          test: /\.(woff|woff2|eot|ttf|otf)$/,
+          name: 'fonts',
+          enforce: true
+        }
+      }
+    }
   }
 }

@@ -450,6 +450,7 @@ const PullRequestDiffViewer = ({
                 currentUser={currentUser?.display_name}
                 hideEditDelete={parent?.payload?.author?.uid !== currentUser?.uid}
                 isComment
+                handleUpload={handleUpload}
                 hideReplyHere={hideReplyHeres[parent?.id]}
                 setHideReplyHere={state => toggleReplyBox(state, parent?.id)}
                 isResolved={!!parent.payload?.resolved}
@@ -481,6 +482,7 @@ const PullRequestDiffViewer = ({
                       principalProps={principalProps}
                       handleSaveComment={handleSaveComment}
                       isLast={replies.length === 0}
+                      handleUpload={handleUpload}
                       hideReplySection
                       mainWrapperClassName="pl-cn-md pr-cn-xs pt-cn-sm"
                       contentWrapperClassName="pr-cn-xs"

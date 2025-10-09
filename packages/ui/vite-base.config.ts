@@ -2,7 +2,6 @@ import { resolve } from 'path'
 
 import react from '@vitejs/plugin-react-swc'
 import { defineConfig } from 'vite'
-import monacoEditorPlugin from 'vite-plugin-monaco-editor'
 import svgr from 'vite-plugin-svgr'
 import tsConfigPaths from 'vite-tsconfig-paths'
 
@@ -18,15 +17,7 @@ const external = [
 ]
 
 export default defineConfig({
-  plugins: [
-    react(),
-    svgr({ include: '**/*.svg' }),
-    tsConfigPaths(),
-    // @ts-expect-error: @TODO: Fix this. Should be removed, added to enable typechecking
-    monacoEditorPlugin.default({
-      languageWorkers: ['editorWorkerService', 'json', 'typescript', 'html', 'css']
-    })
-  ],
+  plugins: [react(), svgr({ include: '**/*.svg' }), tsConfigPaths()],
   resolve: {
     alias: {
       'vaul/style.css?raw': resolve(__dirname, 'node_modules/vaul/style.css?raw')
@@ -49,12 +40,8 @@ export default defineConfig({
       formats: ['es']
     },
     rollupOptions: {
-      external
+      external: external
     },
-    sourcemap: true,
-    target: 'esnext'
-  },
-  worker: {
-    format: 'es'
+    sourcemap: true
   }
 })

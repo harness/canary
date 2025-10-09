@@ -1,10 +1,12 @@
 import { useEffect, useState } from 'react'
 
 import {
+  Button,
   IconV2,
   Layout,
   Link,
   LogoV2,
+  MoreActionsTooltip,
   StatsPanel,
   StatusBadge,
   Table,
@@ -145,12 +147,28 @@ export const ViewOnlyView = () => {
   useEffect(() => {
     const t = setTimeout(() => {
       setIsLoading(false)
-    }, 10000)
+    }, 1000)
 
     return () => {
       if (t) clearTimeout(t)
     }
   }, [])
+
+  const actions = (
+    <>
+      <Button onClick={() => console.log('Click')} disabled={isLoading}>
+        Test Connection
+      </Button>
+      <MoreActionsTooltip
+        actions={[
+          { title: 'Action 1', onClick: () => console.log('Action 1') },
+          { title: 'Action 2', onClick: () => console.log('Action 2') }
+        ]}
+        buttonVariant="outline"
+        disabled={isLoading}
+      />
+    </>
+  )
 
   return (
     <Page.Root>
@@ -163,16 +181,7 @@ export const ViewOnlyView = () => {
         logoName="node-js"
         title="harnessdocker"
         description="Preconfigured Docker connector for use in Harness."
-        button={{
-          props: {
-            onClick: () => console.log('Click')
-          },
-          text: 'Test Connection'
-        }}
-        moreActions={[
-          { title: 'Action 1', onClick: () => console.log('Action 1') },
-          { title: 'Action 2', onClick: () => console.log('Action 2') }
-        ]}
+        actions={actions}
       >
         <Layout.Flex wrap="wrap" gap="xs" align="baseline">
           <Text color="foreground-3">Labels:</Text>

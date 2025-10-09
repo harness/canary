@@ -1,6 +1,6 @@
 import { FC, ReactNode } from 'react'
 
-import { PermissionIdentifier, ResourceType, StatsPanel, Tabs, Text, TimeAgoCard } from '@/components'
+import { StatsPanel, Tabs, Text, TimeAgoCard } from '@/components'
 import { useRouterContext, useTranslation } from '@/context'
 import { Page, type SecretListItem } from '@/views'
 
@@ -10,9 +10,8 @@ interface SecretDetailsLayoutProps {
   configurationView?: ReactNode
   referencesView?: ReactNode
   activityView?: ReactNode
-  onEdit?: (identifier: string) => void
-  onDelete?: (identifier: string) => void
   isLoading?: boolean
+  actions?: ReactNode
 }
 
 enum SecretDetailsTabsKeys {
@@ -33,9 +32,8 @@ export const SecretDetailsLayout: FC<SecretDetailsLayoutProps> = ({
   configurationView,
   referencesView,
   activityView,
-  onEdit,
-  onDelete,
-  isLoading = false
+  isLoading = false,
+  actions
 }) => {
   const { t } = useTranslation()
   const { Switch, Route } = useRouterContext()
@@ -49,33 +47,7 @@ export const SecretDetailsLayout: FC<SecretDetailsLayoutProps> = ({
           linkProps: { to: backButtonTo?.() ?? '' }
         }}
         title={secret?.name ?? ''}
-        moreActions={[
-          {
-            title: t('views:secrets.edit', 'Edit secret'),
-            iconName: 'edit-pencil',
-            onClick: () => onEdit?.(secret.identifier),
-            rbac: {
-              resource: {
-                resourceType: ResourceType.SECRET,
-                resourceIdentifier: secret.identifier
-              },
-              permissions: [PermissionIdentifier.UPDATE_SECRET]
-            }
-          },
-          {
-            isDanger: true,
-            title: t('views:secrets.delete', 'Delete secret'),
-            iconName: 'trash',
-            onClick: () => onDelete?.(secret.identifier),
-            rbac: {
-              resource: {
-                resourceType: ResourceType.SECRET,
-                resourceIdentifier: secret.identifier
-              },
-              permissions: [PermissionIdentifier.DELETE_SECRET]
-            }
-          }
-        ]}
+        actions={actions}
       >
         <StatsPanel
           isLoading={isLoading}
@@ -103,7 +75,11 @@ export const SecretDetailsLayout: FC<SecretDetailsLayoutProps> = ({
             {
               label: t('views:secretDetails.lastUpdated', 'Last updated'),
               value: secret?.updatedAt ? (
-                <TimeAgoCard timestamp={secret.updatedAt} dateTimeFormatOptions={DATE_FORMAT_OPTIONS} />
+                <TimeAgoCard
+                  timestamp={secret.updatedAt}
+                  dateTimeFormatOptions={DATE_FORMAT_OPTIONS}
+                  textProps={{ color: 'foreground-1' }}
+                />
               ) : undefined
             }
           ]}

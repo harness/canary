@@ -1,23 +1,18 @@
-import { ButtonHTMLAttributes, FC, MouseEvent, ReactNode, useMemo } from 'react'
+import { ButtonHTMLAttributes, FC, ReactNode } from 'react'
 import type { LinkProps } from 'react-router-dom'
 
 import {
-  Button,
   ButtonLayout,
-  Dialog,
   Favorite,
   FavoriteIconProps,
   Layout,
   Link,
   LogoPropsV2,
   LogoV2,
-  RbacMoreActionsTooltipActionData,
   Skeleton,
   Text
 } from '@/components'
-import { useComponents, useCustomDialogTrigger } from '@/context'
 import { SandboxLayout } from '@/views'
-import omit from 'lodash-es/omit'
 
 export interface PageHeaderBackProps {
   linkText: string
@@ -36,10 +31,9 @@ export interface PageHeaderProps {
   title: string
   description?: ReactNode
   children?: ReactNode
-  button?: PageHeaderButtonProps
-  moreActions?: RbacMoreActionsTooltipActionData[]
   favoriteProps?: Omit<FavoriteIconProps, 'className'>
   isLoading?: boolean
+  actions?: ReactNode
 }
 
 const Header: FC<PageHeaderProps> = ({
@@ -48,59 +42,10 @@ const Header: FC<PageHeaderProps> = ({
   title,
   description,
   children,
-  button,
-  moreActions,
   favoriteProps,
-  isLoading = false
+  isLoading = false,
+  actions
 }) => {
-  const { RbacMoreActionsTooltip } = useComponents()
-  const { triggerRef, registerTrigger } = useCustomDialogTrigger()
-  const { triggerRef: buttonTriggerRef, registerTrigger: buttonRegisterTest } = useCustomDialogTrigger()
-
-  const UpdatedMoreActions = useMemo(() => {
-    if (!moreActions) return moreActions
-
-    return moreActions.map(action => {
-      const onClick = !action?.onClick
-        ? undefined
-        : () => {
-            registerTrigger()
-            action.onClick?.()
-          }
-
-      return {
-        ...action,
-        onClick
-      }
-    })
-  }, [moreActions, registerTrigger])
-
-  const buttonClickHandler = (e: MouseEvent<HTMLButtonElement>) => {
-    buttonRegisterTest()
-    button?.props?.onClick?.(e)
-  }
-
-  const getButton = () => {
-    if (!button) return null
-
-    const ButtonComp = (
-      <Button
-        ref={buttonTriggerRef}
-        {...omit(button?.props, ['onClick'])}
-        onClick={buttonClickHandler}
-        disabled={isLoading}
-      >
-        {button.text}
-      </Button>
-    )
-
-    if (button?.isDialogTrigger) {
-      return <Dialog.Trigger>{ButtonComp}</Dialog.Trigger>
-    }
-
-    return ButtonComp
-  }
-
   return (
     <Layout.Horizontal justify="between" gap="xl" className="mb-cn-xl">
       <Layout.Vertical gap="xl">
@@ -131,19 +76,7 @@ const Header: FC<PageHeaderProps> = ({
         {children}
       </Layout.Vertical>
 
-      {(!!button || !!UpdatedMoreActions) && (
-        <ButtonLayout className="self-end">
-          {getButton()}
-          {!!UpdatedMoreActions && (
-            <RbacMoreActionsTooltip
-              ref={triggerRef}
-              actions={UpdatedMoreActions}
-              buttonVariant="outline"
-              disabled={isLoading}
-            />
-          )}
-        </ButtonLayout>
-      )}
+      {!!actions && <ButtonLayout className="self-end">{actions}</ButtonLayout>}
     </Layout.Horizontal>
   )
 }

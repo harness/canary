@@ -276,6 +276,7 @@ function PullRequestChangesInternal({
                       toRepoFileDetails={toRepoFileDetails}
                       sourceBranch={pullReqMetadata?.source_branch}
                       currentRefForDiff={currentRefForDiff}
+                      commentLayout="compact"
                     />
                   </InViewDiffRenderer>
                 </div>

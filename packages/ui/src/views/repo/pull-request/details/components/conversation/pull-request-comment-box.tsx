@@ -14,6 +14,7 @@ import {
   Alert,
   Avatar,
   Button,
+  ButtonLayout,
   ButtonVariants,
   IconV2,
   IconV2NamesType,
@@ -125,6 +126,7 @@ export interface PullRequestCommentBoxProps {
   allowEmptyValue?: boolean
   hideAvatar?: boolean
   isLoading?: boolean
+  layout?: 'compact' | 'default'
 }
 
 const TABS_KEYS = {
@@ -165,7 +167,8 @@ export const PullRequestCommentBox = ({
   isReply = false,
   isResolved = false,
   toggleConversationStatus,
-  isLoading: parentIsLoading = false
+  isLoading: parentIsLoading = false,
+  layout = 'default'
 }: PullRequestCommentBoxProps) => {
   const [__file, setFile] = useState<File>()
   const [activeTab, setActiveTab] = useState<typeof TABS_KEYS.WRITE | typeof TABS_KEYS.PREVIEW>(TABS_KEYS.WRITE)
@@ -675,6 +678,8 @@ export const PullRequestCommentBox = ({
     return line.startsWith('- [ ] ')
   }
 
+  const isCompactLayout = layout === 'compact'
+
   return (
     <Layout.Horizontal align="start" className={cn('gap-x-3', className)} data-comment-editor-shown="true">
       {!inReplyMode && !isEditMode && !hideAvatar && avatar}
@@ -687,14 +692,15 @@ export const PullRequestCommentBox = ({
             {
               'border rounded-md': !inReplyMode || isEditMode,
               'bg-cn-1': !inReplyMode,
-              'bg-cn-2 border-t': inReplyMode
+              'bg-cn-2 border-t': inReplyMode,
+              'px-cn-sm pt-cn-xs pb-cn-xs': isCompactLayout
             },
             wrapperClassName
           )}
         >
           <Tabs.Root defaultValue={TABS_KEYS.WRITE} value={activeTab} onValueChange={handleTabChange}>
             <Tabs.List
-              className="-mx-cn-md mb-cn-xs px-cn-md"
+              className={cn('-mx-cn-md mb-cn-xs px-cn-md', { '-mx-cn-sm px-cn-sm': isCompactLayout })}
               activeClassName={inReplyMode ? 'bg-cn-2' : 'bg-cn-1'}
               variant="overlined"
             >
@@ -715,7 +721,7 @@ export const PullRequestCommentBox = ({
                   resizable
                   ref={textAreaRef}
                   placeholder={textareaPlaceholder ?? 'Add your comment here'}
-                  className="min-h-12 pb-cn-3xl text-cn-1"
+                  className="pb-cn-3xl text-cn-1 min-h-12"
                   autoFocus={!!autofocus || !!inReplyMode}
                   principalProps={principalProps}
                   setPrincipalsMentionMap={setPrincipalsMentionMap}
@@ -735,12 +741,12 @@ export const PullRequestCommentBox = ({
                   </div>
                 )}
                 {isDragging && (
-                  <div className="absolute inset-1 z-[100] cursor-copy rounded-sm border border-dashed border-cn-2" />
+                  <div className="border-cn-2 absolute inset-1 z-[100] cursor-copy rounded-sm border border-dashed" />
                 )}
                 <Layout.Flex
                   align="center"
                   gap="4xs"
-                  className="absolute bottom-px left-px w-[calc(100%-20px)] rounded bg-cn-1 p-cn-3xs"
+                  className="bg-cn-1 p-cn-3xs absolute bottom-px left-px w-[calc(100%-20px)] rounded"
                 >
                   {toolbar.map((item, index) => {
                     return (
@@ -797,7 +803,7 @@ export const PullRequestCommentBox = ({
             )}
 
             {onSaveComment ? (
-              <Layout.Flex align="center" justify="end" gap="sm" className="ml-auto">
+              <ButtonLayout className={cn({ 'gap-cn-xs': isCompactLayout })}>
                 {(inReplyMode || isEditMode) && (
                   <Button variant="secondary" onClick={handleCancelComment}>
                     Cancel
@@ -818,7 +824,7 @@ export const PullRequestCommentBox = ({
                     toggleConversationStatus={toggleConversationStatus}
                   />
                 )}
-              </Layout.Flex>
+              </ButtonLayout>
             ) : null}
           </Layout.Flex>
 

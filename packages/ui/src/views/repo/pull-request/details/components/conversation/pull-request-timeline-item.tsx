@@ -29,10 +29,16 @@ import { useExpandedComments } from '../../context/pull-request-comments-context
 import { replaceEmailAsKey } from './utils'
 
 //Utility function to calculate thread spacing based on position
-const getThreadSpacingClasses = (threadIndex?: number, totalThreads?: number, isLast?: boolean) => {
+const getThreadSpacingClasses = (
+  threadIndex?: number,
+  totalThreads?: number,
+  isLast?: boolean,
+  isCompactLayout?: boolean
+) => {
   if (threadIndex === undefined || totalThreads === undefined) {
     return {
       'pb-cn-md': !isLast,
+      'pb-cn-sm': !isLast && isCompactLayout,
       'pb-cn-xs': isLast
     }
   }
@@ -237,6 +243,7 @@ export interface TimelineItemProps {
   payload?: TypesPullReqActivity
   threadIndex?: number
   totalThreads?: number
+  layout?: 'compact' | 'default'
 }
 
 const PullRequestTimelineItem: FC<TimelineItemProps> = ({
@@ -284,7 +291,8 @@ const PullRequestTimelineItem: FC<TimelineItemProps> = ({
   payload,
   threadIndex,
   totalThreads,
-  renderFirstCommentBlock
+  renderFirstCommentBlock,
+  layout = 'default'
 }) => {
   const [comment, setComment] = useState('')
   const { isExpanded: getIsExpanded, toggleExpanded } = useExpandedComments()
@@ -357,6 +365,8 @@ const PullRequestTimelineItem: FC<TimelineItemProps> = ({
     return content
   }
 
+  const isCompactLayout = layout === 'compact'
+
   const renderToggleButton = () => (
     <Button variant="transparent" onClick={handleToggleExpanded}>
       <IconV2 name={isExpanded ? 'collapse-code' : 'expand-code'} size="xs" />
@@ -394,7 +404,9 @@ const PullRequestTimelineItem: FC<TimelineItemProps> = ({
   return (
     <>
       <div id={id} className={mainWrapperClassName}>
-        <NodeGroup.Root className={cn(getThreadSpacingClasses(threadIndex, totalThreads, isLast), wrapperClassName)}>
+        <NodeGroup.Root
+          className={cn(getThreadSpacingClasses(threadIndex, totalThreads, isLast, isCompactLayout), wrapperClassName)}
+        >
           {!!icon && <NodeGroup.Icon wrapperClassName="self-auto size-auto">{icon}</NodeGroup.Icon>}
           <NodeGroup.Title className={titleClassName}>
             {/* Ensure that header has at least one item */}
@@ -457,6 +469,7 @@ const PullRequestTimelineItem: FC<TimelineItemProps> = ({
                     }}
                     comment={comment}
                     setComment={setComment}
+                    layout={layout}
                   />
                 ) : (
                   renderContent()
@@ -492,11 +505,13 @@ const PullRequestTimelineItem: FC<TimelineItemProps> = ({
                         }}
                         comment={comment}
                         setComment={setComment}
+                        layout={layout}
                       />
                     ) : (
                       <div
                         className={cn(
                           'flex items-center gap-cn-sm border-t bg-cn-2 px-cn-md py-cn-xs',
+                          { 'gap-cn-xs px-cn-sm': isCompactLayout },
                           replyBoxClassName
                         )}
                       >

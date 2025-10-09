@@ -81,6 +81,7 @@ interface PullRequestDiffviewerProps {
   handleUpload?: HandleUploadType
   collapseDiff?: () => void
   principalProps: PrincipalPropsType
+  layout?: 'compact' | 'default'
 }
 
 const PullRequestDiffViewer = ({
@@ -108,7 +109,8 @@ const PullRequestDiffViewer = ({
   toggleConversationStatus,
   handleUpload,
   collapseDiff,
-  principalProps
+  principalProps,
+  layout = 'default'
 }: PullRequestDiffviewerProps) => {
   const { t } = useTranslation()
   const ref = useRef<{ getDiffFileInstance: () => DiffFile }>(null)
@@ -363,6 +365,8 @@ const PullRequestDiffViewer = ({
     setHideReplyHeres(prev => ({ ...prev, [id]: state }))
   }
 
+  const isCompactLayout = layout === 'compact'
+
   const [newComments, setNewComments] = useState<Record<string, string>>({})
 
   // comment widget (add comment)
@@ -410,6 +414,7 @@ const PullRequestDiffViewer = ({
             lang={lang}
             comment={commentText}
             setComment={value => setNewComments(prev => ({ ...prev, [commentKey]: value }))}
+            layout={layout}
           />
         </div>
       )
@@ -430,6 +435,8 @@ const PullRequestDiffViewer = ({
             const parentIdAttr = `comment-${parent?.id}`
             const replies = thread.replies
             const parentInitials = getInitials(parent.author ?? '', 2)
+            const isSingleComment = replies.length === 0
+
             return (
               <PullRequestTimelineItem
                 principalsMentionMap={principalsMentionMap}
@@ -444,8 +451,10 @@ const PullRequestDiffViewer = ({
                 parentCommentId={parent.id}
                 handleSaveComment={handleSaveComment}
                 isLast={true}
-                mainWrapperClassName="pl-cn-md pr-cn-xs"
-                contentWrapperClassName="col-start-1 row-start-1 col-end-3 row-end-3 pr-cn-xs"
+                mainWrapperClassName={cn('pl-cn-md pr-cn-xs', { 'pl-cn-xs': isCompactLayout })}
+                contentWrapperClassName={cn('col-start-1 row-start-1 col-end-3 row-end-3', {
+                  'pr-cn-xs': !isCompactLayout
+                })}
                 header={[]}
                 currentUser={currentUser?.display_name}
                 hideEditDelete={parent?.payload?.author?.uid !== currentUser?.uid}
@@ -468,6 +477,7 @@ const PullRequestDiffViewer = ({
                     </Text>
                   )
                 }
+                layout={layout}
                 content={
                   <div>
                     <PullRequestTimelineItem
@@ -482,7 +492,11 @@ const PullRequestDiffViewer = ({
                       handleSaveComment={handleSaveComment}
                       isLast={replies.length === 0}
                       hideReplySection
-                      mainWrapperClassName="pl-cn-md pr-cn-xs pt-cn-sm"
+                      mainWrapperClassName={cn(
+                        'pt-cn-sm',
+                        { 'pb-cn-sm': isSingleComment },
+                        isCompactLayout ? 'pl-cn-sm pr-cn-sm' : 'pl-cn-md pr-cn-xs'
+                      )}
                       contentWrapperClassName="pr-cn-xs"
                       isResolved={!!parent.payload?.resolved}
                       isComment
@@ -515,6 +529,7 @@ const PullRequestDiffViewer = ({
                           )
                         }
                       ]}
+                      layout={layout}
                       content={
                         parent?.deleted ? (
                           <TextInput value={t('views:pullRequests.deletedComment')} disabled />
@@ -545,6 +560,7 @@ const PullRequestDiffViewer = ({
                               parent?.payload?.mentions || {}
                             )}
                             setComment={(text: string) => setEditComments(prev => ({ ...prev, [componentId]: text }))}
+                            layout={layout}
                           />
                         ) : (
                           <PRCommentView
@@ -573,9 +589,10 @@ const PullRequestDiffViewer = ({
                               key={reply.id}
                               payload={parent?.payload}
                               id={replyIdAttr}
-                              mainWrapperClassName={cn('pl-cn-md pr-cn-xs', {
-                                'pb-cn-sm': isLastComment
-                              })}
+                              mainWrapperClassName={cn(
+                                { 'pb-cn-sm': isLastComment },
+                                isCompactLayout ? 'pl-cn-sm pr-cn-sm' : 'pl-cn-md pr-cn-xs'
+                              )}
                               contentWrapperClassName="pr-cn-xs"
                               principalProps={principalProps}
                               parentCommentId={parent?.id}
@@ -636,6 +653,7 @@ const PullRequestDiffViewer = ({
                                     setComment={text =>
                                       setEditComments(prev => ({ ...prev, [replyComponentId]: text }))
                                     }
+                                    layout={layout}
                                   />
                                 ) : (
                                   <PRCommentView

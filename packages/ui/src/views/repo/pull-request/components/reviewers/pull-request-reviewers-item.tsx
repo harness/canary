@@ -48,6 +48,7 @@ const ReviewerItem = ({
           size="2xs"
           variant="transparent"
           iconOnly
+          tooltipProps={{ content: 'Remove reviewer', align: 'end' }}
         >
           <IconV2 name="xmark" skipSize />
         </Button>

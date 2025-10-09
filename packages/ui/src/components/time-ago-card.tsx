@@ -1,6 +1,6 @@
-import { FC, forwardRef, Fragment, memo, MouseEvent, Ref, useCallback, useState } from 'react'
+import { ButtonHTMLAttributes, FC, forwardRef, Fragment, memo, Ref } from 'react'
 
-import { Popover, PopoverTriggerProps, StatusBadge, Text, TextProps } from '@/components'
+import { StatusBadge, Text, TextProps, Tooltip, TooltipProps } from '@/components'
 import { cn } from '@utils/cn'
 import { LOCALE } from '@utils/TimeUtils'
 import { formatDistanceToNow } from 'date-fns'
@@ -138,16 +138,14 @@ interface TimeAgoCardProps {
   cutoffDays?: number
   beforeCutoffPrefix?: string
   afterCutoffPrefix?: string
-  textProps?: TextProps<'time' | 'span'> & {
-    ref?: Ref<HTMLSpanElement | HTMLTimeElement>
-  }
+  textProps?: Omit<TextProps<'time' | 'span'>, 'ref'>
+  tooltipProps?: TooltipProps
+  triggerProps?: Omit<ButtonHTMLAttributes<HTMLButtonElement>, 'className'>
   triggerClassName?: string
-  contentClassName?: string
-  triggerProps?: Omit<PopoverTriggerProps, 'className'>
 }
 
 export const TimeAgoCard = memo(
-  forwardRef<HTMLButtonElement, TimeAgoCardProps>(
+  forwardRef<HTMLButtonElement | HTMLSpanElement, TimeAgoCardProps>(
     (
       {
         timestamp,
@@ -156,26 +154,17 @@ export const TimeAgoCard = memo(
         beforeCutoffPrefix,
         afterCutoffPrefix,
         textProps,
-        triggerClassName,
-        contentClassName,
-        triggerProps
+        tooltipProps,
+        triggerProps,
+        triggerClassName
       },
       ref
     ) => {
-      const [isOpen, setIsOpen] = useState(false)
       const { formattedShort, formattedFull, isBeyondCutoff } = useFormattedTime(
         timestamp,
         cutoffDays,
         dateTimeFormatOptions
       )
-
-      const handleMouseEnter = useCallback(() => {
-        setIsOpen(true)
-      }, [])
-
-      const handleMouseLeave = useCallback(() => {
-        setIsOpen(false)
-      }, [])
 
       if (timestamp === null || timestamp === undefined) {
         return (
@@ -185,30 +174,21 @@ export const TimeAgoCard = memo(
         )
       }
 
-      const handleClickContent = (event: MouseEvent) => {
-        event.stopPropagation()
-      }
-
       const hasPrefix = beforeCutoffPrefix || afterCutoffPrefix
       const prefix = hasPrefix ? (isBeyondCutoff ? afterCutoffPrefix : beforeCutoffPrefix) : undefined
 
       return (
-        <Popover.Root open={isOpen} onOpenChange={setIsOpen}>
-          <Popover.Trigger
+        <Tooltip content={<TimeAgoContent formattedFullArray={formattedFull} />} {...tooltipProps}>
+          <button
+            ref={ref as Ref<HTMLButtonElement>}
+            className={cn('cn-time-ago-card-button', triggerClassName)}
             {...triggerProps}
-            className={cn('cn-time-ago-card-trigger', triggerClassName)}
-            ref={ref}
-            onMouseEnter={handleMouseEnter}
-            onMouseLeave={handleMouseLeave}
           >
-            <Text<'time'> as="time" {...textProps} ref={textProps?.ref as Ref<HTMLTimeElement>}>
+            <Text<'time'> as="time" {...textProps} dateTime={timestamp.toString()}>
               {prefix ? `${prefix} ${formattedShort}` : formattedShort}
             </Text>
-          </Popover.Trigger>
-          <Popover.Content onClick={handleClickContent} side="top" className={contentClassName}>
-            <TimeAgoContent formattedFullArray={formattedFull} />
-          </Popover.Content>
-        </Popover.Root>
+          </button>
+        </Tooltip>
       )
     }
   )

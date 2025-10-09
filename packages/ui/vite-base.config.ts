@@ -21,7 +21,9 @@ export default defineConfig({
   resolve: {
     alias: {
       'vaul/style.css?raw': resolve(__dirname, 'node_modules/vaul/style.css?raw'),
-      'monaco-editor': 'monaco-editor/esm/vs/editor/editor.api.js'
+      // monaco editor doesn't have a proper ESM export marked up in their
+      // package file, so we need to resolve it manually
+      'monaco-editor': './config/resolve-monaco'
     }
   },
   build: {

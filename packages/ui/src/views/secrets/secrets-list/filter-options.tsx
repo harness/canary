@@ -26,7 +26,7 @@ export const getSecretListFilterOptions = (
 ): FilterOptionConfig<Extract<keyof SecretListFilters, string>>[] => {
   return [
     {
-      label: t('views:secrets.filterOptions.secretType.label', 'Secret Type'),
+      label: t('views:secrets.filterOptions.secretType.label', 'Type'),
       value: 'secretTypes',
       type: FilterFieldTypes.MultiSelect,
       filterFieldConfig: {
@@ -35,7 +35,7 @@ export const getSecretListFilterOptions = (
       parser: getMultiSelectParser(SECRET_TYPE_OPTIONS)
     },
     {
-      label: t('views:secrets.filterOptions.secretManagerOption.label', 'Secret Manager Identifier'),
+      label: t('views:secrets.filterOptions.secretManagerOption.label', 'Secret Manager'),
       value: 'secretManagerIdentifiers',
       type: FilterFieldTypes.MultiSelect,
       filterFieldConfig: secretManagerFilterConfig,

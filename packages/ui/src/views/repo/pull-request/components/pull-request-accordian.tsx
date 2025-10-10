@@ -339,8 +339,8 @@ export const PullRequestAccordion: React.FC<{
     >
       <Accordion.Item value={header?.text ?? ''} className="rounded-3 border-none">
         <Accordion.Trigger
-          className="rounded-t-3 bg-cn-2 px-4 py-2 [&>.cn-accordion-trigger-indicator]:m-0 [&>.cn-accordion-trigger-indicator]:self-center"
-          headerClassName="z-[18] sticky top-[123px] border-cn-2 border rounded-t-3"
+          className="rounded-t-3 bg-cn-2 border-cn-2 group-[[data-state=closed]]:rounded-3 border px-4 py-2 transition-[border-radius] duration-300 [&>.cn-accordion-trigger-indicator]:m-0 [&>.cn-accordion-trigger-indicator]:self-center"
+          headerClassName="z-[18] sticky top-[123px] bg-cn-1 group"
         >
           <LineTitle
             header={header}

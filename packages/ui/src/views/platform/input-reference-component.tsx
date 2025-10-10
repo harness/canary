@@ -216,6 +216,7 @@ const InputReferenceInner = <T,>(
               >
                 {displayContent}
               </div>
+              <IconV2 name="nav-arrow-right" size="xs" className="text-cn-3" />
             </Layout.Horizontal>
 
             {suffix && (

@@ -63,7 +63,7 @@ export const SecretDetailsLayout: FC<SecretDetailsLayoutProps> = ({
               ) : undefined
             },
             {
-              label: t('views:secretDetails.lastUsed', 'Last used'),
+              label: t('views:secretDetails.updated', 'Updated'),
               value: secret?.updatedAt ? (
                 <TimeAgoCard
                   timestamp={secret.updatedAt}
@@ -73,7 +73,7 @@ export const SecretDetailsLayout: FC<SecretDetailsLayoutProps> = ({
               ) : undefined
             },
             {
-              label: t('views:secretDetails.lastUpdated', 'Last updated'),
+              label: t('views:secretDetails.lastUsed', 'Last used'),
               value: secret?.updatedAt ? (
                 <TimeAgoCard
                   timestamp={secret.updatedAt}

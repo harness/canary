@@ -645,12 +645,13 @@
   "secretDetails": {
     "backToSecrets": "Back to secrets",
     "created": "Created",
+    "updated": "Updated",
     "lastUsed": "Last used",
-    "lastUpdated": "Last updated",
     "configuration": "Configuration",
     "references": "References",
     "activity": "Activity",
-    "configurationView": "Secret Configuration"
+    "configurationView": "Secret Configuration",
+    "lastUpdated": "Last updated"
   },
   "notFound": {
     "title": "Something went wrong…",
@@ -925,13 +926,14 @@
   },
   "common": {
     "manager": "Manager",
+    "created": "Created",
+    "updated": "Updated",
     "lastActivity": "Last Activity",
     "details": "Details",
     "overview": "Overview",
     "type": "Type",
     "createdOn": "Created on",
-    "modifiedOn": "Modified on",
-    "created": "Created"
+    "modifiedOn": "Modified on"
   },
   "userManagement": {
     "createUser": {

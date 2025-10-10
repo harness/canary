@@ -15,7 +15,11 @@ import {
   TypesPullReqActivity
 } from '@/views'
 import { DiffModeEnum } from '@git-diff-view/react'
-import { HeaderProps, PullRequestAccordion } from '@views/repo/pull-request/components/pull-request-accordian'
+import {
+  HeaderProps,
+  PR_ACCORDION_STICKY_TOP,
+  PullRequestAccordion
+} from '@views/repo/pull-request/components/pull-request-accordian'
 import {
   calculateDetectionMargin,
   IN_VIEWPORT_DETECTION_MARGIN,
@@ -110,9 +114,41 @@ function PullRequestChangesInternal({
 }: DataProps) {
   const [openItems, setOpenItems] = useState<string[]>([])
   const scrollTimeoutRef = useRef<NodeJS.Timeout | null>(null)
+  const [hasInitializedOpenItems, setHasInitializedOpenItems] = useState(false)
+
+  const jumpToDiff = useCallback(
+    (fileText: string, delay: number = 0) => {
+      if (scrollTimeoutRef.current) {
+        clearTimeout(scrollTimeoutRef.current)
+      }
+      const collapsedFile = data.find(item => item.text === fileText)
+      if (collapsedFile) {
+        const currentIndex = data.findIndex(item => item.filePath === collapsedFile.filePath)
+        if (currentIndex !== -1) {
+          const diffItem = data[currentIndex]
+          if (diffItem) {
+            // Check if accordion content has scrolled behind the sticky header
+            const accordionContent = diffsContainerRef?.current?.querySelector(
+              `[data-diff-content="${diffItem.filePath}"]`
+            ) as HTMLElement | null
+            const contentRect = accordionContent?.getBoundingClientRect()
+            const hasContentScrolledBehindHeader = contentRect && contentRect?.top < PR_ACCORDION_STICKY_TOP
+            // Only jump if content has actually scrolled behind the sticky header (at PR_ACCORDION_STICKY_TOP)
+            if (hasContentScrolledBehindHeader) {
+              scrollTimeoutRef.current = setTimeout(() => {
+                jumpToFile(diffItem.filePath, diffBlocks, undefined, diffsContainerRef)
+                scrollTimeoutRef.current = null
+              }, delay)
+            }
+          }
+        }
+      }
+    },
+    [data, diffBlocks, diffsContainerRef]
+  )
 
   useEffect(() => {
-    if (data.length > 0) {
+    if (data.length > 0 && !hasInitializedOpenItems) {
       const itemsToOpen: string[] = []
       data.map(diffItem => {
         const fileComments = getFileComments(diffItem, comments)
@@ -129,8 +165,9 @@ function PullRequestChangesInternal({
         }
       })
       setOpenItems(itemsToOpen)
+      setHasInitializedOpenItems(true)
     }
-  }, [data, commentId, comments, setOpenItems])
+  }, [data, commentId, comments, setOpenItems, hasInitializedOpenItems])
 
   const isOpen = useCallback(
     (fileText: string) => {
@@ -140,42 +177,30 @@ function PullRequestChangesInternal({
   )
   const toggleOpen = useCallback(
     (fileText: string) => {
+      const wasOpen = openItems.includes(fileText)
       setOpenItems(curr => (curr.includes(fileText) ? curr.filter(t => t !== fileText) : [...curr, fileText]))
+
+      // Only check if sticky position needs to be maintained when collapsing (not when opening)
+      if (wasOpen) {
+        jumpToDiff(fileText)
+      }
     },
-    [setOpenItems]
+    [setOpenItems, jumpToDiff, openItems]
   )
 
-  const setCollapsed = useCallback(
+  const collapseAfterMarkingViewed = useCallback(
     (fileText: string, val: boolean) => {
       setOpenItems(items => {
         if (val) {
-          // Clear any existing timeout
-          if (scrollTimeoutRef.current) {
-            clearTimeout(scrollTimeoutRef.current)
-          }
-
-          // Find the file that's being collapsed/marked as viewed
-          const collapsedFile = data.find(item => item.text === fileText)
-          if (collapsedFile) {
-            // Find current file index
-            const currentIndex = data.findIndex(item => item.filePath === collapsedFile.filePath)
-            if (currentIndex !== -1) {
-              const nextDiff = data[currentIndex + 1]
-              if (nextDiff) {
-                scrollTimeoutRef.current = setTimeout(() => {
-                  jumpToFile(nextDiff.filePath, diffBlocks, undefined, diffsContainerRef)
-                  scrollTimeoutRef.current = null
-                }, 150) // Small delay to allow collapse animation
-              }
-            }
-          }
           return items.filter(item => item !== fileText)
         } else {
           return items.includes(fileText) ? items : [...items, fileText]
         }
       })
+      // if collapsing check if sticky position of header needs to be maintained by jumping to diff
+      if (val) jumpToDiff(fileText)
     },
-    [setOpenItems, data, diffBlocks, diffsContainerRef]
+    [setOpenItems, jumpToDiff]
   )
 
   // if diffPath or commentId provided in url search params, jump to diff
@@ -198,15 +223,6 @@ function PullRequestChangesInternal({
       }
     }
   }, [commentId, diffPathQuery, data, initiatedJumpToDiff])
-
-  // Cleanup timeout on unmount
-  useEffect(() => {
-    return () => {
-      if (scrollTimeoutRef.current) {
-        clearTimeout(scrollTimeoutRef.current)
-      }
-    }
-  }, [])
 
   return (
     <div className="flex flex-col" ref={diffsContainerRef}>
@@ -272,7 +288,7 @@ function PullRequestChangesInternal({
                       openItems={openItems}
                       isOpen={isOpen(item.text)}
                       onToggle={() => toggleOpen(item.text)}
-                      setCollapsed={val => setCollapsed(item.text, val)}
+                      setCollapsed={val => collapseAfterMarkingViewed(item.text, val)}
                       toRepoFileDetails={toRepoFileDetails}
                       sourceBranch={pullReqMetadata?.source_branch}
                       currentRefForDiff={currentRefForDiff}

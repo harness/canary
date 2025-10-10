@@ -17,6 +17,7 @@ import {
   TypesPullReqActivity
 } from '@/views'
 import { DiffModeEnum } from '@git-diff-view/react'
+import { cn } from '@utils/cn'
 import PullRequestDiffViewer from '@views/repo/pull-request/components/pull-request-diff-viewer'
 import { FILE_VIEWED_OBSOLETE_SHA } from '@views/repo/pull-request/details/pull-request-utils'
 import { useDiffConfig } from '@views/repo/pull-request/hooks/useDiffConfig'
@@ -84,6 +85,8 @@ interface LineTitleProps {
   sourceBranch?: string
   currentRefForDiff?: string
 }
+
+export const PR_ACCORDION_STICKY_TOP = 123
 
 export const LineTitle: React.FC<LineTitleProps> = ({
   header,
@@ -339,8 +342,11 @@ export const PullRequestAccordion: React.FC<{
     >
       <Accordion.Item value={header?.text ?? ''} className="rounded-3 border-none">
         <Accordion.Trigger
-          className="rounded-t-3 bg-cn-2 border-cn-2 group-[[data-state=closed]]:rounded-3 border px-4 py-2 transition-[border-radius] duration-300 [&>.cn-accordion-trigger-indicator]:m-0 [&>.cn-accordion-trigger-indicator]:self-center"
-          headerClassName="z-[18] sticky top-[123px] bg-cn-1 group"
+          className={cn(
+            'bg-cn-2 border-cn-2 group-[[data-state=closed]]:rounded-3 border px-4 py-2 transition-[border-radius] duration-300 [&>.cn-accordion-trigger-indicator]:m-0 [&>.cn-accordion-trigger-indicator]:self-center',
+            isOpen ? 'rounded-t-3' : 'rounded-3'
+          )}
+          headerClassName={cn(`z-[18] sticky top-[123px] border-cn-2 border`, isOpen ? 'rounded-t-3' : 'rounded-3')}
         >
           <LineTitle
             header={header}
@@ -357,7 +363,11 @@ export const PullRequestAccordion: React.FC<{
             currentRefForDiff={currentRefForDiff}
           />
         </Accordion.Trigger>
-        <Accordion.Content className="pb-0" containerClassName="rounded-b-3 border-x border-b border-cn-2">
+        <Accordion.Content
+          className="pb-0"
+          containerClassName="rounded-b-3 border-x border-b border-cn-2"
+          data-diff-content={header.filePath}
+        >
           <div className="bg-transparent">
             {(fileDeleted || isDiffTooLarge || fileUnchanged || header?.isBinary) && !showHiddenDiff ? (
               <Layout.Vertical align="center" className="py-5">

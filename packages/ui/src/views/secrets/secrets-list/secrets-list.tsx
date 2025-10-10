@@ -60,12 +60,8 @@ export function SecretList({
         <Table.Row>
           <Table.Head className="w-full">{t('views:secret.title', 'Name')}</Table.Head>
           <Table.Head className={CELL_MIN_WIDTH}>{t('views:common.manager', 'Secret Manager')}</Table.Head>
-          <Table.Head className={`${CELL_MIN_WIDTH} [text-align:right!important]`}>
-            {t('views:common.created', 'Created')}
-          </Table.Head>
-          <Table.Head className={`${CELL_MIN_WIDTH} [text-align:right!important]`}>
-            {t('views:common.updated', 'Updated')}
-          </Table.Head>
+          <Table.Head className={`${CELL_MIN_WIDTH}`}>{t('views:common.created', 'Created')}</Table.Head>
+          <Table.Head className={`${CELL_MIN_WIDTH}`}>{t('views:common.updated', 'Updated')}</Table.Head>
           <Table.Head></Table.Head>
         </Table.Row>
       </Table.Header>
@@ -82,12 +78,12 @@ export function SecretList({
                   : secret.spec?.secretManagerIdentifier}
               </Text>
             </Table.Cell>
-            <Table.Cell className={`${CELL_MIN_WIDTH} [text-align:right!important]`}>
+            <Table.Cell className={`${CELL_MIN_WIDTH}`}>
               {secret?.createdAt ? (
                 <TimeAgoCard timestamp={secret.createdAt} dateTimeFormatOptions={{ dateStyle: 'medium' }} />
               ) : null}
             </Table.Cell>
-            <Table.Cell className={`${CELL_MIN_WIDTH} [text-align:right!important]`}>
+            <Table.Cell className={`${CELL_MIN_WIDTH}`}>
               {secret?.updatedAt ? (
                 <TimeAgoCard timestamp={secret.updatedAt} dateTimeFormatOptions={{ dateStyle: 'medium' }} />
               ) : null}

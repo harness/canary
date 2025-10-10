@@ -46,13 +46,16 @@ export const Content = ({ totalItems, pageSize, currentPage, setPage, searchQuer
       <Actions searchQuery={searchQuery} handleSearchChange={handleSearchChange} ref={searchRef} />
       <Spacer size={4.5} />
       <UsersList searchQuery={searchQuery} handleResetSearch={handleResetSearch} />
-      <Pagination
-        totalItems={totalItems}
-        pageSize={pageSize}
-        onPageSizeChange={setPageSize}
-        currentPage={currentPage}
-        goToPage={(pageNum: number) => setPage(pageNum)}
-      />
+      {/* // TODO: check this condition when backend (useAdminListUsersQuery) will be ready for support query param  */}
+      {!!users?.length && !isFetchingUsers && !searchQuery && (
+        <Pagination
+          totalItems={totalItems}
+          pageSize={pageSize}
+          onPageSizeChange={setPageSize}
+          currentPage={currentPage}
+          goToPage={(pageNum: number) => setPage(pageNum)}
+        />
+      )}
     </SandboxLayout.Content>
   )
 }

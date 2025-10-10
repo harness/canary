@@ -52,6 +52,8 @@ export const repoWebhooksListStore: RepoWebhooksListStore = {
     setExecutionId: (_: number | null) => {},
     updateExecution: () => {},
     pageSize: 10,
+    webhookExecutionPageSize: 10,
+    setWebhookExecutionPageSize: noop,
     setPaginationFromHeaders: (_?: Headers) => {},
     totalItems: 10
   })

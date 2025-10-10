@@ -19,7 +19,7 @@ export const RepoTagsListView: FC<RepoTagsListViewProps> = ({
   toCommitDetails
 }) => {
   const { t } = useTranslation()
-  const { tags: tagsList, page, xNextPage, xPrevPage, setPage } = useRepoTagsStore()
+  const { tags: tagsList, page, xNextPage, xPrevPage, setPage, pageSize, setPageSize } = useRepoTagsStore()
 
   const handleSearchChange = useCallback(
     (value: string) => {
@@ -103,6 +103,8 @@ export const RepoTagsListView: FC<RepoTagsListViewProps> = ({
                   hasPrevious={xPrevPage > 0}
                   getNextPageLink={getNextPageLink}
                   getPrevPageLink={getPrevPageLink}
+                  pageSize={pageSize}
+                  onPageSizeChange={setPageSize}
                 />
               )}
             </Layout.Vertical>

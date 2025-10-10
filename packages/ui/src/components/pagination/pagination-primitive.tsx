@@ -4,7 +4,7 @@ import { useRouterContext } from '@/context'
 import { IconV2 } from '@components/icon-v2'
 import { cn } from '@utils/cn'
 
-import { Button, buttonVariants } from '../button'
+import { Button, ButtonSizes, buttonVariants } from '../button'
 
 const PaginationPrimitiveRoot = ({ className, ...props }: React.ComponentProps<'nav'>) => (
   <nav role="navigation" aria-label="pagination" className={cn('cn-pagination-root', className)} {...props} />
@@ -25,6 +25,7 @@ type PaginationPrimitiveLinkGeneralProps = {
   isActive?: boolean
   disabled?: boolean
   onClick?: (e: React.MouseEvent) => void
+  size?: ButtonSizes
 } & React.ComponentProps<'a'> &
   React.ComponentProps<'button'>
 
@@ -42,6 +43,7 @@ const PaginationPrimitiveLink = ({
   disabled = false,
   onClick,
   iconOnly,
+  size,
   ...props
 }: PaginationPrimitiveLinkProps) => {
   const { Link: LinkBase } = useRouterContext()
@@ -58,6 +60,7 @@ const PaginationPrimitiveLink = ({
         variant="outline"
         disabled={disabled}
         onClick={onClick}
+        size={size}
         className={cn(
           {
             'cn-button-active': isActive,
@@ -76,7 +79,7 @@ const PaginationPrimitiveLink = ({
     <LinkBase
       to={href as string}
       className={cn(
-        buttonVariants({ variant: 'outline', rounded: false }),
+        buttonVariants({ variant: 'outline', rounded: false, size }),
         {
           'cn-button-active': isActive,
           'cn-button-disabled': disabled,
@@ -111,6 +114,7 @@ const PaginationPrimitivePrevious = ({
       href={href}
       iconOnly
       {...props}
+      size="sm"
     >
       <IconV2 name="nav-arrow-left" />
     </PaginationPrimitiveLink>
@@ -132,6 +136,7 @@ const PaginationPrimitiveNext = ({
       href={href}
       iconOnly
       {...props}
+      size="sm"
     >
       <IconV2 name="nav-arrow-right" />
     </PaginationPrimitiveLink>

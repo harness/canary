@@ -639,31 +639,6 @@
     "activity": "Activity",
     "configurationView": "Secret Configuration"
   },
-  "secrets": {
-    "edit": "Edit secret",
-    "delete": "Supprimer le secret",
-    "filterOptions": {
-      "secretType": {
-        "label": "Secret Type"
-      },
-      "secretManagerOption": {
-        "label": "Secret Manager Identifier",
-        "placeholder": "Select Secret Manager"
-      },
-      "descriptionOption": {
-        "label": "Description"
-      },
-      "tagsOption": {
-        "label": "Tags"
-      },
-      "typeOption": {
-        "label": "Type"
-      }
-    },
-    "secretsTitle": "Secrets",
-    "createNew": "Créer un secret",
-    "newSecret": "New Secret"
-  },
   "notFound": {
     "title": "Quelque chose s'est mal passé…",
     "descriptionWithType": "La page demandée est introuvable. Vous pouvez revenir pour voir tous les {{type}} et gérer vos paramètres.",
@@ -905,6 +880,31 @@
     "type": "Type",
     "scope": "Scope",
     "created": "Created"
+  },
+  "secrets": {
+    "filterOptions": {
+      "secretType": {
+        "label": "Secret Type"
+      },
+      "secretManagerOption": {
+        "label": "Secret Manager Identifier",
+        "placeholder": "Select Secret Manager"
+      },
+      "descriptionOption": {
+        "label": "Description"
+      },
+      "tagsOption": {
+        "label": "Tags"
+      },
+      "typeOption": {
+        "label": "Type"
+      }
+    },
+    "secretsTitle": "Secrets",
+    "createNew": "Créer un secret",
+    "edit": "Edit secret",
+    "delete": "Supprimer le secret",
+    "newSecret": "New Secret"
   },
   "secret": {
     "title": "Secret"

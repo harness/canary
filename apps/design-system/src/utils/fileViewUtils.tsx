@@ -22,7 +22,13 @@ export const renderEntries = (entries: OpenapiContentInfo[], parentPath: string 
 
     if (item.type === 'file') {
       return (
-        <FileExplorer.FileItem key={itemPath || idx.toString()} isActive={false} link={undefined} level={level}>
+        <FileExplorer.FileItem
+          value={itemPath || ''}
+          key={itemPath || idx.toString()}
+          isActive={false}
+          link={undefined}
+          level={level}
+        >
           {item.name}
         </FileExplorer.FileItem>
       )
@@ -30,7 +36,7 @@ export const renderEntries = (entries: OpenapiContentInfo[], parentPath: string 
       return (
         <FileExplorer.FolderItem
           key={itemPath || idx.toString()}
-          value={itemPath}
+          value={itemPath || ''}
           link={fullPath}
           isActive={false}
           level={level}

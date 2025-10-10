@@ -96,6 +96,7 @@ export default function Explorer({ selectedBranch, repoDetails, isLoading: isLoa
       if (item.type === 'file') {
         return (
           <FileExplorer.FileItem
+            value={itemPath || ''}
             level={level}
             key={itemPath || idx.toString()}
             isActive={itemPath === fullResourcePath}
@@ -109,7 +110,7 @@ export default function Explorer({ selectedBranch, repoDetails, isLoading: isLoa
           <FileExplorer.FolderItem
             key={itemPath || idx.toString()}
             level={level}
-            value={itemPath}
+            value={itemPath || ''}
             link={fullPath}
             isActive={itemPath === fullResourcePath}
             content={

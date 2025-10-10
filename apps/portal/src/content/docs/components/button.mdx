@@ -426,6 +426,82 @@ Transparent buttons have no background or border and don't accept theme props.
 </div>`}
 />
 
+## Promise callback
+
+When the `onClick` prop returns a promise, the button automatically shows a loading state until the promise resolves or rejects.
+
+<DocsPage.ComponentExample
+  client:only
+  code={`<div className="flex flex-col items-start min-w-[600px] gap-8">
+<h4>Promise-based onClick Handlers</h4>
+
+<div className="flex gap-3">
+  <Button
+    onClick={async () => {
+      // Simulate API call
+      await new Promise((resolve) => setTimeout(resolve, 2000));
+      console.log("API call completed");
+    }}
+  >
+    Save Data (2s)
+  </Button>
+
+<Button
+  variant="secondary"
+  onClick={() => {
+    // Return a promise directly
+    return fetch("/api/endpoint")
+      .then((response) => response.json())
+      .then((data) => console.log("Data:", data))
+      .catch((error) => console.error("Error:", error));
+  }}
+>
+  Fetch Data
+</Button>
+
+  <Button
+    variant="outline"
+    onClick={() => {
+      // Promise that might reject
+      return new Promise((resolve, reject) => {
+        setTimeout(() => {
+          Math.random() > 0.5 ? resolve("Success!") : reject("Failed!");
+        }, 1500);
+      });
+    }}
+  >
+    Random Result (1.5s)
+  </Button>
+</div>
+
+<hr />
+
+<h4>Combined with Manual Loading State</h4>
+
+<div className="flex gap-3">
+  <Button 
+    loading={true}
+    onClick={async () => {
+      await new Promise(resolve => setTimeout(resolve, 1000))
+    }}
+  >
+    Always Loading
+  </Button>
+  
+  <Button 
+    iconOnly
+    variant="ai"
+    tooltipProps={{ content: "Ask AI" }}
+    onClick={async () => {
+      await new Promise(resolve => setTimeout(resolve, 1000))
+    }}
+  >
+    <IconV2 name="send" skipSize />
+  </Button>
+</div>
+</div>`}
+/>
+
 ## Additional Features
 
 When the `iconOnly` prop is used, you must also provide `tooltipProps` to display content in the tooltip.

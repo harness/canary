@@ -41,6 +41,7 @@ import toastStyles from './toast'
 import toggleStyles from './toggle'
 import toggleGroupStyles from './toggle-group'
 import tooltipStyles from './tooltip'
+import treeStyles from './tree'
 
 export const ComponentStyles = [
   accordionStyles,
@@ -77,6 +78,7 @@ export const ComponentStyles = [
   buttonGroupStyle,
   skeletonStyles,
   stackedListStyles,
+  treeStyles,
 
   // Form styles
   selectStyles,

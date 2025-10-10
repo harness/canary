@@ -1,6 +1,7 @@
 import { FC, useMemo } from 'react'
 
 import { Layout, StatusBadge, StatusBadgeProps, Table, Text } from '@/components'
+import { useTranslation } from '@/context'
 import {
   DefaultReviewersApprovalsData,
   DefaultReviewersDataProps,
@@ -17,6 +18,7 @@ interface DefaultReviewersSectionProps {
 }
 
 export const DefaultReviewersSection: FC<DefaultReviewersSectionProps> = ({ defaultReviewersData, className }) => {
+  const { t } = useTranslation()
   const {
     defReviewerLatestApprovalRequiredByRule,
     defReviewerApprovalRequiredByRule,
@@ -27,23 +29,54 @@ export const DefaultReviewersSection: FC<DefaultReviewersSectionProps> = ({ defa
 
   const defaultReviewerStatus: { text: string; theme: StatusBadgeProps['theme'] } = useMemo(() => {
     if (defReviewerLatestApprovalRequiredByRule && !defReviewerApprovedLatestChanges) {
-      return { theme: 'warning', text: "Waiting on default reviewer's reviews of latest changes" }
+      return {
+        theme: 'warning',
+        text: t(
+          'views:repo.pullRequest.defaultReviewersSection.waitingOnReviews',
+          "Waiting on default reviewer's reviews of latest changes"
+        )
+      }
     }
 
     if (defReviewerApprovalRequiredByRule && !defReviewerApprovedChanges) {
-      return { theme: 'warning', text: 'Changes are pending approval from default reviewers' }
+      return {
+        theme: 'warning',
+        text: t(
+          'views:repo.pullRequest.defaultReviewersSection.changesPendingApproval',
+          'Changes are pending approval from default reviewers'
+        )
+      }
     }
 
     if (defReviewerLatestApprovalRequiredByRule && defReviewerApprovedLatestChanges) {
-      return { theme: 'success', text: 'Latest changes were approved by default reviewers' }
+      return {
+        theme: 'success',
+        text: t(
+          'views:repo.pullRequest.defaultReviewersSection.latestChangesApproved',
+          'Latest changes were approved by default reviewers'
+        )
+      }
     }
 
     if (defReviewerApprovalRequiredByRule && defReviewerApprovedChanges) {
-      return { theme: 'success', text: 'Changes were approved by default reviewers' }
+      return {
+        theme: 'success',
+        text: t(
+          'views:repo.pullRequest.defaultReviewersSection.changesApproved',
+          'Changes were approved by default reviewers'
+        )
+      }
     }
 
-    return { theme: 'success', text: 'Default reviewers were added to the PR' }
+    return {
+      theme: 'success',
+      text: t(
+        'views:repo.pullRequest.defaultReviewersSection.defaultReviewersAdded',
+        'Default reviewers were added to the PR'
+      )
+    }
   }, [
+    t,
     defReviewerLatestApprovalRequiredByRule,
     defReviewerApprovedLatestChanges,
     defReviewerApprovalRequiredByRule,
@@ -61,16 +94,22 @@ export const DefaultReviewersSection: FC<DefaultReviewersSectionProps> = ({ defa
           <StatusBadge variant="status" theme={defaultReviewerStatus.theme}>
             {defaultReviewerStatus.text}
           </StatusBadge>
-          <StatusBadge variant="outline">Required</StatusBadge>
+          <StatusBadge variant="outline">{t('views:repo.pullRequest.requiredMessage', 'Required')}</StatusBadge>
         </Layout.Horizontal>
       )}
       <Table.Root>
         <Table.Header>
           <Table.Row>
-            <Table.Head className="w-[34%]">Required</Table.Head>
-            <Table.Head className="w-[22%]">Default reviewers</Table.Head>
-            <Table.Head className="w-[22%]">Changes requested by</Table.Head>
-            <Table.Head className="w-[22%]">Approved by</Table.Head>
+            <Table.Head className="w-[34%]">{t('views:repo.pullRequest.requiredMessage', 'Required')}</Table.Head>
+            <Table.Head className="w-[22%]">
+              {t('views:repo.pullRequest.defaultReviewersSection.defaultReviewers', 'Default reviewers')}
+            </Table.Head>
+            <Table.Head className="w-[22%]">
+              {t('views:repo.pullRequest.defaultReviewersSection.changesRequestedBy', 'Changes requested by')}
+            </Table.Head>
+            <Table.Head className="w-[22%]">
+              {t('views:repo.pullRequest.defaultReviewersSection.approvedBy', 'Approved by')}
+            </Table.Head>
           </Table.Row>
         </Table.Header>
         <Table.Body>

@@ -1,4 +1,5 @@
 import { Accordion, IconV2, Layout, Link, StatusBadge, Text } from '@/components'
+import { useTranslation } from '@/context'
 import { cn, timeDistance } from '@/utils'
 import { EnumCheckStatus, ExecutionState, TypesPullReqCheck } from '@/views'
 import { PanelAccordionShowButton } from '@views/repo/pull-request/details/components/conversation/sections/panel-accordion-show-button'
@@ -20,6 +21,7 @@ const PullRequestCheckSection = ({
   // toPRCheck, TODO: add back when checks page is implemented
   accordionValues
 }: PullRequestMergeSectionProps) => {
+  const { t } = useTranslation()
   const getStatusIcon = (status: EnumCheckStatus, isTitle: boolean = true) => {
     switch (status) {
       // TODO: fix icons to use from nucleo
@@ -39,7 +41,7 @@ const PullRequestCheckSection = ({
   return (
     <Accordion.Item value={ACCORDION_VALUE} className="only:border-0">
       <Accordion.Trigger
-        className="py-cn-sm"
+        className="py-cn-sm group"
         suffix={<PanelAccordionShowButton isShowButton value={ACCORDION_VALUE} accordionValues={accordionValues} />}
         indicatorProps={{ className: 'self-center mt-0' }}
       >
@@ -70,19 +72,19 @@ const PullRequestCheckSection = ({
                 <Text color="foreground-3">
                   {check?.check?.status === ExecutionState.SUCCESS ||
                   check?.check?.status === ExecutionState.FAILURE_IGNORED
-                    ? `Succeeded in ${time}`
+                    ? t('views:repo.pullRequest.checksSection.succeededMessage', 'Succeeded in {{time}}', { time })
                     : check?.check?.status === ExecutionState.FAILURE
-                      ? `Failed in ${time}`
+                      ? t('views:repo.pullRequest.checksSection.failedMessage', 'Failed in {{time}}', { time })
                       : check?.check?.status === ExecutionState.RUNNING
-                        ? 'Running...'
+                        ? t('views:repo.pullRequest.checksSection.runningMessage', 'Running...')
                         : check?.check?.status === ExecutionState.PENDING
-                          ? 'Pending...'
-                          : `Errored in ${time}`}
+                          ? t('views:repo.pullRequest.checksSection.pendingMessage', 'Pending...')
+                          : t('views:repo.pullRequest.checksSection.erroredMessage', 'Errored in {{time}}', { time })}
                 </Text>
 
                 <Layout.Horizontal gap="2xl" align="center">
                   <StatusBadge variant="outline" size="sm" className={cn({ invisible: !check?.required })}>
-                    Required
+                    {t('views:repo.pullRequest.requiredMessage', 'Required')}
                   </StatusBadge>
                   <Link
                     to={check?.check?.link || ''}
@@ -93,7 +95,7 @@ const PullRequestCheckSection = ({
                         check?.check?.status === ExecutionState.PENDING || !check?.check?.link
                     })}
                   >
-                    Details
+                    {t('views:repo.pullRequest.checksSection.detailsLink', 'Details')}
                   </Link>
                 </Layout.Horizontal>
               </Layout.Grid>

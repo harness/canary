@@ -1,6 +1,7 @@
 import { FC, useMemo } from 'react'
 
 import { Layout, StatusBadge, StatusBadgeProps, Table } from '@/components'
+import { useTranslation } from '@/context'
 import { CodeOwnersSectionProps, PullReqReviewDecision } from '@/views'
 import { isEmpty } from 'lodash-es'
 
@@ -18,32 +19,63 @@ export const CodeOwnersSection: FC<CodeOwnersSectionProps> = ({
   latestCodeOwnerApprovalArr,
   minReqLatestApproval
 }) => {
+  const { t } = useTranslation()
   const codeOwnerStatus: { text: string; theme: StatusBadgeProps['theme'] } = useMemo(() => {
     if (!isEmpty(codeOwnerChangeReqEntries)) {
       return {
         theme: reqCodeOwnerApproval || reqCodeOwnerLatestApproval ? 'danger' : 'warning',
-        text: 'Code owners requested changes to the pull request'
+        text: t(
+          'views:repo.pullRequest.codeOwnersSection.requestedChanges',
+          'Code owners requested changes to the pull request'
+        )
       }
     }
 
     if (!!codeOwnerPendingEntries?.length && reqCodeOwnerLatestApproval) {
-      return { theme: 'warning', text: 'Waiting on code owner reviews of latest changes' }
+      return {
+        theme: 'warning',
+        text: t(
+          'views:repo.pullRequest.codeOwnersSection.waitingOnReviews',
+          'Waiting on code owner reviews of latest changes'
+        )
+      }
     }
 
     if (!!codeOwnerPendingEntries?.length && reqCodeOwnerApproval) {
-      return { theme: 'warning', text: 'Changes are pending approval from code owners' }
+      return {
+        theme: 'warning',
+        text: t(
+          'views:repo.pullRequest.codeOwnersSection.changesPendingApproval',
+          'Changes are pending approval from code owners'
+        )
+      }
     }
 
     if (!!codeOwnerApprovalEntries?.length && !!codeOwnerPendingEntries?.length) {
-      return { theme: 'success', text: 'Some changes were approved by code owners' }
+      return {
+        theme: 'success',
+        text: t(
+          'views:repo.pullRequest.codeOwnersSection.someChangesApproved',
+          'Some changes were approved by code owners'
+        )
+      }
     }
 
     if (!!latestCodeOwnerApprovalArr?.length && reqCodeOwnerLatestApproval) {
-      return { theme: 'success', text: 'Latest changes were approved by code owners' }
+      return {
+        theme: 'success',
+        text: t(
+          'views:repo.pullRequest.codeOwnersSection.latestChangesApproved',
+          'Latest changes were approved by code owners'
+        )
+      }
     }
 
     if (!!codeOwnerApprovalEntries?.length && reqCodeOwnerApproval) {
-      return { theme: 'success', text: 'Changes were approved by code owners' }
+      return {
+        theme: 'success',
+        text: t('views:repo.pullRequest.codeOwnersSection.changesApproved', 'Changes were approved by code owners')
+      }
     }
 
     if (codeOwnerApprovalEntries?.length) {
@@ -53,14 +85,27 @@ export const CodeOwnersSection: FC<CodeOwnersSectionProps> = ({
         latestCodeOwnerApprovalArr &&
         latestCodeOwnerApprovalArr?.length < minReqLatestApproval
       ) {
-        return { theme: 'warning', text: 'Latest changes are pending approval from required reviewers' }
+        return {
+          theme: 'warning',
+          text: t(
+            'views:repo.pullRequest.codeOwnersSection.latestChangesPendingApproval',
+            'Latest changes are pending approval from required reviewers'
+          )
+        }
       }
 
-      return { theme: 'success', text: 'Changes were approved by code owners' }
+      return {
+        theme: 'success',
+        text: t('views:repo.pullRequest.codeOwnersSection.changesApproved', 'Changes were approved by code owners')
+      }
     }
 
-    return { theme: 'success', text: 'No codeowner reviews required' }
+    return {
+      theme: 'success',
+      text: t('views:repo.pullRequest.codeOwnersSection.noReviewsRequired', 'No codeowner reviews required')
+    }
   }, [
+    t,
     codeOwnerChangeReqEntries,
     codeOwnerPendingEntries?.length,
     reqCodeOwnerLatestApproval,
@@ -80,15 +125,23 @@ export const CodeOwnersSection: FC<CodeOwnersSectionProps> = ({
         <StatusBadge variant="status" theme={codeOwnerStatus.theme}>
           {codeOwnerStatus.text}
         </StatusBadge>
-        {(reqCodeOwnerApproval || reqCodeOwnerLatestApproval) && <StatusBadge variant="outline">Required</StatusBadge>}
+        {(reqCodeOwnerApproval || reqCodeOwnerLatestApproval) && (
+          <StatusBadge variant="outline">{t('views:repo.pullRequest.requiredMessage', 'Required')}</StatusBadge>
+        )}
       </Layout.Horizontal>
       <Table.Root>
         <Table.Header>
           <Table.Row>
-            <Table.Head className="w-[34%]">Code</Table.Head>
-            <Table.Head className="w-[22%]">Owners</Table.Head>
-            <Table.Head className="w-[22%]">Changes requested by</Table.Head>
-            <Table.Head className="w-[22%]">Approved by</Table.Head>
+            <Table.Head className="w-[34%]">{t('views:repo.pullRequest.codeOwnersSection.code', 'Code')}</Table.Head>
+            <Table.Head className="w-[22%]">
+              {t('views:repo.pullRequest.codeOwnersSection.owners', 'Owners')}
+            </Table.Head>
+            <Table.Head className="w-[22%]">
+              {t('views:repo.pullRequest.codeOwnersSection.changesRequestedBy', 'Changes requested by')}
+            </Table.Head>
+            <Table.Head className="w-[22%]">
+              {t('views:repo.pullRequest.codeOwnersSection.approvedBy', 'Approved by')}
+            </Table.Head>
           </Table.Row>
         </Table.Header>
         <Table.Body>

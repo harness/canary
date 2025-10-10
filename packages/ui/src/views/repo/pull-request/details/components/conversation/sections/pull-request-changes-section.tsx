@@ -1,6 +1,7 @@
 import { type FC } from 'react'
 
 import { Accordion, IconV2, Layout, StatusBadge, Text } from '@/components'
+import { useTranslation } from '@/context'
 import { easyPluralize, PullRequestChangesSectionProps } from '@/views'
 import { cn } from '@utils/cn'
 import { PanelAccordionShowButton } from '@views/repo/pull-request/details/components/conversation/sections/panel-accordion-show-button'
@@ -37,6 +38,7 @@ const PullRequestChangesSection: FC<PullRequestChangesSectionProps> = ({
   defaultReviewersData,
   pullReqMetadata
 }) => {
+  const { t } = useTranslation()
   const {
     codeOwners,
     reqCodeOwnerApproval,
@@ -78,11 +80,12 @@ const PullRequestChangesSection: FC<PullRequestChangesSectionProps> = ({
   return (
     <Accordion.Item value={ACCORDION_VALUE}>
       <Accordion.Trigger
-        className="py-cn-sm"
+        className="py-cn-sm group"
         indicatorProps={{ className: cn('self-center mt-0', { hidden: !viewBtn }) }}
         suffix={
           <PanelAccordionShowButton isShowButton={viewBtn} value={ACCORDION_VALUE} accordionValues={accordionValues} />
         }
+        asChild={!hasContent}
       >
         <Layout.Grid gapY="4xs">
           <LineTitle text={changesInfo.header} icon={getStatusIcon(changesInfo.status)} />
@@ -99,7 +102,14 @@ const PullRequestChangesSection: FC<PullRequestChangesSectionProps> = ({
                   <Layout.Horizontal align="center" gap="2xs" className="ml-7">
                     <IconV2 size="lg" color="success" name="check-circle-solid" />
                     <Text color="foreground-1">
-                      {`Changes were approved by ${approvedEvaluations?.length} ${easyPluralize(approvedEvaluations?.length, 'reviewer', 'reviewers')}`}
+                      {t(
+                        'views:repo.pullRequest.changesSection.approvalsMessage',
+                        `Changes were approved by {{approvalsCount}} {{approvedBy}}`,
+                        {
+                          approvalsCount: approvedEvaluations?.length || 0,
+                          approvedBy: easyPluralize(approvedEvaluations?.length, 'reviewer', 'reviewers')
+                        }
+                      )}
                     </Text>
                   </Layout.Horizontal>
                 )}
@@ -107,7 +117,16 @@ const PullRequestChangesSection: FC<PullRequestChangesSectionProps> = ({
                 {hasRequiredLatestApprovals && hasLatestApprovals && (
                   <Layout.Horizontal align="center" gap="2xs" className="ml-7">
                     <IconV2 size="lg" color="success" name="clock-solid" />
-                    <Text color="foreground-1">{`Latest changes were approved by ${latestApprovalsCount} ${easyPluralize(latestApprovalsCount, 'reviewer', 'reviewers')}`}</Text>
+                    <Text color="foreground-1">
+                      {t(
+                        'views:repo.pullRequest.changesSection.latestApprovalsMessage',
+                        `Latest changes were approved by {{latestApprovalsCount}} {{approvedBy}}`,
+                        {
+                          latestApprovalsCount: latestApprovalsCount,
+                          approvedBy: easyPluralize(latestApprovalsCount, 'reviewer', 'reviewers')
+                        }
+                      )}
+                    </Text>
                   </Layout.Horizontal>
                 )}
 
@@ -115,9 +134,19 @@ const PullRequestChangesSection: FC<PullRequestChangesSectionProps> = ({
                   <Layout.Horizontal align="center" justify="between" className="ml-7">
                     <Layout.Horizontal align="center" gap="2xs">
                       <IconV2 size="lg" color="danger" name="warning-triangle-solid" />
-                      <Text color="foreground-1">{`${changeReqReviewer} requested changes to the pull request`}</Text>
+                      <Text color="foreground-1">
+                        {t(
+                          'views:repo.pullRequest.changesSection.changeRequestedMessage',
+                          `{{reviewer}} requested changes to the pull request`,
+                          { reviewer: changeReqReviewer }
+                        )}
+                      </Text>
                     </Layout.Horizontal>
-                    {reqNoChangeReq && <StatusBadge variant="outline">Required</StatusBadge>}
+                    {reqNoChangeReq && (
+                      <StatusBadge variant="outline">
+                        {t('views:repo.pullRequest.requiredMessage', 'Required')}
+                      </StatusBadge>
+                    )}
                   </Layout.Horizontal>
                 )}
               </Layout.Vertical>
@@ -126,18 +155,32 @@ const PullRequestChangesSection: FC<PullRequestChangesSectionProps> = ({
             {hasApprovals && !hasEnoughApprovals && (
               <Layout.Horizontal align="center" justify="between" className="ml-cn-xl">
                 <StatusBadge variant="status" theme="success">
-                  {`${(approvedEvaluations && approvedEvaluations.length) || '0'}/${minApproval} approvals completed`}
+                  {t(
+                    'views:repo.pullRequest.changesSection.pendingApprovalsMessage',
+                    '{{approvalsCount}}/{{minApproval}} approvals completed',
+                    {
+                      approvalsCount: (approvedEvaluations && approvedEvaluations.length) || 0,
+                      minApproval: minApproval || 0
+                    }
+                  )}
                 </StatusBadge>
-                <StatusBadge variant="outline">Required</StatusBadge>
+                <StatusBadge variant="outline">{t('views:repo.pullRequest.requiredMessage', 'Required')}</StatusBadge>
               </Layout.Horizontal>
             )}
 
             {hasRequiredLatestApprovals && !hasLatestApprovals && (
               <Layout.Horizontal align="center" justify="between" className="ml-cn-xl">
                 <StatusBadge variant="status" theme="warning">
-                  {`${latestApprovalsCount} ${easyPluralize(latestApprovalsCount, 'approval', 'approvals')} pending on latest changes`}
+                  {t(
+                    'views:repo.pullRequest.changesSection.pendingLatestApprovalsMessage',
+                    '{{latestApprovalsCount}} {{approval}} pending on latest changes',
+                    {
+                      latestApprovalsCount: (latestApprovalArr && latestApprovalArr.length) || 0,
+                      approval: easyPluralize(latestApprovalsCount, 'approval', 'approvals')
+                    }
+                  )}
                 </StatusBadge>
-                <StatusBadge variant="outline">Required</StatusBadge>
+                <StatusBadge variant="outline">{t('views:repo.pullRequest.requiredMessage', 'Required')}</StatusBadge>
               </Layout.Horizontal>
             )}
 

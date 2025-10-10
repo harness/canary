@@ -1,6 +1,7 @@
 import { Dispatch, FC, MouseEvent, SetStateAction, useMemo, useState } from 'react'
 
 import { Accordion, BranchTag, Button, IconV2, Layout, Link, MarkdownViewer, Separator, Text } from '@/components'
+import { useTranslation } from '@/context'
 import { cn } from '@utils/cn'
 import { PanelAccordionShowButton } from '@views/repo/pull-request/details/components/conversation/sections/panel-accordion-show-button'
 import { isEmpty } from 'lodash-es'
@@ -23,7 +24,7 @@ ${item.code}
   return (
     <Layout.Vertical gap="xs" as="li">
       <Text color="foreground-1">
-        <Text variant="body-strong" color="inherit">
+        <Text variant="body-strong" color="inherit" as="span">
           {item.step}
         </Text>{' '}
         {item.description}
@@ -71,6 +72,7 @@ const PullRequestMergeSection = ({
   repoId,
   spaceId
 }: PullRequestMergeSectionProps) => {
+  const { t } = useTranslation()
   const [showCommandLineInfo, setShowCommandLineInfo] = useState(false)
 
   const isConflicted = !mergeable && !unchecked
@@ -91,36 +93,42 @@ const PullRequestMergeSection = ({
 
   const stepMap = [
     {
-      step: 'Step 1',
-      description: 'Clone the repository or update your local repository with the latest changes',
+      step: t('views:repo.pullRequest.mergeSection.step', 'Step {{number}}.', { number: '1' }),
+      description: t(
+        'views:repo.pullRequest.mergeSection.step1',
+        'Clone the repository or update your local repository with the latest changes'
+      ),
       code: `git pull origin ${pullReqMetadata?.target_branch}`
     },
     {
-      step: 'Step 2',
-      description: 'Switch to the head branch of the pull request',
+      step: t('views:repo.pullRequest.mergeSection.step', 'Step {{number}}.', { number: '2' }),
+      description: t('views:repo.pullRequest.mergeSection.step2', 'Switch to the head branch of the pull request'),
       code: `git checkout ${pullReqMetadata?.source_branch}`
     },
     {
-      step: 'Step 3',
-      description: 'Merge the base branch into the head branch',
+      step: t('views:repo.pullRequest.mergeSection.step', 'Step {{number}}.', { number: '3' }),
+      description: t('views:repo.pullRequest.mergeSection.step3', 'Merge the base branch into the head branch'),
       code: `git merge ${pullReqMetadata?.target_branch}`
     },
     {
-      step: 'Step 4',
-      description: 'Fix the conflicts and commit the results',
+      step: t('views:repo.pullRequest.mergeSection.step', 'Step {{number}}.', { number: '4' }),
+      description: t('views:repo.pullRequest.mergeSection.step4', 'Fix the conflicts and commit the results'),
       comment: (
         <>
-          See{' '}
+          {t('views:repo.pullRequest.mergeSection.comment.1', 'See ')}
           <Link to="https://git-scm.com/book/en/v2/Git-Tools-Advanced-Merging.html#_merge_conflicts" target="_blank">
-            Resolving a merge conflict using the command line
+            {t('views:repo.pullRequest.mergeSection.comment.2', 'Resolving a merge conflict using the command line')}
           </Link>{' '}
-          for step-by-step instructions on resolving merge conflicts
+          {t(
+            'views:repo.pullRequest.mergeSection.comment.3',
+            'for step-by-step instructions on resolving merge conflicts'
+          )}
         </>
       )
     },
     {
-      step: 'Step 5',
-      description: 'Push the changes',
+      step: t('views:repo.pullRequest.mergeSection.step', 'Step {{number}}.', { number: '5' }),
+      description: t('views:repo.pullRequest.mergeSection.step5', 'Push the changes'),
       code: `git push origin ${pullReqMetadata?.source_branch}`
     }
   ]
@@ -137,7 +145,7 @@ const PullRequestMergeSection = ({
     <>
       <Accordion.Item value={ACCORDION_VALUE} className="border-0">
         <Accordion.Trigger
-          className="py-cn-sm"
+          className="py-cn-sm group"
           indicatorProps={{ className: cn('self-center mt-0', { hidden: mergeable || unchecked }) }}
           suffix={
             <PanelAccordionShowButton
@@ -146,16 +154,21 @@ const PullRequestMergeSection = ({
               accordionValues={accordionValues}
             />
           }
+          asChild={mergeable || unchecked}
         >
           <Layout.Grid gapY="4xs">
             <LineTitle
               textClassName={isConflicted ? 'text-cn-danger' : ''}
               text={
                 unchecked
-                  ? 'Merge check in progress...'
+                  ? t('views:repo.pullRequest.mergeSection.mergeCheck', 'Merge check in progress...')
                   : !mergeable
-                    ? 'Conflicts found in this branch'
-                    : `This branch has no conflicts with ${pullReqMetadata?.target_branch} branch`
+                    ? t('views:repo.pullRequest.mergeSection.conflictsFound', 'Conflicts found in this branch')
+                    : t(
+                        'views:repo.pullRequest.mergeSection.noConflicts',
+                        `This branch has no conflicts with {{branch}} branch`,
+                        { branch: pullReqMetadata?.target_branch }
+                      )
               }
               icon={
                 unchecked ? (
@@ -169,21 +182,28 @@ const PullRequestMergeSection = ({
                 )
               }
             />
-            {unchecked && <LineDescription text={'Checking for ability to merge automatically...'} />}
+            {unchecked && (
+              <LineDescription
+                text={t(
+                  'views:repo.pullRequest.mergeSection.automaticMergeCheck',
+                  'Checking for ability to merge automatically...'
+                )}
+              />
+            )}
             {isConflicted && (
               <LineDescription
                 text={
                   <>
-                    Use the&nbsp;
+                    {t('views:repo.pullRequest.mergeSection.resolveConflicts.1', 'Use the ')}
                     <Button
                       variant="link"
                       onClick={handleCommandLineClick}
-                      className="relative z-10 h-auto"
+                      className="relative z-10 h-auto rounded-none hover:underline"
                       aria-label="Open command line"
                     >
-                      command line
+                      {t('views:repo.pullRequest.mergeSection.resolveConflicts.2', 'command line')}
                     </Button>
-                    &nbsp;to resolve conflicts
+                    {t('views:repo.pullRequest.mergeSection.resolveConflicts.3', ' to resolve conflicts')}
                   </>
                 }
               />
@@ -191,11 +211,16 @@ const PullRequestMergeSection = ({
           </Layout.Grid>
         </Accordion.Trigger>
         {isConflicted && (
-          <Accordion.Content className="pt-cn-3xs ml-7">
-            <Layout.Vertical gapY="md">
+          <Accordion.Content className="ml-7" containerClassName={cn({ 'pt-0 mt-0': showCommandLineInfo })}>
+            <Layout.Vertical gapY="sm">
               {showCommandLineInfo && (
-                <Layout.Vertical gap="sm">
-                  <Text variant="heading-small">Resolve conflicts via command line</Text>
+                <Layout.Vertical gap="sm" className="py-cn-sm border border-x-0">
+                  <Text variant="heading-small">
+                    {t(
+                      'views:repo.pullRequest.mergeSection.resolveConflictsCommandLine',
+                      'Resolve conflicts via command line'
+                    )}
+                  </Text>
                   <Layout.Vertical gapY="md" as="ol">
                     {stepMap.map(item => (
                       <StepInfo key={item.step} {...item} />
@@ -205,7 +230,10 @@ const PullRequestMergeSection = ({
               )}
               {!isEmpty(conflictingFiles) && (
                 <Layout.Vertical gapY="sm">
-                  <Text variant="body-single-line-normal">{`Conflicting files (${conflictingFiles?.length || 0})`}</Text>
+                  <Text variant="body-single-line-normal">
+                    {t('views:repo.pullRequest.mergeSection.conflictingFiles', 'Conflicting files ')}
+                    <Text color="foreground-3" as="span">{`(${conflictingFiles?.length || 0})`}</Text>
+                  </Text>
 
                   {conflictingFiles?.map(file => (
                     <Text
@@ -232,15 +260,22 @@ const PullRequestMergeSection = ({
             <Layout.Vertical gapY="4xs">
               <LineTitle
                 textClassName="text-cn-danger"
-                text="This branch is out-of-date with the base branch"
+                text={t(
+                  'views:repo.pullRequest.mergeSection.mergeLatestChangesTitle',
+                  'This branch is out-of-date with the base branch'
+                )}
                 icon={<IconV2 size="lg" color="danger" name="warning-triangle-solid" />}
               />
               <LineDescription
                 text={
                   <Layout.Horizontal gap="2xs">
-                    <Text color="foreground-3">Merge the latest changes from</Text>
+                    <Text color="foreground-3">
+                      {t('views:repo.pullRequest.mergeSection.mergeLatestChanges.1', 'Merge the latest changes from')}
+                    </Text>
                     <BranchTag branchName={pullReqMetadata?.target_branch || ''} spaceId={spaceId} repoId={repoId} />
-                    <Text color="foreground-3">into</Text>
+                    <Text color="foreground-3">
+                      {t('views:repo.pullRequest.mergeSection.mergeLatestChanges.2', 'into')}
+                    </Text>
                     <BranchTag branchName={pullReqMetadata?.source_branch || ''} spaceId={spaceId} repoId={repoId} />
                   </Layout.Horizontal>
                 }
@@ -249,7 +284,7 @@ const PullRequestMergeSection = ({
 
             {handleRebaseBranch && (
               <Button theme="default" variant="outline" onClick={handleRebaseBranch} loading={isRebasing}>
-                Update with rebase
+                {t('views:repo.pullRequest.mergeSection.updateWithRebase', 'Update with rebase')}
               </Button>
             )}
           </Layout.Horizontal>

@@ -122,6 +122,7 @@ export interface IBranchSelectorStore {
   xNextPage: number
   xPrevPage: number
   page: number
+  pageSize: number
   selectedBranchTag: BranchSelectorListItem | null
 
   //actions
@@ -130,6 +131,7 @@ export interface IBranchSelectorStore {
   setSpaceIdAndRepoId: (spaceId: string, repoId: string) => void
   setBranchList: (branches: BranchData[]) => void
   setPage: (page: number) => void
+  setPageSize?: (size: number) => void
   setPaginationFromHeaders: (xNextPage: number, xPrevPage: number) => void
   setSelectedBranchTag: (selectedBranchTag: BranchSelectorListItem) => void
   setDefaultBranch: (branch: string) => void

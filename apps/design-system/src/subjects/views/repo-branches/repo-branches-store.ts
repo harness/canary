@@ -6,6 +6,7 @@ export const repoBranchesStore: IBranchSelectorStore = {
   setBranchList: noop,
   setDefaultBranch: noop,
   setPage: noop,
+  setPageSize: noop,
   setPaginationFromHeaders: noop,
   setSelectedBranchTag: noop,
   setSelectedRefType: noop,
@@ -419,5 +420,6 @@ export const repoBranchesStore: IBranchSelectorStore = {
   },
   xNextPage: 2,
   xPrevPage: 0,
-  page: 1
+  page: 1,
+  pageSize: 10
 }

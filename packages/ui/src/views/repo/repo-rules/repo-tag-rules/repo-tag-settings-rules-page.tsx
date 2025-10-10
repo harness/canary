@@ -7,7 +7,7 @@ import { IProjectRulesStore, IRepoStore } from '@/views'
 import { zodResolver } from '@hookform/resolvers/zod'
 import { cn } from '@utils/cn'
 
-import { combineAndNormalizePrincipalsAndGroups } from '../utils'
+import { combineAndNormalizePrincipalsAndGroups } from '../../utils'
 import {
   TagSettingsRuleBypassListField,
   TagSettingsRuleDescriptionField,

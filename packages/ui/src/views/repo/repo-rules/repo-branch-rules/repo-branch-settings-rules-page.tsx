@@ -3,11 +3,12 @@ import { SubmitHandler, useForm } from 'react-hook-form'
 
 import { Button, ButtonLayout, FormSeparator, FormWrapper, Layout, MultiSelectOption, Text } from '@/components'
 import { useRouterContext, useTranslation } from '@/context'
-import { IProjectRulesStore, IRepoStore, repoBranchSettingsFormSchema } from '@/views'
+import { IProjectRulesStore, IRepoStore } from '@/views'
 import { zodResolver } from '@hookform/resolvers/zod'
 import { cn } from '@utils/index'
 
-import { areRulesValid, combineAndNormalizePrincipalsAndGroups } from '../utils'
+import { areRulesValid, combineAndNormalizePrincipalsAndGroups } from '../../utils'
+import { EnumBypassListType, IBranchRulesStore, PatternsButtonType, RulesFormFields, rulesFormSchema } from '../types'
 import {
   BranchSettingsRuleBypassListField,
   BranchSettingsRuleDescriptionField,
@@ -16,7 +17,6 @@ import {
   BranchSettingsRuleTargetPatternsField,
   BranchSettingsRuleToggleField
 } from './components/repo-branch-rules-fields'
-import { EnumBypassListType, IBranchRulesStore, PatternsButtonType, RepoBranchSettingsFormFields } from './types'
 
 type BranchSettingsErrors = {
   principals: string | null
@@ -27,7 +27,7 @@ type BranchSettingsErrors = {
 
 interface RepoBranchSettingsRulesPageProps {
   isLoading?: boolean
-  handleRuleUpdate: (data: RepoBranchSettingsFormFields) => void
+  handleRuleUpdate: (data: RulesFormFields) => void
   apiErrors?: BranchSettingsErrors
   useRepoRulesStore: () => IRepoStore | IProjectRulesStore
   useBranchRulesStore: () => IBranchRulesStore
@@ -35,7 +35,7 @@ interface RepoBranchSettingsRulesPageProps {
   handleSubmenuChange: (id: string, subOptionId: string, checked: boolean) => void
   handleSelectChangeForRule: (id: string, selectedOptions: MultiSelectOption[]) => void
   handleInputChange: (id: string, input: string) => void
-  handleInitialRules: (presetRuleData: RepoBranchSettingsFormFields | null) => void
+  handleInitialRules: (presetRuleData: RulesFormFields | null) => void
   setPrincipalsSearchQuery: (val: string) => void
   principalsSearchQuery: string
   isSubmitSuccess?: boolean
@@ -63,8 +63,8 @@ export const RepoBranchSettingsRulesPage: FC<RepoBranchSettingsRulesPageProps> =
   const { NavLink } = useRouterContext()
   const { t } = useTranslation()
   const { presetRuleData, principals, userGroups, recentStatusChecks } = useRepoRulesStore()
-  const formMethods = useForm<RepoBranchSettingsFormFields>({
-    resolver: zodResolver(repoBranchSettingsFormSchema),
+  const formMethods = useForm<RulesFormFields>({
+    resolver: zodResolver(rulesFormSchema),
     mode: 'onChange',
     defaultValues: {
       identifier: '',
@@ -92,7 +92,7 @@ export const RepoBranchSettingsRulesPage: FC<RepoBranchSettingsRulesPageProps> =
 
   const { rules } = useBranchRulesStore()
 
-  const onSubmit: SubmitHandler<RepoBranchSettingsFormFields> = data => {
+  const onSubmit: SubmitHandler<RulesFormFields> = data => {
     if (!areRulesValid(rules)) {
       return
     }

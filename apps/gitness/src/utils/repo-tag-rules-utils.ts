@@ -6,6 +6,7 @@ import {
   TagRule,
   TagRuleId
 } from '@harnessio/ui/views'
+import { RuleType } from '../types/rule'
 
 export const transformFormOutput = (formOutput: RepoTagSettingsFormFields): RepoRuleAddRequestBody => {
   const rulesMap = formOutput.rules.reduce<Record<string, TagRule>>((acc, rule) => {
@@ -27,7 +28,7 @@ export const transformFormOutput = (formOutput: RepoTagSettingsFormFields): Repo
 
   return {
     identifier: formOutput.identifier,
-    type: 'tag',
+    type: RuleType.TAG,
     description: formOutput.description,
     state: (formOutput.state ? 'active' : 'disabled') as EnumRuleState,
     pattern: {

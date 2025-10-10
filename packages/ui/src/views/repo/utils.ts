@@ -1,7 +1,7 @@
 import { MessageTheme } from '@components/form-primitives'
 
 import { TypesPrincipalInfo, TypesUserGroupInfo } from './pull-request'
-import { EnumBypassListType, NormalizedPrincipal, Rule } from './repo-branch-rules/types'
+import { EnumBypassListType, NormalizedPrincipal, Rule } from './repo-rules/types'
 
 export function combineAndNormalizePrincipalsAndGroups(
   principals: TypesPrincipalInfo[] | null,

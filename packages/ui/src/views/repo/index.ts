@@ -46,13 +46,13 @@ export * from '@views/repo/repo-import/repo-import-mulitple'
 export * from '@views/repo/repo-import/types'
 
 // repo branch rules
-export * from '@views/repo/repo-branch-rules'
-export * from '@views/repo/repo-branch-rules/types'
+export * from '@views/repo/repo-rules/repo-branch-rules'
+export * from '@views/repo/repo-rules/repo-branch-rules/types'
 
 // repo tag rules
-export * from '@views/repo/repo-tag-rules/repo-tag-settings-rules-page'
-export * from '@views/repo/repo-tag-rules/types'
-export * from '@views/repo/repo-tag-rules/components/repo-tag-rules-data'
+export * from '@views/repo/repo-rules/repo-tag-rules/repo-tag-settings-rules-page'
+export * from '@views/repo/repo-rules/repo-tag-rules/types'
+export * from '@views/repo/repo-rules/repo-tag-rules/components/repo-tag-rules-data'
 
 // repo commit details
 export * from '@views/repo/repo-commit-details'

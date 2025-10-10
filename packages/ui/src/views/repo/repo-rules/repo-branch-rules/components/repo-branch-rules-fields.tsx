@@ -33,7 +33,7 @@ import { useDebounceSearch } from '@hooks/use-debounce-search'
 import { cn } from '@utils/cn'
 import { isEmpty } from 'lodash-es'
 
-import { getIcon } from '../../utils'
+import { getIcon } from '../../../utils'
 
 export const BranchSettingsRuleToggleField: FC<FieldProps> = ({ register, watch, setValue }) => {
   const { t } = useTranslation()

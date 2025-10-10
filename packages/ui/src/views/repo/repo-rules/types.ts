@@ -6,7 +6,13 @@ import { z } from 'zod'
 
 import { MergeStrategy } from '../pull-request/details/pull-request-details-types'
 
-export type RepoBranchSettingsFormFields = z.infer<typeof repoBranchSettingsFormSchema>
+export enum RuleType {
+  BRANCH = 'branch',
+  TAG = 'tag',
+  PUSH = 'push'
+}
+
+export type RulesFormFields = z.infer<typeof rulesFormSchema>
 
 export type Rule = {
   id: string
@@ -22,7 +28,7 @@ export type Rule = {
   input: string
 }
 
-export enum BranchRulesActionType {
+export enum RulesActionType {
   TOGGLE_RULE = 'TOGGLE_RULE',
   TOGGLE_SUBMENU = 'TOGGLE_SUBMENU',
   SET_SELECT_OPTION = 'SET_SELECT_OPTION',
@@ -30,20 +36,21 @@ export enum BranchRulesActionType {
   SET_INPUT_VALUE = 'SET_INPUT_VALUE'
 }
 
-export type BranchRulesAction =
-  | { type: BranchRulesActionType.TOGGLE_RULE; ruleId: string; checked: boolean }
-  | { type: BranchRulesActionType.TOGGLE_SUBMENU; ruleId: string; submenuId: string; checked: boolean }
-  | { type: BranchRulesActionType.SET_SELECT_OPTION; ruleId: string; selectedOptions: MultiSelectOption[] }
-  | { type: BranchRulesActionType.SET_INITIAL_RULES; payload: Rule[] }
-  | { type: BranchRulesActionType.SET_INPUT_VALUE; ruleId: string; value: string }
+export type RulesAction =
+  | { type: RulesActionType.TOGGLE_RULE; ruleId: string; checked: boolean }
+  | { type: RulesActionType.TOGGLE_SUBMENU; ruleId: string; submenuId: string; checked: boolean }
+  | { type: RulesActionType.SET_SELECT_OPTION; ruleId: string; selectedOptions: MultiSelectOption[] }
+  | { type: RulesActionType.SET_INITIAL_RULES; payload: Rule[] }
+  | { type: RulesActionType.SET_INPUT_VALUE; ruleId: string; value: string }
 
-export type Dispatch = (action: BranchRulesAction) => void
+export type Dispatch = (action: RulesAction) => void
 
 export interface FieldProps {
-  register?: UseFormRegister<RepoBranchSettingsFormFields>
-  errors?: FieldErrors<RepoBranchSettingsFormFields>
-  watch?: UseFormWatch<RepoBranchSettingsFormFields>
-  setValue?: UseFormSetValue<RepoBranchSettingsFormFields>
+  type: RuleType
+  register?: UseFormRegister<RulesFormFields>
+  errors?: FieldErrors<RulesFormFields>
+  watch?: UseFormWatch<RulesFormFields>
+  setValue?: UseFormSetValue<RulesFormFields>
 }
 
 export enum BranchRuleId {
@@ -91,8 +98,7 @@ export type IBranchRulesStore = {
 }
 
 // Constants
-
-export const repoBranchSettingsFormSchema = z.object({
+export const rulesFormSchema = z.object({
   identifier: z.string().min(1, 'Name is required'),
   description: z.string(),
   pattern: z.string(),

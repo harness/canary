@@ -9,11 +9,7 @@ import { useGetRepoRef } from '../../../framework/hooks/useGetRepoPath'
 import { useRepoRulesStore } from '../stores/repo-settings-store'
 import { RepoBranchRulesContainer } from './repo-branch-rules-container'
 import { RepoTagRulesContainer } from './repo-tag-rules-container'
-
-export enum RuleType {
-  BRANCH = 'branch',
-  TAG = 'tag'
-}
+import { RuleType } from '../../../types/rule'
 
 export const RepoRulesContainer = () => {
   const repoRef = useGetRepoRef()

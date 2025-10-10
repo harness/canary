@@ -163,6 +163,39 @@ import { DocsPage } from "@/components/docs-page";
 
 }`} />
 
+### Indeterminate Pagination with Callbacks and Page select
+
+<DocsPage.ComponentExample
+  client:only
+  code={`() => {
+    
+    const [currentPage, setCurrentPage] = React.useState(1)
+    const [pageSize, setPageSize] = React.useState(10)
+    
+    const onPrevious = () => {
+        alert("Triggered onPrevious callback")
+    }
+
+    const onNext = () => {
+        alert("Triggered onNext callback")
+    }
+
+    return (
+        <div className="w-[550px]">
+            <Pagination
+                indeterminate
+                hasNext={currentPage < 100}
+                hasPrevious={currentPage > 1}
+                onPrevious={onPrevious}
+                onNext={onNext}
+                pageSize={pageSize}
+                onPageSizeChange={setPageSize}
+            />
+        </div>
+    )
+
+}`} />
+
 ## Usage
 
 ### Determinate Pagination

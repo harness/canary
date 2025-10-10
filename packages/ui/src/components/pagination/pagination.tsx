@@ -31,7 +31,7 @@ export function Pagination({
     goToPage?.(selectedPage)
   }
 
-  const totalPages = indeterminate || !totalItems || !pageSize ? undefined : Math.ceil(totalItems / pageSize)
+  const totalPages = indeterminate || !totalItems ? undefined : Math.ceil(totalItems / pageSize)
 
   // Render nothing if `totalPages` is absent, and both `nextPage` and `previousPage` are absent
   if (!totalPages && hasNext === undefined && hasPrevious === undefined) {
@@ -42,7 +42,7 @@ export function Pagination({
     onPageSizeChange?.(value)
   }
 
-  const renderItemsPerPageBlock = () => {
+  const renderItemsPerPageBlock = (withSeparator: boolean = false) => {
     if (!onPageSizeChange) return null
 
     const options = pageSizeOptions.map(option => ({ label: option, value: option }))
@@ -54,7 +54,7 @@ export function Pagination({
           <Text>items per page</Text>
         </Layout.Horizontal>
 
-        <Separator orientation="vertical" className="h-8" />
+        {withSeparator && <Separator orientation="vertical" className="h-8" />}
       </>
     )
   }
@@ -64,13 +64,14 @@ export function Pagination({
       <div>
         {totalPages && currentPage && (
           <Layout.Horizontal align="center" gap="md">
-            {renderItemsPerPageBlock()}
+            {renderItemsPerPageBlock(true)}
 
             <Text>
               Page {currentPage} of {totalPages}
             </Text>
           </Layout.Horizontal>
         )}
+        {indeterminate && renderItemsPerPageBlock()}
       </div>
 
       <Layout.Horizontal gap="xs">

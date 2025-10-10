@@ -5,9 +5,11 @@ import { RepoTagsStore } from '@harnessio/ui/views'
 export const useRepoTagsStore = create<RepoTagsStore>(set => ({
   tags: [],
   page: 1,
+  pageSize: 10,
   xNextPage: 0,
   xPrevPage: 0,
   setPage: page => set({ page }),
+  setPageSize: size => set({ pageSize: size, page: 1 }),
   setPaginationFromHeaders: (xNextPage: number, xPrevPage: number) => {
     set({ xNextPage, xPrevPage })
   },

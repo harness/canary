@@ -32,6 +32,11 @@ const SecretsListPage = (): JSX.Element => (
     pageSize={10}
     goToPage={noop}
     onCreate={noop}
+    scope={{
+      accountId: 'account-id',
+      orgIdentifier: 'org-id',
+      projectIdentifier: 'project-id'
+    }}
   />
 )
 

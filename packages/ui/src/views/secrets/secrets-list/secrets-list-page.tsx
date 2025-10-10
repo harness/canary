@@ -1,17 +1,8 @@
 import { FC, useCallback, useMemo, useRef } from 'react'
 
-import {
-  IconV2,
-  Layout,
-  NoData,
-  Pagination,
-  PermissionIdentifier,
-  ResourceType,
-  SecretListFilters,
-  Text
-} from '@/components'
+import { IconV2, Layout, NoData, Pagination, PermissionIdentifier, ResourceType, SecretListFilters } from '@/components'
 import { useComponents, useCustomDialogTrigger, useRouterContext, useTranslation } from '@/context'
-import { SandboxLayout } from '@/views'
+import { Page, SandboxLayout } from '@/views'
 import { cn } from '@utils/cn'
 import FilterGroup, { FilterGroupRef } from '@views/components/FilterGroup'
 
@@ -37,12 +28,16 @@ const SecretListPage: FC<SecretListPageProps> = ({
   onDeleteSecret,
   onFilterChange,
   onSortChange,
+  scope,
+  routes,
   ...props
 }) => {
   const { t } = useTranslation()
   const { navigate } = useRouterContext()
   const filterRef = useRef<FilterGroupRef>(null)
   const { RbacButton } = useComponents()
+
+  const { accountId, orgIdentifier, projectIdentifier } = scope
 
   const { triggerRef: noDataTriggerRef, registerTrigger: registerNoDataTrigger } = useCustomDialogTrigger()
   const { triggerRef, registerTrigger } = useCustomDialogTrigger()
@@ -120,9 +115,24 @@ const SecretListPage: FC<SecretListPageProps> = ({
     <SandboxLayout.Main>
       <SandboxLayout.Content className={cn({ 'h-full': !isLoading && !secrets.length && !searchQuery })}>
         <Layout.Vertical gap="xl" className="flex-1">
-          <Text as="h1" variant="heading-hero">
-            {t('views:secrets.secretsTitle', 'Secrets')}
-          </Text>
+          <Page.Header
+            title={t('views:secrets.secretsTitle', 'Secrets')}
+            backLink={
+              routes?.toSettings
+                ? {
+                    linkText: 'All Settings',
+                    linkProps: {
+                      to: routes.toSettings({
+                        accountId,
+                        orgIdentifier,
+                        projectIdentifier,
+                        module: 'all'
+                      })
+                    }
+                  }
+                : undefined
+            }
+          />
 
           {isEmpty && (
             <NoData

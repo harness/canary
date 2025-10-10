@@ -43,7 +43,7 @@ export const SecretDetailsLayout: FC<SecretDetailsLayoutProps> = ({
       <Page.Header
         isLoading={isLoading}
         backLink={{
-          linkText: t('views:secretDetails.backToSecrets', 'Back to secrets'),
+          linkText: t('views:secretDetails.backToSecrets', 'All Secrets'),
           linkProps: { to: backButtonTo?.() ?? '' }
         }}
         title={secret?.name ?? ''}

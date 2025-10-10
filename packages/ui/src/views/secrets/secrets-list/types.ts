@@ -1,3 +1,4 @@
+import { Scope } from '@/views/common/types'
 import { SecretListFilters } from '@components/filters'
 
 interface RoutingProps {
@@ -50,4 +51,13 @@ export interface SecretListPageProps extends SecretListProps {
   goToPage: (page: number) => void
   onFilterChange?: (filters: SecretListFilters) => void
   onSortChange?: (sort: string) => void
+  scope: Scope
+  routes?: {
+    toSettings?: (params: {
+      accountId: string
+      orgIdentifier?: string
+      projectIdentifier?: string
+      module?: string
+    }) => string
+  }
 }

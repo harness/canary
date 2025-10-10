@@ -6,34 +6,50 @@ import { SecretReference } from './types'
 interface SecretReferencesListProps {
   secretReferences: SecretReference[]
   isLoading: boolean
+  isDirtyList: boolean
+  handleResetFiltersQueryAndPages: () => void
 }
 
-export function SecretReferencesList({ secretReferences, isLoading }: SecretReferencesListProps): JSX.Element {
+export function SecretReferencesList({
+  secretReferences,
+  isLoading,
+  isDirtyList,
+  handleResetFiltersQueryAndPages
+}: SecretReferencesListProps): JSX.Element {
   const { t } = useTranslation()
 
   if (isLoading) {
     return <Skeleton.Table countRows={12} countColumns={5} />
   }
 
-  if (!secretReferences.length) {
+  if (!secretReferences.length && isDirtyList) {
     return (
       <NoData
         withBorder
-        imageName="no-data-cog"
-        title={t('views:noData.noSecretReferences', 'No secret references yet')}
-        description={[t('views:noData.noSecretReferencesDescription', 'There are no references to this secret yet.')]}
+        textWrapperClassName="max-w-[350px]"
+        imageName={'no-search-magnifying-glass'}
+        title={t('views:noData.noResults', 'No search results')}
+        description={[
+          t(
+            'views:noData.noResultsDescription',
+            'No secret references match your search. Try adjusting your keywords or filters.',
+            { type: 'secret references' }
+          )
+        ]}
+        secondaryButton={{
+          icon: 'trash',
+          label: t('views:noData.clearSearch', 'Clear Search'),
+          onClick: handleResetFiltersQueryAndPages
+        }}
       />
     )
   }
 
   return (
-    <Table.Root
-      className={isLoading ? '[mask-image:linear-gradient(to_bottom,black_30%,transparent_100%)]' : ''}
-      size="relaxed"
-    >
+    <Table.Root tableClassName="table-fixed" size="relaxed">
       <Table.Header>
         <Table.Row>
-          <Table.Head className="w-2/5">{t('views:entityReference.entity', 'Entity')}</Table.Head>
+          <Table.Head className="w-2/4">{t('views:entityReference.entity', 'Entity')}</Table.Head>
           <Table.Head className="w-1/5">{t('views:entityReference.type', 'Type')}</Table.Head>
           <Table.Head className="w-1/5">{t('views:entityReference.scope', 'Scope')}</Table.Head>
           <Table.Head className="w-1/5">{t('views:entityReference.created', 'Created')}</Table.Head>
@@ -42,29 +58,27 @@ export function SecretReferencesList({ secretReferences, isLoading }: SecretRefe
       <Table.Body>
         {secretReferences.map(reference => (
           <Table.Row key={reference.name} className="cursor-pointer" to={reference.rowLink}>
-            <Table.Cell className="w-2/4 content-center truncate">
-              <Text variant="body-normal" className="text-cn-2" truncate>
+            <Table.Cell>
+              <Text color="foreground-1" truncate>
                 {reference.name}
               </Text>
             </Table.Cell>
             <Table.Cell>
-              <Layout.Horizontal>
-                <IconV2 name={reference.iconType} size="sm" fallback="connectors" />
-                <Text variant="body-normal" className="text-cn-2">
-                  {reference.type}
-                </Text>
+              <Layout.Horizontal gap="xs">
+                <IconV2 name={reference.iconType} size="md" fallback="connectors" />
+                <Text color="foreground-1">{reference.type}</Text>
               </Layout.Horizontal>
             </Table.Cell>
-            <Table.Cell className="content-center">
-              <ScopeTag scopeType={reference.scope} scopedPath={reference.scopedPath} />
+            <Table.Cell>
+              <ScopeTag className="max-w-full" scopeType={reference.scope} scopedPath={reference.scopedPath} />
             </Table.Cell>
-            <Table.Cell className="content-center">
-              {reference?.createdAt ? (
+            <Table.Cell>
+              {!!reference?.createdAt && (
                 <TimeAgoCard
                   timestamp={reference.createdAt}
                   dateTimeFormatOptions={{ day: 'numeric', month: 'short', year: 'numeric' }}
                 />
-              ) : null}
+              )}
             </Table.Cell>
           </Table.Row>
         ))}

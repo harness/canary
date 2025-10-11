@@ -16,6 +16,7 @@ interface SecretsReferencePageProps {
   totalItems: number
   pageSize: number
   goToPage: (page: number) => void
+  setPageSize?: (size: number) => void
   isLoading: boolean
   secretReferences: SecretReference[]
 }
@@ -29,6 +30,7 @@ const SecretReferencesPage: FC<SecretsReferencePageProps> = ({
   totalItems,
   pageSize,
   goToPage,
+  setPageSize,
   isLoading,
   secretReferences
 }) => {
@@ -85,7 +87,13 @@ const SecretReferencesPage: FC<SecretsReferencePageProps> = ({
       </ListActions.Root>
       <Spacer size={4} />
       <SecretReferencesList secretReferences={secretReferences} isLoading={isLoading} />
-      <Pagination totalItems={totalItems} pageSize={pageSize} currentPage={currentPage} goToPage={goToPage} />
+      <Pagination
+        totalItems={totalItems}
+        pageSize={pageSize}
+        onPageSizeChange={setPageSize}
+        currentPage={currentPage}
+        goToPage={goToPage}
+      />
     </>
   )
 }

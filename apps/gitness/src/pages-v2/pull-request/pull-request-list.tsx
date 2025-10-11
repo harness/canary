@@ -31,7 +31,7 @@ import { usePullRequestListStore } from './stores/pull-request-list-store'
 export default function PullRequestListPage() {
   const routes = useRoutes()
   const repoRef = useGetRepoRef() ?? ''
-  const { setPullRequests, page, setPage, setOpenClosePullRequests, labelsQuery, prState, setPrState } =
+  const { setPullRequests, page, setPage, pageSize, setOpenClosePullRequests, labelsQuery, prState, setPrState } =
     usePullRequestListStore()
   const { spaceId, repoId } = useParams<PathParams>()
   const { repoData } = useGitRef()
@@ -60,6 +60,7 @@ export default function PullRequestListPage() {
         exclude_description: true,
         sort: 'number',
         order: 'desc',
+        limit: pageSize,
         ...filterValues
       },
       repo_ref: repoRef,

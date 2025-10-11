@@ -15,6 +15,7 @@ const ProjectMembersList: FC<ProjectMembersListProps> = ({
   pageSize,
   page,
   setPage,
+  setPageSize,
   onDeleteHandler
 }) => {
   const { t } = useTranslation()
@@ -50,7 +51,13 @@ const ProjectMembersList: FC<ProjectMembersListProps> = ({
   return (
     <>
       <MembersList members={memberList} onEdit={onEditMember} onDelete={onDeleteHandler} />
-      <Pagination totalItems={totalItems} pageSize={pageSize} currentPage={page} goToPage={setPage} />
+      <Pagination
+        totalItems={totalItems}
+        pageSize={pageSize}
+        onPageSizeChange={setPageSize}
+        currentPage={page}
+        goToPage={setPage}
+      />
     </>
   )
 }

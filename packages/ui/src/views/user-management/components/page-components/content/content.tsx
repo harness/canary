@@ -5,13 +5,15 @@ import { EmptyState } from '@/views/user-management/components/empty-state/empty
 import { Actions } from '@/views/user-management/components/page-components/actions'
 import { UsersList } from '@/views/user-management/components/page-components/content/components/users-list'
 import { ContentProps } from '@/views/user-management/components/page-components/content/types'
+import { useSearch } from '@/views/user-management/providers/search-provider'
 import { useStates } from '@/views/user-management/providers/state-provider'
 import { useUserManagementStore } from '@/views/user-management/providers/store-provider'
 
 export const Content = ({ totalItems, pageSize, currentPage, setPage }: ContentProps) => {
   const { useAdminListUsersStore } = useUserManagementStore()
 
-  const { users } = useAdminListUsersStore()
+  const { users, setPageSize } = useAdminListUsersStore()
+  const { searchQuery } = useSearch()
 
   const { loadingStates } = useStates()
   const { isFetchingUsers } = loadingStates
@@ -25,18 +27,22 @@ export const Content = ({ totalItems, pageSize, currentPage, setPage }: ContentP
   return (
     <SandboxLayout.Content>
       <Text as="h1" variant="heading-section">
-        {t('views:userManagement.usersHeader', 'Users')} <Text as="span">({users?.length || 0})</Text>
+        {t('views:userManagement.usersHeader', 'Users')} <Text as="span">({totalItems || 0})</Text>
       </Text>
       <Spacer size={6} />
       <Actions />
       <Spacer size={4.5} />
       <UsersList />
-      <Pagination
-        totalItems={totalItems}
-        pageSize={pageSize}
-        currentPage={currentPage}
-        goToPage={(pageNum: number) => setPage(pageNum)}
-      />
+      {/* // TODO: check this condition when backend (useAdminListUsersQuery) will be ready for support query param  */}
+      {!!users?.length && !isFetchingUsers && !searchQuery && (
+        <Pagination
+          totalItems={totalItems}
+          pageSize={pageSize}
+          onPageSizeChange={setPageSize}
+          currentPage={currentPage}
+          goToPage={(pageNum: number) => setPage(pageNum)}
+        />
+      )}
     </SandboxLayout.Content>
   )
 }

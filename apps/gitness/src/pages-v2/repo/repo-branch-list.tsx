@@ -39,7 +39,8 @@ export function RepoBranchesListPage() {
     setSelectedBranchTag,
     setSpaceIdAndRepoId,
     setPaginationFromHeaders,
-    branchList
+    branchList,
+    pageSize
   } = useRepoBranchesStore()
 
   const [query, setQuery] = useQueryState('query')
@@ -54,7 +55,7 @@ export function RepoBranchesListPage() {
   const { isLoading: isLoadingBranches, data: { body: branches, headers } = {} } = useListBranchesQuery({
     queryParams: {
       page: queryPage,
-      limit: 10,
+      limit: pageSize,
       query: query ?? '',
       order: orderSortDate.DESC,
       sort: 'date',

@@ -16,6 +16,7 @@ interface SecretActivityPageProps {
   totalItems: number
   pageSize: number
   goToPage: (page: number) => void
+  setPageSize?: (size: number) => void
   isLoading: boolean
   secretActivity: SecretActivity[]
 }
@@ -29,6 +30,7 @@ const SecretActivityPage: FC<SecretActivityPageProps> = ({
   totalItems,
   pageSize,
   goToPage,
+  setPageSize,
   isLoading,
   secretActivity
 }) => {
@@ -85,7 +87,13 @@ const SecretActivityPage: FC<SecretActivityPageProps> = ({
       </ListActions.Root>
       <Spacer size={4} />
       <SecretActivityList secretActivity={secretActivity} isLoading={isLoading} />
-      <Pagination totalItems={totalItems} pageSize={pageSize} currentPage={currentPage} goToPage={goToPage} />
+      <Pagination
+        totalItems={totalItems}
+        pageSize={pageSize}
+        onPageSizeChange={setPageSize}
+        currentPage={currentPage}
+        goToPage={goToPage}
+      />
     </>
   )
 }

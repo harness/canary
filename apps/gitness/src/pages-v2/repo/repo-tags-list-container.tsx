@@ -31,7 +31,7 @@ import { useRepoTagsStore } from './stores/repo-tags-store'
 
 export const RepoTagsListContainer = () => {
   const repo_ref = useGetRepoRef()
-  const { page, setPage, setPaginationFromHeaders, setTags } = useRepoTagsStore()
+  const { page, setPage, setPaginationFromHeaders, setTags, pageSize } = useRepoTagsStore()
   const { spaceId, repoId } = useParams<PathParams>()
 
   const routes = useRoutes()
@@ -60,7 +60,7 @@ export const RepoTagsListContainer = () => {
     queryParams: {
       query: query ?? '',
       page: queryPage,
-      limit: 10,
+      limit: pageSize,
       include_commit: true,
       sort: 'date',
       order: orderSortDate.DESC

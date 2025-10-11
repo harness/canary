@@ -25,6 +25,7 @@ export const AppSidebarUser = ({ user, openThemeDialog, openLanguageDialog, hand
       description={user?.email}
       avatarFallback={userName}
       src={user?.url}
+      className="!ml-0"
       dropdownMenuContent={
         <>
           <DropdownMenu.Header className="flex items-center gap-x-2">

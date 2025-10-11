@@ -347,7 +347,7 @@ export const extractInfoForPRPanelChanges = ({
     if (mergeBlockedViaRule) {
       title = 'Base branch does not allow updates'
       statusColor = 'text-cn-danger'
-      statusIcon = 'warning'
+      statusIcon = 'error'
     } else if (
       codeOwnerChangeReqEntries &&
       codeOwnerChangeReqEntries?.length > 0 &&
@@ -356,7 +356,7 @@ export const extractInfoForPRPanelChanges = ({
       title = 'Changes requested by code owner'
       statusMessage = 'Code owner requested changes'
       statusColor = 'text-cn-danger'
-      statusIcon = 'warning'
+      statusIcon = 'error'
     } else if (changeReqEvaluations && changeReqEvaluations?.length > 0 && reqNoChangeReq) {
       title = 'Changes Requested'
       statusMessage = `${changeReqReviewer} requested changes to the pull request`
@@ -439,12 +439,12 @@ export const extractInfoForPRPanelChanges = ({
     if (codeOwnerChangeReqEntries && codeOwnerChangeReqEntries?.length > 0) {
       title = 'Changes requested by code owner'
       statusMessage = 'Code owners requested changes to the pull request'
-      statusIcon = 'warning'
+      statusIcon = 'error'
       isNotRequired = true
     } else if (changeReqEvaluations && changeReqEvaluations?.length > 0) {
       title = 'Changes Requested'
       statusMessage = `${changeReqReviewer} requested changes to the pull request`
-      statusIcon = 'warning'
+      statusIcon = 'error'
       isNotRequired = true
     } else if (approvedEvaluations?.length && approvedEvaluations?.length > 0) {
       title = 'Changes approved'

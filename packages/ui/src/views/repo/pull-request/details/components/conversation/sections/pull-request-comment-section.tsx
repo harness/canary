@@ -1,4 +1,5 @@
-import { Accordion, IconV2, Layout, StackedList, Text } from '@/components'
+import { Accordion, IconV2, Layout, Text } from '@/components'
+import { useTranslation } from '@/context'
 
 import { LineDescription, LineTitle } from './pull-request-line-title'
 
@@ -7,30 +8,32 @@ interface PullRequestMergeSectionProps {
   handleAction?: () => void
 }
 const PullRequestCommentSection = ({ commentsInfo, handleAction }: PullRequestMergeSectionProps) => {
+  const { t } = useTranslation()
   const isSuccess = commentsInfo.status === 'success'
 
   return (
     <Accordion.Item value="item-2">
-      <Accordion.Trigger className="py-3 [&>.cn-accordion-trigger-indicator]:hidden" onClick={handleAction}>
-        <Layout.Flex>
-          <StackedList.Field
-            title={
-              <LineTitle
-                textClassName={isSuccess ? '' : 'text-cn-danger'}
-                text={commentsInfo.header}
-                icon={
-                  <IconV2
-                    size="lg"
-                    className={isSuccess ? 'text-cn-success' : 'text-cn-danger'}
-                    name={isSuccess ? 'check-circle-solid' : 'warning-triangle'}
-                  />
-                }
-              />
-            }
-            description={!!commentsInfo?.content && <LineDescription text={commentsInfo.content} />}
-          />
-          {commentsInfo.status === 'failed' && !!handleAction && <Text className="pr-2">View</Text>}
-        </Layout.Flex>
+      <Accordion.Trigger className="group py-3 [&>.cn-accordion-trigger-indicator]:hidden" onClick={handleAction}>
+        <Layout.Horizontal align="center" justify="between">
+          <Layout.Grid gapY="4xs">
+            <LineTitle
+              textClassName={isSuccess ? '' : 'text-cn-danger'}
+              text={commentsInfo.header}
+              icon={
+                <IconV2
+                  size="lg"
+                  className={isSuccess ? 'text-cn-success' : 'text-cn-danger'}
+                  name={isSuccess ? 'check-circle-solid' : 'warning-triangle-solid'}
+                />
+              }
+            />
+            {!!commentsInfo?.content && <LineDescription text={commentsInfo.content} />}
+          </Layout.Grid>
+
+          {commentsInfo.status === 'failed' && !!handleAction && (
+            <Text className="group-hover:text-1">{t('views:repo.pullRequest.commentSection.view', 'View')}</Text>
+          )}
+        </Layout.Horizontal>
       </Accordion.Trigger>
     </Accordion.Item>
   )

@@ -1,9 +1,8 @@
 import { FC } from 'react'
 
-import { Text } from '@/components'
+import { Layout, Text } from '@/components'
 import { useTranslation } from '@/context'
 import { LabelTag, LabelTagProps, PRListLabelType } from '@/views'
-import { cn } from '@utils/cn'
 
 type LabelListLabel = PRListLabelType &
   Omit<LabelTagProps, 'labelKey' | 'id' | 'value'> & {
@@ -30,7 +29,7 @@ export const LabelsList: FC<LabelsListProps> = ({ labels, className, showReset, 
   }
 
   return (
-    <div className={cn('flex flex-wrap gap-1.5', className)}>
+    <Layout.Flex className={className} wrap="wrap" gap="2xs">
       {labels.map(label => (
         <LabelTag
           key={label.key}
@@ -43,6 +42,6 @@ export const LabelsList: FC<LabelsListProps> = ({ labels, className, showReset, 
           onClick={() => onClick?.(label)}
         />
       ))}
-    </div>
+    </Layout.Flex>
   )
 }

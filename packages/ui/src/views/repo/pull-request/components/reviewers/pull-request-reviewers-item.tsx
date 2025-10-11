@@ -27,7 +27,7 @@ const ReviewerItem = ({ reviewer, reviewDecision, sha, sourceSHA, processReviewD
     <Layout.Horizontal key={id} align="center" justify="between" gap="sm">
       <Layout.Horizontal align="center" gap="xs">
         {type === EnumBypassListType.USER ? (
-          <Avatar name={display_name || ''} rounded />
+          <Avatar name={display_name || ''} rounded size="md" />
         ) : (
           <IconV2 name={getIcon(type as EnumBypassListType)} size={'lg'} fallback="stop" className={'ml-cn-4xs'} />
         )}

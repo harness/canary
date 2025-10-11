@@ -11,7 +11,7 @@ export const ReviewerInfo: React.FC<ReviewerInfoProps> = ({ display_name, email 
 
   return (
     <Layout.Grid gap="none">
-      <Text title={display_name} truncate>
+      <Text title={display_name} color="foreground-1" truncate>
         {display_name}
       </Text>
       {display_name !== email && (

@@ -307,7 +307,7 @@ const MarkdownViewerLocal = ({
               return (
                 <div
                   className={cn(
-                    'min-h-[52px] mb-cn-md rounded-2 pl-cn-md pr-cn-sm py-cn-sm relative overflow-hidden border',
+                    'min-h-[52px] mb-cn-md bg-cn-2 rounded-2 pl-cn-md pr-cn-sm py-cn-sm relative overflow-hidden border',
                     { '!pt-[15px]': codeLines.length === 1 }
                   )}
                 >

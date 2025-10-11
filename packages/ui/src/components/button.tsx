@@ -47,7 +47,7 @@ const buttonVariants = cva('cn-button', {
   }
 })
 
-type ButtonTooltipProps = Pick<TooltipProps, 'title' | 'content' | 'side'>
+type ButtonTooltipProps = Pick<TooltipProps, 'title' | 'content' | 'side' | 'align'>
 
 type CommonButtonProps = Omit<ButtonHTMLAttributes<HTMLButtonElement>, 'onClick'> &
   VariantProps<typeof buttonVariants> & {

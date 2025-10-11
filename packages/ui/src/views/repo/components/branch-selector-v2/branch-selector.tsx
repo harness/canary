@@ -1,4 +1,4 @@
-import { forwardRef } from 'react'
+import { forwardRef, useState } from 'react'
 
 import { Button, IconV2, Popover, Text, type ButtonSizes } from '@/components'
 import { BranchData, BranchSelectorListItem, BranchSelectorTab } from '@/views'
@@ -25,6 +25,7 @@ interface BranchSelectorProps {
   setCreateBranchDialogOpen?: (open: boolean) => void
   className?: string
   disabled?: boolean
+  preventCloseOnSelect?: boolean
 }
 export const BranchSelectorV2 = forwardRef<HTMLButtonElement, BranchSelectorProps>(
   (
@@ -46,16 +47,25 @@ export const BranchSelectorV2 = forwardRef<HTMLButtonElement, BranchSelectorProp
       preSelectedTab,
       setCreateBranchDialogOpen,
       className,
-      disabled
+      disabled,
+      preventCloseOnSelect = false
     },
     ref
   ) => {
+    const [open, setOpen] = useState(false)
     const isTag = selectedBranchorTag
       ? tagList?.some(tag => tag.name === selectedBranchorTag.name && tag.sha === selectedBranchorTag.sha)
       : false
 
+    const handleSelectBranch = (branchTag: BranchSelectorListItem, type: BranchSelectorTab) => {
+      onSelectBranch(branchTag, type)
+      if (!preventCloseOnSelect) {
+        setOpen(false)
+      }
+    }
+
     return (
-      <Popover.Root>
+      <Popover.Root open={open} onOpenChange={setOpen}>
         <Popover.Trigger ref={ref} asChild>
           <Button className={cn('min-w-0', className)} variant="outline" size={buttonSize} disabled={disabled}>
             {!hideIcon && <IconV2 name={isTag ? 'tag' : 'git-branch'} size="sm" />}
@@ -75,7 +85,7 @@ export const BranchSelectorV2 = forwardRef<HTMLButtonElement, BranchSelectorProp
           isBranchOnly={isBranchOnly}
           branchList={branchList}
           tagList={tagList}
-          onSelectBranch={onSelectBranch}
+          onSelectBranch={handleSelectBranch}
           selectedBranch={selectedBranch || selectedBranchorTag}
           repoId={repoId}
           spaceId={spaceId}

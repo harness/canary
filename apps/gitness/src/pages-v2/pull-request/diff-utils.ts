@@ -4,24 +4,46 @@ import { ReviewerListPullReqOkResponse, TypesUser } from '@harnessio/code-servic
 
 import { ApprovalItem, ApprovalItems, PullReqReviewDecision } from './types'
 
-// import { ApprovalItem, ApprovalItems, PullReqReviewDecision } from './types/types'
-
-export function parseSpecificDiff(rawDiff: string, sourceFileName: string, targetFileName: string) {
-  // Split the raw diff into individual diffs
+export function parseSpecificDiff(
+  rawDiff: string,
+  sourceFileName: string,
+  targetFileName: string,
+  checksumBefore?: string | string[],
+  checksumAfter?: string
+) {
   const diffs = rawDiff.split(/(?=^diff --git)/gm)
 
-  // Iterate over each diff
   for (const diff of diffs) {
-    // Check if the diff contains the target file name
-    if (
-      diff.includes(`a/${sourceFileName === 'dev/null' ? targetFileName : sourceFileName}`) ||
-      diff.includes(`b/${targetFileName}`)
-    ) {
-      return diff // Return the matched diff
+    // Try checksum matching first (most reliable)
+    if (checksumBefore || checksumAfter) {
+      const indexLineMatch = diff.match(/^index ([a-f0-9]+)\.\.([a-f0-9]+)/m)
+      if (indexLineMatch) {
+        const [, beforeChecksum, afterChecksum] = indexLineMatch
+
+        // Compare checksums (use first 7 chars for short SHA comparison)
+        const checksumBeforeStr = Array.isArray(checksumBefore) ? checksumBefore[0] : checksumBefore
+        const beforeMatches = !checksumBeforeStr || beforeChecksum.startsWith(checksumBeforeStr.slice(0, 7))
+        const afterMatches = !checksumAfter || afterChecksum.startsWith(checksumAfter.slice(0, 7))
+
+        if (beforeMatches && afterMatches) {
+          return diff
+        }
+      }
+    }
+
+    // Fallback to path matching if no checksums or checksum matching failed
+    const diffHeaderMatch = diff.match(/^diff --git a\/(.+?) b\/(.+?)$/m)
+    if (diffHeaderMatch) {
+      const [, aPath, bPath] = diffHeaderMatch
+      const expectedAPath = sourceFileName === 'dev/null' ? targetFileName : sourceFileName
+
+      // Check for exact path matches
+      if (aPath === expectedAPath && bPath === targetFileName) {
+        return diff
+      }
     }
   }
 
-  // Return undefined if no specific diff is found
   return undefined
 }
 

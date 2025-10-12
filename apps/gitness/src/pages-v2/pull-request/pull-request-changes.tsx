@@ -328,7 +328,13 @@ export default function PullRequestChanges() {
           const containerId = `container-${fileId}`
           const contentId = `content-${fileId}`
           const filePath = diff.isDeleted ? diff.oldName : diff.newName
-          const diffString = parseSpecificDiff(cachedDiff.raw ?? '', diff.oldName, diff.newName)
+          const diffString = parseSpecificDiff(
+            cachedDiff.raw ?? '',
+            diff.oldName,
+            diff.newName,
+            diff.checksumBefore,
+            diff.checksumAfter
+          )
 
           return {
             ...diff,

@@ -74,14 +74,20 @@ export const CommitDiffContainer = ({ showSidebar = true }: { showSidebar?: bool
           const contentId = `content-${fileId}`
 
           const filePath = diff.isDeleted ? diff.oldName : diff.newName
-          const diffString = parseSpecificDiff((currentCommitDiffData.body as string) ?? '', diff.oldName, diff.newName)
+          const diffString = parseSpecificDiff(
+            (currentCommitDiffData.body as string) ?? '',
+            diff.oldName,
+            diff.newName,
+            diff.checksumBefore,
+            diff.checksumAfter
+          )
           return {
             ...diff,
             containerId,
             contentId,
             fileId,
             filePath,
-            raw: diffString
+            raw: diffString || ''
           }
         })
         .sort((a, b) => (a.newName || a.oldName).localeCompare(b.newName || b.oldName, undefined, { numeric: true }))

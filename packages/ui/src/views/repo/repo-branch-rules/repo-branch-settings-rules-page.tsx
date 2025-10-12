@@ -7,7 +7,8 @@ import { IProjectRulesStore, IRepoStore, repoBranchSettingsFormSchema } from '@/
 import { zodResolver } from '@hookform/resolvers/zod'
 import { cn } from '@utils/index'
 
-import { areRulesValid, combineAndNormalizePrincipalsAndGroups } from '../utils'
+import { TargetRepoSelectorForBranch } from '../components/target-repo-selector/target-repo-selector'
+import { areRulesValid, combineAndNormalizePrincipalsAndGroups, RepoQueryObject } from '../utils'
 import {
   BranchSettingsRuleBypassListField,
   BranchSettingsRuleDescriptionField,
@@ -41,10 +42,12 @@ interface RepoBranchSettingsRulesPageProps {
   isSubmitSuccess?: boolean
   projectScope?: boolean
   bypassListPlaceholder?: string
+  repoQueryObj?: RepoQueryObject
 }
 
 export const RepoBranchSettingsRulesPage: FC<RepoBranchSettingsRulesPageProps> = ({
   isLoading,
+  repoQueryObj,
   handleRuleUpdate,
   useRepoRulesStore,
   apiErrors,
@@ -71,6 +74,9 @@ export const RepoBranchSettingsRulesPage: FC<RepoBranchSettingsRulesPageProps> =
       description: '',
       pattern: '',
       patterns: [],
+      repoPattern: '',
+      repoPatterns: [],
+      targetRepos: [],
       state: true,
       default: false,
       repo_owners: false,
@@ -125,6 +131,9 @@ export const RepoBranchSettingsRulesPage: FC<RepoBranchSettingsRulesPageProps> =
         description: presetRuleData?.description || '',
         pattern: '',
         patterns: presetRuleData?.patterns || [],
+        repoPattern: presetRuleData?.repoPattern || '',
+        repoPatterns: presetRuleData?.repoPatterns || [],
+        targetRepos: presetRuleData?.targetRepos || [],
         state: presetRuleData?.state && true,
         default: presetRuleData?.default || false,
         repo_owners: presetRuleData?.repo_owners || false,
@@ -165,6 +174,14 @@ export const RepoBranchSettingsRulesPage: FC<RepoBranchSettingsRulesPageProps> =
         <BranchSettingsRuleDescriptionField register={register} errors={errors} />
 
         <Layout.Vertical gapY="3xl">
+          {projectScope && (
+            <TargetRepoSelectorForBranch
+              watch={watch}
+              setValue={setValue}
+              errors={errors}
+              repoQueryObj={repoQueryObj}
+            />
+          )}
           <BranchSettingsRuleTargetPatternsField
             handleAdd={handleAddPattern}
             handleRemove={handleRemovePattern}

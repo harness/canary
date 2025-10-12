@@ -4,7 +4,8 @@ import {
   PatternsButtonType,
   RepoTagSettingsFormFields,
   TagRule,
-  TagRuleId
+  TagRuleId,
+  TargetReposButtonType
 } from '@harnessio/ui/views'
 
 export const transformFormOutput = (formOutput: RepoTagSettingsFormFields): RepoRuleAddRequestBody => {
@@ -25,6 +26,26 @@ export const transformFormOutput = (formOutput: RepoTagSettingsFormFields): Repo
     { include: [], exclude: [] }
   )
 
+  const { include: repoInclude, exclude: repoExclude } = formOutput.repoPatterns.reduce<{
+    include: string[]
+    exclude: string[]
+  }>(
+    (acc, currentPattern) => {
+      if (currentPattern.option === PatternsButtonType.INCLUDE) {
+        acc.include.push(currentPattern.pattern)
+      } else if (currentPattern.option === PatternsButtonType.EXCLUDE) {
+        acc.exclude.push(currentPattern.pattern)
+      }
+      return acc
+    },
+    { include: [], exclude: [] }
+  )
+
+  const includedRepoIds =
+    formOutput.targetRepos?.filter(it => it.type === TargetReposButtonType.SELECT_INCLUDED).map(it => it.id) || []
+  const excludedRepoIds =
+    formOutput.targetRepos?.filter(it => it.type === TargetReposButtonType.SELECT_EXCLUDED).map(it => it.id) || []
+
   return {
     identifier: formOutput.identifier,
     type: 'tag',
@@ -33,6 +54,16 @@ export const transformFormOutput = (formOutput: RepoTagSettingsFormFields): Repo
     pattern: {
       include,
       exclude
+    },
+    repo_target: {
+      include: {
+        ids: includedRepoIds,
+        patterns: repoInclude
+      },
+      exclude: {
+        ids: excludedRepoIds,
+        patterns: repoExclude
+      }
     },
     definition: {
       bypass: {

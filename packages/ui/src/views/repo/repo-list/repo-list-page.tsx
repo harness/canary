@@ -101,7 +101,7 @@ const SandboxRepoListPage: FC<RepoListPageProps> = ({
     const favoriteFilterOption: FilterOptionConfig<keyof RepoListFilters> = {
       defaultValue: favoriteFilterDefaultValue,
       isDefaultValue: queryFilterValues?.favorite === String(favoriteFilterDefaultValue),
-      label: t('views:connectors.filterOptions.statusOption.favorite', 'Favorites'),
+      label: t('views:connectors.filterOptions.statusOption.pinned', 'Pinned'),
       value: 'favorite',
       type: FilterFieldTypes.Checkbox,
       sticky: true,

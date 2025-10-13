@@ -44,7 +44,9 @@ const ReviewerItem = ({
       <div className="relative">
         <Button
           className="absolute -inset-px z-0 opacity-0 group-focus-within:opacity-100 group-hover:opacity-100"
-          onClick={() => (id ? handleDelete(id) : null)}
+          onClick={() => {
+            if (id) handleDelete(id)
+          }}
           size="2xs"
           variant="transparent"
           iconOnly

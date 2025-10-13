@@ -902,6 +902,7 @@
   "connectors": {
     "filterOptions": {
       "statusOption": {
+        "pinned": "Pinned",
         "favorite": "Favorites",
         "success": "Succès",
         "failure": "Échec",

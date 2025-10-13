@@ -69,7 +69,7 @@ export function Pagination({
           {renderItemsPerPageBlock(true)}
 
           <Text>
-            {t('component:pagination.pageOf', `Page ${currentPage}} of ${totalPages}`, { currentPage, totalPages })}
+            {t('component:pagination.pageOf', `Page ${currentPage} of ${totalPages}`, { currentPage, totalPages })}
           </Text>
         </Layout.Horizontal>
       )}

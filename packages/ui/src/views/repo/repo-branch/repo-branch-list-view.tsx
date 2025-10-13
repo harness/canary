@@ -126,6 +126,7 @@ export const RepoBranchListView: FC<RepoBranchListViewProps> = ({
               getNextPageLink={getNextPageLink}
               pageSize={pageSize}
               onPageSizeChange={setPageSize}
+              className="!mt-0"
             />
           )}
 

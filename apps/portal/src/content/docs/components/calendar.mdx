@@ -12,6 +12,7 @@ import { DocsPage } from "@/components/docs-page";
   client:only
   code={`() => {
     const [selectedDate, setSelectedDate] = React.useState<Date | undefined>([new Date()]);
+    const [month, setMonth] = React.useState(new Date());
 
     return (
       <Calendar
@@ -19,9 +20,9 @@ import { DocsPage } from "@/components/docs-page";
         selected={selectedDate}
         onSelect={setSelectedDate}
         showOutsideDays
-        fromDate={new Date().setDate(new Date().getDate() - 10)}
-        toDate={new Date().setDate(new Date().getDate() + 10)}
         weekStartsOn={1}
+        month={month}
+        onMonthChange={setMonth}
       />
     );
 

@@ -1,8 +1,9 @@
 import { ComponentProps } from 'react'
 import * as ResizablePrimitive from 'react-resizable-panels'
 
-import { DragHandleDots2Icon } from '@radix-ui/react-icons'
 import { cn } from '@utils/cn'
+
+import { IconV2 } from './icon-v2'
 
 const ResizablePanelGroup = ({ className, ...props }: ComponentProps<typeof ResizablePrimitive.PanelGroup>) => (
   <ResizablePrimitive.PanelGroup
@@ -28,8 +29,8 @@ const ResizableHandle = ({
     {...props}
   >
     {withHandle && (
-      <div className="z-10 flex h-4 w-3 items-center justify-center rounded-sm border bg-cn-separator-subtle">
-        <DragHandleDots2Icon className="size-2.5" />
+      <div className="bg-cn-separator-subtle z-10 flex h-4 w-3 items-center justify-center rounded-sm border">
+        <IconV2 name="grip-dots" size="2xs" />
       </div>
     )}
   </ResizablePrimitive.PanelResizeHandle>

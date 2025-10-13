@@ -10,9 +10,8 @@ import {
   useState
 } from 'react'
 
-import { Button } from '@/components'
+import { Button, IconV2 } from '@/components'
 import { cn } from '@/utils/cn'
-import { ArrowLeftIcon, ArrowRightIcon } from '@radix-ui/react-icons'
 import useEmblaCarousel, { type UseEmblaCarouselType } from 'embla-carousel-react'
 
 type CarouselApi = UseEmblaCarouselType[1]
@@ -225,7 +224,7 @@ const CarouselPrevious = forwardRef<HTMLButtonElement, CarouselButtonProp>(
         }}
         {...props}
       >
-        <ArrowLeftIcon className="size-4" />
+        <IconV2 name="arrow-long-left" size="sm" />
         <span className="sr-only">Previous slide</span>
       </Button>
     )
@@ -258,7 +257,7 @@ const CarouselNext = forwardRef<HTMLButtonElement, CarouselButtonProp>(
         }}
         {...props}
       >
-        <ArrowRightIcon className="size-4" />
+        <IconV2 name="arrow-long-right" size="sm" />
         <span className="sr-only">Next slide</span>
       </Button>
     )

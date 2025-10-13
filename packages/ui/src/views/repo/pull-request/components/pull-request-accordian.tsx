@@ -346,7 +346,7 @@ export const PullRequestAccordion: React.FC<{
             'bg-cn-2 border-cn-2 group-[[data-state=closed]]:rounded-3 border px-4 py-2 transition-[border-radius] duration-300 [&>.cn-accordion-trigger-indicator]:m-0 [&>.cn-accordion-trigger-indicator]:self-center',
             isOpen ? 'rounded-t-3' : 'rounded-3'
           )}
-          headerClassName={cn(`z-[18] sticky top-[123px] border-cn-2 border`, isOpen ? 'rounded-t-3' : 'rounded-3')}
+          headerClassName="z-[18] sticky top-[123px] bg-cn-1 group"
         >
           <LineTitle
             header={header}

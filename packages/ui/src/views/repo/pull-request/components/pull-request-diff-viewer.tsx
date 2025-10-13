@@ -32,6 +32,7 @@ import PullRequestTimelineItem from '../details/components/conversation/pull-req
 import { replaceMentionIdWithEmail } from '../details/components/conversation/utils'
 import { ExpandedCommentsContext, useExpandedCommentsContext } from '../details/context/pull-request-comments-context'
 import { useDiffHighlighter } from '../hooks/useDiffHighlighter'
+import { useInViewDiffRenderer } from '../hooks/useInViewDiffRenderer'
 import { quoteTransform } from '../utils'
 import { ExtendedDiffView } from './extended-diff-view/extended-diff-view'
 import { ExtendedDiffViewProps, LinesRange } from './extended-diff-view/extended-diff-view-types'
@@ -122,45 +123,27 @@ const PullRequestDiffViewer = ({
   highlightRef.current = highlight
   const [diffFileInstance, setDiffFileInstance] = useState<DiffFile>()
   const overlayScrollbarsInstances = useRef<OverlayScrollbars[]>([])
-  const diffInstanceRef = useRef<HTMLDivElement | null>(null)
-  const [isInView, setIsInView] = useState(false)
+  const {
+    containerRef,
+    contentRef,
+    inView: isInView,
+    shouldRender
+  } = useInViewDiffRenderer({
+    rootMargin: '500px 0px 500px 0px'
+  })
   const [principalsMentionMap, setPrincipalsMentionMap] = useState<PrincipalsMentionMap>({})
   const { isLightTheme } = useTheme()
-
-  useEffect(() => {
-    const observer = new IntersectionObserver(
-      ([entry]) => {
-        setIsInView(entry.isIntersecting)
-      },
-      {
-        root: null, // Use the viewport as the root
-        rootMargin: '0px',
-        threshold: 0.1 // Trigger when 10% of the element is visible
-      }
-    )
-
-    const currentRef = diffInstanceRef.current
-    if (currentRef) {
-      observer.observe(currentRef)
-    }
-
-    return () => {
-      if (currentRef) {
-        observer.unobserve(currentRef)
-      }
-    }
-  }, [])
 
   const cleanup = useCallback(() => {
     // clean up diff instance if it is not in view
     if (!isInView && diffFileInstance) {
-      const diffRect = diffInstanceRef.current?.getBoundingClientRect()
+      const diffRect = contentRef?.current?.getBoundingClientRect()
       // check if diff is below viewport and collapse it, collapsing a diff on top of viewport impacts scroll position
       if (diffRect?.top && diffRect?.top >= (window.innerHeight || document.documentElement.clientHeight)) {
         collapseDiff?.()
       }
     }
-  }, [diffFileInstance, isInView, collapseDiff])
+  }, [diffFileInstance, isInView, collapseDiff, contentRef])
 
   // Use memory cleanup hook
   useMemoryCleanup(cleanup)
@@ -727,9 +710,9 @@ const PullRequestDiffViewer = ({
 
   return (
     <ExpandedCommentsContext.Provider value={contextValue}>
-      <div data-diff-file-path={fileName}>
-        {diffFileInstance && (
-          <div ref={diffInstanceRef}>
+      <div ref={containerRef} data-diff-file-path={fileName}>
+        {shouldRender && diffFileInstance && (
+          <div ref={contentRef}>
             {/* eslint-disable-next-line @typescript-eslint/ban-ts-comment */}
             {/* @ts-ignore */}
             <ExtendedDiffView<Thread[]>
@@ -749,6 +732,11 @@ const PullRequestDiffViewer = ({
               scopeMultilineSelectionToOneHunk={scopeMultilineSelectionToOneHunk}
               scopeMultilineSelectionToOneBlockAndOneSide={scopeMultilineSelectionToOneBlockAndOneSide}
             />
+          </div>
+        )}
+        {!shouldRender && (
+          <div ref={contentRef} className="diff-viewer-placeholder">
+            {/* Placeholder content of the diff hunk is injected by useInViewDiffRenderer */}
           </div>
         )}
       </div>

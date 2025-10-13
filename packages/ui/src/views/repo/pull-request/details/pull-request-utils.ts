@@ -284,14 +284,26 @@ export const handlePaste = (
   }
 }
 
-export function isInViewport(ele: HTMLElement) {
-  const rect = ele.getBoundingClientRect()
-  return (
-    rect.top >= 0 &&
-    rect.left >= 0 &&
-    rect.bottom <= (window.innerHeight || document.documentElement.clientHeight) &&
-    rect.right <= (window.innerWidth || document.documentElement.clientWidth)
-  )
+export function isInViewport(element: Element, margin = 0, direction: 'x' | 'y' | 'xy' = 'y') {
+  const rect = element?.getBoundingClientRect()
+
+  const height = window.innerHeight || document.documentElement.clientHeight
+  const width = window.innerWidth || document.documentElement.clientWidth
+  const _top = 0 - margin
+  const _bottom = height + margin
+  const _left = 0 - margin
+  const _right = width + margin
+
+  const yCheck =
+    (rect?.top >= _top && rect?.top <= _bottom) ||
+    (rect?.bottom >= _top && rect?.bottom <= _bottom) ||
+    (rect?.top <= _top && rect?.bottom >= _bottom)
+  const xCheck = (rect?.left >= _left && rect?.left <= _right) || (rect?.right >= _left && rect?.right <= _right)
+
+  if (direction === 'y') return yCheck
+  if (direction === 'x') return xCheck
+
+  return yCheck || xCheck
 }
 
 export const jumpToFile = (
@@ -320,7 +332,7 @@ export const jumpToFile = (
     outerBlockDOM?.scrollIntoView(false)
     // Position the accordion trigger at the sticky position (PR_ACCORDION_STICKY_TOP px from top)
     if (innerBlockDOM) {
-      const rect = innerBlockDOM.getBoundingClientRect()
+      const rect = innerBlockDOM?.getBoundingClientRect()
       const scrollContainer = innerBlockDOM.closest('[data-scroll-container]') || document.documentElement
       const currentScrollTop = scrollContainer.scrollTop || window.scrollY
       const targetScrollTop = currentScrollTop + rect.top - PR_ACCORDION_STICKY_TOP

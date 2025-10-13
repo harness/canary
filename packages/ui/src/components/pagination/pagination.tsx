@@ -64,18 +64,17 @@ export function Pagination({
 
   return (
     <Layout.Horizontal className={cn('mt-cn-xl w-full', className)} align="center" justify="between">
-      <>
-        {totalPages && currentPage && (
-          <Layout.Horizontal align="center" gap="md">
-            {renderItemsPerPageBlock(true)}
+      {totalPages && currentPage && (
+        <Layout.Horizontal align="center" gap="md">
+          {renderItemsPerPageBlock(true)}
 
-            <Text>
-              {t('component:pagination.pageOf', `Page ${currentPage}} of ${totalPages}}`, { currentPage, totalPages })}
-            </Text>
-          </Layout.Horizontal>
-        )}
-        {indeterminate && renderItemsPerPageBlock()}
-      </>
+          <Text>
+            {t('component:pagination.pageOf', `Page ${currentPage}} of ${totalPages}}`, { currentPage, totalPages })}
+          </Text>
+        </Layout.Horizontal>
+      )}
+
+      {indeterminate && renderItemsPerPageBlock()}
 
       <Layout.Horizontal className="ml-auto" gap="xs">
         {!indeterminate && totalPages && currentPage ? (

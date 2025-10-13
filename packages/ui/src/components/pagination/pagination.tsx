@@ -54,7 +54,7 @@ export function Pagination({
       <>
         <Layout.Horizontal align="center" gap="xs">
           <Select options={options} value={pageSize} onChange={handleChangePageSize} size="sm" />
-          <Text>{t('component:pagination.itemsPerPage')}</Text>
+          <Text>{t('component:pagination.itemsPerPage', 'items per page')}</Text>
         </Layout.Horizontal>
 
         {withSeparator && <Separator orientation="vertical" className="h-8" />}
@@ -69,7 +69,7 @@ export function Pagination({
           {renderItemsPerPageBlock(true)}
 
           <Text>
-            {t('component:pagination.pageOf', `Page ${currentPage}} of ${totalPages}}`, { currentPage, totalPages })}
+            {t('component:pagination.pageOf', `Page ${currentPage}} of ${totalPages}`, { currentPage, totalPages })}
           </Text>
         </Layout.Horizontal>
       )}

@@ -22,6 +22,7 @@ interface BranchSelectorContainerProps {
   isUpdating?: boolean
   disabled?: boolean
   autoSelectDefaultBranch?: boolean
+  preventCloseOnSelect?: boolean
 }
 export const BranchSelectorContainer = forwardRef<HTMLButtonElement, BranchSelectorContainerProps>(
   (
@@ -37,7 +38,8 @@ export const BranchSelectorContainer = forwardRef<HTMLButtonElement, BranchSelec
       className,
       isUpdating,
       disabled,
-      autoSelectDefaultBranch = true
+      autoSelectDefaultBranch = true,
+      preventCloseOnSelect = false
     },
     ref
   ) => {
@@ -133,6 +135,7 @@ export const BranchSelectorContainer = forwardRef<HTMLButtonElement, BranchSelec
         setCreateBranchDialogOpen={setCreateBranchDialogOpen}
         branchPrefix={branchPrefix}
         disabled={disabled}
+        preventCloseOnSelect={preventCloseOnSelect}
       />
     )
   }

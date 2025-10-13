@@ -1,6 +1,6 @@
 import { FC, useCallback, useMemo } from 'react'
 
-import { Button, Layout, SearchInput, Select, Spacer, Text, Toggle } from '@/components'
+import { Button, Layout, SearchInput, Select, Text, Toggle } from '@/components'
 import { useTranslation } from '@/context'
 import { RepositoryType, SandboxLayout } from '@/views'
 import { cn } from '@utils/cn'
@@ -117,47 +117,45 @@ export const SearchPageView: FC<SearchPageViewProps> = ({
           'mx-auto': isLoading || results?.length || searchQuery,
           'h-full': !isLoading && !results?.length && !searchQuery
         })}
-        // maxWidth="7xl"
       >
-        <div className="relative">
+        <Layout.Vertical gapY="xl" className="grow">
           <SearchInput
+            inputContainerClassName="[&>.cn-input-suffix]:border-0 [&>.cn-input-suffix]:px-cn-xs"
             defaultValue={searchQuery || ''}
             onChange={handleSearchChange}
             placeholder={t('views:search.searchPlaceholder', 'Search anything...')}
             autoFocus
+            suffix={
+              <Layout.Horizontal gap="2xs" align="center">
+                {isRepoScope && showSemanticSearch && (
+                  <Toggle
+                    selected={semanticEnabled}
+                    onChange={setSemanticEnabled}
+                    prefixIcon="sparks"
+                    rounded
+                    text="AI Search"
+                    size="xs"
+                    tooltipProps={{ content: 'Toggle AI Semantic Search' }}
+                  />
+                )}
+
+                {!semanticEnabled && (
+                  <Toggle
+                    selected={regexEnabled}
+                    onChange={setRegexEnabled}
+                    iconOnly
+                    variant="ghost"
+                    prefixIcon="regex"
+                    size="xs"
+                    tooltipProps={{ content: 'Toggle Regex Search' }}
+                  />
+                )}
+              </Layout.Horizontal>
+            }
           />
 
-          <Layout.Horizontal className="absolute right-1 top-0 h-full items-center" gap="xs">
-            {isRepoScope && showSemanticSearch ? (
-              <Toggle
-                selected={semanticEnabled}
-                onChange={setSemanticEnabled}
-                prefixIcon="sparks"
-                rounded
-                text="AI Search"
-                size="xs"
-                tooltipProps={{ content: 'Toggle AI Semantic Search' }}
-              />
-            ) : null}
-
-            {!semanticEnabled ? (
-              <Toggle
-                selected={regexEnabled}
-                onChange={setRegexEnabled}
-                iconOnly
-                variant="ghost"
-                prefixIcon="regex"
-                size="xs"
-                tooltipProps={{ content: 'Toggle Regex Search' }}
-              />
-            ) : null}
-          </Layout.Horizontal>
-        </div>
-
-        {!semanticEnabled && ((results && results.length > 0) || selectedLanguage || selectedRepoId) ? (
-          <>
-            <Spacer size={7} />
-            <Layout.Horizontal gap="sm">
+          {!semanticEnabled && ((results && results.length > 0) || selectedLanguage || selectedRepoId) ? (
+            <Layout.Horizontal gap="xs">
               {!scope.projectIdentifier ? (
                 <Select
                   options={getScopeOptions(scope)}
@@ -184,56 +182,52 @@ export const SearchPageView: FC<SearchPageViewProps> = ({
                 Clear Filters
               </Button>
             </Layout.Horizontal>
-          </>
-        ) : null}
+          ) : null}
 
-        <Spacer size={6} />
+          <Layout.Vertical gapY="md" className="grow">
+            {!isLoading && !semanticEnabled && stats && results && results.length > 0 && (
+              <Text>
+                Results:{' '}
+                <Text variant="body-strong" color="foreground-1" as="span">
+                  {t(
+                    'views:search.statsText.matchesAndFiles',
+                    '{{matchCount}} matches found in {{fileCount}} file(s)',
+                    { matchCount: stats.total_matches, fileCount: stats.total_files }
+                  )}
+                </Text>
+              </Text>
+            )}
+            {!isLoading && semanticEnabled && stats && semanticResults && semanticResults.length > 0 && (
+              <Text>
+                Results:{' '}
+                <Text variant="body-strong" color="foreground-1" as="span">
+                  {t('views:search.statsText.files', '{{fileCount}} file(s)', { fileCount: stats.total_files })}
+                </Text>
+              </Text>
+            )}
 
-        {!isLoading && !semanticEnabled && stats && results && results.length > 0 && (
-          <Layout.Horizontal gap="xs" align="center">
-            <Text variant={'body-normal'}>Results:</Text>
-            <Text variant={'caption-normal'}>
-              {t('views:search.statsText', '{{matchCount}} matches found in {{fileCount}} file(s)', {
-                matchCount: stats.total_matches,
-                fileCount: stats.total_files
-              })}
-            </Text>
-          </Layout.Horizontal>
-        )}
-        {!isLoading && semanticEnabled && stats && semanticResults && semanticResults.length > 0 && (
-          <Layout.Horizontal gap="xs" align="center">
-            <Text variant={'body-normal'}>Results:</Text>
-            <Text variant={'caption-normal'}>
-              {t('views:search.statsText', '{{fileCount}} file(s)', {
-                fileCount: stats.total_files
-              })}
-            </Text>
-          </Layout.Horizontal>
-        )}
-
-        <Spacer size={4} />
-
-        {semanticEnabled ? (
-          <SemanticSearchResultsList
-            isLoading={isLoading}
-            isDirtyList={isDirtyList}
-            useSearchResultsStore={useSearchResultsStore}
-            toRepoFileDetails={toRepoFileDetails}
-            semanticSearchError={semanticSearchError}
-          />
-        ) : (
-          <SearchResultsList
-            isLoading={isLoading}
-            isDirtyList={isDirtyList}
-            useSearchResultsStore={useSearchResultsStore}
-            toRepoFileDetails={toRepoFileDetails}
-            toRepo={toRepo}
-            searchError={searchError}
-            isRepoScope={isRepoScope}
-          />
-        )}
-
-        <Spacer size={6} />
+            {semanticEnabled ? (
+              <SemanticSearchResultsList
+                isLoading={isLoading}
+                isDirtyList={isDirtyList}
+                useSearchResultsStore={useSearchResultsStore}
+                toRepoFileDetails={toRepoFileDetails}
+                semanticSearchError={semanticSearchError}
+              />
+            ) : (
+              <SearchResultsList
+                isLoading={isLoading}
+                isDirtyList={isDirtyList}
+                useSearchResultsStore={useSearchResultsStore}
+                toRepoFileDetails={toRepoFileDetails}
+                toRepo={toRepo}
+                searchError={searchError}
+                isRepoScope={isRepoScope}
+                onClearFilters={onClearFilters}
+              />
+            )}
+          </Layout.Vertical>
+        </Layout.Vertical>
       </SandboxLayout.Content>
     </SandboxLayout.Main>
   )

@@ -98,6 +98,9 @@
   },
   "filter": {
     "delete": "Delete filter",
+    "search": {
+      "placeholder": "Search"
+    },
     "inputPlaceholder": "Filtrer par...",
     "buttonLabel": "Réinitialiser les filtres",
     "defaultLabel": "Filtrer",

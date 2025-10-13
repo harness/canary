@@ -29,6 +29,7 @@ export const SearchPagePreview = () => {
       isRepoScope={true}
       onRecursiveToggle={() => {}}
       scope={{ accountId: '1', orgIdentifier: '2', projectIdentifier: '3' }}
+      stats={{ total_files: 4, total_matches: 10 }}
     />
   )
 }

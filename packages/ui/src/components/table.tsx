@@ -9,7 +9,18 @@ import {
   ThHTMLAttributes
 } from 'react'
 
-import { FlexProps, IconV2, Layout, Separator, Text, Tooltip, type LinkProps, type TooltipProps } from '@/components'
+import {
+  FlexProps,
+  IconV2,
+  Layout,
+  Pagination,
+  PaginationProps,
+  Separator,
+  Text,
+  Tooltip,
+  type LinkProps,
+  type TooltipProps
+} from '@/components'
 import { useRouterContext } from '@/context'
 import { cn } from '@/utils'
 import { cva, type VariantProps } from 'class-variance-authority'
@@ -31,10 +42,21 @@ export const tableVariants = cva('cn-table-v2', {
 export interface TableRootV2Props extends HTMLAttributes<HTMLTableElement>, VariantProps<typeof tableVariants> {
   tableClassName?: string
   disableHighlightOnHover?: boolean
+  paginationProps?: PaginationProps
 }
 
 const TableRoot = forwardRef<HTMLTableElement, TableRootV2Props>(
-  ({ size, className, tableClassName, disableHighlightOnHover = false, ...props }, ref) => (
+  (
+    {
+      size,
+      className,
+      tableClassName,
+      disableHighlightOnHover = false,
+      paginationProps: { className: paginationClassName, ...paginationProps } = {} as PaginationProps,
+      ...props
+    },
+    ref
+  ) => (
     <div
       className={cn(
         'cn-table-v2-container',
@@ -44,6 +66,12 @@ const TableRoot = forwardRef<HTMLTableElement, TableRootV2Props>(
       )}
     >
       <table ref={ref} className={cn('cn-table-v2-element', tableClassName)} {...props} />
+      {paginationProps && (
+        <Pagination
+          {...paginationProps}
+          className={cn('!mt-0 px-cn-md py-cn-md border-t border-cn-3', paginationClassName)}
+        />
+      )}
     </div>
   )
 )

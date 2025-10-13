@@ -21,7 +21,7 @@ export default function RepoCommitsPage() {
   const { gitRefName, fullGitRef } = useCodePathDetails()
   const { toRepoCommits } = useRepoCommits()
 
-  const [pageSize, setPageSize] = useState(10)
+  const [pageSize, setPageSize] = useState(25)
 
   const [preSelectedTab, setPreSelectedTab] = useState<BranchSelectorTab>(
     fullGitRef.startsWith(REFS_TAGS_PREFIX) ? BranchSelectorTab.TAGS : BranchSelectorTab.BRANCHES

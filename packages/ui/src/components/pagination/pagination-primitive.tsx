@@ -1,6 +1,6 @@
 import * as React from 'react'
 
-import { useRouterContext } from '@/context'
+import { useRouterContext, useTranslation } from '@/context'
 import { IconV2 } from '@components/icon-v2'
 import { cn } from '@utils/cn'
 
@@ -106,9 +106,10 @@ const PaginationPrimitivePrevious = ({
   href = '#',
   ...props
 }: PaginationPrimitiveLinkGeneralProps) => {
+  const { t } = useTranslation()
   return (
     <PaginationPrimitiveLink
-      aria-label="Go to previous page"
+      aria-label={t('component:pagination.goToPreviousPage', 'Go to previous page')}
       disabled={disabled}
       className={className}
       href={href}
@@ -128,9 +129,10 @@ const PaginationPrimitiveNext = ({
   href = '#',
   ...props
 }: PaginationPrimitiveLinkGeneralProps) => {
+  const { t } = useTranslation()
   return (
     <PaginationPrimitiveLink
-      aria-label="Go to next page"
+      aria-label={t('component:pagination.goToNextPage', 'Go to next page')}
       disabled={disabled}
       className={className}
       href={href}
@@ -144,12 +146,15 @@ const PaginationPrimitiveNext = ({
 }
 PaginationPrimitiveNext.displayName = 'PaginationPrimitiveNext'
 
-const PaginationPrimitiveEllipsis = ({ className, ...props }: React.ComponentProps<'span'>) => (
-  <span aria-hidden className={cn('cn-pagination-ellipsis', className)} {...props}>
-    ...
-    <span className="sr-only">More pages</span>
-  </span>
-)
+const PaginationPrimitiveEllipsis = ({ className, ...props }: React.ComponentProps<'span'>) => {
+  const { t } = useTranslation()
+  return (
+    <span aria-hidden className={cn('cn-pagination-ellipsis', className)} {...props}>
+      ...
+      <span className="sr-only">{t('component:pagination.morePages', 'More pages')}</span>
+    </span>
+  )
+}
 PaginationPrimitiveEllipsis.displayName = 'PaginationPrimitiveEllipsis'
 
 const PaginationPrimitive = {

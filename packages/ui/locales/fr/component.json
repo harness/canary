@@ -195,6 +195,15 @@
     }
   },
   "cancel": "Cancel",
+  "pagination": {
+    "goToPreviousPage": "Go to previous page",
+    "goToNextPage": "Go to next page",
+    "morePages": "More pages",
+    "itemsPerPage": "items per page",
+    "pageOf": "Page {{currentPage}} of {{totalPages}}",
+    "previous": "Précédent",
+    "next": "Suivant"
+  },
   "searchFile": {
     "noFile": "Aucun fichier trouvé."
   },
@@ -247,10 +256,6 @@
     },
     "notAllowed": "Cannot create tag",
     "bypassButton": "Bypass rules and create tag"
-  },
-  "pagination": {
-    "previous": "Précédent",
-    "next": "Suivant"
   },
   "layout": {
     "table": "Table",

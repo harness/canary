@@ -1,3 +1,4 @@
+import { useTranslation } from '@/context'
 import { Select } from '@components/form-primitives'
 import { Layout } from '@components/layout'
 import { Separator } from '@components/separator'
@@ -24,6 +25,8 @@ export function Pagination({
   indeterminate = false,
   className
 }: PaginationProps) {
+  const { t } = useTranslation()
+
   const handleGoToPage = (selectedPage?: number) => (e: React.MouseEvent) => {
     e.preventDefault()
     if (!selectedPage) return
@@ -51,7 +54,7 @@ export function Pagination({
       <>
         <Layout.Horizontal align="center" gap="xs">
           <Select options={options} value={pageSize} onChange={handleChangePageSize} size="sm" />
-          <Text>items per page</Text>
+          <Text>{t('component:pagination.itemsPerPage')}</Text>
         </Layout.Horizontal>
 
         {withSeparator && <Separator orientation="vertical" className="h-8" />}
@@ -61,20 +64,20 @@ export function Pagination({
 
   return (
     <Layout.Horizontal className={cn('mt-cn-xl w-full', className)} align="center" justify="between">
-      <div>
+      <>
         {totalPages && currentPage && (
           <Layout.Horizontal align="center" gap="md">
             {renderItemsPerPageBlock(true)}
 
             <Text>
-              Page {currentPage} of {totalPages}
+              {t('component:pagination.pageOf', `Page ${currentPage}} of ${totalPages}}`, { currentPage, totalPages })}
             </Text>
           </Layout.Horizontal>
         )}
         {indeterminate && renderItemsPerPageBlock()}
-      </div>
+      </>
 
-      <Layout.Horizontal gap="xs">
+      <Layout.Horizontal className="ml-auto" gap="xs">
         {!indeterminate && totalPages && currentPage ? (
           <>
             <PaginationPrimitive.Previous

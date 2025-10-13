@@ -26,7 +26,8 @@ const ReviewersList: React.FC<ReviewersListProps> = ({
   pullRequestMetadata,
   processReviewDecision,
   addReviewerError,
-  removeReviewerError
+  removeReviewerError,
+  handleDelete
 }) => (
   <Layout.Vertical gapY="md" className="pr-cn-3xs">
     {(addReviewerError || removeReviewerError) && (
@@ -45,6 +46,7 @@ const ReviewersList: React.FC<ReviewersListProps> = ({
           sha={sha}
           sourceSHA={pullRequestMetadata?.source_sha}
           processReviewDecision={processReviewDecision}
+          handleDelete={handleDelete}
         />
       ))
     ) : (

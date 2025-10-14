@@ -1,5 +1,4 @@
 @import url('./shared-style-variables.css');
-@import url('./remove-old-theme-values.css');
 @import url('./diff-styles.css');
 
 @import url('@harnessio/core-design-system/core-styles');

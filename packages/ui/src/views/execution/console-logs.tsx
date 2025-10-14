@@ -66,6 +66,7 @@ const ConsoleLogs: FC<ConsoleLogsProps> = ({ logs, query }) => {
   if (!logs || !logs.length) return null
 
   return (
+    // TODO: bg-logs-background- classnames are no longer supported and need to be replaced
     <div ref={containerRef} className="bg-logs-background-1 overflow-y-auto pt-4">
       {logs.filter(Boolean).map(({ out, time, type }, index) => {
         const dateTime = time ? formatTimestamp(time * 1_000) : ''

@@ -32,11 +32,11 @@ export const ExecutionStatusBadge: React.FC<IExecutionStatusBadgeProps> = props 
     case PipelineExecutionStatus.RUNNING:
       return minimal ? (
         <div className="flex items-center gap-1">
-          <div className="bg-studio-3 size-2 rounded-full" />
+          <div className="size-2 rounded-full" />
           <span className="text-studio-3">Running</span>
         </div>
       ) : (
-        <div className="border-studio-3/[0.12] bg-studio-3/10 flex items-center gap-1 rounded-md border border-solid px-1 py-0.5">
+        <div className="flex items-center gap-1 rounded-md border border-solid px-1 py-0.5">
           <div className="flex items-center gap-1">
             <IconV2 name="loader" color="warning" className="animate-spin" />
             <span className="text-studio-3">Running</span>

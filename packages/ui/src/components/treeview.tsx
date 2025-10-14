@@ -155,26 +155,6 @@ const Tree = forwardRef<HTMLDivElement, TreeViewProps>(
 
 Tree.displayName = 'Tree'
 
-const TreeIndicator = forwardRef<HTMLDivElement, React.HTMLAttributes<HTMLDivElement>>(
-  ({ className, ...props }, ref) => {
-    const { direction } = useTree()
-
-    return (
-      <div
-        dir={direction}
-        ref={ref}
-        className={cn(
-          'absolute left-1.5 h-full w-px rounded-md py-3 duration-300 ease-in-out hover:bg-slate-300 rtl:right-1.5',
-          className
-        )}
-        {...props}
-      />
-    )
-  }
-)
-
-TreeIndicator.displayName = 'TreeIndicator'
-
 type FolderProps = {
   expendedItems?: string[]
   element: string

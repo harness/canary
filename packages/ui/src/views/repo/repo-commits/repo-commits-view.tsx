@@ -112,7 +112,7 @@ export const RepoCommitsView: FC<RepoCommitsViewProps> = ({
                   />
                 )}
 
-                {commitsList?.length && (
+                {!!commitsList?.length && (
                   <div>
                     <CommitsList
                       data={commitsList}

@@ -17,6 +17,7 @@ export const SearchPagePreview = () => {
       searchQuery={searchQuery}
       regexEnabled={regexEnabled}
       setRegexEnabled={setRegexEnabled}
+      showSemanticSearch={true}
       semanticEnabled={semanticEnabled}
       setSemanticEnabled={setSemanticEnabled}
       setSearchQuery={setSearchQuery}

@@ -36,6 +36,7 @@ import { CreateBranchDialog } from '../../components-v2/create-branch-dialog'
 import { useRoutes } from '../../framework/context/NavigationContext'
 import { useGetRepoRef } from '../../framework/hooks/useGetRepoPath'
 import { useIsMFE } from '../../framework/hooks/useIsMFE'
+import { useMFEContext } from '../../framework/hooks/useMFEContext'
 import { PathParams } from '../../RouteDefinitions'
 import { useRepoRulesStore } from './stores/repo-settings-store'
 
@@ -59,6 +60,8 @@ export const RepoSettingsGeneralPageContainer = () => {
   const [isCreateBranchDialogOpen, setCreateBranchDialogOpen] = useState(false)
   const [branchQueryForNewBranch, setBranchQueryForNewBranch] = useState<string>('')
   const isMfe = useIsMFE()
+  const { customHooks } = useMFEContext()
+  const { CODE_SECURITY_SCANNING_ON_PUSH: isSecurityScanningOnPushEnabled } = customHooks?.useFeatureFlags() || {}
 
   const closeAlertDeleteDialog = () => {
     isRepoAlertDeleteDialogOpen && setRepoIsAlertDeleteDialogOpen(false)
@@ -304,7 +307,7 @@ export const RepoSettingsGeneralPageContainer = () => {
         openRepoAlertDeleteDialog={openRepoAlertDeleteDialog}
         openRepoArchiveDialog={() => setRepoArchiveDialogOpen(true)}
         branchSelectorRenderer={BranchSelectorContainer}
-        showVulnerabilityScanning={isMfe}
+        showVulnerabilityScanning={isMfe && isSecurityScanningOnPushEnabled}
         setCreateBranchDialogOpen={setCreateBranchDialogOpen}
         onBranchQueryChange={setBranchQueryForNewBranch}
       />

@@ -38,6 +38,7 @@ export interface SearchPageViewProps {
   setSearchQuery: (query: string | null) => void
   regexEnabled: boolean
   setRegexEnabled: (selected: boolean) => void
+  showSemanticSearch: boolean
   semanticEnabled: boolean
   setSemanticEnabled: (selected: boolean) => void
   isRepoScope: boolean
@@ -74,6 +75,7 @@ export const SearchPageView: FC<SearchPageViewProps> = ({
   setSearchQuery,
   regexEnabled,
   setRegexEnabled,
+  showSemanticSearch,
   semanticEnabled,
   setSemanticEnabled,
   isRepoScope,
@@ -126,7 +128,7 @@ export const SearchPageView: FC<SearchPageViewProps> = ({
           />
 
           <Layout.Horizontal className="absolute right-1 top-0 h-full items-center" gap="xs">
-            {isRepoScope ? (
+            {isRepoScope && showSemanticSearch ? (
               <Toggle
                 selected={semanticEnabled}
                 onChange={setSemanticEnabled}

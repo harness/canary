@@ -6,6 +6,7 @@ import { useCustomDialogTrigger, useTranslation } from '@/context'
 export interface CloneRepoDialogProps {
   sshUrl?: string
   httpsUrl: string
+  isSSHEnabled?: boolean
   handleCreateToken: () => void
   tokenGenerationError?: string | null
 }
@@ -18,6 +19,7 @@ export enum CloneRepoTabs {
 export const CloneRepoDialog: FC<CloneRepoDialogProps> = ({
   httpsUrl,
   sshUrl,
+  isSSHEnabled,
   handleCreateToken: _handleCreateToken,
   tokenGenerationError
 }) => {
@@ -46,9 +48,11 @@ export const CloneRepoDialog: FC<CloneRepoDialogProps> = ({
         <Tabs.Root defaultValue={CloneRepoTabs.HTTPS}>
           <Tabs.List className="mb-cn-sm -mx-[var(--cn-popover-py)] px-[var(--cn-popover-py)]" variant="overlined">
             <Tabs.Trigger value={CloneRepoTabs.HTTPS}>{t('views:repos.cloneHttps', 'HTTPS')}</Tabs.Trigger>
-            <Tabs.Trigger value={CloneRepoTabs.SSH} disabled={!sshUrl}>
-              {t('views:repos.cloneSsh', 'SSH')}
-            </Tabs.Trigger>
+            {isSSHEnabled && (
+              <Tabs.Trigger value={CloneRepoTabs.SSH} disabled={!sshUrl}>
+                {t('views:repos.cloneSsh', 'SSH')}
+              </Tabs.Trigger>
+            )}
           </Tabs.List>
 
           <Tabs.Content value={CloneRepoTabs.HTTPS}>

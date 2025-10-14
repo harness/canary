@@ -251,7 +251,7 @@
       @apply font-body-code bg-cn-1 border-cn-3 text-cn-1 mb-0 rounded-none border-0 p-0;
 
       code {
-        @apply bg-cn-1 !text-cn-1 rounded-none p-0;
+        @apply bg-cn-2 !text-cn-1 rounded-none p-0;
       }
     }
 

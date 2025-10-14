@@ -606,7 +606,7 @@ export interface CodeOwnersData {
 }
 
 export type CodeOwnersSectionProps = Pick<PullRequestChangesSectionProps, 'minReqLatestApproval' | 'pullReqMetadata'> &
-  CodeOwnersData
+  CodeOwnersData & { className?: string }
 
 export const PullRequestFilterOption = {
   ...PullRequestState,

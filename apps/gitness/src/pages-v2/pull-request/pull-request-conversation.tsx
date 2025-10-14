@@ -229,7 +229,7 @@ export default function PullRequestConversationPage() {
 
   const {
     data: { body: principals } = {},
-    isLoading: isPrincipalsLoading,
+    isLoading: _isPrincipalsLoading,
     error: principalsError
   } = useListPrincipalsQuery({
     // @ts-expect-error : BE issue - not implemented
@@ -253,6 +253,12 @@ export default function PullRequestConversationPage() {
       enabled: !isEmpty(renderUrl)
     }
   )
+
+  const isPrincipalsLoading = useMemo(() => {
+    if (isEmpty(renderUrl)) return _isPrincipalsLoading
+
+    return _isPrincipalsLoading || isUserGroupsLoading
+  }, [_isPrincipalsLoading, isUserGroupsLoading, renderUrl])
 
   const { data: { body: combinedReviewers } = {}, refetch: refetchReviewers } = useReviewerCombinedListPullReqQuery({
     repo_ref: repoRef,
@@ -1071,7 +1077,7 @@ export default function PullRequestConversationPage() {
           userGroups,
           searchPrincipalsQuery,
           setSearchPrincipalsQuery,
-          isPrincipalsLoading: isPrincipalsLoading || isUserGroupsLoading,
+          isPrincipalsLoading: isPrincipalsLoading,
           principalsError: principalsError || userGroupsError
         }}
         // TODO: create useMemo of commentBoxProps

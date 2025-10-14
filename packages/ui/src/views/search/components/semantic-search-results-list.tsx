@@ -25,6 +25,10 @@ interface SemanticSearchResultsListProps {
   semanticSearchError?: string
 }
 
+/**
+ * Currently, isn't used anywhere
+ * Needs design review
+ */
 export const SemanticSearchResultsList: FC<SemanticSearchResultsListProps> = ({
   isLoading,
   isDirtyList,

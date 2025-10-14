@@ -106,6 +106,11 @@ export const SearchPageView: FC<SearchPageViewProps> = ({
     [setPage, setSearchQuery]
   )
 
+  const handleClearFilters = useCallback(() => {
+    onClearFilters()
+    handleSearchChange('')
+  }, [onClearFilters, handleSearchChange])
+
   const isDirtyList = useMemo(() => {
     return page !== 1 || !!searchQuery
   }, [page, searchQuery])
@@ -178,7 +183,7 @@ export const SearchPageView: FC<SearchPageViewProps> = ({
                 value={selectedLanguage}
                 placeholder={'Select a language'}
               />
-              <Button variant={'secondary'} onClick={onClearFilters}>
+              <Button variant={'secondary'} onClick={handleClearFilters}>
                 Clear Filters
               </Button>
             </Layout.Horizontal>
@@ -223,7 +228,7 @@ export const SearchPageView: FC<SearchPageViewProps> = ({
                 toRepo={toRepo}
                 searchError={searchError}
                 isRepoScope={isRepoScope}
-                onClearFilters={onClearFilters}
+                onClearFilters={handleClearFilters}
               />
             )}
           </Layout.Vertical>

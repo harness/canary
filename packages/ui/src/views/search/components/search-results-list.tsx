@@ -1,6 +1,6 @@
 import { FC, useState } from 'react'
 
-import { Accordion, Alert, Button, Layout, Link, NoData, Skeleton, Tag } from '@/components'
+import { Accordion, Alert, Button, IconV2, Layout, Link, NoData, Skeleton, Tag } from '@/components'
 import { useTranslation } from '@/context'
 import { cn } from '@utils/cn'
 
@@ -71,7 +71,7 @@ export const SearchResultsList: FC<SearchResultsListProps> = ({
           imageName="no-search-magnifying-glass"
           title={t('views:noData.noResults', 'No search results')}
           description={[
-            t('views:noData.checkSpelling', 'Check your spelling and filter options,'),
+            t('views:noData.checkSpelling', 'Check your spelling and filter options'),
             t('views:noData.changeSearch', 'or search for a different keyword.')
           ]}
           secondaryButton={{
@@ -167,9 +167,10 @@ export const SearchResultsList: FC<SearchResultsListProps> = ({
                       setExpandedItems(prev => ({ ...prev, [key]: !prev[key] }))
                     }}
                   >
+                    <IconV2 name={expandedItems[getItemPath(item)] ? 'minus' : 'plus'} size="xs" />
                     {expandedItems[getItemPath(item)]
-                      ? t('views:search.showLess', '- Show Less')
-                      : t('views:search.showMore', '+ Show {{matchesCount}} more matches', {
+                      ? t('views:search.showLess', 'Show Less')
+                      : t('views:search.showMore', 'Show {{matchesCount}} more matches', {
                           matchesCount: item.matches.length - DEFAULT_NUM_ITEMS_TO_SHOW
                         })}
                   </Button>

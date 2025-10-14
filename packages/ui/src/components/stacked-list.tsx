@@ -27,20 +27,36 @@ List.displayName = 'StackedList'
  * Item
  */
 
-const spacings = ['4xs', '3xs', '2xs', 'xs', 'sm', 'md', 'lg', 'xl', '2xl', '3xl', '4xl', '0'] as const
-type Spacing = (typeof spacings)[number]
-
-const createSpacingMap = (prefix: string) => {
-  return Object.fromEntries(spacings.map(s => [s, `${prefix}${s === '0' ? '-' : '-cn-'}${s}`])) as Record<
-    Spacing,
-    string
-  >
-}
-
 export const stackedListItemVariants = cva('cn-stacked-list-item', {
   variants: {
-    paddingX: createSpacingMap('px'),
-    paddingY: createSpacingMap('py'),
+    paddingX: {
+      '0': 'px-0',
+      '4xs': 'px-cn-4xs',
+      '3xs': 'px-cn-3xs',
+      '2xs': 'px-cn-2xs',
+      xs: 'px-cn-xs',
+      sm: 'px-cn-sm',
+      md: 'px-cn-md',
+      lg: 'px-cn-lg',
+      xl: 'px-cn-xl',
+      '2xl': 'px-cn-2xl',
+      '3xl': 'px-cn-3xl',
+      '4xl': 'px-cn-4xl'
+    },
+    paddingY: {
+      '0': 'py-0',
+      '4xs': 'py-cn-4xs',
+      '3xs': 'py-cn-3xs',
+      '2xs': 'py-cn-2xs',
+      xs: 'py-cn-xs',
+      sm: 'py-cn-sm',
+      md: 'py-cn-md',
+      lg: 'py-cn-lg',
+      xl: 'py-cn-xl',
+      '2xl': 'py-cn-2xl',
+      '3xl': 'py-cn-3xl',
+      '4xl': 'py-cn-4xl'
+    },
     disableHover: {
       true: '',
       false: 'cn-stacked-list-item-with-hover'

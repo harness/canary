@@ -580,35 +580,5 @@ export default {
 
       addComponents(hoverClasses)
     }
-  ],
-
-  // 👉 Clean up all the safelist and remove old classes and add new values if needed.
-  safelist: [
-    'prose',
-    'prose-invert',
-    'prose-headings',
-    'prose-p',
-    'prose-a',
-    'prose-img',
-    'prose-code',
-    /** New design system Variants  */
-
-    { pattern: /^border-cn-/ },
-    { pattern: /^text-cn-/ },
-    { pattern: /^hover:text-cn-/ },
-    { pattern: /^bg-cn-/ },
-    { pattern: /^hover:bg-cn-/ },
-
-    /** Existing Variants  */
-    { pattern: /^bg-graph-/ },
-
-    // Hover classes
-    { pattern: /^hover:bg-graph-/ },
-    'stroke-borders-2',
-    { pattern: /rounded-./ },
-    { pattern: /border-./ },
-    // Important: used for generating max-width of SandboxLayout.Content
-    { pattern: /max-w-./ },
-    { pattern: /^(p|px|py|pt|pb|pl|pr|m|mx|my|mt|mb|ml|mr|gap(?:-[xy])?)-cn-.+$/ }
   ]
 } satisfies TailwindConfig

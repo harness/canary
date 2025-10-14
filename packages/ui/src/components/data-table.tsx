@@ -1,6 +1,6 @@
 import { useMemo } from 'react'
 
-import { Button, Checkbox, IconV2, Pagination, PaginationProps, Table, tableVariants } from '@/components'
+import { Button, Checkbox, IconV2, PaginationProps, Table, tableVariants } from '@/components'
 import {
   ColumnDef,
   ExpandedState,
@@ -21,7 +21,7 @@ export interface DataTableProps<TData> {
   data: TData[]
   columns: ColumnDef<TData, unknown>[]
   size?: VariantProps<typeof tableVariants>['size']
-  pagination?: PaginationProps
+  paginationProps?: PaginationProps
   getRowClassName?: (row: Row<TData>) => string | undefined
   onRowClick?: (data: TData, index: number) => void
   disableHighlightOnHover?: boolean
@@ -81,7 +81,7 @@ export function DataTable<TData>({
   data = [],
   columns,
   size = 'normal',
-  pagination,
+  paginationProps,
   getRowClassName,
   onRowClick,
   disableHighlightOnHover = false,
@@ -230,61 +230,62 @@ export function DataTable<TData>({
   const table = useReactTable(tableOptions)
 
   return (
-    <div className={className}>
-      <Table.Root size={size} disableHighlightOnHover={disableHighlightOnHover}>
-        <Table.Header>
-          {table.getHeaderGroups().map(headerGroup => (
-            <Table.Row key={headerGroup.id}>
-              {headerGroup.headers.map(header => (
-                <Table.Head
-                  key={header.id}
-                  className={cn(_enableColumnResizing ? 'relative' : undefined)}
-                  sortable={header.column.getCanSort()}
-                  sortDirection={header.column.getCanSort() ? header.column.getIsSorted() || false : undefined}
-                  onClick={header.column.getCanSort() ? header.column.getToggleSortingHandler() : undefined}
-                  style={{
-                    width: header.getSize()
-                  }}
-                >
-                  {header.isPlaceholder ? null : flexRender(header.column.columnDef.header, header.getContext())}
-                  {_enableColumnResizing && header.column.getCanResize() && (
-                    <button
-                      type="button"
-                      onMouseDown={header.getResizeHandler()}
-                      className="absolute right-0 top-0 h-full w-1 cursor-col-resize"
-                      aria-label="Resize column"
-                    />
-                  )}
-                </Table.Head>
+    <Table.Root
+      className={className}
+      size={size}
+      disableHighlightOnHover={disableHighlightOnHover}
+      paginationProps={paginationProps}
+    >
+      <Table.Header>
+        {table.getHeaderGroups().map(headerGroup => (
+          <Table.Row key={headerGroup.id}>
+            {headerGroup.headers.map(header => (
+              <Table.Head
+                key={header.id}
+                className={cn(_enableColumnResizing ? 'relative' : undefined)}
+                sortable={header.column.getCanSort()}
+                sortDirection={header.column.getCanSort() ? header.column.getIsSorted() || false : undefined}
+                onClick={header.column.getCanSort() ? header.column.getToggleSortingHandler() : undefined}
+                style={{
+                  width: header.getSize()
+                }}
+              >
+                {header.isPlaceholder ? null : flexRender(header.column.columnDef.header, header.getContext())}
+                {_enableColumnResizing && header.column.getCanResize() && (
+                  <button
+                    type="button"
+                    onMouseDown={header.getResizeHandler()}
+                    className="absolute right-0 top-0 h-full w-1 cursor-col-resize"
+                    aria-label="Resize column"
+                  />
+                )}
+              </Table.Head>
+            ))}
+          </Table.Row>
+        ))}
+      </Table.Header>
+      <Table.Body>
+        {table.getRowModel().rows.map(row => (
+          <>
+            <Table.Row
+              key={row.id}
+              className={getRowClassName?.(row)}
+              onClick={onRowClick ? () => onRowClick(row.original, row.index) : undefined}
+              selected={enableRowSelection ? row.getIsSelected() : undefined}
+            >
+              {row.getVisibleCells().map(cell => (
+                <Table.Cell key={cell.id}>{flexRender(cell.column.columnDef.cell, cell.getContext())}</Table.Cell>
               ))}
             </Table.Row>
-          ))}
-        </Table.Header>
-        <Table.Body>
-          {table.getRowModel().rows.map(row => (
-            <>
-              <Table.Row
-                key={row.id}
-                className={getRowClassName?.(row)}
-                onClick={onRowClick ? () => onRowClick(row.original, row.index) : undefined}
-                selected={enableRowSelection ? row.getIsSelected() : undefined}
-              >
-                {row.getVisibleCells().map(cell => (
-                  <Table.Cell key={cell.id}>{flexRender(cell.column.columnDef.cell, cell.getContext())}</Table.Cell>
-                ))}
+            {row.getIsExpanded() && renderSubComponent && (
+              <Table.Row key={`${row.id}-expanded`} className="bg-cn-2">
+                <Table.Cell></Table.Cell>
+                <Table.Cell colSpan={row.getAllCells().length - 1}>{renderSubComponent({ row })}</Table.Cell>
               </Table.Row>
-              {row.getIsExpanded() && renderSubComponent && (
-                <Table.Row key={`${row.id}-expanded`} className="bg-cn-2">
-                  <Table.Cell></Table.Cell>
-                  <Table.Cell colSpan={row.getAllCells().length - 1}>{renderSubComponent({ row })}</Table.Cell>
-                </Table.Row>
-              )}
-            </>
-          ))}
-        </Table.Body>
-      </Table.Root>
-
-      {pagination && <Pagination {...pagination} />}
-    </div>
+            )}
+          </>
+        ))}
+      </Table.Body>
+    </Table.Root>
   )
 }

@@ -165,7 +165,7 @@ export const DataTableDemo: React.FC = () => {
           size="compact"
           currentSorting={tableSorting}
           onSortingChange={handleSortingChange}
-          pagination={{
+          paginationProps={{
             currentPage: 1,
             pageSize: 3,
             totalItems: users.length,

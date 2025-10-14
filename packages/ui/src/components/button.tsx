@@ -30,10 +30,6 @@ const buttonVariants = cva('cn-button', {
       true: 'cn-button-rounded'
     },
 
-    iconOnly: {
-      true: 'cn-button-icon-only'
-    },
-
     theme: {
       default: 'cn-button-default',
       success: 'cn-button-success',
@@ -59,7 +55,6 @@ type CommonButtonProps = Omit<ButtonHTMLAttributes<HTMLButtonElement>, 'onClick'
 
 type ButtonPropsIconOnlyRequired = {
   iconOnly: true
-  ignoreIconOnlyTooltip?: false
   tooltipProps: ButtonTooltipProps
 }
 
@@ -70,20 +65,11 @@ type ButtonPropsIconOnlyIgnored = {
 }
 
 type ButtonPropsRegular = {
-  iconOnly?: false
+  iconOnly?: boolean
   tooltipProps?: ButtonTooltipProps
-  ignoreIconOnlyTooltip?: boolean
 }
 
-// base type that accepts boolean | undefined for iconOnly
-type ButtonPropsBase = {
-  iconOnly?: boolean | undefined
-  tooltipProps?: ButtonTooltipProps
-  ignoreIconOnlyTooltip?: boolean
-}
-
-type ButtonProps = CommonButtonProps &
-  (ButtonPropsIconOnlyRequired | ButtonPropsIconOnlyIgnored | ButtonPropsRegular | ButtonPropsBase)
+type ButtonProps = CommonButtonProps & (ButtonPropsIconOnlyRequired | ButtonPropsIconOnlyIgnored | ButtonPropsRegular)
 
 type ButtonThemes = VariantProps<typeof buttonVariants>['theme']
 type ButtonVariants = VariantProps<typeof buttonVariants>['variant']
@@ -105,8 +91,6 @@ const Button = forwardRef<HTMLButtonElement, ButtonProps>(
       disabled,
       children: _children,
       type = 'button',
-      tooltipProps,
-      ignoreIconOnlyTooltip,
       onClick,
       ...props
     },
@@ -153,7 +137,9 @@ const Button = forwardRef<HTMLButtonElement, ButtonProps>(
 
     const ButtonComp = (
       <Comp
-        className={cn(buttonVariants({ variant, size, theme, rounded, iconOnly, className }))}
+        className={cn(buttonVariants({ variant, size, theme, rounded, className }), {
+          'cn-button-icon-only': iconOnly
+        })}
         ref={ref}
         disabled={disabled || isLoading}
         type={type}
@@ -164,9 +150,10 @@ const Button = forwardRef<HTMLButtonElement, ButtonProps>(
       </Comp>
     )
 
-    if (tooltipProps && !ignoreIconOnlyTooltip) {
+    if ('tooltipProps' in props) {
+      const buttonTooltipProps = props.tooltipProps as ButtonTooltipProps
       return (
-        <Tooltip hideArrow {...tooltipProps}>
+        <Tooltip hideArrow {...buttonTooltipProps}>
           {ButtonComp}
         </Tooltip>
       )
@@ -177,34 +164,7 @@ const Button = forwardRef<HTMLButtonElement, ButtonProps>(
 )
 Button.displayName = 'Button'
 
-/**
- * Converts iconOnly into a literal and returns props ready to be spread into <Button />
- * @param p
- */
-type BtnIconOnly = Extract<ButtonProps, { iconOnly: true }>
-type BtnRegular = Extract<ButtonProps, { iconOnly?: false }>
-type ButtonLike = Omit<Partial<ButtonProps>, 'iconOnly' | 'ignoreIconOnlyTooltip'> & {
-  iconOnly?: boolean
-  ignoreIconOnlyTooltip?: boolean
-}
-
-const toButtonProps = (p: ButtonLike) => {
-  if (p?.iconOnly) {
-    return {
-      ...p,
-      iconOnly: true,
-      ignoreIconOnlyTooltip: (p as any)?.ignoreIconOnlyTooltip ?? false
-    } as BtnIconOnly
-  }
-
-  const { ignoreIconOnlyTooltip: _drop, ...rest } = p as any
-  return {
-    ...rest,
-    iconOnly: false
-  } as BtnRegular
-}
-
-export { Button, buttonVariants, toButtonProps }
+export { Button, buttonVariants }
 export type {
   ButtonProps,
   ButtonThemes,

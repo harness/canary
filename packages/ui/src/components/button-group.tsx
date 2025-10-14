@@ -1,6 +1,6 @@
 import { ComponentProps, FC, forwardRef, ReactNode, Ref } from 'react'
 
-import { Button, ButtonProps, DropdownMenu, toButtonProps, TooltipProps } from '@/components'
+import { Button, ButtonProps, DropdownMenu, TooltipProps } from '@/components'
 import { cn } from '@utils/cn'
 import omit from 'lodash-es/omit'
 
@@ -78,11 +78,9 @@ export const ButtonGroup = forwardRef<HTMLDivElement, ButtonGroupProps>(
                 )}
                 variant={variant ?? 'outline'}
                 size={size}
-                {...toButtonProps({
-                  ...omit(restButtonProps, ['tooltipProps', 'dropdownProps']),
-                  iconOnly,
-                  tooltipProps: mergedTooltip
-                })}
+                {...omit(restButtonProps, ['tooltipProps', 'dropdownProps'])}
+                iconOnly={iconOnly}
+                tooltipProps={mergedTooltip}
               />
             </Wrapper>
           )

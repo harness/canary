@@ -16,7 +16,6 @@ import {
   IconPropsV2,
   IconV2,
   IconV2NamesType,
-  toButtonProps,
   TogglePropsIconOnly,
   TogglePropsNotIconOnly,
   toggleVariants
@@ -218,7 +217,8 @@ const ToggleGroupItem = forwardRef<
           size={size}
           disabled={finalDisabled}
           {...accessibilityProps}
-          {...toButtonProps({ iconOnly, tooltipProps })}
+          iconOnly={iconOnly}
+          tooltipProps={tooltipProps}
         >
           {renderContent()}
         </Button>

@@ -261,6 +261,78 @@ export default {
       inherit: 'inherit',
       current: 'currentColor'
     },
+    borderColor: {
+      // Application default
+      DEFAULT: 'var(--cn-border-3)',
+
+      // theme borders
+      'cn-1': 'lch(from var(--cn-border-1) l c h / <alpha-value>)',
+      'cn-2': 'lch(from var(--cn-border-2) l c h / <alpha-value>)',
+      'cn-3': 'lch(from var(--cn-border-3) l c h / <alpha-value>)',
+
+      // State borders
+      'cn-disabled': 'lch(from var(--cn-state-disabled-border) l c h / <alpha-value>)',
+
+      // status borders
+      'cn-brand': 'var(--cn-border-brand)',
+
+      /**
+       * These colors should be used along with their text and bg outline pairs
+       *
+       * Example:
+       * ✅ .text-cn-success-outline + .bg-cn-success-outline + .border-cn-success-outline
+       *
+       * ❌ .text-cn-success-outline + .bg-cn-success-outline + .border-cn-danger-outline
+       */
+      'cn-success': {
+        DEFAULT: 'var(--cn-border-success)',
+        outline: 'var(--cn-set-success-outline-border)'
+      },
+      'cn-gray': {
+        outline: 'var(--cn-set-gray-outline-border)'
+      },
+      'cn-danger': {
+        DEFAULT: 'var(--cn-border-danger)',
+        outline: 'var(--cn-set-danger-outline-border)'
+      },
+      'cn-warning': {
+        DEFAULT: 'var(--cn-border-warning)',
+        outline: 'var(--cn-set-warning-outline-border)'
+      },
+      'cn-blue': {
+        outline: 'var(--cn-set-blue-outline-border)'
+      },
+      'cn-purple': {
+        outline: 'var(--cn-set-purple-outline-border)'
+      },
+      'cn-brown': {
+        outline: 'var(--cn-set-brown-outline-border)'
+      },
+      'cn-cyan': {
+        outline: 'var(--cn-set-cyan-outline-border)'
+      },
+      'cn-indigo': {
+        outline: 'var(--cn-set-indigo-outline-border)'
+      },
+      'cn-lime': {
+        outline: 'var(--cn-set-lime-outline-border)'
+      },
+      'cn-mint': {
+        outline: 'var(--cn-set-mint-outline-border)'
+      },
+      'cn-orange': {
+        outline: 'var(--cn-set-orange-outline-border)'
+      },
+      'cn-pink': {
+        outline: 'var(--cn-set-pink-outline-border)'
+      },
+      'cn-violet': {
+        outline: 'var(--cn-set-violet-outline-border)'
+      },
+      transparent: 'transparent',
+      inherit: 'inherit',
+      current: 'currentColor'
+    },
     extend: {
       opacity: {
         'cn-disabled': 'var(--cn-disabled-opacity)'
@@ -326,75 +398,6 @@ export default {
         'cn-search-input-max-width': '320px'
       },
 
-      borderColor: {
-        // Application default
-        DEFAULT: 'var(--cn-border-3)',
-
-        // theme borders
-        'cn-1': 'lch(from var(--cn-border-1) l c h / <alpha-value>)',
-        'cn-2': 'lch(from var(--cn-border-2) l c h / <alpha-value>)',
-        'cn-3': 'lch(from var(--cn-border-3) l c h / <alpha-value>)',
-
-        // State borders
-        'cn-disabled': 'lch(from var(--cn-state-disabled-border) l c h / <alpha-value>)',
-
-        // status borders
-        'cn-brand': 'var(--cn-border-brand)',
-
-        /**
-         * These colors should be used along with their text and bg outline pairs
-         *
-         * Example:
-         * ✅ .text-cn-success-outline + .bg-cn-success-outline + .border-cn-success-outline
-         *
-         * ❌ .text-cn-success-outline + .bg-cn-success-outline + .border-cn-danger-outline
-         */
-        'cn-success': {
-          DEFAULT: 'var(--cn-border-success)',
-          outline: 'var(--cn-set-success-outline-border)'
-        },
-        'cn-gray': {
-          outline: 'var(--cn-set-gray-outline-border)'
-        },
-        'cn-danger': {
-          DEFAULT: 'var(--cn-border-danger)',
-          outline: 'var(--cn-set-danger-outline-border)'
-        },
-        'cn-warning': {
-          DEFAULT: 'var(--cn-border-warning)',
-          outline: 'var(--cn-set-warning-outline-border)'
-        },
-        'cn-blue': {
-          outline: 'var(--cn-set-blue-outline-border)'
-        },
-        'cn-purple': {
-          outline: 'var(--cn-set-purple-outline-border)'
-        },
-        'cn-brown': {
-          outline: 'var(--cn-set-brown-outline-border)'
-        },
-        'cn-cyan': {
-          outline: 'var(--cn-set-cyan-outline-border)'
-        },
-        'cn-indigo': {
-          outline: 'var(--cn-set-indigo-outline-border)'
-        },
-        'cn-lime': {
-          outline: 'var(--cn-set-lime-outline-border)'
-        },
-        'cn-mint': {
-          outline: 'var(--cn-set-mint-outline-border)'
-        },
-        'cn-orange': {
-          outline: 'var(--cn-set-orange-outline-border)'
-        },
-        'cn-pink': {
-          outline: 'var(--cn-set-pink-outline-border)'
-        },
-        'cn-violet': {
-          outline: 'var(--cn-set-violet-outline-border)'
-        }
-      },
       outlineOffset: {
         'cn-tight': 'calc(var(--cn-size-px) * -2)'
       },

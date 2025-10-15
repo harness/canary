@@ -76,7 +76,7 @@ export default function YamlView(props: YamlViewProps) {
   }, [schemaConfig, theme, monacoThemes, yamlRevision])
 
   return (
-    <Resizable.PanelGroup direction="vertical" className="border-5 grow">
+    <Resizable.PanelGroup direction="vertical" className="grow">
       <Resizable.Panel order={1} className="flex">
         {yamlEditor}
       </Resizable.Panel>

@@ -32,11 +32,11 @@ export function AnimatedHarnessLogo({ theme }: AnimatedHarnessLogoProps) {
       <div className={cn(isError && 'rotate-90', 'transition-transform duration-700')}>
         <span
           className={cn(
-            'absolute size-[68px] -left-2.5 -z-10 -top-2 rounded-[100%] transition-colors duration-700 blur-[10px] opacity-[.12]',
+            'absolute size-[68px] -left-2.5 -z-10 -top-2 rounded-full transition-colors duration-700 blur-[10px] opacity-[.12]',
             shadowBackground
           )}
         />
-        <div className="relative flex size-16 overflow-hidden rounded-full bg-cn-3 shadow-3">
+        <div className="bg-cn-3 shadow-3 relative flex size-16 overflow-hidden rounded-full">
           <span className="border-linear absolute inset-0 mix-blend-overlay [background:linear-gradient(180deg,#fff,transparent)_border-box]" />
           <span className="absolute -right-0.5 bottom-px size-7 translate-y-1/2 rounded-full bg-[#D9D9D9] opacity-5 blur-[10px]" />
           <span
@@ -51,7 +51,7 @@ export function AnimatedHarnessLogo({ theme }: AnimatedHarnessLogoProps) {
               largeLightBackground
             )}
           />
-          <span className="absolute left-1/2 top-1/2 size-8 -translate-x-1/2 -translate-y-1/2 rotate-45 rounded-xl bg-gradient-to-r from-[#F9F9FA] via-transparent via-60% to-transparent opacity-50 blur-sm" />
+          <span className="rounded-5 absolute left-1/2 top-1/2 size-8 -translate-x-1/2 -translate-y-1/2 rotate-45 bg-gradient-to-r from-[#F9F9FA] via-transparent via-60% to-transparent opacity-50 blur-sm" />
         </div>
       </div>
       <IconV2

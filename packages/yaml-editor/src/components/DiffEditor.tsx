@@ -57,7 +57,7 @@ export function CodeDiffEditor<T>({
   return (
     <>
       <DiffEditor
-        className="overflow-hidden rounded-b-md border-x border-b"
+        className="overflow-hidden rounded-b-3 border-x border-b"
         language={language}
         theme={theme}
         original={original}

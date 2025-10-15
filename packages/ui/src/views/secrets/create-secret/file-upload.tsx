@@ -53,7 +53,7 @@ export function FileUpload({ selectedFile, onFileChange, error, accept }: FileUp
     <div>
       {!selectedFile ? (
         <div
-          className="rounded-md border-2 border-dashed border-cn-2 p-cn-xl"
+          className="rounded-3 border-2 border-dashed border-cn-2 p-cn-xl"
           onDragOver={handleDragOver}
           onDrop={handleDrop}
         >

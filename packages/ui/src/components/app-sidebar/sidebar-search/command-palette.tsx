@@ -56,7 +56,7 @@ const Input = React.forwardRef<
     <CommandPrimitive.Input
       ref={ref}
       className={cn(
-        'flex h-10 w-full rounded-md bg-transparent py-3 text-base text-cn-1 outline-none placeholder:text-cn-3 disabled:cursor-not-allowed disabled:opacity-50 focus:ring-0 focus-visible:outline-none',
+        'flex h-10 w-full rounded-3 bg-transparent py-3 text-base text-cn-1 outline-none placeholder:text-cn-3 disabled:cursor-not-allowed disabled:opacity-50 focus:ring-0 focus-visible:outline-none',
         className
       )}
       {...props}
@@ -108,7 +108,7 @@ const Item = React.forwardRef<
   <CommandPrimitive.Item
     ref={ref}
     className={cn(
-      'relative flex cursor-default gap-0 select-none items-center font-normal rounded-[4px] px-5 py-0 text-sm text-cn-1 outline-none data-[disabled=true]:pointer-events-none data-[selected=true]:bg-cn-hover data-[selected=true]:text-cn-1 data-[disabled=true]:opacity-50 [&_svg]:pointer-events-none [&_svg]:size-4 [&_svg]:shrink-0',
+      'relative flex cursor-default gap-0 select-none items-center font-normal rounded-2 px-5 py-0 text-sm text-cn-1 outline-none data-[disabled=true]:pointer-events-none data-[selected=true]:bg-cn-hover data-[selected=true]:text-cn-1 data-[disabled=true]:opacity-50 [&_svg]:pointer-events-none [&_svg]:size-4 [&_svg]:shrink-0',
       className
     )}
     {...props}
@@ -128,7 +128,7 @@ const Shortcut = ({ className, ...props }: React.HTMLAttributes<HTMLSpanElement>
   return (
     <span
       className={cn(
-        'ml-auto px-[6px] flex gap-0.5 rounded-sm text-2 tracking-tight border border-cn-2 bg-cn-3 text-cn-2',
+        'ml-auto px-[6px] flex gap-0.5 rounded-1 text-2 tracking-tight border border-cn-2 bg-cn-3 text-cn-2',
         className
       )}
       {...props}

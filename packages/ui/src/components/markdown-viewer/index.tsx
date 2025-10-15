@@ -209,7 +209,7 @@ const MarkdownViewerLocal = ({
   }, [interceptClickEventOnViewerContainer])
 
   return (
-    <div className={cn({ 'rounded-b-md border-x border-b py-6 px-16': withBorder }, className)}>
+    <div className={cn({ 'rounded-b-3 border-x border-b py-6 px-16': withBorder }, className)}>
       <div ref={ref} style={styles}>
         <MarkdownPreview
           source={source}

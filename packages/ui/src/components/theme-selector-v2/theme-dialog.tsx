@@ -101,7 +101,7 @@ const ThemeDialog: FC<ThemeDialogProps> = ({
                         <IconV2 className="text-cn-1 absolute bottom-2 left-2" name="check-circle-solid" />
                       )}
                       <div
-                        className="absolute right-[27px] top-[61px] h-2 w-9 rounded-sm"
+                        className="absolute right-[27px] top-[61px] h-2 w-9 rounded-1"
                         style={{
                           backgroundColor:
                             accentColor === AccentColor.White

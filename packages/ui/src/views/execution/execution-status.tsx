@@ -15,7 +15,7 @@ const Badge: React.FC<ExecutionStatusProps & BadgeProps> = props => {
           <span className="text-cn-disabled">Pending</span>
         </div>
       ) : (
-        <div className="flex items-center gap-1 rounded-md">
+        <div className="flex items-center gap-1 rounded-3">
           <div className="flex items-center gap-0.5">
             <IconV2 name="clock-solid" />
             <span className="text-cn-disabled">Pending</span>
@@ -30,7 +30,7 @@ const Badge: React.FC<ExecutionStatusProps & BadgeProps> = props => {
           <span>Running</span>
         </div>
       ) : (
-        <div className="flex items-center gap-1 rounded-md">
+        <div className="flex items-center gap-1 rounded-3">
           <div className="flex items-center gap-1.5">
             <IconV2 name="loader" color="warning" className="animate-spin" />
             <span>Running</span>
@@ -46,7 +46,7 @@ const Badge: React.FC<ExecutionStatusProps & BadgeProps> = props => {
           Failed
         </StatusBadge>
       ) : (
-        <div className="flex items-center gap-1 rounded-md">
+        <div className="flex items-center gap-1 rounded-3">
           <StatusBadge icon="xmark-circle-solid" theme="danger" variant="ghost">
             Failed
           </StatusBadge>
@@ -59,7 +59,7 @@ const Badge: React.FC<ExecutionStatusProps & BadgeProps> = props => {
           Success
         </StatusBadge>
       ) : (
-        <div className="flex items-center gap-1 rounded-md">
+        <div className="flex items-center gap-1 rounded-3">
           <StatusBadge icon="check-circle-solid" theme="success" variant="ghost">
             Success
           </StatusBadge>

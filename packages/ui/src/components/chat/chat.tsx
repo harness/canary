@@ -165,7 +165,7 @@ const InputField: FC<InputFieldProps> = ({
     <div className="relative">
       <Input
         ref={inputRef}
-        className="h-11 flex-1 rounded-lg pl-3 pr-12 focus:ring-0 focus-visible:h-16 focus-visible:rounded-lg focus-visible:pb-8"
+        className="h-11 flex-1 rounded-4 pl-3 pr-12 focus:ring-0 focus-visible:h-16 focus-visible:rounded-4 focus-visible:pb-8"
         wrapperClassName="flex-row"
         value={value}
         onChange={onChange}

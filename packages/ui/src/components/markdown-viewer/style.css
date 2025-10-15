@@ -257,7 +257,7 @@
 
     blockquote {
       font: var(--cn-comp-markdown-content-paragraph);
-      @apply text-cn-3 my-cn-md before:bg-cn-separator relative border-0 pl-4 pr-0 before:absolute before:inset-y-0 before:left-0 before:w-1 before:rounded-sm;
+      @apply text-cn-3 my-cn-md before:bg-cn-separator before:rounded-1 relative border-0 pl-4 pr-0 before:absolute before:inset-y-0 before:left-0 before:w-1;
     }
 
     table {

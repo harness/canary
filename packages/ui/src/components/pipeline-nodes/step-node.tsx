@@ -56,7 +56,7 @@ export function StepNode(props: StepNodeProps) {
       <ExecutionStatus executionStatus={executionStatus} />
 
       <div
-        className={cn('bg-cn-gray-secondary rounded-md', {
+        className={cn('bg-cn-gray-secondary rounded-3', {
           'unified-pipeline-studio_card-wrapper ': executionStatus === 'executing'
         })}
       >
@@ -64,7 +64,7 @@ export function StepNode(props: StepNodeProps) {
           role="button"
           tabIndex={0}
           className={cn(
-            'flex flex-col justify-end gap-y-2 box size-full rounded-md border bg-graph-gradient-1 cursor-pointer p-2.5 pt-2 shadow-4',
+            'flex flex-col justify-end gap-y-2 box size-full rounded-3 border bg-graph-gradient-1 cursor-pointer p-2.5 pt-2 shadow-4',
             {
               'border-graph-border-1': !selected,
               'border-cn-3': selected,

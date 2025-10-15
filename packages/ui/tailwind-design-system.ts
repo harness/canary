@@ -333,6 +333,25 @@ export default {
       inherit: 'inherit',
       current: 'currentColor'
     },
+    borderRadius: {
+      DEFAULT: 'var(--cn-rounded-2)',
+      px: 'var(--cn-rounded-px)',
+      1: 'var(--cn-rounded-1)',
+      2: 'var(--cn-rounded-2)',
+      3: 'var(--cn-rounded-3)',
+      4: 'var(--cn-rounded-4)',
+      5: 'var(--cn-rounded-5)',
+      6: 'var(--cn-rounded-6)',
+      7: 'var(--cn-rounded-7)',
+      none: 'var(--cn-rounded-none)',
+      full: 'var(--cn-rounded-full)',
+
+      /**
+       * Component specific borderRadius
+       */
+      'cn-input': 'var(--cn-input-radius)',
+      inherit: 'inherit'
+    },
     extend: {
       opacity: {
         'cn-disabled': 'var(--cn-disabled-opacity)'
@@ -462,23 +481,6 @@ export default {
       },
       // Remove borderColor - removing the Default is causing border issues in dark mode
 
-      borderRadius: {
-        px: 'var(--cn-rounded-px)',
-        1: 'var(--cn-rounded-1)',
-        2: 'var(--cn-rounded-2)',
-        3: 'var(--cn-rounded-3)',
-        4: 'var(--cn-rounded-4)',
-        5: 'var(--cn-rounded-5)',
-        6: 'var(--cn-rounded-6)',
-        7: 'var(--cn-rounded-7)',
-        none: 'var(--cn-rounded-none)',
-        full: 'var(--cn-rounded-full)',
-
-        /**
-         * Component specific borderRadius
-         */
-        'cn-input': 'var(--cn-input-radius)'
-      },
       fontSize: {
         0: 'var(--cn-font-size-0)',
         1: 'var(--cn-font-size-1)',
@@ -620,7 +622,6 @@ export default {
     // Hover classes
     { pattern: /^hover:bg-graph-/ },
     'stroke-borders-2',
-    { pattern: /rounded-./ },
     { pattern: /border-./ },
     // Important: used for generating max-width of SandboxLayout.Content
     { pattern: /max-w-./ },

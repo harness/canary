@@ -180,7 +180,7 @@ export function CreateSecretPage({
                 Secret File
               </Text>
               <div
-                className="rounded-md border-2 border-dashed border-cn-2 p-4"
+                className="rounded-3 border-2 border-dashed border-cn-2 p-4"
                 onDragOver={handleDragOver}
                 onDrop={handleDrop}
               >
@@ -222,7 +222,7 @@ export function CreateSecretPage({
             <Accordion.Item value="secret-details">
               <Accordion.Trigger>Metadata</Accordion.Trigger>
               <Accordion.Content>
-                <Fieldset className="rounded-md border p-4">
+                <Fieldset className="rounded-3 border p-4">
                   {/* DESCRIPTION */}
                   <FormInput.Textarea
                     id="description"

@@ -5,17 +5,22 @@ import { useCustomDialogTrigger } from '@/context'
 import { DialogLabels } from '@/views/user-management/components/dialogs'
 import { useDialogData } from '@/views/user-management/components/dialogs/hooks/use-dialog-data'
 import { ErrorState } from '@/views/user-management/components/page-components/content/components/users-list/components/error-state'
-import { NoSearchResults } from '@/views/user-management/components/page-components/content/components/users-list/components/no-search-results'
-import { useSearch } from '@/views/user-management/providers/search-provider'
 import { useStates } from '@/views/user-management/providers/state-provider/hooks/use-states'
 import { useUserManagementStore } from '@/views/user-management/providers/store-provider'
 import { UsersProps } from '@views/user-management/types'
 
-export const UsersList = () => {
+import { NoSearchResults } from './components/no-search-results'
+
+interface UserListProps {
+  searchQuery: string | null
+  handleResetSearch: () => void
+}
+
+export const UsersList = ({ searchQuery, handleResetSearch }: UserListProps) => {
   const { useAdminListUsersStore } = useUserManagementStore()
 
   const { users } = useAdminListUsersStore()
-  const { searchQuery } = useSearch()
+
   const { handleDialogOpen } = useDialogData()
 
   const { loadingStates, errorStates } = useStates()
@@ -43,7 +48,7 @@ export const UsersList = () => {
   // but until backend is not ready I leave only searchQuery to make it possible to see how this component works
   // TODO: add additional check for users.length === 0 when backend will be ready
   if (searchQuery) {
-    return <NoSearchResults />
+    return <NoSearchResults handleResetSearch={handleResetSearch} />
   }
 
   return (
@@ -65,14 +70,14 @@ export const UsersList = () => {
                 <Table.Cell className="my-6 content-center">
                   <div className="flex items-center gap-2">
                     <Avatar name={user.uid} src={user.avatarUrl} rounded />
-                    <span className="truncate whitespace-nowrap text-sm font-medium text-cn-1">{user.uid}</span>
+                    <span className="text-cn-1 truncate whitespace-nowrap text-sm font-medium">{user.uid}</span>
                   </div>
                 </Table.Cell>
 
                 {/* EMAIL */}
                 <Table.Cell className="my-6 content-center">
                   <div className="flex gap-1.5">
-                    <span className="truncate whitespace-nowrap text-sm text-cn-3">{user.email}</span>
+                    <span className="text-cn-3 truncate whitespace-nowrap text-sm">{user.email}</span>
                   </div>
                 </Table.Cell>
 

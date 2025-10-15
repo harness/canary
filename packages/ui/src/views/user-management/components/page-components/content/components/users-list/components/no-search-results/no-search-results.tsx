@@ -1,11 +1,12 @@
 import { IconV2, NoData } from '@/components'
 import { useTranslation } from '@/context'
-import { useSearch } from '@/views/user-management/providers/search-provider'
 
-export const NoSearchResults = () => {
+interface NoSearchResultsProps {
+  handleResetSearch: () => void
+}
+
+export const NoSearchResults = ({ handleResetSearch }: NoSearchResultsProps) => {
   const { t } = useTranslation()
-
-  const { handleResetSearch } = useSearch()
 
   return (
     <NoData

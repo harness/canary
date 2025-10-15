@@ -82,7 +82,9 @@ export const NoData: FC<NoDataProps> = ({
       {imageName && <Illustration name={imageName} size={imageSize} themeDependent />}
       <Layout.Vertical gap="xl" align="center" justify="center">
         <Layout.Vertical gap="xs" align="center" justify="center" className={textWrapperClassName}>
-          <Text variant="heading-section">{title}</Text>
+          <Text variant="heading-section" align="center">
+            {title}
+          </Text>
           {!!description &&
             description.map((line, index) => (
               <Text key={index} align="center">

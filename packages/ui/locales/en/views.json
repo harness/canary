@@ -1102,8 +1102,8 @@
     },
     "close": "Close",
     "newUserButton": "Create User",
-    "searchPlaceholder": "Search",
     "usersHeader": "Users",
+    "searchPlaceholder": "Search",
     "tabs": {
       "active": "Active users",
       "inactive": "Pending users"

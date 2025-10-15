@@ -1,25 +1,31 @@
-import { Button, Dialog, IconV2, ListActions, SearchBox } from '@/components'
+import { forwardRef } from 'react'
+
+import { Button, Dialog, IconV2, ListActions, SearchInput } from '@/components'
 import { useTranslation } from '@/context'
 import { DialogLabels } from '@/views/user-management/components/dialogs'
 import { useDialogData } from '@/views/user-management/components/dialogs/hooks/use-dialog-data'
-import { useSearch } from '@/views/user-management/providers/search-provider'
 
-export const Actions = () => {
+interface ActionProps {
+  searchQuery: string | null
+  handleSearchChange: (val: string) => void
+}
+
+export const Actions = forwardRef<HTMLInputElement, ActionProps>(({ searchQuery, handleSearchChange }, ref) => {
   const { t } = useTranslation()
-
-  const { searchInput, handleInputChange } = useSearch()
 
   const { handleDialogOpen } = useDialogData()
 
   return (
     <ListActions.Root>
       <ListActions.Left>
-        <SearchBox.Root
-          className="h-8 max-w-[320px]"
-          placeholder={t('views:userManagement.searchPlaceholder', 'Search')}
-          value={searchInput || ''}
-          handleChange={handleInputChange}
+        <SearchInput
+          id="search"
+          defaultValue={searchQuery ?? ''}
+          inputContainerClassName="w-80"
+          placeholder={t('views:repos.search', 'Search')}
+          onChange={handleSearchChange}
           autoFocus
+          ref={ref}
         />
       </ListActions.Left>
       <ListActions.Right>
@@ -32,4 +38,5 @@ export const Actions = () => {
       </ListActions.Right>
     </ListActions.Root>
   )
-}
+})
+Actions.displayName = 'Actions'

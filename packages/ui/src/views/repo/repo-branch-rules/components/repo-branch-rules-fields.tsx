@@ -6,13 +6,13 @@ import {
   Fieldset,
   FormInput,
   IconV2,
-  Input,
   Label,
   Layout,
   Message,
   MessageTheme,
   MultiSelect,
   MultiSelectOption,
+  NumberInput,
   ResetTag,
   SplitButton,
   Switch,
@@ -370,10 +370,7 @@ export const BranchSettingsRuleListField: FC<{
                 )}
 
                 {!!rule?.hasInput && isChecked && (
-                  <Input
-                    id="name"
-                    size="md"
-                    type="number"
+                  <NumberInput
                     wrapperClassName={cn('ml-[26px]', { 'ml-[52px]': rule.isNested })}
                     placeholder={
                       rule.id === BranchRuleId.REQUIRE_MINIMUM_DEFAULT_REVIEWER_COUNT

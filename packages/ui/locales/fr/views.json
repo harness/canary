@@ -1088,8 +1088,8 @@
     },
     "close": "Fermer",
     "newUserButton": "Créer utilisateur",
-    "searchPlaceholder": "Rechercher",
     "usersHeader": "Utilisateurs",
+    "searchPlaceholder": "Rechercher",
     "tabs": {
       "active": "Utilisateurs actifs",
       "inactive": "Utilisateurs en attente"

@@ -58,7 +58,7 @@ export const CommitsList: FC<CommitProps> = ({
     <div className={className}>
       {entries.map(([date, commitData]) => (
         <NodeGroup.Root className="pb-cn-xl !gap-y-cn-md !gap-x-cn-md grid-cols-[14px_1fr] last:pb-0" key={date}>
-          <NodeGroup.Icon simpleNodeIcon />
+          <NodeGroup.Icon simpleNodeIcon wrapperClassName="size-auto self-center" />
           <NodeGroup.Title>
             {date && (
               <Text variant="body-single-line-normal" color="foreground-3">

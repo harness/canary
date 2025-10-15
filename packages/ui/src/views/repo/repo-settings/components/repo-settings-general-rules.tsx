@@ -173,6 +173,7 @@ export const RepoSettingsGeneralRules: FC<RepoSettingsGeneralRulesProps> = ({
             inputContainerClassName="w-80"
             placeholder={t('views:repos.search', 'Search')}
             onChange={handleSearchChange}
+            autoFocus
           />
         </ListActions.Left>
         <ListActions.Right className="gap-x-cn-sm">

@@ -57,6 +57,7 @@ const ExecutionListPage: FC<IExecutionListPageProps> = ({
               value={searchInput}
               handleChange={handleInputChange}
               placeholder={'Search'}
+              autoFocus
             />
           </ListActions.Left>
           <ListActions.Right>

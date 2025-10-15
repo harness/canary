@@ -19,6 +19,7 @@ export const Actions = () => {
           placeholder={t('views:userManagement.searchPlaceholder', 'Search')}
           value={searchInput || ''}
           handleChange={handleInputChange}
+          autoFocus
         />
       </ListActions.Left>
       <ListActions.Right>

@@ -80,6 +80,7 @@ export const ProjectMemberListView: FC<ProjectMemberListViewProps> = ({
                       value={search}
                       handleChange={handleSearchChange}
                       placeholder={t('views:repos.search', 'Search')}
+                      autoFocus
                     />
                   </ListActions.Left>
                   <ListActions.Right>

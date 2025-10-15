@@ -259,6 +259,9 @@ export const BranchSettingsRuleDefaultReviewersField: FC<
         searchQuery={debouncedPrincipalsSearchQuery}
         setSearchQuery={handleStringSearchChange}
         disallowCreation
+        inputProps={{
+          autoFocus: true
+        }}
       />
       {validationMessage && !isEmpty(validationMessage.message) && (
         <Message theme={validationMessage.theme} className="mt-2">
@@ -349,6 +352,9 @@ export const BranchSettingsRuleListField: FC<{
                     }}
                     options={recentStatusChecks?.map(check => ({ id: check, key: check })) ?? []}
                     disallowCreation
+                    inputProps={{
+                      autoFocus: true
+                    }}
                   />
                 )}
 
@@ -376,6 +382,7 @@ export const BranchSettingsRuleListField: FC<{
                     }
                     value={rules[index].input || ''}
                     onChange={e => handleInputChange(rule.id, e.target.value)}
+                    autoFocus
                   />
                 )}
               </Fragment>

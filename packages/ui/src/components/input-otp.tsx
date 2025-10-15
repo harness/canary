@@ -1,8 +1,9 @@
 import { ComponentPropsWithoutRef, ElementRef, forwardRef, useContext } from 'react'
 
-import { DashIcon } from '@radix-ui/react-icons'
 import { cn } from '@utils/cn'
 import { OTPInput, OTPInputContext } from 'input-otp'
+
+import { IconV2 } from './icon-v2'
 
 const InputOTPRoot = forwardRef<ElementRef<typeof OTPInput>, ComponentPropsWithoutRef<typeof OTPInput>>(
   ({ className, containerClassName, ...props }, ref) => (
@@ -48,7 +49,7 @@ const InputOTPSlot = forwardRef<HTMLDivElement, InputOTPSlotProps>(({ index, cla
       {char}
       {hasFakeCaret && (
         <div className="pointer-events-none absolute inset-0 flex items-center justify-center">
-          <div className="animate-caret-blink h-4 w-px bg-cn-brand duration-1000" />
+          <div className="animate-caret-blink bg-cn-brand h-4 w-px duration-1000" />
         </div>
       )}
     </div>
@@ -58,7 +59,7 @@ InputOTPSlot.displayName = 'InputOTPSlot'
 
 const InputOTPSeparator = forwardRef<ElementRef<'div'>, ComponentPropsWithoutRef<'div'>>(({ ...props }, ref) => (
   <div ref={ref} role="separator" {...props}>
-    <DashIcon />
+    <IconV2 name="minus" />
   </div>
 ))
 InputOTPSeparator.displayName = 'InputOTPSeparator'

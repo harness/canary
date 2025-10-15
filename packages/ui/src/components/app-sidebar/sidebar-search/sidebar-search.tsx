@@ -22,7 +22,7 @@ export function SidebarSearch() {
         placeholder={t('component:navbar.search', 'Search')}
         className="pointer-events-none"
         inputContainerClassName="border-cn-2 max-w-full overflow-hidden"
-        suffix={<Shortcut className="mr-1.5 transition-opacity group-data-[state=collapsed]:opacity-0">⌘K</Shortcut>}
+        suffix={<Shortcut className="mr-cn-2xs transition-opacity group-data-[state=collapsed]:opacity-0">⌘K</Shortcut>}
         readOnly
         aria-hidden="true"
         tabIndex={-1}

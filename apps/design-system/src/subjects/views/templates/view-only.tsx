@@ -218,7 +218,7 @@ export const ViewOnlyView = () => {
       </Page.Header>
       <Page.Content>
         <Tabs.NavRoot defaultValue="/dashboard">
-          <Tabs.List variant="overlined" className="mb-10">
+          <Tabs.List variant="overlined" className="mb-cn-3xl">
             <Tabs.Trigger value="/dashboard">Сonfiguration</Tabs.Trigger>
             <Tabs.Trigger value="/analytics">References</Tabs.Trigger>
             <Tabs.Trigger value="/reports">Activity History</Tabs.Trigger>

@@ -73,7 +73,7 @@ function ArrayFormInputInternal(props: ArrayFormInputProps): JSX.Element {
                   <div>
                     <Button
                       iconOnly
-                      className="mt-2"
+                      className="mt-cn-xs"
                       onClick={() => {
                         remove(idx)
                       }}
@@ -87,7 +87,7 @@ function ArrayFormInputInternal(props: ArrayFormInputProps): JSX.Element {
               ))}
             </div>
             <div>
-              <Button size="sm" onClick={() => append(input.default ?? undefined)} className="mt-2">
+              <Button size="sm" onClick={() => append(input.default ?? undefined)} className="mt-cn-xs">
                 Add
               </Button>
             </div>

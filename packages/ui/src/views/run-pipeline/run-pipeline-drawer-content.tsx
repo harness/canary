@@ -71,7 +71,7 @@ export function RunPipelineDrawerContent(props: RunPipelineDrawerProps) {
 
       <Drawer.Body className={cn({ 'p-0 [&>div]:h-full': view === 'yaml' })}>
         {loading ? (
-          <Skeleton.List className="p-5" />
+          <Skeleton.List className="p-cn-lg" />
         ) : (
           <div className="flex grow flex-col">
             <RunPipelineFormInputs
@@ -99,7 +99,7 @@ export function RunPipelineDrawerContent(props: RunPipelineDrawerProps) {
             />
           </div>
         )}
-        {!!error?.message && <p className="text-sm text-cn-danger">{error.message}</p>}
+        {!!error?.message && <p className="text-cn-danger text-sm">{error.message}</p>}
       </Drawer.Body>
 
       <Drawer.Footer>

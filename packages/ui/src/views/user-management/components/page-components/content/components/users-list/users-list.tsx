@@ -62,7 +62,7 @@ export const UsersList = () => {
             return (
               <Table.Row key={user.uid} className="h-[48px]">
                 {/* NAME */}
-                <Table.Cell className="my-6 content-center">
+                <Table.Cell className="my-cn-xl content-center">
                   <div className="flex items-center gap-2">
                     <Avatar name={user.uid} src={user.avatarUrl} rounded />
                     <span className="truncate whitespace-nowrap text-sm font-medium text-cn-1">{user.uid}</span>
@@ -70,14 +70,14 @@ export const UsersList = () => {
                 </Table.Cell>
 
                 {/* EMAIL */}
-                <Table.Cell className="my-6 content-center">
+                <Table.Cell className="my-cn-xl content-center">
                   <div className="flex gap-1.5">
                     <span className="truncate whitespace-nowrap text-sm text-cn-3">{user.email}</span>
                   </div>
                 </Table.Cell>
 
                 {/* ROLE BINDING */}
-                <Table.Cell className="my-6 content-center">
+                <Table.Cell className="my-cn-xl content-center">
                   <div className="flex gap-1.5">
                     <StatusBadge variant="outline" size="sm" theme={user.admin ? 'merged' : 'danger'}>
                       {user.admin ? 'Admin' : 'User'}

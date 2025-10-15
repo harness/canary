@@ -36,7 +36,7 @@ export const RepoCreateRule = () => {
   }, [])
 
   if (!loaded) {
-    return <Skeleton.Form className="mt-7" />
+    return <Skeleton.Form className="h-fit w-full" linesCount={4} />
   }
 
   return (

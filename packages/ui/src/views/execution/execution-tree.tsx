@@ -8,7 +8,7 @@ import { renderTree } from './utils'
 export const ExecutionTree: FC<ExecutionTreeProps> = props => {
   const { defaultSelectedId, elements } = props
   return (
-    <Tree className="-mb-3 overflow-hidden pb-3" initialSelectedId={defaultSelectedId} elements={elements}>
+    <Tree className="-mb-cn-sm overflow-hidden pb-cn-sm" initialSelectedId={defaultSelectedId} elements={elements}>
       {renderTree(elements, props.onSelectNode)}
     </Tree>
   )

@@ -653,7 +653,7 @@ export const repoRoutes: CustomRouteObject[] = [
                   breadcrumb: ({ webhookId }: { webhookId: string }) => (
                     <Breadcrumb.Item>
                       <span>{webhookId}</span> <Breadcrumb.Separator />
-                      <span className="ml-1.5">Details</span>
+                      <span className="ml-cn-2xs">Details</span>
                     </Breadcrumb.Item>
                   ),
                   routeName: RouteConstants.toRepoWebhookDetails
@@ -666,7 +666,7 @@ export const repoRoutes: CustomRouteObject[] = [
                   breadcrumb: ({ webhookId }: { webhookId: string }) => (
                     <Breadcrumb.Item>
                       <span>{webhookId}</span> <Breadcrumb.Separator />
-                      <span className="ml-1.5">Executions</span>
+                      <span className="ml-cn-2xs">Executions</span>
                     </Breadcrumb.Item>
                   ),
                   routeName: RouteConstants.toRepoWebhookExecutions
@@ -679,8 +679,8 @@ export const repoRoutes: CustomRouteObject[] = [
                   breadcrumb: ({ webhookId, executionId }: { webhookId: string; executionId: string }) => (
                     <Breadcrumb.Item>
                       <span>{webhookId}</span> <Breadcrumb.Separator />
-                      <span className="ml-1.5">Executions</span>
-                      <Breadcrumb.Separator className="mx-1.5" />
+                      <span className="ml-cn-2xs">Executions</span>
+                      <Breadcrumb.Separator className="mx-cn-2xs" />
                       <span>{executionId}</span>
                     </Breadcrumb.Item>
                   ),
@@ -1283,7 +1283,7 @@ export const getMFERoutes = (mfeProjectId?: string): CustomRouteObject[] => [
           breadcrumb: () => (
             <>
               <span>User</span>
-              <Breadcrumb.Separator className="mx-2.5" />
+              <Breadcrumb.Separator className="mx-cn-2xs" />
               <span>{Page.Settings}</span>
             </>
           ),

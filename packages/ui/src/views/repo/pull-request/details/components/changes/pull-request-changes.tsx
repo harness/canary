@@ -252,7 +252,7 @@ function PullRequestChangesInternal({
                 ) || []
 
               return (
-                <div className="pt-2" key={item.filePath}>
+                <div className="pt-cn-xs" key={item.filePath}>
                   <InViewDiffRenderer
                     key={item.filePath}
                     blockName={innerBlockName(item.filePath)}

@@ -1,7 +1,7 @@
 import { Avatar, AvatarTooltipProps, AvatarWithTooltip, Layout, StatusBadge, Text } from '@components/index'
 
 const TooltipContent = ({ contributor }: { contributor: ContributorsProps['contributors'][number] }) => (
-  <Layout.Horizontal align="center" justify="between" className="m-1">
+  <Layout.Horizontal align="center" justify="between" className="m-cn-3xs">
     <Avatar name={contributor.name || ''} size="lg" rounded />
     <Layout.Vertical gap="2xs">
       <Text>{contributor.name}</Text>
@@ -37,7 +37,7 @@ export const Contributors = (props: ContributorsProps) => {
               size="xs"
               rounded
               tooltipProps={tooltipProps}
-              className="[&:not(:first-child)]:-ml-1"
+              className="[&:not(:first-child)]:-ml-cn-3xs"
             />
           )
         })}

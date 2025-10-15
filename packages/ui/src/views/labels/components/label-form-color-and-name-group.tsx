@@ -54,7 +54,7 @@ export const LabelFormColorAndNameGroup: FC<LabelFormColorAndNameGroupProps> = (
 
       {isWithDeleteButton && (
         <Button
-          className="mt-[2px]"
+          className="mt-cn-4xs"
           variant="ghost"
           iconOnly
           onClick={handleDeleteValue}

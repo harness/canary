@@ -77,7 +77,7 @@ export const BranchInfoBar: FC<BranchInfoBarProps> = ({
 
   return (
     <Layout.Flex
-      className="border-cn-2 bg-cn-2 min-h-[3.25rem] rounded-3 border py-2 pl-4 pr-2"
+      className="border-cn-2 bg-cn-2 min-h-[3.25rem] rounded-3 border py-cn-xs pl-cn-md pr-cn-xs"
       align="center"
       justify="between"
       gapX="xs"
@@ -111,7 +111,7 @@ export const BranchInfoBar: FC<BranchInfoBarProps> = ({
                       : 'This branch is not ahead of'}
                     &nbsp;
                     <Tag
-                      className="mt-0.5 align-sub"
+                      className="mt-cn-4xs align-sub"
                       variant="secondary"
                       theme="gray"
                       value={defaultBranchName}

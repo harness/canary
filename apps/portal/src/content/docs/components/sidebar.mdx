@@ -25,10 +25,10 @@ code={`() => {
       <Sidebar.Provider className="!w-[600px]">
         <Sidebar.Root style={{ '--cn-sidebar-min-height': '700px' }}>
           <Sidebar.Header>
-            <div className="flex items-center px-2">
+            <div className="flex items-center px-cn-xs">
               <IconV2 name="harness-plugins" size="md" className="text-[--cn-comp-sidebar-logo-icon]" />
               <div
-                className="overflow-hidden max-w-20 ml-0.5 opacity-100 transition-[max-width,opacity,margin-left] group-data-[state=collapsed]:opacity-0 group-data-[state=collapsed]:max-w-0 group-data-[state=collapsed]:ml-0 ease-linear"
+                className="overflow-hidden max-w-20 ml-cn-4xs opacity-100 transition-[max-width,opacity,margin-left] group-data-[state=collapsed]:opacity-0 group-data-[state=collapsed]:max-w-0 group-data-[state=collapsed]:ml-0 ease-linear"
               >
                 <Illustration name="harness-logo-text" width={65} height={15} className="text-cn-1" />
               </div>
@@ -177,7 +177,7 @@ const SidebarExample = () => {
       <Sidebar.Root>
         <Sidebar.Header>
           {/* Logo or branding */}
-          <div className="p-4">
+          <div className="p-cn-md">
             <YourLogo />
           </div>
         </Sidebar.Header>

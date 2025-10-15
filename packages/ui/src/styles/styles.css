@@ -108,22 +108,22 @@
 }
 
 .card-auth-content {
-  @apply w-full py-6;
+  @apply py-cn-xl w-full;
 }
 
 /* Form utilities */
 .text-form-error {
-  @apply text-cn-danger text-2 mt-2 font-light;
+  @apply text-cn-danger text-2 mt-cn-xs font-light;
 }
 
 .form-input {
-  @apply border-cn-1/10 bg-cn-brand-primary/5 rounded-2 mt-1 w-full text-sm font-light;
+  @apply border-cn-1/10 bg-cn-brand-primary/5 mt-cn-3xs rounded-2 w-full text-sm font-light;
   @apply placeholder:text-cn-1/50 !important;
 }
 
 /* Temporary studio controls override */
 .react-flow__panel {
-  @apply left-auto right-0 m-6 flex gap-[1px] !important;
+  @apply m-cn-xl left-auto right-0 flex gap-[1px] !important;
 }
 
 .react-flow__controls-button {
@@ -624,10 +624,6 @@ mark {
   border: 4px solid transparent;
   border-radius: 7px;
   background-clip: content-box;
-}
-
-.breadcrumbs {
-  @apply bg-cn-1 fixed top-0 z-30 ml-56 w-full;
 }
 
 .layer-high {

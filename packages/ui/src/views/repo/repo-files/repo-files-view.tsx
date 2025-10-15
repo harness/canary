@@ -174,7 +174,7 @@ export const RepoFiles: FC<RepoFilesProps> = ({
     <SandboxLayout.Main className="repo-files-height bg-transparent min-w-0">
       <SandboxLayout.Content className="pl-cn-sm gap-y-cn-md flex h-full flex-col">
         {isView && !isEmptyRepository && (
-          <div className="-mt-1">
+          <div className="-mt-cn-3xs">
             <PathActionBar
               codeMode={codeMode}
               pathParts={pathParts}

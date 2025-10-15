@@ -100,7 +100,7 @@ function ListFormInputInternal(props: ListFormInputProps): JSX.Element {
                       <div>
                         <Button
                           iconOnly
-                          className="mt-2"
+                          className="mt-cn-xs"
                           onClick={() => {
                             remove(idx)
                           }}
@@ -115,7 +115,7 @@ function ListFormInputInternal(props: ListFormInputProps): JSX.Element {
                 ))}
               </div>
             </div>
-            <Button size="sm" onClick={() => append({})} className="mt-2">
+            <Button size="sm" onClick={() => append({})} className="mt-cn-xs">
               Add
             </Button>
           </div>

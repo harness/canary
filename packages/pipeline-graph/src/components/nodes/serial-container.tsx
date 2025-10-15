@@ -71,8 +71,8 @@ export default function SerialNodeContainer(props: ContainerNodeProps<SerialNode
         className="serial-node-header"
         style={{
           position: 'absolute',
-          top: '10px',
-          left: '10px',
+          top: '12px',
+          left: '12px',
           right: '0px',
           height: '0px',
           padding: '0px',

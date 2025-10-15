@@ -253,7 +253,7 @@ export function RepoImportPage({ onFormSubmit, onFormCancel, isLoading, apiError
           )}
 
           {/* SUBMIT BUTTONS */}
-          <Fieldset className="mt-6">
+          <Fieldset className="mt-cn-xl">
             <ControlGroup>
               <ButtonLayout horizontalAlign="start">
                 {/* TODO: Improve loading state to avoid flickering */}

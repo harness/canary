@@ -15,7 +15,7 @@ export interface SearchInputProps extends Omit<InputProps, 'type' | 'onChange' |
 const SearchInput = forwardRef<HTMLInputElement, SearchInputProps>(
   ({ placeholder = 'Search', className, debounce = true, onChange, prefix: prefixProp, ...props }, ref) => {
     const prefix = prefixProp ?? (
-      <div className="ml-1 grid w-8 shrink-0 place-items-center border-r-0">
+      <div className="ml-cn-3xs grid w-8 shrink-0 place-items-center border-r-0">
         <IconV2 name="search" size="sm" />
       </div>
     )

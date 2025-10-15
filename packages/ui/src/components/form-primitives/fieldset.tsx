@@ -2,26 +2,19 @@ import { HTMLAttributes } from 'react'
 
 import { cn } from '@utils/cn'
 
-interface FieldsetProps extends HTMLAttributes<HTMLFieldSetElement> {
-  box?: boolean
-  shaded?: boolean
-}
+interface FieldsetProps extends HTMLAttributes<HTMLFieldSetElement> {}
 
 /**
  * A form fieldset component that groups related form elements.
  * @example
- * <Fieldset box shaded>
+ * <Fieldset>
  *   <div>Form elements</div>
  * </Fieldset>
  */
-export function Fieldset({ children, box, shaded, className, ...props }: FieldsetProps) {
+export function Fieldset({ children, className, ...props }: FieldsetProps) {
   return (
     <fieldset
-      className={cn(
-        'flex flex-col gap-y-6',
-        { 'rounded-3 border px-5 py-3.5 pb-5': box, 'bg-cn-brand/[0.02]': shaded },
-        className
-      )}
+      className={cn('flex flex-col gap-y-6', className)}
       role="group"
       aria-describedby="fieldset-description"
       {...props}

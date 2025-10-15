@@ -47,7 +47,7 @@ export function StepNodeComponent({ node }: { node: LeafNodeInternalType<StepNod
   return (
     <div className={'bg-cn-2 border-cn-2 box-border size-full rounded-5 border'}>
       <div>{icon}</div>
-      <Text title={name} className="text-cn-1 m-2 line-clamp-2 cursor-default">
+      <Text title={name} className="text-cn-1 m-cn-xs line-clamp-2 cursor-default">
         {name}
       </Text>
     </div>
@@ -73,7 +73,7 @@ export function SerialGroupNodeComponent({
     <>
       <div className="border-cn-2 absolute inset-0 -z-10 rounded-5 border" />
       <div className="absolute inset-x-0 top-0 h-0">
-        <div title={name} className="text-cn-3 h-9 cursor-default truncate px-9 pt-2.5">
+        <div title={name} className="text-cn-3 h-9 cursor-default truncate px-cn-3xl pt-cn-sm">
           {name}
         </div>
       </div>
@@ -102,7 +102,7 @@ export function ParallelGroupNodeComponent({
     <>
       <div className="border-cn-2 absolute inset-0 -z-10 rounded-5 border" />
       <div className="absolute inset-x-0 top-0 h-0">
-        <div title={name} className="text-cn-3 h-9 cursor-default truncate px-9 pt-2.5">
+        <div title={name} className="text-cn-3 h-9 cursor-default truncate px-cn-3xl pt-cn-sm">
           {name}
         </div>
       </div>
@@ -143,7 +143,7 @@ const data: AnyContainerNodeType[] = [
     type: ContentNodeTypes.step,
     data: {
       name: 'Step 1',
-      icon: <IconV2 size="lg" name="harness-plugins" className="m-2" />
+      icon: <IconV2 size="lg" name="harness-plugins" className="m-cn-xs" />
     } satisfies StepNodeDataType,
     config: {
       width: 160,
@@ -164,7 +164,7 @@ const data: AnyContainerNodeType[] = [
         type: ContentNodeTypes.step,
         data: {
           name: 'Step 2',
-          icon: <IconV2 size="lg" name="harness-plugins" className="m-2" />
+          icon: <IconV2 size="lg" name="harness-plugins" className="m-cn-xs" />
         } satisfies StepNodeDataType,
         config: {
           width: 160,
@@ -175,7 +175,7 @@ const data: AnyContainerNodeType[] = [
         type: ContentNodeTypes.step,
         data: {
           name: 'Step 3',
-          icon: <IconV2 size="lg" name="harness-plugins" className="m-2" />
+          icon: <IconV2 size="lg" name="harness-plugins" className="m-cn-xs" />
         } satisfies StepNodeDataType,
         config: {
           width: 160,
@@ -198,7 +198,7 @@ const data: AnyContainerNodeType[] = [
         type: ContentNodeTypes.step,
         data: {
           name: 'Step 4',
-          icon: <IconV2 size="lg" name="harness-plugins" className="m-2" />
+          icon: <IconV2 size="lg" name="harness-plugins" className="m-cn-xs" />
         } satisfies StepNodeDataType,
         config: {
           width: 160,
@@ -209,7 +209,7 @@ const data: AnyContainerNodeType[] = [
         type: ContentNodeTypes.step,
         data: {
           name: 'Step 4',
-          icon: <IconV2 size="lg" name="harness-plugins" className="m-2" />
+          icon: <IconV2 size="lg" name="harness-plugins" className="m-cn-xs" />
         } satisfies StepNodeDataType,
         config: {
           width: 160,
@@ -224,7 +224,7 @@ const PipelineGraphMinimalWrapper = () => {
   // const [view, setView] = useState<VisualYamlValue>('visual')
   return (
     <CanvasProvider>
-      {/* <div className="flex px-6 pt-3">
+      {/* <div className="flex px-cn-xl pt-cn-sm">
         <VisualYamlToggle view={view} setView={setView} isYamlValid={true} />
       </div> */}
       <PipelineGraph data={data} nodes={nodes} />

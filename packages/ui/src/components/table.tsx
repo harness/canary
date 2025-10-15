@@ -215,7 +215,7 @@ const TableHead = forwardRef<HTMLTableCellElement, TableHeadProps>(
         {!hideDivider && <Separator orientation="vertical" className="cn-table-v2-head-divider" />}
         {childrenWithTooltip}
         {sortable && (
-          <span className="ml-1">
+          <span className="ml-cn-3xs">
             {sortDirection === 'asc' && <IconV2 name="arrow-up" size="2xs" />}
             {sortDirection === 'desc' && <IconV2 name="arrow-down" size="2xs" />}
             {!sortDirection && <IconV2 name="up-down" />}

@@ -30,14 +30,14 @@ Flex layouts allow you to arrange items in a row or column with flexible spacing
 
 <DocsPage.ComponentExample
   client:only
-  code={`<Layout.Flex gap="md" className="p-4 border rounded-3">
-  <div className="bg-cn-primary-1 p-3 rounded-3">
+  code={`<Layout.Flex gap="md" className="p-cn-md border rounded-3">
+  <div className="bg-cn-primary-1 p-cn-sm rounded-3">
     <Text color="on-primary-1">Item 1</Text>
   </div>
-  <div className="bg-cn-primary-1 p-3 rounded-3">
+  <div className="bg-cn-primary-1 p-cn-sm rounded-3">
     <Text color="on-primary-1">Item 2</Text>
   </div>
-  <div className="bg-cn-primary-1 p-3 rounded-3">
+  <div className="bg-cn-primary-1 p-cn-sm rounded-3">
     <Text color="on-primary-1">Item 3</Text>
   </div>
 </Layout.Flex>`}
@@ -49,17 +49,17 @@ Grid layouts give you precise control over two-dimensional layout with rows and 
 
 <DocsPage.ComponentExample
   client:only
-  code={`<Layout.Grid columns="1fr 1fr" gap="md" className="p-4 border rounded-3">
-  <div className="bg-cn-primary-1 p-3 rounded-3">
+  code={`<Layout.Grid columns="1fr 1fr" gap="md" className="p-cn-md border rounded-3">
+  <div className="bg-cn-primary-1 p-cn-sm rounded-3">
     <Text color="on-primary-1">Item 1</Text>
   </div>
-  <div className="bg-cn-primary-1 p-3 rounded-3">
+  <div className="bg-cn-primary-1 p-cn-sm rounded-3">
     <Text color="on-primary-1">Item 2</Text>
   </div>
-  <div className="bg-cn-primary-1 p-3 rounded-3">
+  <div className="bg-cn-primary-1 p-cn-sm rounded-3">
     <Text color="on-primary-1">Item 3</Text>
   </div>
-  <div className="bg-cn-primary-1 p-3 rounded-3">
+  <div className="bg-cn-primary-1 p-cn-sm rounded-3">
     <Text color="on-primary-1">Item 4</Text>
   </div>
 </Layout.Grid>`}
@@ -71,14 +71,14 @@ Horizontal and Vertical are convenient wrappers around Flex that are pre-configu
 
 <DocsPage.ComponentExample
   client:only
-  code={`<Layout.Vertical gap="md" className="p-4 border rounded-3">
-  <div className="bg-cn-primary-1 p-3 rounded-3">
+  code={`<Layout.Vertical gap="md" className="p-cn-md border rounded-3">
+  <div className="bg-cn-primary-1 p-cn-sm rounded-3">
     <Text color="on-primary-1">Item 1</Text>
   </div>
-  <div className="bg-cn-primary-1 p-3 rounded-3">
+  <div className="bg-cn-primary-1 p-cn-sm rounded-3">
     <Text color="on-primary-1">Item 2</Text>
   </div>
-  <div className="bg-cn-primary-1 p-3 rounded-3">
+  <div className="bg-cn-primary-1 p-cn-sm rounded-3">
     <Text color="on-primary-1">Item 3</Text>
   </div>
 </Layout.Vertical>`}
@@ -96,27 +96,27 @@ Consistent spacing is critical for creating visually balanced layouts. Use the `
   client:only
   code={`<>
   // Small gap
-<Layout.Flex gap="xs" className="p-4 border rounded-3 mb-4 ">
-  <Text className="bg-cn-primary-1 text-cn-on-primary-1 p-3 rounded-3 border">xs gap</Text>
-  <Text className="bg-cn-primary-1 text-cn-on-primary-1 p-3 rounded-3 border">xs gap</Text>
+<Layout.Flex gap="xs" className="p-cn-md border rounded-3 mb-cn-md ">
+  <Text className="bg-cn-primary-1 text-cn-on-primary-1 p-cn-sm rounded-3 border">xs gap</Text>
+  <Text className="bg-cn-primary-1 text-cn-on-primary-1 p-cn-sm rounded-3 border">xs gap</Text>
 </Layout.Flex>
 
 // Medium gap
 
-<Layout.Flex gap="md" className="p-4 border rounded-3 mb-4 ">
-  <Text className="bg-cn-primary-1 text-cn-on-primary-1 p-3 rounded-3 border">
+<Layout.Flex gap="md" className="p-cn-md border rounded-3 mb-cn-md ">
+  <Text className="bg-cn-primary-1 text-cn-on-primary-1 p-cn-sm rounded-3 border">
     md gap
   </Text>
-  <Text className="bg-cn-primary-1 text-cn-on-primary-1 p-3 rounded-3 border">
+  <Text className="bg-cn-primary-1 text-cn-on-primary-1 p-cn-sm rounded-3 border">
     md gap
   </Text>
 </Layout.Flex>
 
 // Large gap
 
-<Layout.Flex gap="xl" className="p-4 border rounded-3 ">
-  <Text className="bg-cn-primary-1 text-cn-on-primary-1 p-3 rounded-3 border">xl gap</Text>
-  <Text className="bg-cn-primary-1 text-cn-on-primary-1 p-3 rounded-3 border">xl gap</Text>
+<Layout.Flex gap="xl" className="p-cn-md border rounded-3 ">
+  <Text className="bg-cn-primary-1 text-cn-on-primary-1 p-cn-sm rounded-3 border">xl gap</Text>
+  <Text className="bg-cn-primary-1 text-cn-on-primary-1 p-cn-sm rounded-3 border">xl gap</Text>
 </Layout.Flex>
 </>
 `}
@@ -126,16 +126,16 @@ Consistent spacing is critical for creating visually balanced layouts. Use the `
 
 <DocsPage.ComponentExample
   client:only
-  code={`<div className="p-4 border rounded-3">
-  <div className="bg-cn-primary-1 p-3 rounded-3">
+  code={`<div className="p-cn-md border rounded-3">
+  <div className="bg-cn-primary-1 p-cn-sm rounded-3">
     <Text color="on-primary-1">Content block</Text>
   </div>
   <Spacer size={8} />
-  <div className="bg-cn-primary-1 p-3 rounded-3">
+  <div className="bg-cn-primary-1 p-cn-sm rounded-3">
     <Text color="on-primary-1">Content block with Spacer size={8}</Text>
   </div>
   <Spacer size={16} />
-  <div className="bg-cn-primary-1 p-3 rounded-3">
+  <div className="bg-cn-primary-1 p-cn-sm rounded-3">
     <Text color="on-primary-1">Content block with Spacer size={16}</Text>
   </div>
 </div>`}
@@ -149,17 +149,17 @@ A common layout pattern with a sidebar and main content area.
 
 <DocsPage.ComponentExample
   client:only
-  code={`<Layout.Grid columns="250px 1fr" gap="md" className="p-4 border rounded-3">
-  <div className="bg-cn-2 p-4 rounded-3">
-    <Text variant="heading-base" className="mb-3">Sidebar</Text>
+  code={`<Layout.Grid columns="250px 1fr" gap="md" className="p-cn-md border rounded-3">
+  <div className="bg-cn-2 p-cn-md rounded-3">
+    <Text variant="heading-base" className="mb-cn-sm">Sidebar</Text>
     <Layout.Vertical gap="sm">
-      <Text variant="body-normal" className="p-2 hover:bg-cn-3 rounded cursor-pointer">Navigation Item 1</Text>
-      <Text variant="body-normal" className="p-2 hover:bg-cn-3 rounded cursor-pointer">Navigation Item 2</Text>
-      <Text variant="body-normal" className="p-2 hover:bg-cn-3 rounded cursor-pointer">Navigation Item 3</Text>
+      <Text variant="body-normal" className="p-cn-xs hover:bg-cn-3 rounded cursor-pointer">Navigation Item 1</Text>
+      <Text variant="body-normal" className="p-cn-xs hover:bg-cn-3 rounded cursor-pointer">Navigation Item 2</Text>
+      <Text variant="body-normal" className="p-cn-xs hover:bg-cn-3 rounded cursor-pointer">Navigation Item 3</Text>
     </Layout.Vertical>
   </div>
-  <div className="bg-cn-2 p-4 rounded-3">
-    <Text variant="heading-base" className="mb-3">Main Content</Text>
+  <div className="bg-cn-2 p-cn-md rounded-3">
+    <Text variant="heading-base" className="mb-cn-sm">Main Content</Text>
     <Text variant="body-normal">This is the main content area. It takes up most of the available space.</Text>
   </div>
 </Layout.Grid>`}
@@ -172,23 +172,23 @@ A traditional page layout with header, content, and footer sections.
 <DocsPage.ComponentExample
   client:only
   code={`<Layout.Vertical gap="md" className="border rounded-3">
-  <div className="bg-cn-primary-1 text-cn-on-primary-1 p-4">
+  <div className="bg-cn-primary-1 text-cn-on-primary-1 p-cn-md">
     <Text variant="heading-base" className="font-bold">Header</Text>
   </div>
-  <div className="px-4">
-    <Text variant="heading-base" className="mb-3">Main Content</Text>
+  <div className="px-cn-md">
+    <Text variant="heading-base" className="mb-cn-sm">Main Content</Text>
     <Text variant="body-normal">This is the main content area of the page.</Text>
     <Spacer size={16} />
     <Layout.Grid columns="1fr 1fr" gap="md">
-      <div className="bg-cn-2 p-4 rounded-3">
+      <div className="bg-cn-2 p-cn-md rounded-3">
         <Text variant="body-normal">Section 1</Text>
       </div>
-      <div className="bg-cn-2 p-4 rounded-3">
+      <div className="bg-cn-2 p-cn-md rounded-3">
         <Text variant="body-normal">Section 2</Text>
       </div>
     </Layout.Grid>
   </div>
-  <div className="bg-cn-2 p-4 mt-auto">
+  <div className="bg-cn-2 p-cn-md mt-auto">
     <Text variant="caption-normal" className="text-center">Footer content</Text>
   </div>
 </Layout.Vertical>`}
@@ -200,7 +200,7 @@ A common layout for forms with labels and inputs.
 
 <DocsPage.ComponentExample
   client:only
-  code={`<Layout.Grid gap="md" className="p-4 border rounded-3 w-96">
+  code={`<Layout.Grid gap="md" className="p-cn-md border rounded-3 w-96">
     <Text variant="heading-subsection">Contact Information</Text> 
     <TextInput 
         label="Name"
@@ -213,7 +213,7 @@ A common layout for forms with labels and inputs.
         type="email"
         placeholder="Enter your email" 
     />
-    <Layout.Flex gap="sm" justify="end" className="mt-2">
+    <Layout.Flex gap="sm" justify="end" className="mt-cn-xs">
         <Button variant="outline">Cancel</Button>
         <Button>Submit</Button>
   </Layout.Flex>
@@ -226,37 +226,37 @@ A grid of cards for dashboard displays.
 
 <DocsPage.ComponentExample
   client:only
-  code={`<Layout.Grid columns="1fr 1fr 1fr" rows="auto" gap="md" className="p-4 border rounded-3">
-  <div className="bg-cn-2 p-4 rounded-3 shadow-sm">
-    <Text variant="heading-base" className="mb-2">Total Users</Text>
+  code={`<Layout.Grid columns="1fr 1fr 1fr" rows="auto" gap="md" className="p-cn-md border rounded-3">
+  <div className="bg-cn-2 p-cn-md rounded-3 shadow-sm">
+    <Text variant="heading-base" className="mb-cn-xs">Total Users</Text>
     <Text variant="heading-section">1,234</Text>
-    <Text variant="caption-normal" color="success" className="mt-2">+12% from last month</Text>
+    <Text variant="caption-normal" color="success" className="mt-cn-xs">+12% from last month</Text>
   </div>
   
-  <div className="bg-cn-2 p-4 rounded-3 shadow-sm">
-    <Text variant="heading-base" className="mb-2">Revenue</Text>
+  <div className="bg-cn-2 p-cn-md rounded-3 shadow-sm">
+    <Text variant="heading-base" className="mb-cn-xs">Revenue</Text>
     <Text variant="heading-section">$48,234</Text>
-    <Text variant="caption-normal" color="success" className="mt-2">+5% from last month</Text>
+    <Text variant="caption-normal" color="success" className="mt-cn-xs">+5% from last month</Text>
   </div>
   
-  <div className="bg-cn-2 p-4 rounded-3 shadow-sm">
-    <Text variant="heading-base" className="mb-2">Active Deployments</Text>
+  <div className="bg-cn-2 p-cn-md rounded-3 shadow-sm">
+    <Text variant="heading-base" className="mb-cn-xs">Active Deployments</Text>
     <Text variant="heading-section">26</Text>
-    <Text variant="caption-normal" color="danger" className="mt-2">-3 from last month</Text>
+    <Text variant="caption-normal" color="danger" className="mt-cn-xs">-3 from last month</Text>
   </div>
   
-  <div className="bg-cn-2 p-4 rounded-3 shadow-sm col-span-2">
-    <Text variant="heading-base" className="mb-2">Monthly Activity</Text>
+  <div className="bg-cn-2 p-cn-md rounded-3 shadow-sm col-span-2">
+    <Text variant="heading-base" className="mb-cn-xs">Monthly Activity</Text>
     <div className="h-32 bg-cn-3 rounded-3 flex items-center justify-center">
       <Text variant="body-normal" color="foreground-2">[Chart]</Text>
     </div>
   </div>
   
-  <div className="bg-cn-2 p-4 rounded-3 shadow-sm">
-    <Text variant="heading-base" className="mb-2">Recent Updates</Text>
+  <div className="bg-cn-2 p-cn-md rounded-3 shadow-sm">
+    <Text variant="heading-base" className="mb-cn-xs">Recent Updates</Text>
     <Layout.Vertical gap="sm">
-      <Text variant="caption-normal" className="p-2 bg-cn-3 rounded-3">System update completed</Text>
-      <Text variant="caption-normal" className="p-2 bg-cn-3 rounded-3">New feature deployed</Text>
+      <Text variant="caption-normal" className="p-cn-xs bg-cn-3 rounded-3">System update completed</Text>
+      <Text variant="caption-normal" className="p-cn-xs bg-cn-3 rounded-3">New feature deployed</Text>
     </Layout.Vertical>
   </div>
 </Layout.Grid>`}
@@ -264,12 +264,12 @@ A grid of cards for dashboard displays.
 
 ## Best Practices
 
-<ol className="list-decimal pl-6 space-y-4">
+<ol className="list-decimal pl-cn-xl space-y-4">
   <li>
     <Text variant="body-strong">
       Use Layout Components Instead of Raw Flex/Grid
     </Text>
-    <Text variant="body-normal" className="mt-1">
+    <Text variant="body-normal" className="mt-cn-3xs">
       The Layout components provide consistent props and behavior across your
       application
     </Text>
@@ -277,7 +277,7 @@ A grid of cards for dashboard displays.
 
 <li>
   <Text variant="body-strong">Prefer Gap Over Spacer</Text>
-  <Text variant="body-normal" className="mt-1">
+  <Text variant="body-normal" className="mt-cn-3xs">
     Use the `gap` property on Layout components rather than inserting Spacer
     components between items
   </Text>
@@ -285,7 +285,7 @@ A grid of cards for dashboard displays.
 
 <li>
   <Text variant="body-strong">Responsive Considerations</Text>
-  <Text variant="body-normal" className="mt-1">
+  <Text variant="body-normal" className="mt-cn-3xs">
     For complex responsive layouts, use the built-in responsive options or
     combine with media queries
   </Text>
@@ -293,7 +293,7 @@ A grid of cards for dashboard displays.
 
 <li>
   <Text variant="body-strong">Grid vs. Flex</Text>
-  <ul className="list-disc pl-6 mt-1 space-y-1">
+  <ul className="list-disc pl-cn-xl mt-cn-3xs space-y-1">
     <li>
       <Text variant="body-normal">
         Use Grid for two-dimensional layouts with rows and columns
@@ -309,7 +309,7 @@ A grid of cards for dashboard displays.
 
   <li>
     <Text variant="body-strong">Combine Layout Components</Text>
-    <Text variant="body-normal" className="mt-1">
+    <Text variant="body-normal" className="mt-cn-3xs">
       Nest Layout components to create complex interface structures
     </Text>
   </li>

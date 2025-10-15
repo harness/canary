@@ -31,7 +31,7 @@ export const ReviewersPanel: FC<ReviewerPanelProps> = ({ principals, userGroups 
               const tooltipProps: AvatarTooltipProps = {
                 side: 'top',
                 content: (
-                  <Layout.Horizontal align="center" justify="between" className="m-1">
+                  <Layout.Horizontal align="center" justify="between" className="m-cn-3xs">
                     {principal?.type === EnumBypassListType.USER_GROUP ? (
                       <IconV2 name={'group-1'} size="lg" />
                     ) : (
@@ -75,16 +75,16 @@ export const ReviewersPanel: FC<ReviewerPanelProps> = ({ principals, userGroups 
               tooltipProps={{
                 side: 'top',
                 content: (
-                  <ul className="my-1 flex flex-col gap-y-0.5">
+                  <ul className="my-cn-3xs flex flex-col gap-y-0.5">
                     {normalizedPrincipals.slice(2).map(({ email_or_identifier, type }) => (
                       <div
                         key={email_or_identifier}
-                        className="flex w-full grow cursor-not-allowed items-center gap-x-2.5 rounded p-1 px-0"
+                        className="flex w-full grow cursor-not-allowed items-center gap-x-2.5 rounded p-cn-3xs px-0"
                       >
                         {type === EnumBypassListType.USER_GROUP ? (
-                          <IconV2 name={'group-1'} size="lg" className="mx-0.5" />
+                          <IconV2 name={'group-1'} size="lg" className="mx-cn-4xs" />
                         ) : (
-                          <Avatar name={email_or_identifier} size="sm" rounded className="mr-1" />
+                          <Avatar name={email_or_identifier} size="sm" rounded className="mr-cn-3xs" />
                         )}
                         <Text>{email_or_identifier}</Text>
                       </div>

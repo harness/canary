@@ -237,7 +237,7 @@ export const ProjectTagRulesContainer = () => {
   }
 
   if (!!ruleIdentifier && fetchRuleIsLoading) {
-    return <Skeleton.Form className="mt-7" />
+    return <Skeleton.Form className="w-full h-fit" linesCount={4} />
   }
 
   if (!!ruleIdentifier && !!fetchRuleError) {

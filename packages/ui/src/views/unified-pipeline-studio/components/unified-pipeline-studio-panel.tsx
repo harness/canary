@@ -12,18 +12,18 @@ export const UnifiedPipelineStudioPanel = ({
   return (
     <Tabs.Root defaultValue="problems" className="h-full">
       <div className="flex flex-row justify-between border-b">
-        <Tabs.List className="ml-4 border-none">
+        <Tabs.List className="ml-cn-md border-none">
           <Tabs.Trigger value="problems">Problems</Tabs.Trigger>
           <Tabs.Trigger value="console">Console</Tabs.Trigger>
         </Tabs.List>
-        <Button onClick={() => setPanelOpen?.(false)} variant="ghost" size="sm" className="mx-2 px-2">
+        <Button onClick={() => setPanelOpen?.(false)} variant="ghost" size="sm" className="mx-cn-xs px-cn-xs">
           <IconV2 name="xmark" />
         </Button>
       </div>
-      <Tabs.Content value="problems" className="h-full overflow-scroll py-2">
+      <Tabs.Content value="problems" className="h-full overflow-scroll py-cn-xs">
         <UnifiedPipelineStudioProblemsPanel problems={problems} />
       </Tabs.Content>
-      <Tabs.Content value="console" className="h-full overflow-scroll py-2">
+      <Tabs.Content value="console" className="h-full overflow-scroll py-cn-xs">
         <UnifiedPipelineStudioProblemsPanel problems={problems} />
       </Tabs.Content>
     </Tabs.Root>

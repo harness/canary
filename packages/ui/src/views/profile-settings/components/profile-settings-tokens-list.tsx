@@ -82,7 +82,7 @@ export const ProfileTokensList: FC<ProfileTokensListProps> = ({ tokens, isLoadin
             ))
           ) : (
             <Table.Row className="hover:bg-transparent">
-              <Table.Cell className="content-center !p-4" colSpan={5}>
+              <Table.Cell className="content-center !p-cn-md" colSpan={5}>
                 <p className="text-center text-2 text-cn-2">
                   {t(
                     'views:profileSettings.noTokenDescription',

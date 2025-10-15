@@ -27,7 +27,8 @@ export const LineTitle = ({ ...props }: LineTitleProps) => {
 
 export const LineDescription = ({ ...props }: LineDescriptionProps) => {
   return (
-    <Text className="ml-7" variant="body-normal" color="foreground-3">
+    // TODO: Replace ml-[28px] with a proper spacing token when available
+    <Text className="ml-[28px]" variant="body-normal" color="foreground-3">
       {props.text}
     </Text>
   )

@@ -10,12 +10,12 @@ const Root: React.FC<{ children: ReactNode }> = ({ children }) => {
 
 // Body
 const Body: React.FC<{ children: ReactNode }> = ({ children }) => {
-  return <div className="mb-3 flex flex-1 flex-col gap-6 p-6">{children}</div>
+  return <div className="mb-cn-sm flex flex-1 flex-col gap-6 p-cn-xl">{children}</div>
 }
 
 // Footer
 const Footer: React.FC<{ children: ReactNode }> = ({ children }) => {
-  return <div className="sticky bottom-0 bg-cn-1 p-6 pt-0">{children}</div>
+  return <div className="sticky bottom-0 bg-cn-1 p-cn-xl pt-0">{children}</div>
 }
 
 // Message Component
@@ -34,7 +34,7 @@ const Message: React.FC<MessageProps> = ({ self, time, avatar, actions, children
         'place-content-end': self
       })}
     >
-      <div className="mt-0.5">{!self && avatar}</div>
+      <div className="mt-cn-4xs">{!self && avatar}</div>
       <div
         className={cn('flex flex-col gap-1.5', {
           'w-[85%] items-end': self,
@@ -43,12 +43,12 @@ const Message: React.FC<MessageProps> = ({ self, time, avatar, actions, children
       >
         <div
           className={cn('text-cn-3 leading-relaxed', {
-            'px-3 py-2 bg-cn-gray-secondary rounded-4': self
+            'px-cn-sm py-cn-xs bg-cn-gray-secondary rounded-4': self
           })}
         >
           {children}
         </div>
-        <div className="mt-1 flex items-center justify-between gap-3">
+        <div className="mt-cn-3xs flex items-center justify-between gap-3">
           <div>{actions && <div className="flex items-center justify-start gap-1">{actions}</div>}</div>
           {time && (
             <Text className="opacity-20" color="foreground-1">
@@ -68,7 +68,7 @@ interface TypingProps {
 
 const Typing: React.FC<TypingProps> = ({ avatar }) => {
   return (
-    <div className="mt-3 flex items-center gap-3">
+    <div className="mt-cn-sm flex items-center gap-3">
       {avatar}
       <div className="flex gap-1 text-lg font-medium text-cn-success" aria-live="polite">
         <span className="dot animate-bounce">&middot;</span>
@@ -118,7 +118,7 @@ const InputField: React.FC<InputFieldProps> = ({
     <div className="sticky bottom-0 flex items-center gap-2 bg-cn-1">
       <Input
         ref={inputRef}
-        className="flex-1 rounded-4 px-4 pb-16 pt-6 focus:ring-0"
+        className="flex-1 rounded-4 px-cn-md pb-[64px] pt-cn-xl focus:ring-0"
         value={value}
         onChange={onChange}
         onKeyDown={onKeyDown}

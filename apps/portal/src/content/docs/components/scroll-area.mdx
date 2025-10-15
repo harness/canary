@@ -13,7 +13,7 @@ import { DocsPage } from "@/components/docs-page";
   code={`
 <div>
   <ScrollArea className="w-[300px] h-[200px] border">
-    <div className="p-4 space-y-4 w-[700px]">
+    <div className="p-cn-md space-y-4 w-[700px]">
       <p>Content that exceeds the viewport height and width.</p>
       <p>More content...</p>
       <p>Even more content...</p>
@@ -41,7 +41,7 @@ import { ScrollArea } from '@harnessio/ui/components';
 
 return (
   <ScrollArea className="w-[300px] h-[200px] border">
-    <div className="p-4 space-y-4 w-[700px]">
+    <div className="p-cn-md space-y-4 w-[700px]">
       <p>Content that exceeds the viewport height and width.</p>
       <p>More content...</p>
       <p>Even more content...</p>
@@ -59,9 +59,9 @@ The `ScrollArea` component supports the `direction` prop to set the text directi
   code={`
 <div className="grid gap-4">
   <div>
-    <Text variant="heading-base" className="mb-1">ltr:</Text>
+    <Text variant="heading-base" className="mb-cn-3xs">ltr:</Text>
     <ScrollArea className="w-[300px] h-[200px] border">
-      <div className="p-4 space-y-4 w-[700px]">
+      <div className="p-cn-md space-y-4 w-[700px]">
         <p>Content that exceeds the viewport height and width.</p>
         <p>More content...</p>
         <p>Even more content...</p>
@@ -70,14 +70,14 @@ The `ScrollArea` component supports the `direction` prop to set the text directi
   </div>
 
 <div>
-  <Text variant="heading-base" className="mb-1">
+  <Text variant="heading-base" className="mb-cn-3xs">
     rtl:
   </Text>
   <ScrollArea
     direction="rtl"
     className="w-[300px] h-[200px] border"
   >
-    <div dir="rtl" className="p-4 space-y-4 w-[700px]">
+    <div dir="rtl" className="p-cn-md space-y-4 w-[700px]">
       <p>Content that exceeds the viewport height and width.</p>
       <p>More content...</p>
       <p>Even more content...</p>
@@ -111,7 +111,7 @@ Use `rootMargin` to adjust the offset around the scroll area, and `threshold` to
     onScrollLeft={() => console.log('Reached left')}
     onScrollRight={() => console.log('Reached right')}
   >
-    <div className="p-4 space-y-4 w-[700px]">
+    <div className="p-cn-md space-y-4 w-[700px]">
       <p>Content that exceeds the viewport height and width.</p>
       <p>More content...</p>
       <p>Even more content...</p>
@@ -129,7 +129,7 @@ Use `rootMargin` to adjust the offset around the scroll area, and `threshold` to
   </ScrollArea>
 
   <div>
-    <Text variant="heading-base" className="mt-4 mb-1">
+    <Text variant="heading-base" className="mt-cn-md mb-cn-3xs">
       Scroll Events with margin:
     </Text>
     
@@ -138,10 +138,10 @@ Use `rootMargin` to adjust the offset around the scroll area, and `threshold` to
       onScrollTop={() => console.log('Reached top')}
       onScrollLeft={() => console.log('Reached left')}
       onScrollRight={() => console.log('Reached right')}
-      rootMargin={{ top: '20px', right: '50px', bottom: '50px', left: '50px' }}
+      rootMargin={{ top: '20px', right: '40px', bottom: '40px', left: '40px' }}
     >
-      <div className="relative px-[50px] pt-[20px] pb-[50px] space-y-4 w-[700px]">
-        <div className="absolute top-[20px] right-[50px] bottom-[50px] left-[50px] outline-2 outline-offset-2 outline-dashed outline-primary-5"/>
+      <div className="relative px-cn-3xl pt-cn-lg pb-cn-3xl space-y-4 w-[700px]">
+        <div className="absolute top-cn-lg right-cn-3xl bottom-cn-3xl left-cn-3xl outline-2 outline-offset-2 outline-dashed outline-primary-5"/>
           <p>Content that exceeds the viewport height and width.</p>
           <p>More content...</p>
           <p>Even more content...</p>

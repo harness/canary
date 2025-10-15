@@ -96,19 +96,22 @@ const Example: FC<ExampleProps> = ({
     >
       <DialogProvider>
         <TooltipProvider>
-          <div className="bg-cn-1 not-content my-12 overflow-hidden rounded-3 border">
+          <div className="bg-cn-1 not-content my-cn-3xl rounded-3 overflow-hidden border">
             <LiveProvider
               code={currentCode}
               scope={scopeWithLayout}
               enableTypeScript
             >
               <div
-                className={cn("grid place-items-center p-12", contentClassName)}
+                className={cn(
+                  "grid place-items-center p-cn-3xl",
+                  contentClassName,
+                )}
               >
                 <RouterProvider router={router} />
               </div>
               {!hideCode && (
-                <details className="example-expand bg-cn-2 relative border-t p-3">
+                <details className="example-expand bg-cn-2 p-cn-sm relative border-t">
                   <CopyButton
                     buttonVariant="transparent"
                     className="absolute right-3 top-3"
@@ -123,7 +126,7 @@ const Example: FC<ExampleProps> = ({
                   </summary>
                   <LiveEditor
                     theme={isLightTheme ? themes.vsLight : themes.vsDark}
-                    className="font-body-code line-numbers p-1 text-sm leading-6"
+                    className="font-body-code line-numbers p-cn-3xs text-sm leading-6"
                     onChange={setCurrentCode}
                   />
                 </details>

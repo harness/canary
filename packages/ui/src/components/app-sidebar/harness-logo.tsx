@@ -8,9 +8,9 @@ export const HarnessLogo = ({ className }: { className?: string }) => {
   const { Link } = useRouterContext()
 
   return (
-    <Link to="/" className={cn('flex items-center px-2 w-fit', className)}>
+    <Link to="/" className={cn('flex items-center px-cn-xs w-fit', className)}>
       <IconV2 name="harness-plugins" size="md" className="text-cn-logo-icon" />
-      <div className="ml-0.5 max-w-20 overflow-hidden opacity-100 transition-[max-width,opacity,margin-left] ease-linear group-data-[state=collapsed]:ml-0 group-data-[state=collapsed]:max-w-0 group-data-[state=collapsed]:opacity-0">
+      <div className="ml-cn-4xs max-w-20 overflow-hidden opacity-100 transition-[max-width,opacity,margin-left] ease-linear group-data-[state=collapsed]:ml-0 group-data-[state=collapsed]:max-w-0 group-data-[state=collapsed]:opacity-0">
         <Illustration name="harness-logo-text" width={65} height={15} className="text-cn-logo-text" />
       </div>
     </Link>

@@ -45,7 +45,7 @@ export default {
     },
 
     '.cn-card-title + .cn-card-content': {
-      '@apply mt-2': ''
+      '@apply mt-cn-xs': ''
     },
 
     '&:where(.cn-card-vertical)': {

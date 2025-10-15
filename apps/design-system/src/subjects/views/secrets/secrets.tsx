@@ -183,7 +183,7 @@ export const SecretsPage = ({
             <Drawer.Title>Secret</Drawer.Title>
           </Drawer.Header>
           <Drawer.Body>
-            <Text className="mb-4">Choose type</Text>
+            <Text className="mb-cn-md">Choose type</Text>
             <SecretsHeader onChange={setSelectedType} selectedType={selectedType} />
             <Spacer size={6} />
             <FormSeparator className="w-full" />

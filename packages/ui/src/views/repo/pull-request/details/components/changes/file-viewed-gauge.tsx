@@ -25,7 +25,7 @@ function Content({ ...props }: RootProps) {
   const { children } = props
 
   return (
-    <Text as="p" variant="body-single-line-normal" className="py-1">
+    <Text as="p" variant="body-single-line-normal" className="py-cn-3xs">
       {children}
     </Text>
   )

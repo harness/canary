@@ -40,7 +40,7 @@ export function GcpRegionsMultiSelect(props: GcpRegionsMultiSelectProps): React.
       {isLoading ? (
         <Skeleton.List />
       ) : error ? (
-        <Alert.Root theme="danger" className="my-2">
+        <Alert.Root theme="danger" className="my-cn-xs">
           <Alert.Description>{error?.toString() || 'Failed to fetch regions'}</Alert.Description>
         </Alert.Root>
       ) : (

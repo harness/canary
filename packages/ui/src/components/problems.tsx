@@ -41,7 +41,7 @@ const ProblemsComponent = {
         role="button"
         tabIndex={0}
         onClick={onClick}
-        className="width-100 text-cn-1 flex flex-1 cursor-pointer items-center justify-between gap-2 text-nowrap px-4 py-0.5"
+        className="width-100 text-cn-1 flex flex-1 cursor-pointer items-center justify-between gap-2 text-nowrap px-cn-md py-cn-4xs"
       >
         {children}
       </div>
@@ -69,7 +69,7 @@ const ProblemsComponent = {
     }
   }) {
     return (
-      <div className="text-nowrap pr-2">
+      <div className="text-nowrap pr-cn-xs">
         [{position.row}, {position.column}]
       </div>
     )
@@ -110,7 +110,7 @@ const Problems = <T,>(props: ProblemsProps<T>): React.ReactElement => {
 
 function NoProblemsFound(): JSX.Element {
   return (
-    <div className="flex items-center gap-2 pl-4">
+    <div className="flex items-center gap-2 pl-cn-md">
       <IconV2 name="check-circle-solid" className="text-cn-success" /> No problems found
     </div>
   )

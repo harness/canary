@@ -198,7 +198,7 @@
 
     ul,
     ol {
-      @apply my-cn-md pl-6 pr-0;
+      @apply my-cn-md pl-cn-xl pr-0;
 
       & :is(ul, ol) {
         @apply my-0;
@@ -257,14 +257,14 @@
 
     blockquote {
       font: var(--cn-comp-markdown-content-paragraph);
-      @apply text-cn-3 my-cn-md before:bg-cn-separator before:rounded-1 relative border-0 pl-4 pr-0 before:absolute before:inset-y-0 before:left-0 before:w-1;
+      @apply text-cn-3 my-cn-md before:bg-cn-separator before:rounded-1 pl-cn-md relative border-0 pr-0 before:absolute before:inset-y-0 before:left-0 before:w-1;
     }
 
     table {
       @apply my-cn-md;
 
       th {
-        @apply text-cn-1 font-heading-small border-l-0 border-r-0 border-t-0 px-0 py-1.5 pr-10;
+        @apply text-cn-1 font-heading-small py-cn-2xs pr-cn-3xl border-l-0 border-r-0 border-t-0 px-0;
       }
 
       td {

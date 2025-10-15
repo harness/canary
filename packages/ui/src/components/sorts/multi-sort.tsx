@@ -63,7 +63,7 @@ const SortableItem = ({
 
   return (
     <div className={cn('relative', isDragging && 'z-10', 'flex items-center gap-x-2')} ref={setNodeRef} style={style}>
-      <div className="cursor-grab rounded p-1 hover:bg-cn-3 active:cursor-grabbing" {...attributes} {...listeners}>
+      <div className="cursor-grab rounded p-cn-3xs hover:bg-cn-3 active:cursor-grabbing" {...attributes} {...listeners}>
         <IconV2 className="text-cn-3" name="grip-dots" size="2xs" />
       </div>
 
@@ -153,11 +153,11 @@ export default function MultiSort() {
             size="2xs"
           />
           <span className="text-cn-1">{getSortTriggerLabel(sortSelections, sortOptions).label}</span>
-          <IconV2 className="chevron-down ml-3" name="nav-arrow-down" size="2xs" />
+          <IconV2 className="chevron-down ml-cn-sm" name="nav-arrow-down" size="2xs" />
         </Button>
       </DropdownMenu.Trigger>
 
-      <DropdownMenu.Content align="start" className="p-2">
+      <DropdownMenu.Content align="start" className="p-cn-xs">
         <DndContext onDragEnd={handleDragEnd} collisionDetection={closestCenter}>
           <SortableContext
             items={sortSelections.map((_, index) => getItemId(index))}
@@ -192,7 +192,7 @@ export default function MultiSort() {
           </SortableContext>
         </DndContext>
 
-        <DropdownMenu.Slot className="mt-3 inline-flex flex-col gap-1">
+        <DropdownMenu.Slot className="mt-cn-sm inline-flex flex-col gap-1">
           {filteredBySearchSortOptions.length > 0 && (
             <SearchableDropdown
               options={filteredBySearchSortOptions}

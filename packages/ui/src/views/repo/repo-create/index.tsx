@@ -236,7 +236,8 @@ export function RepoCreatePage({
                           to="https://developer.harness.io/docs/code-repository/config-repos/create-repo/"
                           target="_blank"
                           suffixIcon={true}
-                          className="ml-7"
+                          // TODO: Replace ml-[28px] with a proper spacing token when available
+                          className="ml-[28px]"
                         >
                           {t('views:repos.learnMoreAboutReadme', 'Learn more about README')}
                         </Link>

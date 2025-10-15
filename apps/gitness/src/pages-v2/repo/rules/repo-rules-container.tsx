@@ -40,7 +40,7 @@ export const RepoRulesContainer = () => {
 
   // Show loading state while fetching rule data
   if (fetchRuleIsLoading) {
-    return <Skeleton.Form className="mt-7" />
+    return <Skeleton.Form className="h-fit w-full" linesCount={4} />
   }
 
   // Show error page if rule not found

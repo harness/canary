@@ -252,7 +252,7 @@ export const RepoBranchRulesContainer = () => {
   }
 
   if (!!identifier && fetchRuleIsLoading) {
-    return <Skeleton.Form className="mt-7" />
+    return <Skeleton.Form className="w-full h-fit" linesCount={4} />
   }
 
   if (!!identifier && !!fetchRuleError) {

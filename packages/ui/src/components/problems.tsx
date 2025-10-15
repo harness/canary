@@ -31,7 +31,8 @@ export interface ProblemsProps<T = unknown> {
 
 const ProblemsComponent = {
   Root: function Root({ children }: { children: React.ReactNode }) {
-    return <div className="min-h-12 overflow-scroll text-[13px] leading-[15px] text-neutral-400">{children}</div>
+    // TODO: needs design review
+    return <div className="min-h-12 overflow-scroll text-[13px] leading-[15px]">{children}</div>
   },
 
   Row: function Root({ onClick, children }: { onClick?: () => void; children: React.ReactNode }) {
@@ -40,7 +41,7 @@ const ProblemsComponent = {
         role="button"
         tabIndex={0}
         onClick={onClick}
-        className="width-100 flex flex-1 cursor-pointer items-center justify-between gap-2 text-nowrap px-4 py-0.5 text-cn-1"
+        className="width-100 text-cn-1 flex flex-1 cursor-pointer items-center justify-between gap-2 text-nowrap px-4 py-0.5"
       >
         {children}
       </div>
@@ -68,7 +69,7 @@ const ProblemsComponent = {
     }
   }) {
     return (
-      <div className="text-grey-60 text-nowrap pr-2">
+      <div className="text-nowrap pr-2">
         [{position.row}, {position.column}]
       </div>
     )

@@ -171,7 +171,7 @@ const TargetRepoSelectorBase: FC<TargetRepoSelectorBaseProps> = ({
       <ControlGroup>
         <Label htmlFor="target-repos">{t('views:repos.targetRepositories', 'Target Repositories')}</Label>
         <Drawer.Root open={isDrawerOpen} onOpenChange={setIsDrawerOpen}>
-          <Text variant="caption-light" className="text-cn-text-secondary pt-cn-sm">
+          <Text variant="caption-light" className="pt-cn-sm">
             {t('views:repos.repositories', 'Repositories')}
           </Text>
           <Drawer.Trigger>
@@ -233,9 +233,7 @@ const TargetRepoSelectorBase: FC<TargetRepoSelectorBaseProps> = ({
                   />
                 </Table.Root>
               ) : (
-                <Text className="text-cn-text-secondary">
-                  {t('views:repos.noRepositoriesAvailable', 'No repositories available')}
-                </Text>
+                <Text>{t('views:repos.noRepositoriesAvailable', 'No repositories available')}</Text>
               )}
             </Drawer.Body>
 
@@ -254,7 +252,7 @@ const TargetRepoSelectorBase: FC<TargetRepoSelectorBaseProps> = ({
           </Drawer.Content>
         </Drawer.Root>
 
-        <Text variant="caption-light" className="text-cn-text-secondary">
+        <Text variant="caption-light">
           {t('views:repos.noReposSelectedAppliesAll', 'If no repositories are selected, the rule applies to all')}
         </Text>
 
@@ -274,7 +272,7 @@ const TargetRepoSelectorBase: FC<TargetRepoSelectorBaseProps> = ({
           </Layout.Flex>
         )}
 
-        <Text variant="caption-light" className="text-cn-text-secondary pt-cn-sm">
+        <Text variant="caption-light" className="pt-cn-sm">
           {t('views:repos.patterns', 'Patterns')}
         </Text>
         <Layout.Grid columns="1fr auto" className="grid grid-cols-[1fr_126px] items-start gap-x-3.5">

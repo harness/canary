@@ -244,6 +244,40 @@ The `StackedList.Field` component accepts the `right` prop, which positions the 
 `}
 />
 
+## Field position
+
+The `StackedList.Field` component accepts the `right` prop, which positions the field on the right side of the `Item`.
+
+<DocsPage.ComponentExample
+  client:only
+  contentClassName={"!block ![place-items:normal]"}
+  code={`
+    <StackedList.Root>
+      <StackedList.Item disableHover>
+        <StackedList.Field title="Item 1" />
+        <StackedList.Field title="Additional text" right />
+      </StackedList.Item>
+    </StackedList.Root>
+`}
+/>
+
+## With pagination
+
+The `StackedList.Root` component can accept pagination props to enable pagination functionality within the list.
+
+<DocsPage.ComponentExample
+  client:only
+  contentClassName={"!block ![place-items:normal]"}
+  code={`
+    <StackedList.Root paginationProps={{ pageSize: 10, totalItems: 50, currentPage: 1, goToPage: (page) => console.log(page), pageSizeOptions: [5, 10, 20], onPageSizeChange: (size) => console.log(size) }}>
+      <StackedList.Item disableHover>
+        <StackedList.Field title="Item 1" />
+        <StackedList.Field title="Additional text" right />
+      </StackedList.Item>
+    </StackedList.Root>
+`}
+/>
+
 ## API Reference
 
 ### `Root`
@@ -271,6 +305,13 @@ Contains [`StackedList.Item`](#item) and [`StackedList.Field`](#field) component
       description: "Keep rounded style only on the top side.",
       required: false,
       value: "'top'",
+      defaultValue: "undefined",
+    },
+    {
+      name: "paginationProps",
+      description: "Props for the pagination component",
+      required: false,
+      value: "PaginationProps",
       defaultValue: "undefined",
     },
   ]}

@@ -212,7 +212,7 @@ import { Aside } from "@astrojs/starlight/components";
 <div className="flex flex-col">
   <div>
     <h5 className="mb-2">Table with Submenu and Pagination</h5>
-    <Table.Root>
+    <Table.Root paginationProps={{ pageSize: 10, totalItems: 50, currentPage: 1, goToPage: (page) => console.log(page), pageSizeOptions: [5, 10, 20], onPageSizeChange: (size) => console.log(size) }}>
       <Table.Header>
         <Table.Row>
           <Table.Head>Name</Table.Head>
@@ -274,12 +274,6 @@ import { Aside } from "@astrojs/starlight/components";
       </Table.Body>
     </Table.Root>
   </div>
-  <Pagination
-    totalItems={10}
-    pageSize={3}
-    currentPage={2}
-    goToPage={() => {}}
-  />
 </div>
 `}
 />
@@ -437,6 +431,13 @@ The root component for the table.
       required: false,
       value: "boolean",
       defaultValue: "false",
+    },
+    {
+      name: "paginationProps",
+      description: "Props for the pagination component",
+      required: false,
+      value: "PaginationProps",
+      defaultValue: "undefined",
     },
   ]}
 />

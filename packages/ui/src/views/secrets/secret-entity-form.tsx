@@ -21,6 +21,7 @@ export type SecretEntityFormHandle = {
 
 interface SecretWrapper extends SecretListItem {
   secretManagerRef?: any
+  allowedSecretType?: 'SSHKey' | 'SecretFile' | 'SecretText' | 'WinRmCredentials'
 }
 
 interface SecretEntityFormProps {
@@ -80,6 +81,7 @@ export const SecretEntityForm = forwardRef<SecretEntityFormHandle, SecretEntityF
             }
           : undefined,
         secretManagerRef: initialSecretValues?.secretManagerRef,
+        allowedSecretType: initialSecretValues?.allowedSecretType,
         intent: EntityIntent.CREATE
       }
     }, [secretsFormDefinition, initialSecretValues?.secretManagerRef, initialSecretValues?.type])

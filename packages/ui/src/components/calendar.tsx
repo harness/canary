@@ -50,8 +50,8 @@ function Calendar({ className, classNames, showOutsideDays = true, ...props }: C
         ...classNames
       }}
       components={{
-        IconLeft: () => <IconV2 name="nav-arrow-left" size="sm" />,
-        IconRight: () => <IconV2 name="nav-arrow-right" size="sm" />
+        IconLeft: () => <IconV2 name="nav-arrow-left" />,
+        IconRight: () => <IconV2 name="nav-arrow-right" />
       }}
       {...props}
     />

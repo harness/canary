@@ -224,7 +224,7 @@ const CarouselPrevious = forwardRef<HTMLButtonElement, CarouselButtonProp>(
         }}
         {...props}
       >
-        <IconV2 name="arrow-long-left" size="sm" />
+        <IconV2 name="arrow-long-left" />
         <span className="sr-only">Previous slide</span>
       </Button>
     )
@@ -257,7 +257,7 @@ const CarouselNext = forwardRef<HTMLButtonElement, CarouselButtonProp>(
         }}
         {...props}
       >
-        <IconV2 name="arrow-long-right" size="sm" />
+        <IconV2 name="arrow-long-right" />
         <span className="sr-only">Next slide</span>
       </Button>
     )

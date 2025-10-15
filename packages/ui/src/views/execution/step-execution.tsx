@@ -66,8 +66,8 @@ export const StepExecution: FC<StepExecutionProps> = ({ step, logs, onEdit, onDo
 
   return (
     <Tabs.Root defaultValue={StepExecutionTab.LOG}>
-      <Layout.Vertical>
-        <Layout.Horizontal justify="between" className="py-2.5 pl-5 pr-3.5">
+      <Layout.Vertical gapY="none">
+        <Layout.Horizontal justify="between" className="py-cn-xs pl-cn-lg pr-cn-md" align="center">
           <Tabs.List variant="outlined">
             <Tabs.Trigger value={StepExecutionTab.LOG}>Logs</Tabs.Trigger>
             <Tabs.Trigger value={StepExecutionTab.INPUT}>Inputs</Tabs.Trigger>
@@ -88,9 +88,9 @@ export const StepExecution: FC<StepExecutionProps> = ({ step, logs, onEdit, onDo
         </Tabs.Content>
         <Tabs.Content value={StepExecutionTab.INPUT}>
           {/*here is the execution details of input table */}
-          <ScrollArea className="h-[calc(100vh-278px)] border-t pt-4">
+          <ScrollArea className="h-[calc(100vh-278px)] border-t pt-cn-md">
             <KeyValueTable
-              className="pt-2"
+              className="pt-cn-xs"
               tableSpec={inputTable}
               tableTitleName={'Input Name'}
               tableTitleVal={'Input Value'}
@@ -99,9 +99,9 @@ export const StepExecution: FC<StepExecutionProps> = ({ step, logs, onEdit, onDo
         </Tabs.Content>
         <Tabs.Content value={StepExecutionTab.OUTPUT}>
           {/*here is the execution details of output table */}
-          <ScrollArea className="h-[calc(100vh-278px)] border-t pt-4">
+          <ScrollArea className="h-[calc(100vh-278px)] border-t pt-cn-md">
             <KeyValueTable
-              className="pt-2"
+              className="pt-cn-xs"
               tableSpec={outputTable}
               tableTitleName={'Output Name'}
               tableTitleVal={'Output Value'}

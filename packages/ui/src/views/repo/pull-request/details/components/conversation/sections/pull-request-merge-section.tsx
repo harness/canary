@@ -211,7 +211,8 @@ const PullRequestMergeSection = ({
           </Layout.Grid>
         </Accordion.Trigger>
         {isConflicted && (
-          <Accordion.Content className="ml-7" containerClassName={cn({ 'pt-0 mt-0': showCommandLineInfo })}>
+          // TODO: Replace ml-[28px] with a proper spacing token when available
+          <Accordion.Content className="ml-[28px]" containerClassName={cn({ 'pt-0 mt-0': showCommandLineInfo })}>
             <Layout.Vertical gapY="sm">
               {showCommandLineInfo && (
                 <Layout.Vertical gap="sm" className="py-cn-sm border border-x-0">

@@ -43,7 +43,7 @@ export const ExecutionHeader: FC<ExecutionHeaderProps> = ({
   className
 }) => {
   return (
-    <div className={cn('px-6 py-5', className)}>
+    <div className={cn('px-cn-xl py-cn-lg', className)}>
       <div className="flex flex-col gap-[18px]">
         <Text as="h1" variant="heading-subsection" className="max-w-[600px]">
           {title.number && <span className="text-cn-2">#{title.number} </span>}
@@ -51,7 +51,7 @@ export const ExecutionHeader: FC<ExecutionHeaderProps> = ({
         </Text>
       </div>
 
-      <div className="mt-6 flex w-full flex-wrap items-center justify-between gap-6 text-2 leading-none">
+      <div className="mt-cn-xl flex w-full flex-wrap items-center justify-between gap-6 text-2 leading-none">
         <PipelineStatus
           branch={branch}
           commit={commit}

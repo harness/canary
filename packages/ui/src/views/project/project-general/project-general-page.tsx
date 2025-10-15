@@ -103,7 +103,7 @@ export const ProjectSettingsGeneralPage = ({
   return (
     <SandboxLayout.Main>
       <SandboxLayout.Content className="mx-auto max-w-[38.125rem]">
-        <Text as="h2" variant="heading-section" className="mb-10">
+        <Text as="h2" variant="heading-section" className="mb-cn-3xl">
           {t('views:projectSettings.general.mainTitle', 'Project Settings')}
         </Text>
 
@@ -163,10 +163,10 @@ export const ProjectSettingsGeneralPage = ({
               </Fieldset>
             </FormWrapper>
 
-            <FormSeparator className="mt-8" />
+            <FormSeparator className="mt-cn-2xl" />
 
             <Legend
-              className="mt-7 max-w-[27.5rem]"
+              className="mt-cn-md max-w-[27.5rem]"
               title={t('views:projectSettings.general.deleteProjectTitle', 'Delete project')}
               description={t(
                 'views:projectSettings.general.deleteProjectDescription',
@@ -174,7 +174,7 @@ export const ProjectSettingsGeneralPage = ({
               )}
             >
               <Dialog.Trigger>
-                <Button theme="danger" variant="secondary" className="mt-3.5 w-fit" onClick={setOpenDeleteDialog}>
+                <Button theme="danger" variant="secondary" className="mt-cn-sm w-fit" onClick={setOpenDeleteDialog}>
                   {t('views:projectSettings.general.deleteProjectButton', 'Delete project')}
                 </Button>
               </Dialog.Trigger>

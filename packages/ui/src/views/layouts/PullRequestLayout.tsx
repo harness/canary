@@ -50,7 +50,7 @@ export const PullRequestLayout: FC<PullRequestLayoutProps> = ({
         )}
 
         <Tabs.NavRoot>
-          <Tabs.List className="-mx-8 px-8" variant="overlined">
+          <Tabs.List className="-mx-cn-2xl px-cn-2xl" variant="overlined">
             <Tabs.Trigger
               value={PullRequestTabsKeys.CONVERSATION}
               icon="chat-bubble-empty"

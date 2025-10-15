@@ -6,7 +6,7 @@ body {
 }
 
 main {
-  @apply px-0 py-10 w-full !important;
+  @apply px-0 py-cn-3xl w-full !important;
 }
 
 .sl-container :is(h1):not(:where(.not-content *)) {
@@ -60,7 +60,7 @@ ul.top-level {
 }
 
 ul.top-level ul {
-  @apply border-b border-cn-3 px-3 py-6 flex flex-col gap-3 pt-5 justify-start;
+  @apply border-b border-cn-3 px-cn-sm py-cn-xl flex flex-col gap-3 pt-cn-lg justify-start;
 }
 
 ul.top-level li {
@@ -68,7 +68,7 @@ ul.top-level li {
 }
 
 ul.top-level li a {
-  @apply py-1 px-2 m-0 text-cn-3 hover:text-cn-1;
+  @apply py-cn-3xs px-cn-xs m-0 text-cn-3 hover:text-cn-1;
 }
 
 ul.top-level li a[aria-current="page"] {
@@ -76,11 +76,11 @@ ul.top-level li a[aria-current="page"] {
 }
 
 ul.top-level li details summary {
-  @apply flex items-center mt-6 !important;
+  @apply flex items-center mt-cn-xl !important;
 }
 
 ul.top-level li details summary .group-label {
-  @apply p-0 px-3;
+  @apply p-0 px-cn-sm;
 }
 
 ul.top-level summary .group-label span {
@@ -94,7 +94,8 @@ ul.top-level summary svg {
 /* Right-hand page sidebar overrides */
 
 .right-sidebar-panel {
-  @apply px-3 pl-0 py-6 pt-16;
+  /* TODO: Replace pt-[64px] with a proper spacing token when available */
+  @apply px-cn-sm pl-0 py-cn-xl pt-[64px];
 }
 
 .right-sidebar-panel h2 {
@@ -102,7 +103,7 @@ ul.top-level summary svg {
 }
 
 .right-sidebar-panel ul {
-  @apply m-0 p-0 flex flex-col gap-4 mt-4;
+  @apply m-0 p-0 flex flex-col gap-4 mt-cn-md;
 }
 
 .right-sidebar-panel li a {
@@ -110,7 +111,7 @@ ul.top-level summary svg {
 }
 
 .right-sidebar-panel li ul {
-  @apply pl-4 border-l border-cn-3;
+  @apply pl-cn-md border-l border-cn-3;
 }
 
 /* Search override */

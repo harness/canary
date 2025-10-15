@@ -158,7 +158,7 @@ export const PullRequestCommentTextarea = forwardRef<HTMLTextAreaElement, PullRe
     const renderCommandList = () => {
       if (isPrincipalsLoading) {
         return (
-          <Command.Loading className="min-w-52 px-2 py-4 text-cn-3">
+          <Command.Loading className="min-w-52 px-cn-xs py-cn-md text-cn-3">
             <div className="grid place-content-center space-x-2">
               <IconV2 className="animate-spin" name="loader" />
             </div>
@@ -167,7 +167,7 @@ export const PullRequestCommentTextarea = forwardRef<HTMLTextAreaElement, PullRe
       }
 
       if (principals === null || (Array.isArray(principals) && principals.length === 0)) {
-        return <Command.Empty className="min-w-max p-2 text-sm">User not found</Command.Empty>
+        return <Command.Empty className="min-w-max p-cn-xs text-sm">User not found</Command.Empty>
       }
 
       return (

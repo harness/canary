@@ -46,8 +46,8 @@ export const DraggableCard = ({
   return (
     <Card.Root ref={setNodeRef} style={style} {...cardProps}>
       <Card.Content>
-        <div className={cn('-mx-4 px-4', description ? 'border-b' : '')}>
-          <div className={cn('flex items-center gap-2', description ? 'pb-4' : '')}>
+        <div className={cn('-mx-cn-md px-cn-md', description ? 'border-b' : '')}>
+          <div className={cn('flex items-center gap-2', description ? 'pb-cn-md' : '')}>
             {disableDragAndDrop ? null : (
               <div className="cursor-grab active:cursor-grabbing" {...attributes} {...listeners}>
                 <IconV2 name="grip-dots" size="xs" />
@@ -56,7 +56,7 @@ export const DraggableCard = ({
             {title}
           </div>
         </div>
-        {description && <div className="mt-4">{description}</div>}
+        {description && <div className="mt-cn-md">{description}</div>}
       </Card.Content>
     </Card.Root>
   )

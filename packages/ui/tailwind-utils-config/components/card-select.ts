@@ -76,11 +76,11 @@ export default {
     },
 
     '.cn-card-select-title + .cn-card-select-description': {
-      '@apply mt-1': ''
+      '@apply mt-cn-3xs': ''
     },
 
     '.cn-card-select-icon, .cn-card-select-logo': {
-      '@apply mr-3 shrink-0': ''
+      '@apply mr-cn-sm shrink-0': ''
     },
 
     '.cn-card-select-content-container': {

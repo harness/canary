@@ -115,7 +115,7 @@ export default {
       },
 
       ':where(.cn-input-affix)': {
-        '@apply grid place-items-center px-2 select-none': '',
+        '@apply grid place-items-center px-cn-xs select-none': '',
 
         '&:where(:not(:has(input[disabled])))': {
           color: 'var(--cn-text-3)'

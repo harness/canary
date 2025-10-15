@@ -40,7 +40,7 @@ export const UnifiedPipelineStudioFooter: React.FC<PipelineStudioFooterProps> = 
   return (
     <footer
       className={
-        'flex h-10 shrink-0 items-center justify-between border-t border-cn-3 px-4 text-[12px] font-normal not-italic leading-[15px]'
+        'flex h-10 shrink-0 items-center justify-between border-t border-cn-3 px-cn-md text-[12px] font-normal not-italic leading-[15px]'
       }
     >
       <div className="flex items-center gap-2">
@@ -50,7 +50,7 @@ export const UnifiedPipelineStudioFooter: React.FC<PipelineStudioFooterProps> = 
           onClick={() => {
             togglePane?.()
           }}
-          className="flex h-full cursor-pointer gap-2.5 rounded-3 px-2 py-1.5 duration-150 ease-in-out hover:bg-cn-brand-hover/10"
+          className="flex h-full cursor-pointer gap-2.5 rounded-3 px-cn-xs py-cn-2xs duration-150 ease-in-out hover:bg-cn-brand-hover/10"
         >
           <div className="flex items-center gap-1.5">
             <IconV2
@@ -95,7 +95,7 @@ export const UnifiedPipelineStudioFooter: React.FC<PipelineStudioFooterProps> = 
               <span className="text-cn-1">&nbsp;{authorName}&nbsp;</span>
             </div>
           </Popover.Trigger>
-          <Popover.Content side="top" className="mb-4 mr-4 w-80 p-0">
+          <Popover.Content side="top" className="mb-cn-md mr-cn-md w-80 p-0">
             <PopoverCommitInfo.Root>
               <PopoverCommitInfo.CommitInfo authorName={authorName} commit={commitSha} />
               <PopoverCommitInfo.CommitMessage>{commitMessage}</PopoverCommitInfo.CommitMessage>

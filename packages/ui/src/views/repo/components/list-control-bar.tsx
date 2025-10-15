@@ -86,12 +86,12 @@ const ListControlBar = <T extends Record<string, any>, CustomValue = Record<stri
   const isListControlVisible = selectedFiltersCnt > 0 || (sortSelectionsCnt ?? 0) > 0
 
   return (
-    <div className={cn('flex items-center gap-x-2', { 'mt-4': isListControlVisible })}>
+    <div className={cn('flex items-center gap-x-cn-md', { 'mt-cn-md': isListControlVisible })}>
       {renderSelectedSort?.()}
       {renderSelectedFilters(filtersFieldRenderer)}
 
       {selectedFiltersCnt > 0 && (
-        <div className="ml-2.5 flex items-center justify-between gap-x-4">
+        <div className="flex items-center justify-between gap-x-cn-md">
           {renderFilterOptions(filterOptionsRenderer)}
         </div>
       )}

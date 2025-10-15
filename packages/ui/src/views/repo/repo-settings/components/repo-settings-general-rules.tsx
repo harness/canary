@@ -46,7 +46,8 @@ interface DescriptionProps {
 const Description: FC<DescriptionProps> = ({ targetPatternsCount, rulesAppliedCount, bypassAllowed }) => {
   const { t } = useTranslation()
   return (
-    <Layout.Grid flow="column" gapX="xs" align="center" className="w-fit pl-7">
+    // TODO: Replace pl-[26px] with a proper spacing token when available
+    <Layout.Grid flow="column" gapX="xs" align="center" className="w-fit pl-[26px]">
       {targetPatternsCount !== 0 && (
         <>
           <Text truncate>

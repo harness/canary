@@ -84,7 +84,7 @@ export const BranchSelectorDropdown: FC<BranchSelectorDropdownProps> = ({
                   setActiveTab(value as BranchSelectorTab)
                 }}
               >
-                <Tabs.List className="-mx-3 px-3" activeClassName="bg-cn-3" variant="overlined">
+                <Tabs.List className="-mx-cn-sm px-cn-sm" activeClassName="bg-cn-3" variant="overlined">
                   <Tabs.Trigger value="branches" onClick={() => setActiveTab(BranchSelectorTab.BRANCHES)}>
                     {t('views:repos.branches.title', 'Branches')}
                   </Tabs.Trigger>
@@ -146,7 +146,7 @@ export const BranchSelectorDropdown: FC<BranchSelectorDropdownProps> = ({
           })}
         </Command.List>
 
-        <div className="px-cn-sm border-cn-3 border-t border-solid py-2.5">
+        <div className="px-cn-sm border-cn-3 pt-cn-sm pb-cn-mb border-t border-solid">
           <Link to={viewAllUrl} variant="secondary" className="w-full" onKeyDown={onLinkEnter}>
             {t('views:repos.viewAll', `View all ${activeTab}`, {
               type:

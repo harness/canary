@@ -439,6 +439,8 @@ export default {
         'cn-brand': 'var(--cn-border-brand)'
       },
       spacing: {
+        0: 'var(--cn-spacing-0)',
+        px: 'var(--cn-spacing-px)',
         'cn-4xs': 'var(--cn-layout-4xs)',
         'cn-3xs': 'var(--cn-layout-3xs)',
         'cn-2xs': 'var(--cn-layout-2xs)',
@@ -449,7 +451,8 @@ export default {
         'cn-xl': 'var(--cn-layout-xl)',
         'cn-2xl': 'var(--cn-layout-2xl)',
         'cn-3xl': 'var(--cn-layout-3xl)',
-        'cn-4xl': 'var(--cn-layout-4xl)'
+        'cn-4xl': 'var(--cn-layout-4xl)',
+        auto: 'auto'
       },
 
       colors: {

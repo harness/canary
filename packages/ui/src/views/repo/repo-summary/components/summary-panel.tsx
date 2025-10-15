@@ -62,7 +62,7 @@ const SummaryPanel: FC<SummaryPanelProps> = ({
 
   return (
     <>
-      <Layout.Grid gapY="xl" className="pr-3">
+      <Layout.Grid gapY="xl" className="pr-cn-sm">
         <Layout.Grid gapX="xs" justify="between" flow="column">
           <Layout.Grid gapY="2xs">
             <Text variant="heading-base" as="h5">

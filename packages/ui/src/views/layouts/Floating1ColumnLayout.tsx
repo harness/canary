@@ -30,7 +30,7 @@ export const Floating1ColumnLayout = ({
   highlightTheme
 }: Floating1ColumnLayoutProps) => {
   const computedClassName = cn(
-    'px-5 pb-8 mx-auto md:px-8',
+    'px-cn-lg pb-cn-2xl mx-auto md:px-cn-2xl',
     widthClass[maxWidth],
     { 'flex items-center justify-center min-h-screen': verticalCenter },
     className

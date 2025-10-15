@@ -13,7 +13,7 @@ const PipelineStudioLayout = {
     const className = isYamlView ? 'border-b' : 'border-b-transparent'
     return (
       <div
-        className={cn(`absolute left-0 right-0 z-40 flex items-center justify-between px-5`, className)}
+        className={cn(`absolute left-0 right-0 z-40 flex items-center justify-between px-cn-lg`, className)}
         style={{ height: `${HEADER_HEIGHT}px`, minHeight: `${HEADER_HEIGHT}px` }}
       >
         {children}
@@ -45,7 +45,7 @@ const PipelineStudioLayout = {
   },
   SplitDivider: ({ children }: { children: ReactNode }) => {
     return (
-      <div style={{ height: 80, minHeight: 80 }} className="flex items-center border-t border-cn-2 px-4">
+      <div style={{ height: 80, minHeight: 80 }} className="border-cn-2 px-cn-md flex items-center border-t">
         {children}
       </div>
     )

@@ -102,7 +102,7 @@ export const PathBreadcrumbs = ({ items, isEdit, isNew, ...props }: PathBreadcru
 
   return (
     <Layout.Flex gap="sm" wrap={isRenderInput ? 'wrap' : 'nowrap'} align="start">
-      <Breadcrumb.Root className="mt-2">
+      <Breadcrumb.Root className="mt-cn-xs">
         <Breadcrumb.List>
           {items.map(({ parentPath, path }, idx) => (
             <Fragment key={idx}>
@@ -122,7 +122,7 @@ export const PathBreadcrumbs = ({ items, isEdit, isNew, ...props }: PathBreadcru
 
       {items.length > 1 && !isRenderInput && (
         <CopyButton
-          className="mt-1"
+          className="mt-cn-3xs"
           size="xs"
           name={items
             .slice(1)

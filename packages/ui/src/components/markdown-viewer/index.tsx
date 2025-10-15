@@ -209,7 +209,8 @@ const MarkdownViewerLocal = ({
   }, [interceptClickEventOnViewerContainer])
 
   return (
-    <div className={cn({ 'rounded-b-3 border-x border-b py-6 px-16': withBorder }, className)}>
+    // TODO: Replace px-[64px] with a proper spacing token when available
+    <div className={cn({ 'rounded-b-3 border-x border-b py-cn-xl px-[64px]': withBorder }, className)}>
       <div ref={ref} style={styles}>
         <MarkdownPreview
           source={source}
@@ -323,7 +324,7 @@ const MarkdownViewerLocal = ({
                       <div className="relative flex w-full bg-transparent">
                         <div className="bg-cn-2 flex-none select-none text-right">
                           {filteredLines.map((_, i) => (
-                            <span key={i} className="text-cn-2 block pr-3 pt-[0.5px] text-sm">
+                            <span key={i} className="text-cn-2 pr-cn-sm block pt-[0.5px] text-sm">
                               {i + 1}
                             </span>
                           ))}

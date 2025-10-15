@@ -67,7 +67,7 @@ export const UsersList = ({ searchQuery, handleResetSearch }: UserListProps) => 
             return (
               <Table.Row key={user.uid} className="h-[48px]">
                 {/* NAME */}
-                <Table.Cell className="my-6 content-center">
+                <Table.Cell className="my-cn-xl content-center">
                   <div className="grid grid-cols-[auto_1fr] items-center gap-2">
                     <Avatar name={user.uid} src={user.avatarUrl} rounded />
                     <Text variant="body-strong" truncate className="whitespace-nowrap">
@@ -77,7 +77,7 @@ export const UsersList = ({ searchQuery, handleResetSearch }: UserListProps) => 
                 </Table.Cell>
 
                 {/* EMAIL */}
-                <Table.Cell className="my-6 content-center">
+                <Table.Cell className="my-cn-xl content-center">
                   <div className="grid">
                     <Text color="foreground-3" truncate className="whitespace-nowrap">
                       {user.email}
@@ -86,7 +86,7 @@ export const UsersList = ({ searchQuery, handleResetSearch }: UserListProps) => 
                 </Table.Cell>
 
                 {/* ROLE BINDING */}
-                <Table.Cell className="my-6 content-center">
+                <Table.Cell className="my-cn-xl content-center">
                   <div className="flex gap-1.5">
                     <StatusBadge variant="outline" size="sm" theme={user.admin ? 'merged' : 'danger'}>
                       {user.admin ? 'Admin' : 'User'}

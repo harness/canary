@@ -149,7 +149,7 @@ export default {
 
     // Caption
     '&-caption': {
-      '@apply text-cn-3 mt-4 text-sm': ''
+      '@apply text-cn-3 mt-cn-md text-sm': ''
     }
   }
 }

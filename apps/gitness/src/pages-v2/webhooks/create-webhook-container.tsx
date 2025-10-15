@@ -128,7 +128,7 @@ export const CreateWebhookContainer = () => {
   const apiError = createWebHookError?.message || updateWebhookError?.message || null
 
   if (!!webhookId && getWebhookIsLoading) {
-    return <Skeleton.Form className="mt-7" />
+    return <Skeleton.Form className="h-fit w-full" linesCount={4} />
   }
 
   if (!!webhookId && !webhookData) return <NotFoundPage pageTypeText="webhooks" />

@@ -52,7 +52,7 @@ const PullRequestFilters = <T extends FilterOption>({
   className
 }: PullRequestFilterProps<T>) => {
   return (
-    <div className={cn('grid grid-cols-[1fr_auto] items-center border-b border-cn-2 pb-2', className)}>
+    <div className={cn('grid grid-cols-[1fr_auto] items-center border-b border-cn-2 pb-cn-xs', className)}>
       <Text as="h3" variant="heading-subsection" className="leading-snug">
         Overview
       </Text>

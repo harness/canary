@@ -10,12 +10,12 @@ export interface NodeTitleProps extends Pick<SerialGroupNodeProps, 'name' | 'onH
 
 export const NodeTitle: FC<NodeTitleProps> = ({ name, onHeaderClick, counter }) => {
   return (
-    <div className="absolute inset-x-0 top-0 h-0 px-2.5 pt-2.5">
+    <div className="absolute inset-x-0 top-0 h-0 p-sn-sm">
       <div
         role="button"
         tabIndex={0}
         title={name}
-        className="mx-9 cursor-pointer truncate pt-1 text-2 font-medium leading-snug text-cn-3"
+        className="mx-cn-3xl cursor-pointer truncate pt-cn-3xs text-2 font-medium leading-snug text-cn-3"
         onClick={onHeaderClick}
       >
         {name} <Text as="span">({counter})</Text>

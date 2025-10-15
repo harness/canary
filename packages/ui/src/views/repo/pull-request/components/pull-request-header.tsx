@@ -101,7 +101,7 @@ export const PullRequestHeader: React.FC<PullRequestTitleProps> = ({
         <Layout.Horizontal gap="sm" align="center">
           <Layout.Horizontal align="center" gap="xs" wrap="wrap">
             <Layout.Horizontal gap="2xs" align="center" wrap="wrap">
-              <StatusBadge icon={stateObject.icon} variant="primary" theme={stateObject.theme} className="mr-1">
+              <StatusBadge icon={stateObject.icon} variant="primary" theme={stateObject.theme} className="mr-cn-3xs">
                 {stateObject.text}
               </StatusBadge>
               <Avatar name={author?.display_name || author?.email || ''} rounded size="sm" />
@@ -118,7 +118,7 @@ export const PullRequestHeader: React.FC<PullRequestTitleProps> = ({
               <BranchTag branchName={target_branch || ''} spaceId={spaceId || ''} repoId={repoId || ''} />
               <Text variant="body-single-line-normal">from</Text>
               <BranchTag branchName={source_branch || ''} spaceId={spaceId || ''} repoId={repoId || ''} />
-              <Separator orientation="vertical" className="mx-0.5 h-4" />
+              <Separator orientation="vertical" className="mx-cn-4xs h-4" />
               <TimeAgoCard timestamp={merged || created} />
             </Layout.Horizontal>
           </Layout.Horizontal>

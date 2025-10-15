@@ -167,13 +167,12 @@ export const GitCommitDialog: FC<GitCommitDialogProps> = ({
               <FormInput.Radio id="commitToGitRef" {...register('commitToGitRef')}>
                 <Radio.Item
                   id={CommitToGitRefOption.DIRECTLY}
-                  className="mt-px"
                   value={CommitToGitRefOption.DIRECTLY}
                   label={
                     <>
                       {t('component:commitDialog.form.radioGroup.directly.labelFirst', 'Commit directly to')}
                       <Tag
-                        className="mx-1.5 -mt-0.5 align-sub"
+                        className="mx-cn-2xs -mt-cn-4xs align-sub"
                         variant="secondary"
                         theme="gray"
                         value={currentBranch}
@@ -184,7 +183,6 @@ export const GitCommitDialog: FC<GitCommitDialogProps> = ({
                 />
                 <Radio.Item
                   id={CommitToGitRefOption.NEW_BRANCH}
-                  className="mt-px"
                   value={CommitToGitRefOption.NEW_BRANCH}
                   label={t(
                     'component:commitDialog.form.radioGroup.new.label',

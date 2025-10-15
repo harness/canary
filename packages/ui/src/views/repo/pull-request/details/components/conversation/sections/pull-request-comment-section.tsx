@@ -13,7 +13,7 @@ const PullRequestCommentSection = ({ commentsInfo, handleAction }: PullRequestMe
 
   return (
     <Accordion.Item value="item-2">
-      <Accordion.Trigger className="group py-3 [&>.cn-accordion-trigger-indicator]:hidden" onClick={handleAction}>
+      <Accordion.Trigger className="group py-cn-sm [&>.cn-accordion-trigger-indicator]:hidden" onClick={handleAction}>
         <Layout.Horizontal align="center" justify="between">
           <Layout.Grid gapY="4xs">
             <LineTitle

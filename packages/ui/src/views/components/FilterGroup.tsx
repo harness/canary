@@ -191,7 +191,7 @@ const FilterGroupInner = <
           <>
             <ListControlBar<T, CustomValue, T[keyof T]>
               renderSelectedFilters={filterFieldRenderer => (
-                <FilterHandler.Content className={'flex items-center gap-x-2'}>
+                <FilterHandler.Content className={'flex items-center gap-x-cn-md'}>
                   {filterOptions.map(filterOption => {
                     return (
                       <FilterHandler.Component<keyof T>

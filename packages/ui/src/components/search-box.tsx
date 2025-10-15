@@ -112,14 +112,14 @@ const Root = forwardRef<HTMLInputElement, SearchBoxProps>(
               'absolute left-px top-px z-10 rounded text-cn-3 h-[calc(100%-2px)] w-7 flex items-center justify-center'
             )}
           >
-            <IconV2 name="search" className="ml-0.5" />
+            <IconV2 name="search" className="ml-cn-4xs" />
           </div>
         )}
 
         {hasShortcut && !!shortcutLetter && (
           <div
             className={cn(
-              'absolute z-[5] right-1.5 top-1/2 flex h-5 -translate-y-1/2 cursor-pointer items-center gap-0.5 rounded-1 border bg-cn-3 px-1 text-cn-2 duration-100 ease-in-out'
+              'absolute z-[5] right-1.5 top-1/2 flex h-5 -translate-y-1/2 cursor-pointer items-center gap-0.5 rounded-1 border bg-cn-3 px-cn-3xs text-cn-2 duration-100 ease-in-out'
             )}
           >
             <IconV2 name="apple-shortcut" size="2xs" />
@@ -132,7 +132,7 @@ const Root = forwardRef<HTMLInputElement, SearchBoxProps>(
           ref={ref}
           placeholder={placeholder}
           defaultValue={defaultValue}
-          className={cn(inputClassName, 'bg-cn-1', { 'pr-10': hasShortcut, 'pl-7': hasSearchIcon }, textSizeClass)}
+          className={cn(inputClassName, 'bg-cn-1', { 'pr-cn-3xl': hasShortcut, 'pl-7': hasSearchIcon }, textSizeClass)}
           onKeyDown={handleKeyDown}
           onFocus={handleFocus}
           onInput={handleChange}

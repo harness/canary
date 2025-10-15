@@ -85,7 +85,7 @@ export const SemanticSearchResultsList: FC<SemanticSearchResultsListProps> = ({
 
               <Layout.Vertical gap="sm">
                 <div>
-                  <pre className={cn('bg-cn-1 p-1 mt-1 rounded')}>
+                  <pre className={cn('bg-cn-1 p-cn-3xs mt-cn-3xs rounded')}>
                     <code className="monospace">
                       {item.lines.slice(0, expandedItems[uniqueKey] ? undefined : LINE_COUNT).map((line, index) => {
                         const lineNumber = item.start_line + index

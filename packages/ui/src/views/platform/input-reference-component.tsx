@@ -104,6 +104,11 @@ export interface InputReferenceProps<T> extends VariantProps<typeof inputReferen
   onOpen?: () => void
 
   dropdownTriggerRef?: Ref<HTMLButtonElement>
+
+  /**
+   * Whether to hide the dropdown menu (3 dots menu)
+   */
+  hideDropdownMenu?: boolean
 }
 
 /**
@@ -134,6 +139,7 @@ const InputReferenceInner = <T,>(
     tooltipProps,
     tooltipContent,
     dropdownTriggerRef,
+    hideDropdownMenu = false,
     ...props
   }: InputReferenceProps<T>,
   ref: ForwardedRef<HTMLDivElement>
@@ -237,7 +243,7 @@ const InputReferenceInner = <T,>(
               </div>
             )}
           </div>
-          {hasValue && !disabled && (
+          {hasValue && !disabled && !hideDropdownMenu && (
             <ButtonGroup
               iconOnly
               size="md"

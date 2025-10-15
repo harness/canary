@@ -5,6 +5,7 @@ import { Slot } from '@radix-ui/react-slot'
 import { cn } from '@utils/cn'
 import { filterChildrenByDisplayNames, isPromise } from '@utils/utils'
 import { cva, type VariantProps } from 'class-variance-authority'
+import isEmpty from 'lodash-es/isEmpty'
 
 import { IconV2, IconV2DisplayName } from './icon-v2'
 
@@ -150,8 +151,9 @@ const Button = forwardRef<HTMLButtonElement, ButtonProps>(
       </Comp>
     )
 
-    if ('tooltipProps' in props) {
-      const buttonTooltipProps = props.tooltipProps as ButtonTooltipProps
+    if (!isEmpty(props.tooltipProps)) {
+      const buttonTooltipProps = props.tooltipProps
+
       return (
         <Tooltip hideArrow {...buttonTooltipProps}>
           {ButtonComp}

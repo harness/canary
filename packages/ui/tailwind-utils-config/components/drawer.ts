@@ -11,7 +11,7 @@ export default {
       '@apply fixed flex flex-col z-50 border': '',
 
       '&:where(.cn-drawer-content-right), &:where(.cn-drawer-content-left)': {
-        '@apply inset-y-0': '',
+        '@apply inset-y-0 !h-auto': '',
 
         '&:where(.cn-drawer-content-2xs)': {
           width: 'var(--cn-drawer-2xs)'
@@ -31,7 +31,7 @@ export default {
       },
 
       '&:where(.cn-drawer-content-top), &:where(.cn-drawer-content-bottom)': {
-        '@apply inset-x-0': '',
+        '@apply inset-x-0 !w-auto': '',
 
         '&:where(.cn-drawer-content-2xs)': {
           height: 'var(--cn-drawer-2xs)'

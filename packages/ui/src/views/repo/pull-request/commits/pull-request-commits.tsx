@@ -20,7 +20,7 @@ const PullRequestCommitsView: FC<RepoPullRequestCommitsViewProps> = ({
 
   toCode
 }) => {
-  const { commitsList, xNextPage, xPrevPage, isFetchingCommits } = usePullRequestCommitsStore()
+  const { commitsList, xNextPage, xPrevPage, isFetchingCommits, page } = usePullRequestCommitsStore()
   const { t } = useTranslation()
 
   const getPrevPageLink = useCallback(() => {
@@ -66,6 +66,7 @@ const PullRequestCommitsView: FC<RepoPullRequestCommitsViewProps> = ({
 
       <Pagination
         indeterminate
+        currentPage={page}
         hasNext={xNextPage > 0}
         hasPrevious={xPrevPage > 0}
         getPrevPageLink={getPrevPageLink}

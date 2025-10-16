@@ -124,6 +124,7 @@ export const RepoCommitsView: FC<RepoCommitsViewProps> = ({
 
                     <Pagination
                       indeterminate
+                      currentPage={page}
                       hasNext={xNextPage > 0}
                       hasPrevious={xPrevPage > 0}
                       getPrevPageLink={getPrevPageLink}

@@ -72,8 +72,8 @@ export function SecretList({
       <Table.Body>
         {secrets.map(secret => (
           <Table.Row key={secret.identifier} to={toSecretDetails?.(secret)}>
-            <Table.Cell className="w-full max-w-[470px]" title={secret.identifier}>
-              <Text truncate>{secret.identifier}</Text>
+            <Table.Cell className="w-full max-w-[470px]" title={secret.name}>
+              <Text truncate>{secret.name}</Text>
             </Table.Cell>
             <Table.Cell className={CELL_MIN_WIDTH}>
               <Text truncate>

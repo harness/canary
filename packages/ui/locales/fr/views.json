@@ -399,86 +399,6 @@
     "clone": "Cloner",
     "addFile": "Ajouter un fichier"
   },
-  "search": {
-    "0": "R",
-    "1": "e",
-    "2": "c",
-    "3": "h",
-    "4": "e",
-    "5": "r",
-    "6": "c",
-    "7": "h",
-    "8": "e",
-    "9": "r",
-    "noResultsFound": "No search results found",
-    "startSearching": "Start searching",
-    "tryDifferentQuery": "Try a different search query or clear filters",
-    "enterSearchTerms": "Enter search terms to find relevant results",
-    "showLess": "- Show Less",
-    "showMore": "+ Show More",
-    "searchPlaceholder": "Search anything...",
-    "scopePlaceholder": "Select a scope",
-    "repositoryPlaceholder": "Select a repository",
-    "statsText": "{{fileCount}} file(s)",
-    "bold": "\u001b[1mRechercher\u001b[22m",
-    "strip": "Rechercher",
-    "stripColors": "Rechercher",
-    "trap": "ƦË©ҺҼƦϾĦĕʀ",
-    "zalgo": "R̢̩̦̩̪̱̘̝͖̮̱̙̣̲̟̠̪̠̬̩̘̳̫̗̬̱̬̙͕̻̰̝̘̫̫̻̯̰̰̟͈̻̙̳̘̙̯̗͕̰̝̜̫̳̥͖̻̻̦̫̮͉̐̍̍͂ͨ͊͟͜͜ͅͅͅe̵̻̗̝̣̩͔̬̲̠̓́̋̓ͧ͋̇̽̀̕͢ͅc̨̟̰̟̟̟̠̲̘̫̋̾͒̋ͭ̎̾̃͛̾̕͡ͅh̛̯͈͍̳̥̼͙̥̣̜͕̺̞̯̪͉͖̳̼͓̲͇̭͚̼̼͕̣̖͓̙͆̿͊̌ͫ̈ͪ̿̾̓̌̂̆̒̀̚͝ȩ̵̶̢͓̭̖͍̹̙͉̬̼̦̙̭͙̫̗̣̞̜̣͙̖͓͕͖̭͚̝͓̯͕͎̯̪̙̯̣̗̪̰͌ͫ͂̾͗̆ͫ̀ͤ̽͡r̜̥̬͍̙̗͚̺̮̤͎̬̲̞̝̤̠̖͙̫̦̙̹̜͈̭̜͚͈̞̻̣͕͖͙͙͉͓͎̦̩͓̼͈̅̌͋̎̏́́ͭ͛ͫ̈̏̽́͞ͅc̢̯̻̞͎͇̟̼̩͕̻͓̦͕̫̳̟̣̤̠͇̠̼͚̥̩͉̱͚̟͖͉̥͕͚̫̮̭̥̭̳͖̩̜̹͚̭͎̫̖̤̼͔͈ͬ̂̉ͧ̉̓̍͂̀͢ͅh̪̣̮̩̠̘͔̘͓͚͕̫̘͖͔̺̳̟͙͚ͦ̑̔́ͨ̀̀͘e̢͔̫̼̘̲̹͍̝͙̲̗̞̭̞̪̺̖̱̫̞̙͓̞͖̺̱̹͍͒̆ͦͧ̓͛̅ͣ̓̽̎ͣ̀͠r̲̼̭̹̝̺͈̥̻̮͎̯̗̘̲͙̫̝̩̜̳̟̗͚͕̠̩̀̑̇͆ͩ̈̈̽͆͐ͭͨͩ͆ͮͨ͛͗̀̚͜͠͠",
-    "zebra": "R\u001b[7me\u001b[27mc\u001b[7mh\u001b[27me\u001b[7mr\u001b[27mc\u001b[7mh\u001b[27me\u001b[7mr\u001b[27m",
-    "rainbow": "\u001b[31mR\u001b[39m\u001b[33me\u001b[39m\u001b[32mc\u001b[39m\u001b[34mh\u001b[39m\u001b[35me\u001b[39m\u001b[31mr\u001b[39m\u001b[33mc\u001b[39m\u001b[32mh\u001b[39m\u001b[34me\u001b[39m\u001b[35mr\u001b[39m",
-    "random": "\u001b[97mR\u001b[39m\u001b[35me\u001b[39m\u001b[37mc\u001b[39m\u001b[35mh\u001b[39m\u001b[94me\u001b[39m\u001b[96mr\u001b[39m\u001b[90mc\u001b[39m\u001b[34mh\u001b[39m\u001b[91me\u001b[39m\u001b[92mr\u001b[39m",
-    "america": "\u001b[31mR\u001b[39m\u001b[37me\u001b[39m\u001b[34mc\u001b[39m\u001b[31mh\u001b[39m\u001b[37me\u001b[39m\u001b[34mr\u001b[39m\u001b[31mc\u001b[39m\u001b[37mh\u001b[39m\u001b[34me\u001b[39m\u001b[31mr\u001b[39m",
-    "reset": "\u001b[0mRechercher\u001b[0m",
-    "dim": "\u001b[2mRechercher\u001b[22m",
-    "italic": "\u001b[3mRechercher\u001b[23m",
-    "underline": "\u001b[4mRechercher\u001b[24m",
-    "inverse": "\u001b[7mRechercher\u001b[27m",
-    "hidden": "\u001b[8mRechercher\u001b[28m",
-    "strikethrough": "\u001b[9mRechercher\u001b[29m",
-    "black": "\u001b[30mRechercher\u001b[39m",
-    "red": "\u001b[31mRechercher\u001b[39m",
-    "green": "\u001b[32mRechercher\u001b[39m",
-    "yellow": "\u001b[33mRechercher\u001b[39m",
-    "blue": "\u001b[34mRechercher\u001b[39m",
-    "magenta": "\u001b[35mRechercher\u001b[39m",
-    "cyan": "\u001b[36mRechercher\u001b[39m",
-    "white": "\u001b[37mRechercher\u001b[39m",
-    "gray": "\u001b[90mRechercher\u001b[39m",
-    "grey": "\u001b[90mRechercher\u001b[39m",
-    "brightRed": "\u001b[91mRechercher\u001b[39m",
-    "brightGreen": "\u001b[92mRechercher\u001b[39m",
-    "brightYellow": "\u001b[93mRechercher\u001b[39m",
-    "brightBlue": "\u001b[94mRechercher\u001b[39m",
-    "brightMagenta": "\u001b[95mRechercher\u001b[39m",
-    "brightCyan": "\u001b[96mRechercher\u001b[39m",
-    "brightWhite": "\u001b[97mRechercher\u001b[39m",
-    "bgBlack": "\u001b[40mRechercher\u001b[49m",
-    "bgRed": "\u001b[41mRechercher\u001b[49m",
-    "bgGreen": "\u001b[42mRechercher\u001b[49m",
-    "bgYellow": "\u001b[43mRechercher\u001b[49m",
-    "bgBlue": "\u001b[44mRechercher\u001b[49m",
-    "bgMagenta": "\u001b[45mRechercher\u001b[49m",
-    "bgCyan": "\u001b[46mRechercher\u001b[49m",
-    "bgWhite": "\u001b[47mRechercher\u001b[49m",
-    "bgGray": "\u001b[100mRechercher\u001b[49m",
-    "bgGrey": "\u001b[100mRechercher\u001b[49m",
-    "bgBrightRed": "\u001b[101mRechercher\u001b[49m",
-    "bgBrightGreen": "\u001b[102mRechercher\u001b[49m",
-    "bgBrightYellow": "\u001b[103mRechercher\u001b[49m",
-    "bgBrightBlue": "\u001b[104mRechercher\u001b[49m",
-    "bgBrightMagenta": "\u001b[105mRechercher\u001b[49m",
-    "bgBrightCyan": "\u001b[106mRechercher\u001b[49m",
-    "bgBrightWhite": "\u001b[107mRechercher\u001b[49m",
-    "blackBG": "\u001b[40mRechercher\u001b[49m",
-    "redBG": "\u001b[41mRechercher\u001b[49m",
-    "greenBG": "\u001b[42mRechercher\u001b[49m",
-    "yellowBG": "\u001b[43mRechercher\u001b[49m",
-    "blueBG": "\u001b[44mRechercher\u001b[49m",
-    "magentaBG": "\u001b[45mRechercher\u001b[49m",
-    "cyanBG": "\u001b[46mRechercher\u001b[49m",
-    "whiteBG": "\u001b[47mRechercher\u001b[49m"
-  },
   "execution": {
     "summary": "Résumé",
     "logs": "Journaux",
@@ -1036,6 +956,25 @@
     "delete": "Delete webhook",
     "create": "Create webhook"
   },
+  "search": {
+    "emptyState": {
+      "title": "Start searching",
+      "description": "Enter search terms to find relevant results,"
+    },
+    "showLess": "- Show Less",
+    "showMore": "+ Show More",
+    "noResultsFound": "No search results found",
+    "startSearching": "Start searching",
+    "tryDifferentQuery": "Try a different search query or clear filters",
+    "enterSearchTerms": "Enter search terms to find relevant results",
+    "searchPlaceholder": "Search anything...",
+    "scopePlaceholder": "Select a scope",
+    "repositoryPlaceholder": "Select a repository",
+    "statsText": {
+      "matchesAndFiles": "{{matchCount}} matches found in {{fileCount}} file(s)",
+      "files": "{{fileCount}} file(s)"
+    }
+  },
   "secretActivity": {
     "event": "Event",
     "entity": "Entity",
@@ -1043,13 +982,10 @@
     "timestamp": "Timestamp",
     "type": "Type"
   },
-  "entityReference": {
-    "entity": "Entity",
-    "type": "Type",
-    "scope": "Scope",
-    "created": "Created"
-  },
   "secrets": {
+    "search": {
+      "placeholder": "Search"
+    },
     "filterOptions": {
       "secretType": {
         "label": "Secret Type"
@@ -1073,6 +1009,12 @@
     "edit": "Edit secret",
     "delete": "Supprimer le secret",
     "newSecret": "New Secret"
+  },
+  "entityReference": {
+    "entity": "Entity",
+    "type": "Type",
+    "scope": "Scope",
+    "created": "Created"
   },
   "secret": {
     "title": "Secret"

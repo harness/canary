@@ -98,7 +98,7 @@ const SecretActivityPage: FC<SecretActivityPageProps> = ({
           <ListActions.Left>
             <SearchInput
               defaultValue={searchQuery}
-              placeholder={t('views:repos.search', 'Search')}
+              placeholder={t('views:secrets.search.placeholder', 'Search')}
               inputContainerClassName="max-w-80"
               onChange={handleSearchChange}
               autoFocus

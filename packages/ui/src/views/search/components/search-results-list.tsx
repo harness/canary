@@ -1,6 +1,6 @@
 import { FC, useState } from 'react'
 
-import { Accordion, Alert, Button, Layout, Link, Skeleton, Spacer, Tag, Text } from '@/components'
+import { Accordion, Alert, Button, IconV2, Layout, Link, NoData, Skeleton, Tag } from '@/components'
 import { useTranslation } from '@/context'
 import { cn } from '@utils/cn'
 
@@ -16,6 +16,7 @@ interface SearchResultsListProps {
   searchError?: string
   isRepoScope: boolean
   toRepo: (params: { repoPath?: string }) => string
+  onClearFilters: () => void
 }
 
 export interface SearchResultItem {
@@ -42,7 +43,8 @@ export const SearchResultsList: FC<SearchResultsListProps> = ({
   toRepoFileDetails,
   searchError,
   isRepoScope,
-  toRepo
+  toRepo,
+  onClearFilters
 }) => {
   const { t } = useTranslation()
   const { results } = useSearchResultsStore()
@@ -62,23 +64,35 @@ export const SearchResultsList: FC<SearchResultsListProps> = ({
       )
     }
 
+    if (isDirtyList) {
+      return (
+        <NoData
+          withBorder
+          imageName="no-search-magnifying-glass"
+          title={t('views:noData.noResults', 'No search results')}
+          description={[
+            t('views:noData.checkSpelling', 'Check your spelling and filter options'),
+            t('views:noData.changeSearch', 'or search for a different keyword.')
+          ]}
+          secondaryButton={{
+            icon: 'trash',
+            label: t('views:noData.clearFilters', 'Clear filters'),
+            onClick: onClearFilters
+          }}
+        />
+      )
+    }
+
     return (
-      <div className={cn('flex flex-col items-center justify-center py-12')}>
-        <Text variant="heading-section">
-          {isDirtyList
-            ? t('views:search.noResultsFound', 'No search results found')
-            : t('views:search.startSearching', 'Start searching')}
-        </Text>
-        <Spacer size={2} />
-        <Text variant="body-normal">
-          {isDirtyList
-            ? t('views:search.tryDifferentQuery', 'Try a different search query or clear filters')
-            : t('views:search.enterSearchTerms', 'Enter search terms to find relevant results')}
-        </Text>
-        <Spacer size={4} />
-      </div>
+      <NoData
+        imageName="no-search-magnifying-glass"
+        title={t('views:search.emptyState.title', 'Start searching')}
+        description={[t('views:search.emptyState.description', 'Enter search terms to find relevant results,')]}
+      />
     )
   }
+
+  const getItemPath = (item: SearchResultItem) => `${item.repo_path}/${item.file_name}`
 
   const AccordionContent = ({ item }: { item: SearchResultItem }) => (
     <Accordion.Root
@@ -91,8 +105,8 @@ export const SearchResultsList: FC<SearchResultsListProps> = ({
       disabled={item.matches.length === 0}
     >
       <Accordion.Item value={item.file_name}>
-        <Accordion.Trigger className="gap-4 px-4 py-3">
-          <Layout.Horizontal className="w-full" gap="md">
+        <Accordion.Trigger className="gap-cn-xs px-cn-sm py-cn-xs" headerClassName="bg-cn-2">
+          <Layout.Horizontal className="w-full" gap="sm">
             {!isRepoScope ? (
               <Link noHoverUnderline variant="secondary" to={toRepo({ repoPath: item.repo_path })}>
                 <Tag value={item.repo_path} icon="repository" />
@@ -100,25 +114,21 @@ export const SearchResultsList: FC<SearchResultsListProps> = ({
             ) : null}
             <Link
               variant="secondary"
-              to={toRepoFileDetails({
-                repoPath: item.repo_path,
-                filePath: item.file_name,
-                branch: item.repo_branch
-              })}
+              to={toRepoFileDetails({ repoPath: item.repo_path, filePath: item.file_name, branch: item.repo_branch })}
             >
-              <Text variant="body-strong">{item.file_name}</Text>
+              {item.file_name}
             </Link>
           </Layout.Horizontal>
         </Accordion.Trigger>
-        <Accordion.Content className="border-t bg-cn-1 pb-0">
+        <Accordion.Content className="pb-0 border-t border-cn-2" containerClassName="px-0">
           {item.matches && item.matches.length >= 1 && (
             <Layout.Vertical gap="none" className="mt-1">
               {item.matches
-                .slice(0, expandedItems[`${item.repo_path}/${item.file_name}`] ? undefined : DEFAULT_NUM_ITEMS_TO_SHOW)
+                .slice(0, expandedItems[getItemPath(item)] ? undefined : DEFAULT_NUM_ITEMS_TO_SHOW)
                 .map(match => (
                   <div
                     key={`${match.before}-${match.fragments.map(frag => frag.pre + frag.match + frag.post).join('')}-${match.after}`}
-                    className="px-4"
+                    className="px-cn-md"
                   >
                     <pre className={cn('bg-cn-1')}>
                       <code className="monospace">
@@ -147,21 +157,22 @@ export const SearchResultsList: FC<SearchResultsListProps> = ({
                   </div>
                 ))}
               {item.matches?.length > DEFAULT_NUM_ITEMS_TO_SHOW && (
-                <div className="bg-cn-0 mt-2 py-1.5 pl-4">
+                <div className="bg-cn-0 mt-cn-2xs">
                   <Button
-                    variant="link"
-                    className="text-cn-2 font-caption-single-line-normal p-cn-4xs h-fit"
+                    variant="ghost"
+                    size="xs"
+                    className="outline-offset-cn-tight hover:!bg-[unset]"
                     onClick={() => {
-                      const key = `${item.repo_path}/${item.file_name}`
+                      const key = getItemPath(item)
                       setExpandedItems(prev => ({ ...prev, [key]: !prev[key] }))
                     }}
                   >
-                    {expandedItems[`${item.repo_path}/${item.file_name}`]
-                      ? t('views:search.showLess', '- Show Less')
-                      : t(
-                          'views:search.showMore',
-                          `+ Show ${item.matches.length - DEFAULT_NUM_ITEMS_TO_SHOW} more matches`
-                        )}
+                    <IconV2 name={expandedItems[getItemPath(item)] ? 'minus' : 'plus'} size="xs" />
+                    {expandedItems[getItemPath(item)]
+                      ? t('views:search.showLess', 'Show Less')
+                      : t('views:search.showMore', 'Show {{matchesCount}} more matches', {
+                          matchesCount: item.matches.length - DEFAULT_NUM_ITEMS_TO_SHOW
+                        })}
                   </Button>
                 </div>
               )}
@@ -173,14 +184,10 @@ export const SearchResultsList: FC<SearchResultsListProps> = ({
   )
 
   return (
-    <Layout.Vertical gap="xs">
-      {results.map(item =>
-        item.matches.length == 0 ? (
-          <AccordionContent key={`${item.repo_path}/${item.file_name}`} item={item} />
-        ) : (
-          <AccordionContent key={`${item.repo_path}/${item.file_name}`} item={item} />
-        )
-      )}
+    <Layout.Vertical gap="md">
+      {results.map(item => (
+        <AccordionContent key={getItemPath(item)} item={item} />
+      ))}
     </Layout.Vertical>
   )
 }

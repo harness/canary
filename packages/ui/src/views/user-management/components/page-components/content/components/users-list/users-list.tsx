@@ -1,6 +1,6 @@
 import { useCallback } from 'react'
 
-import { Avatar, MoreActionsTooltip, Skeleton, StatusBadge, Table } from '@/components'
+import { Avatar, MoreActionsTooltip, Skeleton, StatusBadge, Table, Text } from '@/components'
 import { useCustomDialogTrigger } from '@/context'
 import { DialogLabels } from '@/views/user-management/components/dialogs'
 import { useDialogData } from '@/views/user-management/components/dialogs/hooks/use-dialog-data'
@@ -68,16 +68,20 @@ export const UsersList = ({ searchQuery, handleResetSearch }: UserListProps) => 
               <Table.Row key={user.uid} className="h-[48px]">
                 {/* NAME */}
                 <Table.Cell className="my-6 content-center">
-                  <div className="flex items-center gap-2">
+                  <div className="grid grid-cols-[auto_1fr] items-center gap-2">
                     <Avatar name={user.uid} src={user.avatarUrl} rounded />
-                    <span className="text-cn-1 truncate whitespace-nowrap text-sm font-medium">{user.uid}</span>
+                    <Text variant="body-strong" truncate className="whitespace-nowrap">
+                      {user.uid}
+                    </Text>
                   </div>
                 </Table.Cell>
 
                 {/* EMAIL */}
                 <Table.Cell className="my-6 content-center">
-                  <div className="flex gap-1.5">
-                    <span className="text-cn-3 truncate whitespace-nowrap text-sm">{user.email}</span>
+                  <div className="grid">
+                    <Text color="foreground-3" truncate className="whitespace-nowrap">
+                      {user.email}
+                    </Text>
                   </div>
                 </Table.Cell>
 

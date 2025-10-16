@@ -88,8 +88,8 @@ const ConsoleLogs: FC<ConsoleLogsProps> = ({ logs, query }) => {
               })}
             />
 
-            <span className="text-logs-foreground-1 flex shrink-0 grow font-normal">
-              <time className="text-logs-foreground-2" dateTime={dateTime}>{`[${dateTime}]`}</time>
+            <span className="flex shrink-0 grow font-normal">
+              <time dateTime={dateTime}>{`[${dateTime}]`}</time>
               {out ? logText(out) : null}
             </span>
           </div>

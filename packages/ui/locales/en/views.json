@@ -1,7 +1,5 @@
 {
   "repos": {
-    "createFile": "Create File",
-    "uploadFiles": "Upload Files",
     "summary": "Summary",
     "files": "Files",
     "pipelines": "Pipelines",
@@ -42,8 +40,8 @@
     "tagsLowercase": "tags",
     "findBranch": "Find a branch",
     "findTag": "Find a tag",
-    "allCommits": "All commits",
     "noFile": "No files available",
+    "createFile": "Create File",
     "private": "Private",
     "public": "Public",
     "archived": "Archived",
@@ -382,6 +380,8 @@
         "invalid": "Invalid"
       }
     },
+    "allCommits": "All commits",
+    "uploadFiles": "Upload Files",
     "updateRule": "Update rule",
     "updatingRule": "Updating rule...",
     "createBranchButton": "Create branch",

@@ -12,7 +12,6 @@ export * from './layouts/main-content-layout'
 export * from './layouts/SecretDetailsLayout'
 
 // components
-export * from './components/RadioSelect'
 export { default as FilterGroup } from './components/FilterGroup'
 export * from './components/FilterGroup'
 export * from './components/page'

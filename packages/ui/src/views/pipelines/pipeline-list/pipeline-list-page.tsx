@@ -1,7 +1,6 @@
 import { FC } from 'react'
 
-import { Button, Dialog, ListActions, Pagination, SearchBox, Spacer, Text } from '@/components'
-import { useDebounceSearch } from '@/hooks'
+import { Button, Dialog, ListActions, Pagination, SearchInput, Spacer, Text } from '@/components'
 import { SandboxLayout } from '@/views'
 
 import { PipelineList } from './pipeline-list'
@@ -19,14 +18,8 @@ const PipelineListPage: FC<IPipelineListPageProps> = ({
 }) => {
   const { pipelines, totalItems, pageSize, page, setPage } = usePipelineListStore()
 
-  const {
-    search: searchInput,
-    handleSearchChange: handleInputChange,
-    handleResetSearch
-  } = useDebounceSearch({
-    handleChangeSearchValue: (val: string) => setSearchQuery(val.length ? val : null),
-    searchValue: searchQuery || ''
-  })
+  const handleSearchChange = (val: string) => setSearchQuery(val.length ? val : null)
+  const handleResetSearch = () => setSearchQuery(null)
 
   if (isError)
     // TODO: improve error handling
@@ -52,12 +45,10 @@ const PipelineListPage: FC<IPipelineListPageProps> = ({
             <Spacer size={6} />
             <ListActions.Root>
               <ListActions.Left>
-                <SearchBox.Root
-                  width="full"
-                  className="max-w-96"
-                  value={searchInput}
-                  handleChange={handleInputChange}
-                  placeholder={'Search'}
+                <SearchInput
+                  inputContainerClassName="max-w-96"
+                  defaultValue={searchQuery || ''}
+                  onChange={handleSearchChange}
                   autoFocus
                 />
               </ListActions.Left>

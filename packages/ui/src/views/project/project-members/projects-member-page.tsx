@@ -1,4 +1,4 @@
-import { FC, useCallback, useMemo } from 'react'
+import { FC, useMemo } from 'react'
 
 import { Button, Dialog, ListActions, NoData, SearchInput, Spacer, Text } from '@/components'
 import { useTranslation } from '@/context'
@@ -28,12 +28,7 @@ export const ProjectMemberListView: FC<ProjectMemberListViewProps> = ({
   const { memberList, totalItems, pageSize, page, setPage } = useMemberListStore()
   const { principalList } = usePrincipalListStore()
 
-  const handleSearchChange = useCallback(
-    (val: string) => {
-      setSearchQuery(val.length ? val : null)
-    },
-    [setSearchQuery]
-  )
+  const handleSearchChange = (val: string) => setSearchQuery(val.length ? val : null)
 
   const isDirtyList = useMemo(() => {
     return page !== 1 || !!searchQuery
@@ -77,9 +72,8 @@ export const ProjectMemberListView: FC<ProjectMemberListViewProps> = ({
                   <ListActions.Left>
                     <SearchInput
                       id="search"
-                      defaultValue={searchQuery ?? ''}
                       inputContainerClassName="w-80"
-                      placeholder={t('views:repos.search', 'Search')}
+                      defaultValue={searchQuery || ''}
                       onChange={handleSearchChange}
                       autoFocus
                     />

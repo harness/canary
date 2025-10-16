@@ -52,12 +52,12 @@ export const useWebhookStore = create<WebhookStore>(set => ({
     }))
   },
   setPaginationFromHeaders: (headers: Headers | undefined, isExecution: boolean = false) => {
-    set({
+    set(state => ({
       totalItems: parseInt(headers?.get(PageResponseHeader.xTotal) || '0'),
       [isExecution ? 'webhookExecutionPageSize' : 'pageSize']: parseInt(
-        headers?.get(PageResponseHeader.xPerPage) || '10'
+        headers?.get(PageResponseHeader.xPerPage) || String(state.pageSize)
       )
-    })
+    }))
   },
   setPreSetWebhookData: (data: CreateWebhookFormFields | null) => set({ preSetWebhookData: data }),
   setExecutionId: (id: number | null) => set({ executionId: id })

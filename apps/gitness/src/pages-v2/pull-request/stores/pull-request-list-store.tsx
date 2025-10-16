@@ -79,11 +79,11 @@ export const usePullRequestListStore = create<PullRequestListStore>(set => ({
         })) || []
     }))
 
-    set({
+    set(state => ({
       pullRequests: transformedPullRequests,
       totalItems: parseInt(headers?.get(PageResponseHeader.xTotal) || '0'),
-      pageSize: parseInt(headers?.get(PageResponseHeader.xPerPage) || '10')
-    })
+      pageSize: parseInt(headers?.get(PageResponseHeader.xPerPage) || String(state.pageSize))
+    }))
   },
   setOpenClosePullRequests: (openPullReqs, closedPullReqs, mergedPullReqs) => {
     set({

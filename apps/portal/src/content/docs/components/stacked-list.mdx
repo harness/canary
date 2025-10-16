@@ -22,6 +22,9 @@ import { DocsPage } from "@/components/docs-page";
         thumbnail={<IconV2 name="connectors" size="xs" />}
         actions={<Button>Action</Button>}
         onClick={() => console.log('clicked')}
+        tooltipProps={{
+            content: 'test'
+          }}
       >
         <StackedList.Field title="Clickable item" description="Description 1" />
       </StackedList.Item>

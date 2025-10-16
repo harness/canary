@@ -1,4 +1,12 @@
-import { ComponentProps, forwardRef, ReactNode } from 'react'
+import {
+  ComponentProps,
+  ComponentType,
+  forwardRef,
+  ForwardRefExoticComponent,
+  PropsWithoutRef,
+  ReactNode,
+  RefAttributes
+} from 'react'
 
 import { usePortal } from '@/context'
 import * as TooltipPrimitive from '@radix-ui/react-tooltip'
@@ -26,7 +34,9 @@ export const Tooltip = forwardRef<HTMLDivElement, TooltipProps>(
     const { portalContainer } = usePortal()
     return (
       <TooltipPrimitive.Root delayDuration={delay} open={open}>
-        <TooltipPrimitive.Trigger asChild>{children}</TooltipPrimitive.Trigger>
+        <TooltipPrimitive.Trigger asChild className="test">
+          {children}
+        </TooltipPrimitive.Trigger>
         <TooltipPrimitive.Portal container={portalContainer}>
           <TooltipPrimitive.Content
             ref={ref}
@@ -53,3 +63,23 @@ Tooltip.displayName = 'Tooltip'
 export const TooltipProvider = (props: ComponentProps<typeof TooltipPrimitive.Provider>) => (
   <TooltipPrimitive.Provider skipDelayDuration={0} {...props} />
 )
+
+type WithTooltipProp = {
+  tooltipProps?: Omit<TooltipProps, 'children'>
+}
+
+export function withTooltip<P>(
+  Component: ComponentType<P>
+): ForwardRefExoticComponent<PropsWithoutRef<P & WithTooltipProp> & RefAttributes<any>> {
+  const Wrapped = forwardRef<any, P & WithTooltipProp>(({ tooltipProps, ...rest }, ref) => {
+    const child = <Component ref={ref} {...(rest as P)} />
+
+    if (!tooltipProps) return child
+
+    return <Tooltip {...tooltipProps}>{child}</Tooltip>
+  })
+
+  Wrapped.displayName = `withTooltip(${Component.displayName || Component?.name || 'Component'})`
+
+  return Wrapped
+}

@@ -99,14 +99,14 @@
   },
   "filter": {
     "delete": "Delete Filter",
-    "search": {
-      "placeholder": "Search"
-    },
     "inputPlaceholder": "Filter by...",
     "buttonLabel": "Reset filters",
     "defaultLabel": "Filter",
     "saveFilter": "Save Filter",
     "reset": "Reset",
+    "search": {
+      "placeholder": "Search"
+    },
     "add-filter": "Add filter",
     "is": "is",
     "isNot": "is not",

@@ -45,7 +45,7 @@ export function Pagination({
     onPageSizeChange?.(value)
   }
 
-  const renderItemsPerPageBlock = (withSeparator: boolean = false) => {
+  const renderItemsPerPageBlock = () => {
     if (!onPageSizeChange) return null
 
     const options = pageSizeOptions.map(option => ({ label: option, value: option }))
@@ -57,24 +57,26 @@ export function Pagination({
           <Text>{t('component:pagination.itemsPerPage', 'items per page')}</Text>
         </Layout.Horizontal>
 
-        {withSeparator && <Separator orientation="vertical" className="h-8" />}
+        {currentPage && <Separator orientation="vertical" className="h-8" />}
       </>
     )
   }
 
   return (
     <Layout.Horizontal className={cn('mt-cn-xl w-full', className)} align="center" justify="between">
-      {totalPages && currentPage && (
-        <Layout.Horizontal align="center" gap="md">
-          {renderItemsPerPageBlock(true)}
+      <Layout.Horizontal align="center" gap="md">
+        {renderItemsPerPageBlock()}
 
+        {totalPages && currentPage && (
           <Text>
             {t('component:pagination.pageOf', `Page ${currentPage} of ${totalPages}`, { currentPage, totalPages })}
           </Text>
-        </Layout.Horizontal>
-      )}
+        )}
 
-      {indeterminate && renderItemsPerPageBlock()}
+        {!totalPages && currentPage && (
+          <Text>{t('component:pagination.page', `Page ${currentPage}`, { currentPage })}</Text>
+        )}
+      </Layout.Horizontal>
 
       <Layout.Horizontal className="ml-auto" gap="xs">
         {!indeterminate && totalPages && currentPage ? (

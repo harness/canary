@@ -537,6 +537,7 @@ const PullRequestListPage: FC<PullRequestPageProps> = ({
           !!pullRequests?.length && (
             <Pagination
               indeterminate={true}
+              currentPage={page}
               hasPrevious={page > 1}
               hasNext={(pullRequests.length || 0) === pageSize}
               onPrevious={() => setPage(page - 1)}

@@ -34,11 +34,11 @@ type IndeterminatePaginationProps = PaginationBaseProps &
     hasNext?: boolean
     indeterminate: true
     pageSize?: number
+    currentPage?: number
 
     goToPage?: never
     getPageLink?: never
     totalItems?: never
-    currentPage?: never
     showPageNumbers?: never
   }
 

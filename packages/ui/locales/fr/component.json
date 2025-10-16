@@ -201,6 +201,7 @@
     "morePages": "More pages",
     "itemsPerPage": "items per page",
     "pageOf": "Page {{currentPage}} of {{totalPages}}",
+    "page": "Page {{currentPage}}",
     "previous": "Précédent",
     "next": "Suivant"
   },

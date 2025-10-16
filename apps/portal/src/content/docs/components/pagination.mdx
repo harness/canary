@@ -124,6 +124,7 @@ import { DocsPage } from "@/components/docs-page";
         <div className="w-[550px]">
             <Pagination
                 indeterminate
+                currentPage={currentPage}
                 hasNext={currentPage < 100}
                 hasPrevious={currentPage > 1}
                 getPrevPageLink={getPrevPageLink}
@@ -153,6 +154,7 @@ import { DocsPage } from "@/components/docs-page";
         <div className="w-[550px]">
             <Pagination
                 indeterminate
+                currentPage={currentPage}
                 hasNext={currentPage < 100}
                 hasPrevious={currentPage > 1}
                 onPrevious={onPrevious}
@@ -184,6 +186,7 @@ import { DocsPage } from "@/components/docs-page";
         <div className="w-[550px]">
             <Pagination
                 indeterminate
+                currentPage={currentPage}
                 hasNext={currentPage < 100}
                 hasPrevious={currentPage > 1}
                 onPrevious={onPrevious}
@@ -231,6 +234,7 @@ return (
     indeterminate
     hasPrevious={currentPage > 1}
     hasNext={currentPage < 100}
+    currentPage={currentPage}
 
     // if need to use links
     getPrevPageLink={() => currentPage - 1}
@@ -295,7 +299,7 @@ return (
     },
     {
       name: "currentPage",
-      description: "Current page number (used with determinate pagination)",
+      description: "Current page number",
       required: false,
       value: "number",
     },

@@ -106,6 +106,18 @@ The `Avatar` component supports two visual shapes: `md` and `rounded`.
 </div>`}
 />
 
+## No initials
+
+In case you want the fallback string to be without initials, pass the `noInitials` prop.
+
+<DocsPage.ComponentExample
+  client:only
+  code={`<div className="flex items-center gap-6">
+    <Avatar noInitials name="+22" size="lg" rounded />
+    <Avatar noInitials name="+222" size="lg" rounded />
+</div>`}
+/>
+
 ## API Reference
 
 The `Avatar` component has several props to control its appearance:
@@ -139,6 +151,13 @@ The `Avatar` component has several props to control its appearance:
     {
       name: "rounded",
       description: "Whether to display the avatar as a circle.",
+      required: false,
+      value: "boolean",
+      defaultValue: "false",
+    },
+    {
+      name: "noInitials",
+      description: "Whether to display fallback string without initials.",
       required: false,
       value: "boolean",
       defaultValue: "false",

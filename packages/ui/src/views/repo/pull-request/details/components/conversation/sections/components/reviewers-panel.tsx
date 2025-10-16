@@ -68,8 +68,9 @@ export const ReviewersPanel: FC<ReviewerPanelProps> = ({ principals, userGroups 
           {/* Get all emails from remaining normalizedPrincipals (index 2 and beyond) */}
           {normalizedPrincipals.length > 2 && (
             <AvatarWithTooltip
-              name={`+ ${normalizedPrincipals.length - 2}`}
+              name={`+${normalizedPrincipals.length - 2}`}
               size="sm"
+              noInitials
               rounded
               tooltipProps={{
                 side: 'top',

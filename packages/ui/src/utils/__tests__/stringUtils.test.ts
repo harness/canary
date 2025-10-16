@@ -124,4 +124,18 @@ describe('csvToObject', () => {
       metadata: { a: true }
     })
   })
+
+  it('should handle tags starting with colon as simple tags', () => {
+    expect(csvToObject(':a')).toEqual({
+      data: { ':a': ':a' },
+      metadata: { ':a': false }
+    })
+  })
+
+  it('should handle mixed colon-prefixed tags and key-value pairs', () => {
+    expect(csvToObject(':a,key:value,:b')).toEqual({
+      data: { ':a': ':a', key: 'value', ':b': ':b' },
+      metadata: { ':a': false, key: true, ':b': false }
+    })
+  })
 })

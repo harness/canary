@@ -43,6 +43,10 @@ export const csvToObject = (
         const trimmedKey = key.trim()
         data[trimmedKey] = value ? value.trim() : ''
         metadata[trimmedKey] = true // This was a key-value pair
+      } else {
+        // If key is empty (like ":a"), treat as simple tag
+        data[part] = part
+        metadata[part] = false
       }
     } else {
       data[part] = part

@@ -48,6 +48,7 @@ export interface NoDataProps {
     handleButtonClick: () => void
     props?: ButtonProps
   }
+  children?: ReactNode
 }
 
 export const NoData: FC<NoDataProps> = ({
@@ -60,7 +61,8 @@ export const NoData: FC<NoDataProps> = ({
   withBorder = false,
   textWrapperClassName,
   className,
-  splitButton
+  splitButton,
+  children
 }) => {
   const { NavLink } = useRouterContext()
 
@@ -78,7 +80,8 @@ export const NoData: FC<NoDataProps> = ({
         className
       )}
     >
-      {imageName && <Illustration name={imageName} size={imageSize} themeDependent />}
+      {!!imageName && <Illustration name={imageName} size={imageSize} themeDependent />}
+
       <Layout.Vertical gap="xl" align="center" justify="center">
         <Layout.Vertical gap="xs" align="center" justify="center" className={textWrapperClassName}>
           <Text variant="heading-section">{title}</Text>
@@ -89,29 +92,31 @@ export const NoData: FC<NoDataProps> = ({
               </Text>
             ))}
         </Layout.Vertical>
-        {(primaryButton || secondaryButton || splitButton) && (
+
+        {(!!primaryButton || !!secondaryButton || !!splitButton || !!children) && (
           <Layout.Horizontal gap="sm">
             {primaryButton &&
               (primaryButton.to ? (
                 <Button asChild {...(omit(primaryButton, ['to', 'label', 'icon']) as ButtonProps)}>
                   <NavLink to={primaryButton.to}>
-                    {primaryButton.icon && <IconV2 name={primaryButton.icon} size="sm" />}
+                    {!!primaryButton?.icon && <IconV2 name={primaryButton.icon} size="sm" />}
                     {primaryButton.label}
                   </NavLink>
                 </Button>
               ) : (
                 <PrimaryDialogTrigger>
                   <Button {...(omit(primaryButton, ['label', 'icon', 'isDialogTrigger']) as ButtonProps)}>
-                    {primaryButton.icon && <IconV2 name={primaryButton.icon} size="sm" />}
+                    {!!primaryButton?.icon && <IconV2 name={primaryButton.icon} size="sm" />}
                     {primaryButton.label}
                   </Button>
                 </PrimaryDialogTrigger>
               ))}
+
             {secondaryButton &&
               (secondaryButton.to ? (
                 <Button asChild variant="outline" {...(omit(secondaryButton, ['to', 'label', 'icon']) as ButtonProps)}>
                   <NavLink to={secondaryButton.to}>
-                    {secondaryButton.icon && <IconV2 name={secondaryButton.icon} size="sm" />}
+                    {!!secondaryButton?.icon && <IconV2 name={secondaryButton.icon} size="sm" />}
                     {secondaryButton.label}
                   </NavLink>
                 </Button>
@@ -121,26 +126,29 @@ export const NoData: FC<NoDataProps> = ({
                     variant="outline"
                     {...(omit(secondaryButton, ['label', 'icon', 'isDialogTrigger']) as ButtonProps)}
                   >
-                    {secondaryButton.icon && <IconV2 name={secondaryButton.icon} size="sm" />}
+                    {!!secondaryButton?.icon && <IconV2 name={secondaryButton.icon} size="sm" />}
                     {secondaryButton.label}
                   </Button>
                 </SecondaryDialogTrigger>
               ))}
-            {splitButton && (
+
+            {!!splitButton && (
               <SplitButton<string>
                 dropdownContentClassName="min-w-[170px]"
-                handleButtonClick={() => splitButton.handleButtonClick()}
+                handleButtonClick={() => splitButton?.handleButtonClick()}
                 handleOptionChange={option => {
                   if (option === 'tag-rule') {
-                    splitButton.handleOptionChange(option)
+                    splitButton?.handleOptionChange(option)
                   }
                 }}
                 options={splitButton.options}
               >
-                {splitButton.icon && <IconV2 name={splitButton.icon} size="sm" />}
+                {!!splitButton?.icon && <IconV2 name={splitButton.icon} size="sm" />}
                 {splitButton.label}
               </SplitButton>
             )}
+
+            {children}
           </Layout.Horizontal>
         )}
       </Layout.Vertical>

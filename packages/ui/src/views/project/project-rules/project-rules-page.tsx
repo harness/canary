@@ -1,6 +1,6 @@
 import { FC, useMemo } from 'react'
 
-import { Checkbox, Layout, NoData, Pagination, Text } from '@/components'
+import { Button, Checkbox, DropdownMenu, IconV2, Layout, NoData, Pagination, Text } from '@/components'
 import { useRouterContext, useTranslation } from '@/context'
 import { ErrorTypes, IProjectRulesStore, SandboxLayout } from '@/views'
 import { RepoSettingsGeneralRules } from '@views/repo/repo-settings/components/repo-settings-general-rules'
@@ -63,18 +63,26 @@ export const ProjectRulesPage: FC<ProjectRulesPageProps> = ({
             'There are no rules in this project. Click on the button below to start adding rules.'
           )
         ]}
-        splitButton={{
-          icon: 'plus',
-          label: t('views:repos.createBranchRuleButton', 'Create Branch Rule'),
-          options: [{ value: 'tag-rule', label: t('views:repos.createTagRuleButton', 'Create Tag Rule') }],
-          handleOptionChange: option => {
-            if (option === 'tag-rule') {
-              navigate(toProjectTagRuleCreate?.() || '')
-            }
-          },
-          handleButtonClick: () => navigate(toProjectBranchRuleCreate?.() || '')
-        }}
-      />
+      >
+        <DropdownMenu.Root>
+          <DropdownMenu.Trigger asChild>
+            <Button>
+              <IconV2 name="plus" size="sm" />
+              {t('views:repos.createRuleButton', 'Create Rule')}
+            </Button>
+          </DropdownMenu.Trigger>
+          <DropdownMenu.Content>
+            <DropdownMenu.Item
+              title={t('views:repos.createTagRuleButton', 'Create Tag Rule')}
+              onClick={() => navigate(toProjectTagRuleCreate?.() || '')}
+            />
+            <DropdownMenu.Item
+              title={t('views:repos.createBranchRuleButton', 'Create Branch Rule')}
+              onClick={() => navigate(toProjectBranchRuleCreate?.() || '')}
+            />
+          </DropdownMenu.Content>
+        </DropdownMenu.Root>
+      </NoData>
     )
   }
 

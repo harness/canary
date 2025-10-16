@@ -95,4 +95,9 @@ export interface InputUIConfig {
    * Expression: Value will be derived by evaluating this CEL / JEXL expression
    */
   allowedValueTypes?: Array<'fixed' | 'runtime' | 'expression'>
+
+  /**
+   * CEL expression that evaluates to warning message or null
+   */
+  warning?: string
 }

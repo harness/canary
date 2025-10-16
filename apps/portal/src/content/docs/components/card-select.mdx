@@ -63,7 +63,7 @@ The `CardSelect` supports two selection types:
   client:only
   code={`<div className="flex flex-col space-y-8">
   <div className="flex flex-col space-y-2">
-    <h1 className="text-lg font-semibold">Single Selection</h1>
+    <Text variant="heading-subsection" as="h4">Single Selection</Text>
     <CardSelect.Root type="single" defaultValue="single-1">
       <CardSelect.Item value="single-1" logo="gitlab">
         <CardSelect.Title>Option 1</CardSelect.Title>
@@ -77,7 +77,7 @@ The `CardSelect` supports two selection types:
   </div>
 
   <div className="flex flex-col space-y-2">
-    <h1 className="text-lg font-semibold">Multiple Selection</h1>
+    <Text variant="heading-subsection" as="h4">Multiple Selection</Text>
     <CardSelect.Root type="multiple" defaultValue={["multi-1", "multi-2"]}>
       <CardSelect.Item value="multi-1" icon="git-pull-request-draft">
         <CardSelect.Title>Option A</CardSelect.Title>
@@ -100,7 +100,7 @@ Cards can be arranged horizontally, vertically, or in a grid:
   client:only
   code={`<div className="flex flex-col space-y-8">
     <div className="flex flex-col space-y-2">
-      <h1 className="text-lg font-semibold">Vertical Layout (Default)</h1>
+      <Text variant="heading-subsection" as="h4">Vertical Layout (Default)</Text>
       <CardSelect.Root type="single" layout="vertical">
         <CardSelect.Item value="v1">
           <CardSelect.Title>First Card</CardSelect.Title>
@@ -114,9 +114,9 @@ Cards can be arranged horizontally, vertically, or in a grid:
     </div>
 
     <div className="flex flex-col space-y-2">
-      <h1 className="text-lg font-semibold">Horizontal Layout</h1>
+      <Text variant="heading-subsection" as="h4">Horizontal Layout</Text>
       <CardSelect.Root type="single" layout="horizontal">
-        <CardSelect.Item value="h1">
+        <CardSelect.Item value="Text">
           <CardSelect.Title>First Card</CardSelect.Title>
           <CardSelect.Description>Cards arranged side by side</CardSelect.Description>
         </CardSelect.Item>
@@ -128,7 +128,7 @@ Cards can be arranged horizontally, vertically, or in a grid:
     </div>
 
     <div className="flex flex-col space-y-2">
-      <h1 className="text-lg font-semibold">Grid Layout</h1>
+      <Text variant="heading-subsection" as="h4">Grid Layout</Text>
       <CardSelect.Root type="single" layout="grid" cols={2} rows={2} gap="md">
         <CardSelect.Item value="grid-1">
           <CardSelect.Title>Grid Item 1</CardSelect.Title>
@@ -156,7 +156,7 @@ Control the gap between cards using the `gap` prop:
   client:only
   code={`<div className="flex flex-col space-y-8">
     <div className="flex flex-col space-y-2">
-      <h1 className="text-lg font-semibold">XS Gap</h1>
+      <Text variant="heading-subsection" as="h4">XS Gap</Text>
       <CardSelect.Root type="single" gap="xs" layout="horizontal">
         <CardSelect.Item value="xs-1">
           <CardSelect.Title>XS 1</CardSelect.Title>
@@ -171,7 +171,7 @@ Control the gap between cards using the `gap` prop:
     </div>
 
     <div className="flex flex-col space-y-2">
-      <h1 className="text-lg font-semibold">Small Gap</h1>
+      <Text variant="heading-subsection" as="h4">Small Gap</Text>
       <CardSelect.Root type="single" gap="sm" layout="horizontal">
         <CardSelect.Item value="small-1">
           <CardSelect.Title>Small 1</CardSelect.Title>
@@ -186,7 +186,7 @@ Control the gap between cards using the `gap` prop:
     </div>
 
     <div className="flex flex-col space-y-2">
-      <h1 className="text-lg font-semibold">Medium Gap (Default)</h1>
+      <Text variant="heading-subsection" as="h4">Medium Gap (Default)</Text>
       <CardSelect.Root type="single" gap="md" layout="horizontal">
         <CardSelect.Item value="medium-1">
           <CardSelect.Title>Medium 1</CardSelect.Title>
@@ -201,7 +201,7 @@ Control the gap between cards using the `gap` prop:
     </div>
 
     <div className="flex flex-col space-y-2">
-      <h1 className="text-lg font-semibold">Large Gap</h1>
+      <Text variant="heading-subsection" as="h4">Large Gap</Text>
       <CardSelect.Root type="single" gap="lg" layout="horizontal">
         <CardSelect.Item value="large-1">
           <CardSelect.Title>Large 1</CardSelect.Title>
@@ -244,7 +244,7 @@ Cards can be disabled either individually or as a group:
   client:only
   code={`<div className="flex flex-col space-y-8">
     <div className="flex flex-col space-y-2">
-      <h1 className="text-lg font-semibold">Individual Cards Disabled</h1>
+      <Text variant="heading-subsection" as="h4">Individual Cards Disabled</Text>
       <CardSelect.Root type="single">
         <CardSelect.Item value="enabled" icon="git-branch">
           <CardSelect.Title>Enabled Card</CardSelect.Title>
@@ -256,7 +256,7 @@ Cards can be disabled either individually or as a group:
     </div>
 
     <div className="flex flex-col space-y-2">
-      <h1 className="text-lg font-semibold">Entire Group Disabled</h1>
+      <Text variant="heading-subsection" as="h4">Entire Group Disabled</Text>
       <CardSelect.Root type="single" disabled>
         <CardSelect.Item value="one" icon="git-branch">
           <CardSelect.Title>First Option</CardSelect.Title>

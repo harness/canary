@@ -101,7 +101,7 @@ The `Dialog` component offers four size options: `sm`, `md`, `lg`, and `max` (wh
   client:only
   code={`<div className="space-y-4">
   <div className="space-y-2">
-    <h3 className="text-lg font-semibold">Small (Default)</h3>
+    <Text variant="heading-subsection" as="h4">Small (Default)</Text>
     <Dialog.Root>
       <Dialog.Trigger>
         <Button>Small Dialog</Button>
@@ -119,7 +119,9 @@ The `Dialog` component offers four size options: `sm`, `md`, `lg`, and `max` (wh
   </div>
 
 <div className="space-y-2">
-  <h3 className="text-lg font-semibold">Medium</h3>
+  <Text variant="heading-subsection" as="h4">
+    Medium
+  </Text>
   <Dialog.Root>
     <Dialog.Trigger>
       <Button>Medium Dialog</Button>
@@ -137,7 +139,9 @@ The `Dialog` component offers four size options: `sm`, `md`, `lg`, and `max` (wh
 </div>
 
 <div className="space-y-2">
-  <h3 className="text-lg font-semibold">Large</h3>
+  <Text variant="heading-subsection" as="h4">
+    Large
+  </Text>
   <Dialog.Root>
     <Dialog.Trigger>
       <Button>Large Dialog</Button>
@@ -155,7 +159,7 @@ The `Dialog` component offers four size options: `sm`, `md`, `lg`, and `max` (wh
 </div>
 
   <div className="space-y-2">
-    <h3 className="text-lg font-semibold">Maximized</h3>
+    <Text variant="heading-subsection" as="h4">Maximized</Text>
     <Dialog.Root>
       <Dialog.Trigger>
         <Button>Maximized Dialog</Button>
@@ -198,7 +202,7 @@ Headers can have themes `default`, `warning` and `danger` with matching icons:
   client:only
   code={`<div className="space-y-4">
   <div className="space-y-2">
-    <h3 className="text-lg font-semibold">Default Theme</h3>
+    <Text variant="heading-subsection" as="h4">Default Theme</Text>
     <Dialog.Root>
       <Dialog.Trigger>
         <Button>Default</Button>
@@ -216,7 +220,7 @@ Headers can have themes `default`, `warning` and `danger` with matching icons:
   </div>
   
   <div className="space-y-2">
-    <h3 className="text-lg font-semibold">Warning Theme</h3>
+    <Text variant="heading-subsection" as="h4">Warning Theme</Text>
     <Dialog.Root>
       <Dialog.Trigger>
         <Button>Warning</Button>
@@ -236,7 +240,7 @@ Headers can have themes `default`, `warning` and `danger` with matching icons:
   </div>
   
   <div className="space-y-2">
-    <h3 className="text-lg font-semibold">Danger Theme</h3>
+    <Text variant="heading-subsection" as="h4">Danger Theme</Text>
     <Dialog.Root>
       <Dialog.Trigger>
         <Button>Danger</Button>
@@ -347,7 +351,7 @@ The Body component automatically handles scrolling for long content:
         <div className="space-y-4">
           {Array.from({ length: 20 }).map((_, i) => (
             <div key={i}>
-              <h3 className="font-body-strong">Section {i + 1}</h3>
+              <Text variant="heading-subsection" as="h4"n {i + 1}</Text>
               <p className="font-body-normal">Lorem ipsum dolor sit amet, consectetur adipiscing elit</p>
             </div>
           ))}
@@ -372,7 +376,7 @@ The Body component automatically handles scrolling for long content:
         <div className="space-y-4">
           {Array.from({ length: 20 }).map((_, i) => (
             <div key={i}>
-              <h3 className="font-body-strong">Section {i + 1}</h3>
+              <Text variant="heading-subsection" as="h4"n {i + 1}</Text>
               <p className="font-body-normal">Lorem ipsum dolor sit amet, consectetur adipiscing elit</p>
             </div>
           ))}

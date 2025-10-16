@@ -12,7 +12,7 @@ import { DocsPage } from "../../../components/docs-page";
   client:only
   code={`<div className="flex flex-col gap-8">
     <div className="grid grid-cols-[repeat(6,auto)] gap-5">
-        <div className="col-span-6 text-lg font-semibold mb-2 mt-1 text-foreground/90 underline underline-offset-4 decoration-1">Primary (Default)</div>
+        <Text variant="heading-subsection" as="h4" className="col-span-6 mb-2 mt-1 underline underline-offset-4">Primary (Default)</Text>
         <StatusBadge>Default</StatusBadge>
         <StatusBadge theme="success">Success</StatusBadge>
         <StatusBadge theme="warning">Warning</StatusBadge>
@@ -20,7 +20,7 @@ import { DocsPage } from "../../../components/docs-page";
         <StatusBadge theme="info">Info</StatusBadge>
         <StatusBadge theme="merged">Merged</StatusBadge>
 
-        <div className="col-span-6 text-lg font-semibold mb-2 mt-8 text-foreground/90 underline underline-offset-4 decoration-1">Secondary</div>
+        <Text variant="heading-subsection" as="h4" className="col-span-6 mb-2 mt-8 underline underline-offset-4">Secondary</Text>
         <StatusBadge variant="secondary">Default</StatusBadge>
         <StatusBadge theme="success" variant="secondary">Success</StatusBadge>
         <StatusBadge theme="warning" variant="secondary">Warning</StatusBadge>
@@ -28,7 +28,7 @@ import { DocsPage } from "../../../components/docs-page";
         <StatusBadge theme="info" variant="secondary">Info</StatusBadge>
         <StatusBadge theme="merged" variant="secondary">Merged</StatusBadge>
 
-        <div className="col-span-6 text-lg font-semibold mb-2 mt-8 text-foreground/90 underline underline-offset-4 decoration-1">Outline</div>
+        <Text variant="heading-subsection" as="h4" className="col-span-6 mb-2 mt-8 underline underline-offset-4">Outline</Text>
         <StatusBadge variant="outline">Default</StatusBadge>
         <StatusBadge theme="success" variant="outline">Success</StatusBadge>
         <StatusBadge theme="warning" variant="outline">Warning</StatusBadge>
@@ -36,7 +36,7 @@ import { DocsPage } from "../../../components/docs-page";
         <StatusBadge theme="info" variant="outline">Info</StatusBadge>
         <StatusBadge theme="merged" variant="outline">Merged</StatusBadge>
 
-        <div className="col-span-6 text-lg font-semibold mb-2 mt-8 text-foreground/90 underline underline-offset-4 decoration-1">Ghost</div>
+        <Text variant="heading-subsection" as="h4" className="col-span-6 mb-2 mt-8 underline underline-offset-4">Ghost</Text>
         <StatusBadge icon="info-circle" variant="ghost">Default</StatusBadge>
         <StatusBadge icon="info-circle" theme="success" variant="ghost">Success</StatusBadge>
         <StatusBadge icon="info-circle" theme="warning" variant="ghost">Warning</StatusBadge>
@@ -44,7 +44,7 @@ import { DocsPage } from "../../../components/docs-page";
         <StatusBadge icon="info-circle" theme="info" variant="ghost">Info</StatusBadge>
         <StatusBadge icon="info-circle" theme="merged" variant="ghost">Merged</StatusBadge>
 
-        <div className="col-span-6 text-lg font-semibold mb-2 mt-8 text-foreground/90 underline underline-offset-4 decoration-1">Status</div>
+        <Text variant="heading-subsection" as="h4" className="col-span-6 mb-2 mt-8 underline underline-offset-4">Status</Text>
         <StatusBadge variant="status">Default</StatusBadge>
         <StatusBadge theme="success" variant="status">Success</StatusBadge>
         <StatusBadge theme="warning" variant="status">Warning</StatusBadge>
@@ -52,7 +52,7 @@ import { DocsPage } from "../../../components/docs-page";
         <StatusBadge theme="info" variant="status">Info</StatusBadge>
         <StatusBadge theme="merged" variant="status">Merged</StatusBadge>
 
-        <div className="col-span-6 text-lg font-semibold mb-2 mt-8 text-foreground/90 underline underline-offset-4 decoration-1">Status with Pulse</div>
+        <Text variant="heading-subsection" as="h4" className="col-span-6 mb-2 mt-8 underline underline-offset-4">Status with Pulse</Text>
         <StatusBadge variant="status" pulse>Default</StatusBadge>
         <StatusBadge theme="success" variant="status" pulse>Success</StatusBadge>
         <StatusBadge theme="warning" variant="status" pulse>Warning</StatusBadge>
@@ -64,7 +64,7 @@ import { DocsPage } from "../../../components/docs-page";
     <hr />
 
     <div className="grid grid-cols-[repeat(6,auto)] gap-5 self-center">
-        <div className="col-span-6 text-lg font-semibold mb-2 mt-1 text-foreground/90 underline underline-offset-4 decoration-1">Primary (Default)</div>
+        <Text variant="heading-subsection" as="h4" className="col-span-6 mb-2 mt-1 underline underline-offset-4">Primary (Default)</Text>
         <StatusBadge size="sm">Default</StatusBadge>
         <StatusBadge size="sm" theme="success">Success</StatusBadge>
         <StatusBadge size="sm" theme="warning">Warning</StatusBadge>
@@ -72,7 +72,7 @@ import { DocsPage } from "../../../components/docs-page";
         <StatusBadge size="sm" theme="info">Info</StatusBadge>
         <StatusBadge size="sm" theme="merged">Merged</StatusBadge>
 
-        <div className="col-span-6 text-lg font-semibold mb-2 mt-8 text-foreground/90 underline underline-offset-4 decoration-1">Secondary</div>
+        <Text variant="heading-subsection" as="h4" className="col-span-6 mb-2 mt-8 underline underline-offset-4">Secondary</Text>
         <StatusBadge size="sm" variant="secondary">Default</StatusBadge>
         <StatusBadge size="sm" theme="success" variant="secondary">Success</StatusBadge>
         <StatusBadge size="sm" theme="warning" variant="secondary">Warning</StatusBadge>
@@ -80,7 +80,7 @@ import { DocsPage } from "../../../components/docs-page";
         <StatusBadge size="sm" theme="info" variant="secondary">Info</StatusBadge>
         <StatusBadge size="sm" theme="merged" variant="secondary">Merged</StatusBadge>
 
-        <div className="col-span-6 text-lg font-semibold mb-2 mt-8 text-foreground/90 underline underline-offset-4 decoration-1">Outline</div>
+        <Text variant="heading-subsection" as="h4" className="col-span-6 mb-2 mt-8 underline underline-offset-4">Outline</Text>
         <StatusBadge size="sm" variant="outline">Default</StatusBadge>
         <StatusBadge size="sm" theme="success" variant="outline">Success</StatusBadge>
         <StatusBadge size="sm" theme="warning" variant="outline">Warning</StatusBadge>
@@ -88,7 +88,7 @@ import { DocsPage } from "../../../components/docs-page";
         <StatusBadge size="sm" theme="info" variant="outline">Info</StatusBadge>
         <StatusBadge size="sm" theme="merged" variant="outline">Merged</StatusBadge>
 
-        <div className="col-span-6 text-lg font-semibold mb-2 mt-8 text-foreground/90 underline underline-offset-4 decoration-1">Ghost</div>
+        <Text variant="heading-subsection" as="h4" className="col-span-6 mb-2 mt-8 underline underline-offset-4">Ghost</Text>
         <StatusBadge icon="info-circle" size="sm" variant="ghost">Default</StatusBadge>
         <StatusBadge icon="info-circle" size="sm" theme="success" variant="ghost">Success</StatusBadge>
         <StatusBadge icon="info-circle" size="sm" theme="warning" variant="ghost">Warning</StatusBadge>
@@ -96,7 +96,7 @@ import { DocsPage } from "../../../components/docs-page";
         <StatusBadge icon="info-circle" size="sm" theme="info" variant="ghost">Info</StatusBadge>
         <StatusBadge icon="info-circle" size="sm" theme="merged" variant="ghost">Merged</StatusBadge>
 
-        <div className="col-span-6 text-lg font-semibold mb-2 mt-8 text-foreground/90 underline underline-offset-4 decoration-1">Status</div>
+        <Text variant="heading-subsection" as="h4" className="col-span-6 mb-2 mt-8 underline underline-offset-4">Status</Text>
         <StatusBadge size="sm" variant="status">Default</StatusBadge>
         <StatusBadge size="sm" theme="success" variant="status">Success</StatusBadge>
         <StatusBadge size="sm" theme="warning" variant="status">Warning</StatusBadge>
@@ -104,7 +104,7 @@ import { DocsPage } from "../../../components/docs-page";
         <StatusBadge size="sm" theme="info" variant="status">Info</StatusBadge>
         <StatusBadge size="sm" theme="merged" variant="status">Merged</StatusBadge>
 
-        <div className="col-span-6 text-lg font-semibold mb-2 mt-8 text-foreground/90 underline underline-offset-4 decoration-1">Status with Pulse</div>
+        <Text variant="heading-subsection" as="h4" className="col-span-6 mb-2 mt-8 underline underline-offset-4">Status with Pulse</Text>
         <StatusBadge size="sm" variant="status" pulse>Default</StatusBadge>
         <StatusBadge size="sm" theme="success" variant="status" pulse>Success</StatusBadge>
         <StatusBadge size="sm" theme="warning" variant="status" pulse>Warning</StatusBadge>

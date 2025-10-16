@@ -58,7 +58,7 @@ export const MoreActionsTooltip = forwardRef<HTMLButtonElement, MoreActionsToolt
         <DropdownMenu.Trigger ref={ref} disabled={disabled} asChild>
           <Button
             theme={theme}
-            className={cn('text-icons-1 hover:text-icons-2 data-[state=open]:text-icons-2')}
+            className="text-cn-gray-outline"
             variant={buttonVariant}
             iconOnly
             size={buttonSize}

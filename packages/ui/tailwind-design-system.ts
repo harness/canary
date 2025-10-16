@@ -145,6 +145,194 @@ export default {
       inherit: 'inherit',
       current: 'currentColor'
     },
+    textColor: {
+      DEFAULT: 'lch(from var(--cn-text-2) l c h / <alpha-value>)',
+      // based on the lightness
+      'cn-1': 'lch(from var(--cn-text-1) l c h / <alpha-value>)',
+      'cn-2': 'lch(from var(--cn-text-2) l c h / <alpha-value>)',
+      'cn-3': 'lch(from var(--cn-text-3) l c h / <alpha-value>)',
+
+      // status
+      'cn-merged': 'var(--cn-text-merged)',
+      'cn-disabled': 'var(--cn-text-4)',
+
+      // logo colors
+      'cn-logo-icon': 'var(--cn-logo-icon)',
+      'cn-logo-text': 'var(--cn-logo-text)',
+
+      // brand text
+      'cn-brand': 'var(--cn-text-brand)',
+      'cn-brand-hover': 'var(--cn-comp-link-text-hover)',
+
+      // use only for icons
+      'cn-icon': {
+        danger: 'var(--cn-set-danger-primary-bg)',
+        warning: 'var(--cn-set-warning-primary-bg)',
+        success: 'var(--cn-set-success-primary-bg)',
+        info: 'var(--cn-set-blue-primary-bg)',
+        merged: 'var(--cn-set-purple-primary-bg)'
+      },
+
+      /**
+       * These colors should be used along with their bg pairs
+       *
+       * Example:
+       * ✅ .text-cn-success-primary + .bg-cn-success-primary
+       * ✅ .text-cn-success-secondary + .bg-cn-success-secondary
+       * ✅ .text-cn-success-outline + .bg-cn-success-outline + .border-cn-success-outline
+       *
+       * ❌ .text-cn-success-primary + .bg-cn-success-secondary
+       * ❌ .text-cn-success-primary + .bg-cn-success-outline
+       */
+      'cn-success': {
+        DEFAULT: 'var(--cn-text-success)',
+        primary: 'var(--cn-set-success-primary-text)',
+        secondary: 'var(--cn-set-success-secondary-text)',
+        outline: 'var(--cn-set-success-outline-text)'
+      },
+      'cn-gray': {
+        primary: 'var(--cn-set-gray-primary-text)',
+        secondary: 'var(--cn-set-gray-secondary-text)',
+        outline: 'var(--cn-set-gray-outline-text)'
+      },
+      'cn-danger': {
+        DEFAULT: 'var(--cn-text-danger)',
+        primary: 'var(--cn-set-danger-primary-text)',
+        secondary: 'var(--cn-set-danger-secondary-text)',
+        outline: 'var(--cn-set-danger-outline-text)'
+      },
+      'cn-warning': {
+        DEFAULT: 'var(--cn-text-warning)',
+        primary: 'var(--cn-set-warning-primary-text)',
+        secondary: 'var(--cn-set-warning-secondary-text)',
+        outline: 'var(--cn-set-warning-outline-text)'
+      },
+      'cn-blue': {
+        primary: 'var(--cn-set-blue-primary-text)',
+        secondary: 'var(--cn-set-blue-secondary-text)',
+        outline: 'var(--cn-set-blue-outline-text)'
+      },
+      'cn-purple': {
+        primary: 'var(--cn-set-purple-primary-text)',
+        secondary: 'var(--cn-set-purple-secondary-text)',
+        outline: 'var(--cn-set-purple-outline-text)'
+      },
+      'cn-brown': {
+        primary: 'var(--cn-set-brown-primary-text)',
+        secondary: 'var(--cn-set-brown-secondary-text)',
+        outline: 'var(--cn-set-brown-outline-text)'
+      },
+      'cn-cyan': {
+        primary: 'var(--cn-set-cyan-primary-text)',
+        secondary: 'var(--cn-set-cyan-secondary-text)',
+        outline: 'var(--cn-set-cyan-outline-text)'
+      },
+      'cn-indigo': {
+        primary: 'var(--cn-set-indigo-primary-text)',
+        secondary: 'var(--cn-set-indigo-secondary-text)',
+        outline: 'var(--cn-set-indigo-outline-text)'
+      },
+      'cn-lime': {
+        primary: 'var(--cn-set-lime-primary-text)',
+        secondary: 'var(--cn-set-lime-secondary-text)',
+        outline: 'var(--cn-set-lime-outline-text)'
+      },
+      'cn-mint': {
+        primary: 'var(--cn-set-mint-primary-text)',
+        secondary: 'var(--cn-set-mint-secondary-text)',
+        outline: 'var(--cn-set-mint-outline-text)'
+      },
+      'cn-orange': {
+        primary: 'var(--cn-set-orange-primary-text)',
+        secondary: 'var(--cn-set-orange-secondary-text)',
+        outline: 'var(--cn-set-orange-outline-text)'
+      },
+      'cn-pink': {
+        primary: 'var(--cn-set-pink-primary-text)',
+        secondary: 'var(--cn-set-pink-secondary-text)',
+        outline: 'var(--cn-set-pink-outline-text)'
+      },
+      'cn-violet': {
+        primary: 'var(--cn-set-violet-primary-text)',
+        secondary: 'var(--cn-set-violet-secondary-text)',
+        outline: 'var(--cn-set-violet-outline-text)'
+      },
+      transparent: 'transparent',
+      inherit: 'inherit',
+      current: 'currentColor'
+    },
+    borderColor: {
+      // Application default
+      DEFAULT: 'var(--cn-border-3)',
+
+      // theme borders
+      'cn-1': 'lch(from var(--cn-border-1) l c h / <alpha-value>)',
+      'cn-2': 'lch(from var(--cn-border-2) l c h / <alpha-value>)',
+      'cn-3': 'lch(from var(--cn-border-3) l c h / <alpha-value>)',
+
+      // State borders
+      'cn-disabled': 'lch(from var(--cn-state-disabled-border) l c h / <alpha-value>)',
+
+      // status borders
+      'cn-brand': 'var(--cn-border-brand)',
+
+      /**
+       * These colors should be used along with their text and bg outline pairs
+       *
+       * Example:
+       * ✅ .text-cn-success-outline + .bg-cn-success-outline + .border-cn-success-outline
+       *
+       * ❌ .text-cn-success-outline + .bg-cn-success-outline + .border-cn-danger-outline
+       */
+      'cn-success': {
+        DEFAULT: 'var(--cn-border-success)',
+        outline: 'var(--cn-set-success-outline-border)'
+      },
+      'cn-gray': {
+        outline: 'var(--cn-set-gray-outline-border)'
+      },
+      'cn-danger': {
+        DEFAULT: 'var(--cn-border-danger)',
+        outline: 'var(--cn-set-danger-outline-border)'
+      },
+      'cn-warning': {
+        DEFAULT: 'var(--cn-border-warning)',
+        outline: 'var(--cn-set-warning-outline-border)'
+      },
+      'cn-blue': {
+        outline: 'var(--cn-set-blue-outline-border)'
+      },
+      'cn-purple': {
+        outline: 'var(--cn-set-purple-outline-border)'
+      },
+      'cn-brown': {
+        outline: 'var(--cn-set-brown-outline-border)'
+      },
+      'cn-cyan': {
+        outline: 'var(--cn-set-cyan-outline-border)'
+      },
+      'cn-indigo': {
+        outline: 'var(--cn-set-indigo-outline-border)'
+      },
+      'cn-lime': {
+        outline: 'var(--cn-set-lime-outline-border)'
+      },
+      'cn-mint': {
+        outline: 'var(--cn-set-mint-outline-border)'
+      },
+      'cn-orange': {
+        outline: 'var(--cn-set-orange-outline-border)'
+      },
+      'cn-pink': {
+        outline: 'var(--cn-set-pink-outline-border)'
+      },
+      'cn-violet': {
+        outline: 'var(--cn-set-violet-outline-border)'
+      },
+      transparent: 'transparent',
+      inherit: 'inherit',
+      current: 'currentColor'
+    },
     extend: {
       opacity: {
         'cn-disabled': 'var(--cn-disabled-opacity)'
@@ -210,188 +398,6 @@ export default {
         'cn-search-input-max-width': '320px'
       },
 
-      textColor: {
-        DEFAULT: 'lch(from var(--cn-text-2) l c h / <alpha-value>)',
-        // based on the lightness
-        'cn-1': 'lch(from var(--cn-text-1) l c h / <alpha-value>)',
-        'cn-2': 'lch(from var(--cn-text-2) l c h / <alpha-value>)',
-        'cn-3': 'lch(from var(--cn-text-3) l c h / <alpha-value>)',
-
-        // status
-        'cn-merged': 'var(--cn-text-merged)',
-        'cn-disabled': 'var(--cn-text-4)',
-
-        // logo colors
-        'cn-logo-icon': 'var(--cn-logo-icon)',
-        'cn-logo-text': 'var(--cn-logo-text)',
-
-        // brand text
-        'cn-brand': 'var(--cn-text-brand)',
-        'cn-brand-hover': 'var(--cn-comp-link-text-hover)',
-
-        // use only for icons
-        'cn-icon': {
-          danger: 'var(--cn-set-danger-primary-bg)',
-          warning: 'var(--cn-set-warning-primary-bg)',
-          success: 'var(--cn-set-success-primary-bg)',
-          info: 'var(--cn-set-blue-primary-bg)',
-          merged: 'var(--cn-set-purple-primary-bg)'
-        },
-
-        /**
-         * These colors should be used along with their bg pairs
-         *
-         * Example:
-         * ✅ .text-cn-success-primary + .bg-cn-success-primary
-         * ✅ .text-cn-success-secondary + .bg-cn-success-secondary
-         * ✅ .text-cn-success-outline + .bg-cn-success-outline + .border-cn-success-outline
-         *
-         * ❌ .text-cn-success-primary + .bg-cn-success-secondary
-         * ❌ .text-cn-success-primary + .bg-cn-success-outline
-         */
-        'cn-success': {
-          DEFAULT: 'var(--cn-text-success)',
-          primary: 'var(--cn-set-success-primary-text)',
-          secondary: 'var(--cn-set-success-secondary-text)',
-          outline: 'var(--cn-set-success-outline-text)'
-        },
-        'cn-gray': {
-          primary: 'var(--cn-set-gray-primary-text)',
-          secondary: 'var(--cn-set-gray-secondary-text)',
-          outline: 'var(--cn-set-gray-outline-text)'
-        },
-        'cn-danger': {
-          DEFAULT: 'var(--cn-text-danger)',
-          primary: 'var(--cn-set-danger-primary-text)',
-          secondary: 'var(--cn-set-danger-secondary-text)',
-          outline: 'var(--cn-set-danger-outline-text)'
-        },
-        'cn-warning': {
-          DEFAULT: 'var(--cn-text-warning)',
-          primary: 'var(--cn-set-warning-primary-text)',
-          secondary: 'var(--cn-set-warning-secondary-text)',
-          outline: 'var(--cn-set-warning-outline-text)'
-        },
-        'cn-blue': {
-          primary: 'var(--cn-set-blue-primary-text)',
-          secondary: 'var(--cn-set-blue-secondary-text)',
-          outline: 'var(--cn-set-blue-outline-text)'
-        },
-        'cn-purple': {
-          primary: 'var(--cn-set-purple-primary-text)',
-          secondary: 'var(--cn-set-purple-secondary-text)',
-          outline: 'var(--cn-set-purple-outline-text)'
-        },
-        'cn-brown': {
-          primary: 'var(--cn-set-brown-primary-text)',
-          secondary: 'var(--cn-set-brown-secondary-text)',
-          outline: 'var(--cn-set-brown-outline-text)'
-        },
-        'cn-cyan': {
-          primary: 'var(--cn-set-cyan-primary-text)',
-          secondary: 'var(--cn-set-cyan-secondary-text)',
-          outline: 'var(--cn-set-cyan-outline-text)'
-        },
-        'cn-indigo': {
-          primary: 'var(--cn-set-indigo-primary-text)',
-          secondary: 'var(--cn-set-indigo-secondary-text)',
-          outline: 'var(--cn-set-indigo-outline-text)'
-        },
-        'cn-lime': {
-          primary: 'var(--cn-set-lime-primary-text)',
-          secondary: 'var(--cn-set-lime-secondary-text)',
-          outline: 'var(--cn-set-lime-outline-text)'
-        },
-        'cn-mint': {
-          primary: 'var(--cn-set-mint-primary-text)',
-          secondary: 'var(--cn-set-mint-secondary-text)',
-          outline: 'var(--cn-set-mint-outline-text)'
-        },
-        'cn-orange': {
-          primary: 'var(--cn-set-orange-primary-text)',
-          secondary: 'var(--cn-set-orange-secondary-text)',
-          outline: 'var(--cn-set-orange-outline-text)'
-        },
-        'cn-pink': {
-          primary: 'var(--cn-set-pink-primary-text)',
-          secondary: 'var(--cn-set-pink-secondary-text)',
-          outline: 'var(--cn-set-pink-outline-text)'
-        },
-        'cn-violet': {
-          primary: 'var(--cn-set-violet-primary-text)',
-          secondary: 'var(--cn-set-violet-secondary-text)',
-          outline: 'var(--cn-set-violet-outline-text)'
-        }
-      },
-      borderColor: {
-        // Application default
-        DEFAULT: 'var(--cn-border-3)',
-
-        // theme borders
-        'cn-1': 'lch(from var(--cn-border-1) l c h / <alpha-value>)',
-        'cn-2': 'lch(from var(--cn-border-2) l c h / <alpha-value>)',
-        'cn-3': 'lch(from var(--cn-border-3) l c h / <alpha-value>)',
-
-        // State borders
-        'cn-disabled': 'lch(from var(--cn-state-disabled-border) l c h / <alpha-value>)',
-
-        // status borders
-        'cn-brand': 'var(--cn-border-brand)',
-
-        /**
-         * These colors should be used along with their text and bg outline pairs
-         *
-         * Example:
-         * ✅ .text-cn-success-outline + .bg-cn-success-outline + .border-cn-success-outline
-         *
-         * ❌ .text-cn-success-outline + .bg-cn-success-outline + .border-cn-danger-outline
-         */
-        'cn-success': {
-          DEFAULT: 'var(--cn-border-success)',
-          outline: 'var(--cn-set-success-outline-border)'
-        },
-        'cn-gray': {
-          outline: 'var(--cn-set-gray-outline-border)'
-        },
-        'cn-danger': {
-          DEFAULT: 'var(--cn-border-danger)',
-          outline: 'var(--cn-set-danger-outline-border)'
-        },
-        'cn-warning': {
-          DEFAULT: 'var(--cn-border-warning)',
-          outline: 'var(--cn-set-warning-outline-border)'
-        },
-        'cn-blue': {
-          outline: 'var(--cn-set-blue-outline-border)'
-        },
-        'cn-purple': {
-          outline: 'var(--cn-set-purple-outline-border)'
-        },
-        'cn-brown': {
-          outline: 'var(--cn-set-brown-outline-border)'
-        },
-        'cn-cyan': {
-          outline: 'var(--cn-set-cyan-outline-border)'
-        },
-        'cn-indigo': {
-          outline: 'var(--cn-set-indigo-outline-border)'
-        },
-        'cn-lime': {
-          outline: 'var(--cn-set-lime-outline-border)'
-        },
-        'cn-mint': {
-          outline: 'var(--cn-set-mint-outline-border)'
-        },
-        'cn-orange': {
-          outline: 'var(--cn-set-orange-outline-border)'
-        },
-        'cn-pink': {
-          outline: 'var(--cn-set-pink-outline-border)'
-        },
-        'cn-violet': {
-          outline: 'var(--cn-set-violet-outline-border)'
-        }
-      },
       outlineOffset: {
         'cn-tight': 'calc(var(--cn-size-px) * -2)'
       },

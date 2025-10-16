@@ -9,6 +9,7 @@ import {
   CommitsList,
   HandleAiPullRequestSummaryType,
   HandleUploadType,
+  ICommitSelectorStore,
   ILabelType,
   LabelValuesType,
   PrincipalPropsType,
@@ -17,7 +18,6 @@ import {
   TypesCommit
 } from '@/views'
 import { zodResolver } from '@hookform/resolvers/zod'
-import { ICommitSelectorStore } from '@views/repo/components/commit-selector/types'
 import PullRequestCompareButton from '@views/repo/pull-request/compare/components/pull-request-compare-button'
 import PullRequestCompareForm from '@views/repo/pull-request/compare/components/pull-request-compare-form'
 import { combineAndNormalizePrincipalsAndGroups } from '@views/repo/utils'

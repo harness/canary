@@ -76,10 +76,11 @@ const PaginationPrimitiveLink = ({
     <LinkBase
       to={href as string}
       className={cn(
-        buttonVariants({ variant: 'outline', rounded: false, iconOnly }),
+        buttonVariants({ variant: 'outline', rounded: false }),
         {
           'cn-button-active': isActive,
-          'cn-button-disabled': disabled
+          'cn-button-disabled': disabled,
+          'cn-button-icon-only': iconOnly
         },
         className
       )}

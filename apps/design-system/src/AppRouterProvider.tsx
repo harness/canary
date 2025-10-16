@@ -16,7 +16,6 @@ import {
   RbacButtonProps,
   rbacTooltip,
   SplitButton,
-  toButtonProps,
   Tooltip
 } from '@harnessio/ui/components'
 import { ComponentProvider, RouterContextProvider } from '@harnessio/ui/context'
@@ -24,15 +23,7 @@ import { ComponentProvider, RouterContextProvider } from '@harnessio/ui/context'
 const RbacButton = ({ rbac: _, tooltip, ...rest }: RbacButtonProps) => {
   const hasPermission = true
 
-  const button = (
-    <Button
-      {...toButtonProps({
-        ...rest,
-        ignoreIconOnlyTooltip: true
-      })}
-      disabled={!hasPermission}
-    />
-  )
+  const button = <Button {...rest} ignoreIconOnlyTooltip disabled={!hasPermission} />
 
   return !hasPermission ? (
     <Tooltip title={tooltip?.title ?? rbacTooltip} content={tooltip?.content}>

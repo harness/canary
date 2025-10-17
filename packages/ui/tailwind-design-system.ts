@@ -361,8 +361,6 @@ export default {
       5: 'var(--cn-shadow-5)',
       6: 'var(--cn-shadow-6)',
 
-      'comp-avatar-inner': 'var(--cn-shadow-comp-avatar-inner)',
-
       // Status ring colors
       'ring-error': 'var(--cn-ring-error)',
       'ring-selected': 'var(--cn-ring-selected)',

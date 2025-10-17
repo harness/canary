@@ -11,10 +11,12 @@ interface SecretTypeForm {
 
 export const SecretsHeader = ({
   onChange,
-  selectedType: selectedTypeVal
+  selectedType: selectedTypeVal,
+  disableNewSecret
 }: {
   onChange: (type: SecretType) => void
   selectedType: SecretType
+  disableNewSecret?: boolean
 }) => {
   const { setValue } = useForm<SecretTypeForm>({
     defaultValues: {
@@ -34,7 +36,8 @@ export const SecretsHeader = ({
       id: 'new-secret',
       title: 'New',
       description: 'Create a new secret.',
-      value: SecretType.NEW
+      value: SecretType.NEW,
+      disabled: disableNewSecret
     },
     {
       id: 'existing-secret',
@@ -47,7 +50,7 @@ export const SecretsHeader = ({
   return (
     <CardSelect.Root type="single" value={selectedTypeVal} onValueChange={handleTypeChange}>
       {options.map(option => (
-        <CardSelect.Item value={option.value} key={option.value?.toString()}>
+        <CardSelect.Item value={option.value} key={option.value?.toString()} disabled={option.disabled}>
           <CardSelect.Title>{option.title}</CardSelect.Title>
           <CardSelect.Description>{option.description}</CardSelect.Description>
         </CardSelect.Item>

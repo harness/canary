@@ -353,6 +353,7 @@ export default {
       inherit: 'inherit'
     },
     boxShadow: {
+      none: 'var(--cn-shadow-0)',
       1: 'var(--cn-shadow-1)',
       2: 'var(--cn-shadow-2)',
       3: 'var(--cn-shadow-3)',

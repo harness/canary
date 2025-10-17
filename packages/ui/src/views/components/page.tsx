@@ -55,7 +55,7 @@ const Header: FC<PageHeaderProps> = ({
               {backLink.linkText}
             </Link>
           )}
-          <Layout.Grid gap="xs" className="grid-flow-col">
+          <Layout.Grid gap="xs" flow="column">
             {isLoading ? (
               <>
                 <Skeleton.Logo className="mt-cn-4xs" size="md" />

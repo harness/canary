@@ -56,7 +56,7 @@ export function StageNode(props: StageNodeProps) {
       <ExecutionStatus executionStatus={executionStatus} />
 
       <div
-        className={cn('absolute inset-0 -z-10 rounded-md border border-dashed bg-graph-background-2', {
+        className={cn('absolute inset-0 -z-10 rounded-3 border border-dashed bg-graph-background-2', {
           'border-graph-border-1': !selected,
           'border-cn-3': selected
         })}

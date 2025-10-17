@@ -238,7 +238,7 @@ export function BlameEditorV2({
     <div className={className} ref={holderRef}>
       {styleEl}
       <Editor
-        className={`monaco-editor-${instanceId.current} overflow-hidden rounded-b-md`}
+        className={`monaco-editor-${instanceId.current} overflow-hidden rounded-b-3`}
         height={height}
         language={language}
         theme={theme}

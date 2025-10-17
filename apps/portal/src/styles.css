@@ -72,7 +72,7 @@ ul.top-level li a {
 }
 
 ul.top-level li a[aria-current="page"] {
-  @apply font-normal bg-cn-1 rounded-md text-cn-1;
+  @apply font-normal bg-cn-1 rounded-3 text-cn-1;
 }
 
 ul.top-level li details summary {
@@ -116,7 +116,7 @@ ul.top-level summary svg {
 /* Search override */
 
 [aria-label="Search"] {
-  @apply bg-cn-3 border border-cn-3 rounded-md h-[36px] !important;
+  @apply bg-cn-3 border border-cn-3 rounded-3 h-[36px] !important;
 }
 
 [aria-label="Search"] > kbd:first-of-type {
@@ -126,7 +126,7 @@ ul.top-level summary svg {
 /* Code/Preview override */
 
 .expressive-code pre {
-  @apply rounded-md overflow-hidden border border-cn-3 bg-cn-3 !important;
+  @apply rounded-3 overflow-hidden border border-cn-3 bg-cn-3 !important;
 }
 
 .expressive-code .frame {
@@ -144,7 +144,7 @@ pre.prism-code {
 /* Pagination overrides */
 
 .pagination-links a {
-  @apply border border-cn-3 rounded-md text-2 text-cn-3;
+  @apply border border-cn-3 rounded-3 text-2 text-cn-3;
 }
 
 .pagination-links a .link-title {

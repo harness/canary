@@ -42,7 +42,7 @@ export function MainContentLayout({
       className={cn(
         'min-h-[calc(100vh-var(--cn-inset-layout-indent)*2)] mx-[var(--cn-inset-layout-indent)] my-[var(--cn-inset-layout-indent)] border-[var(--cn-inset-border-width)] bg-cn-1',
         {
-          'rounded-md': isMobile || enableInset,
+          'rounded-3': isMobile || enableInset,
           'min-h-[calc(100vh-var(--cn-breadcrumbs-height)-var(--cn-inset-layout-indent))] mb-[var(--cn-inset-layout-indent)] mt-0':
             withBreadcrumbs
         },

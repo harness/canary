@@ -436,7 +436,7 @@ const PullRequestTimelineItem: FC<TimelineItemProps> = ({
           </NodeGroup.Title>
           {!!content && (
             <NodeGroup.Content className={cn('overflow-auto', contentWrapperClassName)}>
-              <div className={cn('border rounded-md overflow-hidden', contentClassName)}>
+              <div className={cn('border rounded-3 overflow-hidden', contentClassName)}>
                 {!!renderFirstCommentBlock && isExpanded && renderFirstCommentBlock}
 
                 {!!contentHeader && (

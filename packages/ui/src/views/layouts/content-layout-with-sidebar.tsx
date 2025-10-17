@@ -65,13 +65,13 @@ export const ContentLayoutWithSidebar: FC<ContentLayoutWithSidebarProps> = ({
                 )}
 
                 {group.items.map(item => (
-                  <NavLink key={item.id} to={item.to} className="outline-offset-cn-tight rounded-md">
+                  <NavLink key={item.id} to={item.to} className="outline-offset-cn-tight rounded-3">
                     {({ isActive }) => (
                       <Text
                         truncate
                         variant={isActive ? 'body-single-line-strong' : 'body-single-line-normal'}
                         className={cn(
-                          'hover:bg-cn-hover hover:text-cn-1 z-10 w-full rounded-md px-3 py-2 duration-0 ease-in-out bg-transparent transition-colors select-none',
+                          'hover:bg-cn-hover hover:text-cn-1 z-10 w-full rounded-3 px-3 py-2 duration-0 ease-in-out bg-transparent transition-colors select-none',
                           { 'bg-cn-hover': isActive }
                         )}
                       >

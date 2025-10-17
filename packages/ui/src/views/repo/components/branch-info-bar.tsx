@@ -77,7 +77,7 @@ export const BranchInfoBar: FC<BranchInfoBarProps> = ({
 
   return (
     <Layout.Flex
-      className="border-cn-2 bg-cn-2 min-h-[3.25rem] rounded-md border py-2 pl-4 pr-2"
+      className="border-cn-2 bg-cn-2 min-h-[3.25rem] rounded-3 border py-2 pl-4 pr-2"
       align="center"
       justify="between"
       gapX="xs"

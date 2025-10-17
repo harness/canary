@@ -172,10 +172,10 @@ const Folder = forwardRef<HTMLDivElement, FolderProps & React.HTMLAttributes<HTM
       <AccordionPrimitive.Item {...props} value={value} className="relative -mb-3 size-full overflow-hidden pb-3">
         <AccordionPrimitive.Trigger
           className={cn(
-            `flex w-full gap-1 rounded-md text-sm px-5`,
+            `flex w-full gap-1 rounded-3 text-sm px-5`,
             className,
             {
-              'rounded-md': isSelect && isSelectable,
+              'rounded-3': isSelect && isSelectable,
               'cursor-pointer': isSelectable,
               'cursor-not-allowed opacity-50': !isSelectable
             },
@@ -193,14 +193,14 @@ const Folder = forwardRef<HTMLDivElement, FolderProps & React.HTMLAttributes<HTM
           <div className="flex w-full justify-between gap-x-2">
             <div className="flex gap-x-2">
               <div className="flex size-5 flex-none items-center justify-center">{getStatusIcon(status)}</div>
-              <span className="mt-0.5 text-left leading-tight text-cn-1">
+              <span className="text-cn-1 mt-0.5 text-left leading-tight">
                 {element}&nbsp;<span className="text-cn-3">({React.Children.count(children)})</span>
               </span>
             </div>
-            <span className="flex-none text-cn-2">{duration ?? '--'}</span>
+            <span className="text-cn-2 flex-none">{duration ?? '--'}</span>
           </div>
         </AccordionPrimitive.Trigger>
-        <AccordionPrimitive.Content className="relative h-full overflow-visible px-5 text-sm data-[state=closed]:animate-accordion-up data-[state=open]:animate-accordion-down">
+        <AccordionPrimitive.Content className="data-[state=closed]:animate-accordion-up data-[state=open]:animate-accordion-down relative h-full overflow-visible px-5 text-sm">
           <AccordionPrimitive.Root
             dir={direction}
             type="multiple"
@@ -260,7 +260,7 @@ const File = forwardRef<
           disabled={!isSelectable}
           aria-label="File"
           className={cn(
-            'flex relative w-full cursor-pointer items-center gap-1 rounded-md text-sm duration-200 ease-in-out rtl:pl-1 rtl:pr-0',
+            'flex relative w-full cursor-pointer items-center gap-1 rounded-3 text-sm duration-200 ease-in-out rtl:pl-1 rtl:pr-0',
             {
               ['after:absolute after:bg-cn-hover after:-inset-x-1 after:-inset-y-1.5 after:-z-10 after:rounded']:
                 isSelected
@@ -278,9 +278,9 @@ const File = forwardRef<
           <div className="relative flex w-full justify-between gap-x-2 pl-4">
             <div className="flex gap-x-2">
               <div className="flex size-5 flex-none items-center justify-center">{getStatusIcon(status)}</div>
-              <span className="mt-0.5 text-left leading-tight text-cn-1">{children}</span>
+              <span className="text-cn-1 mt-0.5 text-left leading-tight">{children}</span>
             </div>
-            <span className="flex-none text-cn-2">{duration ?? '--'}</span>
+            <span className="text-cn-2 flex-none">{duration ?? '--'}</span>
           </div>
         </AccordionPrimitive.Trigger>
       </AccordionPrimitive.Item>

@@ -83,7 +83,7 @@ const HighlightedFloatingLayout = ({ children, className, theme = 'blue' }: High
         <div className="pointer-events-none absolute inset-0 z-0" aria-hidden>
           <span
             className={cn(
-              'absolute blur-[30px] top-0 left-1/2 -translate-y-1/2 w-[528px] h-[178px] rounded-[100%] opacity-10 mix-blend-plus-lighter',
+              'absolute blur-[30px] top-0 left-1/2 -translate-y-1/2 w-[528px] h-[178px] rounded-full opacity-10 mix-blend-plus-lighter',
               '[mask-image:radial-gradient(50%_50%_at_50%_50%,#000_30%,transparent_100%)]',
               'transition-[transform,background-color] ease-in-out duration-700',
               isError ? '-translate-x-[28%]' : ' -translate-x-[65%]',
@@ -92,7 +92,7 @@ const HighlightedFloatingLayout = ({ children, className, theme = 'blue' }: High
           />
           <span
             className={cn(
-              'absolute blur-[30px] top-3.5 -translate-y-1/2 left-1/2 w-[895px] h-[377px] rounded-[100%] opacity-[0.14]',
+              'absolute blur-[30px] top-3.5 -translate-y-1/2 left-1/2 w-[895px] h-[377px] rounded-full opacity-[0.14]',
               '[mask-image:radial-gradient(50%_50%_at_50%_50%,#000_0%,transparent_100%)]',
               'transition-[transform,background-color] ease-in-out duration-700',
               isError ? '-translate-x-[11%]' : ' -translate-x-[84.5%]',
@@ -101,7 +101,7 @@ const HighlightedFloatingLayout = ({ children, className, theme = 'blue' }: High
           />
           <span
             className={cn(
-              'absolute blur-[30px] bottom-0 translate-y-1/2 left-1/2 w-[895px] h-[261px] rounded-[100%] opacity-[0.08]',
+              'absolute blur-[30px] bottom-0 translate-y-1/2 left-1/2 w-[895px] h-[261px] rounded-full opacity-[0.08]',
               '[mask-image:radial-gradient(50%_50%_at_50%_50%,#000_0%,transparent_100%)]',
               'transition-[transform,background-color] ease-in-out duration-700',
               isError ? '-translate-x-[88.5%]' : ' -translate-x-[104px]',

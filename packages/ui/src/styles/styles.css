@@ -81,7 +81,7 @@
 }
 
 .border-linear {
-  @apply pointer-events-none absolute inset-0 rounded-[inherit] border border-transparent;
+  @apply rounded-inherit pointer-events-none absolute inset-0 border border-transparent;
   mask:
     linear-gradient(#fff 0 0) padding-box,
     linear-gradient(#fff 0 0);
@@ -117,7 +117,7 @@
 }
 
 .form-input {
-  @apply border-cn-1/10 bg-cn-brand-primary/5 mt-1 w-full rounded-[4px] text-sm font-light;
+  @apply border-cn-1/10 bg-cn-brand-primary/5 rounded-2 mt-1 w-full text-sm font-light;
   @apply placeholder:text-cn-1/50 !important;
 }
 
@@ -127,7 +127,7 @@
 }
 
 .react-flow__controls-button {
-  @apply rounded-md invert !important;
+  @apply rounded-3 invert !important;
 }
 
 .diff-style-root tr {

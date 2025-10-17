@@ -127,7 +127,7 @@ const AccordionItem = forwardRef<ElementRef<typeof AccordionPrimitive.Item>, Acc
 )
 AccordionItem.displayName = 'AccordionItem'
 
-type AccordionTriggerProps = ComponentPropsWithoutRef<typeof AccordionPrimitive.Trigger> & {
+type AccordionTriggerProps = Omit<ComponentPropsWithoutRef<typeof AccordionPrimitive.Trigger>, 'prefix'> & {
   prefix?: ReactNode
   suffix?: ReactNode
   indicatorProps?: PropsWithoutRef<Omit<IconPropsV2, 'name' | 'fallback'>>

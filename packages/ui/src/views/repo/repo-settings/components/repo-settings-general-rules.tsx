@@ -3,6 +3,8 @@ import { Fragment } from 'react/jsx-runtime'
 
 import {
   Alert,
+  Button,
+  DropdownMenu,
   IconV2,
   Layout,
   ListActions,
@@ -148,18 +150,26 @@ export const RepoSettingsGeneralRules: FC<RepoSettingsGeneralRulesProps> = ({
             'There are no rules in this project. Click on the button below to start adding rules.'
           )
         ]}
-        splitButton={{
-          icon: 'plus',
-          label: t('views:repos.createBranchRuleButton', 'Create Branch Rule'),
-          options: [{ value: 'tag-rule', label: t('views:repos.createTagRuleButton', 'Create Tag Rule') }],
-          handleOptionChange: option => {
-            if (option === 'tag-rule') {
-              navigate(toRepoTagRuleCreate?.() || '')
-            }
-          },
-          handleButtonClick: () => navigate(toRepoBranchRuleCreate?.() || '')
-        }}
-      />
+      >
+        <DropdownMenu.Root>
+          <DropdownMenu.Trigger asChild>
+            <Button>
+              <IconV2 name="plus" size="sm" />
+              {t('views:repos.createRuleButton', 'Create Rule')}
+            </Button>
+          </DropdownMenu.Trigger>
+          <DropdownMenu.Content>
+            <DropdownMenu.Item
+              title={t('views:repos.createTagRuleButton', 'Create Tag Rule')}
+              onClick={() => navigate(toRepoTagRuleCreate?.() || '')}
+            />
+            <DropdownMenu.Item
+              title={t('views:repos.createBranchRuleButton', 'Create Branch Rule')}
+              onClick={() => navigate(toRepoBranchRuleCreate?.() || '')}
+            />
+          </DropdownMenu.Content>
+        </DropdownMenu.Root>
+      </NoData>
     )
   }
 

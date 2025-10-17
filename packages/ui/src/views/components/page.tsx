@@ -55,7 +55,7 @@ const Header: FC<PageHeaderProps> = ({
               {backLink.linkText}
             </Link>
           )}
-          <Layout.Flex gap="xs">
+          <Layout.Grid gap="xs" flow="column">
             {isLoading ? (
               <>
                 <Skeleton.Logo className="mt-cn-4xs" size="md" />
@@ -64,13 +64,13 @@ const Header: FC<PageHeaderProps> = ({
             ) : (
               <>
                 {!!logoName && <LogoV2 className="mt-cn-4xs" name={logoName} size="md" />}
-                <Text as="h1" variant="heading-section">
+                <Text as="h1" variant="heading-section" truncate>
                   {title}
                 </Text>
               </>
             )}
             {!!favoriteProps && !isLoading && <Favorite className="mt-cn-4xs" {...favoriteProps} />}
-          </Layout.Flex>
+          </Layout.Grid>
         </Layout.Vertical>
         {!!description && <Text>{description}</Text>}
         {children}

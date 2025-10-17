@@ -22,9 +22,6 @@ import { DocsPage } from "@/components/docs-page";
         thumbnail={<IconV2 name="connectors" size="xs" />}
         actions={<Button>Action</Button>}
         onClick={() => console.log('clicked')}
-        tooltipProps={{
-            content: 'test'
-          }}
       >
         <StackedList.Field title="Clickable item" description="Description 1" />
       </StackedList.Item>
@@ -281,6 +278,27 @@ The `StackedList.Root` component can accept pagination props to enable paginatio
 `}
 />
 
+## With Tooltip
+
+The `StackedList.Item` component can accept `tooltipProps` prop to display content in the tooltip.
+
+<DocsPage.ComponentExample
+  client:only
+  contentClassName={"!block ![place-items:normal]"}
+  code={`
+    <StackedList.Root paginationProps={{ pageSize: 10, totalItems: 50, currentPage: 1, goToPage: (page) => console.log(page), pageSizeOptions: [5, 10, 20], onPageSizeChange: (size) => console.log(size) }}>
+      <StackedList.Item
+        tooltipProps={{
+          content: "Content in Tooltip"
+        }}
+      >
+        <StackedList.Field title="Item 1" />
+        <StackedList.Field title="Additional text" right />
+      </StackedList.Item>
+    </StackedList.Root>
+`}
+/>
+
 ## API Reference
 
 ### `Root`
@@ -399,6 +417,14 @@ Contains [`StackedList.Field`](#field) components.
       value:
         "'4xs' | '3xs' | '2xs' | 'xs' | 'sm' | 'md' | 'lg' | 'xl' | '2xl' | '3xl' | '4xl' | '0'",
       defaultValue: "'md'",
+    },
+    {
+      name: "tooltipProps",
+      description:
+        "If provided, wraps the Item in a tooltip with the specified properties.",
+      required: false,
+      defaultValue: "undefined",
+      value: "TooltipProps",
     },
   ]}
 />

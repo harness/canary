@@ -68,6 +68,10 @@ type WithTooltipProp = {
   tooltipProps?: Omit<TooltipProps, 'children'>
 }
 
+/**
+ * HOC for adding Tooltip support to any component.
+ * !!! for the HOC to work correctly, the component must use forwardRef.
+ */
 export function withTooltip<P>(
   Component: ComponentType<P>
 ): ForwardRefExoticComponent<PropsWithoutRef<P & WithTooltipProp> & RefAttributes<any>> {

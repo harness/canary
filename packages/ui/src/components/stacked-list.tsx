@@ -78,7 +78,7 @@ const List: FC<ListProps> = ({
 )
 List.displayName = 'StackedList'
 
-interface ListItemProps extends ComponentProps<'div'>, VariantProps<typeof stackedListItemVariants> {
+interface ListItemProps extends Omit<ComponentProps<'div'>, 'ref'>, VariantProps<typeof stackedListItemVariants> {
   thumbnail?: ReactNode
   actions?: ReactNode
   asChild?: boolean

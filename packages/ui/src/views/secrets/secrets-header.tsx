@@ -1,7 +1,6 @@
 import { useForm } from 'react-hook-form'
 
 import { CardSelect } from '@components/card-select'
-import { RadioSelectOption } from '@views/components/RadioSelect'
 
 import { SecretType } from './types'
 
@@ -31,7 +30,7 @@ export const SecretsHeader = ({
     }
   }
 
-  const options: Array<RadioSelectOption<SecretType>> = [
+  const options = [
     {
       id: 'new-secret',
       title: 'New',

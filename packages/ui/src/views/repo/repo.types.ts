@@ -1,4 +1,4 @@
-import { PullRequestType } from '@/views'
+import { CommitSelectorListItem, PullRequestType, TypesListCommitResponse } from '@/views'
 
 import { BranchSelectorTab } from './components/branch-selector-v2/types'
 
@@ -179,4 +179,13 @@ export interface TypesCommitFileStats {
   old_path?: string
   path?: string
   status?: string
+}
+
+export interface ICommitSelectorStore {
+  commits: TypesCommit[] | null
+  totalPages: number
+  setCommits: (data: TypesListCommitResponse, headers: Headers | undefined) => void
+  page: number
+  setPage: (page: number) => void
+  selectedCommit: CommitSelectorListItem
 }

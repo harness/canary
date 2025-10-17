@@ -723,3 +723,49 @@ mark {
     @apply bg-cn-hover rounded;
   }
 }
+
+@layer overrides {
+  .cn-content-full-height {
+    height: calc(var(--cn-sidebar-min-height) - var(--cn-header-height)) !important;
+  }
+
+  /* 
+  =======================
+  DRAWER OVERRIDES
+  ======================= 
+  */
+
+  /* VARIABLES */
+  :root {
+    /* Inset spacing between drawer and content */
+    --cn-inset-spacing: 6px;
+  }
+
+  /* 
+  SLIDE OUT ANIMATION
+  Added calc((100% + var(--cn-inset-spacing)) to match the inset spacing of the drawer
+  */
+  @keyframes cn-slide-out-drawer {
+    0% {
+      transform: translate3d(0, 0, 0);
+    }
+    100% {
+      transform: translate3d(calc((100% + var(--cn-inset-spacing)) * -1), 0, 0);
+    }
+  }
+
+  .cn-sidebar-menu-drawer-content {
+    /* TODO: Design System: Update height 46px with header height variable */
+    top: calc(var(--cn-header-height) + var(--cn-inset-spacing)) !important;
+    bottom: var(--cn-inset-spacing) !important;
+    left: calc(var(--cn-sidebar-container-full-width) + var(--cn-inset-spacing)) !important;
+
+    &[data-state='closed'] {
+      animation-name: cn-slide-out-drawer !important;
+    }
+
+    &.cn-sidebar-menu-drawer-content-collapsed {
+      left: calc(var(--cn-size-14) + var(--cn-inset-spacing)) !important;
+    }
+  }
+}

@@ -6,6 +6,7 @@ import { Navigate, Route, Routes } from 'react-router-dom'
 
 import { ProfileSettingsViewWrapper } from '@/pages/view-preview/profile-settings-view-wrapper.tsx'
 import { RepoSettingsViewWrapper } from '@/pages/view-preview/repo-settings-view-wrapper'
+import { SideNavWrapper } from '@/pages/view-preview/side-nav-wrapper'
 import DataTableDemo from '@subjects/views/data-table-demo'
 import DraggableCardsDemo from '@subjects/views/draggable-cards-demo'
 import ExecutionListWrapper from '@subjects/views/execution-list/execution-list'
@@ -86,6 +87,23 @@ export const viewPreviews: Record<string, ViewPreviewGroup> = {
     items: {
       signin: { label: 'Sign In', element: <SignInView /> },
       signup: { label: 'Sign Up', element: <SignUpView /> }
+    }
+  },
+  layout: {
+    label: 'Layout',
+    items: {
+      layout: {
+        label: 'Sidebar Layout',
+        element: (
+          <SideNavWrapper>
+            <Routes>
+              <Route path="home" element={<div className="p-6">Home</div>} />
+              <Route path="activity" element={<div className="p-6">Activity</div>} />
+              {/* other routes */}
+            </Routes>
+          </SideNavWrapper>
+        )
+      }
     }
   },
   repository: {

@@ -618,10 +618,9 @@ export default {
 
     /** Existing Variants  */
     { pattern: /^bg-graph-/ },
-
-    // Hover classes
     { pattern: /^hover:bg-graph-/ },
-    'stroke-borders-2',
+
+    { pattern: /rounded-./ },
     { pattern: /border-./ },
     // Important: used for generating max-width of SandboxLayout.Content
     { pattern: /max-w-./ },

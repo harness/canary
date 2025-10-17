@@ -1,6 +1,6 @@
-import { ComponentProps, FC, ReactNode } from 'react'
+import { ComponentProps, FC, forwardRef, ReactNode } from 'react'
 
-import { Link, LinkProps, Pagination, PaginationProps, Text, TextProps } from '@/components'
+import { Link, LinkProps, Pagination, PaginationProps, Text, TextProps, withTooltip } from '@/components'
 import { Slot, Slottable } from '@radix-ui/react-slot'
 import { cn } from '@utils/cn'
 import { cva, type VariantProps } from 'class-variance-authority'
@@ -78,7 +78,7 @@ const List: FC<ListProps> = ({
 )
 List.displayName = 'StackedList'
 
-interface ListItemProps extends ComponentProps<'div'>, VariantProps<typeof stackedListItemVariants> {
+interface ListItemProps extends Omit<ComponentProps<'div'>, 'ref'>, VariantProps<typeof stackedListItemVariants> {
   thumbnail?: ReactNode
   actions?: ReactNode
   asChild?: boolean
@@ -87,55 +87,70 @@ interface ListItemProps extends ComponentProps<'div'>, VariantProps<typeof stack
   onClick?: () => void
 }
 
-const ListItem = ({
-  className,
-  children,
-  thumbnail,
-  actions,
-  asChild,
-  to,
-  linkProps,
-  disableHover = false,
-  paddingX = 'md',
-  paddingY = 'md',
-  onClick,
-  ...props
-}: ListItemProps) => {
-  const Comp = asChild ? Slot : ('div' as any)
-  const withLink = !!to || !!linkProps
-  const withButton = !to && !linkProps && !!onClick
+const ListItemComp = forwardRef<HTMLDivElement, ListItemProps>(
+  (
+    {
+      className,
+      children,
+      thumbnail,
+      actions,
+      asChild,
+      to,
+      linkProps,
+      disableHover = false,
+      paddingX = 'md',
+      paddingY = 'md',
+      onClick,
+      ...props
+    },
+    ref
+  ) => {
+    const Comp = asChild ? Slot : ('div' as any)
+    const withLink = !!to || !!linkProps
+    const withButton = !to && !linkProps && !!onClick
 
-  return (
-    <Comp
-      className={cn(
-        stackedListItemVariants({ paddingX, paddingY, disableHover }),
-        { 'cn-stacked-list-item-clickable': withLink || withButton },
-        className
-      )}
-      {...props}
-    >
-      {withLink && (
-        <Link
-          className="cn-stacked-list-item-clickable-block"
-          to={to || ''}
-          {...(linkProps || {})}
-          onClick={() => onClick?.()}
-        />
-      )}
-      {withButton && <button className="cn-stacked-list-item-clickable-block" onClick={() => onClick?.()} />}
-      {thumbnail && <div className="cn-stacked-list-item-thumbnail">{thumbnail}</div>}
-      <Slottable>{children}</Slottable>
-      {actions && <div className="cn-stacked-list-item-actions">{actions}</div>}
-    </Comp>
-  )
-}
-ListItem.displayName = 'StackedListItem'
+    return (
+      <Comp
+        ref={ref}
+        className={cn(
+          stackedListItemVariants({ paddingX, paddingY, disableHover }),
+          { 'cn-stacked-list-item-clickable': withLink || withButton },
+          className
+        )}
+        {...props}
+      >
+        {withLink && (
+          <Link
+            className="cn-stacked-list-item-clickable-block"
+            to={to || ''}
+            {...(linkProps || {})}
+            onClick={() => onClick?.()}
+          />
+        )}
+        {withButton && <button className="cn-stacked-list-item-clickable-block" onClick={() => onClick?.()} />}
+        {thumbnail && <div className="cn-stacked-list-item-thumbnail">{thumbnail}</div>}
+        <Slottable>{children}</Slottable>
+        {actions && <div className="cn-stacked-list-item-actions">{actions}</div>}
+      </Comp>
+    )
+  }
+)
+ListItemComp.displayName = 'StackedListItem'
+const ListItem = withTooltip(ListItemComp)
 
-const ListHeader = ({ className, paddingY = 'xs', ...props }: Omit<ListItemProps, 'disableHover'>) => {
-  return (
-    <ListItem className={cn('cn-stacked-list-item-header', className)} paddingY={paddingY} disableHover {...props} />
-  )
-}
+const ListHeader = forwardRef<HTMLDivElement, Omit<ListItemProps, 'disableHover'>>(
+  ({ className, paddingY = 'xs', ...props }, ref) => {
+    return (
+      <ListItem
+        ref={ref}
+        className={cn('cn-stacked-list-item-header', className)}
+        paddingY={paddingY}
+        disableHover
+        {...props}
+      />
+    )
+  }
+)
 ListHeader.displayName = 'StackedListHeader'
 
 /**

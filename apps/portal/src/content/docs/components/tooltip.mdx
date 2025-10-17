@@ -40,6 +40,19 @@ return (
 )
 ```
 
+## `withTooltip` HOC
+
+HOC for adding Tooltip support to any component.
+For the HOC to work correctly, the component must use forwardRef.
+
+```typescript jsx
+import { withTooltip } from "@harnessio/ui/components";
+
+// ...
+
+const comp = withTooltip(yourComp);
+```
+
 ## Tooltip with no arrow
 
 <DocsPage.ComponentExample

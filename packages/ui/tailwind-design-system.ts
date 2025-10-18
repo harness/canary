@@ -352,6 +352,21 @@ export default {
       'cn-input': 'var(--cn-input-radius)',
       inherit: 'inherit'
     },
+    boxShadow: {
+      none: 'var(--cn-shadow-0)',
+      1: 'var(--cn-shadow-1)',
+      2: 'var(--cn-shadow-2)',
+      3: 'var(--cn-shadow-3)',
+      4: 'var(--cn-shadow-4)',
+      5: 'var(--cn-shadow-5)',
+      6: 'var(--cn-shadow-6)',
+
+      // Status ring colors
+      'ring-error': 'var(--cn-ring-error)',
+      'ring-selected': 'var(--cn-ring-selected)',
+      'ring-success': 'var(--cn-ring-success)',
+      'ring-warning': 'var(--cn-ring-warning)'
+    },
     extend: {
       opacity: {
         'cn-disabled': 'var(--cn-disabled-opacity)'
@@ -458,26 +473,6 @@ export default {
         wide: 'var(--cn-tracking-wide)',
         wider: 'var(--cn-tracking-wider)',
         widest: 'var(--cn-tracking-widest)'
-      },
-      boxShadow: {
-        1: 'var(--cn-shadow-1)',
-        2: 'var(--cn-shadow-2)',
-        3: 'var(--cn-shadow-3)',
-        4: 'var(--cn-shadow-4)',
-        5: 'var(--cn-shadow-5)',
-        6: 'var(--cn-shadow-6)',
-
-        'comp-avatar-inner': 'var(--cn-shadow-comp-avatar-inner)',
-
-        // Status ring colors
-        'ring-error': 'var(--cn-ring-error)',
-        'ring-selected': 'var(--cn-ring-selected)',
-        'ring-success': 'var(--cn-ring-success)',
-        'ring-warning': 'var(--cn-ring-warning)',
-
-        // 👉 Check this and remove it
-        'commit-list-bullet':
-          '0px 0px 3px 0.5px hsla(var(--cn-set-brand-primary-bg) / 0.2), 0px 0px 8px 1px hsla(var(--cn-set-brand-primary-bg) / 0.3)'
       },
       // Remove borderColor - removing the Default is causing border issues in dark mode
 

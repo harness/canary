@@ -77,7 +77,7 @@ export default {
     '&-dropdown': {
       backgroundColor: 'var(--cn-bg-3)',
       borderColor: 'var(--cn-border-2)',
-      '@apply border rounded-3 shadow-md mt-1 overflow-hidden animate-in absolute top-1 z-[55] w-full outline-none': ''
+      '@apply border rounded-3 shadow-3 mt-1 overflow-hidden animate-in absolute top-1 z-[55] w-full outline-none': ''
     }
   }
 }

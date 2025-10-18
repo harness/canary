@@ -40,7 +40,8 @@ export const LabelsListPage: FC<LabelsListPageProps> = ({
     getParentScopeLabels,
     space_ref,
     repo_ref,
-    setGetParentScopeLabels
+    setGetParentScopeLabels,
+    setPageSize
   } = useLabelsStore()
 
   const handleSearchChange = useCallback((val: string) => setSearchQuery(val.length ? val : null), [setSearchQuery])
@@ -104,7 +105,13 @@ export const LabelsListPage: FC<LabelsListPageProps> = ({
               values={spaceValues}
               toRepoLabelDetails={toRepoLabelDetails}
             />
-            <Pagination totalItems={totalItems} pageSize={pageSize} currentPage={page} goToPage={setPage} />
+            <Pagination
+              totalItems={totalItems}
+              pageSize={pageSize}
+              onPageSizeChange={setPageSize}
+              currentPage={page}
+              goToPage={setPage}
+            />
           </Layout.Vertical>
         )}
       </Layout.Vertical>

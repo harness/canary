@@ -38,8 +38,9 @@ const executions: IExecution[] = [
 export const useExecutionListStore = (): IExecutionListStore => ({
   page: 1,
   executions,
-  setPage: noop,
   totalItems: 10,
   pageSize: 10,
-  setExecutionsData: noop
+  setPage: noop,
+  setExecutionsData: noop,
+  setPageSize: noop
 })

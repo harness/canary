@@ -29,8 +29,11 @@ export interface WebhookStore {
   webhooks: WebhookType[] | null
   totalItems: number
   pageSize: number
+  setPageSize: (size: number) => void
   executionId: number | null
   webhookExecutionPage: number
+  webhookExecutionPageSize: number
+  setWebhookExecutionPageSize: (size: number) => void
   preSetWebhookData: CreateWebhookFormFields | null
   executions: WebhookExecutionType[] | null
   setPreSetWebhookData: (data: CreateWebhookFormFields | null) => void
@@ -43,7 +46,7 @@ export interface WebhookStore {
   page: number
   setPage: (page: number) => void
   setWebhooks: (data: ListRepoWebhooksOkResponse) => void
-  setPaginationFromHeaders: (headers: Headers | undefined) => void
+  setPaginationFromHeaders: (headers: Headers | undefined, isExecution?: boolean) => void
   setExecutionId: (id: number | null) => void
   updateExecution: (updatedExecution: WebhookExecutionType) => void
 }

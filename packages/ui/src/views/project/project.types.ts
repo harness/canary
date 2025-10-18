@@ -26,4 +26,5 @@ export interface IMemberListStore {
   pageSize: number
   page: number
   setPage: (page: number) => void
+  setPageSize: (pageSize: number) => void
 }

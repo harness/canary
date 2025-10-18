@@ -21,6 +21,8 @@ export default function RepoCommitsPage() {
   const { gitRefName, fullGitRef } = useCodePathDetails()
   const { toRepoCommits } = useRepoCommits()
 
+  const [pageSize, setPageSize] = useState(25)
+
   const [preSelectedTab, setPreSelectedTab] = useState<BranchSelectorTab>(
     fullGitRef.startsWith(REFS_TAGS_PREFIX) ? BranchSelectorTab.TAGS : BranchSelectorTab.BRANCHES
   )
@@ -32,6 +34,7 @@ export default function RepoCommitsPage() {
     repo_ref: repoRef,
     queryParams: {
       page: queryPage,
+      limit: pageSize,
       git_ref: normalizeGitRef(fullGitRef)
     }
   })
@@ -43,6 +46,11 @@ export default function RepoCommitsPage() {
     (selectedPage: number) => setSearchParams({ page: String(selectedPage) }),
     [setSearchParams]
   )
+
+  const handlePageSizeChange = (size: number) => {
+    setPageSize(size)
+    setPage(1)
+  }
 
   const selectBranchOrTag = useCallback(
     (branchTagName: BranchSelectorListItem, type: BranchSelectorTab) => {
@@ -69,6 +77,8 @@ export default function RepoCommitsPage() {
       setPage={setPage}
       xNextPage={xNextPage}
       xPrevPage={xPrevPage}
+      pageSize={pageSize}
+      setPageSize={handlePageSizeChange}
       renderProp={() => (
         <BranchSelectorContainer
           onSelectBranchorTag={selectBranchOrTag}

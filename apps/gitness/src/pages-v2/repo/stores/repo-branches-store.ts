@@ -14,6 +14,7 @@ export const useRepoBranchesStore = create<IBranchSelectorStore>(set => ({
   xNextPage: 0,
   xPrevPage: 0,
   page: 1,
+  pageSize: 10,
 
   // Actions
   setSelectedBranchTag: (selectedBranchTag: BranchSelectorListItem) => set({ selectedBranchTag }),
@@ -29,6 +30,7 @@ export const useRepoBranchesStore = create<IBranchSelectorStore>(set => ({
       defaultBranch: branchName
     }),
   setPage: page => set({ page }),
+  setPageSize: size => set({ pageSize: size, page: 1 }),
   setPaginationFromHeaders: (xNextPage: number, xPrevPage: number) => {
     set({ xNextPage, xPrevPage })
   }

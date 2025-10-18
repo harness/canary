@@ -26,7 +26,7 @@ export const ProjectMemberListView: FC<ProjectMemberListViewProps> = ({
   onDeleteHandler
 }) => {
   const { t } = useTranslation()
-  const { memberList, totalItems, pageSize, page, setPage } = useMemberListStore()
+  const { memberList, totalItems, pageSize, page, setPage, setPageSize } = useMemberListStore()
   const { principalList } = usePrincipalListStore()
 
   const { search, handleSearchChange, handleResetSearch } = useDebounceSearch({
@@ -109,6 +109,7 @@ export const ProjectMemberListView: FC<ProjectMemberListViewProps> = ({
               pageSize={pageSize}
               page={page}
               setPage={setPage}
+              setPageSize={setPageSize}
             />
           </SandboxLayout.Content>
         </SandboxLayout.Main>

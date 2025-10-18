@@ -32,6 +32,8 @@ export const tagsStore: RepoTagsStore = {
     }
   ],
   page: 1,
+  pageSize: 10,
+  setPageSize: () => {},
   xNextPage: 0,
   xPrevPage: 0,
   setPage: () => {},

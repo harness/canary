@@ -1,3 +1,4 @@
+import { useEffect } from 'react'
 import { SubmitHandler, useForm } from 'react-hook-form'
 
 import { Button, ButtonLayout, Dialog, Fieldset, FormInput, FormWrapper } from '@/components'
@@ -33,6 +34,13 @@ export function CreateUserDialog({ handleCreateUser, open, onClose }: CreateUser
   const onSubmit: SubmitHandler<NewUserFields> = data => {
     handleCreateUser(data)
   }
+
+  useEffect(() => {
+    if (!open) {
+      formMethods.reset()
+      onClose()
+    }
+  }, [open])
 
   return (
     <Dialog.Root open={open} onOpenChange={onClose}>

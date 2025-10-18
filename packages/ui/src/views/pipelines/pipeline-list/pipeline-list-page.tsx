@@ -58,6 +58,7 @@ const PipelineListPage: FC<IPipelineListPageProps> = ({
                   value={searchInput}
                   handleChange={handleInputChange}
                   placeholder={'Search'}
+                  autoFocus
                 />
               </ListActions.Left>
               <ListActions.Right>

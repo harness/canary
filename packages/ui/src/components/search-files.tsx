@@ -115,6 +115,7 @@ export const SearchFiles = ({
           size={searchInputSize}
           onChange={handleInputChange}
           onKeyDown={handleSearchKeyDown}
+          autoFocus
         />
       </div>
 

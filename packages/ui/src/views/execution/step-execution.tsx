@@ -24,6 +24,7 @@ const StepExecutionToolbar: FC<
         className="searchbox h-8"
         handleChange={handleInputChange}
         value={query}
+        autoFocus
       >
         <div className="absolute inset-y-0 right-1.5 my-auto flex h-5 w-8 items-center justify-center gap-1 rounded border border-cn-2 bg-cn-3">
           <IconV2 name="apple-shortcut" size="2xs" />

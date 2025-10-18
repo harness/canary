@@ -23,7 +23,7 @@ export const CommitSidebar = ({ navigateToFile, filesList, children, sidebarWidt
       <Layout.Flex direction="column" className="max-h-full overflow-hidden" gapY="sm">
         <SearchFiles navigateToFile={navigateToFile} filesList={filesList} />
 
-        <ScrollArea className="pb-cn-xl pr-cn-lg -mr-5 grid-cols-[100%]" classNameContent="w-[248px]">
+        <ScrollArea className="pb-cn-xl pr-cn-sm grid-cols-[100%]" classNameContent="w-[248px]">
           {children}
         </ScrollArea>
       </Layout.Flex>

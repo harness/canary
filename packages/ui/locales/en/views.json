@@ -408,6 +408,25 @@
     "clone": "Clone",
     "addFile": "Add file"
   },
+  "search": {
+    "emptyState": {
+      "title": "Start searching",
+      "description": "Enter search terms to find relevant results,"
+    },
+    "showLess": "- Show Less",
+    "showMore": "+ Show More",
+    "noResultsFound": "No search results found",
+    "startSearching": "Start searching",
+    "tryDifferentQuery": "Try a different search query or clear filters",
+    "enterSearchTerms": "Enter search terms to find relevant results",
+    "searchPlaceholder": "Search anything...",
+    "scopePlaceholder": "Select a scope",
+    "repositoryPlaceholder": "Select a repository",
+    "statsText": {
+      "matchesAndFiles": "{{matchCount}} matches found in {{fileCount}} file(s)",
+      "files": "{{fileCount}} file(s)"
+    }
+  },
   "execution": {
     "summary": "Summary",
     "logs": "Logs",
@@ -970,25 +989,6 @@
     "delete": "Delete Webhook",
     "create": "New Webhook"
   },
-  "search": {
-    "emptyState": {
-      "title": "Start searching",
-      "description": "Enter search terms to find relevant results,"
-    },
-    "showLess": "- Show Less",
-    "showMore": "+ Show More",
-    "noResultsFound": "No search results found",
-    "startSearching": "Start searching",
-    "tryDifferentQuery": "Try a different search query or clear filters",
-    "enterSearchTerms": "Enter search terms to find relevant results",
-    "searchPlaceholder": "Search anything...",
-    "scopePlaceholder": "Select a scope",
-    "repositoryPlaceholder": "Select a repository",
-    "statsText": {
-      "matchesAndFiles": "{{matchCount}} matches found in {{fileCount}} file(s)",
-      "files": "{{fileCount}} file(s)"
-    }
-  },
   "secretActivity": {
     "event": "Event",
     "entity": "Entity",
@@ -1102,8 +1102,8 @@
     },
     "close": "Close",
     "newUserButton": "Create User",
-    "searchPlaceholder": "Search",
     "usersHeader": "Users",
+    "searchPlaceholder": "Search",
     "tabs": {
       "active": "Active users",
       "inactive": "Pending users"

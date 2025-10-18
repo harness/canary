@@ -435,6 +435,7 @@ const PullRequestListPage: FC<PullRequestPageProps> = ({
                   placeholder={t('views:repos.search', 'Search')}
                   inputContainerClassName="max-w-80"
                   onChange={handleInputChange}
+                  autoFocus
                 />
               </ListActions.Left>
               <ListActions.Right>

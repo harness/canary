@@ -1,8 +1,7 @@
-import { FC, useMemo } from 'react'
+import { FC, useCallback, useMemo } from 'react'
 
-import { Button, Dialog, ListActions, NoData, SearchBox, Spacer, Text } from '@/components'
+import { Button, Dialog, ListActions, NoData, SearchInput, Spacer, Text } from '@/components'
 import { useTranslation } from '@/context'
-import { useDebounceSearch } from '@/hooks'
 import { SandboxLayout } from '@/views'
 
 import { InviteMemberDialog } from './components/invite-member-dialog'
@@ -29,17 +28,19 @@ export const ProjectMemberListView: FC<ProjectMemberListViewProps> = ({
   const { memberList, totalItems, pageSize, page, setPage } = useMemberListStore()
   const { principalList } = usePrincipalListStore()
 
-  const { search, handleSearchChange, handleResetSearch } = useDebounceSearch({
-    handleChangeSearchValue: (val: string) => setSearchQuery(val.length ? val : null),
-    searchValue: searchQuery || ''
-  })
+  const handleSearchChange = useCallback(
+    (val: string) => {
+      setSearchQuery(val.length ? val : null)
+    },
+    [setSearchQuery]
+  )
 
   const isDirtyList = useMemo(() => {
     return page !== 1 || !!searchQuery
   }, [page, searchQuery])
 
   const handleResetFiltersQueryAndPages = () => {
-    handleResetSearch()
+    setSearchQuery(null)
     setPage(1)
   }
 
@@ -74,12 +75,13 @@ export const ProjectMemberListView: FC<ProjectMemberListViewProps> = ({
               <>
                 <ListActions.Root>
                   <ListActions.Left>
-                    <SearchBox.Root
-                      width="full"
-                      className="max-w-96"
-                      value={search}
-                      handleChange={handleSearchChange}
+                    <SearchInput
+                      id="search"
+                      defaultValue={searchQuery ?? ''}
+                      inputContainerClassName="w-80"
                       placeholder={t('views:repos.search', 'Search')}
+                      onChange={handleSearchChange}
+                      autoFocus
                     />
                   </ListActions.Left>
                   <ListActions.Right>

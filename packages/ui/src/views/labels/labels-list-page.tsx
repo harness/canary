@@ -78,6 +78,7 @@ export const LabelsListPage: FC<LabelsListPageProps> = ({
                 defaultValue={searchQuery || ''}
                 onChange={handleSearchChange}
                 placeholder={t('views:repos.search', 'Search')}
+                autoFocus
               />
             </ListActions.Left>
             <ListActions.Right>
@@ -104,7 +105,9 @@ export const LabelsListPage: FC<LabelsListPageProps> = ({
               values={spaceValues}
               toRepoLabelDetails={toRepoLabelDetails}
             />
-            <Pagination totalItems={totalItems} pageSize={pageSize} currentPage={page} goToPage={setPage} />
+            {!!spaceLabels.length && (
+              <Pagination totalItems={totalItems} pageSize={pageSize} currentPage={page} goToPage={setPage} />
+            )}
           </Layout.Vertical>
         )}
       </Layout.Vertical>

@@ -50,6 +50,7 @@ export function CreateBranchDialog({
   })
 
   const { register, handleSubmit, setValue, reset, clearErrors, watch } = formMethods
+  const branchName = watch('name')
 
   const resetForm = useCallback(() => {
     clearErrors()
@@ -91,10 +92,9 @@ export function CreateBranchDialog({
   useEffect(() => {
     if (selectedBranchOrTag?.name) {
       setValue('target', selectedBranchOrTag.name)
+      setValue('name', branchName)
     }
   }, [selectedBranchOrTag, setValue])
-
-  const branchName = watch('name')
 
   useEffect(() => {
     resetViolation()
@@ -129,7 +129,7 @@ export function CreateBranchDialog({
 
             {violation && (
               <Alert.Root theme="warning">
-                <Alert.Description className="break-all overflow-hidden">
+                <Alert.Description className="overflow-hidden break-all">
                   {bypassable
                     ? t(
                         'component:branchDialog.violationMessages.bypassed',
@@ -145,7 +145,7 @@ export function CreateBranchDialog({
 
             {error && (
               <Alert.Root theme="danger">
-                <Alert.Description className="break-all overflow-hidden">
+                <Alert.Description className="overflow-hidden break-all">
                   {t('views:repos.error', 'Error:')} {error}
                 </Alert.Description>
               </Alert.Root>

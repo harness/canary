@@ -98,6 +98,7 @@ const RepoWebhookListPage: FC<RepoWebhookListPageProps> = ({
                 inputContainerClassName="w-80"
                 placeholder={t('views:repos.search', 'Search')}
                 onChange={handleSearchChange}
+                autoFocus
               />
             </ListActions.Left>
             <ListActions.Right>

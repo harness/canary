@@ -9,7 +9,7 @@ export interface BaseInputProps
     VariantProps<typeof inputVariants> {}
 
 const inputVariants = cva(
-  'bg-cn-2 px-3 py-1 text-cn-1 disabled:cursor-not-allowed disabled:bg-cn-3 disabled:text-cn-3',
+  'bg-cn-2 px-cn-sm py-cn-3xs text-cn-1 disabled:cursor-not-allowed disabled:bg-cn-3 disabled:text-cn-3',
   {
     variants: {
       variant: {
@@ -119,7 +119,7 @@ const Input = forwardRef<HTMLInputElement, InputProps>(
     const baseInputComp = (
       <InputComponent
         className={cn(className, {
-          'pl-8': !!inputIconName,
+          'pl-cn-2xl': !!inputIconName,
           'border-none': !!rightElement
         })}
         id={id}
@@ -161,7 +161,7 @@ const Input = forwardRef<HTMLInputElement, InputProps>(
     return (
       <ControlGroup className={wrapperClassName}>
         {!!label && (
-          <Label className="mb-2" disabled={disabled} optional={optional} htmlFor={id}>
+          <Label className="mb-cn-xs" disabled={disabled} optional={optional} htmlFor={id}>
             {label}
           </Label>
         )}
@@ -169,7 +169,7 @@ const Input = forwardRef<HTMLInputElement, InputProps>(
         {renderInput()}
 
         {!!error && (
-          <Message className="mt-0.5" theme={MessageTheme.ERROR}>
+          <Message className="mt-cn-4xs" theme={MessageTheme.ERROR}>
             {error}
           </Message>
         )}

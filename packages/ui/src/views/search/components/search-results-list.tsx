@@ -120,9 +120,9 @@ export const SearchResultsList: FC<SearchResultsListProps> = ({
             </Link>
           </Layout.Horizontal>
         </Accordion.Trigger>
-        <Accordion.Content className="pb-0 border-t border-cn-2" containerClassName="px-0">
+        <Accordion.Content className="border-cn-2 border-t pb-0" containerClassName="px-0">
           {item.matches && item.matches.length >= 1 && (
-            <Layout.Vertical gap="none" className="mt-1">
+            <Layout.Vertical gap="none" className="mt-cn-3xs">
               {item.matches
                 .slice(0, expandedItems[getItemPath(item)] ? undefined : DEFAULT_NUM_ITEMS_TO_SHOW)
                 .map(match => (

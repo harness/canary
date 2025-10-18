@@ -97,7 +97,7 @@ const PullRequestDescBox: FC<PullRequestDescBoxProps> = ({
       hideReplySection
       contentClassName="pb-0"
       content={
-        <div className="px-4 py-3">
+        <div className="px-cn-md py-cn-sm">
           {/* Edit mode */}
           {edit ? (
             <PullRequestCommentBox

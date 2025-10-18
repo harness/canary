@@ -105,7 +105,7 @@ const FilterFieldInternal = <T extends string, V extends FilterValueTypes, Custo
       const checkboxId = `checkbox-${uniqId}`
       return (
         <Label
-          className="rounded-3 bg-cn-gray-secondary border-cn-gray-outline cursor-pointer border px-2.5 py-1.5 [&>.cn-label-text]:flex [&>.cn-label-text]:items-center [&>.cn-label-text]:gap-x-2.5"
+          className="rounded-3 bg-cn-gray-secondary border-cn-gray-outline cursor-pointer border px-cn-md py-cn-xs [&>.cn-label-text]:flex [&>.cn-label-text]:items-center [&>.cn-label-text]:gap-x-cn-2xs"
           htmlFor={checkboxId}
         >
           <Checkbox

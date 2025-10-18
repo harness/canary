@@ -173,7 +173,7 @@ const CarouselContent = forwardRef<HTMLDivElement, CarouselContentProps>(
       <div ref={carouselRef} className={cn('overflow-hidden', carouselBlockClassName)}>
         <div
           ref={ref}
-          className={cn('flex', orientation === 'horizontal' ? '-ml-4' : '-mt-4 flex-col', className)}
+          className={cn('flex', orientation === 'horizontal' ? '-ml-cn-md' : '-mt-cn-md flex-col', className)}
           {...props}
         />
       </div>
@@ -190,7 +190,11 @@ const CarouselItem = forwardRef<HTMLDivElement, HTMLAttributes<HTMLDivElement>>(
       ref={ref}
       role="group"
       aria-roledescription="slide"
-      className={cn('min-w-0 shrink-0 grow-0 basis-full', orientation === 'horizontal' ? 'pl-4' : 'pt-4', className)}
+      className={cn(
+        'min-w-0 shrink-0 grow-0 basis-full',
+        orientation === 'horizontal' ? 'pl-cn-md' : 'pt-cn-md',
+        className
+      )}
       {...props}
     />
   )

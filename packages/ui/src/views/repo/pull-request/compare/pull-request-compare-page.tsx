@@ -362,7 +362,7 @@ export const PullRequestComparePage: FC<PullRequestComparePageProps> = ({
               {!isNoNewCommits && (
                 <Layout.Vertical>
                   <Tabs.Root value={activeTab} onValueChange={val => setActiveTab(val)}>
-                    <Tabs.List variant="overlined" className="-mx-8 px-8">
+                    <Tabs.List variant="overlined" className="-mx-cn-2xl px-cn-2xl">
                       {!prBranchCombinationExists && (
                         <Tabs.Trigger value="overview" icon="info-circle">
                           {t('views:pullRequests.compareChangesTabOverview', 'Overview')}

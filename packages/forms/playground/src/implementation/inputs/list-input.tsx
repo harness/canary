@@ -65,7 +65,7 @@ function ListInputInternal(props: InputProps<AnyFormikValue, ListInputConfig>): 
                     )}
                     <div className="flex items-center">
                       <button
-                        className="mt-2"
+                        className="mt-cn-xs"
                         onClick={() => {
                           remove(idx)
                         }}
@@ -77,7 +77,7 @@ function ListInputInternal(props: InputProps<AnyFormikValue, ListInputConfig>): 
                   </div>
                 ))}
               </div>
-              <button onClick={() => append({})} className="mt-2">
+              <button onClick={() => append({})} className="mt-cn-xs">
                 Add
               </button>
             </div>

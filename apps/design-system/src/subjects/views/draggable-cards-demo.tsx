@@ -20,7 +20,7 @@ export const DraggableCardsDemo = () => {
         <div className="flex w-full items-center justify-between">
           <span className="flex items-center">
             <IconV2 name="ai" size="md" />
-            <span className="ml-2">First Card</span>
+            <span className="ml-cn-xs">First Card</span>
           </span>
           <MoreActionsTooltip
             actions={[

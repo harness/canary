@@ -83,17 +83,17 @@ export function OTPPage({
 
   return (
     <Floating1ColumnLayout
-      className="flex-col bg-cn-1 pt-20 sm:pt-[186px]"
+      className="flex-col bg-cn-1 pt-cn-4xl sm:pt-[186px]"
       highlightTheme={hasError ? 'error' : 'blue'}
       verticalCenter
     >
-      <div className="relative z-10 mb-8 w-80 max-w-full text-cn-1">
+      <div className="relative z-10 mb-cn-2xl w-80 max-w-full text-cn-1">
         <div className="flex flex-col items-center">
           <AnimatedHarnessLogo theme={hasError ? 'error' : 'blue'} />
-          <Text className="mt-3" variant="heading-section" align="center" as="h1">
+          <Text className="mt-cn-sm" variant="heading-section" align="center" as="h1">
             Verify your email
           </Text>
-          <Text className="mt-0.5" align="center">
+          <Text className="mt-cn-4xs" align="center">
             Please enter the verification code we’ve sent to your email <span className="text-cn-1">{email}</span>
           </Text>
         </div>
@@ -102,7 +102,7 @@ export function OTPPage({
             <Alert.Title>{serverError}</Alert.Title>
           </Alert.Root>
         )}
-        <div className="mt-10 pt-0">
+        <div className="mt-cn-3xl pt-0">
           {/* TODO: Design system: Replace with FormWrapper once OTP component is ready*/}
           <form className="flex flex-col items-center" onSubmit={handleSubmit(onSubmit)}>
             <div className="relative">
@@ -133,7 +133,7 @@ export function OTPPage({
                 </Text>
               )}
             </div>
-            <Button className="mt-10 w-full max-w-[212px]" type="submit" loading={isLoading}>
+            <Button className="mt-cn-3xl w-full max-w-[212px]" type="submit" loading={isLoading}>
               {isLoading ? 'Verifying...' : 'Verify'}
             </Button>
           </form>

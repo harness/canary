@@ -5,7 +5,7 @@ import { Accordion, Table, Text } from '@/components'
 import { KeyValuePair, KeyValueTableProps } from './types'
 
 //manage style for using repeatedly
-const accordionContentStyle = `w-full pl-1 pr-0 pb-0`
+const accordionContentStyle = `w-full pl-cn-3xs pr-0 pb-0`
 const specTitleStyle = 'flex-grow text-left'
 
 export const KeyValueTable: FC<KeyValueTableProps> = ({ className, tableTitleName, tableTitleVal, tableSpec }) => {
@@ -17,10 +17,10 @@ export const KeyValueTable: FC<KeyValueTableProps> = ({ className, tableTitleNam
       if (typeof item.value === 'string') {
         return (
           <ul className="flex flex-row border-b align-middle" key={index}>
-            <li className="w-1/2 py-2.5 pr-2.5" style={{ paddingLeft: `${level + 1}rem` }}>
+            <li className="w-1/2 py-cn-xs pr-cn-xs" style={{ paddingLeft: `${level + 1}rem` }}>
               <Text>{item.name}</Text>
             </li>
-            <li className="w-1/2 py-2.5 pl-1.5 pr-2.5">
+            <li className="w-1/2 py-cn-xs pl-cn-2xs pr-cn-xs">
               <Text>{item.value}</Text>
             </li>
           </ul>
@@ -37,7 +37,7 @@ export const KeyValueTable: FC<KeyValueTableProps> = ({ className, tableTitleNam
           >
             <Accordion.Item value={item.name} className="border-0">
               <Accordion.Trigger
-                className="pr-4"
+                className="pr-cn-md"
                 style={{
                   paddingLeft: `${level + 1}rem`
                 }}
@@ -60,10 +60,10 @@ export const KeyValueTable: FC<KeyValueTableProps> = ({ className, tableTitleNam
       if (typeof item.value === 'string') {
         return (
           <Table.Row key={index} className="border-b">
-            <Table.Cell className="w-1/2 py-2.5 pl-5">
+            <Table.Cell className="w-1/2 py-cn-xs pl-cn-lg">
               <Text>{item.name}</Text>
             </Table.Cell>
-            <Table.Cell className="w-1/2 py-2.5">
+            <Table.Cell className="w-1/2 py-cn-xs">
               <Text>{item.value}</Text>
             </Table.Cell>
           </Table.Row>
@@ -74,7 +74,7 @@ export const KeyValueTable: FC<KeyValueTableProps> = ({ className, tableTitleNam
             <Table.Cell colSpan={2} className="border-0 p-0">
               <Accordion.Root type="single" collapsible defaultValue={item.name} indicatorPosition="left">
                 <Accordion.Item value={item.name} className="border-0">
-                  <Accordion.Trigger className="px-4">
+                  <Accordion.Trigger className="px-cn-md">
                     <Text className={specTitleStyle}>{item.name}</Text>
                   </Accordion.Trigger>
                   <Accordion.Content className={accordionContentStyle}>{renderListItems(item.value)}</Accordion.Content>
@@ -92,10 +92,10 @@ export const KeyValueTable: FC<KeyValueTableProps> = ({ className, tableTitleNam
     <Table.Root className={className}>
       <Table.Header>
         <Table.Row>
-          <Table.Head className="py-3">
+          <Table.Head className="py-cn-sm">
             <Text variant="heading-small">{tableTitleName}</Text>
           </Table.Head>
-          <Table.Head className="py-3">
+          <Table.Head className="py-cn-sm">
             <Text variant="heading-small">{tableTitleVal}</Text>
           </Table.Head>
         </Table.Row>

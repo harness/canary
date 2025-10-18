@@ -124,7 +124,7 @@ const Calendar = ({ filter, onUpdateFilter }: CalendarProps) => {
           {
             'border-cn-danger focus:border-cn-danger': singleState.input.isError
           },
-          'w-auto mx-1.5 mt-2 mb-2.5'
+          'w-auto mx-cn-2xs my-cn-xs'
         )}
         debounce={false}
         value={singleState.input.value}
@@ -134,7 +134,7 @@ const Calendar = ({ filter, onUpdateFilter }: CalendarProps) => {
         placeholder="DD/MM/YYYY"
       />
       <UICalendar
-        className="mt-2.5 px-2 pb-3 pt-1"
+        className="mt-cn-xs px-cn-xs pb-cn-sm pt-cn-3xs"
         mode="single"
         selected={singleState.date}
         month={singleState.month}

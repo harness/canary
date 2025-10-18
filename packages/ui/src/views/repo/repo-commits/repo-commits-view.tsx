@@ -115,7 +115,7 @@ export const RepoCommitsView: FC<RepoCommitsViewProps> = ({
                       toCode={toCode}
                       toCommitDetails={toCommitDetails}
                       toPullRequest={toPullRequest}
-                      className="ml-1"
+                      className="ml-cn-3xs"
                     />
 
                     <Pagination

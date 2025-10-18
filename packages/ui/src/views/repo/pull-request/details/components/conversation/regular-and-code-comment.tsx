@@ -329,7 +329,7 @@ const PullRequestRegularAndCodeCommentInternal: FC<PullRequestRegularAndCodeComm
                   <TimeAgoCard timestamp={payload.created} />
                   {payload?.code_comment?.outdated && (
                     <>
-                      <Separator orientation="vertical" className="mx-1 h-3.5" />
+                      <Separator orientation="vertical" className="mx-cn-3xs h-3.5" />
                       <Tag key={'outdated'} value="Outdated" theme="orange" />
                     </>
                   )}
@@ -367,7 +367,7 @@ const PullRequestRegularAndCodeCommentInternal: FC<PullRequestRegularAndCodeComm
           <div className="flex flex-col">
             {!!startingLine && (
               <div className="bg-[--diff-hunk-lineNumber--]">
-                <div className="ml-16 w-full px-8 py-1">{startingLine}</div>
+                <div className="pl-[48px] w-full px-cn-2xl py-cn-3xs">{startingLine}</div>
               </div>
             )}
             <div className="border-b">

@@ -15,7 +15,7 @@ export const FileAdditionsTrigger: FC<FileAdditionsTriggerProps> = ({ pathNewFil
   return (
     <DropdownMenu.Root>
       <DropdownMenu.Trigger asChild ref={triggerRef}>
-        <Button className="relative overflow-hidden pl-4 pr-8" variant="outline">
+        <Button className="relative overflow-hidden pl-cn-md pr-cn-2xl" variant="outline">
           <IconV2 name="plus" />
           <span className="border-r pr-2.5">{t('views:repos.createFile', 'Create File')}</span>
           <span className="absolute right-0 top-0 flex h-full w-8 items-center justify-center transition-colors">

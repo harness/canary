@@ -32,9 +32,9 @@ export const Option: FC<OptionProps> = ({ control, id, label, description, ariaS
       aria-labelledby={`${id}-label`}
       aria-selected={ariaSelected}
     >
-      <div className="mt-0.5">{control}</div>
+      <div className="mt-cn-4xs">{control}</div>
       <div className="flex flex-col gap-0">
-        <Label htmlFor={id} className="mb-1 cursor-pointer pl-2.5">
+        <Label htmlFor={id} className="mb-cn-3xs cursor-pointer pl-2.5">
           {label}
         </Label>
         {description && (

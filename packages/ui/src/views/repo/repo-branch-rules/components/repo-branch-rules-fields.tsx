@@ -261,7 +261,7 @@ export const BranchSettingsRuleDefaultReviewersField: FC<
         disallowCreation
       />
       {validationMessage && !isEmpty(validationMessage.message) && (
-        <Message theme={validationMessage.theme} className="mt-2">
+        <Message theme={validationMessage.theme} className="mt-cn-xs">
           {validationMessage.theme === MessageTheme.WARNING
             ? t(`views:repos.${validationMessage.message}`)
             : validationMessage.message}
@@ -312,6 +312,7 @@ export const BranchSettingsRuleListField: FC<{
           return (
             !isHidden && (
               <Fragment key={rule.id}>
+                {/*  TODO: Replace ml-[26px] with a proper spacing token when available */}
                 {index > 0 && <Separator className={cn('w-auto', rule.isNested && 'ml-[26px]')} />}
                 <Checkbox
                   id={rule.id}

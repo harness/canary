@@ -4,13 +4,13 @@ import { Button, IconV2, Illustration, Input } from '@/components'
 import { cn } from '@utils/cn'
 
 const Root: FC<PropsWithChildren<HTMLAttributes<HTMLElement>>> = ({ children }) => {
-  return <div className="flex size-full max-w-[460px] flex-col bg-cn-1">{children}</div>
+  return <div className="bg-cn-1 flex size-full max-w-[460px] flex-col">{children}</div>
 }
 
 const Header: FC<{ onClose: () => void }> = ({ onClose }) => {
   return (
-    <div className="sticky top-0 flex items-center justify-between bg-cn-1 px-6 py-4">
-      <p className="text-16 font-medium text-cn-1">Harness AI</p>
+    <div className="bg-cn-1 px-cn-xl py-cn-md sticky top-0 flex items-center justify-between">
+      <p className="text-16 text-cn-1 font-medium">Harness AI</p>
       <Button size="sm" iconOnly variant="ghost" onClick={onClose} ignoreIconOnlyTooltip>
         <IconV2 name="xmark" />
         <span className="sr-only">Close</span>
@@ -21,14 +21,14 @@ const Header: FC<{ onClose: () => void }> = ({ onClose }) => {
 
 const Body: FC<PropsWithChildren<HTMLAttributes<HTMLElement>>> = ({ children }) => {
   return (
-    <div className="scrollbar-hidden flex flex-1 flex-col gap-y-7 overflow-y-auto overflow-x-hidden px-6 py-2">
+    <div className="scrollbar-hidden px-cn-xl py-cn-xs flex flex-1 flex-col gap-y-7 overflow-y-auto overflow-x-hidden">
       {children}
     </div>
   )
 }
 
 const Footer: FC<PropsWithChildren<HTMLAttributes<HTMLElement>>> = ({ children }) => {
-  return <div className="sticky bottom-0 z-10 bg-cn-1 px-6 py-3">{children}</div>
+  return <div className="bg-cn-1 px-cn-xl py-cn-sm sticky bottom-0 z-10">{children}</div>
 }
 
 interface MessageProps extends PropsWithChildren<HTMLAttributes<HTMLElement>> {
@@ -45,7 +45,9 @@ const Message: FC<MessageProps> = ({ self, avatar, actions, children }) => {
       })}
     >
       {!self && (
-        <div className="mt-0.5">{avatar ? avatar : <Illustration size={16} name="chat-avatar" themeDependent />}</div>
+        <div className="mt-cn-4xs">
+          {avatar ? avatar : <Illustration size={16} name="chat-avatar" themeDependent />}
+        </div>
       )}
       <div
         className={cn('flex flex-col gap-3', {
@@ -55,12 +57,12 @@ const Message: FC<MessageProps> = ({ self, avatar, actions, children }) => {
       >
         <div
           className={cn('text-2 text-cn-1 leading-relaxed', {
-            'px-3.5 py-2 bg-cn-gray-secondary rounded-[8px_8px_2px_8px]': self
+            'px-cn-sm py-cn-xs bg-cn-gray-secondary rounded-[8px_8px_2px_8px]': self
           })}
         >
           {children}
         </div>
-        {actions && <div className="mt-1 flex items-center gap-1">{actions}</div>}
+        {actions && <div className="mt-cn-3xs flex items-center gap-1">{actions}</div>}
       </div>
     </div>
   )
@@ -70,7 +72,7 @@ const CodeBlock: FC<PropsWithChildren<{ className?: string }>> = ({ children, cl
   return (
     <code
       className={cn(
-        'inline-block rounded-[3px] border border-cn-2 bg-cn-gray-secondary px-1.5 text-2 leading-[18px]',
+        'inline-block rounded-[3px] border border-cn-2 bg-cn-gray-secondary px-cn-2xs text-2 leading-[18px]',
         className
       )}
     >
@@ -85,9 +87,9 @@ interface TypingProps {
 
 const Typing: FC<TypingProps> = ({ avatar }) => {
   return (
-    <div className="mt-3 flex items-center gap-x-3.5">
+    <div className="mt-cn-sm flex items-center gap-x-3.5">
       {avatar || <Illustration size={16} name="chat-avatar" themeDependent />}
-      <span className="size-2.5 rounded-full bg-cn-3" aria-hidden />
+      <span className="bg-cn-3 size-2.5 rounded-full" aria-hidden />
     </div>
   )
 }
@@ -97,7 +99,7 @@ interface SeparatorProps {
 }
 
 const Separator: FC<SeparatorProps> = ({ title }) => {
-  return <div className="text-center text-2 font-medium opacity-50">{title}</div>
+  return <div className="text-2 text-center font-medium opacity-50">{title}</div>
 }
 
 const emptyStateButtons = [
@@ -119,14 +121,14 @@ const EmptyState: FC = () => {
   return (
     <div className="mt-auto flex flex-col gap-5">
       <div>
-        <span className="block text-5 font-semibold leading-none text-cn-2">Hello Steven,</span>
-        <span className="mt-[3px] block text-5 font-semibold leading-none text-cn-1">how can I help?</span>
+        <span className="text-5 text-cn-2 block font-semibold leading-none">Hello Steven,</span>
+        <span className="text-5 text-cn-1 mt-cn-3xs block font-semibold leading-none">how can I help?</span>
       </div>
       <div>
-        <span className="text-2 leading-relaxed text-cn-2">
+        <span className="text-2 text-cn-2 leading-relaxed">
           Here are some suggestions to enhance your CI/CD pipeline:
         </span>
-        <ul className="mt-3 flex flex-col gap-y-1.5">
+        <ul className="mt-cn-sm flex flex-col gap-y-1.5">
           {emptyStateButtons.map(({ text }, index) => (
             <li key={index}>
               <Button className="w-full justify-start" variant="secondary">
@@ -165,7 +167,8 @@ const InputField: FC<InputFieldProps> = ({
     <div className="relative">
       <Input
         ref={inputRef}
-        className="h-11 flex-1 rounded-4 pl-3 pr-12 focus:ring-0 focus-visible:h-16 focus-visible:rounded-4 focus-visible:pb-8"
+        // TODO: Review and remove arbitrary values
+        className="rounded-4 pl-cn-sm focus-visible:rounded-4 focus-visible:pb-cn-2xl h-11 flex-1 pr-[60px] focus:ring-0 focus-visible:h-16"
         wrapperClassName="flex-row"
         value={value}
         onChange={onChange}

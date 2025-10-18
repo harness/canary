@@ -58,7 +58,7 @@ export function FileUpload({ selectedFile, onFileChange, error, accept }: FileUp
           onDrop={handleDrop}
         >
           <div className="flex flex-col gap-2 items-center" onClick={openFileInput} role="button" tabIndex={0}>
-            <IconV2 name="cloud-upload" size="xl" className="mb-4" />
+            <IconV2 name="cloud-upload" size="xl" className="mb-cn-md" />
             <Text variant="heading-base">Click to browse or drag and drop a file</Text>
             <Text variant="body-single-line-normal">Up to 50MB</Text>
           </div>
@@ -68,7 +68,7 @@ export function FileUpload({ selectedFile, onFileChange, error, accept }: FileUp
           <Card.Content className="w-full">
             <Layout.Flex direction="row" align="center" justify="between" className="w-full">
               <Layout.Flex direction="row" gap="xs" align="center">
-                <div className="p-2 bg-cn-1 rounded border">
+                <div className="p-cn-xs bg-cn-1 rounded border">
                   <IconV2 name="empty-page" size="lg" />
                 </div>
                 <Layout.Vertical align="start" gap="none">
@@ -87,7 +87,7 @@ export function FileUpload({ selectedFile, onFileChange, error, accept }: FileUp
           </Card.Content>
         </Card.Root>
       )}
-      {error && <div className="mt-1 text-sm text-cn-danger">{error}</div>}
+      {error && <div className="mt-cn-3xs text-sm text-cn-danger">{error}</div>}
 
       {/* Hidden file input */}
       <Input

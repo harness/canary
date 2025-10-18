@@ -31,14 +31,14 @@ export const PullRequestDiffSidebar: FC<PullRequestDiffSidebarProps> = ({
 
   return (
     <div
-      className="nested-sidebar-height pr-cn-sm sticky top-[var(--cn-breadcrumbs-height)] -ml-8 overflow-hidden"
+      className="nested-sidebar-height pr-cn-sm -ml-cn-2xl sticky top-[var(--cn-breadcrumbs-height)] overflow-hidden"
       style={{
         width: `${sidebarWidth}px`,
         minWidth: `${SIDEBAR_MIN_WIDTH}px`,
         maxWidth: `${SIDEBAR_MAX_WIDTH}px`
       }}
     >
-      <Layout.Flex direction="column" className="pt-cn-xl max-h-full pl-8" gapY="sm">
+      <Layout.Flex direction="column" className="pt-cn-xl pl-cn-2xl max-h-full" gapY="sm">
         <Layout.Horizontal gap="sm" align="center" className="mb-cn-3xs">
           <Button
             variant="outline"
@@ -55,10 +55,9 @@ export const PullRequestDiffSidebar: FC<PullRequestDiffSidebarProps> = ({
             {t('views:repos.files', 'Files')}
           </Text>
         </Layout.Horizontal>
-
         <SearchFiles navigateToFile={goToDiff} filesList={filePaths} />
-
-        <ScrollArea className="pr-cn-sm -mr-cn-sm grid-cols-[100%] pb-7" ref={scrollAreaRef}>
+        {/* TODO: Replace pb-[28px] with a proper spacing token when available */}
+        <ScrollArea className="pr-cn-sm -mr-cn-sm grid-cols-[100%] pb-[28px]" ref={scrollAreaRef}>
           <PullRequestChangesExplorer
             paths={filePaths}
             goToDiff={goToDiff}

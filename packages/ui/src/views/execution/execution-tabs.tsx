@@ -9,7 +9,7 @@ export const ExecutionTabs = ({ className }: { className?: string }) => {
     <SubHeaderWrapper className={className}>
       <SandboxLayout.SubHeader>
         <Tabs.NavRoot>
-          <Tabs.List className="px-6">
+          <Tabs.List className="px-cn-xl">
             <Tabs.Trigger value="summary">{t('views:execution.summary', 'Summary')}</Tabs.Trigger>
             <Tabs.Trigger value="logs">{t('views:execution.logs', 'Logs')}</Tabs.Trigger>
             <Tabs.Trigger value="graph">{t('views:execution.graph', 'Graph')}</Tabs.Trigger>

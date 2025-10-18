@@ -24,7 +24,7 @@ export const SecretInputExample = () => {
         }}
         onClear={() => setSelectedSecret(null)}
         renderValue={secret => secret.name}
-        className="mb-8 max-w-xs"
+        className="mb-cn-2xl max-w-xs"
       />
       <SecretsPage
         isDrawerOpen={isDrawerOpen}

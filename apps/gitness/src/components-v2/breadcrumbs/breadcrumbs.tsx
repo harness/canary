@@ -27,8 +27,8 @@ export const Breadcrumbs = ({
       <Topbar.Left>
         {withMobileSidebarToggle && isMobile && (
           <>
-            <Sidebar.Trigger className="-ml-1" />
-            <Separator orientation="vertical" className="bg-cn-0 ml-1 mr-2 h-4" />
+            <Sidebar.Trigger className="-ml-cn-3xs" />
+            <Separator orientation="vertical" className="bg-cn-0 ml-cn-3xs mr-cn-xs h-4" />
           </>
         )}
         <Breadcrumb.Root className={breadcrumbClassName} size="sm" separator={<IconV2 name="nav-arrow-right" />}>

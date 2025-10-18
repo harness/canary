@@ -133,7 +133,7 @@ const Tree = forwardRef<HTMLDivElement, TreeViewProps>(
           direction
         }}
       >
-        <ScrollArea className="pt-4" direction={dir as Direction}>
+        <ScrollArea className="pt-cn-md" direction={dir as Direction}>
           <div className={cn('size-full', className)}>
             <AccordionPrimitive.Root
               {...props}
@@ -169,42 +169,47 @@ const Folder = forwardRef<HTMLDivElement, FolderProps & React.HTMLAttributes<HTM
     const { direction, handleExpand, expendedItems, setExpendedItems } = useTree()
 
     return (
-      <AccordionPrimitive.Item {...props} value={value} className="relative -mb-3 size-full overflow-hidden pb-3">
+      <AccordionPrimitive.Item
+        {...props}
+        value={value}
+        className="pb-cn-sm -mb-cn-sm relative size-full overflow-hidden"
+      >
         <AccordionPrimitive.Trigger
           className={cn(
-            `flex w-full gap-1 rounded-3 text-sm px-5`,
+            `flex w-full gap-1 rounded-3 text-sm px-cn-lg`,
             className,
             {
               'rounded-3': isSelect && isSelectable,
               'cursor-pointer': isSelectable,
               'cursor-not-allowed opacity-50': !isSelectable
             },
-            level >= 2 && 'pl-14',
-            level === 1 && 'pl-7'
+            // TODO: Review and fix arbitrary values
+            level >= 2 && 'pl-[56px]',
+            level === 1 && 'pl-[28px]'
           )}
           disabled={!isSelectable}
           onClick={() => handleExpand(value)}
         >
           <IconV2
             name="nav-arrow-right"
-            className={cn('text-cn-3 mt-1', expendedItems?.includes(value) && 'rotate-90')}
+            className={cn('text-cn-3 mt-cn-3xs', expendedItems?.includes(value) && 'rotate-90')}
             size="2xs"
           />
           <div className="flex w-full justify-between gap-x-2">
             <div className="flex gap-x-2">
               <div className="flex size-5 flex-none items-center justify-center">{getStatusIcon(status)}</div>
-              <span className="text-cn-1 mt-0.5 text-left leading-tight">
+              <span className="text-cn-1 mt-cn-4xs text-left leading-tight">
                 {element}&nbsp;<span className="text-cn-3">({React.Children.count(children)})</span>
               </span>
             </div>
             <span className="text-cn-2 flex-none">{duration ?? '--'}</span>
           </div>
         </AccordionPrimitive.Trigger>
-        <AccordionPrimitive.Content className="data-[state=closed]:animate-accordion-up data-[state=open]:animate-accordion-down relative h-full overflow-visible px-5 text-sm">
+        <AccordionPrimitive.Content className="data-[state=closed]:animate-accordion-up data-[state=open]:animate-accordion-down px-cn-lg relative h-full overflow-visible text-sm">
           <AccordionPrimitive.Root
             dir={direction}
             type="multiple"
-            className="mt-3 flex flex-col gap-3 rtl:mr-5"
+            className="mt-cn-sm rtl:mr-cn-lg flex flex-col gap-3"
             defaultValue={expendedItems}
             value={expendedItems}
             onValueChange={value => {
@@ -260,14 +265,15 @@ const File = forwardRef<
           disabled={!isSelectable}
           aria-label="File"
           className={cn(
-            'flex relative w-full cursor-pointer items-center gap-1 rounded-3 text-sm duration-200 ease-in-out rtl:pl-1 rtl:pr-0',
+            'flex relative w-full cursor-pointer items-center gap-1 rounded-3 text-sm duration-200 ease-in-out rtl:pl-cn-3xs rtl:pr-0',
             {
               ['after:absolute after:bg-cn-hover after:-inset-x-1 after:-inset-y-1.5 after:-z-10 after:rounded']:
                 isSelected
             },
             isSelectable ? 'cursor-pointer' : 'cursor-not-allowed opacity-50',
-            level >= 2 && 'pl-14',
-            level === 1 && 'pl-7',
+            // TODO: Review and fix arbitrary values
+            level >= 2 && 'pl-[56px]',
+            level === 1 && 'pl-[28px]',
             className
           )}
           onClick={() => {
@@ -275,10 +281,10 @@ const File = forwardRef<
             selectItem(value)
           }}
         >
-          <div className="relative flex w-full justify-between gap-x-2 pl-4">
+          <div className="pl-cn-md relative flex w-full justify-between gap-x-2">
             <div className="flex gap-x-2">
               <div className="flex size-5 flex-none items-center justify-center">{getStatusIcon(status)}</div>
-              <span className="text-cn-1 mt-0.5 text-left leading-tight">{children}</span>
+              <span className="text-cn-1 mt-cn-4xs text-left leading-tight">{children}</span>
             </div>
             <span className="text-cn-2 flex-none">{duration ?? '--'}</span>
           </div>
@@ -337,7 +343,7 @@ const CollapseButton = forwardRef<
     return (
       <button
         // variant={'ghost'}
-        className="absolute bottom-1 right-2 h-8 w-fit p-1"
+        className="p-cn-3xs absolute bottom-1 right-2 h-8 w-fit"
         onClick={expendedItems && expendedItems.length > 0 ? closeAll : () => expendAllTree(elements)}
         ref={ref}
         {...props}

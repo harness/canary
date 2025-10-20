@@ -157,18 +157,15 @@ export const LineTitle: React.FC<LineTitleProps> = ({
           <Tag value={t('views:pullRequests.changedSinceLastView')} theme="orange" />
         )}
         {showViewed ? (
-          <Button
+          <button
             tabIndex={-1}
-            variant="ghost"
-            size="sm"
-            className="gap-x-2.5 px-2.5 py-1.5"
             onClick={e => {
               e.stopPropagation()
               handleToggleViewed(!viewed)
             }}
           >
             <Checkbox checked={viewed} label={t('views:pullRequests.markViewed')} />
-          </Button>
+          </button>
         ) : null}
       </div>
     </div>
@@ -343,7 +340,7 @@ export const PullRequestAccordion: React.FC<{
       <Accordion.Item value={header?.text ?? ''} className="rounded-3 border-none">
         <Accordion.Trigger
           className={cn(
-            'bg-cn-2 border-cn-2 group-[[data-state=closed]]:rounded-3 border px-4 py-2 transition-[border-radius] duration-300 [&>.cn-accordion-trigger-indicator]:m-0 [&>.cn-accordion-trigger-indicator]:self-center',
+            'bg-cn-2 border-cn-2 group-[[data-state=closed]]:rounded-3 border px-cn-md py-cn-xs transition-[border-radius] duration-300 [&>.cn-accordion-trigger-indicator]:m-0 [&>.cn-accordion-trigger-indicator]:self-center',
             isOpen ? 'rounded-t-3' : 'rounded-3'
           )}
           headerClassName="z-[18] sticky top-[123px] bg-cn-1 group"
@@ -370,7 +367,7 @@ export const PullRequestAccordion: React.FC<{
         >
           <div className="bg-transparent">
             {(fileDeleted || isDiffTooLarge || fileUnchanged || header?.isBinary) && !showHiddenDiff ? (
-              <Layout.Vertical align="center" className="py-5">
+              <Layout.Vertical align="center" className="py-cn-lg">
                 {!fileUnchanged && (
                   <Button
                     className="text-cn-brand"
@@ -396,7 +393,7 @@ export const PullRequestAccordion: React.FC<{
               <>
                 {startingLine ? (
                   <div className="bg-[--diff-hunk-lineNumber--]">
-                    <div className="ml-16 w-full px-2 py-1">{startingLine}</div>
+                    <div className="px-cn-xs py-cn-3xs w-full pl-[48px]">{startingLine}</div>
                   </div>
                 ) : null}
                 <PullRequestDiffViewer

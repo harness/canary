@@ -36,7 +36,7 @@ export default {
       border: 'var(--cn-input-border) solid var(--cn-border-2)',
       borderRadius: 'var(--cn-input-radius)',
       backgroundColor: 'var(--cn-comp-input-bg)',
-      '@apply w-full font-body-normal transition-[color,box-shadow,border-color] px-3 py-2': '',
+      '@apply w-full font-body-normal transition-[color,box-shadow,border-color] px-cn-sm py-cn-xs': '',
 
       '&:where(:focus-within):not(.cn-multi-select-danger)': {
         borderColor: 'var(--cn-border-brand)',
@@ -77,7 +77,8 @@ export default {
     '&-dropdown': {
       backgroundColor: 'var(--cn-bg-3)',
       borderColor: 'var(--cn-border-2)',
-      '@apply border rounded-3 shadow-3 mt-1 overflow-hidden animate-in absolute top-1 z-[55] w-full outline-none': ''
+      '@apply border rounded-3 shadow-3 mt-cn-3xs overflow-hidden animate-in absolute top-1 z-[55] w-full outline-none':
+        ''
     }
   }
 }

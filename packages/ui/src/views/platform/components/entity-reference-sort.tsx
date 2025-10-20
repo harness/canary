@@ -52,7 +52,7 @@ export const EntityReferenceSort: React.FC<EntityReferenceSortProps> = ({
           variant="outline"
           size="md"
           onClick={() => handleFavoriteChange(!favoriteSelected)}
-          className="flex items-center gap-2 px-2"
+          className="flex items-center gap-2 px-cn-xs"
         >
           <Checkbox
             checked={favoriteSelected}

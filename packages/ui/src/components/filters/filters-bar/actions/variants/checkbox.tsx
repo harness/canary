@@ -90,7 +90,7 @@ const MultiSelectFilter = ({
         <DropdownMenu.Header>
           <SearchInput
             ref={searchInputRef}
-            inputContainerClassName="mb-0.5"
+            inputContainerClassName="mb-cn-4xs"
             placeholder={placeholder}
             autoFocus
             onKeyDown={e => {

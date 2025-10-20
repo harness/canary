@@ -67,7 +67,7 @@ export const ProjectMemberListView: FC<ProjectMemberListViewProps> = ({
       ) : (
         <SandboxLayout.Main>
           <SandboxLayout.Content maxWidth="3xl">
-            <Text as="h1" variant="heading-section" className="mb-6">
+            <Text as="h1" variant="heading-section" className="mb-cn-xl">
               {t('views:projectSettings.members', 'Member')}
             </Text>
 

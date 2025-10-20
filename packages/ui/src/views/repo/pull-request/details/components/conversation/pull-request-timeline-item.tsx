@@ -146,7 +146,7 @@ const ItemHeader: FC<ItemHeaderProps> = memo(
              * ============
              */}
 
-            {!!avatar && <div className="mr-0.5">{avatar}</div>}
+            {!!avatar && <div className="mr-cn-4xs">{avatar}</div>}
             {!!name && (
               <Text variant="body-single-line-normal" color="foreground-1">
                 {name}
@@ -161,7 +161,7 @@ const ItemHeader: FC<ItemHeaderProps> = memo(
             {description}
             {timestamp && (
               <>
-                <Separator orientation="vertical" className="mx-0.5 h-4" />
+                <Separator orientation="vertical" className="mx-cn-4xs h-4" />
                 <TimeAgoCard timestamp={timestamp} />
               </>
             )}

@@ -11,7 +11,7 @@ export function AddNode(props: AddNodeProp) {
   return (
     <div className="border-cn-2 flex size-full items-center justify-center rounded-full border">
       <Button
-        className="self-center p-3"
+        className="self-center p-cn-sm"
         rounded
         style={{ alignSelf: 'center' }}
         variant="outline"

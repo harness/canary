@@ -3,7 +3,7 @@ import { cn } from '@utils/cn'
 const StepsPaletteItemLayout = {
   Root: function Root({ children, ...rest }: React.PropsWithChildren<React.HTMLAttributes<HTMLDivElement>>) {
     return (
-      <div className="flex size-full cursor-pointer flex-row gap-3.5 px-4 py-3" {...rest}>
+      <div className="px-cn-md py-cn-sm flex size-full cursor-pointer flex-row gap-3.5" {...rest}>
         {children}
       </div>
     )
@@ -21,17 +21,17 @@ const StepsPaletteItemLayout = {
     return <div className={cn('font-medium leading-4', className)}>{children}</div>
   },
   Description: function Description({ children, className }: { children: React.ReactNode; className?: string }) {
-    return <div className={cn('mt-1.5 line-clamp-2 overflow-hidden text-sm leading-4', className)}>{children}</div>
+    return <div className={cn('mt-cn-2xs line-clamp-2 overflow-hidden text-sm leading-4', className)}>{children}</div>
   },
   BadgeWrapper: function BadgeWrapper({ children }: { children: React.ReactNode }) {
     return (
-      <div className="self-start rounded-full bg-gradient-to-r from-[#B1CBFF] via-[#6D6B75] to-[#B1CBFF] p-0.5">
-        <div className="rounded-full bg-cn-1 px-2 text-sm">{children}</div>
+      <div className="p-cn-4xs self-start rounded-full bg-gradient-to-r from-[#B1CBFF] via-[#6D6B75] to-[#B1CBFF]">
+        <div className="bg-cn-1 px-cn-xs rounded-full text-sm">{children}</div>
       </div>
     )
   },
   RightItem: function RightItem({ children }: { children: React.ReactNode }) {
-    return <div className="flex items-center p-0.5">{children}</div>
+    return <div className="p-cn-4xs flex items-center">{children}</div>
   }
 }
 

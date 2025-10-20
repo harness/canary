@@ -16,7 +16,7 @@ interface FormSeparatorProps {
  * <FormSeparator dashed />
  *
  * // With custom className
- * <FormSeparator className="my-4" />
+ * <FormSeparator className="my-cn-md" />
  */
 export function FormSeparator({ dashed, dotted, className }: FormSeparatorProps) {
   return (

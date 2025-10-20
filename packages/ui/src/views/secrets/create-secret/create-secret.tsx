@@ -176,18 +176,18 @@ export function CreateSecretPage({
           )}
           {(!prefilledFormData || prefilledFormData.type === SecretCreationType.SECRET_FILE) && (
             <div>
-              <Text<'label'> as="label" htmlFor="secret-file-input" className="mb-2.5 block" variant="body-strong">
+              <Text<'label'> as="label" htmlFor="secret-file-input" className="mb-cn-xs block" variant="body-strong">
                 Secret File
               </Text>
               <div
-                className="rounded-3 border-2 border-dashed border-cn-2 p-4"
+                className="rounded-3 border-2 border-dashed border-cn-2 p-cn-md"
                 onDragOver={handleDragOver}
                 onDrop={handleDrop}
               >
                 <div className="flex flex-col items-center justify-center">
                   {!selectedFile ? (
                     <>
-                      <Text className="mb-2">Drag and drop your file here or click to browse</Text>
+                      <Text className="mb-cn-xs">Drag and drop your file here or click to browse</Text>
                       <Button type="button" variant="outline" onClick={openFileInput}>
                         Browse Files
                       </Button>
@@ -212,7 +212,7 @@ export function CreateSecretPage({
                 </div>
               </div>
               {errors.file && (
-                <Text color="danger" className="mt-1">
+                <Text color="danger" className="mt-cn-3xs">
                   {errors.file.message?.toString()}
                 </Text>
               )}
@@ -222,7 +222,7 @@ export function CreateSecretPage({
             <Accordion.Item value="secret-details">
               <Accordion.Trigger>Metadata</Accordion.Trigger>
               <Accordion.Content>
-                <Fieldset className="rounded-3 border p-4">
+                <Fieldset className="rounded-3 border p-cn-md">
                   {/* DESCRIPTION */}
                   <FormInput.Textarea
                     id="description"
@@ -247,12 +247,12 @@ export function CreateSecretPage({
         </Fieldset>
 
         {apiError && (
-          <Alert.Root theme="danger" className="mb-8">
+          <Alert.Root theme="danger" className="mb-cn-2xl">
             <Alert.Description>{apiError?.toString()}</Alert.Description>
           </Alert.Root>
         )}
 
-        <div className="absolute inset-x-0 bottom-0 bg-cn-2 p-4 shadow-3">
+        <div className="absolute inset-x-0 bottom-0 bg-cn-2 p-cn-md shadow-3">
           <ControlGroup>
             <ButtonLayout.Root>
               <ButtonLayout.Primary>
@@ -268,8 +268,6 @@ export function CreateSecretPage({
             </ButtonLayout.Root>
           </ControlGroup>
         </div>
-
-        <div className="pb-16"></div>
       </FormWrapper>
 
       {/* Hidden file input */}

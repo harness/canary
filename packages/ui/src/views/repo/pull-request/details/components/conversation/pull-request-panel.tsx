@@ -573,7 +573,7 @@ const PullRequestPanel = ({
                     {shouldShowMoreActions && (
                       <MoreActionsTooltip
                         theme={buttonState.theme}
-                        className="!ml-2"
+                        className="!ml-cn-xs"
                         iconName="more-horizontal"
                         sideOffset={4}
                         actions={[
@@ -846,7 +846,7 @@ const PullRequestPanel = ({
         )}
       </StackedList.Root>
       {!!error && (
-        <Alert.Root theme="danger" className="mt-2">
+        <Alert.Root theme="danger" className="mt-cn-xs">
           <Alert.Title>{error}</Alert.Title>
         </Alert.Root>
       )}

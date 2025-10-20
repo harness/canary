@@ -139,7 +139,7 @@ export const ManageNavigation = ({
                           as="li"
                           key={item.id}
                           gapX="xs"
-                          className="w-full grow cursor-not-allowed rounded p-1 px-0 opacity-55"
+                          className="w-full grow cursor-not-allowed rounded p-cn-3xs px-0 opacity-55"
                         >
                           <IconV2 className="w-3.5" name="lock" size="xs" />
                           <Text>{item.title}</Text>

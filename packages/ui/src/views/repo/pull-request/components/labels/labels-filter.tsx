@@ -74,7 +74,7 @@ export function LabelsFilter({
   return (
     <>
       <SearchInput
-        inputContainerClassName="w-auto mx-1.5 mt-2 mb-2.5"
+        inputContainerClassName="w-auto mx-cn-2xs my-cn-xs"
         onChange={value => onInputChange(value)}
         placeholder="Search..."
         onKeyDown={e => e.stopPropagation()}
@@ -166,7 +166,7 @@ export function LabelsFilter({
           )
         )}
 
-      {description && <div className="text-cn-3 mx-2 my-4 text-sm">{description}</div>}
+      {description && <div className="text-cn-3 mx-cn-xs my-cn-md text-sm">{description}</div>}
     </>
   )
 }

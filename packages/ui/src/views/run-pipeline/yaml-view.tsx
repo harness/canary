@@ -84,7 +84,7 @@ export default function YamlView(props: YamlViewProps) {
       {problems.problemsCount.all > 0 && (
         <>
           <Resizable.Handle />
-          <Resizable.Panel defaultSize={20} id="panel" minSize={10} maxSize={90} order={2} className="h-full py-2">
+          <Resizable.Panel defaultSize={20} id="panel" minSize={10} maxSize={90} order={2} className="h-full py-cn-xs">
             <UnifiedPipelineStudioProblemsPanel problems={problems.problems} />
           </Resizable.Panel>
         </>

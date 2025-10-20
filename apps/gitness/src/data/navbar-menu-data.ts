@@ -49,7 +49,7 @@ export const getNavbarMenuData: GetNavbarMenuData = ({ t, spaceId, repoId, route
       {
         id: 6,
         iconName: 'feature-flags',
-        title: t('component:navbar.feature-flags'),
+        title: t('component:navbar.featureFlags.mainTitle', 'Feature Flags'),
         description: 'Optimize feature rollout velocity.',
         to: routes.toFeatureFlags()
       }

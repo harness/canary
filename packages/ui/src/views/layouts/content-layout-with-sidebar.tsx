@@ -43,23 +43,20 @@ export const ContentLayoutWithSidebar: FC<ContentLayoutWithSidebarProps> = ({
 
   return (
     <SandboxLayout.Content className="gap-x-cn-4xl relative flex-row">
-      <Layout.Grid
-        className={cn('top-[var(--cn-breadcrumbs-height)] sticky w-[228px] h-fit -mt-7 pt-7 shrink-0')}
-        gapY="lg"
-      >
+      <Layout.Grid className={cn('top-[var(--cn-breadcrumbs-height)] sticky w-[228px] h-fit shrink-0')} gapY="lg">
         {showBackButton && (
           <Link size="sm" prefixIcon to={backButtonTo?.() ?? ''}>
             {backButtonLabel}
           </Link>
         )}
 
-        <ScrollArea className="h-full pb-11">
+        <ScrollArea className="h-full pb-cn-3xl">
           {sidebarMenu.map((group, group_idx) => (
             <Fragment key={group.groupId}>
-              {group_idx > 0 && <Separator className="mb-2" />}
-              <Layout.Grid className="w-full px-0 pb-1.5" gapY="3xs">
+              {group_idx > 0 && <Separator className="mb-cn-xs" />}
+              <Layout.Grid className="w-full px-0 pb-cn-2xs" gapY="3xs">
                 {group?.title && (
-                  <Text className="mt-2 px-2.5" variant="caption-single-line-normal">
+                  <Text className="mt-cn-xs px-cn-sm" variant="caption-single-line-normal">
                     {group?.title}
                   </Text>
                 )}
@@ -71,7 +68,7 @@ export const ContentLayoutWithSidebar: FC<ContentLayoutWithSidebarProps> = ({
                         truncate
                         variant={isActive ? 'body-single-line-strong' : 'body-single-line-normal'}
                         className={cn(
-                          'hover:bg-cn-hover hover:text-cn-1 z-10 w-full rounded-3 px-3 py-2 duration-0 ease-in-out bg-transparent transition-colors select-none',
+                          'hover:bg-cn-hover hover:text-cn-1 z-10 w-full rounded-3 px-cn-sm py-cn-xs duration-0 ease-in-out bg-transparent transition-colors select-none',
                           { 'bg-cn-hover': isActive }
                         )}
                       >

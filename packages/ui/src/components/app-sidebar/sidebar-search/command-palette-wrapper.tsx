@@ -159,15 +159,19 @@ export function CommandPaletteWrapper() {
         }}
       >
         <CommandPalette.Input placeholder={placeholder} value={search} onValueChange={setSearch} />
-        <CommandPalette.List className="pb-3">
+        <CommandPalette.List className="pb-cn-sm">
           <CommandPalette.Empty>{t('component:navbar.nothing-found', 'Nothing Found')}</CommandPalette.Empty>
 
           {!page ? (
             Object.entries(MENU_OPTIONS).map(([key, items]) => (
               <CommandPalette.Group key={key} heading={key}>
                 {items.map(({ label, key, action, icon, shortcut }) => (
-                  <CommandPalette.Item key={label} onSelect={() => (key ? onItemClick(key) : action?.())}>
-                    <div className="mr-2.5">{icon && icon()}</div>
+                  <CommandPalette.Item
+                    key={label}
+                    onSelect={() => (key ? onItemClick(key) : action?.())}
+                    className="gap-x-cn-xs"
+                  >
+                    <div>{icon && icon()}</div>
                     <Text color="foreground-1">{label}</Text>
                     {shortcut && (
                       <CommandPalette.Shortcut>
@@ -182,9 +186,9 @@ export function CommandPaletteWrapper() {
           ) : (
             <CommandPalette.Group heading={page}>
               {SUB_ITEMS[page]?.map(({ label, url, icon }) => (
-                <CommandPalette.Item key={label} onSelect={() => (window.location.href = url!)}>
-                  <div className="mr-2.5">{icon && icon()}</div>
-                  <div className="">{label}</div>
+                <CommandPalette.Item key={label} onSelect={() => (window.location.href = url!)} className="gap-x-cn-xs">
+                  <div>{icon && icon()}</div>
+                  <div>{label}</div>
                 </CommandPalette.Item>
               ))}
             </CommandPalette.Group>

@@ -77,7 +77,7 @@ export const DataTableDemo: React.FC = () => {
   const renderSubComponent = ({ row }: { row: Row<User> }) => {
     const user = row.original
     return (
-      <div className="py-1">
+      <div className="py-cn-3xs">
         <p>This is a placeholder for expanded content for {user.name}</p>
       </div>
     )

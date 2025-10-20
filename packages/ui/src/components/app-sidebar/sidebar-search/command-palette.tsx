@@ -26,7 +26,7 @@ const CommandPaletteDialog = ({ children, open, onOpenChange }: PropsWithChildre
   <Dialog.Root open={open} onOpenChange={onOpenChange}>
     <Dialog.Content hideClose>
       <Dialog.Body>
-        <Root className="[&_[cmdk-group-heading]]:px-2 [&_[cmdk-group-heading]]:font-medium [&_[cmdk-group-heading]]:text-cn-3 [&_[cmdk-group]:not([hidden])_~[cmdk-group]]:pt-0 [&_[cmdk-group]]:px-2 [&_[cmdk-input-wrapper]_svg]:size-5 [&_[cmdk-input]]:h-12 [&_[cmdk-item]]:px-2.5 [&_[cmdk-item]]:py-1.5 [&_[cmdk-item]_svg]:h-auto [&_[cmdk-item]_svg]:w-5">
+        <Root className="[&_[cmdk-group-heading]]:px-cn-xs [&_[cmdk-group-heading]]:text-cn-3 [&_[cmdk-group]]:px-cn-xs [&_[cmdk-item]]:py-cn-2xs [&_[cmdk-group-heading]]:font-medium [&_[cmdk-group]:not([hidden])_~[cmdk-group]]:pt-0 [&_[cmdk-input-wrapper]_svg]:size-5 [&_[cmdk-input]]:h-12 [&_[cmdk-item]]:px-cn-sm [&_[cmdk-item]_svg]:h-auto [&_[cmdk-item]_svg]:w-5">
           {children}
         </Root>
       </Dialog.Body>
@@ -39,7 +39,7 @@ const Dropdown = ({ children, open, onOpenChange }: PropsWithChildren<DialogProp
   <Dialog.Root open={open} onOpenChange={onOpenChange}>
     <Dialog.Content>
       <Dialog.Body>
-        <Root className="[&_[cmdk-group-heading]]:px-2 [&_[cmdk-group-heading]]:font-medium [&_[cmdk-group-heading]]:text-cn-3 [&_[cmdk-group]:not([hidden])_~[cmdk-group]]:pt-0 [&_[cmdk-group]]:px-2 [&_[cmdk-input-wrapper]_svg]:size-5 [&_[cmdk-input]]:h-12 [&_[cmdk-item]]:px-2.5 [&_[cmdk-item]]:py-1.5 [&_[cmdk-item]_svg]:h-auto [&_[cmdk-item]_svg]:w-5">
+        <Root className="[&_[cmdk-group-heading]]:px-cn-xs [&_[cmdk-group-heading]]:text-cn-3 [&_[cmdk-group]]:px-cn-xs [&_[cmdk-item]]:py-cn-2xs [&_[cmdk-group-heading]]:font-medium [&_[cmdk-group]:not([hidden])_~[cmdk-group]]:pt-0 [&_[cmdk-input-wrapper]_svg]:size-5 [&_[cmdk-input]]:h-12 [&_[cmdk-item]]:px-cn-sm [&_[cmdk-item]_svg]:h-auto [&_[cmdk-item]_svg]:w-5">
           {children}
         </Root>
       </Dialog.Body>
@@ -52,11 +52,11 @@ const Input = React.forwardRef<
   React.ElementRef<typeof CommandPrimitive.Input>,
   React.ComponentPropsWithoutRef<typeof CommandPrimitive.Input>
 >(({ className, ...props }, ref) => (
-  <div className="flex items-center border-b px-4">
+  <div className="px-cn-md flex items-center border-b">
     <CommandPrimitive.Input
       ref={ref}
       className={cn(
-        'flex h-10 w-full rounded-3 bg-transparent py-3 text-base text-cn-1 outline-none placeholder:text-cn-3 disabled:cursor-not-allowed disabled:opacity-50 focus:ring-0 focus-visible:outline-none',
+        'flex h-10 w-full rounded-3 bg-transparent py-cn-sm text-base text-cn-1 outline-none placeholder:text-cn-3 disabled:cursor-not-allowed disabled:opacity-50 focus:ring-0 focus-visible:outline-none',
         className
       )}
       {...props}
@@ -83,7 +83,7 @@ List.displayName = 'List'
 const Empty = React.forwardRef<
   React.ElementRef<typeof CommandPrimitive.Empty>,
   React.ComponentPropsWithoutRef<typeof CommandPrimitive.Empty>
->((props, ref) => <CommandPrimitive.Empty ref={ref} className="py-6 text-center text-sm" {...props} />)
+>((props, ref) => <CommandPrimitive.Empty ref={ref} className="py-cn-xl text-center text-sm" {...props} />)
 Empty.displayName = 'Empty'
 
 const Group = React.forwardRef<
@@ -93,7 +93,7 @@ const Group = React.forwardRef<
   <CommandPrimitive.Group
     ref={ref}
     className={cn(
-      'overflow-hidden mt-2.5 p-1 text-cn-3 text-sm [&_[cmdk-group-heading]]:px-2.5 [&_[cmdk-group-heading]]:py-1.5 [&_[cmdk-group-heading]]:text-sm [&_[cmdk-group-heading]]:font-normal [&_[cmdk-group-heading]]:text-cn-3',
+      'overflow-hidden mt-cn-xs p-cn-3xs text-cn-3 text-sm [&_[cmdk-group-heading]]:px-cn-sm [&_[cmdk-group-heading]]:py-cn-2xs [&_[cmdk-group-heading]]:text-sm [&_[cmdk-group-heading]]:font-normal [&_[cmdk-group-heading]]:text-cn-3',
       className
     )}
     {...props}
@@ -108,7 +108,7 @@ const Item = React.forwardRef<
   <CommandPrimitive.Item
     ref={ref}
     className={cn(
-      'relative flex cursor-default gap-0 select-none items-center font-normal rounded-2 px-5 py-0 text-sm text-cn-1 outline-none data-[disabled=true]:pointer-events-none data-[selected=true]:bg-cn-hover data-[selected=true]:text-cn-1 data-[disabled=true]:opacity-50 [&_svg]:pointer-events-none [&_svg]:size-4 [&_svg]:shrink-0',
+      'relative flex cursor-default gap-0 select-none items-center font-normal rounded-2 px-cn-lg py-0 text-sm text-cn-1 outline-none data-[disabled=true]:pointer-events-none data-[selected=true]:bg-cn-hover data-[selected=true]:text-cn-1 data-[disabled=true]:opacity-50 [&_svg]:pointer-events-none [&_svg]:size-4 [&_svg]:shrink-0',
       className
     )}
     {...props}
@@ -120,7 +120,11 @@ const Separator = React.forwardRef<
   React.ElementRef<typeof CommandPrimitive.Separator>,
   React.ComponentPropsWithoutRef<typeof CommandPrimitive.Separator>
 >(({ className, ...props }, ref) => (
-  <CommandPrimitive.Separator ref={ref} className={cn('-mx-1 h-px bg-cn-separator-subtle', className)} {...props} />
+  <CommandPrimitive.Separator
+    ref={ref}
+    className={cn('-mx-cn-3xs h-px bg-cn-separator-subtle', className)}
+    {...props}
+  />
 ))
 Separator.displayName = 'Separator'
 
@@ -128,7 +132,7 @@ const Shortcut = ({ className, ...props }: React.HTMLAttributes<HTMLSpanElement>
   return (
     <span
       className={cn(
-        'ml-auto px-[6px] flex gap-0.5 rounded-1 text-2 tracking-tight border border-cn-2 bg-cn-3 text-cn-2',
+        'ml-auto px-cn-2xs flex gap-0.5 rounded-1 text-2 tracking-tight border border-cn-2 bg-cn-3 text-cn-2',
         className
       )}
       {...props}

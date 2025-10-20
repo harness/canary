@@ -94,7 +94,7 @@ const CommitsAccordion: FC<{
           indicatorPosition="left"
         >
           <Accordion.Item value={header?.text ?? ''} className="border-none">
-            <Accordion.Trigger className="[&>.cn-accordion-trigger-indicator]:m-0 [&>.cn-accordion-trigger-indicator]:self-center !py-cn-xs !px-cn-sm hover:cursor-pointer">
+            <Accordion.Trigger className="!py-cn-xs !px-cn-sm hover:cursor-pointer [&>.cn-accordion-trigger-indicator]:m-0 [&>.cn-accordion-trigger-indicator]:self-center">
               <StackedList.Field
                 title={<LineTitle {...header} toRepoFileDetails={toRepoFileDetails} commitSHA={commitSHA} />}
                 disableTruncate
@@ -103,7 +103,7 @@ const CommitsAccordion: FC<{
             <Accordion.Content className="pb-0">
               <div className="rounded-b-3 overflow-hidden border-t bg-transparent">
                 {(fileDeleted || isDiffTooLarge || fileUnchanged || header?.isBinary) && !showHiddenDiff ? (
-                  <Layout.Vertical align="center" className="w-full py-5">
+                  <Layout.Vertical align="center" className="py-cn-lg w-full">
                     {!fileUnchanged && (
                       <Button
                         className="text-cn-brand"
@@ -129,7 +129,8 @@ const CommitsAccordion: FC<{
                   <>
                     {startingLine && (
                       <div className="bg-[--diff-hunk-lineNumber--]">
-                        <div className="ml-16 w-full px-2 py-1">{startingLine}</div>
+                        {/* TODO: Replace pl-[48px] with a proper spacing token when available */}
+                        <div className="px-cn-xs py-cn-3xs w-full pl-[48px]">{startingLine}</div>
                       </div>
                     )}
                     <PullRequestDiffViewer

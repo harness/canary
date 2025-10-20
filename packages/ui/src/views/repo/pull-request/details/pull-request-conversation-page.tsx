@@ -48,7 +48,7 @@ export const PullRequestConversationPage: FC<PullRequestConversationPageProps> =
           <SandboxLayout.Content className="pr-cn-xl pl-0 pt-0">
             {/*TODO: update with design  */}
             {!!rebaseErrorMessage && (
-              <Alert.Root theme="danger" className="mb-5" dismissible>
+              <Alert.Root theme="danger" className="mb-cn-lg" dismissible>
                 <Alert.Title>Cannot rebase branch</Alert.Title>
                 <Alert.Description>
                   <p>{rebaseErrorMessage}</p>

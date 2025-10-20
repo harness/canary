@@ -70,7 +70,7 @@ export function SerialGroupNode(props: SerialGroupNodeProps) {
       {!collapsed && isEmpty && (
         <Button
           rounded
-          className="self-center p-3"
+          className="self-center p-cn-sm"
           variant="outline"
           onMouseDown={e => e.stopPropagation()}
           onClick={onAddInClick}

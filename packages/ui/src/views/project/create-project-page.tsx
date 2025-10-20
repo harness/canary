@@ -118,7 +118,7 @@ export const CreateProjectPage: FC<CreateProjectPageProps> = props => {
 
   return (
     <Floating1ColumnLayout
-      className="flex-col justify-start bg-cn-1 pt-20 sm:pt-[8.75rem]"
+      className="flex-col justify-start bg-cn-1 pt-cn-4xl sm:pt-[140px]"
       highlightTheme={hasError ? 'error' : 'green'}
       verticalCenter
     >
@@ -127,25 +127,25 @@ export const CreateProjectPage: FC<CreateProjectPageProps> = props => {
           {...backLinkProps}
           prefixIcon
           variant="secondary"
-          className={cn('fixed left-[14.5%] top-[3.25rem] p-2', backLinkProps?.className)}
+          className={cn('fixed left-[14.5%] top-[3.25rem] p-cn-xs', backLinkProps?.className)}
         >
           {t('views:createProject.backButton', 'Back')}
         </StyledLink>
       )}
 
       <div className="relative z-10 w-80 max-w-full">
-        <div className="mb-10 grid justify-items-center">
+        <div className="mb-cn-3xl grid justify-items-center">
           {isLightTheme ? (
             <Illustration name="create-workspace-light" />
           ) : (
             <CreateProjectAnimatedLogo hasError={hasError} />
           )}
 
-          <Text className="mt-3" variant="heading-section" align="center" as="h1">
+          <Text className="mt-cn-sm" variant="heading-section" align="center" as="h1">
             {t('views:createProject.title', 'Create your new project')}
           </Text>
 
-          <Text className="mt-0.5">
+          <Text className="mt-cn-4xs">
             {t('views:createProject.description', 'Organize your repositories, pipelines and more.')}
           </Text>
         </div>
@@ -169,13 +169,13 @@ export const CreateProjectPage: FC<CreateProjectPageProps> = props => {
           </Fieldset>
 
           <ControlGroup type="button">
-            <Button className="mt-3 w-full" rounded type="submit" loading={isLoading} disabled={hasError}>
+            <Button className="mt-cn-sm w-full" rounded type="submit" loading={isLoading} disabled={hasError}>
               {isLoading
                 ? t('views:createProject.create.projectCreation', 'Creating project...')
                 : t('views:createProject.create.createProject', 'Create project')}
             </Button>
 
-            <div className="mt-3 flex items-center justify-center gap-2">
+            <div className="mt-cn-sm flex items-center justify-center gap-2">
               <div className="w-[145px] shrink border-t border-cn-3" />
               <Text color="foreground-3" as="span">
                 {t('views:createProject.or', 'or')}
@@ -184,14 +184,14 @@ export const CreateProjectPage: FC<CreateProjectPageProps> = props => {
             </div>
 
             {/* TODO: Update the variant of this button to outline once the component supports this style. */}
-            <Button asChild className="mt-3 w-full" rounded variant="outline">
+            <Button asChild className="mt-cn-sm w-full" rounded variant="outline">
               <Link to={importProjectLinkProps.to}>{t('views:createProject.importProject', 'Import project')}</Link>
             </Button>
           </ControlGroup>
         </FormWrapper>
 
         {isFirst && (
-          <Text className="mt-4" align="center" color="foreground-3">
+          <Text className="mt-cn-md" align="center" color="foreground-3">
             {t('views:createProject.logout.question', 'Want to use a different account?')}{' '}
             <StyledLink {...props.logoutLinkProps}>{t('views:createProject.logout.link', 'Log out')}</StyledLink>
           </Text>

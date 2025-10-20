@@ -40,7 +40,7 @@ const InputOTPSlot = forwardRef<HTMLDivElement, InputOTPSlotProps>(({ index, cla
     <div
       ref={ref}
       className={cn(
-        'relative flex items-center justify-center h-[52px] w-11 rounded border border-cn-2 p-2 text-2xl transition-all',
+        'relative flex items-center justify-center h-[52px] w-11 rounded border border-cn-2 p-cn-xs text-2xl transition-all',
         isActive && 'border-cn-3 z-10',
         className
       )}

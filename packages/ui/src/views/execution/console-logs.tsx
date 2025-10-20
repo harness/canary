@@ -45,11 +45,11 @@ const ConsoleLogs: FC<ConsoleLogsProps> = ({ logs, query }) => {
   const logText = useCallback(
     (log: string) => {
       if (!query?.length) {
-        return <span className="font-body-code ml-2 flex gap-1 text-sm font-normal">{log}</span>
+        return <span className="font-body-code ml-cn-xs flex gap-1 text-sm font-normal">{log}</span>
       }
 
       const match = log.match(new RegExp(query, 'i'))
-      if (!match) return <span className="font-body-code ml-2 flex gap-1 text-sm font-normal">{log}</span>
+      if (!match) return <span className="font-body-code ml-cn-xs flex gap-1 text-sm font-normal">{log}</span>
 
       const matchIndex = match.index ?? 0
       return (
@@ -67,21 +67,21 @@ const ConsoleLogs: FC<ConsoleLogsProps> = ({ logs, query }) => {
 
   return (
     // TODO: bg-logs-background- classnames are no longer supported and need to be replaced
-    <div ref={containerRef} className="bg-logs-background-1 overflow-y-auto pt-4">
+    <div ref={containerRef} className="bg-logs-background-1 pt-cn-md overflow-y-auto">
       {logs.filter(Boolean).map(({ out, time, type }, index) => {
         const dateTime = time ? formatTimestamp(time * 1_000) : ''
 
         return (
           <div
             key={index}
-            className={cn('text-2 flex w-full items-center pl-5  font-body-code leading-normal', {
+            className={cn('text-2 flex w-full items-center pl-cn-lg  font-body-code leading-normal', {
               'bg-logs-background-6': type === LivelogLineType.WARNING,
               'bg-logs-background-7': type === LivelogLineType.ERROR,
-              'pt-1.5': index !== 0
+              'pt-cn-2xs': index !== 0
             })}
           >
             <div
-              className={cn('w-1 h-[21px] mr-1.5 bg-logs-background-2', {
+              className={cn('w-1 h-[21px] mr-cn-2xs bg-logs-background-2', {
                 'bg-logs-background-3': type === LivelogLineType.INFO,
                 'bg-logs-background-4': type === LivelogLineType.WARNING,
                 'bg-logs-background-5': type === LivelogLineType.ERROR

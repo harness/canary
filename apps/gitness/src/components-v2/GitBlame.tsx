@@ -67,7 +67,7 @@ export default function GitBlame({ themeConfig, codeContent, language, height, t
           commitInfo: commitInfo,
           infoContent: (
             /* IMPORTANT: itemContent accepts only atomic component that are not depends on external state (e.g. context provider) */
-            <Layout.Flex align="center" gapX="lg" className="pl-4">
+            <Layout.Flex align="center" gapX="lg" className="pl-cn-md">
               <Text style={{ width: '125px' }} truncate>
                 {formatDistanceToNow(commitInfo.author?.when)}
               </Text>

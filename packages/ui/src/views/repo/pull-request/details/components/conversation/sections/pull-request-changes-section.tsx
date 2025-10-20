@@ -99,7 +99,8 @@ const PullRequestChangesSection: FC<PullRequestChangesSectionProps> = ({
             {hasChangesStatuses && (
               <Layout.Vertical gapY="sm">
                 {hasApprovals && hasEnoughApprovals && (
-                  <Layout.Horizontal align="center" gap="2xs" className="ml-7">
+                  // TODO: Replace ml-[28px] with a proper spacing token when available
+                  <Layout.Horizontal align="center" gap="2xs" className="ml-[28px]">
                     <IconV2 size="lg" color="success" name="check-circle-solid" />
                     <Text color="foreground-1">
                       {t(
@@ -115,7 +116,7 @@ const PullRequestChangesSection: FC<PullRequestChangesSectionProps> = ({
                 )}
 
                 {hasRequiredLatestApprovals && hasLatestApprovals && (
-                  <Layout.Horizontal align="center" gap="2xs" className="ml-7">
+                  <Layout.Horizontal align="center" gap="2xs" className="ml-[28px]">
                     <IconV2 size="lg" color="success" name="clock-solid" />
                     <Text color="foreground-1">
                       {t(
@@ -131,7 +132,7 @@ const PullRequestChangesSection: FC<PullRequestChangesSectionProps> = ({
                 )}
 
                 {!isEmpty(changeReqEvaluations) && (
-                  <Layout.Horizontal align="center" justify="between" className="ml-7">
+                  <Layout.Horizontal align="center" justify="between" className="ml-[28px]">
                     <Layout.Horizontal align="center" gap="2xs">
                       <IconV2 size="lg" color="danger" name="warning-triangle-solid" />
                       <Text color="foreground-1">

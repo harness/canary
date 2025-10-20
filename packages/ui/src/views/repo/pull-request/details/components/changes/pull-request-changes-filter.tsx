@@ -165,7 +165,7 @@ export const PullRequestChangesFilter: React.FC<PullRequestChangesFilterProps> =
       align="center"
       justify="between"
       gap="xl"
-      className="layer-high bg-cn-1 pt-cn-xl sticky top-[var(--cn-breadcrumbs-height)] pb-2"
+      className="layer-high bg-cn-1 pt-cn-xl sticky top-[var(--cn-breadcrumbs-height)] pb-cn-xs"
     >
       <Layout.Horizontal className="grow" align="center">
         {!showExplorer && (
@@ -234,7 +234,7 @@ export const PullRequestChangesFilter: React.FC<PullRequestChangesFilterProps> =
       <Layout.Horizontal gap="xl">
         {selectedCommits[0].value === 'ALL' && (
           <FileViewGauge.Root>
-            <div className="py-1">
+            <div className="py-cn-3xs">
               <FileViewGauge.Content className="text-cn-3">
                 {viewedFiles}/{pullReqStats?.files_changed} file{pullReqStats?.files_changed === 1 ? '' : 's'} viewed
               </FileViewGauge.Content>

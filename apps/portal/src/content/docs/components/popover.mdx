@@ -26,7 +26,7 @@ The `Popover.Content` component supports built-in `title`, `description`, and `l
         title="Settings"
         description="Manage your account settings and preferences"
     >
-        <div className="grid gap-3 mt-3">
+        <div className="grid gap-3 mt-cn-sm">
             <Button variant="outline" size="sm">Profile</Button>
             <Button variant="outline" size="sm">Billing</Button>
             <Button variant="outline" size="sm">Notifications</Button>
@@ -148,9 +148,9 @@ The popover can be triggered on hover instead of click using the `triggerType` p
     hoverDelay={200}
     closeDelay={300}
     content={
-        <div className="p-2">
+        <div className="p-cn-xs">
             <Text as="p">Hover content that appears after a short delay</Text>
-            <Text as="p" color="foreground-2" className="mt-2">Mouse out to dismiss</Text>
+            <Text as="p" color="foreground-2" className="mt-cn-xs">Mouse out to dismiss</Text>
         </div>
     }
 >
@@ -191,7 +191,7 @@ The popover can be positioned relative to its trigger using the `side` and `alig
 
 <DocsPage.ComponentExample
   client:only
-  code={`<div className="flex gap-4 items-center justify-center p-8">
+  code={`<div className="flex gap-4 items-center justify-center p-cn-2xl">
     <Popover.Root>
         <Popover.Trigger asChild>
             <Button variant="outline" size="sm">Top</Button>
@@ -268,7 +268,7 @@ You can control the open state of the popover programmatically.
                     <Button
                         variant="outline"
                         size="sm"
-                        className="mt-3"
+                        className="mt-cn-sm"
                         onClick={() => setOpen(false)}
                     >
                         Close from inside
@@ -301,7 +301,7 @@ The `Popover.Anchor` component allows you to position the popover relative to a 
     return (
       <Popover.Root open={open} onOpenChange={setOpen}>
         <Popover.Anchor>
-          <div className="p-4 border rounded-3 cursor-pointer" onClick={() => setOpen(!open)}>
+          <div className="p-cn-md border rounded-3 cursor-pointer" onClick={() => setOpen(!open)}>
             <Text>I'm the anchor element</Text>
           </div>
         </Popover.Anchor>

@@ -6,13 +6,13 @@ import {
   Fieldset,
   FormInput,
   IconV2,
-  Input,
   Label,
   Layout,
   Message,
   MessageTheme,
   MultiSelect,
   MultiSelectOption,
+  NumberInput,
   ResetTag,
   SplitButton,
   Switch,
@@ -259,6 +259,9 @@ export const BranchSettingsRuleDefaultReviewersField: FC<
         searchQuery={debouncedPrincipalsSearchQuery}
         setSearchQuery={handleStringSearchChange}
         disallowCreation
+        inputProps={{
+          autoFocus: true
+        }}
       />
       {validationMessage && !isEmpty(validationMessage.message) && (
         <Message theme={validationMessage.theme} className="mt-2">
@@ -349,6 +352,9 @@ export const BranchSettingsRuleListField: FC<{
                     }}
                     options={recentStatusChecks?.map(check => ({ id: check, key: check })) ?? []}
                     disallowCreation
+                    inputProps={{
+                      autoFocus: true
+                    }}
                   />
                 )}
 
@@ -364,10 +370,7 @@ export const BranchSettingsRuleListField: FC<{
                 )}
 
                 {!!rule?.hasInput && isChecked && (
-                  <Input
-                    id="name"
-                    size="md"
-                    type="number"
+                  <NumberInput
                     wrapperClassName={cn('ml-[26px]', { 'ml-[52px]': rule.isNested })}
                     placeholder={
                       rule.id === BranchRuleId.REQUIRE_MINIMUM_DEFAULT_REVIEWER_COUNT
@@ -376,6 +379,7 @@ export const BranchSettingsRuleListField: FC<{
                     }
                     value={rules[index].input || ''}
                     onChange={e => handleInputChange(rule.id, e.target.value)}
+                    autoFocus
                   />
                 )}
               </Fragment>

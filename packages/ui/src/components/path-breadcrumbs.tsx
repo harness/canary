@@ -120,7 +120,7 @@ export const PathBreadcrumbs = ({ items, isEdit, isNew, ...props }: PathBreadcru
 
       {isRenderInput && renderInput()}
 
-      {items.length > 0 && !isRenderInput && (
+      {items.length > 1 && !isRenderInput && (
         <CopyButton
           className="mt-1"
           size="xs"

@@ -45,7 +45,7 @@ export const RepoSidebar = ({
           <SearchFiles navigateToFile={navigateToFile} filesList={filesList} />
 
           <ScrollArea
-            className="pb-cn-xl pr-cn-lg -mr-5 grid-cols-[100%]"
+            className="pb-cn-xl pr-cn-sm -mr-cn-sm grid-cols-[100%]"
             preserveScrollPosition={true}
             storageKey={repoRef ? `fileExplorer_${repoRef}` : undefined}
           >

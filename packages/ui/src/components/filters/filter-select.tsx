@@ -98,8 +98,8 @@ const renderFilterSelectLabel = ({
 
 const renderFilterSelectAddIconLabel = ({ displayLabel }: { displayLabel: React.ReactNode }) => {
   return (
-    <Button size="sm" variant="transparent">
-      <IconV2 name="plus" size="2xs" />
+    <Button variant="transparent">
+      <IconV2 name="plus" />
       <span>{displayLabel}</span>
     </Button>
   )

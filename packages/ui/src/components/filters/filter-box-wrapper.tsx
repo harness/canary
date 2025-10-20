@@ -51,17 +51,19 @@ const FilterBoxWrapper = ({
       }}
     >
       <DropdownMenu.Trigger asChild>
-        <Button variant="secondary" size="md">
-          <Layout.Grid align="center" columns="auto 1fr" gapX="2xs">
+        <Button variant="secondary">
+          <Layout.Grid align="center" columns={valueLabel ? 'auto 1fr' : undefined} gapX="2xs">
             <Text as="span" color="foreground-1" truncate>
               {filterLabel}
               {!!valueLabel && ': '}
             </Text>
-            <Text as="span" truncate>
-              {valueLabel}
-            </Text>
+            {!!valueLabel && (
+              <Text as="span" truncate>
+                {valueLabel}
+              </Text>
+            )}
           </Layout.Grid>
-          <IconV2 className="chevron-down" name="nav-arrow-down" size="2xs" />
+          <IconV2 className="chevron-down" name="nav-arrow-down" />
         </Button>
       </DropdownMenu.Trigger>
 

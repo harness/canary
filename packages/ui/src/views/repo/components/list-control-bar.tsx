@@ -74,8 +74,8 @@ const ListControlBar = <T extends Record<string, any>, CustomValue = Record<stri
           displayLabel={renderFilterSelectAddIconLabel({ displayLabel: t('component:filter.defaultLabel', 'Filter') })}
         />
         {showFilterResetButton && (
-          <Button size="sm" variant="transparent" onClick={() => resetFilters()} className="hover:text-cn-danger">
-            <IconV2 name="xmark" size="2xs" />
+          <Button variant="transparent" onClick={() => resetFilters()} className="hover:text-cn-danger">
+            <IconV2 name="xmark" />
             {t('component:filter.reset', 'Reset')}
           </Button>
         )}
@@ -86,7 +86,7 @@ const ListControlBar = <T extends Record<string, any>, CustomValue = Record<stri
   const isListControlVisible = selectedFiltersCnt > 0 || (sortSelectionsCnt ?? 0) > 0
 
   return (
-    <div className={cn('flex items-center gap-x-cn-md', { 'mt-cn-md': isListControlVisible })}>
+    <div className={cn('flex items-center gap-x-cn-md', { 'mt-cn-sm': isListControlVisible })}>
       {renderSelectedSort?.()}
       {renderSelectedFilters(filtersFieldRenderer)}
 

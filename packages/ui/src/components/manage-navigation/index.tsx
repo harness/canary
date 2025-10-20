@@ -241,7 +241,7 @@ export const ManageNavigation = ({
                 type="button"
                 size="sm"
                 theme="success"
-                className="pointer-events-none flex gap-2"
+                className="pointer-events-none flex gap-cn-xs"
                 disabled={submitted}
               >
                 Saved

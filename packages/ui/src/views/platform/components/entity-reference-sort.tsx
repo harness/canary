@@ -46,13 +46,13 @@ export const EntityReferenceSort: React.FC<EntityReferenceSortProps> = ({
   const sortOptions = ['Last modified', 'Newest', 'Oldest', 'Name (A→Z, 0→9)', 'Name (Z→A, 9→0)']
 
   return (
-    <div className="flex items-center gap-3">
+    <div className="flex items-center gap-cn-sm">
       {enableFavorite && (
         <Button
           variant="outline"
           size="md"
           onClick={() => handleFavoriteChange(!favoriteSelected)}
-          className="flex items-center gap-2 px-cn-xs"
+          className="flex items-center gap-cn-xs px-cn-xs"
         >
           <Checkbox
             checked={favoriteSelected}
@@ -66,7 +66,7 @@ export const EntityReferenceSort: React.FC<EntityReferenceSortProps> = ({
       )}
       <DropdownMenu.Root>
         <DropdownMenu.Trigger asChild>
-          <Button variant="outline" className="gap-x-1.5">
+          <Button variant="outline" className="gap-x-cn-2xs">
             <Text truncate color="foreground-1">
               {selectedSort}
             </Text>

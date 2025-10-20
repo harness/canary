@@ -123,7 +123,7 @@
 
 /* Temporary studio controls override */
 .react-flow__panel {
-  @apply m-cn-xl left-auto right-0 flex gap-[1px] !important;
+  @apply m-cn-xl left-auto right-0 flex gap-px !important;
 }
 
 .react-flow__controls-button {

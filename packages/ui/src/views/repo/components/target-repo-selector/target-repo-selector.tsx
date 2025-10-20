@@ -275,7 +275,7 @@ const TargetRepoSelectorBase: FC<TargetRepoSelectorBaseProps> = ({
         <Text variant="caption-light" className="pt-cn-sm">
           {t('views:repos.patterns', 'Patterns')}
         </Text>
-        <Layout.Grid columns="1fr auto" className="grid grid-cols-[1fr_126px] items-start gap-x-3.5">
+        <Layout.Grid columns="1fr auto" align="start" gap="sm">
           <FormInput.Text
             id="repoPattern"
             name="repoPattern"

@@ -28,7 +28,7 @@ function createMultiSelectThemeStyles() {
 export default {
   '.cn-multi-select': {
     '&-outer-container': {
-      '@apply flex flex-col gap-2': ''
+      '@apply flex flex-col gap-cn-xs': ''
     },
     '&-container': {
       color: 'var(--cn-text-1)',
@@ -52,7 +52,7 @@ export default {
     },
 
     '&-tag-wrapper': {
-      '@apply relative flex flex-wrap items-center gap-2': ''
+      '@apply relative flex flex-wrap items-center gap-cn-xs': ''
     },
 
     '&-input': {

@@ -198,7 +198,7 @@ export function CreateSecretPage({
                         <Text as="span">
                           Selected: {selectedFile.name} ({Math.round(selectedFile.size / 1024)} KB)
                         </Text>
-                        <div className="flex gap-2">
+                        <div className="flex gap-cn-xs">
                           <Button type="button" variant="outline" size="sm" onClick={openFileInput}>
                             Change
                           </Button>

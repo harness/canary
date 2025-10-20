@@ -117,7 +117,7 @@ const Example: FC<ExampleProps> = ({
                     className="absolute right-3 top-3"
                     name={currentCode}
                   />
-                  <summary className="flex cursor-pointer select-none items-center gap-1 text-sm">
+                  <summary className="flex cursor-pointer select-none items-center gap-cn-3xs text-sm">
                     <IconV2
                       name="nav-arrow-right"
                       className="disclosure-icon"

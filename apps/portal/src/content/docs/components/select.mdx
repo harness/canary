@@ -61,7 +61,7 @@ The `Select` component can be customized with a suffix element that appears on t
     const [value, setValue] = React.useState();
 
     return (
-      <div className="grid gap-4">
+      <div className="grid gap-cn-md">
         <Select
           options={[
             { label: 'Option 1', value: '1' },
@@ -99,7 +99,7 @@ The `Select` component integrates seamlessly with form elements like labels, cap
     const [environment, setEnvironment] = React.useState('dev')
 
     return (
-      <div className="grid gap-4">
+      <div className="grid gap-cn-md">
         <Select
           label="Choose your country"
           options={[
@@ -222,7 +222,7 @@ Enable client-side search filtering to help users find options quickly in large 
     ]
 
     return (
-      <div className="grid gap-4">
+      <div className="grid gap-cn-md">
         <Select
           options={groupedOptions}
           value={value}
@@ -275,7 +275,7 @@ Options can be loaded asynchronously by passing a function that returns a Promis
     }
 
     return (
-      <div className="grid gap-4">
+      <div className="grid gap-cn-md">
         <Select
           label="Async options"
           options={fetchOptions}
@@ -314,7 +314,7 @@ Both the entire select and individual options can be disabled.
     const [value2, setValue2] = React.useState('available')
 
     return (
-      <div className="grid gap-4">
+      <div className="grid gap-cn-md">
         <Select
           label="Disabled select"
           options={[
@@ -352,7 +352,7 @@ The Select component provides clear loading indicators for different scenarios.
   client:only
   code={`() => {
     return (
-      <div className="grid gap-4">
+      <div className="grid gap-cn-md">
         <Select
           label="Initial loading"
           options={[]}
@@ -389,7 +389,7 @@ Options can have ReactNode labels for rich content display.
     const options = [
       {
         label: (
-          <div className="flex items-center gap-2">
+          <div className="flex items-center gap-cn-xs">
             <IconV2 name="git-branch" />
             <span className="font-medium">main</span>
             <span className="text-xs text-cn-3">default</span>
@@ -399,7 +399,7 @@ Options can have ReactNode labels for rich content display.
       },
       {
         label: (
-          <div className="flex items-center gap-2">
+          <div className="flex items-center gap-cn-xs">
             <IconV2 name="git-branch" />
             <span>feature/new-select</span>
           </div>
@@ -408,7 +408,7 @@ Options can have ReactNode labels for rich content display.
       },
       {
         label: (
-          <div className="flex items-center gap-2">
+          <div className="flex items-center gap-cn-xs">
             <IconV2 name="git-branch" />
             <span>hotfix/critical-bug</span>
           </div>
@@ -525,7 +525,7 @@ Customize how individual options are rendered using the `optionRenderer` prop. T
     const [value2, setValue2] = React.useState('banana');
 
     return (
-      <div className="grid gap-4">
+      <div className="grid gap-cn-md">
         <Select
           label="Without search"
           options={[
@@ -572,7 +572,7 @@ The `Select` component supports two sizes: `default` and `sm`. The default size 
     const [value, setValue] = React.useState('banana');
 
     return (
-      <div className="grid gap-4">
+      <div className="grid gap-cn-md">
         <div>
           <Text>Size sm:</Text>
           <Select

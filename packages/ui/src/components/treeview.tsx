@@ -140,7 +140,7 @@ const Tree = forwardRef<HTMLDivElement, TreeViewProps>(
               type="multiple"
               defaultValue={expendedItems}
               value={expendedItems}
-              className="flex flex-col gap-3"
+              className="gap-cn-sm flex flex-col"
               onValueChange={value => setExpendedItems(prev => [...(prev ?? []), value[0]])}
               dir={dir as Direction}
             >
@@ -176,7 +176,7 @@ const Folder = forwardRef<HTMLDivElement, FolderProps & React.HTMLAttributes<HTM
       >
         <AccordionPrimitive.Trigger
           className={cn(
-            `flex w-full gap-1 rounded-3 text-sm px-cn-lg`,
+            `flex w-full gap-cn-3xs rounded-3 text-sm px-cn-lg`,
             className,
             {
               'rounded-3': isSelect && isSelectable,
@@ -195,8 +195,8 @@ const Folder = forwardRef<HTMLDivElement, FolderProps & React.HTMLAttributes<HTM
             className={cn('text-cn-3 mt-cn-3xs', expendedItems?.includes(value) && 'rotate-90')}
             size="2xs"
           />
-          <div className="flex w-full justify-between gap-x-2">
-            <div className="flex gap-x-2">
+          <div className="gap-x-cn-xs flex w-full justify-between">
+            <div className="gap-x-cn-xs flex">
               <div className="flex size-5 flex-none items-center justify-center">{getStatusIcon(status)}</div>
               <span className="text-cn-1 mt-cn-4xs text-left leading-tight">
                 {element}&nbsp;<span className="text-cn-3">({React.Children.count(children)})</span>
@@ -209,7 +209,7 @@ const Folder = forwardRef<HTMLDivElement, FolderProps & React.HTMLAttributes<HTM
           <AccordionPrimitive.Root
             dir={direction}
             type="multiple"
-            className="mt-cn-sm rtl:mr-cn-lg flex flex-col gap-3"
+            className="mt-cn-sm rtl:mr-cn-lg gap-cn-sm flex flex-col"
             defaultValue={expendedItems}
             value={expendedItems}
             onValueChange={value => {
@@ -265,9 +265,9 @@ const File = forwardRef<
           disabled={!isSelectable}
           aria-label="File"
           className={cn(
-            'flex relative w-full cursor-pointer items-center gap-1 rounded-3 text-sm duration-200 ease-in-out rtl:pl-cn-3xs rtl:pr-0',
+            'flex relative w-full cursor-pointer items-center gap-cn-3xs rounded-3 text-sm duration-200 ease-in-out rtl:pl-cn-3xs rtl:pr-0',
             {
-              ['after:absolute after:bg-cn-hover after:-inset-x-1 after:-inset-y-1.5 after:-z-10 after:rounded']:
+              ['after:absolute after:bg-cn-hover after:-inset-x-cn-3xs after:-inset-y-cn-2xs after:-z-10 after:rounded']:
                 isSelected
             },
             isSelectable ? 'cursor-pointer' : 'cursor-not-allowed opacity-50',
@@ -281,8 +281,8 @@ const File = forwardRef<
             selectItem(value)
           }}
         >
-          <div className="pl-cn-md relative flex w-full justify-between gap-x-2">
-            <div className="flex gap-x-2">
+          <div className="pl-cn-md gap-x-cn-xs relative flex w-full justify-between">
+            <div className="gap-x-cn-xs flex">
               <div className="flex size-5 flex-none items-center justify-center">{getStatusIcon(status)}</div>
               <span className="text-cn-1 mt-cn-4xs text-left leading-tight">{children}</span>
             </div>
@@ -343,7 +343,7 @@ const CollapseButton = forwardRef<
     return (
       <button
         // variant={'ghost'}
-        className="p-cn-3xs absolute bottom-1 right-2 h-8 w-fit"
+        className="p-cn-3xs bottom-cn-3xs right-cn-xs absolute h-8 w-fit"
         onClick={expendedItems && expendedItems.length > 0 ? closeAll : () => expendAllTree(elements)}
         ref={ref}
         {...props}

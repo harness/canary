@@ -13,7 +13,7 @@ It can be composed with several subcomponents such as `Tabs.Root`, `Tabs.NavRoot
 
 <DocsPage.ComponentExample
   client:only
-  code={`<Tabs.Root className="grid gap-3" defaultValue="tab1">
+  code={`<Tabs.Root className="grid gap-cn-sm" defaultValue="tab1">
     <Tabs.List variant="outlined">
         <Tabs.Trigger value="tab1">Tab 1</Tabs.Trigger>
         <Tabs.Trigger value="tab2">Tab 2</Tabs.Trigger>
@@ -87,7 +87,7 @@ The `Tabs` component supports multiple visual variants that can be applied via t
 
 <DocsPage.ComponentExample
   client:only
-  code={`<div className="grid gap-3">
+  code={`<div className="grid gap-cn-sm">
     {/* Underlined (default) */}
     <Tabs.Root defaultValue="tab1">
         <Tabs.List>
@@ -136,7 +136,7 @@ Tab triggers can include icons to enhance visual recognition and improve user ex
 
 <DocsPage.ComponentExample
   client:only
-  code={`<Tabs.Root className="grid gap-3" defaultValue="overview">
+  code={`<Tabs.Root className="grid gap-cn-sm" defaultValue="overview">
     <Tabs.List>
         <Tabs.Trigger value="overview" icon="dashboard">
             Overview
@@ -167,7 +167,7 @@ Tab triggers can display logos for brand-specific navigation or integration tabs
 
 <DocsPage.ComponentExample
   client:only
-  code={`<Tabs.Root className="grid gap-3" defaultValue="github">
+  code={`<Tabs.Root className="grid gap-cn-sm" defaultValue="github">
     <Tabs.List>
         <Tabs.Trigger value="github" logo="github">
             GitHub
@@ -198,7 +198,7 @@ Tab triggers can display counter badges to show quantities or notifications.
 
 <DocsPage.ComponentExample
   client:only
-  code={`<Tabs.Root className="grid gap-3" defaultValue="inbox">
+  code={`<Tabs.Root className="grid gap-cn-sm" defaultValue="inbox">
     <Tabs.List>
         <Tabs.Trigger value="inbox" counter={24}>
             Inbox
@@ -235,7 +235,7 @@ When icons, logos, and counters aren't sufficient, you can use custom children f
 
 <DocsPage.ComponentExample
   client:only
-  code={`<Tabs.Root className="grid gap-3" defaultValue="custom1">
+  code={`<Tabs.Root className="grid gap-cn-sm" defaultValue="custom1">
     <Tabs.List>
         <Tabs.Trigger value="custom1">
             <Avatar src="/avatar.png" size="md" />
@@ -289,8 +289,8 @@ Both `Tabs.Root` and `Tabs.NavRoot` can be controlled by passing `value` and `on
     const [activeTab, setActiveTab] = React.useState("tab2");
     
     return (
-        <div className="grid gap-3">
-            <div className="flex gap-2">
+        <div className="grid gap-cn-sm">
+            <div className="flex gap-cn-xs">
                 <Button size="sm" onClick={() => setActiveTab("tab1")}>
                     Go to Tab 1
                 </Button>
@@ -302,7 +302,7 @@ Both `Tabs.Root` and `Tabs.NavRoot` can be controlled by passing `value` and `on
                 </Button>
             </div>
             
-            <Tabs.Root className="grid gap-3" value={activeTab} onValueChange={setActiveTab}>
+            <Tabs.Root className="grid gap-cn-sm" value={activeTab} onValueChange={setActiveTab}>
                 <Tabs.List>
                     <Tabs.Trigger value="tab1">Tab 1</Tabs.Trigger>
                     <Tabs.Trigger value="tab2">Tab 2</Tabs.Trigger>
@@ -334,7 +334,7 @@ You can customize the active tab styling using the `activeClassName` prop on `Ta
 
 <DocsPage.ComponentExample
   client:only
-  code={`<Tabs.Root className="grid gap-3" defaultValue="tab1">
+  code={`<Tabs.Root className="grid gap-cn-sm" defaultValue="tab1">
     <Tabs.List 
         variant="ghost" 
         activeClassName="rounded-3"

@@ -75,11 +75,11 @@ export const ReviewersPanel: FC<ReviewerPanelProps> = ({ principals, userGroups 
               tooltipProps={{
                 side: 'top',
                 content: (
-                  <ul className="my-cn-3xs flex flex-col gap-y-0.5">
+                  <ul className="my-cn-3xs flex flex-col gap-y-cn-4xs">
                     {normalizedPrincipals.slice(2).map(({ email_or_identifier, type }) => (
                       <div
                         key={email_or_identifier}
-                        className="flex w-full grow cursor-not-allowed items-center gap-x-2.5 rounded p-cn-3xs px-0"
+                        className="flex w-full grow cursor-not-allowed items-center gap-x-cn-xs rounded p-cn-3xs px-0"
                       >
                         {type === EnumBypassListType.USER_GROUP ? (
                           <IconV2 name={'group-1'} size="lg" className="mx-cn-4xs" />

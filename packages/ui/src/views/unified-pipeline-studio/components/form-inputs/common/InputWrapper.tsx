@@ -60,7 +60,7 @@ export function InputWrapper({
         return (
           <>
             <InputLabel label={label} required={required} />
-            <div className="flex grow items-center gap-1">
+            <div className="flex grow items-center gap-cn-3xs">
               {'<+input.'}
               <Input
                 wrapperClassName="flex-grow"
@@ -83,7 +83,7 @@ export function InputWrapper({
         return (
           <>
             <InputLabel label={label} required={required} />
-            <div className="flex grow items-center gap-1">
+            <div className="flex grow items-center gap-cn-3xs">
               &#931;{' '}
               <Input
                 wrapperClassName="flex-grow"
@@ -101,8 +101,8 @@ export function InputWrapper({
   }
 
   return (
-    <div className={'flex items-end gap-4'}>
-      <div className={'flex grow flex-col gap-2'}>{renderContent()}</div>
+    <div className={'flex items-end gap-cn-md'}>
+      <div className={'flex grow flex-col gap-cn-xs'}>{renderContent()}</div>
       {!isOnlyFixed && (
         <InputValueTypeSelection
           inputValueType={inputValueType}

@@ -26,7 +26,7 @@ The `Popover.Content` component supports built-in `title`, `description`, and `l
         title="Settings"
         description="Manage your account settings and preferences"
     >
-        <div className="grid gap-3 mt-cn-sm">
+        <div className="grid gap-cn-sm mt-cn-sm">
             <Button variant="outline" size="sm">Profile</Button>
             <Button variant="outline" size="sm">Billing</Button>
             <Button variant="outline" size="sm">Notifications</Button>
@@ -122,7 +122,7 @@ You can include any custom content inside the popover by using children.
         title="Quick Settings"
         description="Adjust your preferences"
     >
-        <div className="grid gap-3">
+        <div className="grid gap-cn-sm">
             <div className="flex items-center justify-between">
                 <Text>Dark Mode</Text>
                 <Button variant="ghost" size="sm">Toggle</Button>
@@ -191,7 +191,7 @@ The popover can be positioned relative to its trigger using the `side` and `alig
 
 <DocsPage.ComponentExample
   client:only
-  code={`<div className="flex gap-4 items-center justify-center p-cn-2xl">
+  code={`<div className="flex gap-cn-md items-center justify-center p-cn-2xl">
     <Popover.Root>
         <Popover.Trigger asChild>
             <Button variant="outline" size="sm">Top</Button>
@@ -253,7 +253,7 @@ You can control the open state of the popover programmatically.
     const [open, setOpen] = React.useState(false);
 
     return (
-        <div className="flex gap-4 items-center">
+        <div className="flex gap-cn-md items-center">
             <Popover.Root open={open} onOpenChange={setOpen} modal={true}>
                 <Popover.Trigger asChild>
                     <Button variant="outline">

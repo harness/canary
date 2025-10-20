@@ -8,7 +8,7 @@ import { IPipelineListProps } from './types'
 
 const Title = ({ status, title }: { status?: PipelineExecutionStatus; title: string }) => {
   return (
-    <div className="flex items-center gap-1.5">
+    <div className="flex items-center gap-cn-2xs">
       <ExecutionStatusIcon status={status} />
       <span className="text-3 truncate font-medium leading-snug">{title}</span>
     </div>
@@ -17,16 +17,16 @@ const Title = ({ status, title }: { status?: PipelineExecutionStatus; title: str
 
 const Description = ({ sha, description, version }: { sha?: string; description?: string; version?: string }) => {
   return (
-    <div className="text-2 inline-flex max-w-full items-center gap-2 overflow-hidden pl-cn-xl leading-tight">
+    <div className="text-2 inline-flex max-w-full items-center gap-cn-xs overflow-hidden pl-cn-xl leading-tight">
       {description && <span className="text-cn-3 w-full overflow-hidden break-words">{description}</span>}
       {version && (
-        <div className="flex items-center gap-1">
+        <div className="flex items-center gap-cn-3xs">
           <IconV2 size="2xs" name="version" />
           {version}
         </div>
       )}
       {sha && (
-        <div className="bg-cn-gray-secondary text-1 text-cn-1 flex h-4 items-center gap-1 rounded px-cn-2xs">
+        <div className="bg-cn-gray-secondary text-1 text-cn-1 flex h-4 items-center gap-cn-3xs rounded px-cn-2xs">
           <IconV2 className="text-cn-3" size="2xs" name="git-commit" />
           {sha?.slice(0, 7)}
         </div>

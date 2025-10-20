@@ -31,7 +31,7 @@ const FilterSelect = <FilterKey extends string, CustomValue = Record<string, unk
 
   return (
     <DropdownMenu.Root>
-      <DropdownMenu.Trigger className="flex items-center gap-x-1.5">{displayLabel}</DropdownMenu.Trigger>
+      <DropdownMenu.Trigger className="flex items-center gap-x-cn-2xs">{displayLabel}</DropdownMenu.Trigger>
       <DropdownMenu.Content align={dropdownAlign} onCloseAutoFocus={e => e.preventDefault()}>
         <DropdownMenu.Header>
           <Input

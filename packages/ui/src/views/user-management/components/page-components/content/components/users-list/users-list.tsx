@@ -68,7 +68,7 @@ export const UsersList = ({ searchQuery, handleResetSearch }: UserListProps) => 
               <Table.Row key={user.uid} className="h-[48px]">
                 {/* NAME */}
                 <Table.Cell className="my-cn-xl content-center">
-                  <div className="grid grid-cols-[auto_1fr] items-center gap-2">
+                  <div className="grid grid-cols-[auto_1fr] items-center gap-cn-xs">
                     <Avatar name={user.uid} src={user.avatarUrl} rounded />
                     <Text variant="body-strong" truncate className="whitespace-nowrap">
                       {user.uid}
@@ -87,7 +87,7 @@ export const UsersList = ({ searchQuery, handleResetSearch }: UserListProps) => 
 
                 {/* ROLE BINDING */}
                 <Table.Cell className="my-cn-xl content-center">
-                  <div className="flex gap-1.5">
+                  <div className="flex gap-cn-2xs">
                     <StatusBadge variant="outline" size="sm" theme={user.admin ? 'merged' : 'danger'}>
                       {user.admin ? 'Admin' : 'User'}
                     </StatusBadge>

@@ -209,7 +209,7 @@ export function RepoImportPage({ onFormSubmit, onFormCancel, isLoading, apiError
 
           {/* authorization - pipelines */}
           <Fieldset>
-            <ControlGroup className="flex flex-row gap-5">
+            <ControlGroup className="flex flex-row gap-cn-lg">
               <FormInput.Checkbox {...register('authorization')} id="authorization" label="Requires Authorization" />
               <FormInput.Checkbox {...register('pipelines')} id="pipelines" label="Import Pipelines" />
             </ControlGroup>

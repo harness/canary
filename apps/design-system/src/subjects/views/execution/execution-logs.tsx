@@ -127,7 +127,7 @@ export const ExecutionLogsView = () => {
       />
       <ExecutionTabs className="border-cn-3 border-t" />
       <div className="grid h-[inherit]" style={{ gridTemplateColumns: '1fr 3fr' }}>
-        <div className="border-cn-3 flex h-[calc(100vh-226px)] flex-col gap-4 border-r">
+        <div className="border-cn-3 flex h-[calc(100vh-226px)] flex-col gap-cn-md border-r">
           <ExecutionTree
             defaultSelectedId={currentNode?.id ?? selectedStep?.id ?? elements[0].id}
             elements={updatedElements}
@@ -136,7 +136,7 @@ export const ExecutionLogsView = () => {
             }}
           />
         </div>
-        <div className="border-cn-3 flex flex-col gap-4">
+        <div className="border-cn-3 flex flex-col gap-cn-md">
           <ExecutionInfo useLogsStore={useLogsStore} onCopy={() => {}} onDownload={() => {}} onEdit={() => {}} />
         </div>
       </div>

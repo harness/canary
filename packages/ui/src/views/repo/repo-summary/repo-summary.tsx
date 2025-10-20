@@ -211,7 +211,7 @@ export function RepoSummaryView({
               </>
             )}
 
-            <ListActions.Root className="flex-wrap gap-y-2">
+            <ListActions.Root className="flex-wrap gap-y-cn-xs">
               <ListActions.Left className="max-w-full">
                 <ButtonLayout className="grid w-full grid-cols-[auto,1fr]" horizontalAlign="start">
                   {cloneElement(branchSelectorRenderer, { className: 'w-full max-w-fit' })}
@@ -229,7 +229,7 @@ export function RepoSummaryView({
                       <Link
                         variant="secondary"
                         noHoverUnderline
-                        className="relative grid grid-cols-[auto_1fr] items-center gap-1.5"
+                        className="relative grid grid-cols-[auto_1fr] items-center gap-cn-2xs"
                         to={`${spaceId ? `/${spaceId}` : ''}/repos/${repoId}/files/new/${gitRef || selectedBranchOrTag?.name || ''}/~/`}
                       >
                         <IconV2 name="plus" />
@@ -335,7 +335,7 @@ export function RepoSummaryView({
                       icon: 'plus',
                       to: getReadmeCreationPath()
                     }}
-                    className="!py-cn-xs !gap-1 [&_.gap-xl]:!gap-2 [&_.py-cn-4xl]:!py-cn-xs"
+                    className="!py-cn-xs !gap-cn-3xs [&_.gap-xl]:!gap-cn-xs [&_.py-cn-4xl]:!py-cn-xs"
                   />
                 </StackedList.Item>
               </StackedList.Root>

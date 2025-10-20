@@ -22,7 +22,7 @@ import { Aside } from "@astrojs/starlight/components";
 
 <DocsPage.ComponentExample
   client:only
-  code={`<div className="flex flex-col gap-8">
+  code={`<div className="flex flex-col gap-cn-2xl">
   {/* Variants and Themes */}
   <div>
     <Text variant="heading-subsection" as="h4" className="mb-cn-sm">Variants and Themes</Text>
@@ -30,7 +30,7 @@ import { Aside } from "@astrojs/starlight/components";
     {/* Primary Variant */}
     <div className="mb-cn-xl">
       <Text variant="heading-small" as="h5" color="foreground-3" className="mb-cn-sm">Primary Variant</Text>
-      <div className="flex flex-wrap items-end gap-4">
+      <div className="flex flex-wrap items-end gap-cn-md">
         <SplitButton
           id="primary-default"
           variant="primary"
@@ -78,7 +78,7 @@ import { Aside } from "@astrojs/starlight/components";
     {/* Secondary Variant */}
     <div className="mb-cn-xl">
       <Text variant="heading-small" as="h5" color="foreground-3" className="mb-cn-sm">Secondary Variant</Text>
-      <div className="flex flex-wrap items-end gap-4">
+      <div className="flex flex-wrap items-end gap-cn-md">
         <SplitButton
           id="secondary-default"
           variant="secondary"
@@ -126,7 +126,7 @@ import { Aside } from "@astrojs/starlight/components";
     {/* Outline Variant */}
     <div className="mb-cn-xl">
       <Text variant="heading-small" as="h5" color="foreground-3" className="mb-cn-sm">Outline Variant</Text>
-      <div className="flex flex-wrap items-end gap-4">
+      <div className="flex flex-wrap items-end gap-cn-md">
         <SplitButton
           id="outline-default"
           variant="outline"
@@ -179,7 +179,7 @@ import { Aside } from "@astrojs/starlight/components";
   <Text variant="heading-subsection" as="h4" className="mb-cn-sm">
     Radio Button Selection
   </Text>
-  <div className="flex flex-wrap items-end gap-4">
+  <div className="flex flex-wrap items-end gap-cn-md">
     <SplitButton
       id="radio-button"
       handleButtonClick={() => {}}
@@ -209,7 +209,7 @@ import { Aside } from "@astrojs/starlight/components";
   <Text variant="heading-subsection" as="h4" className="mb-cn-sm">
     Loading State
   </Text>
-  <div className="flex flex-wrap items-end gap-4">
+  <div className="flex flex-wrap items-end gap-cn-md">
     <SplitButton
       id="loading-state"
       handleButtonClick={() => {}}
@@ -237,7 +237,7 @@ import { Aside } from "@astrojs/starlight/components";
 
   <div>
     <Text variant="heading-subsection" as="h4" className="mb-cn-sm">Disabled State</Text>
-    <div className="flex flex-wrap items-end gap-4">
+    <div className="flex flex-wrap items-end gap-cn-md">
       <SplitButton
         id="disabled-state"
         handleButtonClick={() => {}}

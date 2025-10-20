@@ -220,7 +220,7 @@ const FilterGroupInner = <
               renderFilterOptions={filterOptionsRenderer => (
                 <FilterHandler.Dropdown>
                   {(addFilter, availableFilters: Extract<keyof T, string>[], resetFilters) => (
-                    <div className="flex items-center gap-x-4">
+                    <div className="flex items-center gap-x-cn-md">
                       {filterOptionsRenderer({ addFilter, resetFilters, availableFilters })}
                       {onSaveFilters && <SaveFiltersDialog onSubmit={onSaveFilters} />}
                     </div>

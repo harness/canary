@@ -48,7 +48,7 @@ export const ProfileTokensList: FC<ProfileTokensListProps> = ({ tokens, isLoadin
                   <span className="block w-[200px] truncate font-medium text-cn-1">{token.identifier}</span>
                 </Table.Cell>
                 <Table.Cell className="content-center">
-                  <div className="flex items-center gap-x-1.5">
+                  <div className="flex items-center gap-x-cn-2xs">
                     <IconV2 name="circle" size="2xs" className="text-cn-success" />
                     <span className="text-cn-3">{t('views:profileSettings.active', 'Active')}</span>
                   </div>

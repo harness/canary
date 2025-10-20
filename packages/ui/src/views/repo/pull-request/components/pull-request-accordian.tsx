@@ -122,9 +122,9 @@ export const LineTitle: React.FC<LineTitleProps> = ({
   }
 
   return (
-    <div className="flex items-center justify-between gap-x-3">
-      <div className="inline-flex items-center gap-x-4">
-        <div className="flex items-center gap-x-2">
+    <div className="flex items-center justify-between gap-x-cn-sm">
+      <div className="inline-flex items-center gap-x-cn-md">
+        <div className="flex items-center gap-x-cn-xs">
           <Button
             variant="ghost"
             size="sm"
@@ -146,12 +146,12 @@ export const LineTitle: React.FC<LineTitleProps> = ({
           <CopyButton name={copyText} size="xs" />
         </div>
 
-        <div className="flex items-center gap-x-1">
+        <div className="flex items-center gap-x-cn-3xs">
           {addedLines != null && addedLines > 0 && <CounterBadge theme="success">+{addedLines}</CounterBadge>}
           {deletedLines != null && deletedLines > 0 && <CounterBadge theme="danger">-{deletedLines}</CounterBadge>}
         </div>
       </div>
-      <div className="inline-flex items-center gap-x-2">
+      <div className="inline-flex items-center gap-x-cn-xs">
         {/* Show "Changed since last viewed" tag when file is obsolete */}
         {fileViews?.get(filePath) === FILE_VIEWED_OBSOLETE_SHA && (
           <Tag value={t('views:pullRequests.changedSinceLastView')} theme="orange" />

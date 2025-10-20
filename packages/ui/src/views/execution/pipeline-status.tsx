@@ -19,34 +19,35 @@ const PipelineStatus = ({
   delegateType?: string
 }) => {
   return (
-    <div className="flex justify-between gap-11">
+    // TODO: Replace gap-[44px] with a proper value from design system when available
+    <div className="flex justify-between gap-[44px]">
       {commit && (
-        <div className="flex flex-col gap-1.5">
-          <span className="leading-tight text-cn-2">Commit</span>
+        <div className="gap-cn-2xs flex flex-col">
+          <span className="text-cn-2 leading-tight">Commit</span>
           <span className="text-cn-1">{commit}</span>
         </div>
       )}
       {branch && (
-        <div className="flex flex-col gap-1.5">
-          <span className="leading-tight text-cn-2">Branch</span>
+        <div className="gap-cn-2xs flex flex-col">
+          <span className="text-cn-2 leading-tight">Branch</span>
           <span className="text-cn-1">{branch}</span>
         </div>
       )}
-      <div className="flex flex-col gap-1.5">
-        <span className="leading-tight text-cn-2">Status</span>
+      <div className="gap-cn-2xs flex flex-col">
+        <span className="text-cn-2 leading-tight">Status</span>
         <ExecutionStatus.Badge status={status} minimal />
       </div>
-      <div className="flex flex-col gap-1.5">
-        <span className="leading-tight text-cn-2">Build time</span>
+      <div className="gap-cn-2xs flex flex-col">
+        <span className="text-cn-2 leading-tight">Build time</span>
         <span className="text-cn-1">{buildTime}</span>
       </div>
-      <div className="flex flex-col gap-1.5">
-        <span className="leading-tight text-cn-2">Created</span>
+      <div className="gap-cn-2xs flex flex-col">
+        <span className="text-cn-2 leading-tight">Created</span>
         <span className="text-cn-1">{createdTime}</span>
       </div>
       {delegateType && (
-        <div className="flex flex-col gap-1.5">
-          <span className="leading-tight text-cn-2">Delegate type</span>
+        <div className="gap-cn-2xs flex flex-col">
+          <span className="text-cn-2 leading-tight">Delegate type</span>
           <span className="text-cn-1">{delegateType}</span>
         </div>
       )}

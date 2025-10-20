@@ -4,7 +4,7 @@ import { PipelineExecutionStatus } from '@harnessio/ui/views'
 
 const renderBranch = (branch: string): React.ReactElement => {
   return (
-    <div className="flex items-center gap-1 rounded-3 bg-cn-1/10 px-cn-2xs font-body-code">
+    <div className="flex items-center gap-cn-3xs rounded-3 bg-cn-1/10 px-cn-2xs font-body-code">
       <IconV2 name="git-branch" size="2xs" className="text-cn-3" />
       {branch}
     </div>
@@ -21,7 +21,7 @@ export const getLabel = (execution: TypesExecution): string | React.ReactElement
       return `${author_name} triggered manually`
     case 'pull_request':
       return (
-        <div className="flex items-center gap-1">
+        <div className="flex items-center gap-cn-3xs">
           <span>{`${author_name} created pull request`}</span>
           {source && <>from{renderBranch(source)}</>}
           {source && <span>to</span>}

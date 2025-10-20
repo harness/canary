@@ -21,10 +21,10 @@ const PipelineStudioLayout = {
     )
   },
   HeaderLeft: ({ children }: { children: JSX.Element | (JSX.Element | null)[] | string }) => {
-    return <div className="flex items-center gap-x-3">{children}</div>
+    return <div className="flex items-center gap-x-cn-sm">{children}</div>
   },
   HeaderRight: ({ children }: { children: JSX.Element | (JSX.Element | null)[] | string }) => {
-    return <div className="flex items-center gap-x-3">{children}</div>
+    return <div className="flex items-center gap-x-cn-sm">{children}</div>
   },
   View: ({ children }: { children: ReactElement }) => {
     return <div>{children}</div>

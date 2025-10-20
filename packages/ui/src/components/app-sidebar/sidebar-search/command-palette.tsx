@@ -132,7 +132,7 @@ const Shortcut = ({ className, ...props }: React.HTMLAttributes<HTMLSpanElement>
   return (
     <span
       className={cn(
-        'ml-auto px-cn-2xs flex gap-0.5 rounded-1 text-2 tracking-tight border border-cn-2 bg-cn-3 text-cn-2',
+        'ml-auto px-cn-2xs flex gap-cn-4xs rounded-1 text-2 tracking-tight border border-cn-2 bg-cn-3 text-cn-2',
         className
       )}
       {...props}

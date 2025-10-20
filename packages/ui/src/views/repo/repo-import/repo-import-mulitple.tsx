@@ -257,7 +257,7 @@ export function RepoImportMultiplePage({
 
           {/* authorization - pipelines */}
           <Fieldset>
-            <ControlGroup className="flex flex-row gap-5">
+            <ControlGroup className="flex flex-row gap-cn-lg">
               <FormInput.Checkbox {...register('repositories')} id="authorization" disabled label="Repositories" />
               <FormInput.Checkbox {...register('pipelines')} id="pipelines" label="Pipelines" />
             </ControlGroup>

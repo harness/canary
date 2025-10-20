@@ -8,8 +8,8 @@ interface ReferenceSecretViewProps {
 
 export const ReferenceSecretView: React.FC<ReferenceSecretViewProps> = ({ onTest, value, setValue }) => {
   return (
-    <div className="flex flex-col gap-1">
-      <div className="flex w-full items-center gap-2">
+    <div className="flex flex-col gap-cn-3xs">
+      <div className="flex w-full items-center gap-cn-xs">
         <div className="grow">
           <TextInput
             value={value}

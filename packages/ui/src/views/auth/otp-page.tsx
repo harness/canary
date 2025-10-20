@@ -111,7 +111,7 @@ export function OTPPage({
                 control={control}
                 render={({ field: { onChange, value } }) => (
                   <InputOTP.Root value={value} onChange={onChange} maxLength={OTP_LENGTH}>
-                    <InputOTP.Group className="gap-x-3">
+                    <InputOTP.Group className="gap-x-cn-sm">
                       {Array.from({ length: OTP_LENGTH }).map((_, idx) => (
                         <Fragment key={idx}>
                           <InputOTP.Slot index={idx} />

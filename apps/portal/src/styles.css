@@ -60,7 +60,7 @@ ul.top-level {
 }
 
 ul.top-level ul {
-  @apply border-b border-cn-3 px-cn-sm py-cn-xl flex flex-col gap-3 pt-cn-lg justify-start;
+  @apply border-b border-cn-3 px-cn-sm py-cn-xl flex flex-col gap-cn-sm pt-cn-lg justify-start;
 }
 
 ul.top-level li {
@@ -103,7 +103,7 @@ ul.top-level summary svg {
 }
 
 .right-sidebar-panel ul {
-  @apply m-0 p-0 flex flex-col gap-4 mt-cn-md;
+  @apply m-0 p-0 flex flex-col gap-cn-md mt-cn-md;
 }
 
 .right-sidebar-panel li a {

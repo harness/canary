@@ -67,7 +67,7 @@ export default {
       height: 'var(--cn-toast-fade-height)',
       opacity: '1',
       transition: 'opacity 0.2s linear',
-      '@apply absolute bottom-0.5 left-0.5 right-0.5 pointer-events-none': '',
+      '@apply absolute bottom-cn-4xs left-cn-4xs right-cn-4xs pointer-events-none': '',
 
       '&-not-visible': {
         visibility: 'hidden',

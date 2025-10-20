@@ -175,8 +175,8 @@ export const CreateProjectPage: FC<CreateProjectPageProps> = props => {
                 : t('views:createProject.create.createProject', 'Create project')}
             </Button>
 
-            <div className="mt-cn-sm flex items-center justify-center gap-2">
-              <div className="w-[145px] shrink border-t border-cn-3" />
+            <div className="mt-cn-sm gap-cn-xs flex items-center justify-center">
+              <div className="border-cn-3 w-[145px] shrink border-t" />
               <Text color="foreground-3" as="span">
                 {t('views:createProject.or', 'or')}
               </Text>

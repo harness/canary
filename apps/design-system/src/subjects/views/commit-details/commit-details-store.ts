@@ -3645,13 +3645,14 @@ export const commitDetailsStore: ICommitDetailsStore = {
         {
           lines: [
             {
-              content: "       underline: 'h-11 justify-center gap-4',",
+              content: "       underline: 'h-11 justify-center gap-cn-md',",
               type: 'context',
               oldNumber: 11,
               newNumber: 11
             },
             {
-              content: "       navigation: 'h-11 w-full justify-start gap-6 border-b border-cn-borders-2 px-cn-xl',",
+              content:
+                "       navigation: 'h-11 w-full justify-start gap-cn-xl border-b border-cn-borders-2 px-cn-xl',",
               type: 'context',
               oldNumber: 12,
               newNumber: 12
@@ -3770,7 +3771,7 @@ export const commitDetailsStore: ICommitDetailsStore = {
       contentId: 'content-packages/ui/src/components/tabs.tsx::::packages/ui/src/components/tabs.tsx',
       fileId: 'packages/ui/src/components/tabs.tsx::::packages/ui/src/components/tabs.tsx',
       filePath: 'packages/ui/src/components/tabs.tsx',
-      raw: "diff --git a/packages/ui/src/components/tabs.tsx b/packages/ui/src/components/tabs.tsx\nindex 5cbae7da53b01c1fdcd7d7e940e0c2c6c10dfce4..631a8515f53931f3a9ec94f17fb4c3499bef513d 100644\n--- a/packages/ui/src/components/tabs.tsx\n+++ b/packages/ui/src/components/tabs.tsx\n@@ -11,7 +11,7 @@ const tabsListVariants = cva('inline-flex items-center text-cn-3', {\n       underline: 'h-11 justify-center gap-4',\n       navigation: 'h-11 w-full justify-start gap-6 border-b border-cn-borders-2 px-cn-xl',\n       tabnav:\n-        'relative flex w-full before:absolute before:left-0 before:h-px before:w-full before:bg-cn-2 before:bottom-0'\n+        'relative flex w-full before:absolute before:bottom-0 before:left-0 before:h-px before:w-full before:bg-cn-2'\n     }\n   },\n   defaultVariants: {\n@@ -30,7 +30,7 @@ const tabsTriggerVariants = cva(\n         navigation:\n           'm-0 -mb-px h-11 border-b border-solid border-b-transparent px-0 text-2 font-normal text-cn-2 duration-150 ease-in-out hover:text-cn-foreground-1 data-[state=active]:border-cn-borders-1',\n         tabnav:\n-          'h-[36px] rounded-t-3 border-x border-t border-transparent px-cn-sm font-normal text-cn-2 hover:text-cn-foreground-1 data-[state=active]:border-cn-borders-2 data-[state=active]:text-cn-foreground-1 data-[state=active]:bg-cn-1'\n+          'h-[36px] rounded-t-3 border-x border-t border-transparent px-cn-sm font-normal text-cn-2 hover:text-cn-foreground-1 data-[state=active]:border-cn-borders-2 data-[state=active]:bg-cn-1 data-[state=active]:text-cn-foreground-1'\n       }\n     },\n     defaultVariants: {\n"
+      raw: "diff --git a/packages/ui/src/components/tabs.tsx b/packages/ui/src/components/tabs.tsx\nindex 5cbae7da53b01c1fdcd7d7e940e0c2c6c10dfce4..631a8515f53931f3a9ec94f17fb4c3499bef513d 100644\n--- a/packages/ui/src/components/tabs.tsx\n+++ b/packages/ui/src/components/tabs.tsx\n@@ -11,7 +11,7 @@ const tabsListVariants = cva('inline-flex items-center text-cn-3', {\n       underline: 'h-11 justify-center gap-cn-md',\n       navigation: 'h-11 w-full justify-start gap-cn-xl border-b border-cn-borders-2 px-cn-xl',\n       tabnav:\n-        'relative flex w-full before:absolute before:left-0 before:h-px before:w-full before:bg-cn-2 before:bottom-0'\n+        'relative flex w-full before:absolute before:bottom-0 before:left-0 before:h-px before:w-full before:bg-cn-2'\n     }\n   },\n   defaultVariants: {\n@@ -30,7 +30,7 @@ const tabsTriggerVariants = cva(\n         navigation:\n           'm-0 -mb-px h-11 border-b border-solid border-b-transparent px-0 text-2 font-normal text-cn-2 duration-150 ease-in-out hover:text-cn-foreground-1 data-[state=active]:border-cn-borders-1',\n         tabnav:\n-          'h-[36px] rounded-t-3 border-x border-t border-transparent px-cn-sm font-normal text-cn-2 hover:text-cn-foreground-1 data-[state=active]:border-cn-borders-2 data-[state=active]:text-cn-foreground-1 data-[state=active]:bg-cn-1'\n+          'h-[36px] rounded-t-3 border-x border-t border-transparent px-cn-sm font-normal text-cn-2 hover:text-cn-foreground-1 data-[state=active]:border-cn-borders-2 data-[state=active]:bg-cn-1 data-[state=active]:text-cn-foreground-1'\n       }\n     },\n     defaultVariants: {\n"
     },
     {
       blocks: [
@@ -3873,12 +3874,12 @@ export const commitDetailsStore: ICommitDetailsStore = {
               newNumber: 52
             },
             {
-              content: '-        <h1 className="text-cn-foreground-1 font-medium text-6 flex gap-x-2.5">',
+              content: '-        <h1 className="text-cn-foreground-1 font-medium text-6 flex gap-x-cn-xs">',
               type: 'delete',
               oldNumber: 53
             },
             {
-              content: '+        <h1 className="flex gap-x-2.5 text-6 font-medium text-cn-foreground-1">',
+              content: '+        <h1 className="flex gap-x-cn-xs text-6 font-medium text-cn-foreground-1">',
               type: 'insert',
               newNumber: 53
             },
@@ -3978,7 +3979,7 @@ export const commitDetailsStore: ICommitDetailsStore = {
       fileId:
         'packages/ui/src/views/repo/pull-request/components/pull-request-header.tsx::::packages/ui/src/views/repo/pull-request/components/pull-request-header.tsx',
       filePath: 'packages/ui/src/views/repo/pull-request/components/pull-request-header.tsx',
-      raw: 'diff --git a/packages/ui/src/views/repo/pull-request/components/pull-request-header.tsx b/packages/ui/src/views/repo/pull-request/components/pull-request-header.tsx\nindex 0e0a22511ef8f94379e3d1aa907cf82ef0d385ff..8cfd0819eb80a4a70596c94ef0a37f7f9b55c747 100644\n--- a/packages/ui/src/views/repo/pull-request/components/pull-request-header.tsx\n+++ b/packages/ui/src/views/repo/pull-request/components/pull-request-header.tsx\n@@ -50,7 +50,7 @@ export const PullRequestHeader: React.FC<PullRequestTitleProps> = ({\n   return (\n     <div className="flex flex-col gap-y-4">\n       <div className="flex items-center">\n-        <h1 className="text-cn-foreground-1 font-medium text-6 flex gap-x-2.5">\n+        <h1 className="flex gap-x-2.5 text-6 font-medium text-cn-foreground-1">\n           {original}\n           <span className="font-normal text-cn-3">#{number}</span>\n         </h1>\n@@ -82,7 +82,7 @@ export const PullRequestHeader: React.FC<PullRequestTitleProps> = ({\n               {source_branch}\n             </Link>\n           </Badge>\n-          <span className="w-px h-4 mx-cn-2xs bg-cn-3" />\n+          <span className="mx-cn-2xs h-4 w-px bg-cn-3" />\n           <span className="text-cn-3">{formattedTime}</span>\n         </div>\n       </div>\n'
+      raw: 'diff --git a/packages/ui/src/views/repo/pull-request/components/pull-request-header.tsx b/packages/ui/src/views/repo/pull-request/components/pull-request-header.tsx\nindex 0e0a22511ef8f94379e3d1aa907cf82ef0d385ff..8cfd0819eb80a4a70596c94ef0a37f7f9b55c747 100644\n--- a/packages/ui/src/views/repo/pull-request/components/pull-request-header.tsx\n+++ b/packages/ui/src/views/repo/pull-request/components/pull-request-header.tsx\n@@ -50,7 +50,7 @@ export const PullRequestHeader: React.FC<PullRequestTitleProps> = ({\n   return (\n     <div className="flex flex-col gap-y-cn-md">\n       <div className="flex items-center">\n-        <h1 className="text-cn-foreground-1 font-medium text-6 flex gap-x-cn-xs">\n+        <h1 className="flex gap-x-cn-xs text-6 font-medium text-cn-foreground-1">\n           {original}\n           <span className="font-normal text-cn-3">#{number}</span>\n         </h1>\n@@ -82,7 +82,7 @@ export const PullRequestHeader: React.FC<PullRequestTitleProps> = ({\n               {source_branch}\n             </Link>\n           </Badge>\n-          <span className="w-px h-4 mx-cn-2xs bg-cn-3" />\n+          <span className="mx-cn-2xs h-4 w-px bg-cn-3" />\n           <span className="text-cn-3">{formattedTime}</span>\n         </div>\n       </div>\n'
     },
     {
       blocks: [
@@ -4258,12 +4259,12 @@ export const commitDetailsStore: ICommitDetailsStore = {
               newNumber: 246
             },
             {
-              content: '-                <div className="flex gap-x-2 items-center">',
+              content: '-                <div className="flex gap-x-cn-xs items-center">',
               type: 'delete',
               oldNumber: 247
             },
             {
-              content: '+                <div className="flex items-center gap-x-2">',
+              content: '+                <div className="flex items-center gap-x-cn-xs">',
               type: 'insert',
               newNumber: 247
             },
@@ -4305,7 +4306,7 @@ export const commitDetailsStore: ICommitDetailsStore = {
               newNumber: 253
             },
             {
-              content: '-                <div className="flex gap-x-2 items-center">',
+              content: '-                <div className="flex gap-x-cn-xs items-center">',
               type: 'delete',
               oldNumber: 254
             },
@@ -4315,7 +4316,7 @@ export const commitDetailsStore: ICommitDetailsStore = {
               oldNumber: 255
             },
             {
-              content: '+                <div className="flex items-center gap-x-2">',
+              content: '+                <div className="flex items-center gap-x-cn-xs">',
               type: 'insert',
               newNumber: 254
             },
@@ -4370,12 +4371,12 @@ export const commitDetailsStore: ICommitDetailsStore = {
               newNumber: 271
             },
             {
-              content: '-                <div className="flex gap-x-2 items-center">',
+              content: '-                <div className="flex gap-x-cn-xs items-center">',
               type: 'delete',
               oldNumber: 272
             },
             {
-              content: '+                <div className="flex items-center gap-x-2">',
+              content: '+                <div className="flex items-center gap-x-cn-xs">',
               type: 'insert',
               newNumber: 272
             },
@@ -4405,7 +4406,7 @@ export const commitDetailsStore: ICommitDetailsStore = {
               newNumber: 276
             },
             {
-              content: '-                <div className="flex gap-x-2 items-center">',
+              content: '-                <div className="flex gap-x-cn-xs items-center">',
               type: 'delete',
               oldNumber: 277
             },
@@ -4415,7 +4416,7 @@ export const commitDetailsStore: ICommitDetailsStore = {
               oldNumber: 278
             },
             {
-              content: '+                <div className="flex items-center gap-x-2">',
+              content: '+                <div className="flex items-center gap-x-cn-xs">',
               type: 'insert',
               newNumber: 277
             },
@@ -4470,12 +4471,12 @@ export const commitDetailsStore: ICommitDetailsStore = {
               newNumber: 291
             },
             {
-              content: '-              <div className="flex gap-x-2 items-center">',
+              content: '-              <div className="flex gap-x-cn-xs items-center">',
               type: 'delete',
               oldNumber: 292
             },
             {
-              content: '+              <div className="flex items-center gap-x-2">',
+              content: '+              <div className="flex items-center gap-x-cn-xs">',
               type: 'insert',
               newNumber: 292
             },
@@ -4524,12 +4525,12 @@ export const commitDetailsStore: ICommitDetailsStore = {
               newNumber: 312
             },
             {
-              content: '-                <div className="flex gap-x-2 items-center">',
+              content: '-                <div className="flex gap-x-cn-xs items-center">',
               type: 'delete',
               oldNumber: 313
             },
             {
-              content: '+                <div className="flex items-center gap-x-2">',
+              content: '+                <div className="flex items-center gap-x-cn-xs">',
               type: 'insert',
               newNumber: 313
             },
@@ -4578,7 +4579,7 @@ export const commitDetailsStore: ICommitDetailsStore = {
         'packages/ui/src/views/repo/pull-request/details/components/conversation/sections/pull-request-changes-section.tsx::::packages/ui/src/views/repo/pull-request/details/components/conversation/sections/pull-request-changes-section.tsx',
       filePath:
         'packages/ui/src/views/repo/pull-request/details/components/conversation/sections/pull-request-changes-section.tsx',
-      raw: 'diff --git a/packages/ui/src/views/repo/pull-request/details/components/conversation/sections/pull-request-changes-section.tsx b/packages/ui/src/views/repo/pull-request/details/components/conversation/sections/pull-request-changes-section.tsx\nindex e06b76dd1b69885e022ce9188ee8d813dda07075..37284116f49710e2be9669ca7e65a6a4c7c54d0a 100644\n--- a/packages/ui/src/views/repo/pull-request/details/components/conversation/sections/pull-request-changes-section.tsx\n+++ b/packages/ui/src/views/repo/pull-request/details/components/conversation/sections/pull-request-changes-section.tsx\n@@ -67,7 +67,7 @@ interface HeaderItemProps {\n   header: string\n }\n const HeaderItem: React.FC<HeaderItemProps> = ({ header }: HeaderItemProps) => {\n-  return <span className="text-cn-3 text-1">{header}</span>\n+  return <span className="text-1 text-cn-3">{header}</span>\n }\n \n const AvatarItem: React.FC<AvatarItemProps> = ({ evaluations }: AvatarItemProps) => {\n@@ -244,15 +244,15 @@ const PullRequestChangesSection = ({\n             ((minApproval ?? 0) > 0 && minReqLatestApproval === undefined)) && (\n             <div className="ml-cn-xl flex items-center justify-between">\n               {approvedEvaluations && minApproval && minApproval <= approvedEvaluations?.length ? (\n-                <div className="flex gap-x-2 items-center">\n+                <div className="flex items-center gap-x-2">\n                   <Icon name="success" className="text-icons-success" />\n                   <span className="text-2 text-cn-foreground-1">\n                     {`Changes were approved by ${approvedEvaluations?.length} ${easyPluralize(approvedEvaluations?.length, \'reviewer\', \'reviewers\')}`}\n                   </span>\n                 </div>\n               ) : (\n-                <div className="flex gap-x-2 items-center">\n-                  <Icon name="circle" className="text-icons-7 fill-transparent" />\n+                <div className="flex items-center gap-x-2">\n+                  <Icon name="circle" className="fill-transparent text-icons-7" />\n                   <span className="text-2 text-cn-foreground-1">\n                     {`${(approvedEvaluations && approvedEvaluations.length) || \'\'}/${minApproval} approvals completed`}\n                   </span>\n@@ -269,13 +269,13 @@ const PullRequestChangesSection = ({\n               {latestApprovalArr !== undefined &&\n               minReqLatestApproval !== undefined &&\n               minReqLatestApproval <= latestApprovalArr?.length ? (\n-                <div className="flex gap-x-2 items-center">\n+                <div className="flex items-center gap-x-2">\n                   <Icon name="success" className="text-icons-success" />\n                   <span className="text-2 text-cn-foreground-1">{`Latest changes were approved by ${latestApprovalArr?.length || minReqLatestApproval || \'\'} ${easyPluralize(latestApprovalArr?.length || minReqLatestApproval, \'reviewer\', \'reviewers\')}`}</span>\n                 </div>\n               ) : (\n-                <div className="flex gap-x-2 items-center">\n-                  <Icon name="circle" className="text-icons-7 fill-transparent" />\n+                <div className="flex items-center gap-x-2">\n+                  <Icon name="circle" className="fill-transparent text-icons-7" />\n                   <span className="text-2 text-cn-foreground-1">\n                     {`${latestApprovalArr?.length || minReqLatestApproval || \'\'} ${easyPluralize(latestApprovalArr?.length || minReqLatestApproval || 0, \'approval\', \'approvals\')} pending on latest changes`}\n                   </span>\n@@ -289,7 +289,7 @@ const PullRequestChangesSection = ({\n \n           {!isEmpty(changeReqEvaluations) && (\n             <div className="ml-cn-xl flex items-center justify-between">\n-              <div className="flex gap-x-2 items-center">\n+              <div className="flex items-center gap-x-2">\n                 <Icon\n                   name="triangle-warning"\n                   className={cn({\n@@ -310,7 +310,7 @@ const PullRequestChangesSection = ({\n           {!isEmpty(codeOwners) && !isEmpty(codeOwners.evaluation_entries) && (\n             <div className="ml-cn-xl flex items-center justify-between">\n               {codeOwnerChangeReqEntries && codeOwnerChangeReqEntries?.length > 0 ? (\n-                <div className="flex gap-x-2 items-center">\n+                <div className="flex items-center gap-x-2">\n                   <Icon\n                     name="triangle-warning"\n                     className={cn({\n'
+      raw: 'diff --git a/packages/ui/src/views/repo/pull-request/details/components/conversation/sections/pull-request-changes-section.tsx b/packages/ui/src/views/repo/pull-request/details/components/conversation/sections/pull-request-changes-section.tsx\nindex e06b76dd1b69885e022ce9188ee8d813dda07075..37284116f49710e2be9669ca7e65a6a4c7c54d0a 100644\n--- a/packages/ui/src/views/repo/pull-request/details/components/conversation/sections/pull-request-changes-section.tsx\n+++ b/packages/ui/src/views/repo/pull-request/details/components/conversation/sections/pull-request-changes-section.tsx\n@@ -67,7 +67,7 @@ interface HeaderItemProps {\n   header: string\n }\n const HeaderItem: React.FC<HeaderItemProps> = ({ header }: HeaderItemProps) => {\n-  return <span className="text-cn-3 text-1">{header}</span>\n+  return <span className="text-1 text-cn-3">{header}</span>\n }\n \n const AvatarItem: React.FC<AvatarItemProps> = ({ evaluations }: AvatarItemProps) => {\n@@ -244,15 +244,15 @@ const PullRequestChangesSection = ({\n             ((minApproval ?? 0) > 0 && minReqLatestApproval === undefined)) && (\n             <div className="ml-cn-xl flex items-center justify-between">\n               {approvedEvaluations && minApproval && minApproval <= approvedEvaluations?.length ? (\n-                <div className="flex gap-x-cn-xs items-center">\n+                <div className="flex items-center gap-x-cn-xs">\n                   <Icon name="success" className="text-icons-success" />\n                   <span className="text-2 text-cn-foreground-1">\n                     {`Changes were approved by ${approvedEvaluations?.length} ${easyPluralize(approvedEvaluations?.length, \'reviewer\', \'reviewers\')}`}\n                   </span>\n                 </div>\n               ) : (\n-                <div className="flex gap-x-cn-xs items-center">\n-                  <Icon name="circle" className="text-icons-7 fill-transparent" />\n+                <div className="flex items-center gap-x-cn-xs">\n+                  <Icon name="circle" className="fill-transparent text-icons-7" />\n                   <span className="text-2 text-cn-foreground-1">\n                     {`${(approvedEvaluations && approvedEvaluations.length) || \'\'}/${minApproval} approvals completed`}\n                   </span>\n@@ -269,13 +269,13 @@ const PullRequestChangesSection = ({\n               {latestApprovalArr !== undefined &&\n               minReqLatestApproval !== undefined &&\n               minReqLatestApproval <= latestApprovalArr?.length ? (\n-                <div className="flex gap-x-cn-xs items-center">\n+                <div className="flex items-center gap-x-cn-xs">\n                   <Icon name="success" className="text-icons-success" />\n                   <span className="text-2 text-cn-foreground-1">{`Latest changes were approved by ${latestApprovalArr?.length || minReqLatestApproval || \'\'} ${easyPluralize(latestApprovalArr?.length || minReqLatestApproval, \'reviewer\', \'reviewers\')}`}</span>\n                 </div>\n               ) : (\n-                <div className="flex gap-x-cn-xs items-center">\n-                  <Icon name="circle" className="text-icons-7 fill-transparent" />\n+                <div className="flex items-center gap-x-cn-xs">\n+                  <Icon name="circle" className="fill-transparent text-icons-7" />\n                   <span className="text-2 text-cn-foreground-1">\n                     {`${latestApprovalArr?.length || minReqLatestApproval || \'\'} ${easyPluralize(latestApprovalArr?.length || minReqLatestApproval || 0, \'approval\', \'approvals\')} pending on latest changes`}\n                   </span>\n@@ -289,7 +289,7 @@ const PullRequestChangesSection = ({\n \n           {!isEmpty(changeReqEvaluations) && (\n             <div className="ml-cn-xl flex items-center justify-between">\n-              <div className="flex gap-x-cn-xs items-center">\n+              <div className="flex items-center gap-x-cn-xs">\n                 <Icon\n                   name="triangle-warning"\n                   className={cn({\n@@ -310,7 +310,7 @@ const PullRequestChangesSection = ({\n           {!isEmpty(codeOwners) && !isEmpty(codeOwners.evaluation_entries) && (\n             <div className="ml-cn-xl flex items-center justify-between">\n               {codeOwnerChangeReqEntries && codeOwnerChangeReqEntries?.length > 0 ? (\n-                <div className="flex gap-x-cn-xs items-center">\n+                <div className="flex items-center gap-x-cn-xs">\n                   <Icon\n                     name="triangle-warning"\n                     className={cn({\n'
     },
     {
       blocks: [
@@ -4591,7 +4592,7 @@ export const commitDetailsStore: ICommitDetailsStore = {
               newNumber: 11
             },
             {
-              content: '     <div className="inline-flex items-center gap-2">',
+              content: '     <div className="inline-flex items-center gap-cn-xs">',
               type: 'context',
               oldNumber: 12,
               newNumber: 12
@@ -4651,7 +4652,7 @@ export const commitDetailsStore: ICommitDetailsStore = {
               newNumber: 20
             },
             {
-              content: '     <div className="ml-cn-xl inline-flex items-center gap-2">',
+              content: '     <div className="ml-cn-xl inline-flex items-center gap-cn-xs">',
               type: 'context',
               oldNumber: 21,
               newNumber: 21
@@ -4711,7 +4712,7 @@ export const commitDetailsStore: ICommitDetailsStore = {
         'packages/ui/src/views/repo/pull-request/details/components/conversation/sections/pull-request-line-title.tsx::::packages/ui/src/views/repo/pull-request/details/components/conversation/sections/pull-request-line-title.tsx',
       filePath:
         'packages/ui/src/views/repo/pull-request/details/components/conversation/sections/pull-request-line-title.tsx',
-      raw: 'diff --git a/packages/ui/src/views/repo/pull-request/details/components/conversation/sections/pull-request-line-title.tsx b/packages/ui/src/views/repo/pull-request/details/components/conversation/sections/pull-request-line-title.tsx\nindex 28933260b802c33ecfb573c3b9830a5eced38bec..56cbf4bb612386ac59b554a71b1b7d2bfd1c67fe 100644\n--- a/packages/ui/src/views/repo/pull-request/details/components/conversation/sections/pull-request-line-title.tsx\n+++ b/packages/ui/src/views/repo/pull-request/details/components/conversation/sections/pull-request-line-title.tsx\n@@ -11,7 +11,7 @@ export const LineTitle = ({ ...props }: LineTitleProps) => {\n   return (\n     <div className="inline-flex items-center gap-2">\n       {props.icon}\n-      <h3 className="font-medium text-2">{props.text}</h3>\n+      <h3 className="text-2 font-medium">{props.text}</h3>\n     </div>\n   )\n }\n@@ -19,7 +19,7 @@ export const LineTitle = ({ ...props }: LineTitleProps) => {\n export const LineDescription = ({ ...props }: LineDescriptionProps) => {\n   return (\n     <div className="ml-cn-xl inline-flex items-center gap-2">\n-      <p className="text-cn-3 text-2 font-normal">{props.text}</p>\n+      <p className="text-2 font-normal text-cn-3">{props.text}</p>\n     </div>\n   )\n }\n'
+      raw: 'diff --git a/packages/ui/src/views/repo/pull-request/details/components/conversation/sections/pull-request-line-title.tsx b/packages/ui/src/views/repo/pull-request/details/components/conversation/sections/pull-request-line-title.tsx\nindex 28933260b802c33ecfb573c3b9830a5eced38bec..56cbf4bb612386ac59b554a71b1b7d2bfd1c67fe 100644\n--- a/packages/ui/src/views/repo/pull-request/details/components/conversation/sections/pull-request-line-title.tsx\n+++ b/packages/ui/src/views/repo/pull-request/details/components/conversation/sections/pull-request-line-title.tsx\n@@ -11,7 +11,7 @@ export const LineTitle = ({ ...props }: LineTitleProps) => {\n   return (\n     <div className="inline-flex items-center gap-cn-xs">\n       {props.icon}\n-      <h3 className="font-medium text-2">{props.text}</h3>\n+      <h3 className="text-2 font-medium">{props.text}</h3>\n     </div>\n   )\n }\n@@ -19,7 +19,7 @@ export const LineTitle = ({ ...props }: LineTitleProps) => {\n export const LineDescription = ({ ...props }: LineDescriptionProps) => {\n   return (\n     <div className="ml-cn-xl inline-flex items-center gap-cn-xs">\n-      <p className="text-cn-3 text-2 font-normal">{props.text}</p>\n+      <p className="text-2 font-normal text-cn-3">{props.text}</p>\n     </div>\n   )\n }\n'
     },
     {
       blocks: [
@@ -4730,7 +4731,7 @@ export const commitDetailsStore: ICommitDetailsStore = {
               newNumber: 50
             },
             {
-              content: '               <div className="ml-cn-xl inline-flex items-center gap-2">',
+              content: '               <div className="ml-cn-xl inline-flex items-center gap-cn-xs">',
               type: 'context',
               oldNumber: 51,
               newNumber: 51
@@ -4791,13 +4792,13 @@ export const commitDetailsStore: ICommitDetailsStore = {
             },
             {
               content:
-                '-                  <div className="py-cn-2xs flex items-center gap-x-2" key={`${file}-${idx}`}>',
+                '-                  <div className="py-cn-2xs flex items-center gap-x-cn-xs" key={`${file}-${idx}`}>',
               type: 'delete',
               oldNumber: 87
             },
             {
               content:
-                '+                  <div className="flex items-center gap-x-2 py-cn-2xs" key={`${file}-${idx}`}>',
+                '+                  <div className="flex items-center gap-x-cn-xs py-cn-2xs" key={`${file}-${idx}`}>',
               type: 'insert',
               newNumber: 87
             },
@@ -4846,7 +4847,7 @@ export const commitDetailsStore: ICommitDetailsStore = {
         'packages/ui/src/views/repo/pull-request/details/components/conversation/sections/pull-request-merge-section.tsx::::packages/ui/src/views/repo/pull-request/details/components/conversation/sections/pull-request-merge-section.tsx',
       filePath:
         'packages/ui/src/views/repo/pull-request/details/components/conversation/sections/pull-request-merge-section.tsx',
-      raw: 'diff --git a/packages/ui/src/views/repo/pull-request/details/components/conversation/sections/pull-request-merge-section.tsx b/packages/ui/src/views/repo/pull-request/details/components/conversation/sections/pull-request-merge-section.tsx\nindex 2078a8fdb8f70cdb4548232c33a4fe548aa33bdd..8fee0e7e1c8c4581117f8866e01086a715161a7c 100644\n--- a/packages/ui/src/views/repo/pull-request/details/components/conversation/sections/pull-request-merge-section.tsx\n+++ b/packages/ui/src/views/repo/pull-request/details/components/conversation/sections/pull-request-merge-section.tsx\n@@ -49,7 +49,7 @@ const PullRequestMergeSection = ({\n               <LineDescription text={\'Checking for ability to merge automatically...\'} />\n             ) : !mergeable ? (\n               <div className="ml-cn-xl inline-flex items-center gap-2">\n-                <p className="text-cn-3 text-2 font-normal">\n+                <p className="text-2 font-normal text-cn-3">\n                   Use the\n                   <span\n                     // onClick={() => {\n@@ -84,7 +84,7 @@ const PullRequestMergeSection = ({\n             {!isEmpty(conflictingFiles) && (\n               <div className="mt-cn-xs">\n                 {conflictingFiles?.map((file, idx) => (\n-                  <div className="py-cn-2xs flex items-center gap-x-2" key={`${file}-${idx}`}>\n+                  <div className="flex items-center gap-x-2 py-cn-2xs" key={`${file}-${idx}`}>\n                     <Icon className="text-icons-1" size={16} name="file" />\n                     <span className="text-2 text-cn-foreground-1">{file}</span>\n                   </div>\n'
+      raw: 'diff --git a/packages/ui/src/views/repo/pull-request/details/components/conversation/sections/pull-request-merge-section.tsx b/packages/ui/src/views/repo/pull-request/details/components/conversation/sections/pull-request-merge-section.tsx\nindex 2078a8fdb8f70cdb4548232c33a4fe548aa33bdd..8fee0e7e1c8c4581117f8866e01086a715161a7c 100644\n--- a/packages/ui/src/views/repo/pull-request/details/components/conversation/sections/pull-request-merge-section.tsx\n+++ b/packages/ui/src/views/repo/pull-request/details/components/conversation/sections/pull-request-merge-section.tsx\n@@ -49,7 +49,7 @@ const PullRequestMergeSection = ({\n               <LineDescription text={\'Checking for ability to merge automatically...\'} />\n             ) : !mergeable ? (\n               <div className="ml-cn-xl inline-flex items-center gap-cn-xs">\n-                <p className="text-cn-3 text-2 font-normal">\n+                <p className="text-2 font-normal text-cn-3">\n                   Use the\n                   <span\n                     // onClick={() => {\n@@ -84,7 +84,7 @@ const PullRequestMergeSection = ({\n             {!isEmpty(conflictingFiles) && (\n               <div className="mt-cn-xs">\n                 {conflictingFiles?.map((file, idx) => (\n-                  <div className="py-cn-2xs flex items-center gap-x-cn-xs" key={`${file}-${idx}`}>\n+                  <div className="flex items-center gap-x-cn-xs py-cn-2xs" key={`${file}-${idx}`}>\n                     <Icon className="text-icons-1" size={16} name="file" />\n                     <span className="text-2 text-cn-foreground-1">{file}</span>\n                   </div>\n'
     }
   ] as unknown as DiffFileEntry[],
   commitData: {

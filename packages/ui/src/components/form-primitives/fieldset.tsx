@@ -14,7 +14,7 @@ interface FieldsetProps extends HTMLAttributes<HTMLFieldSetElement> {}
 export function Fieldset({ children, className, ...props }: FieldsetProps) {
   return (
     <fieldset
-      className={cn('flex flex-col gap-y-6', className)}
+      className={cn('flex flex-col gap-y-cn-xl', className)}
       role="group"
       aria-describedby="fieldset-description"
       {...props}

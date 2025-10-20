@@ -62,14 +62,18 @@ const SortableItem = ({
   }
 
   return (
-    <div className={cn('relative', isDragging && 'z-10', 'flex items-center gap-x-2')} ref={setNodeRef} style={style}>
+    <div
+      className={cn('relative', isDragging && 'z-10', 'flex items-center gap-x-cn-xs')}
+      ref={setNodeRef}
+      style={style}
+    >
       <div className="cursor-grab rounded p-cn-3xs hover:bg-cn-3 active:cursor-grabbing" {...attributes} {...listeners}>
         <IconV2 className="text-cn-3" name="grip-dots" size="2xs" />
       </div>
 
       <DropdownMenu.Root>
         <DropdownMenu.Trigger asChild>
-          <Button variant="outline" size="sm" className="gap-x-1.5">
+          <Button variant="outline" size="sm" className="gap-x-cn-2xs">
             {sortOptions.find(opt => opt.value === sort.type)?.label}
             <IconV2 className="chevron-down" name="nav-arrow-down" size="2xs" />
           </Button>
@@ -87,7 +91,7 @@ const SortableItem = ({
 
       <DropdownMenu.Root>
         <DropdownMenu.Trigger asChild>
-          <Button variant="outline" size="sm" className="gap-x-1.5">
+          <Button variant="outline" size="sm" className="gap-x-cn-2xs">
             {sortDirections.find(dir => dir.value === sort.direction)?.label}
             <IconV2 className="chevron-down" name="nav-arrow-down" size="2xs" />
           </Button>
@@ -146,7 +150,7 @@ export default function MultiSort() {
   return (
     <DropdownMenu.Root open={sortOpen} onOpenChange={setSortOpen}>
       <DropdownMenu.Trigger asChild>
-        <Button variant="secondary" className="gap-x-1.5">
+        <Button variant="secondary" className="gap-x-cn-2xs">
           <IconV2
             className={cn(getSortTriggerLabel(sortSelections, sortOptions).isDescending && 'rotate-180')}
             name={getSortTriggerLabel(sortSelections, sortOptions).icon}
@@ -192,7 +196,7 @@ export default function MultiSort() {
           </SortableContext>
         </DndContext>
 
-        <DropdownMenu.Slot className="mt-cn-sm inline-flex flex-col gap-1">
+        <DropdownMenu.Slot className="mt-cn-sm inline-flex flex-col gap-cn-3xs">
           {filteredBySearchSortOptions.length > 0 && (
             <SearchableDropdown
               options={filteredBySearchSortOptions}

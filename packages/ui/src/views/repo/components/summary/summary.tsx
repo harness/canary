@@ -133,7 +133,7 @@ export const Summary = ({
             >
               <Table.Cell className="relative">
                 <div
-                  className={`flex cursor-pointer items-center gap-1.5 ${
+                  className={`flex cursor-pointer items-center gap-cn-2xs ${
                     file.status && file.status !== FileStatus.SAFE
                       ? file.status === FileStatus.LOW_RISK
                         ? 'border-cn-warning absolute left-0 top-1/2 -translate-y-1/2 border-l-2'

@@ -486,7 +486,7 @@ const PullRequestListPage: FC<PullRequestPageProps> = ({
             </ListActions.Root>
             <ListControlBar<PRListFilters, LabelsValue, PRListFilters[PRListFiltersKeys]>
               renderSelectedFilters={filterFieldRenderer => (
-                <PRListFilterHandler.Content className={'flex items-center gap-x-2'}>
+                <PRListFilterHandler.Content className={'flex items-center gap-x-cn-xs'}>
                   {PR_FILTER_OPTIONS.map(filterOption => {
                     return (
                       <PRListFilterHandler.Component
@@ -517,7 +517,7 @@ const PullRequestListPage: FC<PullRequestPageProps> = ({
               renderFilterOptions={filterOptionsRenderer => (
                 <PRListFilterHandler.Dropdown>
                   {(addFilter, availableFilters, resetFilters) => (
-                    <div className="flex items-center gap-x-4">
+                    <div className="flex items-center gap-x-cn-md">
                       {filterOptionsRenderer({ addFilter, resetFilters, availableFilters })}
                     </div>
                   )}

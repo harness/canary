@@ -80,7 +80,7 @@ export const WebhookSSLVerificationField: FC<WebhookFormFieldProps> = ({ registe
       label={t('views:repos.sslVerification', 'SSL Verification')}
       id="insecure"
       {...register('insecure')}
-      className="gap-y-3"
+      className="gap-y-cn-sm"
     >
       <Radio.Item id="enable-ssl" value="1" label={t('views:repos.sslVerificationLabel', 'Enable SSL Verification')} />
       <Radio.Item
@@ -100,7 +100,7 @@ export const WebhookTriggerField: FC<WebhookFormFieldProps> = ({ register }) => 
       label={t('views:repos.evenTriggerLabel', 'Which events would you like to use to trigger this webhook?')}
       id="trigger"
       {...register('trigger')}
-      className="gap-y-3"
+      className="gap-y-cn-sm"
     >
       <Radio.Item id="all-events" value="1" label={t('views:repos.evenTriggerAllLabel', 'Send me everything')} />
       <Radio.Item

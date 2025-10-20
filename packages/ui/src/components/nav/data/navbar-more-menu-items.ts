@@ -120,14 +120,14 @@ export const getNavbarMoreMenuData: GetNavbarMenuData = ({ t, routes, params }) 
       {
         id: 11,
         iconName: 'feature-flags',
-        title: t('component:navbar.feature-flags', 'Feature Flags'),
+        title: t('component:navbar.featureFlags.mainTitle', 'Feature Flags'),
         description: 'Manage all your infrastructure.',
         to: routes?.toFeatureFlags?.(params) || '',
         subItems: [
           {
             id: 11.1,
             iconName: 'feature-flags',
-            title: t('component:navbar.feature-flags.target-groups', 'Target groups'),
+            title: t('component:navbar.featureFlags.targetGroups', 'Target groups'),
             description: 'To manage target groups',
             to: routes?.toFeatureFlagsTargetGroups?.(params) || ''
           }

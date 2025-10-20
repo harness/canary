@@ -56,10 +56,9 @@ export function SerialGroupNode(props: SerialGroupNodeProps) {
       <ExecutionStatus executionStatus={executionStatus} />
 
       <div
-        className={cn('absolute inset-0 -z-10 rounded-3 border-[1.2px] bg-graph-background-1', {
+        className={cn('absolute inset-0 -z-10 rounded-3 border bg-cn-graph-card-canvas-2', {
           'border-cn-3': !selected,
-          'border-cn-2': selected,
-          'bg-graph-background-2 border-graph-border-1': collapsed
+          'border-cn-2': selected || collapsed
         })}
       />
 
@@ -70,7 +69,7 @@ export function SerialGroupNode(props: SerialGroupNodeProps) {
       {!collapsed && isEmpty && (
         <Button
           rounded
-          className="self-center p-cn-sm"
+          className="p-cn-sm self-center"
           variant="outline"
           onMouseDown={e => e.stopPropagation()}
           onClick={onAddInClick}

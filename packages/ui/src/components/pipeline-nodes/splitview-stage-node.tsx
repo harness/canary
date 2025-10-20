@@ -64,9 +64,9 @@ export function SplitView_StageNode(props: SplitView_StageNodeProps) {
           role="button"
           tabIndex={0}
           className={cn(
-            'flex flex-col justify-end gap-y-cn-xs box size-full rounded-3 border bg-graph-gradient-1 cursor-pointer p-cn-xs shadow-4',
+            'flex flex-col justify-end gap-y-cn-xs box size-full rounded-3 border bg-cn-graph-card-gradient cursor-pointer p-cn-xs shadow-4',
             {
-              'border-graph-border-1': !selected,
+              'border-cn-2': !selected,
               'border-cn-3': selected,
               'border-cn-success': executionStatus === 'success',
               'border-cn-warning': executionStatus === 'warning',
@@ -102,9 +102,9 @@ export function SplitView_StageNode(props: SplitView_StageNodeProps) {
           )}
           {/* {icon} */}
           <IconV2 name="square-dashed" size="md" />
-          <span className="line-clamp-2 text-2 font-medium leading-snug text-cn-1">
+          <span className="text-2 text-cn-1 line-clamp-2 font-medium leading-snug">
             {name}
-            {!!counter && <span className="font-normal text-cn-2"> ({counter})</span>}
+            {!!counter && <span className="text-cn-2 font-normal"> ({counter})</span>}
           </span>
           {warningMessage && <WarningLabel>{warningMessage}</WarningLabel>}
         </div>

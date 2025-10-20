@@ -60,6 +60,13 @@ export default {
       'cn-diff-success': 'var(--cn-comp-diff-add-content)',
       'cn-diff-danger': 'var(--cn-comp-diff-del-content)',
 
+      'cn-graph': {
+        card: {
+          'canvas-1': 'var(--cn-comp-pipeline-card-canvas-1-bg)',
+          'canvas-2': 'var(--cn-comp-pipeline-card-canvas-2-bg)'
+        }
+      },
+
       /**
        * These colors should be used along with their text pairs
        *
@@ -456,20 +463,6 @@ export default {
         full: '100%'
       },
 
-      colors: {
-        // 👉 Remove this by checking with pipeline team
-        graph: {
-          background: {
-            1: 'hsl(var(--canary-graph-background-1))',
-            2: 'hsl(var(--canary-graph-background-2))',
-            3: 'var(--canary-graph-background-3)',
-            4: 'hsl(var(--canary-graph-background-4))'
-          },
-          border: {
-            1: 'hsl(var(--canary-graph-border-1))'
-          }
-        }
-      },
       letterSpacing: {
         tighter: 'var(--cn-tracking-tighter)',
         tight: 'var(--cn-tracking-tight)',
@@ -478,7 +471,6 @@ export default {
         wider: 'var(--cn-tracking-wider)',
         widest: 'var(--cn-tracking-widest)'
       },
-      // Remove borderColor - removing the Default is causing border issues in dark mode
 
       fontSize: {
         0: 'var(--cn-font-size-0)',
@@ -499,20 +491,8 @@ export default {
         min: 'var(--cn-font-size-min)'
       },
       backgroundImage: {
-        /**
-         * 👉 Use proper variables from design system and remove it
-         *
-         * --cn-comp-pipeline-card-bg
-         * --cn-comp-pipeline-card-border
-         * --cn-comp-pipeline-card-running-border
-         */
-        'graph-gradient-1':
-          'radial-gradient(88.57% 100% at 14.29% 0%, var(--cn-gradient-pipeline-card-bg-gradient-from) 10.62%, var(--cn-gradient-pipeline-card-bg-gradient-to) 75.86%)',
-        'graph-bg-gradient': 'radial-gradient(circle, var(--cn-bg-1) 1px, transparent 1px)'
-      },
-      backgroundSize: {
-        // 👉 Do we need this here? Check with pipeline team and if not needed, remove it.
-        'graph-bg-size': '22px 22px'
+        'cn-graph-card-gradient': 'var(--cn-comp-pipeline-card-bg)',
+        'cn-graph-bg-gradient': 'radial-gradient(circle, var(--cn-bg-1) 1px, transparent 1px)'
       },
       keyframes: {
         'accordion-down': {
@@ -617,7 +597,6 @@ export default {
 
     /** Existing Variants  */
     { pattern: /^bg-graph-/ },
-    { pattern: /^hover:bg-graph-/ },
 
     { pattern: /rounded-./ },
     { pattern: /border-./ },

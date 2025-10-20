@@ -8,7 +8,7 @@ export function StartNode() {
   return (
     <div
       className={cn(
-        'border-graph-border-1 shadow-4 flex size-full items-center justify-center rounded-full border',
+        'border-cn-gray-outline shadow-4 flex size-full items-center justify-center rounded-full border-[1.2px]',
         isLightTheme ? 'bg-cn-1' : 'bg-cn-3'
       )}
     >

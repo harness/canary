@@ -43,7 +43,7 @@ export const PipelineStudioGraphViewSteps = ({ data: _data }: { data: AnyContain
   }, [])
 
   return (
-    <div className="relative flex h-full grow bg-graph-bg-gradient bg-graph-bg-size">
+    <div className="relative flex h-full grow bg-cn-graph-bg-gradient cn-graph-bg-size">
       <CanvasProvider>
         <PipelineGraph
           customCreateSVGPath={props => {

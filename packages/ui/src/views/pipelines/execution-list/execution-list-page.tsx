@@ -1,8 +1,7 @@
 import { FC } from 'react'
 
-import { Button, ListActions, Pagination, SearchBox, Spacer, Text } from '@/components'
+import { Button, ListActions, Pagination, SearchInput, Spacer, Text } from '@/components'
 import { useRouterContext } from '@/context'
-import { useDebounceSearch } from '@/hooks'
 import { SandboxLayout } from '@/views'
 
 import { ExecutionList } from './execution-list'
@@ -20,14 +19,8 @@ const ExecutionListPage: FC<IExecutionListPageProps> = ({
   const { Link } = useRouterContext()
   const { executions, pageSize, totalItems, page, setPage } = useExecutionListStore()
 
-  const {
-    search: searchInput,
-    handleSearchChange: handleInputChange,
-    handleResetSearch
-  } = useDebounceSearch({
-    handleChangeSearchValue: (val: string) => setSearchQuery(val.length ? val : null),
-    searchValue: searchQuery || ''
-  })
+  const handleSearchChange = (val: string) => setSearchQuery(val.length ? val : null)
+  const handleResetSearch = () => setSearchQuery(null)
 
   if (isError)
     // TODO: improve error handling
@@ -51,12 +44,10 @@ const ExecutionListPage: FC<IExecutionListPageProps> = ({
         <Spacer size={6} />
         <ListActions.Root>
           <ListActions.Left>
-            <SearchBox.Root
-              width="full"
-              className="max-w-96"
-              value={searchInput}
-              handleChange={handleInputChange}
-              placeholder={'Search'}
+            <SearchInput
+              inputContainerClassName="max-w-96"
+              defaultValue={searchQuery || ''}
+              onChange={handleSearchChange}
               autoFocus
             />
           </ListActions.Left>

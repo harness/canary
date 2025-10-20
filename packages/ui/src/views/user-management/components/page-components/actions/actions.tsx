@@ -22,7 +22,6 @@ export const Actions = forwardRef<HTMLInputElement, ActionProps>(({ searchQuery,
           id="search"
           defaultValue={searchQuery ?? ''}
           inputContainerClassName="w-80"
-          placeholder={t('views:repos.search', 'Search')}
           onChange={handleSearchChange}
           autoFocus
           ref={ref}

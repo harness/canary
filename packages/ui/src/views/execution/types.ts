@@ -20,7 +20,7 @@ export interface StepExecutionProps {
   step?: StepProps
   logs?: LivelogLine[]
   query?: string
-  handleInputChange?: (event: React.ChangeEvent<HTMLInputElement>) => void
+  handleInputChange?: (value: string) => void
 }
 
 export interface StageProps {

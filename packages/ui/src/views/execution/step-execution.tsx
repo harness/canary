@@ -1,6 +1,6 @@
-import { ChangeEvent, FC, useState } from 'react'
+import { FC, useState } from 'react'
 
-import { Button, IconV2, Layout, ScrollArea, SearchBox, Tabs } from '@/components'
+import { Button, IconV2, Layout, ScrollArea, SearchInput, Shortcut, Tabs } from '@/components'
 import { cn } from '@utils/cn'
 
 import ConsoleLogs from './console-logs'
@@ -18,22 +18,17 @@ const StepExecutionToolbar: FC<
 > = ({ onEdit, onDownload, onCopy, query, handleInputChange }) => {
   return (
     <Layout.Horizontal>
-      <SearchBox.Root
-        width="full"
+      <SearchInput
+        size="sm"
+        defaultValue={query || ''}
+        onChange={handleInputChange}
         placeholder="Find in logs"
-        className="searchbox h-8"
-        handleChange={handleInputChange}
-        value={query}
+        suffix={<Shortcut className="mr-cn-2xs">⌘K</Shortcut>}
         autoFocus
-      >
-        <div className="absolute inset-y-0 right-1.5 my-auto flex h-5 w-8 items-center justify-center gap-1 rounded border border-cn-2 bg-cn-3">
-          <IconV2 name="apple-shortcut" size="2xs" />
-          <span className="text-1 leading-none">F</span>
-        </div>
-      </SearchBox.Root>
+      />
       <div className="flex">
         <Button
-          className="rounded-r-none border-r-0 border-cn-2"
+          className="border-cn-2 rounded-r-none border-r-0"
           variant="outline"
           size="sm"
           iconOnly
@@ -44,10 +39,10 @@ const StepExecutionToolbar: FC<
         >
           <IconV2 name="copy" className="size-4" />
         </Button>
-        <Button variant="outline" size="sm" className="rounded-none border-cn-2" onClick={onEdit}>
+        <Button variant="outline" size="sm" className="border-cn-2 rounded-none" onClick={onEdit}>
           <IconV2 name="edit-pencil" size="sm" />
         </Button>
-        <Button variant="outline" size="sm" className="rounded-l-none border-l-0 border-cn-2" onClick={onDownload}>
+        <Button variant="outline" size="sm" className="border-cn-2 rounded-l-none border-l-0" onClick={onDownload}>
           <IconV2 name="download" size="sm" />
         </Button>
       </div>
@@ -59,10 +54,6 @@ export const StepExecution: FC<StepExecutionProps> = ({ step, logs, onEdit, onDo
   const inputTable = step?.inputs || []
   const outputTable = step?.outputs || []
   const [query, setQuery] = useState('')
-  const handleInputChange = (event: ChangeEvent<HTMLInputElement>) => {
-    const value = event.target.value
-    setQuery(value)
-  }
 
   return (
     <Tabs.Root defaultValue={StepExecutionTab.LOG}>
@@ -78,7 +69,7 @@ export const StepExecution: FC<StepExecutionProps> = ({ step, logs, onEdit, onDo
             onDownload={onDownload}
             onCopy={onCopy}
             query={query}
-            handleInputChange={handleInputChange}
+            handleInputChange={setQuery}
           />
         </Layout.Horizontal>
         <Tabs.Content value={StepExecutionTab.LOG}>

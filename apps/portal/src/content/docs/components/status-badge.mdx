@@ -10,8 +10,8 @@ import { DocsPage } from "../../../components/docs-page";
 
 <DocsPage.ComponentExample
   client:only
-  code={`<div className="flex flex-col gap-8">
-    <div className="grid grid-cols-[repeat(6,auto)] gap-5">
+  code={`<div className="flex flex-col gap-cn-2xl">
+    <div className="grid grid-cols-[repeat(6,auto)] gap-cn-lg">
         <Text variant="heading-subsection" as="h4" className="col-span-6 mb-cn-xs mt-cn-3xs underline underline-offset-4">Primary (Default)</Text>
         <StatusBadge>Default</StatusBadge>
         <StatusBadge theme="success">Success</StatusBadge>
@@ -63,7 +63,7 @@ import { DocsPage } from "../../../components/docs-page";
 
     <hr />
 
-    <div className="grid grid-cols-[repeat(6,auto)] gap-5 self-center">
+    <div className="grid grid-cols-[repeat(6,auto)] gap-cn-lg self-center">
         <Text variant="heading-subsection" as="h4" className="col-span-6 mb-cn-xs mt-cn-3xs underline underline-offset-4">Primary (Default)</Text>
         <StatusBadge size="sm">Default</StatusBadge>
         <StatusBadge size="sm" theme="success">Success</StatusBadge>
@@ -139,7 +139,7 @@ The `StatusBadge` component supports different color themes, including `muted` (
 
 <DocsPage.ComponentExample
   client:only
-  code={`<div className="flex flex-wrap gap-2">
+  code={`<div className="flex flex-wrap gap-cn-xs">
     <StatusBadge>Default (muted)</StatusBadge>
     <StatusBadge theme="success">Success</StatusBadge>
     <StatusBadge theme="warning">Warning</StatusBadge>
@@ -158,7 +158,7 @@ The `StatusBadge` component supports different visual variants, including `prima
 
 <DocsPage.ComponentExample
   client:only
-  code={`<div className="flex flex-wrap gap-3 items-end">
+  code={`<div className="flex flex-wrap gap-cn-sm items-end">
     <StatusBadge variant="primary" theme="muted">Primary</StatusBadge>
     <StatusBadge variant="secondary" theme="muted">Secondary</StatusBadge>
     <StatusBadge variant="outline" theme="muted">Outline</StatusBadge>
@@ -173,7 +173,7 @@ The `StatusBadge` component comes in two sizes: `sm` and `md`.
 
 <DocsPage.ComponentExample
   client:only
-  code={`<div className="flex items-center gap-2">
+  code={`<div className="flex items-center gap-cn-xs">
     <StatusBadge>Default size</StatusBadge>
     <StatusBadge size="sm">Small size</StatusBadge>
 </div>`}
@@ -185,7 +185,7 @@ The `StatusBadge` component supports an optional `icon` prop to display an icon 
 
 <DocsPage.ComponentExample
   client:only
-  code={`<div className="flex flex-wrap items-end gap-3">
+  code={`<div className="flex flex-wrap items-end gap-cn-sm">
     <StatusBadge icon="check" variant="ghost" theme="success">Saved</StatusBadge>
     <StatusBadge icon="xmark" theme="danger">Failed</StatusBadge>
     <StatusBadge icon="info-circle" variant="outline" theme="info">Info</StatusBadge>
@@ -198,7 +198,7 @@ Status badges can optionally include a pulsing indicator to indicate activity us
 
 <DocsPage.ComponentExample
   client:only
-  code={`<div className="flex flex-wrap items-end gap-3">
+  code={`<div className="flex flex-wrap items-end gap-cn-sm">
     <StatusBadge variant="status" theme="success">Online</StatusBadge>
     <StatusBadge variant="status" theme="warning">Warning</StatusBadge>
     <StatusBadge variant="status" theme="danger">Error</StatusBadge>

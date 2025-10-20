@@ -33,7 +33,7 @@ const LineTitle: FC<
   HeaderProps & { toRepoFileDetails?: ({ path }: { path: string }) => string; commitSHA: string }
 > = ({ text, numAdditions, numDeletions, toRepoFileDetails, commitSHA }) => {
   return (
-    <div className="flex w-full max-w-full items-center gap-2">
+    <div className="flex w-full max-w-full items-center gap-cn-xs">
       <Link
         to={toRepoFileDetails?.({ path: `files/${commitSHA}/~/${text}` }) ?? ''}
         variant="secondary"

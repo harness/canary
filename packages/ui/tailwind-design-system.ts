@@ -452,7 +452,8 @@ export default {
         'cn-2xl': 'var(--cn-layout-2xl)',
         'cn-3xl': 'var(--cn-layout-3xl)',
         'cn-4xl': 'var(--cn-layout-4xl)',
-        auto: 'auto'
+        auto: 'auto',
+        full: '100%'
       },
 
       colors: {

@@ -9,7 +9,7 @@ const StepsPaletteContentLayout = {
 
   Section: forwardRef<HTMLDivElement, { children: React.ReactNode }>(function Section({ children }, ref) {
     return (
-      <div ref={ref} className="flex flex-col gap-3">
+      <div ref={ref} className="flex flex-col gap-cn-sm">
         {children}
       </div>
     )

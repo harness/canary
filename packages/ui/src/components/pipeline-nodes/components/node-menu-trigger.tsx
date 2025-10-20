@@ -14,8 +14,7 @@ export const NodeMenuTrigger: FC<NodeMenuTriggerProps> = ({ onEllipsisClick }) =
 
   return (
     <Button
-      style={{ top: '10px' }}
-      className="absolute right-2.5 z-10"
+      className="absolute right-cn-xs top-cn-xs z-10"
       variant="ghost"
       size="sm"
       iconOnly

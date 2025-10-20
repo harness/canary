@@ -48,11 +48,11 @@ const SettingsAccountKeysPage: FC<SettingsAccountKeysPageProps> = ({
       </Text>
 
       <Layout.Vertical gap="2xl">
-        <Fieldset className="gap-y-5">
+        <Fieldset className="gap-y-cn-lg">
           <div className="flex items-end justify-between">
             <Legend
               title={
-                <span className="flex justify-between gap-x-4">
+                <span className="flex justify-between gap-x-cn-md">
                   {t('views:profileSettings.personalAccessToken', 'Personal access token')}
                 </span>
               }
@@ -80,7 +80,7 @@ const SettingsAccountKeysPage: FC<SettingsAccountKeysPageProps> = ({
 
         <FormSeparator className="border-cn-3" />
 
-        <Fieldset className="gap-y-5">
+        <Fieldset className="gap-y-cn-lg">
           <div className="flex items-end justify-between">
             <Legend
               className="max-w-[400px]"

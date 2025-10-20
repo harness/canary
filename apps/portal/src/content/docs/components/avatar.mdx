@@ -10,10 +10,10 @@ import { DocsPage } from "../../../components/docs-page";
 
 <DocsPage.ComponentExample
   client:only
-  code={`<div className="flex flex-col gap-10">
+  code={`<div className="flex flex-col gap-cn-3xl">
     <div>
       <h6 className="font-semibold mb-cn-xs text-center">Image (Default)</h6>
-      <div className="flex items-center justify-center gap-6">
+      <div className="flex items-center justify-center gap-cn-xl">
         <Avatar name="John Doe" src="/avatar.png" size="xs" />
         <Avatar name="John Doe" src="/avatar.png" size="sm" />
         <Avatar name="John Doe" src="/avatar.png" size="md" />
@@ -22,7 +22,7 @@ import { DocsPage } from "../../../components/docs-page";
     </div>
     <div>
       <h6 className="font-semibold mb-cn-xs text-center">Image (Rounded)</h6>
-      <div className="flex items-center justify-center gap-6">
+      <div className="flex items-center justify-center gap-cn-xl">
         <Avatar name="John Doe" src="/avatar.png" size="xs" rounded />
         <Avatar name="John Doe" src="/avatar.png" size="sm" rounded />
         <Avatar name="John Doe" src="/avatar.png" size="md" rounded />
@@ -31,7 +31,7 @@ import { DocsPage } from "../../../components/docs-page";
     </div>
     <div>
       <h6 className="font-semibold mb-cn-xs text-center">Initials (Default)</h6>
-      <div className="flex items-center justify-center gap-6">
+      <div className="flex items-center justify-center gap-cn-xl">
         <Avatar name="John Doe" size="xs" />
         <Avatar name="John Doe" size="sm" />
         <Avatar name="John Doe" size="md" />
@@ -40,7 +40,7 @@ import { DocsPage } from "../../../components/docs-page";
     </div>
     <div>
       <h6 className="font-semibold mb-cn-xs text-center">Initials (Rounded)</h6>
-      <div className="flex items-center justify-center gap-6">
+      <div className="flex items-center justify-center gap-cn-xl">
         <Avatar name="John Doe" size="xs" rounded />
         <Avatar name="John Doe" size="sm" rounded />
         <Avatar name="John Doe" size="md" rounded />
@@ -49,7 +49,7 @@ import { DocsPage } from "../../../components/docs-page";
     </div>
     <div>
       <h6 className="font-semibold mb-cn-xs text-center">Avatar Icon (Default)</h6>
-      <div className="flex items-center justify-center gap-6">
+      <div className="flex items-center justify-center gap-cn-xl">
         <Avatar size="xs" />
         <Avatar size="sm" />
         <Avatar size="md" />
@@ -58,7 +58,7 @@ import { DocsPage } from "../../../components/docs-page";
     </div>
     <div>
       <h6 className="font-semibold mb-cn-xs text-center">Avatar Icon (Rounded)</h6>
-      <div className="flex items-center justify-center gap-6">
+      <div className="flex items-center justify-center gap-cn-xl">
         <Avatar size="xs" rounded />
         <Avatar size="sm" rounded />
         <Avatar size="md" rounded />
@@ -86,7 +86,7 @@ The `Avatar` component supports four sizes: `xs`, `sm`, `md`, and `lg`. The defa
 
 <DocsPage.ComponentExample
   client:only
-  code={`<div className="flex items-center gap-6">
+  code={`<div className="flex items-center gap-cn-xl">
     <Avatar name="John Doe" src="/avatar.png" size="xs" />
     <Avatar name="John Doe" src="/avatar.png" size="sm" />
     <Avatar name="John Doe" src="/avatar.png" size="md" />
@@ -100,7 +100,7 @@ The `Avatar` component supports two visual shapes: `md` and `rounded`.
 
 <DocsPage.ComponentExample
   client:only
-  code={`<div className="flex items-center gap-6">
+  code={`<div className="flex items-center gap-cn-xl">
     <Avatar name="John Doe" />
     <Avatar name="John Doe" rounded />
 </div>`}
@@ -112,7 +112,7 @@ In case you want the fallback string to be without initials, pass the `noInitial
 
 <DocsPage.ComponentExample
   client:only
-  code={`<div className="flex items-center gap-6">
+  code={`<div className="flex items-center gap-cn-xl">
     <Avatar noInitials name="+22" size="lg" rounded />
     <Avatar noInitials name="+222" size="lg" rounded />
 </div>`}

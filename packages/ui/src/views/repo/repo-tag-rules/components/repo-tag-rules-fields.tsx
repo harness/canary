@@ -86,7 +86,7 @@ export const TagSettingsRuleTargetPatternsField: FC<TagFieldProps> = ({ setValue
     <Layout.Grid gapY="md">
       <ControlGroup>
         <Label htmlFor="target-patterns">{t('views:repos.targetPatterns', 'Target patterns')}</Label>
-        <Layout.Grid columns="1fr auto" className="grid grid-cols-[1fr_126px] items-start gap-x-3.5">
+        <Layout.Grid columns="1fr auto" align="start" gap="sm">
           <FormInput.Text
             id="pattern"
             {...register!('pattern')}

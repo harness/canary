@@ -31,7 +31,8 @@ export const LandingPageView: FC<LandingPageProps> = ({ spaces, getProjectPath, 
 
   return (
     <SandboxLayout.Main className="min-h-[inherit]">
-      <section className="grid min-h-[inherit] place-content-center place-items-center gap-2.5">
+      {/* TODO: Replace gap-[10px] with a proper value from the design system once available */}
+      <section className="grid min-h-[inherit] place-content-center place-items-center gap-[10px]">
         <Text as="h2" variant="heading-section">
           {t('views:landingPage.selectProject', 'Select a project to get started')}
         </Text>

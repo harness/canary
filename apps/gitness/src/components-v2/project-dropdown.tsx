@@ -14,7 +14,7 @@ function ProjectDropdown(): JSX.Element {
 
   return (
     <DropdownMenu.Root>
-      <DropdownMenu.Trigger className="flex items-center gap-x-1.5" disabled={!spaces.length}>
+      <DropdownMenu.Trigger className="flex items-center gap-x-cn-2xs" disabled={!spaces.length}>
         {spaceId ?? 'Select project'}
         <IconV2 className="text-cn-2" name="nav-arrow-down" size="xs" />
       </DropdownMenu.Trigger>

@@ -14,7 +14,7 @@ const DropdownMenuComponent = <T extends { label: string; value: string }>({
 }: DropdownMenuComponentProps<T>) => {
   return (
     <DropdownMenu.Root>
-      <DropdownMenu.Trigger className="flex items-center gap-x-1.5">
+      <DropdownMenu.Trigger className="flex items-center gap-x-cn-2xs">
         <span className="text-cn-2 transition-colors duration-200 group-hover:text-cn-1">{selectedItem.label}</span>
         <IconV2 name="nav-solid-arrow-down" size="2xs" className="chevron-down text-cn-2" />
       </DropdownMenu.Trigger>
@@ -57,7 +57,7 @@ const PullRequestFilters = <T extends FilterOption>({
         Overview
       </Text>
 
-      <div className="flex items-center gap-x-5">
+      <div className="flex items-center gap-x-cn-lg">
         <DropdownMenuComponent items={activityFilters} selectedItem={activityFilter} onItemSelect={setActivityFilter} />
         <DropdownMenuComponent items={dateFilters} selectedItem={dateOrderSort} onItemSelect={setDateOrderSort} />
       </div>

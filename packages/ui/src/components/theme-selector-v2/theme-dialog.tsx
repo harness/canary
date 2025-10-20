@@ -75,14 +75,14 @@ const ThemeDialog: FC<ThemeDialogProps> = ({
             <Text className="mt-cn-2xs" color="foreground-3">
               Choose Dark mode for low light or Light mode for bright spaces.
             </Text>
-            <div className="mt-cn-md grid grid-cols-2 gap-4">
+            <div className="mt-cn-md gap-cn-md grid grid-cols-2">
               {Object.entries(ModeType).map(([key, value]) => {
                 if (!showSystemMode && value === ModeType.System) return null
                 const valueMode = value === ModeType.System ? systemMode : value
                 // TODO: Design system: Update buttons here.
                 return (
                   <button
-                    className="flex flex-col gap-y-2 focus-visible:outline-none"
+                    className="gap-y-cn-xs flex flex-col focus-visible:outline-none"
                     key={key}
                     onClick={() => {
                       setTheme(`${value}-${colorAdjustment}-${contrast}`)
@@ -98,10 +98,10 @@ const ThemeDialog: FC<ThemeDialogProps> = ({
                         )}
                       />
                       {mode === value && (
-                        <IconV2 className="text-cn-1 absolute bottom-2 left-2" name="check-circle-solid" />
+                        <IconV2 className="text-cn-1 bottom-cn-xs left-cn-xs absolute" name="check-circle-solid" />
                       )}
                       <div
-                        className="absolute right-[27px] top-[61px] h-2 w-9 rounded-1"
+                        className="rounded-1 absolute right-[27px] top-[61px] h-2 w-9"
                         style={{
                           backgroundColor:
                             accentColor === AccentColor.White
@@ -124,7 +124,7 @@ const ThemeDialog: FC<ThemeDialogProps> = ({
               <Separator className="bg-cn-2 h-px" />
 
               {/* Contrast */}
-              <div className="grid grid-cols-[246px_1fr] gap-x-8">
+              <div className="gap-x-cn-2xl grid grid-cols-[246px_1fr]">
                 <div>
                   <Text variant="heading-base">Contrast</Text>
                   <Text className="mt-cn-2xs" color="foreground-3">
@@ -143,7 +143,7 @@ const ThemeDialog: FC<ThemeDialogProps> = ({
               <Separator className="bg-cn-2 h-px" />
 
               {/* Color Adjustment */}
-              <div className="grid grid-cols-[246px_1fr] gap-x-8">
+              <div className="gap-x-cn-2xl grid grid-cols-[246px_1fr]">
                 <div>
                   <Text variant="heading-base">Color adjustment</Text>
                   <Text className="mt-cn-2xs" color="foreground-3">
@@ -165,14 +165,14 @@ const ThemeDialog: FC<ThemeDialogProps> = ({
               {showAccentColor ? (
                 <>
                   <Separator className="bg-cn-2 h-px" />
-                  <div className="grid grid-cols-[246px_1fr] gap-x-8">
+                  <div className="gap-x-cn-2xl grid grid-cols-[246px_1fr]">
                     <div>
                       <Text variant="heading-base">Accent color</Text>
                       <Text className="mt-cn-2xs" color="foreground-3">
                         Select your application accent color.
                       </Text>
                     </div>
-                    <div className="flex flex-wrap gap-1.5">
+                    <div className="gap-cn-2xs flex flex-wrap">
                       {Object.values(AccentColor).map(item => (
                         <button
                           key={item}
@@ -202,14 +202,14 @@ const ThemeDialog: FC<ThemeDialogProps> = ({
               {showGrayColor ? (
                 <>
                   <Separator className="bg-cn-2 h-px" />
-                  <div className="grid grid-cols-[246px_1fr] gap-x-8">
+                  <div className="gap-x-cn-2xl grid grid-cols-[246px_1fr]">
                     <div>
                       <Text variant="heading-base">Gray color</Text>
                       <Text className="mt-cn-2xs" color="foreground-3">
                         Select your application gray color.
                       </Text>
                     </div>
-                    <div className="flex flex-wrap gap-1.5">
+                    <div className="gap-cn-2xs flex flex-wrap">
                       {Object.values(GrayColor).map(item => (
                         <button
                           key={item}

@@ -262,7 +262,7 @@ export const UnifiedPipelineStudioEntityForm = (props: UnifiedPipelineStudioEnti
             </Body>
             <Footer>
               <ButtonLayout.Root>
-                <ButtonLayout.Primary className="flex gap-x-3">
+                <ButtonLayout.Primary className="flex gap-x-cn-sm">
                   <Button disabled={loading || !!error?.message} onClick={() => rootForm.submitForm()}>
                     Submit
                   </Button>

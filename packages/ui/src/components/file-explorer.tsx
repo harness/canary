@@ -133,7 +133,7 @@ function FolderItem({ children, value = '', isActive, content, link, onClick, ..
 
       {!!content && (
         <Accordion.Content
-          containerClassName="overflow-visible data-[state=open]:animate-in data-[state=closed]:animate-out data-[state=closed]:fade-out-0 data-[state=open]:fade-in-0 relative after:absolute after:left-3 after:top-0 after:block after:h-full after:w-px after:bg-cn-separator-subtle after:-translate-x-1/2"
+          containerClassName="overflow-visible data-[state=open]:animate-in data-[state=closed]:animate-out data-[state=closed]:fade-out-0 data-[state=open]:fade-in-0 relative after:absolute after:left-cn-sm after:top-0 after:block after:h-full after:w-px after:bg-cn-separator-subtle after:-translate-x-1/2"
           className="cn-file-tree-item-content"
         >
           {content}

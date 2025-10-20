@@ -137,7 +137,7 @@ export const CommitsList: FC<CommitProps> = ({
               </StackedList.Root>
             )}
           </NodeGroup.Content>
-          <NodeGroup.Connector className="left-1.5" />
+          <NodeGroup.Connector className="left-cn-2xs" />
         </NodeGroup.Root>
       ))}
     </div>

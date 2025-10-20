@@ -35,7 +35,7 @@ export const PullRequestItemDescription: FC<PullRequestItemDescriptionProps> = (
   }
 
   return (
-    <div className="text-2 text-cn-2 inline-flex flex-wrap max-w-full items-center gap-1.5 pl-cn-xl">
+    <div className="text-2 text-cn-2 inline-flex flex-wrap max-w-full items-center gap-cn-2xs pl-cn-xl">
       <Text variant="body-single-line-normal">
         {`#${number} ${state === ('open' as EnumPullReqState) ? 'opened' : state} `}
         <TimeAgoCard timestamp={timestamp} dateTimeFormatOptions={{ dateStyle: 'medium' }} /> by{' '}
@@ -44,7 +44,7 @@ export const PullRequestItemDescription: FC<PullRequestItemDescriptionProps> = (
 
       {/* TODO: where did tasks go? */}
       {!!tasks && tasks > 0 && (
-        <div className="flex items-center gap-0.5">
+        <div className="flex items-center gap-cn-4xs">
           <IconV2 className="text-cn-3" size="2xs" name="tasks" />
           <Text variant="body-single-line-normal">
             {tasks} task{tasks === 1 ? '' : 's'}

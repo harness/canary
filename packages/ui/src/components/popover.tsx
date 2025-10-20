@@ -58,7 +58,7 @@ const PopoverContent = forwardRef<ElementRef<typeof PopoverPrimitive.Content>, P
           {...props}
         >
           {(title || description) && (
-            <div className="grid gap-1">
+            <div className="grid gap-cn-3xs">
               {title && (
                 <Text variant="body-strong" color="foreground-1" as="h4">
                   {title}

@@ -28,9 +28,9 @@ export const AppSidebarUser = ({ user, openThemeDialog, openLanguageDialog, hand
       className="!ml-0"
       dropdownMenuContent={
         <>
-          <DropdownMenu.Header className="flex items-center gap-x-2">
+          <DropdownMenu.Header className="flex items-center gap-x-cn-xs">
             <Avatar name={userName} src={user?.url} size="lg" />
-            <Layout.Grid className="gap-1">
+            <Layout.Grid className="gap-cn-3xs">
               <Text variant="body-single-line-strong" color="foreground-1" truncate>
                 {userName}
               </Text>

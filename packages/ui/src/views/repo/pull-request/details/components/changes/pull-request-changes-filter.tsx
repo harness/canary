@@ -183,7 +183,7 @@ export const PullRequestChangesFilter: React.FC<PullRequestChangesFilterProps> =
         )}
 
         <DropdownMenu.Root>
-          <DropdownMenu.Trigger className="group flex items-center gap-x-1.5" asChild>
+          <DropdownMenu.Trigger className="group flex items-center gap-x-cn-2xs" asChild>
             <Button size="sm" variant="transparent">
               {selectedCommits[0].value === 'ALL' ? (
                 <>
@@ -208,7 +208,7 @@ export const PullRequestChangesFilter: React.FC<PullRequestChangesFilterProps> =
         </DropdownMenu.Root>
 
         <DropdownMenu.Root>
-          <DropdownMenu.Trigger className="text-2 group flex items-center gap-x-1.5" asChild>
+          <DropdownMenu.Trigger className="text-2 group flex items-center gap-x-cn-2xs" asChild>
             <Button size="sm" variant="transparent">
               {diffMode === DiffModeEnum.Split ? t('views:pullRequests.split') : t('views:pullRequests.unified')}
               <IconV2 name="nav-solid-arrow-down" size="2xs" />
@@ -243,7 +243,7 @@ export const PullRequestChangesFilter: React.FC<PullRequestChangesFilterProps> =
           </FileViewGauge.Root>
         )}
 
-        <Layout.Horizontal align="center" className="gap-x-2.5">
+        <Layout.Horizontal align="center" gapX="sm">
           {refreshNeeded && handleManualRefresh && (
             // update the styles once supported
             <Button variant="secondary" onClick={handleManualRefresh}>

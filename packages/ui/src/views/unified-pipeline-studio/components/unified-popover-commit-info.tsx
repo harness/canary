@@ -16,7 +16,7 @@ export const PopoverCommitInfo = {
   }) {
     return (
       <div className="flex items-center justify-between p-cn-sm">
-        <div className="flex items-center gap-x-3">
+        <div className="flex items-center gap-x-cn-sm">
           <Avatar name={authorName} src={avatarUrl} size="lg" rounded />
           <span>{authorName}</span>
         </div>

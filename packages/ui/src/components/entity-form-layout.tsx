@@ -5,7 +5,7 @@ import { cn } from '@utils/cn'
 
 const EntityFormLayout = {
   Header: function Header({ children, className }: { children: ReactNode; className?: string }) {
-    return <div className={cn('flex flex-col gap-y-5 mb-cn-md', className)}>{children}</div>
+    return <div className={cn('flex flex-col gap-y-cn-lg mb-cn-md', className)}>{children}</div>
   },
 
   Title: function Title({ children, className }: { children: ReactNode; className?: string }) {
@@ -25,7 +25,7 @@ const EntityFormLayout = {
   },
 
   Footer: function Footer({ className, ...props }: HTMLAttributes<HTMLDivElement>) {
-    return <div className={cn('flex flex-col max-w-xl gap-3 pt-cn-3xl', className)} {...props} />
+    return <div className={cn('flex flex-col max-w-xl gap-cn-sm pt-cn-3xl', className)} {...props} />
   }
 }
 

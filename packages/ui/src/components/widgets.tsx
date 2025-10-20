@@ -22,7 +22,7 @@ const Root: FC<WidgetsRootProps> = ({ children, isTwoColumn: isTwoColumnProp = f
 
   return (
     <WidgetsContext.Provider value={{ isTwoColumn }}>
-      <div className={cn('gap-[var(--cn-spacing-10)]', isTwoColumn ? 'columns-2' : 'flex flex-col')}>{children}</div>
+      <div className={cn('gap-cn-3xl', isTwoColumn ? 'columns-2' : 'flex flex-col')}>{children}</div>
     </WidgetsContext.Provider>
   )
 }

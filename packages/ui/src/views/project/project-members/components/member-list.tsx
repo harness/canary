@@ -44,7 +44,7 @@ export const MembersList = ({ members, onDelete, onEdit }: MembersListProps) => 
           <Table.Row key={member.uid}>
             {/* USER */}
             <Table.Cell className="content-center">
-              <div className="flex items-center gap-2">
+              <div className="flex items-center gap-cn-xs">
                 <Avatar name={member.display_name} src={member.avatarUrl} rounded />
                 <span className="font-medium text-cn-1">{member.display_name}</span>
               </div>
@@ -56,7 +56,7 @@ export const MembersList = ({ members, onDelete, onEdit }: MembersListProps) => 
             {/* ROLE */}
             <Table.Cell className="w-1/5 content-center">
               <DropdownMenu.Root>
-                <DropdownMenu.Trigger className="flex items-center gap-x-1.5 text-cn-2 hover:text-cn-1">
+                <DropdownMenu.Trigger className="flex items-center gap-x-cn-2xs text-cn-2 hover:text-cn-1">
                   {getRoleLabel(member.role)}
                   <IconV2 className="chevron-down text-cn-2" name="nav-solid-arrow-down" size="2xs" />
                 </DropdownMenu.Trigger>

@@ -27,7 +27,7 @@ function Meter({ data = [], className }: IMeterProps) {
   const bars: IMeterProps['data'] = [...Array(emptyBarsCount).fill({ state: MeterState.Empty }), ...data]
 
   return (
-    <div className={cn('flex h-[19px] items-stretch gap-[4px]', className)}>
+    <div className={cn('flex h-[19px] items-stretch gap-cn-3xs', className)}>
       {bars.map(col => {
         const bgColor = stateToBgColor[col.state as MeterState]
         return <div key={col.id} className={cn('flex h-full w-[5px] rounded-px', bgColor)} />

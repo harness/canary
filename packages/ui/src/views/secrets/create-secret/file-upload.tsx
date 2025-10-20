@@ -57,7 +57,7 @@ export function FileUpload({ selectedFile, onFileChange, error, accept }: FileUp
           onDragOver={handleDragOver}
           onDrop={handleDrop}
         >
-          <div className="flex flex-col gap-2 items-center" onClick={openFileInput} role="button" tabIndex={0}>
+          <div className="flex flex-col gap-cn-xs items-center" onClick={openFileInput} role="button" tabIndex={0}>
             <IconV2 name="cloud-upload" size="xl" className="mb-cn-md" />
             <Text variant="heading-base">Click to browse or drag and drop a file</Text>
             <Text variant="body-single-line-normal">Up to 50MB</Text>

@@ -58,7 +58,7 @@ export function ChainedCommitsDropdown(props: ChainedCommitsDropdownProps) {
         return (
           <DropdownMenu.CheckboxItem
             title={
-              <div className="flex gap-4 overflow-hidden">
+              <div className="flex gap-cn-md overflow-hidden">
                 <Text truncate className="w-72">
                   {item.name}
                 </Text>

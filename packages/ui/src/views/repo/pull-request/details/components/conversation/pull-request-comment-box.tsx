@@ -681,7 +681,7 @@ export const PullRequestCommentBox = ({
   const isCompactLayout = layout === 'compact'
 
   return (
-    <Layout.Horizontal align="start" className={cn('gap-x-3', className)} data-comment-editor-shown="true">
+    <Layout.Horizontal align="start" className={cn('gap-x-cn-sm', className)} data-comment-editor-shown="true">
       {!inReplyMode && !isEditMode && !hideAvatar && avatar}
       <Layout.Vertical gap="xs" className="w-full">
         <PullRequestCommentingOn from={lineFromNumber} to={lineNumber} fromSide={lineFromSide} toSide={lineSide} />
@@ -741,7 +741,7 @@ export const PullRequestCommentBox = ({
                   </div>
                 )}
                 {isDragging && (
-                  <div className="border-cn-2 absolute inset-1 z-[100] cursor-copy rounded-1 border border-dashed" />
+                  <div className="border-cn-2 absolute inset-cn-3xs z-[100] cursor-copy rounded-1 border border-dashed" />
                 )}
                 <Layout.Flex
                   align="center"

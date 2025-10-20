@@ -10,7 +10,7 @@ import { DocsPage } from "@/components/docs-page";
 
 <DocsPage.ComponentExample
   client:only
-  code={`<div className="flex flex-col gap-8">
+  code={`<div className="flex flex-col gap-cn-2xl">
 
     <Card.Root>
       <Card.Image src="/card-image.png" />
@@ -58,7 +58,7 @@ The `Card` component supports three sizes: `sm`, `md`, and `lg`. The size prop d
 
 <DocsPage.ComponentExample
   client:only
-  code={`<div className="flex flex-col gap-4">
+  code={`<div className="flex flex-col gap-cn-md">
     <Card.Root size="sm">
       <Card.Title>Small Card</Card.Title>
       <Card.Content>Compact size</Card.Content>
@@ -80,7 +80,7 @@ The `Card` component supports two orientations: `vertical` and `horizontal`. The
 
 <DocsPage.ComponentExample
   client:only
-  code={`<div className="flex flex-col gap-4">
+  code={`<div className="flex flex-col gap-cn-md">
     <Card.Root orientation="vertical">
       <Card.Image src="/card-image.png" />
       <Card.Title>Vertical Layout</Card.Title>
@@ -100,7 +100,7 @@ The `position` prop controls where the image is placed within the card layout. I
 
 <DocsPage.ComponentExample
   client:only
-  code={`<div className="flex flex-col gap-4">
+  code={`<div className="flex flex-col gap-cn-md">
     <Card.Root orientation="horizontal" position="start">
       <Card.Image src="/card-image.png" />
       <Card.Title>Image at Start</Card.Title>
@@ -118,7 +118,7 @@ The `Card` component supports `selected`, `disabled` and `interactive` states:
 
 <DocsPage.ComponentExample
   client:only
-  code={`<div className="flex gap-4">
+  code={`<div className="flex gap-cn-md">
     <Card.Root selected>
       <Card.Title>Selected Card</Card.Title>
       <Card.Content>Active state</Card.Content>

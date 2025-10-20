@@ -11,7 +11,7 @@ import { DocsPage } from "../../../components/docs-page";
 <DocsPage.ComponentExample
   client:only
   code={`
-    <div className="flex flex-col gap-4">
+    <div className="flex flex-col gap-cn-md">
       <Label htmlFor="name">Name</Label>
       <TextInput id="name" type="text" />
     </div>
@@ -38,7 +38,7 @@ return (
 <DocsPage.ComponentExample
   client:only
   code={`
-    <div className="flex flex-col gap-4">
+    <div className="flex flex-col gap-cn-md">
       <Label htmlFor="email" optional>Email</Label>
       <TextInput id="email" type="email" />
     </div>
@@ -54,7 +54,7 @@ Use the `tooltipContent` prop to provide the tooltip content, and pass additiona
   client:only
   code={`
   <Layout.Vertical gap="xl">
-    <div className="flex flex-col gap-4">
+    <div className="flex flex-col gap-cn-md">
       <Label
         htmlFor="2"
         tooltipContent="Content here"
@@ -63,7 +63,7 @@ Use the `tooltipContent` prop to provide the tooltip content, and pass additiona
       </Label>
       <TextInput id="2" type="text" />
     </div>
-    <div className="flex flex-col gap-4">
+    <div className="flex flex-col gap-cn-md">
       <Label
         htmlFor="3"
         tooltipContent="Content here"
@@ -88,7 +88,7 @@ Use the `tooltipContent` prop to provide the tooltip content, and pass additiona
 <DocsPage.ComponentExample
   client:only
   code={`
-    <div className="flex flex-col gap-4">
+    <div className="flex flex-col gap-cn-md">
       <Label
         htmlFor="2"
         tooltipContent="Content here"

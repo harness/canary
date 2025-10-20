@@ -43,16 +43,16 @@ export const UnifiedPipelineStudioFooter: React.FC<PipelineStudioFooterProps> = 
         'flex h-10 shrink-0 items-center justify-between border-t border-cn-3 px-cn-md text-[12px] font-normal not-italic leading-[15px]'
       }
     >
-      <div className="flex items-center gap-2">
+      <div className="flex items-center gap-cn-xs">
         <div
           role="button"
           tabIndex={0}
           onClick={() => {
             togglePane?.()
           }}
-          className="flex h-full cursor-pointer gap-2.5 rounded-3 px-cn-xs py-cn-2xs duration-150 ease-in-out hover:bg-cn-brand-hover/10"
+          className="flex h-full cursor-pointer gap-cn-xs rounded-3 px-cn-xs py-cn-2xs duration-150 ease-in-out hover:bg-cn-brand-hover/10"
         >
-          <div className="flex items-center gap-1.5">
+          <div className="flex items-center gap-cn-2xs">
             <IconV2
               size="xs"
               name="xmark-circle"
@@ -62,17 +62,17 @@ export const UnifiedPipelineStudioFooter: React.FC<PipelineStudioFooterProps> = 
               {problemsCount.error}
             </span>
           </div>
-          <div className="flex items-center gap-1.5">
+          <div className="flex items-center gap-cn-2xs">
             <IconV2 size="xs" name="warning-triangle" className="text-cn-3" />
             <span className="text-[12px] text-cn-1">{problemsCount.warning}</span>
           </div>
-          <div className="flex items-center gap-1.5">
+          <div className="flex items-center gap-cn-2xs">
             <IconV2 size="xs" name="info-circle" className="text-cn-3" />
             <span className="text-[12px] text-cn-1">{problemsCount.info}</span>
           </div>
         </div>
         {(branchesLoading || branches || currentBranch) && (
-          <div className={'flex gap-2'}>
+          <div className={'flex gap-cn-xs'}>
             <div className={'flex items-center'}>
               <span className="text-[12px] text-cn-3">Branch:</span>
 

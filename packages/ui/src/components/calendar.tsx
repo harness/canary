@@ -24,9 +24,9 @@ function Calendar({ className, classNames, showOutsideDays = true, ...props }: C
           buttonVariants({ variant: 'outline' }),
           'h-7 w-7 bg-transparent p-0 opacity-50 hover:opacity-100'
         ),
-        nav_button_previous: 'absolute left-1',
-        nav_button_next: 'absolute right-1',
-        table: 'w-full border-collapse space-y-1',
+        nav_button_previous: 'absolute left-cn-3xs',
+        nav_button_next: 'absolute right-cn-3xs',
+        table: 'w-full border-collapse space-y-cn-3xs',
         head_row: 'flex',
         head_cell: 'text-cn-3 rounded-3 w-8 font-normal text-[0.8rem]',
         row: 'flex w-full mt-cn-xs',

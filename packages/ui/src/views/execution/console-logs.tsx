@@ -45,15 +45,15 @@ const ConsoleLogs: FC<ConsoleLogsProps> = ({ logs, query }) => {
   const logText = useCallback(
     (log: string) => {
       if (!query?.length) {
-        return <span className="font-body-code ml-cn-xs flex gap-1 text-sm font-normal">{log}</span>
+        return <span className="font-body-code ml-cn-xs flex gap-cn-3xs text-sm font-normal">{log}</span>
       }
 
       const match = log.match(new RegExp(query, 'i'))
-      if (!match) return <span className="font-body-code ml-cn-xs flex gap-1 text-sm font-normal">{log}</span>
+      if (!match) return <span className="font-body-code ml-cn-xs flex gap-cn-3xs text-sm font-normal">{log}</span>
 
       const matchIndex = match.index ?? 0
       return (
-        <span className="font-body-code flex gap-1 text-sm font-normal">
+        <span className="font-body-code flex gap-cn-3xs text-sm font-normal">
           {log.slice(0, matchIndex)}
           <mark>{log.slice(matchIndex, matchIndex + query.length)}</mark>
           {log.slice(matchIndex + query.length)}

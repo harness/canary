@@ -52,7 +52,7 @@ const LanguageDialog: FC<LanguageDialogProps> = ({
           >
             {supportedLanguages.map(lang => (
               <CardSelect.Item key={lang.code} value={lang.code}>
-                <div className="flex items-center gap-2">
+                <div className="flex items-center gap-cn-xs">
                   <Avatar name={lang.code.split('').join(' ')} />
                   <CardSelect.Title>{lang.name}</CardSelect.Title>
                 </div>

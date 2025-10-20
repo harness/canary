@@ -21,7 +21,8 @@ const Header: FC<{ onClose: () => void }> = ({ onClose }) => {
 
 const Body: FC<PropsWithChildren<HTMLAttributes<HTMLElement>>> = ({ children }) => {
   return (
-    <div className="scrollbar-hidden px-cn-xl py-cn-xs flex flex-1 flex-col gap-y-7 overflow-y-auto overflow-x-hidden">
+    // TODO: replace gap-y-[28px] with proper values from the design system once available
+    <div className="scrollbar-hidden px-cn-xl py-cn-xs flex flex-1 flex-col gap-y-[28px] overflow-y-auto overflow-x-hidden">
       {children}
     </div>
   )
@@ -40,7 +41,7 @@ interface MessageProps extends PropsWithChildren<HTMLAttributes<HTMLElement>> {
 const Message: FC<MessageProps> = ({ self, avatar, actions, children }) => {
   return (
     <div
-      className={cn('flex gap-x-3 content-center items-start', {
+      className={cn('flex gap-x-cn-sm content-center items-start', {
         'place-content-end': self
       })}
     >
@@ -50,7 +51,7 @@ const Message: FC<MessageProps> = ({ self, avatar, actions, children }) => {
         </div>
       )}
       <div
-        className={cn('flex flex-col gap-3', {
+        className={cn('flex flex-col gap-cn-sm', {
           'w-[85%] items-end': self,
           'w-full': !self
         })}
@@ -62,7 +63,7 @@ const Message: FC<MessageProps> = ({ self, avatar, actions, children }) => {
         >
           {children}
         </div>
-        {actions && <div className="mt-cn-3xs flex items-center gap-1">{actions}</div>}
+        {actions && <div className="mt-cn-3xs gap-cn-3xs flex items-center">{actions}</div>}
       </div>
     </div>
   )
@@ -87,7 +88,7 @@ interface TypingProps {
 
 const Typing: FC<TypingProps> = ({ avatar }) => {
   return (
-    <div className="mt-cn-sm flex items-center gap-x-3.5">
+    <div className="mt-cn-sm flex items-center gap-x-cn-sm">
       {avatar || <Illustration size={16} name="chat-avatar" themeDependent />}
       <span className="bg-cn-3 size-2.5 rounded-full" aria-hidden />
     </div>
@@ -119,7 +120,7 @@ const emptyStateButtons = [
 
 const EmptyState: FC = () => {
   return (
-    <div className="mt-auto flex flex-col gap-5">
+    <div className="gap-cn-lg mt-auto flex flex-col">
       <div>
         <span className="text-5 text-cn-2 block font-semibold leading-none">Hello Steven,</span>
         <span className="text-5 text-cn-1 mt-cn-3xs block font-semibold leading-none">how can I help?</span>
@@ -128,7 +129,7 @@ const EmptyState: FC = () => {
         <span className="text-2 text-cn-2 leading-relaxed">
           Here are some suggestions to enhance your CI/CD pipeline:
         </span>
-        <ul className="mt-cn-sm flex flex-col gap-y-1.5">
+        <ul className="mt-cn-sm gap-y-cn-2xs flex flex-col">
           {emptyStateButtons.map(({ text }, index) => (
             <li key={index}>
               <Button className="w-full justify-start" variant="secondary">
@@ -182,7 +183,7 @@ const InputField: FC<InputFieldProps> = ({
         aria-label="Chat input"
       />
       <Button
-        className="absolute bottom-2 right-2 z-10 size-7"
+        className="bottom-cn-xs right-cn-xs absolute z-10 size-7"
         rounded
         onClick={onSend}
         disabled={disabled}

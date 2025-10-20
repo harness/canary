@@ -192,7 +192,7 @@ export const blocks: DiffBlock[] = [
         newNumber: 38
       },
       {
-        content: '     <div className="inline-flex items-center gap-2.5">',
+        content: '     <div className="inline-flex items-center gap-cn-xs">',
         type: 'context',
         oldNumber: 27,
         newNumber: 39
@@ -397,7 +397,7 @@ export const blocks: DiffBlock[] = [
         newNumber: 130
       },
       {
-        content: '               className="flex max-w-[80%] gap-1.5 text-wrap"',
+        content: '               className="flex max-w-[80%] gap-cn-2xs text-wrap"',
         type: 'context',
         oldNumber: 106,
         newNumber: 131

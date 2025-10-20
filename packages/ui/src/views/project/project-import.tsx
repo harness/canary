@@ -126,7 +126,7 @@ export function ImportProjectPage({ onFormSubmit, onFormCancel, isLoading, apiEr
 
           {/* authorization - pipelines */}
           <Fieldset>
-            <ControlGroup className="flex flex-row gap-5">
+            <ControlGroup className="flex flex-row gap-cn-lg">
               <FormInput.Checkbox
                 {...register('repositories')}
                 id="authorization"

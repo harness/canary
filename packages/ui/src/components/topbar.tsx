@@ -15,7 +15,7 @@ const Topbar = {
     return (
       <div
         className={cn(
-          `grid w-full grid-cols-[1fr_auto] font-regular h-[var(--cn-breadcrumbs-height)] items-center gap-6 px-cn-2xl text-sm`,
+          `grid w-full grid-cols-[1fr_auto] font-regular h-[var(--cn-breadcrumbs-height)] items-center gap-cn-xl px-cn-2xl text-sm`,
           { 'grid-cols-[auto_1fr_auto]': hasCenter },
           className
         )}
@@ -26,7 +26,7 @@ const Topbar = {
   },
 
   Left: React.memo(function Header({ children }: { children: React.ReactNode }) {
-    return <div className="order-1 flex items-center gap-3">{children}</div>
+    return <div className="order-1 flex items-center gap-cn-sm">{children}</div>
   }),
 
   Center: React.memo(function Center({ children }: { children: React.ReactNode }) {
@@ -34,7 +34,7 @@ const Topbar = {
   }),
 
   Right: React.memo(function Header({ children }: { children: React.ReactNode }) {
-    return <div className="order-3 flex items-center gap-3">{children}</div>
+    return <div className="order-3 flex items-center gap-cn-sm">{children}</div>
   })
 }
 

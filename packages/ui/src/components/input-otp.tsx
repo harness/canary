@@ -9,7 +9,7 @@ const InputOTPRoot = forwardRef<ElementRef<typeof OTPInput>, ComponentPropsWitho
   ({ className, containerClassName, ...props }, ref) => (
     <OTPInput
       ref={ref}
-      containerClassName={cn('flex items-center gap-3 has-[:disabled]:opacity-50', containerClassName)}
+      containerClassName={cn('flex items-center gap-cn-sm has-[:disabled]:opacity-50', containerClassName)}
       className={cn('disabled:cursor-not-allowed', className)}
       {...props}
     />

@@ -61,7 +61,7 @@ const dataMock: ViewOnlyProps[] = [
       {
         label: 'SSH Key',
         value: (
-          <div className="flex items-center gap-1">
+          <div className="flex items-center gap-cn-3xs">
             <IconV2 name="custom-secret-manager" /> secret-1
           </div>
         )
@@ -74,11 +74,11 @@ const dataMock: ViewOnlyProps[] = [
       {
         label: 'Delegates',
         value: (
-          <div className="flex flex-wrap items-center gap-4">
-            <div className="inline-flex items-center gap-1">
+          <div className="flex flex-wrap items-center gap-cn-md">
+            <div className="inline-flex items-center gap-cn-3xs">
               <LogoV2 size="xs" name="app-dynamics" /> delegate-1
             </div>
-            <div className="inline-flex items-center gap-1">
+            <div className="inline-flex items-center gap-cn-3xs">
               <LogoV2 size="xs" name="katalon" /> delegate-2
             </div>
           </div>

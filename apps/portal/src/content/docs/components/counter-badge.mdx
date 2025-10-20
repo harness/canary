@@ -10,7 +10,7 @@ import { DocsPage } from "../../../components/docs-page";
 
 <DocsPage.ComponentExample
   client:only
-  code={`<div className="flex gap-5">
+  code={`<div className="flex gap-cn-lg">
         <CounterBadge>1</CounterBadge>
         <CounterBadge theme="info">42</CounterBadge>
         <CounterBadge theme="success">+2345</CounterBadge>
@@ -49,7 +49,7 @@ The outline variant provides a subtle border-based appearance, ideal for seconda
 
 <DocsPage.ComponentExample
   client:only
-  code={`<div className="flex gap-5">
+  code={`<div className="flex gap-cn-lg">
         <CounterBadge variant="outline">1</CounterBadge>
         <CounterBadge variant="outline" theme="info">42</CounterBadge>
         <CounterBadge variant="outline" theme="success">+2345</CounterBadge>
@@ -64,7 +64,7 @@ The secondary variant uses a soft background appearance for more prominent displ
 
 <DocsPage.ComponentExample
   client:only
-  code={`<div className="flex gap-5">
+  code={`<div className="flex gap-cn-lg">
         <CounterBadge variant="secondary">1</CounterBadge>
         <CounterBadge variant="secondary" theme="info">42</CounterBadge>
         <CounterBadge variant="secondary" theme="success">+2345</CounterBadge>
@@ -79,19 +79,19 @@ Compare both variants side by side to see the visual differences:
 
 <DocsPage.ComponentExample
   client:only
-  code={`<div className="flex flex-col gap-4">
-    <div className="flex gap-3">
+  code={`<div className="flex flex-col gap-cn-md">
+    <div className="flex gap-cn-sm">
       <Text variant="heading-subsection" as="h4" className="min-w-[80px]">Outline:</Text>
-      <div className="flex gap-3">
+      <div className="flex gap-cn-sm">
         <CounterBadge variant="outline">12</CounterBadge>
         <CounterBadge variant="outline" theme="info">42</CounterBadge>
         <CounterBadge variant="outline" theme="success">+99</CounterBadge>
         <CounterBadge variant="outline" theme="danger">-5</CounterBadge>
       </div>
     </div>
-    <div className="flex gap-3">
+    <div className="flex gap-cn-sm">
       <Text variant="heading-subsection" as="h4" className="min-w-[80px]">Secondary:</Text>
-      <div className="flex gap-3">
+      <div className="flex gap-cn-sm">
         <CounterBadge variant="secondary">12</CounterBadge>
         <CounterBadge variant="secondary" theme="info">42</CounterBadge>
         <CounterBadge variant="secondary" theme="success">+99</CounterBadge>
@@ -115,7 +115,7 @@ Neutral indicators are used for displaying general counts or values that don't c
 <DocsPage.ComponentExample
   client:only
   code={`
-    <div className="flex gap-2">
+    <div className="flex gap-cn-xs">
         <CounterBadge>0</CounterBadge>
         <CounterBadge theme="info">42</CounterBadge>
     </div>
@@ -129,7 +129,7 @@ Status indicators communicate the nature of the change or value - whether it rep
 <DocsPage.ComponentExample
   client:only
   code={`
-    <div className="flex gap-2">
+    <div className="flex gap-cn-xs">
         <CounterBadge theme="success">+2345</CounterBadge>
         <CounterBadge theme="danger">-123</CounterBadge>
     </div>

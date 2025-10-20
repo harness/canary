@@ -8,7 +8,7 @@ export function CanvasControls() {
   const { reset, increase, decrease } = useCanvasContext()
 
   return (
-    <div className="absolute bottom-2 right-2 flex flex-col gap-y-2">
+    <div className="absolute bottom-cn-xs right-cn-xs flex flex-col gap-y-cn-xs">
       <CanvasButton onClick={increase}>
         <IconV2 name="plus" />
       </CanvasButton>

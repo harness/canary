@@ -30,7 +30,7 @@ export default {
       zIndex: '20',
       cursor: 'ew-resize',
       position: 'absolute',
-      '@apply inset-y-0 hidden group-data-[side=left]:-right-2 group-data-[side=right]:-left-2 md:flex': ''
+      '@apply inset-y-0 hidden group-data-[side=left]:-right-cn-xs group-data-[side=right]:-left-cn-xs md:flex': ''
     },
 
     '&-inset': {

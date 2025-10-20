@@ -16,16 +16,16 @@ interface DropdownProps {
 }
 
 function Root({ children, className }: { children: ReactNode; className?: string }) {
-  return <div className={cn('flex items-center justify-between gap-6', className)}>{children}</div>
+  return <div className={cn('flex items-center justify-between gap-cn-xl', className)}>{children}</div>
 }
 Root.displayName = 'ListActions.Root'
 
 function Left({ children, className }: { children: ReactNode; className?: string }) {
-  return <div className={cn('flex grow items-center gap-6', className)}>{children}</div>
+  return <div className={cn('flex grow items-center gap-cn-xl', className)}>{children}</div>
 }
 
 function Right({ children, className }: { children: ReactNode; className?: string }) {
-  return <div className={cn('flex items-center gap-6', className)}>{children}</div>
+  return <div className={cn('flex items-center gap-cn-xl', className)}>{children}</div>
 }
 
 function Dropdown({ title, items, onChange, selectedValue }: DropdownProps) {

@@ -53,7 +53,7 @@ const ExecutionListPage: FC<IExecutionListPageProps> = ({
           </ListActions.Left>
           <ListActions.Right>
             {/* TODO: two buttons - xd review required */}
-            <div className="flex gap-3">
+            <div className="flex gap-cn-sm">
               <Button variant="outline" asChild>
                 <Link to={`edit`}>Edit</Link>
               </Button>

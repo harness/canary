@@ -41,7 +41,7 @@ function ListFormInputInternal(props: ListFormInputProps): JSX.Element {
   const isGrid = inputConfig?.layout === 'grid'
   // const len = inputConfig?.inputs.length
   // const frArr = new Array(len).fill('1fr', 0, len)
-  const rowClass = isGrid ? `grid gap-2` : 'flex flex-col space-y-4'
+  const rowClass = isGrid ? `grid gap-cn-xs` : 'flex flex-col space-y-cn-md'
   const rowStyle = isGrid ? { gridTemplateColumns: `repeat(${inputConfig?.inputs.length}, 1fr) auto` } : {}
 
   const { fields, append, remove } = useFieldArray({

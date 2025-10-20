@@ -55,7 +55,7 @@ const PRCommentView: FC<PRCommentViewProps> = ({
       <ButtonLayout className="flex-wrap">
         <Dialog.Trigger>
           <Button
-            className="gap-x-2"
+            className="gap-x-cn-xs"
             variant="outline"
             onClick={() => onCommitSuggestion?.({ check_sum: suggestionCheckSum, comment_id: commentItem.id })}
           >

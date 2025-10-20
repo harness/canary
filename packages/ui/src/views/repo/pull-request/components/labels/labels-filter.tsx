@@ -230,7 +230,7 @@ export function filterLabelRenderer({ selectedValue, labelOptions, valueOptions 
   const CNT_BAGDE_THRESHOLD = label.key ? 1 : 0
 
   return (
-    <div className="flex w-max items-center gap-1">
+    <div className="flex w-max items-center gap-cn-3xs">
       {label.key && label.color && (
         <LabelTag key={labelId} theme={label.color} label={label.key} value={value?.value || ''} />
       )}

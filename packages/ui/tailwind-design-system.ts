@@ -13,6 +13,7 @@ import {
 export default {
   darkMode: ['class'],
   content: ['./src/**/*.{ts,tsx}'],
+  important: '.cn-app',
   prefix: '',
   theme: {
     container: {

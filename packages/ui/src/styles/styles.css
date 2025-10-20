@@ -1,11 +1,5 @@
-@import url('./shared-style-variables.css');
-@import url('./diff-styles.css');
-
-@import url('@harnessio/core-design-system/core-styles');
-@import url('@harnessio/core-design-system/themes');
-@import url('@harnessio/core-design-system/mfe-themes');
-
 @import 'highlight.js/styles/atom-one-dark.css';
+@import 'extended-diff-view-style.css';
 
 @tailwind base;
 @tailwind components;

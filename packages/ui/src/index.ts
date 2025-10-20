@@ -1,5 +1,3 @@
-import './styles/styles.css'
-
 import * as locales from '../locales'
 import * as components from './components'
 import * as context from './context'

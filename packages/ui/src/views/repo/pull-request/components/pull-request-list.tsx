@@ -133,6 +133,7 @@ export const PullRequestList: FC<PullRequestListProps> = ({
 
   return (
     <StackedList.Root className={cn({ 'flex grow flex-col': isEmptyState, 'cn-skeleton-list': isLoading })}>
+      {(isLoading || true) && <Skeleton.List onlyItems />}
       <StackedList.Header className={cn({ 'grow-0': isEmptyState })}>
         <StackedList.Field
           title={
@@ -147,8 +148,6 @@ export const PullRequestList: FC<PullRequestListProps> = ({
           }
         />
       </StackedList.Header>
-
-      {isLoading && <Skeleton.List onlyItems />}
 
       {isEmptyState &&
         !isLoading &&

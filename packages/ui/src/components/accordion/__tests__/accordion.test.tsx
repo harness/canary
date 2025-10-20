@@ -2,6 +2,7 @@
 
 import { ComponentProps } from 'react'
 
+import { IconV2 } from '@components/icon-v2'
 import { render, RenderResult, screen } from '@testing-library/react'
 import userEvent from '@testing-library/user-event'
 
@@ -16,6 +17,7 @@ const renderComponent = (props: Partial<ComponentProps<typeof Accordion.Root>> =
       </Accordion.Item>
       <Accordion.Item value="item-2">
         <Accordion.Trigger>Trigger 2</Accordion.Trigger>
+        {/* <Accordion.Trigger prefix={32}>Trigger 2</Accordion.Trigger> */}
         <Accordion.Content>Content 2</Accordion.Content>
       </Accordion.Item>
     </Accordion.Root>

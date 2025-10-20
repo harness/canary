@@ -2,8 +2,6 @@ import { forwardRef, useEffect, useRef } from 'react'
 
 import { DiffFile, DiffModeEnum, DiffView, SplitSide } from '@git-diff-view/react'
 
-import './extended-diff-view-style.css'
-
 import { ExtendedDiffViewProps, LinesRange } from './extended-diff-view-types'
 import useMultiSelectForSplit from './hooks/useMultiSelectSplit'
 import useMultiSelectForUnified from './hooks/useMultiSelectUnified'

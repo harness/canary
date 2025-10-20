@@ -92,7 +92,7 @@ export default {
     },
 
     '&-group': {
-      '--sidebar-group-label-scale': '1',
+      '--sidebar-group-label-scale': 1,
       display: 'grid',
       gap: 'var(--cn-sidebar-group-gap)',
       padding: 'var(--cn-sidebar-group-py) 0',
@@ -100,7 +100,6 @@ export default {
       '&-label': {
         opacity: 'var(--sidebar-group-label-scale)',
         maxHeight: 'calc(44px * var(--sidebar-group-label-scale))',
-        transform: 'max(0.6, scale(var(--sidebar-group-label-scale)))',
         justifySelf: 'start',
         overflow: 'hidden',
         '@apply duration-150 transition-[max-height,padding,opacity,transform] ease-linear': ''
@@ -406,7 +405,7 @@ export default {
       },
 
       '.cn-sidebar-group': {
-        '--sidebar-group-label-scale': '0',
+        '--sidebar-group-label-scale': 0,
 
         '&-header': {
           display: 'none'

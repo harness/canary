@@ -1,0 +1,6 @@
+/* @import url('./shared-style-variables.css'); */
+@import url('./diff-styles.css');
+
+@import url('@harnessio/core-design-system/core-styles');
+/* @import url('@harnessio/core-design-system/themes'); */
+@import url('@harnessio/core-design-system/mfe-themes');

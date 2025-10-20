@@ -5,6 +5,8 @@ import { defineConfig } from 'vite'
 import svgr from 'vite-plugin-svgr'
 import tsConfigPaths from 'vite-tsconfig-paths'
 
+import cssWrapper from './vite-css-transform'
+
 const external = [
   'react',
   'react-dom',
@@ -17,13 +19,21 @@ const external = [
 ]
 
 export default defineConfig({
-  plugins: [react(), svgr({ include: '**/*.svg' }), tsConfigPaths()],
+  plugins: [
+    react(),
+    svgr({ include: '**/*.svg' }),
+    tsConfigPaths(),
+    cssWrapper({
+      wrapper: '.cn-app'
+    })
+  ],
   resolve: {
     alias: {
       'vaul/style.css?raw': resolve(__dirname, 'node_modules/vaul/style.css?raw')
     }
   },
   build: {
+    cssCodeSplit: true,
     lib: {
       cssFileName: 'styles',
       entry: {
@@ -35,7 +45,9 @@ export default defineConfig({
         index: resolve(__dirname, 'src/index.ts'),
         context: resolve(__dirname, 'src/context/index.ts'),
         types: resolve(__dirname, 'src/types/index.ts'),
-        'tailwind.config': resolve(__dirname, 'tailwind.config.js')
+        'tailwind.config': resolve(__dirname, 'tailwind.config.js'),
+        'core-variables': resolve(__dirname, 'src/styles/core-variables.css'),
+        styles: resolve(__dirname, 'src/styles/styles.css')
       },
       formats: ['es']
     },

@@ -64,9 +64,9 @@ export function StepNode(props: StepNodeProps) {
           role="button"
           tabIndex={0}
           className={cn(
-            'flex flex-col justify-end gap-y-cn-xs box size-full rounded-3 border bg-graph-gradient-1 cursor-pointer p-cn-xs shadow-4',
+            'flex flex-col justify-end gap-y-cn-xs box size-full rounded-3 border bg-cn-graph-card-gradient cursor-pointer p-cn-xs shadow-4',
             {
-              'border-graph-border-1': !selected,
+              'border-cn-2': !selected,
               'border-cn-3': selected,
               'border-cn-success': executionStatus === 'success',
               'border-cn-warning': executionStatus === 'warning',
@@ -101,10 +101,10 @@ export function StepNode(props: StepNodeProps) {
             />
           )}
           {icon}
-          <span className="line-clamp-2 text-2 font-medium leading-snug text-cn-1">
+          <Text as="span" color="foreground-1">
             {name}
             {!!counter && <Text as="span"> ({counter})</Text>}
-          </span>
+          </Text>
           {warningMessage && <WarningLabel>{warningMessage}</WarningLabel>}
         </div>
       </div>

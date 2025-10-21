@@ -2,7 +2,7 @@ import { cn } from '@utils/cn'
 
 import { ParallelContainerConfigType, SerialContainerConfigType } from '@harnessio/pipeline-graph'
 
-import { IconV2 } from '..'
+import { IconV2, Text } from '..'
 import { ExecutionStatus } from './components/execution-status'
 import { FloatingAddButton } from './components/floating-add-button'
 import { NodeMenuTrigger } from './components/node-menu-trigger'
@@ -64,9 +64,9 @@ export function SplitView_StageNode(props: SplitView_StageNodeProps) {
           role="button"
           tabIndex={0}
           className={cn(
-            'flex flex-col justify-end gap-y-cn-xs box size-full rounded-3 border bg-graph-gradient-1 cursor-pointer p-cn-xs shadow-4',
+            'flex flex-col justify-end gap-y-cn-xs box size-full rounded-3 border bg-cn-graph-card-gradient cursor-pointer p-cn-xs shadow-4',
             {
-              'border-graph-border-1': !selected,
+              'border-cn-2': !selected,
               'border-cn-3': selected,
               'border-cn-success': executionStatus === 'success',
               'border-cn-warning': executionStatus === 'warning',
@@ -102,10 +102,10 @@ export function SplitView_StageNode(props: SplitView_StageNodeProps) {
           )}
           {/* {icon} */}
           <IconV2 name="square-dashed" size="md" />
-          <span className="line-clamp-2 text-2 font-medium leading-snug text-cn-1">
+          <Text as="span" color="foreground-1">
             {name}
-            {!!counter && <span className="font-normal text-cn-2"> ({counter})</span>}
-          </span>
+            {!!counter && <Text as="span"> ({counter})</Text>}
+          </Text>
           {warningMessage && <WarningLabel>{warningMessage}</WarningLabel>}
         </div>
       </div>

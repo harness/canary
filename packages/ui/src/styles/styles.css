@@ -1,4 +1,3 @@
-@import url('./shared-style-variables.css');
 @import url('./diff-styles.css');
 
 @import url('@harnessio/core-design-system/core-styles');
@@ -121,13 +120,8 @@
   @apply placeholder:text-cn-1/50 !important;
 }
 
-/* Temporary studio controls override */
-.react-flow__panel {
-  @apply m-cn-xl left-auto right-0 flex gap-px !important;
-}
-
-.react-flow__controls-button {
-  @apply rounded-3 invert !important;
+.cn-graph-bg-size {
+  background-size: 22px 22px;
 }
 
 .diff-style-root tr {

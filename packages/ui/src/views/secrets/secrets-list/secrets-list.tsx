@@ -2,12 +2,8 @@ import { useCallback } from 'react'
 
 import { NoData, PermissionIdentifier, ResourceType, Skeleton, Table, Text, TimeAgoCard } from '@/components'
 import { useComponents, useCustomDialogTrigger, useTranslation } from '@/context'
-import { cn } from '@utils/cn'
 
 import { SecretListProps } from './types'
-
-const CELL_MIN_WIDTH = 'min-w-[150px]'
-const CELL_MIN_WIDTH_ICON = 'min-w-16'
 
 export function SecretList({
   secrets,
@@ -55,44 +51,46 @@ export function SecretList({
   }
 
   return (
-    <Table.Root size="compact">
+    <Table.Root tableClassName="table-fixed" size="compact">
       <Table.Header>
         <Table.Row>
-          <Table.Head className="w-full">{t('views:secret.title', 'Name')}</Table.Head>
-          <Table.Head className={CELL_MIN_WIDTH}>{t('views:common.manager', 'Secret Manager')}</Table.Head>
-          <Table.Head className={CELL_MIN_WIDTH} containerProps={{ justify: 'end' }}>
+          <Table.Head className="w-3/6">{t('views:secret.title', 'Name')}</Table.Head>
+          <Table.Head className="w-1/6" contentClassName="truncate">
+            {t('views:common.manager', 'Secret Manager')}
+          </Table.Head>
+          <Table.Head className="w-1/6" containerProps={{ justify: 'end' }}>
             {t('views:common.created', 'Created')}
           </Table.Head>
-          <Table.Head className={CELL_MIN_WIDTH} containerProps={{ justify: 'end' }}>
+          <Table.Head className="w-1/6" containerProps={{ justify: 'end' }}>
             {t('views:common.updated', 'Updated')}
           </Table.Head>
-          <Table.Head></Table.Head>
+          <Table.Head className="w-[68px]" />
         </Table.Row>
       </Table.Header>
       <Table.Body>
         {secrets.map(secret => (
           <Table.Row key={secret.identifier} to={toSecretDetails?.(secret)}>
-            <Table.Cell className="w-full max-w-[470px]" title={secret.name}>
+            <Table.Cell title={secret.name}>
               <Text truncate>{secret.name}</Text>
             </Table.Cell>
-            <Table.Cell className={CELL_MIN_WIDTH}>
+            <Table.Cell>
               <Text truncate>
                 {secret.spec?.secretManagerIdentifier === 'harnessSecretManager'
                   ? 'Harness'
                   : secret.spec?.secretManagerIdentifier}
               </Text>
             </Table.Cell>
-            <Table.Cell className={`${CELL_MIN_WIDTH} text-right`}>
-              {secret?.createdAt ? (
+            <Table.Cell className="text-right">
+              {!!secret?.createdAt && (
                 <TimeAgoCard timestamp={secret.createdAt} dateTimeFormatOptions={{ dateStyle: 'medium' }} />
-              ) : null}
+              )}
             </Table.Cell>
-            <Table.Cell className={`${CELL_MIN_WIDTH} text-right`}>
-              {secret?.updatedAt ? (
+            <Table.Cell className="text-right">
+              {!!secret?.updatedAt && (
                 <TimeAgoCard timestamp={secret.updatedAt} dateTimeFormatOptions={{ dateStyle: 'medium' }} />
-              ) : null}
+              )}
             </Table.Cell>
-            <Table.Cell className={cn(CELL_MIN_WIDTH_ICON, 'text-center')} disableLink>
+            <Table.Cell className="text-right">
               <RbacMoreActionsTooltip
                 iconName="more-horizontal"
                 isInTable

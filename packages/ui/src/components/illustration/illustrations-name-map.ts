@@ -13,6 +13,8 @@ import NoDataCogLight from './images/no-data-cog-light.svg'
 import NoDataCog from './images/no-data-cog.svg'
 import NoDataCommitsLight from './images/no-data-commits-light.svg'
 import NoDataCommits from './images/no-data-commits.svg'
+import NoDataDelegateLight from './images/no-data-delegate-light.svg'
+import NoDataDelegate from './images/no-data-delegate.svg'
 import NoDataErrorLight from './images/no-data-error-light.svg'
 import NoDataError from './images/no-data-error.svg'
 import NoDataFolderLight from './images/no-data-folder-light.svg'
@@ -35,8 +37,6 @@ import NoSearchMagnifyingGlassLight from './images/no-search-magnifying-glass-li
 import NoSearchMagnifyingGlass from './images/no-search-magnifying-glass.svg'
 import SubMenuEllipse from './images/sub-menu-ellipse.svg'
 import TooltipArrow from './images/tooltip-arrow.svg'
-import NoDataDelegate from './images/no-data-delegate.svg'
-import NoDataDelegateLight from './images/no-data-delegate-light.svg'
 
 export const IllustrationsNameMap = {
   'create-workspace': CreateWorkspace,

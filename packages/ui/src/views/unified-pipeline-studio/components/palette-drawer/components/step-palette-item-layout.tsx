@@ -21,12 +21,12 @@ const StepsPaletteItemLayout = {
     return <div className={cn('font-medium leading-4', className)}>{children}</div>
   },
   Description: function Description({ children, className }: { children: React.ReactNode; className?: string }) {
-    return <div className={cn('mt-cn-2xs line-clamp-2 overflow-hidden text-sm leading-4', className)}>{children}</div>
+    return <div className={cn('mt-cn-2xs line-clamp-2 overflow-hidden text-2 leading-4', className)}>{children}</div>
   },
   BadgeWrapper: function BadgeWrapper({ children }: { children: React.ReactNode }) {
     return (
       <div className="p-cn-4xs self-start rounded-full bg-gradient-to-r from-[#B1CBFF] via-[#6D6B75] to-[#B1CBFF]">
-        <div className="bg-cn-1 px-cn-xs rounded-full text-sm">{children}</div>
+        <div className="bg-cn-1 px-cn-xs rounded-full text-2">{children}</div>
       </div>
     )
   },

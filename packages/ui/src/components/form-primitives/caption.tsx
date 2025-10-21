@@ -1,5 +1,6 @@
 import { PropsWithChildren } from 'react'
 
+import { Text } from '@components/text'
 import { cn } from '@utils/cn'
 
 interface CaptionProps extends PropsWithChildren<React.HTMLAttributes<HTMLElement>> {
@@ -13,5 +14,9 @@ interface CaptionProps extends PropsWithChildren<React.HTMLAttributes<HTMLElemen
  * <Caption>This is a caption</Caption>
  */
 export function Caption({ children, className }: CaptionProps) {
-  return <span className={cn('text-cn-2 mt-cn-3xs leading-snug text-sm', className)}>{children}</span>
+  return (
+    <Text as="span" color="foreground-2" className={cn('mt-cn-3xs', className)}>
+      {children}
+    </Text>
+  )
 }

@@ -18,7 +18,7 @@ function Calendar({ className, classNames, showOutsideDays = true, ...props }: C
         months: 'flex flex-col sm:flex-row space-y-4 sm:space-x-4 sm:space-y-0',
         month: 'space-y-4',
         caption: 'flex justify-center pt-cn-3xs relative items-center',
-        caption_label: 'text-sm font-medium',
+        caption_label: 'text-2 font-medium',
         nav: 'space-x-1 flex items-center',
         nav_button: cn(
           buttonVariants({ variant: 'outline' }),
@@ -31,7 +31,7 @@ function Calendar({ className, classNames, showOutsideDays = true, ...props }: C
         head_cell: 'text-cn-3 rounded-3 w-8 font-normal text-[0.8rem]',
         row: 'flex w-full mt-cn-xs',
         cell: cn(
-          'relative p-0 text-center text-sm focus-within:relative focus-within:z-20 [&:has([aria-selected])]:bg-cn-3 [&:has([aria-selected].day-outside)]:bg-cn-3/50 [&:has([aria-selected].day-range-end)]:rounded-r-3',
+          'relative p-0 text-center text-2 focus-within:relative focus-within:z-20 [&:has([aria-selected])]:bg-cn-3 [&:has([aria-selected].day-outside)]:bg-cn-3/50 [&:has([aria-selected].day-range-end)]:rounded-r-3',
           props.mode === 'range'
             ? '[&:has(>.day-range-end)]:rounded-r-3 [&:has(>.day-range-start)]:rounded-l-3 first:[&:has([aria-selected])]:rounded-l-3 last:[&:has([aria-selected])]:rounded-r-3'
             : '[&:has([aria-selected])]:rounded-3'

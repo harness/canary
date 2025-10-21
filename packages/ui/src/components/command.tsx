@@ -39,7 +39,7 @@ const CommandInput = React.forwardRef<
     <CommandPrimitive.Input
       ref={ref}
       className={cn(
-        'placeholder:text-cn-3 flex h-10 w-full rounded-3 bg-transparent py-cn-sm text-sm outline-none disabled:cursor-not-allowed focus-visible:outline-none disabled:opacity-50',
+        'placeholder:text-cn-3 flex h-10 w-full rounded-3 bg-transparent py-cn-sm text-2 outline-none disabled:cursor-not-allowed focus-visible:outline-none disabled:opacity-50',
         className
       )}
       {...props}
@@ -68,7 +68,7 @@ const CommandEmpty = React.forwardRef<
   React.ElementRef<typeof CommandPrimitive.Empty>,
   React.ComponentPropsWithoutRef<typeof CommandPrimitive.Empty>
 >((props, ref) => (
-  <CommandPrimitive.Empty ref={ref} className="text-cn-3 px-cn-xs py-cn-md text-center text-sm" {...props} />
+  <CommandPrimitive.Empty ref={ref} className="text-cn-3 px-cn-xs py-cn-md text-center text-2" {...props} />
 ))
 
 CommandEmpty.displayName = CommandPrimitive.Empty.displayName
@@ -108,7 +108,7 @@ const CommandItem = React.forwardRef<
   <CommandPrimitive.Item
     ref={ref}
     className={cn(
-      'data-[selected=true]:bg-cn-hover data-[selected=true]:text-cn-1 relative flex cursor-default select-none items-center rounded px-cn-xs py-cn-2xs text-sm outline-none data-[disabled=true]:pointer-events-none data-[disabled=true]:opacity-50',
+      'data-[selected=true]:bg-cn-hover data-[selected=true]:text-cn-1 relative flex cursor-default select-none items-center rounded px-cn-xs py-cn-2xs text-2 outline-none data-[disabled=true]:pointer-events-none data-[disabled=true]:opacity-50',
       className
     )}
     {...props}
@@ -128,7 +128,7 @@ const CommandLoading = React.forwardRef<
 >(({ className, ...props }, ref) => (
   <CommandPrimitive.Loading
     ref={ref}
-    className={cn('relative select-none rounded px-cn-xs py-cn-2xs text-sm outline-none', className)}
+    className={cn('relative select-none rounded px-cn-xs py-cn-2xs text-2 outline-none', className)}
     {...props}
   />
 ))

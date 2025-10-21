@@ -278,7 +278,16 @@ const TableCell = forwardRef<HTMLTableCellElement, TableCellProps>(
 TableCell.displayName = 'TableCell'
 
 const TableCaption = forwardRef<HTMLTableCaptionElement, HTMLAttributes<HTMLTableCaptionElement>>(
-  ({ className, ...props }, ref) => <caption ref={ref} className={cn('cn-table-v2-caption', className)} {...props} />
+  ({ className, ...props }, ref) => (
+    <Text
+      as="caption"
+      ref={ref}
+      className={cn('cn-table-v2-caption', className)}
+      {...props}
+      color="foreground-3"
+      variant="caption-normal"
+    />
+  )
 )
 TableCaption.displayName = 'TableCaption'
 

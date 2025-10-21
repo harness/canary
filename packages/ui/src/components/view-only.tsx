@@ -26,31 +26,39 @@ export const ViewOnlyItem = ({
   label: string
   value: ReactNode
   isLoading?: boolean
-}) => (
-  <Layout.Grid key={label} flow="row" gapX="2xl" columns="minmax(0, 200px) minmax(0, 1fr)" align="start">
-    {isLoading ? (
-      <>
-        <Skeleton.Typography className="w-full" />
-        <Skeleton.Typography className="w-2/3" />
-      </>
-    ) : (
-      <>
-        <Text color="foreground-3" as="dt">
-          {label}
-        </Text>
-        <Text color="foreground-1" as="dd">
-          {typeof value === 'string' ? (
-            <Text key="label" color="inherit" className="break-words">
-              {value}
-            </Text>
-          ) : (
-            value
-          )}
-        </Text>
-      </>
-    )}
-  </Layout.Grid>
-)
+}) => {
+  const valueNode = !value ? (
+    <Text as="span" color="disabled">
+      empty
+    </Text>
+  ) : typeof value === 'string' ? (
+    <Text key="label" color="inherit" className="break-words">
+      {value}
+    </Text>
+  ) : (
+    value
+  )
+
+  return (
+    <Layout.Grid key={label} flow="row" gapX="2xl" columns="minmax(0, 200px) minmax(0, 1fr)" align="start">
+      {isLoading ? (
+        <>
+          <Skeleton.Typography className="w-full" />
+          <Skeleton.Typography className="w-2/3" />
+        </>
+      ) : (
+        <>
+          <Text color="foreground-3" as="dt">
+            {label}
+          </Text>
+          <Text color="foreground-1" as="dd">
+            {valueNode}
+          </Text>
+        </>
+      )}
+    </Layout.Grid>
+  )
+}
 
 const isWideEnoughForColumns = (width: number) => width >= 800
 

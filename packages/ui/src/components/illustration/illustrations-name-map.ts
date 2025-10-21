@@ -13,6 +13,8 @@ import NoDataCogLight from './images/no-data-cog-light.svg'
 import NoDataCog from './images/no-data-cog.svg'
 import NoDataCommitsLight from './images/no-data-commits-light.svg'
 import NoDataCommits from './images/no-data-commits.svg'
+import NoDataDelegateLight from './images/no-data-delegate-light.svg'
+import NoDataDelegate from './images/no-data-delegate.svg'
 import NoDataErrorLight from './images/no-data-error-light.svg'
 import NoDataError from './images/no-data-error.svg'
 import NoDataFolderLight from './images/no-data-folder-light.svg'
@@ -51,6 +53,7 @@ export const IllustrationsNameMap = {
   'no-data-labels': NoDataLabels,
   'no-data-webhooks': NoDataWebhooks,
   'no-search-magnifying-glass': NoSearchMagnifyingGlass,
+  'no-delegates': NoDataDelegate,
   'harness-logo-text': HarnessLogoText,
   'sub-menu-ellipse': SubMenuEllipse,
   'chat-avatar': ChatAvatar,
@@ -71,5 +74,6 @@ export const IllustrationsNameMap = {
   'no-data-tags-light': NoDataTagsLight,
   'no-data-labels-light': NoDataLabelsLight,
   'no-data-webhooks-light': NoDataWebhooksLight,
+  'no-delegates-light': NoDataDelegateLight,
   'no-search-magnifying-glass-light': NoSearchMagnifyingGlassLight
 } as const satisfies Record<string, React.FunctionComponent<React.SVGProps<SVGSVGElement>>>

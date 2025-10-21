@@ -101,10 +101,10 @@ export function StepNode(props: StepNodeProps) {
             />
           )}
           {icon}
-          <span className="text-2 text-cn-1 line-clamp-2 font-medium leading-snug">
+          <Text as="span" color="foreground-1">
             {name}
             {!!counter && <Text as="span"> ({counter})</Text>}
-          </span>
+          </Text>
           {warningMessage && <WarningLabel>{warningMessage}</WarningLabel>}
         </div>
       </div>

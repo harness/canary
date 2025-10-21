@@ -597,6 +597,7 @@ export default {
 
     /** Existing Variants  */
     { pattern: /^bg-graph-/ },
+    { pattern: /^hover:bg-graph-/ },
 
     { pattern: /rounded-./ },
     { pattern: /border-./ },

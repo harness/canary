@@ -35,6 +35,8 @@ import NoSearchMagnifyingGlassLight from './images/no-search-magnifying-glass-li
 import NoSearchMagnifyingGlass from './images/no-search-magnifying-glass.svg'
 import SubMenuEllipse from './images/sub-menu-ellipse.svg'
 import TooltipArrow from './images/tooltip-arrow.svg'
+import NoDataDelegate from './images/no-data-delegate.svg'
+import NoDataDelegateLight from './images/no-data-delegate-light.svg'
 
 export const IllustrationsNameMap = {
   'create-workspace': CreateWorkspace,
@@ -51,6 +53,7 @@ export const IllustrationsNameMap = {
   'no-data-labels': NoDataLabels,
   'no-data-webhooks': NoDataWebhooks,
   'no-search-magnifying-glass': NoSearchMagnifyingGlass,
+  'no-delegates': NoDataDelegate,
   'harness-logo-text': HarnessLogoText,
   'sub-menu-ellipse': SubMenuEllipse,
   'chat-avatar': ChatAvatar,
@@ -71,5 +74,6 @@ export const IllustrationsNameMap = {
   'no-data-tags-light': NoDataTagsLight,
   'no-data-labels-light': NoDataLabelsLight,
   'no-data-webhooks-light': NoDataWebhooksLight,
+  'no-delegates-light': NoDataDelegateLight,
   'no-search-magnifying-glass-light': NoSearchMagnifyingGlassLight
 } as const satisfies Record<string, React.FunctionComponent<React.SVGProps<SVGSVGElement>>>

@@ -15,7 +15,7 @@ export const Content = ({ totalItems, pageSize, currentPage, setPage, searchQuer
   const { useAdminListUsersStore } = useUserManagementStore()
   const searchRef = useRef<HTMLInputElement | null>(null)
 
-  const { users } = useAdminListUsersStore()
+  const { users, setPageSize } = useAdminListUsersStore()
 
   const { loadingStates } = useStates()
   const { isFetchingUsers } = loadingStates
@@ -40,18 +40,22 @@ export const Content = ({ totalItems, pageSize, currentPage, setPage, searchQuer
   return (
     <SandboxLayout.Content>
       <Text as="h1" variant="heading-section">
-        {t('views:userManagement.usersHeader', 'Users')} <Text as="span">({users?.length || 0})</Text>
+        {t('views:userManagement.usersHeader', 'Users')} <Text as="span">({totalItems || 0})</Text>
       </Text>
       <Spacer size={6} />
       <Actions searchQuery={searchQuery} handleSearchChange={handleSearchChange} ref={searchRef} />
       <Spacer size={4.5} />
       <UsersList searchQuery={searchQuery} handleResetSearch={handleResetSearch} />
-      <Pagination
-        totalItems={totalItems}
-        pageSize={pageSize}
-        currentPage={currentPage}
-        goToPage={(pageNum: number) => setPage(pageNum)}
-      />
+      {/* // TODO: check this condition when backend (useAdminListUsersQuery) will be ready for support query param  */}
+      {!!users?.length && !isFetchingUsers && !searchQuery && (
+        <Pagination
+          totalItems={totalItems}
+          pageSize={pageSize}
+          onPageSizeChange={setPageSize}
+          currentPage={currentPage}
+          goToPage={(pageNum: number) => setPage(pageNum)}
+        />
+      )}
     </SandboxLayout.Content>
   )
 }

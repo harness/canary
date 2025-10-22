@@ -49,7 +49,7 @@ const SandboxRepoListPage: FC<RepoListPageProps> = ({
 
   // State for storing saved filters and sorts
   // null means no saved state exists
-  const { repositories, totalItems, page, setPage, pageSize } = useRepoStore()
+  const { repositories, totalItems, page, setPage, pageSize, setPageSize } = useRepoStore()
 
   const { projectIdentifier, orgIdentifier, accountId } = scope
 
@@ -248,7 +248,13 @@ const SandboxRepoListPage: FC<RepoListPageProps> = ({
           {...routingProps}
         />
         {!!repositories?.length && (
-          <Pagination totalItems={totalItems} pageSize={pageSize} currentPage={page} goToPage={setPage} />
+          <Pagination
+            totalItems={totalItems}
+            pageSize={pageSize}
+            onPageSizeChange={setPageSize}
+            currentPage={page}
+            goToPage={setPage}
+          />
         )}
       </SandboxLayout.Content>
     </SandboxLayout.Main>

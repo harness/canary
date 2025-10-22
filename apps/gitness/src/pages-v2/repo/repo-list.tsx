@@ -69,7 +69,8 @@ export default function ReposListPage() {
         only_favorites: favorite,
         recursive,
         sort,
-        order
+        order,
+        limit: pageSize
       },
       space_ref: `${spaceURL}/+`
     },
@@ -77,7 +78,7 @@ export default function ReposListPage() {
       retry: 5
     }
   )
-  const PAGE_SIZE = parseInt(headers?.get(PageResponseHeader.xPerPage) || '25')
+  const PAGE_SIZE = parseInt(headers?.get(PageResponseHeader.xPerPage) || String(pageSize))
 
   const { mutate: deleteRepository, isLoading: isCancellingImport } = useDeleteRepositoryMutation(
     {},

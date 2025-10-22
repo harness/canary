@@ -18,6 +18,7 @@ const SecretListPage: FC<SecretListPageProps> = ({
   totalItems,
   pageSize,
   goToPage,
+  setPageSize,
   isLoading,
   secretManagerIdentifiers,
   isSecretManagerIdentifierLoading,
@@ -189,7 +190,13 @@ const SecretListPage: FC<SecretListPageProps> = ({
                 isDirtyList={isDirtyList}
               />
 
-              <Pagination totalItems={totalItems} pageSize={pageSize} currentPage={currentPage} goToPage={goToPage} />
+              <Pagination
+                totalItems={totalItems}
+                pageSize={pageSize}
+                onPageSizeChange={setPageSize}
+                currentPage={currentPage}
+                goToPage={goToPage}
+              />
             </Layout.Vertical>
           </Layout.Vertical>
         )}

@@ -16,6 +16,7 @@ export const useAdminListUsersStore = create<IAdminListUsersStore>(set => ({
     set({
       page
     }),
+  setPageSize: (pageSize: number) => set({ pageSize, page: 1 }),
   setUsers: (data: UsersProps[]) => {
     set({
       users: data

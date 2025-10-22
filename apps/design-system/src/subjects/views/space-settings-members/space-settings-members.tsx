@@ -50,7 +50,8 @@ const useMemberListStore = () => {
     page: 1,
     setPage: noop,
     totalItems: 10,
-    pageSize: 10
+    pageSize: 10,
+    setPageSize: noop
   }
 }
 

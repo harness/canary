@@ -8,6 +8,7 @@ export const usePipelineListStore = create<IPipelineListStore>(set => ({
   pageSize: 0,
   page: 1,
   setPage: page => set({ page }),
+  setPageSize: (pageSize: number) => set({ pageSize, page: 1 }),
   setPipelinesData: (pipelines, { totalItems, pageSize }) => {
     set({
       pipelines,

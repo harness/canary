@@ -43,6 +43,7 @@ export const repoWebhooksListStore: RepoWebhooksListStore = {
     setWebhookLoading: (_: boolean) => {},
     page: 1,
     setPage: (_: number) => {},
+    setPageSize: (_: number) => {},
     setTotalPages: (_: Headers | undefined) => {},
     setWebhooks: (_data: ListRepoWebhooksOkResponse) => {},
     preSetWebhookData: null,
@@ -51,6 +52,8 @@ export const repoWebhooksListStore: RepoWebhooksListStore = {
     setExecutionId: (_: number | null) => {},
     updateExecution: () => {},
     pageSize: 10,
+    webhookExecutionPageSize: 10,
+    setWebhookExecutionPageSize: noop,
     setPaginationFromHeaders: (_?: Headers) => {},
     totalItems: 10
   })

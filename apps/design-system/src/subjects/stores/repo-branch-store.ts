@@ -39,6 +39,7 @@ export const repoBranchListStore = {
   totalPages: 1,
   isRepoStillImporting: false,
   page: 1,
+  pageSize: 10,
   setSelectedBranchTag: noop,
   setSelectedRefType: noop,
   setTagList: noop,

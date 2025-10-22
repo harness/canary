@@ -1,3 +1,4 @@
+import { useTranslation } from '@/context'
 import { Select } from '@components/form-primitives'
 import { Layout } from '@components/layout'
 import { Separator } from '@components/separator'
@@ -24,6 +25,8 @@ export function Pagination({
   indeterminate = false,
   className
 }: PaginationProps) {
+  const { t } = useTranslation()
+
   const handleGoToPage = (selectedPage?: number) => (e: React.MouseEvent) => {
     e.preventDefault()
     if (!selectedPage) return
@@ -31,7 +34,7 @@ export function Pagination({
     goToPage?.(selectedPage)
   }
 
-  const totalPages = indeterminate || !totalItems || !pageSize ? undefined : Math.ceil(totalItems / pageSize)
+  const totalPages = indeterminate || !totalItems ? undefined : Math.ceil(totalItems / pageSize)
 
   // Render nothing if `totalPages` is absent, and both `nextPage` and `previousPage` are absent
   if (!totalPages && hasNext === undefined && hasPrevious === undefined) {
@@ -51,29 +54,31 @@ export function Pagination({
       <>
         <Layout.Horizontal align="center" gap="xs">
           <Select options={options} value={pageSize} onChange={handleChangePageSize} size="sm" />
-          <Text>items per page</Text>
+          <Text>{t('component:pagination.itemsPerPage', 'items per page')}</Text>
         </Layout.Horizontal>
 
-        <Separator orientation="vertical" className="h-8" />
+        {currentPage && <Separator orientation="vertical" className="h-8" />}
       </>
     )
   }
 
   return (
     <Layout.Horizontal className={cn('mt-cn-xl w-full', className)} align="center" justify="between">
-      <div>
+      <Layout.Horizontal align="center" gap="md">
+        {renderItemsPerPageBlock()}
+
         {totalPages && currentPage && (
-          <Layout.Horizontal align="center" gap="md">
-            {renderItemsPerPageBlock()}
-
-            <Text>
-              Page {currentPage} of {totalPages}
-            </Text>
-          </Layout.Horizontal>
+          <Text>
+            {t('component:pagination.pageOf', `Page ${currentPage} of ${totalPages}`, { currentPage, totalPages })}
+          </Text>
         )}
-      </div>
 
-      <Layout.Horizontal gap="xs">
+        {!totalPages && currentPage && (
+          <Text>{t('component:pagination.page', `Page ${currentPage}`, { currentPage })}</Text>
+        )}
+      </Layout.Horizontal>
+
+      <Layout.Horizontal className="ml-auto" gap="xs">
         {!indeterminate && totalPages && currentPage ? (
           <>
             <PaginationPrimitive.Previous

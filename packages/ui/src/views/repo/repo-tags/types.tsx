@@ -22,6 +22,8 @@ export interface RepoTagsStore {
   xPrevPage: number
   setPaginationFromHeaders: (xNextPage: number, xPrevPage: number) => void
   setPage: (page: number) => void
+  pageSize?: number
+  setPageSize?: (size: number) => void
   setTags: (tags: CommitTagType[]) => void
   addTag: (tag: CommitTagType) => void
   removeTag: (tagName: string) => void

@@ -29,7 +29,7 @@ const mapToEnumMembershipRole = (role: string): EnumMembershipRole | undefined =
 
 export function ProjectMemberListPage() {
   const spaceURL = useGetSpaceURLParam()
-  const { page, setPage, setMemberList } = useMemberListStore()
+  const { page, setPage, pageSize, setMemberList } = useMemberListStore()
   const { setPrincipalList } = usePrincipalListStore()
   const queryClient = useQueryClient()
   const [query, setQuery] = useQueryState('query')
@@ -53,7 +53,8 @@ export function ProjectMemberListPage() {
     queryParams: {
       page: queryPage,
       query: query ?? '',
-      order: orderSortDate.DESC
+      order: orderSortDate.DESC,
+      limit: pageSize
     }
   })
 

@@ -18,6 +18,8 @@ export interface RepoCommitsViewProps extends Partial<RoutingProps> {
   xPrevPage: number
   page: number
   setPage: (page: number) => void
+  pageSize?: number
+  setPageSize?: (size: number) => void
   renderProp: () => JSX.Element | null
 }
 
@@ -28,6 +30,8 @@ export const RepoCommitsView: FC<RepoCommitsViewProps> = ({
   xPrevPage,
   page,
   setPage,
+  pageSize,
+  setPageSize,
   toCommitDetails,
   toCode,
   renderProp: BranchSelectorContainer,
@@ -108,7 +112,7 @@ export const RepoCommitsView: FC<RepoCommitsViewProps> = ({
                   />
                 )}
 
-                {commitsList?.length && (
+                {!!commitsList?.length && (
                   <div>
                     <CommitsList
                       data={commitsList}
@@ -120,10 +124,13 @@ export const RepoCommitsView: FC<RepoCommitsViewProps> = ({
 
                     <Pagination
                       indeterminate
+                      currentPage={page}
                       hasNext={xNextPage > 0}
                       hasPrevious={xPrevPage > 0}
                       getPrevPageLink={getPrevPageLink}
                       getNextPageLink={getNextPageLink}
+                      pageSize={pageSize}
+                      onPageSizeChange={setPageSize}
                     />
                   </div>
                 )}

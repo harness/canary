@@ -15,7 +15,7 @@ export interface UsePopulateLabelStoreProps {
 export const usePopulateLabelStore = ({ queryPage, query, enabled = true, inherited }: UsePopulateLabelStoreProps) => {
   const repoId = useGetRepoId()
 
-  const { setLabels, setValues, setRepoSpaceRef, resetLabelsAndValues, setIsLoading, getParentScopeLabels } =
+  const { setLabels, setValues, setRepoSpaceRef, resetLabelsAndValues, setIsLoading, getParentScopeLabels, pageSize } =
     useLabelsStore()
 
   const {
@@ -25,7 +25,13 @@ export const usePopulateLabelStore = ({ queryPage, query, enabled = true, inheri
     labels,
     values,
     headers
-  } = useGetRepoLabelAndValuesData({ queryPage, query, enabled, inherited: inherited || getParentScopeLabels })
+  } = useGetRepoLabelAndValuesData({
+    queryPage,
+    query,
+    enabled,
+    inherited: inherited || getParentScopeLabels,
+    limit: pageSize
+  })
 
   /**
    * Resetting the store state for labels and values
@@ -54,7 +60,7 @@ export const usePopulateLabelStore = ({ queryPage, query, enabled = true, inheri
   useEffect(() => {
     setLabels(labels, {
       totalItems: parseInt(headers?.get(PageResponseHeader.xTotal) ?? '0'),
-      pageSize: parseInt(headers?.get(PageResponseHeader.xPerPage) ?? '10')
+      pageSize: parseInt(headers?.get(PageResponseHeader.xPerPage) ?? String(pageSize))
     })
   }, [labels, setLabels, headers])
 

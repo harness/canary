@@ -32,7 +32,14 @@ const RepoWebhookExecutionsPage: FC<RepoWebhookExecutionsPageProps> = ({
   toRepoWebhookExecutionDetails
 }) => {
   const { t } = useTranslation()
-  const { executions, webhookExecutionPage, setWebhookExecutionPage, totalItems, pageSize } = useWebhookStore()
+  const {
+    executions,
+    webhookExecutionPage,
+    setWebhookExecutionPage,
+    totalItems,
+    webhookExecutionPageSize: pageSize,
+    setWebhookExecutionPageSize: setPageSize
+  } = useWebhookStore()
   const events = useMemo(() => {
     return [...getBranchAndTagEvents(t), ...getPrEvents(t), ...getPrActivityEvents(t)]
   }, [t])
@@ -124,6 +131,7 @@ const RepoWebhookExecutionsPage: FC<RepoWebhookExecutionsPageProps> = ({
             <Pagination
               totalItems={totalItems}
               pageSize={pageSize}
+              onPageSizeChange={setPageSize}
               currentPage={webhookExecutionPage}
               goToPage={setWebhookExecutionPage}
             />

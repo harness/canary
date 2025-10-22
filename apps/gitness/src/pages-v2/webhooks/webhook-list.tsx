@@ -24,7 +24,7 @@ import { useWebhookStore } from './stores/webhook-store'
 export default function WebhookListPage() {
   const repoRef = useGetRepoRef() ?? ''
   const { spaceId, repoId } = useParams<PathParams>()
-  const { webhooks, setWebhooks, page, setPage, setError, setPaginationFromHeaders } = useWebhookStore()
+  const { webhooks, setWebhooks, page, setPage, setError, setPaginationFromHeaders, pageSize } = useWebhookStore()
   const [query, setQuery] = useQueryState('query')
 
   const queryClient = useQueryClient()
@@ -47,7 +47,7 @@ export default function WebhookListPage() {
     refetch
   } = useListRepoWebhooksQuery(
     {
-      queryParams: { page: queryPage, query: query ?? '' },
+      queryParams: { page: queryPage, query: query ?? '', limit: pageSize },
       repo_ref: repoRef
     },
     { retry: false }

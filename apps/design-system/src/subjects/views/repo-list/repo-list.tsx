@@ -17,6 +17,7 @@ const RepoListWrapper: FC<Partial<RepoListPageProps>> = props => {
       setImportToastId: noop,
       updateRepository: noop,
       setPage: noop,
+      setPageSize: noop,
       setRepositories: noop,
       importRepoIdentifier: null,
       setImportRepoIdentifier: noop,

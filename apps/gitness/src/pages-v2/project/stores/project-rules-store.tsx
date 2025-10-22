@@ -14,9 +14,12 @@ export const useProjectRulesStore = create<IProjectRulesStore>(set => ({
   userGroups: null,
   recentStatusChecks: null,
   totalItems: 0,
+  page: 1,
   pageSize: 10,
 
   // Actions
+  setPage: page => set({ page }),
+  setPageSize: (pageSize: number) => set({ pageSize, page: 1 }),
   setRules: (data, headers) => {
     const totalItems = parseInt(headers?.get(PageResponseHeader.xTotal) || '0')
     const pageSize = parseInt(headers?.get(PageResponseHeader.xPerPage) || '10')

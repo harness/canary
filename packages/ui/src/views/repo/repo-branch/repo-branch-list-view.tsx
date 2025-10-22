@@ -19,7 +19,8 @@ export const RepoBranchListView: FC<RepoBranchListViewProps> = ({
   ...routingProps
 }) => {
   const { t } = useTranslation()
-  const { branchList, defaultBranch, xNextPage, xPrevPage, page, setPage } = useRepoBranchesStore()
+  const { branchList, defaultBranch, xNextPage, xPrevPage, page, setPage, pageSize, setPageSize } =
+    useRepoBranchesStore()
 
   const handleResetFiltersAndPages = () => {
     setPage(1)
@@ -123,6 +124,10 @@ export const RepoBranchListView: FC<RepoBranchListViewProps> = ({
               hasPrevious={xPrevPage > 0}
               getPrevPageLink={getPrevPageLink}
               getNextPageLink={getNextPageLink}
+              pageSize={pageSize}
+              onPageSizeChange={setPageSize}
+              currentPage={page}
+              className="!mt-0"
             />
           )}
 

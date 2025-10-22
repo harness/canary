@@ -21,7 +21,7 @@ export default function RepoExecutionListPage() {
   const [query, setQuery] = useQueryState('query')
   const [queryPage, setQueryPage] = useQueryState('page', parseAsInteger.withDefault(1))
 
-  const { setExecutionsData, page, setPage } = useExecutionListStore()
+  const { setExecutionsData, page, setPage, pageSize } = useExecutionListStore()
 
   const {
     data: { body: executionsBody, headers } = {},
@@ -32,7 +32,7 @@ export default function RepoExecutionListPage() {
     {
       repo_ref: repoRef,
       pipeline_identifier: pipelineId || '',
-      queryParams: { page }
+      queryParams: { page, limit: pageSize }
     },
     { enabled: !!repoRef }
   )
@@ -41,10 +41,10 @@ export default function RepoExecutionListPage() {
     if (executionsBody) {
       const executions = apiExecutions2Executions(executionsBody)
       const totalItems = parseInt(headers?.get(PageResponseHeader.xTotal) || '0')
-      const pageSize = parseInt(headers?.get(PageResponseHeader.xPerPage) || '10')
-      setExecutionsData(executions, { totalItems, pageSize })
+      const pageSizeFromHeader = parseInt(headers?.get(PageResponseHeader.xPerPage) || String(pageSize))
+      setExecutionsData(executions, { totalItems, pageSize: pageSizeFromHeader })
     } else {
-      setExecutionsData(null, { totalItems: 0, pageSize: 0 })
+      setExecutionsData(null, { totalItems: 0, pageSize })
     }
   }, [executionsBody, headers])
 

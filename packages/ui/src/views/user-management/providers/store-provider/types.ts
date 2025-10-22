@@ -13,6 +13,7 @@ export interface IAdminListUsersStore {
   setPassword: (password: string) => void
   setUser: (user: UsersProps) => void
   setPage: (data: number) => void
+  setPageSize: (size: number) => void
   setUsers: (data: UsersProps[]) => void
   setPaginationFromHeaders: (data: Headers) => void
   setGeneratePassword: (data: boolean) => void

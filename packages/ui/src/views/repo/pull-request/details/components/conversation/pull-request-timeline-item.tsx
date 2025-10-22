@@ -161,7 +161,7 @@ const ItemHeader: FC<ItemHeaderProps> = memo(
             {description}
             {timestamp && (
               <>
-                <Separator orientation="vertical" className="mx-cn-4xs h-4" />
+                <Separator orientation="vertical" className="mx-cn-4xs h-cn-md" />
                 <TimeAgoCard timestamp={timestamp} />
               </>
             )}
@@ -558,7 +558,7 @@ const PullRequestTimelineItem: FC<TimelineItemProps> = ({
               </div>
             </NodeGroup.Content>
           )}
-          {!isLast && <NodeGroup.Connector className={cn('left-[0.8rem] top-1 bottom-[-10px]')} />}
+          {!isLast && <NodeGroup.Connector className={cn('left-[0.8rem] top-cn-3xs bottom-[-10px]')} />}
         </NodeGroup.Root>
       </div>
 

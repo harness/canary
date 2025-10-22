@@ -131,7 +131,7 @@ export default {
         // TODO: remove !important after fixing the cn-button:focus-visible
         position: 'absolute !important'
       },
-      '@apply absolute right-2 top-2': ''
+      '@apply absolute right-cn-xs top-cn-xs': ''
     },
 
     '&-expand-button': {

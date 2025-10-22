@@ -52,7 +52,7 @@ const SheetOverlay = forwardRef<ElementRef<typeof SheetPrimitive.Overlay>, Sheet
 )
 SheetOverlay.displayName = SheetPrimitive.Overlay.displayName
 
-const sheetVariants = cva('bg-cn-1 p-cn-xl gap-cn-md fixed z-50 shadow-4 transition ease-in-out', {
+const sheetVariants = cva('bg-cn-1 p-cn-xl gap-cn-md shadow-4 fixed z-50 transition ease-in-out', {
   variants: {
     side: {
       top: 'inset-x-0 top-0 border-b',
@@ -129,13 +129,13 @@ const SheetContent = forwardRef<ElementRef<typeof SheetPrimitive.Content>, Sheet
 SheetContent.displayName = SheetPrimitive.Content.displayName
 
 const SheetHeader = forwardRef<HTMLDivElement, HTMLAttributes<HTMLDivElement>>(({ className, ...props }, ref) => (
-  <div className={cn('flex flex-col space-y-2 text-center sm:text-left', className)} {...props} ref={ref} />
+  <div className={cn('flex flex-col space-y-cn-xs text-center sm:text-left', className)} {...props} ref={ref} />
 ))
 SheetHeader.displayName = 'SheetHeader'
 
 const SheetFooter = forwardRef<HTMLDivElement, HTMLAttributes<HTMLDivElement>>(({ className, ...props }, ref) => (
   <div
-    className={cn('flex flex-col-reverse sm:flex-row sm:justify-end sm:space-x-2', className)}
+    className={cn('flex flex-col-reverse sm:flex-row sm:justify-end sm:space-x-cn-xs', className)}
     {...props}
     ref={ref}
   />

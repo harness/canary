@@ -21,7 +21,7 @@ const EntityFormLayout = {
   },
 
   Form: function Form({ className, ...props }: HTMLAttributes<HTMLDivElement>) {
-    return <div className={cn('flex flex-col max-w-xl space-y-7', className)} {...props} />
+    return <div className={cn('flex flex-col max-w-xl space-y-cn-xl', className)} {...props} />
   },
 
   Footer: function Footer({ className, ...props }: HTMLAttributes<HTMLDivElement>) {

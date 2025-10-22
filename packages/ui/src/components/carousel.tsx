@@ -217,8 +217,8 @@ const CarouselPrevious = forwardRef<HTMLButtonElement, CarouselButtonProp>(
         className={cn(
           'absolute h-8 w-8 rounded-full',
           orientation === 'horizontal'
-            ? '-left-12 top-1/2 -translate-y-1/2'
-            : '-top-12 left-1/2 -translate-x-1/2 rotate-90',
+            ? '-left-[48px] top-1/2 -translate-y-1/2' // TODO: replace -[48px] with a proper value from the design system once available
+            : '-top-[48px] left-1/2 -translate-x-1/2 rotate-90',
           className
         )}
         disabled={!canScrollPrev}

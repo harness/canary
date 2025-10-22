@@ -138,7 +138,6 @@ export const RepoFiles: FC<RepoFilesProps> = ({
             ),
             to: `${spaceId ? `/${spaceId}` : ''}/repos/${repoId}/files/new/${gitRef}/~/`
           }}
-          className="py-cn-2 gap-cn-1"
         />
       )
     }
@@ -171,7 +170,7 @@ export const RepoFiles: FC<RepoFilesProps> = ({
   ])
 
   return (
-    <SandboxLayout.Main className="repo-files-height bg-transparent min-w-0">
+    <SandboxLayout.Main className="repo-files-height min-w-0 bg-transparent">
       <SandboxLayout.Content className="pl-cn-sm gap-y-cn-md flex h-full flex-col">
         {isView && !isEmptyRepository && (
           <div className="-mt-cn-3xs">

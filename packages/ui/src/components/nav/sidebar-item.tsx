@@ -34,7 +34,14 @@ export default function SidebarItem({ item, isPinned }: SidebarItemProps) {
 
   if (Array.isArray(item.subItems) && item.subItems.length > 0) {
     return (
-      <Sidebar.Item key={item.id} actionButtons={actionButtons} to={item.to} icon={item.iconName} title={item.title}>
+      <Sidebar.Item
+        defaultSubmenuOpen={!isPinned}
+        key={item.id}
+        actionButtons={actionButtons}
+        to={item.to}
+        icon={item.iconName}
+        title={item.title}
+      >
         {item.subItems.map(subItem => (
           <Sidebar.MenuSubItem key={subItem.id} title={subItem.title} to={subItem.to} />
         ))}

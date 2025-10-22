@@ -49,6 +49,7 @@ interface SidebarItemCommonProps extends ComponentPropsWithoutRef<'button'> {
 
 interface SidebarItemWithChildrenProps extends SidebarItemCommonProps {
   children: ReactNode
+  defaultSubmenuOpen?: boolean
   badge?: never
   actionMenuItems?: never
   dropdownMenuContent?: never
@@ -58,6 +59,7 @@ interface SidebarItemWithChildrenProps extends SidebarItemCommonProps {
 interface SidebarItemWithDropdownProps extends SidebarItemCommonProps {
   dropdownMenuContent: ReactNode
   children?: never
+  defaultSubmenuOpen?: never
   badge?: never
   actionMenuItems?: never
   withRightIndicator?: never
@@ -66,6 +68,7 @@ interface SidebarItemWithDropdownProps extends SidebarItemCommonProps {
 interface SidebarItemWithIndicatorProps extends SidebarItemCommonProps {
   withRightIndicator: true
   children?: never
+  defaultSubmenuOpen?: never
   badge?: never
   actionMenuItems?: never
   dropdownMenuContent?: never
@@ -74,6 +77,7 @@ interface SidebarItemWithIndicatorProps extends SidebarItemCommonProps {
 interface SidebarItemWithBadgeProps extends SidebarItemCommonProps {
   badge?: string | SidebarBadgeProps
   actionMenuItems?: never
+  defaultSubmenuOpen?: never
   children?: never
   dropdownMenuContent?: never
   withRightIndicator?: never
@@ -81,6 +85,7 @@ interface SidebarItemWithBadgeProps extends SidebarItemCommonProps {
 interface SidebarItemWithAndActionsProps extends SidebarItemCommonProps {
   badge?: never
   actionMenuItems?: DropdownMenuItemProps[]
+  defaultSubmenuOpen?: boolean
   children?: never
   dropdownMenuContent?: never
   withRightIndicator?: never
@@ -367,7 +372,7 @@ SidebarItemTrigger.displayName = 'SidebarItemTrigger'
 
 export const SidebarItem = forwardRef<HTMLButtonElement | HTMLAnchorElement, SidebarItemProps>(({ ...props }, ref) => {
   const { state } = useSidebar()
-  const [submenuOpen, setSubmenuOpen] = useState(false)
+  const [submenuOpen, setSubmenuOpen] = useState(props.defaultSubmenuOpen || false)
 
   const { title, tooltip } = props
 

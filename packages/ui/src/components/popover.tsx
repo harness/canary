@@ -58,7 +58,7 @@ const PopoverContent = forwardRef<ElementRef<typeof PopoverPrimitive.Content>, P
           {...props}
         >
           {(title || description) && (
-            <div className="grid gap-cn-3xs">
+            <div className="gap-cn-3xs grid">
               {title && (
                 <Text variant="body-strong" color="foreground-1" as="h4">
                   {title}
@@ -163,7 +163,8 @@ const PopoverComponent = ({
 
   return (
     <Popover.Root open={open} onOpenChange={handleOpenChange}>
-      <button ref={triggerRef} className="sr-only" aria-hidden="true" />
+      {/* This button is used to programmatically focus the trigger element after closing a popover */}
+      <button ref={triggerRef} className="sr-only" aria-hidden="true" tabIndex={-1} />
       <Popover.Trigger {...evenTriggerProps} asChild>
         {children}
       </Popover.Trigger>

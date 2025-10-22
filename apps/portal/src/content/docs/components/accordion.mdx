@@ -38,6 +38,7 @@ import { DocsPage } from "@/components/docs-page";
             <Accordion.Item value="item1">
                 <Accordion.Trigger suffix="3 items" prefix={<IconV2 name="info-circle" size="md" />}>
                   Item 1
+                  <CopyButton size="xs" className="ml-cn-sm" />
                 </Accordion.Trigger>
                 <Accordion.Content>
                     <p>This is the content of item 1</p>
@@ -269,14 +270,6 @@ The `Accordion.Trigger` component displays the item with a chevron disclosure ic
       description: "Content of the trigger",
       required: true,
       value: "ReactNode",
-    },
-    {
-      name: "asChild",
-      description:
-        "Change the default rendered element for the one passed as a child, merging their props and behavior",
-      defaultValue: "false",
-      required: false,
-      value: "boolean",
     },
     {
       name: "prefix",

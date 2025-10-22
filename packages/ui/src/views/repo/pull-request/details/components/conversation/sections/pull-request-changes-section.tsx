@@ -85,7 +85,7 @@ const PullRequestChangesSection: FC<PullRequestChangesSectionProps> = ({
         suffix={
           <PanelAccordionShowButton isShowButton={viewBtn} value={ACCORDION_VALUE} accordionValues={accordionValues} />
         }
-        asChild={!hasContent}
+        clickable={!!hasContent}
       >
         <Layout.Grid gapY="4xs">
           <LineTitle text={changesInfo.header} icon={getStatusIcon(changesInfo.status)} />

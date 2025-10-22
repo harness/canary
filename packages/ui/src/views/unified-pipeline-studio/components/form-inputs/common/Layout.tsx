@@ -8,11 +8,11 @@ interface LayoutProps {
   className?: string
 }
 
-const Vertical: React.FC<LayoutProps> = ({ children, gap = 'space-y-4', className }) => {
+const Vertical: React.FC<LayoutProps> = ({ children, gap = 'space-y-cn-md', className }) => {
   return <div className={cn(`flex flex-col ${gap}`, className)}>{children}</div>
 }
 
-const Horizontal: React.FC<LayoutProps> = ({ children, gap = 'space-x-4', className }) => {
+const Horizontal: React.FC<LayoutProps> = ({ children, gap = 'space-x-cn-md', className }) => {
   return <div className={cn(`flex ${gap}`, className)}>{children}</div>
 }
 

@@ -1,5 +1,6 @@
 import typography from '@tailwindcss/typography'
 import tailwindcssAnimate from 'tailwindcss-animate'
+import defaultTheme from 'tailwindcss/defaultTheme'
 import plugin from 'tailwindcss/plugin'
 import type { PluginAPI, Config as TailwindConfig } from 'tailwindcss/types/config'
 
@@ -374,69 +375,58 @@ export default {
       'ring-success': 'var(--cn-ring-success)',
       'ring-warning': 'var(--cn-ring-warning)'
     },
+    spacing: {
+      0: 'var(--cn-spacing-0)',
+      px: 'var(--cn-spacing-px)',
+      'cn-4xs': 'var(--cn-layout-4xs)',
+      'cn-3xs': 'var(--cn-layout-3xs)',
+      'cn-2xs': 'var(--cn-layout-2xs)',
+      'cn-xs': 'var(--cn-layout-xs)',
+      'cn-sm': 'var(--cn-layout-sm)',
+      'cn-md': 'var(--cn-layout-md)',
+      'cn-lg': 'var(--cn-layout-lg)',
+      'cn-xl': 'var(--cn-layout-xl)',
+      'cn-2xl': 'var(--cn-layout-2xl)',
+      'cn-3xl': 'var(--cn-layout-3xl)',
+      'cn-4xl': 'var(--cn-layout-4xl)',
+      auto: 'auto',
+      full: '100%'
+    },
     extend: {
       opacity: {
         'cn-disabled': 'var(--cn-disabled-opacity)'
       },
-      size: {
-        'cn-0': 'var(--cn-size-0)',
-        'cn-1': 'var(--cn-size-1)',
-        'cn-2': 'var(--cn-size-2)',
-        'cn-3': 'var(--cn-size-3)',
-        'cn-4': 'var(--cn-size-4)',
-        'cn-5': 'var(--cn-size-5)',
-        'cn-6': 'var(--cn-size-6)',
-        'cn-7': 'var(--cn-size-7)',
-        'cn-8': 'var(--cn-size-8)',
-        'cn-9': 'var(--cn-size-9)',
-        'cn-10': 'var(--cn-size-10)',
-        'cn-11': 'var(--cn-size-11)',
-        'cn-12': 'var(--cn-size-12)',
-        'cn-14': 'var(--cn-size-14)',
-        'cn-15': 'var(--cn-size-15)',
-        'cn-16': 'var(--cn-size-16)',
-        'cn-17': 'var(--cn-size-17)',
-        'cn-20': 'var(--cn-size-20)',
-        'cn-24': 'var(--cn-size-24)',
-        'cn-25': 'var(--cn-size-25)',
-        'cn-28': 'var(--cn-size-28)',
-        'cn-32': 'var(--cn-size-32)',
-        'cn-36': 'var(--cn-size-36)',
-        'cn-40': 'var(--cn-size-40)',
-        'cn-44': 'var(--cn-size-44)',
-        'cn-48': 'var(--cn-size-48)',
-        'cn-52': 'var(--cn-size-52)',
-        'cn-56': 'var(--cn-size-56)',
-        'cn-58': 'var(--cn-size-58)',
-        'cn-60': 'var(--cn-size-60)',
-        'cn-64': 'var(--cn-size-64)',
-        'cn-72': 'var(--cn-size-72)',
-        'cn-80': 'var(--cn-size-80)',
-        'cn-90': 'var(--cn-size-90)',
-        'cn-96': 'var(--cn-size-96)',
-        'cn-5-half': 'var(--cn-size-5-half)',
-        'cn-6-half': 'var(--cn-size-6-half)',
-        'cn-11-half': 'var(--cn-size-11-half)',
-        'cn-px': 'var(--cn-size-px)',
-        'cn-half': 'var(--cn-size-half)',
-        'cn-1-half': 'var(--cn-size-1-half)',
-        'cn-2-half': 'var(--cn-size-2-half)',
-        'cn-3-half': 'var(--cn-size-3-half)',
-        'cn-4-half': 'var(--cn-size-4-half)'
-      },
+      // Spreading props to keep the default tailwind values
       height: {
+        ...defaultTheme.spacing,
         'cn-input-md': 'var(--cn-input-size-md)',
         'cn-header': 'var(--cn-header-height)'
       },
       minHeight: {
+        ...defaultTheme.spacing,
         'cn-textarea': '7lh'
       },
       maxHeight: {
+        ...defaultTheme.spacing,
+        'cn-textarea': '35lh'
+      },
+      minWidth: {
+        ...defaultTheme.spacing,
+        'cn-textarea': '7lh'
+      },
+      maxWidth: {
+        ...defaultTheme.spacing,
         'cn-textarea': '35lh'
       },
       width: {
+        ...defaultTheme.spacing,
+
         // Get this from design system
         'cn-search-input-max-width': '320px'
+      },
+      // Spreading here to keep "size-N" classnames working
+      size: {
+        ...defaultTheme.spacing
       },
 
       outlineOffset: {
@@ -444,23 +434,6 @@ export default {
       },
       ringColor: {
         'cn-brand': 'var(--cn-border-brand)'
-      },
-      spacing: {
-        0: 'var(--cn-spacing-0)',
-        px: 'var(--cn-spacing-px)',
-        'cn-4xs': 'var(--cn-layout-4xs)',
-        'cn-3xs': 'var(--cn-layout-3xs)',
-        'cn-2xs': 'var(--cn-layout-2xs)',
-        'cn-xs': 'var(--cn-layout-xs)',
-        'cn-sm': 'var(--cn-layout-sm)',
-        'cn-md': 'var(--cn-layout-md)',
-        'cn-lg': 'var(--cn-layout-lg)',
-        'cn-xl': 'var(--cn-layout-xl)',
-        'cn-2xl': 'var(--cn-layout-2xl)',
-        'cn-3xl': 'var(--cn-layout-3xl)',
-        'cn-4xl': 'var(--cn-layout-4xl)',
-        auto: 'auto',
-        full: '100%'
       },
 
       letterSpacing: {

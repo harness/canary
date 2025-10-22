@@ -114,7 +114,7 @@ const Example: FC<ExampleProps> = ({
                 <details className="example-expand bg-cn-2 p-cn-sm relative border-t">
                   <CopyButton
                     buttonVariant="transparent"
-                    className="absolute right-3 top-3"
+                    className="absolute right-cn-sm top-cn-sm"
                     name={currentCode}
                   />
                   <summary className="flex cursor-pointer select-none items-center gap-cn-3xs text-cn-size-2">

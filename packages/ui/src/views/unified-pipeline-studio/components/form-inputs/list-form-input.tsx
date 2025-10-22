@@ -89,7 +89,7 @@ function ListFormInputInternal(props: ListFormInputProps): JSX.Element {
                   ))}
                 </div>
               )}
-              <div className="flex flex-col space-y-2">
+              <div className="space-y-cn-xs flex flex-col">
                 {fields.map((_item, idx) => (
                   <div key={_item.id} className={rowClass} style={rowStyle}>
                     {inputConfig?.inputs && (

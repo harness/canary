@@ -92,7 +92,7 @@ const HighlightedFloatingLayout = ({ children, className, theme = 'blue' }: High
           />
           <span
             className={cn(
-              'absolute blur-[30px] top-3.5 -translate-y-1/2 left-1/2 w-[895px] h-[377px] rounded-full opacity-[0.14]',
+              'absolute blur-[30px] top-[14px] -translate-y-1/2 left-1/2 w-[895px] h-[377px] rounded-full opacity-[0.14]',
               '[mask-image:radial-gradient(50%_50%_at_50%_50%,#000_0%,transparent_100%)]',
               'transition-[transform,background-color] ease-in-out duration-700',
               isError ? '-translate-x-[11%]' : ' -translate-x-[84.5%]',

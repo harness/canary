@@ -374,24 +374,6 @@ export default {
       'ring-success': 'var(--cn-ring-success)',
       'ring-warning': 'var(--cn-ring-warning)'
     },
-    fontSize: {
-      0: 'var(--cn-font-size-0)',
-      1: 'var(--cn-font-size-1)',
-      2: 'var(--cn-font-size-2)',
-      3: 'var(--cn-font-size-3)',
-      4: 'var(--cn-font-size-4)',
-      5: 'var(--cn-font-size-5)',
-      6: 'var(--cn-font-size-6)',
-      7: 'var(--cn-font-size-7)',
-      8: 'var(--cn-font-size-8)',
-      9: 'var(--cn-font-size-9)',
-      10: 'var(--cn-font-size-10)',
-      11: 'var(--cn-font-size-11)',
-      12: 'var(--cn-font-size-12)',
-      13: 'var(--cn-font-size-13)',
-      half: 'var(--cn-font-size-half)',
-      min: 'var(--cn-font-size-min)'
-    },
     extend: {
       opacity: {
         'cn-disabled': 'var(--cn-disabled-opacity)'
@@ -488,6 +470,25 @@ export default {
         wide: 'var(--cn-tracking-wide)',
         wider: 'var(--cn-tracking-wider)',
         widest: 'var(--cn-tracking-widest)'
+      },
+
+      fontSize: {
+        0: 'var(--cn-font-size-0)',
+        1: 'var(--cn-font-size-1)',
+        2: 'var(--cn-font-size-2)',
+        3: 'var(--cn-font-size-3)',
+        4: 'var(--cn-font-size-4)',
+        5: 'var(--cn-font-size-5)',
+        6: 'var(--cn-font-size-6)',
+        7: 'var(--cn-font-size-7)',
+        8: 'var(--cn-font-size-8)',
+        9: 'var(--cn-font-size-9)',
+        10: 'var(--cn-font-size-10)',
+        11: 'var(--cn-font-size-11)',
+        12: 'var(--cn-font-size-12)',
+        13: 'var(--cn-font-size-13)',
+        half: 'var(--cn-font-size-half)',
+        min: 'var(--cn-font-size-min)'
       },
 
       backgroundImage: {

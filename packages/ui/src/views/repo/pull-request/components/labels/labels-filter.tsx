@@ -168,7 +168,7 @@ export function LabelsFilter({
         )}
 
       {description && (
-        <Text as="div" color="foreground-3" className="mx-cn-xs my-cn-md">
+        <Text color="foreground-3" className="mx-cn-xs my-cn-md">
           {description}
         </Text>
       )}

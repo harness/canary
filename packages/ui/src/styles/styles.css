@@ -115,11 +115,6 @@
   @apply text-cn-danger text-2 mt-cn-xs font-light;
 }
 
-.form-input {
-  @apply border-cn-1/10 bg-cn-brand-primary/5 mt-cn-3xs rounded-2 text-2 w-full font-light;
-  @apply placeholder:text-cn-1/50 !important;
-}
-
 .cn-graph-bg-size {
   background-size: 22px 22px;
 }

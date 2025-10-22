@@ -88,7 +88,7 @@ export function FileUpload({ selectedFile, onFileChange, error, accept }: FileUp
         </Card.Root>
       )}
       {error && (
-        <Text as="div" color="danger" className="mt-cn-3xs">
+        <Text color="danger" className="mt-cn-3xs">
           {error}
         </Text>
       )}

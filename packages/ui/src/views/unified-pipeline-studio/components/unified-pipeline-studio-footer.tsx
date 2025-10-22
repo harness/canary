@@ -1,7 +1,6 @@
 import { useMemo } from 'react'
 
-import { IconV2, Popover, Select } from '@/components'
-import { cn } from '@utils/cn'
+import { IconV2, Popover, Select, Text } from '@/components'
 
 import { PopoverCommitInfo } from './unified-popover-commit-info'
 
@@ -40,41 +39,47 @@ export const UnifiedPipelineStudioFooter: React.FC<PipelineStudioFooterProps> = 
   return (
     <footer
       className={
-        'flex h-10 shrink-0 items-center justify-between border-t border-cn-3 px-cn-md text-[12px] font-normal not-italic leading-[15px]'
+        'border-cn-3 px-cn-md font-caption-single-line-normal flex h-10 shrink-0 items-center justify-between border-t'
       }
     >
-      <div className="flex items-center gap-cn-xs">
+      <div className="gap-cn-xs flex items-center">
         <div
           role="button"
           tabIndex={0}
           onClick={() => {
             togglePane?.()
           }}
-          className="flex h-full cursor-pointer gap-cn-xs rounded-3 px-cn-xs py-cn-2xs duration-150 ease-in-out hover:bg-cn-brand-hover/10"
+          className="gap-cn-xs rounded-3 px-cn-xs py-cn-2xs hover:bg-cn-brand-hover/10 flex h-full cursor-pointer duration-150 ease-in-out"
         >
-          <div className="flex items-center gap-cn-2xs">
+          <div className="gap-cn-2xs flex items-center">
             <IconV2
               size="xs"
               name="xmark-circle"
               className={problemsCount.error > 0 ? 'text-cn-danger' : 'text-cn-3'}
             />
-            <span className={cn('text-[12px]', problemsCount.error > 0 ? 'text-cn-danger' : 'text-cn-1')}>
+            <Text variant="caption-single-line-normal" color={problemsCount.error > 0 ? 'danger' : 'foreground-1'}>
               {problemsCount.error}
-            </span>
+            </Text>
           </div>
-          <div className="flex items-center gap-cn-2xs">
+          <div className="gap-cn-2xs flex items-center">
             <IconV2 size="xs" name="warning-triangle" className="text-cn-3" />
-            <span className="text-[12px] text-cn-1">{problemsCount.warning}</span>
+            <Text variant="caption-single-line-normal" color="foreground-1">
+              {problemsCount.warning}
+            </Text>
           </div>
-          <div className="flex items-center gap-cn-2xs">
+          <div className="gap-cn-2xs flex items-center">
             <IconV2 size="xs" name="info-circle" className="text-cn-3" />
-            <span className="text-[12px] text-cn-1">{problemsCount.info}</span>
+            <Text variant="caption-single-line-normal" color="foreground-1">
+              {problemsCount.info}
+            </Text>
           </div>
         </div>
         {(branchesLoading || branches || currentBranch) && (
-          <div className={'flex gap-cn-xs'}>
+          <div className={'gap-cn-xs flex'}>
             <div className={'flex items-center'}>
-              <span className="text-[12px] text-cn-3">Branch:</span>
+              <Text variant="caption-single-line-normal" color="foreground-3">
+                Branch:
+              </Text>
 
               <Select
                 options={branchOptions}
@@ -89,11 +94,16 @@ export const UnifiedPipelineStudioFooter: React.FC<PipelineStudioFooterProps> = 
       {committedTimeAgo && authorName && (
         <Popover.Root>
           <Popover.Trigger>
-            <div className="flex text-[12px] text-cn-3">
+            <Text as="p" variant="caption-single-line-normal" color="foreground-3" className="flex">
               Last edited
-              <span className="text-cn-1">&nbsp;{committedTimeAgo}&nbsp;</span> by
-              <span className="text-cn-1">&nbsp;{authorName}&nbsp;</span>
-            </div>
+              <Text variant="caption-single-line-normal" color="foreground-1">
+                &nbsp;{committedTimeAgo}&nbsp;
+              </Text>{' '}
+              by
+              <Text variant="caption-single-line-normal" color="foreground-1">
+                &nbsp;{authorName}&nbsp;
+              </Text>
+            </Text>
           </Popover.Trigger>
           <Popover.Content side="top" className="mb-cn-md mr-cn-md w-80 p-0">
             <PopoverCommitInfo.Root>

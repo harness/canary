@@ -9,6 +9,7 @@ import {
   CommitSuggestion,
   CreateCommentPullReqRequest,
   HandleUploadType,
+  isInViewport,
   PrincipalPropsType,
   PrincipalsMentionMap,
   PullRequestCommentBox,
@@ -17,6 +18,7 @@ import {
 import { DiffFile, DiffModeEnum, DiffViewProps, SplitSide } from '@git-diff-view/react'
 import { useCustomEventListener } from '@hooks/use-event-listener'
 import { useMemoryCleanup } from '@hooks/use-memory-cleanup'
+import { useResizeObserver } from '@hooks/use-resize-observer'
 import { cn } from '@utils/cn'
 import { getInitials } from '@utils/stringUtils'
 import { DiffBlock } from 'diff2html/lib/types'
@@ -32,8 +34,8 @@ import PullRequestTimelineItem from '../details/components/conversation/pull-req
 import { replaceMentionIdWithEmail } from '../details/components/conversation/utils'
 import { ExpandedCommentsContext, useExpandedCommentsContext } from '../details/context/pull-request-comments-context'
 import { useDiffHighlighter } from '../hooks/useDiffHighlighter'
-import { useInViewDiffRenderer } from '../hooks/useInViewDiffRenderer'
 import { quoteTransform } from '../utils'
+import { DiffViewerSubstitute } from './diff-viewer-substitute'
 import { ExtendedDiffView } from './extended-diff-view/extended-diff-view'
 import { ExtendedDiffViewProps, LinesRange } from './extended-diff-view/extended-diff-view-types'
 
@@ -85,6 +87,8 @@ interface PullRequestDiffviewerProps {
   layout?: 'compact' | 'default'
 }
 
+const BLOCK_HEIGHT = '--block-height'
+
 const PullRequestDiffViewer = ({
   data,
   blocks,
@@ -123,27 +127,50 @@ const PullRequestDiffViewer = ({
   highlightRef.current = highlight
   const [diffFileInstance, setDiffFileInstance] = useState<DiffFile>()
   const overlayScrollbarsInstances = useRef<OverlayScrollbars[]>([])
-  const {
-    containerRef,
-    contentRef,
-    inView: isInView,
-    shouldRender
-  } = useInViewDiffRenderer({
-    rootMargin: '500px 0px 500px 0px'
-  })
+  const diffInstanceRef = useRef<HTMLDivElement | null>(null)
+  const [isInView, setIsInView] = useState(false)
   const [principalsMentionMap, setPrincipalsMentionMap] = useState<PrincipalsMentionMap>({})
   const { isLightTheme } = useTheme()
+
+  useEffect(() => {
+    const observer = new IntersectionObserver(
+      ([entry]) => {
+        setIsInView(entry.isIntersecting)
+      },
+      {
+        rootMargin: '1000px 0px 1000px 0px'
+      }
+    )
+    const currentRef = diffInstanceRef.current
+    if (currentRef) {
+      observer.observe(currentRef)
+    }
+    return () => {
+      if (currentRef) {
+        observer.unobserve(currentRef)
+      }
+    }
+  }, [])
+
+  useResizeObserver(
+    diffInstanceRef,
+    useCallback((dom: HTMLDivElement) => {
+      if (dom) {
+        // Store current height as CSS custom property for styling
+        dom.style.setProperty(BLOCK_HEIGHT, dom.clientHeight + 'px')
+      }
+    }, [])
+  )
 
   const cleanup = useCallback(() => {
     // clean up diff instance if it is not in view
     if (!isInView && diffFileInstance) {
-      const diffRect = contentRef?.current?.getBoundingClientRect()
       // check if diff is below viewport and collapse it, collapsing a diff on top of viewport impacts scroll position
-      if (diffRect?.top && diffRect?.top >= (window.innerHeight || document.documentElement.clientHeight)) {
+      if (diffInstanceRef?.current && !isInViewport(diffInstanceRef?.current, 2000)) {
         collapseDiff?.()
       }
     }
-  }, [diffFileInstance, isInView, collapseDiff, contentRef])
+  }, [diffFileInstance, isInView, collapseDiff, diffInstanceRef])
 
   // Use memory cleanup hook
   useMemoryCleanup(cleanup)
@@ -710,9 +737,9 @@ const PullRequestDiffViewer = ({
 
   return (
     <ExpandedCommentsContext.Provider value={contextValue}>
-      <div ref={containerRef} data-diff-file-path={fileName}>
-        {shouldRender && diffFileInstance && (
-          <div ref={contentRef}>
+      <div data-diff-file-path={fileName} ref={diffInstanceRef}>
+        {isInView && diffFileInstance && (
+          <>
             {/* eslint-disable-next-line @typescript-eslint/ban-ts-comment */}
             {/* @ts-ignore */}
             <ExtendedDiffView<Thread[]>
@@ -732,13 +759,9 @@ const PullRequestDiffViewer = ({
               scopeMultilineSelectionToOneHunk={scopeMultilineSelectionToOneHunk}
               scopeMultilineSelectionToOneBlockAndOneSide={scopeMultilineSelectionToOneBlockAndOneSide}
             />
-          </div>
+          </>
         )}
-        {!shouldRender && (
-          <div ref={contentRef} className="diff-viewer-placeholder">
-            {/* Placeholder content of the diff hunk is injected by useInViewDiffRenderer */}
-          </div>
-        )}
+        {!isInView && <DiffViewerSubstitute data={data} />}
       </div>
     </ExpandedCommentsContext.Provider>
   )

@@ -748,7 +748,9 @@ const PullRequestPanel = ({
               </ButtonLayout>
               {headerMsg && (
                 <div className="flex w-full justify-end">
-                  <span className="text-1 text-cn-danger">{headerMsg}</span>
+                  <Text variant="caption-normal" color="danger">
+                    {headerMsg}
+                  </Text>
                 </div>
               )}
             </Layout.Horizontal>

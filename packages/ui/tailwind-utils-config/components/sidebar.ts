@@ -167,6 +167,13 @@ export default {
       overflow: 'hidden',
       '@apply duration-150 transition-[max-width,margin-left,padding] ease-linear': '',
 
+      '&:hover': {
+        /**
+         * This is to override the parent default styles
+         */
+        textDecoration: 'none !important'
+      },
+
       '&-big': {
         maxWidth: '100%'
       },

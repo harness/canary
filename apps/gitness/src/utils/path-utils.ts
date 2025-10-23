@@ -33,6 +33,13 @@ export const decodeURIComponentIfValid = (path: string) => {
 export const removeTrailingSlash = (path: string) => path?.replace(/\/$/, '')
 export const removeLeadingSlash = (path: string) => path?.replace(/^\//, '')
 
+export const encodePath = (path: string) => {
+  return path
+    .split('~')
+    .map((part, index) => (index === 0 ? encodeURI(part) : encodeURI(encodeURI(part))))
+    .join('~')
+}
+
 export function getFileExtension(filename: string): string {
   const lastDotIndex = filename.lastIndexOf('.')
   if (lastDotIndex === -1) {

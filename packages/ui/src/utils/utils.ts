@@ -80,3 +80,18 @@ export function createPaginationLinks(xPrevPage: number, xNextPage: number, sear
 export function isPromise(obj: any): obj is Promise<any> {
   return obj instanceof Promise || (obj && typeof obj.then === 'function')
 }
+
+export const encodePath = (path: string) => {
+  return path
+    .split('~')
+    .map((part, index) => (index === 0 ? encodeURI(part) : encodeURI(encodeURI(part))))
+    .join('~')
+}
+
+export const decodeURIComponentIfValid = (path: string) => {
+  try {
+    return decodeURIComponent(path)
+  } catch {
+    return path
+  }
+}

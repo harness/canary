@@ -1,4 +1,4 @@
-import { useParams } from 'react-router-dom'
+import { useLocation, useParams } from 'react-router-dom'
 
 import { CodeModes } from '@harnessio/ui/views'
 
@@ -9,6 +9,7 @@ import { removeLeadingSlash, removeTrailingSlash } from '../utils/path-utils'
 
 const useCodePathDetails = () => {
   const params = useParams()
+  const location = useLocation()
   const subCodePath = params['*'] || ''
   const { branchId, tagId, commitSHA } = params
 
@@ -20,7 +21,8 @@ const useCodePathDetails = () => {
   })()
 
   // Split the restPath into gitRef and resourcePath
-  const [rawSubGitRef = '', rawResourcePath = ''] = restPath.split('~')
+  const rawSubGitRef = restPath.split('~')[0] ?? ''
+  const encodedRawResourcePath = location.pathname.split('~')[1]
 
   let effectiveGitRef = ''
   if (rawSubGitRef) {
@@ -35,7 +37,7 @@ const useCodePathDetails = () => {
 
   // Normalize values
   const fullGitRef = removeTrailingSlash(effectiveGitRef)
-  const fullResourcePath = removeLeadingSlash(rawResourcePath)
+  const fullResourcePath = removeLeadingSlash(encodedRawResourcePath)
 
   let gitRefName = ''
   if (isRefATag(fullGitRef)) {

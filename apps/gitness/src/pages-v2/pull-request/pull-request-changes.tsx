@@ -569,9 +569,10 @@ export default function PullRequestChanges() {
         commitSuggestionsBatchCount={suggestionsBatch?.length}
         onCommitSuggestionsBatch={onCommitSuggestionsBatch}
         onGetFullDiff={onGetFullDiff}
-        toRepoFileDetails={({ path }: { path: string }) =>
-          isMfe ? `/repos/${repoId}/${path}` : `/${spaceId}/repos/${repoId}/${path}`
-        }
+        toRepoFileDetails={({ path }: { path: string }) => {
+          const encodedPath = encodeURI(encodeURI(path))
+          return isMfe ? `/repos/${repoId}/${encodedPath}` : `/${spaceId}/repos/${repoId}/${encodedPath}`
+        }}
         isApproving={isApproving}
         currentRefForDiff={currentRefForDiff}
         initiatedJumpToDiff={initiatedJumpToDiff}

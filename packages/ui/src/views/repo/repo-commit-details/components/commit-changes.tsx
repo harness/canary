@@ -35,7 +35,7 @@ const LineTitle: FC<
   return (
     <div className="flex w-full max-w-full items-center gap-cn-xs">
       <Link
-        to={toRepoFileDetails?.({ path: `files/${commitSHA}/~/${text}` }) ?? ''}
+        to={toRepoFileDetails?.({ path: `files/${commitSHA}/~/${encodeURI(encodeURI(text))}` }) ?? ''}
         variant="secondary"
         className="min-w-0 break-all"
       >

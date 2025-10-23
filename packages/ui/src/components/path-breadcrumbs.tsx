@@ -2,6 +2,7 @@ import { ChangeEvent, Fragment } from 'react'
 
 import { Breadcrumb, CopyButton, Layout, Tag, Text, TextInput } from '@/components'
 import { useRouterContext } from '@/context'
+import { decodeURIComponentIfValid } from '@utils/utils'
 
 interface InputPathBreadcrumbItemProps {
   path: string
@@ -108,7 +109,7 @@ export const PathBreadcrumbs = ({ items, isEdit, isNew, ...props }: PathBreadcru
             <Fragment key={idx}>
               <Breadcrumb.Item>
                 <Breadcrumb.Link asChild>
-                  <Link to={parentPath}>{path}</Link>
+                  <Link to={parentPath}>{decodeURIComponentIfValid(decodeURIComponentIfValid(path))}</Link>
                 </Breadcrumb.Link>
               </Breadcrumb.Item>
               {idx < items.length - 1 && <Breadcrumb.Separator />}
@@ -126,7 +127,7 @@ export const PathBreadcrumbs = ({ items, isEdit, isNew, ...props }: PathBreadcru
           size="xs"
           name={items
             .slice(1)
-            .map(item => item.path)
+            .map(item => decodeURIComponentIfValid(decodeURIComponentIfValid(item.path)))
             .join('/')}
         />
       )}

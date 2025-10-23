@@ -11,7 +11,7 @@ import {
   MarkdownViewer,
   Tabs
 } from '@harnessio/ui/components'
-import { cn } from '@harnessio/ui/utils'
+import { cn, decodeURIComponentIfValid } from '@harnessio/ui/utils'
 import { monacoThemes, PathActionBar } from '@harnessio/ui/views'
 import { CodeDiffEditor, CodeEditor, CodeEditorProps } from '@harnessio/yaml-editor'
 
@@ -107,7 +107,11 @@ export const FileEditor: FC<FileEditorProps> = ({ repoDetails, defaultBranch, lo
     [pathToSplit, repoId, repoPath]
   )
 
-  const isUpdate = useMemo(() => fullResourcePath === fileResourcePath, [fullResourcePath, fileResourcePath])
+  const isUpdate = useMemo(
+    () => decodeURIComponentIfValid(decodeURIComponentIfValid(fullResourcePath)) === fileResourcePath,
+    [fullResourcePath, fileResourcePath]
+  )
+
   const commitAction = useMemo(
     () => (isNew ? GitCommitAction.CREATE : isUpdate ? GitCommitAction.UPDATE : GitCommitAction.MOVE),
     [isNew, isUpdate]

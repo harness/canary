@@ -10,7 +10,7 @@ import { decodeURIComponentIfValid } from './utils/path-utils'
 
 export const MFERouteRenderer: React.FC = () => {
   const { navigate, location } = useRouterContext()
-  const { renderUrl, parentLocationPath, onRouteChange } = useMFEContext()
+  const { renderUrl, parentLocationPath } = useMFEContext()
   const parentPath = parentLocationPath.replace(renderUrl, '')
 
   const filteredRedirectRoutes = extractRedirectRouteObjects(repoRoutes)
@@ -35,19 +35,28 @@ export const MFERouteRenderer: React.FC = () => {
     [isNotRedirectPath, location.pathname, parentPath, renderUrl]
   )
 
-  // Handle location change detected from parent route
+  //   // Handle location change detected from parent route
   useEffect(() => {
     if (canNavigate) {
-      navigate(decodeURIComponentIfValid(parentPath), { replace: true })
+      navigate(encodeURI(parentPath), { replace: true })
     }
   }, [parentPath])
 
-  // Notify parent about route change
-  useEffect(() => {
-    if (canNavigate) {
-      onRouteChange?.(decodeURIComponentIfValid(`${renderUrl}${location.pathname}${location.search}`))
-    }
-  }, [location.pathname])
+  //   // Notify parent about route change
+  // useEffect(() => {
+  //   if (canNavigate) {
+  //     try {
+  //       onRouteChange?.(
+  //         `${renderUrl}${location.pathname
+  //           .split('/')
+  //           .map(segment => encodeURIComponent(segment))
+  //           .join('/')}${location.search}`
+  //       )
+  //     } catch (e) {
+  //       console.error(e)
+  //     }
+  //   }
+  // }, [location.pathname])
 
   return null
 }

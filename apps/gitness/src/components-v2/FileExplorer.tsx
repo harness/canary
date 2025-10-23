@@ -90,7 +90,7 @@ export default function Explorer({ selectedBranch, repoDetails, isLoading: isLoa
     const sortedEntries = sortEntriesByType(entries)
     return sortedEntries.map((item, idx) => {
       const itemPath = parentPath ? `${parentPath}/${item.name}` : item.name
-      const fullPath = `${routes.toRepoFiles({ spaceId, repoId })}/${fullGitRef || selectedBranch}/~/${itemPath}`
+      const fullPath = `${routes.toRepoFiles({ spaceId, repoId })}/${fullGitRef || selectedBranch}/~/${itemPath && encodeURI(encodeURI(itemPath))}`
       const level = (itemPath ?? '').split('/').length - 1
 
       if (item.type === 'file') {

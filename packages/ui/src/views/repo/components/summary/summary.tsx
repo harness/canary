@@ -2,6 +2,7 @@ import { useCallback, useEffect, useRef } from 'react'
 
 import { IconV2, Skeleton, Table, Text, TimeAgoCard } from '@/components'
 import { useTranslation } from '@/context'
+import { encodePath } from '@/utils'
 import { FileStatus, LatestFileTypes, RepoFile, SummaryItemType } from '@/views'
 import { FileLastChangeBar } from '@views/repo/components'
 
@@ -127,7 +128,11 @@ export const Summary = ({
           {files.map(file => (
             <Table.Row
               key={file.id}
-              to={toRepoFileDetails?.({ path: file.path }) ?? ''}
+              to={
+                toRepoFileDetails?.({
+                  path: encodePath(file.path)
+                }) ?? ''
+              }
               data-file-id={file.id}
               ref={element => setTableRowRef(element, file.id)}
             >

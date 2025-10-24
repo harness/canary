@@ -3,11 +3,7 @@ import { NavbarItemType } from '@components/app-sidebar'
 const RECENT_KEY = 'nav_recent_menu'
 const PINNED_KEY = 'nav_pinned_menu'
 
-const mockPinnedItems: NavbarItemType[] = [
-  { title: 'Home', to: '/', id: '1', iconName: 'account' },
-  { title: 'Repositories', to: '/', id: '1', iconName: 'account' },
-  { title: 'Activity', to: '/settings', id: '2', iconName: 'settings' }
-]
+const mockPinnedItems: NavbarItemType[] = [{ title: 'Repositories', to: '/', id: '1', iconName: 'account' }]
 
 const mockRecentItems: NavbarItemType[] = [
   { title: 'Connectors', to: '/connectors', id: '2', iconName: 'connectors' },

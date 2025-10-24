@@ -3164,7 +3164,7 @@ export const commitDetailsStore: ICommitDetailsStore = {
             },
             {
               content:
-                '     <span className="absolute left-2 flex size-4 items-center justify-center rounded-full border border-icons-1">',
+                '     <span className="absolute left-cn-xs flex size-4 items-center justify-center rounded-full border border-icons-1">',
               type: 'context',
               oldNumber: 151,
               newNumber: 151
@@ -3225,7 +3225,7 @@ export const commitDetailsStore: ICommitDetailsStore = {
       contentId: 'content-packages/ui/src/components/dropdown-menu.tsx::::packages/ui/src/components/dropdown-menu.tsx',
       fileId: 'packages/ui/src/components/dropdown-menu.tsx::::packages/ui/src/components/dropdown-menu.tsx',
       filePath: 'packages/ui/src/components/dropdown-menu.tsx',
-      raw: 'diff --git a/packages/ui/src/components/dropdown-menu.tsx b/packages/ui/src/components/dropdown-menu.tsx\nindex b5476fe12dfc08aeb6c1478d4ca77c46b4263490..651d2b8a9c79fc3dbc8bae8dd60f039e14cf83bb 100644\n--- a/packages/ui/src/components/dropdown-menu.tsx\n+++ b/packages/ui/src/components/dropdown-menu.tsx\n@@ -150,7 +150,7 @@ const DropdownMenuRadioItem = React.forwardRef<\n   >\n     <span className="absolute left-2 flex size-4 items-center justify-center rounded-full border border-icons-1">\n       <DropdownMenuPrimitive.ItemIndicator>\n-        <span className="size-2 rounded-full block" />\n+        <span className="block size-2 rounded-full" />\n       </DropdownMenuPrimitive.ItemIndicator>\n     </span>\n     {children}\n'
+      raw: 'diff --git a/packages/ui/src/components/dropdown-menu.tsx b/packages/ui/src/components/dropdown-menu.tsx\nindex b5476fe12dfc08aeb6c1478d4ca77c46b4263490..651d2b8a9c79fc3dbc8bae8dd60f039e14cf83bb 100644\n--- a/packages/ui/src/components/dropdown-menu.tsx\n+++ b/packages/ui/src/components/dropdown-menu.tsx\n@@ -150,7 +150,7 @@ const DropdownMenuRadioItem = React.forwardRef<\n   >\n     <span className="absolute left-cn-xs flex size-4 items-center justify-center rounded-full border border-icons-1">\n       <DropdownMenuPrimitive.ItemIndicator>\n-        <span className="size-2 rounded-full block" />\n+        <span className="block size-2 rounded-full" />\n       </DropdownMenuPrimitive.ItemIndicator>\n     </span>\n     {children}\n'
     },
     {
       blocks: [
@@ -3862,7 +3862,7 @@ export const commitDetailsStore: ICommitDetailsStore = {
               newNumber: 50
             },
             {
-              content: '     <div className="flex flex-col gap-y-4">',
+              content: '     <div className="flex flex-col gap-y-cn-md">',
               type: 'context',
               oldNumber: 51,
               newNumber: 51

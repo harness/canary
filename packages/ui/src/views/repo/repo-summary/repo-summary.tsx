@@ -335,7 +335,7 @@ export function RepoSummaryView({
                       icon: 'plus',
                       to: getReadmeCreationPath()
                     }}
-                    className="!py-cn-xs !gap-cn-3xs [&_.gap-xl]:!gap-cn-xs [&_.py-cn-4xl]:!py-cn-xs"
+                    className="!py-cn-xs !gap-cn-3xs [&_.py-cn-4xl]:!py-cn-xs"
                   />
                 </StackedList.Item>
               </StackedList.Root>

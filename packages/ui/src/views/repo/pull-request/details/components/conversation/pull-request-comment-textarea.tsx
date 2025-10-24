@@ -159,7 +159,7 @@ export const PullRequestCommentTextarea = forwardRef<HTMLTextAreaElement, PullRe
       if (isPrincipalsLoading) {
         return (
           <Command.Loading className="min-w-52 px-cn-xs py-cn-md text-cn-3">
-            <div className="grid place-content-center space-x-2">
+            <div className="grid place-content-center space-x-cn-xs">
               <IconV2 className="animate-spin" name="loader" />
             </div>
           </Command.Loading>

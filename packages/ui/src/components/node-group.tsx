@@ -65,7 +65,10 @@ function Content({ children, className }: { children: ReactNode; className?: str
 
 function Connector({ className }: { className?: string }) {
   return (
-    <div className={cn('absolute bottom-0 left-[4px] top-5 z-10 w-1 border-l border-cn-3', className)} data-connector />
+    <div
+      className={cn('absolute bottom-0 left-cn-3xs top-cn-lg z-10 w-1 border-l border-cn-3', className)}
+      data-connector
+    />
   )
 }
 

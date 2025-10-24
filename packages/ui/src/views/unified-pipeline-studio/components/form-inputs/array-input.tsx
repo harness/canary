@@ -65,7 +65,7 @@ function ArrayFormInputInternal(props: ArrayFormInputProps): JSX.Element {
           <div className="flex flex-col">
             <div>
               {fields.map((item, idx) => (
-                <div key={item.id} className="flex items-end space-x-2">
+                <div key={item.id} className="flex items-end space-x-cn-xs">
                   {inputConfig?.input && (
                     <RenderInputs items={getChildInputs(inputConfig?.input, path, idx)} factory={factory} />
                   )}

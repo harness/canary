@@ -313,7 +313,7 @@ const MarkdownViewerLocal = ({
                   )}
                 >
                   <CopyButton
-                    className="absolute right-3 top-3 z-10"
+                    className="absolute right-cn-sm top-cn-sm z-10"
                     buttonVariant="outline"
                     name={code}
                     iconSize="xs"

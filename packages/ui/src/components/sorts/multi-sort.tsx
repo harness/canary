@@ -167,7 +167,7 @@ export default function MultiSort() {
             items={sortSelections.map((_, index) => getItemId(index))}
             strategy={verticalListSortingStrategy}
           >
-            <div className="flex flex-col gap-y-2.5">
+            <div className="flex flex-col gap-y-cn-xs">
               {sortSelections.map((sort, index) => {
                 const itemOption = sortOptions.find(option => option.value === sort.type)
                 if (!itemOption) return null

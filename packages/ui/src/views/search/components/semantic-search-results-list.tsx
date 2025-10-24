@@ -53,7 +53,7 @@ export const SemanticSearchResultsList: FC<SemanticSearchResultsListProps> = ({
       )
     }
     return (
-      <div className={cn('flex flex-col items-center justify-center py-12')}>
+      <div className={cn('flex flex-col items-center justify-center py-cn-3xl')}>
         <Text variant="heading-section">
           {isDirtyList
             ? t('views:search.noResultsFound', 'No search results found')

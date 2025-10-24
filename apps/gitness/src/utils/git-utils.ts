@@ -139,18 +139,21 @@ export function formatBytes(bytes: number, decimals = 2) {
 }
 
 export const decodeGitContent = (content = '') => {
+  if (!content) return ''
   try {
-    // Decode base64 content for text file
     return decodeURIComponent(escape(window.atob(content)))
-  } catch (_exception) {
-    try {
-      // Return original base64 content for binary file
-      return content
-    } catch (exception) {
-      console.error(exception)
-    }
+  } catch (error) {
+    console.error('Legacy decoding failed:', error)
   }
-  return ''
+
+  // Fallback to direct atob if legacy decoding fails
+  try {
+    return window.atob(content)
+  } catch (error) {
+    console.error('Direct atob failed:', error)
+  }
+
+  return content
 }
 
 export const filenameToLanguage = (name?: string): string | undefined => {

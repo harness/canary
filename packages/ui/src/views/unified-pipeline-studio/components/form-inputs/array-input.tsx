@@ -4,7 +4,7 @@ import { Button } from '@components/button'
 import { IconV2 } from '@components/icon-v2'
 
 import {
-  AnyFormikValue,
+  AnyFormValue,
   Controller,
   IInputDefinition,
   InputComponent,
@@ -21,15 +21,14 @@ import { RuntimeInputConfig } from './types/types'
 
 export type UIInputWithConfigsForArray = Omit<IInputDefinition, 'path'>
 
-export interface ArrayFormInputConfig {
-  inputType: 'array'
-  inputConfig: {
-    input: IInputDefinition
-    tooltip?: string
-  } & RuntimeInputConfig
+export interface ArrayFormInputConfig extends RuntimeInputConfig {
+  input: IInputDefinition
+  tooltip?: string
 }
 
-type ArrayFormInputProps = InputProps<AnyFormikValue, ArrayFormInputConfig>
+export type ArrayFormInputDefinition = IInputDefinition<ArrayFormInputConfig, AnyFormValue, 'array'>
+
+type ArrayFormInputProps = InputProps<AnyFormValue, ArrayFormInputConfig>
 
 function ArrayFormInputInternal(props: ArrayFormInputProps): JSX.Element {
   const { readonly, path, input, factory } = props
@@ -99,7 +98,7 @@ function ArrayFormInputInternal(props: ArrayFormInputProps): JSX.Element {
   )
 }
 
-export class ArrayFormInput extends InputComponent<AnyFormikValue> {
+export class ArrayFormInput extends InputComponent<AnyFormValue> {
   public internalType = 'array'
 
   renderComponent(props: ArrayFormInputProps): JSX.Element {

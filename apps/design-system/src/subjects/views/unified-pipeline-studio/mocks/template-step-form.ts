@@ -1,6 +1,6 @@
-import { IInputConfigWithConfig } from '@harnessio/ui/views'
+import { InputDefinition } from '@harnessio/ui/views'
 
-const inputs: IInputConfigWithConfig[] = [
+const inputs: InputDefinition[] = [
   {
     inputType: 'text',
     path: `template.with.testpath1`,

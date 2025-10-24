@@ -1,6 +1,6 @@
 import { CardSelect } from '@components/index'
 
-import { InputComponent, InputProps, useController, type AnyFormikValue } from '@harnessio/forms'
+import { IInputDefinition, InputComponent, InputProps, useController, type AnyFormValue } from '@harnessio/forms'
 
 import { InputLabel, InputWrapper } from './common'
 import { InputCaption } from './common/InputCaption'
@@ -14,15 +14,14 @@ export interface CardOption {
   title: string
 }
 
-export interface CardsFormInputConfig {
-  inputType: 'cards'
-  inputConfig: {
-    options: CardOption[]
-    tooltip?: string
-  } & RuntimeInputConfig
+export interface CardsFormInputConfig extends RuntimeInputConfig {
+  options: CardOption[]
+  tooltip?: string
 }
 
-type CardsFormInputProps = InputProps<AnyFormikValue, CardsFormInputConfig>
+export type CardsFormInputDefinition = IInputDefinition<CardsFormInputConfig, AnyFormValue, 'cards'>
+
+type CardsFormInputProps = InputProps<AnyFormValue, CardsFormInputConfig>
 
 function CardsFormInputInternal(props: CardsFormInputProps): JSX.Element {
   const { path, input } = props
@@ -50,7 +49,7 @@ function CardsFormInputInternal(props: CardsFormInputProps): JSX.Element {
   )
 }
 
-export class CardsFormInput extends InputComponent<AnyFormikValue> {
+export class CardsFormInput extends InputComponent<AnyFormValue> {
   public internalType = 'cards'
 
   renderComponent(props: CardsFormInputProps): JSX.Element {

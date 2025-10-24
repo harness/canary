@@ -3,20 +3,26 @@ import { useEffect, useState } from 'react'
 import { Accordion, FormCaption, IconV2, Layout } from '@components/index'
 import { get } from 'lodash-es'
 
-import { InputComponent, InputProps, RenderInputs, useFormContext, type AnyFormikValue } from '@harnessio/forms'
+import {
+  IInputDefinition,
+  InputComponent,
+  InputProps,
+  RenderInputs,
+  useFormContext,
+  type AnyFormValue
+} from '@harnessio/forms'
 
 import { InputLabel } from './common/InputLabel'
 
 export interface GroupFormInputConfig {
-  inputType: 'group'
-  inputConfig?: {
-    autoExpandGroups?: boolean
-    /** defines behavior if error is present in any child input */
-    showWarning?: 'never' | 'always' | 'closed'
-  }
+  autoExpandGroups?: boolean
+  /** defines behavior if error is present in any child input */
+  showWarning?: 'never' | 'always' | 'closed'
 }
 
-function GroupFormInputInternal(props: InputProps<AnyFormikValue, GroupFormInputConfig>): JSX.Element {
+export type GroupFormInputDefinition = IInputDefinition<GroupFormInputConfig, AnyFormValue, 'group'>
+
+function GroupFormInputInternal(props: InputProps<AnyFormValue, GroupFormInputConfig>): JSX.Element {
   const { input, factory, path } = props
   const { label = '', inputs = [], required, description, inputConfig = {} } = input
   const { showWarning = 'closed', autoExpandGroups } = inputConfig
@@ -79,10 +85,10 @@ function GroupFormInputInternal(props: InputProps<AnyFormikValue, GroupFormInput
   )
 }
 
-export class GroupFormInput extends InputComponent<AnyFormikValue> {
+export class GroupFormInput extends InputComponent<AnyFormValue> {
   public internalType = 'group'
 
-  renderComponent(props: InputProps<AnyFormikValue, GroupFormInputConfig>): JSX.Element {
+  renderComponent(props: InputProps<AnyFormValue, GroupFormInputConfig>): JSX.Element {
     return <GroupFormInputInternal {...props} />
   }
 }

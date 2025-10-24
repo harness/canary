@@ -1,17 +1,17 @@
 import { InputFactory } from '@harnessio/forms'
 
-import { AccordionFormInput } from '../accordion-form-input'
-import { ArrayFormInput } from '../array-input'
-import { BooleanFormInput } from '../boolean-form-input'
-import { CalendarInput } from '../calendar-form-input'
-import { CardsFormInput } from '../cards-form-input'
-import { GroupFormInput } from '../group-form-input'
-import { ListFormInput } from '../list-form-input'
-import { NumberFormInput } from '../number-form-input'
-import { SelectFormInput } from '../select-form-input'
-import { SeparatorFormInput } from '../separator-form-input'
-import { TextFormInput } from '../text-form-input'
-import { TextareaFormInput } from '../textarea-form-input'
+import { AccordionFormInput, AccordionFormInputDefinition } from '../accordion-form-input'
+import { ArrayFormInput, ArrayFormInputDefinition } from '../array-input'
+import { BooleanFormInput, BooleanFormInputDefinition } from '../boolean-form-input'
+import { CalendarFormInputDefinition, CalendarInput } from '../calendar-form-input'
+import { CardsFormInput, CardsFormInputDefinition } from '../cards-form-input'
+import { GroupFormInput, GroupFormInputDefinition } from '../group-form-input'
+import { ListFormInput, ListFormInputDefinition } from '../list-form-input'
+import { NumberFormInput, NumberFormInputDefinition } from '../number-form-input'
+import { SelectFormInput, SelectFormInputDefinition } from '../select-form-input'
+import { SeparatorFormInput, SeparatorFormInputDefinition } from '../separator-form-input'
+import { TextFormInput, TextFormInputDefinition } from '../text-form-input'
+import { TextareaFormInput, TextareaFormInputDefinition } from '../textarea-form-input'
 
 const inputComponentFactory = new InputFactory()
 inputComponentFactory.registerComponent(new TextFormInput())
@@ -27,4 +27,19 @@ inputComponentFactory.registerComponent(new CardsFormInput())
 inputComponentFactory.registerComponent(new CalendarInput())
 inputComponentFactory.registerComponent(new AccordionFormInput())
 
+type InputDefinition =
+  | TextFormInputDefinition
+  | TextareaFormInputDefinition
+  | SeparatorFormInputDefinition
+  | SelectFormInputDefinition
+  | NumberFormInputDefinition
+  | ListFormInputDefinition
+  | GroupFormInputDefinition
+  | CardsFormInputDefinition
+  | CalendarFormInputDefinition
+  | BooleanFormInputDefinition
+  | ArrayFormInputDefinition
+  | AccordionFormInputDefinition
+
 export { inputComponentFactory }
+export type { InputDefinition }

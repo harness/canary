@@ -5,10 +5,9 @@ import {
   unsetEmptyStringOutputTransformer
 } from '@harnessio/forms'
 
-import { InputConfigType } from '../../form-inputs'
-import { IInputConfigWithConfig } from '../../steps/types'
+import { InputDefinition } from '../../form-inputs/factory/factory'
 
-const inputs: IInputConfigWithConfig[] = [
+const inputs: InputDefinition[] = [
   {
     inputType: 'accordion',
     path: '',
@@ -72,6 +71,6 @@ const inputs: IInputConfigWithConfig[] = [
 ]
 
 // NOTE: basic implementation of stage form for open source
-export const basicStageFormDefinition: IFormDefinition<InputConfigType> = {
+export const basicStageFormDefinition: IFormDefinition<InputDefinition> = {
   inputs
 }

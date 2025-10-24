@@ -2,7 +2,7 @@ import { JSX, useEffect, useMemo, useState } from 'react'
 
 import { get } from 'lodash-es'
 
-import { AnyFormikValue, InputComponent, InputProps, RenderInputs, useFormContext } from '../../../../src'
+import { AnyFormValue, InputComponent, InputProps, RenderInputs, useFormContext } from '../../../../src'
 import InputLabel from './common/input-label'
 import { InputType } from './common/types'
 
@@ -10,7 +10,7 @@ export interface GroupInputConfig {
   inputType: InputType.group
 }
 
-function GroupFormInputInternal(props: InputProps<AnyFormikValue>): JSX.Element {
+function GroupFormInputInternal(props: InputProps<AnyFormValue>): JSX.Element {
   const { input, factory, path } = props
   const { label = '', inputs = [], required } = input
 
@@ -62,10 +62,10 @@ function GroupFormInputInternal(props: InputProps<AnyFormikValue>): JSX.Element 
   )
 }
 
-export class GroupInput extends InputComponent<AnyFormikValue> {
+export class GroupInput extends InputComponent<AnyFormValue> {
   public internalType = InputType.group
 
-  renderComponent(props: InputProps<AnyFormikValue>): JSX.Element {
+  renderComponent(props: InputProps<AnyFormValue>): JSX.Element {
     return <GroupFormInputInternal {...props} />
   }
 }

@@ -1,16 +1,16 @@
 import { useRef, useState } from 'react'
 
-import { AnyFormikValue, InputProps, useController } from '../../../../../src'
+import { AnyFormValue, InputProps, useController } from '../../../../../src'
 import InputValueTypeSelection from '../../../examples/runtime-example/components/input-value-type-selector'
 import {
   constructRuntimeInputValue,
   extractRuntimeInputName,
   getInputValueType
 } from '../../../examples/runtime-example/utils/input-value-utils'
-import { InputError } from './input-errror'
+import { InputError } from './input-error'
 import InputLabel from './input-label'
 
-export interface InputWrapperProps extends InputProps<AnyFormikValue> {
+export interface InputWrapperProps extends InputProps<AnyFormValue> {
   children: JSX.Element | JSX.Element[]
   preserveFixedValue?: boolean
   defaultEmptyValue?: any

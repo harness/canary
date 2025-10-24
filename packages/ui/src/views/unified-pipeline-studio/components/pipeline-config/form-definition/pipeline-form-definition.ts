@@ -1,9 +1,8 @@
 import { IFormDefinition, unsetEmptyStringOutputTransformer } from '@harnessio/forms'
 
-import { InputConfigType } from '../../form-inputs'
-import { IInputConfigWithConfig } from '../../steps/types'
+import { InputDefinition } from '../../form-inputs/factory/factory'
 
-const inputs: IInputConfigWithConfig[] = [
+const inputs: InputDefinition[] = [
   {
     inputType: 'text',
     path: 'name',
@@ -19,6 +18,6 @@ const inputs: IInputConfigWithConfig[] = [
 ]
 
 // NOTE: basic implementation of pipeline form for open source
-export const basicPipelineFormDefinition: IFormDefinition<InputConfigType> = {
+export const basicPipelineFormDefinition: IFormDefinition<InputDefinition> = {
   inputs
 }

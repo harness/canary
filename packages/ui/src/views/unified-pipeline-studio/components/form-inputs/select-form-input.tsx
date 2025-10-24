@@ -2,7 +2,14 @@ import { useEffect, useMemo } from 'react'
 
 import { Select } from '@components/form-primitives'
 
-import { InputComponent, InputProps, useController, useFormContext, type AnyFormikValue } from '@harnessio/forms'
+import {
+  IInputDefinition,
+  InputComponent,
+  InputProps,
+  useController,
+  useFormContext,
+  type AnyFormValue
+} from '@harnessio/forms'
 
 import { InputWrapper } from './common/InputWrapper'
 import { RuntimeInputConfig } from './types/types'
@@ -12,17 +19,16 @@ export interface SelectOption {
   value: string
 }
 
-export interface SelectFormInputConfig {
-  inputType: 'select'
-  inputConfig: {
-    options: SelectOption[]
-    tooltip?: string
-    isDisabled?: (values: AnyFormikValue) => boolean
-    disabledValue?: string
-  } & RuntimeInputConfig
+export interface SelectFormInputConfig extends RuntimeInputConfig {
+  options: SelectOption[]
+  tooltip?: string
+  isDisabled?: (values: AnyFormValue) => boolean
+  disabledValue?: string
 }
 
-type SelectFormInputProps = InputProps<AnyFormikValue, SelectFormInputConfig>
+export type SelectFormInputDefinition = IInputDefinition<SelectFormInputConfig, AnyFormValue, 'select'>
+
+type SelectFormInputProps = InputProps<AnyFormValue, SelectFormInputConfig>
 
 function SelectFormInputInternal(props: SelectFormInputProps): JSX.Element {
   const { path, input } = props
@@ -67,7 +73,7 @@ function SelectFormInputInternal(props: SelectFormInputProps): JSX.Element {
   )
 }
 
-export class SelectFormInput extends InputComponent<AnyFormikValue> {
+export class SelectFormInput extends InputComponent<AnyFormValue> {
   public internalType = 'select'
 
   renderComponent(props: SelectFormInputProps): JSX.Element {

@@ -1,11 +1,11 @@
 import { IFormDefinition, unsetEmptyStringOutputTransformer } from '@harnessio/forms'
 
-import { InputConfigType } from '../form-inputs/types'
-import { IInputConfigWithConfig, QUEUE_STEP_IDENTIFIER } from './types'
+import { InputDefinition } from '../form-inputs/factory/factory'
+import { QUEUE_STEP_IDENTIFIER } from './types'
 
 export const QUEUE_STEP_DESCRIPTION = 'Queue step description.'
 
-const inputs: IInputConfigWithConfig[] = [
+const inputs: InputDefinition[] = [
   {
     inputType: 'text',
     path: `${QUEUE_STEP_IDENTIFIER}.key`,
@@ -26,6 +26,6 @@ const inputs: IInputConfigWithConfig[] = [
   }
 ]
 
-export const queueStepFormDefinition: IFormDefinition<InputConfigType> = {
+export const queueStepFormDefinition: IFormDefinition<InputDefinition> = {
   inputs
 }

@@ -8,21 +8,16 @@ import {
   unsetEmptyStringOutputTransformer
 } from '@harnessio/forms'
 
-import { InputConfigType } from '../form-inputs/types'
+import { InputDefinition } from '../form-inputs/factory/factory'
 import { getContainerPartial } from './partials/container-partial'
-import {
-  BACKGROUND_STEP_IDENTIFIER,
-  IInputConfigWithConfig,
-  RUN_STEP_IDENTIFIER,
-  RUN_TEST_STEP_IDENTIFIER
-} from './types'
+import { BACKGROUND_STEP_IDENTIFIER, RUN_STEP_IDENTIFIER, RUN_TEST_STEP_IDENTIFIER } from './types'
 
 export type RUN_STEP_FAMILY =
   | typeof RUN_STEP_IDENTIFIER
   | typeof RUN_TEST_STEP_IDENTIFIER
   | typeof BACKGROUND_STEP_IDENTIFIER
 
-const getInputs = (propertyName: RUN_STEP_FAMILY): IInputConfigWithConfig[] => [
+const getInputs = (propertyName: RUN_STEP_FAMILY): InputDefinition[] => [
   {
     inputType: 'select',
     path: `${propertyName}.shell`,
@@ -109,6 +104,6 @@ const getInputs = (propertyName: RUN_STEP_FAMILY): IInputConfigWithConfig[] => [
   }
 ]
 
-export const getRunStepFormDefinition = (propertyName: RUN_STEP_FAMILY): IFormDefinition<InputConfigType> => {
+export const getRunStepFormDefinition = (propertyName: RUN_STEP_FAMILY): IFormDefinition<InputDefinition> => {
   return { inputs: getInputs(propertyName) }
 }

@@ -1,7 +1,7 @@
 import { get, isArray, isEmpty, isObject, isUndefined, merge, set } from 'lodash-es'
 import * as zod from 'zod'
 
-import type { AnyFormikValue, IFormDefinition, IGlobalValidationConfig, IInputDefinition } from '../../types/types'
+import type { AnyFormValue, IFormDefinition, IGlobalValidationConfig, IInputDefinition } from '../../types/types'
 
 const REQUIRED_MESSAGE = 'Required field'
 
@@ -53,13 +53,13 @@ export interface IGetValidationSchemaOptions<T = any> {
   validationConfig?: IGlobalValidationConfig
   // TODO: check this
   utils?: {
-    getValuesWithDependencies?: (values: AnyFormikValue, input: IInputDefinition) => AnyFormikValue
+    getValuesWithDependencies?: (values: AnyFormValue, input: IInputDefinition) => AnyFormValue
   }
 }
 
 export function getValidationSchema<T = any>(
   inputs: IFormDefinition,
-  values: AnyFormikValue,
+  values: AnyFormValue,
   options?: IGetValidationSchemaOptions<T>
 ): zod.ZodObject<zod.ZodRawShape> {
   let schemaTreeNode: SchemaTreeNode = {}
@@ -84,7 +84,7 @@ export function getValidationSchema<T = any>(
   return schema
 }
 
-function generateSchemaRec(schemaObj: SchemaTreeNode, values: AnyFormikValue, options?: IGetValidationSchemaOptions) {
+function generateSchemaRec(schemaObj: SchemaTreeNode, values: AnyFormValue, options?: IGetValidationSchemaOptions) {
   const objectSchemas: { [key: string]: zod.Schema<unknown> } = {}
 
   Object.keys(schemaObj).forEach(key => {
@@ -196,7 +196,7 @@ function getSchemaForPrimitive(
 function getSchemaForArray(
   schema: zod.ZodType<unknown> | ((values: any) => zod.ZodType<unknown>) | undefined,
   input: IInputDefinition,
-  values: AnyFormikValue,
+  values: AnyFormValue,
   options?: IGetValidationSchemaOptions,
   arraySchema?: zod.ZodTypeAny
 ) {
@@ -271,10 +271,10 @@ function getSchemaForArray(
 function populateSchemaTreeRec<T = any>(
   schemaObj: SchemaTreeNode,
   inputsArr: IInputDefinition[],
-  values: AnyFormikValue,
+  values: AnyFormValue,
   options?: IGetValidationSchemaOptions<T>,
   utils?: {
-    getValuesWithDependencies?: (values: AnyFormikValue, input: IInputDefinition) => AnyFormikValue
+    getValuesWithDependencies?: (values: AnyFormValue, input: IInputDefinition) => AnyFormValue
   }
 ): void {
   inputsArr.forEach(input => {

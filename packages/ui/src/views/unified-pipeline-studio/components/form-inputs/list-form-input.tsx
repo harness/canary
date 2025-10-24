@@ -4,7 +4,7 @@ import { Button } from '@components/button'
 import { IconV2 } from '@components/icon-v2'
 
 import {
-  AnyFormikValue,
+  AnyFormValue,
   Controller,
   IInputDefinition,
   InputComponent,
@@ -23,16 +23,15 @@ export type UIInputWithConfigsForList<T = unknown> = Omit<IInputDefinition<T>, '
   relativePath: string
 }
 
-export interface ListFormInputConfig {
-  inputType: 'list'
-  inputConfig: {
-    inputs: UIInputWithConfigsForList[]
-    layout?: 'grid' | 'default'
-    tooltip?: string
-  } & RuntimeInputConfig
+export interface ListFormInputConfig extends RuntimeInputConfig {
+  inputs: UIInputWithConfigsForList[]
+  layout?: 'grid' | 'default'
+  tooltip?: string
 }
 
-type ListFormInputProps = InputProps<AnyFormikValue, ListFormInputConfig>
+export type ListFormInputDefinition = IInputDefinition<ListFormInputConfig, AnyFormValue, 'list'>
+
+type ListFormInputProps = InputProps<AnyFormValue, ListFormInputConfig>
 
 function ListFormInputInternal(props: ListFormInputProps): JSX.Element {
   const { readonly, path, input, factory } = props
@@ -126,7 +125,7 @@ function ListFormInputInternal(props: ListFormInputProps): JSX.Element {
   )
 }
 
-export class ListFormInput extends InputComponent<AnyFormikValue> {
+export class ListFormInput extends InputComponent<AnyFormValue> {
   public internalType = 'list'
 
   renderComponent(props: ListFormInputProps): JSX.Element {

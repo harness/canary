@@ -1,9 +1,9 @@
 import { IFormDefinition } from '@harnessio/forms'
 
-import { InputConfigType } from '../../form-inputs/types'
+import { InputDefinition } from '../../form-inputs/factory/factory'
 
 export type HarnessStepGroup = {
   identifier: string
   description: string
-  formDefinition: IFormDefinition<InputConfigType>
+  formDefinition: IFormDefinition<InputDefinition>
 }

@@ -1,9 +1,9 @@
 import { get, set } from 'lodash-es'
 
-import type { AnyFormikValue, IFormDefinition, IInputDefinition } from '../../types/types'
+import type { AnyFormValue, IFormDefinition, IInputDefinition } from '../../types/types'
 
-export const getDefaultValuesFromFormDefinition = (formDef: IFormDefinition): AnyFormikValue => {
-  const defaultValues: AnyFormikValue = {}
+export const getDefaultValuesFromFormDefinition = (formDef: IFormDefinition): AnyFormValue => {
+  const defaultValues: AnyFormValue = {}
 
   const populateDefaults = (inputs: IInputDefinition[]) => {
     inputs.forEach(input => {

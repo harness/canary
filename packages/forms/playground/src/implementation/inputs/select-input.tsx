@@ -1,5 +1,5 @@
-import { AnyFormikValue, InputComponent, InputProps, useController } from '../../../../src'
-import { InputError } from './common/input-errror'
+import { AnyFormValue, InputComponent, InputProps, useController } from '../../../../src'
+import { InputError } from './common/input-error'
 import InputLabel from './common/input-label'
 import InputWrapper from './common/input-wrapper'
 import { InputType } from './common/types'
@@ -15,7 +15,7 @@ export interface SelectInputConfig {
     options: SelectOption[]
   }
 }
-function SelectInputInternal(props: InputProps<AnyFormikValue, SelectInputConfig>): JSX.Element {
+function SelectInputInternal(props: InputProps<AnyFormValue, SelectInputConfig>): JSX.Element {
   const { path, input } = props
   const { label = '', required, inputConfig } = input
 
@@ -41,10 +41,10 @@ function SelectInputInternal(props: InputProps<AnyFormikValue, SelectInputConfig
   )
 }
 
-export class SelectInput extends InputComponent<AnyFormikValue> {
+export class SelectInput extends InputComponent<AnyFormValue> {
   public internalType = InputType.select
 
-  renderComponent(props: InputProps<AnyFormikValue, SelectInputConfig>): JSX.Element {
+  renderComponent(props: InputProps<AnyFormValue, SelectInputConfig>): JSX.Element {
     return <SelectInputInternal {...props} />
   }
 }

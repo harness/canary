@@ -1,8 +1,8 @@
-import type { AnyFormikValue } from '../../types/types'
+import type { AnyFormValue } from '../../types/types'
 import { InputComponent, InputProps } from '../components/InputComponent'
 import { InputFactory, InputOverrideError } from './InputFactory'
 
-class TestInputComponent extends InputComponent<AnyFormikValue> {
+class TestInputComponent extends InputComponent<AnyFormValue> {
   public internalType = 'test-input'
 
   renderComponent(_props: InputProps<any, { inputConfig?: unknown }>): JSX.Element {

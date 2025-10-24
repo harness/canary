@@ -1,19 +1,16 @@
 import { Switch } from '@components/switch'
 
-import { InputComponent, InputProps, useController, type AnyFormikValue } from '@harnessio/forms'
+import { IInputDefinition, InputComponent, InputProps, useController, type AnyFormValue } from '@harnessio/forms'
 
 import { InputCaption } from './common/InputCaption'
 import { InputWrapper } from './common/InputWrapper'
 import { RuntimeInputConfig } from './types/types'
 
-export interface BooleanFormInputConfig {
-  inputType: 'boolean'
-  inputConfig?: {
-    tooltip?: string
-  } & RuntimeInputConfig
-}
+export type BooleanFormInputConfig = RuntimeInputConfig
 
-type BooleanFormInputProps = InputProps<AnyFormikValue, BooleanFormInputConfig>
+export type BooleanFormInputDefinition = IInputDefinition<BooleanFormInputConfig, AnyFormValue, 'boolean'>
+
+type BooleanFormInputProps = InputProps<AnyFormValue, BooleanFormInputConfig>
 
 function BooleanFormInputInternal(props: BooleanFormInputProps): JSX.Element {
   const { readonly, path, input } = props
@@ -40,7 +37,7 @@ function BooleanFormInputInternal(props: BooleanFormInputProps): JSX.Element {
   )
 }
 
-export class BooleanFormInput extends InputComponent<AnyFormikValue> {
+export class BooleanFormInput extends InputComponent<AnyFormValue> {
   public internalType = 'boolean'
 
   renderComponent(props: BooleanFormInputProps): JSX.Element {

@@ -8,9 +8,9 @@ import {
   unsetEmptyStringOutputTransformer
 } from '@harnessio/forms'
 
-import { IInputConfigWithConfig } from '../types'
+import { InputDefinition } from '../../form-inputs/factory/factory'
 
-export const getContainerPartial = (stepIdentifier: 'run' | 'run-test' | 'background'): IInputConfigWithConfig => ({
+export const getContainerPartial = (stepIdentifier: 'run' | 'run-test' | 'background'): InputDefinition => ({
   inputType: 'group',
   path: `${stepIdentifier}.container`,
   label: 'Container',

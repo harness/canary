@@ -9,7 +9,7 @@ import {
   InputProps,
   RenderInputs,
   useFormContext,
-  type AnyFormikValue
+  type AnyFormValue
 } from '@harnessio/forms'
 
 import { InputLabel } from './common/InputLabel'
@@ -20,15 +20,14 @@ function getAccordionId(input: IInputDefinition) {
 }
 
 export interface AccordionFormInputConfig {
-  inputType: 'accordion'
-  inputConfig?: {
-    autoExpandGroups?: boolean
-    /** defines default behavior for accordion items if error is present in any child input */
-    showWarning?: 'never' | 'always' | 'closed'
-  }
+  autoExpandGroups?: boolean
+  /** defines default behavior for accordion items if error is present in any child input */
+  showWarning?: 'never' | 'always' | 'closed'
 }
 
-type AccordionFormInputProp = InputProps<AnyFormikValue, AccordionFormInputConfig>
+export type AccordionFormInputDefinition = IInputDefinition<AccordionFormInputConfig, AnyFormValue, 'accordion'>
+
+type AccordionFormInputProp = InputProps<AnyFormValue, AccordionFormInputConfig>
 
 function AccordionFormInputInternal(props: AccordionFormInputProp): JSX.Element {
   const { input, factory } = props
@@ -105,7 +104,7 @@ function AccordionFormInputInternal(props: AccordionFormInputProp): JSX.Element 
   )
 }
 
-export class AccordionFormInput extends InputComponent<AnyFormikValue> {
+export class AccordionFormInput extends InputComponent<AnyFormValue> {
   public internalType = 'accordion'
 
   renderComponent(props: AccordionFormInputProp): JSX.Element {

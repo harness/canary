@@ -1,18 +1,17 @@
 import { NumberInput } from '@components/index'
 
-import { InputComponent, InputProps, useController, type AnyFormikValue } from '@harnessio/forms'
+import { IInputDefinition, InputComponent, InputProps, useController, type AnyFormValue } from '@harnessio/forms'
 
 import { InputWrapper } from './common/InputWrapper'
 import { RuntimeInputConfig } from './types/types'
 
-export interface NumberFormInputConfig {
-  inputType: 'number'
-  inputConfig?: {
-    tooltip?: string
-  } & RuntimeInputConfig
+export interface NumberFormInputConfig extends RuntimeInputConfig {
+  tooltip?: string
 }
 
-type NumberFormInputProps = InputProps<AnyFormikValue, NumberFormInputConfig>
+export type NumberFormInputDefinition = IInputDefinition<NumberFormInputConfig, AnyFormValue, 'number'>
+
+type NumberFormInputProps = InputProps<AnyFormValue, NumberFormInputConfig>
 
 function NumberFormInputInternal(props: NumberFormInputProps): JSX.Element {
   const { readonly, path, input } = props
@@ -37,7 +36,7 @@ function NumberFormInputInternal(props: NumberFormInputProps): JSX.Element {
   )
 }
 
-export class NumberFormInput extends InputComponent<AnyFormikValue> {
+export class NumberFormInput extends InputComponent<AnyFormValue> {
   public internalType = 'number'
 
   renderComponent(props: NumberFormInputProps): JSX.Element {

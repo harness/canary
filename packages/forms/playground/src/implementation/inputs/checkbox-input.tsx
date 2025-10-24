@@ -1,5 +1,5 @@
-import { AnyFormikValue, IInputDefinition, InputComponent, InputProps, useController } from '../../../../src'
-import { InputError } from './common/input-errror'
+import { AnyFormValue, IInputDefinition, InputComponent, InputProps, useController } from '../../../../src'
+import { InputError } from './common/input-error'
 import InputLabel from './common/input-label'
 import InputWrapper from './common/input-wrapper'
 import { InputType } from './common/types'
@@ -8,7 +8,7 @@ export interface CheckboxInputConfig extends IInputDefinition {
   inputType: InputType.checkbox
 }
 
-function CheckboxInputInternal(props: InputProps<AnyFormikValue>): JSX.Element {
+function CheckboxInputInternal(props: InputProps<AnyFormValue>): JSX.Element {
   const { readonly, path, input } = props
   const { label = '', required } = input
 
@@ -25,10 +25,10 @@ function CheckboxInputInternal(props: InputProps<AnyFormikValue>): JSX.Element {
   )
 }
 
-export class CheckboxInput extends InputComponent<AnyFormikValue> {
+export class CheckboxInput extends InputComponent<AnyFormValue> {
   public internalType = InputType.checkbox
 
-  renderComponent(props: InputProps<AnyFormikValue, CheckboxInputConfig>): JSX.Element {
+  renderComponent(props: InputProps<AnyFormValue, CheckboxInputConfig>): JSX.Element {
     return <CheckboxInputInternal {...props} />
   }
 }

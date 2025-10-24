@@ -1,5 +1,5 @@
-import { InputComponent, InputProps, useController, type AnyFormikValue } from '../../../../src/index'
-import { InputError } from './common/input-errror'
+import { InputComponent, InputProps, useController, type AnyFormValue } from '../../../../src/index'
+import { InputError } from './common/input-error'
 import InputLabel from './common/input-label'
 import InputWrapper from './common/input-wrapper'
 import { InputType } from './common/types'
@@ -8,7 +8,7 @@ export interface IntegerInputConfig {
   inputType: InputType.integer
 }
 
-function IntegerInputInternal(props: InputProps<AnyFormikValue>): JSX.Element {
+function IntegerInputInternal(props: InputProps<AnyFormValue>): JSX.Element {
   const { readonly, path, input } = props
   const { label = '', required, placeholder } = input
 
@@ -25,10 +25,10 @@ function IntegerInputInternal(props: InputProps<AnyFormikValue>): JSX.Element {
   )
 }
 
-export class IntegerInput extends InputComponent<AnyFormikValue> {
+export class IntegerInput extends InputComponent<AnyFormValue> {
   public internalType = InputType.integer
 
-  renderComponent(props: InputProps<AnyFormikValue>): JSX.Element {
+  renderComponent(props: InputProps<AnyFormValue>): JSX.Element {
     return <IntegerInputInternal {...props} />
   }
 }

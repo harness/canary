@@ -5,7 +5,7 @@ import { TextFormInputConfig } from '../components/form-inputs'
 export function addNameInput(
   inputs: IInputDefinition[],
   path: string,
-  nameFieldConfig?: Partial<IInputDefinition<TextFormInputConfig['inputConfig']>>
+  nameFieldConfig?: Partial<IInputDefinition<TextFormInputConfig>>
 ): IInputDefinition[] {
   return [
     {

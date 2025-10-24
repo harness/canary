@@ -1,7 +1,7 @@
 import { useCallback } from 'react'
 
 import {
-  AnyFormikValue,
+  AnyFormValue,
   Controller,
   IInputDefinition,
   InputComponent,
@@ -9,7 +9,7 @@ import {
   RenderInputs,
   useFieldArray
 } from '../../../../src'
-import { InputError } from './common/input-errror'
+import { InputError } from './common/input-error'
 import InputLabel from './common/input-label'
 import InputWrapper from './common/input-wrapper'
 import { InputType } from './common/types'
@@ -23,7 +23,7 @@ export interface ArrayInputConfig {
   }
 }
 
-function ArrayInputInternal(props: InputProps<AnyFormikValue, ArrayInputConfig>): JSX.Element {
+function ArrayInputInternal(props: InputProps<AnyFormValue, ArrayInputConfig>): JSX.Element {
   const { readonly, path, input, factory } = props
   const { label, required, inputConfig } = input
 
@@ -84,10 +84,10 @@ function ArrayInputInternal(props: InputProps<AnyFormikValue, ArrayInputConfig>)
   )
 }
 
-export class ArrayInput extends InputComponent<AnyFormikValue> {
+export class ArrayInput extends InputComponent<AnyFormValue> {
   public internalType = InputType.array
 
-  renderComponent(props: InputProps<AnyFormikValue, ArrayInputConfig>): JSX.Element {
+  renderComponent(props: InputProps<AnyFormValue, ArrayInputConfig>): JSX.Element {
     return <ArrayInputInternal {...props} />
   }
 }

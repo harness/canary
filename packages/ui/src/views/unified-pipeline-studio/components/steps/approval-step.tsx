@@ -5,12 +5,12 @@ import {
   unsetEmptyStringOutputTransformer
 } from '@harnessio/forms'
 
-import { InputConfigType } from '../form-inputs/types'
-import { APPROVAL_STEP_IDENTIFIER, IInputConfigWithConfig } from './types'
+import { InputDefinition } from '../form-inputs/factory/factory'
+import { APPROVAL_STEP_IDENTIFIER } from './types'
 
 export const APPROVAL_STEP_DESCRIPTION = 'Approval step description.'
 
-const inputs: IInputConfigWithConfig[] = [
+const inputs: InputDefinition[] = [
   {
     inputType: 'text',
     path: `${APPROVAL_STEP_IDENTIFIER}.uses`,
@@ -68,6 +68,6 @@ const inputs: IInputConfigWithConfig[] = [
   }
 ]
 
-export const approvalStepFormDefinition: IFormDefinition<InputConfigType> = {
+export const approvalStepFormDefinition: IFormDefinition<InputDefinition> = {
   inputs
 }

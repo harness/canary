@@ -38,13 +38,13 @@ Examples of input can be found in the `playgorund`:
 Minimal implementation:
 
 ```typescript
-import { InputComponent, InputProps, useController, type AnyFormikValue } from '@harnessio/forms'
+import { InputComponent, InputProps, useController, type AnyFormValue } from '@harnessio/forms'
 
 export interface TextInputConfig {
   inputType: InputType.text
 }
 
-function TextInputInternal(props: InputProps<AnyFormikValue>): JSX.Element {
+function TextInputInternal(props: InputProps<AnyFormValue>): JSX.Element {
   const { readonly, path, input } = props
   const { label = '', required, placeholder } = input
 
@@ -60,10 +60,10 @@ function TextInputInternal(props: InputProps<AnyFormikValue>): JSX.Element {
   )
 }
 
-export class TextInput extends InputComponent<AnyFormikValue> {
+export class TextInput extends InputComponent<AnyFormValue> {
   public internalType = InputType.text
 
-  renderComponent(props: InputProps<AnyFormikValue>): JSX.Element {
+  renderComponent(props: InputProps<AnyFormValue>): JSX.Element {
     return <TextInputInternal {...props} />
   }
 }
@@ -119,7 +119,7 @@ export interface ListInputConfig {
 }
 
 // 2. Use input config type for second generic of component props
-function ListInputInternal(props: InputProps<AnyFormikValue, ListInputConfig>): JSX.Element ....
+function ListInputInternal(props: InputProps<AnyFormValue, ListInputConfig>): JSX.Element ....
 
 // 3. Make union of all Input configs
 export type InputConfigType =

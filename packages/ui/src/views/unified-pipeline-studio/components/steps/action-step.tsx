@@ -6,12 +6,12 @@ import {
   unsetEmptyStringOutputTransformer
 } from '@harnessio/forms'
 
-import { InputConfigType } from '../form-inputs/types'
-import { ACTION_STEP_IDENTIFIER, IInputConfigWithConfig } from './types'
+import { InputDefinition } from '../form-inputs/factory/factory'
+import { ACTION_STEP_IDENTIFIER } from './types'
 
 export const ACTION_STEP_DESCRIPTION = 'Action step description.'
 
-const inputs: IInputConfigWithConfig[] = [
+const inputs: InputDefinition[] = [
   {
     inputType: 'text',
     path: `${ACTION_STEP_IDENTIFIER}.uses`,
@@ -97,6 +97,6 @@ const inputs: IInputConfigWithConfig[] = [
   }
 ]
 
-export const actionStepFormDefinition: IFormDefinition<InputConfigType> = {
+export const actionStepFormDefinition: IFormDefinition<InputDefinition> = {
   inputs
 }

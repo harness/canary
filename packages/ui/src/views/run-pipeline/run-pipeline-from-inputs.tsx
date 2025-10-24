@@ -3,7 +3,7 @@ import { useEffect, useMemo, useState } from 'react'
 import { noop } from 'lodash-es'
 import { stringify } from 'yaml'
 
-import { AnyFormikValue, IFormDefinition, InputFactory, RootFormProps } from '@harnessio/forms'
+import { AnyFormValue, IFormDefinition, InputFactory, RootFormProps } from '@harnessio/forms'
 import { YamlEditorContextProvider, YamlRevision } from '@harnessio/yaml-editor'
 
 import { VisualYamlValue } from '..'
@@ -30,7 +30,7 @@ export interface RunPipelineFormInputsProps {
       }
     | undefined
   >
-  onFormSubmit: (values: AnyFormikValue) => void
+  onFormSubmit: (values: AnyFormValue) => void
   pipelineInputLayout?: InputLayout
 }
 
@@ -78,7 +78,7 @@ export default function RunPipelineFormInputs(props: RunPipelineFormInputsProps)
     return pipelineInputs2JsonSchema(pipelineInputs)
   }, [pipelineInputs])
 
-  const handleFormValuesChange = (values: AnyFormikValue) => {
+  const handleFormValuesChange = (values: AnyFormValue) => {
     onYamlRevisionChange({ yaml: stringify(values) })
     setFormValues(values)
   }

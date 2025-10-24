@@ -1,12 +1,6 @@
-import {
-  InputComponent,
-  InputProps,
-  useController,
-  useRootFormContext,
-  type AnyFormikValue
-} from '../../../../src/index'
+import { InputComponent, InputProps, useController, useRootFormContext, type AnyFormValue } from '../../../../src/index'
 import { FormMetadata } from '../../examples/runtime-example/types/types'
-import { InputError } from './common/input-errror'
+import { InputError } from './common/input-error'
 import InputLabel from './common/input-label'
 import InputWrapper from './common/input-wrapper'
 import { InputType } from './common/types'
@@ -15,7 +9,7 @@ export interface TextInputConfig {
   inputType: InputType.text
 }
 
-function TextInputInternal(props: InputProps<AnyFormikValue>): JSX.Element {
+function TextInputInternal(props: InputProps<AnyFormValue>): JSX.Element {
   const { readonly, path, input } = props
   const { label = '', required, placeholder } = input
 
@@ -41,10 +35,10 @@ function TextInputInternal(props: InputProps<AnyFormikValue>): JSX.Element {
   )
 }
 
-export class TextInput extends InputComponent<AnyFormikValue> {
+export class TextInput extends InputComponent<AnyFormValue> {
   public internalType = InputType.text
 
-  renderComponent(props: InputProps<AnyFormikValue>): JSX.Element {
+  renderComponent(props: InputProps<AnyFormValue>): JSX.Element {
     return <TextInputInternal {...props} />
   }
 }

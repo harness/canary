@@ -1,18 +1,17 @@
 import { TextInput } from '@components/index'
 
-import { InputComponent, InputProps, useController, type AnyFormikValue } from '@harnessio/forms'
+import { IInputDefinition, InputComponent, InputProps, useController, type AnyFormValue } from '@harnessio/forms'
 
 import { InputWrapper } from './common/InputWrapper'
 import { RuntimeInputConfig } from './types/types'
 
-export interface TextFormInputConfig {
-  inputType: 'text'
-  inputConfig?: {
-    tooltip?: string
-  } & RuntimeInputConfig
+export interface TextFormInputConfig extends RuntimeInputConfig {
+  tooltip?: string
 }
 
-type TextFormInputProps = InputProps<AnyFormikValue, TextFormInputConfig>
+export type TextFormInputDefinition = IInputDefinition<TextFormInputConfig, AnyFormValue, 'text'>
+
+type TextFormInputProps = InputProps<AnyFormValue, TextFormInputConfig>
 
 function TextFormInputInternal(props: TextFormInputProps): JSX.Element {
   const { readonly, path, input } = props
@@ -37,7 +36,7 @@ function TextFormInputInternal(props: TextFormInputProps): JSX.Element {
   )
 }
 
-export class TextFormInput extends InputComponent<AnyFormikValue> {
+export class TextFormInput extends InputComponent<AnyFormValue> {
   public internalType = 'text'
 
   renderComponent(props: TextFormInputProps): JSX.Element {

@@ -1,7 +1,7 @@
 import { useCallback } from 'react'
 
 import {
-  AnyFormikValue,
+  AnyFormValue,
   Controller,
   IInputDefinition,
   InputComponent,
@@ -9,7 +9,7 @@ import {
   RenderInputs,
   useFieldArray
 } from '../../../../src'
-import { InputError } from './common/input-errror'
+import { InputError } from './common/input-error'
 import InputLabel from './common/input-label'
 import InputWrapper from './common/input-wrapper'
 import { InputType } from './common/types'
@@ -25,7 +25,7 @@ export interface ListInputConfig {
   }
 }
 
-function ListInputInternal(props: InputProps<AnyFormikValue, ListInputConfig>): JSX.Element {
+function ListInputInternal(props: InputProps<AnyFormValue, ListInputConfig>): JSX.Element {
   const { readonly, path, input, factory } = props
   const { label, required, inputConfig } = input
 
@@ -89,10 +89,10 @@ function ListInputInternal(props: InputProps<AnyFormikValue, ListInputConfig>): 
   )
 }
 
-export class ListInput extends InputComponent<AnyFormikValue> {
+export class ListInput extends InputComponent<AnyFormValue> {
   public internalType = InputType.list
 
-  renderComponent(props: InputProps<AnyFormikValue, ListInputConfig>): JSX.Element {
+  renderComponent(props: InputProps<AnyFormValue, ListInputConfig>): JSX.Element {
     return <ListInputInternal {...props} />
   }
 }

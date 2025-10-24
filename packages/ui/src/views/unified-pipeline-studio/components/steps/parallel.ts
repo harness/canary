@@ -1,12 +1,11 @@
 import { IFormDefinition } from '@harnessio/forms'
 
-import { InputConfigType } from '../form-inputs/types'
-import { IInputConfigWithConfig } from './types'
+import { InputDefinition } from '../form-inputs/factory/factory'
 
 export const PARALLEL_DESCRIPTION = 'Parallel group description.'
 
-const inputs: IInputConfigWithConfig[] = []
+const inputs: InputDefinition[] = []
 
-export const parallelFormDefinition: IFormDefinition<InputConfigType> = {
+export const parallelFormDefinition: IFormDefinition<InputDefinition> = {
   inputs
 }

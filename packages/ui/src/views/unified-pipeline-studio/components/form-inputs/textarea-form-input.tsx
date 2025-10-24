@@ -1,18 +1,17 @@
 import { Textarea } from '@components/index'
 
-import { InputComponent, InputProps, useController, type AnyFormikValue } from '@harnessio/forms'
+import { IInputDefinition, InputComponent, InputProps, useController, type AnyFormValue } from '@harnessio/forms'
 
 import { InputWrapper } from './common/InputWrapper'
 import { RuntimeInputConfig } from './types/types'
 
-export interface TextareaFormInputConfig {
-  inputType: 'textarea'
-  inputConfig?: {
-    tooltip?: string
-  } & RuntimeInputConfig
+export interface TextareaFormInputConfig extends RuntimeInputConfig {
+  tooltip?: string
 }
 
-type TextareaFormInputProps = InputProps<AnyFormikValue, TextareaFormInputConfig>
+export type TextareaFormInputDefinition = IInputDefinition<TextareaFormInputConfig, AnyFormValue, 'textarea'>
+
+type TextareaFormInputProps = InputProps<AnyFormValue, TextareaFormInputConfig>
 
 function TextareaFormInputInternal(props: TextareaFormInputProps): JSX.Element {
   const { readonly, path, input } = props
@@ -36,7 +35,7 @@ function TextareaFormInputInternal(props: TextareaFormInputProps): JSX.Element {
   )
 }
 
-export class TextareaFormInput extends InputComponent<AnyFormikValue> {
+export class TextareaFormInput extends InputComponent<AnyFormValue> {
   public internalType = 'textarea'
 
   renderComponent(props: TextareaFormInputProps): JSX.Element {

@@ -29,7 +29,7 @@ export interface RootFormProps<TFieldValues extends FieldValues = FieldValues, T
    *
    * For visible function second argument is metadata.
    *
-   * ```isVisible?: (values: AnyFormikValue, metadata: any) => boolean```
+   * ```isVisible?: (values: AnyFormValue, metadata: any) => boolean```
    */
   metadata?: TMetadata
 

@@ -2,14 +2,14 @@ import { useRef, useState } from 'react'
 
 import { Input } from '@components/index'
 
-import { AnyFormikValue, InputProps, useController } from '@harnessio/forms'
+import { AnyFormValue, InputProps, useController } from '@harnessio/forms'
 
 import { InputCaption, InputLabel } from '.'
 import { InputValueType, RuntimeInputConfig } from '../types/types'
 import { constructRuntimeInputValue, extractRuntimeInputName, getInputValueType } from '../utils/input-value-utils'
 import InputValueTypeSelection from './InputValueTypeSelector'
 
-export interface InputWrapperProps extends InputProps<AnyFormikValue, { inputConfig?: RuntimeInputConfig }> {
+export interface InputWrapperProps extends InputProps<AnyFormValue, RuntimeInputConfig> {
   children: JSX.Element | JSX.Element[]
   preserveFixedValue?: boolean
   defaultEmptyValue?: any

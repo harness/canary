@@ -1,22 +1,28 @@
 import type { Schema } from 'zod'
 
+/** @deprecated use AnyFormValue */
 export type AnyFormikValue = any
 
-export interface IFormDefinition<M = unknown> {
+export type AnyFormValue = any
+
+export interface IFormDefinition<
+  TInput extends IInputDefinition<any, any, any> = IInputDefinition,
+  TMetadata = unknown
+> {
   /* hero is a very top element. it is displayed above Name/Identifier inputs */
   hero?: JSX.Element
-  metadata?: M
-  inputs: IInputDefinition[]
+  metadata?: TMetadata
+  inputs: TInput[]
 }
 
 export type IInputTransformerFunc = (value: any, values: any) => { value: any; path?: string } | undefined
 export type IOutputTransformerFunc = (value: any, values: any) => { value: any; path?: string } | undefined
 
-export interface IInputDefinition<T = unknown> {
+export interface IInputDefinition<TConfig = unknown, TValue = unknown, TInputType extends string = string> {
   /**
    * Input type
    */
-  inputType: string
+  inputType: TInputType
   /**
    * Path for  input
    */
@@ -45,25 +51,25 @@ export interface IInputDefinition<T = unknown> {
   /**
    * Default value
    */
-  default?: any
+  default?: TValue
   /**
    * Input configuration.
    *
    * Note: Each input defines own configuration
    */
-  inputConfig?: T
+  inputConfig?: TConfig
   /**
    * Conditionally render input.
    *
    * Note: If function return false, input will not render and validation will be omitted
    */
-  isVisible?: (values: AnyFormikValue, metadata: any) => boolean
+  isVisible?: (values: AnyFormValue, metadata: any) => boolean
   /**
    * Nested inputs
    *
    * Note: Use only for inputs like groups
    */
-  inputs?: IInputDefinition<unknown>[]
+  inputs?: IInputDefinition[]
   /**
    * Runtime inputs
    *

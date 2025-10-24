@@ -1,4 +1,6 @@
-import { Avatar, Button, IconV2, Layout } from '@/components'
+import { forwardRef } from 'react'
+
+import { Avatar, AvatarProps, Button, IconV2, Layout, ScrollArea, withTooltip } from '@/components'
 import { EnumBypassListType, PullReqReviewDecision, ReviewerItemProps } from '@/views'
 import { getIcon } from '@views/repo/utils'
 
@@ -19,27 +21,79 @@ const getReviewDecisionIcon = (decision: PullReqReviewDecision) => {
   }
 }
 
+const GroupAvatar = forwardRef<HTMLSpanElement, AvatarProps & { name: string }>(({ name, ...props }, ref) => (
+  <Avatar ref={ref} name={name} rounded size="md" isGroup className="cursor-pointer" {...props} />
+))
+GroupAvatar.displayName = 'GroupAvatar'
+
+const GroupAvatarWithTooltip = withTooltip(GroupAvatar)
+
+const User = ({
+  type,
+  name,
+  email,
+  groupUsers
+}: {
+  type: EnumBypassListType
+  name: string
+  email: string
+  groupUsers?: ReviewerItemProps['groupUsers']
+}) => {
+  const hasGroupUsers = groupUsers && groupUsers.length > 0
+  const isGroupWithTooltip = hasGroupUsers && type === EnumBypassListType.USER_GROUP
+
+  return (
+    <Layout.Horizontal align="center" gap="xs">
+      {(type === EnumBypassListType.USER || (type === EnumBypassListType.USER_GROUP && !hasGroupUsers)) && (
+        <Avatar name={name} rounded size="md" isGroup={type === EnumBypassListType.USER_GROUP} />
+      )}
+      {type !== EnumBypassListType.USER && type !== EnumBypassListType.USER_GROUP && (
+        <IconV2 name={getIcon(type)} size="lg" fallback="stop" className="ml-cn-4xs" />
+      )}
+      {isGroupWithTooltip && (
+        <GroupAvatarWithTooltip
+          name={name}
+          tooltipProps={{
+            content: (
+              <ScrollArea className="-mx-cn-2xs px-cn-2xs max-h-60 w-64">
+                <Layout.Vertical gapY="sm" className="w-full">
+                  {groupUsers?.map(user => (
+                    <User
+                      key={user?.id}
+                      type={user?.type as EnumBypassListType}
+                      name={user?.display_name || ''}
+                      email={user?.email || ''}
+                    />
+                  ))}
+                </Layout.Vertical>
+              </ScrollArea>
+            ),
+            side: 'bottom',
+            align: 'start'
+          }}
+        />
+      )}
+      <ReviewerInfo display_name={name} email={email} />
+    </Layout.Horizontal>
+  )
+}
+
 const ReviewerItem = ({
   reviewer,
   reviewDecision,
   sha,
   sourceSHA,
   processReviewDecision,
-  handleDelete
+  handleDelete,
+  groupUsers
 }: ReviewerItemProps) => {
   const { id, type, display_name, email } = reviewer || {}
+
   const updatedReviewDecision = reviewDecision && processReviewDecision(reviewDecision, sha, sourceSHA)
 
   return (
-    <Layout.Horizontal key={id} align="center" justify="between" gap="sm" className="group">
-      <Layout.Horizontal align="center" gap="xs">
-        {type === EnumBypassListType.USER ? (
-          <Avatar name={display_name || ''} rounded size="md" />
-        ) : (
-          <IconV2 name={getIcon(type as EnumBypassListType)} size={'lg'} fallback="stop" className={'ml-cn-4xs'} />
-        )}
-        <ReviewerInfo display_name={display_name || ''} email={email || ''} />
-      </Layout.Horizontal>
+    <Layout.Horizontal align="center" justify="between" gap="sm" className="group">
+      <User type={type as EnumBypassListType} name={display_name || ''} email={email || ''} groupUsers={groupUsers} />
 
       <div className="relative">
         <Button
@@ -54,7 +108,7 @@ const ReviewerItem = ({
         >
           <IconV2 name="xmark" skipSize />
         </Button>
-        <div className="relative z-[1] group-focus-within:-z-[1] group-focus-within:opacity-0 group-hover:-z-[1] group-hover:opacity-0">
+        <div className="relative z-[1] group-focus-within:z-[-1] group-focus-within:opacity-0 group-hover:z-[-1] group-hover:opacity-0">
           {updatedReviewDecision && getReviewDecisionIcon(updatedReviewDecision as PullReqReviewDecision)}
         </div>
       </div>

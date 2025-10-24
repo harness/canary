@@ -1,25 +1,33 @@
 import { cn } from '@utils/cn'
 
-import { Button, Icon, Text } from '..'
+import { Button, Icon, NodeProps, Text } from '..'
+import { FloatingAddButton } from './components/floating-add-button'
 
-export interface StepNodeProps {
+export interface StepNodeProps extends NodeProps {
   name?: string
   icon?: React.ReactNode
   selected?: boolean
+  isFirst?: boolean
+  parentNodeType?: 'leaf' | 'serial' | 'parallel'
   onEllipsisClick?: (e: React.MouseEvent<HTMLElement, MouseEvent>) => void
+  onClick?: (e: React.MouseEvent<HTMLElement, MouseEvent>) => void
+  onAddClick?: (position: 'before' | 'after', e: React.MouseEvent<HTMLElement, MouseEvent>) => void
 }
 
 export function StepNode(props: StepNodeProps) {
-  const { name, icon, selected, onEllipsisClick } = props
+  const { name, icon, selected, onEllipsisClick, onClick, onAddClick, isFirst, parentNodeType, mode } = props
 
   return (
     <div
-      className={cn('box-border size-full rounded-xl border bg-primary-foreground', {
+      role="button"
+      tabIndex={0}
+      className={cn('box-border size-full rounded-xl border bg-primary-foreground cursor-pointer', {
         'border-borders-2': !selected,
         'border-borders-3': selected
       })}
+      onClick={onClick}
     >
-      {onEllipsisClick && (
+      {mode !== 'Execution' && onEllipsisClick && (
         <Button
           className="absolute right-2 top-2"
           variant="ghost"
@@ -31,8 +39,28 @@ export function StepNode(props: StepNodeProps) {
         </Button>
       )}
 
+      {mode !== 'Execution' && isFirst && (
+        <FloatingAddButton
+          parentNodeType={parentNodeType}
+          position="before"
+          onClick={e => {
+            onAddClick?.('before', e)
+          }}
+        />
+      )}
+      {mode !== 'Execution' && (
+        <FloatingAddButton
+          parentNodeType={parentNodeType}
+          position="after"
+          onClick={e => {
+            onAddClick?.('after', e)
+          }}
+        />
+      )}
+
+      {/* position="left" */}
       <div>{icon}</div>
-      <Text title={name} className="m-2 line-clamp-2 cursor-default text-primary">
+      <Text title={name} className="m-2 line-clamp-2 text-primary">
         {name}
       </Text>
     </div>

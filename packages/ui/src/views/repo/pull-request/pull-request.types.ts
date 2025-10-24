@@ -1,3 +1,6 @@
+import { PrincipalType } from '@/types'
+import { ColorsEnum, LabelType } from '@/views'
+
 import { TranslationStore } from '../repo-list/types'
 
 export interface CommitSelectorListItem {
@@ -34,12 +37,9 @@ export interface PullRequestType {
   targetBranch?: string
   timestamp: string
   comments?: number
-  state?: string
+  state?: EnumPullReqState
   updated: number
-  labels?: {
-    text: string
-    color: string
-  }[]
+  labels: PRListLabelType[]
 }
 
 export type IconType = 'pr-open' | 'pr-closed' | 'pr-draft' | 'pr-merge'
@@ -80,7 +80,7 @@ export interface RepoRepositoryOutput {
   updated?: number
 }
 
-export type EnumRepoState = number
+export type EnumRepoState = number | null
 
 export interface TypesDiffStats {
   additions?: number | null
@@ -94,7 +94,7 @@ export interface IPullRequestStore {
 }
 
 export interface TypesPullReq {
-  author?: TypesPrincipalInfo
+  author?: Partial<PrincipalType>
   closed?: number | null
   created?: number
   description?: string
@@ -106,7 +106,7 @@ export interface TypesPullReq {
   merge_method?: EnumMergeMethod
   merge_target_sha?: string | null
   merged?: number | null
-  merger?: TypesPrincipalInfo
+  merger?: Partial<PrincipalType>
   number?: number
   source_branch?: string
   source_repo_id?: number
@@ -117,19 +117,8 @@ export interface TypesPullReq {
   target_repo_id?: number
   title?: string
   labels?: TypesLabelPullReqAssignmentInfo[]
-}
-
-export interface TypesPrincipalInfo {
-  created?: number
-  display_name?: string
-  email?: string
-  id?: number
-  type?: EnumPrincipalType
-  uid?: string
   updated?: number
 }
-
-export type EnumPrincipalType = 'service' | 'serviceaccount' | 'user'
 
 export type EnumMergeMethod = 'fast-forward' | 'merge' | 'rebase' | 'squash'
 
@@ -158,12 +147,6 @@ export interface PRReviewer {
   reviewer: { display_name: string; id: number }
   review_decision?: EnumPullReqReviewDecision
   sha?: string
-}
-
-export interface PRReviewUsers {
-  display_name?: string
-  id?: number
-  uid?: string
 }
 
 export interface TypesLabelPullReqAssignmentInfo {
@@ -207,4 +190,35 @@ export interface CreateCommentPullReqRequest {
 export interface CommitSuggestion {
   check_sum: string
   comment_id: number
+}
+
+export interface LabelAssignmentType {
+  assigned?: boolean | null
+  assigned_value?: {
+    color?: ColorsEnum
+    id?: number | null
+    value?: string | null
+  }
+  color: ColorsEnum
+  id: number
+  key: string
+  scope: number
+  type: LabelType
+  values?: {
+    color?: ColorsEnum
+    id?: number | null
+    value?: string | null
+  }[]
+}
+
+export interface HandleAddLabelType {
+  label_id: number
+  value?: string
+  value_id?: number
+}
+
+export interface PRListLabelType {
+  color: ColorsEnum
+  key: string
+  value?: string
 }

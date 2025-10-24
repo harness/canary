@@ -8,13 +8,13 @@ export function renderNode(props: ContainerNodeProps) {
 
   switch (node.containerType) {
     case 'serial': {
-      return <SerialNodeContainer node={node} {...rest} parentNode={parentNode} />
+      return <SerialNodeContainer key={node.type + '-' + node.path} node={node} {...rest} parentNode={parentNode} />
     }
     case 'parallel': {
-      return <ParallelNodeContainer node={node} {...rest} parentNode={parentNode} />
+      return <ParallelNodeContainer key={node.type + '-' + node.path} node={node} {...rest} parentNode={parentNode} />
     }
     case 'leaf': {
-      return <LeafNodeContainer node={node} {...rest} parentNode={parentNode} />
+      return <LeafNodeContainer key={node.type + '-' + node.path} node={node} {...rest} parentNode={parentNode} />
     }
   }
 }

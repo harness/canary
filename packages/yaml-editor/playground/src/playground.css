@@ -1,0 +1,36 @@
+html,
+body {
+  padding: 0;
+  margin: 0;
+  background-color: #222;
+}
+
+#root {
+  height: 100vh;
+}
+
+.main-buttons-holder {
+  display: flex;
+  column-gap: 10px;
+  padding: 10px 10px 0px 10px;
+}
+
+.buttons-holder {
+  display: flex;
+  column-gap: 10px;
+  padding: 10px;
+}
+
+.demo-holder {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+}
+
+.editor-holder {
+  flex-grow: 1;
+}
+
+.active-button {
+  background-color: yellow;
+}

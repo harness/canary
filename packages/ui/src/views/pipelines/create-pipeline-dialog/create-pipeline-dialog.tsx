@@ -1,18 +1,7 @@
 import { useEffect, useState } from 'react'
 import { useForm } from 'react-hook-form'
 
-import {
-  Alert,
-  Button,
-  ControlGroup,
-  Dialog,
-  Fieldset,
-  FormWrapper,
-  Input,
-  Select,
-  SelectContent,
-  SelectItem
-} from '@/components'
+import { Alert, Button, ControlGroup, Dialog, Fieldset, FormWrapper, Input, Select } from '@/components'
 import { zodResolver } from '@hookform/resolvers/zod'
 import { z } from 'zod'
 
@@ -116,7 +105,7 @@ export function CreatePipelineDialog(props: CreatePipelineDialogProps) {
 
           <Fieldset>
             <ControlGroup>
-              <Select
+              <Select.Root
                 disabled={isLoadingBranchNames}
                 name="branch"
                 value={branch}
@@ -124,14 +113,14 @@ export function CreatePipelineDialog(props: CreatePipelineDialogProps) {
                 placeholder="Select"
                 label="Branch"
               >
-                <SelectContent>
+                <Select.Content>
                   {branchNames?.map(branchName => (
-                    <SelectItem key={branchName} value={branchName}>
+                    <Select.Item key={branchName} value={branchName}>
                       {branchName}
-                    </SelectItem>
+                    </Select.Item>
                   ))}
-                </SelectContent>
-              </Select>
+                </Select.Content>
+              </Select.Root>
             </ControlGroup>
           </Fieldset>
 

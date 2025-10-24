@@ -1,16 +1,5 @@
-import {
-  Accordion,
-  AccordionContent,
-  AccordionItem,
-  AccordionTrigger,
-  Table,
-  TableBody,
-  TableCell,
-  TableHead,
-  TableHeader,
-  TableRow,
-  Text
-} from '@harnessio/canary'
+import { Accordion, AccordionContent, AccordionItem, AccordionTrigger, Text } from '@harnessio/canary'
+import { Table } from '@harnessio/ui/components'
 
 export type KeyValuePair = {
   name: string
@@ -24,7 +13,7 @@ interface KeyValueTableProps {
   tableSpec: KeyValuePair[]
 }
 
-//manage style for using repeatly
+//manage style for using repeatedly
 const accordionContentStyle = `w-full pl-1 pr-0 pb-0`
 const specTitleStyle = 'flex-grow text-studio-2 text-left'
 
@@ -84,23 +73,23 @@ export const KeyValueTable: React.FC<KeyValueTableProps> = ({
     return tableSpec.map((item, index: number) => {
       if (typeof item.value === 'string') {
         return (
-          <TableRow key={index} className="border-b">
-            <TableCell className="w-1/2 py-2.5 pl-5">
+          <Table.Row key={index} className="border-b">
+            <Table.Cell className="w-1/2 py-2.5 pl-5">
               <Text size={2} weight="normal" className="text-studio-7">
                 {item.name}
               </Text>
-            </TableCell>
-            <TableCell className="w-1/2 py-2.5">
+            </Table.Cell>
+            <Table.Cell className="w-1/2 py-2.5">
               <Text size={2} weight="normal" className="text-studio-7">
                 {item.value}
               </Text>
-            </TableCell>
-          </TableRow>
+            </Table.Cell>
+          </Table.Row>
         )
       } else if (Array.isArray(item.value) || typeof item.value === 'object') {
         return (
-          <TableRow key={index} className="border-0">
-            <TableCell colSpan={2} className="border-0 p-0">
+          <Table.Row key={index} className="border-0">
+            <Table.Cell colSpan={2} className="border-0 p-0">
               <Accordion type="single" collapsible defaultValue={item.name}>
                 <AccordionItem value={item.name} className="border-0">
                   <AccordionTrigger
@@ -114,8 +103,8 @@ export const KeyValueTable: React.FC<KeyValueTableProps> = ({
                   <AccordionContent className={accordionContentStyle}>{renderListItems(item.value)}</AccordionContent>
                 </AccordionItem>
               </Accordion>
-            </TableCell>
-          </TableRow>
+            </Table.Cell>
+          </Table.Row>
         )
       }
       return null
@@ -123,22 +112,22 @@ export const KeyValueTable: React.FC<KeyValueTableProps> = ({
   }
 
   return (
-    <Table className={className}>
-      <TableHeader>
-        <TableRow>
-          <TableHead className="py-3">
+    <Table.Root className={className}>
+      <Table.Header>
+        <Table.Row>
+          <Table.Head className="py-3">
             <Text size={2} weight="semibold" className="text-primary">
               {tableTitleName}
             </Text>
-          </TableHead>
-          <TableHead className="py-3">
+          </Table.Head>
+          <Table.Head className="py-3">
             <Text size={2} weight="semibold" className="text-primary">
               {tableTitleVal}
             </Text>
-          </TableHead>
-        </TableRow>
-      </TableHeader>
-      <TableBody>{Array.isArray(tableSpec) && renderTableRows(tableSpec)}</TableBody>
-    </Table>
+          </Table.Head>
+        </Table.Row>
+      </Table.Header>
+      <Table.Body>{Array.isArray(tableSpec) && renderTableRows(tableSpec)}</Table.Body>
+    </Table.Root>
   )
 }

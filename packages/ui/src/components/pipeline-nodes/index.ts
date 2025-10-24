@@ -15,3 +15,5 @@ export const PipelineNodes = {
   SerialGroupNode,
   ParallelGroupNode
 }
+
+export * from './types'

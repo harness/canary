@@ -1,22 +1,7 @@
 import { useNavigate } from 'react-router-dom'
 
-import {
-  Avatar,
-  AvatarFallback,
-  AvatarImage,
-  ButtonGroup,
-  Icon,
-  Spacer,
-  StackedList,
-  Table,
-  TableBody,
-  TableCell,
-  TableHead,
-  TableHeader,
-  TableRow,
-  Text
-} from '@harnessio/canary'
-import { CommitCopyActions } from '@harnessio/ui/components'
+import { Avatar, AvatarFallback, AvatarImage, ButtonGroup, Icon, Spacer, StackedList, Text } from '@harnessio/canary'
+import { CommitCopyActions, Table } from '@harnessio/ui/components'
 
 import { getInitials } from '../utils/utils'
 
@@ -103,19 +88,19 @@ export const Summary = ({ ...props }: PageProps) => {
         </StackedList.Item>
       </StackedList.Root>
       <Spacer size={5} />
-      <Table variant="asStackedList">
-        <TableHeader>
-          <TableRow>
-            <TableHead>Name</TableHead>
-            <TableHead>Last commit message</TableHead>
-            <TableHead className="text-right">Date</TableHead>
-          </TableRow>
-        </TableHeader>
+      <Table.Root variant="asStackedList">
+        <Table.Header>
+          <Table.Row>
+            <Table.Head>Name</Table.Head>
+            <Table.Head>Last commit message</Table.Head>
+            <Table.Head className="text-right">Date</Table.Head>
+          </Table.Row>
+        </Table.Header>
         {files && files.length > 0 ? (
-          <TableBody>
+          <Table.Body>
             {files.map(file => (
-              <TableRow key={file.id} onClick={() => navigate(file.path)}>
-                <TableCell>
+              <Table.Row key={file.id} onClick={() => navigate(file.path)}>
+                <Table.Cell>
                   <ButtonGroup.Root
                     direction="horizontal"
                     verticalAlign="center"
@@ -131,24 +116,24 @@ export const Summary = ({ ...props }: PageProps) => {
                       {file.name}
                     </Text>
                   </ButtonGroup.Root>
-                </TableCell>
-                <TableCell>
+                </Table.Cell>
+                <Table.Cell>
                   <Text color="tertiaryBackground" className="line-clamp-1">
                     {file.lastCommitMessage}
                   </Text>
-                </TableCell>
-                <TableCell className="text-right">
+                </Table.Cell>
+                <Table.Cell className="text-right">
                   <Text color="tertiaryBackground" wrap="nowrap">
                     {file.timestamp}
                   </Text>
-                </TableCell>
-              </TableRow>
+                </Table.Cell>
+              </Table.Row>
             ))}
-          </TableBody>
+          </Table.Body>
         ) : (
           <Text>No files available</Text>
         )}
-      </Table>
+      </Table.Root>
     </>
   )
 }

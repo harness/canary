@@ -1,13 +1,12 @@
-import { TypesListCommitResponse } from '@views/index'
-
+import { PrincipalType } from '@/types'
 import {
   EnumPullReqReviewDecision,
   PullReqReviewDecision,
   RepoRepositoryOutput,
-  TypesPrincipalInfo,
+  TypesListCommitResponse,
   TypesPullReq,
   TypesPullReqStats
-} from '../pull-request.types'
+} from '@/views'
 
 export interface PullReqCount {
   error: number
@@ -131,7 +130,7 @@ export interface PullRequestDataState {
 }
 
 export interface TypesPullReqActivity {
-  author?: TypesPrincipalInfo
+  author?: Partial<PrincipalType>
   code_comment?: TypesCodeCommentFields
   created?: number
   deleted?: number | null
@@ -139,7 +138,7 @@ export interface TypesPullReqActivity {
   id?: number
   kind?: EnumPullReqActivityKind
   mentions?: {
-    [key: string]: TypesPrincipalInfo
+    [key: string]: Partial<PrincipalType>
   }
   metadata?: TypesPullReqActivityMetadata
   order?: number
@@ -148,7 +147,7 @@ export interface TypesPullReqActivity {
   pullreq_id?: number
   repo_id?: number
   resolved?: number | null
-  resolver?: TypesPrincipalInfo
+  resolver?: Partial<PrincipalType>
   sub_order?: number
   text?: string
   type?: EnumPullReqActivityType
@@ -159,11 +158,11 @@ export declare type EnumPullReqReviewerType = 'assigned' | 'requested' | 'self_a
 
 export declare type ReviewerListPullReqOkResponse = TypesPullReqReviewer[]
 export interface TypesPullReqReviewer {
-  added_by?: TypesPrincipalInfo
+  added_by?: Partial<PrincipalType>
   created?: number
   latest_review_id?: number | null
   review_decision?: EnumPullReqReviewDecision
-  reviewer?: TypesPrincipalInfo
+  reviewer?: Partial<PrincipalType>
   sha?: string
   type?: EnumPullReqReviewerType
   updated?: number
@@ -211,7 +210,6 @@ export type EnumPullReqActivityType =
   | 'branch-update'
   | 'code-comment'
   | 'comment'
-  | 'label-modify'
   | 'merge'
   | 'review-submit'
   | 'reviewer-delete'
@@ -246,7 +244,7 @@ export interface TypesCheck {
   link?: string
   metadata?: unknown
   payload?: TypesCheckPayload
-  reported_by?: TypesPrincipalInfo
+  reported_by?: Partial<PrincipalType>
   started?: number
   status?: EnumCheckStatus
   summary?: string
@@ -467,7 +465,7 @@ export interface TypesCodeOwnerEvaluation {
 }
 
 export interface TypesOwnerEvaluation {
-  owner?: TypesPrincipalInfo
+  owner?: Partial<PrincipalType>
   review_decision?: EnumPullReqReviewDecision
   review_sha?: string
 }
@@ -588,4 +586,20 @@ export enum MergeStrategy {
   MERGE = 'merge',
   SQUASH = 'squash',
   REBASE = 'rebase'
+}
+
+export interface DiffHeaderProps {
+  text: string
+  data?: string
+  title: string
+  lang: string
+  addedLines?: number
+  deletedLines?: number
+  isBinary?: boolean
+  isDeleted?: boolean
+  unchangedPercentage?: number
+  filePath?: string
+  fileViews?: Map<string, string>
+  checksumAfter?: string
+  diffData?: DiffFileEntry
 }

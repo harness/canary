@@ -49,7 +49,7 @@ export const EditUserDialog: React.FC<IEditUserDialogProps> = ({
 
   return (
     <AlertDialog.Root open={open} onOpenChange={onClose}>
-      <AlertDialog.Content>
+      <AlertDialog.Content onClose={onClose}>
         <AlertDialog.Header>
           <AlertDialog.Title>Update User</AlertDialog.Title>
         </AlertDialog.Header>

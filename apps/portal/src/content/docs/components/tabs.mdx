@@ -1,0 +1,219 @@
+---
+title: Tabs
+description: Tabs component
+---
+
+The `Tabs` component provides a way to organize content into separate views that can be navigated through tabs.
+
+import { DocsPage } from "@/components/docs-page";
+
+<DocsPage.ComponentExample
+  client:only
+  code={`<Tabs.Root defaultValue="tab1">
+    <Tabs.List>
+        <Tabs.Trigger value="tab1">Tab 1</Tabs.Trigger>
+        <Tabs.Trigger value="tab2">Tab 2</Tabs.Trigger>
+    </Tabs.List>
+    <Tabs.Content value="tab1">Content 1</Tabs.Content>
+    <Tabs.Content value="tab2">Content 2</Tabs.Content>
+</Tabs.Root>`}
+/>
+
+## Usage
+
+```typescript jsx
+import { Tabs } from '@harnessio/ui/components'
+
+//...
+
+return (
+  <Tabs.Root defaultValue="tab1">
+    <Tabs.List>
+      <Tabs.Trigger value="tab1">Tab 1</Tabs.Trigger>
+      <Tabs.Trigger value="tab2">Tab 2</Tabs.Trigger>
+    </Tabs.List>
+    <Tabs.Content value="tab1">Content 1</Tabs.Content>
+    <Tabs.Content value="tab2">Content 2</Tabs.Content>
+  </Tabs.Root>
+)
+```
+
+## Anatomy
+
+All parts of the `Tabs` component can be imported and composed as required.
+
+```typescript jsx
+<Tabs.Root defaultValue="tab1">
+  <Tabs.List>
+    <Tabs.Trigger value="tab1">Tab 1</Tabs.Trigger>
+    <Tabs.Trigger value="tab2">Tab 2</Tabs.Trigger>
+  </Tabs.List>
+  <Tabs.Content value="tab1">Content 1</Tabs.Content>
+  <Tabs.Content value="tab2">Content 2</Tabs.Content>
+</Tabs.Root>
+```
+
+## API Reference
+
+### `Root`
+
+The root component for the tabs.
+
+```typescript jsx
+<Tabs.Root
+  defaultValue="tab1"      // Default value of the selected tab
+  value="tab1"             // [OPTIONAL] Value of the tab
+  variant="default"        // [OPTIONAL] Variant of the tabs
+  fontSize="sm"            // [OPTIONAL] Font size of the tabs
+  className="custom-class" // [OPTIONAL] Custom class name
+>
+  {/* Tabs content */}
+</Tabs.Root>
+```
+
+<DocsPage.PropsTable
+  props={[
+    {
+      name: "defaultValue",
+      description: "Default value of the selected tab",
+      required: true,
+      value: "string",
+    },
+    {
+      name: "value",
+      description: "Value of the tab",
+      required: false,
+      value: "string",
+    },
+    {
+      name: "variant",
+      description: "Variant of the tabs",
+      required: false,
+      value: "'default' | 'underline' | 'navigation' | 'tabnav'",
+    },
+    {
+      name: "fontSize",
+      description: "Font size of the tabs",
+      required: false,
+      value: "'xs' | 'sm'",
+    },
+    {
+      name: "className",
+      description: "Custom class name",
+      required: false,
+      value: "string",
+    },
+  ]}
+/>
+
+### `List`
+
+The list component that contains the tab triggers.
+
+```typescript jsx
+<Tabs.List
+  className="custom-class" // [OPTIONAL] Custom class name
+  variant="default"        // [OPTIONAL] Variant of the tabs
+  fontSize="sm"            // [OPTIONAL] Font size of the tabs
+>
+  <Tabs.Trigger value="tab1">Tab 1</Tabs.Trigger>
+  <Tabs.Trigger value="tab2">Tab 2</Tabs.Trigger>
+</Tabs.List>
+```
+
+<DocsPage.PropsTable
+  props={[
+    {
+      name: "className",
+      description: "Custom class name",
+      required: false,
+      value: "string",
+    },
+    {
+      name: "variant",
+      description: "Variant of the tabs",
+      required: false,
+      value: "'default' | 'underline' | 'navigation' | 'tabnav'",
+    },
+    {
+      name: "fontSize",
+      description: "Font size of the tabs",
+      required: false,
+      value: "'xs' | 'sm'",
+    },
+  ]}
+/>
+
+### `Trigger`
+
+The trigger component for individual tabs.
+
+```typescript jsx
+<Tabs.Trigger
+  value="tab1"             // Value of the tab
+  className="custom-class" // [OPTIONAL] Custom class name
+  variant="default"        // [OPTIONAL] Variant of the tabs
+>
+  Tab 1
+</Tabs.Trigger>
+```
+
+<DocsPage.PropsTable
+  props={[
+    {
+      name: "className",
+      description: "Custom class name",
+      required: false,
+      value: "string",
+    },
+    {
+      name: "variant",
+      description: "Variant of the tabs",
+      required: false,
+      value: "'default' | 'underline' | 'navigation' | 'tabnav'",
+    },
+    {
+      name: "value",
+      description: "Value of the tab",
+      required: true,
+      value: "string",
+    },
+  ]}
+/>
+
+### `Content`
+
+The content component for individual tabs.
+
+```typescript jsx
+<Tabs.Content
+  value="tab1"             // Value of the tab
+  className="custom-class" // [OPTIONAL] Custom class name
+  variant="default"        // [OPTIONAL] Variant of the tabs
+>
+  Content 1
+</Tabs.Content>
+```
+
+<DocsPage.PropsTable
+  props={[
+    {
+      name: "className",
+      description: "Custom class name",
+      required: false,
+      value: "string",
+    },
+    {
+      name: "variant",
+      description: "Variant of the tabs",
+      required: false,
+      value: "'default' | 'underline' | 'navigation' | 'tabnav'",
+    },
+    {
+      name: "value",
+      description: "Value of the tab",
+      required: true,
+      value: "string",
+    },
+  ]}
+/>

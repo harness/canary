@@ -31,6 +31,12 @@ export const repoWebhooksListStore: RepoWebhooksListStore = {
       }
     ],
     error: undefined,
+    webhookExecutionPage: 1,
+    setWebhookExecutionPage: (_: number) => {},
+    totalWebhookExecutionPages: 1,
+    executions: [],
+    setExecutions: () => {},
+    setTotalWebhookExecutionPages: (_: Headers) => {},
     setError: noop,
     totalPages: 20,
     webhookLoading: false,
@@ -40,6 +46,9 @@ export const repoWebhooksListStore: RepoWebhooksListStore = {
     setTotalPages: (_: Headers | undefined) => {},
     setWebhooks: (_data: ListRepoWebhooksOkResponse) => {},
     preSetWebhookData: null,
-    setPreSetWebhookData: (_: CreateWebhookFormFields | null) => {}
+    setPreSetWebhookData: (_: CreateWebhookFormFields | null) => {},
+    executionId: null,
+    setExecutionId: (_: number | null) => {},
+    updateExecution: () => {}
   })
 }

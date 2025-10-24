@@ -1,6 +1,6 @@
 // SuggestionCommentContent.tsx
 
-import { Button, MarkdownViewer } from '@components/index'
+import { Button, MarkdownViewer } from '@/components'
 import { CommitSuggestion } from '@views/repo/pull-request/pull-request.types'
 import { get } from 'lodash-es'
 

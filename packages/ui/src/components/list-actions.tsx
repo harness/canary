@@ -19,16 +19,16 @@ interface DropdownProps {
   selectedValue?: string | null
 }
 
-function Root({ children }: { children: ReactNode }) {
-  return <div className="flex items-center justify-between gap-6">{children}</div>
+function Root({ children, className }: { children: ReactNode; className?: string }) {
+  return <div className={cn('flex items-center justify-between gap-6', className)}>{children}</div>
 }
 
-function Left({ children }: { children: ReactNode }) {
-  return <div className="flex grow items-center gap-6">{children}</div>
+function Left({ children, className }: { children: ReactNode; className?: string }) {
+  return <div className={cn('flex grow items-center gap-6', className)}>{children}</div>
 }
 
-function Right({ children }: { children: ReactNode }) {
-  return <div className="flex items-center gap-6">{children}</div>
+function Right({ children, className }: { children: ReactNode; className?: string }) {
+  return <div className={cn('flex items-center gap-6', className)}>{children}</div>
 }
 
 function Dropdown({ title, items, onChange, selectedValue }: DropdownProps) {

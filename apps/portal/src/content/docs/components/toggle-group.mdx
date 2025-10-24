@@ -1,0 +1,218 @@
+---
+title: Toggle Group
+description: Toggle Group component documentation
+---
+
+The `ToggleGroup` component provides a set of toggle buttons that can be used to switch between different states or options. It is composed of subcomponents such as `ToggleGroup.Root` and `ToggleGroup.Item` to offer a structured and customizable interface.
+
+import { DocsPage } from "@/components/docs-page";
+
+<DocsPage.ComponentExample
+  client:only
+  code={`
+  <div className="flex flex-col space-y-8">
+    <section>
+      <div className="text-l font-semibold mb-4">Single Selection Example</div>
+      <ToggleGroup.Root type="single">
+        <ToggleGroup.Item value="1">Option 1</ToggleGroup.Item>
+        <ToggleGroup.Item value="2">Option 2</ToggleGroup.Item>
+        <ToggleGroup.Item value="3">Option 3</ToggleGroup.Item>
+      </ToggleGroup.Root>
+    </section>
+    <section>
+      <div className="text-l font-semibold mb-4">Multiple Selection Example with outline variant </div>
+      <ToggleGroup.Root type="multiple" variant="outline">
+        <ToggleGroup.Item value="1">Option 1</ToggleGroup.Item>
+        <ToggleGroup.Item value="2">Option 2</ToggleGroup.Item>
+        <ToggleGroup.Item value="3">Option 3</ToggleGroup.Item>
+      </ToggleGroup.Root>
+    </section>
+  </div>`}
+/>
+
+## Usage
+
+```typescript jsx
+import { ToggleGroup } from '@harnessio/ui/components'
+
+// ...
+
+return (
+  <ToggleGroup.Root onValueChange={updateControlledInputValue} value={controlledInputValue} type="single">
+    <ToggleGroup.Item value="1">Option 1</ToggleGroup.Item>
+    <ToggleGroup.Item value="2">Option 2</ToggleGroup.Item>
+    <ToggleGroup.Item value="3">Option 3</ToggleGroup.Item>
+  </ToggleGroup.Root>
+)
+```
+
+## Anatomy
+
+All parts of the Toggle Group component can be imported and composed as required.
+
+```typescript jsx
+<ToggleGroup.Root variant="compact">
+  <ToggleGroup.Item value="1">Option 1</ToggleGroup.Item>
+  <ToggleGroup.Item value="2">Option 2</ToggleGroup.Item>
+  <ToggleGroup.Item value="3">Option 3</ToggleGroup.Item>
+</ToggleGroup.Root>
+```
+
+## API Reference
+
+### Root
+
+The `Root` component serves as the main container for all toggle group elements.
+
+<DocsPage.PropsTable
+  props={[
+    {
+      name: "children",
+      description: "You can pass in your `ToggleGroup.Item` as childrens",
+      required: true,
+      value: "ReactNode",
+    },
+    {
+      name: "className",
+      description: "Additional class names to apply to the root element",
+      required: false,
+      value: "string",
+    },
+    {
+      name: "variant",
+      description: "Variant of the toggle group",
+      required: false,
+      value: "'default' | 'outline' | 'compact'",
+      defaultValue: "default",
+    },
+    {
+      name: "type",
+      description: "Type of the toggle group",
+      required: true,
+      value: "'single' | 'multiple'",
+    },
+    {
+      name: "value",
+      description:
+        "Controlled stateful value of the item(s) that is/are pressed",
+      required: false,
+      value: "string | string[]",
+    },
+    {
+      name: "defaultValue",
+      description:
+        "Value of the item(s) that is/are pressed when initially rendered",
+      required: false,
+      value: "string | string[]",
+    },
+    {
+      name: "onValueChange",
+      description:
+        "Callback that fires when the value of the toggle group changes",
+      required: false,
+      value: "(value: string | string[]) => void",
+    },
+    {
+      name: "disabled",
+      description: "Whether the group is disabled from user interaction",
+      required: false,
+      value: "boolean",
+      defaultValue: "false",
+    },
+    {
+      name: "rovingFocus",
+      description:
+        "Whether the group should maintain roving focus of its buttons",
+      required: false,
+      value: "boolean",
+      defaultValue: "true",
+    },
+    {
+      name: "loop",
+      description: "Whether the focus should loop around when reaching the end",
+      required: false,
+      value: "boolean",
+      defaultValue: "true",
+    },
+    {
+      name: "orientation",
+      description:
+        "Orientation of the toggle group as how focus moves using arrows",
+      required: false,
+      value: "'horizontal' | 'vertical'",
+      defaultValue: "horizontal",
+    },
+  ]}
+/>
+
+### Item
+
+The `Item` component is used to define each toggle button within the group.
+
+```typescript jsx
+<ToggleGroup.Item value="1">Option 1</ToggleGroup.Item>
+```
+
+<DocsPage.PropsTable
+  props={[
+    {
+      name: "children",
+      description: "Content to display",
+      required: true,
+      value: "ReactNode",
+    },
+    {
+      name: "className",
+      description: "Additional class names to apply to the item",
+      required: false,
+      value: "string",
+    },
+    {
+      name: "value",
+      description: "Value of the toggle item",
+      required: true,
+      value: "string",
+    },
+    {
+      name: "variant",
+      description: "Variant of the toggle item",
+      required: false,
+      value: "'default' | 'outline' | 'compact'",
+      defaultValue: "default",
+    },
+    {
+      name: "size",
+      description: "Size of the toggle item",
+      required: false,
+      value: "'default' | 'sm' | 'lg' | 'xs'",
+      defaultValue: "default",
+    },
+    {
+      name: "disabled",
+      description: "Whether the item is disabled from user interaction",
+      required: false,
+      value: "boolean",
+      defaultValue: "false",
+    },
+    {
+      name: "pressed",
+      description: "The controlled state of the toggle",
+      required: false,
+      value: "boolean",
+      defaultValue: "false",
+    },
+    {
+      name: "defaultPressed",
+      description: "The state of the toggle when initially rendered",
+      required: false,
+      value: "boolean",
+      defaultValue: "false",
+    },
+    {
+      name: "onPressedChange",
+      description: "Callback that fires when the state of the toggle changes",
+      required: false,
+      value: "(pressed: boolean) => void",
+    },
+  ]}
+/>

@@ -2,7 +2,7 @@ import { useCallback, useState } from 'react'
 
 import { repoBranchListStore } from '@subjects/stores/repo-branch-store'
 import { useRepoRulesStore } from '@subjects/views/repo-general-settings/use-repo-rules-store'
-import { useTranslationsStore } from '@utils/viewUtils'
+import { useTranslationStore } from '@utils/viewUtils'
 
 import { DeleteAlertDialog } from '@harnessio/ui/components'
 import { ErrorTypes, RepoSettingsGeneralPage } from '@harnessio/ui/views'
@@ -32,12 +32,7 @@ export const RepoGeneralSettings = () => {
   const closeRepoAlertDeleteDialog = () => setRepoAlertDeleteDialogOpen(false)
   const openRepoAlertDeleteDialog = () => setRepoAlertDeleteDialogOpen(true)
 
-  const useRepoBranchesStore = useCallback(
-    () => ({
-      ...repoBranchListStore
-    }),
-    []
-  )
+  const useRepoBranchesStore = useCallback(() => ({ ...repoBranchListStore }), [])
 
   return (
     <>
@@ -50,7 +45,7 @@ export const RepoGeneralSettings = () => {
         isRepoUpdateSuccess={false}
         useRepoRulesStore={useRepoRulesStore}
         useRepoBranchesStore={useRepoBranchesStore}
-        useTranslationStore={useTranslationsStore}
+        useTranslationStore={useTranslationStore}
         handleRuleClick={() => {}}
         openRulesAlertDeleteDialog={openRulesAlertDeleteDialog}
         openRepoAlertDeleteDialog={openRepoAlertDeleteDialog}
@@ -68,7 +63,7 @@ export const RepoGeneralSettings = () => {
         type="rule"
         identifier={alertDeleteParams}
         isLoading={false}
-        useTranslationStore={useTranslationsStore}
+        useTranslationStore={useTranslationStore}
       />
 
       <DeleteAlertDialog
@@ -78,7 +73,7 @@ export const RepoGeneralSettings = () => {
         error={apiError?.type === ErrorTypes.DELETE_REPO ? apiError : null}
         type="repository"
         isLoading={false}
-        useTranslationStore={useTranslationsStore}
+        useTranslationStore={useTranslationStore}
         withForm
       />
     </>

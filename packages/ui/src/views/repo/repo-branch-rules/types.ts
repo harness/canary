@@ -38,18 +38,6 @@ export interface FieldProps {
   t: TFunction
 }
 
-export interface BypassUsersList {
-  id: number
-  uid: string
-  display_name: string
-  email: string
-  type: 'user' | 'service' | 'serviceaccount'
-  created: number
-  updated: number
-  // TODO: need to add avatar
-  url?: string
-}
-
 export enum BranchRuleId {
   REQUIRE_LATEST_COMMIT = 'require_latest_commit',
   REQUIRE_NO_CHANGE_REQUEST = 'require_no_change_request',

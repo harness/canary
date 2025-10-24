@@ -30,6 +30,7 @@ import Cog6 from '../icons/cog-6.svg'
 import Comments from '../icons/comments.svg'
 import Connectors from '../icons/connectors-icon.svg'
 import CreateWorkspace from '../icons/create-workspace.svg'
+import CrossCircle from '../icons/cross-circle.svg'
 import Download from '../icons/download.svg'
 import Edit from '../icons/edit.svg'
 import Environment from '../icons/environment-icon.svg'
@@ -101,6 +102,7 @@ import TubeSign from '../icons/tube-sign.svg'
 import Unmerged from '../icons/unmerged.svg'
 import Unpin from '../icons/unpin.svg'
 import VerticalEllipsis from '../icons/vertical-ellipsis.svg'
+import WarningTriangleOutline from '../icons/warning-triangle-outline.svg'
 import XMark from '../icons/x-mark.svg'
 
 // import Fork from '../icons/fork.svg'
@@ -207,7 +209,9 @@ const IconNameMap = {
   'green-tick': GreenTick,
   'cancel-grey': CancelGrey,
   'harness-logo-text': HarnessLogoText,
-  account: Account
+  account: Account,
+  'cross-circle': CrossCircle,
+  'warning-triangle-outline': WarningTriangleOutline
   // fork: Fork
 } satisfies Record<string, React.FunctionComponent<React.SVGProps<SVGSVGElement>>>
 

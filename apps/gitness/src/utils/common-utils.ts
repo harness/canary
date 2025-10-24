@@ -1,4 +1,5 @@
 import { LivelogLine } from '@harnessio/code-service-client'
+import { RepoFile, SummaryItemType } from '@harnessio/ui/views'
 
 export const createAndDownloadBlob = (output: string, fileName: string) => {
   if (!output?.length) return
@@ -21,7 +22,7 @@ export const getLogsText = (logs: LivelogLine[]) => {
   return output
 }
 
-export const getInitials = (name: string, length?: number) => {
+export const getInitials = (name: string, length = 2) => {
   // Split the name into an array of words, ignoring empty strings
   const words = name.split(' ').filter(Boolean)
 
@@ -32,4 +33,15 @@ export const getInitials = (name: string, length?: number) => {
 
   // If length is provided, truncate the initials to the desired length
   return length ? initials.slice(0, length) : initials
+}
+
+export const sortFilesByType = (entries: RepoFile[]): RepoFile[] => {
+  return entries.sort((a, b) => {
+    if (a.type === SummaryItemType.Folder && b.type === SummaryItemType.File) {
+      return -1
+    } else if (a.type === SummaryItemType.File && b.type === SummaryItemType.Folder) {
+      return 1
+    }
+    return 0
+  })
 }

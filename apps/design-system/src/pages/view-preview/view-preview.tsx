@@ -16,6 +16,7 @@ import PipelineGraphMinimalWrapper from '@subjects/views/pipeline-graph/pipeline
 import PipelineListWrapper from '@subjects/views/pipeline-list/pipeline-list'
 import { ProfileSettingsView } from '@subjects/views/profile-settings'
 import { ProfileSettingsKeysView } from '@subjects/views/profile-settings-keys'
+import { ProjectSettingsView } from '@subjects/views/project-settings/project-settings'
 import PullRequestCompareWrapper from '@subjects/views/pull-request-compare/pull-request-compare'
 import PullRequestChangesWrapper from '@subjects/views/pull-request-conversation/pull-request-changes-wrapper'
 import PullRequestCommits from '@subjects/views/pull-request-conversation/pull-request-commits'
@@ -39,12 +40,15 @@ import { RepoWebhooksList } from '@subjects/views/repo-webhooks-list/repo-webhoo
 import { SignInView } from '@subjects/views/signin'
 import { SignUpView } from '@subjects/views/signup'
 import { SpaceSettingsMembers } from '@subjects/views/space-settings-members/space-settings-members'
-import { useTranslationsStore } from '@utils/viewUtils'
+import { useTranslationStore } from '@utils/viewUtils'
 
+import { ChatEmptyPreviewWrapper, ChatPreviewWrapper } from '@harnessio/ui/components'
 import { NotFoundPage } from '@harnessio/ui/views'
 
 import { CommitDetailsDiffViewWrapper } from './commit-details-diff-view-wrapper'
 import CommitDetailsViewWrapper from './commit-details-view-wrapper'
+import { ExecutionGraphViewWrapper } from './execution-graph-view-wrapper'
+import { ExecutionLogsViewWrapper } from './execution-logs-view-wrapper'
 import { ProjectSettingsWrapper } from './project-settings-wrapper'
 import PullRequestLayoutWrapper from './pull-request-layout-wrapper'
 import { RepoFilesViewWrapper } from './repo-files-view-wrapper'
@@ -161,6 +165,16 @@ export const viewPreviews: Record<string, ReactNode> = {
       <PipelineGraphWrapper />
     </RepoViewWrapper>
   ),
+  'chat-preview': (
+    <RepoViewWrapper>
+      <ChatPreviewWrapper />
+    </RepoViewWrapper>
+  ),
+  'chat-empty-preview': (
+    <RepoViewWrapper>
+      <ChatEmptyPreviewWrapper />
+    </RepoViewWrapper>
+  ),
   'pipeline-graph-minimal': (
     <RepoViewWrapper>
       <PipelineGraphMinimalWrapper />
@@ -212,7 +226,7 @@ export const viewPreviews: Record<string, ReactNode> = {
   'rule-not-found': (
     <RepoViewWrapper>
       <RepoSettingsViewWrapper>
-        <NotFoundPage useTranslationStore={useTranslationsStore} pageTypeText="rules" />
+        <NotFoundPage useTranslationStore={useTranslationStore} pageTypeText="rules" />
       </RepoSettingsViewWrapper>
     </RepoViewWrapper>
   ),
@@ -233,6 +247,11 @@ export const viewPreviews: Record<string, ReactNode> = {
       <SpaceSettingsMembers />
     </ProjectSettingsWrapper>
   ),
+  'project-settings': (
+    <ProjectSettingsWrapper>
+      <ProjectSettingsView />
+    </ProjectSettingsWrapper>
+  ),
   'profile-settings': (
     <RootViewWrapper>
       <ProfileSettingsViewWrapper>
@@ -251,6 +270,16 @@ export const viewPreviews: Record<string, ReactNode> = {
     <ProjectSettingsWrapper>
       <LabelsForm />
     </ProjectSettingsWrapper>
+  ),
+  'execution-details/logs': (
+    <RootViewWrapper>
+      <ExecutionLogsViewWrapper />
+    </RootViewWrapper>
+  ),
+  'execution-details/graph': (
+    <RootViewWrapper>
+      <ExecutionGraphViewWrapper />
+    </RootViewWrapper>
   )
 }
 

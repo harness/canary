@@ -1,7 +1,8 @@
 FROM node:20-slim AS base
 ENV PNPM_HOME="/pnpm"
 ENV PATH="$PNPM_HOME:$PATH"
-RUN corepack enable
+# install pnpm
+RUN npm install -g pnpm@latest-10
 COPY . /canary
 WORKDIR /canary
 
@@ -12,13 +13,10 @@ RUN --mount=type=cache,id=pnpm,target=/pnpm/store pnpm install --prod --frozen-l
 FROM base AS build
 # install deps
 RUN --mount=type=cache,id=pnpm,target=/pnpm/store pnpm install --frozen-lockfile
-# build all the packages and apps
-RUN pnpm run build
-# build the microfrontend
-WORKDIR /canary/apps/gitness
-RUN pnpm run build:webpack
+# build all the packages and apps except portal and design-system
+RUN pnpm --filter \!portal --filter \!design-system run build
 
-FROM node:20-slim AS final
+FROM alpine:3.21 AS final
 COPY --from=build /canary/apps/gitness/dist /canary-dist
 WORKDIR /canary-dist
 

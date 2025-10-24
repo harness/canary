@@ -139,9 +139,7 @@ function Item({ icon, text, description, active, submenuItem, className }: ItemP
     )
 
   return (
-    <div
-      className={cn('group flex cursor-pointer select-none items-center gap-2.5 py-1', { 'gap-0': !icon }, className)}
-    >
+    <div className={cn('group flex cursor-pointer select-none items-center gap-2 py-1', { 'gap-0': !icon }, className)}>
       {icon && (
         <div
           className={cn(

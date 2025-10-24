@@ -4,7 +4,6 @@ import { useQueryClient } from '@tanstack/react-query'
 
 import {
   EnumMembershipRole,
-  TypesPrincipalInfo,
   useListPrincipalsQuery,
   useMembershipAddMutation,
   useMembershipDeleteMutation,
@@ -12,6 +11,7 @@ import {
   useMembershipUpdateMutation
 } from '@harnessio/code-service-client'
 import { DeleteAlertDialog } from '@harnessio/ui/components'
+import { PrincipalType } from '@harnessio/ui/types'
 import { InviteMemberFormFields, MembersProps, ProjectMemberListView } from '@harnessio/ui/views'
 
 import { useGetSpaceURLParam } from '../../framework/hooks/useGetSpaceParam'
@@ -41,7 +41,7 @@ export function ProjectMemberListPage() {
   const { queryPage } = usePaginationQueryStateWithStore({ page, setPage })
 
   const { data: { body: principalData } = {} } = useListPrincipalsQuery({
-    // @ts-expect-error : BE issue - not implemnted
+    // @ts-expect-error : BE issue - not implemented
     queryParams: { page: 1, limit: 100, type: 'user', query: principalsSearchQuery }
   })
 
@@ -140,15 +140,7 @@ export function ProjectMemberListPage() {
 
   useEffect(() => {
     if (principalData) {
-      setPrincipalList(
-        principalData.map((member: TypesPrincipalInfo) => ({
-          display_name: member?.display_name ?? '',
-          uid: member?.uid ?? '',
-          email: member?.email ?? '',
-          // TODO: add avatar to API response
-          avatar_url: ''
-        }))
-      )
+      setPrincipalList(principalData as PrincipalType[])
     }
   }, [principalData, setPrincipalList])
 
@@ -202,14 +194,7 @@ export function ProjectMemberListPage() {
         open={deleteMemberId !== null}
         onClose={handleResetDeleteMember}
         deleteFn={handleDeleteMember}
-        error={
-          deleteMemberError
-            ? {
-                type: '',
-                message: deleteMemberError?.message || ''
-              }
-            : null
-        }
+        error={deleteMemberError ? { message: deleteMemberError?.message ?? '' } : null}
         type="member"
         identifier={deleteMemberId ?? undefined}
         isLoading={isDeletingMember}

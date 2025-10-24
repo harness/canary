@@ -1,6 +1,6 @@
 import { ChangeEvent, useEffect, useState } from 'react'
 
-import { AlertDialog, Button, ButtonGroup, Icon, Textarea } from '@/components'
+import { AlertDialog, Button, ButtonGroup, Textarea } from '@/components'
 
 interface EditRepoDetailsDialog {
   showEditRepoDetails: boolean
@@ -27,20 +27,13 @@ export const EditRepoDetails = ({
   }, [description])
   return (
     <AlertDialog.Root open={showEditRepoDetails} onOpenChange={onClose}>
-      <AlertDialog.Content className="h-80 max-h-[70vh] w-[460px] !rounded" onOverlayClick={handleClose}>
+      <AlertDialog.Content
+        className="h-80 max-h-[70vh] w-[460px] !rounded"
+        onClose={handleClose}
+        onOverlayClick={handleClose}
+      >
         <AlertDialog.Header>
-          <AlertDialog.Title className="mb-4">
-            Repository Description
-            <Button
-              className="absolute right-1 top-1 text-icons-4 hover:text-icons-2"
-              variant="custom"
-              size="icon"
-              onClick={handleClose}
-            >
-              <Icon name="close" size={16} />
-              <span className="sr-only">Close</span>
-            </Button>
-          </AlertDialog.Title>
+          <AlertDialog.Title className="mb-4">Repository Description</AlertDialog.Title>
         </AlertDialog.Header>
         <Textarea
           label="Description"

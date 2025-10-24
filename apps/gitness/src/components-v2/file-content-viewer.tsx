@@ -2,13 +2,7 @@ import { useEffect, useMemo, useState } from 'react'
 import { useNavigate, useParams } from 'react-router-dom'
 
 import { OpenapiGetContentOutput, TypesCommit, useListCommitsQuery } from '@harnessio/code-service-client'
-import {
-  FileViewerControlBar,
-  MarkdownViewer,
-  PaginationComponent,
-  SkeletonList,
-  ViewTypeValue
-} from '@harnessio/ui/components'
+import { FileViewerControlBar, MarkdownViewer, Pagination, SkeletonList, ViewTypeValue } from '@harnessio/ui/components'
 import { BranchSelectorTab, CommitsList } from '@harnessio/ui/views'
 import { CodeEditor } from '@harnessio/yaml-editor'
 
@@ -60,7 +54,8 @@ export default function FileContentViewer({ repoContent }: FileContentViewerProp
   const parentPath = fullResourcePath?.split(FILE_SEPERATOR).slice(0, -1).join(FILE_SEPERATOR)
   const downloadFile = useDownloadRawFile()
   const navigate = useNavigate()
-  const rawURL = useAPIPath(`/api/v1/repos/${repoRef}/raw/${fullResourcePath}?git_ref=${fullGitRef}`)
+  const apiPath = useAPIPath()
+  const rawURL = apiPath(`/api/v1/repos/${repoRef}/raw/${fullResourcePath}?git_ref=${fullGitRef}`)
   const [view, setView] = useState<ViewTypeValue>(getDefaultView(language))
   const [isDeleteFileDialogOpen, setIsDeleteFileDialogOpen] = useState(false)
   const { selectedBranchTag, selectedRefType } = useRepoBranchesStore()
@@ -195,13 +190,7 @@ export default function FileContentViewer({ repoContent }: FileContentViewerProp
                 committer: item.committer
               }))}
             />
-            <PaginationComponent
-              nextPage={xNextPage}
-              previousPage={xPrevPage}
-              currentPage={page}
-              goToPage={setPage}
-              t={t}
-            />
+            <Pagination nextPage={xNextPage} previousPage={xPrevPage} currentPage={page} goToPage={setPage} t={t} />
           </div>
         )
       default:

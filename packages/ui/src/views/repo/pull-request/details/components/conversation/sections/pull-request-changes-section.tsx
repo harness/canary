@@ -1,4 +1,4 @@
-import { Accordion, Avatar, AvatarFallback, Badge, Icon, Layout, StackedList } from '@/components'
+import { Accordion, Avatar, Badge, Icon, Layout, StackedList } from '@/components'
 import {
   easyPluralize,
   TypesCodeOwnerEvaluation,
@@ -58,7 +58,7 @@ interface HeaderItemProps {
   header: string
 }
 const HeaderItem: React.FC<HeaderItemProps> = ({ header }: HeaderItemProps) => {
-  return <span className="text-12 text-foreground-3">{header}</span>
+  return <span className="text-12 text-foreground-1">{header}</span>
 }
 
 const AvatarItem: React.FC<AvatarItemProps> = ({ evaluations }: AvatarItemProps) => {
@@ -71,13 +71,9 @@ const AvatarItem: React.FC<AvatarItemProps> = ({ evaluations }: AvatarItemProps)
             evaluations.map(({ owner }, idx) => {
               if (idx < 2) {
                 return (
-                  <Avatar key={owner?.id} className="size-6 rounded-full">
-                    <AvatarFallback>
-                      <span className="text-12 text-foreground-3">
-                        {owner?.display_name && getInitials(owner?.display_name)}
-                      </span>
-                    </AvatarFallback>
-                  </Avatar>
+                  <Avatar.Root key={owner?.id || idx}>
+                    <Avatar.Fallback>{getInitials(owner?.display_name || '')}</Avatar.Fallback>
+                  </Avatar.Root>
                 )
               }
               if (idx === 2 && evaluations.length && evaluations.length > 2) {
@@ -116,13 +112,13 @@ const PullRequestChangesSection = ({
     switch (status) {
       // TODO: fix icons to use from nucleo
       case 'pending':
-        return <Icon name="pending-clock" className="text-warning" />
+        return <Icon name="pending-clock" className="text-icons-alert" />
       case 'warning':
         return <Icon name="triangle-warning" className="text-tertiary-background" />
       case 'error':
         return <Icon name="triangle-warning" className="text-destructive" />
       default:
-        return <Icon name="success" className="text-success" />
+        return <Icon name="success" className="text-foreground-success" />
     }
   }
 
@@ -162,7 +158,7 @@ const PullRequestChangesSection = ({
     if (latestCodeOwnerApprovalArr && latestCodeOwnerApprovalArr?.length > 0 && reqCodeOwnerLatestApproval) {
       return (
         <div className="flex items-center gap-x-2">
-          <Icon name="success" className="text-success" />
+          <Icon name="success" className="text-foreground-success" />
           <span className="text-14 text-foreground-1">Latest changes were approved by code owners</span>
         </div>
       )
@@ -170,7 +166,7 @@ const PullRequestChangesSection = ({
     if (codeOwnerApprovalEntries && codeOwnerApprovalEntries?.length > 0 && reqCodeOwnerApproval) {
       return (
         <div className="flex items-center gap-x-2">
-          <Icon name="success" className="text-success" />
+          <Icon name="success" className="text-foreground-success" />
           <span className="text-14 text-foreground-1">Changes were approved by code owners</span>
         </div>
       )
@@ -184,7 +180,7 @@ const PullRequestChangesSection = ({
       ) {
         return (
           <div className="flex items-center gap-x-2">
-            <Icon name="pending-clock" className="text-warning" />
+            <Icon name="pending-clock" className="text-icons-alert" />
             <span className="text-14 text-foreground-1">
               Latest changes are pending approval from required reviewers
             </span>
@@ -222,10 +218,15 @@ const PullRequestChangesSection = ({
         }}
       >
         <StackedList.Field
+          className="gap-y-1"
           title={<LineTitle text={changesInfo.header} icon={getStatusIcon(changesInfo.status)} />}
           description={<LineDescription text={changesInfo.content} />}
         />
-        {viewBtn && <span className="px-2 py-1.5 text-14 text-foreground-2">Show more</span>}
+        {viewBtn && (
+          <span className="px-2 py-1.5 text-14 text-foreground-2 transition-colors duration-200 group-hover:text-foreground-1">
+            Show more
+          </span>
+        )}
       </Accordion.Trigger>
 
       <Accordion.Content>
@@ -236,7 +237,7 @@ const PullRequestChangesSection = ({
             <div className="ml-6 flex items-center justify-between">
               {approvedEvaluations && minApproval && minApproval <= approvedEvaluations?.length ? (
                 <div className="flex items-center gap-x-2">
-                  <Icon name="success" className="text-icons-success" />
+                  <Icon name="success" className="text-foreground-success" />
                   <span className="text-14 text-foreground-1">
                     {`Changes were approved by ${approvedEvaluations?.length} ${easyPluralize(approvedEvaluations?.length, 'reviewer', 'reviewers')}`}
                   </span>
@@ -261,7 +262,7 @@ const PullRequestChangesSection = ({
               minReqLatestApproval !== undefined &&
               minReqLatestApproval <= latestApprovalArr?.length ? (
                 <div className="flex items-center gap-x-2">
-                  <Icon name="success" className="text-icons-success" />
+                  <Icon name="success" className="text-foreground-success" />
                   <span className="text-14 text-foreground-1">{`Latest changes were approved by ${latestApprovalArr?.length || minReqLatestApproval || ''} ${easyPluralize(latestApprovalArr?.length || minReqLatestApproval, 'reviewer', 'reviewers')}`}</span>
                 </div>
               ) : (

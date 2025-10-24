@@ -60,6 +60,15 @@ export function ThemeProvider({ children, defaultTheme }: ThemeProviderProps) {
     } else {
       root.classList.add(mode)
     }
+
+    // Set color-scheme meta tag
+    const colorSchemeMeta =
+      (document.querySelector('meta[name="color-scheme"]') as HTMLMetaElement) || document.createElement('meta')
+    colorSchemeMeta.name = 'color-scheme'
+    colorSchemeMeta.content = mode === ModeType.System ? systemMode.toLowerCase() : mode.toLowerCase()
+    if (!colorSchemeMeta.parentNode) {
+      document.head.appendChild(colorSchemeMeta)
+    }
   }, [theme, setTheme, systemMode])
 
   return <>{children}</>

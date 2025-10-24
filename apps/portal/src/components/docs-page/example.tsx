@@ -3,6 +3,7 @@ import { LiveEditor, LivePreview, LiveProvider } from "react-live";
 
 import ExampleLayout from "./example-layout";
 import { themes } from "prism-react-renderer";
+import { createMemoryRouter, RouterProvider } from "react-router-dom";
 
 type LiveProviderProps = ComponentProps<typeof LiveProvider>;
 
@@ -13,13 +14,19 @@ const Example: FC<ExampleProps> = ({ code, scope }) => {
     () => ({ ...scope, ExampleLayout }),
     [scope],
   );
-
+  const router = createMemoryRouter([
+    {
+      path: "*",
+      element: (
+        <LivePreview className="not-content border-borders-4 bg-background-4 dark-std-std mb-0 rounded-lg border p-6 shadow-md" />
+      ),
+    },
+  ]);
   return (
     <div className="my-12 flex flex-col justify-start gap-0 pb-3">
       <LiveProvider code={code} scope={scopeWithLayout}>
         <h2>Preview</h2>
-        <LivePreview className="not-content border-borders-4 bg-background-4 dark-std-std mb-0 rounded-lg border p-6 shadow-md" />
-
+        <RouterProvider router={router} />
         <h3>Live editor</h3>
         <LiveEditor theme={themes["vsDark"]} />
       </LiveProvider>

@@ -13,15 +13,9 @@ import {
   DropdownMenuShortcut,
   DropdownMenuTrigger,
   Icon,
-  Table,
-  TableBody,
-  TableCell,
-  TableHead,
-  TableHeader,
-  TableRow,
   Text
 } from '@harnessio/canary'
-import { CommitCopyActions, CopyButton } from '@harnessio/ui/components'
+import { CommitCopyActions, CopyButton, Table } from '@harnessio/ui/components'
 
 import { getInitials } from '../utils/utils'
 import { DivergenceGauge } from './divergence-gauge'
@@ -94,32 +88,32 @@ export const BranchesList = ({ branches, spaceId, repoId, defaultBranch }: PageP
     )
   }
   return (
-    <Table variant="asStackedList">
-      <TableHeader>
-        <TableRow>
-          <TableHead>Branch</TableHead>
-          <TableHead>Updated</TableHead>
+    <Table.Root variant="asStackedList">
+      <Table.Header>
+        <Table.Row>
+          <Table.Head>Branch</Table.Head>
+          <Table.Head>Updated</Table.Head>
           {branches[0]?.checks?.done && branches[0]?.checks?.total && branches[0]?.checks?.status && (
-            <TableHead>Check status</TableHead>
+            <Table.Head>Check status</Table.Head>
           )}
-          <TableHead className="box-border text-center">
+          <Table.Head className="box-border text-center">
             <span className="border-gray-20 w-[50%] border-r-2 px-1.5 text-right">Behind</span>
             <span className="w-[50%] px-1.5 text-left">Ahead</span>
-          </TableHead>
+          </Table.Head>
           {/* since we don't have the data for pull request, we can change data to Commit to match the original gitness */}
-          {branches[0]?.sha && <TableHead className="text-center">Commit</TableHead>}
-          <TableHead>
+          {branches[0]?.sha && <Table.Head className="text-center">Commit</Table.Head>}
+          <Table.Head>
             <></>
-          </TableHead>
-        </TableRow>
-      </TableHeader>
-      <TableBody>
+          </Table.Head>
+        </Table.Row>
+      </Table.Header>
+      <Table.Body>
         {branches &&
           branches.map(branch => {
             return (
-              <TableRow key={branch.id}>
+              <Table.Row key={branch.id}>
                 {/* branch name */}
-                <TableCell className="content-center">
+                <Table.Cell className="content-center">
                   <div className="flex items-center gap-1.5">
                     <Text wrap="nowrap" truncate className="text-primary/90">
                       <Button variant="secondary" size="xs">
@@ -129,9 +123,9 @@ export const BranchesList = ({ branches, spaceId, repoId, defaultBranch }: PageP
                     </Text>
                     <CopyButton name={branch.name} />
                   </div>
-                </TableCell>
+                </Table.Cell>
                 {/* user avatar and timestamp */}
-                <TableCell className="content-center">
+                <Table.Cell className="content-center">
                   <div className="flex items-center gap-1.5">
                     <Avatar className="size-5">
                       {branch.user.avatarUrl && <AvatarImage src={branch.user.avatarUrl} />}
@@ -143,20 +137,20 @@ export const BranchesList = ({ branches, spaceId, repoId, defaultBranch }: PageP
                       {branch.timestamp}
                     </Text>
                   </div>
-                </TableCell>
+                </Table.Cell>
                 {/* checkstatus: show in the playground, hide the check status column if the checks are null in the gitness without data */}
                 {branch?.checks?.done && branch?.checks?.total && branch?.checks?.status && (
-                  <TableCell className="content-center">
+                  <Table.Cell className="content-center">
                     <div className="flex items-center gap-1.5">
                       <Icon name="tick" size={11} className="text-success" />
                       <Text size={2} wrap="nowrap" truncate className="text-tertiary-background">
                         {branch?.checks?.done} / {branch?.checks?.total}
                       </Text>
                     </div>
-                  </TableCell>
+                  </Table.Cell>
                 )}
                 {/* calculated divergence bar & default branch */}
-                <TableCell className="content-center">
+                <Table.Cell className="content-center">
                   <div className="flex content-center items-center gap-1.5 align-middle">
                     {branch.behindAhead.default ? (
                       <Badge
@@ -170,23 +164,23 @@ export const BranchesList = ({ branches, spaceId, repoId, defaultBranch }: PageP
                       <DivergenceGauge behindAhead={branch.behindAhead} />
                     )}
                   </div>
-                </TableCell>
+                </Table.Cell>
                 {/* change commit data instead: SHA */}
                 {branch.sha && (
-                  <TableCell className="content-center">
+                  <Table.Cell className="content-center">
                     <div className="flex items-center justify-center gap-1.5">
                       {/* <Icon name="open-pr" size={11} className="text-success" /> */}
                       <Text wrap="nowrap" size={1} truncate className="font-mono text-tertiary-background">
                         <CommitCopyActions sha={branch.sha} />
                       </Text>
                     </div>
-                  </TableCell>
+                  </Table.Cell>
                 )}
-                <TableCell className="content-center">{moreActionsTooltip(branch)}</TableCell>
-              </TableRow>
+                <Table.Cell className="content-center">{moreActionsTooltip(branch)}</Table.Cell>
+              </Table.Row>
             )
           })}
-      </TableBody>
-    </Table>
+      </Table.Body>
+    </Table.Root>
   )
 }

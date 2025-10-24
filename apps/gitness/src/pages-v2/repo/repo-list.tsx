@@ -1,9 +1,11 @@
-import { useCallback, useEffect, useMemo } from 'react'
-import { useParams } from 'react-router-dom'
+import { useCallback, useEffect, useMemo, useState } from 'react'
+import { Link, useParams } from 'react-router-dom'
 
-import { ListReposOkResponse, useListReposQuery } from '@harnessio/code-service-client'
+import { RepoRepositoryOutput, useDeleteRepositoryMutation, useListReposQuery } from '@harnessio/code-service-client'
+import { ToastAction, useToast } from '@harnessio/ui/components'
 import { RepositoryType, SandboxRepoListPage } from '@harnessio/ui/views'
 
+import { Toaster } from '../../components-v2/toaster'
 import { useRoutes } from '../../framework/context/NavigationContext'
 import { useGetSpaceURLParam } from '../../framework/hooks/useGetSpaceParam'
 import { useQueryState } from '../../framework/hooks/useQueryState'
@@ -19,14 +21,17 @@ export default function ReposListPage() {
   const routes = useRoutes()
   const { spaceId } = useParams<PathParams>()
   const spaceURL = useGetSpaceURLParam() ?? ''
-  const { setRepositories, page, setPage } = useRepoStore()
+  const { setRepositories, page, setPage, importRepoIdentifier, setImportRepoIdentifier, addRepository } =
+    useRepoStore()
+  const [importToastId, setImportToastId] = useState<string | null>(null)
+  const { toast, dismiss, update } = useToast()
 
   const [query, setQuery] = useQueryState('query')
   const { queryPage } = usePaginationQueryStateWithStore({ page, setPage })
 
   const {
     data: { body: repoData, headers } = {},
-    refetch,
+    refetch: refetchListRepos,
     isFetching,
     isError,
     error
@@ -43,6 +48,18 @@ export default function ReposListPage() {
     }
   )
 
+  const { mutate: deleteRepository, isLoading: isCancellingImport } = useDeleteRepositoryMutation(
+    {},
+    {
+      onSuccess: () => {
+        dismiss(importToastId ?? '')
+        setImportToastId(null)
+        setImportRepoIdentifier(null)
+        refetchListRepos()
+      }
+    }
+  )
+
   useEffect(() => {
     const totalPages = parseInt(headers?.get(PageResponseHeader.xTotalPages) || '0')
     if (repoData) {
@@ -53,17 +70,53 @@ export default function ReposListPage() {
     }
   }, [repoData, headers, setRepositories])
 
-  const isRepoStillImporting: boolean = useMemo(() => {
-    return repoData?.some(repository => repository.importing) ?? false
-  }, [repoData])
+  // const isRepoImporting: boolean = useMemo(() => {
+  //   return repoData?.some(repository => repository.importing) ?? false
+  // }, [repoData])
+
+  useEffect(() => {
+    if (importRepoIdentifier && !importToastId) {
+      const { id } = toast({
+        title: `Import in progress`,
+        description: importRepoIdentifier,
+        duration: Infinity,
+        action: (
+          <ToastAction
+            onClick={() => {
+              deleteRepository({
+                queryParams: {},
+                repo_ref: `${spaceURL}/${importRepoIdentifier}/+`
+              })
+            }}
+            altText="Cancel import"
+          >
+            {isCancellingImport ? 'Canceling...' : 'Cancel'}
+          </ToastAction>
+        )
+      })
+      setImportToastId(id)
+    }
+  }, [importRepoIdentifier, setImportRepoIdentifier])
 
   const onEvent = useCallback(
-    (_eventRepos: ListReposOkResponse) => {
-      if (repoData?.some(repository => repository.importing)) {
-        refetch()
-      }
+    (eventData: RepoRepositoryOutput) => {
+      update({
+        id: importToastId ?? '',
+        title: 'Repository imported',
+        description: importRepoIdentifier,
+        duration: 5000,
+        action: (
+          <Link to={routes.toRepoSummary({ spaceId, repoId: importRepoIdentifier ?? '' })}>
+            <ToastAction altText="View repository">View</ToastAction>
+          </Link>
+        ),
+        variant: 'success'
+      })
+      const transformedRepo = transformRepoList([eventData])
+      addRepository(transformedRepo[0])
+      setImportRepoIdentifier(null)
     },
-    [repoData, refetch]
+    [importToastId]
   )
 
   const events = useMemo(() => [SSEEvent.REPO_IMPORTED], [])
@@ -72,7 +125,7 @@ export default function ReposListPage() {
     space: spaceURL,
     events,
     onEvent,
-    shouldRun: isRepoStillImporting
+    shouldRun: true
   })
 
   return (
@@ -89,6 +142,7 @@ export default function ReposListPage() {
         toCreateRepo={() => routes.toCreateRepo({ spaceId })}
         toImportRepo={() => routes.toImportRepo({ spaceId })}
       />
+      <Toaster />
     </>
   )
 }

@@ -1,0 +1,355 @@
+---
+title: AlertDialog
+description: AlertDialog component documentation
+---
+
+The `AlertDialog` component provides a flexible UI element for displaying alert dialogs. It is composed of several subcomponents such as `AlertDialog.Header`, `AlertDialog.Footer`, `AlertDialog.Title`, and `AlertDialog.Description` to offer a structured and customizable interface.
+
+import { DocsPage } from "@/components/docs-page";
+
+<DocsPage.ComponentExample
+  client:only
+  code={`<AlertDialog.Root>
+    <AlertDialog.Trigger asChild>
+      <Button>Open Alert Dialog</Button>
+    </AlertDialog.Trigger>
+    <AlertDialog.Content>
+      <AlertDialog.Header>
+        <AlertDialog.Title>Alert Dialog Title</AlertDialog.Title>
+      </AlertDialog.Header>
+      <AlertDialog.Description variant="secondary">
+        Alert dialog content goes here. Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.
+      </AlertDialog.Description>
+      <AlertDialog.Footer>
+        <AlertDialog.Cancel asChild><Button>Cancel</Button></AlertDialog.Cancel>
+        <AlertDialog.Action asChild><Button>Confirm</Button></AlertDialog.Action>
+      </AlertDialog.Footer>
+    </AlertDialog.Content>
+  </AlertDialog.Root>`}
+/>
+
+## Usage
+
+```typescript jsx
+import { AlertDialog, Button } from '@harnessio/ui/components'
+
+return (
+  <AlertDialog.Root>
+    <AlertDialog.Trigger asChild>
+      <Button>Open Alert Dialog</Button>
+    </AlertDialog.Trigger>
+    <AlertDialog.Content>
+      <AlertDialog.Header>
+        <AlertDialog.Title>Alert Dialog Title</AlertDialog.Title>
+      </AlertDialog.Header>
+      <AlertDialog.Description variant="secondary">
+        This is the alert dialog description.
+        Alert dialog content goes here.
+      </AlertDialog.Description>
+      <AlertDialog.Footer>
+        <AlertDialog.Cancel>Cancel</AlertDialog.Cancel>
+        <AlertDialog.Action onClick={handleConfirm}>
+          Confirm
+        </AlertDialog.Action>
+      </AlertDialog.Footer>
+    </AlertDialog.Content>
+  </AlertDialog.Root>
+)
+```
+
+## Anatomy
+
+All parts of the `AlertDialog` component can be imported and composed as required.
+
+```typescript jsx
+<AlertDialog.Root>
+  <AlertDialog.Trigger>
+    Open Alert Dialog
+  </AlertDialog.Trigger>
+  <AlertDialog.Content>
+    <AlertDialog.Header>
+      <AlertDialog.Title>Alert Dialog Title</AlertDialog.Title>
+    </AlertDialog.Header>
+    <AlertDialog.Description variant="secondary">
+      This is the alert dialog description.
+      Alert dialog content goes here.
+    </AlertDialog.Description>
+    <AlertDialog.Footer>
+      <AlertDialog.Cancel>Cancel</AlertDialog.Cancel>
+      <AlertDialog.Action>Confirm</AlertDialog.Action>
+    </AlertDialog.Footer>
+  </AlertDialog.Content>
+</AlertDialog.Root>
+```
+
+## API Reference
+
+### Root
+
+The `Root` component serves as the main container for all alert dialog elements.
+
+<DocsPage.PropsTable
+  props={[
+    {
+      name: "children",
+      description:
+        "You can pass in your `AlertDialog.Trigger` and `AlertDialog.Content` as children",
+      required: true,
+      value: "ReactNode",
+    },
+  ]}
+/>
+
+### Trigger
+
+The `Trigger` component is used to open the alert dialog.
+
+```typescript jsx
+<AlertDialog.Trigger>
+  Open Alert Dialog
+</AlertDialog.Trigger>
+```
+
+<DocsPage.PropsTable
+  props={[
+    {
+      name: "children",
+      description: "Content to display",
+      required: true,
+      value: "ReactNode",
+    },
+    {
+      name: "asChild",
+      description:
+        "Change the default rendered element for the one passed as a child, merging their props and behavior.",
+      required: false,
+      value: "boolean",
+    },
+  ]}
+/>
+
+### Content
+
+The `Content` component defines the main content area of the alert dialog.
+
+```typescript jsx
+<AlertDialog.Content>
+  <AlertDialog.Header>
+    <AlertDialog.Title>Alert Dialog Title</AlertDialog.Title>
+  </AlertDialog.Header>
+  <AlertDialog.Description variant="secondary">
+    This is the alert dialog description.
+    Alert dialog content goes here.
+  </AlertDialog.Description>
+  <AlertDialog.Footer>
+    <AlertDialog.Cancel>Cancel</AlertDialog.Cancel>
+    <AlertDialog.Action>Confirm</AlertDialog.Action>
+  </AlertDialog.Footer>
+</AlertDialog.Content>
+```
+
+<DocsPage.PropsTable
+  props={[
+    {
+      name: "children",
+      description: "Content to display",
+      required: true,
+      value: "ReactNode",
+    },
+    {
+      name: "className",
+      description:
+        "Additional class names to apply to the alert dialog content",
+      required: false,
+      value: "string",
+    },
+    {
+      name: "onOverlayClick",
+      description: "Function to handle overlay click",
+      required: false,
+      value: "Function",
+    },
+  ]}
+/>
+
+### Header
+
+The `Header` component is used to define the header section of the alert dialog.
+
+```typescript jsx
+<AlertDialog.Header>
+  <AlertDialog.Title>Alert Dialog Title</AlertDialog.Title>
+</AlertDialog.Header>
+```
+
+<DocsPage.PropsTable
+  props={[
+    {
+      name: "children",
+      description: "Content to display",
+      required: true,
+      value: "ReactNode",
+    },
+    {
+      name: "className",
+      description: "Additional class names to apply to the alert dialog header",
+      required: false,
+      value: "string",
+    },
+  ]}
+/>
+
+### Footer
+
+The `Footer` component is used to define the footer section of the alert dialog.
+
+```typescript jsx
+<AlertDialog.Footer>
+  <AlertDialog.Cancel>Cancel</AlertDialog.Cancel>
+  <AlertDialog.Action>Confirm</AlertDialog.Action>
+</AlertDialog.Footer>
+```
+
+<DocsPage.PropsTable
+  props={[
+    {
+      name: "children",
+      description: "Footer content",
+      required: true,
+      value: "ReactNode",
+    },
+    {
+      name: "className",
+      description: "Additional class names to apply to the alert dialog footer",
+      required: false,
+      value: "string",
+    },
+  ]}
+/>
+
+### Title
+
+The `Title` component displays the title of the alert dialog.
+
+```typescript jsx
+<AlertDialog.Title>Alert Dialog Title</AlertDialog.Title>
+```
+
+<DocsPage.PropsTable
+  props={[
+    {
+      name: "children",
+      description: "Title content",
+      required: true,
+      value: "ReactNode",
+    },
+    {
+      name: "className",
+      description: "Additional class names to apply to the alert dialog title",
+      required: false,
+      value: "string",
+    },
+  ]}
+/>
+
+### Description
+
+The `Description` component displays the description of the alert dialog.
+
+```typescript jsx
+<AlertDialog.Description variant="secondary">
+  This is the alert dialog description.
+  Alert dialog content goes here.
+</AlertDialog.Description>
+```
+
+<DocsPage.PropsTable
+  props={[
+    {
+      name: "children",
+      description: "Description content",
+      required: true,
+      value: "ReactNode",
+    },
+    {
+      name: "className",
+      description:
+        "Additional class names to apply to the alert dialog description",
+      required: false,
+      value: "string",
+    },
+    {
+      name: "variant",
+      description: "Variant of the description",
+      required: false,
+      value: "'secondary' | 'quaternary'",
+      defaultValue: "'secondary'",
+    },
+  ]}
+/>
+
+### Action
+
+The `Action` component is used to define the action button of the alert dialog.
+
+```typescript jsx
+<AlertDialog.Action>Confirm</AlertDialog.Action>
+```
+
+<DocsPage.PropsTable
+  props={[
+    {
+      name: "children",
+      description: "Action button content",
+      required: true,
+      value: "ReactNode",
+    },
+    {
+      name: "className",
+      description:
+        "Additional class names to apply to the alert dialog action button",
+      required: false,
+      value: "string",
+    },
+    {
+      name: "asChild",
+      description:
+        "Change the default rendered element for the one passed as a child, merging their props and behavior.",
+      required: false,
+      value: "boolean",
+    },
+  ]}
+/>
+
+### Cancel
+
+The `Cancel` component is used to define the cancel button of the alert dialog.
+
+```typescript jsx
+<AlertDialog.Cancel>Cancel</AlertDialog.Cancel>
+```
+
+<DocsPage.PropsTable
+  props={[
+    {
+      name: "children",
+      description: "Cancel button content",
+      required: true,
+      value: "ReactNode",
+    },
+    {
+      name: "className",
+      description:
+        "Additional class names to apply to the alert dialog cancel button",
+      required: false,
+      value: "string",
+    },
+    {
+      name: "asChild",
+      description:
+        "Change the default rendered element for the one passed as a child, merging their props and behavior.",
+      required: false,
+      value: "boolean",
+    },
+  ]}
+/>

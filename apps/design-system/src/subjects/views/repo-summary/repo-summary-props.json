@@ -966,7 +966,6 @@
     "packages/views/src/components/pipeline-studio/step-palette/step-palette-item.tsx",
     "packages/views/src/components/pipeline-studio/step-palette/step-palette.tsx",
     "packages/views/src/components/pipeline-studio/visual-yaml-toggle.tsx",
-    "packages/views/src/components/profile-settings/delete-alert-dialog.tsx",
     "packages/views/src/components/profile-settings/profile-settings-keys-list.tsx",
     "packages/views/src/components/profile-settings/profile-settings-tokens-list.tsx",
     "packages/views/src/components/profile-settings/ssh-key-create-dialog.tsx",
@@ -1033,7 +1032,6 @@
     "packages/views/src/components/repo-settings/repo-branch-settings-rules/repo-branch-settings-rules-fields.tsx",
     "packages/views/src/components/repo-settings/repo-branch-settings-rules/repo-branch-settings-rules-schema.tsx",
     "packages/views/src/components/repo-settings/repo-branch-settings-rules/types.ts",
-    "packages/views/src/components/repo-settings/repo-settings-general-page.tsx",
     "packages/views/src/components/repo-settings/repo-settings-general/repo-settings-general-delete.tsx",
     "packages/views/src/components/repo-settings/repo-settings-general/repo-settings-general-form.tsx",
     "packages/views/src/components/repo-settings/repo-settings-general/repo-settings-general-rules.tsx",
@@ -1214,7 +1212,8 @@
         "name": "Abhinav Rastogi"
       },
       "sha": "5d6f2d7",
-      "path": "/canary/repos/canary/code//~/.dockerignore"
+      "path": "/canary/repos/canary/code//~/.dockerignore",
+      "status": "low_risk"
     },
     {
       "id": ".eslintignore",
@@ -1226,7 +1225,8 @@
         "name": "praneshg239"
       },
       "sha": "1e126e7",
-      "path": "/canary/repos/canary/code//~/.eslintignore"
+      "path": "/canary/repos/canary/code//~/.eslintignore",
+      "status": "medium_risk"
     },
     {
       "id": ".eslintrc.json",
@@ -1250,7 +1250,8 @@
         "name": "Calvin Lee"
       },
       "sha": "280c1cf",
-      "path": "/canary/repos/canary/code//~/.github"
+      "path": "/canary/repos/canary/code//~/.github",
+      "status": "high_risk"
     },
     {
       "id": ".gitignore",

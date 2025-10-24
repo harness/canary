@@ -1,0 +1,55 @@
+---
+title: Theme Dialog
+description: ThemeDialog component for adjusting appearance settings.
+---
+
+The `ThemeDialog` component allows users to adjust appearance settings such as mode, contrast, color adjustment, and accent color.
+
+import { DocsPage } from "@/components/docs-page";
+
+<DocsPage.ComponentExample
+  client:only
+  code={`<ThemeDialog onOpenChange={() => {}} onChange={() => {}} onSave={() => {}} onCancel={() => {}}><button>Customize theme</button></ThemeDialog>`}
+/>
+
+## Usage
+
+```typescript jsx
+import { useState } from 'react';
+import { ThemeDialog } from '@harnessio/ui/components';
+
+function App() {
+  const [isOpen, setIsOpen] = useState(false);
+
+  const handleOpenChange = (open: boolean) => {
+    setIsOpen(open);
+  };
+
+  const handleChange = (theme: ThemeInterface) => {
+    console.log(theme);
+  };
+
+  const handleSave = (theme: ThemeInterface) => {
+    console.log(theme);
+  };
+
+  const handleCancel = () => {
+    console.log('Cancelled');
+    setIsOpen(false);
+  };
+
+  return (
+      <ThemeDialog
+        open={isOpen}
+        onOpenChange={handleOpenChange}
+        onChange={handleChange}
+        onSave={handleSave}
+        onCancel={handleCancel}
+      >
+        <button onClick={() => setIsOpen(true)}>Customize theme</button>
+      </ThemeDialog>
+  );
+}
+
+export default App;
+```

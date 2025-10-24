@@ -44,7 +44,7 @@ export const StageGroupNodeContextMenu = () => {
           }}
         >
           <Icon name="plus" size={12} className="text-tertiary-background" />
-          <Text wrap="nowrap">Add Serial group before</Text>
+          <Text wrap="nowrap">Add Serial Stages Group before</Text>
         </DropdownMenu.Item>
         <DropdownMenu.Item
           key="add"
@@ -54,7 +54,7 @@ export const StageGroupNodeContextMenu = () => {
           }}
         >
           <Icon name="plus" size={12} className="text-tertiary-background" />
-          <Text wrap="nowrap">Add Serial group after</Text>
+          <Text wrap="nowrap">Add Serial Stages Group after</Text>
         </DropdownMenu.Item>
         <DropdownMenu.Separator />
         <DropdownMenu.Item
@@ -65,7 +65,7 @@ export const StageGroupNodeContextMenu = () => {
           }}
         >
           <Icon name="plus" size={12} className="text-tertiary-background" />
-          <Text wrap="nowrap">Add Parallel group before</Text>
+          <Text wrap="nowrap">Add Parallel Stages Group before</Text>
         </DropdownMenu.Item>
         <DropdownMenu.Item
           key="add"
@@ -75,7 +75,7 @@ export const StageGroupNodeContextMenu = () => {
           }}
         >
           <Icon name="plus" size={12} className="text-tertiary-background" />
-          <Text wrap="nowrap">Add Parallel group after</Text>
+          <Text wrap="nowrap">Add Parallel Stages Group after</Text>
         </DropdownMenu.Item>
         <DropdownMenu.Separator />
         {/* <RevealDropdownMenuItem /> */}

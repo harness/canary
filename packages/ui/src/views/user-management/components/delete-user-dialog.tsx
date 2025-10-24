@@ -13,7 +13,7 @@ export const DeleteUserDialog: React.FC<IDeleteDialogProps> = ({
   return (
     <AlertDialog.Root open={open} onOpenChange={onClose}>
       <AlertDialog.Trigger asChild></AlertDialog.Trigger>
-      <AlertDialog.Content>
+      <AlertDialog.Content onClose={onClose}>
         <AlertDialog.Header>
           <AlertDialog.Title>Are you sure you want to delete {user?.display_name}?</AlertDialog.Title>
           <AlertDialog.Description>
@@ -29,8 +29,8 @@ export const DeleteUserDialog: React.FC<IDeleteDialogProps> = ({
           )}
 
           <Button
-            size="default"
             theme="error"
+            variant="destructive"
             className="self-start"
             onClick={() => {
               handleDeleteUser(user!.uid ?? '')

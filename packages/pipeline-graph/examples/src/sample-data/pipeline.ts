@@ -1,14 +1,41 @@
-export const pipeline = `
-pipeline:
+export const pipeline = `pipeline:
   stages:
     - group:
         stages:
-          - steps:
-            - run: go build
-            - run: go test
-          - steps:
-            - run: npm run
-            - run: npm test 
+          - parallel:
+              stages:
+                - steps:
+                    - run: go build
+                    - run: go test
+                - steps:
+                    - run: npm test
+          - group:
+              stages:
+                - steps:
+                    - group:
+                        steps:
+                          - run: go build
+                          - run: go test
+
+                    - parallel:
+                        steps:
+                          - run: go build
+                          - run: go test      
+`
+
+export const pipeline2 = `
+pipeline:
+  stages:
+    - steps:
+      - run: go build
+      - parallel:
+          steps:
+          - parallel:
+              steps:
+                - parallel:
+                    steps:
+                      - run: go test
+                      - run: go test
     - group:
         stages:
           - parallel:
@@ -17,26 +44,51 @@ pipeline:
                   - run: go build
                   - run: go test
                   - group:
-                     steps: 
+                     steps:
                        - run: go build
-                       - run: go test
+
+                       - parallel:
+                          steps:
+                            - run: go build
+                            - run: go build
+                            - group:
+                                steps:
+
+                                  - parallel:
+                                      steps:
+                                        - run: go build
+                                        - run: go build
+                                        - group:
+                                            steps:
+                                              - run: go build
+                                              - run: go build
+                                  - run: go build
+
                 - steps:
                   - parallel:
-                     steps: 
+                     steps:
                        - run: go build
                        - run: go build
                        - group:
-                          steps: 
+                          steps:
                             - run: go build
                             - run: go build
                             - parallel:
-                                steps: 
+                                steps:
                                   - run: go build
                                   - run: go build
                                   - group:
-                                      steps: 
-                                        - run: go build
+                                      steps:
+
+                                        - parallel:
+                                            steps:
+                                              - run: go build
+                                              - run: go build
+                                              - group:
+                                                  steps:
+                                                    - run: go build
+                                                    - run: go build
                                         - run: go build
                   - run: npm run
                   - run: npm test
-`;
+`

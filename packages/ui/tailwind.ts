@@ -124,6 +124,7 @@ export default {
           11: 'hsl(var(--canary-background-11))',
           12: 'hsl(var(--canary-background-12))',
           13: 'hsl(var(--canary-background-13))',
+          surface: 'hsl(var(--canary-background-surface))',
           danger: 'hsla(var(--canary-background-danger))',
           success: 'hsla(var(--canary-background-success))'
         },
@@ -140,7 +141,9 @@ export default {
           10: 'hsl(var(--canary-border-10))',
           danger: 'hsl(var(--canary-border-danger))',
           success: 'hsl(var(--canary-border-success))',
-          accent: 'hsl(var(--canary-border-accent))'
+          accent: 'hsl(var(--canary-border-accent))',
+          risk: 'hsl(var(--canary-icon-risk))',
+          alert: 'hsl(var(--canary-border-alert))'
         },
         button: {
           foreground: {
@@ -151,6 +154,7 @@ export default {
           background: {
             'disabled-1': 'hsla(var(--canary-button-background-disabled-01))',
             'danger-1': 'hsla(var(--canary-button-background-danger-01))',
+            'danger-2': 'hsla(var(--canary-button-background-danger-02))',
             'danger-3': 'hsla(var(--canary-button-background-danger-03))',
             'success-1': 'hsla(var(--canary-button-background-success-01))',
             'success-2': 'hsla(var(--canary-button-background-success-02))'
@@ -158,7 +162,6 @@ export default {
           border: {
             'disabled-1': 'hsla(var(--canary-button-border-disabled-01))',
             'danger-1': 'hsla(var(--canary-button-border-danger-01))',
-            'danger-3': 'hsla(var(--canary-button-border-danger-03))',
             'success-1': 'hsla(var(--canary-button-border-success-01))'
           }
         },
@@ -275,39 +278,40 @@ export default {
           alert: 'hsl(var(--canary-icon-alert))',
           success: 'hsl(var(--canary-icon-success))',
           accent: 'hsl(var(--canary-icon-accent))',
-          merged: 'hsl(var(--canary-icon-merged))'
+          merged: 'hsl(var(--canary-icon-merged))',
+          risk: 'hsl(var(--canary-icon-risk))'
         },
         label: {
           foreground: {
-            'red': 'var(--canary-label-foreground-red-01)',
-            'green': 'var(--canary-label-foreground-green-01)',
-            'yellow': 'var(--canary-label-foreground-yellow-01)',
-            'blue': 'var(--canary-label-foreground-blue-01)',
-            'pink': 'var(--canary-label-foreground-pink-01)',
-            'purple': 'var(--canary-label-foreground-purple-01)',
-            'violet': 'var(--canary-label-foreground-violet-01)',
-            'indigo': 'var(--canary-label-foreground-indigo-01)',
-            'cyan': 'var(--canary-label-foreground-cyan-01)',
-            'orange': 'var(--canary-label-foreground-orange-01)',
-            'brown': 'var(--canary-label-foreground-brown-01)',
-            'mint': 'var(--canary-label-foreground-mint-01)',
-            'lime': 'var(--canary-label-foreground-lime-01)'
+            red: 'var(--canary-label-foreground-red-01)',
+            green: 'var(--canary-label-foreground-green-01)',
+            yellow: 'var(--canary-label-foreground-yellow-01)',
+            blue: 'var(--canary-label-foreground-blue-01)',
+            pink: 'var(--canary-label-foreground-pink-01)',
+            purple: 'var(--canary-label-foreground-purple-01)',
+            violet: 'var(--canary-label-foreground-violet-01)',
+            indigo: 'var(--canary-label-foreground-indigo-01)',
+            cyan: 'var(--canary-label-foreground-cyan-01)',
+            orange: 'var(--canary-label-foreground-orange-01)',
+            brown: 'var(--canary-label-foreground-brown-01)',
+            mint: 'var(--canary-label-foreground-mint-01)',
+            lime: 'var(--canary-label-foreground-lime-01)'
           },
           background: {
-            'black': 'var(--canary-label-background-black-01)',
-            'red': 'var(--canary-label-background-red-01)',
-            'green': 'var(--canary-label-background-green-01)',
-            'yellow': 'var(--canary-label-background-yellow-01)',
-            'blue': 'var(--canary-label-background-blue-01)',
-            'pink': 'var(--canary-label-background-pink-01)',
-            'purple': 'var(--canary-label-background-purple-01)',
-            'violet': 'var(--canary-label-background-violet-01)',
-            'indigo': 'var(--canary-label-background-indigo-01)',
-            'cyan': 'var(--canary-label-background-cyan-01)',
-            'orange': 'var(--canary-label-background-orange-01)',
-            'brown': 'var(--canary-label-background-brown-01)',
-            'mint': 'var(--canary-label-background-mint-01)',
-            'lime': 'var(--canary-label-background-lime-01)'
+            black: 'var(--canary-label-background-black-01)',
+            red: 'var(--canary-label-background-red-01)',
+            green: 'var(--canary-label-background-green-01)',
+            yellow: 'var(--canary-label-background-yellow-01)',
+            blue: 'var(--canary-label-background-blue-01)',
+            pink: 'var(--canary-label-background-pink-01)',
+            purple: 'var(--canary-label-background-purple-01)',
+            violet: 'var(--canary-label-background-violet-01)',
+            indigo: 'var(--canary-label-background-indigo-01)',
+            cyan: 'var(--canary-label-background-cyan-01)',
+            orange: 'var(--canary-label-background-orange-01)',
+            brown: 'var(--canary-label-background-brown-01)',
+            mint: 'var(--canary-label-background-mint-01)',
+            lime: 'var(--canary-label-background-lime-01)'
           }
         }
       },
@@ -321,6 +325,23 @@ export default {
         'as-border': 'inset 0 0 0 1px',
         'commit-list-bullet':
           '0px 0px 3px 0.5px hsla(var(--canary-background-05) / 0.2), 0px 0px 8px 1px hsla(var(--canary-background-05) / 0.3)'
+      },
+      borderColor: {
+        'borders-1': 'hsl(var(--canary-border-01))',
+        'borders-2': 'hsl(var(--canary-border-02))',
+        'borders-3': 'hsl(var(--canary-border-03))',
+        'borders-4': 'hsl(var(--canary-border-04))',
+        'borders-5': 'hsl(var(--canary-border-05))',
+        'borders-6': 'hsl(var(--canary-border-06))',
+        'borders-7': 'hsl(var(--canary-border-07))',
+        'borders-8': 'hsl(var(--canary-border-08))',
+        'borders-9': 'hsl(var(--canary-border-09))',
+        'borders-10': 'hsl(var(--canary-border-10))',
+        'borders-danger': 'hsl(var(--canary-border-danger))',
+        'borders-success': 'hsl(var(--canary-border-success))',
+        'borders-accent': 'hsl(var(--canary-border-accent))',
+        'borders-risk': 'hsl(var(--canary-icon-risk))',
+        'borders-alert': 'hsl(var(--canary-border-alert))'
       },
       borderRadius: {
         10: '0.625rem'
@@ -357,7 +378,19 @@ export default {
         'navbar-gradient-4':
           'radial-gradient(50% 50% at 50% 50%, hsla(var(--canary-nav-gradient-4-1)) 0%, hsla(var(--canary-nav-gradient-4-2)) 100%)',
         'navbar-item-gradient':
-          'radial-gradient(50% 50% at 50% 50%, hsla(var(--canary-nav-item-gradient-1)) 0%, hsla(var(--canary-nav-item-gradient-2)) 17.63%, hsla(var(--canary-nav-item-gradient-3)) 40.23%, hsla(var(--canary-nav-item-gradient-4)) 61.54%, hsla(var(--canary-nav-item-gradient-5)) 80%, hsla(var(--canary-nav-item-gradient-6)) 100%)'
+          'radial-gradient(50% 50% at 50% 50%, hsla(var(--canary-nav-item-gradient-1)) 0%, hsla(var(--canary-nav-item-gradient-2)) 17.63%, hsla(var(--canary-nav-item-gradient-3)) 40.23%, hsla(var(--canary-nav-item-gradient-4)) 61.54%, hsla(var(--canary-nav-item-gradient-5)) 80%, hsla(var(--canary-nav-item-gradient-6)) 100%)',
+        'widget-bg-gradient':
+          'radial-gradient(80.82% 77.84% at 80.15% 11.99%, hsla(var(--canary-widget-bg-gradient-from)) 8.43%, hsla(var(--canary-widget-bg-gradient-to)) 100%)',
+        'widget-number-gradient':
+          'linear-gradient(180deg, hsla(var(--canary-widget-number-gradient-from)) 35.9%, hsla(var(--canary-widget-number-gradient-to)) 100%)',
+        'widget-number-bg-gradient':
+          'linear-gradient(135deg, hsla(var(--canary-widget-number-bg-gradient-from)) 0%, hsla(var(--canary-widget-number-bg-gradient-to)) 67.67%)',
+        'graph-gradient-1':
+          'radial-gradient(88.57% 100% at 14.29% 0%, var(--canary-graph-gradient-bg-1) 10.62%, var(--canary-graph-gradient-bg-2) 75.86%)',
+        'graph-bg-gradient': 'radial-gradient(circle, var(--canary-graph-viewport-bg) 1px, transparent 1px)'
+      },
+      backgroundSize: {
+        'graph-bg-size': '22px 22px'
       },
       keyframes: {
         'accordion-down': {
@@ -367,11 +400,16 @@ export default {
         'accordion-up': {
           from: { height: 'var(--radix-accordion-content-height)' },
           to: { height: '0' }
+        },
+        'border-spin': {
+          '100%': { transform: 'rotate(-360deg)' }
         }
       },
       animation: {
         'accordion-down': 'accordion-down 0.2s ease-out',
-        'accordion-up': 'accordion-up 0.2s ease-out'
+        'accordion-up': 'accordion-up 0.2s ease-out',
+
+        'border-spin': 'border-spin 7s linear infinite'
       }
     }
   },
@@ -398,7 +436,13 @@ export default {
     'prose-a',
     'prose-img',
     'prose-code',
+    { pattern: /^border-borders-/ },
+    { pattern: /^bg-graph-/ },
+    { pattern: /^text-foreground-/ },
+    { pattern: /^bg-background-/ },
     // NOTE: stroke-border-2 temporary here as it is used by in gitness for pipeline-graph
-    'stroke-borders-2'
+    'stroke-borders-2',
+    // NOTE: temporary - used in design-system
+    { pattern: /bg-primary-./ }
   ]
 } satisfies TailwindConfig

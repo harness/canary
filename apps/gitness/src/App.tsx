@@ -4,7 +4,7 @@ import { createBrowserRouter, RouterProvider } from 'react-router-dom'
 import { QueryClientProvider } from '@tanstack/react-query'
 
 import { CodeServiceAPIClient } from '@harnessio/code-service-client'
-import { TooltipProvider } from '@harnessio/ui/components'
+import { ToastProvider, TooltipProvider } from '@harnessio/ui/components'
 
 import { ExitConfirmProvider } from './framework/context/ExitConfirmContext'
 import { NavigationProvider } from './framework/context/NavigationContext'
@@ -35,13 +35,15 @@ export default function AppV1() {
     <I18nextProvider i18n={i18n}>
       <ThemeProvider defaultTheme="dark-std-std">
         <QueryClientProvider client={queryClient}>
-          <TooltipProvider>
-            <ExitConfirmProvider>
-              <NavigationProvider routes={routes}>
-                <RouterProvider router={router} />
-              </NavigationProvider>
-            </ExitConfirmProvider>
-          </TooltipProvider>
+          <ToastProvider>
+            <TooltipProvider>
+              <ExitConfirmProvider>
+                <NavigationProvider routes={routes}>
+                  <RouterProvider router={router} />
+                </NavigationProvider>
+              </ExitConfirmProvider>
+            </TooltipProvider>
+          </ToastProvider>
         </QueryClientProvider>
       </ThemeProvider>
     </I18nextProvider>

@@ -12,8 +12,9 @@ import {
   StackedList,
   Text
 } from '@/components'
-import { DiffModeOptions, InViewDiffRenderer, TranslationStore, TypesDiffStats } from '@/views'
+import { DiffModeOptions, InViewDiffRenderer, jumpToFile, TranslationStore, TypesDiffStats } from '@/views'
 import { DiffModeEnum } from '@git-diff-view/react'
+import { formatNumber } from '@utils/utils'
 import { chunk } from 'lodash-es'
 
 import PullRequestDiffViewer from '../../components/pull-request-diff-viewer'
@@ -56,6 +57,7 @@ interface PullRequestAccordionProps {
   useTranslationStore: () => TranslationStore
   openItems: string[]
   onToggle: () => void
+  setCollapsed: (val: boolean) => void
 }
 
 const PullRequestAccordion: FC<PullRequestAccordionProps> = ({
@@ -64,15 +66,18 @@ const PullRequestAccordion: FC<PullRequestAccordionProps> = ({
   currentUser,
   useTranslationStore,
   openItems,
-  onToggle
+  onToggle,
+  setCollapsed
 }) => {
   const { t: _ts } = useTranslationStore()
   const { highlight, wrap, fontsize } = useDiffConfig()
-  const startingLine =
-    parseStartingLineIfOne(header?.data ?? '') !== null ? parseStartingLineIfOne(header?.data ?? '') : null
   const [showHiddenDiff, setShowHiddenDiff] = useState(false)
+  const startingLine = useMemo(
+    () => (parseStartingLineIfOne(header?.data ?? '') !== null ? parseStartingLineIfOne(header?.data ?? '') : null),
+    [header?.data]
+  )
 
-  const fileDeleted = useMemo(() => header?.deleted, [header?.deleted])
+  const fileDeleted = useMemo(() => header?.isDeleted, [header?.isDeleted])
   const isDiffTooLarge = useMemo(() => {
     if (header?.addedLines && header?.removedLines) {
       return header?.addedLines + header?.removedLines > PULL_REQUEST_LARGE_DIFF_CHANGES_LIMIT
@@ -117,11 +122,11 @@ const PullRequestAccordion: FC<PullRequestAccordionProps> = ({
                   </Layout.Vertical>
                 ) : (
                   <>
-                    {startingLine ? (
+                    {startingLine && (
                       <div className="bg-[--diff-hunk-lineNumber--]">
                         <div className="ml-16 w-full px-2 py-1">{startingLine}</div>
                       </div>
-                    ) : null}
+                    )}
                     <PullRequestDiffViewer
                       currentUser={currentUser}
                       data={header?.data}
@@ -135,9 +140,10 @@ const PullRequestAccordion: FC<PullRequestAccordionProps> = ({
                       isBinary={header?.isBinary}
                       addedLines={header?.addedLines}
                       removedLines={header?.removedLines}
-                      deleted={header?.deleted}
+                      deleted={header?.isDeleted}
                       unchangedPercentage={header?.unchangedPercentage}
                       useTranslationStore={useTranslationStore}
+                      collapseDiff={() => setCollapsed(true)}
                     />
                   </>
                 )}
@@ -155,21 +161,25 @@ interface PullRequestCompareDiffListProps {
   diffData: HeaderProps[]
   currentUser?: string
   useTranslationStore: () => TranslationStore
+  jumpToDiff?: string
+  setJumpToDiff: (fileName: string) => void
 }
 
 const PullRequestCompareDiffList: FC<PullRequestCompareDiffListProps> = ({
   diffStats,
   diffData,
   currentUser,
-  useTranslationStore
+  useTranslationStore,
+  jumpToDiff,
+  setJumpToDiff
 }) => {
+  const { t } = useTranslationStore()
   const [diffMode, setDiffMode] = useState<DiffModeEnum>(DiffModeEnum.Split)
   const handleDiffModeChange = (value: string) => {
     setDiffMode(value === 'Split' ? DiffModeEnum.Split : DiffModeEnum.Unified)
   }
   const [openItems, setOpenItems] = useState<string[]>([])
   const diffBlocks = useMemo(() => chunk(diffData, PULL_REQUEST_DIFF_RENDERING_BLOCK_SIZE), [diffData])
-  const rootref = useRef<HTMLDivElement>(null)
   const diffsContainerRef = useRef<HTMLDivElement | null>(null)
 
   useEffect(() => {
@@ -188,6 +198,25 @@ const PullRequestCompareDiffList: FC<PullRequestCompareDiffListProps> = ({
     },
     [setOpenItems]
   )
+  useEffect(() => {
+    if (!jumpToDiff) return
+    jumpToFile(jumpToDiff, diffBlocks, setJumpToDiff)
+  }, [jumpToDiff, diffBlocks, setJumpToDiff])
+
+  const setCollapsed = useCallback(
+    (fileText: string, val: boolean) => {
+      setOpenItems(items => {
+        if (val) {
+          return items.filter(item => item !== fileText)
+        } else {
+          return items.includes(fileText) ? items : [...items, fileText]
+        }
+      })
+    },
+    [setOpenItems]
+  )
+
+  const changedFilesCount = diffStats.files_changed || 0
 
   return (
     <>
@@ -195,20 +224,26 @@ const PullRequestCompareDiffList: FC<PullRequestCompareDiffListProps> = ({
         <ListActions.Left>
           <DropdownMenu.Root>
             <p className="text-14 leading-tight text-foreground-4">
-              Showing{' '}
-              <DropdownMenu.Trigger asChild>
+              {t('views:commits.commitDetailsDiffShowing', 'Showing')}{' '}
+              <FilesChangedCount showAsDropdown={changedFilesCount !== 0}>
                 <span className="cursor-pointer text-foreground-accent ease-in-out">
-                  {diffStats.files_changed || 0} changed files
+                  {formatNumber(changedFilesCount)} {t('views:commits.commitDetailsDiffChangedFiles', 'changed files')}
                 </span>
-              </DropdownMenu.Trigger>{' '}
-              with {diffStats.additions || 0} additions and {diffStats.deletions || 0} deletions
+              </FilesChangedCount>{' '}
+              {t('views:commits.commitDetailsDiffWith', 'with')} {formatNumber(diffStats?.additions || 0)}{' '}
+              {t('views:commits.commitDetailsDiffAdditionsAnd', 'additions and')}{' '}
+              {formatNumber(diffStats?.deletions || 0)} {t('views:commits.commitDetailsDiffDeletions', 'deletions')}
             </p>
             <DropdownMenu.Content align="end">
               <div className="max-h-[360px] overflow-y-auto px-1">
                 {diffData?.map(diff => (
                   <DropdownMenu.Item
                     key={diff.filePath}
-                    onClick={() => {}}
+                    onClick={() => {
+                      if (diff.filePath) {
+                        setJumpToDiff(diff.filePath)
+                      }
+                    }}
                     className="flex w-80 cursor-pointer items-center justify-between px-3 py-2"
                   >
                     <Text size={1} className="flex-1 overflow-hidden truncate text-primary">
@@ -242,13 +277,13 @@ const PullRequestCompareDiffList: FC<PullRequestCompareDiffListProps> = ({
         </ListActions.Right>
       </ListActions.Root>
       <Spacer size={3} />
-      <div className="flex flex-col gap-4" ref={rootref}>
+      <div className="flex flex-col" ref={diffsContainerRef}>
         {diffBlocks?.map((diffsBlock, blockIndex) => {
           return (
             <InViewDiffRenderer
               key={blockIndex}
               blockName={outterBlockName(blockIndex)}
-              root={rootref as RefObject<Element>}
+              root={document as unknown as RefObject<Element>}
               shouldRetainChildren={shouldRetainDiffChildren}
               detectionMargin={calculateDetectionMargin(diffData?.length)}
             >
@@ -270,6 +305,7 @@ const PullRequestCompareDiffList: FC<PullRequestCompareDiffListProps> = ({
                       useTranslationStore={useTranslationStore}
                       openItems={openItems}
                       onToggle={() => toggleOpen(item.text)}
+                      setCollapsed={val => setCollapsed(item.text, val)}
                     />
                   </InViewDiffRenderer>
                 </div>
@@ -280,6 +316,16 @@ const PullRequestCompareDiffList: FC<PullRequestCompareDiffListProps> = ({
       </div>
     </>
   )
+}
+
+function FilesChangedCount({
+  children,
+  showAsDropdown = false
+}: {
+  children: React.ReactNode
+  showAsDropdown: boolean
+}) {
+  return showAsDropdown ? <DropdownMenu.Trigger asChild>{children}</DropdownMenu.Trigger> : <>{children}</>
 }
 
 export default PullRequestCompareDiffList

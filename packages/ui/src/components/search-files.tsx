@@ -1,6 +1,6 @@
 import { ChangeEvent, ReactNode, useCallback, useMemo, useState } from 'react'
 
-import { Command, Popover, PopoverAnchor, PopoverContent, SearchBox, Text } from '@/components'
+import { Command, Popover, SearchBox, Text } from '@/components'
 import { TranslationStore } from '@/views'
 import { debounce } from 'lodash-es'
 
@@ -90,8 +90,8 @@ export const SearchFiles = ({ navigateToFile, filesList, useTranslationStore }: 
   )
 
   return (
-    <Popover open={isOpen} onOpenChange={setIsOpen}>
-      <PopoverAnchor asChild>
+    <Popover.Root open={isOpen} onOpenChange={setIsOpen}>
+      <Popover.Anchor asChild>
         <div>
           <SearchBox.Root
             width="full"
@@ -100,8 +100,8 @@ export const SearchFiles = ({ navigateToFile, filesList, useTranslationStore }: 
             value={query}
           />
         </div>
-      </PopoverAnchor>
-      <PopoverContent
+      </Popover.Anchor>
+      <Popover.Content
         className="w-[300px] p-0"
         align="start"
         onOpenAutoFocus={event => {
@@ -130,7 +130,7 @@ export const SearchFiles = ({ navigateToFile, filesList, useTranslationStore }: 
             )}
           </Command.List>
         </Command.Root>
-      </PopoverContent>
-    </Popover>
+      </Popover.Content>
+    </Popover.Root>
   )
 }

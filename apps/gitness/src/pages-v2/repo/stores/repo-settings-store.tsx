@@ -7,7 +7,8 @@ import {
   RepoRuleGetOkResponse,
   RepoRuleListOkResponse
 } from '@harnessio/code-service-client'
-import { BypassUsersList, RepoBranchSettingsFormFields, RepoData, RuleDataType } from '@harnessio/ui/views'
+import { PrincipalType } from '@harnessio/ui/types'
+import { RepoBranchSettingsFormFields, RepoData, RuleDataType } from '@harnessio/ui/views'
 
 import { getTotalRulesApplied, transformDataFromApi } from '../../../utils/repo-branch-rules-utils'
 
@@ -16,7 +17,7 @@ interface IRepoStore {
   rules: RuleDataType[] | null
   securityScanning: boolean
   presetRuleData: RepoBranchSettingsFormFields | null
-  principals: BypassUsersList[] | null
+  principals: PrincipalType[] | null
   recentStatusChecks: ListStatusCheckRecentOkResponse | null
 
   setRepoData: (data: FindRepositoryOkResponse) => void
@@ -78,7 +79,7 @@ export const useRepoRulesStore = create<IRepoStore>(set => ({
       set({ principals: null })
       return
     }
-    set({ principals: data as BypassUsersList[] })
+    set({ principals: data as PrincipalType[] })
   },
   setRecentStatusChecks: data => {
     if (!data) {

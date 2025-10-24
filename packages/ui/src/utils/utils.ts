@@ -1,6 +1,9 @@
+import { createElement, ReactNode } from 'react'
+
+import { TimeAgoHoverCard } from '@views/repo/components/time-ago-hover-card'
 import { formatDistance, formatDistanceToNow } from 'date-fns'
 
-export const getInitials = (name: string, length?: number) => {
+export const getInitials = (name: string, length = 2) => {
   // Split the name into an array of words, ignoring empty strings
   const words = name.split(' ').filter(Boolean)
 
@@ -66,20 +69,41 @@ export const timeDistance = (date1 = 0, date2 = 0, onlyHighestDenomination = fal
 /**
  * Formats timestamp to relative time (e.g., "1 hour ago")
  * @param timestamp - Unix timestamp in milliseconds
+ * @param cutoffDays - Days within which to use relative time (default: 3)
  * @returns formatted relative time string
  * @example
  * timeAgo(1708113838167) // Returns "1 hour ago"
  */
-export const timeAgo = (timestamp?: number | null): string => {
+
+export const timeAgo = (timestamp?: number | null, cutoffDays: number = 3): ReactNode => {
   if (timestamp === null || timestamp === undefined) {
     return 'Unknown time'
   }
 
+  const now = Date.now()
+  const daysMs = cutoffDays * 24 * 60 * 60 * 1000
+  const isOld = now - timestamp > daysMs
+
+  if (isOld) {
+    const date = new Date(timestamp)
+    const formattedDate = new Intl.DateTimeFormat(LOCALE, {
+      month: 'short',
+      day: 'numeric',
+      year: 'numeric',
+      hour: '2-digit',
+      minute: '2-digit',
+      hour12: false
+    }).format(date)
+
+    return createElement(TimeAgoHoverCard, { formattedDate, timeStamp: timestamp })
+  }
+
   try {
-    return formatDistanceToNow(timestamp, {
-      addSuffix: true, // add "ago" to the end of the string
+    const formattedDate = formatDistanceToNow(timestamp, {
+      addSuffix: true,
       includeSeconds: true
     })
+    return createElement(TimeAgoHoverCard, { formattedDate, timeStamp: timestamp })
   } catch (error) {
     console.error(`Failed to format time ago: ${error}`)
     return 'Unknown time'
@@ -97,4 +121,38 @@ export function generateAlphaNumericHash(length: number) {
   }
 
   return result
+}
+
+/**
+ * Format a number with current locale.
+ * @param num number
+ * @returns Formatted string.
+ */
+export function formatNumber(num: number | bigint): string {
+  return num ? new Intl.NumberFormat(LOCALE).format(num) : ''
+}
+export interface Violation {
+  violation: string
+}
+
+/**
+ * Helps to construct conditional objects like this: {a: b, ...(some ? c : {}), z: x}
+ */
+export const wrapConditionalObjectElement = <T extends Record<string, unknown>>(element: T, isPassing: boolean) => {
+  if (!element || !isPassing) {
+    return {} as T
+  }
+
+  return element
+}
+
+/**
+ * Helps to construct conditional arrays like this: [item1, condition && item2, item3].filter(item => !!item)
+ */
+export const wrapConditionalArrayElements = <T>(elements: T[], isPassing: boolean) => {
+  if (!elements || !isPassing) {
+    return []
+  }
+
+  return elements
 }

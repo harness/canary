@@ -1,7 +1,7 @@
 import { FC } from 'react'
 import { UseFormRegister } from 'react-hook-form'
 
-import { Button, Icon, Input, Select, SelectContent, SelectItem } from '@/components'
+import { Button, Icon, Input, Select } from '@/components'
 import { ColorsEnum, CreateLabelFormFields, TranslationStore } from '@/views'
 
 const SelectColorMarker = {
@@ -50,18 +50,18 @@ export const LabelFormColorAndNameGroup: FC<LabelFormColorAndNameGroupProps> = (
   return (
     <div className="flex gap-x-2.5">
       <div className="w-32 flex-none">
-        <Select name={`color-${name}`} value={colorValue} onValueChange={handleColorChange} error={colorError}>
-          <SelectContent>
+        <Select.Root name={`color-${name}`} value={colorValue} onValueChange={handleColorChange} error={colorError}>
+          <Select.Content>
             {Object.values(ColorsEnum).map(color => (
-              <SelectItem key={color} value={color}>
+              <Select.Item key={color} value={color}>
                 <div className="flex max-w-full items-center gap-x-1.5">
                   <div className={`size-2 rounded-full ${SelectColorMarker[color]}`} />
                   <span className="truncate">{color}</span>
                 </div>
-              </SelectItem>
+              </Select.Item>
             ))}
-          </SelectContent>
-        </Select>
+          </Select.Content>
+        </Select.Root>
       </div>
       <Input
         wrapperClassName="flex-1"

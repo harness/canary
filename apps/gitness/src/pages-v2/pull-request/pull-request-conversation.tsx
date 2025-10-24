@@ -5,7 +5,6 @@ import copy from 'clipboard-copy'
 import { isEmpty } from 'lodash-es'
 
 import {
-  commentStatusPullReq,
   EnumCheckStatus,
   EnumMergeMethod,
   EnumPullReqState,
@@ -19,29 +18,19 @@ import {
   statePullReq,
   TypesPullReqActivity,
   TypesPullReqReviewer,
-  useAssignLabelMutation,
   useCodeownersPullReqQuery,
   useCreateBranchMutation,
   useDeletePullReqSourceBranchMutation,
   useGetBranchQuery,
-  useListLabelsQuery,
   useListPrincipalsQuery,
   useListPullReqActivitiesQuery,
-  useListRepoLabelsQuery,
   useRestorePullReqSourceBranchMutation,
   useReviewerListPullReqQuery,
-  useUnassignLabelMutation,
   useUpdatePullReqMutation
 } from '@harnessio/code-service-client'
-import { SkeletonList, Spacer } from '@harnessio/ui/components'
-import {
-  PullRequestCommentBox,
-  PullRequestFilters,
-  PullRequestOverview,
-  PullRequestPanel,
-  PullRequestSideBar,
-  SandboxLayout
-} from '@harnessio/ui/views'
+import { SkeletonList } from '@harnessio/ui/components'
+import { PrincipalType } from '@harnessio/ui/types'
+import { PullRequestConversationPage as PullRequestConversationView } from '@harnessio/ui/views'
 
 import CommitSuggestionsDialog from '../../components-v2/commit-suggestions-dialog'
 import { useAppContext } from '../../framework/context/AppContext'
@@ -59,8 +48,8 @@ import {
 import { PathParams } from '../../RouteDefinitions'
 import { CodeOwnerReqDecision } from '../../types'
 import { filenameToLanguage } from '../../utils/git-utils'
-import { useActivityFilters } from './hooks/useActivityFilters'
-import { useDateFilters } from './hooks/useDataFilters'
+import { usePrConversationLabels } from './hooks/use-pr-conversation-labels'
+import { usePrFilters } from './hooks/use-pr-filters'
 import { usePRCommonInteractions } from './hooks/usePRCommonInteractions'
 import { extractInfoFromRuleViolationArr, processReviewDecision } from './pull-request-utils'
 import { usePullRequestProviderStore } from './stores/pull-request-provider-store'
@@ -74,8 +63,10 @@ export default function PullRequestConversationPage() {
     setRuleViolationArr,
     prPanelData,
     pullReqChecksDecision,
-    updateCommentStatus
+    updateCommentStatus,
+    dryMerge
   } = usePullRequestProviderStore(state => ({
+    dryMerge: state.dryMerge,
     pullReqMetadata: state.pullReqMetadata,
     refetchPullReq: state.refetchPullReq,
     refetchActivities: state.refetchActivities,
@@ -84,22 +75,19 @@ export default function PullRequestConversationPage() {
     pullReqChecksDecision: state.pullReqChecksDecision,
     updateCommentStatus: state.updateCommentStatus
   }))
+
   const { currentUser: currentUserData } = useAppContext()
+
   const [checkboxBypass, setCheckboxBypass] = useState(false)
   const [searchReviewers, setSearchReviewers] = useState('')
   const [addReviewerError, setAddReviewerError] = useState('')
   const [removeReviewerError, setRemoveReviewerError] = useState('')
-  const [searchLabel, setSearchLabel] = useState('')
+
   const [changesLoading, setChangesLoading] = useState(true)
   const [showDeleteBranchButton, setShowDeleteBranchButton] = useState(false)
   const [showRestoreBranchButton, setShowRestoreBranchButton] = useState(false)
   const [errorMsg, setErrorMsg] = useState('')
   const { spaceId, repoId } = useParams<PathParams>()
-
-  const { data: { body: principals } = {} } = useListPrincipalsQuery({
-    // @ts-expect-error : BE issue - not implemnted
-    queryParams: { page: 1, limit: 100, type: 'user', query: searchReviewers }
-  })
   const [comment, setComment] = useState<string>('')
   const [commentId] = useQueryState('commentId')
   const [isScrolledToComment, setIsScrolledToComment] = useState(false)
@@ -108,75 +96,39 @@ export default function PullRequestConversationPage() {
   const { pullRequestId } = useParams<PathParams>()
   const prId = (pullRequestId && Number(pullRequestId)) || -1
   // const [loadState, setLoadState] = useState('data-loaded')
-  const dateFilters = useDateFilters()
-  const [dateOrderSort, setDateOrderSort] = useState<{ label: string; value: string }>(dateFilters[0])
-  const activityFilters = useActivityFilters()
-  const [activityFilter, setActivityFilter] = useState<{ label: string; value: string }>(activityFilters[0])
+
+  const filtersData = usePrFilters()
+
+  const { data: { body: principals } = {} } = useListPrincipalsQuery({
+    // @ts-expect-error : BE issue - not implemnted
+    queryParams: { page: 1, limit: 100, type: 'user', query: searchReviewers }
+  })
+
   const { data: { body: reviewers } = {}, refetch: refetchReviewers } = useReviewerListPullReqQuery({
     repo_ref: repoRef,
     pullreq_number: prId
   })
+
   const { data: { body: codeOwners } = {}, refetch: refetchCodeOwners } = useCodeownersPullReqQuery({
     repo_ref: repoRef,
     pullreq_number: prId
   })
+
   const { data: { body: activityData } = {} } = useListPullReqActivitiesQuery({
     repo_ref: repoRef,
     pullreq_number: prId,
     queryParams: {}
   })
 
-  const { data: { body: labelsList } = {} } = useListRepoLabelsQuery({
-    repo_ref: repoRef,
-    queryParams: { inherited: true, query: searchLabel }
-  })
-
-  const { data: { body: PRLabels } = {}, refetch: refetchPRLabels } = useListLabelsQuery({
-    repo_ref: repoRef,
-    pullreq_number: prId,
-    queryParams: {}
-  })
-
-  const { mutate: addLabel, error: addLabelError } = useAssignLabelMutation(
-    {
-      repo_ref: repoRef,
-      pullreq_number: prId
-    },
-    {
-      onSuccess: () => {
-        refetchPRLabels()
-        refetchActivities()
-      }
-    }
-  )
-
-  const { mutate: removeLabel, error: removeLabelError } = useUnassignLabelMutation(
-    {
-      repo_ref: repoRef,
-      pullreq_number: prId
-    },
-    {
-      onSuccess: () => {
-        refetchPRLabels()
-        refetchActivities()
-      }
-    }
-  )
-
-  const handleAddLabel = (id?: number) => {
-    if (!id) return
-    addLabel({
-      body: {
-        label_id: id
-      }
+  /**
+   * get all label-related data
+   */
+  const { searchLabel, changeSearchLabel, labels, labelsValues, handleAddLabel, handleRemoveLabel, appliedLabels } =
+    usePrConversationLabels({
+      repoRef,
+      prId,
+      refetchData: refetchActivities
     })
-  }
-
-  const handleRemoveLabel = (id: number) => {
-    removeLabel({
-      label_id: id
-    })
-  }
 
   const { mutateAsync: restoreBranch } = useRestorePullReqSourceBranchMutation({})
   const onRestoreBranch = () => {
@@ -223,6 +175,7 @@ export default function PullRequestConversationPage() {
     })
     refetchPullReq()
   }
+
   const onDeleteBranch = () => {
     deleteBranch({
       repo_ref: repoRef,
@@ -285,7 +238,7 @@ export default function PullRequestConversationPage() {
     }
   }, [branchError])
 
-  const [activities, setActivities] = useState(activityData)
+  const [activities, setActivities] = useState<TypesPullReqActivity[] | undefined>(activityData)
   const approvedEvaluations = reviewers?.filter(evaluation => evaluation.review_decision === 'approved')
   const latestApprovalArr = approvedEvaluations?.filter(
     approved => !checkIfOutdatedSha(approved.sha, pullReqMetadata?.source_sha as string)
@@ -321,7 +274,6 @@ export default function PullRequestConversationPage() {
     refetchCodeOwners()
   }, [pullReqMetadata, pullReqMetadata?.title, pullReqMetadata?.state, pullReqMetadata?.source_sha, refetchCodeOwners])
 
-  // If you need to update activities when activityData changes, use useEffect
   useEffect(() => {
     setActivities(activityData)
   }, [activityData])
@@ -400,6 +352,7 @@ export default function PullRequestConversationPage() {
       })
       .catch(error => setRemoveReviewerError(error.message))
   }
+
   const onPRStateChanged = useCallback(() => {
     refetchCodeOwners()
     refetchPullReq()
@@ -432,6 +385,7 @@ export default function PullRequestConversationPage() {
       setRuleViolationArr(undefined)
     })
   }
+
   const handleRebaseBranch = () => {
     const payload: RebaseBranchRequestBody = {
       base_branch: pullReqMetadata?.target_branch,
@@ -440,11 +394,18 @@ export default function PullRequestConversationPage() {
       head_branch: pullReqMetadata?.source_branch,
       head_commit_sha: pullReqMetadata?.source_sha
     }
-    rebaseBranch({ body: payload, repo_ref: repoRef }).then(() => {
-      onPRStateChanged()
-      setRuleViolationArr(undefined)
-    })
+
+    rebaseBranch({ body: payload, repo_ref: repoRef }).then(
+      () => {
+        onPRStateChanged()
+        setRuleViolationArr(undefined)
+      },
+      error => {
+        setRebaseErrorMessage(error.message)
+      }
+    )
   }
+
   const mockPullRequestActions = [
     ...(pullReqMetadata?.closed
       ? [
@@ -534,15 +495,16 @@ export default function PullRequestConversationPage() {
     refetchActivities,
     updateCommentStatus,
     currentUserName: currentUserData?.display_name,
-    setActivities // pass setActivities if you want ephemeral logic
+    setActivities, // pass setActivities if you want ephemeral logic
+    dryMerge
   })
 
-  if (prPanelData?.PRStateLoading || changesLoading) {
+  const [rebaseErrorMessage, setRebaseErrorMessage] = useState<string | null>(null)
+
+  if (prPanelData?.PRStateLoading || (changesLoading && !!pullReqMetadata?.closed)) {
     return <SkeletonList />
   }
 
-  // TODO: we only need to plug in one component from @harnessio/ui/views
-  // for the PullRequestConversationView example and pass it the required props
   return (
     <>
       <CommitSuggestionsDialog
@@ -552,179 +514,111 @@ export default function PullRequestConversationPage() {
         suggestions={suggestionsBatch?.length ? suggestionsBatch : suggestionToCommit ? [suggestionToCommit] : null}
         prId={prId}
       />
-      <SandboxLayout.Columns columnWidths="1fr 288px">
-        <SandboxLayout.Column>
-          <SandboxLayout.Content className="pl-0 pt-0">
-            {/* TODO: fix handleaction for comment section in panel */}
-            <PullRequestPanel
-              handleRebaseBranch={handleRebaseBranch}
-              handlePrState={handlePrState}
-              spaceId={spaceId || ''}
-              repoId={repoId}
-              changesInfo={{
-                header: changesInfo?.title,
-                content: changesInfo?.statusMessage,
-                status: changesInfo?.statusIcon
-              }}
-              checksInfo={{
-                header: pullReqChecksDecision.checkInfo.title,
-                content: pullReqChecksDecision.summaryText,
-                status: pullReqChecksDecision?.checkInfo.status as EnumCheckStatus
-              }}
-              commentsInfo={prPanelData?.commentsInfoData}
-              ruleViolation={prPanelData.ruleViolation}
-              checks={pullReqChecksDecision?.data?.checks}
-              PRStateLoading={prPanelData?.PRStateLoading}
-              // TODO: TypesPullReq is null for someone: vardan will look into why swagger is doing this
-              pullReqMetadata={pullReqMetadata ? pullReqMetadata : undefined}
-              // TODO: add dry merge check into pr context
-              conflictingFiles={prPanelData?.conflictingFiles}
-              approvedEvaluations={approvedEvaluations}
-              changeReqEvaluations={changeReqEvaluations}
-              codeOwners={codeOwners}
-              latestApprovalArr={latestApprovalArr}
-              reqNoChangeReq={prPanelData?.atLeastOneReviewerRule}
-              changeReqReviewer={changeReqReviewer}
-              codeOwnerChangeReqEntries={codeOwnerChangeReqEntries}
-              reqCodeOwnerApproval={prPanelData?.reqCodeOwnerApproval}
-              reqCodeOwnerLatestApproval={prPanelData?.reqCodeOwnerLatestApproval}
-              codeOwnerPendingEntries={codeOwnerPendingEntries}
-              codeOwnerApprovalEntries={codeOwnerApprovalEntries}
-              latestCodeOwnerApprovalArr={latestCodeOwnerApprovalArr}
-              minApproval={prPanelData?.minApproval}
-              minReqLatestApproval={prPanelData?.minReqLatestApproval}
-              actions={mockPullRequestActions}
-              resolvedCommentArr={prPanelData?.resolvedCommentArr}
-              requiresCommentApproval={prPanelData?.requiresCommentApproval}
-              ruleViolationArr={prPanelData?.ruleViolationArr}
-              checkboxBypass={checkboxBypass}
-              setCheckboxBypass={setCheckboxBypass}
-              onRestoreBranch={onRestoreBranch}
-              onDeleteBranch={onDeleteBranch}
-              showDeleteBranchButton={showDeleteBranchButton}
-              showRestoreBranchButton={showRestoreBranchButton}
-              headerMsg={errorMsg}
-              commitSuggestionsBatchCount={suggestionsBatch?.length}
-              onCommitSuggestions={onCommitSuggestionsBatch}
-              toPRCheck={({ pipelineId, executionId }: { pipelineId: string; executionId: string }) =>
-                routes.toExecution({ spaceId, repoId, pipelineId, executionId })
-              }
-            />
-            <Spacer size={12} />
-            <PullRequestFilters
-              activityFilters={activityFilters}
-              dateFilters={dateFilters}
-              activityFilter={activityFilter}
-              dateOrderSort={dateOrderSort}
-              setActivityFilter={setActivityFilter}
-              setDateOrderSort={setDateOrderSort}
-            />
-            <Spacer size={6} />
-
-            <PullRequestOverview
-              toCommitDetails={({ sha }: { sha: string }) =>
-                routes.toRepoCommitDetails({ spaceId, repoId, commitSHA: sha })
-              }
-              handleUpdateDescription={handleUpdateDescription}
-              handleDeleteComment={deleteComment}
-              handleUpdateComment={updateComment}
-              useTranslationStore={useTranslationStore}
-              repoId={repoRef}
-              refetchActivities={refetchActivities}
-              commentStatusPullReq={commentStatusPullReq}
-              data={activities?.map((item: TypesPullReqActivity) => {
-                return {
-                  author: item?.author,
-                  created: item?.created,
-                  deleted: item?.deleted,
-                  edited: item?.edited,
-                  id: item?.id,
-                  kind: item?.kind,
-                  mentions: item?.mentions,
-                  metadata: item?.metadata,
-                  order: item?.order,
-                  parent_id: item?.parent_id,
-                  payload: item as TypesPullReqActivity,
-                  pullreq_id: item?.pullreq_id,
-                  repo_id: item?.repo_id,
-                  resolved: item?.resolved,
-                  resolver: item?.resolver,
-                  sub_order: item?.sub_order,
-                  text: item?.text,
-                  type: item?.type,
-                  updated: item?.updated
-                }
-              })}
-              pullReqMetadata={pullReqMetadata ? pullReqMetadata : undefined}
-              activityFilter={activityFilter}
-              dateOrderSort={dateOrderSort}
-              handleSaveComment={handleSaveComment}
-              currentUser={{ display_name: currentUserData?.display_name, uid: currentUserData?.uid }}
-              onCopyClick={onCopyClick}
-              toggleConversationStatus={toggleConversationStatus}
-              onCommitSuggestion={onCommitSuggestion}
-              addSuggestionToBatch={addSuggestionToBatch}
-              suggestionsBatch={suggestionsBatch}
-              removeSuggestionFromBatch={removeSuggestionFromBatch}
-              filenameToLanguage={filenameToLanguage}
-              handleUpload={handleUpload}
-            />
-            <Spacer size={9} />
-            <PullRequestCommentBox
-              comment={comment}
-              setComment={setComment}
-              currentUser={currentUserData?.display_name}
-              onSaveComment={handleSaveComment}
-              handleUpload={handleUpload}
-            />
-            <Spacer size={9} />
-          </SandboxLayout.Content>
-        </SandboxLayout.Column>
-        <SandboxLayout.Column>
-          <SandboxLayout.Content className="px-0 pt-0">
-            <PullRequestSideBar
-              addReviewers={handleAddReviewer}
-              usersList={principals?.map(user => ({ id: user.id, display_name: user.display_name, uid: user.uid }))}
-              // repoMetadata={undefined}
-              currentUserId={currentUserData?.uid}
-              pullRequestMetadata={{ source_sha: pullReqMetadata?.source_sha as string }}
-              processReviewDecision={processReviewDecision}
-              refetchReviewers={refetchReviewers}
-              handleDelete={handleDeleteReviewer}
-              addReviewerError={addReviewerError}
-              removeReviewerError={removeReviewerError}
-              reviewers={reviewers?.map((val: TypesPullReqReviewer) => ({
-                reviewer: { display_name: val.reviewer?.display_name || '', id: val.reviewer?.id || 0 },
-                review_decision: val.review_decision,
-                sha: val.sha
-              }))}
-              searchQuery={searchReviewers}
-              setSearchQuery={setSearchReviewers}
-              labelsList={labelsList?.map(label => {
-                return {
-                  id: label.id,
-                  key: label.key,
-                  color: label.color
-                }
-              })}
-              PRLabels={PRLabels?.label_data?.map(label => {
-                return {
-                  id: label.id,
-                  key: label.key,
-                  color: label.color
-                }
-              })}
-              searchLabelQuery={searchLabel}
-              setSearchLabelQuery={setSearchLabel}
-              addLabel={handleAddLabel}
-              removeLabel={handleRemoveLabel}
-              addLabelError={addLabelError?.message}
-              removeLabelError={removeLabelError?.message}
-              useTranslationStore={useTranslationStore}
-            />
-          </SandboxLayout.Content>
-        </SandboxLayout.Column>
-      </SandboxLayout.Columns>
+      <PullRequestConversationView
+        rebaseErrorMessage={rebaseErrorMessage}
+        filtersProps={filtersData}
+        useTranslationStore={useTranslationStore}
+        panelProps={{
+          handleRebaseBranch,
+          handlePrState,
+          changesInfo: {
+            header: changesInfo.title,
+            content: changesInfo.statusMessage,
+            status: changesInfo.statusIcon
+          },
+          checksInfo: {
+            header: pullReqChecksDecision.checkInfo.title,
+            content: pullReqChecksDecision.summaryText,
+            status: pullReqChecksDecision?.checkInfo.status as EnumCheckStatus
+          },
+          prPanelData,
+          checks: pullReqChecksDecision?.data?.checks,
+          // TODO: TypesPullReq is null for someone: vardan will look into why swagger is doing this
+          pullReqMetadata,
+          // TODO: add dry merge check into pr context
+          approvedEvaluations,
+          changeReqEvaluations,
+          codeOwners,
+          latestApprovalArr,
+          changeReqReviewer,
+          codeOwnerChangeReqEntries,
+          codeOwnerPendingEntries,
+          codeOwnerApprovalEntries,
+          latestCodeOwnerApprovalArr,
+          actions: mockPullRequestActions,
+          checkboxBypass,
+          setCheckboxBypass,
+          onRestoreBranch,
+          onDeleteBranch,
+          showDeleteBranchButton,
+          showRestoreBranchButton,
+          headerMsg: errorMsg,
+          commitSuggestionsBatchCount: suggestionsBatch?.length,
+          onCommitSuggestions: onCommitSuggestionsBatch,
+          toPRCheck: ({ pipelineId, executionId }) => routes.toExecution({ spaceId, repoId, pipelineId, executionId }),
+          spaceId,
+          repoId
+        }}
+        overviewProps={{
+          toCommitDetails: ({ sha }) => routes.toRepoCommitDetails({ spaceId, repoId, commitSHA: sha }),
+          handleUpdateDescription,
+          handleDeleteComment: deleteComment,
+          handleUpdateComment: updateComment,
+          data: activities,
+          pullReqMetadata,
+          activityFilter: filtersData.activityFilter,
+          dateOrderSort: filtersData.dateOrderSort,
+          handleSaveComment,
+          currentUser: {
+            display_name: currentUserData?.display_name,
+            uid: currentUserData?.uid
+          },
+          onCopyClick,
+          toggleConversationStatus,
+          onCommitSuggestion,
+          addSuggestionToBatch,
+          suggestionsBatch,
+          removeSuggestionFromBatch,
+          filenameToLanguage,
+          handleUpload,
+          toCode: ({ sha }: { sha: string }) => `${routes.toRepoFiles({ spaceId, repoId })}/${sha}`
+        }}
+        commentBoxProps={{
+          comment,
+          setComment,
+          currentUser: currentUserData?.display_name,
+          onSaveComment: handleSaveComment,
+          handleUpload
+        }}
+        sideBarProps={{
+          addReviewers: handleAddReviewer,
+          usersList: principals as PrincipalType[],
+          currentUserId: currentUserData?.uid,
+          pullRequestMetadata: { source_sha: pullReqMetadata?.source_sha || '' },
+          processReviewDecision,
+          refetchReviewers,
+          handleDelete: handleDeleteReviewer,
+          addReviewerError,
+          removeReviewerError,
+          reviewers: reviewers?.map((val: TypesPullReqReviewer) => ({
+            reviewer: {
+              display_name: val.reviewer?.display_name || '',
+              id: val.reviewer?.id || 0
+            },
+            review_decision: val.review_decision,
+            sha: val.sha
+          })),
+          searchQuery: searchReviewers,
+          setSearchQuery: setSearchReviewers,
+          labelsList: labels,
+          labelsValues,
+          PRLabels: appliedLabels,
+          searchLabelQuery: searchLabel,
+          setSearchLabelQuery: changeSearchLabel,
+          addLabel: handleAddLabel,
+          removeLabel: handleRemoveLabel
+        }}
+      />
     </>
   )
 }

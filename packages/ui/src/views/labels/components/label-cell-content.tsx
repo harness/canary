@@ -25,7 +25,7 @@ export const LabelCellContent: FC<LabelCellContentProps> = ({ label, values }) =
                 size={12}
               />
             )}
-            <LabelMarker inTable label={label.key} color={label.color} value={length ? length : undefined} />
+            <LabelMarker inTable label={label.key} color={label.color} value={length ? String(length) : undefined} />
           </div>
         </Accordion.Trigger>
         <Accordion.Content className="flex flex-col gap-y-2.5 pb-0 pl-[22px] pt-2.5">

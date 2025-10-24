@@ -3,17 +3,17 @@ import { useParams } from 'react-router-dom'
 
 import { Button, Icon, Input, Spacer } from '@harnessio/canary'
 import { useListTemplatesQuery } from '@harnessio/code-service-client'
-import { SkeletonList } from '@harnessio/ui/components'
+import { Pagination, SkeletonList } from '@harnessio/ui/components'
 import {
   harnessStepGroups,
   harnessSteps,
-  PaginationComponent,
   StepForm,
   StepsPalette,
   StepsPaletteContent,
   StepsPaletteItem
 } from '@harnessio/views'
 
+import { useTranslationStore } from '../../../../i18n/stores/i18n-store.ts'
 import { PathParams } from '../../../../RouteDefinitions'
 import { PageResponseHeader } from '../../../../types'
 import { StepSource } from '../context/data-store/types'
@@ -25,6 +25,7 @@ interface PipelineStudioStepFormProps {
 }
 
 const PipelineStudioStepPalette = (props: PipelineStudioStepFormProps): JSX.Element => {
+  const { t } = useTranslationStore()
   const { requestClose } = props
   const {
     state: { addStepIntention },
@@ -180,7 +181,7 @@ const PipelineStudioStepPalette = (props: PipelineStudioStepFormProps): JSX.Elem
           ) : null}
         </StepsPaletteContent.Section>
         <Spacer size={8} />
-        <PaginationComponent
+        <Pagination
           nextPage={xNextPage}
           previousPage={xPrevPage}
           currentPage={page}
@@ -188,6 +189,7 @@ const PipelineStudioStepPalette = (props: PipelineStudioStepFormProps): JSX.Elem
             templatesSectionRef.current?.scrollIntoView()
             setPage(pageNum)
           }}
+          t={t}
         />
         <Spacer size={8} />
       </StepsPaletteContent.Root>

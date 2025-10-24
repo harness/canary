@@ -31,6 +31,16 @@ const spacerVariants = cva('mt-4 block', {
 
 export interface SpacerProps extends ComponentProps<'span'>, VariantProps<typeof spacerVariants> {}
 
+// TODO: Revisit the Spacer component
+// 1. Currently, Spacer uses a <span> with `display: block;` and relies on margins instead of height.
+//    This results in a confusing DevTools experience, where the spacer appears to have a height of 0,
+//    and developers need to manually calculate the rem values.
+//    Suggestion: Replace margins with height in `spacerVariants` for better DevEx.
+// 2. Discuss the overall purpose of the Spacer component:
+//    - For UI development, prefer using `gap`, `space`, `margin`, or `padding` directly on parent elements.
+//    - Retain Spacer primarily for higher-level product or page layouts where Tailwind classes are avoided,
+//      and a reusable abstraction for spacing is beneficial.
+
 const Spacer = ({ className, size, ...props }: SpacerProps) => (
   <span aria-hidden className={cn(spacerVariants({ size, className }))} {...props}></span>
 )

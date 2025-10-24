@@ -60,7 +60,7 @@ export function parseStartingLineIfOne(diffString: string) {
 export const CRLF = '\n'
 
 export const PULL_REQUEST_LARGE_DIFF_CHANGES_LIMIT = 500
-export const PULL_REQUEST_DIFF_RENDERING_BLOCK_SIZE = 5
+export const PULL_REQUEST_DIFF_RENDERING_BLOCK_SIZE = 10
 export const IN_VIEWPORT_DETECTION_MARGIN = 2000
 
 // helper to transform lines to quote format: each line => '> line' + blank line at end
@@ -72,7 +72,7 @@ export function quoteTransform(raw: string): string {
     .join(CRLF)
 }
 
-// If a diff container has a Markdown Editor active, retain it event it's off-screen to make
+// If a diff container has a Markdown Editor active, retain it even if it's off-screen to make
 // sure editor content is not cleared out during off-screen optimization
 export const shouldRetainDiffChildren = (dom: HTMLElement | null) =>
   !!dom?.querySelector('[data-comment-editor-shown="true"]')

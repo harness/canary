@@ -1,6 +1,6 @@
 import { FC } from 'react'
 
-import { EditViewTypeValue, StackedList, ToggleGroup, ToggleGroupItem } from '@/components'
+import { EditViewTypeValue, StackedList, ToggleGroup } from '@/components'
 
 export interface FileEditorControlBarProps {
   view: EditViewTypeValue
@@ -11,7 +11,7 @@ export const FileEditorControlBar: FC<FileEditorControlBarProps> = ({ view, onCh
   return (
     <StackedList.Root onlyTopRounded borderBackground>
       <StackedList.Item disableHover isHeader className="px-4 py-1.5">
-        <ToggleGroup
+        <ToggleGroup.Root
           className="gap-0"
           onValueChange={onChangeView}
           value={view}
@@ -19,9 +19,9 @@ export const FileEditorControlBar: FC<FileEditorControlBarProps> = ({ view, onCh
           unselectable={'on'}
           size="xs"
         >
-          <ToggleGroupItem value={'edit'}>Edit</ToggleGroupItem>
-          <ToggleGroupItem value={'preview'}>Preview</ToggleGroupItem>
-        </ToggleGroup>
+          <ToggleGroup.Item value={'edit'}>Edit</ToggleGroup.Item>
+          <ToggleGroup.Item value={'preview'}>Preview</ToggleGroup.Item>
+        </ToggleGroup.Root>
       </StackedList.Item>
     </StackedList.Root>
   )

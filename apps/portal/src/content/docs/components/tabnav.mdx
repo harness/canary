@@ -1,0 +1,78 @@
+---
+title: TabNav
+description: TabNav component
+---
+
+The `TabNav` component is used to create a tabbed navigation interface. It consists of a root container and individual tab items that can be linked to different routes.
+
+import { DocsPage } from "@/components/docs-page";
+
+<DocsPage.ComponentExample
+  client:only
+  code={`<TabNav.Root>
+  <TabNav.Item to="/home">Home</TabNav.Item>
+  <TabNav.Item to="/about">About</TabNav.Item>
+  <TabNav.Item to="/contact">Contact</TabNav.Item>
+</TabNav.Root>`}
+/>
+
+## Usage
+
+```typescript jsx
+import { TabNav } from '@harnessio/ui/components'
+
+//...
+
+return (
+  <TabNav.Root>
+    <TabNav.Item to="/home">Home</TabNav.Item>
+    <TabNav.Item to="/about">About</TabNav.Item>
+    <TabNav.Item to="/contact">Contact</TabNav.Item>
+  </TabNav.Root>
+)
+```
+
+## Anatomy
+
+```typescript jsx
+<TabNav.Root>
+  <TabNav.Item to="/home">Home</TabNav.Item>
+  <TabNav.Item to="/about">About</TabNav.Item>
+  <TabNav.Item to="/contact">Contact</TabNav.Item>
+</TabNav.Root>
+```
+
+## API Reference
+
+### [`TabNav`](packages/ui/src/components/tabnav.tsx)
+
+The [`TabNav`](packages/ui/src/components/tabnav.tsx) component provides a tabbed navigation interface. It consists of the following subcomponents:
+
+### [`TabNav.Root`](packages/ui/src/components/tabnav.tsx)
+
+The root container for the tab navigation. It wraps the individual tab items.
+
+```typescript jsx
+<TabNav.Root>
+  {/* TabNav.Item elements as children */}
+</TabNav.Root>
+```
+
+### [`TabNav.Item`](packages/ui/src/components/tabnav.tsx)
+
+An individual tab item that links to a specific route. It accepts the same props as `NavLink` from `react-router-dom`:
+
+```typescript jsx
+<TabNav.Item
+  to="/path"              // The route path to link to
+  activeClassname="..."   // [OPTIONAL] Additional class names for the active state
+>
+  {label}
+</TabNav.Item>
+```
+
+### Props
+
+- `to`: A string representing the route path to link to.
+- `label`: A string or ReactNode representing the label to display for the tab.
+- `activeClassname`: An optional string for additional class names to apply when the tab is active.

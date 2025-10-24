@@ -1,5 +1,6 @@
 // RepoLayout.tsx
 
+import { FC } from 'react'
 import { NavLink, Outlet, useParams } from 'react-router-dom'
 
 import {
@@ -9,13 +10,11 @@ import {
   BreadcrumbList,
   BreadcrumbPage,
   BreadcrumbSeparator,
-  Tabs,
-  TabsList,
-  TabsTrigger,
   Topbar
 } from '@harnessio/canary'
+import { Tabs } from '@harnessio/ui/components'
 
-const RepoExecutionLayout: React.FC = () => {
+const RepoExecutionLayout: FC = () => {
   const { repoId } = useParams<{ repoId: string }>()
 
   return (
@@ -40,25 +39,25 @@ const RepoExecutionLayout: React.FC = () => {
           <></>
         </Topbar.Right>
       </Topbar.Root>
-      <Tabs variant="navigation" defaultValue="index">
-        <TabsList>
+      <Tabs.Root variant="navigation" defaultValue="index">
+        <Tabs.List>
           <NavLink to={`/repos/${repoId}`}>
-            <TabsTrigger value="index">Foo</TabsTrigger>
+            <Tabs.Trigger value="index">Foo</Tabs.Trigger>
           </NavLink>
           <NavLink to={`pipelines`}>
-            <TabsTrigger value="pipelines">Pipelines</TabsTrigger>
+            <Tabs.Trigger value="pipelines">Pipelines</Tabs.Trigger>
           </NavLink>
           <NavLink to={`commits`}>
-            <TabsTrigger value="commits">Commits</TabsTrigger>
+            <Tabs.Trigger value="commits">Commits</Tabs.Trigger>
           </NavLink>
           <NavLink to={`pull-requests`}>
-            <TabsTrigger value="pull-requests">Pull Requests</TabsTrigger>
+            <Tabs.Trigger value="pull-requests">Pull Requests</Tabs.Trigger>
           </NavLink>
           <NavLink to={`branches`}>
-            <TabsTrigger value="branches">Branches</TabsTrigger>
+            <Tabs.Trigger value="branches">Branches</Tabs.Trigger>
           </NavLink>
-        </TabsList>
-      </Tabs>
+        </Tabs.List>
+      </Tabs.Root>
       <main className="box-border min-h-[calc(100vh-100px)] overflow-hidden">
         <Outlet />
       </main>

@@ -1,7 +1,7 @@
 import { useState } from 'react'
 
 import { LabelsListStore } from '@subjects/stores/labels-store'
-import { noop, useTranslationsStore } from '@utils/viewUtils'
+import { noop, useTranslationStore } from '@utils/viewUtils'
 
 import { DeleteAlertDialog } from '@harnessio/ui/components'
 import { LabelsListPage } from '@harnessio/ui/views'
@@ -12,7 +12,7 @@ export const RepoLabelsList = () => {
   return (
     <>
       <LabelsListPage
-        useTranslationStore={useTranslationsStore}
+        useTranslationStore={useTranslationStore}
         useLabelsStore={LabelsListStore.useLabelsStore}
         createdIn={''}
         handleEditLabel={() => {}}
@@ -29,7 +29,7 @@ export const RepoLabelsList = () => {
         type="label"
         deleteFn={noop}
         isLoading={false}
-        useTranslationStore={useTranslationsStore}
+        useTranslationStore={useTranslationStore}
       />
     </>
   )

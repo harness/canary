@@ -71,6 +71,8 @@ export const WebhookDescriptionField: FC<WebhookFormFieldProps> = ({ register, e
 export const WebhookPayloadUrlField: FC<WebhookFormFieldProps> = ({ register, errors, t }) => (
   <ControlGroup>
     <Input
+      autoComplete="new-password"
+      data-form-type="other"
       id="payloadUrl"
       {...register!('url')}
       placeholder={t('views:repos.urlPlaceholder', 'https://example.com/harness')}
@@ -84,6 +86,8 @@ export const WebhookPayloadUrlField: FC<WebhookFormFieldProps> = ({ register, er
 export const WebhookSecretField: FC<WebhookFormFieldProps> = ({ register, errors, t }) => (
   <ControlGroup>
     <Input
+      autoComplete="new-password"
+      data-form-type="other"
       id="secret"
       {...register!('secret')}
       type="password"

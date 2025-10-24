@@ -1,6 +1,6 @@
 import { FC } from 'react'
 
-import { NoData, PaginationComponent, SkeletonList } from '@/components'
+import { NoData, Pagination, SkeletonList } from '@/components'
 
 import { MembersList } from './member-list'
 import { ProjectMembersListProps } from './types'
@@ -54,7 +54,7 @@ const ProjectMembersList: FC<ProjectMembersListProps> = ({
         onDelete={onDeleteHandler}
         useTranslationStore={useTranslationStore}
       />
-      <PaginationComponent totalPages={totalPages} currentPage={page} goToPage={setPage} t={t} />
+      <Pagination totalPages={totalPages} currentPage={page} goToPage={setPage} t={t} />
     </>
   )
 }

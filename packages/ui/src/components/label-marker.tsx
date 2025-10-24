@@ -1,11 +1,11 @@
 import { FC } from 'react'
 
-import { ColorsEnum } from '@/views'
 import { cn } from '@utils/cn'
+import { ColorsEnum } from '@views/labels'
 
 export interface LabelMarkerProps {
   label: string
-  value?: string | number
+  value?: string
   color: ColorsEnum
   inTable?: boolean
 }
@@ -30,7 +30,7 @@ export const LabelMarker: FC<LabelMarkerProps> = ({ label, value, color, inTable
   return (
     <span
       className={cn(
-        `inline-flex text-12 h-5 py-px px-2 items-center font-medium rounded overflow-hidden max-w-full ${LabelMarkerColor[color]}`,
+        `inline-flex text-12 leading-5 h-5 py-px px-2 items-center font-medium rounded overflow-hidden max-w-full ${LabelMarkerColor[color]}`,
         { 'pr-px': !!value }
       )}
     >

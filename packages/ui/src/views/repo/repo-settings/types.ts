@@ -1,4 +1,5 @@
-import { BypassUsersList, RepoBranchSettingsFormFields } from '@/views'
+import { PrincipalType } from '@/types'
+import { RepoBranchSettingsFormFields } from '@/views'
 import { z } from 'zod'
 
 export interface RepoBranch {
@@ -50,7 +51,7 @@ export interface IRepoStore {
   rules: RuleDataType[] | null
   securityScanning: boolean
   presetRuleData: RepoBranchSettingsFormFields | null
-  principals: BypassUsersList[] | null
+  principals: PrincipalType[] | null
   recentStatusChecks: string[] | null
 }
 

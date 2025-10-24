@@ -1,23 +1,9 @@
-import { Fragment, useMemo, useRef, useState } from 'react'
+import { ChangeEvent, ClipboardEvent, DragEvent, Fragment, useMemo, useRef, useState } from 'react'
 
-import {
-  Avatar,
-  AvatarFallback,
-  Button,
-  Icon,
-  IconProps,
-  MarkdownViewer,
-  Tabs,
-  TabsContent,
-  TabsList,
-  TabsTrigger,
-  Textarea
-} from '@/components'
+import { Avatar, Button, Icon, IconProps, MarkdownViewer, Tabs, Textarea } from '@/components'
+import { handleFileDrop, handlePaste, ToolbarAction } from '@/views'
 import { cn } from '@utils/cn'
 import { getInitials } from '@utils/stringUtils'
-
-import { ToolbarAction } from '../../pull-request-details-types'
-import { handleFileDrop, handlePaste } from '../../pull-request-utils'
 
 interface ToolbarItem {
   icon: IconProps['name']
@@ -27,7 +13,7 @@ interface ToolbarItem {
   onClick?: () => void
 }
 
-interface PullRequestCommentBoxProps {
+export interface PullRequestCommentBoxProps {
   onSaveComment: (comment: string) => void
   comment: string
   setComment: (comment: string) => void
@@ -74,11 +60,9 @@ const PullRequestCommentBox = ({
 
   const avatar = useMemo(() => {
     return (
-      <Avatar size="6">
-        <AvatarFallback>
-          <span className="text-12 text-foreground-3">{getInitials(currentUser || '')}</span>
-        </AvatarFallback>
-      </Avatar>
+      <Avatar.Root>
+        <Avatar.Fallback>{getInitials(currentUser || '')}</Avatar.Fallback>
+      </Avatar.Root>
     )
   }, [currentUser])
 
@@ -92,14 +76,14 @@ const PullRequestCommentBox = ({
     fileInputRef.current?.click()
   }
 
-  const handleFileChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+  const handleFileChange = (event: ChangeEvent<HTMLInputElement>) => {
     const file = event.target.files?.[0]
     if (file) {
       handleUploadCallback(file)
     }
   }
 
-  const handleDragEnter = (e: React.DragEvent) => {
+  const handleDragEnter = (e: DragEvent) => {
     e.preventDefault()
     e.stopPropagation()
 
@@ -108,7 +92,7 @@ const PullRequestCommentBox = ({
     }
   }
 
-  const handleDragLeave = (e: React.DragEvent) => {
+  const handleDragLeave = (e: DragEvent) => {
     e.preventDefault()
     e.stopPropagation()
 
@@ -117,7 +101,7 @@ const PullRequestCommentBox = ({
     }
   }
 
-  const handleDrop = (e: React.DragEvent) => {
+  const handleDrop = (e: DragEvent) => {
     e.preventDefault()
     e.stopPropagation()
     setIsDragging(false)
@@ -129,7 +113,7 @@ const PullRequestCommentBox = ({
     handleFileDrop(event, handleUploadCallback)
   }
 
-  const handlePasteForUpload = (event: React.ClipboardEvent) => {
+  const handlePasteForUpload = (event: ClipboardEvent) => {
     handlePaste(event, handleUploadCallback)
   }
 
@@ -154,26 +138,25 @@ const PullRequestCommentBox = ({
   }
 
   return (
-    <div className="flex items-start gap-x-3 font-sans">
+    <div className="flex items-start gap-x-3 font-sans" data-comment-editor-shown="true">
       {!inReplyMode && !isEditMode && avatar}
-
       <div
-        className={cn('pb-5 pt-1.5 px-4 flex-1 bg-background-2 border-border-1', {
+        className={cn('pb-4 pt-1.5 px-4 flex-1 bg-background-2 border-border-1 overflow-auto', {
           'border rounded-md': !inReplyMode || isEditMode,
           'border-t': inReplyMode
         })}
       >
-        <Tabs variant="tabnav" defaultValue={TABS_KEYS.WRITE} value={activeTab} onValueChange={handleTabChange}>
-          <TabsList className="relative left-1/2 w-[calc(100%+var(--tab-width))] -translate-x-1/2 px-4">
-            <TabsTrigger className="data-[state=active]:bg-background-2" value={TABS_KEYS.WRITE}>
+        <Tabs.Root variant="tabnav" defaultValue={TABS_KEYS.WRITE} value={activeTab} onValueChange={handleTabChange}>
+          <Tabs.List className="relative left-1/2 w-[calc(100%+var(--tab-width))] -translate-x-1/2 px-4">
+            <Tabs.Trigger className="data-[state=active]:bg-background-2" value={TABS_KEYS.WRITE}>
               Write
-            </TabsTrigger>
-            <TabsTrigger className="data-[state=active]:bg-background-2" value={TABS_KEYS.PREVIEW}>
+            </Tabs.Trigger>
+            <Tabs.Trigger className="data-[state=active]:bg-background-2" value={TABS_KEYS.PREVIEW}>
               Preview
-            </TabsTrigger>
-          </TabsList>
+            </Tabs.Trigger>
+          </Tabs.List>
 
-          <TabsContent className="mt-4" value={TABS_KEYS.WRITE}>
+          <Tabs.Content className="mt-4" value={TABS_KEYS.WRITE}>
             <div
               className="relative"
               onDrop={handleDrop}
@@ -183,7 +166,7 @@ const PullRequestCommentBox = ({
               ref={dropZoneRef}
             >
               <Textarea
-                className="min-h-24 p-3 pb-10 text-foreground-1"
+                className="min-h-24 bg-background-2 p-3 pb-10 text-foreground-1"
                 autoFocus={!!inReplyMode}
                 placeholder="Add your comment here"
                 value={comment}
@@ -204,7 +187,7 @@ const PullRequestCommentBox = ({
                   const isFirst = index === 0
                   return (
                     <Fragment key={`${comment}-${index}`}>
-                      <Button size="icon" variant="ghost" onClick={item?.onClick}>
+                      <Button className="hover:bg-background-8" size="icon" variant="ghost" onClick={item?.onClick}>
                         <Icon className="text-icons-9" name={item.icon} />
                       </Button>
                       {isFirst && <div className="h-4 w-px bg-borders-2" />}
@@ -213,17 +196,17 @@ const PullRequestCommentBox = ({
                 })}
               </div>
             </div>
-          </TabsContent>
-          <TabsContent className="mt-4" value={TABS_KEYS.PREVIEW}>
-            <div className="min-h-24">
+          </Tabs.Content>
+          <Tabs.Content className="mt-4 w-full" value={TABS_KEYS.PREVIEW}>
+            <div className="min-h-24 w-full">
               {comment ? (
-                <MarkdownViewer markdownClassName="!bg-background-2" source={comment} />
+                <MarkdownViewer markdownClassName="!bg-background-2 w-full" source={comment} />
               ) : (
                 <span className="text-foreground-8">Nothing to preview</span>
               )}
             </div>
-          </TabsContent>
-        </Tabs>
+          </Tabs.Content>
+        </Tabs.Root>
 
         <div className="mt-4 flex items-center justify-between">
           {activeTab === TABS_KEYS.WRITE && (

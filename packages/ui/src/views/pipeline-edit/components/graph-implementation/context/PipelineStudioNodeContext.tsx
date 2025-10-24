@@ -1,4 +1,4 @@
-import { createContext, useContext, useState } from 'react'
+import { createContext, useContext, useEffect, useState } from 'react'
 
 import { CommonNodeDataType } from '../types/common-node-data-type'
 import { YamlEntityType } from '../types/yaml-entity-type'
@@ -10,7 +10,7 @@ export interface ContextMenuData {
   isIn?: boolean
 }
 
-export interface PipelineStudioNodeContextProps {
+export interface PipelineStudioNodeContextProps<T> {
   // context menu
   showContextMenu: (
     contextMenu: () => React.ReactNode,
@@ -34,9 +34,10 @@ export interface PipelineStudioNodeContextProps {
   onEditIntention: (nodeData: CommonNodeDataType) => void
   onDeleteIntention: (nodeData: CommonNodeDataType) => void
   onRevealInYaml: (path: string | undefined) => void
+  globalData?: T
 }
 
-export const PipelineStudioNodeContext = createContext<PipelineStudioNodeContextProps>({
+export const PipelineStudioNodeContext = createContext<PipelineStudioNodeContextProps<any>>({
   showContextMenu: (
     _contextMenu: () => React.ReactNode,
     _nodeData: CommonNodeDataType,
@@ -60,12 +61,13 @@ export const PipelineStudioNodeContext = createContext<PipelineStudioNodeContext
   onRevealInYaml: (_path: string | undefined) => undefined
 })
 
-export function usePipelineStudioNodeContext(): PipelineStudioNodeContextProps {
+export function usePipelineStudioNodeContext<T>(): PipelineStudioNodeContextProps<T> {
   return useContext(PipelineStudioNodeContext)
 }
 
-export interface PipelineStudioNodeContextProviderProps {
+export interface PipelineStudioNodeContextProviderProps<T = unknown> {
   children: React.ReactNode
+  selectedPath?: string
   onSelectIntention: (nodeData: CommonNodeDataType) => undefined
   onAddIntention: (
     nodeData: CommonNodeDataType,
@@ -75,9 +77,19 @@ export interface PipelineStudioNodeContextProviderProps {
   onEditIntention: (nodeData: CommonNodeDataType) => undefined
   onDeleteIntention: (nodeData: CommonNodeDataType) => undefined
   onRevealInYaml: (_path: string | undefined) => undefined
+  globalData?: T
 }
 export const PipelineStudioNodeContextProvider: React.FC<PipelineStudioNodeContextProviderProps> = props => {
-  const { onSelectIntention, onAddIntention, onEditIntention, onDeleteIntention, onRevealInYaml, children } = props
+  const {
+    onSelectIntention,
+    onAddIntention,
+    onEditIntention,
+    onDeleteIntention,
+    onRevealInYaml,
+    children,
+    selectedPath,
+    globalData
+  } = props
 
   const [contextMenuData, setContextMenuData] = useState<ContextMenuData | undefined>(undefined)
   const [selectionPath, setSelectionPath] = useState<string | undefined>(undefined)
@@ -102,6 +114,10 @@ export const PipelineStudioNodeContextProvider: React.FC<PipelineStudioNodeConte
     setContextMenuData(undefined)
   }
 
+  useEffect(() => {
+    setSelectionPath(selectedPath)
+  }, [selectedPath])
+
   return (
     <PipelineStudioNodeContext.Provider
       value={{
@@ -114,7 +130,8 @@ export const PipelineStudioNodeContextProvider: React.FC<PipelineStudioNodeConte
         onAddIntention,
         onEditIntention,
         onDeleteIntention,
-        onRevealInYaml
+        onRevealInYaml,
+        globalData
       }}
     >
       {children}

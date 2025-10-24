@@ -1,7 +1,7 @@
 import { FC } from 'react'
 import { Outlet } from 'react-router-dom'
 
-import { Avatar, AvatarFallback, Badge, Button, CommitCopyActions, Icon } from '@/components'
+import { Avatar, Badge, Button, CommitCopyActions, Icon } from '@/components'
 import { ICommitDetailsStore, SandboxLayout, TranslationStore } from '@/views'
 import { getInitials } from '@utils/stringUtils'
 import { timeAgo } from '@utils/utils'
@@ -34,9 +34,9 @@ export const RepoCommitDetailsView: FC<RepoCommitDetailsViewProps> = ({
         <div className="mt-4 flex items-center">
           {commitData?.author?.identity?.name && commitData?.author?.when && (
             <>
-              <Avatar className="size-6">
-                <AvatarFallback className="text-10">{getInitials(commitData.author.identity.name)}</AvatarFallback>
-              </Avatar>
+              <Avatar.Root>
+                <Avatar.Fallback className="text-10">{getInitials(commitData.author.identity.name)}</Avatar.Fallback>
+              </Avatar.Root>
               <span className="ml-2 text-14 font-medium leading-none text-foreground-8">
                 {commitData.author.identity.name}
               </span>

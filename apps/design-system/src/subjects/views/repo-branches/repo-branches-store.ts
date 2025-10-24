@@ -1,6 +1,6 @@
 import { noop } from '@utils/viewUtils'
 
-import { BranchSelectorTab, IBranchSelectorStore } from '@harnessio/ui/views'
+import { BranchSelectorTab, ColorsEnum, IBranchSelectorStore } from '@harnessio/ui/views'
 
 export const repoBranchesStore: IBranchSelectorStore = {
   setBranchList: noop,
@@ -109,7 +109,8 @@ export const repoBranchesStore: IBranchSelectorStore = {
           is_draft: true,
           merged: null,
           timestamp: 'Jan 13, 2025',
-          reviewRequired: false
+          reviewRequired: false,
+          labels: []
         }
       ]
     },
@@ -173,7 +174,19 @@ export const repoBranchesStore: IBranchSelectorStore = {
           timestamp: 'Jan 13, 2025',
           reviewRequired: false,
           state: 'open',
-          is_draft: false
+          is_draft: false,
+          labels: [
+            {
+              color: ColorsEnum.CYAN,
+              key: 'label-1',
+              value: 'value-1'
+            },
+            {
+              color: ColorsEnum.RED,
+              key: 'label-2',
+              value: 'value-2'
+            }
+          ]
         }
       ]
     },
@@ -210,7 +223,19 @@ export const repoBranchesStore: IBranchSelectorStore = {
           timestamp: 'Jan 13, 2025',
           reviewRequired: false,
           state: 'open',
-          is_draft: false
+          is_draft: false,
+          labels: [
+            {
+              color: ColorsEnum.CYAN,
+              key: 'label-1',
+              value: 'value-1'
+            },
+            {
+              color: ColorsEnum.RED,
+              key: 'label-2',
+              value: 'value-2'
+            }
+          ]
         }
       ]
     },
@@ -274,7 +299,19 @@ export const repoBranchesStore: IBranchSelectorStore = {
           reviewRequired: false,
           updated: 1737045230646,
           state: 'open',
-          is_draft: false
+          is_draft: false,
+          labels: [
+            {
+              color: ColorsEnum.CYAN,
+              key: 'label-1',
+              value: 'value-1'
+            },
+            {
+              color: ColorsEnum.RED,
+              key: 'label-2',
+              value: 'value-2'
+            }
+          ]
         }
       ]
     },
@@ -311,7 +348,19 @@ export const repoBranchesStore: IBranchSelectorStore = {
           timestamp: 'Jan 13, 2025',
           reviewRequired: false,
           state: 'open',
-          is_draft: true
+          is_draft: true,
+          labels: [
+            {
+              color: ColorsEnum.CYAN,
+              key: 'label-1',
+              value: 'value-1'
+            },
+            {
+              color: ColorsEnum.RED,
+              key: 'label-2',
+              value: 'value-2'
+            }
+          ]
         }
       ]
     },

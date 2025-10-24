@@ -1,4 +1,4 @@
-import { NoProblemsFound, Problems } from '@harnessio/views'
+import { NoProblemsFound, Problems } from '@harnessio/ui/components'
 import { useYamlEditorContext } from '@harnessio/yaml-editor'
 
 import { usePipelineDataContext } from '../context/PipelineStudioDataProvider'

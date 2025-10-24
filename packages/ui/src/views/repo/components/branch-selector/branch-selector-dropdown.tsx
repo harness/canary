@@ -1,7 +1,7 @@
 import { ChangeEvent, FC, useMemo, useState } from 'react'
 import { Link } from 'react-router-dom'
 
-import { Badge, DropdownMenu, Icon, SearchBox, Tabs, TabsList, TabsTrigger } from '@/components'
+import { Badge, DropdownMenu, Icon, SearchBox, Tabs } from '@/components'
 import { BranchSelectorDropdownProps, BranchSelectorTab, getBranchSelectorLabels } from '@/views'
 import { cn } from '@utils/cn'
 import { BranchSelectorListItem } from '@views/repo/repo.types'
@@ -59,7 +59,7 @@ export const BranchSelectorDropdown: FC<BranchSelectorDropdownProps> = ({
       </div>
 
       {!isBranchOnly && (
-        <Tabs
+        <Tabs.Root
           className="mt-2"
           variant="tabnav"
           value={activeTab}
@@ -68,7 +68,7 @@ export const BranchSelectorDropdown: FC<BranchSelectorDropdownProps> = ({
             setSearchQuery('')
           }}
         >
-          <TabsList className="px-3">
+          <Tabs.List className="px-3">
             <DropdownMenu.Item
               className="rounded-t-md p-0"
               onSelect={e => {
@@ -76,13 +76,13 @@ export const BranchSelectorDropdown: FC<BranchSelectorDropdownProps> = ({
                 setActiveTab(BranchSelectorTab.BRANCHES)
               }}
             >
-              <TabsTrigger
+              <Tabs.Trigger
                 className="data-[state=active]:bg-background-2"
                 value="branches"
                 onClick={e => e.stopPropagation()}
               >
                 {t('views:repos.branches', 'Branches')}
-              </TabsTrigger>
+              </Tabs.Trigger>
             </DropdownMenu.Item>
             <DropdownMenu.Item
               className="rounded-t-md p-0"
@@ -91,16 +91,16 @@ export const BranchSelectorDropdown: FC<BranchSelectorDropdownProps> = ({
                 setActiveTab(BranchSelectorTab.TAGS)
               }}
             >
-              <TabsTrigger
+              <Tabs.Trigger
                 className="data-[state=active]:bg-background-2"
                 value="tags"
                 onClick={e => e.stopPropagation()}
               >
                 {t('views:repos.tags', 'Tags')}
-              </TabsTrigger>
+              </Tabs.Trigger>
             </DropdownMenu.Item>
-          </TabsList>
-        </Tabs>
+          </Tabs.List>
+        </Tabs.Root>
       )}
 
       <div className="mt-1">

@@ -1,6 +1,6 @@
 import { useState } from 'react'
 
-import { noop, useTranslationsStore } from '@utils/viewUtils'
+import { noop, useTranslationStore } from '@utils/viewUtils'
 
 import { DeleteAlertDialog } from '@harnessio/ui/components'
 import {
@@ -24,7 +24,7 @@ export const ProfileSettingsKeysView = () => {
         openSshKeyDialog={() => setIsKeysDialogOpen(true)}
         openAlertDeleteDialog={() => setIsDeleteDialogOpen(true)}
         error={null}
-        useTranslationStore={useTranslationsStore}
+        useTranslationStore={useTranslationStore}
         isLoadingTokenList={false}
         isLoadingKeysList={false}
       />
@@ -34,7 +34,7 @@ export const ProfileSettingsKeysView = () => {
         handleCreateToken={noop}
         error={null}
         isLoading={false}
-        useTranslationStore={useTranslationsStore}
+        useTranslationStore={useTranslationStore}
         useProfileSettingsStore={mockProfileSettingsStore}
       />
       <ProfileSettingsKeysCreateDialog
@@ -42,7 +42,7 @@ export const ProfileSettingsKeysView = () => {
         onClose={() => setIsKeysDialogOpen(false)}
         handleCreateSshKey={noop}
         error={null}
-        useTranslationStore={useTranslationsStore}
+        useTranslationStore={useTranslationStore}
       />
       <DeleteAlertDialog
         open={isDeleteDialogOpen}
@@ -50,7 +50,7 @@ export const ProfileSettingsKeysView = () => {
         deleteFn={noop}
         error={null}
         isLoading={false}
-        useTranslationStore={useTranslationsStore}
+        useTranslationStore={useTranslationStore}
       />
     </>
   )

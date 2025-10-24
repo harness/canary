@@ -38,3 +38,17 @@ export interface UsererrorError {
     [key: string]: any
   }
 }
+
+export type EnumPrincipalType = 'service' | 'serviceaccount' | 'user'
+
+export interface PrincipalType {
+  id?: number
+  uid: string
+  display_name: string
+  email: string
+  type?: EnumPrincipalType
+  created?: number
+  updated?: number
+  // TODO: need to add avatar
+  avatar_url?: string
+}

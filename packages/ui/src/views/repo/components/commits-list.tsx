@@ -1,7 +1,7 @@
 import { FC, useMemo } from 'react'
 import { Link, useNavigate } from 'react-router-dom'
 
-import { Avatar, AvatarFallback, Button, CommitCopyActions, Icon, NodeGroup, StackedList } from '@/components'
+import { Avatar, Button, CommitCopyActions, Icon, NodeGroup, StackedList } from '@/components'
 import { formatDate, getInitials } from '@/utils/utils'
 import { TypesCommit } from '@/views'
 
@@ -43,15 +43,16 @@ export const CommitsList: FC<CommitProps> = ({ data, toCommitDetails, toCode, cl
               <StackedList.Root>
                 {commitData.map((commit, repo_idx) => {
                   const authorName = commit.author?.identity?.name
+                  const avatarUrl = commit.author?.identity?.avatarUrl
 
                   return (
                     <StackedList.Item
-                      className="flex !cursor-default items-start py-3"
+                      className="flex !cursor-default items-start py-3 pr-3"
                       key={commit?.sha || repo_idx}
                       isLast={commitData.length - 1 === repo_idx}
                     >
                       <Link
-                        className="grow "
+                        className="grow"
                         onClick={e => {
                           e.stopPropagation()
                         }}
@@ -75,9 +76,10 @@ export const CommitsList: FC<CommitProps> = ({ data, toCommitDetails, toCode, cl
                               )}
                               <div className="flex items-center gap-x-1.5">
                                 {authorName && (
-                                  <Avatar className="size-[18px]">
-                                    <AvatarFallback className="text-10">{getInitials(authorName)}</AvatarFallback>
-                                  </Avatar>
+                                  <Avatar.Root size="4.5">
+                                    {!!avatarUrl && <Avatar.Image src={avatarUrl} alt={`${authorName} avatar`} />}
+                                    <Avatar.Fallback className="text-10">{getInitials(authorName)}</Avatar.Fallback>
+                                  </Avatar.Root>
                                 )}
                                 <span className="text-foreground-3">{authorName || ''}</span>
                                 <span className="text-foreground-4">committed on {date}</span>

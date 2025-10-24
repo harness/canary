@@ -1,16 +1,16 @@
 import { FC } from 'react'
 
-import { Avatar, AvatarFallback, AvatarImage, CommitCopyActions, Icon, StackedList, Text } from '@/components'
+import { Avatar, CommitCopyActions, Icon, StackedList, Text } from '@/components'
 import { LatestFileTypes, TranslationStore } from '@/views'
 import { getInitials } from '@utils/stringUtils'
 
 const TopTitle: FC<LatestFileTypes> = ({ user, lastCommitMessage }) => {
   return (
     <div className="flex items-center gap-2">
-      <Avatar size="6">
-        <AvatarImage src={user?.avatarUrl || ''} />
-        <AvatarFallback className="text-12">{getInitials(user?.name || '')}</AvatarFallback>
-      </Avatar>
+      <Avatar.Root>
+        {!!user?.avatarUrl && <Avatar.Image src={user.avatarUrl} />}
+        <Avatar.Fallback>{getInitials(user?.name || '')}</Avatar.Fallback>
+      </Avatar.Root>
       <Text size={2} weight="normal" color="tertiaryBackground" wrap="nowrap">
         {user?.name || ''}
       </Text>

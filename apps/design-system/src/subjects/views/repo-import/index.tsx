@@ -1,4 +1,4 @@
-import { noop, useTranslationsStore } from '@utils/viewUtils'
+import { noop, useTranslationStore } from '@utils/viewUtils'
 
 import { RepoImportPage } from '@harnessio/ui/views'
 
@@ -10,7 +10,7 @@ export const ImportRepoView = () => {
         onFormCancel={noop}
         isLoading={false}
         apiErrorsValue={undefined}
-        useTranslationStore={useTranslationsStore}
+        useTranslationStore={useTranslationStore}
       />
     </>
   )

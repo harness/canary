@@ -9,8 +9,8 @@ import {
   useListRepoWebhooksQuery,
   useUpdateRepoWebhookMutation
 } from '@harnessio/code-service-client'
-import { DeleteAlertDialog } from '@harnessio/ui/components'
-import { RepoWebhookListPage } from '@harnessio/ui/views'
+import { DeleteAlertDialog, DeleteAlertDialogProps } from '@harnessio/ui/components'
+import { ErrorTypes, RepoWebhookListPage } from '@harnessio/ui/views'
 
 import { useGetRepoRef } from '../../framework/hooks/useGetRepoPath'
 import { useQueryState } from '../../framework/hooks/useQueryState'
@@ -26,7 +26,7 @@ export default function WebhookListPage() {
 
   const queryClient = useQueryClient()
 
-  const [apiError, setApiError] = useState<{ type: string; message: string } | null>(null)
+  const [apiError, setApiError] = useState<DeleteAlertDialogProps['error']>(null)
   const [deleteWebhookId, setDeleteWebhookId] = useState<number | null>(null)
 
   const { queryPage } = usePaginationQueryStateWithStore({ page, setPage })
@@ -42,10 +42,7 @@ export default function WebhookListPage() {
     refetch
   } = useListRepoWebhooksQuery(
     {
-      queryParams: {
-        page: queryPage,
-        query: query ?? ''
-      },
+      queryParams: { page: queryPage, query: query ?? '' },
       repo_ref: repoRef
     },
     { retry: false }
@@ -55,10 +52,7 @@ export default function WebhookListPage() {
    * Deleting webhook
    */
   const { mutate: deleteWebhook, isLoading: deleteIsLoading } = useDeleteRepoWebhookMutation(
-    {
-      repo_ref: repoRef,
-      webhook_identifier: 0
-    },
+    { repo_ref: repoRef, webhook_identifier: 0 },
     {
       onSuccess: () => {
         setApiError(null)
@@ -68,7 +62,7 @@ export default function WebhookListPage() {
       },
       onError: (error: DeleteRepoWebhookErrorResponse) => {
         const message = error.message || 'Error deleting webhook'
-        setApiError({ type: '', message })
+        setApiError({ type: ErrorTypes.DELETE_REPO, message })
       }
     }
   )
@@ -126,6 +120,7 @@ export default function WebhookListPage() {
         webhookLoading={isFetching}
         handleEnableWebhook={handleEnableWebhook}
       />
+
       <DeleteAlertDialog
         open={deleteWebhookId !== null}
         onClose={closeDeleteWebhookDialog}

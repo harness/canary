@@ -16,7 +16,7 @@ interface ControlGroupProps extends HTMLAttributes<HTMLDivElement> {
 export function ControlGroup({ children, type, className, ...props }: ControlGroupProps) {
   return (
     <div
-      className={cn('relative flex flex-col', { '': type === 'button' }, className)}
+      className={cn('relative flex flex-col', className)}
       role="group"
       aria-label={type === 'button' ? 'Button control group' : 'Input control group'}
       {...props}

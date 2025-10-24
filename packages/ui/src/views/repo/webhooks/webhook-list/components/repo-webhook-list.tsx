@@ -1,21 +1,6 @@
 import { useNavigate } from 'react-router-dom'
 
-import {
-  Badge,
-  MoreActionsTooltip,
-  NoData,
-  PaginationComponent,
-  Spacer,
-  StackedList,
-  Switch,
-  Table,
-  TableBody,
-  TableCell,
-  TableHead,
-  TableHeader,
-  TableRow,
-  Text
-} from '@/components'
+import { Badge, MoreActionsTooltip, NoData, Pagination, Spacer, StackedList, Switch, Table, Text } from '@/components'
 import { TranslationStore, WebhookType } from '@/views'
 
 const Title = ({
@@ -124,19 +109,24 @@ export function RepoWebhookList({
 
   return (
     <>
-      <Table variant="asStackedList">
-        <TableHeader>
-          <TableRow>
-            <TableHead>Name</TableHead>
-            <TableHead>Execution</TableHead>
-            <TableHead></TableHead>
-          </TableRow>
-        </TableHeader>
-        <TableBody>
+      <Table.Root variant="asStackedList">
+        <Table.Header>
+          <Table.Row>
+            <Table.Head>Name</Table.Head>
+            <Table.Head>Execution</Table.Head>
+            <Table.Head></Table.Head>
+          </Table.Row>
+        </Table.Header>
+        <Table.Body>
           {webhooks.map(webhook => (
-            <TableRow onClick={() => navigate(`${webhook.id}`)} key={webhook.id}>
-              <TableCell>
-                <StackedList.Item key={webhook.id} className="max-w-full cursor-pointer !p-0 py-3 pr-1.5" isLast>
+            <Table.Row onClick={() => navigate(`${webhook.id}`)} key={webhook.id}>
+              <Table.Cell>
+                <StackedList.Item
+                  key={webhook.id}
+                  className="max-w-full cursor-pointer !p-0 py-3 pr-1.5"
+                  isLast
+                  disableHover
+                >
                   <StackedList.Field
                     primary
                     description={
@@ -159,8 +149,8 @@ export function RepoWebhookList({
                     className="max-w-full gap-1.5"
                   />
                 </StackedList.Item>
-              </TableCell>
-              <TableCell className="content-center">
+              </Table.Cell>
+              <Table.Cell className="cursor-pointer content-center">
                 <Badge
                   size="md"
                   disableHover
@@ -181,9 +171,9 @@ export function RepoWebhookList({
                       ? 'Failed'
                       : 'Invalid'}
                 </Badge>
-              </TableCell>
+              </Table.Cell>
 
-              <TableCell className="content-center text-right">
+              <Table.Cell className="cursor-pointer content-center text-right">
                 <MoreActionsTooltip
                   actions={[
                     {
@@ -197,12 +187,12 @@ export function RepoWebhookList({
                     }
                   ]}
                 />
-              </TableCell>
-            </TableRow>
+              </Table.Cell>
+            </Table.Row>
           ))}
-        </TableBody>
-      </Table>
-      <PaginationComponent totalPages={totalPages} currentPage={page} goToPage={setPage} t={t} />
+        </Table.Body>
+      </Table.Root>
+      <Pagination totalPages={totalPages} currentPage={page} goToPage={setPage} t={t} />
     </>
   )
 }

@@ -1,32 +1,13 @@
 import { create } from 'zustand'
 
 import { ListPullReqOkResponse } from '@harnessio/code-service-client'
+import { ColorsEnum, PullRequestType } from '@harnessio/ui/views'
 
 import { timeAgoFromEpochTime } from '../../../pages/pipeline-edit/utils/time-utils'
 import { PageResponseHeader } from '../../../types'
 
-interface PullRequestListType {
-  is_draft?: boolean
-  merged?: number | null // TODO: Should merged really be all these??
-  name?: string
-  number?: number
-  sha?: string
-  author?: string
-  reviewRequired: boolean
-  tasks?: number
-  sourceBranch?: string
-  targetBranch?: string
-  timestamp: string
-  comments?: number
-  state?: string
-  updated: number
-  labels?: {
-    text: string
-    color: string
-  }[]
-}
 interface PullRequestListStore {
-  pullRequests: PullRequestListType[] | null
+  pullRequests: PullRequestType[] | null
   totalPages: number
   openPullReqs: number
   closedPullReqs: number
@@ -42,30 +23,32 @@ export const usePullRequestListStore = create<PullRequestListStore>(set => ({
   page: 1,
   openPullReqs: 0,
   closedPullReqs: 0,
+  labels: [],
   setPage: page => set({ page }),
 
   setPullRequests: (data, headers) => {
-    const transformedPullRequests = data.map(item => ({
-      author: item?.author?.display_name,
+    const transformedPullRequests: PullRequestType[] = data.map(item => ({
+      is_draft: item?.is_draft,
+      merged: item?.merged,
       name: item?.title,
+      number: item?.number,
+      sha: item?.merge_base_sha,
+      author: item?.author?.display_name,
       // TODO: fix review required when its actually there
       reviewRequired: !item?.is_draft,
-      merged: item?.merged,
-      comments: item?.stats?.conversations,
-      number: item?.number,
-      is_draft: item?.is_draft,
-      // TODO: add label information to display associated labels for each pull request
-      // labels: item?.labels?.map((key: string, color: string) => ({ text: key, color: color })),
-      // TODO: fix 2 hours ago in timestamp
-      timestamp: item?.created ? timeAgoFromEpochTime(item?.created) : '',
-      updated: item?.updated ? item?.updated : 0,
       sourceBranch: item?.source_branch,
       targetBranch: item?.target_branch,
+      // TODO: fix 2 hours ago in timestamp
+      timestamp: item?.created ? timeAgoFromEpochTime(item?.created) : '',
+      comments: item?.stats?.conversations,
       state: item?.state,
-      labels: item?.labels?.map(label => ({
-        text: label?.key && label?.value ? `${label?.key}:${label?.value}` : (label.key ?? ''),
-        color: label?.color as string
-      }))
+      updated: item?.updated ? item?.updated : 0,
+      labels:
+        item?.labels?.map(label => ({
+          key: label?.key || '',
+          value: label?.value || undefined,
+          color: (label?.value_color || label?.color) as ColorsEnum
+        })) || []
     }))
 
     set({

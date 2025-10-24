@@ -1,19 +1,31 @@
 import { useState } from 'react'
 
-import { Button, ButtonGroup } from '@harnessio/ui/components'
+import { CollapseButton } from '@subjects/views/pipeline-edit/pipeline-nodes/components/collapse-button.tsx'
+
+import { Button, ButtonGroup, Icon } from '@harnessio/ui/components'
 import {
   CommonNodeDataType,
   deleteItemInArray,
+  ErrorDataType,
   injectItemInArray,
   PipelineEdit,
   YamlEntityType
 } from '@harnessio/ui/views'
 
-import { pipelineYaml1 } from './mocks/pipelineYaml1'
+import { demoPSYaml } from './mocks/demoPSYaml'
+import { parallelContainerConfig, serialContainerConfig } from './mocks/pipelineExecutionMock'
+import { contentNodeFactory } from './nodes-factory'
+import PipelineExecution from './pipeline-execution'
+import CustomPort from './pipeline-nodes/components/custom-port'
+import { getIconBasedOnStep } from './utils/step-icon-utils'
 
 const PipelineStudioWrapper = () => {
-  const [yamlRevision, setYamlRevision] = useState({ yaml: pipelineYaml1 })
+  const [yamlRevision, setYamlRevision] = useState({ yaml: demoPSYaml })
   const [view, setView] = useState<'graph' | 'yaml'>('graph')
+  const [isExecution, setIsExecution] = useState(true)
+
+  const [selectedPath, setSelectedPath] = useState<string | undefined>()
+  const [errorData, setErrorData] = useState<ErrorDataType>()
 
   const processAddIntention = (
     nodeData: CommonNodeDataType,
@@ -60,40 +72,89 @@ const PipelineStudioWrapper = () => {
     setYamlRevision({ yaml: newYaml })
   }
 
+  const isYamlInvalid = errorData && !errorData?.isYamlValid
+
   return (
-    <div className="flex h-screen flex-col">
+    <div // eslint-disable-line jsx-a11y/no-static-element-interactions
+      className="bg-graph-bg-gradient bg-graph-bg-size flex h-screen flex-col"
+      onClick={() => {
+        setSelectedPath(undefined)
+      }}
+    >
       <ButtonGroup className="m-2 flex gap-2">
-        <Button onClick={() => setView('graph')} variant={'secondary'}>
+        <Button
+          onClick={() => {
+            setIsExecution(false)
+            setView('graph')
+          }}
+          variant={'secondary'}
+          disabled={isYamlInvalid}
+        >
+          {isYamlInvalid ? <Icon name="triangle-warning" /> : null}
           Visual
         </Button>
-        <Button onClick={() => setView('yaml')} variant={'secondary'}>
+        <Button
+          onClick={() => {
+            setIsExecution(false)
+            setView('yaml')
+          }}
+          variant={'secondary'}
+        >
           Yaml
+        </Button>
+        <Button onClick={() => setIsExecution(true)} variant={'secondary'}>
+          Run
         </Button>
       </ButtonGroup>
 
-      <PipelineEdit
-        yamlRevision={yamlRevision}
-        onYamlRevisionChange={setYamlRevision}
-        view={view}
-        onAddIntention={(nodeData, position, yamlEntityTypeToAdd) => {
-          console.log('onAddIntention')
-          processAddIntention(nodeData, position, yamlEntityTypeToAdd)
-        }}
-        onDeleteIntention={data => {
-          console.log('onDeleteIntention')
-          const updatedYaml = deleteItemInArray(yamlRevision.yaml, { path: data.yamlPath })
-          setYamlRevision({ yaml: updatedYaml })
-        }}
-        onEditIntention={() => {
-          console.log('onEditIntention')
-        }}
-        onSelectIntention={() => {
-          console.log('onSelectIntention')
-        }}
-        onRevealInYaml={() => {
-          console.log('onSelectIntention')
-        }}
-      />
+      {isExecution && <PipelineExecution />}
+
+      {!isExecution && (
+        <>
+          <PipelineEdit
+            customCreateSVGPath={props => {
+              const { id, path /*, pathLength, targetNode*/ } = props
+              // TODO
+              const pathStyle = ` stroke="hsl(var(--canary-border-03))"`
+              const staticPath = `<path d="${path}" id="${id}" fill="none" ${pathStyle} />`
+              return { level1: staticPath, level2: '' }
+            }}
+            portComponent={CustomPort}
+            collapseButtonComponent={CollapseButton}
+            edgesConfig={{ radius: 10, parallelNodeOffset: 10, serialNodeOffset: 10 }}
+            yamlRevision={yamlRevision}
+            onYamlRevisionChange={setYamlRevision}
+            view={view}
+            selectedPath={selectedPath}
+            contentNodeFactory={contentNodeFactory}
+            serialContainerConfig={serialContainerConfig}
+            parallelContainerConfig={parallelContainerConfig}
+            getStepIcon={getIconBasedOnStep}
+            onErrorChange={data => {
+              setErrorData(data)
+            }}
+            onAddIntention={(nodeData, position, yamlEntityTypeToAdd) => {
+              console.log('onAddIntention')
+              processAddIntention(nodeData, position, yamlEntityTypeToAdd)
+            }}
+            onDeleteIntention={data => {
+              console.log('onDeleteIntention')
+              const updatedYaml = deleteItemInArray(yamlRevision.yaml, { path: data.yamlPath })
+              setYamlRevision({ yaml: updatedYaml })
+            }}
+            onEditIntention={() => {
+              console.log('onEditIntention')
+            }}
+            onSelectIntention={data => {
+              console.log('onSelectIntention')
+              setSelectedPath(data.yamlPath)
+            }}
+            onRevealInYaml={() => {
+              console.log('onSelectIntention')
+            }}
+          />
+        </>
+      )}
     </div>
   )
 }

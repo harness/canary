@@ -1,8 +1,10 @@
 // RepoLayout.tsx
 
+import { FC } from 'react'
 import { NavLink, Outlet } from 'react-router-dom'
 
-import { Badge, Icon, Spacer, Tabs, TabsList, TabsTrigger } from '@harnessio/canary'
+import { Badge, Icon, Spacer } from '@harnessio/canary'
+import { Tabs } from '@harnessio/ui/components'
 import { Floating1ColumnLayout } from '@harnessio/ui/views'
 
 import { PullRequestHeader } from '../components/pull-request/pull-request-conversation-header'
@@ -38,52 +40,52 @@ const mockedPullRequest = {
   stats: { commits: 1, files_changed: 1, additions: 1, deletions: 0, conversations: 1, unresolved_count: 1 }
 }
 
-const PullRequestLayout: React.FC = () => {
+const PullRequestLayout: FC = () => {
   return (
     <>
       <Floating1ColumnLayout>
         <Spacer size={8} />
         <PullRequestHeader data={mockedPullRequest} />
-        <Tabs variant="tabnav" defaultValue="conversation">
-          <TabsList>
+        <Tabs.Root variant="tabnav" defaultValue="conversation">
+          <Tabs.List>
             <NavLink to={`conversation`}>
-              <TabsTrigger value="conversation">
+              <Tabs.Trigger value="conversation">
                 <Icon size={16} name="comments" />
                 Conversation
                 <Badge variant="outline" size="xs">
                   1
                 </Badge>
-              </TabsTrigger>
+              </Tabs.Trigger>
             </NavLink>
             <NavLink to={`commits`}>
-              <TabsTrigger value="commits">
+              <Tabs.Trigger value="commits">
                 <Icon size={16} name="tube-sign" />
                 Commits
                 <Badge variant="outline" size="xs">
                   2
                 </Badge>
-              </TabsTrigger>
+              </Tabs.Trigger>
             </NavLink>
             <NavLink to={`changes`}>
-              <TabsTrigger value="pull-requests">
+              <Tabs.Trigger value="pull-requests">
                 <Icon size={14} name="changes" />
                 Changes
                 <Badge variant="outline" size="xs">
                   2
                 </Badge>
-              </TabsTrigger>
+              </Tabs.Trigger>
             </NavLink>
             <NavLink to={`checks`}>
-              <TabsTrigger value="checks">
+              <Tabs.Trigger value="checks">
                 <Icon size={14} name="checks" />
                 Checks
                 <Badge variant="outline" size="xs">
                   9
                 </Badge>
-              </TabsTrigger>
+              </Tabs.Trigger>
             </NavLink>
-          </TabsList>
-        </Tabs>
+          </Tabs.List>
+        </Tabs.Root>
         <Spacer size={8} />
         <Outlet />
       </Floating1ColumnLayout>

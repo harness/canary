@@ -1,3 +1,7 @@
+export interface NodeProps {
+  mode?: 'Edit' | 'Execution'
+}
+
 export enum ContainerNode {
   leaf = 'leaf',
   parallel = 'parallel',

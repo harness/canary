@@ -2,7 +2,7 @@ import { FC, PropsWithChildren, useCallback } from 'react'
 import { Route } from 'react-router-dom'
 
 import { pullRequestStore } from '@subjects/views/pull-request-conversation/pull-request-store'
-import { useTranslationsStore } from '@utils/viewUtils'
+import { useTranslationStore } from '@utils/viewUtils'
 
 import { PullRequestLayout } from '@harnessio/ui/views'
 
@@ -21,7 +21,7 @@ const PullRequestLayoutWrapper: FC<PropsWithChildren<React.HTMLAttributes<HTMLEl
         path="*"
         element={
           <PullRequestLayout
-            useTranslationStore={useTranslationsStore}
+            useTranslationStore={useTranslationStore}
             usePullRequestStore={usePullRequestStore}
             spaceId={''}
             repoId={''}

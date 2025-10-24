@@ -1,3 +1,5 @@
+import { PipelineStudioGraphViewProps } from '@views/pipeline-edit/components/pipeline-studio-graph-view'
+
 import { NodeContent } from '@harnessio/pipeline-graph'
 
 import { ContentNodeType } from './components/graph-implementation/types/content-node-type'
@@ -18,7 +20,7 @@ export class ContentNodeFactory {
     return this.entityBank.get(entityType)
   }
 
-  getNodesDefinition() {
+  getNodesDefinition(): NodeContent[] {
     return Array.from(this.entityBank.values())
   }
 }
@@ -28,12 +30,25 @@ export interface YamlRevision {
   revision?: number
 }
 
-export interface PipelineStudioProps {
+export interface PipelineStudioProps
+  extends Pick<
+    PipelineStudioGraphViewProps,
+    | 'serialContainerConfig'
+    | 'parallelContainerConfig'
+    | 'customCreateSVGPath'
+    | 'edgesConfig'
+    | 'portComponent'
+    | 'collapseButtonComponent'
+  > {
   view: 'yaml' | 'graph'
   contentNodeFactory: ContentNodeFactory
   yamlRevision: YamlRevision
   onYamlRevisionChange: (YamlRevision: YamlRevision) => void
   yamlEditorConfig?: PipelineStudioInternalProps['yamlEditorConfig']
+  onErrorChange?: PipelineStudioInternalProps['onErrorChange']
+  getStepIcon?: PipelineStudioInternalProps['getStepIcon']
+  animateYamlOnUpdate?: boolean
+  onYamlAnimateEnd?: () => void
 }
 
 const PipelineStudio = (props: PipelineStudioProps): JSX.Element => {

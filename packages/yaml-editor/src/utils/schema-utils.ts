@@ -1,6 +1,5 @@
 import { Uri } from 'monaco-editor'
-import * as monaco from 'monaco-editor'
-import { configureMonacoYaml } from 'monaco-yaml'
+import { yamlDefaults } from 'monaco-yaml'
 
 let isYamlMonacoConfigured = false
 
@@ -17,7 +16,10 @@ export function configureSchema(schemaConfig: any) {
 
   isYamlMonacoConfigured = true
 
-  return configureMonacoYaml(monaco, config)
+  // NOTE: this is for monaco-editor@0.50.0 version
+  // return configureMonacoYaml(monaco, config)
+
+  yamlDefaults.setDiagnosticsOptions({ ...config })
 }
 
 export const schemaIdToUrl = (id: string): string => {

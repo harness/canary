@@ -1,9 +1,9 @@
 import { FC } from 'react'
 
-import { Button, ListActions, PaginationComponent, SearchBox, Spacer, Text } from '@/components'
+import { Button, ListActions, Pagination, SearchBox, Spacer, Text } from '@/components'
 import { useDebounceSearch } from '@/hooks'
+import { SandboxLayout } from '@/views'
 
-import { SandboxLayout } from '../../index'
 import { PipelineList } from './pipeline-list'
 import { IPipelineListPageProps } from './types'
 
@@ -83,7 +83,7 @@ const PipelineListPage: FC<IPipelineListPageProps> = ({
           toPipelineDetails={toPipelineDetails}
         />
         <Spacer size={8} />
-        <PaginationComponent totalPages={totalPages} currentPage={page} goToPage={page => setPage(page)} t={t} />
+        <Pagination totalPages={totalPages} currentPage={page} goToPage={setPage} t={t} />
       </SandboxLayout.Content>
     </SandboxLayout.Main>
   )

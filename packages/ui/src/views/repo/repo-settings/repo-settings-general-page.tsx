@@ -38,7 +38,7 @@ interface RepoSettingsGeneralPageProps {
   setRulesSearchQuery: (query: string) => void
 }
 
-const RepoSettingsGeneralPage: FC<RepoSettingsGeneralPageProps> = ({
+export const RepoSettingsGeneralPage: FC<RepoSettingsGeneralPageProps> = ({
   handleRepoUpdate,
   handleUpdateSecuritySettings,
   apiError,
@@ -75,6 +75,7 @@ const RepoSettingsGeneralPage: FC<RepoSettingsGeneralPageProps> = ({
   return (
     <SandboxLayout.Content className="max-w-[570px] px-0">
       <h1 className="mb-10 text-2xl font-medium text-foreground-1">{t('views:repos.settings', 'Settings')}</h1>
+
       <Fieldset>
         <RepoSettingsGeneralForm
           repoData={repoData}
@@ -121,5 +122,3 @@ const RepoSettingsGeneralPage: FC<RepoSettingsGeneralPageProps> = ({
     </SandboxLayout.Content>
   )
 }
-
-export { RepoSettingsGeneralPage }

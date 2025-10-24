@@ -67,7 +67,6 @@ export * from './components/project-settings/form-member-delete-dialog'
 export * from './components/project-settings/form-member-edit-dialog'
 
 export * from './components/filter'
-export * from './components/profile-settings/delete-alert-dialog'
 export * from './components/alert-delete-dialog'
 
 export * from './components/signin-page'
@@ -92,7 +91,6 @@ export * from './components/execution/execution-tree-utils'
 
 export * from './components/settings-account-page'
 export * from './components/repo-settings/repo-settings-page'
-export * from './components/repo-settings/repo-settings-general-page'
 export * from './components/repo-branch-settings-rules-page'
 export * from './components/repo-webhooks-create-page'
 export * from './components/webhooks/types'

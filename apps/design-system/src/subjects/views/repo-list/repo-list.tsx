@@ -1,6 +1,6 @@
 import { FC, useCallback } from 'react'
 
-import { noop, useTranslationsStore } from '@utils/viewUtils'
+import { noop, useTranslationStore } from '@utils/viewUtils'
 
 import { RepoListProps, SandboxRepoListPage } from '@harnessio/ui/views'
 
@@ -11,7 +11,10 @@ const RepoListWrapper: FC<Partial<RepoListProps>> = props => {
     () => ({
       ...repoListStore,
       setPage: noop,
-      setRepositories: noop
+      setRepositories: noop,
+      importRepoIdentifier: null,
+      setImportRepoIdentifier: noop,
+      addRepository: noop
     }),
     []
   )
@@ -19,7 +22,7 @@ const RepoListWrapper: FC<Partial<RepoListProps>> = props => {
   return (
     <SandboxRepoListPage
       useRepoStore={useRepoListStore}
-      useTranslationStore={useTranslationsStore}
+      useTranslationStore={useTranslationStore}
       isLoading={false}
       isError={false}
       searchQuery=""

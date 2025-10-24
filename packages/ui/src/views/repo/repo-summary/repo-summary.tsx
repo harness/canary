@@ -1,5 +1,3 @@
-/* eslint-disable @typescript-eslint/no-unused-vars */
-
 import { Link } from 'react-router-dom'
 
 import {
@@ -8,7 +6,6 @@ import {
   Icon,
   ListActions,
   MarkdownViewer,
-  NoData,
   SearchFiles,
   SkeletonList,
   Spacer,
@@ -33,7 +30,7 @@ import { RepoEmptyView } from './repo-empty-view'
 interface RoutingProps {
   toRepoFiles: () => string
   toCommitDetails?: ({ sha }: { sha: string }) => string
-  toProfileKeys: () => string
+  navigateToProfileKeys: () => void
 }
 
 export interface RepoSummaryViewProps extends Partial<RoutingProps> {
@@ -65,6 +62,7 @@ export interface RepoSummaryViewProps extends Partial<RoutingProps> {
   gitRef?: string
   latestCommitInfo?: {
     userName: string
+    avatarUrl?: string
     message: string
     timestamp: string
     sha: string | null
@@ -79,6 +77,8 @@ export interface RepoSummaryViewProps extends Partial<RoutingProps> {
   currentBranchDivergence: CommitDivergenceType
   searchQuery: string
   setSearchQuery: (query: string) => void
+  renderSidebarComponent?: React.ReactNode
+  isRepoEmpty?: boolean
 }
 
 export function RepoSummaryView({
@@ -86,7 +86,6 @@ export function RepoSummaryView({
   filesList,
   navigateToFile,
   repository,
-  repoEntryPathToFileTypeMap,
   files,
   decodedReadmeContent,
   summaryDetails: { default_branch_commit_count = 0, branch_count = 0, tag_count = 0, pull_req_summary },
@@ -105,7 +104,9 @@ export function RepoSummaryView({
   handleCreateToken,
   toRepoFiles,
   toCommitDetails,
-  toProfileKeys
+  navigateToProfileKeys,
+  renderSidebarComponent,
+  isRepoEmpty
 }: RepoSummaryViewProps) {
   const { t } = useTranslationStore()
   const { repoId, spaceId, selectedBranchTag } = useRepoBranchesStore()
@@ -120,7 +121,7 @@ export function RepoSummaryView({
     )
   }
 
-  if (!repoEntryPathToFileTypeMap.size) {
+  if (isRepoEmpty) {
     return (
       <RepoEmptyView
         sshUrl={repository?.git_ssh_url ?? 'could not fetch url'}
@@ -129,15 +130,15 @@ export function RepoSummaryView({
         projName={spaceId}
         gitRef={gitRef || selectedBranchTag?.name || ''}
         handleCreateToken={handleCreateToken}
-        toProfileKeys={toProfileKeys}
+        navigateToProfileKeys={navigateToProfileKeys}
       />
     )
   }
 
   return (
-    <SandboxLayout.Main>
+    <SandboxLayout.Main fullWidth>
       <SandboxLayout.Columns columnWidths="1fr 256px">
-        <SandboxLayout.Column className="max-w-[1000px]">
+        <SandboxLayout.Column className="w-full">
           <SandboxLayout.Content className="pl-6">
             {/*
               TODO: Implement proper recent push detection logic:
@@ -227,7 +228,7 @@ export function RepoSummaryView({
             <Summary
               toCommitDetails={toCommitDetails}
               latestFile={{
-                user: { name: latestCommitInfo?.userName || '' },
+                user: { name: latestCommitInfo?.userName || '', avatarUrl: latestCommitInfo?.avatarUrl },
                 lastCommitMessage: latestCommitInfo?.message || '',
                 timestamp: latestCommitInfo?.timestamp || '',
                 sha: latestCommitInfo?.sha || ''
@@ -302,6 +303,7 @@ export function RepoSummaryView({
               is_public={repository?.is_public}
               useTranslationStore={useTranslationStore}
             />
+            {renderSidebarComponent}
           </SandboxLayout.Content>
         </SandboxLayout.Column>
       </SandboxLayout.Columns>

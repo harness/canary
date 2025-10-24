@@ -738,6 +738,15 @@
       background-color 5000s,
       color 5000s;
   }
+
+  .scrollbar-hidden {
+    -ms-overflow-style: none;
+    scrollbar-width: none;
+
+    &::-webkit-scrollbar {
+      display: none;
+    }
+  }
 }
 
 .border-linear {
@@ -746,6 +755,10 @@
     linear-gradient(#fff 0 0) padding-box,
     linear-gradient(#fff 0 0);
   mask-composite: exclude;
+}
+
+.connector-gradient {
+  @apply bg-gradient-to-b from-[#2F2F33]/0 to-[#161619]/100;
 }
 
 /* Text utilities */
@@ -1167,4 +1180,21 @@ mark {
 
 .monaco-diff-editor.side-by-side .editor.modified {
   @apply !border-borders-1 !border-l !border-solid !shadow-none;
+}
+
+/* In View Diff Renderer */
+.diffViewBlock {
+  @apply visible box-border flex h-auto min-h-[48px] flex-col;
+}
+
+/* .hidden extension */
+.diffViewBlock.hiddenDiff {
+  @apply invisible h-[var(--block-height)] [contain-intrinsic-size:auto_var(--block-height)] [content-visibility:auto];
+}
+
+.diffViewBlock.hiddenDiff > * {
+  visibility: hidden !important;
+}
+.diffViewBlock.hiddenDiff > * > * {
+  display: none !important;
 }

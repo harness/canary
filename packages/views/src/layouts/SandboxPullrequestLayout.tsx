@@ -2,7 +2,7 @@
 
 import { NavLink, Outlet } from 'react-router-dom'
 
-import { Badge, Icon, Spacer, Tabs, TabsList, TabsTrigger } from '@harnessio/canary'
+import { Badge, Icon, Spacer, Tabs } from '@harnessio/ui/components'
 
 import { SandboxLayout } from '..'
 import { PullRequestHeader } from '../components/pull-request/pull-request-conversation-header'
@@ -45,46 +45,46 @@ const SandboxPullRequestLayout: React.FC = () => {
         <SandboxLayout.Content>
           <Spacer size={8} />
           <PullRequestHeader data={mockedPullRequest} />
-          <Tabs variant="tabnav" defaultValue="conversation">
-            <TabsList>
+          <Tabs.Root variant="tabnav" defaultValue="conversation">
+            <Tabs.List>
               <NavLink to={`conversation`}>
-                <TabsTrigger value="conversation">
+                <Tabs.Trigger value="conversation">
                   <Icon size={16} name="comments" />
                   Conversation
                   <Badge variant="outline" size="xs">
                     1
                   </Badge>
-                </TabsTrigger>
+                </Tabs.Trigger>
               </NavLink>
               <NavLink to={`commits`}>
-                <TabsTrigger value="commits">
+                <Tabs.Trigger value="commits">
                   <Icon size={16} name="tube-sign" />
                   Commits
                   <Badge variant="outline" size="xs">
                     2
                   </Badge>
-                </TabsTrigger>
+                </Tabs.Trigger>
               </NavLink>
               <NavLink to={`changes`}>
-                <TabsTrigger value="pull-requests">
+                <Tabs.Trigger value="pull-requests">
                   <Icon size={14} name="changes" />
                   Changes
                   <Badge variant="outline" size="xs">
                     2
                   </Badge>
-                </TabsTrigger>
+                </Tabs.Trigger>
               </NavLink>
               <NavLink to={`checks`}>
-                <TabsTrigger value="checks">
+                <Tabs.Trigger value="checks">
                   <Icon size={14} name="checks" />
                   Checks
                   <Badge variant="outline" size="xs">
                     9
                   </Badge>
-                </TabsTrigger>
+                </Tabs.Trigger>
               </NavLink>
-            </TabsList>
-          </Tabs>
+            </Tabs.List>
+          </Tabs.Root>
           <Spacer size={8} />
           <Outlet />
         </SandboxLayout.Content>

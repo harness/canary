@@ -1,4 +1,4 @@
-import { noop, useTranslationsStore } from '@utils/viewUtils'
+import { noop, useTranslationStore } from '@utils/viewUtils'
 
 import { RepoCreatePage } from '@harnessio/ui/views'
 
@@ -15,7 +15,7 @@ export const CreateRepoView = () => {
       isSuccess={false}
       gitIgnoreOptions={gitIgnoreOptions}
       licenseOptions={licenseOptions}
-      useTranslationStore={useTranslationsStore}
+      useTranslationStore={useTranslationStore}
     />
   )
 }

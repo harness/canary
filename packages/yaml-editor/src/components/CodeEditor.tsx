@@ -24,9 +24,7 @@ export interface CodeEditorProps<_> {
   language: string
   themeConfig?: { rootElementSelector?: string; defaultTheme?: string; themes?: ThemeDefinition[] }
   theme?: string
-  options?: {
-    readOnly?: boolean
-  }
+  options?: monaco.editor.IStandaloneEditorConstructionOptions
   height?: EditorProps['height']
 }
 
@@ -53,6 +51,17 @@ export function CodeEditor<T>({
       editorVal.setValue(codeRevision.code)
 
       setEditor(editorVal)
+
+      monaco.languages.typescript?.typescriptDefaults?.setDiagnosticsOptions?.({
+        noSuggestionDiagnostics: true,
+        noSyntaxValidation: true,
+        noSemanticValidation: true
+      })
+      monaco.languages.typescript?.javascriptDefaults?.setDiagnosticsOptions?.({
+        noSuggestionDiagnostics: true,
+        noSyntaxValidation: true,
+        noSemanticValidation: true
+      })
     },
     [codeRevision.code]
   )

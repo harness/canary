@@ -3,8 +3,6 @@ import { Link } from 'react-router-dom'
 
 import {
   Avatar,
-  AvatarFallback,
-  AvatarImage,
   ColorType,
   ContrastType,
   DropdownMenu,
@@ -42,10 +40,10 @@ const UserBlock = ({ username, email, url, isButton = false, className }: UserBl
         <div className="absolute -inset-2 rounded duration-100 ease-in-out group-hover:bg-background-4 group-data-[state=open]:bg-background-4" />
       )}
       <div className="col-start-1 row-span-2">
-        <Avatar className="overflow-hidden rounded-md" size="8">
-          {!!url && <AvatarImage src={url} alt="user" />}
-          <AvatarFallback>{getInitials(username)}</AvatarFallback>
-        </Avatar>
+        <Avatar.Root className="rounded-md" size="8">
+          {!!url && <Avatar.Image src={url} alt="user" />}
+          <Avatar.Fallback>{getInitials(username)}</Avatar.Fallback>
+        </Avatar.Root>
       </div>
       <p className="col-start-2 row-start-1 truncate text-13 font-medium leading-tight text-foreground-1">{username}</p>
       {!!email && (

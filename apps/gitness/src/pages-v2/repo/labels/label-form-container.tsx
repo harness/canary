@@ -7,14 +7,14 @@ import { useRoutes } from '../../../framework/context/NavigationContext'
 import { useTranslationStore } from '../../../i18n/stores/i18n-store'
 import { PathParams } from '../../../RouteDefinitions'
 import { useLabelsStore } from '../../project/stores/labels-store'
-import { useGetRepoLabelAndValuesData } from './hooks/use-get-repo-label-and-values-data'
+import { useFullFillLabelStore } from './hooks/use-full-fill-label-store'
 
 export const RepoLabelFormContainer = () => {
   const routes = useRoutes()
   const { spaceId, repoId, labelId } = useParams<PathParams>()
   const navigate = useNavigate()
 
-  const { isLoading: isDataLoading, repo_ref } = useGetRepoLabelAndValuesData({
+  const { isLoading: isDataLoading, repo_ref } = useFullFillLabelStore({
     query: labelId,
     enabled: !!labelId
   })

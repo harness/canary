@@ -1,155 +1,210 @@
-const RADIUS = 7
-const PARALLEL_LINE_OFFSET = 15
-const SERIAL_LINE_OFFSET = 10
+import { AnyNodeInternal } from '..'
+
+export type CreateSVGPathType = typeof createSVGPath
 
 export function clear(svgGroup: SVGElement) {
   svgGroup.innerHTML = ''
 }
 
-export function getPortsConnectionPath(
-  pipelineGraphRoot: HTMLDivElement,
+export function getPortsConnectionPath({
+  pipelineGraphRoot,
+  connection,
+  customCreateSVGPath,
+  edgesConfig = {}
+}: {
+  pipelineGraphRoot: HTMLDivElement
   connection: {
     source: string
     target: string
+    targetNode?: AnyNodeInternal
     parallel?: {
       position: 'left' | 'right'
     }
     serial?: {
       position: 'left' | 'right'
     }
-  },
-  edgeClassName?: string
-) {
-  const { source, target, parallel, serial } = connection
+  }
+  customCreateSVGPath?: CreateSVGPathType
+  edgesConfig?: {
+    radius?: number
+    parallelNodeOffset?: number
+    serialNodeOffset?: number
+  }
+}) {
+  const edgesConfigWithDefaults = {
+    radius: 10,
+    parallelNodeOffset: 10,
+    serialNodeOffset: 10,
+    ...edgesConfig
+  }
+
+  const { source, target, parallel, serial, targetNode } = connection
 
   const fromEl = document.getElementById(source)
   const toEl = document.getElementById(target)
 
-  if (!fromEl || !toEl) return ''
+  if (!fromEl || !toEl) return { level1: '', level2: '' }
 
   const fromElBB = fromEl.getBoundingClientRect()
   const toElBB = toEl.getBoundingClientRect()
 
   const pipelineGraphRootBB = pipelineGraphRoot?.getBoundingClientRect() ?? new DOMRect(0, 0)
 
-  const pathHtml = getPath({
-    id: `${source}-${target}`,
+  const pathObj = getPath({
     startX: fromElBB.left - pipelineGraphRootBB.left,
     startY: fromElBB.top - pipelineGraphRootBB.top,
     endX: toElBB.left - pipelineGraphRootBB.left,
     endY: toElBB.top - pipelineGraphRootBB.top,
+    portAdjustment: fromElBB.height / 2, // center of circle
     parallel,
     serial,
-    edgeClassName
+    targetNode,
+    edgesConfig: edgesConfigWithDefaults
   })
 
-  return pathHtml
+  return customCreateSVGPath
+    ? customCreateSVGPath({ targetNode, id: `${source}-${target}`, ...pathObj })
+    : createSVGPath({ targetNode, id: `${source}-${target}`, ...pathObj })
 }
 
-function getHArcConfig(direction: 'down' | 'up') {
+function getHArcConfig(direction: 'down' | 'up', r: number) {
   if (direction === 'down') {
     return {
-      arc: `a${RADIUS},${RADIUS} 0 0 1 ${RADIUS},${RADIUS}`,
-      hCorrection: 7,
-      vCorrection: 7
+      arc: `a${r},${r} 0 0 1 ${r},${r}`,
+      hCorrection: r,
+      vCorrection: r
     }
   } else {
     return {
-      arc: `a${RADIUS},-${RADIUS} 0 0 0 ${RADIUS},-${RADIUS}`,
-      hCorrection: 7,
-      vCorrection: -7
+      arc: `a${r},-${r} 0 0 0 ${r},-${r}`,
+      hCorrection: r,
+      vCorrection: -r
     }
   }
 }
 
-function getVArcConfig(direction: 'down' | 'up') {
+function getVArcConfig(direction: 'down' | 'up', r: number) {
   if (direction === 'down') {
     return {
-      arc: `a${RADIUS},${RADIUS} 0 0 0 ${RADIUS},${RADIUS}`,
-      hCorrection: 7,
-      vCorrection: 7
+      arc: `a${r},${r} 0 0 0 ${r},${r}`,
+      hCorrection: r,
+      vCorrection: r
     }
   } else {
     return {
-      arc: `a${RADIUS},-${RADIUS} 0 0 1 ${RADIUS},-${RADIUS}`,
-      hCorrection: 7,
-      vCorrection: -7
+      arc: `a${r},-${r} 0 0 1 ${r},-${r}`,
+      hCorrection: r,
+      vCorrection: -r
     }
   }
 }
 
 function getPath({
-  id,
   startX,
   startY,
   endX,
   endY,
   parallel,
   serial,
-  edgeClassName
+  edgesConfig,
+  portAdjustment
 }: {
-  id: string
   startX: number
   startY: number
   endX: number
   endY: number
+  portAdjustment: number
   parallel?: {
     position: 'left' | 'right'
   }
   serial?: {
     position: 'left' | 'right'
   }
-  edgeClassName?: string
+  targetNode?: AnyNodeInternal
+  edgesConfig: {
+    radius: number
+    parallelNodeOffset: number
+    serialNodeOffset: number
+  }
 }) {
-  const correction = 3
-
   let path = ''
 
+  // NOTE: approximate line length (arc is not included in calc)
+  let pathLength = 0
   if (startY === endY) {
-    path = 'M ' + (startX + correction) + ' ' + (startY + correction) + ' ' + 'H ' + (endX + correction)
+    path = 'M ' + (startX + portAdjustment) + ' ' + (startY + portAdjustment) + ' ' + 'H ' + (endX + portAdjustment)
+    pathLength = endX - startX
   } else {
-    const diff = endX - startX
+    // reduce radius avoid broken line
+    const xyMinForRadius = Math.min(Math.abs(endY - startY) / 2, Math.abs(endX - startX) / 2)
+    const radius = Math.min(edgesConfig.radius, xyMinForRadius)
 
-    let hMiddle = startX + diff / 2
+    const totalHDistance = endX - startX
+    const halfHDistance = totalHDistance / 2
+    let absArcStart = endX - halfHDistance - radius
+
     if (parallel?.position === 'right') {
-      hMiddle = startX + diff - PARALLEL_LINE_OFFSET * 2 - RADIUS * 2
+      absArcStart = endX - radius * 2 - edgesConfig.parallelNodeOffset
     }
     if (parallel?.position === 'left') {
-      hMiddle = startX + PARALLEL_LINE_OFFSET
+      absArcStart = startX + edgesConfig.parallelNodeOffset
     }
     if (serial?.position === 'right') {
-      hMiddle = startX + diff - SERIAL_LINE_OFFSET - RADIUS * 2
+      absArcStart = endX - radius * 2 - edgesConfig.serialNodeOffset
     }
     if (serial?.position === 'left') {
-      hMiddle = startX + SERIAL_LINE_OFFSET - RADIUS * 2
+      absArcStart = startX + edgesConfig.serialNodeOffset
     }
 
-    const { arc, hCorrection, vCorrection } = getHArcConfig(endY + correction > startY + correction ? 'down' : 'up')
+    const { arc } = getHArcConfig(endY + portAdjustment > startY + portAdjustment ? 'down' : 'up', radius)
 
-    const {
-      arc: arc2,
-      hCorrection: hCorrection2,
-      vCorrection: vCorrection2
-    } = getVArcConfig(endY + correction > startY + correction ? 'down' : 'up')
+    const { arc: arc2, vCorrection: vCorrection2 } = getVArcConfig(
+      endY + portAdjustment > startY + portAdjustment ? 'down' : 'up',
+      radius
+    )
 
     path =
       'M ' +
-      (startX + correction) +
+      (startX + portAdjustment) +
       ' ' +
-      (startY + correction) +
+      (startY + portAdjustment) +
       ' ' +
       'H ' +
-      (hMiddle + correction + hCorrection) + //- 6
+      (absArcStart + portAdjustment) +
       arc +
       'V ' +
-      (endY + correction - vCorrection2) + //- 6
+      (endY + portAdjustment - vCorrection2) +
       arc2 +
       'H ' +
-      (endX + correction)
+      (endX + portAdjustment)
+
+    pathLength = Math.abs(endX - startX) + Math.abs(endY - startY)
   }
 
-  // NOTE: if edgeClassName is not provided use hardcoded color
-  const pathStyle = edgeClassName ? ` class="${edgeClassName}"` : ` stroke="#5D5B65"`
+  return { path, pathLength }
+}
 
-  return `<path d="${path}" id="${id}" fill="none" ${pathStyle}/>`
+function createSVGPath({
+  path,
+  id,
+  pathLength,
+  targetNode
+}: {
+  path: string
+  id: string
+  pathLength: number
+  targetNode?: AnyNodeInternal
+}): {
+  level1: string
+  level2: string
+} {
+  const pathStyle = targetNode?.data.state === 'executed' ? ` stroke="#43b5e6"` : ` stroke="#5D5B65"`
+  const staticPath = `<path d="${path}" id="${id}" fill="none" ${pathStyle} />`
+
+  let animationPath: string = ''
+  if (targetNode?.data.state === 'executing') {
+    animationPath = `<path d="${path}" id="${id}" fill="none" stroke="#43b5e6" class="PipelineGraph-AnimatePath" stroke-dasharray="${pathLength}" stroke-dashoffset="${pathLength}" />`
+  }
+
+  return { level1: staticPath, level2: animationPath }
 }

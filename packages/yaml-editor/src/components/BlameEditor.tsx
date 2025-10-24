@@ -38,6 +38,7 @@ export interface BlameEditorProps {
   blameData: BlameItem[]
   showSeparators?: boolean
   height?: EditorProps['height']
+  options?: monaco.editor.IStandaloneEditorConstructionOptions
 }
 
 export function BlameEditor({
@@ -48,7 +49,8 @@ export function BlameEditor({
   blameData,
   showSeparators = true,
   theme: themeFromProps,
-  height = '75vh'
+  height = '75vh',
+  options
 }: BlameEditorProps): JSX.Element {
   const blameDataRef = useRef(blameData)
 
@@ -128,8 +130,16 @@ export function BlameEditor({
     editor.setValue(code)
     setEditor(editor)
 
-    monaco.languages.typescript?.typescriptDefaults?.setDiagnosticsOptions?.({ noSuggestionDiagnostics: true })
-    monaco.languages.typescript?.javascriptDefaults?.setDiagnosticsOptions?.({ noSuggestionDiagnostics: true })
+    monaco.languages.typescript?.typescriptDefaults?.setDiagnosticsOptions?.({
+      noSuggestionDiagnostics: true,
+      noSyntaxValidation: true,
+      noSemanticValidation: true
+    })
+    monaco.languages.typescript?.javascriptDefaults?.setDiagnosticsOptions?.({
+      noSuggestionDiagnostics: true,
+      noSyntaxValidation: true,
+      noSemanticValidation: true
+    })
 
     setupBlameEditor()
   }
@@ -200,6 +210,14 @@ export function BlameEditor({
     height:100% !important;
    }`
 
+  const mergedOptions = useMemo(
+    () => ({
+      ...defaultOptions,
+      ...options
+    }),
+    [options]
+  )
+
   return (
     <>
       <style
@@ -212,7 +230,7 @@ export function BlameEditor({
         height={height}
         language={language}
         theme={theme}
-        options={defaultOptions}
+        options={mergedOptions}
         onMount={handleEditorDidMount}
       />
     </>

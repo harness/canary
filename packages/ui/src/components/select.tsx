@@ -1,4 +1,13 @@
-import { Children, ComponentPropsWithoutRef, ElementRef, FC, forwardRef, PropsWithChildren, ReactNode } from 'react'
+import {
+  Children,
+  ComponentPropsWithoutRef,
+  ElementRef,
+  FC,
+  forwardRef,
+  HTMLAttributes,
+  PropsWithChildren,
+  ReactNode
+} from 'react'
 
 import { Caption, Icon, Label, Message, MessageTheme, SearchBox } from '@/components'
 import { usePortal } from '@/context'
@@ -6,8 +15,8 @@ import { useDebounceSearch } from '@hooks/use-debounce-search'
 import * as SelectPrimitive from '@radix-ui/react-select'
 import { cn } from '@utils/cn'
 
-interface SelectProps
-  extends Omit<Omit<PropsWithChildren<React.HTMLAttributes<HTMLElement>>, 'defaultValue'>, 'dir'>,
+interface SelectRootProps
+  extends Omit<Omit<PropsWithChildren<HTMLAttributes<HTMLElement>>, 'defaultValue'>, 'dir'>,
     SelectPrimitive.SelectProps {
   label?: string
   error?: string
@@ -20,12 +29,14 @@ interface SelectProps
 /**
  * A customizable select component that supports labels, error states, and captions
  * @example
- * <Select name="select" label="Select an option" placeholder="Select an option">
- *   <SelectItem value="option1">Option 1</SelectItem>
- *   <SelectItem value="option2">Option 2</SelectItem>
- * </Select>
+ * <Select.Root name="select" label="Select an option" placeholder="Select an option">
+ *   <Select.Content>
+ *     <Select.Item val`ue="option1">Option 1</Select.Item>
+ *     <Select.Item val`ue="option2">Option 2</Select.Item>
+ *   </Select.Content>
+ * </Select.Root>
  */
-const Select: FC<SelectProps> = ({
+const SelectRoot: FC<SelectRootProps> = ({
   name,
   label,
   error,
@@ -60,7 +71,7 @@ const Select: FC<SelectProps> = ({
     {caption && <Caption>{caption}</Caption>}
   </SelectPrimitive.Root>
 )
-Select.displayName = SelectPrimitive.Root.displayName
+SelectRoot.displayName = SelectPrimitive.Root.displayName
 
 const SelectGroup = SelectPrimitive.Group
 
@@ -76,7 +87,7 @@ const SelectTrigger = forwardRef<
   <SelectPrimitive.Trigger
     ref={ref}
     className={cn(
-      'border-borders-2 ring-offset-background flex h-9 w-full items-center justify-between whitespace-nowrap rounded border bg-transparent px-3 py-2 text-sm shadow-sm focus-visible:outline-none focus-visible:rounded disabled:cursor-not-allowed disabled:border-borders-1 [&>span]:line-clamp-1',
+      'border-borders-2 ring-offset-background flex h-9 w-full items-center justify-between whitespace-nowrap rounded border bg-input-background px-3 py-2 text-sm focus-visible:outline-none focus-visible:rounded disabled:cursor-not-allowed disabled:border-borders-1 [&>span]:line-clamp-1',
       className
     )}
     {...props}
@@ -125,7 +136,7 @@ const SelectContent = forwardRef<
       <SelectPrimitive.Content
         ref={ref}
         className={cn(
-          'bg-background-2 text-popover-foreground relative z-50 max-h-96 min-w-[8rem] max-w-[var(--radix-popper-anchor-width)] overflow-hidden rounded box-border shadow-md',
+          'bg-popover text-popover-foreground relative z-50 max-h-96 min-w-[8rem] max-w-[var(--radix-popper-anchor-width)] overflow-hidden rounded box-border',
           position === 'popper' &&
             'data-[side=bottom]:translate-y-1 data-[side=left]:-translate-x-1 data-[side=right]:translate-x-1 data-[side=top]:-translate-y-1',
           className
@@ -209,4 +220,13 @@ const SelectSeparator = forwardRef<
 ))
 SelectSeparator.displayName = SelectPrimitive.Separator.displayName
 
-export { Select, SelectGroup, SelectValue, SelectTrigger, SelectContent, SelectLabel, SelectItem, SelectSeparator }
+const Select = {
+  Root: SelectRoot,
+  Group: SelectGroup,
+  Content: SelectContent,
+  Label: SelectLabel,
+  Item: SelectItem,
+  Separator: SelectSeparator
+}
+
+export { Select }

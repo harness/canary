@@ -6,14 +6,24 @@ interface Scope {
   projectIdentifier?: string
 }
 
+export type Unknown = any
+
 interface IMFEContext {
   /**
    * Scope will be later referred from "Scope" from @harness/microfrontends
    *  */
   scope: Scope
   renderUrl: string
+  customHooks: Partial<{
+    useGenerateToken: Unknown
+  }>
+  customUtils: Partial<{
+    navigateToUserProfile: Unknown
+  }>
 }
 export const MFEContext = createContext<IMFEContext>({
   scope: {},
-  renderUrl: ''
+  renderUrl: '',
+  customHooks: {},
+  customUtils: {}
 })

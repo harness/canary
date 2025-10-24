@@ -2,6 +2,7 @@ import { useEffect, useState } from 'react'
 import { SubmitHandler, useForm } from 'react-hook-form'
 
 import {
+  Alert,
   Button,
   ButtonGroup,
   ControlGroup,
@@ -10,26 +11,23 @@ import {
   FormWrapper,
   Icon,
   Input,
-  Message,
-  MessageTheme,
-  Spacer,
-  Text
+  Legend,
+  SkeletonForm,
+  Textarea
 } from '@/components'
-import { ISpaceStore, SandboxLayout } from '@/views'
+import { SandboxLayout, TranslationStore, TypesSpace } from '@/views'
 import { zodResolver } from '@hookform/resolvers/zod'
 import { z } from 'zod'
 
 interface ProjectSettingsGeneralPageProps {
-  onFormSubmit: (formData: InputProps) => void
+  data?: TypesSpace
+  isLoading?: boolean
+  onFormSubmit: (formData: ProjectSettingsGeneralFields) => void
   isUpdating: boolean
   isUpdateSuccess: boolean
   updateError: string | null
-  useSpaceStore: () => ISpaceStore
   setOpenDeleteDialog: () => void
-}
-interface InputProps {
-  identifier: string
-  description: string
+  useTranslationStore: () => TranslationStore
 }
 
 const projectSettingsSchema = z.object({
@@ -37,31 +35,31 @@ const projectSettingsSchema = z.object({
   description: z.string()
 })
 
-type ProjectSettingsGeneralFields = z.infer<typeof projectSettingsSchema>
+export type ProjectSettingsGeneralFields = z.infer<typeof projectSettingsSchema>
 
 export const ProjectSettingsGeneralPage = ({
-  useSpaceStore,
+  data,
+  isLoading = false,
   onFormSubmit,
   isUpdating,
   isUpdateSuccess,
   updateError,
-  setOpenDeleteDialog
+  setOpenDeleteDialog,
+  useTranslationStore
 }: ProjectSettingsGeneralPageProps) => {
-  // Project Settings form handling
-  const { space: spaceData } = useSpaceStore()
+  const { t } = useTranslationStore()
   const {
     register,
     handleSubmit,
     reset,
-    resetField,
     setValue,
     formState: { errors }
   } = useForm<ProjectSettingsGeneralFields>({
     resolver: zodResolver(projectSettingsSchema),
-    mode: 'onChange',
+    mode: 'onSubmit',
     defaultValues: {
-      identifier: spaceData?.identifier, //project name
-      description: spaceData?.description
+      identifier: data?.identifier ?? '', //project name
+      description: data?.description ?? ''
     }
   })
 
@@ -72,6 +70,8 @@ export const ProjectSettingsGeneralPage = ({
     onFormSubmit(formData)
   }
 
+  const handleReset = () => reset()
+
   useEffect(() => {
     if (isUpdateSuccess) {
       setSubmitted(true)
@@ -81,100 +81,116 @@ export const ProjectSettingsGeneralPage = ({
       }, 1000)
 
       reset({
-        identifier: spaceData?.identifier,
-        description: spaceData?.description
+        identifier: data?.identifier ?? '',
+        description: data?.description ?? ''
       })
 
       return () => clearTimeout(timer)
     }
-  }, [isUpdateSuccess, reset, spaceData?.description, spaceData?.identifier])
+  }, [isUpdateSuccess, reset, data?.description, data?.identifier])
 
   useEffect(() => {
-    setValue('description', spaceData?.description ?? '')
-  }, [spaceData?.description, setValue])
+    setValue('description', data?.description ?? '')
+  }, [data?.description, setValue])
 
   useEffect(() => {
-    setValue('identifier', spaceData?.identifier ?? '')
-  }, [spaceData?.identifier, setValue])
+    setValue('identifier', data?.identifier ?? '')
+  }, [data?.identifier, setValue])
 
   useEffect(() => {
     reset({
-      identifier: spaceData?.identifier,
-      description: spaceData?.description
+      identifier: data?.identifier ?? '',
+      description: data?.description ?? ''
     })
-  }, [spaceData, reset])
-
-  const handleCancel = () => {
-    resetField('description', { defaultValue: spaceData?.description })
-  }
+  }, [data, reset])
 
   return (
     <SandboxLayout.Main>
-      <SandboxLayout.Content maxWidth="2xl">
-        <Spacer size={10} />
-        <Text size={5} weight={'medium'}>
-          Project Settings
-        </Text>
-        <Spacer size={6} />
-        <FormWrapper onSubmit={handleSubmit(onSubmit)}>
-          <Fieldset>
-            {/* PROJECT NAME */}
-            <ControlGroup>
-              <Input
-                value={spaceData?.identifier}
-                id="identifier"
-                {...register('identifier')}
-                placeholder="Enter project name"
-                label="Project Name"
-                error={errors.identifier?.message?.toString()}
-                disabled
-              />
-            </ControlGroup>
+      <SandboxLayout.Content className="mx-auto max-w-[38.125rem] pt-[3.25rem]">
+        <h2 className="mb-10 text-2xl font-medium text-foreground-1">
+          {t('views:projectSettings.general.mainTitle', 'Project Settings')}
+        </h2>
 
-            {/* IDENTIFIER/DESCRIPTION */}
-            <ControlGroup>
-              <Input
-                id="description"
-                {...register('description')}
-                placeholder="Enter description"
-                label="Description"
-                onChange={e => setValue('description', e.target.value)}
-                error={errors.description?.message?.toString()}
-              />
+        {isLoading && <SkeletonForm />}
 
-              {updateError && <Message theme={MessageTheme.ERROR}>{updateError}</Message>}
-            </ControlGroup>
+        {!isLoading && (
+          <>
+            <FormWrapper onSubmit={handleSubmit(onSubmit)}>
+              <Fieldset>
+                {/* PROJECT NAME */}
+                <ControlGroup>
+                  <Input
+                    id="identifier"
+                    {...register('identifier')}
+                    placeholder={t('views:projectSettings.general.projectNamePlaceholder', 'Enter project name')}
+                    label={t('views:projectSettings.general.projectNameLabel', 'Project name')}
+                    error={errors.identifier?.message?.toString()}
+                    // TODO: backend is not ready to update project name
+                    disabled
+                  />
+                </ControlGroup>
 
-            {/*BUTTON CONTROL: SAVE & CANCEL*/}
-            <ControlGroup type="button">
-              <ButtonGroup>
-                {!submitted ? (
-                  <>
-                    <Button size="sm" type="submit">
-                      {isUpdating ? 'Saving...' : 'Save changes'}
-                    </Button>
-                    <Button size="sm" variant="outline" type="button" onClick={handleCancel}>
-                      Cancel
-                    </Button>
-                  </>
-                ) : (
-                  <Button variant="ghost" type="button" size="sm" theme="success" className="pointer-events-none">
-                    Saved&nbsp;&nbsp;
-                    <Icon name="tick" size={14} />
-                  </Button>
+                {/* IDENTIFIER/DESCRIPTION */}
+                <ControlGroup>
+                  <Textarea
+                    id="description"
+                    {...register('description')}
+                    placeholder={t(
+                      'views:projectSettings.general.projectDescriptionPlaceholder',
+                      'Enter description (optional)'
+                    )}
+                    label={t('views:projectSettings.general.projectDescriptionLabel', 'Description')}
+                    error={errors?.description?.message?.toString()}
+                  />
+                </ControlGroup>
+
+                {updateError && (
+                  <Alert.Container variant="destructive">
+                    <Alert.Title>{updateError}</Alert.Title>
+                  </Alert.Container>
                 )}
-              </ButtonGroup>
-            </ControlGroup>
-          </Fieldset>
 
-          <Fieldset>
-            <FormSeparator />
-          </Fieldset>
-        </FormWrapper>
+                {/*BUTTON CONTROL: SAVE & CANCEL*/}
+                <ControlGroup type="button">
+                  <ButtonGroup spacing="3">
+                    {!submitted ? (
+                      <>
+                        <Button type="submit">
+                          {isUpdating
+                            ? t('views:projectSettings.general.formSubmitButton.savingState', 'Saving...')
+                            : t('views:projectSettings.general.formSubmitButton.defaultState', 'Save changes')}
+                        </Button>
+                        <Button variant="outline" type="button" onClick={handleReset}>
+                          {t('views:projectSettings.general.formCancelButton', 'Cancel')}
+                        </Button>
+                      </>
+                    ) : (
+                      <Button variant="ghost" type="button" theme="success" className="pointer-events-none">
+                        {t('views:projectSettings.general.formSubmitButton.savedState', 'Saved')}&nbsp;&nbsp;
+                        <Icon name="tick" size={14} />
+                      </Button>
+                    )}
+                  </ButtonGroup>
+                </ControlGroup>
+              </Fieldset>
+            </FormWrapper>
 
-        <Button size="sm" theme="error" className="mt-7 self-start" onClick={setOpenDeleteDialog}>
-          Delete project
-        </Button>
+            <FormSeparator className="mt-8" />
+
+            <Legend
+              className="mt-7 max-w-[27.5rem]"
+              title={t('views:projectSettings.general.deleteProjectTitle', 'Delete project')}
+              description={t(
+                'views:projectSettings.general.deleteProjectDescription',
+                'This will permanently delete this project, and everything contained in it. All repositories in it will also be deleted.'
+              )}
+            >
+              <Button theme="error" variant="destructive" className="mt-3.5 w-fit" onClick={setOpenDeleteDialog}>
+                {t('views:projectSettings.general.deleteProjectButton', 'Delete project')}
+              </Button>
+            </Legend>
+          </>
+        )}
       </SandboxLayout.Content>
     </SandboxLayout.Main>
   )

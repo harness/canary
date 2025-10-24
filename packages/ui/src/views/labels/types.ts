@@ -63,7 +63,7 @@ export interface ILabelType {
   key: string
   repo_id?: number | null
   scope: number
-  space_id: number | null
+  space_id?: number | null
   type: LabelType
   updated: number
   updated_by: number

@@ -1,16 +1,7 @@
 import { FC, useMemo } from 'react'
 import { Link } from 'react-router-dom'
 
-import {
-  Button,
-  Checkbox,
-  ListActions,
-  Option,
-  PaginationComponent,
-  SearchBox,
-  SkeletonList,
-  Spacer
-} from '@/components'
+import { Button, Checkbox, ListActions, Option, Pagination, SearchBox, SkeletonList, Spacer } from '@/components'
 import { useDebounceSearch } from '@/hooks'
 import { ILabelsStore, ILabelType, SandboxLayout, TranslationStore } from '@/views'
 
@@ -70,7 +61,7 @@ export const LabelsListPage: FC<LabelsListPageProps> = ({
 
   return (
     <SandboxLayout.Main>
-      <SandboxLayout.Content className="mx-auto max-w-[812px]">
+      <SandboxLayout.Content className="px-0">
         <h1 className="text-2xl font-medium text-foreground-1">{t('views:labelData.title', 'Labels')}</h1>
         <Spacer size={6} />
         {isRepository && (
@@ -126,12 +117,7 @@ export const LabelsListPage: FC<LabelsListPageProps> = ({
         )}
 
         <Spacer size={8} />
-        <PaginationComponent
-          totalPages={totalPages}
-          currentPage={page}
-          goToPage={(pageNum: number) => setPage(pageNum)}
-          t={t}
-        />
+        <Pagination totalPages={totalPages} currentPage={page} goToPage={setPage} t={t} />
       </SandboxLayout.Content>
     </SandboxLayout.Main>
   )

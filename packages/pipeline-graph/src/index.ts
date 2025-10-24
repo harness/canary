@@ -4,3 +4,4 @@ export * from './types/nodes-internal'
 
 export * from './types/node-content'
 export * from './context/canvas-provider'
+export { type CollapseButtonProps } from './components/components/collapse'

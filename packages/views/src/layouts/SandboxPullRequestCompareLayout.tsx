@@ -1,4 +1,4 @@
-import { useEffect, useRef, useState } from 'react'
+import { FC, useEffect, useRef, useState } from 'react'
 import { useForm } from 'react-hook-form'
 import { useNavigate } from 'react-router-dom'
 
@@ -16,11 +16,9 @@ import {
   ListActions,
   Spacer,
   StackedList,
-  Tabs,
-  TabsContent,
-  TabsList,
   Text
 } from '@harnessio/canary'
+import { Tabs } from '@harnessio/ui/components'
 
 import { BranchSelector, Layout, NoData, PullRequestCommits, SandboxLayout } from '..'
 import { useDiffConfig } from '../components/pull-request/hooks/useDiffConfig'
@@ -63,7 +61,7 @@ interface SandboxPullRequestCompareProps {
   prBranchCombinationExists: number | null
 }
 
-const SandboxPullRequestCompare: React.FC<SandboxPullRequestCompareProps> = ({
+const SandboxPullRequestCompare: FC<SandboxPullRequestCompareProps> = ({
   onFormSubmit,
   apiError = null,
   isLoading,
@@ -248,13 +246,13 @@ const SandboxPullRequestCompare: React.FC<SandboxPullRequestCompareProps> = ({
         <Spacer size={10} />
         {isBranchSelected ? (
           <Layout.Vertical>
-            <Tabs variant="navigation" defaultValue="overview">
-              <TabsList className="px-0">
+            <Tabs.Root variant="navigation" defaultValue="overview">
+              <Tabs.List className="px-0">
                 <TabTriggerItem value="overview" icon="comments" label="Overview" />
                 <TabTriggerItem value="commits" icon="tube-sign" label="Commits" badgeCount={1} />
                 <TabTriggerItem value="changes" icon="changes" label="Changes" badgeCount={1} />
-              </TabsList>
-              <TabsContent value="overview">
+              </Tabs.List>
+              <Tabs.Content value="overview">
                 <Spacer size={4} />
                 <PullRequestCompareForm
                   register={register}
@@ -267,12 +265,12 @@ const SandboxPullRequestCompare: React.FC<SandboxPullRequestCompareProps> = ({
                   errors={errors}
                   handleSubmit={handleSubmit}
                 />
-              </TabsContent>
-              <TabsContent className="flex flex-col" value="commits">
+              </Tabs.Content>
+              <Tabs.Content className="flex flex-col" value="commits">
                 <Spacer size={10} />
                 <PullRequestCommits data={commitData} />
-              </TabsContent>
-              <TabsContent value="changes">
+              </Tabs.Content>
+              <Tabs.Content value="changes">
                 {/* Content for Changes */}
                 <Spacer size={5} />
                 <Text
@@ -305,8 +303,8 @@ const SandboxPullRequestCompare: React.FC<SandboxPullRequestCompareProps> = ({
                     />
                   </>
                 ))}
-              </TabsContent>
-            </Tabs>
+              </Tabs.Content>
+            </Tabs.Root>
             <Spacer size={3} />
           </Layout.Vertical>
         ) : (
@@ -331,7 +329,7 @@ interface HeaderProps {
   unchangedPercentage?: number
 }
 
-const LineTitle: React.FC<Omit<HeaderProps, 'title' | 'data' | 'lang'>> = ({ text }) => (
+const LineTitle: FC<Omit<HeaderProps, 'title' | 'data' | 'lang'>> = ({ text }) => (
   <div className="flex items-center justify-between gap-3">
     <div className="inline-flex items-center gap-2">
       <Text weight="medium">{text}</Text>
@@ -347,7 +345,7 @@ const LineTitle: React.FC<Omit<HeaderProps, 'title' | 'data' | 'lang'>> = ({ tex
   </div>
 )
 
-const PullRequestAccordion: React.FC<{
+const PullRequestAccordion: FC<{
   header?: HeaderProps
   data?: string
   diffMode: DiffModeEnum

@@ -22,34 +22,31 @@ import { UsererrorError, ViolationState } from '@/types'
 import { zodResolver } from '@hookform/resolvers/zod'
 import { z } from 'zod'
 
-const gitCommitSchema = z
-  .object({
-    message: z.string().optional(),
-    description: z.string().optional(),
-    commitToGitRef: z.string(),
-    newBranchName: z.string().optional(),
-    fileName: z.union([z.string().min(1), z.undefined()])
-  })
-  .superRefine((data, ctx) => {
-    if (data.commitToGitRef === CommitToGitRefOption.NEW_BRANCH) {
-      if (!data.newBranchName || data.newBranchName.trim() === '') {
-        ctx.addIssue({
-          code: z.ZodIssueCode.custom,
-          message: 'Branch Name is required ',
-          path: ['newBranchName']
-        })
-      }
-    }
-    if (!!data.fileName && !data.fileName.length) {
-      ctx.addIssue({
-        code: z.ZodIssueCode.custom,
-        message: 'File Name is required ',
-        path: ['fileName']
-      })
-    }
-  })
+export const createGitCommitSchema = (isFileNameRequired: boolean) => {
+  const fileNameSchema = isFileNameRequired ? z.string().min(1, 'File Name is required') : z.string().optional()
 
-export type FormFields = z.infer<typeof gitCommitSchema>
+  return z
+    .object({
+      message: z.string().optional(),
+      description: z.string().optional(),
+      commitToGitRef: z.nativeEnum(CommitToGitRefOption),
+      newBranchName: z.string().optional(),
+      fileName: fileNameSchema
+    })
+    .superRefine((data, ctx) => {
+      if (data.commitToGitRef === CommitToGitRefOption.NEW_BRANCH) {
+        if (!data.newBranchName || !data.newBranchName.trim()) {
+          ctx.addIssue({
+            code: z.ZodIssueCode.custom,
+            message: 'Branch Name is required',
+            path: ['newBranchName']
+          })
+        }
+      }
+    })
+}
+
+export type GitCommitSchemaType = z.infer<ReturnType<typeof createGitCommitSchema>>
 
 export interface GitCommitDialogProps {
   isOpen: boolean
@@ -89,8 +86,8 @@ export const GitCommitDialog: FC<GitCommitDialogProps> = ({
     setValue,
     watch,
     formState: { errors }
-  } = useForm<FormFields>({
-    resolver: zodResolver(gitCommitSchema),
+  } = useForm<GitCommitSchemaType>({
+    resolver: zodResolver(createGitCommitSchema(isFileNameRequired)),
     mode: 'onChange',
     defaultValues: {
       message: '',
@@ -102,7 +99,7 @@ export const GitCommitDialog: FC<GitCommitDialogProps> = ({
   })
 
   const isDisabledSubmission = disableCTA || isSubmitting
-  const onSubmit: SubmitHandler<FormFields> = data => {
+  const onSubmit: SubmitHandler<GitCommitSchemaType> = data => {
     if (isDisabledSubmission) return
 
     onFormSubmit(data as GitCommitFormType)
@@ -207,7 +204,7 @@ export const GitCommitDialog: FC<GitCommitDialogProps> = ({
                 }
               />
             </RadioGroup>
-            {(violation || error) && (
+            {violation && (
               <Message className="ml-[26px] mt-0.5" theme={MessageTheme.ERROR}>
                 {bypassable
                   ? commitToGitRefValue === CommitToGitRefOption.DIRECTLY
@@ -216,6 +213,11 @@ export const GitCommitDialog: FC<GitCommitDialogProps> = ({
                   : commitToGitRefValue === CommitToGitRefOption.DIRECTLY
                     ? "Some rules don't allow you to commit directly"
                     : "Some rules don't allow you to create new branch for commit"}
+              </Message>
+            )}
+            {error && error?.message && (
+              <Message className="ml-[26px] mt-0.5" theme={MessageTheme.ERROR}>
+                {error.message}
               </Message>
             )}
             {errors.commitToGitRef && (

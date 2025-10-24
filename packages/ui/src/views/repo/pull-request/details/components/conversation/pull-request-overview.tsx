@@ -1,62 +1,37 @@
-import { useCallback, useMemo, useState } from 'react'
+import { FC, useCallback, useMemo, useState } from 'react'
 
-import { Avatar, AvatarFallback, Icon, Layout } from '@components/index'
+import { Avatar, Icon, Layout } from '@/components'
+import {
+  CommentItem,
+  EnumPullReqActivityType,
+  GeneralPayload,
+  isCodeComment,
+  isComment,
+  isSystemComment,
+  orderSortDate,
+  PayloadAuthor,
+  PayloadCodeComment,
+  PayloadCreated,
+  PRCommentFilterType,
+  PullRequestCommentBox,
+  removeLastPlus,
+  TranslationStore,
+  TypesPullReqActivity
+} from '@/views'
 import { DiffModeEnum } from '@git-diff-view/react'
 import { getInitials } from '@utils/stringUtils'
 import { timeAgo } from '@utils/utils'
-import { PullRequestCommentBox, TranslationStore } from '@views/index'
 import PullRequestDiffViewer from '@views/repo/pull-request/components/pull-request-diff-viewer'
 import { useDiffConfig } from '@views/repo/pull-request/hooks/useDiffConfig'
 import { CommitSuggestion, TypesPullReq } from '@views/repo/pull-request/pull-request.types'
 import { parseStartingLineIfOne, quoteTransform } from '@views/repo/pull-request/utils'
 import { get, orderBy } from 'lodash-es'
 
-import {
-  CommentItem,
-  EnumPullReqActivityType,
-  GeneralPayload,
-  orderSortDate,
-  PayloadAuthor,
-  PayloadCodeComment,
-  PayloadCreated,
-  PRCommentFilterType,
-  TypesPullReqActivity
-} from '../../pull-request-details-types'
-import { isCodeComment, isComment, isSystemComment, removeLastPlus } from '../../pull-request-utils'
 import PRCommentView from '../common/pull-request-comment-view'
 import PullRequestDescBox from './pull-request-description-box'
-// import { PullRequestStatusSelect } from './pull-request-status-select-button'
 import PullRequestSystemComments from './pull-request-system-comments'
 import PullRequestTimelineItem from './pull-request-timeline-item'
 
-interface RoutingProps {
-  toCommitDetails?: ({ sha }: { sha: string }) => string
-}
-interface PullRequestOverviewProps extends RoutingProps {
-  handleUpdateDescription: (title: string, description: string) => void
-  data?: TypesPullReqActivity[]
-  currentUser?: { display_name?: string; uid?: string }
-  handleUpdateComment: (id: number, comment: string) => void
-  handleSaveComment: (comment: string, parentId?: number) => void
-  refetchActivities: () => void
-  useTranslationStore: () => TranslationStore
-  handleDeleteComment: (id: number) => void
-  handleUpload: (blob: File, setMarkdownContent: (data: string) => void) => void
-  // data: CommentItem<TypesPullReqActivity>[][]
-  pullReqMetadata: TypesPullReq | undefined
-  activityFilter: { label: string; value: string }
-  dateOrderSort: { label: string; value: string } // eslint-disable-next-line  @typescript-eslint/no-explicit-any
-  commentStatusPullReq: any
-  repoId: string
-  diffData?: { text: string; numAdditions?: number; numDeletions?: number; data?: string; title: string; lang: string }
-  onCopyClick: (commentId?: number) => void
-  suggestionsBatch: CommitSuggestion[]
-  onCommitSuggestion: (suggestion: CommitSuggestion) => void
-  addSuggestionToBatch: (suggestion: CommitSuggestion) => void
-  removeSuggestionFromBatch: (commentId: number) => void
-  filenameToLanguage: (fileName: string) => string | undefined
-  toggleConversationStatus: (status: string, parentId?: number) => void
-}
 export const activityToCommentItem = (activity: TypesPullReqActivity): CommentItem<TypesPullReqActivity> => ({
   id: activity.id || 0,
   author: activity.author?.display_name as string,
@@ -69,7 +44,34 @@ export const activityToCommentItem = (activity: TypesPullReqActivity): CommentIt
   payload: activity
 })
 
-const PullRequestOverview: React.FC<PullRequestOverviewProps> = ({
+interface RoutingProps {
+  toCommitDetails?: ({ sha }: { sha: string }) => string
+}
+
+export interface PullRequestOverviewProps extends RoutingProps {
+  handleUpdateDescription: (title: string, description: string) => void
+  data?: TypesPullReqActivity[]
+  currentUser?: { display_name?: string; uid?: string }
+  handleUpdateComment: (id: number, comment: string) => void
+  handleSaveComment: (comment: string, parentId?: number) => void
+  useTranslationStore: () => TranslationStore
+  handleDeleteComment: (id: number) => void
+  handleUpload: (blob: File, setMarkdownContent: (data: string) => void) => void
+  pullReqMetadata?: TypesPullReq
+  activityFilter: { label: string; value: string }
+  dateOrderSort: { label: string; value: string }
+  diffData?: { text: string; addedLines?: number; deletedLines?: number; data?: string; title: string; lang: string }
+  onCopyClick: (commentId?: number) => void
+  suggestionsBatch: CommitSuggestion[]
+  onCommitSuggestion: (suggestion: CommitSuggestion) => void
+  addSuggestionToBatch: (suggestion: CommitSuggestion) => void
+  removeSuggestionFromBatch: (commentId: number) => void
+  filenameToLanguage: (fileName: string) => string | undefined
+  toggleConversationStatus: (status: string, parentId?: number) => void
+  toCode?: ({ sha }: { sha: string }) => string
+}
+
+const PullRequestOverview: FC<PullRequestOverviewProps> = ({
   data,
   pullReqMetadata,
   activityFilter,
@@ -88,7 +90,8 @@ const PullRequestOverview: React.FC<PullRequestOverviewProps> = ({
   filenameToLanguage,
   toggleConversationStatus,
   handleUpdateDescription,
-  toCommitDetails
+  toCommitDetails,
+  toCode
 }) => {
   const { t } = useTranslationStore()
   const {
@@ -100,6 +103,7 @@ const PullRequestOverview: React.FC<PullRequestOverviewProps> = ({
     //  setWrap,
     fontsize
   } = useDiffConfig()
+
   const activityBlocks = useMemo(() => {
     // Each block may have one or more activities which are grouped into it. For example, one comment block
     // contains a parent comment and multiple replied comments
@@ -159,6 +163,7 @@ const PullRequestOverview: React.FC<PullRequestOverviewProps> = ({
     activityFilter,
     currentUser?.uid
   ])
+
   const [editModes, setEditModes] = useState<{ [key: string]: boolean }>({})
   const [editComments, setEditComments] = useState<{ [key: string]: string }>({})
   const [hideReplyHeres, setHideReplyHeres] = useState<{ [key: string]: boolean }>({})
@@ -214,10 +219,11 @@ const PullRequestOverview: React.FC<PullRequestOverviewProps> = ({
                   commentItems={commentItems}
                   isLast={activityBlocks.length - 1 === index}
                   pullReqMetadata={pullReqMetadata}
+                  toCode={toCode}
                 />
               )
             } else {
-              const payload = commentItems[0]?.payload?.payload // Ensure payload is typed correctly
+              const payload = commentItems[0]?.payload // Ensure payload is typed correctly
               const parentIdAttr = `comment-${payload?.id}`
 
               const codeDiffSnapshot = [
@@ -258,21 +264,23 @@ const PullRequestOverview: React.FC<PullRequestOverviewProps> = ({
                     header={[
                       {
                         avatar: (
-                          <Avatar className="size-6 rounded-full p-0">
-                            <AvatarFallback>
-                              <span className="text-12 text-foreground-3">
-                                {/* TODO: fix fallback string */}
-                                {getInitials((payload?.author as PayloadAuthor)?.display_name || '')}
-                              </span>
-                            </AvatarFallback>
-                          </Avatar>
+                          <Avatar.Root>
+                            <Avatar.Fallback>
+                              {/* TODO: fix fallback string */}
+                              {getInitials((payload?.author as PayloadAuthor)?.display_name || '')}
+                            </Avatar.Fallback>
+                          </Avatar.Root>
                         ),
                         name: (payload?.author as PayloadAuthor)?.display_name,
                         // TODO: fix comment to tell between comment or code comment?
                         description: payload?.created && `reviewed ${timeAgo(payload?.created)}`
                       }
                     ]}
-                    contentHeader={<span>{(payload?.code_comment as PayloadCodeComment)?.path}</span>}
+                    contentHeader={
+                      <span className="font-medium text-foreground-1">
+                        {(payload?.code_comment as PayloadCodeComment)?.path}
+                      </span>
+                    }
                     content={
                       <div className="flex flex-col">
                         {startingLine ? (
@@ -323,19 +331,17 @@ const PullRequestOverview: React.FC<PullRequestOverviewProps> = ({
                                 replyBoxClassName="p-4"
                                 toggleConversationStatus={toggleConversationStatus}
                                 icon={
-                                  <Avatar className="size-6 rounded-full p-0">
-                                    <AvatarFallback>
-                                      <span className="text-12 text-foreground-3">
-                                        {/* TODO: fix fallback string */}
-                                        {getInitials(
-                                          (
-                                            (commentItem as unknown as TypesPullReqActivity)?.payload
-                                              ?.author as PayloadAuthor
-                                          )?.display_name || ''
-                                        )}
-                                      </span>
-                                    </AvatarFallback>
-                                  </Avatar>
+                                  <Avatar.Root>
+                                    <Avatar.Fallback>
+                                      {/* TODO: fix fallback string */}
+                                      {getInitials(
+                                        (
+                                          (commentItem as unknown as TypesPullReqActivity)?.payload
+                                            ?.author as PayloadAuthor
+                                        )?.display_name || ''
+                                      )}
+                                    </Avatar.Fallback>
+                                  </Avatar.Root>
                                 }
                                 header={[
                                   {
@@ -390,15 +396,18 @@ const PullRequestOverview: React.FC<PullRequestOverviewProps> = ({
                                   )
                                 }
                                 key={`${commentItem.id}-${commentItem.author}`}
+                                hideEditDelete={payload?.author?.uid !== currentUser?.uid}
                               />
                             ) : null
                           })}
                         </div>
                       </div>
                     }
+                    hideEditDelete={payload?.author?.uid !== currentUser?.uid}
                   />
                 ) : null
               }
+
               return payload?.id ? (
                 <PullRequestTimelineItem
                   handleUpload={handleUpload}
@@ -417,22 +426,23 @@ const PullRequestOverview: React.FC<PullRequestOverviewProps> = ({
                   header={[
                     {
                       avatar: (
-                        <Avatar className="size-6 rounded-full p-0">
-                          <AvatarFallback>
-                            <span className="text-12 text-foreground-3">
-                              {/* TODO: fix fallback string */}
-                              {getInitials((payload?.author as PayloadAuthor)?.display_name || '')}
-                            </span>
-                          </AvatarFallback>
-                        </Avatar>
+                        <Avatar.Root>
+                          <Avatar.Fallback>
+                            {/* TODO: fix fallback string */}
+                            {getInitials((payload?.author as PayloadAuthor)?.display_name || '')}
+                          </Avatar.Fallback>
+                        </Avatar.Root>
                       ),
                       name: (payload?.author as PayloadAuthor)?.display_name,
                       // TODO: fix comment to tell between comment or code comment?
-                      description: (
-                        <div className="flex space-x-4">
-                          <div className="pr-2">{payload?.created && `commented ${timeAgo(payload?.created)}`} </div>
-                        </div>
-                      )
+                      ...(payload?.created && {
+                        description: (
+                          <div className="flex gap-x-1">
+                            commented
+                            {timeAgo(payload?.created)}
+                          </div>
+                        )
+                      })
                     }
                   ]}
                   content={
@@ -440,7 +450,7 @@ const PullRequestOverview: React.FC<PullRequestOverviewProps> = ({
                       {commentItems?.map((commentItem, idx) => {
                         const componentId = `activity-comment-${commentItem?.id}`
                         // const diffCommentItem = activitiesToDiffCommentItems(commentItem)
-                        const commentIdAttr = `comment-${payload?.id}`
+                        const commentIdAttr = `comment-${commentItem?.id}`
 
                         return payload?.id ? (
                           <PullRequestTimelineItem
@@ -466,19 +476,15 @@ const PullRequestOverview: React.FC<PullRequestOverviewProps> = ({
                             replyBoxClassName="p-4"
                             key={`${commentItem.id}-${commentItem.author}-pr-comment`}
                             icon={
-                              <Avatar className="size-6 rounded-full p-0">
-                                <AvatarFallback>
-                                  <span className="text-12 text-foreground-3">
-                                    {/* TODO: fix fallback string */}
-                                    {getInitials(
-                                      (
-                                        (commentItem as unknown as TypesPullReqActivity)?.payload
-                                          ?.author as PayloadAuthor
-                                      ).display_name || ''
-                                    )}
-                                  </span>
-                                </AvatarFallback>
-                              </Avatar>
+                              <Avatar.Root>
+                                <Avatar.Fallback>
+                                  {/* TODO: fix fallback string */}
+                                  {getInitials(
+                                    ((commentItem as unknown as TypesPullReqActivity)?.payload?.author as PayloadAuthor)
+                                      .display_name || ''
+                                  )}
+                                </Avatar.Fallback>
+                              </Avatar.Root>
                             }
                             header={[
                               {
@@ -534,6 +540,7 @@ const PullRequestOverview: React.FC<PullRequestOverviewProps> = ({
                                 />
                               )
                             }
+                            hideEditDelete={payload?.author?.uid !== currentUser?.uid}
                           />
                         ) : null
                       })}
@@ -544,6 +551,7 @@ const PullRequestOverview: React.FC<PullRequestOverviewProps> = ({
                   isLast={activityBlocks.length - 1 === index}
                   handleSaveComment={handleSaveComment}
                   parentCommentId={payload?.id}
+                  hideEditDelete={payload?.author?.uid !== currentUser?.uid}
                 />
               ) : null
             }

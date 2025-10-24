@@ -1,0 +1,360 @@
+---
+title: Table
+description: Table component
+---
+
+The `Table` component provides a way to display tabular data with various sub-components for customization.
+
+import { DocsPage } from "../../../components/docs-page";
+import { Aside } from "@astrojs/starlight/components";
+
+<DocsPage.ComponentExample
+  client:only
+  code={`<div className="flex flex-col space-y-8">
+    <div>
+        <h5>With default variant</h5>
+        <Table.Root>
+            <Table.Header>
+                <Table.Row>
+                    <Table.Head>Name</Table.Head>
+                    <Table.Head>Email</Table.Head>
+                    <Table.Head>Display Name</Table.Head>
+                    <Table.Head>Date added</Table.Head>
+                </Table.Row>
+            </Table.Header>
+            <Table.Body>
+                <Table.Row>
+                    <Table.Cell>John Doe</Table.Cell>
+                    <Table.Cell>john@example.com</Table.Cell>
+                    <Table.Cell>John</Table.Cell>
+                    <Table.Cell>2023-01-01</Table.Cell>
+                </Table.Row>
+            </Table.Body>
+        </Table.Root>
+    </div>
+    <hr />
+    <div>
+        <h5>With "asStackedList" variant</h5>
+        <Table.Root variant="asStackedList">
+            <Table.Header>
+                <Table.Row>
+                    <Table.Head>Name</Table.Head>
+                    <Table.Head>Email</Table.Head>
+                    <Table.Head>Display Name</Table.Head>
+                    <Table.Head>Date added</Table.Head>
+                </Table.Row>
+            </Table.Header>
+            <Table.Body>
+                <Table.Row>
+                    <Table.Cell>John Doe</Table.Cell>
+                    <Table.Cell>john@example.com</Table.Cell>
+                    <Table.Cell>John</Table.Cell>
+                    <Table.Cell>2023-01-01</Table.Cell>
+                </Table.Row>
+            </Table.Body>
+        </Table.Root>
+    </div>
+    <hr />
+    <div>
+        <h5>With Caption and Footer</h5>
+        <Table.Root variant="asStackedList">
+            <Table.Caption>List of users</Table.Caption>
+            <Table.Header>
+                <Table.Row>
+                    <Table.Head>Name</Table.Head>
+                    <Table.Head>Email</Table.Head>
+                    <Table.Head>Display Name</Table.Head>
+                    <Table.Head>Date added</Table.Head>
+                </Table.Row>
+            </Table.Header>
+            <Table.Body>
+                <Table.Row>
+                    <Table.Cell>John Doe</Table.Cell>
+                    <Table.Cell>john@example.com</Table.Cell>
+                    <Table.Cell>John</Table.Cell>
+                    <Table.Cell>2023-01-01</Table.Cell>
+                </Table.Row>
+            </Table.Body>
+            <Table.Footer>
+                <Table.Row>
+                    <Table.Cell colSpan={4}>Total users: 1</Table.Cell>
+                </Table.Row>
+            </Table.Footer>
+        </Table.Root>
+    </div>
+</div>`}
+/>
+
+## Usage
+
+```typescript jsx
+import { Table } from '@harnessio/ui/components'
+
+//...
+
+return (
+  <Table.Root variant="asStackedList">
+    <Table.Header>
+      <Table.Row>
+        <Table.Head>Name</Table.Head>
+        <Table.Head>Email</Table.Head>
+        <Table.Head>Display Name</Table.Head>
+        <Table.Head>Date added</Table.Head>
+      </Table.Row>
+    </Table.Header>
+    <Table.Body>
+      <Table.Row>
+        <Table.Cell>John Doe</Table.Cell>
+        <Table.Cell>john@example.com</Table.Cell>
+        <Table.Cell>John</Table.Cell>
+        <Table.Cell>2023-01-01</Table.Cell>
+      </Table.Row>
+    </Table.Body>
+  </Table.Root>
+)
+```
+
+## Anatomy
+
+All parts of the `Table` component can be imported and composed as required.
+
+```typescript jsx
+<Table.Root variant="asStackedList">
+  <Table.Caption>List of users</Table.Caption>
+  <Table.Header>
+    <Table.Row>
+      <Table.Head>Name</Table.Head>
+      <Table.Head>Email</Table.Head>
+      <Table.Head>Display Name</Table.Head>
+      <Table.Head>Date added</Table.Head>
+    </Table.Row>
+  </Table.Header>
+  <Table.Body>
+    <Table.Row>
+      <Table.Cell>John Doe</Table.Cell>
+      <Table.Cell>john@example.com</Table.Cell>
+      <Table.Cell>John</Table.Cell>
+      <Table.Cell>2023-01-01</Table.Cell>
+    </Table.Row>
+  </Table.Body>
+  <Table.Footer>
+    <Table.Row>
+      <Table.Cell colSpan={4}>Total users: 1</Table.Cell>
+    </Table.Row>
+  </Table.Footer>
+</Table.Root>
+```
+
+## API Reference
+
+<Aside>
+  All components extend their HTML equivalents, so all relevant HTML props also
+  apply.
+</Aside>
+
+### `Root`
+
+The root component for the table.
+
+```typescript jsx
+<Table.Root
+  variant="asStackedList"             // [OPTIONAL] Variant of the table
+  disableXScroll={false}              // [OPTIONAL] Disable horizontal scroll
+  className="custom-class"            // [OPTIONAL] Custom class name
+  tableClassName="custom-table-class" // [OPTIONAL] Custom table class name
+>
+  {/* Table content */}
+</Table.Root>
+```
+
+<DocsPage.PropsTable
+  props={[
+    {
+      name: "variant",
+      description: "Variant of the table",
+      required: false,
+      defaultValue: "default",
+      value: "'default' | 'asStackedList'",
+    },
+    {
+      name: "disableXScroll",
+      description: "Disable horizontal scroll",
+      required: false,
+      defaultValue: "false",
+      value: "boolean",
+    },
+    {
+      name: "className",
+      description: "Custom class name",
+      required: false,
+      value: "string",
+    },
+    {
+      name: "tableClassName",
+      description: "Custom table class name",
+      required: false,
+      value: "string",
+    },
+  ]}
+/>
+
+### `Header`
+
+The header section of the table.
+
+```typescript jsx
+<Table.Header
+  className="custom-class" // [OPTIONAL] Custom class name
+>
+  {/* Header content */}
+</Table.Header>
+```
+
+<DocsPage.PropsTable
+  props={[
+    {
+      name: "className",
+      description: "Custom class name",
+      required: false,
+      value: "string",
+    },
+  ]}
+/>
+
+### `Body`
+
+The body section of the table.
+
+```typescript jsx
+<Table.Body
+  className="custom-class" // [OPTIONAL] Custom class name
+>
+  {/* Body content */}
+</Table.Body>
+```
+
+<DocsPage.PropsTable
+  props={[
+    {
+      name: "className",
+      description: "Custom class name",
+      required: false,
+      value: "string",
+    },
+  ]}
+/>
+
+### `Footer`
+
+The footer section of the table.
+
+```typescript jsx
+<Table.Footer
+  className="custom-class" // [OPTIONAL] Custom class name
+>
+  {/* Footer content */}
+</Table.Footer>
+```
+
+<DocsPage.PropsTable
+  props={[
+    {
+      name: "className",
+      description: "Custom class name",
+      required: false,
+      value: "string",
+    },
+  ]}
+/>
+
+### `Row`
+
+A row within the table.
+
+```typescript jsx
+<Table.Row
+  className="custom-class" // [OPTIONAL] Custom class name
+>
+  {/* Row content */}
+</Table.Row>
+```
+
+<DocsPage.PropsTable
+  props={[
+    {
+      name: "className",
+      description: "Custom class name",
+      required: false,
+      value: "string",
+    },
+  ]}
+/>
+
+### `Head`
+
+A header cell within the table.
+
+```typescript jsx
+<Table.Head
+  className="custom-class" // [OPTIONAL] Custom class name
+>
+  {/* Header cell content */}
+</Table.Head>
+```
+
+<DocsPage.PropsTable
+  props={[
+    {
+      name: "className",
+      description: "Custom class name",
+      required: false,
+      value: "string",
+    },
+  ]}
+/>
+
+### `Cell`
+
+A cell within the table.
+
+```typescript jsx
+<Table.Cell
+  className="custom-class" // [OPTIONAL] Custom class name
+>
+  {/* Cell content */}
+</Table.Cell>
+```
+
+<DocsPage.PropsTable
+  props={[
+    {
+      name: "className",
+      description: "Custom class name",
+      required: false,
+      value: "string",
+    },
+  ]}
+/>
+
+### `Caption`
+
+A caption for the table.
+
+```typescript jsx
+<Table.Caption
+  className="custom-class" // [OPTIONAL] Custom class name
+>
+  {/* Caption content */}
+</Table.Caption>
+```
+
+<DocsPage.PropsTable
+  props={[
+    {
+      name: "className",
+      description: "Custom class name",
+      required: false,
+      value: "string",
+    },
+  ]}
+/>

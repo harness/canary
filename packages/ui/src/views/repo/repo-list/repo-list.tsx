@@ -1,7 +1,6 @@
 import { Link } from 'react-router-dom'
 
 import { Badge, Icon, NoData, SkeletonList, StackedList } from '@/components'
-import { cn } from '@utils/cn'
 import { TFunction } from 'i18next'
 
 import { RepositoryType } from '../repo.types'
@@ -84,28 +83,18 @@ export function RepoList({
 
   return (
     <StackedList.Root>
-      {repos.map((repo, repo_idx) => (
-        <Link
-          key={repo.name}
-          to={toRepository?.(repo) || ''}
-          className={cn({
-            'pointer-events-none': repo.importing
-          })}
-        >
-          <StackedList.Item key={repo.name} className="pb-2.5 pt-3" isLast={repos.length - 1 === repo_idx}>
-            <StackedList.Field
-              primary
-              description={
-                repo.importing ? (
-                  t('views:repos.importing', 'Importing…')
-                ) : (
-                  <span className="max-w-full truncate">{repo.description}</span>
-                )
-              }
-              title={<Title title={repo.name} isPrivate={repo.private} t={t} />}
-              className="flex max-w-[80%] gap-1.5 text-wrap"
-            />
-            {!repo.importing && (
+      {repos
+        .filter(repo => !repo.importing) // Exclude repos where importing is true
+        .map((repo, repo_idx) => (
+          <Link key={repo.name} to={toRepository?.(repo) || ''}>
+            <StackedList.Item key={repo.name} className="pb-2.5 pt-3" isLast={repos.length - 1 === repo_idx}>
+              <StackedList.Field
+                primary
+                description={<span className="max-w-full truncate">{repo.description}</span>}
+                title={<Title title={repo.name} isPrivate={repo.private} t={t} />}
+                className="flex max-w-[80%] gap-1.5 text-wrap"
+              />
+
               <StackedList.Field
                 title={t('views:repos.updated', 'Updated') + ' ' + repo.timestamp}
                 description={<Stats pulls={repo.pulls} />}
@@ -113,10 +102,9 @@ export function RepoList({
                 label
                 secondary
               />
-            )}
-          </StackedList.Item>
-        </Link>
-      ))}
+            </StackedList.Item>
+          </Link>
+        ))}
     </StackedList.Root>
   )
 }

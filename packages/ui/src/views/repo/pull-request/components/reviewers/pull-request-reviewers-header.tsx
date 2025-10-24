@@ -1,12 +1,13 @@
-import { Avatar, AvatarFallback, Button, DropdownMenu, Icon, SearchBox } from '@/components'
+import { Avatar, DropdownMenu, Icon, SearchBox } from '@/components'
+import { PrincipalType } from '@/types'
 import { TranslationStore } from '@/views'
 import { cn } from '@utils/cn'
 import { getInitials } from '@utils/stringUtils'
 
-import { PRReviewer, PRReviewUsers } from '../../pull-request.types'
+import { PRReviewer } from '../../pull-request.types'
 
 interface ReviewersHeaderProps {
-  usersList?: PRReviewUsers[]
+  usersList?: PrincipalType[]
   reviewers: PRReviewer[]
   addReviewers?: (id?: number) => void
   handleDelete: (id: number) => void
@@ -35,10 +36,12 @@ const ReviewersHeader = ({
     <div className="flex items-center justify-between">
       <span className="text-14 font-medium text-foreground-1">{t('views:pullRequests.reviewers')}</span>
       <DropdownMenu.Root>
-        <DropdownMenu.Trigger asChild>
-          <Button size="sm" variant="ghost" className="px-2 py-1">
-            <Icon className="text-icons-2" name="vertical-ellipsis" size={12} />
-          </Button>
+        <DropdownMenu.Trigger className="group flex h-6 items-center px-2">
+          <Icon
+            className="text-icons-1 transition-colors duration-200 group-hover:text-icons-2"
+            name="vertical-ellipsis"
+            size={12}
+          />
         </DropdownMenu.Trigger>
         <DropdownMenu.Content className="w-[280px] p-0" align="end">
           <div
@@ -81,11 +84,9 @@ const ReviewersHeader = ({
                   >
                     <div className="flex w-full min-w-0 items-center gap-x-2">
                       {isSelected && <Icon name="tick" size={12} className="shrink-0 text-icons-2" />}
-                      <Avatar className="size-6 rounded-full">
-                        <AvatarFallback>
-                          <span className="text-12 text-foreground-3">{getInitials(display_name || '')}</span>
-                        </AvatarFallback>
-                      </Avatar>
+                      <Avatar.Root>
+                        <Avatar.Fallback>{getInitials(display_name || '')}</Avatar.Fallback>
+                      </Avatar.Root>
                       <span className="truncate text-14 font-medium text-foreground-8">{display_name}</span>
                     </div>
                   </DropdownMenu.Item>

@@ -1,12 +1,17 @@
 import { noop } from '@utils/viewUtils'
 
+import { EnumPrincipalType } from '@harnessio/ui/types'
 import {
+  ColorsEnum,
   EnumCheckPayloadKind,
   EnumCheckStatus,
-  EnumPrincipalType,
   EnumPullReqActivityKind,
   EnumPullReqActivityType,
   EnumPullReqReviewDecision,
+  EnumRuleState,
+  ILabelType,
+  LabelAssignmentType,
+  LabelType,
   TypesPullReqActivity
 } from '@harnessio/ui/views'
 
@@ -20,7 +25,7 @@ export const prPanelInfo = {
             repo_path: 'test666/new',
             identifier: 'test',
             type: 'branch',
-            state: 'active',
+            state: 'active' as EnumRuleState,
             uid: 'test'
           },
           bypassable: false,
@@ -874,15 +879,15 @@ export const mockReviewers = [
   }
 ]
 
-export const mockLabelList = [
+export const mockLabelList: ILabelType[] = [
   {
     id: 1,
     space_id: 3,
     scope: 1,
     key: 'P0',
     description: '',
-    type: 'static',
-    color: 'red',
+    type: LabelType.STATIC,
+    color: ColorsEnum.BLUE,
     value_count: 0,
     created: 1723740581843,
     updated: 1723740581843,
@@ -895,8 +900,8 @@ export const mockLabelList = [
     scope: 0,
     key: 's',
     description: '',
-    type: 'static',
-    color: 'blue',
+    type: LabelType.DYNAMIC,
+    color: ColorsEnum.CYAN,
     value_count: 0,
     created: 1736929623159,
     updated: 1736929623159,
@@ -919,7 +924,7 @@ export interface PRLabelsData {
       updated: number
     }
   }>
-  label_data: Label[]
+  label_data: LabelAssignmentType[]
 }
 
 export const mockPrLabels: PRLabelsData = {
@@ -941,10 +946,15 @@ export const mockPrLabels: PRLabelsData = {
   label_data: [
     {
       scope: 1,
-      id: 1,
-      type: 'static',
-      key: 'P0',
-      color: 'red'
+      id: 9,
+      type: LabelType.DYNAMIC,
+      key: '111',
+      color: ColorsEnum.RED,
+      assigned_value: {
+        id: 10,
+        value: 'newwwww',
+        color: ColorsEnum.RED
+      }
     }
   ]
 }

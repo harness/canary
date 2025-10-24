@@ -19,7 +19,10 @@ const DialogOverlay = forwardRef<ElementRef<typeof DialogPrimitive.Overlay>, Dia
   ({ className, onClick, ...props }, ref) => (
     <DialogPrimitive.Overlay
       ref={ref}
-      className={cn('fixed inset-0 z-50 bg-background-7/80', className)}
+      className={cn(
+        'fixed inset-0 z-50 bg-background-7/80 data-[state=open]:animate-in data-[state=closed]:animate-out data-[state=closed]:fade-out-0 data-[state=open]:fade-in-0',
+        className
+      )}
       {...props}
       onClick={onClick}
     />
@@ -64,7 +67,7 @@ const DialogContent = forwardRef<ElementRef<typeof DialogPrimitive.Content>, Dia
             {mainContent}
           </div>
           {footer}
-          <DialogPrimitive.Close className="absolute right-3 top-[18px] disabled:pointer-events-none" asChild>
+          <DialogPrimitive.Close className="absolute right-3 top-3.5 disabled:pointer-events-none" asChild>
             <Button size="icon" variant="custom" className="text-icons-4 hover:text-icons-2">
               <Icon name="close" size={16} />
               <span className="sr-only">Close</span>

@@ -18,8 +18,11 @@ function Root({ children }: { children: ReactNode }) {
 
 function LeftPanel({ children, className }: { children: ReactNode; className?: string }) {
   return (
-    <div className="sticky top-0 z-10 h-screen">
-      <nav className={cn('h-full w-[220px] border-borders-5', className)} aria-label="Left Navigation Panel">
+    <div className="sticky top-0 z-50 h-screen">
+      <nav
+        className={cn('h-full w-[220px] border-borders-5 max-md:hidden', className)}
+        aria-label="Left Navigation Panel"
+      >
         {children}
       </nav>
     </div>
@@ -99,4 +102,5 @@ function Column({ children, className }: { children: ReactNode; className?: stri
   )
 }
 
-export { Root, LeftPanel, LeftSubPanel, Header, SubHeader, Main, Content, Columns, Column }
+const SandboxLayout = { Root, LeftPanel, LeftSubPanel, Header, SubHeader, Main, Content, Columns, Column }
+export { SandboxLayout }

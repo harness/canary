@@ -2,20 +2,8 @@ import { FC, useEffect, useRef, useState } from 'react'
 import { useForm } from 'react-hook-form'
 import { useNavigate } from 'react-router-dom'
 
-import {
-  Avatar,
-  AvatarFallback,
-  Button,
-  Icon,
-  NoData,
-  SkeletonList,
-  Spacer,
-  StyledLink,
-  Tabs,
-  TabsContent,
-  TabsList
-} from '@/components'
-import { TypesDiffStats } from '@/types'
+import { Avatar, Button, Icon, NoData, SkeletonList, Spacer, StyledLink, Tabs } from '@/components'
+import { PrincipalType, TypesDiffStats } from '@/types'
 import {
   BranchSelector,
   BranchSelectorListItem,
@@ -23,6 +11,8 @@ import {
   CommitSelectorListItem,
   CommitsList,
   IBranchSelectorStore,
+  ILabelType,
+  LabelValuesType,
   PullRequestSideBar,
   SandboxLayout,
   TranslationStore,
@@ -38,7 +28,13 @@ import TabTriggerItem from '@views/repo/pull-request/compare/components/pull-req
 import { noop } from 'lodash-es'
 import { z } from 'zod'
 
-import { EnumPullReqReviewDecision, PRReviewer, PullReqReviewDecision } from '../pull-request.types'
+import {
+  EnumPullReqReviewDecision,
+  HandleAddLabelType,
+  LabelAssignmentType,
+  PRReviewer,
+  PullReqReviewDecision
+} from '../pull-request.types'
 import PullRequestCompareDiffList from './components/pull-request-compare-diff-list'
 import { HeaderProps } from './pull-request-compare.types'
 
@@ -88,7 +84,7 @@ export interface PullRequestComparePageProps extends Partial<RoutingProps> {
   setSearchTargetQuery: (query: string) => void
   searchReviewersQuery: string
   setSearchReviewersQuery: (query: string) => void
-  usersList?: { display_name?: string; id?: number; uid?: string }[]
+  usersList?: PrincipalType[]
   reviewers?: PRReviewer[]
   handleAddReviewer: (id?: number) => void
   handleDeleteReviewer: (id?: number) => void
@@ -96,6 +92,15 @@ export interface PullRequestComparePageProps extends Partial<RoutingProps> {
   desc?: string
   setDesc: (desc: string) => void
   isFetchingCommits?: boolean
+  jumpToDiff: string
+  setJumpToDiff: (fileName: string) => void
+  labelsList?: ILabelType[]
+  labelsValues?: LabelValuesType
+  PRLabels?: LabelAssignmentType[]
+  searchLabelQuery?: string
+  setSearchLabelQuery?: (query: string) => void
+  addLabel?: (data: HandleAddLabelType) => void
+  removeLabel?: (id: number) => void
 }
 
 export const PullRequestComparePage: FC<PullRequestComparePageProps> = ({
@@ -132,7 +137,16 @@ export const PullRequestComparePage: FC<PullRequestComparePageProps> = ({
   handleUpload,
   desc,
   setDesc,
-  isFetchingCommits
+  isFetchingCommits,
+  jumpToDiff,
+  setJumpToDiff,
+  labelsList = [],
+  labelsValues = {},
+  PRLabels = [],
+  searchLabelQuery,
+  setSearchLabelQuery,
+  addLabel,
+  removeLabel
 }) => {
   const { commits: commitData } = useRepoCommitsStore()
   const formRef = useRef<HTMLFormElement>(null) // Create a ref for the form
@@ -330,8 +344,8 @@ export const PullRequestComparePage: FC<PullRequestComparePageProps> = ({
         )}
         {isBranchSelected ? (
           <Layout.Vertical className="mt-10">
-            <Tabs variant="tabnav" defaultValue={prBranchCombinationExists ? 'commits' : 'overview'}>
-              <TabsList className="relative left-1/2 w-[calc(100%+160px)] -translate-x-1/2 px-20 before:bg-borders-4">
+            <Tabs.Root variant="tabnav" defaultValue={prBranchCombinationExists ? 'commits' : 'overview'}>
+              <Tabs.List className="relative left-1/2 w-[calc(100%+160px)] -translate-x-1/2 px-20 before:bg-borders-4">
                 {!prBranchCombinationExists && (
                   <TabTriggerItem
                     value="overview"
@@ -351,15 +365,15 @@ export const PullRequestComparePage: FC<PullRequestComparePageProps> = ({
                   label={t('views:pullRequests.compareChangesTabChanges', 'Changes')}
                   badgeCount={diffStats.files_changed ? diffStats.files_changed : undefined}
                 />
-              </TabsList>
+              </Tabs.List>
               {!prBranchCombinationExists && (
-                <TabsContent className="pt-7" value="overview">
+                <Tabs.Content className="pt-7" value="overview">
                   <div className="grid grid-cols-[1fr_288px] gap-x-8">
                     <div className="flex gap-x-3">
                       {currentUser && (
-                        <Avatar className="overflow-hidden rounded-full" size="6">
-                          <AvatarFallback>{getInitials(currentUser)}</AvatarFallback>
-                        </Avatar>
+                        <Avatar.Root>
+                          <Avatar.Fallback>{getInitials(currentUser)}</Avatar.Fallback>
+                        </Avatar.Root>
                       )}
                       <div className="w-full">
                         <Spacer size={1} />
@@ -392,11 +406,18 @@ export const PullRequestComparePage: FC<PullRequestComparePageProps> = ({
                       searchQuery={searchReviewersQuery}
                       setSearchQuery={setSearchReviewersQuery}
                       useTranslationStore={useTranslationStore}
+                      labelsList={labelsList}
+                      labelsValues={labelsValues}
+                      PRLabels={PRLabels}
+                      addLabel={addLabel}
+                      removeLabel={removeLabel}
+                      searchLabelQuery={searchLabelQuery}
+                      setSearchLabelQuery={setSearchLabelQuery}
                     />
                   </div>
-                </TabsContent>
+                </Tabs.Content>
               )}
-              <TabsContent className="pt-7" value="commits">
+              <Tabs.Content className="pt-7" value="commits">
                 {/* TODO: add pagination to this */}
                 {isFetchingCommits ? (
                   <SkeletonList />
@@ -425,8 +446,8 @@ export const PullRequestComparePage: FC<PullRequestComparePageProps> = ({
                     ]}
                   />
                 )}
-              </TabsContent>
-              <TabsContent className="pt-7" value="changes">
+              </Tabs.Content>
+              <Tabs.Content className="pt-7" value="changes">
                 {/* Content for Changes */}
                 {(diffData ?? []).length > 0 ? (
                   <PullRequestCompareDiffList
@@ -434,6 +455,8 @@ export const PullRequestComparePage: FC<PullRequestComparePageProps> = ({
                     currentUser={currentUser}
                     diffStats={diffStats}
                     useTranslationStore={useTranslationStore}
+                    jumpToDiff={jumpToDiff}
+                    setJumpToDiff={setJumpToDiff}
                   />
                 ) : (
                   <NoData
@@ -442,8 +465,8 @@ export const PullRequestComparePage: FC<PullRequestComparePageProps> = ({
                     description={['There are no changes to display for the selected branches.']}
                   />
                 )}
-              </TabsContent>
-            </Tabs>
+              </Tabs.Content>
+            </Tabs.Root>
           </Layout.Vertical>
         ) : (
           <>

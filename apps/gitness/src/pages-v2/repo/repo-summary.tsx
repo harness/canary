@@ -29,13 +29,17 @@ import {
 } from '@harnessio/ui/views'
 import { SummaryItemType } from '@harnessio/views'
 
+import { useAppContext } from '../../framework/context/AppContext'
 import { useRoutes } from '../../framework/context/NavigationContext'
 import { useGetRepoRef } from '../../framework/hooks/useGetRepoPath'
+import { useIsMFE } from '../../framework/hooks/useIsMFE'
+import { useMFEContext } from '../../framework/hooks/useMFEContext'
 import { useTranslationStore } from '../../i18n/stores/i18n-store'
 import { generateAlphaNumericHash } from '../../pages-v2/pull-request/pull-request-utils'
 import { timeAgoFromISOTime } from '../../pages/pipeline-edit/utils/time-utils'
 import { PathParams } from '../../RouteDefinitions'
 import { orderSortDate } from '../../types'
+import { sortFilesByType } from '../../utils/common-utils'
 import { decodeGitContent, getTrimmedSha, normalizeGitRef, REFS_TAGS_PREFIX } from '../../utils/git-utils'
 import { useRepoBranchesStore } from '././stores/repo-branches-store'
 import { transformBranchList } from './transform-utils/branch-transform'
@@ -61,6 +65,10 @@ export default function RepoSummaryPage() {
     setSelectedBranchTag,
     setSelectedRefType
   } = useRepoBranchesStore()
+
+  const { currentUser } = useAppContext()
+  const isMFE = useIsMFE()
+  const { customHooks, customUtils } = useMFEContext()
 
   const { data: { body: repository } = {}, refetch: refetchRepo } = useFindRepositoryQuery({ repo_ref: repoRef })
 
@@ -121,6 +129,11 @@ export default function RepoSummaryPage() {
     setUpdateError('')
   }, [isEditDialogOpen])
 
+  const [MFETokenFlag, setMFETokenFlag] = useState(false)
+  const [showTokenDialog, setShowTokenDialog] = useState(false)
+  const MFEtokenData = isMFE
+    ? customHooks.useGenerateToken(generateAlphaNumericHash(5), currentUser?.uid, MFETokenFlag)
+    : null
   const [createdTokenData, setCreatedTokenData] = useState<(TokenFormType & { token: string }) | null>(null)
   const [successTokenDialog, setSuccessTokenDialog] = useState(false)
 
@@ -217,17 +230,36 @@ export default function RepoSummaryPage() {
         }
 
         setCreatedTokenData(tokenData)
+        setShowTokenDialog(true)
         setSuccessTokenDialog(true)
       }
     }
   )
 
   const handleCreateToken = () => {
-    const body = {
-      identifier: `code_token_${generateAlphaNumericHash(5)}`
+    if (isMFE) {
+      setMFETokenFlag(true)
+    } else {
+      const body = {
+        identifier: `code_token_${generateAlphaNumericHash(5)}`
+      }
+      createToken({ body })
     }
-    createToken({ body })
   }
+  useEffect(() => {
+    if (MFEtokenData) {
+      const tokenDataNew = {
+        identifier: MFEtokenData.token?.identifier ?? 'Unknown',
+        lifetime: MFEtokenData.token?.expires_at
+          ? new Date(MFEtokenData.token.expires_at).toLocaleDateString()
+          : 'No Expiration',
+        token: MFEtokenData.data ?? 'Token not available'
+      }
+      setCreatedTokenData(tokenDataNew)
+      setShowTokenDialog(true)
+      setSuccessTokenDialog(true)
+    }
+  }, [MFEtokenData])
 
   const repoEntryPathToFileTypeMap: Map<string, OpenapiGetContentOutput['type']> = useMemo(() => {
     const entries = repoDetails?.content?.entries
@@ -248,11 +280,10 @@ export default function RepoSummaryPage() {
   }
 
   useEffect(() => {
-    setLoading(true)
-
     if (!repoEntryPathToFileTypeMap.size) {
       return
     }
+    setLoading(true)
 
     pathDetails({
       queryParams: { git_ref: normalizeGitRef(gitRef || selectedBranchTag?.name) },
@@ -262,16 +293,18 @@ export default function RepoSummaryPage() {
       .then(({ body: response }: { body: RepoPathsDetailsOutput }) => {
         if (response?.details && response.details.length) {
           setFiles(
-            response.details.map((item: GitPathDetails) => ({
-              id: item?.path || '',
-              type: item?.path ? getSummaryItemType(repoEntryPathToFileTypeMap.get(item.path)) : SummaryItemType.File,
-              name: item?.path || '',
-              lastCommitMessage: item?.last_commit?.message || '',
-              timestamp: item?.last_commit?.author?.when ? timeAgoFromISOTime(item.last_commit.author.when) : '',
-              user: { name: item?.last_commit?.author?.identity?.name || '' },
-              sha: item?.last_commit?.sha && getTrimmedSha(item.last_commit.sha),
-              path: `${routes.toRepoFiles({ spaceId, repoId })}/${gitRef}/~/${item?.path}`
-            }))
+            sortFilesByType(
+              response.details.map((item: GitPathDetails) => ({
+                id: item?.path || '',
+                type: item?.path ? getSummaryItemType(repoEntryPathToFileTypeMap.get(item.path)) : SummaryItemType.File,
+                name: item?.path || '',
+                lastCommitMessage: item?.last_commit?.message || '',
+                timestamp: item?.last_commit?.author?.when ? timeAgoFromISOTime(item.last_commit.author.when) : '',
+                user: { name: item?.last_commit?.author?.identity?.name || '' },
+                sha: item?.last_commit?.sha && getTrimmedSha(item.last_commit.sha),
+                path: `${routes.toRepoFiles({ spaceId, repoId })}/${gitRef}/~/${item?.path}`
+              }))
+            )
           )
         }
       })
@@ -324,7 +357,7 @@ export default function RepoSummaryPage() {
     [default_branch_commit_count, branch_count, tag_count, pull_req_summary]
   )
 
-  const isLoading = (loading || isLoadingRepoDetails) && !repository?.is_empty
+  const isLoading = loading || isLoadingRepoDetails
 
   return (
     <>
@@ -352,13 +385,14 @@ export default function RepoSummaryPage() {
         searchQuery={branchTagQuery}
         setSearchQuery={setBranchTagQuery}
         toRepoFiles={() => routes.toRepoFiles({ spaceId, repoId })}
-        toProfileKeys={() => routes.toProfileKeys()}
+        navigateToProfileKeys={() => (isMFE ? customUtils.navigateToUserProfile() : navigate(routes.toProfileKeys()))}
+        isRepoEmpty={repository?.is_empty}
       />
-      {createdTokenData && (
+      {showTokenDialog && createdTokenData && (
         <CloneCredentialDialog
           open={successTokenDialog}
           onClose={() => setSuccessTokenDialog(false)}
-          toManageToken={() => routes.toProfileKeys({ spaceId, repoId })}
+          navigateToManageToken={() => (isMFE ? customUtils.navigateToUserProfile() : navigate(routes.toProfileKeys()))}
           tokenData={createdTokenData}
           useTranslationStore={useTranslationStore}
         />

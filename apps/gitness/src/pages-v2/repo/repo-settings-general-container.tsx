@@ -26,6 +26,7 @@ import {
   useUpdateSecuritySettingsMutation
 } from '@harnessio/code-service-client'
 import { DeleteAlertDialog } from '@harnessio/ui/components'
+import { wrapConditionalObjectElement } from '@harnessio/ui/utils'
 import {
   AccessLevel,
   BranchSelectorListItem,
@@ -57,18 +58,20 @@ export const RepoSettingsGeneralPageContainer = () => {
   const [branchQuery, setBranchQuery] = useState('')
   const [rulesSearchQuery, setRulesSearchQuery] = useState('')
   const [apiError, setApiError] = useState<{ type: ErrorTypes; message: string } | null>(null)
-  const [isRulesAlertDeleteDialogOpen, setIsRulesAlertDeleteDialogOpen] = useState(false)
-  const [isRepoAlertDeleteDialogOpen, setRepoAlertDeleteDialogOpen] = useState(false)
+  const [isRuleAlertDeleteDialogOpen, setRuleIsAlertDeleteDialogOpen] = useState(false)
+  const [isRepoAlertDeleteDialogOpen, setRepoIsAlertDeleteDialogOpen] = useState(false)
   const [alertDeleteParams, setAlertDeleteParams] = useState('')
 
-  const closeRulesAlertDeleteDialog = () => setIsRulesAlertDeleteDialogOpen(false)
+  const closeAlertDeleteDialog = () => {
+    isRuleAlertDeleteDialogOpen && setRuleIsAlertDeleteDialogOpen(false)
+    isRepoAlertDeleteDialogOpen && setRepoIsAlertDeleteDialogOpen(false)
+  }
   const openRulesAlertDeleteDialog = (identifier: string) => {
     setAlertDeleteParams(identifier)
-    setIsRulesAlertDeleteDialogOpen(true)
+    setRuleIsAlertDeleteDialogOpen(true)
   }
 
-  const closeRepoAlertDeleteDialog = () => setRepoAlertDeleteDialogOpen(false)
-  const openRepoAlertDeleteDialog = () => setRepoAlertDeleteDialogOpen(true)
+  const openRepoAlertDeleteDialog = () => setRepoIsAlertDeleteDialogOpen(true)
 
   const { data: { body: repoData } = {}, isLoading: isLoadingRepoData } = useFindRepositoryQuery(
     { repo_ref: repoRef },
@@ -83,12 +86,7 @@ export const RepoSettingsGeneralPageContainer = () => {
   const { data: { body: branches } = {} } = useListBranchesQuery(
     {
       repo_ref: repoRef,
-      queryParams: {
-        order: 'asc',
-        page: 1,
-        limit: 100,
-        query: branchQuery
-      }
+      queryParams: { order: 'asc', page: 1, limit: 100, query: branchQuery }
     },
     {
       onError: (error: ListBranchesErrorResponse) => {
@@ -103,12 +101,7 @@ export const RepoSettingsGeneralPageContainer = () => {
     refetch: refetchRulesList,
     isLoading: isRulesLoading
   } = useRepoRuleListQuery(
-    {
-      repo_ref: repoRef,
-      queryParams: {
-        query: rulesSearchQuery
-      }
-    },
+    { repo_ref: repoRef, queryParams: { query: rulesSearchQuery } },
     {
       onError: (error: RepoRuleListErrorResponse) => {
         const message = error.message || 'Error fetching rules'
@@ -142,7 +135,7 @@ export const RepoSettingsGeneralPageContainer = () => {
     {
       onSuccess: () => {
         refetchRulesList()
-        setIsRulesAlertDeleteDialogOpen(false)
+        setRepoIsAlertDeleteDialogOpen(false)
         setApiError(null)
       },
       onError: (error: RepoRuleDeleteErrorResponse) => {
@@ -244,47 +237,36 @@ export const RepoSettingsGeneralPageContainer = () => {
   }
 
   const handleRepoUpdate = (data: RepoUpdateData) => {
-    updateDescription({
-      body: {
-        description: data.description
-      }
-    })
-    updateBranch({
-      body: {
-        name: data.branch
-      }
-    })
-    updatePublicAccess({
-      body: {
-        is_public: data.access === AccessLevel.PUBLIC
-      }
-    })
+    updateDescription({ body: { description: data.description } })
+    updateBranch({ body: { name: data.branch } })
+    updatePublicAccess({ body: { is_public: data.access === AccessLevel.PUBLIC } })
   }
 
   const selectBranchOrTag = useCallback(
     (branchTagName: BranchSelectorListItem, type: BranchSelectorTab) => {
-      if (type === BranchSelectorTab.BRANCHES) {
-        const branch = branchList.find(branch => branch.name === branchTagName.name)
-        if (branch) {
-          setSelectedBranchTag(branch)
-          setSelectedRefType(type)
-        }
-      }
+      if (type !== BranchSelectorTab.BRANCHES) return
+
+      const branch = branchList.find(branch => branch.name === branchTagName.name)
+
+      if (!branch) return
+
+      setSelectedBranchTag(branch)
+      setSelectedRefType(type)
     },
     [spaceId, branchList]
   )
 
   useEffect(() => {
-    if (repoData) {
-      setRepoData(repoData)
-      setApiError(null)
-      const defaultBranch = branchList.find(branch => branch.default)
-      setSelectedBranchTag({
-        name: defaultBranch?.name || repoData?.default_branch || '',
-        sha: defaultBranch?.sha || '',
-        default: true
-      })
-    }
+    if (!repoData) return
+
+    setRepoData(repoData)
+    setApiError(null)
+    const defaultBranch = branchList.find(branch => branch.default)
+    setSelectedBranchTag({
+      name: defaultBranch?.name || repoData?.default_branch || '',
+      sha: defaultBranch?.sha || '',
+      default: true
+    })
   }, [repoData, setRepoData])
 
   useEffect(() => {
@@ -302,19 +284,16 @@ export const RepoSettingsGeneralPageContainer = () => {
   }, [rulesData, setRules])
 
   const handleUpdateSecuritySettings = (data: SecurityScanning) => {
-    updateSecuritySettings({
-      body: {
-        secret_scanning_enabled: data.secretScanning
-      }
-    })
+    updateSecuritySettings({ body: { secret_scanning_enabled: data.secretScanning } })
   }
 
   const handleRuleClick = (identifier: string) => {
     navigate(routes.toRepoBranchRules({ spaceId, repoId: repoName, identifier }))
   }
 
-  const handleDeleteRule = (ruleIdentifier: string) => {
-    deleteRule({ rule_identifier: ruleIdentifier })
+  const handleDeleteRule = (identifier: string) => {
+    deleteRule({ rule_identifier: identifier })
+    navigate(routes.toRepoBranchRules({ spaceId, repoId: repoName, identifier }))
   }
 
   const loadingStates = {
@@ -347,26 +326,29 @@ export const RepoSettingsGeneralPageContainer = () => {
       />
 
       <DeleteAlertDialog
-        open={isRulesAlertDeleteDialogOpen}
-        onClose={closeRulesAlertDeleteDialog}
-        deleteFn={handleDeleteRule}
-        error={apiError?.type === ErrorTypes.DELETE_RULE ? apiError : null}
-        type="rule"
-        identifier={alertDeleteParams}
-        isLoading={isDeletingRule}
+        open={isRuleAlertDeleteDialogOpen || isRepoAlertDeleteDialogOpen}
+        onClose={closeAlertDeleteDialog}
         useTranslationStore={useTranslationStore}
-      />
-
-      <DeleteAlertDialog
-        open={isRepoAlertDeleteDialogOpen}
-        onClose={closeRepoAlertDeleteDialog}
-        deleteFn={handleDeleteRepository}
-        error={apiError?.type === ErrorTypes.DELETE_REPO ? apiError : null}
-        type="repository"
-        identifier={repoRef}
-        isLoading={isDeletingRepo}
-        useTranslationStore={useTranslationStore}
-        withForm
+        {...wrapConditionalObjectElement(
+          {
+            identifier: alertDeleteParams,
+            deleteFn: handleDeleteRule,
+            isLoading: isDeletingRule,
+            error: apiError?.type === ErrorTypes.DELETE_RULE ? apiError : null,
+            type: 'rule'
+          },
+          isRuleAlertDeleteDialogOpen
+        )}
+        {...wrapConditionalObjectElement(
+          {
+            identifier: repoRef,
+            deleteFn: handleDeleteRepository,
+            isLoading: isDeletingRepo,
+            error: apiError?.type === ErrorTypes.DELETE_REPO ? apiError : null,
+            type: 'repository'
+          },
+          isRepoAlertDeleteDialogOpen
+        )}
       />
     </>
   )

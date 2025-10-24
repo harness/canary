@@ -1,10 +1,10 @@
 import { FC } from 'react'
 import { Link } from 'react-router-dom'
 
-import { Button, ListActions, PaginationComponent, SearchBox, Spacer, Text } from '@/components'
+import { Button, ListActions, Pagination, SearchBox, Spacer, Text } from '@/components'
 import { useDebounceSearch } from '@/hooks'
+import { SandboxLayout } from '@/views'
 
-import { SandboxLayout } from '../../index'
 import { ExecutionList } from './execution-list'
 import { IExecutionListPageProps } from './types'
 
@@ -84,7 +84,7 @@ const ExecutionListPage: FC<IExecutionListPageProps> = ({
           handleExecutePipeline={handleExecutePipeline}
         />
         <Spacer size={8} />
-        <PaginationComponent totalPages={totalPages} currentPage={page} goToPage={page => setPage(page)} t={t} />
+        <Pagination totalPages={totalPages} currentPage={page} goToPage={setPage} t={t} />
       </SandboxLayout.Content>
     </SandboxLayout.Main>
   )

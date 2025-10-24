@@ -14,6 +14,8 @@ export * from './details/pull-request-changes-page'
 export * from './details/components/changes/pull-request-changes-filter'
 
 //pull-request-conversation
+export * from './details/pull-request-conversation-page'
+
 export * from './components/pull-request-side-bar'
 export * from './details/components/conversation/pull-request-comment-box'
 export * from './details/components/conversation/pull-request-overview'

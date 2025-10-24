@@ -1,0 +1,43 @@
+---
+title: Caption
+description: Caption component documentation
+---
+
+The Caption component renders supplementary text below form inputs. It is used to provide additional context or hints for form fields.
+
+import { DocsPage } from "@/components/docs-page";
+import { Caption } from "@harnessio/ui/components";
+
+<DocsPage.ComponentExample
+  client:only
+  code={`<Caption>This is a caption</Caption>`}
+/>
+
+## Usage
+
+```typescript jsx
+import { Caption } from '@harnessio/ui/components'
+
+return (
+  <Caption>This is a caption</Caption>
+)
+```
+
+## API Reference
+
+<DocsPage.PropsTable
+  props={[
+    {
+      name: "children",
+      description: "Content to display",
+      required: true,
+      value: "ReactNode",
+    },
+    {
+      name: "className",
+      description: "Additional class names to apply to the caption",
+      required: false,
+      value: "string",
+    },
+  ]}
+/>

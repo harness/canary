@@ -6,18 +6,18 @@ import { cn } from '@utils/cn'
 import { cva, type VariantProps } from 'class-variance-authority'
 
 const buttonVariants = cva(
-  'inline-flex items-center justify-center whitespace-nowrap rounded text-14 font-medium transition-colors disabled:pointer-events-none disabled:cursor-not-allowed',
+  'inline-flex items-center justify-center whitespace-nowrap rounded text-14 font-medium transition-colors disabled:cursor-not-allowed',
   {
     variants: {
       variant: {
         default:
           'bg-background-5 text-foreground-6 hover:bg-background-10 disabled:bg-background-6 disabled:text-foreground-9',
         destructive:
-          'bg-button-background-danger-1 text-button-foreground-danger-1 hover:bg-button-background-danger-3',
+          'bg-button-background-danger-1 text-button-foreground-danger-1 hover:bg-button-background-danger-2',
         outline:
           'border border-borders-2 bg-transparent text-foreground-2 hover:border-borders-6 hover:text-foreground-8',
-        secondary: 'bg-secondary text-secondary-foreground shadow-sm hover:bg-secondary/80',
-        tertiary: 'bg-tertiary text-secondary-foreground shadow-sm hover:bg-tertiary/80',
+        secondary: 'bg-secondary text-secondary-foreground hover:bg-secondary/80',
+        tertiary: 'bg-tertiary text-secondary-foreground hover:bg-tertiary/80',
         ghost: 'hover:bg-background-12 hover:text-accent-foreground',
         link: 'text-primary underline-offset-4 hover:underline',
         link_accent: 'text-foreground-accent underline-offset-4 hover:underline',
@@ -32,6 +32,7 @@ const buttonVariants = cva(
         md: 'h-9 px-7',
         lg: 'h-10 px-8',
         icon: 'size-8',
+        xs_icon: 'size-6',
         sm_icon: 'size-7',
         xs_split: 'h-auto p-0 text-xs font-medium',
         md_split: 'h-8 text-14 font-medium',
@@ -44,8 +45,9 @@ const buttonVariants = cva(
       },
       theme: {
         default: '',
-        error: 'border-borders-danger/30 bg-background-danger text-error',
-        warning: 'border-borders-danger/30 bg-background-danger text-warning',
+        error: 'border-borders-danger/30 bg-button-background-danger-1 text-error hover:bg-button-background-danger-2',
+        warning:
+          'border-borders-danger/30 bg-button-background-danger-1 text-warning hover:bg-button-background-danger-2',
         success:
           'border-button-border-success-1 bg-button-background-success-1 text-button-foreground-success-1 hover:bg-button-background-success-2',
         muted: 'border-tertiary-background/20 bg-tertiary-background/10 text-tertiary-background',
@@ -72,7 +74,7 @@ const buttonVariants = cva(
   }
 )
 
-export interface ButtonProps extends ButtonHTMLAttributes<HTMLButtonElement>, VariantProps<typeof buttonVariants> {
+interface ButtonProps extends ButtonHTMLAttributes<HTMLButtonElement>, VariantProps<typeof buttonVariants> {
   asChild?: boolean
   loading?: boolean
   spinner?: ReactNode
@@ -167,4 +169,4 @@ const Button = forwardRef<HTMLButtonElement, ButtonProps>(
 )
 Button.displayName = 'Button'
 
-export { Button, buttonVariants }
+export { Button, buttonVariants, type ButtonProps }

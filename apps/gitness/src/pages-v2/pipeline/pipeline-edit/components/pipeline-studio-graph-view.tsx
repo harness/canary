@@ -129,7 +129,7 @@ export const PipelineStudioGraphView = (): React.ReactElement => {
     <div className="relative flex size-full" style={{ width: 'calc(100vw - 220px)' }}>
       <NodeContextProvider>
         <CanvasProvider>
-          <PipelineGraph data={data} nodes={nodes} config={{ edgeClassName: 'stroke-borders-2' }} />
+          <PipelineGraph data={data} nodes={nodes} />
           <CanvasControls />
           <CommonNodeContextMenu />
         </CanvasProvider>

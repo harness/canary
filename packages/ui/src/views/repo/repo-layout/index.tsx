@@ -1,7 +1,7 @@
 import { useMemo } from 'react'
 import { NavLink, Outlet, useLocation } from 'react-router-dom'
 
-import { Tabs, TabsList, TabsTrigger } from '@/components'
+import { Tabs } from '@/components'
 import { SandboxLayout, TranslationStore } from '@/views'
 
 export enum RepoTabsKeys {
@@ -32,31 +32,31 @@ export const RepoLayout = ({ useTranslationStore }: { useTranslationStore: () =>
   return (
     <>
       <SandboxLayout.SubHeader className="h-[45px] overflow-hidden">
-        <Tabs variant="navigation" value={activeTab}>
-          <TabsList>
+        <Tabs.Root variant="navigation" value={activeTab}>
+          <Tabs.List>
             <NavLink to={RepoTabsKeys.SUMMARY}>
-              <TabsTrigger value="summary">{t('views:repos.summary', 'Summary')}</TabsTrigger>
+              <Tabs.Trigger value="summary">{t('views:repos.summary', 'Summary')}</Tabs.Trigger>
             </NavLink>
             <NavLink to={RepoTabsKeys.CODE}>
-              <TabsTrigger value="code">{t('views:repos.files', 'Files')}</TabsTrigger>
+              <Tabs.Trigger value="code">{t('views:repos.files', 'Files')}</Tabs.Trigger>
             </NavLink>
             <NavLink to={RepoTabsKeys.PIPELINES}>
-              <TabsTrigger value="pipelines">{t('views:repos.pipelines', 'Pipelines')}</TabsTrigger>
+              <Tabs.Trigger value="pipelines">{t('views:repos.pipelines', 'Pipelines')}</Tabs.Trigger>
             </NavLink>
             <NavLink to={RepoTabsKeys.COMMITS}>
-              <TabsTrigger value="commits">{t('views:repos.commits', 'Commits')}</TabsTrigger>
+              <Tabs.Trigger value="commits">{t('views:repos.commits', 'Commits')}</Tabs.Trigger>
             </NavLink>
             <NavLink to={RepoTabsKeys.PULLS}>
-              <TabsTrigger value="pulls">{t('views:repos.pull-requests', 'Pull Requests')}</TabsTrigger>
+              <Tabs.Trigger value="pulls">{t('views:repos.pull-requests', 'Pull Requests')}</Tabs.Trigger>
             </NavLink>
             <NavLink to={RepoTabsKeys.BRANCHES}>
-              <TabsTrigger value="branches">{t('views:repos.branches', 'Branches')}</TabsTrigger>
+              <Tabs.Trigger value="branches">{t('views:repos.branches', 'Branches')}</Tabs.Trigger>
             </NavLink>
             <NavLink to={RepoTabsKeys.SETTINGS}>
-              <TabsTrigger value="settings">{t('views:repos.settings', 'Settings')}</TabsTrigger>
+              <Tabs.Trigger value="settings">{t('views:repos.settings', 'Settings')}</Tabs.Trigger>
             </NavLink>
-          </TabsList>
-        </Tabs>
+          </Tabs.List>
+        </Tabs.Root>
       </SandboxLayout.SubHeader>
       <Outlet />
     </>

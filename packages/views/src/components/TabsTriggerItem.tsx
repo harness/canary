@@ -1,4 +1,7 @@
-import { Badge, Icon, IconProps, TabsTrigger, Text } from '@harnessio/canary'
+import { FC } from 'react'
+
+import { Badge, Icon, IconProps, Text } from '@harnessio/canary'
+import { Tabs } from '@harnessio/ui/components'
 
 import { Layout } from './layout/layout'
 
@@ -9,9 +12,9 @@ interface TabTriggerItemProps {
   badgeCount?: number // Optional badge count
 }
 
-const TabTriggerItem: React.FC<TabTriggerItemProps> = ({ value, icon, label, badgeCount }) => {
+const TabTriggerItem: FC<TabTriggerItemProps> = ({ value, icon, label, badgeCount }) => {
   return (
-    <TabsTrigger value={value}>
+    <Tabs.Trigger value={value}>
       <Layout.Horizontal className="items-center">
         <div>
           <Icon size={16} name={icon as IconProps['name']} />
@@ -23,7 +26,7 @@ const TabTriggerItem: React.FC<TabTriggerItemProps> = ({ value, icon, label, bad
           </Badge>
         )}
       </Layout.Horizontal>
-    </TabsTrigger>
+    </Tabs.Trigger>
   )
 }
 

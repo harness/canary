@@ -19,13 +19,16 @@ import {
   useListTagsQuery,
   useRawDiffQuery
 } from '@harnessio/code-service-client'
+import { PrincipalType } from '@harnessio/ui/types'
 import {
   BranchSelectorListItem,
   BranchSelectorTab,
   CommitSelectorListItem,
   CompareFormFields,
+  HandleAddLabelType,
+  LabelAssignmentType,
+  LabelValueType,
   PRReviewer,
-  PRReviewUsers,
   PullReqReviewDecision,
   PullRequestComparePage
 } from '@harnessio/ui/views'
@@ -40,6 +43,7 @@ import { changesInfoAtom, DiffFileEntry } from '../../pages/pull-request/types/t
 import { changedFileId, DIFF2HTML_CONFIG, normalizeGitFilePath } from '../../pages/pull-request/utils'
 import { PathParams } from '../../RouteDefinitions'
 import { normalizeGitRef } from '../../utils/git-utils'
+import { useGetRepoLabelAndValuesData } from '../repo/labels/hooks/use-get-repo-label-and-values-data'
 import { useRepoBranchesStore } from '../repo/stores/repo-branches-store'
 import { useRepoCommitsStore } from '../repo/stores/repo-commits-store'
 import { transformBranchList } from '../repo/transform-utils/branch-transform'
@@ -72,8 +76,9 @@ export const CreatePullRequest = () => {
     description: string
   } | null>(null)
   const [reviewers, setReviewers] = useState<PRReviewer[]>([])
-  const [reviewUsers, setReviewUsers] = useState<PRReviewUsers[]>()
   const [diffs, setDiffs] = useState<DiffFileEntry[]>()
+  const [labels, setLabels] = useState<LabelAssignmentType[]>([])
+  const [searchLabel, setSearchLabel] = useState('')
   const commitSHA = '' // TODO: when you implement commit filter will need commitSHA
   const defaultCommitRange = compact(commitSHA?.split(/~1\.\.\.|\.\.\./g))
   const [
@@ -84,6 +89,7 @@ export const CreatePullRequest = () => {
   const sourceRef = useMemo(() => selectedSourceBranch.name, [selectedSourceBranch])
   const [cachedDiff, setCachedDiff] = useAtom(changesInfoAtom)
   const [mergeability, setMergeabilty] = useState<boolean>()
+  const [jumpToDiff, setJumpToDiff] = useState('')
   const diffApiPath = useMemo(
     () =>
       // show range of commits and user selected subrange
@@ -166,11 +172,11 @@ export const CreatePullRequest = () => {
     queryParams: { page: 1, limit: 100, type: 'user', query: searchReviewers }
   })
 
-  useEffect(() => {
-    if (principals?.length) {
-      setReviewUsers(principals?.map(user => ({ id: user.id, display_name: user.display_name, uid: user.uid })))
-    }
-  }, [principals])
+  const { labels: labelsList, values: labelsValues } = useGetRepoLabelAndValuesData({
+    query: searchLabel,
+    inherited: true,
+    limit: 100
+  })
 
   useEffect(
     function updateCacheWhenDiffDataArrives() {
@@ -250,7 +256,14 @@ export const CreatePullRequest = () => {
       target_branch: selectedTargetBranch.name || repoMetadata?.default_branch,
       source_branch: selectedSourceBranch.name,
       title: data.title,
-      reviewer_ids: reviewers.map(reviewer => reviewer.reviewer.id)
+      reviewer_ids: reviewers.map(reviewer => reviewer.reviewer.id),
+      labels: labels.map(label => {
+        return {
+          label_id: label.id,
+          value: label.assigned_value?.value || undefined,
+          value_id: label.assigned_value?.id || undefined
+        }
+      })
     }
 
     createPullRequestMutation.mutate(
@@ -482,6 +495,37 @@ export const CreatePullRequest = () => {
     setReviewers(newReviewers)
   }
 
+  const handleAddLabel = (labelToAdd: HandleAddLabelType) => {
+    const findLabel = labelsList.find(label => label.id === labelToAdd.label_id)
+    if (!findLabel) return
+    let labelValue: LabelValueType | undefined
+    if (labelToAdd.value_id && findLabel?.key) {
+      labelValue = labelsValues[findLabel.key].find(labelValue => labelToAdd.value_id === labelValue.id)
+    }
+    setLabels(prev => [
+      {
+        id: findLabel.id,
+        scope: findLabel.scope,
+        color: findLabel.color,
+        key: findLabel.key,
+        type: findLabel.type,
+        assigned_value: labelValue
+          ? {
+              color: labelValue?.color,
+              id: labelValue?.id,
+              value: labelValue?.value
+            }
+          : undefined
+      },
+      ...prev
+    ])
+  }
+
+  const handleDeleteLabel = (id: number) => {
+    const newLabels = labels.filter(label => label.id !== id)
+    setLabels(newLabels)
+  }
+
   const renderContent = () => {
     return (
       <PullRequestComparePage
@@ -513,19 +557,21 @@ export const CreatePullRequest = () => {
         sourceBranch={selectedSourceBranch}
         prBranchCombinationExists={prBranchCombinationExists}
         diffData={
-          diffs?.map(item => ({
-            text: item.filePath,
-            data: item.raw,
-            title: item.filePath,
-            lang: item.filePath.split('.')?.[1],
-            addedLines: item.addedLines,
-            removedLines: item.deletedLines,
-            isBinary: item.isBinary,
-            deleted: item.isDeleted,
-            unchangedPercentage: item.unchangedPercentage,
-            blocks: item.blocks,
-            filePath: item.filePath
-          })) || []
+          diffStats?.files_changed || 0
+            ? diffs?.map(item => ({
+                text: item.filePath,
+                data: item.raw,
+                title: item.filePath,
+                lang: item.filePath.split('.')?.[1],
+                addedLines: item.addedLines,
+                removedLines: item.deletedLines,
+                isBinary: item.isBinary,
+                deleted: item.isDeleted,
+                unchangedPercentage: item.unchangedPercentage,
+                blocks: item.blocks,
+                filePath: item.filePath
+              })) || []
+            : []
         }
         diffStats={
           diffStats
@@ -541,13 +587,22 @@ export const CreatePullRequest = () => {
         setSearchSourceQuery={setSourceQuery}
         searchTargetQuery={targetQuery}
         setSearchTargetQuery={setTargetQuery}
-        usersList={reviewUsers}
+        usersList={principals as PrincipalType[]}
         searchReviewersQuery={searchReviewers}
         setSearchReviewersQuery={setSearchReviewers}
         reviewers={reviewers}
         handleAddReviewer={handleAddReviewer}
         handleDeleteReviewer={handleDeleteReviewer}
         isFetchingCommits={isFetchingCommits}
+        jumpToDiff={jumpToDiff}
+        setJumpToDiff={setJumpToDiff}
+        labelsList={labelsList}
+        labelsValues={labelsValues}
+        PRLabels={labels}
+        addLabel={handleAddLabel}
+        removeLabel={handleDeleteLabel}
+        searchLabelQuery={searchLabel}
+        setSearchLabelQuery={setSearchLabel}
       />
     )
   }

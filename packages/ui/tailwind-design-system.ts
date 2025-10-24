@@ -473,6 +473,7 @@ export default {
       },
 
       fontSize: {
+        // TODO: Remove old classes once refactoring is done
         0: 'var(--cn-font-size-0)',
         1: 'var(--cn-font-size-1)',
         2: 'var(--cn-font-size-2)',
@@ -489,6 +490,7 @@ export default {
         13: 'var(--cn-font-size-13)',
         half: 'var(--cn-font-size-half)',
         min: 'var(--cn-font-size-min)',
+        // new classes
         'cn-size-0': 'var(--cn-font-size-0)',
         'cn-size-1': 'var(--cn-font-size-1)',
         'cn-size-2': 'var(--cn-font-size-2)',

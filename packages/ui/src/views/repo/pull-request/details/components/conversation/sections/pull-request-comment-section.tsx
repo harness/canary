@@ -31,7 +31,9 @@ const PullRequestCommentSection = ({ commentsInfo, handleAction }: PullRequestMe
           </Layout.Grid>
 
           {commentsInfo.status === 'failed' && !!handleAction && (
-            <Text className="group-hover:text-1">{t('views:repo.pullRequest.commentSection.view', 'View')}</Text>
+            <Text className="group-hover:text-cn-size-1">
+              {t('views:repo.pullRequest.commentSection.view', 'View')}
+            </Text>
           )}
         </Layout.Horizontal>
       </Accordion.Trigger>

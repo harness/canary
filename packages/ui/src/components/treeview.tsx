@@ -176,7 +176,7 @@ const Folder = forwardRef<HTMLDivElement, FolderProps & React.HTMLAttributes<HTM
       >
         <AccordionPrimitive.Trigger
           className={cn(
-            `flex w-full gap-cn-3xs rounded-3 text-2 px-cn-lg`,
+            `flex w-full gap-cn-3xs rounded-3 text-cn-size-2 px-cn-lg`,
             className,
             {
               'rounded-3': isSelect && isSelectable,
@@ -205,7 +205,7 @@ const Folder = forwardRef<HTMLDivElement, FolderProps & React.HTMLAttributes<HTM
             <span className="text-cn-2 flex-none">{duration ?? '--'}</span>
           </div>
         </AccordionPrimitive.Trigger>
-        <AccordionPrimitive.Content className="data-[state=closed]:animate-accordion-up data-[state=open]:animate-accordion-down px-cn-lg relative h-full overflow-visible text-2">
+        <AccordionPrimitive.Content className="data-[state=closed]:animate-accordion-up data-[state=open]:animate-accordion-down px-cn-lg relative h-full overflow-visible text-cn-size-2">
           <AccordionPrimitive.Root
             dir={direction}
             type="multiple"
@@ -265,7 +265,7 @@ const File = forwardRef<
           disabled={!isSelectable}
           aria-label="File"
           className={cn(
-            'flex relative w-full cursor-pointer items-center gap-cn-3xs rounded-3 text-2 duration-200 ease-in-out rtl:pl-cn-3xs rtl:pr-0',
+            'flex relative w-full cursor-pointer items-center gap-cn-3xs rounded-3 text-cn-size-2 duration-200 ease-in-out rtl:pl-cn-3xs rtl:pr-0',
             {
               ['after:absolute after:bg-cn-hover after:-inset-x-cn-3xs after:-inset-y-cn-2xs after:-z-10 after:rounded']:
                 isSelected

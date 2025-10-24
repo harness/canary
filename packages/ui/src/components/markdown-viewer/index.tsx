@@ -324,9 +324,9 @@ const MarkdownViewerLocal = ({
                       <div className="relative flex w-full bg-transparent">
                         <div className="bg-cn-2 flex-none select-none text-right">
                           {filteredLines.map((_, i) => (
-                            <span key={i} className="text-cn-2 pr-cn-sm block pt-[0.5px] text-2">
+                            <Text as="span" key={i} className="pr-cn-sm block pt-[0.5px]">
                               {i + 1}
-                            </span>
+                            </Text>
                           ))}
                         </div>
                         <div className="relative flex-1 overflow-hidden bg-transparent">{children}</div>

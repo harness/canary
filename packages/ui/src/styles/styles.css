@@ -112,7 +112,7 @@
 
 /* Form utilities */
 .text-form-error {
-  @apply text-cn-danger text-2 mt-cn-xs font-light;
+  @apply text-cn-danger text-cn-size-2 mt-cn-xs font-light;
 }
 
 .cn-graph-bg-size {

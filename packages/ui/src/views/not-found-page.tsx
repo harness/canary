@@ -19,7 +19,7 @@ export const NotFoundPage: FC<NotFoundPageProps> = ({ pageTypeText, errorMessage
   return (
     <SandboxLayout.Main className="peer flex" fullWidth>
       <div className="m-auto flex max-w-[332px] flex-col items-center text-center">
-        <span className="mb-cn-lg text-12 text-cn-3 font-bold">404</span>
+        <span className="mb-cn-lg text-cn-size-12 text-cn-3 font-bold">404</span>
         <Text as="span" variant="heading-section" color="foreground-1" className="mb-cn-xs">
           {t('views:notFound.title', 'Something went wrong…')}
         </Text>

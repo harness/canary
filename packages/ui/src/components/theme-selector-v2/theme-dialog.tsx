@@ -113,7 +113,9 @@ const ThemeDialog: FC<ThemeDialogProps> = ({
                         aria-hidden
                       />
                     </div>
-                    <span className="text-2 text-cn-1 leading-tight">{key}</span>
+                    <Text as="span" color="foreground-1">
+                      {key}
+                    </Text>
                   </button>
                 )
               })}

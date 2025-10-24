@@ -361,7 +361,7 @@ const SidebarItemTrigger = forwardRef<HTMLButtonElement | HTMLAnchorElement, Sid
 
         {withSubmenu && (
           <button className="cn-sidebar-item-action-button" onClick={toggleSubmenu}>
-            <IconV2 name={submenuOpen ? 'nav-arrow-down' : 'nav-arrow-right'} size="xs" />
+            <IconV2 name={submenuOpen ? 'nav-arrow-down' : 'nav-arrow-right'} size="sm" />
           </button>
         )}
       </div>

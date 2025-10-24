@@ -9,7 +9,6 @@ import {
   CommitSuggestion,
   CreateCommentPullReqRequest,
   HandleUploadType,
-  // isInViewport,
   PrincipalPropsType,
   PrincipalsMentionMap,
   PullRequestCommentBox,
@@ -17,11 +16,9 @@ import {
 } from '@/views'
 import { DiffFile, DiffModeEnum, DiffViewProps, SplitSide } from '@git-diff-view/react'
 import { useCustomEventListener } from '@hooks/use-event-listener'
-// import { useMemoryCleanup } from '@hooks/use-memory-cleanup'
 import { useResizeObserver } from '@hooks/use-resize-observer'
 import { cn } from '@utils/cn'
 import { getInitials } from '@utils/stringUtils'
-// import { createRequestAnimationFrameTaskPool } from '@utils/task'
 import { DiffBlock } from 'diff2html/lib/types'
 import { debounce, get } from 'lodash-es'
 import { OverlayScrollbars } from 'overlayscrollbars'
@@ -36,7 +33,6 @@ import { replaceMentionIdWithEmail } from '../details/components/conversation/ut
 import { ExpandedCommentsContext, useExpandedCommentsContext } from '../details/context/pull-request-comments-context'
 import { useDiffHighlighter } from '../hooks/useDiffHighlighter'
 import { quoteTransform } from '../utils'
-// import { DiffViewerSubstitute } from './diff-viewer-substitute'
 import { ExtendedDiffView } from './extended-diff-view/extended-diff-view'
 import { ExtendedDiffViewProps, LinesRange } from './extended-diff-view/extended-diff-view-types'
 
@@ -114,7 +110,6 @@ const PullRequestDiffViewer = ({
   filenameToLanguage,
   toggleConversationStatus,
   handleUpload,
-  // collapseDiff,
   principalProps,
   layout = 'default'
 }: PullRequestDiffviewerProps) => {
@@ -141,21 +136,6 @@ const PullRequestDiffViewer = ({
       }
     }, [])
   )
-
-  // const cleanup = useCallback(() => {
-  //   // clean up diff instance when not visible
-  //   if (diffFileInstance && diffInstanceRef?.current && !isInViewport(diffInstanceRef?.current, 2000)) {
-  //     collapseDiff?.()
-  //   }
-  // }, [diffFileInstance, collapseDiff, diffInstanceRef])
-
-  // // Use memory cleanup hook
-  // useMemoryCleanup(cleanup)
-
-  // // Cleanup on unmount
-  // useEffect(() => {
-  //   return cleanup
-  // }, [])
 
   const [quoteReplies, setQuoteReplies] = useState<Record<number, { text: string }>>({})
 

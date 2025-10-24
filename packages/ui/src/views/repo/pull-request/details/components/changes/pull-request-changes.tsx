@@ -8,7 +8,6 @@ import {
   FileViewedState,
   getFileViewedState,
   HandleUploadType,
-  // InViewDiffRenderer,
   jumpToFile,
   PrincipalPropsType,
   TypesPullReq,
@@ -20,13 +19,7 @@ import {
   PR_ACCORDION_STICKY_TOP,
   PullRequestAccordion
 } from '@views/repo/pull-request/components/pull-request-accordian'
-import {
-  // calculateDetectionMargin,
-  // IN_VIEWPORT_DETECTION_MARGIN,
-  innerBlockName,
-  outterBlockName
-  // shouldRetainDiffChildren
-} from '@views/repo/pull-request/utils'
+import { innerBlockName, outterBlockName } from '@views/repo/pull-request/utils'
 
 interface DataProps {
   data: HeaderProps[]
@@ -116,7 +109,7 @@ function PullRequestChangesInternal({
   const scrollTimeoutRef = useRef<NodeJS.Timeout | null>(null)
   const [hasInitializedOpenItems, setHasInitializedOpenItems] = useState(false)
 
-  // Scroll position cache scoped to this PR
+  // Scroll position cache scoped to current PR
   const diffScrollCacheRef = useRef(new Map<string, number>())
 
   // Infinite scroll state
@@ -151,12 +144,11 @@ function PullRequestChangesInternal({
                   diffBlocks,
                   undefined,
                   diffsContainerRef,
-                  // Load more diffs callback for infinite scroll
                   (targetCount: number) => {
                     setVisibleFileCount(Math.max(targetCount, visibleFileCount))
                   },
-                  openItems, // Pass current open/collapsed state for height estimation
-                  diffScrollCacheRef.current // Pass PR-scoped scroll cache
+                  openItems,
+                  diffScrollCacheRef.current
                 )
                 scrollTimeoutRef.current = null
               }, delay)
@@ -235,12 +227,11 @@ function PullRequestChangesInternal({
           diffBlocks,
           undefined,
           diffsContainerRef,
-          // Load more diffs callback for infinite scroll
           (targetCount: number) => {
             setVisibleFileCount(Math.max(targetCount, visibleFileCount))
           },
-          openItems, // Pass current open/collapsed state for height estimation
-          diffScrollCacheRef.current // Pass PR-scoped scroll cache
+          openItems,
+          diffScrollCacheRef.current
         )
         setInitiatedJumpToDiff(true)
       }
@@ -255,12 +246,11 @@ function PullRequestChangesInternal({
           diffBlocks,
           commentId,
           diffsContainerRef,
-          // Load more diffs callback for infinite scroll
           (targetCount: number) => {
             setVisibleFileCount(Math.max(targetCount, visibleFileCount))
           },
-          openItems, // Pass current open/collapsed state for height estimation
-          diffScrollCacheRef.current // Pass PR-scoped scroll cache
+          openItems,
+          diffScrollCacheRef.current
         )
         setInitiatedJumpToDiff(true)
       }
@@ -297,20 +287,7 @@ function PullRequestChangesInternal({
     <div className="flex flex-col" ref={diffsContainerRef}>
       {diffBlocks?.map((diffsBlock, blockIndex) => {
         return (
-          // <InViewDiffRenderer
-          //   key={blockIndex}
-          //   blockName={outterBlockName(blockIndex)}
-          //   root={document as unknown as RefObject<Element>}
-          //   shouldRetainChildren={shouldRetainDiffChildren}
-          //   detectionMargin={calculateDetectionMargin(data?.length)}
-          // >
-          <div
-            key={blockIndex}
-            data-block={outterBlockName(blockIndex)}
-            // data-rendered={showChildren}
-            // ref={setContainerRef}
-            // className={cn('diffViewBlock', { hiddenDiff: !showChildren })}
-          >
+          <div key={blockIndex} data-block={outterBlockName(blockIndex)}>
             {diffsBlock.slice(0, visibleFileCount).map((item, index) => {
               // Only render files up to visibleFileCount for infinite scroll
               const globalIndex = diffBlocks.flat().indexOf(item)
@@ -333,13 +310,6 @@ function PullRequestChangesInternal({
 
               return (
                 <div className="pt-cn-xs" key={item.filePath}>
-                  {/* <InViewDiffRenderer
-                    key={item.filePath}
-                    blockName={innerBlockName(item.filePath)}
-                    root={diffsContainerRef}
-                    shouldRetainChildren={shouldRetainDiffChildren}
-                    detectionMargin={IN_VIEWPORT_DETECTION_MARGIN}
-                  > */}
                   <div key={item.filePath} data-block={innerBlockName(item.filePath)}>
                     <PullRequestAccordion
                       handleUpload={handleUpload}

@@ -34,9 +34,7 @@ export const Tooltip = forwardRef<HTMLDivElement, TooltipProps>(
     const { portalContainer } = usePortal()
     return (
       <TooltipPrimitive.Root delayDuration={delay} open={open}>
-        <TooltipPrimitive.Trigger asChild className="test">
-          {children}
-        </TooltipPrimitive.Trigger>
+        <TooltipPrimitive.Trigger asChild>{children}</TooltipPrimitive.Trigger>
         <TooltipPrimitive.Portal container={portalContainer}>
           <TooltipPrimitive.Content
             ref={ref}
@@ -70,7 +68,7 @@ type WithTooltipProp = {
 
 /**
  * HOC for adding Tooltip support to any component.
- * !!! for the HOC to work correctly, the component must use forwardRef.
+ * !!! for the HOC to work correctly, the component must use forwardRef and spread props.
  */
 export function withTooltip<P>(
   Component: ComponentType<P>

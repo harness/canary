@@ -64,7 +64,7 @@ interface IconFallbackPropsV2 extends BaseIconPropsV2 {
 export type IconPropsV2 = IconDefaultPropsV2 | IconFallbackPropsV2
 
 const IconV2 = forwardRef<SVGSVGElement, IconPropsV2>(
-  ({ name, size = 'sm', className, skipSize = false, fallback, color = 'inherit' }, ref) => {
+  ({ name, size = 'sm', className, skipSize = false, fallback, color = 'inherit', ...props }, ref) => {
     const Component = name ? IconNameMapV2[name] : undefined
 
     const sizeClasses = skipSize ? '' : iconVariants({ size })
@@ -83,7 +83,7 @@ const IconV2 = forwardRef<SVGSVGElement, IconPropsV2>(
       return null
     }
 
-    return <Component className={cn(sizeClasses, colorClasses, className)} ref={ref} />
+    return <Component className={cn(sizeClasses, colorClasses, className)} ref={ref} {...props} />
   }
 )
 

@@ -434,14 +434,15 @@ interface DropdownMenuAvatarItemProps extends Omit<DropdownMenuItemProps, 'prefi
   src?: AvatarProps['src']
   name?: AvatarProps['name']
   rounded?: AvatarProps['rounded']
+  isGroup?: AvatarProps['isGroup']
 }
 
 const DropdownMenuAvatarItem = forwardRef<ElementRef<typeof DropdownMenuPrimitive.Item>, DropdownMenuAvatarItemProps>(
-  ({ src, rounded = true, name, ...props }, ref) => (
+  ({ src, rounded = true, name, isGroup, ...props }, ref) => (
     <DropdownMenuItem
       ref={ref}
       {...props}
-      prefix={<Avatar size={props.description ? 'lg' : 'sm'} src={src} rounded={rounded} name={name} />}
+      prefix={<Avatar size={props.description ? 'lg' : 'sm'} {...{ src, rounded, name, isGroup }} />}
     />
   )
 )

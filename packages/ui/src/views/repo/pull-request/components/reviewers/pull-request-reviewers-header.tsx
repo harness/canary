@@ -11,7 +11,6 @@ import {
 } from '@/components'
 import { useTranslation } from '@/context'
 import { EnumBypassListType, NormalizedPrincipal, PRReviewer } from '@/views'
-import { getIcon } from '@views/repo/utils'
 import { debounce } from 'lodash-es'
 
 import { ReviewerInfo } from './reviewer-info'
@@ -102,12 +101,10 @@ const ReviewersHeader = ({
             }
 
             return type === EnumBypassListType.USER_GROUP ? (
-              <DropdownMenu.IconItem
+              <DropdownMenu.AvatarItem
                 {...commonProps}
-                icon={getIcon(type)}
-                iconSize={'lg'}
-                iconClassName={'ml-cn-4xs'}
                 onClick={() => (isSelected ? handleUserGroupReviewerDelete?.(id) : addUserGroupReviewer?.(id))}
+                isGroup
               />
             ) : (
               <DropdownMenu.AvatarItem

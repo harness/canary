@@ -517,6 +517,7 @@ export type ButtonEnum = 'success' | 'muted' | 'default' | 'error' | 'warning' |
 export type EnumPullReqReviewDecisionExtended = EnumPullReqReviewDecision | 'outdated'
 export interface ReviewerItemProps {
   reviewer?: PRReviewer['reviewer']
+  groupUsers?: PRReviewer['reviewer'][]
   reviewDecision?: EnumPullReqReviewDecision
   sha?: string
   sourceSHA?: string

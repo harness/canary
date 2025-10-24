@@ -115,14 +115,17 @@ import CollapseCode from './icons/collapse-code.svg'
 import CollapseSidebar from './icons/collapse-sidebar.svg'
 import Collapse from './icons/collapse.svg'
 import Community from './icons/community.svg'
+import ConnectorsSolid from './icons/connectors-solid.svg'
 import Connectors from './icons/connectors.svg'
 import Cookie from './icons/cookie.svg'
 import Copy from './icons/copy.svg'
 import CpuWarning from './icons/cpu-warning.svg'
 import Cpu from './icons/cpu.svg'
+import Cron from './icons/cron.svg'
 import Crop from './icons/crop.svg'
 import CursorPointer from './icons/cursor-pointer.svg'
 import CustomSecretManager from './icons/custom-secret-manager.svg'
+import CustomTrigger from './icons/custom-trigger.svg'
 import CustomizeNavigation from './icons/customize-navigation.svg'
 import DashboardSolid from './icons/dashboard-solid.svg'
 import DashboardSpeed from './icons/dashboard-speed.svg'
@@ -142,7 +145,9 @@ import DatabaseXmark from './icons/database-xmark.svg'
 import Database from './icons/database.svg'
 import DatabasesSolid from './icons/databases-solid.svg'
 import Databases from './icons/databases.svg'
+import DefaultSecretManager from './icons/default-secret-manager.svg'
 import Delegates from './icons/delegates.svg'
+import Deploy from './icons/deploy.svg'
 import DeploymentsSolid from './icons/deployments-solid.svg'
 import Deployments from './icons/deployments.svg'
 import Developer from './icons/developer.svg'
@@ -158,6 +163,7 @@ import DragHandGesture from './icons/drag-hand-gesture.svg'
 import Drag from './icons/drag.svg'
 import EditPencil from './icons/edit-pencil.svg'
 import Edit from './icons/edit.svg'
+import EmptyCircle from './icons/empty-circle.svg'
 import EmptyPage from './icons/empty-page.svg'
 import EnergyUsageWindow from './icons/energy-usage-window.svg'
 import EngineeringInsightsSolid from './icons/engineering-insights-solid.svg'
@@ -216,6 +222,7 @@ import HalfMoon from './icons/half-moon.svg'
 import HarnessPlugins from './icons/harness-plugins.svg'
 import Header from './icons/header.svg'
 import HeadsetHelp from './icons/headset-help.svg'
+import HealthShieldSolid from './icons/health-shield-solid.svg'
 import HealthShield from './icons/health-shield.svg'
 import HeartSolid from './icons/heart-solid.svg'
 import Heart from './icons/heart.svg'
@@ -236,6 +243,7 @@ import KeyBack from './icons/key-back.svg'
 import Key from './icons/key.svg'
 import LabelSolid from './icons/label-solid.svg'
 import Label from './icons/label.svg'
+import Lamp from './icons/lamp.svg'
 import LaptopDevMode from './icons/laptop-dev-mode.svg'
 import LineSpace from './icons/line-space.svg'
 import ListSelect from './icons/list-select.svg'
@@ -303,6 +311,7 @@ import PinSlashSolid from './icons/pin-slash-solid.svg'
 import PinSlash from './icons/pin-slash.svg'
 import PinSolid from './icons/pin-solid.svg'
 import Pin from './icons/pin.svg'
+import PipelineExecutions from './icons/pipeline-executions.svg'
 import PipelineSolid from './icons/pipeline-solid.svg'
 import Pipeline from './icons/pipeline.svg'
 import PlaySolid from './icons/play-solid.svg'
@@ -559,11 +568,13 @@ export const IconNameMapV2 = {
   'collapse-sidebar': CollapseSidebar,
   collapse: Collapse,
   community: Community,
+  'connectors-solid': ConnectorsSolid,
   connectors: Connectors,
   cookie: Cookie,
   copy: Copy,
   'cpu-warning': CpuWarning,
   cpu: Cpu,
+  cron: Cron,
   crop: Crop,
   'cursor-pointer': CursorPointer,
   'custom-secret-manager': CustomSecretManager,
@@ -586,7 +597,9 @@ export const IconNameMapV2 = {
   database: Database,
   'databases-solid': DatabasesSolid,
   databases: Databases,
+  'default-secret-manager': DefaultSecretManager,
   delegates: Delegates,
+  deploy: Deploy,
   'deployments-solid': DeploymentsSolid,
   deployments: Deployments,
   developer: Developer,
@@ -602,6 +615,7 @@ export const IconNameMapV2 = {
   drag: Drag,
   'edit-pencil': EditPencil,
   edit: Edit,
+  'empty-circle': EmptyCircle,
   'empty-page': EmptyPage,
   'energy-usage-window': EnergyUsageWindow,
   'engineering-insights-solid': EngineeringInsightsSolid,
@@ -660,6 +674,7 @@ export const IconNameMapV2 = {
   'harness-plugins': HarnessPlugins,
   header: Header,
   'headset-help': HeadsetHelp,
+  'health-shield-solid': HealthShieldSolid,
   'health-shield': HealthShield,
   'heart-solid': HeartSolid,
   heart: Heart,
@@ -680,6 +695,7 @@ export const IconNameMapV2 = {
   key: Key,
   'label-solid': LabelSolid,
   label: Label,
+  lamp: Lamp,
   'laptop-dev-mode': LaptopDevMode,
   'line-space': LineSpace,
   'list-select': ListSelect,
@@ -747,6 +763,7 @@ export const IconNameMapV2 = {
   'pin-slash': PinSlash,
   'pin-solid': PinSolid,
   pin: Pin,
+  'pipeline-executions': PipelineExecutions,
   'pipeline-solid': PipelineSolid,
   pipeline: Pipeline,
   'play-solid': PlaySolid,
@@ -835,6 +852,7 @@ export const IconNameMapV2 = {
   'sun-light': SunLight,
   'supply-chain-solid': SupplyChainSolid,
   'supply-chain': SupplyChain,
+  'custom-trigger': CustomTrigger,
   'system-restart': SystemRestart,
   'table-rows': TableRows,
   'tag-solid': TagSolid,

@@ -14,10 +14,15 @@ import Bitbucket from './logos/bitbucket.svg'
 import BuildKite from './logos/build-kite.svg'
 import Codecov from './logos/codecov.svg'
 import Confluence from './logos/confluence.svg'
+import Connector from './logos/connector.svg'
+import CustomSecretManager from './logos/custom-secret-manager.svg'
 import DataDog from './logos/data-dog.svg'
+import DefaultSecretManager from './logos/default-secret-manager.svg'
 import Docker from './logos/docker.svg'
 import Dynatrace from './logos/dynatrace.svg'
 import Elastic from './logos/elastic.svg'
+import ErrorTracking from './logos/error-tracking.svg'
+import EventRelay from './logos/event-relay.svg'
 import Fairwinds from './logos/fairwinds.svg'
 import Git from './logos/git.svg'
 import Gitea from './logos/gitea.svg'
@@ -48,11 +53,12 @@ import Npm from './logos/npm.svg'
 import Oci from './logos/oci.svg'
 import OpenShift from './logos/open-shift.svg'
 import OpenTofu from './logos/open-tofu.svg'
-import Opsgenie from './logos/opsgenie.svg'
+import OpsGenie from './logos/ops-genie.svg'
 import Pagerduty from './logos/pagerduty.svg'
 import Prometheus from './logos/prometheus.svg'
 import Python from './logos/python.svg'
 import Rancher from './logos/rancher.svg'
+import Salesforce from './logos/salesforce.svg'
 import Servicenow from './logos/servicenow.svg'
 import Sfx from './logos/sfx.svg'
 import Slack from './logos/slack.svg'
@@ -78,10 +84,15 @@ export const LogoNameMapV2 = {
   'build-kite': BuildKite,
   codecov: Codecov,
   confluence: Confluence,
+  connector: Connector,
+  'custom-secret-manager': CustomSecretManager,
   'data-dog': DataDog,
+  'default-secret-manager': DefaultSecretManager,
   docker: Docker,
   dynatrace: Dynatrace,
   elastic: Elastic,
+  'error-tracking': ErrorTracking,
+  'event-relay': EventRelay,
   fairwinds: Fairwinds,
   git: Git,
   gitea: Gitea,
@@ -112,11 +123,12 @@ export const LogoNameMapV2 = {
   oci: Oci,
   'open-shift': OpenShift,
   'open-tofu': OpenTofu,
-  opsgenie: Opsgenie,
+  'ops-genie': OpsGenie,
   pagerduty: Pagerduty,
   prometheus: Prometheus,
   python: Python,
   rancher: Rancher,
+  salesforce: Salesforce,
   servicenow: Servicenow,
   sfx: Sfx,
   slack: Slack,

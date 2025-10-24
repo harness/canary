@@ -526,8 +526,7 @@
     "createSecret": "Create new secret.",
     "noDelegates": "No delegates yet",
     "noDelegatesDescription": "There are no delegates in this project yet.",
-    "noDelegatesWithTagsDescription": "No Delegates available with the selected tags.",
-    "noDelegatesWithTags": "No Delegates available with the selected tags. Partial matches are listed below.",
+    "noDelegatesWithTags": "No eligible Delegates found. Install a new Delegate or continue to save.",
     "clearTags": "Clear tags",
     "noActivities": "No activities yet",
     "noActivitiesDescription": "There are no activities yet. ",
@@ -1139,7 +1138,7 @@
     "useDelegateTags": "Use delegate with following tags",
     "enterTags": "Enter tags",
     "testDelegate": "Test Delegate connectivity",
-    "delegateMatches": "Matches: ",
+    "delegateMatches": "Matches: {{count}} of {{length}}",
     "connectDelegates": "Connect ",
     "noDelegatesInstalled": "Haven't installed a delegate yet?",
     "installDelegate": "Install delegate"

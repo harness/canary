@@ -64,7 +64,11 @@ export function ResetPasswordDialog({ handleUpdatePassword, open, onClose }: Res
             />
           )}
 
-          {updateUserError && <span className="text-2 text-cn-danger">{updateUserError}</span>}
+          {updateUserError && (
+            <Text as="span" color="danger">
+              {updateUserError}
+            </Text>
+          )}
         </Dialog.Body>
 
         <Dialog.Footer>

@@ -167,7 +167,7 @@ export const PullRequestCommentTextarea = forwardRef<HTMLTextAreaElement, PullRe
       }
 
       if (principals === null || (Array.isArray(principals) && principals.length === 0)) {
-        return <Command.Empty className="min-w-max p-cn-xs text-sm">User not found</Command.Empty>
+        return <Command.Empty className="min-w-max p-cn-xs">User not found</Command.Empty>
       }
 
       return (

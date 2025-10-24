@@ -12,7 +12,7 @@ const stateStyleMapper: Record<
 > = {
   processing: {
     progressBg: 'progress',
-    color: 'text-3'
+    color: 'text-cn-3'
   },
   completed: {
     progressBg: 'success',

@@ -1,6 +1,6 @@
 import { FC } from 'react'
 
-import { Button, IconV2 } from '@/components'
+import { Button, IconV2, Text } from '@/components'
 import { useTranslation } from '@/context'
 import { SandboxLayout } from '@/views'
 
@@ -19,11 +19,11 @@ export const NotFoundPage: FC<NotFoundPageProps> = ({ pageTypeText, errorMessage
   return (
     <SandboxLayout.Main className="peer flex" fullWidth>
       <div className="m-auto flex max-w-[332px] flex-col items-center text-center">
-        <span className="mb-cn-lg text-8xl font-bold text-cn-3">404</span>
-        <span className="mb-cn-xs text-2xl font-medium text-cn-1">
+        <span className="mb-cn-lg text-cn-size-12 text-cn-3 font-bold">404</span>
+        <Text as="span" variant="heading-section" color="foreground-1" className="mb-cn-xs">
           {t('views:notFound.title', 'Something went wrong…')}
-        </span>
-        <span className="mb-cn-xl text-sm text-cn-3">
+        </Text>
+        <Text as="span" color="foreground-3" className="mb-cn-xl">
           {pageTypeText
             ? t(
                 'views:notFound.descriptionWithType',
@@ -31,7 +31,7 @@ export const NotFoundPage: FC<NotFoundPageProps> = ({ pageTypeText, errorMessage
                 { type: pageTypeText }
               )
             : errorMessage || t('views:notFound.description', 'The requested page is not found.')}
-        </span>
+        </Text>
         <Button variant="outline" type="button" onClick={handleReload}>
           <IconV2 name="refresh" />
           {t('views:notFound.button', 'Reload Page')}

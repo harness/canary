@@ -208,7 +208,7 @@ export const PullRequestChangesFilter: React.FC<PullRequestChangesFilterProps> =
         </DropdownMenu.Root>
 
         <DropdownMenu.Root>
-          <DropdownMenu.Trigger className="text-2 group flex items-center gap-x-cn-2xs" asChild>
+          <DropdownMenu.Trigger className="text-cn-size-2 group flex items-center gap-x-cn-2xs" asChild>
             <Button size="sm" variant="transparent">
               {diffMode === DiffModeEnum.Split ? t('views:pullRequests.split') : t('views:pullRequests.unified')}
               <IconV2 name="nav-solid-arrow-down" size="2xs" />

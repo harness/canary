@@ -7,7 +7,7 @@ const customTwMerge = createTailwindMerge(getDefaultConfig, config =>
   mergeConfigs<'font-size' | 'box-shadow'>(config, {
     extend: {
       classGroups: {
-        'font-size': Object.keys(tailwindConfig?.theme?.extend?.fontSize || {}).map(key => `text-${key}`),
+        'font-size': Object.keys(tailwindConfig?.theme?.extend.fontSize || {}).map(key => `text-${key}`),
         'box-shadow': Object.keys(tailwindConfig?.theme?.boxShadow || {}).map(key => `shadow-${key}`)
       }
     }

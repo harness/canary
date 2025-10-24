@@ -149,7 +149,7 @@ export const ProfileSettingsTokenCreateDialog: FC<ProfileSettingsTokenCreateDial
                 />
 
                 {isValid && (
-                  <span className="text-2 text-cn-3">
+                  <Text as="span" color="foreground-3">
                     {watch('lifetime') === 'never' ? (
                       <span>{t('views:profileSettings.tokenExpiryNone', 'Token will never expire')}</span>
                     ) : (
@@ -158,7 +158,7 @@ export const ProfileSettingsTokenCreateDialog: FC<ProfileSettingsTokenCreateDial
                         {calculateExpirationDate(watch('lifetime'))}
                       </span>
                     )}
-                  </span>
+                  </Text>
                 )}
               </Layout.Flex>
             )}

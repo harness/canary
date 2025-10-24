@@ -35,7 +35,7 @@ const LanguageDialog: FC<LanguageDialogProps> = ({
       {!!children && <Dialog.Trigger>{children}</Dialog.Trigger>}
       <Dialog.Content>
         <Dialog.Header>
-          <Dialog.Title className="text-5 font-medium">Language</Dialog.Title>
+          <Dialog.Title className="text-cn-size-5 font-medium">Language</Dialog.Title>
         </Dialog.Header>
         <Dialog.Body>
           <CardSelect.Root

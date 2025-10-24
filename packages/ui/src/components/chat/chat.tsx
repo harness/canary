@@ -1,6 +1,6 @@
 import { ChangeEvent, FC, HTMLAttributes, KeyboardEvent, PropsWithChildren, ReactNode, RefObject } from 'react'
 
-import { Button, IconV2, Illustration, Input } from '@/components'
+import { Button, IconV2, Illustration, Input, Text } from '@/components'
 import { cn } from '@utils/cn'
 
 const Root: FC<PropsWithChildren<HTMLAttributes<HTMLElement>>> = ({ children }) => {
@@ -10,7 +10,7 @@ const Root: FC<PropsWithChildren<HTMLAttributes<HTMLElement>>> = ({ children }) 
 const Header: FC<{ onClose: () => void }> = ({ onClose }) => {
   return (
     <div className="bg-cn-1 px-cn-xl py-cn-md sticky top-0 flex items-center justify-between">
-      <p className="text-16 text-cn-1 font-medium">Harness AI</p>
+      <Text variant="heading-hero">Harness AI</Text>
       <Button size="sm" iconOnly variant="ghost" onClick={onClose} ignoreIconOnlyTooltip>
         <IconV2 name="xmark" />
         <span className="sr-only">Close</span>
@@ -57,7 +57,7 @@ const Message: FC<MessageProps> = ({ self, avatar, actions, children }) => {
         })}
       >
         <div
-          className={cn('text-2 text-cn-1 leading-relaxed', {
+          className={cn('text-cn-size-2 text-cn-1 leading-relaxed', {
             'px-cn-sm py-cn-xs bg-cn-gray-secondary rounded-[8px_8px_2px_8px]': self
           })}
         >
@@ -73,7 +73,7 @@ const CodeBlock: FC<PropsWithChildren<{ className?: string }>> = ({ children, cl
   return (
     <code
       className={cn(
-        'inline-block rounded-[3px] border border-cn-2 bg-cn-gray-secondary px-cn-2xs text-2 leading-[18px]',
+        'inline-block rounded-[3px] border border-cn-2 bg-cn-gray-secondary px-cn-2xs text-cn-size-2 leading-[18px]',
         className
       )}
     >
@@ -88,7 +88,7 @@ interface TypingProps {
 
 const Typing: FC<TypingProps> = ({ avatar }) => {
   return (
-    <div className="mt-cn-sm flex items-center gap-x-cn-sm">
+    <div className="mt-cn-sm gap-x-cn-sm flex items-center">
       {avatar || <Illustration size={16} name="chat-avatar" themeDependent />}
       <span className="bg-cn-3 size-2.5 rounded-full" aria-hidden />
     </div>
@@ -100,7 +100,11 @@ interface SeparatorProps {
 }
 
 const Separator: FC<SeparatorProps> = ({ title }) => {
-  return <div className="text-2 text-center font-medium opacity-50">{title}</div>
+  return (
+    <Text align="center" className="opacity-50">
+      {title}
+    </Text>
+  )
 }
 
 const emptyStateButtons = [
@@ -122,13 +126,16 @@ const EmptyState: FC = () => {
   return (
     <div className="gap-cn-lg mt-auto flex flex-col">
       <div>
-        <span className="text-5 text-cn-2 block font-semibold leading-none">Hello Steven,</span>
-        <span className="text-5 text-cn-1 mt-cn-3xs block font-semibold leading-none">how can I help?</span>
+        <Text variant="heading-subsection" color="foreground-2">
+          Hello Steven,
+        </Text>
+        <Text variant="heading-subsection" className="mt-cn-3xs">
+          {' '}
+          how can I help?
+        </Text>
       </div>
       <div>
-        <span className="text-2 text-cn-2 leading-relaxed">
-          Here are some suggestions to enhance your CI/CD pipeline:
-        </span>
+        <Text as="span">Here are some suggestions to enhance your CI/CD pipeline:</Text>
         <ul className="mt-cn-sm gap-y-cn-2xs flex flex-col">
           {emptyStateButtons.map(({ text }, index) => (
             <li key={index}>

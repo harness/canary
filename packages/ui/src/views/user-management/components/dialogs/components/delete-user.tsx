@@ -1,4 +1,4 @@
-import { Button, ButtonLayout, Dialog } from '@/components'
+import { Button, ButtonLayout, Dialog, Text } from '@/components'
 import { useTranslation } from '@/context'
 import { useStates } from '@/views/user-management/providers/state-provider'
 import { useUserManagementStore } from '@/views/user-management/providers/store-provider'
@@ -46,7 +46,13 @@ export function DeleteUserDialog({ onClose, handleDeleteUser, open }: DeleteUser
           </Dialog.Description>
         </Dialog.Header>
 
-        <Dialog.Body>{deleteUserError && <span className="text-2 text-cn-danger">{deleteUserError}</span>}</Dialog.Body>
+        <Dialog.Body>
+          {deleteUserError && (
+            <Text as="span" color="danger">
+              {deleteUserError}
+            </Text>
+          )}
+        </Dialog.Body>
 
         <Dialog.Footer>
           <ButtonLayout>

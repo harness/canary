@@ -9,7 +9,7 @@ const EntityFormLayout = {
   },
 
   Title: function Title({ children, className }: { children: ReactNode; className?: string }) {
-    return <h2 className={cn('text-base leading-none text-cn-1 font-medium', className)}>{children}</h2>
+    return <h2 className={cn('text-cn-size-3 leading-none text-cn-1 font-medium', className)}>{children}</h2>
   },
 
   Description: function Description({ children }: { children: ReactNode }) {

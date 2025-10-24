@@ -62,7 +62,11 @@ export function RemoveAdminDialog({ handleUpdateUserAdmin, open, onClose }: Remo
               />
             </ControlGroup>
 
-            {updateUserAdminError && <span className="text-2 text-cn-danger">{updateUserAdminError}</span>}
+            {updateUserAdminError && (
+              <Text as="span" color="danger">
+                {updateUserAdminError}
+              </Text>
+            )}
           </Layout.Flex>
         </Dialog.Body>
 

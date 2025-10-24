@@ -15,7 +15,7 @@ export const NodeTitle: FC<NodeTitleProps> = ({ name, onHeaderClick, counter }) 
         role="button"
         tabIndex={0}
         title={name}
-        className="mx-cn-3xl cursor-pointer truncate pt-cn-3xs text-2 font-medium leading-snug text-cn-3"
+        className="mx-cn-3xl cursor-pointer truncate pt-cn-3xs text-cn-size-2 font-medium leading-snug text-cn-3"
         onClick={onHeaderClick}
       >
         {name} <Text as="span">({counter})</Text>

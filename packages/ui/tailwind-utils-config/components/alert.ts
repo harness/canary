@@ -8,7 +8,7 @@ const themeStyleMapper: Record<
 > = {
   info: {
     backgroundColor: 'gray-secondary',
-    color: 'text-2',
+    color: 'text-cn-2',
     fadeBgColor: 'default'
   },
   danger: {

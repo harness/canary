@@ -184,7 +184,7 @@ export const TimeAgoCard = memo(
             className={cn('cn-time-ago-card-button', triggerClassName)}
             {...triggerProps}
           >
-            <Text<'time'> as="time" {...textProps} dateTime={timestamp.toString()}>
+            <Text<'time'> as="time" {...textProps} dateTime={timestamp.toString()} wrap="nowrap">
               {prefix ? `${prefix} ${formattedShort}` : formattedShort}
             </Text>
           </button>

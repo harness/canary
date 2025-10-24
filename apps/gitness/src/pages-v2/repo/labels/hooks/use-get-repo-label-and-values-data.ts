@@ -5,6 +5,8 @@ import { ILabelType, LabelValuesType, LabelValueType } from '@harnessio/ui/views
 
 import { useGetRepoRef } from '../../../../framework/hooks/useGetRepoPath'
 import { useGetSpaceURLParam } from '../../../../framework/hooks/useGetSpaceParam'
+import { useIsMFE } from '../../../../framework/hooks/useIsMFE'
+import { getSpaceRefByScope } from '../../../../utils/scope-url-utils'
 
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
 type LabelValuesResponseResultType = { key: string; data: LabelValueType[] } | { key: string; error: any }
@@ -30,6 +32,7 @@ export const useGetRepoLabelAndValuesData = ({
 }: UseGetRepoLabelAndValuesDataProps) => {
   const space_ref = useGetSpaceURLParam()
   const repo_ref = useGetRepoRef()
+  const isMFE = useIsMFE()
   const [isLoadingValues, setIsLoadingValues] = useState(false)
   const [values, setValues] = useState<LabelValuesType>({})
 
@@ -68,6 +71,7 @@ export const useGetRepoLabelAndValuesData = ({
       setIsLoadingValues(true)
 
       const promises = labelsData.reduce<Promise<LabelValuesResponseResultType>[]>((acc, item) => {
+        const space_ref_by_scope = !isMFE ? space_ref : getSpaceRefByScope(space_ref, item.scope)
         if (item.value_count !== 0) {
           acc.push(
             item.scope === 0
@@ -75,7 +79,7 @@ export const useGetRepoLabelAndValuesData = ({
                   data => ({ key: item.key, data: data.body as LabelValueType[] }),
                   error => ({ key: item.key, error })
                 )
-              : listSpaceLabelValues({ space_ref: `${space_ref}/+`, key: item.key, signal }).then(
+              : listSpaceLabelValues({ space_ref: `${space_ref_by_scope}/+`, key: item.key, signal }).then(
                   data => ({ key: item.key, data: data.body as LabelValueType[] }),
                   error => ({ key: item.key, error })
                 )

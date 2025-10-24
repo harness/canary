@@ -2,6 +2,8 @@ import { Context, createContext } from 'react'
 
 import { noop } from 'lodash-es'
 
+import { PermissionsRequest } from '@harnessio/ui/components'
+
 /**
  * @todo import from '@harness/microfrontends'
  * Currently, unable to do so due to npm access issues.
@@ -52,15 +54,18 @@ export interface UseLogoutReturn {
 
 export declare const useLogout: () => UseLogoutReturn
 
+export declare const usePermission: (permissionsRequest?: PermissionsRequest, deps?: Array<any>) => Array<boolean>
+
 export interface Hooks {
   useLogout?: typeof useLogout
+  usePermission?: typeof usePermission
 }
 
 /**************/
 
 export type Unknown = any
 
-export interface IMFEContext {
+export interface MFEContextProps {
   /**
    * Scope will be later referred from "Scope" from @harness/microfrontends
    *  */
@@ -80,11 +85,27 @@ export interface IMFEContext {
     toOrgSettings: () => string
     toProjectSettings: () => string
   }>
+  routeUtils: Partial<{
+    toCODERepository: ({ repoPath }: { repoPath: string }) => void
+    toCODEPullRequest: ({ repoPath, pullRequestId }: { repoPath: string; pullRequestId: string }) => void
+    toCODERule: ({ repoPath, ruleId }: { repoPath: string; ruleId: string }) => void
+    toCODEManageRepositories: ({
+      space,
+      ruleId,
+      settingSection
+    }: {
+      space: string
+      ruleId: string
+      settingSection: string
+    }) => void
+  }>
   hooks: Hooks
   setMFETheme: (newTheme: string) => void
+  parentLocationPath: string
+  onRouteChange: (updatedLocationPathname: string) => void
 }
 
-export const MFEContext = createContext<IMFEContext>({
+export const MFEContext = createContext<MFEContextProps>({
   scope: { accountId: '' },
   parentContextObj: {
     appStoreContext: createContext({
@@ -97,6 +118,9 @@ export const MFEContext = createContext<IMFEContext>({
   customHooks: {},
   customUtils: {},
   routes: {},
+  routeUtils: {},
   hooks: {},
-  setMFETheme: noop
+  setMFETheme: noop,
+  parentLocationPath: '',
+  onRouteChange: noop
 })

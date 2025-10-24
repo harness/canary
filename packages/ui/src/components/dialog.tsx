@@ -55,17 +55,26 @@ const Content = forwardRef<HTMLDivElement, ContentProps>(
 
     return (
       <DialogPrimitive.Portal container={portalContainer}>
-        <DialogPrimitive.Overlay className="cn-modal-dialog-overlay" />
-        <DialogPrimitive.Content ref={ref} className={cn(contentVariants({ size }), className)} {...props}>
-          {!hideClose && (
-            <DialogPrimitive.Close asChild>
-              <Button variant="transparent" className="cn-modal-dialog-close" iconOnly>
-                <IconV2 name="xmark" />
-              </Button>
-            </DialogPrimitive.Close>
-          )}
-          {children}
-        </DialogPrimitive.Content>
+        {/* !!! */}
+        {/* For the scroll to work when using the dialog in Shadow DOM, the Overlay needs to wrap the Content */}
+        {/* Here’s the issue for the scroll bug in Shadow DOM - https://github.com/radix-ui/primitives/issues/3353 */}
+        <DialogPrimitive.Overlay className="cn-modal-dialog-overlay">
+          <DialogPrimitive.Content
+            ref={ref}
+            className={cn(contentVariants({ size }), className)}
+            onOpenAutoFocus={event => event.preventDefault()}
+            {...props}
+          >
+            {!hideClose && (
+              <DialogPrimitive.Close asChild>
+                <Button variant="transparent" className="cn-modal-dialog-close" iconOnly>
+                  <IconV2 name="xmark" />
+                </Button>
+              </DialogPrimitive.Close>
+            )}
+            {children}
+          </DialogPrimitive.Content>
+        </DialogPrimitive.Overlay>
       </DialogPrimitive.Portal>
     )
   }
@@ -78,53 +87,60 @@ interface HeaderProps extends HTMLAttributes<HTMLDivElement> {
   theme?: 'default' | 'warning' | 'danger'
 }
 
-const Header = ({ className, icon, logo, theme = 'default', children, ...props }: HeaderProps) => {
-  if (icon && logo) {
-    console.warn('Dialog.Header: Cannot use both icon and logo props together')
-    return null
-  }
-
-  // Find the title and description from children
-  let title: React.ReactNode = null
-  let description: React.ReactNode = null
-
-  Children.forEach(children, child => {
-    if (isValidElement(child)) {
-      if (child.type === Title) {
-        title = child
-      } else if (child.type === Description) {
-        description = child
-      }
+const Header = forwardRef<HTMLDivElement, HeaderProps>(
+  ({ className, icon, logo, theme = 'default', children, ...props }, ref) => {
+    if (icon && logo) {
+      console.warn('Dialog.Header: Cannot use both icon and logo props together')
+      return null
     }
-  })
 
-  return (
-    <div className={cn(headerVariants({ theme }), className)} {...props}>
-      <div className="cn-modal-dialog-header-title-row">
-        {icon && (
-          <div className="cn-modal-dialog-header-icon">
-            <IconV2 name={icon} size="lg" />
-          </div>
-        )}
-        {logo && (
-          <div className="cn-modal-dialog-header-logo">
-            <LogoV2 name={logo} />
-          </div>
-        )}
-        {title}
+    // Find the title and description from children
+    let title: React.ReactNode = null
+    let description: React.ReactNode = null
+
+    Children.forEach(children, child => {
+      if (isValidElement(child)) {
+        if (child.type === Title) {
+          title = child
+        } else if (child.type === Description) {
+          description = child
+        }
+      }
+    })
+
+    return (
+      <div className={cn(headerVariants({ theme }), className)} ref={ref} {...props}>
+        <div className="cn-modal-dialog-header-title-row">
+          {icon && (
+            <div className="cn-modal-dialog-header-icon">
+              <IconV2 name={icon} size="xl" />
+            </div>
+          )}
+          {logo && (
+            <div className="cn-modal-dialog-header-logo">
+              <LogoV2 name={logo} size="md" />
+            </div>
+          )}
+          {title}
+        </div>
+        {description}
       </div>
-      {description}
-    </div>
+    )
+  }
+)
+Header.displayName = 'Dialog.Header'
+
+const Title = forwardRef<HTMLHeadingElement, HTMLAttributes<HTMLHeadingElement>>(({ className, ...props }, ref) => (
+  <DialogPrimitive.Title className={cn('cn-modal-dialog-title', className)} {...props} ref={ref} />
+))
+Title.displayName = 'Dialog.Title'
+
+const Description = forwardRef<HTMLParagraphElement, HTMLAttributes<HTMLParagraphElement>>(
+  ({ className, ...props }, ref) => (
+    <DialogPrimitive.Description className={cn('cn-modal-dialog-description', className)} {...props} ref={ref} />
   )
-}
-
-const Title = ({ className, ...props }: HTMLAttributes<HTMLHeadingElement>) => (
-  <DialogPrimitive.Title className={cn('cn-modal-dialog-title', className)} {...props} />
 )
-
-const Description = ({ className, ...props }: HTMLAttributes<HTMLParagraphElement>) => (
-  <DialogPrimitive.Description className={cn('cn-modal-dialog-description', className)} {...props} />
-)
+Description.displayName = 'Dialog.Description'
 
 interface BodyProps {
   className?: string
@@ -132,19 +148,22 @@ interface BodyProps {
   children: ReactNode
 }
 
-const Body = ({ className, classNameContent, children, ...props }: BodyProps) => (
+const Body = forwardRef<HTMLDivElement, BodyProps>(({ className, classNameContent, children, ...props }, ref) => (
   <ScrollArea
     className={cn('cn-modal-dialog-body', className)}
     classNameContent={cn('cn-modal-dialog-body-content', classNameContent)}
+    ref={ref}
     {...props}
   >
     {children}
   </ScrollArea>
-)
+))
+Body.displayName = 'Dialog.Body'
 
-const Footer = ({ className, ...props }: HTMLAttributes<HTMLDivElement>) => (
-  <div className={cn('cn-modal-dialog-footer', className)} {...props} />
-)
+const Footer = forwardRef<HTMLDivElement, HTMLAttributes<HTMLDivElement>>(({ className, ...props }, ref) => (
+  <div className={cn('cn-modal-dialog-footer', className)} {...props} ref={ref} />
+))
+Footer.displayName = 'Dialog.Footer'
 
 const Close = forwardRef<HTMLButtonElement, ButtonProps>(({ children, className, ...props }, ref) => (
   <DialogPrimitive.Close asChild>

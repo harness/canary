@@ -91,3 +91,27 @@ export function updateSelection(
     }
   })
 }
+
+export function getNumberHolder(el: HTMLElement | null, inMouseDown = false): HTMLElement | null {
+  if (!el) return null
+
+  let numberHolder: HTMLElement | null = null
+
+  if (!inMouseDown || el.closest('.diff-add-widget-wrapper')) {
+    const newContentEL = el.closest('.diff-line-new-content')
+    const oldContentEL = el.closest('.diff-line-old-content')
+
+    if (newContentEL) {
+      numberHolder = newContentEL.parentElement?.querySelector('.diff-line-new-num') ?? null
+    }
+    if (oldContentEL) {
+      numberHolder = oldContentEL.parentElement?.querySelector('.diff-line-old-num') ?? null
+    }
+  }
+
+  if (!numberHolder) {
+    numberHolder = el.closest('.diff-line-new-num') || el.closest('.diff-line-old-num')
+  }
+
+  return numberHolder
+}

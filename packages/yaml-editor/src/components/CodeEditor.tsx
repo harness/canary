@@ -4,8 +4,12 @@ import Editor, { EditorProps, loader, Monaco, useMonaco } from '@monaco-editor/r
 import * as monaco from 'monaco-editor'
 
 import { MonacoCommonDefaultOptions } from '../constants/monaco-common-default-options'
+import { useHighlight } from '../hooks/useHighlight'
+import { useLinesSelection } from '../hooks/useLinesSelection'
 import { useTheme } from '../hooks/useTheme'
 import { ThemeDefinition } from '../types/themes'
+import { createRandomString } from '../utils/utils'
+import codeEditorCss from './CodeEditor.css?raw'
 
 loader.config({ monaco })
 
@@ -20,13 +24,18 @@ const defaultOptions: monaco.editor.IStandaloneEditorConstructionOptions = {
 
 export interface CodeEditorProps<_> {
   codeRevision: CodeRevision
-  onCodeRevisionChange: (codeRevision: CodeRevision | undefined, ev: monaco.editor.IModelContentChangedEvent) => void
+  onCodeRevisionChange?: (codeRevision: CodeRevision | undefined, ev: monaco.editor.IModelContentChangedEvent) => void
   language: string
   themeConfig?: { rootElementSelector?: string; defaultTheme?: string; themes?: ThemeDefinition[] }
   theme?: string
   options?: monaco.editor.IStandaloneEditorConstructionOptions
   height?: EditorProps['height']
   className?: string
+  enableLinesSelection?: boolean
+  selectedLine?: number
+  onSelectedLineChange?: (line: number | undefined) => void
+  onSelectedLineButtonClick?: (ev: HTMLDivElement | undefined) => void
+  highlightKeyword?: string
 }
 
 export function CodeEditor<T>({
@@ -36,9 +45,16 @@ export function CodeEditor<T>({
   themeConfig,
   options,
   theme: themeFromProps,
+  enableLinesSelection = false,
+  selectedLine,
+  onSelectedLineChange,
+  onSelectedLineButtonClick,
+  highlightKeyword,
   height = '75vh',
   className
 }: CodeEditorProps<T>): JSX.Element {
+  const instanceId = useRef(createRandomString(5))
+
   const monaco = useMonaco()
   const [editor, setEditor] = useState<monaco.editor.IStandaloneCodeEditor | undefined>()
   const monacoRef = useRef<typeof monaco>()
@@ -90,22 +106,42 @@ export function CodeEditor<T>({
         }
       }
     }
-  }, [codeRevision, editorRef.current])
+  }, [codeRevision, options?.readOnly, editorRef])
 
   const { theme } = useTheme({ monacoRef, themeConfig, editor, theme: themeFromProps })
 
+  useLinesSelection({
+    enable: enableLinesSelection,
+    editor,
+    selectedLine,
+    onSelectedLineChange,
+    onSelectedLineButtonClick
+  })
+
+  useHighlight({ editor, keyword: highlightKeyword })
+
   const mergedOptions = useMemo(() => {
-    return { ...defaultOptions, ...(options ? options : {}) }
+    return {
+      ...defaultOptions,
+      ...(options ? options : {})
+      // TODO: this will be used in the future
+      // ...(enableLinesSelection ? { glyphMargin: true } : {})
+    }
   }, [options])
+
+  const styleCss = useMemo(() => {
+    return `.monaco-editor-${instanceId.current} .margin-view-overlays .line-numbers { cursor: pointer !important; } ${codeEditorCss}`
+  }, [])
 
   return (
     <>
+      {enableLinesSelection && <style dangerouslySetInnerHTML={{ __html: styleCss }}></style>}
       <Editor
-        className={className}
+        className={`monaco-editor-${instanceId.current} ${className}`}
         height={height}
         onChange={(value, data) => {
           currentRevisionRef.current = { code: value ?? '', revisionId: data.versionId }
-          onCodeRevisionChange({ ...currentRevisionRef.current }, data)
+          onCodeRevisionChange?.({ ...currentRevisionRef.current }, data)
         }}
         language={language}
         theme={theme}

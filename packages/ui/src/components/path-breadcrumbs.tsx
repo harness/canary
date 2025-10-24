@@ -34,17 +34,21 @@ const InputPathBreadcrumbItem = ({
           changeFileName(event.currentTarget.value)
         }}
         onBlur={handleOnBlur}
-        onFocus={() => {
+        onFocus={({ target }) => {
           const value = (parentPath ? parentPath + '/' : '') + path
           changeFileName(value)
           setParentPath?.('')
+          setTimeout(() => {
+            target.setSelectionRange(value.length, value.length)
+            target.scrollLeft = Number.MAX_SAFE_INTEGER
+          }, 0)
         }}
         autoFocus={!!isNew}
       />
       <Text variant="body-single-line-normal" color="foreground-3">
         in
       </Text>
-      <Tag value={gitRefName} icon="git-branch" showIcon />
+      <Tag variant="secondary" theme="gray" value={gitRefName} icon="git-branch" />
     </Layout.Flex>
   )
 }
@@ -95,6 +99,8 @@ export const PathBreadcrumbs = ({ items, isEdit, isNew, ...props }: PathBreadcru
     )
   }
 
+  const isRenderInput = isNew || isEdit
+
   return (
     <Layout.Flex gap="2xs" align="center" wrap="wrap">
       <Breadcrumb.Root>
@@ -109,13 +115,20 @@ export const PathBreadcrumbs = ({ items, isEdit, isNew, ...props }: PathBreadcru
               {idx < items.length - 1 && <Breadcrumb.Separator />}
             </Fragment>
           ))}
+          {isRenderInput && <Breadcrumb.Separator />}
         </Breadcrumb.List>
       </Breadcrumb.Root>
 
-      {(isNew || isEdit) && renderInput()}
+      {isRenderInput && renderInput()}
 
-      {items.length > 0 && !(isNew || isEdit) && (
-        <CopyButton name={items.map(item => item.path).join('/')} className="ml-cn-2xs" />
+      {items.length > 0 && !isRenderInput && (
+        <CopyButton
+          name={items
+            .slice(1)
+            .map(item => item.path)
+            .join('/')}
+          className="ml-cn-2xs"
+        />
       )}
     </Layout.Flex>
   )

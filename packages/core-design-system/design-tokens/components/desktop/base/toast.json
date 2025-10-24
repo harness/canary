@@ -2,7 +2,7 @@
   "toast": {
     "radius": {
       "$type": "borderRadius",
-      "$value": "{rounded.3}"
+      "$value": "{rounded.4}"
     },
     "gap": {
       "$type": "spacing",

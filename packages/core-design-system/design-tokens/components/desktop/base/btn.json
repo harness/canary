@@ -41,13 +41,13 @@
       },
       "md": {
         "$type": "spacing",
-        "$value": "{spacing.2}"
+        "$value": "{spacing.1-half}"
       }
     },
     "default": {
       "radius": {
         "$type": "borderRadius",
-        "$value": "{rounded.2}"
+        "$value": "{rounded.3}"
       }
     },
     "rounded": {

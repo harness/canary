@@ -20,7 +20,7 @@ import {
   IconV2NamesType,
   Label,
   Layout,
-  SkeletonList,
+  Skeleton,
   Tag
 } from '@/components'
 import { generateAlphaNumericHash } from '@/utils'
@@ -335,12 +335,11 @@ export const MultiSelect = forwardRef<MultiSelectRef, MultiSelectProps>(
                         theme={option?.theme}
                         label={option.key}
                         value={option?.value || ''}
-                        showReset={!disabled}
-                        onReset={() => handleUnselect(option)}
+                        actionIcon={disabled ? undefined : 'xmark'}
+                        onActionClick={() => handleUnselect(option)}
                         disabled={disabled}
                         title={option.title}
                         icon={option.icon}
-                        showIcon={Boolean(option.icon)}
                       />
                     )
                   })}
@@ -364,7 +363,7 @@ export const MultiSelect = forwardRef<MultiSelectRef, MultiSelectProps>(
                       setOpen(true)
                       inputProps?.onFocus?.(event)
                     }}
-                    placeholder={disabled ? '' : placeholder}
+                    placeholder={disabled || getSelectedOptions().length > 0 ? '' : placeholder}
                     className={cn('cn-multi-select-input', inputProps?.className)}
                     asChild
                   >
@@ -387,7 +386,7 @@ export const MultiSelect = forwardRef<MultiSelectRef, MultiSelectProps>(
                     }}
                   >
                     {isLoading ? (
-                      <SkeletonList />
+                      <Skeleton.List />
                     ) : availableOptions?.length === 0 ? (
                       disallowCreation ? (
                         <Command.Item value="-" disabled>

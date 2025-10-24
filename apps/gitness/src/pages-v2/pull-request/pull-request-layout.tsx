@@ -1,6 +1,8 @@
 import { useEffect } from 'react'
 import { useParams } from 'react-router-dom'
 
+import { capitalize } from 'lodash-es'
+
 import {
   useChangeTargetBranchMutation,
   useGetPullReqQuery,
@@ -9,7 +11,9 @@ import {
 import { PullRequestLayout as PullRequestLayoutView } from '@harnessio/ui/views'
 
 import { BranchSelectorContainer } from '../../components-v2/branch-selector-container'
+import { usePageTitleContext } from '../../framework/context/PageTitleContext'
 import { useGetRepoRef } from '../../framework/hooks/useGetRepoPath'
+import useGetPullRequestTab from '../../hooks/useGetPullRequestTab'
 import { PathParams } from '../../RouteDefinitions'
 import { usePullRequestStore } from './stores/pull-request-store'
 
@@ -19,6 +23,7 @@ const PullRequestLayout = () => {
   const { pullRequestId, spaceId, repoId } = useParams<PathParams>()
 
   const repoRef = useGetRepoRef()
+  const { setPageTitle } = usePageTitleContext()
 
   const {
     data: { body: pullReqData } = {},
@@ -30,6 +35,23 @@ const PullRequestLayout = () => {
     pullreq_number: Number(pullRequestId),
     queryParams: {}
   })
+
+  const pullRequestTab = useGetPullRequestTab({ spaceId, repoId, pullRequestId })
+
+  useEffect(() => {
+    if (!pullReqData && !pullRequestTab) return
+
+    /**
+     * Constructs document title in the format:
+     * "Pull Request Title (#123) | Conversation"
+     */
+    const { title, number } = pullReqData ?? {}
+    const pageTitle = [title, number ? `(#${number})` : null].filter(Boolean).join(' ')
+    const finalTitle = [pageTitle, capitalize(pullRequestTab || '')].filter(Boolean).join(' | ')
+
+    setPageTitle(finalTitle)
+  }, [pullReqData, pullRequestTab])
+
   const { mutateAsync: updateTitle } = useUpdatePullReqMutation(
     {
       repo_ref: repoRef,

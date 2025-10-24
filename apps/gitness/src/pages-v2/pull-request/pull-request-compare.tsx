@@ -24,7 +24,6 @@ import {
 import { IconV2 } from '@harnessio/ui/components'
 import {
   BranchSelectorListItem,
-  BranchSelectorTab,
   CommitSelectorListItem,
   CompareFormFields,
   HandleAddLabelType,
@@ -43,9 +42,9 @@ import { useIsMFE } from '../../framework/hooks/useIsMFE.ts'
 import { useMFEContext } from '../../framework/hooks/useMFEContext'
 import { useQueryState } from '../../framework/hooks/useQueryState'
 import { useAPIPath } from '../../hooks/useAPIPath.ts'
-import { useGitRef } from '../../hooks/useGitRef.ts'
 import { PathParams } from '../../RouteDefinitions'
 import { decodeGitContent, normalizeGitRef } from '../../utils/git-utils'
+import { getFileExtension } from '../../utils/path-utils.ts'
 import { useGetRepoLabelAndValuesData } from '../repo/labels/hooks/use-get-repo-label-and-values-data'
 import { useRepoCommitsStore } from '../repo/stores/repo-commits-store'
 import { parseSpecificDiff } from './diff-utils'
@@ -80,11 +79,11 @@ export const CreatePullRequest = () => {
   const navigate = useNavigate()
   const [apiError, setApiError] = useState<string | null>(null)
   const repoRef = useGetRepoRef()
-  const [selectedTargetBranch, setSelectedTargetBranch] = useState<BranchSelectorListItem | null>(
-    diffTargetBranch ? { name: diffTargetBranch, sha: '' } : null
+  const [selectedTargetBranch, setSelectedTargetBranch] = useState<BranchSelectorListItem | undefined>(
+    diffTargetBranch ? { name: diffTargetBranch, sha: '' } : undefined
   )
-  const [selectedSourceBranch, setSelectedSourceBranch] = useState<BranchSelectorListItem | null>(
-    diffSourceBranch ? { name: diffSourceBranch, sha: '' } : null
+  const [selectedSourceBranch, setSelectedSourceBranch] = useState<BranchSelectorListItem | undefined>(
+    diffSourceBranch ? { name: diffSourceBranch, sha: '' } : undefined
   )
   const [prBranchCombinationExists, setPrBranchCombinationExists] = useState<{
     number: number
@@ -106,21 +105,25 @@ export const CreatePullRequest = () => {
   const [cachedDiff, setCachedDiff] = useAtom(changesInfoAtom)
   const [mergeability, setMergeabilty] = useState<boolean>()
   const [jumpToDiff, setJumpToDiff] = useState('')
-  const diffApiPath = useMemo(
-    () =>
-      // show range of commits and user selected subrange
-      commitRange.length > 0
-        ? `${commitRange[0]}~1...${commitRange[commitRange.length - 1]}`
-        : // show range of commits and user did not select a subrange
-          `${normalizeGitRef(targetRef)}...${normalizeGitRef(sourceRef)}`,
-    [commitRange, targetRef, sourceRef]
-  )
+  const diffApiPath = useMemo(() => {
+    if (!targetRef || !sourceRef) return ''
+    // show range of commits and user selected subrange
+    return commitRange.length > 0
+      ? `${commitRange[0]}~1...${commitRange[commitRange.length - 1]}`
+      : // show range of commits and user did not select a subrange
+        `${normalizeGitRef(targetRef)}...${normalizeGitRef(sourceRef)}`
+  }, [commitRange, targetRef, sourceRef])
 
-  const { data: { body: prTemplateData } = {} } = useGetContentQuery({
-    path: '.harness/pull_request_template.md',
-    repo_ref: repoRef,
-    queryParams: { include_commit: false, git_ref: normalizeGitRef(diffTargetBranch || '') }
-  })
+  const { data: { body: prTemplateData } = {} } = useGetContentQuery(
+    {
+      path: '.harness/pull_request_template.md',
+      repo_ref: repoRef,
+      queryParams: { include_commit: false, git_ref: normalizeGitRef(diffTargetBranch || '') }
+    },
+    {
+      enabled: !!repoRef && !!diffTargetBranch
+    }
+  )
 
   useEffect(() => {
     if (prTemplateData?.content?.data) {
@@ -183,10 +186,10 @@ export const CreatePullRequest = () => {
 
   useEffect(() => {
     // Set isBranchSelected to false if source and target branches are the same, otherwise true
-    if (selectedSourceBranch && selectedTargetBranch && selectedSourceBranch.name === selectedTargetBranch.name) {
-      setIsBranchSelected(false)
-    } else {
+    if (selectedSourceBranch && selectedTargetBranch && selectedSourceBranch.name !== selectedTargetBranch.name) {
       setIsBranchSelected(true)
+    } else {
+      setIsBranchSelected(false)
     }
   }, [selectedSourceBranch, selectedTargetBranch, setIsBranchSelected])
 
@@ -245,7 +248,7 @@ export const CreatePullRequest = () => {
   useEffect(() => {
     if (repoMetadata?.default_branch) {
       setSelectedTargetBranch({ name: diffTargetBranch || repoMetadata.default_branch, sha: '' })
-      setSelectedSourceBranch({ name: diffSourceBranch || '', sha: '' })
+      // setSelectedSourceBranch({ name: diffSourceBranch || '', sha: '' })
     }
   }, [repoMetadata, diffTargetBranch, diffSourceBranch])
 
@@ -309,34 +312,37 @@ export const CreatePullRequest = () => {
   useEffect(() => {
     // useMergeCheckMutation
     setApiError(null)
+    setMergeabilty(undefined) // reset mergeability state when diffRefs change, to hide the last status
+    if (!targetRef || !sourceRef) return
     mergeCheck({ queryParams: {}, repo_ref: repoRef, range: diffApiPath })
       .then(({ body: value }) => {
         setMergeabilty(value?.mergeable)
       })
       .catch(err => {
-        if (err.message !== "head branch doesn't contain any new commits.") {
-          setApiError('Error in merge check')
-        } else {
-          setApiError("head branch doesn't contain any new commits.")
-        }
+        setApiError(err.message || 'Error in merge check')
         setMergeabilty(false)
       })
-  }, [repoRef, diffApiPath])
+  }, [repoRef, diffApiPath, targetRef, sourceRef])
 
   const { data: { body: diffStats } = {} } = useDiffStatsQuery(
     { queryParams: {}, repo_ref: repoRef, range: diffApiPath },
     { enabled: !!repoRef && !!diffApiPath }
   )
 
-  const { data: { body: pullReqData } = {} } = useGetPullReqByBranchesQuery({
-    repo_ref: repoRef,
-    source_branch: selectedSourceBranch?.name || repoMetadata?.default_branch || '',
-    target_branch: selectedTargetBranch?.name || repoMetadata?.default_branch || '',
-    queryParams: {
-      include_checks: true,
-      include_rules: true
+  const { data: { body: pullReqData } = {} } = useGetPullReqByBranchesQuery(
+    {
+      repo_ref: repoRef,
+      source_branch: sourceRef || '',
+      target_branch: targetRef || '',
+      queryParams: {
+        include_checks: true,
+        include_rules: true
+      }
+    },
+    {
+      enabled: !!repoRef && !!sourceRef && !!targetRef
     }
-  })
+  )
 
   useEffect(() => {
     if (pullReqData?.number && pullReqData.title) {
@@ -352,19 +358,24 @@ export const CreatePullRequest = () => {
   const [query, setQuery] = useQueryState('query')
 
   // TODO:handle pagination in compare commit tab
-  const { data: { body: commitData, headers } = {}, isFetching: isFetchingCommits } = useListCommitsQuery({
-    repo_ref: repoRef,
+  const { data: { body: commitData, headers } = {}, isFetching: isFetchingCommits } = useListCommitsQuery(
+    {
+      repo_ref: repoRef,
 
-    queryParams: {
-      // TODO: add query when commit list api has query abilities
-      // query: query??'',
-      page: 0,
-      limit: 20,
-      after: normalizeGitRef(selectedTargetBranch?.name),
-      git_ref: normalizeGitRef(selectedSourceBranch?.name),
-      include_stats: true
+      queryParams: {
+        // TODO: add query when commit list api has query abilities
+        // query: query??'',
+        page: 0,
+        limit: 20,
+        after: normalizeGitRef(selectedTargetBranch?.name),
+        git_ref: normalizeGitRef(selectedSourceBranch?.name),
+        include_stats: true
+      }
+    },
+    {
+      enabled: !!repoRef && !!sourceRef && !!targetRef
     }
-  })
+  )
   const { setCommits, setSelectedCommit } = useRepoCommitsStore()
 
   useEffect(() => {
@@ -383,50 +394,39 @@ export const CreatePullRequest = () => {
     [commitData, setSelectedCommit]
   )
 
-  const selectBranchorTag = useCallback(
-    (branchTagName: BranchSelectorListItem, type: BranchSelectorTab, sourceBranch: boolean) => {
-      if (type === BranchSelectorTab.BRANCHES) {
-        if (sourceBranch) {
-          setSelectedSourceBranch(branchTagName)
-        } else {
-          setSelectedTargetBranch(branchTagName)
-        }
-      } else if (type === BranchSelectorTab.TAGS) {
-        if (sourceBranch) {
-          setSelectedSourceBranch(branchTagName)
-        } else {
-          setSelectedTargetBranch(branchTagName)
-        }
-      }
+  const handleSelectSourceBranchOrTag = useCallback(
+    (branchTagName: BranchSelectorListItem) => {
+      setSelectedSourceBranch(branchTagName)
 
-      // Update URL when either branch changes - use branchTagName directly
-      const targetName = sourceBranch ? selectedTargetBranch?.name || diffTargetBranch : branchTagName.name
-
-      const sourceName = sourceBranch ? branchTagName.name : selectedSourceBranch?.name || diffSourceBranch
-
-      if (targetName && sourceName) {
+      if (targetRef && branchTagName.name) {
         navigate(
           routes.toPullRequestCompare({
             spaceId,
             repoId,
-            diffRefs: `${targetName}...${sourceName}`
+            diffRefs: `${targetRef}...${branchTagName.name}`
           }),
           { replace: true }
         )
       }
     },
-    [
-      setSelectedSourceBranch,
-      setSelectedTargetBranch,
-      selectedSourceBranch,
-      selectedTargetBranch,
-      diffTargetBranch,
-      diffSourceBranch,
-      navigate,
-      routes,
-      spaceId,
-      repoId
-    ]
+    [setSelectedSourceBranch, targetRef, sourceRef, navigate, routes, spaceId, repoId]
+  )
+
+  const handleSelectTargetBranchOrTag = useCallback(
+    (branchTagName: BranchSelectorListItem) => {
+      setSelectedTargetBranch(branchTagName)
+      if (sourceRef && branchTagName.name) {
+        navigate(
+          routes.toPullRequestCompare({
+            spaceId,
+            repoId,
+            diffRefs: `${branchTagName.name}...${sourceRef}`
+          }),
+          { replace: true }
+        )
+      }
+    },
+    [setSelectedTargetBranch, sourceRef, targetRef, navigate, routes, spaceId, repoId]
   )
 
   const handleAddReviewer = (id?: number) => {
@@ -482,7 +482,6 @@ export const CreatePullRequest = () => {
   }
 
   const getApiPath = useAPIPath()
-  const { fullGitRef: baseRef } = useGitRef()
 
   const mutation = useMutation(async ({ repoMetadata, baseRef, headRef }: AiPullRequestSummaryParams) => {
     return fetch(getApiPath(`/api/v1/repos/${repoMetadata.path}/+/genai/change-summary`), {
@@ -499,13 +498,11 @@ export const CreatePullRequest = () => {
   })
 
   const handleAiPullRequestSummary = useCallback(async () => {
-    if (repoMetadata && repoMetadata.path && selectedSourceBranch?.name) {
-      const headRef = `refs/heads/${selectedSourceBranch.name}`
-
+    if (repoMetadata && repoMetadata.path && selectedSourceBranch?.name && selectedTargetBranch?.name) {
       return await mutation.mutateAsync({
         repoMetadata,
-        baseRef,
-        headRef
+        baseRef: normalizeGitRef(selectedTargetBranch.name) || '',
+        headRef: normalizeGitRef(selectedSourceBranch.name) || ''
       })
     }
 
@@ -577,7 +574,7 @@ export const CreatePullRequest = () => {
                 text: item.filePath,
                 data: item.raw,
                 title: item.filePath,
-                lang: item.filePath.split('.')?.[1],
+                lang: getFileExtension(item.filePath),
                 addedLines: item.addedLines,
                 deletedLines: item.deletedLines,
                 isBinary: item.isBinary,
@@ -585,7 +582,10 @@ export const CreatePullRequest = () => {
                 unchangedPercentage: item.unchangedPercentage,
                 blocks: item.blocks,
                 filePath: item.filePath,
-                diffData: item
+                diffData: {
+                  ...item,
+                  filePath: item.filePath
+                }
               })) || []
             : []
         }
@@ -623,15 +623,16 @@ export const CreatePullRequest = () => {
         branchSelectorRenderer={
           <>
             <BranchSelectorContainer
-              onSelectBranchorTag={(branchTagName, type) => selectBranchorTag(branchTagName, type, false)}
+              onSelectBranchorTag={branchTagName => handleSelectTargetBranchOrTag(branchTagName)}
               selectedBranch={selectedTargetBranch}
               branchPrefix="base"
             />
             <IconV2 name="arrow-left" />
             <BranchSelectorContainer
-              onSelectBranchorTag={(branchTagName, type) => selectBranchorTag(branchTagName, type, true)}
+              onSelectBranchorTag={branchTagName => handleSelectSourceBranchOrTag(branchTagName)}
               selectedBranch={selectedSourceBranch}
               branchPrefix="compare"
+              autoSelectDefaultBranch={false}
             />
           </>
         }

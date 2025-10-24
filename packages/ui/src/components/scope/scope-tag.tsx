@@ -2,18 +2,18 @@ import { ScopeType } from '@views/common'
 
 import { Tag, TagProps } from '../tag'
 
-interface ScopeTagProps extends Pick<TagProps, 'size'> {
+interface ScopeTagProps extends Pick<TagProps, 'size' | 'className'> {
   scopeType: ScopeType
   scopedPath?: string
 }
 
-const ScopeTag: React.FC<ScopeTagProps> = ({ scopeType, scopedPath, size }) => {
+const ScopeTag: React.FC<ScopeTagProps> = ({ scopeType, scopedPath, size, className }) => {
   const tagProps: TagProps = {
     variant: 'secondary',
     theme: 'gray',
     size,
     value: scopedPath || '',
-    showIcon: true
+    className
   }
 
   switch (scopeType) {

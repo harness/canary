@@ -315,6 +315,10 @@
       "$type": "sizing",
       "$value": "224px"
     },
+    "58": {
+      "$type": "sizing",
+      "$value": "230px"
+    },
     "60": {
       "$type": "sizing",
       "$value": "240px"
@@ -338,6 +342,10 @@
     "96": {
       "$type": "sizing",
       "$value": "384px"
+    },
+    "5-half": {
+      "$type": "sizing",
+      "$value": "22px"
     },
     "6-half": {
       "$type": "sizing",
@@ -419,15 +427,15 @@
     },
     "md": {
       "$type": "sizing",
-      "$value": "{size.5}"
+      "$value": "{size.4-half}"
     },
     "lg": {
       "$type": "sizing",
-      "$value": "{size.8}"
+      "$value": "{size.5-half}"
     },
     "xl": {
       "$type": "sizing",
-      "$value": "{size.10}"
+      "$value": "{size.8}"
     }
   },
   "opacity": {
@@ -477,9 +485,13 @@
     }
   },
   "logoSize": {
-    "sm": {
+    "xs": {
       "$type": "sizing",
       "$value": "{size.5}"
+    },
+    "sm": {
+      "$type": "sizing",
+      "$value": "{size.6}"
     },
     "md": {
       "$type": "sizing",

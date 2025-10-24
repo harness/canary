@@ -1,6 +1,6 @@
 import { ReactNode } from 'react'
 
-import { Button, IconV2, Layout, ScrollArea, SearchFiles, Spacer } from '@/components'
+import { Button, IconV2, Layout, ScrollArea, SearchFiles } from '@/components'
 
 interface RepoSidebarProps {
   navigateToNewFile: () => void
@@ -8,6 +8,7 @@ interface RepoSidebarProps {
   filesList?: string[]
   children: ReactNode
   branchSelectorRenderer: ReactNode
+  repoRef?: string
 }
 
 export const RepoSidebar = ({
@@ -15,34 +16,31 @@ export const RepoSidebar = ({
   branchSelectorRenderer,
   navigateToFile,
   filesList,
-  children
+  children,
+  repoRef
 }: RepoSidebarProps) => {
   return (
     <>
       <div className="repo-files-height sticky top-[var(--cn-page-nav-full-height)]">
-        <Layout.Flex direction="column" className="max-h-full overflow-hidden px-5 pt-7" gapY="sm">
-          <Layout.Grid columns="1fr auto" flow="column" align="center" gapX="xs" className="max-w-[210px]">
+        <Layout.Flex direction="column" className="pr-cn-lg pl-cn-2xl pt-cn-xl max-h-full overflow-hidden" gapY="sm">
+          <Layout.Grid columns="1fr auto" flow="column" align="center" gapX="xs">
             {branchSelectorRenderer}
             <Button iconOnly variant="outline" aria-label="Create file" onClick={navigateToNewFile}>
               <IconV2 name="plus" className="text-icons-3" />
             </Button>
           </Layout.Grid>
 
-          <SearchFiles
-            navigateToFile={navigateToFile}
-            filesList={filesList}
-            searchInputSize="md"
-            contentClassName="w-[280px]"
-          />
+          <SearchFiles navigateToFile={navigateToFile} filesList={filesList} />
 
-          <ScrollArea className="-mr-5 grid-cols-[100%] pr-5" classNameContent="w-[210px]">
+          <ScrollArea
+            className="pb-cn-xl pr-cn-lg -mr-5 grid-cols-[100%]"
+            preserveScrollPosition={true}
+            storageKey={repoRef ? `fileExplorer_${repoRef}` : undefined}
+          >
             {children}
-            <Spacer size={10} />
           </ScrollArea>
         </Layout.Flex>
       </div>
-      {/* Sticky right border */}
-      <div className="border-cn-borders-4 sticky top-0 w-px border-r" />
     </>
   )
 }

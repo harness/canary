@@ -19,8 +19,11 @@ interface CreateTagDialogProps {
   onSubmit: (data: CreateTagFormFields) => void
   error?: string
   isLoading?: boolean
-  selectedBranchOrTag: BranchSelectorListItem | null
+  selectedBranchOrTag?: BranchSelectorListItem
   branchSelectorRenderer: () => JSX.Element | null
+  violation?: boolean
+  bypassable?: boolean
+  resetViolation: () => void
 }
 
 export const CreateTagDialog: FC<CreateTagDialogProps> = ({
@@ -30,7 +33,10 @@ export const CreateTagDialog: FC<CreateTagDialogProps> = ({
   error,
   isLoading = false,
   selectedBranchOrTag,
-  branchSelectorRenderer: BranchSelectorContainer
+  branchSelectorRenderer: BranchSelectorContainer,
+  violation = false,
+  bypassable = false,
+  resetViolation
 }) => {
   const { t } = useTranslation()
 
@@ -40,37 +46,46 @@ export const CreateTagDialog: FC<CreateTagDialogProps> = ({
     defaultValues: INITIAL_FORM_VALUES
   })
 
-  const { register, handleSubmit, setValue, reset, clearErrors } = formMethods
+  const { register, handleSubmit, setValue, reset, clearErrors, watch } = formMethods
 
   const resetForm = useCallback(() => {
     clearErrors()
     reset(INITIAL_FORM_VALUES)
   }, [clearErrors, reset])
 
-  useEffect(() => {
-    if (open) {
-      resetForm()
+  const tagName = watch('name')
 
-      if (selectedBranchOrTag) {
-        setValue('target', selectedBranchOrTag.name, { shouldValidate: true })
-      }
+  useEffect(() => {
+    resetViolation()
+  }, [tagName, resetViolation])
+
+  useEffect(() => {
+    if (open && selectedBranchOrTag) {
+      setValue('target', selectedBranchOrTag.name, { shouldValidate: true })
     }
   }, [open, resetForm, selectedBranchOrTag, setValue])
 
+  useEffect(() => {
+    if (!open) {
+      resetForm()
+    }
+  }, [open, resetForm])
+
   const handleClose = () => {
     resetForm()
+    resetViolation()
     onClose()
   }
 
   return (
     <Dialog.Root open={open} onOpenChange={handleClose}>
-      <Dialog.Content>
+      <Dialog.Content className="max-w-2xl">
         <Dialog.Header>
           <Dialog.Title className="font-medium">{t('views:repos.createTagTitle', 'Create a tag')}</Dialog.Title>
         </Dialog.Header>
 
-        <FormWrapper<CreateTagFormFields> {...formMethods} onSubmit={handleSubmit(onSubmit)} className="block">
-          <Dialog.Body>
+        <Dialog.Body>
+          <FormWrapper<CreateTagFormFields> id="create-tag-form" {...formMethods} onSubmit={handleSubmit(onSubmit)}>
             <FormInput.Text
               id="name"
               label={t('views:forms.tagName', 'Name')}
@@ -78,6 +93,7 @@ export const CreateTagDialog: FC<CreateTagDialogProps> = ({
               maxLength={250}
               placeholder={t('views:forms.enterTagName', 'Enter a tag name here')}
               disabled={isLoading}
+              autoFocus
             />
 
             <ControlGroup>
@@ -92,29 +108,56 @@ export const CreateTagDialog: FC<CreateTagDialogProps> = ({
               label={t('views:repos.description', 'Description')}
               disabled={isLoading}
             />
+            {violation && (
+              <Alert.Root theme="warning">
+                <Alert.Description className="overflow-hidden break-all">
+                  {bypassable
+                    ? t(
+                        'component:tagDialog.violationMessages.bypassed',
+                        'Some rules will be bypassed while creating tag'
+                      )
+                    : t('component:tagDialog.violationMessages.notAllow', "Some rules don't allow you to create tag")}
+                </Alert.Description>
+              </Alert.Root>
+            )}
 
             {error && (
               <Alert.Root theme="danger">
-                <Alert.Title>
+                <Alert.Description className="overflow-hidden break-all">
                   {t('views:repos.error', 'Error:')} {error}
-                </Alert.Title>
+                </Alert.Description>
               </Alert.Root>
             )}
-          </Dialog.Body>
+          </FormWrapper>
+        </Dialog.Body>
 
-          <Dialog.Footer>
-            <ButtonLayout>
-              <Dialog.Close onClick={handleClose} loading={isLoading} disabled={isLoading}>
-                {t('views:repos.cancel', 'Cancel')}
-              </Dialog.Close>
-              <Button type="submit" disabled={isLoading} loading={isLoading}>
+        <Dialog.Footer>
+          <ButtonLayout>
+            <Dialog.Close onClick={handleClose} disabled={isLoading}>
+              {t('views:repos.cancel', 'Cancel')}
+            </Dialog.Close>
+            {!bypassable || !violation ? (
+              <Button
+                type="submit"
+                form="create-tag-form"
+                disabled={isLoading || (!bypassable && violation)}
+                loading={isLoading}
+              >
                 {isLoading
                   ? t('views:repos.creatingTagButton', 'Creating tag...')
-                  : t('views:repos.createTagButton', 'Create tag')}
+                  : !bypassable && violation
+                    ? t('component:tagDialog.notAllowed', 'Cannot create tag')
+                    : t('views:repos.createTagButton', 'Create tag')}
               </Button>
-            </ButtonLayout>
-          </Dialog.Footer>
-        </FormWrapper>
+            ) : (
+              <Button type="submit" form="create-tag-form" variant="outline" theme="danger">
+                {isLoading
+                  ? t('views:repos.creatingTagButton', 'Creating tag...')
+                  : t('component:tagDialog.bypassButton', 'Bypass rules and create tag')}
+              </Button>
+            )}
+          </ButtonLayout>
+        </Dialog.Footer>
       </Dialog.Content>
     </Dialog.Root>
   )

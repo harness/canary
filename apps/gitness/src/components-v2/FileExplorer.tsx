@@ -4,7 +4,7 @@ import { useLocation, useParams } from 'react-router-dom'
 import { useQuery, useQueryClient } from '@tanstack/react-query'
 
 import { getContent, OpenapiContentInfo, OpenapiGetContentOutput } from '@harnessio/code-service-client'
-import { Alert, FileExplorer, IconV2 } from '@harnessio/ui/components'
+import { Alert, FileExplorer, SkeletonFileExplorer } from '@harnessio/ui/components'
 
 import { useOpenFolderPaths } from '../framework/context/ExplorerPathsContext'
 import { useRoutes } from '../framework/context/NavigationContext'
@@ -16,6 +16,7 @@ import { normalizeGitRef } from '../utils/git-utils'
 interface ExplorerProps {
   selectedBranch?: string
   repoDetails: OpenapiGetContentOutput
+  isLoading?: boolean
 }
 
 const sortEntriesByType = (entries: OpenapiContentInfo[]): OpenapiContentInfo[] => {
@@ -32,7 +33,7 @@ const sortEntriesByType = (entries: OpenapiContentInfo[]): OpenapiContentInfo[] 
 /**
  * TODO: This code was migrated from V2 and needs to be refactored.
  */
-export default function Explorer({ selectedBranch, repoDetails }: ExplorerProps) {
+export default function Explorer({ selectedBranch, repoDetails, isLoading: isLoadingProp }: ExplorerProps) {
   const repoRef = useGetRepoRef()
   const { spaceId, repoId } = useParams<PathParams>()
   const { fullGitRef, fullResourcePath } = useCodePathDetails()
@@ -148,7 +149,7 @@ export default function Explorer({ selectedBranch, repoDetails }: ExplorerProps)
     }
 
     if (isLoading) {
-      return <IconV2 name="loader" className="animate-spin" />
+      return <SkeletonFileExplorer />
     }
 
     if (error) {
@@ -240,8 +241,8 @@ export default function Explorer({ selectedBranch, repoDetails }: ExplorerProps)
       }}
       value={openFolderPaths}
     >
-      {isRootLoading ? (
-        <IconV2 name="loader" className="animate-spin" />
+      {isRootLoading || isLoadingProp ? (
+        <SkeletonFileExplorer linesCount={12} />
       ) : rootError ? (
         <Alert.Root theme="danger">
           <Alert.Title>Error loading root folder</Alert.Title>

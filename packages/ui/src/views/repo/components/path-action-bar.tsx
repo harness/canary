@@ -1,6 +1,6 @@
 import { FC } from 'react'
 
-import { Button, Layout, PathBreadcrumbs, PathParts } from '@/components'
+import { Button, IconV2, Layout, PathBreadcrumbs, PathParts } from '@/components'
 import { useRouterContext, useTranslation } from '@/context'
 import { BranchSelectorTab, CodeModes } from '@/views'
 
@@ -41,7 +41,7 @@ export const PathActionBar: FC<PathActionBarProps> = ({
   const { t } = useTranslation()
 
   return (
-    <Layout.Horizontal className="items-center justify-between">
+    <Layout.Horizontal align="center" justify="between">
       <PathBreadcrumbs
         isEdit={codeMode === CodeModes.EDIT}
         isNew={codeMode === CodeModes.NEW}
@@ -59,20 +59,26 @@ export const PathActionBar: FC<PathActionBarProps> = ({
         pathUploadFiles &&
         selectedRefType === BranchSelectorTab.BRANCHES && (
           <Button asChild>
-            <Link className="relative grid grid-cols-[auto_1fr] items-center gap-1.5" to={pathNewFile}>
-              <span className="truncate">{t('views:repos.create-file', 'Create file')}</span>
+            <Link to={pathNewFile}>
+              <IconV2 name="plus" />
+              {t('views:repos.createFile', 'Create File')}
             </Link>
           </Button>
         )}
       {codeMode !== CodeModes.VIEW && (
-        <div className="flex gap-2.5">
+        <Layout.Flex gapX="sm">
           {!!handleCancelFileEdit && (
             <Button variant="outline" onClick={handleCancelFileEdit}>
-              Cancel changes
+              Cancel Changes
             </Button>
           )}
-          {!!handleOpenCommitDialog && <Button onClick={handleOpenCommitDialog}>Commit changes</Button>}
-        </div>
+          {!!handleOpenCommitDialog && (
+            <Button onClick={handleOpenCommitDialog}>
+              <IconV2 name="upload" />
+              Commit Changes
+            </Button>
+          )}
+        </Layout.Flex>
       )}
     </Layout.Horizontal>
   )

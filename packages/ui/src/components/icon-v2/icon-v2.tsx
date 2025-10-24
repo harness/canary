@@ -1,13 +1,15 @@
-import { FC, SVGProps } from 'react'
+import { forwardRef, SVGProps } from 'react'
 
 import { cn } from '@utils/cn'
 import { cva, VariantProps } from 'class-variance-authority'
 
 import { IconNameMapV2 } from './icon-name-map'
 
+export const IconV2DisplayName = 'IconV2'
+
 export type IconV2NamesType = keyof typeof IconNameMapV2
 
-const iconVariants = cva('cn-icon', {
+export const iconVariants = cva('cn-icon', {
   variants: {
     size: {
       '2xs': 'cn-icon-2xs',
@@ -41,25 +43,27 @@ interface IconFallbackPropsV2 extends BaseIconPropsV2 {
 
 export type IconPropsV2 = IconDefaultPropsV2 | IconFallbackPropsV2
 
-const IconV2: FC<IconPropsV2> = ({ name, size = 'sm', className, skipSize = false, fallback }) => {
-  const Component = name ? IconNameMapV2[name] : undefined
-  const sizeClasses = skipSize ? '' : iconVariants({ size })
+const IconV2 = forwardRef<SVGSVGElement, IconPropsV2>(
+  ({ name, size = 'sm', className, skipSize = false, fallback }, ref) => {
+    const Component = name ? IconNameMapV2[name] : undefined
+    const sizeClasses = skipSize ? '' : iconVariants({ size })
 
-  if (!Component && fallback) {
-    console.warn(`Icon "${name}" not found, falling back to "${fallback}".`)
-    const FallbackComponent = IconNameMapV2[fallback]
+    if (!Component && fallback) {
+      console.warn(`Icon "${name}" not found, falling back to "${fallback}".`)
+      const FallbackComponent = IconNameMapV2[fallback]
 
-    return <FallbackComponent className={cn(sizeClasses, className)} />
+      return <FallbackComponent className={cn(sizeClasses, className)} ref={ref} />
+    }
+
+    if (!Component) {
+      console.warn(`Icon "${name}" not found in IconNameMapV2.`)
+      return null
+    }
+
+    return <Component className={cn(sizeClasses, className)} ref={ref} />
   }
-
-  if (!Component) {
-    console.warn(`Icon "${name}" not found in IconNameMapV2.`)
-    return null
-  }
-
-  return <Component className={cn(sizeClasses, className)} />
-}
+)
 
 export { IconV2 }
 
-IconV2.displayName = 'IconV2'
+IconV2.displayName = IconV2DisplayName

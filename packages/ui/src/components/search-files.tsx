@@ -1,10 +1,12 @@
-import { ReactNode, useCallback, useState } from 'react'
+import { KeyboardEvent, ReactNode, useCallback, useEffect, useRef, useState } from 'react'
 
-import { Command, Popover, SearchInput, SearchInputProps, Text } from '@/components'
+import { DropdownMenu, SearchInput, SearchInputProps, Text } from '@/components'
 import { useTranslation } from '@/context'
+import { afterFrames } from '@/utils'
 import { cn } from '@utils/cn'
 
 const markedFileClassName = 'w-full text-cn-foreground-1'
+const MAX_FILES = 50
 
 /**
  * Get marked file component with query
@@ -26,7 +28,7 @@ const getMarkedFileElement = (file: string, query: string, matchIndex: number): 
   const endText = file.slice(matchIndex + query.length)
 
   return (
-    <Text className={markedFileClassName} truncate>
+    <Text className={cn(markedFileClassName, 'break-words')}>
       {startText && <span>{startText}</span>}
       {matchedText && <mark>{matchedText}</mark>}
       {endText && <span>{endText}</span>}
@@ -50,91 +52,127 @@ interface SearchFilesProps {
 export const SearchFiles = ({
   navigateToFile,
   filesList,
-  searchInputSize = 'sm',
+  searchInputSize = 'md',
   inputContainerClassName,
   contentClassName
 }: SearchFilesProps) => {
   const [isOpen, setIsOpen] = useState(false)
   const [filteredFiles, setFilteredFiles] = useState<FilteredFile[]>([])
+  const [currentQuery, setCurrentQuery] = useState('')
+  const inputRef = useRef<HTMLInputElement | null>(null)
+  const contentRef = useRef<HTMLDivElement | null>(null)
   const { t } = useTranslation()
 
-  const filterQuery = useCallback(
-    (query: string) => {
-      if (!filesList) {
-        setFilteredFiles([])
-        return
+  useEffect(() => {
+    if (!filesList || !currentQuery) {
+      setFilteredFiles([])
+      return
+    }
+
+    const lowerCaseQuery = currentQuery.toLowerCase()
+    const _filteredFiles: FilteredFile[] = []
+
+    for (const file of filesList) {
+      const lowerCaseFile = file.toLowerCase()
+      const matchIndex = lowerCaseFile.indexOf(lowerCaseQuery)
+
+      if (matchIndex > -1) {
+        _filteredFiles.push({
+          file,
+          element: getMarkedFileElement(file, lowerCaseQuery, matchIndex)
+        })
       }
 
-      const lowerCaseQuery = query.toLowerCase()
+      // Limiting the result to 50, refactor this once backend supports pagination
+      if (_filteredFiles.length === MAX_FILES) {
+        break
+      }
+    }
 
-      const filtered = filesList.reduce<FilteredFile[]>((acc, file) => {
-        const lowerCaseFile = file.toLowerCase()
-        const matchIndex = lowerCaseFile.indexOf(lowerCaseQuery)
+    setFilteredFiles(_filteredFiles)
+  }, [filesList, currentQuery])
 
-        if (matchIndex > -1) {
-          acc.push({
-            file,
-            element: getMarkedFileElement(file, lowerCaseQuery, matchIndex)
-          })
-        }
+  const handleInputChange = useCallback((searchQuery: string) => {
+    setIsOpen(searchQuery !== '')
+    setCurrentQuery(searchQuery)
+  }, [])
 
-        return acc
-      }, [])
+  const getItems = useCallback(() => {
+    if (!contentRef.current) return []
+    return Array.from(
+      contentRef.current?.querySelectorAll<HTMLElement>('[data-radix-collection-item]:not([data-disabled])')
+    )
+  }, [])
 
-      setFilteredFiles(filtered)
+  const focusItem = useCallback(
+    (isFirst = true) => {
+      const items = getItems()
+      items[isFirst ? 0 : items.length - 1]?.focus()
     },
-    [filesList]
+    [getItems]
   )
 
-  const handleInputChange = useCallback(
-    (searchQuery: string) => {
-      setIsOpen(searchQuery !== '')
-      filterQuery(searchQuery)
-    },
-    [filterQuery]
-  )
+  const handleInputKeyDown = (e: KeyboardEvent<HTMLInputElement>) => {
+    if (e.key === 'ArrowDown' || e.key === 'ArrowUp') {
+      e.preventDefault()
+      afterFrames(() => focusItem(e.key === 'ArrowDown'))
+    }
+  }
+
+  const handleContentKeyDownCapture = (e: KeyboardEvent<HTMLDivElement>) => {
+    const items = getItems()
+
+    if (!items.length) return
+
+    const first = items[0]
+    const last = items[items.length - 1]
+    const activeElement = document.activeElement?.shadowRoot?.activeElement ?? document.activeElement
+
+    if ((e.key === 'ArrowUp' && activeElement === first) || (e.key === 'ArrowDown' && activeElement === last)) {
+      e.preventDefault()
+      inputRef.current?.focus()
+      setIsOpen(true)
+      return
+    }
+  }
 
   return (
-    <Popover.Root open={isOpen} onOpenChange={setIsOpen}>
-      <Popover.Anchor asChild>
-        <div className={inputContainerClassName}>
-          <SearchInput size={searchInputSize} onChange={handleInputChange} />
-        </div>
-      </Popover.Anchor>
-      <Popover.Content
+    <DropdownMenu.Root open={isOpen} onOpenChange={setIsOpen} modal={false}>
+      <div className={cn('relative', inputContainerClassName)}>
+        <DropdownMenu.Trigger className="pointer-events-none absolute inset-0 -z-0" tabIndex={-1} />
+        <SearchInput
+          ref={inputRef}
+          size={searchInputSize}
+          onChange={handleInputChange}
+          onKeyDown={handleInputKeyDown}
+        />
+      </div>
+
+      <DropdownMenu.Content
+        ref={contentRef}
+        className={cn('w-[800px]', contentClassName)}
         align="start"
-        hideArrow
-        onOpenAutoFocus={event => {
-          event.preventDefault()
-        }}
-        className={cn('!p-1', contentClassName)}
+        onKeyDownCapture={handleContentKeyDownCapture}
+        onOpenAutoFocus={event => event.preventDefault()}
       >
-        <Command.Root className="bg-transparent">
-          <Command.List
-            scrollAreaProps={{ className: 'max-h-60', classNameContent: 'overflow-hidden [&>[cmdk-group]]:!p-0' }}
-          >
-            {filteredFiles.length ? (
-              <Command.Group>
-                {filteredFiles?.map(({ file, element }) => (
-                  <Command.Item
-                    key={file}
-                    className="!cn-dropdown-menu-item"
-                    value={file}
-                    onSelect={() => {
-                      navigateToFile(file)
-                      setIsOpen(false)
-                    }}
-                  >
-                    {element}
-                  </Command.Item>
-                ))}
-              </Command.Group>
-            ) : (
-              <Command.Empty>{t('component:searchFile.noFile', 'No file found.')}</Command.Empty>
-            )}
-          </Command.List>
-        </Command.Root>
-      </Popover.Content>
-    </Popover.Root>
+        {filteredFiles.length ? (
+          filteredFiles?.map(({ file, element }) => (
+            <DropdownMenu.IconItem
+              key={file}
+              onSelect={() => {
+                navigateToFile(file)
+                setIsOpen(false)
+              }}
+              title={element}
+              icon="empty-page"
+            />
+          ))
+        ) : (
+          <DropdownMenu.NoOptions className="!p-2">
+            {t('component:searchFile.noFile', 'No file found.')}
+          </DropdownMenu.NoOptions>
+        )}
+      </DropdownMenu.Content>
+    </DropdownMenu.Root>
   )
 }

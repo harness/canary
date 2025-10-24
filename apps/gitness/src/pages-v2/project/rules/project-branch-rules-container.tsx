@@ -18,7 +18,8 @@ import {
   getBranchRules,
   MergeStrategy,
   RepoBranchSettingsFormFields,
-  RepoBranchSettingsRulesPage
+  RepoBranchSettingsRulesPage,
+  SandboxLayout
 } from '@harnessio/ui/views'
 
 import { useGetSpaceURLParam } from '../../../framework/hooks/useGetSpaceParam'
@@ -127,9 +128,12 @@ export const ProjectBranchRulesContainer = () => {
       }
     }
   )
+
   const { data: { body: recentStatusChecks } = {}, error: statusChecksError } = useListStatusCheckRecentSpaceQuery({
     space_ref: `${spaceURL}/+`,
-    queryParams: {}
+    queryParams: {
+      recursive: true
+    }
   })
 
   const handleRuleUpdate = (data: RepoBranchSettingsFormFields) => {
@@ -241,22 +245,24 @@ export const ProjectBranchRulesContainer = () => {
     ? t('views:pullRequests.selectUsersUGAndServiceAccounts', 'Select users, user groups and service accounts')
     : t('views:pullRequests.selectUsers', 'Select users')
   return (
-    <RepoBranchSettingsRulesPage
-      handleRuleUpdate={handleRuleUpdate}
-      apiErrors={errors}
-      isLoading={addingRule || updatingRule}
-      useRepoRulesStore={useProjectRulesStore}
-      useBranchRulesStore={useBranchRulesStore}
-      handleCheckboxChange={handleCheckboxChange}
-      handleSubmenuChange={handleSubmenuChange}
-      handleSelectChangeForRule={handleSelectChangeForRule}
-      handleInputChange={handleInputChange}
-      handleInitialRules={handleInitialRules}
-      setPrincipalsSearchQuery={setPrincipalsSearchQuery}
-      principalsSearchQuery={principalsSearchQuery}
-      isSubmitSuccess={isSubmitSuccess}
-      bypassListPlaceholder={searchPlaceholder}
-      projectScope
-    />
+    <SandboxLayout.Content>
+      <RepoBranchSettingsRulesPage
+        handleRuleUpdate={handleRuleUpdate}
+        apiErrors={errors}
+        isLoading={addingRule || updatingRule}
+        useRepoRulesStore={useProjectRulesStore}
+        useBranchRulesStore={useBranchRulesStore}
+        handleCheckboxChange={handleCheckboxChange}
+        handleSubmenuChange={handleSubmenuChange}
+        handleSelectChangeForRule={handleSelectChangeForRule}
+        handleInputChange={handleInputChange}
+        handleInitialRules={handleInitialRules}
+        setPrincipalsSearchQuery={setPrincipalsSearchQuery}
+        principalsSearchQuery={principalsSearchQuery}
+        isSubmitSuccess={isSubmitSuccess}
+        bypassListPlaceholder={searchPlaceholder}
+        projectScope
+      />
+    </SandboxLayout.Content>
   )
 }

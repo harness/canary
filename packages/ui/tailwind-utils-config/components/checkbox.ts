@@ -17,7 +17,7 @@ export default {
   '.cn-checkbox-label-wrapper': {
     display: 'flex',
     flexDirection: 'column',
-    gap: 'var(--cn-spacing-1)'
+    gap: 'var(--cn-layout-4xs)'
   },
 
   '.cn-checkbox-root': {
@@ -31,6 +31,11 @@ export default {
     border: 'var(--cn-border-width-1) solid var(--cn-comp-selection-unselected-border)',
     borderRadius: 'var(--cn-rounded-1)',
     backgroundColor: 'var(--cn-comp-selection-unselected-bg)',
+
+    '&:where(:not([disabled])):focus': {
+      outline: 'var(--cn-focus)'
+    },
+
     '&:where(:not([disabled])):hover': {
       backgroundColor: 'var(--cn-comp-selection-unselected-bg-hover)',
       borderColor: 'var(--cn-comp-selection-unselected-border-hover)'
@@ -113,7 +118,7 @@ export default {
   },
 
   '.cn-checkbox-label': {
-    font: 'var(--cn-body-strong) !important',
+    font: 'var(--cn-body-normal) !important',
     color: 'var(--cn-text-1) !important',
     '&:where(.disabled)': {
       color: 'var(--cn-state-disabled-text) !important'

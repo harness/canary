@@ -77,11 +77,19 @@
     "account": "Account"
   },
   "deleteDialog": {
-    "descriptionWithType": "This will permanently delete your {{type}} and remove all data. This action cannot be undone.",
+    "descriptionWithType": "This will permanently delete your {{type}} {{identifier}} and remove all data. This action cannot be undone.",
     "description": "This will permanently remove all data. This action cannot be undone.",
     "title": "Are you sure?",
     "inputLabel": "To confirm, type",
-    "cancel": "Cancel"
+    "validation": {
+      "mismatch": ""
+    },
+    "violationMessages": {
+      "bypassed": "Some rules will be bypassed while deleting {{type}}",
+      "notAllow": "Some rules don't allow you to delete {{type}}"
+    },
+    "cancel": "Cancel",
+    "bypassButton": "Bypass rule and confirm delete"
   },
   "dropdownMenu": {
     "noOptions": "No options available"
@@ -139,7 +147,7 @@
       },
       "radioGroup": {
         "directly": {
-          "labelFirst": "Commit directly to the",
+          "labelFirst": "Commit directly to",
           "labelSecond": "branch"
         },
         "new": {
@@ -195,6 +203,35 @@
     "forks": "Forks",
     "pullRequests": "Pull Requests",
     "title": "Title"
+  },
+  "branchDialog": {
+    "violationMessages": {
+      "bypassed": "Some rules will be bypassed while creating branch",
+      "notAllow": "Some rules don't allow creating branch "
+    },
+    "loading": "Creating branch...",
+    "notAllowed": "Cannot create branch",
+    "default": "Create branch",
+    "bypassButton": "Bypass rules and create branch",
+    "title": "Create a branch",
+    "form": {
+      "name": {
+        "label": "Branch name",
+        "placeholder": "Add a branch name"
+      },
+      "target": {
+        "label": "Based on",
+        "placeholder": "Add a branch name"
+      }
+    }
+  },
+  "tagDialog": {
+    "violationMessages": {
+      "bypassed": "Some rules will be bypassed while creating tag",
+      "notAllow": "Some rules don't allow you to create tag"
+    },
+    "notAllowed": "Cannot create tag",
+    "bypassButton": "Bypass rules and create tag"
   },
   "layout": {
     "table": "Table",

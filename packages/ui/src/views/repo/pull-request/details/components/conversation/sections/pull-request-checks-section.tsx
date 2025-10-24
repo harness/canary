@@ -61,7 +61,7 @@ const PullRequestCheckSection = ({
             {checkData.map(check => {
               const time = timeDistance(check?.check?.created, check?.check?.updated)
               return (
-                <Table.Row key={check.check?.id}>
+                <Table.Row key={check.check?.identifier}>
                   <Table.Cell className="pl-0 w-80">
                     <Layout.Horizontal align="center" gap="xs">
                       {getStatusIcon(check?.check?.status as EnumCheckStatus)}

@@ -34,5 +34,10 @@ export const ConnectorTypeToLogoNameMap: Map<ConnectorConfigType, keyof typeof L
   ['Azure', 'azure'],
   ['Artifactory', 'artifactory'],
   ['OciHelmRepo', 'helm'],
-  ['Tas', 'tanzu']
+  ['Tas', 'tanzu'],
+  ['AzureArtifacts', 'azure'],
+  ['Jenkins', 'jenkins'],
+  ['Bamboo', 'bamboo'],
+  ['PagerDuty', 'pagerduty'],
+  ['JDBC', 'java']
 ])

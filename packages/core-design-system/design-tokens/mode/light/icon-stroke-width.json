@@ -6,19 +6,19 @@
     },
     "xs": {
       "$type": "borderWidth",
-      "$value": "1.3"
+      "$value": "1.22"
     },
     "sm": {
       "$type": "borderWidth",
-      "$value": "1.3"
+      "$value": "1.2"
     },
     "md": {
       "$type": "borderWidth",
-      "$value": "1.1"
+      "$value": "1.2"
     },
     "lg": {
       "$type": "borderWidth",
-      "$value": "1"
+      "$value": "1.1"
     },
     "xl": {
       "$type": "borderWidth",

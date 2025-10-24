@@ -1,6 +1,6 @@
 import { useCallback, useEffect, useMemo, useState } from 'react'
 
-import { Accordion, Button, Checkbox, CopyButton, CounterBadge, IconV2, Layout, Link, Text } from '@/components'
+import { Accordion, Button, Checkbox, CopyButton, CounterBadge, IconV2, Layout, Link, Tag, Text } from '@/components'
 import { useTranslation } from '@/context'
 import {
   CommentItem,
@@ -17,6 +17,7 @@ import {
 } from '@/views'
 import { DiffModeEnum } from '@git-diff-view/react'
 import PullRequestDiffViewer from '@views/repo/pull-request/components/pull-request-diff-viewer'
+import { FILE_VIEWED_OBSOLETE_SHA } from '@views/repo/pull-request/details/pull-request-utils'
 import { useDiffConfig } from '@views/repo/pull-request/hooks/useDiffConfig'
 import { parseStartingLineIfOne, PULL_REQUEST_LARGE_DIFF_CHANGES_LIMIT } from '@views/repo/pull-request/utils'
 
@@ -34,6 +35,9 @@ export interface HeaderProps {
   isDeleted: boolean
   unchangedPercentage?: number
   isBinary?: boolean
+  isRename?: boolean
+  oldName?: string
+  newName?: string
 }
 
 interface DataProps {
@@ -80,6 +84,7 @@ interface LineTitleProps {
   useFullDiff?: boolean
   toRepoFileDetails?: ({ path }: { path: string }) => string
   sourceBranch?: string
+  currentRefForDiff?: string
 }
 
 export const LineTitle: React.FC<LineTitleProps> = ({
@@ -93,10 +98,17 @@ export const LineTitle: React.FC<LineTitleProps> = ({
   toggleFullDiff,
   useFullDiff,
   toRepoFileDetails,
-  sourceBranch
+  sourceBranch,
+  currentRefForDiff
 }) => {
   const { t } = useTranslation()
-  const { text, addedLines, deletedLines, filePath, checksumAfter } = header
+  const { text, addedLines, deletedLines, filePath, checksumAfter, fileViews, isRename, oldName, newName } = header
+
+  // Determine the display text and link path for renamed files
+  const displayText = isRename ? `${oldName} → ${newName}` : text
+  const linkPath = isRename ? newName : filePath
+  const copyText = isRename ? newName || text : text
+
   return (
     <div className="flex items-center justify-between gap-x-3">
       <div className="inline-flex items-center gap-x-4">
@@ -114,12 +126,12 @@ export const LineTitle: React.FC<LineTitleProps> = ({
             <IconV2 name={useFullDiff ? 'collapse-code' : 'expand-code'} />
           </Button>
           <Link
-            to={toRepoFileDetails?.({ path: `files/${sourceBranch}/~/${filePath}` }) ?? ''}
+            to={toRepoFileDetails?.({ path: `files/${currentRefForDiff || sourceBranch}/~/${linkPath}` }) ?? ''}
             className="font-medium leading-tight text-cn-foreground-1"
           >
-            {text}
+            {displayText}
           </Link>
-          <CopyButton name={text} size="xs" color="gray" />
+          <CopyButton name={copyText} size="xs" color="gray" />
         </div>
 
         <div className="flex items-center gap-x-1">
@@ -127,7 +139,11 @@ export const LineTitle: React.FC<LineTitleProps> = ({
           {deletedLines != null && deletedLines > 0 && <CounterBadge theme="danger">-{deletedLines}</CounterBadge>}
         </div>
       </div>
-      <div className="inline-flex items-center gap-x-6">
+      <div className="inline-flex items-center gap-x-2">
+        {/* Show "Changed since last viewed" tag when file is obsolete */}
+        {fileViews?.get(filePath) === FILE_VIEWED_OBSOLETE_SHA && (
+          <Tag value={t('views:pullRequests.changedSinceLastView')} theme="orange" />
+        )}
         {showViewed ? (
           <Button variant="ghost" size="sm" className="gap-x-2.5 px-2.5 py-1.5" onClick={e => e.stopPropagation()}>
             <Checkbox
@@ -185,6 +201,7 @@ export const PullRequestAccordion: React.FC<{
   principalProps: PrincipalPropsType
   hideViewedCheckbox?: boolean
   addWidget?: boolean
+  currentRefForDiff?: string
 }> = ({
   header,
   diffMode,
@@ -217,7 +234,8 @@ export const PullRequestAccordion: React.FC<{
   sourceBranch,
   principalProps,
   hideViewedCheckbox = false,
-  addWidget = true
+  addWidget = true,
+  currentRefForDiff
 }) => {
   const { t: _ts } = useTranslation()
   const { highlight, wrap, fontsize } = useDiffConfig()
@@ -316,10 +334,10 @@ export const PullRequestAccordion: React.FC<{
       onValueChange={onToggle}
       indicatorPosition="left"
     >
-      <Accordion.Item value={header?.text ?? ''} className="border-cn-borders-2 rounded-3 border">
+      <Accordion.Item value={header?.text ?? ''} className="rounded-3 border-none">
         <Accordion.Trigger
-          className="bg-cn-background-2 rounded-tl-3 rounded-tr-3 px-4 py-2 [&>.cn-accordion-trigger-indicator]:m-0 [&>.cn-accordion-trigger-indicator]:self-center"
-          headerClassName="sticky top-[99px] z-10 border-cn-borders-2 border-b"
+          className="rounded-t-3 bg-cn-background-2 px-4 py-2 [&>.cn-accordion-trigger-indicator]:m-0 [&>.cn-accordion-trigger-indicator]:self-center"
+          headerClassName="z-[18] sticky top-[119px] border-cn-borders-2 border rounded-t-3"
         >
           <LineTitle
             header={header}
@@ -333,9 +351,10 @@ export const PullRequestAccordion: React.FC<{
             useFullDiff={useFullDiff}
             toRepoFileDetails={toRepoFileDetails}
             sourceBranch={sourceBranch}
+            currentRefForDiff={currentRefForDiff}
           />
         </Accordion.Trigger>
-        <Accordion.Content className="pb-0" containerClassName="rounded-bl-3 rounded-br-3">
+        <Accordion.Content className="pb-0" containerClassName="rounded-b-3 border-x border-b border-cn-borders-2">
           <div className="bg-transparent">
             {(fileDeleted || isDiffTooLarge || fileUnchanged || header?.isBinary) && !showHiddenDiff ? (
               <Layout.Vertical align="center" className="py-5">
@@ -368,6 +387,7 @@ export const PullRequestAccordion: React.FC<{
                 <PullRequestDiffViewer
                   principalProps={principalProps}
                   handleUpload={handleUpload}
+                  blocks={header.diffData.blocks}
                   data={rawDiffData}
                   fontsize={fontsize}
                   highlight={highlight}

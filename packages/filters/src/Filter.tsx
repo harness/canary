@@ -19,6 +19,7 @@ export interface FilterProps<T extends Record<string, unknown>, K extends keyof 
     value?: Parser<T[K]> extends undefined ? string : T[K]
     removeFilter: (filterKey?: K) => void
   }) => React.ReactNode
+  defaultValue?: T[K]
   parser?: SpreadParser<T[K]>
   sticky?: boolean
   className?: string

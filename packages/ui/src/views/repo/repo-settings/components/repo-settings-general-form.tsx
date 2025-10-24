@@ -5,14 +5,12 @@ import {
   Button,
   ButtonLayout,
   ControlGroup,
-  Fieldset,
   FormInput,
   FormWrapper,
   IconV2,
   Label,
-  Layout,
   Radio,
-  SkeletonForm,
+  Skeleton,
   Text
 } from '@/components'
 import { useTranslation } from '@/context'
@@ -52,7 +50,14 @@ export const RepoSettingsGeneralForm: FC<{
     }
   })
 
-  const { register, handleSubmit, setValue, watch, reset } = formMethods
+  const {
+    register,
+    handleSubmit,
+    setValue,
+    watch,
+    reset,
+    formState: { isDirty }
+  } = formMethods
 
   useEffect(() => {
     // Don't reset the form during updates to prevent UI flakiness
@@ -98,100 +103,79 @@ export const RepoSettingsGeneralForm: FC<{
   }
 
   const onSubmit: SubmitHandler<RepoUpdateData> = data => {
+    if (!isDirty && branchValue === repoData.defaultBranch) return
+
     setIsSubmitted(true)
     handleRepoUpdate(data)
   }
 
+  if (isLoadingRepoData) {
+    return <Skeleton.Form />
+  }
+
   return (
-    <Fieldset>
-      {isLoadingRepoData ? (
-        <SkeletonForm />
-      ) : (
-        <FormWrapper {...formMethods} onSubmit={handleSubmit(onSubmit)}>
-          {/* NAME */}
-          <Fieldset>
-            <FormInput.Text
-              id="name"
-              {...register('name')}
-              placeholder={t('views:repos.repoNamePlaceholder', 'Enter repository name')}
-              disabled
-              label={t('views:repos.name', 'Name')}
-            />
-          </Fieldset>
+    <FormWrapper {...formMethods} onSubmit={handleSubmit(onSubmit)}>
+      <FormInput.Text
+        id="name"
+        {...register('name')}
+        placeholder={t('views:repos.repoNamePlaceholder', 'Enter repository name')}
+        disabled
+        label={t('views:repos.name', 'Name')}
+      />
 
-          {/* DESCRIPTION */}
-          <Fieldset>
-            <FormInput.Textarea
-              id="description"
-              {...register('description')}
-              placeholder={t('views:repos.repoDescriptionPlaceholder', 'Enter a description of this repository...')}
-              label={t('views:repos.description', 'Description')}
-              optional
-              resizable
-              className="min-h-[136px]"
-            />
-          </Fieldset>
+      <FormInput.Textarea
+        id="description"
+        {...register('description')}
+        placeholder={t('views:repos.repoDescriptionPlaceholder', 'Enter a description of this repository...')}
+        label={t('views:repos.description', 'Description')}
+        optional
+        resizable
+        rows={6}
+      />
 
-          {/* BRANCH */}
-          <Fieldset className="w-[298px]">
-            <ControlGroup>
-              <Layout.Vertical gap="xs">
-                <Label>{t('views:repos.defaultBranch', 'Default Branch')}</Label>
-                <BranchSelector
-                  onSelectBranchorTag={value => {
-                    handleSelectChange('branch', value.name)
-                  }}
-                  isBranchOnly={true}
-                  dynamicWidth={true}
-                  selectedBranch={{ name: branchValue, sha: '' }}
-                  isUpdating={isUpdatingRepoData}
-                  disabled={isUpdatingRepoData}
-                />
-              </Layout.Vertical>
-            </ControlGroup>
-          </Fieldset>
+      <ControlGroup>
+        <Label>{t('views:repos.defaultBranch', 'Default Branch')}</Label>
+        <BranchSelector
+          onSelectBranchorTag={value => {
+            handleSelectChange('branch', value.name)
+          }}
+          isBranchOnly
+          selectedBranch={{ name: branchValue, sha: '' }}
+          isUpdating={isUpdatingRepoData}
+          disabled={isUpdatingRepoData}
+          className="w-fit max-w-full"
+        />
+      </ControlGroup>
 
-          <Fieldset>
-            <FormInput.Radio label={t('views:repos.visibility', 'Visibility')} id="visibility" {...register('access')}>
-              <Radio.Item
-                id="access-public"
-                value="1"
-                label={t('views:repos.public', 'Public')}
-                caption={t('views:repos.publicDescription', 'Anyone with access to Harness can clone this repo.')}
-              />
-              <Radio.Item
-                id="access-private"
-                value="2"
-                label={t('views:repos.private', 'Private')}
-                caption={t(
-                  'views:repos.privateDescription',
-                  'You can choose who can see and commit to this repository.'
-                )}
-              />
-            </FormInput.Radio>
-          </Fieldset>
+      <FormInput.Radio label={t('views:repos.visibility', 'Visibility')} id="visibility" {...register('access')}>
+        <Radio.Item
+          id="access-public"
+          value="1"
+          label={t('views:repos.public', 'Public')}
+          caption={t('views:repos.publicDescription', 'Anyone with access to Harness can clone this repo.')}
+        />
+        <Radio.Item
+          id="access-private"
+          value="2"
+          label={t('views:repos.private', 'Private')}
+          caption={t('views:repos.privateDescription', 'You can choose who can see and commit to this repository.')}
+        />
+      </FormInput.Radio>
 
-          {/* SUBMIT BUTTONS */}
-          <Fieldset>
-            <ControlGroup>
-              <ButtonLayout horizontalAlign="start">
-                {!isSubmitted || !isRepoUpdateSuccess ? (
-                  <Button type="submit" disabled={isUpdatingRepoData}>
-                    {!isUpdatingRepoData ? t('views:repos.save', 'Save') : t('views:repos.saving', 'Saving...')}
-                  </Button>
-                ) : (
-                  <Button variant="primary" theme="success" type="button" className="pointer-events-none">
-                    Saved
-                    <IconV2 name="check" size="xs" />
-                  </Button>
-                )}
-              </ButtonLayout>
-            </ControlGroup>
-          </Fieldset>
+      <ButtonLayout horizontalAlign="start">
+        {!isSubmitted || !isRepoUpdateSuccess ? (
+          <Button type="submit" disabled={isUpdatingRepoData}>
+            {!isUpdatingRepoData ? t('views:repos.save', 'Save') : t('views:repos.saving', 'Saving...')}
+          </Button>
+        ) : (
+          <Button variant="primary" theme="success" type="button" className="pointer-events-none">
+            Saved
+            <IconV2 name="check" size="xs" />
+          </Button>
+        )}
+      </ButtonLayout>
 
-          {!!apiError && errorTypes.has(apiError.type) && <Text color="danger">{apiError.message}</Text>}
-        </FormWrapper>
-      )}
-    </Fieldset>
+      {!!apiError && errorTypes.has(apiError.type) && <Text color="danger">{apiError.message}</Text>}
+    </FormWrapper>
   )
 }

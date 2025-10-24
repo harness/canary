@@ -113,17 +113,12 @@ export const PullRequestHeaderEditDialog: FC<PullRequestHeaderEditDialogProps> =
   return (
     <Dialog.Root open={open} onOpenChange={handleDialogClose}>
       <Dialog.Content aria-describedby={undefined}>
-        <FormWrapper
-          {...formMethods}
-          onSubmit={handleSubmit(handleFormSubmit)}
-          id="edit-pr-title-form"
-          className="block"
-        >
-          <Dialog.Header>
-            <Dialog.Title>Edit PR title</Dialog.Title>
-          </Dialog.Header>
+        <Dialog.Header>
+          <Dialog.Title>Edit PR title</Dialog.Title>
+        </Dialog.Header>
 
-          <Dialog.Body>
+        <Dialog.Body>
+          <FormWrapper {...formMethods} onSubmit={handleSubmit(handleFormSubmit)} id="edit-pr-title-form">
             <FormInput.Text
               id={FIELD_TITLE}
               {...register(FIELD_TITLE)}
@@ -152,17 +147,19 @@ export const PullRequestHeaderEditDialog: FC<PullRequestHeaderEditDialogProps> =
             )}
 
             {error && <p className="text-cn-foreground-danger">{error}</p>}
-          </Dialog.Body>
+          </FormWrapper>
+        </Dialog.Body>
 
-          <Dialog.Footer>
-            <ButtonLayout>
-              <Dialog.Close onClick={handleDialogClose}>Cancel</Dialog.Close>
-              <Button type="submit" disabled={isDisabled}>
-                {isLoading ? 'Saving...' : 'Save'}
-              </Button>
-            </ButtonLayout>
-          </Dialog.Footer>
-        </FormWrapper>
+        <Dialog.Footer>
+          <ButtonLayout>
+            <Dialog.Close onClick={handleDialogClose} disabled={isDisabled}>
+              Cancel
+            </Dialog.Close>
+            <Button type="submit" form="edit-pr-title-form" disabled={isDisabled}>
+              {isLoading ? 'Saving...' : 'Save'}
+            </Button>
+          </ButtonLayout>
+        </Dialog.Footer>
       </Dialog.Content>
     </Dialog.Root>
   )

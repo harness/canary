@@ -14,7 +14,7 @@ import { useMFEContext } from '../../framework/hooks/useMFEContext'
 import { useQueryState } from '../../framework/hooks/useQueryState'
 import usePaginationQueryStateWithStore from '../../hooks/use-pagination-query-state-with-store'
 import { getTotalRulesApplied } from '../../utils/repo-branch-rules-utils'
-import { generateRuleDetailsUrl } from '../../utils/rule-url-utils'
+import { getScopedRuleUrl } from '../../utils/rule-url-utils'
 import { useProjectRulesStore } from './stores/project-rules-store'
 
 export const ProjectRulesListContainer = () => {
@@ -29,7 +29,9 @@ export const ProjectRulesListContainer = () => {
   const navigate = useNavigate()
   const { setRules } = useProjectRulesStore()
   const {
-    routes: { toAccountSettings, toOrgSettings, toProjectSettings }
+    routes: { toAccountSettings, toOrgSettings, toProjectSettings },
+    routeUtils,
+    scope: { accountId, orgIdentifier, projectIdentifier }
   } = useMFEContext()
 
   const [isRuleAlertDeleteDialogOpen, setRuleIsAlertDeleteDialogOpen] = useState(false)
@@ -117,12 +119,17 @@ export const ProjectRulesListContainer = () => {
         toProjectBranchRuleCreate={() => routes.toProjectBranchRuleCreate({ space_ref })}
         toProjectTagRuleCreate={() => routes.toProjectTagRuleCreate({ space_ref })}
         toProjectRuleDetails={(identifier, scope) => {
-          return generateRuleDetailsUrl({
+          getScopedRuleUrl({
             scope,
             identifier,
+            toCODEManageRepositories: routeUtils?.toCODEManageRepositories,
+            toCODERule: routeUtils?.toCODERule,
             toAccountSettings,
             toOrgSettings,
-            toProjectSettings
+            toProjectSettings,
+            accountId,
+            orgIdentifier,
+            projectIdentifier
           })
         }}
         showParentScopeLabelsCheckbox={space_ref?.includes('/')}

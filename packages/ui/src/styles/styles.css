@@ -529,7 +529,7 @@ mark {
 }
 
 [data-radix-select-viewport]::-webkit-scrollbar-thumb {
-  background-color: var(--cn-bg-2);
+  background-color: var(--cn-comp-scrollbar-thumb);
   border: 4px solid transparent;
   border-radius: 7px;
   background-clip: content-box;
@@ -553,6 +553,8 @@ mark {
 .monaco-editor.monaco-editor {
   --vscode-editorGutter-background: transparent;
   --vscode-editor-background: transparent;
+  --vscode-editorLineNumber-foreground: var(--cn-text-3);
+  --vscode-editorLineNumber-activeForeground: var(--cn-text-1);
   outline-color: transparent !important;
 }
 
@@ -599,7 +601,7 @@ mark {
 }
 
 .nested-sidebar-height {
-  height: calc(100vh - var(--cn-page-nav-height) - var(--cn-inset-layout-indent) - var(--cn-inset-border-width) * 2);
+  height: calc(100vh - var(--cn-breadcrumbs-height) - var(--cn-inset-layout-indent) - var(--cn-inset-border-width) * 2);
 }
 
 .repo-files-height {
@@ -613,6 +615,10 @@ mark {
   padding-inline: var(--cn-input-md-pl) var(--cn-input-md-pr);
 }
 
-.width-popover-width {
-  width: var(--radix-popper-anchor-width);
+.width-popover-max-width {
+  max-width: var(--radix-popover-content-available-width);
+}
+
+.settings-form-width {
+  width: 570px;
 }

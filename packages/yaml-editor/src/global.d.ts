@@ -17,3 +17,8 @@ declare module 'monaco-editor/esm/vs/editor/standalone/browser/standaloneService
     get: (id: unknown) => { documentSymbolProvider: unknown }
   }
 }
+
+declare module '*.css?raw' {
+  const content: string
+  export default content
+}

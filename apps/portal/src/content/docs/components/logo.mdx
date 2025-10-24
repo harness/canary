@@ -29,6 +29,7 @@ The `LogoV2` component can be sized using the `size` prop.
   client:only
   code={`
   <Layout.Flex gap="md" justify="center" align="end" className="min-w-[400px]">
+    <LogoV2 name="harness" size="xs" />
     <LogoV2 name="harness" size="sm" />
     <LogoV2 name="harness" size="md" />
     <LogoV2 name="harness" size="lg" />
@@ -64,7 +65,7 @@ The following logos are available:
       name: "size",
       description: "Size variant of the logo",
       required: false,
-      value: "'sm' | 'md' | 'lg'",
+      value: " 'xs' |'sm' | 'md' | 'lg'",
       defaultValue: "'lg'",
     },
     {

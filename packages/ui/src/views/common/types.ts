@@ -10,3 +10,11 @@ export enum ScopeType {
   Project = 'Project',
   Repository = 'Repository'
 }
+
+export enum ScopeValue {
+  // Backend 'scope' Values
+  Repository = 0,
+  Account = 1,
+  Organization = 2,
+  Project = 3
+}

@@ -8,6 +8,7 @@ import {
   Separator,
   StackedList,
   Tabs,
+  Tag,
   Text,
   ViewTypeValue
 } from '@/components'
@@ -23,6 +24,7 @@ export interface FileViewerControlBarProps {
   handleEditFile: () => void
   handleOpenDeleteDialog: () => void
   refType?: BranchSelectorTab
+  isGitLfsObject?: boolean
 }
 
 export const FileViewerControlBar: FC<FileViewerControlBarProps> = ({
@@ -31,6 +33,7 @@ export const FileViewerControlBar: FC<FileViewerControlBarProps> = ({
   fileBytesSize,
   fileContent,
   url,
+  isGitLfsObject,
   handleDownloadFile,
   handleEditFile,
   handleOpenDeleteDialog,
@@ -43,7 +46,8 @@ export const FileViewerControlBar: FC<FileViewerControlBarProps> = ({
   const RightDetails = () => {
     return (
       <Layout.Horizontal gap="xl" align="center">
-        <Layout.Horizontal gap="xs" align="center">
+        {isGitLfsObject && <Tag value="Stored with Git LFS" icon="info-circle" />}
+        <Layout.Horizontal gap="2xs" align="center">
           <Text color="foreground-3">{`${fileContent?.split('\n').length || 0} lines`}</Text>
           <Separator orientation="vertical" className="h-3" />
           <Text color="foreground-3">{fileBytesSize}</Text>
@@ -61,10 +65,7 @@ export const FileViewerControlBar: FC<FileViewerControlBarProps> = ({
                 content: (
                   <>
                     <DropdownMenu.Item onSelect={handleViewRaw} title="View Raw" />
-                    <DropdownMenu.Item
-                      onSelect={handleOpenDeleteDialog}
-                      title={<span className="truncate text-sm text-cn-foreground-danger">Delete</span>}
-                    />
+                    <DropdownMenu.Item onSelect={handleOpenDeleteDialog} title={<Text color="danger">Delete</Text>} />
                   </>
                 ),
                 contentProps: {
@@ -80,7 +81,7 @@ export const FileViewerControlBar: FC<FileViewerControlBarProps> = ({
 
   return (
     <StackedList.Root className="bg-cn-background-2" onlyTopRounded={view !== 'history'}>
-      <StackedList.Item disableHover isHeader className="px-cn-md py-cn-2xs">
+      <StackedList.Item disableHover isHeader className="px-cn-md py-cn-2xs gap-cn-sm flex-nowrap">
         <Tabs.List variant="ghost">
           {isMarkdown && <Tabs.Trigger value="preview">Preview</Tabs.Trigger>}
           <Tabs.Trigger value="code">Code</Tabs.Trigger>

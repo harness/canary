@@ -1,6 +1,6 @@
 import { useTranslation } from '@/context'
 
-import { IconV2, NoData, SkeletonList, StackedList } from '../../../components'
+import { IconV2, NoData, Skeleton, StackedList } from '../../../components'
 import { Meter } from '../../../components/meter'
 import { PipelineExecutionStatus } from '../common/execution-types'
 import { ExecutionStatusIcon } from '../components/execution-status-icon'
@@ -26,7 +26,7 @@ const Description = ({ sha, description, version }: { sha?: string; description?
         </div>
       )}
       {sha && (
-        <div className="bg-cn-background-8 text-1 text-cn-foreground-1 flex h-4 items-center gap-1 rounded px-1.5">
+        <div className="bg-cn-background-softgray text-1 text-cn-foreground-1 flex h-4 items-center gap-1 rounded px-1.5">
           <IconV2 className="text-icons-9" size="2xs" name="git-commit" />
           {sha?.slice(0, 7)}
         </div>
@@ -49,7 +49,7 @@ export const PipelineList = ({
   const { t } = useTranslation()
 
   if (isLoading) {
-    return <SkeletonList />
+    return <Skeleton.List />
   }
 
   if (noData) {
@@ -62,7 +62,7 @@ export const PipelineList = ({
             t('views:noData.checkSpelling', 'Check your spelling and filter options,'),
             t('views:noData.changeSearch', 'or search for a different keyword.')
           ]}
-          primaryButton={{
+          secondaryButton={{
             label: t('views:noData.clearSearch', 'Clear search'),
             onClick: handleResetQuery
           }}

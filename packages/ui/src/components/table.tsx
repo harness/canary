@@ -54,7 +54,9 @@ const TableRoot = forwardRef<HTMLTableElement, TableRootV2Props>(
 TableRoot.displayName = 'TableRoot'
 
 const TableHeader = forwardRef<HTMLTableSectionElement, HTMLAttributes<HTMLTableSectionElement>>(
-  ({ className, ...props }, ref) => <thead ref={ref} className={cn('cn-table-v2-header', className)} {...props} />
+  ({ className, ...props }, ref) => (
+    <thead ref={ref} className={cn('cn-table-v2-header pointer-events-none select-none', className)} {...props} />
+  )
 )
 TableHeader.displayName = 'TableHeader'
 
@@ -135,15 +137,29 @@ export interface TableHeadProps extends ThHTMLAttributes<HTMLTableCellElement> {
   tooltipProps?: Omit<TooltipProps, 'children'>
   containerProps?: FlexProps
   hideDivider?: boolean
+  contentClassName?: string
 }
 
 const TableHead = forwardRef<HTMLTableCellElement, TableHeadProps>(
-  ({ className, sortDirection, sortable, children, tooltipProps, hideDivider, containerProps, ...props }, ref) => {
+  (
+    {
+      className,
+      sortDirection,
+      sortable,
+      children,
+      tooltipProps,
+      hideDivider,
+      containerProps,
+      contentClassName,
+      ...props
+    },
+    ref
+  ) => {
     const Title = () => (
       <Text
-        variant="caption-strong"
-        color="foreground-1"
-        className={cn({ 'underline decoration-dashed': !!tooltipProps?.content })}
+        variant="caption-normal"
+        color="foreground-3"
+        className={cn({ 'underline decoration-dashed': !!tooltipProps?.content }, contentClassName)}
       >
         {children}
       </Text>

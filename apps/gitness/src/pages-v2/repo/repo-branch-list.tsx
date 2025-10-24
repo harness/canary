@@ -2,24 +2,26 @@ import { useEffect, useState } from 'react'
 import { useParams } from 'react-router-dom'
 
 import { useQueryClient } from '@tanstack/react-query'
+import { isEmpty } from 'lodash-es'
 
 import {
   useCalculateCommitDivergenceMutation,
-  useCreateBranchMutation,
   useDeleteBranchMutation,
   useFindRepositoryQuery,
   useListBranchesQuery
 } from '@harnessio/code-service-client'
 import { DeleteAlertDialog } from '@harnessio/ui/components'
-import { CreateBranchFormFields, RepoBranchListView } from '@harnessio/ui/views'
+import { RepoBranchListView } from '@harnessio/ui/views'
 
 import { CreateBranchDialog } from '../../components-v2/create-branch-dialog'
 import { useRoutes } from '../../framework/context/NavigationContext'
 import { useGetRepoRef } from '../../framework/hooks/useGetRepoPath'
 import { useQueryState } from '../../framework/hooks/useQueryState'
+import { useRuleViolationCheck } from '../../framework/hooks/useRuleViolationCheck'
 import usePaginationQueryStateWithStore from '../../hooks/use-pagination-query-state-with-store'
 import { PathParams } from '../../RouteDefinitions'
 import { orderSortDate, PageResponseHeader } from '../../types'
+import { normalizeGitRef } from '../../utils/git-utils'
 import { useRepoBranchesStore } from './stores/repo-branches-store'
 import { transformBranchList } from './transform-utils/branch-transform'
 
@@ -41,7 +43,6 @@ export function RepoBranchesListPage() {
   } = useRepoBranchesStore()
 
   const [query, setQuery] = useQueryState('query')
-  const [createBranchSearchQuery, setCreateBranchSearchQuery] = useState('')
   const { queryPage } = usePaginationQueryStateWithStore({ page, setPage })
 
   const [isCreateBranchDialogOpen, setCreateBranchDialogOpen] = useState(false)
@@ -54,7 +55,7 @@ export function RepoBranchesListPage() {
     queryParams: {
       page: queryPage,
       limit: 10,
-      query: (createBranchSearchQuery || query) ?? '',
+      query: query ?? '',
       order: orderSortDate.DESC,
       sort: 'date',
       include_commit: true,
@@ -84,11 +85,12 @@ export function RepoBranchesListPage() {
   }
 
   const handleResetDeleteBranch = () => {
-    setDeleteBranchName(null)
     setIsDeleteDialogOpen(false)
+    setDeleteBranchName(null)
     if (deleteBranchError) {
       resetDeleteBranch()
     }
+    resetViolation()
   }
 
   const handleSetDeleteBranch = (branchName: string) => {
@@ -101,29 +103,44 @@ export function RepoBranchesListPage() {
     isLoading: isDeletingBranch,
     error: deleteBranchError,
     reset: resetDeleteBranch
-  } = useDeleteBranchMutation(
-    { repo_ref: repoRef },
-    {
-      onSuccess: () => {
+  } = useDeleteBranchMutation({ repo_ref: repoRef })
+
+  const { violation, bypassable, bypassed, setAllStates, resetViolation } = useRuleViolationCheck()
+
+  const handleDeleteBranch = (branch_name: string) => {
+    deleteBranch({ branch_name, queryParams: { dry_run_rules: false, bypass_rules: bypassed } })
+      .then(() => {
         setIsDeleteDialogOpen(false)
         handleResetDeleteBranch()
         handleInvalidateBranchList()
-      }
+        resetViolation()
+      })
+      .catch(error => {
+        console.error(error)
+      })
+  }
+
+  const handleDeleteBranchWithDryRun = (branch_name: string) => {
+    deleteBranch({ branch_name, queryParams: { dry_run_rules: true, bypass_rules: false } })
+      .then(res => {
+        if (!isEmpty(res?.body?.rule_violations)) {
+          setAllStates({
+            violation: true,
+            bypassed: true,
+            bypassable: res?.body?.rule_violations?.[0]?.bypassable
+          })
+        } else setAllStates({ bypassable: true })
+      })
+      .catch(error => {
+        console.error(error)
+      })
+  }
+
+  useEffect(() => {
+    if (isDeleteDialogOpen && deleteBranchName) {
+      handleDeleteBranchWithDryRun(deleteBranchName)
     }
-  )
-
-  const { mutateAsync: saveBranch, isLoading: isCreatingBranch, error: createBranchError } = useCreateBranchMutation({})
-
-  const onSubmit = async (formValues: CreateBranchFormFields) => {
-    const { name, target } = formValues
-    await saveBranch({ repo_ref: repoRef, body: { name, target, bypass_rules: false } })
-    handleInvalidateBranchList()
-    setCreateBranchDialogOpen(false)
-  }
-
-  const handleDeleteBranch = (branch_name: string) => {
-    deleteBranch({ branch_name, queryParams: {} })
-  }
+  }, [isDeleteDialogOpen, deleteBranchName])
 
   useEffect(() => {
     setPaginationFromHeaders(
@@ -140,7 +157,13 @@ export function RepoBranchesListPage() {
     }
 
     calculateBranchDivergence({
-      body: { requests: branches?.map(branch => ({ from: branch.name, to: repoMetadata?.default_branch })) || [] }
+      body: {
+        requests:
+          branches?.map(branch => ({
+            from: normalizeGitRef(branch.name),
+            to: normalizeGitRef(repoMetadata?.default_branch)
+          })) || []
+      }
     })
   }, [calculateBranchDivergence, branches, repoMetadata?.default_branch])
 
@@ -166,14 +189,10 @@ export function RepoBranchesListPage() {
     <>
       <RepoBranchListView
         isLoading={isLoadingBranches || isLoadingDivergence}
-        isCreatingBranch={isCreatingBranch}
-        onSubmit={onSubmit}
         useRepoBranchesStore={useRepoBranchesStore}
-        isCreateBranchDialogOpen={isCreateBranchDialogOpen}
         setCreateBranchDialogOpen={setCreateBranchDialogOpen}
         searchQuery={query}
         setSearchQuery={setQuery}
-        createBranchError={createBranchError?.message}
         // toBranchRules={() => routes.toRepoBranchRules({ spaceId, repoId })}
         toPullRequestCompare={({ diffRefs }: { diffRefs: string }) =>
           routes.toPullRequestCompare({ spaceId, repoId, diffRefs })
@@ -183,7 +202,6 @@ export function RepoBranchesListPage() {
         }
         toCode={({ branchName }: { branchName: string }) => `${routes.toRepoFiles({ spaceId, repoId })}/${branchName}`}
         onDeleteBranch={handleSetDeleteBranch}
-        setCreateBranchSearchQuery={setCreateBranchSearchQuery}
       />
 
       <CreateBranchDialog
@@ -200,6 +218,8 @@ export function RepoBranchesListPage() {
         type="branch"
         identifier={deleteBranchName ?? undefined}
         isLoading={isDeletingBranch}
+        violation={violation}
+        bypassable={bypassable}
       />
     </>
   )

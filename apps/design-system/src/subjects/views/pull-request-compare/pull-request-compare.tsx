@@ -40,7 +40,6 @@ const PullRequestCompareWrapper: FC<Partial<PullRequestComparePageProps>> = prop
           isDeleted: false,
           filePath: 'bot.txt',
           diffData: {
-            fileId: 'some-id',
             containerId: 'some-container-id',
             contentId: 'some-content-id',
             isCombined: false,
@@ -52,7 +51,8 @@ const PullRequestCompareWrapper: FC<Partial<PullRequestComparePageProps>> = prop
             language: 'txt',
             blocks: [],
             oldName: 'bot.txt',
-            newName: 'bot.txt'
+            newName: 'bot.txt',
+            isRename: false
           }
         }
       ]}

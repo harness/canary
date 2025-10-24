@@ -1,11 +1,20 @@
-import { FC, useMemo } from 'react'
+import { FC, useMemo, useRef, useState } from 'react'
 
-import { SkeletonList } from '@/components'
+import { Layout, Skeleton } from '@/components'
 import { TypesUser } from '@/types'
 import { DiffModeEnum } from '@git-diff-view/react'
-import { activityToCommentItem, HandleUploadType, TypesCommit } from '@views/index'
+import { cn } from '@utils/cn'
+import {
+  activityToCommentItem,
+  FILE_VIEWED_OBSOLETE_SHA,
+  HandleUploadType,
+  SandboxLayout,
+  TypesCommit
+} from '@views/index'
 import { orderBy } from 'lodash-es'
 
+import { DraggableSidebarDivider, SIDEBAR_MIN_WIDTH } from '../../components/draggable-sidebar-divider'
+import { PullRequestDiffSidebar } from '../components/pull-request-diff-sidebar'
 import { CommitSuggestion, PullReqReviewDecision, TypesPullReq } from '../pull-request.types'
 import { PullRequestChanges } from './components/changes/pull-request-changes'
 import { CommitFilterItemProps, PullRequestChangesFilter } from './components/changes/pull-request-changes-filter'
@@ -58,6 +67,7 @@ interface RepoPullRequestChangesPageProps {
   jumpToDiff?: string
   setJumpToDiff: (fileName: string) => void
   toRepoFileDetails?: ({ path }: { path: string }) => string
+  currentRefForDiff?: string
   principalProps: PrincipalPropsType
 }
 const PullRequestChangesPage: FC<RepoPullRequestChangesPageProps> = ({
@@ -100,9 +110,13 @@ const PullRequestChangesPage: FC<RepoPullRequestChangesPageProps> = ({
   jumpToDiff,
   setJumpToDiff,
   toRepoFileDetails,
-  principalProps
+  principalProps,
+  currentRefForDiff
 }) => {
   const { diffs, pullReqStats } = usePullRequestProviderStore()
+  const [sidebarWidth, setSidebarWidth] = useState(SIDEBAR_MIN_WIDTH)
+  const containerRef = useRef<HTMLDivElement>(null)
+  const [showExplorer, setShowExplorer] = useState(true)
 
   // Convert activities to comment threads
   const activityBlocks = useMemo(() => {
@@ -122,9 +136,18 @@ const PullRequestChangesPage: FC<RepoPullRequestChangesPageProps> = ({
     return parentActivities.map(thread => thread.map(activityToCommentItem))
   }, [activities])
 
+  const viewedFileCount =
+    diffs?.reduce((count, currentDiff) => {
+      const isInFileViewsAndNotObsolete =
+        currentDiff.fileViews?.has(currentDiff.filePath) &&
+        currentDiff.fileViews?.get(currentDiff.filePath) !== FILE_VIEWED_OBSOLETE_SHA
+
+      return count + (isInFileViewsAndNotObsolete ? 1 : 0)
+    }, 0) ?? 0
+
   const renderContent = () => {
     if (loadingRawDiff) {
-      return <SkeletonList />
+      return <Skeleton.List />
     }
     return (
       <PullRequestChanges
@@ -132,7 +155,7 @@ const PullRequestChangesPage: FC<RepoPullRequestChangesPageProps> = ({
         principalProps={principalProps}
         data={
           diffs?.map(item => ({
-            text: item.filePath,
+            text: item.isRename ? `${item.oldName} → ${item.newName}` : item.filePath,
             addedLines: item.addedLines,
             deletedLines: item.deletedLines,
             data: item.raw,
@@ -144,7 +167,10 @@ const PullRequestChangesPage: FC<RepoPullRequestChangesPageProps> = ({
             diffData: item,
             isDeleted: !!item.isDeleted,
             unchangedPercentage: item.unchangedPercentage,
-            isBinary: item.isBinary
+            isBinary: item.isBinary,
+            isRename: !!item.isRename,
+            oldName: item.oldName,
+            newName: item.newName
           })) || []
         }
         diffMode={diffMode}
@@ -173,39 +199,66 @@ const PullRequestChangesPage: FC<RepoPullRequestChangesPageProps> = ({
         setJumpToDiff={setJumpToDiff}
         toRepoFileDetails={toRepoFileDetails}
         pullReqMetadata={pullReqMetadata}
+        currentRefForDiff={currentRefForDiff}
       />
     )
   }
 
   return (
-    <>
-      <PullRequestChangesFilter
-        active={''}
-        isApproving={isApproving}
-        currentUser={currentUser ?? {}}
-        pullRequestMetadata={pullReqMetadata ? pullReqMetadata : undefined}
-        reviewers={reviewers}
-        submitReview={submitReview}
-        refetchReviewers={refetchReviewers}
-        diffMode={diffMode}
-        setDiffMode={setDiffMode}
-        pullReqCommits={pullReqCommits}
-        defaultCommitFilter={defaultCommitFilter}
-        selectedCommits={selectedCommits}
-        setSelectedCommits={setSelectedCommits}
-        viewedFiles={diffs?.[0]?.fileViews?.size || 0}
-        pullReqStats={pullReqStats}
-        onCommitSuggestionsBatch={onCommitSuggestionsBatch}
-        commitSuggestionsBatchCount={commitSuggestionsBatchCount}
-        diffData={diffs?.map(diff => ({
-          filePath: diff.filePath,
-          addedLines: diff.addedLines,
-          deletedLines: diff.deletedLines
-        }))}
-        setJumpToDiff={setJumpToDiff}
-      />
-      {renderContent()}
-    </>
+    <Layout.Flex className="flex-1" ref={containerRef}>
+      {showExplorer && (
+        <Layout.Flex className="-mb-7">
+          <PullRequestDiffSidebar
+            sidebarWidth={sidebarWidth}
+            filePaths={diffs?.map(diff => diff.filePath) || []}
+            setJumpToDiff={setJumpToDiff}
+            diffsData={
+              diffs?.map(item => ({
+                addedLines: item.addedLines,
+                deletedLines: item.deletedLines,
+                lang: item.filePath.split('.')[1],
+                filePath: item.filePath,
+                isDeleted: !!item.isDeleted,
+                unchangedPercentage: item.unchangedPercentage || 0
+              })) || []
+            }
+          />
+          <DraggableSidebarDivider width={sidebarWidth} setWidth={setSidebarWidth} containerRef={containerRef} />
+        </Layout.Flex>
+      )}
+      <SandboxLayout.Main>
+        <SandboxLayout.Content className={cn('flex flex-col p-0', showExplorer ? 'pl-cn-lg' : '')}>
+          <PullRequestChangesFilter
+            active={''}
+            isApproving={isApproving}
+            currentUser={currentUser ?? {}}
+            pullRequestMetadata={pullReqMetadata ? pullReqMetadata : undefined}
+            reviewers={reviewers}
+            submitReview={submitReview}
+            refetchReviewers={refetchReviewers}
+            diffMode={diffMode}
+            setDiffMode={setDiffMode}
+            pullReqCommits={pullReqCommits}
+            defaultCommitFilter={defaultCommitFilter}
+            selectedCommits={selectedCommits}
+            setSelectedCommits={setSelectedCommits}
+            viewedFiles={viewedFileCount}
+            pullReqStats={pullReqStats}
+            onCommitSuggestionsBatch={onCommitSuggestionsBatch}
+            commitSuggestionsBatchCount={commitSuggestionsBatchCount}
+            showExplorer={showExplorer}
+            setShowExplorer={setShowExplorer}
+            diffData={diffs?.map(diff => ({
+              filePath: diff.filePath,
+              addedLines: diff.addedLines,
+              deletedLines: diff.deletedLines
+            }))}
+            setJumpToDiff={setJumpToDiff}
+          />
+          {renderContent()}
+        </SandboxLayout.Content>
+      </SandboxLayout.Main>
+    </Layout.Flex>
   )
 }
 

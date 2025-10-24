@@ -1,6 +1,7 @@
 import { useCallback, useEffect, useMemo, useState } from 'react'
 import { useNavigate, useParams } from 'react-router-dom'
 
+import { useMutation } from '@tanstack/react-query'
 import copy from 'clipboard-copy'
 import { isEmpty } from 'lodash-es'
 
@@ -11,8 +12,8 @@ import {
   mergePullReqOp,
   OpenapiMergePullReq,
   OpenapiStatePullReqRequest,
-  rebaseBranch,
   RebaseBranchRequestBody,
+  RepoRepositoryOutput,
   reviewerAddPullReq,
   reviewerDeletePullReq,
   statePullReq,
@@ -24,16 +25,18 @@ import {
   useGetBranchQuery,
   useListPrincipalsQuery,
   useListPullReqActivitiesQuery,
+  useRebaseBranchMutation,
   useRestorePullReqSourceBranchMutation,
   useRevertPullReqOpMutation,
   useReviewerListPullReqQuery,
   useUpdatePullReqMutation
 } from '@harnessio/code-service-client'
-import { SkeletonList } from '@harnessio/ui/components'
+import { Skeleton } from '@harnessio/ui/components'
 import {
   CodeOwnersData,
   DefaultReviewersDataProps,
   LatestCodeOwnerApprovalArrType,
+  PRCommentFilterType,
   PRPanelData,
   PullRequestConversationPage as PullRequestConversationView,
   PullRequestPanelProps,
@@ -46,8 +49,9 @@ import { useRoutes } from '../../framework/context/NavigationContext'
 import { useGetRepoRef } from '../../framework/hooks/useGetRepoPath'
 import { useMFEContext } from '../../framework/hooks/useMFEContext'
 import { useQueryState } from '../../framework/hooks/useQueryState'
+import { useAPIPath } from '../../hooks/useAPIPath.ts'
 import { PathParams } from '../../RouteDefinitions'
-import { filenameToLanguage } from '../../utils/git-utils'
+import { filenameToLanguage, normalizeGitRef } from '../../utils/git-utils'
 import { usePrConversationLabels } from './hooks/use-pr-conversation-labels'
 import { usePrFilters } from './hooks/use-pr-filters'
 import { usePRCommonInteractions } from './hooks/usePRCommonInteractions'
@@ -80,9 +84,7 @@ const getMockPullRequestActions = (
             id: '0',
             title: 'Open for review',
             description: 'Open this pull request for review.',
-            action: () => {
-              handlePrState('open')
-            }
+            action: () => handlePrState('open')
           }
         ]
       : pullReqMetadata?.is_draft
@@ -91,17 +93,7 @@ const getMockPullRequestActions = (
               id: '0',
               title: 'Ready for review',
               description: 'Open this pull request for review.',
-              action: () => {
-                handlePrState('open')
-              }
-            },
-            {
-              id: '1',
-              title: 'Close pull request',
-              description: 'Close this pull request. You can still re-open the request after closing.',
-              action: () => {
-                handlePrState('closed')
-              }
+              action: () => handlePrState('open')
             }
           ]
         : [
@@ -163,6 +155,12 @@ const onCopyClick = (commentId?: number, isNotCodeComment = false) => {
 
   url.searchParams.set('commentId', commentId.toString())
   copy(url.toString())
+}
+
+interface AiPullRequestSummaryParams {
+  repoMetadata: RepoRepositoryOutput
+  baseRef: string
+  headRef: string
 }
 
 export default function PullRequestConversationPage() {
@@ -360,6 +358,36 @@ export default function PullRequestConversationPage() {
     [updateTitle, refetchPullReq]
   )
 
+  const getApiPath = useAPIPath()
+
+  const mutation = useMutation(async ({ repoMetadata, baseRef, headRef }: AiPullRequestSummaryParams) => {
+    return fetch(getApiPath(`/api/v1/repos/${repoMetadata.path}/+/genai/change-summary`), {
+      method: 'POST',
+      body: JSON.stringify({
+        base_ref: baseRef,
+        head_ref: headRef
+      })
+    })
+      .then(res => res.json())
+      .then(json => ({
+        summary: json.summary
+      }))
+  })
+
+  const handleAiPullRequestSummary = useCallback(async () => {
+    if (repoMetadata && repoMetadata.path && pullReqMetadata?.source_branch && pullReqMetadata?.target_branch) {
+      return await mutation.mutateAsync({
+        repoMetadata,
+        baseRef: normalizeGitRef(pullReqMetadata?.target_branch) || '',
+        headRef: normalizeGitRef(pullReqMetadata.source_branch) || ''
+      })
+    }
+
+    return Promise.resolve({
+      summary: ''
+    })
+  }, [mutation])
+
   const onDeleteBranch = useCallback(() => {
     const onSuccessDeleteCommon = () => {
       setShowDeleteBranchButton(false)
@@ -501,7 +529,11 @@ export default function PullRequestConversationPage() {
     return {
       codeOwners: codeOwners,
       codeOwnerChangeReqEntries: findChangeReqDecisions(data, CodeOwnerReqDecision.CHANGEREQ),
-      codeOwnerPendingEntries: findWaitingDecisions(data),
+      codeOwnerPendingEntries: findWaitingDecisions(
+        data,
+        pullReqMetadata?.source_sha ?? '',
+        prPanelData?.reqCodeOwnerLatestApproval
+      ),
       codeOwnerApprovalEntries,
       latestCodeOwnerApprovalArr,
       reqCodeOwnerApproval: prPanelData?.reqCodeOwnerApproval,
@@ -526,7 +558,11 @@ export default function PullRequestConversationPage() {
     if (!commentId || isScrolledToComment || prPanelData.PRStateLoading || activityData?.length === 0) return
     // Slight timeout so the UI has time to expand/hydrate
     const timeoutId = setTimeout(() => {
-      const elem = document.getElementById(`comment-${commentId}`)
+      const mfeRoot = document.getElementById('code-mfe-root')
+      const shadowRoot = mfeRoot?.shadowRoot as ShadowRoot
+      const elem = mfeRoot
+        ? shadowRoot?.getElementById(`comment-${commentId}`)
+        : document.getElementById(`comment-${commentId}`)
       if (!elem) return
       elem.scrollIntoView({ behavior: 'smooth', block: 'center' })
       setIsScrolledToComment(true)
@@ -622,6 +658,18 @@ export default function PullRequestConversationPage() {
   const [mergeTitle, setMergeTitle] = useState(pullReqMetadata?.title || '')
   const [mergeMessage, setMergeMessage] = useState('')
   const [isMerging, setIsMerging] = useState(false)
+  const { mutateAsync: performRebase, isLoading: isRebasing } = useRebaseBranchMutation(
+    { repo_ref: repoRef },
+    {
+      onSuccess: () => {
+        handleRefetchData()
+        setRuleViolationArr(undefined)
+      },
+      onError: (error: any) => {
+        setRebaseErrorMessage(error.message || 'Failed to rebase branch. Please try again.')
+      }
+    }
+  )
   const [selectedMergeMethod, setSelectedMergeMethod] = useState<EnumMergeMethod | null>(null)
 
   // Update merge title based on selected merge method
@@ -728,7 +776,7 @@ export default function PullRequestConversationPage() {
     dryMerge
   })
 
-  const handleRebaseBranch = useCallback(() => {
+  const handleRebaseBranch = useCallback(async () => {
     const payload: RebaseBranchRequestBody = {
       ...(pullReqMetadata?.target_branch
         ? {
@@ -749,13 +797,29 @@ export default function PullRequestConversationPage() {
         : {})
     }
 
-    rebaseBranch({ body: payload, repo_ref: repoRef })
-      .then(() => {
-        handleRefetchData()
-        setRuleViolationArr(undefined)
-      })
-      .catch(error => setRebaseErrorMessage(error.message))
-  }, [pullReqMetadata, handleRefetchData, setRuleViolationArr, repoRef])
+    await performRebase({ body: payload })
+  }, [pullReqMetadata, performRebase])
+
+  const handleViewUnresolvedComments = useCallback(() => {
+    const shadowRoot = document.activeElement?.shadowRoot as ShadowRoot
+
+    filtersData.setActivityFilter({
+      label: 'Unresolved comments',
+      value: PRCommentFilterType.UNRESOLVED_COMMENTS
+    })
+    const unresolvedComments = activities?.filter(
+      activity => !activity.resolved && (activity.type === 'comment' || activity.code_comment)
+    )
+    if (unresolvedComments && unresolvedComments.length > 0) {
+      const firstUnresolvedCommentId = unresolvedComments[0].id
+      const firstUnresolvedCommentDiv = shadowRoot?.getElementById
+        ? shadowRoot.getElementById(`comment-${firstUnresolvedCommentId}`)
+        : document.getElementById(`comment-${firstUnresolvedCommentId}`)
+      if (firstUnresolvedCommentDiv) {
+        firstUnresolvedCommentDiv.scrollIntoView({ behavior: 'smooth', block: 'center' })
+      }
+    }
+  }, [filtersData, activities])
 
   /**
    * Memoize overviewProps
@@ -764,6 +828,7 @@ export default function PullRequestConversationPage() {
     () => ({
       toCommitDetails: ({ sha }: { sha: string }) => routes.toRepoCommitDetails({ spaceId, repoId, commitSHA: sha }),
       handleUpdateDescription,
+      handleAiPullRequestSummary,
       handleDeleteComment: deleteComment,
       handleUpdateComment: updateComment,
       data: activities,
@@ -790,6 +855,7 @@ export default function PullRequestConversationPage() {
     [
       routes,
       handleUpdateDescription,
+      handleAiPullRequestSummary,
       deleteComment,
       updateComment,
       activities,
@@ -815,6 +881,7 @@ export default function PullRequestConversationPage() {
     return {
       handleRebaseBranch,
       handlePrState,
+      handleViewUnresolvedComments,
       changesInfo: {
         header: changesInfo.title,
         content: changesInfo.statusMessage,
@@ -866,6 +933,7 @@ export default function PullRequestConversationPage() {
       setMergeTitle,
       setMergeMessage,
       isMerging,
+      isRebasing,
       onMergeMethodSelect: handleMergeMethodSelect
     }
   }, [
@@ -905,12 +973,14 @@ export default function PullRequestConversationPage() {
     mergeMessage,
     routes,
     isMerging,
+    isRebasing,
     setSelectedMergeMethod,
-    handleMergeMethodSelect
+    handleMergeMethodSelect,
+    handleViewUnresolvedComments
   ])
 
   if (prPanelData?.PRStateLoading || (changesLoading && !!pullReqMetadata?.closed)) {
-    return <SkeletonList />
+    return <Skeleton.List />
   }
   return (
     <>

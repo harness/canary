@@ -19,39 +19,96 @@ export function transformToRuleDetailsUrl(url?: string, ruleId?: string): string
  * @param params Parameters needed to generate the URL
  * @returns The URL for the rule details page
  */
-export function generateRuleDetailsUrl({
+
+// @TODO: Remove navigate fallback once MFE route utils are available across all release branches
+
+export function getScopedRuleUrl({
   scope,
   identifier,
+  toCODEManageRepositories,
+  toCODERule,
   toAccountSettings,
   toOrgSettings,
   toProjectSettings,
   toRepoBranchRule,
   spaceId,
-  repoId
+  repoId,
+  accountId,
+  orgIdentifier,
+  projectIdentifier,
+  settingSection = 'rules'
 }: {
   scope: number
   identifier: string
+  settingSection?: string
+  toCODEManageRepositories?: ({
+    space,
+    ruleId,
+    settingSection
+  }: {
+    space: string
+    ruleId: string
+    settingSection: string
+  }) => void
+  toCODERule?: ({
+    repoPath,
+    ruleId,
+    settingSection
+  }: {
+    repoPath: string
+    ruleId: string
+    settingSection: string
+  }) => void
   toAccountSettings?: () => string
   toOrgSettings?: () => string
   toProjectSettings?: () => string
   toRepoBranchRule?: (params: { spaceId: string; repoId: string; identifier: string }) => string
   spaceId?: string
   repoId?: string
-}): string {
+  accountId?: string
+  orgIdentifier?: string
+  projectIdentifier?: string
+}) {
   if (scope === 0) {
-    return toRepoBranchRule?.({ spaceId: spaceId ?? '', repoId: repoId ?? '', identifier }) || ''
+    const repoPath = [accountId, orgIdentifier, projectIdentifier, repoId].filter(Boolean).join('/')
+
+    if (toCODERule) {
+      toCODERule({
+        repoPath,
+        ruleId: identifier,
+        settingSection
+      })
+    } else {
+      const url = toRepoBranchRule?.({ spaceId: spaceId ?? '', repoId: repoId ?? '', identifier }) ?? ''
+      window.location.href = transformToRuleDetailsUrl(url, identifier)
+    }
   }
 
   if (scope === 1) {
-    return transformToRuleDetailsUrl(toAccountSettings?.(), identifier)
+    if (!toCODEManageRepositories)
+      window.location.href = transformToRuleDetailsUrl(toAccountSettings?.() ?? '', identifier)
+    toCODEManageRepositories?.({
+      space: `${accountId ?? ''}`,
+      ruleId: identifier,
+      settingSection
+    })
   }
 
   if (scope === 2) {
-    return transformToRuleDetailsUrl(toOrgSettings?.(), identifier)
+    if (!toCODEManageRepositories) window.location.href = transformToRuleDetailsUrl(toOrgSettings?.() ?? '', identifier)
+    toCODEManageRepositories?.({
+      space: `${accountId ?? ''}/${orgIdentifier ?? ''}`,
+      ruleId: identifier,
+      settingSection
+    })
   }
   if (scope === 3) {
-    return transformToRuleDetailsUrl(toProjectSettings?.(), identifier)
+    if (!toCODEManageRepositories)
+      window.location.href = transformToRuleDetailsUrl(toProjectSettings?.() ?? '', identifier)
+    toCODEManageRepositories?.({
+      space: `${accountId ?? ''}/${orgIdentifier ?? ''}/${projectIdentifier ?? ''}`,
+      ruleId: identifier,
+      settingSection
+    })
   }
-
-  return ''
 }

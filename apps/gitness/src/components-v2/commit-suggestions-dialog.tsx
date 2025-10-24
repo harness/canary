@@ -1,4 +1,4 @@
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 
 import {
   CommentApplySuggestionsOkResponse,
@@ -35,6 +35,13 @@ export default function CommitSuggestionsDialog({
   const { mutateAsync: applyChanges } = useCommentApplySuggestionsMutation({})
 
   const commitTitlePlaceholder = 'Apply suggestion from code review'
+
+  // Clear error when dialog closes
+  useEffect(() => {
+    if (!open) {
+      setError(undefined)
+    }
+  }, [open])
 
   const onSubmit = async (formValues: CommitSuggestionsFormType) => {
     const { message, title } = formValues

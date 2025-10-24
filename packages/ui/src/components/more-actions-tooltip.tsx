@@ -6,7 +6,6 @@ import { DropdownMenu } from '@components/dropdown-menu'
 import { IconV2, type IconPropsV2 } from '@components/icon-v2'
 import { cn } from '@utils/cn'
 
-import { Layout } from './layout'
 import { Text } from './text'
 
 export interface ActionData {
@@ -32,8 +31,8 @@ export interface MoreActionsTooltipProps {
 export const MoreActionsTooltip: FC<MoreActionsTooltipProps> = ({
   actions,
   iconName = 'more-vert',
-  sideOffset = -6,
-  alignOffset = 10,
+  sideOffset = 2,
+  alignOffset = 0,
   className
 }) => {
   const { Link } = useRouterContext()
@@ -46,12 +45,17 @@ export const MoreActionsTooltip: FC<MoreActionsTooltipProps> = ({
           className={cn('text-icons-1 hover:text-icons-2 data-[state=open]:text-icons-2')}
           variant="ghost"
           iconOnly
-          size="sm"
+          size="md"
         >
           <IconV2 name={iconName} />
         </Button>
       </DropdownMenu.Trigger>
-      <DropdownMenu.Content className={className} align="end" sideOffset={sideOffset} alignOffset={alignOffset}>
+      <DropdownMenu.Content
+        className={cn('min-w-[208px]', className)}
+        align="end"
+        sideOffset={sideOffset}
+        alignOffset={alignOffset}
+      >
         {actions.map((action, idx) =>
           action.to ? (
             <Link
@@ -61,28 +65,47 @@ export const MoreActionsTooltip: FC<MoreActionsTooltipProps> = ({
                 e.stopPropagation()
               }}
             >
-              <DropdownMenu.Item
-                title={
-                  <Layout.Horizontal gap="xs" className="items-center">
-                    {action.iconName ? <IconV2 name={action.iconName} /> : null}
+              {action.iconName ? (
+                <DropdownMenu.IconItem
+                  icon={action.iconName}
+                  iconClassName={cn({ 'text-cn-foreground-danger': action.isDanger })}
+                  title={
                     <Text color={action.isDanger ? 'danger' : 'foreground-2'} truncate>
                       {action.title}
                     </Text>
-                  </Layout.Horizontal>
-                }
-              />
+                  }
+                />
+              ) : (
+                <DropdownMenu.Item
+                  title={
+                    <Text color={action.isDanger ? 'danger' : 'foreground-2'} truncate>
+                      {action.title}
+                    </Text>
+                  }
+                />
+              )}
             </Link>
+          ) : action.iconName ? (
+            <DropdownMenu.IconItem
+              icon={action.iconName}
+              title={
+                <Text color={action.isDanger ? 'danger' : 'foreground-2'} truncate>
+                  {action.title}
+                </Text>
+              }
+              iconClassName={cn({ 'text-cn-foreground-danger': action.isDanger })}
+              key={`${action.title}-${idx}`}
+              onClick={e => {
+                e.stopPropagation()
+                action?.onClick?.()
+              }}
+            />
           ) : (
             <DropdownMenu.Item
               title={
-                <Layout.Horizontal gap="xs" className="items-center">
-                  {action.iconName ? (
-                    <IconV2 className={cn({ 'text-cn-foreground-danger': action.isDanger })} name={action.iconName} />
-                  ) : null}
-                  <Text color={action.isDanger ? 'danger' : 'foreground-2'} truncate>
-                    {action.title}
-                  </Text>
-                </Layout.Horizontal>
+                <Text color={action.isDanger ? 'danger' : 'foreground-2'} truncate>
+                  {action.title}
+                </Text>
               }
               key={`${action.title}-${idx}`}
               onClick={e => {
@@ -96,3 +119,4 @@ export const MoreActionsTooltip: FC<MoreActionsTooltipProps> = ({
     </DropdownMenu.Root>
   )
 }
+MoreActionsTooltip.displayName = 'MoreActionsTooltip'

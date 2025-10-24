@@ -36,7 +36,8 @@ interface PRListFilterOptions {
   t: TFunctionWithFallback
   onAuthorSearch: (name: string) => void
   isPrincipalsLoading?: boolean
-  principalData: { label: string; value: string }[]
+  isProjectLevel?: boolean
+  principalData: { label: string | React.ReactNode; value: string }[]
   customFilterOptions?: PRListFilterOptionConfig
 }
 
@@ -45,10 +46,11 @@ export const getPRListFilterOptions = ({
   onAuthorSearch,
   isPrincipalsLoading,
   principalData,
+  isProjectLevel,
   customFilterOptions = [],
   scope
 }: PRListFilterOptions & { scope: Scope }): PRListFilterOptionConfig => {
-  const scopeFilterOptions = getFilterScopeOptions({ t, scope })
+  const { options: scopeFilterOptions, defaultValue: scopeFilterDefaultValue } = getFilterScopeOptions({ t, scope })
   const { accountId, orgIdentifier, projectIdentifier } = scope
   return [
     {
@@ -84,17 +86,19 @@ export const getPRListFilterOptions = ({
     /**
      * Scope filter is only applicable at Account and Organization scope
      */
-    ...(!(accountId && orgIdentifier && projectIdentifier)
+    ...(!(accountId && orgIdentifier && projectIdentifier) && isProjectLevel
       ? [
           {
             label: t('views:scope.label', 'Scope'),
             value: 'include_subspaces' as keyof PRListFilters,
             type: FilterFieldTypes.ComboBox as FilterFieldTypes.ComboBox,
+            defaultValue: scopeFilterDefaultValue,
             filterFieldConfig: {
               options: scopeFilterOptions,
               placeholder: 'Select scope',
               allowSearch: false
             },
+            sticky: true,
             parser: {
               parse: (value: string): ComboBoxOptions => {
                 let selectedValue: string

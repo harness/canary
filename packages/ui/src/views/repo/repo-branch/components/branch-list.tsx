@@ -2,13 +2,14 @@ import { FC } from 'react'
 
 import {
   ActionData,
-  Avatar,
+  AvatarWithTooltip,
+  CopyTag,
   IconPropsV2,
   IconV2,
+  Layout,
   MoreActionsTooltip,
-  NoData,
   Separator,
-  SkeletonTable,
+  Skeleton,
   StatusBadge,
   Table,
   Tag,
@@ -26,10 +27,6 @@ export const BranchesList: FC<BranchListPageProps> = ({
   isLoading,
   branches,
   defaultBranch,
-  isDirtyList,
-  setCreateBranchDialogOpen,
-  handleResetFiltersAndPages,
-  // toBranchRules,
   toPullRequestCompare,
   toPullRequest,
   toCode,
@@ -38,82 +35,40 @@ export const BranchesList: FC<BranchListPageProps> = ({
   const { t } = useTranslation()
   const { Link } = useRouterContext()
 
-  if (!branches?.length && !isLoading) {
-    return (
-      <NoData
-        className="m-auto"
-        imageName={isDirtyList ? 'no-search-magnifying-glass' : 'no-data-branches'}
-        withBorder={isDirtyList}
-        title={
-          isDirtyList
-            ? t('views:noData.noResults', 'No search results')
-            : t('views:noData.noBranches', 'No branches yet')
-        }
-        description={
-          isDirtyList
-            ? [
-                t(
-                  'views:noData.noResultsDescription',
-                  'No branches match your search. Try adjusting your keywords or filters.',
-                  {
-                    type: 'branches'
-                  }
-                )
-              ]
-            : [
-                t('views:noData.createBranchDescription', "Your branches will appear here once they're created."),
-                t('views:noData.startBranchDescription', 'Start branching to see your work organized.')
-              ]
-        }
-        secondaryButton={
-          isDirtyList
-            ? {
-                label: t('views:noData.clearSearch', 'Clear search'),
-                onClick: handleResetFiltersAndPages
-              }
-            : {
-                label: t('views:repos.createBranch', 'Create branch'),
-                onClick: () => {
-                  setCreateBranchDialogOpen(true)
-                }
-              }
-        }
-      />
-    )
-  }
-
   if (isLoading) {
-    return <SkeletonTable countRows={12} countColumns={6} />
+    return <Skeleton.Table countRows={12} countColumns={6} />
   }
 
   return (
-    <Table.Root className={isLoading ? '[mask-image:linear-gradient(to_bottom,black_30%,transparent_100%)]' : ''}>
+    <Table.Root>
       <Table.Header>
         <Table.Row>
-          <Table.Head className="w-[25rem]">
+          <Table.Head className="w-[33%]">
             <Text variant="caption-strong">{t('views:repos.branch', 'Branch')}</Text>
           </Table.Head>
-          <Table.Head className="w-[11.71875rem]">
+          <Table.Head className="w-[15%]">
             <Text variant="caption-strong">{t('views:repos.update', 'Updated')}</Text>
           </Table.Head>
-          {branches[0]?.checks ? (
-            <Table.Head className="w-[11.71875rem]">
+
+          {branches[0]?.checks && (
+            <Table.Head className="w-[15%]">
               <Text variant="caption-strong">{t('views:repos.checkStatus', 'Check status')}</Text>
             </Table.Head>
-          ) : null}
-          <Table.Head className="w-[11.71875rem]">
-            <div className="mx-auto grid w-28 grid-flow-col grid-cols-[1fr_auto_1fr] items-center justify-center gap-x-1.5">
+          )}
+
+          <Table.Head className="w-[15%]" contentClassName="w-full">
+            <Layout.Grid flow="column" columns="1fr auto 1fr" align="center" justify="center" gapX="2xs">
               <Text variant="caption-strong" align="right">
                 {t('views:repos.behind', 'Behind')}
               </Text>
               <Separator orientation="vertical" />
               <Text variant="caption-strong">{t('views:repos.ahead', 'Ahead')}</Text>
-            </div>
+            </Layout.Grid>
           </Table.Head>
-          <Table.Head className="w-[11.71875rem] whitespace-nowrap">
+          <Table.Head className="w-[15%] whitespace-nowrap">
             <Text variant="caption-strong">{t('views:repos.pullRequest', 'Pull Request')}</Text>
           </Table.Head>
-          <Table.Head className="w-[4.25rem]" />
+          <Table.Head className="w-[7%]" />
         </Table.Row>
       </Table.Header>
 
@@ -123,89 +78,80 @@ export const BranchesList: FC<BranchListPageProps> = ({
 
           return (
             <Table.Row key={branch.id} className="cursor-pointer" to={toCode?.({ branchName: branch.name })}>
-              {/* branch name */}
-              <Table.Cell className="content-center">
-                <div className="flex items-center">
-                  <Tag
-                    variant="secondary"
-                    size="md"
-                    value={branch?.name}
-                    icon="lock"
-                    theme="blue"
-                    showIcon={defaultBranch === branch?.name}
-                    showCopyButton
-                  />
-                  {/* <CopyButton buttonVariant="ghost" color="gray" name={branch?.name} /> */}
-                </div>
+              <Table.Cell>
+                <CopyTag
+                  variant="secondary"
+                  value={branch?.name}
+                  icon={defaultBranch === branch?.name ? 'lock' : undefined}
+                  theme="gray"
+                />
               </Table.Cell>
-              {/* user avatar and timestamp */}
-              <Table.Cell className="content-center" disableLink>
-                <div className="flex items-center gap-2">
-                  <Avatar name={branch?.user?.name} src={branch?.user?.avatarUrl} size="sm" rounded />
+
+              <Table.Cell disableLink>
+                <Layout.Flex align="center" gapX="xs">
+                  <AvatarWithTooltip name={branch?.user?.name} src={branch?.user?.avatarUrl} size="sm" rounded />
                   <TimeAgoCard
                     timestamp={branch?.timestamp}
                     dateTimeFormatOptions={{ dateStyle: 'medium' }}
                     textProps={{ color: 'foreground-1', truncate: true }}
                   />
-                </div>
+                </Layout.Flex>
               </Table.Cell>
               {/* checkstatus: show in the playground, hide the check status column if the checks are null in the gitness without data */}
-              {branch?.checks && (
-                <Table.Cell className="content-center">
-                  <div className="flex items-center">
-                    {checkState === 'running' ? (
-                      <span className="mr-1.5 size-2 rounded-full bg-icons-alert" />
-                    ) : (
-                      <IconV2
-                        className={cn('mr-1.5', {
-                          'text-icons-success': checkState === 'success',
-                          'text-icons-danger': checkState === 'failure'
-                        })}
-                        name={
-                          cn({
-                            check: checkState === 'success',
-                            xmark: checkState === 'failure'
-                          }) as NonNullable<IconPropsV2['name']>
-                        }
-                        size="2xs"
-                      />
-                    )}
-                    <span className="truncate text-cn-foreground-3">{branch?.checks?.done}</span>
-                    <span className="mx-px">/</span>
-                    <span className="truncate text-cn-foreground-3">{branch?.checks?.total}</span>
-                  </div>
+              {checkState && (
+                <Table.Cell>
+                  <Layout.Flex align="center" gapX="xs">
+                    <IconV2
+                      className={cn('shrink-0', {
+                        'text-cn-foreground-success': checkState === 'success',
+                        'text-cn-foreground-danger': checkState === 'failure',
+                        'text-cn-foreground-warning': checkState === 'running'
+                      })}
+                      name={
+                        cn({
+                          check: checkState === 'success',
+                          xmark: checkState === 'failure',
+                          circle: checkState === 'running'
+                        }) as NonNullable<IconPropsV2['name']>
+                      }
+                      size="2xs"
+                    />
+
+                    <Text variant="body-single-line-strong" className="text-cn-foreground-surface-gray">
+                      <span>{branch?.checks?.done || 0}</span>
+                      <span>/</span>
+                      <span>{branch?.checks?.total || 0}</span>
+                    </Text>
+                  </Layout.Flex>
                 </Table.Cell>
               )}
               {/* calculated divergence bar & default branch */}
-              <Table.Cell className="content-center">
-                <div className="flex size-full items-center justify-center">
-                  {branch?.behindAhead?.default ? (
-                    <Tag variant="outline" size="md" value={t('views:repos.default', 'Default')} theme="gray" rounded />
-                  ) : (
-                    <DivergenceGauge behindAhead={branch?.behindAhead || {}} />
-                  )}
-                </div>
+              <Table.Cell>
+                {branch?.behindAhead?.default ? (
+                  <Tag className="m-auto" value={t('views:repos.default', 'Default')} rounded />
+                ) : (
+                  <DivergenceGauge className="m-auto" behindAhead={branch?.behindAhead || {}} />
+                )}
               </Table.Cell>
 
-              {/* PR link */}
-              <Table.Cell className="max-w-20 content-center" disableLink>
+              <Table.Cell disableLink>
                 {branch.pullRequests && branch.pullRequests.length > 0 && branch.pullRequests[0].number && (
-                  <StatusBadge
-                    variant="outline"
-                    size="md"
-                    theme={
-                      getPrState(
-                        branch.pullRequests[0].is_draft,
-                        branch.pullRequests[0].merged,
-                        branch.pullRequests[0].state
-                      ).theme
-                    }
-                    // className="w-[66px]"
+                  <Link
+                    to={toPullRequest?.({ pullRequestId: branch.pullRequests[0].number }) || ''}
+                    onClick={e => e.stopPropagation()}
+                    className="focus-visible:shadow-ring-focus rounded-2 inline-flex"
                   >
-                    <Link
-                      to={toPullRequest?.({ pullRequestId: branch.pullRequests[0].number }) || ''}
-                      onClick={e => e.stopPropagation()}
-                      className="flex w-full gap-1"
+                    {/* TODO: Merged state is not shown in the branch list, because the PR gets removed from 'branch.pullRequests' */}
+                    <StatusBadge
+                      variant="outline"
+                      size="md"
+                      theme={
+                        getPrState(
+                          branch.pullRequests[0].is_draft,
+                          branch.pullRequests[0].merged,
+                          branch.pullRequests[0].state
+                        ).theme
+                      }
                     >
                       <IconV2
                         name={
@@ -216,37 +162,26 @@ export const BranchesList: FC<BranchListPageProps> = ({
                           ).icon
                         }
                         size="xs"
-                        className={cn({
-                          'text-icons-success':
-                            branch.pullRequests[0].state === 'open' && !branch.pullRequests[0].is_draft,
-                          'text-icons-1': branch.pullRequests[0].state === 'open' && branch.pullRequests[0].is_draft,
-                          'text-icons-danger': branch.pullRequests[0].state === 'closed',
-                          'text-icons-merged': branch.pullRequests[0].merged
-                        })}
                       />
                       #{branch.pullRequests[0].number}
-                    </Link>
-                  </StatusBadge>
+                    </StatusBadge>
+                  </Link>
                 )}
               </Table.Cell>
               <Table.Cell className="text-right" disableLink>
                 <MoreActionsTooltip
                   iconName="more-horizontal"
                   actions={[
-                    // Don't show New Pull Request option for default branch
+                    // Don't show Compare option for default branch
                     ...(!branch?.behindAhead?.default
                       ? [
                           {
-                            title: t('views:repos.newPullReq', 'New pull request'),
+                            title: t('views:repos.compare', 'Compare'),
                             to: toPullRequestCompare?.({ diffRefs: `${defaultBranch}...${branch.name}` }) || '',
                             iconName: 'git-pull-request'
                           } as ActionData
                         ]
                       : []),
-                    // {
-                    //   title: t('views:repos.viewRules', 'View Rules'),
-                    //   to: toBranchRules?.()
-                    // },
                     {
                       title: t('views:repos.browse', 'Browse'),
                       to: toCode?.({ branchName: branch.name }) || '',

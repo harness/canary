@@ -1,14 +1,15 @@
 import { FC } from 'react'
 
-import { Button } from '@/components'
+import { Button, IconV2 } from '@/components'
 import { useTranslation } from '@/context'
 import { SandboxLayout } from '@/views'
 
 export interface NotFoundPageProps {
   pageTypeText?: string
+  errorMessage?: string
 }
 
-export const NotFoundPage: FC<NotFoundPageProps> = ({ pageTypeText }) => {
+export const NotFoundPage: FC<NotFoundPageProps> = ({ pageTypeText, errorMessage }) => {
   const { t } = useTranslation()
 
   const handleReload = () => {
@@ -29,10 +30,11 @@ export const NotFoundPage: FC<NotFoundPageProps> = ({ pageTypeText }) => {
                 `The requested page is not found. You can go back to view all ${pageTypeText} and manage your settings.`,
                 { type: pageTypeText }
               )
-            : t('views:notFound.description', 'The requested page is not found.')}
+            : errorMessage || t('views:notFound.description', 'The requested page is not found.')}
         </span>
         <Button variant="outline" type="button" onClick={handleReload}>
-          {t('views:notFound.button', 'Reload page')}
+          <IconV2 name="refresh" />
+          {t('views:notFound.button', 'Reload Page')}
         </Button>
       </div>
     </SandboxLayout.Main>

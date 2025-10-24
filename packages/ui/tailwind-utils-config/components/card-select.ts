@@ -41,7 +41,12 @@ export default {
     gap: 'var(--cn-card-check-md-gap)',
 
     '&:hover:not([data-disabled])': {
-      borderColor: 'var(--cn-border-1)'
+      borderColor: 'var(--cn-border-brand)'
+    },
+
+    '&:where(:not([data-disabled])):focus': {
+      outline: 'var(--cn-focus)',
+      outlineOffset: 'calc(var(--cn-size-px) * -2)'
     },
 
     '&:where([data-disabled])': {
@@ -50,8 +55,8 @@ export default {
     },
 
     '&:where([data-state="checked"])': {
-      borderColor: 'var(--cn-border-accent)',
-      backgroundImage: 'var(--cn-comp-card-gradient)'
+      borderColor: 'var(--cn-border-brand)',
+      background: 'var(--cn-set-brand-soft-bg)'
     },
 
     '.cn-card-select-content': {
@@ -67,9 +72,7 @@ export default {
       right: 'var(--cn-spacing-4)',
       top: '50%',
       transform: 'translateY(-50%)',
-      width: '1rem',
-      height: '1rem',
-      color: 'var(--cn-text-1)'
+      color: 'var(--cn-text-brand)'
     },
 
     '.cn-card-select-title': {

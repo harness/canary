@@ -1,7 +1,7 @@
 import { FC } from 'react'
 
 import { useRouterContext, useTranslation } from '@/context'
-import { NoData, Pagination } from '@components/index'
+import { IconV2, NoData, Pagination } from '@components/index'
 import { Spacer } from '@components/spacer'
 
 import ConnectorDetailsActivitiesList from './connector-details-activities-list'
@@ -36,7 +36,12 @@ const ConnectorDetailsActivities: FC<ConnectorDetailsActivityProps> = ({
             )
         ]}
         primaryButton={{
-          label: t('views:notFound.button', 'Reload page'),
+          label: (
+            <>
+              <IconV2 name="refresh" />
+              {t('views:notFound.button', 'Reload Page')}
+            </>
+          ),
           onClick: () => {
             navigate(0) // Reload the page
           }

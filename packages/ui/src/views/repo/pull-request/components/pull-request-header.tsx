@@ -1,10 +1,9 @@
 import { useCallback, useState } from 'react'
 
-import { Button, IconV2, Layout, StatusBadge, Text, TimeAgoCard } from '@/components'
+import { Avatar, BranchTag, Button, IconV2, Layout, StatusBadge, Text, TimeAgoCard } from '@/components'
 import { cn } from '@utils/cn'
 import { BranchSelectorContainerProps } from '@views/repo'
 
-import PullRequestBranchBadge from '../details/components/conversation/pull-request-branch-badge'
 import { getPrState } from '../utils'
 import { PullRequestHeaderEditDialog } from './pull-request-header-edit-dialog'
 
@@ -65,15 +64,13 @@ export const PullRequestHeader: React.FC<PullRequestTitleProps> = ({
   return (
     <>
       <Layout.Vertical gap="md" className={cn(className)}>
-        <Layout.Horizontal gap="xs" align="center">
-          <Layout.Horizontal gap="xs" align="center">
-            <Text as="h1" className="max-w-[95%] truncate" variant="heading-section" color="foreground-1">
-              {title}
-            </Text>
-            <Text as="h1" className="max-w-[95%] truncate" variant="heading-section" color="foreground-2">
+        <Layout.Horizontal gap="sm" align="end">
+          <Text as="h1" variant="heading-section" className="break-all [&>*]:ml-cn-xs">
+            {title}
+            <Text as="span" variant="heading-section" color="foreground-3">
               #{number}
             </Text>
-          </Layout.Horizontal>
+          </Text>
 
           <Button
             className="group"
@@ -94,6 +91,7 @@ export const PullRequestHeader: React.FC<PullRequestTitleProps> = ({
           </StatusBadge>
 
           <Layout.Horizontal gap="3xs" align="center" wrap="wrap">
+            <Avatar name={author?.display_name || author?.email || ''} rounded />
             <Text variant="body-single-line-strong" color="foreground-1">
               {author?.display_name || author?.email || ''}
             </Text>
@@ -102,11 +100,11 @@ export const PullRequestHeader: React.FC<PullRequestTitleProps> = ({
               into
             </Text>
 
-            <PullRequestBranchBadge branchName={target_branch || ''} spaceId={spaceId || ''} repoId={repoId || ''} />
+            <BranchTag branchName={target_branch || ''} spaceId={spaceId || ''} repoId={repoId || ''} />
             <Text variant="body-single-line-normal" color="foreground-2">
               from
             </Text>
-            <PullRequestBranchBadge branchName={source_branch || ''} spaceId={spaceId || ''} repoId={repoId || ''} />
+            <BranchTag branchName={source_branch || ''} spaceId={spaceId || ''} repoId={repoId || ''} />
             <span className="mx-1.5 h-4 w-px bg-cn-borders-3" />
             <TimeAgoCard timestamp={created} />
           </Layout.Horizontal>

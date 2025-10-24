@@ -171,6 +171,8 @@ const FilterGroupInner = <
                       <FilterHandler.Component<keyof T>
                         parser={filterOption.parser as any}
                         filterKey={filterOption.value}
+                        sticky={filterOption.sticky}
+                        defaultValue={filterOption.defaultValue as T[keyof T]}
                         key={filterOption.value}
                       >
                         {({ onChange, removeFilter, value }) =>

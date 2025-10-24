@@ -17,7 +17,7 @@ import { tagsStore } from './repo-tags-store'
 export const RepoTagsList = () => {
   const [openCreateTagDialog, setOpenCreateTagDialog] = useState(false)
   const [openCreateBranchDialog, setOpenCreateBranchDialog] = useState(false)
-  const [selectedTagInList, setSelectedTagInList] = useState<BranchSelectorListItem | null>(null)
+  const [selectedTagInList, setSelectedTagInList] = useState<BranchSelectorListItem>()
   const [preSelectedTab, setPreSelectedTab] = useState<BranchSelectorTab>(BranchSelectorTab.BRANCHES)
 
   const [openDeleteTagDialog, setOpenDeleteTagDialog] = useState(false)
@@ -60,7 +60,9 @@ export const RepoTagsList = () => {
         onSubmit={noop}
         isLoading={false}
         error=""
-        selectedBranchOrTag={null}
+        violation={false}
+        bypassable={false}
+        resetViolation={noop}
         branchSelectorRenderer={() => (
           <BranchSelectorV2
             branchList={branches}
@@ -98,6 +100,9 @@ export const RepoTagsList = () => {
             preSelectedTab={preSelectedTab}
           />
         )}
+        violation={false}
+        bypassable={false}
+        resetViolation={noop}
       />
       <DeleteAlertDialog
         open={openDeleteTagDialog}

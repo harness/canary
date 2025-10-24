@@ -3,6 +3,8 @@ import { noop } from '@utils/viewUtils'
 import { DiffFileEntry, ICommitDetailsStore } from '@harnessio/ui/views'
 
 export const commitDetailsStore: ICommitDetailsStore = {
+  commitSHA: '',
+  setCommitSHA: noop,
   diffs: [
     {
       blocks: [

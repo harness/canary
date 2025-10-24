@@ -1,31 +1,47 @@
 import { Dispatch, FC, ReactNode, SetStateAction } from 'react'
 
-import { Button, ButtonProps, Illustration, IllustrationsNameType, Layout, Text } from '@/components'
+import {
+  Button,
+  ButtonProps,
+  IconPropsV2,
+  IconV2,
+  Illustration,
+  IllustrationsNameType,
+  Layout,
+  SplitButton,
+  Text
+} from '@/components'
 import { useRouterContext } from '@/context'
 import { cn } from '@utils/cn'
+import omit from 'lodash-es/omit'
 
 export interface NoDataProps {
   title: string
   imageName?: IllustrationsNameType
   imageSize?: number
   description: string[]
-  primaryButton?: {
+  primaryButton?: ButtonProps & {
+    icon?: IconPropsV2['name']
     label: ReactNode | string
-    onClick?: () => void
     to?: string
-    props?: ButtonProps
   }
-  secondaryButton?: {
+  secondaryButton?: ButtonProps & {
+    icon?: IconPropsV2['name']
     label: ReactNode | string
     to?: string
-    onClick?: () => void
-    props?: ButtonProps
   }
   withBorder?: boolean
   loadState?: string
   setLoadState?: Dispatch<SetStateAction<string>>
   textWrapperClassName?: string
   className?: string
+  splitButton?: {
+    label: ReactNode | string
+    options: { value: string; label: string }[]
+    handleOptionChange: (option: string) => void
+    handleButtonClick: () => void
+    props?: ButtonProps
+  }
 }
 
 export const NoData: FC<NoDataProps> = ({
@@ -34,11 +50,11 @@ export const NoData: FC<NoDataProps> = ({
   title,
   description,
   primaryButton,
-
   secondaryButton,
   withBorder = false,
   textWrapperClassName,
-  className
+  className,
+  splitButton
 }) => {
   const { NavLink } = useRouterContext()
 
@@ -48,8 +64,8 @@ export const NoData: FC<NoDataProps> = ({
       align="center"
       justify="center"
       className={cn(
-        'h-full w-full my-auto',
-        { 'h-auto grow border border-cn-borders-4 rounded-md': withBorder },
+        'h-full w-full my-auto py-cn-4xl',
+        { 'h-auto grow border border-cn-borders-3 rounded-md': withBorder },
         className
       )}
     >
@@ -57,43 +73,57 @@ export const NoData: FC<NoDataProps> = ({
       <Layout.Vertical gap="xl" align="center" justify="center">
         <Layout.Vertical gap="xs" align="center" justify="center" className={textWrapperClassName}>
           <Text variant="heading-section">{title}</Text>
-          {description && (
-            <div className="flex flex-col">
-              {description.map((line, index) => (
-                <Text key={index} align="center" color="foreground-3">
-                  {line}
-                </Text>
-              ))}
-            </div>
-          )}
+          {!!description &&
+            description.map((line, index) => (
+              <Text key={index} align="center">
+                {line}
+              </Text>
+            ))}
         </Layout.Vertical>
-        {(primaryButton || secondaryButton) && (
+        {(primaryButton || secondaryButton || splitButton) && (
           <Layout.Horizontal gap="sm">
             {primaryButton &&
               (primaryButton.to ? (
-                <Button asChild onClick={() => primaryButton?.onClick?.()} {...primaryButton.props}>
-                  <NavLink to={primaryButton.to}>{primaryButton.label}</NavLink>
+                <Button asChild {...omit(primaryButton, ['to', 'label', 'icon'])}>
+                  <NavLink to={primaryButton.to}>
+                    {primaryButton.icon && <IconV2 name={primaryButton.icon} size="sm" />}
+                    {primaryButton.label}
+                  </NavLink>
                 </Button>
               ) : (
-                <Button onClick={() => primaryButton?.onClick?.()} {...primaryButton.props}>
+                <Button {...omit(primaryButton, ['label', 'icon'])}>
+                  {primaryButton.icon && <IconV2 name={primaryButton.icon} size="sm" />}
                   {primaryButton.label}
                 </Button>
               ))}
             {secondaryButton &&
               (secondaryButton.to ? (
-                <Button
-                  variant="secondary"
-                  asChild
-                  onClick={() => secondaryButton?.onClick?.()}
-                  {...secondaryButton.props}
-                >
-                  <NavLink to={secondaryButton.to}>{secondaryButton.label}</NavLink>
+                <Button variant="outline" asChild {...omit(secondaryButton, ['to', 'label', 'icon'])}>
+                  <NavLink to={secondaryButton.to}>
+                    {secondaryButton.icon && <IconV2 name={secondaryButton.icon} size="sm" />}
+                    {secondaryButton.label}
+                  </NavLink>
                 </Button>
               ) : (
-                <Button variant="secondary" onClick={() => secondaryButton?.onClick?.()} {...secondaryButton.props}>
+                <Button variant="outline" {...omit(secondaryButton, ['label', 'icon'])}>
+                  {secondaryButton.icon && <IconV2 name={secondaryButton.icon} size="sm" />}
                   {secondaryButton.label}
                 </Button>
               ))}
+            {splitButton && (
+              <SplitButton<string>
+                dropdownContentClassName="mt-0 min-w-[170px]"
+                handleButtonClick={() => splitButton.handleButtonClick()}
+                handleOptionChange={option => {
+                  if (option === 'tag-rule') {
+                    splitButton.handleOptionChange(option)
+                  }
+                }}
+                options={splitButton.options}
+              >
+                {splitButton.label}
+              </SplitButton>
+            )}
           </Layout.Horizontal>
         )}
       </Layout.Vertical>

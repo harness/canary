@@ -4,16 +4,15 @@ import { LabelsListStore } from '@subjects/stores/labels-store'
 import { noop } from '@utils/viewUtils'
 
 import { DeleteAlertDialog } from '@harnessio/ui/components'
-import { LabelsListPage } from '@harnessio/ui/views'
+import { LabelsListPage, SandboxLayout } from '@harnessio/ui/views'
 
 export const ProjectLabelsList = () => {
   const [openAlertDeleteDialog, setOpenAlertDeleteDialog] = useState(false)
 
   return (
-    <>
+    <SandboxLayout.Content>
       <LabelsListPage
         useLabelsStore={LabelsListStore.useLabelsStore}
-        createdIn={''}
         searchQuery={''}
         setSearchQuery={noop}
         labelsListViewProps={{ handleEditLabel: noop, handleDeleteLabel: () => setOpenAlertDeleteDialog(true) }}
@@ -26,6 +25,6 @@ export const ProjectLabelsList = () => {
         deleteFn={noop}
         isLoading={false}
       />
-    </>
+    </SandboxLayout.Content>
   )
 }

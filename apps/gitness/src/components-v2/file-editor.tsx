@@ -2,40 +2,52 @@ import { FC, useCallback, useEffect, useMemo, useState } from 'react'
 import { useNavigate, useParams } from 'react-router-dom'
 
 import { OpenapiGetContentOutput } from '@harnessio/code-service-client'
-import { EditViewTypeValue, FileEditorControlBar, getIsMarkdown, MarkdownViewer, Tabs } from '@harnessio/ui/components'
+import {
+  EditViewTypeValue,
+  FileEditorControlBar,
+  getIsMarkdown,
+  IconV2,
+  Layout,
+  MarkdownViewer,
+  Tabs
+} from '@harnessio/ui/components'
+import { cn } from '@harnessio/ui/utils'
 import { monacoThemes, PathActionBar } from '@harnessio/ui/views'
-import { CodeDiffEditor, CodeEditor } from '@harnessio/yaml-editor'
+import { CodeDiffEditor, CodeEditor, CodeEditorProps } from '@harnessio/yaml-editor'
 
 import GitCommitDialog from '../components-v2/git-commit-dialog'
 import { useRoutes } from '../framework/context/NavigationContext'
 import { useThemeStore } from '../framework/context/ThemeContext'
-import { useExitConfirm } from '../framework/hooks/useExitConfirm'
+import { useExitPrompt } from '../framework/hooks/useExitPrompt'
 import useCodePathDetails from '../hooks/useCodePathDetails'
 import { useRepoBranchesStore } from '../pages-v2/repo/stores/repo-branches-store'
 import { PathParams } from '../RouteDefinitions'
-import { decodeGitContent, FILE_SEPERATOR, filenameToLanguage, GitCommitAction, PLAIN_TEXT } from '../utils/git-utils'
+import { decodeGitContent, FILE_SEPARATOR, filenameToLanguage, GitCommitAction, PLAIN_TEXT } from '../utils/git-utils'
 import { splitPathWithParents } from '../utils/path-utils'
 
 export interface FileEditorProps {
   repoDetails?: OpenapiGetContentOutput
   defaultBranch: string
+  loading?: boolean
 }
 
-export const FileEditor: FC<FileEditorProps> = ({ repoDetails, defaultBranch }) => {
+export const FileEditor: FC<FileEditorProps> = ({ repoDetails, defaultBranch, loading }) => {
   const routes = useRoutes()
   const navigate = useNavigate()
   const { codeMode, fullGitRef, gitRefName, fullResourcePath } = useCodePathDetails()
   const { repoId, spaceId } = useParams<PathParams>()
-  const { show } = useExitConfirm()
   const repoPath = `${routes.toRepoFiles({ spaceId, repoId })}/${fullGitRef}`
 
   const [fileName, setFileName] = useState('')
   const [language, setLanguage] = useState('')
   const [originalFileContent, setOriginalFileContent] = useState('')
-  const [contentRevision, setContentRevision] = useState({ code: originalFileContent })
+  const [contentRevision, setContentRevision] = useState<CodeEditorProps<unknown>['codeRevision']>({
+    code: originalFileContent
+  })
   const [view, setView] = useState<EditViewTypeValue>('edit')
   const [dirty, setDirty] = useState(false)
   const [isCommitDialogOpen, setIsCommitDialogOpen] = useState(false)
+  useExitPrompt({ isDirty: dirty && !isCommitDialogOpen })
   const { selectedBranchTag, selectedRefType } = useRepoBranchesStore()
   const { theme } = useThemeStore()
   // TODO: temporary solution for matching themes
@@ -51,26 +63,34 @@ export const FileEditor: FC<FileEditorProps> = ({ repoDetails, defaultBranch }) 
 
   const isNew = useMemo(() => !repoDetails || repoDetails?.type === 'dir', [repoDetails])
   const [parentPath, setParentPath] = useState(
-    isNew ? fullResourcePath : fullResourcePath?.split(FILE_SEPERATOR).slice(0, -1).join(FILE_SEPERATOR)
+    isNew ? fullResourcePath : fullResourcePath?.split(FILE_SEPARATOR).slice(0, -1).join(FILE_SEPARATOR)
   )
   const fileResourcePath = useMemo(
-    () => [(parentPath || '').trim(), (fileName || '').trim()].filter(p => !!p.trim()).join(FILE_SEPERATOR),
+    () => [(parentPath || '').trim(), (fileName || '').trim()].filter(p => !!p.trim()).join(FILE_SEPARATOR),
     [parentPath, fileName]
   )
+  const isShowPreview = () => !isNew || getIsMarkdown(language)
+  const [showPreview, setShowPreview] = useState(isShowPreview())
 
   const pathToSplit = useMemo(() => {
     if (isNew) {
-      // When in new file mode, use fullResourcePath to ensure we maintain the directory structure
-      if (fullResourcePath && parentPath !== fullResourcePath) {
-        // Update parentPath to match fullResourcePath when in new file mode
-        setParentPath(fullResourcePath)
-      }
       return fullResourcePath || parentPath
     } else if (parentPath?.length && fileName.length) {
-      return [parentPath, fileName].join(FILE_SEPERATOR)
+      return [parentPath, fileName].join(FILE_SEPARATOR)
     }
     return parentPath?.length ? parentPath : fileName
-  }, [isNew, parentPath, fileName, fullResourcePath, setParentPath])
+  }, [isNew, parentPath, fileName, fullResourcePath])
+
+  useEffect(() => {
+    if (isNew && fullResourcePath && parentPath !== fullResourcePath) {
+      setParentPath(fullResourcePath)
+    }
+  }, [isNew, fullResourcePath, parentPath])
+
+  useEffect(() => {
+    setLanguage(filenameToLanguage(fileName) || '')
+    setShowPreview(isShowPreview())
+  }, [fileName, isNew, language])
 
   const pathParts = useMemo(
     () => [
@@ -93,30 +113,27 @@ export const FileEditor: FC<FileEditorProps> = ({ repoDetails, defaultBranch }) 
     const currentFileName = isNew ? '' : repoDetails?.name || ''
     setFileName(currentFileName)
     setLanguage(filenameToLanguage(currentFileName) || '')
-    setOriginalFileContent(decodeGitContent(repoDetails?.content?.data))
+    const decodedContent = decodeGitContent(repoDetails?.content?.data)
+    setOriginalFileContent(decodedContent)
+    setContentRevision({ code: decodedContent })
   }, [isNew, repoDetails])
 
   useEffect(() => {
     setDirty(!(!fileName || (isUpdate && contentRevision.code === originalFileContent)))
   }, [fileName, isUpdate, contentRevision, originalFileContent])
 
-  useEffect(() => {
-    setContentRevision({ code: originalFileContent })
-  }, [originalFileContent])
-
   const toggleOpenCommitDialog = (value: boolean) => {
     setIsCommitDialogOpen(value)
   }
 
   const rebuildPaths = useCallback(() => {
-    const _tokens = fileName?.split(FILE_SEPERATOR).filter(part => !!part.trim())
-    const _fileName = ((_tokens?.pop() as string) || '').trim()
-    const _parentPath = parentPath
-      ?.split(FILE_SEPERATOR)
-      .concat(_tokens || '')
+    const _tokens = fileName?.split(FILE_SEPARATOR).filter(part => !!part.trim()) || []
+    const _fileName = (_tokens.pop() || '').trim()
+    const _parentPath = (parentPath?.split(FILE_SEPARATOR) || [])
+      .concat(_tokens)
       .map(p => p.trim())
       .filter(part => !!part.trim())
-      .join(FILE_SEPERATOR)
+      .join(FILE_SEPARATOR)
 
     if (_fileName) {
       const normalizedFilename = _fileName.trim()
@@ -137,25 +154,10 @@ export const FileEditor: FC<FileEditorProps> = ({ repoDetails, defaultBranch }) 
   /**
    * Navigate to file view route
    */
-  const onExitConfirm = useCallback(() => {
+  const handleCancelFileEdit = useCallback(() => {
     const navigateTo = `${routes.toRepoFiles({ spaceId, repoId })}/${fullGitRef}/${fullResourcePath ? `~/${fullResourcePath}` : ''}`
     navigate(navigateTo)
   }, [fullGitRef, fullResourcePath, navigate, repoId, spaceId, routes])
-
-  /**
-   * Cancel edit handler
-   * - if dirty - open confirm exit dialog via context
-   * - if !dirty - call navigate fnc
-   */
-  const handleCancelFileEdit = useCallback(() => {
-    if (dirty) {
-      show({
-        onConfirm: () => onExitConfirm()
-      })
-    } else {
-      onExitConfirm()
-    }
-  }, [dirty, onExitConfirm, show])
 
   /**
    * Change view handler
@@ -164,6 +166,12 @@ export const FileEditor: FC<FileEditorProps> = ({ repoDetails, defaultBranch }) 
   const onChangeView = (value: EditViewTypeValue) => {
     setView(value)
   }
+
+  const Loader = () => (
+    <Layout.Flex align="center" justify="center" className="rounded-b-3 flex h-full rounded-t-none border border-t-0">
+      <IconV2 className="animate-spin" name="loader" size="lg" />
+    </Layout.Flex>
+  )
 
   return (
     <>
@@ -202,30 +210,40 @@ export const FileEditor: FC<FileEditorProps> = ({ repoDetails, defaultBranch }) 
       />
 
       <Tabs.Root
-        className="flex flex-col h-full"
+        className="flex h-full flex-col overflow-auto"
         value={view as string}
         onValueChange={val => onChangeView(val as EditViewTypeValue)}
       >
-        <FileEditorControlBar />
+        <FileEditorControlBar showPreview={showPreview} />
 
         <Tabs.Content value="edit" className="grow">
-          <CodeEditor
-            height="100%"
-            language={language}
-            codeRevision={contentRevision}
-            onCodeRevisionChange={valueRevision => setContentRevision(valueRevision ?? { code: '' })}
-            themeConfig={themeConfig}
-            theme={monacoTheme}
-            options={{
-              readOnly: false
-            }}
-          />
+          {loading && <Loader />}
+
+          {!loading && !isNew && !contentRevision.code && <Loader />}
+          {!loading && (isNew || contentRevision.code) && (
+            <CodeEditor
+              height="100%"
+              language={language}
+              codeRevision={contentRevision}
+              onCodeRevisionChange={valueRevision => setContentRevision(valueRevision ?? { code: '' })}
+              themeConfig={themeConfig}
+              theme={monacoTheme}
+              options={{ readOnly: false }}
+            />
+          )}
         </Tabs.Content>
 
-        <Tabs.Content value="preview" className="grow">
-          {getIsMarkdown(language) ? (
-            <MarkdownViewer className="max-h-screen overflow-auto" source={contentRevision.code} withBorder />
-          ) : (
+        <Tabs.Content
+          value="preview"
+          className={cn('grow', { 'overflow-auto border border-t-0 rounded-b-3': getIsMarkdown(language) })}
+        >
+          {loading && <Loader />}
+
+          {!loading && getIsMarkdown(language) && (
+            <MarkdownViewer source={contentRevision.code} withBorder className="border-x-0 border-b-0" />
+          )}
+
+          {!loading && !getIsMarkdown(language) && (
             <CodeDiffEditor
               height="100%"
               language={language}
@@ -233,9 +251,7 @@ export const FileEditor: FC<FileEditorProps> = ({ repoDetails, defaultBranch }) 
               modified={contentRevision.code}
               themeConfig={themeConfig}
               theme={monacoTheme}
-              options={{
-                readOnly: true
-              }}
+              options={{ readOnly: true }}
             />
           )}
         </Tabs.Content>

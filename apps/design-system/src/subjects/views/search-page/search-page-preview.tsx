@@ -13,6 +13,7 @@ export const SearchPagePreview = () => {
   return (
     <SearchPageView
       isLoading={false}
+      toRepo={() => '#'}
       searchQuery={searchQuery}
       regexEnabled={regexEnabled}
       setRegexEnabled={setRegexEnabled}
@@ -25,6 +26,8 @@ export const SearchPagePreview = () => {
       onLanguageSelect={() => {}}
       onClearFilters={() => {}}
       isRepoScope={true}
+      onRecursiveToggle={() => {}}
+      scope={{ accountId: '1', orgIdentifier: '2', projectIdentifier: '3' }}
     />
   )
 }

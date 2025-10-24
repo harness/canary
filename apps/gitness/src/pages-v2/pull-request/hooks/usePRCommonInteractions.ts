@@ -2,7 +2,7 @@ import { useCallback, useMemo, useRef, useState } from 'react'
 
 import { commentCreatePullReq, commentDeletePullReq, commentUpdatePullReq } from '@harnessio/code-service-client'
 import { generateAlphaNumericHash } from '@harnessio/ui/utils'
-import { CommitSuggestion } from '@harnessio/ui/views'
+import { CommitSuggestion, TextSelection } from '@harnessio/ui/views'
 
 import { useAPIPath } from '../../../hooks/useAPIPath'
 import { getErrorMessage } from '../pull-request-utils'
@@ -68,21 +68,61 @@ export function usePRCommonInteractions({
   )
 
   const handleUpload = useCallback(
-    (blob: File, setMarkdownContent: (data: string) => void, currentComment?: string) => {
+    (
+      blob: File,
+      setMarkdownContent: (data: string) => void,
+      currentComment: string = '',
+      textSelection: TextSelection = { start: currentComment.length, end: currentComment.length }
+    ) => {
       const reader = new FileReader()
 
+      const isImageFile = (): boolean => blob.type.startsWith('image/')
+      const isVideoFile = (): boolean => blob.type.startsWith('video/')
+
       // Set up a function to be called when the load event is triggered
-      reader.onload = async function () {
-        if (blob.type.startsWith('image/') || blob.type.startsWith('video/')) {
+      const handleLoad = async function () {
+        if (isImageFile() || isVideoFile()) {
           const markdown = await uploadImage(reader.result)
 
-          if (blob.type.startsWith('image/')) {
-            setMarkdownContent(`${currentComment} \n ![image](${markdown})`) // Set the markdown content
-          } else {
-            setMarkdownContent(`${currentComment} \n ${markdown}`) // Set the markdown content
-          }
+          const commentBeforeSelection = currentComment.slice(0, textSelection.start)
+          const commentSelection = currentComment.slice(textSelection.start, textSelection.end)
+          const commentAfterSelection = currentComment.slice(textSelection.end)
+
+          const alreadyHasNewline = commentBeforeSelection.endsWith('\n')
+          const hasSelection = commentSelection.length > 0
+
+          const markdownSyntax = isImageFile()
+            ? `${alreadyHasNewline ? '' : '\n'}![${hasSelection ? commentSelection : 'image'}](${markdown})`
+            : `${alreadyHasNewline ? '' : '\n'}${hasSelection ? `[${commentSelection}](${markdown})` : `${markdown}`}`
+
+          setMarkdownContent(`${commentBeforeSelection}${markdownSyntax}${commentAfterSelection}`)
         }
+
+        // Clean up event handlers after processing
+        reader.onload = null
+        reader.onerror = null
+        reader.onabort = null
       }
+
+      const handleError = function () {
+        console.error('FileReader error occurred')
+        // Clean up event handlers on error
+        reader.onload = null
+        reader.onerror = null
+        reader.onabort = null
+      }
+
+      const handleAbort = function () {
+        console.log('FileReader operation was aborted')
+        // Clean up event handlers on abort
+        reader.onload = null
+        reader.onerror = null
+        reader.onabort = null
+      }
+
+      reader.onload = handleLoad
+      reader.onerror = handleError
+      reader.onabort = handleAbort
 
       reader.readAsArrayBuffer(blob) // This will trigger the onload function when the reading is complete
     },

@@ -1,11 +1,9 @@
-import { FC } from 'react'
+import { FC, Fragment, useState } from 'react'
 
-import { MoreActionsTooltip, NoData, Table, Tag, Text } from '@/components'
+import { Button, IconV2, Layout, MoreActionsTooltip, NoData, ScopeTag, Table, Tag, Text } from '@/components'
 import { useTranslation } from '@/context'
 import { cn } from '@/utils'
-import { ILabelType, LabelValuesType } from '@/views'
-
-import { LabelCellContent } from './label-cell-content'
+import { ILabelType, LabelValuesType, ScopeType } from '@/views'
 
 export interface LabelsListViewProps {
   labels: ILabelType[]
@@ -22,21 +20,21 @@ export interface LabelsListViewProps {
    * When the widthType is set to 'small', 'name' column is bigger and 'description' column is smaller
    */
   widthType?: 'default' | 'small'
-  createdIn?: string
+  toRepoLabelDetails?: ({ labelId, scope }: { labelId: string; scope: number }) => string
 }
 
-const getDisplayPath = (scope: number, path?: string): string => {
-  if (!path) return ''
-
+const getScopeType = (scope: number): ScopeType => {
   switch (scope) {
     case 0:
-      return path
+      return ScopeType.Repository
     case 1:
-      return path.split('/')[0] || ''
+      return ScopeType.Account
     case 2:
-      return path.split('/').slice(0, 2).join('/')
+      return ScopeType.Organization
+    case 3:
+      return ScopeType.Project
     default:
-      return path.split('/').slice(0, 3).join('/')
+      return ScopeType.Account
   }
 }
 
@@ -48,23 +46,40 @@ export const LabelsListView: FC<LabelsListViewProps> = ({
   handleResetQueryAndPages,
   values,
   widthType = 'default',
-  createdIn
+  toRepoLabelDetails
 }) => {
   const { t } = useTranslation()
+  const [expandedRows, setExpandedRows] = useState<Record<string, boolean>>({})
+
+  const toggleRow = (key: string, e: React.MouseEvent) => {
+    e.stopPropagation()
+    setExpandedRows(prev => ({
+      ...prev,
+      [key]: !prev[key]
+    }))
+  }
 
   if (!labels.length) {
     if (searchQuery) {
       return (
         <NoData
           withBorder
-          className="min-h-0 py-cn-xl"
+          className="py-cn-xl min-h-0"
           imageName="no-search-magnifying-glass"
           title={t('views:noData.noResults', 'No search results')}
           description={[
             t('views:noData.checkSpelling', 'Check your spelling and filter options,'),
             t('views:noData.changeSearch', 'or search for a different keyword.')
           ]}
-          primaryButton={{ label: t('views:noData.clearSearch', 'Clear search'), onClick: handleResetQueryAndPages }}
+          secondaryButton={{
+            label: (
+              <>
+                <IconV2 name="trash" />
+                {t('views:noData.clearSearch', 'Clear search')}
+              </>
+            ),
+            onClick: handleResetQueryAndPages
+          }}
         />
       )
     }
@@ -72,11 +87,19 @@ export const LabelsListView: FC<LabelsListViewProps> = ({
     return (
       <NoData
         withBorder
-        className="min-h-0 py-cn-3xl"
+        className="py-cn-3xl min-h-0"
         imageName="no-data-branches"
         title={t('views:noData.labels', 'No labels yet')}
         description={[t('views:noData.createLabel', 'Create a new label to get started.')]}
-        primaryButton={{ label: t('views:projectSettings.newLabels', 'Create label'), to: 'create' }}
+        primaryButton={{
+          label: (
+            <>
+              <IconV2 name="plus" />
+              {t('views:projectSettings.newLabels', 'Create Label')}
+            </>
+          ),
+          to: 'create'
+        }}
       />
     )
   }
@@ -84,13 +107,12 @@ export const LabelsListView: FC<LabelsListViewProps> = ({
   const isSmallWidth = widthType === 'small'
 
   return (
-    <Table.Root tableClassName="table-fixed" className="mb-8 mt-4">
+    <Table.Root tableClassName="table-fixed" size="compact">
       <Table.Header>
         <Table.Row>
-          <Table.Head className={cn('w-[304px]', { 'w-4/12': isSmallWidth })}>
-            <Text variant="caption-strong" className="pl-[45px]">
-              {t('views:labelData.table.name', 'Name')}
-            </Text>
+          <Table.Head className="w-[44px]" />
+          <Table.Head className={cn('w-[260px]', { 'w-4/12': isSmallWidth })}>
+            <Text variant="caption-strong">{t('views:labelData.table.name', 'Name')}</Text>
           </Table.Head>
           <Table.Head className="w-[240px]">
             <Text variant="caption-strong">{t('views:labelData.table.created', 'Created in')}</Text>
@@ -104,24 +126,54 @@ export const LabelsListView: FC<LabelsListViewProps> = ({
 
       <Table.Body>
         {labels.map(label => (
-          <Table.Row key={label.id}>
-            <Table.Cell className={cn('w-[304px] !py-3', { 'w-4/12': isSmallWidth })}>
-              <LabelCellContent label={label} values={values?.[label.key]} />
+          <Table.Row
+            className="cursor-pointer"
+            key={label.id}
+            onClick={() => {
+              if (toRepoLabelDetails) {
+                toRepoLabelDetails({ labelId: label.key, scope: label.scope })
+              }
+            }}
+          >
+            <Table.Cell className={cn('w-[44px] align-top', { 'w-4/12': isSmallWidth })}>
+              {values?.[label.key]?.length > 0 ? (
+                <Button variant="ghost" size="2xs" iconOnly onClick={e => toggleRow(label.key, e)}>
+                  <IconV2 name={expandedRows[label.key] ? 'nav-arrow-up' : 'nav-arrow-down'} />
+                </Button>
+              ) : null}
             </Table.Cell>
-            <Table.Cell className="w-[240px] !py-3.5 leading-none">
-              <Tag
-                size="md"
-                theme="gray"
-                variant="secondary"
-                value={getDisplayPath(label.scope, createdIn)}
-                showIcon
-                icon={label.scope === 0 ? 'repository' : 'folder'}
-              />
+            <Table.Cell className="w-[260px] align-top">
+              <Layout.Vertical align="start" gap={values?.[label.key]?.length ? 'xs' : 'none'}>
+                <Tag
+                  variant="secondary"
+                  size="md"
+                  theme={label.color}
+                  label={label.key}
+                  value={(values?.[label.key]?.length || '').toString()}
+                />
+                <Layout.Vertical gap="xs">
+                  {!!values?.[label.key]?.length &&
+                    expandedRows[label.key] &&
+                    values?.[label.key].map(item => (
+                      <Tag
+                        key={item.id}
+                        variant="secondary"
+                        size="md"
+                        theme={item?.color || label.color}
+                        label={label.key}
+                        value={item.value}
+                      />
+                    ))}
+                </Layout.Vertical>
+              </Layout.Vertical>
             </Table.Cell>
-            <Table.Cell className={cn('w-[298px] !py-3', { 'w-5/12': isSmallWidth })}>
+            <Table.Cell className="w-[240px] align-top leading-none">
+              <ScopeTag scopedPath={getScopeType(label.scope)} scopeType={getScopeType(label.scope)} />
+            </Table.Cell>
+            <Table.Cell className={cn('w-[298px] align-top', { 'w-5/12': isSmallWidth })}>
               <span className="line-clamp-3 break-words text-sm text-cn-foreground-3">{label?.description || ''}</span>
             </Table.Cell>
-            <Table.Cell className="w-[68px] !py-2">
+            <Table.Cell className="w-[68px] align-top">
               <MoreActionsTooltip
                 isInTable
                 iconName="more-horizontal"

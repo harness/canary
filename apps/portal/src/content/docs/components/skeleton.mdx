@@ -1,0 +1,420 @@
+---
+title: Skeleton
+description: Skeleton component for displaying loading states
+---
+
+import { DocsPage } from "@/components/docs-page";
+
+The `Skeleton` component is a placeholder UI element that represents the loading state of a component. It can be used to indicate that content is being loaded or processed, providing a visual cue to users.
+
+<DocsPage.ComponentExample
+  client:only
+  code={`<div className="w-[600px] grid gap-4">
+    <Skeleton.Box className="w-80 h-20" />
+  </div>`}
+/>
+
+## Usage
+
+```typescript jsx
+import { Skeleton } from "@harnessio/ui/components";
+
+//...
+
+return (
+  <Skeleton.Box className="w-[400px] h-[80px]" />
+)
+```
+
+## Anatomy
+
+### Skeleton Box
+
+The `Skeleton.Box` component is a simple, flexible rectangular placeholder that can be used to indicate loading states for various UI elements.
+It is a free-form box — you can specify its width and height to match the shape of the content being loaded.
+
+<DocsPage.ComponentExample
+  client:only
+  code={`<div className="w-[600px] grid gap-4">
+    <Skeleton.Box className="w-80 h-20" />
+    <Skeleton.Box className="w-[400px] h-[100px]" />
+  </div>`}
+/>
+
+### Skeleton Avatar
+
+The `Skeleton.Avatar` component is a placeholder for user profile images or icons. It can be used to indicate loading states for avatar images.
+
+<DocsPage.ComponentExample
+  client:only
+  code={`<div className="w-[600px] grid gap-4">
+    <div className="flex items-start gap-2">
+      <Skeleton.Avatar size="sm" />
+      <Skeleton.Avatar size="sm" rounded />
+    </div>
+    <div className="flex items-start gap-2">
+      <Skeleton.Avatar />
+      <Skeleton.Avatar rounded />
+    </div>
+    <div className="flex items-start gap-2">
+      <Skeleton.Avatar size="lg" />
+      <Skeleton.Avatar size="lg" rounded />
+    </div>
+  </div>`}
+/>
+
+### Skeleton Icon
+
+The `Skeleton.Icon` component is a placeholder for icons. It can be used to indicate loading states for icon-based UI elements.
+
+<DocsPage.ComponentExample
+  client:only
+  code={`<div className="w-[600px] grid gap-4">
+    <div className="flex items-start gap-2">
+      <Skeleton.Icon size="2xs" />
+      <Skeleton.Icon size="xs" />
+      <Skeleton.Icon size="sm" />
+      <Skeleton.Icon size="md" />
+      <Skeleton.Icon size="lg" />
+      <Skeleton.Icon size="xl" />
+    </div>
+  </div>`}
+/>
+
+### Skeleton Logo
+
+The `Skeleton.Logo` component is a placeholder for logos. It can be used to indicate loading states for logo images.
+
+<DocsPage.ComponentExample
+  client:only
+  code={`<div className="w-[600px] grid gap-4">
+    <div className="flex items-start gap-2">
+      <Skeleton.Logo size="sm" />
+      <Skeleton.Logo size="md" />
+      <Skeleton.Logo size="lg" />
+    </div>
+  </div>`}
+/>
+
+### Skeleton Typography
+
+The `Skeleton.Typography` component is a placeholder for text elements. It can be used to indicate loading states for text content. Variants include different text styles such as headings, body text, and captions.
+
+<DocsPage.ComponentExample
+  client:only
+  code={`<div className="w-[600px] grid gap-1">
+    Typography
+    <div className="flex items-end gap-4">
+      Heading
+      <div>
+        <Skeleton.Typography variant="heading-hero" />
+      </div>
+      <div>
+        <Skeleton.Typography variant="heading-section" />
+      </div>
+      <div>
+        <Skeleton.Typography variant="heading-subsection" />
+      </div>
+      <div>
+        <Skeleton.Typography variant="heading-base" />
+      </div>
+      <div>
+        <Skeleton.Typography variant="heading-small" />
+      </div>
+    </div>
+
+    <div className="flex items-end gap-4">
+      Body
+      <div>
+        <Skeleton.Typography variant="body" />
+      </div>
+      <div>
+        <Skeleton.Typography variant="body-single-line" />
+      </div>
+      <div>
+        <Skeleton.Typography variant="body-code" />
+      </div>
+      <div>
+        <Skeleton.Typography variant="body-single-line-code" />
+      </div>
+    </div>
+
+    <div className="flex items-end gap-4">
+      Caption
+      <div>
+        <Skeleton.Typography variant="caption" />
+      </div>
+      <div>
+        <Skeleton.Typography variant="caption-single-line" />
+      </div>
+    </div>
+
+  </div>`}
+/>
+
+### Skeleton Form
+
+The `Skeleton.Form` component is a placeholder for form elements. It can be used to indicate loading states for input fields, labels, and other form controls. Orientation variants include vertical and horizontal layouts. `linesCount` can be used to specify the number of lines in the skeleton form item.
+
+<DocsPage.ComponentExample
+  client:only
+  code={`<div className="w-[600px] grid gap-4">
+    <div className="grid grid-cols-1 gap-4">
+      <div>
+        <Skeleton.Form />
+      </div>
+      <div>
+        <Skeleton.Form itemProps={{ withLabel: false }} linesCount={2} />
+      </div>
+      <div>
+        <Skeleton.Form itemProps={{ withLabel: false, size: 'sm' }} linesCount={2} />
+      </div>
+      <div>
+        <Skeleton.Form itemProps={{ orientation: 'horizontal' }} linesCount={4} />
+      </div>
+    </div>
+  </div>`}
+/>
+
+### Skeleton List
+
+The `Skeleton.List` component is a placeholder for list items. It can be used to indicate loading states for list content. `linesCount` can be used to specify the number of lines in the skeleton list item. The `hasActions` prop can be used to indicate that the list items have action buttons.
+
+<DocsPage.ComponentExample
+  client:only
+  code={`<div className="w-[600px] grid gap-8">
+    <div>
+      <Skeleton.List linesCount={2} />
+    </div>
+    <div>
+      <Skeleton.List hasActions />
+    </div>
+  </div>`}
+/>
+
+### Skeleton Table
+
+The `Skeleton.Table` component is a placeholder for table elements. It can be used to indicate loading states for table content. `countRows` can be used to specify the number of rows in the skeleton table. `countColumns` can be used to specify the number of columns in the skeleton table.
+`showHeader` can be used to indicate that the table has a header row.
+
+<DocsPage.ComponentExample
+  client:only
+  code={`<div className="w-[600px] grid gap-4">
+    <div>
+      <Skeleton.Table countColumns={5} countRows={5} />
+    </div>
+  </div>`}
+/>
+
+## API Reference
+
+### `Skeleton.Box`
+
+<DocsPage.PropsTable
+  props={[
+    {
+      name: "className",
+      description: "Custom class name",
+      required: false,
+      value: "string",
+    },
+  ]}
+/>
+
+### `Skeleton.Avatar`
+
+<DocsPage.PropsTable
+  props={[
+    {
+      name: "size",
+      description: "Size of the avatar",
+      required: false,
+      value: "'sm' | 'md' | 'lg'",
+      defaultValue: "'md'",
+    },
+    {
+      name: "rounded",
+      description: "Defines whether the avatar should be rounded",
+      required: false,
+      value: "boolean",
+      defaultValue: "false",
+    },
+    {
+      name: "className",
+      description: "Custom class name",
+      required: false,
+      value: "string",
+    },
+  ]}
+/>
+
+### `Skeleton.Icon`
+
+<DocsPage.PropsTable
+  props={[
+    {
+      name: "size",
+      description: "Size of the icon",
+      required: false,
+      value: "'2xs' | 'xs' | 'sm' | 'md' | 'lg' | 'xl'",
+      defaultValue: "'sm'",
+    },
+    {
+      name: "className",
+      description: "Custom class name",
+      required: false,
+      value: "string",
+    },
+  ]}
+/>
+
+### `Skeleton.Logo`
+
+<DocsPage.PropsTable
+  props={[
+    {
+      name: "size",
+      description: "Size of the logo",
+      required: false,
+      value: "'sm' | 'md' | 'lg'",
+      defaultValue: "'lg'",
+    },
+    {
+      name: "className",
+      description: "Custom class name",
+      required: false,
+      value: "string",
+    },
+  ]}
+/>
+
+### `Skeleton.Typography`
+
+<DocsPage.PropsTable
+  props={[
+    {
+      name: "variant",
+      description: "Variant of the skeleton text",
+      required: false,
+      value:
+        "'heading-hero' | 'heading-section' | 'heading-subsection' | 'heading-base' | 'heading-small' | 'body' | 'body-code' | 'body-single-line' | 'body-single-line-code' | 'caption' | 'caption-single-line'",
+      defaultValue: "'body'",
+    },
+    {
+      name: "className",
+      description: "Custom class name",
+      required: false,
+      value: "string",
+    },
+  ]}
+/>
+
+### `Skeleton.Form`
+
+<DocsPage.PropsTable
+  props={[
+    {
+      name: "linesCount",
+      description: "Number of lines in the skeleton form",
+      required: false,
+      value: "1 | 2 | 3 | 4 | 5 | 6 | 7 | 8 | 9",
+      defaultValue: 9,
+    },
+    {
+      name: "className",
+      description: "Custom class name for the skeleton field",
+      required: false,
+      value: "string",
+    },
+    {
+      name: "itemProps",
+      description: "Props for the skeleton form item",
+      required: false,
+      value:
+        "{ withLabel?: boolean; orientation?: 'vertical' | 'horizontal'; size?: 'sm' | 'md'; labelClassName?: string, inputClassName?: string }",
+      defaultValue:
+        "{ withLabel: true, orientation: 'vertical', size: 'md', linesCount: 3 }",
+    },
+  ]}
+/>
+
+### `Skeleton.List`
+
+<DocsPage.PropsTable
+  props={[
+    {
+      name: "linesCount",
+      description: "Number of lines in the skeleton list",
+      required: false,
+      value: "number",
+      defaultValue: 8,
+    },
+    {
+      name: "className",
+      description: "Custom class name for the skeleton list wrapper",
+      required: false,
+      value: "string",
+    },
+    {
+      name: "hasActions",
+      description:
+        "Defines whether the skeleton list has right skeleton square",
+      required: false,
+      value: "boolean",
+      defaultValue: "false",
+    },
+    {
+      name: "classNames",
+      description: "Defines the custom class names for the skeleton list items",
+      required: false,
+      value:
+        "{ item?: string; leftTitle?: string; leftDescription?: string, rightTitle?: string, rightDescription?: string, actions?: string }",
+    },
+  ]}
+/>
+
+### `Skeleton.Table`
+
+<DocsPage.PropsTable
+  props={[
+    {
+      name: "countRows",
+      description: "Number of rows in the skeleton table",
+      required: false,
+      value: "number",
+      defaultValue: 12,
+    },
+    {
+      name: "countColumns",
+      description: "Number of columns in the skeleton table",
+      required: false,
+      value: "number",
+      defaultValue: 5,
+    },
+    {
+      name: "hideHeader",
+      description: "Defines whether the skeleton table has a header row",
+      required: false,
+      value: "boolean",
+      defaultValue: "false",
+    },
+    {
+      name: "className",
+      description: "Custom class name for the skeleton table root element",
+      required: false,
+      value: "string",
+    },
+    {
+      name: "classNameHeader",
+      description: "Custom class name for the skeleton table header element",
+      required: false,
+      value: "string",
+    },
+    {
+      name: "classNameBody",
+      description: "Custom class name for the skeleton table body element",
+      required: false,
+      value: "string",
+    },
+  ]}
+/>

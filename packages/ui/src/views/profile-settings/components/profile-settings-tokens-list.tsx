@@ -1,6 +1,6 @@
 import { FC } from 'react'
 
-import { IconV2, MoreActionsTooltip, SkeletonTable, Table, TimeAgoCard } from '@/components'
+import { IconV2, MoreActionsTooltip, Skeleton, Table, TimeAgoCard } from '@/components'
 import { useTranslation } from '@/context'
 
 import { TokensList } from '../types'
@@ -29,7 +29,7 @@ export const ProfileTokensList: FC<ProfileTokensListProps> = ({ tokens, isLoadin
         </Table.Row>
       </Table.Header>
       {isLoading ? (
-        <SkeletonTable countRows={5} />
+        <Skeleton.Table countRows={5} countColumns={5} hideHeader />
       ) : (
         <Table.Body>
           {tokens.length ? (

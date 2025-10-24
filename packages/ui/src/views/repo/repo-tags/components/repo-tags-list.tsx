@@ -4,11 +4,13 @@ import {
   ActionData,
   Avatar,
   CommitCopyActions,
+  CopyTag,
+  IconV2,
+  Layout,
   MoreActionsTooltip,
   NoData,
-  SkeletonTable,
+  Skeleton,
   Table,
-  Tag,
   Text,
   TimeAgoCard
 } from '@/components'
@@ -42,7 +44,7 @@ export const RepoTagsList: FC<RepoTagsListProps> = ({
   const getTableActions = (tag: CommitTagType): ActionData[] => [
     {
       iconName: 'git-branch',
-      title: t('views:repos.createBranch', 'Create branch'),
+      title: t('views:repos.tags.createBranch', 'Create Branch'),
       onClick: () => onOpenCreateBranchDialog(tag)
     },
     {
@@ -53,7 +55,7 @@ export const RepoTagsList: FC<RepoTagsListProps> = ({
     {
       iconName: 'trash',
       isDanger: true,
-      title: t('views:repos.deleteTag', 'Delete tag'),
+      title: t('views:repos.deleteTag', 'Delete Tag'),
       onClick: () => onDeleteTag(tag.name)
     }
   ]
@@ -78,14 +80,30 @@ export const RepoTagsList: FC<RepoTagsListProps> = ({
               ]
         }
         textWrapperClassName={isDirtyList ? '' : 'max-w-[360px]'}
-        primaryButton={
+        className="flex-1"
+        secondaryButton={
           isDirtyList
             ? {
-                label: t('views:noData.clearSearch', 'Clear search'),
+                label: (
+                  <>
+                    <IconV2 name="trash" />
+                    {t('views:noData.clearSearch', 'Clear Search')}
+                  </>
+                ),
                 onClick: onResetFiltersAndPages
               }
+            : undefined
+        }
+        primaryButton={
+          isDirtyList
+            ? undefined
             : {
-                label: t('views:noData.createNewTag', 'Create tag'),
+                label: (
+                  <>
+                    <IconV2 name="plus" />
+                    {t('views:noData.createNewTag', 'Create Tag')}
+                  </>
+                ),
                 onClick: onOpenCreateTagDialog
               }
         }
@@ -94,38 +112,38 @@ export const RepoTagsList: FC<RepoTagsListProps> = ({
   }
 
   if (isLoading) {
-    return <SkeletonTable countRows={12} countColumns={5} />
+    return <Skeleton.Table countRows={10} countColumns={5} />
   }
 
   return (
-    <Table.Root className="[&_td]:py-3.5" tableClassName="table-fixed" disableHighlightOnHover>
+    <Table.Root tableClassName="table-fixed" size="compact">
       <Table.Header>
-        <Table.Row className="pointer-events-none select-none">
-          <Table.Head className="w-[17%]">{t('views:repos.tag', 'Tag')}</Table.Head>
-          <Table.Head className="w-[30%]">{t('views:repos.description', 'Description')}</Table.Head>
+        <Table.Row>
+          <Table.Head className="w-[15%]">{t('views:repos.tag', 'Tag')}</Table.Head>
+          <Table.Head className="w-[33%]">{t('views:repos.description', 'Description')}</Table.Head>
           <Table.Head className="w-[15%]">{t('views:repos.commit', 'Commit')}</Table.Head>
           <Table.Head className="w-[15%]">{t('views:repos.tagger', 'Tagger')}</Table.Head>
-          <Table.Head className="w-[16%]">{t('views:repos.creationDate', 'Creation date')}</Table.Head>
+          <Table.Head className="w-[15%]">{t('views:repos.creationDate', 'Creation date')}</Table.Head>
           <Table.Head className="w-[7%]" />
         </Table.Row>
       </Table.Header>
 
       <Table.Body>
         {tagsList.map(tag => (
-          <Table.Row key={tag.sha}>
+          <Table.Row key={tag.sha} to={`../summary/refs/tags/${tag.name}`}>
             <Table.Cell>
-              <Tag value={tag.name} theme="violet" size="md" variant="secondary" showCopyButton />
+              <CopyTag value={tag.name} theme="violet" size="md" variant="secondary" className="max-w-full" />
             </Table.Cell>
             <Table.Cell>
               <Text variant="body-normal" className="line-clamp-3">
                 {tag?.message}
               </Text>
             </Table.Cell>
-            <Table.Cell>
+            <Table.Cell disableLink>
               <CommitCopyActions sha={tag.commit?.sha ?? ''} toCommitDetails={toCommitDetails} />
             </Table.Cell>
-            <Table.Cell>
-              <div className="flex items-center gap-2">
+            <Table.Cell disableLink>
+              <Layout.Horizontal gap="xs">
                 {tag.tagger?.identity.name ? (
                   <>
                     <Avatar name={tag.tagger?.identity.name} size="sm" rounded />
@@ -134,7 +152,7 @@ export const RepoTagsList: FC<RepoTagsListProps> = ({
                     </Text>
                   </>
                 ) : null}
-              </div>
+              </Layout.Horizontal>
             </Table.Cell>
             <Table.Cell>
               {tag.tagger?.when ? (
@@ -142,10 +160,11 @@ export const RepoTagsList: FC<RepoTagsListProps> = ({
                   timestamp={new Date(tag.tagger?.when).getTime()}
                   dateTimeFormatOptions={{ dateStyle: 'medium' }}
                   textProps={{ variant: 'body-normal' }}
+                  triggerClassName="text-left"
                 />
               ) : null}
             </Table.Cell>
-            <Table.Cell className="w-[46px] text-right">
+            <Table.Cell className="text-right" disableLink>
               <MoreActionsTooltip
                 actions={getTableActions(tag).map(action => ({
                   ...action,

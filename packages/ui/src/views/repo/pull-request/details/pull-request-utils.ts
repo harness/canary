@@ -1,3 +1,5 @@
+import { RefObject } from 'react'
+
 import { TypesUser } from '@/types'
 import { dispatchCustomEvent } from '@hooks/use-event-listener'
 import { get, isEmpty } from 'lodash-es'
@@ -56,16 +58,31 @@ export function getApprovalItems(approveState: PullReqReviewDecision, approvalIt
   }
   return []
 }
+
 export const getApprovalStateTheme = (state: PullReqReviewDecision) => {
   switch (state) {
     case PullReqReviewDecision.approved:
     case PullReqReviewDecision.approve:
       return 'success'
     case PullReqReviewDecision.changeReq:
+      return 'danger'
     default:
       return 'default'
   }
 }
+
+export const getApprovalStateVariant = (state: PullReqReviewDecision) => {
+  switch (state) {
+    case PullReqReviewDecision.approved:
+    case PullReqReviewDecision.changeReq:
+      return 'primary'
+    case PullReqReviewDecision.approve:
+      return 'outline'
+    default:
+      return 'outline'
+  }
+}
+
 export const approvalItems = [
   {
     id: 0,
@@ -278,23 +295,27 @@ export const jumpToFile = (
   filePath: string,
   diffBlocks: DiffHeaderProps[][],
   setJumpToDiff: (filePath: string) => void,
-  commentId?: string
+  commentId?: string,
+  diffsContainerRef?: RefObject<Element>
 ) => {
   let loopCount = 0
+  let timeoutId: NodeJS.Timeout | null = null
 
   const blockIndex = diffBlocks.findIndex(block => block.some(diff => diff.filePath === filePath))
-  if (blockIndex < 0) return
+  if (blockIndex < 0) return () => {} // Return empty cleanup function
 
   function attemptScroll() {
     // Retrieve the top-level block + the sub-block + the final diff DOM
-    const outerDOM = document.querySelector(`[data-block="${outterBlockName(blockIndex)}"]`) as HTMLElement | null
+    const outerDOM = diffsContainerRef?.current?.querySelector(
+      `[data-block="${outterBlockName(blockIndex)}"]`
+    ) as HTMLElement | null
     const innerDOM = outerDOM?.querySelector(`[data-block="${innerBlockName(filePath)}"]`) as HTMLElement | null
     const diffDOM = innerDOM?.querySelector(`[data-diff-file-path="${filePath}"]`) as HTMLElement | null
 
     // Scroll them all in order outterBlock + innerBlock + the final diff
     outerDOM?.scrollIntoView(false)
     innerDOM?.scrollIntoView(false)
-    diffDOM?.scrollIntoView(true)
+    diffDOM?.scrollIntoView({ block: 'center', inline: 'center' })
 
     if (diffDOM && commentId) {
       dispatchCustomEvent<DiffViewerCustomEvent>(filePath, {
@@ -303,9 +324,9 @@ export const jumpToFile = (
       })
     }
 
-    // Re-check after a short delay if it’s truly in viewport
+    // Re-check after a short delay if it's truly in viewport
     // If not in viewport and loopCount < 100 => re-run
-    setTimeout(() => {
+    timeoutId = setTimeout(() => {
       if (loopCount++ < 100) {
         if (
           !outerDOM ||
@@ -319,11 +340,20 @@ export const jumpToFile = (
         }
       } else {
         setJumpToDiff('')
+        timeoutId = null
       }
     }, 0)
   }
 
   attemptScroll()
+
+  // Return cleanup function
+  return () => {
+    if (timeoutId) {
+      clearTimeout(timeoutId)
+      timeoutId = null
+    }
+  }
 }
 
 export const getDefaultReviewersApprovalCount = (data: DefaultReviewersApprovalsData): string => {

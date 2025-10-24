@@ -1,7 +1,15 @@
-import { ComponentPropsWithoutRef, ElementRef, forwardRef, HTMLAttributes, ReactNode } from 'react'
+import {
+  ComponentPropsWithoutRef,
+  ElementRef,
+  forwardRef,
+  HTMLAttributes,
+  KeyboardEvent,
+  ReactNode,
+  useRef
+} from 'react'
 
 import { usePortal, useTranslation } from '@/context'
-import { cn, filterChildrenByDisplayNames } from '@/utils'
+import { cn, filterChildrenByDisplayNames, useMergeRefs } from '@/utils'
 import { Avatar, AvatarProps } from '@components/avatar'
 import { Layout } from '@components/layout'
 import { ScrollArea, ScrollAreaProps } from '@components/scroll-area'
@@ -64,24 +72,88 @@ const innerComponentsDisplayNames = [
 interface DropdownMenuContentProps extends ComponentPropsWithoutRef<typeof DropdownMenuPrimitive.Content> {
   isSubContent?: boolean
   scrollAreaProps?: Omit<ScrollAreaProps, 'children'>
+  onOpenAutoFocus?: (event: Event) => void
 }
 
 const DropdownMenuContent = forwardRef<ElementRef<typeof DropdownMenuPrimitive.Content>, DropdownMenuContentProps>(
-  ({ className, children: _children, sideOffset = 4, isSubContent, scrollAreaProps, ...props }, ref) => {
+  (
+    {
+      className,
+      children: _children,
+      sideOffset = 4,
+      isSubContent,
+      scrollAreaProps,
+      onKeyDownCapture: propOnKeyDownCapture,
+      ...props
+    },
+    ref
+  ) => {
     const { portalContainer } = usePortal()
+    const contentRef = useRef<HTMLDivElement | null>(null)
     const Primitive = isSubContent ? DropdownMenuPrimitive.SubContent : DropdownMenuPrimitive.Content
 
     const header = filterChildrenByDisplayNames(_children, [displayNames.header])[0]
     const footer = filterChildrenByDisplayNames(_children, [displayNames.footer])[0]
     const children = filterChildrenByDisplayNames(_children, [displayNames.header, displayNames.footer], true)
 
+    const mergedRef = useMergeRefs<HTMLDivElement>([
+      node => {
+        if (!node) return
+
+        contentRef.current = node
+      },
+      ref
+    ])
+
+    /**
+     * This code is executed only when inside a ShadowRoot
+     */
+    const onKeyDownCaptureHandler = (e: KeyboardEvent<HTMLDivElement>) => {
+      /**
+       * To block further code execution in onKeyDownCaptureHandler,
+       * need to call e.preventDefault() inside propOnKeyDownCapture.
+       */
+      propOnKeyDownCapture?.(e)
+      if (e.defaultPrevented || e.isDefaultPrevented?.()) return
+
+      if (e.key !== 'ArrowDown' && e.key !== 'ArrowUp') return
+
+      const rootEl = contentRef.current
+      if (!rootEl) return
+
+      const rootNode = rootEl.getRootNode()
+
+      if (!(rootNode instanceof ShadowRoot)) return
+
+      const items = Array.from(
+        rootEl.querySelectorAll<HTMLElement>('[data-radix-collection-item]:not([data-disabled])[role*="menuitem"]')
+      )
+
+      if (!items.length) return
+
+      const activeEl = rootNode instanceof ShadowRoot ? rootNode.activeElement : document.activeElement
+      let idx = items.findIndex(el => el === activeEl || (activeEl instanceof Element && el.contains(activeEl)))
+
+      if (idx === -1) {
+        idx = e.key === 'ArrowDown' ? -1 : 0
+      }
+
+      const next =
+        e.key === 'ArrowDown' ? (idx + 1 + items.length) % items.length : (idx - 1 + items.length) % items.length
+
+      e.preventDefault()
+      e.stopPropagation()
+      items[next]?.focus()
+    }
+
     return (
       <DropdownMenuPortal container={portalContainer}>
         <Primitive
-          ref={ref}
+          ref={mergedRef}
           sideOffset={sideOffset}
           className={cn('cn-dropdown-menu', className)}
           onCloseAutoFocus={event => event.preventDefault()}
+          onKeyDownCapture={onKeyDownCaptureHandler}
           {...props}
         >
           {!!header && <div className="cn-dropdown-menu-container cn-dropdown-menu-container-header">{header}</div>}
@@ -155,10 +227,28 @@ interface DropdownMenuItemProps
   extends Omit<DropdownBaseItemProps, 'withSubIndicator'>,
     Omit<ComponentPropsWithoutRef<typeof DropdownMenuPrimitive.Item>, 'title' | 'prefix'> {
   prefix?: ReactNode
+  subContentProps?: Omit<DropdownMenuContentProps, 'isSubContent'>
+  subMenuProps?: ComponentPropsWithoutRef<typeof DropdownMenuPrimitive.Sub>
 }
 
 const DropdownMenuItem = forwardRef<ElementRef<typeof DropdownMenuPrimitive.Item>, DropdownMenuItemProps>(
-  ({ className, children, title, description, label, shortcut, checkmark, prefix, tag, ...props }, ref) => {
+  (
+    {
+      className,
+      children,
+      title,
+      description,
+      label,
+      shortcut,
+      checkmark,
+      prefix,
+      tag,
+      subContentProps,
+      subMenuProps,
+      ...props
+    },
+    ref
+  ) => {
     const filteredChildren = filterChildrenByDisplayNames(children, innerComponentsDisplayNames)
     const withChildren = filteredChildren.length > 0
 
@@ -170,7 +260,7 @@ const DropdownMenuItem = forwardRef<ElementRef<typeof DropdownMenuPrimitive.Item
 
     if (withChildren) {
       return (
-        <DropdownMenuSub>
+        <DropdownMenuSub {...subMenuProps}>
           <DropdownMenuSubTrigger
             ref={ref}
             className={cn('cn-dropdown-menu-item cn-dropdown-menu-item-subtrigger', className)}
@@ -178,7 +268,9 @@ const DropdownMenuItem = forwardRef<ElementRef<typeof DropdownMenuPrimitive.Item
           >
             <ItemContent />
           </DropdownMenuSubTrigger>
-          <DropdownMenuContent isSubContent>{filteredChildren}</DropdownMenuContent>
+          <DropdownMenuContent isSubContent {...subContentProps}>
+            {filteredChildren}
+          </DropdownMenuContent>
         </DropdownMenuSub>
       )
     }
@@ -194,7 +286,10 @@ DropdownMenuItem.displayName = displayNames.item
 
 interface DropdownMenuCheckboxItemProps
   extends Omit<DropdownBaseItemProps, 'withSubIndicator'>,
-    Omit<ComponentPropsWithoutRef<typeof DropdownMenuPrimitive.CheckboxItem>, 'title' | 'onSelect'> {}
+    Omit<ComponentPropsWithoutRef<typeof DropdownMenuPrimitive.CheckboxItem>, 'title' | 'onSelect'> {
+  subContentProps?: Omit<DropdownMenuContentProps, 'isSubContent'>
+  subMenuProps?: ComponentPropsWithoutRef<typeof DropdownMenuPrimitive.Sub>
+}
 
 const DropdownMenuCheckboxItem = forwardRef<
   ElementRef<typeof DropdownMenuPrimitive.CheckboxItem>,
@@ -213,6 +308,8 @@ const DropdownMenuCheckboxItem = forwardRef<
       tag,
       onCheckedChange,
       onClick,
+      subContentProps,
+      subMenuProps,
       ...props
     },
     ref
@@ -227,9 +324,9 @@ const DropdownMenuCheckboxItem = forwardRef<
           {checked && (
             <div className="cn-checkbox-indicator" {...{ 'data-state': checkedDataState }}>
               {checked === 'indeterminate' ? (
-                <IconV2 name="minus" className="cn-checkbox-icon" skipSize />
+                <IconV2 name="minus" className="cn-checkbox-icon" size="2xs" />
               ) : (
-                <IconV2 name="check" className="cn-checkbox-icon" skipSize />
+                <IconV2 name="check" className="cn-checkbox-icon" size="2xs" />
               )}
             </div>
           )}
@@ -239,7 +336,7 @@ const DropdownMenuCheckboxItem = forwardRef<
 
     if (withChildren) {
       return (
-        <DropdownMenuSub>
+        <DropdownMenuSub {...subMenuProps}>
           <DropdownMenuSubTrigger
             ref={ref}
             className={cn('cn-dropdown-menu-item cn-dropdown-menu-item-subtrigger', className)}
@@ -256,7 +353,9 @@ const DropdownMenuCheckboxItem = forwardRef<
           >
             <ItemContent />
           </DropdownMenuSubTrigger>
-          <DropdownMenuContent isSubContent>{filteredChildren}</DropdownMenuContent>
+          <DropdownMenuContent isSubContent {...subContentProps}>
+            {filteredChildren}
+          </DropdownMenuContent>
         </DropdownMenuSub>
       )
     }
@@ -402,20 +501,22 @@ const DropdownMenuSeparator = forwardRef<
 ))
 DropdownMenuSeparator.displayName = displayNames.separator
 
-const DropdownMenuHeader = ({ className, ...props }: HTMLAttributes<HTMLDivElement>) => (
-  <div className={cn('cn-dropdown-menu-header', className)} {...props} />
+const DropdownMenuHeader = forwardRef<HTMLDivElement, HTMLAttributes<HTMLDivElement>>(
+  ({ className, ...props }, ref) => <div className={cn('cn-dropdown-menu-header', className)} ref={ref} {...props} />
 )
 DropdownMenuHeader.displayName = displayNames.header
 
-const DropdownMenuFooter = ({ className, ...props }: HTMLAttributes<HTMLDivElement>) => (
-  <div className={cn('cn-dropdown-menu-footer', className)} {...props} />
+const DropdownMenuFooter = forwardRef<HTMLDivElement, HTMLAttributes<HTMLDivElement>>(
+  ({ className, ...props }, ref) => <div className={cn('cn-dropdown-menu-footer', className)} ref={ref} {...props} />
 )
 DropdownMenuFooter.displayName = displayNames.footer
 
-const DropdownMenuSpinner = ({ className, ...props }: HTMLAttributes<HTMLDivElement>) => (
-  <div className={cn('cn-dropdown-menu-spinner', className)} {...props}>
-    <IconV2 className="animate-spin" name="loader" />
-  </div>
+const DropdownMenuSpinner = forwardRef<HTMLDivElement, HTMLAttributes<HTMLDivElement>>(
+  ({ className, ...props }, ref) => (
+    <div className={cn('cn-dropdown-menu-spinner', className)} ref={ref} {...props}>
+      <IconV2 className="animate-spin" name="loader" />
+    </div>
+  )
 )
 DropdownMenuSpinner.displayName = displayNames.spinner
 
@@ -430,7 +531,11 @@ const DropdownMenuNoOptions = ({ className, children, ...props }: Omit<TextProps
 }
 DropdownMenuNoOptions.displayName = displayNames.noOptions
 
-const DropdownMenuSlot = (props: HTMLAttributes<HTMLDivElement>) => <div {...props} />
+const DropdownMenuSlot = forwardRef<HTMLDivElement, HTMLAttributes<HTMLDivElement>>((props, ref) => (
+  <div ref={ref} {...props}>
+    {props.children}
+  </div>
+))
 DropdownMenuSlot.displayName = displayNames.slot
 
 const DropdownMenu = {

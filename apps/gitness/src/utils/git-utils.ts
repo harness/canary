@@ -94,7 +94,7 @@ const MONACO_SUPPORTED_LANGUAGES = [
   'yaml'
 ]
 
-export const FILE_SEPERATOR = '/'
+export const FILE_SEPARATOR = '/'
 
 export const PLAIN_TEXT = 'plaintext'
 
@@ -186,6 +186,20 @@ export const normalizeGitRef = (gitRef: string | undefined) => {
     return gitRef
   } else {
     return `refs/heads/${gitRef}`
+  }
+}
+
+export const deNormalizeGitRef = (gitRef: string | undefined) => {
+  if (isRefATag(gitRef)) {
+    return gitRef?.replace('refs/tags/', '')
+  } else if (isRefABranch(gitRef)) {
+    return gitRef?.replace('refs/heads/', '')
+  } else if (gitRef === '') {
+    return ''
+  } else if (gitRef && isRefACommitSHA(gitRef)) {
+    return gitRef
+  } else {
+    return gitRef
   }
 }
 

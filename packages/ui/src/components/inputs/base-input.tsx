@@ -20,7 +20,7 @@ export interface BaseInputProps
   extends Omit<InputHTMLAttributes<HTMLInputElement>, 'size' | 'prefix' | 'suffix'>,
     VariantProps<typeof inputVariants> {}
 
-const inputVariants = cva('cn-input-container', {
+export const inputVariants = cva('cn-input-container', {
   variants: {
     size: {
       md: '',

@@ -172,7 +172,7 @@ const CardSelectItem = forwardRef<HTMLLabelElement, CardSelectItemProps>(
             {logo && !icon && <LogoV2 name={logo} className="cn-card-select-logo" />}
             <div className="cn-card-select-content-container">{children}</div>
           </div>
-          {checked && <IconV2 name="check" className="cn-card-select-check" />}
+          {checked && <IconV2 size="md" name="check" className="cn-card-select-check" />}
         </div>
         <input
           type={type === 'multiple' ? 'checkbox' : 'radio'}

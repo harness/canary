@@ -56,8 +56,8 @@ export const ProfileSettingsKeysCreateDialog: FC<ProfileSettingsKeysCreateDialog
         <Dialog.Header>
           <Dialog.Title>{t('views:profileSettings.newSshKey', 'New SSH key')}</Dialog.Title>
         </Dialog.Header>
-        <FormWrapper {...formMethods} onSubmit={handleSubmit(handleFormSubmit)} className="block">
-          <Dialog.Body>
+        <Dialog.Body>
+          <FormWrapper id="ssh-key-form" {...formMethods} onSubmit={handleSubmit(handleFormSubmit)}>
             <FormInput.Text
               id="identifier"
               value={identifier}
@@ -77,14 +77,16 @@ export const ProfileSettingsKeysCreateDialog: FC<ProfileSettingsKeysCreateDialog
                 <Alert.Title>{error.message}</Alert.Title>
               </Alert.Root>
             )}
-          </Dialog.Body>
-          <Dialog.Footer>
-            <ButtonLayout>
-              <Dialog.Close onClick={onClose}>{t('views:profileSettings.cancel', 'Cancel')}</Dialog.Close>
-              <Button type="submit">{t('views:profileSettings.save', 'Save')}</Button>
-            </ButtonLayout>
-          </Dialog.Footer>
-        </FormWrapper>
+          </FormWrapper>
+        </Dialog.Body>
+        <Dialog.Footer>
+          <ButtonLayout>
+            <Dialog.Close onClick={onClose}>{t('views:profileSettings.cancel', 'Cancel')}</Dialog.Close>
+            <Button type="submit" form="ssh-key-form">
+              {t('views:profileSettings.save', 'Save')}
+            </Button>
+          </ButtonLayout>
+        </Dialog.Footer>
       </Dialog.Content>
     </Dialog.Root>
   )

@@ -1,4 +1,4 @@
-import { useEffect } from 'react'
+import { useEffect, useState } from 'react'
 import { useParams } from 'react-router-dom'
 
 import {
@@ -39,8 +39,6 @@ export default function ReposListPage() {
     setImportToastId
   } = useRepoStore()
   const { toast, dismiss } = useToast()
-  const { renderUrl } = useMFEContext()
-  const basename = `/ng${renderUrl}`
   const isMFE = useIsMFE()
   const { navigate } = useRouterContext()
 
@@ -48,9 +46,10 @@ export default function ReposListPage() {
   const { queryPage, setQueryPage } = usePaginationQueryStateWithStore({ page, setPage })
   const [favorite, setFavorite] = useQueryState<boolean>('favorite')
   const [recursive, setRecursive] = useQueryState<boolean>('recursive')
-  const { scope } = useMFEContext()
-  const [sort, setSort] = useQueryState<ListReposQueryQueryParams['sort']>('sort')
-  const [order, setOrder] = useQueryState<ListReposQueryQueryParams['order']>('order')
+  const { scope, renderUrl, routeUtils } = useMFEContext()
+  const basename = `/ng${renderUrl}`
+  const [sort, setSort] = useState<ListReposQueryQueryParams['sort']>('last_git_push')
+  const [order, setOrder] = useState<ListReposQueryQueryParams['order']>('desc')
 
   const {
     data: { body: repoData, headers } = {},
@@ -118,7 +117,6 @@ export default function ReposListPage() {
           </Toast.Action>
         )
       })
-
       setImportToastId(id)
     }
   }, [importRepoIdentifier, setImportRepoIdentifier])
@@ -163,15 +161,18 @@ export default function ReposListPage() {
     if (!isMFE || isSameScope) {
       navigate(repoSummaryPath)
     } else {
-      const fullPath = `${basename}${getRepoUrl({
-        repo,
-        scope,
-        repoSubPath: repoSummaryPath
-      })}`
-
-      // TODO: Fix this properly to avoid full page refresh.
-      // Currently, not able to navigate properly with React Router.
-      window.location.href = fullPath
+      if (routeUtils?.toCODERepository) {
+        // Navigate with parent app's React Router
+        routeUtils.toCODERepository?.({ repoPath: repo.path })
+      } else {
+        // TODO: Remove this fallback once the routeUtils is available in all release branches
+        const fullPath = `${basename}${getRepoUrl({
+          repo,
+          scope,
+          repoSubPath: repoSummaryPath
+        })}`
+        window.location.href = fullPath
+      }
     }
   }
 
@@ -204,11 +205,11 @@ export default function ReposListPage() {
       }}
       onSortChange={(sortValues: string) => {
         const [type, direction] = sortValues?.split(',') || []
-        const sortKey = type as ListReposQueryQueryParams['sort'] | undefined
-        const orderKey = direction as ListReposQueryQueryParams['order'] | undefined
+        const sortKey = type as ListReposQueryQueryParams['sort']
+        const orderKey = direction as ListReposQueryQueryParams['order']
 
-        setSort(sortKey ?? null)
-        setOrder(orderKey ?? null)
+        setSort(sortKey)
+        setOrder(orderKey)
       }}
     />
   )

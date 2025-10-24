@@ -1,17 +1,22 @@
 {
   "repos": {
-    "create-file": "Create file",
-    "upload-files": "Upload files",
+    "createFile": "Create File",
+    "uploadFiles": "Upload Files",
     "summary": "Summary",
     "files": "Files",
     "pipelines": "Pipelines",
     "commits": "Commits",
     "tags": "Tags",
-    "pull-requests": "Pull requests",
-    "branches": "Branches",
+    "pullRequests": "Pull requests",
+    "branches": {
+      "title": "Branches",
+      "commitsBehind": "commits behind",
+      "commitsAhead": "commits ahead",
+      "createBranch": "Create Branch"
+    },
     "search": "Search",
     "settings": "Settings",
-    "descriptionPlaceholder": "Enter a short description for the label",
+    "descriptionPlaceholder": "Enter a description",
     "description": "Description",
     "error": "Error:",
     "saving": "Saving…",
@@ -26,6 +31,7 @@
     "compareAndPullRequest": "Compare & pull request",
     "dismiss": "Dismiss",
     "compareBranchesToSeeChanges": "Compare branches to see your changes.",
+    "noNewCommits": "No new commits yet",
     "default": "Default",
     "viewAll": "View all {{type}}",
     "branchesLowercase": "branches",
@@ -70,6 +76,7 @@
         "label": "Label by"
       }
     },
+    "createPullReq": "Create Pull Request",
     "BlockBranchCreation": "Block branch creation",
     "BlockBranchCreationDescription": "Only allow users with bypass permission to create matching branches",
     "BlockBranchDeletion": "Block branch deletion",
@@ -86,8 +93,8 @@
     "RequireMinimumDefaultReviewerCountDescription": "Require a minimum number of default reviewers",
     "RequireCodeReview": "Require a minimum number of reviewers",
     "RequireCodeReviewDescription": "Require approval on pull requests from a minimum number of reviewers",
-    "AutoAddCodeOwners": "Add Code Owners as reviewers",
-    "AutoAddCodeOwnersDescription": "Automatically add relevant Code Owners as reviewers",
+    "AutoAddCodeOwners": "Add code owners as reviewers",
+    "AutoAddCodeOwnersDescription": "Automatically add relevant code owners as reviewers",
     "RequireCodeOwners": "Require review from code owners",
     "RequireCodeOwnersDescription": "Require approval on pull requests from one reviewer for each Code Owner rule",
     "RequestApprovalRule": "Request approval of new changes",
@@ -127,20 +134,18 @@
     "enterMinDefaultReviewers": "Enter minimum number of default reviewers",
     "enterMinReviewers": "Enter minimum number of reviewers",
     "updateBranchRule": "Update branch rule",
-    "CreateRule": "Create a branch rule",
-    "updateRule": "Update rule",
-    "createRuleButton": "Create rule",
-    "updatingRule": "Updating rule...",
-    "creatingRuleButton": "Creating rule...",
-    "createBranch": "Create branch",
+    "createBranchRule": "Create branch rule",
+    "updateRuleButton": "Update Rule",
+    "createRuleButton": "Create Rule",
+    "updatingRuleButton": "Updating Rule...",
+    "creatingRuleButton": "Creating Rule...",
     "branch": "Branch",
     "update": "Updated",
     "checkStatus": "Check status",
     "behind": "Behind",
     "ahead": "Ahead",
     "pullRequest": "Pull Request",
-    "newPullReq": "New pull request",
-    "viewRules": "View Rules",
+    "compare": "Compare",
     "browse": "Browse",
     "deleteBranch": "Delete Branch",
     "createBranchDialog": {
@@ -151,7 +156,6 @@
       }
     },
     "createBranchTitle": "Create a branch",
-    "createBranchButton": "Create branch",
     "createNewRepo": "Create a new repository",
     "repoContains": "A repository contains all project files, including the revision history. Already have a project repository elsewhere?",
     "importRepo": "Import a repository",
@@ -165,9 +169,9 @@
         "label": "Description"
       },
       "gitignore": {
-        "placeholder": "Select",
         "label": "Add a .gitignore",
-        "caption": "Choose which files not to track from a list of templates."
+        "caption": "Choose which files not to track from a list of templates.",
+        "placeholder": "Select"
       },
       "defaultBranchDialog": {
         "startLabel": "Your repository will be initialized with a",
@@ -181,9 +185,9 @@
       }
     },
     "repositories": "Repositories",
-    "new-repository": "New repository",
-    "import-repository": "Import repository",
-    "import-repositories": "Import repositories",
+    "createRepository": "Create Repository",
+    "importRepository": "Import Repository",
+    "importRepositories": "Import Repositories",
     "importing": "Importing…",
     "updated": "Updated",
     "unarchiveRepo": "Unarchive this repository",
@@ -192,11 +196,11 @@
     "archiveRepoDescription": "Set this repository to archived and restrict it to read-only access.",
     "unarchiving": "Unarchiving...",
     "archiving": "Archiving...",
-    "unarchiveRepoButton": "Unarchive repository",
-    "archiveRepoButton": "Archive repository",
+    "unarchiveRepoButton": "Unarchive Repository",
+    "archiveRepoButton": "Archive Repository",
     "deleteRepo": "Delete this repository",
     "deleteRepoDescription": "This will permanently delete this repository, and everything contained in it.",
-    "deleteRepoButton": "Delete repository",
+    "deleteRepoButton": "Delete Repository",
     "settingsToolTip": "Cannot change settings while loading or updating.",
     "features": "Features",
     "gitLfs": "Git LFS",
@@ -213,8 +217,8 @@
     "allRules": "All Rules",
     "branchRules": "Branch Rules",
     "tagRules": "Tag Rules",
-    "newTagRule": "New tag rule",
-    "createBranchRule": "New branch rule",
+    "createTagRuleButton": "Create Tag Rule",
+    "createBranchRuleButton": "Create Branch Rule",
     "security": "Security",
     "secretScanning": "Secret scanning",
     "secretScanningDescription": "Block commits containing secrets like passwords, API keys and tokens.",
@@ -242,14 +246,14 @@
           "0": "We recommend every repository include a",
           "1": "README, LICENSE, and .gitignrore."
         },
-        "createFile": "New file"
+        "createFile": "Create File"
       },
       "cloneInstructions": {
         "title": "Please generate git credentials if it’s your first time cloning the repository",
         "subTitle": "Git clone URL",
         "http": "HTTP",
         "ssh": "SSH",
-        "generateButton": "Generate clone credential",
+        "generateButton": "Generate Clone Credential",
         "manageCredentials": {
           "0": "You can also manage your git credential",
           "1": "here"
@@ -257,7 +261,7 @@
         "pushRepository": {
           "0": "You might need to",
           "1": "create an API token",
-          "2": "In order to pull from or push into this repository"
+          "2": "in order to pull from or push into this repository"
         }
       },
       "initialCommit": "Then push some content into it",
@@ -275,7 +279,7 @@
     "BlockTagUpdate": "Block tag update",
     "BlockTagUpdateDescription": "Only allow users with bypass permission to update matching tags",
     "updateTagRule": "Update tag rule",
-    "CreateTagRule": "Create a tag rule",
+    "createTagRule": "Create tag rule",
     "createTagTitle": "Create a tag",
     "repoTagDescriptionPlaceholder": "Enter tag description here",
     "creatingTagButton": "Creating tag...",
@@ -299,7 +303,7 @@
     "commit": "Commit",
     "tagger": "Tagger",
     "creationDate": "Creation date",
-    "newTag": "New Tag",
+    "createTag": "Create Tag",
     "enableWebhookToggle": "Enable the webhook",
     "toggleDescription": "We will deliver event details when this hook is triggered",
     "urlPlaceholder": "https://example.com/harness",
@@ -319,6 +323,11 @@
     "creatingWebhook": "Creating webhook...",
     "updateWebhook": "Update webhook",
     "createWebhook": "Create webhook",
+    "updateRule": "Update rule",
+    "updatingRule": "Updating rule...",
+    "createBranchButton": "Create branch",
+    "newPullReq": "New pull request",
+    "viewRules": "View Rules",
     "newBranch": "New branch",
     "emptyRepo": "This repository is empty.",
     "afterComparingOpenPullRequest": "After comparing changes, you may open a pull request to contribute your changes upstream.",
@@ -355,7 +364,7 @@
     "configuration": "Configuration",
     "references": "References",
     "activityHistory": "Activity history",
-    "createNew": "Create new connector",
+    "createNew": "Create Connector",
     "errorEncountered": "Error Encountered",
     "viewDetails": "View Details",
     "id": "Connector ID",
@@ -395,24 +404,32 @@
     "noCommitsYetDescription": "Your commits will appear here once they're made. Start committing to see your changes reflected.",
     "compareChanges": "Compare and review just about anything",
     "compareChangesDescription": "Branches and commit ranges can be reviewed within the same repository.",
+    "title": {
+      "noOpenPullRequests": "No open pull requests yet",
+      "noClosedPullRequests": "No closed pull requests yet",
+      "noMergedPullRequests": "No merged pull requests yet"
+    },
     "noOpenPullRequests": "There are no open pull requests in this project yet.",
-    "createNewPullRequest": "Create a new pull request.",
     "noClosedPullRequests": "There are no closed pull requests in this project yet.",
-    "clearFilters": "Clear filters",
-    "noPullRequestsInRepo": "Start your contribution journey by creating a new pull request draft.",
+    "noMergedPullRequests": "There are no merged pull requests in this project yet.",
+    "button": {
+      "createPullRequest": "Create Pull Request"
+    },
+    "noPullRequestsInRepo": "Start your contribution journey by creating a new pull request.",
     "noPullRequestsInProject": "There are no pull requests in this project yet.",
     "noBranches": "No branches yet",
     "createBranchDescription": "Your branches will appear here once they're created.",
     "startBranchDescription": "Start branching to see your work organized.",
     "noCommitsHistory": "No commits history",
     "noCommitsHistoryDescription": "There isn't any commit history to show here for the selected user, time range, or current page.",
+    "clearFilters": "Clear Filters",
     "noRepos": "No repositories yet",
     "noReposProject": "There are no repositories in this project yet.",
     "createOrImportRepos": "Create new or import an existing repository.",
     "noRulesDescription": "There are no rules in this project. Click on the button below to start adding rules.",
     "noTags": "No tags yet",
     "noTagsDescription": "Your tags will appear here once they're created. Start creating tags to see your work organized.",
-    "createNewTag": "Create tag",
+    "createNewTag": "Create Tag",
     "noWebhookExecution": "No webhook executions yet",
     "noWebhookExecutionsDescription": "Your webhook executions will appear here once they're completed. Trigger your webhook to see the results.",
     "noWebhooks": "No webhooks yet",
@@ -421,8 +438,10 @@
     "createSecret": "Create new secret.",
     "noUsers": "No Users Found",
     "noUsersDescription": "There are no users in this scope. Click on the button below to start adding them.",
-    "createBranch": "Create new branch",
-    "createConnector": "Create new connector.",
+    "createTagRuleButton": "Create Tag Rule",
+    "createTagRule": "Create Tag Rule",
+    "createBranch": "Create New Branch",
+    "createConnector": "Create New Connector.",
     "noConnectorsProject": "There are no connectors in this project yet.",
     "noSecretsProject": "There are no secrets in this project yet.",
     "commit": "Commit",
@@ -430,7 +449,7 @@
     "noLabelsDescription": "Use labels to organize, prioritize, and categorize tasks efficiently."
   },
   "notFound": {
-    "button": "Reload page",
+    "button": "Reload Page",
     "title": "Something went wrong…",
     "descriptionWithType": "The requested page is not found. You can go back to view all {{type}} and manage your settings.",
     "description": "The requested page is not found."
@@ -510,15 +529,16 @@
       "created": "Created in",
       "description": "Description"
     },
-    "edit": "Edit label",
-    "delete": "Delete label",
+    "edit": "Edit Label",
+    "delete": "Delete Label",
     "title": "Labels",
     "showParentLabels": "Show labels from parent scopes",
-    "newLabel": "New label",
-    "create": "Create labels"
+    "createLabel": "Create Label",
+    "newLabel": "Create Label",
+    "create": "Create Labels"
   },
   "projectSettings": {
-    "newLabels": "Create label",
+    "newLabels": "Create Label",
     "general": {
       "mainTitle": "General settings",
       "projectNamePlaceholder": "Enter project name",
@@ -527,13 +547,13 @@
       "projectDescriptionLabel": "Description",
       "formSubmitButton": {
         "savingState": "Saving...",
-        "defaultState": "Save changes",
+        "defaultState": "Save Changes",
         "savedState": "Saved"
       },
       "formCancelButton": "Cancel",
       "deleteProjectTitle": "Delete project",
       "deleteProjectDescription": "This will permanently delete this project, and everything contained in it. All repositories in it will also be deleted.",
-      "deleteProjectButton": "Delete project"
+      "deleteProjectButton": "Delete Project"
     },
     "newMember": "New member",
     "member": "Member",
@@ -570,11 +590,11 @@
     "changes": "Changes",
     "noCommitsYet": "No commits yet",
     "noCommitDataDescription": "There are no commits yet.",
-    "compareChangesCreateTitle": "Create pull request",
+    "compareChangesCreateTitle": "Create Pull Request",
     "compareChangesCreateDescription": "Open pull request that is ready for review.",
-    "compareChangesDraftTitle": "Create draft pull request",
+    "compareChangesDraftTitle": "Create Draft Pull request",
     "compareChangesDraftDescription": "Does not request code reviews and cannot be merged.",
-    "compareChangesCreatedButton": "Pull request created",
+    "compareChangesCreatedButton": "Pull Request Created",
     "compareChangesFormTitleLabel": "Add a title",
     "compareChangesFormTitlePlaceholder": "Enter pull request title",
     "compareChangesFormDescriptionHeading": "Add a description",
@@ -607,6 +627,7 @@
     "searchLabels": "Search",
     "noLabels": "No labels found",
     "editLabels": "Edit labels",
+    "changedSinceLastView": "Changed since last viewed",
     "markViewed": "Viewed",
     "deletedComment": "This comment was deleted.",
     "reviewers": "Reviewers",
@@ -616,6 +637,13 @@
     "changereq": "Changes Requested",
     "split": "Split",
     "unified": "Unified",
+    "comments": {
+      "suggestionApplied": "Suggestion applied",
+      "codeSuggestion": "Code suggestion",
+      "commitSuggestion": "Commit suggestion",
+      "removeSuggestion": "Remove suggestion from batch",
+      "addSuggestion": "Add suggestion to batch"
+    },
     "deleted": "Deleted",
     "searchUsers": "Search users",
     "compareChangesFormDescriptionLabel": "Description",
@@ -626,10 +654,10 @@
     "compareChangesDiffLink": "learn more about diff comparisons",
     "compareChangesFormTitle": "Add a title",
     "compareChangesFormDescription": "Add a description",
-    "compareChangesCreateButton": "Create pull request",
-    "compareChangesCreateButtonLoading": "Creating pull request...",
-    "compareChangesDraftButton": "Draft pull request",
-    "compareChangesDraftButtonLoading": "Drafting pull request...",
+    "compareChangesCreateButton": "Create Pull Request",
+    "compareChangesCreateButtonLoading": "Creating Pull Request...",
+    "compareChangesDraftButton": "Draft Pull Request",
+    "compareChangesDraftButtonLoading": "Drafting Pull Request...",
     "replyHere": "Reply here",
     "showDiff": "Show Diff",
     "deletedFileDiff": "This file was deleted.",
@@ -656,9 +684,9 @@
     "select": "Select",
     "tokenExpiryNone": "Token will never expire",
     "tokenExpiryDate": " Token will expire on",
-    "gotItButton": "Got it",
-    "generateTokenButton": "Generate token",
-    "generatingTokenButton": "Generating token...",
+    "gotItButton": "Got It",
+    "generateTokenButton": "Generate Token",
+    "generatingTokenButton": "Generating Token...",
     "tokenTableHeader": "Token",
     "statusTableHeader": "Status",
     "expirationDateTableHeader": "Expiration date",
@@ -685,7 +713,7 @@
     "enterUsernameCaption": "This username will be shown across the platform.",
     "accountEmail": "Account email",
     "updatingProfileButton": "Updating...",
-    "updateProfileButton": "Update profile",
+    "updateProfileButton": "Update Profile",
     "updatedButton": "Updated",
     "passwordSettingsTitle": "Password settings",
     "passwordSettingsDesc": "Minimum of 6 characters long containing at least one number and a mixture of uppercase and lowercase letters.",
@@ -733,8 +761,8 @@
   },
   "rules": {
     "showParentRules": "Show rules from parent scopes",
-    "edit": "Edit rule",
-    "delete": "Delete rule",
+    "edit": "Edit Rule",
+    "delete": "Delete Rule",
     "exclude": "Exclude",
     "include": "Include"
   },
@@ -745,16 +773,26 @@
     "accountOnly": "Account only",
     "label": "Scope"
   },
+  "repo": {
+    "components": {
+      "commitDetailsDiffShowing": "Showing",
+      "commitDetailsDiffChangedFiles": "changed files",
+      "commitDetailsDiffWith": "with",
+      "commitDetailsDiffAdditionsAnd": "additions and",
+      "commitDetailsDiffDeletions": "deletions"
+    }
+  },
   "commits": {
+    "commitDetailsTitle": "Commit",
+    "browseFiles": "Browse Files",
+    "commitDetailsAuthored": "authored",
+    "createCommit": "Create commit",
+    "createNewCommit": "Create commit",
     "commitDetailsDiffShowing": "Showing",
     "commitDetailsDiffChangedFiles": "changed files",
     "commitDetailsDiffWith": "with",
     "commitDetailsDiffAdditionsAnd": "additions and",
     "commitDetailsDiffDeletions": "deletions",
-    "commitDetailsTitle": "Commit",
-    "browseFiles": "Browse files",
-    "createNewCommit": "Create new commit",
-    "commitDetailsAuthored": "authored",
     "verified": "Verified"
   },
   "createTagDialog": {
@@ -780,12 +818,12 @@
     "prCommentUpdated": "PR comment updated",
     "prReviewSubmitted": "PR review submitted",
     "prLabelAssigned": "PR label assigned",
-    "create": "Create webhook",
-    "edit": "Edit webhook",
-    "delete": "Delete webhook"
+    "create": "Create Webhook",
+    "edit": "Edit Webhook",
+    "delete": "Delete Webhook"
   },
   "secrets": {
-    "createNew": "Create new secret",
+    "createNew": "Create Secret",
     "delete": "Delete Secret",
     "secretsTitle": "Secrets"
   },
@@ -849,7 +887,7 @@
       "confirm": "Confirm"
     },
     "close": "Close",
-    "newUserButton": "New user",
+    "newUserButton": "Create User",
     "searchPlaceholder": "Search",
     "usersHeader": "Users",
     "tabs": {

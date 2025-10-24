@@ -6,7 +6,7 @@
       color-scheme: dark;
 
       --color-fg-default: #dedede;
-      --color-fg-muted: #969896;
+      --color-fg-muted: var(--cn-text-3);
       --color-fg-subtle: #7aa6da;
 
       --color-canvas-default: var(--cn-bg-1);
@@ -72,7 +72,7 @@
       color-scheme: light;
 
       --color-fg-default: #353535;
-      --color-fg-muted: #10a567;
+      --color-fg-muted: var(--cn-text-3);
       --color-fg-subtle: #386ac3;
 
       --color-canvas-default: var(--cn-bg-1);
@@ -154,6 +154,10 @@
     font: var(--cn-comp-markdown-content-paragraph);
     @apply text-cn-foreground-2 !max-w-full;
 
+    &::-webkit-scrollbar-thumb {
+      background-color: var(--cn-comp-scrollbar-thumb);
+    }
+
     h1,
     h2,
     h3,
@@ -202,7 +206,7 @@
     }
 
     li {
-      @apply marker:text-cn-foreground-1 my-cn-2xs ps-0;
+      @apply marker:text-cn-foreground-2 my-cn-2xs ps-0;
     }
 
     ol {
@@ -228,24 +232,30 @@
     }
 
     code {
-      @apply font-body-code border-cn-borders-2 text-nowrap rounded border bg-[var(--cn-set-brand-surface-bg)] px-1 !text-[var(--cn-set-brand-surface-text)] before:hidden after:hidden;
+      @apply font-body-code px-cn-2xs py-cn-4xs text-nowrap rounded border-0 bg-[var(--cn-set-brand-surface-bg)] !text-[var(--cn-set-blue-soft-text)] before:hidden after:hidden;
+    }
+
+    :not(p) > code {
+      font-size: inherit;
+      line-height: inherit;
     }
 
     strong {
       font: var(--cn-comp-markdown-content-emphasized);
-      @apply text-cn-foreground-1;
+      @apply text-cn-foreground-2;
     }
 
     pre {
-      @apply font-body-code bg-cn-background-1 border-cn-borders-3 text-cn-foreground-1 mb-0 rounded border py-3 pl-4 pr-3;
+      @apply font-body-code bg-cn-background-1 border-cn-borders-3 text-cn-foreground-1 mb-0 rounded-none border-0 p-0;
 
       code {
-        @apply bg-cn-background-1 !text-cn-foreground-1 mr-7 p-0;
+        @apply bg-cn-background-1 !text-cn-foreground-1 rounded-none p-0;
       }
     }
 
     blockquote {
-      @apply border-cn-borders-1 my-cn-md border-l-4 pl-4 pr-0;
+      font: var(--cn-comp-markdown-content-paragraph);
+      @apply text-cn-foreground-3 my-cn-md relative border-0 pl-4 pr-0 before:absolute before:inset-y-0 before:left-0 before:w-1 before:rounded-sm before:bg-[var(--cn-border-2)];
     }
 
     table {
@@ -277,17 +287,22 @@
         @apply border-0;
       }
     }
-  }
 
-  &.comment {
-    @apply !bg-transparent;
+    &.pr-section {
+      @apply font-body-normal !bg-transparent;
 
-    pre code {
-      @apply bg-transparent;
-    }
+      pre code {
+        @apply bg-transparent;
+      }
 
-    blockquote {
-      @apply before:bg-cn-background-softgray relative border-0 before:absolute before:inset-y-0 before:left-0 before:w-[3px] before:rounded-sm;
+      a,
+      blockquote {
+        @apply font-body-normal;
+      }
+
+      strong {
+        @apply font-body-strong;
+      }
     }
   }
 }

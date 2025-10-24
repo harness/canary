@@ -1,6 +1,6 @@
 import { useCallback, useEffect, useRef, useState } from 'react'
 
-import { Avatar, Text, TextInput, TimeAgoCard } from '@/components'
+import { Avatar, Layout, Separator, Tag, Text, TextInput, TimeAgoCard } from '@/components'
 import { useTheme, useTranslation } from '@/context'
 import {
   activitiesToDiffCommentItems,
@@ -22,12 +22,14 @@ import { debounce, get } from 'lodash-es'
 import { OverlayScrollbars } from 'overlayscrollbars'
 
 import PRCommentView from '../details/components/common/pull-request-comment-view'
+import { scopeLinesRangeToOneBlock } from '../details/components/conversation/diff-utils'
 import PullRequestTimelineItem from '../details/components/conversation/pull-request-timeline-item'
 import { replaceMentionEmailWithId, replaceMentionIdWithEmail } from '../details/components/conversation/utils'
+import { ExpandedCommentsContext, useExpandedCommentsContext } from '../details/context/pull-request-comments-context'
 import { useDiffHighlighter } from '../hooks/useDiffHighlighter'
 import { quoteTransform } from '../utils'
 import { ExtendedDiffView } from './extended-diff-view/extended-diff-view'
-import { ExtendedDiffViewProps } from './extended-diff-view/extended-diff-view-types'
+import { ExtendedDiffViewProps, LinesRange } from './extended-diff-view/extended-diff-view-types'
 
 interface Thread {
   parent: CommentItem<TypesPullReqActivity>
@@ -80,6 +82,7 @@ interface PullRequestDiffviewerProps {
 
 const PullRequestDiffViewer = ({
   data,
+  blocks,
   highlight,
   fontsize,
   mode,
@@ -400,6 +403,7 @@ const PullRequestDiffViewer = ({
             lineNumber={lineNumber}
             lineFromNumber={lineFromNumber}
             sideKey={sideKey}
+            blocks={blocks}
             diff={data}
             lang={lang}
             comment={commentText}
@@ -418,7 +422,7 @@ const PullRequestDiffViewer = ({
 
       return (
         <div className="bg-cn-background-1">
-          {threads.map(thread => {
+          {threads.map((thread, idx) => {
             const parent = thread.parent
             const componentId = `activity-code-${parent?.id}`
             const parentIdAttr = `comment-${parent?.id}`
@@ -430,14 +434,15 @@ const PullRequestDiffViewer = ({
                 setPrincipalsMentionMap={setPrincipalsMentionMap}
                 mentions={parent?.payload?.mentions}
                 payload={parent?.payload}
-                wrapperClassName="pb-3"
+                threadIndex={idx}
+                totalThreads={threads.length}
                 key={parent.id}
                 id={parentIdAttr}
                 principalProps={principalProps}
                 parentCommentId={parent.id}
                 handleSaveComment={handleSaveComment}
                 isLast={true}
-                contentWrapperClassName="col-start-1 row-start-1 col-end-3 row-end-3 px-4 pt-4 pb-1"
+                contentWrapperClassName="col-start-1 row-start-1 col-end-3 row-end-3 px-4 pb-2"
                 header={[]}
                 currentUser={currentUser}
                 isComment
@@ -491,7 +496,18 @@ const PullRequestDiffViewer = ({
                       header={[
                         {
                           name: parent.author,
-                          description: <TimeAgoCard timestamp={parent?.created} />
+                          description: (
+                            <Layout.Horizontal align="center" gap="xs">
+                              <TimeAgoCard timestamp={parent?.created} />
+
+                              {parent?.payload?.payload?.code_comment?.outdated && (
+                                <>
+                                  <Separator orientation="vertical" className="h-3.5" />
+                                  <Tag key={'outdated'} value="Outdated" theme="orange" />
+                                </>
+                              )}
+                            </Layout.Horizontal>
+                          )
                         }
                       ]}
                       content={
@@ -519,6 +535,7 @@ const PullRequestDiffViewer = ({
                             onCancelClick={() => {
                               toggleEditMode(componentId, '')
                             }}
+                            blocks={blocks}
                             diff={data}
                             lang={lang}
                             comment={replaceMentionIdWithEmail(
@@ -608,6 +625,7 @@ const PullRequestDiffViewer = ({
                                     onCancelClick={() => {
                                       toggleEditMode(replyComponentId, '')
                                     }}
+                                    blocks={blocks}
                                     diff={data}
                                     lang={lang}
                                     comment={replaceMentionIdWithEmail(
@@ -677,30 +695,41 @@ const PullRequestDiffViewer = ({
     () => !!fileName
   )
 
+  const contextValue = useExpandedCommentsContext()
+
+  const scopeMultilineSelectionToOneHunk = useCallback(
+    (linesRange: LinesRange) => (blocks ? scopeLinesRangeToOneBlock(blocks, linesRange) : linesRange),
+    [blocks]
+  )
+
   return (
-    <div data-diff-file-path={fileName}>
-      {diffFileInstance && (
-        <div ref={diffInstanceRef}>
-          {/* eslint-disable-next-line @typescript-eslint/ban-ts-comment */}
-          {/* @ts-ignore */}
-          <ExtendedDiffView<Thread[]>
-            ref={ref}
-            className="bg-tr w-full text-cn-foreground-3"
-            renderWidgetLine={renderWidgetLine}
-            renderExtendLine={renderExtendLine}
-            diffFile={diffFileInstance}
-            extendData={extend}
-            diffViewFontSize={fontsize}
-            diffViewHighlight={highlight}
-            diffViewMode={mode}
-            registerHighlighter={highlighter}
-            diffViewWrap={wrap}
-            diffViewAddWidget={addWidget}
-            diffViewTheme={isLightTheme ? 'light' : 'dark'}
-          />
-        </div>
-      )}
-    </div>
+    <ExpandedCommentsContext.Provider value={contextValue}>
+      <div data-diff-file-path={fileName}>
+        {diffFileInstance && (
+          <div ref={diffInstanceRef}>
+            {/* eslint-disable-next-line @typescript-eslint/ban-ts-comment */}
+            {/* @ts-ignore */}
+            <ExtendedDiffView<Thread[]>
+              ref={ref}
+              className="bg-tr w-full text-cn-foreground-1"
+              renderWidgetLine={renderWidgetLine}
+              renderExtendLine={renderExtendLine}
+              diffFile={diffFileInstance}
+              extendData={extend}
+              diffViewFontSize={fontsize}
+              diffViewHighlight={highlight}
+              diffViewMode={mode}
+              registerHighlighter={highlighter}
+              diffViewWrap={wrap}
+              // TODO: Remove 'mode === DiffModeEnum.Split' after the shadow dom is removed
+              diffViewAddWidget={addWidget && mode === DiffModeEnum.Split}
+              diffViewTheme={isLightTheme ? 'light' : 'dark'}
+              scopeMultilineSelectionToOneHunk={scopeMultilineSelectionToOneHunk}
+            />
+          </div>
+        )}
+      </div>
+    </ExpandedCommentsContext.Provider>
   )
 }
 

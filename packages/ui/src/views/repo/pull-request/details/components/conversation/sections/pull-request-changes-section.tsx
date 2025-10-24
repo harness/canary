@@ -36,7 +36,8 @@ const PullRequestChangesSection: FC<PullRequestChangesSectionProps> = ({
   changeReqReviewer,
   codeOwnersData,
   accordionValues,
-  defaultReviewersData
+  defaultReviewersData,
+  pullReqMetadata
 }) => {
   const {
     codeOwners,
@@ -64,7 +65,7 @@ const PullRequestChangesSection: FC<PullRequestChangesSectionProps> = ({
       >
         <Layout.Flex>
           <StackedList.Field
-            className="flex gap-y-1"
+            className="flex"
             title={<LineTitle text={changesInfo.header} icon={getStatusIcon(changesInfo.status)} />}
             description={<LineDescription text={changesInfo.content} />}
           />
@@ -77,7 +78,7 @@ const PullRequestChangesSection: FC<PullRequestChangesSectionProps> = ({
           {((minApproval ?? 0) > (minReqLatestApproval ?? 0) ||
             (!isEmpty(approvedEvaluations) && minReqLatestApproval === 0 && minApproval && minApproval > 0) ||
             ((minApproval ?? 0) > 0 && minReqLatestApproval === undefined)) && (
-            <div className="ml-7 flex items-center justify-between">
+            <div className="flex items-center justify-between">
               {approvedEvaluations && minApproval && minApproval <= approvedEvaluations?.length ? (
                 <div className="flex items-center gap-x-2">
                   <IconV2 size="md" name="check-circle-solid" className="text-cn-icon-success" />
@@ -109,7 +110,7 @@ const PullRequestChangesSection: FC<PullRequestChangesSectionProps> = ({
           )}
 
           {(minReqLatestApproval ?? 0) > 0 && (
-            <div className="ml-7 flex items-center justify-between">
+            <div className="flex items-center justify-between">
               {latestApprovalArr !== undefined &&
               minReqLatestApproval !== undefined &&
               minReqLatestApproval <= latestApprovalArr?.length ? (
@@ -125,7 +126,7 @@ const PullRequestChangesSection: FC<PullRequestChangesSectionProps> = ({
                   </span>
                 </div>
               )}
-              <StatusBadge variant="secondary">Required</StatusBadge>
+              <StatusBadge variant="outline">Required</StatusBadge>
             </div>
           )}
 
@@ -142,7 +143,7 @@ const PullRequestChangesSection: FC<PullRequestChangesSectionProps> = ({
                 />
                 <span className="text-2 text-cn-foreground-1">{`${changeReqReviewer} requested changes to the pull request`}</span>
               </div>
-              {reqNoChangeReq && <StatusBadge variant="secondary">Required</StatusBadge>}
+              {reqNoChangeReq && <StatusBadge variant="outline">Required</StatusBadge>}
             </div>
           )}
 
@@ -150,6 +151,7 @@ const PullRequestChangesSection: FC<PullRequestChangesSectionProps> = ({
 
           <CodeOwnersSection
             codeOwners={codeOwners}
+            pullReqMetadata={pullReqMetadata}
             reqCodeOwnerApproval={reqCodeOwnerApproval}
             reqCodeOwnerLatestApproval={reqCodeOwnerLatestApproval}
             codeOwnerChangeReqEntries={codeOwnerChangeReqEntries}

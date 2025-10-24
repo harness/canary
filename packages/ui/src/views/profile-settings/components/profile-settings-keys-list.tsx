@@ -1,6 +1,6 @@
 import { FC } from 'react'
 
-import { IconV2, MoreActionsTooltip, SkeletonTable, Table, TimeAgoCard } from '@/components'
+import { IconV2, MoreActionsTooltip, Skeleton, Table, TimeAgoCard } from '@/components'
 import { useTranslation } from '@/context'
 
 import { KeysList } from '../types'
@@ -29,7 +29,7 @@ export const ProfileKeysList: FC<ProfileKeysListProps> = ({ publicKeys, isLoadin
       </Table.Header>
 
       {isLoading ? (
-        <SkeletonTable countRows={4} countColumns={4} />
+        <Skeleton.Table countRows={4} countColumns={4} hideHeader />
       ) : (
         <Table.Body>
           {publicKeys.length ? (
@@ -37,7 +37,11 @@ export const ProfileKeysList: FC<ProfileKeysListProps> = ({ publicKeys, isLoadin
               <Table.Row key={key.identifier}>
                 <Table.Cell className="content-center">
                   <div className="inline-flex items-center gap-x-2.5">
-                    <IconV2 name="ssh-key" size="lg" className="rounded-md bg-cn-background-8 text-cn-foreground-2" />
+                    <IconV2
+                      name="ssh-key"
+                      size="lg"
+                      className="rounded-md bg-cn-background-softgray text-cn-foreground-2"
+                    />
                     <div className="flex flex-col">
                       <span className="block w-[200px] truncate font-medium text-cn-foreground-1">
                         {key.identifier}

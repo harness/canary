@@ -1,6 +1,6 @@
 import { FC, useCallback, useMemo } from 'react'
 
-import { Button, ListActions, Pagination, SearchInput, Spacer, Text } from '@/components'
+import { Button, IconV2, Layout, ListActions, NoData, Pagination, SearchInput, Text } from '@/components'
 import { useTranslation } from '@/context'
 import { SandboxLayout } from '@/views'
 import { cn } from '@utils/cn'
@@ -37,6 +37,9 @@ export const RepoBranchListView: FC<RepoBranchListViewProps> = ({
     return page !== 1 || !!searchQuery
   }, [page, searchQuery])
 
+  const noBranches = !branchList?.length && !isLoading && !isDirtyList
+  const noSearchResults = !branchList?.length && !isLoading && isDirtyList
+
   const getPrevPageLink = useCallback(() => {
     return `?page=${xPrevPage}`
   }, [xPrevPage])
@@ -45,15 +48,42 @@ export const RepoBranchListView: FC<RepoBranchListViewProps> = ({
     return `?page=${xNextPage}`
   }, [xNextPage])
 
+  const canShowPagination = useMemo(() => {
+    return !isLoading && !!branchList.length
+  }, [isLoading, branchList.length])
+
+  const openCreateBranchDialog = useCallback(() => {
+    setCreateBranchDialogOpen(true)
+  }, [setCreateBranchDialogOpen])
+
+  if (noBranches) {
+    return (
+      <NoData
+        className="m-auto"
+        imageName="no-data-branches"
+        title={t('views:noData.noBranches', 'No branches yet')}
+        description={[
+          t('views:noData.createBranchDescription', "Your branches will appear here once they're created."),
+          t('views:noData.startBranchDescription', 'Start branching to see your work organized.')
+        ]}
+        primaryButton={{
+          icon: 'plus',
+          label: t('views:repos.branches.createBranch', 'Create Branch'),
+          onClick: openCreateBranchDialog
+        }}
+      />
+    )
+  }
+
   return (
     <SandboxLayout.Main>
       <SandboxLayout.Content className={cn({ 'h-full': !isLoading && !branchList.length && !searchQuery })}>
-        {(isLoading || !!branchList.length || isDirtyList) && (
-          <>
-            <Text as="h1" variant="heading-section">
-              {t('views:repos.branches', 'Branches')}
-            </Text>
-            <Spacer size={6} />
+        <Layout.Flex direction="column" gapY="xl" className="grow">
+          <Text as="h2" variant="heading-section">
+            {t('views:repos.branches.title', 'Branches')}
+          </Text>
+
+          <Layout.Grid gapY="md">
             <ListActions.Root>
               <ListActions.Left>
                 <SearchInput
@@ -65,41 +95,58 @@ export const RepoBranchListView: FC<RepoBranchListViewProps> = ({
                 />
               </ListActions.Left>
               <ListActions.Right>
-                <Button
-                  onClick={() => {
-                    setCreateBranchDialogOpen(true)
-                  }}
-                  size="md"
-                  variant="primary"
-                  theme="default"
-                >
-                  {t('views:repos.createBranch', 'Create branch')}
+                <Button onClick={openCreateBranchDialog} size="md" variant="primary" theme="default">
+                  <IconV2 name="plus" />
+                  {t('views:repos.branches.createBranch', 'Create Branch')}
                 </Button>
               </ListActions.Right>
             </ListActions.Root>
 
-            <Spacer size={4} />
-          </>
-        )}
-        <BranchesList
-          isLoading={isLoading}
-          defaultBranch={defaultBranch}
-          branches={branchList}
-          setCreateBranchDialogOpen={setCreateBranchDialogOpen}
-          handleResetFiltersAndPages={handleResetFiltersAndPages}
-          onDeleteBranch={onDeleteBranch}
-          isDirtyList={isDirtyList}
-          {...routingProps}
-        />
-        {!isLoading && (
-          <Pagination
-            indeterminate
-            hasNext={xNextPage > 0}
-            hasPrevious={xPrevPage > 0}
-            getPrevPageLink={getPrevPageLink}
-            getNextPageLink={getNextPageLink}
-          />
-        )}
+            {!noSearchResults && (
+              <BranchesList
+                isLoading={isLoading}
+                defaultBranch={defaultBranch}
+                branches={branchList}
+                setCreateBranchDialogOpen={setCreateBranchDialogOpen}
+                handleResetFiltersAndPages={handleResetFiltersAndPages}
+                onDeleteBranch={onDeleteBranch}
+                isDirtyList={isDirtyList}
+                {...routingProps}
+              />
+            )}
+          </Layout.Grid>
+
+          {canShowPagination && (
+            <Pagination
+              indeterminate
+              hasNext={xNextPage > 0}
+              hasPrevious={xPrevPage > 0}
+              getPrevPageLink={getPrevPageLink}
+              getNextPageLink={getNextPageLink}
+            />
+          )}
+
+          {noSearchResults && (
+            <NoData
+              className="grow"
+              imageName="no-search-magnifying-glass"
+              withBorder
+              title={t('views:noData.noResults', 'No search results')}
+              description={[
+                t(
+                  'views:noData.noResultsDescription',
+                  'No branches match your search. Try adjusting your keywords or filters.',
+                  { type: 'branches' }
+                )
+              ]}
+              secondaryButton={{
+                icon: 'trash',
+                label: t('views:noData.clearSearch', 'Clear filters'),
+                onClick: handleResetFiltersAndPages
+              }}
+            />
+          )}
+        </Layout.Flex>
       </SandboxLayout.Content>
     </SandboxLayout.Main>
   )

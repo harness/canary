@@ -17,7 +17,7 @@ export default {
   '.cn-radio-item-label-wrapper': {
     display: 'flex',
     flexDirection: 'column',
-    gap: 'var(--cn-spacing-1)'
+    gap: 'var(--cn-layout-4xs)'
   },
 
   '.cn-radio-item': {
@@ -32,6 +32,11 @@ export default {
     border: 'var(--cn-border-width-1) solid var(--cn-comp-selection-unselected-border)',
     borderRadius: '50%',
     backgroundColor: 'var(--cn-comp-selection-unselected-bg)',
+
+    '&:where(:not([disabled])):focus': {
+      outline: 'var(--cn-focus)'
+    },
+
     '&:where(:not([disabled])):hover': {
       backgroundColor: 'var(--cn-comp-selection-unselected-bg-hover)',
       borderColor: 'var(--cn-comp-selection-unselected-border-hover)'
@@ -60,7 +65,7 @@ export default {
   },
 
   '.cn-radio-error:not(:has(.cn-radio-item[data-state=checked])) .cn-radio-item': {
-    '&:where(:not([disabled]))' : {
+    '&:where(:not([disabled]))': {
       borderColor: 'var(--cn-border-danger)',
       boxShadow: `var(--cn-ring-danger)`,
       '&:where(:hover)': {

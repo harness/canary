@@ -57,6 +57,7 @@ export interface PullRequestListStore {
   setLabelsQuery: (query: string) => void
   openPullReqs: number
   closedPullReqs: number
+  mergedPullReqs: number
 }
 
 export interface RepoRepositoryOutput {
@@ -132,6 +133,15 @@ export interface TypesPullReq {
 export type EnumMergeMethod = 'fast-forward' | 'merge' | 'rebase' | 'squash'
 
 export type EnumPullReqState = 'closed' | 'merged' | 'open'
+
+export enum PrState {
+  Draft = 'draft',
+  Ready = 'ready',
+  Success = 'success',
+  Error = 'error',
+  Closed = 'closed',
+  Merged = 'merged'
+}
 
 export declare type EnumPullReqReviewDecision = 'approved' | 'changereq' | 'pending' | 'reviewed'
 
@@ -267,6 +277,7 @@ export interface PullRequestListProps extends Partial<RoutingProps> {
   hasActiveFilters?: boolean
   query?: string
   openPRs?: number
+  mergedPRs?: number
   handleOpenClick?: () => void
   closedPRs?: number
   handleCloseClick?: () => void
@@ -295,5 +306,15 @@ export enum PRFilterGroupTogglerOptions {
   ReviewRequested = 'ReviewRequested'
 }
 
-export type HandleUploadType = (blob: File, setMarkdownContent: (data: string) => void, currentComment?: string) => void
+export interface TextSelection {
+  start: number
+  end: number
+}
+
+export type HandleUploadType = (
+  blob: File,
+  setMarkdownContent: (data: string) => void,
+  currentComment?: string,
+  textSelection?: TextSelection
+) => void
 export type HandleAiPullRequestSummaryType = () => Promise<{ summary: string }>

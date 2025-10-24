@@ -1,7 +1,7 @@
 import { FC } from 'react'
 
 import { useRouterContext, useTranslation } from '@/context'
-import { ListActions, NoData, Pagination, SearchBox } from '@components/index'
+import { IconV2, ListActions, NoData, Pagination, SearchBox } from '@components/index'
 import { Spacer } from '@components/spacer'
 import { useDebounceSearch } from '@hooks/use-debounce-search'
 
@@ -46,7 +46,12 @@ const ConnectorDetailsReference: FC<ConnectorDetailsReferenceProps> = ({
             )
         ]}
         primaryButton={{
-          label: t('views:notFound.button', 'Reload page'),
+          label: (
+            <>
+              <IconV2 name="refresh" />
+              {t('views:notFound.button', 'Reload Page')}
+            </>
+          ),
           onClick: () => {
             navigate(0) // Reload the page
           }

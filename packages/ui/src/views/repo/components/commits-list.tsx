@@ -47,7 +47,7 @@ export const CommitsList: FC<CommitProps> = ({ data, toCommitDetails, toPullRequ
   return (
     <div className={className}>
       {entries.map(([date, commitData]) => (
-        <NodeGroup.Root className="grid-cols-[9px_1fr] gap-4 pb-cn-xl last:pb-0" key={date}>
+        <NodeGroup.Root className="pb-cn-xl grid-cols-[9px_1fr] gap-4 last:pb-0" key={date}>
           <NodeGroup.Icon simpleNodeIcon />
           <NodeGroup.Title>{date && <Text variant="body-single-line-normal">Commits on {date}</Text>}</NodeGroup.Title>
           <NodeGroup.Content className="overflow-hidden">
@@ -60,28 +60,30 @@ export const CommitsList: FC<CommitProps> = ({ data, toCommitDetails, toPullRequ
 
                   return (
                     <StackedList.Item
-                      className="flex items-start p-cn-sm pl-cn-xs"
+                      className="p-cn-sm pl-cn-xs flex items-start"
                       key={commit?.sha || idx}
                       isLast={commitData.length - 1 === idx}
                       asChild
                     >
                       <Link className="grow overflow-hidden" to={`${toCommitDetails?.({ sha: commit?.sha || '' })}`}>
-                        <Layout.Grid flow="column" className="w-full pl-cn-md" columns="1fr auto" gap="md">
+                        <Layout.Grid flow="column" className="pl-cn-md w-full" columns="1fr auto" gap="md">
                           <Layout.Vertical gap="2xs" className="truncate">
                             <CommitTitleWithPRLink
-                              Link={Link}
                               toPullRequest={toPullRequest}
                               commitMessage={commit.title}
                               title={commit.message || commit.title}
-                              textVariant={'heading-base'}
+                              textProps={{ variant: 'heading-base' }}
                             />
-                            <div className="flex items-center gap-cn-2xs">
+                            <div className="gap-cn-2xs flex items-center">
                               {authorName && <Avatar name={authorName} src={avatarUrl} size="md" rounded />}
                               <Text variant="body-single-line-strong">{authorName || ''}</Text>
                               <Text variant="body-single-line-normal" color="foreground-3">
-                                committed on{' '}
+                                committed{' '}
                                 <TimeAgoCard
                                   timestamp={when}
+                                  cutoffDays={3}
+                                  beforeCutoffPrefix=""
+                                  afterCutoffPrefix="on"
                                   dateTimeFormatOptions={{ dateStyle: 'medium' }}
                                   textProps={{ color: 'foreground-4' }}
                                 />

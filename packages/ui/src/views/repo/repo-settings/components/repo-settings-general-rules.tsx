@@ -4,14 +4,14 @@ import { Fragment } from 'react/jsx-runtime'
 import {
   Alert,
   IconV2,
+  Layout,
   ListActions,
   MoreActionsTooltip,
   NoData,
   ScopeTag,
   SearchInput,
   Separator,
-  SkeletonList,
-  Spacer,
+  Skeleton,
   SplitButton,
   StackedList,
   Tag,
@@ -45,11 +45,14 @@ const Description: FC<DescriptionProps> = ({ targetPatternsCount, rulesAppliedCo
   const { t } = useTranslation()
   return (
     <div className="flex items-center gap-1.5 pl-7 text-sm">
-      <Text variant="body-normal">
-        {targetPatternsCount} {t('views:repos.targetPatterns', 'target patterns')}
-      </Text>
-      {/* <span className="pointer-events-none mx-1 h-3 w-px bg-cn-background-3" aria-hidden /> */}
-      <Separator orientation="vertical" className="h-3" />
+      {targetPatternsCount !== 0 ? (
+        <>
+          <Text variant="body-normal">
+            {targetPatternsCount} {t('views:repos.targetPatterns', 'target patterns')}
+          </Text>
+          <Separator orientation="vertical" className="h-3" />
+        </>
+      ) : null}
       <Text variant="body-normal">
         {rulesAppliedCount} {t('views:repos.rulesApplied', 'rules applied')}
       </Text>
@@ -85,7 +88,7 @@ export interface RepoSettingsGeneralRulesProps {
   toRepoTagRuleCreate?: () => string
   ruleTypeFilter?: 'branch' | 'tag' | 'push' | null
   setRuleTypeFilter?: (filter: 'branch' | 'tag' | 'push' | null) => void
-  toProjectRuleDetails?: (identifier: string, scope: number) => string
+  toProjectRuleDetails?: (identifier: string, scope: number) => void
 }
 
 export const RepoSettingsGeneralRules: FC<RepoSettingsGeneralRulesProps> = ({
@@ -121,65 +124,67 @@ export const RepoSettingsGeneralRules: FC<RepoSettingsGeneralRulesProps> = ({
   }, [rulesSearchQuery, rules])
 
   return (
-    <>
+    <Layout.Vertical gapY="sm" grow>
+      <ListActions.Root>
+        <ListActions.Left>
+          <SearchInput
+            id="search"
+            defaultValue={rulesSearchQuery}
+            inputContainerClassName="w-80"
+            placeholder={t('views:repos.search', 'Search')}
+            onChange={handleSearchChange}
+          />
+        </ListActions.Left>
+        <ListActions.Right>
+          <Select
+            options={[
+              { label: t('views:repos.allRules', 'All Rules'), value: null },
+              { label: t('views:repos.branchRules', 'Branch Rules'), value: 'branch' },
+              { label: t('views:repos.tagRules', 'Tag Rules'), value: 'tag' }
+            ]}
+            value={ruleTypeFilter}
+            onChange={value => setRuleTypeFilter?.(value as 'branch' | 'tag' | 'push' | null)}
+            size="md"
+            triggerClassName="min-w-[150px]"
+          />
+          <SplitButton<string>
+            dropdownContentClassName="mt-0 min-w-[170px]"
+            handleButtonClick={() => navigate(toRepoBranchRuleCreate?.() || '')}
+            handleOptionChange={option => {
+              if (option === 'tag-rule') {
+                navigate(toRepoTagRuleCreate?.() || '')
+              }
+            }}
+            options={[
+              {
+                value: 'tag-rule',
+                label: t('views:repos.createTagRuleButton', 'Create Tag Rule')
+              }
+            ]}
+          >
+            <IconV2 name="plus" />
+            {t('views:repos.createBranchRuleButton', 'Create Branch Rule')}
+          </SplitButton>
+        </ListActions.Right>
+      </ListActions.Root>
+
       {isShowRulesContent ? (
         <>
-          <>
-            <ListActions.Root className="mt-1">
-              <ListActions.Left>
-                <SearchInput
-                  id="search"
-                  defaultValue={rulesSearchQuery}
-                  inputContainerClassName="max-w-80"
-                  placeholder={t('views:repos.search', 'Search')}
-                  onChange={handleSearchChange}
-                />
-              </ListActions.Left>
-              <ListActions.Right>
-                <Select
-                  options={[
-                    { label: t('views:repos.allRules', 'All Rules'), value: null },
-                    { label: t('views:repos.branchRules', 'Branch Rules'), value: 'branch' },
-                    { label: t('views:repos.tagRules', 'Tag Rules'), value: 'tag' }
-                  ]}
-                  value={ruleTypeFilter}
-                  onChange={value => setRuleTypeFilter?.(value as 'branch' | 'tag' | 'push' | null)}
-                  size="md"
-                  triggerClassName="min-w-[150px]"
-                />
-                <SplitButton<string>
-                  dropdownContentClassName="mt-0 min-w-[170px]"
-                  handleButtonClick={() => navigate(toRepoBranchRuleCreate?.() || '')}
-                  handleOptionChange={option => {
-                    if (option === 'tag-rule') {
-                      navigate(toRepoTagRuleCreate?.() || '')
-                    }
-                  }}
-                  options={[
-                    {
-                      value: 'tag-rule',
-                      label: t('views:repos.newTagRule', 'New tag rule')
-                    }
-                  ]}
-                >
-                  {t('views:repos.createBranchRule', 'New branch rule')}
-                </SplitButton>
-              </ListActions.Right>
-            </ListActions.Root>
-
-            <Spacer size={3} />
-          </>
           {isLoading ? (
-            <>
-              <Spacer size={7} />
-              <SkeletonList />
-            </>
+            <Skeleton.List />
           ) : rules?.length !== 0 ? (
             <StackedList.Root>
               {rules?.map((rule, idx) =>
                 rule?.identifier ? (
                   <StackedList.Item className="py-4 pr-1.5" key={rule.identifier} asChild>
-                    <Link to={toProjectRuleDetails?.(rule.identifier, rule.scope ?? 0) || ''} target="_blank">
+                    <Link
+                      to="#"
+                      onClick={e => {
+                        e.preventDefault()
+                        e.stopPropagation()
+                        toProjectRuleDetails?.(rule.identifier ?? '', rule.scope ?? 0)
+                      }}
+                    >
                       <StackedList.Field
                         className="grid gap-1.5"
                         title={
@@ -194,7 +199,6 @@ export const RepoSettingsGeneralRules: FC<RepoSettingsGeneralRulesProps> = ({
                             </Text>
                             {rule.type && (
                               <Tag
-                                showIcon
                                 variant="outline"
                                 size="sm"
                                 theme={rule.type === 'branch' ? 'blue' : 'purple'}
@@ -221,13 +225,13 @@ export const RepoSettingsGeneralRules: FC<RepoSettingsGeneralRulesProps> = ({
                       <MoreActionsTooltip
                         actions={[
                           {
-                            title: t('views:rules.edit', 'Edit rule'),
+                            title: t('views:rules.edit', 'Edit Rule'),
                             iconName: 'edit-pencil',
                             onClick: () => handleRuleClick(rule.identifier!)
                           },
                           {
                             isDanger: true,
-                            title: t('views:rules.delete', 'Delete rule'),
+                            title: t('views:rules.delete', 'Delete Rule'),
                             iconName: 'trash',
                             onClick: () => openRulesAlertDeleteDialog(rule.identifier!)
                           }
@@ -255,7 +259,7 @@ export const RepoSettingsGeneralRules: FC<RepoSettingsGeneralRulesProps> = ({
                   }
                 )
               ]}
-              primaryButton={{
+              secondaryButton={{
                 label: t('views:noData.clearSearch', 'Clear search'),
                 onClick: resetSearch
               }}
@@ -269,24 +273,42 @@ export const RepoSettingsGeneralRules: FC<RepoSettingsGeneralRulesProps> = ({
           )}
         </>
       ) : (
-        <NoData
-          withBorder
-          className="min-h-0 py-cn-3xl"
-          textWrapperClassName="max-w-[350px]"
-          imageName={'no-data-cog'}
-          title={t('views:noData.noRules', 'No rules yet')}
-          description={[
-            t(
-              'views:noData.noRulesDescription',
-              'There are no rules in this project. Click on the button below to start adding rules.'
-            )
-          ]}
-          primaryButton={{
-            label: t('views:repos.createRuleButton', 'Create rule'),
-            to: toRepoBranchRuleCreate?.() ?? ''
-          }}
-        />
+        <>
+          <NoData
+            withBorder
+            className="py-cn-3xl min-h-0"
+            textWrapperClassName="max-w-[350px]"
+            imageName={'no-data-cog'}
+            title={t('views:noData.noRules', 'No rules yet')}
+            description={[
+              t(
+                'views:noData.noRulesDescription',
+                'There are no rules in this project. Click on the button below to start adding rules.'
+              )
+            ]}
+            splitButton={{
+              label: (
+                <>
+                  <IconV2 name="plus" />
+                  {t('views:repos.createBranchRuleButton', 'Create Branch Rule')}
+                </>
+              ),
+              options: [
+                {
+                  value: 'tag-rule',
+                  label: t('views:repos.createTagRuleButton', 'Create Tag Rule')
+                }
+              ],
+              handleOptionChange: option => {
+                if (option === 'tag-rule') {
+                  navigate(toRepoTagRuleCreate?.() || '')
+                }
+              },
+              handleButtonClick: () => navigate(toRepoBranchRuleCreate?.() || '')
+            }}
+          />
+        </>
       )}
-    </>
+    </Layout.Vertical>
   )
 }

@@ -11,7 +11,6 @@ import {
   useRepoRuleListQuery
 } from '@harnessio/code-service-client'
 import { DeleteAlertDialog } from '@harnessio/ui/components'
-import { wrapConditionalObjectElement } from '@harnessio/ui/utils'
 import { ErrorTypes, RepoSettingsRulesPage } from '@harnessio/ui/views'
 
 import { useRoutes } from '../../framework/context/NavigationContext'
@@ -19,7 +18,7 @@ import { useGetRepoId } from '../../framework/hooks/useGetRepoId'
 import { useGetRepoRef } from '../../framework/hooks/useGetRepoPath'
 import { useMFEContext } from '../../framework/hooks/useMFEContext'
 import { PathParams } from '../../RouteDefinitions'
-import { generateRuleDetailsUrl } from '../../utils/rule-url-utils'
+import { getScopedRuleUrl } from '../../utils/rule-url-utils'
 import { useRepoRulesStore } from './stores/repo-settings-store'
 
 export const RepoSettingsRulesListContainer = () => {
@@ -46,7 +45,9 @@ export const RepoSettingsRulesListContainer = () => {
   }
 
   const {
-    routes: { toAccountSettings, toOrgSettings, toProjectSettings }
+    routes: { toAccountSettings, toOrgSettings, toProjectSettings },
+    routeUtils,
+    scope: { accountId, orgIdentifier, projectIdentifier }
   } = useMFEContext()
 
   const {
@@ -123,15 +124,20 @@ export const RepoSettingsRulesListContainer = () => {
         ruleTypeFilter={ruleTypeFilter}
         setRuleTypeFilter={setRuleTypeFilter}
         toProjectRuleDetails={(identifier, scope) => {
-          return generateRuleDetailsUrl({
+          return getScopedRuleUrl({
             scope,
             identifier,
+            toCODEManageRepositories: routeUtils.toCODEManageRepositories,
+            toCODERule: routeUtils.toCODERule,
             toAccountSettings,
             toOrgSettings,
             toProjectSettings,
             toRepoBranchRule: routes.toRepoBranchRule,
             spaceId,
-            repoId: repoName
+            repoId: repoName,
+            accountId,
+            orgIdentifier,
+            projectIdentifier
           })
         }}
       />
@@ -139,16 +145,11 @@ export const RepoSettingsRulesListContainer = () => {
       <DeleteAlertDialog
         open={isRuleAlertDeleteDialogOpen}
         onClose={closeAlertDeleteDialog}
-        {...wrapConditionalObjectElement(
-          {
-            identifier: alertDeleteParams,
-            deleteFn: handleDeleteRule,
-            isLoading: isDeletingRule,
-            error: apiError?.type === ErrorTypes.DELETE_RULE ? apiError : null,
-            type: 'rule'
-          },
-          isRuleAlertDeleteDialogOpen
-        )}
+        identifier={alertDeleteParams}
+        deleteFn={handleDeleteRule}
+        isLoading={isDeletingRule}
+        error={apiError?.type === ErrorTypes.DELETE_RULE ? apiError : null}
+        type="rule"
       />
     </>
   )

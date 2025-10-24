@@ -1,0 +1,23 @@
+.CodeEditor_HighlightedLine {
+  opacity: 0.1;
+  background-color: var(--cn-yellow-300, orange) !important;
+}
+
+.CodeEditor_HighlightedText {
+  background-color: var(--cn-yellow-100, orange) !important;
+}
+
+.CodeEditor_HighlightedGlyphMargin {
+  background: rgb(183, 183, 183);
+  border: 1px solid gray;
+  border-radius: 4px;
+  margin-left: 5px;
+  height: 20px;
+  position: relative;
+}
+
+.CodeEditor_HighlightedGlyphMargin::after {
+  content: '...';
+  position: absolute;
+  padding: 7px 3px;
+}

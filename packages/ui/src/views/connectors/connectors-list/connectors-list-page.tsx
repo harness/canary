@@ -1,6 +1,6 @@
 import { FC, useState } from 'react'
 
-import { Button, NoData, Pagination, Spacer, Text } from '@/components'
+import { Button, IconV2, NoData, Pagination, Spacer, Text } from '@/components'
 import { useRouterContext, useTranslation } from '@/context'
 import { SandboxLayout } from '@/views'
 import { cn } from '@utils/cn'
@@ -58,7 +58,12 @@ const ConnectorsListPage: FC<ConnectorListPageProps> = ({
             )
         ]}
         primaryButton={{
-          label: t('views:notFound.button', 'Reload page'),
+          label: (
+            <>
+              <IconV2 name="refresh" />
+              {t('views:notFound.button', 'Reload Page')}
+            </>
+          ),
           onClick: () => {
             navigate(0) // Reload the page
           }
@@ -89,7 +94,12 @@ const ConnectorsListPage: FC<ConnectorListPageProps> = ({
           onFilterSelectionChange={onFilterSelectionChange}
           onFilterValueChange={onFilterValueChange}
           handleInputChange={(value: string) => setSearchQuery(value)}
-          headerAction={<Button onClick={onCreate}>{t('views:connectors.createNew', 'New connector')}</Button>}
+          headerAction={
+            <Button onClick={onCreate}>
+              <IconV2 name="plus" />
+              {t('views:connectors.createNew', 'Create Connector')}
+            </Button>
+          }
           filterOptions={CONNECTOR_FILTER_OPTIONS}
         />
         <Spacer size={4.5} />

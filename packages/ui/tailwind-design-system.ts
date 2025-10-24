@@ -77,19 +77,15 @@ export default {
           backdrop: 'var(--cn-comp-dialog-backdrop)',
           'diff-success': 'var(--cn-comp-diff-add-content)',
           'diff-danger': 'var(--cn-comp-diff-del-content)',
-
-          // Remove
           solidred: 'lch(from var(--cn-set-red-solid-bg) l c h / <alpha-value>)',
           softgray: 'lch(from var(--cn-set-gray-soft-bg) l c h / <alpha-value>)',
           hover: 'var(--cn-state-hover)',
           selected: 'var(--cn-state-selected)',
-          primary: 'lch(from var(--cn-set-brand-solid-bg) l c h / <alpha-value>)',
-          8: 'lch(from var(--cn-set-gray-soft-bg) l c h / <alpha-value>)',
-          9: 'lch(from var(--cn-bg-3) l c h / <alpha-value>)',
           // avatar - remove once avatar component is completed
-          11: 'lch(from var(--cn-set-gray-soft-bg) l c h / <alpha-value>)',
-          12: 'lch(from var(--cn-set-gray-surface-bg-hover) l c h / <alpha-value>)',
-          13: 'lch(from var(--cn-set-gray-solid-bg) l c h / <alpha-value>)'
+          surface: {
+            'gray-hover': 'lch(from var(--cn-set-gray-surface-bg-hover) l c h / <alpha-value>)'
+          },
+          solidgray: 'lch(from var(--cn-set-gray-solid-bg) l c h / <alpha-value>)'
         },
         'cn-borders': {
           1: 'lch(from var(--cn-border-1) l c h / <alpha-value>)',
@@ -274,20 +270,6 @@ export default {
             brown: 'var(--canary-label-background-brown-01)',
             mint: 'var(--canary-label-background-mint-01)',
             lime: 'var(--canary-label-background-lime-01)'
-          }
-        },
-        topbar: {
-          background: {
-            1: 'hsl(var(--canary-topbar-background-01))'
-          },
-          foreground: {
-            1: 'hsl(var(--canary-topbar-foreground-01))',
-            2: 'hsl(var(--canary-topbar-foreground-02))',
-            3: 'hsl(var(--canary-topbar-foreground-03))',
-            4: 'hsl(var(--canary-topbar-foreground-04))'
-          },
-          icon: {
-            1: 'hsl(var(--canary-topbar-icon-01))'
           }
         },
         graph: {
@@ -493,10 +475,6 @@ export default {
     { pattern: /^bg-label-background-/ },
     { pattern: /^bg-label-foreground-/ }, // this is essential for the color select in the LabelFormColorAndNameGroup component
     { pattern: /^text-label-foreground-/ },
-    // topbar classes
-    { pattern: /^bg-topbar-background-/ },
-    { pattern: /^text-topbar-foreground-/ },
-    { pattern: /^text-topbar-icon-/ },
 
     // Hover classes
     { pattern: /^hover:bg-graph-/ },
@@ -510,10 +488,6 @@ export default {
     // label classes
     { pattern: /^hover:bg-label-background-/ },
     { pattern: /^hover:text-label-foreground-/ },
-    // topbar classes
-    { pattern: /^hover:bg-topbar-background-/ },
-    { pattern: /^hover:text-topbar-foreground-/ },
-    { pattern: /^hover:text-topbar-icon-/ },
     'stroke-borders-2',
     { pattern: /rounded-./ },
     { pattern: /border-./ },

@@ -1,4 +1,4 @@
-import { Avatar, MoreActionsTooltip, SkeletonList, StatusBadge, Table } from '@/components'
+import { Avatar, MoreActionsTooltip, Skeleton, StatusBadge, Table } from '@/components'
 import { DialogLabels } from '@/views/user-management/components/dialogs'
 import { useDialogData } from '@/views/user-management/components/dialogs/hooks/use-dialog-data'
 import { ErrorState } from '@/views/user-management/components/page-components/content/components/users-list/components/error-state'
@@ -20,7 +20,7 @@ export const UsersList = () => {
   const { fetchUsersError } = errorStates
 
   if (isFetchingUsers) {
-    return <SkeletonList />
+    return <Skeleton.List />
   }
 
   if (fetchUsersError) {

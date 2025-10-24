@@ -10,7 +10,7 @@ import {
   useRepoRuleGetQuery,
   useRepoRuleUpdateMutation
 } from '@harnessio/code-service-client'
-import { SkeletonForm } from '@harnessio/ui/components'
+import { Skeleton } from '@harnessio/ui/components'
 import { useTranslation } from '@harnessio/ui/context'
 import { PrincipalType } from '@harnessio/ui/types'
 import {
@@ -219,7 +219,7 @@ export const RepoTagRulesContainer = () => {
   }
 
   if (!!identifier && fetchRuleIsLoading) {
-    return <SkeletonForm className="mt-7" />
+    return <Skeleton.Form className="mt-7" />
   }
 
   if (!!identifier && !!fetchRuleError) {

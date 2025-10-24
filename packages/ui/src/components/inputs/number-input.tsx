@@ -140,6 +140,7 @@ export const NumberInput = forwardRef<HTMLInputElement, NumberInputProps>(
                     <div className="flex flex-col">
                       <Button
                         tabIndex={-1}
+                        className="shrink"
                         aria-label="Increment value"
                         variant="ghost"
                         iconOnly
@@ -152,6 +153,7 @@ export const NumberInput = forwardRef<HTMLInputElement, NumberInputProps>(
                       <hr />
                       <Button
                         tabIndex={-1}
+                        className="shrink"
                         aria-label="Decrement value"
                         variant="ghost"
                         iconOnly

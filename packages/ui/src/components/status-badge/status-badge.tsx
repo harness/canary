@@ -1,3 +1,5 @@
+import { forwardRef } from 'react'
+
 import { IconNameMapV2, IconV2 } from '@components/icon-v2'
 import { cn } from '@utils/cn'
 import { cva, type VariantProps } from 'class-variance-authority'
@@ -59,29 +61,32 @@ type StatusBadgeOtherThemeProps = BadgeBaseProps & {
 // Combined props using discriminated union
 export type StatusBadgeProps = StatusBadgeOtherThemeProps | StatusBadgeStatusVariantProps
 
-function StatusBadge({ className, variant, size, pulse, theme = 'muted', children, icon, ...props }: StatusBadgeProps) {
-  const isStatusVariant = variant === 'status'
+const StatusBadge = forwardRef<HTMLDivElement, StatusBadgeProps>(
+  ({ className, variant, size, pulse, theme = 'muted', children, icon, ...props }, ref) => {
+    const isStatusVariant = variant === 'status'
 
-  return (
-    <div
-      className={cn(
-        statusBadgeVariants({
-          variant,
-          size,
-          theme
-        }),
-        className
-      )}
-      {...props}
-    >
-      {isStatusVariant && (
-        <span className={cn('cn-badge-indicator rounded-full', { 'animate-pulse': pulse })} aria-hidden="true" />
-      )}
-      {icon && <IconV2 skipSize className="cn-badge-icon" name={icon} />}
-      {children}
-    </div>
-  )
-}
+    return (
+      <div
+        ref={ref}
+        className={cn(
+          statusBadgeVariants({
+            variant,
+            size,
+            theme
+          }),
+          className
+        )}
+        {...props}
+      >
+        {isStatusVariant && (
+          <span className={cn('cn-badge-indicator rounded-full', { 'animate-pulse': pulse })} aria-hidden="true" />
+        )}
+        {icon && <IconV2 skipSize className="cn-badge-icon" name={icon} />}
+        {children}
+      </div>
+    )
+  }
+)
 
 StatusBadge.displayName = 'StatusBadge'
 

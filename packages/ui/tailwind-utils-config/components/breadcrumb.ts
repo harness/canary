@@ -49,7 +49,11 @@ export default {
   },
 
   '.cn-breadcrumb-link': {
-    '@apply transition-colors': ''
+    '@apply transition-colors': '',
+
+    '&:focus': {
+      outline: 'var(--cn-focus)'
+    }
   },
 
   '.cn-breadcrumb-separator': {

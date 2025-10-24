@@ -55,6 +55,7 @@ interface DataProps {
   toRepoFileDetails?: ({ path }: { path: string }) => string
   pullReqMetadata?: TypesPullReq
   principalProps: PrincipalPropsType
+  currentRefForDiff?: string
 }
 
 function PullRequestChangesInternal({
@@ -86,7 +87,8 @@ function PullRequestChangesInternal({
   setJumpToDiff,
   toRepoFileDetails,
   pullReqMetadata,
-  principalProps
+  principalProps,
+  currentRefForDiff
 }: DataProps) {
   const [openItems, setOpenItems] = useState<string[]>([])
   const diffBlocks = useMemo(() => chunk(data, PULL_REQUEST_DIFF_RENDERING_BLOCK_SIZE), [data])
@@ -95,9 +97,16 @@ function PullRequestChangesInternal({
   const getFileComments = (diffItem: HeaderProps) => {
     return (
       comments?.filter((thread: CommentItem<TypesPullReqActivity>[]) =>
-        thread.some(
-          (comment: CommentItem<TypesPullReqActivity>) => comment.payload?.payload?.code_comment?.path === diffItem.text
-        )
+        thread.some((comment: CommentItem<TypesPullReqActivity>) => {
+          const commentPath = comment.payload?.payload?.code_comment?.path
+          if (!commentPath) return false
+          // Handle renamed files: check both old and new paths
+          if (diffItem.isRename && diffItem.oldName && diffItem.newName) {
+            return commentPath === diffItem.oldName || commentPath === diffItem.newName
+          }
+          // For non-renamed files
+          return commentPath === diffItem.text
+        })
       ) || []
     )
   }
@@ -151,14 +160,14 @@ function PullRequestChangesInternal({
 
   useEffect(() => {
     if (jumpToDiff) {
-      jumpToFile(jumpToDiff, diffBlocks, setJumpToDiff)
+      jumpToFile(jumpToDiff, diffBlocks, setJumpToDiff, undefined, diffsContainerRef)
     }
     if (commentId) {
       data.map(diffItem => {
         const fileComments = getFileComments(diffItem)
         const diffHasComment = fileComments.some(thread => thread.some(comment => String(comment.id) === commentId))
         if (commentId && diffHasComment) {
-          jumpToFile(diffItem.text, diffBlocks, setJumpToDiff, commentId)
+          jumpToFile(diffItem.text, diffBlocks, setJumpToDiff, commentId, diffsContainerRef)
         }
       })
     }
@@ -179,14 +188,20 @@ function PullRequestChangesInternal({
               // Filter activityBlocks that are relevant for this file
               const fileComments =
                 comments?.filter((thread: CommentItem<TypesPullReqActivity>[]) =>
-                  thread.some(
-                    (comment: CommentItem<TypesPullReqActivity>) =>
-                      comment.payload?.payload?.code_comment?.path === item.text
-                  )
+                  thread.some((comment: CommentItem<TypesPullReqActivity>) => {
+                    const commentPath = comment.payload?.payload?.code_comment?.path
+                    if (!commentPath) return false
+                    // Handle renamed files: both old and new paths
+                    if (item.isRename && item.oldName && item.newName) {
+                      return commentPath === item.oldName || commentPath === item.newName
+                    }
+                    // For non-renamed files
+                    return commentPath === item.text
+                  })
                 ) || []
 
               return (
-                <div className="pt-4" key={item.filePath}>
+                <div className="pt-2" key={item.filePath}>
                   <InViewDiffRenderer
                     key={item.filePath}
                     blockName={innerBlockName(item.filePath)}
@@ -227,6 +242,7 @@ function PullRequestChangesInternal({
                       setCollapsed={val => setCollapsed(item.text, val)}
                       toRepoFileDetails={toRepoFileDetails}
                       sourceBranch={pullReqMetadata?.source_branch}
+                      currentRefForDiff={currentRefForDiff}
                     />
                   </InViewDiffRenderer>
                 </div>

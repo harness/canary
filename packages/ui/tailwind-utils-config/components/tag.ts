@@ -74,9 +74,23 @@ export default {
     height: `var(--cn-tag-size-md)`,
     '@apply w-fit items-center transition-colors select-none font-body-single-line-normal': '',
 
+    ':where(.cn-tag-action-icon-button)': {
+      marginRight: 'calc(-1 * var(--cn-tag-px))',
+      marginLeft: 'calc(-1 * var(--cn-tag-gap))',
+      opacity: 'var(--cn-opacity-70)',
+
+      '&:hover': {
+        opacity: 'var(--cn-opacity-100)'
+      }
+    },
+
     '&:where(.cn-tag-sm)': {
       height: `var(--cn-tag-size-sm)`,
-      '@apply font-caption-single-line-normal': ''
+      '@apply font-caption-single-line-normal': '',
+
+      '.cn-tag-action-icon-button': {
+        marginRight: 'calc(-0.5 * var(--cn-tag-px))'
+      }
     },
 
     '&:where(.cn-tag-rounded)': {

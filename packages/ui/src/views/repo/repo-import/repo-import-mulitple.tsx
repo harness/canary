@@ -269,7 +269,7 @@ export function RepoImportMultiplePage({
               <ButtonLayout horizontalAlign="start">
                 {/* TODO: Improve loading state to avoid flickering */}
                 <Button type="submit" disabled={isLoading}>
-                  {!isLoading ? 'Import repositories' : 'Importing repositories...'}
+                  {!isLoading ? 'Import Repositories' : 'Importing Repositories...'}
                 </Button>
                 <Button type="button" variant="outline" onClick={handleCancel}>
                   Cancel

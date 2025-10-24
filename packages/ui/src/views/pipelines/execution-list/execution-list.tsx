@@ -1,4 +1,4 @@
-import { IconV2, NoData, SkeletonList, StackedList, TimeAgoCard } from '@/components'
+import { IconV2, NoData, Skeleton, StackedList, TimeAgoCard } from '@/components'
 import { useTranslation } from '@/context'
 import { timeDistance } from '@/utils'
 import { PipelineExecutionStatus } from '@/views'
@@ -34,7 +34,7 @@ const Description = ({
         </div>
       )}
       {sha && (
-        <div className="flex h-4 items-center gap-1 rounded bg-cn-background-8 px-1.5 text-1 text-cn-foreground-1">
+        <div className="flex h-4 items-center gap-1 rounded bg-cn-background-softgray px-1.5 text-1 text-cn-foreground-1">
           <IconV2 className="text-icons-9" size="2xs" name="git-commit" />
           {sha?.slice(0, 7)}
         </div>
@@ -56,7 +56,7 @@ export const ExecutionList = ({
   const { t } = useTranslation()
 
   if (isLoading) {
-    return <SkeletonList />
+    return <Skeleton.List />
   }
 
   if (noData) {
@@ -69,7 +69,7 @@ export const ExecutionList = ({
             t('views:noData.checkSpelling', 'Check your spelling and filter options,'),
             t('views:noData.changeSearch', 'or search for a different keyword.')
           ]}
-          primaryButton={{
+          secondaryButton={{
             label: t('views:noData.clearSearch', 'Clear search'),
             onClick: handleResetQuery
           }}

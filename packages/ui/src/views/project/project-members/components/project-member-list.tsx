@@ -1,6 +1,6 @@
 import { FC } from 'react'
 
-import { NoData, Pagination, SkeletonList } from '@/components'
+import { NoData, Pagination, Skeleton } from '@/components'
 import { useTranslation } from '@/context'
 
 import { MembersList } from './member-list'
@@ -20,7 +20,7 @@ const ProjectMembersList: FC<ProjectMembersListProps> = ({
   const { t } = useTranslation()
 
   if (isLoading) {
-    return <SkeletonList />
+    return <Skeleton.List />
   }
 
   if (!memberList.length) {
@@ -39,7 +39,7 @@ const ProjectMembersList: FC<ProjectMembersListProps> = ({
             }
           )
         ]}
-        primaryButton={{
+        secondaryButton={{
           label: t('views:noData.clearSearch', 'Clear search'),
           onClick: handleResetFiltersQueryAndPages
         }}

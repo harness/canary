@@ -405,11 +405,11 @@ export interface CommentItem<T = unknown> {
 }
 
 export interface DiffFileEntry extends DiffFile {
-  fileId: string
   filePath: string
   containerId: string
   contentId: string
   fileViews?: Map<string, string>
+  isRename?: boolean
 }
 
 export interface DiffFileName {
@@ -566,6 +566,7 @@ export interface PullRequestChangesSectionProps {
   changeReqReviewer?: string
   accordionValues: string[]
   defaultReviewersData?: DefaultReviewersDataProps
+  pullReqMetadata?: TypesPullReq
 }
 
 export interface CodeOwnersData {
@@ -599,7 +600,8 @@ export interface CodeOwnersData {
   )[]
 }
 
-export type CodeOwnersSectionProps = Pick<PullRequestChangesSectionProps, 'minReqLatestApproval'> & CodeOwnersData
+export type CodeOwnersSectionProps = Pick<PullRequestChangesSectionProps, 'minReqLatestApproval' | 'pullReqMetadata'> &
+  CodeOwnersData
 
 export const PullRequestFilterOption = {
   ...PullRequestState,

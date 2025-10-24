@@ -51,6 +51,10 @@
       "$type": "color",
       "$value": "{set.yellow.soft.text}",
       "$description": "Primary color for text and icons in warning content. Communicates caution and potential issues requiring attention.\n\nCommon uses: Warning message text, alert text, important notifications."
+    },
+    "brand": {
+      "$type": "color",
+      "$value": "{cyan.200}"
     }
   },
   "border": {
@@ -165,28 +169,14 @@
           "$value": "{blue.600}",
           "$description": "Background color for primary brand items with strong emphasis."
         },
-        "separator": {
-          "$extensions": {
-            "studio.tokens": {
-              "modify": {
-                "type": "alpha",
-                "value": "0.25",
-                "space": "lch"
-              }
-            }
-          },
-          "$type": "color",
-          "$value": "{pure.white}",
-          "$description": "Separator color for dividing brand areas."
-        },
         "bg-hover": {
           "$type": "color",
-          "$value": "{blue.700}",
+          "$value": "{blue.500}",
           "$description": "Hover state background color for interactive brand surfaces."
         },
         "bg-selected": {
           "$type": "color",
-          "$value": "{blue.800}",
+          "$value": "{blue.500}",
           "$description": "Selected state background color for active brand items."
         }
       },
@@ -259,13 +249,25 @@
         },
         "bg-hover": {
           "$type": "color",
-          "$value": "{chrome.900}",
+          "$value": "{purple.950}",
           "$description": "Hover state background color for interactive AI surfaces."
         },
         "bg-selected": {
           "$type": "color",
-          "$value": "{chrome.900}",
-          "$description": "Selected state background color for active AI items."
+          "$value": "linear-gradient(102deg, {gradient.ai-subtle.gradient-stop-1} 8%, {gradient.ai-subtle.gradient-stop-2} 35%, {gradient.ai-subtle.gradient-stop-3} 65%, {gradient.ai-subtle.gradient-stop-4} 87%)"
+        },
+        "inner": {
+          "$extensions": {
+            "studio.tokens": {
+              "modify": {
+                "type": "alpha",
+                "value": "0.35",
+                "space": "lch"
+              }
+            }
+          },
+          "$type": "color",
+          "$value": "{blue.600}"
         }
       }
     },
@@ -346,61 +348,71 @@
       "solid": {
         "text": {
           "$type": "color",
-          "$value": "{green.1000}",
+          "$value": "{lime.1000}",
           "$description": "Text color for high-contrast green surfaces."
         },
         "bg": {
           "$type": "color",
-          "$value": "{green.200}",
+          "$value": "{lime.300}",
+          "$description": "Background color for prominent green surfaces."
+        },
+        "bg-hover": {
+          "$type": "color",
+          "$value": "{lime.200}",
+          "$description": "Background color for prominent green surfaces."
+        },
+        "bg-selected": {
+          "$type": "color",
+          "$value": "{lime.200}",
           "$description": "Background color for prominent green surfaces."
         }
       },
       "soft": {
         "text": {
           "$type": "color",
-          "$value": "{green.150}",
+          "$value": "{lime.150}",
           "$description": "Text color for subtle green surfaces with good contrast."
         },
         "bg": {
           "$type": "color",
-          "$value": "{green.950}",
+          "$value": "{lime.950}",
           "$description": "Background color for subdued green surfaces."
         },
         "bg-hover": {
           "$type": "color",
-          "$value": "{green.900}",
+          "$value": "{lime.900}",
           "$description": "Background color for subdued green surfaces."
         },
         "bg-selected": {
           "$type": "color",
-          "$value": "{green.900}",
+          "$value": "{lime.900}",
           "$description": "Background color for subdued green surfaces."
         }
       },
       "surface": {
         "text": {
           "$type": "color",
-          "$value": "{green.150}",
+          "$value": "{lime.150}",
           "$description": "Standard text color for green surfaces with balanced readability."
         },
         "bg": {
           "$type": "color",
-          "$value": "{green.1000}",
+          "$value": "{lime.1000}",
           "$description": "Base background color for green surfaces in default states."
         },
         "border": {
           "$type": "color",
-          "$value": "{green.900}",
+          "$value": "{lime.900}",
           "$description": "Border color for standard green boundaries."
         },
         "bg-hover": {
           "$type": "color",
-          "$value": "{green.950}",
+          "$value": "{lime.950}",
           "$description": "Hover state background color for interactive green surfaces."
         },
         "bg-selected": {
           "$type": "color",
-          "$value": "{green.900}",
+          "$value": "{lime.900}",
           "$description": "Selected state background color for active green items."
         }
       }
@@ -415,6 +427,16 @@
         "bg": {
           "$type": "color",
           "$value": "{red.300}",
+          "$description": "Background color for prominent red surfaces."
+        },
+        "bg-hover": {
+          "$type": "color",
+          "$value": "{red.200}",
+          "$description": "Background color for prominent red surfaces."
+        },
+        "bg-selected": {
+          "$type": "color",
+          "$value": "{red.200}",
           "$description": "Background color for prominent red surfaces."
         }
       },
@@ -1086,6 +1108,10 @@
         "warning": {
           "$type": "color",
           "$value": "linear-gradient(0deg, {set.yellow.soft.bg} 42%, {gradient.alert.fade-warning} 100%)"
+        },
+        "success": {
+          "$type": "color",
+          "$value": "linear-gradient(0deg, {set.green.soft.bg} 42%, {gradient.alert.fade-success} 100%)"
         }
       }
     },
@@ -1103,12 +1129,6 @@
         "$type": "color",
         "$value": "{chrome.500}",
         "$description": "Inset border color for avatars. Creates subtle definition inside the avatar element."
-      }
-    },
-    "card": {
-      "gradient": {
-        "$type": "color",
-        "$value": "linear-gradient(180deg, {gradient.card.from} 0%, {gradient.card.to} 100%);"
       }
     },
     "chat": {
@@ -1360,12 +1380,12 @@
     "link": {
       "text": {
         "$type": "color",
-        "$value": "{blue.300}",
+        "$value": "{cyan.200}",
         "$description": "Default color for text links. Creates distinct visual identification of interactive text elements."
       },
       "text-hover": {
         "$type": "color",
-        "$value": "{blue.200}",
+        "$value": "{cyan.150}",
         "$description": "Hover color for text links. "
       }
     },
@@ -1782,18 +1802,6 @@
       },
       "$description": "Extra extra large shadow.\nCommon uses: This aggressive shadow is typically used sparingly in UI design, primarily for elements that need maximum visual emphasis and elevation."
     },
-    "inner": {
-      "$type": "boxShadow",
-      "$value": {
-        "x": "0",
-        "y": "2",
-        "blur": "4",
-        "spread": "0",
-        "color": "{shadow-color.inner}",
-        "type": "innerShadow"
-      },
-      "$description": "Inner shadow. \nCommon uses: Pressed buttons, selected states, inset form fields."
-    },
     "comp": {
       "avatar": {
         "inner": {
@@ -1804,6 +1812,19 @@
             "blur": "0",
             "spread": "0.6",
             "color": "{comp.avatar.shadow}",
+            "type": "innerShadow"
+          }
+        }
+      },
+      "ai": {
+        "inner": {
+          "$type": "boxShadow",
+          "$value": {
+            "x": "0",
+            "y": "7",
+            "blur": "16",
+            "spread": "0",
+            "color": "{set.ai.surface.inner}",
             "type": "innerShadow"
           }
         }
@@ -1908,45 +1929,9 @@
       "$type": "color",
       "$value": "{pure.black}",
       "$description": "Extremely deep shadow color. Provides maximum depth for highly elevated elements."
-    },
-    "inner": {
-      "$extensions": {
-        "studio.tokens": {
-          "modify": {
-            "type": "alpha",
-            "value": "0.1",
-            "space": "lch"
-          }
-        }
-      },
-      "$type": "color",
-      "$value": "{pure.white}",
-      "$description": "Subtle inner shadow color. Creates inset effect for pressed or focused states."
     }
   },
   "ring": {
-    "focus": {
-      "$type": "boxShadow",
-      "$value": [
-        {
-          "x": "0",
-          "y": "0",
-          "blur": "0",
-          "spread": "0.8",
-          "color": "{bg.1}",
-          "type": "dropShadow"
-        },
-        {
-          "x": "0",
-          "y": "0",
-          "blur": "0",
-          "spread": "2",
-          "color": "{border.brand}",
-          "type": "dropShadow"
-        }
-      ],
-      "$description": "Focus ring effect with background offset and accent border."
-    },
     "danger": {
       "$type": "boxShadow",
       "$value": {
@@ -2097,6 +2082,19 @@
         },
         "$type": "color",
         "$value": "{set.yellow.soft.bg}"
+      },
+      "fade-success": {
+        "$extensions": {
+          "studio.tokens": {
+            "modify": {
+              "type": "alpha",
+              "value": "0",
+              "space": "lch"
+            }
+          }
+        },
+        "$type": "color",
+        "$value": "{set.green.soft.bg}"
       }
     },
     "skeleton": {
@@ -2216,16 +2214,6 @@
             }
           }
         }
-      }
-    },
-    "card": {
-      "from": {
-        "$type": "color",
-        "$value": "{chrome.900}"
-      },
-      "to": {
-        "$type": "color",
-        "$value": "{chrome.950}"
       }
     },
     "dialog": {
@@ -2691,6 +2679,24 @@
           }
         }
       }
+    },
+    "ai-subtle": {
+      "gradient-stop-1": {
+        "$type": "color",
+        "$value": "{orange.800}"
+      },
+      "gradient-stop-2": {
+        "$type": "color",
+        "$value": "{purple.850}"
+      },
+      "gradient-stop-3": {
+        "$type": "color",
+        "$value": "{violet.900}"
+      },
+      "gradient-stop-4": {
+        "$type": "color",
+        "$value": "{blue.900}"
+      }
     }
   },
   "disabled": {
@@ -2785,6 +2791,36 @@
           "$value": "radial-gradient(50% 50% at 50% 50%, {gradient.flow.onboard.ellipse-b.danger.from} 26%, {gradient.flow.onboard.ellipse-b.danger.to} 100%)"
         }
       }
+    }
+  },
+  "icon": {
+    "devops": {
+      "$type": "color",
+      "$value": "{mint.200}"
+    },
+    "testing": {
+      "$type": "color",
+      "$value": "{orange.200}"
+    },
+    "security": {
+      "$type": "color",
+      "$value": "{blue.400}"
+    },
+    "efficiency": {
+      "$type": "color",
+      "$value": "{cyan.200}"
+    },
+    "platform": {
+      "$type": "color",
+      "$value": "{purple.300}"
+    }
+  },
+  "focus": {
+    "$type": "border",
+    "$value": {
+      "color": "{border.brand}",
+      "width": "{borderWidth.2}",
+      "style": "solid"
     }
   }
 }

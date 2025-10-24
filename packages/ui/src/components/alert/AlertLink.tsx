@@ -25,7 +25,7 @@ export const AlertLink = forwardRef<HTMLAnchorElement, AlertLinkProps>(
       <div className="cn-alert-link-wrapper">
         <Link
           ref={ref}
-          variant="secondary"
+          variant="default"
           suffixIcon
           className={cn('cn-alert-link', className)}
           {...externalProps}

@@ -13,7 +13,6 @@ export const RepoLabelsList = () => {
     <>
       <LabelsListPage
         useLabelsStore={LabelsListStore.useLabelsStore}
-        createdIn={''}
         searchQuery={''}
         setSearchQuery={noop}
         isRepository

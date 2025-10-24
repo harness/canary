@@ -1,6 +1,7 @@
-import { FC, forwardRef, Fragment, memo, Ref, useState } from 'react'
+import { FC, forwardRef, Fragment, memo, MouseEvent, Ref, useCallback, useState } from 'react'
 
 import { Popover, StatusBadge, Text, TextProps } from '@/components'
+import { cn } from '@utils/cn'
 import { LOCALE } from '@utils/TimeUtils'
 import { formatDistanceToNow } from 'date-fns'
 
@@ -68,7 +69,7 @@ export const useFormattedTime = (
   const isValidTime = !isNaN(time.getTime())
   const now = new Date()
   const diff = now.getTime() - time.getTime()
-  const isBeyondCutoff = diff > cutoffDays * 24 * 60 * 60 * 1000
+  const isBeyondCutoff = isValidTime && diff > cutoffDays * 24 * 60 * 60 * 1000
 
   const formattedShort = () => {
     if (!isValidTime) return 'Unknown time'
@@ -100,7 +101,8 @@ export const useFormattedTime = (
       .replace(/^about\s+/i, '')
       .replace(/less than\s+/i, ''),
     formattedFull,
-    time
+    time,
+    isBeyondCutoff
   }
 }
 
@@ -134,42 +136,73 @@ interface TimeAgoCardProps {
   timestamp?: string | number | null
   dateTimeFormatOptions?: Intl.DateTimeFormatOptions
   cutoffDays?: number
+  beforeCutoffPrefix?: string
+  afterCutoffPrefix?: string
   textProps?: TextProps<'time' | 'span'> & {
     ref?: Ref<HTMLSpanElement | HTMLTimeElement>
   }
+  triggerClassName?: string
+  contentClassName?: string
 }
 
 export const TimeAgoCard = memo(
   forwardRef<HTMLButtonElement, TimeAgoCardProps>(
-    ({ timestamp, cutoffDays = 8, dateTimeFormatOptions, textProps }, ref) => {
+    (
+      {
+        timestamp,
+        cutoffDays = 8,
+        dateTimeFormatOptions,
+        beforeCutoffPrefix,
+        afterCutoffPrefix,
+        textProps,
+        triggerClassName,
+        contentClassName
+      },
+      ref
+    ) => {
       const [isOpen, setIsOpen] = useState(false)
-      const { formattedShort, formattedFull } = useFormattedTime(timestamp, cutoffDays, dateTimeFormatOptions)
+      const { formattedShort, formattedFull, isBeyondCutoff } = useFormattedTime(
+        timestamp,
+        cutoffDays,
+        dateTimeFormatOptions
+      )
+
+      const handleMouseEnter = useCallback(() => {
+        setIsOpen(true)
+      }, [])
+
+      const handleMouseLeave = useCallback(() => {
+        setIsOpen(false)
+      }, [])
 
       if (timestamp === null || timestamp === undefined) {
         return (
-          <Text as="span" {...textProps}>
+          <Text as="span" {...textProps} ref={ref}>
             Unknown time
           </Text>
         )
       }
 
-      const handleClick = (event: React.MouseEvent) => {
-        event.preventDefault()
-        setIsOpen(prev => !prev)
-      }
-
-      const handleClickContent = (event: React.MouseEvent) => {
+      const handleClickContent = (event: MouseEvent) => {
         event.stopPropagation()
       }
 
+      const hasPrefix = beforeCutoffPrefix || afterCutoffPrefix
+      const prefix = hasPrefix ? (isBeyondCutoff ? afterCutoffPrefix : beforeCutoffPrefix) : undefined
+
       return (
         <Popover.Root open={isOpen} onOpenChange={setIsOpen}>
-          <Popover.Trigger className="cn-time-ago-card-trigger" onClick={handleClick} ref={ref}>
+          <Popover.Trigger
+            className={cn('cn-time-ago-card-trigger', triggerClassName)}
+            ref={ref}
+            onMouseEnter={handleMouseEnter}
+            onMouseLeave={handleMouseLeave}
+          >
             <Text<'time'> as="time" {...textProps} ref={textProps?.ref as Ref<HTMLTimeElement>}>
-              {formattedShort}
+              {prefix ? `${prefix} ${formattedShort}` : formattedShort}
             </Text>
           </Popover.Trigger>
-          <Popover.Content onClick={handleClickContent} side="top">
+          <Popover.Content onClick={handleClickContent} side="top" className={contentClassName}>
             <TimeAgoContent formattedFullArray={formattedFull} />
           </Popover.Content>
         </Popover.Root>

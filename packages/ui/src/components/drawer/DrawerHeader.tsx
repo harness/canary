@@ -1,4 +1,4 @@
-import { Children, HTMLAttributes, ReactNode } from 'react'
+import { Children, forwardRef, HTMLAttributes, ReactNode } from 'react'
 
 import { IconV2, IconV2NamesType, LogoV2, LogoV2NamesType } from '@/components'
 import { cn, getComponentDisplayName } from '@/utils'
@@ -28,39 +28,41 @@ type DrawerHeaderNoIconOrLogoProps = {
 export type DrawerHeaderProps = DrawerHeaderBaseProps &
   (DrawerHeaderIconOnlyProps | DrawerHeaderLogoOnlyProps | DrawerHeaderNoIconOrLogoProps)
 
-export const DrawerHeader = ({ className, children, icon, logo, ...props }: DrawerHeaderProps) => {
-  const IconOrLogoComp =
-    (!!icon && <IconV2 className="cn-drawer-header-icon cn-drawer-header-icon-color" name={icon} skipSize />) ||
-    (!!logo && <LogoV2 className="cn-drawer-header-icon" name={logo} />) ||
-    null
+export const DrawerHeader = forwardRef<HTMLDivElement, DrawerHeaderProps>(
+  ({ className, children, icon, logo, ...props }, ref) => {
+    const IconOrLogoComp =
+      (!!icon && <IconV2 className="cn-drawer-header-icon cn-drawer-header-icon-color" name={icon} size="xl" />) ||
+      (!!logo && <LogoV2 className="cn-drawer-header-icon" name={logo} size="md" />) ||
+      null
 
-  const { titleChildren, otherChildren } = Children.toArray(children).reduce<{
-    titleChildren: ReactNode[]
-    otherChildren: ReactNode[]
-  }>(
-    (acc, child) => {
-      const displayName = getComponentDisplayName(child)
+    const { titleChildren, otherChildren } = Children.toArray(children).reduce<{
+      titleChildren: ReactNode[]
+      otherChildren: ReactNode[]
+    }>(
+      (acc, child) => {
+        const displayName = getComponentDisplayName(child)
 
-      if (displayName === DrawerPrimitive.Title.displayName || displayName === DrawerTagline.displayName) {
-        acc.titleChildren.push(child)
-      } else {
-        acc.otherChildren.push(child)
-      }
-      return acc
-    },
-    { titleChildren: [], otherChildren: [] }
-  )
+        if (displayName === DrawerPrimitive.Title.displayName || displayName === DrawerTagline.displayName) {
+          acc.titleChildren.push(child)
+        } else {
+          acc.otherChildren.push(child)
+        }
+        return acc
+      },
+      { titleChildren: [], otherChildren: [] }
+    )
 
-  return (
-    <div className={cn('cn-drawer-header', className)} {...props}>
-      {(!!titleChildren.length || !!IconOrLogoComp) && (
-        <div className="cn-drawer-header-top">
-          {IconOrLogoComp}
-          <div className="cn-drawer-header-title">{titleChildren}</div>
-        </div>
-      )}
-      {otherChildren}
-    </div>
-  )
-}
+    return (
+      <div className={cn('cn-drawer-header', className)} ref={ref} {...props}>
+        {(!!titleChildren.length || !!IconOrLogoComp) && (
+          <div className="cn-drawer-header-top">
+            {IconOrLogoComp}
+            <div className="cn-drawer-header-title">{titleChildren}</div>
+          </div>
+        )}
+        {otherChildren}
+      </div>
+    )
+  }
+)
 DrawerHeader.displayName = 'DrawerHeader'

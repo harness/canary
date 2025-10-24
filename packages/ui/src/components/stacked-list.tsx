@@ -21,10 +21,10 @@ const listItemVariants = cva(
   }
 )
 
-const listFieldVariants = cva('flex flex-1 flex-col items-stretch gap-[0.3125rem] justify-start', {
+const listFieldVariants = cva('gap-cn-2xs flex flex-1 flex-col items-stretch justify-start', {
   variants: {
     right: {
-      true: 'justify-end items-end'
+      true: 'items-end justify-end'
     }
   }
 })
@@ -43,6 +43,7 @@ interface ListFieldProps extends Omit<React.ComponentProps<'div'>, 'title'>, Var
   description?: React.ReactNode
   label?: boolean
   primary?: boolean
+  disableTruncate?: boolean
 }
 
 interface ListProps extends React.ComponentProps<'div'> {
@@ -117,20 +118,30 @@ const ListItem = ({
 
 ListItem.displayName = 'StackedListItem'
 
-const ListField = ({ className, title, description, label, primary, right, ...props }: ListFieldProps) => (
+const ListField = ({
+  className,
+  title,
+  description,
+  label,
+  primary,
+  right,
+  disableTruncate = false,
+  ...props
+}: ListFieldProps) => (
   <div className={cn(listFieldVariants({ right }), className)} {...props}>
     {title && (
       <Text
         as="div"
         variant={primary ? 'heading-base' : 'body-normal'}
         color={label ? 'foreground-2' : 'foreground-1'}
-        truncate
+        truncate={!disableTruncate}
+        className="min-w-0"
       >
         {title}
       </Text>
     )}
     {description && (
-      <Text as="div" variant="body-normal" className={cn('flex gap-2', className)} truncate>
+      <Text className={cn('flex gap-2', className)} as="div" variant="body-normal" truncate={!disableTruncate}>
         {description}
       </Text>
     )}

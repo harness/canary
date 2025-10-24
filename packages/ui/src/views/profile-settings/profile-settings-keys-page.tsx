@@ -1,8 +1,8 @@
 import { FC } from 'react'
 
-import { Alert, Button, Fieldset, FormSeparator, Layout, Legend, Spacer, Text } from '@/components'
+import { Alert, Button, Fieldset, FormSeparator, Layout, Legend, Text } from '@/components'
 import { useTranslation } from '@/context'
-import { ApiErrorType, SandboxLayout } from '@/views'
+import { ApiErrorType } from '@/views'
 
 import { ProfileKeysList } from './components/profile-settings-keys-list'
 import { ProfileTokensList } from './components/profile-settings-tokens-list'
@@ -42,11 +42,11 @@ const SettingsAccountKeysPage: FC<SettingsAccountKeysPageProps> = ({
   const { t } = useTranslation()
 
   return (
-    <SandboxLayout.Content className="px-0">
+    <Layout.Vertical gap="xl" grow>
       <Text as="h1" variant="heading-section">
         {t('views:profileSettings.keysAndTokens', 'Keys and Tokens')}
       </Text>
-      <Spacer size={10} />
+
       <Layout.Vertical gap="2xl">
         <Fieldset className="gap-y-5">
           <div className="flex items-end justify-between">
@@ -103,7 +103,7 @@ const SettingsAccountKeysPage: FC<SettingsAccountKeysPageProps> = ({
           )}
         </Fieldset>
       </Layout.Vertical>
-    </SandboxLayout.Content>
+    </Layout.Vertical>
   )
 }
 

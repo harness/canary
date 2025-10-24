@@ -3,6 +3,7 @@ import langMap from 'lang-map'
 import {
   createCommitFilterFromSHA,
   decodeGitContent,
+  deNormalizeGitRef,
   filenameToLanguage,
   formatBytes,
   getTrimmedSha,
@@ -160,6 +161,24 @@ describe('Git Reference Functions', () => {
       expect(normalizeGitRef(commit)).toBe(commit)
       expect(normalizeGitRef('main')).toBe('refs/heads/main')
       expect(normalizeGitRef('')).toBe('')
+    })
+  })
+
+  describe('deNormalizeGitRef', () => {
+    it('should handle undefined input', () => {
+      expect(deNormalizeGitRef(undefined)).toBe(undefined)
+    })
+
+    it('should denormalize git references correctly', () => {
+      const tag = REFS_TAGS_PREFIX + 'v1.0.0'
+      const branch = REFS_BRANCH_PREFIX + 'main'
+      const commit = '1234567890abcdef1234567890abcdef12345678'
+
+      expect(deNormalizeGitRef(tag)).toBe('v1.0.0')
+      expect(deNormalizeGitRef(branch)).toBe('main')
+      expect(deNormalizeGitRef(commit)).toBe(commit)
+      expect(deNormalizeGitRef('main')).toBe('main')
+      expect(deNormalizeGitRef('')).toBe('')
     })
   })
 })

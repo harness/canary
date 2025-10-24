@@ -1,8 +1,18 @@
 import { FC, useMemo } from 'react'
 
-import { FormSeparator, NoData, Pagination, SkeletonList, StatusBadge, Table, Text, TimeAgoCard } from '@/components'
+import {
+  FormSeparator,
+  Layout,
+  NoData,
+  Pagination,
+  Skeleton,
+  StatusBadge,
+  Table,
+  Text,
+  TimeAgoCard
+} from '@/components'
 import { useRouterContext, useTranslation } from '@/context'
-import { SandboxLayout, WebhookStore } from '@/views'
+import { WebhookStore } from '@/views'
 
 import {
   getBranchAndTagEvents,
@@ -12,16 +22,12 @@ import {
 
 interface RepoWebhookExecutionsPageProps {
   useWebhookStore: () => WebhookStore
-  toRepoWebhooks: (repoRef?: string) => string
-  repo_ref: string
   isLoading: boolean
   toRepoWebhookExecutionDetails: (executionId: string) => string
 }
 
 const RepoWebhookExecutionsPage: FC<RepoWebhookExecutionsPageProps> = ({
   useWebhookStore,
-  toRepoWebhooks,
-  repo_ref,
   isLoading,
   toRepoWebhookExecutionDetails
 }) => {
@@ -33,24 +39,26 @@ const RepoWebhookExecutionsPage: FC<RepoWebhookExecutionsPageProps> = ({
   }, [t])
 
   return (
-    <SandboxLayout.Main className="ml-3">
-      <SandboxLayout.Content>
-        <Text as="h1" variant="heading-section" className="mb-2">
+    <Layout.Vertical gap="xl" grow>
+      <Layout.Grid gap="xs">
+        <Text as="h1" variant="heading-section">
           Order Status Update Webhook
         </Text>
-        <Text className="max-w-[570px]">
+        <Text className="settings-form-width">
           This webhook triggers every time an order status is updated, sending data to the specified endpoint for
           real-time tracking.
         </Text>
-        <FormSeparator className="my-6" />
-        <Text as="h2" variant="heading-subsection" className="mb-4">
+      </Layout.Grid>
+      <FormSeparator />
+      <Layout.Vertical grow>
+        <Text as="h2" variant="heading-subsection">
           Executions
         </Text>
         {isLoading ? (
-          <SkeletonList />
+          <Skeleton.List />
         ) : executions && executions.length > 0 ? (
           <>
-            <Table.Root disableHighlightOnHover>
+            <Table.Root size="compact">
               <Table.Header>
                 <Table.Row>
                   <Table.Head className="w-[136px]">
@@ -62,7 +70,7 @@ const RepoWebhookExecutionsPage: FC<RepoWebhookExecutionsPageProps> = ({
                   <Table.Head className="w-[136px]">
                     <Text variant="caption-strong">Status</Text>
                   </Table.Head>
-                  <Table.Head className="flex justify-end w-[176px]">
+                  <Table.Head className="flex w-[176px] justify-end">
                     <Text variant="caption-strong">Last triggered at</Text>
                   </Table.Head>
                 </Table.Row>
@@ -124,14 +132,10 @@ const RepoWebhookExecutionsPage: FC<RepoWebhookExecutionsPageProps> = ({
                 "Your webhook executions will appear here once they're completed. Trigger your webhook to see results."
               )
             ]}
-            primaryButton={{
-              label: t('views:webhookData.create', 'Create webhook'),
-              to: `${toRepoWebhooks(repo_ref)}/create`
-            }}
           />
         )}
-      </SandboxLayout.Content>
-    </SandboxLayout.Main>
+      </Layout.Vertical>
+    </Layout.Vertical>
   )
 }
 

@@ -1,4 +1,4 @@
-import { useCallback, useEffect, useMemo, useState } from 'react'
+import { useCallback, useEffect, useMemo, useRef, useState } from 'react'
 import { Outlet, useNavigate, useParams } from 'react-router-dom'
 
 import {
@@ -9,16 +9,25 @@ import {
   useListPathsQuery,
   useListTagsQuery
 } from '@harnessio/code-service-client'
-import { BranchSelectorListItem, BranchSelectorTab, RepoSidebar as RepoSidebarView } from '@harnessio/ui/views'
+import { Layout, SkeletonFileExplorer } from '@harnessio/ui/components'
+import {
+  BranchSelectorListItem,
+  BranchSelectorTab,
+  DraggableSidebarDivider,
+  RepoSidebar as RepoSidebarView,
+  SIDEBAR_MAX_WIDTH,
+  SIDEBAR_MIN_WIDTH
+} from '@harnessio/ui/views'
 
 import { BranchSelectorContainer } from '../../components-v2/branch-selector-container'
 import { CreateBranchDialog } from '../../components-v2/create-branch-dialog'
 import Explorer from '../../components-v2/FileExplorer'
 import { useRoutes } from '../../framework/context/NavigationContext'
 import { useGetRepoRef } from '../../framework/hooks/useGetRepoPath'
+import useLocalStorage from '../../framework/hooks/useLocalStorage'
 import { useGitRef } from '../../hooks/useGitRef'
 import { PathParams } from '../../RouteDefinitions'
-import { FILE_SEPERATOR, normalizeGitRef, REFS_BRANCH_PREFIX, REFS_TAGS_PREFIX } from '../../utils/git-utils'
+import { FILE_SEPARATOR, normalizeGitRef, REFS_BRANCH_PREFIX, REFS_TAGS_PREFIX } from '../../utils/git-utils'
 import { transformBranchList } from './transform-utils/branch-transform'
 
 /**
@@ -32,6 +41,8 @@ export const RepoSidebar = () => {
   const navigate = useNavigate()
   const [isCreateBranchDialogOpen, setCreateBranchDialogOpen] = useState(false)
   const [branchQueryForNewBranch, setBranchQueryForNewBranch] = useState<string>('')
+  const [sidebarWidth, setSidebarWidth] = useLocalStorage<number>('sidebarWidth', SIDEBAR_MIN_WIDTH)
+  const containerRef = useRef<HTMLDivElement>(null)
 
   const {
     fullGitRef,
@@ -41,7 +52,8 @@ export const RepoSidebar = () => {
     preSelectedTab,
     setPreSelectedTab,
     prefixedDefaultBranch,
-    fullGitRefWoDefault
+    fullGitRefWoDefault,
+    isLoading
   } = useGitRef()
 
   const { data: { body: selectedGitRefBranch } = {} } = useGetBranchQuery(
@@ -137,10 +149,14 @@ export const RepoSidebar = () => {
     (branchTagName: BranchSelectorListItem, type: BranchSelectorTab) => {
       if (type === BranchSelectorTab.BRANCHES) {
         setPreSelectedTab(type)
-        navigate(`${routes.toRepoFiles({ spaceId, repoId })}/${REFS_BRANCH_PREFIX + branchTagName.name}`)
+        navigate(
+          `${routes.toRepoFiles({ spaceId, repoId })}/${REFS_BRANCH_PREFIX + branchTagName.name}/~/${fullResourcePath}`
+        )
       } else if (type === BranchSelectorTab.TAGS) {
         setPreSelectedTab(type)
-        navigate(`${routes.toRepoFiles({ spaceId, repoId })}/${REFS_TAGS_PREFIX + branchTagName.name}`)
+        navigate(
+          `${routes.toRepoFiles({ spaceId, repoId })}/${REFS_TAGS_PREFIX + branchTagName.name}/~/${fullResourcePath}`
+        )
       }
     },
     [navigate, repoId, spaceId]
@@ -159,7 +175,7 @@ export const RepoSidebar = () => {
         if (response.body.type === 'dir') {
           navigate(routes.toRepoFiles({ spaceId, repoId, '*': `new/${fullGitRef}/~/${fullResourcePath}` }))
         } else {
-          const parentDirPath = fullResourcePath?.split(FILE_SEPERATOR).slice(0, -1).join(FILE_SEPERATOR)
+          const parentDirPath = fullResourcePath?.split(FILE_SEPARATOR).slice(0, -1).join(FILE_SEPARATOR)
           navigate(routes.toRepoFiles({ spaceId, repoId, '*': `new/${fullGitRef}/~/${parentDirPath}` }))
         }
       })
@@ -180,29 +196,42 @@ export const RepoSidebar = () => {
 
   return (
     <>
-      <div className="flex flex-1">
-        <RepoSidebarView
-          navigateToNewFile={navigateToNewFile}
-          navigateToFile={navigateToFile}
-          filesList={filesList}
-          branchSelectorRenderer={
-            <BranchSelectorContainer
-              onSelectBranchorTag={selectBranchOrTag}
-              selectedBranch={{ name: gitRefName, sha: repoDetails?.body?.latest_commit?.sha || '' }}
-              preSelectedTab={preSelectedTab}
-              isFilesPage
-              setCreateBranchDialogOpen={setCreateBranchDialogOpen}
-              onBranchQueryChange={setBranchQueryForNewBranch}
-            />
-          }
+      <Layout.Flex className="flex-1" ref={containerRef}>
+        <div
+          className="shrink-0 overflow-hidden"
+          style={{
+            width: `${sidebarWidth}px`,
+            minWidth: `${SIDEBAR_MIN_WIDTH}px`,
+            maxWidth: `${SIDEBAR_MAX_WIDTH}px`
+          }}
         >
-          {!!repoDetails?.body?.content?.entries?.length && (
-            <Explorer repoDetails={repoDetails?.body} selectedBranch={fullGitRef} />
-          )}
-        </RepoSidebarView>
+          <RepoSidebarView
+            navigateToNewFile={navigateToNewFile}
+            navigateToFile={navigateToFile}
+            filesList={filesList}
+            repoRef={repoRef}
+            branchSelectorRenderer={
+              <BranchSelectorContainer
+                onSelectBranchorTag={selectBranchOrTag}
+                selectedBranch={{ name: gitRefName, sha: repoDetails?.body?.latest_commit?.sha || '' }}
+                preSelectedTab={preSelectedTab}
+                isFilesPage
+                setCreateBranchDialogOpen={setCreateBranchDialogOpen}
+                onBranchQueryChange={setBranchQueryForNewBranch}
+              />
+            }
+          >
+            {isLoading && <SkeletonFileExplorer linesCount={12} />}
+            {!!repoDetails?.body?.content?.entries?.length && (
+              <Explorer isLoading={isLoading} repoDetails={repoDetails?.body} selectedBranch={fullGitRef} />
+            )}
+          </RepoSidebarView>
+        </div>
+
+        <DraggableSidebarDivider width={sidebarWidth} setWidth={setSidebarWidth} containerRef={containerRef} />
 
         <Outlet />
-      </div>
+      </Layout.Flex>
       <CreateBranchDialog
         open={isCreateBranchDialogOpen}
         onClose={() => setCreateBranchDialogOpen(false)}

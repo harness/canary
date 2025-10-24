@@ -11,6 +11,7 @@
   inset: 0;
   opacity: 0.1;
   background-color: var(--cn-yellow-300) !important;
+  pointer-events: none;
 }
 
 .ExtendedDiffView-RowCell-Selected.diff-line-new-num::before,
@@ -33,10 +34,11 @@
   inset: 0;
   opacity: 0.1;
   background-color: var(--cn-yellow-300) !important;
+  pointer-events: none;
 }
 
 .diff-add-widget-wrapper {
-  z-index: 200 !important;
+  z-index: 10 !important;
   position: absolute !important;
 }
 

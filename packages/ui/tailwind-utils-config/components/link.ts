@@ -26,13 +26,17 @@ export default {
 
     '&:where([data-disabled="false"])': {
       '&:where(.cn-link-default)': {
-        '&:hover, &:focus, &:where([data-hovered="true"])': {
+        '&:hover, &:where([data-hovered="true"])': {
           color: 'var(--cn-comp-link-text-hover)'
         }
       },
 
-      '&:hover, &:focus, &:where([data-hovered="true"])': {
+      '&:hover, &:where([data-hovered="true"])': {
         textDecorationColor: 'inherit'
+      },
+
+      '&:focus': {
+        outline: 'var(--cn-focus)'
       }
     },
 

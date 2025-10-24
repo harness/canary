@@ -1,4 +1,4 @@
-import { useCallback, useEffect } from 'react'
+import { useCallback, useEffect, useState } from 'react'
 import { useForm } from 'react-hook-form'
 
 import { Alert, Button, ButtonLayout, ControlGroup, Dialog, FormInput, FormWrapper, Label } from '@/components'
@@ -31,13 +31,17 @@ export function CreateBranchDialog({
   open,
   onClose,
   onSubmit,
-  isCreatingBranch,
+  isCreatingBranch = false,
+  violation,
+  bypassable,
+  resetViolation,
   error,
   selectedBranchOrTag,
   renderProp: branchSelectorContainer,
   prefilledName
 }: CreateBranchDialogProps) {
   const { t } = useTranslation()
+  const [isLoading, setIsLoading] = useState(isCreatingBranch)
 
   const formMethods = useForm<CreateBranchFormFields>({
     resolver: zodResolver(createBranchFormSchema(t)),
@@ -45,7 +49,7 @@ export function CreateBranchDialog({
     defaultValues: INITIAL_FORM_VALUES
   })
 
-  const { register, handleSubmit, setValue, reset, clearErrors } = formMethods
+  const { register, handleSubmit, setValue, reset, clearErrors, watch } = formMethods
 
   const resetForm = useCallback(() => {
     clearErrors()
@@ -53,25 +57,48 @@ export function CreateBranchDialog({
   }, [clearErrors, reset])
 
   const handleFormSubmit = async (data: CreateBranchFormFields) => {
-    await onSubmit(data)
-
-    if (!error && !isCreatingBranch) {
-      handleClose()
+    try {
+      await onSubmit(data)
+    } catch {
+      // Parent handles error display; avoid unhandled promise rejection
     }
   }
 
   useEffect(() => {
-    reset({
-      name: prefilledName || '',
-      target: selectedBranchOrTag?.name
-    })
-  }, [open, prefilledName, reset])
+    if (open) {
+      // Reset form when dialog opens
+      reset({
+        name: prefilledName || '',
+        target: selectedBranchOrTag?.name
+      })
+      resetViolation()
+    }
+  }, [open, prefilledName, selectedBranchOrTag, reset, resetViolation])
+
+  useEffect(() => {
+    if (isCreatingBranch) {
+      setIsLoading(isCreatingBranch)
+      return
+    }
+
+    const t = setTimeout(() => {
+      setIsLoading(isCreatingBranch)
+    }, 300)
+
+    return () => clearTimeout(t)
+  }, [isCreatingBranch])
 
   useEffect(() => {
     if (selectedBranchOrTag?.name) {
       setValue('target', selectedBranchOrTag.name)
     }
   }, [selectedBranchOrTag, setValue])
+
+  const branchName = watch('name')
+
+  useEffect(() => {
+    resetViolation()
+  }, [branchName, resetViolation])
 
   const handleClose = () => {
     resetForm()
@@ -80,18 +107,19 @@ export function CreateBranchDialog({
 
   return (
     <Dialog.Root open={open} onOpenChange={handleClose}>
-      <Dialog.Content aria-describedby={undefined}>
+      <Dialog.Content aria-describedby={undefined} className="max-w-2xl">
         <Dialog.Header>
           <Dialog.Title>{t('views:repos.createBranchTitle', 'Create a branch')}</Dialog.Title>
         </Dialog.Header>
-        <FormWrapper {...formMethods} onSubmit={handleSubmit(handleFormSubmit)} className="block">
-          <Dialog.Body>
+        <Dialog.Body>
+          <FormWrapper id="create-branch-form" {...formMethods} onSubmit={handleSubmit(handleFormSubmit)}>
             <FormInput.Text
               id="name"
-              label="Branch name"
+              label="Name"
               {...register('name')}
               maxLength={250}
               placeholder={t('views:forms.enterBranchName', 'Enter branch name')}
+              autoFocus
             />
 
             <ControlGroup>
@@ -99,26 +127,59 @@ export function CreateBranchDialog({
               {branchSelectorContainer}
             </ControlGroup>
 
-            {error && (
-              <Alert.Root theme="danger">
-                <Alert.Title>
-                  {t('views:repos.error', 'Error:')} {error}
-                </Alert.Title>
+            {violation && (
+              <Alert.Root theme="warning">
+                <Alert.Description className="break-all overflow-hidden">
+                  {bypassable
+                    ? t(
+                        'component:branchDialog.violationMessages.bypassed',
+                        'Some rules will be bypassed while creating branch'
+                      )
+                    : t(
+                        'component:branchDialog.violationMessages.notAllow',
+                        "Some rules don't allow you to create branch"
+                      )}
+                </Alert.Description>
               </Alert.Root>
             )}
-          </Dialog.Body>
 
-          <Dialog.Footer>
-            <ButtonLayout>
-              <Dialog.Close onClick={handleClose} loading={isCreatingBranch} disabled={isCreatingBranch}>
-                {t('views:repos.cancel', 'Cancel')}
-              </Dialog.Close>
-              <Button type="submit" disabled={isCreatingBranch}>
-                {t('views:repos.createBranchButton', 'Create branch')}
+            {error && (
+              <Alert.Root theme="danger">
+                <Alert.Description className="break-all overflow-hidden">
+                  {t('views:repos.error', 'Error:')} {error}
+                </Alert.Description>
+              </Alert.Root>
+            )}
+          </FormWrapper>
+        </Dialog.Body>
+
+        <Dialog.Footer>
+          <ButtonLayout>
+            <Dialog.Close onClick={handleClose} disabled={isLoading}>
+              {t('views:repos.cancel', 'Cancel')}
+            </Dialog.Close>
+            {!bypassable || !violation ? (
+              <Button
+                type="submit"
+                form="create-branch-form"
+                disabled={isLoading || (!bypassable && violation)}
+                loading={isLoading}
+              >
+                {isLoading
+                  ? t('component:branchDialog.loading', 'Creating branch...')
+                  : !bypassable && violation
+                    ? t('component:branchDialog.notAllowed', 'Cannot create branch')
+                    : t('component:branchDialog.default', 'Create branch')}
               </Button>
-            </ButtonLayout>
-          </Dialog.Footer>
-        </FormWrapper>
+            ) : (
+              <Button type="submit" form="create-branch-form" variant="outline" theme="danger">
+                {isLoading
+                  ? t('component:branchDialog.loading', 'Creating branch...')
+                  : t('component:branchDialog.bypassButton', 'Bypass rules and create branch')}
+              </Button>
+            )}
+          </ButtonLayout>
+        </Dialog.Footer>
       </Dialog.Content>
     </Dialog.Root>
   )

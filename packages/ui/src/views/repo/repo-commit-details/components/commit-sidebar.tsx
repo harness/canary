@@ -1,34 +1,32 @@
 import { ReactNode } from 'react'
 
-import { ScrollArea, SearchFiles, Spacer } from '@/components'
-import { SandboxLayout } from '@/views'
+import { Layout, ScrollArea, SearchFiles } from '@/components'
+import { SIDEBAR_MAX_WIDTH, SIDEBAR_MIN_WIDTH } from '@views/repo/components'
 
 interface CommitsSidebarProps {
   navigateToFile: (file: string) => void
   filesList?: string[]
   children: ReactNode
+  sidebarWidth: number
 }
 
-export const CommitSidebar = ({ navigateToFile, filesList, children }: CommitsSidebarProps) => {
+export const CommitSidebar = ({ navigateToFile, filesList, children, sidebarWidth }: CommitsSidebarProps) => {
   return (
-    <div className="nested-sidebar-height sticky top-[var(--cn-page-nav-height)]">
-      <SandboxLayout.LeftSubPanel className="w-[248px]">
-        <SandboxLayout.Content className="flex h-full overflow-hidden p-0">
-          <div className="flex size-full flex-col gap-3 pt-5">
-            <div className="px-5">
-              <SearchFiles
-                navigateToFile={navigateToFile}
-                filesList={filesList}
-                contentClassName="width-popover-width"
-              />
-            </div>
-            <ScrollArea className="pr-cn-sm grid-cols-[100%]">
-              {children}
-              <Spacer size={7} />
-            </ScrollArea>
-          </div>
-        </SandboxLayout.Content>
-      </SandboxLayout.LeftSubPanel>
+    <div
+      className="nested-sidebar-height pt-cn-xl sticky top-[var(--cn-breadcrumbs-height)]"
+      style={{
+        width: `${sidebarWidth}px`,
+        minWidth: `${SIDEBAR_MIN_WIDTH}px`,
+        maxWidth: `${SIDEBAR_MAX_WIDTH}px`
+      }}
+    >
+      <Layout.Flex direction="column" className="max-h-full overflow-hidden" gapY="sm">
+        <SearchFiles navigateToFile={navigateToFile} filesList={filesList} />
+
+        <ScrollArea className="pb-cn-xl pr-cn-lg -mr-5 grid-cols-[100%]" classNameContent="w-[248px]">
+          {children}
+        </ScrollArea>
+      </Layout.Flex>
     </div>
   )
 }

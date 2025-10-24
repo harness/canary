@@ -12,7 +12,7 @@ import {
   FormWrapper,
   IconV2,
   Legend,
-  SkeletonForm,
+  Skeleton,
   Text
 } from '@/components'
 import { useTranslation } from '@/context'
@@ -101,12 +101,12 @@ export const ProjectSettingsGeneralPage = ({
 
   return (
     <SandboxLayout.Main>
-      <SandboxLayout.Content className="mx-auto max-w-[38.125rem] pt-[3.25rem]">
+      <SandboxLayout.Content className="mx-auto max-w-[38.125rem]">
         <Text as="h2" variant="heading-section" className="mb-10">
           {t('views:projectSettings.general.mainTitle', 'Project Settings')}
         </Text>
 
-        {isLoading && <SkeletonForm />}
+        {isLoading && <Skeleton.Form />}
 
         {!isLoading && (
           <>
@@ -145,7 +145,7 @@ export const ProjectSettingsGeneralPage = ({
                         <Button type="submit">
                           {isUpdating
                             ? t('views:projectSettings.general.formSubmitButton.savingState', 'Saving...')
-                            : t('views:projectSettings.general.formSubmitButton.defaultState', 'Save changes')}
+                            : t('views:projectSettings.general.formSubmitButton.defaultState', 'Save Changes')}
                         </Button>
                         <Button variant="outline" type="button" onClick={handleReset}>
                           {t('views:projectSettings.general.formCancelButton', 'Cancel')}

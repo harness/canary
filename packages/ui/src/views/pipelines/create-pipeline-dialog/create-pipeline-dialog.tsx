@@ -97,8 +97,9 @@ export function CreatePipelineDialog(props: CreatePipelineDialogProps) {
         <Dialog.Header>
           <Dialog.Title>Create Pipeline</Dialog.Title>
         </Dialog.Header>
-        <FormWrapper {...formMethods} onSubmit={handleSubmit(onSubmit)} className="block">
-          <Dialog.Body>
+
+        <Dialog.Body>
+          <FormWrapper id="create-pipline-form" {...formMethods} onSubmit={handleSubmit(onSubmit)}>
             <Fieldset>
               <Input
                 id="name"
@@ -133,24 +134,25 @@ export function CreatePipelineDialog(props: CreatePipelineDialogProps) {
                 <Alert.Title>{errorMessage}</Alert.Title>
               </Alert.Root>
             )}
-          </Dialog.Body>
+          </FormWrapper>
+        </Dialog.Body>
 
-          <Dialog.Footer>
-            <ButtonLayout>
-              <Dialog.Close
-                onClick={() => {
-                  onCancel()
-                  reset()
-                }}
-              >
-                Cancel
-              </Dialog.Close>
-              <Button type="submit" disabled={isLoadingBranchNames}>
-                Create Pipeline
-              </Button>
-            </ButtonLayout>
-          </Dialog.Footer>
-        </FormWrapper>
+        <Dialog.Footer>
+          <ButtonLayout>
+            <Dialog.Close
+              onClick={() => {
+                onCancel()
+                reset()
+              }}
+              disabled={isLoadingBranchNames}
+            >
+              Cancel
+            </Dialog.Close>
+            <Button type="submit" form="create-pipline-form" disabled={isLoadingBranchNames}>
+              Create Pipeline
+            </Button>
+          </ButtonLayout>
+        </Dialog.Footer>
       </Dialog.Content>
     </Dialog.Root>
   )

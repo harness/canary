@@ -1,4 +1,14 @@
-import { Avatar, AvatarTooltipProps, AvatarWithTooltip, Layout, Tag, Text } from '@components/index'
+import { Avatar, AvatarTooltipProps, AvatarWithTooltip, Layout, StatusBadge, Text } from '@components/index'
+
+const TooltipContent = ({ contributor }: { contributor: ContributorsProps['contributors'][number] }) => (
+  <Layout.Horizontal align="center" justify="between" className="m-1">
+    <Avatar name={contributor.name || ''} size="lg" rounded />
+    <Layout.Vertical gap="2xs">
+      <Text>{contributor.name}</Text>
+      <Text>{contributor.email}</Text>
+    </Layout.Vertical>
+  </Layout.Horizontal>
+)
 
 export interface ContributorsProps {
   contributors: { name: string; email: string }[]
@@ -13,33 +23,30 @@ export const Contributors = (props: ContributorsProps) => {
   const contributorsToShow = contributors.length > maxNames ? contributors.slice(0, 10) : contributors
 
   return (
-    <Layout.Horizontal gapX="2xs" align={'center'}>
-      {contributorsToShow.map((contributor, idx) => {
-        const tooltipProps: AvatarTooltipProps = {
-          side: 'top',
-          content: (
-            <Layout.Horizontal align="center" justify="between" className="m-1">
-              <Avatar name={contributor.name || ''} size="lg" rounded />
-              <Layout.Vertical gap="2xs">
-                <Text>{contributor.name}</Text>
-                <Text>{contributor.email}</Text>
-              </Layout.Vertical>
-            </Layout.Horizontal>
+    <Layout.Horizontal gapX="2xs" align="center">
+      <Layout.Flex align="center">
+        {contributorsToShow.map(contributor => {
+          const tooltipProps: AvatarTooltipProps = {
+            side: 'top',
+            content: <TooltipContent contributor={contributor} />
+          }
+          return (
+            <AvatarWithTooltip
+              key={contributor.email}
+              name={contributor.name}
+              size="sm"
+              rounded
+              tooltipProps={tooltipProps}
+              className="[&:not(:first-child)]:-ml-1"
+            />
           )
-        }
-        return (
-          <AvatarWithTooltip
-            key={contributor.email}
-            name={contributor.name}
-            size="md"
-            rounded
-            tooltipProps={tooltipProps}
-            className={idx !== 0 ? '-ml-3' : undefined}
-          />
-        )
-      })}
-      <Text>Contributors</Text>
-      <Tag value={`${contributors.length}`} theme={'blue'} className="px-1" />
+        })}
+      </Layout.Flex>
+
+      <Text variant="body-single-line-normal">Contributors</Text>
+      <StatusBadge variant="outline" theme="info" size="sm">
+        {contributors.length}
+      </StatusBadge>
     </Layout.Horizontal>
   )
 }

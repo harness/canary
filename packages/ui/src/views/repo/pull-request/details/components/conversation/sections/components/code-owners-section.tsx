@@ -1,7 +1,7 @@
 import { FC, useMemo } from 'react'
 
 import { IconV2, StatusBadge, Table } from '@/components'
-import { CodeOwnersSectionProps, TypesOwnerEvaluation } from '@/views'
+import { CodeOwnersSectionProps, PullReqReviewDecision, TypesOwnerEvaluation } from '@/views'
 import { cn } from '@utils/cn'
 import { isEmpty } from 'lodash-es'
 
@@ -17,6 +17,7 @@ const mapEvaluationsToUsers = (evaluations: TypesOwnerEvaluation[]): AvatarUser[
 
 export const CodeOwnersSection: FC<CodeOwnersSectionProps> = ({
   codeOwners,
+  pullReqMetadata,
   reqCodeOwnerApproval,
   reqCodeOwnerLatestApproval,
   codeOwnerChangeReqEntries,
@@ -140,10 +141,12 @@ export const CodeOwnersSection: FC<CodeOwnersSectionProps> = ({
           <Table.Body>
             {codeOwners?.evaluation_entries?.map(entry => {
               const changeReqEvaluations = entry?.owner_evaluations?.filter(
-                evaluation => evaluation.review_decision === 'changereq'
+                evaluation => evaluation.review_decision === PullReqReviewDecision.changeReq
               )
               const approvedEvaluations = entry?.owner_evaluations?.filter(
-                evaluation => evaluation.review_decision === 'approved'
+                evaluation =>
+                  evaluation.review_decision === PullReqReviewDecision.approved &&
+                  (reqCodeOwnerLatestApproval ? evaluation.review_sha === pullReqMetadata?.source_sha : true)
               )
               return (
                 <Table.Row key={entry.pattern} className="cursor-pointer">

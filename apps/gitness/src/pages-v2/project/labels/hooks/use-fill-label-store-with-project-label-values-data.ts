@@ -1,7 +1,7 @@
-import { useEffect, useState } from 'react'
+import { useEffect, useMemo, useState } from 'react'
 
 import { listSpaceLabelValues, useListSpaceLabelsQuery } from '@harnessio/code-service-client'
-import { ILabelType, LabelValuesType, LabelValueType } from '@harnessio/ui/views'
+import { ILabelType, LabelValuesType, LabelValueType, ScopeValue } from '@harnessio/ui/views'
 
 import { useGetSpaceURLParam } from '../../../../framework/hooks/useGetSpaceParam'
 import { PageResponseHeader } from '../../../../types'
@@ -18,30 +18,25 @@ export interface UseFillLabelStoreWithProjectLabelValuesDataProps {
   queryPage?: number
   query?: string
   enabled?: boolean
+  inherited?: boolean
 }
 
 export const useFillLabelStoreWithProjectLabelValuesData = ({
   queryPage,
   query,
-  enabled = true
+  enabled = true,
+  inherited = false
 }: UseFillLabelStoreWithProjectLabelValuesDataProps) => {
   const space_ref = useGetSpaceURLParam()
   const [isLoadingValues, setIsLoadingValues] = useState(false)
 
-  const {
-    labels: storeLabels,
-    setLabels,
-    setValues,
-    setRepoSpaceRef,
-    resetLabelsAndValues,
-    setIsLoading,
-    getParentScopeLabels
-  } = useLabelsStore()
+  const { setLabels, setValues, setRepoSpaceRef, resetLabelsAndValues, setIsLoading, getParentScopeLabels } =
+    useLabelsStore()
 
   const { data: { body: labels, headers } = {}, isLoading: isLoadingSpaceLabels } = useListSpaceLabelsQuery(
     {
       space_ref: `${space_ref}/+`,
-      queryParams: { page: queryPage || 1, limit: 10, query: query ?? '', inherited: getParentScopeLabels }
+      queryParams: { page: queryPage || 1, limit: 10, query: query ?? '', inherited: inherited || getParentScopeLabels }
     },
     { enabled }
   )
@@ -57,6 +52,8 @@ export const useFillLabelStoreWithProjectLabelValuesData = ({
     }
   }, [resetLabelsAndValues])
 
+  const labelsData = useMemo(() => (labels || []) as ILabelType[], [labels])
+
   /**
    * Get values for each label
    *
@@ -67,8 +64,9 @@ export const useFillLabelStoreWithProjectLabelValuesData = ({
     // I use useLabelsStore.getState().labels to retrieve data synchronously,
     // ensuring I get the latest state immediately without waiting for React's re-renders or state updates.
     // If I use storeLabels, the data in this hook will not be updated immediately after clearing the store.
-    const syncStoreLabelsData = useLabelsStore.getState().labels
-    if (!space_ref || !syncStoreLabelsData.length) return
+    // const syncStoreLabelsData = useLabelsStore.getState().labels
+
+    if (!space_ref || !labelsData.length) return
 
     const controller = new AbortController()
     const { signal } = controller
@@ -76,10 +74,23 @@ export const useFillLabelStoreWithProjectLabelValuesData = ({
     const fetchAllLabelValues = async () => {
       setIsLoadingValues(true)
 
-      const promises = syncStoreLabelsData.reduce<Promise<LabelValuesResponseResultType>[]>((acc, item) => {
+      const promises = labelsData.reduce<Promise<LabelValuesResponseResultType>[]>((acc, item) => {
         if (item.value_count !== 0) {
+          let ref = space_ref
+
+          switch (item.scope as ScopeValue) {
+            case ScopeValue.Account: {
+              ref = space_ref.split('/').at(0) ?? space_ref
+              break
+            }
+            case ScopeValue.Organization: {
+              ref = space_ref.split('/').slice(0, 2).join('/')
+              break
+            }
+          }
+
           acc.push(
-            listSpaceLabelValues({ space_ref: `${space_ref}/+`, key: item.key, signal }).then(
+            listSpaceLabelValues({ space_ref: `${ref}/+`, key: item.key, signal }).then(
               data => ({ key: item.key, data: data.body as LabelValueType[] }),
               error => ({ key: item.key, error })
             )
@@ -115,7 +126,7 @@ export const useFillLabelStoreWithProjectLabelValuesData = ({
     return () => {
       controller.abort()
     }
-  }, [storeLabels, space_ref, setValues])
+  }, [labelsData, space_ref])
 
   /**
    * Set labels data from API to store

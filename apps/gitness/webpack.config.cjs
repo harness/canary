@@ -48,12 +48,10 @@ module.exports = {
         react: {
           singleton: true,
           requiredVersion: false,
-          eager: true
         },
         'react-dom': {
           singleton: true,
           requiredVersion: false,
-          eager: true
         }
       }
     }),

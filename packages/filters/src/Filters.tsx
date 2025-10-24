@@ -59,7 +59,7 @@ const Filters = forwardRef(function Filters<T extends Record<string, unknown>>(
       }
     })
     const mergedParams = mergeURLSearchParams(paramsOtherthanFilters, params)
-    routerUpdateURL(mergedParams)
+    routerUpdateURL(mergedParams, true)
   }
 
   const setFiltersMapTrigger = (filtersMap: Record<FilterKeys, FilterType>) => {
@@ -162,7 +162,7 @@ const Filters = forwardRef(function Filters<T extends Record<string, unknown>>(
       }
 
       config[key] = {
-        defaultValue: serializedDefaultValue,
+        defaultValue: defaultValue,
         parser: initialFiltersConfig[key].parser,
         isSticky: isStickyFilter
       }
@@ -201,7 +201,10 @@ const Filters = forwardRef(function Filters<T extends Record<string, unknown>>(
 
     const query = createQueryString(newFiltersOrder, map)
     debug('Updating URL with query: %s', query)
-    updateURL(new URLSearchParams(query))
+
+    if (query) {
+      updateURL(new URLSearchParams(query))
+    }
 
     // remove setVisibleFilters
     initialFiltersRef.current = map
@@ -302,7 +305,7 @@ const Filters = forwardRef(function Filters<T extends Record<string, unknown>>(
     Object.keys(updatedFiltersMap).forEach(key => {
       const isSticky = filtersConfig[key as FilterKeys]?.isSticky
       const defaultValue = filtersConfig[key as FilterKeys]?.defaultValue
-      const serializedDefaultValue = defaultValue
+      const serializedDefaultValue = filtersConfig[key as FilterKeys]?.parser?.serialize(defaultValue) ?? defaultValue
       const resetCurrentFilter = resetAllFilters || filters?.includes(key)
       let filterState = isSticky ? FilterStatus.VISIBLE : FilterStatus.HIDDEN
 

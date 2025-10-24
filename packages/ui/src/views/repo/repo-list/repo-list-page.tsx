@@ -1,7 +1,7 @@
 import { FC, useCallback, useMemo, useRef, useState } from 'react'
 
-import { IconV2, NoData, Pagination, Spacer, SplitButton, Text } from '@/components'
-import { useRouterContext, useTranslation } from '@/context'
+import { IconV2, NoData, Pagination, PermissionIdentifier, ResourceType, Spacer, Text } from '@/components'
+import { useComponents, useRouterContext, useTranslation } from '@/context'
 import { SandboxLayout } from '@/views'
 import { ComboBoxOptions } from '@components/filters/filters-bar/actions/variants/combo-box'
 import { FilterFieldTypes, FilterOptionConfig } from '@components/filters/types'
@@ -31,6 +31,7 @@ const SandboxRepoListPage: FC<RepoListPageProps> = ({
   scope,
   ...routingProps
 }) => {
+  const { RbacSplitButton } = useComponents()
   const { t } = useTranslation()
   const { navigate } = useRouterContext()
   const [showScope, setShowScope] = useState(false)
@@ -68,7 +69,12 @@ const SandboxRepoListPage: FC<RepoListPageProps> = ({
             )
         ]}
         primaryButton={{
-          label: t('views:notFound.button', 'Reload page'),
+          label: (
+            <>
+              <IconV2 name="refresh" />
+              {t('views:notFound.button', 'Reload Page')}
+            </>
+          ),
           onClick: () => {
             navigate(0) // Reload the page
           }
@@ -95,20 +101,23 @@ const SandboxRepoListPage: FC<RepoListPageProps> = ({
   const { projectIdentifier, orgIdentifier, accountId } = scope
 
   const FilterSortOptions = [
-    { label: 'Name', value: RepoSortMethod.Identifier },
+    { label: 'Name (A->Z, 0->9)', value: RepoSortMethod.Identifier_Asc },
+    { label: 'Name (Z->A, 9->0)', value: RepoSortMethod.Identifier_Desc },
     { label: 'Newest', value: RepoSortMethod.Newest },
     { label: 'Oldest', value: RepoSortMethod.Oldest },
     { label: 'Last push', value: RepoSortMethod.LastPush }
   ]
 
-  const scopeFilterOptions = getFilterScopeOptions({ t, scope })
+  const { options: scopeFilterOptions, defaultValue: scopeFilterDefaultValue } = getFilterScopeOptions({ t, scope })
   const filterOptions: FilterOptionConfig<keyof RepoListFilters>[] = [
     {
+      defaultValue: false,
       label: t('views:connectors.filterOptions.statusOption.favorite', 'Favorites'),
       value: 'favorite',
       type: FilterFieldTypes.Checkbox,
+      sticky: true,
       filterFieldConfig: {
-        label: <IconV2 name="star-solid" size="md" className="text-cn-icon-yellow" />
+        label: <IconV2 name="star-solid" size="md" className="text-cn-icon-yellow cursor-pointer" />
       },
       parser: booleanParser
     }
@@ -119,6 +128,7 @@ const SandboxRepoListPage: FC<RepoListPageProps> = ({
       label: t('views:scope.label', 'Scope'),
       value: 'recursive',
       type: FilterFieldTypes.ComboBox,
+      defaultValue: scopeFilterDefaultValue,
       filterFieldConfig: {
         options: scopeFilterOptions,
         placeholder: 'Select scope',
@@ -159,7 +169,7 @@ const SandboxRepoListPage: FC<RepoListPageProps> = ({
           <FilterGroup<RepoListFilters, keyof RepoListFilters>
             simpleSortConfig={{
               sortOptions: FilterSortOptions,
-              defaultSort: RepoSortMethod.Identifier,
+              defaultSort: RepoSortMethod.LastPush,
               onSortChange
             }}
             onFilterValueChange={onFilterValueChange}
@@ -167,7 +177,7 @@ const SandboxRepoListPage: FC<RepoListPageProps> = ({
             ref={filterRef}
             handleInputChange={handleSearch}
             headerAction={
-              <SplitButton<string>
+              <RbacSplitButton<string>
                 dropdownContentClassName="mt-0 min-w-[208px]"
                 handleButtonClick={() => navigate(toCreateRepo?.() || '')}
                 handleOptionChange={option => {
@@ -184,21 +194,27 @@ const SandboxRepoListPage: FC<RepoListPageProps> = ({
                 options={[
                   {
                     value: 'new',
-                    label: t('views:repos.new-repository', 'New repository')
+                    label: t('views:repos.createRepository', 'Create Repository')
                   },
                   {
                     value: 'import',
-                    label: t('views:repos.import-repository', 'Import repository')
+                    label: t('views:repos.importRepository', 'Import Repository')
                   },
                   {
                     value: 'import-multiple',
-                    label: t('views:repos.import-repositories', 'Import repositories')
+                    label: t('views:repos.importRepositories', 'Import Repositories')
                   }
                 ]}
+                rbac={{
+                  resource: {
+                    resourceType: ResourceType.CODE_REPOSITORY
+                  },
+                  permissions: [PermissionIdentifier.CODE_REPO_CREATE]
+                }}
               >
-                <IconV2 name="plus" size="sm" />
-                {t('views:repos.new-repository', 'New Repository')}
-              </SplitButton>
+                <IconV2 name="plus" />
+                {t('views:repos.createRepository', 'Create Repository')}
+              </RbacSplitButton>
             }
             filterOptions={filterOptions}
           />

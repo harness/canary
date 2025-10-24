@@ -6,21 +6,25 @@ import type {
   NavLinkProps,
   OutletProps,
   Params,
+  SetURLSearchParams,
   UIMatch
 } from 'react-router-dom'
+
+import { noop } from 'lodash-es'
 
 import { RouterContextProvider as FiltersRouterContextProvider } from '@harnessio/filters'
 
 const resolveTo = (to: LinkProps['to']) => (typeof to === 'string' ? to : to.pathname || '/')
 
-const LinkDefault = ({ to, children, ...props }: LinkProps) => {
+const LinkDefault = forwardRef<HTMLAnchorElement, LinkProps>(({ to, children, ...props }, ref) => {
   const href = resolveTo(to)
   return (
-    <a href={href} {...props}>
+    <a href={href} {...props} ref={ref}>
       {children}
     </a>
   )
-}
+})
+LinkDefault.displayName = 'LinkDefault'
 
 const NavLinkDefault = forwardRef<HTMLAnchorElement, NavLinkProps>(
   ({ to, children, className, style, ...props }, ref) => {
@@ -53,7 +57,7 @@ const navigateFnDefault: NavigateFunction = to => {
 }
 
 const useSearchParamsDefault = () => {
-  const setSearchParams = (_params: URLSearchParams | ((currentParams: URLSearchParams) => URLSearchParams)): void => {}
+  const setSearchParams: SetURLSearchParams = noop
   return [new URLSearchParams(), setSearchParams] as const
 }
 
@@ -68,7 +72,7 @@ const useParamsDefault = (): Params => {
 const defaultLocation: Location = { ...window.location, state: {}, key: '' }
 
 interface RouterContextType {
-  Link: ComponentType<LinkProps>
+  Link: ComponentType<ComponentPropsWithRef<typeof LinkDefault>>
   NavLink: ComponentType<ComponentPropsWithRef<typeof NavLinkDefault>>
   Outlet: ComponentType<OutletProps>
   location: Location
@@ -124,4 +128,4 @@ export const RouterContextProvider = ({
   )
 }
 
-export { NavLinkProps }
+export { NavLinkProps, LinkProps }

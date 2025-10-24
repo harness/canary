@@ -34,7 +34,7 @@ export const BranchInfoBar: FC<BranchInfoBarProps> = ({
 
   return (
     <Layout.Flex
-      className="border-cn-borders-2 bg-cn-background-2 min-h-9 rounded-md border px-4 py-2"
+      className="min-h-[3.25rem] rounded-md border border-cn-borders-2 bg-cn-background-2 py-2 pl-4 pr-2"
       align="center"
       justify="between"
       gapX="xs"
@@ -58,22 +58,14 @@ export const BranchInfoBar: FC<BranchInfoBarProps> = ({
           {!hasAhead && !hasBehind && 'up to date with'}
         </span>
 
-        <Tag
-          variant="secondary"
-          theme="blue"
-          size="md"
-          icon="git-branch"
-          showIcon
-          value={defaultBranchName}
-          className="align-middle"
-        />
+        <Tag variant="secondary" theme="gray" icon="git-branch" value={defaultBranchName} className="align-middle" />
       </Text>
 
       {showContributeBtn && (
         <DropdownMenu.Root>
           <DropdownMenu.Trigger asChild>
             <Button
-              className="group/contribute data-[state=open]:border-cn-borders-9 data-[state=open]:text-cn-foreground-1"
+              className="group/contribute data-[state=open]:border-cn-borders-9 py-2 data-[state=open]:text-cn-foreground-1"
               variant="outline"
             >
               <IconV2 name="git-pull-request" size="xs" />
@@ -85,45 +77,50 @@ export const BranchInfoBar: FC<BranchInfoBarProps> = ({
               />
             </Button>
           </DropdownMenu.Trigger>
-          <DropdownMenu.Content align="end" className="w-60">
+          <DropdownMenu.Content align="end" className="w-80">
             <DropdownMenu.Slot>
               <Layout.Grid gapY="xs" className="p-2">
                 <Layout.Grid flow="column" gapX="xs">
-                  <div className="border-cn-borders-4 rounded-2 flex size-8 shrink-0 items-center justify-center border">
+                  <div className="border-cn-borders-4 flex size-8 shrink-0 items-center justify-center rounded-2 border">
                     <IconV2 name="git-pull-request" size="md" />
                   </div>
                   <Layout.Grid gapY="xs">
                     <Text variant="body-single-line-strong" color="foreground-1">
-                      This branch is {ahead} {easyPluralize(ahead, 'commit', 'commits')} ahead of{' '}
+                      {hasAhead
+                        ? `This branch is ${ahead} ${easyPluralize(ahead, 'commit', 'commits')} ahead of`
+                        : 'This branch is not ahead of'}
+                      &nbsp;
                       <Tag
                         className="mt-0.5 align-sub"
                         variant="secondary"
-                        theme="blue"
-                        size="md"
+                        theme="gray"
                         value={defaultBranchName}
                         icon="git-branch"
-                        showIcon
                       />
                     </Text>
 
                     <Text color="foreground-3">
-                      {t(
-                        'views:repos.compareBranchesToSeeChanges',
-                        'Open a pull request to contribute your changes upstream.'
-                      )}
+                      {hasAhead
+                        ? t(
+                            'views:repos.compareBranchesToSeeChanges',
+                            'Open a pull request to contribute your changes upstream.'
+                          )
+                        : t('views:repos.noNewCommits', 'No new commits yet.')}
                     </Text>
                   </Layout.Grid>
                 </Layout.Grid>
 
-                <ButtonLayout>
-                  <Button className="w-full" variant="outline" asChild>
-                    <Link
-                      to={`${spaceId ? `/${spaceId}` : ''}/repos/${repoId}/pulls/compare/${defaultBranchName}...${selectedBranchTag?.name}`}
-                    >
-                      Compare
-                    </Link>
-                  </Button>
-                </ButtonLayout>
+                {hasAhead && (
+                  <ButtonLayout>
+                    <Button className="w-full" variant="outline" asChild>
+                      <Link
+                        to={`${spaceId ? `/${spaceId}` : ''}/repos/${repoId}/pulls/compare/${defaultBranchName}...${selectedBranchTag?.name}`}
+                      >
+                        Compare
+                      </Link>
+                    </Button>
+                  </ButtonLayout>
+                )}
               </Layout.Grid>
             </DropdownMenu.Slot>
           </DropdownMenu.Content>

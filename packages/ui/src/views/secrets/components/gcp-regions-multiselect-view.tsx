@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react'
 
-import { Alert, MultiSelect, MultiSelectOption, SkeletonList } from '@/components'
+import { Alert, MultiSelect, MultiSelectOption, Skeleton } from '@/components'
 
 export interface GcpRegionsMultiSelectProps {
   value?: string | string[]
@@ -38,7 +38,7 @@ export function GcpRegionsMultiSelect(props: GcpRegionsMultiSelectProps): React.
   return (
     <>
       {isLoading ? (
-        <SkeletonList />
+        <Skeleton.List />
       ) : error ? (
         <Alert.Root theme="danger" className="my-2">
           <Alert.Description>{error?.toString() || 'Failed to fetch regions'}</Alert.Description>

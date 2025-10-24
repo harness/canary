@@ -44,7 +44,7 @@
         },
         "300": {
           "$type": "fontWeights",
-          "$value": "Light"
+          "$value": "350"
         },
         "400": {
           "$type": "fontWeights",
@@ -176,11 +176,18 @@
   "fontFamily": {
     "default": {
       "$type": "fontFamilies",
-      "$value": "Inter"
+      "$value": [
+        "Inter",
+        "system-ui",
+        "sans-serif"
+      ]
     },
     "mono": {
       "$type": "fontFamilies",
-      "$value": "JetBrains Mono"
+      "$value": [
+        "JetBrains Mono",
+        "monospace"
+      ]
     }
   },
   "textDecoration": {

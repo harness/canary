@@ -24,6 +24,7 @@ export enum RouteConstants {
   toPullRequestConversation = 'toPullRequestConversation',
   toPullRequestCommits = 'toPullRequestCommits',
   toPullRequestChanges = 'toPullRequestChanges',
+  toPullRequestChange = 'toPullRequestChange',
   toPullRequestChecks = 'toPullRequestChecks',
   toPipelineEdit = 'toPipelineEdit',
   toPipelines = 'toPipelines',
@@ -92,7 +93,8 @@ export enum RouteConstants {
   toProjectBranchRuleCreate = 'toProjectBranchRuleCreate',
   toProjectTagRuleCreate = 'toProjectTagRuleCreate',
   toProjectRules = 'toProjectRules',
-  toProjectRuleDetails = 'toProjectRuleDetails'
+  toProjectRuleDetails = 'toProjectRuleDetails',
+  toRepoLabelDetails = 'toRepoLabelDetails'
 }
 
 export interface RouteEntry {

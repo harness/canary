@@ -62,7 +62,7 @@ const PullRequestCompareButton: FC<PullRequestCompareButtonProps> = ({
           options={[
             {
               value: PR_TYPE.CREATE,
-              label: t(`views:pullRequests.compareChangesCreateTitle`, 'Create pull request'),
+              label: t(`views:pullRequests.compareChangesCreateTitle`, 'Create Pull Request'),
               description: t(
                 `views:pullRequests.compareChangesCreateDescription`,
                 'Open pull request that is ready for review.'
@@ -70,7 +70,7 @@ const PullRequestCompareButton: FC<PullRequestCompareButtonProps> = ({
             },
             {
               value: PR_TYPE.DRAFT,
-              label: t(`views:pullRequests.compareChangesDraftTitle`, 'Create draft pull request'),
+              label: t(`views:pullRequests.compareChangesDraftTitle`, 'Create Draft Pull Request'),
               description: t(
                 `views:pullRequests.compareChangesDraftDescription`,
                 'Does not request code reviews and cannot be merged.'
@@ -78,6 +78,7 @@ const PullRequestCompareButton: FC<PullRequestCompareButtonProps> = ({
             }
           ]}
         >
+          <IconV2 name="plus" />
           {t(
             `views:pullRequests.compareChanges${prType}Button${isLoading ? 'Loading' : ''}`,
             `${prType}${isLoading ? 'ing' : ''} pull request${isLoading ? '...' : ''}`

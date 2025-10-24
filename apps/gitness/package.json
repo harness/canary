@@ -52,7 +52,7 @@
   },
   "devDependencies": {
     "@eslint/js": "^9.9.0",
-    "@git-diff-view/react": "^0.0.16",
+    "@git-diff-view/react": "^0.0.30",
     "@swc/core": "^1.12.1",
     "@testing-library/dom": "^10.4.0",
     "@testing-library/react": "^12.1.5",

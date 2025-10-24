@@ -18,15 +18,23 @@ export const EditRepoDetails = ({
   updateRepoError
 }: EditRepoDetailsDialog) => {
   const [newDesc, setNewDesc] = useState<string>(description)
+
   const handleClose = () => {
     setNewDesc(description || '')
     onClose()
   }
+
   useEffect(() => {
     setNewDesc(description)
   }, [description])
+
+  const onOpenChangeHandler = () => {
+    setNewDesc(description || '')
+    onClose()
+  }
+
   return (
-    <Dialog.Root open={showEditRepoDetails} onOpenChange={onClose}>
+    <Dialog.Root open={showEditRepoDetails} onOpenChange={onOpenChangeHandler}>
       <Dialog.Content>
         <Dialog.Header>
           <Dialog.Title>Repository Description</Dialog.Title>
@@ -38,7 +46,6 @@ export const EditRepoDetails = ({
             resizable
             rows={6}
             autoFocus
-            defaultValue={description}
             onChange={(e: ChangeEvent<HTMLTextAreaElement>) => {
               setNewDesc(e?.target?.value)
             }}

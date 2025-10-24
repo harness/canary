@@ -39,6 +39,69 @@ import { CounterBadge } from '@harnessio/ui/components'
 <CounterBadge theme="danger">99+</CounterBadge>
 ```
 
+## Variants
+
+The `CounterBadge` component supports two variants: `outline` (default) and `secondary`.
+
+### Outline Variant
+
+The outline variant provides a subtle border-based appearance, ideal for secondary information display.
+
+<DocsPage.ComponentExample
+  client:only
+  code={`<div className="flex gap-5">
+        <CounterBadge variant="outline">1</CounterBadge>
+        <CounterBadge variant="outline" theme="info">42</CounterBadge>
+        <CounterBadge variant="outline" theme="success">+2345</CounterBadge>
+        <CounterBadge variant="outline" theme="danger">-123</CounterBadge>
+    </div>
+`}
+/>
+
+### Secondary Variant
+
+The secondary variant uses a soft background appearance for more prominent display while maintaining subtlety.
+
+<DocsPage.ComponentExample
+  client:only
+  code={`<div className="flex gap-5">
+        <CounterBadge variant="secondary">1</CounterBadge>
+        <CounterBadge variant="secondary" theme="info">42</CounterBadge>
+        <CounterBadge variant="secondary" theme="success">+2345</CounterBadge>
+        <CounterBadge variant="secondary" theme="danger">-123</CounterBadge>
+    </div>
+`}
+/>
+
+### Variant Comparison
+
+Compare both variants side by side to see the visual differences:
+
+<DocsPage.ComponentExample
+  client:only
+  code={`<div className="flex flex-col gap-4">
+    <div className="flex gap-3">
+      <span className="text-sm text-muted-foreground min-w-[80px]">Outline:</span>
+      <div className="flex gap-3">
+        <CounterBadge variant="outline">12</CounterBadge>
+        <CounterBadge variant="outline" theme="info">42</CounterBadge>
+        <CounterBadge variant="outline" theme="success">+99</CounterBadge>
+        <CounterBadge variant="outline" theme="danger">-5</CounterBadge>
+      </div>
+    </div>
+    <div className="flex gap-3">
+      <span className="text-sm text-muted-foreground min-w-[80px]">Secondary:</span>
+      <div className="flex gap-3">
+        <CounterBadge variant="secondary">12</CounterBadge>
+        <CounterBadge variant="secondary" theme="info">42</CounterBadge>
+        <CounterBadge variant="secondary" theme="success">+99</CounterBadge>
+        <CounterBadge variant="secondary" theme="danger">-5</CounterBadge>
+      </div>
+    </div>
+  </div>
+`}
+/>
+
 ## Themes
 
 The `CounterBadge` component supports four color themes that can be categorized into different groups based on their semantic meaning.
@@ -79,6 +142,13 @@ The `CounterBadge` component has the following props to control its appearance:
 
 <DocsPage.PropsTable
   props={[
+    {
+      name: "variant",
+      description: "Visual style variant of the badge",
+      required: false,
+      value: "'outline' | 'secondary'",
+      defaultValue: "'outline'",
+    },
     {
       name: "theme",
       description: "Color theme of the badge",

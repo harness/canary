@@ -1,4 +1,6 @@
-import { Progress, Separator } from '@/components'
+import { CSSProperties } from 'react'
+
+import { Layout, Progress, Separator, Text } from '@/components'
 import { useTranslation } from '@/context'
 import { cn } from '@/utils/cn'
 
@@ -25,54 +27,42 @@ export const DivergenceGauge = ({ behindAhead, className }: GaugeProps) => {
   const adjustedAheadPercentage = adjustPercentage(aheadPercentage)
 
   return (
-    <div className={cn('flex w-full flex-col gap-[4px]', className)}>
-      <div className="mx-auto grid w-28 grid-flow-col grid-cols-[1fr_auto_1fr] items-center justify-center gap-x-1.5">
-        <span className="truncate text-right text-2 leading-none text-cn-foreground-3">
+    <Layout.Grid className={cn('', className)} gapY="3xs">
+      <Layout.Grid columns="1fr auto 1fr" align="center" justify="center" gapX="2xs">
+        <Text variant="body-single-line-normal" align="right">
           {behindAhead.behind ?? 0}
-          <span className="sr-only">
-            {t('views:repos.commits', 'commits')}
-            {t('views:repos.behind', 'behind')}
-          </span>
-        </span>
+          <span className="sr-only">{t('views:repos.branches.commitsBehind', 'commits behind')}</span>
+        </Text>
         <Separator orientation="vertical" />
-        <span className="truncate text-2 leading-none text-cn-foreground-3">
+        <Text variant="body-single-line-normal">
           {behindAhead.ahead ?? 0}
-          <span className="sr-only">
-            {t('views:repos.commits', 'commits')}
-            {t('views:repos.ahead', 'ahead')}
-          </span>
-        </span>
-      </div>
+          <span className="sr-only">{t('views:repos.branches.commitsAhead', 'commits ahead')}</span>
+        </Text>
+      </Layout.Grid>
       {/* Both behind and ahead are 0, don't show the progress bar */}
       {/* TODO: replace with meter component when available */}
       {behindAhead?.behind === 0 && behindAhead?.ahead == 0 ? null : (
-        <div className="mx-auto flex w-28 items-center justify-center">
-          <div className="flex w-1/2 flex-row-reverse justify-start">
-            <div style={{ width: `${adjustedBehindPercentage}%` }}>
-              <Progress
-                className={`rotate-180 [&_.cn-progress-root::-moz-progress-bar]:bg-cn-background-8 [&_.cn-progress-root::-webkit-progress-value]:bg-cn-background-8 [&_.cn-progress-root]:rounded-l-none`}
-                value={adjustedBehindPercentage / 100}
-                size="sm"
-                hideIcon
-                hidePercentage
-                hideContainer
-              />
-            </div>
-          </div>
-          <div className="flex w-1/2 justify-start">
-            <div style={{ width: `${adjustedAheadPercentage}%` }}>
-              <Progress
-                className={`[&_.cn-progress-root::-moz-progress-bar]:bg-cn-background-13 [&_.cn-progress-root::-webkit-progress-value]:bg-cn-background-13 [&_.cn-progress-root]:rounded-l-none`}
-                value={adjustedAheadPercentage / 100}
-                size="sm"
-                hideIcon
-                hidePercentage
-                hideContainer
-              />
-            </div>
-          </div>
-        </div>
+        <Layout.Grid columns={2} align="center" justify="center" className="mx-auto w-20">
+          <Progress
+            className="[&_.cn-progress-root::-moz-progress-bar]:bg-cn-background-softgray [&_.cn-progress-root::-webkit-progress-value]:bg-cn-background-softgray rotate-180 justify-self-end [&_.cn-progress-root]:rounded-l-none"
+            value={adjustedBehindPercentage / 100}
+            size="sm"
+            hideIcon
+            hidePercentage
+            hideContainer
+            style={{ width: `${adjustedBehindPercentage}%` } as CSSProperties}
+          />
+          <Progress
+            className="[&_.cn-progress-root::-moz-progress-bar]:bg-cn-background-solidgray [&_.cn-progress-root::-webkit-progress-value]:bg-cn-background-solidgray [&_.cn-progress-root]:rounded-l-none"
+            value={adjustedAheadPercentage / 100}
+            size="sm"
+            hideIcon
+            hidePercentage
+            hideContainer
+            style={{ width: `${adjustedAheadPercentage}%` } as CSSProperties}
+          />
+        </Layout.Grid>
       )}
-    </div>
+    </Layout.Grid>
   )
 }

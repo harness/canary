@@ -3,12 +3,13 @@ import { useCallback, useEffect, useState } from 'react'
 import {
   Accordion,
   Alert,
+  Avatar,
+  BranchTag,
   Button,
   ButtonLayout,
   Checkbox,
   CounterBadge,
   IconV2,
-  Input,
   Layout,
   MoreActionsTooltip,
   SplitButton,
@@ -16,6 +17,7 @@ import {
   StatusBadge,
   Text,
   Textarea,
+  TextInput,
   TimeAgoCard,
   type ButtonThemes
 } from '@/components'
@@ -33,7 +35,7 @@ import {
   TypesPullReqCheck
 } from '@/views'
 import { cn } from '@utils/cn'
-import { TypesPullReq } from '@views/repo/pull-request/pull-request.types'
+import { PrState, TypesPullReq } from '@views/repo/pull-request/pull-request.types'
 
 import {
   DefaultReviewersDataProps,
@@ -41,11 +43,23 @@ import {
   MergeStrategy,
   PullRequestRoutingProps
 } from '../../pull-request-details-types'
-import PullRequestBranchBadge from './pull-request-branch-badge'
 import PullRequestChangesSection from './sections/pull-request-changes-section'
 import PullRequestCheckSection from './sections/pull-request-checks-section'
 import PullRequestCommentSection from './sections/pull-request-comment-section'
 import PullRequestMergeSection from './sections/pull-request-merge-section'
+
+const MERGE_METHOD_TITLES: Record<MergeStrategy, string> = {
+  [MergeStrategy.FAST_FORWARD]: 'Fast-forward merge',
+  [MergeStrategy.SQUASH]: 'Squash and merge',
+  [MergeStrategy.MERGE]: 'Merge pull request',
+  [MergeStrategy.REBASE]: 'Rebase and merge'
+}
+
+const getMergeStrategyFromTitle = (title?: string): MergeStrategy | undefined => {
+  if (!title) return undefined
+  const entry = Object.entries(MERGE_METHOD_TITLES).find(([, display]) => display === title)
+  return entry ? (entry[0] as MergeStrategy) : undefined
+}
 
 export const getMergeMethodDisplay = (mergeMethodType: MergeStrategy): string => {
   return mergeMethodMapping[mergeMethodType]
@@ -67,6 +81,8 @@ interface HeaderProps {
   headerMsg?: string
   spaceId?: string
   repoId?: string
+  actions?: PullRequestAction[]
+  mergeButtonValue?: string
 }
 
 interface ButtonStateProps {
@@ -79,48 +95,111 @@ interface ButtonStateProps {
 }
 
 const HeaderTitle = ({ ...props }: HeaderProps) => {
-  const { pullReqMetadata, spaceId, repoId } = props
+  const {
+    pullReqMetadata,
+    spaceId,
+    repoId,
+    onRevertPR,
+    onDeleteBranch,
+    onRestoreBranch,
+    headerMsg,
+    showDeleteBranchButton,
+    showRestoreBranchButton,
+    isDraft,
+    isClosed,
+    unchecked,
+    mergeable,
+    isOpen,
+    ruleViolation,
+    actions,
+    mergeButtonValue
+  } = props
   const areRulesBypassed = pullReqMetadata?.merge_violations_bypassed
   const mergeMethod = getMergeMethodDisplay(pullReqMetadata?.merge_method as MergeStrategy)
-  if (props?.pullReqMetadata?.state === PullRequestFilterOption.MERGED) {
+  const isRebasable = pullReqMetadata?.merge_target_sha !== pullReqMetadata?.merge_base_sha && !pullReqMetadata?.merged
+
+  // Get the current selected merge method
+  const getCurrentMergeMethod = () => {
+    const selectedAction = actions?.[parseInt(mergeButtonValue || '0')]
+    switch (getMergeStrategyFromTitle(selectedAction?.title)) {
+      case MergeStrategy.FAST_FORWARD:
+        return MergeStrategy.FAST_FORWARD
+      case MergeStrategy.SQUASH:
+        return MergeStrategy.SQUASH
+      case MergeStrategy.MERGE:
+        return MergeStrategy.MERGE
+      case MergeStrategy.REBASE:
+        return MergeStrategy.REBASE
+      default:
+        return undefined
+    }
+  }
+
+  const currentMergeMethod = getCurrentMergeMethod()
+  const isFastForwardNotPossible = isRebasable && currentMergeMethod === MergeStrategy.FAST_FORWARD
+
+  const getStatusTextColor = (): 'success' | 'danger' | 'foreground-1' => {
+    if (isDraft || isClosed) return 'foreground-1'
+
+    if (isOpen && (mergeable === false || ruleViolation || isFastForwardNotPossible)) {
+      return 'danger'
+    }
+
+    if (isOpen && !unchecked) {
+      return 'success'
+    }
+    return 'foreground-1'
+  }
+
+  if (pullReqMetadata?.state === PullRequestFilterOption.MERGED) {
     return (
       <>
         <div className="inline-flex w-full items-center justify-between gap-2">
-          <Text className="flex items-center space-x-1" variant="body-single-line-strong" as="h2" color="foreground-1">
-            <span>{props?.pullReqMetadata?.merger?.display_name}</span>
+          <Text
+            className="flex items-center space-x-1 text-[var(--cn-set-purple-surface-text)]"
+            variant="body-single-line-strong"
+            as="h2"
+            color="inherit"
+          >
+            <Avatar name={pullReqMetadata?.merger?.display_name || ''} rounded size="sm" />
+            <span>{pullReqMetadata?.merger?.display_name}</span>
             <span>{areRulesBypassed ? `bypassed rules and ${mergeMethod}` : `${mergeMethod}`}</span>
             <span>into</span>
-            <PullRequestBranchBadge
+            <BranchTag
               branchName={pullReqMetadata?.target_branch || ''}
               spaceId={spaceId}
               repoId={repoId}
+              theme="violet"
+              variant="secondary"
             />
             <span>from</span>
-            <PullRequestBranchBadge
+            <BranchTag
               branchName={pullReqMetadata?.source_branch || ''}
               spaceId={spaceId}
               repoId={repoId}
+              theme="violet"
+              variant="secondary"
             />
             <TimeAgoCard timestamp={pullReqMetadata?.merged} />
           </Text>
           <Layout.Horizontal>
-            <Button variant="secondary" onClick={props.onRevertPR}>
+            <Button variant="secondary" onClick={onRevertPR}>
               Revert
             </Button>
-            {props.showDeleteBranchButton ? (
-              <Button variant="primary" theme="danger" onClick={props.onDeleteBranch}>
+            {showDeleteBranchButton ? (
+              <Button variant="primary" theme="danger" onClick={onDeleteBranch}>
                 Delete Branch
               </Button>
-            ) : props.showRestoreBranchButton ? (
-              <Button variant="outline" onClick={props.onRestoreBranch}>
+            ) : showRestoreBranchButton ? (
+              <Button variant="outline" onClick={onRestoreBranch}>
                 Restore Branch
               </Button>
             ) : null}
           </Layout.Horizontal>
         </div>
-        {props.headerMsg && (
+        {headerMsg && (
           <div className="flex w-full justify-end">
-            <span className="text-1 text-cn-foreground-danger">{props.headerMsg}</span>
+            <span className="text-1 text-cn-foreground-danger">{headerMsg}</span>
           </div>
         )}
       </>
@@ -129,18 +208,20 @@ const HeaderTitle = ({ ...props }: HeaderProps) => {
 
   return (
     <div className="inline-flex items-center gap-2">
-      <Text variant="body-single-line-strong" as="h2" color="foreground-1">
-        {props.isDraft
+      <Text variant="body-single-line-strong" as="h2" color={getStatusTextColor()}>
+        {isDraft
           ? 'This pull request is still a work in progress'
-          : props.isClosed
+          : isClosed
             ? 'This pull request is closed'
-            : props.unchecked
+            : unchecked
               ? 'Checking for ability to merge automatically...'
-              : props.mergeable === false && props.isOpen
+              : mergeable === false && isOpen
                 ? 'Cannot merge pull request'
-                : props.ruleViolation
+                : ruleViolation
                   ? 'Cannot merge pull request'
-                  : `Pull request can be merged`}
+                  : isFastForwardNotPossible
+                    ? 'Cannot merge pull request'
+                    : `Pull request can be merged`}
       </Text>
     </div>
   )
@@ -216,8 +297,7 @@ const getDataFromPullReqMetadata = (pullReqMetadata?: TypesPullReq) => {
     isOpen,
     isDraft,
     isUnchecked: pullReqMetadata?.merge_check_status === MergeCheckStatus.UNCHECKED && !isClosed,
-    isRebasable: pullReqMetadata?.merge_target_sha !== pullReqMetadata?.merge_base_sha && !pullReqMetadata?.merged,
-    isShowMoreTooltip: isOpen && !isDraft
+    isRebasable: pullReqMetadata?.merge_target_sha !== pullReqMetadata?.merge_base_sha && !pullReqMetadata?.merged
   }
 }
 
@@ -234,6 +314,7 @@ export interface PullRequestPanelProps
     Partial<PullRequestRoutingProps> {
   handleRebaseBranch: () => void
   handlePrState: (state: string) => void
+  handleViewUnresolvedComments: () => void
   pullReqMetadata?: TypesPullReq
   checks?: TypesPullReqCheck[]
   checksInfo: { header: string; content: string; status: EnumCheckStatus }
@@ -259,6 +340,7 @@ export interface PullRequestPanelProps
   setMergeTitle: (title: string) => void
   setMergeMessage: (message: string) => void
   isMerging?: boolean
+  isRebasing?: boolean
   onMergeMethodSelect?: (method: string) => void
 }
 
@@ -286,6 +368,7 @@ const PullRequestPanel = ({
   onCommitSuggestions,
   handlePrState,
   handleRebaseBranch,
+  handleViewUnresolvedComments,
   prPanelData,
   spaceId,
   repoId,
@@ -296,6 +379,7 @@ const PullRequestPanel = ({
   setMergeTitle,
   setMergeMessage,
   isMerging,
+  isRebasing,
   onMergeMethodSelect,
   ...routingProps
 }: PullRequestPanelProps) => {
@@ -317,32 +401,42 @@ const PullRequestPanel = ({
 
   const handleMergeTypeSelect = (value: string) => {
     const selectedAction = actions[parseInt(value)]
-    if (selectedAction.title === 'Squash and merge') {
-      setMergeMessage(
-        pullReqCommits?.commits
-          ?.map(commit => `* ${commit?.sha?.substring(0, 6)} ${commit?.title}`)
-          .join('\n\n')
-          ?.slice(0, 1000) ?? ''
-      )
-      onMergeMethodSelect?.('squash')
-    } else if (selectedAction.title === 'Merge pull request') {
-      setMergeMessage('')
-      onMergeMethodSelect?.('merge')
-    } else if (selectedAction.title === 'Rebase and merge') {
-      setMergeMessage('')
-      onMergeMethodSelect?.('rebase')
-    } else if (selectedAction.title === 'Fast-forward merge') {
-      setMergeMessage('')
-      onMergeMethodSelect?.('fast-forward')
-    }
-
-    setShowActionBtn(true)
+    const strategy = getMergeStrategyFromTitle(selectedAction.title)
+    const mergeActionTitles = new Set(Object.values(MERGE_METHOD_TITLES))
+    const isMergeAction = mergeActionTitles.has(selectedAction.title)
     setMergeButtonValue(value)
-    if (selectedAction.title === 'Merge pull request' || selectedAction.title === 'Squash and merge') {
-      setShowMergeInputs(true)
-    } else {
-      setShowMergeInputs(false)
+    if (!isMergeAction) {
+      return
     }
+    setShowActionBtn(true)
+
+    switch (strategy) {
+      case MergeStrategy.SQUASH:
+        setMergeMessage(
+          pullReqCommits?.commits
+            ?.map(commit => `* ${commit?.sha?.substring(0, 6)} ${commit?.title}`)
+            .join('\n\n')
+            ?.slice(0, 1000) ?? ''
+        )
+        onMergeMethodSelect?.(MergeStrategy.SQUASH)
+        break
+      case MergeStrategy.MERGE:
+        setMergeMessage('')
+        onMergeMethodSelect?.(MergeStrategy.MERGE)
+        break
+      case MergeStrategy.REBASE:
+        setMergeMessage('')
+        onMergeMethodSelect?.(MergeStrategy.REBASE)
+        break
+      case MergeStrategy.FAST_FORWARD:
+        setMergeMessage('')
+        onMergeMethodSelect?.(MergeStrategy.FAST_FORWARD)
+        break
+      default:
+        break
+    }
+    const showInputs = strategy === MergeStrategy.MERGE || strategy === MergeStrategy.SQUASH
+    setShowMergeInputs(!!showInputs)
   }
 
   const handleCancelMerge = () => {
@@ -356,10 +450,26 @@ const PullRequestPanel = ({
     setShowMergeInputs(false)
     setShowActionBtn(false)
     setMergeInitiated(true)
+
     const actionIdx = actions.findIndex(action => action.id === mergeButtonValue)
     if (actionIdx !== -1) {
       actions[actionIdx]?.action?.()
     }
+  }
+
+  // Check if Fast-Forward merge should be disabled
+  const shouldDisableFastForwardMerge = () => {
+    const selectedAction = actions[parseInt(mergeButtonValue || '0')]
+    const isRebasable =
+      pullReqMetadata?.merge_target_sha !== pullReqMetadata?.merge_base_sha && !pullReqMetadata?.merged
+    const isFastForwardSelected = getMergeStrategyFromTitle(selectedAction?.title) === MergeStrategy.FAST_FORWARD
+    return isFastForwardSelected && isRebasable
+  }
+
+  // To get the selected merge method
+  const getSelectedMergeMethod = () => {
+    const selectedAction = actions[parseInt(mergeButtonValue || '0')]
+    return getMergeStrategyFromTitle(selectedAction?.title)
   }
 
   const handleAccordionValuesChange = useCallback((data: string | string[]) => {
@@ -368,7 +478,7 @@ const PullRequestPanel = ({
     setAccordionValues(data)
   }, [])
 
-  const { isMergeable, isClosed, isOpen, isDraft, isUnchecked, isRebasable, isShowMoreTooltip } =
+  const { isMergeable, isClosed, isOpen, isDraft, isUnchecked, isRebasable } =
     getDataFromPullReqMetadata(pullReqMetadata)
 
   useEffect(() => {
@@ -415,6 +525,15 @@ const PullRequestPanel = ({
     }
   }, [error, mergeInitiated])
 
+  // Reset mergeInitiated when PR state changes (e.g., from draft to open)
+  useEffect(() => {
+    if (mergeInitiated && !isMerging && !pullReqMetadata?.is_draft) {
+      // Reset loading state when PR changes from draft to open (API success)
+      setMergeInitiated(false)
+      setShowActionBtn(false)
+    }
+  }, [mergeInitiated, isMerging, pullReqMetadata?.is_draft])
+
   const buttonState = getButtonState({
     isMergeable,
     ruleViolation: prPanelData.ruleViolation,
@@ -424,35 +543,80 @@ const PullRequestPanel = ({
     canBypass: !notBypassable
   })
 
+  const fastForwardDisabled = shouldDisableFastForwardMerge()
+  const getPrState = (): PrState => {
+    if (pullReqMetadata?.state === PullRequestFilterOption.MERGED) {
+      return PrState.Merged
+    } else if (isClosed && !pullReqMetadata?.merged) {
+      return PrState.Closed
+    } else if (isOpen && isDraft) {
+      return PrState.Draft
+    } else if (isOpen && (!isMergeable || prPanelData.ruleViolation || fastForwardDisabled)) {
+      return PrState.Error
+    } else if (isOpen && !isDraft && !isClosed && isMergeable && !prPanelData.ruleViolation && !fastForwardDisabled) {
+      return PrState.Success
+    } else {
+      return PrState.Ready
+    }
+  }
+
+  const prState = getPrState()
+  const headerRowBgClass = cn({
+    'bg-[var(--cn-set-green-surface-bg)]': prState === PrState.Success,
+    'bg-cn-background-2': prState === PrState.Draft,
+    'bg-label-background-red': prState === PrState.Error,
+    'bg-cn-background-softgray': prState === PrState.Closed,
+    'bg-[var(--cn-set-purple-surface-bg)]': prState === PrState.Merged
+  })
+
+  const headerTitleColorClass = cn({
+    'text-cn-foreground-success': prState === PrState.Success,
+    'text-cn-foreground-danger': prState === PrState.Error
+  })
+
+  const shouldShowConfirmation = actions && !pullReqMetadata?.closed && (showActionBtn || isMerging || mergeInitiated)
+
+  const shouldShowSplitButton =
+    actions?.length > 1 &&
+    !pullReqMetadata?.closed &&
+    !showActionBtn &&
+    !isMerging &&
+    !pullReqMetadata?.merged &&
+    !mergeInitiated
+
+  const shouldShowMoreActions = !shouldShowConfirmation && isOpen
+
   return (
     <>
       <StackedList.Root className="border-cn-borders-3 bg-cn-background-1">
         <StackedList.Item
-          className={cn('items-center py-2 border-cn-borders-3', {
-            'pr-1.5': isShowMoreTooltip
-          })}
+          className={cn('items-center py-2 border-cn-borders-3', { 'pr-1.5': shouldShowMoreActions }, headerRowBgClass)}
           disableHover
         >
           <StackedList.Field
             className={cn({ 'w-full': !pullReqMetadata?.merged })}
             title={
-              <HeaderTitle
-                isDraft={isDraft}
-                isClosed={isClosed}
-                unchecked={isUnchecked}
-                mergeable={isMergeable}
-                isOpen={isOpen}
-                ruleViolation={prPanelData.ruleViolation}
-                pullReqMetadata={pullReqMetadata}
-                onRestoreBranch={onRestoreBranch}
-                onDeleteBranch={onDeleteBranch}
-                onRevertPR={onRevertPR}
-                showRestoreBranchButton={showRestoreBranchButton}
-                showDeleteBranchButton={showDeleteBranchButton}
-                headerMsg={headerMsg}
-                spaceId={spaceId}
-                repoId={repoId}
-              />
+              <div className={headerTitleColorClass}>
+                <HeaderTitle
+                  isDraft={isDraft}
+                  isClosed={isClosed}
+                  unchecked={isUnchecked}
+                  mergeable={isMergeable}
+                  isOpen={isOpen}
+                  ruleViolation={prPanelData.ruleViolation}
+                  pullReqMetadata={pullReqMetadata}
+                  onRestoreBranch={onRestoreBranch}
+                  onDeleteBranch={onDeleteBranch}
+                  onRevertPR={onRevertPR}
+                  showRestoreBranchButton={showRestoreBranchButton}
+                  showDeleteBranchButton={showDeleteBranchButton}
+                  headerMsg={headerMsg}
+                  spaceId={spaceId}
+                  repoId={repoId}
+                  actions={actions}
+                  mergeButtonValue={mergeButtonValue}
+                />
+              </div>
             }
           />
 
@@ -469,6 +633,7 @@ const PullRequestPanel = ({
                         <CounterBadge theme="info">{commitSuggestionsBatchCount}</CounterBadge>
                       </Button>
                     )}
+
                     {!notBypassable && isMergeable && !isDraft && prPanelData.ruleViolation && (
                       <Checkbox
                         className="flex-1"
@@ -484,87 +649,86 @@ const PullRequestPanel = ({
                         truncateLabel={false}
                       />
                     )}
-                    {(() => {
-                      // Only show SplitButton if we're not in any merge-related state
-                      const shouldShowSplitButton =
-                        actions &&
-                        !pullReqMetadata?.closed &&
-                        !showActionBtn &&
-                        !isMerging &&
-                        !pullReqMetadata?.merged &&
-                        !mergeInitiated
-                      return shouldShowSplitButton ? (
-                        <SplitButton
-                          // because of the complex SplitButtonProps type, we need to cast the theme and variant to const
-                          {...(buttonState.variant === 'primary'
-                            ? { theme: 'default' as const, variant: 'primary' as const }
-                            : {
-                                theme: (buttonState.theme || 'default') as 'success' | 'danger' | 'default',
-                                variant: 'outline' as const
-                              })}
-                          disabled={buttonState.disabled}
-                          loading={actions[parseInt(mergeButtonValue)]?.loading}
-                          selectedValue={mergeButtonValue}
-                          handleOptionChange={handleMergeTypeSelect}
-                          options={actions.map(action => ({
+
+                    {/*Only show SplitButton if we're not in any merge-related state*/}
+                    {shouldShowSplitButton && (
+                      <SplitButton
+                        theme={buttonState.variant === 'primary' ? 'default' : (buttonState.theme ?? 'default')}
+                        variant={buttonState.variant}
+                        disabled={buttonState.disabled}
+                        loading={actions[parseInt(mergeButtonValue)]?.loading}
+                        handleOptionChange={handleMergeTypeSelect}
+                        options={actions.map(action => {
+                          return {
                             value: action.id,
                             label: action.title,
                             description: action.description,
                             disabled: action.disabled
-                          }))}
-                          handleButtonClick={() => {
-                            const selectedAction = actions[parseInt(mergeButtonValue)]
-                            if (!selectedAction.disabled) {
+                          }
+                        })}
+                        handleButtonClick={() => {
+                          const selectedAction = actions[parseInt(mergeButtonValue)]
+                          if (!selectedAction.disabled) {
+                            const mergeActionTitles = new Set(Object.values(MERGE_METHOD_TITLES))
+                            const isMergeAction = mergeActionTitles.has(selectedAction.title)
+
+                            if (!isMergeAction) {
+                              selectedAction.action?.()
+                            } else {
                               handleMergeTypeSelect(mergeButtonValue)
                             }
-                          }}
-                        >
-                          {actions[parseInt(mergeButtonValue)].title}
-                        </SplitButton>
-                      ) : null
-                    })()}
+                          }
+                        }}
+                        size="md"
+                      >
+                        {actions[parseInt(mergeButtonValue)].title}
+                      </SplitButton>
+                    )}
+
                     {/* When in merge input mode or merging, show Cancel/Confirm buttons */}
-                    {(() => {
-                      const shouldShowButtonLayout =
-                        actions && !pullReqMetadata?.closed && (showActionBtn || isMerging || mergeInitiated)
-                      return shouldShowButtonLayout ? (
-                        <ButtonLayout>
-                          <Button
-                            variant="outline"
-                            onClick={handleCancelMerge}
-                            loading={cancelInitiated}
-                            disabled={isMerging || mergeInitiated}
-                          >
-                            Cancel
-                          </Button>
-                          <Button
-                            theme="success"
-                            onClick={handleConfirmMerge}
-                            loading={isMerging || mergeInitiated}
-                            disabled={cancelInitiated}
-                          >
-                            Confirm {actions[parseInt(mergeButtonValue || '0')]?.title || 'Merge'}
-                          </Button>
-                        </ButtonLayout>
-                      ) : null
-                    })()}
-                    {actions && pullReqMetadata?.closed ? (
+                    {shouldShowConfirmation && (
+                      <ButtonLayout>
+                        <Button
+                          variant="outline"
+                          onClick={handleCancelMerge}
+                          loading={cancelInitiated}
+                          disabled={isMerging || mergeInitiated}
+                        >
+                          Cancel
+                        </Button>
+                        <Button
+                          theme="success"
+                          onClick={handleConfirmMerge}
+                          loading={isMerging || mergeInitiated}
+                          disabled={cancelInitiated || shouldDisableFastForwardMerge()}
+                        >
+                          Confirm {actions[parseInt(mergeButtonValue || '0')]?.title || 'Merge'}
+                        </Button>
+                      </ButtonLayout>
+                    )}
+
+                    {actions?.length === 1 && (
                       <Button variant="primary" theme="default" onClick={actions[0].action}>
                         {actions[0].title}
                       </Button>
-                    ) : null}
-                    {isShowMoreTooltip && (
+                    )}
+
+                    {shouldShowMoreActions && (
                       <MoreActionsTooltip
                         className="!ml-2"
                         iconName="more-horizontal"
-                        sideOffset={-8}
-                        alignOffset={2}
+                        sideOffset={4}
+                        alignOffset={0}
                         actions={[
-                          {
-                            title: 'Mark as draft',
-                            onClick: () => handlePrState('draft'),
-                            iconName: 'page-edit'
-                          },
+                          ...(!isDraft
+                            ? [
+                                {
+                                  title: 'Mark as draft',
+                                  onClick: () => handlePrState('draft'),
+                                  iconName: 'page-edit' as const
+                                }
+                              ]
+                            : []),
                           {
                             title: 'Close pull request',
                             onClick: () => handlePrState('closed'),
@@ -586,24 +750,26 @@ const PullRequestPanel = ({
                 }
               />
               {showMergeInputs && (
-                <Layout.Vertical className="mt-4 w-full items-center">
-                  <Layout.Vertical className="w-full gap-4">
-                    <Input
+                <Layout.Vertical className="mt-2 w-full items-center pr-cn-xs pb-cn-xs">
+                  <Layout.Vertical className="w-full gap-1 rounded-md border border-cn-borders-3 bg-cn-background-1 p-3">
+                    <TextInput
                       id="merge-title"
-                      label="Commit Message"
+                      label="Commit message"
                       className="w-full bg-cn-background-1"
                       value={mergeTitle}
-                      onChange={e => setMergeTitle(e.target.value)}
+                      onChange={(e: React.ChangeEvent<HTMLInputElement>) => setMergeTitle(e.target.value)}
                       optional
                       placeholder="Enter commit message (optional)"
                     />
                     <Textarea
                       id="merge-message"
-                      label="Commit Description"
-                      className="w-full"
+                      label="Commit description"
+                      className="w-full bg-cn-background-1"
                       value={mergeMessage}
-                      onChange={e => setMergeMessage(e.target.value)}
+                      onChange={(e: React.ChangeEvent<HTMLTextAreaElement>) => setMergeMessage(e.target.value)}
                       optional
+                      resizable
+                      rows={5}
                       placeholder="Enter commit description (optional)"
                     />
                   </Layout.Vertical>
@@ -633,11 +799,17 @@ const PullRequestPanel = ({
                   changeReqReviewer={changeReqReviewer}
                   codeOwnersData={codeOwnersData}
                   defaultReviewersData={defaultReviewersData}
+                  pullReqMetadata={pullReqMetadata}
                 />
               )}
 
               {(!!prPanelData?.resolvedCommentArr || prPanelData.requiresCommentApproval) &&
-                !pullReqMetadata?.merged && <PullRequestCommentSection commentsInfo={prPanelData.commentsInfoData} />}
+                !pullReqMetadata?.merged && (
+                  <PullRequestCommentSection
+                    commentsInfo={prPanelData.commentsInfoData}
+                    handleAction={handleViewUnresolvedComments}
+                  />
+                )}
 
               <PullRequestCheckSection
                 {...routingProps}
@@ -654,6 +826,9 @@ const PullRequestPanel = ({
                   conflictingFiles={prPanelData.conflictingFiles}
                   accordionValues={accordionValues}
                   setAccordionValues={setAccordionValues}
+                  handleRebaseBranch={handleRebaseBranch}
+                  isRebasing={isRebasing}
+                  selectedMergeMethod={getSelectedMergeMethod()}
                 />
               )}
             </Accordion.Root>
@@ -672,12 +847,14 @@ const PullRequestPanel = ({
                 <span className="text-2 text-cn-foreground-1"> branch has unmerged changes.</span>
               </Layout.Horizontal>
               {showDeleteBranchButton && (
-                <Button theme="danger" onClick={onDeleteBranch}>
+                <Button theme="danger" size="sm" onClick={onDeleteBranch}>
                   Delete Branch
                 </Button>
               )}
               {!showDeleteBranchButton && showRestoreBranchButton && (
-                <Button onClick={onRestoreBranch}>Restore Branch</Button>
+                <Button size="sm" onClick={onRestoreBranch}>
+                  Restore Branch
+                </Button>
               )}
             </Layout.Horizontal>
           )}

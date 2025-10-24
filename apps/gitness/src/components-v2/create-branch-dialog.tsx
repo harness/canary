@@ -1,6 +1,6 @@
 import { useCallback, useEffect, useState } from 'react'
 
-import { useCreateBranchMutation } from '@harnessio/code-service-client'
+import { useCreateBranchMutation, UsererrorError } from '@harnessio/code-service-client'
 import {
   BranchSelectorListItem,
   BranchSelectorTab,
@@ -9,6 +9,7 @@ import {
 } from '@harnessio/ui/views'
 
 import { useGetRepoRef } from '../framework/hooks/useGetRepoPath'
+import { useRuleViolationCheck } from '../framework/hooks/useRuleViolationCheck'
 import { BranchSelectorContainer } from './branch-selector-container'
 
 interface CreateBranchDialogProps {
@@ -31,43 +32,65 @@ export const CreateBranchDialog = ({
   onBranchQueryChange
 }: CreateBranchDialogProps) => {
   const repo_ref = useGetRepoRef()
+  const [error, setError] = useState<UsererrorError>()
+  const [selectedBranchOrTag, setSelectedBranchOrTag] = useState<BranchSelectorListItem>()
+  const { violation, bypassable, bypassed, setAllStates, resetViolation } = useRuleViolationCheck()
 
-  const [selectedBranchOrTag, setSelectedBranchOrTag] = useState<BranchSelectorListItem | null>(null)
-
-  const selectBranchOrTag = useCallback((branchTagName: BranchSelectorListItem) => {
+  const selectBranchOrTag = useCallback((branchTagName: BranchSelectorListItem, _type: BranchSelectorTab) => {
     setSelectedBranchOrTag(branchTagName)
   }, [])
 
+  const handleMutationSuccess = useCallback(() => {
+    setError(undefined)
+    resetViolation()
+    onClose()
+    onSuccess?.()
+  }, [onClose, onSuccess, resetViolation])
+
+  const handleMutationError = useCallback(
+    (err: any) => {
+      if (err?.violations?.length > 0) {
+        setAllStates({
+          violation: true,
+          bypassed: true,
+          bypassable: err?.violations[0]?.bypassable
+        })
+      } else {
+        setError(err as UsererrorError)
+      }
+    },
+    [setAllStates]
+  )
+
   const {
     mutateAsync: createBranch,
-    error: createBranchError,
     isLoading: isCreatingBranch,
     reset: resetBranchMutation
-  } = useCreateBranchMutation(
-    {},
-    {
-      onSuccess: () => {
-        onClose()
-        onSuccess?.()
-      }
-    }
-  )
+  } = useCreateBranchMutation({}, { onSuccess: handleMutationSuccess, onError: handleMutationError })
 
   const handleCreateBranch = async (data: CreateBranchFormFields) => {
     onBranchQueryChange?.(data.name)
+    setError(undefined)
+    resetViolation()
     await createBranch({
       repo_ref,
       body: {
-        ...data
+        ...data,
+        bypass_rules: bypassed
       }
     })
   }
 
   useEffect(() => {
-    if (!open) {
+    if (open) {
+      setError(undefined)
+      resetViolation()
+    } else {
       resetBranchMutation()
+      setError(undefined)
+      resetViolation()
     }
-  }, [open, resetBranchMutation])
+  }, [open])
 
   useEffect(() => {
     if (preselectedBranchOrTag) {
@@ -82,11 +105,15 @@ export const CreateBranchDialog = ({
       selectedBranchOrTag={selectedBranchOrTag}
       onSubmit={handleCreateBranch}
       isCreatingBranch={isCreatingBranch}
-      error={createBranchError?.message}
+      error={error?.message}
       prefilledName={prefilledName}
+      violation={violation}
+      bypassable={bypassable}
+      resetViolation={resetViolation}
       renderProp={
         <BranchSelectorContainer
           onSelectBranchorTag={selectBranchOrTag}
+          className={'branch-selector-trigger-as-input'}
           selectedBranch={selectedBranchOrTag}
           preSelectedTab={preselectedTab}
           dynamicWidth

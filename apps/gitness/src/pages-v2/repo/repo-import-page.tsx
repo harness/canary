@@ -5,6 +5,7 @@ import { ImportRepoFormFields, RepoImportPage as RepoImportPageView } from '@har
 
 import { useRoutes } from '../../framework/context/NavigationContext'
 import { useGetSpaceURLParam } from '../../framework/hooks/useGetSpaceParam'
+import { useRepoImportWithPubSub } from '../../framework/hooks/useRepoImportWithPubSub'
 import { getRepoProviderConfig, PROVIDER_TYPE_MAP } from './constants/import-providers-map'
 import { useRepoStore } from './stores/repo-list-store'
 
@@ -14,6 +15,7 @@ export const ImportRepo = () => {
   const navigate = useNavigate()
   const { mutate: importRepoMutation, error, isLoading } = useImportRepositoryMutation({})
   const { setImportRepoIdentifier } = useRepoStore()
+  useRepoImportWithPubSub()
 
   const onSubmit = async (data: ImportRepoFormFields) => {
     setImportRepoIdentifier(data.identifier)

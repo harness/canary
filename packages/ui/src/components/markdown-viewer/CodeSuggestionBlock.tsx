@@ -5,9 +5,6 @@ import hljs from 'highlight.js'
 export interface SuggestionBlock {
   source: string
   lang?: string
-  commentId?: number
-  appliedCheckSum?: string
-  appliedCommitSha?: string
 }
 
 export interface Suggestion {
@@ -35,13 +32,15 @@ export function CodeSuggestionBlock({ code, suggestionBlock }: CodeSuggestionBlo
   }, [code, language])
 
   return (
-    <div className="pt-1">
-      <pre className="!bg-cn-background-diff-danger">
-        <code className={`${language} code-highlight`} dangerouslySetInnerHTML={{ __html: highlightedHtmlOld }}></code>
-      </pre>
-      <pre className="!bg-cn-background-diff-success">
-        <code className={`${language} code-highlight`} dangerouslySetInnerHTML={{ __html: highlightedHtmlNew }}></code>
-      </pre>
-    </div>
+    <>
+      <code
+        className={`${language} code-highlight !bg-cn-background-diff-danger !pl-cn-md`}
+        dangerouslySetInnerHTML={{ __html: highlightedHtmlOld }}
+      />
+      <code
+        className={`${language} code-highlight !bg-cn-background-diff-success !pl-cn-md`}
+        dangerouslySetInnerHTML={{ __html: highlightedHtmlNew }}
+      />
+    </>
   )
 }

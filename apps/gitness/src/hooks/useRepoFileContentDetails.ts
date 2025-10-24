@@ -10,6 +10,7 @@ import { getTrimmedSha, normalizeGitRef } from '../utils/git-utils'
 interface UseRepoContentDetailsProps {
   repoRef: string
   fullGitRef: string
+  fullResourcePath: string
   pathToTypeMap: Map<string, OpenapiGetContentOutput['type']>
   spaceId?: string
   repoId?: string
@@ -20,29 +21,34 @@ interface UseRepoContentDetailsProps {
 interface UseRepoContentDetailsResult {
   files: RepoFile[]
   loading: boolean
+  loadMetadataForPaths: (paths: string[]) => Promise<void>
+  scheduleFileMetaFetch: (paths: string[]) => void
 }
 
+export const BATCH_OVERFLOW_TIMEOUT_DELAY = 200
+export const METADETA_FETCH_DELAY = 500
+
 /**
- * fetch and process repository content details using batch processing
+ * show files immediately and load metadata lazily
  */
 export const useRepoFileContentDetails = ({
   repoRef,
   fullGitRef,
+  fullResourcePath,
   pathToTypeMap,
   spaceId,
-  repoId,
-  batchSize = 20,
-  throttleDelay = 300
+  repoId
 }: UseRepoContentDetailsProps): UseRepoContentDetailsResult => {
   const [files, setFiles] = useState<RepoFile[]>([])
   const [loading, setLoading] = useState(false)
   const routes = useRoutes()
 
-  // Track whether this is the first render to avoid unnecessary API calls on remounts
-  const isFirstRender = useRef(true)
+  // files that already have metadata loaded
+  const metadataLoadedRef = useRef(new Set<string>())
 
-  // Previous props to detect actual changes
-  const prevPropsRef = useRef({ repoRef, fullGitRef, pathMapSize: pathToTypeMap.size })
+  // Batching and throttling refs
+  const pendingPathsRef = useRef(new Set<string>())
+  const throttleTimeoutRef = useRef<ReturnType<typeof setTimeout> | null>(null)
 
   // convert content type to summary item type
   const getSummaryItemType = useCallback((type: OpenapiGetContentOutput['type']): SummaryItemType => {
@@ -76,61 +82,45 @@ export const useRepoFileContentDetails = ({
     return sortPathsByType(Array.from(pathToTypeMap.keys()), filteredMap)
   }, [pathToTypeMap, filteredMap])
 
-  const createFileObject = useCallback(
-    (path: string, item: TypesPathDetails): RepoFile => ({
+  // Creates file object with basic info (no metadata)
+  const createBasicFileObject = useCallback(
+    (path: string): RepoFile => ({
       id: path,
       type: getSummaryItemType(pathToTypeMap.get(path)),
       name: getLastPathSegment(path) || path,
-      lastCommitMessage: item?.last_commit?.message || '',
-      timestamp: item?.last_commit?.author?.when ?? '',
-      user: { name: item?.last_commit?.author?.identity?.name || '' },
-      sha: item?.last_commit?.sha && getTrimmedSha(item.last_commit.sha),
+      lastCommitMessage: '',
+      timestamp: '',
+      user: undefined,
+      sha: undefined,
       path: routes.toRepoFiles({ spaceId, repoId, '*': `${fullGitRef || ''}/~/${path}` })
     }),
     [pathToTypeMap, getSummaryItemType, getLastPathSegment, routes, spaceId, repoId, fullGitRef]
   )
 
-  useEffect(() => {
-    // If there are no paths to process, skip processing
-    if (!pathToTypeMap.size) {
-      return
-    }
+  // Creates file object with metadata
+  const createFileObjectWithMetadata = useCallback(
+    (item: TypesPathDetails): Partial<RepoFile> => ({
+      lastCommitMessage: item?.last_commit?.message || '',
+      timestamp: item?.last_commit?.author?.when ?? '',
+      user: { name: item?.last_commit?.author?.identity?.name || '' },
+      sha: item?.last_commit?.sha && getTrimmedSha(item.last_commit.sha)
+    }),
+    []
+  )
 
-    // Check if props actually changed
-    const prevProps = prevPropsRef.current
-    const propsChanged =
-      prevProps.repoRef !== repoRef ||
-      prevProps.fullGitRef !== fullGitRef ||
-      prevProps.pathMapSize !== pathToTypeMap.size
+  // load metadata for specific file paths
+  const loadMetadataForPaths = useCallback(
+    async (paths: string[]) => {
+      if (!paths.length || !repoRef || !fullGitRef) return
 
-    prevPropsRef.current = { repoRef, fullGitRef, pathMapSize: pathToTypeMap.size }
-
-    // Skip API call if this is a re-render with the same props
-    if (!isFirstRender.current && !propsChanged) {
-      return
-    }
-
-    isFirstRender.current = false
-
-    setLoading(true)
-
-    // Track processed files to avoid duplicates
-    const processedFilesSet = new Set<string>()
-    let timeoutId: ReturnType<typeof setTimeout> | null = null
-
-    const processBatch = async (startIndex: number, isFirstBatch: boolean = false) => {
-      // If we've processed all paths, we're done
-      if (startIndex >= allPaths.length) {
-        return
-      }
-
-      // Get the next batch of paths
-      const batchPaths = allPaths.slice(startIndex, startIndex + batchSize)
+      // Filter out paths that already have metadata
+      const pathsToLoad = paths.filter(path => !metadataLoadedRef.current.has(path))
+      if (!pathsToLoad.length) return
 
       try {
         const { body: response } = await pathDetails({
           queryParams: { git_ref: normalizeGitRef(fullGitRef || '') },
-          body: { paths: batchPaths },
+          body: { paths: pathsToLoad },
           repo_ref: repoRef
         })
 
@@ -140,64 +130,113 @@ export const useRepoFileContentDetails = ({
           response.details.forEach(detail => {
             if (detail.path) {
               detailsMap.set(detail.path, detail)
+              metadataLoadedRef.current.add(detail.path)
             }
           })
 
-          // Process paths in order from the pre-sorted batch
-          const newFiles: RepoFile[] = []
-          for (const path of batchPaths) {
-            // Skip if already processed or not found in response
-            if (processedFilesSet.has(path) || !detailsMap.has(path)) continue
-
-            // Mark as processed
-            processedFilesSet.add(path)
-
-            // Get the details for this path
-            const item = detailsMap.get(path)!
-            newFiles.push(createFileObject(path, item))
-          }
-
-          // Update the files state
-          setFiles(prevFiles => [...prevFiles, ...newFiles])
-
-          // Set loading to false after the first batch is processed
-          if (isFirstBatch) {
-            setLoading(false)
-          }
-        } else if (isFirstBatch) {
-          // If first batch has no results, still set loading to false
-          setLoading(false)
+          // Update files with metadata
+          setFiles(prevFiles =>
+            prevFiles.map(file => {
+              if (pathsToLoad.includes(file.id) && detailsMap.has(file.id)) {
+                const metadata = createFileObjectWithMetadata(detailsMap.get(file.id)!)
+                return { ...file, ...metadata }
+              }
+              return file
+            })
+          )
         }
-
-        // Process the next batch with throttling
-        timeoutId = setTimeout(() => {
-          processBatch(startIndex + batchSize, false)
-        }, throttleDelay)
       } catch (error) {
-        console.error('Error fetching path details:', error)
+        console.error('Error loading metadata for paths:', paths, error)
+      }
+    },
+    [repoRef, fullGitRef, createFileObjectWithMetadata]
+  )
 
-        // If this was the first batch, set loading to false even on error
-        if (isFirstBatch) {
-          setLoading(false)
+  // Batch and throttle metadata loading
+  const scheduleFileMetaFetch = useCallback(
+    (newPaths: string[]) => {
+      if (!loadMetadataForPaths || newPaths.length === 0) return
+
+      // Add new paths to pending set
+      newPaths.forEach(path => pendingPathsRef.current.add(path))
+
+      // Clear existing timeout
+      if (throttleTimeoutRef.current) {
+        clearTimeout(throttleTimeoutRef.current)
+      }
+
+      const currentPendingCount = pendingPathsRef.current.size
+      const batchSize = 20
+
+      // If full batch (20 files), process immediately otherwise, throttle with 500ms delay
+      const throttleDelay = currentPendingCount >= batchSize ? 0 : METADETA_FETCH_DELAY
+
+      // Schedule batched load after throttle delay
+      throttleTimeoutRef.current = setTimeout(() => {
+        const pathsToLoad = Array.from(pendingPathsRef.current)
+        pendingPathsRef.current.clear()
+
+        if (pathsToLoad.length === 0) return
+
+        // Process in batches of 20 (API limit)
+        const processBatch = async (startIndex: number) => {
+          if (startIndex >= pathsToLoad.length) return
+
+          const batch = pathsToLoad.slice(startIndex, startIndex + batchSize)
+
+          try {
+            await loadMetadataForPaths(batch)
+          } catch (error) {
+            console.error('Failed to load metadata batch:', error)
+          }
+
+          // Process next batch with a small delay to avoid overwhelming the API
+          if (startIndex + batchSize < pathsToLoad.length) {
+            setTimeout(() => processBatch(startIndex + batchSize), BATCH_OVERFLOW_TIMEOUT_DELAY)
+          }
         }
 
-        // Even if there's an error, try to process the next batch (with throttling)
-        timeoutId = setTimeout(() => {
-          processBatch(startIndex + batchSize, false)
-        }, throttleDelay)
-      }
-    }
+        processBatch(0)
+      }, throttleDelay)
+    },
+    [loadMetadataForPaths]
+  )
 
-    setFiles([])
-    processBatch(0, true)
+  // Initialize files immediately when pathToTypeMap changes
+  useEffect(() => {
+    const shouldUpdateFiles = pathToTypeMap.size > 0
+
+    if (shouldUpdateFiles) {
+      setLoading(true)
+
+      // Create basic file objects immediately
+      const basicFiles = allPaths.map(path => createBasicFileObject(path))
+      setFiles(basicFiles)
+
+      // Clear metadata cache for new repo/ref
+      metadataLoadedRef.current.clear()
+
+      // Set loading to false immediately since we're showing files
+      setLoading(false)
+    } else if (pathToTypeMap.size === 0) {
+      // No files to show
+      setFiles([])
+      setLoading(false)
+      metadataLoadedRef.current.clear()
+    }
 
     return () => {
-      if (timeoutId) {
-        clearTimeout(timeoutId)
+      if (throttleTimeoutRef.current) {
+        clearTimeout(throttleTimeoutRef.current)
       }
-      setLoading(false)
+      pendingPathsRef.current.clear()
     }
-  }, [createFileObject, allPaths, repoRef, fullGitRef])
+  }, [pathToTypeMap, allPaths, createBasicFileObject, repoRef, fullGitRef, fullResourcePath])
 
-  return { files, loading }
+  return {
+    files,
+    loading,
+    loadMetadataForPaths,
+    scheduleFileMetaFetch
+  }
 }

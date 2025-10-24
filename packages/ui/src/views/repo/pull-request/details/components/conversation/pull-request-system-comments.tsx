@@ -1,6 +1,6 @@
 import { FC, useMemo } from 'react'
 
-import { Avatar, CommitCopyActions, IconPropsV2, IconV2, Tag, Text, TimeAgoCard } from '@/components'
+import { Avatar, BranchTag, CommitCopyActions, IconPropsV2, IconV2, Tag, Text, TimeAgoCard } from '@/components'
 import { useRouterContext } from '@/context'
 import {
   ColorsEnum,
@@ -16,7 +16,6 @@ import {
 import { TypesPullReq } from '@views/repo/pull-request/pull-request.types'
 import { noop } from 'lodash-es'
 
-import PullRequestBranchBadge from './pull-request-branch-badge'
 import PullRequestTimelineItem, { TimelineItemProps } from './pull-request-timeline-item'
 
 const labelActivityToTitleDict: Record<LabelActivity, string> = {
@@ -148,19 +147,11 @@ const PullRequestSystemComments: FC<SystemCommentProps> = ({
                 <Text variant="body-single-line-normal" color="foreground-3">
                   {merge_method === MergeStrategy.REBASE ? 'rebased changes from branch' : 'merged changes from'}
                 </Text>
-                <PullRequestBranchBadge
-                  branchName={pullReqMetadata?.source_branch as string}
-                  spaceId={spaceId}
-                  repoId={repoId}
-                />
+                <BranchTag branchName={pullReqMetadata?.source_branch as string} spaceId={spaceId} repoId={repoId} />
                 <Text variant="body-single-line-normal" color="foreground-3">
                   into
                 </Text>
-                <PullRequestBranchBadge
-                  branchName={pullReqMetadata?.target_branch as string}
-                  spaceId={spaceId}
-                  repoId={repoId}
-                />
+                <BranchTag branchName={pullReqMetadata?.target_branch as string} spaceId={spaceId} repoId={repoId} />
                 <Text variant="body-single-line-normal" color="foreground-3">
                   {merge_method === MergeStrategy.REBASE ? ', now at ' : 'by commit'}
                 </Text>
@@ -235,9 +226,7 @@ const PullRequestSystemComments: FC<SystemCommentProps> = ({
                 <Text variant="body-single-line-normal" color="foreground-3">
                   {isSourceBranchDeleted ? 'deleted the' : 'restored the'}
                 </Text>
-                {!!sourceBranch && (
-                  <PullRequestBranchBadge branchName={sourceBranch} spaceId={spaceId} repoId={repoId} />
-                )}
+                {!!sourceBranch && <BranchTag branchName={sourceBranch} spaceId={spaceId} repoId={repoId} />}
                 <Text variant="body-single-line-normal" color="foreground-3">
                   branch
                 </Text>
@@ -295,7 +284,7 @@ const PullRequestSystemComments: FC<SystemCommentProps> = ({
               </>
             )
           },
-          icon: <IconV2 name="edit-pencil" size="xs" className="p-0.5" />
+          icon: <IconV2 name="edit-pencil" size="xs" />
         }
 
       case CommentType.REVIEW_DELETE: {
@@ -322,7 +311,7 @@ const PullRequestSystemComments: FC<SystemCommentProps> = ({
               </>
             )
           },
-          icon: <IconV2 name="edit-pencil" size="xs" className="p-0.5" />
+          icon: <IconV2 name="edit-pencil" size="xs" />
         }
       }
 
@@ -352,7 +341,7 @@ const PullRequestSystemComments: FC<SystemCommentProps> = ({
               </Text>
             )
           },
-          icon: <IconV2 name="eye" size="xs" className="p-0.5" />
+          icon: <IconV2 name="eye" size="xs" />
         }
       }
 
@@ -381,7 +370,7 @@ const PullRequestSystemComments: FC<SystemCommentProps> = ({
               </>
             )
           },
-          icon: <IconV2 name="edit-pencil" size="xs" className="p-0.5" />
+          icon: <IconV2 name="edit-pencil" size="xs" />
         }
       }
 

@@ -8,7 +8,7 @@ import { cva, type VariantProps } from 'class-variance-authority'
 import { IconV2 } from './icon-v2'
 import { Tooltip, TooltipProps } from './tooltip'
 
-const avatarVariants = cva('cn-avatar', {
+export const avatarVariants = cva('cn-avatar', {
   variants: {
     size: {
       md: '',

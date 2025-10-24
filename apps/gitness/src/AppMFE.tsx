@@ -1,6 +1,6 @@
-import { useEffect, useMemo, useRef } from 'react'
+import { useEffect, useRef } from 'react'
 import { I18nextProvider } from 'react-i18next'
-import { createBrowserRouter, matchPath, RouterProvider, useLocation, useNavigate } from 'react-router-dom'
+import { createBrowserRouter, RouterProvider } from 'react-router-dom'
 
 import { QueryClientProvider } from '@tanstack/react-query'
 
@@ -10,70 +10,18 @@ import { PortalProvider, TranslationProvider } from '@harnessio/ui/context'
 
 import ShadowRootWrapper from './components-v2/shadow-root-wrapper'
 import { ExitConfirmProvider } from './framework/context/ExitConfirmContext'
-import { IMFEContext, MFEContext } from './framework/context/MFEContext'
+import { MFEContext, MFEContextProps } from './framework/context/MFEContext'
 import { NavigationProvider } from './framework/context/NavigationContext'
 import { ThemeProvider, useThemeStore } from './framework/context/ThemeContext'
 import { queryClient } from './framework/queryClient'
-import { extractRedirectRouteObjects } from './framework/routing/utils'
 import { useLoadMFEStyles } from './hooks/useLoadMFEStyles'
 import i18n from './i18n/i18n'
 import { useTranslationStore } from './i18n/stores/i18n-store'
-import { mfeRoutes, repoRoutes } from './routes'
-import { decodeURIComponentIfValid } from './utils/path-utils'
+import { getMFERoutes } from './routes'
 
-export interface MFERouteRendererProps {
-  renderUrl: string
-  parentLocationPath: string
-  onRouteChange: (updatedLocationPathname: string) => void
-}
-
-const filteredRedirectRoutes = extractRedirectRouteObjects(repoRoutes)
-const isRouteNotMatchingRedirectRoutes = (pathToValidate: string) => {
-  return filteredRedirectRoutes.every(route => !matchPath(`/${route.path}` as string, pathToValidate))
-}
-
-function MFERouteRenderer({ renderUrl, parentLocationPath, onRouteChange }: MFERouteRendererProps) {
-  const navigate = useNavigate()
-  const location = useLocation()
-  const parentPath = parentLocationPath.replace(renderUrl, '')
-  const isNotRedirectPath = isRouteNotMatchingRedirectRoutes(location.pathname)
-
-  /**
-   * renderUrl ==> base URL of parent application
-   * parentPath ==> path name of parent application after base URL
-   * location.pathname ==> path name of MFE
-   * isNotRedirectPath ==> check if the current path is not a redirect path
-   */
-  const canNavigate = useMemo(
-    () =>
-      renderUrl &&
-      decodeURIComponentIfValid(parentPath) !== decodeURIComponentIfValid(location.pathname) &&
-      isNotRedirectPath,
-    [isNotRedirectPath, location.pathname, parentPath, renderUrl]
-  )
-
-  // Handle location change detected from parent route
-  useEffect(() => {
-    if (canNavigate) {
-      navigate(decodeURIComponentIfValid(parentPath), { replace: true })
-    }
-  }, [parentPath])
-
-  // Notify parent about route change
-  useEffect(() => {
-    if (canNavigate) {
-      onRouteChange?.(decodeURIComponentIfValid(`${renderUrl}${location.pathname}`))
-    }
-  }, [location.pathname])
-
-  return null
-}
-
-interface AppMFEProps extends IMFEContext {
+interface AppMFEProps extends MFEContextProps {
   on401?: () => void
   useMFEThemeContext: () => { theme: string; setTheme: (newTheme: string) => void }
-  parentLocationPath: string
-  onRouteChange: (updatedLocationPathname: string) => void
 }
 
 function decode<T = unknown>(arg: string): T {
@@ -91,6 +39,7 @@ export default function AppMFE({
   customHooks,
   customUtils,
   routes,
+  routeUtils,
   hooks
 }: AppMFEProps) {
   new CodeServiceAPIClient({
@@ -137,16 +86,13 @@ export default function AppMFE({
   // Router Configuration
   const basename = `/ng${renderUrl}`
 
-  const routesToRender = mfeRoutes(
-    scope.projectIdentifier,
-    <MFERouteRenderer renderUrl={renderUrl} onRouteChange={onRouteChange} parentLocationPath={parentLocationPath} />
-  )
+  const mfeRoutes = getMFERoutes(scope.projectIdentifier)
 
-  const router = createBrowserRouter(routesToRender, { basename })
+  const router = createBrowserRouter(mfeRoutes, { basename })
   const { t } = useTranslationStore()
 
   return (
-    <div ref={shadowRef}>
+    <div ref={shadowRef} id="code-mfe-root">
       <ShadowRootWrapper>
         {/* Radix UI elements need to be rendered inside the following div with the theme class */}
         <div className={theme.toLowerCase()} ref={portalRef}>
@@ -163,8 +109,11 @@ export default function AppMFE({
                   customHooks,
                   customUtils,
                   routes,
+                  routeUtils,
                   hooks,
-                  setMFETheme
+                  setMFETheme,
+                  parentLocationPath,
+                  onRouteChange
                 }}
               >
                 <I18nextProvider i18n={i18n}>
@@ -174,7 +123,7 @@ export default function AppMFE({
                         <Toast.Provider>
                           <TooltipProvider>
                             <ExitConfirmProvider>
-                              <NavigationProvider routes={routesToRender}>
+                              <NavigationProvider routes={mfeRoutes}>
                                 <RouterProvider router={router} />
                               </NavigationProvider>
                             </ExitConfirmProvider>

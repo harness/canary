@@ -113,6 +113,7 @@ import CollapseCode from './icons/collapse-code.svg'
 import CollapseSidebar from './icons/collapse-sidebar.svg'
 import Collapse from './icons/collapse.svg'
 import Community from './icons/community.svg'
+import Connect from './icons/connect.svg'
 import ConnectorsSolid from './icons/connectors-solid.svg'
 import Connectors from './icons/connectors.svg'
 import ControlSlider from './icons/control-slider.svg'
@@ -185,6 +186,7 @@ import FilterSolid from './icons/filter-solid.svg'
 import Filter from './icons/filter.svg'
 import Finder from './icons/finder.svg'
 import FingerprintWindow from './icons/fingerprint-window.svg'
+import FlagSolid from './icons/flag-solid.svg'
 import FlashSolid from './icons/flash-solid.svg'
 import Flash from './icons/flash.svg'
 import FolderMinus from './icons/folder-minus.svg'
@@ -590,6 +592,7 @@ export const IconNameMapV2 = {
   'collapse-sidebar': CollapseSidebar,
   collapse: Collapse,
   community: Community,
+  connect: Connect,
   'connectors-solid': ConnectorsSolid,
   connectors: Connectors,
   'control-slider': ControlSlider,
@@ -662,6 +665,7 @@ export const IconNameMapV2 = {
   filter: Filter,
   finder: Finder,
   'fingerprint-window': FingerprintWindow,
+  'flag-solid': FlagSolid,
   'flash-solid': FlashSolid,
   flash: Flash,
   'folder-minus': FolderMinus,

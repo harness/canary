@@ -3,9 +3,9 @@ import { useEffect, useMemo, useState } from 'react'
 import { Button, CounterBadge, DropdownMenu, IconV2, Layout, SplitButton } from '@/components'
 import { useTranslation } from '@/context'
 import { TypesUser } from '@/types'
-import { formatNumber } from '@/utils'
-import { TypesCommit } from '@/views'
+import { ChangedFilesShortInfo, DiffModeOptions, TypesCommit } from '@/views'
 import { DiffModeEnum } from '@git-diff-view/react'
+import { cn } from '@utils/index'
 
 import {
   EnumPullReqReviewDecision,
@@ -19,14 +19,17 @@ import {
   determineOverallDecision,
   getApprovalItems,
   getApprovalStateTheme,
+  getApprovalStateVariant,
   processReviewDecision
 } from '../../pull-request-utils'
+import { ChainedCommitsDropdown } from './chained-commits-dropdown'
 import * as FileViewGauge from './file-viewed-gauge'
 
 export interface CommitFilterItemProps {
   name: string
   count: number
   value: string
+  datetime?: string
 }
 
 export interface PullRequestChangesFilterProps {
@@ -46,12 +49,14 @@ export interface PullRequestChangesFilterProps {
   viewedFiles: number
   commitSuggestionsBatchCount: number
   onCommitSuggestionsBatch: () => void
+  pullReqStats?: TypesPullReqStats
+  showExplorer: boolean
+  setShowExplorer: (value: boolean) => void
   diffData?: {
     filePath: string
     addedLines: number
     deletedLines: number
   }[]
-  pullReqStats?: TypesPullReqStats
   setJumpToDiff: (fileName: string) => void
 }
 
@@ -62,8 +67,8 @@ export const PullRequestChangesFilter: React.FC<PullRequestChangesFilterProps> =
   submitReview,
   refetchReviewers,
   isApproving,
-  // diffMode,
-  // setDiffMode,
+  diffMode,
+  setDiffMode,
   pullReqCommits,
   defaultCommitFilter,
   selectedCommits,
@@ -71,8 +76,10 @@ export const PullRequestChangesFilter: React.FC<PullRequestChangesFilterProps> =
   viewedFiles,
   commitSuggestionsBatchCount,
   onCommitSuggestionsBatch,
-  diffData,
   pullReqStats,
+  showExplorer,
+  setShowExplorer,
+  diffData,
   setJumpToDiff
 }) => {
   const { t } = useTranslation()
@@ -100,7 +107,8 @@ export const PullRequestChangesFilter: React.FC<PullRequestChangesFilterProps> =
         commitsList.push({
           name: commitInfo.message || '',
           count: 0,
-          value: commitInfo.sha || ''
+          value: commitInfo.sha || '',
+          datetime: commitInfo.committer?.when || ''
         })
       })
       setCommitFilterOptions(commitsList)
@@ -143,77 +151,52 @@ export const PullRequestChangesFilter: React.FC<PullRequestChangesFilterProps> =
     }
   }
 
-  /** Click handler to manage multi-selection of commits */
-  const handleCommitCheck = (item: CommitFilterItemProps, checked: boolean): void => {
-    // If user clicked on 'All Commits', reset selection to just the default commit filter
-    if (item.value === defaultCommitFilter.value) {
-      setSelectedCommits([defaultCommitFilter])
-      return
-    }
-
-    setSelectedCommits((prev: CommitFilterItemProps[]) => {
-      // Remove the 'All' option if it exists in the selection
-      const withoutDefault = prev.filter(sel => sel.value !== defaultCommitFilter.value)
-
-      if (checked) {
-        // Add the item to selection
-        return [...withoutDefault, item]
-      } else {
-        // Remove the item from selection, but ensure at least one item remains selected
-        const filtered = withoutDefault.filter(sel => sel.value !== item.value)
-        return filtered.length > 0 ? filtered : withoutDefault
-      }
-    })
-  }
-
-  function renderCommitDropdownItems(items: CommitFilterItemProps[]): JSX.Element[] {
-    return items.map((item, idx) => {
-      const isSelected = selectedCommits.some(sel => sel.value === item.value)
-
-      return (
-        <DropdownMenu.CheckboxItem
-          title={item.name}
-          checked={isSelected}
-          key={idx}
-          onCheckedChange={checked => handleCommitCheck(item, checked)}
-          className="flex cursor-pointer items-center"
-        />
-      )
-    })
-  }
-
-  const commitDropdownItems = renderCommitDropdownItems(commitFilterOptions)
   const itemsToRender = getApprovalItems(approveState, approvalItems)
-  // const handleDiffModeChange = (value: string) => {
-  //   setDiffMode(value === 'Split' ? DiffModeEnum.Split : DiffModeEnum.Unified)
-  // }
+  const handleDiffModeChange = (value: string) => {
+    setDiffMode(value === 'Split' ? DiffModeEnum.Split : DiffModeEnum.Unified)
+  }
 
   return (
-    <Layout.Horizontal align="center" justify="between" className="gap-x-5">
-      <Layout.Horizontal className="grow gap-x-5">
+    <Layout.Horizontal
+      align="center"
+      justify="between"
+      className="layer-high bg-cn-background-1 pt-cn-lg sticky top-[var(--cn-breadcrumbs-height)] gap-x-5 pb-2"
+    >
+      <Layout.Horizontal className="grow gap-x-5" align="center">
+        <Button
+          size="md"
+          title={showExplorer ? 'Collapse Sidebar' : 'Expand Sidebar'}
+          variant="transparent"
+          onClick={() => setShowExplorer(!showExplorer)}
+        >
+          <IconV2 name={showExplorer ? 'collapse-sidebar' : 'expand-sidebar'} size="md" />
+        </Button>
         <DropdownMenu.Root>
           <DropdownMenu.Trigger className="group flex items-center gap-x-1.5">
             <Button size="sm" variant="transparent">
               {selectedCommits[0].value === 'ALL' ? (
                 <>
                   <span>{defaultCommitFilter.name}</span>
-                  <span className="text-cn-foreground-3">({defaultCommitFilter.count})</span>
+                  <CounterBadge>{defaultCommitFilter.count}</CounterBadge>
                 </>
               ) : (
                 <>
                   <span>Commits</span>
-                  <span className="text-cn-foreground-3">({selectedCommits?.length})</span>
+                  <CounterBadge>{selectedCommits?.length}</CounterBadge>
                 </>
               )}
               <IconV2 name="nav-solid-arrow-down" size="2xs" />
             </Button>
           </DropdownMenu.Trigger>
-          <DropdownMenu.Content className="w-96" align="start">
-            {commitDropdownItems}
-          </DropdownMenu.Content>
+          <ChainedCommitsDropdown
+            commitFilterOptions={commitFilterOptions}
+            defaultCommitFilter={defaultCommitFilter}
+            selectedCommits={selectedCommits}
+            setSelectedCommits={setSelectedCommits}
+          />
         </DropdownMenu.Root>
 
-        {/* <DropdownMenu.Root>
+        <DropdownMenu.Root>
           <DropdownMenu.Trigger className="group flex items-center gap-x-1.5 text-2">
             <Button size="sm" variant="transparent">
               {diffMode === DiffModeEnum.Split ? t('views:pullRequests.split') : t('views:pullRequests.unified')}
@@ -233,58 +216,9 @@ export const PullRequestChangesFilter: React.FC<PullRequestChangesFilterProps> =
               />
             ))}
           </DropdownMenu.Content>
-        </DropdownMenu.Root> */}
-
-        <DropdownMenu.Root>
-          <Layout.Horizontal align="center">
-            <p className="text-2 leading-tight text-cn-foreground-2">
-              {t('views:commits.commitDetailsDiffShowing', 'Showing')}{' '}
-              <DropdownMenu.Trigger className="group">
-                <span className="group-hover:decoration-foreground-accent text-cn-foreground-accent underline decoration-transparent underline-offset-4 transition-colors duration-200">
-                  {formatNumber(pullReqStats?.files_changed || 0)}{' '}
-                  {t('views:commits.commitDetailsDiffChangedFiles', 'changed files')}
-                </span>
-              </DropdownMenu.Trigger>{' '}
-              {t('views:commits.commitDetailsDiffWith', 'with')} {formatNumber(pullReqStats?.additions || 0)}{' '}
-              {t('views:commits.commitDetailsDiffAdditionsAnd', 'additions and')}{' '}
-              {formatNumber(pullReqStats?.deletions || 0)} {t('views:commits.commitDetailsDiffDeletions', 'deletions')}
-            </p>
-          </Layout.Horizontal>
-          <DropdownMenu.Content className="max-w-[396px]" align="start">
-            {diffData?.map(diff => (
-              <DropdownMenu.Item
-                key={diff.filePath}
-                onClick={() => {
-                  setJumpToDiff(diff.filePath)
-                }}
-                title={
-                  <Layout.Horizontal align="center" className="min-w-0 gap-x-3">
-                    <Layout.Horizontal align="center" justify="start" className="min-w-0 flex-1 gap-x-1.5">
-                      <IconV2 name="page" className="shrink-0 text-icons-1" />
-                      <span className="overflow-hidden truncate text-2 text-cn-foreground-1 [direction:rtl]">
-                        {diff.filePath}
-                      </span>
-                    </Layout.Horizontal>
-                  </Layout.Horizontal>
-                }
-                label={
-                  <Layout.Horizontal className="shrink-0 text-2" gap="none">
-                    {diff.addedLines != null && diff.addedLines > 0 && (
-                      <span className="text-cn-foreground-success">+{diff.addedLines}</span>
-                    )}
-                    {diff.addedLines != null &&
-                      diff.addedLines > 0 &&
-                      diff.deletedLines != null &&
-                      diff.deletedLines > 0 && <span className="mx-1.5 h-3 w-px bg-cn-background-3" />}
-                    {diff.deletedLines != null && diff.deletedLines > 0 && (
-                      <span className="text-cn-foreground-danger">-{diff.deletedLines}</span>
-                    )}
-                  </Layout.Horizontal>
-                }
-              />
-            ))}
-          </DropdownMenu.Content>
         </DropdownMenu.Root>
+
+        <ChangedFilesShortInfo diffData={diffData} diffStats={pullReqStats} goToDiff={setJumpToDiff} />
       </Layout.Horizontal>
 
       <Layout.Horizontal className="gap-x-7">
@@ -313,7 +247,7 @@ export const PullRequestChangesFilter: React.FC<PullRequestChangesFilterProps> =
               theme={getApprovalStateTheme(approveState)}
               disabled={isActiveUserPROwner}
               loading={isApproving}
-              variant="outline"
+              variant={getApprovalStateVariant(approveState)}
               handleOptionChange={selectedMethod => {
                 submitReview?.(selectedMethod as PullReqReviewDecision)
               }}

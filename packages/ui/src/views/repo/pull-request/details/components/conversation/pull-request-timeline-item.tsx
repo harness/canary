@@ -22,7 +22,27 @@ import {
 import { cn } from '@utils/cn'
 import { isEmpty } from 'lodash-es'
 
+import { useExpandedComments } from '../../context/pull-request-comments-context'
 import { replaceEmailAsKey, replaceMentionEmailWithId } from './utils'
+
+//Utility function to calculate thread spacing based on position
+const getThreadSpacingClasses = (threadIndex?: number, totalThreads?: number, isLast?: boolean) => {
+  if (threadIndex === undefined || totalThreads === undefined) {
+    return {
+      'pb-cn-sm': !isLast,
+      'pb-cn-md': isLast
+    }
+  }
+  const isFirstThread = threadIndex === 0
+  const isLastThread = threadIndex === totalThreads - 1
+  const isSingleThread = totalThreads === 1
+  return {
+    'pt-4 pb-2': isSingleThread, // Single conversation: lines to conversation to lines
+    'pt-4 pb-1': isFirstThread && !isSingleThread, // First: lines to conversation
+    'pt-1 pb-1': !isFirstThread && !isLastThread, // Middle: conversation to conversation
+    'pt-1 pb-2': isLastThread && !isSingleThread // Last: conversation to lines
+  }
+}
 
 interface ItemHeaderProps {
   avatar?: ReactNode
@@ -125,7 +145,7 @@ const ItemHeader: FC<ItemHeaderProps> = memo(
           </Text>
         </Layout.Horizontal>
         {isComment && !isDeleted && !isResolved && (
-          <MoreActionsTooltip iconName="more-horizontal" sideOffset={-8} alignOffset={2} actions={actions} />
+          <MoreActionsTooltip iconName="more-horizontal" sideOffset={4} alignOffset={0} actions={actions} />
         )}
       </Layout.Horizontal>
     )
@@ -180,6 +200,8 @@ export interface TimelineItemProps {
   mentions?: PrincipalsMentionMap
   isReply?: boolean
   payload?: TypesPullReqActivity
+  threadIndex?: number
+  totalThreads?: number
 }
 
 const PullRequestTimelineItem: FC<TimelineItemProps> = ({
@@ -221,10 +243,19 @@ const PullRequestTimelineItem: FC<TimelineItemProps> = ({
   principalsMentionMap,
   setPrincipalsMentionMap,
   mentions,
-  payload
+  payload,
+  threadIndex,
+  totalThreads
 }) => {
   const [comment, setComment] = useState('')
-  const [isExpanded, setIsExpanded] = useState(!isResolved)
+  const { isExpanded: getIsExpanded, toggleExpanded } = useExpandedComments()
+
+  const expandedKey = parentCommentId || commentId || 0
+  const isExpanded = !isResolved || getIsExpanded(expandedKey)
+
+  const handleToggleExpanded = useCallback(() => {
+    toggleExpanded(expandedKey)
+  }, [expandedKey, toggleExpanded])
 
   const [isDeleteDialogOpen, setIsDeleteDialogOpen] = useState(false)
   const [isDeletingComment, setIsDeletingComment] = useState(false)
@@ -244,12 +275,6 @@ const PullRequestTimelineItem: FC<TimelineItemProps> = ({
   useEffect(() => {
     if (quoteReplyText) setComment(quoteReplyText)
   }, [quoteReplyText])
-
-  useEffect(() => {
-    if (isResolved) {
-      setIsExpanded(false)
-    }
-  }, [isResolved])
 
   const handleOpenDeleteDialog = useCallback(() => {
     setIsDeleteDialogOpen(true)
@@ -293,18 +318,17 @@ const PullRequestTimelineItem: FC<TimelineItemProps> = ({
     return content
   }
 
+  const renderToggleButton = () => (
+    <Button variant="transparent" onClick={handleToggleExpanded}>
+      <IconV2 name={isExpanded ? 'collapse-code' : 'expand-code'} size="xs" />
+      {isExpanded ? 'Hide resolved' : 'Show resolved'}
+    </Button>
+  )
+
   return (
     <>
       <div id={id}>
-        <NodeGroup.Root
-          className={cn(
-            {
-              'pb-cn-lg': !isLast,
-              'pb-cn-md': isLast
-            },
-            wrapperClassName
-          )}
-        >
+        <NodeGroup.Root className={cn(getThreadSpacingClasses(threadIndex, totalThreads, isLast), wrapperClassName)}>
           {!!icon && <NodeGroup.Icon className={cn({ 'border-transparent': hideIconBorder })}>{icon}</NodeGroup.Icon>}
           <NodeGroup.Title className={titleClassName}>
             {/* Ensure that header has at least one item */}
@@ -327,12 +351,7 @@ const PullRequestTimelineItem: FC<TimelineItemProps> = ({
                   }}
                   hideEditDelete={hideEditDelete}
                 />
-                {isResolved && !isComment && !contentHeader && (
-                  <Button variant="transparent" onClick={() => setIsExpanded(prev => !prev)}>
-                    <IconV2 name={isExpanded ? 'collapse-code' : 'expand-code'} size="xs" />
-                    {isExpanded ? 'Hide resolved' : 'Show resolved'}
-                  </Button>
-                )}
+                {isResolved && !isComment && !contentHeader && renderToggleButton()}
               </div>
             )}
           </NodeGroup.Title>
@@ -342,12 +361,7 @@ const PullRequestTimelineItem: FC<TimelineItemProps> = ({
                 {!!contentHeader && (
                   <Layout.Horizontal align="center" justify="between" className={cn('p-2 px-4 bg-cn-background-2')}>
                     {contentHeader}
-                    {isResolved && (
-                      <Button variant="transparent" onClick={() => setIsExpanded(prev => !prev)}>
-                        <IconV2 name={isExpanded ? 'collapse-code' : 'expand-code'} size="xs" />
-                        {isExpanded ? 'Hide resolved' : 'Show resolved'}
-                      </Button>
-                    )}
+                    {isResolved && renderToggleButton()}
                   </Layout.Horizontal>
                 )}
 
@@ -375,7 +389,7 @@ const PullRequestTimelineItem: FC<TimelineItemProps> = ({
                     setComment={setComment}
                   />
                 ) : (
-                  renderContent()
+                  <div className={cn(isExpanded ? '' : 'line-clamp-1')}>{renderContent()}</div>
                 )}
 
                 {!hideReplySection && (!isResolved || isExpanded) && (
@@ -412,6 +426,7 @@ const PullRequestTimelineItem: FC<TimelineItemProps> = ({
                         <TextInput
                           wrapperClassName="flex-1"
                           placeholder="Reply here"
+                          onFocus={() => setHideReplyHere?.(true)}
                           onClick={() => setHideReplyHere?.(true)}
                           onChange={e => setComment(e.target.value)}
                         />

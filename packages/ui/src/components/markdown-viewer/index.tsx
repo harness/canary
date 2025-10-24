@@ -1,6 +1,6 @@
-import { CSSProperties, useCallback, useEffect, useMemo, useRef, useState } from 'react'
+import { CSSProperties, ReactNode, useCallback, useEffect, useMemo, useRef } from 'react'
 
-import { CopyButton, ImageCarousel } from '@/components'
+import { CopyButton, Text } from '@/components'
 import MarkdownPreview from '@uiw/react-markdown-preview'
 import rehypeExternalLinks from 'rehype-external-links'
 import { getCodeString, RehypeRewriteOptions } from 'rehype-rewrite'
@@ -28,9 +28,11 @@ type MarkdownViewerProps = {
   className?: string
   suggestionBlock?: SuggestionBlock
   suggestionCheckSum?: string
-  isSuggestion?: boolean
   markdownClassName?: string
   showLineNumbers?: boolean
+  onCheckboxChange?: (source: string) => void
+  suggestionTitle?: string
+  suggestionFooter?: ReactNode
 }
 
 export function MarkdownViewer({
@@ -39,17 +41,23 @@ export function MarkdownViewer({
   withBorder = false,
   className,
   suggestionBlock,
-  suggestionCheckSum,
-  isSuggestion,
   markdownClassName,
-  showLineNumbers = false
+  showLineNumbers = false,
+  onCheckboxChange,
+  suggestionTitle,
+  suggestionFooter
 }: MarkdownViewerProps) {
   const { navigate } = useRouterContext()
-  const [isOpen, setIsOpen] = useState(false)
-  const [imgEvent, setImageEvent] = useState<string[]>([])
   const refRootHref = useMemo(() => document.getElementById('repository-ref-root')?.getAttribute('href'), [])
   const ref = useRef<HTMLDivElement>(null)
-  const [initialSlide, setInitialSlide] = useState<number>(0)
+
+  // Track checkbox indices and set to data-checkbox-index
+  const checkboxCounter = useRef<number>(0)
+
+  // Reset checkbox counter at the start of each render
+  checkboxCounter.current = 0
+
+  const filteredSource = useMemo(() => source.split('\n').filter(line => line !== '' && line !== '```'), [source])
 
   const styles: CSSProperties = maxHeight ? { maxHeight } : {}
 
@@ -106,16 +114,14 @@ export function MarkdownViewer({
     (event: MouseEvent) => {
       const { target } = event
 
-      const imgTags = ref.current?.querySelectorAll<HTMLImageElement>('.wmde-markdown img') || []
-
-      if (target instanceof HTMLImageElement && !!imgTags.length) {
-        const imgsArr: string[] = Array.from(imgTags).map(img => img.src)
-        const dataSrc = target.getAttribute('src')
-        const index = imgsArr.findIndex(val => val === dataSrc)
-
-        setImageEvent(imgsArr)
-        setInitialSlide(index > -1 ? index : 0)
-        setIsOpen(true)
+      // Handle image clicks - open in new tab
+      if (target instanceof HTMLImageElement) {
+        event.preventDefault()
+        const imageSrc = target.getAttribute('src')
+        if (imageSrc) {
+          window.open(imageSrc, '_blank', 'noopener,noreferrer')
+        }
+        return
       }
 
       if (target instanceof HTMLAnchorElement) {
@@ -135,6 +141,48 @@ export function MarkdownViewer({
     [navigate]
   )
 
+  // Handle checkbox state changes
+  const handleCheckboxChange = useCallback(
+    (event: React.ChangeEvent<HTMLInputElement>) => {
+      if (onCheckboxChange) {
+        const TODO_LIST_ITEM_CLASS = 'task-list-item'
+        const targetIsListItem = (event.target as HTMLElement).classList.contains(TODO_LIST_ITEM_CLASS)
+        const target = (event.target as HTMLElement)?.closest?.(`.${TODO_LIST_ITEM_CLASS}`)
+        const input = target?.firstElementChild as HTMLInputElement
+        const checked = targetIsListItem ? !input?.checked : input?.checked
+        const checkboxIndex = parseInt(event.target.getAttribute('data-checkbox-index') || '0', 10)
+        let currentCheckboxIndex = 0
+        const newContent = source
+          .split('\n')
+          .map(line => {
+            if (line.startsWith('- [ ]') || line.startsWith('- [x]')) {
+              currentCheckboxIndex++
+
+              if (checkboxIndex === currentCheckboxIndex) {
+                return checked ? line.replace('- [ ]', '- [x]') : line.replace('- [x]', '- [ ]')
+              }
+            }
+            return line
+          })
+          .join('\n')
+        onCheckboxChange(newContent)
+      }
+    },
+    [onCheckboxChange, source]
+  )
+
+  const getIsSuggestion = useCallback(
+    (code: string) => {
+      const trimmedCode = code.trim()
+      const codeLines = trimmedCode.split('\n')
+      const codeIndex = filteredSource.findIndex(line => line.includes(codeLines[0] || ''))
+      const isSuggestion = codeIndex !== -1 && filteredSource[codeIndex - 1]?.includes('suggestion')
+
+      return { isSuggestion, codeLines }
+    },
+    [filteredSource]
+  )
+
   useEffect(() => {
     const container = ref.current
 
@@ -150,23 +198,9 @@ export function MarkdownViewer({
   return (
     <div className={cn({ 'rounded-b-md border-x border-b py-6 px-16': withBorder }, className)}>
       <div ref={ref} style={styles}>
-        {isSuggestion && (
-          <div className="border-cn-borders-2 bg-cn-background-2 rounded-t-md border-x border-t px-4 py-3">
-            <span className="text-2 text-cn-foreground-1">
-              {suggestionBlock?.appliedCheckSum && suggestionBlock?.appliedCheckSum === suggestionCheckSum
-                ? 'Suggestion applied'
-                : 'Suggested change'}
-            </span>
-          </div>
-        )}
-
         <MarkdownPreview
           source={source}
-          className={cn(
-            'prose prose-invert',
-            { '[&>div>pre]:rounded-t-none [&>div>pre]:mb-2': isSuggestion },
-            markdownClassName
-          )}
+          className={cn('prose prose-invert', markdownClassName)}
           rehypeRewrite={rehypeRewrite}
           remarkPlugins={[remarkBreaks]}
           rehypePlugins={[
@@ -178,11 +212,14 @@ export function MarkdownViewer({
             input: ({ type, checked, ...props }) => {
               // checkbox inputs
               if (type === 'checkbox') {
+                checkboxCounter.current++
                 return (
                   <input
                     type="checkbox"
                     defaultChecked={checked}
                     {...props}
+                    data-checkbox-index={checkboxCounter.current}
+                    onChange={handleCheckboxChange}
                     // Removed disabled to make checkbox interactive
                     disabled={undefined}
                   />
@@ -199,14 +236,33 @@ export function MarkdownViewer({
                 codeContent = code
               }
 
-              const trimmedCode = codeContent.trim()
-              const codeLines = trimmedCode.split('\n')
+              const { isSuggestion, codeLines } = getIsSuggestion(codeContent)
+
               const filteredLines =
                 codeLines.length > 0 && codeLines[codeLines.length - 1] === '' ? codeLines.slice(0, -1) : codeLines
               const hasLineNumbers = showLineNumbers && filteredLines.length > 1
 
+              if (isSuggestion) {
+                return (
+                  <div className="rounded-2 overflow-hidden border">
+                    <div className="bg-cn-background-2 px-cn-md py-cn-sm border-b">
+                      <Text variant="body-strong" color="foreground-1" className="!m-0">
+                        {suggestionTitle}
+                      </Text>
+                    </div>
+                    <pre>{children}</pre>
+                    <div className="p-cn-md">{suggestionFooter}</div>
+                  </div>
+                )
+              }
+
               return (
-                <div className="mb-cn-md relative">
+                <div
+                  className={cn(
+                    'min-h-[52px] mb-cn-md rounded-2 pl-cn-md pr-cn-sm py-cn-sm relative overflow-hidden border',
+                    { '!pt-[15px]': codeLines.length === 1 }
+                  )}
+                >
                   <CopyButton
                     className="absolute right-3 top-3 z-10"
                     buttonVariant="outline"
@@ -214,7 +270,7 @@ export function MarkdownViewer({
                     iconSize="xs"
                     size="xs"
                   />
-                  <pre className={cn('min-h-[52px]', { '!pt-[15px]': codeLines.length === 1 })}>
+                  <pre>
                     {hasLineNumbers ? (
                       <div className="relative flex w-full bg-transparent">
                         <div className="bg-cn-background-2 flex-none select-none text-right">
@@ -236,25 +292,22 @@ export function MarkdownViewer({
             code: ({ children = [], className: _className, ...props }) => {
               const code = props.node && props.node.children ? getCodeString(props.node.children) : children
 
-              if (
+              const isPossibleSuggestion =
                 typeof code === 'string' &&
-                isSuggestion &&
                 typeof _className === 'string' &&
                 'language-suggestion' === _className.split(' ')[0].toLocaleLowerCase()
-              ) {
-                return <CodeSuggestionBlock code={code} suggestionBlock={suggestionBlock} />
+
+              if (isPossibleSuggestion) {
+                const { isSuggestion } = getIsSuggestion(code)
+
+                if (isSuggestion) {
+                  return <CodeSuggestionBlock code={code} suggestionBlock={suggestionBlock} />
+                }
               }
 
-              return <code className={String(_className)}>{children}</code>
+              return <code className={`mr-cn-3xl !whitespace-pre-wrap ${String(_className)}`}>{children}</code>
             }
           }}
-        />
-
-        <ImageCarousel
-          isOpen={isOpen && !!imgEvent.length}
-          setIsOpen={setIsOpen}
-          imgEvent={imgEvent}
-          initialSlide={initialSlide}
         />
       </div>
     </div>

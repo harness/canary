@@ -1,6 +1,7 @@
-import { Navigate } from 'react-router-dom'
+import { Navigate, redirect } from 'react-router-dom'
 
 import { Breadcrumb, Layout, Sidebar } from '@harnessio/ui/components'
+import { ComponentProvider } from '@harnessio/ui/context'
 import {
   EmptyPage,
   ProfileSettingsLayout,
@@ -15,6 +16,9 @@ import { AppShell } from './components-v2/standalone/app-shell'
 import { AppProvider } from './framework/context/AppContext'
 import { AppRouterProvider } from './framework/context/AppRouterProvider'
 import { ExplorerPathsProvider } from './framework/context/ExplorerPathsContext'
+import { PageTitleProvider } from './framework/context/PageTitleContext'
+import { RbacButton } from './framework/rbac/rbac-button'
+import { RbacSplitButton } from './framework/rbac/rbac-split-button'
 import { CustomRouteObject, RouteConstants } from './framework/routing/types'
 import { CreateProject } from './pages-v2/create-project'
 import { LandingPage } from './pages-v2/landing-page-container'
@@ -152,7 +156,7 @@ const rulesRoute = {
       }
     },
     {
-      path: ':ruleId',
+      path: ':ruleId/edit',
       element: <ProjectRulesContainer />,
       handle: {
         breadcrumb: ({ ruleId }: { ruleId: string }) => <span>{ruleId}</span>,
@@ -215,6 +219,17 @@ export const repoRoutes: CustomRouteObject[] = [
           },
           {
             path: 'summary',
+            loader: ({ params }) => {
+              const wildcard = params['*'] || ''
+              if (wildcard.startsWith('edit/')) {
+                const cleanPath = wildcard.substring(5)
+                return redirect(`./${cleanPath}`)
+              } else if (wildcard.startsWith('new/')) {
+                const cleanPath = wildcard.substring(4)
+                return redirect(`./${cleanPath}`)
+              }
+              return null
+            },
             element: <RepoSummaryPage />,
             handle: {
               breadcrumb: () => <span>{Page.Summary}</span>,
@@ -257,28 +272,24 @@ export const repoRoutes: CustomRouteObject[] = [
                   pageTitle: Page.Commits,
                   routeName: RouteConstants.toRepoTagCommits
                 }
-              },
+              }
+            ]
+          },
+          {
+            path: 'commit/:commitSHA',
+            element: <RepoCommitDetailsPage />,
+            handle: {
+              breadcrumb: ({ commitSHA }: { commitSHA: string }) => <span>{commitSHA.substring(0, 7)}</span>,
+              routeName: RouteConstants.toRepoCommitDetails
+            },
+            children: [
               {
-                path: 'commit/:commitSHA',
-                element: <RepoCommitDetailsPage showSidebar={false} />,
-                handle: {
-                  breadcrumb: ({ commitSHA }: { commitSHA: string }) => (
-                    <>
-                      <span>{commitSHA.substring(0, 7)}</span>
-                    </>
-                  ),
-                  routeName: RouteConstants.toRepoCommitDetails
-                },
-                children: [
-                  {
-                    index: true,
-                    element: (
-                      <ExplorerPathsProvider>
-                        <CommitDiffContainer showSidebar={false} />
-                      </ExplorerPathsProvider>
-                    )
-                  }
-                ]
+                index: true,
+                element: (
+                  <ExplorerPathsProvider>
+                    <CommitDiffContainer showSidebar={false} />
+                  </ExplorerPathsProvider>
+                )
               }
             ]
           },
@@ -289,6 +300,22 @@ export const repoRoutes: CustomRouteObject[] = [
               breadcrumb: () => <span>{Page.Branches}</span>,
               routeName: RouteConstants.toRepoBranches,
               pageTitle: Page.Branches
+            }
+          },
+          {
+            path: 'edit/*',
+            loader: ({ params }) => {
+              const wildcard = params['*'] || ''
+              return redirect(`../files/edit/${wildcard}`)
+            },
+            element: (
+              <ExplorerPathsProvider>
+                <RepoSidebar />
+              </ExplorerPathsProvider>
+            ),
+            handle: {
+              breadcrumb: () => <span>{Page.Files}</span>,
+              routeName: RouteConstants.toRepoFiles
             }
           },
           {
@@ -332,7 +359,8 @@ export const repoRoutes: CustomRouteObject[] = [
             element: <SearchPage />,
             handle: {
               breadcrumb: () => <span>{Page.Search}</span>,
-              routeName: RouteConstants.toRepoSearch
+              routeName: RouteConstants.toRepoSearch,
+              pageTitle: Page.Search
             }
           },
           {
@@ -421,7 +449,7 @@ export const repoRoutes: CustomRouteObject[] = [
                     ),
                     handle: {
                       breadcrumb: () => <span>{Page.Changes}</span>,
-                      routeName: RouteConstants.toPullRequestChanges,
+                      routeName: RouteConstants.toPullRequestChange,
                       pageTitle: Page.Changes
                     }
                   },
@@ -496,6 +524,10 @@ export const repoRoutes: CustomRouteObject[] = [
             ]
           },
           {
+            path: 'webhooks',
+            element: <Navigate to="../settings/webhooks" replace />
+          },
+          {
             path: 'settings',
             element: <RepoSettingsLayout />,
             handle: {
@@ -547,7 +579,7 @@ export const repoRoutes: CustomRouteObject[] = [
                     }
                   },
                   {
-                    path: ':identifier',
+                    path: ':identifier/edit',
                     element: <RepoRulesContainer />,
                     handle: {
                       breadcrumb: ({ identifier }: { identifier: string }) => <span>{identifier}</span>,
@@ -603,7 +635,8 @@ export const repoRoutes: CustomRouteObject[] = [
                     path: ':labelId',
                     element: <RepoLabelFormContainer />,
                     handle: {
-                      breadcrumb: ({ labelId }: { labelId: string }) => <span>{labelId}</span>
+                      breadcrumb: ({ labelId }: { labelId: string }) => <span>{labelId}</span>,
+                      routeName: RouteConstants.toRepoLabelDetails
                     }
                   }
                 ]
@@ -756,11 +789,15 @@ export const routes: CustomRouteObject[] = [
     path: '/',
     element: (
       <AppRouterProvider>
-        <AppProvider>
-          <Sidebar.Provider className="min-h-svh">
-            <AppShell />
-          </Sidebar.Provider>
-        </AppProvider>
+        <PageTitleProvider>
+          <AppProvider>
+            <Sidebar.Provider className="min-h-svh">
+              <ComponentProvider components={{ RbacButton, RbacSplitButton }}>
+                <AppShell />
+              </ComponentProvider>
+            </Sidebar.Provider>
+          </AppProvider>
+        </PageTitleProvider>
       </AppRouterProvider>
     ),
     handle: { routeName: 'toHome' },
@@ -1219,15 +1256,18 @@ export const routes: CustomRouteObject[] = [
   }
 ]
 
-export const mfeRoutes = (mfeProjectId = '', mfeRouteRenderer: JSX.Element | null = null): CustomRouteObject[] => [
+export const getMFERoutes = (mfeProjectId?: string): CustomRouteObject[] => [
   {
     path: '/',
     element: (
       <AppRouterProvider>
-        <AppProvider>
-          {mfeRouteRenderer}
-          <AppShellMFE />
-        </AppProvider>
+        <PageTitleProvider>
+          <AppProvider>
+            <ComponentProvider components={{ RbacButton, RbacSplitButton }}>
+              <AppShellMFE />
+            </ComponentProvider>
+          </AppProvider>
+        </PageTitleProvider>
       </AppRouterProvider>
     ),
     handle: { routeName: RouteConstants.toHome },

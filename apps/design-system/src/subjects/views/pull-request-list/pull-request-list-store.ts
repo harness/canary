@@ -36,6 +36,7 @@ export const pullRequestListStore: PullRequestListStore = {
   page: 1,
   openPullReqs: 1,
   closedPullReqs: 0,
+  mergedPullReqs: 0,
   setPage: noop,
   setLabelsQuery: noop,
   prState: ['open'],

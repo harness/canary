@@ -84,7 +84,7 @@ export default function RepoSummaryPage() {
   // Navigate to default branch if no branch is selected
   useEffect(() => {
     if (!fullGitRefWoDefault && prefixedDefaultBranch && fullGitRef) {
-      navigate(routes.toRepoSummary({ spaceId, repoId, '*': fullGitRef }))
+      navigate(routes.toRepoSummary({ spaceId, repoId, '*': fullGitRef }), { replace: true })
     }
   }, [fullGitRefWoDefault, prefixedDefaultBranch, fullGitRef])
 
@@ -150,7 +150,7 @@ export default function RepoSummaryPage() {
       calculateDivergence({
         repo_ref: repoRef,
         body: {
-          requests: [{ from: fullGitRefWoDefault, to: repoData?.default_branch }]
+          requests: [{ from: normalizeGitRef(fullGitRefWoDefault), to: normalizeGitRef(repoData?.default_branch) }]
         }
       })
     }
@@ -236,9 +236,10 @@ export default function RepoSummaryPage() {
     return new Map(nonEmtpyPathEntries.map((entry: OpenapiContentInfo) => [entry.path, entry.type]))
   }, [repoDetails?.content?.entries])
 
-  const { files, loading } = useRepoFileContentDetails({
+  const { files, loading, scheduleFileMetaFetch } = useRepoFileContentDetails({
     repoRef,
     fullGitRef,
+    fullResourcePath: '',
     pathToTypeMap: repoEntryPathToFileTypeMap,
     spaceId,
     repoId
@@ -324,6 +325,7 @@ export default function RepoSummaryPage() {
         toRepoTags={() => routes.toRepoTags({ spaceId, repoId })}
         toRepoPullRequests={() => routes.toRepoPullRequests({ spaceId, repoId })}
         showContributeBtn={showContributeBtn}
+        scheduleFileMetaFetch={scheduleFileMetaFetch}
       />
       {showTokenDialog && createdTokenData && (
         <CloneCredentialDialog

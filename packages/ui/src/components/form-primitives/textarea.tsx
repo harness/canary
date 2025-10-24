@@ -1,4 +1,13 @@
-import { ChangeEvent, forwardRef, TextareaHTMLAttributes, useCallback, useMemo, useState } from 'react'
+import {
+  ChangeEvent,
+  forwardRef,
+  TextareaHTMLAttributes,
+  useCallback,
+  useEffect,
+  useMemo,
+  useRef,
+  useState
+} from 'react'
 
 import { CommonInputsProp, ControlGroup, FormCaption, Label } from '@/components'
 import { cn, generateAlphaNumericHash, isAnyTypeOf, useMergeRefs } from '@/utils'
@@ -54,10 +63,12 @@ const Textarea = forwardRef<HTMLTextAreaElement, TextareaProps>(
       informerProps,
       informerContent,
       wrapperClassName,
+      autoFocus,
       ...props
     },
     ref
   ) => {
+    const textareaRef = useRef<HTMLTextAreaElement | null>(null)
     const [counter, setCounter] = useState(0)
 
     const isHorizontal = orientation === 'horizontal'
@@ -84,12 +95,24 @@ const Textarea = forwardRef<HTMLTextAreaElement, TextareaProps>(
       node => {
         if (!node) return
 
+        textareaRef.current = node
+
         if (isAnyTypeOf(node.value, ['number', 'string'])) {
           setCharactersCount(String(node.value))
         }
       },
       ref
     ])
+
+    useEffect(() => {
+      if (autoFocus && textareaRef.current) {
+        const t = setTimeout(() => {
+          textareaRef.current?.focus()
+        }, 0)
+
+        return () => clearTimeout(t)
+      }
+    }, [autoFocus])
 
     return (
       <ControlGroup.Root className={wrapperClassName} orientation={orientation}>

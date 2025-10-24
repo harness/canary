@@ -10,7 +10,7 @@ import {
   useSpaceRuleGetQuery,
   useSpaceRuleUpdateMutation
 } from '@harnessio/code-service-client'
-import { SkeletonForm } from '@harnessio/ui/components'
+import { Skeleton } from '@harnessio/ui/components'
 import { useTranslation } from '@harnessio/ui/context'
 import { PrincipalType } from '@harnessio/ui/types'
 import {
@@ -121,7 +121,9 @@ export const ProjectTagRulesContainer = () => {
 
   const { data: { body: recentStatusChecks } = {}, error: statusChecksError } = useListStatusCheckRecentSpaceQuery({
     space_ref: `${spaceRef}/+`,
-    queryParams: {}
+    queryParams: {
+      recursive: true
+    }
   })
 
   const {
@@ -213,7 +215,7 @@ export const ProjectTagRulesContainer = () => {
   }
 
   if (!!ruleIdentifier && fetchRuleIsLoading) {
-    return <SkeletonForm className="mt-7" />
+    return <Skeleton.Form className="mt-7" />
   }
 
   if (!!ruleIdentifier && !!fetchRuleError) {

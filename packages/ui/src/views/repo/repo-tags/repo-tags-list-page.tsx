@@ -1,6 +1,6 @@
 import { FC, useCallback, useMemo } from 'react'
 
-import { Button, IconV2, Layout, ListActions, Pagination, SearchInput, Spacer, Text } from '@/components'
+import { Button, IconV2, Layout, ListActions, Pagination, SearchInput, Text } from '@/components'
 import { useTranslation } from '@/context'
 import { RepoTagsListViewProps, SandboxLayout } from '@/views'
 import { cn } from '@utils/cn'
@@ -30,7 +30,7 @@ export const RepoTagsListView: FC<RepoTagsListViewProps> = ({
 
   const handleResetFiltersAndPages = useCallback(() => {
     setPage(1)
-    setSearchQuery(null)
+    setSearchQuery('')
   }, [setPage, setSearchQuery])
 
   const isDirtyList = useMemo(() => {
@@ -45,6 +45,10 @@ export const RepoTagsListView: FC<RepoTagsListViewProps> = ({
     return `?page=${xNextPage}`
   }, [xNextPage])
 
+  const canShowPagination = useMemo(() => {
+    return !isLoading && !!tagsList.length
+  }, [isLoading, tagsList.length])
+
   return (
     <SandboxLayout.Main>
       <SandboxLayout.Content
@@ -53,58 +57,57 @@ export const RepoTagsListView: FC<RepoTagsListViewProps> = ({
           'h-full': !isLoading && !tagsList.length && !searchQuery
         })}
       >
-        {!isLoading && (!!tagsList.length || isDirtyList) && (
-          <>
+        <Layout.Vertical gap="xl" className="flex-1">
+          {(!!tagsList?.length || !!searchQuery) && (
             <Text as="h1" variant="heading-section">
               {t('views:repos.tags', 'Tags')}
             </Text>
-            <Spacer size={6} />
-            <ListActions.Root>
-              <ListActions.Left>
-                <SearchInput
-                  inputContainerClassName="max-w-80"
-                  defaultValue={searchQuery || ''}
-                  onChange={handleSearchChange}
-                  placeholder={t('views:repos.search', 'Search')}
-                  autoFocus
+          )}
+          <Layout.Vertical gap="md" className="flex-1">
+            {(!!tagsList?.length || !!searchQuery) && (
+              <ListActions.Root>
+                <ListActions.Left>
+                  <SearchInput
+                    inputContainerClassName="max-w-80"
+                    defaultValue={searchQuery || ''}
+                    onChange={handleSearchChange}
+                    placeholder={t('views:repos.search', 'Search')}
+                    autoFocus
+                  />
+                </ListActions.Left>
+                <ListActions.Right>
+                  <Button onClick={openCreateTagDialog}>
+                    <IconV2 name="plus" />
+                    <span>{t('views:repos.createTag', 'Create Tag')}</span>
+                  </Button>
+                </ListActions.Right>
+              </ListActions.Root>
+            )}
+
+            <Layout.Vertical gap="none" className="flex-1">
+              <RepoTagsList
+                onDeleteTag={onDeleteTag}
+                useRepoTagsStore={useRepoTagsStore}
+                toCommitDetails={toCommitDetails}
+                onOpenCreateBranchDialog={openCreateBranchDialog}
+                isLoading={isLoading}
+                isDirtyList={isDirtyList}
+                onResetFiltersAndPages={handleResetFiltersAndPages}
+                onOpenCreateTagDialog={openCreateTagDialog}
+              />
+
+              {canShowPagination && (
+                <Pagination
+                  indeterminate
+                  hasNext={xNextPage > 0}
+                  hasPrevious={xPrevPage > 0}
+                  getNextPageLink={getNextPageLink}
+                  getPrevPageLink={getPrevPageLink}
                 />
-              </ListActions.Left>
-              <ListActions.Right>
-                <Button onClick={openCreateTagDialog}>
-                  <Layout.Horizontal gap="xs" align="center">
-                    <IconV2 name="plus" size="sm" />
-                    <span>{t('views:repos.newTag', 'New Tag')}</span>
-                  </Layout.Horizontal>
-                </Button>
-              </ListActions.Right>
-            </ListActions.Root>
-
-            <Spacer size={4.5} />
-          </>
-        )}
-
-        <RepoTagsList
-          onDeleteTag={onDeleteTag}
-          useRepoTagsStore={useRepoTagsStore}
-          toCommitDetails={toCommitDetails}
-          onOpenCreateBranchDialog={openCreateBranchDialog}
-          isLoading={isLoading}
-          isDirtyList={isDirtyList}
-          onResetFiltersAndPages={handleResetFiltersAndPages}
-          onOpenCreateTagDialog={openCreateTagDialog}
-        />
-
-        <Spacer size={5} />
-
-        {!isLoading && (
-          <Pagination
-            indeterminate
-            hasNext={xNextPage > 0}
-            hasPrevious={xPrevPage > 0}
-            getNextPageLink={getNextPageLink}
-            getPrevPageLink={getPrevPageLink}
-          />
-        )}
+              )}
+            </Layout.Vertical>
+          </Layout.Vertical>
+        </Layout.Vertical>
       </SandboxLayout.Content>
     </SandboxLayout.Main>
   )

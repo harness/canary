@@ -1,19 +1,23 @@
 import { FC, useCallback } from 'react'
 
-import { IconV2, Layout, NoData, Pagination, SkeletonList, Text } from '@/components'
+import { Layout, NoData, Pagination, Skeleton, Text } from '@/components'
 import { useTranslation } from '@/context'
 import { CommitsList, SandboxLayout, TypesCommit } from '@/views'
 
-export interface RepoCommitsViewProps {
+interface RoutingProps {
+  toCommitDetails?: ({ sha }: { sha: string }) => string
+  toPullRequest?: ({ pullRequestId }: { pullRequestId: number }) => string
+  toFiles?: () => string
+  toCode?: ({ sha }: { sha: string }) => string
+}
+
+export interface RepoCommitsViewProps extends Partial<RoutingProps> {
   isFetchingCommits: boolean
   commitsList?: TypesCommit[] | null
   xNextPage: number
   xPrevPage: number
   page: number
   setPage: (page: number) => void
-  toCommitDetails?: ({ sha }: { sha: string }) => string
-  toPullRequest?: ({ pullRequestId }: { pullRequestId: number }) => string
-  toCode?: ({ sha }: { sha: string }) => string
   renderProp: () => JSX.Element | null
 }
 
@@ -27,7 +31,8 @@ export const RepoCommitsView: FC<RepoCommitsViewProps> = ({
   toCommitDetails,
   toCode,
   renderProp: BranchSelectorContainer,
-  toPullRequest
+  toPullRequest,
+  toFiles
 }) => {
   const { t } = useTranslation()
 
@@ -48,17 +53,17 @@ export const RepoCommitsView: FC<RepoCommitsViewProps> = ({
   return (
     <SandboxLayout.Main>
       <SandboxLayout.Content>
-        <Layout.Flex direction="column" gapY="xl" className="grow">
+        <Layout.Flex direction="column" gapY="xl" grow>
           <Text variant="heading-section" as="h2">
             Commits
           </Text>
 
-          <Layout.Flex direction="column" gapY="md" className="grow">
+          <Layout.Flex direction="column" gapY="md" grow>
             <div>
               <BranchSelectorContainer />
             </div>
 
-            {isFetchingCommits && <SkeletonList />}
+            {isFetchingCommits && <Skeleton.List />}
 
             {!isFetchingCommits && (
               <>
@@ -83,20 +88,21 @@ export const RepoCommitsView: FC<RepoCommitsViewProps> = ({
                             "Your commits will appear here once they're made. Start committing to see your changes reflected."
                           )
                     ]}
-                    primaryButton={
+                    secondaryButton={
                       isDirtyList
                         ? {
+                            icon: 'trash',
                             label: t('views:noData.clearFilters', 'Clear filters'),
                             onClick: handleResetFiltersAndPages
                           }
                         : // TODO: add onClick for Creating new commit
                           {
-                            label: (
-                              <>
-                                <IconV2 name="plus" />
-                                {t('views:commits.createNewCommit', 'Make commit')}
-                              </>
-                            )
+                            label: t('views:commits.createCommit', 'Create commit'),
+                            /**
+                             * To make the first commit, redirect to the files page so a new file can be created.
+                             */
+                            to: toFiles?.() || '',
+                            icon: 'plus'
                           }
                     }
                   />

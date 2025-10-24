@@ -1,6 +1,6 @@
 import { FC } from 'react'
 
-import { IconV2, Separator, Tag, TagProps, Text, TimeAgoCard } from '@/components'
+import { IconV2, Layout, Separator, Tag, TagProps, Text, TimeAgoCard } from '@/components'
 import { useRouterContext } from '@/context'
 
 interface PullRequestItemDescriptionProps {
@@ -14,7 +14,6 @@ interface PullRequestItemDescriptionProps {
 }
 
 export const PullRequestItemDescription: FC<PullRequestItemDescriptionProps> = ({
-  reviewRequired,
   number,
   tasks,
   author,
@@ -29,21 +28,16 @@ export const PullRequestItemDescription: FC<PullRequestItemDescriptionProps> = (
   const branchTagProps: Omit<TagProps, 'value'> = {
     variant: 'secondary',
     icon: 'git-branch',
-    showIcon: true,
     enableHover: true,
-    theme: 'blue'
+    theme: 'gray'
   }
 
   return (
-    <div className="text-2 text-cn-foreground-2 inline-flex max-w-full items-center gap-1.5 pl-[22px]">
+    <div className="text-2 text-cn-foreground-2 inline-flex flex-wrap max-w-full items-center gap-1.5 pl-[22px]">
       <Text variant="body-single-line-normal">
         {`#${number}`} opened <TimeAgoCard timestamp={timestamp} dateTimeFormatOptions={{ dateStyle: 'medium' }} /> by{' '}
         <span className="inline-block max-w-[200px] truncate align-text-bottom">{author}</span>
       </Text>
-
-      <Separator orientation="vertical" className="h-3.5" />
-
-      <Text variant="body-single-line-normal">{reviewRequired ? 'Review required' : 'Draft'}</Text>
 
       {/* TODO: where did tasks go? */}
       {!!tasks && tasks > 0 && (
@@ -57,16 +51,17 @@ export const PullRequestItemDescription: FC<PullRequestItemDescriptionProps> = (
       <Separator orientation="vertical" className="h-3.5" />
 
       {sourceBranch && (
-        <>
+        <Layout.Horizontal align="center" gap="2xs">
           <Link to={`${relativePath}/files/${targetBranch}`}>
             <Tag value={targetBranch} {...branchTagProps} />
           </Link>
 
-          <span>&larr;</span>
+          <IconV2 className="text-cn-foreground-3" name="arrow-long-left" />
+
           <Link to={`${relativePath}/files/${sourceBranch}`}>
             <Tag value={sourceBranch} {...branchTagProps} />
           </Link>
-        </>
+        </Layout.Horizontal>
       )}
     </div>
   )

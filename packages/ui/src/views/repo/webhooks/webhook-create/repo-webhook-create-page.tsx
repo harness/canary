@@ -1,9 +1,9 @@
 import { FC, useEffect } from 'react'
 import { SubmitHandler, useForm } from 'react-hook-form'
 
-import { Button, ButtonLayout, Fieldset, FormSeparator, FormWrapper, Text } from '@/components'
+import { Alert, Button, ButtonLayout, Fieldset, FormSeparator, FormWrapper, Layout, Text } from '@/components'
 import { useTranslation } from '@/context'
-import { SandboxLayout, WebhookStore } from '@/views'
+import { WebhookStore } from '@/views'
 import { zodResolver } from '@hookform/resolvers/zod'
 import { createWebhookFormSchema } from '@views/repo/webhooks/webhook-create/components/create-webhooks-form-schema'
 
@@ -25,7 +25,6 @@ interface RepoWebhooksCreatePageProps {
   onFormCancel: () => void
   apiError?: string | null
   isLoading: boolean
-  // preSetWebHookData: CreateWebhookFormFields | null
   useWebhookStore: () => WebhookStore
 }
 
@@ -88,78 +87,86 @@ export const RepoWebhooksCreatePage: FC<RepoWebhooksCreatePageProps> = ({
   ]
 
   const onSubmit: SubmitHandler<CreateWebhookFormFields> = data => {
+    if (data.trigger === TriggerEventsEnum.SELECTED_EVENTS && (!data.triggers || data.triggers.length === 0)) {
+      formMethods.setError('triggers', {
+        type: 'manual',
+        message: 'At least one event must be selected'
+      })
+      return
+    }
     onFormSubmit(data)
   }
 
   return (
-    <SandboxLayout.Content className="max-w-[570px] ml-3">
-      <Text as="h1" variant="heading-section" className="mb-4">
+    <Layout.Vertical className="settings-form-width" gapY="md">
+      <Text as="h1" variant="heading-section">
         {preSetWebhookData
           ? t('views:repos.editWebhookTitle', 'Order Status Update Webhook')
           : t('views:repos.createWebhookTitle', 'Create a webhook')}
       </Text>
-      <FormWrapper {...formMethods} onSubmit={handleSubmit(onSubmit)} className="gap-y-6">
-        <Fieldset>
-          <WebhookToggleField register={register} setValue={setValue} watch={watch} />
-        </Fieldset>
+
+      <FormWrapper {...formMethods} onSubmit={handleSubmit(onSubmit)}>
+        <WebhookToggleField register={register} setValue={setValue} watch={watch} />
         <FormSeparator />
-        {preSetWebhookData ? (
+
+        {preSetWebhookData && (
           <Text as="h2" variant="heading-subsection">
             {t('views:repos.webhookDetails', 'Details')}
           </Text>
-        ) : null}
+        )}
+
+        <WebhookNameField register={register} />
+        <WebhookDescriptionField register={register} />
+        <WebhookPayloadUrlField register={register} />
+        <WebhookSecretField register={register} />
+        <WebhookSSLVerificationField register={register} />
+
         <Fieldset>
-          <WebhookNameField register={register} />
-        </Fieldset>
-        <Fieldset>
-          <WebhookDescriptionField register={register} />
-        </Fieldset>
-        <Fieldset>
-          <WebhookPayloadUrlField register={register} />
-        </Fieldset>
-        <Fieldset>
-          <WebhookSecretField register={register} />
-        </Fieldset>
-        <Fieldset className="mt-5">
-          <WebhookSSLVerificationField register={register} />
-        </Fieldset>
-        <Fieldset className="mt-5">
           <WebhookTriggerField register={register} />
           {triggerValue === TriggerEventsEnum.SELECTED_EVENTS && (
-            <div className="flex justify-between">
-              {eventSettingsComponents.map(component => (
-                <div key={component.fieldName} className="flex flex-col">
-                  <WebhookEventSettingsFieldset
-                    register={register}
-                    setValue={setValue}
-                    watch={watch}
-                    eventList={component.events}
-                  />
-                </div>
-              ))}
-            </div>
+            <>
+              <div className="flex justify-between">
+                {eventSettingsComponents.map(component => (
+                  <div key={component.fieldName} className="flex flex-col">
+                    <WebhookEventSettingsFieldset
+                      register={register}
+                      setValue={setValue}
+                      watch={watch}
+                      eventList={component.events}
+                    />
+                  </div>
+                ))}
+              </div>
+              {formMethods.formState.errors.triggers && (
+                <Alert.Root theme="danger">
+                  <Alert.Title>{formMethods.formState.errors.triggers.message}</Alert.Title>
+                </Alert.Root>
+              )}
+            </>
           )}
         </Fieldset>
 
-        <Fieldset className="mt-7">
-          <ButtonLayout horizontalAlign="start">
-            <Button type="submit" disabled={isLoading}>
-              {isLoading
-                ? preSetWebhookData
-                  ? t('views:repos.updatingWebhook', 'Updating webhook...')
-                  : t('views:repos.creatingWebhook', 'Creating webhook...')
-                : preSetWebhookData
-                  ? t('views:repos.updateWebhook', 'Update webhook')
-                  : t('views:repos.createWebhook', 'Create webhook')}
-            </Button>
-            <Button type="button" variant="outline" onClick={onFormCancel}>
-              {t('views:repos.cancel', 'Cancel')}
-            </Button>
-          </ButtonLayout>
-        </Fieldset>
+        <ButtonLayout horizontalAlign="start">
+          <Button type="submit" disabled={isLoading}>
+            {isLoading
+              ? preSetWebhookData
+                ? t('views:repos.updatingWebhook', 'Updating Webhook...')
+                : t('views:repos.creatingWebhook', 'Creating Webhook...')
+              : preSetWebhookData
+                ? t('views:repos.updateWebhook', 'Update Webhook')
+                : t('views:repos.createWebhook', 'Create Webhook')}
+          </Button>
+          <Button type="button" variant="outline" onClick={onFormCancel}>
+            {t('views:repos.cancel', 'Cancel')}
+          </Button>
+        </ButtonLayout>
 
-        {!!apiError && <span className="text-2 text-cn-foreground-danger">{apiError?.toString()}</span>}
+        {!!apiError && (
+          <Alert.Root theme="danger">
+            <Alert.Title>{apiError?.toString()}</Alert.Title>
+          </Alert.Root>
+        )}
       </FormWrapper>
-    </SandboxLayout.Content>
+    </Layout.Vertical>
   )
 }

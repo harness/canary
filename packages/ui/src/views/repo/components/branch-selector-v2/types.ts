@@ -8,7 +8,7 @@ export enum BranchSelectorTab {
 
 export const getBranchSelectorLabels = (t: TFunctionWithFallback) => ({
   [BranchSelectorTab.BRANCHES]: {
-    label: t('views:repos.branches', 'Branches'),
+    label: t('views:repos.branches.title', 'Branches'),
     searchPlaceholder: t('views:repos.findBranch', 'Find a branch')
   },
   [BranchSelectorTab.TAGS]: {
@@ -18,7 +18,7 @@ export const getBranchSelectorLabels = (t: TFunctionWithFallback) => ({
 })
 
 export interface BranchSelectorDropdownProps {
-  selectedBranch: BranchSelectorListItem
+  selectedBranch?: BranchSelectorListItem
   branchList: BranchSelectorListItem[]
   tagList: BranchSelectorListItem[]
   onSelectBranch?: (branchTag: BranchSelectorListItem, type: BranchSelectorTab) => void
@@ -41,7 +41,7 @@ export interface BranchSelectorProps extends BranchSelectorDropdownProps {
 }
 
 export interface BranchSelectorContainerProps {
-  selectedBranch?: BranchSelectorListItem | null
+  selectedBranch?: BranchSelectorListItem
   onSelectBranchorTag: (branchTag: BranchSelectorListItem, type: BranchSelectorTab) => void
   isBranchOnly?: boolean
   dynamicWidth?: boolean

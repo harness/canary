@@ -21,13 +21,15 @@ import {
 import { useRoutes } from '../../../framework/context/NavigationContext'
 import { useIsMFE } from '../../../framework/hooks/useIsMFE'
 import { useMFEContext } from '../../../framework/hooks/useMFEContext'
-import { parseAsInteger, useQueryState } from '../../../framework/hooks/useQueryState'
+import { useQueryState } from '../../../framework/hooks/useQueryState'
+import usePaginationQueryStateWithStore from '../../../hooks/use-pagination-query-state-with-store'
 import { useAPIPath } from '../../../hooks/useAPIPath'
 import { PathParams } from '../../../RouteDefinitions'
 import { getPullRequestUrl, getScopeType } from '../../../utils/scope-url-utils'
 import { buildPRFilters } from '../../pull-request/pull-request-utils'
 import { usePullRequestListStore } from '../../pull-request/stores/pull-request-list-store'
 import { usePopulateLabelStore } from '../../repo/labels/hooks/use-populate-label-store'
+import { useFillLabelStoreWithProjectLabelValuesData } from '../labels/hooks/use-fill-label-store-with-project-label-values-data'
 import { useLabelsStore } from '../stores/labels-store'
 
 export default function PullRequestListPage() {
@@ -37,7 +39,7 @@ export default function PullRequestListPage() {
 
   /* Query and Pagination */
   const [query, setQuery] = useQueryState('query')
-  const [queryPage, setQueryPage] = useQueryState('page', parseAsInteger.withDefault(1))
+  const { queryPage } = usePaginationQueryStateWithStore({ page, setPage })
   const [filterValues, setFilterValues] = useState<ListSpacePullReqQueryQueryParams>({ include_subspaces: false })
   const [principalsSearchQuery, setPrincipalsSearchQuery] = useState<string>()
   const [populateLabelStore, setPopulateLabelStore] = useState(false)
@@ -48,12 +50,13 @@ export default function PullRequestListPage() {
   const oldPageRef = useRef(page)
   const [lastUpdatedPRFilter, setLastUpdatedPRFilter] = useState<{ updated_lt?: number; updated_gt?: number }>({})
 
-  const { scope, renderUrl } = useMFEContext()
+  const { scope, renderUrl, routeUtils } = useMFEContext()
   const basename = `/ng${renderUrl}`
   const isMFE = useIsMFE()
   const { navigate } = useRouterContext()
 
   usePopulateLabelStore({ queryPage, query: labelsQuery, enabled: populateLabelStore, inherited: true })
+  useFillLabelStoreWithProjectLabelValuesData({ queryPage, query: labelsQuery, inherited: true })
   const getApiPath = useAPIPath()
   const { accountId, orgIdentifier, projectIdentifier } = scope
 
@@ -172,11 +175,6 @@ export default function PullRequestListPage() {
   }, [pullRequestData, setPullRequests])
 
   useEffect(() => {
-    setQueryPage(page)
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [page, queryPage, setPage])
-
-  useEffect(() => {
     if (labelBy) {
       setPopulateLabelStore(true)
     }
@@ -208,19 +206,18 @@ export default function PullRequestListPage() {
     if (!isMFE || isSameScope) {
       navigate(pullRequestPath)
     } else {
-      const fullPath = `${basename}${getPullRequestUrl({
-        repo,
-        scope: {
-          accountId,
-          orgIdentifier,
-          projectIdentifier
-        },
-        pullRequestSubPath: pullRequestPath
-      })}`
-
-      // TODO: Fix this properly to avoid full page refresh.
-      // Currently, not able to navigate properly with React Router.
-      window.location.href = fullPath
+      if (routeUtils?.toCODEPullRequest) {
+        // Navigate with parent app's React Router
+        routeUtils.toCODEPullRequest({ repoPath: repo.path, pullRequestId: prNumber?.toString() || '' })
+      } else {
+        // TODO: Remove this fallback once the routeUtils is available in all release branches
+        const fullPath = `${basename}${getPullRequestUrl({
+          repo,
+          scope: { accountId, orgIdentifier, projectIdentifier },
+          pullRequestSubPath: pullRequestPath
+        })}`
+        window.location.href = fullPath
+      }
     }
   }
 

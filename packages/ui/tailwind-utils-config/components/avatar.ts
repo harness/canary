@@ -24,7 +24,7 @@ export default {
       height: `var(--cn-avatar-size-lg)`,
       width: `var(--cn-avatar-size-lg)`,
       fontSize: `var(--cn-font-size-2)`,
-      fontWeight: `var(--cn-font-weight-default-normal-400)`,
+      fontWeight: `var(--cn-font-weight-default-normal-400)`
     },
 
     '&:where(.cn-avatar-rounded)': {
@@ -38,8 +38,8 @@ export default {
     },
 
     '.cn-avatar-fallback': {
-      backgroundColor: `var(--cn-set-brand-soft-bg)`,
-      color: `var(--cn-set-brand-soft-text)`,
+      backgroundColor: `var(--cn-set-gray-solid-bg)`,
+      color: `var(--cn-set-gray-solid-text)`,
       fontSize: 'inherit',
       borderRadius: 'inherit',
       boxShadow: 'inherit',
@@ -47,8 +47,8 @@ export default {
     },
 
     '.cn-avatar-icon': {
-      width: '80%',
-      height: '80%'
+      width: '60%',
+      height: '60%'
     }
   }
 }

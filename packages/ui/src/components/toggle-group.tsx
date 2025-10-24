@@ -4,6 +4,7 @@ import {
   ElementRef,
   FC,
   forwardRef,
+  PropsWithoutRef,
   ReactNode,
   useCallback,
   useContext,
@@ -12,16 +13,7 @@ import {
   useState
 } from 'react'
 
-import {
-  Button,
-  ButtonSizes,
-  IconPropsV2,
-  IconV2,
-  IconV2NamesType,
-  toggleVariants,
-  Tooltip,
-  TooltipProps
-} from '@/components'
+import { Button, IconPropsV2, IconV2, IconV2NamesType, toggleVariants, Tooltip, TooltipProps } from '@/components'
 import { cn } from '@/utils'
 import * as ToggleGroupPrimitive from '@radix-ui/react-toggle-group'
 import { VariantProps } from 'class-variance-authority'
@@ -53,7 +45,7 @@ export interface ToggleGroupProps
   type?: ComponentPropsWithoutRef<typeof ToggleGroupPrimitive.Root>['type']
   variant?: ToggleGroupVariant
   selectedVariant?: ToggleGroupSelectedVariant
-  size?: ButtonSizes
+  size?: VariantProps<typeof toggleVariants>['size']
   disabled?: boolean
   className?: string
   unselectable?: boolean
@@ -65,14 +57,14 @@ export type ToggleGroupItemPropsBase = {
   tooltipProps?: ToggleTooltipProps
   disabled?: boolean
   suffixIcon?: IconV2NamesType
-  suffixIconProps?: IconPropsV2
+  suffixIconProps?: PropsWithoutRef<IconPropsV2>
   text?: string
 }
 
 type TogglePropsIconOnly = ToggleGroupItemPropsBase & {
   iconOnly: true
   prefixIcon: IconV2NamesType
-  prefixIconProps: IconPropsV2
+  prefixIconProps: PropsWithoutRef<IconPropsV2>
   suffixIcon: never
   suffixIconProps: never
 }
@@ -80,7 +72,7 @@ type TogglePropsIconOnly = ToggleGroupItemPropsBase & {
 type TogglePropsNotIconOnly = ToggleGroupItemPropsBase & {
   iconOnly?: false
   prefixIcon?: IconV2NamesType
-  prefixIconProps?: IconPropsV2
+  prefixIconProps?: PropsWithoutRef<IconPropsV2>
 }
 
 export type ToggleGroupItemProps = TogglePropsIconOnly | TogglePropsNotIconOnly

@@ -73,7 +73,7 @@ export const RepoFileEdit = () => {
       />
 
       <Tabs.Root
-        className="flex flex-col h-full"
+        className="flex h-full flex-col"
         value={view as string}
         onValueChange={val => onChangeView(val as EditViewTypeValue)}
       >

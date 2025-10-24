@@ -3,17 +3,20 @@ import { FC, useCallback, useEffect, useMemo, useRef, useState } from 'react'
 import {
   Button,
   ButtonGroup,
+  ButtonGroupBaseButtonProps,
   IconV2,
+  Layout,
   ListActions,
   NoData,
   Pagination,
   SearchInput,
-  SkeletonList,
+  Skeleton,
   Spacer,
   StackedList,
   Text
 } from '@/components'
 import { useRouterContext, useTranslation } from '@/context'
+import { PrincipalType } from '@/types'
 import { ExtendedScope, SandboxLayout } from '@/views'
 import { renderFilterSelectLabel } from '@components/filters/filter-select'
 import {
@@ -73,6 +76,7 @@ const PullRequestListPage: FC<PullRequestPageProps> = ({
     page,
     setPage,
     openPullReqs,
+    mergedPullReqs,
     closedPullReqs,
     setLabelsQuery,
     setPrState,
@@ -108,6 +112,40 @@ const PullRequestListPage: FC<PullRequestPageProps> = ({
   const computedPrincipalData = useMemo(() => {
     return principalData || (defaultSelectedAuthor && !principalsSearchQuery ? [defaultSelectedAuthor] : [])
   }, [principalData, defaultSelectedAuthor, principalsSearchQuery])
+
+  const generateAuthorLabel = ({
+    display_name,
+    email
+  }: Pick<PrincipalType, 'display_name' | 'email'>): React.ReactNode =>
+    display_name !== email ? (
+      <Layout.Flex align="center" className="gap-x-1">
+        <Text wrap="nowrap">{display_name}</Text>
+        <Text color="foreground-4" variant="body-single-line-normal" lineClamp={1}>
+          ({email})
+        </Text>
+      </Layout.Flex>
+    ) : (
+      <Text lineClamp={1}>{display_name}</Text>
+    )
+
+  const userSelectOptions = useMemo(() => {
+    const otherUserOptions = computedPrincipalData
+      .filter(user => !currentUser?.id || String(user?.id) !== String(currentUser?.id))
+      .map(user => ({
+        label: generateAuthorLabel(user),
+        value: String(user?.id)
+      }))
+
+    if (currentUser?.id && !principalsSearchQuery) {
+      const currentUserOption = {
+        label: generateAuthorLabel(currentUser),
+        value: String(currentUser.id)
+      }
+      return [currentUserOption, ...otherUserOptions]
+    }
+
+    return otherUserOptions
+  }, [computedPrincipalData, currentUser, principalsSearchQuery])
 
   const labelsFilterConfig: CustomFilterOptionConfig<keyof PRListFilters, LabelsValue> = {
     label: t('views:repos.prListFilterOptions.labels.label', 'Label'),
@@ -165,12 +203,10 @@ const PullRequestListPage: FC<PullRequestPageProps> = ({
     onAuthorSearch: searchText => {
       setPrincipalsSearchQuery?.(searchText)
     },
+    isProjectLevel,
     isPrincipalsLoading,
     customFilterOptions,
-    principalData: computedPrincipalData.map(userInfo => ({
-      label: userInfo?.display_name || '',
-      value: String(userInfo?.id)
-    })),
+    principalData: userSelectOptions,
     scope
   })
 
@@ -193,19 +229,24 @@ const PullRequestListPage: FC<PullRequestPageProps> = ({
 
   const [selectedFiltersCnt, setSelectedFiltersCnt] = useState(0)
 
-  const noData = !(pullRequests && pullRequests.length > 0) && closedPullReqs === 0 && openPullReqs === 0
+  const noData =
+    !(pullRequests && pullRequests.length > 0) &&
+    closedPullReqs === 0 &&
+    openPullReqs === 0 &&
+    mergedPullReqs === 0 &&
+    !isProjectLevel
 
   const onFilterSelectionChange = (filterValues: PRListFiltersKeys[]) => {
     setSelectedFiltersCnt(filterValues.length)
   }
 
-  const hasActiveFilters = selectedFiltersCnt > 0 || searchQuery || !!defaultSelectedAuthor
+  const hasActiveFilters = selectedFiltersCnt > 0 || searchQuery
 
   const showTopBar = !noData || hasActiveFilters
 
   const renderListContent = () => {
     if (isLoading) {
-      return <SkeletonList />
+      return <Skeleton.List />
     }
 
     if (noData) {
@@ -219,12 +260,8 @@ const PullRequestListPage: FC<PullRequestPageProps> = ({
               t('views:noData.changeSearch', 'or search for a different keyword.')
             ]}
             secondaryButton={{
-              label: (
-                <>
-                  <IconV2 name="trash" />
-                  <Text>{t('views:noData.clearFilters', 'Clear filters')}</Text>
-                </>
-              ),
+              icon: 'trash',
+              label: t('views:noData.clearSearch', 'Clear filters'),
               onClick: () => {
                 filtersRef.current?.reset()
                 handleResetQuery()
@@ -234,23 +271,23 @@ const PullRequestListPage: FC<PullRequestPageProps> = ({
         </StackedList.Root>
       ) : (
         <NoData
-          imageName="no-data-folder"
+          imageName="no-data-pr"
           title="No pull requests yet"
           description={
             repoId
               ? [
                   t(
                     'views:noData.noPullRequestsInRepo',
-                    `Start your contribution journey by creating a new pull request draft.`
-                  ),
-                  t('views:noData.createNewPullRequest', 'Create a new pull request.')
+                    `Start your contribution journey by creating a new pull request.`
+                  )
                 ]
               : [t('views:noData.noPullRequestsInProject', `There are no pull requests in this project yet.`)]
           }
           primaryButton={
             repoId
               ? {
-                  label: 'Create pull request',
+                  icon: 'plus',
+                  label: t('views:noData.button.createPullRequest', 'Create Pull Request'),
                   to: `${spaceId ? `/${spaceId}` : ''}/repos/${repoId}/pulls/compare/`
                 }
               : undefined
@@ -266,6 +303,7 @@ const PullRequestListPage: FC<PullRequestPageProps> = ({
         pullRequests={pullRequests || []}
         // Do not show Open and close count if project level
         closedPRs={!isProjectLevel ? closedPullReqs : undefined}
+        mergedPRs={!isProjectLevel ? mergedPullReqs : undefined}
         openPRs={!isProjectLevel ? openPullReqs : undefined}
         headerFilter={prState}
         setHeaderFilter={setPrState}
@@ -348,8 +386,13 @@ const PullRequestListPage: FC<PullRequestPageProps> = ({
     onFilterChange?.(_filterValues)
   }
 
-  const activeClass = 'bg-cn-background-primary text-cn-foreground-primary'
-  const inactiveClass = ''
+  const getToggleCommonProps = (filterGroup: PRFilterGroupTogglerOptions): ButtonGroupBaseButtonProps => {
+    return {
+      onClick: () => onFilterGroupChange(filterGroup),
+      className: activeFilterGrp === filterGroup ? 'z-[2]' : '',
+      variant: activeFilterGrp === filterGroup ? 'primary' : 'outline'
+    }
+  }
 
   return (
     <SandboxLayout.Main>
@@ -390,21 +433,11 @@ const PullRequestListPage: FC<PullRequestPageProps> = ({
                 {isProjectLevel && (
                   <ButtonGroup
                     buttonsProps={[
-                      {
-                        children: 'All',
-                        onClick: () => onFilterGroupChange(PRFilterGroupTogglerOptions.All),
-                        className: activeFilterGrp === PRFilterGroupTogglerOptions.All ? activeClass : inactiveClass
-                      },
-                      {
-                        children: 'Created',
-                        onClick: () => onFilterGroupChange(PRFilterGroupTogglerOptions.Created),
-                        className: activeFilterGrp === PRFilterGroupTogglerOptions.Created ? activeClass : inactiveClass
-                      },
+                      { children: 'All', ...getToggleCommonProps(PRFilterGroupTogglerOptions.All) },
+                      { children: 'Created', ...getToggleCommonProps(PRFilterGroupTogglerOptions.Created) },
                       {
                         children: 'Review Requested',
-                        onClick: () => onFilterGroupChange(PRFilterGroupTogglerOptions.ReviewRequested),
-                        className:
-                          activeFilterGrp === PRFilterGroupTogglerOptions.ReviewRequested ? activeClass : inactiveClass
+                        ...getToggleCommonProps(PRFilterGroupTogglerOptions.ReviewRequested)
                       }
                     ]}
                     size="sm"
@@ -434,7 +467,10 @@ const PullRequestListPage: FC<PullRequestPageProps> = ({
                  */}
                 {repoId ? (
                   <Button asChild>
-                    <Link to={`${spaceId ? `/${spaceId}` : ''}/repos/${repoId}/pulls/compare/`}>New pull request</Link>
+                    <Link to={`${spaceId ? `/${spaceId}` : ''}/repos/${repoId}/pulls/compare/`}>
+                      <IconV2 name="plus" />
+                      {t('views:repos.createPullReq', 'Create Pull Request.')}
+                    </Link>
                   </Button>
                 ) : null}
               </ListActions.Right>
@@ -447,6 +483,8 @@ const PullRequestListPage: FC<PullRequestPageProps> = ({
                       <PRListFilterHandler.Component
                         parser={filterOption.parser}
                         filterKey={filterOption.value}
+                        sticky={filterOption.sticky}
+                        defaultValue={filterOption.defaultValue}
                         key={filterOption.value}
                       >
                         {({ onChange, removeFilter, value }) =>
@@ -454,6 +492,8 @@ const PullRequestListPage: FC<PullRequestPageProps> = ({
                             filterOption,
                             onChange,
                             removeFilter,
+                            // Increase width for Author filter to accomodate name and email as label
+                            dropdownContentClassName: filterOption.value === 'created_by' ? 'w-[445px]' : '',
                             value: value,
                             onOpenChange: isOpen => {
                               handleFilterOpen(filterOption.value, isOpen)
@@ -484,13 +524,15 @@ const PullRequestListPage: FC<PullRequestPageProps> = ({
         )}
         {renderListContent()}
         {isProjectLevel ? (
-          <Pagination
-            indeterminate={true}
-            hasPrevious={page > 1}
-            hasNext={(pullRequests?.length || 0) === pageSize}
-            onPrevious={() => setPage(page - 1)}
-            onNext={() => setPage(page + 1)}
-          />
+          !!pullRequests?.length && (
+            <Pagination
+              indeterminate={true}
+              hasPrevious={page > 1}
+              hasNext={(pullRequests.length || 0) === pageSize}
+              onPrevious={() => setPage(page - 1)}
+              onNext={() => setPage(page + 1)}
+            />
+          )
         ) : (
           <Pagination totalItems={totalItems} pageSize={pageSize} currentPage={page} goToPage={setPage} />
         )}

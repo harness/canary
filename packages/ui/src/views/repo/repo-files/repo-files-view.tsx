@@ -1,7 +1,8 @@
 import { FC, ReactNode, useMemo } from 'react'
 
-import { NoData, PathParts, SkeletonList } from '@/components'
+import { IconV2, NoData, PathParts } from '@/components'
 import { useTranslation } from '@/context'
+import { UsererrorError } from '@/types'
 import {
   BranchInfoBar,
   BranchSelectorListItem,
@@ -10,6 +11,7 @@ import {
   CommitDivergenceType,
   FileLastChangeBar,
   LatestFileTypes,
+  NotFoundPage,
   PathActionBar,
   RepoFile,
   SandboxLayout,
@@ -18,7 +20,6 @@ import {
 
 interface RepoFilesProps {
   pathParts: PathParts[]
-  loading: boolean
   files: RepoFile[]
   isDir: boolean
   isRepoEmpty?: boolean
@@ -40,11 +41,12 @@ interface RepoFilesProps {
   selectedRefType: BranchSelectorTab
   fullResourcePath?: string
   showContributeBtn?: boolean
+  repoDetailsError?: UsererrorError | null
+  scheduleFileMetaFetch?: (paths: string[]) => void
 }
 
 export const RepoFiles: FC<RepoFilesProps> = ({
   pathParts,
-  loading,
   files,
   isDir,
   isShowSummary,
@@ -65,18 +67,18 @@ export const RepoFiles: FC<RepoFilesProps> = ({
   gitRef,
   selectedRefType,
   fullResourcePath,
-  showContributeBtn
+  showContributeBtn,
+  repoDetailsError,
+  scheduleFileMetaFetch
 }) => {
   const { t } = useTranslation()
 
   const isView = useMemo(() => codeMode === CodeModes.VIEW, [codeMode])
 
   const content = useMemo(() => {
-    if (loading || isLoadingRepoDetails) return <SkeletonList />
-
     if (!isView) return children
 
-    if (!isRepoEmpty && !isDir) {
+    if (!isRepoEmpty && !isDir && !repoDetailsError) {
       return (
         <>
           {!isLoadingRepoDetails && <FileLastChangeBar toCommitDetails={toCommitDetails} {...latestFile} />}
@@ -85,7 +87,7 @@ export const RepoFiles: FC<RepoFilesProps> = ({
       )
     }
 
-    if (isShowSummary && files.length)
+    if (isShowSummary && files.length && !repoDetailsError)
       return (
         <>
           {selectedBranchTag?.name !== defaultBranchName && (
@@ -107,9 +109,14 @@ export const RepoFiles: FC<RepoFilesProps> = ({
             latestFile={latestFile}
             files={files}
             toRepoFileDetails={toRepoFileDetails}
+            scheduleFileMetaFetch={scheduleFileMetaFetch}
           />
         </>
       )
+
+    if (repoDetailsError) {
+      return <NotFoundPage errorMessage={repoDetailsError.message} />
+    }
 
     return (
       <NoData
@@ -118,7 +125,12 @@ export const RepoFiles: FC<RepoFilesProps> = ({
         title="No files yet"
         description={['There are no files in this repository yet.']}
         primaryButton={{
-          label: 'Create file',
+          label: (
+            <>
+              <IconV2 name="plus" />
+              {t('views:repos.createFile', 'Create File')}
+            </>
+          ),
           to: `${spaceId ? `/${spaceId}` : ''}/repos/${repoId}/files/new/${gitRef}/~/`
         }}
       />
@@ -128,7 +140,6 @@ export const RepoFiles: FC<RepoFilesProps> = ({
     children,
     isDir,
     latestFile,
-    loading,
     isShowSummary,
     files,
     selectedBranchTag?.name,
@@ -142,8 +153,8 @@ export const RepoFiles: FC<RepoFilesProps> = ({
   ])
 
   return (
-    <SandboxLayout.Main className="repo-files-height bg-transparent" fullWidth>
-      <SandboxLayout.Content className="flex h-full flex-col pl-cn-xl gap-y-cn-md">
+    <SandboxLayout.Main className="repo-files-height bg-transparent">
+      <SandboxLayout.Content className="pl-cn-lg gap-y-cn-md pt-cn-xl flex h-full flex-col">
         {isView && !isRepoEmpty && (
           <PathActionBar
             codeMode={codeMode}

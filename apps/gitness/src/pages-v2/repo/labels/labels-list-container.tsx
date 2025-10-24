@@ -2,20 +2,27 @@ import { useState } from 'react'
 import { useNavigate, useParams } from 'react-router-dom'
 
 import { useDeleteRepoLabelMutation, useDeleteSpaceLabelMutation } from '@harnessio/code-service-client'
-import { DeleteAlertDialog } from '@harnessio/ui/components'
+import { DeleteAlertDialog, MessageTheme } from '@harnessio/ui/components'
 import { ILabelType, LabelsListPage } from '@harnessio/ui/views'
 
 import { useRoutes } from '../../../framework/context/NavigationContext'
+import { useMFEContext } from '../../../framework/hooks/useMFEContext.ts'
 import { useQueryState } from '../../../framework/hooks/useQueryState'
 import usePaginationQueryStateWithStore from '../../../hooks/use-pagination-query-state-with-store'
 import { PathParams } from '../../../RouteDefinitions'
+import { getScopedRuleUrl } from '../../../utils/rule-url-utils.ts'
+import { getSpaceRefByScope } from '../../../utils/scope-url-utils.ts'
 import { useLabelsStore } from '../../project/stores/labels-store'
 import { usePopulateLabelStore } from './hooks/use-populate-label-store.ts'
 
 export const RepoLabelsList = () => {
-  const { spaceId } = useParams<PathParams>()
+  const { repoId, spaceId } = useParams<PathParams>()
   const routes = useRoutes()
   const navigate = useNavigate()
+  const {
+    routeUtils,
+    scope: { accountId, orgIdentifier, projectIdentifier }
+  } = useMFEContext()
 
   const [openAlertDeleteDialog, setOpenAlertDeleteDialog] = useState(false)
   const [identifier, setIdentifier] = useState<string | null>(null)
@@ -28,11 +35,18 @@ export const RepoLabelsList = () => {
   const { space_ref, repo_ref } = usePopulateLabelStore({ queryPage, query })
 
   const handleOpenDeleteDialog = (identifier: string) => {
+    resetDeleteRepoMutation()
+    resetDeleteSpaceMutation()
     setOpenAlertDeleteDialog(true)
     setIdentifier(identifier)
   }
 
-  const { mutate: deleteRepoLabel, isLoading: isDeletingRepoLabel } = useDeleteRepoLabelMutation(
+  const {
+    mutate: deleteRepoLabel,
+    isLoading: isDeletingRepoLabel,
+    error: repoError,
+    reset: resetDeleteRepoMutation
+  } = useDeleteRepoLabelMutation(
     { repo_ref: repo_ref ?? '' },
     {
       onSuccess: (_data, variables) => {
@@ -42,7 +56,12 @@ export const RepoLabelsList = () => {
     }
   )
 
-  const { mutate: deleteSpaceLabel, isLoading: isDeletingSpaceLabel } = useDeleteSpaceLabelMutation(
+  const {
+    mutate: deleteSpaceLabel,
+    isLoading: isDeletingSpaceLabel,
+    error: spaceError,
+    reset: resetDeleteSpaceMutation
+  } = useDeleteSpaceLabelMutation(
     { space_ref: space_ref ?? '' },
     {
       onSuccess: (_data, variables) => {
@@ -59,21 +78,35 @@ export const RepoLabelsList = () => {
   const handleDeleteLabel = (key: string) => {
     const label = storeLabels.find(label => label.key === key)
 
-    if (!label) return
-
-    label?.scope === 0 ? deleteRepoLabel({ key }) : deleteSpaceLabel({ key })
+    label?.scope === 0
+      ? deleteRepoLabel({ key })
+      : deleteSpaceLabel({ space_ref: `${getSpaceRefByScope(space_ref ?? '', label?.scope ?? 0)}/+`, key })
   }
 
   return (
     <>
       <LabelsListPage
-        // className="max-w-[772px] px-0"
         useLabelsStore={useLabelsStore}
-        createdIn={repo_ref}
         searchQuery={query}
         setSearchQuery={setQuery}
         isRepository
         labelsListViewProps={{ widthType: 'default', handleDeleteLabel: handleOpenDeleteDialog, handleEditLabel }}
+        toRepoLabelDetails={({ labelId, scope }: { labelId: string; scope: number }) => {
+          // routes.toRepoLabelDetails({ repoId: repoId ?? '', spaceId: spaceId ?? '', labelId })
+          getScopedRuleUrl({
+            scope,
+            identifier: labelId,
+            settingSection: 'labels',
+            toCODERule: routeUtils?.toCODERule,
+            toCODEManageRepositories: routeUtils?.toCODEManageRepositories,
+            accountId,
+            orgIdentifier,
+            projectIdentifier,
+            repoId,
+            spaceId
+          })
+          return ''
+        }}
       />
       <DeleteAlertDialog
         open={openAlertDeleteDialog}
@@ -82,6 +115,14 @@ export const RepoLabelsList = () => {
         type="label"
         deleteFn={handleDeleteLabel}
         isLoading={isDeletingRepoLabel || isDeletingSpaceLabel}
+        error={
+          repoError || spaceError
+            ? {
+                type: MessageTheme.ERROR,
+                message: repoError?.message ?? spaceError?.message ?? 'Unable to delete label'
+              }
+            : undefined
+        }
       />
     </>
   )

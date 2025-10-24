@@ -1,7 +1,7 @@
 import { FC, ReactElement, useEffect, useRef, useState } from 'react'
 import { useForm } from 'react-hook-form'
 
-import { Avatar, Button, IconV2, Layout, Link, LinkProps, NoData, SkeletonList, Spacer, Tabs, Text } from '@/components'
+import { Avatar, Button, IconV2, Layout, Link, LinkProps, NoData, Skeleton, Spacer, Tabs, Text } from '@/components'
 import { TFunctionWithFallback, useRouterContext, useTranslation } from '@/context'
 import { TypesDiffStats } from '@/types'
 import {
@@ -49,7 +49,7 @@ export type CompareFormFields = z.infer<ReturnType<typeof getPullRequestFormSche
 
 export const DiffModeOptions = [
   { name: 'Split', value: 'Split' },
-  { name: 'Unified', value: 'Unified' }
+  { name: 'Unified (Experimental - Read only mode)', value: 'Unified' }
 ]
 interface RoutingProps {
   toCommitDetails?: ({ sha }: { sha: string }) => string
@@ -111,7 +111,7 @@ export const PullRequestComparePage: FC<PullRequestComparePageProps> = ({
   isLoading,
   isSuccess,
   onFormDraftSubmit,
-  mergeability = false,
+  mergeability,
   handleAiPullRequestSummary,
 
   diffData,
@@ -156,6 +156,12 @@ export const PullRequestComparePage: FC<PullRequestComparePageProps> = ({
   const [isSubmitted, setIsSubmitted] = useState<boolean>(false)
   const { navigate } = useRouterContext()
   const { t } = useTranslation()
+
+  const [activeTab, setActiveTab] = useState(prBranchCombinationExists ? 'commits' : 'overview')
+
+  useEffect(() => {
+    setActiveTab(prBranchCombinationExists ? 'commits' : 'overview')
+  }, [prBranchCombinationExists])
 
   const formMethods = useForm<CompareFormFields>({
     resolver: zodResolver(getPullRequestFormSchema(t)),
@@ -216,6 +222,7 @@ export const PullRequestComparePage: FC<PullRequestComparePageProps> = ({
     // Return a default value
     return review_decision
   }
+
   return (
     <SandboxLayout.Main fullWidth>
       <SandboxLayout.Content>
@@ -230,59 +237,59 @@ export const PullRequestComparePage: FC<PullRequestComparePageProps> = ({
           <Layout.Horizontal align="center" gap="xs">
             {branchSelectorRenderer}
 
-            {isBranchSelected &&
-              !isLoading && ( // Only render this block if isBranchSelected is true
-                <Layout.Horizontal gap="xs" align="center">
-                  {mergeability ? (
-                    <>
-                      <IconV2 className="text-icons-success" name="check" size="2xs" />
-                      <Text variant="body-single-line-normal" color="success">
-                        {t('views:pullRequests.compareChangesAbleToMerge', 'Able to merge.')}{' '}
-                        <Text variant="body-single-line-normal" as="span" color="foreground-2">
+            {mergeability !== undefined && !isLoading && (
+              <Layout.Horizontal gap="xs" align="center">
+                {mergeability === true ? (
+                  <>
+                    <IconV2 className="text-icons-success" name="check" size="2xs" />
+                    <Text variant="body-single-line-normal" color="success">
+                      {t('views:pullRequests.compareChangesAbleToMerge', 'Able to merge.')}{' '}
+                      <Text variant="body-single-line-normal" as="span" color="foreground-2">
+                        {t(
+                          'views:pullRequests.compareChangesAbleToMergeDescription',
+                          'These branches can be automatically merged.'
+                        )}
+                      </Text>
+                    </Text>
+                  </>
+                ) : null}
+                {mergeability === false ? (
+                  <>
+                    {apiError === "head branch doesn't contain any new commits." ? (
+                      <>
+                        <IconV2 name="xmark" size="2xs" className="text-icons-1" />
+                        <Text variant="body-single-line-normal">
                           {t(
-                            'views:pullRequests.compareChangesAbleToMergeDescription',
-                            'These branches can be automatically merged.'
+                            'views:pullRequests.compareChangesApiError',
+                            'Head branch doesn’t contain any new commits.'
                           )}
                         </Text>
-                      </Text>
-                    </>
-                  ) : (
-                    <>
-                      {apiError === "head branch doesn't contain any new commits." ? (
-                        <>
-                          <IconV2 name="xmark" size="2xs" className="text-icons-1" />
-                          <Text variant="body-single-line-normal">
+                      </>
+                    ) : (
+                      <>
+                        <IconV2 className="text-icons-danger" name="xmark" size="2xs" />
+                        <Text variant="body-single-line-normal" color="danger">
+                          {t('views:pullRequests.compareChangesCantMerge', 'Can’t be merged.')}{' '}
+                          <span className="text-cn-foreground-2">
                             {t(
-                              'views:pullRequests.compareChangesApiError',
-                              'Head branch doesn’t contain any new commits.'
+                              'views:pullRequests.compareChangesCantMergeDescription',
+                              'You can still create the pull request.'
                             )}
-                          </Text>
-                        </>
-                      ) : (
-                        <>
-                          <IconV2 className="text-icons-danger" name="xmark" size="2xs" />
-                          <Text variant="body-single-line-normal" color="danger">
-                            {t('views:pullRequests.compareChangesCantMerge', 'Can’t be merged.')}{' '}
-                            <span className="text-cn-foreground-2">
-                              {t(
-                                'views:pullRequests.compareChangesCantMergeDescription',
-                                'You can still create the pull request.'
-                              )}
-                            </span>
-                          </Text>
-                        </>
-                      )}
-                    </>
-                  )}
-                </Layout.Horizontal>
-              )}
+                          </span>
+                        </Text>
+                      </>
+                    )}
+                  </>
+                ) : null}
+              </Layout.Horizontal>
+            )}
           </Layout.Horizontal>
         </Layout.Vertical>
         {!prBranchCombinationExists && (
           <Layout.Horizontal
             align="center"
             justify="between"
-            className="mt-5 rounded-md border border-cn-borders-2 bg-cn-background-2 py-3 px-4"
+            className="mt-5 rounded-md border border-cn-borders-2 bg-cn-background-2 px-4 py-3"
           >
             <Text variant="body-normal" color="foreground-1">
               {isBranchSelected ? (
@@ -333,8 +340,6 @@ export const PullRequestComparePage: FC<PullRequestComparePageProps> = ({
                     <span className="text-cn-foreground-2">{`#${prBranchCombinationExists.number}`}</span>
                   </div>
                 </Layout.Horizontal>
-
-                <Text>{prBranchCombinationExists.description}</Text>
               </div>
             </div>
             <Button
@@ -348,7 +353,7 @@ export const PullRequestComparePage: FC<PullRequestComparePageProps> = ({
         )}
         {isBranchSelected ? (
           <Layout.Vertical className="mt-10">
-            <Tabs.Root defaultValue={prBranchCombinationExists ? 'commits' : 'overview'}>
+            <Tabs.Root value={activeTab} onValueChange={val => setActiveTab(val)}>
               <Tabs.List variant="overlined" className="-mx-8 px-8">
                 {!prBranchCombinationExists && (
                   <Tabs.Trigger value="overview" icon="info-circle">
@@ -358,7 +363,7 @@ export const PullRequestComparePage: FC<PullRequestComparePageProps> = ({
                 <Tabs.Trigger value="commits" icon="git-commit" counter={diffStats?.commits}>
                   {t('views:pullRequests.compareChangesTabCommits', 'Commits')}
                 </Tabs.Trigger>
-                <Tabs.Trigger value="changes" icon="page" counter={diffStats?.files_changed}>
+                <Tabs.Trigger value="changes" icon="empty-page" counter={diffStats?.files_changed}>
                   {t('views:pullRequests.compareChangesTabChanges', 'Changes')}
                 </Tabs.Trigger>
               </Tabs.List>
@@ -414,7 +419,7 @@ export const PullRequestComparePage: FC<PullRequestComparePageProps> = ({
               <Tabs.Content className="pt-7" value="commits">
                 {/* TODO: add pagination to this */}
                 {isFetchingCommits ? (
-                  <SkeletonList />
+                  <Skeleton.List />
                 ) : (commitData ?? []).length > 0 ? (
                   <CommitsList
                     toCode={toCode}
@@ -441,7 +446,7 @@ export const PullRequestComparePage: FC<PullRequestComparePageProps> = ({
                   />
                 )}
               </Tabs.Content>
-              <Tabs.Content className="pt-7" value="changes">
+              <Tabs.Content value="changes">
                 {/* Content for Changes */}
                 {(diffData ?? []).length > 0 ? (
                   <PullRequestCompareDiffList

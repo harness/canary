@@ -98,6 +98,7 @@ const PullRequestConversation: FC<PullRequestConversationProps> = ({ state }) =>
         panelProps={{
           handleRebaseBranch,
           handlePrState,
+          handleViewUnresolvedComments: noop,
           changesInfo: {
             header: changesInfo.title,
             content: changesInfo.statusMessage,

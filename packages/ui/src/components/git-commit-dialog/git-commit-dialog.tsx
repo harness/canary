@@ -132,7 +132,7 @@ export const GitCommitDialog: FC<GitCommitDialogProps> = ({
         </Dialog.Header>
 
         <Dialog.Body>
-          <FormWrapper {...formMethods} onSubmit={handleSubmit(onSubmit)}>
+          <FormWrapper id="commit-form" {...formMethods} onSubmit={handleSubmit(onSubmit)}>
             {isFileNameRequired && (
               <FormInput.Text
                 id="fileName"
@@ -171,17 +171,14 @@ export const GitCommitDialog: FC<GitCommitDialogProps> = ({
                   value={CommitToGitRefOption.DIRECTLY}
                   label={
                     <>
-                      {t('component:commitDialog.form.radioGroup.directly.labelFirst', 'Commit directly to the')}
+                      {t('component:commitDialog.form.radioGroup.directly.labelFirst', 'Commit directly to')}
                       <Tag
-                        className="-mt-0.5 mx-1.5 align-sub"
+                        className="mx-1.5 -mt-0.5 align-sub"
                         variant="secondary"
-                        theme="blue"
-                        size="md"
+                        theme="gray"
                         value={currentBranch}
                         icon="git-branch"
-                        showIcon
                       />
-                      {t('component:commitDialog.form.radioGroup.directly.labelSecond', 'branch')}
                     </>
                   }
                 />
@@ -194,8 +191,7 @@ export const GitCommitDialog: FC<GitCommitDialogProps> = ({
                     'Create a new branch for this commit and start a pull request'
                   )}
                   caption={
-                    // TODO: Add correct path
-                    <Link to="/">
+                    <Link to="https://developer.harness.io/docs/category/pull-requests" target="_blank">
                       {t('component:commitDialog.form.radioGroup.new.caption', 'Learn more about pull requests')}
                     </Link>
                   }
@@ -252,13 +248,13 @@ export const GitCommitDialog: FC<GitCommitDialogProps> = ({
               {t('component:cancel', 'Cancel')}
             </Dialog.Close>
             {!bypassable ? (
-              <Button type="button" onClick={handleSubmit(onSubmit)} disabled={isDisabledSubmission}>
+              <Button type="submit" form="commit-form" disabled={isDisabledSubmission}>
                 {isSubmitting
                   ? t('component:commitDialog.form.submit.loading', 'Committing...')
                   : t('component:commitDialog.form.submit.default', 'Commit changes')}
               </Button>
             ) : (
-              <Button onClick={handleSubmit(onSubmit)} variant="outline" theme="danger" type="submit">
+              <Button type="submit" form="commit-form" variant="outline" theme="danger">
                 {commitToGitRefValue === CommitToGitRefOption.NEW_BRANCH
                   ? t('component:commitDialog.form.submit.bypassable.new', 'Bypass rules and commit via new branch')
                   : t('component:commitDialog.form.submit.bypassable.directly', 'Bypass rules and commit directly')}

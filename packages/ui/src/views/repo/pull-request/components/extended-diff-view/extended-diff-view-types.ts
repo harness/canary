@@ -7,6 +7,7 @@ export type LinesRange = {
 }
 
 export interface ExtendedDiffViewProps<T> extends Omit<DiffViewProps<T>, 'extendData' | 'renderWidgetLine'> {
+  scopeMultilineSelectionToOneHunk?: (lineRange: LinesRange) => LinesRange
   extendData?: {
     oldFile?: Record<
       string,

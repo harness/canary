@@ -1,12 +1,13 @@
 import { FC, useCallback, useMemo } from 'react'
 
-import { Button, Layout, Pagination, SearchInput, Select, Spacer, Text, Toggle } from '@/components'
+import { Button, Layout, SearchInput, Select, Spacer, Text, Toggle } from '@/components'
 import { useTranslation } from '@/context'
 import { RepositoryType, SandboxLayout } from '@/views'
 import { cn } from '@utils/cn'
 
 import { SearchResultItem, SearchResultsList } from './components/search-results-list'
 import { SemanticSearchResultItem, SemanticSearchResultsList } from './components/semantic-search-results-list'
+import { getScopeOptions } from './utils/utils'
 
 const languageOptions = [
   { label: 'JavaScript', value: 'javascript' },
@@ -40,6 +41,7 @@ export interface SearchPageViewProps {
   semanticEnabled: boolean
   setSemanticEnabled: (selected: boolean) => void
   isRepoScope: boolean
+  onRecursiveToggle: (recursive: boolean) => void
   semanticSearchError?: string
   searchError?: string
   useSearchResultsStore: () => {
@@ -60,7 +62,10 @@ export interface SearchPageViewProps {
   selectedLanguage?: string
   onLanguageSelect: (language: string) => void
   onClearFilters: () => void
+  // routing paths
   toRepoFileDetails: (params: { repoPath?: string; filePath: string; branch?: string }) => string
+  toRepo: (params: { repoPath?: string }) => string
+  scope: { accountId: string; orgIdentifier?: string; projectIdentifier?: string }
 }
 
 export const SearchPageView: FC<SearchPageViewProps> = ({
@@ -79,14 +84,17 @@ export const SearchPageView: FC<SearchPageViewProps> = ({
   toRepoFileDetails,
   repos,
   selectedRepoId,
+  onRecursiveToggle,
   isReposListLoading,
   selectedLanguage,
   onLanguageSelect,
   onRepoSelect,
-  onClearFilters
+  onClearFilters,
+  toRepo,
+  scope
 }) => {
   const { t } = useTranslation()
-  const { results, semanticResults, page, xNextPage, xPrevPage, setPage } = useSearchResultsStore()
+  const { results, semanticResults, page, setPage } = useSearchResultsStore()
 
   const handleSearchChange = useCallback(
     (value: string) => {
@@ -100,14 +108,6 @@ export const SearchPageView: FC<SearchPageViewProps> = ({
     return page !== 1 || !!searchQuery
   }, [page, searchQuery])
 
-  const getPrevPageLink = useCallback(() => {
-    return `?page=${xPrevPage}`
-  }, [xPrevPage])
-
-  const getNextPageLink = useCallback(() => {
-    return `?page=${xNextPage}`
-  }, [xNextPage])
-
   return (
     <SandboxLayout.Main>
       <SandboxLayout.Content
@@ -115,6 +115,7 @@ export const SearchPageView: FC<SearchPageViewProps> = ({
           'mx-auto': isLoading || results?.length || searchQuery,
           'h-full': !isLoading && !results?.length && !searchQuery
         })}
+        // maxWidth="7xl"
       >
         <div className="relative">
           <SearchInput
@@ -155,6 +156,13 @@ export const SearchPageView: FC<SearchPageViewProps> = ({
           <>
             <Spacer size={7} />
             <Layout.Horizontal gap="sm">
+              {!scope.projectIdentifier ? (
+                <Select
+                  options={getScopeOptions(scope)}
+                  onChange={value => (value === 'all' ? onRecursiveToggle(true) : onRecursiveToggle(false))}
+                  placeholder={t('views:search.scopePlaceholder', 'Select a scope')}
+                />
+              ) : null}
               {!isRepoScope && repos ? (
                 <Select
                   isLoading={isReposListLoading}
@@ -180,7 +188,7 @@ export const SearchPageView: FC<SearchPageViewProps> = ({
         <Spacer size={6} />
 
         {!isLoading && !semanticEnabled && stats && results && results.length > 0 && (
-          <Layout.Horizontal gap="xs">
+          <Layout.Horizontal gap="xs" align="center">
             <Text variant={'body-normal'}>Results:</Text>
             <Text variant={'caption-normal'}>
               {t('views:search.statsText', '{{matchCount}} matches found in {{fileCount}} file(s)', {
@@ -191,7 +199,7 @@ export const SearchPageView: FC<SearchPageViewProps> = ({
           </Layout.Horizontal>
         )}
         {!isLoading && semanticEnabled && stats && semanticResults && semanticResults.length > 0 && (
-          <Layout.Horizontal gap="xs">
+          <Layout.Horizontal gap="xs" align="center">
             <Text variant={'body-normal'}>Results:</Text>
             <Text variant={'caption-normal'}>
               {t('views:search.statsText', '{{fileCount}} file(s)', {
@@ -217,22 +225,13 @@ export const SearchPageView: FC<SearchPageViewProps> = ({
             isDirtyList={isDirtyList}
             useSearchResultsStore={useSearchResultsStore}
             toRepoFileDetails={toRepoFileDetails}
+            toRepo={toRepo}
             searchError={searchError}
             isRepoScope={isRepoScope}
           />
         )}
 
         <Spacer size={6} />
-
-        {!isLoading && (results?.length || semanticResults?.length) ? (
-          <Pagination
-            indeterminate={true}
-            hasNext={xNextPage > 0}
-            hasPrevious={xPrevPage > 0}
-            getNextPageLink={getNextPageLink}
-            getPrevPageLink={getPrevPageLink}
-          />
-        ) : null}
       </SandboxLayout.Content>
     </SandboxLayout.Main>
   )

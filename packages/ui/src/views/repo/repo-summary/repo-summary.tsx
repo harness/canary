@@ -7,7 +7,7 @@ import {
   ListActions,
   MarkdownViewer,
   SearchFiles,
-  SkeletonList,
+  Skeleton,
   Spacer,
   StackedList,
   Text
@@ -87,6 +87,7 @@ export interface RepoSummaryViewProps extends Partial<RoutingProps> {
   refType?: BranchSelectorTab
   prCandidateBranches?: TypesBranchTable[]
   showContributeBtn?: boolean
+  scheduleFileMetaFetch?: (paths: string[]) => void
 }
 
 export function RepoSummaryView({
@@ -119,6 +120,7 @@ export function RepoSummaryView({
   tokenGenerationError,
   refType = BranchSelectorTab.BRANCHES,
   showContributeBtn,
+  scheduleFileMetaFetch,
   ...props
 }: RepoSummaryViewProps) {
   const { Link } = useRouterContext()
@@ -128,7 +130,7 @@ export function RepoSummaryView({
     return (
       <SandboxLayout.Main fullWidth>
         <SandboxLayout.Content>
-          <SkeletonList />
+          <Skeleton.Table countColumns={3} countRows={10} />
         </SandboxLayout.Content>
       </SandboxLayout.Main>
     )
@@ -184,15 +186,13 @@ export function RepoSummaryView({
             )}
 
             <ListActions.Root className="flex-wrap gap-y-2">
-              <ListActions.Left>
-                <ButtonLayout className="w-full " horizontalAlign="start">
+              <ListActions.Left className="max-w-full">
+                <ButtonLayout className="grid w-full grid-cols-[auto,1fr]" horizontalAlign="start">
                   {cloneElement(branchSelectorRenderer, { className: 'w-full max-w-fit' })}
                   <SearchFiles
                     navigateToFile={navigateToFile}
                     filesList={filesList}
-                    searchInputSize="md"
                     inputContainerClassName="max-w-80 min-w-40 w-full"
-                    contentClassName="width-popover-width"
                   />
                 </ButtonLayout>
               </ListActions.Left>
@@ -204,7 +204,8 @@ export function RepoSummaryView({
                         className="relative grid grid-cols-[auto_1fr] items-center gap-1.5"
                         to={`${spaceId ? `/${spaceId}` : ''}/repos/${repoId}/files/new/${gitRef || selectedBranchOrTag?.name || ''}/~/`}
                       >
-                        <span className="truncate">{t('views:repos.create-file', 'Create file')}</span>
+                        <IconV2 name="plus" />
+                        <span className="truncate">{t('views:repos.createFile', 'Create File')}</span>
                       </Link>
                     </Button>
                   ) : null}
@@ -229,6 +230,7 @@ export function RepoSummaryView({
               files={files}
               toRepoFileDetails={toRepoFileDetails}
               hideHeader
+              scheduleFileMetaFetch={scheduleFileMetaFetch}
             />
             <Spacer size={5} />
             <StackedList.Root onlyTopRounded borderBackground>
@@ -244,19 +246,17 @@ export function RepoSummaryView({
                 <StackedList.Field
                   right
                   title={
-                    <Button variant="outline" iconOnly asChild>
-                      <Link
-                        to={`${toRepoFiles?.()}/${doesReadmeExistInFiles(files) ? 'edit' : 'new'}/${gitRef || selectedBranchOrTag?.name}/~/${README_PATH}`}
-                        aria-label={t('views:repos.editReadme', 'Edit README.md')}
-                      >
-                        <IconV2 name="edit-pencil" className="text-icons-3" />
-                      </Link>
-                    </Button>
+                    <Link
+                      to={`${toRepoFiles?.()}/${doesReadmeExistInFiles(files) ? 'edit' : 'new'}/${gitRef || selectedBranchOrTag?.name}/~/${README_PATH}`}
+                      aria-label={t('views:repos.editReadme', 'Edit README.md')}
+                    >
+                      <IconV2 name="edit-pencil" className="text-icons-3" size="sm" />
+                    </Link>
                   }
                 />
               </StackedList.Item>
             </StackedList.Root>
-            <MarkdownViewer source={decodedReadmeContent || ''} withBorder />
+            <MarkdownViewer source={decodedReadmeContent || ''} withBorder className="text-wrap" />
           </SandboxLayout.Content>
         </SandboxLayout.Column>
         <SandboxLayout.Column>
@@ -273,7 +273,7 @@ export function RepoSummaryView({
                 },
                 {
                   id: '1',
-                  name: t('views:repos.branches', 'Branches'),
+                  name: t('views:repos.branches.title', 'Branches'),
                   count: branch_count,
                   iconName: 'git-branch',
                   to: props.toRepoBranches?.() ?? '#'

@@ -7,8 +7,7 @@ import {
   LogoV2,
   MoreActionsTooltip,
   NoData,
-  SkeletonList,
-  SkeletonTable,
+  Skeleton,
   Table,
   Text,
   TimeAgoCard,
@@ -22,7 +21,7 @@ import { ConnectorListItem, ConnectorListProps } from './types'
 import { ConnectorTypeToLogoNameMap } from './utils'
 
 const Title = ({ title }: { title: string }): JSX.Element => (
-  <span className="max-w-full truncate font-medium text-cn-foreground-1" title={title}>
+  <span className="text-cn-foreground-1 max-w-full truncate font-medium" title={title}>
     {title}
   </span>
 )
@@ -35,7 +34,7 @@ const ConnectivityStatus = ({ item }: { item: ConnectorListItem; connectorDetail
   return isSuccess ? (
     <div className="flex items-center gap-2">
       <IconV2 name="circle" size="2xs" className="text-icons-success" />
-      <Text className="transition-colors duration-200 group-hover:text-cn-foreground-1">
+      <Text className="group-hover:text-cn-foreground-1 transition-colors duration-200">
         {t('views:connectors.success', 'Success')}
       </Text>
     </div>
@@ -55,7 +54,7 @@ const ConnectivityStatus = ({ item }: { item: ConnectorListItem; connectorDetail
       >
         <Button className="group h-auto gap-2 p-0 font-normal hover:!bg-transparent" variant="ghost">
           <IconV2 name="circle" size="2xs" className="text-icons-danger" />
-          <Text className="transition-colors duration-200 group-hover:text-cn-foreground-1">
+          <Text className="group-hover:text-cn-foreground-1 transition-colors duration-200">
             {t('views:connectors.failure', 'Failed')}
           </Text>
         </Button>
@@ -84,7 +83,7 @@ export function ConnectorsList({
   const { t } = useTranslation()
 
   if (isLoading) {
-    return <SkeletonList />
+    return <Skeleton.Table countRows={12} countColumns={6} />
   }
 
   if (!connectors.length) {
@@ -95,7 +94,7 @@ export function ConnectorsList({
         title={t('views:noData.noConnectors', 'No connectors yet')}
         description={[
           t('views:noData.noConnectors', 'There are no connectors in this project yet.'),
-          t('views:connectors.createNew', 'New connector')
+          t('views:connectors.createNew', 'Create Connector')
         ]}
       />
     )
@@ -118,68 +117,60 @@ export function ConnectorsList({
           <Table.Head className="w-10" />
         </Table.Row>
       </Table.Header>
-      {isLoading ? (
-        <SkeletonTable countRows={12} countColumns={5} />
-      ) : (
-        <Table.Body>
-          {connectors.map(({ name, identifier, type, spec, status, lastModifiedAt, isFavorite }) => {
-            const connectorLogo = type ? ConnectorTypeToLogoNameMap.get(type) : undefined
-            const connectorDetailUrl = toConnectorDetails?.({ identifier, type, spec, status, lastModifiedAt }) || ''
+      <Table.Body>
+        {connectors.map(({ name, identifier, type, spec, status, lastModifiedAt, isFavorite }) => {
+          const connectorLogo = type ? ConnectorTypeToLogoNameMap.get(type) : undefined
+          const connectorDetailUrl = toConnectorDetails?.({ identifier, type, spec, status, lastModifiedAt }) || ''
 
-            return (
-              <Table.Row className="[&_td]:py-5" key={identifier} to={connectorDetailUrl}>
-                <Table.Cell className="content-center truncate">
-                  <div className="flex items-center gap-2.5">
-                    <div className="flex w-full max-w-8 items-center justify-center">
-                      {connectorLogo ? (
-                        <LogoV2 name={connectorLogo} size="lg" />
-                      ) : (
-                        <IconV2 name="connectors" size="lg" />
-                      )}
-                    </div>
-                    <Title title={identifier} />
+          return (
+            <Table.Row className="[&_td]:py-5" key={identifier} to={connectorDetailUrl}>
+              <Table.Cell className="content-center truncate">
+                <div className="flex items-center gap-2.5">
+                  <div className="flex w-full max-w-8 items-center justify-center">
+                    {connectorLogo ? <LogoV2 name={connectorLogo} size="lg" /> : <IconV2 name="connectors" size="lg" />}
                   </div>
-                </Table.Cell>
-                <Table.Cell className="content-center truncate" title={spec?.url}>
-                  {spec?.url}
-                </Table.Cell>
-                <Table.Cell className="content-center whitespace-nowrap">
-                  {status ? (
-                    <ConnectivityStatus
-                      item={{ name, identifier, type, spec, status, lastModifiedAt }}
-                      connectorDetailUrl={connectorDetailUrl}
-                    />
-                  ) : null}
-                </Table.Cell>
-                <Table.Cell className="content-center">
-                  {lastModifiedAt ? <TimeAgoCard timestamp={lastModifiedAt} /> : null}
-                </Table.Cell>
-                <Table.Cell className="content-center !p-1.5" disableLink>
-                  <Favorite
-                    isFavorite={isFavorite}
-                    onFavoriteToggle={(favorite: boolean) => onToggleFavoriteConnector(identifier, !favorite)}
+                  <Title title={identifier} />
+                </div>
+              </Table.Cell>
+              <Table.Cell className="content-center truncate" title={spec?.url}>
+                {spec?.url}
+              </Table.Cell>
+              <Table.Cell className="content-center whitespace-nowrap">
+                {status ? (
+                  <ConnectivityStatus
+                    item={{ name, identifier, type, spec, status, lastModifiedAt }}
+                    connectorDetailUrl={connectorDetailUrl}
                   />
-                </Table.Cell>
-                <Table.Cell className="content-center !p-0" disableLink>
-                  <MoreActionsTooltip
-                    actions={[
-                      {
-                        title: t('views:connectors.viewDetails', 'View Details'),
-                        to: connectorDetailUrl
-                      },
-                      {
-                        isDanger: true,
-                        title: t('views:connectors.delete', 'Delete'),
-                        onClick: () => onDeleteConnector(identifier)
-                      }
-                    ]}
-                  />
-                </Table.Cell>
-              </Table.Row>
-            )
-          })}
-        </Table.Body>
-      )}
+                ) : null}
+              </Table.Cell>
+              <Table.Cell className="content-center">
+                {lastModifiedAt ? <TimeAgoCard timestamp={lastModifiedAt} /> : null}
+              </Table.Cell>
+              <Table.Cell className="content-center !p-1.5" disableLink>
+                <Favorite
+                  isFavorite={isFavorite}
+                  onFavoriteToggle={(favorite: boolean) => onToggleFavoriteConnector(identifier, !favorite)}
+                />
+              </Table.Cell>
+              <Table.Cell className="content-center !p-0" disableLink>
+                <MoreActionsTooltip
+                  actions={[
+                    {
+                      title: t('views:connectors.viewDetails', 'View Details'),
+                      to: connectorDetailUrl
+                    },
+                    {
+                      isDanger: true,
+                      title: t('views:connectors.delete', 'Delete'),
+                      onClick: () => onDeleteConnector(identifier)
+                    }
+                  ]}
+                />
+              </Table.Cell>
+            </Table.Row>
+          )
+        })}
+      </Table.Body>
     </Table.Root>
   )
 }

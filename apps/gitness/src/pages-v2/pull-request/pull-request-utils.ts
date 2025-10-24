@@ -6,6 +6,7 @@ import {
   EnumPullReqReviewDecision,
   ListPullReqQueryQueryParams,
   TypesCodeOwnerEvaluationEntry,
+  TypesOwnerEvaluation,
   TypesPrincipalInfo,
   TypesPullReqReviewer,
   TypesRuleViolations,
@@ -260,18 +261,29 @@ export const findChangeReqDecisions = (
   }
 }
 
-export const findWaitingDecisions = (entries: TypesCodeOwnerEvaluationEntry[] | null | undefined) => {
-  if (entries === null || entries === undefined) {
+export const findWaitingDecisions = (
+  entries: TypesCodeOwnerEvaluationEntry[] | null | undefined,
+  source_sha: string,
+  reqCodeOwnerLatestApproval?: boolean
+) => {
+  if (isEmpty(entries) || entries === null || entries === undefined) {
+    //adding extra check to bypass typescript error
     return []
   } else {
     return entries.filter((entry: TypesCodeOwnerEvaluationEntry) => {
-      // eslint-disable-next-line @typescript-eslint/no-explicit-any
-      const hasEmptyDecision = entry?.owner_evaluations?.some((evaluation: any) => evaluation?.review_decision === '')
-      const hasNoApprovedDecision = !entry?.owner_evaluations?.some(
-        evaluation => evaluation.review_decision === 'approved'
+      const hasNoReview = entry?.owner_evaluations?.every(
+        (evaluation: TypesOwnerEvaluation | { review_decision: string }) => evaluation.review_decision === ''
       )
 
-      return hasEmptyDecision && hasNoApprovedDecision
+      // add entry if no review found from codeowners
+      if (hasNoReview) return true
+      // add entry to waiting decision array if approved changes are outdated or no approvals are found for the given entry
+      const hasNoApprovedDecision = !entry?.owner_evaluations?.some(
+        evaluation =>
+          evaluation.review_decision === PullReqReviewDecision.approved &&
+          (reqCodeOwnerLatestApproval ? evaluation.review_sha === source_sha : true)
+      )
+      return hasNoApprovedDecision
     })
   }
 }

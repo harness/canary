@@ -5,6 +5,8 @@ const variants = ['solid', 'soft', 'surface', 'ghost'] as const
 
 const themes = ['success', 'danger', 'muted', 'primary'] as const
 
+const sizes = ['3xs', '2xs', 'xs', 'sm', 'md'] as const
+
 const themeStyleMapper: Record<(typeof themes)[number], string> = {
   success: 'green',
   danger: 'red',
@@ -18,11 +20,6 @@ function createButtonVariantStyles() {
 
   variants.forEach(variant => {
     themes.forEach(theme => {
-      // Skip solid variant for success and danger themes
-      if (variant === 'solid' && (theme === 'success' || theme === 'danger')) {
-        return
-      }
-
       const style: CSSRuleObject = {}
 
       const themeStyle = themeStyleMapper[theme as keyof typeof themeStyleMapper]
@@ -50,15 +47,26 @@ function createButtonVariantStyles() {
           `var(--cn-set-${themeStyle}-${variant}-border, var(--cn-set-${themeStyle}-${variant}-bg))`
 
         // Hover styles
-        style[`&:hover:not(:disabled, .cn-button-disabled)`] = {
-          backgroundColor: `var(--cn-set-${themeStyle}-${variant}-bg-hover, var(--cn-set-${themeStyle}-${variant}-bg))`
-        }
+        style[`&:hover:not(:disabled, .cn-button-disabled)`] =
+          variant === 'surface'
+            ? {
+                backgroundColor: `var(--cn-set-${themeStyle}-${variant}-bg-hover, var(--cn-set-${themeStyle}-${variant}-bg))`
+              }
+            : {
+                backgroundColor: `var(--cn-set-${themeStyle}-${variant}-bg-hover, var(--cn-set-${themeStyle}-${variant}-bg))`,
+                borderColor: `var(--cn-set-${themeStyle}-${variant}-bg-hover, var(--cn-set-${themeStyle}-${variant}-bg))`
+              }
 
         // Active styles
         style[`&:active:not(:disabled, .cn-button-disabled), &:where(.cn-button-active), &:where([data-state=open])`] =
-          {
-            backgroundColor: `var(--cn-set-${themeStyle}-${variant}-bg-selected, var(--cn-set-${themeStyle}-${variant}-bg))`
-          }
+          variant === 'surface'
+            ? {
+                backgroundColor: `var(--cn-set-${themeStyle}-${variant}-bg-selected, var(--cn-set-${themeStyle}-${variant}-bg))`
+              }
+            : {
+                backgroundColor: `var(--cn-set-${themeStyle}-${variant}-bg-selected, var(--cn-set-${themeStyle}-${variant}-bg))`,
+                borderColor: `var(--cn-set-${themeStyle}-${variant}-bg-selected, var(--cn-set-${themeStyle}-${variant}-bg))`
+              }
 
         separatorStyles[`&:where(.cn-button-split-dropdown.cn-button-${variant}.cn-button-${theme})`] = {
           '&::before': {
@@ -66,7 +74,8 @@ function createButtonVariantStyles() {
              * Some variants don't have separator
              * Hence adding border color for separator
              *  */
-            backgroundColor: `var(--cn-set-${themeStyle}-${variant}-separator, var(--cn-set-${themeStyle}-${variant}-border))`
+            backgroundColor: `var(--cn-set-${themeStyle}-${variant}-text)`,
+            opacity: 'var(--cn-opacity-20)'
           }
         }
       }
@@ -78,6 +87,21 @@ function createButtonVariantStyles() {
   return { ...combinationStyles, ...separatorStyles }
 }
 
+function createButtonSizeStyles() {
+  const styles: CSSRuleObject = {}
+
+  sizes.forEach(size => {
+    styles[`&:where(.cn-button-${size})`] = {
+      height: `var(--cn-btn-size-${size})`,
+      paddingBlock: `var(--cn-btn-py-${size})`,
+      paddingInline: `var(--cn-btn-px-${size})`,
+      gap: `var(--cn-btn-gap-${size})`
+    }
+  })
+
+  return styles
+}
+
 export default {
   '.cn-button': {
     transitionProperty: 'color, background-color, border-color, text-decoration-color, fill, stroke',
@@ -87,8 +111,9 @@ export default {
     height: 'var(--cn-btn-size-md)',
     gap: 'var(--cn-btn-gap-md)',
     flexShrink: '0',
+    minWidth: 'fit-content',
     border: 'var(--cn-btn-border) solid var(--cn-set-gray-surface-border)',
-    '@apply font-body-single-line-strong select-none overflow-hidden inline-flex items-center justify-center whitespace-nowrap':
+    '@apply font-body-single-line-normal select-none overflow-hidden inline-flex items-center justify-center whitespace-nowrap':
       '',
 
     '&:where(.cn-button-split-dropdown)': {
@@ -107,16 +132,8 @@ export default {
     },
 
     // sizes
-    '&:where(.cn-button-sm)': {
-      height: 'var(--cn-btn-size-sm)',
-      padding: 'var(--cn-btn-py-sm) var(--cn-btn-px-sm)',
-      gap: 'var(--cn-btn-gap-sm)'
-    },
-    '&:where(.cn-button-xs)': {
-      height: 'var(--cn-btn-size-xs)',
-      paddingBlock: 'var(--cn-btn-py-xs)',
-      paddingInline: 'var(--cn-btn-px-xs)',
-      gap: 'var(--cn-btn-gap-xs)',
+    ...createButtonSizeStyles(),
+    '&:where(.cn-button-xs, .cn-button-3xs, .cn-button-2xs)': {
       '@apply font-caption-single-line-normal': ''
     },
 
@@ -126,13 +143,14 @@ export default {
       backgroundImage: `linear-gradient(to right, var(--cn-set-ai-surface-bg), var(--cn-set-ai-surface-bg)), var(--cn-set-ai-surface-border)`,
       backgroundOrigin: 'border-box',
       backgroundClip: 'padding-box, border-box',
-      border: 'var(--cn-badge-border) solid transparent',
+      border: 'var(--cn-btn-border) solid transparent',
+      boxShadow: 'var(--cn-shadow-comp-ai-inner)',
 
       '&:hover:not(:disabled, .cn-button-disabled)': {
         backgroundImage: `linear-gradient(to right, var(--cn-set-ai-surface-bg-hover), var(--cn-set-ai-surface-bg-hover)), var(--cn-set-ai-surface-border)`
       },
       '&:active:not(:disabled, .cn-button-disabled), &:where(.cn-button-active)': {
-        backgroundImage: `linear-gradient(to right, var(--cn-set-ai-surface-bg-selected), var(--cn-set-ai-surface-bg-selected)), var(--cn-set-ai-surface-border)`
+        backgroundImage: 'var(--cn-set-ai-surface-bg-selected), var(--cn-set-ai-surface-border)'
       }
     },
 
@@ -149,6 +167,7 @@ export default {
       }
     },
 
+    // variant styles
     ...createButtonVariantStyles(),
 
     // Rounded
@@ -170,21 +189,43 @@ export default {
     // Icon Only sizing
     '&:where(.cn-button-icon-only.cn-button-sm)': {
       width: 'var(--cn-btn-size-sm)',
-      height: 'var(--cn-btn-size-sm)'
+      height: 'var(--cn-btn-size-sm)',
+      '& > svg': {
+        strokeWidth: 'var(--cn-icon-stroke-width-sm)'
+      }
     },
     '&:where(.cn-button-icon-only.cn-button-xs)': {
       width: 'var(--cn-btn-size-xs)',
       height: 'var(--cn-btn-size-xs)',
       '& > svg': {
         width: 'var(--cn-icon-size-sm)',
-        height: 'var(--cn-icon-size-sm)'
+        height: 'var(--cn-icon-size-sm)',
+        strokeWidth: 'var(--cn-icon-stroke-width-xs)'
+      }
+    },
+    '&:where(.cn-button-icon-only.cn-button-2xs)': {
+      width: 'var(--cn-btn-size-2xs)',
+      height: 'var(--cn-btn-size-2xs)',
+      '& > svg': {
+        width: 'var(--cn-icon-size-2xs)',
+        height: 'var(--cn-icon-size-2xs)',
+        strokeWidth: 'var(--cn-icon-stroke-width-2xs)'
+      }
+    },
+    '&:where(.cn-button-icon-only.cn-button-3xs)': {
+      width: 'var(--cn-btn-size-3xs)',
+      height: 'var(--cn-btn-size-3xs)',
+      '& > svg': {
+        width: 'var(--cn-icon-size-2xs)',
+        height: 'var(--cn-icon-size-2xs)',
+        strokeWidth: 'var(--cn-icon-stroke-width-2xs)'
       }
     },
 
     // Focus
     '&:where(:focus-visible)': {
-      boxShadow: 'var(--cn-ring-focus)',
-      outline: 'none',
+      outline: 'var(--cn-focus)',
+      outlineOffset: 'var(--cn-size-px)',
 
       // This is to prevent focus outline from being hidden by dropdown
       position: 'relative',

@@ -4,7 +4,7 @@ import {
   Layout,
   NoData,
   ScopeTag,
-  SkeletonList,
+  Skeleton,
   StackedList,
   StatusBadge,
   Text,
@@ -91,7 +91,7 @@ export function RepoList({
   const { t } = useTranslation()
 
   if (isLoading) {
-    return <SkeletonList />
+    return <Skeleton.List linesCount={8} hasActions />
   }
 
   if (!repos.length) {
@@ -105,12 +105,8 @@ export function RepoList({
           t('views:noData.changeSearch', 'or search for a different keyword.')
         ]}
         secondaryButton={{
-          label: (
-            <>
-              <IconV2 name="trash" />
-              {t('views:noData.clearFilters', 'Clear filters')}
-            </>
-          ),
+          icon: 'trash',
+          label: t('views:noData.clearFilters', 'Clear filters'),
           onClick: handleResetFiltersQueryAndPages
         }}
       />
@@ -123,23 +119,15 @@ export function RepoList({
           t('views:noData.createOrImportRepos', 'Create new or import an existing repository.')
         ]}
         primaryButton={{
-          label: (
-            <>
-              <IconV2 name="plus" />
-              {t('views:repos.new-repository', 'New repository')}
-            </>
-          ),
+          icon: 'plus',
+          label: t('views:repos.createRepository', 'Create Repository'),
           to: toCreateRepo?.()
         }}
         secondaryButton={{
-          label: (
-            <>
-              <IconV2 name="import" />
-              {t('views:repos.import-repository', 'Import Repository')}
-            </>
-          ),
+          icon: 'import',
+          label: t('views:repos.importRepository', 'Import Repository'),
           to: toImportRepo?.(),
-          props: { variant: 'outline' }
+          variant: 'outline'
         }}
       />
     )
@@ -175,7 +163,11 @@ export function RepoList({
               className="grid"
               primary
               description={
-                repo.importing ? t('views:repos.importing', 'Importing…') : <Text truncate>{repo.description}</Text>
+                repo.importing ? (
+                  t('views:repos.importing', 'Importing…')
+                ) : repo?.description ? (
+                  <Text truncate>{repo.description}</Text>
+                ) : undefined
               }
               title={
                 <Title
@@ -193,7 +185,13 @@ export function RepoList({
                 title={
                   <>
                     {t('views:repos.updated', 'Updated')}{' '}
-                    <TimeAgoCard timestamp={repo.timestamp} dateTimeFormatOptions={{ dateStyle: 'medium' }} />
+                    <TimeAgoCard
+                      timestamp={repo.timestamp}
+                      cutoffDays={3}
+                      beforeCutoffPrefix=""
+                      afterCutoffPrefix="on"
+                      dateTimeFormatOptions={{ dateStyle: 'medium' }}
+                    />
                   </>
                 }
                 description={<Stats pulls={repo.pulls} />}

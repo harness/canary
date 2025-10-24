@@ -1,14 +1,19 @@
 {
   "repos": {
-    "create-file": "Create file",
-    "upload-files": "Télécharger des fichiers",
+    "createFile": "Create File",
+    "uploadFiles": "Télécharger des fichiers",
     "summary": "Résumé",
     "files": "Fichiers",
     "pipelines": "Pipelines",
     "commits": "Commits",
     "tags": "Étiquettes",
-    "pull-requests": "Requêtes de tirage",
-    "branches": "Branches",
+    "pullRequests": "Pull requests",
+    "branches": {
+      "title": "Branches",
+      "commitsBehind": "commits en retard",
+      "commitsAhead": "commits en avance",
+      "createBranch": "Create Branch"
+    },
     "search": "Rechercher",
     "settings": "Paramètres",
     "descriptionPlaceholder": "Enter a description",
@@ -26,6 +31,7 @@
     "compareAndPullRequest": "Comparez et ouvrez une requête de tirage",
     "dismiss": "Dismiss",
     "compareBranchesToSeeChanges": "Comparez les branches pour voir vos changements.",
+    "noNewCommits": "Pas encore de nouveaux commits",
     "default": "Par défaut",
     "viewAll": "Voir tous les {{type}}",
     "branchesLowercase": "branches",
@@ -70,6 +76,7 @@
         "label": "Label by"
       }
     },
+    "createPullReq": "Créer une requête de tirage.",
     "BlockBranchCreation": "Bloquer la création de branches",
     "BlockBranchCreationDescription": "Autoriser uniquement les utilisateurs ayant des permissions spécifiques à créer ces branches",
     "BlockBranchDeletion": "Bloquer la suppression de branches",
@@ -127,20 +134,18 @@
     "enterMinDefaultReviewers": "Entrer le nombre minimal de réviseurs par défaut",
     "enterMinReviewers": "Entrer le nombre minimal de réviseurs",
     "updateBranchRule": "Mettre à jour la règle de branche",
-    "CreateRule": "Créer une règle",
-    "updateRule": "Mettre à jour la règle",
-    "createRuleButton": "Créer la règle",
-    "updatingRule": "Mise à jour de la règle...",
+    "createBranchRule": "Create branch rule",
+    "updateRuleButton": "Mettre à jour la règle",
+    "createRuleButton": "Créer une règle de branche",
+    "updatingRuleButton": "Mise à jour de la règle...",
     "creatingRuleButton": "Création de la règle...",
-    "createBranch": "Create branch",
     "branch": "Branche",
     "update": "Mettre à jour",
     "checkStatus": "Vérifier le statut",
-    "behind": "En retard",
+    "behind": "Behind",
     "ahead": "En avance",
     "pullRequest": "Pull Request",
-    "newPullReq": "Nouvelle requête de tirage",
-    "viewRules": "Voir les règles",
+    "compare": "Compare",
     "browse": "Browse",
     "deleteBranch": "Delete Branch",
     "createBranchDialog": {
@@ -151,7 +156,6 @@
       }
     },
     "createBranchTitle": "Créer une branche",
-    "createBranchButton": "Créer une branche",
     "createNewRepo": "Create a new repository",
     "repoContains": "A repository contains all project files, including the revision history. Already have a project repository elsewhere?",
     "importRepo": "Import a repository",
@@ -165,9 +169,9 @@
         "label": "Description"
       },
       "gitignore": {
-        "placeholder": "Select",
         "label": "Add a .gitignore",
-        "caption": "Choose which files not to track from a list of templates."
+        "caption": "Choose which files not to track from a list of templates.",
+        "placeholder": "Select"
       },
       "defaultBranchDialog": {
         "startLabel": "Your repository will be initialized with a",
@@ -181,9 +185,9 @@
       }
     },
     "repositories": "Dépôts",
-    "new-repository": "Créer un dépôt",
-    "import-repository": "Importer un dépôt",
-    "import-repositories": "Import repositories",
+    "createRepository": "Créer un dépôt",
+    "importRepository": "Importer un dépôt",
+    "importRepositories": "Import repositories",
     "importing": "Importing…",
     "updated": "Mis à jour",
     "unarchiveRepo": "Unarchive Repository",
@@ -213,8 +217,8 @@
     "allRules": "All Rules",
     "branchRules": "Branch Rules",
     "tagRules": "Tag Rules",
-    "newTagRule": "New tag rule",
-    "createBranchRule": "New branch rule",
+    "createTagRuleButton": "Create tag rule",
+    "createBranchRuleButton": "Create Branch rule",
     "security": "Sécurité",
     "secretScanning": "Analyse des secrets",
     "secretScanningDescription": "Empêcher les commits contenant des secrets comme les mots de passe ou jetons API.",
@@ -242,7 +246,7 @@
           "0": "We recommend every repository include a",
           "1": "README, LICENSE, and .gitignrore."
         },
-        "createFile": "New file"
+        "createFile": "Créer un fichier"
       },
       "cloneInstructions": {
         "title": "Please generate git credentials if it’s your first time cloning the repository",
@@ -257,7 +261,7 @@
         "pushRepository": {
           "0": "You might need to",
           "1": "create an API token",
-          "2": "In order to pull from or push into this repository"
+          "2": "pour pouvoir tirer ou pousser dans ce dépôt"
         }
       },
       "initialCommit": "Then push some content into it",
@@ -275,7 +279,7 @@
     "BlockTagUpdate": "Block tag update",
     "BlockTagUpdateDescription": "Only allow users with bypass permission to update matching tags",
     "updateTagRule": "Update tag rule",
-    "CreateTagRule": "Create a tag rule",
+    "createTagRule": "Create tag rule",
     "createTagTitle": "Create a tag",
     "repoTagDescriptionPlaceholder": "Enter a description of this tag...",
     "creatingTagButton": "Creating tag...",
@@ -293,7 +297,7 @@
     "commit": "Commit",
     "tagger": "Tagger",
     "creationDate": "Creation date",
-    "newTag": "New Tag",
+    "createTag": "Créer une balise",
     "enableWebhookToggle": "Activer le webhook",
     "toggleDescription": "Nous enverrons les détails lorsque ce webhook sera déclenché",
     "urlPlaceholder": "https://example.com/harness",
@@ -313,6 +317,9 @@
     "creatingWebhook": "Creating webhook...",
     "updateWebhook": "Update webhook",
     "createWebhook": "Create webhook",
+    "newPullReq": "Nouvelle requête de tirage",
+    "createBranchButton": "Créer une branche",
+    "viewRules": "Voir les règles",
     "newBranch": "Nouvelle branche",
     "emptyRepo": "Ce référentiel est vide.",
     "afterComparingOpenPullRequest": "Après avoir comparé les modifications, vous pouvez ouvrir une demande d'extraction pour contribuer à vos modifications en amont.",
@@ -347,7 +354,7 @@
     "configuration": "Configuration",
     "references": "Références",
     "activityHistory": "Historique des activités",
-    "createNew": "Créer un nouveau connecteur",
+    "createNew": "Créer un connecteur",
     "errorEncountered": "Erreur rencontrée",
     "viewDetails": "Voir les détails",
     "id": "ID du connecteur",
@@ -387,10 +394,17 @@
     "noCommitsYetDescription": "Your commits will appear here once they're made. Start committing to see your changes reflected.",
     "compareChanges": "Comparez et révisez pratiquement tout",
     "compareChangesDescription": "Branches, tags, plages de commits et périodes. Dans le même dépôt et entre les forks.",
+    "title": {
+      "noOpenPullRequests": "Il n'y a pas encore de demandes de tirage ouvertes",
+      "noClosedPullRequests": "Il n'y a pas encore de demandes de tirage fermées",
+      "noMergedPullRequests": "Il n'y a pas encore de demandes de tirage fusionnées"
+    },
     "noOpenPullRequests": "Il n'y a pas encore de demandes de tirage ouvertes dans ce projet.",
-    "createNewPullRequest": "Créez une nouvelle demande de tirage.",
     "noClosedPullRequests": "Il n'y a pas encore de demandes de tirage fermées dans ce projet.",
-    "clearFilters": "Effacer les filtres",
+    "noMergedPullRequests": "Il n'y a pas encore de demandes de tirage fusionnées dans ce projet.",
+    "button": {
+      "createPullRequest": "Créer une demande de tirage"
+    },
     "noPullRequestsInRepo": "Commencez votre parcours de contribution en créant un brouillon de demande de tirage.",
     "noPullRequestsInProject": "There are no pull requests in this project yet.",
     "noBranches": "Pas encore de branches",
@@ -398,6 +412,7 @@
     "startBranchDescription": "Commencez à créer des branches pour voir votre travail organisé.",
     "noCommitsHistory": "No commits history",
     "noCommitsHistoryDescription": "There isn't any commit history to show here for the selected user, time range, or current page.",
+    "clearFilters": "Effacer les filtres",
     "noRepos": "Pas encore de dépôts",
     "noReposProject": "Il n'y a pas encore de dépôts dans ce projet.",
     "createOrImportRepos": "Créer un nouveau dépôt ou importer un dépôt existant.",
@@ -413,6 +428,8 @@
     "createSecret": "Créer un nouveau secret.",
     "noUsers": "Aucun utilisateur trouvé",
     "noUsersDescription": "Il n'y a aucun utilisateur dans ce périmètre. Cliquez sur le bouton ci-dessous pour commencer à les ajouter.",
+    "createTagRuleButton": "Create Tag rule",
+    "createTagRule": "Create Tag rule",
     "createBranch": "Créer une nouvelle branche",
     "noPullRequests": "Il n'y a pas encore de demandes de tirage dans ce projet.",
     "createConnector": "Créez un nouveau connecteur.",
@@ -506,7 +523,8 @@
     "delete": "Delete label",
     "title": "Labels",
     "showParentLabels": "Show labels from parent scopes",
-    "newLabel": "New label",
+    "createLabel": "Create label",
+    "newLabel": "Create Label",
     "create": "Create labels"
   },
   "projectSettings": {
@@ -599,6 +617,7 @@
     "searchLabels": "Rechercher des étiquettes..",
     "noLabels": "No labels found",
     "editLabels": "Edit labels",
+    "changedSinceLastView": "Modifié depuis la dernière consultation",
     "markViewed": "Vue",
     "deletedComment": "Ce commentaire a été supprimé.",
     "reviewers": "Réviseurs",
@@ -608,6 +627,13 @@
     "changereq": "Changement Demandé",
     "split": "Diviser",
     "unified": "Unifié",
+    "comments": {
+      "suggestionApplied": "Suggestion applied",
+      "codeSuggestion": "Code suggestion",
+      "commitSuggestion": "Commit suggestion",
+      "removeSuggestion": "Remove suggestion from batch",
+      "addSuggestion": "Add suggestion to batch"
+    },
     "deleted": "Supprimé",
     "searchUsers": "Rechercher des utilisateurs",
     "compareChangesFormDescriptionLabel": "Description",
@@ -732,16 +758,26 @@
     "label": "Périmètre",
     "account": "Compte"
   },
+  "repo": {
+    "components": {
+      "commitDetailsDiffShowing": "Affichage de",
+      "commitDetailsDiffChangedFiles": "fichiers modifiés",
+      "commitDetailsDiffWith": "avec",
+      "commitDetailsDiffAdditionsAnd": "ajouts et",
+      "commitDetailsDiffDeletions": "suppressions"
+    }
+  },
   "commits": {
+    "commitDetailsTitle": "Commit",
+    "browseFiles": "Parcourir les fichiers",
+    "commitDetailsAuthored": "créé par",
+    "createCommit": "Créer un commit",
+    "createNewCommit": "Créer un commit",
     "commitDetailsDiffShowing": "Affichage de",
     "commitDetailsDiffChangedFiles": "fichiers modifiés",
     "commitDetailsDiffWith": "avec",
     "commitDetailsDiffAdditionsAnd": "ajouts et",
     "commitDetailsDiffDeletions": "suppressions",
-    "commitDetailsTitle": "Commit",
-    "browseFiles": "Parcourir les fichiers",
-    "createNewCommit": "Créer un nouveau commit",
-    "commitDetailsAuthored": "créé par",
     "verified": "Vérifié"
   },
   "createTagDialog": {
@@ -772,7 +808,7 @@
     "delete": "Delete webhook"
   },
   "secrets": {
-    "createNew": "Créer un nouveau secret",
+    "createNew": "Créer un secret",
     "delete": "Supprimer le secret",
     "secretsTitle": "Secrets"
   },
@@ -836,7 +872,7 @@
       "confirm": "Confirmer"
     },
     "close": "Fermer",
-    "newUserButton": "Nouvel utilisateur",
+    "newUserButton": "Créer utilisateur",
     "searchPlaceholder": "Rechercher",
     "usersHeader": "Utilisateurs",
     "tabs": {

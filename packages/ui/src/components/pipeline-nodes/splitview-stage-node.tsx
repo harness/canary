@@ -56,7 +56,7 @@ export function SplitView_StageNode(props: SplitView_StageNodeProps) {
       <ExecutionStatus executionStatus={executionStatus} />
 
       <div
-        className={cn('bg-cn-background-8 rounded-md', {
+        className={cn('bg-cn-background-softgray rounded-md', {
           'unified-pipeline-studio_card-wrapper ': executionStatus === 'executing'
         })}
       >

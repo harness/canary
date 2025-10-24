@@ -10,22 +10,28 @@ export const getFilterScopeOptions = ({
 }: {
   t: TFunctionWithFallback
   scope: Scope
-}): ComboBoxOptions[] => {
-  if (accountId && orgIdentifier && projectIdentifier) return []
+}): { options: ComboBoxOptions[]; defaultValue: ComboBoxOptions } => {
+  if (accountId && orgIdentifier && projectIdentifier) return { options: [], defaultValue: { label: '', value: '' } }
 
   if (accountId && orgIdentifier) {
-    return [
-      { label: t('views:scope.orgAndProject', 'Organizations and projects'), value: ExtendedScope.OrgProg },
-      { label: t('views:scope.orgOnly', 'Organizations only'), value: ExtendedScope.Organization }
-    ]
+    return {
+      options: [
+        { label: t('views:scope.orgAndProject', 'Organizations and projects'), value: ExtendedScope.OrgProg },
+        { label: t('views:scope.orgOnly', 'Organizations only'), value: ExtendedScope.Organization }
+      ],
+      defaultValue: { label: t('views:scope.orgOnly', 'Organizations only'), value: ExtendedScope.Organization }
+    }
   }
 
   if (accountId) {
-    return [
-      { label: t('views:scope.all', 'Account, organizations and projects'), value: ExtendedScope.All },
-      { label: t('views:scope.accountOnly', 'Account only'), value: ExtendedScope.Account }
-    ]
+    return {
+      options: [
+        { label: t('views:scope.all', 'Account, organizations and projects'), value: ExtendedScope.All },
+        { label: t('views:scope.accountOnly', 'Account only'), value: ExtendedScope.Account }
+      ],
+      defaultValue: { label: t('views:scope.accountOnly', 'Account only'), value: ExtendedScope.Account }
+    }
   }
 
-  return []
+  return { options: [], defaultValue: { label: '', value: '' } }
 }

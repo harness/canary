@@ -8,7 +8,7 @@ import {
   FileViewedState,
   getFileViewedState,
   HandleUploadType,
-  InViewDiffRenderer,
+  // InViewDiffRenderer,
   jumpToFile,
   PrincipalPropsType,
   TypesPullReq,
@@ -21,11 +21,11 @@ import {
   PullRequestAccordion
 } from '@views/repo/pull-request/components/pull-request-accordian'
 import {
-  calculateDetectionMargin,
-  IN_VIEWPORT_DETECTION_MARGIN,
+  // calculateDetectionMargin,
+  // IN_VIEWPORT_DETECTION_MARGIN,
   innerBlockName,
-  outterBlockName,
-  shouldRetainDiffChildren
+  outterBlockName
+  // shouldRetainDiffChildren
 } from '@views/repo/pull-request/utils'
 
 interface DataProps {
@@ -116,6 +116,16 @@ function PullRequestChangesInternal({
   const scrollTimeoutRef = useRef<NodeJS.Timeout | null>(null)
   const [hasInitializedOpenItems, setHasInitializedOpenItems] = useState(false)
 
+  // Scroll position cache scoped to this PR
+  const diffScrollCacheRef = useRef(new Map<string, number>())
+
+  // Infinite scroll state
+  const INITIAL_LOAD_COUNT = 30
+  const LOAD_MORE_COUNT = 20
+  const [visibleFileCount, setVisibleFileCount] = useState(INITIAL_LOAD_COUNT)
+  const [isLoadingMore, setIsLoadingMore] = useState(false)
+  const loadMoreRef = useRef<HTMLDivElement>(null)
+
   const jumpToDiff = useCallback(
     (fileText: string, delay: number = 0) => {
       if (scrollTimeoutRef.current) {
@@ -136,7 +146,18 @@ function PullRequestChangesInternal({
             // Only jump if content has actually scrolled behind the sticky header (at PR_ACCORDION_STICKY_TOP)
             if (hasContentScrolledBehindHeader) {
               scrollTimeoutRef.current = setTimeout(() => {
-                jumpToFile(diffItem.filePath, diffBlocks, undefined, diffsContainerRef)
+                jumpToFile(
+                  fileText,
+                  diffBlocks,
+                  undefined,
+                  diffsContainerRef,
+                  // Load more diffs callback for infinite scroll
+                  (targetCount: number) => {
+                    setVisibleFileCount(Math.max(targetCount, visibleFileCount))
+                  },
+                  openItems, // Pass current open/collapsed state for height estimation
+                  diffScrollCacheRef.current // Pass PR-scoped scroll cache
+                )
                 scrollTimeoutRef.current = null
               }, delay)
             }
@@ -144,7 +165,7 @@ function PullRequestChangesInternal({
         }
       }
     },
-    [data, diffBlocks, diffsContainerRef]
+    [data, diffBlocks, diffsContainerRef, openItems, visibleFileCount]
   )
 
   useEffect(() => {
@@ -209,7 +230,18 @@ function PullRequestChangesInternal({
     if (diffPathQuery) {
       const diffItem = data.find(item => item.filePath === diffPathQuery)
       if (diffItem) {
-        jumpToFile(diffItem.filePath, diffBlocks, undefined, diffsContainerRef)
+        jumpToFile(
+          diffItem.filePath,
+          diffBlocks,
+          undefined,
+          diffsContainerRef,
+          // Load more diffs callback for infinite scroll
+          (targetCount: number) => {
+            setVisibleFileCount(Math.max(targetCount, visibleFileCount))
+          },
+          openItems, // Pass current open/collapsed state for height estimation
+          diffScrollCacheRef.current // Pass PR-scoped scroll cache
+        )
         setInitiatedJumpToDiff(true)
       }
     } else if (commentId) {
@@ -218,24 +250,72 @@ function PullRequestChangesInternal({
         return fileComments.some(thread => thread.some(comment => String(comment.id) === commentId))
       })
       if (diffItem) {
-        jumpToFile(diffItem.filePath, diffBlocks, commentId, diffsContainerRef)
+        jumpToFile(
+          diffItem.filePath,
+          diffBlocks,
+          commentId,
+          diffsContainerRef,
+          // Load more diffs callback for infinite scroll
+          (targetCount: number) => {
+            setVisibleFileCount(Math.max(targetCount, visibleFileCount))
+          },
+          openItems, // Pass current open/collapsed state for height estimation
+          diffScrollCacheRef.current // Pass PR-scoped scroll cache
+        )
         setInitiatedJumpToDiff(true)
       }
     }
   }, [commentId, diffPathQuery, data, initiatedJumpToDiff])
 
+  // Infinite scroll intersection observer
+  useEffect(() => {
+    const loadMoreElement = loadMoreRef.current
+    if (!loadMoreElement) return
+
+    const observer = new IntersectionObserver(
+      ([entry]) => {
+        if (entry.isIntersecting && !isLoadingMore) {
+          const totalFiles = data?.length || 0
+          if (visibleFileCount < totalFiles) {
+            setIsLoadingMore(true)
+            // RAF to prevent blocking
+            requestAnimationFrame(() => {
+              setVisibleFileCount(prev => Math.min(prev + LOAD_MORE_COUNT, totalFiles))
+              setIsLoadingMore(false)
+            })
+          }
+        }
+      },
+      { rootMargin: '200px' }
+    )
+
+    observer.observe(loadMoreElement)
+    return () => observer.disconnect()
+  }, [visibleFileCount, isLoadingMore, data?.length])
+
   return (
     <div className="flex flex-col" ref={diffsContainerRef}>
       {diffBlocks?.map((diffsBlock, blockIndex) => {
         return (
-          <InViewDiffRenderer
+          // <InViewDiffRenderer
+          //   key={blockIndex}
+          //   blockName={outterBlockName(blockIndex)}
+          //   root={document as unknown as RefObject<Element>}
+          //   shouldRetainChildren={shouldRetainDiffChildren}
+          //   detectionMargin={calculateDetectionMargin(data?.length)}
+          // >
+          <div
             key={blockIndex}
-            blockName={outterBlockName(blockIndex)}
-            root={document as unknown as RefObject<Element>}
-            shouldRetainChildren={shouldRetainDiffChildren}
-            detectionMargin={calculateDetectionMargin(data?.length)}
+            data-block={outterBlockName(blockIndex)}
+            // data-rendered={showChildren}
+            // ref={setContainerRef}
+            // className={cn('diffViewBlock', { hiddenDiff: !showChildren })}
           >
-            {diffsBlock.map((item, index) => {
+            {diffsBlock.slice(0, visibleFileCount).map((item, index) => {
+              // Only render files up to visibleFileCount for infinite scroll
+              const globalIndex = diffBlocks.flat().indexOf(item)
+              if (globalIndex >= visibleFileCount) return null
+
               // Filter activityBlocks that are relevant for this file
               const fileComments =
                 comments?.filter((thread: CommentItem<TypesPullReqActivity>[]) =>
@@ -253,13 +333,14 @@ function PullRequestChangesInternal({
 
               return (
                 <div className="pt-cn-xs" key={item.filePath}>
-                  <InViewDiffRenderer
+                  {/* <InViewDiffRenderer
                     key={item.filePath}
                     blockName={innerBlockName(item.filePath)}
                     root={diffsContainerRef}
                     shouldRetainChildren={shouldRetainDiffChildren}
                     detectionMargin={IN_VIEWPORT_DETECTION_MARGIN}
-                  >
+                  > */}
+                  <div key={item.filePath} data-block={innerBlockName(item.filePath)}>
                     <PullRequestAccordion
                       handleUpload={handleUpload}
                       principalProps={principalProps}
@@ -294,13 +375,20 @@ function PullRequestChangesInternal({
                       currentRefForDiff={currentRefForDiff}
                       commentLayout="compact"
                     />
-                  </InViewDiffRenderer>
+                  </div>
                 </div>
               )
             })}
-          </InViewDiffRenderer>
+          </div>
         )
       })}
+
+      {/* Infinite scroll trigger element */}
+      {(data?.length || 0) > visibleFileCount && (
+        <div ref={loadMoreRef} className="h-20 flex items-center justify-center text-cn-7">
+          {isLoadingMore ? 'Loading more diffs...' : 'Scroll to load more'}
+        </div>
+      )}
     </div>
   )
 }

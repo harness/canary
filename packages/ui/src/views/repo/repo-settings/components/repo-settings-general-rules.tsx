@@ -14,7 +14,6 @@ import {
   SearchInput,
   Separator,
   Skeleton,
-  SplitButton,
   StackedList,
   Tag,
   Text
@@ -138,6 +137,27 @@ export const RepoSettingsGeneralRules: FC<RepoSettingsGeneralRulesProps> = ({
     toProjectRuleDetails?.(rule.identifier ?? '', rule.scope ?? 0)
   }
 
+  const renderCreateButton = () => (
+    <DropdownMenu.Root>
+      <DropdownMenu.Trigger asChild>
+        <Button>
+          <IconV2 name="plus" size="sm" />
+          {t('views:repos.createRuleButton', 'Create Rule')}
+        </Button>
+      </DropdownMenu.Trigger>
+      <DropdownMenu.Content>
+        <DropdownMenu.Item
+          title={t('views:repos.createTagRuleButton', 'Create Tag Rule')}
+          onClick={() => navigate(toRepoTagRuleCreate?.() || '')}
+        />
+        <DropdownMenu.Item
+          title={t('views:repos.createBranchRuleButton', 'Create Branch Rule')}
+          onClick={() => navigate(toRepoBranchRuleCreate?.() || '')}
+        />
+      </DropdownMenu.Content>
+    </DropdownMenu.Root>
+  )
+
   if (!isShowRulesContent) {
     return (
       <NoData
@@ -152,24 +172,7 @@ export const RepoSettingsGeneralRules: FC<RepoSettingsGeneralRulesProps> = ({
           )
         ]}
       >
-        <DropdownMenu.Root>
-          <DropdownMenu.Trigger asChild>
-            <Button>
-              <IconV2 name="plus" size="sm" />
-              {t('views:repos.createRuleButton', 'Create Rule')}
-            </Button>
-          </DropdownMenu.Trigger>
-          <DropdownMenu.Content>
-            <DropdownMenu.Item
-              title={t('views:repos.createTagRuleButton', 'Create Tag Rule')}
-              onClick={() => navigate(toRepoTagRuleCreate?.() || '')}
-            />
-            <DropdownMenu.Item
-              title={t('views:repos.createBranchRuleButton', 'Create Branch Rule')}
-              onClick={() => navigate(toRepoBranchRuleCreate?.() || '')}
-            />
-          </DropdownMenu.Content>
-        </DropdownMenu.Root>
+        {renderCreateButton()}
       </NoData>
     )
   }
@@ -199,24 +202,7 @@ export const RepoSettingsGeneralRules: FC<RepoSettingsGeneralRulesProps> = ({
             size="md"
             triggerClassName="min-w-[150px]"
           />
-          <SplitButton<string>
-            dropdownContentClassName="mt-0 min-w-[170px]"
-            handleButtonClick={() => navigate(toRepoBranchRuleCreate?.() || '')}
-            handleOptionChange={option => {
-              if (option === 'tag-rule') {
-                navigate(toRepoTagRuleCreate?.() || '')
-              }
-            }}
-            options={[
-              {
-                value: 'tag-rule',
-                label: t('views:repos.createTagRuleButton', 'Create Tag Rule')
-              }
-            ]}
-          >
-            <IconV2 name="plus" />
-            {t('views:repos.createBranchRuleButton', 'Create Branch Rule')}
-          </SplitButton>
+          {renderCreateButton()}
         </ListActions.Right>
       </ListActions.Root>
 

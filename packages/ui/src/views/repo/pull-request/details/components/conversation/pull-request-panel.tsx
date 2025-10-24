@@ -271,9 +271,11 @@ export interface PullRequestPanelProps
   isMerging?: boolean
   isRebasing?: boolean
   onMergeMethodSelect?: (method: string) => void
+  className?: string
 }
 
 const PullRequestPanel = ({
+  className,
   pullReqCommits,
   pullReqMetadata,
   checks,
@@ -512,7 +514,7 @@ const PullRequestPanel = ({
   const mergeMethod = getMergeMethodDisplay(pullReqMetadata?.merge_method as MergeStrategy)
 
   return (
-    <>
+    <div className={className}>
       <StackedList.Root>
         <StackedList.Item
           className={cn('pl-cn-md gap-y-cn-sm', headerRowBgClass)}
@@ -580,7 +582,7 @@ const PullRequestPanel = ({
                                 {
                                   title: 'Mark as draft',
                                   onClick: () => handlePrState('draft'),
-                                  iconName: 'page-edit' as const
+                                  iconName: 'edit-pencil' as const
                                 }
                               ]
                             : []),
@@ -807,6 +809,8 @@ const PullRequestPanel = ({
                     handleRebaseBranch={handleRebaseBranch}
                     isRebasing={isRebasing}
                     selectedMergeMethod={getSelectedMergeMethod()}
+                    spaceId={spaceId}
+                    repoId={repoId}
                   />
                 )}
               </Accordion.Root>
@@ -846,7 +850,7 @@ const PullRequestPanel = ({
           <Alert.Title>{error}</Alert.Title>
         </Alert.Root>
       )}
-    </>
+    </div>
   )
 }
 

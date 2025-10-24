@@ -1,6 +1,7 @@
 import { cloneDeep, get, isArray, pick, set, unset } from 'lodash-es'
 
 import { IFormDefinition, IInputDefinition } from '../../types/types'
+import { removeTemporaryFieldsValue } from './temporary-field-utils'
 
 type TransformItem = {
   path: string
@@ -101,17 +102,47 @@ export function getTransformers(formDefinition: IFormDefinition): TransformItem[
 export function unsetHiddenInputsValues(
   formDefinition: IFormDefinition,
   values: Record<string, any>,
-  metadata?: any
+  metadata?: any,
+  options: { preserve?: string[] } = {}
 ): Record<string, any> {
+  const { preserve } = options
+
   const flattenInputs = flattenInputsRec(formDefinition.inputs)
 
   const retValues = cloneDeep(values)
 
   flattenInputs.forEach(input => {
+    if (preserve && preserve.includes(input.path)) {
+      return
+    }
+
     if (!!input.isVisible && !input.isVisible(values, metadata)) {
       unset(retValues, input.path)
     }
   })
 
   return retValues
+}
+
+/** Convert data to form model  */
+export function convertDataToFormModel(
+  inputData: Record<string, any>,
+  formDefinition: IFormDefinition
+): Record<string, any> {
+  const transformers = getTransformers(formDefinition)
+  return inputTransformValues(inputData, transformers)
+}
+
+/** Convert form model to data  */
+export function convertFormModelToData(
+  formData: Record<string, any>,
+  formDefinition: IFormDefinition,
+  metadata?: any,
+  options: { preserve?: string[] } = {}
+): Record<string, any> {
+  const transformers = getTransformers(formDefinition)
+  let data = unsetHiddenInputsValues(formDefinition, formData, metadata, options)
+  data = outputTransformValues(data, transformers)
+  data = removeTemporaryFieldsValue(data)
+  return data
 }

@@ -2076,7 +2076,7 @@
         "y": "0",
         "blur": "0",
         "spread": "4",
-        "color": "{set.brand.outline.bg}",
+        "color": "{set.brand.secondary.bg}",
         "type": "dropShadow"
       }
     },
@@ -2804,7 +2804,7 @@
   "disabled": {
     "opacity": {
       "$type": "opacity",
-      "$value": "{opacity.50}"
+      "$value": "{opacity.60}"
     }
   },
   "img": {

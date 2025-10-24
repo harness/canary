@@ -23,7 +23,7 @@ import { DocsPage } from "@/components/docs-page";
       <div className="flex flex-col space-y-8">
         {/* Standard usage */}
         <div className="space-y-2">
-          <h4 className="text-sm font-medium">Standard usage</h4>
+          <Text variant="heading-subsection" as="h4">Standard usage</Text>
           <Checkbox
             id="checkbox-standard"
             checked={checked}
@@ -35,7 +35,7 @@ import { DocsPage } from "@/components/docs-page";
 
         {/* Indeterminate state */}
         <div className="space-y-2">
-          <h4 className="text-sm font-medium">Indeterminate state</h4>
+          <Text variant="heading-subsection" as="h4">Indeterminate state</Text>
           <Checkbox
             id="checkbox-indeterminate"
             checked={checkedIndeterminate ? "indeterminate" : false}
@@ -47,7 +47,7 @@ import { DocsPage } from "@/components/docs-page";
 
         {/* Optional */}
         <div className="space-y-2">
-          <h4 className="text-sm font-medium">Optional</h4>
+          <Text variant="heading-subsection" as="h4">Optional</Text>
           <Checkbox
             id="checkbox-optional"
             checked={optionalChecked}
@@ -60,7 +60,7 @@ import { DocsPage } from "@/components/docs-page";
 
         {/* Disabled */}
         <div className="space-y-2">
-          <h4 className="text-sm font-medium">Disabled</h4>
+          <Text variant="heading-subsection" as="h4">Disabled</Text>
           <Checkbox
             id="checkbox-disabled"
             checked={false}
@@ -73,7 +73,7 @@ import { DocsPage } from "@/components/docs-page";
 
         {/* Without Label */}
         <div className="space-y-2">
-          <h4 className="text-sm font-medium">Without Label</h4>
+          <Text variant="heading-subsection" as="h4">Without Label</Text>
           <Checkbox
             id="checkbox-no-label"
             checked={checkedWOLabel}
@@ -83,7 +83,7 @@ import { DocsPage } from "@/components/docs-page";
 
         {/* Error state */}
         <div className="space-y-2">
-          <h4 className="text-sm font-medium">Error state</h4>
+          <Text variant="heading-subsection" as="h4">Error state</Text>
           <div className="flex items-center space-x-8">
             <Checkbox
               id="checkbox-error"

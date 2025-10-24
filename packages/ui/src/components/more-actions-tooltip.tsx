@@ -1,7 +1,7 @@
 import { forwardRef } from 'react'
 
 import { useRouterContext } from '@/context'
-import { Button, ButtonProps, ButtonVariants } from '@components/button'
+import { Button, ButtonProps, ButtonSizes, ButtonVariants } from '@components/button'
 import { DropdownMenu } from '@components/dropdown-menu'
 import { IconV2, type IconPropsV2 } from '@components/icon-v2'
 import { Tooltip, TooltipProps } from '@components/tooltip'
@@ -28,6 +28,8 @@ export interface MoreActionsTooltipProps {
   alignOffset?: number
   className?: string
   buttonVariant?: ButtonVariants
+  buttonSize?: ButtonSizes
+  disabled?: boolean
 }
 
 /**
@@ -35,7 +37,17 @@ export interface MoreActionsTooltipProps {
  */
 export const MoreActionsTooltip = forwardRef<HTMLButtonElement, MoreActionsTooltipProps>(
   (
-    { theme, actions, iconName = 'more-vert', sideOffset = 2, alignOffset = 0, className, buttonVariant = 'ghost' },
+    {
+      theme,
+      actions,
+      iconName = 'more-vert',
+      sideOffset = 2,
+      alignOffset = 0,
+      className,
+      buttonVariant = 'ghost',
+      buttonSize = 'md',
+      disabled = false
+    },
     ref
   ) => {
     const { Link } = useRouterContext()
@@ -43,15 +55,17 @@ export const MoreActionsTooltip = forwardRef<HTMLButtonElement, MoreActionsToolt
 
     return (
       <DropdownMenu.Root>
-        <DropdownMenu.Trigger ref={ref} asChild>
+        <DropdownMenu.Trigger ref={ref} disabled={disabled} asChild>
           <Button
             theme={theme}
-            className={cn('text-icons-1 hover:text-icons-2 data-[state=open]:text-icons-2')}
+            className="text-cn-gray-outline"
             variant={buttonVariant}
             iconOnly
-            size="md"
+            size={buttonSize}
             aria-label="Show more actions"
-            ignoreIconOnlyTooltip
+            tooltipProps={{
+              content: 'Show more actions'
+            }}
           >
             <IconV2 name={iconName} />
           </Button>

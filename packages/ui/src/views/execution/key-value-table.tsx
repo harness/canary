@@ -6,7 +6,7 @@ import { KeyValuePair, KeyValueTableProps } from './types'
 
 //manage style for using repeatedly
 const accordionContentStyle = `w-full pl-1 pr-0 pb-0`
-const specTitleStyle = 'flex-grow text-studio-2 text-left'
+const specTitleStyle = 'flex-grow text-left'
 
 export const KeyValueTable: FC<KeyValueTableProps> = ({ className, tableTitleName, tableTitleVal, tableSpec }) => {
   const renderListItems = (items: KeyValuePair[], level: number = 1) => {
@@ -17,10 +17,10 @@ export const KeyValueTable: FC<KeyValueTableProps> = ({ className, tableTitleNam
       if (typeof item.value === 'string') {
         return (
           <ul className="flex flex-row border-b align-middle" key={index}>
-            <li className="text-studio-7 w-1/2 py-2.5 pr-2.5" style={{ paddingLeft: `${level + 1}rem` }}>
+            <li className="w-1/2 py-2.5 pr-2.5" style={{ paddingLeft: `${level + 1}rem` }}>
               <Text>{item.name}</Text>
             </li>
-            <li className="text-studio-7 w-1/2 py-2.5 pl-1.5 pr-2.5">
+            <li className="w-1/2 py-2.5 pl-1.5 pr-2.5">
               <Text>{item.value}</Text>
             </li>
           </ul>
@@ -61,10 +61,10 @@ export const KeyValueTable: FC<KeyValueTableProps> = ({ className, tableTitleNam
         return (
           <Table.Row key={index} className="border-b">
             <Table.Cell className="w-1/2 py-2.5 pl-5">
-              <Text className="text-studio-7">{item.name}</Text>
+              <Text>{item.name}</Text>
             </Table.Cell>
             <Table.Cell className="w-1/2 py-2.5">
-              <Text className="text-studio-7">{item.value}</Text>
+              <Text>{item.value}</Text>
             </Table.Cell>
           </Table.Row>
         )

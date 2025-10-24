@@ -6,11 +6,16 @@ export default {
       borderColor: 'var(--cn-border-3)',
       borderRadius: 'var(--cn-drawer-radius)',
       boxShadow: 'var(--cn-shadow-5)',
+      overflow: 'hidden',
+      outline: 'none',
       '@apply fixed flex flex-col z-50 border': '',
 
       '&:where(.cn-drawer-content-right), &:where(.cn-drawer-content-left)': {
-        '@apply inset-y-0': '',
+        '@apply inset-y-0 !h-auto': '',
 
+        '&:where(.cn-drawer-content-2xs)': {
+          width: 'var(--cn-drawer-2xs)'
+        },
         '&:where(.cn-drawer-content-xs)': {
           width: 'var(--cn-drawer-xs)'
         },
@@ -26,8 +31,11 @@ export default {
       },
 
       '&:where(.cn-drawer-content-top), &:where(.cn-drawer-content-bottom)': {
-        '@apply inset-x-0': '',
+        '@apply inset-x-0 !w-auto': '',
 
+        '&:where(.cn-drawer-content-2xs)': {
+          height: 'var(--cn-drawer-2xs)'
+        },
         '&:where(.cn-drawer-content-xs)': {
           height: 'var(--cn-drawer-xs)'
         },
@@ -110,7 +118,8 @@ export default {
 
     '&-title': {
       font: 'var(--cn-comp-dialog-title)',
-      color: 'var(--cn-text-1)'
+      color: 'var(--cn-text-1)',
+      wordBreak: 'break-word'
     },
 
     '&-tagline': {
@@ -127,7 +136,8 @@ export default {
       '@apply size-full': '',
 
       '&-content': {
-        padding: 'var(--cn-drawer-container)'
+        padding: 'var(--cn-drawer-container)',
+        overflowX: 'hidden'
       }
     },
 
@@ -138,15 +148,13 @@ export default {
       '&:before': {
         height: 'var(--cn-drawer-fade-height)',
         background: 'var(--cn-comp-dialog-fade-start)',
-        pointerEvents: 'none',
-        borderTopLeftRadius: 'var(--cn-drawer-radius)'
+        pointerEvents: 'none'
       },
 
       '&:after': {
         height: 'var(--cn-drawer-fade-height)',
         background: 'var(--cn-comp-dialog-fade-end)',
-        pointerEvents: 'none',
-        borderBottomLeftRadius: 'var(--cn-drawer-radius)'
+        pointerEvents: 'none'
       },
 
       '&:where(.cn-drawer-body-wrap-top)': {

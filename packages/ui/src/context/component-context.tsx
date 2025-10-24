@@ -1,12 +1,15 @@
 // ComponentContext.tsx
 
-import React, { createContext, ReactNode, useContext } from 'react'
+import React, { createContext, ReactNode, RefAttributes, useContext } from 'react'
 
-import { RbacButtonProps, RbacSplitButtonProps } from '@components/rbac'
+import { RbacButtonProps, RbacMoreActionsTooltipProps, RbacSplitButtonProps } from '@components/rbac'
 
 interface ComponentContextValue {
-  RbacButton: React.ComponentType<RbacButtonProps>
+  RbacButton: React.ComponentType<RbacButtonProps & RefAttributes<HTMLButtonElement>>
   RbacSplitButton: <T extends string>(props: RbacSplitButtonProps<T>) => JSX.Element
+  RbacMoreActionsTooltip: React.ForwardRefExoticComponent<
+    RbacMoreActionsTooltipProps & RefAttributes<HTMLButtonElement>
+  >
 }
 
 const ComponentContext = createContext<ComponentContextValue | undefined>(undefined)

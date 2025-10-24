@@ -1,6 +1,7 @@
 import { type FC } from 'react'
 
-import { Accordion, IconV2, Layout, StackedList, StatusBadge, Text } from '@/components'
+import { Accordion, IconV2, Layout, StatusBadge, Text } from '@/components'
+import { useTranslation } from '@/context'
 import { easyPluralize, PullRequestChangesSectionProps } from '@/views'
 import { cn } from '@utils/cn'
 import { PanelAccordionShowButton } from '@views/repo/pull-request/details/components/conversation/sections/panel-accordion-show-button'
@@ -14,8 +15,6 @@ const getStatusIcon = (status: string) => {
   switch (status) {
     case 'pending':
       return <IconV2 size="lg" color="warning" name="clock-solid" />
-    case 'warning':
-      return <IconV2 size="lg" color="warning" name="warning-triangle-solid" />
     case 'error':
       return <IconV2 size="lg" color="danger" name="warning-triangle-solid" />
     default:
@@ -39,6 +38,7 @@ const PullRequestChangesSection: FC<PullRequestChangesSectionProps> = ({
   defaultReviewersData,
   pullReqMetadata
 }) => {
+  const { t } = useTranslation()
   const {
     codeOwners,
     reqCodeOwnerApproval,
@@ -55,102 +55,152 @@ const PullRequestChangesSection: FC<PullRequestChangesSectionProps> = ({
     !isEmpty(changeReqEvaluations) ||
     (!isEmpty(codeOwners) && !isEmpty(codeOwners?.evaluation_entries))
 
+  const hasApprovals =
+    (minApproval ?? 0) > (minReqLatestApproval ?? 0) ||
+    (!isEmpty(approvedEvaluations) && minReqLatestApproval === 0 && minApproval && minApproval > 0) ||
+    ((minApproval ?? 0) > 0 && minReqLatestApproval === undefined)
+  const hasRequiredLatestApprovals = Number(minReqLatestApproval) > 0
+  const hasLatestApprovals =
+    latestApprovalArr !== undefined &&
+    minReqLatestApproval !== undefined &&
+    minReqLatestApproval <= latestApprovalArr?.length
+  const latestApprovalsCount = Number(latestApprovalArr?.length || minReqLatestApproval)
+  const hasEnoughApprovals = approvedEvaluations && minApproval && minApproval <= approvedEvaluations?.length
+  const hasContent =
+    hasApprovals ||
+    hasRequiredLatestApprovals ||
+    !isEmpty(changeReqEvaluations) ||
+    !isEmpty(defaultReviewersData?.defaultReviewersApprovals) ||
+    (codeOwners && !isEmpty(codeOwners?.evaluation_entries))
+  const hasChangesStatuses =
+    (hasApprovals && hasEnoughApprovals) ||
+    (hasRequiredLatestApprovals && hasLatestApprovals) ||
+    !isEmpty(changeReqEvaluations)
+
   return (
     <Accordion.Item value={ACCORDION_VALUE}>
       <Accordion.Trigger
-        className={cn('py-cn-sm', { '[&>.cn-accordion-trigger-indicator]:hidden': !viewBtn })}
-        onClick={e => {
-          if (!viewBtn) e.preventDefault()
-        }}
-      >
-        <Layout.Flex>
-          <StackedList.Field
-            title={<LineTitle text={changesInfo.header} icon={getStatusIcon(changesInfo.status)} />}
-            description={<LineDescription text={changesInfo.content} />}
-          />
+        className="py-cn-sm group"
+        indicatorProps={{ className: cn('self-center mt-0', { hidden: !viewBtn }) }}
+        suffix={
           <PanelAccordionShowButton isShowButton={viewBtn} value={ACCORDION_VALUE} accordionValues={accordionValues} />
-        </Layout.Flex>
+        }
+        asChild={!hasContent}
+      >
+        <Layout.Grid gapY="4xs">
+          <LineTitle text={changesInfo.header} icon={getStatusIcon(changesInfo.status)} />
+          <LineDescription text={changesInfo.content} />
+        </Layout.Grid>
       </Accordion.Trigger>
 
-      <Accordion.Content>
-        <Layout.Vertical gap="2xs" className="ml-7">
-          {((minApproval ?? 0) > (minReqLatestApproval ?? 0) ||
-            (!isEmpty(approvedEvaluations) && minReqLatestApproval === 0 && minApproval && minApproval > 0) ||
-            ((minApproval ?? 0) > 0 && minReqLatestApproval === undefined)) && (
-            <div className="flex items-center justify-between">
-              {approvedEvaluations && minApproval && minApproval <= approvedEvaluations?.length ? (
-                <div className="flex items-center gap-x-2">
-                  <IconV2 size="lg" color="success" name="check-circle-solid" />
-                  <Text variant="body-single-line-normal" color="foreground-1">
-                    {`Changes were approved by ${approvedEvaluations?.length} ${easyPluralize(approvedEvaluations?.length, 'reviewer', 'reviewers')}`}
-                  </Text>
-                </div>
-              ) : (
-                <div className="flex items-center gap-x-2">
-                  <IconV2
-                    size="lg"
-                    color={Number(approvedEvaluations?.length) >= Number(minApproval) ? 'success' : 'warning'}
-                    name={
-                      Number(approvedEvaluations?.length) >= Number(minApproval)
-                        ? 'check-circle-solid'
-                        : 'warning-triangle-solid'
+      {hasContent && (
+        <Accordion.Content className="pt-cn-3xs pb-cn-sm">
+          <Layout.Vertical gapY="lg">
+            {hasChangesStatuses && (
+              <Layout.Vertical gapY="sm">
+                {hasApprovals && hasEnoughApprovals && (
+                  <Layout.Horizontal align="center" gap="2xs" className="ml-7">
+                    <IconV2 size="lg" color="success" name="check-circle-solid" />
+                    <Text color="foreground-1">
+                      {t(
+                        'views:repo.pullRequest.changesSection.approvalsMessage',
+                        `Changes were approved by {{approvalsCount}} {{approvedBy}}`,
+                        {
+                          approvalsCount: approvedEvaluations?.length || 0,
+                          approvedBy: easyPluralize(approvedEvaluations?.length, 'reviewer', 'reviewers')
+                        }
+                      )}
+                    </Text>
+                  </Layout.Horizontal>
+                )}
+
+                {hasRequiredLatestApprovals && hasLatestApprovals && (
+                  <Layout.Horizontal align="center" gap="2xs" className="ml-7">
+                    <IconV2 size="lg" color="success" name="clock-solid" />
+                    <Text color="foreground-1">
+                      {t(
+                        'views:repo.pullRequest.changesSection.latestApprovalsMessage',
+                        `Latest changes were approved by {{latestApprovalsCount}} {{approvedBy}}`,
+                        {
+                          latestApprovalsCount: latestApprovalsCount,
+                          approvedBy: easyPluralize(latestApprovalsCount, 'reviewer', 'reviewers')
+                        }
+                      )}
+                    </Text>
+                  </Layout.Horizontal>
+                )}
+
+                {!isEmpty(changeReqEvaluations) && (
+                  <Layout.Horizontal align="center" justify="between" className="ml-7">
+                    <Layout.Horizontal align="center" gap="2xs">
+                      <IconV2 size="lg" color="danger" name="warning-triangle-solid" />
+                      <Text color="foreground-1">
+                        {t(
+                          'views:repo.pullRequest.changesSection.changeRequestedMessage',
+                          `{{reviewer}} requested changes to the pull request`,
+                          { reviewer: changeReqReviewer }
+                        )}
+                      </Text>
+                    </Layout.Horizontal>
+                    {reqNoChangeReq && (
+                      <StatusBadge variant="outline">
+                        {t('views:repo.pullRequest.requiredMessage', 'Required')}
+                      </StatusBadge>
+                    )}
+                  </Layout.Horizontal>
+                )}
+              </Layout.Vertical>
+            )}
+
+            {hasApprovals && !hasEnoughApprovals && (
+              <Layout.Horizontal align="center" justify="between" className="ml-cn-xl">
+                <StatusBadge variant="status" theme="success">
+                  {t(
+                    'views:repo.pullRequest.changesSection.pendingApprovalsMessage',
+                    '{{approvalsCount}}/{{minApproval}} approvals completed',
+                    {
+                      approvalsCount: (approvedEvaluations && approvedEvaluations.length) || 0,
+                      minApproval: minApproval || 0
                     }
-                  />
-                  <Text variant="body-single-line-normal" color="foreground-1">
-                    {`${(approvedEvaluations && approvedEvaluations.length) || '0'}/${minApproval} approvals completed`}
-                  </Text>
-                </div>
-              )}
-              <StatusBadge variant="outline">Required</StatusBadge>
-            </div>
-          )}
+                  )}
+                </StatusBadge>
+                <StatusBadge variant="outline">{t('views:repo.pullRequest.requiredMessage', 'Required')}</StatusBadge>
+              </Layout.Horizontal>
+            )}
 
-          {(minReqLatestApproval ?? 0) > 0 && (
-            <div className="flex items-center justify-between">
-              {latestApprovalArr !== undefined &&
-              minReqLatestApproval !== undefined &&
-              minReqLatestApproval <= latestApprovalArr?.length ? (
-                <div className="flex items-center gap-x-2">
-                  <IconV2 size="lg" color="success" name="clock-solid" />
-                  <span className="text-2 text-cn-1">{`Latest changes were approved by ${latestApprovalArr?.length || minReqLatestApproval || ''} ${easyPluralize(latestApprovalArr?.length || minReqLatestApproval, 'reviewer', 'reviewers')}`}</span>
-                </div>
-              ) : (
-                <div className="flex items-center gap-x-2">
-                  <IconV2 size="lg" name="circle" className="fill-transparent text-cn-2" />
-                  <span className="text-2 text-cn-1">
-                    {`${latestApprovalArr?.length || minReqLatestApproval || ''} ${easyPluralize(latestApprovalArr?.length || minReqLatestApproval || 0, 'approval', 'approvals')} pending on latest changes`}
-                  </span>
-                </div>
-              )}
-              <StatusBadge variant="outline">Required</StatusBadge>
-            </div>
-          )}
+            {hasRequiredLatestApprovals && !hasLatestApprovals && (
+              <Layout.Horizontal align="center" justify="between" className="ml-cn-xl">
+                <StatusBadge variant="status" theme="warning">
+                  {t(
+                    'views:repo.pullRequest.changesSection.pendingLatestApprovalsMessage',
+                    '{{latestApprovalsCount}} {{approval}} pending on latest changes',
+                    {
+                      latestApprovalsCount: (latestApprovalArr && latestApprovalArr.length) || 0,
+                      approval: easyPluralize(latestApprovalsCount, 'approval', 'approvals')
+                    }
+                  )}
+                </StatusBadge>
+                <StatusBadge variant="outline">{t('views:repo.pullRequest.requiredMessage', 'Required')}</StatusBadge>
+              </Layout.Horizontal>
+            )}
 
-          {!isEmpty(changeReqEvaluations) && (
-            <div className="ml-7 flex items-center justify-between">
-              <div className="flex items-center gap-x-2">
-                <IconV2 size="lg" color={reqNoChangeReq ? 'danger' : 'warning'} name="warning-triangle-solid" />
-                <span className="text-2 text-cn-1">{`${changeReqReviewer} requested changes to the pull request`}</span>
-              </div>
-              {reqNoChangeReq && <StatusBadge variant="outline">Required</StatusBadge>}
-            </div>
-          )}
+            <DefaultReviewersSection defaultReviewersData={defaultReviewersData} className="ml-cn-xl" />
 
-          <DefaultReviewersSection defaultReviewersData={defaultReviewersData} />
-
-          <CodeOwnersSection
-            codeOwners={codeOwners}
-            pullReqMetadata={pullReqMetadata}
-            reqCodeOwnerApproval={reqCodeOwnerApproval}
-            reqCodeOwnerLatestApproval={reqCodeOwnerLatestApproval}
-            codeOwnerChangeReqEntries={codeOwnerChangeReqEntries}
-            codeOwnerPendingEntries={codeOwnerPendingEntries}
-            codeOwnerApprovalEntries={codeOwnerApprovalEntries}
-            latestCodeOwnerApprovalArr={latestCodeOwnerApprovalArr}
-            minReqLatestApproval={minReqLatestApproval}
-          />
-        </Layout.Vertical>
-      </Accordion.Content>
+            <CodeOwnersSection
+              className="ml-cn-xl"
+              codeOwners={codeOwners}
+              pullReqMetadata={pullReqMetadata}
+              reqCodeOwnerApproval={reqCodeOwnerApproval}
+              reqCodeOwnerLatestApproval={reqCodeOwnerLatestApproval}
+              codeOwnerChangeReqEntries={codeOwnerChangeReqEntries}
+              codeOwnerPendingEntries={codeOwnerPendingEntries}
+              codeOwnerApprovalEntries={codeOwnerApprovalEntries}
+              latestCodeOwnerApprovalArr={latestCodeOwnerApprovalArr}
+              minReqLatestApproval={minReqLatestApproval}
+            />
+          </Layout.Vertical>
+        </Accordion.Content>
+      )}
     </Accordion.Item>
   )
 }

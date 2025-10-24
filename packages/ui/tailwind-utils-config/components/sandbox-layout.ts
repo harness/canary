@@ -6,6 +6,13 @@ export default {
       paddingLeft: 'var(--cn-container-spacing-px)',
       paddingRight: 'var(--cn-container-spacing-px)',
       '@apply flex flex-col grow w-full': ''
+    },
+
+    '&-tabs': {
+      marginLeft: 'calc(-1 * var(--cn-container-spacing-px))',
+      marginRight: 'calc(-1 * var(--cn-container-spacing-px))',
+      paddingLeft: 'var(--cn-container-spacing-px)',
+      paddingRight: 'var(--cn-container-spacing-px)'
     }
   }
 }

@@ -14,6 +14,7 @@ import {
   Alert,
   Avatar,
   Button,
+  ButtonLayout,
   ButtonVariants,
   IconV2,
   IconV2NamesType,
@@ -41,6 +42,7 @@ import { isEmpty, isUndefined } from 'lodash-es'
 import { getLinesFromBlocks } from './diff-utils'
 import { PullRequestCommentTextarea } from './pull-request-comment-textarea'
 import { PullRequestCommentingOn } from './pull-request-commenting-on'
+import { ReplySplitButton } from './sections/components/reply-split-button'
 import { replaceMentionEmailWithDisplayName, replaceMentionEmailWithId } from './utils'
 
 interface ParsedSelection extends TextSelection {
@@ -89,6 +91,7 @@ interface CommentHistory {
 
 export interface PullRequestCommentBoxProps {
   className?: string
+  wrapperClassName?: string
   comment: string
   lang?: string
   blocks?: DiffBlock[]
@@ -116,10 +119,14 @@ export interface PullRequestCommentBoxProps {
   setPrincipalsMentionMap?: React.Dispatch<React.SetStateAction<PrincipalsMentionMap>>
   preserveCommentOnSave?: boolean
   buttonTitle?: string
+  isReply?: boolean
+  isResolved?: boolean
+  toggleConversationStatus?: () => void
   textareaPlaceholder?: string
   allowEmptyValue?: boolean
   hideAvatar?: boolean
   isLoading?: boolean
+  layout?: 'compact' | 'default'
 }
 
 const TABS_KEYS = {
@@ -130,6 +137,7 @@ const TABS_KEYS = {
 //  TODO: will have to eventually implement a commenting and reply system similiar to gitness
 export const PullRequestCommentBox = ({
   className,
+  wrapperClassName,
   onSaveComment,
   currentUser,
   inReplyMode = false,
@@ -143,8 +151,8 @@ export const PullRequestCommentBox = ({
   lineFromNumber,
   lineSide,
   lineFromSide,
-  comment: initialComment,
-  setComment,
+  comment: parentComment,
+  setComment: setParentComment,
   isEditMode,
   handleUpload,
   handleAiPullRequestSummary,
@@ -156,16 +164,18 @@ export const PullRequestCommentBox = ({
   textareaPlaceholder,
   allowEmptyValue = false,
   hideAvatar = false,
-
-  isLoading: parentIsLoading = false
+  isReply = false,
+  isResolved = false,
+  toggleConversationStatus,
+  isLoading: parentIsLoading = false,
+  layout = 'default'
 }: PullRequestCommentBoxProps) => {
   const [__file, setFile] = useState<File>()
   const [activeTab, setActiveTab] = useState<typeof TABS_KEYS.WRITE | typeof TABS_KEYS.PREVIEW>(TABS_KEYS.WRITE)
   const fileInputRef = useRef<HTMLInputElement | null>(null)
   const textAreaRef = useRef<HTMLTextAreaElement | null>(null)
   const [isDragging, setIsDragging] = useState(false)
-  const [textComment, setTextComment] = useState(initialComment)
-  const [textSelection, setTextSelection] = useState({ start: initialComment.length, end: initialComment.length })
+  const [textComment, setTextComment] = useState(parentComment)
   const [showAiLoader, setShowAiLoader] = useState(false)
   const dropZoneRef = useRef<HTMLDivElement>(null)
   const [isLoading, setIsLoading] = useState(false)
@@ -174,7 +184,7 @@ export const PullRequestCommentBox = ({
 
   const initialCommentHistory: CommentHistory = {
     comment: textComment,
-    selection: textSelection
+    selection: { start: textComment.length, end: textComment.length }
   }
   const [commentHistory, setCommentHistory] = useState<CommentHistory[]>([initialCommentHistory])
   const [commentFuture, setCommentFuture] = useState<CommentHistory[]>([])
@@ -182,12 +192,11 @@ export const PullRequestCommentBox = ({
   const hasInitialized = useRef(false)
 
   useEffect(() => {
-    if (initialComment && !hasInitialized.current) {
-      setTextComment(initialComment)
-      setTextSelection({ start: initialComment.length, end: initialComment.length })
+    if (parentComment && !hasInitialized.current) {
+      setCommentAndSelection(parentComment, { start: parentComment.length, end: parentComment.length })
       hasInitialized.current = true
     }
-  }, [initialComment])
+  }, [parentComment])
 
   const {
     principalsMentionMap,
@@ -208,7 +217,7 @@ export const PullRequestCommentBox = ({
 
   const clearComment = () => {
     if (!preserveCommentOnSave) {
-      setComment('')
+      setParentComment('')
       setCommentAndSelection('', { start: 0, end: 0 }) // Clear the comment box after saving
     }
   }
@@ -217,31 +226,39 @@ export const PullRequestCommentBox = ({
     onCancelClick && onCancelClick()
   }
 
-  const handleSaveComment = () => {
-    const newComment = textComment.trim()
+  const handleSaveComment = (): Promise<void> => {
+    return new Promise((resolve, reject) => {
+      const newComment = textComment.trim()
 
-    if (onSaveComment && (allowEmptyValue || newComment)) {
-      setComment(newComment)
-      setCommentError(null)
-      const formattedComment = replaceMentionEmailWithId(newComment, principalsMentionMap)
-      const onSaveCommentReturn = onSaveComment(formattedComment)
+      if (onSaveComment && (allowEmptyValue || newComment)) {
+        setParentComment(newComment)
+        setCommentError(null)
 
-      if (onSaveCommentReturn instanceof Promise) {
-        setIsLoading(true)
-        onSaveCommentReturn
-          .then(() => {
-            clearComment()
-          })
-          .catch(e => {
-            setCommentError(getErrorMessage(e, 'Failed to save comment'))
-          })
-          .finally(() => {
-            setIsLoading(false)
-          })
+        const formattedComment = replaceMentionEmailWithId(newComment, principalsMentionMap)
+        const onSaveCommentReturn = onSaveComment(formattedComment)
+
+        if (onSaveCommentReturn instanceof Promise) {
+          setIsLoading(true)
+          onSaveCommentReturn
+            .then(() => {
+              clearComment()
+              resolve()
+            })
+            .catch(e => {
+              setCommentError(getErrorMessage(e, 'Failed to save comment'))
+              reject(e)
+            })
+            .finally(() => {
+              setIsLoading(false)
+            })
+        } else {
+          clearComment()
+          resolve()
+        }
       } else {
-        clearComment()
+        resolve()
       }
-    }
+    })
   }
 
   const avatar = useMemo(() => {
@@ -251,7 +268,7 @@ export const PullRequestCommentBox = ({
   const handleUploadCallback = (file: File) => {
     setFile(file)
 
-    handleUpload?.(file, setTextComment, textComment, textSelection)
+    handleUpload?.(file, setTextComment, textComment, currentSelection())
   }
 
   const handleFileSelect = () => {
@@ -320,12 +337,6 @@ export const PullRequestCommentBox = ({
         })
     }
   }
-
-  useEffect(() => {
-    if (textAreaRef.current) {
-      textAreaRef.current.setSelectionRange(textSelection.start, textSelection.end)
-    }
-  }, [textComment, textSelection])
 
   const parseComment = (
     originalComment: string,
@@ -482,7 +493,10 @@ export const PullRequestCommentBox = ({
     ]
   }, [diff, lineNumber, lineFromNumber, handleAiPullRequestSummary])
 
-  const handleActionClick = (type: ToolbarAction, comment: string, selection: TextSelection) => {
+  const handleActionClick = (type: ToolbarAction) => {
+    const selection: TextSelection = currentSelection()
+    const comment: string = textComment
+
     switch (type) {
       case ToolbarAction.AI_SUMMARY:
         handleAiSummary(selection)
@@ -548,9 +562,12 @@ export const PullRequestCommentBox = ({
     const current = commentHistory.pop() ?? initialCommentHistory
     const undo = commentHistory.pop() ?? current
 
-    !isUndefined(undo) &&
-      !isUndefined(current) &&
-      setCommentAndSelection(undo.comment, undo.selection, [...commentHistory, undo], [...commentFuture, current])
+    if (!isUndefined(undo) && !isUndefined(current)) {
+      setCommentAndSelection(undo.comment, undo.selection)
+
+      setCommentHistory([...commentHistory, undo])
+      setCommentFuture([...commentFuture, current])
+    }
   }
 
   const handleRedo = (e: KeyboardEvent<HTMLTextAreaElement>): void => {
@@ -562,70 +579,86 @@ export const PullRequestCommentBox = ({
 
     const redo = commentFuture.pop()
 
-    !isUndefined(redo) && setCommentAndSelection(redo.comment, redo.selection, [...commentHistory, redo], commentFuture)
-  }
+    if (!isUndefined(redo)) {
+      setCommentAndSelection(redo.comment, redo.selection)
 
-  const setSelection = (selection: TextSelection, skipSetHistory: boolean = false): void => {
-    if (textAreaRef.current) {
-      textAreaRef.current.setSelectionRange(selection.start, selection.end)
-      setTextSelection({ start: selection.start, end: selection.end })
-
-      !skipSetHistory && setCommentHistory([...commentHistory, { comment: textComment, selection: selection }])
+      setCommentHistory([...commentHistory, redo])
+      setCommentFuture(commentFuture)
     }
   }
 
-  const setCommentAndSelection = (
-    comment: string,
-    selection: TextSelection,
-    replaceHistory?: CommentHistory[],
-    replaceFuture?: CommentHistory[]
-  ): void => {
-    setTextComment(comment)
+  const pushHistory = (current: CommentHistory): void => {
+    setCommentHistory([...commentHistory, current])
+  }
 
-    setSelection({ start: selection.start, end: selection.end }, true)
+  const currentSelection = (): TextSelection => {
+    const textAreaElement = textAreaRef.current
 
-    const current = {
+    return textAreaElement
+      ? {
+          start: textAreaElement.selectionStart,
+          end: textAreaElement.selectionEnd
+        }
+      : { start: textComment.length, end: textComment.length }
+  }
+
+  const setCommentAndSelection = (comment: string, selection: TextSelection): void => {
+    setComment(comment)
+
+    pushHistory({
       comment: comment,
       selection: selection
-    }
+    })
 
-    setCommentHistory(replaceHistory ?? [...commentHistory, current])
-    setCommentFuture(replaceFuture ? replaceFuture : [])
+    setTimeout(() => {
+      /*
+       * Note: Setting the comment value on the textarea causes the textarea to set its internal selection index
+       *       to the end of the passed in value. This also causes its onSelect event to fire with the new (wrong)
+       *       selection. To work around this, we call setSelection on the next event loop so after the textarea
+       *       sets the wrong selection we update it to be correct. The alternative is maintaining our own selection
+       *       state, but that gets a bit messy having two sources of truth.
+       */
+      setSelection({ start: selection.start, end: selection.end })
+    })
   }
 
-  const onCommentChange = (e: ChangeEvent<HTMLTextAreaElement>): void => {
-    const selection = { start: e.target.selectionStart, end: e.target.selectionEnd }
-
-    setCommentAndSelection(e.target.value, selection)
+  const setSelection = (selection: TextSelection): void => {
+    textAreaRef.current && textAreaRef.current.setSelectionRange(selection.start, selection.end)
   }
 
-  const onSelect = (): void => {
-    if (textAreaRef.current) {
-      const selection = { start: textAreaRef.current.selectionStart, end: textAreaRef.current.selectionEnd }
+  const setComment = (comment: string): void => {
+    setTextComment(comment)
+    setParentComment(comment) // Only required because the "Compare changes" screen has an external close button
+  }
 
-      setSelection(selection)
-    }
+  const onCommentChange = (comment: string): void => {
+    setComment(comment)
+
+    pushHistory({
+      comment: comment,
+      selection: currentSelection()
+    })
   }
 
   const onKeyUp = (e: KeyboardEvent<HTMLTextAreaElement>): void => {
     switch (e.code) {
       case 'Enter': {
-        const commentMetadata = parseComment(textComment, textSelection)
+        const commentMetadata = parseComment(textComment, currentSelection())
         const textLinesSelectionStartIndexBeforeEnter = commentMetadata.comment.textLinesSelectionStartIndex - 1
         const lineBeforeEnter = commentMetadata.comment.textLines.at(textLinesSelectionStartIndexBeforeEnter) ?? ''
 
         if (isListString(lineBeforeEnter)) {
-          handleActionClick(ToolbarAction.UNORDERED_LIST, textComment, textSelection)
+          handleActionClick(ToolbarAction.UNORDERED_LIST)
         }
         if (isListSelectString(lineBeforeEnter)) {
-          handleActionClick(ToolbarAction.CHECK_LIST, textComment, textSelection)
+          handleActionClick(ToolbarAction.CHECK_LIST)
         }
         break
       }
     }
   }
 
-  const onKeyDown = (e: KeyboardEvent<HTMLTextAreaElement>): void => {
+  const onKeyDown = (e: KeyboardEvent<HTMLTextAreaElement>): Promise<void> | void => {
     if (e.key === 'Enter' && e.metaKey) {
       return handleSaveComment()
     }
@@ -645,22 +678,29 @@ export const PullRequestCommentBox = ({
     return line.startsWith('- [ ] ')
   }
 
+  const isCompactLayout = layout === 'compact'
+
   return (
     <Layout.Horizontal align="start" className={cn('gap-x-3', className)} data-comment-editor-shown="true">
       {!inReplyMode && !isEditMode && !hideAvatar && avatar}
       <Layout.Vertical gap="xs" className="w-full">
         <PullRequestCommentingOn from={lineFromNumber} to={lineNumber} fromSide={lineFromSide} toSide={lineSide} />
         <Layout.Vertical
-          gap="md"
-          className={cn('p-4 pt-3 flex-1 w-full', {
-            'border rounded-md': !inReplyMode || isEditMode,
-            'bg-cn-1': !inReplyMode,
-            'bg-cn-2 border-t': inReplyMode
-          })}
+          gap="xs"
+          className={cn(
+            'px-cn-md pt-cn-2xs pb-cn-sm flex-1 w-full',
+            {
+              'border rounded-md': !inReplyMode || isEditMode,
+              'bg-cn-1': !inReplyMode,
+              'bg-cn-2 border-t': inReplyMode,
+              'px-cn-sm pt-cn-xs pb-cn-xs': isCompactLayout
+            },
+            wrapperClassName
+          )}
         >
           <Tabs.Root defaultValue={TABS_KEYS.WRITE} value={activeTab} onValueChange={handleTabChange}>
             <Tabs.List
-              className="-mx-4 mb-cn-md px-4"
+              className={cn('-mx-cn-md mb-cn-xs px-cn-md', { '-mx-cn-sm px-cn-sm': isCompactLayout })}
               activeClassName={inReplyMode ? 'bg-cn-2' : 'bg-cn-1'}
               variant="overlined"
             >
@@ -681,19 +721,14 @@ export const PullRequestCommentBox = ({
                   resizable
                   ref={textAreaRef}
                   placeholder={textareaPlaceholder ?? 'Add your comment here'}
-                  className="min-h-12 pb-cn-3xl text-cn-1"
+                  className="pb-cn-3xl text-cn-1 min-h-12"
                   autoFocus={!!autofocus || !!inReplyMode}
                   principalProps={principalProps}
                   setPrincipalsMentionMap={setPrincipalsMentionMap}
                   value={textComment}
-                  setValue={value => {
-                    setTextComment(value)
-                    setComment(value)
-                  }}
-                  onChange={e => onCommentChange(e)}
-                  onKeyUp={e => onKeyUp(e)}
-                  onKeyDown={e => onKeyDown(e)}
-                  onSelect={() => onSelect()}
+                  setValue={onCommentChange}
+                  onKeyUp={onKeyUp}
+                  onKeyDown={onKeyDown}
                   onPaste={e => {
                     if (e.clipboardData.files.length > 0) {
                       handlePasteForUpload(e)
@@ -706,12 +741,12 @@ export const PullRequestCommentBox = ({
                   </div>
                 )}
                 {isDragging && (
-                  <div className="absolute inset-1 z-[100] cursor-copy rounded-sm border border-dashed border-cn-2" />
+                  <div className="border-cn-2 absolute inset-1 z-[100] cursor-copy rounded-sm border border-dashed" />
                 )}
                 <Layout.Flex
                   align="center"
                   gap="4xs"
-                  className="absolute bottom-px left-px w-[calc(100%-20px)] rounded bg-cn-1 p-cn-3xs"
+                  className="bg-cn-1 p-cn-3xs absolute bottom-px left-px w-[calc(100%-20px)] rounded"
                 >
                   {toolbar.map((item, index) => {
                     return (
@@ -721,7 +756,7 @@ export const PullRequestCommentBox = ({
                           variant={item.variant ?? 'ghost'}
                           iconOnly
                           disabled={showAiLoader}
-                          onClick={() => handleActionClick(item.action, textComment, textSelection)}
+                          onClick={() => handleActionClick(item.action)}
                           tooltipProps={{
                             content: item.title
                           }}
@@ -768,17 +803,28 @@ export const PullRequestCommentBox = ({
             )}
 
             {onSaveComment ? (
-              <Layout.Flex align="center" justify="end" gap="sm" className="ml-auto">
+              <ButtonLayout className={cn({ 'gap-cn-xs': isCompactLayout })}>
                 {(inReplyMode || isEditMode) && (
                   <Button variant="secondary" onClick={handleCancelComment}>
                     Cancel
                   </Button>
                 )}
 
-                <Button loading={parentIsLoading || isLoading} onClick={handleSaveComment}>
-                  {buttonTitle || 'Comment'}
-                </Button>
-              </Layout.Flex>
+                {!isReply && (
+                  <Button loading={parentIsLoading || isLoading} onClick={handleSaveComment}>
+                    {buttonTitle || 'Comment'}
+                  </Button>
+                )}
+
+                {isReply && (
+                  <ReplySplitButton
+                    isLoading={parentIsLoading || isLoading}
+                    isResolved={isResolved}
+                    handleSaveComment={handleSaveComment}
+                    toggleConversationStatus={toggleConversationStatus}
+                  />
+                )}
+              </ButtonLayout>
             ) : null}
           </Layout.Flex>
 

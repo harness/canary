@@ -5,6 +5,7 @@ import {
   ControlGroup,
   Fieldset,
   FormInput,
+  IconV2,
   Label,
   Layout,
   MultiSelectOption,
@@ -16,7 +17,7 @@ import { Separator } from '@/components/separator'
 import { useTranslation } from '@/context'
 import { useDebounceSearch } from '@hooks/use-debounce-search'
 import { EnumBypassListType, NormalizedPrincipal, PatternsButtonType } from '@views/repo/repo-branch-rules/types'
-import { getIcon } from '@views/repo/repo-branch-rules/utils'
+import { getIcon } from '@views/repo/utils'
 
 import { TagFieldProps, TagRule } from '../types'
 import { getTagRules } from './repo-tag-rules-data'
@@ -110,6 +111,7 @@ export const TagSettingsRuleTargetPatternsField: FC<TagFieldProps> = ({ setValue
               }
             ]}
           >
+            <IconV2 name={selectedOption === PatternsButtonType.INCLUDE ? 'plus-circle' : 'xmark-circle'} />
             {t(`views:repos.${selectedOption.toLowerCase()}`, `${selectedOption}`)}
           </SplitButton>
         </Layout.Grid>

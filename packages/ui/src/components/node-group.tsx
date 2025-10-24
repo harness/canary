@@ -13,7 +13,7 @@ function Root({ className, children }: NodeGroupRootProps) {
   return (
     <div
       className={cn(
-        'relative grid grid-cols-[26px_1fr] grid-rows-[auto_1fr] items-center gap-x-cn-sm gap-y-cn-xs',
+        'relative grid grid-cols-[28px_1fr] grid-rows-[auto_1fr] items-center gap-x-cn-xs gap-y-cn-3xs',
         className
       )}
     >
@@ -25,14 +25,16 @@ function Root({ className, children }: NodeGroupRootProps) {
 function Icon({
   children,
   simpleNodeIcon,
-  className
+  className,
+  wrapperClassName
 }: {
   children?: ReactNode
   simpleNodeIcon?: boolean
   className?: string
+  wrapperClassName?: string
 }) {
   return (
-    <div className="col-start-1 row-start-1 size-full self-start">
+    <div className={cn('col-start-1 row-start-1 size-full self-start', wrapperClassName)}>
       <div
         className={cn(
           {

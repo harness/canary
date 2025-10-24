@@ -7,8 +7,7 @@ import {
   ButtonPropsRegular,
   IconPropsV2,
   IconV2,
-  IconV2NamesType,
-  toButtonProps
+  IconV2NamesType
 } from '@/components'
 import * as TogglePrimitive from '@radix-ui/react-toggle'
 import { cn } from '@utils/cn'
@@ -139,7 +138,8 @@ const Toggle = forwardRef<ElementRef<typeof TogglePrimitive.Root>, ToggleProps>(
           size={size}
           rounded={rounded}
           {...accessibilityProps}
-          {...toButtonProps({ iconOnly, tooltipProps })}
+          iconOnly={iconOnly}
+          tooltipProps={tooltipProps}
         >
           {renderContent()}
         </Button>

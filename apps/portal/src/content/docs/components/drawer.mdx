@@ -14,7 +14,7 @@ import { DocsPage } from "@/components/docs-page";
   client:only
   code={`
     <Drawer.Root>
-      <Drawer.Trigger asChild>
+      <Drawer.Trigger>
         <Button>Open Drawer</Button>
       </Drawer.Trigger>
 
@@ -105,7 +105,7 @@ return (
     open={isDrawerOpen}
     onOpenChange={setIsDrawerOpen}
   >
-    <Drawer.Trigger asChild>
+    <Drawer.Trigger>
       <Button>Open drawer</Button>
     </Drawer.Trigger>
 
@@ -120,7 +120,7 @@ return (
         Content of the drawer goes here
 
         <Drawer.Root>
-          <Drawer.Trigger asChild>
+          <Drawer.Trigger>
             <Button>Open Nested Drawer</Button>
           </Drawer.Trigger>
 
@@ -200,7 +200,7 @@ Nested drawers can be implemented by placing a `Drawer.Root` inside the parent `
 
         <Drawer.Body>
           <Drawer.Root>
-            <Drawer.Trigger asChild>
+            <Drawer.Trigger>
               <Button>Open Nested Drawer</Button>
             </Drawer.Trigger>
 
@@ -211,7 +211,7 @@ Nested drawers can be implemented by placing a `Drawer.Root` inside the parent `
 
               <Drawer.Body>
                 <Drawer.Root>
-                  <Drawer.Trigger asChild>
+                  <Drawer.Trigger>
                     <Button>Open Nested Drawer</Button>
                   </Drawer.Trigger>
 
@@ -286,14 +286,38 @@ Nested drawers can be implemented by placing a `Drawer.Root` inside the parent `
 
 ## Drawer sizes
 
-The `Drawer.Content` component accepts a `size` prop to control its width (or height, depending on `direction`). Supported values are: `xs`, `sm`, `md`, and `lg`.
+The `Drawer.Content` component accepts a `size` prop to control its width (or height, depending on `direction`). Supported values are: `2xs`, `xs`, `sm`, `md`, and `lg`.
 
 <DocsPage.ComponentExample
   client:only
   code={`
   <ButtonLayout orientation="vertical">
     <Drawer.Root>
-      <Drawer.Trigger asChild>
+      <Drawer.Trigger>
+        <Button>Open Drawer with '2xs' size</Button>
+      </Drawer.Trigger>
+
+      <Drawer.Content size="2xs">
+        <Drawer.Header>
+          <Drawer.Title>Title</Drawer.Title>
+        </Drawer.Header>
+
+        <Drawer.Body />
+
+        <Drawer.Footer>
+          <ButtonLayout.Root>
+            <ButtonLayout.Secondary>
+              <Drawer.Close asChild>
+                <Button variant="outline">Cancel</Button>
+              </Drawer.Close>
+            </ButtonLayout.Secondary>
+          </ButtonLayout.Root>
+        </Drawer.Footer>
+      </Drawer.Content>
+    </Drawer.Root>
+
+    <Drawer.Root>
+      <Drawer.Trigger>
         <Button>Open Drawer with 'xs' size</Button>
       </Drawer.Trigger>
 
@@ -317,7 +341,7 @@ The `Drawer.Content` component accepts a `size` prop to control its width (or he
     </Drawer.Root>
 
     <Drawer.Root>
-      <Drawer.Trigger asChild>
+      <Drawer.Trigger>
         <Button>Open Drawer with 'sm' size</Button>
       </Drawer.Trigger>
 
@@ -341,7 +365,7 @@ The `Drawer.Content` component accepts a `size` prop to control its width (or he
     </Drawer.Root>
 
     <Drawer.Root>
-      <Drawer.Trigger asChild>
+      <Drawer.Trigger>
         <Button>Open Drawer with 'md' size</Button>
       </Drawer.Trigger>
 
@@ -365,7 +389,7 @@ The `Drawer.Content` component accepts a `size` prop to control its width (or he
     </Drawer.Root>
 
     <Drawer.Root>
-      <Drawer.Trigger asChild>
+      <Drawer.Trigger>
         <Button>Open Drawer with 'lg' size</Button>
       </Drawer.Trigger>
 
@@ -401,7 +425,7 @@ The `Drawer.Root` component accepts a `direction` prop to control which side the
   code={`
   <ButtonLayout orientation="vertical">
     <Drawer.Root>
-      <Drawer.Trigger asChild>
+      <Drawer.Trigger>
         <Button>Open Drawer with 'right' direction</Button>
       </Drawer.Trigger>
 
@@ -425,7 +449,7 @@ The `Drawer.Root` component accepts a `direction` prop to control which side the
     </Drawer.Root>
 
     <Drawer.Root direction="left">
-      <Drawer.Trigger asChild>
+      <Drawer.Trigger>
         <Button>Open Drawer with 'left' direction</Button>
       </Drawer.Trigger>
 
@@ -449,7 +473,7 @@ The `Drawer.Root` component accepts a `direction` prop to control which side the
     </Drawer.Root>
 
     <Drawer.Root direction="top">
-      <Drawer.Trigger asChild>
+      <Drawer.Trigger>
         <Button>Open Drawer with 'top' direction</Button>
       </Drawer.Trigger>
 
@@ -473,7 +497,7 @@ The `Drawer.Root` component accepts a `direction` prop to control which side the
     </Drawer.Root>
 
     <Drawer.Root direction="bottom">
-      <Drawer.Trigger asChild>
+      <Drawer.Trigger>
         <Button>Open Drawer with 'bottom' direction</Button>
       </Drawer.Trigger>
 
@@ -498,6 +522,63 @@ The `Drawer.Root` component accepts a `direction` prop to control which side the
 
   </ButtonLayout>
 `}
+/>
+
+### Keep focus on the custom trigger element
+
+If a drawer is opened without the `Trigger` component (e.g., a dropdown item), focus will not return to the trigger element when the drawer is closed. To address this use `useCustomDialogTrigger` hook to register your custom trigger element.
+
+<DocsPage.ComponentExample
+  client:only
+  code={`() => {
+    const [open, setOpen] = React.useState(false);
+    const { triggerRef, registerTrigger } = useCustomDialogTrigger();
+
+    const handleOpenDialog = () => {
+      registerTrigger();
+      setOpen(true);
+    };
+
+return (
+
+  <>
+    <Layout.Horizontal>
+      <DropdownMenu.Root>
+        <DropdownMenu.Trigger aria-label="options menu" ref={triggerRef} asChild>
+          <Button>Open Menu</Button>
+        </DropdownMenu.Trigger>
+
+        <DropdownMenu.Content>
+            <DropdownMenu.Item title="Open dialog" onSelect={handleOpenDialog} />
+        </DropdownMenu.Content>
+
+      </DropdownMenu.Root>
+
+      <Drawer.Trigger>
+        <Button onClick={handleOpenDialog}>Open Drawer</Button>
+      </Drawer.Trigger>
+    </Layout.Horizontal>
+
+    <Drawer.Root open={open} onOpenChange={setOpen}>
+      <Drawer.Content>
+        <Drawer.Header icon="plus-circle">
+          <Drawer.Title>Content</Drawer.Title>
+          <Drawer.Description>Drawer opened from the custom trigger</Drawer.Description>
+        </Drawer.Header>
+        <Drawer.Body>
+          <p className="font-body-normal">
+            Lorem ipsum dolor sit amet, consectetur adipiscing elit
+          </p>
+        </Drawer.Body>
+        <Drawer.Footer>
+          <Drawer.Close>Close</Drawer.Close>
+        </Drawer.Footer>
+      </Drawer.Content>
+
+    </Drawer.Root>
+
+</>
+)}`}
 />
 
 ## API Reference
@@ -595,17 +676,16 @@ Contains [`Drawer.Trigger`](#trigger) and [`Drawer.Content`](#content) component
 
 ### `Trigger`
 
-An optional button that opens the drawer.
+Used to open a drawer. Essential for registering the trigger element with the dialog focus manager.
+If a drawer is opened without the `Trigger` component (e.g., a dropdown item), focus will not return to the trigger element when the drawer is closed. To address this use `useCustomDialogTrigger` hook to register your custom trigger element.
 
 <DocsPage.PropsTable
   props={[
     {
-      name: "asChild",
-      description:
-        "Change the default rendered element for the one passed as a child, merging their props and behavior.",
-      required: false,
-      value: "boolean",
-      defaultValue: "false",
+      name: "children",
+      description: "Trigger element (only one child allowed)",
+      required: true,
+      value: "ReactNode",
     },
   ]}
 />
@@ -637,7 +717,7 @@ Contains [`Drawer.Header`](#header), [`Drawer.Body`](#body) and [`Drawer.Footer`
       name: "size",
       description: "Width | height of the drawer.",
       required: false,
-      value: "'sm' | 'md' | 'lg'",
+      value: " '2xs' | 'xs' | 'sm' | 'md' | 'lg'",
       defaultValue: "sm",
     },
     {

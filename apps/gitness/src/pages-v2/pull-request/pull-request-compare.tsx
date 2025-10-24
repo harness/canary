@@ -4,7 +4,7 @@ import { useNavigate, useParams } from 'react-router-dom'
 import { useMutation } from '@tanstack/react-query'
 import * as Diff2Html from 'diff2html'
 import { useAtom } from 'jotai'
-import { compact, noop } from 'lodash-es'
+import { compact, isEmpty, noop } from 'lodash-es'
 
 import {
   CreateRepositoryErrorResponse,
@@ -19,13 +19,15 @@ import {
   useGetPullReqByBranchesQuery,
   useListCommitsQuery,
   useListPrincipalsQuery,
+  useListUsergroupsQuery,
   useRawDiffQuery
 } from '@harnessio/code-service-client'
-import { IconV2 } from '@harnessio/ui/components'
+import { IconV2, Layout } from '@harnessio/ui/components'
 import {
   BranchSelectorListItem,
   CommitSelectorListItem,
   CompareFormFields,
+  EnumBypassListType,
   HandleAddLabelType,
   LabelAssignmentType,
   LabelValueType,
@@ -38,6 +40,7 @@ import { BranchSelectorContainer } from '../../components-v2/branch-selector-con
 import { useAppContext } from '../../framework/context/AppContext'
 import { useRoutes } from '../../framework/context/NavigationContext'
 import { useGetRepoRef } from '../../framework/hooks/useGetRepoPath'
+import { useGetSpaceURLParam } from '../../framework/hooks/useGetSpaceParam.ts'
 import { useIsMFE } from '../../framework/hooks/useIsMFE.ts'
 import { useMFEContext } from '../../framework/hooks/useMFEContext'
 import { useQueryState } from '../../framework/hooks/useQueryState'
@@ -73,8 +76,10 @@ export const CreatePullRequest = () => {
   const { currentUser } = useAppContext()
   const [diffTargetBranch, diffSourceBranch] = diffRefs ? diffRefs.split('...') : [undefined, undefined]
   const {
+    renderUrl,
     scope: { accountId }
   } = useMFEContext()
+  const spaceURL = useGetSpaceURLParam()
 
   const navigate = useNavigate()
   const [apiError, setApiError] = useState<string | null>(null)
@@ -91,6 +96,7 @@ export const CreatePullRequest = () => {
     description: string
   } | null>(null)
   const [reviewers, setReviewers] = useState<PRReviewer[]>([])
+  const [userGroupReviewers, setUserGroupReviewers] = useState<PRReviewer[]>([])
   const [diffs, setDiffs] = useState<DiffFileEntry[]>()
   const [labels, setLabels] = useState<LabelAssignmentType[]>([])
   const [searchLabel, setSearchLabel] = useState('')
@@ -157,9 +163,27 @@ export const CreatePullRequest = () => {
     isLoading: isPrincipalsLoading,
     error: principalsError
   } = useListPrincipalsQuery({
-    // @ts-expect-error : BE issue - not implemnted
+    // @ts-expect-error : BE issue - not implemented
     queryParams: { page: 1, limit: 100, type: 'user', query: searchReviewers, accountIdentifier: accountId }
   })
+
+  const {
+    data: { body: userGroups } = {},
+    isLoading: isUserGroupsLoading,
+    error: userGroupsError
+  } = useListUsergroupsQuery(
+    {
+      space_ref: `${spaceURL}/+`,
+      queryParams: {
+        page: 1,
+        limit: 100,
+        query: searchReviewers
+      }
+    },
+    {
+      enabled: !isEmpty(renderUrl)
+    }
+  )
 
   const {
     labels: labelsList,
@@ -185,7 +209,7 @@ export const CreatePullRequest = () => {
 
   useEffect(() => {
     // Set isBranchSelected to false if source and target branches are the same, otherwise true
-    if (selectedSourceBranch && selectedTargetBranch && selectedSourceBranch.name !== selectedTargetBranch.name) {
+    if (selectedSourceBranch && selectedTargetBranch) {
       setIsBranchSelected(true)
     } else {
       setIsBranchSelected(false)
@@ -219,7 +243,13 @@ export const CreatePullRequest = () => {
         const containerId = `container-${fileId}`
         const contentId = `content-${fileId}`
         const filePath = diff.isDeleted ? diff.oldName : diff.newName
-        const diffString = parseSpecificDiff(cachedDiff.raw ?? '', diff.oldName, diff.newName)
+        const diffString = parseSpecificDiff(
+          cachedDiff.raw ?? '',
+          diff.oldName,
+          diff.newName,
+          diff.checksumBefore,
+          diff.checksumAfter
+        )
 
         return {
           ...diff,
@@ -259,6 +289,7 @@ export const CreatePullRequest = () => {
       source_branch: selectedSourceBranch?.name,
       title: data.title,
       reviewer_ids: reviewers.map(reviewer => reviewer.reviewer.id),
+      user_group_reviewer_ids: userGroupReviewers.map(ugReviewer => ugReviewer.reviewer.id),
       labels: labels.map(label => {
         return {
           label_id: label.id,
@@ -434,7 +465,32 @@ export const CreatePullRequest = () => {
       setReviewers(prev => [
         ...prev,
         {
-          reviewer: { display_name: reviewer?.display_name || '', id: reviewer?.id || 0, email: reviewer?.email || '' },
+          reviewer: {
+            display_name: reviewer?.display_name || '',
+            id: reviewer?.id || 0,
+            email: reviewer?.email || '',
+            type: EnumBypassListType.USER
+          },
+          review_decision: PullReqReviewDecision.pending,
+          sha: ''
+        }
+      ])
+    }
+  }
+
+  const handleAddUserGroupReviewer = (id?: number) => {
+    if (!id) return
+    const ugReviewer = userGroups?.find(ug => ug.id === id)
+    if (ugReviewer?.name && ugReviewer.id) {
+      setUserGroupReviewers(prev => [
+        ...prev,
+        {
+          reviewer: {
+            display_name: ugReviewer?.name || '',
+            id: ugReviewer?.id || 0,
+            email: ugReviewer?.identifier || '',
+            type: EnumBypassListType.USER_GROUP
+          },
           review_decision: PullReqReviewDecision.pending,
           sha: ''
         }
@@ -446,6 +502,12 @@ export const CreatePullRequest = () => {
     if (!id) return
     const newReviewers = reviewers.filter(reviewer => reviewer?.reviewer?.id !== id)
     setReviewers(newReviewers)
+  }
+
+  const handleDeleteUserGroupReviewer = (id?: number) => {
+    if (!id) return
+    const newReviewers = userGroupReviewers.filter(ugReviewer => ugReviewer?.reviewer?.id !== id)
+    setUserGroupReviewers(newReviewers)
   }
 
   const handleAddLabel = (labelToAdd: HandleAddLabelType) => {
@@ -556,7 +618,6 @@ export const CreatePullRequest = () => {
         isLabelsLoading={isLabelsLoading}
         onSelectCommit={selectCommit}
         isBranchSelected={isBranchSelected}
-        setIsBranchSelected={setIsBranchSelected}
         onFormSubmit={onSubmit}
         onFormCancel={onCancel}
         apiError={apiError}
@@ -599,14 +660,18 @@ export const CreatePullRequest = () => {
         }
         principalProps={{
           principals,
+          userGroups,
           searchPrincipalsQuery: searchReviewers,
           setSearchPrincipalsQuery: setSearchReviewers,
-          isPrincipalsLoading,
-          principalsError
+          isPrincipalsLoading: isPrincipalsLoading || isUserGroupsLoading,
+          principalsError: principalsError || userGroupsError
         }}
         reviewers={reviewers}
+        userGroupReviewers={userGroupReviewers}
         handleAddReviewer={handleAddReviewer}
+        handleAddUserGroupReviewer={handleAddUserGroupReviewer}
         handleDeleteReviewer={handleDeleteReviewer}
+        handleDeleteUserGroupReviewer={handleDeleteUserGroupReviewer}
         isFetchingCommits={isFetchingCommits}
         labelsList={labelsList}
         labelsValues={labelsValues}
@@ -617,24 +682,27 @@ export const CreatePullRequest = () => {
         searchLabelQuery={searchLabel}
         setSearchLabelQuery={setSearchLabel}
         branchSelectorRenderer={
-          <>
+          <Layout.Horizontal gapX="3xs" align="center">
             <BranchSelectorContainer
+              className="max-w-80"
               onSelectBranchorTag={branchTagName => handleSelectTargetBranchOrTag(branchTagName)}
               selectedBranch={selectedTargetBranch}
               branchPrefix="base"
             />
             <IconV2 name="arrow-left" />
             <BranchSelectorContainer
+              className="max-w-80"
               onSelectBranchorTag={branchTagName => handleSelectSourceBranchOrTag(branchTagName)}
               selectedBranch={selectedSourceBranch}
               branchPrefix="compare"
               autoSelectDefaultBranch={false}
             />
-          </>
+          </Layout.Horizontal>
         }
         onGetFullDiff={onGetFullDiff}
         toRepoFileDetails={toRepoFileDetails}
         sourceBranch={selectedSourceBranch?.name}
+        targetBranch={selectedTargetBranch?.name}
       />
     )
   }

@@ -1,7 +1,7 @@
 import { useCallback } from 'react'
 
-import { Layout, MoreActionsTooltip, StatusBadge, Switch, Table, Text, useCustomDialogTrigger } from '@/components'
-import { useRouterContext, useTranslation } from '@/context'
+import { Layout, MoreActionsTooltip, StatusBadge, Switch, Table, Text } from '@/components'
+import { useCustomDialogTrigger, useRouterContext, useTranslation } from '@/context'
 import { WebhookType } from '@/views'
 
 import { formatWebhookTriggers } from '../../utils'

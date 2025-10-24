@@ -10,15 +10,15 @@ export const ReviewerInfo: React.FC<ReviewerInfoProps> = ({ display_name, email 
   if (!display_name && !email) return null
 
   return (
-    <Layout.Flex direction="column">
-      <Text className="truncate text-2 font-medium text-cn-1" title={display_name}>
+    <Layout.Grid gap="none">
+      <Text title={display_name} color="foreground-1" truncate>
         {display_name}
       </Text>
       {display_name !== email && (
-        <Text className="truncate line-clamp-1 w-60 text-2 font-medium text-cn-3" title={email}>
+        <Text variant="caption-normal" color="foreground-3" title={email} truncate>
           {email}
         </Text>
       )}
-    </Layout.Flex>
+    </Layout.Grid>
   )
 }

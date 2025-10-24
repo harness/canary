@@ -1,10 +1,11 @@
-import { ButtonHTMLAttributes, forwardRef, Fragment } from 'react'
+import { ButtonHTMLAttributes, forwardRef, Fragment, useCallback, useState } from 'react'
 
 import { Tooltip, TooltipProps } from '@components/tooltip'
 import { Slot } from '@radix-ui/react-slot'
 import { cn } from '@utils/cn'
-import { filterChildrenByDisplayNames } from '@utils/utils'
+import { filterChildrenByDisplayNames, isPromise } from '@utils/utils'
 import { cva, type VariantProps } from 'class-variance-authority'
+import isEmpty from 'lodash-es/isEmpty'
 
 import { IconV2, IconV2DisplayName } from './icon-v2'
 
@@ -30,10 +31,6 @@ const buttonVariants = cva('cn-button', {
       true: 'cn-button-rounded'
     },
 
-    iconOnly: {
-      true: 'cn-button-icon-only'
-    },
-
     theme: {
       default: 'cn-button-default',
       success: 'cn-button-success',
@@ -47,18 +44,18 @@ const buttonVariants = cva('cn-button', {
   }
 })
 
-type ButtonTooltipProps = Pick<TooltipProps, 'title' | 'content' | 'side'>
+type ButtonTooltipProps = Pick<TooltipProps, 'title' | 'content' | 'side' | 'align'>
 
-type CommonButtonProps = ButtonHTMLAttributes<HTMLButtonElement> &
+type CommonButtonProps = Omit<ButtonHTMLAttributes<HTMLButtonElement>, 'onClick'> &
   VariantProps<typeof buttonVariants> & {
     asChild?: boolean
     loading?: boolean
     rounded?: boolean
+    onClick?: (event: React.MouseEvent<HTMLButtonElement>) => void | Promise<unknown>
   }
 
 type ButtonPropsIconOnlyRequired = {
   iconOnly: true
-  ignoreIconOnlyTooltip?: false
   tooltipProps: ButtonTooltipProps
 }
 
@@ -69,9 +66,8 @@ type ButtonPropsIconOnlyIgnored = {
 }
 
 type ButtonPropsRegular = {
-  iconOnly?: false
+  iconOnly?: boolean
   tooltipProps?: ButtonTooltipProps
-  ignoreIconOnlyTooltip?: boolean
 }
 
 type ButtonProps = CommonButtonProps & (ButtonPropsIconOnlyRequired | ButtonPropsIconOnlyIgnored | ButtonPropsRegular)
@@ -96,19 +92,41 @@ const Button = forwardRef<HTMLButtonElement, ButtonProps>(
       disabled,
       children: _children,
       type = 'button',
-      tooltipProps,
-      ignoreIconOnlyTooltip,
+      onClick,
       ...props
     },
     ref
   ) => {
+    const [isPromiseLoading, setIsPromiseLoading] = useState(false)
+
     const Comp = asChild ? Slot : 'button'
     const microSize = size === '2xs' || size === '3xs'
     const iconOnly = iconOnlyProp || microSize
 
+    // Handle onClick that might return a promise
+    const handleClick = useCallback(
+      (event: React.MouseEvent<HTMLButtonElement>) => {
+        if (onClick) {
+          const result = onClick(event)
+
+          // Check if onClick returned a promise (result could be void)
+          if (isPromise(result)) {
+            setIsPromiseLoading(true)
+            ;(result as Promise<unknown>).finally(() => {
+              setIsPromiseLoading(false)
+            })
+          }
+        }
+      },
+      [onClick]
+    )
+
     const filteredChildren = iconOnly ? filterChildrenByDisplayNames(_children, [IconV2DisplayName])[0] : _children
 
-    const children = loading ? (
+    // Show loading if either loading prop is true or promise is loading
+    const isLoading = loading || isPromiseLoading
+
+    const children = isLoading ? (
       <>
         <IconV2 className="animate-spin" name="loader" />
         {/* When button state is 'loading' and iconOnly is true, we show only 1 icon */}
@@ -120,19 +138,24 @@ const Button = forwardRef<HTMLButtonElement, ButtonProps>(
 
     const ButtonComp = (
       <Comp
-        className={cn(buttonVariants({ variant, size, theme, rounded, iconOnly, className }))}
+        className={cn(buttonVariants({ variant, size, theme, rounded, className }), {
+          'cn-button-icon-only': iconOnly
+        })}
         ref={ref}
-        disabled={disabled || loading}
+        disabled={disabled || isLoading}
         type={type}
+        onClick={handleClick}
         {...props}
       >
         {children}
       </Comp>
     )
 
-    if (tooltipProps && !ignoreIconOnlyTooltip) {
+    if (!isEmpty(props.tooltipProps)) {
+      const buttonTooltipProps = props.tooltipProps
+
       return (
-        <Tooltip hideArrow {...tooltipProps}>
+        <Tooltip hideArrow {...buttonTooltipProps}>
           {ButtonComp}
         </Tooltip>
       )
@@ -143,34 +166,7 @@ const Button = forwardRef<HTMLButtonElement, ButtonProps>(
 )
 Button.displayName = 'Button'
 
-/**
- * Converts iconOnly into a literal and returns props ready to be spread into <Button />
- * @param p
- */
-type BtnIconOnly = Extract<ButtonProps, { iconOnly: true }>
-type BtnRegular = Extract<ButtonProps, { iconOnly?: false }>
-type ButtonLike = Omit<Partial<ButtonProps>, 'iconOnly' | 'ignoreIconOnlyTooltip'> & {
-  iconOnly?: boolean
-  ignoreIconOnlyTooltip?: boolean
-}
-
-const toButtonProps = (p: ButtonLike) => {
-  if (p?.iconOnly) {
-    return {
-      ...p,
-      iconOnly: true,
-      ignoreIconOnlyTooltip: (p as any)?.ignoreIconOnlyTooltip ?? false
-    } as BtnIconOnly
-  }
-
-  const { ignoreIconOnlyTooltip: _drop, ...rest } = p as any
-  return {
-    ...rest,
-    iconOnly: false
-  } as BtnRegular
-}
-
-export { Button, buttonVariants, toButtonProps }
+export { Button, buttonVariants }
 export type {
   ButtonProps,
   ButtonThemes,

@@ -17,6 +17,7 @@ import {
 import { DiffFile, DiffModeEnum, DiffViewProps, SplitSide } from '@git-diff-view/react'
 import { useCustomEventListener } from '@hooks/use-event-listener'
 import { useMemoryCleanup } from '@hooks/use-memory-cleanup'
+import { cn } from '@utils/cn'
 import { getInitials } from '@utils/stringUtils'
 import { DiffBlock } from 'diff2html/lib/types'
 import { debounce, get } from 'lodash-es'
@@ -31,6 +32,7 @@ import PullRequestTimelineItem from '../details/components/conversation/pull-req
 import { replaceMentionIdWithEmail } from '../details/components/conversation/utils'
 import { ExpandedCommentsContext, useExpandedCommentsContext } from '../details/context/pull-request-comments-context'
 import { useDiffHighlighter } from '../hooks/useDiffHighlighter'
+import { useInViewDiffRenderer } from '../hooks/useInViewDiffRenderer'
 import { quoteTransform } from '../utils'
 import { ExtendedDiffView } from './extended-diff-view/extended-diff-view'
 import { ExtendedDiffViewProps, LinesRange } from './extended-diff-view/extended-diff-view-types'
@@ -80,6 +82,7 @@ interface PullRequestDiffviewerProps {
   handleUpload?: HandleUploadType
   collapseDiff?: () => void
   principalProps: PrincipalPropsType
+  layout?: 'compact' | 'default'
 }
 
 const PullRequestDiffViewer = ({
@@ -107,7 +110,8 @@ const PullRequestDiffViewer = ({
   toggleConversationStatus,
   handleUpload,
   collapseDiff,
-  principalProps
+  principalProps,
+  layout = 'default'
 }: PullRequestDiffviewerProps) => {
   const { t } = useTranslation()
   const ref = useRef<{ getDiffFileInstance: () => DiffFile }>(null)
@@ -119,45 +123,27 @@ const PullRequestDiffViewer = ({
   highlightRef.current = highlight
   const [diffFileInstance, setDiffFileInstance] = useState<DiffFile>()
   const overlayScrollbarsInstances = useRef<OverlayScrollbars[]>([])
-  const diffInstanceRef = useRef<HTMLDivElement | null>(null)
-  const [isInView, setIsInView] = useState(false)
+  const {
+    containerRef,
+    contentRef,
+    inView: isInView,
+    shouldRender
+  } = useInViewDiffRenderer({
+    rootMargin: '500px 0px 500px 0px'
+  })
   const [principalsMentionMap, setPrincipalsMentionMap] = useState<PrincipalsMentionMap>({})
   const { isLightTheme } = useTheme()
-
-  useEffect(() => {
-    const observer = new IntersectionObserver(
-      ([entry]) => {
-        setIsInView(entry.isIntersecting)
-      },
-      {
-        root: null, // Use the viewport as the root
-        rootMargin: '0px',
-        threshold: 0.1 // Trigger when 10% of the element is visible
-      }
-    )
-
-    const currentRef = diffInstanceRef.current
-    if (currentRef) {
-      observer.observe(currentRef)
-    }
-
-    return () => {
-      if (currentRef) {
-        observer.unobserve(currentRef)
-      }
-    }
-  }, [])
 
   const cleanup = useCallback(() => {
     // clean up diff instance if it is not in view
     if (!isInView && diffFileInstance) {
-      const diffRect = diffInstanceRef.current?.getBoundingClientRect()
+      const diffRect = contentRef?.current?.getBoundingClientRect()
       // check if diff is below viewport and collapse it, collapsing a diff on top of viewport impacts scroll position
       if (diffRect?.top && diffRect?.top >= (window.innerHeight || document.documentElement.clientHeight)) {
         collapseDiff?.()
       }
     }
-  }, [diffFileInstance, isInView, collapseDiff])
+  }, [diffFileInstance, isInView, collapseDiff, contentRef])
 
   // Use memory cleanup hook
   useMemoryCleanup(cleanup)
@@ -362,6 +348,8 @@ const PullRequestDiffViewer = ({
     setHideReplyHeres(prev => ({ ...prev, [id]: state }))
   }
 
+  const isCompactLayout = layout === 'compact'
+
   const [newComments, setNewComments] = useState<Record<string, string>>({})
 
   // comment widget (add comment)
@@ -372,7 +360,7 @@ const PullRequestDiffViewer = ({
       const commentText = newComments[commentKey] ?? ''
 
       return (
-        <div className="flex w-full flex-col bg-cn-1 p-4">
+        <div className="bg-cn-1 p-cn-md flex w-full flex-col">
           <PullRequestCommentBox
             autofocus
             handleUpload={handleUpload}
@@ -409,6 +397,7 @@ const PullRequestDiffViewer = ({
             lang={lang}
             comment={commentText}
             setComment={value => setNewComments(prev => ({ ...prev, [commentKey]: value }))}
+            layout={layout}
           />
         </div>
       )
@@ -429,6 +418,8 @@ const PullRequestDiffViewer = ({
             const parentIdAttr = `comment-${parent?.id}`
             const replies = thread.replies
             const parentInitials = getInitials(parent.author ?? '', 2)
+            const isSingleComment = replies.length === 0
+
             return (
               <PullRequestTimelineItem
                 principalsMentionMap={principalsMentionMap}
@@ -443,12 +434,15 @@ const PullRequestDiffViewer = ({
                 parentCommentId={parent.id}
                 handleSaveComment={handleSaveComment}
                 isLast={true}
-                contentWrapperClassName="col-start-1 row-start-1 col-end-3 row-end-3 px-4 pb-2"
+                mainWrapperClassName={cn('pl-cn-md pr-cn-xs', { 'pl-cn-xs': isCompactLayout })}
+                contentWrapperClassName={cn('col-start-1 row-start-1 col-end-3 row-end-3', {
+                  'pr-cn-xs': !isCompactLayout
+                })}
                 header={[]}
                 currentUser={currentUser?.display_name}
                 hideEditDelete={parent?.payload?.author?.uid !== currentUser?.uid}
                 isComment
-                replyBoxClassName="p-4"
+                handleUpload={handleUpload}
                 hideReplyHere={hideReplyHeres[parent?.id]}
                 setHideReplyHere={state => toggleReplyBox(state, parent?.id)}
                 isResolved={!!parent.payload?.resolved}
@@ -463,12 +457,13 @@ const PullRequestDiffViewer = ({
                       <Text as="span" variant="body-strong" color="foreground-1">
                         {parent.payload?.resolver?.display_name}
                       </Text>
-                      &nbsp; marked this conversation as resolved.
+                      &nbsp;marked this conversation as resolved.
                     </Text>
                   )
                 }
+                layout={layout}
                 content={
-                  <div className="px-4 pt-4">
+                  <div>
                     <PullRequestTimelineItem
                       isReply={false}
                       mentions={parent?.payload?.mentions}
@@ -480,10 +475,16 @@ const PullRequestDiffViewer = ({
                       principalProps={principalProps}
                       handleSaveComment={handleSaveComment}
                       isLast={replies.length === 0}
+                      handleUpload={handleUpload}
                       hideReplySection
+                      mainWrapperClassName={cn(
+                        'pt-cn-sm',
+                        { 'pb-cn-sm': isSingleComment },
+                        isCompactLayout ? 'pl-cn-sm pr-cn-sm' : 'pl-cn-md pr-cn-xs'
+                      )}
+                      contentWrapperClassName="pr-cn-xs"
                       isResolved={!!parent.payload?.resolved}
                       isComment
-                      replyBoxClassName=""
                       handleDeleteComment={() => deleteComment?.(parent?.id) || Promise.resolve()}
                       onEditClick={() => toggleEditMode(componentId, parent?.payload?.payload?.text || '')}
                       data={parent?.payload?.payload?.text}
@@ -513,6 +514,7 @@ const PullRequestDiffViewer = ({
                           )
                         }
                       ]}
+                      layout={layout}
                       content={
                         parent?.deleted ? (
                           <TextInput value={t('views:pullRequests.deletedComment')} disabled />
@@ -543,6 +545,7 @@ const PullRequestDiffViewer = ({
                               parent?.payload?.mentions || {}
                             )}
                             setComment={(text: string) => setEditComments(prev => ({ ...prev, [componentId]: text }))}
+                            layout={layout}
                           />
                         ) : (
                           <PRCommentView
@@ -571,6 +574,11 @@ const PullRequestDiffViewer = ({
                               key={reply.id}
                               payload={parent?.payload}
                               id={replyIdAttr}
+                              mainWrapperClassName={cn(
+                                { 'pb-cn-sm': isLastComment },
+                                isCompactLayout ? 'pl-cn-sm pr-cn-sm' : 'pl-cn-md pr-cn-xs'
+                              )}
+                              contentWrapperClassName="pr-cn-xs"
                               principalProps={principalProps}
                               parentCommentId={parent?.id}
                               isLast={isLastComment}
@@ -630,6 +638,7 @@ const PullRequestDiffViewer = ({
                                     setComment={text =>
                                       setEditComments(prev => ({ ...prev, [replyComponentId]: text }))
                                     }
+                                    layout={layout}
                                   />
                                 ) : (
                                   <PRCommentView
@@ -701,14 +710,14 @@ const PullRequestDiffViewer = ({
 
   return (
     <ExpandedCommentsContext.Provider value={contextValue}>
-      <div data-diff-file-path={fileName}>
-        {diffFileInstance && (
-          <div ref={diffInstanceRef}>
+      <div ref={containerRef} data-diff-file-path={fileName}>
+        {shouldRender && diffFileInstance && (
+          <div ref={contentRef}>
             {/* eslint-disable-next-line @typescript-eslint/ban-ts-comment */}
             {/* @ts-ignore */}
             <ExtendedDiffView<Thread[]>
               ref={ref}
-              className="bg-tr w-full text-cn-1"
+              className="text-cn-1 w-full"
               renderWidgetLine={renderWidgetLine}
               renderExtendLine={renderExtendLine}
               diffFile={diffFileInstance}
@@ -723,6 +732,11 @@ const PullRequestDiffViewer = ({
               scopeMultilineSelectionToOneHunk={scopeMultilineSelectionToOneHunk}
               scopeMultilineSelectionToOneBlockAndOneSide={scopeMultilineSelectionToOneBlockAndOneSide}
             />
+          </div>
+        )}
+        {!shouldRender && (
+          <div ref={contentRef} className="diff-viewer-placeholder">
+            {/* Placeholder content of the diff hunk is injected by useInViewDiffRenderer */}
           </div>
         )}
       </div>

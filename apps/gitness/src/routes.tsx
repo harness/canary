@@ -18,6 +18,7 @@ import { AppRouterProvider } from './framework/context/AppRouterProvider'
 import { ExplorerPathsProvider } from './framework/context/ExplorerPathsContext'
 import { PageTitleProvider } from './framework/context/PageTitleContext'
 import { RbacButton } from './framework/rbac/rbac-button'
+import { RbacMoreActionsTooltip } from './framework/rbac/rbac-more-actions-tooltip.tsx'
 import { RbacSplitButton } from './framework/rbac/rbac-split-button'
 import { CustomRouteObject, RouteConstants } from './framework/routing/types'
 import { MFERouteRenderer } from './MFERouteRenderer'
@@ -785,7 +786,7 @@ export const routes: CustomRouteObject[] = [
         <PageTitleProvider>
           <AppProvider>
             <Sidebar.Provider className="min-h-svh">
-              <ComponentProvider components={{ RbacButton, RbacSplitButton }}>
+              <ComponentProvider components={{ RbacButton, RbacSplitButton, RbacMoreActionsTooltip }}>
                 <AppShell />
               </ComponentProvider>
             </Sidebar.Provider>
@@ -1256,7 +1257,7 @@ export const getMFERoutes = (mfeProjectId?: string): CustomRouteObject[] => [
       <AppRouterProvider>
         <PageTitleProvider>
           <AppProvider>
-            <ComponentProvider components={{ RbacButton, RbacSplitButton }}>
+            <ComponentProvider components={{ RbacButton, RbacSplitButton, RbacMoreActionsTooltip }}>
               <MFERouteRenderer />
               <AppShellMFE />
             </ComponentProvider>

@@ -31,7 +31,7 @@ const PipelineStudioLayout = {
   },
   Split: ({ children }: { children: ReactElement[] }) => {
     return (
-      <Resizable.PanelGroup direction="vertical" className="border-5 grow">
+      <Resizable.PanelGroup direction="vertical" className="grow">
         {children}
       </Resizable.PanelGroup>
     )

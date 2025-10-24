@@ -4,332 +4,312 @@ description: Toast component
 beta: true
 ---
 
-The `Toast` component is used to display notifications to the user. The `Toast.Root` component can be used either controlled or uncontrolled. When used uncontrolled, the `Toast.Root` component automatically handles the open state of the toast. When used controlled, the `Toast.Root` component can be controlled by providing the `open` and `onOpenChange` props.
-
+import { Code, Card, Aside } from "@astrojs/starlight/components";
 import { DocsPage } from "../../../components/docs-page";
+
+`toast` is a toast component that is used to display notifications to the user. It is handled by `Toaster` component, that is added in the root of the app.
+
+To show a simple toast, use the `toast` function.
 
 <DocsPage.ComponentExample
   client:only
-  code={`() => {
-    const [show, setShow] = React.useState(false)
-
-    return (
-      <Toast.Provider>
-        <Button onClick={() => setShow(curr => !curr)}>{show ? 'Hide' : 'Show'} Toast</Button>
-
-        {show && (
-          <Toast.Root onOpenChange={setShow} open={show}>
-            <Toast.Title>Toast title</Toast.Title>
-            <Toast.Description>Toast description</Toast.Description>
-            <Toast.Close />
-          </Toast.Root>
-        )}
-        <Toast.Viewport />
-      </Toast.Provider>
-    )
-
-}`}
+  code={`
+    <Button
+      onClick={() =>
+        toast({
+          title: 'Toast title',
+          description: Array.from({ length: Math.floor(Math.random() * 1000) + 1 })
+            .map(() => 'a')
+            .join(''),
+          options: {
+            duration: 3000,
+            action: {
+              label: 'Undo',
+              onClick: () => {
+                console.log('Undo')
+              }
+            }
+          }
+        })
+      }
+    >
+      Show toast
+    </Button>`}
 />
+
+<Code
+  code={`
+    toast({
+      title: 'Toast title',
+      description: 'Toast description',
+      options: {
+      /**
+       * If duration is not provided, 
+       * the toast will be closed after 10 seconds by default.
+       */
+        duration: 5000,
+        dismissible: true,
+        action: {
+          label: 'Undo',
+          onClick: () => {
+            console.log('Undo')
+          }
+        }
+      }
+    })
+  `}
+  lang="typescript"
+/>
+
+## Toast types
+
+`toast` can be used to show different types of toasts.
+
+<ol>
+  <li>- Default toast (`toast`)</li>
+  <li>- Success toast (`toast.success`)</li>
+  <li>- Danger toast (`toast.danger`)</li>
+  <li>- Info toast (`toast.info`)</li>
+  <li>- Loading toast (`toast.loading`)</li>
+  <li>- Promise toast (`toast.promise`)</li>
+</ol>
+
+<Card title="Points to Note">
+
+<ol className='space-y-4'>
+  <li>Maximum number of toasts that can be displayed at a time is 3.</li>
+  <li>- If <code>duration</code> is not provided, the toast will be closed after <strong>10 seconds</strong> by default.</li>
+  <li>- Close button in toast will be hidden only if <code>dismissible</code> is set to false in <code>options</code>. By default, it is set to true.</li>
+  <li>- Action button can be added to toast by providing <code>action</code> in <code>options</code>.</li>
+  <li>- Clicking of action button will execute the callback function provided in <code>action</code> and will not close the toast by default. If you want to close the toast after clicking the action button, you can use <code>toast.dismiss</code> in the callback function.</li>
+  <li>- Promise toast and Loading toast cannot be dismissed by the user, it will be closed after the promise is resolved or rejected (Promise toast) or when the work in progress task is completed (Loading toast).</li>
+  <li>- Promise toast and Loading toast cannot display a <code>description</code></li>
+</ol>
+</Card>
 
 ## Usage
 
-```typescript jsx
-import { Toast } from '@harnessio/ui/components'
+### Success toast
 
-//...
+<DocsPage.ComponentExample
+  client:only
+  code={`
+    <Button
+      onClick={() =>
+        toast.success({
+          title: 'Toast title',
+          description: "Lorem ipsum dolor sit amet, consectetur adipisicing elit. Magni magnam quibusdam fugit saepe voluptates aperiam perspiciatis ipsam! Ad cupiditate, tempora aspernatur a, veritatis, rem maxime est aliquam natus iure vero. Lorem ipsum dolor sit amet, consectetur adipisicing elit. Dignissimos quis reprehenderit quas! Praesentium, delectus perferendis? Dicta, reiciendis? Sint ipsa necessitatibus natus, magni, delectus consequuntur, aperiam asperiores in quasi commodi doloribus?",
+          options: {
+            duration: 5000,
+            action: {
+              label: 'Undo',
+              onClick: () => {
+                console.log('Undo')
+              }
+            }
+          }
+        })
+      }
+    >
+      Show success toast
+    </Button>`}
+/>
 
-return (
-  <Toast.Provider> {/* typically placed at the root of the app */}
-    <Toast.Root>
-      <Toast.Title>Toast title</Toast.Title>
-      <Toast.Description>Toast description</Toast.Description>
-      <Toast.Close />
-    </Toast.Root>
-    <Toast.Viewport />
-  </Toast.Provider>
+### Danger toast
+
+<DocsPage.ComponentExample
+  client:only
+  code={`
+    <Button
+      onClick={() =>
+        toast.danger({
+          title: 'Toast title',
+          description: "Lorem ipsum dolor sit amet, consectetur adipisicing elit. Magni magnam quibusdam fugit saepe voluptates aperiam perspiciatis ipsam! Ad cupiditate, tempora aspernatur a, veritatis, rem maxime est aliquam natus iure vero.",
+          options: {
+            duration: 5000,
+            action: {
+              label: 'Undo',
+              onClick: () => {
+                console.log('Undo')
+              }
+            }
+          }
+        })
+      }
+    >
+      Show danger toast
+    </Button>`}
+/>
+
+### Info toast
+
+<DocsPage.ComponentExample
+  client:only
+  code={`
+    <Button
+      onClick={() =>
+        toast.info({
+          title: 'Toast title',
+          description: "Lorem ipsum dolor sit amet, consectetur adipisicing elit. Magni magnam quibusdam fugit saepe voluptates aperiam perspiciatis ipsam! Ad cupiditate, tempora aspernatur a, veritatis, rem maxime est aliquam natus iure vero.",
+          options: {
+            duration: 5000,
+          }
+        })
+      }
+    >
+      Show info toast
+    </Button>`}
+/>
+
+### Loading toast
+
+<Aside type="caution">
+  Loading toast needs to be closed manually. use `toast.dismiss` to close the
+  toast using the toast id.
+</Aside>
+
+<DocsPage.ComponentExample
+  client:only
+  code={`
+    <Button
+      onClick={() => {
+        const _toastId = toast.loading({
+          title: 'Loading data...',
+          options: {
+            action: {
+              label: 'Close',
+              onClick: () => {
+                toast.dismiss(_toastId)
+              }
+            }
+          }
+        })
+      }}
+    >
+      Show loading toast
+    </Button>
+        `}
+/>
+
+### Promise toast
+
+Promise toast accepts a **promise** as its **first argument** and an **options object** as its **second argument**.
+
+<Aside type="caution">
+  Promise toast cannot be dismissed by the user, it will be closed after 7
+  seconds when the promise is resolved or rejected.
+</Aside>
+
+<DocsPage.ComponentExample
+  client:only
+  code={`
+() => (
+  <Button
+    onClick={() => {
+      const _toastId = toast.promise(new Promise((resolve, reject) => {
+        const random = Math.random()
+        setTimeout(() => {
+          if (random > 0.5) {
+            resolve('Promise resolved')
+          } else {
+            reject('Promise rejected')
+          }
+        }, 5000)
+      }), {
+        loadingMessage: 'Promise in progress',
+        successMessage: 'Promise resolved successfully',
+        errorMessage: 'Promise rejected',
+        options: {
+          action: {
+            label: 'Action',
+            onClick: () => {
+              console.log('Action')
+              toast.dismiss(_toastId)
+            },
+          },
+        },
+      })
+    }
+    }
+  >
+    Show promise toast
+  </Button>
 )
-```
+`}
+/>
 
-## Anatomy
+### Toast params
 
-All parts of the `Toast` component can be imported and composed as required.
-
-```typescript jsx
-<Toast.Provider>
-  <Toast.Root>
-    <Toast.Title />
-    <Toast.Description />
-    <Toast.Close />
-    <Toast.Action />
-  </Toast.Root>
-  <Toast.Viewport />
-</Toast.Provider>
-```
-
-## API Reference
-
-### `Provider`
-
-The `Provider` component is used to provide the Toast context to the rest of the app. It is typically placed at the root of the app.
-
-```typescript jsx
-<Toast.Provider
-  label="Notification" // [OPTIONAL] label for screen readers
-  duration={5000}      // [OPTIONAL] duration of the toast in milliseconds
-swipeDirection="right" // [OPTIONAL] direction in which the toast can be swiped to dismiss
-swipeThreshold={50}    // [OPTIONAL] distance in pixels at which the toast can be swiped to dismiss
->
-  {/* Toast roots and viewport */}
-</Toast.Provider>
-```
+Toast params are the parameters that are passed to the toast function.
 
 <DocsPage.PropsTable
   props={[
     {
-      name: "label",
-      description: "Label for screen readers",
+      name: "title",
+      description: "Title of the toast",
+      required: true,
+      value: "string",
+    },
+    {
+      name: "options",
+      description: "Options object for the toast",
+      required: false,
+      value: "ToastOptions",
+    },
+    {
+      name: "description",
+      description: "Description of the toast",
+      required: false,
+      value: "ReactNode",
+    },
+    {
+      name: "loadingMessage",
+      description:
+        "It is specific for promise toast. Loading message to be displayed when the promise is in progress",
+      required: true,
+      value: "string",
+    },
+    {
+      name: "successMessage",
+      description:
+        "It is specific for promise toast. Success message to be displayed when the promise is resolved",
       required: false,
       value: "string",
-      defaultValue: "Notification",
     },
+    {
+      name: "errorMessage",
+      description:
+        "It is specific for promise toast. Error message to be displayed when the promise is rejected",
+      required: false,
+      value: "string",
+    },
+  ]}
+/>
+
+### Toast options
+
+Toast options are the configuration object that are passed to the toast parameter.
+
+<DocsPage.PropsTable
+  props={[
     {
       name: "duration",
-      description: "Duration of the toast in milliseconds",
+      description:
+        "Duration of the toast to be closed after. Value should be in milliseconds.",
       required: false,
       value: "number",
-      defaultValue: "5000",
     },
     {
-      name: "swipeDirection",
-      description: "Direction in which the toast can be swiped to dismiss",
+      name: "action",
+      description: "Action button to be added to the toast",
       required: false,
-      value: "'left' | 'right' | 'up' | 'down'",
-      defaultValue: "right",
+      value: "Action",
     },
     {
-      name: "swipeThreshold",
-      description:
-        "Distance in pixels at which the toast can be swiped to dismiss",
-      required: false,
-      value: "number",
-      defaultValue: "50",
-    },
-  ]}
-/>
-
-### `Root`
-
-The `Root` component is used to wrap the content of the toast. The `Root` component can be used either controlled or uncontrolled. When used uncontrolled, the `Root` component automatically handles the open state of the toast. When used controlled, the `Root` component can be controlled by providing the `open` and `onOpenChange` props.
-
-```typescript jsx
-<Toast.Root
-  variant="default"       // [OPTIONAL] variant of the toast, can be 'default', 'destructive', 'success'
-  open                    // [OPTIONAL] whether the toast is open or closed
-  onOpenChange={onChange} // [OPTIONAL] callback when the toast is opened or closed
-  defaultOpen             // [OPTIONAL] whether the toast is open by default
-  forceMount              // [OPTIONAL] whether the toast should be mounted even if it is not open
-  className="class"       // [OPTIONAL] className for the root element
->
-  <Toast.Title>Toast title</Toast.Title>
-  <Toast.Description>Toast description</Toast.Description>
-  <Toast.Close />
-</Toast.Root>
-```
-
-<DocsPage.PropsTable
-  props={[
-    {
-      name: "variant",
-      description: "Variant of the toast",
-      required: false,
-      value: "'default' | 'destructive' | 'success'",
-      defaultValue: "default",
-    },
-    {
-      name: "open",
-      description: "Whether the toast is open",
+      name: "dismissible",
+      description: "Whether the toast can be dismissed by the user",
       required: false,
       value: "boolean",
-    },
-    {
-      name: "onOpenChange",
-      description: "Callback when the toast is opened or closed",
-      required: false,
-      value: "(open: boolean) => void",
-    },
-    {
-      name: "defaultOpen",
-      description: "Whether the toast is open by default",
-      required: false,
-      value: "boolean",
-    },
-    {
-      name: "forceMount",
-      description: "Whether the toast should be mounted even if it is not open",
-      required: false,
-      value: "boolean",
-    },
-    {
-      name: "className",
-      description: "Custom class name",
-      required: false,
-      value: "string",
-    },
-  ]}
-/>
-
-### `Title`
-
-The `Title` component is used to display the title of the toast.
-
-```typescript jsx
-<Toast.Title
-  className="class" // [OPTIONAL] className for the title element
->
-  Toast title
-</Toast.Title>
-```
-
-<DocsPage.PropsTable
-  props={[
-    {
-      name: "className",
-      description: "Custom class name",
-      required: false,
-      value: "string",
-    },
-  ]}
-/>
-
-### `Description`
-
-The `Description` component is used to display the description of the toast.
-
-```typescript jsx
-<Toast.Description
-  className="class" // [OPTIONAL] className for the description element
->
-  Toast description
-</Toast.Description>
-```
-
-<DocsPage.PropsTable
-  props={[
-    {
-      name: "className",
-      description: "Custom class name",
-      required: false,
-      value: "string",
-    },
-  ]}
-/>
-
-### `Close`
-
-The `Close` component is used to close the toast.
-
-```typescript jsx
-<Toast.Close
-  className="class" // [OPTIONAL] className for the close button element
-  asChild           // [OPTIONAL] render the close button as the child
-  onClick={onClick} // [OPTIONAL] callback when the close button is clicked
->
-  <button>Close</button>
-</Toast.Close>
-```
-
-<DocsPage.PropsTable
-  props={[
-    {
-      name: "className",
-      description: "Custom class name",
-      required: false,
-      value: "string",
-    },
-    {
-      name: "asChild",
-      description: "Render the close button as the child",
-      required: false,
-      value: "boolean",
-    },
-    {
-      name: "onClick",
-      description: "Callback when the close button is clicked",
-      required: false,
-      value: "() => void",
-    },
-  ]}
-/>
-
-### `Action`
-
-The `Action` component is used to display a call-to-action button in the toast.
-
-```typescript jsx
-<Toast.Action
-  className="class" // [OPTIONAL] className for the action button element
-  asChild           // [OPTIONAL] render the action button as the child
-  onClick={onClick} // [OPTIONAL] callback when the action button is clicked
->
-  <button>Approve</button>
-</Toast.Action>
-```
-
-<DocsPage.PropsTable
-  props={[
-    {
-      name: "className",
-      description: "Custom class name",
-      required: false,
-      value: "string",
-    },
-    {
-      name: "asChild",
-      description: "Render the action button as the child",
-      required: false,
-      value: "boolean",
-    },
-    {
-      name: "onClick",
-      description: "Callback when the action button is clicked",
-      required: false,
-      value: "() => void",
-    },
-  ]}
-/>
-
-### `Viewport`
-
-The `Viewport` component is used to display the toast in the viewport.
-
-```typescript jsx
-<Toast.Viewport
-  hotkey={['f8']}                  // [OPTIONAL] hotkey to focus the toast
-  label="Notifications ({hotkey})" // [OPTIONAL] label for screen readers
-  className="class"                // [OPTIONAL] className for the viewport element
-/>
-```
-
-<DocsPage.PropsTable
-  props={[
-    {
-      name: "hotkey",
-      description: "Hotkey to focus the toast",
-      required: false,
-      value: "string[]",
-    },
-    {
-      name: "label",
-      description:
-        "Label for the toast viewport to provide context for screen reader users when navigating page landmarks. The available {hotkey} placeholder will be replaced for you.",
-      required: false,
-      value: "string",
-    },
-    {
-      name: "className",
-      description: "Custom class name",
-      required: false,
-      value: "string",
     },
   ]}
 />

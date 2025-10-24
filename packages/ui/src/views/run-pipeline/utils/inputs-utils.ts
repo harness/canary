@@ -189,22 +189,30 @@ export function pipelineInput2FormInput(
   }
 
   // special handling for each inputTypes
-  const { inputType: transformedType, inputConfig } = transformInputConfig(inputType, inputProps, baseConfig)
+  const { inputType: transformedType, inputConfig } = transformInputConfig(name, inputType, inputProps, baseConfig)
+
+  const fullPath = (options.prefix || '') + name
 
   return {
     inputType: transformedType,
-    path: (options.prefix || '') + name,
+    path: fullPath,
     label: typeof inputProps.label === 'string' ? inputProps.label : name,
     default: inputProps.default,
     required: Boolean(inputProps.required),
     placeholder: inputProps.ui?.placeholder || '',
     description: inputProps.description,
-    isVisible: function (values: any) {
+    isVisible: function (values: { inputs: Record<string, unknown> | undefined }) {
       const camelCaseInputs = convertMapKeysToCamelCase(values?.inputs)
       try {
         if (typeof inputProps.ui?.visible === 'string') {
           const unwrapped = getCorrectParserWithString(inputProps.ui.visible)
-          return unwrapped.kind === PARSERTYPES.CEL ? (evaluate(unwrapped.inner, camelCaseInputs) as boolean) : true
+          return unwrapped.kind === PARSERTYPES.CEL
+            ? (evaluate(unwrapped.inner, {
+                ...camelCaseInputs,
+                values: values?.inputs,
+                value: get(values?.inputs, fullPath)
+              }) as boolean)
+            : true
         }
         return true
       } catch (e) {
@@ -237,6 +245,7 @@ export function pipelineInput2FormInput(
 }
 
 export function transformInputConfig(
+  name: string,
   originalType: string,
   inputProps: PipelineInputDefinition,
   baseConfig: Record<string, any>
@@ -257,6 +266,39 @@ export function transformInputConfig(
 
   if (inputType === 'connector') {
     baseConfig.connectorTypes = inputProps.oneof
+  }
+
+  if (inputProps.ui?.warning) {
+    baseConfig.warning = {
+      schema: function (values: { inputs: Record<string, unknown> | undefined }) {
+        return z
+          .any()
+          .optional()
+          .superRefine((value, ctx) => {
+            if (inputProps.ui?.warning) {
+              try {
+                const camelCaseInputs = convertMapKeysToCamelCase(values?.inputs)
+                const unwrapped = getCorrectParserWithString(inputProps.ui.warning)
+                const warningMessage =
+                  unwrapped.kind === PARSERTYPES.CEL
+                    ? (evaluate(unwrapped.inner, { ...camelCaseInputs, values: values?.inputs, value }) as string)
+                    : undefined
+
+                if (warningMessage) {
+                  ctx.addIssue({
+                    code: z.ZodIssueCode.custom,
+                    message: warningMessage
+                  })
+                }
+              } catch (e) {
+                console.error(`Error evaluating warning for input ${name}`, e)
+
+                console.log(e)
+              }
+            }
+          })
+      }
+    }
   }
 
   return { inputType, inputConfig: baseConfig }

@@ -23,7 +23,7 @@ export default {
     borderStyle: 'solid',
     borderColor: 'var(--cn-border-2)',
     borderRadius: 'var(--cn-card-md-radius)',
-    backgroundColor: 'var(--cn-bg-2)',
+    backgroundColor: 'var(--cn-bg-1)',
     paddingTop: 'var(--cn-card-check-md-py)',
     paddingBottom: 'var(--cn-card-check-md-py)',
     paddingLeft: 'var(--cn-card-check-md-pl)',
@@ -46,7 +46,7 @@ export default {
 
     '&:where([data-state="checked"])': {
       borderColor: 'var(--cn-border-brand)',
-      background: 'var(--cn-set-brand-secondary-bg)'
+      background: 'var(--cn-set-brand-outline-bg)'
     },
 
     '.cn-card-select-content': {

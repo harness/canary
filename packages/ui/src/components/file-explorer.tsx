@@ -1,12 +1,32 @@
-import { ForwardedRef, forwardRef, ReactNode } from 'react'
+import { ForwardedRef, forwardRef, ReactNode, useMemo } from 'react'
 
-import { Accordion, GridProps, IconPropsV2, IconV2, Layout, Text, Tooltip, TooltipProps } from '@/components'
+import {
+  Accordion,
+  Button,
+  ButtonProps,
+  GridProps,
+  IconPropsV2,
+  IconV2,
+  IconV2NamesType,
+  Layout,
+  Text,
+  Tooltip,
+  TooltipProps
+} from '@/components'
 import { LinkProps, useRouterContext } from '@/context'
 import { cn } from '@utils/cn'
+
+type SidebarItemActionButtonPropsType = ButtonProps & {
+  title?: string
+  iconName?: IconV2NamesType
+  iconProps?: Omit<IconPropsV2, 'ref' | 'name' | 'fallback'>
+  onClick: React.MouseEventHandler<HTMLButtonElement>
+}
 
 interface BaseItemProps {
   icon: NonNullable<IconPropsV2['name']>
   isActive?: boolean
+  actionButtons?: SidebarItemActionButtonPropsType[]
 }
 
 interface DefaultItemProps extends BaseItemProps, GridProps {
@@ -22,16 +42,33 @@ interface LinkItemProps extends BaseItemProps, Omit<LinkProps, 'to'> {
 type ItemProps = DefaultItemProps | LinkItemProps
 
 const Item = forwardRef<HTMLDivElement, ItemProps>(
-  ({ className, children, icon, isActive, link, isFolder, ...props }: ItemProps, ref) => {
+  ({ className, children, icon, isActive, link, isFolder, actionButtons, ...props }: ItemProps, ref) => {
     const { Link } = useRouterContext()
 
+    const actionButtonsContent = useMemo(() => {
+      if (!actionButtons) return null
+
+      return (
+        <Layout.Horizontal gap="none">
+          {actionButtons?.map((buttonProps, index) => {
+            const { title, iconOnly = true, iconName, iconProps, ...rest } = buttonProps
+            return (
+              <Button key={index} size="2xs" variant="ghost" iconOnly={iconOnly} {...rest}>
+                {iconName && <IconV2 name={iconName} {...iconProps} />}
+                {title}
+              </Button>
+            )
+          })}
+        </Layout.Horizontal>
+      )
+    }, [actionButtons])
+
     const commonClassnames = cn(
-      'w-[fill-available] py-cn-2xs pr-1.5 rounded text-cn-2 hover:text-cn-1 focus-visible:text-cn-1 focus-visible:bg-cn-hover focus-visible:outline-none',
+      'cn-file-tree-item',
       {
-        'text-cn-1': isActive,
-        'grid items-center justify-start gap-cn-2xs grid-flow-col': !!link,
-        'bg-cn-selected': !isFolder && isActive,
-        'hover:bg-cn-hover': !isFolder
+        'cn-file-tree-item-wrapper cn-file-tree-item-leaf': !isFolder,
+        'cn-file-tree-item-active': !isFolder && isActive,
+        'cn-file-tree-item-with-action-buttons': !!actionButtonsContent
       },
       className
     )
@@ -43,26 +80,19 @@ const Item = forwardRef<HTMLDivElement, ItemProps>(
         className={commonClassnames}
         {...(props as Omit<LinkItemProps, 'to'>)}
       >
-        <IconV2 className="text-inherit" name={icon} size="md" />
-        <Text className="text-inherit" truncate>
+        <IconV2 name={icon} size="md" />
+        <Text align="left" color="inherit" truncate>
           {children}
         </Text>
+        {actionButtonsContent}
       </Link>
     ) : (
-      <Layout.Grid
-        ref={ref}
-        align="center"
-        gap="2xs"
-        flow="column"
-        justify="start"
-        className={commonClassnames}
-        as="button"
-        {...(props as DefaultItemProps)}
-      >
-        <IconV2 className="text-inherit" name={icon} size="md" />
-        <Text className="text-inherit" truncate>
+      <Layout.Grid ref={ref} className={commonClassnames} as="button" {...(props as DefaultItemProps)}>
+        <IconV2 name={icon} size="md" />
+        <Text align="left" color="inherit" truncate>
           {children}
         </Text>
+        {actionButtonsContent}
       </Layout.Grid>
     )
   }
@@ -72,34 +102,29 @@ Item.displayName = 'FileExplorerItem'
 interface FolderItemProps {
   children: ReactNode
   level: number
-  value?: string
+  value: string
   isActive?: boolean
   content?: ReactNode
+  onClick?: (value: string) => void
   link?: string
 }
 
-function FolderItem({ children, value = '', isActive, content, link, level }: FolderItemProps) {
+function FolderItem({ children, value = '', isActive, content, link, onClick, ...otherProps }: FolderItemProps) {
   const itemElement = (
-    <Item
-      icon="folder"
-      isActive={isActive}
-      style={{ marginLeft: `calc(-16px * ${level + 1} - 8px)`, paddingLeft: `calc(16px * ${level + 1} + 8px)` }}
-      link={link}
-      isFolder
-    >
+    <Item icon="folder" isActive={isActive} link={link} isFolder onClick={() => onClick?.(value)} {...otherProps}>
       {children}
     </Item>
   )
 
   return (
-    <Accordion.Item value={value} className="border-none ">
+    <Accordion.Item value={value} className="border-none">
       <Layout.Flex
-        className={cn('file-explorer-header', {
-          'bg-cn-selected': isActive
+        className={cn('cn-file-tree-folder-item cn-file-tree-item-wrapper pl-0', {
+          'cn-file-tree-item-active': isActive
         })}
       >
         <Accordion.Trigger
-          className="hover:bg-cn-separator pl-cn-2xs relative z-[1] h-full rounded-l p-0 [&>.cn-accordion-trigger-indicator]:mt-0 [&>.cn-accordion-trigger-indicator]:-rotate-90 [&>.cn-accordion-trigger-indicator]:self-center [&>.cn-accordion-trigger-indicator]:data-[state=open]:-rotate-0"
+          className="cn-file-tree-folder-trigger [&>.cn-accordion-trigger-indicator]:mt-0 [&>.cn-accordion-trigger-indicator]:-rotate-90 [&>.cn-accordion-trigger-indicator]:self-center [&>.cn-accordion-trigger-indicator]:data-[state=open]:-rotate-0"
           indicatorProps={{ size: '2xs', className: 'flex' }}
           asChild
         ></Accordion.Trigger>
@@ -109,9 +134,10 @@ function FolderItem({ children, value = '', isActive, content, link, level }: Fo
       {!!content && (
         <Accordion.Content
           containerClassName="overflow-visible data-[state=open]:animate-in data-[state=closed]:animate-out data-[state=closed]:fade-out-0 data-[state=open]:fade-in-0 relative after:absolute after:left-3 after:top-0 after:block after:h-full after:w-px after:bg-cn-separator-subtle after:-translate-x-1/2"
-          className="pl-cn-md pb-0"
+          className="cn-file-tree-item-content"
         >
           {content}
+          {/* LOADER */}
         </Accordion.Content>
       )}
     </Accordion.Item>
@@ -123,19 +149,19 @@ type FileItemProps = {
   children: ReactNode
   isActive?: boolean
   link?: string
-  onClick?: () => void
+  value: string
+  onClick?: (value: string) => void
   tooltip?: TooltipProps['content']
   [key: `data-${string}`]: any
 }
 
-function FileItem({ children, isActive, level, link, onClick, tooltip, ...dataProps }: FileItemProps) {
+function FileItem({ children, isActive, value, link, onClick, tooltip, ...dataProps }: FileItemProps) {
   const comp = (
     <Item
       icon="empty-page"
       isActive={isActive}
       className="mb-cn-4xs"
-      style={{ marginLeft: `calc(-16px * ${level})`, paddingLeft: level ? `calc(16px * ${level} + 8px)` : '24px' }}
-      onClick={onClick}
+      onClick={() => onClick?.(value)}
       link={link}
       {...dataProps}
     >
@@ -166,4 +192,4 @@ function Root({ children, onValueChange, value }: RootProps) {
   )
 }
 
-export { Root, FileItem, FolderItem }
+export { Root, FileItem, FolderItem, Item }

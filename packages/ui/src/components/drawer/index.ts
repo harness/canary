@@ -13,8 +13,8 @@ import { DrawerFooter } from './DrawerFooter'
 import { DrawerHeader, DrawerHeaderProps } from './DrawerHeader'
 import { DrawerRoot } from './DrawerRoot'
 import { DrawerTitle } from './DrawerTitle'
+import { DrawerTrigger } from './DrawerTrigger'
 
-const DrawerTrigger = DrawerPrimitive.Trigger
 const DrawerClose = DrawerPrimitive.Close
 
 export type { DrawerContentVariantsSize, DrawerContentVariantsDirection, DrawerContentProps, DrawerHeaderProps }

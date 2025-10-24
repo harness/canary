@@ -59,15 +59,28 @@ const SearchInput = forwardRef<HTMLInputElement, SearchInputProps>(
     )
 
     return (
-      <BaseInput
-        type="text"
-        ref={ref}
-        className={cn('cn-input-search', className)}
-        onChange={handleInputChange}
-        prefix={prefix}
-        placeholder={placeholder}
-        {...props}
-      />
+      <>
+        <BaseInput
+          type="text"
+          ref={ref}
+          className={cn('cn-input-search', className)}
+          onChange={handleInputChange}
+          prefix={prefix}
+          placeholder={placeholder}
+          {...props}
+        />
+        {/* NOTE: The hidden input below is required to prevent password managers from populating
+                  the search field above. Previously this was happening when a user would use
+                  their password manager to auto-populate something in a drawer form, e.g. entering
+                  Secret Text. The password manager would find the search field above and assume
+                  that was the matching username field. Traditionally this was prevented by using
+                  autocomplete="off" but password managers have begun ignoring that property. Adding
+                  a second hidden input confuses the password managers and prevents them from trying
+                  to populate either of the two inputs with a username. Hacky, but this seems to be
+                  the accepted solution for now.
+         */}
+        <input type="text" autoComplete="off" style={{ display: 'none' }} />
+      </>
     )
   }
 )

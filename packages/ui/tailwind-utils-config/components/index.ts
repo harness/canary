@@ -30,16 +30,18 @@ import selectStyles from './select'
 import shortcutStyle from './shortcut'
 import sidebarStyles from './sidebar'
 import skeletonStyles from './skeleton'
+import stackedListStyles from './stacked-list'
 import switchStyles from './switch'
 import tableV2Styles from './table-v2'
 import tabsStyles from './tabs'
 import tagStyles from './tag'
 import textareaStyles from './textarea'
 import timeAgoCardStyles from './time-ago-card'
+import toastStyles from './toast'
 import toggleStyles from './toggle'
 import toggleGroupStyles from './toggle-group'
 import tooltipStyles from './tooltip'
-import stackedListStyles from "./stacked-list";
+import treeStyles from './tree'
 
 export const ComponentStyles = [
   accordionStyles,
@@ -65,6 +67,7 @@ export const ComponentStyles = [
   scrollAreaStyles,
   popoverStyles,
   tooltipStyles,
+  toastStyles,
   sidebarStyles,
   breadcrumbStyles,
   iconsAndLogos,
@@ -75,6 +78,7 @@ export const ComponentStyles = [
   buttonGroupStyle,
   skeletonStyles,
   stackedListStyles,
+  treeStyles,
 
   // Form styles
   selectStyles,

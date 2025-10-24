@@ -24,8 +24,9 @@ type TError = Error | { message?: string }
 
 export default function SearchPage() {
   const getApiPath = useAPIPath()
-  const { scope } = useMFEContext()
+  const { scope, customHooks } = useMFEContext()
   const { repoId } = useParams()
+  const { SEMANTIC_SEARCH_ENABLED: semanticSearchEnabled } = customHooks?.useFeatureFlags() || {}
 
   const [searchQuery, setSearchQuery] = useQueryState('query')
   const [selectedRepoId, setSelectedRepoId] = useQueryState('repo')
@@ -33,6 +34,7 @@ export default function SearchPage() {
   const [isRecursive, setIsRecursive] = useState<boolean>(false)
   const [regexEnabled, setRegexEnabled] = useQueryState<boolean>('regexEnabled', parseAsBoolean)
   const [semanticEnabled, setSemanticEnabled] = useQueryState<boolean>('semantic', parseAsBoolean)
+  const [showSemanticSearch, setShowSemanticSearch] = useState<boolean>(false)
   const [searchResults, setSearchResults] = useState<SearchResultItem[]>([])
   const [semanticSearchResults, setSemanticSearchResults] = useState<SemanticSearchResultItem[]>([])
   const [stats, setStats] = useState<Stats>()
@@ -148,6 +150,10 @@ export default function SearchPage() {
     isRecursive
   ])
 
+  useEffect(() => {
+    setShowSemanticSearch(!!semanticSearchEnabled)
+  }, [semanticSearchEnabled])
+
   return (
     <SearchPageView
       isLoading={searchLoading || semanticSearchLoading}
@@ -161,6 +167,7 @@ export default function SearchPage() {
       }}
       regexEnabled={regexEnabled}
       setRegexEnabled={setRegexEnabled}
+      showSemanticSearch={showSemanticSearch}
       semanticEnabled={semanticEnabled}
       setSemanticEnabled={setSemanticEnabled}
       stats={stats}

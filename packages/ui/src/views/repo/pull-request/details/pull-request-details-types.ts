@@ -1,6 +1,7 @@
 import { PrincipalType, UsererrorError } from '@/types'
 import {
   EnumPullReqReviewDecision,
+  PRReviewer,
   PullReqReviewDecision,
   RepoRepositoryOutput,
   TypesListCommitResponse,
@@ -73,17 +74,11 @@ export interface PullReqChecksDecisionData {
 
 export interface DefaultReviewersApprovalsData {
   current_count?: number
+  evaluations?: TypesReviewerEvaluation[] | null
   minimum_required_count?: number
   minimum_required_count_latest?: number
-  principals?: TypesPrincipalInfo[] | PrincipalInfoWithReviewDecision[] | null
-}
-
-/**
- * Interface for the principal info with review decision
- */
-export interface PrincipalInfoWithReviewDecision extends TypesPrincipalInfo {
-  review_decision?: string
-  review_sha?: string
+  principals?: TypesPrincipalInfo[] | null
+  user_groups?: TypesUserGroupInfo[] | null
 }
 
 /**
@@ -94,8 +89,6 @@ export interface DefaultReviewersDataProps {
   defReviewerApprovalRequiredByRule: boolean
   defReviewerApprovedChanges: boolean
   defReviewerApprovedLatestChanges: boolean
-  changesRequestedByDefaultReviewers?: PrincipalInfoWithReviewDecision[]
-  updatedDefaultApprovals?: DefaultReviewersApprovalsData[]
   defaultReviewersApprovals?: DefaultReviewersApprovalsData[]
 }
 
@@ -186,6 +179,7 @@ export interface TypesPullReqActivity {
   text?: string
   type?: EnumPullReqActivityType
   updated?: number
+  user_group_mentions?: { [key: string]: TypesUserGroupInfo }
 }
 
 export type EnumPrincipalType = 'service' | 'serviceaccount' | 'user'
@@ -222,6 +216,12 @@ export interface TypesPullReqReviewer {
   updated?: number
 }
 
+export interface TypesReviewerEvaluation {
+  decision?: EnumPullReqReviewDecision
+  reviewer?: TypesPrincipalInfo
+  sha?: string
+}
+
 export interface TypesCodeCommentFields {
   line_new?: number
   line_old?: number
@@ -242,6 +242,7 @@ export interface TypesPullReqActivityMetadata {
 
 export interface TypesPullReqActivityMentionsMetadata {
   ids?: number[]
+  user_group_ids?: number[]
 }
 export interface TypesPullReqActivitySuggestionsMetadata {
   applied_check_sum?: string
@@ -273,6 +274,9 @@ export type EnumPullReqActivityType =
   | 'label-modify'
   | 'branch-restore'
   | 'target-branch-change'
+  | 'title-change'
+  | 'user-group-reviewer-add'
+  | 'user-group-reviewer-delete'
 
 export enum ReviewerAddActivity {
   REQUESTED = 'requested',
@@ -512,7 +516,7 @@ export interface ApprovalItems {
 export type ButtonEnum = 'success' | 'muted' | 'default' | 'error' | 'warning' | null | undefined
 export type EnumPullReqReviewDecisionExtended = EnumPullReqReviewDecision | 'outdated'
 export interface ReviewerItemProps {
-  reviewer?: { display_name?: string; id?: number; email?: string }
+  reviewer?: PRReviewer['reviewer']
   reviewDecision?: EnumPullReqReviewDecision
   sha?: string
   sourceSHA?: string
@@ -521,6 +525,7 @@ export interface ReviewerItemProps {
     reviewedSHA?: string,
     sourceSHA?: string
   ) => EnumPullReqReviewDecision | PullReqReviewDecision.outdated
+  handleDelete: (id: number) => void
 }
 
 export interface TypesCodeOwnerEvaluation {
@@ -529,7 +534,7 @@ export interface TypesCodeOwnerEvaluation {
 }
 
 export interface TypesOwnerEvaluation {
-  owner?: Partial<PrincipalType>
+  owner?: TypesPrincipalInfo
   review_decision?: EnumPullReqReviewDecision
   review_sha?: string
 }
@@ -601,7 +606,7 @@ export interface CodeOwnersData {
 }
 
 export type CodeOwnersSectionProps = Pick<PullRequestChangesSectionProps, 'minReqLatestApproval' | 'pullReqMetadata'> &
-  CodeOwnersData
+  CodeOwnersData & { className?: string }
 
 export const PullRequestFilterOption = {
   ...PullRequestState,
@@ -646,13 +651,16 @@ export enum CommentType {
   TITLE_CHANGE = 'title-change',
   REVIEW_SUBMIT = 'review-submit',
   MERGE = 'merge',
-  REVIEW_DELETE = 'reviewer-delete',
   BRANCH_UPDATE = 'branch-update',
   BRANCH_DELETE = 'branch-delete',
   STATE_CHANGE = 'state-change',
-  REVIEW_ADD = 'reviewer-add',
+  REVIEWER_ADD = 'reviewer-add',
+  USER_GROUP_REVIEWER_ADD = 'user-group-reviewer-add',
+  REVIEWER_DELETE = 'reviewer-delete',
+  USER_GROUP_REVIEWER_DELETE = 'user-group-reviewer-delete',
   LABEL_MODIFY = 'label-modify',
-  BRANCH_RESTORE = 'branch-restore'
+  BRANCH_RESTORE = 'branch-restore',
+  TARGET_BRANCH_CHANGE = 'target-branch-change'
 }
 
 export enum LabelActivity {
@@ -701,6 +709,7 @@ export type PrincipalsMentionMap = Record<string, TypesPrincipalInfo>
 
 export interface PrincipalPropsType {
   principals?: PrincipalType[]
+  userGroups?: TypesUserGroupInfo[]
   searchPrincipalsQuery?: string
   setSearchPrincipalsQuery?: (query: string) => void
   isPrincipalsLoading?: boolean

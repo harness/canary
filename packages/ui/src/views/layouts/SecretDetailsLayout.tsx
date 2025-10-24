@@ -1,10 +1,8 @@
 import { FC, ReactNode } from 'react'
 
-import { Layout, Link, MoreActionsTooltip, Spacer, Text, TimeAgoCard, useCustomDialogTrigger } from '@/components'
-import { Tabs } from '@/components/tabs'
+import { StatsPanel, Tabs, Text, TimeAgoCard } from '@/components'
 import { useRouterContext, useTranslation } from '@/context'
-import { SandboxLayout } from '@views/layouts/SandboxLayout'
-import { SecretListItem } from '@views/secrets'
+import { Page, type SecretListItem } from '@/views'
 
 interface SecretDetailsLayoutProps {
   secret: SecretListItem
@@ -12,8 +10,8 @@ interface SecretDetailsLayoutProps {
   configurationView?: ReactNode
   referencesView?: ReactNode
   activityView?: ReactNode
-  onEdit?: (identifier: string) => void
-  onDelete?: (identifier: string) => void
+  isLoading?: boolean
+  actions?: ReactNode
 }
 
 enum SecretDetailsTabsKeys {
@@ -28,103 +26,68 @@ const DATE_FORMAT_OPTIONS = {
   year: 'numeric' as const
 }
 
-const useGetSecretInfo = (
-  created?: string | number,
-  lastUsed?: string | number,
-  lastUpdated?: string | number,
-  onEdit?: (identifier: string) => void,
-  onDelete?: (identifier: string) => void,
-  identifier?: string
-) => {
-  const { triggerRef, registerTrigger } = useCustomDialogTrigger()
-  const handleDelete = (id: string) => {
-    registerTrigger()
-    onDelete?.(id)
-  }
-
-  return (
-    <Layout.Horizontal justify="between" align="center" className="mt-2">
-      <Layout.Horizontal gap="3xl">
-        <Layout.Vertical gap="sm">
-          <Text variant="body-normal" className="text-cn-3">
-            Created
-          </Text>
-          {created ? (
-            <TimeAgoCard timestamp={created} dateTimeFormatOptions={DATE_FORMAT_OPTIONS} />
-          ) : (
-            <Text variant="body-normal">-</Text>
-          )}
-        </Layout.Vertical>
-        <Layout.Vertical gap="sm">
-          <Text variant="body-normal" className="text-cn-3">
-            Last used
-          </Text>
-          {lastUsed ? (
-            <TimeAgoCard timestamp={lastUsed} dateTimeFormatOptions={DATE_FORMAT_OPTIONS} />
-          ) : (
-            <Text variant="body-normal">-</Text>
-          )}
-        </Layout.Vertical>
-        <Layout.Vertical gap="sm">
-          <Text variant="body-normal" className="text-cn-3">
-            Last updated
-          </Text>
-          {lastUpdated ? (
-            <TimeAgoCard timestamp={lastUpdated} dateTimeFormatOptions={DATE_FORMAT_OPTIONS} />
-          ) : (
-            <Text variant="body-normal">-</Text>
-          )}
-        </Layout.Vertical>
-      </Layout.Horizontal>
-      <MoreActionsTooltip
-        ref={triggerRef}
-        buttonVariant="outline"
-        actions={[
-          {
-            isDanger: false,
-            title: 'Edit secret',
-            iconName: 'edit-pencil',
-            onClick: () => onEdit?.(identifier ?? '')
-          },
-          {
-            isDanger: true,
-            title: 'Delete secret',
-            iconName: 'trash',
-            onClick: () => handleDelete(identifier ?? '')
-          }
-        ]}
-      />
-    </Layout.Horizontal>
-  )
-}
-
 export const SecretDetailsLayout: FC<SecretDetailsLayoutProps> = ({
   secret,
   backButtonTo,
   configurationView,
   referencesView,
   activityView,
-  onEdit,
-  onDelete
+  isLoading = false,
+  actions
 }) => {
   const { t } = useTranslation()
   const { Switch, Route } = useRouterContext()
 
   return (
-    <SandboxLayout.Main fullWidth>
-      <SandboxLayout.Content>
-        <Layout.Vertical gap="md">
-          <Link size="sm" prefixIcon to={backButtonTo?.() ?? ''}>
-            {t('views:secretDetails.backToSecrets', 'Back to secrets')}
-          </Link>
-          <Layout.Horizontal align="center">
-            <Text variant="heading-hero">{secret.name}</Text>
-          </Layout.Horizontal>
-          {useGetSecretInfo(secret.createdAt, secret.updatedAt, secret.updatedAt, onEdit, onDelete, secret.identifier)}
-        </Layout.Vertical>
-        <Spacer size={6} />
+    <Page.Root>
+      <Page.Header
+        isLoading={isLoading}
+        backLink={{
+          linkText: t('views:secretDetails.backToSecrets', 'All Secrets'),
+          linkProps: { to: backButtonTo?.() ?? '' }
+        }}
+        title={secret?.name ?? ''}
+        actions={actions}
+      >
+        <StatsPanel
+          isLoading={isLoading}
+          data={[
+            {
+              label: t('views:secretDetails.created', 'Created'),
+              value: secret?.createdAt ? (
+                <TimeAgoCard
+                  timestamp={secret.createdAt}
+                  dateTimeFormatOptions={DATE_FORMAT_OPTIONS}
+                  textProps={{ color: 'foreground-1' }}
+                />
+              ) : undefined
+            },
+            {
+              label: t('views:secretDetails.updated', 'Updated'),
+              value: secret?.updatedAt ? (
+                <TimeAgoCard
+                  timestamp={secret.updatedAt}
+                  dateTimeFormatOptions={DATE_FORMAT_OPTIONS}
+                  textProps={{ color: 'foreground-1' }}
+                />
+              ) : undefined
+            },
+            {
+              label: t('views:secretDetails.lastUsed', 'Last used'),
+              value: secret?.updatedAt ? (
+                <TimeAgoCard
+                  timestamp={secret.updatedAt}
+                  dateTimeFormatOptions={DATE_FORMAT_OPTIONS}
+                  textProps={{ color: 'foreground-1' }}
+                />
+              ) : undefined
+            }
+          ]}
+        />
+      </Page.Header>
+      <Page.Content>
         <Tabs.NavRoot>
-          <Tabs.List className="-mx-8 px-8" variant="overlined">
+          <Tabs.List className="cn-sandbox-layout-tabs mb-cn-3xl" variant="overlined">
             <Tabs.Trigger value={SecretDetailsTabsKeys.OVERVIEW}>
               {t('views:secretDetails.configuration', 'Configuration')}
             </Tabs.Trigger>
@@ -144,19 +107,15 @@ export const SecretDetailsLayout: FC<SecretDetailsLayoutProps> = ({
             path="/overview"
             render={() =>
               configurationView || (
-                <SandboxLayout.Content>
-                  {/* Default Configuration View */}
-                  <Text variant="body-normal">
-                    {t('views:secretDetails.configurationView', 'Secret Configuration')}
-                  </Text>
-                </SandboxLayout.Content>
+                /* Default Configuration View */
+                <Text variant="body-normal">{t('views:secretDetails.configurationView', 'Secret Configuration')}</Text>
               )
             }
           />
           <Route path="/references">{referencesView}</Route>
           <Route path="/runtime-usage">{activityView}</Route>
         </Switch>
-      </SandboxLayout.Content>
-    </SandboxLayout.Main>
+      </Page.Content>
+    </Page.Root>
   )
 }

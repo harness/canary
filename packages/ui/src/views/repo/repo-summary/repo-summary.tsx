@@ -59,6 +59,7 @@ export interface RepoSummaryViewProps extends Partial<RoutingProps> {
   spaceId: string
   selectedBranchOrTag: BranchSelectorListItem | null
   loading: boolean
+  isSSHEnabled?: boolean
   filesList: string[]
   navigateToFile: (path: string) => void
   repository?: RepoRepositoryOutput
@@ -133,6 +134,7 @@ export function RepoSummaryView({
   showContributeBtn,
   scheduleFileMetaFetch,
   imageUrlTransform,
+  isSSHEnabled,
   ...props
 }: RepoSummaryViewProps) {
   const { t } = useTranslation()
@@ -236,6 +238,7 @@ export function RepoSummaryView({
                     </Button>
                   ) : null}
                   <CloneRepoDialog
+                    isSSHEnabled={isSSHEnabled}
                     sshUrl={repository?.git_ssh_url}
                     httpsUrl={repository?.git_url ?? 'could not fetch url'}
                     handleCreateToken={handleCreateToken}

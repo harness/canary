@@ -1,6 +1,6 @@
 import { FC } from 'react'
 
-import { Alert, Spacer } from '@/components'
+import { Alert, Layout } from '@/components'
 import {
   PrincipalPropsType,
   PullRequestCommentBox,
@@ -15,6 +15,7 @@ import {
   PullRequestSideBarProps,
   SandboxLayout
 } from '@/views'
+import { combineAndNormalizePrincipalsAndGroups } from '@views/repo/utils'
 import { noop } from 'lodash-es'
 
 import { ExpandedCommentsContext, useExpandedCommentsContext } from './context/pull-request-comments-context'
@@ -55,29 +56,29 @@ export const PullRequestConversationPage: FC<PullRequestConversationPageProps> =
               </Alert.Root>
             )}
 
-            <PullRequestPanel {...panelProps} />
-            <Spacer size={10} />
+            <PullRequestPanel {...panelProps} className="mb-cn-3xl" />
 
-            <PullRequestFilters {...filtersProps} />
-            <Spacer size={6} />
+            <Layout.Vertical gapY="lg">
+              <PullRequestFilters {...filtersProps} />
 
-            <PullRequestOverview {...overviewProps} principalProps={principalProps} />
-            <Spacer size={10} />
+              <PullRequestOverview {...overviewProps} principalProps={principalProps} />
 
-            <PullRequestCommentBox {...commentBoxProps} principalProps={principalProps} />
+              <PullRequestCommentBox {...commentBoxProps} principalProps={principalProps} />
+            </Layout.Vertical>
           </SandboxLayout.Content>
         </SandboxLayout.Column>
 
         <SandboxLayout.Column>
-          <SandboxLayout.Content className="px-0 pt-0">
-            <PullRequestSideBar
-              {...sideBarProps}
-              isReviewersLoading={principalProps?.isPrincipalsLoading}
-              searchQuery={principalProps?.searchPrincipalsQuery || ''}
-              setSearchQuery={principalProps?.setSearchPrincipalsQuery || noop}
-              usersList={principalProps?.principals}
-            />
-          </SandboxLayout.Content>
+          <PullRequestSideBar
+            {...sideBarProps}
+            isReviewersLoading={principalProps?.isPrincipalsLoading}
+            searchQuery={principalProps?.searchPrincipalsQuery || ''}
+            setSearchQuery={principalProps?.setSearchPrincipalsQuery || noop}
+            usersList={combineAndNormalizePrincipalsAndGroups(
+              principalProps?.principals ?? [],
+              principalProps?.userGroups ?? []
+            )}
+          />
         </SandboxLayout.Column>
       </SandboxLayout.Columns>
     </ExpandedCommentsContext.Provider>

@@ -1,6 +1,6 @@
 import { isValidElement, ReactNode, useCallback, useLayoutEffect, useRef, useState } from 'react'
 
-import { Layout, Separator, Spacer, Text } from '@/components'
+import { Layout, Separator, Skeleton, Text } from '@/components'
 import { useResizeObserver } from '@/hooks'
 import { cn, wrapConditionalObjectElement } from '@/utils'
 
@@ -18,20 +18,37 @@ function splitArray<T>(array: T[]): [T[], T[]] {
   return [firstHalf, secondHalf]
 }
 
-export const ViewOnlyItem = ({ label, value }: { label: string; value: ReactNode }) => (
+export const ViewOnlyItem = ({
+  label,
+  value,
+  isLoading = false
+}: {
+  label: string
+  value: ReactNode
+  isLoading?: boolean
+}) => (
   <Layout.Grid key={label} flow="row" gapX="2xl" columns="minmax(0, 200px) minmax(0, 1fr)" align="start">
-    <Text color="foreground-3" as="dt">
-      {label}
-    </Text>
-    <Text color="foreground-1" as="dd">
-      {typeof value === 'string' ? (
-        <Text key="label" className="break-words">
-          {value}
+    {isLoading ? (
+      <>
+        <Skeleton.Typography className="w-full" />
+        <Skeleton.Typography className="w-2/3" />
+      </>
+    ) : (
+      <>
+        <Text color="foreground-3" as="dt">
+          {label}
         </Text>
-      ) : (
-        value
-      )}
-    </Text>
+        <Text color="foreground-1" as="dd">
+          {typeof value === 'string' ? (
+            <Text key="label" color="inherit" className="break-words">
+              {value}
+            </Text>
+          ) : (
+            value
+          )}
+        </Text>
+      </>
+    )}
   </Layout.Grid>
 )
 
@@ -42,9 +59,10 @@ export interface ViewOnlyProps {
   data: ViewOnlyItemData[]
   layout?: 'singleColumn' | 'columns'
   className?: string
+  isLoading?: boolean
 }
 
-export const ViewOnly = ({ className, title, data, layout = 'columns' }: ViewOnlyProps) => {
+export const ViewOnly = ({ className, title, data, layout = 'columns', isLoading = false }: ViewOnlyProps) => {
   const [isLayoutColumns, setIsLayoutColumns] = useState(layout === 'columns')
   const contentRef = useRef<HTMLDivElement>(null)
 
@@ -67,15 +85,18 @@ export const ViewOnly = ({ className, title, data, layout = 'columns' }: ViewOnl
     200
   )
 
-  const renderItem = useCallback((item: ViewOnlyItemData) => {
-    if (item instanceof Object && 'label' in item && 'value' in item && typeof item.label === 'string') {
-      return <ViewOnlyItem key={item.label} label={item.label} value={item.value} />
-    } else if (isValidElement(item)) {
-      return item
-    }
+  const renderItem = useCallback(
+    (item: ViewOnlyItemData) => {
+      if (item instanceof Object && 'label' in item && 'value' in item && typeof item.label === 'string') {
+        return <ViewOnlyItem key={item.label} label={item.label} value={item.value} isLoading={isLoading} />
+      } else if (isValidElement(item)) {
+        return item
+      }
 
-    return null
-  }, [])
+      return null
+    },
+    [isLoading]
+  )
 
   if (!data || data.length === 0) return null
 
@@ -84,8 +105,8 @@ export const ViewOnly = ({ className, title, data, layout = 'columns' }: ViewOnl
   const rightColumnData = isLayoutColumns ? splitArray(data)[1] : null
 
   return (
-    <Layout.Grid ref={contentRef} className={cn('group', className)}>
-      <Text variant="heading-base" as="h4" className="mb-4">
+    <Layout.Grid ref={contentRef} gap="md" className={cn('group', className)}>
+      <Text variant="heading-base" as="h4">
         {title}
       </Text>
 
@@ -93,24 +114,17 @@ export const ViewOnly = ({ className, title, data, layout = 'columns' }: ViewOnl
         as="dl"
         flow="column"
         align="start"
+        gapX="lg"
         {...wrapConditionalObjectElement({ columns: '1fr auto 1fr' }, isLayoutColumns)}
       >
-        <Layout.Grid className="gap-y-3.5">{leftColumnData.map(item => renderItem(item))}</Layout.Grid>
+        <Layout.Grid gapY="sm">{leftColumnData.map(item => renderItem(item))}</Layout.Grid>
 
-        {isLayoutColumns && (
-          <Separator orientation="vertical" className={cn('ml-4 mr-5', { invisible: !isSeparatorVisible })} />
-        )}
+        {isLayoutColumns && <Separator orientation="vertical" className={cn({ invisible: !isSeparatorVisible })} />}
 
-        {!!rightColumnData && (
-          <Layout.Grid className="gap-y-3.5">{rightColumnData.map(item => renderItem(item))}</Layout.Grid>
-        )}
+        {!!rightColumnData && <Layout.Grid gapY="sm">{rightColumnData.map(item => renderItem(item))}</Layout.Grid>}
       </Layout.Grid>
 
-      <div className="group-last:hidden">
-        <Spacer size={5} />
-        <Separator />
-        <Spacer size={5} />
-      </div>
+      <Separator className="group-last:hidden mb-cn-md" />
     </Layout.Grid>
   )
 }

@@ -11,11 +11,10 @@ import {
   updateUser,
   UpdateUserErrorResponse
 } from '@harnessio/code-service-client'
+import { useLocalStorage, UserPreference } from '@harnessio/ui/hooks'
 import { ProfileSettingsErrorType } from '@harnessio/ui/views'
 
 import { useIsMFE } from '../hooks/useIsMFE'
-import useLocalStorage from '../hooks/useLocalStorage'
-import { useMFEContext } from '../hooks/useMFEContext'
 import usePageTitle from '../hooks/usePageTitle'
 
 interface AppContextType {
@@ -52,11 +51,7 @@ const AppContext = createContext<AppContextType>({
 export const AppProvider: FC<{ children: ReactNode }> = memo(({ children }) => {
   usePageTitle()
   const isMFE = useIsMFE()
-  const {
-    parentContextObj: { appStoreContext }
-  } = useMFEContext()
-  const parentAppStoreContext = useContext(appStoreContext)
-  const [currentUser, setCurrentUser] = useLocalStorage<TypesUser>('currentUser', {})
+  const [currentUser, setCurrentUser] = useLocalStorage<TypesUser>(UserPreference.CURRENT_USER, {})
   const [spaces, setSpaces] = useState<TypesSpace[]>([])
   const [isSpacesLoading, setSpacesIsLoading] = useState(false)
   const [isLoadingUser, setIsLoadingUser] = useState(false)
@@ -68,12 +63,10 @@ export const AppProvider: FC<{ children: ReactNode }> = memo(({ children }) => {
 
   const fetchUser = async (): Promise<void> => {
     try {
-      if (!isMFE) {
-        setIsLoadingUser(true)
-        setUpdateUserError(null)
-        const userResponse = await getUser({})
-        setCurrentUser(userResponse.body)
-      }
+      setIsLoadingUser(true)
+      setUpdateUserError(null)
+      const userResponse = await getUser({})
+      setCurrentUser(userResponse.body)
     } catch (error) {
       const typedError = error as GetUserErrorResponse
       setUpdateUserError({
@@ -102,7 +95,7 @@ export const AppProvider: FC<{ children: ReactNode }> = memo(({ children }) => {
     }
   }
 
-  const fetchSpacesAndUser = async () => {
+  const fetchSpaces = async () => {
     setSpacesIsLoading(true)
 
     try {
@@ -111,11 +104,9 @@ export const AppProvider: FC<{ children: ReactNode }> = memo(({ children }) => {
           queryParams: { page: 1, limit: 100, sort: 'identifier', order: 'asc' }
         })
 
-      const promises = isMFE ? [] : [fetchSpaces(), fetchUser()]
-      const [results] = await Promise.allSettled(promises)
-
-      if (!isMFE && results.status === 'fulfilled' && results.value?.body) {
-        const spaces = results.value.body
+      const results = await fetchSpaces()
+      if (results?.body) {
+        const spaces = results.body
           .filter((item: { space?: TypesSpace }) => item.space)
           .map((item: { space?: TypesSpace }) => item.space as TypesSpace)
 
@@ -129,17 +120,9 @@ export const AppProvider: FC<{ children: ReactNode }> = memo(({ children }) => {
   }
 
   useEffect(() => {
-    if (isMFE) {
-      const currentUserInfo = parentAppStoreContext.currentUserInfo
-      setCurrentUser({
-        uid: currentUserInfo.uuid,
-        email: currentUserInfo.email,
-        display_name: currentUserInfo.name,
-        created: currentUserInfo.createdAt,
-        updated: currentUserInfo.lastUpdatedAt
-      })
-    } else {
-      fetchSpacesAndUser()
+    fetchUser()
+    if (!isMFE) {
+      fetchSpaces()
     }
   }, [isMFE])
 

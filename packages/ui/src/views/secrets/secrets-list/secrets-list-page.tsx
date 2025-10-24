@@ -1,8 +1,8 @@
 import { FC, useCallback, useMemo, useRef } from 'react'
 
-import { Button, IconV2, Layout, NoData, Pagination, SecretListFilters, Text } from '@/components'
-import { useRouterContext, useTranslation } from '@/context'
-import { SandboxLayout } from '@/views'
+import { IconV2, Layout, NoData, Pagination, PermissionIdentifier, ResourceType, SecretListFilters } from '@/components'
+import { useComponents, useCustomDialogTrigger, useRouterContext, useTranslation } from '@/context'
+import { Page, SandboxLayout } from '@/views'
 import { cn } from '@utils/cn'
 import FilterGroup, { FilterGroupRef } from '@views/components/FilterGroup'
 
@@ -28,11 +28,19 @@ const SecretListPage: FC<SecretListPageProps> = ({
   onDeleteSecret,
   onFilterChange,
   onSortChange,
+  scope,
+  routes,
   ...props
 }) => {
   const { t } = useTranslation()
   const { navigate } = useRouterContext()
   const filterRef = useRef<FilterGroupRef>(null)
+  const { RbacButton } = useComponents()
+
+  const { accountId, orgIdentifier, projectIdentifier } = scope
+
+  const { triggerRef: noDataTriggerRef, registerTrigger: registerNoDataTrigger } = useCustomDialogTrigger()
+  const { triggerRef, registerTrigger } = useCustomDialogTrigger()
 
   const secretManagerFilterOptions = secretManagerIdentifiers.map(secretManager => {
     return {
@@ -93,12 +101,8 @@ const SecretListPage: FC<SecretListPageProps> = ({
             )
         ]}
         primaryButton={{
-          label: (
-            <>
-              <IconV2 name="refresh" />
-              {t('views:notFound.button', 'Reload Page')}
-            </>
-          ),
+          icon: 'refresh',
+          label: t('views:notFound.button', 'Reload Page'),
           onClick: () => {
             navigate(0) // Reload the page
           }
@@ -111,9 +115,24 @@ const SecretListPage: FC<SecretListPageProps> = ({
     <SandboxLayout.Main>
       <SandboxLayout.Content className={cn({ 'h-full': !isLoading && !secrets.length && !searchQuery })}>
         <Layout.Vertical gap="xl" className="flex-1">
-          <Text as="h1" variant="heading-hero">
-            {t('views:secrets.secretsTitle', 'Secrets')}
-          </Text>
+          <Page.Header
+            title={t('views:secrets.secretsTitle', 'Secrets')}
+            backLink={
+              routes?.toSettings
+                ? {
+                    linkText: 'All Settings',
+                    linkProps: {
+                      to: routes.toSettings({
+                        accountId,
+                        orgIdentifier,
+                        projectIdentifier,
+                        module: 'all'
+                      })
+                    }
+                  }
+                : undefined
+            }
+          />
 
           {isEmpty && (
             <NoData
@@ -121,13 +140,13 @@ const SecretListPage: FC<SecretListPageProps> = ({
               title={t('views:noData.noSecrets', 'No secrets yet')}
               description={[t('views:noData.noSecrets', 'There are no secrets in this project yet.')]}
               primaryButton={{
-                label: (
-                  <>
-                    <IconV2 name="plus" />
-                    {t('views:secrets.createNew', 'Create Secret')}
-                  </>
-                ),
-                onClick: onCreate
+                ref: noDataTriggerRef,
+                icon: 'plus',
+                label: t('views:secrets.createNew', 'Create Secret'),
+                onClick: () => {
+                  onCreate?.()
+                  registerNoDataTrigger()
+                }
               }}
             />
           )}
@@ -144,10 +163,20 @@ const SecretListPage: FC<SecretListPageProps> = ({
                 onFilterValueChange={onFilterValueChange}
                 handleInputChange={handleSearch}
                 headerAction={
-                  <Button onClick={onCreate}>
+                  <RbacButton
+                    ref={triggerRef}
+                    onClick={() => {
+                      onCreate?.()
+                      registerTrigger()
+                    }}
+                    rbac={{
+                      resource: { resourceType: ResourceType.SECRET },
+                      permissions: [PermissionIdentifier.UPDATE_SECRET]
+                    }}
+                  >
                     <IconV2 name="plus" />
                     {t('views:secrets.createNew', 'Create Secret')}
-                  </Button>
+                  </RbacButton>
                 }
                 filterOptions={SECRET_FILTER_OPTIONS}
               />

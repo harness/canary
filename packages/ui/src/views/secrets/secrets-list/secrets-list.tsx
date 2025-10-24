@@ -1,7 +1,7 @@
 import { useCallback } from 'react'
 
-import { MoreActionsTooltip, NoData, Skeleton, Table, Text, TimeAgoCard, useCustomDialogTrigger } from '@/components'
-import { useTranslation } from '@/context'
+import { NoData, PermissionIdentifier, ResourceType, Skeleton, Table, Text, TimeAgoCard } from '@/components'
+import { useComponents, useCustomDialogTrigger, useTranslation } from '@/context'
 import { cn } from '@utils/cn'
 
 import { SecretListProps } from './types'
@@ -21,6 +21,7 @@ export function SecretList({
   const { t } = useTranslation()
 
   const { triggerRef, registerTrigger } = useCustomDialogTrigger()
+  const { RbacMoreActionsTooltip } = useComponents()
 
   const handleDeleteSecret = useCallback(
     (secretId: string) => {
@@ -58,41 +59,72 @@ export function SecretList({
       <Table.Header>
         <Table.Row>
           <Table.Head className="w-full">{t('views:secret.title', 'Name')}</Table.Head>
-          <Table.Head className={CELL_MIN_WIDTH}>{t('views:common.manager', 'Secrets Manager')}</Table.Head>
-          <Table.Head className={CELL_MIN_WIDTH}>{t('views:common.lastActivity', 'Last Activity')}</Table.Head>
+          <Table.Head className={CELL_MIN_WIDTH}>{t('views:common.manager', 'Secret Manager')}</Table.Head>
+          <Table.Head className={CELL_MIN_WIDTH} containerProps={{ justify: 'end' }}>
+            {t('views:common.created', 'Created')}
+          </Table.Head>
+          <Table.Head className={CELL_MIN_WIDTH} containerProps={{ justify: 'end' }}>
+            {t('views:common.updated', 'Updated')}
+          </Table.Head>
           <Table.Head></Table.Head>
         </Table.Row>
       </Table.Header>
       <Table.Body>
         {secrets.map(secret => (
           <Table.Row key={secret.identifier} to={toSecretDetails?.(secret)}>
-            <Table.Cell className="w-full max-w-[470px]">
-              <Text truncate>{secret.identifier}</Text>
+            <Table.Cell className="w-full max-w-[470px]" title={secret.name}>
+              <Text truncate>{secret.name}</Text>
             </Table.Cell>
             <Table.Cell className={CELL_MIN_WIDTH}>
-              <Text truncate>{secret.spec?.secretManagerIdentifier}</Text>
+              <Text truncate>
+                {secret.spec?.secretManagerIdentifier === 'harnessSecretManager'
+                  ? 'Harness'
+                  : secret.spec?.secretManagerIdentifier}
+              </Text>
             </Table.Cell>
-            <Table.Cell className={CELL_MIN_WIDTH}>
+            <Table.Cell className={`${CELL_MIN_WIDTH} text-right`}>
+              {secret?.createdAt ? (
+                <TimeAgoCard timestamp={secret.createdAt} dateTimeFormatOptions={{ dateStyle: 'medium' }} />
+              ) : null}
+            </Table.Cell>
+            <Table.Cell className={`${CELL_MIN_WIDTH} text-right`}>
               {secret?.updatedAt ? (
                 <TimeAgoCard timestamp={secret.updatedAt} dateTimeFormatOptions={{ dateStyle: 'medium' }} />
               ) : null}
             </Table.Cell>
             <Table.Cell className={cn(CELL_MIN_WIDTH_ICON, 'text-center')} disableLink>
-              <MoreActionsTooltip
+              <RbacMoreActionsTooltip
                 iconName="more-horizontal"
                 isInTable
                 ref={triggerRef}
                 actions={[
                   {
-                    title: t('views:secrets.edit', 'Edit Secret'),
+                    title: t('views:secrets.edit', 'Edit secret'),
                     iconName: 'edit-pencil',
-                    onClick: () => onEditSecret(secret)
+                    onClick: () => {
+                      registerTrigger()
+                      onEditSecret(secret)
+                    },
+                    rbac: {
+                      resource: {
+                        resourceType: ResourceType.SECRET,
+                        resourceIdentifier: secret.identifier
+                      },
+                      permissions: [PermissionIdentifier.UPDATE_SECRET]
+                    }
                   },
                   {
                     isDanger: true,
-                    title: t('views:secrets.delete', 'Delete Secret'),
+                    title: t('views:secrets.delete', 'Delete secret'),
                     iconName: 'trash',
-                    onClick: () => handleDeleteSecret(secret.identifier)
+                    onClick: () => handleDeleteSecret(secret.identifier),
+                    rbac: {
+                      resource: {
+                        resourceType: ResourceType.SECRET,
+                        resourceIdentifier: secret.identifier
+                      },
+                      permissions: [PermissionIdentifier.DELETE_SECRET]
+                    }
                   }
                 ]}
               />

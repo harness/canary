@@ -1,6 +1,6 @@
 import { Fragment } from 'react'
 
-import { Breadcrumb, ScrollArea, StackedList } from '@/components'
+import { Breadcrumb, Button, ScrollArea, Skeleton, StackedList } from '@/components'
 
 import {
   BaseEntityProps,
@@ -27,6 +27,12 @@ export interface EntityReferenceListProps<T extends BaseEntityProps, S = string,
   showBreadcrumbEllipsis?: boolean
   enableMultiSelect?: boolean
   compareFn?: (entity1: T, entity2: T) => boolean
+  isLoading: boolean
+  paginationProps?: {
+    handleLoadMore: () => void
+    isLastPage?: boolean
+    isLoading?: boolean
+  }
 }
 
 export function EntityReferenceList<T extends BaseEntityProps, S = string, F = string>({
@@ -44,7 +50,9 @@ export function EntityReferenceList<T extends BaseEntityProps, S = string, F = s
   childFolderRenderer,
   showBreadcrumbEllipsis = false,
   enableMultiSelect = false,
-  compareFn
+  compareFn,
+  isLoading,
+  paginationProps
 }: EntityReferenceListProps<T, S, F>): JSX.Element {
   return (
     <StackedList.Root>
@@ -87,7 +95,9 @@ export function EntityReferenceList<T extends BaseEntityProps, S = string, F = s
         {childFolderRenderer({ folder: childFolder, onSelect: () => handleScopeChange(DirectionEnum.CHILD) })}
 
         {/* entities */}
-        {entities.length > 0 ? (
+        {isLoading ? (
+          <Skeleton.List />
+        ) : entities.length > 0 ? (
           <>
             {entities.map(entity => {
               // Use either the custom comparator or the default one
@@ -118,6 +128,18 @@ export function EntityReferenceList<T extends BaseEntityProps, S = string, F = s
                 </Fragment>
               )
             })}
+            {paginationProps?.handleLoadMore && !paginationProps?.isLastPage && (
+              <StackedList.Item disableHover className="flex items-center justify-center">
+                <Button
+                  variant="outline"
+                  onClick={paginationProps?.handleLoadMore}
+                  loading={paginationProps?.isLoading}
+                  size="sm"
+                >
+                  Load more
+                </Button>
+              </StackedList.Item>
+            )}
           </>
         ) : (
           <StackedList.Item disableHover>

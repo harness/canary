@@ -245,7 +245,7 @@ When icons, logos, and counters aren't sufficient, you can use custom children f
         <Tabs.Trigger value="custom2">
             <IconV2 name="folder" />
             <span>Documents</span>
-            <Text size="sm" color="disabled">(2.3 GB)</Text>
+            <Text color="disabled">(2.3 GB)</Text>
         </Tabs.Trigger>
     </Tabs.List>
     
@@ -320,7 +320,7 @@ Both `Tabs.Root` and `Tabs.NavRoot` can be controlled by passing `value` and `on
                 </Tabs.Content>
             </Tabs.Root>
             
-            <Text size="sm" className="text-muted-foreground">
+            <Text>
                 Active tab: {activeTab}
             </Text>
         </div>
@@ -337,7 +337,7 @@ You can customize the active tab styling using the `activeClassName` prop on `Ta
   code={`<Tabs.Root className="grid gap-3" defaultValue="tab1">
     <Tabs.List 
         variant="ghost" 
-        activeClassName="bg-primary text-primary-foreground rounded-md"
+        activeClassName="rounded-md"
     >
         <Tabs.Trigger value="tab1">Custom Active 1</Tabs.Trigger>
         <Tabs.Trigger value="tab2">Custom Active 2</Tabs.Trigger>

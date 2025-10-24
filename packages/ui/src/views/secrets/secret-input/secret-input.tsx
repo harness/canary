@@ -18,7 +18,6 @@ export const SecretInput = ({
       placeholder={placeholder}
       value={value}
       label={label}
-      icon="key"
       onClick={onClick}
       onEdit={onEdit}
       onClear={onClear}

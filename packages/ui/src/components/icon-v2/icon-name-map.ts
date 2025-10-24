@@ -6,6 +6,7 @@
 import AccountSolid from './icons/account-solid.svg'
 import Account from './icons/account.svg'
 import Agile from './icons/agile.svg'
+import AiDeepResearch from './icons/ai-deep-research.svg'
 import AiMlOpsSolid from './icons/ai-ml-ops-solid.svg'
 import AiMlOps from './icons/ai-ml-ops.svg'
 import AiSolid from './icons/ai-solid.svg'
@@ -14,7 +15,6 @@ import AiTest from './icons/ai-test.svg'
 import Ai from './icons/ai.svg'
 import AppDiscoverySolid from './icons/app-discovery-solid.svg'
 import AppDiscovery from './icons/app-discovery.svg'
-import AppNotification from './icons/app-notification.svg'
 import AppSecurityTestsSolid from './icons/app-security-tests-solid.svg'
 import AppSecurityTests from './icons/app-security-tests.svg'
 import AppleShortcut from './icons/apple-shortcut.svg'
@@ -44,25 +44,11 @@ import ArrowUp from './icons/arrow-up.svg'
 import ArrowsUpdown from './icons/arrows-updown.svg'
 import ArtifactsSolid from './icons/artifacts-solid.svg'
 import Artifacts from './icons/artifacts.svg'
-import AtSignCircle from './icons/at-sign-circle.svg'
 import AtSign from './icons/at-sign.svg'
 import AttachmentImage from './icons/attachment-image.svg'
 import Attachment from './icons/attachment.svg'
-import BatteryCharging from './icons/battery-charging.svg'
-import BatteryEmpty from './icons/battery-empty.svg'
-import BatteryFull from './icons/battery-full.svg'
-import BatterySlash from './icons/battery-slash.svg'
-import BatteryWarning from './icons/battery-warning.svg'
-import Battery25 from './icons/battery25.svg'
-import Battery50 from './icons/battery50.svg'
-import Battery75 from './icons/battery75.svg'
-import BellNotification from './icons/bell-notification.svg'
 import BellOff from './icons/bell-off.svg'
 import Bell from './icons/bell.svg'
-import BinFull from './icons/bin-full.svg'
-import BinHalf from './icons/bin-half.svg'
-import BinMinusIn from './icons/bin-minus-in.svg'
-import BinPlusIn from './icons/bin-plus-in.svg'
 import BoldSquere from './icons/bold-squere.svg'
 import Bold from './icons/bold.svg'
 import BookmarkSolid from './icons/bookmark-solid.svg'
@@ -99,6 +85,9 @@ import ChatBubble from './icons/chat-bubble.svg'
 import ChatLines from './icons/chat-lines.svg'
 import ChatMinusIn from './icons/chat-minus-in.svg'
 import ChatPlusIn from './icons/chat-plus-in.svg'
+import ChatPositionFull from './icons/chat-position-full.svg'
+import ChatPositionLeft from './icons/chat-position-left.svg'
+import ChatPositionRight from './icons/chat-position-right.svg'
 import CheckCircleSolid from './icons/check-circle-solid.svg'
 import CheckCircle from './icons/check-circle.svg'
 import Check from './icons/check.svg'
@@ -113,7 +102,6 @@ import CloudCostsSolid from './icons/cloud-costs-solid.svg'
 import CloudCosts from './icons/cloud-costs.svg'
 import CloudDesync from './icons/cloud-desync.svg'
 import CloudDownload from './icons/cloud-download.svg'
-import CloudSquare from './icons/cloud-square.svg'
 import CloudSync from './icons/cloud-sync.svg'
 import CloudUpload from './icons/cloud-upload.svg'
 import CloudXmark from './icons/cloud-xmark.svg'
@@ -128,7 +116,6 @@ import CollapseSidebar from './icons/collapse-sidebar.svg'
 import Collapse from './icons/collapse.svg'
 import Community from './icons/community.svg'
 import Connectors from './icons/connectors.svg'
-import ControlSlider from './icons/control-slider.svg'
 import Cookie from './icons/cookie.svg'
 import Copy from './icons/copy.svg'
 import CpuWarning from './icons/cpu-warning.svg'
@@ -137,7 +124,6 @@ import Crop from './icons/crop.svg'
 import CursorPointer from './icons/cursor-pointer.svg'
 import CustomSecretManager from './icons/custom-secret-manager.svg'
 import CustomizeNavigation from './icons/customize-navigation.svg'
-import DashboardDots from './icons/dashboard-dots.svg'
 import DashboardSolid from './icons/dashboard-solid.svg'
 import DashboardSpeed from './icons/dashboard-speed.svg'
 import Dashboard from './icons/dashboard.svg'
@@ -160,10 +146,9 @@ import Delegates from './icons/delegates.svg'
 import DeploymentsSolid from './icons/deployments-solid.svg'
 import Deployments from './icons/deployments.svg'
 import Developer from './icons/developer.svg'
-import DocMagnifyingGlassIn from './icons/doc-magnifying-glass-in.svg'
 import DocMagnifyingGlass from './icons/doc-magnifying-glass.svg'
-import DocStarIn from './icons/doc-star-in.svg'
 import DocStar from './icons/doc-star.svg'
+import Docs from './icons/docs.svg'
 import DoubleCheck from './icons/double-check.svg'
 import DownloadCircleSolid from './icons/download-circle-solid.svg'
 import DownloadCircle from './icons/download-circle.svg'
@@ -173,7 +158,6 @@ import DragHandGesture from './icons/drag-hand-gesture.svg'
 import Drag from './icons/drag.svg'
 import EditPencil from './icons/edit-pencil.svg'
 import Edit from './icons/edit.svg'
-import Eject from './icons/eject.svg'
 import EmptyPage from './icons/empty-page.svg'
 import EnergyUsageWindow from './icons/energy-usage-window.svg'
 import EngineeringInsightsSolid from './icons/engineering-insights-solid.svg'
@@ -186,10 +170,9 @@ import Executions from './icons/executions.svg'
 import ExpandCode from './icons/expand-code.svg'
 import ExpandSidebar from './icons/expand-sidebar.svg'
 import Expand from './icons/expand.svg'
-import Externaltickets from './icons/externaltickets.svg'
+import ExternalTickets from './icons/external-tickets.svg'
 import EyeClosed from './icons/eye-closed.svg'
 import Eye from './icons/eye.svg'
-import Facetime from './icons/facetime.svg'
 import FastArrowDown from './icons/fast-arrow-down.svg'
 import FastArrowLeft from './icons/fast-arrow-left.svg'
 import FastArrowRight from './icons/fast-arrow-right.svg'
@@ -202,12 +185,14 @@ import FilterListCircle from './icons/filter-list-circle.svg'
 import FilterList from './icons/filter-list.svg'
 import FilterSolid from './icons/filter-solid.svg'
 import Filter from './icons/filter.svg'
-import Finder from './icons/finder.svg'
 import FingerprintWindow from './icons/fingerprint-window.svg'
 import FlagSolid from './icons/flag-solid.svg'
 import FolderMinus from './icons/folder-minus.svg'
+import FolderOpenedSolid from './icons/folder-opened-solid.svg'
+import FolderOpened from './icons/folder-opened.svg'
 import FolderPlus from './icons/folder-plus.svg'
 import FolderSettings from './icons/folder-settings.svg'
+import FolderSolid from './icons/folder-solid.svg'
 import FolderWarning from './icons/folder-warning.svg'
 import Folder from './icons/folder.svg'
 import ForwardMessage from './icons/forward-message.svg'
@@ -225,12 +210,6 @@ import GitRebase from './icons/git-rebase.svg'
 import GitSquashMerge from './icons/git-squash-merge.svg'
 import GithubAction from './icons/github-action.svg'
 import Globe from './icons/globe.svg'
-import GoogleDocs from './icons/google-docs.svg'
-import GoogleDriveCheck from './icons/google-drive-check.svg'
-import GoogleDriveSync from './icons/google-drive-sync.svg'
-import GoogleDriveWarning from './icons/google-drive-warning.svg'
-import GoogleDrive from './icons/google-drive.svg'
-import GoogleOne from './icons/google-one.svg'
 import GripDots from './icons/grip-dots.svg'
 import Group1 from './icons/group-1.svg'
 import HalfMoon from './icons/half-moon.svg'
@@ -249,12 +228,9 @@ import InfoCircleSolid from './icons/info-circle-solid.svg'
 import InfoCircle from './icons/info-circle.svg'
 import InfrastructureSolid from './icons/infrastructure-solid.svg'
 import Infrastructure from './icons/infrastructure.svg'
-import InputSearch from './icons/input-search.svg'
 import Internet from './icons/internet.svg'
 import ItalicSquare from './icons/italic-square.svg'
 import Italic from './icons/italic.svg'
-import JournalPage from './icons/journal-page.svg'
-import Journal from './icons/journal.svg'
 import KanbanBoard from './icons/kanban-board.svg'
 import KeyBack from './icons/key-back.svg'
 import Key from './icons/key.svg'
@@ -262,7 +238,6 @@ import LabelSolid from './icons/label-solid.svg'
 import Label from './icons/label.svg'
 import LaptopDevMode from './icons/laptop-dev-mode.svg'
 import LineSpace from './icons/line-space.svg'
-import Linux from './icons/linux.svg'
 import ListSelect from './icons/list-select.svg'
 import List from './icons/list.svg'
 import Loader from './icons/loader.svg'
@@ -279,9 +254,6 @@ import Maximize from './icons/maximize.svg'
 import MenuMoreHorizontal from './icons/menu-more-horizontal.svg'
 import MenuScale from './icons/menu-scale.svg'
 import Menu from './icons/menu.svg'
-import MessageAlert from './icons/message-alert.svg'
-import MessageText from './icons/message-text.svg'
-import Message from './icons/message.svg'
 import MinusCircleSolid from './icons/minus-circle-solid.svg'
 import MinusCircle from './icons/minus-circle.svg'
 import MinusSquare from './icons/minus-square.svg'
@@ -295,36 +267,17 @@ import MultiplePagesEmpty from './icons/multiple-pages-empty.svg'
 import MultiplePagesMinus from './icons/multiple-pages-minus.svg'
 import MultiplePagesPlus from './icons/multiple-pages-plus.svg'
 import MultiplePagesXmark from './icons/multiple-pages-xmark.svg'
-import MultiplePages from './icons/multiple-pages.svg'
 import NavArrowDown from './icons/nav-arrow-down.svg'
 import NavArrowLeft from './icons/nav-arrow-left.svg'
 import NavArrowRight from './icons/nav-arrow-right.svg'
 import NavArrowUp from './icons/nav-arrow-up.svg'
 import NavSolidArrowDown from './icons/nav-solid-arrow-down.svg'
+import NewThread from './icons/new-thread.svg'
 import Notes from './icons/notes.svg'
-import Number1SquareSolid from './icons/number-1-square-solid.svg'
-import Number1Square from './icons/number-1-square.svg'
-import Number2SquareSolid from './icons/number-2-square-solid.svg'
-import Number2Square from './icons/number-2-square.svg'
-import Number3SquareSolid from './icons/number-3-square-solid.svg'
-import Number3Square from './icons/number-3-square.svg'
-import Number4SquareSolid from './icons/number-4-square-solid.svg'
-import Number4Square from './icons/number-4-square.svg'
-import Number5SquareSolid from './icons/number-5-square-solid.svg'
-import Number5Square from './icons/number-5-square.svg'
-import Number6SquareSolid from './icons/number-6-square-solid.svg'
-import Number6Square from './icons/number-6-square.svg'
-import Number7SquareSolid from './icons/number-7-square-solid.svg'
-import Number7Square from './icons/number-7-square.svg'
-import Number8SquareSolid from './icons/number-8-square-solid.svg'
-import Number8Square from './icons/number-8-square.svg'
-import Number9SquareSolid from './icons/number-9-square-solid.svg'
-import Number9Square from './icons/number-9-square.svg'
 import NumberedListLeft from './icons/numbered-list-left.svg'
 import NumberedListRight from './icons/numbered-list-right.svg'
 import Okrs from './icons/okrs.svg'
 import OneFingerSelectHandGesture from './icons/one-finger-select-hand-gesture.svg'
-import OpenInBrowser from './icons/open-in-browser.svg'
 import OpenInWindow from './icons/open-in-window.svg'
 import OpenNewWindow from './icons/open-new-window.svg'
 import OpenSelectHandGesture from './icons/open-select-hand-gesture.svg'
@@ -332,28 +285,18 @@ import OrganizationSolid from './icons/organization-solid.svg'
 import Organizations from './icons/organizations.svg'
 import Overrides from './icons/overrides.svg'
 import PageDown from './icons/page-down.svg'
-import PageEdit from './icons/page-edit.svg'
 import PageLeft from './icons/page-left.svg'
 import PageMinusIn from './icons/page-minus-in.svg'
 import PageMinus from './icons/page-minus.svg'
 import PagePlusIn from './icons/page-plus-in.svg'
+import PagePlusMinusIn from './icons/page-plus-minus-in.svg'
 import PagePlus from './icons/page-plus.svg'
 import PageRight from './icons/page-right.svg'
-import PageSearch from './icons/page-search.svg'
-import PageStar from './icons/page-star.svg'
 import PageUp from './icons/page-up.svg'
-import Page from './icons/page.svg'
 import PasteClipboard from './icons/paste-clipboard.svg'
 import PathArrow from './icons/path-arrow.svg'
 import Pause from './icons/pause.svg'
 import PeaceHand from './icons/peace-hand.svg'
-import PhoneDisabled from './icons/phone-disabled.svg'
-import PhoneIncome from './icons/phone-income.svg'
-import PhoneMinus from './icons/phone-minus.svg'
-import PhoneOutcome from './icons/phone-outcome.svg'
-import PhonePaused from './icons/phone-paused.svg'
-import PhonePlus from './icons/phone-plus.svg'
-import PhoneXmark from './icons/phone-xmark.svg'
 import Phone from './icons/phone.svg'
 import PhysicalDataCenter from './icons/physical-data-center.svg'
 import PinSlashSolid from './icons/pin-slash-solid.svg'
@@ -368,16 +311,13 @@ import PlusCircleSolid from './icons/plus-circle-solid.svg'
 import PlusCircle from './icons/plus-circle.svg'
 import PlusSquare from './icons/plus-square.svg'
 import Plus from './icons/plus.svg'
-import Podcast from './icons/podcast.svg'
 import PortalSolid from './icons/portal-solid.svg'
 import Portal from './icons/portal.svg'
 import PrComment from './icons/pr-comment.svg'
 import Presentation from './icons/presentation.svg'
-import PrivacyPolicy from './icons/privacy-policy.svg'
 import Prohibition from './icons/prohibition.svg'
 import Project from './icons/project.svg'
 import QuestionMark from './icons/question-mark.svg'
-import QuoteMessage from './icons/quote-message.svg'
 import Quote from './icons/quote.svg'
 import RedoAction from './icons/redo-action.svg'
 import RedoCircleSolid from './icons/redo-circle-solid.svg'
@@ -402,7 +342,7 @@ import RunTest from './icons/run-test.svg'
 import Run from './icons/run.svg'
 import RuntimeSecuritySolid from './icons/runtime-security-solid.svg'
 import RuntimeSecurity from './icons/runtime-security.svg'
-import Safari from './icons/safari.svg'
+import Satellite from './icons/satellite.svg'
 import ScissorAlt from './icons/scissor-alt.svg'
 import Scissor from './icons/scissor.svg'
 import SearchEngine from './icons/search-engine.svg'
@@ -412,7 +352,6 @@ import SecurityPass from './icons/security-pass.svg'
 import SecurityTestsSolid from './icons/security-tests-solid.svg'
 import SecurityTests from './icons/security-tests.svg'
 import SelectWindow from './icons/select-window.svg'
-import SendDiagonal from './icons/send-diagonal.svg'
 import SendMail from './icons/send-mail.svg'
 import Send from './icons/send.svg'
 import ServiceAccounts from './icons/service-accounts.svg'
@@ -427,9 +366,9 @@ import SingleView from './icons/single-view.svg'
 import SlashSquare from './icons/slash-square.svg'
 import Slash from './icons/slash.svg'
 import Snowflake from './icons/snowflake.svg'
-import Sort2Down from './icons/sort-2-down.svg'
-import Sort2Up from './icons/sort-2-up.svg'
 import Sort2 from './icons/sort-2.svg'
+import SortDown from './icons/sort-down.svg'
+import SortUp from './icons/sort-up.svg'
 import SparksSolid from './icons/sparks-solid.svg'
 import Sparks from './icons/sparks.svg'
 import SplitView from './icons/split-view.svg'
@@ -486,6 +425,7 @@ import UserBadgeCheck from './icons/user-badge-check.svg'
 import User from './icons/user.svg'
 import Variables from './icons/variables.svg'
 import Version from './icons/version.svg'
+import VideoCall from './icons/video-call.svg'
 import ViewColumns2 from './icons/view-columns-2.svg'
 import ViewColumns3 from './icons/view-columns-3.svg'
 import ViewGrid from './icons/view-grid.svg'
@@ -499,7 +439,6 @@ import Webhook from './icons/webhook.svg'
 import WorkspacesSolid from './icons/workspaces-solid.svg'
 import Workspaces from './icons/workspaces.svg'
 import WrapText from './icons/wrap-text.svg'
-import Www from './icons/www.svg'
 import XmarkCircleSolid from './icons/xmark-circle-solid.svg'
 import XmarkCircle from './icons/xmark-circle.svg'
 import XmarkSquare from './icons/xmark-square.svg'
@@ -511,6 +450,7 @@ export const IconNameMapV2 = {
   'account-solid': AccountSolid,
   account: Account,
   agile: Agile,
+  'ai-deep-research': AiDeepResearch,
   'ai-ml-ops-solid': AiMlOpsSolid,
   'ai-ml-ops': AiMlOps,
   'ai-solid': AiSolid,
@@ -519,7 +459,6 @@ export const IconNameMapV2 = {
   ai: Ai,
   'app-discovery-solid': AppDiscoverySolid,
   'app-discovery': AppDiscovery,
-  'app-notification': AppNotification,
   'app-security-tests-solid': AppSecurityTestsSolid,
   'app-security-tests': AppSecurityTests,
   'apple-shortcut': AppleShortcut,
@@ -549,25 +488,11 @@ export const IconNameMapV2 = {
   'arrows-updown': ArrowsUpdown,
   'artifacts-solid': ArtifactsSolid,
   artifacts: Artifacts,
-  'at-sign-circle': AtSignCircle,
   'at-sign': AtSign,
   'attachment-image': AttachmentImage,
   attachment: Attachment,
-  'battery-charging': BatteryCharging,
-  'battery-empty': BatteryEmpty,
-  'battery-full': BatteryFull,
-  'battery-slash': BatterySlash,
-  'battery-warning': BatteryWarning,
-  battery25: Battery25,
-  battery50: Battery50,
-  battery75: Battery75,
-  'bell-notification': BellNotification,
   'bell-off': BellOff,
   bell: Bell,
-  'bin-full': BinFull,
-  'bin-half': BinHalf,
-  'bin-minus-in': BinMinusIn,
-  'bin-plus-in': BinPlusIn,
   'bold-squere': BoldSquere,
   bold: Bold,
   'bookmark-solid': BookmarkSolid,
@@ -604,6 +529,9 @@ export const IconNameMapV2 = {
   'chat-lines': ChatLines,
   'chat-minus-in': ChatMinusIn,
   'chat-plus-in': ChatPlusIn,
+  'chat-position-full': ChatPositionFull,
+  'chat-position-left': ChatPositionLeft,
+  'chat-position-right': ChatPositionRight,
   'check-circle-solid': CheckCircleSolid,
   'check-circle': CheckCircle,
   check: Check,
@@ -618,7 +546,6 @@ export const IconNameMapV2 = {
   'cloud-costs': CloudCosts,
   'cloud-desync': CloudDesync,
   'cloud-download': CloudDownload,
-  'cloud-square': CloudSquare,
   'cloud-sync': CloudSync,
   'cloud-upload': CloudUpload,
   'cloud-xmark': CloudXmark,
@@ -633,7 +560,6 @@ export const IconNameMapV2 = {
   collapse: Collapse,
   community: Community,
   connectors: Connectors,
-  'control-slider': ControlSlider,
   cookie: Cookie,
   copy: Copy,
   'cpu-warning': CpuWarning,
@@ -642,7 +568,6 @@ export const IconNameMapV2 = {
   'cursor-pointer': CursorPointer,
   'custom-secret-manager': CustomSecretManager,
   'customize-navigation': CustomizeNavigation,
-  'dashboard-dots': DashboardDots,
   'dashboard-solid': DashboardSolid,
   'dashboard-speed': DashboardSpeed,
   dashboard: Dashboard,
@@ -665,10 +590,9 @@ export const IconNameMapV2 = {
   'deployments-solid': DeploymentsSolid,
   deployments: Deployments,
   developer: Developer,
-  'doc-magnifying-glass-in': DocMagnifyingGlassIn,
   'doc-magnifying-glass': DocMagnifyingGlass,
-  'doc-star-in': DocStarIn,
   'doc-star': DocStar,
+  docs: Docs,
   'double-check': DoubleCheck,
   'download-circle-solid': DownloadCircleSolid,
   'download-circle': DownloadCircle,
@@ -678,7 +602,6 @@ export const IconNameMapV2 = {
   drag: Drag,
   'edit-pencil': EditPencil,
   edit: Edit,
-  eject: Eject,
   'empty-page': EmptyPage,
   'energy-usage-window': EnergyUsageWindow,
   'engineering-insights-solid': EngineeringInsightsSolid,
@@ -691,10 +614,9 @@ export const IconNameMapV2 = {
   'expand-code': ExpandCode,
   'expand-sidebar': ExpandSidebar,
   expand: Expand,
-  externaltickets: Externaltickets,
+  'external-tickets': ExternalTickets,
   'eye-closed': EyeClosed,
   eye: Eye,
-  facetime: Facetime,
   'fast-arrow-down': FastArrowDown,
   'fast-arrow-left': FastArrowLeft,
   'fast-arrow-right': FastArrowRight,
@@ -707,12 +629,14 @@ export const IconNameMapV2 = {
   'filter-list': FilterList,
   'filter-solid': FilterSolid,
   filter: Filter,
-  finder: Finder,
   'fingerprint-window': FingerprintWindow,
   'flag-solid': FlagSolid,
   'folder-minus': FolderMinus,
+  'folder-opened-solid': FolderOpenedSolid,
+  'folder-opened': FolderOpened,
   'folder-plus': FolderPlus,
   'folder-settings': FolderSettings,
+  'folder-solid': FolderSolid,
   'folder-warning': FolderWarning,
   folder: Folder,
   'forward-message': ForwardMessage,
@@ -730,12 +654,6 @@ export const IconNameMapV2 = {
   'git-squash-merge': GitSquashMerge,
   'github-action': GithubAction,
   globe: Globe,
-  'google-docs': GoogleDocs,
-  'google-drive-check': GoogleDriveCheck,
-  'google-drive-sync': GoogleDriveSync,
-  'google-drive-warning': GoogleDriveWarning,
-  'google-drive': GoogleDrive,
-  'google-one': GoogleOne,
   'grip-dots': GripDots,
   'group-1': Group1,
   'half-moon': HalfMoon,
@@ -754,12 +672,9 @@ export const IconNameMapV2 = {
   'info-circle': InfoCircle,
   'infrastructure-solid': InfrastructureSolid,
   infrastructure: Infrastructure,
-  'input-search': InputSearch,
   internet: Internet,
   'italic-square': ItalicSquare,
   italic: Italic,
-  'journal-page': JournalPage,
-  journal: Journal,
   'kanban-board': KanbanBoard,
   'key-back': KeyBack,
   key: Key,
@@ -767,7 +682,6 @@ export const IconNameMapV2 = {
   label: Label,
   'laptop-dev-mode': LaptopDevMode,
   'line-space': LineSpace,
-  linux: Linux,
   'list-select': ListSelect,
   list: List,
   loader: Loader,
@@ -784,9 +698,6 @@ export const IconNameMapV2 = {
   'menu-more-horizontal': MenuMoreHorizontal,
   'menu-scale': MenuScale,
   menu: Menu,
-  'message-alert': MessageAlert,
-  'message-text': MessageText,
-  message: Message,
   'minus-circle-solid': MinusCircleSolid,
   'minus-circle': MinusCircle,
   'minus-square': MinusSquare,
@@ -800,36 +711,17 @@ export const IconNameMapV2 = {
   'multiple-pages-minus': MultiplePagesMinus,
   'multiple-pages-plus': MultiplePagesPlus,
   'multiple-pages-xmark': MultiplePagesXmark,
-  'multiple-pages': MultiplePages,
   'nav-arrow-down': NavArrowDown,
   'nav-arrow-left': NavArrowLeft,
   'nav-arrow-right': NavArrowRight,
   'nav-arrow-up': NavArrowUp,
   'nav-solid-arrow-down': NavSolidArrowDown,
+  'new-thread': NewThread,
   notes: Notes,
-  'number-1-square-solid': Number1SquareSolid,
-  'number-1-square': Number1Square,
-  'number-2-square-solid': Number2SquareSolid,
-  'number-2-square': Number2Square,
-  'number-3-square-solid': Number3SquareSolid,
-  'number-3-square': Number3Square,
-  'number-4-square-solid': Number4SquareSolid,
-  'number-4-square': Number4Square,
-  'number-5-square-solid': Number5SquareSolid,
-  'number-5-square': Number5Square,
-  'number-6-square-solid': Number6SquareSolid,
-  'number-6-square': Number6Square,
-  'number-7-square-solid': Number7SquareSolid,
-  'number-7-square': Number7Square,
-  'number-8-square-solid': Number8SquareSolid,
-  'number-8-square': Number8Square,
-  'number-9-square-solid': Number9SquareSolid,
-  'number-9-square': Number9Square,
   'numbered-list-left': NumberedListLeft,
   'numbered-list-right': NumberedListRight,
   okrs: Okrs,
   'one-finger-select-hand-gesture': OneFingerSelectHandGesture,
-  'open-in-browser': OpenInBrowser,
   'open-in-window': OpenInWindow,
   'open-new-window': OpenNewWindow,
   'open-select-hand-gesture': OpenSelectHandGesture,
@@ -837,28 +729,18 @@ export const IconNameMapV2 = {
   organizations: Organizations,
   overrides: Overrides,
   'page-down': PageDown,
-  'page-edit': PageEdit,
   'page-left': PageLeft,
   'page-minus-in': PageMinusIn,
   'page-minus': PageMinus,
   'page-plus-in': PagePlusIn,
+  'page-plus-minus-in': PagePlusMinusIn,
   'page-plus': PagePlus,
   'page-right': PageRight,
-  'page-search': PageSearch,
-  'page-star': PageStar,
   'page-up': PageUp,
-  page: Page,
   'paste-clipboard': PasteClipboard,
   'path-arrow': PathArrow,
   pause: Pause,
   'peace-hand': PeaceHand,
-  'phone-disabled': PhoneDisabled,
-  'phone-income': PhoneIncome,
-  'phone-minus': PhoneMinus,
-  'phone-outcome': PhoneOutcome,
-  'phone-paused': PhonePaused,
-  'phone-plus': PhonePlus,
-  'phone-xmark': PhoneXmark,
   phone: Phone,
   'physical-data-center': PhysicalDataCenter,
   'pin-slash-solid': PinSlashSolid,
@@ -873,16 +755,13 @@ export const IconNameMapV2 = {
   'plus-circle': PlusCircle,
   'plus-square': PlusSquare,
   plus: Plus,
-  podcast: Podcast,
   'portal-solid': PortalSolid,
   portal: Portal,
   'pr-comment': PrComment,
   presentation: Presentation,
-  'privacy-policy': PrivacyPolicy,
   prohibition: Prohibition,
   project: Project,
   'question-mark': QuestionMark,
-  'quote-message': QuoteMessage,
   quote: Quote,
   'redo-action': RedoAction,
   'redo-circle-solid': RedoCircleSolid,
@@ -907,7 +786,7 @@ export const IconNameMapV2 = {
   run: Run,
   'runtime-security-solid': RuntimeSecuritySolid,
   'runtime-security': RuntimeSecurity,
-  safari: Safari,
+  satellite: Satellite,
   'scissor-alt': ScissorAlt,
   scissor: Scissor,
   'search-engine': SearchEngine,
@@ -917,7 +796,6 @@ export const IconNameMapV2 = {
   'security-tests-solid': SecurityTestsSolid,
   'security-tests': SecurityTests,
   'select-window': SelectWindow,
-  'send-diagonal': SendDiagonal,
   'send-mail': SendMail,
   send: Send,
   'service-accounts': ServiceAccounts,
@@ -932,9 +810,9 @@ export const IconNameMapV2 = {
   'slash-square': SlashSquare,
   slash: Slash,
   snowflake: Snowflake,
-  'sort-2-down': Sort2Down,
-  'sort-2-up': Sort2Up,
   'sort-2': Sort2,
+  'sort-down': SortDown,
+  'sort-up': SortUp,
   'sparks-solid': SparksSolid,
   sparks: Sparks,
   'split-view': SplitView,
@@ -991,6 +869,7 @@ export const IconNameMapV2 = {
   user: User,
   variables: Variables,
   version: Version,
+  'video-call': VideoCall,
   'view-columns-2': ViewColumns2,
   'view-columns-3': ViewColumns3,
   'view-grid': ViewGrid,
@@ -1004,7 +883,6 @@ export const IconNameMapV2 = {
   'workspaces-solid': WorkspacesSolid,
   workspaces: Workspaces,
   'wrap-text': WrapText,
-  www: Www,
   'xmark-circle-solid': XmarkCircleSolid,
   'xmark-circle': XmarkCircle,
   'xmark-square': XmarkSquare,

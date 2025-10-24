@@ -7,8 +7,6 @@ import {
   ListPullReqQueryQueryParams,
   TypesCodeOwnerEvaluationEntry,
   TypesOwnerEvaluation,
-  TypesPrincipalInfo,
-  TypesPullReqReviewer,
   TypesRuleViolations,
   TypesViolation
 } from '@harnessio/code-service-client'
@@ -18,17 +16,11 @@ import {
   easyPluralize,
   ExecutionState,
   ExtendedScope,
-  PrincipalInfoWithReviewDecision,
   PRListFilters,
   Scope
 } from '@harnessio/ui/views'
 
-import {
-  extractInfoForPRPanelChangesProps,
-  PullReqReviewDecision,
-  TypeCheckData,
-  TypesDefaultReviewerApprovalsResponseWithRevDecision
-} from './types'
+import { extractInfoForPRPanelChangesProps, PullReqReviewDecision, TypeCheckData } from './types'
 
 export const processReviewDecision = (
   review_decision: EnumPullReqReviewDecision | PullReqReviewDecision.outdated,
@@ -232,10 +224,6 @@ export function extractSpecificViolations(violationsData: any, rule: string) {
 export const checkIfOutdatedSha = (reviewedSHA?: string, sourceSHA?: string) =>
   reviewedSHA !== sourceSHA || reviewedSHA !== sourceSHA ? true : false
 
-export function capitalizeFirstLetter(str: string) {
-  return str.charAt(0).toUpperCase() + str.slice(1).toLowerCase()
-}
-
 // find code owner request decision from given entries
 export const findChangeReqDecisions = (
   entries: TypesCodeOwnerEvaluationEntry[] | null | undefined,
@@ -288,79 +276,30 @@ export const findWaitingDecisions = (
   }
 }
 
-export const getUnifiedDefaultReviewersState = (
-  info?: TypesDefaultReviewerApprovalsResponseWithRevDecision[]
-): DefaultReviewersDataProps => {
+export const getUnifiedDefaultReviewersState = (info?: DefaultReviewersApprovalsData[]): DefaultReviewersDataProps => {
   const defaultReviewState = {
     defReviewerApprovalRequiredByRule: false,
     defReviewerLatestApprovalRequiredByRule: false,
     defReviewerApprovedLatestChanges: true,
-    defReviewerApprovedChanges: true,
-    changesRequestedByDefaultReviewers: [] as PrincipalInfoWithReviewDecision[]
+    defReviewerApprovedChanges: true
   }
 
-  info?.forEach(item => {
-    if (item?.minimum_required_count !== undefined && item.minimum_required_count > 0) {
+  info?.forEach(({ current_count, minimum_required_count, minimum_required_count_latest }) => {
+    if (minimum_required_count !== undefined && minimum_required_count > 0) {
       defaultReviewState.defReviewerApprovalRequiredByRule = true
-      if (item.current_count !== undefined && item.current_count < item.minimum_required_count) {
+      if (current_count !== undefined && current_count < minimum_required_count) {
         defaultReviewState.defReviewerApprovedChanges = false
       }
     }
-    if (item?.minimum_required_count_latest !== undefined && item.minimum_required_count_latest > 0) {
+    if (minimum_required_count_latest !== undefined && minimum_required_count_latest > 0) {
       defaultReviewState.defReviewerLatestApprovalRequiredByRule = true
-      if (item.current_count !== undefined && item.current_count < item.minimum_required_count_latest) {
+      if (current_count !== undefined && current_count < minimum_required_count_latest) {
         defaultReviewState.defReviewerApprovedLatestChanges = false
       }
     }
-
-    item?.principals?.forEach(principal => {
-      if (principal?.review_decision === PullReqReviewDecision.changeReq)
-        defaultReviewState.changesRequestedByDefaultReviewers.push(principal)
-    })
   })
 
   return defaultReviewState
-}
-
-export const updateReviewDecisionPrincipal = (reviewers: TypesPullReqReviewer[], principals: TypesPrincipalInfo[]) => {
-  const reviewDecisionMap: {
-    [x: number]: { sha: string; review_decision: EnumPullReqReviewDecision } | null
-  } = reviewers?.reduce(
-    (acc, rev) => {
-      if (rev.reviewer?.id) {
-        acc[rev.reviewer.id] = {
-          sha: rev.sha ?? '',
-          review_decision: rev.review_decision ?? 'pending'
-        }
-      }
-      return acc
-    },
-    {} as { [x: number]: { sha: string; review_decision: EnumPullReqReviewDecision } | null }
-  )
-
-  return principals?.map(principal => {
-    if (principal?.id) {
-      return {
-        ...principal,
-        review_decision: reviewDecisionMap[principal.id] ? reviewDecisionMap[principal.id]?.review_decision : 'pending',
-        review_sha: reviewDecisionMap[principal.id]?.sha
-      }
-    }
-    return principal
-  })
-}
-
-export const defaultReviewerResponseWithDecision = (
-  reviewers: TypesPullReqReviewer[],
-  defaultRevApprovalResponse?: DefaultReviewersApprovalsData[]
-) => {
-  return defaultRevApprovalResponse?.map(res => {
-    return {
-      ...res,
-      principals:
-        reviewers && res.principals ? updateReviewDecisionPrincipal(reviewers, res.principals) : res.principals
-    }
-  })
 }
 
 export const extractInfoForPRPanelChanges = ({
@@ -408,7 +347,7 @@ export const extractInfoForPRPanelChanges = ({
     if (mergeBlockedViaRule) {
       title = 'Base branch does not allow updates'
       statusColor = 'text-cn-danger'
-      statusIcon = 'warning'
+      statusIcon = 'error'
     } else if (
       codeOwnerChangeReqEntries &&
       codeOwnerChangeReqEntries?.length > 0 &&
@@ -417,7 +356,7 @@ export const extractInfoForPRPanelChanges = ({
       title = 'Changes requested by code owner'
       statusMessage = 'Code owner requested changes'
       statusColor = 'text-cn-danger'
-      statusIcon = 'warning'
+      statusIcon = 'error'
     } else if (changeReqEvaluations && changeReqEvaluations?.length > 0 && reqNoChangeReq) {
       title = 'Changes Requested'
       statusMessage = `${changeReqReviewer} requested changes to the pull request`
@@ -500,12 +439,12 @@ export const extractInfoForPRPanelChanges = ({
     if (codeOwnerChangeReqEntries && codeOwnerChangeReqEntries?.length > 0) {
       title = 'Changes requested by code owner'
       statusMessage = 'Code owners requested changes to the pull request'
-      statusIcon = 'warning'
+      statusIcon = 'error'
       isNotRequired = true
     } else if (changeReqEvaluations && changeReqEvaluations?.length > 0) {
       title = 'Changes Requested'
       statusMessage = `${changeReqReviewer} requested changes to the pull request`
-      statusIcon = 'warning'
+      statusIcon = 'error'
       isNotRequired = true
     } else if (approvedEvaluations?.length && approvedEvaluations?.length > 0) {
       title = 'Changes approved'

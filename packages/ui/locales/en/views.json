@@ -51,6 +51,21 @@
     "name": "Name",
     "lastCommit": "Last commit message",
     "date": "Date",
+    "targetRepositories": "Target Repositories",
+    "repositories": "Repositories",
+    "selectIncluded": "Select included",
+    "selectExcluded": "Select excluded",
+    "selectReposTitle": "{{type}} repositories",
+    "selectReposDescription": "Choose repositories to {{action}} from this rule",
+    "repository": "Repository",
+    "noRepositoriesAvailable": "No repositories available",
+    "saveSelection": "Save Selection",
+    "noReposSelectedAppliesAll": "If no repositories are selected, the rule applies to all",
+    "patterns": "Patterns",
+    "targetReposCaption": "Match repositories using globstar patterns (e.g.\"repo-*\", \"prod/**\")",
+    "targetReposPlaceholder": "Enter the target repository patterns",
+    "include": "Include",
+    "exclude": "Exclude",
     "cloneCredential": "Generate Clone Credential",
     "expiration": "Expiration",
     "token": "Token",
@@ -125,8 +140,6 @@
     "targetPatterns": "Target patterns",
     "createRuleCaption": "Match branches using globstar patterns (e.g.”golden”, “feature-*”, “releases/**”)",
     "rulePatternPlaceholder": "Enter the target patterns",
-    "include": "Include",
-    "exclude": "Exclude",
     "applyRuleDefaultBranch": "Apply this rule to the default branch",
     "bypassList": "Bypass list",
     "selectUsers": "Select users",
@@ -191,7 +204,6 @@
       "title": "No files yet",
       "description": "This repository is empty. Add your first file to get started."
     },
-    "repositories": "Repositories",
     "createRepository": "Create Repository",
     "importRepository": "Import Repository",
     "importRepositories": "Import Repositories",
@@ -229,6 +241,10 @@
     "secretScanningDescription": "Block commits containing secrets like passwords, API keys and tokens.",
     "vulnerabilityScanning": "Vulnerability scanning",
     "vulnerabilityScanningDescription": "Scan incoming commits for known vulnerabilities.",
+    "detectVulnerabilities": "Detect",
+    "detectVulnerabilitiesDescription": "Passive vulnerability will report errors but not block",
+    "blockVulnerabilities": "Block",
+    "blockVulnerabilitiesDescription": "Active vulnerability blocks commit if any vulnerability is found",
     "verifyCommitterIdentity": "Verify committer identity",
     "verifyCommitterIdentityDescription": "Block commits not committed by the user pushing the changes.",
     "generalSettings": "General settings",
@@ -392,7 +408,6 @@
     "clone": "Clone",
     "addFile": "Add file"
   },
-  "search": "Search",
   "execution": {
     "summary": "Summary",
     "logs": "Logs",
@@ -443,8 +458,10 @@
     "inviteMembers": "There are no members in this project. Click on the button below to start adding them.",
     "noRules": "No rules yet",
     "noRulesDescription": "There are no rules in this project. Click on the button below to start adding rules.",
-    "noCommitsYet": "No commits yet",
-    "noCommitsYetDescription": "Your commits will appear here once they're made. Start committing to see your changes reflected.",
+    "pullRequests": {
+      "noNewCommits": "There isn’t anything to compare",
+      "noNewCommitsDescription": "{{source}} and {{target}} are identical."
+    },
     "compareChanges": "Compare and review just about anything",
     "compareChangesDescription": "Branches and commit ranges can be reviewed within the same repository.",
     "title": {
@@ -464,7 +481,9 @@
     "createBranchDescription": "Your branches will appear here once they're created.",
     "startBranchDescription": "Start branching to see your work organized.",
     "noCommitsHistory": "No commits history",
+    "noCommitsYet": "No commits yet",
     "noCommitsHistoryDescription": "There isn't any commit history to show here for the selected user, time range, or current page.",
+    "noCommitsYetDescription": "Your commits will appear here once they're made. Start committing to see your changes reflected.",
     "clearFilters": "Clear Filters",
     "errorApiTitle": "Failed to load {{type}}",
     "errorApiDescription": "An error occurred while loading the data. Please try again and reload the page.",
@@ -561,6 +580,7 @@
     "compareChangesDraftTitle": "Create Draft Pull request",
     "compareChangesDraftDescription": "Does not request code reviews and cannot be merged.",
     "compareChangesCreatedButton": "Pull Request Created",
+    "expandSidebar": "Expand Sidebar",
     "compareChangesFormTitleLabel": "Add a title",
     "compareChangesFormTitlePlaceholder": "Enter pull request title",
     "compareChangesFormDescriptionHeading": "Add a description",
@@ -579,7 +599,6 @@
     "compareChangesCantMergeDescription": "You can still create the pull request.",
     "compareChangesDiscussChanges": "Discuss and review the changes in this comparison with others.",
     "compareChangesDiscussChangesLink": "Learn about pull requests.",
-    "compareChangesChooseDifferent": "Choose different branches above to discuss and review changes.",
     "compareChangesViewPRLink": "View pull request",
     "compareChangesTabOverview": "Overview",
     "compareChangesTabCommits": "Commits",
@@ -596,6 +615,7 @@
     "noLabelsSidebar": "No labels",
     "changedSinceLastView": "Changed since last viewed",
     "markViewed": "Viewed",
+    "collapseSidebar": "Collapse Sidebar",
     "deletedComment": "This comment was deleted.",
     "reviewers": "Reviewers",
     "noUsers": "No users found.",
@@ -611,6 +631,7 @@
       "suggestionApplied": "Suggestion applied",
       "codeSuggestion": "Code suggestion"
     },
+    "compareChangesChooseDifferent": "Choose different branches above to discuss and review changes.",
     "deleted": "Deleted",
     "searchUsers": "Search users",
     "compareChangesFormDescriptionLabel": "Description",
@@ -634,10 +655,14 @@
   },
   "secretDetails": {
     "backToSecrets": "Back to secrets",
+    "created": "Created",
+    "updated": "Updated",
+    "lastUsed": "Last used",
     "configuration": "Configuration",
     "references": "References",
     "activity": "Activity",
-    "configurationView": "Secret Configuration"
+    "configurationView": "Secret Configuration",
+    "lastUpdated": "Last updated"
   },
   "notFound": {
     "title": "Something went wrong…",
@@ -793,6 +818,81 @@
       "commitDetailsDiffWith": "with",
       "commitDetailsDiffAdditionsAnd": "additions and",
       "commitDetailsDiffDeletions": "deletions"
+    },
+    "pullRequest": {
+      "codeOwnersSection": {
+        "requestedChanges": "Code owners requested changes to the pull request",
+        "waitingOnReviews": "Waiting on code owner reviews of latest changes",
+        "changesPendingApproval": "Changes are pending approval from code owners",
+        "someChangesApproved": "Some changes were approved by code owners",
+        "latestChangesApproved": "Latest changes were approved by code owners",
+        "changesApproved": "Changes were approved by code owners",
+        "latestChangesPendingApproval": "Latest changes are pending approval from required reviewers",
+        "noReviewsRequired": "No codeowner reviews required",
+        "code": "Code",
+        "owners": "Owners",
+        "changesRequestedBy": "Changes requested by",
+        "approvedBy": "Approved by"
+      },
+      "requiredMessage": "Required",
+      "defaultReviewersSection": {
+        "waitingOnReviews": "Waiting on default reviewer's reviews of latest changes",
+        "changesPendingApproval": "Changes are pending approval from default reviewers",
+        "latestChangesApproved": "Latest changes were approved by default reviewers",
+        "changesApproved": "Changes were approved by default reviewers",
+        "defaultReviewersAdded": "Default reviewers were added to the PR",
+        "defaultReviewers": "Default reviewers",
+        "changesRequestedBy": "Changes requested by",
+        "approvedBy": "Approved by"
+      },
+      "changesSection": {
+        "approvalsMessage": "Changes were approved by {{approvalsCount}} {{approvedBy}}",
+        "latestApprovalsMessage": "Latest changes were approved by {{latestApprovalsCount}} {{approvedBy}}",
+        "changeRequestedMessage": "{{reviewer}} requested changes to the pull request",
+        "pendingApprovalsMessage": "{{approvalsCount}}/{{minApproval}} approvals completed",
+        "pendingLatestApprovalsMessage": "{{latestApprovalsCount}} {{approval}} pending on latest changes"
+      },
+      "checksSection": {
+        "succeededMessage": "Succeeded in {{time}}",
+        "failedMessage": "Failed in {{time}}",
+        "runningMessage": "Running...",
+        "pendingMessage": "Pending...",
+        "erroredMessage": "Errored in {{time}}",
+        "detailsLink": "Details"
+      },
+      "commentSection": {
+        "view": "View"
+      },
+      "mergeSection": {
+        "step": "Step {{number}}.",
+        "step1": "Clone the repository or update your local repository with the latest changes",
+        "step2": "Switch to the head branch of the pull request",
+        "step3": "Merge the base branch into the head branch",
+        "step4": "Fix the conflicts and commit the results",
+        "comment": {
+          "1": "See ",
+          "2": "Resolving a merge conflict using the command line",
+          "3": "for step-by-step instructions on resolving merge conflicts"
+        },
+        "step5": "Push the changes",
+        "mergeCheck": "Merge check in progress...",
+        "conflictsFound": "Conflicts found in this branch",
+        "noConflicts": "This branch has no conflicts with {{branch}} branch",
+        "automaticMergeCheck": "Checking for ability to merge automatically...",
+        "resolveConflicts": {
+          "1": "Use the ",
+          "2": "command line",
+          "3": " to resolve conflicts"
+        },
+        "resolveConflictsCommandLine": "Resolve conflicts via command line",
+        "conflictingFiles": "Conflicting files ",
+        "mergeLatestChangesTitle": "This branch is out-of-date with the base branch",
+        "mergeLatestChanges": {
+          "1": "Merge the latest changes from",
+          "2": "into"
+        },
+        "updateWithRebase": "Update with rebase"
+      }
     }
   },
   "commits": {
@@ -811,6 +911,7 @@
   "connectors": {
     "filterOptions": {
       "statusOption": {
+        "pinned": "Pinned",
         "favorite": "Favorites",
         "success": "Success",
         "failure": "Failure",
@@ -869,6 +970,25 @@
     "delete": "Delete Webhook",
     "create": "New Webhook"
   },
+  "search": {
+    "emptyState": {
+      "title": "Start searching",
+      "description": "Enter search terms to find relevant results,"
+    },
+    "showLess": "- Show Less",
+    "showMore": "+ Show More",
+    "noResultsFound": "No search results found",
+    "startSearching": "Start searching",
+    "tryDifferentQuery": "Try a different search query or clear filters",
+    "enterSearchTerms": "Enter search terms to find relevant results",
+    "searchPlaceholder": "Search anything...",
+    "scopePlaceholder": "Select a scope",
+    "repositoryPlaceholder": "Select a repository",
+    "statsText": {
+      "matchesAndFiles": "{{matchCount}} matches found in {{fileCount}} file(s)",
+      "files": "{{fileCount}} file(s)"
+    }
+  },
   "secretActivity": {
     "event": "Event",
     "entity": "Entity",
@@ -876,13 +996,10 @@
     "timestamp": "Timestamp",
     "type": "Type"
   },
-  "entityReference": {
-    "entity": "Entity",
-    "type": "Type",
-    "scope": "Scope",
-    "created": "Created"
-  },
   "secrets": {
+    "search": {
+      "placeholder": "Search"
+    },
     "filterOptions": {
       "secretType": {
         "label": "Secret Type"
@@ -894,28 +1011,38 @@
       "descriptionOption": {
         "label": "Description"
       },
+      "tagsOption": {
+        "label": "Tags"
+      },
       "typeOption": {
         "label": "Type"
       }
     },
     "secretsTitle": "Secrets",
     "createNew": "Create Secret",
-    "edit": "Edit Secret",
-    "delete": "Delete Secret",
+    "edit": "Edit secret",
+    "delete": "Delete secret",
     "newSecret": "New Secret"
+  },
+  "entityReference": {
+    "entity": "Entity",
+    "type": "Type",
+    "scope": "Scope",
+    "created": "Created"
   },
   "secret": {
     "title": "Secret"
   },
   "common": {
     "manager": "Manager",
+    "created": "Created",
+    "updated": "Updated",
     "lastActivity": "Last Activity",
     "details": "Details",
     "overview": "Overview",
     "type": "Type",
     "createdOn": "Created on",
-    "modifiedOn": "Modified on",
-    "created": "Created"
+    "modifiedOn": "Modified on"
   },
   "userManagement": {
     "createUser": {

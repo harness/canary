@@ -1,34 +1,64 @@
-import { Avatar, IconV2 } from '@/components'
-import { PullReqReviewDecision, ReviewerItemProps } from '@/views'
+import { Avatar, Button, IconV2, Layout } from '@/components'
+import { EnumBypassListType, PullReqReviewDecision, ReviewerItemProps } from '@/views'
+import { getIcon } from '@views/repo/utils'
 
 import { ReviewerInfo } from './reviewer-info'
 
-const ReviewerItem = ({ reviewer, reviewDecision, sha, sourceSHA, processReviewDecision }: ReviewerItemProps) => {
-  const updatedReviewDecision = reviewDecision && processReviewDecision(reviewDecision, sha, sourceSHA)
-  const getReviewDecisionIcon = (decision: PullReqReviewDecision) => {
-    switch (decision) {
-      case PullReqReviewDecision.outdated:
-        return <IconV2 size="lg" name="refresh-circle-solid" color="neutral" />
-      case PullReqReviewDecision.approved:
-        return <IconV2 size="lg" name="check-circle-solid" color="success" />
-      case PullReqReviewDecision.changeReq:
-        return <IconV2 size="lg" name="warning-triangle-solid" color="danger" />
-      case PullReqReviewDecision.pending:
-        return <IconV2 size="lg" name="clock-solid" color="warning" />
-      default:
-        return null
-    }
+const getReviewDecisionIcon = (decision: PullReqReviewDecision) => {
+  switch (decision) {
+    case PullReqReviewDecision.outdated:
+      return <IconV2 size="lg" name="refresh-circle-solid" color="neutral" />
+    case PullReqReviewDecision.approved:
+      return <IconV2 size="lg" name="check-circle-solid" color="success" />
+    case PullReqReviewDecision.changeReq:
+      return <IconV2 size="lg" name="warning-triangle-solid" color="danger" />
+    case PullReqReviewDecision.pending:
+      return <IconV2 size="lg" name="clock-solid" color="warning" />
+    default:
+      return null
   }
+}
+
+const ReviewerItem = ({
+  reviewer,
+  reviewDecision,
+  sha,
+  sourceSHA,
+  processReviewDecision,
+  handleDelete
+}: ReviewerItemProps) => {
+  const { id, type, display_name, email } = reviewer || {}
+  const updatedReviewDecision = reviewDecision && processReviewDecision(reviewDecision, sha, sourceSHA)
+
   return (
-    <div key={reviewer?.id} className="flex items-center justify-between space-x-2">
-      <div className="flex items-center space-x-2 overflow-hidden">
-        <Avatar name={reviewer?.display_name} rounded />
-        <ReviewerInfo display_name={reviewer?.display_name || ''} email={reviewer?.email || ''} />
+    <Layout.Horizontal key={id} align="center" justify="between" gap="sm" className="group">
+      <Layout.Horizontal align="center" gap="xs">
+        {type === EnumBypassListType.USER ? (
+          <Avatar name={display_name || ''} rounded size="md" />
+        ) : (
+          <IconV2 name={getIcon(type as EnumBypassListType)} size={'lg'} fallback="stop" className={'ml-cn-4xs'} />
+        )}
+        <ReviewerInfo display_name={display_name || ''} email={email || ''} />
+      </Layout.Horizontal>
+
+      <div className="relative">
+        <Button
+          className="absolute -inset-px z-0 opacity-0 group-focus-within:opacity-100 group-hover:opacity-100"
+          onClick={() => {
+            if (id) handleDelete(id)
+          }}
+          size="2xs"
+          variant="transparent"
+          iconOnly
+          tooltipProps={{ content: 'Remove reviewer', align: 'end' }}
+        >
+          <IconV2 name="xmark" skipSize />
+        </Button>
+        <div className="relative z-[1] group-focus-within:-z-[1] group-focus-within:opacity-0 group-hover:-z-[1] group-hover:opacity-0">
+          {updatedReviewDecision && getReviewDecisionIcon(updatedReviewDecision as PullReqReviewDecision)}
+        </div>
       </div>
-      <div className="px-1.5">
-        {updatedReviewDecision && getReviewDecisionIcon(updatedReviewDecision as PullReqReviewDecision)}
-      </div>
-    </div>
+    </Layout.Horizontal>
   )
 }
 

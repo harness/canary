@@ -341,6 +341,7 @@ function renderTree(
       const deletedLines = getDiffFileDeletedLines(diffsData || [], node.path)
       return (
         <FileExplorer.FileItem
+          value={node.path}
           key={node.path}
           isActive={isActive}
           level={level}

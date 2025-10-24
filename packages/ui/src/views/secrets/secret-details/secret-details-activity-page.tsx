@@ -1,17 +1,14 @@
-import { FC } from 'react'
+import { FC, useCallback, useMemo } from 'react'
 
-import { IconV2, ListActions, NoData, Pagination, SearchBox, Spacer } from '@/components'
+import { IconV2, Layout, ListActions, NoData, Pagination, SearchInput } from '@/components'
 import { useRouterContext, useTranslation } from '@/context'
-import { useDebounceSearch } from '@/hooks'
-import { cn } from '@utils/cn'
-import { SandboxLayout } from '@views/layouts/SandboxLayout'
 
 import { SecretActivityList } from './secret-details-activity-list'
 import { SecretActivity } from './types'
 
 interface SecretActivityPageProps {
   searchQuery: string
-  setSearchQuery: (query: string) => void
+  setSearchQuery: (query: string | undefined) => void
   isError: boolean
   errorMessage: string
   currentPage: number
@@ -37,10 +34,21 @@ const SecretActivityPage: FC<SecretActivityPageProps> = ({
   const { t } = useTranslation()
   const { navigate } = useRouterContext()
 
-  const { search: searchInput, handleSearchChange: handleInputChange } = useDebounceSearch({
-    handleChangeSearchValue: setSearchQuery,
-    searchValue: searchQuery || ''
-  })
+  const handleSearchChange = useCallback(
+    (query: string) => {
+      setSearchQuery(query.length ? query : undefined)
+      goToPage(1)
+    },
+    [goToPage, setSearchQuery]
+  )
+
+  const isDirtyList = useMemo(() => {
+    return currentPage !== 1 || !!searchQuery.length
+  }, [currentPage, searchQuery])
+
+  const isShowPagination = useMemo(() => {
+    return !isLoading && !!secretActivity.length
+  }, [isLoading, secretActivity])
 
   if (isError) {
     return (
@@ -72,26 +80,42 @@ const SecretActivityPage: FC<SecretActivityPageProps> = ({
     )
   }
 
+  if (!secretActivity.length && !isLoading && !isDirtyList) {
+    return (
+      <NoData
+        withBorder
+        imageName="no-data-cog"
+        title={t('views:noData.noActivity', 'No secret activity yet')}
+        description={[t('views:noData.noSecretActivity', 'There is no secret activity yet.')]}
+      />
+    )
+  }
+
   return (
-    <SandboxLayout.Content
-      className={cn({ 'h-full': !isLoading && !secretActivity.length && !searchQuery }, 'px-0 mt-4')}
-    >
-      <ListActions.Root className="mb-1">
-        <ListActions.Left>
-          <SearchBox.Root
-            width="full"
-            className="max-w-80"
-            value={searchInput}
-            handleChange={handleInputChange}
-            placeholder={t('views:search', 'Search')}
-          />
-        </ListActions.Left>
-      </ListActions.Root>
-      <Spacer size={4} />
-      <SecretActivityList secretActivity={secretActivity} isLoading={isLoading} />
-      <Spacer size={8} />
-      <Pagination totalItems={totalItems} pageSize={pageSize} currentPage={currentPage} goToPage={goToPage} />
-    </SandboxLayout.Content>
+    <>
+      <Layout.Grid gapY="md" className="mb-cn-sm">
+        <ListActions.Root>
+          <ListActions.Left>
+            <SearchInput
+              defaultValue={searchQuery}
+              placeholder={t('views:secrets.search.placeholder', 'Search')}
+              inputContainerClassName="max-w-80"
+              onChange={handleSearchChange}
+              autoFocus
+            />
+          </ListActions.Left>
+        </ListActions.Root>
+      </Layout.Grid>
+      <SecretActivityList
+        secretActivity={secretActivity}
+        isLoading={isLoading}
+        isDirtyList={isDirtyList}
+        handleResetFiltersQueryAndPages={() => handleSearchChange('')}
+      />
+      {isShowPagination && (
+        <Pagination totalItems={totalItems} pageSize={pageSize} currentPage={currentPage} goToPage={goToPage} />
+      )}
+    </>
   )
 }
 

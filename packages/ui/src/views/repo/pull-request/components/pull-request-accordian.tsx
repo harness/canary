@@ -17,6 +17,7 @@ import {
   TypesPullReqActivity
 } from '@/views'
 import { DiffModeEnum } from '@git-diff-view/react'
+import { cn } from '@utils/cn'
 import PullRequestDiffViewer from '@views/repo/pull-request/components/pull-request-diff-viewer'
 import { FILE_VIEWED_OBSOLETE_SHA } from '@views/repo/pull-request/details/pull-request-utils'
 import { useDiffConfig } from '@views/repo/pull-request/hooks/useDiffConfig'
@@ -85,6 +86,8 @@ interface LineTitleProps {
   currentRefForDiff?: string
 }
 
+export const PR_ACCORDION_STICKY_TOP = 123
+
 export const LineTitle: React.FC<LineTitleProps> = ({
   header,
   viewed,
@@ -136,7 +139,7 @@ export const LineTitle: React.FC<LineTitleProps> = ({
           </Button>
           <Link
             to={toRepoFileDetails?.({ path: `files/${currentRefForDiff || sourceBranch}/~/${linkPath}` }) ?? ''}
-            className="font-medium leading-tight text-cn-1 min-w-0 break-all"
+            className="text-cn-1 min-w-0 break-all font-medium leading-tight"
           >
             {displayText}
           </Link>
@@ -205,6 +208,7 @@ export const PullRequestAccordion: React.FC<{
   hideViewedCheckbox?: boolean
   addWidget?: boolean
   currentRefForDiff?: string
+  commentLayout?: 'compact' | 'default'
 }> = ({
   header,
   diffMode,
@@ -236,7 +240,8 @@ export const PullRequestAccordion: React.FC<{
   principalProps,
   hideViewedCheckbox = false,
   addWidget = true,
-  currentRefForDiff
+  currentRefForDiff,
+  commentLayout
 }) => {
   const { t: _ts } = useTranslation()
   const { highlight, wrap, fontsize } = useDiffConfig()
@@ -337,8 +342,11 @@ export const PullRequestAccordion: React.FC<{
     >
       <Accordion.Item value={header?.text ?? ''} className="rounded-3 border-none">
         <Accordion.Trigger
-          className="rounded-t-3 bg-cn-2 px-4 py-2 [&>.cn-accordion-trigger-indicator]:m-0 [&>.cn-accordion-trigger-indicator]:self-center"
-          headerClassName="z-[18] sticky top-[119px] border-cn-2 border rounded-t-3"
+          className={cn(
+            'bg-cn-2 border-cn-2 group-[[data-state=closed]]:rounded-3 border px-4 py-2 transition-[border-radius] duration-300 [&>.cn-accordion-trigger-indicator]:m-0 [&>.cn-accordion-trigger-indicator]:self-center',
+            isOpen ? 'rounded-t-3' : 'rounded-3'
+          )}
+          headerClassName="z-[18] sticky top-[123px] bg-cn-1 group"
         >
           <LineTitle
             header={header}
@@ -355,19 +363,25 @@ export const PullRequestAccordion: React.FC<{
             currentRefForDiff={currentRefForDiff}
           />
         </Accordion.Trigger>
-        <Accordion.Content className="pb-0" containerClassName="rounded-b-3 border-x border-b border-cn-2">
+        <Accordion.Content
+          className="pb-0"
+          containerClassName="rounded-b-3 border-x border-b border-cn-2"
+          data-diff-content={header.filePath}
+        >
           <div className="bg-transparent">
             {(fileDeleted || isDiffTooLarge || fileUnchanged || header?.isBinary) && !showHiddenDiff ? (
               <Layout.Vertical align="center" className="py-5">
-                <Button
-                  className="text-cn-brand"
-                  variant="link"
-                  size="sm"
-                  aria-label="show diff"
-                  onClick={() => setShowHiddenDiff(true)}
-                >
-                  {_ts('views:pullRequests.showDiff')}
-                </Button>
+                {!fileUnchanged && (
+                  <Button
+                    className="text-cn-brand"
+                    variant="link"
+                    size="sm"
+                    aria-label="show diff"
+                    onClick={() => setShowHiddenDiff(true)}
+                  >
+                    {_ts('views:pullRequests.showDiff')}
+                  </Button>
+                )}
                 <Text variant="body-strong">
                   {fileDeleted
                     ? _ts('views:pullRequests.deletedFileDiff')
@@ -410,6 +424,7 @@ export const PullRequestAccordion: React.FC<{
                   filenameToLanguage={filenameToLanguage}
                   toggleConversationStatus={toggleConversationStatus}
                   collapseDiff={() => setCollapsed(true)}
+                  layout={commentLayout}
                 />
               </>
             )}

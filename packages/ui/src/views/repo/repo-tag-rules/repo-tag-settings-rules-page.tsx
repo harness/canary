@@ -7,7 +7,8 @@ import { IProjectRulesStore, IRepoStore } from '@/views'
 import { zodResolver } from '@hookform/resolvers/zod'
 import { cn } from '@utils/cn'
 
-import { combineAndNormalizePrincipalsAndGroups } from '../repo-branch-rules/utils'
+import { TargetRepoSelectorForTag } from '../components/target-repo-selector/target-repo-selector'
+import { combineAndNormalizePrincipalsAndGroups, RepoQueryObject } from '../utils'
 import {
   TagSettingsRuleBypassListField,
   TagSettingsRuleDescriptionField,
@@ -27,6 +28,7 @@ type TagSettingsErrors = {
 
 interface RepoTagSettingsRulesPageProps {
   isLoading?: boolean
+  repoQueryObj?: RepoQueryObject
   handleRuleUpdate: (data: RepoTagSettingsFormFields) => void
   apiErrors?: TagSettingsErrors
   useRepoRulesStore: () => IRepoStore | IProjectRulesStore
@@ -42,6 +44,7 @@ interface RepoTagSettingsRulesPageProps {
 
 export const RepoTagSettingsRulesPage: FC<RepoTagSettingsRulesPageProps> = ({
   isLoading,
+  repoQueryObj,
   handleRuleUpdate,
   useRepoRulesStore,
   apiErrors,
@@ -67,6 +70,9 @@ export const RepoTagSettingsRulesPage: FC<RepoTagSettingsRulesPageProps> = ({
       state: true,
       repo_owners: false,
       patterns: [],
+      repoPattern: '',
+      repoPatterns: [],
+      targetRepos: [],
       bypass: [],
       rules: []
     }
@@ -98,6 +104,9 @@ export const RepoTagSettingsRulesPage: FC<RepoTagSettingsRulesPageProps> = ({
         state: presetRuleData?.state && true,
         repo_owners: presetRuleData?.repo_owners || false,
         patterns: presetRuleData?.patterns || [],
+        repoPattern: presetRuleData?.repoPattern || '',
+        repoPatterns: presetRuleData?.repoPatterns || [],
+        targetRepos: presetRuleData?.targetRepos || [],
         bypass: presetRuleData?.bypass || [],
         rules: []
       })
@@ -135,6 +144,9 @@ export const RepoTagSettingsRulesPage: FC<RepoTagSettingsRulesPageProps> = ({
         <TagSettingsRuleDescriptionField register={register} errors={errors} />
 
         <Layout.Vertical gapY="3xl">
+          {projectScope && (
+            <TargetRepoSelectorForTag watch={watch} setValue={setValue} errors={errors} repoQueryObj={repoQueryObj} />
+          )}
           <TagSettingsRuleTargetPatternsField watch={watch} setValue={setValue} register={register} errors={errors} />
 
           <TagSettingsRuleBypassListField

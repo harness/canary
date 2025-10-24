@@ -27,15 +27,15 @@ const Badge: React.FC<ExecutionStatusProps & BadgeProps> = props => {
       return minimal ? (
         <div className="flex items-center gap-1">
           <div className="size-2 animate-pulse rounded-full bg-cn-warning-primary duration-1000" />
-          <span className="text-studio-3">Running</span>
+          <span>Running</span>
         </div>
       ) : (
         <div className="flex items-center gap-1 rounded-md">
           <div className="flex items-center gap-1.5">
             <IconV2 name="loader" color="warning" className="animate-spin" />
-            <span className="text-studio-3">Running</span>
+            <span>Running</span>
           </div>
-          {duration && <span className="text-studio-3">{duration}</span>}
+          {duration && <span>{duration}</span>}
         </div>
       )
     case ExecutionState.KILLED:

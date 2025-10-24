@@ -22,6 +22,7 @@ import {
   useRawDiffQuery,
   useReviewerListPullReqQuery
 } from '@harnessio/code-service-client'
+import { useLocalStorage, UserPreference } from '@harnessio/ui/hooks'
 import {
   CommitFilterItemProps,
   CreateCommentPullReqRequest,
@@ -81,7 +82,7 @@ export default function PullRequestChanges() {
     () => pullReqCommits?.commits?.map(commit => commit.sha as string),
     [pullReqCommits?.commits]
   )
-  const [diffMode, setDiffMode] = useState<DiffModeEnum>(DiffModeEnum.Split)
+  const [diffMode, setDiffMode] = useLocalStorage<DiffModeEnum>(UserPreference.DIFF_VIEW_STYLE, DiffModeEnum.Split)
   const targetRef = useMemo(() => pullReqMetadata?.merge_base_sha, [pullReqMetadata?.merge_base_sha])
   const sourceRef = useMemo(() => pullReqMetadata?.source_sha, [pullReqMetadata?.source_sha])
   const prId = (pullRequestId && Number(pullRequestId)) || -1
@@ -327,7 +328,13 @@ export default function PullRequestChanges() {
           const containerId = `container-${fileId}`
           const contentId = `content-${fileId}`
           const filePath = diff.isDeleted ? diff.oldName : diff.newName
-          const diffString = parseSpecificDiff(cachedDiff.raw ?? '', diff.oldName, diff.newName)
+          const diffString = parseSpecificDiff(
+            cachedDiff.raw ?? '',
+            diff.oldName,
+            diff.newName,
+            diff.checksumBefore,
+            diff.checksumAfter
+          )
 
           return {
             ...diff,
@@ -340,88 +347,13 @@ export default function PullRequestChanges() {
           }
         })
 
-        // Helper function to check if two files might be a rename
-        const isRenameCandidate = (oldBaseName: string, newBaseName: string): boolean => {
-          const oldBaseWithoutExt = oldBaseName.replace(/\.[^.]*$/, '')
-          const newBaseWithoutExt = newBaseName.replace(/\.[^.]*$/, '')
-
-          return (
-            // Exact matches
-            oldBaseName === newBaseName ||
-            // Same name without extension
-            oldBaseWithoutExt === newBaseWithoutExt ||
-            // New name contains old name
-            (oldBaseWithoutExt.length <= 1 && newBaseWithoutExt.includes(oldBaseWithoutExt)) ||
-            // Old name contains new name (reverse case)
-            (newBaseWithoutExt.length <= 1 && oldBaseWithoutExt.includes(newBaseWithoutExt))
-          )
-        }
-
-        // Detect potential renames by comparing deleted and new files
-        const deletedFiles = chunk.filter(d => d.isDeleted && d.oldName && d.oldName !== '/dev/null')
-        const newFiles = chunk.filter(d => !d.isDeleted && d.newName && d.newName !== '/dev/null')
-        const potentialRenames: Array<{ oldPath: string; newPath: string }> = []
-
-        for (const deletedFile of deletedFiles) {
-          for (const newFile of newFiles) {
-            const oldBaseName = deletedFile.oldName?.split('/').pop() || ''
-            const newBaseName = newFile.newName?.split('/').pop() || ''
-
-            if (isRenameCandidate(oldBaseName, newBaseName)) {
-              potentialRenames.push({
-                oldPath: deletedFile.oldName!,
-                newPath: newFile.newName!
-              })
-            }
-          }
-        }
-
-        // Helper function to apply rename information to diff objects
-        const applyRenameInfo = (diff: any, matchingRename: { oldPath: string; newPath: string }) => {
-          diff.isRename = true
-          if (diff.isDeleted) {
-            diff.newName = matchingRename.newPath
-          } else {
-            diff.oldName = matchingRename.oldPath
-          }
-        }
-
-        // Helper function to check if diff is a basic rename (root-level)
-        const isBasicRename = (diff: any): boolean => {
-          return !!(
-            diff.oldName &&
-            diff.newName &&
-            diff.oldName !== diff.newName &&
-            diff.oldName !== '/dev/null' &&
-            diff.newName !== '/dev/null'
-          )
-        }
-
-        // Apply detected renames and filter the chunk
+        // Filter out deleted files from renames (keep only the renamed version)
         const filteredChunk = chunk.filter(diff => {
-          // Handle explicit renames from Diff2Html
+          // For renamed files, only show the non-deleted version
           if (diff.isRename) {
             return !diff.isDeleted
           }
-
-          // Handle detected renames
-          const matchingRename = potentialRenames.find(
-            rename =>
-              (diff.isDeleted && diff.oldName === rename.oldPath) ||
-              (!diff.isDeleted && diff.newName === rename.newPath)
-          )
-
-          if (matchingRename) {
-            applyRenameInfo(diff, matchingRename)
-            return !diff.isDeleted
-          }
-
-          // Handle basic renames (root-level files)
-          if (isBasicRename(diff)) {
-            diff.isRename = true
-            return !diff.isDeleted
-          }
-
+          // For all other files, show them as they are
           return true
         })
 

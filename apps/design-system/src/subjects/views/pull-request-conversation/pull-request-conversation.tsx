@@ -6,6 +6,7 @@ import { noop } from '@utils/viewUtils'
 import { CommitSuggestionsDialog } from '@harnessio/ui/components'
 import {
   CommitSuggestion,
+  EnumBypassListType,
   EnumCheckStatus,
   EnumPullReqReviewDecision,
   ILabelType,
@@ -24,6 +25,7 @@ import {
   mockPrLabels,
   mockPullRequestActions,
   mockReviewers,
+  mockUserGroupReviewers,
   pendingChangesInfoData,
   prPanelInfo,
   pullReqChecksDecisionSucceeded
@@ -57,7 +59,7 @@ const PullRequestConversation: FC<PullRequestConversationProps> = ({ state }) =>
   const showRestoreBranchButton = false
   const errorMsg = ''
 
-  const currentUserData = { display_name: 'admin', uid: '' }
+  const currentUserData = { display_name: 'admin', id: 1, uid: '' }
 
   const comment = ''
 
@@ -76,7 +78,25 @@ const PullRequestConversation: FC<PullRequestConversationProps> = ({ state }) =>
   const PRLabels = state === 'complex-1' ? mockPrLabels : { label_data: [] as LabelAssignmentType[] }
   const searchLabel = ''
   const pullReqMetadata = { source_sha: '' }
-  const reviewers = state === 'complex-1' ? mockReviewers : undefined
+  const reviewers =
+    state === 'complex-1'
+      ? mockReviewers.map(reviewer => ({
+          ...reviewer,
+          reviewer: { ...reviewer.reviewer, type: EnumBypassListType.USER }
+        }))
+      : undefined
+  const userGroupReviewers =
+    state === 'complex-1'
+      ? mockUserGroupReviewers.map(reviewer => ({
+          ...reviewer,
+          reviewer: {
+            display_name: reviewer.user_group.name,
+            id: reviewer.user_group.id,
+            email: reviewer.user_group.identifier,
+            type: EnumBypassListType.USER_GROUP
+          }
+        }))
+      : undefined
 
   const filtersData = usePrFilters()
 
@@ -172,15 +192,17 @@ const PullRequestConversation: FC<PullRequestConversationProps> = ({ state }) =>
           handleUpload: noop
         }}
         sideBarProps={{
-          addReviewers: noop,
-          currentUserId: currentUserData?.uid,
+          addReviewer: noop,
+          authorId: currentUserData?.id,
           pullRequestMetadata: { source_sha: pullReqMetadata?.source_sha || '' },
           processReviewDecision,
           refetchReviewers: noop,
           handleDelete: noop,
+          handleUserGroupReviewerDelete: noop,
           addReviewerError: '',
           removeReviewerError: '',
           reviewers,
+          userGroupReviewers,
           labelsList,
           PRLabels: PRLabels?.label_data,
           searchLabelQuery: searchLabel,

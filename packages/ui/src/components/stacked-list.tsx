@@ -1,6 +1,6 @@
 import { ComponentProps, FC, ReactNode } from 'react'
 
-import { Link, LinkProps, Text, TextProps } from '@/components'
+import { Link, LinkProps, Pagination, PaginationProps, Text, TextProps } from '@/components'
 import { Slot, Slottable } from '@radix-ui/react-slot'
 import { cn } from '@utils/cn'
 import { cva, type VariantProps } from 'class-variance-authority'
@@ -15,17 +15,6 @@ export const stackedListVariants = cva('cn-stacked-list', {
     }
   }
 })
-
-type ListProps = ComponentProps<'div'> & VariantProps<typeof stackedListVariants>
-
-const List: FC<ListProps> = ({ className, border, rounded, ...props }) => (
-  <div className={cn(stackedListVariants({ border, rounded }), className)} {...props} />
-)
-List.displayName = 'StackedList'
-
-/**
- * Item
- */
 
 const spacings = ['4xs', '3xs', '2xs', 'xs', 'sm', 'md', 'lg', 'xl', '2xl', '3xl', '4xl', '0'] as const
 type Spacing = (typeof spacings)[number]
@@ -52,6 +41,42 @@ export const stackedListItemVariants = cva('cn-stacked-list-item', {
     paddingY: 'md'
   }
 })
+
+type ListPaginationProps = PaginationProps & Pick<VariantProps<typeof stackedListItemVariants>, 'paddingX' | 'paddingY'>
+
+type ListProps = ComponentProps<'div'> &
+  VariantProps<typeof stackedListVariants> & {
+    paginationProps?: ListPaginationProps
+  }
+
+const List: FC<ListProps> = ({
+  children,
+  className,
+  border,
+  rounded,
+  paginationProps: {
+    className: paginationClassName,
+    paddingX,
+    paddingY,
+    ...paginationProps
+  } = {} as ListPaginationProps,
+  ...props
+}) => (
+  <div className={cn(stackedListVariants({ border, rounded }), className)} {...props}>
+    {children}
+    {paginationProps && (
+      <Pagination
+        {...paginationProps}
+        className={cn(
+          '!mt-0',
+          stackedListItemVariants({ paddingX, paddingY, disableHover: true }),
+          paginationClassName
+        )}
+      />
+    )}
+  </div>
+)
+List.displayName = 'StackedList'
 
 interface ListItemProps extends ComponentProps<'div'>, VariantProps<typeof stackedListItemVariants> {
   thumbnail?: ReactNode

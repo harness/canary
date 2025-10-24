@@ -1,6 +1,8 @@
+import { isEmpty } from 'lodash-es'
+
 import { useMFEContext } from './useMFEContext'
 
 export const useIsMFE = () => {
   const mfeContext = useMFEContext()
-  return mfeContext.renderUrl !== ''
+  return !isEmpty(mfeContext.renderUrl)
 }

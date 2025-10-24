@@ -1,6 +1,8 @@
 import { FC, RefObject, useCallback, useEffect, useMemo, useRef, useState } from 'react'
 
 import { Button, IconV2, Layout, ListActions } from '@/components'
+import { useTranslation } from '@/context'
+import { useLocalStorage, UserPreference } from '@/hooks'
 import { TypesUser } from '@/types'
 import {
   ChangedFilesShortInfo,
@@ -46,7 +48,8 @@ const PullRequestCompareDiffList: FC<PullRequestCompareDiffListProps> = ({
   onGetFullDiff,
   toRepoFileDetails
 }) => {
-  const [diffMode, setDiffMode] = useState<DiffModeEnum>(DiffModeEnum.Split)
+  const { t } = useTranslation()
+  const [diffMode, setDiffMode] = useLocalStorage<DiffModeEnum>(UserPreference.DIFF_VIEW_STYLE, DiffModeEnum.Split)
   const handleDiffModeChange = (value: string) => {
     setDiffMode(value === 'Split' ? DiffModeEnum.Split : DiffModeEnum.Unified)
   }
@@ -59,11 +62,7 @@ const PullRequestCompareDiffList: FC<PullRequestCompareDiffListProps> = ({
 
   useEffect(() => {
     if (diffData.length > 0) {
-      const itemsToOpen: string[] = []
-      diffData.map(diffItem => {
-        itemsToOpen.push(diffItem.text)
-      })
-      setOpenItems(itemsToOpen)
+      setOpenItems(diffData.map(diffItem => diffItem.text))
     }
   }, [diffData])
 
@@ -112,32 +111,43 @@ const PullRequestCompareDiffList: FC<PullRequestCompareDiffListProps> = ({
                 unchangedPercentage: item.unchangedPercentage || 0
               })) || []
             }
+            setShowExplorer={setShowExplorer}
           />
           <DraggableSidebarDivider width={sidebarWidth} setWidth={setSidebarWidth} containerRef={containerRef} />
         </Layout.Flex>
       )}
-      <Layout.Flex className={cn('p-0', showExplorer ? 'pl-cn-lg' : '')} direction="column">
-        <ListActions.Root className="layer-high bg-cn-1 pt-cn-lg sticky top-[var(--cn-breadcrumbs-height)] gap-x-5 pb-2">
-          <ListActions.Left>
-            <Button
-              size="md"
-              title={showExplorer ? 'Collapse Sidebar' : 'Expand Sidebar'}
-              variant="transparent"
-              onClick={() => setShowExplorer(!showExplorer)}
-            >
-              <IconV2 name={showExplorer ? 'collapse-sidebar' : 'expand-sidebar'} size="md" />
-            </Button>
+      <Layout.Flex className={cn('p-0', showExplorer ? 'pl-cn-sm' : '')} direction="column">
+        <Layout.Horizontal
+          align="center"
+          justify="between"
+          gap="xl"
+          className="layer-high bg-cn-1 pt-cn-xl sticky top-[var(--cn-breadcrumbs-height)] pb-cn-xs"
+        >
+          <Layout.Horizontal className="grow" align="center">
+            {!showExplorer && (
+              <Button
+                variant="outline"
+                onClick={() => setShowExplorer(true)}
+                iconOnly
+                tooltipProps={{
+                  content: t('views:pullRequests.expandSidebar', 'Expand Sidebar')
+                }}
+                title={t('views:pullRequests.expandSidebar', 'Expand Sidebar')}
+              >
+                <IconV2 name="expand-sidebar" />
+              </Button>
+            )}
             <ChangedFilesShortInfo diffData={diffData} diffStats={diffStats} goToDiff={goToDiff} />
-          </ListActions.Left>
-          <ListActions.Right>
+          </Layout.Horizontal>
+          <Layout.Horizontal gap="xl">
             <ListActions.Dropdown
               selectedValue={diffMode === DiffModeEnum.Split ? 'Split' : 'Unified'}
               onChange={handleDiffModeChange}
               title={diffMode === DiffModeEnum.Split ? 'Split' : 'Unified'}
               items={DiffModeOptions}
             />
-          </ListActions.Right>
-        </ListActions.Root>
+          </Layout.Horizontal>
+        </Layout.Horizontal>
         <div className="flex flex-col" ref={diffsContainerRef}>
           {diffBlocks?.map((diffsBlock, blockIndex) => {
             return (
@@ -149,7 +159,7 @@ const PullRequestCompareDiffList: FC<PullRequestCompareDiffListProps> = ({
                 detectionMargin={calculateDetectionMargin(diffData?.length)}
               >
                 {diffsBlock?.map((item, index) => (
-                  <div className="pt-4" key={item.filePath}>
+                  <div className="pt-cn-xs" key={item.filePath}>
                     <InViewDiffRenderer
                       key={item.filePath}
                       blockName={innerBlockName(item?.filePath ?? (blockIndex + index).toString())}

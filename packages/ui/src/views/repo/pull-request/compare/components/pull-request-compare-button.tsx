@@ -1,8 +1,9 @@
-import { FC, MouseEvent, RefObject, useCallback, useState } from 'react'
+import { FC, MouseEvent, RefObject, useCallback } from 'react'
 import { UseFormGetValues } from 'react-hook-form'
 
 import { Button, IconV2, SplitButton } from '@/components'
 import { useTranslation } from '@/context'
+import { useLocalStorage, UserPreference } from '@/hooks'
 import { CompareFormFields } from '@/views'
 
 interface PullRequestCompareButtonProps {
@@ -27,7 +28,7 @@ const PullRequestCompareButton: FC<PullRequestCompareButtonProps> = ({
   onFormDraftSubmit,
   onFormSubmit
 }) => {
-  const [prType, setPrType] = useState<PR_TYPE>(PR_TYPE.CREATE)
+  const [prType, setPrType] = useLocalStorage<PR_TYPE>(UserPreference.PULL_REQUEST_CREATION_OPTION, PR_TYPE.CREATE)
   const { t } = useTranslation()
 
   const handleButtonClick = useCallback(

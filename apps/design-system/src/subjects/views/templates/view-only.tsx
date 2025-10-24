@@ -1,8 +1,12 @@
+import { useEffect, useState } from 'react'
+
 import {
+  Button,
   IconV2,
   Layout,
   Link,
   LogoV2,
+  MoreActionsTooltip,
   StatsPanel,
   StatusBadge,
   Table,
@@ -138,9 +142,38 @@ const dataMock: ViewOnlyProps[] = [
 ]
 
 export const ViewOnlyView = () => {
+  const [isLoading, setIsLoading] = useState(true)
+
+  useEffect(() => {
+    const t = setTimeout(() => {
+      setIsLoading(false)
+    }, 1000)
+
+    return () => {
+      if (t) clearTimeout(t)
+    }
+  }, [])
+
+  const actions = (
+    <>
+      <Button onClick={() => console.log('Click')} disabled={isLoading}>
+        Test Connection
+      </Button>
+      <MoreActionsTooltip
+        actions={[
+          { title: 'Action 1', onClick: () => console.log('Action 1') },
+          { title: 'Action 2', onClick: () => console.log('Action 2') }
+        ]}
+        buttonVariant="outline"
+        disabled={isLoading}
+      />
+    </>
+  )
+
   return (
     <Page.Root>
       <Page.Header
+        isLoading={isLoading}
         backLink={{
           linkText: 'Back to connectors',
           linkProps: { to: '/' }
@@ -148,16 +181,7 @@ export const ViewOnlyView = () => {
         logoName="node-js"
         title="harnessdocker"
         description="Preconfigured Docker connector for use in Harness."
-        button={{
-          props: {
-            onClick: () => console.log('Click')
-          },
-          text: 'Test Connection'
-        }}
-        moreActions={[
-          { title: 'Action 1', onClick: () => console.log('Action 1') },
-          { title: 'Action 2', onClick: () => console.log('Action 2') }
-        ]}
+        actions={actions}
       >
         <Layout.Flex wrap="wrap" gap="xs" align="baseline">
           <Text color="foreground-3">Labels:</Text>
@@ -169,17 +193,18 @@ export const ViewOnlyView = () => {
           <Tag variant="secondary" value="+3 labels" theme="violet" />
         </Layout.Flex>
         <StatsPanel
+          isLoading={isLoading}
           data={[
             {
               label: 'Created',
               value: <TimeAgoCard timestamp="Dec 6, 2024" dateTimeFormatOptions={{ dateStyle: 'medium' }} />
             },
-            { label: 'Last updated', value: null },
+            { label: 'Last updated', value: undefined },
             {
               label: 'Last status check',
               value: <TimeAgoCard timestamp="Jun 6, 2025" dateTimeFormatOptions={{ dateStyle: 'medium' }} />
             },
-            { label: 'Last successful check', value: null },
+            { label: 'Last successful check', value: undefined },
             {
               label: 'Connection status',
               value: (
@@ -200,10 +225,10 @@ export const ViewOnlyView = () => {
           </Tabs.List>
         </Tabs.NavRoot>
 
-        <Widgets.Root isTwoColumn>
+        <Widgets.Root>
           <Widgets.Item title="Connector details">
             {dataMock.map((props, index) => (
-              <ViewOnly key={index} {...props} />
+              <ViewOnly key={index} {...props} isLoading={isLoading} />
             ))}
           </Widgets.Item>
 
@@ -214,7 +239,7 @@ export const ViewOnlyView = () => {
             }}
           >
             {dataMock.slice(0, 2).map((props, index) => (
-              <ViewOnly key={index} {...props} />
+              <ViewOnly key={index} {...props} isLoading={isLoading} />
             ))}
           </Widgets.Item>
 

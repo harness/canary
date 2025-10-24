@@ -13,10 +13,6 @@ export default {
       }
     },
 
-    '&-button': {
-      paddingInline: 'var(--cn-pagination-btn-px)'
-    },
-
     '&-content': {
       '@apply flex flex-grow items-center justify-center': '',
       gap: 'var(--cn-spacing-half)',

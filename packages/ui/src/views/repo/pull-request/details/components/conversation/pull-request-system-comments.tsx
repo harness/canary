@@ -1,11 +1,12 @@
 import { FC, useMemo } from 'react'
 
-import { Avatar, BranchTag, CommitCopyActions, IconPropsV2, IconV2, Text, TimeAgoCard } from '@/components'
+import { Avatar, BranchTag, CommitCopyActions, IconPropsV2, IconV2, Text } from '@/components'
 import { useRouterContext } from '@/context'
 import {
   ColorsEnum,
   CommentItem,
   CommentType,
+  easyPluralize,
   GeneralPayload,
   LabelActivity,
   LabelTag,
@@ -101,6 +102,13 @@ const PullRequestSystemComments: FC<SystemCommentProps> = ({
     return uniqueList.map(id => mentionsMap[id]?.display_name ?? '')
   }, [payloadMain?.metadata?.mentions?.ids, payloadMain?.mentions])
 
+  const userGroupsDisplayNameList = useMemo(() => {
+    const ids = payloadMain?.metadata?.mentions?.user_group_ids ?? []
+    const uniqueList = [...new Set(ids)]
+    const mentionsMap = payloadMain?.user_group_mentions ?? {}
+    return uniqueList.map(id => mentionsMap[id]?.name ?? '')
+  }, [payloadMain?.metadata?.mentions?.user_group_ids, payloadMain?.user_group_mentions])
+
   const principalNameList = useMemo(() => {
     const checkList = (payloadMain?.payload as any)?.principal_ids ?? []
     const uniqueList = [...new Set(checkList)]
@@ -116,7 +124,7 @@ const PullRequestSystemComments: FC<SystemCommentProps> = ({
   } = useMemo(() => {
     if (!payloadMain) return { header: {} }
 
-    const { payload, type, author, metadata, mentions, created } = payloadMain
+    const { payload, type, author, metadata, mentions } = payloadMain
 
     const {
       old_draft,
@@ -156,7 +164,6 @@ const PullRequestSystemComments: FC<SystemCommentProps> = ({
                   {merge_method === MergeStrategy.REBASE ? ', now at ' : 'by commit'}
                 </Text>
                 <CommitCopyActions toCommitDetails={toCommitDetails} sha={merge_sha as string} />
-                <TimeAgoCard timestamp={created} />
               </>
             )
           },
@@ -173,7 +180,6 @@ const PullRequestSystemComments: FC<SystemCommentProps> = ({
                 <Text variant="body-single-line-normal" color="foreground-3">
                   {decision === 'approved' ? 'approved these changes' : 'requested changes to this pull request'}
                 </Text>
-                <TimeAgoCard timestamp={created} />
               </>
             )
           },
@@ -199,7 +205,6 @@ const PullRequestSystemComments: FC<SystemCommentProps> = ({
                   pullRequestId={pullReqMetadata?.number ?? 0}
                   sha={String(newData)}
                 />
-                <TimeAgoCard timestamp={created} />
               </>
             ) : (
               <>
@@ -219,7 +224,6 @@ const PullRequestSystemComments: FC<SystemCommentProps> = ({
                   pullRequestId={pullReqMetadata?.number ?? 0}
                   sha={String(newData)}
                 />
-                <TimeAgoCard timestamp={created} />
               </>
             )
           },
@@ -242,7 +246,6 @@ const PullRequestSystemComments: FC<SystemCommentProps> = ({
                 <Text variant="body-single-line-normal" color="foreground-3">
                   branch
                 </Text>
-                <TimeAgoCard timestamp={created} />
               </>
             )
           },
@@ -269,7 +272,6 @@ const PullRequestSystemComments: FC<SystemCommentProps> = ({
                   {!!openFromDraft && 'marked pull request as ready for review'}
                   {!changedToDraft && !openFromDraft && `changed pull request state from ${old} to ${newData}`}
                 </Text>
-                <TimeAgoCard timestamp={created} />
               </>
             )
           },
@@ -292,14 +294,32 @@ const PullRequestSystemComments: FC<SystemCommentProps> = ({
                     {String(newData)}
                   </Text>
                 </Text>
-                <TimeAgoCard timestamp={created} />
               </>
             )
           },
           icon: <IconV2 name="edit-pencil" size="xs" />
         }
 
-      case CommentType.REVIEW_DELETE: {
+      case CommentType.TARGET_BRANCH_CHANGE:
+        return {
+          header: {
+            description: (
+              <>
+                <Text variant="body-single-line-normal" color="foreground-3">
+                  changed the target branch from
+                </Text>
+                <BranchTag branchName={String(old)} spaceId={spaceId} repoId={repoId} />
+                <Text variant="body-single-line-normal" color="foreground-3">
+                  to
+                </Text>
+                <BranchTag branchName={String(newData)} spaceId={spaceId} repoId={repoId} />
+              </>
+            )
+          },
+          icon: <IconV2 name="git-branch" size="xs" />
+        }
+
+      case CommentType.REVIEWER_DELETE: {
         const mentionId = metadata?.mentions?.ids?.[0] ?? 0
         const mentionDisplayName = mentions?.[mentionId]?.display_name ?? ''
 
@@ -319,7 +339,6 @@ const PullRequestSystemComments: FC<SystemCommentProps> = ({
                     </>
                   )}
                 </Text>
-                <TimeAgoCard timestamp={created} />
               </>
             )
           },
@@ -327,7 +346,29 @@ const PullRequestSystemComments: FC<SystemCommentProps> = ({
         }
       }
 
-      case CommentType.REVIEW_ADD: {
+      case CommentType.USER_GROUP_REVIEWER_DELETE: {
+        const userGroupReviewers = formatListWithAndFragment(userGroupsDisplayNameList)
+
+        return {
+          header: {
+            description: (
+              <>
+                <Text variant="body-single-line-normal" color="foreground-3">
+                  <>
+                    removed the request for review from user group &nbsp;
+                    <Text as="span" variant="body-single-line-normal" color="foreground-1">
+                      {userGroupReviewers}
+                    </Text>
+                  </>
+                </Text>
+              </>
+            )
+          },
+          icon: <IconV2 name="edit-pencil" size="xs" />
+        }
+      }
+
+      case CommentType.REVIEWER_ADD: {
         const activityMentions = formatListWithAndFragment(displayNameList)
         const principalMentions = formatListWithAndFragment(principalNameList)
 
@@ -357,6 +398,39 @@ const PullRequestSystemComments: FC<SystemCommentProps> = ({
         }
       }
 
+      case CommentType.USER_GROUP_REVIEWER_ADD: {
+        const userGroupReviewers = formatListWithAndFragment(userGroupsDisplayNameList)
+        const requestedText = (
+          <>
+            requested a review from {easyPluralize(userGroupsDisplayNameList.length, 'user group', 'user groups')}
+            {userGroupReviewers}
+          </>
+        )
+
+        return {
+          header: {
+            description: (
+              <>
+                {reviewer_type === ReviewerAddActivity.REQUESTED && <>{requestedText}</>}
+                {reviewer_type === ReviewerAddActivity.CODEOWNERS && (
+                  <>
+                    {requestedText} as&nbsp;
+                    {easyPluralize(userGroupsDisplayNameList.length, 'code owner', 'code owners')}
+                  </>
+                )}
+                {reviewer_type === ReviewerAddActivity.DEFAULT && (
+                  <>
+                    {requestedText} as&nbsp;
+                    {easyPluralize(userGroupsDisplayNameList.length, 'default reviewer', 'default reviewers')}
+                  </>
+                )}
+              </>
+            )
+          },
+          icon: <IconV2 name="eye" size="xs" />
+        }
+      }
+
       case CommentType.LABEL_MODIFY: {
         const labelType = payload?.type as LabelActivity
 
@@ -376,7 +450,6 @@ const PullRequestSystemComments: FC<SystemCommentProps> = ({
                 <Text variant="body-single-line-normal" color="foreground-3">
                   label
                 </Text>
-                <TimeAgoCard timestamp={created} />
               </>
             )
           },
@@ -393,7 +466,7 @@ const PullRequestSystemComments: FC<SystemCommentProps> = ({
           }
         }
     }
-  }, [payloadMain, pullReqMetadata, toCommitDetails, toCode, navigate])
+  }, [payloadMain, pullReqMetadata, toCommitDetails, toCode, navigate, spaceId, repoId])
 
   if (!payloadMain) return <></>
 
@@ -409,6 +482,7 @@ const PullRequestSystemComments: FC<SystemCommentProps> = ({
         {
           avatar: <Avatar name={payloadMain?.author?.display_name} rounded />,
           name: payloadMain?.author?.display_name,
+          timestamp: payloadMain.created,
           ...header
         }
       ]}

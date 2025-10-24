@@ -1,17 +1,14 @@
-import { FC } from 'react'
+import { FC, useCallback, useMemo } from 'react'
 
-import { IconV2, ListActions, NoData, Pagination, SearchBox, Spacer } from '@/components'
+import { IconV2, Layout, ListActions, NoData, Pagination, SearchInput } from '@/components'
 import { useRouterContext, useTranslation } from '@/context'
-import { useDebounceSearch } from '@/hooks'
-import { cn } from '@utils/cn'
-import { SandboxLayout } from '@views/layouts/SandboxLayout'
 
 import { SecretReferencesList } from './secret-details-references-list'
 import { SecretReference } from './types'
 
 interface SecretsReferencePageProps {
   searchQuery: string
-  setSearchQuery: (query: string) => void
+  setSearchQuery: (query: string | undefined) => void
   isError: boolean
   errorMessage: string
   currentPage: number
@@ -37,10 +34,21 @@ const SecretReferencesPage: FC<SecretsReferencePageProps> = ({
   const { t } = useTranslation()
   const { navigate } = useRouterContext()
 
-  const { search: searchInput, handleSearchChange: handleInputChange } = useDebounceSearch({
-    handleChangeSearchValue: setSearchQuery,
-    searchValue: searchQuery || ''
-  })
+  const handleSearchChange = useCallback(
+    (query: string) => {
+      setSearchQuery(query.length ? query : undefined)
+      goToPage(1)
+    },
+    [goToPage, setSearchQuery]
+  )
+
+  const isDirtyList = useMemo(() => {
+    return currentPage !== 1 || !!searchQuery.length
+  }, [currentPage, searchQuery])
+
+  const isShowPagination = useMemo(() => {
+    return !isLoading && !!secretReferences.length
+  }, [isLoading, secretReferences])
 
   if (isError) {
     return (
@@ -72,26 +80,42 @@ const SecretReferencesPage: FC<SecretsReferencePageProps> = ({
     )
   }
 
+  if (!secretReferences.length && !isLoading && !isDirtyList) {
+    return (
+      <NoData
+        withBorder
+        imageName="no-data-cog"
+        title={t('views:noData.noSecretReferences', 'No secret references yet')}
+        description={[t('views:noData.noSecretReferencesDescription', 'There are no references to this secret yet.')]}
+      />
+    )
+  }
+
   return (
-    <SandboxLayout.Content
-      className={cn({ 'h-full': !isLoading && !secretReferences.length && !searchQuery }, 'px-0 mt-4')}
-    >
-      <ListActions.Root className="mb-1">
-        <ListActions.Left>
-          <SearchBox.Root
-            width="full"
-            className="max-w-80"
-            value={searchInput}
-            handleChange={handleInputChange}
-            placeholder={t('views:search', 'Search')}
-          />
-        </ListActions.Left>
-      </ListActions.Root>
-      <Spacer size={4} />
-      <SecretReferencesList secretReferences={secretReferences} isLoading={isLoading} />
-      <Spacer size={8} />
-      <Pagination totalItems={totalItems} pageSize={pageSize} currentPage={currentPage} goToPage={goToPage} />
-    </SandboxLayout.Content>
+    <>
+      <Layout.Grid gapY="md" className="mb-cn-sm">
+        <ListActions.Root>
+          <ListActions.Left>
+            <SearchInput
+              defaultValue={searchQuery}
+              placeholder={t('views:secrets.search.placeholder', 'Search')}
+              inputContainerClassName="max-w-80"
+              onChange={handleSearchChange}
+              autoFocus
+            />
+          </ListActions.Left>
+        </ListActions.Root>
+      </Layout.Grid>
+      <SecretReferencesList
+        secretReferences={secretReferences}
+        isLoading={isLoading}
+        isDirtyList={isDirtyList}
+        handleResetFiltersQueryAndPages={() => handleSearchChange('')}
+      />
+      {isShowPagination && (
+        <Pagination totalItems={totalItems} pageSize={pageSize} currentPage={currentPage} goToPage={goToPage} />
+      )}
+    </>
   )
 }
 

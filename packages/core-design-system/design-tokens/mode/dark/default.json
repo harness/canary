@@ -176,17 +176,17 @@
         },
         "bg": {
           "$type": "color",
-          "$value": "{blue.950}",
+          "$value": "{blue.900}",
           "$description": "Background color for subdued gray surfaces."
         },
         "bg-hover": {
           "$type": "color",
-          "$value": "{blue.900}",
+          "$value": "{blue.850}",
           "$description": "Hover state background color for interactive brand subtle surfaces."
         },
         "bg-selected": {
           "$type": "color",
-          "$value": "{blue.900}",
+          "$value": "{blue.850}",
           "$description": "Selected state background color for active brand subtle items."
         }
       },
@@ -198,7 +198,7 @@
         },
         "bg": {
           "$type": "color",
-          "$value": "{blue.900}",
+          "$value": "{blue.1000}",
           "$description": "Background color for primary brand items with minimum emphasis."
         },
         "border": {
@@ -208,12 +208,12 @@
         },
         "bg-hover": {
           "$type": "color",
-          "$value": "{blue.800}",
+          "$value": "{blue.950}",
           "$description": "Hover state background color for interactive brand with minimum emphasis surfaces."
         },
         "bg-selected": {
           "$type": "color",
-          "$value": "{blue.800}",
+          "$value": "{blue.900}",
           "$description": "Selected state background color for active brand with minimum emphasis items."
         }
       }
@@ -2085,7 +2085,7 @@
         "y": "0",
         "blur": "0",
         "spread": "4",
-        "color": "{set.brand.outline.bg}",
+        "color": "{set.brand.secondary.bg}",
         "type": "dropShadow"
       }
     },
@@ -2804,7 +2804,7 @@
   "disabled": {
     "opacity": {
       "$type": "opacity",
-      "$value": "{opacity.50}"
+      "$value": "{opacity.60}"
     }
   },
   "img": {

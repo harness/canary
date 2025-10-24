@@ -1,5 +1,4 @@
 @import url('./shared-style-variables.css');
-@import url('./remove-old-theme-values.css');
 @import url('./diff-styles.css');
 
 @import url('@harnessio/core-design-system/core-styles');
@@ -176,6 +175,11 @@
 
 .diff-widget-tooltip:hover::after {
   display: block;
+}
+
+.diff-line-extend-new-content {
+  vertical-align: top;
+  border-left-width: 1px;
 }
 
 .diff-tailwindcss-wrapper {

@@ -56,9 +56,15 @@ export declare const useLogout: () => UseLogoutReturn
 
 export declare const usePermission: (permissionsRequest?: PermissionsRequest, deps?: Array<any>) => Array<boolean>
 
+export enum FeatureFlag {
+  SEMANTIC_SEARCH_ENABLED = 'SEMANTIC_SEARCH_ENABLED',
+  CODE_SSH_ENABLED = 'CODE_SSH_ENABLED',
+  CODE_SECURITY_SCANNING_ON_PUSH = 'CODE_SECURITY_SCANNING_ON_PUSH'
+}
+
 export interface Hooks {
-  useLogout?: typeof useLogout
   usePermission?: typeof usePermission
+  useLogout?: typeof useLogout
 }
 
 /**************/
@@ -77,6 +83,7 @@ export interface MFEContextProps {
   customHooks: Partial<{
     useGenerateToken: Unknown
     usePreferenceStore: Unknown
+    useFeatureFlags: Unknown
   }>
   customUtils: Partial<{
     navigateToUserProfile: Unknown
@@ -125,7 +132,8 @@ export const defaultContext: MFEContextProps = {
     appStoreContext: createContext({ currentUserInfo: { uuid: '' } })
   },
   customHooks: {
-    usePreferenceStore: () => ({ preference: undefined, setPreference: noop })
+    usePreferenceStore: () => ({ preference: undefined, setPreference: noop }),
+    useFeatureFlags: () => ({})
   },
   customUtils: {},
   routes: {},

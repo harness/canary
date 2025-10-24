@@ -1,7 +1,7 @@
 import { atom } from 'jotai'
 
-import { TypesCheck, TypesDefaultReviewerApprovalsResponse } from '@harnessio/code-service-client'
-import { PrincipalInfoWithReviewDecision, PullRequestChangesSectionProps } from '@harnessio/ui/views'
+import { TypesCheck } from '@harnessio/code-service-client'
+import { PullRequestChangesSectionProps } from '@harnessio/ui/views'
 
 export enum PullReqReviewDecision {
   approved = 'approved',
@@ -119,10 +119,6 @@ export type extractInfoForPRPanelChangesProps = Pick<
   | 'codeOwnersData'
 > & {
   mergeBlockedViaRule?: boolean
-}
-
-export interface TypesDefaultReviewerApprovalsResponseWithRevDecision extends TypesDefaultReviewerApprovalsResponse {
-  principals?: PrincipalInfoWithReviewDecision[] | null // Override the 'principals' field
 }
 
 export enum CodeOwnerReqDecision {

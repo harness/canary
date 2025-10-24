@@ -57,7 +57,11 @@ export default {
       fontSize: 'inherit',
       borderRadius: 'inherit',
       boxShadow: 'inherit',
-      '@apply h-full w-full flex items-center justify-center select-none': ''
+      '@apply h-full w-full flex items-center justify-center select-none': '',
+
+      '&-small': {
+        fontSize: `var(--cn-font-size-min)`
+      }
     },
 
     '.cn-avatar-icon': {

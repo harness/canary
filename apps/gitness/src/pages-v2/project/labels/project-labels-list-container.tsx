@@ -27,13 +27,13 @@ export const ProjectLabelsList = () => {
     routeUtils
   } = useMFEContext()
 
-  const { page, setPage, deleteLabel: deleteStoreLabel, labels: storeLabels } = useLabelsStore()
+  const { page, setPage, deleteLabel: deleteStoreLabel, labels: storeLabels, pageSize } = useLabelsStore()
 
   const { queryPage } = usePaginationQueryStateWithStore({ page, setPage })
   const [query, setQuery] = useQueryState('query')
 
   // To fetch labels/values and set isLoading state at useLabelsStore
-  useFillLabelStoreWithProjectLabelValuesData({ queryPage, query })
+  useFillLabelStoreWithProjectLabelValuesData({ queryPage, query, pageSize })
 
   const handleOpenDeleteDialog = (identifier: string) => {
     resetDeleteMutation()

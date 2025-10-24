@@ -133,16 +133,17 @@ const RepoWebhookListPage: FC<RepoWebhookListPageProps> = ({
             }}
           />
         ) : (
-          <RepoWebhookList
-            webhooks={webhooks || []}
-            openDeleteWebhookDialog={openDeleteWebhookDialog}
-            handleEnableWebhook={handleEnableWebhook}
-            toRepoWebhookDetails={toRepoWebhookDetails}
-          />
+          <div>
+            <RepoWebhookList
+              webhooks={webhooks || []}
+              openDeleteWebhookDialog={openDeleteWebhookDialog}
+              handleEnableWebhook={handleEnableWebhook}
+              toRepoWebhookDetails={toRepoWebhookDetails}
+            />
+            <Pagination totalItems={totalItems} pageSize={pageSize} currentPage={page} goToPage={setPage} />
+          </div>
         )}
       </Layout.Vertical>
-
-      <Pagination totalItems={totalItems} pageSize={pageSize} currentPage={page} goToPage={setPage} />
     </Layout.Vertical>
   )
 }

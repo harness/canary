@@ -148,7 +148,7 @@ const FilterGroupInner = <
                 ref={searchRef}
                 defaultValue={searchValue || ''}
                 onChange={handleInputChange}
-                placeholder={t('views:search', 'Search')}
+                placeholder={t('component:filter.search.placeholder', 'Search')}
               />
             </ListActions.Left>
             <ListActions.Right>

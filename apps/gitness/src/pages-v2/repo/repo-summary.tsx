@@ -13,7 +13,7 @@ import {
   useSummaryQuery,
   useUpdateRepositoryMutation
 } from '@harnessio/code-service-client'
-import { useCustomDialogTrigger } from '@harnessio/ui/components'
+import { useCustomDialogTrigger } from '@harnessio/ui/context'
 import { generateAlphaNumericHash } from '@harnessio/ui/utils'
 import {
   BranchSelectorListItem,
@@ -60,6 +60,7 @@ export default function RepoSummaryPage() {
   const { currentUser } = useAppContext()
   const isMFE = useIsMFE()
   const { customHooks, customUtils } = useMFEContext()
+  const { CODE_SSH_ENABLED: isSSHEnabled } = customHooks?.useFeatureFlags() || {}
 
   const { toRepoCommits } = useRepoCommits()
   const {
@@ -369,6 +370,7 @@ export default function RepoSummaryPage() {
         showContributeBtn={showContributeBtn}
         scheduleFileMetaFetch={scheduleFileMetaFetch}
         imageUrlTransform={imageUrlTransform}
+        isSSHEnabled={isSSHEnabled}
       />
       <CreateBranchDialog
         open={isCreateBranchDialogOpen}

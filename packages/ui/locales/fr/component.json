@@ -98,6 +98,9 @@
   },
   "filter": {
     "delete": "Delete filter",
+    "search": {
+      "placeholder": "Search"
+    },
     "inputPlaceholder": "Filtrer par...",
     "buttonLabel": "Réinitialiser les filtres",
     "defaultLabel": "Filtrer",
@@ -180,10 +183,6 @@
     }
   },
   "cancel": "Cancel",
-  "pagination": {
-    "previous": "Précédent",
-    "next": "Suivant"
-  },
   "searchFile": {
     "noFile": "Aucun fichier trouvé."
   },
@@ -236,6 +235,10 @@
     },
     "notAllowed": "Cannot create tag",
     "bypassButton": "Bypass rules and create tag"
+  },
+  "pagination": {
+    "previous": "Précédent",
+    "next": "Suivant"
   },
   "layout": {
     "table": "Table",

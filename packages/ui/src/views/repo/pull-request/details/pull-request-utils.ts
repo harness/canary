@@ -5,6 +5,7 @@ import { createRequestIdleCallbackTaskPool } from '@/utils/task'
 import { dispatchCustomEvent } from '@hooks/use-event-listener'
 import { get, isEmpty } from 'lodash-es'
 
+import { PR_ACCORDION_STICKY_TOP } from '../components/pull-request-accordian'
 import { DiffViewerCustomEvent, DiffViewerEvent } from '../components/pull-request-diff-viewer'
 import { PullReqReviewDecision } from '../pull-request.types'
 import { innerBlockName, outterBlockName } from '../utils'
@@ -283,14 +284,26 @@ export const handlePaste = (
   }
 }
 
-function isInViewport(ele: HTMLElement) {
-  const rect = ele.getBoundingClientRect()
-  return (
-    rect.top >= 0 &&
-    rect.left >= 0 &&
-    rect.bottom <= (window.innerHeight || document.documentElement.clientHeight) &&
-    rect.right <= (window.innerWidth || document.documentElement.clientWidth)
-  )
+export function isInViewport(element: Element, margin = 0, direction: 'x' | 'y' | 'xy' = 'y') {
+  const rect = element?.getBoundingClientRect()
+
+  const height = window.innerHeight || document.documentElement.clientHeight
+  const width = window.innerWidth || document.documentElement.clientWidth
+  const _top = 0 - margin
+  const _bottom = height + margin
+  const _left = 0 - margin
+  const _right = width + margin
+
+  const yCheck =
+    (rect?.top >= _top && rect?.top <= _bottom) ||
+    (rect?.bottom >= _top && rect?.bottom <= _bottom) ||
+    (rect?.top <= _top && rect?.bottom >= _bottom)
+  const xCheck = (rect?.left >= _left && rect?.left <= _right) || (rect?.right >= _left && rect?.right <= _right)
+
+  if (direction === 'y') return yCheck
+  if (direction === 'x') return xCheck
+
+  return yCheck || xCheck
 }
 
 export const jumpToFile = (
@@ -317,8 +330,17 @@ export const jumpToFile = (
     const diffDOM = innerBlockDOM?.querySelector(`[data-diff-file-path="${filePath}"]`) as HTMLElement | null
 
     outerBlockDOM?.scrollIntoView(false)
-    const innerBlockDomScroll: boolean | ScrollIntoViewOptions = { block: 'center', inline: 'center' }
-    innerBlockDOM?.scrollIntoView(innerBlockDomScroll)
+    // Position the accordion trigger at the sticky position (PR_ACCORDION_STICKY_TOP px from top)
+    if (innerBlockDOM) {
+      const rect = innerBlockDOM?.getBoundingClientRect()
+      const scrollContainer = innerBlockDOM.closest('[data-scroll-container]') || document.documentElement
+      const currentScrollTop = scrollContainer.scrollTop || window.scrollY
+      const targetScrollTop = currentScrollTop + rect.top - PR_ACCORDION_STICKY_TOP
+
+      scrollContainer.scrollTo({
+        top: Math.max(0, targetScrollTop)
+      })
+    }
 
     if (diffDOM && commentId) {
       dispatchCustomEvent<DiffViewerCustomEvent>(filePath, {

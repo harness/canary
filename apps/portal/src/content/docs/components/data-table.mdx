@@ -78,6 +78,14 @@ return (
   onSortingChange={setTableSorting}
   getRowCanExpand={(row) => row.original.status === "active"}
   getRowCanSelect={(row) => row.original.status === "active"}
+  paginationProps={{
+    pageSize: 10,
+    totalItems: 50,
+    currentPage: 1,
+    goToPage: (page) => console.log(page),
+    pageSizeOptions: [5, 10, 20],
+    onPageSizeChange: (size) => console.log(size),
+  }}
 />
 ) }`} />
 
@@ -200,7 +208,7 @@ function MyTable() {
       value: "(row: TData) => string",
     },
     {
-      name: "pagination",
+      name: "paginationProps",
       description: "Pagination configuration",
       required: false,
       value: "PaginationProps",

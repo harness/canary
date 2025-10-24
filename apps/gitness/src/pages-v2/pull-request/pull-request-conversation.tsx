@@ -3,7 +3,7 @@ import { useNavigate, useParams } from 'react-router-dom'
 
 import { useMutation } from '@tanstack/react-query'
 import copy from 'clipboard-copy'
-import { isEmpty } from 'lodash-es'
+import { capitalize, isEmpty } from 'lodash-es'
 
 import {
   EnumCheckStatus,
@@ -19,22 +19,27 @@ import {
   statePullReq,
   TypesPullReqActivity,
   TypesPullReqReviewer,
+  TypesUserGroupReviewer,
   useCodeownersPullReqQuery,
   useCreateBranchMutation,
   useDeletePullReqSourceBranchMutation,
   useGetBranchQuery,
   useListPrincipalsQuery,
   useListPullReqActivitiesQuery,
+  useListUsergroupsQuery,
   useRebaseBranchMutation,
   useRestorePullReqSourceBranchMutation,
   useRevertPullReqOpMutation,
-  useReviewerListPullReqQuery,
+  useReviewerCombinedListPullReqQuery,
+  userGroupReviewerAddPullReq,
+  userGroupReviewerDeletePullReq,
   useUpdatePullReqMutation
 } from '@harnessio/code-service-client'
 import { Skeleton } from '@harnessio/ui/components'
 import {
   CodeOwnersData,
   DefaultReviewersDataProps,
+  EnumBypassListType,
   LatestCodeOwnerApprovalArrType,
   PRCommentFilterType,
   PRPanelData,
@@ -48,6 +53,7 @@ import { useAppContext } from '../../framework/context/AppContext'
 import { useRoutes } from '../../framework/context/NavigationContext'
 import { eventManager } from '../../framework/event/EventManager.ts'
 import { useGetRepoRef } from '../../framework/hooks/useGetRepoPath'
+import { useGetSpaceURLParam } from '../../framework/hooks/useGetSpaceParam.ts'
 import { useMFEContext } from '../../framework/hooks/useMFEContext'
 import { useQueryState } from '../../framework/hooks/useQueryState'
 import { useAPIPath } from '../../hooks/useAPIPath.ts'
@@ -59,9 +65,7 @@ import { usePrConversationLabels } from './hooks/use-pr-conversation-labels'
 import { usePrFilters } from './hooks/use-pr-filters'
 import { usePRCommonInteractions } from './hooks/usePRCommonInteractions'
 import {
-  capitalizeFirstLetter,
   checkIfOutdatedSha,
-  defaultReviewerResponseWithDecision,
   extractInfoForPRPanelChanges,
   extractInfoFromRuleViolationArr,
   findChangeReqDecisions,
@@ -210,8 +214,10 @@ export default function PullRequestConversationPage() {
   const [commentId] = useQueryState('commentId')
   const { spaceId, repoId } = useParams<PathParams>()
   const {
+    renderUrl,
     scope: { accountId }
   } = useMFEContext()
+  const spaceURL = useGetSpaceURLParam()
   const repoRef = useGetRepoRef()
   const { pullRequestId } = useParams<PathParams>()
 
@@ -223,14 +229,38 @@ export default function PullRequestConversationPage() {
 
   const {
     data: { body: principals } = {},
-    isLoading: isPrincipalsLoading,
+    isLoading: _isPrincipalsLoading,
     error: principalsError
   } = useListPrincipalsQuery({
-    // @ts-expect-error : BE issue - not implemnted
+    // @ts-expect-error : BE issue - not implemented
     queryParams: { page: 1, limit: 100, type: 'user', query: searchPrincipalsQuery, accountIdentifier: accountId }
   })
 
-  const { data: { body: reviewers } = {}, refetch: refetchReviewers } = useReviewerListPullReqQuery({
+  const {
+    data: { body: userGroups } = {},
+    isLoading: isUserGroupsLoading,
+    error: userGroupsError
+  } = useListUsergroupsQuery(
+    {
+      space_ref: `${spaceURL}/+`,
+      queryParams: {
+        page: 1,
+        limit: 100,
+        query: searchPrincipalsQuery
+      }
+    },
+    {
+      enabled: !isEmpty(renderUrl)
+    }
+  )
+
+  const isPrincipalsLoading = useMemo(() => {
+    if (isEmpty(renderUrl)) return _isPrincipalsLoading
+
+    return _isPrincipalsLoading || isUserGroupsLoading
+  }, [_isPrincipalsLoading, isUserGroupsLoading, renderUrl])
+
+  const { data: { body: combinedReviewers } = {}, refetch: refetchReviewers } = useReviewerCombinedListPullReqQuery({
     repo_ref: repoRef,
     pullreq_number: prId
   })
@@ -481,7 +511,7 @@ export default function PullRequestConversationPage() {
   const [activities, setActivities] = useState<TypesPullReqActivity[] | undefined>(activityData)
 
   const { approvedEvaluations, changeReqEvaluations, latestApprovalArr, changeReqReviewer } = useMemo(() => {
-    if (!reviewers)
+    if (!combinedReviewers)
       return {
         approvedEvaluations: [],
         changeReqEvaluations: [],
@@ -489,7 +519,7 @@ export default function PullRequestConversationPage() {
         changeReqReviewer: 'Reviewer'
       }
 
-    const { approvedEvaluations, changeReqEvaluations } = reviewers.reduce<{
+    const { approvedEvaluations, changeReqEvaluations } = (combinedReviewers?.reviewers || []).reduce<{
       approvedEvaluations: TypesPullReqReviewer[]
       changeReqEvaluations: TypesPullReqReviewer[]
     }>(
@@ -510,9 +540,7 @@ export default function PullRequestConversationPage() {
     )
 
     const changeReqReviewer = !isEmpty(changeReqEvaluations)
-      ? capitalizeFirstLetter(
-          changeReqEvaluations[0].reviewer?.display_name || changeReqEvaluations[0].reviewer?.uid || ''
-        )
+      ? capitalize(changeReqEvaluations[0].reviewer?.display_name || changeReqEvaluations[0].reviewer?.uid || '')
       : 'Reviewer'
 
     return {
@@ -521,7 +549,7 @@ export default function PullRequestConversationPage() {
       latestApprovalArr,
       changeReqReviewer
     }
-  }, [reviewers, pullReqMetadata?.source_sha])
+  }, [combinedReviewers, pullReqMetadata?.source_sha])
 
   const codeOwnersData: CodeOwnersData = useMemo(() => {
     const data = codeOwners?.evaluation_entries
@@ -591,17 +619,13 @@ export default function PullRequestConversationPage() {
     }
   }, [commentId, isScrolledToComment, prPanelData.PRStateLoading, activityData])
 
-  const defaultReviewersData: DefaultReviewersDataProps = useMemo(() => {
-    const updatedDefaultApprovals = reviewers
-      ? defaultReviewerResponseWithDecision(reviewers, prPanelData?.defaultReviewersApprovals)
-      : prPanelData?.defaultReviewersApprovals
-
-    return {
-      ...getUnifiedDefaultReviewersState(updatedDefaultApprovals),
-      updatedDefaultApprovals,
+  const defaultReviewersData: DefaultReviewersDataProps = useMemo(
+    () => ({
+      ...getUnifiedDefaultReviewersState(prPanelData?.defaultReviewersApprovals),
       defaultReviewersApprovals: prPanelData?.defaultReviewersApprovals
-    }
-  }, [reviewers, prPanelData?.defaultReviewersApprovals])
+    }),
+    [prPanelData?.defaultReviewersApprovals]
+  )
 
   const changesInfo = useMemo(() => {
     return extractInfoForPRPanelChanges({
@@ -661,8 +685,27 @@ export default function PullRequestConversationPage() {
     [repoRef, prId, refetchReviewers]
   )
 
+  const handleAddUserGroupReviewer = useCallback(
+    (id?: number) => {
+      userGroupReviewerAddPullReq({
+        repo_ref: repoRef,
+        pullreq_number: prId,
+        body: { usergroup_id: id }
+      })
+        .then(() => refetchReviewers())
+        .catch(error => setAddReviewerError(error.message))
+    },
+    [repoRef, prId, refetchReviewers]
+  )
+
   const handleDeleteReviewer = (id: number) => {
     reviewerDeletePullReq({ repo_ref: repoRef, pullreq_number: prId, pullreq_reviewer_id: id })
+      .then(() => refetchReviewers())
+      .catch(error => setRemoveReviewerError(error.message))
+  }
+
+  const handleDeleteUserGroupReviewer = (id: number) => {
+    userGroupReviewerDeletePullReq({ repo_ref: repoRef, pullreq_number: prId, user_group_id: id })
       .then(() => refetchReviewers())
       .catch(error => setRemoveReviewerError(error.message))
   }
@@ -1031,10 +1074,11 @@ export default function PullRequestConversationPage() {
         overviewProps={overviewProps}
         principalProps={{
           principals,
+          userGroups,
           searchPrincipalsQuery,
           setSearchPrincipalsQuery,
-          isPrincipalsLoading,
-          principalsError
+          isPrincipalsLoading: isPrincipalsLoading,
+          principalsError: principalsError || userGroupsError
         }}
         // TODO: create useMemo of commentBoxProps
         commentBoxProps={{
@@ -1046,23 +1090,36 @@ export default function PullRequestConversationPage() {
         }}
         // TODO: create useMemo of sideBarProps
         sideBarProps={{
-          addReviewers: handleAddReviewer,
+          addReviewer: handleAddReviewer,
+          addUserGroupReviewer: handleAddUserGroupReviewer,
           isLabelsLoading,
-          currentUserId: currentUserData?.uid,
+          authorId: pullReqMetadata?.author?.id || currentUserData?.id,
           pullRequestMetadata: { source_sha: pullReqMetadata?.source_sha || '' },
           processReviewDecision,
           refetchReviewers,
           handleDelete: handleDeleteReviewer,
+          handleUserGroupReviewerDelete: handleDeleteUserGroupReviewer,
           addReviewerError,
           removeReviewerError,
-          reviewers: reviewers?.map((val: TypesPullReqReviewer) => ({
+          reviewers: combinedReviewers?.reviewers?.map((val: TypesPullReqReviewer) => ({
             reviewer: {
               display_name: val.reviewer?.display_name || '',
               id: val.reviewer?.id || 0,
-              email: val.reviewer?.email || ''
+              email: val.reviewer?.email || '',
+              type: EnumBypassListType.USER
             },
             review_decision: val.review_decision,
             sha: val.sha
+          })),
+          userGroupReviewers: combinedReviewers?.user_group_reviewers?.map((val: TypesUserGroupReviewer) => ({
+            reviewer: {
+              display_name: val?.user_group?.name || '',
+              id: val.user_group?.id || 0,
+              email: val.user_group?.identifier || '',
+              type: EnumBypassListType.USER_GROUP
+            },
+            review_decision: val?.decision,
+            sha: val?.sha
           })),
           assignableLabels: assignableLabels,
           PRLabels: appliedLabels,

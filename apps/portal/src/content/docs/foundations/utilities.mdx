@@ -774,3 +774,50 @@ Focus rings for accessibility and keyboard navigation.
 />
 
 ---
+
+## Size Tokens
+
+### Width & Height Utilities
+
+Use size tokens for consistent dimensions across components.
+
+| Class | Value | Usage |
+|-------|-------|-------|
+| `w-cn-*` / `h-cn-*` | 4px - 96px | Consistent sizing |
+| `min-w-cn-*` / `max-w-cn-*` | 4px - 96px | Size constraints |
+| `min-h-cn-*` / `max-h-cn-*` | 4px - 96px | Size constraints |
+
+<DocsPage.ComponentExample
+  client:only
+  code={`<Layout.Flex gap="md" className="p-cn-md items-center">
+  <div className="w-cn-md h-cn-md bg-cn-primary rounded-cn-sm"></div>
+  <div className="w-cn-lg h-cn-lg bg-cn-primary rounded-cn-sm"></div>
+  <div className="w-cn-xl h-cn-xl bg-cn-primary rounded-cn-sm"></div>
+  <div className="w-cn-2xl h-cn-2xl bg-cn-primary rounded-cn-sm"></div>
+</Layout.Flex>`}
+/>
+
+### Icon Sizes
+
+Standard icon size utilities.
+
+| Class | Value | Usage |
+|-------|-------|-------|
+| `size-cn-icon-xs` | 12px | Extra small icons |
+| `size-cn-icon-sm` | 16px | Small icons |
+| `size-cn-icon-md` | 20px | Medium icons (default) |
+| `size-cn-icon-lg` | 24px | Large icons |
+| `size-cn-icon-xl` | 32px | Extra large icons |
+
+<DocsPage.ComponentExample
+  client:only
+  code={`<Layout.Flex gap="md" className="p-cn-md items-center">
+  <IconV2 name="settings" className="size-cn-icon-xs" />
+  <IconV2 name="settings" className="size-cn-icon-sm" />
+  <IconV2 name="settings" className="size-cn-icon-md" />
+  <IconV2 name="settings" className="size-cn-icon-lg" />
+  <IconV2 name="settings" className="size-cn-icon-xl" />
+</Layout.Flex>`}
+/>
+
+---

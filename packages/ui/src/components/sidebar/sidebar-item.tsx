@@ -236,7 +236,7 @@ const SidebarItemTrigger = forwardRef<HTMLButtonElement | HTMLAnchorElement, Sid
               <IconV2 name={props.icon} size="md" fallback="stop" />
             </div>
           ) : (
-            <IconV2 name={props.icon} size="sm" fallback="stop" className="cn-sidebar-item-content-icon" />
+            <IconV2 name={props.icon} size="md" fallback="stop" className="cn-sidebar-item-content-icon" />
           ))}
 
         {withLogo && props.logo && (
@@ -301,7 +301,9 @@ const SidebarItemTrigger = forwardRef<HTMLButtonElement | HTMLAnchorElement, Sid
         {/* Action buttons */}
         {actionButtonsContent}
 
-        {withRightIndicator && <IconV2 name="nav-arrow-right" className="cn-sidebar-item-content-right-element" />}
+        {withRightIndicator && (
+          <IconV2 name="nav-arrow-right" className="cn-sidebar-item-content-right-element" size="md" />
+        )}
 
         {((withActionMenu && !badge) || withSubmenu) && (
           <div className="cn-sidebar-item-content-action-item-placeholder" />
@@ -361,7 +363,7 @@ const SidebarItemTrigger = forwardRef<HTMLButtonElement | HTMLAnchorElement, Sid
 
         {withSubmenu && (
           <button className="cn-sidebar-item-action-button" onClick={toggleSubmenu}>
-            <IconV2 name={submenuOpen ? 'minus' : 'plus'} size="xs" />
+            <IconV2 name={submenuOpen ? 'nav-arrow-down' : 'nav-arrow-right'} size="md" />
           </button>
         )}
       </div>

@@ -28,3 +28,264 @@ Jump to a specific section:
 - [Component-Specific Tokens](#component-specific-tokens)
 
 ---
+
+## Background Colors
+
+Background colors establish the visual hierarchy and surface elevation in your UI. All background utilities support alpha transparency via Tailwind's `/[opacity]` syntax.
+
+### Base Backgrounds
+
+The base background colors provide the foundational layering system.
+
+<DocsPage.ComponentExample
+  client:only
+  code={`<Layout.Grid columns="1fr 1fr 1fr 1fr" gap="md" className="p-cn-md">
+  <div className="bg-cn-0 border border-cn-3 rounded-3 p-cn-md text-center">
+    <Text variant="caption-normal" className="mb-cn-xs">bg-cn-0</Text>
+    <Text variant="caption-light">Lightest background</Text>
+  </div>
+  <div className="bg-cn-1 border border-cn-3 rounded-3 p-cn-md text-center">
+    <Text variant="caption-normal" className="mb-cn-xs">bg-cn-1</Text>
+    <Text variant="caption-light">Primary background</Text>
+  </div>
+  <div className="bg-cn-2 border border-cn-3 rounded-3 p-cn-md text-center">
+    <Text variant="caption-normal" className="mb-cn-xs">bg-cn-2</Text>
+    <Text variant="caption-light">Secondary background</Text>
+  </div>
+  <div className="bg-cn-3 border border-cn-3 rounded-3 p-cn-md text-center">
+    <Text variant="caption-normal" className="mb-cn-xs">bg-cn-3</Text>
+    <Text variant="caption-light">Subtle background</Text>
+  </div>
+</Layout.Grid>`}
+/>
+
+**Usage:**
+```tsx
+<div className="bg-cn-1">Primary surface</div>
+<div className="bg-cn-2">Raised surface</div>
+<div className="bg-cn-0/50">Semi-transparent background</div>
+```
+
+### Status Colors
+
+Status colors communicate success, danger, warning, and neutral states. Each status color has three variants: primary, secondary, and outline.
+
+<Aside type="caution">
+  **Important:** Always pair status backgrounds with their corresponding text colors:
+  - `bg-cn-success-primary` + `text-cn-success-primary`
+  - `bg-cn-success-secondary` + `text-cn-success-secondary`
+  - `bg-cn-success-outline` + `text-cn-success-outline` + `border-cn-success-outline`
+</Aside>
+
+#### Success Colors
+
+<DocsPage.ComponentExample
+  client:only
+  code={`<Layout.Grid columns="1fr 1fr 1fr" gap="md" className="p-cn-md">
+  <div className="bg-cn-success-primary text-cn-success-primary rounded-3 p-cn-md text-center">
+    <Text variant="body-strong" className="mb-cn-xs">Primary</Text>
+    <Text variant="caption-normal">bg-cn-success-primary</Text>
+    <Text variant="caption-normal">text-cn-success-primary</Text>
+  </div>
+  <div className="bg-cn-success-secondary text-cn-success-secondary rounded-3 p-cn-md text-center">
+    <Text variant="body-strong" className="mb-cn-xs">Secondary</Text>
+    <Text variant="caption-normal">bg-cn-success-secondary</Text>
+    <Text variant="caption-normal">text-cn-success-secondary</Text>
+  </div>
+  <div className="bg-cn-success-outline text-cn-success-outline border border-cn-success-outline rounded-3 p-cn-md text-center">
+    <Text variant="body-strong" className="mb-cn-xs">Outline</Text>
+    <Text variant="caption-normal">bg-cn-success-outline</Text>
+    <Text variant="caption-normal">text-cn-success-outline</Text>
+    <Text variant="caption-normal">border-cn-success-outline</Text>
+  </div>
+</Layout.Grid>`}
+/>
+
+#### Danger Colors
+
+<DocsPage.ComponentExample
+  client:only
+  code={`<Layout.Grid columns="1fr 1fr 1fr" gap="md" className="p-cn-md">
+  <div className="bg-cn-danger-primary text-cn-danger-primary rounded-3 p-cn-md text-center">
+    <Text variant="body-strong" className="mb-cn-xs">Primary</Text>
+    <Text variant="caption-normal">bg-cn-danger-primary</Text>
+    <Text variant="caption-normal">text-cn-danger-primary</Text>
+  </div>
+  <div className="bg-cn-danger-secondary text-cn-danger-secondary rounded-3 p-cn-md text-center">
+    <Text variant="body-strong" className="mb-cn-xs">Secondary</Text>
+    <Text variant="caption-normal">bg-cn-danger-secondary</Text>
+    <Text variant="caption-normal">text-cn-danger-secondary</Text>
+  </div>
+  <div className="bg-cn-danger-outline text-cn-danger-outline border border-cn-danger-outline rounded-3 p-cn-md text-center">
+    <Text variant="body-strong" className="mb-cn-xs">Outline</Text>
+    <Text variant="caption-normal">bg-cn-danger-outline</Text>
+    <Text variant="caption-normal">text-cn-danger-outline</Text>
+    <Text variant="caption-normal">border-cn-danger-outline</Text>
+  </div>
+</Layout.Grid>`}
+/>
+
+#### Warning Colors
+
+<DocsPage.ComponentExample
+  client:only
+  code={`<Layout.Grid columns="1fr 1fr 1fr" gap="md" className="p-cn-md">
+  <div className="bg-cn-warning-primary text-cn-warning-primary rounded-3 p-cn-md text-center">
+    <Text variant="body-strong" className="mb-cn-xs">Primary</Text>
+    <Text variant="caption-normal">bg-cn-warning-primary</Text>
+    <Text variant="caption-normal">text-cn-warning-primary</Text>
+  </div>
+  <div className="bg-cn-warning-secondary text-cn-warning-secondary rounded-3 p-cn-md text-center">
+    <Text variant="body-strong" className="mb-cn-xs">Secondary</Text>
+    <Text variant="caption-normal">bg-cn-warning-secondary</Text>
+    <Text variant="caption-normal">text-cn-warning-secondary</Text>
+  </div>
+  <div className="bg-cn-warning-outline text-cn-warning-outline border border-cn-warning-outline rounded-3 p-cn-md text-center">
+    <Text variant="body-strong" className="mb-cn-xs">Outline</Text>
+    <Text variant="caption-normal">bg-cn-warning-outline</Text>
+    <Text variant="caption-normal">text-cn-warning-outline</Text>
+    <Text variant="caption-normal">border-cn-warning-outline</Text>
+  </div>
+</Layout.Grid>`}
+/>
+
+#### Gray Colors
+
+<DocsPage.ComponentExample
+  client:only
+  code={`<Layout.Grid columns="1fr 1fr 1fr" gap="md" className="p-cn-md">
+  <div className="bg-cn-gray-primary text-cn-gray-primary rounded-3 p-cn-md text-center">
+    <Text variant="body-strong" className="mb-cn-xs">Primary</Text>
+    <Text variant="caption-normal">bg-cn-gray-primary</Text>
+    <Text variant="caption-normal">text-cn-gray-primary</Text>
+  </div>
+  <div className="bg-cn-gray-secondary text-cn-gray-secondary rounded-3 p-cn-md text-center">
+    <Text variant="body-strong" className="mb-cn-xs">Secondary</Text>
+    <Text variant="caption-normal">bg-cn-gray-secondary</Text>
+    <Text variant="caption-normal">text-cn-gray-secondary</Text>
+  </div>
+  <div className="bg-cn-gray-outline text-cn-gray-outline border border-cn-gray-outline rounded-3 p-cn-md text-center">
+    <Text variant="body-strong" className="mb-cn-xs">Outline</Text>
+    <Text variant="caption-normal">bg-cn-gray-outline</Text>
+    <Text variant="caption-normal">text-cn-gray-outline</Text>
+    <Text variant="caption-normal">border-cn-gray-outline</Text>
+  </div>
+</Layout.Grid>`}
+/>
+
+### Extended Color Palette
+
+The extended palette provides additional semantic colors for categorization, labeling, and visual distinction. Each color has primary, secondary, and outline variants.
+
+**Available Colors:**
+
+| Color | Class Prefix | Variants |
+|-------|-------------|----------|
+| Blue | `bg-cn-blue-` | primary, secondary, outline |
+| Purple | `bg-cn-purple-` | primary, secondary, outline |
+| Brown | `bg-cn-brown-` | primary, secondary, outline |
+| Cyan | `bg-cn-cyan-` | primary, secondary, outline |
+| Indigo | `bg-cn-indigo-` | primary, secondary, outline |
+| Lime | `bg-cn-lime-` | primary, secondary, outline |
+| Mint | `bg-cn-mint-` | primary, secondary, outline |
+| Orange | `bg-cn-orange-` | primary, secondary, outline |
+| Pink | `bg-cn-pink-` | primary, secondary, outline |
+| Violet | `bg-cn-violet-` | primary, secondary, outline |
+
+<DocsPage.ComponentExample
+  client:only
+  code={`<Layout.Grid columns="1fr 1fr 1fr 1fr 1fr" gap="sm" className="p-cn-md">
+  <div className="bg-cn-blue-secondary text-cn-blue-secondary rounded-2 p-cn-sm text-center">
+    <Text variant="caption-normal">Blue</Text>
+  </div>
+  <div className="bg-cn-purple-secondary text-cn-purple-secondary rounded-2 p-cn-sm text-center">
+    <Text variant="caption-normal">Purple</Text>
+  </div>
+  <div className="bg-cn-brown-secondary text-cn-brown-secondary rounded-2 p-cn-sm text-center">
+    <Text variant="caption-normal">Brown</Text>
+  </div>
+  <div className="bg-cn-cyan-secondary text-cn-cyan-secondary rounded-2 p-cn-sm text-center">
+    <Text variant="caption-normal">Cyan</Text>
+  </div>
+  <div className="bg-cn-indigo-secondary text-cn-indigo-secondary rounded-2 p-cn-sm text-center">
+    <Text variant="caption-normal">Indigo</Text>
+  </div>
+  <div className="bg-cn-lime-secondary text-cn-lime-secondary rounded-2 p-cn-sm text-center">
+    <Text variant="caption-normal">Lime</Text>
+  </div>
+  <div className="bg-cn-mint-secondary text-cn-mint-secondary rounded-2 p-cn-sm text-center">
+    <Text variant="caption-normal">Mint</Text>
+  </div>
+  <div className="bg-cn-orange-secondary text-cn-orange-secondary rounded-2 p-cn-sm text-center">
+    <Text variant="caption-normal">Orange</Text>
+  </div>
+  <div className="bg-cn-pink-secondary text-cn-pink-secondary rounded-2 p-cn-sm text-center">
+    <Text variant="caption-normal">Pink</Text>
+  </div>
+  <div className="bg-cn-violet-secondary text-cn-violet-secondary rounded-2 p-cn-sm text-center">
+    <Text variant="caption-normal">Violet</Text>
+  </div>
+</Layout.Grid>`}
+/>
+
+### Brand Colors
+
+Brand colors are used for primary actions, links, and brand elements.
+
+<DocsPage.ComponentExample
+  client:only
+  code={`<Layout.Grid columns="1fr 1fr 1fr" gap="md" className="p-cn-md">
+  <div className="bg-cn-brand-primary rounded-3 p-cn-md text-center">
+    <Text variant="body-strong" className="mb-cn-xs text-white">Primary</Text>
+    <Text variant="caption-normal" className="text-white">bg-cn-brand-primary</Text>
+  </div>
+  <div className="bg-cn-brand-secondary rounded-3 p-cn-md text-center">
+    <Text variant="body-strong" className="mb-cn-xs">Secondary</Text>
+    <Text variant="caption-normal">bg-cn-brand-secondary</Text>
+  </div>
+  <div className="bg-cn-brand-outline border border-cn-brand rounded-3 p-cn-md text-center">
+    <Text variant="body-strong" className="mb-cn-xs">Outline</Text>
+    <Text variant="caption-normal">bg-cn-brand-outline</Text>
+  </div>
+</Layout.Grid>`}
+/>
+
+**Hover and Selected States:**
+
+```tsx
+// Brand button with hover state
+<button className="bg-cn-brand-primary hover:bg-cn-brand-primary-hover">
+  Click me
+</button>
+
+// Brand button with selected state
+<button className="bg-cn-brand-primary-selected">
+  Selected
+</button>
+```
+
+### Special Purpose Backgrounds
+
+<DocsPage.ComponentExample
+  client:only
+  code={`<Layout.Grid columns="1fr 1fr" gap="md" className="p-cn-md">
+  <div className="bg-cn-hover border border-cn-3 rounded-3 p-cn-md text-center">
+    <Text variant="caption-normal" className="mb-cn-xs">bg-cn-hover</Text>
+    <Text variant="caption-light">Interactive hover state</Text>
+  </div>
+  <div className="bg-cn-selected border border-cn-3 rounded-3 p-cn-md text-center">
+    <Text variant="caption-normal" className="mb-cn-xs">bg-cn-selected</Text>
+    <Text variant="caption-light">Selected state</Text>
+  </div>
+  <div className="bg-cn-backdrop/50 border border-cn-3 rounded-3 p-cn-md text-center">
+    <Text variant="caption-normal" className="mb-cn-xs">bg-cn-backdrop</Text>
+    <Text variant="caption-light">Dialog/modal backdrop</Text>
+  </div>
+  <div className="bg-cn-separator border border-cn-3 rounded-3 p-cn-md text-center">
+    <Text variant="caption-normal" className="mb-cn-xs">bg-cn-separator</Text>
+    <Text variant="caption-light">Separator background</Text>
+  </div>
+</Layout.Grid>`}
+/>
+
+---

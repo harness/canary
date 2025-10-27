@@ -4,7 +4,7 @@ description: Comprehensive reference for Tailwind utility classes in the Harness
 ---
 
 import { DocsPage } from "../../../components/docs-page";
-import { Text, Layout } from "@harnessio/ui/components";
+import { Text, Layout, IconV2 } from "@harnessio/ui/components";
 import { Aside } from "@astrojs/starlight/components";
 
 The Harness design system extends Tailwind CSS with custom utility classes prefixed with `cn-`. This page documents all available utility classes for colors, spacing, borders, shadows, and more.
@@ -358,23 +358,23 @@ Special text colors designed for icons to ensure proper contrast and semantic me
   client:only
   code={`<Layout.Flex gap="md" className="p-cn-md">
   <div className="flex flex-col items-center gap-cn-xs">
-    <div className="text-cn-icon-danger text-4xl">⚠</div>
+    <IconV2 name="alert-triangle" className="text-cn-icon-danger" size="xl" />
     <Text variant="caption-normal">text-cn-icon-danger</Text>
   </div>
   <div className="flex flex-col items-center gap-cn-xs">
-    <div className="text-cn-icon-warning text-4xl">⚡</div>
+    <IconV2 name="alert-octagon" className="text-cn-icon-warning" size="xl" />
     <Text variant="caption-normal">text-cn-icon-warning</Text>
   </div>
   <div className="flex flex-col items-center gap-cn-xs">
-    <div className="text-cn-icon-success text-4xl">✓</div>
+    <IconV2 name="check-circle" className="text-cn-icon-success" size="xl" />
     <Text variant="caption-normal">text-cn-icon-success</Text>
   </div>
   <div className="flex flex-col items-center gap-cn-xs">
-    <div className="text-cn-icon-info text-4xl">ℹ</div>
+    <IconV2 name="info" className="text-cn-icon-info" size="xl" />
     <Text variant="caption-normal">text-cn-icon-info</Text>
   </div>
   <div className="flex flex-col items-center gap-cn-xs">
-    <div className="text-cn-icon-merged text-4xl">⚫</div>
+    <IconV2 name="git-merge" className="text-cn-icon-merged" size="xl" />
     <Text variant="caption-normal">text-cn-icon-merged</Text>
   </div>
 </Layout.Flex>`}
@@ -399,7 +399,7 @@ Special text colors designed for icons to ensure proper contrast and semantic me
   code={`<Layout.Flex gap="md" className="p-cn-md">
   <div>
     <Text variant="caption-light" className="mb-cn-xs">text-cn-logo-icon:</Text>
-    <div className="text-cn-logo-icon text-4xl">🎨</div>
+    <IconV2 name="harness" className="text-cn-logo-icon" size="xl" />
   </div>
   <div>
     <Text variant="caption-light" className="mb-cn-xs">text-cn-logo-text:</Text>

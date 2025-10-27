@@ -1,4 +1,4 @@
-import { useEffect, useRef, useState } from 'react'
+import { useEffect, useMemo, useRef, useState } from 'react'
 import { useParams } from 'react-router-dom'
 
 import {
@@ -193,6 +193,14 @@ export default function ReposListPage() {
     }
   }
 
+  const queryFilterValues = useMemo(
+    () => ({
+      favorite,
+      recursive
+    }),
+    [favorite, recursive]
+  )
+
   return (
     <SandboxRepoListPage
       scope={scope}
@@ -200,7 +208,7 @@ export default function ReposListPage() {
       isLoading={isFetching}
       isError={isError}
       errorMessage={error?.message}
-      queryFilterValues={{ favorite: favorite, recursive: recursive }}
+      queryFilterValues={queryFilterValues}
       searchQuery={query}
       setSearchQuery={setQuery}
       setQueryPage={setQueryPage}

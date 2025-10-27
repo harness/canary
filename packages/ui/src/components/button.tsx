@@ -6,6 +6,7 @@ import { cn } from '@utils/cn'
 import { filterChildrenByDisplayNames, isPromise } from '@utils/utils'
 import { cva, type VariantProps } from 'class-variance-authority'
 import isEmpty from 'lodash-es/isEmpty'
+import omit from 'lodash-es/omit'
 
 import { IconV2, IconV2DisplayName } from './icon-v2'
 
@@ -145,7 +146,7 @@ const Button = forwardRef<HTMLButtonElement, ButtonProps>(
         disabled={disabled || isLoading}
         type={type}
         onClick={handleClick}
-        {...props}
+        {...omit(props, ['tooltipProps', 'ignoreIconOnlyTooltip'])}
       >
         {children}
       </Comp>

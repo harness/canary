@@ -37,7 +37,6 @@ const SandboxRepoListPage: FC<RepoListPageProps> = ({
   const { navigate } = useRouterContext()
   const [showScope, setShowScope] = useState(false)
   const filterRef = useRef<FilterGroupRef>(null)
-  const { options: scopeFilterOptions, defaultValue: scopeFilterDefaultValue } = getFilterScopeOptions({ t, scope })
 
   const handleSearch = useCallback(
     (query: string) => {
@@ -51,8 +50,6 @@ const SandboxRepoListPage: FC<RepoListPageProps> = ({
   // null means no saved state exists
   const { repositories, totalItems, page, setPage, pageSize, setPageSize } = useRepoStore()
 
-  const { projectIdentifier, orgIdentifier, accountId } = scope
-
   const FilterSortOptions = [
     { label: 'Name (A->Z, 0->9)', value: RepoSortMethod.Identifier_Asc },
     { label: 'Name (Z->A, 9->0)', value: RepoSortMethod.Identifier_Desc },
@@ -61,9 +58,74 @@ const SandboxRepoListPage: FC<RepoListPageProps> = ({
     { label: 'Last push', value: RepoSortMethod.LastPush }
   ]
 
+  const filterOptions = useMemo(() => {
+    const { options: scopeFilterOptions, defaultValue: scopeFilterDefaultValue } = getFilterScopeOptions({ t, scope })
+    const { projectIdentifier, orgIdentifier, accountId } = scope
+
+    const buildFilterOptions = (): FilterOptionConfig<keyof RepoListFilters>[] => {
+      const favoriteFilterDefaultValue = false
+
+      const favoriteFilterOption: FilterOptionConfig<keyof RepoListFilters> = {
+        defaultValue: favoriteFilterDefaultValue,
+        isDefaultValue: queryFilterValues?.favorite === String(favoriteFilterDefaultValue),
+        label: t('views:connectors.filterOptions.statusOption.pinned', 'Pinned'),
+        value: 'favorite',
+        type: FilterFieldTypes.Checkbox,
+        sticky: true,
+        filterFieldConfig: {
+          label: <IconV2 name="pin-solid" size="md" className="cursor-pointer" />
+        },
+        parser: booleanParser
+      }
+
+      if (!projectIdentifier) {
+        const parse = (value: string): ComboBoxOptions => {
+          let selectedValue: string
+          if (accountId && orgIdentifier) {
+            selectedValue = value === 'true' ? ExtendedScope.OrgProg : ExtendedScope.Organization
+          } else if (accountId) {
+            selectedValue = value === 'true' ? ExtendedScope.All : ExtendedScope.Account
+          }
+
+          return scopeFilterOptions.find(scope => scope.value === selectedValue) || { label: '', value }
+        }
+
+        const recursiveFilterOption: FilterOptionConfig<keyof RepoListFilters> = {
+          defaultValue: scopeFilterDefaultValue,
+          isDefaultValue: parse(String(queryFilterValues?.recursive)).value === String(scopeFilterDefaultValue.value),
+          label: t('views:scope.label', 'Scope'),
+          value: 'recursive',
+          type: FilterFieldTypes.ComboBox,
+          filterFieldConfig: {
+            options: scopeFilterOptions,
+            placeholder: 'Select scope',
+            allowSearch: false
+          },
+          parser: {
+            parse: parse,
+            serialize: (value: ComboBoxOptions): string => {
+              const selected = value?.value
+
+              if (accountId && orgIdentifier && projectIdentifier) return ''
+              if (accountId && orgIdentifier) return String(selected === ExtendedScope.OrgProg)
+              if (accountId) return String(selected === ExtendedScope.All)
+
+              return ''
+            }
+          }
+        }
+
+        return [favoriteFilterOption, recursiveFilterOption]
+      }
+      return [favoriteFilterOption]
+    }
+
+    return buildFilterOptions()
+  }, [queryFilterValues, t, scope])
+
   const isDirtyList = useMemo(() => {
-    return page !== 1 || !!searchQuery
-  }, [page, searchQuery])
+    return page !== 1 || !!searchQuery || filterOptions.some(filter => !filter.isDefaultValue)
+  }, [page, searchQuery, filterOptions])
 
   if (isError) {
     return (
@@ -95,66 +157,6 @@ const SandboxRepoListPage: FC<RepoListPageProps> = ({
     )
   }
 
-  const buildFilterOptions = (): FilterOptionConfig<keyof RepoListFilters>[] => {
-    const favoriteFilterDefaultValue = false
-
-    const favoriteFilterOption: FilterOptionConfig<keyof RepoListFilters> = {
-      defaultValue: favoriteFilterDefaultValue,
-      isDefaultValue: queryFilterValues?.favorite === String(favoriteFilterDefaultValue),
-      label: t('views:connectors.filterOptions.statusOption.pinned', 'Pinned'),
-      value: 'favorite',
-      type: FilterFieldTypes.Checkbox,
-      sticky: true,
-      filterFieldConfig: {
-        label: <IconV2 name="pin-solid" size="md" className="cursor-pointer" />
-      },
-      parser: booleanParser
-    }
-
-    if (!projectIdentifier) {
-      const parse = (value: string): ComboBoxOptions => {
-        let selectedValue: string
-        if (accountId && orgIdentifier) {
-          selectedValue = value === 'true' ? ExtendedScope.OrgProg : ExtendedScope.Organization
-        } else if (accountId) {
-          selectedValue = value === 'true' ? ExtendedScope.All : ExtendedScope.Account
-        }
-
-        return scopeFilterOptions.find(scope => scope.value === selectedValue) || { label: '', value }
-      }
-
-      const recursiveFilterOption: FilterOptionConfig<keyof RepoListFilters> = {
-        defaultValue: scopeFilterDefaultValue,
-        isDefaultValue: parse(String(queryFilterValues?.recursive)).value === String(scopeFilterDefaultValue.value),
-        label: t('views:scope.label', 'Scope'),
-        value: 'recursive',
-        type: FilterFieldTypes.ComboBox,
-        filterFieldConfig: {
-          options: scopeFilterOptions,
-          placeholder: 'Select scope',
-          allowSearch: false
-        },
-        parser: {
-          parse: parse,
-          serialize: (value: ComboBoxOptions): string => {
-            const selected = value?.value
-
-            if (accountId && orgIdentifier && projectIdentifier) return ''
-            if (accountId && orgIdentifier) return String(selected === ExtendedScope.OrgProg)
-            if (accountId) return String(selected === ExtendedScope.All)
-
-            return ''
-          }
-        }
-      }
-
-      return [favoriteFilterOption, recursiveFilterOption]
-    }
-    return [favoriteFilterOption]
-  }
-
-  let filterOptions = buildFilterOptions()
-
   const handleResetFiltersQueryAndPages = () => {
     filterRef.current?.resetSearch?.()
     filterRef.current?.resetFilters?.()
@@ -165,8 +167,6 @@ const SandboxRepoListPage: FC<RepoListPageProps> = ({
   const onFilterValueChange = (filterValues: RepoListFilters) => {
     onFilterChange(filterValues)
 
-    filterOptions = buildFilterOptions()
-
     /**
      * Only show scope if the Scope filter is set to "All" or "Organizations and projects" only.
      */
@@ -176,64 +176,66 @@ const SandboxRepoListPage: FC<RepoListPageProps> = ({
   return (
     <SandboxLayout.Main>
       <SandboxLayout.Content>
-        <>
-          <Text variant="heading-section" as="h1">
-            {t('views:repos.repositories', 'Repositories')}
-          </Text>
-          <Spacer size={6} />
-          <FilterGroup<RepoListFilters, keyof RepoListFilters>
-            simpleSortConfig={{
-              sortOptions: FilterSortOptions,
-              defaultSort: RepoSortMethod.LastPush,
-              onSortChange
-            }}
-            onFilterValueChange={onFilterValueChange}
-            searchValue={searchQuery || ''}
-            ref={filterRef}
-            handleInputChange={handleSearch}
-            headerAction={
-              <RbacSplitButton<string>
-                dropdownContentClassName="mt-0 min-w-[208px]"
-                handleButtonClick={() => navigate(toCreateRepo?.() || '')}
-                handleOptionChange={option => {
-                  if (option === 'new') {
-                    navigate(toCreateRepo?.() || '')
-                  }
-                  if (option === 'import') {
-                    navigate(toImportRepo?.() || '')
-                  }
-                  if (option === 'import-multiple') {
-                    navigate(toImportMultipleRepos?.() || '')
-                  }
-                }}
-                options={[
-                  {
-                    value: 'new',
-                    label: t('views:repos.createRepository', 'Create Repository')
-                  },
-                  {
-                    value: 'import',
-                    label: t('views:repos.importRepository', 'Import Repository')
-                  },
-                  {
-                    value: 'import-multiple',
-                    label: t('views:repos.importRepositories', 'Import Repositories')
-                  }
-                ]}
-                rbac={{
-                  resource: {
-                    resourceType: ResourceType.CODE_REPOSITORY
-                  },
-                  permissions: [PermissionIdentifier.CODE_REPO_CREATE]
-                }}
-              >
-                <IconV2 name="plus" />
-                {t('views:repos.createRepository', 'Create Repository')}
-              </RbacSplitButton>
-            }
-            filterOptions={filterOptions}
-          />
-        </>
+        <Text variant="heading-section" as="h1">
+          {t('views:repos.repositories', 'Repositories')}
+        </Text>
+        {(!!repositories?.length || isDirtyList) && (
+          <>
+            <Spacer size={6} />
+            <FilterGroup<RepoListFilters, keyof RepoListFilters>
+              simpleSortConfig={{
+                sortOptions: FilterSortOptions,
+                defaultSort: RepoSortMethod.LastPush,
+                onSortChange
+              }}
+              onFilterValueChange={onFilterValueChange}
+              searchValue={searchQuery || ''}
+              ref={filterRef}
+              handleInputChange={handleSearch}
+              headerAction={
+                <RbacSplitButton<string>
+                  dropdownContentClassName="mt-0 min-w-[208px]"
+                  handleButtonClick={() => navigate(toCreateRepo?.() || '')}
+                  handleOptionChange={option => {
+                    if (option === 'new') {
+                      navigate(toCreateRepo?.() || '')
+                    }
+                    if (option === 'import') {
+                      navigate(toImportRepo?.() || '')
+                    }
+                    if (option === 'import-multiple') {
+                      navigate(toImportMultipleRepos?.() || '')
+                    }
+                  }}
+                  options={[
+                    {
+                      value: 'new',
+                      label: t('views:repos.createRepository', 'Create Repository')
+                    },
+                    {
+                      value: 'import',
+                      label: t('views:repos.importRepository', 'Import Repository')
+                    },
+                    {
+                      value: 'import-multiple',
+                      label: t('views:repos.importRepositories', 'Import Repositories')
+                    }
+                  ]}
+                  rbac={{
+                    resource: {
+                      resourceType: ResourceType.CODE_REPOSITORY
+                    },
+                    permissions: [PermissionIdentifier.CODE_REPO_CREATE]
+                  }}
+                >
+                  <IconV2 name="plus" />
+                  {t('views:repos.createRepository', 'Create Repository')}
+                </RbacSplitButton>
+              }
+              filterOptions={filterOptions}
+            />
+          </>
+        )}
         <Spacer size={4.5} />
         <RepoList
           repos={repositories || []}
@@ -247,7 +249,7 @@ const SandboxRepoListPage: FC<RepoListPageProps> = ({
           showScope={showScope}
           {...routingProps}
         />
-        {!!repositories?.length && (
+        {!!repositories?.length && !isLoading && (
           <Pagination
             totalItems={totalItems}
             pageSize={pageSize}

@@ -112,7 +112,6 @@ const Tag = forwardRef<HTMLDivElement, TagProps>(
     return (
       <div
         ref={ref}
-        tabIndex={-1}
         className={cn(
           tagVariants({ variant, size, theme, rounded }),
           {

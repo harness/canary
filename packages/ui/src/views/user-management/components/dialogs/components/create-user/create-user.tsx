@@ -1,7 +1,7 @@
 import { useEffect } from 'react'
 import { SubmitHandler, useForm } from 'react-hook-form'
 
-import { Button, ButtonLayout, Dialog, Fieldset, FormInput, FormWrapper } from '@/components'
+import { Button, ButtonLayout, Dialog, Fieldset, FormInput, FormWrapper, Text } from '@/components'
 import { useTranslation } from '@/context'
 import { useStates } from '@/views/user-management/providers/state-provider'
 import { zodResolver } from '@hookform/resolvers/zod'
@@ -76,7 +76,11 @@ export function CreateUserDialog({ handleCreateUser, open, onClose }: CreateUser
               />
             </Fieldset>
 
-            {createUserError && <span className="text-2 text-cn-danger">{createUserError}</span>}
+            {createUserError && (
+              <Text as="span" color="danger">
+                {createUserError}
+              </Text>
+            )}
           </FormWrapper>
         </Dialog.Body>
 

@@ -117,7 +117,7 @@ const Example: FC<ExampleProps> = ({
                     className="absolute right-3 top-3"
                     name={currentCode}
                   />
-                  <summary className="flex cursor-pointer select-none items-center gap-cn-3xs text-sm">
+                  <summary className="flex cursor-pointer select-none items-center gap-cn-3xs text-cn-size-2">
                     <IconV2
                       name="nav-arrow-right"
                       className="disclosure-icon"
@@ -126,7 +126,7 @@ const Example: FC<ExampleProps> = ({
                   </summary>
                   <LiveEditor
                     theme={isLightTheme ? themes.vsLight : themes.vsDark}
-                    className="font-body-code line-numbers p-cn-3xs text-sm leading-6"
+                    className="font-body-code line-numbers p-cn-3xs text-cn-size-2 leading-6"
                     onChange={setCurrentCode}
                   />
                 </details>

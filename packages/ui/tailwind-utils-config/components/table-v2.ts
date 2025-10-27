@@ -1,6 +1,6 @@
 export default {
   '.cn-table-v2': {
-    '@apply w-full text-sm': '',
+    '@apply w-full': '',
 
     // Table container
     '&-container': {
@@ -149,7 +149,7 @@ export default {
 
     // Caption
     '&-caption': {
-      '@apply text-cn-3 mt-cn-md text-sm': ''
+      '@apply mt-cn-md': ''
     }
   }
 }

@@ -1,6 +1,6 @@
 import { FC, useCallback } from 'react'
 
-import { IconV2, MoreActionsTooltip, Skeleton, Table, TimeAgoCard } from '@/components'
+import { IconV2, MoreActionsTooltip, Skeleton, Table, Text, TimeAgoCard } from '@/components'
 import { useCustomDialogTrigger, useTranslation } from '@/context'
 
 import { TokensList } from '../types'
@@ -83,12 +83,12 @@ export const ProfileTokensList: FC<ProfileTokensListProps> = ({ tokens, isLoadin
           ) : (
             <Table.Row className="hover:bg-transparent">
               <Table.Cell className="content-center !p-cn-md" colSpan={5}>
-                <p className="text-center text-2 text-cn-2">
+                <Text align="center">
                   {t(
                     'views:profileSettings.noTokenDescription',
                     'There are no personal access tokens associated with this account.'
                   )}
-                </p>
+                </Text>
               </Table.Cell>
             </Table.Row>
           )}

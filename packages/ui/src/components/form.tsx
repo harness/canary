@@ -14,6 +14,8 @@ import {
 import { Slot } from '@radix-ui/react-slot'
 import { cn } from '@utils/cn'
 
+import { Text } from './text'
+
 interface ZodFormProps<T extends FieldValues> {
   form: UseFormReturn<T>
   onSubmit: SubmitHandler<T>
@@ -114,7 +116,7 @@ const FormDescription = React.forwardRef<HTMLParagraphElement, React.HTMLAttribu
   ({ className, ...props }, ref) => {
     const { formDescriptionId } = useFormField()
 
-    return <p ref={ref} id={formDescriptionId} className={cn('text-cn-3 text-[0.8rem]', className)} {...props} />
+    return <Text ref={ref} id={formDescriptionId} className={className} {...props} color="foreground-3" />
   }
 )
 FormDescription.displayName = 'FormDescription'
@@ -129,9 +131,9 @@ const FormMessage = React.forwardRef<HTMLParagraphElement, React.HTMLAttributes<
     }
 
     return (
-      <p ref={ref} id={formMessageId} className={cn('text-cn-danger text-[0.8rem] font-medium', className)} {...props}>
+      <Text ref={ref} id={formMessageId} className={className} {...props} color="danger" variant="body-strong">
         {body}
-      </p>
+      </Text>
     )
   }
 )

@@ -1,6 +1,6 @@
 import { FC, useCallback } from 'react'
 
-import { IconV2, MoreActionsTooltip, Skeleton, Table, TimeAgoCard } from '@/components'
+import { IconV2, MoreActionsTooltip, Skeleton, Table, Text, TimeAgoCard } from '@/components'
 import { useCustomDialogTrigger, useTranslation } from '@/context'
 
 import { KeysList } from '../types'
@@ -48,8 +48,12 @@ export const ProfileKeysList: FC<ProfileKeysListProps> = ({ publicKeys, isLoadin
                   <div className="inline-flex items-center gap-x-cn-sm">
                     <IconV2 name="ssh-key" size="lg" className="rounded-3 bg-cn-gray-secondary text-cn-2" />
                     <div className="flex flex-col">
-                      <span className="block w-[200px] truncate font-medium text-cn-1">{key.identifier}</span>
-                      <span className="w-[200px] truncate text-1 text-cn-3">{key.fingerprint}</span>
+                      <Text variant="body-strong" color="foreground-1" className="w-[200px]" truncate>
+                        {key.identifier}
+                      </Text>
+                      <Text as="span" variant="caption-normal" color="foreground-3" className="w-[200px]" truncate>
+                        {key.fingerprint}
+                      </Text>
                     </div>
                   </div>
                 </Table.Cell>
@@ -80,12 +84,12 @@ export const ProfileKeysList: FC<ProfileKeysListProps> = ({ publicKeys, isLoadin
           ) : (
             <Table.Row className="hover:bg-transparent">
               <Table.Cell className="content-center !p-cn-md" colSpan={4}>
-                <p className="text-center text-2 text-cn-2">
+                <Text align="center">
                   {t(
                     'views:profileSettings.noDataKeysDescription',
                     'There are no SSH keys associated with this account.'
                   )}
-                </p>
+                </Text>
               </Table.Cell>
             </Table.Row>
           )}

@@ -3,6 +3,7 @@ import { useEffect, useRef, useState } from 'react'
 import { CounterBadge } from '@components/counter-badge'
 import { DropdownMenu } from '@components/dropdown-menu'
 import { SearchInput } from '@components/inputs'
+import { Text } from '@components/text'
 import { ColorsEnum, ILabelType, LabelTag, LabelValueType } from '@views/labels'
 
 export type LabelsValue = Record<
@@ -166,7 +167,11 @@ export function LabelsFilter({
           )
         )}
 
-      {description && <div className="text-cn-3 mx-cn-xs my-cn-md text-sm">{description}</div>}
+      {description && (
+        <Text color="foreground-3" className="mx-cn-xs my-cn-md">
+          {description}
+        </Text>
+      )}
     </>
   )
 }

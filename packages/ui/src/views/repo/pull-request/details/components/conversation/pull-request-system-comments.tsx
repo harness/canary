@@ -462,7 +462,11 @@ const PullRequestSystemComments: FC<SystemCommentProps> = ({
 
         return {
           header: {
-            description: <span className="text-cn-3 text-sm">{String(type)}</span>
+            description: (
+              <Text as="span" color="foreground-3">
+                {String(type)}
+              </Text>
+            )
           }
         }
     }

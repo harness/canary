@@ -1,4 +1,4 @@
-import { IconV2, NoData, Skeleton, StackedList, TimeAgoCard } from '@/components'
+import { IconV2, NoData, Skeleton, StackedList, Text, TimeAgoCard } from '@/components'
 import { useTranslation } from '@/context'
 import { timeDistance } from '@/utils'
 import { PipelineExecutionStatus } from '@/views'
@@ -10,7 +10,9 @@ const Title = ({ status, title }: { status?: PipelineExecutionStatus; title: str
   return (
     <div className="flex items-center gap-cn-2xs">
       {status && <ExecutionStatusIcon status={status} />}
-      <span className="truncate text-3 font-medium leading-snug">{title}</span>
+      <Text as="span" variant="body-strong" color="foreground-3" truncate>
+        {title}
+      </Text>
     </div>
   )
 }
@@ -25,7 +27,7 @@ const Description = ({
   version?: string
 }) => {
   return (
-    <div className="inline-flex max-w-full items-center gap-cn-xs overflow-hidden pl-cn-xl text-2 leading-tight">
+    <div className="inline-flex max-w-full items-center gap-cn-xs overflow-hidden pl-cn-xl text-cn-size-2 leading-tight">
       {description && <span className="w-full overflow-hidden break-words text-cn-3">{description}</span>}
       {version && (
         <div className="flex items-center gap-cn-3xs">
@@ -34,7 +36,7 @@ const Description = ({
         </div>
       )}
       {sha && (
-        <div className="flex h-4 items-center gap-cn-3xs rounded bg-cn-gray-secondary px-cn-2xs text-1 text-cn-1">
+        <div className="flex h-4 items-center gap-cn-3xs rounded bg-cn-gray-secondary px-cn-2xs text-cn-size-1 text-cn-1">
           <IconV2 className="text-cn-3" size="2xs" name="git-commit" />
           {sha?.slice(0, 7)}
         </div>

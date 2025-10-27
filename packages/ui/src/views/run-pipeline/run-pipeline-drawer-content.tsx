@@ -1,6 +1,6 @@
 import { useRef, useState } from 'react'
 
-import { Button, ButtonLayout, Drawer, Skeleton } from '@/components'
+import { Button, ButtonLayout, Drawer, Skeleton, Text } from '@/components'
 import { cn } from '@/utils'
 
 import { InputFactory } from '@harnessio/forms'
@@ -99,7 +99,7 @@ export function RunPipelineDrawerContent(props: RunPipelineDrawerProps) {
             />
           </div>
         )}
-        {!!error?.message && <p className="text-cn-danger text-sm">{error.message}</p>}
+        {!!error?.message && <Text color="danger">{error.message}</Text>}
       </Drawer.Body>
 
       <Drawer.Footer>

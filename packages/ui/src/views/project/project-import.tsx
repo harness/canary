@@ -169,7 +169,11 @@ export function ImportProjectPage({ onFormSubmit, onFormCancel, isLoading, apiEr
             </ControlGroup>
           </Fieldset>
 
-          {!!apiErrorsValue && <span className="text-2 text-cn-danger">{apiErrorsValue}</span>}
+          {!!apiErrorsValue && (
+            <Text as="span" color="danger">
+              {apiErrorsValue}
+            </Text>
+          )}
           {/* SUBMIT BUTTONS */}
           <Fieldset>
             <ControlGroup>

@@ -1,5 +1,6 @@
 import { FC, useCallback, useEffect, useRef } from 'react'
 
+import { Text } from '@components/text'
 import { cn } from '@utils/cn'
 
 import { formatTimestamp } from '../../utils/TimeUtils'
@@ -45,19 +46,28 @@ const ConsoleLogs: FC<ConsoleLogsProps> = ({ logs, query }) => {
   const logText = useCallback(
     (log: string) => {
       if (!query?.length) {
-        return <span className="font-body-code ml-cn-xs flex gap-cn-3xs text-sm font-normal">{log}</span>
+        return (
+          <Text as="span" variant="body-code" className="ml-cn-xs flex gap-cn-3xs">
+            {log}
+          </Text>
+        )
       }
 
       const match = log.match(new RegExp(query, 'i'))
-      if (!match) return <span className="font-body-code ml-cn-xs flex gap-cn-3xs text-sm font-normal">{log}</span>
+      if (!match)
+        return (
+          <Text as="span" variant="body-code" className=" ml-cn-xs flex gap-cn-3xs">
+            {log}
+          </Text>
+        )
 
       const matchIndex = match.index ?? 0
       return (
-        <span className="font-body-code flex gap-cn-3xs text-sm font-normal">
+        <Text as="span" variant="body-code" className="flex gap-cn-3xs">
           {log.slice(0, matchIndex)}
           <mark>{log.slice(matchIndex, matchIndex + query.length)}</mark>
           {log.slice(matchIndex + query.length)}
-        </span>
+        </Text>
       )
     },
     [query]
@@ -74,7 +84,7 @@ const ConsoleLogs: FC<ConsoleLogsProps> = ({ logs, query }) => {
         return (
           <div
             key={index}
-            className={cn('text-2 flex w-full items-center pl-cn-lg  font-body-code leading-normal', {
+            className={cn('text-cn-size-2 flex w-full items-center pl-cn-lg  font-body-code leading-normal', {
               'bg-logs-background-6': type === LivelogLineType.WARNING,
               'bg-logs-background-7': type === LivelogLineType.ERROR,
               'pt-cn-2xs': index !== 0

@@ -35,7 +35,7 @@ export const PullRequestItemDescription: FC<PullRequestItemDescriptionProps> = (
   }
 
   return (
-    <div className="text-2 text-cn-2 inline-flex flex-wrap max-w-full items-center gap-cn-2xs pl-cn-xl">
+    <div className="text-cn-size-2 text-cn-2 inline-flex flex-wrap max-w-full items-center gap-cn-2xs pl-cn-xl">
       <Text variant="body-single-line-normal">
         {`#${number} ${state === ('open' as EnumPullReqState) ? 'opened' : state} `}
         <TimeAgoCard timestamp={timestamp} dateTimeFormatOptions={{ dateStyle: 'medium' }} /> by{' '}

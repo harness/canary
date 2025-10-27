@@ -717,3 +717,60 @@ The design system provides border radius utilities for different component types
 ```
 
 ---
+
+## Shadows & Effects
+
+### Box Shadows
+
+The design system provides elevation shadows for depth hierarchy.
+
+| Class | Usage |
+|-------|-------|
+| `shadow-cn-sm` | Subtle elevation (tooltips, dropdowns) |
+| `shadow-cn-md` | Medium elevation (cards, popovers) |
+| `shadow-cn-lg` | High elevation (modals, dialogs) |
+
+<DocsPage.ComponentExample
+  client:only
+  code={`<Layout.Grid columns="3" gap="lg" className="p-cn-lg">
+  <div className="shadow-cn-sm bg-cn-surface p-cn-md rounded-cn-md">
+    <Text variant="body-medium">shadow-cn-sm</Text>
+    <Text variant="caption-normal" className="text-cn-secondary">Subtle elevation</Text>
+  </div>
+  <div className="shadow-cn-md bg-cn-surface p-cn-md rounded-cn-md">
+    <Text variant="body-medium">shadow-cn-md</Text>
+    <Text variant="caption-normal" className="text-cn-secondary">Medium elevation</Text>
+  </div>
+  <div className="shadow-cn-lg bg-cn-surface p-cn-md rounded-cn-md">
+    <Text variant="body-medium">shadow-cn-lg</Text>
+    <Text variant="caption-normal" className="text-cn-secondary">High elevation</Text>
+  </div>
+</Layout.Grid>`}
+/>
+
+### Focus Rings
+
+Focus rings for accessibility and keyboard navigation.
+
+| Class | Usage |
+|-------|-------|
+| `ring-cn-focus` | Standard focus ring (blue) |
+| `ring-cn-danger` | Error/danger focus ring (red) |
+| `ring-cn-success` | Success focus ring (green) |
+
+<DocsPage.ComponentExample
+  client:only
+  code={`<Layout.Vertical gap="md" className="p-cn-md">
+  <button className="px-cn-md py-cn-sm rounded-cn-md bg-cn-primary focus:ring-2 focus:ring-cn-focus focus:outline-none">
+    <Text variant="body-medium">Focus ring (Tab to focus)</Text>
+  </button>
+  <button className="px-cn-md py-cn-sm rounded-cn-md bg-cn-danger focus:ring-2 focus:ring-cn-danger focus:outline-none">
+    <Text variant="body-medium">Danger focus ring</Text>
+  </button>
+  <button className="px-cn-md py-cn-sm rounded-cn-md bg-cn-success focus:ring-2 focus:ring-cn-success focus:outline-none">
+    <Text variant="body-medium">Success focus ring</Text>
+  </button>
+</Layout.Vertical>`}
+/>
+
+---

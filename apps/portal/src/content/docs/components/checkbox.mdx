@@ -20,9 +20,9 @@ import { DocsPage } from "@/components/docs-page";
     const [errorIndeterminate, setErrorIndeterminate] = React.useState<'indeterminate' | boolean>('indeterminate');
 
     return (
-      <div className="flex flex-col space-y-8">
+      <div className="flex flex-col space-y-cn-2xl">
         {/* Standard usage */}
-        <div className="space-y-2">
+        <div className="space-y-cn-xs">
           <Text variant="heading-subsection" as="h4">Standard usage</Text>
           <Checkbox
             id="checkbox-standard"
@@ -34,7 +34,7 @@ import { DocsPage } from "@/components/docs-page";
         </div>
 
         {/* Indeterminate state */}
-        <div className="space-y-2">
+        <div className="space-y-cn-xs">
           <Text variant="heading-subsection" as="h4">Indeterminate state</Text>
           <Checkbox
             id="checkbox-indeterminate"
@@ -46,7 +46,7 @@ import { DocsPage } from "@/components/docs-page";
         </div>
 
         {/* Optional */}
-        <div className="space-y-2">
+        <div className="space-y-cn-xs">
           <Text variant="heading-subsection" as="h4">Optional</Text>
           <Checkbox
             id="checkbox-optional"
@@ -59,7 +59,7 @@ import { DocsPage } from "@/components/docs-page";
         </div>
 
         {/* Disabled */}
-        <div className="space-y-2">
+        <div className="space-y-cn-xs">
           <Text variant="heading-subsection" as="h4">Disabled</Text>
           <Checkbox
             id="checkbox-disabled"
@@ -72,7 +72,7 @@ import { DocsPage } from "@/components/docs-page";
         </div>
 
         {/* Without Label */}
-        <div className="space-y-2">
+        <div className="space-y-cn-xs">
           <Text variant="heading-subsection" as="h4">Without Label</Text>
           <Checkbox
             id="checkbox-no-label"
@@ -82,9 +82,9 @@ import { DocsPage } from "@/components/docs-page";
         </div>
 
         {/* Error state */}
-        <div className="space-y-2">
+        <div className="space-y-cn-xs">
           <Text variant="heading-subsection" as="h4">Error state</Text>
-          <div className="flex items-center space-x-8">
+          <div className="flex items-center space-x-cn-2xl">
             <Checkbox
               id="checkbox-error"
               checked={errorChecked}
@@ -116,7 +116,7 @@ function Example() {
   const [optionalChecked, setOptionalChecked] = React.useState(false);
 
   return (
-    <div className="flex flex-col space-y-8">
+    <div className="flex flex-col space-y-cn-2xl">
       {/* Standard usage */}
       <Checkbox
         id="checkbox-standard"

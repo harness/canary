@@ -244,7 +244,8 @@ const PullRequestChangesPage: FC<RepoPullRequestChangesPageProps> = ({
   return (
     <Layout.Flex className="flex-1" ref={containerRef}>
       {showExplorer && (
-        <Layout.Flex className="-mb-7">
+        // TODO: Replace -mb-[28px] with a proper value from the design system once available
+        <Layout.Flex className="-mb-[28px]">
           <PullRequestDiffSidebar
             sidebarWidth={sidebarWidth}
             filePaths={diffs?.map(diff => diff.filePath) || []}

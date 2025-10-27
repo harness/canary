@@ -124,7 +124,7 @@ export function OTPPage({
               {(errors.otp || serverError) && (
                 <Text
                   variant="body-single-line-normal"
-                  className="absolute top-full w-full translate-y-2"
+                  className="absolute top-full w-full translate-y-cn-xs"
                   color="danger"
                   align="center"
                   as="p"

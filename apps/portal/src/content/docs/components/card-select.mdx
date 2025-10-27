@@ -11,7 +11,7 @@ import { DocsPage } from "@/components/docs-page";
 <DocsPage.ComponentExample
   client:only
   code={`
-  <div className="flex flex-col space-y-8">
+  <div className="flex flex-col space-y-cn-2xl">
     <CardSelect.Root type="single" layout="horizontal" onValueChange={console.log}>
       <CardSelect.Item value="option-1">
         <CardSelect.Title>Option 1</CardSelect.Title>
@@ -61,8 +61,8 @@ The `CardSelect` supports two selection types:
 
 <DocsPage.ComponentExample
   client:only
-  code={`<div className="flex flex-col space-y-8">
-  <div className="flex flex-col space-y-2">
+  code={`<div className="flex flex-col space-y-cn-2xl">
+  <div className="flex flex-col space-y-cn-xs">
     <Text variant="heading-subsection" as="h4">Single Selection</Text>
     <CardSelect.Root type="single" defaultValue="single-1">
       <CardSelect.Item value="single-1" logo="gitlab">
@@ -76,7 +76,7 @@ The `CardSelect` supports two selection types:
     </CardSelect.Root>
   </div>
 
-  <div className="flex flex-col space-y-2">
+  <div className="flex flex-col space-y-cn-xs">
     <Text variant="heading-subsection" as="h4">Multiple Selection</Text>
     <CardSelect.Root type="multiple" defaultValue={["multi-1", "multi-2"]}>
       <CardSelect.Item value="multi-1" icon="git-pull-request-draft">
@@ -98,8 +98,8 @@ Cards can be arranged horizontally, vertically, or in a grid:
 
 <DocsPage.ComponentExample
   client:only
-  code={`<div className="flex flex-col space-y-8">
-    <div className="flex flex-col space-y-2">
+  code={`<div className="flex flex-col space-y-cn-2xl">
+    <div className="flex flex-col space-y-cn-xs">
       <Text variant="heading-subsection" as="h4">Vertical Layout (Default)</Text>
       <CardSelect.Root type="single" layout="vertical">
         <CardSelect.Item value="v1">
@@ -113,7 +113,7 @@ Cards can be arranged horizontally, vertically, or in a grid:
       </CardSelect.Root>
     </div>
 
-    <div className="flex flex-col space-y-2">
+    <div className="flex flex-col space-y-cn-xs">
       <Text variant="heading-subsection" as="h4">Horizontal Layout</Text>
       <CardSelect.Root type="single" layout="horizontal">
         <CardSelect.Item value="Text">
@@ -127,7 +127,7 @@ Cards can be arranged horizontally, vertically, or in a grid:
       </CardSelect.Root>
     </div>
 
-    <div className="flex flex-col space-y-2">
+    <div className="flex flex-col space-y-cn-xs">
       <Text variant="heading-subsection" as="h4">Grid Layout</Text>
       <CardSelect.Root type="single" layout="grid" cols={2} rows={2} gap="md">
         <CardSelect.Item value="grid-1">
@@ -154,8 +154,8 @@ Control the gap between cards using the `gap` prop:
 
 <DocsPage.ComponentExample
   client:only
-  code={`<div className="flex flex-col space-y-8">
-    <div className="flex flex-col space-y-2">
+  code={`<div className="flex flex-col space-y-cn-2xl">
+    <div className="flex flex-col space-y-cn-xs">
       <Text variant="heading-subsection" as="h4">XS Gap</Text>
       <CardSelect.Root type="single" gap="xs" layout="horizontal">
         <CardSelect.Item value="xs-1">
@@ -170,7 +170,7 @@ Control the gap between cards using the `gap` prop:
       </CardSelect.Root>
     </div>
 
-    <div className="flex flex-col space-y-2">
+    <div className="flex flex-col space-y-cn-xs">
       <Text variant="heading-subsection" as="h4">Small Gap</Text>
       <CardSelect.Root type="single" gap="sm" layout="horizontal">
         <CardSelect.Item value="small-1">
@@ -185,7 +185,7 @@ Control the gap between cards using the `gap` prop:
       </CardSelect.Root>
     </div>
 
-    <div className="flex flex-col space-y-2">
+    <div className="flex flex-col space-y-cn-xs">
       <Text variant="heading-subsection" as="h4">Medium Gap (Default)</Text>
       <CardSelect.Root type="single" gap="md" layout="horizontal">
         <CardSelect.Item value="medium-1">
@@ -200,7 +200,7 @@ Control the gap between cards using the `gap` prop:
       </CardSelect.Root>
     </div>
 
-    <div className="flex flex-col space-y-2">
+    <div className="flex flex-col space-y-cn-xs">
       <Text variant="heading-subsection" as="h4">Large Gap</Text>
       <CardSelect.Root type="single" gap="lg" layout="horizontal">
         <CardSelect.Item value="large-1">
@@ -224,7 +224,7 @@ Cards can display either an icon or a logo:
 
 <DocsPage.ComponentExample
   client:only
-  code={`<div className="flex flex-col space-y-4">
+  code={`<div className="flex flex-col space-y-cn-md">
     <CardSelect.Root type="single">
       <CardSelect.Item value="icon" icon="git-branch">
         <CardSelect.Title>With Icon</CardSelect.Title>
@@ -242,8 +242,8 @@ Cards can be disabled either individually or as a group:
 
 <DocsPage.ComponentExample
   client:only
-  code={`<div className="flex flex-col space-y-8">
-    <div className="flex flex-col space-y-2">
+  code={`<div className="flex flex-col space-y-cn-2xl">
+    <div className="flex flex-col space-y-cn-xs">
       <Text variant="heading-subsection" as="h4">Individual Cards Disabled</Text>
       <CardSelect.Root type="single">
         <CardSelect.Item value="enabled" icon="git-branch">
@@ -255,7 +255,7 @@ Cards can be disabled either individually or as a group:
       </CardSelect.Root>
     </div>
 
-    <div className="flex flex-col space-y-2">
+    <div className="flex flex-col space-y-cn-xs">
       <Text variant="heading-subsection" as="h4">Entire Group Disabled</Text>
       <CardSelect.Root type="single" disabled>
         <CardSelect.Item value="one" icon="git-branch">

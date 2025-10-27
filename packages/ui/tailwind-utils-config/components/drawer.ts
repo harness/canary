@@ -72,7 +72,7 @@ export default {
     },
 
     '&-close-button': {
-      '@apply absolute right-2 top-4 z-50': '',
+      '@apply absolute right-cn-xs top-cn-md z-50': '',
 
       '&-icon': {
         flexShrink: '0',

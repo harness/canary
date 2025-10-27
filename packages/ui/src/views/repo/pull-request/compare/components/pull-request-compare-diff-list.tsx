@@ -96,7 +96,8 @@ const PullRequestCompareDiffList: FC<PullRequestCompareDiffListProps> = ({
   return (
     <Layout.Flex className="flex-1" ref={containerRef}>
       {showExplorer && (
-        <Layout.Flex className="-mb-7">
+        // TODO: Replace -mb-[28px] with a proper value from the design system once available
+        <Layout.Flex className="-mb-[28px]">
           <PullRequestDiffSidebar
             sidebarWidth={sidebarWidth}
             filePaths={diffData?.map(diff => diff.filePath) || []}
@@ -121,7 +122,7 @@ const PullRequestCompareDiffList: FC<PullRequestCompareDiffListProps> = ({
           align="center"
           justify="between"
           gap="xl"
-          className="layer-high bg-cn-1 pt-cn-xl sticky top-[var(--cn-breadcrumbs-height)] pb-cn-xs"
+          className="layer-high bg-cn-1 pt-cn-xl pb-cn-xs sticky top-[var(--cn-breadcrumbs-height)]"
         >
           <Layout.Horizontal className="grow" align="center">
             {!showExplorer && (

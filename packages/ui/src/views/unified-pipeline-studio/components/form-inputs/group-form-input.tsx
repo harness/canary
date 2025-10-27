@@ -77,7 +77,7 @@ function GroupFormInputInternal(props: InputProps<AnyFormValue, GroupFormInputCo
             {allowShowWarning && groupError ? <IconV2 name="warning-triangle" className="text-cn-danger" /> : null}
           </Layout.Horizontal>
         </Accordion.Trigger>
-        <Accordion.Content className="mt-cn-md space-y-4" forceMount={forceMount}>
+        <Accordion.Content className="mt-cn-md space-y-cn-md" forceMount={forceMount}>
           <RenderInputs items={inputs} factory={factory} />
         </Accordion.Content>
       </Accordion.Item>

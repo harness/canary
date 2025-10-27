@@ -94,7 +94,7 @@ function AccordionFormInputInternal(props: AccordionFormInputProp): JSX.Element 
                 </Layout.Horizontal>
               </Accordion.Trigger>
             )}
-            <Accordion.Content className="space-y-4" forceMount={forceMount}>
+            <Accordion.Content className="space-y-cn-md" forceMount={forceMount}>
               <RenderInputs items={childInput.inputs ?? []} factory={factory} />
             </Accordion.Content>
           </Accordion.Item>

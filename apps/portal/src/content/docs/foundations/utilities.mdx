@@ -519,3 +519,141 @@ Combine border colors with Tailwind border utilities:
 ```
 
 ---
+
+## Spacing Utilities
+
+The design system provides a comprehensive spacing scale for consistent layout spacing.
+
+### Spacing Scale
+
+<DocsPage.ComponentExample
+  client:only
+  code={`<Layout.Vertical gap="sm" className="p-cn-md">
+  <div className="flex items-center gap-cn-sm">
+    <div className="w-cn-4xs h-cn-md bg-cn-primary"></div>
+    <Text variant="caption-normal">cn-4xs (4px)</Text>
+  </div>
+  <div className="flex items-center gap-cn-sm">
+    <div className="w-cn-3xs h-cn-md bg-cn-primary"></div>
+    <Text variant="caption-normal">cn-3xs (8px)</Text>
+  </div>
+  <div className="flex items-center gap-cn-sm">
+    <div className="w-cn-2xs h-cn-md bg-cn-primary"></div>
+    <Text variant="caption-normal">cn-2xs (12px)</Text>
+  </div>
+  <div className="flex items-center gap-cn-sm">
+    <div className="w-cn-xs h-cn-md bg-cn-primary"></div>
+    <Text variant="caption-normal">cn-xs (16px)</Text>
+  </div>
+  <div className="flex items-center gap-cn-sm">
+    <div className="w-cn-sm h-cn-md bg-cn-primary"></div>
+    <Text variant="caption-normal">cn-sm (20px)</Text>
+  </div>
+  <div className="flex items-center gap-cn-sm">
+    <div className="w-cn-md h-cn-md bg-cn-primary"></div>
+    <Text variant="caption-normal">cn-md (24px)</Text>
+  </div>
+  <div className="flex items-center gap-cn-sm">
+    <div className="w-cn-lg h-cn-md bg-cn-primary"></div>
+    <Text variant="caption-normal">cn-lg (32px)</Text>
+  </div>
+  <div className="flex items-center gap-cn-sm">
+    <div className="w-cn-xl h-cn-md bg-cn-primary"></div>
+    <Text variant="caption-normal">cn-xl (40px)</Text>
+  </div>
+  <div className="flex items-center gap-cn-sm">
+    <div className="w-cn-2xl h-cn-md bg-cn-primary"></div>
+    <Text variant="caption-normal">cn-2xl (48px)</Text>
+  </div>
+  <div className="flex items-center gap-cn-sm">
+    <div className="w-cn-3xl h-cn-md bg-cn-primary"></div>
+    <Text variant="caption-normal">cn-3xl (64px)</Text>
+  </div>
+  <div className="flex items-center gap-cn-sm">
+    <div className="w-cn-4xl h-cn-md bg-cn-primary"></div>
+    <Text variant="caption-normal">cn-4xl (96px)</Text>
+  </div>
+</Layout.Vertical>`}
+/>
+
+### Padding Utilities
+
+Apply padding using the spacing scale:
+
+<DocsPage.ComponentExample
+  client:only
+  code={`<Layout.Grid columns="3" gap="md" className="p-cn-md">
+  <div className="p-cn-xs bg-cn-secondary">
+    <Text variant="caption-normal">p-cn-xs</Text>
+  </div>
+  <div className="px-cn-md bg-cn-secondary">
+    <Text variant="caption-normal">px-cn-md (horizontal)</Text>
+  </div>
+  <div className="py-cn-lg bg-cn-secondary">
+    <Text variant="caption-normal">py-cn-lg (vertical)</Text>
+  </div>
+  <div className="pt-cn-xl bg-cn-secondary">
+    <Text variant="caption-normal">pt-cn-xl (top)</Text>
+  </div>
+  <div className="pr-cn-sm bg-cn-secondary">
+    <Text variant="caption-normal">pr-cn-sm (right)</Text>
+  </div>
+  <div className="pb-cn-md bg-cn-secondary">
+    <Text variant="caption-normal">pb-cn-md (bottom)</Text>
+  </div>
+</Layout.Grid>`}
+/>
+
+### Margin Utilities
+
+Apply margin using the spacing scale:
+
+<DocsPage.ComponentExample
+  client:only
+  code={`<Layout.Vertical gap="2xl" className="p-cn-md">
+  <div className="m-cn-md bg-cn-secondary p-cn-sm">
+    <Text variant="caption-normal">m-cn-md (all sides)</Text>
+  </div>
+  <div className="mx-cn-lg bg-cn-secondary p-cn-sm">
+    <Text variant="caption-normal">mx-cn-lg (horizontal)</Text>
+  </div>
+  <div className="my-cn-xl bg-cn-secondary p-cn-sm">
+    <Text variant="caption-normal">my-cn-xl (vertical)</Text>
+  </div>
+  <div className="mt-cn-2xl bg-cn-secondary p-cn-sm">
+    <Text variant="caption-normal">mt-cn-2xl (top)</Text>
+  </div>
+</Layout.Vertical>`}
+/>
+
+### Gap Utilities
+
+For flexbox and grid layouts:
+
+<DocsPage.ComponentExample
+  client:only
+  code={`<Layout.Vertical gap="lg" className="p-cn-md">
+  <div>
+    <Text variant="body-medium" className="mb-cn-xs">Flex with gap-cn-md</Text>
+    <div className="flex gap-cn-md">
+      <div className="bg-cn-primary p-cn-sm">Item 1</div>
+      <div className="bg-cn-primary p-cn-sm">Item 2</div>
+      <div className="bg-cn-primary p-cn-sm">Item 3</div>
+    </div>
+  </div>
+  <div>
+    <Text variant="body-medium" className="mb-cn-xs">Grid with gap-cn-lg</Text>
+    <div className="grid grid-cols-3 gap-cn-lg">
+      <div className="bg-cn-secondary p-cn-sm">Cell 1</div>
+      <div className="bg-cn-secondary p-cn-sm">Cell 2</div>
+      <div className="bg-cn-secondary p-cn-sm">Cell 3</div>
+    </div>
+  </div>
+</Layout.Vertical>`}
+/>
+
+<Aside type="tip">
+  For more layout utilities and patterns, see the [Layout documentation](/components/layout).
+</Aside>
+
+---

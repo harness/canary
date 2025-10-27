@@ -657,3 +657,63 @@ For flexbox and grid layouts:
 </Aside>
 
 ---
+
+## Border Radius
+
+The design system provides border radius utilities for different component types.
+
+### Border Radius Scale
+
+| Class | Value | Usage |
+|-------|-------|-------|
+| `rounded-cn-none` | 0px | No rounding |
+| `rounded-cn-xs` | 2px | Minimal rounding |
+| `rounded-cn-sm` | 4px | Small components |
+| `rounded-cn-md` | 8px | Medium components |
+| `rounded-cn-lg` | 12px | Large components |
+| `rounded-cn-xl` | 16px | Cards, panels |
+| `rounded-cn-full` | 9999px | Pills, avatars |
+
+### Border Radius Examples
+
+<DocsPage.ComponentExample
+  client:only
+  code={`<Layout.Grid columns="3" gap="md" className="p-cn-md">
+  <div className="rounded-cn-xs bg-cn-secondary p-cn-md">
+    <Text variant="caption-normal">rounded-cn-xs</Text>
+  </div>
+  <div className="rounded-cn-sm bg-cn-secondary p-cn-md">
+    <Text variant="caption-normal">rounded-cn-sm</Text>
+  </div>
+  <div className="rounded-cn-md bg-cn-secondary p-cn-md">
+    <Text variant="caption-normal">rounded-cn-md</Text>
+  </div>
+  <div className="rounded-cn-lg bg-cn-secondary p-cn-md">
+    <Text variant="caption-normal">rounded-cn-lg</Text>
+  </div>
+  <div className="rounded-cn-xl bg-cn-secondary p-cn-md">
+    <Text variant="caption-normal">rounded-cn-xl</Text>
+  </div>
+  <div className="rounded-cn-full bg-cn-secondary p-cn-md">
+    <Text variant="caption-normal">rounded-cn-full</Text>
+  </div>
+</Layout.Grid>`}
+/>
+
+### Directional Border Radius
+
+```tsx
+// Specific corners
+<div className="rounded-tl-cn-lg">Top-left only</div>
+<div className="rounded-tr-cn-lg">Top-right only</div>
+<div className="rounded-bl-cn-lg">Bottom-left only</div>
+<div className="rounded-br-cn-lg">Bottom-right only</div>
+
+// Sides
+<div className="rounded-t-cn-md">Top corners</div>
+<div className="rounded-b-cn-md">Bottom corners</div>
+<div className="rounded-l-cn-md">Left corners</div>
+<div className="rounded-r-cn-md">Right corners</div>
+```
+
+---

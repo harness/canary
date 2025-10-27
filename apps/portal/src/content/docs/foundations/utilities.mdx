@@ -409,3 +409,113 @@ Special text colors designed for icons to ensure proper contrast and semantic me
 />
 
 ---
+
+## Border Colors
+
+Border colors define edges, dividers, and outlines. The default border is `border-cn-3` (most subtle).
+
+### Base Border Colors
+
+<DocsPage.ComponentExample
+  client:only
+  code={`<Layout.Grid columns="1fr 1fr 1fr" gap="md" className="p-cn-md">
+  <div className="border-4 border-cn-1 rounded-3 p-cn-md text-center">
+    <Text variant="caption-normal" className="mb-cn-xs">border-cn-1</Text>
+    <Text variant="caption-light">Strongest border</Text>
+  </div>
+  <div className="border-4 border-cn-2 rounded-3 p-cn-md text-center">
+    <Text variant="caption-normal" className="mb-cn-xs">border-cn-2</Text>
+    <Text variant="caption-light">Medium border</Text>
+  </div>
+  <div className="border-4 border-cn-3 rounded-3 p-cn-md text-center">
+    <Text variant="caption-normal" className="mb-cn-xs">border-cn-3</Text>
+    <Text variant="caption-light">Subtle border (default)</Text>
+  </div>
+</Layout.Grid>`}
+/>
+
+### Status Border Colors
+
+Status borders are used with outline variants. They must be paired with their corresponding text and background colors.
+
+<DocsPage.ComponentExample
+  client:only
+  code={`<Layout.Grid columns="1fr 1fr 1fr 1fr" gap="md" className="p-cn-md">
+  <div className="bg-cn-success-outline text-cn-success-outline border-2 border-cn-success-outline rounded-3 p-cn-md text-center">
+    <Text variant="caption-normal">Success</Text>
+  </div>
+  <div className="bg-cn-danger-outline text-cn-danger-outline border-2 border-cn-danger-outline rounded-3 p-cn-md text-center">
+    <Text variant="caption-normal">Danger</Text>
+  </div>
+  <div className="bg-cn-warning-outline text-cn-warning-outline border-2 border-cn-warning-outline rounded-3 p-cn-md text-center">
+    <Text variant="caption-normal">Warning</Text>
+  </div>
+  <div className="bg-cn-gray-outline text-cn-gray-outline border-2 border-cn-gray-outline rounded-3 p-cn-md text-center">
+    <Text variant="caption-normal">Gray</Text>
+  </div>
+</Layout.Grid>`}
+/>
+
+**Default Status Borders (without background):**
+
+```tsx
+<div className="border border-cn-success">Success border</div>
+<div className="border border-cn-danger">Danger border</div>
+<div className="border border-cn-warning">Warning border</div>
+```
+
+### Extended Palette Border Colors
+
+All extended palette colors have outline border variants.
+
+**Available Border Colors:**
+
+| Color | Class |
+|-------|-------|
+| Blue | `border-cn-blue-outline` |
+| Purple | `border-cn-purple-outline` |
+| Brown | `border-cn-brown-outline` |
+| Cyan | `border-cn-cyan-outline` |
+| Indigo | `border-cn-indigo-outline` |
+| Lime | `border-cn-lime-outline` |
+| Mint | `border-cn-mint-outline` |
+| Orange | `border-cn-orange-outline` |
+| Pink | `border-cn-pink-outline` |
+| Violet | `border-cn-violet-outline` |
+
+### Brand and Disabled Borders
+
+<DocsPage.ComponentExample
+  client:only
+  code={`<Layout.Flex gap="md" className="p-cn-md">
+  <div className="border-2 border-cn-brand rounded-3 p-cn-md">
+    <Text variant="caption-normal">border-cn-brand</Text>
+  </div>
+  <div className="border-2 border-cn-disabled rounded-3 p-cn-md">
+    <Text variant="caption-normal">border-cn-disabled</Text>
+  </div>
+</Layout.Flex>`}
+/>
+
+### Border Styles
+
+Combine border colors with Tailwind border utilities:
+
+```tsx
+// Border width
+<div className="border border-cn-3">1px border</div>
+<div className="border-2 border-cn-2">2px border</div>
+<div className="border-4 border-cn-1">4px border</div>
+
+// Border sides
+<div className="border-t border-cn-3">Top border only</div>
+<div className="border-b border-cn-3">Bottom border only</div>
+<div className="border-l border-cn-3">Left border only</div>
+<div className="border-r border-cn-3">Right border only</div>
+
+// Border styles
+<div className="border border-dashed border-cn-3">Dashed border</div>
+<div className="border border-dotted border-cn-3">Dotted border</div>
+```
+
+---

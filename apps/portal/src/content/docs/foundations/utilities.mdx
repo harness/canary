@@ -10,7 +10,8 @@ import { Aside } from "@astrojs/starlight/components";
 The Harness design system extends Tailwind CSS with custom utility classes prefixed with `cn-`. This page documents all available utility classes for colors, spacing, borders, shadows, and more.
 
 <Aside type="tip">
-  For a printable reference, see the [Design System Cheatsheet](/docs/design-system-cheatsheet.html).
+  For a printable reference, see the [Design System
+  Cheatsheet](/docs/design-system-cheatsheet.html).
 </Aside>
 
 ## Quick Reference
@@ -60,6 +61,7 @@ The base background colors provide the foundational layering system.
 />
 
 **Usage:**
+
 ```tsx
 <div className="bg-cn-1">Primary surface</div>
 <div className="bg-cn-2">Raised surface</div>
@@ -71,10 +73,11 @@ The base background colors provide the foundational layering system.
 Status colors communicate success, danger, warning, and neutral states. Each status color has three variants: primary, secondary, and outline.
 
 <Aside type="caution">
-  **Important:** Always pair status backgrounds with their corresponding text colors:
-  - `bg-cn-success-primary` + `text-cn-success-primary`
-  - `bg-cn-success-secondary` + `text-cn-success-secondary`
-  - `bg-cn-success-outline` + `text-cn-success-outline` + `border-cn-success-outline`
+  **Important:** Always pair status backgrounds with their corresponding text
+  colors: - `bg-cn-success-primary` + `text-cn-success-primary` -
+  `bg-cn-success-secondary` + `text-cn-success-secondary` -
+  `bg-cn-success-outline` + `text-cn-success-outline` +
+  `border-cn-success-outline`
 </Aside>
 
 #### Success Colors
@@ -179,17 +182,17 @@ The extended palette provides additional semantic colors for categorization, lab
 
 **Available Colors:**
 
-| Color | Class Prefix | Variants |
-|-------|-------------|----------|
-| Blue | `bg-cn-blue-` | primary, secondary, outline |
+| Color  | Class Prefix    | Variants                    |
+| ------ | --------------- | --------------------------- |
+| Blue   | `bg-cn-blue-`   | primary, secondary, outline |
 | Purple | `bg-cn-purple-` | primary, secondary, outline |
-| Brown | `bg-cn-brown-` | primary, secondary, outline |
-| Cyan | `bg-cn-cyan-` | primary, secondary, outline |
+| Brown  | `bg-cn-brown-`  | primary, secondary, outline |
+| Cyan   | `bg-cn-cyan-`   | primary, secondary, outline |
 | Indigo | `bg-cn-indigo-` | primary, secondary, outline |
-| Lime | `bg-cn-lime-` | primary, secondary, outline |
-| Mint | `bg-cn-mint-` | primary, secondary, outline |
+| Lime   | `bg-cn-lime-`   | primary, secondary, outline |
+| Mint   | `bg-cn-mint-`   | primary, secondary, outline |
 | Orange | `bg-cn-orange-` | primary, secondary, outline |
-| Pink | `bg-cn-pink-` | primary, secondary, outline |
+| Pink   | `bg-cn-pink-`   | primary, secondary, outline |
 | Violet | `bg-cn-violet-` | primary, secondary, outline |
 
 <DocsPage.ComponentExample
@@ -286,6 +289,123 @@ Brand colors are used for primary actions, links, and brand elements.
     <Text variant="caption-light">Separator background</Text>
   </div>
 </Layout.Grid>`}
+/>
+
+---
+
+## Text Colors
+
+Text colors establish hierarchy, provide emphasis, and communicate status. The default text color is `text-cn-2`.
+
+### Base Text Colors
+
+<DocsPage.ComponentExample
+  client:only
+  code={`<Layout.Vertical gap="md" className="p-cn-md">
+  <div>
+    <Text variant="caption-light" className="mb-cn-2xs">text-cn-1:</Text>
+    <Text className="text-cn-1 text-2xl">Primary text - highest contrast</Text>
+  </div>
+  <div>
+    <Text variant="caption-light" className="mb-cn-2xs">text-cn-2 (default):</Text>
+    <Text className="text-cn-2 text-2xl">Secondary text - default color</Text>
+  </div>
+  <div>
+    <Text variant="caption-light" className="mb-cn-2xs">text-cn-3:</Text>
+    <Text className="text-cn-3 text-2xl">Tertiary text - lower contrast</Text>
+  </div>
+  <div>
+    <Text variant="caption-light" className="mb-cn-2xs">text-cn-disabled:</Text>
+    <Text className="text-cn-disabled text-2xl">Disabled text</Text>
+  </div>
+</Layout.Vertical>`}
+/>
+
+### Status Text Colors
+
+<Aside type="caution">
+  Status text colors should always be paired with their corresponding background colors. See the [Background Colors](#background-colors) section for proper pairing.
+</Aside>
+
+<DocsPage.ComponentExample
+  client:only
+  code={`<Layout.Vertical gap="sm" className="p-cn-md">
+  <div className="bg-cn-success-secondary p-cn-sm rounded-3">
+    <Text className="text-cn-success-secondary">Success message text</Text>
+  </div>
+  <div className="bg-cn-danger-secondary p-cn-sm rounded-3">
+    <Text className="text-cn-danger-secondary">Error message text</Text>
+  </div>
+  <div className="bg-cn-warning-secondary p-cn-sm rounded-3">
+    <Text className="text-cn-warning-secondary">Warning message text</Text>
+  </div>
+</Layout.Vertical>`}
+/>
+
+**Default Status Colors (without background):**
+
+```tsx
+<Text className="text-cn-success">Success text</Text>
+<Text className="text-cn-danger">Error text</Text>
+<Text className="text-cn-warning">Warning text</Text>
+```
+
+### Icon Colors
+
+Special text colors designed for icons to ensure proper contrast and semantic meaning.
+
+<DocsPage.ComponentExample
+  client:only
+  code={`<Layout.Flex gap="md" className="p-cn-md">
+  <div className="flex flex-col items-center gap-cn-xs">
+    <div className="text-cn-icon-danger text-4xl">⚠</div>
+    <Text variant="caption-normal">text-cn-icon-danger</Text>
+  </div>
+  <div className="flex flex-col items-center gap-cn-xs">
+    <div className="text-cn-icon-warning text-4xl">⚡</div>
+    <Text variant="caption-normal">text-cn-icon-warning</Text>
+  </div>
+  <div className="flex flex-col items-center gap-cn-xs">
+    <div className="text-cn-icon-success text-4xl">✓</div>
+    <Text variant="caption-normal">text-cn-icon-success</Text>
+  </div>
+  <div className="flex flex-col items-center gap-cn-xs">
+    <div className="text-cn-icon-info text-4xl">ℹ</div>
+    <Text variant="caption-normal">text-cn-icon-info</Text>
+  </div>
+  <div className="flex flex-col items-center gap-cn-xs">
+    <div className="text-cn-icon-merged text-4xl">⚫</div>
+    <Text variant="caption-normal">text-cn-icon-merged</Text>
+  </div>
+</Layout.Flex>`}
+/>
+
+### Brand Text Colors
+
+<DocsPage.ComponentExample
+  client:only
+  code={`<Layout.Vertical gap="sm" className="p-cn-md">
+  <Text className="text-cn-brand text-xl">Brand text color</Text>
+  <a href="#" className="text-cn-brand hover:text-cn-brand-hover text-xl">
+    Brand link (hover to see color change)
+  </a>
+</Layout.Vertical>`}
+/>
+
+### Logo Colors
+
+<DocsPage.ComponentExample
+  client:only
+  code={`<Layout.Flex gap="md" className="p-cn-md">
+  <div>
+    <Text variant="caption-light" className="mb-cn-xs">text-cn-logo-icon:</Text>
+    <div className="text-cn-logo-icon text-4xl">🎨</div>
+  </div>
+  <div>
+    <Text variant="caption-light" className="mb-cn-xs">text-cn-logo-text:</Text>
+    <Text className="text-cn-logo-text text-2xl font-bold">HARNESS</Text>
+  </div>
+</Layout.Flex>`}
 />
 
 ---

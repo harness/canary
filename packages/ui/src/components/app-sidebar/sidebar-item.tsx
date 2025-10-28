@@ -11,6 +11,7 @@ interface NavbarItemProps {
   disabled?: boolean
   actionButtons?: SidebarItemProps['actionButtons']
   hideMenuItems?: boolean
+  active?: boolean
 }
 
 export const AppSidebarItem = ({
@@ -21,7 +22,8 @@ export const AppSidebarItem = ({
   handleCustomNav,
   disabled = false,
   actionButtons,
-  hideMenuItems = false
+  hideMenuItems = false,
+  active = false
 }: NavbarItemProps) => {
   const { t } = useTranslation()
 
@@ -50,6 +52,7 @@ export const AppSidebarItem = ({
       actionMenuItems={hideMenuItems ? undefined : actionMenuItems}
       disabled={disabled}
       actionButtons={actionButtons}
+      active={active}
     />
   )
 }

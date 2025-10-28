@@ -106,7 +106,6 @@ function PullRequestChangesInternal({
 }: DataProps) {
   const [openItems, setOpenItems] = useState<string[]>([])
   const scrollTimeoutRef = useRef<NodeJS.Timeout | null>(null)
-  const [hasInitializedOpenItems, setHasInitializedOpenItems] = useState(false)
 
   // Scroll position cache scoped to current PR
   const diffScrollCacheRef = useRef(new Map<string, number>())
@@ -152,7 +151,7 @@ function PullRequestChangesInternal({
   )
 
   useEffect(() => {
-    if (data.length > 0 && !hasInitializedOpenItems) {
+    if (data.length > 0) {
       const itemsToOpen: string[] = []
       data.map(diffItem => {
         const fileComments = getFileComments(diffItem, comments)
@@ -169,9 +168,8 @@ function PullRequestChangesInternal({
         }
       })
       setOpenItems(itemsToOpen)
-      setHasInitializedOpenItems(true)
     }
-  }, [data, commentId, comments, setOpenItems, hasInitializedOpenItems])
+  }, [data, commentId, comments, setOpenItems])
 
   const isOpen = useCallback(
     (fileText: string) => {

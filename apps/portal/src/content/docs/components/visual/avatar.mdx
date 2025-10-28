@@ -1,0 +1,184 @@
+---
+title: Avatar
+description: Avatar component
+beta: true
+---
+
+The `Avatar` component provides a way to represent an image with a fallback for when the image cannot be loaded. It supports displaying initials derived from the `name` prop or an Avatar Icon if no `name` or `src` is provided.
+
+import { DocsPage } from "@/components/docs-page";
+
+<DocsPage.ComponentExample
+  client:only
+  code={`<div className="flex flex-col gap-cn-3xl">
+    <div>
+      <h6 className="font-semibold mb-cn-xs text-center">Image (Default)</h6>
+      <div className="flex items-center justify-center gap-cn-xl">
+        <Avatar name="John Doe" src="/avatar.png" size="xs" />
+        <Avatar name="John Doe" src="/avatar.png" size="sm" />
+        <Avatar name="John Doe" src="/avatar.png" size="md" />
+        <Avatar name="John Doe" src="/avatar.png" size="lg" />
+      </div>
+    </div>
+    <div>
+      <h6 className="font-semibold mb-cn-xs text-center">Image (Rounded)</h6>
+      <div className="flex items-center justify-center gap-cn-xl">
+        <Avatar name="John Doe" src="/avatar.png" size="xs" rounded />
+        <Avatar name="John Doe" src="/avatar.png" size="sm" rounded />
+        <Avatar name="John Doe" src="/avatar.png" size="md" rounded />
+        <Avatar name="John Doe" src="/avatar.png" size="lg" rounded />
+      </div>
+    </div>
+    <div>
+      <h6 className="font-semibold mb-cn-xs text-center">Initials (Default)</h6>
+      <div className="flex items-center justify-center gap-cn-xl">
+        <Avatar name="John Doe" size="xs" />
+        <Avatar name="John Doe" size="sm" />
+        <Avatar name="John Doe" size="md" />
+        <Avatar name="John Doe" size="lg" />
+      </div>
+    </div>
+    <div>
+      <h6 className="font-semibold mb-cn-xs text-center">Initials (Rounded)</h6>
+      <div className="flex items-center justify-center gap-cn-xl">
+        <Avatar name="John Doe" size="xs" rounded />
+        <Avatar name="John Doe" size="sm" rounded />
+        <Avatar name="John Doe" size="md" rounded />
+        <Avatar name="John Doe" size="lg" rounded />
+      </div>
+    </div>
+    <div>
+      <h6 className="font-semibold mb-cn-xs text-center">Avatar Icon (Default)</h6>
+      <div className="flex items-center justify-center gap-cn-xl">
+        <Avatar size="xs" />
+        <Avatar size="sm" />
+        <Avatar size="md" />
+        <Avatar size="lg" />
+      </div>
+    </div>
+    <div>
+      <h6 className="font-semibold mb-cn-xs text-center">Avatar Icon (Rounded)</h6>
+      <div className="flex items-center justify-center gap-cn-xl">
+        <Avatar size="xs" rounded />
+        <Avatar size="sm" rounded />
+        <Avatar size="md" rounded />
+        <Avatar size="lg" rounded />
+      </div>
+    </div>
+    <div>
+      <h6 className="font-semibold mb-cn-xs text-center">Group Avatar Icon (Default)</h6>
+      <div className="flex items-center justify-center gap-cn-xl">
+        <Avatar size="xs" isGroup />
+        <Avatar size="sm" isGroup />
+        <Avatar size="md" isGroup />
+        <Avatar size="lg" isGroup />
+      </div>
+    </div>
+    <div>
+      <h6 className="font-semibold mb-cn-xs text-center">Group Avatar Icon (Rounded)</h6>
+      <div className="flex items-center justify-center gap-cn-xl">
+        <Avatar size="xs" rounded isGroup />
+        <Avatar size="sm" rounded isGroup />
+        <Avatar size="md" rounded isGroup />
+        <Avatar size="lg" rounded isGroup />
+      </div>
+    </div>
+</div>`}
+/>
+
+## Usage
+
+```typescript jsx
+import { Avatar } from '@harnessio/ui'
+
+// ...
+
+return (
+  <Avatar name="John Doe" src="/avatar.png" />
+)
+```
+
+## Sizes
+
+The `Avatar` component supports four sizes: `xs`, `sm`, `md`, and `lg`. The default size is `sm`.
+
+<DocsPage.ComponentExample
+  client:only
+  code={`<div className="flex items-center gap-cn-xl">
+    <Avatar name="John Doe" src="/avatar.png" size="xs" />
+    <Avatar name="John Doe" src="/avatar.png" size="sm" />
+    <Avatar name="John Doe" src="/avatar.png" size="md" />
+    <Avatar name="John Doe" src="/avatar.png" size="lg" />
+</div>`}
+/>
+
+## Shapes
+
+The `Avatar` component supports two visual shapes: `md` and `rounded`.
+
+<DocsPage.ComponentExample
+  client:only
+  code={`<div className="flex items-center gap-cn-xl">
+    <Avatar name="John Doe" />
+    <Avatar name="John Doe" rounded />
+</div>`}
+/>
+
+## No initials
+
+In case you want the fallback string to be without initials, pass the `noInitials` prop.
+
+<DocsPage.ComponentExample
+  client:only
+  code={`<div className="flex items-center gap-cn-xl">
+    <Avatar noInitials name="+22" size="lg" rounded />
+    <Avatar noInitials name="+222" size="lg" rounded />
+</div>`}
+/>
+
+## API Reference
+
+The `Avatar` component has several props to control its appearance:
+
+<DocsPage.PropsTable
+  props={[
+    {
+      name: "name",
+      description:
+        "Full name of the subject of the avatar. Used to generate initials for the fallback and alt text. If not provided, an Avatar Icon will be rendered if no `src` is provided.",
+      required: false,
+      value: "string",
+      defaultValue: "undefined",
+    },
+    {
+      name: "src",
+      description:
+        "The source URL of the image. If not provided, initials or an Avatar Icon will be rendered.",
+      required: false,
+      value: "string",
+      defaultValue: "undefined",
+    },
+    {
+      name: "size",
+      description:
+        "The size of the avatar. Can be one of 'xs', 'sm', 'md', or 'lg'.",
+      required: false,
+      value: "'xs' | 'sm' | 'md' | 'lg'",
+      defaultValue: "'sm'",
+    },
+    {
+      name: "rounded",
+      description: "Whether to display the avatar as a circle.",
+      required: false,
+      value: "boolean",
+      defaultValue: "false",
+    },
+    {
+      name: "noInitials",
+      description: "Whether to display fallback string without initials.",
+      required: false,
+      value: "boolean",
+      defaultValue: "false",
+    },
+  ]}
+/>

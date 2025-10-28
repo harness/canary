@@ -1,0 +1,179 @@
+---
+title: Switch
+description: Switch component
+beta: true
+---
+
+The `Switch` component provides a toggle switch for on/off states.  
+It is built on top of the Radix UI Switch primitive with additional styling.
+
+import { DocsPage } from "@/components/docs-page";
+
+<DocsPage.ComponentExample
+  client:only
+  code={`<div className="flex flex-col gap-cn-md">
+    <h5>Standard usage</h5>
+    <Switch 
+      id="airplane-mode"
+      label="Airplane mode"
+      caption="Enable or disable airplane mode to control all wireless communication."
+    />
+
+    <hr className="my-cn-md" />
+
+    <h5>Optional Field</h5>
+    <Switch
+      id="notifications"
+      label="Enable notifications"
+      caption="Toggle to enable or disable notifications."
+      optional
+    />
+
+    <hr className="my-cn-md" />
+
+    <h5>Disabled</h5>
+    <Switch
+      id="god-mode"
+      label="God mode"
+      caption="Toggle to enable or disable God mode, which grants unrestricted access and control."
+      disabled
+    />
+
+    <hr className="my-cn-md" />
+
+    <h5>Without Label and Caption</h5>
+    <div className="flex gap-cn-md">
+      <Switch id="no-label-caption" />
+      <Switch id="no-label-caption-disabled" disabled />
+    </div>
+
+</div>`}
+/>
+
+## Usage
+
+```typescript jsx
+import { Switch } from '@harnessio/ui/components'
+
+// Standard usage
+<Switch
+  id="airplane-mode"
+  checked={airplaneModeEnabled}
+  onCheckedChange={setAirplaneModeEnabled}
+  label="Airplane mode"
+  caption="Enable or disable airplane mode to control all wireless communication."
+/>
+
+// Optional field
+<Switch
+  id="notifications"
+  checked={notificationsEnabled}
+  onCheckedChange={setNotificationsEnabled}
+  label="Enable notifications"
+  caption="Toggle to enable or disable notifications."
+  optional
+/>
+
+// Disabled
+<Switch
+  id="god-mode"
+  checked={false}
+  onCheckedChange={() => {}}
+  label="God mode"
+  caption="Toggle to enable or disable God mode, which grants unrestricted access and control."
+  disabled
+/>
+
+// Without Label and Caption
+<Switch id="no-label-caption" checked={true} onCheckedChange={() => {}} />
+<Switch id="no-label-caption-disabled" checked={false} disabled />
+```
+
+## API Reference
+
+The `Switch` component can be used either controlled with the `checked` and `onCheckedChange` props, or uncontrolled.  
+When used uncontrolled, the `defaultChecked` prop can be used to set the initial state of the switch.
+
+```typescript jsx
+<Switch
+  id="airplane-mode"             // [OPTIONAL] ID of the switch
+  checked                        // [OPTIONAL] whether the switch is checked
+  defaultChecked                 // [OPTIONAL] initial checked state
+  required                       // [OPTIONAL] whether the switch is required
+  onCheckedChange={handleChange} // [OPTIONAL] callback called when the checked state changes
+  disabled                       // [OPTIONAL] whether the switch is disabled
+  label                          // [OPTIONAL] a label for the switch
+  caption                        // [OPTIONAL] a caption for the switch
+  optional                       // [OPTIONAL] indicates if the field is optional
+/>
+```
+
+<DocsPage.PropsTable
+  props={[
+    {
+      name: "id",
+      description: "Unique identifier for the switch.",
+      required: false,
+      value: "string",
+    },
+    {
+      name: "checked",
+      description: "Indicates whether the switch is checked.",
+      required: false,
+      value: "boolean",
+      defaultValue: "false",
+    },
+    {
+      name: "defaultChecked",
+      description: "Initial checked state of the switch.",
+      required: false,
+      value: "boolean",
+      defaultValue: "false",
+    },
+    {
+      name: "required",
+      description: "Indicates whether the switch is required.",
+      required: false,
+      value: "boolean",
+      defaultValue: "false",
+    },
+    {
+      name: "onCheckedChange",
+      description: "Function to handle checked state change.",
+      required: false,
+      value: "(checked: boolean) => void",
+    },
+    {
+      name: "disabled",
+      description: "Indicates whether the switch is disabled.",
+      required: false,
+      value: "boolean",
+      defaultValue: "false",
+    },
+    {
+      name: "label",
+      description: "Label for the switch.",
+      required: false,
+      value: "string",
+    },
+    {
+      name: "caption",
+      description: "Caption for the switch.",
+      required: false,
+      value: "string",
+    },
+    {
+      name: "optional",
+      description: "Indicates if the field is optional.",
+      required: false,
+      value: "boolean",
+      defaultValue: "false",
+    },
+    {
+      name: "className",
+      description: "Additional class names to apply to the switch.",
+      required: false,
+      value: "string",
+    },
+  ]}
+/>

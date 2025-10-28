@@ -1,0 +1,79 @@
+---
+title: Logo
+description: Logo component
+beta: true
+---
+
+import { DocsPage } from "@/components/docs-page";
+import { LogoV2, LogoNameMapV2 } from "@harnessio/ui/components";
+
+The `LogoV2` component contains logos of various brands and can be used as icons. It follows the brand guidelines to choose colors.
+
+## Usage
+
+```typescript jsx
+<LogoV2 name="node-js" size="lg" />
+```
+
+<DocsPage.ComponentExample
+  client:only
+  code={`<LogoV2 name="harness" size="lg" />`}
+/>
+
+## Sizes
+
+The `LogoV2` component can be sized using the `size` prop.
+
+<DocsPage.ComponentExample
+  client:only
+  code={`
+  <Layout.Flex gap="md" justify="center" align="end" className="min-w-[400px]">
+    <LogoV2 name="harness" size="xs" />
+    <LogoV2 name="harness" size="sm" />
+    <LogoV2 name="harness" size="md" />
+    <LogoV2 name="harness" size="lg" />
+  </Layout.Flex>
+  `}
+/>
+
+## API Reference
+
+```typescript jsx
+<LogoV2
+  name="logo-name"     // name of the logo
+  size="lg"       // [OPTIONAL] size variant of the logo
+  className="my-class" // [OPTIONAL] custom class name
+/>
+```
+
+<DocsPage.PropsTable
+  props={[
+    {
+      name: "name",
+      description: "Name of the logo",
+      required: true,
+      value: "string",
+    },
+    {
+      name: "size",
+      description: "Size variant of the logo",
+      required: false,
+      value: " 'xs' |'sm' | 'md' | 'lg'",
+      defaultValue: "'lg'",
+    },
+    {
+      name: "className",
+      description: "Custom class name",
+      required: false,
+      value: "string",
+    },
+    {
+      name: "original",
+      description:
+        "If true, the logo will use its brand-specific color, otherwise will use `currentColor`",
+      required: false,
+      value: "boolean",
+      defaultValue: "true",
+    },
+  ]}
+/>

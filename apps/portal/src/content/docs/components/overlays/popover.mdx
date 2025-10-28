@@ -1,0 +1,591 @@
+---
+title: Popover
+description: Popover component
+beta: true
+---
+
+import { DocsPage } from "@/components/docs-page";
+import { Aside } from "@astrojs/starlight/components";
+
+The `Popover` component provides a way to create floating overlays that display rich content in a popup. It's perfect for tooltips, menus, forms, or any content that needs to appear above other elements without disrupting the page flow.
+
+It can be composed with several subcomponents such as `Popover.Root`, `Popover.Trigger`, `Popover.Content`, and `Popover.Anchor` to offer a structured and customizable interface.
+
+The `Popover.Content` component supports built-in `title`, `description`, and `linkProps` for common popover patterns, while also allowing custom content through children.
+
+<DocsPage.ComponentExample
+  client:only
+  code={`<Popover.Root>
+    <Popover.Trigger asChild>
+        <Button variant="outline">
+            Open Popover
+        </Button>
+    </Popover.Trigger>
+
+    <Popover.Content
+        title="Settings"
+        description="Manage your account settings and preferences"
+    >
+        <div className="grid gap-cn-sm mt-cn-sm">
+            <Button variant="outline" size="sm">Profile</Button>
+            <Button variant="outline" size="sm">Billing</Button>
+            <Button variant="outline" size="sm">Notifications</Button>
+        </div>
+    </Popover.Content>
+
+</Popover.Root>`}
+/>
+
+## Usage
+
+```typescript jsx
+import { Popover } from "@harnessio/ui/components";
+
+//...
+
+return (
+  <Popover.Root>
+    <Popover.Trigger asChild>
+      <Button>Show Info</Button>
+    </Popover.Trigger>
+
+    <Popover.Content
+      title="Information"
+      description="This is additional information about the feature."
+    />
+  </Popover.Root>
+
+  // --- or ---
+
+  <Popover title="Popover Title" description="Popover description" content="Popover content">
+    <Button>Show Info</Button>
+  </Popover>
+)
+```
+
+## Anatomy
+
+All parts of the `Popover` component can be imported and composed as required.
+
+```typescript jsx
+<Popover.Root>
+  <Popover.Trigger />
+  <Popover.Anchor />
+  <Popover.Content />
+</Popover.Root>
+
+// or
+
+<Popover
+  title="Popover Title"
+  description="Popover description"
+  content="Popover content"
+>
+```
+
+## Basic Popover
+
+The simplest form of a popover with just title and description.
+
+<DocsPage.ComponentExample
+  client:only
+  code={`<Popover.Root>
+    <Popover.Trigger asChild>
+        <Button variant="ghost" iconOnly>
+            <IconV2 name="info-circle" />
+        </Button>
+    </Popover.Trigger>
+
+    <Popover.Content
+        title="Help"
+        description="This feature helps you manage your workflow more efficiently."
+    />
+
+</Popover.Root>`}
+/>
+
+## Popover with Custom Content
+
+You can include any custom content inside the popover by using children.
+
+<DocsPage.ComponentExample
+  client:only
+  code={`<Popover.Root>
+    <Popover.Trigger asChild>
+        <Button variant="outline">
+            <IconV2 name="settings" />
+            Settings
+        </Button>
+    </Popover.Trigger>
+
+    <Popover.Content
+        title="Quick Settings"
+        description="Adjust your preferences"
+    >
+        <div className="grid gap-cn-sm">
+            <div className="flex items-center justify-between">
+                <Text>Dark Mode</Text>
+                <Button variant="ghost" size="sm">Toggle</Button>
+            </div>
+            <div className="flex items-center justify-between">
+                <Text>Notifications</Text>
+                <Button variant="ghost" size="sm">Configure</Button>
+            </div>
+        </div>
+    </Popover.Content>
+
+</Popover.Root>`}
+/>
+
+## Hover Trigger Popover
+
+The popover can be triggered on hover instead of click using the `triggerType` prop set to `hover`. You can also customize the hover delay and close delay.
+
+<DocsPage.ComponentExample
+  client:only
+  code={`<Popover
+    triggerType="hover"
+    hoverDelay={200}
+    closeDelay={300}
+    content={
+        <div className="p-cn-xs">
+            <Text as="p">Hover content that appears after a short delay</Text>
+            <Text as="p" color="foreground-2" className="mt-cn-xs">Mouse out to dismiss</Text>
+        </div>
+    }
+>
+    <Button variant="outline">Hover over me</Button>
+</Popover>`}
+/>
+
+## Popover with Link
+
+The popover supports an integrated link using the `linkProps` prop.
+
+<DocsPage.ComponentExample
+  client:only
+  code={`<Popover.Root>
+    <Popover.Trigger asChild>
+        <Button variant="outline">
+            <IconV2 name="help-circle" />
+            Help
+        </Button>
+    </Popover.Trigger>
+
+    <Popover.Content
+        title="Need More Help?"
+        description="Check out our comprehensive documentation for detailed guides and tutorials."
+        linkProps={{
+            text: "View Documentation",
+            href: "/docs",
+            suffixIcon: true
+        }}
+    />
+
+</Popover.Root>`}
+/>
+
+## Positioning
+
+The popover can be positioned relative to its trigger using the `side` and `align` props.
+
+<DocsPage.ComponentExample
+  client:only
+  code={`<div className="flex gap-cn-md items-center justify-center p-cn-2xl">
+    <Popover.Root>
+        <Popover.Trigger asChild>
+            <Button variant="outline" size="sm">Top</Button>
+        </Popover.Trigger>
+        <Popover.Content 
+            side="top"
+            title="Top Position"
+            description="This popover appears above the trigger"
+            showArrow
+        />
+    </Popover.Root>
+
+    <Popover.Root>
+        <Popover.Trigger asChild>
+            <Button variant="outline" size="sm">Right</Button>
+        </Popover.Trigger>
+        <Popover.Content
+            side="right"
+            title="Right Position"
+            description="This popover appears to the right of the trigger"
+            showArrow
+        />
+    </Popover.Root>
+
+    <Popover.Root>
+        <Popover.Trigger asChild>
+            <Button variant="outline" size="sm">Bottom</Button>
+        </Popover.Trigger>
+        <Popover.Content
+            side="bottom"
+            title="Bottom Position"
+            description="This popover appears below the trigger"
+            showArrow
+        />
+    </Popover.Root>
+
+    <Popover.Root>
+        <Popover.Trigger asChild>
+            <Button variant="outline" size="sm">Left</Button>
+        </Popover.Trigger>
+        <Popover.Content
+            side="left"
+            title="Left Position"
+            description="This popover appears to the left of the trigger"
+            showArrow
+        />
+    </Popover.Root>
+
+</div>`}
+/>
+
+## Controlled Popover
+
+You can control the open state of the popover programmatically.
+
+<DocsPage.ComponentExample
+  client:only
+  code={`() => {
+    const [open, setOpen] = React.useState(false);
+
+    return (
+        <div className="flex gap-cn-md items-center">
+            <Popover.Root open={open} onOpenChange={setOpen} modal={true}>
+                <Popover.Trigger asChild>
+                    <Button variant="outline">
+                        {open ? 'Close' : 'Open'} Popover
+                    </Button>
+                </Popover.Trigger>
+
+                <Popover.Content
+                    title="Controlled Popover"
+                    description="This popover's state is controlled by the parent component."
+                >
+                    <Button
+                        variant="outline"
+                        size="sm"
+                        className="mt-cn-sm"
+                        onClick={() => setOpen(false)}
+                    >
+                        Close from inside
+                    </Button>
+                </Popover.Content>
+            </Popover.Root>
+
+            <Button
+                variant="ghost"
+                size="sm"
+                onClick={() => setOpen(!open)}
+            >
+                Toggle from outside
+            </Button>
+        </div>
+    );
+
+}`}
+/>
+
+## Using Anchor
+
+The `Popover.Anchor` component allows you to position the popover relative to a different element than the trigger.
+
+<DocsPage.ComponentExample
+  client:only
+  code={`() => {
+  const [open, setOpen] = React.useState(false);
+
+    return (
+      <Popover.Root open={open} onOpenChange={setOpen}>
+        <Popover.Anchor>
+          <div className="p-cn-md border rounded-3 cursor-pointer" onClick={() => setOpen(!open)}>
+            <Text>I'm the anchor element</Text>
+          </div>
+        </Popover.Anchor>
+        <Popover.Content
+            title="Anchored Popover"
+            description="Click the box to toggle this popover."
+        />
+      </Popover.Root>
+    )
+
+}`}
+/>
+
+## API Reference
+
+### `Root`
+
+The `Root` component serves as the main container for all popover elements.
+It requires both a `Trigger` and `Content` as children. It can be used in either
+a controlled or uncontrolled manner.
+
+```typescript jsx
+<Popover.Root
+  open                    // [OPTIONAL] controlled open state
+  onOpenChange={onChange} // [OPTIONAL] event handler called when the open state changes
+  defaultOpen             // [OPTIONAL] default open state
+  modal                   // [OPTIONAL] when set to true, interaction with outside elements
+                          //            will be disabled and only popover content will be
+                          //            visible to screen readers.
+>
+  {/* Trigger, Anchor, and Content */}
+</Popover.Root>
+```
+
+<DocsPage.PropsTable
+  props={[
+    {
+      name: "open",
+      description: "Controlled open state",
+      required: false,
+      value: "boolean",
+      defaultValue: "false",
+    },
+    {
+      name: "onOpenChange",
+      description: "Event handler called when the open state changes",
+      required: false,
+      value: "(open: boolean) => void",
+    },
+    {
+      name: "defaultOpen",
+      description: "Default open state",
+      required: false,
+      value: "boolean",
+      defaultValue: "false",
+    },
+    {
+      name: "triggerType",
+      description: "How the popover is triggered - click or hover",
+      required: false,
+      value: "'click' | 'hover'",
+      defaultValue: "'click'",
+    },
+    {
+      name: "hoverDelay",
+      description: "Delay in milliseconds before showing the popover on hover",
+      required: false,
+      value: "number",
+      defaultValue: "200",
+    },
+    {
+      name: "closeDelay",
+      description:
+        "Delay in milliseconds before hiding the popover on mouse out",
+      required: false,
+      value: "number",
+      defaultValue: "300",
+    },
+    {
+      name: "modal",
+      description:
+        "The modality of the popover. When set to true, interaction with outside elements will be disabled and only popover content will be visible to screen readers.",
+      required: false,
+      value: "boolean",
+      defaultValue: "false",
+    },
+    {
+      name: "children",
+      description: "Trigger, Anchor, and Content components",
+      required: true,
+      value: "ReactNode",
+    },
+  ]}
+/>
+
+### `Trigger`
+
+The `Trigger` component represents the button that triggers the popover.
+
+<Aside title="Accessibility">
+  The `Trigger` component renders as a `button` by default. It is recommended to include descriptive
+  text inside the `Trigger` component to allow assistive technologies to announce the button
+  with appropriate context. If the child is solely an icon, ensure that either `aria-label`
+  is provided or descriptive text is included in a hidden element.
+  <details>
+    <summary>Example</summary>
+
+```typescript jsx
+<Popover.Trigger aria-label="help information">
+  <IconV2 name="help-circle" />
+</Popover.Trigger>
+```
+
+Or
+
+```typescript jsx
+<Popover.Trigger>
+  <IconV2 name="help-circle" />
+  <span className="sr-only">Help information</span>
+</Popover.Trigger>
+```
+
+  </details>
+</Aside>
+
+```typescript jsx
+<Popover.Trigger
+  className="my-class" // [OPTIONAL] custom class
+  asChild              // [OPTIONAL] render the trigger as the child
+  disabled             // [OPTIONAL] disable the trigger
+>
+  {/* Trigger content */}
+</Popover.Trigger>
+```
+
+<DocsPage.PropsTable
+  props={[
+    {
+      name: "className",
+      description: "Custom class name",
+      required: false,
+      value: "string",
+    },
+    {
+      name: "asChild",
+      description: "Render the trigger as the child element",
+      required: false,
+      value: "boolean",
+      defaultValue: "false",
+    },
+    {
+      name: "disabled",
+      description: "Disable the trigger",
+      required: false,
+      value: "boolean",
+      defaultValue: "false",
+    },
+    {
+      name: "children",
+      description: "Trigger content",
+      required: true,
+      value: "ReactNode",
+    },
+  ]}
+/>
+
+### `Content`
+
+The `Content` component represents the popover content with built-in support for title, description, and links.
+
+```typescript jsx
+<Popover.Content
+  title="Popover Title"        // [OPTIONAL] title text
+  description="Description"    // [OPTIONAL] description text
+  linkProps={{                 // [OPTIONAL] link configuration
+    text: "Learn more",
+    href: "/docs"
+  }}
+  className="my-class"         // [OPTIONAL] custom class
+  sideOffset={4}               // [OPTIONAL] offset from the trigger
+  align="center"               // [OPTIONAL] alignment relative to trigger
+  alignOffset={0}              // [OPTIONAL] offset from align
+  side="bottom"                // [OPTIONAL] preferred side of the trigger
+>
+  {/* Custom content */}
+</Popover.Content>
+```
+
+<DocsPage.PropsTable
+  props={[
+    {
+      name: "title",
+      description: "Title text displayed at the top of the popover",
+      required: false,
+      value: "string",
+    },
+    {
+      name: "description",
+      description: "Description text displayed below the title",
+      required: false,
+      value: "string",
+    },
+    {
+      name: "linkProps",
+      description:
+        "Configuration for an optional link at the bottom of the popover",
+      required: false,
+      value: "Omit<LinkProps, 'children'> & { text: string }",
+    },
+    {
+      name: "className",
+      description: "Custom class name",
+      required: false,
+      value: "string",
+    },
+    {
+      name: "sideOffset",
+      description: "Distance in pixels from the trigger",
+      required: false,
+      value: "number",
+      defaultValue: "4",
+    },
+    {
+      name: "align",
+      description: "Preferred alignment against the trigger",
+      required: false,
+      value: "'start' | 'center' | 'end'",
+      defaultValue: "'center'",
+    },
+    {
+      name: "alignOffset",
+      description: "An offset in pixels from the align options",
+      required: false,
+      value: "number",
+      defaultValue: "0",
+    },
+    {
+      name: "side",
+      description: "Preferred side of the trigger to render against",
+      required: false,
+      value: "'top' | 'right' | 'bottom' | 'left'",
+      defaultValue: "'bottom'",
+    },
+    {
+      name: "children",
+      description: "Custom content to display in the popover",
+      required: false,
+      value: "ReactNode",
+    },
+    {
+      name: "showArrow",
+      description: "Show an arrow pointing to the trigger",
+      required: false,
+      value: "boolean",
+      defaultValue: "false",
+    },
+  ]}
+/>
+
+### `Anchor`
+
+The `Anchor` component allows you to anchor the popover to a different element than the trigger.
+
+```typescript jsx
+<Popover.Anchor
+  className="my-class" // [OPTIONAL] custom class
+>
+  {/* Anchor element */}
+</Popover.Anchor>
+```
+
+<DocsPage.PropsTable
+  props={[
+    {
+      name: "className",
+      description: "Custom class name",
+      required: false,
+      value: "string",
+    },
+    {
+      name: "children",
+      description: "Element to anchor the popover to",
+      required: false,
+      value: "ReactNode",
+    },
+  ]}
+/>

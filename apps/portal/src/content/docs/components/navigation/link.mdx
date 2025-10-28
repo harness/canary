@@ -1,0 +1,185 @@
+---
+title: Link
+description: Link component
+---
+
+The `Link` component provides styled links for navigation within and outside the application. It offers two size options and distinguishes between internal and external links with appropriate visual indicator. The component ensures consistent styling while maintaining accessibility standards.
+
+import { DocsPage } from "@/components/docs-page";
+
+<DocsPage.ComponentExample
+  client:only
+  code={`<div className="grid grid-cols-2 gap-cn-md">
+    <div className="flex flex-col gap-cn-xs">
+        <h5 className="mb-cn-3xs">Default</h5>
+        <Link to="#1">Link</Link>
+        <Link to="#2" data-hovered="true">Link (hovered)</Link>
+        <Link to="#4" disabled>Link (disabled)</Link>
+    </div>
+
+    <div className="flex flex-col gap-cn-xs">
+        <h5 className="mb-cn-3xs">Default sm</h5>
+        <Link size="sm" to="#1">Link</Link>
+        <Link size="sm" to="#2" data-hovered="true">Link (hovered)</Link>
+        <Link size="sm" to="#4" disabled>Link (disabled)</Link>
+    </div>
+
+    <div className="flex flex-col gap-cn-xs">
+        <h5 className="mb-cn-3xs">Secondary</h5>
+        <Link variant="secondary" to="#1">Link</Link>
+        <Link variant="secondary" to="#2" data-hovered="true">Link (hovered)</Link>
+        <Link variant="secondary" to="#4" disabled>Link (disabled)</Link>
+    </div>
+
+    <div className="flex flex-col gap-cn-xs">
+        <h5 className="mb-cn-3xs">Secondary sm</h5>
+        <Link size="sm" variant="secondary" to="#1">Link</Link>
+        <Link size="sm" variant="secondary" to="#2" data-hovered="true">Link (hovered)</Link>
+        <Link size="sm" variant="secondary" to="#4" disabled>Link (disabled)</Link>
+    </div>
+
+    <div className="flex flex-col gap-cn-xs">
+        <h5 className="mb-cn-3xs">Default with icons</h5>
+        <Link prefixIcon suffixIcon to="#1">Link</Link>
+        <Link prefixIcon suffixIcon to="#2" data-hovered="true">Link (hovered)</Link>
+        <Link prefixIcon suffixIcon to="#4" disabled>Link (disabled)</Link>
+    </div>
+
+    <div className="flex flex-col gap-cn-xs">
+        <h5 className="mb-cn-3xs">Default sm with icons</h5>
+        <Link size="sm" prefixIcon suffixIcon to="#1">Link</Link>
+        <Link size="sm" prefixIcon suffixIcon to="#2" data-hovered="true">Link (hovered)</Link>
+        <Link size="sm" prefixIcon suffixIcon to="#4" disabled>Link (disabled)</Link>
+    </div>
+
+    <div className="flex flex-col gap-cn-xs">
+        <h5 className="mb-cn-3xs">Secondary with icons</h5>
+        <Link prefixIcon suffixIcon variant="secondary" to="#1">Link</Link>
+        <Link prefixIcon suffixIcon variant="secondary" to="#2" data-hovered="true">Link (hovered)</Link>
+        <Link prefixIcon suffixIcon variant="secondary" to="#4" disabled>Link (disabled)</Link>
+    </div>
+
+    <div className="flex flex-col gap-cn-xs">
+        <h5 className="mb-cn-3xs">Secondary sm with icons + external</h5>
+        <Link size="sm" prefixIcon suffixIcon variant="secondary" external href="#1">Link</Link>
+        <Link size="sm" prefixIcon suffixIcon variant="secondary" external href="#2" data-hovered="true">Link (hovered)</Link>
+        <Link size="sm" prefixIcon suffixIcon variant="secondary" external href="#4" disabled>Link (disabled)</Link>
+    </div>
+
+</div>`}
+/>
+
+## Usage
+
+```typescript jsx
+import { Link } from '@harnessio/ui/components'
+
+// ...
+
+return (
+  <Link to="/your-url-here">Username</Link>
+)
+```
+
+## API Reference
+
+The `Link` component allows for the creation of accessible hyperlinks with consistent styling. It supports multiple visual variants, sizes, and icon placements to enhance navigation experiences throughout the application.
+
+```typescript jsx
+<Link
+  to="/your-url-here"
+  className="additional-classes" // [OPTIONAL] Additional CSS classes to apply to the link
+  variant="secondary" // [OPTIONAL] The style variant of the link
+  prefixIcon // [OPTIONAL] Displays an icon before the link text
+  suffixIcon // [OPTIONAL] Displays an icon after the link text
+  disabled // [OPTIONAL] Disables the link, preventing clicks and changing its appearance
+  size="sm" // [OPTIONAL] The size of the link
+>
+  Link Text
+</Link>
+```
+
+<DocsPage.PropsTable
+  props={[
+    {
+      name: "external",
+      description: "Indicates that the link is external.",
+      required: false,
+      value: "false",
+    },
+    {
+      name: "to",
+      description: "The URL that the link points to",
+      required: true,
+      value: "string",
+    },
+  ]}
+/>
+
+Also, the `Link` component can be `external` — in that case, the types will be different.
+
+<DocsPage.PropsTable
+  props={[
+    {
+      name: "external",
+      description: "Indicates that the link is external.",
+      required: true,
+      value: "true",
+    },
+    {
+      name: "href",
+      description: "The URL that the link points to",
+      required: true,
+      value: "string",
+    },
+  ]}
+/>
+
+Common types
+
+<DocsPage.PropsTable
+  props={[
+    {
+      name: "variant",
+      description: "The style variant of the link",
+      defaultValue: "'default'",
+      required: false,
+      value: "'default' | 'secondary'",
+    },
+    {
+      name: "size",
+      description: "The size of the link",
+      defaultValue: "'md'",
+      required: false,
+      value: "'md' | 'sm'",
+    },
+    {
+      name: "prefixIcon",
+      description: "Displays an icon before the link text",
+      defaultValue: "'chevron-left'",
+      required: false,
+      value: "'boolean' | IconProps['name']",
+    },
+    {
+      name: "suffixIcon",
+      description: "Displays an icon after the link text",
+      defaultValue: "'arrow-to-top-right'",
+      required: false,
+      value: "'boolean' | IconProps['name']",
+    },
+    {
+      name: "disabled",
+      description:
+        "Disables the link, preventing clicks and changing its appearance",
+      defaultValue: "false",
+      required: false,
+      value: "boolean",
+    },
+    {
+      name: "className",
+      description: "Additional CSS classes to apply to the link",
+      required: false,
+      value: "string",
+    },
+  ]}
+/>

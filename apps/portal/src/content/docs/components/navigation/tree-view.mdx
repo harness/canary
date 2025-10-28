@@ -1,0 +1,1132 @@
+---
+title: Tree View
+description: TreeView component for displaying hierarchical data structures
+---
+
+The `TreeView` component is used to display hierarchical data in an expandable/collapsible tree structure. It supports features like selection, status indicators, execution details, and RTL/LTR text direction.
+
+import { DocsPage } from "@/components/docs-page";
+
+<DocsPage.ComponentExample
+  client:only
+  code={`() => {
+  const basicTreeData = [
+    {
+      id: '1',
+      name: 'Root Folder',
+      status: 'success',
+      children: [
+        { id: '1-1', name: 'Child File 1', status: 'success' },
+        { id: '1-2', name: 'Child File 2', status: 'running' }
+      ]
+    }
+  ];
+
+return <Tree className="h-64 w-full rounded-3 border">
+
+<Folder
+  element={basicTreeData[0].name}
+  value={basicTreeData[0].id}
+  status={basicTreeData[0].status}
+  level={0}
+>
+  <File value="1-1" status="success" level={1}>
+    Child File 1
+  </File>
+  <File value="1-2" status="running" level={1}>
+    Child File 2
+  </File>
+</Folder>
+
+  </Tree>
+}`}
+/>
+
+## Usage
+
+```typescript jsx
+import { Tree, Folder, File, CollapseButton, type TreeViewElement } from '@harnessio/ui/components'
+import { ExecutionState } from '@harnessio/ui/views'
+
+//...
+
+return (
+  <Tree initialSelectedId="1-1" className="h-96 w-full rounded-3 border">
+    <Folder
+      element="Documents"
+      value="folder-1"
+      status={ExecutionState.SUCCESS}
+      level={0}
+    >
+      <File value="1-1" status={ExecutionState.SUCCESS} level={1}>
+        File 1
+      </File>
+    </Folder>
+  </Tree>
+)
+```
+
+## Basic Tree Structure
+
+Create a simple tree with folders and files. The tree automatically handles expand/collapse interactions.
+
+<DocsPage.ComponentExample
+  client:only
+  code={`() => {
+  const simpleTree = [
+    {
+      id: 'folder-1',
+      name: 'Documents',
+      status: 'success',
+      children: [
+        { id: 'file-1', name: 'Resume.pdf', status: 'success' },
+        { id: 'file-2', name: 'Cover Letter.docx', status: 'success' }
+      ]
+    },
+    {
+      id: 'folder-2',
+      name: 'Projects',
+      status: 'running',
+      children: [
+        {
+          id: 'folder-2-1',
+          name: 'Web App',
+          status: 'running',
+          children: [
+            { id: 'file-3', name: 'index.html', status: 'success' },
+            { id: 'file-4', name: 'styles.css', status: 'running' }
+          ]
+        }
+      ]
+    }
+  ];
+
+return <Tree className="h-80 w-full rounded-3 border">
+
+<Folder element="Documents" value="folder-1" status="success" level={0}>
+  <File value="file-1" status="success" level={1}>
+    Resume.pdf
+  </File>
+  <File value="file-2" status="success" level={1}>
+    Cover Letter.docx
+  </File>
+</Folder>
+<Folder element="Projects" value="folder-2" status="running" level={0}>
+  <Folder element="Web App" value="folder-2-1" status="running" level={1}>
+    <File value="file-3" status="success" level={2}>
+      index.html
+    </File>
+    <File value="file-4" status="running" level={2}>
+      styles.css
+    </File>
+  </Folder>
+</Folder>
+
+  </Tree>
+}`}
+/>
+
+## With Status Indicators
+
+The TreeView component displays status icons based on the `ExecutionState`. It supports states like `SUCCESS`, `RUNNING`, `FAILURE`, `PENDING`, and more.
+
+<DocsPage.ComponentExample
+  client:only
+  code={`() => {
+  const statusTree = [
+    {
+      id: 'build-1',
+      name: 'Build Pipeline',
+      status: 'running',
+      duration: '2m 30s',
+      children: [
+        { id: 'test-1', name: 'Unit Tests', status: 'success', duration: '45s' },
+        { id: 'test-2', name: 'Integration Tests', status: 'running', duration: '1m 15s' },
+        { id: 'test-3', name: 'E2E Tests', status: 'pending' }
+      ]
+    },
+    {
+      id: 'build-2',
+      name: 'Deploy Pipeline',
+      status: 'failure',
+      duration: '3m 10s',
+      children: [
+        { id: 'deploy-1', name: 'Staging Deploy', status: 'success', duration: '2m' },
+        { id: 'deploy-2', name: 'Production Deploy', status: 'failure', duration: '1m 10s' }
+      ]
+    }
+  ];
+
+return <Tree className="h-80 w-full rounded-3 border">
+
+<Folder
+  element="Build Pipeline"
+  value="build-1"
+  status="running"
+  duration="2m 30s"
+  level={0}
+>
+  <File value="test-1" status="success" duration="45s" level={1}>
+    Unit Tests
+  </File>
+  <File value="test-2" status="running" duration="1m 15s" level={1}>
+    Integration Tests
+  </File>
+  <File value="test-3" status="pending" level={1}>
+    E2E Tests
+  </File>
+</Folder>
+<Folder
+  element="Deploy Pipeline"
+  value="build-2"
+  status="failure"
+  duration="3m 10s"
+  level={0}
+>
+  <File value="deploy-1" status="success" duration="2m" level={1}>
+    Staging Deploy
+  </File>
+  <File value="deploy-2" status="failure" duration="1m 10s" level={1}>
+    Production Deploy
+  </File>
+</Folder>
+
+  </Tree>
+}`}
+/>
+
+## With Initial Selection
+
+You can specify an initial selected item using the `initialSelectedId` prop. The tree will automatically expand parent folders to show the selected item.
+
+<DocsPage.ComponentExample
+  client:only
+  code={`() => {
+  const selectionTree = [
+    {
+      id: 'root',
+      name: 'Root',
+      status: 'success',
+      children: [
+        {
+          id: 'nested-folder',
+          name: 'Nested Folder',
+          status: 'success',
+          children: [
+            { id: 'target-file', name: 'Target File (Selected)', status: 'success' },
+            { id: 'other-file', name: 'Other File', status: 'success' }
+          ]
+        }
+      ]
+    }
+  ];
+
+return <Tree initialSelectedId="target-file" className="h-64 w-full rounded-3 border">
+
+<Folder element="Root" value="root" status="success" level={0}>
+  <Folder
+    element="Nested Folder"
+    value="nested-folder"
+    status="success"
+    level={1}
+  >
+    <File value="target-file" status="success" level={2}>
+      Target File (Selected)
+    </File>
+    <File value="other-file" status="success" level={2}>
+      Other File
+    </File>
+  </Folder>
+</Folder>
+
+  </Tree>
+}`}
+/>
+
+## With Initial Expanded Items
+
+Control which folders are initially expanded using the `initialExpendedItems` prop.
+
+<DocsPage.ComponentExample
+  client:only
+  code={`() => {
+  const expandedTree = [
+    {
+      id: 'folder-a',
+      name: 'Folder A (Expanded)',
+      status: 'success',
+      children: [
+        { id: 'file-a1', name: 'File A1', status: 'success' },
+        { id: 'file-a2', name: 'File A2', status: 'success' }
+      ]
+    },
+    {
+      id: 'folder-b',
+      name: 'Folder B (Collapsed)',
+      status: 'success',
+      children: [
+        { id: 'file-b1', name: 'File B1', status: 'success' }
+      ]
+    }
+  ];
+
+return <Tree
+initialExpendedItems={['folder-a']}
+className="h-64 w-full rounded-3 border"
+
+>
+
+    <Folder element="Folder A (Expanded)" value="folder-a" status="success" level={0}>
+      <File value="file-a1" status="success" level={1}>File A1</File>
+      <File value="file-a2" status="success" level={1}>File A2</File>
+    </Folder>
+    <Folder element="Folder B (Collapsed)" value="folder-b" status="success" level={0}>
+      <File value="file-b1" status="success" level={1}>File B1</File>
+    </Folder>
+
+  </Tree>
+}`}
+/>
+
+## Non-Selectable Items
+
+You can make specific items non-selectable by setting `isSelectable: false` on the element.
+
+<DocsPage.ComponentExample
+  client:only
+  code={`() => {
+  const nonSelectableTree = [
+    {
+      id: 'config',
+      name: 'Configuration (Non-selectable)',
+      status: 'success',
+      isSelectable: false,
+      children: [
+        { id: 'config-1', name: 'app.config.js', status: 'success' },
+        { id: 'config-2', name: 'env.config.js', status: 'success' }
+      ]
+    },
+    {
+      id: 'src',
+      name: 'Source Files',
+      status: 'success',
+      children: [
+        { id: 'src-1', name: 'index.ts', status: 'success' }
+      ]
+    }
+  ];
+
+return <Tree className="h-64 w-full rounded-3 border">
+
+<Folder
+  element="Configuration (Non-selectable)"
+  value="config"
+  status="success"
+  isSelectable={false}
+  level={0}
+>
+  <File value="config-1" status="success" level={1}>
+    app.config.js
+  </File>
+  <File value="config-2" status="success" level={1}>
+    env.config.js
+  </File>
+</Folder>
+<Folder element="Source Files" value="src" status="success" level={0}>
+  <File value="src-1" status="success" level={1}>
+    index.ts
+  </File>
+</Folder>
+
+  </Tree>
+}`}
+/>
+
+## With Collapse Button
+
+Add a collapse/expand all button using the `CollapseButton` component.
+
+<DocsPage.ComponentExample
+  client:only
+  code={`() => {
+  const collapseTreeElements = [
+    {
+      id: 'module-1',
+      name: 'Module 1',
+      status: 'success',
+      children: [
+        { id: 'file-1', name: 'component.tsx', status: 'success' },
+        { id: 'file-2', name: 'styles.css', status: 'success' }
+      ]
+    },
+    {
+      id: 'module-2',
+      name: 'Module 2',
+      status: 'success',
+      children: [
+        { id: 'file-3', name: 'utils.ts', status: 'success' },
+        { id: 'file-4', name: 'types.ts', status: 'success' }
+      ]
+    }
+  ];
+
+return <div className="relative">
+
+<Tree className="h-80 w-full rounded-3 border" elements={collapseTreeElements}>
+  <Folder element="Module 1" value="module-1" status="success" level={0}>
+    <File value="file-1" status="success" level={1}>
+      component.tsx
+    </File>
+    <File value="file-2" status="success" level={1}>
+      styles.css
+    </File>
+  </Folder>
+  <Folder element="Module 2" value="module-2" status="success" level={0}>
+    <File value="file-3" status="success" level={1}>
+      utils.ts
+    </File>
+    <File value="file-4" status="success" level={1}>
+      types.ts
+    </File>
+  </Folder>
+  <CollapseButton elements={collapseTreeElements}>
+    <IconV2 name="fold" size="xs" />
+  </CollapseButton>
+</Tree>
+
+  </div>
+}`}
+/>
+
+## RTL Support
+
+The TreeView component supports right-to-left (RTL) text direction using the `dir` prop.
+
+<DocsPage.ComponentExample
+  client:only
+  code={`() => {
+  const rtlTree = [
+    {
+      id: 'rtl-1',
+      name: 'مجلد رئيسي',
+      status: 'success',
+      children: [
+        { id: 'rtl-1-1', name: 'ملف 1', status: 'success' },
+        { id: 'rtl-1-2', name: 'ملف 2', status: 'running' }
+      ]
+    }
+  ];
+
+return <Tree dir="rtl" className="h-64 w-full rounded-3 border">
+
+<Folder element="مجلد رئيسي" value="rtl-1" status="success" level={0}>
+  <File value="rtl-1-1" status="success" level={1}>
+    ملف 1
+  </File>
+  <File value="rtl-1-2" status="running" level={1}>
+    ملف 2
+  </File>
+</Folder>
+
+  </Tree>
+}`}
+/>
+
+## Complex Example - Full-Featured Pipeline Execution Tree
+
+This comprehensive example demonstrates all features of the TreeView component including:
+
+- Multiple nested levels
+- Various execution states with status icons
+- Duration display for each item
+- Initial selection and expansion
+- Collapse/expand all functionality
+- Mix of selectable and non-selectable items
+- Real-world CI/CD pipeline structure
+
+<DocsPage.ComponentExample
+  client:only
+  code={`() => {
+  const pipelineExecutionTree = [
+      {
+        id: 'pipeline-main',
+        name: 'Main Pipeline',
+        status: 'running',
+        duration: '15m 45s',
+        children: [
+          {
+            id: 'stage-build',
+            name: 'Build Stage',
+            status: 'success',
+            duration: '5m 20s',
+            children: [
+              {
+                id: 'job-compile',
+                name: 'Compile',
+                status: 'success',
+                duration: '2m 15s',
+                children: [
+                  { id: 'step-install', name: 'Install Dependencies', status: 'success', duration: '45s' },
+                  { id: 'step-compile', name: 'Run Compiler', status: 'success', duration: '1m 30s' }
+                ]
+              },
+              {
+                id: 'job-lint',
+                name: 'Lint & Format',
+                status: 'success',
+                duration: '1m 30s',
+                children: [
+                  { id: 'step-eslint', name: 'ESLint Check', status: 'success', duration: '50s' },
+                  { id: 'step-prettier', name: 'Prettier Check', status: 'success', duration: '40s' }
+                ]
+              },
+              {
+                id: 'job-build',
+                name: 'Build Application',
+                status: 'success',
+                duration: '1m 35s'
+              }
+            ]
+          },
+          {
+            id: 'stage-test',
+            name: 'Test Stage',
+            status: 'running',
+            duration: '8m 15s',
+            children: [
+              {
+                id: 'job-unit',
+                name: 'Unit Tests',
+                status: 'success',
+                duration: '3m 20s',
+                children: [
+                  { id: 'step-jest', name: 'Jest Tests', status: 'success', duration: '2m 45s' },
+                  { id: 'step-coverage', name: 'Coverage Report', status: 'success', duration: '35s' }
+                ]
+              },
+              {
+                id: 'job-integration',
+                name: 'Integration Tests',
+                status: 'running',
+                duration: '4m 55s',
+                children: [
+                  { id: 'step-setup-db', name: 'Setup Test DB', status: 'success', duration: '1m 10s' },
+                  { id: 'step-api-tests', name: 'API Tests', status: 'running', duration: '2m 30s' },
+                  { id: 'step-cleanup', name: 'Cleanup', status: 'pending' }
+                ]
+              },
+              {
+                id: 'job-e2e',
+                name: 'E2E Tests',
+                status: 'pending',
+                isSelectable: false
+              }
+            ]
+          },
+          {
+            id: 'stage-security',
+            name: 'Security Scan',
+            status: 'pending',
+            isSelectable: false,
+            children: [
+              { id: 'job-sast', name: 'SAST Scan', status: 'pending' },
+              { id: 'job-dependency', name: 'Dependency Check', status: 'pending' }
+            ]
+          },
+          {
+            id: 'stage-deploy',
+            name: 'Deploy Stage',
+            status: 'pending',
+            isSelectable: false,
+            children: [
+              {
+                id: 'job-staging',
+                name: 'Deploy to Staging',
+                status: 'pending',
+                children: [
+                  { id: 'step-build-image', name: 'Build Docker Image', status: 'pending' },
+                  { id: 'step-push-registry', name: 'Push to Registry', status: 'pending' },
+                  { id: 'step-deploy-k8s', name: 'Deploy to K8s', status: 'pending' }
+                ]
+              },
+              {
+                id: 'job-production',
+                name: 'Deploy to Production',
+                status: 'pending',
+                isSelectable: false
+              }
+            ]
+          }
+        ]
+      },
+      {
+        id: 'pipeline-hotfix',
+        name: 'Hotfix Pipeline',
+        status: 'failure',
+        duration: '4m 12s',
+        children: [
+          {
+            id: 'hotfix-build',
+            name: 'Quick Build',
+            status: 'success',
+            duration: '1m 45s'
+          },
+          {
+            id: 'hotfix-test',
+            name: 'Smoke Tests',
+            status: 'failure',
+            duration: '2m 27s',
+            children: [
+              { id: 'hotfix-test-1', name: 'Critical Path Test', status: 'failure', duration: '2m 27s' }
+            ]
+          }
+        ]
+      },
+      {
+        id: 'pipeline-scheduled',
+        name: 'Scheduled Maintenance',
+        status: 'skipped',
+        duration: '--',
+        children: [
+          { id: 'cleanup-logs', name: 'Cleanup Logs', status: 'skipped' },
+          { id: 'backup-db', name: 'Backup Database', status: 'skipped' }
+        ]
+      }
+  ];
+
+return <div className="relative">
+
+<Tree
+  initialSelectedId="step-api-tests"
+  initialExpendedItems={["pipeline-main", "stage-test", "job-integration"]}
+  indicator={true}
+  elements={pipelineExecutionTree}
+  className="h-[600px] w-full rounded-3 border"
+>
+  <Folder
+    element="Main Pipeline"
+    value="pipeline-main"
+    status="running"
+    duration="15m 45s"
+    level={0}
+  >
+    <Folder
+      element="Build Stage"
+      value="stage-build"
+      status="success"
+      duration="5m 20s"
+      level={1}
+    >
+      <Folder
+        element="Compile"
+        value="job-compile"
+        status="success"
+        duration="2m 15s"
+        level={2}
+      >
+        <File value="step-install" status="success" duration="45s" level={3}>
+          Install Dependencies
+        </File>
+        <File value="step-compile" status="success" duration="1m 30s" level={3}>
+          Run Compiler
+        </File>
+      </Folder>
+      <Folder
+        element="Lint & Format"
+        value="job-lint"
+        status="success"
+        duration="1m 30s"
+        level={2}
+      >
+        <File value="step-eslint" status="success" duration="50s" level={3}>
+          ESLint Check
+        </File>
+        <File value="step-prettier" status="success" duration="40s" level={3}>
+          Prettier Check
+        </File>
+      </Folder>
+      <File value="job-build" status="success" duration="1m 35s" level={2}>
+        Build Application
+      </File>
+    </Folder>
+    <Folder
+      element="Test Stage"
+      value="stage-test"
+      status="running"
+      duration="8m 15s"
+      level={1}
+    >
+      <Folder
+        element="Unit Tests"
+        value="job-unit"
+        status="success"
+        duration="3m 20s"
+        level={2}
+      >
+        <File value="step-jest" status="success" duration="2m 45s" level={3}>
+          Jest Tests
+        </File>
+        <File value="step-coverage" status="success" duration="35s" level={3}>
+          Coverage Report
+        </File>
+      </Folder>
+      <Folder
+        element="Integration Tests"
+        value="job-integration"
+        status="running"
+        duration="4m 55s"
+        level={2}
+      >
+        <File
+          value="step-setup-db"
+          status="success"
+          duration="1m 10s"
+          level={3}
+        >
+          Setup Test DB
+        </File>
+        <File
+          value="step-api-tests"
+          status="running"
+          duration="2m 30s"
+          level={3}
+        >
+          API Tests
+        </File>
+        <File value="step-cleanup" status="pending" level={3}>
+          Cleanup
+        </File>
+      </Folder>
+      <File value="job-e2e" status="pending" isSelectable={false} level={2}>
+        E2E Tests
+      </File>
+    </Folder>
+    <Folder
+      element="Security Scan"
+      value="stage-security"
+      status="pending"
+      isSelectable={false}
+      level={1}
+    >
+      <File value="job-sast" status="pending" level={2}>
+        SAST Scan
+      </File>
+      <File value="job-dependency" status="pending" level={2}>
+        Dependency Check
+      </File>
+    </Folder>
+    <Folder
+      element="Deploy Stage"
+      value="stage-deploy"
+      status="pending"
+      isSelectable={false}
+      level={1}
+    >
+      <Folder
+        element="Deploy to Staging"
+        value="job-staging"
+        status="pending"
+        level={2}
+      >
+        <File value="step-build-image" status="pending" level={3}>
+          Build Docker Image
+        </File>
+        <File value="step-push-registry" status="pending" level={3}>
+          Push to Registry
+        </File>
+        <File value="step-deploy-k8s" status="pending" level={3}>
+          Deploy to K8s
+        </File>
+      </Folder>
+      <File
+        value="job-production"
+        status="pending"
+        isSelectable={false}
+        level={2}
+      >
+        Deploy to Production
+      </File>
+    </Folder>
+  </Folder>
+  <Folder
+    element="Hotfix Pipeline"
+    value="pipeline-hotfix"
+    status="failure"
+    duration="4m 12s"
+    level={0}
+  >
+    <File value="hotfix-build" status="success" duration="1m 45s" level={1}>
+      Quick Build
+    </File>
+    <Folder
+      element="Smoke Tests"
+      value="hotfix-test"
+      status="failure"
+      duration="2m 27s"
+      level={1}
+    >
+      <File value="hotfix-test-1" status="failure" duration="2m 27s" level={2}>
+        Critical Path Test
+      </File>
+    </Folder>
+  </Folder>
+  <Folder
+    element="Scheduled Maintenance"
+    value="pipeline-scheduled"
+    status="skipped"
+    duration="--"
+    level={0}
+  >
+    <File value="cleanup-logs" status="skipped" level={1}>
+      Cleanup Logs
+    </File>
+    <File value="backup-db" status="skipped" level={1}>
+      Backup Database
+    </File>
+  </Folder>
+  <CollapseButton elements={pipelineExecutionTree}>
+    <IconV2 name="fold" size="xs" />
+  </CollapseButton>
+</Tree>
+
+  </div>
+}`}
+/>
+
+## API Reference
+
+### TreeViewElement Type
+
+```typescript
+type TreeViewElement = {
+  id: string; // Unique identifier for the tree item
+  name: string; // Display name of the item
+  isSelectable?: boolean; // Whether the item can be selected (default: true)
+  children?: TreeViewElement[]; // Nested child elements
+  status: ExecutionState; // Execution status (see ExecutionState enum)
+  duration?: string; // Formatted duration string (e.g., "2m 30s")
+};
+```
+
+### ExecutionState Enum
+
+```typescript
+enum ExecutionState {
+  PENDING = "pending",
+  RUNNING = "running",
+  SUCCESS = "success",
+  FAILURE = "failure",
+  ERROR = "error",
+  SKIPPED = "skipped",
+  KILLED = "killed",
+  BLOCKED = "blocked",
+  WAITING_ON_DEPENDENCIES = "waiting_on_dependencies",
+  UNKNOWN = "unknown",
+}
+```
+
+### Tree Component Props
+
+<DocsPage.PropsTable
+  props={[
+    {
+      name: "elements",
+      description:
+        "Array of tree elements to render. Each element can have nested children.",
+      required: false,
+      value: "TreeViewElement[]",
+    },
+    {
+      name: "initialSelectedId",
+      description:
+        "ID of the initially selected item. The tree will automatically expand parent folders to show this item.",
+      required: false,
+      value: "string",
+    },
+    {
+      name: "initialExpendedItems",
+      description: "Array of IDs for items that should be initially expanded.",
+      required: false,
+      value: "string[]",
+    },
+    {
+      name: "indicator",
+      description: "Whether to show visual indicators for the tree structure.",
+      required: false,
+      defaultValue: "true",
+      value: "boolean",
+    },
+    {
+      name: "dir",
+      description: "Text direction for the tree. Supports RTL languages.",
+      required: false,
+      defaultValue: "'ltr'",
+      value: "'rtl' | 'ltr'",
+    },
+    {
+      name: "className",
+      description: "Additional CSS classes for the tree container.",
+      required: false,
+      value: "string",
+    },
+    {
+      name: "openIcon",
+      description: "Custom icon to display for open/expanded folders.",
+      required: false,
+      value: "React.ReactNode",
+    },
+    {
+      name: "closeIcon",
+      description: "Custom icon to display for closed/collapsed folders.",
+      required: false,
+      value: "React.ReactNode",
+    },
+  ]}
+/>
+
+### Folder Component Props
+
+<DocsPage.PropsTable
+  props={[
+    {
+      name: "element",
+      description: "Name of the folder to display.",
+      required: true,
+      value: "string",
+    },
+    {
+      name: "value",
+      description: "Unique value/ID for the folder (used for accordion state).",
+      required: true,
+      value: "string",
+    },
+    {
+      name: "status",
+      description:
+        "Execution status of the folder (determines the status icon displayed).",
+      required: true,
+      value: "ExecutionState",
+    },
+    {
+      name: "duration",
+      description: "Formatted duration string displayed on the right side.",
+      required: false,
+      value: "string",
+    },
+    {
+      name: "level",
+      description: "Nesting level of the folder (affects indentation).",
+      required: true,
+      value: "number",
+    },
+    {
+      name: "isSelectable",
+      description: "Whether the folder can be selected/clicked.",
+      required: false,
+      defaultValue: "true",
+      value: "boolean",
+    },
+    {
+      name: "isSelect",
+      description: "Whether the folder is currently selected.",
+      required: false,
+      value: "boolean",
+    },
+    {
+      name: "expendedItems",
+      description: "Array of expanded item IDs (internal state management).",
+      required: false,
+      value: "string[]",
+    },
+  ]}
+/>
+
+### File Component Props
+
+<DocsPage.PropsTable
+  props={[
+    {
+      name: "value",
+      description: "Unique value/ID for the file.",
+      required: true,
+      value: "string",
+    },
+    {
+      name: "children",
+      description: "Display name of the file.",
+      required: true,
+      value: "React.ReactNode",
+    },
+    {
+      name: "status",
+      description:
+        "Execution status of the file (determines the status icon displayed).",
+      required: true,
+      value: "ExecutionState",
+    },
+    {
+      name: "duration",
+      description: "Formatted duration string displayed on the right side.",
+      required: false,
+      value: "string",
+    },
+    {
+      name: "level",
+      description: "Nesting level of the file (affects indentation).",
+      required: true,
+      value: "number",
+    },
+    {
+      name: "isSelectable",
+      description: "Whether the file can be selected/clicked.",
+      required: false,
+      defaultValue: "true",
+      value: "boolean",
+    },
+    {
+      name: "isSelect",
+      description: "Whether the file is currently selected.",
+      required: false,
+      value: "boolean",
+    },
+    {
+      name: "handleSelect",
+      description: "Callback function when the file is selected.",
+      required: false,
+      value: "(id: string) => void",
+    },
+  ]}
+/>
+
+### CollapseButton Component Props
+
+<DocsPage.PropsTable
+  props={[
+    {
+      name: "elements",
+      description:
+        "Array of tree elements (required to expand/collapse all items).",
+      required: true,
+      value: "TreeViewElement[]",
+    },
+    {
+      name: "expandAll",
+      description: "If true, automatically expands all items on mount.",
+      required: false,
+      defaultValue: "false",
+      value: "boolean",
+    },
+    {
+      name: "children",
+      description: "Content to display inside the button (typically an icon).",
+      required: false,
+      value: "React.ReactNode",
+    },
+  ]}
+/>
+
+## Helper Utility: Rendering Tree Elements
+
+You can create a helper utility to recursively render tree elements from data:
+
+```typescript jsx
+import { ReactNode } from 'react'
+import { File, Folder, type TreeViewElement } from '@harnessio/ui/components'
+
+interface RenderTreeElementProps {
+  element: TreeViewElement
+  handleClick?: (params: { parentNode: TreeViewElement | null; childNode: TreeViewElement }) => void
+  parentElement?: TreeViewElement | null
+  level?: number
+}
+
+// Main render function
+export const renderTree = (
+  elements: TreeViewElement[],
+  handleClick?: (params: { parentNode: TreeViewElement | null; childNode: TreeViewElement }) => void
+): ReactNode => {
+  if (elements.length === 0) return []
+  return elements.map(element => (
+    <div key={element.id}>
+      {renderTreeElement({ element, handleClick, parentElement: null })}
+    </div>
+  ))
+}
+
+// Render folder with children
+const renderTreeFolder = ({ element: folderElement, handleClick, level = 0 }: RenderTreeElementProps): ReactNode => {
+  return (
+    <Folder
+      element={folderElement.name}
+      value={folderElement.id}
+      status={folderElement.status}
+      duration={folderElement.duration}
+      isSelectable={folderElement.isSelectable}
+      level={level}
+    >
+      {folderElement.children?.map(childElement => (
+        <div key={childElement.id}>
+          {renderTreeElement({
+            parentElement: folderElement,
+            element: childElement,
+            handleClick,
+            level: level + 1
+          })}
+        </div>
+      ))}
+    </Folder>
+  )
+}
+
+// Render file (leaf node)
+const renderTreeFile = ({
+  element: fileElement,
+  handleClick,
+  parentElement,
+  level = 0
+}: RenderTreeElementProps): ReactNode => {
+  return (
+    <File
+      value={fileElement.id}
+      status={fileElement.status}
+      duration={fileElement.duration}
+      isSelectable={fileElement.isSelectable}
+      handleSelect={() => handleClick?.({ parentNode: parentElement, childNode: fileElement })}
+      level={level}
+    >
+      {fileElement.name}
+    </File>
+  )
+}
+
+// Decide whether to render folder or file
+const renderTreeElement = ({
+  element,
+  handleClick,
+  parentElement,
+  level = 0
+}: RenderTreeElementProps): ReactNode => {
+  if (element.children && element.children.length > 0) {
+    return renderTreeFolder({ element, handleClick, parentElement, level })
+  }
+  return renderTreeFile({ element, handleClick, parentElement, level })
+}
+
+// Usage example:
+const treeData: TreeViewElement[] = [
+  {
+    id: '1',
+    name: 'Folder',
+    status: 'success',
+    children: [
+      { id: '1-1', name: 'File 1', status: 'success' }
+    ]
+  }
+]
+
+<Tree className="h-96 w-full rounded-3 border">
+  {renderTree(treeData, ({ parentNode, childNode }) => {
+    console.log('Selected:', childNode.name)
+  })}
+</Tree>
+```

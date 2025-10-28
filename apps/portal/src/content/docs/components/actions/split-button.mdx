@@ -1,0 +1,438 @@
+---
+title: Split Button
+description: Interactive split button with dropdown options
+beta: true
+---
+
+The `SplitButton` component provides a flexible UI element combining a button with a dropdown menu of options. It can be used in two different modes:
+
+- Regular dropdown menu (default behavior)
+- Radio button selection group (when `selectedValue` is provided)
+
+import { DocsPage } from "@/components/docs-page";
+import { Aside } from "@astrojs/starlight/components";
+
+<Aside>
+  The `SplitButton` component supports specific combinations of `variant` and `theme` props:
+
+- `variant="primary"` with `theme="default"`
+- `variant="outline"` with `theme="default" | "success" | "danger"`
+
+</Aside>
+
+<DocsPage.ComponentExample
+  client:only
+  code={`<div className="flex flex-col gap-cn-2xl">
+  {/* Variants and Themes */}
+  <div>
+    <Text variant="heading-subsection" as="h4" className="mb-cn-sm">Variants and Themes</Text>
+    
+    {/* Primary Variant */}
+    <div className="mb-cn-xl">
+      <Text variant="heading-small" as="h5" color="foreground-3" className="mb-cn-sm">Primary Variant</Text>
+      <div className="flex flex-wrap items-end gap-cn-md">
+        <SplitButton
+          id="primary-default"
+          variant="primary"
+          theme="default"
+          handleButtonClick={() => {}}
+          options={[
+            { value: 'option1', label: 'Option 1', description: 'Description for option 1' },
+            { value: 'option2', label: 'Option 2', description: 'Description for option 2' },
+          ]}
+          handleOptionChange={() => {}}
+        >
+          Primary + Default
+        </SplitButton>
+
+        <SplitButton
+          id="primary-success"
+          variant="primary"
+          theme="success"
+          handleButtonClick={() => {}}
+          options={[
+            { value: 'option1', label: 'Option 1', description: 'Description for option 1' },
+            { value: 'option2', label: 'Option 2', description: 'Description for option 2' },
+          ]}
+          handleOptionChange={() => {}}
+        >
+          Primary + Success
+        </SplitButton>
+
+        <SplitButton
+          id="primary-danger"
+          variant="primary"
+          theme="danger"
+          handleButtonClick={() => {}}
+          options={[
+            { value: 'option1', label: 'Option 1', description: 'Description for option 1' },
+            { value: 'option2', label: 'Option 2', description: 'Description for option 2' },
+          ]}
+          handleOptionChange={() => {}}
+        >
+          Primary + Danger
+        </SplitButton>
+      </div>
+    </div>
+
+    {/* Secondary Variant */}
+    <div className="mb-cn-xl">
+      <Text variant="heading-small" as="h5" color="foreground-3" className="mb-cn-sm">Secondary Variant</Text>
+      <div className="flex flex-wrap items-end gap-cn-md">
+        <SplitButton
+          id="secondary-default"
+          variant="secondary"
+          theme="default"
+          handleButtonClick={() => {}}
+          options={[
+            { value: 'option1', label: 'Option 1', description: 'Description for option 1' },
+            { value: 'option2', label: 'Option 2', description: 'Description for option 2' },
+          ]}
+          handleOptionChange={() => {}}
+        >
+          Secondary + Default
+        </SplitButton>
+
+        <SplitButton
+          id="secondary-success"
+          variant="secondary"
+          theme="success"
+          handleButtonClick={() => {}}
+          options={[
+            { value: 'option1', label: 'Option 1', description: 'Description for option 1' },
+            { value: 'option2', label: 'Option 2', description: 'Description for option 2' },
+          ]}
+          handleOptionChange={() => {}}
+        >
+          Secondary + Success
+        </SplitButton>
+
+        <SplitButton
+          id="secondary-danger"
+          variant="secondary"
+          theme="danger"
+          handleButtonClick={() => {}}
+          options={[
+            { value: 'option1', label: 'Option 1', description: 'Description for option 1' },
+            { value: 'option2', label: 'Option 2', description: 'Description for option 2' },
+          ]}
+          handleOptionChange={() => {}}
+        >
+          Secondary + Danger
+        </SplitButton>
+      </div>
+    </div>
+
+    {/* Outline Variant */}
+    <div className="mb-cn-xl">
+      <Text variant="heading-small" as="h5" color="foreground-3" className="mb-cn-sm">Outline Variant</Text>
+      <div className="flex flex-wrap items-end gap-cn-md">
+        <SplitButton
+          id="outline-default"
+          variant="outline"
+          theme="default"
+          handleButtonClick={() => {}}
+          options={[
+            { value: 'option1', label: 'Option 1', description: 'Description for option 1' },
+            { value: 'option2', label: 'Option 2', description: 'Description for option 2' },
+          ]}
+          handleOptionChange={() => {}}
+        >
+          Outline + Default
+        </SplitButton>
+
+        <SplitButton
+          id="outline-success"
+          variant="outline"
+          theme="success"
+          handleButtonClick={() => {}}
+          options={[
+            { value: 'option1', label: 'Option 1', description: 'Description for option 1' },
+            { value: 'option2', label: 'Option 2', description: 'Description for option 2' },
+          ]}
+          handleOptionChange={() => {}}
+        >
+          Outline + Success
+        </SplitButton>
+
+        <SplitButton
+          id="outline-danger"
+          variant="outline"
+          theme="danger"
+          handleButtonClick={() => {}}
+          options={[
+            { value: 'option1', label: 'Option 1', description: 'Description for option 1' },
+            { value: 'option2', label: 'Option 2', description: 'Description for option 2' },
+          ]}
+          handleOptionChange={() => {}}
+        >
+          Outline + Danger
+        </SplitButton>
+      </div>
+    </div>
+
+  </div>
+
+{/* Radio Button Behavior */}
+
+<div>
+  <Text variant="heading-subsection" as="h4" className="mb-cn-sm">
+    Radio Button Selection
+  </Text>
+  <div className="flex flex-wrap items-end gap-cn-md">
+    <SplitButton
+      id="radio-button"
+      handleButtonClick={() => {}}
+      selectedValue="option1"
+      options={[
+        {
+          value: "option1",
+          label: "Option 1",
+          description: "Description for option 1",
+        },
+        {
+          value: "option2",
+          label: "Option 2",
+          description: "Description for option 2",
+        },
+      ]}
+      handleOptionChange={() => {}}
+    >
+      With Selected Value
+    </SplitButton>
+  </div>
+</div>
+
+{/* Loading State */}
+
+<div>
+  <Text variant="heading-subsection" as="h4" className="mb-cn-sm">
+    Loading State
+  </Text>
+  <div className="flex flex-wrap items-end gap-cn-md">
+    <SplitButton
+      id="loading-state"
+      handleButtonClick={() => {}}
+      loading={true}
+      options={[
+        {
+          value: "option1",
+          label: "Option 1",
+          description: "Description for option 1",
+        },
+        {
+          value: "option2",
+          label: "Option 2",
+          description: "Description for option 2",
+        },
+      ]}
+      handleOptionChange={() => {}}
+    >
+      Loading...
+    </SplitButton>
+  </div>
+</div>
+
+{/* Disabled States */}
+
+  <div>
+    <Text variant="heading-subsection" as="h4" className="mb-cn-sm">Disabled State</Text>
+    <div className="flex flex-wrap items-end gap-cn-md">
+      <SplitButton
+        id="disabled-state"
+        handleButtonClick={() => {}}
+        disabled
+        options={[
+          { value: 'option1', label: 'Option 1', description: 'Description for option 1' },
+          { value: 'option2', label: 'Option 2', description: 'Description for option 2' },
+        ]}
+        handleOptionChange={() => {}}
+      >
+        Disabled
+      </SplitButton>
+      <SplitButton
+        id="disabled-state"
+        handleButtonClick={() => {}}
+        disableButton
+        options={[
+          { value: 'option1', label: 'Option 1', description: 'Description for option 1' },
+          { value: 'option2', label: 'Option 2', description: 'Description for option 2' },
+        ]}
+        handleOptionChange={() => {}}
+      >
+        Disabled (Button)
+      </SplitButton>
+      <SplitButton
+        id="disabled-state"
+        handleButtonClick={() => {}}
+        disableDropdown
+        options={[
+          { value: 'option1', label: 'Option 1', description: 'Description for option 1' },
+          { value: 'option2', label: 'Option 2', description: 'Description for option 2' },
+        ]}
+        handleOptionChange={() => {}}
+      >
+        Disabled (Dropdown)
+      </SplitButton>
+    </div>
+  </div>
+</div>`}
+/>
+
+## Usage
+
+```typescript jsx
+import { SplitButton } from '@harnessio/ui/components'
+
+// ...
+
+// Basic usage with primary+default combination
+const options = [
+  { value: 'option1', label: 'Option 1', description: 'Description for option 1' },
+  { value: 'option2', label: 'Option 2', description: 'Description for option 2' },
+]
+
+// Primary variant with default theme
+return (
+  <>
+    {/* Primary variant with default theme */}
+    <SplitButton
+      id="primary-default"
+      handleButtonClick={() => console.log('Button clicked')}
+      options={options}
+      handleOptionChange={(value) => console.log('Selected:', value)}
+    >
+      Primary + Default
+    </SplitButton>
+
+    {/* Outline variant with success theme */}
+    <SplitButton
+      id="outline-success"
+      variant="outline"
+      theme="success"
+      handleButtonClick={() => console.log('Button clicked')}
+      options={options}
+      handleOptionChange={(value) => console.log('Selected:', value)}
+    >
+      Outline + Success
+    </SplitButton>
+
+    {/* As a radio button group */}
+    <SplitButton
+      id="radio-button"
+      handleButtonClick={() => console.log('Button clicked')}
+      selectedValue="option1"
+      options={options}
+      handleOptionChange={(value) => console.log('Selected:', value)}
+    >
+      With Selected Value
+    </SplitButton>
+  </>
+)
+```
+
+## API Reference
+
+<DocsPage.PropsTable
+  props={[
+    {
+      name: "id",
+      description: "Unique identifier for the component.",
+      required: true,
+      value: "string",
+    },
+    {
+      name: "handleButtonClick",
+      description: "Function to handle button click.",
+      required: true,
+      value: "(e: MouseEvent) => void",
+    },
+    {
+      name: "options",
+      description: "Array of options to display in the dropdown.",
+      required: true,
+      value: "{ value: string; label: string; description?: string }[]",
+    },
+    {
+      name: "handleOptionChange",
+      description: "Function to handle option selection.",
+      required: true,
+      value: "(val: string) => void",
+    },
+    {
+      name: "selectedValue",
+      description:
+        "Selected value for radio button behavior. When provided, the dropdown displays radio buttons.",
+      required: false,
+      value: "string",
+    },
+    {
+      name: "loading",
+      description: "Indicates if the button is in a loading state.",
+      required: false,
+      value: "boolean",
+      defaultValue: "false",
+    },
+    {
+      name: "disabled",
+      description: "Disables the button and dropdown.",
+      required: false,
+      value: "boolean",
+      defaultValue: "false",
+    },
+    {
+      name: "disableButton",
+      description: "Disables the button while dropdown is enabled.",
+      required: false,
+      value: "boolean",
+      defaultValue: "false",
+    },
+    {
+      name: "disableDropdown",
+      description: "Disables the dropdown while button is enabled.",
+      required: false,
+      value: "boolean",
+      defaultValue: "false",
+    },
+    {
+      name: "variant",
+      description:
+        "Visual style of the button. Allowed combinations: primary+default, or outline+(default|success|danger).",
+      required: false,
+      value: "'primary' | 'outline' | 'secondary'",
+      defaultValue: "'primary'",
+    },
+    {
+      name: "theme",
+      description:
+        "Color theme of the button. Allowed combinations: primary+default, or outline+(default|success|danger).",
+      required: false,
+      value: "'default' | 'success' | 'danger'",
+      defaultValue: "'default'",
+    },
+    {
+      name: "children",
+      description: "Content to display inside the button.",
+      required: true,
+      value: "ReactNode",
+    },
+    {
+      name: "className",
+      description: "Additional class name for the container.",
+      required: false,
+      value: "string",
+    },
+    {
+      name: "buttonClassName",
+      description: "Additional class name for the button element.",
+      required: false,
+      value: "string",
+    },
+    {
+      name: "dropdownContentClassName",
+      description: "Additional class name for the dropdown content.",
+      required: false,
+      value: "string",
+    },
+  ]}
+/>

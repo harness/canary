@@ -1,0 +1,667 @@
+---
+title: Table
+description: Table component
+beta: true
+---
+
+The `Table` component provides a way to display tabular data with various sub-components for customization.
+
+import { DocsPage } from "@/components/docs-page";
+import { Aside } from "@astrojs/starlight/components";
+
+<DocsPage.ComponentExample
+  client:only
+  code={`
+<Layout.Flex direction="column" gap="xl">
+  <div>
+    <h5 className="mb-cn-xs">Normal size with tooltip</h5>
+    <Table.Root>
+      <Table.Header>
+        <Table.Row>
+          <Table.Head tooltipProps={{ content: 'Name'}}>Name</Table.Head>
+          <Table.Head tooltipProps={{ content: 'Email'}}>Email</Table.Head>
+          <Table.Head tooltipProps={{ content: 'Display Name'}}>Display Name</Table.Head>
+          <Table.Head tooltipProps={{ content: 'Date added'}}>Date added</Table.Head>
+        </Table.Row>
+      </Table.Header>
+      <Table.Body>
+        <Table.Row>
+          <Table.Cell>John Doe</Table.Cell>
+          <Table.Cell>john@example.com</Table.Cell>
+          <Table.Cell>John</Table.Cell>
+          <Table.Cell>2023-01-01</Table.Cell>
+        </Table.Row>
+        <Table.Row>
+          <Table.Cell>Jane Smith</Table.Cell>
+          <Table.Cell>jane@example.com</Table.Cell>
+          <Table.Cell>Jane</Table.Cell>
+          <Table.Cell>2023-02-15</Table.Cell>
+        </Table.Row>
+        <Table.Row>
+          <Table.Cell>Bob Johnson</Table.Cell>
+          <Table.Cell>bob@example.com</Table.Cell>
+          <Table.Cell>Bob</Table.Cell>
+          <Table.Cell>2023-03-20</Table.Cell>
+        </Table.Row>
+      </Table.Body>
+    </Table.Root>
+  </div>
+  <div>
+    <h5 className="mb-cn-xs">Compact size with hover disabled</h5>
+    <Table.Root size="compact" disableHighlightOnHover>
+      <Table.Header>
+        <Table.Row>
+          <Table.Head>Name</Table.Head>
+          <Table.Head>Email</Table.Head>
+          <Table.Head>Display Name</Table.Head>
+          <Table.Head>Date added</Table.Head>
+        </Table.Row>
+      </Table.Header>
+      <Table.Body>
+        <Table.Row>
+          <Table.Cell>John Doe</Table.Cell>
+          <Table.Cell>john@example.com</Table.Cell>
+          <Table.Cell>John</Table.Cell>
+          <Table.Cell>2023-01-01</Table.Cell>
+        </Table.Row>
+        <Table.Row>
+          <Table.Cell>Jane Smith</Table.Cell>
+          <Table.Cell>jane@example.com</Table.Cell>
+          <Table.Cell>Jane</Table.Cell>
+          <Table.Cell>2023-02-15</Table.Cell>
+        </Table.Row>
+        <Table.Row>
+          <Table.Cell>Bob Johnson</Table.Cell>
+          <Table.Cell>bob@example.com</Table.Cell>
+          <Table.Cell>Bob</Table.Cell>
+          <Table.Cell>2023-03-20</Table.Cell>
+        </Table.Row>
+      </Table.Body>
+    </Table.Root>
+  </div>
+  <div>
+    <h5 className="mb-cn-xs">Relaxed size</h5>
+    <Table.Root size="relaxed">
+      <Table.Header>
+        <Table.Row>
+          <Table.Head>Name</Table.Head>
+          <Table.Head>Email</Table.Head>
+          <Table.Head>Display Name</Table.Head>
+          <Table.Head>Date added</Table.Head>
+        </Table.Row>
+      </Table.Header>
+      <Table.Body>
+        <Table.Row>
+          <Table.Cell>John Doe</Table.Cell>
+          <Table.Cell>john@example.com</Table.Cell>
+          <Table.Cell>John</Table.Cell>
+          <Table.Cell>2023-01-01</Table.Cell>
+        </Table.Row>
+        <Table.Row>
+          <Table.Cell>Jane Smith</Table.Cell>
+          <Table.Cell>jane@example.com</Table.Cell>
+          <Table.Cell>Jane</Table.Cell>
+          <Table.Cell>2023-02-15</Table.Cell>
+        </Table.Row>
+        <Table.Row>
+          <Table.Cell>Bob Johnson</Table.Cell>
+          <Table.Cell>bob@example.com</Table.Cell>
+          <Table.Cell>Bob</Table.Cell>
+          <Table.Cell>2023-03-20</Table.Cell>
+        </Table.Row>
+      </Table.Body>
+    </Table.Root>
+  </div>
+</Layout.Flex>
+`}
+/>
+
+<DocsPage.ComponentExample
+  client:only
+  code={`
+<Layout.Flex direction="column" gap="xl">
+  <div>
+    <h5 className="mb-cn-xs">Table with Checkbox</h5>
+    <Table.Root>
+      <Table.Header>
+        <Table.Row>
+          <Table.Head width="40px"><Checkbox checked="indeterminate" /></Table.Head>
+          <Table.Head>Name</Table.Head>
+          <Table.Head>Email</Table.Head>
+          <Table.Head>Display Name</Table.Head>
+          <Table.Head>Date added</Table.Head>
+        </Table.Row>
+      </Table.Header>
+      <Table.Body>
+        <Table.Row selected>
+          <Table.Cell><Checkbox checked /></Table.Cell>
+          <Table.Cell>John Doe</Table.Cell>
+          <Table.Cell>john@example.com</Table.Cell>
+          <Table.Cell>John</Table.Cell>
+          <Table.Cell>2023-01-01</Table.Cell>
+        </Table.Row>
+        <Table.Row>
+          <Table.Cell><Checkbox checked={false}/></Table.Cell>
+          <Table.Cell>Jane Smith</Table.Cell>
+          <Table.Cell>jane@example.com</Table.Cell>
+          <Table.Cell>Jane</Table.Cell>
+          <Table.Cell>2023-02-15</Table.Cell>
+        </Table.Row>
+        <Table.Row>
+          <Table.Cell><Checkbox checked={false}/></Table.Cell>
+          <Table.Cell>Bob Johnson</Table.Cell>
+          <Table.Cell>bob@example.com</Table.Cell>
+          <Table.Cell>Bob</Table.Cell>
+          <Table.Cell>2023-03-20</Table.Cell>
+        </Table.Row>
+      </Table.Body>
+    </Table.Root>
+  </div>
+  <div>
+    <h5 className="mb-cn-xs">Table with radio button</h5>
+    <Radio.Root name="user-selection" value="jane">
+      <Table.Root>
+        <Table.Header>
+          <Table.Row>
+            <Table.Head></Table.Head>
+            <Table.Head>Name</Table.Head>
+            <Table.Head>Email</Table.Head>
+            <Table.Head>Display Name</Table.Head>
+            <Table.Head>Date added</Table.Head>
+          </Table.Row>
+        </Table.Header>
+        <Table.Body>  
+          <Table.Row>
+            <Table.Cell>
+              <Radio.Item value="john" />
+            </Table.Cell>
+            <Table.Cell>John Doe</Table.Cell>
+            <Table.Cell>john@example.com</Table.Cell>
+            <Table.Cell>John</Table.Cell>
+            <Table.Cell>2023-01-01</Table.Cell>
+          </Table.Row>
+          <Table.Row selected>
+            <Table.Cell>
+              <Radio.Item value="jane" />
+            </Table.Cell>
+            <Table.Cell>Jane Smith</Table.Cell>
+            <Table.Cell>jane@example.com</Table.Cell>
+            <Table.Cell>Jane</Table.Cell>
+            <Table.Cell>2023-02-15</Table.Cell>
+          </Table.Row>
+          <Table.Row>
+            <Table.Cell>
+              <Radio.Item value="bob" />
+            </Table.Cell>
+            <Table.Cell>Bob Johnson</Table.Cell>
+            <Table.Cell>bob@example.com</Table.Cell>
+            <Table.Cell>Bob</Table.Cell>
+            <Table.Cell>2023-03-20</Table.Cell>
+          </Table.Row>
+        </Table.Body>
+      </Table.Root>
+    </Radio.Root>
+  </div>
+</Layout.Flex>
+`}
+/>
+
+<DocsPage.ComponentExample
+  client:only
+  code={`
+<div className="flex flex-col">
+  <div>
+    <h5 className="mb-cn-xs">Table with Submenu and Pagination</h5>
+    <Table.Root paginationProps={{ pageSize: 10, totalItems: 50, currentPage: 1, goToPage: (page) => console.log(page), pageSizeOptions: [5, 10, 20], onPageSizeChange: (size) => console.log(size) }}>
+      <Table.Header>
+        <Table.Row>
+          <Table.Head>Name</Table.Head>
+          <Table.Head>Email</Table.Head>
+          <Table.Head>Display Name</Table.Head>
+          <Table.Head>Date added</Table.Head>
+          <Table.Head></Table.Head>
+        </Table.Row>
+      </Table.Header>
+      <Table.Body>
+        <Table.Row>
+          <Table.Cell>John Doe</Table.Cell>
+          <Table.Cell>john@example.com</Table.Cell>
+          <Table.Cell>John</Table.Cell>
+          <Table.Cell>2023-01-01</Table.Cell>
+          <Table.Cell><MoreActionsTooltip actions={[
+            {
+              title: 'Action 1',
+              onClick: () => {}
+            },
+            {
+              title: 'Action 2',
+              onClick: () => {}
+            }
+          ]} /></Table.Cell>
+        </Table.Row>
+        <Table.Row>
+          <Table.Cell>Jane Smith</Table.Cell>
+          <Table.Cell>jane@example.com</Table.Cell>
+          <Table.Cell>Jane</Table.Cell>
+          <Table.Cell>2023-02-15</Table.Cell>
+          <Table.Cell><MoreActionsTooltip actions={[
+            {
+              title: 'Action 1',
+              onClick: () => {}
+            },
+            {
+              title: 'Action 2',
+              onClick: () => {}
+            }
+          ]} /></Table.Cell>
+        </Table.Row>
+        <Table.Row>
+          <Table.Cell>Bob Johnson</Table.Cell>
+          <Table.Cell>bob@example.com</Table.Cell>
+          <Table.Cell>Bob</Table.Cell>
+          <Table.Cell>2023-03-20</Table.Cell>
+          <Table.Cell><MoreActionsTooltip actions={[
+            {
+              title: 'Action 1',
+              onClick: () => {}
+            },
+            {
+              title: 'Action 2',
+              onClick: () => {}
+            }
+          ]} /></Table.Cell>
+        </Table.Row>
+      </Table.Body>
+    </Table.Root>
+  </div>
+</div>
+`}
+/>
+
+<DocsPage.ComponentExample
+  client:only
+  code={`
+  <div>
+    <h5 className="mb-cn-xs">Table with Linked Cells</h5>
+    <Table.Root>
+      <Table.Header>
+        <Table.Row>
+          <Table.Head>Repository</Table.Head>
+          <Table.Head>Description</Table.Head>
+          <Table.Head>Stars</Table.Head>
+        </Table.Row>
+      </Table.Header>
+      <Table.Body>
+        <Table.Row>
+          <Table.Cell to="/repositories/canary">
+            canary
+          </Table.Cell>
+          <Table.Cell>UI component library for Harness</Table.Cell>
+          <Table.Cell>★ 245</Table.Cell>
+        </Table.Row>
+        {/* Example of a linked row - entire row is clickable */}
+        <Table.Row to="/repositories/gitness" linkProps={{ variant: 'secondary' }}>
+          <Table.Cell>
+            gitness
+          </Table.Cell>
+          <Table.Cell>Git server with a modern UI</Table.Cell>
+          <Table.Cell disableLink>★ 189</Table.Cell>
+        </Table.Row>
+        <Table.Row>
+          {/* Link with onClick handler */}
+          <Table.Cell 
+            to="/repositories/drone"
+            linkProps={{ 
+              suffixIcon: true,
+            }}
+          >
+            drone
+          </Table.Cell>
+          <Table.Cell>CI/CD platform built on Docker</Table.Cell>
+          <Table.Cell>★ 312</Table.Cell>
+        </Table.Row>
+        
+      </Table.Body>
+    </Table.Root>
+  </div>
+`}
+/>
+
+## Usage
+
+```typescript jsx
+import { Table } from '@harnessio/ui/components'
+
+//...
+
+return (
+  <Table.Root size="normal">
+    <Table.Header>
+      <Table.Row>
+        <Table.Head>Name</Table.Head>
+        <Table.Head>Email</Table.Head>
+        <Table.Head>Display Name</Table.Head>
+        <Table.Head>Date added</Table.Head>
+      </Table.Row>
+    </Table.Header>
+    <Table.Body>
+      <Table.Row>
+        <Table.Cell>John Doe</Table.Cell>
+        <Table.Cell>john@example.com</Table.Cell>
+        <Table.Cell>John</Table.Cell>
+        <Table.Cell>2023-01-01</Table.Cell>
+      </Table.Row>
+    </Table.Body>
+  </Table.Root>
+)
+```
+
+## Anatomy
+
+All parts of the `Table` component can be imported and composed as required.
+
+```typescript jsx
+<Table.Root>
+  <Table.Caption />
+  <Table.Header>
+    <Table.Row>
+      <Table.Head />
+    </Table.Row>
+  </Table.Header>
+  <Table.Body>
+    <Table.Row>
+      <Table.Cell />
+    </Table.Row>
+  </Table.Body>
+  <Table.Footer>
+    <Table.Row>
+      <Table.Cell />
+    </Table.Row>
+  </Table.Footer>
+</Table.Root>
+```
+
+## API Reference
+
+<Aside>
+  All components extend their HTML equivalents, so all relevant HTML props also
+  apply.
+</Aside>
+
+### `Root`
+
+The root component for the table.
+
+```typescript jsx
+<Table.Root
+  size="normal"                     // [OPTIONAL] Size of the table
+  className="custom-class"             // [OPTIONAL] Custom class name
+  tableClassName="custom-table-class"  // [OPTIONAL] Custom table class name
+  disableHighlightOnHover={false}   // [OPTIONAL] Disable row highlighting on hover (enabled by default)
+>
+  {/* Table content */}
+</Table.Root>
+```
+
+<DocsPage.PropsTable
+  props={[
+    {
+      name: "size",
+      description: "Size of the table",
+      required: false,
+      value: "'normal' | 'relaxed' | 'compact'",
+      defaultValue: "'normal'",
+    },
+    {
+      name: "className",
+      description: "Custom class name for the container",
+      required: false,
+      value: "string",
+    },
+    {
+      name: "tableClassName",
+      description: "Custom class name for the table element",
+      required: false,
+      value: "string",
+    },
+    {
+      name: "disableHighlightOnHover",
+      description:
+        "Disable row highlighting on hover (highlighting is enabled by default)",
+      required: false,
+      value: "boolean",
+      defaultValue: "false",
+    },
+    {
+      name: "paginationProps",
+      description: "Props for the pagination component",
+      required: false,
+      value: "PaginationProps",
+      defaultValue: "undefined",
+    },
+  ]}
+/>
+
+### `Header`
+
+The header section of the table.
+
+```typescript jsx
+<Table.Header
+  className="custom-class" // [OPTIONAL] Custom class name
+>
+  {/* Header content */}
+</Table.Header>
+```
+
+<DocsPage.PropsTable
+  props={[
+    {
+      name: "className",
+      description: "Custom class name",
+      required: false,
+      value: "string",
+    },
+  ]}
+/>
+
+### `Body`
+
+The body section of the table.
+
+```typescript jsx
+<Table.Body
+  className="custom-class" // [OPTIONAL] Custom class name
+>
+  {/* Body content */}
+</Table.Body>
+```
+
+<DocsPage.PropsTable
+  props={[
+    {
+      name: "className",
+      description: "Custom class name",
+      required: false,
+      value: "string",
+    },
+  ]}
+/>
+
+### `Footer`
+
+The footer section of the table.
+
+```typescript jsx
+<Table.Footer
+  className="custom-class" // [OPTIONAL] Custom class name
+>
+  {/* Footer content */}
+</Table.Footer>
+```
+
+<DocsPage.PropsTable
+  props={[
+    {
+      name: "className",
+      description: "Custom class name",
+      required: false,
+      value: "string",
+    },
+  ]}
+/>
+
+### `Row`
+
+```typescript jsx
+<Table.Row
+  className="custom-class" // [OPTIONAL] Custom class name
+  selected={true} // [OPTIONAL] Whether the row is checked/selected
+  onClick={(e) => console.log('Row clicked', e)} // [OPTIONAL] Click handler for the row
+>
+  {/* Row content */}
+</Table.Row>
+```
+
+<DocsPage.PropsTable
+  props={[
+    {
+      name: "className",
+      description: "Custom class name",
+      required: false,
+      value: "string",
+    },
+    {
+      name: "selected",
+      description: "Whether the row is checked/selected",
+      required: false,
+      value: "boolean",
+    },
+    {
+      name: "onClick",
+      description: "Click handler for the row.",
+      required: false,
+      value: "(event: React.MouseEvent<HTMLTableRowElement>) => void",
+    },
+    {
+      name: "to",
+      description:
+        "URL to navigate to when the row is clicked. Renders the each table cell with a Link component.",
+      required: false,
+      value: "string",
+    },
+    {
+      name: "linkProps",
+      description:
+        "Additional props to pass to the Link component. A Link will be rendered if either 'to' or 'linkProps' are provided.",
+      required: false,
+      value: "LinkProps",
+    },
+  ]}
+/>
+
+### `Head`
+
+A header cell within the table.
+
+```typescript jsx
+<Table.Head
+  className="custom-class" // [OPTIONAL] Custom class name
+>
+  {/* Header cell content */}
+</Table.Head>
+```
+
+<DocsPage.PropsTable
+  props={[
+    {
+      name: "className",
+      description: "Custom class name",
+      required: false,
+      value: "string",
+    },
+    {
+      name: "containerProps",
+      description: "Props to be applied to the container element",
+      required: false,
+      value: "FlexProps",
+    },
+    {
+      name: "hideDivider",
+      description:
+        "Whether to hide the left divider in the header cell. The first header cell in a row will not have a divider by default.",
+      required: false,
+      value: "boolean",
+      defaultValue: "true",
+    },
+  ]}
+/>
+
+### `Cell`
+
+A cell within the table.
+
+```typescript jsx
+<Table.Cell
+  className="custom-class" // [OPTIONAL] Custom class name
+  onClick={(e) => console.log('Cell clicked', e)} // [OPTIONAL] Click handler for the cell
+  to="/path/to/page" // [OPTIONAL] URL to navigate to when the cell is clicked
+  linkProps={{ prefixIcon: 'arrow-right', variant: 'secondary' }} // [OPTIONAL] Additional props for the Link component
+>
+  {/* Cell content */}
+</Table.Cell>
+```
+
+<DocsPage.PropsTable
+  props={[
+    {
+      name: "className",
+      description: "Custom class name",
+      required: false,
+      value: "string",
+    },
+    {
+      name: "onClick",
+      description: "Click handler for the cell.",
+      required: false,
+      value: "(event: React.MouseEvent<HTMLTableCellElement>) => void",
+    },
+    {
+      name: "to",
+      description:
+        "URL to navigate to when the cell is clicked. Renders the cell content inside a Link component.",
+      required: false,
+      value: "string",
+    },
+    {
+      name: "linkProps",
+      description:
+        "Additional props to pass to the Link component. A Link will be rendered if either 'to' or 'linkProps' are provided.",
+      required: false,
+      value: "LinkProps",
+    },
+  ]}
+/>
+
+### `Caption`
+
+A caption for the table.
+
+```typescript jsx
+<Table.Caption
+  className="custom-class" // [OPTIONAL] Custom class name
+>
+  {/* Caption content */}
+</Table.Caption>
+```
+
+<DocsPage.PropsTable
+  props={[
+    {
+      name: "className",
+      description: "Custom class name",
+      required: false,
+      value: "string",
+    },
+  ]}
+/>

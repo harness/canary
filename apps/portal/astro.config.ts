@@ -50,7 +50,44 @@ export default defineConfig({
         },
         {
           label: "Components",
-          autogenerate: { directory: "components" },
+          items: [
+            {
+              label: "Foundations",
+              autogenerate: { directory: "components/foundations" },
+            },
+            {
+              label: "Form & Inputs",
+              autogenerate: { directory: "components/form" },
+            },
+            {
+              label: "Buttons & Actions",
+              autogenerate: { directory: "components/actions" },
+            },
+            {
+              label: "Navigation",
+              autogenerate: { directory: "components/navigation" },
+            },
+            {
+              label: "Overlays & Dialogs",
+              autogenerate: { directory: "components/overlays" },
+            },
+            {
+              label: "Data Display",
+              autogenerate: { directory: "components/data-display" },
+            },
+            {
+              label: "Feedback & Status",
+              autogenerate: { directory: "components/feedback" },
+            },
+            {
+              label: "Media & Visual",
+              autogenerate: { directory: "components/visual" },
+            },
+            {
+              label: "Utilities",
+              autogenerate: { directory: "components/utilities" },
+            },
+          ],
         },
       ],
       customCss: [

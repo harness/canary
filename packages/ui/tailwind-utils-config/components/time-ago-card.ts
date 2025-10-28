@@ -1,7 +1,7 @@
 export default {
   '.cn-time-ago-card': {
     '&-trigger': {
-      '@apply leading-snug whitespace-nowrap truncate': '',
+      '@apply leading-snug whitespace-nowrap truncate max-w-full': '',
       ':where(time)': {
         '@apply data-[state=open]:text-cn-1 hover:text-cn-1': ''
       },

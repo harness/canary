@@ -174,14 +174,12 @@ export const RepoTagsList: FC<RepoTagsListProps> = ({
             </Table.Cell>
             <Table.Cell>
               {tag.tagger?.when ? (
-                <div className="grid">
-                  <TimeAgoCard
-                    timestamp={new Date(tag.tagger?.when).getTime()}
-                    dateTimeFormatOptions={{ dateStyle: 'medium' }}
-                    textProps={{ variant: 'body-normal' }}
-                    triggerClassName="text-left"
-                  />
-                </div>
+                <TimeAgoCard
+                  timestamp={new Date(tag.tagger?.when).getTime()}
+                  dateTimeFormatOptions={{ dateStyle: 'medium' }}
+                  textProps={{ variant: 'body-normal' }}
+                  triggerClassName="text-left"
+                />
               ) : null}
             </Table.Cell>
             <Table.Cell className="text-right">

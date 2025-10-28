@@ -1530,17 +1530,8 @@
           "$description": "Background color for sidebar items on hover. Provides subtle visual feedback for interactive elements."
         },
         "selected": {
-          "$extensions": {
-            "studio.tokens": {
-              "modify": {
-                "type": "alpha",
-                "value": "0.18",
-                "space": "lch"
-              }
-            }
-          },
           "$type": "color",
-          "$value": "{chrome.600}",
+          "$value": "linear-gradient(95deg, {gradient.sidebar.selected.from} -13.12%, {gradient.sidebar.selected.to} 84.9%);",
           "$description": "Background color for selected sidebar items. Indicates the current active navigation state with stronger emphasis than hover."
         }
       },
@@ -2339,7 +2330,35 @@
           }
         },
         "$type": "color",
-        "$value": "{bg.0}"
+        "$value": "{comp.sidebar.bg}"
+      },
+      "selected": {
+        "from": {
+          "$extensions": {
+            "studio.tokens": {
+              "modify": {
+                "type": "alpha",
+                "value": "0.45",
+                "space": "lch"
+              }
+            }
+          },
+          "$type": "color",
+          "$value": "{blue.800}"
+        },
+        "to": {
+          "$extensions": {
+            "studio.tokens": {
+              "modify": {
+                "type": "alpha",
+                "value": "0.12",
+                "space": "lch"
+              }
+            }
+          },
+          "$type": "color",
+          "$value": "{chrome.600}"
+        }
       }
     },
     "toast": {

@@ -21,6 +21,8 @@ import {
 } from '@views/repo/pull-request/components/pull-request-accordian'
 import { innerBlockName, outterBlockName } from '@views/repo/pull-request/utils'
 
+import { PullRequestChangesSingleFileView } from './pull-request-changes-single-file-view'
+
 interface DataProps {
   data: HeaderProps[]
   diffBlocks: HeaderProps[][]
@@ -112,6 +114,8 @@ function PullRequestChangesInternal({
   // Scroll position cache scoped to current PR
   const diffScrollCacheRef = useRef(new Map<string, number>())
 
+  const isLargePR = data.length > 150
+
   // Infinite scroll state
   const INITIAL_LOAD_COUNT = 30
   const LOAD_MORE_COUNT = 20
@@ -139,17 +143,7 @@ function PullRequestChangesInternal({
             // Only jump if content has actually scrolled behind the sticky header (at PR_ACCORDION_STICKY_TOP)
             if (hasContentScrolledBehindHeader) {
               scrollTimeoutRef.current = setTimeout(() => {
-                jumpToFile(
-                  fileText,
-                  diffBlocks,
-                  undefined,
-                  diffsContainerRef,
-                  (targetCount: number) => {
-                    setVisibleFileCount(Math.max(targetCount, visibleFileCount))
-                  },
-                  openItems,
-                  diffScrollCacheRef.current
-                )
+                jumpToFile(fileText, diffBlocks, undefined, diffsContainerRef, openItems, diffScrollCacheRef.current)
                 scrollTimeoutRef.current = null
               }, delay)
             }
@@ -222,17 +216,7 @@ function PullRequestChangesInternal({
     if (diffPathQuery) {
       const diffItem = data.find(item => item.filePath === diffPathQuery)
       if (diffItem) {
-        jumpToFile(
-          diffItem.filePath,
-          diffBlocks,
-          undefined,
-          diffsContainerRef,
-          (targetCount: number) => {
-            setVisibleFileCount(Math.max(targetCount, visibleFileCount))
-          },
-          openItems,
-          diffScrollCacheRef.current
-        )
+        jumpToFile(diffItem.filePath, diffBlocks, undefined, diffsContainerRef, openItems, diffScrollCacheRef.current)
         setInitiatedJumpToDiff(true)
       }
     } else if (commentId) {
@@ -241,17 +225,7 @@ function PullRequestChangesInternal({
         return fileComments.some(thread => thread.some(comment => String(comment.id) === commentId))
       })
       if (diffItem) {
-        jumpToFile(
-          diffItem.filePath,
-          diffBlocks,
-          commentId,
-          diffsContainerRef,
-          (targetCount: number) => {
-            setVisibleFileCount(Math.max(targetCount, visibleFileCount))
-          },
-          openItems,
-          diffScrollCacheRef.current
-        )
+        jumpToFile(diffItem.filePath, diffBlocks, commentId, diffsContainerRef, openItems, diffScrollCacheRef.current)
         setInitiatedJumpToDiff(true)
       }
     }
@@ -276,7 +250,7 @@ function PullRequestChangesInternal({
           }
         }
       },
-      { rootMargin: '200px' }
+      { rootMargin: '500px' }
     )
 
     observer.observe(loadMoreElement)
@@ -285,79 +259,107 @@ function PullRequestChangesInternal({
 
   return (
     <div className="flex flex-col" ref={diffsContainerRef}>
-      {diffBlocks?.map((diffsBlock, blockIndex) => {
-        return (
-          <div key={blockIndex} data-block={outterBlockName(blockIndex)}>
-            {diffsBlock.slice(0, visibleFileCount).map((item, index) => {
-              // Only render files up to visibleFileCount for infinite scroll
-              const globalIndex = diffBlocks.flat().indexOf(item)
-              if (globalIndex >= visibleFileCount) return null
+      {isLargePR ? (
+        // Large PR (>150 files): Show only one file at a time
+        <PullRequestChangesSingleFileView
+          data={data}
+          diffBlocks={diffBlocks}
+          diffPathQuery={diffPathQuery}
+          comments={comments}
+          diffMode={diffMode}
+          currentUser={currentUser}
+          handleSaveComment={handleSaveComment}
+          deleteComment={deleteComment}
+          updateComment={updateComment}
+          defaultCommitFilter={defaultCommitFilter}
+          selectedCommits={selectedCommits}
+          markViewed={markViewed}
+          unmarkViewed={unmarkViewed}
+          onCopyClick={onCopyClick}
+          onCommentSaveAndStatusChange={onCommentSaveAndStatusChange}
+          suggestionsBatch={suggestionsBatch}
+          onCommitSuggestion={onCommitSuggestion}
+          addSuggestionToBatch={addSuggestionToBatch}
+          removeSuggestionFromBatch={removeSuggestionFromBatch}
+          filenameToLanguage={filenameToLanguage}
+          toggleConversationStatus={toggleConversationStatus}
+          handleUpload={handleUpload}
+          onGetFullDiff={onGetFullDiff}
+          toRepoFileDetails={toRepoFileDetails}
+          pullReqMetadata={pullReqMetadata}
+          principalProps={principalProps}
+          currentRefForDiff={currentRefForDiff}
+        />
+      ) : (
+        // Normal PR (≤150 files): Show all files with infinite scroll
+        <>
+          {diffBlocks?.map((diffsBlock, blockIndex) => {
+            return (
+              <div key={blockIndex} data-block={outterBlockName(blockIndex)}>
+                {diffsBlock.slice(0, visibleFileCount).map((item, index) => {
+                  // Only render files up to visibleFileCount for infinite scroll
+                  const globalIndex = diffBlocks.flat().indexOf(item)
+                  if (globalIndex >= visibleFileCount) return null
 
-              // Filter activityBlocks that are relevant for this file
-              const fileComments =
-                comments?.filter((thread: CommentItem<TypesPullReqActivity>[]) =>
-                  thread.some((comment: CommentItem<TypesPullReqActivity>) => {
-                    const commentPath = comment.payload?.payload?.code_comment?.path
-                    if (!commentPath) return false
-                    // Handle renamed files: both old and new paths
-                    if (item.isRename && item.oldName && item.newName) {
-                      return commentPath === item.oldName || commentPath === item.newName
-                    }
-                    // For non-renamed files
-                    return commentPath === item.text
-                  })
-                ) || []
+                  // Filter activityBlocks that are relevant for this file
+                  const fileComments = getFileComments(item, comments)
 
-              return (
-                <div className="pt-cn-xs" key={item.filePath}>
-                  <div key={item.filePath} data-block={innerBlockName(item.filePath)}>
-                    <PullRequestAccordion
-                      handleUpload={handleUpload}
-                      principalProps={principalProps}
-                      key={`${item.title}-${index}`}
-                      header={item}
-                      diffMode={diffMode}
-                      currentUser={currentUser}
-                      comments={fileComments}
-                      handleSaveComment={handleSaveComment}
-                      deleteComment={deleteComment}
-                      updateComment={updateComment}
-                      defaultCommitFilter={defaultCommitFilter}
-                      selectedCommits={selectedCommits}
-                      markViewed={markViewed}
-                      unmarkViewed={unmarkViewed}
-                      autoExpand={openItems.includes(item.text)}
-                      onCopyClick={onCopyClick}
-                      onCommentSaveAndStatusChange={onCommentSaveAndStatusChange}
-                      onCommitSuggestion={onCommitSuggestion}
-                      addSuggestionToBatch={addSuggestionToBatch}
-                      suggestionsBatch={suggestionsBatch}
-                      removeSuggestionFromBatch={removeSuggestionFromBatch}
-                      filenameToLanguage={filenameToLanguage}
-                      toggleConversationStatus={toggleConversationStatus}
-                      onGetFullDiff={onGetFullDiff}
-                      openItems={openItems}
-                      isOpen={isOpen(item.text)}
-                      onToggle={() => toggleOpen(item.text)}
-                      setCollapsed={val => collapseAfterMarkingViewed(item.text, val)}
-                      toRepoFileDetails={toRepoFileDetails}
-                      sourceBranch={pullReqMetadata?.source_branch}
-                      currentRefForDiff={currentRefForDiff}
-                      commentLayout="compact"
-                    />
-                  </div>
-                </div>
-              )
-            })}
-          </div>
-        )
-      })}
+                  return (
+                    <div className="pt-cn-xs" key={item.filePath}>
+                      <div key={item.filePath} data-block={innerBlockName(item.filePath)}>
+                        <PullRequestAccordion
+                          handleUpload={handleUpload}
+                          principalProps={principalProps}
+                          key={`${item.title}-${index}`}
+                          header={item}
+                          diffMode={diffMode}
+                          currentUser={currentUser}
+                          comments={fileComments}
+                          handleSaveComment={handleSaveComment}
+                          deleteComment={deleteComment}
+                          updateComment={updateComment}
+                          defaultCommitFilter={defaultCommitFilter}
+                          selectedCommits={selectedCommits}
+                          markViewed={markViewed}
+                          unmarkViewed={unmarkViewed}
+                          autoExpand={openItems.includes(item.text)}
+                          onCopyClick={onCopyClick}
+                          onCommentSaveAndStatusChange={onCommentSaveAndStatusChange}
+                          onCommitSuggestion={onCommitSuggestion}
+                          addSuggestionToBatch={addSuggestionToBatch}
+                          suggestionsBatch={suggestionsBatch}
+                          removeSuggestionFromBatch={removeSuggestionFromBatch}
+                          filenameToLanguage={filenameToLanguage}
+                          toggleConversationStatus={toggleConversationStatus}
+                          onGetFullDiff={onGetFullDiff}
+                          openItems={openItems}
+                          isOpen={isOpen(item.text)}
+                          onToggle={() => toggleOpen(item.text)}
+                          setCollapsed={val => collapseAfterMarkingViewed(item.text, val)}
+                          toRepoFileDetails={toRepoFileDetails}
+                          sourceBranch={pullReqMetadata?.source_branch}
+                          currentRefForDiff={currentRefForDiff}
+                          commentLayout="compact"
+                        />
+                      </div>
+                    </div>
+                  )
+                })}
+              </div>
+            )
+          })}
 
-      {/* Infinite scroll trigger element */}
-      {(data?.length || 0) > visibleFileCount && (
-        <div ref={loadMoreRef} className="h-20 flex items-center justify-center text-cn-7">
-          {isLoadingMore ? 'Loading more diffs...' : 'Scroll to load more'}
-        </div>
+          {/* Load more trigger for infinite scroll */}
+          {(data?.length || 0) > visibleFileCount && (
+            <div ref={loadMoreRef} className="flex justify-center py-4">
+              {isLoadingMore ? (
+                <div className="text-sm text-gray-500">Loading more files...</div>
+              ) : (
+                <div className="text-sm text-gray-400">Scroll to load more</div>
+              )}
+            </div>
+          )}
+        </>
       )}
     </div>
   )

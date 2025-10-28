@@ -339,7 +339,6 @@ export const jumpToFile = (
   diffBlocks: DiffHeaderProps[][],
   commentId?: string,
   diffsContainerRef?: RefObject<Element>,
-  onLoadMoreDiffs?: (targetCount: number) => void,
   openItems: string[] = [],
   diffScrollCache?: Map<string, number>
 ) => {

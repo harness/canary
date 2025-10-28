@@ -306,70 +306,137 @@ export function isInViewport(element: Element, margin = 0, direction: 'x' | 'y' 
   return yCheck || xCheck
 }
 
+// Estimate scroll position based on diff statistics and open/collapsed state
+function estimateScrollPosition(
+  targetIndex: number,
+  allDiffs: DiffHeaderProps[],
+  openItems: string[],
+  baseScrollTop: number = 0
+): number {
+  let estimatedHeight = baseScrollTop
+
+  for (let i = 0; i < Math.min(targetIndex, allDiffs.length); i++) {
+    const diff = allDiffs[i]
+    const isOpen = openItems.includes(diff.text || diff.filePath || '')
+
+    if (isOpen) {
+      // Expanded: ~30px per line + 80px for accordion header
+      const lineCount = (diff.addedLines || 0) + (diff.deletedLines || 0)
+      const estimatedDiffHeight = Math.max(lineCount * 30, 120) + 80 // Min 120px + header
+      estimatedHeight += estimatedDiffHeight
+    } else {
+      // Collapsed: just accordion header height
+      estimatedHeight += 50 // Collapsed accordion height
+    }
+  }
+
+  return estimatedHeight
+}
+
+// Two-phase jump: estimate position → load content → exact scroll
 export const jumpToFile = (
   filePath: string,
   diffBlocks: DiffHeaderProps[][],
   commentId?: string,
-  diffsContainerRef?: RefObject<Element>
+  diffsContainerRef?: RefObject<Element>,
+  onLoadMoreDiffs?: (targetCount: number) => void,
+  openItems: string[] = [],
+  diffScrollCache?: Map<string, number>
 ) => {
-  // idle callback scheduling to avoid blocking main thread and for virtualized content that may not exist initially in DOM
   const { scheduleTask, cancelTask } = createRequestIdleCallbackTaskPool()
-  let loopCount = 0
   let taskId = 0
 
+  const allDiffs = diffBlocks.flat()
+  const targetIndex = allDiffs.findIndex(diff => diff.filePath === filePath)
   const blockIndex = diffBlocks.findIndex(block => block.some(diff => diff.filePath === filePath))
-  if (blockIndex < 0) return () => {} // Return empty cleanup function
 
-  const dispatchScrollIntoView = () => {
+  if (targetIndex < 0 || blockIndex < 0) return () => {} // Return empty cleanup function
+
+  const scrollContainer = diffsContainerRef?.current?.closest('[data-scroll-container]') || document.documentElement
+
+  // Check cache first for instant jump
+  const cachedPosition = diffScrollCache?.get(filePath)
+
+  // if innerBlockDOM available, scroll to it
+  const exactScrollToTarget = () => {
     const outerBlockDOM = diffsContainerRef?.current?.querySelector(
       `[data-block="${outterBlockName(blockIndex)}"]`
     ) as HTMLElement | null
     const innerBlockDOM = outerBlockDOM?.querySelector(
       `[data-block="${innerBlockName(filePath)}"]`
     ) as HTMLElement | null
-    const diffDOM = innerBlockDOM?.querySelector(`[data-diff-file-path="${filePath}"]`) as HTMLElement | null
 
     outerBlockDOM?.scrollIntoView(false)
-    // Position the accordion trigger at the sticky position (PR_ACCORDION_STICKY_TOP px from top)
-    if (innerBlockDOM) {
-      const rect = innerBlockDOM?.getBoundingClientRect()
-      const scrollContainer = innerBlockDOM.closest('[data-scroll-container]') || document.documentElement
+
+    // If innerBlockDOM is found, do exact scroll
+    if (outerBlockDOM && innerBlockDOM) {
+      const rect = innerBlockDOM.getBoundingClientRect()
       const currentScrollTop = scrollContainer.scrollTop || window.scrollY
-      const targetScrollTop = currentScrollTop + rect.top - PR_ACCORDION_STICKY_TOP
+      const exactScrollTop = currentScrollTop + rect.top - PR_ACCORDION_STICKY_TOP
+
+      // Cache the exact position for future use
+      diffScrollCache?.set(filePath, Math.max(0, exactScrollTop))
 
       scrollContainer.scrollTo({
-        top: Math.max(0, targetScrollTop)
+        top: Math.max(0, exactScrollTop) // Instant jump
       })
-    }
 
-    if (diffDOM && commentId) {
-      dispatchCustomEvent<DiffViewerCustomEvent>(filePath, {
-        action: DiffViewerEvent.SCROLL_INTO_VIEW,
-        commentId: commentId
-      })
-    }
+      // Handle scrolling to a comment
+      if (commentId) {
+        dispatchCustomEvent<DiffViewerCustomEvent>(filePath, {
+          action: DiffViewerEvent.SCROLL_INTO_VIEW,
+          commentId: commentId
+        })
+      }
 
+      return true // Success
+    }
+    return false // Target not found yet
+  }
+
+  // Phase 1: Try immediate exact scroll if target is already available
+  if (exactScrollToTarget()) {
+    return () => {
+      if (taskId) cancelTask(taskId)
+    }
+  } else if (cachedPosition !== undefined) {
+    scrollContainer.scrollTo({ top: cachedPosition }) // Instant jump
+    return () => {}
+  }
+
+  // Phase 2: Target not available - scroll to estimated position
+  const estimatedPosition = estimateScrollPosition(targetIndex, allDiffs, openItems)
+  scrollContainer.scrollTo({ top: estimatedPosition }) // Instant jump to estimate
+
+  // If exact scroll failed, start polling for target to appear
+  let attempts = 0
+  const maxAttempts = 25
+
+  const pollForTarget = () => {
     taskId = scheduleTask(() => {
-      if (loopCount++ < 25) {
-        if (!outerBlockDOM || !innerBlockDOM || !isInViewport(outerBlockDOM) || !isInViewport(innerBlockDOM)) {
-          dispatchScrollIntoView()
-        } else {
-          cancelTask(taskId)
-        }
+      attempts++
+      if (exactScrollToTarget()) {
+        cancelTask(taskId)
+        return
+      }
+
+      if (attempts < maxAttempts) {
+        // Continue polling
+        setTimeout(pollForTarget, 10)
       } else {
+        // Timeout - scroll to estimated position as fallback
+        console.warn(`jumpToFile timeout for ${filePath}, using estimated position`)
+        scrollContainer.scrollTo({ top: estimatedPosition })
         cancelTask(taskId)
       }
     })
   }
 
-  if (blockIndex >= 0) {
-    dispatchScrollIntoView()
-  }
+  // Start polling immediately - no delay between phases
+  pollForTarget()
 
   return () => {
-    if (taskId) {
-      cancelTask(taskId)
-    }
+    if (taskId) cancelTask(taskId)
   }
 }
 

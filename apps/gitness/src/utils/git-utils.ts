@@ -138,8 +138,24 @@ export function formatBytes(bytes: number, decimals = 2) {
   return `${parseFloat((bytes / Math.pow(k, i)).toFixed(dm))} ${sizes[i]}`
 }
 
+const isValidBase64 = (str: string): boolean => {
+  // Check if string contains only valid base64 characters
+  const base64Regex = /^[A-Za-z0-9+/]*={0,2}$/
+  if (!base64Regex.test(str)) return false
+
+  // Check if string length is a multiple of 4 (with padding)
+  if (str.length % 4 !== 0) return false
+
+  return true
+}
+
 export const decodeGitContent = (content = ''): string => {
   if (!content) return ''
+
+  // Return original content if it's not valid base64
+  if (!isValidBase64(content)) {
+    return content
+  }
 
   try {
     const binary = atob(content)

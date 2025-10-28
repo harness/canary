@@ -138,22 +138,23 @@ export function formatBytes(bytes: number, decimals = 2) {
   return `${parseFloat((bytes / Math.pow(k, i)).toFixed(dm))} ${sizes[i]}`
 }
 
-export const decodeGitContent = (content = '') => {
+export const decodeGitContent = (content = ''): string => {
   if (!content) return ''
-  try {
-    return decodeURIComponent(escape(window.atob(content)))
-  } catch (error) {
-    console.error('Legacy decoding failed:', error)
-  }
 
-  // Fallback to direct atob if legacy decoding fails
   try {
-    return window.atob(content)
+    const binary = atob(content)
+    const bytes = Uint8Array.from(binary, c => c.charCodeAt(0))
+    return new TextDecoder('utf-8').decode(bytes)
   } catch (error) {
-    console.error('Direct atob failed:', error)
+    console.error('UTF-8 decoding failed:', error)
+    try {
+      // Fallback: plain base64 decode
+      return atob(content)
+    } catch (fallbackError) {
+      console.error('Base64 decoding failed:', fallbackError)
+      return content
+    }
   }
-
-  return content
 }
 
 export const filenameToLanguage = (name?: string): string | undefined => {

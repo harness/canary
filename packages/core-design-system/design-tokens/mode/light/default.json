@@ -1534,7 +1534,7 @@
             "studio.tokens": {
               "modify": {
                 "type": "alpha",
-                "value": "0.2",
+                "value": "0.15",
                 "space": "lch"
               }
             }
@@ -1548,13 +1548,13 @@
             "studio.tokens": {
               "modify": {
                 "type": "alpha",
-                "value": "0.26",
+                "value": "0",
                 "space": "lch"
               }
             }
           },
           "$type": "color",
-          "$value": "{tuna.300}",
+          "$value": "linear-gradient(95deg, {gradient.sidebar.selected.from} -13.12%, {gradient.sidebar.selected.to} 84.9%);",
           "$description": "Background color for selected sidebar items. Indicates the current active navigation state with stronger emphasis than hover."
         }
       },
@@ -2368,6 +2368,34 @@
         },
         "$type": "color",
         "$value": "{comp.sidebar.bg}"
+      },
+      "selected": {
+        "from": {
+          "$extensions": {
+            "studio.tokens": {
+              "modify": {
+                "type": "alpha",
+                "value": "0.65",
+                "space": "lch"
+              }
+            }
+          },
+          "$type": "color",
+          "$value": "{cyan.50}"
+        },
+        "to": {
+          "$extensions": {
+            "studio.tokens": {
+              "modify": {
+                "type": "alpha",
+                "value": "0.15",
+                "space": "lch"
+              }
+            }
+          },
+          "$type": "color",
+          "$value": "{tuna.300}"
+        }
       }
     },
     "toast": {

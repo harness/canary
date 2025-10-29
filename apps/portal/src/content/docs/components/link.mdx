@@ -16,7 +16,7 @@ import { DocsPage } from "../../../components/docs-page";
         <Link to="#2" data-hovered="true">Link (hovered)</Link>
         <Link to="#4" disabled>Link (disabled)</Link>
     </div>
-    
+
     <div className="flex flex-col gap-cn-xs">
         <h5 className="mb-cn-3xs">Default sm</h5>
         <Link size="sm" to="#1">Link</Link>
@@ -60,10 +60,10 @@ import { DocsPage } from "../../../components/docs-page";
     </div>
 
     <div className="flex flex-col gap-cn-xs">
-        <h5 className="mb-cn-3xs">Secondary sm with icons</h5>
-        <Link size="sm" prefixIcon suffixIcon variant="secondary" to="#1">Link</Link>
-        <Link size="sm" prefixIcon suffixIcon variant="secondary" to="#2" data-hovered="true">Link (hovered)</Link>
-        <Link size="sm" prefixIcon suffixIcon variant="secondary" to="#4" disabled>Link (disabled)</Link>
+        <h5 className="mb-cn-3xs">Secondary sm with icons + external</h5>
+        <Link size="sm" prefixIcon suffixIcon variant="secondary" external href="#1">Link</Link>
+        <Link size="sm" prefixIcon suffixIcon variant="secondary" external href="#2" data-hovered="true">Link (hovered)</Link>
+        <Link size="sm" prefixIcon suffixIcon variant="secondary" external href="#4" disabled>Link (disabled)</Link>
     </div>
 
 </div>`}
@@ -102,11 +102,43 @@ The `Link` component allows for the creation of accessible hyperlinks with consi
 <DocsPage.PropsTable
   props={[
     {
+      name: "external",
+      description: "Indicates that the link is external.",
+      required: false,
+      value: "false",
+    },
+    {
       name: "to",
       description: "The URL that the link points to",
       required: true,
       value: "string",
     },
+  ]}
+/>
+
+Also, the `Link` component can be `external` — in that case, the types will be different.
+
+<DocsPage.PropsTable
+  props={[
+    {
+      name: "external",
+      description: "Indicates that the link is external.",
+      required: true,
+      value: "true",
+    },
+    {
+      name: "href",
+      description: "The URL that the link points to",
+      required: true,
+      value: "string",
+    },
+  ]}
+/>
+
+Common types
+
+<DocsPage.PropsTable
+  props={[
     {
       name: "variant",
       description: "The style variant of the link",

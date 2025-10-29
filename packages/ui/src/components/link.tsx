@@ -1,4 +1,4 @@
-import { forwardRef, MouseEvent, RefAttributes } from 'react'
+import { ComponentPropsWithoutRef, forwardRef, MouseEvent, RefAttributes } from 'react'
 import type { LinkProps as LinkBaseProps } from 'react-router-dom'
 
 import { useRouterContext } from '@/context'
@@ -27,7 +27,7 @@ export const linkVariants = cva('cn-link', {
   }
 })
 
-interface LinkProps extends LinkBaseProps, RefAttributes<HTMLAnchorElement>, VariantProps<typeof linkVariants> {
+interface LinkCommonProps extends VariantProps<typeof linkVariants> {
   /**
    * If true, the 'chevron-left' icon will be displayed before the link text.
    * If a string, that string will be used as the icon name.
@@ -51,6 +51,10 @@ interface LinkProps extends LinkBaseProps, RefAttributes<HTMLAnchorElement>, Var
   noHoverUnderline?: boolean
 }
 
+type LinkProps =
+  | ({ external: true } & LinkCommonProps & ComponentPropsWithoutRef<'a'>)
+  | ({ external?: false } & LinkCommonProps & LinkBaseProps & RefAttributes<HTMLAnchorElement>)
+
 const Link = forwardRef<HTMLAnchorElement, LinkProps>(
   (
     {
@@ -63,11 +67,13 @@ const Link = forwardRef<HTMLAnchorElement, LinkProps>(
       disabled = false,
       size,
       onClick,
+      external,
       ...props
     },
     ref
   ) => {
     const { Link: LinkBase } = useRouterContext()
+    const LinkComp = external ? 'a' : LinkBase
 
     const handleClick = (e: MouseEvent<HTMLAnchorElement>) => {
       if (disabled) {
@@ -79,8 +85,8 @@ const Link = forwardRef<HTMLAnchorElement, LinkProps>(
     }
 
     return (
-      <LinkBase
-        {...props}
+      <LinkComp
+        {...(props as any)}
         className={cn(linkVariants({ variant, size, noHoverUnderline }), className)}
         onClick={handleClick}
         data-disabled={disabled}
@@ -90,11 +96,11 @@ const Link = forwardRef<HTMLAnchorElement, LinkProps>(
         {!!prefixIcon && <IconV2 name={typeof prefixIcon === 'string' ? prefixIcon : 'nav-arrow-left'} size="2xs" />}
         {children}
         {!!suffixIcon && <IconV2 name={typeof suffixIcon === 'string' ? suffixIcon : 'arrow-up-right'} size="2xs" />}
-      </LinkBase>
+      </LinkComp>
     )
   }
 )
 
 Link.displayName = 'Link'
 
-export { Link, type LinkProps }
+export { Link, type LinkProps, type LinkCommonProps }

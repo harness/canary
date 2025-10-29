@@ -76,7 +76,7 @@ export const CreateProjectPage: FC<CreateProjectPageProps> = props => {
 
   const isAdditional = getIsAdditionalProjectPage(props)
   const isFirst = getIsFirstProjectPage(props)
-  const isWithBackButton = !!backLinkProps?.to && isAdditional
+  const isWithBackButton = (!backLinkProps?.external ? !!backLinkProps?.to : !!backLinkProps?.href) && isAdditional
 
   const { t } = useTranslation()
 
@@ -124,7 +124,7 @@ export const CreateProjectPage: FC<CreateProjectPageProps> = props => {
     >
       {isWithBackButton && (
         <StyledLink
-          {...backLinkProps}
+          {...(backLinkProps as StyledLinkProps)}
           prefixIcon
           variant="secondary"
           className={cn('fixed left-[14.5%] top-[3.25rem] p-cn-xs', backLinkProps?.className)}

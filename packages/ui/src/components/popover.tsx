@@ -71,7 +71,7 @@ const PopoverContent = forwardRef<ElementRef<typeof PopoverPrimitive.Content>, P
 
           {children}
 
-          {linkProps?.text && <Link {...linkProps}>{linkProps.text}</Link>}
+          {linkProps?.text && <Link {...(linkProps as LinkProps)}>{linkProps.text}</Link>}
 
           {!hideArrow && (
             <PopoverPrimitive.Arrow width={20} height={8} asChild>

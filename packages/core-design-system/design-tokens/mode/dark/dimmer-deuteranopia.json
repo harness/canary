@@ -1533,7 +1533,7 @@
       },
       "group-label": {
         "$type": "color",
-        "$value": "{text.3}",
+        "$value": "{text.2}",
         "$description": "Text color for sidebar group labels. Provides reduced emphasis for section headers and categorization."
       },
       "fade-start": {

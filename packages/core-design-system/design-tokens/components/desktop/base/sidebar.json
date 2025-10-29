@@ -81,7 +81,7 @@
       },
       "py": {
         "$type": "spacing",
-        "$value": "{spacing.1-half}"
+        "$value": "{spacing.2}"
       },
       "gap": {
         "$type": "spacing",
@@ -89,7 +89,7 @@
       },
       "min": {
         "$type": "sizing",
-        "$value": "{size.7}"
+        "$value": "{size.8}"
       }
     },
     "sub-group": {

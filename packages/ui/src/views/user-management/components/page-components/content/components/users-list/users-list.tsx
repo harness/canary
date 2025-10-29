@@ -19,13 +19,16 @@ interface UserListProps {
 export const UsersList = ({ searchQuery, handleResetSearch }: UserListProps) => {
   const { useAdminListUsersStore } = useUserManagementStore()
 
-  const { users } = useAdminListUsersStore()
+  const { users, setPage, totalItems, pageSize, page: currentPage, setPageSize } = useAdminListUsersStore()
 
   const { handleDialogOpen } = useDialogData()
 
   const { loadingStates, errorStates } = useStates()
   const { isFetchingUsers } = loadingStates
   const { fetchUsersError } = errorStates
+
+  // TODO: check this condition when backend (useAdminListUsersQuery) will be ready for support query param
+  const canShowPagination = !!users?.length && !isFetchingUsers && !searchQuery
 
   const { triggerRef, registerTrigger } = useCustomDialogTrigger()
   const handleToggleDialog = useCallback(
@@ -52,7 +55,20 @@ export const UsersList = ({ searchQuery, handleResetSearch }: UserListProps) => 
   }
 
   return (
-    <Table.Root disableHighlightOnHover>
+    <Table.Root
+      disableHighlightOnHover
+      paginationProps={
+        canShowPagination
+          ? {
+              totalItems: totalItems,
+              pageSize: pageSize,
+              onPageSizeChange: setPageSize,
+              currentPage: currentPage,
+              goToPage: (pageNum: number) => setPage(pageNum)
+            }
+          : undefined
+      }
+    >
       <Table.Header className="h-[46px]">
         <Table.Row className="pointer-events-none">
           <Table.Head className="w-[346px]">User</Table.Head>
@@ -68,7 +84,7 @@ export const UsersList = ({ searchQuery, handleResetSearch }: UserListProps) => 
               <Table.Row key={user.uid} className="h-[48px]">
                 {/* NAME */}
                 <Table.Cell className="my-cn-xl content-center">
-                  <div className="grid grid-cols-[auto_1fr] items-center gap-cn-xs">
+                  <div className="gap-cn-xs grid grid-cols-[auto_1fr] items-center">
                     <Avatar name={user.uid} src={user.avatarUrl} rounded />
                     <Text variant="body-strong" truncate className="whitespace-nowrap">
                       {user.uid}
@@ -87,7 +103,7 @@ export const UsersList = ({ searchQuery, handleResetSearch }: UserListProps) => 
 
                 {/* ROLE BINDING */}
                 <Table.Cell className="my-cn-xl content-center">
-                  <div className="flex gap-cn-2xs">
+                  <div className="gap-cn-2xs flex">
                     <StatusBadge variant="outline" size="sm" theme={user.admin ? 'merged' : 'danger'}>
                       {user.admin ? 'Admin' : 'User'}
                     </StatusBadge>

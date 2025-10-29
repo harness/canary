@@ -97,7 +97,7 @@ export function SecretList({
                 ref={triggerRef}
                 actions={[
                   {
-                    title: t('views:secrets.edit', 'Edit secret'),
+                    title: t('views:secrets.viewDetails', 'View details'),
                     iconName: 'edit-pencil',
                     onClick: () => {
                       registerTrigger()
@@ -113,7 +113,7 @@ export function SecretList({
                   },
                   {
                     isDanger: true,
-                    title: t('views:secrets.delete', 'Delete secret'),
+                    title: t('views:secrets.delete', 'Delete'),
                     iconName: 'trash',
                     onClick: () => handleDeleteSecret(secret.identifier),
                     rbac: {

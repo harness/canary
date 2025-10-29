@@ -1006,8 +1006,9 @@
     },
     "secretsTitle": "Secrets",
     "createNew": "Créer un secret",
+    "viewDetails": "View Details",
+    "delete": "Supprimer",
     "edit": "Edit secret",
-    "delete": "Supprimer le secret",
     "newSecret": "New Secret"
   },
   "entityReference": {

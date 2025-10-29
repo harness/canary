@@ -4,13 +4,12 @@ import { Link, LinkProps } from '@components/link'
 import { Slot } from '@radix-ui/react-slot'
 import { cn } from '@utils/cn'
 
-export interface AlertLinkProps extends LinkProps {
-  external?: boolean
+export type AlertLinkProps = LinkProps & {
   asChild?: boolean
 }
 
 export const AlertLink = forwardRef<HTMLAnchorElement, AlertLinkProps>(
-  ({ external = false, asChild = false, children, className, ...linkProps }, ref) => {
+  ({ external, asChild = false, children, className, ...linkProps }, ref) => {
     if (asChild) {
       return (
         <div className="cn-alert-link-wrapper">
@@ -19,7 +18,9 @@ export const AlertLink = forwardRef<HTMLAnchorElement, AlertLinkProps>(
       )
     }
 
-    const externalProps = external ? { target: '_blank', rel: 'noopener noreferrer' } : {}
+    const narrowedProps = external
+      ? (linkProps as Extract<LinkProps, { external: true; target: '_blank'; rel: 'noopener noreferrer' }>)
+      : (linkProps as Extract<LinkProps, { external?: false }>)
 
     return (
       <div className="cn-alert-link-wrapper">
@@ -28,7 +29,7 @@ export const AlertLink = forwardRef<HTMLAnchorElement, AlertLinkProps>(
           variant="default"
           suffixIcon
           className={cn('cn-alert-link', className)}
-          {...externalProps}
+          {...narrowedProps}
           {...linkProps}
         >
           {children}

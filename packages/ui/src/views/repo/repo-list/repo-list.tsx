@@ -109,6 +109,7 @@ export function RepoList({
       />
     ) : (
       <NoData
+        withBorder
         imageName="no-repository"
         title={t('views:noData.noRepos', 'No repositories yet')}
         description={[

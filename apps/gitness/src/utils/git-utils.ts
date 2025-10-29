@@ -138,38 +138,33 @@ export function formatBytes(bytes: number, decimals = 2) {
   return `${parseFloat((bytes / Math.pow(k, i)).toFixed(dm))} ${sizes[i]}`
 }
 
-const isValidBase64 = (str: string): boolean => {
-  // Check if string contains only valid base64 characters
-  const base64Regex = /^[A-Za-z0-9+/]*={0,2}$/
-  if (!base64Regex.test(str)) return false
+// Reuse TextDecoder instance for better performance
+const UTF8_DECODER = new TextDecoder('utf-8')
 
-  // Check if string length is a multiple of 4 (with padding)
-  if (str.length % 4 !== 0) return false
-
-  return true
+const isLikelyBase64 = (str: string): boolean => {
+  // More forgiving check - just ensure it looks like base64
+  // Use + instead of * to require at least one character
+  const base64Regex = /^[A-Za-z0-9+/]+={0,2}$/
+  return base64Regex.test(str)
+  // Note: Removed strict length validation since atob() is more forgiving
 }
 
 export const decodeGitContent = (content = ''): string => {
   if (!content) return ''
 
-  // Return original content if it's not valid base64
-  if (!isValidBase64(content)) {
+  // Quick check to avoid processing obviously non-base64 strings
+  if (!isLikelyBase64(content)) {
     return content
   }
 
   try {
     const binary = atob(content)
     const bytes = Uint8Array.from(binary, c => c.charCodeAt(0))
-    return new TextDecoder('utf-8').decode(bytes)
+    return UTF8_DECODER.decode(bytes)
   } catch (error) {
-    console.error('UTF-8 decoding failed:', error)
-    try {
-      // Fallback: plain base64 decode
-      return atob(content)
-    } catch (fallbackError) {
-      console.error('Base64 decoding failed:', fallbackError)
-      return content
-    }
+    // If atob() fails, it means invalid base64 - return original
+    console.error('Base64 decoding failed:', error)
+    return content
   }
 }
 

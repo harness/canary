@@ -1,6 +1,6 @@
 import { FC, useCallback, useMemo } from 'react'
 
-import { Button, Checkbox, IconV2, Layout, ListActions, Pagination, SearchInput, Skeleton, Text } from '@/components'
+import { Button, Checkbox, IconV2, Layout, ListActions, SearchInput, Skeleton, Text } from '@/components'
 import { useRouterContext, useTranslation } from '@/context'
 import { ILabelsStore } from '@/views'
 import { cn } from '@utils/cn'
@@ -31,17 +31,13 @@ export const LabelsListPage: FC<LabelsListPageProps> = ({
   const { t } = useTranslation()
   const {
     labels: spaceLabels,
-    totalItems,
-    pageSize,
     page,
     setPage,
     isLoading,
-    values: spaceValues,
     getParentScopeLabels,
     space_ref,
     repo_ref,
-    setGetParentScopeLabels,
-    setPageSize
+    setGetParentScopeLabels
   } = useLabelsStore()
 
   const handleSearchChange = useCallback((val: string) => setSearchQuery(val.length ? val : null), [setSearchQuery])
@@ -99,22 +95,12 @@ export const LabelsListPage: FC<LabelsListPageProps> = ({
           <Layout.Vertical grow gapY="none">
             <LabelsListView
               {...labelsListViewProps}
-              labels={spaceLabels}
+              useLabelsStore={useLabelsStore}
               labelContext={{ space: space_ref, repo: repo_ref }}
               handleResetQueryAndPages={handleResetQueryAndPages}
               searchQuery={searchQuery}
-              values={spaceValues}
               toRepoLabelDetails={toRepoLabelDetails}
             />
-            {!!spaceLabels.length && (
-              <Pagination
-                totalItems={totalItems}
-                pageSize={pageSize}
-                onPageSizeChange={setPageSize}
-                currentPage={page}
-                goToPage={setPage}
-              />
-            )}
           </Layout.Vertical>
         )}
       </Layout.Vertical>

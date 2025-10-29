@@ -3,15 +3,14 @@ import { FC, useCallback, useState } from 'react'
 import { Button, getScopeType, IconV2, Layout, MoreActionsTooltip, NoData, ScopeTag, Table, Text } from '@/components'
 import { useCustomDialogTrigger, useTranslation } from '@/context'
 import { cn } from '@/utils'
-import { ILabelType, LabelTag, LabelType, LabelValuesType } from '@/views'
+import { ILabelsStore, ILabelType, LabelTag, LabelType } from '@/views'
 
 export interface LabelsListViewProps {
-  labels: ILabelType[]
+  useLabelsStore: () => ILabelsStore
   handleEditLabel: (label: ILabelType) => void
   handleDeleteLabel: (identifier: string) => void
   handleResetQueryAndPages: () => void
   searchQuery: string | null
-  values: LabelValuesType
   /**
    * Context of the label; can be a repo or a space
    */
@@ -24,17 +23,18 @@ export interface LabelsListViewProps {
 }
 
 export const LabelsListView: FC<LabelsListViewProps> = ({
-  labels,
+  useLabelsStore,
   handleEditLabel,
   handleDeleteLabel,
   searchQuery,
   handleResetQueryAndPages,
-  values,
   widthType = 'default',
   toRepoLabelDetails
 }) => {
   const { t } = useTranslation()
   const [expandedRows, setExpandedRows] = useState<Record<string, boolean>>({})
+
+  const { labels, page, setPage, values, totalItems, pageSize, setPageSize } = useLabelsStore()
 
   const toggleRow = (key: string, e: React.MouseEvent) => {
     e.stopPropagation()
@@ -92,7 +92,16 @@ export const LabelsListView: FC<LabelsListViewProps> = ({
   const isSmallWidth = widthType === 'small'
 
   return (
-    <Table.Root size="compact">
+    <Table.Root
+      size="compact"
+      paginationProps={{
+        totalItems: totalItems,
+        pageSize: pageSize,
+        onPageSizeChange: setPageSize,
+        currentPage: page,
+        goToPage: setPage
+      }}
+    >
       <Table.Header>
         <Table.Row>
           <Table.Head className="w-10 truncate" />

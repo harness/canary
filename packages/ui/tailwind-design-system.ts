@@ -593,6 +593,7 @@ export default {
 
     { pattern: /rounded-./ },
     { pattern: /border-./ },
+    { pattern: /shadow-./ },
     // Important: used for generating max-width of SandboxLayout.Content
     { pattern: /(?:(?:max|min)-)?(?:w|h)-.*/ },
     { pattern: /^(p|px|py|pt|pb|pl|pr|m|mx|my|mt|mb|ml|mr|gap(?:-[xy])?|space(?:-[xy])?)-cn-.+$/ },

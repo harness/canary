@@ -1,0 +1,247 @@
+---
+title: Spacings
+description: Guidelines for using spacing and sizing tokens in your application
+---
+
+import { DocsPage } from "@/components/docs-page";
+import { Aside } from "@astrojs/starlight/components";
+
+Our design system enforces specific token usage for spacing and sizing properties to maintain visual consistency across light and dark themes.
+
+## Spacing Properties
+
+For spacing-related properties, **only design system tokens** (`cn-4xs` through `cn-4xl`) should be used. This ensures consistent spacing that adapts properly to theme changes. Full list can be found in the [Available spacing tokens](/foundations/spacings/) section.
+
+### Required for:
+
+- **Padding**: `p-*`, `px-*`, `py-*`, `pt-*`, `pr-*`, `pb-*`, `pl-*`
+- **Margin**: `m-*`, `mx-*`, `my-*`, `mt-*`, `mr-*`, `mb-*`, `ml-*`
+- **Gap**: `gap-*`, `gap-x-*`, `gap-y-*`
+- **Positioning**: `top-*`, `right-*`, `bottom-*`, `left-*`, `inset-*`
+- **Text indent**: `indent-*`
+- **Space between**: `space-x-*`, `space-y-*`
+
+<DocsPage.ComponentExample
+  client:only
+  code={`<Layout.Vertical gap="lg" className="min-w-[400px]">
+  {/* Padding examples */}
+  <Layout.Horizontal className="bg-cn-0 p-cn-md rounded-3">
+    <Text>Padding: p-cn-md</Text>
+  </Layout.Horizontal>
+
+{/* Margin examples */}
+
+<Layout.Vertical className="bg-cn-0 rounded-3">
+  <Layout.Horizontal className="bg-cn-3 p-cn-sm mx-cn-lg my-cn-md rounded-3">
+    <Text variant="caption-normal">Margin: mx-cn-lg my-cn-md</Text>
+  </Layout.Horizontal>
+</Layout.Vertical>
+
+{/* Gap example */}
+
+<Layout.Horizontal gap="sm" className="bg-cn-0 p-cn-md rounded-3">
+  <Button size="sm">Gap:</Button>
+  <Button size="sm">gap-sm</Button>
+</Layout.Horizontal>
+
+{/* Position example */}
+
+  <Layout.Horizontal className="bg-cn-0 p-cn-md rounded-3 relative h-20">
+    <Layout.Horizontal className="absolute top-cn-sm right-cn-sm bg-cn-3 px-cn-sm py-cn-xs rounded-3">
+      <Text variant="caption-normal">Position: top-cn-sm right-cn-sm</Text>
+    </Layout.Horizontal>
+  </Layout.Horizontal>
+</Layout.Vertical>`}
+/>
+
+### Available spacing tokens:
+
+`cn-4xs`, `cn-3xs`, `cn-2xs`, `cn-xs`, `cn-sm`, `cn-md`, `cn-lg`, `cn-xl`, `cn-2xl`, `cn-3xl`, `cn-4xl`
+
+```tsx
+// ✅ Correct - using design system tokens
+<Layout.Horizontal className="p-cn-md m-cn-sm gap-cn-lg">
+  <Button className="px-cn-xl">Button</Button>
+</Layout.Horizontal>
+
+// ❌ Won't work - using default Tailwind spacing
+<Layout.Horizontal className="p-4 m-2 gap-8">
+  <Button className="px-12">Button</Button>
+</Layout.Horizontal>
+```
+
+## Size Properties
+
+For size-related properties, you can use **both design system tokens and default Tailwind tokens**. This flexibility allows for precise control when needed.
+
+### Flexible for:
+
+- **Width**: `w-*`, `min-w-*`, `max-w-*`
+- **Height**: `h-*`, `min-h-*`, `max-h-*`
+- **Size**: `size-*`
+
+<DocsPage.ComponentExample
+  client:only
+  code={`<Layout.Vertical gap="md" className="min-w-[400px]">
+  {/* Using design system tokens */}
+  <Layout.Horizontal className="bg-cn-0 p-cn-sm rounded-3 h-cn-3xl">
+    <Text variant="caption-normal">Height: h-cn-3xl (design token)</Text>
+  </Layout.Horizontal>
+
+{/* Using default Tailwind tokens */}
+
+<Layout.Horizontal className="bg-cn-0 p-cn-sm rounded-3 h-16">
+  <Text variant="caption-normal">Height: h-16 (Tailwind default)</Text>
+</Layout.Horizontal>
+
+{/* Width examples */}
+
+<Layout.Horizontal gap="md">
+  <Layout.Horizontal className="bg-cn-0 p-cn-sm rounded-3 w-40">
+    <Text variant="caption-normal">w-40</Text>
+  </Layout.Horizontal>
+  <Layout.Horizontal className="bg-cn-0 p-cn-sm rounded-3 w-56">
+    <Text variant="caption-normal">w-56</Text>
+  </Layout.Horizontal>
+</Layout.Horizontal>
+
+{/* Size property (width and height together) */}
+
+  <Layout.Horizontal className="bg-cn-0 p-cn-sm rounded-3 size-24">
+    <Text variant="caption-normal">size-24</Text>
+  </Layout.Horizontal>
+</Layout.Vertical>`}
+/>
+
+```tsx
+// ✅ Both are acceptable
+<Layout.Vertical className="w-64 h-cn-2xl min-w-fit max-h-40">
+  <Text>Using Tailwind defaults</Text>
+</Layout.Vertical>
+```
+
+## Percentage-Based Properties
+
+Properties that accept percentage values use **standard Tailwind utilities** without restriction.
+
+### Standard Tailwind for:
+
+- **Fractional widths**: `w-1/2`, `w-1/3`, `w-2/3`, `w-full`
+- **Fractional heights**: `h-1/2`, `h-full`
+- **Responsive grid columns**: `grid-cols-*`, `col-span-*`
+- **Flex properties**: `flex-1`, `flex-auto`, `flex-grow`, `flex-shrink`
+
+<DocsPage.ComponentExample
+  client:only
+  code={`<Layout.Vertical gap="md" className="min-w-[400px]">
+  {/* Fractional widths */}
+  <Layout.Horizontal gap="sm">
+    <Layout.Horizontal className="bg-cn-0 p-cn-sm rounded-3 w-1/3">
+      <Text variant="caption-normal">w-1/3</Text>
+    </Layout.Horizontal>
+    <Layout.Horizontal className="bg-cn-0 p-cn-sm rounded-3 w-2/3">
+      <Text variant="caption-normal">w-2/3</Text>
+    </Layout.Horizontal>
+  </Layout.Horizontal>
+
+{/* Full width button */}
+
+<Button className="w-full">Full Width Button (w-full)</Button>
+
+{/* Flex properties */}
+
+<Layout.Horizontal gap="sm">
+  <Layout.Horizontal className="bg-cn-0 p-cn-sm rounded-3 flex-1">
+    <Text variant="caption-normal">flex-1</Text>
+  </Layout.Horizontal>
+  <Layout.Horizontal className="bg-cn-0 p-cn-sm rounded-3 flex-1">
+    <Text variant="caption-normal">flex-1</Text>
+  </Layout.Horizontal>
+</Layout.Horizontal>
+
+{/* Grid with percentages */}
+
+  <Layout.Grid className="grid-cols-3 gap-cn-sm">
+    <Layout.Horizontal className="bg-cn-0 p-cn-sm rounded-3">
+      <Text variant="caption-normal">Column 1</Text>
+    </Layout.Horizontal>
+    <Layout.Horizontal className="bg-cn-0 p-cn-sm rounded-3">
+      <Text variant="caption-normal">Column 2</Text>
+    </Layout.Horizontal>
+    <Layout.Horizontal className="bg-cn-0 p-cn-sm rounded-3">
+      <Text variant="caption-normal">Column 3</Text>
+    </Layout.Horizontal>
+  </Layout.Grid>
+</Layout.Vertical>`}
+/>
+
+```tsx
+// ✅ Standard Tailwind for percentages
+<Layout.Horizontal className="w-full">
+  <Layout.Horizontal className="w-1/3 flex-shrink-0">Sidebar</Layout.Horizontal>
+  <Layout.Horizontal className="flex-1">Main Content</Layout.Horizontal>
+</Layout.Horizontal>
+
+<Layout.Grid className="grid-cols-2 md:grid-cols-3 lg:grid-cols-4">
+  <Text>Responsive grid</Text>
+</Layout.Grid>
+```
+
+## Practical Example
+
+Here's a complete example combining all three categories:
+
+<DocsPage.ComponentExample
+  client:only
+  code={`<Layout.Vertical gap="md" className="min-w-[400px]">
+  <Layout.Horizontal className="w-full bg-cn-1 rounded-3 shadow-2 border border-cn-3 p-cn-lg">
+    {/* Sidebar - percentage width, design spacing */}
+    <Layout.Vertical className="w-1/4 pr-cn-md border-r border-cn-3" gap="sm">
+      <Text variant="heading-small">Menu</Text>
+      <Button variant="ghost" size="sm" className="w-full justify-start px-cn-sm">
+        Dashboard
+      </Button>
+      <Button variant="ghost" size="sm" className="w-full justify-start px-cn-sm">
+        Settings
+      </Button>
+    </Layout.Vertical>
+
+    {/* Main content - flex-1, design spacing */}
+    <Layout.Vertical className="flex-1 pl-cn-md" gap="lg">
+      <Layout.Horizontal className="justify-between items-center">
+        <Text variant="heading-base">Content Area</Text>
+        <Layout.Horizontal gap="sm">
+          <Button variant="outline" size="sm">Cancel</Button>
+          <Button size="sm">Save</Button>
+        </Layout.Horizontal>
+      </Layout.Horizontal>
+
+      {/* Fixed height with design spacing */}
+      <Layout.Horizontal className="bg-cn-0 p-cn-md rounded-3 h-32 items-center justify-center">
+        <Text color="foreground-3">Fixed height: h-32</Text>
+      </Layout.Horizontal>
+    </Layout.Vertical>
+
+  </Layout.Horizontal>
+</Layout.Vertical>`}
+/>
+
+## Quick Reference
+
+| Property Type                                | Token Usage                     | Examples                                       |
+| -------------------------------------------- | ------------------------------- | ---------------------------------------------- |
+| **Spacing** (padding, margin, gap, position) | Design system only              | `p-cn-md`, `m-cn-sm`, `gap-cn-lg`, `top-cn-xs` |
+| **Sizing** (width, height, size)             | Both design system and Tailwind | `w-64`, `h-cn-header`, `size-12`               |
+| **Percentages** (fractional, flex, grid)     | Standard Tailwind               | `w-1/2`, `flex-1`, `grid-cols-3`               |
+
+## Best Practices
+
+1. **Always use design system spacing tokens** for padding, margin, gap, and positioning
+2. **Choose appropriate size tokens** based on your needs - use design tokens for theme-aware sizes, Tailwind defaults for fixed dimensions
+3. **Use standard Tailwind** for all percentage-based and responsive sizing
+
+<Aside type="tip" title="Why This Matters">
+  Design system spacing tokens are calibrated to work harmoniously across the
+  app. Using standard Tailwind spacing values for padding, margin, and gap would
+  result in inconsistent visual rhythm and poor theme adaptation.
+</Aside>

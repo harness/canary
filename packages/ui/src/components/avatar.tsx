@@ -35,11 +35,19 @@ export interface AvatarProps extends ComponentPropsWithoutRef<'span'> {
   size?: VariantProps<typeof avatarVariants>['size']
   rounded?: boolean
   noInitials?: boolean
+  isGroup?: boolean
 }
 
 const Avatar = forwardRef<HTMLSpanElement, AvatarProps>(
-  ({ name = '', src, size = 'sm', rounded = false, className, noInitials = false, ...props }, ref) => {
+  ({ name = '', src, size = 'sm', rounded = false, className, noInitials = false, isGroup = false, ...props }, ref) => {
     const initials = noInitials ? name : getInitials(name)
+
+    const renderFallbackIcon = () =>
+      isGroup ? (
+        <IconV2 name="group-1" className="cn-avatar-icon" />
+      ) : (
+        initials || <IconV2 name="user" className="cn-avatar-icon" />
+      )
 
     return (
       <AvatarPrimitive.Root ref={ref} className={cn(avatarVariants({ size, rounded }), className)} {...props}>
@@ -48,7 +56,7 @@ const Avatar = forwardRef<HTMLSpanElement, AvatarProps>(
             <AvatarPrimitive.Image src={src} alt={name} className="cn-avatar-image" />
             <AvatarPrimitive.Fallback className="cn-avatar-fallback">
               {/* TODO: Design system: Check whether we need cn-avatar-icon */}
-              {initials || <IconV2 name="user" className="cn-avatar-icon" />}
+              {renderFallbackIcon()}
             </AvatarPrimitive.Fallback>
           </>
         ) : (
@@ -56,7 +64,7 @@ const Avatar = forwardRef<HTMLSpanElement, AvatarProps>(
             className={`cn-avatar-fallback ${initials.length > 3 ? 'cn-avatar-fallback-small' : ''}`}
             delayMs={0}
           >
-            {initials || <IconV2 name="user" className="cn-avatar-icon" />}
+            {renderFallbackIcon()}
           </AvatarPrimitive.Fallback>
         )}
       </AvatarPrimitive.Root>

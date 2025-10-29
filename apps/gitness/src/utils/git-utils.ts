@@ -138,19 +138,39 @@ export function formatBytes(bytes: number, decimals = 2) {
   return `${parseFloat((bytes / Math.pow(k, i)).toFixed(dm))} ${sizes[i]}`
 }
 
-export const decodeGitContent = (content = '') => {
+const isValidBase64 = (str: string): boolean => {
+  // Check if string contains only valid base64 characters
+  const base64Regex = /^[A-Za-z0-9+/]*={0,2}$/
+  if (!base64Regex.test(str)) return false
+
+  // Check if string length is a multiple of 4 (with padding)
+  if (str.length % 4 !== 0) return false
+
+  return true
+}
+
+export const decodeGitContent = (content = ''): string => {
+  if (!content) return ''
+
+  // Return original content if it's not valid base64
+  if (!isValidBase64(content)) {
+    return content
+  }
+
   try {
-    // Decode base64 content for text file
-    return decodeURIComponent(escape(window.atob(content)))
-  } catch (_exception) {
+    const binary = atob(content)
+    const bytes = Uint8Array.from(binary, c => c.charCodeAt(0))
+    return new TextDecoder('utf-8').decode(bytes)
+  } catch (error) {
+    console.error('UTF-8 decoding failed:', error)
     try {
-      // Return original base64 content for binary file
+      // Fallback: plain base64 decode
+      return atob(content)
+    } catch (fallbackError) {
+      console.error('Base64 decoding failed:', fallbackError)
       return content
-    } catch (exception) {
-      console.error(exception)
     }
   }
-  return ''
 }
 
 export const filenameToLanguage = (name?: string): string | undefined => {

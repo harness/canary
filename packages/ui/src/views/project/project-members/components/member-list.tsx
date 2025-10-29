@@ -1,6 +1,6 @@
 import { useCallback, useMemo } from 'react'
 
-import { Avatar, DropdownMenu, IconV2, MoreActionsTooltip, Table } from '@/components'
+import { Avatar, DropdownMenu, IconV2, MoreActionsTooltip, PaginationProps, Table } from '@/components'
 import { useCustomDialogTrigger, useTranslation } from '@/context'
 import { MembersProps } from '@/views'
 import { getRolesData } from '@views/project/project-members/constants'
@@ -9,9 +9,10 @@ interface MembersListProps {
   members: MembersProps[]
   onDelete: (member: string) => void
   onEdit: (member: MembersProps) => void
+  paginationProps?: PaginationProps
 }
 
-export const MembersList = ({ members, onDelete, onEdit }: MembersListProps) => {
+export const MembersList = ({ members, onDelete, onEdit, paginationProps }: MembersListProps) => {
   const { t } = useTranslation()
 
   const roleOptions = useMemo(() => getRolesData(t), [t])
@@ -30,7 +31,7 @@ export const MembersList = ({ members, onDelete, onEdit }: MembersListProps) => 
   )
 
   return (
-    <Table.Root>
+    <Table.Root paginationProps={paginationProps}>
       <Table.Header>
         <Table.Row>
           <Table.Head>{t('views:projectSettings.membersTable.user', 'User')}</Table.Head>
@@ -44,19 +45,19 @@ export const MembersList = ({ members, onDelete, onEdit }: MembersListProps) => 
           <Table.Row key={member.uid}>
             {/* USER */}
             <Table.Cell className="content-center">
-              <div className="flex items-center gap-cn-xs">
+              <div className="gap-cn-xs flex items-center">
                 <Avatar name={member.display_name} src={member.avatarUrl} rounded />
-                <span className="font-medium text-cn-1">{member.display_name}</span>
+                <span className="text-cn-1 font-medium">{member.display_name}</span>
               </div>
             </Table.Cell>
 
             {/* EMAIL */}
-            <Table.Cell className="content-center text-cn-2">{member.email}</Table.Cell>
+            <Table.Cell className="text-cn-2 content-center">{member.email}</Table.Cell>
 
             {/* ROLE */}
             <Table.Cell className="w-1/5 content-center">
               <DropdownMenu.Root>
-                <DropdownMenu.Trigger className="flex items-center gap-x-cn-2xs text-cn-2 hover:text-cn-1">
+                <DropdownMenu.Trigger className="gap-x-cn-2xs text-cn-2 hover:text-cn-1 flex items-center">
                   {getRoleLabel(member.role)}
                   <IconV2 className="chevron-down text-cn-2" name="nav-solid-arrow-down" size="2xs" />
                 </DropdownMenu.Trigger>

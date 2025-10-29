@@ -296,7 +296,7 @@ export const viewPreviews: Record<string, ViewPreviewGroup> = {
         element: (
           <RepoViewWrapper>
             <RepoSettingsViewWrapper>
-              <NotFoundPage pageTypeText="rules" />
+              <NotFoundPage pageTypeText="rules" withReloadButton />
             </RepoSettingsViewWrapper>
           </RepoViewWrapper>
         )
@@ -585,6 +585,14 @@ export const viewPreviews: Record<string, ViewPreviewGroup> = {
         element: (
           <RootViewWrapper>
             <ViewOnlyView />
+          </RootViewWrapper>
+        )
+      },
+      'not-found': {
+        label: 'Not found page',
+        element: (
+          <RootViewWrapper>
+            <NotFoundPage />
           </RootViewWrapper>
         )
       }

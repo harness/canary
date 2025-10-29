@@ -1,10 +1,9 @@
-import { FC, useCallback, useMemo } from 'react'
+import { FC, useCallback } from 'react'
 
-import { Button, Dialog, IconV2, Layout, ListActions, Pagination, SearchInput, Text } from '@/components'
+import { Button, Dialog, IconV2, Layout, ListActions, SearchInput, Text } from '@/components'
 import { useTranslation } from '@/context'
 import { RepoTagsListViewProps, SandboxLayout } from '@/views'
 import { cn } from '@utils/cn'
-import { createPaginationLinks } from '@utils/utils'
 
 import { RepoTagsList } from './components/repo-tags-list'
 
@@ -19,7 +18,7 @@ export const RepoTagsListView: FC<RepoTagsListViewProps> = ({
   toCommitDetails
 }) => {
   const { t } = useTranslation()
-  const { tags: tagsList, page, xNextPage, xPrevPage, setPage, pageSize, setPageSize } = useRepoTagsStore()
+  const { tags: tagsList, setPage } = useRepoTagsStore()
 
   const handleSearchChange = useCallback(
     (value: string) => {
@@ -33,19 +32,6 @@ export const RepoTagsListView: FC<RepoTagsListViewProps> = ({
     setPage(1)
     setSearchQuery('')
   }, [setPage, setSearchQuery])
-
-  const isDirtyList = useMemo(() => {
-    return page !== 1 || !!searchQuery
-  }, [page, searchQuery])
-
-  const { getPrevPageLink, getNextPageLink } = useMemo(
-    () => createPaginationLinks(xPrevPage, xNextPage, searchQuery),
-    [xPrevPage, xNextPage, searchQuery]
-  )
-
-  const canShowPagination = useMemo(() => {
-    return !isLoading && !!tagsList.length
-  }, [isLoading, tagsList.length])
 
   return (
     <SandboxLayout.Main>
@@ -91,23 +77,10 @@ export const RepoTagsListView: FC<RepoTagsListViewProps> = ({
                 toCommitDetails={toCommitDetails}
                 onOpenCreateBranchDialog={openCreateBranchDialog}
                 isLoading={isLoading}
-                isDirtyList={isDirtyList}
                 onResetFiltersAndPages={handleResetFiltersAndPages}
                 onOpenCreateTagDialog={openCreateTagDialog}
+                searchQuery={searchQuery}
               />
-
-              {canShowPagination && (
-                <Pagination
-                  indeterminate
-                  currentPage={page}
-                  hasNext={xNextPage > 0}
-                  hasPrevious={xPrevPage > 0}
-                  getNextPageLink={getNextPageLink}
-                  getPrevPageLink={getPrevPageLink}
-                  pageSize={pageSize}
-                  onPageSizeChange={setPageSize}
-                />
-              )}
             </Layout.Vertical>
           </Layout.Vertical>
         </Layout.Vertical>

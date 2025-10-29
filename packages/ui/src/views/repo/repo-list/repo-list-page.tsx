@@ -1,6 +1,6 @@
 import { FC, useCallback, useMemo, useRef, useState } from 'react'
 
-import { IconV2, NoData, Pagination, PermissionIdentifier, ResourceType, Spacer, Text } from '@/components'
+import { IconV2, NoData, PermissionIdentifier, ResourceType, Spacer, Text } from '@/components'
 import { useComponents, useRouterContext, useTranslation } from '@/context'
 import { SandboxLayout } from '@/views'
 import { ComboBoxOptions } from '@components/filters/filters-bar/actions/variants/combo-box'
@@ -48,7 +48,7 @@ const SandboxRepoListPage: FC<RepoListPageProps> = ({
 
   // State for storing saved filters and sorts
   // null means no saved state exists
-  const { repositories, totalItems, page, setPage, pageSize, setPageSize } = useRepoStore()
+  const { repositories, page, setPage } = useRepoStore()
 
   const FilterSortOptions = [
     { label: 'Name (A->Z, 0->9)', value: RepoSortMethod.Identifier_Asc },
@@ -238,7 +238,7 @@ const SandboxRepoListPage: FC<RepoListPageProps> = ({
         )}
         <Spacer size={4.5} />
         <RepoList
-          repos={repositories || []}
+          useRepoStore={useRepoStore}
           handleResetFiltersQueryAndPages={handleResetFiltersQueryAndPages}
           isDirtyList={isDirtyList}
           isLoading={isLoading}
@@ -249,15 +249,6 @@ const SandboxRepoListPage: FC<RepoListPageProps> = ({
           showScope={showScope}
           {...routingProps}
         />
-        {!!repositories?.length && !isLoading && (
-          <Pagination
-            totalItems={totalItems}
-            pageSize={pageSize}
-            onPageSizeChange={setPageSize}
-            currentPage={page}
-            goToPage={setPage}
-          />
-        )}
       </SandboxLayout.Content>
     </SandboxLayout.Main>
   )

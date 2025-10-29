@@ -1,4 +1,4 @@
-import { FC, useCallback } from 'react'
+import { FC, useCallback, useMemo } from 'react'
 
 import {
   ActionData,
@@ -18,7 +18,7 @@ import {
   TimeAgoCard
 } from '@/components'
 import { useCustomDialogTrigger, useTranslation } from '@/context'
-import { cn } from '@utils/cn'
+import { cn, createPaginationLinks } from '@/utils'
 import { getChecksState, getPrState } from '@views/repo/pull-request/utils'
 
 import { BranchListPageProps } from '../types'
@@ -26,16 +26,18 @@ import { DivergenceGauge } from './divergence-gauge'
 
 export const BranchesList: FC<BranchListPageProps> = ({
   isLoading,
-  branches,
-  defaultBranch,
+  useRepoBranchesStore,
   toPullRequestCompare,
   toPullRequest,
   toCode,
-  onDeleteBranch
+  onDeleteBranch,
+  searchQuery
 }) => {
   const { t } = useTranslation()
 
   const { triggerRef, registerTrigger } = useCustomDialogTrigger()
+
+  const { branchList, defaultBranch, xNextPage, xPrevPage, page, pageSize, setPageSize } = useRepoBranchesStore()
 
   const handleDeleteBranch = useCallback(
     (branchName: string) => {
@@ -45,18 +47,42 @@ export const BranchesList: FC<BranchListPageProps> = ({
     [onDeleteBranch, registerTrigger]
   )
 
+  const { getPrevPageLink, getNextPageLink } = useMemo(
+    () => createPaginationLinks(xPrevPage, xNextPage, searchQuery),
+    [xPrevPage, xNextPage, searchQuery]
+  )
+
+  const canShowPagination = useMemo(() => {
+    return !isLoading && !!branchList.length
+  }, [isLoading, branchList.length])
+
   if (isLoading) {
     return <Skeleton.Table countRows={12} countColumns={6} />
   }
 
   return (
-    <Table.Root>
+    <Table.Root
+      paginationProps={
+        canShowPagination
+          ? {
+              indeterminate: true,
+              currentPage: page,
+              hasNext: xNextPage > 0,
+              hasPrevious: xPrevPage > 0,
+              getNextPageLink: getNextPageLink,
+              getPrevPageLink: getPrevPageLink,
+              pageSize: pageSize,
+              onPageSizeChange: setPageSize
+            }
+          : undefined
+      }
+    >
       <Table.Header>
         <Table.Row>
           <Table.Head className="w-[33%]">{t('views:repos.branch', 'Branch')}</Table.Head>
           <Table.Head className="w-[15%]">{t('views:repos.update', 'Updated')}</Table.Head>
 
-          {branches[0]?.checks && (
+          {branchList[0]?.checks && (
             <Table.Head className="w-[15%]">{t('views:repos.checkStatus', 'Check status')}</Table.Head>
           )}
 
@@ -73,7 +99,7 @@ export const BranchesList: FC<BranchListPageProps> = ({
       </Table.Header>
 
       <Table.Body>
-        {branches.map(branch => {
+        {branchList.map(branch => {
           const checkState = branch?.checks?.status ? getChecksState(branch?.checks?.status) : null
 
           const checkStateColor = () => {

@@ -14,15 +14,15 @@ import { useTranslation } from '@/context'
 import { RepositoryType, Scope } from '@/views'
 import { determineScope, getScopedPath } from '@components/scope/utils'
 
-import { FavoriteProps, RoutingProps } from './types'
+import { FavoriteProps, RepoStore, RoutingProps } from './types'
 
 export interface RepoListProps extends Partial<RoutingProps>, FavoriteProps {
-  repos: RepositoryType[]
+  useRepoStore: () => RepoStore
   handleResetFiltersQueryAndPages: () => void
-  isDirtyList: boolean
   isLoading: boolean
   scope: Scope
   showScope?: boolean
+  isDirtyList: boolean
 }
 
 const Stats = ({ pulls }: { pulls: number }) => (
@@ -74,24 +74,25 @@ const Title = ({
 }
 
 export function RepoList({
-  repos,
   handleResetFiltersQueryAndPages,
-  isDirtyList,
   isLoading,
   onClickRepo,
   toCreateRepo,
   toImportRepo,
   onFavoriteToggle,
   scope,
-  showScope = false
+  showScope = false,
+  isDirtyList,
+  useRepoStore
 }: RepoListProps) {
   const { t } = useTranslation()
+  const { repositories, totalItems, page, setPage, pageSize, setPageSize } = useRepoStore()
 
   if (isLoading) {
     return <Skeleton.List linesCount={8} hasActions />
   }
 
-  if (!repos.length) {
+  if (!repositories?.length) {
     return isDirtyList ? (
       <NoData
         withBorder
@@ -138,8 +139,16 @@ export function RepoList({
   }
 
   return (
-    <StackedList.Root>
-      {repos.map(repo => (
+    <StackedList.Root
+      paginationProps={{
+        totalItems,
+        pageSize,
+        onPageSizeChange: setPageSize,
+        currentPage: page,
+        goToPage: setPage
+      }}
+    >
+      {repositories.map(repo => (
         <StackedList.Item
           key={repo.name}
           paddingY="sm"

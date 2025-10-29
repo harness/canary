@@ -42,12 +42,11 @@ interface RoutingProps {
 
 export interface BranchListPageProps extends Partial<RoutingProps> {
   isLoading: boolean
-  branches: BranchProps[]
-  defaultBranch?: string
+  useRepoBranchesStore: () => IBranchSelectorStore
   setCreateBranchDialogOpen: (isOpen: boolean) => void
   handleResetFiltersAndPages: () => void
   onDeleteBranch: (branchName: string) => void
-  isDirtyList: boolean
+  searchQuery: string | null
 }
 
 export interface RepoBranchListViewProps extends Partial<RoutingProps> {

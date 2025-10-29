@@ -1,6 +1,6 @@
 import { FC, useMemo } from 'react'
 
-import { Button, Checkbox, DropdownMenu, IconV2, Layout, NoData, Pagination, Text } from '@/components'
+import { Button, Checkbox, DropdownMenu, IconV2, Layout, NoData, Text } from '@/components'
 import { useRouterContext, useTranslation } from '@/context'
 import { ErrorTypes, IProjectRulesStore, SandboxLayout } from '@/views'
 import { RepoSettingsGeneralRules } from '@views/repo/repo-settings/components/repo-settings-general-rules'
@@ -113,16 +113,15 @@ export const ProjectRulesPage: FC<ProjectRulesPageProps> = ({
             toProjectRuleDetails={toProjectRuleDetails}
             ruleTypeFilter={ruleTypeFilter}
             setRuleTypeFilter={setRuleTypeFilter}
+            paginationProps={{
+              totalItems: totalItems,
+              pageSize: pageSize,
+              onPageSizeChange: setPageSize,
+              currentPage: page,
+              goToPage: setPage
+            }}
           />
         </Layout.Vertical>
-
-        <Pagination
-          totalItems={totalItems}
-          pageSize={pageSize}
-          onPageSizeChange={setPageSize}
-          currentPage={page}
-          goToPage={setPage}
-        />
       </SandboxLayout.Content>
     </SandboxLayout.Main>
   )

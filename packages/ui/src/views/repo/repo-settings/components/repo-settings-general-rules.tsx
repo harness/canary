@@ -8,6 +8,7 @@ import {
   IconV2,
   Layout,
   ListActions,
+  ListPaginationProps,
   MoreActionsTooltip,
   NoData,
   ScopeTag,
@@ -91,6 +92,7 @@ export interface RepoSettingsGeneralRulesProps {
   ruleTypeFilter?: 'branch' | 'tag' | 'push' | null
   setRuleTypeFilter?: (filter: 'branch' | 'tag' | 'push' | null) => void
   toProjectRuleDetails?: (identifier: string, scope: number) => void
+  paginationProps?: ListPaginationProps
 }
 
 export const RepoSettingsGeneralRules: FC<RepoSettingsGeneralRulesProps> = ({
@@ -105,7 +107,8 @@ export const RepoSettingsGeneralRules: FC<RepoSettingsGeneralRulesProps> = ({
   toRepoTagRuleCreate,
   ruleTypeFilter,
   setRuleTypeFilter,
-  toProjectRuleDetails
+  toProjectRuleDetails,
+  paginationProps
 }) => {
   const { navigate } = useRouterContext()
   const { t } = useTranslation()
@@ -223,7 +226,7 @@ export const RepoSettingsGeneralRules: FC<RepoSettingsGeneralRulesProps> = ({
       {isLoading && <Skeleton.List />}
 
       {!isLoading && rules?.length !== 0 && (
-        <StackedList.Root>
+        <StackedList.Root paginationProps={paginationProps}>
           {rules?.map((rule, idx) => {
             if (!rule?.identifier) return <Fragment key={idx} />
 

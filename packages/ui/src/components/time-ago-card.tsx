@@ -181,7 +181,7 @@ export const TimeAgoCard = memo(
         <Tooltip content={<TimeAgoContent formattedFullArray={formattedFull} />} {...tooltipProps}>
           <button
             ref={ref as Ref<HTMLButtonElement>}
-            className={cn('cn-time-ago-card-button', triggerClassName)}
+            className={cn('cn-time-ago-card-trigger', triggerClassName)}
             {...triggerProps}
           >
             <Text<'time'> as="time" {...textProps} dateTime={timestamp.toString()}>

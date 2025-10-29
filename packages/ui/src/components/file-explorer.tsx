@@ -107,11 +107,21 @@ interface FolderItemProps {
   content?: ReactNode
   onClick?: (value: string) => void
   link?: string
+  icon?: IconV2NamesType
 }
 
-function FolderItem({ children, value = '', isActive, content, link, onClick, ...otherProps }: FolderItemProps) {
+function FolderItem({
+  children,
+  value = '',
+  isActive,
+  content,
+  link,
+  onClick,
+  icon = 'folder',
+  ...otherProps
+}: FolderItemProps) {
   const itemElement = (
-    <Item icon="folder" isActive={isActive} link={link} isFolder onClick={() => onClick?.(value)} {...otherProps}>
+    <Item icon={icon} isActive={isActive} link={link} isFolder onClick={() => onClick?.(value)} {...otherProps}>
       {children}
     </Item>
   )
@@ -153,12 +163,22 @@ type FileItemProps = {
   onClick?: (value: string) => void
   tooltip?: TooltipProps['content']
   [key: `data-${string}`]: any
+  icon?: IconV2NamesType
 }
 
-function FileItem({ children, isActive, value, link, onClick, tooltip, ...dataProps }: FileItemProps) {
+function FileItem({
+  children,
+  isActive,
+  value,
+  link,
+  onClick,
+  tooltip,
+  icon = 'empty-page',
+  ...dataProps
+}: FileItemProps) {
   const comp = (
     <Item
-      icon="empty-page"
+      icon={icon}
       isActive={isActive}
       className="mb-cn-4xs"
       onClick={() => onClick?.(value)}

@@ -253,7 +253,7 @@
         "$value": {
           "fontFamily": "{fontFamily.default}",
           "fontWeight": "{fontWeight.default.normal.400}",
-          "fontSize": "{fontSize.1}",
+          "fontSize": "{fontSize.half}",
           "lineHeight": "{lineHeight.1.none}",
           "letterSpacing": "{tracking.normal}",
           "textCase": "{textCase.uppercase}"

@@ -1,3 +1,4 @@
+import { useTranslation } from '@/context'
 import { TypesUser } from '@/types'
 import {
   CommentItem,
@@ -74,6 +75,7 @@ export function PullRequestChangesSingleFileView({
   principalProps,
   currentRefForDiff
 }: PullRequestChangesSingleFileViewProps) {
+  const { t } = useTranslation()
   // For large PRs, determine which single file to show
   const getSingleFileToShow = () => {
     if (diffPathQuery) {
@@ -85,33 +87,27 @@ export function PullRequestChangesSingleFileView({
   }
 
   const singleFile = getSingleFileToShow()
-
-  if (!singleFile) {
-    return (
-      <Alert.Root theme="warning" className="pt-cn-md">
-        <Alert.Title>No Files Found</Alert.Title>
-        <Alert.Description>No files are available to display in this pull request.</Alert.Description>
-      </Alert.Root>
-    )
-  }
-
-  // Find the block that contains this file
   const blockIndex = diffBlocks.findIndex(block => block.some(item => item.filePath === singleFile.filePath))
 
-  if (blockIndex === -1) {
-    return (
-      <Alert.Root theme="warning" className="pt-cn-md">
-        <Alert.Title>File Not Found</Alert.Title>
-        <Alert.Description>The selected file could not be found in the diff blocks.</Alert.Description>
-      </Alert.Root>
-    )
+  if (!singleFile || blockIndex === -1) {
+    return null
   }
 
   const fileComments = getFileComments(singleFile, comments)
 
   return (
     <>
-      <div key={blockIndex} data-block={outterBlockName(blockIndex)}>
+      <Alert.Root theme="info" expandable>
+        <Alert.Title>{t('views:pullRequests.largePRMode', 'Large Pull Request Mode')}</Alert.Title>
+        <Alert.Description>
+          {t(
+            'views:pullRequests.largePRModeDescription',
+            `Due to the large number of changes (${data.length} files) in this pull request, only one file is being shown at a time.`,
+            { files: data.length }
+          )}
+        </Alert.Description>
+      </Alert.Root>
+      <div key={blockIndex} data-block={outterBlockName(blockIndex)} className="pt-cn-xs">
         <div className="pt-cn-xs" key={singleFile.filePath}>
           <div data-block={innerBlockName(singleFile.filePath)}>
             <PullRequestAccordion
@@ -151,15 +147,6 @@ export function PullRequestChangesSingleFileView({
           </div>
         </div>
       </div>
-
-      {/* Message explaining single-file mode */}
-      <Alert.Root theme="info" expandable className="pt-cn-md">
-        <Alert.Title>Large Pull Request Mode</Alert.Title>
-        <Alert.Description>
-          Due to the large number of changes ({data.length} files) in this pull request, only one file is being shown at
-          a time for optimal performance. Use the file explorer to navigate between files.
-        </Alert.Description>
-      </Alert.Root>
     </>
   )
 }

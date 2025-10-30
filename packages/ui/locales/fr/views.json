@@ -615,6 +615,8 @@
     "changereq": "Changement Demandé",
     "split": "Diviser",
     "unified": "Unifié",
+    "largePRMode": "Large Pull Request Mode",
+    "largePRModeDescription": "",
     "comments": {
       "commitSuggestion": "Commit suggestion",
       "removeSuggestion": "Remove suggestion from batch",

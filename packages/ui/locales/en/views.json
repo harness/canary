@@ -627,6 +627,8 @@
     "changereq": "Changes Requested",
     "split": "Split",
     "unified": "Unified",
+    "largePRMode": "Large Pull Request Mode",
+    "largePRModeDescription": "Due to the large number of changes ({{files}} files) in this pull request, only one file is being shown at a time.",
     "comments": {
       "commitSuggestion": "Commit suggestion",
       "removeSuggestion": "Remove suggestion from batch",

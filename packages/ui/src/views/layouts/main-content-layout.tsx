@@ -11,7 +11,7 @@ const HalfArch = ({ className }: { className?: string }) => (
   <div className="relative size-[var(--cn-inset-layout-indent)] overflow-hidden">
     <div
       className={cn(
-        'absolute top-0 size-[calc(var(--cn-inset-layout-indent)*2)] rounded-full border shadow-[0_0_0_20px_var(--cn-bg-0)]',
+        'absolute top-0 size-[calc(var(--cn-inset-layout-indent)*2)] rounded-cn-full border shadow-[0_0_0_20px_var(--cn-bg-0)]',
         className
       )}
     />
@@ -42,7 +42,7 @@ export function MainContentLayout({
       className={cn(
         'min-h-[calc(100vh-var(--cn-inset-layout-indent)*2)] mx-[var(--cn-inset-layout-indent)] my-[var(--cn-inset-layout-indent)] border-[var(--cn-inset-border-width)] bg-cn-1',
         {
-          'rounded-3': isMobile || enableInset,
+          'rounded-cn-3': isMobile || enableInset,
           'min-h-[calc(100vh-var(--cn-breadcrumbs-height)-var(--cn-inset-layout-indent))] mb-[var(--cn-inset-layout-indent)] mt-0':
             withBreadcrumbs
         },

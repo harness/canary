@@ -39,7 +39,7 @@ function Icon({
         className={cn(
           {
             'text-cn-1': simpleNodeIcon,
-            'border-cn-3 bg-cn-2 text-cn-1 relative flex size-cn-7 place-content-center place-items-center rounded-full border layer-medium':
+            'border-cn-3 bg-cn-2 text-cn-1 relative flex size-cn-7 place-content-center place-items-center rounded-cn-full border layer-medium':
               !simpleNodeIcon
           },
           className

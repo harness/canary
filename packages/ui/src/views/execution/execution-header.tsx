@@ -75,7 +75,7 @@ export const ExecutionHeader: FC<ExecutionHeaderProps> = ({
             <div className="gap-cn-2xs flex flex-col">
               <Text as="span">Storage (average)</Text>
               <Text as="span" color="foreground-1" className="gap-x-cn-2xs inline-flex">
-                {storageAverage} <span className="border-cn-2 size-3.5 rounded-full border" />
+                {storageAverage} <span className="border-cn-2 size-3.5 rounded-cn-full border" />
               </Text>
             </div>
           )}

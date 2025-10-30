@@ -215,7 +215,7 @@ const CarouselPrevious = forwardRef<HTMLButtonElement, CarouselButtonProp>(
         size={size}
         iconOnly
         className={cn(
-          'absolute h-8 w-8 rounded-full',
+          'absolute h-8 w-8 rounded-cn-full',
           orientation === 'horizontal'
             ? '-left-[48px] top-1/2 -translate-y-1/2' // TODO: replace -[48px] with a proper value from the design system once available
             : '-top-[48px] left-1/2 -translate-x-1/2 rotate-90',
@@ -248,7 +248,7 @@ const CarouselNext = forwardRef<HTMLButtonElement, CarouselButtonProp>(
         size={size}
         iconOnly
         className={cn(
-          'absolute h-8 w-8 rounded-full',
+          'absolute h-8 w-8 rounded-cn-full',
           orientation === 'horizontal'
             ? '-right-[48px] top-1/2 -translate-y-1/2' // TODO: replace -[48px] with a proper value from the design system once available
             : '-bottom-[48px] left-1/2 -translate-x-1/2 rotate-90',

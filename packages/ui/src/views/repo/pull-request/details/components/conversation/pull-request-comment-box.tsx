@@ -690,7 +690,7 @@ export const PullRequestCommentBox = ({
           className={cn(
             'px-cn-md pt-cn-2xs pb-cn-sm flex-1 w-full',
             {
-              'border rounded-3': !inReplyMode || isEditMode,
+              'border rounded-cn-3': !inReplyMode || isEditMode,
               'bg-cn-1': !inReplyMode,
               'bg-cn-2 border-t': inReplyMode,
               'px-cn-sm pt-cn-xs pb-cn-xs': isCompactLayout
@@ -741,7 +741,7 @@ export const PullRequestCommentBox = ({
                   </div>
                 )}
                 {isDragging && (
-                  <div className="border-cn-2 absolute inset-cn-3xs z-[100] cursor-copy rounded-1 border border-dashed" />
+                  <div className="border-cn-2 absolute inset-cn-3xs z-[100] cursor-copy rounded-cn-1 border border-dashed" />
                 )}
                 <Layout.Flex
                   align="center"

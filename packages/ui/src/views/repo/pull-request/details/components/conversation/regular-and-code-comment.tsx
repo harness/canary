@@ -263,7 +263,7 @@ const PullRequestRegularAndCodeCommentInternal: FC<PullRequestRegularAndCodeComm
               isDeleted: !!commentItem.deleted,
               handleDeleteComment: () => handleDeleteComment(commentItem.id),
               onEditClick: () => toggleEditMode(componentId, commentItem.payload?.text || ''),
-              contentClassName: cn('border-0 pb-0 rounded-none', { 'line-clamp-1': !isExpanded }),
+              contentClassName: cn('border-0 pb-0 rounded-cn-none', { 'line-clamp-1': !isExpanded }),
               icon: avatar,
               hideEditDelete: commentItem?.payload?.author?.uid !== currentUser?.uid,
               content: commentItem.deleted ? (

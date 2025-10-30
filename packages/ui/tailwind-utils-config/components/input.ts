@@ -123,12 +123,12 @@ export default {
       },
 
       ':where(.cn-input-prefix)': {
-        '@apply h-full border-0 border-r rounded-r-none': '',
+        '@apply h-full border-0 border-r rounded-r-cn-none': '',
         borderColor: 'inherit'
       },
 
       ':where(.cn-input-suffix)': {
-        '@apply h-full border-0 border-l rounded-l-none': '',
+        '@apply h-full border-0 border-l rounded-l-cn-none': '',
         borderColor: 'inherit'
       },
 

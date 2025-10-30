@@ -121,7 +121,7 @@ export default {
       height: 'var(--cn-btn-size-md)',
       width: 'var(--cn-btn-size-md)',
       position: 'relative',
-      '@apply rounded-l-none border-l-0 p-0': '',
+      '@apply rounded-l-cn-none border-l-0 p-0': '',
 
       '&::before': {
         content: '""',

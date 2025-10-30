@@ -17,11 +17,11 @@ export const ExecutionStatusBadge: React.FC<IExecutionStatusBadgeProps> = props 
     case PipelineExecutionStatus.PENDING:
       return minimal ? (
         <div className="flex items-center gap-cn-3xs">
-          <div className="bg-cn-gray-secondary size-2 rounded-full" />
+          <div className="bg-cn-gray-secondary size-2 rounded-cn-full" />
           <span className="text-cn-disabled">Pending</span>
         </div>
       ) : (
-        <div className="border-cn-1 bg-cn-gray-secondary/[0.1] flex items-center gap-cn-3xs rounded-3 border border-solid px-cn-3xs py-cn-4xs">
+        <div className="border-cn-1 bg-cn-gray-secondary/[0.1] flex items-center gap-cn-3xs rounded-cn-3 border border-solid px-cn-3xs py-cn-4xs">
           <div className="flex items-center gap-cn-4xs">
             <IconV2 name="clock-solid" />
             <span className="text-cn-disabled">Pending</span>
@@ -32,11 +32,11 @@ export const ExecutionStatusBadge: React.FC<IExecutionStatusBadgeProps> = props 
     case PipelineExecutionStatus.RUNNING:
       return minimal ? (
         <div className="flex items-center gap-cn-3xs">
-          <div className="size-2 rounded-full" />
+          <div className="size-2 rounded-cn-full" />
           <span>Running</span>
         </div>
       ) : (
-        <div className="flex items-center gap-cn-3xs rounded-3 border border-solid px-cn-3xs py-cn-4xs">
+        <div className="flex items-center gap-cn-3xs rounded-cn-3 border border-solid px-cn-3xs py-cn-4xs">
           <div className="flex items-center gap-cn-3xs">
             <IconV2 name="loader" color="warning" className="animate-spin" />
             <span>Running</span>
@@ -49,11 +49,11 @@ export const ExecutionStatusBadge: React.FC<IExecutionStatusBadgeProps> = props 
     case PipelineExecutionStatus.FAILURE:
       return minimal ? (
         <div className="flex items-center gap-cn-3xs">
-          <div className="size-2 rounded-full bg-[#ED5E5E]" />
+          <div className="size-2 rounded-cn-full bg-[#ED5E5E]" />
           <span className="text-cn-danger">Failed</span>
         </div>
       ) : (
-        <div className="flex items-center gap-cn-3xs rounded-3 border border-solid border-[#F76E6E1F] bg-[#F76E6E1A]/[0.1] px-cn-3xs py-cn-4xs">
+        <div className="flex items-center gap-cn-3xs rounded-cn-3 border border-solid border-[#F76E6E1F] bg-[#F76E6E1A]/[0.1] px-cn-3xs py-cn-4xs">
           <div className="flex items-center gap-cn-4xs">
             <IconV2 name="xmark-circle-solid" color="danger" />
             <span className="text-cn-danger">Failed</span>
@@ -64,11 +64,11 @@ export const ExecutionStatusBadge: React.FC<IExecutionStatusBadgeProps> = props 
     case PipelineExecutionStatus.SUCCESS:
       return minimal ? (
         <div className="flex items-center gap-cn-3xs">
-          <div className="bg-cn-success-primary size-2 rounded-full" />
+          <div className="bg-cn-success-primary size-2 rounded-cn-full" />
           <span className="text-cn-success">Success</span>
         </div>
       ) : (
-        <div className="border-cn-success bg-cn-success-primary/[0.1] flex items-center gap-cn-3xs rounded-3 border border-solid px-cn-3xs py-cn-4xs">
+        <div className="border-cn-success bg-cn-success-primary/[0.1] flex items-center gap-cn-3xs rounded-cn-3 border border-solid px-cn-3xs py-cn-4xs">
           <div className="text-cn-success flex items-center gap-cn-4xs">
             <IconV2 name="check-circle-solid" color="success" />
             <span>Success</span>

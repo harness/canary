@@ -141,7 +141,7 @@ export function EntityReference<T extends BaseEntityProps, S = string, F = strin
   const defaultEntityRenderer = ({ entity, isSelected, onSelect, showCheckbox }: EntityRendererProps<T>) => {
     return (
       <StackedList.Item
-        className={cn({ 'bg-cn-selected first:!rounded-none min-h-12': isSelected })}
+        className={cn({ 'bg-cn-selected first:!rounded-cn-none min-h-12': isSelected })}
         paddingY="xs"
         onClick={() => onSelect?.(entity)}
         thumbnail={showCheckbox ? <Checkbox checked={isSelected} onCheckedChange={() => onSelect?.(entity)} /> : null}
@@ -156,7 +156,7 @@ export function EntityReference<T extends BaseEntityProps, S = string, F = strin
     return (
       <StackedList.Item
         paddingY="xs"
-        className="gap-x-cn-xs min-h-12 first:!rounded-none"
+        className="gap-x-cn-xs min-h-12 first:!rounded-cn-none"
         onClick={() => onSelect?.(parentFolder)}
         thumbnail={<IconV2 name="folder" size="md" className="text-cn-2" />}
       >
@@ -170,7 +170,7 @@ export function EntityReference<T extends BaseEntityProps, S = string, F = strin
     return (
       <StackedList.Item
         paddingY="xs"
-        className="gap-x-cn-xs min-h-12 first:!rounded-none"
+        className="gap-x-cn-xs min-h-12 first:!rounded-cn-none"
         onClick={() => onSelect?.(folder)}
         thumbnail={<IconV2 name="folder" size="md" className="text-cn-2" />}
       >

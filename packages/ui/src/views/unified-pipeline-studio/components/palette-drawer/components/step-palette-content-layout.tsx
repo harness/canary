@@ -20,7 +20,7 @@ const StepsPaletteContentLayout = {
   },
 
   SectionItem: function SectionHeader({ children }: { children: React.ReactNode }) {
-    return <div className="flex flex-col rounded-3 border hover:!bg-cn-hover">{children}</div>
+    return <div className="flex flex-col rounded-cn-3 border hover:!bg-cn-hover">{children}</div>
   }
 }
 

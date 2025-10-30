@@ -39,7 +39,7 @@ const CommandInput = React.forwardRef<
     <CommandPrimitive.Input
       ref={ref}
       className={cn(
-        'placeholder:text-cn-3 flex h-10 w-full rounded-3 bg-transparent py-cn-sm text-cn-size-2 outline-none disabled:cursor-not-allowed focus-visible:outline-none disabled:opacity-50',
+        'placeholder:text-cn-3 flex h-10 w-full rounded-cn-3 bg-transparent py-cn-sm text-cn-size-2 outline-none disabled:cursor-not-allowed focus-visible:outline-none disabled:opacity-50',
         className
       )}
       {...props}
@@ -118,7 +118,7 @@ const CommandItem = React.forwardRef<
 CommandItem.displayName = CommandPrimitive.Item.displayName
 
 const CommandShortcut = ({ className, ...props }: React.HTMLAttributes<HTMLSpanElement>) => {
-  return <span className={cn('text-cn-3 ml-auto text-cn-size-2 tracking-widest', className)} {...props} />
+  return <span className={cn('text-cn-3 ml-auto text-cn-size-2 tracking-cn-widest', className)} {...props} />
 }
 CommandShortcut.displayName = 'CommandShortcut'
 

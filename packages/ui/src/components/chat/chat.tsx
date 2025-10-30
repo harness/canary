@@ -90,7 +90,7 @@ const Typing: FC<TypingProps> = ({ avatar }) => {
   return (
     <div className="mt-cn-sm gap-x-cn-sm flex items-center">
       {avatar || <Illustration size={16} name="chat-avatar" themeDependent />}
-      <span className="bg-cn-3 size-2.5 rounded-full" aria-hidden />
+      <span className="bg-cn-3 size-2.5 rounded-cn-full" aria-hidden />
     </div>
   )
 }
@@ -176,7 +176,7 @@ const InputField: FC<InputFieldProps> = ({
       <Input
         ref={inputRef}
         // TODO: Review and remove arbitrary values
-        className="rounded-4 pl-cn-sm focus-visible:rounded-4 focus-visible:pb-cn-2xl h-11 flex-1 pr-[60px] focus:ring-0 focus-visible:h-16"
+        className="rounded-cn-4 pl-cn-sm focus-visible:rounded-cn-4 focus-visible:pb-cn-2xl h-11 flex-1 pr-[60px] focus:ring-0 focus-visible:h-16"
         wrapperClassName="flex-row"
         value={value}
         onChange={onChange}

@@ -93,7 +93,7 @@ function apiExecutions2Executions(data: ListExecutionsOkResponse): IExecution[] 
 
 const Branch = ({ children }: { children: React.ReactNode }): React.ReactElement => {
   return (
-    <div className="flex items-center gap-cn-3xs rounded-3 bg-cn-1/10 px-cn-2xs font-body-code">
+    <div className="flex items-center gap-cn-3xs rounded-cn-3 bg-cn-1/10 px-cn-2xs font-body-code">
       <IconV2 name="git-branch" size="2xs" className="text-cn-3" />
       {children}
     </div>

@@ -77,7 +77,7 @@ export const BranchInfoBar: FC<BranchInfoBarProps> = ({
 
   return (
     <Layout.Flex
-      className="border-cn-2 bg-cn-2 min-h-[3.25rem] rounded-3 border py-cn-xs pl-cn-md pr-cn-xs"
+      className="border-cn-2 bg-cn-2 min-h-[3.25rem] rounded-cn-3 border py-cn-xs pl-cn-md pr-cn-xs"
       align="center"
       justify="between"
       gapX="xs"
@@ -101,7 +101,7 @@ export const BranchInfoBar: FC<BranchInfoBarProps> = ({
           <Popover.Content align="end" className="w-80" hideArrow>
             <Layout.Grid gapY="xs">
               <Layout.Grid flow="column" gapX="xs">
-                <div className="border-cn-3 rounded-2 flex size-8 shrink-0 items-center justify-center border">
+                <div className="border-cn-3 rounded-cn-2 flex size-8 shrink-0 items-center justify-center border">
                   <IconV2 name="git-pull-request" size="md" />
                 </div>
                 <Layout.Grid gapY="xs">

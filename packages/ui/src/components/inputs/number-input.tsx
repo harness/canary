@@ -140,7 +140,7 @@ export const NumberInput = forwardRef<HTMLInputElement, NumberInputProps>(
                     <div className="flex flex-col overflow-hidden rounded-r-cn-input">
                       <Button
                         tabIndex={-1}
-                        className="shrink rounded-none"
+                        className="shrink rounded-cn-none"
                         aria-label="Increment value"
                         variant="ghost"
                         iconOnly
@@ -154,7 +154,7 @@ export const NumberInput = forwardRef<HTMLInputElement, NumberInputProps>(
                       <hr />
                       <Button
                         tabIndex={-1}
-                        className="shrink rounded-none"
+                        className="shrink rounded-cn-none"
                         aria-label="Decrement value"
                         variant="ghost"
                         iconOnly

@@ -23,7 +23,7 @@ export default {
 
           '&::after': {
             content: '""',
-            '@apply absolute h-cn-md w-cn-3xs rounded-full bg-cn-brand-primary -left-cn-2xs top-1/2 -translate-y-1/2':
+            '@apply absolute h-cn-md w-cn-3xs rounded-cn-full bg-cn-brand-primary -left-cn-2xs top-1/2 -translate-y-1/2':
               ''
           }
         }

@@ -680,7 +680,7 @@ const PullRequestPanel = ({
                 }
               />
               {showMergeInputs && (
-                <Layout.Vertical className="bg-cn-1 gap-cn-md p-cn-sm rounded-3 mb-cn-3xs w-full">
+                <Layout.Vertical className="bg-cn-1 gap-cn-md p-cn-sm rounded-cn-3 mb-cn-3xs w-full">
                   <TextInput
                     id="merge-title"
                     label="Commit message"

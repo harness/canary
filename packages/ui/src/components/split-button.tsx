@@ -83,7 +83,7 @@ const SplitButtonInner = forwardRef(
       <div className={cn('flex', className)}>
         <Button
           ref={ref}
-          className={cn('rounded-r-none border-r-0', buttonClassName)}
+          className={cn('rounded-r-cn-none border-r-0', buttonClassName)}
           theme={theme}
           variant={variant}
           size={size}

@@ -11,11 +11,11 @@ const Badge: React.FC<ExecutionStatusProps & BadgeProps> = props => {
     case ExecutionState.PENDING:
       return minimal ? (
         <div className="flex items-center gap-cn-3xs">
-          <div className="size-2 rounded-full bg-cn-gray-secondary" />
+          <div className="size-2 rounded-cn-full bg-cn-gray-secondary" />
           <span className="text-cn-disabled">Pending</span>
         </div>
       ) : (
-        <div className="flex items-center gap-cn-3xs rounded-3">
+        <div className="flex items-center gap-cn-3xs rounded-cn-3">
           <div className="flex items-center gap-cn-4xs">
             <IconV2 name="clock-solid" />
             <span className="text-cn-disabled">Pending</span>
@@ -26,11 +26,11 @@ const Badge: React.FC<ExecutionStatusProps & BadgeProps> = props => {
     case ExecutionState.RUNNING:
       return minimal ? (
         <div className="flex items-center gap-cn-3xs">
-          <div className="size-2 animate-pulse rounded-full bg-cn-warning-primary duration-1000" />
+          <div className="size-2 animate-pulse rounded-cn-full bg-cn-warning-primary duration-1000" />
           <span>Running</span>
         </div>
       ) : (
-        <div className="flex items-center gap-cn-3xs rounded-3">
+        <div className="flex items-center gap-cn-3xs rounded-cn-3">
           <div className="flex items-center gap-cn-2xs">
             <IconV2 name="loader" color="warning" className="animate-spin" />
             <span>Running</span>
@@ -46,7 +46,7 @@ const Badge: React.FC<ExecutionStatusProps & BadgeProps> = props => {
           Failed
         </StatusBadge>
       ) : (
-        <div className="flex items-center gap-cn-3xs rounded-3">
+        <div className="flex items-center gap-cn-3xs rounded-cn-3">
           <StatusBadge icon="xmark-circle-solid" theme="danger" variant="ghost">
             Failed
           </StatusBadge>
@@ -59,7 +59,7 @@ const Badge: React.FC<ExecutionStatusProps & BadgeProps> = props => {
           Success
         </StatusBadge>
       ) : (
-        <div className="flex items-center gap-cn-3xs rounded-3">
+        <div className="flex items-center gap-cn-3xs rounded-cn-3">
           <StatusBadge icon="check-circle-solid" theme="success" variant="ghost">
             Success
           </StatusBadge>

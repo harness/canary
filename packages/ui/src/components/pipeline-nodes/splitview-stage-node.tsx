@@ -56,7 +56,7 @@ export function SplitView_StageNode(props: SplitView_StageNodeProps) {
       <ExecutionStatus executionStatus={executionStatus} />
 
       <div
-        className={cn('bg-cn-gray-secondary rounded-3', {
+        className={cn('bg-cn-gray-secondary rounded-cn-3', {
           'unified-pipeline-studio_card-wrapper ': executionStatus === 'executing'
         })}
       >
@@ -64,7 +64,7 @@ export function SplitView_StageNode(props: SplitView_StageNodeProps) {
           role="button"
           tabIndex={0}
           className={cn(
-            'flex flex-col justify-end gap-y-cn-xs box size-full rounded-3 border bg-cn-graph-card-gradient cursor-pointer p-cn-xs shadow-4',
+            'flex flex-col justify-end gap-y-cn-xs box size-full rounded-cn-3 border bg-cn-graph-card-gradient cursor-pointer p-cn-xs shadow-cn-4',
             {
               'border-cn-2': !selected,
               'border-cn-3': selected,

@@ -22,7 +22,7 @@ import { DocsPage } from "@/components/docs-page";
     }
   ];
 
-return <Tree className="h-64 w-full rounded-3 border">
+return <Tree className="h-64 w-full rounded-cn-3 border">
 
 <Folder
   element={basicTreeData[0].name}
@@ -51,7 +51,7 @@ import { ExecutionState } from '@harnessio/ui/views'
 //...
 
 return (
-  <Tree initialSelectedId="1-1" className="h-96 w-full rounded-3 border">
+  <Tree initialSelectedId="1-1" className="h-96 w-full rounded-cn-3 border">
     <Folder
       element="Documents"
       value="folder-1"
@@ -101,7 +101,7 @@ Create a simple tree with folders and files. The tree automatically handles expa
     }
   ];
 
-return <Tree className="h-80 w-full rounded-3 border">
+return <Tree className="h-80 w-full rounded-cn-3 border">
 
 <Folder element="Documents" value="folder-1" status="success" level={0}>
   <File value="file-1" status="success" level={1}>
@@ -157,7 +157,7 @@ The TreeView component displays status icons based on the `ExecutionState`. It s
     }
   ];
 
-return <Tree className="h-80 w-full rounded-3 border">
+return <Tree className="h-80 w-full rounded-cn-3 border">
 
 <Folder
   element="Build Pipeline"
@@ -221,7 +221,7 @@ You can specify an initial selected item using the `initialSelectedId` prop. The
     }
   ];
 
-return <Tree initialSelectedId="target-file" className="h-64 w-full rounded-3 border">
+return <Tree initialSelectedId="target-file" className="h-64 w-full rounded-cn-3 border">
 
 <Folder element="Root" value="root" status="success" level={0}>
   <Folder
@@ -272,7 +272,7 @@ Control which folders are initially expanded using the `initialExpendedItems` pr
 
 return <Tree
 initialExpendedItems={['folder-a']}
-className="h-64 w-full rounded-3 border"
+className="h-64 w-full rounded-cn-3 border"
 
 >
 
@@ -316,7 +316,7 @@ You can make specific items non-selectable by setting `isSelectable: false` on t
     }
   ];
 
-return <Tree className="h-64 w-full rounded-3 border">
+return <Tree className="h-64 w-full rounded-cn-3 border">
 
 <Folder
   element="Configuration (Non-selectable)"
@@ -372,7 +372,10 @@ Add a collapse/expand all button using the `CollapseButton` component.
 
 return <div className="relative">
 
-<Tree className="h-80 w-full rounded-3 border" elements={collapseTreeElements}>
+<Tree
+  className="h-80 w-full rounded-cn-3 border"
+  elements={collapseTreeElements}
+>
   <Folder element="Module 1" value="module-1" status="success" level={0}>
     <File value="file-1" status="success" level={1}>
       component.tsx
@@ -417,7 +420,7 @@ The TreeView component supports right-to-left (RTL) text direction using the `di
     }
   ];
 
-return <Tree dir="rtl" className="h-64 w-full rounded-3 border">
+return <Tree dir="rtl" className="h-64 w-full rounded-cn-3 border">
 
 <Folder element="مجلد رئيسي" value="rtl-1" status="success" level={0}>
   <File value="rtl-1-1" status="success" level={1}>
@@ -601,7 +604,7 @@ return <div className="relative">
   initialExpendedItems={["pipeline-main", "stage-test", "job-integration"]}
   indicator={true}
   elements={pipelineExecutionTree}
-  className="h-[600px] w-full rounded-3 border"
+  className="h-[600px] w-full rounded-cn-3 border"
 >
   <Folder
     element="Main Pipeline"
@@ -1124,7 +1127,7 @@ const treeData: TreeViewElement[] = [
   }
 ]
 
-<Tree className="h-96 w-full rounded-3 border">
+<Tree className="h-96 w-full rounded-cn-3 border">
   {renderTree(treeData, ({ parentNode, childNode }) => {
     console.log('Selected:', childNode.name)
   })}

@@ -1,6 +1,6 @@
+import * as TooltipPrimitive from '@radix-ui/react-tooltip'
 import { render, RenderResult, screen } from '@testing-library/react'
 import { vi } from 'vitest'
-import * as TooltipPrimitive from '@radix-ui/react-tooltip'
 
 import { Dialog } from '../dialog'
 
@@ -425,7 +425,7 @@ describe('Dialog', () => {
   describe('Ref Forwarding', () => {
     test('should forward ref on Content', () => {
       const ref = vi.fn()
-      
+
       render(
         <TestWrapper>
           <Dialog.Root open={true}>
@@ -443,7 +443,7 @@ describe('Dialog', () => {
 
     test('should forward ref on Header', () => {
       const ref = vi.fn()
-      
+
       render(
         <TestWrapper>
           <Dialog.Root open={true}>
@@ -461,7 +461,7 @@ describe('Dialog', () => {
 
     test('should forward ref on Title', () => {
       const ref = vi.fn()
-      
+
       render(
         <TestWrapper>
           <Dialog.Root open={true}>
@@ -479,7 +479,7 @@ describe('Dialog', () => {
 
     test('should forward ref on Body', () => {
       const ref = vi.fn()
-      
+
       render(
         <TestWrapper>
           <Dialog.Root open={true}>
@@ -495,7 +495,7 @@ describe('Dialog', () => {
 
     test('should forward ref on Footer', () => {
       const ref = vi.fn()
-      
+
       render(
         <TestWrapper>
           <Dialog.Root open={true}>
@@ -512,4 +512,3 @@ describe('Dialog', () => {
     })
   })
 })
-

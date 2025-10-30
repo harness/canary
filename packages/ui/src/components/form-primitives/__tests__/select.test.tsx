@@ -246,7 +246,7 @@ describe('Select', () => {
   describe('Ref Forwarding', () => {
     test('should forward ref to trigger', () => {
       const ref = vi.fn()
-      
+
       render(<Select ref={ref} options={options} />)
 
       expect(ref).toHaveBeenCalled()
@@ -254,7 +254,7 @@ describe('Select', () => {
 
     test('should allow ref access to button element', () => {
       const ref = { current: null as HTMLButtonElement | null }
-      
+
       render(<Select ref={ref} options={options} />)
 
       expect(ref.current).toBeInstanceOf(HTMLButtonElement)

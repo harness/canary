@@ -30,7 +30,7 @@ describe('Textarea', () => {
 
       const textarea = screen.getByRole('textbox')
       expect(textarea).toHaveAttribute('id', 'comments')
-      
+
       // Label text is rendered and textarea has correct id
       expect(screen.getByText('Comments')).toBeInTheDocument()
     })
@@ -426,7 +426,7 @@ describe('Textarea', () => {
     })
 
     test('should work in forms', () => {
-      const handleSubmit = vi.fn((e) => {
+      const handleSubmit = vi.fn(e => {
         e.preventDefault()
         const formData = new FormData(e.target)
         return formData.get('message')
@@ -473,7 +473,7 @@ describe('Textarea', () => {
       renderComponent({ onChange: handleChange })
 
       const textarea = screen.getByRole('textbox') as HTMLTextAreaElement
-      
+
       // Type simulates user input including paste behavior
       await userEvent.type(textarea, 'Pasted content')
 
@@ -521,11 +521,10 @@ describe('Textarea', () => {
 
       expect(handleChange).toHaveBeenCalled()
       expect(textarea.value).toBe('Test')
-      
+
       await waitFor(() => {
         expect(screen.getByText('4 / 50')).toBeInTheDocument()
       })
     })
   })
 })
-

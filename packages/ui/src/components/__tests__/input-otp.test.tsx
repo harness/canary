@@ -4,7 +4,9 @@ import { vi } from 'vitest'
 
 import { InputOTP } from '../input-otp'
 
-const renderComponent = (props: Omit<Partial<React.ComponentProps<typeof InputOTP.Root>>, 'children' | 'render'> = {}): RenderResult => {
+const renderComponent = (
+  props: Omit<Partial<React.ComponentProps<typeof InputOTP.Root>>, 'children' | 'render'> = {}
+): RenderResult => {
   const defaultProps = {
     maxLength: 6,
     ...props
@@ -234,7 +236,7 @@ describe('InputOTP', () => {
 
       const separator = container.querySelector('[role="separator"]')
       expect(separator).toBeInTheDocument()
-      
+
       // Icon is rendered inside separator
       const icon = separator?.querySelector('svg')
       expect(icon).toBeInTheDocument()
@@ -275,7 +277,7 @@ describe('InputOTP', () => {
       // All slots rendered
       const container = document.querySelector('.flex.items-center.gap-cn-sm')
       expect(container).toBeTruthy()
-      
+
       // Separator rendered
       const separator = document.querySelector('[role="separator"]')
       expect(separator).toBeTruthy()
@@ -317,7 +319,7 @@ describe('InputOTP', () => {
   describe('Ref Forwarding', () => {
     test('should forward ref on Root', () => {
       const ref = vi.fn()
-      
+
       render(
         <InputOTP.Root ref={ref} maxLength={4}>
           <InputOTP.Group>
@@ -331,7 +333,7 @@ describe('InputOTP', () => {
 
     test('should forward ref on Group', () => {
       const ref = vi.fn()
-      
+
       render(
         <InputOTP.Root maxLength={3}>
           <InputOTP.Group ref={ref}>
@@ -347,7 +349,7 @@ describe('InputOTP', () => {
 
     test('should forward ref on Slot', () => {
       const ref = vi.fn()
-      
+
       render(
         <InputOTP.Root maxLength={1}>
           <InputOTP.Group>
@@ -361,7 +363,7 @@ describe('InputOTP', () => {
 
     test('should forward ref on Separator', () => {
       const ref = vi.fn()
-      
+
       render(
         <InputOTP.Root maxLength={2}>
           <InputOTP.Group>
@@ -378,4 +380,3 @@ describe('InputOTP', () => {
     })
   })
 })
-

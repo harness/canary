@@ -374,4 +374,3 @@ describe('Tag', () => {
     expect(splitTag).toBeInTheDocument()
   })
 })
-

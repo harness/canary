@@ -1,7 +1,7 @@
+import * as TooltipPrimitive from '@radix-ui/react-tooltip'
 import { render, RenderResult, screen, waitFor } from '@testing-library/react'
 import userEvent from '@testing-library/user-event'
 import { vi } from 'vitest'
-import * as TooltipPrimitive from '@radix-ui/react-tooltip'
 
 import { AlertDialog } from '../alert-dialog'
 
@@ -266,7 +266,7 @@ describe('AlertDialog', () => {
   describe('Ref Forwarding', () => {
     test('should forward ref on Content', () => {
       const ref = vi.fn()
-      
+
       render(
         <TestWrapper>
           <AlertDialog.Root open={true} onConfirm={vi.fn()}>
@@ -282,7 +282,7 @@ describe('AlertDialog', () => {
 
     test('should forward ref on Cancel button', () => {
       const ref = vi.fn()
-      
+
       render(
         <TestWrapper>
           <AlertDialog.Root open={true} onConfirm={vi.fn()}>
@@ -298,7 +298,7 @@ describe('AlertDialog', () => {
 
     test('should forward ref on Confirm button', () => {
       const ref = vi.fn()
-      
+
       render(
         <TestWrapper>
           <AlertDialog.Root open={true} onConfirm={vi.fn()}>
@@ -313,4 +313,3 @@ describe('AlertDialog', () => {
     })
   })
 })
-

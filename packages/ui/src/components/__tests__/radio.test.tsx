@@ -363,7 +363,7 @@ describe('Radio', () => {
 
   describe('Complex Scenarios', () => {
     test('should handle form submission with radio value', () => {
-      const handleSubmit = vi.fn((e) => {
+      const handleSubmit = vi.fn(e => {
         e.preventDefault()
         const formData = new FormData(e.target)
         return formData.get('option')
@@ -424,4 +424,3 @@ describe('Radio', () => {
     })
   })
 })
-

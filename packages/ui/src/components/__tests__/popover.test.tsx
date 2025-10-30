@@ -242,7 +242,7 @@ describe('Popover', () => {
   describe('Ref Forwarding', () => {
     test('should forward ref on Content', () => {
       const ref = vi.fn()
-      
+
       render(
         <Popover.Root open={true}>
           <Popover.Trigger>Button</Popover.Trigger>
@@ -342,4 +342,3 @@ describe('Popover Primitives', () => {
     })
   })
 })
-

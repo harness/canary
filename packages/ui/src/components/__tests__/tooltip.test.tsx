@@ -1,5 +1,6 @@
-import { render, RenderResult, screen } from '@testing-library/react'
 import { forwardRef } from 'react'
+
+import { render, RenderResult, screen } from '@testing-library/react'
 import { vi } from 'vitest'
 
 import { Tooltip, TooltipProvider, withTooltip } from '../tooltip'
@@ -40,7 +41,7 @@ describe('Tooltip', () => {
 
     const tooltip = document.querySelector('.cn-tooltip')
     const title = document.querySelector('.cn-tooltip-title')
-    
+
     expect(tooltip).toBeTruthy()
     expect(title).toBeTruthy()
   })
@@ -195,7 +196,9 @@ describe('withTooltip HOC', () => {
 
   test('should pass props to wrapped component', () => {
     const TestComponent = forwardRef<HTMLButtonElement, { 'data-testid': string }>((props, ref) => (
-      <button ref={ref} {...props}>Test</button>
+      <button ref={ref} {...props}>
+        Test
+      </button>
     ))
     TestComponent.displayName = 'TestComponent'
 

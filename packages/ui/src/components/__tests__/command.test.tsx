@@ -1,7 +1,7 @@
+import * as TooltipPrimitive from '@radix-ui/react-tooltip'
 import { render, RenderResult, screen } from '@testing-library/react'
 import userEvent from '@testing-library/user-event'
 import { vi } from 'vitest'
-import * as TooltipPrimitive from '@radix-ui/react-tooltip'
 
 import { Command } from '../command'
 
@@ -10,7 +10,11 @@ const TestWrapper = ({ children }: { children: React.ReactNode }) => (
 )
 
 const renderComponent = (children: React.ReactNode): RenderResult => {
-  return render(<TestWrapper><Command.Root>{children}</Command.Root></TestWrapper>)
+  return render(
+    <TestWrapper>
+      <Command.Root>{children}</Command.Root>
+    </TestWrapper>
+  )
 }
 
 describe('Command', () => {
@@ -449,7 +453,11 @@ describe('Command', () => {
     test('should forward ref on List', () => {
       const ref = vi.fn()
 
-      renderComponent(<Command.List ref={ref}><Command.Item>Item</Command.Item></Command.List>)
+      renderComponent(
+        <Command.List ref={ref}>
+          <Command.Item>Item</Command.Item>
+        </Command.List>
+      )
 
       expect(ref).toHaveBeenCalled()
     })
@@ -467,4 +475,3 @@ describe('Command', () => {
     })
   })
 })
-

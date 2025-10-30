@@ -66,7 +66,7 @@ describe('Calendar', () => {
       // Find any date button and click it
       const buttons = screen.getAllByRole('button')
       const dateButton = buttons.find(btn => btn.textContent && /^\d+$/.test(btn.textContent.trim()))
-      
+
       if (dateButton) {
         await userEvent.click(dateButton)
         expect(handleSelect).toHaveBeenCalled()
@@ -85,14 +85,12 @@ describe('Calendar', () => {
     test('should handle date selection change', async () => {
       const handleSelect = vi.fn()
       const month = new Date(2024, 0, 1)
-      const { rerender } = render(
-        <Calendar mode="single" onSelect={handleSelect} selected={undefined} month={month} />
-      )
+      const { rerender } = render(<Calendar mode="single" onSelect={handleSelect} selected={undefined} month={month} />)
 
       // Find any date button and click it
       const buttons = screen.getAllByRole('button')
       const dateButton = buttons.find(btn => btn.textContent && /^\d+$/.test(btn.textContent.trim()))
-      
+
       if (dateButton) {
         await userEvent.click(dateButton)
         expect(handleSelect).toHaveBeenCalled()
@@ -131,7 +129,7 @@ describe('Calendar', () => {
       // Find any date button and click it
       const buttons = screen.getAllByRole('button')
       const dateButton = buttons.find(btn => btn.textContent && /^\d+$/.test(btn.textContent.trim()))
-      
+
       if (dateButton) {
         await userEvent.click(dateButton)
         expect(handleSelect).toHaveBeenCalled()
@@ -162,7 +160,7 @@ describe('Calendar', () => {
       // Find any date button and click it
       const buttons = screen.getAllByRole('button')
       const dateButton = buttons.find(btn => btn.textContent && /^\d+$/.test(btn.textContent.trim()))
-      
+
       if (dateButton) {
         await userEvent.click(dateButton)
         expect(handleSelect).toHaveBeenCalled()
@@ -382,4 +380,3 @@ describe('Calendar', () => {
     })
   })
 })
-

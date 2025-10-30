@@ -255,4 +255,3 @@ describe('Input', () => {
     expect(input.value).toBe('new value')
   })
 })
-

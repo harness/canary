@@ -350,7 +350,7 @@ describe('DropdownMenu', () => {
       const regularItems = screen.getAllByRole('menuitem')
       const checkboxItems = screen.getAllByRole('menuitemcheckbox')
       const radioItems = screen.getAllByRole('menuitemradio')
-      
+
       expect(regularItems.length).toBeGreaterThan(0)
       expect(checkboxItems.length).toBe(1)
       expect(radioItems.length).toBe(1)

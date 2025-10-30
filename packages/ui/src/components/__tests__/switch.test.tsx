@@ -274,4 +274,3 @@ describe('Switch', () => {
     expect(handleChange).toHaveBeenCalledTimes(1)
   })
 })
-

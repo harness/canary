@@ -274,4 +274,3 @@ describe('Checkbox', () => {
     expect(handleChange).toHaveBeenCalledTimes(3)
   })
 })
-

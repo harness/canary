@@ -1024,8 +1024,8 @@
     "secretsTitle": "Secrets",
     "createNew": "Create Secret",
     "viewDetails": "View Details",
+    "edit": "Edit",
     "delete": "Delete",
-    "edit": "Edit secret",
     "newSecret": "New Secret"
   },
   "entityReference": {

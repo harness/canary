@@ -98,6 +98,11 @@ export function SecretList({
                 actions={[
                   {
                     title: t('views:secrets.viewDetails', 'View details'),
+                    iconName: 'docs',
+                    to: toSecretDetails?.(secret) || ''
+                  },
+                  {
+                    title: t('views:secrets.edit', 'Edit'),
                     iconName: 'edit-pencil',
                     onClick: () => {
                       registerTrigger()

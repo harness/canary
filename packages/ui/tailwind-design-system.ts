@@ -392,6 +392,24 @@ export default {
       auto: 'auto',
       full: '100%'
     },
+    fontSize: {
+      'cn-size-0': 'var(--cn-font-size-0)',
+      'cn-size-1': 'var(--cn-font-size-1)',
+      'cn-size-2': 'var(--cn-font-size-2)',
+      'cn-size-3': 'var(--cn-font-size-3)',
+      'cn-size-4': 'var(--cn-font-size-4)',
+      'cn-size-5': 'var(--cn-font-size-5)',
+      'cn-size-6': 'var(--cn-font-size-6)',
+      'cn-size-7': 'var(--cn-font-size-7)',
+      'cn-size-8': 'var(--cn-font-size-8)',
+      'cn-size-9': 'var(--cn-font-size-9)',
+      'cn-size-10': 'var(--cn-font-size-10)',
+      'cn-size-11': 'var(--cn-font-size-11)',
+      'cn-size-12': 'var(--cn-font-size-12)',
+      'cn-size-13': 'var(--cn-font-size-13)',
+      'cn-size-half': 'var(--cn-font-size-half)',
+      'cn-size-min': 'var(--cn-font-size-min)'
+    },
     extend: {
       opacity: {
         'cn-disabled': 'var(--cn-disabled-opacity)'
@@ -443,43 +461,6 @@ export default {
         wide: 'var(--cn-tracking-wide)',
         wider: 'var(--cn-tracking-wider)',
         widest: 'var(--cn-tracking-widest)'
-      },
-
-      fontSize: {
-        // TODO: Remove old classes once refactoring is done
-        0: 'var(--cn-font-size-0)',
-        1: 'var(--cn-font-size-1)',
-        2: 'var(--cn-font-size-2)',
-        3: 'var(--cn-font-size-3)',
-        4: 'var(--cn-font-size-4)',
-        5: 'var(--cn-font-size-5)',
-        6: 'var(--cn-font-size-6)',
-        7: 'var(--cn-font-size-7)',
-        8: 'var(--cn-font-size-8)',
-        9: 'var(--cn-font-size-9)',
-        10: 'var(--cn-font-size-10)',
-        11: 'var(--cn-font-size-11)',
-        12: 'var(--cn-font-size-12)',
-        13: 'var(--cn-font-size-13)',
-        half: 'var(--cn-font-size-half)',
-        min: 'var(--cn-font-size-min)',
-        // new classes
-        'cn-size-0': 'var(--cn-font-size-0)',
-        'cn-size-1': 'var(--cn-font-size-1)',
-        'cn-size-2': 'var(--cn-font-size-2)',
-        'cn-size-3': 'var(--cn-font-size-3)',
-        'cn-size-4': 'var(--cn-font-size-4)',
-        'cn-size-5': 'var(--cn-font-size-5)',
-        'cn-size-6': 'var(--cn-font-size-6)',
-        'cn-size-7': 'var(--cn-font-size-7)',
-        'cn-size-8': 'var(--cn-font-size-8)',
-        'cn-size-9': 'var(--cn-font-size-9)',
-        'cn-size-10': 'var(--cn-font-size-10)',
-        'cn-size-11': 'var(--cn-font-size-11)',
-        'cn-size-12': 'var(--cn-font-size-12)',
-        'cn-size-13': 'var(--cn-font-size-13)',
-        'cn-size-half': 'var(--cn-font-size-half)',
-        'cn-size-min': 'var(--cn-font-size-min)'
       },
 
       backgroundImage: {

@@ -3,6 +3,7 @@ import {
   createContext,
   ElementRef,
   forwardRef,
+  Fragment,
   PropsWithoutRef,
   ReactNode,
   useContext
@@ -126,16 +127,15 @@ const AccordionItem = forwardRef<ElementRef<typeof AccordionPrimitive.Item>, Acc
 )
 AccordionItem.displayName = 'AccordionItem'
 
-type AccordionTriggerProps = Omit<ComponentPropsWithoutRef<typeof AccordionPrimitive.Trigger>, 'prefix' | 'asChild'> & {
+type AccordionTriggerProps = Omit<ComponentPropsWithoutRef<typeof AccordionPrimitive.Trigger>, 'prefix'> & {
   prefix?: ReactNode
   suffix?: ReactNode
   indicatorProps?: PropsWithoutRef<Omit<IconPropsV2, 'name' | 'fallback'>>
   headerClassName?: string
-  clickable?: boolean
 }
 
 const AccordionTrigger = forwardRef<ElementRef<typeof AccordionPrimitive.Trigger>, AccordionTriggerProps>(
-  ({ className, children, suffix, prefix, indicatorProps, headerClassName, clickable = true, ...props }, ref) => {
+  ({ className, children, suffix, prefix, indicatorProps, headerClassName, asChild, ...props }, ref) => {
     const { indicatorPosition, variant, cardSize } = useContext(AccordionContext)
 
     const Indicator = () => (
@@ -147,21 +147,26 @@ const AccordionTrigger = forwardRef<ElementRef<typeof AccordionPrimitive.Trigger
       />
     )
 
+    const Wrapper = asChild ? 'div' : Fragment
+
     return (
-      <AccordionPrimitive.Header className={cn('cn-accordion-item-header relative', headerClassName)}>
-        {clickable && <AccordionPrimitive.Trigger ref={ref} {...props} className="absolute inset-0 z-0" />}
-
-        <div
+      <AccordionPrimitive.Header className={headerClassName}>
+        <AccordionPrimitive.Trigger
+          ref={ref}
           className={cn(accordionTriggerVariants({ cardSize: variant === 'card' ? cardSize : 'default' }), className)}
+          asChild={asChild}
+          {...props}
         >
-          {indicatorPosition === 'left' && <Indicator />}
+          <Wrapper>
+            {indicatorPosition === 'left' && <Indicator />}
 
-          {!!prefix && <span className="cn-accordion-trigger-prefix">{prefix}</span>}
-          <span className="cn-accordion-trigger-text">{children}</span>
-          {!!suffix && <span className="cn-accordion-trigger-suffix">{suffix}</span>}
+            {!!prefix && <span className="cn-accordion-trigger-prefix">{prefix}</span>}
+            <span className="cn-accordion-trigger-text">{children}</span>
+            {!!suffix && <span className="cn-accordion-trigger-suffix">{suffix}</span>}
 
-          {indicatorPosition === 'right' && <Indicator />}
-        </div>
+            {indicatorPosition === 'right' && <Indicator />}
+          </Wrapper>
+        </AccordionPrimitive.Trigger>
       </AccordionPrimitive.Header>
     )
   }

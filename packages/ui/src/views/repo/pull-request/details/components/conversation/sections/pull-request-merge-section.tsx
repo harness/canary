@@ -154,7 +154,7 @@ const PullRequestMergeSection = ({
               accordionValues={accordionValues}
             />
           }
-          clickable={isConflicted}
+          asChild={mergeable || unchecked}
         >
           <Layout.Grid gapY="4xs">
             <LineTitle

@@ -87,14 +87,10 @@ export default {
       },
 
       '&-indicator': {
+        alignSelf: 'start',
         marginTop: 'var(--cn-accordion-indicator-mt)',
         color: 'var(--cn-text-2)',
         '@apply transition-[transform,color] duration-100 ease-in-out': ''
-      },
-
-      'a, button': {
-        position: 'relative',
-        zIndex: '1'
       }
     },
 

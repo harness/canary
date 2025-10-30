@@ -1,11 +1,9 @@
 ---
 title: Icons
-description: Icons and Logos foundations
+description: Icons foundations
 beta: true
 ---
 
-import CompactIconV2Grid from "@/components/CompactIconV2Grid.astro";
+import { DocsPage } from "@/components/docs-page";
 
-<div class="bg-cn-3 border p-cn-sm rounded">
-  <CompactIconV2Grid />
-</div>
+<DocsPage.FigureGrid client:only type="icon" />

@@ -1,0 +1,102 @@
+---
+title: Illustration
+description: Illustration component
+beta: true
+---
+
+import { DocsPage } from "@/components/docs-page";
+import { Illustration, IllustrationsNameMap } from "@harnessio/ui/components";
+
+The `Illustration` component displays various illustrations and graphics used throughout the Harness UI. It has built-in support for theme-specific variants.
+
+## Usage
+
+```typescript jsx
+<Illustration name="no-data-folder" size={112} />
+```
+
+<DocsPage.ComponentExample
+  client:only
+  code={`<Illustration name="no-data-folder" size={112} />`}
+/>
+
+## Sizing
+
+The `Illustration` component can be sized using the `size` prop which sets both width and height (default is 112px).
+
+<DocsPage.ComponentExample
+  client:only
+  code={`
+  <Layout.Flex gap="xl" justify="center" align="center" className="min-w-[400px]">
+    <Illustration name="no-data-folder" size={150} />
+    <Illustration name="no-data-folder" size={112} />
+    <Illustration name="no-data-folder" size={80} />
+  </Layout.Flex>
+  `}
+/>
+
+## Theme Support
+
+Some illustrations have theme-specific variants. Use the `themeDependent` prop to enable theme-sensitive rendering.
+
+<DocsPage.ComponentExample
+  client:only
+  code={`<Illustration name="no-data-folder" themeDependent />`}
+/>
+
+Illustrations with specific light theme variants will use them automatically when the theme is set to light. For illustrations without a light variant, enabling `themeDependent` will apply an invert filter in light mode.
+
+## API Reference
+
+```typescript jsx
+<Illustration
+  name="illustration-name"  // name of the illustration
+  size={112}               // [OPTIONAL] size in pixels for both width and height
+  themeDependent={false}   // [OPTIONAL] whether to use theme-specific variants
+  className="my-class"     // [OPTIONAL] custom class name
+/>
+```
+
+<DocsPage.PropsTable
+  props={[
+    {
+      name: "name",
+      description: "Name of the illustration",
+      required: true,
+      value: "IllustrationsNameType",
+    },
+    {
+      name: "size",
+      description: "Size in pixels (applied to both width and height)",
+      required: false,
+      value: "number",
+      defaultValue: "112",
+    },
+    {
+      name: "width",
+      description: "Custom width in pixels (overrides size)",
+      required: false,
+      value: "number",
+    },
+    {
+      name: "height",
+      description: "Custom height in pixels (overrides size)",
+      required: false,
+      value: "number",
+    },
+    {
+      name: "themeDependent",
+      description:
+        "Whether to use theme-specific variants or invert in light mode",
+      required: false,
+      value: "boolean",
+      defaultValue: "false",
+    },
+    {
+      name: "className",
+      description: "Custom class name",
+      required: false,
+      value: "string",
+    },
+  ]}
+/>

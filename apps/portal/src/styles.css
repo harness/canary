@@ -51,40 +51,74 @@ code {
   @apply p-0;
 }
 
+.cn-portal-sidebar {
+  details {
+    @apply border-b border-cn-3 py-cn-lg;
+
+    ul {
+      @apply pl-cn-md;
+    }
+
+    li {
+      @apply border-l border-cn-3 pl-0;
+
+      a {
+        @apply pl-cn-sm py-cn-2xs text-cn-3 hover:text-cn-1;
+
+        &[aria-current="page"] {
+          @apply bg-cn-1 text-cn-1;
+        }
+      }
+    }
+
+    &[open] > summary {
+      @apply pb-cn-xs;
+    }
+  }
+
+  details details {
+    @apply border-b-0 py-0;
+
+    summary {
+      @apply py-cn-3xs;
+
+      .group-label {
+        span {
+          @apply font-heading-small;
+        }
+      }
+    }
+
+    &[open] > summary {
+      @apply pb-cn-3xs;
+    }
+  }
+
+  summary {
+    @apply flex items-center py-0 px-cn-sm;
+
+    .group-label {
+      span {
+        @apply font-heading-base text-cn-1;
+      }
+    }
+  }
+
+  ul {
+    @apply w-full;
+  }
+
+  li {
+    @apply !m-0;
+  }
+}
+
+#starlight__on-this-page {
+  @apply font-heading-base text-cn-1;
+}
+
 mobile-starlight-toc {
   display: none;
-}
-
-ul.top-level {
-  @apply flex flex-col w-full justify-start;
-}
-
-ul.top-level ul {
-  @apply border-b border-cn-3 px-cn-sm py-cn-xl flex flex-col gap-cn-sm pt-cn-lg justify-start;
-}
-
-ul.top-level li {
-  @apply font-normal text-cn-2 text-cn-size-2 border-none p-0 m-0;
-}
-
-ul.top-level li a {
-  @apply py-cn-3xs px-cn-xs m-0 text-cn-3 hover:text-cn-1;
-}
-
-ul.top-level li a[aria-current="page"] {
-  @apply font-normal bg-cn-1 rounded-3 text-cn-1;
-}
-
-ul.top-level li details summary {
-  @apply flex items-center mt-cn-xl !important;
-}
-
-ul.top-level li details summary .group-label {
-  @apply p-0 px-cn-sm;
-}
-
-ul.top-level summary .group-label span {
-  @apply font-normal text-cn-size-2 text-cn-disabled;
 }
 
 ul.top-level summary svg {
@@ -94,8 +128,11 @@ ul.top-level summary svg {
 /* Right-hand page sidebar overrides */
 
 .right-sidebar-panel {
-  /* TODO: Replace pt-[64px] with a proper spacing token when available */
-  @apply px-cn-sm pl-0 py-cn-xl pt-[64px];
+  @apply px-cn-sm pl-0 py-cn-xl pt-cn-3xl;
+
+  .sl-container {
+    @apply w-full;
+  }
 }
 
 .right-sidebar-panel h2 {
@@ -103,7 +140,7 @@ ul.top-level summary svg {
 }
 
 .right-sidebar-panel ul {
-  @apply m-0 p-0 flex flex-col gap-cn-md mt-cn-md;
+  @apply m-0 p-0 flex flex-col gap-cn-sm mt-cn-md;
 }
 
 .right-sidebar-panel li a {
@@ -111,7 +148,7 @@ ul.top-level summary svg {
 }
 
 .right-sidebar-panel li ul {
-  @apply pl-cn-md border-l border-cn-3;
+  @apply pl-cn-sm ml-cn-3xs border-l border-cn-3;
 }
 
 /* Search override */

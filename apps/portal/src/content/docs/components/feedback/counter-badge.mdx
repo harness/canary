@@ -1,0 +1,172 @@
+---
+title: Counter Badge
+description: Display simple numerical or textual count indicators
+beta: true
+---
+
+The `CounterBadge` component is used to highlight and display numerical values or simple count indicators. It is designed to be non-interactive (read-only) and supports different color themes.
+
+import { DocsPage } from "@/components/docs-page";
+
+<DocsPage.ComponentExample
+  client:only
+  code={`<div className="flex gap-cn-lg">
+        <CounterBadge>1</CounterBadge>
+        <CounterBadge theme="info">42</CounterBadge>
+        <CounterBadge theme="success">+2345</CounterBadge>
+        <CounterBadge theme="danger">-123</CounterBadge>
+    </div>
+`}
+/>
+
+## Usage
+
+```typescript jsx
+import { CounterBadge } from '@harnessio/ui/components'
+
+// ...
+
+// Default counter badge
+<CounterBadge>1</CounterBadge>
+
+// Info theme counter badge
+<CounterBadge theme="info">42</CounterBadge>
+
+// Success theme counter badge
+<CounterBadge theme="success">10</CounterBadge>
+
+// Danger theme counter badge
+<CounterBadge theme="danger">99+</CounterBadge>
+```
+
+## Variants
+
+The `CounterBadge` component supports two variants: `outline` (default) and `secondary`.
+
+### Outline Variant
+
+The outline variant provides a subtle border-based appearance, ideal for secondary information display.
+
+<DocsPage.ComponentExample
+  client:only
+  code={`<div className="flex gap-cn-lg">
+        <CounterBadge variant="outline">1</CounterBadge>
+        <CounterBadge variant="outline" theme="info">42</CounterBadge>
+        <CounterBadge variant="outline" theme="success">+2345</CounterBadge>
+        <CounterBadge variant="outline" theme="danger">-123</CounterBadge>
+    </div>
+`}
+/>
+
+### Secondary Variant
+
+The secondary variant uses a soft background appearance for more prominent display while maintaining subtlety.
+
+<DocsPage.ComponentExample
+  client:only
+  code={`<div className="flex gap-cn-lg">
+        <CounterBadge variant="secondary">1</CounterBadge>
+        <CounterBadge variant="secondary" theme="info">42</CounterBadge>
+        <CounterBadge variant="secondary" theme="success">+2345</CounterBadge>
+        <CounterBadge variant="secondary" theme="danger">-123</CounterBadge>
+    </div>
+`}
+/>
+
+### Variant Comparison
+
+Compare both variants side by side to see the visual differences:
+
+<DocsPage.ComponentExample
+  client:only
+  code={`<div className="flex flex-col gap-cn-md">
+    <div className="flex gap-cn-sm">
+      <Text variant="heading-subsection" as="h4" className="min-w-[80px]">Outline:</Text>
+      <div className="flex gap-cn-sm">
+        <CounterBadge variant="outline">12</CounterBadge>
+        <CounterBadge variant="outline" theme="info">42</CounterBadge>
+        <CounterBadge variant="outline" theme="success">+99</CounterBadge>
+        <CounterBadge variant="outline" theme="danger">-5</CounterBadge>
+      </div>
+    </div>
+    <div className="flex gap-cn-sm">
+      <Text variant="heading-subsection" as="h4" className="min-w-[80px]">Secondary:</Text>
+      <div className="flex gap-cn-sm">
+        <CounterBadge variant="secondary">12</CounterBadge>
+        <CounterBadge variant="secondary" theme="info">42</CounterBadge>
+        <CounterBadge variant="secondary" theme="success">+99</CounterBadge>
+        <CounterBadge variant="secondary" theme="danger">-5</CounterBadge>
+      </div>
+    </div>
+  </div>
+`}
+/>
+
+## Themes
+
+The `CounterBadge` component supports four color themes that can be categorized into different groups based on their semantic meaning.
+
+### Theme Categories
+
+#### Neutral Indicators
+
+Neutral indicators are used for displaying general counts or values that don't carry specific positive or negative connotations.
+
+<DocsPage.ComponentExample
+  client:only
+  code={`
+    <div className="flex gap-cn-xs">
+        <CounterBadge>0</CounterBadge>
+        <CounterBadge theme="info">42</CounterBadge>
+    </div>
+`}
+/>
+
+#### Status Indicators
+
+Status indicators communicate the nature of the change or value - whether it represents an improvement (success) or a concern (danger).
+
+<DocsPage.ComponentExample
+  client:only
+  code={`
+    <div className="flex gap-cn-xs">
+        <CounterBadge theme="success">+2345</CounterBadge>
+        <CounterBadge theme="danger">-123</CounterBadge>
+    </div>
+`}
+/>
+
+## API Reference
+
+The `CounterBadge` component has the following props to control its appearance:
+
+<DocsPage.PropsTable
+  props={[
+    {
+      name: "variant",
+      description: "Visual style variant of the badge",
+      required: false,
+      value: "'outline' | 'secondary'",
+      defaultValue: "'outline'",
+    },
+    {
+      name: "theme",
+      description: "Color theme of the badge",
+      required: false,
+      value: "'default' | 'info' | 'success' | 'danger'",
+      defaultValue: "'default'",
+    },
+    {
+      name: "className",
+      description: "Additional CSS class names",
+      required: false,
+      value: "string",
+    },
+    {
+      name: "children",
+      description: "Content to display inside the badge",
+      required: true,
+      value: "ReactNode",
+    },
+  ]}
+/>

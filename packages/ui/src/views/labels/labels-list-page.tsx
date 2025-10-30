@@ -35,8 +35,6 @@ export const LabelsListPage: FC<LabelsListPageProps> = ({
     setPage,
     isLoading,
     getParentScopeLabels,
-    space_ref,
-    repo_ref,
     setGetParentScopeLabels
   } = useLabelsStore()
 
@@ -96,7 +94,6 @@ export const LabelsListPage: FC<LabelsListPageProps> = ({
             <LabelsListView
               {...labelsListViewProps}
               useLabelsStore={useLabelsStore}
-              labelContext={{ space: space_ref, repo: repo_ref }}
               handleResetQueryAndPages={handleResetQueryAndPages}
               searchQuery={searchQuery}
               toRepoLabelDetails={toRepoLabelDetails}

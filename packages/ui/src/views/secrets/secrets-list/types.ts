@@ -1,5 +1,6 @@
 import { Scope } from '@/views/common/types'
 import { SecretListFilters } from '@components/filters'
+import { PaginationProps } from '@components/index'
 
 interface RoutingProps {
   toSecretDetails: (secret: SecretListItem) => string
@@ -30,6 +31,7 @@ export interface SecretListProps extends Partial<RoutingProps> {
   onDeleteSecret: (secretId: string) => void
   handleResetFiltersQueryAndPages?: () => void
   isDirtyList?: boolean
+  paginationProps?: PaginationProps
 }
 
 export interface SecretListPageProps extends SecretListProps {

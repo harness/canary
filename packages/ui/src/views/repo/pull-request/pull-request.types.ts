@@ -12,7 +12,7 @@ import {
 } from '@/views'
 import { CheckboxOptions } from '@components/filters'
 import { ComboBoxOptions } from '@components/filters/filters-bar/actions/variants/combo-box'
-import { ListPaginationProps } from '@components/stacked-list'
+import { StackedListPaginationProps } from '@components/stacked-list'
 
 import { LabelsValue } from './components/labels'
 
@@ -302,7 +302,7 @@ export interface PullRequestListProps extends Partial<RoutingProps> {
   showScope?: boolean
   dirtyNoDataContent?: ReactNode
   isLoading?: boolean
-  paginationProps?: ListPaginationProps
+  paginationProps?: StackedListPaginationProps
 }
 
 export type PRListFilters = {

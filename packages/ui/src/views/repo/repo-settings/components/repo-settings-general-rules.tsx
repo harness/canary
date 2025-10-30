@@ -8,7 +8,6 @@ import {
   IconV2,
   Layout,
   ListActions,
-  ListPaginationProps,
   MoreActionsTooltip,
   NoData,
   ScopeTag,
@@ -17,6 +16,7 @@ import {
   Skeleton,
   SplitButton,
   StackedList,
+  StackedListPaginationProps,
   Tag,
   Text
 } from '@/components'
@@ -92,7 +92,7 @@ export interface RepoSettingsGeneralRulesProps {
   ruleTypeFilter?: 'branch' | 'tag' | 'push' | null
   setRuleTypeFilter?: (filter: 'branch' | 'tag' | 'push' | null) => void
   toProjectRuleDetails?: (identifier: string, scope: number) => void
-  paginationProps?: ListPaginationProps
+  paginationProps?: StackedListPaginationProps
 }
 
 export const RepoSettingsGeneralRules: FC<RepoSettingsGeneralRulesProps> = ({

@@ -12,10 +12,6 @@ export interface LabelsListViewProps {
   handleResetQueryAndPages: () => void
   searchQuery: string | null
   /**
-   * Context of the label; can be a repo or a space
-   */
-  labelContext: { space: string | null; repo: string | null }
-  /**
    * When the widthType is set to 'small', 'name' column is bigger and 'description' column is smaller
    */
   widthType?: 'default' | 'small'

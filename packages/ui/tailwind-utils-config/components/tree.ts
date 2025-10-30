@@ -30,7 +30,7 @@ export default {
       },
 
       '&-leaf': {
-        '@apply pl-cn-lg': ''
+        '@apply pl-cn-lg select-none': ''
       },
 
       '&-content': {
@@ -39,14 +39,14 @@ export default {
       }
     },
     '&-folder-trigger': {
-      '@apply relative z-[1] pl-cn-2xs transition-colors cursor-pointer': '',
+      '@apply pl-cn-2xs transition-colors cursor-pointer': '',
       borderTopLeftRadius: 'var(--cn-tree-item-radius)',
       borderBottomLeftRadius: 'var(--cn-tree-item-radius)',
       height: 'var(--cn-tree-item-height)',
       width: 'var(--cn-button-size-3xs)',
 
-      '&:hover': {
-        '@apply bg-cn-hover': ''
+      '.cn-accordion-trigger-indicator': {
+        '@apply flex mt-0 -rotate-90 self-center data-[state=open]:-rotate-0 pointer-events-none': ''
       }
     },
     '&-folder-item': {

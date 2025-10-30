@@ -134,9 +134,10 @@ function FolderItem({
         })}
       >
         <Accordion.Trigger
-          className="cn-file-tree-folder-trigger [&>.cn-accordion-trigger-indicator]:mt-0 [&>.cn-accordion-trigger-indicator]:-rotate-90 [&>.cn-accordion-trigger-indicator]:self-center [&>.cn-accordion-trigger-indicator]:data-[state=open]:-rotate-0"
-          indicatorProps={{ size: '2xs', className: 'flex' }}
-        ></Accordion.Trigger>
+          className="cn-file-tree-folder-trigger"
+          headerClassName="rounded-l-4 hover:bg-cn-hover"
+          indicatorProps={{ size: '2xs' }}
+        />
         {itemElement}
       </Layout.Flex>
 

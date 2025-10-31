@@ -284,7 +284,7 @@ const PullRequestSystemComments: FC<SystemCommentProps> = ({
           header: {
             description: (
               <>
-                <Text variant="body-single-line-normal" color="foreground-3">
+                <Text variant="body-single-line-normal" color="foreground-3" lineClamp={1}>
                   changed title from&nbsp;
                   <Text className="line-through" as="span" variant="body-single-line-normal" color="foreground-1">
                     {String(old)}

@@ -1,0 +1,342 @@
+---
+title: Border Colors
+description: Theme-aware border colors for component styling and visual separation
+---
+
+import { DocsPage } from "@/components/docs-page";
+import { Aside } from "@astrojs/starlight/components";
+
+Border colors provide visual separation and emphasis in your interface. All colors use the `border-cn-` prefix and adapt to light and dark themes.
+
+## Primary Border Colors
+
+Foundation border colors for general UI elements. Lower numbers provide stronger contrast.
+
+<DocsPage.ComponentExample
+  hideCode
+  client:only
+  code={`<Layout.Grid columns="3" gap="lg" className="min-w-[600px] p-cn-xl bg-cn-0">
+  <Layout.Vertical gap="xs" align="center">
+    <Layout.Horizontal className="bg-cn-1 border-2 border-cn-1 rounded-3 p-cn-lg w-full h-20" justify="center" align="center">
+      <Text variant="caption-normal">border-cn-1</Text>
+    </Layout.Horizontal>
+    <Text variant="caption-normal" color="foreground-3">Strongest contrast</Text>
+  </Layout.Vertical>
+  
+  <Layout.Vertical gap="xs" align="center">
+    <Layout.Horizontal className="bg-cn-1 border-2 border-cn-2 rounded-3 p-cn-lg w-full h-20" justify="center" align="center">
+      <Text variant="caption-normal">border-cn-2</Text>
+    </Layout.Horizontal>
+    <Text variant="caption-normal" color="foreground-3">Medium contrast</Text>
+  </Layout.Vertical>
+  
+  <Layout.Vertical gap="xs" align="center">
+    <Layout.Horizontal className="bg-cn-1 border-2 border-cn-3 rounded-3 p-cn-lg w-full h-20" justify="center" align="center">
+      <Text variant="caption-normal">border-cn-3</Text>
+    </Layout.Horizontal>
+    <Text variant="caption-normal" color="foreground-3">Subtle (default)</Text>
+  </Layout.Vertical>
+</Layout.Grid>`}
+/>
+
+```tsx
+// Primary borders
+<div className="border border-cn-1">Strongest border</div>
+<div className="border border-cn-2">Medium border</div>
+<div className="border border-cn-3">Subtle border</div>
+
+// Default shorthand
+<div className="border">Uses border-cn-3 by default</div>
+```
+
+<Aside type="tip" title="Default Border">
+  Use `border` (without specifying a color) to apply the default border color
+  (`border-cn-3`). This is the most commonly used border color for subtle
+  separation.
+</Aside>
+
+## State and Brand Borders
+
+Special border colors for disabled states and brand emphasis.
+
+<DocsPage.ComponentExample
+  hideCode
+  client:only
+  code={`<Layout.Horizontal gap="lg" className="min-w-[600px] p-cn-xl bg-cn-0" justify="center">
+  <Layout.Vertical gap="xs" align="center">
+    <Layout.Horizontal className="bg-cn-1 border-2 border-cn-disabled rounded-3 p-cn-lg w-32 h-20" justify="center" align="center">
+      <Text variant="caption-normal" color="state-disabled">Disabled</Text>
+    </Layout.Horizontal>
+    <Text variant="caption-normal" color="foreground-3">border-cn-disabled</Text>
+  </Layout.Vertical>
+  
+  <Layout.Vertical gap="xs" align="center">
+    <Layout.Horizontal className="bg-cn-1 border-2 border-cn-brand rounded-3 p-cn-lg w-32 h-20" justify="center" align="center">
+      <Text variant="caption-normal" className="text-cn-brand">Brand</Text>
+    </Layout.Horizontal>
+    <Text variant="caption-normal" color="foreground-3">border-cn-brand</Text>
+  </Layout.Vertical>
+</Layout.Horizontal>`}
+/>
+
+```tsx
+// Disabled state
+<input disabled className="border border-cn-disabled" />
+
+// Brand border
+<div className="border border-cn-brand">Brand highlight</div>
+```
+
+## Semantic Border Colors
+
+Semantic borders communicate meaning and status. Success, danger, and warning include both default and outline variants. Other colors only have outline variants for use with outline backgrounds.
+
+<DocsPage.ComponentExample
+  hideCode
+  client:only
+  code={`<Layout.Grid columns="2" gap="lg" className="min-w-[600px] p-cn-xl bg-cn-0">
+  <Layout.Vertical gap="xs">
+    <Text variant="caption-normal" color="foreground-3">Success borders</Text>
+    <Layout.Horizontal className="bg-cn-1 border-2 border-cn-success rounded-3 p-cn-sm" justify="center">
+      <Text variant="caption-normal">border-cn-success</Text>
+    </Layout.Horizontal>
+    <Layout.Horizontal className="bg-cn-success-outline border-2 border-cn-success-outline rounded-3 p-cn-sm" justify="center">
+      <Text variant="caption-normal" className="text-cn-success-outline">border-cn-success-outline</Text>
+    </Layout.Horizontal>
+  </Layout.Vertical>
+  
+  <Layout.Vertical gap="xs">
+    <Text variant="caption-normal" color="foreground-3">Danger borders</Text>
+    <Layout.Horizontal className="bg-cn-1 border-2 border-cn-danger rounded-3 p-cn-sm" justify="center">
+      <Text variant="caption-normal">border-cn-danger</Text>
+    </Layout.Horizontal>
+    <Layout.Horizontal className="bg-cn-danger-outline border-2 border-cn-danger-outline rounded-3 p-cn-sm" justify="center">
+      <Text variant="caption-normal" className="text-cn-danger-outline">border-cn-danger-outline</Text>
+    </Layout.Horizontal>
+  </Layout.Vertical>
+  
+  <Layout.Vertical gap="xs">
+    <Text variant="caption-normal" color="foreground-3">Warning borders</Text>
+    <Layout.Horizontal className="bg-cn-1 border-2 border-cn-warning rounded-3 p-cn-sm" justify="center">
+      <Text variant="caption-normal">border-cn-warning</Text>
+    </Layout.Horizontal>
+    <Layout.Horizontal className="bg-cn-warning-outline border-2 border-cn-warning-outline rounded-3 p-cn-sm" justify="center">
+      <Text variant="caption-normal" className="text-cn-warning-outline">border-cn-warning-outline</Text>
+    </Layout.Horizontal>
+  </Layout.Vertical>
+  
+  <Layout.Vertical gap="xs">
+    <Text variant="caption-normal" color="foreground-3">Other semantic colors</Text>
+    <Layout.Horizontal className="bg-cn-blue-outline border-2 border-cn-blue-outline rounded-3 p-cn-sm" justify="center">
+      <Text variant="caption-normal" className="text-cn-blue-outline">border-cn-blue-outline</Text>
+    </Layout.Horizontal>
+    <Layout.Horizontal className="bg-cn-purple-outline border-2 border-cn-purple-outline rounded-3 p-cn-sm" justify="center">
+      <Text variant="caption-normal" className="text-cn-purple-outline">border-cn-purple-outline</Text>
+    </Layout.Horizontal>
+  </Layout.Vertical>
+</Layout.Grid>`}
+/>
+
+```tsx
+// Default variants (success, danger, warning only)
+<div className="border border-cn-success">Success border</div>
+<div className="border border-cn-danger">Danger border</div>
+<div className="border border-cn-warning">Warning border</div>
+
+// Outline variants (must be paired with matching text and background)
+<div className="bg-cn-success-outline text-cn-success-outline border border-cn-success-outline">
+  Success outline style
+</div>
+
+// Other semantic colors (outline only)
+<div className="bg-cn-blue-outline text-cn-blue-outline border border-cn-blue-outline">
+  Blue outline
+</div>
+```
+
+<Aside type="caution" title="Outline Variant Pairing">
+  Always use outline border variants with their matching text and background
+  colors: `text-cn-{color}-outline` + `bg-cn-{color}-outline` + `border-cn-
+  {color}-outline`. Never mix outline borders with primary or secondary
+  backgrounds.
+</Aside>
+
+**Available semantic outline borders:** gray, blue, purple, brown, cyan, indigo, lime, mint, orange, pink, violet
+
+## Border Width
+
+Combine border colors with Tailwind's border width utilities:
+
+```tsx
+// Default width (1px)
+<div className="border border-cn-3">1px border</div>
+
+// Specific widths
+<div className="border-2 border-cn-brand">2px border</div>
+<div className="border-4 border-cn-danger">4px border</div>
+
+// Directional borders
+<div className="border-t border-cn-2">Top border only</div>
+<div className="border-b-2 border-cn-3">2px bottom border</div>
+<div className="border-l border-cn-1 border-r border-cn-1">Left and right</div>
+
+// No border
+<div className="border-0">Remove border</div>
+```
+
+## Common Customization Patterns
+
+### Form Input States
+
+<DocsPage.ComponentExample
+  hideCode
+  client:only
+  code={`<Layout.Vertical gap="lg" className="min-w-[600px] p-cn-xl bg-cn-0">
+  <Layout.Vertical gap="xs">
+    <Text variant="caption-normal">Default state</Text>
+    <input
+      type="text"
+      className="bg-cn-1 border border-cn-3 rounded-3 p-cn-sm w-full"
+      placeholder="Enter text..."
+    />
+  </Layout.Vertical>
+  
+  <Layout.Vertical gap="xs">
+    <Text variant="caption-normal">Focus state</Text>
+    <input
+      type="text"
+      className="bg-cn-1 border-2 border-cn-brand rounded-3 p-cn-sm w-full"
+      placeholder="Focused input"
+    />
+  </Layout.Vertical>
+  
+  <Layout.Vertical gap="xs">
+    <Text variant="caption-normal">Error state</Text>
+    <input
+      type="text"
+      className="bg-cn-1 border border-cn-danger rounded-3 p-cn-sm w-full"
+      value="Invalid input"
+      readOnly
+    />
+  </Layout.Vertical>
+  
+  <Layout.Vertical gap="xs">
+    <Text variant="caption-normal">Success state</Text>
+    <input
+      type="text"
+      className="bg-cn-1 border border-cn-success rounded-3 p-cn-sm w-full"
+      value="Valid input"
+      readOnly
+    />
+  </Layout.Vertical>
+</Layout.Vertical>`}
+/>
+
+```tsx
+// Default input
+<input className="border border-cn-3" />
+
+// Focus state with brand border
+<input className="border focus:border-cn-brand focus:border-2" />
+
+// Error validation
+<input className="border border-cn-danger" />
+
+// Success validation
+<input className="border border-cn-success" />
+```
+
+### Card with Border
+
+<DocsPage.ComponentExample
+  hideCode
+  client:only
+  code={`<Layout.Horizontal className="min-w-[600px] p-cn-xl bg-cn-0" justify="center">
+  <Layout.Vertical className="bg-cn-1 border border-cn-3 rounded-3 shadow-cn-2 p-cn-lg max-w-sm" gap="md">
+    <Text variant="heading-base">Card with Border</Text>
+    <Text variant="body-normal" color="foreground-2">
+      Using border-cn-3 for subtle separation from the background.
+    </Text>
+    <Button size="sm">Action</Button>
+  </Layout.Vertical>
+</Layout.Horizontal>`}
+/>
+
+```tsx
+<div className="bg-cn-1 border border-cn-3 rounded-3 shadow-cn-2 p-cn-lg">
+  Card content
+</div>
+```
+
+### Alert with Semantic Border
+
+<DocsPage.ComponentExample
+  hideCode
+  client:only
+  code={`<Layout.Vertical gap="md" className="min-w-[600px] p-cn-xl bg-cn-0">
+  <Layout.Horizontal className="bg-cn-warning-outline text-cn-warning-outline border-l-4 border-cn-warning-outline rounded-3 p-cn-md" gap="sm">
+    <IconV2 name="exclamation-triangle" className="flex-shrink-0" />
+    <Layout.Vertical gap="3xs">
+      <Text variant="body-strong" color="inherit">Warning</Text>
+      <Text variant="caption-normal" color="inherit">Please review before proceeding</Text>
+    </Layout.Vertical>
+  </Layout.Horizontal>
+  
+  <Layout.Horizontal className="bg-cn-danger-outline text-cn-danger-outline border-l-4 border-cn-danger-outline rounded-3 p-cn-md" gap="sm">
+    <IconV2 name="xmark-circle" className="flex-shrink-0" />
+    <Layout.Vertical gap="3xs">
+      <Text variant="body-strong" color="inherit">Error</Text>
+      <Text variant="caption-normal" color="inherit">Action could not be completed</Text>
+    </Layout.Vertical>
+  </Layout.Horizontal>
+</Layout.Vertical>`}
+/>
+
+```tsx
+// Alert with left accent border
+<div className="bg-cn-warning-outline text-cn-warning-outline border-l-4 border-cn-warning-outline">
+  Warning message
+</div>
+
+<div className="bg-cn-danger-outline text-cn-danger-outline border-l-4 border-cn-danger-outline">
+  Error message
+</div>
+```
+
+## Usage Guidelines
+
+**When to use each border:**
+
+- `border-cn-1` - Strongest separation, important boundaries
+- `border-cn-2` - Medium emphasis, secondary containers
+- `border-cn-3` - Default, subtle separation (most common)
+- `border-cn-disabled` - Disabled form elements
+- `border-cn-brand` - Focus states, brand emphasis
+- `border-cn-success/danger/warning` - Semantic feedback (standalone)
+- `border-cn-{color}-outline` - Always paired with outline backgrounds
+
+## Best Practices
+
+1. **Use the default** - `border` or `border-cn-3` works for most cases
+2. **Pair outline variants** - Always match outline borders with outline text and backgrounds
+3. **Combine with width** - Use `border-2` or `border-4` for emphasis
+4. **Directional borders** - Use `border-t`, `border-l`, etc. for accent lines
+5. **State indication** - Use semantic borders for form validation and status
+6. **Avoid overuse** - Too many borders create visual clutter
+
+<Aside type="tip" title="Border Removal">
+  Use `border-0` to explicitly remove borders when customizing components.
+  Useful when a component has a default border you don't want.
+</Aside>
+
+## Quick Reference
+
+| Color Group            | Available Classes                                            | Usage                                     |
+| ---------------------- | ------------------------------------------------------------ | ----------------------------------------- |
+| **Primary**            | `border-cn-1`, `border-cn-2`, `border-cn-3`                  | General borders, default is cn-3          |
+| **State**              | `border-cn-disabled`                                         | Disabled elements                         |
+| **Brand**              | `border-cn-brand`                                            | Focus states, brand emphasis              |
+| **Semantic (default)** | `border-cn-success`, `border-cn-danger`, `border-cn-warning` | Status indication                         |
+| **Semantic (outline)** | `border-cn-{color}-outline`                                  | 14 colors, must pair with outline text/bg |
+
+**Semantic colors with outline:** success, danger, warning, gray, blue, purple, brown, cyan, indigo, lime, mint, orange, pink, violet

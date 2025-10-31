@@ -1,0 +1,275 @@
+---
+title: Shadows
+description: Elevation and depth system using box shadows and focus rings
+---
+
+import { DocsPage } from "@/components/docs-page";
+import { Aside } from "@astrojs/starlight/components";
+
+Shadows in our design system create visual hierarchy and depth. Use them to indicate elevation, focus states, and interactive elements.
+
+## Shadow Levels
+
+Six shadow levels provide progressively deeper elevation effects. Higher numbers create stronger, more pronounced shadows.
+
+<DocsPage.ComponentExample
+  hideCode
+  client:only
+  code={`<Layout.Grid columns="3" gap="xl" className="min-w-[500px] p-cn-xl pb-cn-2xl bg-cn-0">
+  <Layout.Vertical gap="sm" align="center">
+    <Text variant="caption-normal" color="foreground-3">Subtle elevation</Text>
+    <Layout.Horizontal className="bg-cn-1 rounded-cn-3 shadow-cn-1 p-cn-lg w-full" justify="center">
+      <Text variant="caption-normal">shadow-cn-1</Text>
+    </Layout.Horizontal>
+  </Layout.Vertical>
+  
+  <Layout.Vertical gap="sm" align="center">
+    <Text variant="caption-normal" color="foreground-3">Light shadow</Text>
+    <Layout.Horizontal className="bg-cn-1 rounded-cn-3 shadow-cn-2 p-cn-lg w-full" justify="center">
+      <Text variant="caption-normal">shadow-cn-2</Text>
+    </Layout.Horizontal>
+  </Layout.Vertical>
+  
+  <Layout.Vertical gap="sm" align="center">
+    <Text variant="caption-normal" color="foreground-3">Medium shadow</Text>
+    <Layout.Horizontal className="bg-cn-1 rounded-cn-3 shadow-cn-3 p-cn-lg w-full" justify="center">
+      <Text variant="caption-normal">shadow-cn-3</Text>
+    </Layout.Horizontal>
+  </Layout.Vertical>
+  
+  <Layout.Vertical gap="sm" align="center">
+    <Text variant="caption-normal" color="foreground-3">Prominent shadow</Text>
+    <Layout.Horizontal className="bg-cn-1 rounded-cn-3 shadow-cn-4 p-cn-lg w-full" justify="center">
+      <Text variant="caption-normal">shadow-cn-4</Text>
+    </Layout.Horizontal>
+  </Layout.Vertical>
+  
+  <Layout.Vertical gap="sm" align="center">
+    <Text variant="caption-normal" color="foreground-3">Strong shadow</Text>
+    <Layout.Horizontal className="bg-cn-1 rounded-cn-3 shadow-cn-5 p-cn-lg w-full" justify="center">
+      <Text variant="caption-normal">shadow-cn-5</Text>
+    </Layout.Horizontal>
+  </Layout.Vertical>
+  
+  <Layout.Vertical gap="sm" align="center">
+    <Text variant="caption-normal" color="foreground-3">Maximum elevation</Text>
+    <Layout.Horizontal className="bg-cn-1 rounded-cn-3 shadow-cn-6 p-cn-lg w-full" justify="center">
+      <Text variant="caption-normal">shadow-cn-6</Text>
+    </Layout.Horizontal>
+  </Layout.Vertical>
+</Layout.Grid>`}
+/>
+
+```tsx
+// Basic usage
+<div className="bg-cn-1 rounded-cn-3 shadow-cn-2 p-cn-md">
+  Card with light shadow
+</div>
+
+// No shadow
+<div className="bg-cn-1 rounded-cn-3 shadow-cn-none p-cn-md">
+  Flat card without shadow
+</div>
+```
+
+**Shadow level guidelines:**
+
+- `shadow-cn-none` - No shadow, flat appearance
+- `shadow-cn-1` - Subtle elevation for slightly raised elements
+- `shadow-cn-2` - Light shadow for cards and containers
+- `shadow-cn-3` - Medium shadow for elevated panels
+- `shadow-cn-4` - Prominent shadow for floating elements
+- `shadow-cn-5` - Strong shadow for modals and overlays
+- `shadow-cn-6` - Maximum elevation for top-level overlays
+
+## Interactive Shadows
+
+Combine shadows with hover states to create depth on interaction:
+
+<DocsPage.ComponentExample
+  hideCode
+  client:only
+  code={`<Layout.Horizontal gap="lg" className="min-w-[500px] p-cn-xl bg-cn-0" justify="center">
+  <Button 
+    className="shadow-cn-2 hover:shadow-cn-4 transition-shadow"
+  >
+    Hover for elevation
+  </Button>
+  
+  <Layout.Horizontal 
+    className="bg-cn-1 rounded-cn-3 shadow-cn-2 hover:shadow-cn-5 transition-shadow p-cn-lg cursor-pointer"
+  >
+    <Text variant="caption-normal">Hover to elevate</Text>
+  </Layout.Horizontal>
+</Layout.Horizontal>`}
+/>
+
+```tsx
+// Button with shadow transition
+<Button className="shadow-cn-2 hover:shadow-cn-4 transition-shadow">
+  Interactive button
+</Button>
+
+// Card with elevation on hover
+<div className="bg-cn-1 rounded-cn-3 shadow-cn-2 hover:shadow-cn-5 transition-shadow">
+  Hover to see elevation
+</div>
+```
+
+## Focus Ring Shadows
+
+Focus ring shadows provide visual feedback for keyboard navigation and form validation. These appear as colored rings around focused elements.
+
+<DocsPage.ComponentExample
+  hideCode
+  client:only
+  code={`<Layout.Grid columns="2" gap="lg" className="min-w-[500px] p-cn-xl bg-cn-0">
+  <Layout.Vertical gap="sm">
+    <Text variant="caption-normal" color="foreground-3">Selected state</Text>
+    <input
+    type="text"
+    className="bg-cn-1 border border-cn-3 rounded-cn-3 p-cn-sm shadow-cn-ring-selected"
+    value="Selected input"
+    readOnly
+    />
+  </Layout.Vertical>
+  
+  <Layout.Vertical gap="sm">
+    <Text variant="caption-normal" color="foreground-3">Success state</Text>
+    <input
+      type="text"
+      className="bg-cn-1 border border-cn-success rounded-cn-3 p-cn-sm shadow-cn-ring-success"
+      value="Valid input"
+      readOnly
+    />
+  </Layout.Vertical>
+  
+  <Layout.Vertical gap="sm">
+    <Text variant="caption-normal" color="foreground-3">Warning state</Text>
+    <input
+      type="text"
+      className="bg-cn-1 border border-cn-warning rounded-cn-3 p-cn-sm shadow-cn-ring-warning"
+      value="Warning input"
+      readOnly
+    />
+  </Layout.Vertical>
+  
+  <Layout.Vertical gap="sm">
+    <Text variant="caption-normal" color="foreground-3">Error state</Text>
+    <input
+      type="text"
+      className="bg-cn-1 border border-cn-danger rounded-cn-3 p-cn-sm shadow-cn-ring-error"
+      value="Invalid input"
+      readOnly
+    />
+  </Layout.Vertical>
+</Layout.Grid>`}
+/>
+
+```tsx
+// Selected/focused state
+<input className="focus:shadow-cn-ring-selected" />
+
+// Success validation
+<input className="shadow-cn-ring-success border-cn-success" />
+
+// Warning state
+<input className="shadow-cn-ring-warning border-cn-warning" />
+
+// Error validation
+<input className="shadow-cn-ring-error border-cn-danger" />
+```
+
+**Ring shadow guidelines:**
+
+- `shadow-cn-ring-selected` - Default focus ring for interactive elements
+- `shadow-cn-ring-success` - Success or valid state indication
+- `shadow-cn-ring-warning` - Warning state for attention-required fields
+- `shadow-cn-ring-error` - Error or invalid state indication
+
+<Aside type="tip" title="Focus States">
+  Use `focus:shadow-cn-ring-selected` for default keyboard focus states. Combine
+  with `focus-visible:` when you want rings only for keyboard navigation, not
+  mouse clicks.
+</Aside>
+
+## Common Patterns
+
+### Elevated Card
+
+<DocsPage.ComponentExample
+  hideCode
+  client:only
+  code={`<Layout.Horizontal className="min-w-[500px] p-cn-xl bg-cn-0" justify="center">
+  <Layout.Vertical className="bg-cn-1 rounded-cn-3 shadow-cn-2 p-cn-lg max-w-sm" gap="md">
+    <Text variant="heading-base">Card Title</Text>
+    <Text variant="body-normal" color="foreground-2">
+      Cards use shadow-cn-2 for a subtle elevation effect that separates them from the background.
+    </Text>
+    <Layout.Horizontal gap="sm">
+      <Button size="sm">Action</Button>
+      <Button variant="secondary" size="sm">Cancel</Button>
+    </Layout.Horizontal>
+  </Layout.Vertical>
+</Layout.Horizontal>`}
+/>
+
+```tsx
+<div className="bg-cn-1 rounded-cn-3 shadow-cn-2 p-cn-lg">
+  <Text variant="heading-base">Card Title</Text>
+  <Text variant="body-normal">Card content</Text>
+</div>
+```
+
+### Modal Overlay
+
+<DocsPage.ComponentExample
+  hideCode
+  client:only
+  code={`<Layout.Horizontal className="min-w-[500px] p-cn-xl bg-cn-0 relative h-64" justify="center" align="center">
+  <Layout.Vertical 
+    className="bg-cn-1 rounded-cn-3 shadow-cn-6 p-cn-xl max-w-md"
+    gap="md"
+  >
+    <Text variant="heading-base">Modal Dialog</Text>
+    <Text variant="body-normal" color="foreground-2">
+      Modals use shadow-cn-6 for maximum elevation above all other content.
+    </Text>
+    <Layout.Horizontal gap="sm" justify="end">
+      <Button variant="outline" size="sm">Cancel</Button>
+      <Button size="sm">Confirm</Button>
+    </Layout.Horizontal>
+  </Layout.Vertical>
+</Layout.Horizontal>`}
+/>
+
+```tsx
+<div className="bg-cn-1 rounded-cn-3 shadow-cn-6 p-cn-xl">
+  <Text variant="heading-base">Modal Dialog</Text>
+  <Text variant="body-normal">Modal content</Text>
+</div>
+```
+
+## Best Practices
+
+1. **Use appropriate elevation** - Higher shadows for elements that need more prominence
+2. **Maintain consistency** - Use the same shadow levels for similar components
+3. **Combine with transitions** - Add `transition-shadow` for smooth elevation changes
+4. **Layer thoughtfully** - Ensure overlaying elements have higher shadow values
+5. **Ring shadows for states** - Use colored ring shadows for focus and validation feedback
+
+## Quick Reference
+
+| Shadow Class              | Use Case         | Example                   |
+| ------------------------- | ---------------- | ------------------------- |
+| `shadow-cn-none`          | Flat elements    | Reset default shadows     |
+| `shadow-cn-1`             | Subtle elevation | Slightly raised cards     |
+| `shadow-cn-2`             | Standard cards   | Default card elevation    |
+| `shadow-cn-3`             | Elevated panels  | Sidebar panels, sections  |
+| `shadow-cn-4`             | Dropdowns        | Menus, tooltips           |
+| `shadow-cn-5`             | Dialogs          | Modal backgrounds         |
+| `shadow-cn-6`             | Top overlays     | Full-screen modals        |
+| `shadow-cn-ring-selected` | Focus state      | Interactive element focus |
+| `shadow-cn-ring-success`  | Valid input      | Successful validation     |
+| `shadow-cn-ring-warning`  | Warning state    | Attention required        |
+| `shadow-cn-ring-error`    | Invalid input    | Error validation          |

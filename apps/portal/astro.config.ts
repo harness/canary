@@ -102,8 +102,12 @@ export default defineConfig({
           items: [
             "customization/overview",
             "customization/spacings",
+            "customization/typography-scale",
             "customization/bg-colors",
             "customization/text-colors",
+            "customization/border-colors",
+            "customization/shadows",
+            "customization/border-radius",
           ],
         },
       ],

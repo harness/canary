@@ -1,0 +1,240 @@
+---
+title: Border Radius
+description: Rounded corner system for consistent component styling
+---
+
+import { DocsPage } from "@/components/docs-page";
+import { Aside } from "@astrojs/starlight/components";
+
+Border radius tokens provide consistent rounded corners across your application. Use them to customize component styling while maintaining design system consistency.
+
+## Available Radius Values
+
+Seven radius levels from subtle to fully rounded, plus special values for sharp corners and circular elements.
+
+<DocsPage.ComponentExample
+  hideCode
+  client:only
+  code={`<Layout.Grid columns="4" gap="lg" className="min-w-[600px] p-cn-xl">
+  <Layout.Vertical gap="xs" align="center">
+    <Text variant="caption-normal" color="foreground-3">1px radius</Text>
+    <Layout.Horizontal className="bg-cn-0 rounded-cn-px p-cn-lg w-full h-20" justify="center" align="center">
+      <Text variant="caption-normal" className="font-mono text-cn-size-1">rounded-cn-px</Text>
+    </Layout.Horizontal>
+  </Layout.Vertical>
+  
+  <Layout.Vertical gap="xs" align="center">
+    <Text variant="caption-normal" color="foreground-3">Smallest</Text>
+    <Layout.Horizontal className="bg-cn-0 rounded-cn-1 p-cn-lg w-full h-20" justify="center" align="center">
+      <Text variant="caption-normal" className="font-mono text-cn-size-1">rounded-cn-1</Text>
+    </Layout.Horizontal>
+  </Layout.Vertical>
+  
+  <Layout.Vertical gap="xs" align="center">
+    <Text variant="caption-normal" color="foreground-3">Default</Text>
+    <Layout.Horizontal className="bg-cn-0 rounded-cn-2 p-cn-lg w-full h-20" justify="center" align="center">
+      <Text variant="caption-normal" className="font-mono text-cn-size-1">rounded-cn-2</Text>
+    </Layout.Horizontal>
+  </Layout.Vertical>
+  
+  <Layout.Vertical gap="xs" align="center">
+    <Text variant="caption-normal" color="foreground-3">Standard</Text>
+    <Layout.Horizontal className="bg-cn-0 rounded-cn-3 p-cn-lg w-full h-20" justify="center" align="center">
+      <Text variant="caption-normal" className="font-mono text-cn-size-1">rounded-cn-3</Text>
+    </Layout.Horizontal>
+  </Layout.Vertical>
+  
+  <Layout.Vertical gap="xs" align="center">
+    <Text variant="caption-normal" color="foreground-3">Medium</Text>
+    <Layout.Horizontal className="bg-cn-0 rounded-cn-4 p-cn-lg w-full h-20" justify="center" align="center">
+      <Text variant="caption-normal" className="font-mono text-cn-size-1">rounded-cn-4</Text>
+    </Layout.Horizontal>
+  </Layout.Vertical>
+  
+  <Layout.Vertical gap="xs" align="center">
+    <Text variant="caption-normal" color="foreground-3">Large</Text>
+    <Layout.Horizontal className="bg-cn-0 rounded-cn-5 p-cn-lg w-full h-20" justify="center" align="center">
+      <Text variant="caption-normal" className="font-mono text-cn-size-1">rounded-cn-5</Text>
+    </Layout.Horizontal>
+  </Layout.Vertical>
+  
+  <Layout.Vertical gap="xs" align="center">
+    <Text variant="caption-normal" color="foreground-3">Larger</Text>
+    <Layout.Horizontal className="bg-cn-0 rounded-cn-6 p-cn-lg w-full h-20" justify="center" align="center">
+      <Text variant="caption-normal" className="font-mono text-cn-size-1">rounded-cn-6</Text>
+    </Layout.Horizontal>
+  </Layout.Vertical>
+  
+  <Layout.Vertical gap="xs" align="center">
+    <Text variant="caption-normal" color="foreground-3">Largest</Text>
+    <Layout.Horizontal className="bg-cn-0 rounded-cn-7 p-cn-lg w-full h-20" justify="center" align="center">
+      <Text variant="caption-normal" className="font-mono text-cn-size-1">rounded-cn-7</Text>
+    </Layout.Horizontal>
+  </Layout.Vertical>
+</Layout.Grid>`}
+/>
+
+### Special Values
+
+<DocsPage.ComponentExample
+  hideCode
+  client:only
+  code={`<Layout.Horizontal gap="lg" className="min-w-[600px] p-cn-xl" justify="center">
+  <Layout.Vertical gap="xs" align="center">
+    <Layout.Horizontal className="bg-cn-2 rounded-cn-none p-cn-lg w-32 h-20" justify="center" align="center">
+      <Text variant="caption-normal" className="font-mono text-cn-size-1">none</Text>
+    </Layout.Horizontal>
+    <Text variant="caption-normal" color="foreground-3">Sharp corners</Text>
+  </Layout.Vertical>
+  
+  <Layout.Vertical gap="xs" align="center">
+    <Layout.Horizontal className="bg-cn-2 rounded-cn-full p-cn-lg size-20" justify="center" align="center">
+      <Text variant="caption-normal" className="font-mono text-cn-size-1">full</Text>
+    </Layout.Horizontal>
+    <Text variant="caption-normal" color="foreground-3">Circular</Text>
+  </Layout.Vertical>
+</Layout.Horizontal>`}
+/>
+
+```tsx
+// Standard radius values
+<div className="rounded-cn-1">Smallest radius</div>
+<div className="rounded-cn-2">Default radius</div>
+<div className="rounded-cn-3">Standard radius</div>
+
+// Special values
+<div className="rounded-cn-none">Sharp corners</div>
+<div className="rounded-cn-full">Circular or pill shape</div>
+```
+
+## Directional Radius
+
+Apply radius to specific corners using directional modifiers:
+
+```tsx
+// Top corners
+<div className="rounded-t-cn-3">Rounded top</div>
+
+// Bottom corners
+<div className="rounded-b-cn-3">Rounded bottom</div>
+
+// Left corners
+<div className="rounded-l-cn-3">Rounded left</div>
+
+// Right corners
+<div className="rounded-r-cn-3">Rounded right</div>
+
+// Individual corners
+<div className="rounded-tl-cn-3">Top-left</div>
+<div className="rounded-tr-cn-3">Top-right</div>
+<div className="rounded-bl-cn-3">Bottom-left</div>
+<div className="rounded-br-cn-3">Bottom-right</div>
+```
+
+## Common Customization Patterns
+
+### Button Variants
+
+<DocsPage.ComponentExample
+  hideCode
+  client:only
+  code={`<Layout.Horizontal gap="md" className="min-w-[600px] p-cn-xl" justify="center">
+  <Button className="rounded-cn-full">Pill Button</Button>
+  <Button variant="outline" className="rounded-cn-1">Sharp Button</Button>
+  <Button variant="secondary" className="rounded-cn-7">Extra Rounded</Button>
+</Layout.Horizontal>`}
+/>
+
+```tsx
+<Button className="rounded-cn-full">Pill-shaped button</Button>
+<Button className="rounded-cn-1">Less rounded button</Button>
+```
+
+### Card Customization
+
+<DocsPage.ComponentExample
+  hideCode
+  client:only
+  code={`<Layout.Horizontal gap="lg" className="min-w-[600px] p-cn-xl bg-cn-0" justify="center">
+  <Layout.Vertical className="bg-cn-1 rounded-cn-5 shadow-cn-2 p-cn-lg max-w-[200px]" gap="sm">
+    <Text variant="heading-small">Rounded Card</Text>
+    <Text variant="caption-normal" color="foreground-2">Custom rounded-cn-5 for softer edges</Text>
+  </Layout.Vertical>
+  
+  <Layout.Vertical className="bg-cn-1 rounded-cn-none shadow-cn-2 p-cn-lg max-w-[200px]" gap="sm">
+    <Text variant="heading-small">Sharp Card</Text>
+    <Text variant="caption-normal" color="foreground-2">Using rounded-cn-none for sharp corners</Text>
+  </Layout.Vertical>
+</Layout.Horizontal>`}
+/>
+
+```tsx
+// Softer card edges
+<div className="bg-cn-1 rounded-cn-5 shadow-cn-2 p-cn-lg">
+  Content
+</div>
+
+// Sharp corners
+<div className="bg-cn-1 rounded-cn-none shadow-cn-2 p-cn-lg">
+  Content
+</div>
+```
+
+### Badge Styles
+
+<DocsPage.ComponentExample
+  hideCode
+  client:only
+  code={`<Layout.Horizontal gap="md" className="min-w-[600px] p-cn-xl" justify="center">
+  <span className="bg-cn-success-primary text-cn-success-primary px-cn-md py-cn-xs rounded-cn-full">
+    <Text variant="caption-normal" color="inherit">Pill Badge</Text>
+  </span>
+  <span className="bg-cn-blue-secondary text-cn-blue-secondary px-cn-md py-cn-xs rounded-cn-2">
+    <Text variant="caption-normal" color="inherit">Default Badge</Text>
+  </span>
+  <span className="bg-cn-gray-secondary text-cn-gray-secondary px-cn-md py-cn-xs rounded-cn-1">
+    <Text variant="caption-normal" color="inherit">Subtle Badge</Text>
+  </span>
+</Layout.Horizontal>`}
+/>
+
+```tsx
+<span className="rounded-cn-full px-cn-md py-cn-xs">Pill badge</span>
+<span className="rounded-cn-2 px-cn-md py-cn-xs">Default badge</span>
+```
+
+## Usage Guidelines
+
+**When to use each radius:**
+
+- `rounded-cn-px` / `rounded-cn-1` - Minimal rounding for subtle softening
+- `rounded-cn-2` - Default for most components (inputs, buttons, cards)
+- `rounded-cn-3` - Standard for larger containers and panels
+- `rounded-cn-(4 to 7)` - Progressive rounding for special emphasis
+- `rounded-cn-full` - Pills, badges, avatars, circular buttons
+- `rounded-cn-none` - Sharp, modern aesthetic or specific design requirements
+
+<Aside type="tip" title="Default Radius Shorthand">
+  The class name `rounded` (without a number) can be used to apply the default
+  border radius (`rounded-cn-2`).
+</Aside>
+
+## Best Practices
+
+1. **Be consistent** - Use similar radius values for related components
+2. **Match component size** - Larger components can handle larger radius values
+3. **Consider content** - Sharp corners for technical/data-heavy UIs, rounded for friendly interfaces
+4. **Override sparingly** - Only customize when the default doesn't fit your use case
+5. **Test combinations** - Ensure custom radius works with shadows and borders
+
+## Quick Reference
+
+| Class                 | Usage         | Common For                         |
+| --------------------- | ------------- | ---------------------------------- |
+| `rounded-cn-px`       | 1px radius    | Subtle softening                   |
+| `rounded-cn-1`        | Smallest      | Technical UIs, minimal style       |
+| `rounded-cn-2`        | Default       | Buttons, inputs, small cards       |
+| `rounded-cn-3`        | Standard      | Cards, panels, containers          |
+| `rounded-cn-(4 to 7)` | Progressive   | Special emphasis, large containers |
+| `rounded-cn-none`     | Sharp corners | Modern aesthetic                   |
+| `rounded-cn-full`     | Circular      | Avatars, pills, badges             |

@@ -1572,6 +1572,11 @@
         "$value": "{text.2}",
         "$description": "Text color for sidebar group labels. Provides reduced emphasis for section headers and categorization."
       },
+      "group-label-subtle": {
+        "$type": "color",
+        "$value": "{text.3}",
+        "$description": "Text color for sidebar group labels. Provides reduced emphasis for section headers and categorization."
+      },
       "fade-start": {
         "$type": "color",
         "$value": "linear-gradient(0deg, {gradient.sidebar.fade} 0%, {comp.sidebar.bg} 100%)",

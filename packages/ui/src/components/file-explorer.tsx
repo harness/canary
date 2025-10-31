@@ -127,17 +127,17 @@ function FolderItem({
   )
 
   return (
-    <Accordion.Item value={value} className="border-none">
+    <Accordion.Item value={value} className="border-none group">
       <Layout.Flex
         className={cn('cn-file-tree-folder-item cn-file-tree-item-wrapper pl-0', {
           'cn-file-tree-item-active': isActive
         })}
       >
         <Accordion.Trigger
-          className="cn-file-tree-folder-trigger [&>.cn-accordion-trigger-indicator]:mt-0 [&>.cn-accordion-trigger-indicator]:-rotate-90 [&>.cn-accordion-trigger-indicator]:self-center [&>.cn-accordion-trigger-indicator]:data-[state=open]:-rotate-0"
-          indicatorProps={{ size: '2xs', className: 'flex' }}
-          asChild
-        ></Accordion.Trigger>
+          className="cn-file-tree-folder-trigger"
+          headerClassName="rounded-l-4 hover:bg-cn-hover"
+          indicatorProps={{ size: '2xs' }}
+        />
         {itemElement}
       </Layout.Flex>
 

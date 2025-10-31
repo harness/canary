@@ -1,0 +1,286 @@
+---
+title: Typography Scale
+description: Font sizing and letter spacing tokens for consistent text styling
+---
+
+import { DocsPage } from "@/components/docs-page";
+import { Aside } from "@astrojs/starlight/components";
+
+Typography scale tokens provide consistent font sizes and letter spacing across your application. Use them to customize component text styling while maintaining visual hierarchy.
+
+## Font Sizes
+
+Fourteen size levels from minimal to display, designed for flexible text scaling.
+
+<DocsPage.ComponentExample
+  hideCode
+  client:only
+  code={`<Layout.Vertical gap="md" className="max-w-[500px] p-cn-xl bg-cn-0 whitespace-nowrap overflow-scroll">
+  <Layout.Horizontal gap="md" align="baseline">
+    <p className="leading-tight text-cn-size-0">Size 0</p>
+    <p className="leading-tight text-cn-size-0">The quick brown fox jumps over the lazy dog</p>
+  </Layout.Horizontal>
+  <Layout.Horizontal gap="md" align="baseline">
+    <p className="leading-tight text-cn-size-1">Size 1</p>
+    <p className="leading-tight text-cn-size-1">The quick brown fox jumps over the lazy dog</p>
+  </Layout.Horizontal>
+  <Layout.Horizontal gap="md" align="baseline">
+    <p className="leading-tight text-cn-size-2">Size 2</p>
+    <p className="leading-tight text-cn-size-2">The quick brown fox jumps over the lazy dog</p>
+  </Layout.Horizontal>
+  <Layout.Horizontal gap="md" align="baseline">
+    <p className="leading-tight text-cn-size-3">Size 3</p>
+    <p className="leading-tight text-cn-size-3">The quick brown fox jumps over the lazy dog</p>
+  </Layout.Horizontal>
+  <Layout.Horizontal gap="md" align="baseline">
+    <p className="leading-tight text-cn-size-4">Size 4</p>
+    <p className="leading-tight text-cn-size-4">The quick brown fox jumps over the lazy dog</p>
+  </Layout.Horizontal>
+  <Layout.Horizontal gap="md" align="baseline">
+    <p className="leading-tight text-cn-size-5">Size 5</p>
+    <p className="leading-tight text-cn-size-5">The quick brown fox jumps over the lazy dog</p>
+  </Layout.Horizontal>
+  <Layout.Horizontal gap="md" align="baseline">
+    <p className="leading-tight text-cn-size-6">Size 6</p>
+    <p className="leading-tight text-cn-size-6">The quick brown fox jumps over the lazy dog</p>
+  </Layout.Horizontal>
+  <Layout.Horizontal gap="md" align="baseline">
+    <p className="leading-tight text-cn-size-7">Size 7</p>
+    <p className="leading-tight text-cn-size-7">The quick brown fox jumps over the lazy dog</p>
+  </Layout.Horizontal>
+  <Layout.Horizontal gap="md" align="baseline">
+    <p className="leading-tight text-cn-size-8">Size 8</p>
+    <p className="leading-tight text-cn-size-8">The quick brown fox jumps over the lazy dog</p>
+  </Layout.Horizontal>
+  <Layout.Horizontal gap="md" align="baseline">
+    <p className="leading-tight text-cn-size-9">Size 9</p>
+    <p className="leading-tight text-cn-size-9">The quick brown fox jumps over the lazy dog</p>
+  </Layout.Horizontal>
+  <Layout.Horizontal gap="md" align="baseline">
+    <p className="leading-tight text-cn-size-10">Size 10</p>
+    <p className="leading-tight text-cn-size-10">The quick brown fox jumps over the lazy dog</p>
+  </Layout.Horizontal>
+  <Layout.Horizontal gap="md" align="baseline">
+    <p className="leading-tight text-cn-size-11">Size 11</p>
+    <p className="leading-tight text-cn-size-11">The quick brown fox jumps over the lazy dog</p>
+  </Layout.Horizontal>
+  <Layout.Horizontal gap="md" align="baseline">
+    <p className="leading-tight text-cn-size-12">Size 12</p>
+    <p className="leading-tight text-cn-size-12">The quick brown fox jumps over the lazy dog</p>
+  </Layout.Horizontal>
+  <Layout.Horizontal gap="md" align="baseline">
+    <p className="leading-tight text-cn-size-13">Size 13</p>
+    <p className="leading-tight text-cn-size-13">The quick brown fox jumps over the lazy dog</p>
+  </Layout.Horizontal>
+</Layout.Vertical>`}
+/>
+
+```tsx
+// Font size classes
+<Text className="text-cn-size-0">Minimum text</Text>
+<Text className="text-cn-size-2">Small text</Text>
+<Text className="text-cn-size-4">Body text</Text>
+<Text className="text-cn-size-6">Large text</Text>
+<Text className="text-cn-size-9">Heading text</Text>
+<Text className="text-cn-size-13">Display text</Text>
+
+// Special sizes
+<Text className="text-cn-size-min">Absolute minimum</Text>
+<Text className="text-cn-size-half">Half size</Text>
+```
+
+**Common size usage:**
+
+- `text-cn-size-0` to `text-cn-size-2` - Small text, captions, metadata
+- `text-cn-size-3` to `text-cn-size-5` - Body text, default content
+- `text-cn-size-6` to `text-cn-size-8` - Large text, subheadings
+- `text-cn-size-9` to `text-cn-size-13` - Headings, hero text, display
+
+<Aside type="tip" title="Text Component">
+  The [Text](/components/foundations/text/) component handles font sizing
+  through its `variant` prop. Combine font size class names with `leading-`
+  class names when you need to override the variant's default size or when
+  working with native HTML elements.
+</Aside>
+
+## Letter Spacing
+
+Six tracking levels for adjusting character spacing. Use sparingly to refine text appearance.
+
+<DocsPage.ComponentExample
+  hideCode
+  client:only
+  code={`<Layout.Vertical gap="lg" className="min-w-[500px] p-cn-xl bg-cn-0">
+  <Layout.Vertical gap="xs">
+    <Text variant="caption-normal" color="foreground-3">tracking-cn-tighter</Text>
+    <Text className="text-cn-size-6 tracking-cn-tighter">The quick brown fox jumps over the lazy dog</Text>
+  </Layout.Vertical>
+  
+  <Layout.Vertical gap="xs">
+    <Text variant="caption-normal" color="foreground-3">tracking-cn-tight</Text>
+    <Text className="text-cn-size-6 tracking-cn-tight">The quick brown fox jumps over the lazy dog</Text>
+  </Layout.Vertical>
+  
+  <Layout.Vertical gap="xs">
+    <Text variant="caption-normal" color="foreground-3">tracking-cn-normal (default)</Text>
+    <Text className="text-cn-size-6 tracking-cn-normal">The quick brown fox jumps over the lazy dog</Text>
+  </Layout.Vertical>
+  
+  <Layout.Vertical gap="xs">
+    <Text variant="caption-normal" color="foreground-3">tracking-cn-wide</Text>
+    <Text className="text-cn-size-6 tracking-cn-wide">The quick brown fox jumps over the lazy dog</Text>
+  </Layout.Vertical>
+  
+  <Layout.Vertical gap="xs">
+    <Text variant="caption-normal" color="foreground-3">tracking-cn-wider</Text>
+    <Text className="text-cn-size-6 tracking-cn-wider">The quick brown fox jumps over the lazy dog</Text>
+  </Layout.Vertical>
+  
+  <Layout.Vertical gap="xs">
+    <Text variant="caption-normal" color="foreground-3">tracking-cn-widest</Text>
+    <Text className="text-cn-size-6 tracking-cn-widest">The quick brown fox jumps over the lazy dog</Text>
+  </Layout.Vertical>
+</Layout.Vertical>`}
+/>
+
+```tsx
+// Letter spacing classes
+<Text className="tracking-cn-tighter">Tightest spacing</Text>
+<Text className="tracking-cn-tight">Tight spacing</Text>
+<Text className="tracking-cn-normal">Normal spacing (default)</Text>
+<Text className="tracking-cn-wide">Wide spacing</Text>
+<Text className="tracking-cn-wider">Wider spacing</Text>
+<Text className="tracking-cn-widest">Widest spacing</Text>
+```
+
+**Tracking guidelines:**
+
+- `tracking-cn-tighter` / `tracking-cn-tight` - Large headings, display text
+- `tracking-cn-normal` - Default, body text (rarely needs override)
+- `tracking-cn-wide` / `tracking-cn-wider` / `tracking-cn-widest` - All caps, labels, buttons
+
+## Common Customization Patterns
+
+### Button Text Sizing
+
+<DocsPage.ComponentExample
+  hideCode
+  client:only
+  code={`<Layout.Horizontal gap="md" className="min-w-[500px] p-cn-xl bg-cn-0" justify="center">
+  <Button className="text-cn-size-2">Small Text</Button>
+  <Button className="text-cn-size-4">Medium Text</Button>
+  <Button className="text-cn-size-5">Large Text</Button>
+</Layout.Horizontal>`}
+/>
+
+```tsx
+<Button className="text-cn-size-2">Smaller button text</Button>
+<Button className="text-cn-size-5">Larger button text</Button>
+```
+
+### All Caps with Tracking
+
+<DocsPage.ComponentExample
+  hideCode
+  client:only
+  code={`<Layout.Vertical gap="lg" className="min-w-[500px] p-cn-xl bg-cn-0">
+  <Text className="text-cn-size-2 uppercase tracking-cn-wide">Label with spacing</Text>
+  <Text className="text-cn-size-1 uppercase tracking-cn-wider text-cn-3">Section Header</Text>
+  <Button variant="secondary" className="uppercase tracking-cn-widest">Call to Action</Button>
+</Layout.Vertical>`}
+/>
+
+```tsx
+// Labels and section headers
+<Text className="uppercase tracking-cn-wide">Label</Text>
+<Text className="uppercase tracking-cn-wider">Section Header</Text>
+
+// Buttons with uppercase text
+<Button className="uppercase tracking-cn-widest">Action</Button>
+```
+
+### Display Text
+
+<DocsPage.ComponentExample
+  hideCode
+  client:only
+  code={`<Layout.Vertical gap="md" className="min-w-[500px] p-cn-xl bg-cn-0" align="center">
+  <Text className="text-cn-size-13 tracking-cn-tight font-bold">Hero Heading</Text>
+  <Text className="text-cn-size-9 tracking-cn-tighter">Large Subheading</Text>
+</Layout.Vertical>`}
+/>
+
+```tsx
+// Hero text with tighter tracking
+<h1 className="text-cn-size-13 tracking-cn-tight">Hero Heading</h1>
+
+// Large headings
+<h2 className="text-cn-size-9 tracking-cn-tighter">Subheading</h2>
+```
+
+## Combining Size and Tracking
+
+<DocsPage.ComponentExample
+  hideCode
+  client:only
+  code={`<Layout.Vertical gap="xl" className="min-w-[500px] p-cn-xl bg-cn-0">
+  <Layout.Vertical gap="sm">
+    <Text variant="heading-base">Card Header</Text>
+    <Text className="text-cn-size-3 text-cn-2 leading-relaxed">
+      Body text at size 3 maintains good readability with default tracking.
+      The design system handles line height automatically.
+    </Text>
+    <Text className="text-cn-size-1 uppercase tracking-cn-wider text-cn-3">
+      Metadata • Updated 2 hours ago
+    </Text>
+  </Layout.Vertical>
+  
+  <Layout.Horizontal className="bg-cn-2 rounded-3 p-cn-lg" gap="md">
+    <Layout.Vertical gap="xs" className="flex-1">
+      <Text className="text-cn-size-1 uppercase tracking-cn-wide text-cn-3">Metric</Text>
+      <Text className="text-cn-size-8 tracking-cn-tight font-bold">1,234</Text>
+      <Text className="text-cn-size-2 text-cn-success">+12% increase</Text>
+    </Layout.Vertical>
+  </Layout.Horizontal>
+</Layout.Vertical>`}
+/>
+
+```tsx
+// Stat card with custom sizing and tracking
+<div className="bg-cn-2 rounded-3 p-cn-lg">
+  <Text className="text-cn-size-1 uppercase tracking-cn-wide text-cn-3">
+    Metric Label
+  </Text>
+  <Text className="text-cn-size-8 tracking-cn-tight font-bold">1,234</Text>
+</div>
+```
+
+## Best Practices
+
+1. **Use Text component variants first** - Only override with size classes when necessary
+2. **Tighter tracking for large text** - Improves readability at display sizes
+3. **Wider tracking for small caps** - Enhances legibility of uppercase text
+4. **Avoid extreme combinations** - Don't use widest tracking with tiny text or tightest with small sizes
+5. **Consider line height** - Combine with Tailwind's `leading-*` utilities when needed
+6. **Test readability** - Ensure custom sizes maintain sufficient contrast and legibility
+
+## Quick Reference
+
+| Token Type         | Classes                                            | Usage                        |
+| ------------------ | -------------------------------------------------- | ---------------------------- |
+| **Font Size**      | `text-cn-size-0` through `text-cn-size-13`         | Progressive sizing scale     |
+| **Special Sizes**  | `text-cn-size-min`, `text-cn-size-half`            | Edge cases                   |
+| **Letter Spacing** | `tracking-cn-tighter` through `tracking-cn-widest` | Character spacing adjustment |
+
+**Size recommendations:**
+
+- 0-2: Small text, captions
+- 3-5: Body text
+- 6-8: Subheadings
+- 9-13: Headings, display
+
+**Tracking recommendations:**
+
+- Tighter/Tight: Large headings
+- Normal: Body text
+- Wide/Wider/Widest: All caps, labels

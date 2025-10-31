@@ -8,7 +8,6 @@ import {
   Layout,
   ListActions,
   NoData,
-  Pagination,
   SearchInput,
   Spacer,
   StackedList,
@@ -317,6 +316,24 @@ const PullRequestListPage: FC<PullRequestPageProps> = ({
         scope={scope}
         showScope={showScope}
         dirtyNoDataContent={renderDirtyNoDataContent()}
+        paginationProps={
+          isProjectLevel
+            ? {
+                indeterminate: true,
+                currentPage: page,
+                hasPrevious: page > 1,
+                hasNext: (pullRequests?.length || 0) === pageSize,
+                onPrevious: () => setPage(page - 1),
+                onNext: () => setPage(page + 1)
+              }
+            : {
+                totalItems: totalItems,
+                pageSize: pageSize,
+                onPageSizeChange: setPageSize,
+                currentPage: page,
+                goToPage: setPage
+              }
+        }
         {...routingProps}
       />
     )
@@ -487,7 +504,7 @@ const PullRequestListPage: FC<PullRequestPageProps> = ({
             </ListActions.Root>
             <ListControlBar<PRListFilters, LabelsValue, PRListFilters[PRListFiltersKeys]>
               renderSelectedFilters={filterFieldRenderer => (
-                <PRListFilterHandler.Content className={'flex items-center gap-x-cn-xs'}>
+                <PRListFilterHandler.Content className={'gap-x-cn-xs flex items-center'}>
                   {PR_FILTER_OPTIONS.map(filterOption => {
                     return (
                       <PRListFilterHandler.Component
@@ -518,7 +535,7 @@ const PullRequestListPage: FC<PullRequestPageProps> = ({
               renderFilterOptions={filterOptionsRenderer => (
                 <PRListFilterHandler.Dropdown>
                   {(addFilter, availableFilters, resetFilters) => (
-                    <div className="flex items-center gap-x-cn-md">
+                    <div className="gap-x-cn-md flex items-center">
                       {filterOptionsRenderer({ addFilter, resetFilters, availableFilters })}
                     </div>
                   )}
@@ -533,26 +550,6 @@ const PullRequestListPage: FC<PullRequestPageProps> = ({
           </PRListFilterHandler>
         )}
         {renderListContent()}
-        {isProjectLevel ? (
-          !!pullRequests?.length && (
-            <Pagination
-              indeterminate={true}
-              currentPage={page}
-              hasPrevious={page > 1}
-              hasNext={(pullRequests.length || 0) === pageSize}
-              onPrevious={() => setPage(page - 1)}
-              onNext={() => setPage(page + 1)}
-            />
-          )
-        ) : (
-          <Pagination
-            totalItems={totalItems}
-            pageSize={pageSize}
-            onPageSizeChange={setPageSize}
-            currentPage={page}
-            goToPage={setPage}
-          />
-        )}
       </SandboxLayout.Content>
     </SandboxLayout.Main>
   )

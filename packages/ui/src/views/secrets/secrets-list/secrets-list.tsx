@@ -12,7 +12,8 @@ export function SecretList({
   onDeleteSecret,
   onEditSecret,
   handleResetFiltersQueryAndPages,
-  isDirtyList
+  isDirtyList,
+  paginationProps
 }: SecretListProps): JSX.Element {
   const { t } = useTranslation()
 
@@ -51,7 +52,7 @@ export function SecretList({
   }
 
   return (
-    <Table.Root tableClassName="table-fixed" size="compact">
+    <Table.Root tableClassName="table-fixed" size="compact" paginationProps={paginationProps}>
       <Table.Header>
         <Table.Row>
           <Table.Head className="w-3/6">{t('views:secret.title', 'Name')}</Table.Head>

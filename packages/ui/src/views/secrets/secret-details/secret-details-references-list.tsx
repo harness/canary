@@ -1,4 +1,4 @@
-import { IconV2, Layout, NoData, ScopeTag, Skeleton, Table, Text, TimeAgoCard } from '@/components'
+import { IconV2, Layout, NoData, PaginationProps, ScopeTag, Skeleton, Table, Text, TimeAgoCard } from '@/components'
 import { useTranslation } from '@/context'
 
 import { SecretReference } from './types'
@@ -8,13 +8,15 @@ interface SecretReferencesListProps {
   isLoading: boolean
   isDirtyList: boolean
   handleResetFiltersQueryAndPages: () => void
+  paginationProps?: PaginationProps
 }
 
 export function SecretReferencesList({
   secretReferences,
   isLoading,
   isDirtyList,
-  handleResetFiltersQueryAndPages
+  handleResetFiltersQueryAndPages,
+  paginationProps
 }: SecretReferencesListProps): JSX.Element {
   const { t } = useTranslation()
 
@@ -46,7 +48,7 @@ export function SecretReferencesList({
   }
 
   return (
-    <Table.Root tableClassName="table-fixed" size="relaxed">
+    <Table.Root tableClassName="table-fixed" size="relaxed" paginationProps={paginationProps}>
       <Table.Header>
         <Table.Row>
           <Table.Head className="w-2/4">{t('views:entityReference.entity', 'Entity')}</Table.Head>

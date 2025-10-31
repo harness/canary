@@ -1,6 +1,6 @@
 import { FC, useCallback, useMemo } from 'react'
 
-import { IconV2, Layout, ListActions, NoData, Pagination, SearchInput } from '@/components'
+import { IconV2, Layout, ListActions, NoData, SearchInput } from '@/components'
 import { useRouterContext, useTranslation } from '@/context'
 
 import { SecretReferencesList } from './secret-details-references-list'
@@ -113,16 +113,18 @@ const SecretReferencesPage: FC<SecretsReferencePageProps> = ({
         isLoading={isLoading}
         isDirtyList={isDirtyList}
         handleResetFiltersQueryAndPages={() => handleSearchChange('')}
+        paginationProps={
+          isShowPagination
+            ? {
+                totalItems: totalItems,
+                pageSize: pageSize,
+                onPageSizeChange: setPageSize,
+                currentPage: currentPage,
+                goToPage: goToPage
+              }
+            : undefined
+        }
       />
-      {isShowPagination && (
-        <Pagination
-          totalItems={totalItems}
-          pageSize={pageSize}
-          onPageSizeChange={setPageSize}
-          currentPage={currentPage}
-          goToPage={goToPage}
-        />
-      )}
     </>
   )
 }

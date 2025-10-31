@@ -2,25 +2,27 @@ import { useCallback } from 'react'
 
 import { Layout, MoreActionsTooltip, StatusBadge, Switch, Table, Text } from '@/components'
 import { useCustomDialogTrigger, useRouterContext, useTranslation } from '@/context'
-import { WebhookType } from '@/views'
+import { WebhookStore } from '@/views'
 
 import { formatWebhookTriggers } from '../../utils'
 
 export interface RepoWebhookListProps {
-  webhooks: WebhookType[]
   openDeleteWebhookDialog: (id: number) => void
   handleEnableWebhook: (id: number, enabled: boolean) => void
   toRepoWebhookDetails?: ({ webhookId }: { webhookId: number }) => string
+  useWebhookStore: () => WebhookStore
 }
 
 export function RepoWebhookList({
-  webhooks,
   openDeleteWebhookDialog,
   handleEnableWebhook,
-  toRepoWebhookDetails
+  toRepoWebhookDetails,
+  useWebhookStore
 }: RepoWebhookListProps) {
   const { t } = useTranslation()
   const { navigate } = useRouterContext()
+
+  const { webhooks, totalItems, pageSize, page, setPage, setPageSize } = useWebhookStore()
 
   const { triggerRef, registerTrigger } = useCustomDialogTrigger()
   const handleDeleteWebhook = useCallback(
@@ -33,7 +35,17 @@ export function RepoWebhookList({
 
   return (
     <>
-      <Table.Root className="table-fixed" size="compact">
+      <Table.Root
+        className="table-fixed"
+        size="compact"
+        paginationProps={{
+          totalItems: totalItems,
+          pageSize: pageSize,
+          onPageSizeChange: setPageSize,
+          currentPage: page,
+          goToPage: setPage
+        }}
+      >
         <Table.Header>
           <Table.Row>
             <Table.Head className="w-[52px]"></Table.Head>
@@ -43,7 +55,7 @@ export function RepoWebhookList({
           </Table.Row>
         </Table.Header>
         <Table.Body>
-          {webhooks.map(webhook => {
+          {(webhooks ?? []).map(webhook => {
             const isSuccess = webhook.latest_execution_result === 'success'
             const isError = ['fatal_error', 'retriable_error'].includes(webhook.latest_execution_result ?? '')
             const webhooksUrl = toRepoWebhookDetails ? toRepoWebhookDetails({ webhookId: webhook.id }) : `${webhook.id}`

@@ -42,11 +42,12 @@ export const stackedListItemVariants = cva('cn-stacked-list-item', {
   }
 })
 
-type ListPaginationProps = PaginationProps & Pick<VariantProps<typeof stackedListItemVariants>, 'paddingX' | 'paddingY'>
+export type StackedListPaginationProps = PaginationProps &
+  Pick<VariantProps<typeof stackedListItemVariants>, 'paddingX' | 'paddingY'>
 
 type ListProps = ComponentProps<'div'> &
   VariantProps<typeof stackedListVariants> & {
-    paginationProps?: ListPaginationProps
+    paginationProps?: StackedListPaginationProps
   }
 
 const List: FC<ListProps> = ({
@@ -59,7 +60,7 @@ const List: FC<ListProps> = ({
     paddingX,
     paddingY,
     ...paginationProps
-  } = {} as ListPaginationProps,
+  } = {} as StackedListPaginationProps,
   ...props
 }) => (
   <div className={cn(stackedListVariants({ border, rounded }), className)} {...props}>

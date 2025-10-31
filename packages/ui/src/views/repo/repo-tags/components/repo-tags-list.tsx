@@ -1,4 +1,4 @@
-import { FC, useCallback } from 'react'
+import { FC, useCallback, useMemo } from 'react'
 
 import {
   ActionData,
@@ -16,6 +16,7 @@ import {
 } from '@/components'
 import { useCustomDialogTrigger, useTranslation } from '@/context'
 import { BranchSelectorListItem, CommitTagType, RepoTagsStore } from '@/views'
+import { createPaginationLinks } from '@utils/utils'
 
 interface RepoTagsListProps {
   onDeleteTag: (tagName: string) => void
@@ -23,24 +24,28 @@ interface RepoTagsListProps {
   toCommitDetails?: ({ sha }: { sha: string }) => string
   onOpenCreateBranchDialog: (selectedTagInList: BranchSelectorListItem) => void
   isLoading?: boolean
-  isDirtyList?: boolean
   onResetFiltersAndPages: () => void
   onOpenCreateTagDialog: () => void
+  searchQuery: string
 }
 
 export const RepoTagsList: FC<RepoTagsListProps> = ({
   useRepoTagsStore,
   toCommitDetails,
   isLoading,
-  isDirtyList = false,
   onResetFiltersAndPages,
   onOpenCreateTagDialog,
   onDeleteTag,
-  onOpenCreateBranchDialog
+  onOpenCreateBranchDialog,
+  searchQuery
 }) => {
   const { t } = useTranslation()
-  const { tags: tagsList } = useRepoTagsStore()
+  const { tags: tagsList, page, pageSize, setPageSize, xNextPage, xPrevPage } = useRepoTagsStore()
   const { triggerRef, registerTrigger } = useCustomDialogTrigger()
+
+  const isDirtyList = useMemo(() => {
+    return page !== 1 || !!searchQuery
+  }, [page, searchQuery])
 
   const handleDeleteTag = useCallback(
     (tagName: string) => {
@@ -76,6 +81,15 @@ export const RepoTagsList: FC<RepoTagsListProps> = ({
       onClick: () => handleDeleteTag(tag.name)
     }
   ]
+
+  const { getPrevPageLink, getNextPageLink } = useMemo(
+    () => createPaginationLinks(xPrevPage, xNextPage, searchQuery),
+    [xPrevPage, xNextPage, searchQuery]
+  )
+
+  const canShowPagination = useMemo(() => {
+    return !isLoading && !!tagsList.length
+  }, [isLoading, tagsList.length])
 
   if (!isLoading && !tagsList?.length) {
     return (
@@ -134,7 +148,24 @@ export const RepoTagsList: FC<RepoTagsListProps> = ({
   }
 
   return (
-    <Table.Root tableClassName="table-fixed" size="compact">
+    <Table.Root
+      tableClassName="table-fixed"
+      size="compact"
+      paginationProps={
+        canShowPagination
+          ? {
+              indeterminate: true,
+              currentPage: page,
+              hasNext: xNextPage > 0,
+              hasPrevious: xPrevPage > 0,
+              getNextPageLink: getNextPageLink,
+              getPrevPageLink: getPrevPageLink,
+              pageSize: pageSize,
+              onPageSizeChange: setPageSize
+            }
+          : undefined
+      }
+    >
       <Table.Header>
         <Table.Row>
           <Table.Head className="w-[15%]">{t('views:repos.tag', 'Tag')}</Table.Head>

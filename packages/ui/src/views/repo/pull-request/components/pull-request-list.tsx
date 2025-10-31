@@ -97,7 +97,8 @@ export const PullRequestList: FC<PullRequestListProps> = ({
   dirtyNoDataContent: DirtyNoDataContent,
   showScope = false,
   toBranch,
-  isLoading
+  isLoading,
+  paginationProps
 }) => {
   const { identifier: repoId } = repo || {}
 
@@ -132,7 +133,10 @@ export const PullRequestList: FC<PullRequestListProps> = ({
   const isEmptyState = !pullRequests.length && !!state
 
   return (
-    <StackedList.Root className={cn({ 'flex grow flex-col': isEmptyState, 'cn-skeleton-list': isLoading })}>
+    <StackedList.Root
+      className={cn({ 'flex grow flex-col': isEmptyState, 'cn-skeleton-list': isLoading })}
+      paginationProps={paginationProps}
+    >
       <StackedList.Header className={cn({ 'grow-0': isEmptyState })}>
         <StackedList.Field
           title={

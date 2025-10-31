@@ -1,16 +1,6 @@
 import { FC, useMemo } from 'react'
 
-import {
-  FormSeparator,
-  Layout,
-  NoData,
-  Pagination,
-  Skeleton,
-  StatusBadge,
-  Table,
-  Text,
-  TimeAgoCard
-} from '@/components'
+import { FormSeparator, Layout, NoData, Skeleton, StatusBadge, Table, Text, TimeAgoCard } from '@/components'
 import { useTranslation } from '@/context'
 import { WebhookStore } from '@/views'
 
@@ -82,60 +72,60 @@ const RepoWebhookExecutionsPage: FC<RepoWebhookExecutionsPageProps> = ({
         </Text>
         {isLoading && <Skeleton.List />}
         {hasExecutions && (
-          <div>
-            <Table.Root size="compact">
-              <Table.Header>
-                <Table.Row>
-                  <Table.Head className="w-32">{t('views:repos.webhookExecutions.table.id', 'ID')}</Table.Head>
-                  <Table.Head>{t('views:repos.webhookExecutions.table.event', 'Event')}</Table.Head>
-                  <Table.Head className="w-1/6">{t('views:repos.webhookExecutions.table.status', 'Status')}</Table.Head>
-                  <Table.Head className="w-1/5" containerProps={{ justify: 'end' }}>
-                    {t('views:repos.webhookExecutions.table.lastTriggeredAt', 'Last triggered at')}
-                  </Table.Head>
-                </Table.Row>
-              </Table.Header>
-              <Table.Body>
-                {executions.map(execution => {
-                  const isSuccess = execution.result === 'success'
-                  const isError = ['fatal_error', 'retriable_error'].includes(execution.result ?? '')
-                  const executionEvent =
-                    events.find(event => event.id === execution.trigger_type)?.event || execution.trigger_type
-                  return (
-                    <Table.Row key={execution.id} to={toRepoWebhookExecutionDetails(`${execution.id}`)}>
-                      <Table.Cell>
-                        <Text>{`#${execution.id}`}</Text>
-                      </Table.Cell>
+          <Table.Root
+            size="compact"
+            paginationProps={{
+              totalItems: totalItems,
+              pageSize: pageSize,
+              onPageSizeChange: setPageSize,
+              currentPage: webhookExecutionPage,
+              goToPage: setWebhookExecutionPage
+            }}
+          >
+            <Table.Header>
+              <Table.Row>
+                <Table.Head className="w-32">{t('views:repos.webhookExecutions.table.id', 'ID')}</Table.Head>
+                <Table.Head>{t('views:repos.webhookExecutions.table.event', 'Event')}</Table.Head>
+                <Table.Head className="w-1/6">{t('views:repos.webhookExecutions.table.status', 'Status')}</Table.Head>
+                <Table.Head className="w-1/5" containerProps={{ justify: 'end' }}>
+                  {t('views:repos.webhookExecutions.table.lastTriggeredAt', 'Last triggered at')}
+                </Table.Head>
+              </Table.Row>
+            </Table.Header>
+            <Table.Body>
+              {executions.map(execution => {
+                const isSuccess = execution.result === 'success'
+                const isError = ['fatal_error', 'retriable_error'].includes(execution.result ?? '')
+                const executionEvent =
+                  events.find(event => event.id === execution.trigger_type)?.event || execution.trigger_type
+                return (
+                  <Table.Row key={execution.id} to={toRepoWebhookExecutionDetails(`${execution.id}`)}>
+                    <Table.Cell>
+                      <Text>{`#${execution.id}`}</Text>
+                    </Table.Cell>
 
-                      <Table.Cell>
-                        <Text>{executionEvent}</Text>
-                      </Table.Cell>
+                    <Table.Cell>
+                      <Text>{executionEvent}</Text>
+                    </Table.Cell>
 
-                      <Table.Cell>
-                        <StatusBadge variant="status" theme={isSuccess ? 'success' : isError ? 'danger' : 'muted'}>
-                          {isSuccess
-                            ? t('views:repos.webhookExecutions.table.success', 'Success')
-                            : isError
-                              ? t('views:repos.webhookExecutions.table.failed', 'Failed')
-                              : t('views:repos.webhookExecutions.table.invalid', 'Invalid')}
-                        </StatusBadge>
-                      </Table.Cell>
+                    <Table.Cell>
+                      <StatusBadge variant="status" theme={isSuccess ? 'success' : isError ? 'danger' : 'muted'}>
+                        {isSuccess
+                          ? t('views:repos.webhookExecutions.table.success', 'Success')
+                          : isError
+                            ? t('views:repos.webhookExecutions.table.failed', 'Failed')
+                            : t('views:repos.webhookExecutions.table.invalid', 'Invalid')}
+                      </StatusBadge>
+                    </Table.Cell>
 
-                      <Table.Cell className="relative">
-                        <TimeAgoCard timestamp={execution.created ?? Date.now()} />
-                      </Table.Cell>
-                    </Table.Row>
-                  )
-                })}
-              </Table.Body>
-            </Table.Root>
-            <Pagination
-              totalItems={totalItems}
-              pageSize={pageSize}
-              onPageSizeChange={setPageSize}
-              currentPage={webhookExecutionPage}
-              goToPage={setWebhookExecutionPage}
-            />
-          </div>
+                    <Table.Cell className="relative">
+                      <TimeAgoCard timestamp={execution.created ?? Date.now()} />
+                    </Table.Cell>
+                  </Table.Row>
+                )
+              })}
+            </Table.Body>
+          </Table.Root>
         )}
       </Layout.Vertical>
     </Layout.Vertical>

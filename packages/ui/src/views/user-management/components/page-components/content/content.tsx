@@ -1,6 +1,6 @@
 import { useRef } from 'react'
 
-import { Pagination, Spacer, Text } from '@/components'
+import { Spacer, Text } from '@/components'
 import { useTranslation } from '@/context'
 import { SandboxLayout } from '@/views'
 import { EmptyState } from '@/views/user-management/components/empty-state/empty-state'
@@ -11,11 +11,11 @@ import { useUserManagementStore } from '@/views/user-management/providers/store-
 
 import { ContentProps } from './types'
 
-export const Content = ({ totalItems, pageSize, currentPage, setPage, searchQuery, setSearchQuery }: ContentProps) => {
+export const Content = ({ searchQuery, setSearchQuery }: ContentProps) => {
   const { useAdminListUsersStore } = useUserManagementStore()
   const searchRef = useRef<HTMLInputElement | null>(null)
 
-  const { users, setPageSize } = useAdminListUsersStore()
+  const { users, totalItems } = useAdminListUsersStore()
 
   const { loadingStates } = useStates()
   const { isFetchingUsers } = loadingStates
@@ -46,16 +46,6 @@ export const Content = ({ totalItems, pageSize, currentPage, setPage, searchQuer
       <Actions searchQuery={searchQuery} handleSearchChange={handleSearchChange} ref={searchRef} />
       <Spacer size={4.5} />
       <UsersList searchQuery={searchQuery} handleResetSearch={handleResetSearch} />
-      {/* // TODO: check this condition when backend (useAdminListUsersQuery) will be ready for support query param  */}
-      {!!users?.length && !isFetchingUsers && !searchQuery && (
-        <Pagination
-          totalItems={totalItems}
-          pageSize={pageSize}
-          onPageSizeChange={setPageSize}
-          currentPage={currentPage}
-          goToPage={(pageNum: number) => setPage(pageNum)}
-        />
-      )}
     </SandboxLayout.Content>
   )
 }

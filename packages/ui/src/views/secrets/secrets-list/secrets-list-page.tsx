@@ -1,6 +1,6 @@
 import { FC, useCallback, useMemo, useRef } from 'react'
 
-import { IconV2, Layout, NoData, Pagination, PermissionIdentifier, ResourceType, SecretListFilters } from '@/components'
+import { IconV2, Layout, NoData, PermissionIdentifier, ResourceType, SecretListFilters } from '@/components'
 import { useComponents, useCustomDialogTrigger, useRouterContext, useTranslation } from '@/context'
 import { Page } from '@/views'
 import FilterGroup, { FilterGroupRef } from '@views/components/FilterGroup'
@@ -188,14 +188,13 @@ const SecretListPage: FC<SecretListPageProps> = ({
                 {...props}
                 handleResetFiltersQueryAndPages={handleResetFiltersQueryAndPages}
                 isDirtyList={isDirtyList}
-              />
-
-              <Pagination
-                totalItems={totalItems}
-                pageSize={pageSize}
-                onPageSizeChange={setPageSize}
-                currentPage={currentPage}
-                goToPage={goToPage}
+                paginationProps={{
+                  totalItems: totalItems,
+                  pageSize: pageSize,
+                  onPageSizeChange: setPageSize,
+                  currentPage: currentPage,
+                  goToPage: goToPage
+                }}
               />
             </Layout.Vertical>
           </Layout.Vertical>

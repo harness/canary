@@ -1,6 +1,6 @@
 import { FC, useCallback, useMemo } from 'react'
 
-import { Button, IconV2, Layout, ListActions, NoData, Pagination, SearchInput, Skeleton, Text } from '@/components'
+import { Button, IconV2, Layout, ListActions, NoData, SearchInput, Skeleton, Text } from '@/components'
 import { useRouterContext, useTranslation } from '@/context'
 import { NotFoundPage } from '@views/not-found-page'
 
@@ -30,7 +30,7 @@ const RepoWebhookListPage: FC<RepoWebhookListPageProps> = ({
 }) => {
   const { t } = useTranslation()
   const { navigate, Link } = useRouterContext()
-  const { webhooks, totalItems, pageSize, page, setPage, error, setPageSize } = useWebhookStore()
+  const { webhooks, page, setPage, error } = useWebhookStore()
 
   const handleSearchChange = useCallback(
     (val: string) => {
@@ -134,21 +134,12 @@ const RepoWebhookListPage: FC<RepoWebhookListPageProps> = ({
             }}
           />
         ) : (
-          <div>
-            <RepoWebhookList
-              webhooks={webhooks || []}
-              openDeleteWebhookDialog={openDeleteWebhookDialog}
-              handleEnableWebhook={handleEnableWebhook}
-              toRepoWebhookDetails={toRepoWebhookDetails}
-            />
-            <Pagination
-              totalItems={totalItems}
-              pageSize={pageSize}
-              onPageSizeChange={setPageSize}
-              currentPage={page}
-              goToPage={setPage}
-            />
-          </div>
+          <RepoWebhookList
+            useWebhookStore={useWebhookStore}
+            openDeleteWebhookDialog={openDeleteWebhookDialog}
+            handleEnableWebhook={handleEnableWebhook}
+            toRepoWebhookDetails={toRepoWebhookDetails}
+          />
         )}
       </Layout.Vertical>
     </Layout.Vertical>

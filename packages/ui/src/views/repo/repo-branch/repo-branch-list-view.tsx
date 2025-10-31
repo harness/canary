@@ -1,8 +1,7 @@
 import { FC, useCallback, useMemo } from 'react'
 
-import { Button, Dialog, IconV2, Layout, ListActions, NoData, Pagination, SearchInput, Text } from '@/components'
+import { Button, Dialog, IconV2, Layout, ListActions, NoData, SearchInput, Text } from '@/components'
 import { useTranslation } from '@/context'
-import { createPaginationLinks } from '@/utils'
 import { SandboxLayout } from '@/views'
 import { cn } from '@utils/cn'
 
@@ -19,8 +18,7 @@ export const RepoBranchListView: FC<RepoBranchListViewProps> = ({
   ...routingProps
 }) => {
   const { t } = useTranslation()
-  const { branchList, defaultBranch, xNextPage, xPrevPage, page, setPage, pageSize, setPageSize } =
-    useRepoBranchesStore()
+  const { branchList, page, setPage } = useRepoBranchesStore()
 
   const handleResetFiltersAndPages = () => {
     setPage(1)
@@ -41,15 +39,6 @@ export const RepoBranchListView: FC<RepoBranchListViewProps> = ({
 
   const noBranches = !branchList?.length && !isLoading && !isDirtyList
   const noSearchResults = !branchList?.length && !isLoading && isDirtyList
-
-  const { getPrevPageLink, getNextPageLink } = useMemo(
-    () => createPaginationLinks(xPrevPage, xNextPage, searchQuery),
-    [xPrevPage, xNextPage, searchQuery]
-  )
-
-  const canShowPagination = useMemo(() => {
-    return !isLoading && !!branchList.length
-  }, [isLoading, branchList.length])
 
   const openCreateBranchDialog = useCallback(() => {
     setCreateBranchDialogOpen(true)
@@ -105,31 +94,16 @@ export const RepoBranchListView: FC<RepoBranchListViewProps> = ({
 
             {!noSearchResults && (
               <BranchesList
+                useRepoBranchesStore={useRepoBranchesStore}
                 isLoading={isLoading}
-                defaultBranch={defaultBranch}
-                branches={branchList}
                 setCreateBranchDialogOpen={setCreateBranchDialogOpen}
                 handleResetFiltersAndPages={handleResetFiltersAndPages}
                 onDeleteBranch={onDeleteBranch}
-                isDirtyList={isDirtyList}
+                searchQuery={searchQuery}
                 {...routingProps}
               />
             )}
           </Layout.Grid>
-
-          {canShowPagination && (
-            <Pagination
-              indeterminate
-              hasNext={xNextPage > 0}
-              hasPrevious={xPrevPage > 0}
-              getPrevPageLink={getPrevPageLink}
-              getNextPageLink={getNextPageLink}
-              pageSize={pageSize}
-              onPageSizeChange={setPageSize}
-              currentPage={page}
-              className="!mt-0"
-            />
-          )}
 
           {noSearchResults && (
             <NoData

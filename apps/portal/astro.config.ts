@@ -46,7 +46,15 @@ export default defineConfig({
         },
         {
           label: "Foundations",
-          autogenerate: { directory: "foundations" },
+          items: [
+            "foundations/colors",
+            "foundations/spacings",
+            "foundations/typography",
+            "foundations/icons",
+            "foundations/illustrations",
+            "foundations/logos",
+            "foundations/layout",
+          ],
         },
         {
           label: "Components",
@@ -87,6 +95,15 @@ export default defineConfig({
               label: "Utilities",
               autogenerate: { directory: "components/utilities" },
             },
+          ],
+        },
+        {
+          label: "Customization",
+          items: [
+            "customization/overview",
+            "customization/spacings",
+            "customization/bg-colors",
+            "customization/text-colors",
           ],
         },
       ],

@@ -1,0 +1,149 @@
+---
+title: Background Colors
+description: Theme-aware background colors for building consistent interfaces
+---
+
+import { BackgroundColorPalette } from "@/components/bg-color-palette";
+import { Aside } from "@astrojs/starlight/components";
+import { Text } from "@harnessio/ui/components";
+
+Background colors in our design system are theme-aware and automatically adapt between light and dark modes. All colors use the `bg-cn-` prefix and are designed to work harmoniously together.
+
+## Primary Backgrounds
+
+The foundation of the color system. Use these for main surfaces, cards, and layered interfaces.
+
+<BackgroundColorPalette type="base" variant="primary" client:only />
+
+```tsx
+// Primary background example
+<div className="bg-cn-1 p-cn-md rounded-3">Primary background</div>
+```
+
+## State Colors
+
+Interactive state colors for hover and selection states. These colors indicate user interaction and should be used sparingly.
+
+<BackgroundColorPalette type="base" variant="state" client:only />
+
+```tsx
+// Hover state example
+<button className="bg-cn-1 hover:bg-cn-hover p-cn-md rounded-3">
+  Hover me
+</button>
+
+// Selected state example
+<div className="bg-cn-selected p-cn-md rounded-3">
+  Selected item
+</div>
+```
+
+## Brand Colors
+
+Brand colors represent application's primary brand identity. Each variant (primary, secondary, outline) serves different emphasis levels.
+
+### Primary Brand Color
+
+Adds strong emphasis.
+
+<BackgroundColorPalette type="brand" variant="primary" client:only />
+
+```tsx
+<Button variant="primary">Primary Brand Button</Button>
+
+// Custom brand highlight
+<div className="bg-cn-brand-primary text-cn-1 p-cn-md rounded-3">
+  Brand highlight
+</div>
+```
+
+### Secondary Brand Color
+
+Adds average emphasis.
+
+<BackgroundColorPalette type="brand" variant="secondary" client:only />
+
+```tsx
+// Subtle brand container
+<div className="bg-cn-brand-secondary text-cn-brand p-cn-md rounded-3">
+  Secondary brand element
+</div>
+```
+
+### Outline Brand Color
+
+Adds subtle emphasis.
+
+<BackgroundColorPalette type="brand" variant="outline" client:only />
+
+```tsx
+<Button variant="outline">Outline Brand Button</Button>
+
+// Custom outlined element
+<div className="bg-cn-brand-outline text-cn-brand border border-cn-brand p-cn-md rounded-3">
+  Outlined brand element
+</div>
+```
+
+<Aside type="caution" title="Brand Color States">
+  Brand colors include hover and selected states (`-hover`, `-selected`
+  suffixes). Use these for interactive brand elements to maintain consistent
+  interaction feedback.
+</Aside>
+
+## Semantic Colors
+
+Semantic colors communicate meaning through color. Each color has three variants (primary, secondary, outline) for different emphasis levels.
+
+<Aside type="tip" title="Color Pairing">
+  Always use matching text and background colors together. For example, use
+  `text-cn-success-primary` with `bg-cn-success-primary`. See the [Customization
+  Overview](/customization/overview) for more details.
+</Aside>
+
+<BackgroundColorPalette type="semantic" client:only />
+
+```tsx
+// Success alert
+<div className="bg-cn-success-secondary text-cn-success-secondary p-cn-md rounded-3">
+  Success message
+</div>
+
+// Danger button
+<Button variant="primary" theme="danger">Delete</Button>
+
+// Warning banner
+<div className="bg-cn-warning-outline text-cn-warning-outline border border-cn-warning-outline p-cn-md rounded-3">
+  Warning message
+</div>
+
+// Custom badge with any semantic color
+<span className="bg-cn-purple-primary text-cn-purple-primary px-cn-sm py-cn-xs rounded-full">
+  Category
+</span>
+```
+
+## Opacity Support
+
+All background colors support Tailwind's opacity modifier for creating variations:
+
+```tsx
+// 50% opacity
+<div className="bg-cn-1/50 p-cn-md rounded-3">
+  Semi-transparent background
+</div>
+
+// 20% opacity
+<div className="bg-cn-success-primary/20 p-cn-md rounded-3">
+  Very subtle success background
+</div>
+```
+
+## Quick Reference
+
+| Color Group  | Purpose                  | Example Classes                                                       |
+| ------------ | ------------------------ | --------------------------------------------------------------------- |
+| **Primary**  | Main surfaces and layers | `bg-cn-0`, `bg-cn-1`, `bg-cn-2`, `bg-cn-3`                            |
+| **State**    | Interactive states       | `bg-cn-hover`, `bg-cn-selected`                                       |
+| **Brand**    | Brand identity           | `bg-cn-brand-primary`, `bg-cn-brand-secondary`, `bg-cn-brand-outline` |
+| **Semantic** | Meaningful colors        | `bg-cn-success-*`, `bg-cn-danger-*`, `bg-cn-warning-*`, etc.          |

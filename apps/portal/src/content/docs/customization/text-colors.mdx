@@ -1,0 +1,243 @@
+---
+title: Text Colors
+description: Theme-aware text colors for consistent typography across your application
+---
+
+import { TextColorPalette } from "@/components/text-color-palette";
+import { Aside } from "@astrojs/starlight/components";
+
+Text colors in our design system are theme-aware and automatically adapt between light and dark modes. All colors use the `text-cn-` prefix and work harmoniously with background colors.
+
+## Base Text Colors
+
+Foundation text colors for general content. Lower numbers provide higher contrast for primary content, while higher numbers are used for secondary or less prominent text.
+
+<TextColorPalette type="base" variant="base" client:only />
+
+```tsx
+<Text color="foreground-1">High contrast text for headings</Text>
+<Text color="foreground-2">Default body text</Text>
+<Text color="foreground-3">Subtle text for captions</Text>
+
+// Using classes directly
+<h1 className="text-cn-1">Primary heading</h1>
+<p className="text-cn-2">Body content</p>
+<span className="text-cn-3">Secondary information</span>
+```
+
+**Usage guidelines:**
+
+- `text-cn-1` - Highest contrast for headings and primary content
+- `text-cn-2` - Default text color for body content
+- `text-cn-3` - Lower contrast for secondary or supporting text
+
+## State Colors
+
+Special text colors for specific states and conditions.
+
+<TextColorPalette type="base" variant="state" client:only />
+
+```tsx
+// Disabled state
+<button disabled className="text-cn-disabled">
+  Disabled button
+</button>
+
+// Merged state (for version control UIs)
+<span className="text-cn-merged">Merged</span>
+```
+
+**Usage guidelines:**
+
+- `text-cn-disabled` - Text color for disabled elements
+- `text-cn-merged` - Text color indicating merged state in version control contexts
+
+## Brand Colors
+
+Brand text colors for links and branded text elements.
+
+<TextColorPalette type="base" variant="brand" client:only />
+
+```tsx
+// Brand link
+<a href="#" className="text-cn-brand hover:text-cn-brand-hover">
+  Brand link
+</a>
+
+// Brand text
+<Text className="text-cn-brand">Brand colored text</Text>
+```
+
+**Usage guidelines:**
+
+- `text-cn-brand` - Default brand text color
+- `text-cn-brand-hover` - Brand text color for hover states
+
+## Semantic Text Colors
+
+Semantic text colors communicate meaning and should be paired with corresponding background colors. Success, danger, and warning include a default variant for standalone text usage.
+
+<Aside type="tip" title="Color Pairing">
+  When using semantic text colors with backgrounds, always pair matching
+  variants: `text-cn-success-primary` with `bg-cn-success-primary`,
+  `text-cn-danger-outline` with `bg-cn-danger-outline` and
+  `border-cn-danger-outline`.
+</Aside>
+
+<TextColorPalette type="semantic" client:only />
+
+### Common Use Cases
+
+```tsx
+// Success - standalone text and with backgrounds
+<Text color="success">Operation completed successfully</Text>
+<div className="bg-cn-success-secondary text-cn-success-secondary p-cn-md rounded-3">
+  Success message with background
+</div>
+
+// Danger - standalone text and with backgrounds
+<Text color="danger">Error occurred</Text>
+<div className="bg-cn-danger-primary text-cn-danger-primary p-cn-sm rounded-3">
+  Critical error
+</div>
+
+// Warning - standalone text and with backgrounds
+<Text color="warning">Please review carefully</Text>
+<div className="bg-cn-warning-outline text-cn-warning-outline border border-cn-warning-outline p-cn-md rounded-3">
+  Warning notice
+</div>
+
+// Gray - neutral text
+<span className="text-cn-gray-secondary">Neutral information</span>
+
+// Blue - informational text
+<Text className="text-cn-blue-primary">Information</Text>
+
+// Other colors for categorization and labels
+<span className="text-cn-purple-primary">Category A</span>
+<span className="text-cn-mint-outline">Label B</span>
+```
+
+<Aside type="caution" title="Default vs Variants">
+  Success, danger, and warning colors have both a `DEFAULT` variant (e.g.,
+  `text-cn-success`) for standalone text and specific variants (`primary`,
+  `secondary`, `outline`) for use with backgrounds. Use the default for
+  text-only scenarios, and specific variants when pairing with backgrounds.
+</Aside>
+
+## Opacity Support
+
+Base colors support Tailwind's opacity modifier:
+
+```tsx
+// 50% opacity
+<Text className="text-cn-1/30">Semi-transparent text</Text>
+<Text className="text-cn-2/50">Semi-transparent text</Text>
+<Text className="text-cn-3/70">Semi-transparent text</Text>
+```
+
+## Best Practices
+
+1. **Match contrast levels** - Use `text-cn-1` for high emphasis, `text-cn-2` for body, `text-cn-3` for de-emphasized content
+2. **Pair semantic variants** - When using colored backgrounds, match text and background variants
+3. **Use defaults for standalone text** - Use `text-cn-success`, `text-cn-danger`, `text-cn-warning` for text without backgrounds
+4. **Brand colors for links** - Use `text-cn-brand` with `hover:text-cn-brand-hover` for interactive text
+5. **Consider accessibility** - Ensure sufficient contrast between text and backgrounds
+
+## Common Patterns
+
+### Heading and Body Text
+
+```tsx
+<Layout.Vertical gap="xs">
+  <Text variant="heading-base" className="text-cn-1">
+    Document Title
+  </Text>
+  <Text variant="body-normal" className="text-cn-2">
+    This is the main content with default text color.
+  </Text>
+  <Text variant="caption-normal" className="text-cn-3">
+    Additional metadata or secondary information
+  </Text>
+</Layout.Vertical>
+```
+
+### Semantic Status Indicators
+
+```tsx
+<Layout.Horizontal gap="sm">
+  <Text className="text-cn-success">Available</Text>
+  <Text className="text-cn-warning">Limited</Text>
+  <Text className="text-cn-danger">Unavailable</Text>
+</Layout.Horizontal>
+```
+
+### Branded Link
+
+```tsx
+<a href="/docs" className="text-cn-brand hover:text-cn-brand-hover underline">
+  Read the documentation
+</a>
+```
+
+### Status Badge with Paired Colors
+
+```tsx
+<span className="bg-cn-success-primary text-cn-success-primary px-cn-md py-cn-xs rounded-full">
+  Active
+</span>
+<span className="bg-cn-danger-secondary text-cn-danger-secondary px-cn-md py-cn-xs rounded-full">
+  Failed
+</span>
+```
+
+### Alert with Proper Pairing
+
+```tsx
+<div className="bg-cn-warning-secondary text-cn-warning-secondary border border-cn-warning-outline p-cn-md rounded-3">
+  <Text variant="body-strong" color="inherit">
+    Attention Required
+  </Text>
+  <Text variant="caption-normal" color="inherit">
+    Please review the following items before proceeding.
+  </Text>
+</div>
+```
+
+## Text Component Integration
+
+The Text component provides a `color` prop that maps to these text colors:
+
+```tsx
+// Primary text colors
+<Text color="foreground-1">Highest contrast</Text>
+<Text color="foreground-2">Default</Text>
+<Text color="foreground-3">Lower contrast</Text>
+
+// State colors
+<Text color="state-disabled">Disabled</Text>
+
+// Semantic colors (default variants)
+<Text color="success">Success text</Text>
+<Text color="danger">Danger text</Text>
+<Text color="warning">Warning text</Text>
+```
+
+For variant-specific semantic colors, use className:
+
+```tsx
+<Text className="text-cn-success-primary">Primary success</Text>
+<Text className="text-cn-danger-outline">Outline danger</Text>
+```
+
+## Quick Reference
+
+| Color Group                 | Purpose                      | Available Classes                                                                 |
+| --------------------------- | ---------------------------- | --------------------------------------------------------------------------------- |
+| **Base**                    | General text content         | `text-cn-1`, `text-cn-2`, `text-cn-3`                                             |
+| **State**                   | Specific states              | `text-cn-disabled`, `text-cn-merged`                                              |
+| **Brand**                   | Brand and links              | `text-cn-brand`, `text-cn-brand-hover`                                            |
+| **Semantic (with default)** | Standalone semantic text     | `text-cn-success`, `text-cn-danger`, `text-cn-warning`                            |
+| **Semantic (variants)**     | A set of color with variants | `text-cn-{color}-primary`, `text-cn-{color}-secondary`, `text-cn-{color}-outline` |
+
+**Semantic colors**: success, danger, warning, gray, blue, purple, brown, cyan, indigo, lime, mint, orange, pink, violet

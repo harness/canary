@@ -1,0 +1,275 @@
+---
+title: Overview
+description: Learn how to customize components using Tailwind CSS with our design system tokens
+---
+
+import { DocsPage } from "@/components/docs-page";
+import { Aside } from "@astrojs/starlight/components";
+
+Our design system is built on Tailwind CSS with minimal adjustments. We preserve all standard Tailwind utilities while adding custom tokens through a `cn-` prefix for design system-specific values like colors, spacing, and typography.
+
+## How It Works
+
+The design system extends Tailwind's default configuration rather than replacing it. This means you have access to both our design system tokens and all standard Tailwind utilities.
+
+```tsx
+// ✅ Using design system tokens
+<Layout.Horizontal className="bg-cn-1 text-cn-2 p-cn-md">
+  <Text>Content</Text>
+</Layout.Horizontal>
+
+// ✅ Using standard Tailwind utilities
+<Layout.Horizontal className="items-center justify-between">
+  <Text>Content</Text>
+</Layout.Horizontal>
+
+// ✅ Combining both
+<Layout.Horizontal className="items-center gap-cn-sm bg-cn-2 rounded-3">
+  <Text>Content</Text>
+</Layout.Horizontal>
+```
+
+## Customizing Components
+
+All components accept a `className` prop for customization. Use design system tokens for theme-aware styling and standard Tailwind utilities for layout and positioning.
+
+<DocsPage.ComponentExample
+  client:only
+  code={`<Layout.Vertical gap="md" className="min-w-[400px]">
+  {/* Customizing Button with spacing and width */}
+  <Button className="w-full">
+    Full Width Button
+  </Button>
+
+{/* Combining design tokens with Tailwind utilities */}
+
+<Button variant="secondary" className="px-cn-xl rounded-full hover:shadow-3">
+  Rounded Button with Custom Padding
+</Button>
+
+{/* Custom layout with buttons */}
+
+<Layout.Horizontal gap="sm" className="justify-end">
+  <Button variant="outline" size="sm">
+    Cancel
+  </Button>
+  <Button size="sm" className="!min-w-36">
+    Confirm
+  </Button>
+</Layout.Horizontal>
+
+{/* Button with custom text styling */}
+
+  <Button className="uppercase self-center">
+    Styled Text Button
+  </Button>
+</Layout.Vertical>`}
+/>
+
+## Color Customization
+
+Our color system provides semantic colors optimized for light and dark modes. Use design system color tokens to ensure proper theme support.
+
+### Semantic Color Sets
+
+<DocsPage.ComponentExample
+  client:only
+  code={`<Layout.Vertical gap="md" className="min-w-[400px]">
+  {/* Primary variants - solid backgrounds */}
+  <Layout.Horizontal gap="sm">
+    <Layout.Horizontal className="bg-cn-success-primary text-cn-success-primary px-cn-md py-cn-sm rounded-3">
+      <Text color="inherit">Success Primary</Text>
+    </Layout.Horizontal>
+    <Layout.Horizontal className="bg-cn-danger-primary text-cn-danger-primary px-cn-md py-cn-sm rounded-3">
+      <Text color="inherit">Danger Primary</Text>
+    </Layout.Horizontal>
+    <Layout.Horizontal className="bg-cn-warning-primary text-cn-warning-primary px-cn-md py-cn-sm rounded-3">
+      <Text color="inherit">Warning Primary</Text>
+    </Layout.Horizontal>
+  </Layout.Horizontal>
+
+{/* Secondary variants - subtle backgrounds */}
+
+<Layout.Horizontal gap="sm">
+  <Layout.Horizontal className="bg-cn-success-secondary text-cn-success-secondary px-cn-md py-cn-sm rounded-3">
+    <Text color="inherit">Success Secondary</Text>
+  </Layout.Horizontal>
+  <Layout.Horizontal className="bg-cn-danger-secondary text-cn-danger-secondary px-cn-md py-cn-sm rounded-3">
+    <Text color="inherit">Danger Secondary</Text>
+  </Layout.Horizontal>
+  <Layout.Horizontal className="bg-cn-warning-secondary text-cn-warning-secondary px-cn-md py-cn-sm rounded-3">
+    <Text color="inherit">Warning Secondary</Text>
+  </Layout.Horizontal>
+</Layout.Horizontal>
+
+{/* Outline variants - borders with transparent backgrounds */}
+
+  <Layout.Horizontal gap="sm">
+    <Layout.Horizontal className="bg-cn-success-outline text-cn-success-outline border border-cn-success-outline px-cn-md py-cn-sm rounded-3">
+      <Text color="inherit">Success Outline</Text>
+    </Layout.Horizontal>
+    <Layout.Horizontal className="bg-cn-danger-outline text-cn-danger-outline border border-cn-danger-outline px-cn-md py-cn-sm rounded-3">
+      <Text color="inherit">Danger Outline</Text>
+    </Layout.Horizontal>
+    <Layout.Horizontal className="bg-cn-warning-outline text-cn-warning-outline border border-cn-warning-outline px-cn-md py-cn-sm rounded-3">
+      <Text color="inherit">Warning Outline</Text>
+    </Layout.Horizontal>
+  </Layout.Horizontal>
+</Layout.Vertical>`}
+/>
+
+<Aside type="caution" title="Important">
+  Always use matching text, background, and border classes together (e.g.,
+  `text-cn-success-primary` with `bg-cn-success-primary`). Mixing variants (like
+  `text-cn-success-primary` with `bg-cn-success-secondary`) will produce
+  incorrect visual results.
+</Aside>
+
+## Practical Examples
+
+### Custom Card component
+
+<DocsPage.ComponentExample
+  client:only
+  code={`<Layout.Vertical gap="md" className="min-w-[400px]">
+  <Layout.Vertical className="bg-cn-1 rounded-3 shadow-2 border border-cn-3 p-cn-lg">
+    <Text variant="heading-base" className="mb-cn-sm">Card Title</Text>
+    <Text variant="body-normal" color="foreground-2" className="mb-cn-md">
+      This card combines design system tokens with standard Tailwind utilities
+      for a polished, consistent appearance.
+    </Text>
+    <Layout.Horizontal gap="sm">
+      <Button variant="primary" size="sm">Action</Button>
+      <Button variant="secondary" size="sm">Cancel</Button>
+    </Layout.Horizontal>
+  </Layout.Vertical>
+</Layout.Vertical>`}
+/>
+
+### Custom Alert Component
+
+<DocsPage.ComponentExample
+  client:only
+  code={`<Layout.Vertical gap="md" className="min-w-[400px]">
+  <Layout.Horizontal className="bg-cn-success-secondary text-cn-success-secondary border border-cn-success-outline rounded-3 p-cn-md items-start gap-cn-sm">
+    <IconV2 name="check-circle" className="flex-shrink-0 mt-0.5" />
+    <Layout.Vertical gap="3xs">
+      <Text variant="body-strong" color="inherit">Success</Text>
+      <Text variant="caption-normal" color="inherit" className="opacity-90">
+        Your changes have been saved successfully.
+      </Text>
+    </Layout.Vertical>
+  </Layout.Horizontal>
+
+  <Layout.Horizontal className="bg-cn-danger-secondary text-cn-danger-secondary border border-cn-danger-outline rounded-3 p-cn-md items-start gap-cn-sm">
+    <IconV2 name="exclamation-triangle" className="flex-shrink-0 mt-0.5" />
+    <Layout.Vertical gap="3xs">
+      <Text variant="body-strong" color="inherit">Error</Text>
+      <Text variant="caption-normal" color="inherit" className="opacity-90">
+        There was a problem processing your request.
+      </Text>
+    </Layout.Vertical>
+  </Layout.Horizontal>
+</Layout.Vertical>`}
+/>
+
+### Custom Button Layouts
+
+<DocsPage.ComponentExample
+  client:only
+  code={`<Layout.Vertical gap="xl" className="min-w-[400px]">
+  {/* Button group with custom spacing */}
+  <Layout.Horizontal gap="sm" className="justify-between items-center">
+    <Text variant="heading-base">Actions</Text>
+    <Layout.Horizontal gap="xs">
+      <Button size="sm" iconOnly ignoreIconOnlyTooltip>
+        <IconV2 name="search" skipSize />
+      </Button>
+      <Button variant="outline" size="sm">Options</Button>
+      <Button variant="primary" size="sm">Save</Button>
+    </Layout.Horizontal>
+  </Layout.Horizontal>
+
+  <Layout.Horizontal gap="sm">
+    <Button className="shadow-4 hover:shadow-5 transition-shadow">
+      With Shadow
+    </Button>
+    <Button variant="outline" className="border-2 border-cn-brand">
+      Thick Border
+    </Button>
+  </Layout.Horizontal>
+</Layout.Vertical>`}
+/>
+
+## Standard Tailwind Utilities
+
+All standard Tailwind utilities work alongside our design system. Use them for layout, positioning, responsive design, and state variants.
+
+```tsx
+// Layout utilities
+<Layout.Horizontal className="flex-col md:flex-row items-center justify-between">
+  <Text>Content</Text>
+</Layout.Horizontal>
+
+// Responsive design
+<Layout.Horizontal className="w-full md:w-1/2 lg:w-1/3">
+  <Text>Content</Text>
+</Layout.Horizontal>
+
+// State variants
+<Button className="hover:opacity-80 focus:ring-2 active:scale-95">
+  Interactive Button
+</Button>
+
+// Grid utilities
+<Layout.Grid className="grid-cols-1 md:grid-cols-2 lg:grid-cols-3">
+  <Text>Item</Text>
+</Layout.Grid>
+```
+
+### Arbitrary Values
+
+<Aside type="caution" title="Use Sparingly">
+  While Tailwind supports arbitrary values like `w-[347px]` or `bg-[#bada55]`,
+  use them only when design system tokens don't fit your needs. **Never use
+  arbitrary values for colors** as this creates visual inconsistency and breaks
+  theme support. Always prefer design system tokens for maintainability and
+  consistency.
+</Aside>
+
+```tsx
+// ⚠️ Use only when necessary
+<Layout.Horizontal className="w-[347px] h-[52px]">
+  <Text>Fixed dimensions</Text>
+</Layout.Horizontal>
+
+// ❌ Never do this - breaks theming
+<Button className="bg-[#ff0000] text-[#ffffff]">
+  Bad Practice
+</Button>
+
+// ✅ Use design tokens instead
+<Button className="bg-cn-danger-primary text-cn-danger-primary">
+  Good Practice
+</Button>
+```
+
+## Best Practices
+
+1. **Use design system tokens** for colors, spacing, typography, and borders to ensure consistency and proper theme support
+2. **Use standard Tailwind** for layout (`flex`, `grid`), positioning, and responsive utilities (`md:`, `lg:`)
+3. **Always match semantic color variants** (primary with primary, outline with outline)
+4. **Leverage Layout components** instead of raw `div` elements for consistent spacing and structure
+5. **Prefer Text component** for text content to maintain typography consistency
+6. **Use opacity utilities** for color variations: `bg-cn-2/50` for 50% opacity
+7. **Avoid arbitrary color values** to maintain visual consistency across themes
+
+## Resources
+
+- [Tailwind CSS Documentation](https://tailwindcss.com/docs) - Complete guide to all Tailwind utilities
+- [Tailwind CSS IntelliSense](https://marketplace.visualstudio.com/items?itemName=bradlc.vscode-tailwindcss) - VS Code extension for autocomplete
+- [Tailwind CSS Cheat Sheet](https://nerdcave.com/tailwind-cheat-sheet) - Quick reference for all utilities
+
+## Next Steps
+
+Explore specific component documentation to see how these customization patterns are applied in practice. Each component page includes live examples you can modify and experiment with.

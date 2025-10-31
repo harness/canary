@@ -139,7 +139,7 @@ const ItemHeader: FC<ItemHeaderProps> = memo(
     return (
       <Layout.Horizontal className="flex-1" justify="between">
         <Text asChild variant="body-single-line-normal" color="foreground-3">
-          <Layout.Horizontal className="flex-1" gap="2xs" align="center" wrap="wrap">
+          <Layout.Horizontal className="flex-1" gap="2xs" align="center" wrap="nowrap">
             {/**
              * ============
              * Avatar and Name
@@ -162,7 +162,7 @@ const ItemHeader: FC<ItemHeaderProps> = memo(
             {timestamp && (
               <>
                 <Separator orientation="vertical" className="mx-cn-4xs h-cn-md" />
-                <TimeAgoCard timestamp={timestamp} />
+                <TimeAgoCard triggerClassName="shrink-0" timestamp={timestamp} />
               </>
             )}
             {selectStatus && (

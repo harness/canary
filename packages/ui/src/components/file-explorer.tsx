@@ -127,7 +127,7 @@ function FolderItem({
   )
 
   return (
-    <Accordion.Item value={value} className="border-none">
+    <Accordion.Item value={value} className="border-none group">
       <Layout.Flex
         className={cn('cn-file-tree-folder-item cn-file-tree-item-wrapper pl-0', {
           'cn-file-tree-item-active': isActive

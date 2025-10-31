@@ -46,7 +46,8 @@ export default {
       width: 'var(--cn-button-size-3xs)',
 
       '.cn-accordion-trigger-indicator': {
-        '@apply flex mt-0 -rotate-90 self-center data-[state=open]:-rotate-0 pointer-events-none': ''
+        '@apply flex mt-0 self-center pointer-events-none group-data-[state=open]:rotate-0 group-data-[state=closed]:-rotate-90':
+          ''
       }
     },
     '&-folder-item': {

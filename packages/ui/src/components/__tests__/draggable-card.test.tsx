@@ -1,6 +1,6 @@
+import * as TooltipPrimitive from '@radix-ui/react-tooltip'
 import { render, RenderResult, screen } from '@testing-library/react'
 import { vi } from 'vitest'
-import * as TooltipPrimitive from '@radix-ui/react-tooltip'
 
 import { DraggableCard, DraggableCardList } from '../draggable-card'
 
@@ -313,4 +313,3 @@ describe('DraggableCard', () => {
     })
   })
 })
-

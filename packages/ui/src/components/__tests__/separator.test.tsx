@@ -70,7 +70,7 @@ describe('Separator', () => {
 
   describe('Decorative Prop', () => {
     test('should be decorative by default', () => {
-      const { container} = renderComponent()
+      const { container } = renderComponent()
 
       const separator = container.querySelector('.bg-cn-separator-subtle')
       expect(separator).toBeInTheDocument()
@@ -172,4 +172,3 @@ describe('Separator', () => {
     })
   })
 })
-

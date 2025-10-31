@@ -36,11 +36,7 @@ describe('NoData', () => {
   describe('Primary button', () => {
     test('should render primary button', () => {
       render(
-        <NoData
-          title="No Items"
-          description={['Empty']}
-          primaryButton={{ label: 'Create Item', onClick: vi.fn() }}
-        />
+        <NoData title="No Items" description={['Empty']} primaryButton={{ label: 'Create Item', onClick: vi.fn() }} />
       )
       expect(screen.getByRole('button', { name: /Create Item/i })).toBeInTheDocument()
     })
@@ -71,11 +67,7 @@ describe('NoData', () => {
 
     test('should render primary button as link when to prop is provided', () => {
       render(
-        <NoData
-          title="No Items"
-          description={['Empty']}
-          primaryButton={{ label: 'Create Item', to: '/create' }}
-        />
+        <NoData title="No Items" description={['Empty']} primaryButton={{ label: 'Create Item', to: '/create' }} />
       )
       const link = screen.getByText('Create Item').closest('a')
       expect(link).toBeInTheDocument()
@@ -97,11 +89,7 @@ describe('NoData', () => {
   describe('Secondary button', () => {
     test('should render secondary button', () => {
       render(
-        <NoData
-          title="No Items"
-          description={['Empty']}
-          secondaryButton={{ label: 'Learn More', onClick: vi.fn() }}
-        />
+        <NoData title="No Items" description={['Empty']} secondaryButton={{ label: 'Learn More', onClick: vi.fn() }} />
       )
       expect(screen.getByRole('button', { name: /Learn More/i })).toBeInTheDocument()
     })
@@ -120,20 +108,14 @@ describe('NoData', () => {
 
     test('should render secondary button with outline variant by default', () => {
       render(
-        <NoData
-          title="No Items"
-          description={['Empty']}
-          secondaryButton={{ label: 'Learn More', onClick: vi.fn() }}
-        />
+        <NoData title="No Items" description={['Empty']} secondaryButton={{ label: 'Learn More', onClick: vi.fn() }} />
       )
       const button = screen.getByRole('button', { name: /Learn More/i })
       expect(button).toHaveClass('cn-button-outline')
     })
 
     test('should render secondary button as link when to prop is provided', () => {
-      render(
-        <NoData title="No Items" description={['Empty']} secondaryButton={{ label: 'Learn More', to: '/docs' }} />
-      )
+      render(<NoData title="No Items" description={['Empty']} secondaryButton={{ label: 'Learn More', to: '/docs' }} />)
       const link = screen.getByText('Learn More').closest('a')
       expect(link).toBeInTheDocument()
     })
@@ -201,11 +183,7 @@ describe('NoData', () => {
 
     test('should render children alongside buttons', () => {
       render(
-        <NoData
-          title="No Items"
-          description={['Empty']}
-          primaryButton={{ label: 'Create', onClick: vi.fn() }}
-        >
+        <NoData title="No Items" description={['Empty']} primaryButton={{ label: 'Create', onClick: vi.fn() }}>
           <button>Custom Action</button>
         </NoData>
       )
@@ -230,7 +208,9 @@ describe('NoData', () => {
     })
 
     test('should use custom image size', () => {
-      const { container } = render(<NoData title="Empty" description={['No data']} imageName="no-data-folder" imageSize={200} />)
+      const { container } = render(
+        <NoData title="Empty" description={['No data']} imageName="no-data-folder" imageSize={200} />
+      )
       // Illustration component renders with custom size
       expect(container).toBeInTheDocument()
     })
@@ -238,12 +218,7 @@ describe('NoData', () => {
 
   describe('Multiple description lines', () => {
     test('should render all description lines', () => {
-      render(
-        <NoData
-          title="No Items"
-          description={['Line 1', 'Line 2', 'Line 3']}
-        />
-      )
+      render(<NoData title="No Items" description={['Line 1', 'Line 2', 'Line 3']} />)
       expect(screen.getByText('Line 1')).toBeInTheDocument()
       expect(screen.getByText('Line 2')).toBeInTheDocument()
       expect(screen.getByText('Line 3')).toBeInTheDocument()
@@ -258,4 +233,3 @@ describe('NoData', () => {
     })
   })
 })
-

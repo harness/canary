@@ -1,7 +1,7 @@
+import * as TooltipPrimitive from '@radix-ui/react-tooltip'
 import { render, RenderResult, screen } from '@testing-library/react'
 import userEvent from '@testing-library/user-event'
 import { vi } from 'vitest'
-import * as TooltipPrimitive from '@radix-ui/react-tooltip'
 
 import { ToggleGroup } from '../toggle-group'
 
@@ -363,7 +363,7 @@ describe('ToggleGroup', () => {
       // Icon-only has aria-label
       const iconButton = screen.getByRole('radio', { name: 'Star' })
       expect(iconButton).toBeInTheDocument()
-      
+
       expect(screen.getByText('Text Only')).toBeInTheDocument()
       expect(screen.getByText('With Icon')).toBeInTheDocument()
     })

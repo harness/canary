@@ -1,7 +1,7 @@
+import * as TooltipPrimitive from '@radix-ui/react-tooltip'
 import { render, RenderResult, screen } from '@testing-library/react'
 import userEvent from '@testing-library/user-event'
 import { vi } from 'vitest'
-import * as TooltipPrimitive from '@radix-ui/react-tooltip'
 
 import { Favorite } from '../favorite'
 
@@ -221,4 +221,3 @@ describe('Favorite', () => {
     })
   })
 })
-

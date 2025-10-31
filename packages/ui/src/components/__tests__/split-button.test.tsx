@@ -1,7 +1,7 @@
+import * as TooltipPrimitive from '@radix-ui/react-tooltip'
 import { render, RenderResult, screen } from '@testing-library/react'
 import userEvent from '@testing-library/user-event'
 import { vi } from 'vitest'
-import * as TooltipPrimitive from '@radix-ui/react-tooltip'
 
 import { SplitButton } from '../split-button'
 
@@ -272,12 +272,7 @@ describe('SplitButton', () => {
 
       render(
         <TestWrapper>
-          <SplitButton
-            ref={ref}
-            handleButtonClick={vi.fn()}
-            options={mockOptions}
-            handleOptionChange={vi.fn()}
-          >
+          <SplitButton ref={ref} handleButtonClick={vi.fn()} options={mockOptions} handleOptionChange={vi.fn()}>
             Action
           </SplitButton>
         </TestWrapper>
@@ -295,9 +290,7 @@ describe('SplitButton', () => {
     })
 
     test('should accept options with descriptions', () => {
-      const optionsWithDesc = [
-        { value: 'opt1', label: 'Option 1', description: 'Description 1' }
-      ]
+      const optionsWithDesc = [{ value: 'opt1', label: 'Option 1', description: 'Description 1' }]
 
       renderComponent({ options: optionsWithDesc })
 
@@ -318,4 +311,3 @@ describe('SplitButton', () => {
     })
   })
 })
-

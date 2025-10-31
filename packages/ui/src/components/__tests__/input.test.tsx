@@ -19,15 +19,16 @@ describe('Input', () => {
   test('should render with label', () => {
     renderComponent({ label: 'Email', id: 'email' })
 
-    const label = screen.getByText('Email')
+    const labelText = screen.getByText('Email')
+    const label = labelText.closest('label')
     expect(label).toBeInTheDocument()
-    expect(label.tagName).toBe('LABEL')
+    expect(label?.tagName).toBe('LABEL')
   })
 
   test('should associate label with input using htmlFor', () => {
     renderComponent({ label: 'Email', id: 'email-input' })
 
-    const label = screen.getByText('Email')
+    const label = screen.getByText('Email').closest('label')
     const input = screen.getByRole('textbox')
 
     expect(label).toHaveAttribute('for', 'email-input')
@@ -113,7 +114,7 @@ describe('Input', () => {
     expect(input).toHaveAttribute('type', 'email')
 
     rerender(<Input type="password" />)
-    input = screen.getByLabelText('', { selector: 'input[type="password"]' })
+    input = document.querySelector('input[type="password"]') as HTMLInputElement
     expect(input).toHaveAttribute('type', 'password')
   })
 

@@ -1,7 +1,7 @@
+import * as TooltipPrimitive from '@radix-ui/react-tooltip'
 import { render, RenderResult, screen } from '@testing-library/react'
 import userEvent from '@testing-library/user-event'
 import { vi } from 'vitest'
-import * as TooltipPrimitive from '@radix-ui/react-tooltip'
 
 import { FileToolbarActions } from '../file-toolbar-actions'
 
@@ -224,4 +224,3 @@ describe('FileToolbarActions', () => {
     })
   })
 })
-

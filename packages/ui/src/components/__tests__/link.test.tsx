@@ -5,7 +5,11 @@ import { vi } from 'vitest'
 import { Link } from '../link'
 
 const renderComponent = (props: Partial<React.ComponentProps<typeof Link>> = {}): RenderResult => {
-  return render(<Link to="/" {...props}>Link Text</Link>)
+  return render(
+    <Link to="/" {...props}>
+      Link Text
+    </Link>
+  )
 }
 
 describe('Link', () => {
@@ -317,4 +321,3 @@ describe('Link', () => {
     })
   })
 })
-

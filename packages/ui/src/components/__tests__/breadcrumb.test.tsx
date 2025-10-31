@@ -264,7 +264,6 @@ describe('Breadcrumb', () => {
     })
   })
 
-
   describe('Complete breadcrumb navigation', () => {
     test('should render full breadcrumb navigation', () => {
       render(
@@ -309,7 +308,5 @@ describe('Breadcrumb', () => {
       expect(screen.getByText('More')).toBeInTheDocument()
       expect(screen.getByText('Current')).toBeInTheDocument()
     })
-
   })
 })
-

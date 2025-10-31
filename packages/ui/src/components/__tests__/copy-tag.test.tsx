@@ -1,7 +1,7 @@
 import { render, RenderResult, screen, waitFor } from '@testing-library/react'
 import userEvent from '@testing-library/user-event'
-import { vi } from 'vitest'
 import copy from 'clipboard-copy'
+import { vi } from 'vitest'
 
 import { CopyTag } from '../copy-tag'
 
@@ -239,4 +239,3 @@ describe('CopyTag', () => {
     })
   })
 })
-

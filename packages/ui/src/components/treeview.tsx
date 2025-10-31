@@ -198,14 +198,14 @@ const Folder = forwardRef<HTMLDivElement, FolderProps & React.HTMLAttributes<HTM
           <div className="gap-x-cn-xs flex w-full justify-between">
             <div className="gap-x-cn-xs flex">
               <div className="flex size-5 flex-none items-center justify-center">{getStatusIcon(status)}</div>
-              <span className="text-cn-1 mt-cn-4xs text-left leading-tight">
+              <span className="text-cn-1 mt-cn-4xs select-none text-left leading-tight">
                 {element}&nbsp;<span className="text-cn-3">({React.Children.count(children)})</span>
               </span>
             </div>
-            <span className="text-cn-2 flex-none">{duration ?? '--'}</span>
+            <span className="text-cn-2 flex-none select-none">{duration ?? '--'}</span>
           </div>
         </AccordionPrimitive.Trigger>
-        <AccordionPrimitive.Content className="data-[state=closed]:animate-accordion-up data-[state=open]:animate-accordion-down px-cn-lg relative h-full overflow-visible text-cn-size-2">
+        <AccordionPrimitive.Content className="data-[state=closed]:animate-accordion-up data-[state=open]:animate-accordion-down px-cn-lg text-cn-size-2 relative h-full overflow-visible">
           <AccordionPrimitive.Root
             dir={direction}
             type="multiple"
@@ -284,9 +284,9 @@ const File = forwardRef<
           <div className="pl-cn-md gap-x-cn-xs relative flex w-full justify-between">
             <div className="gap-x-cn-xs flex">
               <div className="flex size-5 flex-none items-center justify-center">{getStatusIcon(status)}</div>
-              <span className="text-cn-1 mt-cn-4xs text-left leading-tight">{children}</span>
+              <span className="text-cn-1 mt-cn-4xs select-none text-left leading-tight">{children}</span>
             </div>
-            <span className="text-cn-2 flex-none">{duration ?? '--'}</span>
+            <span className="text-cn-2 flex-none select-none">{duration ?? '--'}</span>
           </div>
         </AccordionPrimitive.Trigger>
       </AccordionPrimitive.Item>

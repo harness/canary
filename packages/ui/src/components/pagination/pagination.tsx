@@ -54,7 +54,7 @@ export function Pagination({
       <>
         <Layout.Horizontal align="center" gap="xs">
           <Select options={options} value={pageSize} onChange={handleChangePageSize} size="sm" />
-          <Text>{t('component:pagination.itemsPerPage', 'items per page')}</Text>
+          <Text className="select-none">{t('component:pagination.itemsPerPage', 'items per page')}</Text>
         </Layout.Horizontal>
 
         {currentPage && <Separator orientation="vertical" className="h-8" />}
@@ -68,13 +68,13 @@ export function Pagination({
         {renderItemsPerPageBlock()}
 
         {totalPages && currentPage && (
-          <Text>
+          <Text className="select-none">
             {t('component:pagination.pageOf', `Page ${currentPage} of ${totalPages}`, { currentPage, totalPages })}
           </Text>
         )}
 
         {!totalPages && currentPage && (
-          <Text>{t('component:pagination.page', `Page ${currentPage}`, { currentPage })}</Text>
+          <Text className="select-none">{t('component:pagination.page', `Page ${currentPage}`, { currentPage })}</Text>
         )}
       </Layout.Horizontal>
 

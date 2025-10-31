@@ -111,7 +111,8 @@ export default {
       display: 'flex',
       justifyContent: 'flex-end',
       alignItems: 'center',
-      gap: 'var(--cn-spacing-1-half)'
+      gap: 'var(--cn-spacing-1-half)',
+      userSelect: 'none'
     },
 
     '&-icon': {
@@ -128,6 +129,10 @@ export default {
 
     '&-description-wrap': {
       display: 'grid'
+    },
+
+    '&-subtitle': {
+      userSelect: 'none'
     },
 
     '&-root': {

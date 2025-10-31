@@ -48,7 +48,7 @@ export default {
     '.cn-avatar-image': {
       borderRadius: 'inherit',
       boxShadow: 'inherit',
-      '@apply h-full w-full': ''
+      '@apply h-full w-full select-none': ''
     },
 
     '.cn-avatar-fallback': {

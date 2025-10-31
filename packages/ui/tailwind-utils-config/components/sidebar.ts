@@ -103,6 +103,7 @@ export default {
         transform: 'max(0.6, scale(var(--sidebar-group-label-scale)))',
         justifySelf: 'start',
         overflow: 'hidden',
+        userSelect: 'none',
         '@apply duration-150 transition-[max-height,padding,opacity,transform] ease-linear': ''
       },
 
@@ -296,12 +297,14 @@ export default {
 
         '&-title': {
           maxWidth: '100%',
-          gridArea: 'title'
+          gridArea: 'title',
+          userSelect: 'none'
         },
 
         '&-description': {
           maxWidth: '100%',
-          gridArea: 'description'
+          gridArea: 'description',
+          userSelect: 'none'
         },
 
         '&-badge': {

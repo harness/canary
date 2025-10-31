@@ -18,7 +18,7 @@ function Calendar({ className, classNames, showOutsideDays = true, ...props }: C
         months: 'flex flex-col sm:flex-row space-y-cn-md sm:space-x-cn-md sm:space-y-0',
         month: 'space-y-cn-md',
         caption: 'flex justify-center pt-cn-3xs relative items-center',
-        caption_label: 'text-cn-size-2 font-medium',
+        caption_label: 'text-cn-size-2 font-medium select-none',
         nav: 'space-x-cn-3xs flex items-center',
         nav_button: cn(
           buttonVariants({ variant: 'outline' }),
@@ -28,7 +28,7 @@ function Calendar({ className, classNames, showOutsideDays = true, ...props }: C
         nav_button_next: 'absolute right-cn-3xs',
         table: 'w-full border-collapse space-y-cn-3xs',
         head_row: 'flex',
-        head_cell: 'text-cn-3 rounded-cn-3 w-8 font-normal text-cn-size-1',
+        head_cell: 'text-cn-3 rounded-cn-3 w-8 font-normal text-cn-size-1 select-none',
         row: 'flex w-full mt-cn-xs',
         cell: cn(
           'relative p-0 text-center text-cn-size-2 focus-within:relative focus-within:z-20 [&:has([aria-selected])]:bg-cn-3 [&:has([aria-selected].day-outside)]:bg-cn-3/50 [&:has([aria-selected].day-range-end)]:rounded-r-cn-3',

@@ -77,13 +77,13 @@ export default {
         width: '100%',
         textAlign: 'start',
         color: 'var(--cn-text-1)',
-        '@apply font-body-strong': ''
+        '@apply font-body-strong select-none': ''
       },
 
       '&-suffix': {
         color: 'var(--cn-text-3)',
         whiteSpace: 'nowrap',
-        '@apply font-caption-single-line-normal': ''
+        '@apply font-caption-single-line-normal select-none': ''
       },
 
       '&-indicator': {

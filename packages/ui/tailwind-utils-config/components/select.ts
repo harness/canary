@@ -73,7 +73,7 @@ export default {
     },
 
     '&-trigger': {
-      '@apply w-full flex items-center justify-between truncate': '',
+      '@apply w-full flex items-center justify-between truncate select-none': '',
       padding: 'var(--cn-input-md-py) var(--cn-input-md-pr) var(--cn-input-md-py) var(--cn-input-md-pl)',
       gap: 'var(--cn-input-md-gap)'
     },

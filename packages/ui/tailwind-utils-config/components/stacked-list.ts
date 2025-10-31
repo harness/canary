@@ -77,7 +77,7 @@ export default {
       },
 
       '&-title': {
-        '@apply min-w-0': ''
+        '@apply min-w-0 select-none': ''
       }
     }
   }

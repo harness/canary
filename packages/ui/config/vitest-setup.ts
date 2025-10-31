@@ -28,6 +28,7 @@ vi.mock('@/context', async () => {
     usePortal: () => ({ portalContainer: document.body }),
     useRouterContext: () => ({
       Link: 'a',
+      NavLink: 'a', // Mock NavLink as a simple 'a' tag
       navigate: vi.fn()
     })
   }

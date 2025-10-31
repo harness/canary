@@ -48,7 +48,7 @@ const ViewSettings: FC<ViewSettingsProps> = ({ routes }) => {
   }
 
   return (
-    <aside className={clsx(css.viewSettings, 'shadow-4')} data-show={showSettings ? 'show' : 'hide'}>
+    <aside className={clsx(css.viewSettings, 'shadow-cn-4')} data-show={showSettings ? 'show' : 'hide'}>
       <Button
         variant="link"
         size="sm"

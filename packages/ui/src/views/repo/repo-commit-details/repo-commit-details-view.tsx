@@ -48,7 +48,7 @@ export const RepoCommitDetailsView: FC<RepoCommitDetailsViewProps> = ({
             </Text>
           </Text>
 
-          <div className="border-cn-3 rounded-3 overflow-hidden border">
+          <div className="border-cn-3 rounded-cn-3 overflow-hidden border">
             <Layout.Grid
               flow="column"
               justify="between"

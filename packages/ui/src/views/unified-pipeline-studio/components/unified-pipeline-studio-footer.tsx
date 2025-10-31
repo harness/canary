@@ -49,7 +49,7 @@ export const UnifiedPipelineStudioFooter: React.FC<PipelineStudioFooterProps> = 
           onClick={() => {
             togglePane?.()
           }}
-          className="gap-cn-xs rounded-3 px-cn-xs py-cn-2xs hover:bg-cn-brand-hover/10 flex h-full cursor-pointer duration-150 ease-in-out"
+          className="gap-cn-xs rounded-cn-3 px-cn-xs py-cn-2xs hover:bg-cn-brand-hover/10 flex h-full cursor-pointer duration-150 ease-in-out"
         >
           <div className="gap-cn-2xs flex items-center">
             <IconV2

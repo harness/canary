@@ -317,7 +317,11 @@ export default function FileContentViewer({ repoContent, loading }: FileContentV
   }
 
   const Loader = () => (
-    <Layout.Flex align="center" justify="center" className="flex h-full rounded-b-3 rounded-t-none border border-t-0">
+    <Layout.Flex
+      align="center"
+      justify="center"
+      className="flex h-full rounded-b-cn-3 rounded-t-cn-none border border-t-0"
+    >
       <IconV2 className="animate-spin" name="loader" size="lg" />
     </Layout.Flex>
   )
@@ -370,7 +374,7 @@ export default function FileContentViewer({ repoContent, loading }: FileContentV
 
         <Tabs.Content
           value="preview"
-          className={cn('grow overflow-hidden', { 'border border-t-0 rounded-b-3': getIsMarkdown(language) })}
+          className={cn('grow overflow-hidden', { 'border border-t-0 rounded-b-cn-3': getIsMarkdown(language) })}
         >
           {loading && <Loader />}
 
@@ -378,7 +382,7 @@ export default function FileContentViewer({ repoContent, loading }: FileContentV
             <>
               {fileError && (
                 <div className="flex h-full items-center justify-center">
-                  <FileReviewError onButtonClick={() => {}} className="my-0 h-full rounded-t-none border-t-0" />
+                  <FileReviewError onButtonClick={() => {}} className="my-0 h-full rounded-t-cn-none border-t-0" />
                 </div>
               )}
 

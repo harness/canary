@@ -301,7 +301,7 @@ export const PullRequestComparePage: FC<PullRequestComparePageProps> = ({
             <Layout.Horizontal
               align="center"
               justify="between"
-              className="border-cn-3 bg-cn-2 px-cn-md py-cn-sm rounded-2 border"
+              className="border-cn-3 bg-cn-2 px-cn-md py-cn-sm rounded-cn-2 border"
             >
               <Text variant="body-normal" color="foreground-1">
                 {t(
@@ -332,7 +332,7 @@ export const PullRequestComparePage: FC<PullRequestComparePageProps> = ({
             <Layout.Horizontal
               align="center"
               justify="between"
-              className="border-cn-3 bg-cn-2 px-cn-md py-cn-sm rounded-2 border"
+              className="border-cn-3 bg-cn-2 px-cn-md py-cn-sm rounded-cn-2 border"
             >
               <Layout.Grid gapY="2xs">
                 <Layout.Grid flow="column" align="center" gapX="2xs" justify="start">

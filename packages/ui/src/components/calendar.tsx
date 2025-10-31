@@ -28,13 +28,13 @@ function Calendar({ className, classNames, showOutsideDays = true, ...props }: C
         nav_button_next: 'absolute right-cn-3xs',
         table: 'w-full border-collapse space-y-cn-3xs',
         head_row: 'flex',
-        head_cell: 'text-cn-3 rounded-3 w-8 font-normal text-cn-size-1',
+        head_cell: 'text-cn-3 rounded-cn-3 w-8 font-normal text-cn-size-1',
         row: 'flex w-full mt-cn-xs',
         cell: cn(
-          'relative p-0 text-center text-cn-size-2 focus-within:relative focus-within:z-20 [&:has([aria-selected])]:bg-cn-3 [&:has([aria-selected].day-outside)]:bg-cn-3/50 [&:has([aria-selected].day-range-end)]:rounded-r-3',
+          'relative p-0 text-center text-cn-size-2 focus-within:relative focus-within:z-20 [&:has([aria-selected])]:bg-cn-3 [&:has([aria-selected].day-outside)]:bg-cn-3/50 [&:has([aria-selected].day-range-end)]:rounded-r-cn-3',
           props.mode === 'range'
-            ? '[&:has(>.day-range-end)]:rounded-r-3 [&:has(>.day-range-start)]:rounded-l-3 first:[&:has([aria-selected])]:rounded-l-3 last:[&:has([aria-selected])]:rounded-r-3'
-            : '[&:has([aria-selected])]:rounded-3'
+            ? '[&:has(>.day-range-end)]:rounded-r-cn-3 [&:has(>.day-range-start)]:rounded-l-cn-3 first:[&:has([aria-selected])]:rounded-l-cn-3 last:[&:has([aria-selected])]:rounded-r-cn-3'
+            : '[&:has([aria-selected])]:rounded-cn-3'
         ),
         day: cn(buttonVariants({ variant: 'ghost' }), 'h-8 w-8 p-0 font-normal aria-selected:opacity-100'),
         day_range_start: 'day-range-start',

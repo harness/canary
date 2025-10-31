@@ -198,7 +198,7 @@ const PullRequestMergeSection = ({
                     <Button
                       variant="link"
                       onClick={handleCommandLineClick}
-                      className="relative z-10 h-auto rounded-none hover:underline"
+                      className="relative z-10 h-auto rounded-cn-none hover:underline"
                       aria-label="Open command line"
                     >
                       {t('views:repo.pullRequest.mergeSection.resolveConflicts.2', 'command line')}

@@ -9,7 +9,7 @@ export function AddNode(props: AddNodeProp) {
   const { onClick } = props
 
   return (
-    <div className="border-cn-2 flex size-full items-center justify-center rounded-full border">
+    <div className="border-cn-2 flex size-full items-center justify-center rounded-cn-full border">
       <Button
         className="self-center p-cn-sm"
         rounded

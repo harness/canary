@@ -176,10 +176,10 @@ const Folder = forwardRef<HTMLDivElement, FolderProps & React.HTMLAttributes<HTM
       >
         <AccordionPrimitive.Trigger
           className={cn(
-            `flex w-full gap-cn-3xs rounded-3 text-cn-size-2 px-cn-lg`,
+            `flex w-full gap-cn-3xs rounded-cn-3 text-cn-size-2 px-cn-lg`,
             className,
             {
-              'rounded-3': isSelect && isSelectable,
+              'rounded-cn-3': isSelect && isSelectable,
               'cursor-pointer': isSelectable,
               'cursor-not-allowed opacity-50': !isSelectable
             },
@@ -265,7 +265,7 @@ const File = forwardRef<
           disabled={!isSelectable}
           aria-label="File"
           className={cn(
-            'flex relative w-full cursor-pointer items-center gap-cn-3xs rounded-3 text-cn-size-2 duration-200 ease-in-out rtl:pl-cn-3xs rtl:pr-0',
+            'flex relative w-full cursor-pointer items-center gap-cn-3xs rounded-cn-3 text-cn-size-2 duration-200 ease-in-out rtl:pl-cn-3xs rtl:pr-0',
             {
               ['after:absolute after:bg-cn-hover after:-inset-x-cn-3xs after:-inset-y-cn-2xs after:-z-10 after:rounded']:
                 isSelected

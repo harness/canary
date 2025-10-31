@@ -29,7 +29,7 @@ const ResizableHandle = ({
     {...props}
   >
     {withHandle && (
-      <div className="bg-cn-separator-subtle z-10 flex h-4 w-3 items-center justify-center rounded-1 border">
+      <div className="bg-cn-separator-subtle z-10 flex h-4 w-3 items-center justify-center rounded-cn-1 border">
         <IconV2 name="grip-dots" size="2xs" />
       </div>
     )}

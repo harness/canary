@@ -122,9 +122,9 @@ export const LineTitle: React.FC<LineTitleProps> = ({
   }
 
   return (
-    <div className="flex items-center justify-between gap-x-cn-sm">
-      <div className="inline-flex items-center gap-x-cn-md">
-        <div className="flex items-center gap-x-cn-xs">
+    <div className="gap-x-cn-sm flex items-center justify-between">
+      <div className="gap-x-cn-md inline-flex items-center">
+        <div className="gap-x-cn-xs flex items-center">
           <Button
             variant="ghost"
             size="sm"
@@ -146,12 +146,12 @@ export const LineTitle: React.FC<LineTitleProps> = ({
           <CopyButton name={copyText} size="xs" />
         </div>
 
-        <div className="flex items-center gap-x-cn-3xs">
+        <div className="gap-x-cn-3xs flex items-center">
           {addedLines != null && addedLines > 0 && <CounterBadge theme="success">+{addedLines}</CounterBadge>}
           {deletedLines != null && deletedLines > 0 && <CounterBadge theme="danger">-{deletedLines}</CounterBadge>}
         </div>
       </div>
-      <div className="inline-flex items-center gap-x-cn-xs">
+      <div className="gap-x-cn-xs inline-flex items-center">
         {/* Show "Changed since last viewed" tag when file is obsolete */}
         {fileViews?.get(filePath) === FILE_VIEWED_OBSOLETE_SHA && (
           <Tag value={t('views:pullRequests.changedSinceLastView')} theme="orange" />
@@ -337,11 +337,11 @@ export const PullRequestAccordion: React.FC<{
       onValueChange={onToggle}
       indicatorPosition="left"
     >
-      <Accordion.Item value={header?.text ?? ''} className="rounded-3 border-none">
+      <Accordion.Item value={header?.text ?? ''} className="rounded-cn-3 border-none">
         <Accordion.Trigger
           className={cn(
-            'bg-cn-2 border-cn-2 group-[[data-state=closed]]:rounded-3 border px-cn-md py-cn-xs transition-[border-radius] duration-300 [&>.cn-accordion-trigger-indicator]:m-0 [&>.cn-accordion-trigger-indicator]:self-center',
-            isOpen ? 'rounded-t-3' : 'rounded-3'
+            'bg-cn-2 border-cn-2 group-[[data-state=closed]]:rounded-cn-3 border px-cn-md py-cn-xs transition-[border-radius] duration-300 [&>.cn-accordion-trigger-indicator]:m-0 [&>.cn-accordion-trigger-indicator]:self-center',
+            isOpen ? 'rounded-t-cn-3' : 'rounded-cn-3'
           )}
           headerClassName="z-[18] sticky top-[123px] bg-cn-1 group"
         >
@@ -362,7 +362,7 @@ export const PullRequestAccordion: React.FC<{
         </Accordion.Trigger>
         <Accordion.Content
           className="pb-0"
-          containerClassName="rounded-b-3 border-x border-b border-cn-2"
+          containerClassName="rounded-b-cn-3 border-x border-b border-cn-2"
           data-diff-content={header.filePath}
         >
           <div className="bg-transparent">

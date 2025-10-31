@@ -210,7 +210,7 @@ const MarkdownViewerLocal = ({
 
   return (
     // TODO: Replace px-[64px] with a proper spacing token when available
-    <div className={cn({ 'rounded-b-3 border-x border-b py-cn-xl px-[64px]': withBorder }, className)}>
+    <div className={cn({ 'rounded-b-cn-3 border-x border-b py-cn-xl px-[64px]': withBorder }, className)}>
       <div ref={ref} style={styles}>
         <MarkdownPreview
           source={source}
@@ -293,7 +293,7 @@ const MarkdownViewerLocal = ({
 
               if (isSuggestion) {
                 return (
-                  <div className="rounded-2 overflow-hidden border">
+                  <div className="rounded-cn-2 overflow-hidden border">
                     <div className="bg-cn-2 px-cn-md py-cn-sm border-b">
                       <Text variant="body-strong" color="foreground-1" className="!m-0">
                         {suggestionTitle}
@@ -308,7 +308,7 @@ const MarkdownViewerLocal = ({
               return (
                 <div
                   className={cn(
-                    'min-h-[52px] mb-cn-md bg-cn-2 rounded-2 pl-cn-md pr-cn-sm py-cn-sm relative overflow-hidden border',
+                    'min-h-[52px] mb-cn-md bg-cn-2 rounded-cn-2 pl-cn-md pr-cn-sm py-cn-sm relative overflow-hidden border',
                     { '!pt-[15px]': codeLines.length === 1 }
                   )}
                 >

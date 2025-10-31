@@ -1,29 +1,29 @@
 export default {
   '.cn-stacked-list': {
-    '@apply w-full bg-cn-1 border rounded-3': '',
+    '@apply w-full bg-cn-1 border rounded-cn-3': '',
 
     '& > *:first-child > .cn-stacked-list-item': {
-      '@apply rounded-t-3': ''
+      '@apply rounded-t-cn-3': ''
     },
 
     '& > *:last-child > .cn-stacked-list-item': {
-      '@apply rounded-b-3': ''
+      '@apply rounded-b-cn-3': ''
     },
 
     '&-item:first-child': {
-      '@apply !rounded-t-3': ''
+      '@apply !rounded-t-cn-3': ''
     },
 
     '&-item:last-child': {
-      '@apply rounded-b-3': ''
+      '@apply rounded-b-cn-3': ''
     },
 
     // List mod
     '&-rounded-top': {
-      '@apply rounded-none rounded-t-3': '',
+      '@apply rounded-cn-none rounded-t-cn-3': '',
 
       '& > *:last-child > .cn-stacked-list-item, .cn-stacked-list-item:last-child': {
-        '@apply rounded-none': ''
+        '@apply rounded-cn-none': ''
       }
     },
 
@@ -48,7 +48,7 @@ export default {
       },
 
       '&-clickable-block': {
-        '@apply absolute inset-0 w-full rounded-3 !z-0 outline-offset-cn-tight': ''
+        '@apply absolute inset-0 w-full rounded-cn-3 !z-0 outline-offset-cn-tight': ''
       },
 
       '&-thumbnail': {

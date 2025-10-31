@@ -636,7 +636,7 @@ mark {
 }
 
 .monaco-editor .overflow-guard {
-  @apply border-cn-3 rounded-b-3 border border-t-0;
+  @apply border-cn-3 rounded-b-cn-3 border border-t-0;
 }
 
 .monaco-diff-editor .monaco-editor .overflow-guard {
@@ -657,7 +657,7 @@ mark {
 }
 
 .monaco-diff-editor.side-by-side .editor.modified {
-  @apply !border-cn-2 !border-l !border-solid !shadow-none;
+  @apply !border-cn-2 !shadow-cn-none !border-l !border-solid;
 }
 
 /* In View Diff Renderer */

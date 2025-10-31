@@ -51,19 +51,19 @@ export default {
       },
 
       '&:where(.cn-drawer-content-right)': {
-        '@apply border-r-0 rounded-r-none right-0': ''
+        '@apply border-r-0 rounded-r-cn-none right-0': ''
       },
 
       '&:where(.cn-drawer-content-left)': {
-        '@apply border-l-0 rounded-l-none left-0': ''
+        '@apply border-l-0 rounded-l-cn-none left-0': ''
       },
 
       '&:where(.cn-drawer-content-top)': {
-        '@apply border-t-0 rounded-t-none top-0': ''
+        '@apply border-t-0 rounded-t-cn-none top-0': ''
       },
 
       '&:where(.cn-drawer-content-bottom)': {
-        '@apply border-b-0 rounded-b-none bottom-0': ''
+        '@apply border-b-0 rounded-b-cn-none bottom-0': ''
       },
 
       '&[data-vaul-drawer]:not([data-vaul-custom-container=true])::after': {

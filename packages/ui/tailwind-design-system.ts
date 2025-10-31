@@ -6,9 +6,13 @@ import type { PluginAPI, Config as TailwindConfig } from 'tailwindcss/types/conf
 
 import { ComponentStyles } from './tailwind-utils-config/components'
 import {
+  backgroundColor as backgroundColorStyles,
+  borderRadius as borderRadiusStyles,
   borders as borderStyles,
+  height as heightStyles,
   padding as paddingStyles,
-  typography as typographyStyles
+  typography as typographyStyles,
+  width as widthStyles
 } from './tailwind-utils-config/utilities'
 
 export default {
@@ -25,10 +29,6 @@ export default {
     },
     backgroundColor: {
       DEFAULT: 'lch(from var(--cn-bg-1) l c h / <alpha-value>)',
-
-      // Separator bg colors
-      'cn-separator-subtle': 'var(--cn-border-3)',
-      'cn-separator': 'var(--cn-border-2)',
 
       // Design system primary colors
       // Remove opacity from the colors
@@ -50,23 +50,9 @@ export default {
         'outline-selected': 'lch(from var(--cn-set-brand-outline-bg-selected) l c h / <alpha-value>)'
       },
 
-      'cn-input': 'var(--cn-comp-input-bg)',
-
       // States
       'cn-hover': 'var(--cn-state-hover)',
       'cn-selected': 'var(--cn-state-selected)',
-
-      // component related
-      'cn-backdrop': 'var(--cn-comp-dialog-backdrop)',
-      'cn-diff-success': 'var(--cn-comp-diff-add-content)',
-      'cn-diff-danger': 'var(--cn-comp-diff-del-content)',
-
-      'cn-graph': {
-        card: {
-          'canvas-1': 'var(--cn-comp-pipeline-card-canvas-1-bg)',
-          'canvas-2': 'var(--cn-comp-pipeline-card-canvas-2-bg)'
-        }
-      },
 
       /**
        * These colors should be used along with their text pairs
@@ -342,38 +328,33 @@ export default {
       current: 'currentColor'
     },
     borderRadius: {
-      DEFAULT: 'var(--cn-rounded-2)',
-      px: 'var(--cn-rounded-px)',
-      1: 'var(--cn-rounded-1)',
-      2: 'var(--cn-rounded-2)',
-      3: 'var(--cn-rounded-3)',
-      4: 'var(--cn-rounded-4)',
-      5: 'var(--cn-rounded-5)',
-      6: 'var(--cn-rounded-6)',
-      7: 'var(--cn-rounded-7)',
-      none: 'var(--cn-rounded-none)',
-      full: 'var(--cn-rounded-full)',
-
-      /**
-       * Component specific borderRadius
-       */
-      'cn-input': 'var(--cn-input-radius)',
+      DEFAULT: 'var(--cn-rounded-cn-2)',
+      'cn-px': 'var(--cn-rounded-px)',
+      'cn-1': 'var(--cn-rounded-1)',
+      'cn-2': 'var(--cn-rounded-2)',
+      'cn-3': 'var(--cn-rounded-3)',
+      'cn-4': 'var(--cn-rounded-4)',
+      'cn-5': 'var(--cn-rounded-5)',
+      'cn-6': 'var(--cn-rounded-6)',
+      'cn-7': 'var(--cn-rounded-7)',
+      'cn-none': 'var(--cn-rounded-none)',
+      'cn-full': 'var(--cn-rounded-full)',
       inherit: 'inherit'
     },
     boxShadow: {
-      none: 'var(--cn-shadow-0)',
-      1: 'var(--cn-shadow-1)',
-      2: 'var(--cn-shadow-2)',
-      3: 'var(--cn-shadow-3)',
-      4: 'var(--cn-shadow-4)',
-      5: 'var(--cn-shadow-5)',
-      6: 'var(--cn-shadow-6)',
+      'cn-none': 'var(--cn-shadow-0)',
+      'cn-1': 'var(--cn-shadow-1)',
+      'cn-2': 'var(--cn-shadow-2)',
+      'cn-3': 'var(--cn-shadow-3)',
+      'cn-4': 'var(--cn-shadow-4)',
+      'cn-5': 'var(--cn-shadow-5)',
+      'cn-6': 'var(--cn-shadow-6)',
 
       // Status ring colors
-      'ring-error': 'var(--cn-ring-error)',
-      'ring-selected': 'var(--cn-ring-selected)',
-      'ring-success': 'var(--cn-ring-success)',
-      'ring-warning': 'var(--cn-ring-warning)'
+      'cn-ring-error': 'var(--cn-ring-error)',
+      'cn-ring-selected': 'var(--cn-ring-selected)',
+      'cn-ring-success': 'var(--cn-ring-success)',
+      'cn-ring-warning': 'var(--cn-ring-warning)'
     },
     spacing: {
       0: 'var(--cn-spacing-0)',
@@ -410,37 +391,37 @@ export default {
       'cn-size-half': 'var(--cn-font-size-half)',
       'cn-size-min': 'var(--cn-font-size-min)'
     },
+
+    letterSpacing: {
+      'cn-tighter': 'var(--cn-tracking-tighter)',
+      'cn-tight': 'var(--cn-tracking-tight)',
+      'cn-normal': 'var(--cn-tracking-normal)',
+      'cn-wide': 'var(--cn-tracking-wide)',
+      'cn-wider': 'var(--cn-tracking-wider)',
+      'cn-widest': 'var(--cn-tracking-widest)'
+    },
     extend: {
       opacity: {
         'cn-disabled': 'var(--cn-disabled-opacity)'
       },
       // Spreading props to keep the default tailwind values
       height: {
-        ...defaultTheme.spacing,
-        'cn-input-md': 'var(--cn-input-size-md)',
-        'cn-header': 'var(--cn-header-height)'
+        ...defaultTheme.spacing
       },
       minHeight: {
-        ...defaultTheme.spacing,
-        'cn-textarea': '7lh'
+        ...defaultTheme.spacing
       },
       maxHeight: {
-        ...defaultTheme.spacing,
-        'cn-textarea': '35lh'
+        ...defaultTheme.spacing
       },
       minWidth: {
-        ...defaultTheme.spacing,
-        'cn-textarea': '7lh'
+        ...defaultTheme.spacing
       },
       maxWidth: {
-        ...defaultTheme.spacing,
-        'cn-textarea': '35lh'
+        ...defaultTheme.spacing
       },
       width: {
-        ...defaultTheme.spacing,
-
-        // Get this from design system
-        'cn-search-input-max-width': '320px'
+        ...defaultTheme.spacing
       },
       // Spreading here to keep "size-N" classnames working
       size: {
@@ -454,19 +435,6 @@ export default {
         'cn-brand': 'var(--cn-border-brand)'
       },
 
-      letterSpacing: {
-        tighter: 'var(--cn-tracking-tighter)',
-        tight: 'var(--cn-tracking-tight)',
-        normal: 'var(--cn-tracking-normal)',
-        wide: 'var(--cn-tracking-wide)',
-        wider: 'var(--cn-tracking-wider)',
-        widest: 'var(--cn-tracking-widest)'
-      },
-
-      backgroundImage: {
-        'cn-graph-card-gradient': 'var(--cn-comp-pipeline-card-bg)',
-        'cn-graph-bg-gradient': 'radial-gradient(circle, var(--cn-bg-1) 1px, transparent 1px)'
-      },
       keyframes: {
         'accordion-down': {
           from: { height: '0' },
@@ -500,6 +468,10 @@ export default {
       addUtilities(paddingStyles)
       addUtilities(typographyStyles)
       addUtilities(borderStyles)
+      addUtilities(backgroundColorStyles)
+      addUtilities(borderRadiusStyles)
+      addUtilities(heightStyles)
+      addUtilities(widthStyles)
     }),
     plugin(({ addComponents }) => {
       addComponents(ComponentStyles)
@@ -560,8 +532,8 @@ export default {
     'prose-a',
     'prose-img',
     'prose-code',
-    /** New design system Variants  */
 
+    /** New design system Variants  */
     { pattern: /^border-cn-/ },
     { pattern: /^text-cn-/ },
     { pattern: /^hover:text-cn-/ },

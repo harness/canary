@@ -101,7 +101,7 @@ const ThemeDialog: FC<ThemeDialogProps> = ({
                         <IconV2 className="text-cn-1 bottom-cn-xs left-cn-xs absolute" name="check-circle-solid" />
                       )}
                       <div
-                        className="rounded-1 absolute right-[27px] top-[61px] h-2 w-9"
+                        className="rounded-cn-1 absolute right-[27px] top-[61px] h-2 w-9"
                         style={{
                           backgroundColor:
                             accentColor === AccentColor.White
@@ -179,7 +179,7 @@ const ThemeDialog: FC<ThemeDialogProps> = ({
                         <button
                           key={item}
                           className={cn(
-                            'focus-visible:rounded-full h-[26px] w-[26px] rounded-full',
+                            'focus-visible:rounded-cn-full h-[26px] w-[26px] rounded-cn-full',
                             accentColor === item && 'border border-cn-brand'
                           )}
                           onClick={() => {
@@ -191,7 +191,7 @@ const ThemeDialog: FC<ThemeDialogProps> = ({
                               backgroundColor:
                                 item === AccentColor.White && mode === ModeType.Light ? 'hsla(240, 6%, 40%, 1)' : item
                             }}
-                            className="m-auto block size-[18px] rounded-full"
+                            className="m-auto block size-[18px] rounded-cn-full"
                           />
                         </button>
                       ))}
@@ -216,14 +216,17 @@ const ThemeDialog: FC<ThemeDialogProps> = ({
                         <button
                           key={item}
                           className={cn(
-                            'focus-visible:rounded-full h-[26px] w-[26px] rounded-full',
+                            'focus-visible:rounded-cn-full h-[26px] w-[26px] rounded-cn-full',
                             grayColor === item && 'border border-cn-2'
                           )}
                           onClick={() => {
                             setGrayColor(item)
                           }}
                         >
-                          <span style={{ backgroundColor: item }} className="m-auto block size-[18px] rounded-full" />
+                          <span
+                            style={{ backgroundColor: item }}
+                            className="m-auto block size-[18px] rounded-cn-full"
+                          />
                         </button>
                       ))}
                     </div>

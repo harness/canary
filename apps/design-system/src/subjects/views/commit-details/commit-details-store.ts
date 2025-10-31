@@ -3164,7 +3164,7 @@ export const commitDetailsStore: ICommitDetailsStore = {
             },
             {
               content:
-                '     <span className="absolute left-cn-xs flex size-4 items-center justify-center rounded-full border border-icons-1">',
+                '     <span className="absolute left-cn-xs flex size-4 items-center justify-center rounded-cn-full border border-icons-1">',
               type: 'context',
               oldNumber: 151,
               newNumber: 151
@@ -3176,12 +3176,12 @@ export const commitDetailsStore: ICommitDetailsStore = {
               newNumber: 152
             },
             {
-              content: '-        <span className="size-2 rounded-full block" />',
+              content: '-        <span className="size-2 rounded-cn-full block" />',
               type: 'delete',
               oldNumber: 153
             },
             {
-              content: '+        <span className="block size-2 rounded-full" />',
+              content: '+        <span className="block size-2 rounded-cn-full" />',
               type: 'insert',
               newNumber: 153
             },
@@ -3225,7 +3225,7 @@ export const commitDetailsStore: ICommitDetailsStore = {
       contentId: 'content-packages/ui/src/components/dropdown-menu.tsx::::packages/ui/src/components/dropdown-menu.tsx',
       fileId: 'packages/ui/src/components/dropdown-menu.tsx::::packages/ui/src/components/dropdown-menu.tsx',
       filePath: 'packages/ui/src/components/dropdown-menu.tsx',
-      raw: 'diff --git a/packages/ui/src/components/dropdown-menu.tsx b/packages/ui/src/components/dropdown-menu.tsx\nindex b5476fe12dfc08aeb6c1478d4ca77c46b4263490..651d2b8a9c79fc3dbc8bae8dd60f039e14cf83bb 100644\n--- a/packages/ui/src/components/dropdown-menu.tsx\n+++ b/packages/ui/src/components/dropdown-menu.tsx\n@@ -150,7 +150,7 @@ const DropdownMenuRadioItem = React.forwardRef<\n   >\n     <span className="absolute left-cn-xs flex size-4 items-center justify-center rounded-full border border-icons-1">\n       <DropdownMenuPrimitive.ItemIndicator>\n-        <span className="size-2 rounded-full block" />\n+        <span className="block size-2 rounded-full" />\n       </DropdownMenuPrimitive.ItemIndicator>\n     </span>\n     {children}\n'
+      raw: 'diff --git a/packages/ui/src/components/dropdown-menu.tsx b/packages/ui/src/components/dropdown-menu.tsx\nindex b5476fe12dfc08aeb6c1478d4ca77c46b4263490..651d2b8a9c79fc3dbc8bae8dd60f039e14cf83bb 100644\n--- a/packages/ui/src/components/dropdown-menu.tsx\n+++ b/packages/ui/src/components/dropdown-menu.tsx\n@@ -150,7 +150,7 @@ const DropdownMenuRadioItem = React.forwardRef<\n   >\n     <span className="absolute left-cn-xs flex size-4 items-center justify-center rounded-cn-full border border-icons-1">\n       <DropdownMenuPrimitive.ItemIndicator>\n-        <span className="size-2 rounded-cn-full block" />\n+        <span className="block size-2 rounded-cn-full" />\n       </DropdownMenuPrimitive.ItemIndicator>\n     </span>\n     {children}\n'
     },
     {
       blocks: [
@@ -3722,13 +3722,13 @@ export const commitDetailsStore: ICommitDetailsStore = {
             },
             {
               content:
-                "-          'h-[36px] rounded-t-3 border-x border-t border-transparent px-cn-sm font-normal text-cn-2 hover:text-cn-foreground-1 data-[state=active]:border-cn-borders-2 data-[state=active]:text-cn-foreground-1 data-[state=active]:bg-cn-1'",
+                "-          'h-[36px] rounded-t-cn-3 border-x border-t border-transparent px-cn-sm font-normal text-cn-2 hover:text-cn-foreground-1 data-[state=active]:border-cn-borders-2 data-[state=active]:text-cn-foreground-1 data-[state=active]:bg-cn-1'",
               type: 'delete',
               oldNumber: 33
             },
             {
               content:
-                "+          'h-[36px] rounded-t-3 border-x border-t border-transparent px-cn-sm font-normal text-cn-2 hover:text-cn-foreground-1 data-[state=active]:border-cn-borders-2 data-[state=active]:bg-cn-1 data-[state=active]:text-cn-foreground-1'",
+                "+          'h-[36px] rounded-t-cn-3 border-x border-t border-transparent px-cn-sm font-normal text-cn-2 hover:text-cn-foreground-1 data-[state=active]:border-cn-borders-2 data-[state=active]:bg-cn-1 data-[state=active]:text-cn-foreground-1'",
               type: 'insert',
               newNumber: 33
             },
@@ -3771,7 +3771,7 @@ export const commitDetailsStore: ICommitDetailsStore = {
       contentId: 'content-packages/ui/src/components/tabs.tsx::::packages/ui/src/components/tabs.tsx',
       fileId: 'packages/ui/src/components/tabs.tsx::::packages/ui/src/components/tabs.tsx',
       filePath: 'packages/ui/src/components/tabs.tsx',
-      raw: "diff --git a/packages/ui/src/components/tabs.tsx b/packages/ui/src/components/tabs.tsx\nindex 5cbae7da53b01c1fdcd7d7e940e0c2c6c10dfce4..631a8515f53931f3a9ec94f17fb4c3499bef513d 100644\n--- a/packages/ui/src/components/tabs.tsx\n+++ b/packages/ui/src/components/tabs.tsx\n@@ -11,7 +11,7 @@ const tabsListVariants = cva('inline-flex items-center text-cn-3', {\n       underline: 'h-11 justify-center gap-cn-md',\n       navigation: 'h-11 w-full justify-start gap-cn-xl border-b border-cn-borders-2 px-cn-xl',\n       tabnav:\n-        'relative flex w-full before:absolute before:left-0 before:h-px before:w-full before:bg-cn-2 before:bottom-0'\n+        'relative flex w-full before:absolute before:bottom-0 before:left-0 before:h-px before:w-full before:bg-cn-2'\n     }\n   },\n   defaultVariants: {\n@@ -30,7 +30,7 @@ const tabsTriggerVariants = cva(\n         navigation:\n           'm-0 -mb-px h-11 border-b border-solid border-b-transparent px-0 text-cn-size-2 font-normal text-cn-2 duration-150 ease-in-out hover:text-cn-foreground-1 data-[state=active]:border-cn-borders-1',\n         tabnav:\n-          'h-[36px] rounded-t-3 border-x border-t border-transparent px-cn-sm font-normal text-cn-2 hover:text-cn-foreground-1 data-[state=active]:border-cn-borders-2 data-[state=active]:text-cn-foreground-1 data-[state=active]:bg-cn-1'\n+          'h-[36px] rounded-t-3 border-x border-t border-transparent px-cn-sm font-normal text-cn-2 hover:text-cn-foreground-1 data-[state=active]:border-cn-borders-2 data-[state=active]:bg-cn-1 data-[state=active]:text-cn-foreground-1'\n       }\n     },\n     defaultVariants: {\n"
+      raw: "diff --git a/packages/ui/src/components/tabs.tsx b/packages/ui/src/components/tabs.tsx\nindex 5cbae7da53b01c1fdcd7d7e940e0c2c6c10dfce4..631a8515f53931f3a9ec94f17fb4c3499bef513d 100644\n--- a/packages/ui/src/components/tabs.tsx\n+++ b/packages/ui/src/components/tabs.tsx\n@@ -11,7 +11,7 @@ const tabsListVariants = cva('inline-flex items-center text-cn-3', {\n       underline: 'h-11 justify-center gap-cn-md',\n       navigation: 'h-11 w-full justify-start gap-cn-xl border-b border-cn-borders-2 px-cn-xl',\n       tabnav:\n-        'relative flex w-full before:absolute before:left-0 before:h-px before:w-full before:bg-cn-2 before:bottom-0'\n+        'relative flex w-full before:absolute before:bottom-0 before:left-0 before:h-px before:w-full before:bg-cn-2'\n     }\n   },\n   defaultVariants: {\n@@ -30,7 +30,7 @@ const tabsTriggerVariants = cva(\n         navigation:\n           'm-0 -mb-px h-11 border-b border-solid border-b-transparent px-0 text-cn-size-2 font-normal text-cn-2 duration-150 ease-in-out hover:text-cn-foreground-1 data-[state=active]:border-cn-borders-1',\n         tabnav:\n-          'h-[36px] rounded-t-cn-3 border-x border-t border-transparent px-cn-sm font-normal text-cn-2 hover:text-cn-foreground-1 data-[state=active]:border-cn-borders-2 data-[state=active]:text-cn-foreground-1 data-[state=active]:bg-cn-1'\n+          'h-[36px] rounded-t-cn-3 border-x border-t border-transparent px-cn-sm font-normal text-cn-2 hover:text-cn-foreground-1 data-[state=active]:border-cn-borders-2 data-[state=active]:bg-cn-1 data-[state=active]:text-cn-foreground-1'\n       }\n     },\n     defaultVariants: {\n"
     },
     {
       blocks: [

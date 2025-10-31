@@ -81,7 +81,7 @@ const StatusBadge = forwardRef<HTMLDivElement, StatusBadgeProps>(
         {...props}
       >
         {isStatusVariant && (
-          <span className={cn('cn-badge-indicator rounded-full', { 'animate-pulse': pulse })} aria-hidden="true" />
+          <span className={cn('cn-badge-indicator rounded-cn-full', { 'animate-pulse': pulse })} aria-hidden="true" />
         )}
         {icon && <IconV2 name={icon} />}
         {children}

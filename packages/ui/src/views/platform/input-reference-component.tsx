@@ -23,7 +23,7 @@ const inputReferenceVariants = cva(
     variants: {
       state: {
         default:
-          'hover:border-cn-brand focus-visible:shadow-ring-selected focus-visible:outline-none focus-visible:border-cn-brand',
+          'hover:border-cn-brand focus-visible:shadow-cn-ring-selected focus-visible:outline-none focus-visible:border-cn-brand',
         disabled: 'opacity-cn-disabled cursor-not-allowed'
       }
     },
@@ -227,7 +227,7 @@ const InputReferenceInner = <T,>(
 
             {suffix && (
               <div
-                className="aspect-1 flex h-full items-center justify-center rounded-l-none border-l border-inherit"
+                className="aspect-1 flex h-full items-center justify-center rounded-l-cn-none border-l border-inherit"
                 // Don't trigger onClick of the parent div when suffix is clicked
                 onPointerDown={e => {
                   e.stopPropagation()

@@ -52,7 +52,7 @@ const SheetOverlay = forwardRef<ElementRef<typeof SheetPrimitive.Overlay>, Sheet
 )
 SheetOverlay.displayName = SheetPrimitive.Overlay.displayName
 
-const sheetVariants = cva('bg-cn-1 p-cn-xl gap-cn-md shadow-4 fixed z-50 transition ease-in-out', {
+const sheetVariants = cva('bg-cn-1 p-cn-xl gap-cn-md shadow-cn-4 fixed z-50 transition ease-in-out', {
   variants: {
     side: {
       top: 'inset-x-0 top-0 border-b',

@@ -101,7 +101,7 @@ const CommitsAccordion: FC<{
               />
             </Accordion.Trigger>
             <Accordion.Content className="pb-0">
-              <div className="rounded-b-3 overflow-hidden border-t bg-transparent">
+              <div className="rounded-b-cn-3 overflow-hidden border-t bg-transparent">
                 {(fileDeleted || isDiffTooLarge || fileUnchanged || header?.isBinary) && !showHiddenDiff ? (
                   <Layout.Vertical align="center" className="py-cn-lg w-full">
                     {!fileUnchanged && (

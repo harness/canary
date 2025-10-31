@@ -28,7 +28,7 @@ const StepExecutionToolbar: FC<
       />
       <div className="flex">
         <Button
-          className="border-cn-2 rounded-r-none border-r-0"
+          className="border-cn-2 rounded-r-cn-none border-r-0"
           variant="outline"
           size="sm"
           iconOnly
@@ -39,10 +39,10 @@ const StepExecutionToolbar: FC<
         >
           <IconV2 name="copy" className="size-4" />
         </Button>
-        <Button variant="outline" size="sm" className="border-cn-2 rounded-none" onClick={onEdit}>
+        <Button variant="outline" size="sm" className="border-cn-2 rounded-cn-none" onClick={onEdit}>
           <IconV2 name="edit-pencil" size="sm" />
         </Button>
-        <Button variant="outline" size="sm" className="border-cn-2 rounded-l-none border-l-0" onClick={onDownload}>
+        <Button variant="outline" size="sm" className="border-cn-2 rounded-l-cn-none border-l-0" onClick={onDownload}>
           <IconV2 name="download" size="sm" />
         </Button>
       </div>

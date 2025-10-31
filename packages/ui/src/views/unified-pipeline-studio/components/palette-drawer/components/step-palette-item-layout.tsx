@@ -27,8 +27,8 @@ const StepsPaletteItemLayout = {
   },
   BadgeWrapper: function BadgeWrapper({ children }: { children: React.ReactNode }) {
     return (
-      <div className="p-cn-4xs self-start rounded-full bg-gradient-to-r from-[#B1CBFF] via-[#6D6B75] to-[#B1CBFF]">
-        <div className="bg-cn-1 px-cn-xs rounded-full text-cn-size-2">{children}</div>
+      <div className="p-cn-4xs self-start rounded-cn-full bg-gradient-to-r from-[#B1CBFF] via-[#6D6B75] to-[#B1CBFF]">
+        <div className="bg-cn-1 px-cn-xs rounded-cn-full text-cn-size-2">{children}</div>
       </div>
     )
   },

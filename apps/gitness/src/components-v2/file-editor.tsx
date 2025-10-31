@@ -201,7 +201,11 @@ export const FileEditor: FC<FileEditorProps> = ({ repoDetails, defaultBranch, lo
   }
 
   const Loader = () => (
-    <Layout.Flex align="center" justify="center" className="rounded-b-3 flex h-full rounded-t-none border border-t-0">
+    <Layout.Flex
+      align="center"
+      justify="center"
+      className="rounded-b-cn-3 flex h-full rounded-t-cn-none border border-t-0"
+    >
       <IconV2 className="animate-spin" name="loader" size="lg" />
     </Layout.Flex>
   )
@@ -269,7 +273,7 @@ export const FileEditor: FC<FileEditorProps> = ({ repoDetails, defaultBranch, lo
 
         <Tabs.Content
           value="preview"
-          className={cn('grow', { 'overflow-auto border border-t-0 rounded-b-3': getIsMarkdown(language) })}
+          className={cn('grow', { 'overflow-auto border border-t-0 rounded-b-cn-3': getIsMarkdown(language) })}
         >
           {loading && <Loader />}
 

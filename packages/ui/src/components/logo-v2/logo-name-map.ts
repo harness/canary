@@ -15,6 +15,7 @@ import BuildKite from './logos/build-kite.svg'
 import Codecov from './logos/codecov.svg'
 import Confluence from './logos/confluence.svg'
 import Connector from './logos/connector.svg'
+import CustomDeployment from './logos/custom-deployment.svg'
 import CustomSecretManager from './logos/custom-secret-manager.svg'
 import DataDog from './logos/data-dog.svg'
 import DefaultSecretManager from './logos/default-secret-manager.svg'
@@ -59,6 +60,9 @@ import Prometheus from './logos/prometheus.svg'
 import Python from './logos/python.svg'
 import Rancher from './logos/rancher.svg'
 import Salesforce from './logos/salesforce.svg'
+import SecretSsh from './logos/secret-ssh.svg'
+import SecureShell from './logos/secure-shell.svg'
+import Serverless from './logos/serverless.svg'
 import Servicenow from './logos/servicenow.svg'
 import Sfx from './logos/sfx.svg'
 import Slack from './logos/slack.svg'
@@ -85,6 +89,7 @@ export const LogoNameMapV2 = {
   codecov: Codecov,
   confluence: Confluence,
   connector: Connector,
+  'custom-deployment': CustomDeployment,
   'custom-secret-manager': CustomSecretManager,
   'data-dog': DataDog,
   'default-secret-manager': DefaultSecretManager,
@@ -129,6 +134,9 @@ export const LogoNameMapV2 = {
   python: Python,
   rancher: Rancher,
   salesforce: Salesforce,
+  'secret-ssh': SecretSsh,
+  'secure-shell': SecureShell,
+  serverless: Serverless,
   servicenow: Servicenow,
   sfx: Sfx,
   slack: Slack,

@@ -12,6 +12,7 @@ import {
 
 import { AppShellMFE } from './components-v2/mfe/app-shell'
 import { ProjectDropdown } from './components-v2/project-dropdown'
+import { PublicAccessGuard } from './components-v2/public-access'
 import { AppShell } from './components-v2/standalone/app-shell'
 import { AppProvider } from './framework/context/AppContext'
 import { AppRouterProvider } from './framework/context/AppRouterProvider'
@@ -236,7 +237,8 @@ export const repoRoutes: CustomRouteObject[] = [
             handle: {
               breadcrumb: () => <span>{Page.Summary}</span>,
               routeName: RouteConstants.toRepoSummary,
-              pageTitle: Page.Summary
+              pageTitle: Page.Summary,
+              publicAccess: true
             },
             children: [
               {
@@ -254,7 +256,11 @@ export const repoRoutes: CustomRouteObject[] = [
             children: [
               {
                 index: true,
-                element: <RepoCommitsPage />,
+                element: (
+                  <PublicAccessGuard>
+                    <RepoCommitsPage />
+                  </PublicAccessGuard>
+                ),
                 handle: {
                   pageTitle: Page.Commits
                 }
@@ -264,14 +270,19 @@ export const repoRoutes: CustomRouteObject[] = [
                 element: <RepoCommitsPage />,
                 handle: {
                   pageTitle: Page.Commits,
-                  routeName: RouteConstants.toRepoBranchCommits
+                  routeName: RouteConstants.toRepoBranchCommits,
+                  publicAccess: true
                 }
               }
             ]
           },
           {
             path: 'commit/:commitSHA',
-            element: <RepoCommitDetailsPage />,
+            element: (
+              <PublicAccessGuard>
+                <RepoCommitDetailsPage />
+              </PublicAccessGuard>
+            ),
             handle: {
               breadcrumb: ({ commitSHA }: { commitSHA: string }) => <span>{commitSHA.substring(0, 7)}</span>,
               routeName: RouteConstants.toRepoCommitDetails
@@ -293,7 +304,8 @@ export const repoRoutes: CustomRouteObject[] = [
             handle: {
               breadcrumb: () => <span>{Page.Branches}</span>,
               routeName: RouteConstants.toRepoBranches,
-              pageTitle: Page.Branches
+              pageTitle: Page.Branches,
+              publicAccess: true
             }
           },
           {
@@ -303,9 +315,11 @@ export const repoRoutes: CustomRouteObject[] = [
               return redirect(`../files/edit/${wildcard}`)
             },
             element: (
-              <ExplorerPathsProvider>
-                <RepoSidebar />
-              </ExplorerPathsProvider>
+              <PublicAccessGuard>
+                <ExplorerPathsProvider>
+                  <RepoSidebar />
+                </ExplorerPathsProvider>
+              </PublicAccessGuard>
             ),
             handle: {
               breadcrumb: () => <span>{Page.Files}</span>,
@@ -328,14 +342,16 @@ export const repoRoutes: CustomRouteObject[] = [
                 index: true,
                 element: <RepoCode />,
                 handle: {
-                  pageTitle: Page.Files
+                  pageTitle: Page.Files,
+                  publicAccess: true
                 }
               },
               {
                 path: '*',
                 element: <RepoCode />,
                 handle: {
-                  routeName: RouteConstants.toRepoFileDetails
+                  routeName: RouteConstants.toRepoFileDetails,
+                  publicAccess: true
                 }
               }
             ]
@@ -345,7 +361,8 @@ export const repoRoutes: CustomRouteObject[] = [
             element: <RepoTagsListContainer />,
             handle: {
               breadcrumb: () => <span>{Page.Tags}</span>,
-              routeName: RouteConstants.toRepoTags
+              routeName: RouteConstants.toRepoTags,
+              publicAccess: true
             }
           },
           {
@@ -354,7 +371,8 @@ export const repoRoutes: CustomRouteObject[] = [
             handle: {
               breadcrumb: () => <span>{Page.Search}</span>,
               routeName: RouteConstants.toRepoSearch,
-              pageTitle: Page.Search
+              pageTitle: Page.Search,
+              publicAccess: true
             }
           },
           {
@@ -368,7 +386,8 @@ export const repoRoutes: CustomRouteObject[] = [
                 index: true,
                 element: <RepoPullRequestListPage />,
                 handle: {
-                  pageTitle: Page.Pull_Requests
+                  pageTitle: Page.Pull_Requests,
+                  publicAccess: true
                 }
               },
               {
@@ -409,7 +428,8 @@ export const repoRoutes: CustomRouteObject[] = [
                     ),
                     handle: {
                       routeName: RouteConstants.toPullRequestConversation,
-                      pageTitle: Page.Conversation
+                      pageTitle: Page.Conversation,
+                      publicAccess: true
                     }
                   },
                   {
@@ -418,7 +438,8 @@ export const repoRoutes: CustomRouteObject[] = [
                     handle: {
                       breadcrumb: () => <span>{Page.Commits}</span>,
                       routeName: RouteConstants.toPullRequestCommits,
-                      pageTitle: Page.Commits
+                      pageTitle: Page.Commits,
+                      publicAccess: true
                     }
                   },
                   {
@@ -431,7 +452,8 @@ export const repoRoutes: CustomRouteObject[] = [
                     handle: {
                       breadcrumb: () => <span>{Page.Changes}</span>,
                       routeName: RouteConstants.toPullRequestChanges,
-                      pageTitle: Page.Changes
+                      pageTitle: Page.Changes,
+                      publicAccess: true
                     }
                   },
                   {
@@ -444,7 +466,8 @@ export const repoRoutes: CustomRouteObject[] = [
                     handle: {
                       breadcrumb: () => <span>{Page.Changes}</span>,
                       routeName: RouteConstants.toPullRequestChange,
-                      pageTitle: Page.Changes
+                      pageTitle: Page.Changes,
+                      publicAccess: true
                     }
                   },
                   {
@@ -453,7 +476,8 @@ export const repoRoutes: CustomRouteObject[] = [
                     handle: {
                       breadcrumb: () => <span>{Page.Checks}</span>,
                       routeName: RouteConstants.toPullRequestChecks,
-                      pageTitle: Page.Checks
+                      pageTitle: Page.Checks,
+                      publicAccess: true
                     }
                   }
                 ]
@@ -462,6 +486,7 @@ export const repoRoutes: CustomRouteObject[] = [
           },
           {
             path: 'pipelines',
+            element: <PublicAccessGuard />,
             handle: {
               breadcrumb: () => <span>{Page.Pipelines}</span>,
               routeName: RouteConstants.toRepoPipelines
@@ -523,7 +548,11 @@ export const repoRoutes: CustomRouteObject[] = [
           },
           {
             path: 'settings',
-            element: <RepoSettingsLayout />,
+            element: (
+              <PublicAccessGuard>
+                <RepoSettingsLayout />
+              </PublicAccessGuard>
+            ),
             handle: {
               breadcrumb: () => <span>{Page.Settings}</span>,
               pageTitle: Page.Settings
@@ -741,7 +770,8 @@ export const repoRoutes: CustomRouteObject[] = [
     element: <SearchPage />,
     handle: {
       breadcrumb: () => <span>{Page.Search}</span>,
-      pageTitle: Page.Search
+      pageTitle: Page.Search,
+      publicAccess: true
     }
   },
   {

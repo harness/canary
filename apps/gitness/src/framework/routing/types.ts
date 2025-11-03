@@ -129,6 +129,10 @@ export interface CustomHandle {
    * Updates the document title based on route parameters.
    */
   pageTitle?: string | ((params: Params<string>) => string)
+  /**
+   * Indicates if this route is accessible in public sessions
+   */
+  publicAccess?: boolean
 }
 
 // Intersection of RouteObject with the custom handle

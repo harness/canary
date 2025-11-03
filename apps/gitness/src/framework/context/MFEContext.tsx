@@ -46,6 +46,7 @@ export interface UserInfo {
 
 export interface ParentAppStoreContextProps {
   currentUserInfo: UserInfo
+  isPublicAccessEnabledOnResources: boolean | undefined
 }
 
 export interface UseLogoutReturn {
@@ -129,7 +130,10 @@ export const defaultContext: MFEContextProps = {
   scope: { accountId: '' },
   renderUrl: '',
   parentContextObj: {
-    appStoreContext: createContext({ currentUserInfo: { uuid: '' } })
+    appStoreContext: createContext({
+      currentUserInfo: { uuid: '' },
+      isPublicAccessEnabledOnResources: false as boolean | undefined
+    })
   },
   customHooks: {
     usePreferenceStore: () => ({ preference: undefined, setPreference: noop }),

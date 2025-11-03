@@ -1,4 +1,4 @@
-import { createContext, FC, memo, ReactNode, useContext, useEffect, useMemo, useState } from 'react'
+import { createContext, FC, memo, ReactNode, useCallback, useContext, useEffect, useMemo, useState } from 'react'
 
 import { noop } from 'lodash-es'
 
@@ -17,6 +17,12 @@ import { ProfileSettingsErrorType } from '@harnessio/ui/views'
 import { useIsMFE } from '../hooks/useIsMFE'
 import usePageTitle from '../hooks/usePageTitle'
 
+declare global {
+  interface Window {
+    publicAccessOnAccount?: boolean
+  }
+}
+
 interface AppContextType {
   spaces: TypesSpace[]
   isSpacesLoading: boolean
@@ -32,6 +38,7 @@ interface AppContextType {
     type: ProfileSettingsErrorType
     message: string
   } | null
+  isCurrentSessionPublic: boolean | undefined
 }
 
 const AppContext = createContext<AppContextType>({
@@ -45,7 +52,8 @@ const AppContext = createContext<AppContextType>({
   updateUserProfile: async () => {},
   isUpdatingUser: false,
   isLoadingUser: false,
-  updateUserError: null
+  updateUserError: null,
+  isCurrentSessionPublic: undefined
 })
 
 export const AppProvider: FC<{ children: ReactNode }> = memo(({ children }) => {
@@ -61,7 +69,12 @@ export const AppProvider: FC<{ children: ReactNode }> = memo(({ children }) => {
     message: string
   } | null>(null)
 
-  const fetchUser = async (): Promise<void> => {
+  // Calculate isCurrentSessionPublic from window object
+  const isCurrentSessionPublic = useMemo(() => {
+    return window.publicAccessOnAccount
+  }, [])
+
+  const fetchUser = useCallback(async (): Promise<void> => {
     try {
       setIsLoadingUser(true)
       setUpdateUserError(null)
@@ -76,35 +89,38 @@ export const AppProvider: FC<{ children: ReactNode }> = memo(({ children }) => {
     } finally {
       setIsLoadingUser(false)
     }
-  }
+  }, [setCurrentUser])
 
-  const updateUserProfile = async (data: { display_name?: string; email?: string }): Promise<void> => {
-    setIsUpdatingUser(true)
-    setUpdateUserError(null)
-    try {
-      const response = await updateUser({ body: data })
-      setCurrentUser(response.body)
-    } catch (error) {
-      const typedError = error as UpdateUserErrorResponse
-      setUpdateUserError({
-        type: ProfileSettingsErrorType.PROFILE,
-        message: typedError.message || 'An unknown update user error occurred.'
-      })
-    } finally {
-      setIsUpdatingUser(false)
-    }
-  }
+  const updateUserProfile = useCallback(
+    async (data: { display_name?: string; email?: string }): Promise<void> => {
+      setIsUpdatingUser(true)
+      setUpdateUserError(null)
+      try {
+        const response = await updateUser({ body: data })
+        setCurrentUser(response.body)
+      } catch (error) {
+        const typedError = error as UpdateUserErrorResponse
+        setUpdateUserError({
+          type: ProfileSettingsErrorType.PROFILE,
+          message: typedError.message || 'An unknown update user error occurred.'
+        })
+      } finally {
+        setIsUpdatingUser(false)
+      }
+    },
+    [setCurrentUser]
+  )
 
-  const fetchSpaces = async () => {
+  const fetchSpaces = useCallback(async () => {
     setSpacesIsLoading(true)
 
     try {
-      const fetchSpaces = () =>
+      const fetchSpacesAPI = () =>
         membershipSpaces({
           queryParams: { page: 1, limit: 100, sort: 'identifier', order: 'asc' }
         })
 
-      const results = await fetchSpaces()
+      const results = await fetchSpacesAPI()
       if (results?.body) {
         const spaces = results.body
           .filter((item: { space?: TypesSpace }) => item.space)
@@ -117,14 +133,14 @@ export const AppProvider: FC<{ children: ReactNode }> = memo(({ children }) => {
     } finally {
       setSpacesIsLoading(false)
     }
-  }
+  }, [])
 
   useEffect(() => {
     fetchUser()
     if (!isMFE) {
       fetchSpaces()
     }
-  }, [isMFE])
+  }, [isMFE, fetchUser, fetchSpaces])
 
   const addSpaces = (newSpaces: TypesSpace[]): void => {
     setSpaces(prevSpaces => [...prevSpaces, ...newSpaces])
@@ -142,9 +158,21 @@ export const AppProvider: FC<{ children: ReactNode }> = memo(({ children }) => {
       isLoadingUser,
       isUpdatingUser,
       updateUserError,
-      isSpacesLoading
+      isSpacesLoading,
+      isCurrentSessionPublic
     }),
-    [spaces, currentUser, isLoadingUser, isUpdatingUser, updateUserError, isSpacesLoading]
+    [
+      spaces,
+      currentUser,
+      isLoadingUser,
+      isUpdatingUser,
+      updateUserError,
+      isSpacesLoading,
+      isCurrentSessionPublic,
+      fetchUser,
+      setCurrentUser,
+      updateUserProfile
+    ]
   )
 
   return <AppContext.Provider value={contextValue}>{children}</AppContext.Provider>

@@ -1549,15 +1549,6 @@
           "$description": "Background color for sidebar items on hover. Provides subtle visual feedback for interactive elements."
         },
         "selected": {
-          "$extensions": {
-            "studio.tokens": {
-              "modify": {
-                "type": "alpha",
-                "value": "0",
-                "space": "lch"
-              }
-            }
-          },
           "$type": "color",
           "$value": "linear-gradient(95deg, {gradient.sidebar.selected.from} 0%, {gradient.sidebar.selected.to} 84.9%);",
           "$description": "Background color for selected sidebar items. Indicates the current active navigation state with stronger emphasis than hover."

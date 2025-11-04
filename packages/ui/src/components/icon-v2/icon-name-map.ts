@@ -165,6 +165,7 @@ import DownloadDataWindow from './icons/download-data-window.svg'
 import Download from './icons/download.svg'
 import DragHandGesture from './icons/drag-hand-gesture.svg'
 import Drag from './icons/drag.svg'
+import Earth from './icons/earth.svg'
 import EditPencil from './icons/edit-pencil.svg'
 import Edit from './icons/edit.svg'
 import EmptyCircle from './icons/empty-circle.svg'
@@ -219,7 +220,6 @@ import GitPullRequest from './icons/git-pull-request.svg'
 import GitRebase from './icons/git-rebase.svg'
 import GitSquashMerge from './icons/git-squash-merge.svg'
 import GithubAction from './icons/github-action.svg'
-import Globe from './icons/globe.svg'
 import Globe from './icons/globe.svg'
 import GripDots from './icons/grip-dots.svg'
 import Group1 from './icons/group-1.svg'
@@ -628,6 +628,7 @@ export const IconNameMapV2 = {
   download: Download,
   'drag-hand-gesture': DragHandGesture,
   drag: Drag,
+  earth: Earth,
   'edit-pencil': EditPencil,
   edit: Edit,
   'empty-circle': EmptyCircle,
@@ -682,7 +683,6 @@ export const IconNameMapV2 = {
   'git-rebase': GitRebase,
   'git-squash-merge': GitSquashMerge,
   'github-action': GithubAction,
-  globe: Globe,
   globe: Globe,
   'grip-dots': GripDots,
   'group-1': Group1,

@@ -15,7 +15,6 @@ export function RenderInputs(props: {
           key={`${input.inputType}_${input.path}_${input.label}`}
           input={input}
           path={input.path}
-          readonly={false}
           {...restProps}
         />
       ))}

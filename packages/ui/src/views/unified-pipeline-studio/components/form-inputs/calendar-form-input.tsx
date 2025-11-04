@@ -15,8 +15,8 @@ export type CalendarFormInputDefinition = IInputDefinition<CalendarInputConfig, 
 type CalendarFormInputProps = InputProps<AnyFormValue, CalendarInputConfig>
 
 function CalendarFormInputInternal(props: CalendarFormInputProps): JSX.Element {
-  const { path, input } = props
-  const { label, required, description, readonly } = input
+  const { path, input, readonly } = props
+  const { label, required, description } = input
 
   const { field, fieldState } = useController({
     name: path,

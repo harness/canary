@@ -71,21 +71,24 @@ export interface IInputDefinition<TConfig = unknown, TValue = unknown, TInputTyp
    */
   inputs?: IInputDefinition[]
   /**
-   * Runtime inputs
-   *
-   * Note: In input has child input that can be runtime inputs we can define input components.
-   *
-   * @deprecated
-   */
-  runtimeInputs?: IInputDefinition<unknown>[]
-  /**
    * Validation for input
    *
-   * Note: Validation of complex inputs has to respect its formik structure
+   * Note: Validation of complex inputs has to respect its model structure
    */
   validation?: {
     schema?: Schema<unknown> | ((values: any) => Schema<unknown>)
   }
+  /**
+   * Conditionally disable input.
+   */
+  disabled?: boolean | ((values: AnyFormValue, metadata: any) => boolean)
+  /**
+   * Warning validation schema
+   */
+  warning?: {
+    schema?: Schema<unknown> | ((values: any) => Schema<unknown>)
+  }
+
   before?: JSX.Element | string
   after?: JSX.Element | string
   description?: string

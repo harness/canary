@@ -31,8 +31,8 @@ export type SelectFormInputDefinition = IInputDefinition<SelectFormInputConfig, 
 type SelectFormInputProps = InputProps<AnyFormValue, SelectFormInputConfig>
 
 function SelectFormInputInternal(props: SelectFormInputProps): JSX.Element {
-  const { path, input } = props
-  const { label, description, inputConfig, readonly, placeholder } = input
+  const { path, input, readonly } = props
+  const { label, description, inputConfig, placeholder } = input
   const methods = useFormContext()
   const values = methods.watch()
 

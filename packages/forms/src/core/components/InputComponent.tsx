@@ -1,14 +1,16 @@
 import type { IInputDefinition } from '../../types/types'
 import type { InputFactory } from '../factory/InputFactory'
 
-export interface InputProps<TValue, TDef = unknown> {
+export interface InputProps<TValue, TConfig = unknown> {
   initialValues?: TValue
   onUpdate?: (data: TValue) => void
   onChange?: (data: TValue) => void
   factory: InputFactory
   path: string
   readonly?: boolean
-  input: IInputDefinition<TDef, TValue>
+  disabled?: boolean
+  warning?: string
+  input: Omit<IInputDefinition<TConfig, TValue>, 'readonly' | 'disabled'>
 }
 
 export abstract class InputComponent<TValue> {

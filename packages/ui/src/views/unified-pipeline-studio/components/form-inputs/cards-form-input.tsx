@@ -24,8 +24,8 @@ export type CardsFormInputDefinition = IInputDefinition<CardsFormInputConfig, An
 type CardsFormInputProps = InputProps<AnyFormValue, CardsFormInputConfig>
 
 function CardsFormInputInternal(props: CardsFormInputProps): JSX.Element {
-  const { path, input } = props
-  const { label, required, description, inputConfig, readonly } = input
+  const { path, input, readonly } = props
+  const { label, required, description, inputConfig } = input
   const options = inputConfig?.options ?? []
 
   const { field, fieldState } = useController({

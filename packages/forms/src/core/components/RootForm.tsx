@@ -46,6 +46,10 @@ export interface RootFormProps<TFieldValues extends FieldValues = FieldValues, T
    * auto focus input
    */
   autoFocusPath?: Path<TFieldValues>
+  /**
+   * Make form readonly
+   */
+  readonly?: boolean
 }
 
 export function RootForm<TFieldValues extends FieldValues = FieldValues, TContext = any, TMetadata = any>(
@@ -66,7 +70,8 @@ export function RootForm<TFieldValues extends FieldValues = FieldValues, TContex
     metadata,
     children,
     // fixedValues
-    autoFocusPath
+    autoFocusPath,
+    readonly
   } = props
 
   const methods = useForm<TFieldValues>({
@@ -150,7 +155,7 @@ export function RootForm<TFieldValues extends FieldValues = FieldValues, TContex
   }, [methods])
 
   return (
-    <RootFormProvider metadata={metadata}>
+    <RootFormProvider metadata={metadata} readonly={readonly}>
       <FormProvider {...methods}>
         {typeof children === 'function'
           ? children({

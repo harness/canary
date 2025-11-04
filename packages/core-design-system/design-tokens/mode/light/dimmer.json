@@ -1498,7 +1498,7 @@
         },
         "selected": {
           "$type": "color",
-          "$value": "linear-gradient(95deg, {gradient.sidebar.selected.from} 0%, {gradient.sidebar.selected.to} 84.9%);",
+          "$value": "linear-gradient(95deg, {gradient.sidebar.selected.from} -13.12%, {gradient.sidebar.selected.to} 84.9%);",
           "$description": "Background color for selected sidebar items. Indicates the current active navigation state with stronger emphasis than hover."
         },
         "bg-draggable": {

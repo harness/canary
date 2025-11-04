@@ -1529,9 +1529,14 @@
           "$value": "{tuna.300}",
           "$description": "Background color for sidebar items on hover. Provides subtle visual feedback for interactive elements."
         },
+        "text-subtle": {
+          "$type": "color",
+          "$value": "{text.3}",
+          "$description": "Text color for sidebar. Provides reduced emphasis for section headers and categorization."
+        },
         "selected": {
           "$type": "color",
-          "$value": "linear-gradient(95deg, {gradient.sidebar.selected.from} -13.12%, {gradient.sidebar.selected.to} 84.9%);",
+          "$value": "linear-gradient(95deg, {gradient.sidebar.selected.from} 0%, {gradient.sidebar.selected.to} 84.9%);",
           "$description": "Background color for selected sidebar items. Indicates the current active navigation state with stronger emphasis than hover."
         },
         "bg-draggable": {
@@ -1543,11 +1548,6 @@
         "$type": "color",
         "$value": "{border.3}",
         "$description": "Color for separator lines between sidebar sections. Creates visual grouping and hierarchy."
-      },
-      "group-label": {
-        "$type": "color",
-        "$value": "{text.2}",
-        "$description": "Text color for sidebar group labels. Provides reduced emphasis for section headers and categorization."
       },
       "fade-start": {
         "$type": "color",

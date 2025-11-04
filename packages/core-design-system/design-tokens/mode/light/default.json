@@ -1529,12 +1529,17 @@
           "$value": "{text.1}",
           "$description": "Text color for selected sidebar items. Emphasizes the current active navigation state."
         },
+        "text-subtle": {
+          "$type": "color",
+          "$value": "{text.3}",
+          "$description": "Text color for sidebar. Provides reduced emphasis for section headers and categorization."
+        },
         "hover": {
           "$extensions": {
             "studio.tokens": {
               "modify": {
                 "type": "alpha",
-                "value": "0.2",
+                "value": "0.15",
                 "space": "lch"
               }
             }
@@ -1544,29 +1549,19 @@
           "$description": "Background color for sidebar items on hover. Provides subtle visual feedback for interactive elements."
         },
         "selected": {
-          "$extensions": {
-            "studio.tokens": {
-              "modify": {
-                "type": "alpha",
-                "value": "0.26",
-                "space": "lch"
-              }
-            }
-          },
           "$type": "color",
-          "$value": "{tuna.300}",
+          "$value": "linear-gradient(95deg, {gradient.sidebar.selected.from} -13.12%, {gradient.sidebar.selected.to} 84.9%);",
           "$description": "Background color for selected sidebar items. Indicates the current active navigation state with stronger emphasis than hover."
+        },
+        "bg-draggable": {
+          "$type": "color",
+          "$value": "{bg.2}"
         }
       },
       "separator": {
         "$type": "color",
-        "$value": "{border.2}",
+        "$value": "{border.3}",
         "$description": "Color for separator lines between sidebar sections. Creates visual grouping and hierarchy."
-      },
-      "group-label": {
-        "$type": "color",
-        "$value": "{text.3}",
-        "$description": "Text color for sidebar group labels. Provides reduced emphasis for section headers and categorization."
       },
       "fade-start": {
         "$type": "color",
@@ -1831,7 +1826,7 @@
         {
           "x": "0",
           "y": "1",
-          "blur": "2",
+          "blur": "15",
           "spread": "-1",
           "color": "{shadow-color.2}",
           "type": "dropShadow"
@@ -1853,7 +1848,7 @@
         {
           "x": "0",
           "y": "2",
-          "blur": "4",
+          "blur": "8",
           "spread": "-2",
           "color": "{shadow-color.3}",
           "type": "dropShadow"
@@ -1875,7 +1870,7 @@
         {
           "x": "0",
           "y": "4",
-          "blur": "6",
+          "blur": "8",
           "spread": "-4",
           "color": "{shadow-color.4}",
           "type": "dropShadow"
@@ -1966,7 +1961,7 @@
         "studio.tokens": {
           "modify": {
             "type": "alpha",
-            "value": "0.05",
+            "value": "0.13",
             "space": "lch"
           }
         }
@@ -1980,7 +1975,7 @@
         "studio.tokens": {
           "modify": {
             "type": "alpha",
-            "value": "0.05",
+            "value": "0.13",
             "space": "lch"
           }
         }
@@ -1994,7 +1989,7 @@
         "studio.tokens": {
           "modify": {
             "type": "alpha",
-            "value": "0.05",
+            "value": "0.08",
             "space": "lch"
           }
         }
@@ -2008,7 +2003,7 @@
         "studio.tokens": {
           "modify": {
             "type": "alpha",
-            "value": "0.05",
+            "value": "0.08",
             "space": "lch"
           }
         }
@@ -2022,7 +2017,7 @@
         "studio.tokens": {
           "modify": {
             "type": "alpha",
-            "value": "0.07",
+            "value": "0.08",
             "space": "lch"
           }
         }
@@ -2368,6 +2363,34 @@
         },
         "$type": "color",
         "$value": "{comp.sidebar.bg}"
+      },
+      "selected": {
+        "from": {
+          "$extensions": {
+            "studio.tokens": {
+              "modify": {
+                "type": "alpha",
+                "value": "0.65",
+                "space": "lch"
+              }
+            }
+          },
+          "$type": "color",
+          "$value": "{cyan.50}"
+        },
+        "to": {
+          "$extensions": {
+            "studio.tokens": {
+              "modify": {
+                "type": "alpha",
+                "value": "0.15",
+                "space": "lch"
+              }
+            }
+          },
+          "$type": "color",
+          "$value": "{tuna.300}"
+        }
       }
     },
     "toast": {

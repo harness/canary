@@ -7,7 +7,7 @@
       },
       "py": {
         "$type": "spacing",
-        "$value": "{spacing.2}"
+        "$value": "{spacing.1}"
       },
       "gap": {
         "$type": "spacing",
@@ -25,7 +25,7 @@
     "group": {
       "py": {
         "$type": "spacing",
-        "$value": "{spacing.1-half}"
+        "$value": "{spacing.2}"
       },
       "gap": {
         "$type": "spacing",
@@ -33,9 +33,13 @@
       }
     },
     "container": {
-      "py": {
+      "pb": {
         "$type": "spacing",
         "$value": "{spacing.1-half}"
+      },
+      "pt": {
+        "$type": "spacing",
+        "$value": "{spacing.px}"
       },
       "px": {
         "$type": "spacing",
@@ -81,7 +85,7 @@
       },
       "py": {
         "$type": "spacing",
-        "$value": "{spacing.1-half}"
+        "$value": "{spacing.2}"
       },
       "gap": {
         "$type": "spacing",
@@ -89,7 +93,7 @@
       },
       "min": {
         "$type": "sizing",
-        "$value": "{size.7}"
+        "$value": "{size.8}"
       }
     },
     "sub-group": {

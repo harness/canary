@@ -114,6 +114,7 @@ import Code from './icons/code.svg'
 import CollapseCode from './icons/collapse-code.svg'
 import CollapseSidebar from './icons/collapse-sidebar.svg'
 import Collapse from './icons/collapse.svg'
+import CollapsedItems from './icons/collapsed-items.svg'
 import Community from './icons/community.svg'
 import ConnectorsSolid from './icons/connectors-solid.svg'
 import Connectors from './icons/connectors.svg'
@@ -124,6 +125,8 @@ import Cpu from './icons/cpu.svg'
 import Cron from './icons/cron.svg'
 import Crop from './icons/crop.svg'
 import CursorPointer from './icons/cursor-pointer.svg'
+import CustomDeploymentSolid from './icons/custom-deployment-solid.svg'
+import CustomRemote from './icons/custom-remote.svg'
 import CustomSecretManager from './icons/custom-secret-manager.svg'
 import CustomTrigger from './icons/custom-trigger.svg'
 import CustomizeNavigation from './icons/customize-navigation.svg'
@@ -147,6 +150,7 @@ import DatabasesSolid from './icons/databases-solid.svg'
 import Databases from './icons/databases.svg'
 import DefaultSecretManager from './icons/default-secret-manager.svg'
 import Delegates from './icons/delegates.svg'
+import DeploySolid from './icons/deploy-solid.svg'
 import Deploy from './icons/deploy.svg'
 import DeploymentsSolid from './icons/deployments-solid.svg'
 import Deployments from './icons/deployments.svg'
@@ -161,6 +165,7 @@ import DownloadDataWindow from './icons/download-data-window.svg'
 import Download from './icons/download.svg'
 import DragHandGesture from './icons/drag-hand-gesture.svg'
 import Drag from './icons/drag.svg'
+import Earth from './icons/earth.svg'
 import EditPencil from './icons/edit-pencil.svg'
 import Edit from './icons/edit.svg'
 import EmptyCircle from './icons/empty-circle.svg'
@@ -266,6 +271,7 @@ import MinusCircleSolid from './icons/minus-circle-solid.svg'
 import MinusCircle from './icons/minus-circle.svg'
 import MinusSquare from './icons/minus-square.svg'
 import Minus from './icons/minus.svg'
+import MonitoredService from './icons/monitored-service.svg'
 import MoreHorizCircle from './icons/more-horiz-circle.svg'
 import MoreHorizontal from './icons/more-horizontal.svg'
 import MoreVertCircle from './icons/more-vert-circle.svg'
@@ -357,6 +363,9 @@ import Scissor from './icons/scissor.svg'
 import SearchEngine from './icons/search-engine.svg'
 import SearchWindow from './icons/search-window.svg'
 import Search from './icons/search.svg'
+import SecretSshSolid from './icons/secret-ssh-solid.svg'
+import SecretSsh from './icons/secret-ssh.svg'
+import SecureShellSolid from './icons/secure-shell-solid.svg'
 import SecurityPass from './icons/security-pass.svg'
 import SecurityTestsSolid from './icons/security-tests-solid.svg'
 import SecurityTests from './icons/security-tests.svg'
@@ -365,6 +374,7 @@ import SendMail from './icons/send-mail.svg'
 import Send from './icons/send.svg'
 import ServiceAccounts from './icons/service-accounts.svg'
 import Services from './icons/services.svg'
+import SettingsSolid from './icons/settings-solid.svg'
 import Settings from './icons/settings.svg'
 import ShareIos from './icons/share-ios.svg'
 import ShareSolid from './icons/share-solid.svg'
@@ -567,6 +577,7 @@ export const IconNameMapV2 = {
   'collapse-code': CollapseCode,
   'collapse-sidebar': CollapseSidebar,
   collapse: Collapse,
+  'collapsed-items': CollapsedItems,
   community: Community,
   'connectors-solid': ConnectorsSolid,
   connectors: Connectors,
@@ -577,7 +588,10 @@ export const IconNameMapV2 = {
   cron: Cron,
   crop: Crop,
   'cursor-pointer': CursorPointer,
+  'custom-deployment-solid': CustomDeploymentSolid,
+  'custom-remote': CustomRemote,
   'custom-secret-manager': CustomSecretManager,
+  'custom-trigger': CustomTrigger,
   'customize-navigation': CustomizeNavigation,
   'dashboard-solid': DashboardSolid,
   'dashboard-speed': DashboardSpeed,
@@ -599,6 +613,7 @@ export const IconNameMapV2 = {
   databases: Databases,
   'default-secret-manager': DefaultSecretManager,
   delegates: Delegates,
+  'deploy-solid': DeploySolid,
   deploy: Deploy,
   'deployments-solid': DeploymentsSolid,
   deployments: Deployments,
@@ -613,6 +628,7 @@ export const IconNameMapV2 = {
   download: Download,
   'drag-hand-gesture': DragHandGesture,
   drag: Drag,
+  earth: Earth,
   'edit-pencil': EditPencil,
   edit: Edit,
   'empty-circle': EmptyCircle,
@@ -718,6 +734,7 @@ export const IconNameMapV2 = {
   'minus-circle': MinusCircle,
   'minus-square': MinusSquare,
   minus: Minus,
+  'monitored-service': MonitoredService,
   'more-horiz-circle': MoreHorizCircle,
   'more-horizontal': MoreHorizontal,
   'more-vert-circle': MoreVertCircle,
@@ -809,6 +826,9 @@ export const IconNameMapV2 = {
   'search-engine': SearchEngine,
   'search-window': SearchWindow,
   search: Search,
+  'secret-ssh-solid': SecretSshSolid,
+  'secret-ssh': SecretSsh,
+  'secure-shell-solid': SecureShellSolid,
   'security-pass': SecurityPass,
   'security-tests-solid': SecurityTestsSolid,
   'security-tests': SecurityTests,
@@ -817,6 +837,7 @@ export const IconNameMapV2 = {
   send: Send,
   'service-accounts': ServiceAccounts,
   services: Services,
+  'settings-solid': SettingsSolid,
   settings: Settings,
   'share-ios': ShareIos,
   'share-solid': ShareSolid,
@@ -852,7 +873,6 @@ export const IconNameMapV2 = {
   'sun-light': SunLight,
   'supply-chain-solid': SupplyChainSolid,
   'supply-chain': SupplyChain,
-  'custom-trigger': CustomTrigger,
   'system-restart': SystemRestart,
   'table-rows': TableRows,
   'tag-solid': TagSolid,

@@ -173,7 +173,7 @@ import EnergyUsageWindow from './icons/energy-usage-window.svg'
 import EngineeringInsightsSolid from './icons/engineering-insights-solid.svg'
 import EngineeringInsights from './icons/engineering-insights.svg'
 import Enlarge from './icons/enlarge.svg'
-import Enviroments from './icons/enviroments.svg'
+import Environments from './icons/environments.svg'
 import Erase from './icons/erase.svg'
 import ErrorTracking from './icons/error-tracking.svg'
 import Executions from './icons/executions.svg'
@@ -636,7 +636,7 @@ export const IconNameMapV2 = {
   'engineering-insights-solid': EngineeringInsightsSolid,
   'engineering-insights': EngineeringInsights,
   enlarge: Enlarge,
-  enviroments: Enviroments,
+  environments: Environments,
   erase: Erase,
   'error-tracking': ErrorTracking,
   executions: Executions,

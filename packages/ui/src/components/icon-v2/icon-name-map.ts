@@ -364,7 +364,7 @@ import SearchEngine from './icons/search-engine.svg'
 import SearchWindow from './icons/search-window.svg'
 import Search from './icons/search.svg'
 import SecretSshSolid from './icons/secret-ssh-solid.svg'
-import SecretSshSolid from './icons/secret-ssh-solid.svg'
+import SecretSsh from './icons/secret-ssh.svg'
 import SecureShellSolid from './icons/secure-shell-solid.svg'
 import SecurityPass from './icons/security-pass.svg'
 import SecurityTestsSolid from './icons/security-tests-solid.svg'
@@ -827,7 +827,7 @@ export const IconNameMapV2 = {
   'search-window': SearchWindow,
   search: Search,
   'secret-ssh-solid': SecretSshSolid,
-  'secret-ssh-solid': SecretSshSolid,
+  'secret-ssh': SecretSsh,
   'secure-shell-solid': SecureShellSolid,
   'security-pass': SecurityPass,
   'security-tests-solid': SecurityTestsSolid,

@@ -35,6 +35,10 @@
     "safezone": {
       "$type": "spacing",
       "$value": "{spacing.10}"
+    },
+    "fixed-height": {
+      "$type": "sizing",
+      "$value": "518px"
     }
   }
 }

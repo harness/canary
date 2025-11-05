@@ -5,7 +5,6 @@ import { Button } from '@components/button'
 import { IconV2 } from '@components/icon-v2'
 
 import { useSidebar } from './sidebar-context'
-import { SidebarItem } from './sidebar-item'
 
 export interface SidebarToggleMenuButtonProps {
   title?: string

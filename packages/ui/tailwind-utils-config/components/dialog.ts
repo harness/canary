@@ -50,6 +50,10 @@ export default {
       height: 'auto', // let content decide height until it reaches max
       maxWidth: '80vw',
       maxHeight: '80vh'
+    },
+    '&.cn-modal-dialog-fixed-height': {
+      '--cn-dialog-height': 'var(--cn-dialog-fixed-height)',
+      height: 'var(--cn-dialog-height)'
     }
   },
 

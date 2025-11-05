@@ -210,8 +210,8 @@
   },
   "sidebar": {
     "sidebarToggle": {
-      "collapse": "Réduire",
-      "expand": "Développer"
+      "expand": "Développer",
+      "collapse": "Réduire"
     },
     "toggle": "Basculer la barre latérale"
   },

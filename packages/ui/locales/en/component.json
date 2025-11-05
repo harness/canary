@@ -211,8 +211,8 @@
   },
   "sidebar": {
     "sidebarToggle": {
-      "collapse": "Collapse",
-      "expand": "Expand"
+      "expand": "Expand",
+      "collapse": "Collapse"
     },
     "toggle": "Toggle sidebar"
   },

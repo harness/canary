@@ -176,7 +176,8 @@ const PullRequestChangesSection: FC<PullRequestChangesSectionProps> = ({
                     'views:repo.pullRequest.changesSection.pendingLatestApprovalsMessage',
                     '{{latestApprovalsCount}} {{approval}} pending on latest changes',
                     {
-                      latestApprovalsCount: (latestApprovalArr && latestApprovalArr.length) || 0,
+                      latestApprovalsCount:
+                        (latestApprovalArr && latestApprovalArr.length) || minReqLatestApproval || 0,
                       approval: easyPluralize(latestApprovalsCount, 'approval', 'approvals')
                     }
                   )}

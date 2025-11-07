@@ -226,6 +226,9 @@ export default {
             },
             '.cn-sidebar-item-action-menu': {
               opacity: '1'
+            },
+            '.cn-sidebar-item-active-indicator': {
+              backgroundColor: 'var(--cn-set-brand-primary-bg)'
             }
           }
         },

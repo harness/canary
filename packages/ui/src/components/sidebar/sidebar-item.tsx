@@ -366,6 +366,8 @@ const SidebarItemTrigger = forwardRef<HTMLButtonElement | HTMLAnchorElement, Sid
             <IconV2 name={submenuOpen ? 'nav-arrow-down' : 'nav-arrow-right'} size="xs" />
           </button>
         )}
+
+        <div className="absolute top-cn-sm h-3 w-0.5 cn-sidebar-item-active-indicator" />
       </div>
     )
   }

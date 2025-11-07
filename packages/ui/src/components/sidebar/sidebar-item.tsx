@@ -443,7 +443,9 @@ export const SidebarMenuSubItem = forwardRef<HTMLAnchorElement, NavLinkProps & {
 
     return (
       <Layout.Flex>
-        <div className="relative left-cn-4xs top-[10px] h-3 w-0.5 cn-sidebar-submenu-item-active-indicator" />
+        {active && (
+          <div className="relative left-cn-4xs top-[10px] h-3 w-0.5 cn-sidebar-submenu-item-active-indicator" />
+        )}
         <NavLink className={cn('w-full cn-sidebar-submenu-item', className)} role="menuitem" {...props} ref={ref}>
           <Text
             className="cn-sidebar-submenu-item-content"

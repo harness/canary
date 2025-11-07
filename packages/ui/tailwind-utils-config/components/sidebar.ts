@@ -164,6 +164,10 @@ export default {
           '.cn-sidebar-submenu-item-content': {
             color: 'var(--cn-text-1)'
           }
+        },
+
+        '&-active-indicator': {
+          backgroundColor: 'var(--cn-set-brand-primary-bg)'
         }
       }
     },
@@ -226,6 +230,9 @@ export default {
             },
             '.cn-sidebar-item-action-menu': {
               opacity: '1'
+            },
+            '.cn-sidebar-item-active-indicator': {
+              backgroundColor: 'var(--cn-set-brand-primary-bg)'
             }
           }
         },

@@ -144,6 +144,7 @@ export default {
       },
 
       '&-item': {
+        // Layout
         display: 'grid',
         alignItems: 'center',
         minHeight: 'var(--cn-sidebar-sub-item-min)',
@@ -151,11 +152,15 @@ export default {
         borderRadius: 'var(--cn-sidebar-item-radius)',
         outline: 'none',
 
+        // States
         '&:hover, &:focus-within': {
           backgroundColor: 'var(--cn-state-hover)'
         },
 
-        '&-active': {
+        // Modifiers
+        '&.active': {
+          background:
+            'var(--cn-comp-sidebar-item-selected, linear-gradient(95deg, var(--cn-gradient-sidebar-selected-from) -13.12%, var(--cn-gradient-sidebar-selected-to) 84.9%))',
           '.cn-sidebar-submenu-item-content': {
             color: 'var(--cn-text-1)'
           }
@@ -192,23 +197,35 @@ export default {
         overflow: 'hidden',
 
         '&:not([data-disabled=true])': {
-          '&:hover, &:focus-within, &[data-active=true]': {
-            '.cn-sidebar-item-content': {
-              backgroundColor: 'var(--cn-state-hover)'
+          // Hover/focus for non-active items
+          '&:hover, &:focus-within': {
+            '&[data-active=false]': {
+              '.cn-sidebar-item-content': {
+                backgroundColor: 'var(--cn-state-hover)'
+              }
             },
-
             '.cn-sidebar-item-content-title': {
               color: 'var(--cn-text-1)'
             },
-
             '.cn-sidebar-item-action-menu': {
               opacity: '1'
+            },
+            '.cn-sidebar-item-content-action-buttons': {
+              display: 'flex !important'
             }
           },
 
-          '&:hover, &:focus-within': {
-            '.cn-sidebar-item-content-action-buttons': {
-              display: 'flex !important'
+          // Active item
+          '&[data-active=true]': {
+            '.cn-sidebar-item-content': {
+              background:
+                'var(--cn-comp-sidebar-item-selected, linear-gradient(95deg, var(--cn-gradient-sidebar-selected-from) -13.12%, var(--cn-gradient-sidebar-selected-to) 84.9%))'
+            },
+            '.cn-sidebar-item-content-title': {
+              color: 'var(--cn-text-1)'
+            },
+            '.cn-sidebar-item-action-menu': {
+              opacity: '1'
             }
           }
         },

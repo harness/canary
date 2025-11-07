@@ -440,14 +440,7 @@ export const SidebarMenuSubItem = forwardRef<HTMLAnchorElement, NavLinkProps & {
     const { NavLink } = useRouterContext()
 
     return (
-      <NavLink
-        className={({ isActive }) =>
-          cn('cn-sidebar-submenu-item', { 'cn-sidebar-submenu-item-active': isActive }, className)
-        }
-        role="menuitem"
-        {...props}
-        ref={ref}
-      >
+      <NavLink className={cn('cn-sidebar-submenu-item', className)} role="menuitem" {...props} ref={ref}>
         <Text
           className="cn-sidebar-submenu-item-content"
           variant="body-single-line-normal"

@@ -107,6 +107,7 @@ export interface InputReferenceProps<T> extends VariantProps<typeof inputReferen
 
   /**
    * Whether to hide the dropdown menu (3 dots menu)
+   * @default true
    */
   hideDropdownMenu?: boolean
 }
@@ -139,7 +140,7 @@ const InputReferenceInner = <T,>(
     tooltipProps,
     tooltipContent,
     dropdownTriggerRef,
-    hideDropdownMenu = false,
+    hideDropdownMenu = true,
     ...props
   }: InputReferenceProps<T>,
   ref: ForwardedRef<HTMLDivElement>

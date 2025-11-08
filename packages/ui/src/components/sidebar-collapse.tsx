@@ -2,6 +2,11 @@ import { useState } from 'react'
 
 import { motion } from 'framer-motion' // v6 compatible
 
+import { Button } from './button'
+import { IconV2 } from './icon-v2'
+import { Separator } from './separator'
+import { Text } from './text'
+
 const ITEMS = [
   { id: 'dashboard', label: 'Dashboard', icon: '🏠' },
   { id: 'payments', label: 'Payments', icon: '💰', badge: 3 },
@@ -71,11 +76,23 @@ const SidebarCollapse = () => {
         {/* Icon moves along with container bump */}
         <motion.div
           className="absolute flex items-center justify-center text-gray-600 font-bold select-none pointer-events-none"
-          style={{ left: 6 }} // 5px to the right of the line
+          style={hover ? { left: -6 } : { left: 4 }} // 4px to the right of the line when not hovering
           animate={{ x: 0 }} // now moves with parent container
           transition={{ type: 'spring', stiffness: 300, damping: 20 }}
         >
-          {hover ? (open ? '<' : '>') : '|'}
+          {hover ? (
+            open ? (
+              <Button variant="transparent" iconOnly tooltipProps={{ content: 'Collapse' }}>
+                <IconV2 name="nav-arrow-left" size="lg" />
+              </Button>
+            ) : (
+              <Button variant="transparent" iconOnly tooltipProps={{ content: 'Expand' }}>
+                <IconV2 name="nav-arrow-right" size="lg" />
+              </Button>
+            )
+          ) : (
+            <Text>|</Text>
+          )}
         </motion.div>
       </motion.div>
 

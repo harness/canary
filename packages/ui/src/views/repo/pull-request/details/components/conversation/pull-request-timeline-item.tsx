@@ -139,7 +139,7 @@ const ItemHeader: FC<ItemHeaderProps> = memo(
     return (
       <Layout.Horizontal className="flex-1" justify="between">
         <Text asChild variant="body-single-line-normal" color="foreground-3">
-          <Layout.Horizontal className="flex-1" gap="2xs" align="center" wrap="nowrap">
+          <Layout.Horizontal className="flex-1" gap="2xs" align="center" wrap="wrap">
             {/**
              * ============
              * Avatar and Name
@@ -161,7 +161,7 @@ const ItemHeader: FC<ItemHeaderProps> = memo(
             {description}
             {timestamp && (
               <>
-                <Separator orientation="vertical" className="mx-cn-4xs h-cn-md" />
+                <Separator orientation="vertical" className="mx-cn-4xs h-3" />
                 <TimeAgoCard triggerClassName="shrink-0" timestamp={timestamp} />
               </>
             )}
@@ -407,7 +407,7 @@ const PullRequestTimelineItem: FC<TimelineItemProps> = ({
         <NodeGroup.Root
           className={cn(getThreadSpacingClasses(threadIndex, totalThreads, isLast, isCompactLayout), wrapperClassName)}
         >
-          {!!icon && <NodeGroup.Icon wrapperClassName="self-auto size-auto">{icon}</NodeGroup.Icon>}
+          {!!icon && <NodeGroup.Icon>{icon}</NodeGroup.Icon>}
           <NodeGroup.Title className={titleClassName}>
             {/* Ensure that header has at least one item */}
             {!!header.length && (

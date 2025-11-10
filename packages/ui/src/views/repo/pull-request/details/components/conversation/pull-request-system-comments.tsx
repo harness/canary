@@ -284,15 +284,15 @@ const PullRequestSystemComments: FC<SystemCommentProps> = ({
           header: {
             description: (
               <>
-                <Text variant="body-single-line-normal" color="foreground-3" lineClamp={1}>
-                  changed title from&nbsp;
-                  <Text className="line-through" as="span" variant="body-single-line-normal" color="foreground-1">
+                changed title from&nbsp;
+                <Text as="span">
+                  <Text as="del" className="text-cn-1 inline ">
                     {String(old)}
                   </Text>
-                  &nbsp;to&nbsp;
-                  <Text as="span" variant="body-single-line-normal" color="foreground-1">
-                    {String(newData)}
-                  </Text>
+                  &nbsp; to&nbsp;
+                </Text>
+                <Text as="ins" className="text-cn-1 inline">
+                  {String(newData)}
                 </Text>
               </>
             )

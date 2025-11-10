@@ -256,7 +256,7 @@ const SidebarItemTrigger = forwardRef<HTMLButtonElement | HTMLAnchorElement, Sid
           variant="body-single-line-normal"
           color={withDescription ? 'foreground-1' : 'foreground-2'}
           className="cn-sidebar-item-content-title"
-          truncate
+          wrap="wrap"
         >
           {title}
         </Text>

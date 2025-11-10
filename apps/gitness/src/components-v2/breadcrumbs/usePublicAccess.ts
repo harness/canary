@@ -1,14 +1,14 @@
 import { useMemo } from 'react'
 import { useLocation, useMatches } from 'react-router-dom'
 
-import { useAppContext } from '../../framework/context/AppContext'
+import { useMFEContext } from '../../framework/hooks/useMFEContext'
 import { CustomHandle } from '../../framework/routing/types'
 
 export const usePublicAccess = () => {
   const matches = useMatches()
   const location = useLocation()
-  const { isCurrentSessionPublic } = useAppContext()
 
+  const { isPublicAccessEnabledOnResources, isCurrentSessionPublic } = useMFEContext()
   // Check if current route is public
   const isRoutePublic = useMemo(() => {
     // Find the deepest match (most specific route)
@@ -24,6 +24,7 @@ export const usePublicAccess = () => {
 
   return {
     isCurrentSessionPublic,
+    isPublicAccessEnabledOnResources,
     isRoutePublic,
     shouldShowPageNotPublic,
     currentPath: location.pathname

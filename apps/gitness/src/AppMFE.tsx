@@ -40,7 +40,9 @@ export default function AppMFE({
   customUtils,
   routes,
   routeUtils,
-  hooks
+  hooks,
+  isPublicAccessEnabledOnResources,
+  isCurrentSessionPublic
 }: AppMFEProps) {
   new CodeServiceAPIClient({
     urlInterceptor: (url: string) =>
@@ -100,7 +102,9 @@ export default function AppMFE({
             hooks,
             setMFETheme,
             parentLocationPath,
-            onRouteChange
+            onRouteChange,
+            isPublicAccessEnabledOnResources,
+            isCurrentSessionPublic
           }}
         >
           <I18nextProvider i18n={i18n}>

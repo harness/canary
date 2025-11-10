@@ -1,13 +1,13 @@
 import { useMemo } from 'react'
 import { UIMatch, useMatches } from 'react-router-dom'
 
-import { useAppContext } from '../../framework/context/AppContext'
+import { useMFEContext } from '../../framework/hooks/useMFEContext'
 import { CustomHandle } from '../../framework/routing/types'
 
 export const useGetBreadcrumbs = () => {
   const matches = useMatches()
-  const { isCurrentSessionPublic } = useAppContext()
 
+  const { isCurrentSessionPublic } = useMFEContext()
   // Filter breadcrumbs based on public session
   const breadcrumbs = useMemo(() => {
     const allBreadcrumbs = matches.filter(match => (match.handle as CustomHandle)?.breadcrumb) as UIMatch<

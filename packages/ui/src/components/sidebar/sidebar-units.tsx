@@ -6,7 +6,8 @@ import {
   forwardRef,
   MouseEvent,
   useCallback,
-  useMemo
+  useMemo,
+  useState
 } from 'react'
 
 import {
@@ -91,10 +92,11 @@ export const SidebarTrigger = forwardRef<ElementRef<typeof Button>, SidebarTrigg
 )
 SidebarTrigger.displayName = 'SidebarTrigger'
 
-export const SidebarRail = forwardRef<HTMLButtonElement, ComponentProps<'button'>>(
-  ({ className, onClick, ...props }, ref) => {
+export const SidebarRail = forwardRef<HTMLButtonElement, ComponentProps<'button'> & { open?: boolean }>(
+  ({ className, onClick, open, ...props }, ref) => {
     const { toggleSidebar } = useSidebar()
     const { t } = useTranslation()
+    const [hovered, setHovered] = useState(false)
 
     const onClickHandler = useCallback(
       (event: MouseEvent<HTMLButtonElement>) => {
@@ -104,16 +106,26 @@ export const SidebarRail = forwardRef<HTMLButtonElement, ComponentProps<'button'
       [toggleSidebar, onClick]
     )
 
+    const label = open ? t('component:sidebar.collapse', 'Collapse') : t('component:sidebar.expand', 'Expand')
+
     return (
       <button
         ref={ref}
-        aria-label={t('component:sidebar.toggle', 'Toggle sidebar')}
+        aria-label={label}
+        title={label}
         tabIndex={-1}
         onClick={onClickHandler}
-        title={t('component:sidebar.toggle', 'Toggle sidebar')}
-        className={cn('cn-sidebar-rail', className)}
+        onMouseEnter={() => setHovered(true)}
+        onMouseLeave={() => setHovered(false)}
+        className={cn('cn-sidebar-rail top-1/4 translate-x-1/2', { 'translate-x-1/4': hovered }, className)}
         {...props}
-      />
+      >
+        {hovered ? (
+          <IconV2 name={open ? 'nav-arrow-left' : 'nav-arrow-right'} size="lg" />
+        ) : (
+          <Text className="cn-pl-1 pl-cn-4xs">|</Text>
+        )}
+      </button>
     )
   }
 )

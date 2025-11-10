@@ -174,11 +174,7 @@ export const SideNav: React.FC<{ routes?: RouteDefinitions }> = ({ routes }) => 
             ))}
           </Sidebar.Group>
         </Sidebar.Content>
-
-        <Sidebar.Footer>
-          <Sidebar.ToggleMenuButton onClick={noop} />
-        </Sidebar.Footer>
-        <Sidebar.Rail onClick={noop} />
+        <Sidebar.Rail onClick={noop} open={!collapsed} />
       </Sidebar.Root>
 
       <ManageNavigation

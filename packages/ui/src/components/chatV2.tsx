@@ -1,6 +1,6 @@
 import { useRef, useState } from 'react'
 
-import { Button, IconV2, Layout, Text } from '@/components'
+import { Button, IconV2, Text } from '@/components'
 
 export const ChatV2 = () => {
   const [collapsed, setCollapsed] = useState(false)
@@ -33,18 +33,7 @@ export const ChatV2 = () => {
           </Button>
         </div>
       ) : (
-        <Layout.Vertical className="h-full justify-between">
-          <Text>Chat</Text>
-          <Button
-            variant="transparent"
-            size="sm"
-            iconOnly
-            tooltipProps={{ content: 'Collapse' }}
-            onClick={handleToggle}
-          >
-            <IconV2 name="collapse-sidebar" skipSize />
-          </Button>
-        </Layout.Vertical>
+        <Text>Chat</Text>
       )}
     </div>
   )

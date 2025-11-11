@@ -223,7 +223,7 @@
         },
         "border": {
           "$type": "color",
-          "$value": "linear-gradient(94deg, {gradient.ai.gradient-stop-1} 0%, {gradient.ai.gradient-stop-2} 35%, {gradient.ai.gradient-stop-3} 65%, {gradient.ai.gradient-stop-4} 100%)",
+          "$value": "linear-gradient(299deg, color(display-p3 0.2431 0.3922 0.898) -9.37%, color(display-p3 0 0.6784 0.8941) 83.25%);",
           "$description": "Distinctive gradient border for AI-related areas, using a multi-color pattern."
         },
         "bg-hover": {
@@ -1131,12 +1131,6 @@
         "$type": "color",
         "$value": "{chrome.200}",
         "$description": "Inset border color for avatars. Creates subtle definition inside the avatar element."
-      }
-    },
-    "chat": {
-      "ai-icon": {
-        "$type": "color",
-        "$value": "radial-gradient(106% 106% at 103% 57%,{gradient.ai-chat.gradient-stop-1} 27%, {gradient.ai-chat.gradient-stop-2} 58%, {gradient.ai-chat.gradient-stop-3} 77%)"
       }
     },
     "dialog": {
@@ -2122,35 +2116,13 @@
   },
   "gradient": {
     "ai": {
-      "gradient-stop-1": {
+      "gradient-from": {
         "$type": "color",
-        "$value": "{yellow.200}"
+        "$value": "{cyan.300}"
       },
-      "gradient-stop-2": {
+      "gradient-to": {
         "$type": "color",
-        "$value": "{pink.300}"
-      },
-      "gradient-stop-3": {
-        "$type": "color",
-        "$value": "{purple.300}"
-      },
-      "gradient-stop-4": {
-        "$type": "color",
-        "$value": "{cyan.200}"
-      }
-    },
-    "ai-chat": {
-      "gradient-stop-1": {
-        "$type": "color",
-        "$value": "{cyan.200}"
-      },
-      "gradient-stop-2": {
-        "$type": "color",
-        "$value": "{indigo.400}"
-      },
-      "gradient-stop-3": {
-        "$type": "color",
-        "$value": "{violet.400}"
+        "$value": "{indigo.600}"
       }
     },
     "alert": {

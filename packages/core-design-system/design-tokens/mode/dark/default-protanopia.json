@@ -232,7 +232,7 @@
         },
         "border": {
           "$type": "color",
-          "$value": "linear-gradient(94deg, {gradient.ai.gradient-stop-1} 0%, {gradient.ai.gradient-stop-2} 35%, {gradient.ai.gradient-stop-3} 65%, {gradient.ai.gradient-stop-4} 100%)",
+          "$value": "linear-gradient(94deg, {gradient.ai.gradient-from} 0%, {gradient.ai.gradient-to} 35%, {gradient.ai.gradient-stop-3} 65%, {gradient.ai.gradient-stop-4} 100%)",
           "$description": "Distinctive gradient border for AI-related areas, using a multi-color pattern."
         },
         "bg-hover": {
@@ -2094,11 +2094,11 @@
   },
   "gradient": {
     "ai": {
-      "gradient-stop-1": {
+      "gradient-from": {
         "$type": "color",
         "$value": "{yellow.100}"
       },
-      "gradient-stop-2": {
+      "gradient-to": {
         "$type": "color",
         "$value": "{pink.200}"
       },

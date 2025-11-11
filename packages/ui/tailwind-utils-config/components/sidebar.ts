@@ -84,7 +84,7 @@ export default {
       display: 'grid',
       gap: 'var(--cn-sidebar-footer-gap)',
       padding: 'var(--cn-sidebar-footer-pt) var(--cn-sidebar-container-px)',
-      paddingBottom: 'var(--cn-sidebar-footer-pb)',
+      paddingBottom: 'var(--cn-sidebar-footer-pb)'
     },
 
     '&-separator': {
@@ -159,8 +159,7 @@ export default {
 
         // Modifiers
         '&.active': {
-          background:
-            'var(--cn-comp-sidebar-item-selected)',
+          background: 'var(--cn-comp-sidebar-item-selected)',
           '.cn-sidebar-submenu-item-content': {
             color: 'var(--cn-sidebar-text-hover)'
           }
@@ -225,8 +224,7 @@ export default {
           // Active item
           '&[data-active=true]': {
             '.cn-sidebar-item-content': {
-              background:
-                'var(--cn-comp-sidebar-item-selected)'
+              background: 'var(--cn-comp-sidebar-item-selected)'
             },
             '.cn-sidebar-item-content-title': {
               color: 'var(--cn-comp-sidebar-item-text-selected)'
@@ -247,16 +245,13 @@ export default {
       },
 
       '&-content': {
-        rowGap: 'var(--cn-spacing-1)',
+        display: 'flex',
+        width: '216px',
         minHeight: 'var(--cn-sidebar-item-min)',
-        columnGap: 'var(--cn-sidebar-item-gap)',
-        justifyItems: 'start',
+        padding: 'var(--cn-sidebar-item-py) var(--cn-sidebar-item-px)',
         alignItems: 'center',
-        gridTemplateColumns: 'var(--cn-icon-size-sm) 1fr',
-        gridTemplateAreas: '"icon title"',
-        paddingInline: 'var(--cn-sidebar-item-px)',
+        gap: 'var(--cn-sidebar-item-gap)',
         borderRadius: 'var(--cn-sidebar-item-radius)',
-        '@apply duration-150 transition-[padding,row-gap,column-gap] ease-linear': '',
 
         '&-only-action-buttons': {
           gridTemplateAreas: '"icon title action-buttons"',
@@ -436,7 +431,8 @@ export default {
 
     '&[data-state=collapsed]': {
       '&.cn-sidebar': {
-        width: 'var(--cn-size-16)' /* I don’t have a fixed value for the collapsed state in the design — it depends on the padding */
+        width:
+          'var(--cn-size-16)' /* I don’t have a fixed value for the collapsed state in the design — it depends on the padding */
       },
 
       '& .cn-input-prefix': {
@@ -453,7 +449,8 @@ export default {
 
       '.cn-sidebar-item': {
         '&-big': {
-          maxWidth: '38px', /* I don’t have a fixed value for the collapsed state in the design — it depends on the padding */
+          maxWidth:
+            '38px' /* I don’t have a fixed value for the collapsed state in the design — it depends on the padding */
           /* marginLeft: '2px' / Why we need that? */
         },
 

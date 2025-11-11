@@ -21,10 +21,10 @@ export default function SidebarGroupMenu({
 
   return (
     <Layout.Grid>
-      {menuItems.map(group => (
+      {menuItems.map((group, index) => (
         <Sidebar.Group label={(group.title ?? '').toUpperCase()} key={group.groupId}>
           {renderMenuItems(group.items)}
-          <Sidebar.Separator />
+          {index !== menuItems.length - 1 && <Sidebar.Separator />}
         </Sidebar.Group>
       ))}
     </Layout.Grid>

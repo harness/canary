@@ -849,13 +849,36 @@ describe('AppSidebarUser', () => {
 })
 
 describe('HarnessLogo', () => {
-  test('renders link with icon and illustration', () => {
-    render(<HarnessLogo className="custom" />)
+  it('renders compact logo when "full" is not provided', () => {
+    render(<HarnessLogo />)
 
-    const link = screen.getByTestId('router-link')
-    expect(link).toHaveAttribute('data-to', '/')
-    expect(link).toHaveClass('custom')
-    expect(screen.getByTestId('icon')).toHaveAttribute('data-name', 'harness-plugins')
+    const svg = screen.getByRole('img', { hidden: true }) || screen.getByTestId('harness-logo')
+
+    // Fallback: locate SVG directly if no role
+    const svgElement = svg?.tagName ? svg : document.querySelector('svg')
+
+    expect(svgElement).toBeInTheDocument()
+    expect(svgElement).toHaveAttribute('width', '24')
+    expect(svgElement).toHaveAttribute('height', '24')
+    expect(svgElement).toHaveAttribute('viewBox', '0 0 24 24')
+
+    // Should only have one <path> for compact version
+    const paths = svgElement?.querySelectorAll('path')
+    expect(paths?.length).toBe(1)
+  })
+
+  it('renders full logo when "full" is true', () => {
+    render(<HarnessLogo full />)
+    const svg = document.querySelector('svg')
+
+    expect(svg).toBeInTheDocument()
+    expect(svg).toHaveAttribute('width', '110')
+    expect(svg).toHaveAttribute('height', '24')
+    expect(svg).toHaveAttribute('viewBox', '0 0 110 24')
+
+    // Full logo includes both blue + black path elements
+    const paths = svg?.querySelectorAll('path')
+    expect(paths?.length).toBeGreaterThan(1)
   })
 })
 

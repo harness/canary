@@ -458,8 +458,6 @@ export default {
         },
 
         '&-content': {
-          '@apply pl-cn-xs': '',
-
           '&-title, &-description, &-badge, &-right-element, &-action-item-placeholder, &-action-buttons': {
             maxWidth: '0',
             padding: '0',

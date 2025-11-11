@@ -58,7 +58,13 @@ export const SideNav: React.FC<{ routes?: RouteDefinitions }> = ({ routes }) => 
   // --- Initialization: Load from localStorage ---
   useEffect(() => {
     const stored = localStorage.getItem('nav-items')
-    const parsed: NavLinkStorageInterface | undefined = stored ? JSON.parse(stored) : undefined
+    let parsed: NavLinkStorageInterface | undefined
+    try {
+      parsed = stored ? JSON.parse(stored) : undefined
+    } catch {
+      // Invalid JSON, use defaults
+      parsed = undefined
+    }
 
     if (parsed) {
       setNavLinks({

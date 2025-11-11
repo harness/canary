@@ -39,7 +39,7 @@
       },
       "pt": {
         "$type": "spacing",
-        "$value": "{spacing.px}"
+        "$value": "{spacing.1-half}"
       },
       "px": {
         "$type": "spacing",

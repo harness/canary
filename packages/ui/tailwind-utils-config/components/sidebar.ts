@@ -5,8 +5,8 @@ export default {
       flexDirection: 'column',
       height: 'var(--cn-sidebar-min-height)',
       width: 'var(--cn-sidebar-container-full-width)',
-      backgroundColor: 'var(--cn-bg-0)',
-      padding: 'var(--cn-sidebar-container-py) 0',
+      backgroundColor: 'var(--cn-comp-sidebar-bg)',
+      padding: 'var(--cn-sidebar-container-pb) 0',
 
       '&-desktop': {
         top: '0px',
@@ -37,17 +37,17 @@ export default {
       width: '100%',
       height: 'var(--cn-sidebar-min-height)',
       overflowY: 'auto',
-      backgroundColor: 'var(--cn-bg-0)'
+      backgroundColor: 'var(--cn-bg-1)'
     },
 
-    '&-header': {
+    /*'&-header': {
       padding:
         'var(--cn-sidebar-header-pt) var(--cn-sidebar-container-px) var(--cn-sidebar-header-pb) var(--cn-sidebar-container-px)',
 
       '& .cn-input-prefix': {
         '@apply transition-[margin-left,width] duration-150 ease-linear': ''
       }
-    },
+    }, We don't have this section anymore */
 
     '&-content': {
       height: '100%',
@@ -84,11 +84,11 @@ export default {
       display: 'grid',
       gap: 'var(--cn-sidebar-footer-gap)',
       padding: 'var(--cn-sidebar-footer-pt) var(--cn-sidebar-container-px)',
-      paddingBottom: '0'
+      paddingBottom: 'var(--cn-sidebar-footer-pb)',
     },
 
     '&-separator': {
-      backgroundColor: 'var(--cn-border-2)'
+      backgroundColor: 'var(--cn-comp-sidebar-separator)'
     },
 
     '&-group': {
@@ -160,9 +160,9 @@ export default {
         // Modifiers
         '&.active': {
           background:
-            'var(--cn-comp-sidebar-item-selected, linear-gradient(95deg, var(--cn-gradient-sidebar-selected-from) -13.12%, var(--cn-gradient-sidebar-selected-to) 84.9%))',
+            'var(--cn-comp-sidebar-item-selected)',
           '.cn-sidebar-submenu-item-content': {
-            color: 'var(--cn-text-1)'
+            color: 'var(--cn-sidebar-text-hover)'
           }
         },
 
@@ -181,6 +181,9 @@ export default {
         /**
          * This is to override the parent default styles
          */
+        '.cn-sidebar-item-content-title': {
+          color: 'var(--cn-comp-sidebar-item-text-hover)'
+        },
         textDecoration: 'none !important'
       },
 
@@ -190,7 +193,7 @@ export default {
 
       '&-active': {
         '.cn-sidebar-item-content-title': {
-          color: 'var(--cn-text-1)'
+          color: 'var(--cn-comp-sidebar-item-text-selected)'
         }
       },
 
@@ -209,7 +212,7 @@ export default {
               }
             },
             '.cn-sidebar-item-content-title': {
-              color: 'var(--cn-text-1)'
+              color: 'var(--cn-comp-sidebar-item-text-hover)'
             },
             '.cn-sidebar-item-action-menu': {
               opacity: '1'
@@ -223,10 +226,10 @@ export default {
           '&[data-active=true]': {
             '.cn-sidebar-item-content': {
               background:
-                'var(--cn-comp-sidebar-item-selected, linear-gradient(95deg, var(--cn-gradient-sidebar-selected-from) -13.12%, var(--cn-gradient-sidebar-selected-to) 84.9%))'
+                'var(--cn-comp-sidebar-item-selected)'
             },
             '.cn-sidebar-item-content-title': {
-              color: 'var(--cn-text-1)'
+              color: 'var(--cn-comp-sidebar-item-text-selected)'
             },
             '.cn-sidebar-item-action-menu': {
               opacity: '1'
@@ -303,21 +306,22 @@ export default {
             gridTemplateColumns: 'var(--cn-avatar-size-lg) 1fr auto auto'
           }
         },
+        /* Deprecated class
 
-        '&-icon': {
-          gridArea: 'icon',
-          color: 'var(--cn-text-3)',
-
-          '&-w-border': {
-            width: 'var(--cn-icon-size-lg)',
-            height: 'var(--cn-icon-size-lg)',
-            borderRadius: 'var(--cn-rounded-2)',
-            border: '1px solid var(--cn-border-2)',
-            display: 'grid',
-            placeContent: 'center',
-            backgroundImage: 'var(--cn-comp-sidebar-icon-asset-bg)'
-          }
-        },
+                '&-icon': {
+                  gridArea: 'icon',
+        
+                  '&-w-border': {
+                    width: 'var(--cn-icon-size-lg)',
+                    height: 'var(--cn-icon-size-lg)',
+                    borderRadius: 'var(--cn-rounded-2)',
+                    border: '1px solid var(--cn-border-2)',
+                    display: 'grid',
+                    placeContent: 'center',
+                    backgroundImage: 'var(--cn-comp-sidebar-icon-asset-bg)'
+                  }
+                },
+              */
 
         '&-title': {
           maxWidth: '100%',
@@ -426,13 +430,13 @@ export default {
       left: 'var(--cn-sidebar-container-full-width) !important',
 
       '&-collapsed': {
-        left: 'var(--cn-size-14) !important'
+        left: 'var(--cn-size-16) !important'
       }
     },
 
     '&[data-state=collapsed]': {
       '&.cn-sidebar': {
-        width: 'var(--cn-size-14)'
+        width: 'var(--cn-size-16)' /* I don’t have a fixed value for the collapsed state in the design — it depends on the padding */
       },
 
       '& .cn-input-prefix': {
@@ -449,8 +453,8 @@ export default {
 
       '.cn-sidebar-item': {
         '&-big': {
-          maxWidth: '32px',
-          marginLeft: '2px'
+          maxWidth: '38px', /* I don’t have a fixed value for the collapsed state in the design — it depends on the padding */
+          /* marginLeft: '2px' / Why we need that? */
         },
 
         '&-content': {

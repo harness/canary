@@ -213,7 +213,9 @@
       "expand": "Développer",
       "collapse": "Réduire"
     },
-    "toggle": "Basculer la barre latérale"
+    "toggle": "Basculer la barre latérale",
+    "collapse": "Collapse",
+    "expand": "Expand"
   },
   "widgets": {
     "viewMore": "View more"

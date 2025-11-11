@@ -214,7 +214,9 @@
       "expand": "Expand",
       "collapse": "Collapse"
     },
-    "toggle": "Toggle sidebar"
+    "toggle": "Toggle sidebar",
+    "collapse": "Collapse",
+    "expand": "Expand"
   },
   "widgets": {
     "viewMore": "View more"

@@ -28,7 +28,7 @@ export default {
     '&-rail': {
       width: '16px',
       zIndex: '20',
-      cursor: 'ew-resize',
+      cursor: 'pointer',
       position: 'absolute',
       '@apply inset-y-0 hidden group-data-[side=left]:-right-cn-xs group-data-[side=right]:-left-cn-xs md:flex': ''
     },
@@ -84,7 +84,7 @@ export default {
       display: 'grid',
       gap: 'var(--cn-sidebar-footer-gap)',
       padding: 'var(--cn-sidebar-footer-pt) var(--cn-sidebar-container-px)',
-      paddingBottom: 'var(--cn-sidebar-footer-pb)',
+      paddingBottom: 'var(--cn-sidebar-footer-pb)'
     },
 
     '&-separator': {
@@ -159,8 +159,7 @@ export default {
 
         // Modifiers
         '&.active': {
-          background:
-            'var(--cn-comp-sidebar-item-selected)',
+          background: 'var(--cn-comp-sidebar-item-selected)',
           '.cn-sidebar-submenu-item-content': {
             color: 'var(--cn-sidebar-text-hover)'
           }
@@ -225,8 +224,7 @@ export default {
           // Active item
           '&[data-active=true]': {
             '.cn-sidebar-item-content': {
-              background:
-                'var(--cn-comp-sidebar-item-selected)'
+              background: 'var(--cn-comp-sidebar-item-selected)'
             },
             '.cn-sidebar-item-content-title': {
               color: 'var(--cn-comp-sidebar-item-text-selected)'
@@ -436,7 +434,8 @@ export default {
 
     '&[data-state=collapsed]': {
       '&.cn-sidebar': {
-        width: 'var(--cn-size-16)' /* I don’t have a fixed value for the collapsed state in the design — it depends on the padding */
+        width:
+          'var(--cn-size-16)' /* I don’t have a fixed value for the collapsed state in the design — it depends on the padding */
       },
 
       '& .cn-input-prefix': {
@@ -453,7 +452,8 @@ export default {
 
       '.cn-sidebar-item': {
         '&-big': {
-          maxWidth: '38px', /* I don’t have a fixed value for the collapsed state in the design — it depends on the padding */
+          maxWidth:
+            '38px' /* I don’t have a fixed value for the collapsed state in the design — it depends on the padding */
           /* marginLeft: '2px' / Why we need that? */
         },
 

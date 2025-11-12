@@ -68,8 +68,15 @@ vi.mock('@/components', () => {
   mockButton.displayName = 'MockButton'
 
   const mockIcon = ({ name }: any) => <span data-testid="icon" data-name={name} />
-  const mockText = ({ children, className, color }: any) => (
-    <span data-testid="text" className={className} data-color={color}>
+  const mockText = ({ children, className, color, onMouseEnter, onMouseLeave, ...props }: any) => (
+    <span
+      data-testid="text"
+      className={className}
+      data-color={color}
+      onMouseEnter={onMouseEnter}
+      onMouseLeave={onMouseLeave}
+      {...props}
+    >
       {children}
     </span>
   )

@@ -237,7 +237,7 @@
         },
         "bg-hover": {
           "$type": "color",
-          "$value": "linear-gradient(102deg, {gradient.ai-subtle.gradient-stop-1} 8%, {gradient.ai-subtle.gradient-stop-2} 35%, {gradient.ai-subtle.gradient-stop-3} 65%, {gradient.ai-subtle.gradient-stop-4} 87%)",
+          "$value": "linear-gradient(102deg, {gradient.ai.subtle.gradient-stop-1} 8%, {gradient.ai.subtle.gradient-stop-2} 35%, {gradient.ai.subtle.gradient-stop-3} 65%, {gradient.ai.subtle.gradient-stop-4} 87%)",
           "$description": "Hover state background color for interactive AI surfaces."
         },
         "bg-selected": {
@@ -251,7 +251,7 @@
             }
           },
           "$type": "color",
-          "$value": "linear-gradient(102deg, {gradient.ai-subtle.gradient-stop-1} 8%, {gradient.ai-subtle.gradient-stop-2} 35%, {gradient.ai-subtle.gradient-stop-3} 65%, {gradient.ai-subtle.gradient-stop-4} 87%)"
+          "$value": "linear-gradient(102deg, {gradient.ai.subtle.gradient-stop-1} 8%, {gradient.ai.subtle.gradient-stop-2} 35%, {gradient.ai.subtle.gradient-stop-3} 65%, {gradient.ai.subtle.gradient-stop-4} 87%)"
         },
         "inner": {
           "$extensions": {
@@ -1791,6 +1791,12 @@
         "$type": "color",
         "$value": "linear-gradient(95deg, {gradient.sidebar.selected.from} -13.12%, {gradient.sidebar.selected.to} 84.9%);"
       }
+    },
+    "input-ai": {
+      "blur": {
+        "$type": "dimension",
+        "$value": "16px"
+      }
     }
   },
   "logo": {
@@ -2147,6 +2153,24 @@
       "gradient-to": {
         "$type": "color",
         "$value": "{cyan.300}"
+      },
+      "subtle": {
+        "gradient-stop-1": {
+          "$type": "color",
+          "$value": "{cyan.950}"
+        },
+        "gradient-stop-2": {
+          "$type": "color",
+          "$value": "{cyan.1000}"
+        },
+        "gradient-stop-3": {
+          "$type": "color",
+          "$value": "{blue.1000}"
+        },
+        "gradient-stop-4": {
+          "$type": "color",
+          "$value": "{blue.950}"
+        }
       }
     },
     "alert": {
@@ -2790,24 +2814,6 @@
             }
           }
         }
-      }
-    },
-    "ai-subtle": {
-      "gradient-stop-1": {
-        "$type": "color",
-        "$value": "{cyan.950}"
-      },
-      "gradient-stop-2": {
-        "$type": "color",
-        "$value": "{cyan.1000}"
-      },
-      "gradient-stop-3": {
-        "$type": "color",
-        "$value": "{blue.1000}"
-      },
-      "gradient-stop-4": {
-        "$type": "color",
-        "$value": "{blue.950}"
       }
     }
   },

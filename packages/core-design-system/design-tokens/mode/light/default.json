@@ -228,7 +228,7 @@
         },
         "bg-hover": {
           "$type": "color",
-          "$value": "linear-gradient(102deg, {gradient.ai-subtle.gradient-stop-1} 8%, {gradient.ai-subtle.gradient-stop-2} 35%, {gradient.ai-subtle.gradient-stop-3} 65%, {gradient.ai-subtle.gradient-stop-4} 87%)",
+          "$value": "linear-gradient(102deg, {gradient.ai.subtle.gradient-stop-1} 8%, {gradient.ai.subtle.gradient-stop-2} 35%, {gradient.ai.subtle.gradient-stop-3} 65%, {gradient.ai.subtle.gradient-stop-4} 87%)",
           "$description": "Hover state background color for interactive AI surfaces."
         },
         "bg-selected": {
@@ -242,7 +242,7 @@
             }
           },
           "$type": "color",
-          "$value": "linear-gradient(102deg, {gradient.ai-subtle.gradient-stop-1} 8%, {gradient.ai-subtle.gradient-stop-2} 35%, {gradient.ai-subtle.gradient-stop-3} 65%, {gradient.ai-subtle.gradient-stop-4} 87%)"
+          "$value": "linear-gradient(102deg, {gradient.ai.subtle.gradient-stop-1} 8%, {gradient.ai.subtle.gradient-stop-2} 35%, {gradient.ai.subtle.gradient-stop-3} 65%, {gradient.ai.subtle.gradient-stop-4} 87%)"
         },
         "inner": {
           "$type": "color",
@@ -2132,6 +2132,24 @@
       "gradient-to": {
         "$type": "color",
         "$value": "{cyan.300}"
+      },
+      "subtle": {
+        "gradient-stop-1": {
+          "$type": "color",
+          "$value": "{cyan.50}"
+        },
+        "gradient-stop-2": {
+          "$type": "color",
+          "$value": "{cyan.25}"
+        },
+        "gradient-stop-3": {
+          "$type": "color",
+          "$value": "{indigo.100}"
+        },
+        "gradient-stop-4": {
+          "$type": "color",
+          "$value": "{cyan.150}"
+        }
       }
     },
     "alert": {
@@ -2784,24 +2802,6 @@
             }
           }
         }
-      }
-    },
-    "ai-subtle": {
-      "gradient-stop-1": {
-        "$type": "color",
-        "$value": "{cyan.50}"
-      },
-      "gradient-stop-2": {
-        "$type": "color",
-        "$value": "{cyan.25}"
-      },
-      "gradient-stop-3": {
-        "$type": "color",
-        "$value": "{indigo.100}"
-      },
-      "gradient-stop-4": {
-        "$type": "color",
-        "$value": "{cyan.150}"
       }
     }
   },

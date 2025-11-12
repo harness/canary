@@ -18,6 +18,7 @@ import iconsAndLogos from './icon-and-logo'
 import inputStyles from './input'
 import labelStyles from './label'
 import linkStyles from './link'
+import meterStyles from './meter'
 import multiSelectStyles from './multi-select'
 import paginationStyles from './pagination'
 import popoverStyles from './popover'
@@ -79,6 +80,7 @@ export const ComponentStyles = [
   skeletonStyles,
   stackedListStyles,
   treeStyles,
+  meterStyles,
 
   // Form styles
   selectStyles,

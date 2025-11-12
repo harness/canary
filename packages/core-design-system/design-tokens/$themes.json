@@ -2126,8 +2126,6 @@
       "shadow-color.4": "2b2e0307d252bdc6db53a23ce2cc2e9bb4f6b914",
       "shadow-color.5": "5a6c707240bab54cb4403f47262abfe0756efc9a",
       "shadow-color.6": "928283d00759150575a8f155da90180a582be438",
-      "gradient.ai.gradient-stop-3": "c9e14c3db8e622b10b1cd3e860115cd6f876ae49",
-      "gradient.ai.gradient-stop-4": "6e7d0850d7eb1e699f87b41f6ffd4cb8d73d72e8",
       "gradient.ai-chat.gradient-stop-1": "17770c4eecf613f0c98fba1f1f3b4d3f44c65a83",
       "gradient.ai-chat.gradient-stop-2": "1e938efee77a81f9f3ea69c9bbfb5a46250300c2",
       "gradient.ai-chat.gradient-stop-3": "c4d9d604b3e81f45bba98a66d2127c7bed108813",
@@ -2232,8 +2230,8 @@
       "set.purple.primary.bg-selected": "2c7a9901521b1378bbdf0c0563690bf93182ab22",
       "set.purple.secondary.bg-selected": "2a4b8f7459ce6ff8dc816c2aedf37060fe5dfcd8",
       "comp.sidebar.item.text-subtle": "5c029c163aacd0ffacea90d18551a6ce181d09ae",
-      "gradient.ai.gradient-from": "8db516caa68afc5b8fdd6fc6e5a9bad7715c5f26",
-      "gradient.ai.gradient-to": "33930f41665251a281973a37847f357480aedca3"
+      "gradient.ai.gradient-to": "8db516caa68afc5b8fdd6fc6e5a9bad7715c5f26",
+      "gradient.ai.gradient-from": "33930f41665251a281973a37847f357480aedca3"
     },
     "$figmaCollectionId": "VariableCollectionId:1340:156918",
     "$figmaModeId": "1340:3",
@@ -3223,8 +3221,8 @@
       "icon.security": "8066563f865087eb0d6a353fd7ff552081856e5a",
       "icon.efficiency": "d3020e54b0702e0f06ba18db7a6af384dbc1ff9c",
       "icon.platform": "7b8f2b594d560d034ab6c59b7d0a8f07d41cf77e",
-      "gradient.ai.gradient-from": "8db516caa68afc5b8fdd6fc6e5a9bad7715c5f26",
-      "gradient.ai.gradient-to": "33930f41665251a281973a37847f357480aedca3"
+      "gradient.ai.gradient-to": "8db516caa68afc5b8fdd6fc6e5a9bad7715c5f26",
+      "gradient.ai.gradient-from": "33930f41665251a281973a37847f357480aedca3"
     },
     "group": "mode"
   },
@@ -4110,8 +4108,6 @@
       "shadow-color.4": "2b2e0307d252bdc6db53a23ce2cc2e9bb4f6b914",
       "shadow-color.5": "5a6c707240bab54cb4403f47262abfe0756efc9a",
       "shadow-color.6": "928283d00759150575a8f155da90180a582be438",
-      "gradient.ai.gradient-stop-3": "c9e14c3db8e622b10b1cd3e860115cd6f876ae49",
-      "gradient.ai.gradient-stop-4": "6e7d0850d7eb1e699f87b41f6ffd4cb8d73d72e8",
       "gradient.ai-chat.gradient-stop-1": "17770c4eecf613f0c98fba1f1f3b4d3f44c65a83",
       "gradient.ai-chat.gradient-stop-2": "1e938efee77a81f9f3ea69c9bbfb5a46250300c2",
       "gradient.ai-chat.gradient-stop-3": "c4d9d604b3e81f45bba98a66d2127c7bed108813",
@@ -4208,8 +4204,8 @@
       "icon.efficiency": "d3020e54b0702e0f06ba18db7a6af384dbc1ff9c",
       "icon.platform": "7b8f2b594d560d034ab6c59b7d0a8f07d41cf77e",
       "comp.sidebar.item.text-subtle": "5c029c163aacd0ffacea90d18551a6ce181d09ae",
-      "gradient.ai.gradient-from": "8db516caa68afc5b8fdd6fc6e5a9bad7715c5f26",
-      "gradient.ai.gradient-to": "33930f41665251a281973a37847f357480aedca3"
+      "gradient.ai.gradient-to": "8db516caa68afc5b8fdd6fc6e5a9bad7715c5f26",
+      "gradient.ai.gradient-from": "33930f41665251a281973a37847f357480aedca3"
     },
     "group": "mode"
   },
@@ -5094,8 +5090,6 @@
       "shadow-color.4": "2b2e0307d252bdc6db53a23ce2cc2e9bb4f6b914",
       "shadow-color.5": "5a6c707240bab54cb4403f47262abfe0756efc9a",
       "shadow-color.6": "928283d00759150575a8f155da90180a582be438",
-      "gradient.ai.gradient-stop-3": "c9e14c3db8e622b10b1cd3e860115cd6f876ae49",
-      "gradient.ai.gradient-stop-4": "6e7d0850d7eb1e699f87b41f6ffd4cb8d73d72e8",
       "gradient.ai-chat.gradient-stop-1": "17770c4eecf613f0c98fba1f1f3b4d3f44c65a83",
       "gradient.ai-chat.gradient-stop-2": "1e938efee77a81f9f3ea69c9bbfb5a46250300c2",
       "gradient.ai-chat.gradient-stop-3": "c4d9d604b3e81f45bba98a66d2127c7bed108813",
@@ -5192,8 +5186,8 @@
       "icon.efficiency": "d3020e54b0702e0f06ba18db7a6af384dbc1ff9c",
       "icon.platform": "7b8f2b594d560d034ab6c59b7d0a8f07d41cf77e",
       "comp.sidebar.item.text-subtle": "5c029c163aacd0ffacea90d18551a6ce181d09ae",
-      "gradient.ai.gradient-from": "8db516caa68afc5b8fdd6fc6e5a9bad7715c5f26",
-      "gradient.ai.gradient-to": "33930f41665251a281973a37847f357480aedca3"
+      "gradient.ai.gradient-to": "8db516caa68afc5b8fdd6fc6e5a9bad7715c5f26",
+      "gradient.ai.gradient-from": "33930f41665251a281973a37847f357480aedca3"
     },
     "group": "mode"
   },
@@ -6079,8 +6073,6 @@
       "shadow-color.4": "2b2e0307d252bdc6db53a23ce2cc2e9bb4f6b914",
       "shadow-color.5": "5a6c707240bab54cb4403f47262abfe0756efc9a",
       "shadow-color.6": "928283d00759150575a8f155da90180a582be438",
-      "gradient.ai.gradient-stop-3": "c9e14c3db8e622b10b1cd3e860115cd6f876ae49",
-      "gradient.ai.gradient-stop-4": "6e7d0850d7eb1e699f87b41f6ffd4cb8d73d72e8",
       "gradient.ai-chat.gradient-stop-1": "17770c4eecf613f0c98fba1f1f3b4d3f44c65a83",
       "gradient.ai-chat.gradient-stop-2": "1e938efee77a81f9f3ea69c9bbfb5a46250300c2",
       "gradient.ai-chat.gradient-stop-3": "c4d9d604b3e81f45bba98a66d2127c7bed108813",
@@ -6177,8 +6169,8 @@
       "icon.efficiency": "d3020e54b0702e0f06ba18db7a6af384dbc1ff9c",
       "icon.platform": "7b8f2b594d560d034ab6c59b7d0a8f07d41cf77e",
       "comp.sidebar.item.text-subtle": "5c029c163aacd0ffacea90d18551a6ce181d09ae",
-      "gradient.ai.gradient-from": "8db516caa68afc5b8fdd6fc6e5a9bad7715c5f26",
-      "gradient.ai.gradient-to": "33930f41665251a281973a37847f357480aedca3"
+      "gradient.ai.gradient-to": "8db516caa68afc5b8fdd6fc6e5a9bad7715c5f26",
+      "gradient.ai.gradient-from": "33930f41665251a281973a37847f357480aedca3"
     },
     "group": "mode"
   },
@@ -7064,8 +7056,6 @@
       "shadow-color.4": "2b2e0307d252bdc6db53a23ce2cc2e9bb4f6b914",
       "shadow-color.5": "5a6c707240bab54cb4403f47262abfe0756efc9a",
       "shadow-color.6": "928283d00759150575a8f155da90180a582be438",
-      "gradient.ai.gradient-stop-3": "c9e14c3db8e622b10b1cd3e860115cd6f876ae49",
-      "gradient.ai.gradient-stop-4": "6e7d0850d7eb1e699f87b41f6ffd4cb8d73d72e8",
       "gradient.ai-chat.gradient-stop-1": "17770c4eecf613f0c98fba1f1f3b4d3f44c65a83",
       "gradient.ai-chat.gradient-stop-2": "1e938efee77a81f9f3ea69c9bbfb5a46250300c2",
       "gradient.ai-chat.gradient-stop-3": "c4d9d604b3e81f45bba98a66d2127c7bed108813",
@@ -7162,8 +7152,8 @@
       "icon.efficiency": "d3020e54b0702e0f06ba18db7a6af384dbc1ff9c",
       "icon.platform": "7b8f2b594d560d034ab6c59b7d0a8f07d41cf77e",
       "comp.sidebar.item.text-subtle": "5c029c163aacd0ffacea90d18551a6ce181d09ae",
-      "gradient.ai.gradient-from": "8db516caa68afc5b8fdd6fc6e5a9bad7715c5f26",
-      "gradient.ai.gradient-to": "33930f41665251a281973a37847f357480aedca3"
+      "gradient.ai.gradient-to": "8db516caa68afc5b8fdd6fc6e5a9bad7715c5f26",
+      "gradient.ai.gradient-from": "33930f41665251a281973a37847f357480aedca3"
     },
     "group": "mode"
   },
@@ -8049,8 +8039,6 @@
       "shadow-color.4": "2b2e0307d252bdc6db53a23ce2cc2e9bb4f6b914",
       "shadow-color.5": "5a6c707240bab54cb4403f47262abfe0756efc9a",
       "shadow-color.6": "928283d00759150575a8f155da90180a582be438",
-      "gradient.ai.gradient-stop-3": "c9e14c3db8e622b10b1cd3e860115cd6f876ae49",
-      "gradient.ai.gradient-stop-4": "6e7d0850d7eb1e699f87b41f6ffd4cb8d73d72e8",
       "gradient.ai-chat.gradient-stop-1": "17770c4eecf613f0c98fba1f1f3b4d3f44c65a83",
       "gradient.ai-chat.gradient-stop-2": "1e938efee77a81f9f3ea69c9bbfb5a46250300c2",
       "gradient.ai-chat.gradient-stop-3": "c4d9d604b3e81f45bba98a66d2127c7bed108813",
@@ -8147,8 +8135,8 @@
       "icon.efficiency": "d3020e54b0702e0f06ba18db7a6af384dbc1ff9c",
       "icon.platform": "7b8f2b594d560d034ab6c59b7d0a8f07d41cf77e",
       "comp.sidebar.item.text-subtle": "5c029c163aacd0ffacea90d18551a6ce181d09ae",
-      "gradient.ai.gradient-from": "8db516caa68afc5b8fdd6fc6e5a9bad7715c5f26",
-      "gradient.ai.gradient-to": "33930f41665251a281973a37847f357480aedca3"
+      "gradient.ai.gradient-to": "8db516caa68afc5b8fdd6fc6e5a9bad7715c5f26",
+      "gradient.ai.gradient-from": "33930f41665251a281973a37847f357480aedca3"
     },
     "group": "mode"
   },
@@ -9034,8 +9022,6 @@
       "shadow-color.4": "2b2e0307d252bdc6db53a23ce2cc2e9bb4f6b914",
       "shadow-color.5": "5a6c707240bab54cb4403f47262abfe0756efc9a",
       "shadow-color.6": "928283d00759150575a8f155da90180a582be438",
-      "gradient.ai.gradient-stop-3": "c9e14c3db8e622b10b1cd3e860115cd6f876ae49",
-      "gradient.ai.gradient-stop-4": "6e7d0850d7eb1e699f87b41f6ffd4cb8d73d72e8",
       "gradient.ai-chat.gradient-stop-1": "17770c4eecf613f0c98fba1f1f3b4d3f44c65a83",
       "gradient.ai-chat.gradient-stop-2": "1e938efee77a81f9f3ea69c9bbfb5a46250300c2",
       "gradient.ai-chat.gradient-stop-3": "c4d9d604b3e81f45bba98a66d2127c7bed108813",
@@ -9132,8 +9118,8 @@
       "icon.efficiency": "d3020e54b0702e0f06ba18db7a6af384dbc1ff9c",
       "icon.platform": "7b8f2b594d560d034ab6c59b7d0a8f07d41cf77e",
       "comp.sidebar.item.text-subtle": "5c029c163aacd0ffacea90d18551a6ce181d09ae",
-      "gradient.ai.gradient-from": "8db516caa68afc5b8fdd6fc6e5a9bad7715c5f26",
-      "gradient.ai.gradient-to": "33930f41665251a281973a37847f357480aedca3"
+      "gradient.ai.gradient-to": "8db516caa68afc5b8fdd6fc6e5a9bad7715c5f26",
+      "gradient.ai.gradient-from": "33930f41665251a281973a37847f357480aedca3"
     },
     "group": "mode"
   },
@@ -10019,8 +10005,6 @@
       "shadow-color.4": "2b2e0307d252bdc6db53a23ce2cc2e9bb4f6b914",
       "shadow-color.5": "5a6c707240bab54cb4403f47262abfe0756efc9a",
       "shadow-color.6": "928283d00759150575a8f155da90180a582be438",
-      "gradient.ai.gradient-stop-3": "c9e14c3db8e622b10b1cd3e860115cd6f876ae49",
-      "gradient.ai.gradient-stop-4": "6e7d0850d7eb1e699f87b41f6ffd4cb8d73d72e8",
       "gradient.ai-chat.gradient-stop-1": "17770c4eecf613f0c98fba1f1f3b4d3f44c65a83",
       "gradient.ai-chat.gradient-stop-2": "1e938efee77a81f9f3ea69c9bbfb5a46250300c2",
       "gradient.ai-chat.gradient-stop-3": "c4d9d604b3e81f45bba98a66d2127c7bed108813",
@@ -10117,8 +10101,8 @@
       "icon.efficiency": "d3020e54b0702e0f06ba18db7a6af384dbc1ff9c",
       "icon.platform": "7b8f2b594d560d034ab6c59b7d0a8f07d41cf77e",
       "comp.sidebar.item.text-subtle": "5c029c163aacd0ffacea90d18551a6ce181d09ae",
-      "gradient.ai.gradient-from": "8db516caa68afc5b8fdd6fc6e5a9bad7715c5f26",
-      "gradient.ai.gradient-to": "33930f41665251a281973a37847f357480aedca3"
+      "gradient.ai.gradient-to": "8db516caa68afc5b8fdd6fc6e5a9bad7715c5f26",
+      "gradient.ai.gradient-from": "33930f41665251a281973a37847f357480aedca3"
     },
     "group": "mode"
   },
@@ -11004,8 +10988,6 @@
       "shadow-color.4": "2b2e0307d252bdc6db53a23ce2cc2e9bb4f6b914",
       "shadow-color.5": "5a6c707240bab54cb4403f47262abfe0756efc9a",
       "shadow-color.6": "928283d00759150575a8f155da90180a582be438",
-      "gradient.ai.gradient-stop-3": "c9e14c3db8e622b10b1cd3e860115cd6f876ae49",
-      "gradient.ai.gradient-stop-4": "6e7d0850d7eb1e699f87b41f6ffd4cb8d73d72e8",
       "gradient.ai-chat.gradient-stop-1": "17770c4eecf613f0c98fba1f1f3b4d3f44c65a83",
       "gradient.ai-chat.gradient-stop-2": "1e938efee77a81f9f3ea69c9bbfb5a46250300c2",
       "gradient.ai-chat.gradient-stop-3": "c4d9d604b3e81f45bba98a66d2127c7bed108813",
@@ -11102,8 +11084,8 @@
       "icon.efficiency": "d3020e54b0702e0f06ba18db7a6af384dbc1ff9c",
       "icon.platform": "7b8f2b594d560d034ab6c59b7d0a8f07d41cf77e",
       "comp.sidebar.item.text-subtle": "5c029c163aacd0ffacea90d18551a6ce181d09ae",
-      "gradient.ai.gradient-from": "8db516caa68afc5b8fdd6fc6e5a9bad7715c5f26",
-      "gradient.ai.gradient-to": "33930f41665251a281973a37847f357480aedca3"
+      "gradient.ai.gradient-to": "8db516caa68afc5b8fdd6fc6e5a9bad7715c5f26",
+      "gradient.ai.gradient-from": "33930f41665251a281973a37847f357480aedca3"
     },
     "group": "mode"
   },
@@ -11989,8 +11971,6 @@
       "shadow-color.4": "2b2e0307d252bdc6db53a23ce2cc2e9bb4f6b914",
       "shadow-color.5": "5a6c707240bab54cb4403f47262abfe0756efc9a",
       "shadow-color.6": "928283d00759150575a8f155da90180a582be438",
-      "gradient.ai.gradient-stop-3": "c9e14c3db8e622b10b1cd3e860115cd6f876ae49",
-      "gradient.ai.gradient-stop-4": "6e7d0850d7eb1e699f87b41f6ffd4cb8d73d72e8",
       "gradient.ai-chat.gradient-stop-1": "17770c4eecf613f0c98fba1f1f3b4d3f44c65a83",
       "gradient.ai-chat.gradient-stop-2": "1e938efee77a81f9f3ea69c9bbfb5a46250300c2",
       "gradient.ai-chat.gradient-stop-3": "c4d9d604b3e81f45bba98a66d2127c7bed108813",
@@ -12087,8 +12067,8 @@
       "icon.efficiency": "d3020e54b0702e0f06ba18db7a6af384dbc1ff9c",
       "icon.platform": "7b8f2b594d560d034ab6c59b7d0a8f07d41cf77e",
       "comp.sidebar.item.text-subtle": "5c029c163aacd0ffacea90d18551a6ce181d09ae",
-      "gradient.ai.gradient-from": "8db516caa68afc5b8fdd6fc6e5a9bad7715c5f26",
-      "gradient.ai.gradient-to": "33930f41665251a281973a37847f357480aedca3"
+      "gradient.ai.gradient-to": "8db516caa68afc5b8fdd6fc6e5a9bad7715c5f26",
+      "gradient.ai.gradient-from": "33930f41665251a281973a37847f357480aedca3"
     },
     "group": "mode"
   },
@@ -12974,8 +12954,6 @@
       "shadow-color.4": "2b2e0307d252bdc6db53a23ce2cc2e9bb4f6b914",
       "shadow-color.5": "5a6c707240bab54cb4403f47262abfe0756efc9a",
       "shadow-color.6": "928283d00759150575a8f155da90180a582be438",
-      "gradient.ai.gradient-stop-3": "c9e14c3db8e622b10b1cd3e860115cd6f876ae49",
-      "gradient.ai.gradient-stop-4": "6e7d0850d7eb1e699f87b41f6ffd4cb8d73d72e8",
       "gradient.ai-chat.gradient-stop-1": "17770c4eecf613f0c98fba1f1f3b4d3f44c65a83",
       "gradient.ai-chat.gradient-stop-2": "1e938efee77a81f9f3ea69c9bbfb5a46250300c2",
       "gradient.ai-chat.gradient-stop-3": "c4d9d604b3e81f45bba98a66d2127c7bed108813",
@@ -13072,8 +13050,8 @@
       "icon.efficiency": "d3020e54b0702e0f06ba18db7a6af384dbc1ff9c",
       "icon.platform": "7b8f2b594d560d034ab6c59b7d0a8f07d41cf77e",
       "comp.sidebar.item.text-subtle": "5c029c163aacd0ffacea90d18551a6ce181d09ae",
-      "gradient.ai.gradient-from": "8db516caa68afc5b8fdd6fc6e5a9bad7715c5f26",
-      "gradient.ai.gradient-to": "33930f41665251a281973a37847f357480aedca3"
+      "gradient.ai.gradient-to": "8db516caa68afc5b8fdd6fc6e5a9bad7715c5f26",
+      "gradient.ai.gradient-from": "33930f41665251a281973a37847f357480aedca3"
     },
     "group": "mode"
   },
@@ -13959,8 +13937,6 @@
       "shadow-color.4": "2b2e0307d252bdc6db53a23ce2cc2e9bb4f6b914",
       "shadow-color.5": "5a6c707240bab54cb4403f47262abfe0756efc9a",
       "shadow-color.6": "928283d00759150575a8f155da90180a582be438",
-      "gradient.ai.gradient-stop-3": "c9e14c3db8e622b10b1cd3e860115cd6f876ae49",
-      "gradient.ai.gradient-stop-4": "6e7d0850d7eb1e699f87b41f6ffd4cb8d73d72e8",
       "gradient.ai-chat.gradient-stop-1": "17770c4eecf613f0c98fba1f1f3b4d3f44c65a83",
       "gradient.ai-chat.gradient-stop-2": "1e938efee77a81f9f3ea69c9bbfb5a46250300c2",
       "gradient.ai-chat.gradient-stop-3": "c4d9d604b3e81f45bba98a66d2127c7bed108813",
@@ -14057,8 +14033,8 @@
       "icon.efficiency": "d3020e54b0702e0f06ba18db7a6af384dbc1ff9c",
       "icon.platform": "7b8f2b594d560d034ab6c59b7d0a8f07d41cf77e",
       "comp.sidebar.item.text-subtle": "5c029c163aacd0ffacea90d18551a6ce181d09ae",
-      "gradient.ai.gradient-from": "8db516caa68afc5b8fdd6fc6e5a9bad7715c5f26",
-      "gradient.ai.gradient-to": "33930f41665251a281973a37847f357480aedca3"
+      "gradient.ai.gradient-to": "8db516caa68afc5b8fdd6fc6e5a9bad7715c5f26",
+      "gradient.ai.gradient-from": "33930f41665251a281973a37847f357480aedca3"
     },
     "group": "mode"
   },
@@ -14939,8 +14915,6 @@
       "shadow-color.4": "2b2e0307d252bdc6db53a23ce2cc2e9bb4f6b914",
       "shadow-color.5": "5a6c707240bab54cb4403f47262abfe0756efc9a",
       "shadow-color.6": "928283d00759150575a8f155da90180a582be438",
-      "gradient.ai.gradient-stop-3": "c9e14c3db8e622b10b1cd3e860115cd6f876ae49",
-      "gradient.ai.gradient-stop-4": "6e7d0850d7eb1e699f87b41f6ffd4cb8d73d72e8",
       "gradient.ai-chat.gradient-stop-1": "17770c4eecf613f0c98fba1f1f3b4d3f44c65a83",
       "gradient.ai-chat.gradient-stop-2": "1e938efee77a81f9f3ea69c9bbfb5a46250300c2",
       "gradient.ai-chat.gradient-stop-3": "c4d9d604b3e81f45bba98a66d2127c7bed108813",
@@ -15037,8 +15011,8 @@
       "icon.efficiency": "d3020e54b0702e0f06ba18db7a6af384dbc1ff9c",
       "icon.platform": "7b8f2b594d560d034ab6c59b7d0a8f07d41cf77e",
       "comp.sidebar.item.text-subtle": "5c029c163aacd0ffacea90d18551a6ce181d09ae",
-      "gradient.ai.gradient-from": "8db516caa68afc5b8fdd6fc6e5a9bad7715c5f26",
-      "gradient.ai.gradient-to": "33930f41665251a281973a37847f357480aedca3"
+      "gradient.ai.gradient-to": "8db516caa68afc5b8fdd6fc6e5a9bad7715c5f26",
+      "gradient.ai.gradient-from": "33930f41665251a281973a37847f357480aedca3"
     },
     "group": "mode"
   },
@@ -15919,8 +15893,6 @@
       "shadow-color.4": "2b2e0307d252bdc6db53a23ce2cc2e9bb4f6b914",
       "shadow-color.5": "5a6c707240bab54cb4403f47262abfe0756efc9a",
       "shadow-color.6": "928283d00759150575a8f155da90180a582be438",
-      "gradient.ai.gradient-stop-3": "c9e14c3db8e622b10b1cd3e860115cd6f876ae49",
-      "gradient.ai.gradient-stop-4": "6e7d0850d7eb1e699f87b41f6ffd4cb8d73d72e8",
       "gradient.ai-chat.gradient-stop-1": "17770c4eecf613f0c98fba1f1f3b4d3f44c65a83",
       "gradient.ai-chat.gradient-stop-2": "1e938efee77a81f9f3ea69c9bbfb5a46250300c2",
       "gradient.ai-chat.gradient-stop-3": "c4d9d604b3e81f45bba98a66d2127c7bed108813",
@@ -16017,8 +15989,8 @@
       "icon.efficiency": "d3020e54b0702e0f06ba18db7a6af384dbc1ff9c",
       "icon.platform": "7b8f2b594d560d034ab6c59b7d0a8f07d41cf77e",
       "comp.sidebar.item.text-subtle": "5c029c163aacd0ffacea90d18551a6ce181d09ae",
-      "gradient.ai.gradient-from": "8db516caa68afc5b8fdd6fc6e5a9bad7715c5f26",
-      "gradient.ai.gradient-to": "33930f41665251a281973a37847f357480aedca3"
+      "gradient.ai.gradient-to": "8db516caa68afc5b8fdd6fc6e5a9bad7715c5f26",
+      "gradient.ai.gradient-from": "33930f41665251a281973a37847f357480aedca3"
     },
     "group": "mode"
   },
@@ -16899,8 +16871,6 @@
       "shadow-color.4": "2b2e0307d252bdc6db53a23ce2cc2e9bb4f6b914",
       "shadow-color.5": "5a6c707240bab54cb4403f47262abfe0756efc9a",
       "shadow-color.6": "928283d00759150575a8f155da90180a582be438",
-      "gradient.ai.gradient-stop-3": "c9e14c3db8e622b10b1cd3e860115cd6f876ae49",
-      "gradient.ai.gradient-stop-4": "6e7d0850d7eb1e699f87b41f6ffd4cb8d73d72e8",
       "gradient.ai-chat.gradient-stop-1": "17770c4eecf613f0c98fba1f1f3b4d3f44c65a83",
       "gradient.ai-chat.gradient-stop-2": "1e938efee77a81f9f3ea69c9bbfb5a46250300c2",
       "gradient.ai-chat.gradient-stop-3": "c4d9d604b3e81f45bba98a66d2127c7bed108813",
@@ -16997,8 +16967,8 @@
       "icon.efficiency": "d3020e54b0702e0f06ba18db7a6af384dbc1ff9c",
       "icon.platform": "7b8f2b594d560d034ab6c59b7d0a8f07d41cf77e",
       "comp.sidebar.item.text-subtle": "5c029c163aacd0ffacea90d18551a6ce181d09ae",
-      "gradient.ai.gradient-from": "8db516caa68afc5b8fdd6fc6e5a9bad7715c5f26",
-      "gradient.ai.gradient-to": "33930f41665251a281973a37847f357480aedca3"
+      "gradient.ai.gradient-to": "8db516caa68afc5b8fdd6fc6e5a9bad7715c5f26",
+      "gradient.ai.gradient-from": "33930f41665251a281973a37847f357480aedca3"
     },
     "group": "mode"
   },
@@ -17879,8 +17849,6 @@
       "shadow-color.4": "2b2e0307d252bdc6db53a23ce2cc2e9bb4f6b914",
       "shadow-color.5": "5a6c707240bab54cb4403f47262abfe0756efc9a",
       "shadow-color.6": "928283d00759150575a8f155da90180a582be438",
-      "gradient.ai.gradient-stop-3": "c9e14c3db8e622b10b1cd3e860115cd6f876ae49",
-      "gradient.ai.gradient-stop-4": "6e7d0850d7eb1e699f87b41f6ffd4cb8d73d72e8",
       "gradient.ai-chat.gradient-stop-1": "17770c4eecf613f0c98fba1f1f3b4d3f44c65a83",
       "gradient.ai-chat.gradient-stop-2": "1e938efee77a81f9f3ea69c9bbfb5a46250300c2",
       "gradient.ai-chat.gradient-stop-3": "c4d9d604b3e81f45bba98a66d2127c7bed108813",
@@ -17977,8 +17945,8 @@
       "icon.efficiency": "d3020e54b0702e0f06ba18db7a6af384dbc1ff9c",
       "icon.platform": "7b8f2b594d560d034ab6c59b7d0a8f07d41cf77e",
       "comp.sidebar.item.text-subtle": "5c029c163aacd0ffacea90d18551a6ce181d09ae",
-      "gradient.ai.gradient-from": "8db516caa68afc5b8fdd6fc6e5a9bad7715c5f26",
-      "gradient.ai.gradient-to": "33930f41665251a281973a37847f357480aedca3"
+      "gradient.ai.gradient-to": "8db516caa68afc5b8fdd6fc6e5a9bad7715c5f26",
+      "gradient.ai.gradient-from": "33930f41665251a281973a37847f357480aedca3"
     },
     "group": "mode"
   },
@@ -18859,8 +18827,6 @@
       "shadow-color.4": "2b2e0307d252bdc6db53a23ce2cc2e9bb4f6b914",
       "shadow-color.5": "5a6c707240bab54cb4403f47262abfe0756efc9a",
       "shadow-color.6": "928283d00759150575a8f155da90180a582be438",
-      "gradient.ai.gradient-stop-3": "c9e14c3db8e622b10b1cd3e860115cd6f876ae49",
-      "gradient.ai.gradient-stop-4": "6e7d0850d7eb1e699f87b41f6ffd4cb8d73d72e8",
       "gradient.ai-chat.gradient-stop-1": "17770c4eecf613f0c98fba1f1f3b4d3f44c65a83",
       "gradient.ai-chat.gradient-stop-2": "1e938efee77a81f9f3ea69c9bbfb5a46250300c2",
       "gradient.ai-chat.gradient-stop-3": "c4d9d604b3e81f45bba98a66d2127c7bed108813",
@@ -18957,8 +18923,8 @@
       "icon.efficiency": "d3020e54b0702e0f06ba18db7a6af384dbc1ff9c",
       "icon.platform": "7b8f2b594d560d034ab6c59b7d0a8f07d41cf77e",
       "comp.sidebar.item.text-subtle": "5c029c163aacd0ffacea90d18551a6ce181d09ae",
-      "gradient.ai.gradient-from": "8db516caa68afc5b8fdd6fc6e5a9bad7715c5f26",
-      "gradient.ai.gradient-to": "33930f41665251a281973a37847f357480aedca3"
+      "gradient.ai.gradient-to": "8db516caa68afc5b8fdd6fc6e5a9bad7715c5f26",
+      "gradient.ai.gradient-from": "33930f41665251a281973a37847f357480aedca3"
     },
     "group": "mode"
   },
@@ -19839,8 +19805,6 @@
       "shadow-color.4": "2b2e0307d252bdc6db53a23ce2cc2e9bb4f6b914",
       "shadow-color.5": "5a6c707240bab54cb4403f47262abfe0756efc9a",
       "shadow-color.6": "928283d00759150575a8f155da90180a582be438",
-      "gradient.ai.gradient-stop-3": "c9e14c3db8e622b10b1cd3e860115cd6f876ae49",
-      "gradient.ai.gradient-stop-4": "6e7d0850d7eb1e699f87b41f6ffd4cb8d73d72e8",
       "gradient.ai-chat.gradient-stop-1": "17770c4eecf613f0c98fba1f1f3b4d3f44c65a83",
       "gradient.ai-chat.gradient-stop-2": "1e938efee77a81f9f3ea69c9bbfb5a46250300c2",
       "gradient.ai-chat.gradient-stop-3": "c4d9d604b3e81f45bba98a66d2127c7bed108813",
@@ -19937,8 +19901,8 @@
       "icon.efficiency": "d3020e54b0702e0f06ba18db7a6af384dbc1ff9c",
       "icon.platform": "7b8f2b594d560d034ab6c59b7d0a8f07d41cf77e",
       "comp.sidebar.item.text-subtle": "5c029c163aacd0ffacea90d18551a6ce181d09ae",
-      "gradient.ai.gradient-from": "8db516caa68afc5b8fdd6fc6e5a9bad7715c5f26",
-      "gradient.ai.gradient-to": "33930f41665251a281973a37847f357480aedca3"
+      "gradient.ai.gradient-to": "8db516caa68afc5b8fdd6fc6e5a9bad7715c5f26",
+      "gradient.ai.gradient-from": "33930f41665251a281973a37847f357480aedca3"
     },
     "group": "mode"
   },
@@ -20843,8 +20807,6 @@
       "shadow-color.4": "2b2e0307d252bdc6db53a23ce2cc2e9bb4f6b914",
       "shadow-color.5": "5a6c707240bab54cb4403f47262abfe0756efc9a",
       "shadow-color.6": "928283d00759150575a8f155da90180a582be438",
-      "gradient.ai.gradient-stop-3": "c9e14c3db8e622b10b1cd3e860115cd6f876ae49",
-      "gradient.ai.gradient-stop-4": "6e7d0850d7eb1e699f87b41f6ffd4cb8d73d72e8",
       "gradient.ai-chat.gradient-stop-1": "17770c4eecf613f0c98fba1f1f3b4d3f44c65a83",
       "gradient.ai-chat.gradient-stop-2": "1e938efee77a81f9f3ea69c9bbfb5a46250300c2",
       "gradient.ai-chat.gradient-stop-3": "c4d9d604b3e81f45bba98a66d2127c7bed108813",
@@ -20941,8 +20903,8 @@
       "icon.efficiency": "d3020e54b0702e0f06ba18db7a6af384dbc1ff9c",
       "icon.platform": "7b8f2b594d560d034ab6c59b7d0a8f07d41cf77e",
       "comp.sidebar.item.text-subtle": "5c029c163aacd0ffacea90d18551a6ce181d09ae",
-      "gradient.ai.gradient-from": "8db516caa68afc5b8fdd6fc6e5a9bad7715c5f26",
-      "gradient.ai.gradient-to": "33930f41665251a281973a37847f357480aedca3"
+      "gradient.ai.gradient-to": "8db516caa68afc5b8fdd6fc6e5a9bad7715c5f26",
+      "gradient.ai.gradient-from": "33930f41665251a281973a37847f357480aedca3"
     },
     "group": "mode"
   },
@@ -21823,8 +21785,6 @@
       "shadow-color.4": "2b2e0307d252bdc6db53a23ce2cc2e9bb4f6b914",
       "shadow-color.5": "5a6c707240bab54cb4403f47262abfe0756efc9a",
       "shadow-color.6": "928283d00759150575a8f155da90180a582be438",
-      "gradient.ai.gradient-stop-3": "c9e14c3db8e622b10b1cd3e860115cd6f876ae49",
-      "gradient.ai.gradient-stop-4": "6e7d0850d7eb1e699f87b41f6ffd4cb8d73d72e8",
       "gradient.ai-chat.gradient-stop-1": "17770c4eecf613f0c98fba1f1f3b4d3f44c65a83",
       "gradient.ai-chat.gradient-stop-2": "1e938efee77a81f9f3ea69c9bbfb5a46250300c2",
       "gradient.ai-chat.gradient-stop-3": "c4d9d604b3e81f45bba98a66d2127c7bed108813",
@@ -21921,8 +21881,8 @@
       "icon.efficiency": "d3020e54b0702e0f06ba18db7a6af384dbc1ff9c",
       "icon.platform": "7b8f2b594d560d034ab6c59b7d0a8f07d41cf77e",
       "comp.sidebar.item.text-subtle": "5c029c163aacd0ffacea90d18551a6ce181d09ae",
-      "gradient.ai.gradient-from": "8db516caa68afc5b8fdd6fc6e5a9bad7715c5f26",
-      "gradient.ai.gradient-to": "33930f41665251a281973a37847f357480aedca3"
+      "gradient.ai.gradient-to": "8db516caa68afc5b8fdd6fc6e5a9bad7715c5f26",
+      "gradient.ai.gradient-from": "33930f41665251a281973a37847f357480aedca3"
     },
     "group": "mode"
   },
@@ -22803,8 +22763,6 @@
       "shadow-color.4": "2b2e0307d252bdc6db53a23ce2cc2e9bb4f6b914",
       "shadow-color.5": "5a6c707240bab54cb4403f47262abfe0756efc9a",
       "shadow-color.6": "928283d00759150575a8f155da90180a582be438",
-      "gradient.ai.gradient-stop-3": "c9e14c3db8e622b10b1cd3e860115cd6f876ae49",
-      "gradient.ai.gradient-stop-4": "6e7d0850d7eb1e699f87b41f6ffd4cb8d73d72e8",
       "gradient.ai-chat.gradient-stop-1": "17770c4eecf613f0c98fba1f1f3b4d3f44c65a83",
       "gradient.ai-chat.gradient-stop-2": "1e938efee77a81f9f3ea69c9bbfb5a46250300c2",
       "gradient.ai-chat.gradient-stop-3": "c4d9d604b3e81f45bba98a66d2127c7bed108813",
@@ -22901,8 +22859,8 @@
       "icon.efficiency": "d3020e54b0702e0f06ba18db7a6af384dbc1ff9c",
       "icon.platform": "7b8f2b594d560d034ab6c59b7d0a8f07d41cf77e",
       "comp.sidebar.item.text-subtle": "5c029c163aacd0ffacea90d18551a6ce181d09ae",
-      "gradient.ai.gradient-from": "8db516caa68afc5b8fdd6fc6e5a9bad7715c5f26",
-      "gradient.ai.gradient-to": "33930f41665251a281973a37847f357480aedca3"
+      "gradient.ai.gradient-to": "8db516caa68afc5b8fdd6fc6e5a9bad7715c5f26",
+      "gradient.ai.gradient-from": "33930f41665251a281973a37847f357480aedca3"
     },
     "group": "mode"
   },
@@ -23783,8 +23741,6 @@
       "shadow-color.4": "2b2e0307d252bdc6db53a23ce2cc2e9bb4f6b914",
       "shadow-color.5": "5a6c707240bab54cb4403f47262abfe0756efc9a",
       "shadow-color.6": "928283d00759150575a8f155da90180a582be438",
-      "gradient.ai.gradient-stop-3": "c9e14c3db8e622b10b1cd3e860115cd6f876ae49",
-      "gradient.ai.gradient-stop-4": "6e7d0850d7eb1e699f87b41f6ffd4cb8d73d72e8",
       "gradient.ai-chat.gradient-stop-1": "17770c4eecf613f0c98fba1f1f3b4d3f44c65a83",
       "gradient.ai-chat.gradient-stop-2": "1e938efee77a81f9f3ea69c9bbfb5a46250300c2",
       "gradient.ai-chat.gradient-stop-3": "c4d9d604b3e81f45bba98a66d2127c7bed108813",
@@ -23881,8 +23837,8 @@
       "icon.efficiency": "d3020e54b0702e0f06ba18db7a6af384dbc1ff9c",
       "icon.platform": "7b8f2b594d560d034ab6c59b7d0a8f07d41cf77e",
       "comp.sidebar.item.text-subtle": "5c029c163aacd0ffacea90d18551a6ce181d09ae",
-      "gradient.ai.gradient-from": "8db516caa68afc5b8fdd6fc6e5a9bad7715c5f26",
-      "gradient.ai.gradient-to": "33930f41665251a281973a37847f357480aedca3"
+      "gradient.ai.gradient-to": "8db516caa68afc5b8fdd6fc6e5a9bad7715c5f26",
+      "gradient.ai.gradient-from": "33930f41665251a281973a37847f357480aedca3"
     },
     "group": "mode"
   },
@@ -24763,8 +24719,6 @@
       "shadow-color.4": "2b2e0307d252bdc6db53a23ce2cc2e9bb4f6b914",
       "shadow-color.5": "5a6c707240bab54cb4403f47262abfe0756efc9a",
       "shadow-color.6": "928283d00759150575a8f155da90180a582be438",
-      "gradient.ai.gradient-stop-3": "c9e14c3db8e622b10b1cd3e860115cd6f876ae49",
-      "gradient.ai.gradient-stop-4": "6e7d0850d7eb1e699f87b41f6ffd4cb8d73d72e8",
       "gradient.ai-chat.gradient-stop-1": "17770c4eecf613f0c98fba1f1f3b4d3f44c65a83",
       "gradient.ai-chat.gradient-stop-2": "1e938efee77a81f9f3ea69c9bbfb5a46250300c2",
       "gradient.ai-chat.gradient-stop-3": "c4d9d604b3e81f45bba98a66d2127c7bed108813",
@@ -24861,8 +24815,8 @@
       "icon.efficiency": "d3020e54b0702e0f06ba18db7a6af384dbc1ff9c",
       "icon.platform": "7b8f2b594d560d034ab6c59b7d0a8f07d41cf77e",
       "comp.sidebar.item.text-subtle": "5c029c163aacd0ffacea90d18551a6ce181d09ae",
-      "gradient.ai.gradient-from": "8db516caa68afc5b8fdd6fc6e5a9bad7715c5f26",
-      "gradient.ai.gradient-to": "33930f41665251a281973a37847f357480aedca3"
+      "gradient.ai.gradient-to": "8db516caa68afc5b8fdd6fc6e5a9bad7715c5f26",
+      "gradient.ai.gradient-from": "33930f41665251a281973a37847f357480aedca3"
     },
     "group": "mode"
   },

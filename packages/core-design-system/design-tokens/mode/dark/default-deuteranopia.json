@@ -237,7 +237,7 @@
         },
         "bg-hover": {
           "$type": "color",
-          "$value": "linear-gradient(102deg, {gradient.ai.subtle.gradient-stop-1} 8%, {gradient.ai.subtle.gradient-stop-2} 35%, {gradient.ai.subtle.gradient-stop-3} 65%, {gradient.ai.subtle.gradient-stop-4} 87%)",
+          "$value": "linear-gradient(102deg, {gradient.ai.subtle.stop-1} 8%, {gradient.ai.subtle.stop-2} 35%, {gradient.ai.subtle.stop-3} 65%, {gradient.ai.subtle.stop-4} 87%)",
           "$description": "Hover state background color for interactive AI surfaces."
         },
         "bg-selected": {
@@ -251,7 +251,7 @@
             }
           },
           "$type": "color",
-          "$value": "linear-gradient(102deg, {gradient.ai.subtle.gradient-stop-1} 8%, {gradient.ai.subtle.gradient-stop-2} 35%, {gradient.ai.subtle.gradient-stop-3} 65%, {gradient.ai.subtle.gradient-stop-4} 87%)"
+          "$value": "linear-gradient(102deg, {gradient.ai.subtle.stop-1} 8%, {gradient.ai.subtle.stop-2} 35%, {gradient.ai.subtle.stop-3} 65%, {gradient.ai.subtle.stop-4} 87%)"
         },
         "inner": {
           "$extensions": {
@@ -1429,7 +1429,7 @@
         "running": {
           "border": {
             "$type": "color",
-            "$value": "linear-gradient(90deg, {gradient.pipeline.arrows.gradient-stop-1} 0%, {gradient.pipeline.arrows.gradient-stop-2} 50%, {gradient.pipeline.arrows.gradient-stop-3} 100%)",
+            "$value": "linear-gradient(90deg, {gradient.pipeline.arrows.stop-1} 0%, {gradient.pipeline.arrows.stop-2} 50%, {gradient.pipeline.arrows.stop-3} 100%)",
             "$description": "Gradient border color for active pipeline arrows. Visually indicates data flow between active pipeline components."
           }
         }
@@ -1448,7 +1448,7 @@
         "running": {
           "border": {
             "$type": "color",
-            "$value": "radial-gradient(604% 142% at 0% 0%, {gradient.pipeline.running.gradient-stop-1} 0%, {gradient.pipeline.running.gradient-stop-2} 30%, {gradient.pipeline.running.gradient-stop-3} 100%)",
+            "$value": "radial-gradient(604% 142% at 0% 0%, {gradient.pipeline.running.stop-1} 0%, {gradient.pipeline.running.stop-2} 30%, {gradient.pipeline.running.stop-3} 100%)",
             "$description": "Animated gradient border for running pipeline states. Provides visual indication of active processing."
           }
         }
@@ -1629,7 +1629,7 @@
     "skeleton": {
       "bg": {
         "$type": "color",
-        "$value": "linear-gradient(90deg, {gradient.skeleton.gradient-stop-1} 0%, {gradient.skeleton.gradient-stop-2} 50%, {gradient.skeleton.gradient-stop-3} 100%)",
+        "$value": "linear-gradient(90deg, {gradient.skeleton.stop-1} 0%, {gradient.skeleton.stop-2} 50%, {gradient.skeleton.stop-3} 100%)",
         "$description": "Animation color that sweeps across skeleton elements. Creates a \"shimmer\" effect indicating content loading states."
       },
       "mask": {
@@ -2119,19 +2119,19 @@
         "$value": "{orange.200}"
       },
       "subtle": {
-        "gradient-stop-1": {
+        "stop-1": {
           "$type": "color",
           "$value": "{cyan.950}"
         },
-        "gradient-stop-2": {
+        "stop-2": {
           "$type": "color",
           "$value": "{cyan.1000}"
         },
-        "gradient-stop-3": {
+        "stop-3": {
           "$type": "color",
           "$value": "{blue.1000}"
         },
-        "gradient-stop-4": {
+        "stop-4": {
           "$type": "color",
           "$value": "{blue.950}"
         }
@@ -2192,15 +2192,15 @@
       }
     },
     "skeleton": {
-      "gradient-stop-1": {
+      "stop-1": {
         "$type": "color",
         "$value": "{chrome.950}"
       },
-      "gradient-stop-2": {
+      "stop-2": {
         "$type": "color",
         "$value": "{chrome.850}"
       },
-      "gradient-stop-3": {
+      "stop-3": {
         "$type": "color",
         "$value": "{chrome.950}"
       },
@@ -2226,11 +2226,11 @@
     },
     "pipeline": {
       "running": {
-        "gradient-stop-1": {
+        "stop-1": {
           "$type": "color",
           "$value": "{blue.200}"
         },
-        "gradient-stop-2": {
+        "stop-2": {
           "$extensions": {
             "studio.tokens": {
               "modify": {
@@ -2243,21 +2243,21 @@
           "$type": "color",
           "$value": "{chrome.800}"
         },
-        "gradient-stop-3": {
+        "stop-3": {
           "$type": "color",
           "$value": "{blue.200}"
         }
       },
       "arrows": {
-        "gradient-stop-1": {
+        "stop-1": {
           "$type": "color",
           "$value": "{pure.white}"
         },
-        "gradient-stop-2": {
+        "stop-2": {
           "$type": "color",
           "$value": "{blue.300}"
         },
-        "gradient-stop-3": {
+        "stop-3": {
           "$type": "color",
           "$value": "{border.1}"
         }

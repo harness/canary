@@ -68,8 +68,15 @@ vi.mock('@/components', () => {
   mockButton.displayName = 'MockButton'
 
   const mockIcon = ({ name }: any) => <span data-testid="icon" data-name={name} />
-  const mockText = ({ children, className, color }: any) => (
-    <span data-testid="text" className={className} data-color={color}>
+  const mockText = ({ children, className, color, onMouseEnter, onMouseLeave, ...props }: any) => (
+    <span
+      data-testid="text"
+      className={className}
+      data-color={color}
+      onMouseEnter={onMouseEnter}
+      onMouseLeave={onMouseLeave}
+      {...props}
+    >
       {children}
     </span>
   )
@@ -194,14 +201,13 @@ describe('SidebarRail', () => {
 
   test('updates indicator on hover state', () => {
     renderWith(<SidebarRail open={false} />)
-    const button = screen.getByRole('button')
-    const indicator = button.querySelector('.absolute') as HTMLElement
+    const textElement = screen.getByTestId('text')
 
-    expect(indicator.textContent).toBe('|')
+    expect(textElement.textContent).toBe('|')
     act(() => {
-      fireEvent.mouseEnter(button)
+      fireEvent.mouseEnter(textElement)
     })
-    expect(screen.getAllByTestId('icon')[0]).toHaveAttribute('data-name', 'nav-arrow-right')
+    expect(screen.getByTestId('icon')).toHaveAttribute('data-name', 'nav-arrow-right')
   })
 })
 

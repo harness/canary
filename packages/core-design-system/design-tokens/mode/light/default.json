@@ -218,7 +218,7 @@
         },
         "bg": {
           "$type": "color",
-          "$value": "{purple.50}",
+          "$value": "{pure.white}",
           "$description": "Base background color for AI-related surfaces."
         },
         "border": {

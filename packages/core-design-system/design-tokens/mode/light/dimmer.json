@@ -1875,6 +1875,19 @@
             "type": "innerShadow"
           }
         }
+      },
+      "ai": {
+        "inner": {
+          "$type": "boxShadow",
+          "$value": {
+            "x": "0",
+            "y": "6",
+            "blur": "12",
+            "spread": "0",
+            "color": "{set.ai.outline.inner}",
+            "type": "innerShadow"
+          }
+        }
       }
     }
   },
@@ -2723,19 +2736,19 @@
     "ai-subtle": {
       "gradient-stop-1": {
         "$type": "color",
-        "$value": "{yellow.25}"
+        "$value": "{cyan.50}"
       },
       "gradient-stop-2": {
         "$type": "color",
-        "$value": "{pink.50}"
+        "$value": "{cyan.25}"
       },
       "gradient-stop-3": {
         "$type": "color",
-        "$value": "{purple.50}"
+        "$value": "{indigo.100}"
       },
       "gradient-stop-4": {
         "$type": "color",
-        "$value": "{cyan.50}"
+        "$value": "{cyan.150}"
       }
     }
   },

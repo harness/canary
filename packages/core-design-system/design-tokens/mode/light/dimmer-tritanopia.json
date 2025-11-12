@@ -2142,6 +2142,36 @@
           "$type": "color",
           "$value": "{indigo.150}"
         }
+      },
+      "chat": {
+        "bubble": {
+          "from": {
+            "$extensions": {
+              "studio.tokens": {
+                "modify": {
+                  "type": "alpha",
+                  "value": "0.45",
+                  "space": "lch"
+                }
+              }
+            },
+            "$type": "color",
+            "$value": "{cyan.100}"
+          },
+          "to": {
+            "$extensions": {
+              "studio.tokens": {
+                "modify": {
+                  "type": "alpha",
+                  "value": "0.2",
+                  "space": "lch"
+                }
+              }
+            },
+            "$type": "color",
+            "$value": "{tuna.300}"
+          }
+        }
       }
     },
     "alert": {

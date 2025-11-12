@@ -3,7 +3,7 @@ import { NavbarItemType } from '@components/app-sidebar'
 import { GetNavbarMenuDataParams } from '../types'
 
 /**
- * No pinned menu items by default
+ * Mocked recent items for the navbar.
  */
 export const getRecentMenuItems = ({ t, routes, params }: GetNavbarMenuDataParams): NavbarItemType[] => [
   {

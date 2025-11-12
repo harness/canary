@@ -223,15 +223,24 @@
         },
         "border": {
           "$type": "color",
-          "$value": "linear-gradient(299deg, color(display-p3 0.2431 0.3922 0.898) -9.37%, color(display-p3 0 0.6784 0.8941) 83.25%);",
+          "$value": "linear-gradient(299deg, {gradient.ai.gradient-from}-9.37%, {gradient.ai.gradient-to} 83.25%)",
           "$description": "Distinctive gradient border for AI-related areas, using a multi-color pattern."
         },
         "bg-hover": {
           "$type": "color",
-          "$value": "{purple.100}",
+          "$value": "linear-gradient(102deg, {gradient.ai-subtle.gradient-stop-1} 8%, {gradient.ai-subtle.gradient-stop-2} 35%, {gradient.ai-subtle.gradient-stop-3} 65%, {gradient.ai-subtle.gradient-stop-4} 87%)",
           "$description": "Hover state background color for interactive AI surfaces."
         },
         "bg-selected": {
+          "$extensions": {
+            "studio.tokens": {
+              "modify": {
+                "type": "alpha",
+                "value": "0.65",
+                "space": "lch"
+              }
+            }
+          },
           "$type": "color",
           "$value": "linear-gradient(102deg, {gradient.ai-subtle.gradient-stop-1} 8%, {gradient.ai-subtle.gradient-stop-2} 35%, {gradient.ai-subtle.gradient-stop-3} 65%, {gradient.ai-subtle.gradient-stop-4} 87%)"
         },
@@ -1925,8 +1934,8 @@
           "$type": "boxShadow",
           "$value": {
             "x": "0",
-            "y": "7",
-            "blur": "16",
+            "y": "6",
+            "blur": "12",
             "spread": "0",
             "color": "{set.ai.outline.inner}",
             "type": "innerShadow"
@@ -2118,11 +2127,11 @@
     "ai": {
       "gradient-from": {
         "$type": "color",
-        "$value": "{cyan.300}"
+        "$value": "{indigo.600}"
       },
       "gradient-to": {
         "$type": "color",
-        "$value": "{indigo.600}"
+        "$value": "{cyan.300}"
       }
     },
     "alert": {
@@ -2780,19 +2789,19 @@
     "ai-subtle": {
       "gradient-stop-1": {
         "$type": "color",
-        "$value": "{orange.50}"
+        "$value": "{cyan.50}"
       },
       "gradient-stop-2": {
         "$type": "color",
-        "$value": "{pink.50}"
+        "$value": "{cyan.25}"
       },
       "gradient-stop-3": {
         "$type": "color",
-        "$value": "{purple.50}"
+        "$value": "{indigo.100}"
       },
       "gradient-stop-4": {
         "$type": "color",
-        "$value": "{cyan.50}"
+        "$value": "{cyan.150}"
       }
     }
   },

@@ -232,15 +232,24 @@
         },
         "border": {
           "$type": "color",
-          "$value": "linear-gradient(94deg, {gradient.ai.gradient-from} 0%, {gradient.ai.gradient-to} 35%, {gradient.ai.gradient-stop-3} 65%, {gradient.ai.gradient-stop-4} 100%)",
+          "$value": "linear-gradient(299deg, {gradient.ai.gradient-from}-9.37%, {gradient.ai.gradient-to} 83.25%)",
           "$description": "Distinctive gradient border for AI-related areas, using a multi-color pattern."
         },
         "bg-hover": {
           "$type": "color",
-          "$value": "{purple.950}",
+          "$value": "linear-gradient(102deg, {gradient.ai-subtle.gradient-stop-1} 8%, {gradient.ai-subtle.gradient-stop-2} 35%, {gradient.ai-subtle.gradient-stop-3} 65%, {gradient.ai-subtle.gradient-stop-4} 87%)",
           "$description": "Hover state background color for interactive AI surfaces."
         },
         "bg-selected": {
+          "$extensions": {
+            "studio.tokens": {
+              "modify": {
+                "type": "alpha",
+                "value": "0.65",
+                "space": "lch"
+              }
+            }
+          },
           "$type": "color",
           "$value": "linear-gradient(102deg, {gradient.ai-subtle.gradient-stop-1} 8%, {gradient.ai-subtle.gradient-stop-2} 35%, {gradient.ai-subtle.gradient-stop-3} 65%, {gradient.ai-subtle.gradient-stop-4} 87%)"
         },
@@ -1117,12 +1126,6 @@
         "$type": "color",
         "$value": "{chrome.500}",
         "$description": "Inset border color for avatars. Creates subtle definition inside the avatar element."
-      }
-    },
-    "chat": {
-      "ai-icon": {
-        "$type": "color",
-        "$value": "radial-gradient(106% 106% at 103% 57%,{gradient.ai-chat.gradient-stop-1} 27%, {gradient.ai-chat.gradient-stop-2} 58%, {gradient.ai-chat.gradient-stop-3} 77%)"
       }
     },
     "dialog": {
@@ -2094,35 +2097,13 @@
   },
   "gradient": {
     "ai": {
-      "gradient-from": {
+      "gradient-to": {
         "$type": "color",
         "$value": "{yellow.100}"
       },
-      "gradient-to": {
+      "gradient-from": {
         "$type": "color",
         "$value": "{orange.200}"
-      },
-      "gradient-stop-3": {
-        "$type": "color",
-        "$value": "{cyan.400}"
-      },
-      "gradient-stop-4": {
-        "$type": "color",
-        "$value": "{cyan.200}"
-      }
-    },
-    "ai-chat": {
-      "gradient-stop-1": {
-        "$type": "color",
-        "$value": "{cyan.150}"
-      },
-      "gradient-stop-2": {
-        "$type": "color",
-        "$value": "{indigo.300}"
-      },
-      "gradient-stop-3": {
-        "$type": "color",
-        "$value": "{violet.300}"
       }
     },
     "alert": {

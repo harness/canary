@@ -241,7 +241,7 @@
         },
         "border": {
           "$type": "color",
-          "$value": "linear-gradient(119deg, {gradient.ai.gradient-from} 17%, {gradient.ai.gradient-to} 100%)",
+          "$value": "linear-gradient(131deg, {gradient.ai.gradient-from} 27%, {gradient.ai.gradient-to} 112%)",
           "$description": "Distinctive gradient border for AI-related areas, using a multi-color pattern."
         },
         "bg-hover": {

@@ -17,6 +17,7 @@ import { useNav } from '../../hooks/useNav'
 import { getNavbarMoreMenuData, NavItems } from './data/navbar-more-menu-items'
 import { getNavbarSettingsMenuData } from './data/navbar-settings-menu-items'
 import { getPinnedMenuItems } from './data/pinned-menu-items'
+import { getRecentMenuItems } from './data/recent-menu-items'
 import SidebarGroupMenu from './sidebar-group-menu'
 import SidebarItem from './sidebar-item'
 import { NavEnum, RouteDefinitions } from './types'
@@ -46,6 +47,7 @@ export const SideNav: React.FC<{ routes?: RouteDefinitions }> = ({ routes }) => 
   const moreMenuItems = useMemo(() => getNavbarMoreMenuData({ t, routes, params: commonParams }), [t])
   const settingsMenuItems = useMemo(() => getNavbarSettingsMenuData({ t, routes, params: commonParams }), [t])
   const pinnedMenuItems = useMemo(() => getPinnedMenuItems(t), [t])
+  const recentMenuItems = useMemo(() => getRecentMenuItems({ t, routes, params: commonParams }), [t])
   const combinedMenuItems = useMemo(
     () => [
       ...pinnedMenuItems,
@@ -68,12 +70,12 @@ export const SideNav: React.FC<{ routes?: RouteDefinitions }> = ({ routes }) => 
 
     if (parsed) {
       setNavLinks({
-        pinned: parsed.state?.pinnedMenu?.length ? parsed.state.pinnedMenu : pinnedMenuItems,
-        recents: parsed.state?.recentMenu ?? []
+        pinnedMenu: parsed.state?.pinnedMenu?.length ? parsed.state.pinnedMenu : pinnedMenuItems,
+        recentMenu: parsed.state?.recentMenu?.length ? parsed.state.recentMenu : recentMenuItems
       })
     } else {
       // First time: set default pinned
-      setNavLinks({ pinned: pinnedMenuItems, recents: [] })
+      setNavLinks({ pinnedMenu: pinnedMenuItems, recentMenu: [] })
     }
   }, [setNavLinks])
 
@@ -100,8 +102,8 @@ export const SideNav: React.FC<{ routes?: RouteDefinitions }> = ({ routes }) => 
    */
   const handleSave = (nextRecentItems: NavbarItemType[], nextPinnedItems: NavbarItemType[]) => {
     setNavLinks({
-      pinned: nextPinnedItems,
-      recents: nextRecentItems
+      pinnedMenu: nextPinnedItems,
+      recentMenu: nextRecentItems
     })
   }
 

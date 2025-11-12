@@ -1,66 +1,71 @@
-import { NavbarItemType } from '@components/app-sidebar'
+import { create, StateCreator } from 'zustand'
+import { persist } from 'zustand/middleware'
 
-const RECENT_KEY = 'nav_recent_menu'
-const PINNED_KEY = 'nav_pinned_menu'
+import type { NavState } from '@harnessio/ui/components'
 
-const mockPinnedItems: NavbarItemType[] = [{ title: 'Repositories', to: '/', id: '1', iconName: 'account' }]
+const navStateCreator: StateCreator<NavState> = set => ({
+  recentMenu: [],
+  pinnedMenu: [],
 
-const mockRecentItems: NavbarItemType[] = [
-  { title: 'Connectors', to: '/connectors', id: '2', iconName: 'connectors' },
-  { title: 'Secrets', to: '/secrets', id: '2', iconName: 'key' },
-  {
-    title: 'Builds',
-    to: '/builds',
-    id: '3',
-    iconName: 'builds',
-    subItems: [
-      { title: 'Pipelines', to: '/builds/pipelines', id: '3-1', iconName: 'pipeline' },
-      { title: 'Overview', to: '/builds/overview', id: '3-2', iconName: 'settings' }
-    ]
-  }
-]
+  setRecent: (route, remove = false) =>
+    set(state => {
+      let copyRecent = [...state.recentMenu]
 
-const setLocal = (key: string, value: NavbarItemType[]) => {
-  try {
-    localStorage.setItem(key, JSON.stringify(value))
-  } catch {
-    // do nothing
-  }
-}
-
-export const useNav = () => {
-  const recentMenu = mockRecentItems
-  const pinnedMenu = mockPinnedItems
-
-  const setRecent = (item: NavbarItemType, remove?: boolean) => {
-    let updated: NavbarItemType[]
-    if (remove) {
-      updated = recentMenu.filter(i => i.title !== item.title)
-    } else {
-      const filtered = recentMenu.filter(i => i.title !== item.title)
-      updated = [item, ...filtered]
-    }
-    setLocal(RECENT_KEY, updated)
-  }
-
-  const setPinned = (item: NavbarItemType, pin: boolean) => {
-    let updated: NavbarItemType[]
-    if (pin) {
-      if (pinnedMenu.some(i => i.title === item.title)) {
-        updated = pinnedMenu
+      if (remove) {
+        copyRecent = copyRecent.filter(item => item.id !== route.id)
       } else {
-        updated = [...pinnedMenu, item]
+        // Check if the route exists in pinned
+        if (state.pinnedMenu.find(item => item.id === route.id)) return state
+
+        // Check if the route exists in recents
+        if (state.recentMenu.find(item => item.id === route.id)) return state
+
+        // Otherwise, prepend new route
+        copyRecent = [route, ...state.recentMenu.slice(0, 4)]
       }
-    } else {
-      updated = pinnedMenu.filter(i => i.title !== item.title)
-    }
-    setLocal(PINNED_KEY, updated)
-  }
 
-  const setNavLinks = ({ recents, pinned }: { recents: NavbarItemType[]; pinned: NavbarItemType[] }) => {
-    setLocal(RECENT_KEY, recents)
-    setLocal(PINNED_KEY, pinned)
-  }
+      // Prepend the route to history, limiting to 5 items
+      return {
+        pinnedMenu: state.pinnedMenu,
+        recentMenu: copyRecent.slice(0, 5) // Ensure max 5 items
+      }
+    }),
 
-  return { recentMenu, setRecent, pinnedMenu, setPinned, setNavLinks }
-}
+  setPinned: (route, pin) =>
+    set(state => {
+      // Make shallow copies of the lists
+      let copyPinned = [...state.pinnedMenu]
+      let copyRecent = [...state.recentMenu]
+
+      if (pin) {
+        // Push the route to the pinned list
+        copyPinned.push(route)
+
+        // Remove the route from the recent list
+        copyRecent = copyRecent.filter(item => item.id !== route.id)
+      } else {
+        // Remove the route from the pinned list
+        copyPinned = copyPinned.filter(item => item.id !== route.id)
+      }
+
+      return {
+        pinnedMenu: copyPinned,
+        recentMenu: copyRecent
+      }
+    }),
+
+  setNavLinks: ({ pinnedMenu, recentMenu }) =>
+    set(state => ({
+      // Updates the pinned and recent navigation items in the state
+      pinnedMenu: pinnedMenu ?? state.pinnedMenu,
+      recentMenu: recentMenu ?? state.recentMenu
+    }))
+})
+
+export const useNav = create(
+  persist(navStateCreator, {
+    // localStorage key
+    name: 'nav-items',
+    version: 1.1
+  })
+)

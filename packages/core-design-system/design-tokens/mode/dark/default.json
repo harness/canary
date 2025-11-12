@@ -2171,6 +2171,20 @@
           "$type": "color",
           "$value": "{blue.950}"
         }
+      },
+      "glow": {
+        "stop-1": {
+          "$type": "color",
+          "$value": "{cyan.700}"
+        },
+        "stop-2": {
+          "$type": "color",
+          "$value": "{bg.1}"
+        },
+        "stop-3": {
+          "$type": "color",
+          "$value": "{indigo.800}"
+        }
       }
     },
     "alert": {

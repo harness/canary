@@ -2138,17 +2138,8 @@
       },
       "glow": {
         "stop-1": {
-          "$extensions": {
-            "studio.tokens": {
-              "modify": {
-                "type": "alpha",
-                "value": "0.6",
-                "space": "lch"
-              }
-            }
-          },
           "$type": "color",
-          "$value": "{cyan.300}"
+          "$value": "{cyan.700}"
         },
         "stop-2": {
           "$type": "color",
@@ -2156,7 +2147,7 @@
         },
         "stop-3": {
           "$type": "color",
-          "$value": "{indigo.150}"
+          "$value": "{indigo.800}"
         }
       }
     },

@@ -1419,6 +1419,10 @@
         "$type": "color",
         "$value": "{bg.3}",
         "$description": "Background color for form input fields. Provides elevated surface that distinguishes interactive form elements from surrounding content."
+      },
+      "ai-glow": {
+        "$type": "color",
+        "$value": "linear-gradient(284deg, {gradient.ai.glow.stop-1} 10%, {gradient.ai.glow.stop-2} 50%, {gradient.ai.glow.stop-3} 90%)"
       }
     },
     "link": {

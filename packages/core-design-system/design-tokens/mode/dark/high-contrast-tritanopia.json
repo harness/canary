@@ -1405,6 +1405,10 @@
         "$type": "color",
         "$value": "{bg.2}",
         "$description": "Background color for form input fields. Provides clear visual distinction from surrounding content while maintaining readability and accessibility standards."
+      },
+      "ai-glow": {
+        "$type": "color",
+        "$value": "linear-gradient(284deg, {gradient.ai.glow.stop-1} 10%, {gradient.ai.glow.stop-2} 50%, {gradient.ai.glow.stop-3} 90%)"
       }
     },
     "link": {

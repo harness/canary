@@ -115,8 +115,6 @@ export const SidebarRail = forwardRef<HTMLButtonElement, ComponentProps<'button'
         title={label}
         tabIndex={-1}
         onClick={onClickHandler}
-        onMouseEnter={() => setHovered(true)}
-        onMouseLeave={() => setHovered(false)}
         className={cn('cn-sidebar-rail', className)}
         {...props}
       >
@@ -124,7 +122,13 @@ export const SidebarRail = forwardRef<HTMLButtonElement, ComponentProps<'button'
           {hovered ? (
             <IconV2 name={open ? 'nav-arrow-left' : 'nav-arrow-right'} size="lg" />
           ) : (
-            <Text className="cn-pl-1 pl-cn-4xs">|</Text>
+            <Text
+              className="cn-pl-1 pl-cn-4xs"
+              onMouseEnter={() => setHovered(true)}
+              onMouseLeave={() => setHovered(false)}
+            >
+              |
+            </Text>
           )}
         </div>
       </button>

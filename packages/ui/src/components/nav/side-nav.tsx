@@ -81,7 +81,7 @@ export const SideNav: React.FC<{ routes?: RouteDefinitions }> = ({ routes }) => 
 
   const drawerContentCommonProps: DrawerContentProps = useMemo(
     () => ({
-      className: cn('cn-sidebar-drawer-content z-20 cn-sidebar-menu-drawer-content rounded', {
+      className: cn('cn-sidebar-drawer-content z-20 overflow-x-hidden rounded', {
         'cn-sidebar-menu-drawer-content-collapsed': collapsed
       }),
       overlayClassName: cn('bg-transparent z-20 opacity-0', {

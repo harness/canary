@@ -108,8 +108,12 @@ export default {
       },
 
       '&-header': {
-        padding:
-          'calc(var(--cn-sidebar-item-py) * var(--sidebar-group-label-scale)) calc(var(--cn-sidebar-item-px) * var(--sidebar-group-label-scale))',
+        display: 'flex',
+        minHeight: '28px',
+        padding: 'var(--cn-sidebar-item-py) var(--cn-sidebar-item-px)',
+        alignItems: 'center',
+        gap: 'var(--cn-sidebar-item-gap)',
+        alignSelf: 'stretch',
         '&-action-button': {
           '@apply opacity-0 transition-opacity duration-150': ''
         },

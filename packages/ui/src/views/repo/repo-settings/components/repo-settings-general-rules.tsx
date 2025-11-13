@@ -160,11 +160,13 @@ export const RepoSettingsGeneralRules: FC<RepoSettingsGeneralRulesProps> = ({
 
   const resetSearch = () => {
     setRulesSearchQuery?.('')
+    setRuleTypeFilter?.(null)
+    paginationProps?.goToPage?.(1)
   }
 
   const isShowRulesContent = useMemo(() => {
-    return !!rules?.length || !!rulesSearchQuery?.length
-  }, [rulesSearchQuery, rules])
+    return !!rules?.length || !!rulesSearchQuery?.length || ruleTypeFilter !== null
+  }, [rulesSearchQuery, rules, ruleTypeFilter])
 
   const handleToProjectRuleDetails = (rule: RuleDataType) => {
     toProjectRuleDetails?.(rule.identifier ?? '', rule.scope ?? 0)
@@ -310,11 +312,26 @@ export const RepoSettingsGeneralRules: FC<RepoSettingsGeneralRulesProps> = ({
           textWrapperClassName="max-w-[312px]"
           title={t('views:noData.noResults', 'No search results')}
           description={[
-            t(
-              'views:noData.noResultsDescription',
-              'No rules match your search. Try adjusting your keywords or filters.',
-              { type: 'rules' }
-            )
+            ruleTypeFilter
+              ? t(
+                  'views:noData.noResultsDescriptionWithFilter',
+                  `No {{filterName}} rules match your search. Try adjusting your keywords or filters.`,
+                  {
+                    filterName:
+                      ruleTypeFilter === 'branch'
+                        ? t('views:repos.branch', 'branch')
+                        : ruleTypeFilter === 'tag'
+                          ? t('views:repos.tag', 'tag')
+                          : ruleTypeFilter === 'push'
+                            ? t('views:repos.push', 'push')
+                            : ruleTypeFilter
+                  }
+                )
+              : t(
+                  'views:noData.noResultsDescription',
+                  'No rules match your search. Try adjusting your keywords or filters.',
+                  { type: 'rules' }
+                )
           ]}
           secondaryButton={{
             icon: 'trash',

@@ -1,6 +1,6 @@
 import { forwardRef } from 'react'
 
-import { act, fireEvent, render, screen, waitFor } from '@testing-library/react'
+import { render, screen, waitFor } from '@testing-library/react'
 import userEvent from '@testing-library/user-event'
 import { vi } from 'vitest'
 
@@ -191,7 +191,7 @@ describe('SidebarRail', () => {
 
   test('toggles sidebar and forwards click', async () => {
     const onClick = vi.fn()
-    render(<SidebarRail open={true} onClick={onClick} />)
+    renderWith(<SidebarRail open={true} onClick={onClick} />)
 
     const button = screen.getByRole('button')
 
@@ -206,7 +206,7 @@ describe('SidebarRail', () => {
   })
 
   test('updates indicator on hover state', async () => {
-    render(<SidebarRail open={false} />)
+    renderWith(<SidebarRail open={false} />)
     const button = screen.getByRole('button')
 
     // select inner div that handles hover

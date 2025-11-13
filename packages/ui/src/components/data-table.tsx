@@ -1,4 +1,4 @@
-import { useMemo } from 'react'
+import { useEffect, useMemo } from 'react'
 
 import { Button, Checkbox, IconV2, PaginationProps, Table, tableVariants } from '@/components'
 import {
@@ -28,6 +28,12 @@ export interface DataTableProps<TData> {
   className?: string
   currentSorting?: SortingState
   currentRowSelection?: RowSelectionState
+
+  /**
+   * Array of column IDs to be visible
+   */
+  visibleColumns?: string[]
+
   getRowId?: (row: TData) => string
   /**
    * Callback for when sorting changes. Use this for server-side sorting.
@@ -77,7 +83,7 @@ export interface DataTableProps<TData> {
   _enableColumnResizing?: boolean
 }
 
-export function DataTable<TData>({
+export const DataTable = function DataTable<TData>({
   data = [],
   columns,
   size = 'normal',
@@ -98,7 +104,8 @@ export function DataTable<TData>({
   onExpandedChange: externalOnExpandedChange,
   renderSubComponent,
   _enableColumnResizing = false,
-  getRowId
+  getRowId,
+  visibleColumns
 }: DataTableProps<TData>) {
   const tableColumns = useMemo(() => {
     // Start with the base columns
@@ -228,6 +235,21 @@ export function DataTable<TData>({
   )
 
   const table = useReactTable(tableOptions)
+
+  // Set the visible columns
+  useEffect(() => {
+    if (!table || !visibleColumns) {
+      return
+    }
+
+    const hideableColumns = table.getAllColumns()?.filter(column => column.getCanHide())
+
+    if (hideableColumns) {
+      hideableColumns.forEach(column => {
+        column.toggleVisibility(visibleColumns?.includes(column.id) || false)
+      })
+    }
+  }, [table, visibleColumns])
 
   return (
     <Table.Root

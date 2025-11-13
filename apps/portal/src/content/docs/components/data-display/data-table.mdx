@@ -309,6 +309,13 @@ function MyTable() {
       required: false,
       value: "boolean",
     },
+    {
+      name: "visibleColumns",
+      description:
+        "Array of column IDs to control which columns are visible. Columns must have 'enableHiding: true' to be controlled by this prop.",
+      required: false,
+      value: "string[]",
+    },
   ]}
 />
 
@@ -351,3 +358,87 @@ const columns = [
   onRowSelectionChange={setRowSelection}
 />
 ```
+
+### Table with Column Visibility Control
+
+```tsx
+import {
+  DataTable,
+  Button,
+  DropdownMenu,
+  IconV2,
+} from "@harnessio/ui/components";
+import { useState } from "react";
+
+// Define columns with enableHiding
+const columns = [
+  {
+    accessorKey: "name",
+    header: "Name",
+    enableHiding: true,
+  },
+  {
+    accessorKey: "email",
+    header: "Email",
+    enableHiding: true,
+  },
+  {
+    accessorKey: "status",
+    header: "Status",
+    enableHiding: true,
+  },
+];
+
+function TableWithColumnFilter() {
+  const [visibleColumns, setVisibleColumns] = useState([
+    "name",
+    "email",
+    "status",
+  ]);
+
+  const handleColumnToggle = (columnId: string, checked: boolean) => {
+    if (checked) {
+      setVisibleColumns([...visibleColumns, columnId]);
+    } else {
+      setVisibleColumns(visibleColumns.filter((id) => id !== columnId));
+    }
+  };
+
+  return (
+    <>
+      <DropdownMenu.Root>
+        <DropdownMenu.Trigger asChild>
+          <Button variant="outline">
+            Columns
+            <IconV2 name="nav-arrow-down" />
+          </Button>
+        </DropdownMenu.Trigger>
+        <DropdownMenu.Content>
+          {columns.map((column) => (
+            <DropdownMenu.CheckboxItem
+              key={column.accessorKey}
+              title={column.header}
+              checked={visibleColumns.includes(column.accessorKey)}
+              onCheckedChange={(checked) =>
+                handleColumnToggle(column.accessorKey, checked)
+              }
+            />
+          ))}
+        </DropdownMenu.Content>
+      </DropdownMenu.Root>
+
+      <DataTable
+        columns={columns}
+        data={data}
+        visibleColumns={visibleColumns}
+      />
+    </>
+  );
+}
+```
+
+<Aside type="tip">
+  The `visibleColumns` prop works with columns that have `enableHiding: true`.
+  This allows you to dynamically control which columns are displayed, perfect
+  for user preferences and localStorage persistence.
+</Aside>

@@ -84,7 +84,7 @@
       },
       "gap": {
         "$type": "spacing",
-        "$value": "{spacing.1-half}"
+        "$value": "{spacing.2-half}"
       },
       "radius": {
         "$type": "borderRadius",
@@ -93,6 +93,14 @@
       "min-height": {
         "$type": "sizing",
         "$value": "102px"
+      },
+      "max-height": {
+        "$type": "sizing",
+        "$value": "340px"
+      },
+      "border": {
+        "$type": "borderWidth",
+        "$value": "1.5px"
       }
     }
   }

@@ -129,7 +129,6 @@ export const SideNav: React.FC<{ routes?: RouteDefinitions }> = ({ routes }) => 
                   withRightIndicator
                   title={NavItems.get(NavEnum.Settings)!.title}
                   icon={NavItems.get(NavEnum.Settings)!.iconName}
-                  active={showSettingsMenu}
                 />
               </Drawer.Trigger>
 
@@ -149,7 +148,7 @@ export const SideNav: React.FC<{ routes?: RouteDefinitions }> = ({ routes }) => 
             {/* 👉 More menu */}
             <Drawer.Root direction="left" open={showMoreMenu} onOpenChange={setShowMoreMenu}>
               <Drawer.Trigger>
-                <Sidebar.Item title="more" icon="menu-more-horizontal" withRightIndicator active={showMoreMenu} />
+                <Sidebar.Item title="more" icon="menu-more-horizontal" withRightIndicator />
               </Drawer.Trigger>
 
               <Drawer.Content

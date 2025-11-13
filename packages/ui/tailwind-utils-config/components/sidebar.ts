@@ -260,6 +260,11 @@ export default {
         borderRadius: 'var(--cn-sidebar-item-radius)',
         '@apply duration-150 transition-[padding,row-gap,column-gap] ease-linear': '',
 
+        '&:hover, &:focus-within': {
+          color: 'var(--cn-text-1)',
+          backgroundColor: 'var(--cn-state-hover)'
+        },
+
         '&-only-action-buttons': {
           gridTemplateAreas: '"icon title action-buttons"',
           gridTemplateColumns: 'var(--cn-icon-size-sm) 1fr auto'

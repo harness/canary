@@ -1,6 +1,6 @@
 import { forwardRef } from 'react'
 
-import { act, fireEvent, render, screen } from '@testing-library/react'
+import { render, screen, waitFor } from '@testing-library/react'
 import userEvent from '@testing-library/user-event'
 import { vi } from 'vitest'
 
@@ -185,29 +185,49 @@ describe('SidebarTrigger', () => {
 })
 
 describe('SidebarRail', () => {
+  beforeEach(() => {
+    sidebarState.toggleSidebar.mockClear()
+  })
+
   test('toggles sidebar and forwards click', async () => {
     const onClick = vi.fn()
-
     renderWith(<SidebarRail open={true} onClick={onClick} />)
+
     const button = screen.getByRole('button')
 
+    // initial aria-label
     expect(button).toHaveAttribute('aria-label', 'Collapse')
 
+    // click button
     await userEvent.click(button)
 
     expect(onClick).toHaveBeenCalled()
     expect(sidebarState.toggleSidebar).toHaveBeenCalled()
   })
 
-  test('updates indicator on hover state', () => {
+  test('updates indicator on hover state', async () => {
     renderWith(<SidebarRail open={false} />)
-    const textElement = screen.getByTestId('text')
+    const button = screen.getByRole('button')
 
-    expect(textElement.textContent).toBe('|')
-    act(() => {
-      fireEvent.mouseEnter(textElement)
+    // select inner div that handles hover
+    const indicator = button.querySelector('.absolute') as HTMLElement
+    expect(indicator).toBeInTheDocument()
+
+    // Initial state
+    expect(indicator.textContent).toBe('|')
+
+    // Hover over the inner div
+    await userEvent.hover(indicator)
+
+    // Wait for the icon to appear
+    await waitFor(() => {
+      const icon = indicator.querySelector('[data-name="nav-arrow-right"]')
+      expect(icon).toBeInTheDocument()
     })
-    expect(screen.getByTestId('icon')).toHaveAttribute('data-name', 'nav-arrow-right')
+
+    // Unhover
+    await userEvent.unhover(indicator)
+    expect(indicator.textContent).toBe('|')
   })
 })
 

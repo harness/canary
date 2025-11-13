@@ -118,17 +118,15 @@ export const SidebarRail = forwardRef<HTMLButtonElement, ComponentProps<'button'
         className={cn('cn-sidebar-rail', className)}
         {...props}
       >
-        <div className={cn('absolute top-1/4 translate-x-full', { 'translate-x-1/4': hovered }, className)}>
+        <div
+          className={cn('absolute top-1/4 translate-x-full', { 'translate-x-1/4': hovered }, className)}
+          onMouseEnter={() => setHovered(true)}
+          onMouseLeave={() => setHovered(false)}
+        >
           {hovered ? (
             <IconV2 name={open ? 'nav-arrow-left' : 'nav-arrow-right'} size="lg" />
           ) : (
-            <Text
-              className="cn-pl-1 pl-cn-4xs"
-              onMouseEnter={() => setHovered(true)}
-              onMouseLeave={() => setHovered(false)}
-            >
-              |
-            </Text>
+            <Text className="cn-pl-1 pl-cn-4xs">|</Text>
           )}
         </div>
       </button>

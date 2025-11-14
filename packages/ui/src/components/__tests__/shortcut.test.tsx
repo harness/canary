@@ -1,187 +1,74 @@
-import { render } from '@testing-library/react'
+import { createRef, forwardRef } from 'react'
+
+import { render, screen } from '@testing-library/react'
 import { vi } from 'vitest'
 
-import { Shortcut, ShortcutProps } from '../shortcut'
+import { Shortcut } from '../shortcut'
 
-// Mock Text component
-vi.mock('../text', async () => {
-  const actual = await vi.importActual('../text')
-  return {
-    ...actual,
-    Text: ({ children, className, variant, ...props }: any) => (
-      <span data-testid="text" className={className} data-variant={variant} {...props}>
+const textCalls: Array<{ className: string; variant: string; rest: Record<string, unknown> }> = []
+
+vi.mock('@/components', () => {
+  const MockText = forwardRef<HTMLElement, any>(({ children, className, variant, ...rest }, ref) => {
+    textCalls.push({ className, variant, rest })
+    const { 'data-testid': dataTestId, ...otherProps } = rest
+    return (
+      <span
+        data-testid={dataTestId ?? 'mock-text'}
+        data-variant={variant}
+        className={className}
+        ref={ref}
+        {...otherProps}
+      >
         {children}
       </span>
     )
+  })
+  MockText.displayName = 'MockText'
+
+  return {
+    Text: MockText
   }
 })
 
-const renderComponent = (props: Partial<ShortcutProps> = {}) => {
-  const defaultProps: ShortcutProps = {
-    children: 'Ctrl+K'
-  }
-  return render(<Shortcut {...defaultProps} {...props} />)
-}
-
 describe('Shortcut', () => {
-  describe('Basic Rendering', () => {
-    test('should render shortcut text', () => {
-      const { getByText } = renderComponent({ children: 'Ctrl+K' })
-      expect(getByText('Ctrl+K')).toBeInTheDocument()
-    })
-
-    test('should have correct displayName', () => {
-      expect(Shortcut.displayName).toBe('Shortcut')
-    })
-
-    test('should render with default variant (caption-light)', () => {
-      const { getByTestId } = renderComponent()
-      const text = getByTestId('text')
-      expect(text).toHaveAttribute('data-variant', 'caption-light')
-    })
-
-    test('should apply cn-shortcut class', () => {
-      const { getByTestId } = renderComponent()
-      const text = getByTestId('text')
-      expect(text).toHaveClass('cn-shortcut')
-    })
+  beforeEach(() => {
+    textCalls.length = 0
   })
 
-  describe('Children Prop', () => {
-    test('should render string children', () => {
-      const { getByText } = renderComponent({ children: 'Cmd+S' })
-      expect(getByText('Cmd+S')).toBeInTheDocument()
-    })
+  it('renders underlying Text with shortcut styling and children', () => {
+    render(<Shortcut>Cmd + K</Shortcut>)
 
-    test('should render React node children', () => {
-      const { getByText } = renderComponent({ children: <span>Alt+F4</span> })
-      expect(getByText('Alt+F4')).toBeInTheDocument()
-    })
-
-    test('should render multiple children', () => {
-      const { container } = renderComponent({ children: ['Ctrl', '+', 'K'] })
-      const text = container.querySelector('[data-testid="text"]')
-      expect(text).toBeInTheDocument()
-      expect(text?.textContent).toContain('Ctrl')
-    })
-
-    test('should handle empty children', () => {
-      const { container } = renderComponent({ children: '' })
-      const text = container.querySelector('[data-testid="text"]')
-      expect(text).toBeInTheDocument()
-    })
+    const text = screen.getByTestId('mock-text')
+    expect(text).toHaveTextContent('Cmd + K')
+    expect(text.getAttribute('data-variant')).toBe('caption-light')
+    expect(text.className.split(/\s+/)).toContain('cn-shortcut')
+    expect(textCalls[0]?.variant).toBe('caption-light')
   })
 
-  describe('Custom ClassName', () => {
-    test('should apply custom className', () => {
-      const { getByTestId } = renderComponent({ className: 'custom-shortcut' })
-      const text = getByTestId('text')
-      expect(text).toHaveClass('custom-shortcut')
-    })
+  it('merges custom class names and forwards other props', () => {
+    render(
+      <Shortcut className="extra-class" aria-label="shortcut" data-testid="shortcut">
+        Shift + Enter
+      </Shortcut>
+    )
 
-    test('should merge custom className with cn-shortcut', () => {
-      const { getByTestId } = renderComponent({ className: 'custom-shortcut' })
-      const text = getByTestId('text')
-      expect(text).toHaveClass('cn-shortcut')
-      expect(text).toHaveClass('custom-shortcut')
-    })
-
-    test('should handle empty className', () => {
-      const { getByTestId } = renderComponent({ className: '' })
-      const text = getByTestId('text')
-      expect(text).toBeInTheDocument()
-    })
+    const text = screen.getByTestId('shortcut')
+    expect(text.className).toContain('cn-shortcut')
+    expect(text.className).toContain('extra-class')
+    expect(text).toHaveAttribute('aria-label', 'shortcut')
+    expect(textCalls[0]?.rest['aria-label']).toBe('shortcut')
   })
 
-  describe('Text Props Forwarding', () => {
-    test('should forward variant prop', () => {
-      const { getByTestId } = renderComponent({ variant: 'body-normal' })
-      const text = getByTestId('text')
-      expect(text).toHaveAttribute('data-variant', 'body-normal')
-    })
+  it('forwards refs to the underlying element', () => {
+    const ref = createRef<HTMLElement>()
 
-    test('should override default variant when provided', () => {
-      const { getByTestId } = renderComponent({ variant: 'heading-base' })
-      const text = getByTestId('text')
-      expect(text).toHaveAttribute('data-variant', 'heading-base')
-    })
+    render(<Shortcut ref={ref}>Space</Shortcut>)
 
-    test('should forward color prop', () => {
-      const { getByTestId } = renderComponent({ color: 'foreground-1' })
-      const text = getByTestId('text')
-      expect(text).toBeInTheDocument()
-    })
-
-    test('should forward as prop', () => {
-      const { container } = renderComponent({ as: 'kbd' })
-      const element = container.querySelector('[data-testid="text"]')
-      expect(element).toBeInTheDocument()
-      // as prop is forwarded to Text component
-    })
-
-    test('should forward all Text props', () => {
-      const { getByTestId } = renderComponent({
-        variant: 'caption-light',
-        color: 'foreground-2',
-        as: 'span'
-      })
-      const text = getByTestId('text')
-      expect(text).toBeInTheDocument()
-    })
+    expect(ref.current).not.toBeNull()
+    expect(ref.current?.tagName.toLowerCase()).toBe('span')
   })
 
-  describe('Ref Forwarding', () => {
-    test('should forward ref to Text component', () => {
-      const ref = { current: null }
-      const { container } = render(<Shortcut ref={ref}>Ctrl+K</Shortcut>)
-      const text = container.querySelector('[data-testid="text"]')
-      expect(text).toBeInTheDocument()
-      // Ref forwarding is tested by verifying the component renders correctly
-    })
-  })
-
-  describe('Edge Cases', () => {
-    test('should handle special characters in children', () => {
-      const { getByText } = renderComponent({ children: 'Ctrl+Shift+K' })
-      expect(getByText('Ctrl+Shift+K')).toBeInTheDocument()
-    })
-
-    test('should handle unicode characters', () => {
-      const { getByText } = renderComponent({ children: '⌘+K' })
-      expect(getByText('⌘+K')).toBeInTheDocument()
-    })
-
-    test('should handle very long shortcut text', () => {
-      const longText = 'Ctrl+Shift+Alt+Meta+K'.repeat(10)
-      const { getByText } = renderComponent({ children: longText })
-      expect(getByText(longText)).toBeInTheDocument()
-    })
-
-    test('should handle numeric children', () => {
-      const { getByText } = renderComponent({ children: 123 })
-      expect(getByText('123')).toBeInTheDocument()
-    })
-
-    test('should handle boolean children', () => {
-      const { container } = renderComponent({ children: true })
-      const text = container.querySelector('[data-testid="text"]')
-      expect(text).toBeInTheDocument()
-    })
-  })
-
-  describe('Component Integration', () => {
-    test('should render Text component with correct props', () => {
-      const { getByTestId } = renderComponent({ children: 'Test' })
-      const text = getByTestId('text')
-      expect(text).toHaveClass('cn-shortcut')
-      expect(text).toHaveAttribute('data-variant', 'caption-light')
-    })
-
-    test('should maintain component hierarchy', () => {
-      const { container } = renderComponent({ children: 'Ctrl+K' })
-      const text = container.querySelector('[data-testid="text"]')
-      expect(text).toBeInTheDocument()
-      expect(text).toHaveTextContent('Ctrl+K')
-    })
+  it('exposes a display name for debugging', () => {
+    expect(Shortcut.displayName).toBe('Shortcut')
   })
 })

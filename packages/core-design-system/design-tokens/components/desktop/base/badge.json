@@ -45,6 +45,32 @@
         "$type": "spacing",
         "$value": "{spacing.half}"
       }
+    },
+    "split": {
+      "right": {
+        "radius": {
+          "r": {
+            "$type": "borderRadius",
+            "$value": "{badge.radius}"
+          },
+          "l": {
+            "$type": "borderRadius",
+            "$value": "{rounded.none}"
+          }
+        }
+      },
+      "left": {
+        "radius": {
+          "r": {
+            "$type": "borderRadius",
+            "$value": "{rounded.none}"
+          },
+          "l": {
+            "$type": "borderRadius",
+            "$value": "{badge.radius}"
+          }
+        }
+      }
     }
   },
   "badge-status": {

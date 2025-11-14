@@ -54,5 +54,9 @@ export * from '@views/repo/repo-tag-rules/repo-tag-settings-rules-page'
 export * from '@views/repo/repo-tag-rules/types'
 export * from '@views/repo/repo-tag-rules/components/repo-tag-rules-data'
 
+// repo push rules
+export * from '@views/repo/repo-push-rules'
+export * from '@views/repo/repo-push-rules/types'
+
 // repo commit details
 export * from '@views/repo/repo-commit-details'

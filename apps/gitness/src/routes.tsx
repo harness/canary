@@ -36,6 +36,7 @@ import { ProjectRulesListContainer } from './pages-v2/project/project-rules-list
 import { ProjectSettingsLayout } from './pages-v2/project/project-settings-layout'
 import ProjectPullRequestListPage from './pages-v2/project/pull-request/pull-request-list'
 import { ProjectBranchRulesContainer } from './pages-v2/project/rules/project-branch-rules-container'
+import { ProjectPushRulesContainer } from './pages-v2/project/rules/project-push-rules-container.tsx'
 import { ProjectRulesContainer } from './pages-v2/project/rules/project-rules-container'
 import { ProjectTagRulesContainer } from './pages-v2/project/rules/project-tag-rules-container'
 import PullRequestChanges from './pages-v2/pull-request/pull-request-changes'
@@ -64,7 +65,8 @@ import { RepoSidebar } from './pages-v2/repo/repo-sidebar'
 import RepoSummaryPage from './pages-v2/repo/repo-summary'
 import { RepoTagsListContainer } from './pages-v2/repo/repo-tags-list-container'
 import { RepoBranchRulesContainer } from './pages-v2/repo/rules/repo-branch-rules-container'
-import RepoRulesContainer from './pages-v2/repo/rules/repo-rules-container'
+import { RepoPushRulesContainer } from './pages-v2/repo/rules/repo-push-rules-container.tsx'
+import { RepoRulesContainer } from './pages-v2/repo/rules/repo-rules-container'
 import { RepoTagRulesContainer } from './pages-v2/repo/rules/repo-tag-rules-container'
 import SearchPage from './pages-v2/search-page'
 import { SignIn } from './pages-v2/signin'
@@ -155,6 +157,14 @@ const rulesRoute = {
       handle: {
         breadcrumb: () => <span>Create a tag rule</span>,
         routeName: RouteConstants.toProjectTagRuleCreate
+      }
+    },
+    {
+      path: 'create/push',
+      element: <ProjectPushRulesContainer />,
+      handle: {
+        breadcrumb: () => <span>Create a push rule</span>,
+        routeName: RouteConstants.toProjectPushRuleCreate
       }
     },
     {
@@ -560,7 +570,7 @@ export const repoRoutes: CustomRouteObject[] = [
                     path: 'create/branch',
                     element: <RepoBranchRulesContainer />,
                     handle: {
-                      breadcrumb: () => <span>Create a rule</span>,
+                      breadcrumb: () => <span>Create a branch rule</span>,
                       routeName: RouteConstants.toRepoBranchRuleCreate
                     }
                   },
@@ -568,8 +578,16 @@ export const repoRoutes: CustomRouteObject[] = [
                     path: 'create/tag',
                     element: <RepoTagRulesContainer />,
                     handle: {
-                      breadcrumb: () => <span>Create a tag</span>,
+                      breadcrumb: () => <span>Create a tag rule</span>,
                       routeName: RouteConstants.toRepoTagRuleCreate
+                    }
+                  },
+                  {
+                    path: 'create/push',
+                    element: <RepoPushRulesContainer />,
+                    handle: {
+                      breadcrumb: () => <span>Create a push rule</span>,
+                      routeName: RouteConstants.toRepoPushRuleCreate
                     }
                   },
                   {

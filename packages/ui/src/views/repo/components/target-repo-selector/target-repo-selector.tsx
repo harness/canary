@@ -24,6 +24,7 @@ import { useTranslation } from '@/context'
 import {
   PatternsButtonType,
   RepoBranchSettingsFormFields,
+  RepoPushRulesSettingsFormFields,
   RepoRepositoryOutput,
   ScopeType,
   TargetReposButtonType
@@ -391,6 +392,56 @@ interface TargetRepoSelectorForTagProps {
 }
 
 export const TargetRepoSelectorForTag: FC<TargetRepoSelectorForTagProps> = ({ watch, setValue, repoQueryObj }) => {
+  const patterns = watch('repoPatterns') || []
+  const targetRepos = watch('targetRepos') || []
+  const repoPattern = watch('repoPattern') || ''
+
+  const handleAddPattern = (pattern: string, option: PatternsButtonType) => {
+    setValue('repoPatterns', [...patterns, { pattern, option }])
+    setValue('repoPattern', '')
+  }
+
+  const handleRemovePattern = (patternVal: string) => {
+    const updatedPatterns = patterns.filter(({ pattern }) => pattern !== patternVal)
+    setValue('repoPatterns', updatedPatterns)
+  }
+
+  const handleSaveRepos = (selectedRepos: SelectedRepo[]) => {
+    setValue('targetRepos', selectedRepos)
+  }
+
+  const handleRemoveRepo = (repoId: number) => {
+    const updated = targetRepos.filter(repo => repo.id !== repoId)
+    setValue('targetRepos', updated)
+  }
+
+  return (
+    <TargetRepoSelectorBase
+      patterns={patterns}
+      targetRepos={targetRepos}
+      repoPattern={repoPattern}
+      onAddPattern={handleAddPattern}
+      onRemovePattern={handleRemovePattern}
+      onSaveRepos={handleSaveRepos}
+      onRemoveRepo={handleRemoveRepo}
+      onRepoPatternChange={e => setValue('repoPattern', e.target.value)}
+      repoQueryObj={repoQueryObj}
+    />
+  )
+}
+
+interface TargetRepoSelectorForPushRulesProps {
+  errors?: FieldErrors<RepoPushRulesSettingsFormFields>
+  watch: UseFormWatch<RepoPushRulesSettingsFormFields>
+  setValue: UseFormSetValue<RepoPushRulesSettingsFormFields>
+  repoQueryObj?: RepoQueryObject
+}
+
+export const TargetRepoSelectorForPushRules: FC<TargetRepoSelectorForPushRulesProps> = ({
+  watch,
+  setValue,
+  repoQueryObj
+}) => {
   const patterns = watch('repoPatterns') || []
   const targetRepos = watch('targetRepos') || []
   const repoPattern = watch('repoPattern') || ''

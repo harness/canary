@@ -3,17 +3,13 @@ import { useParams } from 'react-router-dom'
 
 import { useRepoRuleGetQuery } from '@harnessio/code-service-client'
 import { Skeleton } from '@harnessio/ui/components'
-import { NotFoundPage } from '@harnessio/ui/views'
+import { NotFoundPage, RuleType } from '@harnessio/ui/views'
 
 import { useGetRepoRef } from '../../../framework/hooks/useGetRepoPath'
 import { useRepoRulesStore } from '../stores/repo-settings-store'
 import { RepoBranchRulesContainer } from './repo-branch-rules-container'
+import { RepoPushRulesContainer } from './repo-push-rules-container'
 import { RepoTagRulesContainer } from './repo-tag-rules-container'
-
-export enum RuleType {
-  BRANCH = 'branch',
-  TAG = 'tag'
-}
 
 export const RepoRulesContainer = () => {
   const repoRef = useGetRepoRef()
@@ -52,6 +48,8 @@ export const RepoRulesContainer = () => {
   switch (rulesData?.type) {
     case RuleType.TAG:
       return <RepoTagRulesContainer />
+    case RuleType.PUSH:
+      return <RepoPushRulesContainer />
     case RuleType.BRANCH:
     default:
       return <RepoBranchRulesContainer />

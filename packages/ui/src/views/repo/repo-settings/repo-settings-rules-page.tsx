@@ -15,6 +15,7 @@ interface RepoSettingsRulesPageProps {
   projectScope?: boolean
   toRepoBranchRuleCreate: () => string
   toRepoTagRuleCreate: () => string
+  toRepoPushRuleCreate: () => string
   showParentScopeLabelsCheckbox?: boolean
   parentScopeLabelsChecked?: boolean
   onParentScopeLabelsChange?: (checked: boolean) => void
@@ -34,6 +35,7 @@ export const RepoSettingsRulesPage: React.FC<RepoSettingsRulesPageProps> = ({
   projectScope = false,
   toRepoBranchRuleCreate,
   toRepoTagRuleCreate,
+  toRepoPushRuleCreate,
   showParentScopeLabelsCheckbox = false,
   parentScopeLabelsChecked = false,
   onParentScopeLabelsChange,
@@ -79,8 +81,9 @@ export const RepoSettingsRulesPage: React.FC<RepoSettingsRulesPageProps> = ({
           rulesSearchQuery={rulesSearchQuery}
           setRulesSearchQuery={setRulesSearchQuery}
           projectScope={projectScope}
-          toRepoBranchRuleCreate={toRepoBranchRuleCreate}
-          toRepoTagRuleCreate={toRepoTagRuleCreate}
+          toBranchRuleCreate={toRepoBranchRuleCreate}
+          toTagRuleCreate={toRepoTagRuleCreate}
+          toPushRuleCreate={toRepoPushRuleCreate}
           ruleTypeFilter={ruleTypeFilter}
           setRuleTypeFilter={setRuleTypeFilter}
           toProjectRuleDetails={toProjectRuleDetails}

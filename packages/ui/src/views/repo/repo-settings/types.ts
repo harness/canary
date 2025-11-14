@@ -20,6 +20,12 @@ export enum AccessLevel {
   PUBLIC = '1'
 }
 
+export enum RuleType {
+  BRANCH = 'branch',
+  TAG = 'tag',
+  PUSH = 'push'
+}
+
 export enum ErrorTypes {
   FETCH_REPO = 'fetchRepo',
   FETCH_BRANCH = 'fetchBranch',
@@ -57,7 +63,7 @@ export interface RuleDataType {
   bypassAllowed: boolean
   identifier?: string
   state?: string
-  type?: 'branch' | 'tag'
+  type?: RuleType
   scope?: number
 }
 

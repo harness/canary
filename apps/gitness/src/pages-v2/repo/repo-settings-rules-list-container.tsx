@@ -163,6 +163,7 @@ export const RepoSettingsRulesListContainer = () => {
         apiError={apiError}
         toRepoBranchRuleCreate={() => routes.toRepoBranchRuleCreate({ spaceId, repoId: repoName })}
         toRepoTagRuleCreate={() => routes.toRepoTagRuleCreate({ spaceId, repoId: repoName })}
+        toRepoPushRuleCreate={() => routes.toRepoPushRuleCreate({ spaceId, repoId: repoName })}
         parentScopeLabelsChecked={parentScopeLabelsChecked}
         onParentScopeLabelsChange={setParentScopeLabelsChecked}
         showParentScopeLabelsCheckbox

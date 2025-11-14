@@ -24,7 +24,8 @@ const statusBadgeVariants = cva('cn-badge inline-flex w-fit items-center transit
       warning: 'cn-badge-warning',
       danger: 'cn-badge-danger',
       info: 'cn-badge-info',
-      merged: 'cn-badge-merged'
+      merged: 'cn-badge-merged',
+      risk: 'cn-badge-risk'
     }
   },
   defaultVariants: {

@@ -10,7 +10,13 @@ import {
   TypesUserGroupInfo
 } from '@harnessio/code-service-client'
 import { PrincipalType } from '@harnessio/ui/types'
-import { RepoBranchSettingsFormFields, RepoData, RuleDataType, RuleType, VulnerabilityScanningType } from '@harnessio/ui/views'
+import {
+  RepoBranchSettingsFormFields,
+  RepoData,
+  RuleDataType,
+  RuleType,
+  VulnerabilityScanningType
+} from '@harnessio/ui/views'
 
 import { getTotalRulesApplied, transformDataFromApi } from '../../../utils/repo-branch-rules-utils'
 

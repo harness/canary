@@ -56,8 +56,10 @@ export default {
   '.cn-skeleton': {
     '&-base': {
       backgroundImage: 'var(--cn-comp-skeleton-bg)',
+      backgroundSize: '200% 100%',
+      backgroundPosition: '-200% 0',
       borderRadius: `var(--cn-rounded-2)`,
-      '@apply animate-pulse': ''
+      animation: 'cnSkeletonShimmer 5.25s linear infinite'
     },
 
     '&-avatar': {
@@ -123,6 +125,15 @@ export default {
 
     '&-file-explorer': {
       maskImage: 'var(--cn-comp-skeleton-mask)'
+    }
+  },
+
+  '@keyframes cnSkeletonShimmer': {
+    '0%': {
+      backgroundPosition: '-200% 0'
+    },
+    '100%': {
+      backgroundPosition: '200% 0'
     }
   }
 }

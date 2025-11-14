@@ -474,11 +474,11 @@
         },
         "bg-hover": {
           "$type": "color",
-          "$value": "{yellow.400}"
+          "$value": "{yellow.200}"
         },
         "bg-selected": {
           "$type": "color",
-          "$value": "{yellow.400}"
+          "$value": "{yellow.200}"
         }
       },
       "secondary": {

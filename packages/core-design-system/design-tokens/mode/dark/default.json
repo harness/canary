@@ -2219,15 +2219,15 @@
     "skeleton": {
       "gradient-stop-1": {
         "$type": "color",
-        "$value": "{chrome.950}"
+        "$value": "{chrome.900}"
       },
       "gradient-stop-2": {
         "$type": "color",
-        "$value": "{chrome.900}"
+        "$value": "{chrome.800}"
       },
       "gradient-stop-3": {
         "$type": "color",
-        "$value": "{chrome.950}"
+        "$value": "{chrome.900}"
       },
       "mask": {
         "from": {

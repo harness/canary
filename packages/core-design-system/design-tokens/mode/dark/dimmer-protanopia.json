@@ -924,6 +924,11 @@
           "$type": "color",
           "$value": "{purple.200}",
           "$description": "Background color for prominent purple surfaces."
+        },
+        "bg-hover": {
+          "$type": "color",
+          "$value": "{purple.150}",
+          "$description": "Background color for prominent purple surfaces."
         }
       },
       "secondary": {

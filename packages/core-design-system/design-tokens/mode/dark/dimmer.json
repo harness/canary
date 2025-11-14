@@ -924,6 +924,11 @@
           "$type": "color",
           "$value": "{orange.200}",
           "$description": "Background color for prominent orange surfaces."
+        },
+        "bg-hover": {
+          "$type": "color",
+          "$value": "{orange.150}",
+          "$description": "Background color for prominent orange surfaces."
         }
       },
       "secondary": {

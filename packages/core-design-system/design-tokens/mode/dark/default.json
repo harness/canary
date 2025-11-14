@@ -966,6 +966,11 @@
           "$type": "color",
           "$value": "{orange.200}",
           "$description": "Background color for solid orange surfaces."
+        },
+        "bg-hover": {
+          "$type": "color",
+          "$value": "{orange.150}",
+          "$description": "Background color for solid orange surfaces."
         }
       },
       "secondary": {

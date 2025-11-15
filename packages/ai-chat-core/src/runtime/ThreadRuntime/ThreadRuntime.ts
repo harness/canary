@@ -55,7 +55,7 @@ export class ThreadRuntime extends BaseSubscribable {
       this.composer.clear()
       await this._core.startRun({
         role: 'user',
-        content: [{ type: 'text', text } as TextContent]
+        content: [{ type: 'text', data: text } as TextContent]
       })
     } catch (e) {
       // TODO: Handle error

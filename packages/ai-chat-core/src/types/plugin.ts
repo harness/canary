@@ -6,7 +6,7 @@ export interface MessageRendererProps<T extends MessageContent = MessageContent>
   onClick?: () => void
 }
 
-export interface MessageRenderer<T extends MessageContent = MessageContent> {
+export interface MessageRenderer<T extends MessageContent = any> {
   type: string
   component: React.ComponentType<MessageRendererProps<T>>
   detailComponent?: React.ComponentType<{ content: T }>
@@ -18,6 +18,20 @@ export interface MessageRenderer<T extends MessageContent = MessageContent> {
     requiresDetailPanel?: boolean
     fallbackBehavior?: 'inline' | 'hide'
   }
+  canHandle?: (message: Message, content: MessageContent) => boolean
+}
+
+export interface GroupRendererProps {
+  groupKey: string
+  items: MessageContent[]
+  message: Message
+}
+
+export interface GroupRenderer {
+  groupType: string
+  component: React.ComponentType<GroupRendererProps>
+  priority?: number
+  canHandle?: (groupKey: string, items: MessageContent[]) => boolean
 }
 
 export interface ChatPluginConfig {
@@ -32,6 +46,7 @@ export interface ChatPlugin {
   id: string
   name: string
   renderers: MessageRenderer[]
+  groupRenderers?: GroupRenderer[]
   init?: (config: ChatPluginConfig) => void
 }
 

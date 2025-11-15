@@ -1,5 +1,5 @@
-import { StreamAdapter } from '../types/adapters'
-import { Message, MessageContent } from '../types/message'
+import { StreamAdapter, StreamChunk } from '../types/adapters'
+import { Message } from '../types/message'
 
 export interface SSEEvent {
   event: string
@@ -14,7 +14,7 @@ export abstract class BaseSSEStreamAdapter<TAllowedEvents extends readonly strin
     options: RequestInit
   }
 
-  protected abstract convertEvent(event: SSEEvent & { event: TAllowedEvents[number] }): MessageContent | null
+  protected abstract convertEvent(event: SSEEvent & { event: TAllowedEvents[number] }): StreamChunk | null
 
   protected getAllowedEvents(): TAllowedEvents | null {
     return null
@@ -26,7 +26,7 @@ export abstract class BaseSSEStreamAdapter<TAllowedEvents extends readonly strin
     return allowedEvents.includes(eventType)
   }
 
-  async *stream(params: { messages: Message[]; signal?: AbortSignal }): AsyncGenerator<MessageContent, void, unknown> {
+  async *stream(params: { messages: Message[]; signal?: AbortSignal }): AsyncGenerator<StreamChunk, void, unknown> {
     const { signal } = params
     const { url, options } = this.prepareRequest(params)
 
@@ -46,7 +46,7 @@ export abstract class BaseSSEStreamAdapter<TAllowedEvents extends readonly strin
   private async *parseSSEStream(
     body: ReadableStream<Uint8Array>,
     signal?: AbortSignal
-  ): AsyncGenerator<MessageContent, void, unknown> {
+  ): AsyncGenerator<StreamChunk, void, unknown> {
     const reader = body.getReader()
     const decoder = new TextDecoder()
     let buffer = ''
@@ -91,6 +91,9 @@ export abstract class BaseSSEStreamAdapter<TAllowedEvents extends readonly strin
             try {
               const data = JSON.parse(dataStr)
 
+              console.log('currentEvent', currentEvent)
+
+              console.log('this.getAllowedEvents()', this.getAllowedEvents())
               if (currentEvent && this.shouldProcessEvent(currentEvent)) {
                 const chunk = this.convertEvent({
                   event: currentEvent as TAllowedEvents[number],

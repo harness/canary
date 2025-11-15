@@ -1,8 +1,15 @@
 // Types
 export type { Message, MessageContent, MessageRole, MessageStatus, AppendMessage } from './types/message'
 export type { ThreadListItemState, ThreadState, RuntimeCapabilities } from './types/thread'
-export type { ChatPlugin, MessageRenderer, MessageRendererProps, PluginConfig } from './types/plugin'
-export type { StreamAdapter, ThreadListAdapter } from './types/adapters'
+export type {
+  ChatPlugin,
+  MessageRenderer,
+  MessageRendererProps,
+  GroupRenderer,
+  GroupRendererProps,
+  PluginConfig
+} from './types/plugin'
+export type { StreamAdapter, ThreadListAdapter, StreamEvent, StreamRequest, StreamChunk } from './types/adapters'
 export type { SSEEvent } from './utils/BaseSSEStreamAdapter'
 
 // Runtime
@@ -32,6 +39,7 @@ export { useContentRenderer, useHasDetailView, useShouldReuseInstance } from './
 // Utils
 export { BaseSubscribable } from './utils/Subscribable'
 export { generateMessageId, generateThreadId, generateId } from './utils/idGenerator'
+export { groupContentByParentId, type ContentGroup } from './utils/groupContentByParentId'
 
 // Adapters
 export { BaseSSEStreamAdapter } from './utils/BaseSSEStreamAdapter'

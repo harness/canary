@@ -1,5 +1,5 @@
-import { StreamAdapter } from '../../types/adapters'
-import { AppendMessage, Message, MessageContent, MessageStatus, MetadataContent } from '../../types/message'
+import { StreamAdapter, StreamEvent } from '../../types/adapters'
+import { AppendMessage, Message, MessageContent, MessageStatus } from '../../types/message'
 import { RuntimeCapabilities } from '../../types/thread'
 import { generateMessageId } from '../../utils/idGenerator'
 import { BaseSubscribable } from '../../utils/Subscribable'
@@ -15,6 +15,14 @@ export class ThreadRuntimeCore extends BaseSubscribable {
   private _isRunning = false
   private _isDisabled = false
   private _abortController: AbortController | null = null
+
+  // Track current part being accumulated
+  private _currentPart: {
+    messageId: string
+    contentIndex: number
+    type: string
+    parentId?: string
+  } | null = null
 
   constructor(private config: ThreadRuntimeCoreConfig) {
     super()
@@ -70,6 +78,7 @@ export class ThreadRuntimeCore extends BaseSubscribable {
     this.append(userMessage)
     this._isRunning = true
     this._abortController = new AbortController()
+    this._currentPart = null // Reset current part
     this.notifySubscribers()
 
     const assistantMessageId = generateMessageId()
@@ -91,12 +100,12 @@ export class ThreadRuntimeCore extends BaseSubscribable {
         signal: this._abortController.signal
       })
 
-      for await (const chunk of stream) {
+      for await (const event of stream) {
         if (this._abortController.signal.aborted) {
           break
         }
 
-        this.handleChunk(assistantMessageId, chunk)
+        this.handleStreamEvent(assistantMessageId, event.event)
       }
 
       this.updateMessageStatus(assistantMessageId, { type: 'complete' })
@@ -113,29 +122,48 @@ export class ThreadRuntimeCore extends BaseSubscribable {
     } finally {
       this._isRunning = false
       this._abortController = null
+      this._currentPart = null // Clean up
       this.notifySubscribers()
     }
   }
 
-  private handleChunk(messageId: string, chunk: MessageContent): void {
+  private handleStreamEvent(messageId: string, event: StreamEvent): void {
     const messageIndex = this._messages.findIndex(m => m.id === messageId)
     if (messageIndex === -1) return
 
     const message = this._messages[messageIndex]
 
-    if (chunk.type === 'metadata') {
-      // Type narrowed to MetadataChunk
-      const metadataChunk = chunk as MetadataContent
+    // Handle core events with type guards
+    if (event.type === 'part-start') {
+      this.handlePartStart(message, event as Extract<StreamEvent, { type: 'part-start' }>)
+    } else if (event.type === 'text-delta') {
+      this.handleTextDelta(message, event as Extract<StreamEvent, { type: 'text-delta' }>)
+    } else if (event.type === 'part-finish') {
+      this.handlePartFinish()
+    } else if (event.type === 'metadata') {
+      const metadataEvent = event as Extract<StreamEvent, { type: 'metadata' }>
       message.metadata = {
         ...message.metadata,
-        conversationId: metadataChunk.conversationId,
-        interactionId: metadataChunk.interactionId
+        conversationId: metadataEvent.conversationId,
+        interactionId: metadataEvent.interactionId
       }
+    } else if (event.type === 'error') {
+      const errorEvent = event as Extract<StreamEvent, { type: 'error' }>
+      message.content.push({
+        type: 'error',
+        data: errorEvent.error
+      })
     } else {
-      message.content.push(chunk)
+      // Handle custom events
+      const customEvent = event as Extract<StreamEvent, { data?: any }>
+      message.content.push({
+        type: customEvent.type,
+        data: customEvent.data,
+        parentId: customEvent.parentId
+      })
     }
 
-    // Create new array reference for React to detect change
+    // Update message
     this._messages = [
       ...this._messages.slice(0, messageIndex),
       { ...message, timestamp: Date.now() },
@@ -143,6 +171,82 @@ export class ThreadRuntimeCore extends BaseSubscribable {
     ]
     this.config.onMessagesChange?.(this._messages)
     this.notifySubscribers()
+  }
+
+  private handlePartStart(message: Message, event: Extract<StreamEvent, { type: 'part-start' }>): void {
+    const contentIndex = message.content.length
+
+    // Create initial content based on type
+    let initialContent: MessageContent
+
+    switch (event.part.type) {
+      case 'assistant_thought':
+        // Initialize as array for assistant thoughts
+        initialContent = {
+          type: event.part.type,
+          data: [],
+          parentId: event.part.parentId
+        } as any
+        break
+
+      case 'text':
+        // Initialize as empty string for text
+        initialContent = {
+          type: event.part.type,
+          data: '',
+          parentId: event.part.parentId
+        } as any
+        break
+
+      default:
+        initialContent = {
+          type: event.part.type,
+          parentId: event.part.parentId
+        } as any
+    }
+
+    // Add to message
+    message.content.push(initialContent)
+
+    // Track current part
+    this._currentPart = {
+      messageId: message.id,
+      contentIndex,
+      type: event.part.type,
+      parentId: event.part.parentId
+    }
+  }
+
+  private handleTextDelta(message: Message, event: Extract<StreamEvent, { type: 'text-delta' }>): void {
+    if (!this._currentPart) {
+      console.warn('Received text-delta without part-start')
+      return
+    }
+
+    const content = message.content[this._currentPart.contentIndex] as any
+
+    if (content.type === 'assistant_thought') {
+      // For assistant thoughts, push each delta as a new array item
+      if (!Array.isArray(content.data)) {
+        content.data = []
+      }
+      if (event.delta.trim()) {
+        content.data.push(event.delta.trim())
+      }
+    } else {
+      // For text and other types, concatenate into a single string
+      content.data = (content.data || '') + event.delta
+    }
+  }
+
+  private handlePartFinish(): void {
+    if (!this._currentPart) {
+      console.warn('Received part-finish without part-start')
+      return
+    }
+
+    // Part is complete, clear tracking
+    this._currentPart = null
   }
 
   private updateMessageStatus(messageId: string, status: MessageStatus): void {

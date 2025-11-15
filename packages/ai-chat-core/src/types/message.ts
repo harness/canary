@@ -23,14 +23,12 @@ export interface Message {
   metadata?: MessageMetadata
 }
 
-export interface TextContent extends MessageContent {
+export interface TextContent extends MessageContent<string> {
   type: 'text'
-  text: string
 }
 
-export interface ErrorContent extends MessageContent {
+export interface ErrorContent extends MessageContent<string> {
   type: 'error'
-  error: string
 }
 
 export interface MetadataContent extends MessageContent {
@@ -39,13 +37,20 @@ export interface MetadataContent extends MessageContent {
   interactionId?: string
 }
 
+export interface AssistantThoughtContent extends MessageContent {
+  type: 'assistant_thought'
+  text: string
+}
+
 export interface CustomContent extends MessageContent {
   type: string
   data: Record<string, unknown>
 }
 
-export interface MessageContent {
+export interface MessageContent<T = any> {
   type: string
+  parentId?: string
+  data?: T
 }
 
 export type AppendMessage = Omit<Message, 'id' | 'timestamp' | 'status'> & {

@@ -57,21 +57,6 @@ export class PluginRegistry {
     return renderers[0]
   }
 
-  public hasDetailView(type: string): boolean {
-    const renderer = this.getBestRendererForType(type)
-    return renderer?.showInDetailPanel === true && renderer.detailComponent !== undefined
-  }
-
-  public shouldReuseInstance(type: string): boolean {
-    const renderer = this.getBestRendererForType(type)
-    return renderer?.reuseInstance === true
-  }
-
-  public shouldHideRootLoading(type: string): boolean {
-    const renderer = this.getBestRendererForType(type)
-    return renderer?.hideRootLoading === true
-  }
-
   public clear(): void {
     this.plugins.clear()
     this.renderersByType.clear()

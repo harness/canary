@@ -119,7 +119,7 @@ export const SidebarRail = forwardRef<HTMLButtonElement, ComponentProps<'button'
         {...props}
       >
         <div
-          className={cn('absolute top-1/4 translate-x-full', { 'translate-x-1/4': hovered }, className)}
+          className={cn('absolute top-1/2 translate-x-full', { 'translate-x-1/4': hovered }, className)}
           onMouseEnter={() => setHovered(true)}
           onMouseLeave={() => setHovered(false)}
         >

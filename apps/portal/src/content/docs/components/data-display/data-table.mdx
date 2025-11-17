@@ -89,6 +89,118 @@ return (
 />
 ) }`} />
 
+## Column Filter Demo
+
+<DocsPage.ComponentExample
+  client:only
+  code={`() => {
+  const users = [
+    { name: 'John Doe', email: 'john@example.com', status: 'active', role: 'Admin', createdAt: '2024-01-15' },
+    { name: 'Jane Smith', email: 'jane@example.com', status: 'active', role: 'User', createdAt: '2024-02-20' },
+    { name: 'Bob Johnson', email: 'bob@example.com', status: 'inactive', role: 'User', createdAt: '2024-03-10' },
+    { name: 'Alice Williams', email: 'alice@example.com', status: 'active', role: 'Manager', createdAt: '2024-01-25' }
+  ]
+
+// Define column options for the filter dropdown
+const COLUMN_OPTIONS = [
+{ label: 'Name', value: 'name' },
+{ label: 'Email', value: 'email' },
+{ label: 'Status', value: 'status' },
+{ label: 'Role', value: 'role' },
+{ label: 'Created At', value: 'createdAt' }
+]
+
+// Use the column filter hook with localStorage persistence
+const { visibleColumns, toggleColumn, resetColumns } = useColumnFilter({
+storageKey: 'demo-table-columns',
+columns: COLUMN_OPTIONS,
+defaultVisibleColumns: ['name', 'email', 'status'] // Hide role and createdAt by default
+})
+
+// Define columns with enableHiding and unique IDs
+const columns = [
+{
+id: 'name',
+accessorKey: 'name',
+header: 'Name',
+enableHiding: true,
+enableSorting: true
+},
+{
+id: 'email',
+accessorKey: 'email',
+header: 'Email',
+enableHiding: true
+},
+{
+id: 'status',
+accessorKey: 'status',
+header: 'Status',
+enableHiding: true,
+cell: (info) => (
+
+<StatusBadge
+theme={info.getValue() === 'active' ? 'success' : 'default'}
+size="sm"
+>
+{info.getValue()}
+</StatusBadge>
+)
+},
+{
+id: 'role',
+accessorKey: 'role',
+header: 'Role',
+enableHiding: true
+},
+{
+id: 'createdAt',
+accessorKey: 'createdAt',
+header: 'Created At',
+enableHiding: true
+}
+]
+
+const [tableSorting, setTableSorting] = React.useState([])
+
+const sortedData = [...users].sort((a, b) => {
+if (tableSorting.length === 0) return 0
+const sort = tableSorting[0]
+const key = sort.id
+if (a[key] < b[key]) return sort.desc ? 1 : -1
+if (a[key] > b[key]) return sort.desc ? -1 : 1
+return 0
+})
+
+return (
+
+<Layout.Vertical gap="md">
+<Layout.Flex justify="between" align="center">
+<Text variant="body-normal">
+Showing {visibleColumns.length} of {COLUMN_OPTIONS.length} columns
+</Text>
+<DataTable.ColumnFilter
+columns={COLUMN_OPTIONS}
+visibleColumns={visibleColumns}
+onCheckedChange={toggleColumn}
+onReset={resetColumns}
+/>
+</Layout.Flex>
+
+      <DataTable
+        columns={columns}
+        data={sortedData}
+        visibleColumns={visibleColumns}
+        getRowId={(row) => row.email}
+        size="compact"
+        currentSorting={tableSorting}
+        onSortingChange={setTableSorting}
+      />
+    </Layout.Vertical>
+
+)
+}`} />
+
 ## Anatomy
 
 ```jsx
@@ -319,6 +431,97 @@ function MyTable() {
   ]}
 />
 
+## DataTable.ColumnFilter Component
+
+The `DataTable.ColumnFilter` is a sub-component that provides a dropdown menu for toggling column visibility.
+
+### Props
+
+<DocsPage.PropsTable
+  props={[
+    {
+      name: "columns",
+      description: "Array of column options with label and value pairs",
+      required: true,
+      value: "CheckboxOptions[]",
+    },
+    {
+      name: "visibleColumns",
+      description: "Array of currently visible column IDs",
+      required: true,
+      value: "string[]",
+    },
+    {
+      name: "onCheckedChange",
+      description: "Callback when a column's visibility is toggled",
+      required: true,
+      value: "(columnName: string, checked: boolean) => void",
+    },
+    {
+      name: "onReset",
+      description:
+        "Optional callback to reset columns to default. When provided, shows a Reset button in the dropdown footer",
+      required: false,
+      value: "() => void",
+    },
+  ]}
+/>
+
+## useColumnFilter Hook
+
+The `useColumnFilter` hook manages column visibility state with automatic localStorage persistence.
+
+### Parameters
+
+<DocsPage.PropsTable
+  props={[
+    {
+      name: "storageKey",
+      description: "Unique key for localStorage persistence",
+      required: true,
+      value: "string",
+    },
+    {
+      name: "columns",
+      description: "Available columns configuration",
+      required: true,
+      value: "CheckboxOptions[]",
+    },
+    {
+      name: "defaultVisibleColumns",
+      description:
+        "Default visible columns when no localStorage value exists. If not provided, all columns are visible by default",
+      required: false,
+      value: "string[]",
+    },
+  ]}
+/>
+
+### Return Value
+
+<DocsPage.PropsTable
+  props={[
+    {
+      name: "visibleColumns",
+      description: "Currently visible column identifiers",
+      required: false,
+      value: "string[]",
+    },
+    {
+      name: "toggleColumn",
+      description: "Function to toggle visibility of a specific column",
+      required: false,
+      value: "(columnName: string, checked: boolean) => void",
+    },
+    {
+      name: "resetColumns",
+      description: "Function to reset to default visible columns",
+      required: false,
+      value: "() => void",
+    },
+  ]}
+/>
+
 ## Examples
 
 ### Table with Custom Cell Rendering
@@ -361,35 +564,104 @@ const columns = [
 
 ### Table with Column Visibility Control
 
-```tsx
-import {
-  DataTable,
-  Button,
-  DropdownMenu,
-  IconV2,
-} from "@harnessio/ui/components";
-import { useState } from "react";
+The DataTable component provides a built-in column filter dropdown (`DataTable.ColumnFilter`) and a hook (`useColumnFilter`) for managing column visibility with localStorage persistence.
 
-// Define columns with enableHiding
+#### Using the Built-in Column Filter (Recommended)
+
+```tsx
+import { DataTable } from "@harnessio/ui/components";
+import { useColumnFilter } from "@harnessio/ui/hooks";
+import type { CheckboxOptions } from "@harnessio/ui/components";
+
+// Define columns with enableHiding and unique IDs
 const columns = [
   {
+    id: "name",
     accessorKey: "name",
     header: "Name",
     enableHiding: true,
   },
   {
+    id: "email",
     accessorKey: "email",
     header: "Email",
     enableHiding: true,
   },
   {
+    id: "status",
     accessorKey: "status",
     header: "Status",
     enableHiding: true,
   },
+  {
+    id: "createdAt",
+    accessorKey: "createdAt",
+    header: "Created At",
+    enableHiding: true,
+  },
+];
+
+// Define column options for the filter dropdown
+const COLUMN_OPTIONS: CheckboxOptions[] = [
+  { label: "Name", value: "name" },
+  { label: "Email", value: "email" },
+  { label: "Status", value: "status" },
+  { label: "Created At", value: "createdAt" },
 ];
 
 function TableWithColumnFilter() {
+  // Use the column filter hook with localStorage persistence
+  const { visibleColumns, toggleColumn, resetColumns } = useColumnFilter({
+    storageKey: "my-table-columns", // Unique key for localStorage
+    columns: COLUMN_OPTIONS,
+    defaultVisibleColumns: ["name", "email", "status"], // Default visible columns
+  });
+
+  const data = [
+    {
+      name: "John Doe",
+      email: "john@example.com",
+      status: "active",
+      createdAt: "2024-01-15",
+    },
+    {
+      name: "Jane Smith",
+      email: "jane@example.com",
+      status: "inactive",
+      createdAt: "2024-02-20",
+    },
+  ];
+
+  return (
+    <>
+      {/* Column filter dropdown */}
+      <DataTable.ColumnFilter
+        columns={COLUMN_OPTIONS}
+        visibleColumns={visibleColumns}
+        onCheckedChange={toggleColumn}
+        onReset={resetColumns}
+      />
+
+      {/* DataTable with visible columns */}
+      <DataTable
+        columns={columns}
+        data={data}
+        visibleColumns={visibleColumns}
+      />
+    </>
+  );
+}
+```
+
+#### Manual Column Visibility Control
+
+You can also manually control column visibility without using the hook:
+
+```tsx
+import { DataTable } from "@harnessio/ui/components";
+import { useState } from "react";
+
+function TableWithManualColumnControl() {
   const [visibleColumns, setVisibleColumns] = useState([
     "name",
     "email",
@@ -404,28 +676,18 @@ function TableWithColumnFilter() {
     }
   };
 
+  const handleReset = () => {
+    setVisibleColumns(["name", "email", "status"]);
+  };
+
   return (
     <>
-      <DropdownMenu.Root>
-        <DropdownMenu.Trigger asChild>
-          <Button variant="outline">
-            Columns
-            <IconV2 name="nav-arrow-down" />
-          </Button>
-        </DropdownMenu.Trigger>
-        <DropdownMenu.Content>
-          {columns.map((column) => (
-            <DropdownMenu.CheckboxItem
-              key={column.accessorKey}
-              title={column.header}
-              checked={visibleColumns.includes(column.accessorKey)}
-              onCheckedChange={(checked) =>
-                handleColumnToggle(column.accessorKey, checked)
-              }
-            />
-          ))}
-        </DropdownMenu.Content>
-      </DropdownMenu.Root>
+      <DataTable.ColumnFilter
+        columns={COLUMN_OPTIONS}
+        visibleColumns={visibleColumns}
+        onCheckedChange={handleColumnToggle}
+        onReset={handleReset}
+      />
 
       <DataTable
         columns={columns}
@@ -438,7 +700,14 @@ function TableWithColumnFilter() {
 ```
 
 <Aside type="tip">
-  The `visibleColumns` prop works with columns that have `enableHiding: true`.
-  This allows you to dynamically control which columns are displayed, perfect
-  for user preferences and localStorage persistence.
+  **Key Points:** - Each column must have a unique `id` that matches the values
+  in `COLUMN_OPTIONS` - Set `enableHiding: true` on columns you want to be
+  toggleable - The `useColumnFilter` hook automatically persists preferences to
+  localStorage - The `onReset` prop is optional and adds a "Reset" button to the
+  dropdown footer
+</Aside>
+
+<Aside type="note">
+  The `visibleColumns` prop accepts an array of column IDs. Only columns with
+  IDs present in this array will be displayed in the table.
 </Aside>

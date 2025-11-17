@@ -1,7 +1,6 @@
 import { FocusContext } from '../../runtime/ContentFocusRuntime/ContentFocusRuntime'
 import { useAssistantRuntime } from './useAssistantRuntime'
 
-
 export function useContentRenderer(contentType: string, context?: FocusContext) {
   const runtime = useAssistantRuntime()
   const renderer = runtime.pluginRegistry.getBestRendererForType(contentType)

@@ -1,4 +1,4 @@
-import { MessageContent } from '../../types/message'
+import { Message, MessageContent } from '../../types/message'
 import { BaseSubscribable } from '../../utils/Subscribable'
 
 export type FocusContext = 'detail'
@@ -7,6 +7,7 @@ export interface ContentFocusState {
   isActive: boolean
   context: FocusContext | null
   focusedContent: MessageContent | null
+  focusedMessage: Message | null
   focusedMessageId: string | null
   focusedContentIndex: number | null
 }
@@ -16,6 +17,7 @@ export class ContentFocusRuntime extends BaseSubscribable {
     isActive: false,
     context: null,
     focusedContent: null,
+    focusedMessage: null,
     focusedMessageId: null,
     focusedContentIndex: null
   }
@@ -36,6 +38,10 @@ export class ContentFocusRuntime extends BaseSubscribable {
     return this._state.focusedContent
   }
 
+  public get focusedMessage(): Message | null {
+    return this._state.focusedMessage
+  }
+
   public get focusedMessageId(): string | null {
     return this._state.focusedMessageId
   }
@@ -46,7 +52,7 @@ export class ContentFocusRuntime extends BaseSubscribable {
 
   public focus(
     content: MessageContent,
-    messageId: string,
+    message: Message,
     contentIndex: number,
     context: FocusContext = 'detail'
   ): void {
@@ -54,7 +60,8 @@ export class ContentFocusRuntime extends BaseSubscribable {
       isActive: true,
       context,
       focusedContent: content,
-      focusedMessageId: messageId,
+      focusedMessage: message,
+      focusedMessageId: message.id,
       focusedContentIndex: contentIndex
     }
     this.notifySubscribers()
@@ -65,6 +72,7 @@ export class ContentFocusRuntime extends BaseSubscribable {
       isActive: false,
       context: null,
       focusedContent: null,
+      focusedMessage: null,
       focusedMessageId: null,
       focusedContentIndex: null
     }
@@ -73,19 +81,19 @@ export class ContentFocusRuntime extends BaseSubscribable {
 
   public toggle(
     content: MessageContent,
-    messageId: string,
+    message: Message,
     contentIndex: number,
     context: FocusContext = 'detail'
   ): void {
     if (
       this._state.isActive &&
-      this._state.focusedMessageId === messageId &&
+      this._state.focusedMessageId === message.id &&
       this._state.focusedContentIndex === contentIndex &&
       this._state.context === context
     ) {
       this.blur()
     } else {
-      this.focus(content, messageId, contentIndex, context)
+      this.focus(content, message, contentIndex, context)
     }
   }
 
@@ -99,7 +107,7 @@ export class ContentFocusRuntime extends BaseSubscribable {
     }
   }
 
-  public focusNext(messages: ReadonlyArray<{ id: string; content: readonly MessageContent[] }>): void {
+  public focusNext(messages: readonly Message[]): void {
     if (!this._state.focusedMessageId || !messages.length) return
 
     const currentMsgIndex = messages.findIndex(m => m.id === this._state.focusedMessageId)
@@ -110,7 +118,7 @@ export class ContentFocusRuntime extends BaseSubscribable {
 
     if (currentContentIndex + 1 < currentMsg.content.length) {
       const nextContent = currentMsg.content[currentContentIndex + 1]
-      this.focus(nextContent, currentMsg.id, currentContentIndex + 1, this._state.context || 'detail')
+      this.focus(nextContent, currentMsg, currentContentIndex + 1, this._state.context || 'detail')
       return
     }
 
@@ -118,12 +126,12 @@ export class ContentFocusRuntime extends BaseSubscribable {
     if (currentMsgIndex + 1 < messages.length) {
       const nextMsg = messages[currentMsgIndex + 1]
       if (nextMsg.content.length > 0) {
-        this.focus(nextMsg.content[0], nextMsg.id, 0, this._state.context || 'detail')
+        this.focus(nextMsg.content[0], nextMsg, 0, this._state.context || 'detail')
       }
     }
   }
 
-  public focusPrevious(messages: ReadonlyArray<{ id: string; content: readonly MessageContent[] }>): void {
+  public focusPrevious(messages: readonly Message[]): void {
     if (!this._state.focusedMessageId || !messages.length) return
 
     const currentMsgIndex = messages.findIndex(m => m.id === this._state.focusedMessageId)
@@ -134,7 +142,7 @@ export class ContentFocusRuntime extends BaseSubscribable {
 
     if (currentContentIndex > 0) {
       const prevContent = currentMsg.content[currentContentIndex - 1]
-      this.focus(prevContent, currentMsg.id, currentContentIndex - 1, this._state.context || 'detail')
+      this.focus(prevContent, currentMsg, currentContentIndex - 1, this._state.context || 'detail')
       return
     }
 
@@ -143,7 +151,7 @@ export class ContentFocusRuntime extends BaseSubscribable {
       const prevMsg = messages[currentMsgIndex - 1]
       if (prevMsg.content.length > 0) {
         const lastIndex = prevMsg.content.length - 1
-        this.focus(prevMsg.content[lastIndex], prevMsg.id, lastIndex, this._state.context || 'detail')
+        this.focus(prevMsg.content[lastIndex], prevMsg, lastIndex, this._state.context || 'detail')
       }
     }
   }

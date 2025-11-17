@@ -3,7 +3,7 @@
 import { useEffect, useState } from 'react'
 
 import { ContentFocusState, FocusContext } from '../../runtime/ContentFocusRuntime/ContentFocusRuntime'
-import { MessageContent } from '../../types/message'
+import { Message, MessageContent } from '../../types/message'
 import { useAssistantRuntime } from './useAssistantRuntime'
 
 export function useContentFocus() {
@@ -19,11 +19,11 @@ export function useContentFocus() {
 
   return {
     ...state,
-    focus: (content: MessageContent, messageId: string, contentIndex: number, context?: FocusContext) =>
-      runtime.contentFocus.focus(content, messageId, contentIndex, context),
+    focus: (content: MessageContent, message: Message, contentIndex: number, context?: FocusContext) =>
+      runtime.contentFocus.focus(content, message, contentIndex, context),
     blur: () => runtime.contentFocus.blur(),
-    toggle: (content: MessageContent, messageId: string, contentIndex: number, context?: FocusContext) =>
-      runtime.contentFocus.toggle(content, messageId, contentIndex, context),
+    toggle: (content: MessageContent, message: Message, contentIndex: number, context?: FocusContext) =>
+      runtime.contentFocus.toggle(content, message, contentIndex, context),
     switchContext: (context: FocusContext) => runtime.contentFocus.switchContext(context),
     focusNext: () => runtime.contentFocus.focusNext(runtime.thread.messages),
     focusPrevious: () => runtime.contentFocus.focusPrevious(runtime.thread.messages)

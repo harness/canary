@@ -15,7 +15,7 @@ export class PluginRegistry {
     plugin.renderers.forEach(renderer => {
       const renderers = this.renderersByType.get(renderer.type) || []
       renderers.push(renderer)
-      renderers.sort((a, b) => b.priority - a.priority)
+      renderers.sort((a, b) => (b?.priority ?? 0) - (a?.priority ?? 0))
       this.renderersByType.set(renderer.type, renderers)
     })
   }

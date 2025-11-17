@@ -81,9 +81,10 @@ export class AssistantRuntime extends BaseSubscribable {
 
   private handleMessagesChange(messages: readonly Message[]): void {
     if (messages.length === 0) return
-    
+
     // Only auto-focus when a new assistant message completes
     const lastMessage = messages[messages.length - 1]
+
     if (lastMessage.role === 'assistant' && lastMessage.status.type === 'complete') {
       this.autoFocusLastContent(messages)
     }
@@ -104,7 +105,7 @@ export class AssistantRuntime extends BaseSubscribable {
         const renderer = this.pluginRegistry.getRenderersByType(content.type)
 
         if (renderer.length > 0 && renderer[0].capabilities?.supportsFocus) {
-          this._contentFocusRuntime.focus(content, message.id, j, 'detail')
+          this._contentFocusRuntime.focus(content, message, j, 'detail')
           return
         }
       }

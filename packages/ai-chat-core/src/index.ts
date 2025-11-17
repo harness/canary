@@ -34,7 +34,8 @@ export { useThreadList, useThreadListState } from './react/hooks/useThreadList'
 export { useCurrentThread } from './react/hooks/useCurrentThread'
 export { useMessages } from './react/hooks/useMessages'
 export { useComposer, useComposerState } from './react/hooks/useComposer'
-export { useContentRenderer, useHasDetailView, useShouldReuseInstance } from './react/hooks/useContentRenderer'
+export { useContentRenderer } from './react/hooks/useContentRenderer'
+export { useContentFocus } from './react/hooks/useContentFocus'
 
 // Utils
 export { BaseSubscribable } from './utils/Subscribable'

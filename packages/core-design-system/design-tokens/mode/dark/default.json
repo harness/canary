@@ -1795,12 +1795,6 @@
         "$type": "color",
         "$value": "linear-gradient(95deg, {gradient.sidebar.selected.from} -13.12%, {gradient.sidebar.selected.to} 84.9%);"
       }
-    },
-    "input-ai": {
-      "blur": {
-        "$type": "dimension",
-        "$value": "16px"
-      }
     }
   },
   "logo": {

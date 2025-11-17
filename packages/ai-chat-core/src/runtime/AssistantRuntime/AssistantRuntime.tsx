@@ -14,6 +14,7 @@ export class AssistantRuntime extends BaseSubscribable {
   public readonly threads: ThreadListRuntime
   public readonly pluginRegistry: PluginRegistry
   private _contentFocusRuntime: ContentFocusRuntime
+  private _currentThreadUnsubscribe?: () => void
 
   constructor(config: AssistantRuntimeConfig) {
     super()
@@ -39,20 +40,19 @@ export class AssistantRuntime extends BaseSubscribable {
       this.notifySubscribers()
     })
 
-    // Subscribe to thread list changes
+    // Subscribe to thread list changes (including thread switches)
     this.threads.subscribe(() => {
+      // Re-subscribe to the new main thread when it changes
+      this.subscribeToCurrentThread()
       this.notifySubscribers()
     })
 
-    // Subscribe to main thread message changes for auto-focus
-    this.thread.subscribe(() => {
-      this.handleMessagesChange(this.thread.messages)
-      this.notifySubscribers()
-    })
+    // Initial subscription to main thread
+    this.subscribeToCurrentThread()
   }
 
   public get thread(): ThreadRuntime {
-    return this.threads.main
+    return this.threads.getMainThread()
   }
 
   public get contentFocus(): ContentFocusRuntime {
@@ -77,6 +77,23 @@ export class AssistantRuntime extends BaseSubscribable {
    */
   public unregisterPlugin(pluginId: string): boolean {
     return this.pluginRegistry.unregisterPlugin(pluginId)
+  }
+
+  /**
+   * Subscribe to the current main thread
+   * Called when thread switches to ensure we listen to the right thread
+   */
+  private subscribeToCurrentThread(): void {
+    // Unsubscribe from previous thread
+    if (this._currentThreadUnsubscribe) {
+      this._currentThreadUnsubscribe()
+    }
+
+    // Subscribe to new main thread
+    this._currentThreadUnsubscribe = this.thread.subscribe(() => {
+      this.handleMessagesChange(this.thread.messages)
+      this.notifySubscribers()
+    })
   }
 
   private handleMessagesChange(messages: readonly Message[]): void {

@@ -1,18 +1,30 @@
-import { useSyncExternalStore } from 'use-sync-external-store/shim'
+import { useEffect, useState } from 'react'
 
-import { ThreadListRuntime, ThreadListState } from '../../runtime/ThreadListRuntime/ThreadListRuntime'
+import { ThreadListState } from '../../runtime/ThreadListRuntime/ThreadListRuntime'
 import { useAssistantRuntime } from './useAssistantRuntime'
 
-export function useThreadList(): ThreadListRuntime {
-  return useAssistantRuntime().threads
+export function useThreadList() {
+  const runtime = useAssistantRuntime()
+
+  return {
+    switchToThread: (threadId: string) => runtime.threads.switchToThread(threadId),
+    switchToNewThread: () => runtime.threads.switchToNewThread(),
+    loadThreads: () => runtime.threads.loadThreads?.(),
+    renameThread: (threadId: string, title: string) => runtime.threads['renameThread']?.(threadId, title),
+    deleteThread: (threadId: string) => runtime.threads['deleteThread']?.(threadId)
+  }
 }
 
-export function useThreadListState(): ThreadListState {
-  const threadList = useThreadList()
+export function useThreadListState() {
+  const runtime = useAssistantRuntime()
+  const [state, setState] = useState<ThreadListState>(runtime.threads.getState())
 
-  return useSyncExternalStore(
-    callback => threadList.subscribe(callback),
-    () => threadList.getState(),
-    () => threadList.getState()
-  )
+  useEffect(() => {
+    const unsubscribe = runtime.threads.subscribe(() => {
+      setState(runtime.threads.getState())
+    })
+    return unsubscribe
+  }, [runtime])
+
+  return state
 }

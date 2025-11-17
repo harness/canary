@@ -53,6 +53,8 @@ export interface StreamChunk {
 export interface ThreadListAdapter {
   listThreads(): Promise<ThreadListItemState[]>
 
+  loadThreads(): Promise<ThreadListItemState[]>
+
   loadThread(threadId: string): Promise<Message[]>
 
   createThread(initialMessage?: string): Promise<ThreadListItemState>

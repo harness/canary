@@ -1,21 +1,24 @@
 import { useSyncExternalStore } from 'use-sync-external-store/shim'
 
 import { Message } from '../../types/message'
-import { useCurrentThread } from './useCurrentThread'
+import { useAssistantRuntime } from './useAssistantRuntime'
 
 export function useMessages(): readonly Message[] {
-  const thread = useCurrentThread()
+  const runtime = useAssistantRuntime()
 
   return useSyncExternalStore(
     callback => {
-      return thread.subscribe(() => {
+      // Subscribe to runtime, which notifies when thread switches
+      // or when the current thread's messages change
+      return runtime.subscribe(() => {
         callback()
       })
     },
 
     () => {
-      return thread.messages
+      // Always get messages from the current main thread
+      return runtime.thread.messages
     },
-    () => thread.messages
+    () => runtime.thread.messages
   )
 }

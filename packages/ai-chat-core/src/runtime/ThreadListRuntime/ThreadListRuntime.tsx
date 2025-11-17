@@ -9,7 +9,6 @@ import { ThreadRuntimeCore } from '../ThreadRuntime/ThreadRuntimeCore'
 export interface ThreadListState {
   mainThreadId: string
   threads: readonly string[]
-  archivedThreads: readonly string[]
   isLoading: boolean
   threadItems: Record<string, ThreadListItemState>
 }
@@ -63,9 +62,19 @@ export class ThreadListRuntime extends BaseSubscribable {
     return this._isLoading
   }
 
+  /**
+   * Get the currently active main thread
+   */
+  public getMainThread(): ThreadRuntime {
+    const mainThread = this._threads.get(this._mainThreadId)
+    if (!mainThread) {
+      return this.main
+    }
+    return mainThread
+  }
+
   public getState(): ThreadListState {
     const threads: string[] = []
-    const archivedThreads: string[] = []
     const threadItems: Record<string, ThreadListItemState> = {}
 
     for (const [id, state] of this._threadStates) {
@@ -78,13 +87,13 @@ export class ThreadListRuntime extends BaseSubscribable {
     return {
       mainThreadId: this._mainThreadId,
       threads,
-      archivedThreads,
       isLoading: this._isLoading,
       threadItems
     }
   }
 
   public async switchToThread(threadId: string): Promise<void> {
+    console.log('switch to thread is called', this._threads, threadId)
     const thread = this._threads.get(threadId)
     if (!thread) {
       throw new Error(`Thread ${threadId} not found`)
@@ -114,6 +123,7 @@ export class ThreadListRuntime extends BaseSubscribable {
 
       try {
         const messages = await this.config.threadListAdapter.loadThread(threadId)
+        console.log('messages of thread', messages)
         thread.reset(messages)
       } catch (error) {
         console.error('Failed to load thread:', error)
@@ -172,6 +182,53 @@ export class ThreadListRuntime extends BaseSubscribable {
     }
 
     await this.switchToThread(newThreadId)
+  }
+
+  public async loadThreads(): Promise<void> {
+    if (!this.config.threadListAdapter) {
+      console.warn('No threadListAdapter configured')
+      return
+    }
+
+    this._isLoading = true
+    this.notifySubscribers()
+
+    try {
+      const threadStates = await this.config.threadListAdapter.loadThreads()
+
+      for (const state of threadStates) {
+        if (this._threadStates.has(state.id)) {
+          continue
+        }
+
+        const threadCore = new ThreadRuntimeCore({
+          streamAdapter: this.config.streamAdapter
+        })
+        const thread = new ThreadRuntime(threadCore)
+        this._threads.set(state.id, thread)
+
+        this._threadStates.set(state.id, state)
+
+        // Create thread item
+        const threadItem = new ThreadListItemRuntime({
+          state,
+          onSwitchTo: this.switchToThread.bind(this),
+          onRename: this.renameThread.bind(this),
+          onDelete: this.deleteThread.bind(this)
+        })
+        this._threadItems.set(state.id, threadItem)
+
+        // Subscribe to thread changes
+        thread.subscribe(() => {
+          this.notifySubscribers()
+        })
+      }
+    } catch (error) {
+      console.error('Failed to load threads:', error)
+    } finally {
+      this._isLoading = false
+      this.notifySubscribers()
+    }
   }
 
   private async renameThread(threadId: string, newTitle: string): Promise<void> {

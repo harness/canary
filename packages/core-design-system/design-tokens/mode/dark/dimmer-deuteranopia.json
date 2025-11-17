@@ -1756,6 +1756,12 @@
         "$value": "linear-gradient(0deg, {gradient.toast.default.from} 42%, {gradient.toast.default.to} 100%)",
         "$description": "Default gradient fade effect for toast notifications. Creates visual depth and subtle emphasis for general messages."
       }
+    },
+    "ai-chat": {
+      "bubble": {
+        "$type": "color",
+        "$value": "linear-gradient(95deg, {gradient.sidebar.selected.from} -13.12%, {gradient.sidebar.selected.to} 84.9%)"
+      }
     }
   },
   "logo": {

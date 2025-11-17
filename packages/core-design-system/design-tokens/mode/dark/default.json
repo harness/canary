@@ -1793,7 +1793,7 @@
     "ai-chat": {
       "bubble": {
         "$type": "color",
-        "$value": "linear-gradient(95deg, {gradient.sidebar.selected.from} -13.12%, {gradient.sidebar.selected.to} 84.9%);"
+        "$value": "linear-gradient(95deg, {gradient.sidebar.selected.from} -13.12%, {gradient.sidebar.selected.to} 84.9%)"
       }
     }
   },

@@ -2153,7 +2153,7 @@
     "skeleton": {
       "gradient-stop-1": {
         "$type": "color",
-        "$value": "{chrome.100}"
+        "$value": "{chrome.150}"
       },
       "gradient-stop-2": {
         "$type": "color",
@@ -2161,7 +2161,7 @@
       },
       "gradient-stop-3": {
         "$type": "color",
-        "$value": "{chrome.100}"
+        "$value": "{chrome.150}"
       },
       "mask": {
         "from": {
@@ -2313,20 +2313,20 @@
             "studio.tokens": {
               "modify": {
                 "type": "alpha",
-                "value": "0.65",
+                "value": "0.45",
                 "space": "lch"
               }
             }
           },
           "$type": "color",
-          "$value": "{cyan.50}"
+          "$value": "{cyan.100}"
         },
         "to": {
           "$extensions": {
             "studio.tokens": {
               "modify": {
                 "type": "alpha",
-                "value": "0.15",
+                "value": "0.2",
                 "space": "lch"
               }
             }

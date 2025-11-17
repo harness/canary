@@ -481,6 +481,7 @@
     "noRepos": "Pas encore de dépôts",
     "noReposProject": "Il n'y a pas encore de dépôts dans ce projet.",
     "createOrImportRepos": "Créer un nouveau dépôt ou importer un dépôt existant.",
+    "noResultsDescriptionWithFilter": "No {{filterName}} rules match your search. Try adjusting your keywords or filters.",
     "noTags": "There are no tags in this project yet.",
     "noTagsDescription": "Your tags will appear here once they're created. Start creating tags to see your work organized.",
     "createNewTag": "Créer une balise",

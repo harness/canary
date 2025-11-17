@@ -34,6 +34,8 @@ type TextElement =
   | 'li'
   | 'dt'
   | 'dd'
+  | 'del'
+  | 'ins'
 
 export const typographyVariantConfig = {
   'heading-hero': 'font-heading-hero',

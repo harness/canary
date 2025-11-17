@@ -244,7 +244,10 @@ export default function PullRequestChanges() {
         commit_sha: pullReqMetadata?.source_sha,
         path: filePath
       }
-    }).then(() => refetchFileViews())
+    }).catch(error => {
+      console.error('Failed to mark viewed:', error)
+      refetchFileViews()
+    })
   }
 
   const { mutateAsync: unmarkViewed } = useFileViewDeletePullReqMutation({

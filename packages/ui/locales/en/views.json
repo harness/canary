@@ -490,6 +490,7 @@
     "noRepos": "No repositories yet",
     "noReposProject": "There are no repositories in this project yet.",
     "createOrImportRepos": "Create new or import an existing repository.",
+    "noResultsDescriptionWithFilter": "No {{filterName}} rules match your search. Try adjusting your keywords or filters.",
     "noTags": "No tags yet",
     "noTagsDescription": "Your tags will appear here once they're created. Start creating tags to see your work organized.",
     "createNewTag": "Create Tag",

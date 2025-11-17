@@ -1,5 +1,5 @@
 export const borderRadius = {
   '.rounded-cn-input': {
-    borderColor: 'var(--cn-input-radius)'
+    borderRadius: 'var(--cn-input-radius)'
   }
 }

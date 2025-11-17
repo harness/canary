@@ -3,7 +3,7 @@ import { CSSRuleObject } from 'tailwindcss/types/config'
 /** Variants */
 const variants = ['primary', 'secondary', 'outline', 'status', 'ghost'] as const
 
-const themes = ['success', 'info', 'warning', 'danger', 'muted', 'merged'] as const
+const themes = ['success', 'info', 'warning', 'danger', 'muted', 'merged', 'risk'] as const
 
 const themeStyleMapper: Record<Exclude<(typeof themes)[number], 'ai'>, string> = {
   success: 'success',
@@ -11,7 +11,8 @@ const themeStyleMapper: Record<Exclude<(typeof themes)[number], 'ai'>, string> =
   warning: 'warning',
   danger: 'danger',
   muted: 'gray',
-  merged: 'purple'
+  merged: 'purple',
+  risk: 'orange'
 }
 
 function createBadgeVariantStyles() {

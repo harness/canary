@@ -58,7 +58,13 @@ export const SideNav: React.FC<{ routes?: RouteDefinitions }> = ({ routes }) => 
   // --- Initialization: Load from localStorage ---
   useEffect(() => {
     const stored = localStorage.getItem('nav-items')
-    const parsed: NavLinkStorageInterface | undefined = stored ? JSON.parse(stored) : undefined
+    let parsed: NavLinkStorageInterface | undefined
+    try {
+      parsed = stored ? JSON.parse(stored) : undefined
+    } catch {
+      // Invalid JSON, use defaults
+      parsed = undefined
+    }
 
     if (parsed) {
       setNavLinks({
@@ -75,7 +81,7 @@ export const SideNav: React.FC<{ routes?: RouteDefinitions }> = ({ routes }) => 
 
   const drawerContentCommonProps: DrawerContentProps = useMemo(
     () => ({
-      className: cn('cn-sidebar-drawer-content z-20 cn-sidebar-menu-drawer-content rounded', {
+      className: cn('cn-sidebar-drawer-content z-20 overflow-x-hidden rounded', {
         'cn-sidebar-menu-drawer-content-collapsed': collapsed
       }),
       overlayClassName: cn('bg-transparent z-20 opacity-0', {
@@ -123,7 +129,6 @@ export const SideNav: React.FC<{ routes?: RouteDefinitions }> = ({ routes }) => 
                   withRightIndicator
                   title={NavItems.get(NavEnum.Settings)!.title}
                   icon={NavItems.get(NavEnum.Settings)!.iconName}
-                  active={showSettingsMenu}
                 />
               </Drawer.Trigger>
 
@@ -143,7 +148,7 @@ export const SideNav: React.FC<{ routes?: RouteDefinitions }> = ({ routes }) => 
             {/* 👉 More menu */}
             <Drawer.Root direction="left" open={showMoreMenu} onOpenChange={setShowMoreMenu}>
               <Drawer.Trigger>
-                <Sidebar.Item title="more" icon="menu-more-horizontal" withRightIndicator active={showMoreMenu} />
+                <Sidebar.Item title="more" icon="menu-more-horizontal" withRightIndicator />
               </Drawer.Trigger>
 
               <Drawer.Content
@@ -174,11 +179,7 @@ export const SideNav: React.FC<{ routes?: RouteDefinitions }> = ({ routes }) => 
             ))}
           </Sidebar.Group>
         </Sidebar.Content>
-
-        <Sidebar.Footer>
-          <Sidebar.ToggleMenuButton onClick={noop} />
-        </Sidebar.Footer>
-        <Sidebar.Rail onClick={noop} />
+        <Sidebar.Rail onClick={noop} open={!collapsed} />
       </Sidebar.Root>
 
       <ManageNavigation

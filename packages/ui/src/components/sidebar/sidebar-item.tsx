@@ -150,10 +150,8 @@ const SidebarItemTrigger = forwardRef<HTMLButtonElement | HTMLAnchorElement, Sid
   ({ children, ...props }, ref) => {
     const { state } = useSidebar()
     const { NavLink } = useRouterContext()
-    const withIcon = itemIsIcon(props)
     const withLogo = itemIsLogo(props)
     const withAvatar = itemIsAvatar(props)
-    const withFallback = !withIcon && !withLogo && !withAvatar
     const isLink = isSidebarItemLink(props)
 
     const {
@@ -171,6 +169,7 @@ const SidebarItemTrigger = forwardRef<HTMLButtonElement | HTMLAnchorElement, Sid
       ...restProps
     } = props
 
+    const withIcon = itemIsIcon(props)
     const withSubmenu = !!children
     const withDescription = !!description
     const withActionMenu = state === 'expanded' && !!actionMenuItems && actionMenuItems.length > 0
@@ -189,7 +188,7 @@ const SidebarItemTrigger = forwardRef<HTMLButtonElement | HTMLAnchorElement, Sid
     }
 
     const itemProps = omit(restProps, ['icon', 'logo', 'avatarFallback', 'src', 'badgeProps'])
-    const sidebarItemClassName = cn('cn-sidebar-item', { 'cn-sidebar-item-big': withDescription }, className)
+    const sidebarItemClassName = cn('cn-sidebar-item', className)
     const buttonRef = ref as Ref<HTMLButtonElement>
 
     const actionButtonsContent = useMemo(() => {
@@ -202,7 +201,7 @@ const SidebarItemTrigger = forwardRef<HTMLButtonElement | HTMLAnchorElement, Sid
             return (
               <Button
                 key={index}
-                size="2xs"
+                size="xs"
                 variant="ghost"
                 iconOnly={iconOnly}
                 onClick={e => {
@@ -230,7 +229,7 @@ const SidebarItemTrigger = forwardRef<HTMLButtonElement | HTMLAnchorElement, Sid
           'cn-sidebar-item-content-only-action-buttons': withActionButtons && !withDescription && !withRightElement
         })}
       >
-        {(withIcon || withFallback) &&
+        {withIcon &&
           (withDescription ? (
             <div className="cn-sidebar-item-content-icon cn-sidebar-item-content-icon-w-border">
               <IconV2 name={props.icon} size="md" fallback="stop" />
@@ -238,11 +237,9 @@ const SidebarItemTrigger = forwardRef<HTMLButtonElement | HTMLAnchorElement, Sid
           ) : (
             <IconV2 name={props.icon} size="md" fallback="stop" className="cn-sidebar-item-content-icon" />
           ))}
-
         {withLogo && props.logo && (
           <LogoV2 name={props.logo} size={withDescription ? 'sm' : 'xs'} className="cn-sidebar-item-content-icon" />
         )}
-
         {withAvatar && (
           <Avatar
             src={props.src}
@@ -251,16 +248,14 @@ const SidebarItemTrigger = forwardRef<HTMLButtonElement | HTMLAnchorElement, Sid
             className="cn-sidebar-item-content-icon"
           />
         )}
-
         <Text
           variant="body-single-line-normal"
           color={withDescription ? 'foreground-1' : 'foreground-2'}
           className="cn-sidebar-item-content-title"
-          truncate
+          wrap="wrap"
         >
           {title}
         </Text>
-
         {withDescription && (
           <Text
             variant="caption-single-line-light"
@@ -271,9 +266,7 @@ const SidebarItemTrigger = forwardRef<HTMLButtonElement | HTMLAnchorElement, Sid
             {description}
           </Text>
         )}
-
         {withDropdownMenu && <IconV2 name="up-down" size="xs" className="cn-sidebar-item-content-right-element" />}
-
         {badge && !isBadgeProps(badge) && (
           <StatusBadge variant="outline" {...badgeCommonProps}>
             {badge}
@@ -297,14 +290,11 @@ const SidebarItemTrigger = forwardRef<HTMLButtonElement | HTMLAnchorElement, Sid
             {badge.content}
           </StatusBadge>
         )}
-
         {/* Action buttons */}
         {actionButtonsContent}
-
         {withRightIndicator && (
           <IconV2 name="nav-arrow-right" className="cn-sidebar-item-content-right-element" size="xs" />
         )}
-
         {((withActionMenu && !badge) || withSubmenu) && (
           <div className="cn-sidebar-item-content-action-item-placeholder" />
         )}

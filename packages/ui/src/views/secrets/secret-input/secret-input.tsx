@@ -11,6 +11,7 @@ export const SecretInput = ({
   className,
   placeholder,
   label,
+  hideDropdownMenu = false,
   ...props
 }: InputReferenceProps<SecretItem>) => {
   return (
@@ -22,6 +23,7 @@ export const SecretInput = ({
       onEdit={onEdit}
       onClear={onClear}
       className={className}
+      hideDropdownMenu={hideDropdownMenu}
       {...props}
     />
   )

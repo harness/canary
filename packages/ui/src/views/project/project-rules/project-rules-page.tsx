@@ -44,8 +44,8 @@ export const ProjectRulesPage: FC<ProjectRulesPageProps> = ({
   const { rules: rulesData, pageSize, totalItems, setPageSize, page, setPage } = useProjectRulesStore()
 
   const isDirtyList = useMemo(() => {
-    return page !== 1 || !!searchQuery
-  }, [page, searchQuery])
+    return page !== 1 || !!searchQuery || ruleTypeFilter !== null
+  }, [page, searchQuery, ruleTypeFilter])
 
   if (!rulesData?.length && !isDirtyList && !isLoading) {
     return (

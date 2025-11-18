@@ -91,9 +91,6 @@ export abstract class BaseSSEStreamAdapter<TAllowedEvents extends readonly strin
             try {
               const data = JSON.parse(dataStr)
 
-              console.log('currentEvent', currentEvent)
-
-              console.log('this.getAllowedEvents()', this.getAllowedEvents())
               if (currentEvent && this.shouldProcessEvent(currentEvent)) {
                 const chunk = this.convertEvent({
                   event: currentEvent as TAllowedEvents[number],

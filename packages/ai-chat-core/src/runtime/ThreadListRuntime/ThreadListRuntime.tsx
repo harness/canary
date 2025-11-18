@@ -93,7 +93,6 @@ export class ThreadListRuntime extends BaseSubscribable {
   }
 
   public async switchToThread(threadId: string): Promise<void> {
-    console.log('switch to thread is called', this._threads, threadId)
     const thread = this._threads.get(threadId)
     if (!thread) {
       throw new Error(`Thread ${threadId} not found`)
@@ -123,7 +122,6 @@ export class ThreadListRuntime extends BaseSubscribable {
 
       try {
         const messages = await this.config.threadListAdapter.loadThread(threadId)
-        console.log('messages of thread', messages)
         thread.reset(messages)
       } catch (error) {
         console.error('Failed to load thread:', error)

@@ -1,5 +1,3 @@
-// src/react/hooks/useContentFocus.ts
-
 import { useEffect, useState } from 'react'
 
 import { ContentFocusState, FocusContext } from '../../runtime/ContentFocusRuntime/ContentFocusRuntime'

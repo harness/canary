@@ -10,7 +10,13 @@ import {
   TypesUserGroupInfo
 } from '@harnessio/code-service-client'
 import { PrincipalType } from '@harnessio/ui/types'
-import { RepoBranchSettingsFormFields, RepoData, RuleDataType, VulnerabilityScanningType } from '@harnessio/ui/views'
+import {
+  RepoBranchSettingsFormFields,
+  RepoData,
+  RuleDataType,
+  RuleType,
+  VulnerabilityScanningType
+} from '@harnessio/ui/views'
 
 import { getTotalRulesApplied, transformDataFromApi } from '../../../utils/repo-branch-rules-utils'
 
@@ -78,7 +84,7 @@ export const useRepoRulesStore = create<IRepoStore>(set => ({
         rule.definition?.bypass?.repo_owners === true,
       identifier: rule.identifier,
       state: rule.state ? String(rule.state) : undefined,
-      type: rule.type as 'branch' | 'tag',
+      type: rule.type as RuleType,
       scope: rule.scope ?? 0
     }))
     set({ rules: rulesData })

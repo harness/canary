@@ -21,7 +21,7 @@ import {
 } from '@/components'
 import { Select } from '@/components/form-primitives/select'
 import { useCustomDialogTrigger, useRouterContext, useTranslation } from '@/context'
-import { ErrorTypes, RuleDataType, ScopeType } from '@/views'
+import { ErrorTypes, RuleDataType, RuleType, ScopeType } from '@/views'
 
 // Utility function to map numeric scope to ScopeType enum
 const getScopeType = (scope: number): ScopeType => {
@@ -80,9 +80,14 @@ const Description: FC<DescriptionProps> = ({ targetPatternsCount, rulesAppliedCo
 interface CreateButtonProps {
   onClickTagRuleButton: () => void
   onClickBranchRuleButton: () => void
+  onClickPushRuleButton: () => void
 }
 
-const CreateButton: FC<CreateButtonProps> = ({ onClickBranchRuleButton, onClickTagRuleButton }) => {
+const CreateButton: FC<CreateButtonProps> = ({
+  onClickBranchRuleButton,
+  onClickTagRuleButton,
+  onClickPushRuleButton
+}) => {
   const { t } = useTranslation()
 
   return (
@@ -102,6 +107,10 @@ const CreateButton: FC<CreateButtonProps> = ({ onClickBranchRuleButton, onClickT
           title={t('views:repos.createBranchRuleButton', 'Create Branch Rule')}
           onClick={onClickBranchRuleButton}
         />
+        <DropdownMenu.Item
+          title={t('views:repos.createPushRuleButton', 'Create Push Rule')}
+          onClick={onClickPushRuleButton}
+        />
       </DropdownMenu.Content>
     </DropdownMenu.Root>
   )
@@ -116,8 +125,10 @@ export interface RepoSettingsGeneralRulesProps {
   rulesSearchQuery?: string
   setRulesSearchQuery?: (query: string) => void
   projectScope?: boolean
-  toRepoBranchRuleCreate?: () => string
-  toRepoTagRuleCreate?: () => string
+  toBranchRuleCreate?: () => string
+  toTagRuleCreate?: () => string
+  toPushRuleCreate?: () => string
+  toRepoPushRuleCreate?: () => string
   ruleTypeFilter?: 'branch' | 'tag' | 'push' | null
   setRuleTypeFilter?: (filter: 'branch' | 'tag' | 'push' | null) => void
   toProjectRuleDetails?: (identifier: string, scope: number) => void
@@ -132,8 +143,9 @@ export const RepoSettingsGeneralRules: FC<RepoSettingsGeneralRulesProps> = ({
   isLoading,
   rulesSearchQuery,
   setRulesSearchQuery,
-  toRepoBranchRuleCreate,
-  toRepoTagRuleCreate,
+  toBranchRuleCreate,
+  toTagRuleCreate,
+  toPushRuleCreate,
   ruleTypeFilter,
   setRuleTypeFilter,
   toProjectRuleDetails,
@@ -172,9 +184,9 @@ export const RepoSettingsGeneralRules: FC<RepoSettingsGeneralRulesProps> = ({
     toProjectRuleDetails?.(rule.identifier ?? '', rule.scope ?? 0)
   }
 
-  const handleClickBranchRuleButton = () => navigate(toRepoBranchRuleCreate?.() || '')
-  const handleClickTagRuleButton = () => navigate(toRepoTagRuleCreate?.() || '')
-
+  const handleClickBranchRuleButton = () => navigate(toBranchRuleCreate?.() || '')
+  const handleClickTagRuleButton = () => navigate(toTagRuleCreate?.() || '')
+  const handleClickPushRuleButton = () => navigate(toPushRuleCreate?.() || '')
   if (!isShowRulesContent) {
     return (
       <NoData
@@ -192,9 +204,39 @@ export const RepoSettingsGeneralRules: FC<RepoSettingsGeneralRulesProps> = ({
         <CreateButton
           onClickBranchRuleButton={handleClickBranchRuleButton}
           onClickTagRuleButton={handleClickTagRuleButton}
+          onClickPushRuleButton={handleClickPushRuleButton}
         />
       </NoData>
     )
+  }
+
+  const getTypeMeta = (type: RuleType | undefined) => {
+    switch (type) {
+      case 'branch':
+        return {
+          theme: 'blue' as const,
+          value: 'Branch Rule',
+          icon: 'git-branch' as const
+        }
+      case 'tag':
+        return {
+          theme: 'purple' as const,
+          value: 'Tag Rule',
+          icon: 'tag' as const
+        }
+      case 'push':
+        return {
+          theme: 'green' as const,
+          value: 'Push Rule',
+          icon: 'git-squash-merge' as const
+        }
+      default:
+        return {
+          theme: 'gray' as const,
+          value: type || '',
+          icon: undefined
+        }
+    }
   }
 
   return (
@@ -215,7 +257,8 @@ export const RepoSettingsGeneralRules: FC<RepoSettingsGeneralRulesProps> = ({
             options={[
               { label: t('views:repos.allRules', 'All Rules'), value: null },
               { label: t('views:repos.branchRules', 'Branch Rules'), value: 'branch' },
-              { label: t('views:repos.tagRules', 'Tag Rules'), value: 'tag' }
+              { label: t('views:repos.tagRules', 'Tag Rules'), value: 'tag' },
+              { label: t('views:repos.pushRules', 'Push Rules'), value: 'push' }
             ]}
             value={ruleTypeFilter}
             onChange={value => setRuleTypeFilter?.(value as 'branch' | 'tag' | 'push' | null)}
@@ -225,6 +268,7 @@ export const RepoSettingsGeneralRules: FC<RepoSettingsGeneralRulesProps> = ({
           <CreateButton
             onClickBranchRuleButton={handleClickBranchRuleButton}
             onClickTagRuleButton={handleClickTagRuleButton}
+            onClickPushRuleButton={handleClickPushRuleButton}
           />
         </ListActions.Right>
       </ListActions.Root>
@@ -235,7 +279,7 @@ export const RepoSettingsGeneralRules: FC<RepoSettingsGeneralRulesProps> = ({
         <StackedList.Root paginationProps={paginationProps}>
           {rules?.map((rule, idx) => {
             if (!rule?.identifier) return <Fragment key={idx} />
-
+            const meta = getTypeMeta(rule.type as RuleType | undefined)
             return (
               <StackedList.Item
                 key={rule.identifier}
@@ -274,14 +318,7 @@ export const RepoSettingsGeneralRules: FC<RepoSettingsGeneralRulesProps> = ({
                       {rule.type && (
                         <>
                           <Separator orientation="vertical" className="h-3" />
-                          <Tag
-                            variant="outline"
-                            size="sm"
-                            theme={rule.type === 'branch' ? 'blue' : 'purple'}
-                            value={rule.type === 'branch' ? 'Branch Rule' : 'Tag Rule'}
-                            icon={rule.type === 'branch' ? 'git-branch' : 'tag'}
-                            rounded={rule.type === 'tag'}
-                          />
+                          <Tag variant="outline" size="sm" theme={meta.theme} value={meta.value} icon={meta.icon} />
                         </>
                       )}
                       <Separator orientation="vertical" className="h-3" />

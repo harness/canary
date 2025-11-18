@@ -1,28 +1,26 @@
-import { FC, Fragment, useMemo, useState } from 'react'
+import { FC, Fragment, useMemo } from 'react'
 
 import {
   Checkbox,
   ControlGroup,
   Fieldset,
   FormInput,
-  IconV2,
   Label,
   Layout,
   MultiSelectOption,
-  ResetTag,
-  SplitButton,
+  NumberInput,
   Switch
 } from '@/components'
 import { Separator } from '@/components/separator'
 import { useTranslation } from '@/context'
 import { useDebounceSearch } from '@hooks/use-debounce-search'
-import { EnumBypassListType, NormalizedPrincipal, PatternsButtonType } from '@views/repo/repo-branch-rules/types'
+import { EnumBypassListType, NormalizedPrincipal } from '@views/repo/repo-branch-rules/types'
 import { getIcon } from '@views/repo/utils'
 
-import { TagFieldProps, TagRule } from '../types'
-import { getTagRules } from './repo-tag-rules-data'
+import { PushRule, PushRuleFieldProps, PushRuleId } from '../types'
+import { getPushRules } from './repo-push-rules-data'
 
-export const TagSettingsRuleToggleField: FC<TagFieldProps> = ({ register, watch, setValue }) => {
+export const PushSettingsRuleToggleField: FC<PushRuleFieldProps> = ({ register, watch, setValue }) => {
   const { t } = useTranslation()
   return (
     <Switch
@@ -31,13 +29,13 @@ export const TagSettingsRuleToggleField: FC<TagFieldProps> = ({ register, watch,
       onCheckedChange={() => setValue!('state', !watch!('state'))}
       label={t('views:repos.enableRule', 'Enable the rule')}
       caption={t('views:repos.enableRuleDescription', 'By enabling the toggle, the {type} rule will be enforced.', {
-        type: 'tag'
+        type: 'push'
       })}
     />
   )
 }
 
-export const TagSettingsRuleNameField: FC<TagFieldProps & { disabled: boolean }> = ({ register, disabled }) => {
+export const PushSettingsRuleNameField: FC<PushRuleFieldProps & { disabled: boolean }> = ({ register, disabled }) => {
   const { t } = useTranslation()
   return (
     <FormInput.Text
@@ -51,7 +49,7 @@ export const TagSettingsRuleNameField: FC<TagFieldProps & { disabled: boolean }>
   )
 }
 
-export const TagSettingsRuleDescriptionField: FC<TagFieldProps> = ({ register }) => {
+export const PushSettingsRuleDescriptionField: FC<PushRuleFieldProps> = ({ register }) => {
   const { t } = useTranslation()
   return (
     <FormInput.Textarea
@@ -64,81 +62,8 @@ export const TagSettingsRuleDescriptionField: FC<TagFieldProps> = ({ register })
   )
 }
 
-export const TagSettingsRuleTargetPatternsField: FC<TagFieldProps> = ({ setValue, watch, register }) => {
-  const { t } = useTranslation()
-
-  const [selectedOption, setSelectedOption] = useState<PatternsButtonType>(PatternsButtonType.INCLUDE)
-
-  const patterns = watch!('patterns') || []
-
-  const handleAddPattern = () => {
-    const pattern = watch!('pattern')
-    if (pattern && !patterns.some(p => p.pattern === pattern)) {
-      setValue!('patterns', [...patterns, { pattern, option: selectedOption }])
-      setValue!('pattern', '')
-    }
-  }
-
-  const handleRemove = (patternVal: string) => {
-    const updatedPatterns = patterns.filter(({ pattern }) => pattern !== patternVal)
-    setValue!('patterns', updatedPatterns)
-  }
-
-  return (
-    <Layout.Grid gapY="md">
-      <ControlGroup>
-        <Label htmlFor="target-patterns">{t('views:repos.targetPatterns', 'Target patterns')}</Label>
-        <Layout.Grid columns="1fr auto" align="start" gap="sm">
-          <FormInput.Text
-            id="pattern"
-            {...register!('pattern')}
-            caption={t(
-              'views:repos.createRuleCaption',
-              'Match tags using globstar patterns (e.g.”golden”, “feature-*”, “releases/**”)'
-            )}
-            placeholder={t('views:repos.rulePatternPlaceholder', 'Enter the target patterns')}
-          />
-          <SplitButton<PatternsButtonType>
-            handleButtonClick={handleAddPattern}
-            selectedValue={selectedOption}
-            handleOptionChange={setSelectedOption}
-            options={[
-              {
-                value: PatternsButtonType.INCLUDE,
-                label: t(`views:repos.include`, 'Include')
-              },
-              {
-                value: PatternsButtonType.EXCLUDE,
-                label: t(`views:repos.exclude`, 'Exclude')
-              }
-            ]}
-          >
-            <IconV2 name={selectedOption === PatternsButtonType.INCLUDE ? 'plus-circle' : 'xmark-circle'} />
-            {t(`views:repos.${selectedOption.toLowerCase()}`, `${selectedOption}`)}
-          </SplitButton>
-        </Layout.Grid>
-      </ControlGroup>
-      {!!patterns.length && (
-        <Layout.Flex wrap="wrap" gap="xs">
-          {patterns.map(({ pattern, option }) => (
-            <ResetTag
-              key={pattern}
-              value={pattern}
-              onReset={() => handleRemove(pattern)}
-              icon={option === PatternsButtonType.INCLUDE ? 'plus-circle' : 'xmark-circle'}
-              iconProps={{
-                className: option === PatternsButtonType.INCLUDE ? '!text-cn-success' : '!text-cn-danger'
-              }}
-            />
-          ))}
-        </Layout.Flex>
-      )}
-    </Layout.Grid>
-  )
-}
-
-export const TagSettingsRuleBypassListField: FC<
-  TagFieldProps & {
+export const PushSettingsRuleBypassListField: FC<
+  PushRuleFieldProps & {
     bypassOptions: NormalizedPrincipal[] | null
     setPrincipalsSearchQuery: (val: string) => void
     principalsSearchQuery: string
@@ -192,20 +117,24 @@ export const TagSettingsRuleBypassListField: FC<
   )
 }
 
-export const TagSettingsRuleListField: FC<{
-  rules: TagRule[]
+export const PushSettingsRuleListField: FC<{
+  rules: PushRule[]
   handleCheckboxChange: (ruleId: string, checked: boolean) => void
-}> = ({ rules, handleCheckboxChange }) => {
+  handleInputChange: (ruleId: string, value: string) => void
+}> = ({ rules, handleCheckboxChange, handleInputChange }) => {
   const { t } = useTranslation()
-  const tagRules = getTagRules(t)
-
+  const pushRules = getPushRules(t)
   return (
     <Layout.Vertical gapY="xl">
       <Label>{t('views:repos.rulesTitle', 'Rules: select all that apply')}</Label>
       <Layout.Vertical gapY="lg">
-        {tagRules.map((rule, index) => {
+        {pushRules.map((rule, index) => {
           const matchingRule = rules.find(r => r.id === rule.id)
-          const { checked: isChecked = false, disabled: isDisabled = false } = matchingRule || {}
+          const {
+            checked: isChecked = false,
+            disabled: isDisabled = false,
+            input: inputValue = ''
+          } = matchingRule || {}
 
           return (
             <Fragment key={rule.id}>
@@ -219,6 +148,19 @@ export const TagSettingsRuleListField: FC<{
                 caption={rule.description}
                 captionVariant="caption-light"
               />
+              {!!rule?.hasInput && isChecked && (
+                <NumberInput
+                  wrapperClassName="ml-[26px]"
+                  placeholder={
+                    rule.id === PushRuleId.FILE_SIZE_LIMIT
+                      ? t('views:repos.enterFileSizeLimit', 'Enter file size limit ( in bytes )')
+                      : ''
+                  }
+                  value={inputValue || ''}
+                  onChange={e => handleInputChange(rule.id, e.target.value)}
+                  autoFocus
+                />
+              )}
             </Fragment>
           )
         })}

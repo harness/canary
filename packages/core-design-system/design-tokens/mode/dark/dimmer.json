@@ -232,15 +232,6 @@
           "$description": "Hover state background color for interactive AI surfaces."
         },
         "bg-selected": {
-          "$extensions": {
-            "studio.tokens": {
-              "modify": {
-                "type": "alpha",
-                "value": "0.65",
-                "space": "lch"
-              }
-            }
-          },
           "$type": "color",
           "$value": "linear-gradient(102deg, {gradient.ai.subtle.stop-1} 8%, {gradient.ai.subtle.stop-2} 35%, {gradient.ai.subtle.stop-3} 65%, {gradient.ai.subtle.stop-4} 87%)"
         },

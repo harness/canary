@@ -956,7 +956,7 @@
     "name": "dark",
     "selectedTokenSets": {
       "mode/dark/default": "enabled",
-      "mode/dark/figma-icon-stroke-width": "enabled"
+      "mode/dark/icon-stroke-width": "enabled"
     },
     "$figmaStyleReferences": {
       "brand_typography.text-xl": "S:1befb2b289e263331f60edbfe130631462dc9883,",
@@ -3330,7 +3330,7 @@
     },
     "selectedTokenSets": {
       "mode/light/default": "enabled",
-      "mode/light/figma-icon-stroke-width": "enabled"
+      "mode/light/icon-stroke-width": "enabled"
     },
     "$figmaCollectionId": "VariableCollectionId:1340:156918",
     "$figmaModeId": "1340:4",

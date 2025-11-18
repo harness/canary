@@ -167,18 +167,30 @@ interface BodyProps {
   className?: string
   classNameContent?: string
   children: ReactNode
+  scrollable?: boolean
 }
 
-const Body = forwardRef<HTMLDivElement, BodyProps>(({ className, classNameContent, children, ...props }, ref) => (
-  <ScrollArea
-    className={cn('cn-modal-dialog-body', className)}
-    classNameContent={cn('cn-modal-dialog-body-content', classNameContent)}
-    ref={ref}
-    {...props}
-  >
-    {children}
-  </ScrollArea>
-))
+const Body = forwardRef<HTMLDivElement, BodyProps>(
+  ({ className, classNameContent, children, scrollable = true, ...props }, ref) => {
+    const contentClass = cn('cn-modal-dialog-body-content', classNameContent)
+    if (scrollable)
+      return (
+        <ScrollArea
+          className={cn('cn-modal-dialog-body', className)}
+          classNameContent={contentClass}
+          ref={ref}
+          {...props}
+        >
+          {children}
+        </ScrollArea>
+      )
+    return (
+      <div className={cn('cn-modal-dialog-body', className)} ref={ref} {...props}>
+        <div className={contentClass}>{children}</div>
+      </div>
+    )
+  }
+)
 Body.displayName = 'Dialog.Body'
 
 const Footer = forwardRef<HTMLDivElement, HTMLAttributes<HTMLDivElement>>(({ className, ...props }, ref) => (

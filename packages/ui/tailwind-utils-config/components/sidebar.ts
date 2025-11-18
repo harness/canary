@@ -256,7 +256,7 @@ export default {
         alignItems: 'center',
         gridTemplateColumns: 'var(--cn-icon-size-sm) 1fr',
         gridTemplateAreas: '"icon title"',
-        paddingInline: 'var(--cn-sidebar-item-px)',
+        padding: 'var(--cn-sidebar-item-py) var(--cn-sidebar-item-px)',
         borderRadius: 'var(--cn-sidebar-item-radius)',
         '@apply duration-150 transition-[padding,row-gap,column-gap] ease-linear': '',
 

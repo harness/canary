@@ -192,7 +192,7 @@ export const getNavbarMoreMenuData: GetNavbarMenuData = ({ t, routes, params }) 
       {
         id: 18,
         iconName: 'engineering-insights',
-        title: 'Developer Insights',
+        title: 'Engineerings Insights',
         description: 'Actionable insights on SDLC.',
         to: routes?.toDeveloperInsights?.(params) || ''
       }

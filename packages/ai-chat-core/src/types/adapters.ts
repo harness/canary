@@ -5,7 +5,7 @@ export interface StreamAdapter {
   stream(request: StreamRequest): AsyncIterable<StreamChunk>
 }
 
-export type StreamEvent = 
+export type StreamEvent =
   | {
       readonly type: 'part-start'
       readonly part: {
@@ -37,7 +37,7 @@ export type StreamEvent =
       readonly type: string
       readonly data?: any
       readonly parentId?: string
-      [key: string]: any  // Allow any additional properties
+      [key: string]: any // Allow any additional properties
     }
 
 export interface StreamRequest {

@@ -2097,15 +2097,15 @@
         },
         "stop-2": {
           "$type": "color",
-          "$value": "{cyan.50}"
+          "$value": "{indigo.50}"
         },
         "stop-3": {
           "$type": "color",
-          "$value": "{indigo.100}"
+          "$value": "{cyan.100}"
         },
         "stop-4": {
           "$type": "color",
-          "$value": "{cyan.150}"
+          "$value": "{cyan.200}"
         }
       },
       "glow": {

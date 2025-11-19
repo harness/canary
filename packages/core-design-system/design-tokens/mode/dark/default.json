@@ -2141,15 +2141,15 @@
         },
         "stop-2": {
           "$type": "color",
-          "$value": "{blue.900}"
+          "$value": "{cyan.1000}"
         },
         "stop-3": {
           "$type": "color",
-          "$value": "{blue.800}"
+          "$value": "{cyan.850}"
         },
         "stop-4": {
           "$type": "color",
-          "$value": "{cyan.950}"
+          "$value": "{blue.950}"
         }
       },
       "glow": {

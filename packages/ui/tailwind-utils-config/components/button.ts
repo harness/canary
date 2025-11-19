@@ -143,24 +143,34 @@ export default {
     // AI button
     '&:where(.cn-button-ai)': {
       color: 'var(--cn-set-ai-outline-text)',
-      backgroundImage: `var(--cn-set-ai-outline-bg), var(--cn-set-ai-outline-border)`,
+      backgroundImage: `var(--cn-set-ai-outline-bg-gradient), var(--cn-set-ai-outline-border)`,
       backgroundOrigin: 'border-box',
       backgroundClip: 'padding-box, border-box',
+      // default: zoom the gradient so mostly the first (white) stop is visible
+      // hover will reset size to 100% 100% and position to 0 0 (one-to-one with the token)
+      backgroundSize: '800% 800%, 100% 100%',
+      backgroundPosition: '0 0, 0 0',
       border: 'var(--cn-btn-ai-border) solid transparent',
-      transitionProperty: 'color, background-image, border-color, box-shadow',
+      transitionProperty: 'color, background-size, background-position, border-color, box-shadow',
       transitionDuration: '150ms',
       transitionTimingFunction: 'ease-in-out',
 
       '&:hover:not(:disabled, .cn-button-disabled)': {
-        backgroundImage: `var(--cn-set-ai-outline-bg-hover), var(--cn-set-ai-outline-border)`,
+        // gradient matches the token one-to-one
+        backgroundSize: '100% 100%, 100% 100%',
+        backgroundPosition: '0 0, 0 0',
         boxShadow: 'var(--cn-shadow-comp-ai-inner)'
       },
       '&:active:not(:disabled, .cn-button-disabled), &:where(.cn-button-active)': {
-        backgroundImage: 'var(--cn-set-ai-outline-bg-selected), var(--cn-set-ai-outline-border)',
+        // slightly weaker than hover: slight zoom back
+        backgroundSize: '120% 120%, 100% 100%',
+        backgroundPosition: '0 0, 0 0',
         boxShadow: 'var(--cn-shadow-comp-ai-inner)'
       },
-      "&[data-loading='true']": {
-        backgroundImage: 'var(--cn-set-ai-outline-bg-selected), var(--cn-set-ai-outline-border)',
+      "&[data-loading]": {
+        // loading mirrors the hover state so the gradient is clearly visible
+        backgroundSize: '120% 120%, 100% 100%',
+        backgroundPosition: '0 0, 0 0',
         boxShadow: 'var(--cn-shadow-comp-ai-inner)'
       }
     },

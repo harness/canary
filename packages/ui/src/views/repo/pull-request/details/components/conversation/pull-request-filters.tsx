@@ -16,7 +16,7 @@ const DropdownMenuComponent = <T extends { label: string; value: string }>({
     <DropdownMenu.Root>
       <DropdownMenu.Trigger className="flex items-center gap-x-cn-2xs">
         <span className="text-cn-2 transition-colors duration-200 group-hover:text-cn-1">{selectedItem.label}</span>
-        <IconV2 name="nav-solid-arrow-down" size="2xs" className="chevron-down text-cn-2" />
+        <IconV2 name="solid-arrow-down" size="2xs" className="chevron-down text-cn-2" />
       </DropdownMenu.Trigger>
       <DropdownMenu.Content align="end">
         {items.map(item => (

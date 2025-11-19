@@ -19,7 +19,7 @@ export default function SimpleSort(props: SimpleSortProps) {
         <Button size="sm" variant="transparent">
           <IconV2 name="arrows-updown" size="2xs" />
           {selectedOptionLabel || 'Sort'}
-          <IconV2 name="nav-solid-arrow-down" size="2xs" />
+          <IconV2 name="solid-arrow-down" size="2xs" />
         </Button>
       </DropdownMenu.Trigger>
       <DropdownMenu.Content align="end" className="min-w-56">

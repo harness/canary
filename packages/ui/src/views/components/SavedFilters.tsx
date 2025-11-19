@@ -37,7 +37,7 @@ export default function SavedFilters({
         <Button size="sm" variant="transparent">
           <IconV2 name="filter" size="2xs" />
           {selectedOption?.label || 'Saved Filters'}
-          <IconV2 name="nav-solid-arrow-down" size="2xs" />
+          <IconV2 name="solid-arrow-down" size="2xs" />
         </Button>
       </DropdownMenu.Trigger>
       <DropdownMenu.Content align="end" className="min-w-56">

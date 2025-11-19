@@ -196,7 +196,7 @@ export const PullRequestChangesFilter: React.FC<PullRequestChangesFilterProps> =
                   <CounterBadge>{selectedCommits?.length}</CounterBadge>
                 </>
               )}
-              <IconV2 name="nav-solid-arrow-down" size="2xs" />
+              <IconV2 name="solid-arrow-down" size="2xs" />
             </Button>
           </DropdownMenu.Trigger>
           <ChainedCommitsDropdown
@@ -211,7 +211,7 @@ export const PullRequestChangesFilter: React.FC<PullRequestChangesFilterProps> =
           <DropdownMenu.Trigger className="text-cn-size-2 group flex items-center gap-x-cn-2xs" asChild>
             <Button size="sm" variant="transparent">
               {diffMode === DiffModeEnum.Split ? t('views:pullRequests.split') : t('views:pullRequests.unified')}
-              <IconV2 name="nav-solid-arrow-down" size="2xs" />
+              <IconV2 name="solid-arrow-down" size="2xs" />
             </Button>
           </DropdownMenu.Trigger>
           <DropdownMenu.Content align="start">

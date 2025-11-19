@@ -163,13 +163,13 @@ export default {
       },
       '&:active:not(:disabled, .cn-button-disabled), &:where(.cn-button-active)': {
         // slightly weaker than hover: slight zoom back
-        backgroundSize: '120% 120%, 100% 100%',
+        backgroundSize: '110% 110%, 100% 100%',
         backgroundPosition: '0 0, 0 0',
         boxShadow: 'var(--cn-shadow-comp-ai-inner)'
       },
       "&[data-loading]": {
         // loading mirrors the hover state so the gradient is clearly visible
-        backgroundSize: '120% 120%, 100% 100%',
+        backgroundSize: '110% 110%, 100% 100%',
         backgroundPosition: '0 0, 0 0',
         boxShadow: 'var(--cn-shadow-comp-ai-inner)'
       }

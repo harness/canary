@@ -35,9 +35,9 @@ function createButtonVariantStyles() {
         }
 
         style[`&:active:not(:disabled, .cn-button-disabled), &:where(.cn-button-active), &:where([data-state=open])`] =
-          {
-            backgroundColor: `var(--cn-set-${themeStyle}-outline-bg-selected)`
-          }
+        {
+          backgroundColor: `var(--cn-set-${themeStyle}-outline-bg-selected)`
+        }
       } else {
         const themeStyleForVariant = variant === 'primary' && theme === 'default' ? 'brand' : themeStyle
 
@@ -51,23 +51,23 @@ function createButtonVariantStyles() {
         style[`&:hover:not(:disabled, .cn-button-disabled)`] =
           variant === 'outline'
             ? {
-                backgroundColor: `var(--cn-set-${themeStyleForVariant}-${variant}-bg-hover, var(--cn-set-${themeStyleForVariant}-${variant}-bg))`
-              }
+              backgroundColor: `var(--cn-set-${themeStyleForVariant}-${variant}-bg-hover, var(--cn-set-${themeStyleForVariant}-${variant}-bg))`
+            }
             : {
-                backgroundColor: `var(--cn-set-${themeStyleForVariant}-${variant}-bg-hover, var(--cn-set-${themeStyleForVariant}-${variant}-bg))`,
-                borderColor: `var(--cn-set-${themeStyleForVariant}-${variant}-bg-hover, var(--cn-set-${themeStyleForVariant}-${variant}-bg))`
-              }
+              backgroundColor: `var(--cn-set-${themeStyleForVariant}-${variant}-bg-hover, var(--cn-set-${themeStyleForVariant}-${variant}-bg))`,
+              borderColor: `var(--cn-set-${themeStyleForVariant}-${variant}-bg-hover, var(--cn-set-${themeStyleForVariant}-${variant}-bg))`
+            }
 
         // Active styles
         style[`&:active:not(:disabled, .cn-button-disabled), &:where(.cn-button-active), &:where([data-state=open])`] =
           variant === 'outline'
             ? {
-                backgroundColor: `var(--cn-set-${themeStyleForVariant}-${variant}-bg-selected, var(--cn-set-${themeStyleForVariant}-${variant}-bg))`
-              }
+              backgroundColor: `var(--cn-set-${themeStyleForVariant}-${variant}-bg-selected, var(--cn-set-${themeStyleForVariant}-${variant}-bg))`
+            }
             : {
-                backgroundColor: `var(--cn-set-${themeStyleForVariant}-${variant}-bg-selected, var(--cn-set-${themeStyleForVariant}-${variant}-bg))`,
-                borderColor: `var(--cn-set-${themeStyleForVariant}-${variant}-bg-selected, var(--cn-set-${themeStyleForVariant}-${variant}-bg))`
-              }
+              backgroundColor: `var(--cn-set-${themeStyleForVariant}-${variant}-bg-selected, var(--cn-set-${themeStyleForVariant}-${variant}-bg))`,
+              borderColor: `var(--cn-set-${themeStyleForVariant}-${variant}-bg-selected, var(--cn-set-${themeStyleForVariant}-${variant}-bg))`
+            }
 
         separatorStyles[`&:where(.cn-button-split-dropdown.cn-button-${variant}.cn-button-${theme})`] = {
           '&::before': {
@@ -106,6 +106,8 @@ function createButtonSizeStyles() {
 export default {
   '.cn-button': {
     transitionProperty: 'color, background-color, border-color, text-decoration-color, fill, stroke',
+    transitionDuration: '100ms',
+    transitionTimingFunction: 'linear',
     borderRadius: 'var(--cn-btn-default-radius)',
     paddingBlock: 'var(--cn-btn-py-md)',
     paddingInline: 'var(--cn-btn-px-md)',
@@ -141,14 +143,14 @@ export default {
     // AI button
     '&:where(.cn-button-ai)': {
       color: 'var(--cn-set-ai-outline-text)',
-      backgroundImage: `linear-gradient(to right, var(--cn-set-ai-outline-bg), var(--cn-set-ai-outline-bg)), var(--cn-set-ai-outline-border)`,
+      backgroundImage: `var(--cn-set-ai-outline-bg), var(--cn-set-ai-outline-border)`,
       backgroundOrigin: 'border-box',
       backgroundClip: 'padding-box, border-box',
       border: 'var(--cn-btn-ai-border) solid transparent',
       boxShadow: 'var(--cn-shadow-comp-ai-inner)',
 
       '&:hover:not(:disabled, .cn-button-disabled)': {
-        backgroundImage: `linear-gradient(to right, var(--cn-set-ai-outline-bg-hover), var(--cn-set-ai-outline-bg-hover)), var(--cn-set-ai-outline-border)`
+        backgroundImage: `var(--cn-set-ai-outline-bg-hover), var(--cn-set-ai-outline-border)`
       },
       '&:active:not(:disabled, .cn-button-disabled), &:where(.cn-button-active)': {
         backgroundImage: 'var(--cn-set-ai-outline-bg-selected), var(--cn-set-ai-outline-border)'

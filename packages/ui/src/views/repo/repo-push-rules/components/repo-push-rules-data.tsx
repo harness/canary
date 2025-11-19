@@ -20,10 +20,10 @@ export const getPushRules = (t: TFunctionWithFallback): PushRuleType[] => [
   },
   {
     id: PushRuleId.PRINCIPAL_COMMITTER_MATCH,
-    label: t('views:repos.PrincipalCommitterMatch', 'Principal committer match'),
+    label: t('views:repos.PrincipalCommitterMatch', 'Verify committer identity'),
     description: t(
       'views:repos.PrincipalCommitterMatchDescription',
-      'Only allow users with bypass permission to push commits in case of principal committer mismatch'
+      'Only allow users with bypass permission to push commits in case of committer identity mismatch'
     )
   },
   {

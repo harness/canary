@@ -227,7 +227,7 @@
         },
         "bg": {
           "$type": "color",
-          "$value": "linear-gradient(100deg, {gradient.ai.outline.default.from} 0%, {gradient.ai.outline.default.to} 100%)",
+          "$value": "linear-gradient(100deg, {gradient.ai.bg.default.from} 0%, {gradient.ai.bg.default.to} 100%)",
           "$description": "Base background color for AI-related surfaces."
         },
         "border": {
@@ -235,14 +235,14 @@
           "$value": "linear-gradient(131deg, {gradient.ai.from} 27%, {gradient.ai.to} 112%)",
           "$description": "Distinctive gradient border for AI-related areas, using a multi-color pattern."
         },
-        "bg-hover": {
+        "bg-gradient": {
           "$type": "color",
-          "$value": "linear-gradient(102deg, {gradient.ai.outline.hover.stop-1} 8%, {gradient.ai.outline.hover.stop-2} 35%, {gradient.ai.outline.hover.stop-3} 65%, {gradient.ai.outline.hover.stop-4} 87%)",
+          "$value": "linear-gradient(102deg, {gradient.ai.outline-bg.stop-1} 8%, {gradient.ai.outline-bg.stop-2} 35%, {gradient.ai.outline-bg.stop-3} 65%, {gradient.ai.outline-bg.stop-4} 87%)",
           "$description": "Hover state background color for interactive AI surfaces."
         },
         "bg-selected": {
           "$type": "color",
-          "$value": "linear-gradient(102deg, {gradient.ai.outline.hover.stop-1} 8%, {gradient.ai.outline.hover.stop-2} 35%, {gradient.ai.outline.hover.stop-3} 65%, {gradient.ai.outline.hover.stop-4} 87%)"
+          "$value": "linear-gradient(102deg, {gradient.ai.outline-bg.stop-1} 8%, {gradient.ai.outline-bg.stop-2} 35%, {gradient.ai.outline-bg.stop-3} 65%, {gradient.ai.outline-bg.stop-4} 87%)"
         },
         "inner": {
           "$type": "color",

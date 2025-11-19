@@ -2476,11 +2476,11 @@
       "set.purple.primary.bg-selected": "2c7a9901521b1378bbdf0c0563690bf93182ab22",
       "set.purple.secondary.bg-selected": "2a4b8f7459ce6ff8dc816c2aedf37060fe5dfcd8",
       "comp.input-ai.blur": "3cbe0699211521009122a8145ce1c5e50d6753c8",
-      "gradient.ai.outline.hover.stop-1": "52c849bed3b3e0b3886dd262bd662d801269d294",
-      "gradient.ai.outline.hover.stop-2": "25137d674df20bcf4992b85f392589f9437cf64e",
-      "gradient.ai.outline.hover.stop-3": "0097385aca19f7b30af8df5e0a81b4b0a1dc1c37",
-      "gradient.ai.outline.hover.stop-4": "ae39b0a0bf6508f41c87e919434d1f6b90994f7a",
-      "gradient.ai.from": "8db516caa68afc5b8fdd6fc6e5a9bad7715c5f26"
+      "gradient.ai.from": "8db516caa68afc5b8fdd6fc6e5a9bad7715c5f26",
+      "gradient.ai.outline-bg.stop-1": "52c849bed3b3e0b3886dd262bd662d801269d294",
+      "gradient.ai.outline-bg.stop-2": "25137d674df20bcf4992b85f392589f9437cf64e",
+      "gradient.ai.outline-bg.stop-3": "0097385aca19f7b30af8df5e0a81b4b0a1dc1c37",
+      "gradient.ai.outline-bg.stop-4": "ae39b0a0bf6508f41c87e919434d1f6b90994f7a"
     },
     "$figmaCollectionId": "VariableCollectionId:1340:156918",
     "$figmaModeId": "1340:3",
@@ -3377,7 +3377,6 @@
       "set.brand.outline.bg-hover": "e7a93546b27475ca365f71a7bbd4a7c450ae60eb",
       "set.brand.outline.bg-selected": "b68e9b16f39b46a0861bd1f9f799756f64edcb48",
       "set.ai.outline.text": "52ddfa5ea6aed729c40dadc69f5327434231ea59",
-      "set.ai.outline.bg": "47707bcec328fb320335ca0cb8fc19628a812889",
       "set.ai.outline.inner": "6425b07d537e95060d430e3eeb89098375f869aa",
       "set.gray.primary.text": "5087347f06426c2415ddea934d3641d1120f3662",
       "set.gray.primary.bg": "498d5985cbe806febb13511b25ff1a0dd690ee0e",
@@ -3700,11 +3699,11 @@
       "set.purple.primary.bg-hover": "926b386f6227e7cbdf4fda3bd4d42c8fc21d7d8f",
       "set.purple.primary.bg-selected": "2c7a9901521b1378bbdf0c0563690bf93182ab22",
       "set.purple.secondary.bg-selected": "2a4b8f7459ce6ff8dc816c2aedf37060fe5dfcd8",
-      "gradient.ai.outline.hover.stop-1": "52c849bed3b3e0b3886dd262bd662d801269d294",
-      "gradient.ai.outline.hover.stop-2": "25137d674df20bcf4992b85f392589f9437cf64e",
-      "gradient.ai.outline.hover.stop-3": "0097385aca19f7b30af8df5e0a81b4b0a1dc1c37",
-      "gradient.ai.outline.hover.stop-4": "ae39b0a0bf6508f41c87e919434d1f6b90994f7a",
-      "gradient.ai.from": "8db516caa68afc5b8fdd6fc6e5a9bad7715c5f26"
+      "gradient.ai.from": "8db516caa68afc5b8fdd6fc6e5a9bad7715c5f26",
+      "gradient.ai.outline-bg.stop-1": "52c849bed3b3e0b3886dd262bd662d801269d294",
+      "gradient.ai.outline-bg.stop-2": "25137d674df20bcf4992b85f392589f9437cf64e",
+      "gradient.ai.outline-bg.stop-3": "0097385aca19f7b30af8df5e0a81b4b0a1dc1c37",
+      "gradient.ai.outline-bg.stop-4": "ae39b0a0bf6508f41c87e919434d1f6b90994f7a"
     },
     "group": "mode"
   },
@@ -4898,12 +4897,12 @@
       "icon.security": "b384df147a9aff297b454472914cfad96103506f",
       "icon.efficiency": "4b554767df1837c38b15f23d999f4cbe41c0b5ae",
       "icon.platform": "ae83568ed208652babd56da2b44ddfe863b933bb",
-      "gradient.ai.outline.hover.stop-1": "32fb17f6fdcc9f3fda9af45e52e0d2f93829800c",
-      "gradient.ai.outline.hover.stop-2": "a67d307124e1ec70dceebfd58e3982987fb40caa",
-      "gradient.ai.outline.hover.stop-3": "45fb2c5fd824a29cc5f5d45b480e0764aed58543",
-      "gradient.ai.outline.hover.stop-4": "c6bb9f2c6045f1afb925ac640381f5a7c7e00c3c",
       "gradient.ai.from": "1dad6b8ad686d75dffe9503ac49a9d3d4d6e381c",
-      "gradient.ai.to": "bdbb199e9f3e0c7a08cec2e0cf6db59c954644ed"
+      "gradient.ai.to": "bdbb199e9f3e0c7a08cec2e0cf6db59c954644ed",
+      "gradient.ai.outline-bg.stop-1": "32fb17f6fdcc9f3fda9af45e52e0d2f93829800c",
+      "gradient.ai.outline-bg.stop-2": "a67d307124e1ec70dceebfd58e3982987fb40caa",
+      "gradient.ai.outline-bg.stop-3": "45fb2c5fd824a29cc5f5d45b480e0764aed58543",
+      "gradient.ai.outline-bg.stop-4": "c6bb9f2c6045f1afb925ac640381f5a7c7e00c3c"
     },
     "group": "mode"
   },
@@ -6097,12 +6096,12 @@
       "icon.security": "b384df147a9aff297b454472914cfad96103506f",
       "icon.efficiency": "4b554767df1837c38b15f23d999f4cbe41c0b5ae",
       "icon.platform": "ae83568ed208652babd56da2b44ddfe863b933bb",
-      "gradient.ai.outline.hover.stop-1": "32fb17f6fdcc9f3fda9af45e52e0d2f93829800c",
-      "gradient.ai.outline.hover.stop-2": "a67d307124e1ec70dceebfd58e3982987fb40caa",
-      "gradient.ai.outline.hover.stop-3": "45fb2c5fd824a29cc5f5d45b480e0764aed58543",
-      "gradient.ai.outline.hover.stop-4": "c6bb9f2c6045f1afb925ac640381f5a7c7e00c3c",
       "gradient.ai.from": "1dad6b8ad686d75dffe9503ac49a9d3d4d6e381c",
-      "gradient.ai.to": "bdbb199e9f3e0c7a08cec2e0cf6db59c954644ed"
+      "gradient.ai.to": "bdbb199e9f3e0c7a08cec2e0cf6db59c954644ed",
+      "gradient.ai.outline-bg.stop-1": "32fb17f6fdcc9f3fda9af45e52e0d2f93829800c",
+      "gradient.ai.outline-bg.stop-2": "a67d307124e1ec70dceebfd58e3982987fb40caa",
+      "gradient.ai.outline-bg.stop-3": "45fb2c5fd824a29cc5f5d45b480e0764aed58543",
+      "gradient.ai.outline-bg.stop-4": "c6bb9f2c6045f1afb925ac640381f5a7c7e00c3c"
     },
     "group": "mode"
   },
@@ -7296,12 +7295,12 @@
       "icon.security": "b384df147a9aff297b454472914cfad96103506f",
       "icon.efficiency": "4b554767df1837c38b15f23d999f4cbe41c0b5ae",
       "icon.platform": "ae83568ed208652babd56da2b44ddfe863b933bb",
-      "gradient.ai.outline.hover.stop-1": "32fb17f6fdcc9f3fda9af45e52e0d2f93829800c",
-      "gradient.ai.outline.hover.stop-2": "a67d307124e1ec70dceebfd58e3982987fb40caa",
-      "gradient.ai.outline.hover.stop-3": "45fb2c5fd824a29cc5f5d45b480e0764aed58543",
-      "gradient.ai.outline.hover.stop-4": "c6bb9f2c6045f1afb925ac640381f5a7c7e00c3c",
       "gradient.ai.from": "1dad6b8ad686d75dffe9503ac49a9d3d4d6e381c",
-      "gradient.ai.to": "bdbb199e9f3e0c7a08cec2e0cf6db59c954644ed"
+      "gradient.ai.to": "bdbb199e9f3e0c7a08cec2e0cf6db59c954644ed",
+      "gradient.ai.outline-bg.stop-1": "32fb17f6fdcc9f3fda9af45e52e0d2f93829800c",
+      "gradient.ai.outline-bg.stop-2": "a67d307124e1ec70dceebfd58e3982987fb40caa",
+      "gradient.ai.outline-bg.stop-3": "45fb2c5fd824a29cc5f5d45b480e0764aed58543",
+      "gradient.ai.outline-bg.stop-4": "c6bb9f2c6045f1afb925ac640381f5a7c7e00c3c"
     },
     "group": "mode"
   },
@@ -8495,12 +8494,12 @@
       "icon.security": "b384df147a9aff297b454472914cfad96103506f",
       "icon.efficiency": "4b554767df1837c38b15f23d999f4cbe41c0b5ae",
       "icon.platform": "ae83568ed208652babd56da2b44ddfe863b933bb",
-      "gradient.ai.outline.hover.stop-1": "32fb17f6fdcc9f3fda9af45e52e0d2f93829800c",
-      "gradient.ai.outline.hover.stop-2": "a67d307124e1ec70dceebfd58e3982987fb40caa",
-      "gradient.ai.outline.hover.stop-3": "45fb2c5fd824a29cc5f5d45b480e0764aed58543",
-      "gradient.ai.outline.hover.stop-4": "c6bb9f2c6045f1afb925ac640381f5a7c7e00c3c",
       "gradient.ai.from": "1dad6b8ad686d75dffe9503ac49a9d3d4d6e381c",
-      "gradient.ai.to": "bdbb199e9f3e0c7a08cec2e0cf6db59c954644ed"
+      "gradient.ai.to": "bdbb199e9f3e0c7a08cec2e0cf6db59c954644ed",
+      "gradient.ai.outline-bg.stop-1": "32fb17f6fdcc9f3fda9af45e52e0d2f93829800c",
+      "gradient.ai.outline-bg.stop-2": "a67d307124e1ec70dceebfd58e3982987fb40caa",
+      "gradient.ai.outline-bg.stop-3": "45fb2c5fd824a29cc5f5d45b480e0764aed58543",
+      "gradient.ai.outline-bg.stop-4": "c6bb9f2c6045f1afb925ac640381f5a7c7e00c3c"
     },
     "group": "mode"
   },
@@ -9694,12 +9693,12 @@
       "icon.security": "b384df147a9aff297b454472914cfad96103506f",
       "icon.efficiency": "4b554767df1837c38b15f23d999f4cbe41c0b5ae",
       "icon.platform": "ae83568ed208652babd56da2b44ddfe863b933bb",
-      "gradient.ai.outline.hover.stop-1": "32fb17f6fdcc9f3fda9af45e52e0d2f93829800c",
-      "gradient.ai.outline.hover.stop-2": "a67d307124e1ec70dceebfd58e3982987fb40caa",
-      "gradient.ai.outline.hover.stop-3": "45fb2c5fd824a29cc5f5d45b480e0764aed58543",
-      "gradient.ai.outline.hover.stop-4": "c6bb9f2c6045f1afb925ac640381f5a7c7e00c3c",
       "gradient.ai.from": "1dad6b8ad686d75dffe9503ac49a9d3d4d6e381c",
-      "gradient.ai.to": "bdbb199e9f3e0c7a08cec2e0cf6db59c954644ed"
+      "gradient.ai.to": "bdbb199e9f3e0c7a08cec2e0cf6db59c954644ed",
+      "gradient.ai.outline-bg.stop-1": "32fb17f6fdcc9f3fda9af45e52e0d2f93829800c",
+      "gradient.ai.outline-bg.stop-2": "a67d307124e1ec70dceebfd58e3982987fb40caa",
+      "gradient.ai.outline-bg.stop-3": "45fb2c5fd824a29cc5f5d45b480e0764aed58543",
+      "gradient.ai.outline-bg.stop-4": "c6bb9f2c6045f1afb925ac640381f5a7c7e00c3c"
     },
     "group": "mode"
   },
@@ -10893,12 +10892,12 @@
       "icon.security": "b384df147a9aff297b454472914cfad96103506f",
       "icon.efficiency": "4b554767df1837c38b15f23d999f4cbe41c0b5ae",
       "icon.platform": "ae83568ed208652babd56da2b44ddfe863b933bb",
-      "gradient.ai.outline.hover.stop-1": "32fb17f6fdcc9f3fda9af45e52e0d2f93829800c",
-      "gradient.ai.outline.hover.stop-2": "a67d307124e1ec70dceebfd58e3982987fb40caa",
-      "gradient.ai.outline.hover.stop-3": "45fb2c5fd824a29cc5f5d45b480e0764aed58543",
-      "gradient.ai.outline.hover.stop-4": "c6bb9f2c6045f1afb925ac640381f5a7c7e00c3c",
       "gradient.ai.from": "1dad6b8ad686d75dffe9503ac49a9d3d4d6e381c",
-      "gradient.ai.to": "bdbb199e9f3e0c7a08cec2e0cf6db59c954644ed"
+      "gradient.ai.to": "bdbb199e9f3e0c7a08cec2e0cf6db59c954644ed",
+      "gradient.ai.outline-bg.stop-1": "32fb17f6fdcc9f3fda9af45e52e0d2f93829800c",
+      "gradient.ai.outline-bg.stop-2": "a67d307124e1ec70dceebfd58e3982987fb40caa",
+      "gradient.ai.outline-bg.stop-3": "45fb2c5fd824a29cc5f5d45b480e0764aed58543",
+      "gradient.ai.outline-bg.stop-4": "c6bb9f2c6045f1afb925ac640381f5a7c7e00c3c"
     },
     "group": "mode"
   },
@@ -12092,12 +12091,12 @@
       "icon.security": "b384df147a9aff297b454472914cfad96103506f",
       "icon.efficiency": "4b554767df1837c38b15f23d999f4cbe41c0b5ae",
       "icon.platform": "ae83568ed208652babd56da2b44ddfe863b933bb",
-      "gradient.ai.outline.hover.stop-1": "32fb17f6fdcc9f3fda9af45e52e0d2f93829800c",
-      "gradient.ai.outline.hover.stop-2": "a67d307124e1ec70dceebfd58e3982987fb40caa",
-      "gradient.ai.outline.hover.stop-3": "45fb2c5fd824a29cc5f5d45b480e0764aed58543",
-      "gradient.ai.outline.hover.stop-4": "c6bb9f2c6045f1afb925ac640381f5a7c7e00c3c",
       "gradient.ai.from": "1dad6b8ad686d75dffe9503ac49a9d3d4d6e381c",
-      "gradient.ai.to": "bdbb199e9f3e0c7a08cec2e0cf6db59c954644ed"
+      "gradient.ai.to": "bdbb199e9f3e0c7a08cec2e0cf6db59c954644ed",
+      "gradient.ai.outline-bg.stop-1": "32fb17f6fdcc9f3fda9af45e52e0d2f93829800c",
+      "gradient.ai.outline-bg.stop-2": "a67d307124e1ec70dceebfd58e3982987fb40caa",
+      "gradient.ai.outline-bg.stop-3": "45fb2c5fd824a29cc5f5d45b480e0764aed58543",
+      "gradient.ai.outline-bg.stop-4": "c6bb9f2c6045f1afb925ac640381f5a7c7e00c3c"
     },
     "group": "mode"
   },
@@ -13291,12 +13290,12 @@
       "icon.security": "b384df147a9aff297b454472914cfad96103506f",
       "icon.efficiency": "4b554767df1837c38b15f23d999f4cbe41c0b5ae",
       "icon.platform": "ae83568ed208652babd56da2b44ddfe863b933bb",
-      "gradient.ai.outline.hover.stop-1": "32fb17f6fdcc9f3fda9af45e52e0d2f93829800c",
-      "gradient.ai.outline.hover.stop-2": "a67d307124e1ec70dceebfd58e3982987fb40caa",
-      "gradient.ai.outline.hover.stop-3": "45fb2c5fd824a29cc5f5d45b480e0764aed58543",
-      "gradient.ai.outline.hover.stop-4": "c6bb9f2c6045f1afb925ac640381f5a7c7e00c3c",
       "gradient.ai.from": "1dad6b8ad686d75dffe9503ac49a9d3d4d6e381c",
-      "gradient.ai.to": "bdbb199e9f3e0c7a08cec2e0cf6db59c954644ed"
+      "gradient.ai.to": "bdbb199e9f3e0c7a08cec2e0cf6db59c954644ed",
+      "gradient.ai.outline-bg.stop-1": "32fb17f6fdcc9f3fda9af45e52e0d2f93829800c",
+      "gradient.ai.outline-bg.stop-2": "a67d307124e1ec70dceebfd58e3982987fb40caa",
+      "gradient.ai.outline-bg.stop-3": "45fb2c5fd824a29cc5f5d45b480e0764aed58543",
+      "gradient.ai.outline-bg.stop-4": "c6bb9f2c6045f1afb925ac640381f5a7c7e00c3c"
     },
     "group": "mode"
   },
@@ -14490,12 +14489,12 @@
       "icon.security": "b384df147a9aff297b454472914cfad96103506f",
       "icon.efficiency": "4b554767df1837c38b15f23d999f4cbe41c0b5ae",
       "icon.platform": "ae83568ed208652babd56da2b44ddfe863b933bb",
-      "gradient.ai.outline.hover.stop-1": "32fb17f6fdcc9f3fda9af45e52e0d2f93829800c",
-      "gradient.ai.outline.hover.stop-2": "a67d307124e1ec70dceebfd58e3982987fb40caa",
-      "gradient.ai.outline.hover.stop-3": "45fb2c5fd824a29cc5f5d45b480e0764aed58543",
-      "gradient.ai.outline.hover.stop-4": "c6bb9f2c6045f1afb925ac640381f5a7c7e00c3c",
       "gradient.ai.from": "1dad6b8ad686d75dffe9503ac49a9d3d4d6e381c",
-      "gradient.ai.to": "bdbb199e9f3e0c7a08cec2e0cf6db59c954644ed"
+      "gradient.ai.to": "bdbb199e9f3e0c7a08cec2e0cf6db59c954644ed",
+      "gradient.ai.outline-bg.stop-1": "32fb17f6fdcc9f3fda9af45e52e0d2f93829800c",
+      "gradient.ai.outline-bg.stop-2": "a67d307124e1ec70dceebfd58e3982987fb40caa",
+      "gradient.ai.outline-bg.stop-3": "45fb2c5fd824a29cc5f5d45b480e0764aed58543",
+      "gradient.ai.outline-bg.stop-4": "c6bb9f2c6045f1afb925ac640381f5a7c7e00c3c"
     },
     "group": "mode"
   },
@@ -15689,12 +15688,12 @@
       "icon.security": "b384df147a9aff297b454472914cfad96103506f",
       "icon.efficiency": "4b554767df1837c38b15f23d999f4cbe41c0b5ae",
       "icon.platform": "ae83568ed208652babd56da2b44ddfe863b933bb",
-      "gradient.ai.outline.hover.stop-1": "32fb17f6fdcc9f3fda9af45e52e0d2f93829800c",
-      "gradient.ai.outline.hover.stop-2": "a67d307124e1ec70dceebfd58e3982987fb40caa",
-      "gradient.ai.outline.hover.stop-3": "45fb2c5fd824a29cc5f5d45b480e0764aed58543",
-      "gradient.ai.outline.hover.stop-4": "c6bb9f2c6045f1afb925ac640381f5a7c7e00c3c",
       "gradient.ai.from": "1dad6b8ad686d75dffe9503ac49a9d3d4d6e381c",
-      "gradient.ai.to": "bdbb199e9f3e0c7a08cec2e0cf6db59c954644ed"
+      "gradient.ai.to": "bdbb199e9f3e0c7a08cec2e0cf6db59c954644ed",
+      "gradient.ai.outline-bg.stop-1": "32fb17f6fdcc9f3fda9af45e52e0d2f93829800c",
+      "gradient.ai.outline-bg.stop-2": "a67d307124e1ec70dceebfd58e3982987fb40caa",
+      "gradient.ai.outline-bg.stop-3": "45fb2c5fd824a29cc5f5d45b480e0764aed58543",
+      "gradient.ai.outline-bg.stop-4": "c6bb9f2c6045f1afb925ac640381f5a7c7e00c3c"
     },
     "group": "mode"
   },
@@ -16888,12 +16887,12 @@
       "icon.security": "b384df147a9aff297b454472914cfad96103506f",
       "icon.efficiency": "4b554767df1837c38b15f23d999f4cbe41c0b5ae",
       "icon.platform": "ae83568ed208652babd56da2b44ddfe863b933bb",
-      "gradient.ai.outline.hover.stop-1": "32fb17f6fdcc9f3fda9af45e52e0d2f93829800c",
-      "gradient.ai.outline.hover.stop-2": "a67d307124e1ec70dceebfd58e3982987fb40caa",
-      "gradient.ai.outline.hover.stop-3": "45fb2c5fd824a29cc5f5d45b480e0764aed58543",
-      "gradient.ai.outline.hover.stop-4": "c6bb9f2c6045f1afb925ac640381f5a7c7e00c3c",
       "gradient.ai.from": "1dad6b8ad686d75dffe9503ac49a9d3d4d6e381c",
-      "gradient.ai.to": "bdbb199e9f3e0c7a08cec2e0cf6db59c954644ed"
+      "gradient.ai.to": "bdbb199e9f3e0c7a08cec2e0cf6db59c954644ed",
+      "gradient.ai.outline-bg.stop-1": "32fb17f6fdcc9f3fda9af45e52e0d2f93829800c",
+      "gradient.ai.outline-bg.stop-2": "a67d307124e1ec70dceebfd58e3982987fb40caa",
+      "gradient.ai.outline-bg.stop-3": "45fb2c5fd824a29cc5f5d45b480e0764aed58543",
+      "gradient.ai.outline-bg.stop-4": "c6bb9f2c6045f1afb925ac640381f5a7c7e00c3c"
     },
     "group": "mode"
   },
@@ -18078,12 +18077,12 @@
       "icon.security": "b384df147a9aff297b454472914cfad96103506f",
       "icon.efficiency": "4b554767df1837c38b15f23d999f4cbe41c0b5ae",
       "icon.platform": "ae83568ed208652babd56da2b44ddfe863b933bb",
-      "gradient.ai.outline.hover.stop-1": "32fb17f6fdcc9f3fda9af45e52e0d2f93829800c",
-      "gradient.ai.outline.hover.stop-2": "a67d307124e1ec70dceebfd58e3982987fb40caa",
-      "gradient.ai.outline.hover.stop-3": "45fb2c5fd824a29cc5f5d45b480e0764aed58543",
-      "gradient.ai.outline.hover.stop-4": "c6bb9f2c6045f1afb925ac640381f5a7c7e00c3c",
       "gradient.ai.from": "1dad6b8ad686d75dffe9503ac49a9d3d4d6e381c",
-      "gradient.ai.to": "bdbb199e9f3e0c7a08cec2e0cf6db59c954644ed"
+      "gradient.ai.to": "bdbb199e9f3e0c7a08cec2e0cf6db59c954644ed",
+      "gradient.ai.outline-bg.stop-1": "32fb17f6fdcc9f3fda9af45e52e0d2f93829800c",
+      "gradient.ai.outline-bg.stop-2": "a67d307124e1ec70dceebfd58e3982987fb40caa",
+      "gradient.ai.outline-bg.stop-3": "45fb2c5fd824a29cc5f5d45b480e0764aed58543",
+      "gradient.ai.outline-bg.stop-4": "c6bb9f2c6045f1afb925ac640381f5a7c7e00c3c"
     },
     "group": "mode"
   },
@@ -19268,12 +19267,12 @@
       "icon.security": "b384df147a9aff297b454472914cfad96103506f",
       "icon.efficiency": "4b554767df1837c38b15f23d999f4cbe41c0b5ae",
       "icon.platform": "ae83568ed208652babd56da2b44ddfe863b933bb",
-      "gradient.ai.outline.hover.stop-1": "32fb17f6fdcc9f3fda9af45e52e0d2f93829800c",
-      "gradient.ai.outline.hover.stop-2": "a67d307124e1ec70dceebfd58e3982987fb40caa",
-      "gradient.ai.outline.hover.stop-3": "45fb2c5fd824a29cc5f5d45b480e0764aed58543",
-      "gradient.ai.outline.hover.stop-4": "c6bb9f2c6045f1afb925ac640381f5a7c7e00c3c",
       "gradient.ai.from": "1dad6b8ad686d75dffe9503ac49a9d3d4d6e381c",
-      "gradient.ai.to": "bdbb199e9f3e0c7a08cec2e0cf6db59c954644ed"
+      "gradient.ai.to": "bdbb199e9f3e0c7a08cec2e0cf6db59c954644ed",
+      "gradient.ai.outline-bg.stop-1": "32fb17f6fdcc9f3fda9af45e52e0d2f93829800c",
+      "gradient.ai.outline-bg.stop-2": "a67d307124e1ec70dceebfd58e3982987fb40caa",
+      "gradient.ai.outline-bg.stop-3": "45fb2c5fd824a29cc5f5d45b480e0764aed58543",
+      "gradient.ai.outline-bg.stop-4": "c6bb9f2c6045f1afb925ac640381f5a7c7e00c3c"
     },
     "group": "mode"
   },
@@ -20458,12 +20457,12 @@
       "icon.security": "b384df147a9aff297b454472914cfad96103506f",
       "icon.efficiency": "4b554767df1837c38b15f23d999f4cbe41c0b5ae",
       "icon.platform": "ae83568ed208652babd56da2b44ddfe863b933bb",
-      "gradient.ai.outline.hover.stop-1": "32fb17f6fdcc9f3fda9af45e52e0d2f93829800c",
-      "gradient.ai.outline.hover.stop-2": "a67d307124e1ec70dceebfd58e3982987fb40caa",
-      "gradient.ai.outline.hover.stop-3": "45fb2c5fd824a29cc5f5d45b480e0764aed58543",
-      "gradient.ai.outline.hover.stop-4": "c6bb9f2c6045f1afb925ac640381f5a7c7e00c3c",
       "gradient.ai.from": "1dad6b8ad686d75dffe9503ac49a9d3d4d6e381c",
-      "gradient.ai.to": "bdbb199e9f3e0c7a08cec2e0cf6db59c954644ed"
+      "gradient.ai.to": "bdbb199e9f3e0c7a08cec2e0cf6db59c954644ed",
+      "gradient.ai.outline-bg.stop-1": "32fb17f6fdcc9f3fda9af45e52e0d2f93829800c",
+      "gradient.ai.outline-bg.stop-2": "a67d307124e1ec70dceebfd58e3982987fb40caa",
+      "gradient.ai.outline-bg.stop-3": "45fb2c5fd824a29cc5f5d45b480e0764aed58543",
+      "gradient.ai.outline-bg.stop-4": "c6bb9f2c6045f1afb925ac640381f5a7c7e00c3c"
     },
     "group": "mode"
   },
@@ -21648,12 +21647,12 @@
       "icon.security": "b384df147a9aff297b454472914cfad96103506f",
       "icon.efficiency": "4b554767df1837c38b15f23d999f4cbe41c0b5ae",
       "icon.platform": "ae83568ed208652babd56da2b44ddfe863b933bb",
-      "gradient.ai.outline.hover.stop-1": "32fb17f6fdcc9f3fda9af45e52e0d2f93829800c",
-      "gradient.ai.outline.hover.stop-2": "a67d307124e1ec70dceebfd58e3982987fb40caa",
-      "gradient.ai.outline.hover.stop-3": "45fb2c5fd824a29cc5f5d45b480e0764aed58543",
-      "gradient.ai.outline.hover.stop-4": "c6bb9f2c6045f1afb925ac640381f5a7c7e00c3c",
       "gradient.ai.from": "1dad6b8ad686d75dffe9503ac49a9d3d4d6e381c",
-      "gradient.ai.to": "bdbb199e9f3e0c7a08cec2e0cf6db59c954644ed"
+      "gradient.ai.to": "bdbb199e9f3e0c7a08cec2e0cf6db59c954644ed",
+      "gradient.ai.outline-bg.stop-1": "32fb17f6fdcc9f3fda9af45e52e0d2f93829800c",
+      "gradient.ai.outline-bg.stop-2": "a67d307124e1ec70dceebfd58e3982987fb40caa",
+      "gradient.ai.outline-bg.stop-3": "45fb2c5fd824a29cc5f5d45b480e0764aed58543",
+      "gradient.ai.outline-bg.stop-4": "c6bb9f2c6045f1afb925ac640381f5a7c7e00c3c"
     },
     "group": "mode"
   },
@@ -22838,12 +22837,12 @@
       "icon.security": "b384df147a9aff297b454472914cfad96103506f",
       "icon.efficiency": "4b554767df1837c38b15f23d999f4cbe41c0b5ae",
       "icon.platform": "ae83568ed208652babd56da2b44ddfe863b933bb",
-      "gradient.ai.outline.hover.stop-1": "32fb17f6fdcc9f3fda9af45e52e0d2f93829800c",
-      "gradient.ai.outline.hover.stop-2": "a67d307124e1ec70dceebfd58e3982987fb40caa",
-      "gradient.ai.outline.hover.stop-3": "45fb2c5fd824a29cc5f5d45b480e0764aed58543",
-      "gradient.ai.outline.hover.stop-4": "c6bb9f2c6045f1afb925ac640381f5a7c7e00c3c",
       "gradient.ai.from": "1dad6b8ad686d75dffe9503ac49a9d3d4d6e381c",
-      "gradient.ai.to": "bdbb199e9f3e0c7a08cec2e0cf6db59c954644ed"
+      "gradient.ai.to": "bdbb199e9f3e0c7a08cec2e0cf6db59c954644ed",
+      "gradient.ai.outline-bg.stop-1": "32fb17f6fdcc9f3fda9af45e52e0d2f93829800c",
+      "gradient.ai.outline-bg.stop-2": "a67d307124e1ec70dceebfd58e3982987fb40caa",
+      "gradient.ai.outline-bg.stop-3": "45fb2c5fd824a29cc5f5d45b480e0764aed58543",
+      "gradient.ai.outline-bg.stop-4": "c6bb9f2c6045f1afb925ac640381f5a7c7e00c3c"
     },
     "group": "mode"
   },
@@ -24028,12 +24027,12 @@
       "icon.security": "b384df147a9aff297b454472914cfad96103506f",
       "icon.efficiency": "4b554767df1837c38b15f23d999f4cbe41c0b5ae",
       "icon.platform": "ae83568ed208652babd56da2b44ddfe863b933bb",
-      "gradient.ai.outline.hover.stop-1": "32fb17f6fdcc9f3fda9af45e52e0d2f93829800c",
-      "gradient.ai.outline.hover.stop-2": "a67d307124e1ec70dceebfd58e3982987fb40caa",
-      "gradient.ai.outline.hover.stop-3": "45fb2c5fd824a29cc5f5d45b480e0764aed58543",
-      "gradient.ai.outline.hover.stop-4": "c6bb9f2c6045f1afb925ac640381f5a7c7e00c3c",
       "gradient.ai.from": "1dad6b8ad686d75dffe9503ac49a9d3d4d6e381c",
-      "gradient.ai.to": "bdbb199e9f3e0c7a08cec2e0cf6db59c954644ed"
+      "gradient.ai.to": "bdbb199e9f3e0c7a08cec2e0cf6db59c954644ed",
+      "gradient.ai.outline-bg.stop-1": "32fb17f6fdcc9f3fda9af45e52e0d2f93829800c",
+      "gradient.ai.outline-bg.stop-2": "a67d307124e1ec70dceebfd58e3982987fb40caa",
+      "gradient.ai.outline-bg.stop-3": "45fb2c5fd824a29cc5f5d45b480e0764aed58543",
+      "gradient.ai.outline-bg.stop-4": "c6bb9f2c6045f1afb925ac640381f5a7c7e00c3c"
     },
     "group": "mode"
   },
@@ -24935,7 +24934,6 @@
       "set.brand.outline.bg-selected": "925b734a085b90fbf08607810767e81ce409e77b",
       "set.ai.outline.text": "66c6bd03cad1e98504ffeadc783b59798e994b49",
       "set.ai.outline.bg": "0824c8542f07c48df713d097131b933526e47c71",
-      "set.ai.outline.bg-hover": "a184659587d3b87d450d5ed49dd935fb96bc8b53",
       "set.ai.outline.inner": "a801aeb876af7adf90aeefeba7bba7e4bdc228ab",
       "set.gray.primary.text": "80a6cac30ce3df62fd9478aa492c59d15f3e2561",
       "set.gray.primary.bg": "f53ef33e388d10be3c2e7b02fb27fd48f2b31364",
@@ -25243,12 +25241,13 @@
       "icon.security": "b384df147a9aff297b454472914cfad96103506f",
       "icon.efficiency": "4b554767df1837c38b15f23d999f4cbe41c0b5ae",
       "icon.platform": "ae83568ed208652babd56da2b44ddfe863b933bb",
-      "gradient.ai.outline.hover.stop-1": "32fb17f6fdcc9f3fda9af45e52e0d2f93829800c",
-      "gradient.ai.outline.hover.stop-2": "a67d307124e1ec70dceebfd58e3982987fb40caa",
-      "gradient.ai.outline.hover.stop-3": "45fb2c5fd824a29cc5f5d45b480e0764aed58543",
-      "gradient.ai.outline.hover.stop-4": "c6bb9f2c6045f1afb925ac640381f5a7c7e00c3c",
       "gradient.ai.from": "1dad6b8ad686d75dffe9503ac49a9d3d4d6e381c",
-      "gradient.ai.to": "bdbb199e9f3e0c7a08cec2e0cf6db59c954644ed"
+      "gradient.ai.to": "bdbb199e9f3e0c7a08cec2e0cf6db59c954644ed",
+      "set.ai.outline.bg-gradient": "a184659587d3b87d450d5ed49dd935fb96bc8b53",
+      "gradient.ai.outline-bg.stop-1": "32fb17f6fdcc9f3fda9af45e52e0d2f93829800c",
+      "gradient.ai.outline-bg.stop-2": "a67d307124e1ec70dceebfd58e3982987fb40caa",
+      "gradient.ai.outline-bg.stop-3": "45fb2c5fd824a29cc5f5d45b480e0764aed58543",
+      "gradient.ai.outline-bg.stop-4": "c6bb9f2c6045f1afb925ac640381f5a7c7e00c3c"
     },
     "group": "mode"
   },
@@ -26433,12 +26432,12 @@
       "icon.security": "b384df147a9aff297b454472914cfad96103506f",
       "icon.efficiency": "4b554767df1837c38b15f23d999f4cbe41c0b5ae",
       "icon.platform": "ae83568ed208652babd56da2b44ddfe863b933bb",
-      "gradient.ai.outline.hover.stop-1": "32fb17f6fdcc9f3fda9af45e52e0d2f93829800c",
-      "gradient.ai.outline.hover.stop-2": "a67d307124e1ec70dceebfd58e3982987fb40caa",
-      "gradient.ai.outline.hover.stop-3": "45fb2c5fd824a29cc5f5d45b480e0764aed58543",
-      "gradient.ai.outline.hover.stop-4": "c6bb9f2c6045f1afb925ac640381f5a7c7e00c3c",
       "gradient.ai.from": "1dad6b8ad686d75dffe9503ac49a9d3d4d6e381c",
-      "gradient.ai.to": "bdbb199e9f3e0c7a08cec2e0cf6db59c954644ed"
+      "gradient.ai.to": "bdbb199e9f3e0c7a08cec2e0cf6db59c954644ed",
+      "gradient.ai.outline-bg.stop-1": "32fb17f6fdcc9f3fda9af45e52e0d2f93829800c",
+      "gradient.ai.outline-bg.stop-2": "a67d307124e1ec70dceebfd58e3982987fb40caa",
+      "gradient.ai.outline-bg.stop-3": "45fb2c5fd824a29cc5f5d45b480e0764aed58543",
+      "gradient.ai.outline-bg.stop-4": "c6bb9f2c6045f1afb925ac640381f5a7c7e00c3c"
     },
     "group": "mode"
   },
@@ -27623,12 +27622,12 @@
       "icon.security": "b384df147a9aff297b454472914cfad96103506f",
       "icon.efficiency": "4b554767df1837c38b15f23d999f4cbe41c0b5ae",
       "icon.platform": "ae83568ed208652babd56da2b44ddfe863b933bb",
-      "gradient.ai.outline.hover.stop-1": "32fb17f6fdcc9f3fda9af45e52e0d2f93829800c",
-      "gradient.ai.outline.hover.stop-2": "a67d307124e1ec70dceebfd58e3982987fb40caa",
-      "gradient.ai.outline.hover.stop-3": "45fb2c5fd824a29cc5f5d45b480e0764aed58543",
-      "gradient.ai.outline.hover.stop-4": "c6bb9f2c6045f1afb925ac640381f5a7c7e00c3c",
       "gradient.ai.from": "1dad6b8ad686d75dffe9503ac49a9d3d4d6e381c",
-      "gradient.ai.to": "bdbb199e9f3e0c7a08cec2e0cf6db59c954644ed"
+      "gradient.ai.to": "bdbb199e9f3e0c7a08cec2e0cf6db59c954644ed",
+      "gradient.ai.outline-bg.stop-1": "32fb17f6fdcc9f3fda9af45e52e0d2f93829800c",
+      "gradient.ai.outline-bg.stop-2": "a67d307124e1ec70dceebfd58e3982987fb40caa",
+      "gradient.ai.outline-bg.stop-3": "45fb2c5fd824a29cc5f5d45b480e0764aed58543",
+      "gradient.ai.outline-bg.stop-4": "c6bb9f2c6045f1afb925ac640381f5a7c7e00c3c"
     },
     "group": "mode"
   },
@@ -28813,12 +28812,12 @@
       "icon.security": "b384df147a9aff297b454472914cfad96103506f",
       "icon.efficiency": "4b554767df1837c38b15f23d999f4cbe41c0b5ae",
       "icon.platform": "ae83568ed208652babd56da2b44ddfe863b933bb",
-      "gradient.ai.outline.hover.stop-1": "32fb17f6fdcc9f3fda9af45e52e0d2f93829800c",
-      "gradient.ai.outline.hover.stop-2": "a67d307124e1ec70dceebfd58e3982987fb40caa",
-      "gradient.ai.outline.hover.stop-3": "45fb2c5fd824a29cc5f5d45b480e0764aed58543",
-      "gradient.ai.outline.hover.stop-4": "c6bb9f2c6045f1afb925ac640381f5a7c7e00c3c",
       "gradient.ai.from": "1dad6b8ad686d75dffe9503ac49a9d3d4d6e381c",
-      "gradient.ai.to": "bdbb199e9f3e0c7a08cec2e0cf6db59c954644ed"
+      "gradient.ai.to": "bdbb199e9f3e0c7a08cec2e0cf6db59c954644ed",
+      "gradient.ai.outline-bg.stop-1": "32fb17f6fdcc9f3fda9af45e52e0d2f93829800c",
+      "gradient.ai.outline-bg.stop-2": "a67d307124e1ec70dceebfd58e3982987fb40caa",
+      "gradient.ai.outline-bg.stop-3": "45fb2c5fd824a29cc5f5d45b480e0764aed58543",
+      "gradient.ai.outline-bg.stop-4": "c6bb9f2c6045f1afb925ac640381f5a7c7e00c3c"
     },
     "group": "mode"
   },
@@ -30003,12 +30002,12 @@
       "icon.security": "b384df147a9aff297b454472914cfad96103506f",
       "icon.efficiency": "4b554767df1837c38b15f23d999f4cbe41c0b5ae",
       "icon.platform": "ae83568ed208652babd56da2b44ddfe863b933bb",
-      "gradient.ai.outline.hover.stop-1": "32fb17f6fdcc9f3fda9af45e52e0d2f93829800c",
-      "gradient.ai.outline.hover.stop-2": "a67d307124e1ec70dceebfd58e3982987fb40caa",
-      "gradient.ai.outline.hover.stop-3": "45fb2c5fd824a29cc5f5d45b480e0764aed58543",
-      "gradient.ai.outline.hover.stop-4": "c6bb9f2c6045f1afb925ac640381f5a7c7e00c3c",
       "gradient.ai.from": "1dad6b8ad686d75dffe9503ac49a9d3d4d6e381c",
-      "gradient.ai.to": "bdbb199e9f3e0c7a08cec2e0cf6db59c954644ed"
+      "gradient.ai.to": "bdbb199e9f3e0c7a08cec2e0cf6db59c954644ed",
+      "gradient.ai.outline-bg.stop-1": "32fb17f6fdcc9f3fda9af45e52e0d2f93829800c",
+      "gradient.ai.outline-bg.stop-2": "a67d307124e1ec70dceebfd58e3982987fb40caa",
+      "gradient.ai.outline-bg.stop-3": "45fb2c5fd824a29cc5f5d45b480e0764aed58543",
+      "gradient.ai.outline-bg.stop-4": "c6bb9f2c6045f1afb925ac640381f5a7c7e00c3c"
     },
     "group": "mode"
   },

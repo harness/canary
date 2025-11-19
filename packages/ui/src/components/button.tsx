@@ -113,9 +113,9 @@ const Button = forwardRef<HTMLButtonElement, ButtonProps>(
           // Check if onClick returned a promise (result could be void)
           if (isPromise(result)) {
             setIsPromiseLoading(true)
-            ;(result as Promise<unknown>).finally(() => {
-              setIsPromiseLoading(false)
-            })
+              ; (result as Promise<unknown>).finally(() => {
+                setIsPromiseLoading(false)
+              })
           }
         }
       },
@@ -146,6 +146,7 @@ const Button = forwardRef<HTMLButtonElement, ButtonProps>(
         disabled={disabled || isLoading}
         type={type}
         onClick={handleClick}
+        data-loading={isLoading || undefined}
         {...omit(props, ['tooltipProps', 'ignoreIconOnlyTooltip'])}
       >
         {children}

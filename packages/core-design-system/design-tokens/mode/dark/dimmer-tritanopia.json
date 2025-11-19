@@ -213,7 +213,7 @@
       "outline": {
         "text": {
           "$type": "color",
-          "$value": "{text.1}",
+          "$value": "{pure.white}",
           "$description": "Primary text color for AI-related content with optimal readability."
         },
         "border": {
@@ -231,7 +231,7 @@
             "studio.tokens": {
               "modify": {
                 "type": "alpha",
-                "value": "0.5",
+                "value": "0.35",
                 "space": "lch"
               }
             }

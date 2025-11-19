@@ -2108,7 +2108,7 @@
       },
       "to": {
         "$type": "color",
-        "$value": "{indigo.800}"
+        "$value": "{indigo.700}"
       },
       "outline-bg": {
         "stop-1": {

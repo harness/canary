@@ -1,7 +1,7 @@
 {
   "name": "@harnessio/ui",
   "description": "Harness Canary UI component library",
-  "version": "0.0.189",
+  "version": "0.0.190",
   "private": false,
   "type": "module",
   "main": "./dist/index.js",
@@ -12,7 +12,14 @@
     "./utils": "./dist/utils.js",
     "./hooks": "./dist/hooks.js",
     "./locales": "./dist/locales.js",
-    "./tailwind.config": "./dist/tailwind.config.js",
+    "./tailwind.config": {
+      "types": "./dist/tailwind.config.d.ts",
+      "default": "./dist/tailwind.config.js"
+    },
+    "./tailwind-design-system": {
+      "types": "./dist/tailwind-design-system.d.ts",
+      "default": "./dist/tailwind-design-system.js"
+    },
     "./styles.css": "./dist/styles.css",
     "./shared-style-variables.css": "./src/styles/shared-style-variables.css",
     "./markdown-preview-styles.css": "./src/components/markdown-viewer/style.css",

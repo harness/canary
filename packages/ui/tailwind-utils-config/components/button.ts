@@ -106,8 +106,8 @@ function createButtonSizeStyles() {
 export default {
   '.cn-button': {
     transitionProperty: 'color, background-color, border-color, text-decoration-color, fill, stroke',
-    transitionDuration: '100ms',
-    transitionTimingFunction: 'linear',
+    transitionDuration: '150ms',
+    transitionTimingFunction: 'ease-in-out',
     borderRadius: 'var(--cn-btn-default-radius)',
     paddingBlock: 'var(--cn-btn-py-md)',
     paddingInline: 'var(--cn-btn-px-md)',
@@ -147,13 +147,21 @@ export default {
       backgroundOrigin: 'border-box',
       backgroundClip: 'padding-box, border-box',
       border: 'var(--cn-btn-ai-border) solid transparent',
-      boxShadow: 'var(--cn-shadow-comp-ai-inner)',
+      transitionProperty: 'color, background-image, border-color, box-shadow',
+      transitionDuration: '150ms',
+      transitionTimingFunction: 'ease-in-out',
 
       '&:hover:not(:disabled, .cn-button-disabled)': {
-        backgroundImage: `var(--cn-set-ai-outline-bg-hover), var(--cn-set-ai-outline-border)`
+        backgroundImage: `var(--cn-set-ai-outline-bg-hover), var(--cn-set-ai-outline-border)`,
+        boxShadow: 'var(--cn-shadow-comp-ai-inner)'
       },
       '&:active:not(:disabled, .cn-button-disabled), &:where(.cn-button-active)': {
-        backgroundImage: 'var(--cn-set-ai-outline-bg-selected), var(--cn-set-ai-outline-border)'
+        backgroundImage: 'var(--cn-set-ai-outline-bg-selected), var(--cn-set-ai-outline-border)',
+        boxShadow: 'var(--cn-shadow-comp-ai-inner)'
+      },
+      "&[data-loading='true']": {
+        backgroundImage: 'var(--cn-set-ai-outline-bg-selected), var(--cn-set-ai-outline-border)',
+        boxShadow: 'var(--cn-shadow-comp-ai-inner)'
       }
     },
 

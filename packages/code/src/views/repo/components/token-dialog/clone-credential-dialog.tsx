@@ -1,10 +1,11 @@
 import { FC } from 'react'
 import { useForm } from 'react-hook-form'
 
-import { Button, ButtonLayout, CopyButton, Dialog, TextInput } from '@/components'
-import { useTranslation } from '@/context'
 import { zodResolver } from '@hookform/resolvers/zod'
 import { z } from 'zod'
+
+import { Button, ButtonLayout, CopyButton, Dialog, TextInput } from '@harnessio/ui/components'
+import { useTranslation } from '@harnessio/ui/context'
 
 interface RoutingProps {
   navigateToManageToken?: () => void

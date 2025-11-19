@@ -1,5 +1,7 @@
-import { NoData, PaginationProps, ScopeTag, Skeleton, Table, Text, TimeAgoCard } from '@/components'
-import { useTranslation } from '@/context'
+import { ScopeTag } from '@/components/scope'
+
+import { NoData, PaginationProps, Skeleton, Table, Text, TimeAgoCard } from '@harnessio/ui/components'
+import { useTranslation } from '@harnessio/ui/context'
 
 import { SecretActivity } from './types'
 

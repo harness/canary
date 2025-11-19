@@ -1,4 +1,4 @@
-import { Label } from '@components/form-primitives/label'
+import { Label } from '@harnessio/ui/components'
 
 export interface InputLabelProps {
   label?: string

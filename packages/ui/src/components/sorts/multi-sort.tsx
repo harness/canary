@@ -1,7 +1,6 @@
 // TODO: we should rethink the approach and stop using the @dnd-kit library
 
-import { Button, DropdownMenu, IconV2 } from '@/components'
-import SearchableDropdown from '@components/searchable-dropdown/searchable-dropdown'
+import { Button, DropdownMenu, IconV2, SearchableDropdown } from '@/components'
 import { closestCenter, DndContext } from '@dnd-kit/core'
 import { SortableContext, useSortable, verticalListSortingStrategy } from '@dnd-kit/sortable'
 import { CSS } from '@dnd-kit/utilities'

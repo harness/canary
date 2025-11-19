@@ -1,9 +1,10 @@
 import { FC, useMemo } from 'react'
 
-import { Button, Checkbox, DropdownMenu, IconV2, Layout, NoData, Text } from '@/components'
-import { useRouterContext, useTranslation } from '@/context'
 import { ErrorTypes, IProjectRulesStore, SandboxLayout } from '@/views'
 import { RepoSettingsGeneralRules } from '@views/repo/repo-settings/components/repo-settings-general-rules'
+
+import { Button, Checkbox, DropdownMenu, IconV2, Layout, NoData, Text } from '@harnessio/ui/components'
+import { useRouterContext, useTranslation } from '@harnessio/ui/context'
 
 export interface ProjectRulesPageProps {
   useProjectRulesStore: () => IProjectRulesStore

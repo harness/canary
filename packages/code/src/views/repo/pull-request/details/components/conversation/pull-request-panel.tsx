@@ -1,6 +1,20 @@
 import { useCallback, useEffect, useState } from 'react'
 
 import {
+  EnumCheckStatus,
+  extractInfoFromRuleViolationArr,
+  MergeCheckStatus,
+  PRPanelData,
+  PullRequestAction,
+  PullRequestChangesSectionProps,
+  PullRequestFilterOption,
+  PullRequestState,
+  TypesListCommitResponse,
+  TypesPullReqCheck
+} from '@/views'
+import { PrState, TypesPullReq } from '@views/repo/pull-request/pull-request.types'
+
+import {
   Accordion,
   Alert,
   Avatar,
@@ -21,21 +35,8 @@ import {
   TextProps,
   TimeAgoCard,
   type ButtonThemes
-} from '@/components'
-import {
-  EnumCheckStatus,
-  extractInfoFromRuleViolationArr,
-  MergeCheckStatus,
-  PRPanelData,
-  PullRequestAction,
-  PullRequestChangesSectionProps,
-  PullRequestFilterOption,
-  PullRequestState,
-  TypesListCommitResponse,
-  TypesPullReqCheck
-} from '@/views'
-import { cn } from '@utils/cn'
-import { PrState, TypesPullReq } from '@views/repo/pull-request/pull-request.types'
+} from '@harnessio/ui/components'
+import { cn } from '@harnessio/ui/utils'
 
 import {
   DefaultReviewersDataProps,

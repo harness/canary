@@ -1,7 +1,5 @@
 import { useEffect, useMemo, useState } from 'react'
 
-import { Problem, ProblemSeverity } from '@components/problems'
-import { Resizable } from '@components/resizable'
 import {
   countProblems,
   monacoMarkers2Problems
@@ -9,6 +7,7 @@ import {
 import { UnifiedPipelineStudioProblemsPanel } from '@views/unified-pipeline-studio/components/panel/unified-pipeline-studio-problems-panel'
 import { editor } from 'monaco-editor'
 
+import { Problem, ProblemSeverity, Resizable } from '@harnessio/ui/components'
 import { useYamlEditorContext, YamlEditor, YamlRevision } from '@harnessio/yaml-editor'
 
 import { monacoThemes } from '..'

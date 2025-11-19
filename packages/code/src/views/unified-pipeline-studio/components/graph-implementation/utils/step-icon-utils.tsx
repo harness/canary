@@ -1,4 +1,4 @@
-import { IconV2, type IconPropsV2 } from '@components/icon-v2'
+import { IconV2, type IconPropsV2 } from '@harnessio/ui/components'
 
 import {
   getIsActionStep,

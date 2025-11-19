@@ -1,18 +1,18 @@
+import { determineScope, getScopedPath, ScopeTag } from '@/components/scope'
+import { RepositoryType, Scope } from '@/views'
+
 import {
   Favorite,
   IconV2,
   Layout,
   NoData,
-  ScopeTag,
   Skeleton,
   StackedList,
   StatusBadge,
   Text,
   TimeAgoCard
-} from '@/components'
-import { useTranslation } from '@/context'
-import { RepositoryType, Scope } from '@/views'
-import { determineScope, getScopedPath } from '@components/scope/utils'
+} from '@harnessio/ui/components'
+import { useTranslation } from '@harnessio/ui/context'
 
 import { FavoriteProps, RepoStore, RoutingProps } from './types'
 

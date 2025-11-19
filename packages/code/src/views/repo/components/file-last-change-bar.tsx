@@ -1,8 +1,9 @@
 import { FC } from 'react'
 
-import { Avatar, CommitCopyActions, Layout, Separator, StackedList, Text, TimeAgoCard } from '@/components'
-import { useTranslation } from '@/context'
 import { LatestFileTypes } from '@/views'
+
+import { Avatar, CommitCopyActions, Layout, Separator, StackedList, Text, TimeAgoCard } from '@harnessio/ui/components'
+import { useTranslation } from '@harnessio/ui/context'
 
 const TopTitle: FC<LatestFileTypes> = ({ user, lastCommitMessage }) => {
   return (

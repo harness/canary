@@ -1,4 +1,4 @@
-import { IconV2 } from '@/components'
+import { IconV2 } from '@harnessio/ui/components'
 
 interface InputTooltipProps {
   tooltip: string

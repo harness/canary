@@ -10,16 +10,20 @@ import {
   useState
 } from 'react'
 
-import { Layout, ListActions, SearchInput } from '@/components'
-import { useTranslation } from '@/context'
-import { renderFilterSelectLabel } from '@components/filters/filter-select'
-import { FilterOptionConfig } from '@components/filters/types'
-import SearchableDropdown from '@components/searchable-dropdown/searchable-dropdown'
-import { Sort, SortValue } from '@components/sorts'
-import SimpleSort from '@components/sorts/simple-sort'
 import ListControlBar from '@views/repo/components/list-control-bar'
 
 import { createFilters, FilterRefType } from '@harnessio/filters'
+import {
+  FilterOptionConfig,
+  Layout,
+  ListActions,
+  renderFilterSelectLabel,
+  SearchableDropdown,
+  SearchInput,
+  Sort,
+  SortValue
+} from '@harnessio/ui/components'
+import { useTranslation } from '@harnessio/ui/context'
 
 import SaveFiltersDialog, { SaveFiltersDialogProps } from './save-filters-dialog'
 import SavedFilters from './SavedFilters'
@@ -33,7 +37,7 @@ interface FilterGroupProps<
   onFilterValueChange?: (filterType: T) => void
   handleFilterOpen?: (filter: V, isOpen: boolean) => void
   multiSortConfig?: Omit<ComponentProps<typeof Sort.Root>, 'children'>
-  simpleSortConfig?: ComponentProps<typeof SimpleSort>
+  simpleSortConfig?: ComponentProps<typeof Sort.SimpleSort>
   searchValue?: string
   handleInputChange: (value: string) => void
   filterOptions: FilterOptionConfig<V, CustomValue>[]
@@ -184,7 +188,7 @@ const FilterGroupInner = <
                   />
                 )}
               </Layout.Horizontal>
-              {simpleSortConfig && <SimpleSort {...simpleSortConfig} />}
+              {simpleSortConfig && <Sort.SimpleSort {...simpleSortConfig} />}
               {props.headerAction}
             </ListActions.Right>
           </ListActions.Root>

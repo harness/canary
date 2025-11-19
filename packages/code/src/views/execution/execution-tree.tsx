@@ -1,6 +1,6 @@
 import { FC } from 'react'
 
-import { Tree } from '@/components'
+import { Tree } from '@harnessio/ui/components'
 
 import { ExecutionTreeProps } from './types'
 import { renderTree } from './utils'

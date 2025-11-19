@@ -1,6 +1,6 @@
 import { useCallback, useState } from 'react'
 
-import { Button, DropdownMenu, IconV2, Text } from '@/components'
+import { Button, DropdownMenu, IconV2, Text } from '@harnessio/ui/components'
 
 export interface EntityReferenceFilterProps {
   onFilterChange?: (type: string) => void

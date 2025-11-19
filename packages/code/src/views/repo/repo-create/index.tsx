@@ -1,6 +1,11 @@
 import { useEffect, useMemo } from 'react'
 import { useForm } from 'react-hook-form'
 
+import { SandboxLayout } from '@/views'
+import { zodResolver } from '@hookform/resolvers/zod'
+import { isEmpty } from 'lodash-es'
+import { z } from 'zod'
+
 import {
   Alert,
   Button,
@@ -18,12 +23,8 @@ import {
   Select,
   SelectValueOption,
   Text
-} from '@/components'
-import { useTranslation } from '@/context'
-import { SandboxLayout } from '@/views'
-import { zodResolver } from '@hookform/resolvers/zod'
-import { isEmpty } from 'lodash-es'
-import { z } from 'zod'
+} from '@harnessio/ui/components'
+import { useTranslation } from '@harnessio/ui/context'
 
 import { DefaultBranchDialog } from './default-branch-dialog'
 

@@ -1,8 +1,9 @@
 import { FC, useMemo } from 'react'
 
-import { Button, IconV2, Layout, Link, Popover, Link as StyledLink, Tag, Text } from '@/components'
-import { useTranslation } from '@/context'
 import { BranchSelectorListItem, BranchSelectorTab, easyPluralize } from '@/views'
+
+import { Button, IconV2, Layout, Link, Popover, Link as StyledLink, Tag, Text } from '@harnessio/ui/components'
+import { useTranslation } from '@harnessio/ui/context'
 
 interface BranchInfoBarProps {
   defaultBranchName?: string

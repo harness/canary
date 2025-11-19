@@ -1,8 +1,18 @@
 import { FC, useMemo } from 'react'
 
-import { FormSeparator, Layout, NoData, Skeleton, StatusBadge, Table, Text, TimeAgoCard } from '@/components'
-import { useTranslation } from '@/context'
 import { WebhookStore } from '@/views'
+
+import {
+  FormSeparator,
+  Layout,
+  NoData,
+  Skeleton,
+  StatusBadge,
+  Table,
+  Text,
+  TimeAgoCard
+} from '@harnessio/ui/components'
+import { useTranslation } from '@harnessio/ui/context'
 
 import {
   getBranchAndTagEvents,

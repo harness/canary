@@ -1,8 +1,9 @@
 import { FC, useMemo } from 'react'
 
-import { Button, Dialog, ListActions, NoData, SearchInput, Spacer, Text } from '@/components'
-import { useTranslation } from '@/context'
 import { SandboxLayout } from '@/views'
+
+import { Button, Dialog, ListActions, NoData, SearchInput, Spacer, Text } from '@harnessio/ui/components'
+import { useTranslation } from '@harnessio/ui/context'
 
 import { InviteMemberDialog } from './components/invite-member-dialog'
 import ProjectMembersList from './components/project-member-list'

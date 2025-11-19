@@ -1,8 +1,8 @@
 import { FC, useState } from 'react'
 
 import { TypesBranchTable } from '@/views'
-import { Layout } from '@components/layout'
-import { Separator } from '@components/separator'
+
+import { Layout, Separator } from '@harnessio/ui/components'
 
 import BranchCompareBanner from './branch-compare-banner'
 

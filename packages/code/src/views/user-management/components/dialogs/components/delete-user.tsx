@@ -1,7 +1,8 @@
-import { Button, ButtonLayout, Dialog, Text } from '@/components'
-import { useTranslation } from '@/context'
 import { useStates } from '@/views/user-management/providers/state-provider'
 import { useUserManagementStore } from '@/views/user-management/providers/store-provider'
+
+import { Button, ButtonLayout, Dialog, Text } from '@harnessio/ui/components'
+import { useTranslation } from '@harnessio/ui/context'
 
 interface DeleteUserDialogProps {
   handleDeleteUser: (uid: string) => void

@@ -1,6 +1,7 @@
-import { Tabs } from '@/components'
-import { useTranslation } from '@/context'
 import { SandboxLayout, SubHeaderWrapper } from '@/views'
+
+import { Tabs } from '@harnessio/ui/components'
+import { useTranslation } from '@harnessio/ui/context'
 
 export const ExecutionTabs = ({ className }: { className?: string }) => {
   const { t } = useTranslation()

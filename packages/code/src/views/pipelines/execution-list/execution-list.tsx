@@ -1,7 +1,8 @@
-import { IconV2, NoData, Skeleton, StackedList, Text, TimeAgoCard } from '@/components'
-import { useTranslation } from '@/context'
-import { timeDistance } from '@/utils'
 import { PipelineExecutionStatus } from '@/views'
+
+import { IconV2, NoData, Skeleton, StackedList, Text, TimeAgoCard } from '@harnessio/ui/components'
+import { useTranslation } from '@harnessio/ui/context'
+import { timeDistance } from '@harnessio/ui/utils'
 
 import { ExecutionStatusIcon } from '../components/execution-status-icon'
 import { IExecutionListProps, IExecutionType } from './types'

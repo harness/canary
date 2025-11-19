@@ -1,6 +1,6 @@
 import { FC } from 'react'
 
-import { IconV2, Layout, Link, Separator, Tag, TagProps, Text, TimeAgoCard } from '@/components'
+import { IconV2, Layout, Link, Separator, Tag, TagProps, Text, TimeAgoCard } from '@harnessio/ui/components'
 
 import { EnumPullReqState, PullRequestPageProps } from '../pull-request.types'
 

@@ -1,11 +1,11 @@
-import { TFunctionWithFallback } from '@/context'
 import {
   FilterFieldTypes,
   FilterOptionConfig,
+  getMultiSelectParser,
   MultiSelectFilterOptionConfig,
   SecretListFilters
-} from '@components/filters/types'
-import { getMultiSelectParser } from '@components/filters/utils'
+} from '@harnessio/ui/components'
+import { TFunctionWithFallback } from '@harnessio/ui/context'
 
 export const SECRET_SORT_OPTIONS = [
   { label: 'Last modified', value: 'lastModifiedAt,DESC' },

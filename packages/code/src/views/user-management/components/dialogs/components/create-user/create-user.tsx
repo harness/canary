@@ -1,14 +1,15 @@
 import { useEffect } from 'react'
 import { SubmitHandler, useForm } from 'react-hook-form'
 
-import { Button, ButtonLayout, Dialog, Fieldset, FormInput, FormWrapper, Text } from '@/components'
-import { useTranslation } from '@/context'
 import { useStates } from '@/views/user-management/providers/state-provider'
 import { zodResolver } from '@hookform/resolvers/zod'
 import {
   createNewUserSchema,
   NewUserFields
 } from '@views/user-management/components/dialogs/components/create-user/schema'
+
+import { Button, ButtonLayout, Dialog, Fieldset, FormInput, FormWrapper, Text } from '@harnessio/ui/components'
+import { useTranslation } from '@harnessio/ui/context'
 
 interface CreateUserDialogProps {
   handleCreateUser: (data: NewUserFields) => void

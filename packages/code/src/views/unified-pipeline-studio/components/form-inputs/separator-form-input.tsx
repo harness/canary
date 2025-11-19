@@ -1,6 +1,5 @@
-import { Separator } from '@components/separator'
-
 import { IInputDefinition, InputComponent, type AnyFormValue } from '@harnessio/forms'
+import { Separator } from '@harnessio/ui/components'
 
 export type SeparatorFormInputDefinition = IInputDefinition<unknown, AnyFormValue, 'separator'>
 

@@ -1,8 +1,7 @@
 import { useMemo } from 'react'
 
-import { PipelineNodesComponents } from '@/components'
-
 import { AnyContainerNodeType, CanvasProvider, PipelineGraph } from '@harnessio/pipeline-graph'
+import { PipelineNodesComponents } from '@harnessio/ui/components'
 
 import { CanvasControls } from './graph-implementation/canvas/canvas-controls'
 

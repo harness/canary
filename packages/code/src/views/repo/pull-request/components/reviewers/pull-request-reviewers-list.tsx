@@ -1,7 +1,6 @@
-import { Alert } from '@components/alert'
-import { Layout } from '@components/layout'
-import { Text } from '@components/text'
 import { isEmpty } from 'lodash-es'
+
+import { Alert, Layout, Text } from '@harnessio/ui/components'
 
 import { EnumPullReqReviewDecision, PRReviewer, PullReqReviewDecision } from '../../pull-request.types'
 import { ReviewerItem } from './pull-request-reviewers-item'

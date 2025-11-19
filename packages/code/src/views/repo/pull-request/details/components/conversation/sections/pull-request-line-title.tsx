@@ -1,8 +1,7 @@
 import { ReactElement, ReactNode } from 'react'
 
-import { Layout } from '@components/layout'
-import { Text } from '@components/text'
-import { cn } from '@utils/cn'
+import { Layout, Text } from '@harnessio/ui/components'
+import { cn } from '@harnessio/ui/utils'
 
 interface LineTitleProps {
   text?: string

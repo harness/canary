@@ -18,10 +18,9 @@ import {
   SidebarSearch,
   ThemeDialog,
   useSidebar
-} from '@/components'
-import { useRouterContext, useTheme, useTranslation } from '@/context'
-import { TypesUser } from '@/types'
-import { cn } from '@utils/index'
+} from '@harnessio/ui/components'
+import { useRouterContext, useTheme, useTranslation } from '@harnessio/ui/context'
+import { cn } from '@harnessio/ui/utils'
 
 interface SidebarProps {
   recentMenuItems: NavbarItemType[]

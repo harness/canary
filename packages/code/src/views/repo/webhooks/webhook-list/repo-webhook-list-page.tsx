@@ -1,8 +1,9 @@
 import { FC, useCallback, useMemo } from 'react'
 
-import { Button, IconV2, Layout, ListActions, NoData, SearchInput, Skeleton, Text } from '@/components'
-import { useRouterContext, useTranslation } from '@/context'
 import { NotFoundPage } from '@views/not-found-page'
+
+import { Button, IconV2, Layout, ListActions, NoData, SearchInput, Skeleton, Text } from '@harnessio/ui/components'
+import { useRouterContext, useTranslation } from '@harnessio/ui/context'
 
 import { RepoWebhookList } from './components/repo-webhook-list'
 import { WebhookStore } from './types'

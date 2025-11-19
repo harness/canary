@@ -1,9 +1,10 @@
 import { FC, useCallback, useMemo, useRef } from 'react'
 
-import { IconV2, Layout, NoData, PermissionIdentifier, ResourceType, SecretListFilters } from '@/components'
-import { useComponents, useCustomDialogTrigger, useRouterContext, useTranslation } from '@/context'
 import { Page } from '@/views'
 import FilterGroup, { FilterGroupRef } from '@views/components/FilterGroup'
+
+import { IconV2, Layout, NoData, PermissionIdentifier, ResourceType, SecretListFilters } from '@harnessio/ui/components'
+import { useComponents, useCustomDialogTrigger, useRouterContext, useTranslation } from '@harnessio/ui/context'
 
 import { getSecretListFilterOptions, SECRET_SORT_OPTIONS } from './filter-options'
 import { SecretList } from './secrets-list'

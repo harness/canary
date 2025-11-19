@@ -1,8 +1,9 @@
 import { FC } from 'react'
 
-import { IconV2, Text } from '@/components'
-import { cn } from '@utils/cn'
 import { ExecutionState } from '@views/repo/pull-request'
+
+import { IconV2, Text } from '@harnessio/ui/components'
+import { cn } from '@harnessio/ui/utils'
 
 import { PipelineStatus } from './pipeline-status'
 

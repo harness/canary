@@ -1,6 +1,6 @@
 import { memo, RefObject, useEffect, useMemo, useRef, useState } from 'react'
 
-import { FileExplorer, Layout, StatusBadge } from '@/components'
+import { FileExplorer, Layout, StatusBadge } from '@harnessio/ui/components'
 
 type TreeNode = FolderNode | FileNode
 

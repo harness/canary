@@ -1,6 +1,5 @@
 import { useEffect, useState } from 'react'
 
-import { Accordion, IconV2 } from '@components/index'
 import { get } from 'lodash-es'
 
 import {
@@ -11,6 +10,7 @@ import {
   useFormContext,
   type AnyFormValue
 } from '@harnessio/forms'
+import { Accordion, IconV2 } from '@harnessio/ui/components'
 
 import { InputLabel } from './common/InputLabel'
 import { Layout } from './common/Layout'

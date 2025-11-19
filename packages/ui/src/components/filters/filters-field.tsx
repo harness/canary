@@ -134,7 +134,7 @@ const FilterFieldInternal = <T extends string, V extends FilterValueTypes, Custo
   }
 }
 
-const FiltersField = <T extends string, V extends FilterValueTypes, CustomValue = Record<string, unknown>>({
+export const FiltersField = <T extends string, V extends FilterValueTypes, CustomValue = Record<string, unknown>>({
   filterOption,
   removeFilter,
   shouldOpenFilter,

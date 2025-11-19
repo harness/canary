@@ -1,7 +1,8 @@
 import { FieldErrors, UseFormRegister, UseFormSetValue, UseFormWatch } from 'react-hook-form'
 
-import { MessageTheme } from '@components/index'
 import { z } from 'zod'
+
+import { MessageTheme } from '@harnessio/ui/components'
 
 import { EnumBypassListType, PatternsButtonType, TargetReposButtonType } from '../repo-branch-rules/types'
 

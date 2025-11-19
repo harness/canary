@@ -1,6 +1,8 @@
 import { ButtonHTMLAttributes, FC, ReactNode } from 'react'
 import type { LinkProps } from 'react-router-dom'
 
+import { SandboxLayout } from '@/views'
+
 import {
   ButtonLayout,
   Favorite,
@@ -11,8 +13,7 @@ import {
   LogoV2,
   Skeleton,
   Text
-} from '@/components'
-import { SandboxLayout } from '@/views'
+} from '@harnessio/ui/components'
 
 export interface PageHeaderBackProps {
   linkText: string

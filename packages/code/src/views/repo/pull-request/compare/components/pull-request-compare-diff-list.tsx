@@ -1,9 +1,5 @@
 import { FC, RefObject, useCallback, useEffect, useMemo, useRef, useState } from 'react'
 
-import { Button, IconV2, Layout, ListActions } from '@/components'
-import { useTranslation } from '@/context'
-import { useLocalStorage, UserPreference } from '@/hooks'
-import { TypesUser } from '@/types'
 import {
   ChangedFilesShortInfo,
   DiffModeOptions,
@@ -15,8 +11,13 @@ import {
   TypesDiffStats
 } from '@/views'
 import { DiffModeEnum } from '@git-diff-view/react'
-import { cn } from '@utils/cn'
 import { chunk } from 'lodash-es'
+
+import { Button, IconV2, Layout, ListActions } from '@harnessio/ui/components'
+import { useTranslation } from '@harnessio/ui/context'
+import { useLocalStorage, UserPreference } from '@harnessio/ui/hooks'
+import { TypesUser } from '@harnessio/ui/types'
+import { cn } from '@harnessio/ui/utils'
 
 import { HeaderProps, PullRequestAccordion } from '../../components/pull-request-accordian'
 import { PullRequestDiffSidebar } from '../../components/pull-request-diff-sidebar'

@@ -1,13 +1,20 @@
 import { FC, useCallback, useMemo, useRef, useState } from 'react'
 
-import { IconV2, NoData, PermissionIdentifier, ResourceType, Spacer, Text } from '@/components'
-import { useComponents, useRouterContext, useTranslation } from '@/context'
+import { PermissionIdentifier, ResourceType } from '@/components/rbac'
 import { SandboxLayout } from '@/views'
-import { ComboBoxOptions } from '@components/filters/filters-bar/actions/variants/combo-box'
-import { FilterFieldTypes, FilterOptionConfig } from '@components/filters/types'
 import FilterGroup, { FilterGroupRef } from '@views/components/FilterGroup'
 
 import { booleanParser } from '@harnessio/filters'
+import {
+  ComboBoxOptions,
+  FilterFieldTypes,
+  FilterOptionConfig,
+  IconV2,
+  NoData,
+  Spacer,
+  Text
+} from '@harnessio/ui/components'
+import { useComponents, useRouterContext, useTranslation } from '@harnessio/ui/context'
 
 import { ExtendedScope } from '../common'
 import { getFilterScopeOptions } from '../common/util'

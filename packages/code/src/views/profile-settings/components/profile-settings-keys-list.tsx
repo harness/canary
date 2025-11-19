@@ -1,7 +1,7 @@
 import { FC, useCallback } from 'react'
 
-import { IconV2, MoreActionsTooltip, Skeleton, Table, Text, TimeAgoCard } from '@/components'
-import { useCustomDialogTrigger, useTranslation } from '@/context'
+import { IconV2, MoreActionsTooltip, Skeleton, Table, Text, TimeAgoCard } from '@harnessio/ui/components'
+import { useCustomDialogTrigger, useTranslation } from '@harnessio/ui/context'
 
 import { KeysList } from '../types'
 

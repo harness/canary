@@ -1,6 +1,6 @@
 import { ReactNode } from 'react'
 
-import { Button, IconV2, Layout, ScrollArea, SearchFiles } from '@/components'
+import { Button, IconV2, Layout, ScrollArea, SearchFiles } from '@harnessio/ui/components'
 
 interface RepoSidebarProps {
   navigateToNewFile: () => void

@@ -1,8 +1,9 @@
 import { FC } from 'react'
 
-import { Button, ButtonLayout, DropdownMenu, IconV2, Text } from '@/components'
-import { useRouterContext, useTranslation } from '@/context'
 import { SandboxLayout } from '@/views'
+
+import { Button, ButtonLayout, DropdownMenu, IconV2, Text } from '@harnessio/ui/components'
+import { useRouterContext, useTranslation } from '@harnessio/ui/context'
 
 interface TypesSpace {
   created?: number

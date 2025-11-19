@@ -1,11 +1,12 @@
 import { type FC } from 'react'
 
-import { Accordion, IconV2, Layout, StatusBadge, Text } from '@/components'
-import { useTranslation } from '@/context'
 import { easyPluralize, PullRequestChangesSectionProps } from '@/views'
-import { cn } from '@utils/cn'
 import { PanelAccordionShowButton } from '@views/repo/pull-request/details/components/conversation/sections/panel-accordion-show-button'
 import { isEmpty } from 'lodash-es'
+
+import { Accordion, IconV2, Layout, StatusBadge, Text } from '@harnessio/ui/components'
+import { useTranslation } from '@harnessio/ui/context'
+import { cn } from '@harnessio/ui/utils'
 
 import { CodeOwnersSection } from './components/code-owners-section'
 import { DefaultReviewersSection } from './components/default-reviewers-section'

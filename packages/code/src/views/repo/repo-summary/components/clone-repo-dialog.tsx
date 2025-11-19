@@ -1,7 +1,7 @@
 import { FC } from 'react'
 
-import { Alert, Button, CopyButton, IconV2, Layout, Popover, Tabs, TextInput } from '@/components'
-import { useCustomDialogTrigger, useTranslation } from '@/context'
+import { Alert, Button, CopyButton, IconV2, Layout, Popover, Tabs, TextInput } from '@harnessio/ui/components'
+import { useCustomDialogTrigger, useTranslation } from '@harnessio/ui/context'
 
 export interface CloneRepoDialogProps {
   sshUrl?: string

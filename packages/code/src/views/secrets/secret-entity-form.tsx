@@ -1,7 +1,5 @@
 import { forwardRef, useEffect, useImperativeHandle, useMemo, useRef, useState } from 'react'
 
-import { Alert, Button, ButtonLayout } from '@/components'
-import { useTranslation } from '@/context'
 import { EntityIntent, SecretListItem } from '@/views'
 
 import {
@@ -12,6 +10,8 @@ import {
   RootForm,
   useZodValidationResolver
 } from '@harnessio/forms'
+import { Alert, Button, ButtonLayout } from '@harnessio/ui/components'
+import { useTranslation } from '@harnessio/ui/context'
 
 import { onSubmitSecretProps } from './types'
 

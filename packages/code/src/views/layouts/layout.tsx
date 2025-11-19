@@ -1,6 +1,6 @@
 import { ReactNode } from 'react'
 
-import { cn } from '@utils/cn'
+import { cn } from '@harnessio/ui/utils'
 
 interface LayoutProps {
   children: ReactNode

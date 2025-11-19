@@ -1,8 +1,8 @@
 import { CSSProperties } from 'react'
 
-import { Layout, Progress, Separator, Text } from '@/components'
-import { useTranslation } from '@/context'
-import { cn } from '@/utils/cn'
+import { Layout, Progress, Separator, Text } from '@harnessio/ui/components'
+import { useTranslation } from '@harnessio/ui/context'
+import { cn } from '@harnessio/ui/utils'
 
 interface GaugeProps {
   behindAhead: {

@@ -1,5 +1,8 @@
 import { ElementType, useCallback, useMemo, useRef } from 'react'
 
+import { useUnifiedPipelineStudioContext } from '@views/unified-pipeline-studio/context/unified-pipeline-studio-context'
+import { RightDrawer } from '@views/unified-pipeline-studio/types/right-drawer-types'
+
 import {
   Button,
   ButtonLayout,
@@ -11,9 +14,7 @@ import {
   Skeleton,
   Spacer,
   Text
-} from '@/components'
-import { useUnifiedPipelineStudioContext } from '@views/unified-pipeline-studio/context/unified-pipeline-studio-context'
-import { RightDrawer } from '@views/unified-pipeline-studio/types/right-drawer-types'
+} from '@harnessio/ui/components'
 
 import { harnessStepGroups, harnessSteps } from '../steps/harness-steps'
 import { StepPaletteSection } from './components/step-palette-section'

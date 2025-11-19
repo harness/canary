@@ -1,10 +1,10 @@
 import { FC, useMemo } from 'react'
 
-import { IconV2, Layout, ScopeTag, Separator, Tag, Text } from '@/components'
-import { cn } from '@/utils'
 import { PullRequest, Scope } from '@/views'
-import { determineScope, getScopedPath } from '@components/scope/utils'
 import { LabelsList } from '@views/repo/pull-request/components/labels'
+
+import { determineScope, getScopedPath, IconV2, Layout, ScopeTag, Separator, Tag, Text } from '@harnessio/ui/components'
+import { cn } from '@harnessio/ui/utils'
 
 import { getPrState } from '../utils'
 

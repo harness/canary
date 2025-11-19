@@ -1,4 +1,4 @@
-import { Layout, Progress, Text } from '@/components'
+import { Layout, Progress, Text } from '@harnessio/ui/components'
 
 interface RootProps {
   children: React.ReactNode

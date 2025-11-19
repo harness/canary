@@ -1,7 +1,5 @@
 import { FC, useMemo } from 'react'
 
-import { Layout, StatusBadge, StatusBadgeProps, Table, Text } from '@/components'
-import { useTranslation } from '@/context'
 import {
   DefaultReviewersApprovalsData,
   DefaultReviewersDataProps,
@@ -9,6 +7,9 @@ import {
   PullReqReviewDecision
 } from '@/views'
 import { isEmpty } from 'lodash-es'
+
+import { Layout, StatusBadge, StatusBadgeProps, Table, Text } from '@harnessio/ui/components'
+import { useTranslation } from '@harnessio/ui/context'
 
 import { ReviewersPanel } from './reviewers-panel'
 

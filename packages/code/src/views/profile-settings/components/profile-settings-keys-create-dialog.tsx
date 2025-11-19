@@ -1,11 +1,12 @@
 import { FC, useEffect } from 'react'
 import { SubmitHandler, useForm } from 'react-hook-form'
 
-import { Alert, Button, ButtonLayout, Dialog, FormInput, FormWrapper } from '@/components'
-import { useTranslation } from '@/context'
 import { ApiErrorType } from '@/views'
 import { zodResolver } from '@hookform/resolvers/zod'
 import { z } from 'zod'
+
+import { Alert, Button, ButtonLayout, Dialog, FormInput, FormWrapper } from '@harnessio/ui/components'
+import { useTranslation } from '@harnessio/ui/context'
 
 type SshKeyFormType = z.infer<typeof formSchema>
 

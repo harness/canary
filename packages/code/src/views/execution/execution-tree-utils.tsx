@@ -1,8 +1,9 @@
-import { TreeViewElement } from '@/components'
 import { CiStatus } from '@views/pipelines'
 import { ExecutionState } from '@views/repo/pull-request'
 
-import { getFormattedDuration } from '../../utils/TimeUtils'
+import { TreeViewElement } from '@harnessio/ui/components'
+import { getFormattedDuration } from '@harnessio/ui/utils'
+
 import { Execution, Stage, Step } from './types'
 
 const mapCiStatusToExecutionState = (status: CiStatus): ExecutionState => {

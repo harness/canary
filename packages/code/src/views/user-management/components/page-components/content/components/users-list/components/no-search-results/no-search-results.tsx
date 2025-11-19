@@ -1,5 +1,5 @@
-import { IconV2, NoData } from '@/components'
-import { useTranslation } from '@/context'
+import { IconV2, NoData } from '@harnessio/ui/components'
+import { useTranslation } from '@harnessio/ui/context'
 
 interface NoSearchResultsProps {
   handleResetSearch: () => void

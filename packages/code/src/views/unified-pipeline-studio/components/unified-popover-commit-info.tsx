@@ -1,4 +1,4 @@
-import { Avatar } from '@/components'
+import { Avatar } from '@harnessio/ui/components'
 
 export const PopoverCommitInfo = {
   Root: function Root({ children }: { children: React.ReactNode }) {

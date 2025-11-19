@@ -1,6 +1,5 @@
-import { Textarea } from '@components/index'
-
 import { IInputDefinition, InputComponent, InputProps, useController, type AnyFormValue } from '@harnessio/forms'
+import { Textarea } from '@harnessio/ui/components'
 
 import { InputWrapper } from './common/InputWrapper'
 import { RuntimeInputConfig } from './types/types'

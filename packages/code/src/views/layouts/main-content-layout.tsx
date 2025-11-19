@@ -1,7 +1,7 @@
 import { PropsWithChildren } from 'react'
 
-import { Layout, UseSidebarSignature } from '@/components'
-import { cn } from '@/utils'
+import { Layout, UseSidebarSignature } from '@harnessio/ui/components'
+import { cn } from '@harnessio/ui/utils'
 
 /**
  * The component `HalfArch` creates a visual layer that is used to keep the top corners

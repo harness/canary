@@ -1,10 +1,10 @@
 import { useEffect, useState } from 'react'
 
-import { Layout, Text } from '@/components'
 import { get } from 'lodash-es'
 import { parse } from 'yaml'
 
 import { AnyContainerNodeType } from '@harnessio/pipeline-graph'
+import { Layout, Text } from '@harnessio/ui/components'
 
 import '@harnessio/pipeline-graph/dist/index.css'
 

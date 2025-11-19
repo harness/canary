@@ -1,8 +1,8 @@
 import { FC, useState } from 'react'
 
-import { Accordion, Alert, Button, IconV2, Layout, Link, NoData, Skeleton, Tag } from '@/components'
-import { useTranslation } from '@/context'
-import { cn } from '@utils/cn'
+import { Accordion, Alert, Button, IconV2, Layout, Link, NoData, Skeleton, Tag } from '@harnessio/ui/components'
+import { useTranslation } from '@harnessio/ui/context'
+import { cn } from '@harnessio/ui/utils'
 
 const DEFAULT_NUM_ITEMS_TO_SHOW = 1
 

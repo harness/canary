@@ -2,6 +2,17 @@ import { FC, useEffect, useMemo } from 'react'
 import { useForm } from 'react-hook-form'
 
 import {
+  ColorsEnum,
+  CreateLabelFormFields,
+  createLabelFormSchema,
+  ILabelsStore,
+  LabelTag,
+  LabelType,
+  NotFoundPage
+} from '@/views'
+import { zodResolver } from '@hookform/resolvers/zod'
+
+import {
   Alert,
   Button,
   ButtonLayout,
@@ -13,19 +24,9 @@ import {
   Layout,
   Skeleton,
   Text
-} from '@/components'
-import { useTranslation } from '@/context'
-import { cn } from '@/utils'
-import {
-  ColorsEnum,
-  CreateLabelFormFields,
-  createLabelFormSchema,
-  ILabelsStore,
-  LabelTag,
-  LabelType,
-  NotFoundPage
-} from '@/views'
-import { zodResolver } from '@hookform/resolvers/zod'
+} from '@harnessio/ui/components'
+import { useTranslation } from '@harnessio/ui/context'
+import { cn } from '@harnessio/ui/utils'
 
 import { LabelFormColorAndNameGroup } from './components/label-form-color-and-name-group'
 

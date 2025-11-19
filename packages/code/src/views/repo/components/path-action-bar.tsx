@@ -1,8 +1,9 @@
 import { FC } from 'react'
 
-import { Button, Dialog, IconV2, Layout, PathBreadcrumbs, PathParts } from '@/components'
-import { useRouterContext, useTranslation } from '@/context'
 import { BranchSelectorTab, CodeModes } from '@/views'
+
+import { Button, Dialog, IconV2, Layout, PathBreadcrumbs, PathParts } from '@harnessio/ui/components'
+import { useRouterContext, useTranslation } from '@harnessio/ui/context'
 
 export interface PathActionBarProps {
   codeMode: CodeModes

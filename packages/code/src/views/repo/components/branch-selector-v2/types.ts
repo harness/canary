@@ -1,5 +1,6 @@
-import { TFunctionWithFallback } from '@/context'
 import { BranchSelectorListItem } from '@views/repo/repo.types'
+
+import { TFunctionWithFallback } from '@harnessio/ui/context'
 
 export enum BranchSelectorTab {
   BRANCHES = 'branches',

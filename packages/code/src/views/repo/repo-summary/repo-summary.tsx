@@ -1,6 +1,17 @@
 import { cloneElement, useCallback } from 'react'
 
 import {
+  BranchSelectorListItem,
+  CommitDivergenceType,
+  RepoFile,
+  RepoRepositoryOutput,
+  SandboxLayout,
+  TypesBranchTable
+} from '@/views'
+import { BranchInfoBar, BranchSelectorTab, Summary } from '@/views/repo/components'
+import { isEmpty } from 'lodash-es'
+
+import {
   Button,
   ButtonLayout,
   IconV2,
@@ -13,18 +24,8 @@ import {
   Spacer,
   StackedList,
   Text
-} from '@/components'
-import { useTranslation } from '@/context'
-import {
-  BranchSelectorListItem,
-  CommitDivergenceType,
-  RepoFile,
-  RepoRepositoryOutput,
-  SandboxLayout,
-  TypesBranchTable
-} from '@/views'
-import { BranchInfoBar, BranchSelectorTab, Summary } from '@/views/repo/components'
-import { isEmpty } from 'lodash-es'
+} from '@harnessio/ui/components'
+import { useTranslation } from '@harnessio/ui/context'
 
 import BranchCompareBannerList from '../components/branch-banner/branch-compare-banner-list'
 import { CloneRepoDialog } from './components/clone-repo-dialog'

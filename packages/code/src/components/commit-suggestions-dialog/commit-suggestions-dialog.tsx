@@ -1,10 +1,11 @@
 import { FC, useEffect } from 'react'
 import { useForm } from 'react-hook-form'
 
-import { Alert, Button, ButtonLayout, Dialog, FormInput, FormWrapper } from '@/components'
 import { UsererrorError } from '@/types'
 import { zodResolver } from '@hookform/resolvers/zod'
 import { z } from 'zod'
+
+import { Alert, Button, ButtonLayout, Dialog, FormInput, FormWrapper } from '@harnessio/ui/components'
 
 export interface CommitSuggestionsFormType {
   message?: string

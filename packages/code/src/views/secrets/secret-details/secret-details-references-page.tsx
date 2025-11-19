@@ -1,7 +1,7 @@
 import { FC, useCallback, useMemo } from 'react'
 
-import { IconV2, Layout, ListActions, NoData, SearchInput } from '@/components'
-import { useRouterContext, useTranslation } from '@/context'
+import { IconV2, Layout, ListActions, NoData, SearchInput } from '@harnessio/ui/components'
+import { useRouterContext, useTranslation } from '@harnessio/ui/context'
 
 import { SecretReferencesList } from './secret-details-references-list'
 import { SecretReference } from './types'

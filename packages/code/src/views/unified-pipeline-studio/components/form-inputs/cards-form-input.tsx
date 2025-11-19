@@ -1,6 +1,5 @@
-import { CardSelect } from '@components/index'
-
 import { IInputDefinition, InputComponent, InputProps, useController, type AnyFormValue } from '@harnessio/forms'
+import { CardSelect } from '@harnessio/ui/components'
 
 import { InputLabel, InputWrapper } from './common'
 import { InputCaption } from './common/InputCaption'

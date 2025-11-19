@@ -1,9 +1,20 @@
 import { FC, useCallback, useState } from 'react'
 
-import { Button, getScopeType, IconV2, Layout, MoreActionsTooltip, NoData, ScopeTag, Table, Text } from '@/components'
-import { useCustomDialogTrigger, useTranslation } from '@/context'
-import { cn } from '@/utils'
 import { ILabelsStore, ILabelType, LabelTag, LabelType } from '@/views'
+
+import {
+  Button,
+  getScopeType,
+  IconV2,
+  Layout,
+  MoreActionsTooltip,
+  NoData,
+  ScopeTag,
+  Table,
+  Text
+} from '@harnessio/ui/components'
+import { useCustomDialogTrigger, useTranslation } from '@harnessio/ui/context'
+import { cn } from '@harnessio/ui/utils'
 
 export interface LabelsListViewProps {
   useLabelsStore: () => ILabelsStore

@@ -1,11 +1,12 @@
 import { forwardRef } from 'react'
 import { SubmitHandler, UseFormReturn } from 'react-hook-form'
 
-import { Alert, FormInput, FormWrapper, Layout, Text } from '@/components'
-import { useTranslation } from '@/context'
 import { HandleAiPullRequestSummaryType, HandleUploadType, PrincipalPropsType, PullRequestCommentBox } from '@/views'
 import { isEmpty, noop } from 'lodash-es'
 import { z } from 'zod'
+
+import { Alert, FormInput, FormWrapper, Layout, Text } from '@harnessio/ui/components'
+import { useTranslation } from '@harnessio/ui/context'
 
 // Define the form schema
 const formSchemaCompare = z.object({

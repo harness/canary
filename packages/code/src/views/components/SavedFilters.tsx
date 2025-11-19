@@ -1,11 +1,8 @@
 import { useEffect, useState } from 'react'
 
-import { useRouterContext } from '@/context'
-import { Button } from '@components/button'
-import { DropdownMenu } from '@components/dropdown-menu'
-import { IconV2 } from '@components/icon-v2'
-
 import { useFiltersContext } from '@harnessio/filters'
+import { Button, DropdownMenu, IconV2 } from '@harnessio/ui/components'
+import { useRouterContext } from '@harnessio/ui/context'
 
 export default function SavedFilters({
   options,

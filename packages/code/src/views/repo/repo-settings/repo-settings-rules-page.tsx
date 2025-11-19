@@ -1,5 +1,5 @@
-import { Checkbox, Layout, Text } from '@/components'
-import { useTranslation } from '@/context'
+import { Checkbox, Layout, Text } from '@harnessio/ui/components'
+import { useTranslation } from '@harnessio/ui/context'
 
 import { RepoSettingsGeneralRules } from './components/repo-settings-general-rules'
 import { ErrorTypes, IRepoStore } from './types'

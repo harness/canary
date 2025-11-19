@@ -1,5 +1,7 @@
 import { FC, useMemo } from 'react'
 
+import { TypesCommit } from '@/views'
+
 import {
   Avatar,
   Button,
@@ -10,10 +12,9 @@ import {
   StackedList,
   Text,
   TimeAgoCard
-} from '@/components'
-import { useRouterContext } from '@/context'
-import { formatDate } from '@/utils'
-import { TypesCommit } from '@/views'
+} from '@harnessio/ui/components'
+import { useRouterContext } from '@harnessio/ui/context'
+import { formatDate } from '@harnessio/ui/utils'
 
 import { CommitTitleWithPRLink } from './CommitTitleWithPRLink'
 

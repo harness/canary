@@ -1,7 +1,8 @@
-import { IconV2, NoData } from '@/components'
-import { useTranslation } from '@/context'
 import { DialogLabels } from '@/views/user-management'
 import { useDialogData } from '@/views/user-management/components/dialogs/hooks/use-dialog-data'
+
+import { IconV2, NoData } from '@harnessio/ui/components'
+import { useTranslation } from '@harnessio/ui/context'
 
 export const EmptyState = () => {
   const { t } = useTranslation()

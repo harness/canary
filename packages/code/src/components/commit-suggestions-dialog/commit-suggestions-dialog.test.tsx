@@ -52,7 +52,7 @@ vi.mock('@hookform/resolvers/zod', () => ({
   zodResolver: () => vi.fn()
 }))
 
-vi.mock('@/components', () => ({
+vi.mock('@harnessio/ui/components', () => ({
   Alert: {
     Root: ({ children, className }: { children: React.ReactNode; className?: string }) => (
       <div data-testid="alert-root" className={className}>

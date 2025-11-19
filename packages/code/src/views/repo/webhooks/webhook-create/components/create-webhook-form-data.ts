@@ -1,4 +1,4 @@
-import { TFunctionWithFallback } from '@/context'
+import { TFunctionWithFallback } from '@harnessio/ui/context'
 
 import { WebhookTriggerEnum } from '../types'
 

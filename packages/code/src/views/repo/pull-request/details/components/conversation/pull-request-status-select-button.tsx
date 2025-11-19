@@ -1,8 +1,9 @@
 import { useEffect, useMemo, useState } from 'react'
 
-import { Select } from '@/components'
 import { useEmitCodeCommentStatus } from '@views/repo/pull-request/hooks/useEmitCodeCommentStatus'
 import { TypesPullReq } from '@views/repo/pull-request/pull-request.types'
+
+import { Select } from '@harnessio/ui/components'
 
 import { CodeCommentState, CommentItem, TypesPullReqActivity } from '../../pull-request-details-types'
 

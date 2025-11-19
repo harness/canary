@@ -8,13 +8,13 @@ import { createGitCommitSchema, GitCommitDialog } from '../git-commit-dialog'
 import { CommitToGitRefOption } from '../types'
 
 // Mock dependencies
-vi.mock('@/context', () => ({
+vi.mock('@harnessio/ui/context', () => ({
   useTranslation: () => ({
     t: (key: string, defaultValue: string) => defaultValue
   })
 }))
 
-vi.mock('@/components', () => ({
+vi.mock('@harnessio/ui/components', () => ({
   Button: ({ children, onClick, disabled, type, form, variant, theme, ...props }: any) => (
     <button
       data-testid="button"

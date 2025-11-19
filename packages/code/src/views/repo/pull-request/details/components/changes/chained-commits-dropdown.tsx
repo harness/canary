@@ -1,6 +1,6 @@
 import { useCallback, useRef } from 'react'
 
-import { DropdownMenu, Text, TimeAgoCard } from '@components/index'
+import { DropdownMenu, Text, TimeAgoCard } from '@harnessio/ui/components'
 
 import { CommitFilterItemProps } from './pull-request-changes-filter'
 

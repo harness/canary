@@ -1,7 +1,5 @@
 import { FC, useMemo } from 'react'
 
-import { Avatar, BranchTag, CommitCopyActions, IconPropsV2, IconV2, Text } from '@/components'
-import { useRouterContext } from '@/context'
 import {
   ColorsEnum,
   CommentItem,
@@ -17,6 +15,9 @@ import {
 } from '@/views'
 import { TypesPullReq } from '@views/repo/pull-request/pull-request.types'
 import { noop } from 'lodash-es'
+
+import { Avatar, BranchTag, CommitCopyActions, IconPropsV2, IconV2, Text } from '@harnessio/ui/components'
+import { useRouterContext } from '@harnessio/ui/context'
 
 import PullRequestTimelineItem, { TimelineItemProps } from './pull-request-timeline-item'
 

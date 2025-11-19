@@ -1,11 +1,8 @@
-import { useTranslation } from '@/context'
 import { DiffFileEntry, TypesDiffStats } from '@/views'
-import { Button } from '@components/button'
-import { DropdownMenu } from '@components/dropdown-menu'
-import { Layout } from '@components/layout'
-import { StatusBadge } from '@components/status-badge/status-badge'
-import { Text } from '@components/text'
-import { formatNumber } from '@utils/TimeUtils'
+
+import { Button, DropdownMenu, Layout, StatusBadge, Text } from '@harnessio/ui/components'
+import { useTranslation } from '@harnessio/ui/context'
+import { formatNumber } from '@harnessio/ui/utils'
 
 interface ChangedFilesShortInfoProps {
   diffData?: Partial<DiffFileEntry>[]

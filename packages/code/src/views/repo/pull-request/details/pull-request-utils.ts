@@ -1,8 +1,7 @@
 import { RefObject } from 'react'
 
-import { TypesUser } from '@/types'
-import { createRequestIdleCallbackTaskPool } from '@/utils/task'
 import { dispatchCustomEvent } from '@hooks/use-event-listener'
+import { createRequestIdleCallbackTaskPool } from '@utils/task'
 import { get, isEmpty } from 'lodash-es'
 
 import { PR_ACCORDION_STICKY_TOP } from '../components/pull-request-accordian'

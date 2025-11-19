@@ -1,6 +1,9 @@
 import { FC, useCallback, useMemo } from 'react'
 import { Fragment } from 'react/jsx-runtime'
 
+import { ScopeTag } from '@/components/scope'
+import { ErrorTypes, RuleDataType, RuleType, ScopeType } from '@/views'
+
 import {
   Alert,
   Button,
@@ -10,18 +13,16 @@ import {
   ListActions,
   MoreActionsTooltip,
   NoData,
-  ScopeTag,
   SearchInput,
+  Select,
   Separator,
   Skeleton,
   StackedList,
   StackedListPaginationProps,
   Tag,
   Text
-} from '@/components'
-import { Select } from '@/components/form-primitives/select'
-import { useCustomDialogTrigger, useRouterContext, useTranslation } from '@/context'
-import { ErrorTypes, RuleDataType, RuleType, ScopeType } from '@/views'
+} from '@harnessio/ui/components'
+import { useCustomDialogTrigger, useRouterContext, useTranslation } from '@harnessio/ui/context'
 
 // Utility function to map numeric scope to ScopeType enum
 const getScopeType = (scope: number): ScopeType => {

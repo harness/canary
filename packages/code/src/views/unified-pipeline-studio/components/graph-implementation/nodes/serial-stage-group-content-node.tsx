@@ -1,9 +1,7 @@
 import { useMemo } from 'react'
 
-import { PipelineNodes } from '@components/pipeline-nodes'
-import { CollapsedGroupNode } from '@components/pipeline-nodes/components/collapsed-group-node'
-
 import { SerialNodeInternalType } from '@harnessio/pipeline-graph'
+import { CollapsedGroupNode, PipelineNodes } from '@harnessio/ui/components'
 
 import { StageGroupAddInNodeContextMenu } from '../context-menu/stage-group-add-in-node-context-menu'
 import { StageGroupFloatingAddNodeContextMenu } from '../context-menu/stage-group-floating-add-node-context-menu'

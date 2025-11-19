@@ -1,11 +1,21 @@
 import { FC, useCallback, useEffect } from 'react'
 import { useForm } from 'react-hook-form'
 
-import { Alert, Button, ButtonLayout, ControlGroup, Dialog, FormInput, FormWrapper, Label } from '@/components'
-import { useTranslation } from '@/context'
 import { BranchSelectorListItem } from '@/views/repo'
 import { CreateTagFormFields, makeCreateTagFormSchema } from '@/views/repo/repo-tags/components/create-tag/schema'
 import { zodResolver } from '@hookform/resolvers/zod'
+
+import {
+  Alert,
+  Button,
+  ButtonLayout,
+  ControlGroup,
+  Dialog,
+  FormInput,
+  FormWrapper,
+  Label
+} from '@harnessio/ui/components'
+import { useTranslation } from '@harnessio/ui/context'
 
 const INITIAL_FORM_VALUES: CreateTagFormFields = {
   name: '',

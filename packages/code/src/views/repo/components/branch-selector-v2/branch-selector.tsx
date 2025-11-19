@@ -1,8 +1,9 @@
 import { forwardRef, useState } from 'react'
 
-import { Button, IconV2, Popover, Text, type ButtonSizes } from '@/components'
 import { BranchData, BranchSelectorListItem, BranchSelectorTab } from '@/views'
-import { cn } from '@utils/cn'
+
+import { Button, IconV2, Popover, Text, type ButtonSizes } from '@harnessio/ui/components'
+import { cn } from '@harnessio/ui/utils'
 
 import { BranchSelectorDropdown } from './branch-selector-dropdown'
 

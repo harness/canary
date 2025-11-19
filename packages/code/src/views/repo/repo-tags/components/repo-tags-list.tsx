@@ -1,5 +1,7 @@
 import { FC, useCallback, useMemo } from 'react'
 
+import { BranchSelectorListItem, CommitTagType, RepoTagsStore } from '@/views'
+
 import {
   ActionData,
   Avatar,
@@ -13,10 +15,9 @@ import {
   Table,
   Text,
   TimeAgoCard
-} from '@/components'
-import { useCustomDialogTrigger, useTranslation } from '@/context'
-import { BranchSelectorListItem, CommitTagType, RepoTagsStore } from '@/views'
-import { createPaginationLinks } from '@utils/utils'
+} from '@harnessio/ui/components'
+import { useCustomDialogTrigger, useTranslation } from '@harnessio/ui/context'
+import { createPaginationLinks } from '@harnessio/ui/utils'
 
 interface RepoTagsListProps {
   onDeleteTag: (tagName: string) => void

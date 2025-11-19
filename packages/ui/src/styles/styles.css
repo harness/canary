@@ -3,7 +3,7 @@
 @import url('@harnessio/core-design-system/core-styles');
 @import url('@harnessio/core-design-system/mfe-themes');
 
-@import 'highlight.js/styles/atom-one-dark.css';
+/* @import 'highlight.js/styles/atom-one-dark.css'; */
 
 @tailwind base;
 @tailwind components;
@@ -624,58 +624,6 @@ mark {
 
 .layer-low {
   @apply z-10;
-}
-
-/*  MONACO EDITOR  */
-.monaco-editor.monaco-editor {
-  --vscode-editorGutter-background: transparent;
-  --vscode-editor-background: transparent;
-  --vscode-editorLineNumber-foreground: var(--cn-text-3);
-  --vscode-editorLineNumber-activeForeground: var(--cn-text-1);
-  outline-color: transparent !important;
-}
-
-.monaco-editor .overflow-guard {
-  @apply border-cn-3 rounded-b-cn-3 border border-t-0;
-}
-
-.monaco-diff-editor .monaco-editor .overflow-guard {
-  @apply border-0;
-}
-
-.monaco-diff-editor .diffOverview .diffViewport {
-  background: var(--cn-comp-scrollbar-thumb, lch(20.5% 2.62 285.74));
-
-  &:hover {
-    background: var(--cn-comp-scrollbar-thumb, lch(20.5% 2.62 285.74));
-  }
-}
-
-.monaco-scrollable-element > .scrollbar > .slider {
-  border-radius: var(--cn-rounded-full, 0.25rem);
-  --vscode-scrollbarSlider-background: var(--cn-comp-scrollbar-thumb, lch(20.5% 2.62 285.74));
-}
-
-.monaco-diff-editor.side-by-side .editor.modified {
-  @apply !border-cn-2 !shadow-cn-none !border-l !border-solid;
-}
-
-/* In View Diff Renderer */
-.diffViewBlock {
-  @apply visible box-border flex h-auto min-h-[48px] flex-col;
-}
-
-/* .hidden extension */
-.diffViewBlock.hiddenDiff {
-  @apply invisible h-[var(--block-height)] [contain-intrinsic-height:auto_var(--block-height)] [content-visibility:auto];
-}
-
-.diffViewBlock.hiddenDiff > * {
-  visibility: hidden !important;
-}
-
-.diffViewBlock.hiddenDiff > * > * {
-  display: none !important;
 }
 
 .nested-sidebar-height {

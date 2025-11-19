@@ -1,9 +1,9 @@
 import { useEffect, useMemo, useState } from 'react'
 
-import { PipelineNodesComponents } from '@/components'
 import { parse } from 'yaml'
 
 import { AnyContainerNodeType, CanvasProvider, PipelineGraph } from '@harnessio/pipeline-graph'
+import { PipelineNodesComponents } from '@harnessio/ui/components'
 
 import { CanvasControls } from '../graph-implementation/canvas/canvas-controls'
 import { processSteps } from '../graph-implementation/utils/yaml-to-pipeline-graph'

@@ -1,5 +1,6 @@
 import { UsererrorError } from '@/types'
-import { MessageTheme } from '@components/form-primitives'
+
+import { MessageTheme } from '@harnessio/ui/components'
 
 import { RepoRepositoryOutput, TypesPrincipalInfo, TypesUserGroupInfo } from './pull-request'
 import { EnumBypassListType, NormalizedPrincipal, Rule } from './repo-branch-rules/types'

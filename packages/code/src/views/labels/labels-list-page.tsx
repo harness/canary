@@ -1,9 +1,10 @@
 import { FC, useCallback, useMemo } from 'react'
 
-import { Button, Checkbox, IconV2, Layout, ListActions, SearchInput, Skeleton, Text } from '@/components'
-import { useRouterContext, useTranslation } from '@/context'
 import { ILabelsStore } from '@/views'
-import { cn } from '@utils/cn'
+
+import { Button, Checkbox, IconV2, Layout, ListActions, SearchInput, Skeleton, Text } from '@harnessio/ui/components'
+import { useRouterContext, useTranslation } from '@harnessio/ui/context'
+import { cn } from '@harnessio/ui/utils'
 
 import { LabelsListView, LabelsListViewProps } from './components/labels-list-view'
 

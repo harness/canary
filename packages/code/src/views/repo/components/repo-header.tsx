@@ -1,7 +1,6 @@
-import { Alert, Favorite, Layout, Skeleton, StatusBadge, Text } from '@/components'
-import { useTranslation } from '@/context'
-import { cn } from '@/utils'
-import { formatDate } from '@/utils/TimeUtils'
+import { Alert, Favorite, Layout, Skeleton, StatusBadge, Text } from '@harnessio/ui/components'
+import { useTranslation } from '@harnessio/ui/context'
+import { cn, formatDate } from '@harnessio/ui/utils'
 
 interface RepoHeaderProps {
   name: string

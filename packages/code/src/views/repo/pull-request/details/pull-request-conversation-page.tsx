@@ -1,6 +1,5 @@
 import { FC } from 'react'
 
-import { Alert, Layout } from '@/components'
 import {
   PrincipalPropsType,
   PullRequestCommentBox,
@@ -17,6 +16,8 @@ import {
 } from '@/views'
 import { combineAndNormalizePrincipalsAndGroups } from '@views/repo/utils'
 import { noop } from 'lodash-es'
+
+import { Alert, Layout } from '@harnessio/ui/components'
 
 import { ExpandedCommentsContext, useExpandedCommentsContext } from './context/pull-request-comments-context'
 

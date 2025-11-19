@@ -1,6 +1,6 @@
 import { FC } from 'react'
 
-import { Text } from '@components/text'
+import { Text } from '@harnessio/ui/components'
 
 interface PanelAccordionShowButtonProps {
   isShowButton?: boolean

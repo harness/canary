@@ -1,6 +1,6 @@
 import { ChangeEvent, useRef } from 'react'
 
-import { Button, Card, IconV2, Input, Layout, Text } from '@/components'
+import { Button, Card, IconV2, Input, Layout, Text } from '@harnessio/ui/components'
 
 export interface FileUploadProps {
   selectedFile?: File

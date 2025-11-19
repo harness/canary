@@ -1,8 +1,8 @@
 import { FieldErrors, UseFormRegister, UseFormSetValue, UseFormWatch } from 'react-hook-form'
 
-import { MessageTheme } from '@components/index'
-import { MultiSelectOption } from '@components/multi-select'
 import { z } from 'zod'
+
+import { MessageTheme, MultiSelectOption } from '@harnessio/ui/components'
 
 import { MergeStrategy } from '../pull-request/details/pull-request-details-types'
 

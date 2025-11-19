@@ -1,11 +1,12 @@
 import { useEffect, useMemo, useState } from 'react'
 
-import { Button, CounterBadge, Dialog, DropdownMenu, IconV2, Layout, SplitButton } from '@/components'
-import { useTranslation } from '@/context'
 import { TypesUser } from '@/types'
 import { ChangedFilesShortInfo, DiffModeOptions, TypesCommit } from '@/views'
 import { DiffModeEnum } from '@git-diff-view/react'
-import { cn } from '@utils/index'
+
+import { Button, CounterBadge, Dialog, DropdownMenu, IconV2, Layout, SplitButton } from '@harnessio/ui/components'
+import { useTranslation } from '@harnessio/ui/context'
+import { cn } from '@harnessio/ui/utils'
 
 import {
   EnumPullReqReviewDecision,

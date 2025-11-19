@@ -1,5 +1,6 @@
-import { IconV2NamesType } from '@components/icon-v2'
 import { ScopeType } from '@views/common'
+
+import { IconV2NamesType } from '@harnessio/ui/components'
 
 export interface SecretReference {
   name: string

@@ -12,9 +12,11 @@
     "skipLibCheck": true,
     "paths": {
       "@views/*": ["src/views/*"],
-      "@components/*": ["@harnessio/ui/components"],
+      "@types/*": ["src/types/*"],
+      "@utils/*": ["src/utils/*"],
+      "@hooks/*": ["src/hooks/*"],
       "@/*": ["src/*"]
     }
   },
-  "exclude": ["node_modules", "dist"]
+  "exclude": ["node_modules", "dist", "__tests__"]
 }

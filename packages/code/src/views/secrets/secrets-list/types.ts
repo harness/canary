@@ -1,6 +1,6 @@
 import { Scope } from '@/views/common/types'
-import { SecretListFilters } from '@components/filters'
-import { PaginationProps } from '@components/index'
+
+import { PaginationProps, SecretListFilters } from '@harnessio/ui/components'
 
 interface RoutingProps {
   toSecretDetails: (secret: SecretListItem) => string

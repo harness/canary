@@ -1,8 +1,8 @@
 import { FC, useState } from 'react'
 
-import { Alert, Card, Layout, Link, Skeleton, Spacer, Text } from '@/components'
-import { useTranslation } from '@/context'
-import { cn } from '@utils/cn'
+import { Alert, Card, Layout, Link, Skeleton, Spacer, Text } from '@harnessio/ui/components'
+import { useTranslation } from '@harnessio/ui/context'
+import { cn } from '@harnessio/ui/utils'
 
 export type SemanticSearchResultItem = {
   commit: string

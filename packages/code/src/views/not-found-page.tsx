@@ -1,8 +1,9 @@
 import { FC } from 'react'
 
-import { Button, IconV2, Text } from '@/components'
-import { useTranslation } from '@/context'
 import { SandboxLayout } from '@/views'
+
+import { Button, IconV2, Text } from '@harnessio/ui/components'
+import { useTranslation } from '@harnessio/ui/context'
 
 export interface NotFoundPageProps {
   pageTypeText?: string

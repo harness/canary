@@ -1,6 +1,10 @@
 import { useEffect, useState } from 'react'
 import { SubmitHandler, useForm } from 'react-hook-form'
 
+import { SandboxLayout, TypesSpace } from '@/views'
+import { zodResolver } from '@hookform/resolvers/zod'
+import { z } from 'zod'
+
 import {
   Alert,
   Button,
@@ -15,11 +19,8 @@ import {
   Legend,
   Skeleton,
   Text
-} from '@/components'
-import { useTranslation } from '@/context'
-import { SandboxLayout, TypesSpace } from '@/views'
-import { zodResolver } from '@hookform/resolvers/zod'
-import { z } from 'zod'
+} from '@harnessio/ui/components'
+import { useTranslation } from '@harnessio/ui/context'
 
 interface ProjectSettingsGeneralPageProps {
   data?: TypesSpace

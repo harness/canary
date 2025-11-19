@@ -1,8 +1,8 @@
 import { FC, Fragment, ReactNode } from 'react'
 
-import { Layout, Link, ScrollArea, Separator, Text } from '@/components'
-import { useRouterContext } from '@/context'
-import { cn } from '@utils/cn'
+import { Layout, Link, ScrollArea, Separator, Text } from '@harnessio/ui/components'
+import { useRouterContext } from '@harnessio/ui/context'
+import { cn } from '@harnessio/ui/utils'
 
 import { SandboxLayout } from './SandboxLayout'
 

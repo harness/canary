@@ -1,9 +1,7 @@
 import { useMemo } from 'react'
 
-import { PipelineNodes } from '@components/pipeline-nodes'
-import { CollapsedGroupNode } from '@components/pipeline-nodes/components/collapsed-group-node'
-
 import { ParallelNodeInternalType } from '@harnessio/pipeline-graph'
+import { CollapsedGroupNode, PipelineNodes } from '@harnessio/ui/components'
 
 import { StepGroupNodeContextMenu } from '../context-menu/step-group-node-context-menu'
 import { usePipelineStudioNodeContext } from '../context/UnifiedPipelineStudioNodeContext'

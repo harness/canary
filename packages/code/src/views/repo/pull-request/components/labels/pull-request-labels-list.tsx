@@ -1,8 +1,9 @@
 import { FC } from 'react'
 
-import { Layout, Text } from '@/components'
-import { useTranslation } from '@/context'
 import { LabelTag, LabelTagProps, PRListLabelType } from '@/views'
+
+import { Layout, Text } from '@harnessio/ui/components'
+import { useTranslation } from '@harnessio/ui/context'
 
 type LabelListLabel = PRListLabelType &
   Omit<LabelTagProps, 'labelKey' | 'id' | 'value'> & {

@@ -1,6 +1,7 @@
-import { IconV2, NoData } from '@/components'
-import { useTranslation } from '@/context'
 import { useStates } from '@/views/user-management/providers/state-provider'
+
+import { IconV2, NoData } from '@harnessio/ui/components'
+import { useTranslation } from '@harnessio/ui/context'
 
 export const ErrorState = () => {
   const { t } = useTranslation()

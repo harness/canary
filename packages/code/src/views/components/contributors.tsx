@@ -1,4 +1,4 @@
-import { Avatar, AvatarTooltipProps, AvatarWithTooltip, Layout, StatusBadge, Text } from '@components/index'
+import { Avatar, AvatarTooltipProps, AvatarWithTooltip, Layout, StatusBadge, Text } from '@harnessio/ui/components'
 
 const TooltipContent = ({ contributor }: { contributor: ContributorsProps['contributors'][number] }) => (
   <Layout.Horizontal align="center" justify="between" className="m-cn-3xs">

@@ -13,7 +13,7 @@ interface SearchableDropdownProps<T> {
   isSearchable?: boolean
 }
 
-const SearchableDropdown = <T extends { label: string; value: string }>({
+export const SearchableDropdown = <T extends { label: string; value: string }>({
   displayLabel,
   dropdownAlign = 'end',
   onChange,
@@ -55,5 +55,3 @@ const SearchableDropdown = <T extends { label: string; value: string }>({
     </DropdownMenu.Root>
   )
 }
-
-export default SearchableDropdown

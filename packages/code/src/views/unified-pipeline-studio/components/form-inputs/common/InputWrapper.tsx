@@ -1,8 +1,7 @@
 import { useRef, useState } from 'react'
 
-import { Input } from '@components/index'
-
 import { AnyFormValue, InputProps, useController } from '@harnessio/forms'
+import { Input } from '@harnessio/ui/components'
 
 import { InputCaption, InputLabel } from '.'
 import { InputValueType, RuntimeInputConfig } from '../types/types'

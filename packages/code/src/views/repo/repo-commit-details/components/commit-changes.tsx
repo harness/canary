@@ -1,11 +1,12 @@
 import { FC, useCallback, useEffect, useMemo, useState } from 'react'
 
-import { Accordion, Button, CopyButton, Layout, Link, StackedList, StatusBadge } from '@/components'
-import { useTranslation } from '@/context'
 import { DiffModeEnum } from '@git-diff-view/react'
 import PullRequestDiffViewer from '@views/repo/pull-request/components/pull-request-diff-viewer'
 import { useDiffConfig } from '@views/repo/pull-request/hooks/useDiffConfig'
 import { parseStartingLineIfOne, PULL_REQUEST_LARGE_DIFF_CHANGES_LIMIT } from '@views/repo/pull-request/utils'
+
+import { Accordion, Button, CopyButton, Layout, Link, StackedList, StatusBadge } from '@harnessio/ui/components'
+import { useTranslation } from '@harnessio/ui/context'
 
 interface HeaderProps {
   text: string

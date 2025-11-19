@@ -1,11 +1,20 @@
 import { FC, useMemo } from 'react'
 
-import { Avatar, IconV2, IconWithTooltip, Layout, StackedList, Text } from '@/components'
-import { AvatarTooltipProps, AvatarWithTooltip } from '@components/avatar'
 import { EnumBypassListType } from '@views/repo'
 import { TypesPrincipalInfo, TypesUserGroupInfo } from '@views/repo/pull-request/details/pull-request-details-types'
 import { combineAndNormalizePrincipalsAndGroups } from '@views/repo/utils'
 import { isEmpty } from 'lodash-es'
+
+import {
+  Avatar,
+  AvatarTooltipProps,
+  AvatarWithTooltip,
+  IconV2,
+  IconWithTooltip,
+  Layout,
+  StackedList,
+  Text
+} from '@harnessio/ui/components'
 
 interface ReviewerPanelProps {
   principals?: TypesPrincipalInfo[]

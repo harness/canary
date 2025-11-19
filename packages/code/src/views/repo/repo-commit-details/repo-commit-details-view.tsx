@@ -1,8 +1,18 @@
 import { FC } from 'react'
 
-import { Avatar, Button, CommitCopyActions, IconV2, Layout, Skeleton, Text, TimeAgoCard } from '@/components'
-import { useRouterContext, useTranslation } from '@/context'
 import { ICommitDetailsStore, SandboxLayout } from '@/views'
+
+import {
+  Avatar,
+  Button,
+  CommitCopyActions,
+  IconV2,
+  Layout,
+  Skeleton,
+  Text,
+  TimeAgoCard
+} from '@harnessio/ui/components'
+import { useRouterContext, useTranslation } from '@harnessio/ui/context'
 
 import { CommitTitleWithPRLink } from '../components/CommitTitleWithPRLink'
 

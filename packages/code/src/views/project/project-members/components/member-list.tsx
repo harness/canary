@@ -1,9 +1,10 @@
 import { useCallback, useMemo } from 'react'
 
-import { Avatar, DropdownMenu, IconV2, MoreActionsTooltip, PaginationProps, Table } from '@/components'
-import { useCustomDialogTrigger, useTranslation } from '@/context'
 import { MembersProps } from '@/views'
 import { getRolesData } from '@views/project/project-members/constants'
+
+import { Avatar, DropdownMenu, IconV2, MoreActionsTooltip, PaginationProps, Table } from '@harnessio/ui/components'
+import { useCustomDialogTrigger, useTranslation } from '@harnessio/ui/context'
 
 interface MembersListProps {
   members: MembersProps[]

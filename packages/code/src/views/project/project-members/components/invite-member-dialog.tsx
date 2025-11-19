@@ -1,13 +1,23 @@
 import { FC, useMemo } from 'react'
 import { useForm } from 'react-hook-form'
 
-import { Alert, Button, ButtonLayout, Dialog, DropdownMenu, FormWrapper, Select, SelectValueOption } from '@/components'
-import { useTranslation } from '@/context'
 import { PrincipalType } from '@/types'
 import { InviteMemberDialogProps, InviteMemberFormFields } from '@/views'
 import { zodResolver } from '@hookform/resolvers/zod'
 import { getRolesData } from '@views/project/project-members/constants'
 import { z } from 'zod'
+
+import {
+  Alert,
+  Button,
+  ButtonLayout,
+  Dialog,
+  DropdownMenu,
+  FormWrapper,
+  Select,
+  SelectValueOption
+} from '@harnessio/ui/components'
+import { useTranslation } from '@harnessio/ui/context'
 
 export const inviteMemberFormSchema = z.object({
   member: z.string().min(1, { message: 'Member name is required' }),

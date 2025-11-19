@@ -1,6 +1,6 @@
 import { useForm } from 'react-hook-form'
 
-import { CardSelect } from '@components/card-select'
+import { CardSelect } from '@harnessio/ui/components'
 
 import { SecretType } from './types'
 

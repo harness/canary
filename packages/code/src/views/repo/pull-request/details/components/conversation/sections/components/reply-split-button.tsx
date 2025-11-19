@@ -1,6 +1,6 @@
 import { FC, useCallback, useState } from 'react'
 
-import { SplitButton } from '@/components'
+import { SplitButton } from '@harnessio/ui/components'
 
 interface ReplySplitButtonProps {
   isLoading?: boolean

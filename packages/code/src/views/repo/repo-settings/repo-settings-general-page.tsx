@@ -1,8 +1,9 @@
 import { FC } from 'react'
 
-import { FormSeparator, Layout, Text } from '@/components'
-import { useTranslation } from '@/context'
 import { BranchSelectorContainerProps } from '@/views/repo/components'
+
+import { FormSeparator, Layout, Text } from '@harnessio/ui/components'
+import { useTranslation } from '@harnessio/ui/context'
 
 import { RepoSettingsGeneralDelete } from './components/repo-settings-general-delete'
 import { RepoSettingsFeaturesForm, RepoSettingsFeaturesFormFields } from './components/repo-settings-general-features'

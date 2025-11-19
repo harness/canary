@@ -1,4 +1,4 @@
-import { DropdownMenu } from '@components/dropdown-menu'
+import { DropdownMenu } from '@harnessio/ui/components'
 
 import { usePipelineStudioNodeContext } from '../context/UnifiedPipelineStudioNodeContext'
 

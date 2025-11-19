@@ -1,4 +1,4 @@
-import { Layout, Link, Text, TextProps } from '@/components'
+import { Layout, Link, Text, TextProps } from '@harnessio/ui/components'
 
 interface CommitTitleWithPRLinkProps {
   commitMessage?: string

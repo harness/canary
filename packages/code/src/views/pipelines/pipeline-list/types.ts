@@ -1,5 +1,6 @@
 import { PipelineExecutionStatus } from '@/views'
-import { MeterState } from '@components/meter'
+
+import { MeterState } from '@harnessio/ui/components'
 
 export interface IPipeline {
   id: string

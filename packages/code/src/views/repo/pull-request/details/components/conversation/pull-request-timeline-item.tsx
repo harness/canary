@@ -1,6 +1,15 @@
 import { Children, FC, memo, ReactElement, ReactNode, useCallback, useEffect, useState } from 'react'
 
 import {
+  HandleUploadType,
+  PrincipalPropsType,
+  PrincipalsMentionMap,
+  PullRequestCommentBox,
+  TypesPullReqActivity
+} from '@/views'
+import { isEmpty } from 'lodash-es'
+
+import {
   Avatar,
   Button,
   DeleteAlertDialog,
@@ -13,17 +22,9 @@ import {
   Text,
   TextInput,
   TimeAgoCard
-} from '@/components'
-import { useCustomDialogTrigger } from '@/context'
-import {
-  HandleUploadType,
-  PrincipalPropsType,
-  PrincipalsMentionMap,
-  PullRequestCommentBox,
-  TypesPullReqActivity
-} from '@/views'
-import { cn } from '@utils/cn'
-import { isEmpty } from 'lodash-es'
+} from '@harnessio/ui/components'
+import { useCustomDialogTrigger } from '@harnessio/ui/context'
+import { cn } from '@harnessio/ui/utils'
 
 import { useExpandedComments } from '../../context/pull-request-comments-context'
 import { replaceEmailAsKey } from './utils'

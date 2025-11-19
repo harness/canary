@@ -2,6 +2,10 @@ import { FC, useEffect, useState } from 'react'
 import { useForm } from 'react-hook-form'
 import type { LinkProps } from 'react-router-dom'
 
+import { Floating1ColumnLayout } from '@/views'
+import { zodResolver } from '@hookform/resolvers/zod'
+import { z } from 'zod'
+
 import {
   Button,
   ControlGroup,
@@ -12,12 +16,9 @@ import {
   Link as StyledLink,
   LinkProps as StyledLinkProps,
   Text
-} from '@/components'
-import { TFunctionWithFallback, useRouterContext, useTheme, useTranslation } from '@/context'
-import { Floating1ColumnLayout } from '@/views'
-import { zodResolver } from '@hookform/resolvers/zod'
-import { cn } from '@utils/cn'
-import { z } from 'zod'
+} from '@harnessio/ui/components'
+import { TFunctionWithFallback, useRouterContext, useTheme, useTranslation } from '@harnessio/ui/context'
+import { cn } from '@harnessio/ui/utils'
 
 import { CreateProjectAnimatedLogo } from './create-project-animated-logo'
 

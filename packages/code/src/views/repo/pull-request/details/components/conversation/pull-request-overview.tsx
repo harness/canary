@@ -13,10 +13,11 @@ import {
   PrincipalPropsType,
   TypesPullReqActivity
 } from '@/views'
-import { Layout } from '@components/layout'
 import { PullRequestRegularAndCodeComment } from '@views/repo/pull-request/details/components/conversation/regular-and-code-comment'
 import { TypesPullReq } from '@views/repo/pull-request/pull-request.types'
 import { orderBy } from 'lodash-es'
+
+import { Layout } from '@harnessio/ui/components'
 
 import PRCommentView, { PRCommentViewProps } from '../common/pull-request-comment-view'
 import PullRequestDescBox from './pull-request-description-box'

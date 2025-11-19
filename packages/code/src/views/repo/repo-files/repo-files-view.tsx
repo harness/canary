@@ -1,7 +1,5 @@
 import { FC, ReactNode, useMemo } from 'react'
 
-import { IconV2, NoData, PathParts } from '@/components'
-import { useTranslation } from '@/context'
 import { UsererrorError } from '@/types'
 import {
   BranchInfoBar,
@@ -17,6 +15,9 @@ import {
   SandboxLayout,
   Summary
 } from '@/views'
+
+import { IconV2, NoData, PathParts } from '@harnessio/ui/components'
+import { useTranslation } from '@harnessio/ui/context'
 
 interface RepoFilesProps {
   pathParts: PathParts[]

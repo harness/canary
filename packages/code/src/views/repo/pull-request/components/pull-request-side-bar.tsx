@@ -1,6 +1,5 @@
 import { FC } from 'react'
 
-import { Layout, LinkProps } from '@/components'
 import {
   EnumPullReqReviewDecision,
   HandleAddLabelType,
@@ -12,6 +11,8 @@ import {
   PullReqReviewDecision,
   TypesScopesLabels
 } from '@/views'
+
+import { Layout, LinkProps } from '@harnessio/ui/components'
 
 import { LabelsHeader, LabelsList } from './labels'
 import { ReviewersHeader, ReviewersList } from './reviewers'

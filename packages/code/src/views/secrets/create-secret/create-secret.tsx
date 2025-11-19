@@ -1,6 +1,10 @@
 import { ChangeEvent, useEffect, useRef } from 'react'
 import { useForm, type SubmitHandler } from 'react-hook-form'
 
+import { SandboxLayout } from '@/views'
+import { zodResolver } from '@hookform/resolvers/zod'
+import { z } from 'zod'
+
 import {
   Accordion,
   Alert,
@@ -13,11 +17,8 @@ import {
   Input,
   Spacer,
   Text
-} from '@/components'
-import { useTranslation } from '@/context'
-import { SandboxLayout } from '@/views'
-import { zodResolver } from '@hookform/resolvers/zod'
-import { z } from 'zod'
+} from '@harnessio/ui/components'
+import { useTranslation } from '@harnessio/ui/context'
 
 import { SecretCreationType, SecretDataType } from '../types'
 

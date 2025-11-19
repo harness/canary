@@ -1,5 +1,9 @@
 import { useForm, type SubmitHandler } from 'react-hook-form'
 
+import { SandboxLayout } from '@/views'
+import { zodResolver } from '@hookform/resolvers/zod'
+import { z } from 'zod'
+
 import {
   Alert,
   Button,
@@ -12,10 +16,7 @@ import {
   Select,
   Spacer,
   Text
-} from '@/components'
-import { SandboxLayout } from '@/views'
-import { zodResolver } from '@hookform/resolvers/zod'
-import { z } from 'zod'
+} from '@harnessio/ui/components'
 
 import { ProviderOptionsEnum } from './types'
 

@@ -1,6 +1,6 @@
 import { ChangeEvent, useEffect, useState } from 'react'
 
-import { Button, ButtonLayout, Dialog, Textarea } from '@/components'
+import { Button, ButtonLayout, Dialog, Textarea } from '@harnessio/ui/components'
 
 interface EditRepoDetailsDialog {
   showEditRepoDetails: boolean

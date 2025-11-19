@@ -1,5 +1,6 @@
-import { Button, ButtonLayout } from '@/components'
 import { DirectionEnum, EntityReference, EntityRendererProps, SecretItem, secretsFilterTypes } from '@/views'
+
+import { Button, ButtonLayout } from '@harnessio/ui/components'
 
 export interface SecretReferenceProps {
   // Data

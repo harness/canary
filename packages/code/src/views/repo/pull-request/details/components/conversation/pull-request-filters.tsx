@@ -1,5 +1,5 @@
-import { DropdownMenu, IconV2, Text } from '@/components'
-import { cn } from '@utils/cn'
+import { DropdownMenu, IconV2, Text } from '@harnessio/ui/components'
+import { cn } from '@harnessio/ui/utils'
 
 interface DropdownMenuComponentProps<T> {
   items: T[]

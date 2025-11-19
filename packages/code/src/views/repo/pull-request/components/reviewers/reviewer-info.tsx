@@ -1,5 +1,4 @@
-import { Layout } from '@components/layout'
-import { Text } from '@components/text'
+import { Layout, Text } from '@harnessio/ui/components'
 
 type ReviewerInfoProps = {
   display_name: string

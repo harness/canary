@@ -1,7 +1,8 @@
-import { Button, ButtonLayout, CopyButton, Dialog, Input, Text } from '@/components'
-import { useTranslation } from '@/context'
 import { useUserManagementStore } from '@/views/user-management/providers/store-provider'
 import { useStates } from '@views/user-management/providers/state-provider'
+
+import { Button, ButtonLayout, CopyButton, Dialog, Input, Text } from '@harnessio/ui/components'
+import { useTranslation } from '@harnessio/ui/context'
 
 interface ResetPasswordDialogProps {
   handleUpdatePassword: (userId: string) => void

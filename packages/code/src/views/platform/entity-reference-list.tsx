@@ -1,6 +1,6 @@
 import { Fragment } from 'react'
 
-import { Breadcrumb, Button, ScrollArea, Skeleton, StackedList } from '@/components'
+import { Breadcrumb, Button, ScrollArea, Skeleton, StackedList } from '@harnessio/ui/components'
 
 import {
   BaseEntityProps,

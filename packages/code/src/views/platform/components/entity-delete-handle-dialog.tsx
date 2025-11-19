@@ -1,7 +1,7 @@
 import { useState } from 'react'
 
-import { Alert, AlertDialog, Button, Checkbox, Layout, Text } from '@/components'
-import { useTranslation } from '@/context'
+import { Alert, AlertDialog, Button, Checkbox, Layout, Text } from '@harnessio/ui/components'
+import { useTranslation } from '@harnessio/ui/context'
 
 interface EntityDeleteHandleDialogProps {
   isOpen: boolean

@@ -1,5 +1,7 @@
 import { FC, useMemo, useState } from 'react'
 
+import { EnumLabelColor, HandleAddLabelType, LabelTag, TypesLabelValueInfo } from '@/views'
+
 import {
   Button,
   DropdownMenu,
@@ -8,10 +10,9 @@ import {
   scopeTypeToIconMap,
   SearchInput,
   useSearchableDropdownKeyboardNavigation
-} from '@/components'
-import { useTranslation } from '@/context'
-import { wrapConditionalObjectElement } from '@/utils'
-import { EnumLabelColor, HandleAddLabelType, LabelTag, TypesLabelValueInfo } from '@/views'
+} from '@harnessio/ui/components'
+import { useTranslation } from '@harnessio/ui/context'
+import { wrapConditionalObjectElement } from '@harnessio/ui/utils'
 
 import { LabelsWithValueType } from './pull-request-labels-header'
 

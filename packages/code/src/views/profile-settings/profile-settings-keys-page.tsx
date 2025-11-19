@@ -1,8 +1,9 @@
 import { FC } from 'react'
 
-import { Alert, Button, Dialog, Fieldset, FormSeparator, Layout, Legend, Text } from '@/components'
-import { useTranslation } from '@/context'
 import { ApiErrorType } from '@/views'
+
+import { Alert, Button, Dialog, Fieldset, FormSeparator, Layout, Legend, Text } from '@harnessio/ui/components'
+import { useTranslation } from '@harnessio/ui/context'
 
 import { ProfileKeysList } from './components/profile-settings-keys-list'
 import { ProfileTokensList } from './components/profile-settings-tokens-list'

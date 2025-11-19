@@ -1,10 +1,8 @@
 import { useEffect, useRef, useState } from 'react'
 
-import { CounterBadge } from '@components/counter-badge'
-import { DropdownMenu } from '@components/dropdown-menu'
-import { SearchInput } from '@components/inputs'
-import { Text } from '@components/text'
 import { ColorsEnum, ILabelType, LabelTag, LabelValueType } from '@views/labels'
+
+import { CounterBadge, DropdownMenu, SearchInput, Text } from '@harnessio/ui/components'
 
 export type LabelsValue = Record<
   string,

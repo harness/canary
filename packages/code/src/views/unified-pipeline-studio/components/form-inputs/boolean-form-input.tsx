@@ -1,6 +1,5 @@
-import { Switch } from '@components/switch'
-
 import { IInputDefinition, InputComponent, InputProps, useController, type AnyFormValue } from '@harnessio/forms'
+import { Switch } from '@harnessio/ui/components'
 
 import { InputCaption } from './common/InputCaption'
 import { InputWrapper } from './common/InputWrapper'

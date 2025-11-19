@@ -1,7 +1,7 @@
 import { ReactElement, ReactNode } from 'react'
 
-import { Resizable } from '@/components'
-import { cn } from '@/utils'
+import { Resizable } from '@harnessio/ui/components'
+import { cn } from '@harnessio/ui/utils'
 
 export const HEADER_HEIGHT = 55
 

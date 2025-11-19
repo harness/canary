@@ -1,8 +1,9 @@
 import { FC } from 'react'
 
-import { Checkbox, FormInput, Radio, Switch } from '@/components'
-import { useTranslation } from '@/context'
 import { WebhookEvent, WebhookFormFieldProps, WebhookTriggerEnum } from '@/views'
+
+import { Checkbox, FormInput, Radio, Switch } from '@harnessio/ui/components'
+import { useTranslation } from '@harnessio/ui/context'
 
 export const WebhookToggleField: FC<WebhookFormFieldProps> = ({ register, watch, setValue }) => {
   const { t } = useTranslation()

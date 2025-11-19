@@ -1,9 +1,10 @@
 import { useEffect, useState } from 'react'
 import { useForm } from 'react-hook-form'
 
-import { Alert, Button, FormInput, FormWrapper, Link, Spacer, Text } from '@/components'
 import { zodResolver } from '@hookform/resolvers/zod'
 import { z } from 'zod'
+
+import { Alert, Button, FormInput, FormWrapper, Link, Spacer, Text } from '@harnessio/ui/components'
 
 import { Floating1ColumnLayout } from '..'
 import { Agreements } from './components/agreements'

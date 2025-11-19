@@ -1,8 +1,9 @@
-import { Accordion, IconV2, Layout, Link, StatusBadge, Text } from '@/components'
-import { useTranslation } from '@/context'
-import { cn, timeDistance } from '@/utils'
 import { EnumCheckStatus, ExecutionState, TypesPullReqCheck } from '@/views'
 import { PanelAccordionShowButton } from '@views/repo/pull-request/details/components/conversation/sections/panel-accordion-show-button'
+
+import { Accordion, IconV2, Layout, Link, StatusBadge, Text } from '@harnessio/ui/components'
+import { useTranslation } from '@harnessio/ui/context'
+import { cn, timeDistance } from '@harnessio/ui/utils'
 
 import { PullRequestRoutingProps } from '../../../pull-request-details-types'
 import { LineDescription, LineTitle } from './pull-request-line-title'

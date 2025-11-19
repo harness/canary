@@ -1,6 +1,6 @@
 import { FC } from 'react'
 
-import { Accordion, Table, Text } from '@/components'
+import { Accordion, Table, Text } from '@harnessio/ui/components'
 
 import { KeyValuePair, KeyValueTableProps } from './types'
 

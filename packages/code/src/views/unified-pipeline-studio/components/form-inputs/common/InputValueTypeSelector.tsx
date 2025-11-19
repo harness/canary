@@ -1,4 +1,4 @@
-import { Button, DropdownMenu } from '@components/index'
+import { Button, DropdownMenu } from '@harnessio/ui/components'
 
 import { InputValueType } from '../types/types'
 

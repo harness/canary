@@ -1,5 +1,6 @@
-import { IconV2, StatusBadge } from '@/components'
 import { ExecutionState } from '@views/repo/pull-request'
+
+import { IconV2, StatusBadge } from '@harnessio/ui/components'
 
 import { BadgeProps, ExecutionStatusProps } from './types'
 

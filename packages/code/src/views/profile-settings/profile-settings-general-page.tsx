@@ -1,6 +1,10 @@
 import { FC, useEffect, useState } from 'react'
 import { SubmitHandler, useForm } from 'react-hook-form'
 
+import { IProfileSettingsStore, ProfileSettingsErrorType } from '@/views'
+import { zodResolver } from '@hookform/resolvers/zod'
+import { z } from 'zod'
+
 import {
   Alert,
   Avatar,
@@ -14,11 +18,8 @@ import {
   Legend,
   Skeleton,
   Text
-} from '@/components'
-import { TFunctionWithFallback, useTranslation } from '@/context'
-import { IProfileSettingsStore, ProfileSettingsErrorType } from '@/views'
-import { zodResolver } from '@hookform/resolvers/zod'
-import { z } from 'zod'
+} from '@harnessio/ui/components'
+import { TFunctionWithFallback, useTranslation } from '@harnessio/ui/context'
 
 const makeProfileSchema = (t: TFunctionWithFallback) =>
   z.object({

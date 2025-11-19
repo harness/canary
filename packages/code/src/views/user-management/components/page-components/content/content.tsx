@@ -1,13 +1,14 @@
 import { useRef } from 'react'
 
-import { Spacer, Text } from '@/components'
-import { useTranslation } from '@/context'
 import { SandboxLayout } from '@/views'
 import { EmptyState } from '@/views/user-management/components/empty-state/empty-state'
 import { Actions } from '@/views/user-management/components/page-components/actions'
 import { UsersList } from '@/views/user-management/components/page-components/content/components/users-list'
 import { useStates } from '@/views/user-management/providers/state-provider'
 import { useUserManagementStore } from '@/views/user-management/providers/store-provider'
+
+import { Spacer, Text } from '@harnessio/ui/components'
+import { useTranslation } from '@harnessio/ui/context'
 
 import { ContentProps } from './types'
 

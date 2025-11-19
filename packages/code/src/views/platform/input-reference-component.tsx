@@ -1,5 +1,7 @@
 import { ForwardedRef, forwardRef, ReactNode, Ref } from 'react'
 
+import { cva, type VariantProps } from 'class-variance-authority'
+
 import {
   ButtonGroup,
   CommonInputsProp,
@@ -13,9 +15,8 @@ import {
   LogoPropsV2,
   LogoV2,
   Text
-} from '@/components'
-import { cn } from '@utils/cn'
-import { cva, type VariantProps } from 'class-variance-authority'
+} from '@harnessio/ui/components'
+import { cn } from '@harnessio/ui/utils'
 
 const inputReferenceVariants = cva(
   'h-cn-input-md border-cn-input rounded-cn-input bg-cn-input text-cn-1 flex cursor-pointer select-none items-center transition-colors min-w-0 grow',

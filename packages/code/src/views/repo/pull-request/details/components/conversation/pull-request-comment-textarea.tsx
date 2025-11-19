@@ -1,9 +1,9 @@
 import { forwardRef, useCallback, useEffect, useRef, useState } from 'react'
 
-import { IconV2, Textarea, TextareaProps } from '@/components'
-import { Command } from '@components/command'
-import { cn } from '@utils/cn'
 import { Command as CommandPrimitive } from 'cmdk'
+
+import { Command, IconV2, Textarea, TextareaProps } from '@harnessio/ui/components'
+import { cn } from '@harnessio/ui/utils'
 
 import { PrincipalPropsType, PrincipalsMentionMap } from '../../pull-request-details-types'
 import { getCaretCoordinates, getCurrentWord, replaceWord } from './utils'

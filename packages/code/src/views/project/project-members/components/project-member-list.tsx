@@ -1,7 +1,7 @@
 import { FC } from 'react'
 
-import { NoData, Skeleton } from '@/components'
-import { useTranslation } from '@/context'
+import { NoData, Skeleton } from '@harnessio/ui/components'
+import { useTranslation } from '@harnessio/ui/context'
 
 import { MembersList } from './member-list'
 import { ProjectMembersListProps } from './types'

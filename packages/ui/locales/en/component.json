@@ -149,6 +149,31 @@
     "noResults": "No results found",
     "noOptions": "No options available"
   },
+  "pagination": {
+    "goToPreviousPage": "Go to previous page",
+    "goToNextPage": "Go to next page",
+    "morePages": "More pages",
+    "itemsPerPage": "items per page",
+    "pageOf": "Page {{currentPage}} of {{totalPages}}",
+    "page": "Page {{currentPage}}",
+    "previous": "Prev",
+    "next": "Next"
+  },
+  "searchFile": {
+    "noFile": "No file found."
+  },
+  "sidebar": {
+    "sidebarToggle": {
+      "expand": "Expand",
+      "collapse": "Collapse"
+    },
+    "toggle": "Toggle sidebar",
+    "collapse": "Collapse",
+    "expand": "Expand"
+  },
+  "widgets": {
+    "viewMore": "View more"
+  },
   "commitDialog": {
     "title": "Commit changes",
     "form": {
@@ -196,31 +221,6 @@
     }
   },
   "cancel": "Cancel",
-  "pagination": {
-    "goToPreviousPage": "Go to previous page",
-    "goToNextPage": "Go to next page",
-    "morePages": "More pages",
-    "itemsPerPage": "items per page",
-    "pageOf": "Page {{currentPage}} of {{totalPages}}",
-    "page": "Page {{currentPage}}",
-    "previous": "Prev",
-    "next": "Next"
-  },
-  "searchFile": {
-    "noFile": "No file found."
-  },
-  "sidebar": {
-    "sidebarToggle": {
-      "expand": "Expand",
-      "collapse": "Collapse"
-    },
-    "toggle": "Toggle sidebar",
-    "collapse": "Collapse",
-    "expand": "Expand"
-  },
-  "widgets": {
-    "viewMore": "View more"
-  },
   "sort": {
     "defaultLabel": "Sort",
     "resetSort": "Reset sort",

@@ -1,9 +1,6 @@
 import { FC, useCallback, useMemo, useRef, useState } from 'react'
 
-import { Layout, Skeleton } from '@/components'
-import { TypesUser } from '@/types'
 import { DiffModeEnum } from '@git-diff-view/react'
-import { cn } from '@utils/cn'
 import {
   activityToCommentItem,
   FILE_VIEWED_OBSOLETE_SHA,
@@ -12,6 +9,10 @@ import {
   TypesCommit
 } from '@views/index'
 import { chunk, orderBy } from 'lodash-es'
+
+import { Layout, Skeleton } from '@harnessio/ui/components'
+import { TypesUser } from '@harnessio/ui/types'
+import { cn } from '@harnessio/ui/utils'
 
 import { DraggableSidebarDivider, SIDEBAR_MIN_WIDTH } from '../../components/draggable-sidebar-divider'
 import { PullRequestDiffSidebar } from '../components/pull-request-diff-sidebar'

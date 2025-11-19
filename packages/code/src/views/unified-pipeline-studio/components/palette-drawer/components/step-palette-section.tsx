@@ -1,7 +1,6 @@
 import { forwardRef } from 'react'
 
-import { IconV2 } from '@components/icon-v2'
-import { Text } from '@components/text'
+import { IconV2, Text } from '@harnessio/ui/components'
 
 import { StepsPaletteContentLayout } from './step-palette-content-layout'
 import { StepsPaletteItemLayout } from './step-palette-item-layout'

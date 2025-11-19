@@ -1,9 +1,10 @@
 import { FC, useCallback, useMemo } from 'react'
 
-import { Button, Dialog, IconV2, Layout, ListActions, NoData, SearchInput, Text } from '@/components'
-import { useTranslation } from '@/context'
 import { SandboxLayout } from '@/views'
-import { cn } from '@utils/cn'
+
+import { Button, Dialog, IconV2, Layout, ListActions, NoData, SearchInput, Text } from '@harnessio/ui/components'
+import { useTranslation } from '@harnessio/ui/context'
+import { cn } from '@harnessio/ui/utils'
 
 import { BranchesList } from './components/branch-list'
 import { RepoBranchListViewProps } from './types'

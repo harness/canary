@@ -1,5 +1,8 @@
 import { useMemo, useRef } from 'react'
 
+import { EnumBypassListType, NormalizedPrincipal, PRReviewer } from '@/views'
+import { debounce } from 'lodash-es'
+
 import {
   Button,
   DropdownMenu,
@@ -8,10 +11,8 @@ import {
   SearchInput,
   Text,
   useSearchableDropdownKeyboardNavigation
-} from '@/components'
-import { useTranslation } from '@/context'
-import { EnumBypassListType, NormalizedPrincipal, PRReviewer } from '@/views'
-import { debounce } from 'lodash-es'
+} from '@harnessio/ui/components'
+import { useTranslation } from '@harnessio/ui/context'
 
 import { ReviewerInfo } from './reviewer-info'
 

@@ -1,6 +1,6 @@
 import { JSX } from 'react'
 
-import { Calendar, Input, Popover } from '@/components'
+import { Calendar, Input, Popover } from '@harnessio/ui/components'
 
 export interface CalendarInputViewProps {
   value?: string

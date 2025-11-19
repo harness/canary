@@ -1,7 +1,5 @@
 import { FC, memo, useCallback, useState } from 'react'
 
-import { Avatar, CopyButton, IconV2, Layout, Link, Separator, Tag, Text, TextInput, TimeAgoCard } from '@/components'
-import { useTranslation } from '@/context'
 import {
   activitiesToDiffCommentItems,
   CommentItem,
@@ -14,7 +12,6 @@ import {
   TypesPullReqActivity
 } from '@/views'
 import { DiffModeEnum } from '@git-diff-view/react'
-import { cn } from '@utils/cn'
 import PullRequestDiffViewer from '@views/repo/pull-request/components/pull-request-diff-viewer'
 import { PRCommentViewProps } from '@views/repo/pull-request/details/components/common/pull-request-comment-view'
 import PullRequestTimelineItem, {
@@ -23,6 +20,21 @@ import PullRequestTimelineItem, {
 import { useDiffConfig } from '@views/repo/pull-request/hooks/useDiffConfig'
 import { parseStartingLineIfOne, quoteTransform } from '@views/repo/pull-request/utils'
 import { get } from 'lodash-es'
+
+import {
+  Avatar,
+  CopyButton,
+  IconV2,
+  Layout,
+  Link,
+  Separator,
+  Tag,
+  Text,
+  TextInput,
+  TimeAgoCard
+} from '@harnessio/ui/components'
+import { useTranslation } from '@harnessio/ui/context'
+import { cn } from '@harnessio/ui/utils'
 
 import { useExpandedComments } from '../../context/pull-request-comments-context'
 import { replaceEmailAsKey, replaceMentionIdWithEmail } from './utils'

@@ -1,8 +1,5 @@
 import { useCallback, useEffect, useRef, useState } from 'react'
 
-import { Avatar, Layout, Separator, Tag, Text, TextInput, TimeAgoCard } from '@/components'
-import { useTheme, useTranslation } from '@/context'
-import { TypesUser } from '@/types'
 import {
   activitiesToDiffCommentItems,
   CommentItem,
@@ -16,12 +13,15 @@ import {
 } from '@/views'
 import { DiffFile, DiffModeEnum, DiffViewProps, SplitSide } from '@git-diff-view/react'
 import { useCustomEventListener } from '@hooks/use-event-listener'
-import { useResizeObserver } from '@hooks/use-resize-observer'
-import { cn } from '@utils/cn'
-import { getInitials } from '@utils/stringUtils'
 import { DiffBlock } from 'diff2html/lib/types'
 import { debounce, get } from 'lodash-es'
 import { OverlayScrollbars } from 'overlayscrollbars'
+
+import { Avatar, Layout, Separator, Tag, Text, TextInput, TimeAgoCard } from '@harnessio/ui/components'
+import { useTheme, useTranslation } from '@harnessio/ui/context'
+import { useResizeObserver } from '@harnessio/ui/hooks'
+import { TypesUser } from '@harnessio/ui/types'
+import { cn, getInitials } from '@harnessio/ui/utils'
 
 import PRCommentView from '../details/components/common/pull-request-comment-view'
 import {

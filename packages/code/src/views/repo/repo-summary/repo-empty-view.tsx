@@ -1,6 +1,7 @@
-import { Alert, Button, Layout, MarkdownViewer, NoData, Text } from '@/components'
-import { useTranslation } from '@/context'
 import { SandboxLayout } from '@/views'
+
+import { Alert, Button, Layout, MarkdownViewer, NoData, Text } from '@harnessio/ui/components'
+import { useTranslation } from '@harnessio/ui/context'
 
 interface RepoEmptyViewProps {
   repoName: string

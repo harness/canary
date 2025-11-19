@@ -1,8 +1,9 @@
 import { FC, ReactNode } from 'react'
 
-import { StatsPanel, Tabs, Text, TimeAgoCard } from '@/components'
-import { useRouterContext, useTranslation } from '@/context'
 import { Page, type SecretListItem } from '@/views'
+
+import { StatsPanel, Tabs, Text, TimeAgoCard } from '@harnessio/ui/components'
+import { useRouterContext, useTranslation } from '@harnessio/ui/context'
 
 interface SecretDetailsLayoutProps {
   secret: SecretListItem

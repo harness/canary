@@ -1,6 +1,6 @@
 import { RefObject, useCallback, useEffect, useRef } from 'react'
 
-import { useResizeObserver } from '@hooks/use-resize-observer'
+import { useResizeObserver } from '@harnessio/ui/hooks'
 
 interface UseInViewDiffRendererOptions {
   rootMargin?: string

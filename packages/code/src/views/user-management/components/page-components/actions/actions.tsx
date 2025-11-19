@@ -1,9 +1,10 @@
 import { forwardRef } from 'react'
 
-import { Button, Dialog, IconV2, ListActions, SearchInput } from '@/components'
-import { useTranslation } from '@/context'
 import { DialogLabels } from '@/views/user-management/components/dialogs'
 import { useDialogData } from '@/views/user-management/components/dialogs/hooks/use-dialog-data'
+
+import { Button, Dialog, IconV2, ListActions, SearchInput } from '@harnessio/ui/components'
+import { useTranslation } from '@harnessio/ui/context'
 
 interface ActionProps {
   searchQuery: string | null

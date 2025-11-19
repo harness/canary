@@ -1,5 +1,6 @@
-import { TFunctionWithFallback, useRouterContext, useTranslation } from '@/context'
 import { ContentLayoutWithSidebar } from '@/views'
+
+import { TFunctionWithFallback, useRouterContext, useTranslation } from '@harnessio/ui/context'
 
 const getNavItems = (t: TFunctionWithFallback) => [
   {

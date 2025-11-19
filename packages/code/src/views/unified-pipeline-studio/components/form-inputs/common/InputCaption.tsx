@@ -1,4 +1,4 @@
-import { FormCaption } from '@components/index'
+import { FormCaption } from '@harnessio/ui/components'
 
 export interface InputCaptionProps {
   error?: string

@@ -1,5 +1,5 @@
-import { IconV2 } from '@/components'
-import { cn } from '@utils/cn'
+import { IconV2 } from '@harnessio/ui/components'
+import { cn } from '@harnessio/ui/utils'
 
 interface AnimatedHarnessLogoProps {
   theme: 'error' | 'green' | 'blue'

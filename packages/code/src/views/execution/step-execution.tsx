@@ -1,7 +1,7 @@
 import { FC, useState } from 'react'
 
-import { Button, IconV2, Layout, ScrollArea, SearchInput, Shortcut, Tabs } from '@/components'
-import { cn } from '@utils/cn'
+import { Button, IconV2, Layout, ScrollArea, SearchInput, Shortcut, Tabs } from '@harnessio/ui/components'
+import { cn } from '@harnessio/ui/utils'
 
 import ConsoleLogs from './console-logs'
 import { KeyValueTable } from './key-value-table'

@@ -1,4 +1,4 @@
-import { Button, IconV2, Tabs } from '@components/index'
+import { Button, IconV2, Tabs } from '@harnessio/ui/components'
 
 import { UnifiedPipelineStudioProblemsPanel } from './panel/unified-pipeline-studio-problems-panel'
 

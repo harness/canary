@@ -1,17 +1,6 @@
 import { useMemo, useRef, useState } from 'react'
 
 import {
-  Button,
-  DropdownMenu,
-  IconV2,
-  Link,
-  LinkProps,
-  SearchInput,
-  Text,
-  useSearchableDropdownKeyboardNavigation
-} from '@/components'
-import { useTranslation } from '@/context'
-import {
   HandleAddLabelType,
   ILabelType,
   LabelAssignmentType,
@@ -22,6 +11,18 @@ import {
   TypesScopesLabels
 } from '@/views'
 import { debounce, isEmpty } from 'lodash-es'
+
+import {
+  Button,
+  DropdownMenu,
+  IconV2,
+  Link,
+  LinkProps,
+  SearchInput,
+  Text,
+  useSearchableDropdownKeyboardNavigation
+} from '@harnessio/ui/components'
+import { useTranslation } from '@harnessio/ui/context'
 
 import { LabelValueSelector } from './label-value-selector'
 

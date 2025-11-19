@@ -1,8 +1,18 @@
 import { FC, useEffect, useState } from 'react'
 
-import { Avatar, Button, IconV2, Layout, MarkdownViewer, MoreActionsTooltip, Text, TimeAgoCard } from '@/components'
 import { HandleAiPullRequestSummaryType, HandleUploadType, PrincipalPropsType } from '@/views'
 import { noop } from 'lodash-es'
+
+import {
+  Avatar,
+  Button,
+  IconV2,
+  Layout,
+  MarkdownViewer,
+  MoreActionsTooltip,
+  Text,
+  TimeAgoCard
+} from '@harnessio/ui/components'
 
 import { PullRequestCommentBox } from './pull-request-comment-box'
 import PullRequestTimelineItem from './pull-request-timeline-item'

@@ -1,6 +1,18 @@
 import { FC, Fragment, useMemo, useState } from 'react'
 
 import {
+  BranchRuleId,
+  EnumBypassListType,
+  FieldProps,
+  getBranchRules,
+  MergeStrategy,
+  NormalizedPrincipal,
+  PatternsButtonType,
+  Rule
+} from '@/views'
+import { isEmpty } from 'lodash-es'
+
+import {
   Checkbox,
   ControlGroup,
   Fieldset,
@@ -14,25 +26,14 @@ import {
   MultiSelectOption,
   NumberInput,
   ResetTag,
+  Separator,
   SplitButton,
   Switch,
   Text
-} from '@/components'
-import { Separator } from '@/components/separator'
-import { useTranslation } from '@/context'
-import {
-  BranchRuleId,
-  EnumBypassListType,
-  FieldProps,
-  getBranchRules,
-  MergeStrategy,
-  NormalizedPrincipal,
-  PatternsButtonType,
-  Rule
-} from '@/views'
-import { useDebounceSearch } from '@hooks/use-debounce-search'
-import { cn } from '@utils/cn'
-import { isEmpty } from 'lodash-es'
+} from '@harnessio/ui/components'
+import { useTranslation } from '@harnessio/ui/context'
+import { useDebounceSearch } from '@harnessio/ui/hooks'
+import { cn } from '@harnessio/ui/utils'
 
 import { getIcon } from '../../utils'
 

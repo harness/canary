@@ -1,8 +1,6 @@
 import { useEffect } from 'react'
 import { useForm } from 'react-hook-form'
 
-import { Button, ButtonLayout, Dialog, FormInput, FormWrapper, Text } from '@/components'
-import { useTranslation } from '@/context'
 import {
   createEditUserSchema,
   type EditUserFields
@@ -10,6 +8,9 @@ import {
 import { useUserManagementStore } from '@/views/user-management/providers/store-provider'
 import { zodResolver } from '@hookform/resolvers/zod'
 import { useStates } from '@views/user-management/providers/state-provider'
+
+import { Button, ButtonLayout, Dialog, FormInput, FormWrapper, Text } from '@harnessio/ui/components'
+import { useTranslation } from '@harnessio/ui/context'
 
 interface EditUserDialogProps {
   handleUpdateUser: (data: EditUserFields) => void

@@ -1,9 +1,10 @@
 import { ComponentProps, FC } from 'react'
 
-import { Button, FormInput, FormSelectProps, IconV2, Layout, SelectValueOption, Text } from '@/components'
-import { useTranslation } from '@/context'
-import { cn } from '@/utils'
 import { ColorsEnum } from '@/views'
+
+import { Button, FormInput, FormSelectProps, IconV2, Layout, SelectValueOption, Text } from '@harnessio/ui/components'
+import { useTranslation } from '@harnessio/ui/context'
+import { cn } from '@harnessio/ui/utils'
 
 interface LabelFormColorAndNameGroupProps {
   className?: string

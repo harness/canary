@@ -1,6 +1,5 @@
 import { ElementType, useEffect, useState } from 'react'
 
-import { Button, ButtonLayout, Drawer, EntityFormLayout, IconV2, Skeleton, Text } from '@/components'
 import { useUnifiedPipelineStudioContext } from '@views/unified-pipeline-studio/context/unified-pipeline-studio-context'
 import { addNameInput } from '@views/unified-pipeline-studio/utils/entity-form-utils'
 import { get, isEmpty, isUndefined, omit, omitBy } from 'lodash-es'
@@ -15,6 +14,7 @@ import {
   RootForm,
   useZodValidationResolver
 } from '@harnessio/forms'
+import { Button, ButtonLayout, Drawer, EntityFormLayout, IconV2, Skeleton, Text } from '@harnessio/ui/components'
 
 import { getHarnessSteOrGroupIdentifier, getHarnessStepOrGroupDefinition, isHarnessGroup } from '../steps/harness-steps'
 import { TEMPLATE_CD_STEP_IDENTIFIER, TEMPLATE_CI_STEP_IDENTIFIER } from '../steps/types'

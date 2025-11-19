@@ -1,4 +1,4 @@
-import { Drawer } from '@/components'
+import { Drawer } from '@harnessio/ui/components'
 
 import { useUnifiedPipelineStudioContext } from '../context/unified-pipeline-studio-context'
 import { RightDrawer } from '../types/right-drawer-types'

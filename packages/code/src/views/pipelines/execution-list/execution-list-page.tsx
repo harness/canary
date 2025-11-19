@@ -1,8 +1,9 @@
 import { FC } from 'react'
 
-import { Button, ListActions, Pagination, SearchInput, Spacer, Text } from '@/components'
-import { useRouterContext } from '@/context'
 import { SandboxLayout } from '@/views'
+
+import { Button, ListActions, Pagination, SearchInput, Spacer, Text } from '@harnessio/ui/components'
+import { useRouterContext } from '@harnessio/ui/context'
 
 import { ExecutionList } from './execution-list'
 import { IExecutionListPageProps } from './types'

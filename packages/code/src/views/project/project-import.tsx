@@ -1,6 +1,11 @@
 import { useEffect } from 'react'
 import { useForm, type SubmitHandler } from 'react-hook-form'
 
+import { SandboxLayout } from '@/views'
+import { zodResolver } from '@hookform/resolvers/zod'
+import { ProviderOptionsEnum } from '@views/repo/repo-import/types'
+import { z } from 'zod'
+
 import {
   Button,
   ButtonLayout,
@@ -11,11 +16,7 @@ import {
   FormWrapper,
   Spacer,
   Text
-} from '@/components'
-import { SandboxLayout } from '@/views'
-import { zodResolver } from '@hookform/resolvers/zod'
-import { ProviderOptionsEnum } from '@views/repo/repo-import/types'
-import { z } from 'zod'
+} from '@harnessio/ui/components'
 
 const formSchema = z
   .object({

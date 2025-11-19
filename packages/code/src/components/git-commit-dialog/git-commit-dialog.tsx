@@ -1,6 +1,10 @@
 import { FC, useEffect } from 'react'
 import { SubmitHandler, useForm } from 'react-hook-form'
 
+import { UsererrorError, ViolationState } from '@/types'
+import { zodResolver } from '@hookform/resolvers/zod'
+import { z } from 'zod'
+
 import {
   Button,
   ButtonLayout,
@@ -15,11 +19,8 @@ import {
   MessageTheme,
   Radio,
   Tag
-} from '@/components'
-import { useTranslation } from '@/context'
-import { UsererrorError, ViolationState } from '@/types'
-import { zodResolver } from '@hookform/resolvers/zod'
-import { z } from 'zod'
+} from '@harnessio/ui/components'
+import { useTranslation } from '@harnessio/ui/context'
 
 export const createGitCommitSchema = (isFileNameRequired: boolean) => {
   const fileNameSchema = isFileNameRequired ? z.string().min(1, 'File Name is required') : z.string().optional()

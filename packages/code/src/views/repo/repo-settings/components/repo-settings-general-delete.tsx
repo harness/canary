@@ -1,5 +1,7 @@
 import { FC } from 'react'
 
+import { ErrorTypes } from '@/views'
+
 import {
   Button,
   ButtonLayout,
@@ -9,9 +11,8 @@ import {
   PermissionIdentifier,
   ResourceType,
   Text
-} from '@/components'
-import { useComponents, useTranslation } from '@/context'
-import { ErrorTypes } from '@/views'
+} from '@harnessio/ui/components'
+import { useComponents, useTranslation } from '@harnessio/ui/context'
 
 export const RepoSettingsGeneralDelete: FC<{
   isLoading?: boolean

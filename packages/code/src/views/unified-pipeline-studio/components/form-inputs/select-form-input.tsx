@@ -1,7 +1,5 @@
 import { useEffect, useMemo } from 'react'
 
-import { Select } from '@components/form-primitives'
-
 import {
   IInputDefinition,
   InputComponent,
@@ -10,6 +8,7 @@ import {
   useFormContext,
   type AnyFormValue
 } from '@harnessio/forms'
+import { Select } from '@harnessio/ui/components'
 
 import { InputWrapper } from './common/InputWrapper'
 import { RuntimeInputConfig } from './types/types'

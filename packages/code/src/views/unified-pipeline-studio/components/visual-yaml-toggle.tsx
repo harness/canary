@@ -1,4 +1,4 @@
-import { IconPropsV2, ToggleGroup } from '@/components'
+import { IconPropsV2, ToggleGroup } from '@harnessio/ui/components'
 
 export type VisualYamlValue = 'visual' | 'yaml'
 

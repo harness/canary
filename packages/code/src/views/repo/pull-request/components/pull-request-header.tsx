@@ -1,5 +1,7 @@
 import { useCallback, useState } from 'react'
 
+import { BranchSelectorContainerProps } from '@views/repo'
+
 import {
   Avatar,
   BranchTag,
@@ -11,9 +13,8 @@ import {
   StatusBadge,
   Text,
   TimeAgoCard
-} from '@/components'
-import { cn } from '@utils/cn'
-import { BranchSelectorContainerProps } from '@views/repo'
+} from '@harnessio/ui/components'
+import { cn } from '@harnessio/ui/utils'
 
 import { getPrState } from '../utils'
 import { PullRequestHeaderEditDialog } from './pull-request-header-edit-dialog'

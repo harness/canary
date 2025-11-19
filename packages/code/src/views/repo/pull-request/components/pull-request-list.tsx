@@ -1,9 +1,10 @@
 import { FC, useMemo } from 'react'
 
-import { IconV2, NoData, Skeleton, StackedList } from '@/components'
-import { useTranslation } from '@/context'
-import { cn } from '@/utils'
 import { EnumPullReqState, PullRequest, PullRequestListProps } from '@/views'
+
+import { IconV2, NoData, Skeleton, StackedList } from '@harnessio/ui/components'
+import { useTranslation } from '@harnessio/ui/context'
+import { cn } from '@harnessio/ui/utils'
 
 import { PullRequestItemDescription } from './pull-request-item-description'
 import { PullRequestItemTitle } from './pull-request-item-title'

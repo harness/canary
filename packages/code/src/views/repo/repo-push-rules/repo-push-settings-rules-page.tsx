@@ -1,11 +1,12 @@
 import { FC, useEffect } from 'react'
 import { SubmitHandler, useForm } from 'react-hook-form'
 
-import { Button, ButtonLayout, FormSeparator, FormWrapper, Layout, Text } from '@/components'
-import { useRouterContext, useTranslation } from '@/context'
 import { IProjectRulesStore, IRepoStore } from '@/views'
 import { zodResolver } from '@hookform/resolvers/zod'
-import { cn } from '@utils/cn'
+
+import { Button, ButtonLayout, FormSeparator, FormWrapper, Layout, Text } from '@harnessio/ui/components'
+import { useRouterContext, useTranslation } from '@harnessio/ui/context'
+import { cn } from '@harnessio/ui/utils'
 
 import { TargetRepoSelectorForPushRules } from '../components/target-repo-selector/target-repo-selector'
 import { combineAndNormalizePrincipalsAndGroups, RepoQueryObject } from '../utils'

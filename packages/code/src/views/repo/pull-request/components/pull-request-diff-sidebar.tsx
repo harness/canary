@@ -1,7 +1,7 @@
 import { FC, useRef } from 'react'
 
-import { Button, IconV2, Layout, ScrollArea, SearchFiles, Text } from '@/components'
-import { useTranslation } from '@/context'
+import { Button, IconV2, Layout, ScrollArea, SearchFiles, Text } from '@harnessio/ui/components'
+import { useTranslation } from '@harnessio/ui/context'
 
 import { SIDEBAR_MAX_WIDTH, SIDEBAR_MIN_WIDTH } from '../../components/draggable-sidebar-divider'
 import {

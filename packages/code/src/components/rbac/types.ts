@@ -1,9 +1,12 @@
 import { RefAttributes } from 'react'
 
-import { ActionData, MoreActionsTooltipProps } from '@/components'
-import { ButtonProps } from '@components/button'
-import { SplitButtonProps } from '@components/split-button'
-import { TooltipProps } from '@components/tooltip'
+import {
+  ActionData,
+  ButtonProps,
+  MoreActionsTooltipProps,
+  SplitButtonProps,
+  TooltipProps
+} from '@harnessio/ui/components'
 
 /**
  * @todo Replace with types from @harness/microfrontends once its accessible in the monorepo

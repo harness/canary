@@ -1,6 +1,5 @@
 import { ElementType, Fragment, useEffect, useState } from 'react'
 
-import { Button, ButtonLayout, Drawer, EntityFormLayout, IconV2 } from '@/components'
 import { get } from 'lodash-es'
 import { parse } from 'yaml'
 
@@ -12,6 +11,7 @@ import {
   RootForm,
   useZodValidationResolver
 } from '@harnessio/forms'
+import { Button, ButtonLayout, Drawer, EntityFormLayout, IconV2 } from '@harnessio/ui/components'
 
 import { useUnifiedPipelineStudioContext } from '../../context/unified-pipeline-studio-context'
 import { basicStageFormDefinition } from './form-definition/stage-form-definition'

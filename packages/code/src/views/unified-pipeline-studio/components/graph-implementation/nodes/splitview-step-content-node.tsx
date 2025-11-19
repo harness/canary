@@ -1,9 +1,7 @@
 import { useMemo } from 'react'
 
-import { PipelineNodes } from '@components/pipeline-nodes'
-import { ExecutionStatusType } from '@components/pipeline-nodes/types/types'
-
 import { LeafNodeInternalType } from '@harnessio/pipeline-graph'
+import { ExecutionStatusType, PipelineNodes } from '@harnessio/ui/components'
 
 import { GlobalData } from '../../../types/common-types'
 import { StageFloatingAddNodeContextMenu } from '../context-menu/stage-floating-add-node-context-menu'

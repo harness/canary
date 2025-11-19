@@ -1,13 +1,14 @@
 import { useCallback } from 'react'
 
-import { Avatar, MoreActionsTooltip, Skeleton, StatusBadge, Table, Text } from '@/components'
-import { useCustomDialogTrigger } from '@/context'
 import { DialogLabels } from '@/views/user-management/components/dialogs'
 import { useDialogData } from '@/views/user-management/components/dialogs/hooks/use-dialog-data'
 import { ErrorState } from '@/views/user-management/components/page-components/content/components/users-list/components/error-state'
 import { useStates } from '@/views/user-management/providers/state-provider/hooks/use-states'
 import { useUserManagementStore } from '@/views/user-management/providers/store-provider'
 import { UsersProps } from '@views/user-management/types'
+
+import { Avatar, MoreActionsTooltip, Skeleton, StatusBadge, Table, Text } from '@harnessio/ui/components'
+import { useCustomDialogTrigger } from '@harnessio/ui/context'
 
 import { NoSearchResults } from './components/no-search-results'
 

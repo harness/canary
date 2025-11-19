@@ -1,8 +1,5 @@
 import { useCallback } from 'react'
 
-import { Button } from '@components/button'
-import { IconV2 } from '@components/icon-v2'
-
 import {
   AnyFormValue,
   Controller,
@@ -13,6 +10,7 @@ import {
   useFieldArray,
   useFormContext
 } from '@harnessio/forms'
+import { Button, IconV2 } from '@harnessio/ui/components'
 
 import { InputCaption } from './common/InputCaption'
 import { InputLabel } from './common/InputLabel'

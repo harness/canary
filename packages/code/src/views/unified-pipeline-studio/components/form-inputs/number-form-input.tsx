@@ -1,6 +1,5 @@
-import { NumberInput } from '@components/index'
-
 import { IInputDefinition, InputComponent, InputProps, useController, type AnyFormValue } from '@harnessio/forms'
+import { NumberInput } from '@harnessio/ui/components'
 
 import { InputWrapper } from './common/InputWrapper'
 import { RuntimeInputConfig } from './types/types'

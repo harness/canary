@@ -1,7 +1,8 @@
-import { Button, ButtonLayout, ControlGroup, Dialog, Layout, Text } from '@/components'
-import { useTranslation } from '@/context'
 import { useStates } from '@/views/user-management/providers/state-provider'
 import { useUserManagementStore } from '@/views/user-management/providers/store-provider'
+
+import { Button, ButtonLayout, ControlGroup, Dialog, Layout, Text } from '@harnessio/ui/components'
+import { useTranslation } from '@harnessio/ui/context'
 
 interface RemoveAdminDialogProps {
   handleUpdateUserAdmin: (uid: string, isAdmin: boolean) => void

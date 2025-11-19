@@ -1,9 +1,10 @@
 import { FC, useCallback } from 'react'
 
-import { Button, Dialog, IconV2, Layout, ListActions, SearchInput, Text } from '@/components'
-import { useTranslation } from '@/context'
 import { RepoTagsListViewProps, SandboxLayout } from '@/views'
-import { cn } from '@utils/cn'
+
+import { Button, Dialog, IconV2, Layout, ListActions, SearchInput, Text } from '@harnessio/ui/components'
+import { useTranslation } from '@harnessio/ui/context'
+import { cn } from '@harnessio/ui/utils'
 
 import { RepoTagsList } from './components/repo-tags-list'
 

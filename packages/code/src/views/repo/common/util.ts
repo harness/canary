@@ -1,6 +1,7 @@
-import { TFunctionWithFallback } from '@/context'
-import { ComboBoxOptions } from '@components/filters/filters-bar/actions/variants/combo-box'
 import { Scope } from '@views/common'
+
+import { ComboBoxOptions } from '@harnessio/ui/components'
+import { TFunctionWithFallback } from '@harnessio/ui/context'
 
 import { ExtendedScope } from './types'
 

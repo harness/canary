@@ -1,8 +1,9 @@
 import { FC, useMemo } from 'react'
 
-import { Button, ButtonLayout, CounterBadge, Dialog, MarkdownViewer } from '@/components'
-import { useTranslation } from '@/context'
 import { CommitSuggestion } from '@views/repo/pull-request/pull-request.types'
+
+import { Button, ButtonLayout, CounterBadge, Dialog, MarkdownViewer } from '@harnessio/ui/components'
+import { useTranslation } from '@harnessio/ui/context'
 
 import { CommentItem, TypesPullReqActivity } from '../../pull-request-details-types'
 import { replaceMentionIdWithDisplayName } from '../conversation/utils'

@@ -1,12 +1,16 @@
 import { ReactNode } from 'react'
 
-import { Button, IconV2 } from '@/components'
-import { useTranslation } from '@/context'
-import { renderFilterSelectAddIconLabel } from '@components/filters/filter-select'
-import FiltersField, { FiltersFieldProps } from '@components/filters/filters-field'
-import { FilterOptionConfig } from '@components/filters/types'
-import SearchableDropdown from '@components/searchable-dropdown/searchable-dropdown'
-import { cn } from '@utils/cn'
+import {
+  Button,
+  FilterOptionConfig,
+  FiltersField,
+  FiltersFieldProps,
+  IconV2,
+  renderFilterSelectAddIconLabel,
+  SearchableDropdown
+} from '@harnessio/ui/components'
+import { useTranslation } from '@harnessio/ui/context'
+import { cn } from '@harnessio/ui/utils'
 
 interface FiltersBarProps<T, V = T[keyof T], CustomValue = Record<string, unknown>> {
   openedFilter: string | undefined

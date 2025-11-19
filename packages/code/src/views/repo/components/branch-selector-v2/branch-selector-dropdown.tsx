@@ -1,5 +1,7 @@
 import { FC, KeyboardEvent, useMemo, useState } from 'react'
 
+import { BranchSelectorDropdownProps, BranchSelectorTab, getBranchSelectorLabels } from '@/views'
+
 import {
   Button,
   Command,
@@ -12,9 +14,8 @@ import {
   Tabs,
   Tag,
   Text
-} from '@/components'
-import { useTranslation } from '@/context'
-import { BranchSelectorDropdownProps, BranchSelectorTab, getBranchSelectorLabels } from '@/views'
+} from '@harnessio/ui/components'
+import { useTranslation } from '@harnessio/ui/context'
 
 export const BranchSelectorDropdown: FC<BranchSelectorDropdownProps> = ({
   selectedBranch,

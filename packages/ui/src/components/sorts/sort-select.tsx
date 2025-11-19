@@ -1,5 +1,4 @@
-import { Button, IconV2 } from '@/components'
-import SearchableDropdown from '@components/searchable-dropdown/searchable-dropdown'
+import { Button, IconV2, SearchableDropdown } from '@/components'
 
 import { useSort } from './sort-context'
 import { Direction, SortOption } from './type'

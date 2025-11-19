@@ -1,7 +1,8 @@
 import { ReactNode } from 'react'
 
-import { Layout, ScrollArea, SearchFiles } from '@/components'
 import { SIDEBAR_MAX_WIDTH, SIDEBAR_MIN_WIDTH } from '@views/repo/components'
+
+import { Layout, ScrollArea, SearchFiles } from '@harnessio/ui/components'
 
 interface CommitsSidebarProps {
   navigateToFile: (file: string) => void

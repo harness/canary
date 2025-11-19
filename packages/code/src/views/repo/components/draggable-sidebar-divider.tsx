@@ -1,6 +1,6 @@
 import { RefObject, useCallback } from 'react'
 
-import { cn } from '@utils/cn'
+import { cn } from '@harnessio/ui/utils'
 
 interface DraggableSidebarDividerProps {
   width: number

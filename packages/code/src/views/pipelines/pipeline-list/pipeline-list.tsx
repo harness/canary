@@ -1,4 +1,4 @@
-import { useTranslation } from '@/context'
+import { useTranslation } from '@harnessio/ui/context'
 
 import { IconV2, NoData, Skeleton, StackedList } from '../../../components'
 import { Meter } from '../../../components/meter'

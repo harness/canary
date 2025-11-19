@@ -1,6 +1,5 @@
-import { IconV2 } from '@components/icon-v2'
-
 import { useCanvasContext } from '@harnessio/pipeline-graph'
+import { IconV2 } from '@harnessio/ui/components'
 
 import { CanvasButton } from './canvas-button'
 

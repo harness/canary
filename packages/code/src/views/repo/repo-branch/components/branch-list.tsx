@@ -1,5 +1,7 @@
 import { FC, useCallback, useMemo } from 'react'
 
+import { getChecksState, getPrState } from '@views/repo/pull-request/utils'
+
 import {
   ActionData,
   AvatarWithTooltip,
@@ -16,10 +18,9 @@ import {
   Tag,
   Text,
   TimeAgoCard
-} from '@/components'
-import { useCustomDialogTrigger, useTranslation } from '@/context'
-import { cn, createPaginationLinks } from '@/utils'
-import { getChecksState, getPrState } from '@views/repo/pull-request/utils'
+} from '@harnessio/ui/components'
+import { useCustomDialogTrigger, useTranslation } from '@harnessio/ui/context'
+import { cn, createPaginationLinks } from '@harnessio/ui/utils'
 
 import { BranchListPageProps } from '../types'
 import { DivergenceGauge } from './divergence-gauge'

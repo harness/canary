@@ -1,4 +1,4 @@
-import { StatusBadgeProps } from '@components/index'
+import { StatusBadgeProps } from '@harnessio/ui/components'
 
 import { IconType } from './pull-request.types'
 

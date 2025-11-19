@@ -1,6 +1,5 @@
-import { PipelineNodes } from '@components/pipeline-nodes'
-
 import { LeafNodeInternalType } from '@harnessio/pipeline-graph'
+import { PipelineNodes } from '@harnessio/ui/components'
 
 export interface StartNodeDataType {}
 

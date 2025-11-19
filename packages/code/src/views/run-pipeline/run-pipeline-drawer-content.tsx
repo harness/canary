@@ -1,9 +1,8 @@
 import { useRef, useState } from 'react'
 
-import { Button, ButtonLayout, Drawer, Skeleton, Text } from '@/components'
-import { cn } from '@/utils'
-
 import { InputFactory } from '@harnessio/forms'
+import { Button, ButtonLayout, Drawer, Skeleton, Text } from '@harnessio/ui/components'
+import { cn } from '@harnessio/ui/utils'
 import { YamlRevision } from '@harnessio/yaml-editor'
 
 import { PipelineInputDefinition, VisualYamlToggle, VisualYamlValue } from '..'

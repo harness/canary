@@ -1,8 +1,9 @@
 import { FC, useCallback } from 'react'
 
-import { Layout, NoData, Pagination, Skeleton, Text } from '@/components'
-import { useTranslation } from '@/context'
 import { CommitsList, SandboxLayout, TypesCommit } from '@/views'
+
+import { Layout, NoData, Pagination, Skeleton, Text } from '@harnessio/ui/components'
+import { useTranslation } from '@harnessio/ui/context'
 
 interface RoutingProps {
   toCommitDetails?: ({ sha }: { sha: string }) => string

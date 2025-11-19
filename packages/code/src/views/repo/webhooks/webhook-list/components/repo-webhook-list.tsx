@@ -1,8 +1,9 @@
 import { useCallback } from 'react'
 
-import { Layout, MoreActionsTooltip, StatusBadge, Switch, Table, Text } from '@/components'
-import { useCustomDialogTrigger, useRouterContext, useTranslation } from '@/context'
 import { WebhookStore } from '@/views'
+
+import { Layout, MoreActionsTooltip, StatusBadge, Switch, Table, Text } from '@harnessio/ui/components'
+import { useCustomDialogTrigger, useRouterContext, useTranslation } from '@harnessio/ui/context'
 
 import { formatWebhookTriggers } from '../../utils'
 

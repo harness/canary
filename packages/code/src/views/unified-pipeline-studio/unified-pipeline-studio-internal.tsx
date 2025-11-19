@@ -1,6 +1,6 @@
-import { Button, Checkbox, FileToolbarActions, IconV2 } from '@components/index'
 import { noop } from 'lodash-es'
 
+import { Button, Checkbox, FileToolbarActions, IconV2 } from '@harnessio/ui/components'
 import { YamlEditorContextProvider } from '@harnessio/yaml-editor'
 
 import { UnifiedPipelinePipelineConfigDrawer } from './components/unified-pipeline-pipeline-config-drawer'

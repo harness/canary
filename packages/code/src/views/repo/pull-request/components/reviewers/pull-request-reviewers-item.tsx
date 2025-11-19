@@ -1,8 +1,9 @@
 import { forwardRef } from 'react'
 
-import { Avatar, AvatarProps, Button, IconV2, Layout, ScrollArea, withTooltip } from '@/components'
 import { EnumBypassListType, PullReqReviewDecision, ReviewerItemProps } from '@/views'
 import { getIcon } from '@views/repo/utils'
+
+import { Avatar, AvatarProps, Button, IconV2, Layout, ScrollArea, withTooltip } from '@harnessio/ui/components'
 
 import { ReviewerInfo } from './reviewer-info'
 

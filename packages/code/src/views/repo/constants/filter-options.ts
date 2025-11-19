@@ -1,16 +1,16 @@
-import { TFunctionWithFallback } from '@/context'
-import { ComboBoxOptions } from '@components/filters/filters-bar/actions/variants/combo-box'
+import { Scope } from '@views/common'
+
+import { Parser } from '@harnessio/filters'
 import {
   CalendarFilterOptionConfig,
   ComboBoxFilterOptionConfig,
+  ComboBoxOptions,
   CustomFilterOptionConfig,
   FilterFieldTypes,
   FilterOptionConfig,
   MultiSelectFilterOptionConfig
-} from '@components/filters/types'
-import { Scope } from '@views/common'
-
-import { Parser } from '@harnessio/filters'
+} from '@harnessio/ui/components'
+import { TFunctionWithFallback } from '@harnessio/ui/context'
 
 import { ExtendedScope } from '../common'
 import { getFilterScopeOptions } from '../common/util'

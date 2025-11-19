@@ -1,4 +1,4 @@
-import { IconV2 } from '@components/icon-v2'
+import { IconV2 } from '@harnessio/ui/components'
 
 import { PipelineExecutionStatus } from '../common/execution-types'
 

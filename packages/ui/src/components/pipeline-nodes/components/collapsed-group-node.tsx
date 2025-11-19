@@ -1,5 +1,5 @@
 import { cn } from '@utils/cn'
-import { getNestedStepsCount } from '@views/unified-pipeline-studio/components/graph-implementation/utils/common-step-utils'
+import { getNestedStepsCount } from '@utils/pipelineUtils'
 
 import {
   ParallelNodeInternalType,

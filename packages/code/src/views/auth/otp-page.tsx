@@ -2,9 +2,10 @@ import { useCallback, useEffect, useState } from 'react'
 import { Controller, useForm } from 'react-hook-form'
 import { Fragment } from 'react/jsx-runtime'
 
-import { Alert, Button, InputOTP, Spacer, Text } from '@/components'
 import { zodResolver } from '@hookform/resolvers/zod'
 import { z } from 'zod'
+
+import { Alert, Button, InputOTP, Spacer, Text } from '@harnessio/ui/components'
 
 import { Floating1ColumnLayout } from '..'
 import { Agreements } from './components/agreements'

@@ -1,10 +1,21 @@
 import { FC, useEffect } from 'react'
 import { SubmitHandler, useForm } from 'react-hook-form'
 
-import { Alert, Button, ButtonLayout, CopyButton, Dialog, FormInput, FormWrapper, Layout, Text } from '@/components'
-import { useTranslation } from '@/context'
 import { zodResolver } from '@hookform/resolvers/zod'
 import { z } from 'zod'
+
+import {
+  Alert,
+  Button,
+  ButtonLayout,
+  CopyButton,
+  Dialog,
+  FormInput,
+  FormWrapper,
+  Layout,
+  Text
+} from '@harnessio/ui/components'
+import { useTranslation } from '@harnessio/ui/context'
 
 import { ApiErrorType, IProfileSettingsStore, TokenFormType } from '../types'
 

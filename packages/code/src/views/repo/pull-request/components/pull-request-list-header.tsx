@@ -1,7 +1,8 @@
 import { FC, useEffect, useRef, useState } from 'react'
 
-import { Tabs } from '@/components'
 import { EnumPullReqState, PRState } from '@/views'
+
+import { Tabs } from '@harnessio/ui/components'
 
 interface PullRequestListHeaderProps {
   headerFilter: Array<PRState>

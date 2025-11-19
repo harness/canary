@@ -1,5 +1,7 @@
 import { FC, useMemo, useState } from 'react'
 
+import { WebhookStore } from '@/views'
+
 import {
   Button,
   Layout,
@@ -10,11 +12,9 @@ import {
   Tabs,
   Text,
   TimeAgoCard
-} from '@/components'
-import { ModeType, useTheme, useTranslation } from '@/context'
-import { WebhookStore } from '@/views'
-import { formatDuration } from '@utils/TimeUtils'
-
+} from '@harnessio/ui/components'
+import { ModeType, useTheme, useTranslation } from '@harnessio/ui/context'
+import { formatDuration } from '@harnessio/ui/utils'
 import { CodeEditor, CodeEditorProps } from '@harnessio/yaml-editor'
 
 import {

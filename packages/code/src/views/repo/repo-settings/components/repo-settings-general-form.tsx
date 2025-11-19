@@ -1,6 +1,10 @@
 import { FC, useEffect, useState } from 'react'
 import { SubmitHandler, useForm } from 'react-hook-form'
 
+import { AccessLevel, ErrorTypes, errorTypes, generalSettingsFormSchema, RepoData, RepoUpdateData } from '@/views'
+import { BranchSelectorContainerProps } from '@/views/repo/components'
+import { zodResolver } from '@hookform/resolvers/zod'
+
 import {
   Button,
   ButtonLayout,
@@ -12,11 +16,8 @@ import {
   Radio,
   Skeleton,
   Text
-} from '@/components'
-import { useCustomDialogTrigger, useTranslation } from '@/context'
-import { AccessLevel, ErrorTypes, errorTypes, generalSettingsFormSchema, RepoData, RepoUpdateData } from '@/views'
-import { BranchSelectorContainerProps } from '@/views/repo/components'
-import { zodResolver } from '@hookform/resolvers/zod'
+} from '@harnessio/ui/components'
+import { useCustomDialogTrigger, useTranslation } from '@harnessio/ui/context'
 
 export const RepoSettingsGeneralForm: FC<{
   repoData: RepoData

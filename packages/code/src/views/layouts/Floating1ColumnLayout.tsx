@@ -1,5 +1,5 @@
-import { useTheme } from '@/context'
-import { cn } from '@utils/cn'
+import { useTheme } from '@harnessio/ui/context'
+import { cn } from '@harnessio/ui/utils'
 
 type HighlightTheme = 'blue' | 'green' | 'error'
 

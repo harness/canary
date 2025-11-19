@@ -1,7 +1,6 @@
-import { IconV2NamesType } from '@components/icon-v2'
 import { ScopeType } from '@views/common'
 
-import { Tag, TagProps } from '../tag'
+import { IconV2NamesType, Tag, TagProps } from '@harnessio/ui/components'
 
 interface ScopeTagProps extends Pick<TagProps, 'size' | 'className'> {
   scopeType: ScopeType

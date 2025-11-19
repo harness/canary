@@ -1,9 +1,8 @@
 import { FC, useCallback, useEffect, useRef } from 'react'
 
-import { Text } from '@components/text'
-import { cn } from '@utils/cn'
+import { Text } from '@harnessio/ui/components'
+import { cn, formatTimestamp } from '@harnessio/ui/utils'
 
-import { formatTimestamp } from '../../utils/TimeUtils'
 import { ConsoleLogsProps, LivelogLine, LivelogLineType } from './types'
 
 export const createStreamedLogLineElement = (log: LivelogLine) => {

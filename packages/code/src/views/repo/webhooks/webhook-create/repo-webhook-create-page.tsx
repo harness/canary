@@ -1,11 +1,21 @@
 import { FC, useEffect } from 'react'
 import { SubmitHandler, useForm } from 'react-hook-form'
 
-import { Alert, Button, ButtonLayout, Fieldset, FormSeparator, FormWrapper, Layout, Text } from '@/components'
-import { useTranslation } from '@/context'
 import { WebhookStore } from '@/views'
 import { zodResolver } from '@hookform/resolvers/zod'
 import { createWebhookFormSchema } from '@views/repo/webhooks/webhook-create/components/create-webhooks-form-schema'
+
+import {
+  Alert,
+  Button,
+  ButtonLayout,
+  Fieldset,
+  FormSeparator,
+  FormWrapper,
+  Layout,
+  Text
+} from '@harnessio/ui/components'
+import { useTranslation } from '@harnessio/ui/context'
 
 import { getBranchAndTagEvents, getPrActivityEvents, getPrEvents } from './components/create-webhook-form-data'
 import {

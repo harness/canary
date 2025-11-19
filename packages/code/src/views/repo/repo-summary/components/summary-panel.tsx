@@ -11,8 +11,8 @@ import {
   Separator,
   Text,
   TimeAgoCard
-} from '@/components'
-import { useCustomDialogTrigger, useTranslation } from '@/context'
+} from '@harnessio/ui/components'
+import { useCustomDialogTrigger, useTranslation } from '@harnessio/ui/context'
 
 import { EditRepoDetails } from './edit-repo-details-dialog'
 

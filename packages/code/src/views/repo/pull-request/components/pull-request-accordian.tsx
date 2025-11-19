@@ -1,7 +1,5 @@
 import { useCallback, useEffect, useMemo, useState } from 'react'
 
-import { Accordion, Button, Checkbox, CopyButton, CounterBadge, IconV2, Layout, Link, Tag, Text } from '@/components'
-import { useTranslation } from '@/context'
 import { TypesUser } from '@/types'
 import {
   CommentItem,
@@ -17,11 +15,25 @@ import {
   TypesPullReqActivity
 } from '@/views'
 import { DiffModeEnum } from '@git-diff-view/react'
-import { cn } from '@utils/cn'
 import PullRequestDiffViewer from '@views/repo/pull-request/components/pull-request-diff-viewer'
 import { FILE_VIEWED_OBSOLETE_SHA } from '@views/repo/pull-request/details/pull-request-utils'
 import { useDiffConfig } from '@views/repo/pull-request/hooks/useDiffConfig'
 import { parseStartingLineIfOne, PULL_REQUEST_LARGE_DIFF_CHANGES_LIMIT } from '@views/repo/pull-request/utils'
+
+import {
+  Accordion,
+  Button,
+  Checkbox,
+  CopyButton,
+  CounterBadge,
+  IconV2,
+  Layout,
+  Link,
+  Tag,
+  Text
+} from '@harnessio/ui/components'
+import { useTranslation } from '@harnessio/ui/context'
+import { cn } from '@harnessio/ui/utils'
 
 export interface HeaderProps {
   text: string

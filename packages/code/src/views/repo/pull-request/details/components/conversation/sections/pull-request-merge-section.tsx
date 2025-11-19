@@ -1,10 +1,21 @@
 import { Dispatch, FC, MouseEvent, SetStateAction, useMemo, useState } from 'react'
 
-import { Accordion, BranchTag, Button, IconV2, Layout, Link, MarkdownViewer, Separator, Text } from '@/components'
-import { useTranslation } from '@/context'
-import { cn } from '@utils/cn'
 import { PanelAccordionShowButton } from '@views/repo/pull-request/details/components/conversation/sections/panel-accordion-show-button'
 import { isEmpty } from 'lodash-es'
+
+import {
+  Accordion,
+  BranchTag,
+  Button,
+  IconV2,
+  Layout,
+  Link,
+  MarkdownViewer,
+  Separator,
+  Text
+} from '@harnessio/ui/components'
+import { useTranslation } from '@harnessio/ui/context'
+import { cn } from '@harnessio/ui/utils'
 
 import { LineDescription, LineTitle } from './pull-request-line-title'
 

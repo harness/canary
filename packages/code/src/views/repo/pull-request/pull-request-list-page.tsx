@@ -1,34 +1,32 @@
 import { FC, useCallback, useEffect, useMemo, useRef, useState } from 'react'
 
+import { PrincipalType } from '@/types'
+import { ExtendedScope, SandboxLayout } from '@/views'
+import { isEmpty } from 'lodash-es'
+
+import { createFilters, FilterRefType } from '@harnessio/filters'
 import {
   Button,
   ButtonGroup,
   ButtonGroupBaseButtonProps,
-  IconV2,
-  Layout,
-  ListActions,
-  NoData,
-  SearchInput,
-  Spacer,
-  StackedList,
-  Text
-} from '@/components'
-import { useRouterContext, useTranslation } from '@/context'
-import { PrincipalType } from '@/types'
-import { ExtendedScope, SandboxLayout } from '@/views'
-import { renderFilterSelectLabel } from '@components/filters/filter-select'
-import {
   CheckboxOptions,
   CustomFilterOptionConfig,
   FilterFieldTypes,
   FilterOptionConfig,
-  MultiSelectFilterOptionConfig
-} from '@components/filters/types'
-import SearchableDropdown from '@components/searchable-dropdown/searchable-dropdown'
-import { splitObjectProps } from '@utils/typeUtils'
-import { isEmpty } from 'lodash-es'
-
-import { createFilters, FilterRefType } from '@harnessio/filters'
+  IconV2,
+  Layout,
+  ListActions,
+  MultiSelectFilterOptionConfig,
+  NoData,
+  renderFilterSelectLabel,
+  SearchableDropdown,
+  SearchInput,
+  Spacer,
+  StackedList,
+  Text
+} from '@harnessio/ui/components'
+import { useRouterContext, useTranslation } from '@harnessio/ui/context'
+import { splitObjectProps } from '@harnessio/ui/utils'
 
 import BranchCompareBannerList from '../components/branch-banner/branch-compare-banner-list'
 import ListControlBar from '../components/list-control-bar'

@@ -1,6 +1,6 @@
 import { useCallback, useState } from 'react'
 
-import { Button, Checkbox, DropdownMenu, IconV2, Text } from '@/components'
+import { Button, Checkbox, DropdownMenu, IconV2, Text } from '@harnessio/ui/components'
 
 export interface EntityReferenceSortProps {
   onSortChange?: (type: string) => void

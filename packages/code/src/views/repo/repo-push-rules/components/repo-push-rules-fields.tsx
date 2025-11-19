@@ -1,5 +1,8 @@
 import { FC, Fragment, useMemo } from 'react'
 
+import { EnumBypassListType, NormalizedPrincipal } from '@views/repo/repo-branch-rules/types'
+import { getIcon } from '@views/repo/utils'
+
 import {
   Checkbox,
   ControlGroup,
@@ -9,13 +12,11 @@ import {
   Layout,
   MultiSelectOption,
   NumberInput,
+  Separator,
   Switch
-} from '@/components'
-import { Separator } from '@/components/separator'
-import { useTranslation } from '@/context'
-import { useDebounceSearch } from '@hooks/use-debounce-search'
-import { EnumBypassListType, NormalizedPrincipal } from '@views/repo/repo-branch-rules/types'
-import { getIcon } from '@views/repo/utils'
+} from '@harnessio/ui/components'
+import { useTranslation } from '@harnessio/ui/context'
+import { useDebounceSearch } from '@harnessio/ui/hooks'
 
 import { PushRule, PushRuleFieldProps, PushRuleId } from '../types'
 import { getPushRules } from './repo-push-rules-data'

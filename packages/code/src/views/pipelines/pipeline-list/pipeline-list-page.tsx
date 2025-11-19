@@ -1,7 +1,8 @@
 import { FC } from 'react'
 
-import { Button, Dialog, ListActions, Pagination, SearchInput, Spacer, Text } from '@/components'
 import { SandboxLayout } from '@/views'
+
+import { Button, Dialog, ListActions, Pagination, SearchInput, Spacer, Text } from '@harnessio/ui/components'
 
 import { PipelineList } from './pipeline-list'
 import { IPipelineListPageProps } from './types'

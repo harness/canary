@@ -44,13 +44,13 @@ export * from './landing-page'
 export * from './profile-settings'
 
 // pipelines
-export * from './pipelines'
+// export * from './pipelines'
 
 // unified-pipeline-studio
-export * from './unified-pipeline-studio'
+// export * from './unified-pipeline-studio'
 
 // run pipeline from
-export * from './run-pipeline'
+// export * from './run-pipeline'
 
 // user-management
 export * from './user-management'
@@ -62,7 +62,7 @@ export * from './not-found-page'
 export * from './labels'
 
 // execution
-export * from './execution'
+// export * from './execution'
 
 // secrets
 export * from './secrets'

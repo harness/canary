@@ -1,10 +1,11 @@
 import { useCallback, useEffect, useRef } from 'react'
 
-import { IconV2, Skeleton, Table, Text, TimeAgoCard } from '@/components'
-import { useTranslation } from '@/context'
-import { encodePath } from '@/utils'
 import { FileStatus, LatestFileTypes, RepoFile, SummaryItemType } from '@/views'
 import { FileLastChangeBar } from '@views/repo/components'
+
+import { IconV2, Skeleton, Table, Text, TimeAgoCard } from '@harnessio/ui/components'
+import { useTranslation } from '@harnessio/ui/context'
+import { encodePath } from '@harnessio/ui/utils'
 
 interface RoutingProps {
   toCommitDetails?: ({ sha }: { sha: string }) => string

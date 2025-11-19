@@ -1,5 +1,5 @@
-import { NoData } from '@/components'
-import { useRouterContext } from '@/context'
+import { NoData } from '@harnessio/ui/components'
+import { useRouterContext } from '@harnessio/ui/context'
 
 export const EmptyPage = ({ pathName, comingSoon }: { pathName: string; comingSoon?: boolean }) => {
   const { navigate } = useRouterContext()

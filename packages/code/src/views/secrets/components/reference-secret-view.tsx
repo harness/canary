@@ -1,4 +1,4 @@
-import { Button, Caption, IconV2, TextInput } from '@/components'
+import { Button, Caption, IconV2, TextInput } from '@harnessio/ui/components'
 
 interface ReferenceSecretViewProps {
   onTest: (value: string) => void

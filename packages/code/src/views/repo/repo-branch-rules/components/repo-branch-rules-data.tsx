@@ -1,5 +1,6 @@
-import { TFunctionWithFallback } from '@/context'
 import { BranchRuleId, MergeStrategy } from '@/views'
+
+import { TFunctionWithFallback } from '@harnessio/ui/context'
 
 export interface BranchRuleType {
   id: BranchRuleId

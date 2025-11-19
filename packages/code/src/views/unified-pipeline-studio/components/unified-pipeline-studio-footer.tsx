@@ -1,6 +1,6 @@
 import { useMemo } from 'react'
 
-import { IconV2, Popover, Select, Text } from '@/components'
+import { IconV2, Popover, Select, Text } from '@harnessio/ui/components'
 
 import { PopoverCommitInfo } from './unified-popover-commit-info'
 

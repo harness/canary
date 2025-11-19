@@ -1,10 +1,20 @@
 import { useCallback, useEffect, useState } from 'react'
 import { useForm } from 'react-hook-form'
 
-import { Alert, Button, ButtonLayout, ControlGroup, Dialog, FormInput, FormWrapper, Label } from '@/components'
-import { TFunctionWithFallback, useTranslation } from '@/context'
 import { zodResolver } from '@hookform/resolvers/zod'
 import { z } from 'zod'
+
+import {
+  Alert,
+  Button,
+  ButtonLayout,
+  ControlGroup,
+  Dialog,
+  FormInput,
+  FormWrapper,
+  Label
+} from '@harnessio/ui/components'
+import { TFunctionWithFallback, useTranslation } from '@harnessio/ui/context'
 
 import { CreateBranchDialogProps, CreateBranchFormFields } from '../types'
 

@@ -1,8 +1,6 @@
 import { FC, ReactElement, useEffect, useRef, useState } from 'react'
 import { useForm } from 'react-hook-form'
 
-import { Avatar, Button, IconV2, Layout, Link, LinkProps, NoData, Skeleton, Tabs, Text } from '@/components'
-import { TFunctionWithFallback, useRouterContext, useTranslation } from '@/context'
 import { TypesDiffStats, TypesUser } from '@/types'
 import {
   CommitSelectorListItem,
@@ -23,6 +21,9 @@ import PullRequestCompareForm from '@views/repo/pull-request/compare/components/
 import { combineAndNormalizePrincipalsAndGroups } from '@views/repo/utils'
 import { noop } from 'lodash-es'
 import { z } from 'zod'
+
+import { Avatar, Button, IconV2, Layout, Link, LinkProps, NoData, Skeleton, Tabs, Text } from '@harnessio/ui/components'
+import { TFunctionWithFallback, useRouterContext, useTranslation } from '@harnessio/ui/context'
 
 import {
   EnumPullReqReviewDecision,

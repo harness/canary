@@ -1,5 +1,6 @@
-import { ComboBoxOptions } from '@components/filters/filters-bar/actions/variants/combo-box'
 import { RepositoryType } from '@views/repo/repo.types'
+
+import { ComboBoxOptions } from '@harnessio/ui/components'
 
 import { Scope } from '../..'
 

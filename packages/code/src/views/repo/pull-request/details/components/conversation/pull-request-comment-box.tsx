@@ -11,6 +11,20 @@ import {
 } from 'react'
 
 import {
+  DiffBlock,
+  HandleAiPullRequestSummaryType,
+  handleFileDrop,
+  handlePaste,
+  HandleUploadType,
+  PrincipalsMentionMap,
+  TextSelection,
+  ToolbarAction,
+  type PrincipalPropsType
+} from '@/views'
+import { SideWithBoth } from '@views/repo/pull-request/components/extended-diff-view/extended-diff-view-types'
+import { isEmpty, isUndefined } from 'lodash-es'
+
+import {
   Alert,
   Avatar,
   Button,
@@ -22,22 +36,8 @@ import {
   MarkdownViewer,
   Tabs,
   Text
-} from '@/components'
-import {
-  DiffBlock,
-  HandleAiPullRequestSummaryType,
-  handleFileDrop,
-  handlePaste,
-  HandleUploadType,
-  PrincipalsMentionMap,
-  TextSelection,
-  ToolbarAction,
-  type PrincipalPropsType
-} from '@/views'
-import { cn } from '@utils/cn'
-import { getErrorMessage } from '@utils/utils'
-import { SideWithBoth } from '@views/repo/pull-request/components/extended-diff-view/extended-diff-view-types'
-import { isEmpty, isUndefined } from 'lodash-es'
+} from '@harnessio/ui/components'
+import { cn, getErrorMessage } from '@harnessio/ui/utils'
 
 import { getLinesFromBlocks } from './diff-utils'
 import { PullRequestCommentTextarea } from './pull-request-comment-textarea'

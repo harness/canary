@@ -1,5 +1,6 @@
-import { Text } from '@components/index'
 import { SideWithBoth } from '@views/repo/pull-request/components/extended-diff-view/extended-diff-view-types'
+
+import { Text } from '@harnessio/ui/components'
 
 export interface PullRequestCommentingOnProps {
   from?: number

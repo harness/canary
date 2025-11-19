@@ -5,24 +5,24 @@ export const blocks: DiffBlock[] = [
     lines: [
       {
         content:
-          "-import { IconV2, NoData, SkeletonList, StackedList, StatusBadge, Text, TimeAgoCard } from '@/components'",
+          "-import { IconV2, NoData, SkeletonList, StackedList, StatusBadge, Text, TimeAgoCard } from '@harnessio/ui/components'",
         type: 'delete',
         oldNumber: 1
       },
       {
         content:
-          "+import { Favorite, IconV2, NoData, SkeletonList, StackedList, StatusBadge, Text, TimeAgoCard } from '@/components'",
+          "+import { Favorite, IconV2, NoData, SkeletonList, StackedList, StatusBadge, Text, TimeAgoCard } from '@harnessio/ui/components'",
         type: 'insert',
         newNumber: 1
       },
       {
-        content: " import { useRouterContext, useTranslation } from '@/context'",
+        content: " import { useRouterContext, useTranslation } from '@harnessio/ui/context'",
         type: 'context',
         oldNumber: 2,
         newNumber: 2
       },
       {
-        content: " import { cn } from '@utils/cn'",
+        content: " import { cn } from '@harnessio/ui/utils'",
         type: 'context',
         oldNumber: 3,
         newNumber: 3

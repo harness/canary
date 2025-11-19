@@ -1,4 +1,4 @@
-import { Link, Text } from '@/components'
+import { Link, Text } from '@harnessio/ui/components'
 
 export function Agreements() {
   return (

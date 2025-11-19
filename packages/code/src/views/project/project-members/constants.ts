@@ -1,5 +1,6 @@
-import { TFunctionWithFallback } from '@/context'
 import { EnumMembershipRole } from '@/views'
+
+import { TFunctionWithFallback } from '@harnessio/ui/context'
 
 export const getRolesData = (t: TFunctionWithFallback) => {
   return [

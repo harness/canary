@@ -1,11 +1,12 @@
 import { useEffect, useState } from 'react'
 import { useForm } from 'react-hook-form'
 
-import { Alert, Button, ButtonLayout, Dialog, FormInput, FormWrapper, Radio } from '@/components'
-import { useTranslation } from '@/context'
-import { identifierSchema } from '@/utils/schema'
 import { zodResolver } from '@hookform/resolvers/zod'
 import { z } from 'zod'
+
+import { Alert, Button, ButtonLayout, Dialog, FormInput, FormWrapper, Radio } from '@harnessio/ui/components'
+import { useTranslation } from '@harnessio/ui/context'
+import { identifierSchema } from '@harnessio/ui/utils'
 
 interface SavedFilterError {
   errMessage: string

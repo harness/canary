@@ -1,11 +1,11 @@
 import { useCallback, useEffect, useMemo, useRef, useState } from 'react'
 
-import type { Problem, ProblemSeverity } from '@components/problems'
 import { editor } from 'monaco-editor'
 import { ILanguageFeaturesService } from 'monaco-editor/esm/vs/editor/common/services/languageFeatures.js'
 import { OutlineModel } from 'monaco-editor/esm/vs/editor/contrib/documentSymbols/browser/outlineModel.js'
 import { StandaloneServices } from 'monaco-editor/esm/vs/editor/standalone/browser/standaloneServices.js'
 
+import type { Problem, ProblemSeverity } from '@harnessio/ui/components'
 import { InlineAction, MonacoGlobals, useYamlEditorContext, YamlEditor } from '@harnessio/yaml-editor'
 
 import { useUnifiedPipelineStudioContext } from '../context/unified-pipeline-studio-context'

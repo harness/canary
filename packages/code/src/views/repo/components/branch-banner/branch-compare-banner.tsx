@@ -1,8 +1,9 @@
 import { FC } from 'react'
 
-import { Button, IconV2, Layout, Link, Text, TimeAgoCard } from '@/components'
-import { useRouterContext, useTranslation } from '@/context'
 import { TypesBranchTable } from '@/views'
+
+import { Button, IconV2, Layout, Link, Text, TimeAgoCard } from '@harnessio/ui/components'
+import { useRouterContext, useTranslation } from '@harnessio/ui/context'
 
 export interface BranchInfo {
   name: string

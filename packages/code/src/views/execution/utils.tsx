@@ -1,6 +1,6 @@
 import { ReactNode } from 'react'
 
-import { File, Folder, type TreeViewElement } from '@/components'
+import { File, Folder, type TreeViewElement } from '@harnessio/ui/components'
 
 import { ExecutionTreeProps } from './types'
 

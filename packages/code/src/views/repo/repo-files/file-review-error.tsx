@@ -1,5 +1,5 @@
-import { useTranslation } from '@/context'
-import { NoData, NoDataProps } from '@components/no-data'
+import { NoData, NoDataProps } from '@harnessio/ui/components'
+import { useTranslation } from '@harnessio/ui/context'
 
 export const FileReviewError = ({
   onButtonClick,

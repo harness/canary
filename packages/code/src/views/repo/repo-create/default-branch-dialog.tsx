@@ -1,8 +1,8 @@
 import { FC, useState } from 'react'
 import { UseFormReturn } from 'react-hook-form'
 
-import { Button, ButtonLayout, Dialog, FormInput, IconV2, Layout, Radio, Text } from '@/components'
-import { useTranslation } from '@/context'
+import { Button, ButtonLayout, Dialog, FormInput, IconV2, Layout, Radio, Text } from '@harnessio/ui/components'
+import { useTranslation } from '@harnessio/ui/context'
 
 import { FormFields } from '.'
 

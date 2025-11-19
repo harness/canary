@@ -1,10 +1,11 @@
 import { FC, useEffect } from 'react'
 import { useForm } from 'react-hook-form'
 
-import { Checkbox, ControlGroup, Layout, Message, MessageTheme, Skeleton, Text } from '@/components'
-import { useTranslation } from '@/context'
 import { zodResolver } from '@hookform/resolvers/zod'
 import { z } from 'zod'
+
+import { Checkbox, ControlGroup, Layout, Message, MessageTheme, Skeleton, Text } from '@harnessio/ui/components'
+import { useTranslation } from '@harnessio/ui/context'
 
 import { ErrorTypes } from '../types'
 

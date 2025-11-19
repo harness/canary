@@ -1,5 +1,6 @@
 import { ChangedFilesShortInfo, ICommitDetailsStore } from '@/views'
-import { Layout } from '@components/layout'
+
+import { Layout } from '@harnessio/ui/components'
 
 import { CommitChanges } from './commit-changes'
 

@@ -1,6 +1,5 @@
-import { PipelineNodes } from '@components/pipeline-nodes'
-
 import { LeafNodeInternalType } from '@harnessio/pipeline-graph'
+import { PipelineNodes } from '@harnessio/ui/components'
 
 import { StageGroupAddInNodeContextMenu } from '../context-menu/stage-group-add-in-node-context-menu'
 import { usePipelineStudioNodeContext } from '../context/UnifiedPipelineStudioNodeContext'

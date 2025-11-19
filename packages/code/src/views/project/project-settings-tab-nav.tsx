@@ -1,8 +1,9 @@
 import { FC } from 'react'
 
-import { Tabs } from '@/components'
-import { useTranslation } from '@/context'
 import { SandboxLayout } from '@/views'
+
+import { Tabs } from '@harnessio/ui/components'
+import { useTranslation } from '@harnessio/ui/context'
 
 export interface ProjectSettingsTabNavProps {
   isMFE?: boolean

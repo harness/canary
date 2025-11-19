@@ -1,5 +1,4 @@
-import { NoProblemsFound, Problems } from '@components/index'
-
+import { NoProblemsFound, Problems } from '@harnessio/ui/components'
 import { useYamlEditorContext } from '@harnessio/yaml-editor'
 
 export function UnifiedPipelineStudioProblemsPanel({ problems }: { problems: any }): JSX.Element {

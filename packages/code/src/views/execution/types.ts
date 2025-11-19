@@ -1,6 +1,7 @@
-import { type TreeViewElement } from '@/components'
 import { CiStatus } from '@views/pipelines'
 import { ExecutionState } from '@views/repo/pull-request'
+
+import { type TreeViewElement } from '@harnessio/ui/components'
 
 export interface StepProps {
   name?: string

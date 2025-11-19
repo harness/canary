@@ -1,9 +1,10 @@
 import { FC, useCallback, useMemo } from 'react'
 
-import { Button, Layout, SearchInput, Select, Text, Toggle } from '@/components'
-import { useTranslation } from '@/context'
 import { RepositoryType, SandboxLayout } from '@/views'
-import { cn } from '@utils/cn'
+
+import { Button, Layout, SearchInput, Select, Text, Toggle } from '@harnessio/ui/components'
+import { useTranslation } from '@harnessio/ui/context'
+import { cn } from '@harnessio/ui/utils'
 
 import { SearchResultItem, SearchResultsList } from './components/search-results-list'
 import { SemanticSearchResultItem, SemanticSearchResultsList } from './components/semantic-search-results-list'

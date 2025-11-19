@@ -1,8 +1,7 @@
 import { useCallback, useRef } from 'react'
 
-import { Checkbox, IconV2, Layout, SearchInput, StackedList } from '@/components'
-import { afterFrames } from '@utils/after-frames'
-import { cn } from '@utils/cn'
+import { Checkbox, IconV2, Layout, SearchInput, StackedList } from '@harnessio/ui/components'
+import { afterFrames, cn } from '@harnessio/ui/utils'
 
 import { EntityReferenceFilter } from './components/entity-reference-filter'
 import { EntityReferenceSort } from './components/entity-reference-sort'

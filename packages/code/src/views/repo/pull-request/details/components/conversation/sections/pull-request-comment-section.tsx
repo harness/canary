@@ -1,5 +1,5 @@
-import { Accordion, IconV2, Layout, Text } from '@/components'
-import { useTranslation } from '@/context'
+import { Accordion, IconV2, Layout, Text } from '@harnessio/ui/components'
+import { useTranslation } from '@harnessio/ui/context'
 
 import { LineDescription, LineTitle } from './pull-request-line-title'
 

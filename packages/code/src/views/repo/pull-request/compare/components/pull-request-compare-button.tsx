@@ -1,10 +1,11 @@
 import { FC, MouseEvent, RefObject, useCallback } from 'react'
 import { UseFormGetValues } from 'react-hook-form'
 
-import { Button, IconV2, SplitButton } from '@/components'
-import { useTranslation } from '@/context'
-import { useLocalStorage, UserPreference } from '@/hooks'
 import { CompareFormFields } from '@/views'
+
+import { Button, IconV2, SplitButton } from '@harnessio/ui/components'
+import { useTranslation } from '@harnessio/ui/context'
+import { useLocalStorage, UserPreference } from '@harnessio/ui/hooks'
 
 interface PullRequestCompareButtonProps {
   isSubmitted: boolean

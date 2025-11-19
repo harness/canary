@@ -218,22 +218,22 @@
         },
         "bg": {
           "$type": "color",
-          "$value": "{pure.white}",
+          "$value": "linear-gradient(100deg, {gradient.ai.outline.default.from} 0%, {gradient.ai.outline.default.to} 100%)",
           "$description": "Base background color for AI-related surfaces."
         },
         "border": {
           "$type": "color",
-          "$value": "linear-gradient(131deg, {gradient.ai.gradient-from} 27%, {gradient.ai.gradient-to} 112%)",
+          "$value": "linear-gradient(131deg, {gradient.ai.from} 27%, {gradient.ai.to} 112%)",
           "$description": "Distinctive gradient border for AI-related areas, using a multi-color pattern."
         },
         "bg-hover": {
           "$type": "color",
-          "$value": "linear-gradient(102deg, {gradient.ai.subtle.stop-1} 8%, {gradient.ai.subtle.stop-2} 35%, {gradient.ai.subtle.stop-3} 65%, {gradient.ai.subtle.stop-4} 87%)",
+          "$value": "linear-gradient(102deg, {gradient.ai.outline.hover.stop-1} 8%, {gradient.ai.outline.hover.stop-2} 35%, {gradient.ai.outline.hover.stop-3} 65%, {gradient.ai.outline.hover.stop-4} 87%)",
           "$description": "Hover state background color for interactive AI surfaces."
         },
         "bg-selected": {
           "$type": "color",
-          "$value": "linear-gradient(102deg, {gradient.ai.subtle.stop-1} 8%, {gradient.ai.subtle.stop-2} 35%, {gradient.ai.subtle.stop-3} 65%, {gradient.ai.subtle.stop-4} 87%)"
+          "$value": "linear-gradient(102deg, {gradient.ai.outline.hover.stop-1} 8%, {gradient.ai.outline.hover.stop-2} 35%, {gradient.ai.outline.hover.stop-3} 65%, {gradient.ai.outline.hover.stop-4} 87%)"
         },
         "inner": {
           "$type": "color",
@@ -2126,30 +2126,96 @@
   },
   "gradient": {
     "ai": {
-      "gradient-from": {
+      "from": {
         "$type": "color",
         "$value": "{cyan.300}"
       },
-      "gradient-to": {
+      "to": {
         "$type": "color",
         "$value": "{indigo.600}"
       },
-      "subtle": {
-        "stop-1": {
-          "$type": "color",
-          "$value": "{cyan.50}"
+      "outline": {
+        "hover": {
+          "stop-1": {
+            "$type": "color",
+            "$value": "{cyan.50}"
+          },
+          "stop-2": {
+            "$type": "color",
+            "$value": "{cyan.25}"
+          },
+          "stop-3": {
+            "$type": "color",
+            "$value": "{indigo.100}"
+          },
+          "stop-4": {
+            "$type": "color",
+            "$value": "{cyan.150}"
+          }
         },
-        "stop-2": {
-          "$type": "color",
-          "$value": "{cyan.25}"
+        "selected": {
+          "stop-1": {
+            "$extensions": {
+              "studio.tokens": {
+                "modify": {
+                  "type": "alpha",
+                  "value": "0.65",
+                  "space": "lch"
+                }
+              }
+            },
+            "$type": "color",
+            "$value": "{cyan.50}"
+          },
+          "stop-2": {
+            "$extensions": {
+              "studio.tokens": {
+                "modify": {
+                  "type": "alpha",
+                  "value": "0.65",
+                  "space": "lch"
+                }
+              }
+            },
+            "$type": "color",
+            "$value": "{cyan.25}"
+          },
+          "stop-3": {
+            "$extensions": {
+              "studio.tokens": {
+                "modify": {
+                  "type": "alpha",
+                  "value": "0.65",
+                  "space": "lch"
+                }
+              }
+            },
+            "$type": "color",
+            "$value": "{indigo.100}"
+          },
+          "stop-4": {
+            "$extensions": {
+              "studio.tokens": {
+                "modify": {
+                  "type": "alpha",
+                  "value": "0.65",
+                  "space": "lch"
+                }
+              }
+            },
+            "$type": "color",
+            "$value": "{cyan.150}"
+          }
         },
-        "stop-3": {
-          "$type": "color",
-          "$value": "{indigo.100}"
-        },
-        "stop-4": {
-          "$type": "color",
-          "$value": "{cyan.150}"
+        "default": {
+          "from": {
+            "$type": "color",
+            "$value": "{pure.white}"
+          },
+          "to": {
+            "$type": "color",
+            "$value": "{pure.white}"
+          }
         }
       },
       "glow": {

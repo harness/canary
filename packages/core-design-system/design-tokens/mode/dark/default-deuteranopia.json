@@ -232,17 +232,17 @@
         },
         "border": {
           "$type": "color",
-          "$value": "linear-gradient(131deg, {gradient.ai.gradient-from} 27%, {gradient.ai.gradient-to} 112%)",
+          "$value": "linear-gradient(131deg, {gradient.ai.from} 27%, {gradient.ai.to} 112%)",
           "$description": "Distinctive gradient border for AI-related areas, using a multi-color pattern."
         },
         "bg-hover": {
           "$type": "color",
-          "$value": "linear-gradient(102deg, {gradient.ai.subtle.stop-1} 8%, {gradient.ai.subtle.stop-2} 35%, {gradient.ai.subtle.stop-3} 65%, {gradient.ai.subtle.stop-4} 87%)",
+          "$value": "linear-gradient(102deg, {gradient.ai.outline.hover.stop-1} 8%, {gradient.ai.outline.hover.stop-2} 35%, {gradient.ai.outline.hover.stop-3} 65%, {gradient.ai.outline.hover.stop-4} 87%)",
           "$description": "Hover state background color for interactive AI surfaces."
         },
         "bg-selected": {
           "$type": "color",
-          "$value": "linear-gradient(102deg, {gradient.ai.subtle.stop-1} 8%, {gradient.ai.subtle.stop-2} 35%, {gradient.ai.subtle.stop-3} 65%, {gradient.ai.subtle.stop-4} 87%)"
+          "$value": "linear-gradient(102deg, {gradient.ai.outline.hover.stop-1} 8%, {gradient.ai.outline.hover.stop-2} 35%, {gradient.ai.outline.hover.stop-3} 65%, {gradient.ai.outline.hover.stop-4} 87%)"
         },
         "inner": {
           "$extensions": {
@@ -2111,11 +2111,11 @@
   },
   "gradient": {
     "ai": {
-      "gradient-from": {
+      "from": {
         "$type": "color",
         "$value": "{yellow.100}"
       },
-      "gradient-to": {
+      "to": {
         "$type": "color",
         "$value": "{orange.200}"
       },

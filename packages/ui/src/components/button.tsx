@@ -146,6 +146,7 @@ const Button = forwardRef<HTMLButtonElement, ButtonProps>(
         disabled={disabled || isLoading}
         type={type}
         onClick={handleClick}
+        data-loading={isLoading || undefined}
         {...omit(props, ['tooltipProps', 'ignoreIconOnlyTooltip'])}
       >
         {children}

@@ -213,27 +213,18 @@
       "outline": {
         "text": {
           "$type": "color",
-          "$value": "{chrome.1000}",
+          "$value": "{pure.black}",
           "$description": "Primary text color for AI-related content with optimal readability."
-        },
-        "bg": {
-          "$type": "color",
-          "$value": "{pure.white}",
-          "$description": "Base background color for AI-related surfaces."
         },
         "border": {
           "$type": "color",
-          "$value": "linear-gradient(94deg, {gradient.ai.gradient-stop-1} 0%, {gradient.ai.gradient-stop-2} 35%, {gradient.ai.gradient-stop-3} 65%, {gradient.ai.gradient-stop-4} 100%)",
+          "$value": "linear-gradient(131deg, {gradient.ai.from} 27%, {gradient.ai.to} 112%)",
           "$description": "Distinctive gradient border for AI-related areas, using a multi-color pattern."
         },
-        "bg-hover": {
+        "bg-gradient": {
           "$type": "color",
-          "$value": "{purple.50}",
+          "$value": "linear-gradient(102deg, {gradient.ai.outline-bg.stop-1} 8%, {gradient.ai.outline-bg.stop-2} 35%, {gradient.ai.outline-bg.stop-3} 65%, {gradient.ai.outline-bg.stop-4} 87%)",
           "$description": "Hover state background color for interactive AI surfaces."
-        },
-        "bg-selected": {
-          "$type": "color",
-          "$value": "linear-gradient(102deg, {gradient.ai-subtle.gradient-stop-1} 8%, {gradient.ai-subtle.gradient-stop-2} 35%, {gradient.ai-subtle.gradient-stop-3} 65%, {gradient.ai-subtle.gradient-stop-4} 87%)"
         },
         "inner": {
           "$type": "color",
@@ -1081,12 +1072,6 @@
         "$description": "Inset border color for avatars. Creates subtle definition inside the avatar element."
       }
     },
-    "chat": {
-      "ai-icon": {
-        "$type": "color",
-        "$value": "radial-gradient(106% 106% at 103% 57%,{gradient.ai-chat.gradient-stop-1} 27%, {gradient.ai-chat.gradient-stop-2} 58%, {gradient.ai-chat.gradient-stop-3} 77%)"
-      }
-    },
     "dialog": {
       "backdrop": {
         "$extensions": {
@@ -1364,6 +1349,10 @@
         "$type": "color",
         "$value": "{bg.3}",
         "$description": "Background color for form input fields. Provides clear visual distinction from surrounding content while maintaining readability and accessibility standards."
+      },
+      "ai-glow": {
+        "$type": "color",
+        "$value": "linear-gradient(111deg, {gradient.ai.glow.stop-1} 10%, {gradient.ai.glow.stop-2} 50%, {gradient.ai.glow.stop-3} 90%)"
       }
     },
     "link": {
@@ -1388,7 +1377,7 @@
         "running": {
           "border": {
             "$type": "color",
-            "$value": "linear-gradient(90deg, {gradient.pipeline.arrows.gradient-stop-1} 0%, {gradient.pipeline.arrows.gradient-stop-2} 50%, {gradient.pipeline.arrows.gradient-stop-3} 100%)",
+            "$value": "linear-gradient(90deg, {gradient.pipeline.arrows.stop-1} 0%, {gradient.pipeline.arrows.stop-2} 50%, {gradient.pipeline.arrows.stop-3} 100%)",
             "$description": "Gradient border color for active pipeline arrows. Visually indicates data flow between active pipeline components."
           }
         }
@@ -1407,7 +1396,7 @@
         "running": {
           "border": {
             "$type": "color",
-            "$value": "radial-gradient(604% 142% at 0% 0%, {gradient.pipeline.running.gradient-stop-1} 0%, {gradient.pipeline.running.gradient-stop-2} 30%, {gradient.pipeline.running.gradient-stop-3} 100%)",
+            "$value": "radial-gradient(604% 142% at 0% 0%, {gradient.pipeline.running.stop-1} 0%, {gradient.pipeline.running.stop-2} 30%, {gradient.pipeline.running.stop-3} 100%)",
             "$description": "Animated gradient border for running pipeline states. Provides visual indication of active processing."
           }
         }
@@ -1588,7 +1577,7 @@
     "skeleton": {
       "bg": {
         "$type": "color",
-        "$value": "linear-gradient(90deg, {gradient.skeleton.gradient-stop-1} 0%, {gradient.skeleton.gradient-stop-2} 50%, {gradient.skeleton.gradient-stop-3} 100%)",
+        "$value": "linear-gradient(90deg, {gradient.skeleton.stop-1} 0%, {gradient.skeleton.stop-2} 50%, {gradient.skeleton.stop-3} 100%)",
         "$description": "Animation color that sweeps across skeleton elements. Creates a \"shimmer\" effect indicating content loading states."
       },
       "mask": {
@@ -1719,6 +1708,12 @@
         "$type": "color",
         "$value": "linear-gradient(0deg, {gradient.toast.default.from} 42%, {gradient.toast.default.to} 100%)",
         "$description": "Default gradient fade effect for toast notifications. Creates visual depth and subtle emphasis for general messages."
+      }
+    },
+    "ai-chat": {
+      "bubble": {
+        "$type": "color",
+        "$value": "linear-gradient(95deg, {gradient.sidebar.selected.from} -13.12%, {gradient.sidebar.selected.to} 84.9%)"
       }
     }
   },
@@ -1869,6 +1864,19 @@
             "blur": "0",
             "spread": "0.6",
             "color": "{comp.avatar.shadow}",
+            "type": "innerShadow"
+          }
+        }
+      },
+      "ai": {
+        "inner": {
+          "$type": "boxShadow",
+          "$value": {
+            "x": "0",
+            "y": "6",
+            "blur": "12",
+            "spread": "0",
+            "color": "{set.ai.outline.inner}",
             "type": "innerShadow"
           }
         }
@@ -2056,35 +2064,84 @@
   },
   "gradient": {
     "ai": {
-      "gradient-stop-1": {
+      "from": {
         "$type": "color",
-        "$value": "{yellow.200}"
+        "$value": "{cyan.300}"
       },
-      "gradient-stop-2": {
+      "to": {
         "$type": "color",
-        "$value": "{pink.300}"
+        "$value": "{indigo.600}"
       },
-      "gradient-stop-3": {
-        "$type": "color",
-        "$value": "{purple.300}"
+      "outline-bg": {
+        "stop-1": {
+          "$type": "color",
+          "$value": "{pure.white}"
+        },
+        "stop-2": {
+          "$type": "color",
+          "$value": "{indigo.50}"
+        },
+        "stop-3": {
+          "$type": "color",
+          "$value": "{cyan.100}"
+        },
+        "stop-4": {
+          "$type": "color",
+          "$value": "{cyan.200}"
+        }
       },
-      "gradient-stop-4": {
-        "$type": "color",
-        "$value": "{cyan.200}"
-      }
-    },
-    "ai-chat": {
-      "gradient-stop-1": {
-        "$type": "color",
-        "$value": "{cyan.200}"
+      "glow": {
+        "stop-1": {
+          "$extensions": {
+            "studio.tokens": {
+              "modify": {
+                "type": "alpha",
+                "value": "0.6",
+                "space": "lch"
+              }
+            }
+          },
+          "$type": "color",
+          "$value": "{cyan.300}"
+        },
+        "stop-2": {
+          "$type": "color",
+          "$value": "{bg.1}"
+        },
+        "stop-3": {
+          "$type": "color",
+          "$value": "{indigo.150}"
+        }
       },
-      "gradient-stop-2": {
-        "$type": "color",
-        "$value": "{indigo.400}"
-      },
-      "gradient-stop-3": {
-        "$type": "color",
-        "$value": "{violet.400}"
+      "chat": {
+        "bubble": {
+          "from": {
+            "$extensions": {
+              "studio.tokens": {
+                "modify": {
+                  "type": "alpha",
+                  "value": "0.45",
+                  "space": "lch"
+                }
+              }
+            },
+            "$type": "color",
+            "$value": "{cyan.100}"
+          },
+          "to": {
+            "$extensions": {
+              "studio.tokens": {
+                "modify": {
+                  "type": "alpha",
+                  "value": "0.2",
+                  "space": "lch"
+                }
+              }
+            },
+            "$type": "color",
+            "$value": "{tuna.300}"
+          }
+        }
       }
     },
     "alert": {
@@ -2142,15 +2199,15 @@
       }
     },
     "skeleton": {
-      "gradient-stop-1": {
+      "stop-1": {
         "$type": "color",
         "$value": "{chrome.150}"
       },
-      "gradient-stop-2": {
+      "stop-2": {
         "$type": "color",
         "$value": "{chrome.50}"
       },
-      "gradient-stop-3": {
+      "stop-3": {
         "$type": "color",
         "$value": "{chrome.150}"
       },
@@ -2176,11 +2233,11 @@
     },
     "pipeline": {
       "running": {
-        "gradient-stop-1": {
+        "stop-1": {
           "$type": "color",
           "$value": "{blue.400}"
         },
-        "gradient-stop-2": {
+        "stop-2": {
           "$extensions": {
             "studio.tokens": {
               "modify": {
@@ -2193,21 +2250,21 @@
           "$type": "color",
           "$value": "{chrome.200}"
         },
-        "gradient-stop-3": {
+        "stop-3": {
           "$type": "color",
           "$value": "{blue.400}"
         }
       },
       "arrows": {
-        "gradient-stop-1": {
+        "stop-1": {
           "$type": "color",
           "$value": "{chrome.100}"
         },
-        "gradient-stop-2": {
+        "stop-2": {
           "$type": "color",
           "$value": "{blue.400}"
         },
-        "gradient-stop-3": {
+        "stop-3": {
           "$type": "color",
           "$value": "{border.1}"
         }
@@ -2737,24 +2794,6 @@
             }
           }
         }
-      }
-    },
-    "ai-subtle": {
-      "gradient-stop-1": {
-        "$type": "color",
-        "$value": "{yellow.25}"
-      },
-      "gradient-stop-2": {
-        "$type": "color",
-        "$value": "{pink.50}"
-      },
-      "gradient-stop-3": {
-        "$type": "color",
-        "$value": "{purple.50}"
-      },
-      "gradient-stop-4": {
-        "$type": "color",
-        "$value": "{cyan.50}"
       }
     }
   },

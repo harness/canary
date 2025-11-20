@@ -33,6 +33,7 @@
     "mode/light/dimmer-tritanopia",
     "mode/light/high-contrast-tritanopia",
     "breakpoint/desktop",
+    "components/desktop/base/ai-chat",
     "components/desktop/base/alert",
     "components/desktop/base/accordion",
     "components/desktop/base/avatar",

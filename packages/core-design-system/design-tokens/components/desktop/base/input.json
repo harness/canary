@@ -70,12 +70,46 @@
           "$value": "{size.72}"
         }
       }
+    },
+    "text-area": {
+      "min-height": {
+        "$type": "sizing",
+        "$value": "{size.25}"
+      }
+    },
+    "ai": {
+      "container": {
+        "$type": "spacing",
+        "$value": "{spacing.3}"
+      },
+      "gap": {
+        "$type": "spacing",
+        "$value": "{spacing.2-half}"
+      },
+      "radius": {
+        "$type": "borderRadius",
+        "$value": "{rounded.5}"
+      },
+      "min-height": {
+        "$type": "sizing",
+        "$value": "102px"
+      },
+      "max-height": {
+        "$type": "sizing",
+        "$value": "340px"
+      },
+      "border": {
+        "$type": "borderWidth",
+        "$value": "1.5px"
+      }
     }
   },
-  "input-text-area": {
-    "min-height": {
-      "$type": "sizing",
-      "$value": "{size.25}"
+  "comp": {
+    "input-ai": {
+      "blur": {
+        "$type": "dimension",
+        "$value": "16px"
+      }
     }
   }
 }

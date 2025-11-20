@@ -1,0 +1,22 @@
+{
+  "ai-chat": {
+    "container": {
+      "$type": "spacing",
+      "$value": "{spacing.6}"
+    },
+    "content": {
+      "max-width": {
+        "$type": "sizing",
+        "$value": "760px"
+      }
+    },
+    "min-width": {
+      "$type": "sizing",
+      "$value": "412px"
+    },
+    "border": {
+      "$type": "borderWidth",
+      "$value": "{borderWidth.1}"
+    }
+  }
+}

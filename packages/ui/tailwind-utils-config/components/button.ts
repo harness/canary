@@ -147,7 +147,7 @@ export default {
       backgroundOrigin: 'border-box',
       backgroundClip: 'padding-box, border-box',
       // default: zoom the gradient so mostly the first (solid) stop is visible
-      // hover will reset size to 100% 100% and position to 0 0 (one-to-one with the token)
+      // hover will reset size to 100% 100%
       backgroundSize: '800% 800%, 100% 100%',
       border: 'var(--cn-btn-ai-border) solid transparent',
       transitionProperty: 'color, background-size, background-position, border-color, box-shadow',
@@ -165,7 +165,7 @@ export default {
         boxShadow: 'var(--cn-shadow-comp-ai-inner)'
       },
       "&[data-loading]": {
-        // loading mirrors the hover state so the gradient is clearly visible
+        // loading mirrors the active state so the gradient is clearly visible
         backgroundSize: '110% 110%, 100% 100%',
         boxShadow: 'var(--cn-shadow-comp-ai-inner)'
       }

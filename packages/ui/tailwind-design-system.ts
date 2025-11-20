@@ -4,7 +4,6 @@ import defaultTheme from 'tailwindcss/defaultTheme'
 import plugin from 'tailwindcss/plugin'
 import type { PluginAPI, Config as TailwindConfig } from 'tailwindcss/types/config'
 
-import { ComponentStyles } from './tailwind-utils-config/components'
 import {
   backgroundColor as backgroundColorStyles,
   borderRadius as borderRadiusStyles,
@@ -15,7 +14,7 @@ import {
   width as widthStyles
 } from './tailwind-utils-config/utilities'
 
-export default {
+const tailwindDesignSystem: TailwindConfig = {
   darkMode: ['class'],
   content: ['./src/**/*.{ts,tsx}'],
   prefix: '',
@@ -473,9 +472,6 @@ export default {
       addUtilities(heightStyles)
       addUtilities(widthStyles)
     }),
-    plugin(({ addComponents }) => {
-      addComponents(ComponentStyles)
-    }),
     tailwindcssAnimate,
     typography,
     function ({ addComponents, theme, e }: PluginAPI) {
@@ -540,10 +536,6 @@ export default {
     { pattern: /^bg-cn-/ },
     { pattern: /^hover:bg-cn-/ },
 
-    /** Existing Variants  */
-    { pattern: /^bg-graph-/ },
-    { pattern: /^hover:bg-graph-/ },
-
     { pattern: /rounded-./ },
     { pattern: /border-./ },
     { pattern: /shadow-./ },
@@ -554,4 +546,6 @@ export default {
     { pattern: /^h-cn-/ },
     { pattern: /^w-cn-/ }
   ]
-} satisfies TailwindConfig
+}
+
+export default tailwindDesignSystem

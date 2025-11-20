@@ -3,18 +3,14 @@ import { useParams } from 'react-router-dom'
 
 import { OpenapiRule, useSpaceRuleGetQuery } from '@harnessio/code-service-client'
 import { Skeleton } from '@harnessio/ui/components'
-import { NotFoundPage } from '@harnessio/ui/views'
+import { NotFoundPage, RuleType } from '@harnessio/ui/views'
 
 import { useGetSpaceURLParam } from '../../../framework/hooks/useGetSpaceParam'
 import { transformDataFromApi } from '../../../utils/repo-branch-rules-utils'
 import { useProjectRulesStore } from '../stores/project-rules-store'
 import { ProjectBranchRulesContainer } from './project-branch-rules-container'
+import { ProjectPushRulesContainer } from './project-push-rules-container'
 import { ProjectTagRulesContainer } from './project-tag-rules-container'
-
-export enum RuleType {
-  BRANCH = 'branch',
-  TAG = 'tag'
-}
 
 export const ProjectRulesContainer = () => {
   const spaceRef = useGetSpaceURLParam()
@@ -55,6 +51,8 @@ export const ProjectRulesContainer = () => {
   switch (rulesData?.type) {
     case RuleType.TAG:
       return <ProjectTagRulesContainer />
+    case RuleType.PUSH:
+      return <ProjectPushRulesContainer />
     case RuleType.BRANCH:
     default:
       return <ProjectBranchRulesContainer />

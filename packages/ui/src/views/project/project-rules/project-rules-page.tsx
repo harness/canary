@@ -15,6 +15,7 @@ export interface ProjectRulesPageProps {
   handleRuleClick: (identifier: string, scope: number) => void
   toProjectBranchRuleCreate?: () => string
   toProjectTagRuleCreate?: () => string
+  toProjectPushRuleCreate?: () => string
   showParentScopeLabelsCheckbox?: boolean
   parentScopeLabelsChecked?: boolean
   onParentScopeLabelsChange?: (checked: boolean) => void
@@ -32,6 +33,7 @@ export const ProjectRulesPage: FC<ProjectRulesPageProps> = ({
   handleRuleClick,
   toProjectBranchRuleCreate,
   toProjectTagRuleCreate,
+  toProjectPushRuleCreate,
   showParentScopeLabelsCheckbox = false,
   parentScopeLabelsChecked = false,
   onParentScopeLabelsChange,
@@ -108,8 +110,9 @@ export const ProjectRulesPage: FC<ProjectRulesPageProps> = ({
             rulesSearchQuery={searchQuery}
             setRulesSearchQuery={setSearchQuery}
             projectScope
-            toRepoBranchRuleCreate={toProjectBranchRuleCreate}
-            toRepoTagRuleCreate={toProjectTagRuleCreate}
+            toBranchRuleCreate={toProjectBranchRuleCreate}
+            toTagRuleCreate={toProjectTagRuleCreate}
+            toPushRuleCreate={toProjectPushRuleCreate}
             toProjectRuleDetails={toProjectRuleDetails}
             ruleTypeFilter={ruleTypeFilter}
             setRuleTypeFilter={setRuleTypeFilter}

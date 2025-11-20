@@ -115,13 +115,17 @@ export const SidebarRail = forwardRef<HTMLButtonElement, ComponentProps<'button'
         title={label}
         tabIndex={-1}
         onClick={onClickHandler}
-        className={cn('cn-sidebar-rail', className)}
+        className={cn('cn-sidebar-rail', open ? 'cursor-w-resize' : 'cursor-e-resize', className)}
+        onMouseEnter={() => setHovered(true)}
+        onMouseLeave={() => setHovered(false)}
         {...props}
       >
         <div
-          className={cn('absolute top-1/2 translate-x-full', { 'translate-x-1/4': hovered }, className)}
-          onMouseEnter={() => setHovered(true)}
-          onMouseLeave={() => setHovered(false)}
+          className={cn(
+            'absolute top-[calc(50%-var(--cn-header-height))] right-0',
+            { 'translate-x-1/2': hovered },
+            className
+          )}
         >
           {hovered ? (
             <IconV2 name={open ? 'nav-arrow-left' : 'nav-arrow-right'} size="lg" />

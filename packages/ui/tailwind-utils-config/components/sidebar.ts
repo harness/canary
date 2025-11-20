@@ -26,9 +26,8 @@ export default {
     },
 
     '&-rail': {
-      width: '16px',
+      width: '32px',
       zIndex: '20',
-      cursor: 'pointer',
       position: 'absolute',
       '@apply inset-y-0 hidden group-data-[side=left]:-right-cn-xs group-data-[side=right]:-left-cn-xs md:flex': ''
     },
@@ -256,7 +255,7 @@ export default {
         alignItems: 'center',
         gridTemplateColumns: 'var(--cn-icon-size-sm) 1fr',
         gridTemplateAreas: '"icon title"',
-        paddingInline: 'var(--cn-sidebar-item-px)',
+        padding: 'var(--cn-sidebar-item-py) var(--cn-sidebar-item-px)',
         borderRadius: 'var(--cn-sidebar-item-radius)',
         '@apply duration-150 transition-[padding,row-gap,column-gap] ease-linear': '',
 

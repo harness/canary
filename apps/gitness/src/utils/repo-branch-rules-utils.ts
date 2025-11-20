@@ -14,6 +14,7 @@ import {
   EnumBypassListType,
   MergeStrategy,
   PatternsButtonType,
+  PushRuleId,
   RepoBranchSettingsFormFields,
   Rule,
   TargetReposButtonType
@@ -37,7 +38,10 @@ const ruleIds = [
   BranchRuleId.COMMENTS,
   BranchRuleId.STATUS_CHECKS,
   BranchRuleId.MERGE,
-  BranchRuleId.DELETE_BRANCH
+  BranchRuleId.DELETE_BRANCH,
+  PushRuleId.FILE_SIZE_LIMIT,
+  PushRuleId.PRINCIPAL_COMMITTER_MATCH,
+  PushRuleId.SECRET_SCANNING_ENABLED
 ]
 
 const getDetailsByIds = (ids: number[], objMap: { [key: string]: TypesPrincipalInfo }): MultiSelectOption[] => {
@@ -81,7 +85,8 @@ const extractBranchRules = (data: RepoRuleGetOkResponse): Rule[] => {
     let submenu: MergeStrategy[] = []
     let selectOptions: MultiSelectOption[] = []
     let input: string = ''
-    const { lifecycle, pullreq } = (data?.definition || {}) as OpenapiRuleDefinition
+
+    const { lifecycle, pullreq, push } = (data?.definition || {}) as OpenapiRuleDefinition
 
     switch (rule) {
       case BranchRuleId.BLOCK_BRANCH_CREATION:
@@ -155,6 +160,16 @@ const extractBranchRules = (data: RepoRuleGetOkResponse): Rule[] => {
         break
       case BranchRuleId.DELETE_BRANCH:
         checked = pullreq?.merge?.delete_branch || false
+        break
+      case PushRuleId.FILE_SIZE_LIMIT:
+        checked = (push?.file_size_limit ?? 0) > 0
+        input = (push?.file_size_limit ?? 0).toString()
+        break
+      case PushRuleId.PRINCIPAL_COMMITTER_MATCH:
+        checked = push?.principal_committer_match || false
+        break
+      case PushRuleId.SECRET_SCANNING_ENABLED:
+        checked = push?.secret_scanning_enabled || false
         break
 
       default:

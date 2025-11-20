@@ -18,6 +18,7 @@ import AppDiscovery from './icons/app-discovery.svg'
 import AppSecurityTestsSolid from './icons/app-security-tests-solid.svg'
 import AppSecurityTests from './icons/app-security-tests.svg'
 import AppleShortcut from './icons/apple-shortcut.svg'
+import Architect from './icons/architect.svg'
 import Archive from './icons/archive.svg'
 import AreaSearch from './icons/area-search.svg'
 import ArrowDownCircle from './icons/arrow-down-circle.svg'
@@ -285,7 +286,6 @@ import NavArrowDown from './icons/nav-arrow-down.svg'
 import NavArrowLeft from './icons/nav-arrow-left.svg'
 import NavArrowRight from './icons/nav-arrow-right.svg'
 import NavArrowUp from './icons/nav-arrow-up.svg'
-import NavSolidArrowDown from './icons/nav-solid-arrow-down.svg'
 import NewThread from './icons/new-thread.svg'
 import Notes from './icons/notes.svg'
 import NumberedListLeft from './icons/numbered-list-left.svg'
@@ -385,6 +385,8 @@ import SingleView from './icons/single-view.svg'
 import SlashSquare from './icons/slash-square.svg'
 import Slash from './icons/slash.svg'
 import Snowflake from './icons/snowflake.svg'
+import SolidArrowDown from './icons/solid-arrow-down.svg'
+import SolidArrowUp from './icons/solid-arrow-up.svg'
 import Sort2 from './icons/sort-2.svg'
 import SortDown from './icons/sort-down.svg'
 import SortUp from './icons/sort-up.svg'
@@ -481,6 +483,7 @@ export const IconNameMapV2 = {
   'app-security-tests-solid': AppSecurityTestsSolid,
   'app-security-tests': AppSecurityTests,
   'apple-shortcut': AppleShortcut,
+  architect: Architect,
   archive: Archive,
   'area-search': AreaSearch,
   'arrow-down-circle': ArrowDownCircle,
@@ -748,7 +751,6 @@ export const IconNameMapV2 = {
   'nav-arrow-left': NavArrowLeft,
   'nav-arrow-right': NavArrowRight,
   'nav-arrow-up': NavArrowUp,
-  'nav-solid-arrow-down': NavSolidArrowDown,
   'new-thread': NewThread,
   notes: Notes,
   'numbered-list-left': NumberedListLeft,
@@ -848,6 +850,8 @@ export const IconNameMapV2 = {
   'slash-square': SlashSquare,
   slash: Slash,
   snowflake: Snowflake,
+  'solid-arrow-down': SolidArrowDown,
+  'solid-arrow-up': SolidArrowUp,
   'sort-2': Sort2,
   'sort-down': SortDown,
   'sort-up': SortUp,

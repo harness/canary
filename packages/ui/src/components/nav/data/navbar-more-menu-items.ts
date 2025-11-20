@@ -1,5 +1,4 @@
 import { MenuGroupTypes, NavbarItemType } from '@/components'
-import { ScopeType } from '@/views'
 
 import { GetNavbarMenuData, NavEnum } from '../types'
 
@@ -192,7 +191,7 @@ export const getNavbarMoreMenuData: GetNavbarMenuData = ({ t, routes, params }) 
       {
         id: 18,
         iconName: 'engineering-insights',
-        title: 'Developer Insights',
+        title: 'Engineerings Insights',
         description: 'Actionable insights on SDLC.',
         to: routes?.toDeveloperInsights?.(params) || ''
       }
@@ -222,8 +221,7 @@ export const getNavbarMoreMenuData: GetNavbarMenuData = ({ t, routes, params }) 
         iconName: 'organizations',
         title: t('component:navbar.organization', 'Organization'),
         description: 'Manage your organization settings.',
-        to: routes?.toOrganization?.(params) || '',
-        scopes: [ScopeType.Organization, ScopeType.Project]
+        to: routes?.toOrganization?.(params) || ''
       }
     ]
   }

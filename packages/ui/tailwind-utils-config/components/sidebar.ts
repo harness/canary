@@ -26,9 +26,8 @@ export default {
     },
 
     '&-rail': {
-      width: '16px',
+      width: '32px',
       zIndex: '20',
-      cursor: 'pointer',
       position: 'absolute',
       '@apply inset-y-0 hidden group-data-[side=left]:-right-cn-xs group-data-[side=right]:-left-cn-xs md:flex': ''
     },

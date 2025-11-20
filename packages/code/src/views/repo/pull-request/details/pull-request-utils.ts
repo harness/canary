@@ -1,5 +1,6 @@
 import { RefObject } from 'react'
 
+import { TypesUser } from '@/types'
 import { dispatchCustomEvent } from '@hooks/use-event-listener'
 import { createRequestIdleCallbackTaskPool } from '@utils/task'
 import { get, isEmpty } from 'lodash-es'

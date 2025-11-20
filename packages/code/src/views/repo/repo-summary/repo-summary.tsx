@@ -1,5 +1,6 @@
 import { cloneElement, useCallback } from 'react'
 
+import { MarkdownViewer } from '@/components/markdown-viewer'
 import {
   BranchSelectorListItem,
   CommitDivergenceType,
@@ -17,7 +18,6 @@ import {
   IconV2,
   Link,
   ListActions,
-  MarkdownViewer,
   NoData,
   SearchFiles,
   Skeleton,

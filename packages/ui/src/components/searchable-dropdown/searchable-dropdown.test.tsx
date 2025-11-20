@@ -1,10 +1,10 @@
-import React from 'react'
+import { useEffect } from 'react'
 
 import { render, screen } from '@testing-library/react'
 import userEvent from '@testing-library/user-event'
 import { beforeEach, describe, expect, test, vi } from 'vitest'
 
-import SearchableDropdown from './searchable-dropdown'
+import { SearchableDropdown } from './searchable-dropdown'
 
 // Mock dependencies
 vi.mock('@/components', () => ({
@@ -16,7 +16,7 @@ vi.mock('@/components', () => ({
       </button>
     ),
     Content: ({ children, className, align, onCloseAutoFocus }: any) => {
-      React.useEffect(() => {
+      useEffect(() => {
         // Immediately call onCloseAutoFocus to ensure it's covered
         if (onCloseAutoFocus) {
           const event = { preventDefault: vi.fn() }

@@ -1,5 +1,7 @@
 import { Fragment, useEffect, useMemo, useState } from 'react'
 
+import { TypesUser } from '@/types'
+
 import {
   AppSidebarItem,
   AppSidebarUser,

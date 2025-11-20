@@ -1,13 +1,12 @@
 import { FC, useMemo, useState } from 'react'
 
+import { getScopeType, scopeTypeToIconMap } from '@/components/scope'
 import { EnumLabelColor, HandleAddLabelType, LabelTag, TypesLabelValueInfo } from '@/views'
 
 import {
   Button,
   DropdownMenu,
-  getScopeType,
   IconV2,
-  scopeTypeToIconMap,
   SearchInput,
   useSearchableDropdownKeyboardNavigation
 } from '@harnessio/ui/components'

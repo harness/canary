@@ -1,6 +1,7 @@
 import { FC, useCallback, useMemo, useRef, useState } from 'react'
 
 import { PermissionIdentifier, ResourceType } from '@/components/rbac'
+import { useComponents } from '@/context/component-context'
 import { SandboxLayout } from '@/views'
 import FilterGroup, { FilterGroupRef } from '@views/components/FilterGroup'
 
@@ -14,7 +15,7 @@ import {
   Spacer,
   Text
 } from '@harnessio/ui/components'
-import { useComponents, useRouterContext, useTranslation } from '@harnessio/ui/context'
+import { useRouterContext, useTranslation } from '@harnessio/ui/context'
 
 import { ExtendedScope } from '../common'
 import { getFilterScopeOptions } from '../common/util'

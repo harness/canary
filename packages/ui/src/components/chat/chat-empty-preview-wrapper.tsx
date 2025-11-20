@@ -1,18 +1,18 @@
-import { FC } from 'react'
+// import { FC } from 'react'
 
-import { Chat } from '@/components'
+// import { Chat } from '@/components'
 
-export const ChatEmptyPreviewWrapper: FC = () => {
-  return (
-    <div className="border-cn-3 h-[calc(100vh-var(--cn-page-nav-full-height))] border-r">
-      <Chat.Root>
-        <Chat.Body>
-          <Chat.EmptyState />
-        </Chat.Body>
-        <Chat.Footer>
-          <Chat.Input />
-        </Chat.Footer>
-      </Chat.Root>
-    </div>
-  )
-}
+// export const ChatEmptyPreviewWrapper: FC = () => {
+//   return (
+//     <div className="border-cn-3 h-[calc(100vh-var(--cn-page-nav-full-height))] border-r">
+//       <Chat.Root>
+//         <Chat.Body>
+//           <Chat.EmptyState />
+//         </Chat.Body>
+//         <Chat.Footer>
+//           <Chat.Input />
+//         </Chat.Footer>
+//       </Chat.Root>
+//     </div>
+//   )
+// }

@@ -1,8 +1,8 @@
 // ComponentContext.tsx
 
-import React, { createContext, ReactNode, RefAttributes, useContext } from 'react'
+import { createContext, ReactNode, RefAttributes, useContext } from 'react'
 
-import { RbacButtonProps, RbacMoreActionsTooltipProps, RbacSplitButtonProps } from '@components/rbac'
+import { RbacButtonProps, RbacMoreActionsTooltipProps, RbacSplitButtonProps } from '@/components/rbac'
 
 interface ComponentContextValue {
   RbacButton: React.ComponentType<RbacButtonProps & RefAttributes<HTMLButtonElement>>

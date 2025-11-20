@@ -49,3 +49,15 @@ export interface TypesUserGroupInfo {
   name?: string
   scope?: number
 }
+
+export interface TypesUser {
+  admin?: boolean
+  blocked?: boolean
+  created?: number
+  display_name?: string
+  email?: string
+  id?: number
+  uid?: string
+  updated?: number
+  url?: string
+}

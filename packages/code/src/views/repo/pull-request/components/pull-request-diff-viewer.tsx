@@ -1,5 +1,6 @@
 import { useCallback, useEffect, useRef, useState } from 'react'
 
+import { TypesUser } from '@/types'
 import {
   activitiesToDiffCommentItems,
   CommentItem,
@@ -20,7 +21,6 @@ import { OverlayScrollbars } from 'overlayscrollbars'
 import { Avatar, Layout, Separator, Tag, Text, TextInput, TimeAgoCard } from '@harnessio/ui/components'
 import { useTheme, useTranslation } from '@harnessio/ui/context'
 import { useResizeObserver } from '@harnessio/ui/hooks'
-import { TypesUser } from '@harnessio/ui/types'
 import { cn, getInitials } from '@harnessio/ui/utils'
 
 import PRCommentView from '../details/components/common/pull-request-comment-view'

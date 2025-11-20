@@ -9,5 +9,7 @@ export * from './after-frames'
 export * from './get-shadow-active-element'
 export * from './pipelineUtils'
 export * from './schema'
+export * from './executionState'
+export * from './scopeType'
 
 export { formatDistanceToNow } from 'date-fns'

@@ -1,18 +1,9 @@
 import { FC, useCallback, useState } from 'react'
 
+import { getScopeType, ScopeTag } from '@/components/scope'
 import { ILabelsStore, ILabelType, LabelTag, LabelType } from '@/views'
 
-import {
-  Button,
-  getScopeType,
-  IconV2,
-  Layout,
-  MoreActionsTooltip,
-  NoData,
-  ScopeTag,
-  Table,
-  Text
-} from '@harnessio/ui/components'
+import { Button, IconV2, Layout, MoreActionsTooltip, NoData, Table, Text } from '@harnessio/ui/components'
 import { useCustomDialogTrigger, useTranslation } from '@harnessio/ui/context'
 import { cn } from '@harnessio/ui/utils'
 

@@ -1,8 +1,8 @@
 import type { Params } from 'react-router-dom'
 
 import { TFunctionWithFallback } from '@/context'
-import { ScopeType } from '@/views'
 import { MenuGroupType, NavbarItemType } from '@components/app-sidebar'
+import { ScopeType } from '@utils/scopeType'
 
 export interface ScopedNavbarItemType extends NavbarItemType {
   scopes?: ScopeType[]

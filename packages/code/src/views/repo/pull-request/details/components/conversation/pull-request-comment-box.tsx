@@ -10,6 +10,7 @@ import {
   useState
 } from 'react'
 
+import { MarkdownViewer } from '@/components/markdown-viewer'
 import {
   DiffBlock,
   HandleAiPullRequestSummaryType,
@@ -33,7 +34,6 @@ import {
   IconV2,
   IconV2NamesType,
   Layout,
-  MarkdownViewer,
   Tabs,
   Text
 } from '@harnessio/ui/components'

@@ -1,9 +1,7 @@
-import React from 'react'
-
 import { render, screen } from '@testing-library/react'
 import { describe, expect, test, vi } from 'vitest'
 
-import { RepoSubheader, RepoTabsKeys, repoTabsKeysArr } from '../repo-subheader'
+import { RepoSubheader, RepoTabsKeys, repoTabsKeysArr } from './repo-subheader'
 
 // Mock translation context and router context
 vi.mock('@/context', async importOriginal => {

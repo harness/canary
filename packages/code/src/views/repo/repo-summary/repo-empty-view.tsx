@@ -1,6 +1,7 @@
+import { MarkdownViewer } from '@/components/markdown-viewer'
 import { SandboxLayout } from '@/views'
 
-import { Alert, Button, Layout, MarkdownViewer, NoData, Text } from '@harnessio/ui/components'
+import { Alert, Button, Layout, NoData, Text } from '@harnessio/ui/components'
 import { useTranslation } from '@harnessio/ui/context'
 
 interface RepoEmptyViewProps {

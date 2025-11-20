@@ -1,6 +1,8 @@
 import { FC } from 'react'
 
-import { getScopeType, IconV2, Layout, scopeTypeToIconMap, Tag, TagProps } from '@harnessio/ui/components'
+import { getScopeType, scopeTypeToIconMap } from '@/components/scope'
+
+import { IconV2, Layout, Tag, TagProps } from '@harnessio/ui/components'
 
 import { ILabelType } from '../types'
 

@@ -1,5 +1,7 @@
 import { FC, useCallback, useMemo } from 'react'
 
+import { BranchSelectorTab } from '@views/repo/components/branch-selector-v2/types'
+
 import {
   DropdownMenu,
   FileToolbarActions,
@@ -9,11 +11,11 @@ import {
   StackedList,
   Tabs,
   Tag,
-  Text,
-  ViewTypeValue
-} from '@/components'
-import { useCustomDialogTrigger } from '@/context'
-import { BranchSelectorTab } from '@views/repo/components/branch-selector-v2/types'
+  Text
+} from '@harnessio/ui/components'
+import { useCustomDialogTrigger } from '@harnessio/ui/context'
+
+import { ViewTypeValue } from './types'
 
 export interface FileViewerControlBarProps {
   view: ViewTypeValue

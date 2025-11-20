@@ -1,15 +1,10 @@
 import { useCallback } from 'react'
 
-import {
-  NoData,
-  PermissionIdentifier,
-  ResourceType,
-  Skeleton,
-  Table,
-  Text,
-  TimeAgoCard
-} from '@harnessio/ui/components'
-import { useComponents, useCustomDialogTrigger, useTranslation } from '@harnessio/ui/context'
+import { PermissionIdentifier, ResourceType } from '@/components/rbac'
+import { useComponents } from '@/context/component-context'
+
+import { NoData, Skeleton, Table, Text, TimeAgoCard } from '@harnessio/ui/components'
+import { useCustomDialogTrigger, useTranslation } from '@harnessio/ui/context'
 
 import { SecretListProps } from './types'
 

@@ -1,19 +1,10 @@
 import { Dispatch, FC, MouseEvent, SetStateAction, useMemo, useState } from 'react'
 
+import { MarkdownViewer } from '@/components/markdown-viewer'
 import { PanelAccordionShowButton } from '@views/repo/pull-request/details/components/conversation/sections/panel-accordion-show-button'
 import { isEmpty } from 'lodash-es'
 
-import {
-  Accordion,
-  BranchTag,
-  Button,
-  IconV2,
-  Layout,
-  Link,
-  MarkdownViewer,
-  Separator,
-  Text
-} from '@harnessio/ui/components'
+import { Accordion, BranchTag, Button, IconV2, Layout, Link, Separator, Text } from '@harnessio/ui/components'
 import { useTranslation } from '@harnessio/ui/context'
 import { cn } from '@harnessio/ui/utils'
 

@@ -1,8 +1,8 @@
-import React from 'react'
+import { createRef } from 'react'
 
 import { render, screen } from '@testing-library/react'
 import userEvent from '@testing-library/user-event'
-import { ExecutionState } from '@views/repo/pull-request'
+import { ExecutionState } from '@utils/executionState'
 import { describe, expect, test, vi } from 'vitest'
 
 import { CollapseButton, File, Folder, Tree, type TreeViewElement } from '../treeview'
@@ -223,7 +223,7 @@ describe('Tree Component', () => {
 
   describe('Ref Forwarding', () => {
     test('should accept ref without errors', () => {
-      const ref = React.createRef<HTMLDivElement>()
+      const ref = createRef<HTMLDivElement>()
 
       const { container } = render(<Tree ref={ref}>Content</Tree>)
 
@@ -634,7 +634,7 @@ describe('Folder Component', () => {
 
   describe('Ref Forwarding', () => {
     test('should accept ref without errors', () => {
-      const ref = React.createRef<HTMLDivElement>()
+      const ref = createRef<HTMLDivElement>()
 
       render(
         <TestWrapper>

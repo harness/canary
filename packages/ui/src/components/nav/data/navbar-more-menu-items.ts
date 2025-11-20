@@ -1,5 +1,5 @@
 import { MenuGroupTypes, NavbarItemType } from '@/components'
-import { ScopeType } from '@/views'
+import { ScopeType } from '@utils/scopeType'
 
 import { GetNavbarMenuData, NavEnum } from '../types'
 

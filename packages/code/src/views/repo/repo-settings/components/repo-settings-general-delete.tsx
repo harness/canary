@@ -1,18 +1,11 @@
 import { FC } from 'react'
 
+import { PermissionIdentifier, ResourceType } from '@/components/rbac'
+import { useComponents } from '@/context/component-context'
 import { ErrorTypes } from '@/views'
 
-import {
-  Button,
-  ButtonLayout,
-  Dialog,
-  FormSeparator,
-  Layout,
-  PermissionIdentifier,
-  ResourceType,
-  Text
-} from '@harnessio/ui/components'
-import { useComponents, useTranslation } from '@harnessio/ui/context'
+import { Button, ButtonLayout, Dialog, FormSeparator, Layout, Text } from '@harnessio/ui/components'
+import { useTranslation } from '@harnessio/ui/context'
 
 export const RepoSettingsGeneralDelete: FC<{
   isLoading?: boolean

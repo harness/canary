@@ -1,6 +1,5 @@
 import { CSSProperties, memo, ReactNode, useCallback, useEffect, useMemo, useRef } from 'react'
 
-import { CopyButton, Text } from '@/components'
 import MarkdownPreview from '@uiw/react-markdown-preview'
 import rehypeExternalLinks from 'rehype-external-links'
 import { getCodeString, RehypeRewriteOptions } from 'rehype-rewrite'
@@ -8,10 +7,12 @@ import rehypeSanitize from 'rehype-sanitize'
 import rehypeVideo from 'rehype-video'
 import remarkBreaks from 'remark-breaks'
 
+import { CopyButton, Text } from '@harnessio/ui/components'
+
 import './style.css'
 
-import { useRouterContext } from '@/context'
-import { cn } from '@utils/cn'
+import { useRouterContext } from '@harnessio/ui/context'
+import { cn } from '@harnessio/ui/utils'
 
 import { CodeSuggestionBlock, SuggestionBlock } from './CodeSuggestionBlock'
 

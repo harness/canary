@@ -4,7 +4,7 @@ import { createContext, forwardRef, useCallback, useContext, useEffect, useState
 import { IconV2, ScrollArea } from '@/components'
 import * as AccordionPrimitive from '@radix-ui/react-accordion'
 import { cn } from '@utils/cn'
-import { ExecutionState } from '@views/repo/pull-request'
+import { ExecutionState } from '@utils/executionState'
 
 type ExecutionDetail = {
   status: ExecutionState

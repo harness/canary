@@ -68,6 +68,7 @@ import { RepoFilesViewWrapper } from './repo-files-view-wrapper'
 import RepoViewWrapper from './repo-view-wrapper'
 import RootViewWrapper from './root-view-wrapper'
 import SecretDetailsLayoutWrapper from './secret-details-layout-wrapper'
+import { SidebarExpandCollapseWrapper } from './sidebar-expand-collapse'
 import ViewSettings from './view-settings'
 
 export interface ViewPreviewGroup {
@@ -103,6 +104,10 @@ export const viewPreviews: Record<string, ViewPreviewGroup> = {
             </Routes>
           </SideNavWrapper>
         )
+      },
+      expandCollapse: {
+        label: 'Sidebar Expand/Collapse',
+        element: <SidebarExpandCollapseWrapper />
       }
     }
   },

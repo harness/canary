@@ -146,31 +146,27 @@ export default {
       backgroundImage: `var(--cn-set-ai-outline-bg-gradient), var(--cn-set-ai-outline-border)`,
       backgroundOrigin: 'border-box',
       backgroundClip: 'padding-box, border-box',
-      // default: zoom the gradient so mostly the first (white) stop is visible
+      // default: zoom the gradient so mostly the first (solid) stop is visible
       // hover will reset size to 100% 100% and position to 0 0 (one-to-one with the token)
       backgroundSize: '800% 800%, 100% 100%',
-      backgroundPosition: '0 0, 0 0',
       border: 'var(--cn-btn-ai-border) solid transparent',
       transitionProperty: 'color, background-size, background-position, border-color, box-shadow',
-      transitionDuration: '150ms',
-      transitionTimingFunction: 'ease-in-out',
+      transitionDuration: '250ms',
+      transitionTimingFunction: 'ease-in',
 
       '&:hover:not(:disabled, .cn-button-disabled)': {
         // gradient matches the token one-to-one
         backgroundSize: '100% 100%, 100% 100%',
-        backgroundPosition: '0 0, 0 0',
         boxShadow: 'var(--cn-shadow-comp-ai-inner)'
       },
       '&:active:not(:disabled, .cn-button-disabled), &:where(.cn-button-active)': {
         // slightly weaker than hover: slight zoom back
         backgroundSize: '110% 110%, 100% 100%',
-        backgroundPosition: '0 0, 0 0',
         boxShadow: 'var(--cn-shadow-comp-ai-inner)'
       },
       "&[data-loading]": {
         // loading mirrors the hover state so the gradient is clearly visible
         backgroundSize: '110% 110%, 100% 100%',
-        backgroundPosition: '0 0, 0 0',
         boxShadow: 'var(--cn-shadow-comp-ai-inner)'
       }
     },

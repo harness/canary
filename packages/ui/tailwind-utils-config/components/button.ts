@@ -151,7 +151,7 @@ export default {
       backgroundSize: '800% 800%, 100% 100%',
       border: 'var(--cn-btn-ai-border) solid transparent',
       transitionProperty: 'color, background-size, background-position, border-color, box-shadow',
-      transitionDuration: '250ms',
+      transitionDuration: '200ms',
       transitionTimingFunction: 'ease-in',
 
       '&:hover:not(:disabled, .cn-button-disabled)': {

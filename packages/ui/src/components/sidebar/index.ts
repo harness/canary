@@ -1,5 +1,6 @@
 import { SidebarProvider, useSidebar, UseSidebarSignature } from './sidebar-context'
 import { SidebarItem, SidebarItemProps, SidebarMenuSubItem } from './sidebar-item'
+import { SidebarRail } from './sidebar-rail'
 import { SidebarToggleMenuButton } from './sidebar-toggle-menu-button'
 import {
   SidebarContent,
@@ -8,7 +9,6 @@ import {
   SidebarHeader,
   SidebarInset,
   SidebarMenuSkeleton,
-  SidebarRail,
   SidebarRoot,
   SidebarSeparator,
   SidebarTrigger

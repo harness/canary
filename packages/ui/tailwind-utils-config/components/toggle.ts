@@ -20,6 +20,7 @@ const createToggleStyles = () => {
 
 export default {
   '.cn-toggle': {
+    transitionDuration: '100ms',
     ...createToggleStyles(),
 
     '&[data-state="on"]': {

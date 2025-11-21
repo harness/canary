@@ -7,6 +7,10 @@ const themes = ['success', 'danger', 'default'] as const
 
 const sizes = ['3xs', '2xs', 'xs', 'sm', 'md'] as const
 
+const BUTTON_ACTIVE_SCALE = '0.99'
+const BUTTON_TRANSITION_DURATION = '150ms'
+const BUTTON_TRANSITION_EASING = 'ease-in-out'
+
 const themeStyleMapper: Record<(typeof themes)[number], string> = {
   success: 'success',
   danger: 'danger',
@@ -105,9 +109,11 @@ function createButtonSizeStyles() {
 
 export default {
   '.cn-button': {
-    transitionProperty: 'color, background-color, border-color, text-decoration-color, fill, stroke',
-    transitionDuration: '150ms',
-    transitionTimingFunction: 'ease-in-out',
+    transitionProperty:
+      'color, background-color, border-color, text-decoration-color, fill, stroke, transform, box-shadow, opacity',
+    transitionDuration: BUTTON_TRANSITION_DURATION,
+    transitionTimingFunction: BUTTON_TRANSITION_EASING,
+    willChange: 'transform',
     borderRadius: 'var(--cn-btn-default-radius)',
     paddingBlock: 'var(--cn-btn-py-md)',
     paddingInline: 'var(--cn-btn-px-md)',
@@ -118,6 +124,10 @@ export default {
     border: 'var(--cn-btn-border) solid var(--cn-set-gray-outline-border)',
     '@apply font-body-single-line-normal select-none overflow-hidden inline-flex items-center justify-center whitespace-nowrap':
       '',
+
+    '&:active:not(:disabled, .cn-button-disabled, .cn-button-split-dropdown)': {
+      transform: `scale(${BUTTON_ACTIVE_SCALE})`
+    },
 
     '&:where(.cn-button-split-dropdown)': {
       height: 'var(--cn-btn-size-md)',
@@ -150,9 +160,9 @@ export default {
       // hover will reset size to 100% 100%
       backgroundSize: '800% 800%, 100% 100%',
       border: 'var(--cn-btn-ai-border) solid transparent',
-      transitionProperty: 'color, background-size, background-position, border-color, box-shadow',
-      transitionDuration: '200ms',
-      transitionTimingFunction: 'ease-in',
+      transitionProperty: 'color, background-size, background-position, border-color, box-shadow, transform, opacity',
+      transitionDuration: BUTTON_TRANSITION_DURATION,
+      transitionTimingFunction: BUTTON_TRANSITION_EASING,
 
       '&:hover:not(:disabled, .cn-button-disabled)': {
         // gradient matches the token one-to-one
@@ -308,6 +318,21 @@ export default {
       '&:where(:not(:disabled, .cn-button-disabled):hover, :not(:disabled, .cn-button-disabled):active)': {
         color: 'var(--cn-text-1)'
       }
+    }
+  },
+
+  '.cn-button-split-wrapper': {
+    display: 'inline-flex',
+    transitionProperty: 'transform',
+    transitionDuration: BUTTON_TRANSITION_DURATION,
+    transitionTimingFunction: BUTTON_TRANSITION_EASING,
+
+    '& > .cn-button, & > .cn-button-split-dropdown': {
+      transform: 'none !important'
+    },
+
+    '&:has(> .cn-button:active)': {
+      transform: `scale(${BUTTON_ACTIVE_SCALE})`
     }
   }
 }

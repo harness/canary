@@ -40,6 +40,10 @@
       "full-width": {
         "$type": "sizing",
         "$value": "{size.58}"
+      },
+      "min-width": {
+        "$type": "sizing",
+        "$value": "58px"
       }
     },
     "fade-height": {

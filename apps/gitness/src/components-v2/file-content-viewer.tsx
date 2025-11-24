@@ -24,7 +24,7 @@ import {
   ViewTypeValue
 } from '@harnessio/ui/components'
 import { useRouterContext } from '@harnessio/ui/context'
-import { cn, decodeURIComponentIfValid } from '@harnessio/ui/utils'
+import { cn } from '@harnessio/ui/utils'
 import { CommitsList, FileReviewError, monacoThemes } from '@harnessio/ui/views'
 import { CodeEditor } from '@harnessio/yaml-editor'
 
@@ -151,7 +151,7 @@ const RenameHistoryDetector: React.FC<RenameHistoryDetectorProps> = ({
     repo_ref: repoRef,
     queryParams: {
       git_ref: gitRef,
-      path: decodeURIComponentIfValid(decodeURIComponentIfValid(currentPath)),
+      path: currentPath,
       limit: 1
     }
   })
@@ -161,7 +161,7 @@ const RenameHistoryDetector: React.FC<RenameHistoryDetectorProps> = ({
       repo_ref: repoRef,
       queryParams: {
         git_ref: firstCommit?.body?.commits?.[0]?.sha || '',
-        path: decodeURIComponentIfValid(decodeURIComponentIfValid(currentPath)),
+        path: currentPath,
         limit: 1
       }
     },
@@ -232,7 +232,7 @@ export default function FileContentViewer({ repoContent, loading }: FileContentV
     queryParams: {
       page,
       git_ref: normalizeGitRef(gitRefName),
-      path: decodeURIComponentIfValid(decodeURIComponentIfValid(fullResourcePath))
+      path: fullResourcePath
     }
   })
 

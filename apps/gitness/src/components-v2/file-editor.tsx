@@ -11,7 +11,7 @@ import {
   MarkdownViewer,
   Tabs
 } from '@harnessio/ui/components'
-import { cn, decodeURIPath } from '@harnessio/ui/utils'
+import { cn, decodeURIComponentIfValid } from '@harnessio/ui/utils'
 import { monacoThemes, PathActionBar } from '@harnessio/ui/views'
 import { CodeDiffEditor, CodeEditor, CodeEditorProps } from '@harnessio/yaml-editor'
 
@@ -69,14 +69,6 @@ export const FileEditor: FC<FileEditorProps> = ({ repoDetails, defaultBranch, lo
     () => [(parentPath || '').trim(), (fileName || '').trim()].filter(p => !!p.trim()).join(FILE_SEPARATOR),
     [parentPath, fileName]
   )
-
-  const encodedFileResourcePath = useMemo(
-    () =>
-      [(parentPath || '').trim(), (encodeURI(encodeURI(fileName)) || '').trim()]
-        .filter(p => !!p.trim())
-        .join(FILE_SEPARATOR),
-    [parentPath, fileName]
-  )
   const isShowPreview = () => !isNew || getIsMarkdown(language)
   const [showPreview, setShowPreview] = useState(isShowPreview())
 
@@ -116,8 +108,8 @@ export const FileEditor: FC<FileEditorProps> = ({ repoDetails, defaultBranch, lo
   )
 
   const isUpdate = useMemo(
-    () => fullResourcePath === encodedFileResourcePath,
-    [fullResourcePath, encodedFileResourcePath]
+    () => decodeURIComponentIfValid(decodeURIComponentIfValid(fullResourcePath)) === fileResourcePath,
+    [fullResourcePath, fileResourcePath]
   )
 
   const commitAction = useMemo(
@@ -213,15 +205,13 @@ export const FileEditor: FC<FileEditorProps> = ({ repoDetails, defaultBranch, lo
         onClose={() => toggleOpenCommitDialog(false)}
         commitAction={commitAction}
         gitRef={fullGitRef || ''}
-        oldResourcePath={
-          commitAction === GitCommitAction.MOVE ? decodeURIPath(decodeURIPath(fullResourcePath)) : undefined
-        }
-        resourcePath={decodeURIPath(decodeURIPath(fileResourcePath)) || ''}
+        oldResourcePath={commitAction === GitCommitAction.MOVE ? fullResourcePath : undefined}
+        resourcePath={fileResourcePath || ''}
         payload={contentRevision.code}
         sha={repoDetails?.sha}
         onSuccess={(_commitInfo, isNewBranch, newBranchName) => {
           if (!isNewBranch) {
-            navigate(`${routes.toRepoFiles({ spaceId, repoId })}/${fullGitRef}/~/${encodedFileResourcePath}`)
+            navigate(`${routes.toRepoFiles({ spaceId, repoId })}/${fullGitRef}/~/${fileResourcePath}`)
           } else {
             navigate(routes.toPullRequestCompare({ spaceId, repoId, diffRefs: `${defaultBranch}...${newBranchName}` }))
           }

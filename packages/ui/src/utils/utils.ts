@@ -95,8 +95,3 @@ export const decodeURIComponentIfValid = (path: string) => {
     return path
   }
 }
-
-export const decodeURIPath = (path: string) => {
-  const pathArr = path.split('/')
-  return pathArr.map(decodeURIComponentIfValid).join('/')
-}

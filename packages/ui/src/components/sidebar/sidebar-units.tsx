@@ -112,7 +112,7 @@ export const SidebarRail = forwardRef<
   const label = open ? t('component:sidebar.collapse', 'Collapse') : t('component:sidebar.expand', 'Expand')
 
   if (animate) {
-    return <AnimatedSideBarRail />
+    return <AnimatedSideBarRail className={className} />
   }
 
   return (
@@ -128,13 +128,7 @@ export const SidebarRail = forwardRef<
       onMouseLeave={() => setHovered(false)}
       {...props}
     >
-      <div
-        className={cn(
-          'absolute top-[calc(50%-var(--cn-header-height))] right-0',
-          { 'translate-x-1/2': hovered },
-          className
-        )}
-      >
+      <div className={cn('absolute top-[calc(50%-var(--cn-header-height))] right-0', { 'translate-x-1/2': hovered })}>
         {hovered ? (
           <IconV2 name={open ? 'nav-arrow-left' : 'nav-arrow-right'} size="lg" />
         ) : (

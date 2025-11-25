@@ -1,6 +1,7 @@
-import { useCallback, useState } from 'react'
+import { HTMLAttributes, useCallback, useState } from 'react'
 
 import { useTranslation } from '@/context'
+import { cn } from '@utils/cn'
 import { motion } from 'framer-motion'
 
 import { useSidebar } from '.'
@@ -13,7 +14,9 @@ const BUMP_PX = 3 // Pixels to bump the sidebar on hover
 const EXPANDED_LEFT = 230 // Left position when sidebar is expanded
 const COLLAPSED_LEFT = 64 // Left position when sidebar is collapsed
 
-const AnimatedSideBarRail: React.FC = () => {
+interface AnimatedSideBarRailProps extends Pick<HTMLAttributes<HTMLElement>, 'className'> {}
+
+const AnimatedSideBarRail: React.FC<AnimatedSideBarRailProps> = ({ className }) => {
   const { t } = useTranslation()
   const { state, toggleSidebar } = useSidebar()
 
@@ -38,7 +41,10 @@ const AnimatedSideBarRail: React.FC = () => {
   return (
     <motion.div
       data-id="sidebar-rail"
-      className="absolute w-6 top-[var(--cn-header-height)] bottom-0 z-20 flex items-center border-l border-t bg-cn-2 rounded-tl-cn-3"
+      className={cn(
+        'absolute w-6 top-[var(--cn-header-height)] bottom-0 z-20 flex items-center border-l border-t bg-cn-2 rounded-tl-cn-3',
+        className
+      )}
       animate={{
         x: shiftWithBump,
         transition: { type: 'tween', ease: 'easeOut' } // Smooth tween animation

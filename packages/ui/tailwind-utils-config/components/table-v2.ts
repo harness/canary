@@ -49,14 +49,16 @@ export default {
 
     // Header
     '&-header': {
-      '@apply border-b bg-cn-2': '',
+      '@apply border-b': '',
       borderColor: 'var(--cn-border-3)'
     },
 
     // Container highlight on hover
     '&:where(.cn-table-v2-highlight-hover) tbody > tr': {
       '&:hover, &:has(.cn-table-v2-cell-clickable-block:focus-visible)': {
-        backgroundColor: 'var(--cn-state-hover)'
+        '&>td': {
+          backgroundColor: 'var(--cn-bg-2)'
+        }
       }
     },
 
@@ -93,7 +95,7 @@ export default {
 
     // Head cell
     '&-head': {
-      '@apply text-cn-3 text-left align-middle font-medium overflow-hidden': '',
+      '@apply text-cn-3 text-left align-middle font-medium overflow-hidden bg-cn-2 transition-colors': '',
       '@apply [&:has([role=checkbox])]:py-0 [&:has([role=checkbox])]:!pr-0 [&>[role=checkbox]]:translate-y-[2px]': '',
       '@apply [&:has([role=button])]:py-0 [&:has([role=button])]:!pr-0': '',
       paddingLeft: 'var(--cn-table-header-px)',
@@ -122,7 +124,7 @@ export default {
     // Data cell
     '&-cell': {
       position: 'relative',
-      '@apply align-middle': '',
+      '@apply align-middle bg-cn-1 transition-colors': '',
       '@apply [&:has([role=checkbox])]:py-0 [&:has([role=checkbox])]:!pr-0 [&>[role=checkbox]]:translate-y-[2px]': '',
       '@apply [&:has([role=button])]:py-0 [&:has([role=button])]:!pr-0': '',
       paddingLeft: 'var(--cn-table-cell-px)',

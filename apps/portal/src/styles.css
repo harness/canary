@@ -216,3 +216,8 @@ pre.prism-code {
     }
   }
 }
+
+.live-provider-router-wrapper > div {
+  @apply w-full;
+  min-width: 0;
+}

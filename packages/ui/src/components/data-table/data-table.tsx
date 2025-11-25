@@ -3,6 +3,7 @@ import { useEffect, useMemo } from 'react'
 import { Button, Checkbox, IconV2, PaginationProps, Table, tableVariants } from '@/components'
 import {
   ColumnDef,
+  ColumnPinningState,
   ExpandedState,
   flexRender,
   getCoreRowModel,
@@ -17,6 +18,8 @@ import {
 import { cn } from '@utils/cn'
 import { type VariantProps } from 'class-variance-authority'
 
+import { getCommonPinningStyles } from './utils'
+
 export interface DataTableProps<TData> {
   data: TData[]
   columns: ColumnDef<TData, unknown>[]
@@ -28,6 +31,7 @@ export interface DataTableProps<TData> {
   className?: string
   currentSorting?: SortingState
   currentRowSelection?: RowSelectionState
+  columnPinning?: ColumnPinningState
 
   /**
    * Array of column IDs to be visible
@@ -105,7 +109,8 @@ export const DataTable = function DataTable<TData>({
   renderSubComponent,
   _enableColumnResizing = false,
   getRowId,
-  visibleColumns
+  visibleColumns,
+  columnPinning = { left: [], right: [] }
 }: DataTableProps<TData>) {
   const tableColumns = useMemo(() => {
     // Start with the base columns
@@ -213,7 +218,8 @@ export const DataTable = function DataTable<TData>({
       state: {
         sorting: currentSorting,
         rowSelection: currentRowSelection || {},
-        expanded: currentExpanded || {}
+        expanded: currentExpanded || {},
+        columnPinning
       }
     }),
     [
@@ -230,7 +236,8 @@ export const DataTable = function DataTable<TData>({
       _enableColumnResizing,
       currentSorting,
       currentRowSelection,
-      currentExpanded
+      currentExpanded,
+      columnPinning
     ]
   )
 
@@ -251,9 +258,18 @@ export const DataTable = function DataTable<TData>({
     }
   }, [table, visibleColumns])
 
+  const hasPinnedColumns = useMemo(
+    () => Boolean(columnPinning?.left?.length || columnPinning?.right?.length),
+    [columnPinning]
+  )
+
   return (
     <Table.Root
       className={className}
+      /* If there are pinned columns, we need to set the table to fixed layout to prevent columns
+       *  from resizing based on their content.
+       */
+      tableClassName={cn({ 'table-fixed': hasPinnedColumns })}
       size={size}
       disableHighlightOnHover={disableHighlightOnHover}
       paginationProps={paginationProps}
@@ -263,13 +279,17 @@ export const DataTable = function DataTable<TData>({
           <Table.Row key={headerGroup.id}>
             {headerGroup.headers.map(header => (
               <Table.Head
+                colSpan={header.colSpan}
                 key={header.id}
                 className={cn(_enableColumnResizing ? 'relative' : undefined)}
                 sortable={header.column.getCanSort()}
                 sortDirection={header.column.getCanSort() ? header.column.getIsSorted() || false : undefined}
                 onClick={header.column.getCanSort() ? header.column.getToggleSortingHandler() : undefined}
                 style={{
-                  width: header.getSize()
+                  width: header.getSize(),
+                  minWidth: header.column.columnDef.minSize ?? header.getSize(),
+                  maxWidth: header.column.columnDef.maxSize ?? header.getSize(),
+                  ...getCommonPinningStyles<TData>(header.column)
                 }}
               >
                 {header.isPlaceholder ? null : flexRender(header.column.columnDef.header, header.getContext())}
@@ -295,9 +315,22 @@ export const DataTable = function DataTable<TData>({
               onClick={onRowClick ? () => onRowClick(row.original, row.index) : undefined}
               selected={enableRowSelection ? row.getIsSelected() : undefined}
             >
-              {row.getVisibleCells().map(cell => (
-                <Table.Cell key={cell.id}>{flexRender(cell.column.columnDef.cell, cell.getContext())}</Table.Cell>
-              ))}
+              {row.getVisibleCells().map(cell => {
+                const column = cell.column
+                return (
+                  <Table.Cell
+                    key={cell.id}
+                    style={{
+                      ...getCommonPinningStyles<TData>(column),
+                      width: column.getSize(),
+                      minWidth: column.columnDef.minSize ?? column.getSize(),
+                      maxWidth: column.columnDef.maxSize ?? column.getSize()
+                    }}
+                  >
+                    {flexRender(cell.column.columnDef.cell, cell.getContext())}
+                  </Table.Cell>
+                )
+              })}
             </Table.Row>
             {row.getIsExpanded() && renderSubComponent && (
               <Table.Row key={`${row.id}-expanded`} className="bg-cn-2">

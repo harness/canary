@@ -428,6 +428,13 @@ function MyTable() {
       required: false,
       value: "string[]",
     },
+    {
+      name: "columnPinning",
+      description:
+        "Column pinning state to pin columns to the left or right side of the table. Pinned columns remain visible during horizontal scrolling.",
+      required: false,
+      value: "ColumnPinningState ({ left?: string[], right?: string[] })",
+    },
   ]}
 />
 
@@ -521,6 +528,228 @@ The `useColumnFilter` hook manages column visibility state with automatic localS
     },
   ]}
 />
+
+## Column Pinning
+
+The `DataTable` component supports column pinning, allowing you to pin columns to the left or right side of the table. Pinned columns remain visible while scrolling horizontally through the table.
+
+<DocsPage.ComponentExample
+  client:only
+  code={`() => {
+  const users = [
+    { id: 1, name: 'John Doe', email: 'john@example.com', role: 'Admin', department: 'Engineering', status: 'active', location: 'New York', phone: '+1-555-0101', joinDate: '2024-01-15' },
+    { id: 2, name: 'Jane Smith', email: 'jane@example.com', role: 'Manager', department: 'Product', status: 'active', location: 'San Francisco', phone: '+1-555-0102', joinDate: '2024-02-20' },
+    { id: 3, name: 'Bob Johnson', email: 'bob@example.com', role: 'Developer', department: 'Engineering', status: 'inactive', location: 'Austin', phone: '+1-555-0103', joinDate: '2024-03-10' },
+    { id: 4, name: 'Alice Williams', email: 'alice@example.com', role: 'Designer', department: 'Design', status: 'active', location: 'Seattle', phone: '+1-555-0104', joinDate: '2024-01-25' },
+    { id: 5, name: 'Charlie Brown', email: 'charlie@example.com', role: 'Developer', department: 'Engineering', status: 'active', location: 'Boston', phone: '+1-555-0105', joinDate: '2024-04-05' }
+  ]
+
+const [columnPinning, setColumnPinning] = React.useState({
+left: ['name'],
+right: ['status']
+})
+
+const columns = [
+{
+id: 'name',
+accessorKey: 'name',
+header: 'Name',
+size: 150
+},
+{
+id: 'email',
+accessorKey: 'email',
+header: 'Email',
+size: 200
+},
+{
+id: 'role',
+accessorKey: 'role',
+header: 'Role',
+size: 120
+},
+{
+id: 'department',
+accessorKey: 'department',
+header: 'Department',
+size: 150
+},
+{
+id: 'location',
+accessorKey: 'location',
+header: 'Location',
+size: 150
+},
+{
+id: 'phone',
+accessorKey: 'phone',
+header: 'Phone',
+size: 150
+},
+{
+id: 'joinDate',
+accessorKey: 'joinDate',
+header: 'Join Date',
+size: 120
+},
+{
+id: 'status',
+accessorKey: 'status',
+header: 'Status',
+size: 100,
+cell: (info) => (
+
+<StatusBadge
+  theme={info.getValue() === "active" ? "success" : "default"}
+  size="sm"
+>
+  {info.getValue()}
+</StatusBadge>
+) } ]
+
+const handlePinColumn = (columnId, side) => {
+setColumnPinning(prev => {
+const newPinning = { ...prev }
+
+      // Remove from both sides first
+      newPinning.left = prev.left?.filter(id => id !== columnId) || []
+      newPinning.right = prev.right?.filter(id => id !== columnId) || []
+
+      // Add to the specified side if provided
+      if (side === 'left') {
+        newPinning.left = [...newPinning.left, columnId]
+      } else if (side === 'right') {
+        newPinning.right = [...newPinning.right, columnId]
+      }
+
+      return newPinning
+    })
+
+}
+
+const isPinned = (columnId) => {
+if (columnPinning.left?.includes(columnId)) return 'left'
+if (columnPinning.right?.includes(columnId)) return 'right'
+return false
+}
+
+return (
+
+<Layout.Vertical className="w-[600px]" gap="md">
+<Layout.Flex gap="sm" wrap="wrap">
+<Text variant="body-strong">Pin Controls:</Text>
+{columns.map(col => (
+<Layout.Flex key={col.id} gap="2xs" align="center">
+<Text variant="caption-normal">{col.header}</Text>
+<ButtonGroup
+size="xs"
+buttonsProps={[
+{
+variant: isPinned(col.id) === 'left' ? 'primary' : 'outline',
+onClick: () => handlePinColumn(col.id, isPinned(col.id) === 'left' ? null : 'left'),
+children: (
+<>
+<IconV2 name="pin" size="xs" />
+Left
+</>
+)
+},
+{
+variant: isPinned(col.id) === 'right' ? 'primary' : 'outline',
+onClick: () => handlePinColumn(col.id, isPinned(col.id) === 'right' ? null : 'right'),
+children: (
+<>
+Right
+<IconV2 name="pin" size="xs" />
+</>
+)
+}
+]}
+/>
+</Layout.Flex>
+))}
+</Layout.Flex>
+
+      <div className="overflow-x-auto w-full">
+        <DataTable
+          columns={columns}
+          data={users}
+          getRowId={(row) => row.id.toString()}
+          size="compact"
+          columnPinning={columnPinning}
+        />
+      </div>
+
+      <Text variant="caption-light">
+        Scroll horizontally to see pinned columns in action. Pinned columns stay visible while scrolling.
+      </Text>
+    </Layout.Vertical>
+
+)
+}`} />
+
+### Usage
+
+To enable column pinning, pass a `columnPinning` prop to the `DataTable` component with the column IDs you want to pin:
+
+```tsx
+import { DataTable } from "@harnessio/ui/components";
+import { useState } from "react";
+import type { ColumnPinningState } from "@tanstack/react-table";
+
+function TableWithPinnedColumns() {
+  const [columnPinning, setColumnPinning] = useState<ColumnPinningState>({
+    left: ["name"], // Pin 'name' column to the left
+    right: ["status"], // Pin 'status' column to the right
+  });
+
+  const columns = [
+    {
+      id: "name",
+      accessorKey: "name",
+      header: "Name",
+      size: 150, // Optional: Set column width
+    },
+    {
+      id: "email",
+      accessorKey: "email",
+      header: "Email",
+      size: 200,
+    },
+    {
+      id: "status",
+      accessorKey: "status",
+      header: "Status",
+      size: 100,
+    },
+  ];
+
+  return (
+    <DataTable columns={columns} data={data} columnPinning={columnPinning} />
+  );
+}
+```
+
+### Key Features
+
+- **Left Pinning**: Pin columns to the left side of the table
+- **Right Pinning**: Pin columns to the right side of the table
+- **Visual Indicators**: Pinned columns have subtle shadows to indicate their pinned state
+- **Sticky Positioning**: Pinned columns remain visible during horizontal scrolling
+- **Multiple Columns**: Pin multiple columns to either side
+
+### Best Practices
+
+- Pin important identifier columns (like names or IDs) to the left
+- Pin action columns or status indicators to the right
+- Avoid pinning too many columns as it reduces the scrollable area
+- Set explicit column widths using the `size` property for better control
+
+<Aside type="tip">
+  **Performance Tip:** Column pinning works best with tables that have many
+  columns requiring horizontal scrolling. For tables with few columns, pinning
+  may not be necessary.
+</Aside>
 
 ## Examples
 

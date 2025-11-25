@@ -18,6 +18,7 @@ import iconsAndLogos from './icon-and-logo'
 import inputStyles from './input'
 import labelStyles from './label'
 import linkStyles from './link'
+import messageBubbleStyles from './message-bubble'
 import meterStyles from './meter'
 import multiSelectStyles from './multi-select'
 import paginationStyles from './pagination'
@@ -81,6 +82,7 @@ export const ComponentStyles = [
   stackedListStyles,
   treeStyles,
   meterStyles,
+  messageBubbleStyles,
 
   // Form styles
   selectStyles,

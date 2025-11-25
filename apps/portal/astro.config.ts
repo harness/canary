@@ -92,6 +92,10 @@ export default defineConfig({
               autogenerate: { directory: "components/visual" },
             },
             {
+              label: "AI & Chat",
+              autogenerate: { directory: "components/chat" },
+            },
+            {
               label: "Utilities",
               autogenerate: { directory: "components/utilities" },
             },

@@ -1,0 +1,64 @@
+---
+title: Message Bubble
+description: Conversational message component for AI and chat interfaces
+beta: true
+---
+
+import { DocsPage } from "@/components/docs-page";
+
+The `MessageBubble` component is a compound component for displaying conversational messages in AI and chat interfaces. It supports both user and assistant messages with different styling and layouts.
+
+## Usage
+
+The MessageBubble component uses a compound pattern with `MessageBubble.Root` and `MessageBubble.Content` sub-components.
+
+<DocsPage.ComponentExample
+  client:only
+  code={`<div className="flex flex-col gap-cn-md w-full max-w-2xl">
+  <MessageBubble.Root role="user">
+    <MessageBubble.Content>
+      Hello! Can you help me with my code?
+    </MessageBubble.Content>
+  </MessageBubble.Root>
+
+  <MessageBubble.Root role="assistant">
+    <MessageBubble.Content>
+      Of course! I'd be happy to help. What do you need assistance with?
+    </MessageBubble.Content>
+  </MessageBubble.Root>
+</div>`}
+/>
+
+## Usage
+
+```typescript jsx
+import { MessageBubble } from '@harnessio/ui/components'
+
+return (
+  <MessageBubble.Root role="user">
+    <MessageBubble.Content>
+      Your message here
+    </MessageBubble.Content>
+  </MessageBubble.Root>
+)
+```
+
+## Component Structure
+
+### MessageBubble.Root
+
+The root container that defines the message role and layout.
+
+**Props:**
+
+- `role`: `"user" | "assistant"` - Determines the message role and styling
+- Extends `HTMLAttributes<HTMLDivElement>`
+
+### MessageBubble.Content
+
+The content wrapper with role-based styling.
+
+**Props:**
+
+- `children`: React node - The message content
+- Extends `HTMLAttributes<HTMLDivElement>`

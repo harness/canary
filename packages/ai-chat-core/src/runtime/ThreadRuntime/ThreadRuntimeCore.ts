@@ -54,6 +54,12 @@ export class ThreadRuntimeCore extends BaseSubscribable {
     }
   }
 
+  private updateMessages(messages: Message[]): void {
+    this._messages = messages
+    this.config.onMessagesChange?.(this._messages)
+    this.notifySubscribers()
+  }
+
   public append(message: AppendMessage): void {
     const newMessage: Message = {
       id: message.id || generateMessageId(),
@@ -65,9 +71,7 @@ export class ThreadRuntimeCore extends BaseSubscribable {
       metadata: message.metadata
     }
 
-    this._messages.push(newMessage)
-    this.config.onMessagesChange?.(this._messages)
-    this.notifySubscribers()
+    this.updateMessages([...this._messages, newMessage])
   }
 
   public async startRun(userMessage: AppendMessage): Promise<void> {
@@ -79,7 +83,6 @@ export class ThreadRuntimeCore extends BaseSubscribable {
     this._isRunning = true
     this._abortController = new AbortController()
     this._currentPart = null // Reset current part
-    this.notifySubscribers()
 
     const assistantMessageId = generateMessageId()
     const assistantMessage: Message = {
@@ -90,9 +93,7 @@ export class ThreadRuntimeCore extends BaseSubscribable {
       timestamp: Date.now()
     }
 
-    this._messages.push(assistantMessage)
-    this.config.onMessagesChange?.(this._messages)
-    this.notifySubscribers()
+    this.updateMessages([...this._messages, assistantMessage])
 
     try {
       const stream = this.config.streamAdapter.stream({
@@ -149,28 +150,34 @@ export class ThreadRuntimeCore extends BaseSubscribable {
       }
     } else if (event.type === 'error') {
       const errorEvent = event as Extract<StreamEvent, { type: 'error' }>
-      message.content.push({
-        type: 'error',
-        data: errorEvent.error
-      })
+      message.content = [
+        ...message.content,
+        {
+          type: 'error',
+          data: errorEvent.error
+        }
+      ]
     } else {
       // Handle custom events
       const customEvent = event as Extract<StreamEvent, { data?: any }>
-      message.content.push({
-        type: customEvent.type,
-        data: customEvent.data,
-        parentId: customEvent.parentId
-      })
+      message.content = [
+        ...message.content,
+        {
+          type: customEvent.type,
+          data: customEvent.data,
+          parentId: customEvent.parentId
+        }
+      ]
     }
 
-    // Update message
-    this._messages = [
+    // Update message with new reference
+    const updatedMessages = [
       ...this._messages.slice(0, messageIndex),
       { ...message, timestamp: Date.now() },
       ...this._messages.slice(messageIndex + 1)
     ]
-    this.config.onMessagesChange?.(this._messages)
-    this.notifySubscribers()
+
+    this.updateMessages(updatedMessages)
   }
 
   private handlePartStart(message: Message, event: Extract<StreamEvent, { type: 'part-start' }>): void {
@@ -205,8 +212,8 @@ export class ThreadRuntimeCore extends BaseSubscribable {
         } as any
     }
 
-    // Add to message
-    message.content.push(initialContent)
+    // Add to message with new reference
+    message.content = [...message.content, initialContent]
 
     // Track current part
     this._currentPart = {
@@ -253,19 +260,20 @@ export class ThreadRuntimeCore extends BaseSubscribable {
     const messageIndex = this._messages.findIndex(m => m.id === messageId)
     if (messageIndex === -1) return
 
-    this._messages[messageIndex] = {
-      ...this._messages[messageIndex],
-      status
-    }
+    const updatedMessages = [
+      ...this._messages.slice(0, messageIndex),
+      {
+        ...this._messages[messageIndex],
+        status
+      },
+      ...this._messages.slice(messageIndex + 1)
+    ]
 
-    this.config.onMessagesChange?.(this._messages)
-    this.notifySubscribers()
+    this.updateMessages(updatedMessages)
   }
 
   public clear(): void {
-    this._messages = []
-    this.config.onMessagesChange?.(this._messages)
-    this.notifySubscribers()
+    this.updateMessages([])
   }
 
   public cancelRun(): void {
@@ -277,8 +285,6 @@ export class ThreadRuntimeCore extends BaseSubscribable {
   }
 
   public reset(messages: Message[] = []): void {
-    this._messages = [...messages]
-    this.config.onMessagesChange?.(this._messages)
-    this.notifySubscribers()
+    this.updateMessages([...messages])
   }
 }

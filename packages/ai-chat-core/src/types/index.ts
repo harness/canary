@@ -1,4 +1,15 @@
-export type { Message, MessageContent, MessageRole, MessageStatus, AppendMessage } from './message'
+export type {
+  Message,
+  MessageContent,
+  MessageRole,
+  MessageStatus,
+  AppendMessage,
+  TextContent,
+  ErrorContent,
+  MetadataContent,
+  AssistantThoughtContent,
+  CustomContent
+} from './message'
 export type { ThreadListItemState, ThreadState, RuntimeCapabilities } from './thread'
 export type {
   ChatPlugin,

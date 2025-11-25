@@ -220,7 +220,7 @@ export const FileEditor: FC<FileEditorProps> = ({ repoDetails, defaultBranch, lo
         oldResourcePath={
           commitAction === GitCommitAction.MOVE ? decodeURIPath(decodeURIPath(fullResourcePath)) : undefined
         }
-        resourcePath={decodeURIPath(decodeURIPath(fileResourcePath)) || ''}
+        resourcePath={fileResourcePath || ''}
         payload={contentRevision.code}
         sha={repoDetails?.sha}
         onSuccess={(_commitInfo, isNewBranch, newBranchName) => {

@@ -54,7 +54,7 @@ const PullRequestCheckSection = ({
         {/* TODO: Replace ml-[28px] with a proper spacing token when available */}
         <Layout.Vertical className="ml-[28px]" gap="none">
           {checkData.map(check => {
-            const time = timeDistance(check?.check?.created, check?.check?.updated)
+            const time = timeDistance(check?.check?.created, check?.check?.ended || check?.check?.updated)
             return (
               <Layout.Grid
                 key={check.check?.identifier}

@@ -1481,17 +1481,8 @@
       },
       "bg": {
         "dotes": {
-          "$extensions": {
-            "studio.tokens": {
-              "modify": {
-                "type": "alpha",
-                "value": "0.6",
-                "space": "lch"
-              }
-            }
-          },
           "$type": "color",
-          "$value": "{chrome.300}",
+          "$value": "{chrome.100}",
           "$description": "Refers to the dotted pattern visible in the background of the workspace."
         }
       }

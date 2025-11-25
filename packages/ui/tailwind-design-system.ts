@@ -167,6 +167,11 @@ const tailwindDesignSystem: TailwindConfig = {
       },
 
       /**
+       * @todo add a token in core-design-system for this color
+       */
+      'cn-sidebar-toggle': 'lch(68.87 0 0 / <alpha-value>)',
+
+      /**
        * These colors should be used along with their bg pairs
        *
        * Example:

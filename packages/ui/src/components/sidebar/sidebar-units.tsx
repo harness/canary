@@ -24,6 +24,7 @@ import {
 import { useTranslation } from '@/context'
 import { cn } from '@utils/cn'
 
+import { AnimatedSideBarRail } from './animated-sidebar-rail'
 import { useSidebar } from './sidebar-context'
 
 export const SidebarRoot = forwardRef<HTMLDivElement, ComponentProps<'div'> & { side?: 'left' | 'right' }>(
@@ -92,51 +93,57 @@ export const SidebarTrigger = forwardRef<ElementRef<typeof Button>, SidebarTrigg
 )
 SidebarTrigger.displayName = 'SidebarTrigger'
 
-export const SidebarRail = forwardRef<HTMLButtonElement, ComponentProps<'button'> & { open?: boolean }>(
-  ({ className, onClick, open, ...props }, ref) => {
-    const { toggleSidebar } = useSidebar()
-    const { t } = useTranslation()
-    const [hovered, setHovered] = useState(false)
+export const SidebarRail = forwardRef<
+  HTMLButtonElement,
+  ComponentProps<'button'> & { open?: boolean; animate?: boolean }
+>(({ className, onClick, open, animate = false, ...props }, ref) => {
+  const { toggleSidebar } = useSidebar()
+  const { t } = useTranslation()
+  const [hovered, setHovered] = useState(false)
 
-    const onClickHandler = useCallback(
-      (event: MouseEvent<HTMLButtonElement>) => {
-        onClick?.(event)
-        toggleSidebar()
-      },
-      [toggleSidebar, onClick]
-    )
+  const onClickHandler = useCallback(
+    (event: MouseEvent<HTMLButtonElement>) => {
+      onClick?.(event)
+      toggleSidebar()
+    },
+    [toggleSidebar, onClick]
+  )
 
-    const label = open ? t('component:sidebar.collapse', 'Collapse') : t('component:sidebar.expand', 'Expand')
+  const label = open ? t('component:sidebar.collapse', 'Collapse') : t('component:sidebar.expand', 'Expand')
 
-    return (
-      <button
-        ref={ref}
-        aria-label={label}
-        title={label}
-        tabIndex={-1}
-        onClick={onClickHandler}
-        className={cn('cn-sidebar-rail', open ? 'cursor-w-resize' : 'cursor-e-resize', className)}
-        onMouseEnter={() => setHovered(true)}
-        onMouseLeave={() => setHovered(false)}
-        {...props}
-      >
-        <div
-          className={cn(
-            'absolute top-[calc(50%-var(--cn-header-height))] right-0',
-            { 'translate-x-1/2': hovered },
-            className
-          )}
-        >
-          {hovered ? (
-            <IconV2 name={open ? 'nav-arrow-left' : 'nav-arrow-right'} size="lg" />
-          ) : (
-            <Text className="cn-pl-1 pl-cn-4xs">|</Text>
-          )}
-        </div>
-      </button>
-    )
+  if (animate) {
+    return <AnimatedSideBarRail />
   }
-)
+
+  return (
+    <button
+      data-id="sidebar-rail"
+      ref={ref}
+      aria-label={label}
+      title={label}
+      tabIndex={-1}
+      onClick={onClickHandler}
+      className={cn('cn-sidebar-rail', open ? 'cursor-w-resize' : 'cursor-e-resize', className)}
+      onMouseEnter={() => setHovered(true)}
+      onMouseLeave={() => setHovered(false)}
+      {...props}
+    >
+      <div
+        className={cn(
+          'absolute top-[calc(50%-var(--cn-header-height))] right-0',
+          { 'translate-x-1/2': hovered },
+          className
+        )}
+      >
+        {hovered ? (
+          <IconV2 name={open ? 'nav-arrow-left' : 'nav-arrow-right'} size="lg" />
+        ) : (
+          <Text className="cn-pl-1 pl-cn-4xs">|</Text>
+        )}
+      </div>
+    </button>
+  )
+})
 SidebarRail.displayName = 'SidebarRail'
 
 export const SidebarInset = forwardRef<HTMLDivElement, ComponentProps<'main'>>(({ className, ...props }, ref) => {

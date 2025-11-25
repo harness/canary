@@ -10,7 +10,6 @@ import {
 } from '@/components'
 import { useRouterContext, useTranslation } from '@/context'
 import { cn } from '@/utils'
-import { noop } from 'lodash-es'
 
 import { useLocationChange } from '../../hooks/useLocationChange'
 import { useNav } from '../../hooks/useNav'
@@ -107,7 +106,7 @@ export const SideNav: React.FC<{ routes?: RouteDefinitions }> = ({ routes }) => 
 
   return (
     <>
-      <Sidebar.Root className="!z-30 cn-content-full-height">
+      <Sidebar.Root className="z-10 cn-content-full-height">
         <Sidebar.Content>
           <Sidebar.Group>
             {/* 👉 Static pinned menu */}
@@ -179,7 +178,6 @@ export const SideNav: React.FC<{ routes?: RouteDefinitions }> = ({ routes }) => 
             ))}
           </Sidebar.Group>
         </Sidebar.Content>
-        <Sidebar.Rail onClick={noop} open={!collapsed} />
       </Sidebar.Root>
 
       <ManageNavigation

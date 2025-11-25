@@ -1,5 +1,5 @@
 const ScopeSelector = () => {
-  return <div>ScopeSelector Component</div>
+  return <div>Scope</div>
 }
 
 export default ScopeSelector

@@ -209,13 +209,13 @@
     "noFile": "Aucun fichier trouvé."
   },
   "sidebar": {
+    "collapse": "Collapse",
+    "expand": "Expand",
     "sidebarToggle": {
       "expand": "Développer",
       "collapse": "Réduire"
     },
-    "toggle": "Basculer la barre latérale",
-    "collapse": "Collapse",
-    "expand": "Expand"
+    "toggle": "Basculer la barre latérale"
   },
   "widgets": {
     "viewMore": "View more"

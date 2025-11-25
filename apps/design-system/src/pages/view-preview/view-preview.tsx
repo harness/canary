@@ -97,7 +97,9 @@ export const viewPreviews: Record<string, ViewPreviewGroup> = {
         element: (
           <SideNavWrapper>
             <Routes>
-              <Route path="home" element={<SecretsListPage />} />
+              {/* Dummy Implementation */}
+              <Route path="/" element={<SecretsListPage />} />
+              <Route path="home" element={<div className="p-cn-xl">Home</div>} />
               <Route path="activity" element={<div className="p-cn-xl">Activity</div>} />
               {/* other routes */}
             </Routes>

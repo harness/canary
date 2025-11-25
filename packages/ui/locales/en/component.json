@@ -210,13 +210,13 @@
     "noFile": "No file found."
   },
   "sidebar": {
+    "collapse": "Collapse",
+    "expand": "Expand",
     "sidebarToggle": {
       "expand": "Expand",
       "collapse": "Collapse"
     },
-    "toggle": "Toggle sidebar",
-    "collapse": "Collapse",
-    "expand": "Expand"
+    "toggle": "Toggle sidebar"
   },
   "widgets": {
     "viewMore": "View more"

@@ -376,12 +376,6 @@ describe('SideNav', () => {
       expect(screen.getByTestId('sidebar-root')).toBeInTheDocument()
     })
 
-    it('renders sidebar rail', () => {
-      render(<SideNav />)
-
-      expect(screen.getByTestId('sidebar-rail')).toBeInTheDocument()
-    })
-
     // TODO: These tests are commented out as the features are not yet implemented in SideNav
     // it('renders sidebar footer', () => {
     //   render(<SideNav />)

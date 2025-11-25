@@ -27,7 +27,8 @@ let sidebarState = {
 }
 
 vi.mock('../sidebar-context', () => ({
-  useSidebar: () => sidebarState
+  useSidebar: () => sidebarState,
+  SidebarProvider: ({ children }: { children: React.ReactNode }) => <>{children}</>
 }))
 
 vi.mock('@utils/cn', () => ({

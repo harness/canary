@@ -2330,12 +2330,10 @@
       "comp.input.bg": "baa07e89fb941a827a073f593cc94e73c4c86c73",
       "comp.link.text": "e387bb4185d01d8a3a7d52b15f3868ba40b31ec9",
       "comp.link.text-hover": "73352dab8131667fad74ea687f74d6673f7d04dc",
-      "comp.pipeline.arrow.border": "e2beaac31e79580c5cb1d64e29cb8bffec601ad6",
       "comp.pipeline.card-canvas.1.bg": "01bd392d5ddafe85e5575296d08254e52054ba8d",
       "comp.pipeline.card-canvas.1.border": "b9510abf89f82fb7b779bb730caa1bf393c83bd4",
       "comp.pipeline.card-canvas.2.bg": "87b6b3e65b995fc4180dfb7bf613efb0098d1fff",
       "comp.pipeline.card-canvas.2.border": "1f9fa1e95134d87995a21738a3877f1c15158e5e",
-      "comp.pipeline.bg.dotes": "2784742abff27552789cdd4f2b51cab1331abb4a",
       "comp.sidebar.bg": "5f70464fb44b873299fb85fbbc73ee6b1d1efec5",
       "comp.sidebar.item.text": "e88adc5bde2f2656656822213d153c1cc85584dc",
       "comp.sidebar.item.text-hover": "ac304eabfeb6efe22b23b0596f2104a8cc0d83a0",
@@ -2480,7 +2478,9 @@
       "gradient.ai.outline-bg.stop-1": "52c849bed3b3e0b3886dd262bd662d801269d294",
       "gradient.ai.outline-bg.stop-2": "25137d674df20bcf4992b85f392589f9437cf64e",
       "gradient.ai.outline-bg.stop-3": "0097385aca19f7b30af8df5e0a81b4b0a1dc1c37",
-      "gradient.ai.outline-bg.stop-4": "ae39b0a0bf6508f41c87e919434d1f6b90994f7a"
+      "gradient.ai.outline-bg.stop-4": "ae39b0a0bf6508f41c87e919434d1f6b90994f7a",
+      "comp.pipeline.arrow": "e2beaac31e79580c5cb1d64e29cb8bffec601ad6",
+      "comp.pipeline.dotes": "2784742abff27552789cdd4f2b51cab1331abb4a"
     },
     "$figmaCollectionId": "VariableCollectionId:1340:156918",
     "$figmaModeId": "1340:3",
@@ -3554,12 +3554,10 @@
       "comp.input.bg": "baa07e89fb941a827a073f593cc94e73c4c86c73",
       "comp.link.text": "e387bb4185d01d8a3a7d52b15f3868ba40b31ec9",
       "comp.link.text-hover": "73352dab8131667fad74ea687f74d6673f7d04dc",
-      "comp.pipeline.arrow.border": "e2beaac31e79580c5cb1d64e29cb8bffec601ad6",
       "comp.pipeline.card-canvas.1.bg": "01bd392d5ddafe85e5575296d08254e52054ba8d",
       "comp.pipeline.card-canvas.1.border": "b9510abf89f82fb7b779bb730caa1bf393c83bd4",
       "comp.pipeline.card-canvas.2.bg": "87b6b3e65b995fc4180dfb7bf613efb0098d1fff",
       "comp.pipeline.card-canvas.2.border": "1f9fa1e95134d87995a21738a3877f1c15158e5e",
-      "comp.pipeline.bg.dotes": "2784742abff27552789cdd4f2b51cab1331abb4a",
       "comp.sidebar.bg": "5f70464fb44b873299fb85fbbc73ee6b1d1efec5",
       "comp.sidebar.item.text": "e88adc5bde2f2656656822213d153c1cc85584dc",
       "comp.sidebar.item.text-hover": "ac304eabfeb6efe22b23b0596f2104a8cc0d83a0",
@@ -3703,7 +3701,8 @@
       "gradient.ai.outline-bg.stop-1": "52c849bed3b3e0b3886dd262bd662d801269d294",
       "gradient.ai.outline-bg.stop-2": "25137d674df20bcf4992b85f392589f9437cf64e",
       "gradient.ai.outline-bg.stop-3": "0097385aca19f7b30af8df5e0a81b4b0a1dc1c37",
-      "gradient.ai.outline-bg.stop-4": "ae39b0a0bf6508f41c87e919434d1f6b90994f7a"
+      "gradient.ai.outline-bg.stop-4": "ae39b0a0bf6508f41c87e919434d1f6b90994f7a",
+      "comp.pipeline.dotes": "2784742abff27552789cdd4f2b51cab1331abb4a"
     },
     "group": "mode"
   },
@@ -4763,12 +4762,10 @@
       "comp.input.bg": "733350fb00a500886d9e407a0c683d4f799896bc",
       "comp.link.text": "34218786e3a2ef2723bda685f0ebfab2a7dbdf52",
       "comp.link.text-hover": "7d1749601929ecc4f98646475203d2215a8c3bf0",
-      "comp.pipeline.arrow.border": "85ba5cc12a135d2fd4d5b872af82422f6f552b02",
       "comp.pipeline.card-canvas.1.bg": "b6618735f03455137c2559aa4b68c08dca14262f",
       "comp.pipeline.card-canvas.1.border": "7ddd0de26b23cd7428c443753d4277d3721217ce",
       "comp.pipeline.card-canvas.2.bg": "24fa1916e7d5b30c256fa7c292087bb03fdd2dd2",
       "comp.pipeline.card-canvas.2.border": "52b692a8b1af9d76bb5b37338e8b49f220fc7156",
-      "comp.pipeline.bg.dotes": "3410e3416d4fbbc0776413f12fb05485fd72e145",
       "comp.sidebar.bg": "1c07c294d1ed3ce402d8503f32289fad62b2ed1b",
       "comp.sidebar.item.text": "f351c7d76b23ed1e68c5c945a890df41243fd07e",
       "comp.sidebar.item.text-hover": "3b8ac5bf60fb2aa5636adf274796915b9a50eb11",
@@ -4902,7 +4899,9 @@
       "gradient.ai.outline-bg.stop-1": "32fb17f6fdcc9f3fda9af45e52e0d2f93829800c",
       "gradient.ai.outline-bg.stop-2": "a67d307124e1ec70dceebfd58e3982987fb40caa",
       "gradient.ai.outline-bg.stop-3": "45fb2c5fd824a29cc5f5d45b480e0764aed58543",
-      "gradient.ai.outline-bg.stop-4": "c6bb9f2c6045f1afb925ac640381f5a7c7e00c3c"
+      "gradient.ai.outline-bg.stop-4": "c6bb9f2c6045f1afb925ac640381f5a7c7e00c3c",
+      "comp.pipeline.arrow": "85ba5cc12a135d2fd4d5b872af82422f6f552b02",
+      "comp.pipeline.dotes": "3410e3416d4fbbc0776413f12fb05485fd72e145"
     },
     "group": "mode"
   },
@@ -5962,12 +5961,10 @@
       "comp.input.bg": "733350fb00a500886d9e407a0c683d4f799896bc",
       "comp.link.text": "34218786e3a2ef2723bda685f0ebfab2a7dbdf52",
       "comp.link.text-hover": "7d1749601929ecc4f98646475203d2215a8c3bf0",
-      "comp.pipeline.arrow.border": "85ba5cc12a135d2fd4d5b872af82422f6f552b02",
       "comp.pipeline.card-canvas.1.bg": "b6618735f03455137c2559aa4b68c08dca14262f",
       "comp.pipeline.card-canvas.1.border": "7ddd0de26b23cd7428c443753d4277d3721217ce",
       "comp.pipeline.card-canvas.2.bg": "24fa1916e7d5b30c256fa7c292087bb03fdd2dd2",
       "comp.pipeline.card-canvas.2.border": "52b692a8b1af9d76bb5b37338e8b49f220fc7156",
-      "comp.pipeline.bg.dotes": "3410e3416d4fbbc0776413f12fb05485fd72e145",
       "comp.sidebar.bg": "1c07c294d1ed3ce402d8503f32289fad62b2ed1b",
       "comp.sidebar.item.text": "f351c7d76b23ed1e68c5c945a890df41243fd07e",
       "comp.sidebar.item.text-hover": "3b8ac5bf60fb2aa5636adf274796915b9a50eb11",
@@ -6101,7 +6098,9 @@
       "gradient.ai.outline-bg.stop-1": "32fb17f6fdcc9f3fda9af45e52e0d2f93829800c",
       "gradient.ai.outline-bg.stop-2": "a67d307124e1ec70dceebfd58e3982987fb40caa",
       "gradient.ai.outline-bg.stop-3": "45fb2c5fd824a29cc5f5d45b480e0764aed58543",
-      "gradient.ai.outline-bg.stop-4": "c6bb9f2c6045f1afb925ac640381f5a7c7e00c3c"
+      "gradient.ai.outline-bg.stop-4": "c6bb9f2c6045f1afb925ac640381f5a7c7e00c3c",
+      "comp.pipeline.arrow": "85ba5cc12a135d2fd4d5b872af82422f6f552b02",
+      "comp.pipeline.dotes": "3410e3416d4fbbc0776413f12fb05485fd72e145"
     },
     "group": "mode"
   },
@@ -7161,12 +7160,10 @@
       "comp.input.bg": "733350fb00a500886d9e407a0c683d4f799896bc",
       "comp.link.text": "34218786e3a2ef2723bda685f0ebfab2a7dbdf52",
       "comp.link.text-hover": "7d1749601929ecc4f98646475203d2215a8c3bf0",
-      "comp.pipeline.arrow.border": "85ba5cc12a135d2fd4d5b872af82422f6f552b02",
       "comp.pipeline.card-canvas.1.bg": "b6618735f03455137c2559aa4b68c08dca14262f",
       "comp.pipeline.card-canvas.1.border": "7ddd0de26b23cd7428c443753d4277d3721217ce",
       "comp.pipeline.card-canvas.2.bg": "24fa1916e7d5b30c256fa7c292087bb03fdd2dd2",
       "comp.pipeline.card-canvas.2.border": "52b692a8b1af9d76bb5b37338e8b49f220fc7156",
-      "comp.pipeline.bg.dotes": "3410e3416d4fbbc0776413f12fb05485fd72e145",
       "comp.sidebar.bg": "1c07c294d1ed3ce402d8503f32289fad62b2ed1b",
       "comp.sidebar.item.text": "f351c7d76b23ed1e68c5c945a890df41243fd07e",
       "comp.sidebar.item.text-hover": "3b8ac5bf60fb2aa5636adf274796915b9a50eb11",
@@ -7300,7 +7297,9 @@
       "gradient.ai.outline-bg.stop-1": "32fb17f6fdcc9f3fda9af45e52e0d2f93829800c",
       "gradient.ai.outline-bg.stop-2": "a67d307124e1ec70dceebfd58e3982987fb40caa",
       "gradient.ai.outline-bg.stop-3": "45fb2c5fd824a29cc5f5d45b480e0764aed58543",
-      "gradient.ai.outline-bg.stop-4": "c6bb9f2c6045f1afb925ac640381f5a7c7e00c3c"
+      "gradient.ai.outline-bg.stop-4": "c6bb9f2c6045f1afb925ac640381f5a7c7e00c3c",
+      "comp.pipeline.arrow": "85ba5cc12a135d2fd4d5b872af82422f6f552b02",
+      "comp.pipeline.dotes": "3410e3416d4fbbc0776413f12fb05485fd72e145"
     },
     "group": "mode"
   },
@@ -8360,12 +8359,10 @@
       "comp.input.bg": "733350fb00a500886d9e407a0c683d4f799896bc",
       "comp.link.text": "34218786e3a2ef2723bda685f0ebfab2a7dbdf52",
       "comp.link.text-hover": "7d1749601929ecc4f98646475203d2215a8c3bf0",
-      "comp.pipeline.arrow.border": "85ba5cc12a135d2fd4d5b872af82422f6f552b02",
       "comp.pipeline.card-canvas.1.bg": "b6618735f03455137c2559aa4b68c08dca14262f",
       "comp.pipeline.card-canvas.1.border": "7ddd0de26b23cd7428c443753d4277d3721217ce",
       "comp.pipeline.card-canvas.2.bg": "24fa1916e7d5b30c256fa7c292087bb03fdd2dd2",
       "comp.pipeline.card-canvas.2.border": "52b692a8b1af9d76bb5b37338e8b49f220fc7156",
-      "comp.pipeline.bg.dotes": "3410e3416d4fbbc0776413f12fb05485fd72e145",
       "comp.sidebar.bg": "1c07c294d1ed3ce402d8503f32289fad62b2ed1b",
       "comp.sidebar.item.text": "f351c7d76b23ed1e68c5c945a890df41243fd07e",
       "comp.sidebar.item.text-hover": "3b8ac5bf60fb2aa5636adf274796915b9a50eb11",
@@ -8499,7 +8496,9 @@
       "gradient.ai.outline-bg.stop-1": "32fb17f6fdcc9f3fda9af45e52e0d2f93829800c",
       "gradient.ai.outline-bg.stop-2": "a67d307124e1ec70dceebfd58e3982987fb40caa",
       "gradient.ai.outline-bg.stop-3": "45fb2c5fd824a29cc5f5d45b480e0764aed58543",
-      "gradient.ai.outline-bg.stop-4": "c6bb9f2c6045f1afb925ac640381f5a7c7e00c3c"
+      "gradient.ai.outline-bg.stop-4": "c6bb9f2c6045f1afb925ac640381f5a7c7e00c3c",
+      "comp.pipeline.arrow": "85ba5cc12a135d2fd4d5b872af82422f6f552b02",
+      "comp.pipeline.dotes": "3410e3416d4fbbc0776413f12fb05485fd72e145"
     },
     "group": "mode"
   },
@@ -9559,12 +9558,10 @@
       "comp.input.bg": "733350fb00a500886d9e407a0c683d4f799896bc",
       "comp.link.text": "34218786e3a2ef2723bda685f0ebfab2a7dbdf52",
       "comp.link.text-hover": "7d1749601929ecc4f98646475203d2215a8c3bf0",
-      "comp.pipeline.arrow.border": "85ba5cc12a135d2fd4d5b872af82422f6f552b02",
       "comp.pipeline.card-canvas.1.bg": "b6618735f03455137c2559aa4b68c08dca14262f",
       "comp.pipeline.card-canvas.1.border": "7ddd0de26b23cd7428c443753d4277d3721217ce",
       "comp.pipeline.card-canvas.2.bg": "24fa1916e7d5b30c256fa7c292087bb03fdd2dd2",
       "comp.pipeline.card-canvas.2.border": "52b692a8b1af9d76bb5b37338e8b49f220fc7156",
-      "comp.pipeline.bg.dotes": "3410e3416d4fbbc0776413f12fb05485fd72e145",
       "comp.sidebar.bg": "1c07c294d1ed3ce402d8503f32289fad62b2ed1b",
       "comp.sidebar.item.text": "f351c7d76b23ed1e68c5c945a890df41243fd07e",
       "comp.sidebar.item.text-hover": "3b8ac5bf60fb2aa5636adf274796915b9a50eb11",
@@ -9698,7 +9695,9 @@
       "gradient.ai.outline-bg.stop-1": "32fb17f6fdcc9f3fda9af45e52e0d2f93829800c",
       "gradient.ai.outline-bg.stop-2": "a67d307124e1ec70dceebfd58e3982987fb40caa",
       "gradient.ai.outline-bg.stop-3": "45fb2c5fd824a29cc5f5d45b480e0764aed58543",
-      "gradient.ai.outline-bg.stop-4": "c6bb9f2c6045f1afb925ac640381f5a7c7e00c3c"
+      "gradient.ai.outline-bg.stop-4": "c6bb9f2c6045f1afb925ac640381f5a7c7e00c3c",
+      "comp.pipeline.arrow": "85ba5cc12a135d2fd4d5b872af82422f6f552b02",
+      "comp.pipeline.dotes": "3410e3416d4fbbc0776413f12fb05485fd72e145"
     },
     "group": "mode"
   },
@@ -10758,12 +10757,10 @@
       "comp.input.bg": "733350fb00a500886d9e407a0c683d4f799896bc",
       "comp.link.text": "34218786e3a2ef2723bda685f0ebfab2a7dbdf52",
       "comp.link.text-hover": "7d1749601929ecc4f98646475203d2215a8c3bf0",
-      "comp.pipeline.arrow.border": "85ba5cc12a135d2fd4d5b872af82422f6f552b02",
       "comp.pipeline.card-canvas.1.bg": "b6618735f03455137c2559aa4b68c08dca14262f",
       "comp.pipeline.card-canvas.1.border": "7ddd0de26b23cd7428c443753d4277d3721217ce",
       "comp.pipeline.card-canvas.2.bg": "24fa1916e7d5b30c256fa7c292087bb03fdd2dd2",
       "comp.pipeline.card-canvas.2.border": "52b692a8b1af9d76bb5b37338e8b49f220fc7156",
-      "comp.pipeline.bg.dotes": "3410e3416d4fbbc0776413f12fb05485fd72e145",
       "comp.sidebar.bg": "1c07c294d1ed3ce402d8503f32289fad62b2ed1b",
       "comp.sidebar.item.text": "f351c7d76b23ed1e68c5c945a890df41243fd07e",
       "comp.sidebar.item.text-hover": "3b8ac5bf60fb2aa5636adf274796915b9a50eb11",
@@ -10897,7 +10894,9 @@
       "gradient.ai.outline-bg.stop-1": "32fb17f6fdcc9f3fda9af45e52e0d2f93829800c",
       "gradient.ai.outline-bg.stop-2": "a67d307124e1ec70dceebfd58e3982987fb40caa",
       "gradient.ai.outline-bg.stop-3": "45fb2c5fd824a29cc5f5d45b480e0764aed58543",
-      "gradient.ai.outline-bg.stop-4": "c6bb9f2c6045f1afb925ac640381f5a7c7e00c3c"
+      "gradient.ai.outline-bg.stop-4": "c6bb9f2c6045f1afb925ac640381f5a7c7e00c3c",
+      "comp.pipeline.arrow": "85ba5cc12a135d2fd4d5b872af82422f6f552b02",
+      "comp.pipeline.dotes": "3410e3416d4fbbc0776413f12fb05485fd72e145"
     },
     "group": "mode"
   },
@@ -11957,12 +11956,10 @@
       "comp.input.bg": "733350fb00a500886d9e407a0c683d4f799896bc",
       "comp.link.text": "34218786e3a2ef2723bda685f0ebfab2a7dbdf52",
       "comp.link.text-hover": "7d1749601929ecc4f98646475203d2215a8c3bf0",
-      "comp.pipeline.arrow.border": "85ba5cc12a135d2fd4d5b872af82422f6f552b02",
       "comp.pipeline.card-canvas.1.bg": "b6618735f03455137c2559aa4b68c08dca14262f",
       "comp.pipeline.card-canvas.1.border": "7ddd0de26b23cd7428c443753d4277d3721217ce",
       "comp.pipeline.card-canvas.2.bg": "24fa1916e7d5b30c256fa7c292087bb03fdd2dd2",
       "comp.pipeline.card-canvas.2.border": "52b692a8b1af9d76bb5b37338e8b49f220fc7156",
-      "comp.pipeline.bg.dotes": "3410e3416d4fbbc0776413f12fb05485fd72e145",
       "comp.sidebar.bg": "1c07c294d1ed3ce402d8503f32289fad62b2ed1b",
       "comp.sidebar.item.text": "f351c7d76b23ed1e68c5c945a890df41243fd07e",
       "comp.sidebar.item.text-hover": "3b8ac5bf60fb2aa5636adf274796915b9a50eb11",
@@ -12096,7 +12093,9 @@
       "gradient.ai.outline-bg.stop-1": "32fb17f6fdcc9f3fda9af45e52e0d2f93829800c",
       "gradient.ai.outline-bg.stop-2": "a67d307124e1ec70dceebfd58e3982987fb40caa",
       "gradient.ai.outline-bg.stop-3": "45fb2c5fd824a29cc5f5d45b480e0764aed58543",
-      "gradient.ai.outline-bg.stop-4": "c6bb9f2c6045f1afb925ac640381f5a7c7e00c3c"
+      "gradient.ai.outline-bg.stop-4": "c6bb9f2c6045f1afb925ac640381f5a7c7e00c3c",
+      "comp.pipeline.arrow": "85ba5cc12a135d2fd4d5b872af82422f6f552b02",
+      "comp.pipeline.dotes": "3410e3416d4fbbc0776413f12fb05485fd72e145"
     },
     "group": "mode"
   },
@@ -13156,12 +13155,10 @@
       "comp.input.bg": "733350fb00a500886d9e407a0c683d4f799896bc",
       "comp.link.text": "34218786e3a2ef2723bda685f0ebfab2a7dbdf52",
       "comp.link.text-hover": "7d1749601929ecc4f98646475203d2215a8c3bf0",
-      "comp.pipeline.arrow.border": "85ba5cc12a135d2fd4d5b872af82422f6f552b02",
       "comp.pipeline.card-canvas.1.bg": "b6618735f03455137c2559aa4b68c08dca14262f",
       "comp.pipeline.card-canvas.1.border": "7ddd0de26b23cd7428c443753d4277d3721217ce",
       "comp.pipeline.card-canvas.2.bg": "24fa1916e7d5b30c256fa7c292087bb03fdd2dd2",
       "comp.pipeline.card-canvas.2.border": "52b692a8b1af9d76bb5b37338e8b49f220fc7156",
-      "comp.pipeline.bg.dotes": "3410e3416d4fbbc0776413f12fb05485fd72e145",
       "comp.sidebar.bg": "1c07c294d1ed3ce402d8503f32289fad62b2ed1b",
       "comp.sidebar.item.text": "f351c7d76b23ed1e68c5c945a890df41243fd07e",
       "comp.sidebar.item.text-hover": "3b8ac5bf60fb2aa5636adf274796915b9a50eb11",
@@ -13295,7 +13292,9 @@
       "gradient.ai.outline-bg.stop-1": "32fb17f6fdcc9f3fda9af45e52e0d2f93829800c",
       "gradient.ai.outline-bg.stop-2": "a67d307124e1ec70dceebfd58e3982987fb40caa",
       "gradient.ai.outline-bg.stop-3": "45fb2c5fd824a29cc5f5d45b480e0764aed58543",
-      "gradient.ai.outline-bg.stop-4": "c6bb9f2c6045f1afb925ac640381f5a7c7e00c3c"
+      "gradient.ai.outline-bg.stop-4": "c6bb9f2c6045f1afb925ac640381f5a7c7e00c3c",
+      "comp.pipeline.arrow": "85ba5cc12a135d2fd4d5b872af82422f6f552b02",
+      "comp.pipeline.dotes": "3410e3416d4fbbc0776413f12fb05485fd72e145"
     },
     "group": "mode"
   },
@@ -14355,12 +14354,10 @@
       "comp.input.bg": "733350fb00a500886d9e407a0c683d4f799896bc",
       "comp.link.text": "34218786e3a2ef2723bda685f0ebfab2a7dbdf52",
       "comp.link.text-hover": "7d1749601929ecc4f98646475203d2215a8c3bf0",
-      "comp.pipeline.arrow.border": "85ba5cc12a135d2fd4d5b872af82422f6f552b02",
       "comp.pipeline.card-canvas.1.bg": "b6618735f03455137c2559aa4b68c08dca14262f",
       "comp.pipeline.card-canvas.1.border": "7ddd0de26b23cd7428c443753d4277d3721217ce",
       "comp.pipeline.card-canvas.2.bg": "24fa1916e7d5b30c256fa7c292087bb03fdd2dd2",
       "comp.pipeline.card-canvas.2.border": "52b692a8b1af9d76bb5b37338e8b49f220fc7156",
-      "comp.pipeline.bg.dotes": "3410e3416d4fbbc0776413f12fb05485fd72e145",
       "comp.sidebar.bg": "1c07c294d1ed3ce402d8503f32289fad62b2ed1b",
       "comp.sidebar.item.text": "f351c7d76b23ed1e68c5c945a890df41243fd07e",
       "comp.sidebar.item.text-hover": "3b8ac5bf60fb2aa5636adf274796915b9a50eb11",
@@ -14494,7 +14491,9 @@
       "gradient.ai.outline-bg.stop-1": "32fb17f6fdcc9f3fda9af45e52e0d2f93829800c",
       "gradient.ai.outline-bg.stop-2": "a67d307124e1ec70dceebfd58e3982987fb40caa",
       "gradient.ai.outline-bg.stop-3": "45fb2c5fd824a29cc5f5d45b480e0764aed58543",
-      "gradient.ai.outline-bg.stop-4": "c6bb9f2c6045f1afb925ac640381f5a7c7e00c3c"
+      "gradient.ai.outline-bg.stop-4": "c6bb9f2c6045f1afb925ac640381f5a7c7e00c3c",
+      "comp.pipeline.arrow": "85ba5cc12a135d2fd4d5b872af82422f6f552b02",
+      "comp.pipeline.dotes": "3410e3416d4fbbc0776413f12fb05485fd72e145"
     },
     "group": "mode"
   },
@@ -15554,12 +15553,10 @@
       "comp.input.bg": "733350fb00a500886d9e407a0c683d4f799896bc",
       "comp.link.text": "34218786e3a2ef2723bda685f0ebfab2a7dbdf52",
       "comp.link.text-hover": "7d1749601929ecc4f98646475203d2215a8c3bf0",
-      "comp.pipeline.arrow.border": "85ba5cc12a135d2fd4d5b872af82422f6f552b02",
       "comp.pipeline.card-canvas.1.bg": "b6618735f03455137c2559aa4b68c08dca14262f",
       "comp.pipeline.card-canvas.1.border": "7ddd0de26b23cd7428c443753d4277d3721217ce",
       "comp.pipeline.card-canvas.2.bg": "24fa1916e7d5b30c256fa7c292087bb03fdd2dd2",
       "comp.pipeline.card-canvas.2.border": "52b692a8b1af9d76bb5b37338e8b49f220fc7156",
-      "comp.pipeline.bg.dotes": "3410e3416d4fbbc0776413f12fb05485fd72e145",
       "comp.sidebar.bg": "1c07c294d1ed3ce402d8503f32289fad62b2ed1b",
       "comp.sidebar.item.text": "f351c7d76b23ed1e68c5c945a890df41243fd07e",
       "comp.sidebar.item.text-hover": "3b8ac5bf60fb2aa5636adf274796915b9a50eb11",
@@ -15693,7 +15690,9 @@
       "gradient.ai.outline-bg.stop-1": "32fb17f6fdcc9f3fda9af45e52e0d2f93829800c",
       "gradient.ai.outline-bg.stop-2": "a67d307124e1ec70dceebfd58e3982987fb40caa",
       "gradient.ai.outline-bg.stop-3": "45fb2c5fd824a29cc5f5d45b480e0764aed58543",
-      "gradient.ai.outline-bg.stop-4": "c6bb9f2c6045f1afb925ac640381f5a7c7e00c3c"
+      "gradient.ai.outline-bg.stop-4": "c6bb9f2c6045f1afb925ac640381f5a7c7e00c3c",
+      "comp.pipeline.arrow": "85ba5cc12a135d2fd4d5b872af82422f6f552b02",
+      "comp.pipeline.dotes": "3410e3416d4fbbc0776413f12fb05485fd72e145"
     },
     "group": "mode"
   },
@@ -16753,12 +16752,10 @@
       "comp.input.bg": "733350fb00a500886d9e407a0c683d4f799896bc",
       "comp.link.text": "34218786e3a2ef2723bda685f0ebfab2a7dbdf52",
       "comp.link.text-hover": "7d1749601929ecc4f98646475203d2215a8c3bf0",
-      "comp.pipeline.arrow.border": "85ba5cc12a135d2fd4d5b872af82422f6f552b02",
       "comp.pipeline.card-canvas.1.bg": "b6618735f03455137c2559aa4b68c08dca14262f",
       "comp.pipeline.card-canvas.1.border": "7ddd0de26b23cd7428c443753d4277d3721217ce",
       "comp.pipeline.card-canvas.2.bg": "24fa1916e7d5b30c256fa7c292087bb03fdd2dd2",
       "comp.pipeline.card-canvas.2.border": "52b692a8b1af9d76bb5b37338e8b49f220fc7156",
-      "comp.pipeline.bg.dotes": "3410e3416d4fbbc0776413f12fb05485fd72e145",
       "comp.sidebar.bg": "1c07c294d1ed3ce402d8503f32289fad62b2ed1b",
       "comp.sidebar.item.text": "f351c7d76b23ed1e68c5c945a890df41243fd07e",
       "comp.sidebar.item.text-hover": "3b8ac5bf60fb2aa5636adf274796915b9a50eb11",
@@ -16892,7 +16889,9 @@
       "gradient.ai.outline-bg.stop-1": "32fb17f6fdcc9f3fda9af45e52e0d2f93829800c",
       "gradient.ai.outline-bg.stop-2": "a67d307124e1ec70dceebfd58e3982987fb40caa",
       "gradient.ai.outline-bg.stop-3": "45fb2c5fd824a29cc5f5d45b480e0764aed58543",
-      "gradient.ai.outline-bg.stop-4": "c6bb9f2c6045f1afb925ac640381f5a7c7e00c3c"
+      "gradient.ai.outline-bg.stop-4": "c6bb9f2c6045f1afb925ac640381f5a7c7e00c3c",
+      "comp.pipeline.arrow": "85ba5cc12a135d2fd4d5b872af82422f6f552b02",
+      "comp.pipeline.dotes": "3410e3416d4fbbc0776413f12fb05485fd72e145"
     },
     "group": "mode"
   },
@@ -17943,12 +17942,10 @@
       "comp.input.bg": "733350fb00a500886d9e407a0c683d4f799896bc",
       "comp.link.text": "34218786e3a2ef2723bda685f0ebfab2a7dbdf52",
       "comp.link.text-hover": "7d1749601929ecc4f98646475203d2215a8c3bf0",
-      "comp.pipeline.arrow.border": "85ba5cc12a135d2fd4d5b872af82422f6f552b02",
       "comp.pipeline.card-canvas.1.bg": "b6618735f03455137c2559aa4b68c08dca14262f",
       "comp.pipeline.card-canvas.1.border": "7ddd0de26b23cd7428c443753d4277d3721217ce",
       "comp.pipeline.card-canvas.2.bg": "24fa1916e7d5b30c256fa7c292087bb03fdd2dd2",
       "comp.pipeline.card-canvas.2.border": "52b692a8b1af9d76bb5b37338e8b49f220fc7156",
-      "comp.pipeline.bg.dotes": "3410e3416d4fbbc0776413f12fb05485fd72e145",
       "comp.sidebar.bg": "1c07c294d1ed3ce402d8503f32289fad62b2ed1b",
       "comp.sidebar.item.text": "f351c7d76b23ed1e68c5c945a890df41243fd07e",
       "comp.sidebar.item.text-hover": "3b8ac5bf60fb2aa5636adf274796915b9a50eb11",
@@ -18082,7 +18079,9 @@
       "gradient.ai.outline-bg.stop-1": "32fb17f6fdcc9f3fda9af45e52e0d2f93829800c",
       "gradient.ai.outline-bg.stop-2": "a67d307124e1ec70dceebfd58e3982987fb40caa",
       "gradient.ai.outline-bg.stop-3": "45fb2c5fd824a29cc5f5d45b480e0764aed58543",
-      "gradient.ai.outline-bg.stop-4": "c6bb9f2c6045f1afb925ac640381f5a7c7e00c3c"
+      "gradient.ai.outline-bg.stop-4": "c6bb9f2c6045f1afb925ac640381f5a7c7e00c3c",
+      "comp.pipeline.arrow": "85ba5cc12a135d2fd4d5b872af82422f6f552b02",
+      "comp.pipeline.dotes": "3410e3416d4fbbc0776413f12fb05485fd72e145"
     },
     "group": "mode"
   },
@@ -19133,12 +19132,10 @@
       "comp.input.bg": "733350fb00a500886d9e407a0c683d4f799896bc",
       "comp.link.text": "34218786e3a2ef2723bda685f0ebfab2a7dbdf52",
       "comp.link.text-hover": "7d1749601929ecc4f98646475203d2215a8c3bf0",
-      "comp.pipeline.arrow.border": "85ba5cc12a135d2fd4d5b872af82422f6f552b02",
       "comp.pipeline.card-canvas.1.bg": "b6618735f03455137c2559aa4b68c08dca14262f",
       "comp.pipeline.card-canvas.1.border": "7ddd0de26b23cd7428c443753d4277d3721217ce",
       "comp.pipeline.card-canvas.2.bg": "24fa1916e7d5b30c256fa7c292087bb03fdd2dd2",
       "comp.pipeline.card-canvas.2.border": "52b692a8b1af9d76bb5b37338e8b49f220fc7156",
-      "comp.pipeline.bg.dotes": "3410e3416d4fbbc0776413f12fb05485fd72e145",
       "comp.sidebar.bg": "1c07c294d1ed3ce402d8503f32289fad62b2ed1b",
       "comp.sidebar.item.text": "f351c7d76b23ed1e68c5c945a890df41243fd07e",
       "comp.sidebar.item.text-hover": "3b8ac5bf60fb2aa5636adf274796915b9a50eb11",
@@ -19272,7 +19269,9 @@
       "gradient.ai.outline-bg.stop-1": "32fb17f6fdcc9f3fda9af45e52e0d2f93829800c",
       "gradient.ai.outline-bg.stop-2": "a67d307124e1ec70dceebfd58e3982987fb40caa",
       "gradient.ai.outline-bg.stop-3": "45fb2c5fd824a29cc5f5d45b480e0764aed58543",
-      "gradient.ai.outline-bg.stop-4": "c6bb9f2c6045f1afb925ac640381f5a7c7e00c3c"
+      "gradient.ai.outline-bg.stop-4": "c6bb9f2c6045f1afb925ac640381f5a7c7e00c3c",
+      "comp.pipeline.arrow": "85ba5cc12a135d2fd4d5b872af82422f6f552b02",
+      "comp.pipeline.dotes": "3410e3416d4fbbc0776413f12fb05485fd72e145"
     },
     "group": "mode"
   },
@@ -20323,12 +20322,10 @@
       "comp.input.bg": "733350fb00a500886d9e407a0c683d4f799896bc",
       "comp.link.text": "34218786e3a2ef2723bda685f0ebfab2a7dbdf52",
       "comp.link.text-hover": "7d1749601929ecc4f98646475203d2215a8c3bf0",
-      "comp.pipeline.arrow.border": "85ba5cc12a135d2fd4d5b872af82422f6f552b02",
       "comp.pipeline.card-canvas.1.bg": "b6618735f03455137c2559aa4b68c08dca14262f",
       "comp.pipeline.card-canvas.1.border": "7ddd0de26b23cd7428c443753d4277d3721217ce",
       "comp.pipeline.card-canvas.2.bg": "24fa1916e7d5b30c256fa7c292087bb03fdd2dd2",
       "comp.pipeline.card-canvas.2.border": "52b692a8b1af9d76bb5b37338e8b49f220fc7156",
-      "comp.pipeline.bg.dotes": "3410e3416d4fbbc0776413f12fb05485fd72e145",
       "comp.sidebar.bg": "1c07c294d1ed3ce402d8503f32289fad62b2ed1b",
       "comp.sidebar.item.text": "f351c7d76b23ed1e68c5c945a890df41243fd07e",
       "comp.sidebar.item.text-hover": "3b8ac5bf60fb2aa5636adf274796915b9a50eb11",
@@ -20462,7 +20459,9 @@
       "gradient.ai.outline-bg.stop-1": "32fb17f6fdcc9f3fda9af45e52e0d2f93829800c",
       "gradient.ai.outline-bg.stop-2": "a67d307124e1ec70dceebfd58e3982987fb40caa",
       "gradient.ai.outline-bg.stop-3": "45fb2c5fd824a29cc5f5d45b480e0764aed58543",
-      "gradient.ai.outline-bg.stop-4": "c6bb9f2c6045f1afb925ac640381f5a7c7e00c3c"
+      "gradient.ai.outline-bg.stop-4": "c6bb9f2c6045f1afb925ac640381f5a7c7e00c3c",
+      "comp.pipeline.arrow": "85ba5cc12a135d2fd4d5b872af82422f6f552b02",
+      "comp.pipeline.dotes": "3410e3416d4fbbc0776413f12fb05485fd72e145"
     },
     "group": "mode"
   },
@@ -21513,12 +21512,10 @@
       "comp.input.bg": "733350fb00a500886d9e407a0c683d4f799896bc",
       "comp.link.text": "34218786e3a2ef2723bda685f0ebfab2a7dbdf52",
       "comp.link.text-hover": "7d1749601929ecc4f98646475203d2215a8c3bf0",
-      "comp.pipeline.arrow.border": "85ba5cc12a135d2fd4d5b872af82422f6f552b02",
       "comp.pipeline.card-canvas.1.bg": "b6618735f03455137c2559aa4b68c08dca14262f",
       "comp.pipeline.card-canvas.1.border": "7ddd0de26b23cd7428c443753d4277d3721217ce",
       "comp.pipeline.card-canvas.2.bg": "24fa1916e7d5b30c256fa7c292087bb03fdd2dd2",
       "comp.pipeline.card-canvas.2.border": "52b692a8b1af9d76bb5b37338e8b49f220fc7156",
-      "comp.pipeline.bg.dotes": "3410e3416d4fbbc0776413f12fb05485fd72e145",
       "comp.sidebar.bg": "1c07c294d1ed3ce402d8503f32289fad62b2ed1b",
       "comp.sidebar.item.text": "f351c7d76b23ed1e68c5c945a890df41243fd07e",
       "comp.sidebar.item.text-hover": "3b8ac5bf60fb2aa5636adf274796915b9a50eb11",
@@ -21652,7 +21649,9 @@
       "gradient.ai.outline-bg.stop-1": "32fb17f6fdcc9f3fda9af45e52e0d2f93829800c",
       "gradient.ai.outline-bg.stop-2": "a67d307124e1ec70dceebfd58e3982987fb40caa",
       "gradient.ai.outline-bg.stop-3": "45fb2c5fd824a29cc5f5d45b480e0764aed58543",
-      "gradient.ai.outline-bg.stop-4": "c6bb9f2c6045f1afb925ac640381f5a7c7e00c3c"
+      "gradient.ai.outline-bg.stop-4": "c6bb9f2c6045f1afb925ac640381f5a7c7e00c3c",
+      "comp.pipeline.arrow": "85ba5cc12a135d2fd4d5b872af82422f6f552b02",
+      "comp.pipeline.dotes": "3410e3416d4fbbc0776413f12fb05485fd72e145"
     },
     "group": "mode"
   },
@@ -22703,12 +22702,10 @@
       "comp.input.bg": "733350fb00a500886d9e407a0c683d4f799896bc",
       "comp.link.text": "34218786e3a2ef2723bda685f0ebfab2a7dbdf52",
       "comp.link.text-hover": "7d1749601929ecc4f98646475203d2215a8c3bf0",
-      "comp.pipeline.arrow.border": "85ba5cc12a135d2fd4d5b872af82422f6f552b02",
       "comp.pipeline.card-canvas.1.bg": "b6618735f03455137c2559aa4b68c08dca14262f",
       "comp.pipeline.card-canvas.1.border": "7ddd0de26b23cd7428c443753d4277d3721217ce",
       "comp.pipeline.card-canvas.2.bg": "24fa1916e7d5b30c256fa7c292087bb03fdd2dd2",
       "comp.pipeline.card-canvas.2.border": "52b692a8b1af9d76bb5b37338e8b49f220fc7156",
-      "comp.pipeline.bg.dotes": "3410e3416d4fbbc0776413f12fb05485fd72e145",
       "comp.sidebar.bg": "1c07c294d1ed3ce402d8503f32289fad62b2ed1b",
       "comp.sidebar.item.text": "f351c7d76b23ed1e68c5c945a890df41243fd07e",
       "comp.sidebar.item.text-hover": "3b8ac5bf60fb2aa5636adf274796915b9a50eb11",
@@ -22842,7 +22839,9 @@
       "gradient.ai.outline-bg.stop-1": "32fb17f6fdcc9f3fda9af45e52e0d2f93829800c",
       "gradient.ai.outline-bg.stop-2": "a67d307124e1ec70dceebfd58e3982987fb40caa",
       "gradient.ai.outline-bg.stop-3": "45fb2c5fd824a29cc5f5d45b480e0764aed58543",
-      "gradient.ai.outline-bg.stop-4": "c6bb9f2c6045f1afb925ac640381f5a7c7e00c3c"
+      "gradient.ai.outline-bg.stop-4": "c6bb9f2c6045f1afb925ac640381f5a7c7e00c3c",
+      "comp.pipeline.arrow": "85ba5cc12a135d2fd4d5b872af82422f6f552b02",
+      "comp.pipeline.dotes": "3410e3416d4fbbc0776413f12fb05485fd72e145"
     },
     "group": "mode"
   },
@@ -23893,12 +23892,10 @@
       "comp.input.bg": "733350fb00a500886d9e407a0c683d4f799896bc",
       "comp.link.text": "34218786e3a2ef2723bda685f0ebfab2a7dbdf52",
       "comp.link.text-hover": "7d1749601929ecc4f98646475203d2215a8c3bf0",
-      "comp.pipeline.arrow.border": "85ba5cc12a135d2fd4d5b872af82422f6f552b02",
       "comp.pipeline.card-canvas.1.bg": "b6618735f03455137c2559aa4b68c08dca14262f",
       "comp.pipeline.card-canvas.1.border": "7ddd0de26b23cd7428c443753d4277d3721217ce",
       "comp.pipeline.card-canvas.2.bg": "24fa1916e7d5b30c256fa7c292087bb03fdd2dd2",
       "comp.pipeline.card-canvas.2.border": "52b692a8b1af9d76bb5b37338e8b49f220fc7156",
-      "comp.pipeline.bg.dotes": "3410e3416d4fbbc0776413f12fb05485fd72e145",
       "comp.sidebar.bg": "1c07c294d1ed3ce402d8503f32289fad62b2ed1b",
       "comp.sidebar.item.text": "f351c7d76b23ed1e68c5c945a890df41243fd07e",
       "comp.sidebar.item.text-hover": "3b8ac5bf60fb2aa5636adf274796915b9a50eb11",
@@ -24032,7 +24029,9 @@
       "gradient.ai.outline-bg.stop-1": "32fb17f6fdcc9f3fda9af45e52e0d2f93829800c",
       "gradient.ai.outline-bg.stop-2": "a67d307124e1ec70dceebfd58e3982987fb40caa",
       "gradient.ai.outline-bg.stop-3": "45fb2c5fd824a29cc5f5d45b480e0764aed58543",
-      "gradient.ai.outline-bg.stop-4": "c6bb9f2c6045f1afb925ac640381f5a7c7e00c3c"
+      "gradient.ai.outline-bg.stop-4": "c6bb9f2c6045f1afb925ac640381f5a7c7e00c3c",
+      "comp.pipeline.arrow": "85ba5cc12a135d2fd4d5b872af82422f6f552b02",
+      "comp.pipeline.dotes": "3410e3416d4fbbc0776413f12fb05485fd72e145"
     },
     "group": "mode"
   },
@@ -25107,12 +25106,10 @@
       "comp.input.bg": "733350fb00a500886d9e407a0c683d4f799896bc",
       "comp.link.text": "34218786e3a2ef2723bda685f0ebfab2a7dbdf52",
       "comp.link.text-hover": "7d1749601929ecc4f98646475203d2215a8c3bf0",
-      "comp.pipeline.arrow.border": "85ba5cc12a135d2fd4d5b872af82422f6f552b02",
       "comp.pipeline.card-canvas.1.bg": "b6618735f03455137c2559aa4b68c08dca14262f",
       "comp.pipeline.card-canvas.1.border": "7ddd0de26b23cd7428c443753d4277d3721217ce",
       "comp.pipeline.card-canvas.2.bg": "24fa1916e7d5b30c256fa7c292087bb03fdd2dd2",
       "comp.pipeline.card-canvas.2.border": "52b692a8b1af9d76bb5b37338e8b49f220fc7156",
-      "comp.pipeline.bg.dotes": "3410e3416d4fbbc0776413f12fb05485fd72e145",
       "comp.sidebar.bg": "1c07c294d1ed3ce402d8503f32289fad62b2ed1b",
       "comp.sidebar.item.text": "f351c7d76b23ed1e68c5c945a890df41243fd07e",
       "comp.sidebar.item.text-hover": "3b8ac5bf60fb2aa5636adf274796915b9a50eb11",
@@ -25247,7 +25244,9 @@
       "gradient.ai.outline-bg.stop-1": "32fb17f6fdcc9f3fda9af45e52e0d2f93829800c",
       "gradient.ai.outline-bg.stop-2": "a67d307124e1ec70dceebfd58e3982987fb40caa",
       "gradient.ai.outline-bg.stop-3": "45fb2c5fd824a29cc5f5d45b480e0764aed58543",
-      "gradient.ai.outline-bg.stop-4": "c6bb9f2c6045f1afb925ac640381f5a7c7e00c3c"
+      "gradient.ai.outline-bg.stop-4": "c6bb9f2c6045f1afb925ac640381f5a7c7e00c3c",
+      "comp.pipeline.arrow": "85ba5cc12a135d2fd4d5b872af82422f6f552b02",
+      "comp.pipeline.dotes": "3410e3416d4fbbc0776413f12fb05485fd72e145"
     },
     "group": "mode"
   },
@@ -26298,12 +26297,10 @@
       "comp.input.bg": "733350fb00a500886d9e407a0c683d4f799896bc",
       "comp.link.text": "34218786e3a2ef2723bda685f0ebfab2a7dbdf52",
       "comp.link.text-hover": "7d1749601929ecc4f98646475203d2215a8c3bf0",
-      "comp.pipeline.arrow.border": "85ba5cc12a135d2fd4d5b872af82422f6f552b02",
       "comp.pipeline.card-canvas.1.bg": "b6618735f03455137c2559aa4b68c08dca14262f",
       "comp.pipeline.card-canvas.1.border": "7ddd0de26b23cd7428c443753d4277d3721217ce",
       "comp.pipeline.card-canvas.2.bg": "24fa1916e7d5b30c256fa7c292087bb03fdd2dd2",
       "comp.pipeline.card-canvas.2.border": "52b692a8b1af9d76bb5b37338e8b49f220fc7156",
-      "comp.pipeline.bg.dotes": "3410e3416d4fbbc0776413f12fb05485fd72e145",
       "comp.sidebar.bg": "1c07c294d1ed3ce402d8503f32289fad62b2ed1b",
       "comp.sidebar.item.text": "f351c7d76b23ed1e68c5c945a890df41243fd07e",
       "comp.sidebar.item.text-hover": "3b8ac5bf60fb2aa5636adf274796915b9a50eb11",
@@ -26437,7 +26434,9 @@
       "gradient.ai.outline-bg.stop-1": "32fb17f6fdcc9f3fda9af45e52e0d2f93829800c",
       "gradient.ai.outline-bg.stop-2": "a67d307124e1ec70dceebfd58e3982987fb40caa",
       "gradient.ai.outline-bg.stop-3": "45fb2c5fd824a29cc5f5d45b480e0764aed58543",
-      "gradient.ai.outline-bg.stop-4": "c6bb9f2c6045f1afb925ac640381f5a7c7e00c3c"
+      "gradient.ai.outline-bg.stop-4": "c6bb9f2c6045f1afb925ac640381f5a7c7e00c3c",
+      "comp.pipeline.arrow": "85ba5cc12a135d2fd4d5b872af82422f6f552b02",
+      "comp.pipeline.dotes": "3410e3416d4fbbc0776413f12fb05485fd72e145"
     },
     "group": "mode"
   },
@@ -27488,12 +27487,10 @@
       "comp.input.bg": "733350fb00a500886d9e407a0c683d4f799896bc",
       "comp.link.text": "34218786e3a2ef2723bda685f0ebfab2a7dbdf52",
       "comp.link.text-hover": "7d1749601929ecc4f98646475203d2215a8c3bf0",
-      "comp.pipeline.arrow.border": "85ba5cc12a135d2fd4d5b872af82422f6f552b02",
       "comp.pipeline.card-canvas.1.bg": "b6618735f03455137c2559aa4b68c08dca14262f",
       "comp.pipeline.card-canvas.1.border": "7ddd0de26b23cd7428c443753d4277d3721217ce",
       "comp.pipeline.card-canvas.2.bg": "24fa1916e7d5b30c256fa7c292087bb03fdd2dd2",
       "comp.pipeline.card-canvas.2.border": "52b692a8b1af9d76bb5b37338e8b49f220fc7156",
-      "comp.pipeline.bg.dotes": "3410e3416d4fbbc0776413f12fb05485fd72e145",
       "comp.sidebar.bg": "1c07c294d1ed3ce402d8503f32289fad62b2ed1b",
       "comp.sidebar.item.text": "f351c7d76b23ed1e68c5c945a890df41243fd07e",
       "comp.sidebar.item.text-hover": "3b8ac5bf60fb2aa5636adf274796915b9a50eb11",
@@ -27627,7 +27624,9 @@
       "gradient.ai.outline-bg.stop-1": "32fb17f6fdcc9f3fda9af45e52e0d2f93829800c",
       "gradient.ai.outline-bg.stop-2": "a67d307124e1ec70dceebfd58e3982987fb40caa",
       "gradient.ai.outline-bg.stop-3": "45fb2c5fd824a29cc5f5d45b480e0764aed58543",
-      "gradient.ai.outline-bg.stop-4": "c6bb9f2c6045f1afb925ac640381f5a7c7e00c3c"
+      "gradient.ai.outline-bg.stop-4": "c6bb9f2c6045f1afb925ac640381f5a7c7e00c3c",
+      "comp.pipeline.arrow": "85ba5cc12a135d2fd4d5b872af82422f6f552b02",
+      "comp.pipeline.dotes": "3410e3416d4fbbc0776413f12fb05485fd72e145"
     },
     "group": "mode"
   },
@@ -28678,12 +28677,10 @@
       "comp.input.bg": "733350fb00a500886d9e407a0c683d4f799896bc",
       "comp.link.text": "34218786e3a2ef2723bda685f0ebfab2a7dbdf52",
       "comp.link.text-hover": "7d1749601929ecc4f98646475203d2215a8c3bf0",
-      "comp.pipeline.arrow.border": "85ba5cc12a135d2fd4d5b872af82422f6f552b02",
       "comp.pipeline.card-canvas.1.bg": "b6618735f03455137c2559aa4b68c08dca14262f",
       "comp.pipeline.card-canvas.1.border": "7ddd0de26b23cd7428c443753d4277d3721217ce",
       "comp.pipeline.card-canvas.2.bg": "24fa1916e7d5b30c256fa7c292087bb03fdd2dd2",
       "comp.pipeline.card-canvas.2.border": "52b692a8b1af9d76bb5b37338e8b49f220fc7156",
-      "comp.pipeline.bg.dotes": "3410e3416d4fbbc0776413f12fb05485fd72e145",
       "comp.sidebar.bg": "1c07c294d1ed3ce402d8503f32289fad62b2ed1b",
       "comp.sidebar.item.text": "f351c7d76b23ed1e68c5c945a890df41243fd07e",
       "comp.sidebar.item.text-hover": "3b8ac5bf60fb2aa5636adf274796915b9a50eb11",
@@ -28817,7 +28814,9 @@
       "gradient.ai.outline-bg.stop-1": "32fb17f6fdcc9f3fda9af45e52e0d2f93829800c",
       "gradient.ai.outline-bg.stop-2": "a67d307124e1ec70dceebfd58e3982987fb40caa",
       "gradient.ai.outline-bg.stop-3": "45fb2c5fd824a29cc5f5d45b480e0764aed58543",
-      "gradient.ai.outline-bg.stop-4": "c6bb9f2c6045f1afb925ac640381f5a7c7e00c3c"
+      "gradient.ai.outline-bg.stop-4": "c6bb9f2c6045f1afb925ac640381f5a7c7e00c3c",
+      "comp.pipeline.arrow": "85ba5cc12a135d2fd4d5b872af82422f6f552b02",
+      "comp.pipeline.dotes": "3410e3416d4fbbc0776413f12fb05485fd72e145"
     },
     "group": "mode"
   },
@@ -29868,12 +29867,10 @@
       "comp.input.bg": "733350fb00a500886d9e407a0c683d4f799896bc",
       "comp.link.text": "34218786e3a2ef2723bda685f0ebfab2a7dbdf52",
       "comp.link.text-hover": "7d1749601929ecc4f98646475203d2215a8c3bf0",
-      "comp.pipeline.arrow.border": "85ba5cc12a135d2fd4d5b872af82422f6f552b02",
       "comp.pipeline.card-canvas.1.bg": "b6618735f03455137c2559aa4b68c08dca14262f",
       "comp.pipeline.card-canvas.1.border": "7ddd0de26b23cd7428c443753d4277d3721217ce",
       "comp.pipeline.card-canvas.2.bg": "24fa1916e7d5b30c256fa7c292087bb03fdd2dd2",
       "comp.pipeline.card-canvas.2.border": "52b692a8b1af9d76bb5b37338e8b49f220fc7156",
-      "comp.pipeline.bg.dotes": "3410e3416d4fbbc0776413f12fb05485fd72e145",
       "comp.sidebar.bg": "1c07c294d1ed3ce402d8503f32289fad62b2ed1b",
       "comp.sidebar.item.text": "f351c7d76b23ed1e68c5c945a890df41243fd07e",
       "comp.sidebar.item.text-hover": "3b8ac5bf60fb2aa5636adf274796915b9a50eb11",
@@ -30007,7 +30004,9 @@
       "gradient.ai.outline-bg.stop-1": "32fb17f6fdcc9f3fda9af45e52e0d2f93829800c",
       "gradient.ai.outline-bg.stop-2": "a67d307124e1ec70dceebfd58e3982987fb40caa",
       "gradient.ai.outline-bg.stop-3": "45fb2c5fd824a29cc5f5d45b480e0764aed58543",
-      "gradient.ai.outline-bg.stop-4": "c6bb9f2c6045f1afb925ac640381f5a7c7e00c3c"
+      "gradient.ai.outline-bg.stop-4": "c6bb9f2c6045f1afb925ac640381f5a7c7e00c3c",
+      "comp.pipeline.arrow": "85ba5cc12a135d2fd4d5b872af82422f6f552b02",
+      "comp.pipeline.dotes": "3410e3416d4fbbc0776413f12fb05485fd72e145"
     },
     "group": "mode"
   },

@@ -1398,11 +1398,9 @@
     },
     "pipeline": {
       "arrow": {
-        "border": {
-          "$type": "color",
-          "$value": "{border.1}",
-          "$description": "Border color for pipeline connection arrows. Defines the visual path between pipeline components."
-        },
+        "$type": "color",
+        "$value": "{border.1}",
+        "$description": "Border color for pipeline connection arrows. Defines the visual path between pipeline components.",
         "running": {
           "border": {
             "$type": "color",
@@ -1456,21 +1454,19 @@
           }
         }
       },
-      "bg": {
-        "dotes": {
-          "$extensions": {
-            "studio.tokens": {
-              "modify": {
-                "type": "alpha",
-                "value": "0.6",
-                "space": "lch"
-              }
+      "dotes": {
+        "$extensions": {
+          "studio.tokens": {
+            "modify": {
+              "type": "alpha",
+              "value": "0.6",
+              "space": "lch"
             }
-          },
-          "$type": "color",
-          "$value": "{chrome.850}",
-          "$description": "Refers to the dotted pattern visible in the background of the workspace."
-        }
+          }
+        },
+        "$type": "color",
+        "$value": "{chrome.850}",
+        "$description": "Refers to the dotted pattern visible in the background of the workspace."
       }
     },
     "scrollbar": {

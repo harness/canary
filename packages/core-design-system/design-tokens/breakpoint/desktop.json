@@ -16,12 +16,12 @@
   "container": {
     "spacing-px": {
       "$type": "number",
-      "$value": "{spacing.8}",
+      "$value": "{spacing.6}",
       "$description": "Horizontal spacing for the page container."
     },
     "spacing-py": {
       "$type": "number",
-      "$value": "{spacing.7}",
+      "$value": "{spacing.5}",
       "$description": "Vertical spacing for the page container."
     }
   },

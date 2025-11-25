@@ -1429,6 +1429,21 @@
         "$type": "color",
         "$value": "{chrome.100}",
         "$description": "Refers to the dotted pattern visible in the background of the workspace."
+      },
+      "stage-card": {
+        "bg": {
+          "$extensions": {
+            "studio.tokens": {
+              "modify": {
+                "type": "alpha",
+                "value": "0.5",
+                "space": "lch"
+              }
+            }
+          },
+          "$type": "color",
+          "$value": "{bg.3}"
+        }
       }
     },
     "sidebar": {

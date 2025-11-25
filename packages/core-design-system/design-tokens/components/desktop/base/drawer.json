@@ -10,7 +10,7 @@
     },
     "sm": {
       "$type": "sizing",
-      "$value": "488"
+      "$value": "480"
     },
     "md": {
       "$type": "sizing",

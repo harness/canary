@@ -43,14 +43,13 @@ const AnimatedSideBarRail: React.FC = () => {
         x: shiftWithBump,
         transition: { type: 'tween', ease: 'easeOut' } // Smooth tween animation
       }}
-      aria-label={label}
-      title={label}
     >
       <Tooltip content={label} side="right" delay={0}>
         <div
           className="flex items-center justify-center w-full h-6 relative text-gray-600 cursor-pointer"
           onMouseEnter={() => setHover(true)}
           onMouseLeave={() => setHover(false)}
+          aria-label={label}
         >
           {hover ? (
             <IconV2

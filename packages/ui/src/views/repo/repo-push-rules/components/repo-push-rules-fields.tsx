@@ -1,20 +1,23 @@
-import { FC, Fragment, useMemo } from 'react'
+import { FC, Fragment, useMemo, useState } from 'react'
 
 import {
   Checkbox,
   ControlGroup,
   Fieldset,
   FormInput,
+  IconV2,
   Label,
   Layout,
   MultiSelectOption,
   NumberInput,
+  ResetTag,
+  SplitButton,
   Switch
 } from '@/components'
 import { Separator } from '@/components/separator'
 import { useTranslation } from '@/context'
 import { useDebounceSearch } from '@hooks/use-debounce-search'
-import { EnumBypassListType, NormalizedPrincipal } from '@views/repo/repo-branch-rules/types'
+import { EnumBypassListType, NormalizedPrincipal, PatternsButtonType } from '@views/repo/repo-branch-rules/types'
 import { getIcon } from '@views/repo/utils'
 
 import { PushRule, PushRuleFieldProps, PushRuleId } from '../types'
@@ -59,6 +62,82 @@ export const PushSettingsRuleDescriptionField: FC<PushRuleFieldProps> = ({ regis
       placeholder={t('views:repos.ruleDescriptionPlaceholder', 'Enter the description here')}
       className="h-[136px]"
     />
+  )
+}
+
+export const PushSettingsRuleTargetPatternsField: FC<PushRuleFieldProps> = ({ setValue, watch, register }) => {
+  const { t } = useTranslation()
+
+  const [selectedOption, setSelectedOption] = useState<PatternsButtonType>(PatternsButtonType.INCLUDE)
+
+  const patterns = watch!('patterns') || []
+
+  const handleAddPattern = () => {
+    const pattern = watch!('pattern')
+    if (pattern && !patterns.some(p => p.pattern === pattern)) {
+      setValue!('patterns', [...patterns, { pattern, option: selectedOption }])
+      setValue!('pattern', '')
+    }
+  }
+
+  const handleRemove = (patternVal: string) => {
+    const updatedPatterns = patterns.filter(({ pattern }) => pattern !== patternVal)
+    setValue!('patterns', updatedPatterns)
+  }
+
+  return (
+    <Layout.Grid gapY="md">
+      <ControlGroup>
+        <Label htmlFor="target-patterns">{t('views:repos.targetPatterns', 'Target patterns')}</Label>
+        <Layout.Grid columns="1fr auto" align="start" gap="sm">
+          <FormInput.Text
+            id="pattern"
+            {...register!('pattern')}
+            caption={t(
+              'views:repos.createRuleCaption',
+              'Match {{type}} using globstar patterns (e.g.”golden”, “feature-*”, “releases/**”)',
+              {
+                type: 'references'
+              }
+            )}
+            placeholder={t('views:repos.rulePatternPlaceholder', 'Enter the target patterns')}
+          />
+          <SplitButton<PatternsButtonType>
+            handleButtonClick={handleAddPattern}
+            selectedValue={selectedOption}
+            handleOptionChange={setSelectedOption}
+            options={[
+              {
+                value: PatternsButtonType.INCLUDE,
+                label: t(`views:repos.include`, 'Include')
+              },
+              {
+                value: PatternsButtonType.EXCLUDE,
+                label: t(`views:repos.exclude`, 'Exclude')
+              }
+            ]}
+          >
+            <IconV2 name={selectedOption === PatternsButtonType.INCLUDE ? 'plus-circle' : 'xmark-circle'} />
+            {t(`views:repos.${selectedOption.toLowerCase()}`, `${selectedOption}`)}
+          </SplitButton>
+        </Layout.Grid>
+      </ControlGroup>
+      {!!patterns.length && (
+        <Layout.Flex wrap="wrap" gap="xs">
+          {patterns.map(({ pattern, option }) => (
+            <ResetTag
+              key={pattern}
+              value={pattern}
+              onReset={() => handleRemove(pattern)}
+              icon={option === PatternsButtonType.INCLUDE ? 'plus-circle' : 'xmark-circle'}
+              iconProps={{
+                className: option === PatternsButtonType.INCLUDE ? '!text-cn-success' : '!text-cn-danger'
+              }}
+            />
+          ))}
+        </Layout.Flex>
+      )}
+    </Layout.Grid>
   )
 }
 

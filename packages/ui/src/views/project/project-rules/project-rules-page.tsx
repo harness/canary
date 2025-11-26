@@ -1,8 +1,8 @@
-import { FC, useMemo } from 'react'
+import { FC, useCallback, useMemo } from 'react'
 
 import { Button, Checkbox, DropdownMenu, IconV2, Layout, NoData, Text } from '@/components'
 import { useRouterContext, useTranslation } from '@/context'
-import { ErrorTypes, IProjectRulesStore, SandboxLayout } from '@/views'
+import { ErrorTypes, IProjectRulesStore, RuleType, SandboxLayout } from '@/views'
 import { RepoSettingsGeneralRules } from '@views/repo/repo-settings/components/repo-settings-general-rules'
 
 export interface ProjectRulesPageProps {
@@ -49,44 +49,56 @@ export const ProjectRulesPage: FC<ProjectRulesPageProps> = ({
     return page !== 1 || !!searchQuery || ruleTypeFilter !== null
   }, [page, searchQuery, ruleTypeFilter])
 
-  if (!rulesData?.length && !isDirtyList && !isLoading) {
-    return (
-      <NoData
-        textWrapperClassName="max-w-[350px]"
-        imageName="no-data-cog"
-        title={t('views:noData.noRules', 'No rules yet')}
-        description={[
-          t(
-            'views:noData.noRulesDescription',
-            'There are no rules in this project. Click on the button below to start adding rules.'
-          )
-        ]}
-      >
-        <DropdownMenu.Root>
-          <DropdownMenu.Trigger asChild>
-            <Button>
-              <IconV2 name="plus" size="sm" />
-              {t('views:repos.createRuleButton', 'Create Rule')}
-            </Button>
-          </DropdownMenu.Trigger>
-          <DropdownMenu.Content>
-            <DropdownMenu.Item
-              title={t('views:repos.createTagRuleButton', 'Create Tag Rule')}
-              onClick={() => navigate(toProjectTagRuleCreate?.() || '')}
-            />
-            <DropdownMenu.Item
-              title={t('views:repos.createBranchRuleButton', 'Create Branch Rule')}
-              onClick={() => navigate(toProjectBranchRuleCreate?.() || '')}
-            />
-            <DropdownMenu.Item
-              title={t('views:repos.createPushRuleButton', 'Create Push Rule')}
-              onClick={() => navigate(toProjectPushRuleCreate?.() || '')}
-            />
-          </DropdownMenu.Content>
-        </DropdownMenu.Root>
-      </NoData>
-    )
-  }
+  const ruleCreationConfig = useMemo(
+    () => [
+      {
+        type: RuleType.TAG,
+        title: t('views:repos.createTagRuleButton', 'Create Tag Rule'),
+        navigateTo: toProjectTagRuleCreate
+      },
+      {
+        type: RuleType.BRANCH,
+        title: t('views:repos.createBranchRuleButton', 'Create Branch Rule'),
+        navigateTo: toProjectBranchRuleCreate
+      },
+      {
+        type: RuleType.PUSH,
+        title: t('views:repos.createPushRuleButton', 'Create Push Rule'),
+        navigateTo: toProjectPushRuleCreate
+      }
+    ],
+    [toProjectTagRuleCreate, toProjectBranchRuleCreate, toProjectPushRuleCreate]
+  )
+
+  const handleCreateRule = useCallback(
+    (link?: () => string) => {
+      if (link) {
+        navigate(link())
+      }
+    },
+    [navigate]
+  )
+
+  const renderCreateRuleDropdown = useCallback(
+    () => (
+      <DropdownMenu.Root>
+        <DropdownMenu.Trigger asChild>
+          <Button>
+            <IconV2 name="plus" size="sm" />
+            {t('views:repos.createRuleButton', 'Create Rule')}
+          </Button>
+        </DropdownMenu.Trigger>
+        <DropdownMenu.Content>
+          {ruleCreationConfig.map(({ type, title, navigateTo }) => (
+            <DropdownMenu.Item key={type} title={title} onClick={() => handleCreateRule(navigateTo)} />
+          ))}
+        </DropdownMenu.Content>
+      </DropdownMenu.Root>
+    ),
+    [t, ruleCreationConfig, handleCreateRule]
+  )
+
+  const hasNoRules = !rulesData?.length && !isDirtyList && !isLoading
 
   return (
     <SandboxLayout.Main>
@@ -105,29 +117,45 @@ export const ProjectRulesPage: FC<ProjectRulesPageProps> = ({
             />
           )}
 
-          <RepoSettingsGeneralRules
-            rules={rulesData}
-            isLoading={isLoading}
-            apiError={apiError}
-            handleRuleClick={handleRuleClick}
-            openRulesAlertDeleteDialog={openRulesAlertDeleteDialog}
-            rulesSearchQuery={searchQuery}
-            setRulesSearchQuery={setSearchQuery}
-            projectScope
-            toBranchRuleCreate={toProjectBranchRuleCreate}
-            toTagRuleCreate={toProjectTagRuleCreate}
-            toPushRuleCreate={toProjectPushRuleCreate}
-            toProjectRuleDetails={toProjectRuleDetails}
-            ruleTypeFilter={ruleTypeFilter}
-            setRuleTypeFilter={setRuleTypeFilter}
-            paginationProps={{
-              totalItems: totalItems,
-              pageSize: pageSize,
-              onPageSizeChange: setPageSize,
-              currentPage: page,
-              goToPage: setPage
-            }}
-          />
+          {hasNoRules ? (
+            <NoData
+              textWrapperClassName="max-w-[350px]"
+              imageName="no-data-cog"
+              title={t('views:noData.noRules', 'No rules yet')}
+              description={[
+                t(
+                  'views:noData.noRulesDescription',
+                  'There are no rules in this project. Click on the button below to start adding rules.'
+                )
+              ]}
+            >
+              {renderCreateRuleDropdown()}
+            </NoData>
+          ) : (
+            <RepoSettingsGeneralRules
+              rules={rulesData}
+              isLoading={isLoading}
+              apiError={apiError}
+              handleRuleClick={handleRuleClick}
+              openRulesAlertDeleteDialog={openRulesAlertDeleteDialog}
+              rulesSearchQuery={searchQuery}
+              setRulesSearchQuery={setSearchQuery}
+              projectScope
+              toBranchRuleCreate={toProjectBranchRuleCreate}
+              toTagRuleCreate={toProjectTagRuleCreate}
+              toPushRuleCreate={toProjectPushRuleCreate}
+              toProjectRuleDetails={toProjectRuleDetails}
+              ruleTypeFilter={ruleTypeFilter}
+              setRuleTypeFilter={setRuleTypeFilter}
+              paginationProps={{
+                totalItems,
+                pageSize,
+                onPageSizeChange: setPageSize,
+                currentPage: page,
+                goToPage: setPage
+              }}
+            />
+          )}
         </Layout.Vertical>
       </SandboxLayout.Content>
     </SandboxLayout.Main>

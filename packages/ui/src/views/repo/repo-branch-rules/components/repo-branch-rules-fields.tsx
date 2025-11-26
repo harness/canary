@@ -99,7 +99,10 @@ export const BranchSettingsRuleTargetPatternsField: FC<
             {...register!('pattern')}
             caption={t(
               'views:repos.createRuleCaption',
-              'Match branches using globstar patterns (e.g.”golden”, “feature-*”, “releases/**”)'
+              'Match {{type}} using globstar patterns (e.g.”golden”, “feature-*”, “releases/**”)',
+              {
+                type: 'branches'
+              }
             )}
             placeholder={t('views:repos.rulePatternPlaceholder', 'Enter the target patterns')}
           />

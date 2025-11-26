@@ -14,6 +14,7 @@ import {
   PushSettingsRuleDescriptionField,
   PushSettingsRuleListField,
   PushSettingsRuleNameField,
+  PushSettingsRuleTargetPatternsField,
   PushSettingsRuleToggleField
 } from './components/repo-push-rules-fields'
 import { IPushRulesStore, repoPushRuleSettingsFormSchema, RepoPushRulesSettingsFormFields } from './types'
@@ -153,6 +154,8 @@ export const RepoPushSettingsRulesPage: FC<RepoPushSettingsRulesPageProps> = ({
               repoQueryObj={repoQueryObj}
             />
           )}
+
+          <PushSettingsRuleTargetPatternsField setValue={setValue} watch={watch} register={register} errors={errors} />
 
           <PushSettingsRuleBypassListField
             register={register}

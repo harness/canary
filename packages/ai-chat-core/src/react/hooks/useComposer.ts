@@ -1,19 +1,37 @@
-import { useSyncExternalStore } from 'use-sync-external-store/shim'
+import { useState } from 'react'
 
-import ComposerRuntime, { ComposerState } from '../../runtime/ComposerRuntime/ComposerRuntime'
 import { useCurrentThread } from './useCurrentThread'
 
-export function useComposer(): ComposerRuntime {
+export function useComposer() {
   const thread = useCurrentThread()
-  return thread.composer
-}
+  const [text, setText] = useState('')
+  const [isSubmitting, setIsSubmitting] = useState(false)
 
-export function useComposerState(): ComposerState {
-  const composer = useComposer()
+  const send = async (e?: React.FormEvent) => {
+    e?.preventDefault()
 
-  return useSyncExternalStore(
-    callback => composer.subscribe(callback),
-    () => composer.getState(),
-    () => composer.getState()
-  )
+    if (!text.trim() || isSubmitting) return
+
+    const messageText = text
+    setText('')
+    setIsSubmitting(true)
+
+    try {
+      await thread.send(messageText)
+    } catch (error) {
+      console.error('Failed to send message:', error)
+      setText(messageText)
+    } finally {
+      setIsSubmitting(false)
+    }
+  }
+
+  return {
+    text,
+    setText,
+    isSubmitting,
+    send,
+    clear: () => setText(''),
+    append: (value: string) => setText(prev => prev + value)
+  }
 }

@@ -433,7 +433,7 @@
     },
     "pipeline": {
       "card": {
-        "content": {
+        "description": {
           "$type": "typography",
           "$value": {
             "fontFamily": "{fontFamily.default}",

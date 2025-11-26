@@ -1396,6 +1396,33 @@
         "$description": "Hover color for text links."
       }
     },
+    "pipeline": {
+      "running": {
+        "$type": "color",
+        "$value": "{set.warning.outline.border}",
+        "$description": "Animated gradient border for running pipeline states. Provides visual indication of active processing."
+      },
+      "dotes": {
+        "$type": "color",
+        "$value": "{chrome.950}",
+        "$description": "Refers to the dotted pattern visible in the background of the workspace."
+      },
+      "stage-card": {
+        "bg": {
+          "$extensions": {
+            "studio.tokens": {
+              "modify": {
+                "type": "alpha",
+                "value": "0.5",
+                "space": "lch"
+              }
+            }
+          },
+          "$type": "color",
+          "$value": "{bg.3}"
+        }
+      }
+    },
     "scrollbar": {
       "thumb": {
         "$type": "color",

@@ -7,6 +7,7 @@ beta: true
 The `TimeAgoCard` component displays a timestamp in a human-readable format, such as "5 minutes ago". It also provides an option to view the full date and time when clicked.
 
 import { DocsPage } from "@/components/docs-page";
+import { Aside } from "@astrojs/starlight/components";
 
 <DocsPage.ComponentExample
   client:only
@@ -26,6 +27,14 @@ return (
   <TimeAgoCard timestamp={new Date().toISOString()} />
 );
 ```
+
+<Aside type="caution" title="Invalid Date Handling">
+  If an invalid date is passed to the `timestamp` prop (e.g., an invalid date
+  string or `NaN`), the component will **not render anything**. A warning
+  message will be displayed in browser console instead. Ensure that the
+  timestamp value is a valid ISO 8601 date string, Unix timestamp number, or
+  `null`.
+</Aside>
 
 ## Timestamp variants
 

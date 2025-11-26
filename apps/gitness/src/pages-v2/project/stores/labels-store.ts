@@ -5,7 +5,7 @@ import { ILabelsStore, ILabelType, LabelValuesType, SetRepoSpaceRefProps } from 
 export const useLabelsStore = create<ILabelsStore>(set => ({
   labels: [],
   totalItems: 0,
-  pageSize: 10,
+  pageSize: 25,
   page: 1,
   isLoading: true,
   values: {},

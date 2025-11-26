@@ -6,7 +6,7 @@ export const useRepoStore = create<RepoStore>(set => ({
   repositories: null,
   importRepoIdentifier: null,
   totalItems: 0,
-  pageSize: 10,
+  pageSize: 25,
   isRepoStillImporting: false,
   page: 1,
   importToastId: null,

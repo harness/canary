@@ -30,7 +30,7 @@ export const TagSettingsRuleToggleField: FC<TagFieldProps> = ({ register, watch,
       checked={watch!('state')}
       onCheckedChange={() => setValue!('state', !watch!('state'))}
       label={t('views:repos.enableRule', 'Enable the rule')}
-      caption={t('views:repos.enableRuleDescription', 'By enabling the toggle, the {type} rule will be enforced.', {
+      caption={t('views:repos.enableRuleDescription', 'By enabling the toggle, the {{type}} rule will be enforced.', {
         type: 'tag'
       })}
     />

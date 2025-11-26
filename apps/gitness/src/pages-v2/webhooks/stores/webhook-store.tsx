@@ -8,8 +8,8 @@ import { timeAgoFromEpochTime } from '../../../utils/time-utils'
 export const useWebhookStore = create<WebhookStore>(set => ({
   webhooks: null,
   totalItems: 0,
-  pageSize: 10,
-  webhookExecutionPageSize: 10,
+  pageSize: 25,
+  webhookExecutionPageSize: 25,
   error: undefined,
   preSetWebhookData: null,
   setError: error => set({ error }),

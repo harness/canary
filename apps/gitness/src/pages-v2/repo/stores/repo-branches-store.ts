@@ -14,7 +14,7 @@ export const useRepoBranchesStore = create<IBranchSelectorStore>(set => ({
   xNextPage: 0,
   xPrevPage: 0,
   page: 1,
-  pageSize: 10,
+  pageSize: 25,
 
   // Actions
   setSelectedBranchTag: (selectedBranchTag: BranchSelectorListItem) => set({ selectedBranchTag }),

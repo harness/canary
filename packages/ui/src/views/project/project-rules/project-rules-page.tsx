@@ -78,6 +78,10 @@ export const ProjectRulesPage: FC<ProjectRulesPageProps> = ({
               title={t('views:repos.createBranchRuleButton', 'Create Branch Rule')}
               onClick={() => navigate(toProjectBranchRuleCreate?.() || '')}
             />
+            <DropdownMenu.Item
+              title={t('views:repos.createPushRuleButton', 'Create Push Rule')}
+              onClick={() => navigate(toProjectPushRuleCreate?.() || '')}
+            />
           </DropdownMenu.Content>
         </DropdownMenu.Root>
       </NoData>

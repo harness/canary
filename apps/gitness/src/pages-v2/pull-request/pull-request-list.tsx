@@ -58,7 +58,7 @@ export default function PullRequestListPage() {
         state: prState,
         query: query ?? '',
         exclude_description: true,
-        sort: 'number',
+        sort: prState.includes('merged') ? 'merged' : 'number',
         order: 'desc',
         limit: pageSize,
         ...filterValues

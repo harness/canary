@@ -15,7 +15,7 @@ export const useProjectRulesStore = create<IProjectRulesStore>(set => ({
   recentStatusChecks: null,
   totalItems: 0,
   page: 1,
-  pageSize: 10,
+  pageSize: 25,
 
   // Actions
   setPage: page => set({ page }),

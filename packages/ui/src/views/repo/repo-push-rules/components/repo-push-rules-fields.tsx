@@ -28,7 +28,7 @@ export const PushSettingsRuleToggleField: FC<PushRuleFieldProps> = ({ register, 
       checked={watch!('state')}
       onCheckedChange={() => setValue!('state', !watch!('state'))}
       label={t('views:repos.enableRule', 'Enable the rule')}
-      caption={t('views:repos.enableRuleDescription', 'By enabling the toggle, the {type} rule will be enforced.', {
+      caption={t('views:repos.enableRuleDescription', 'By enabling the toggle, the {{type}} rule will be enforced.', {
         type: 'push'
       })}
     />
@@ -159,6 +159,8 @@ export const PushSettingsRuleListField: FC<{
                   value={inputValue || ''}
                   onChange={e => handleInputChange(rule.id, e.target.value)}
                   autoFocus
+                  min={0}
+                  integerOnly
                 />
               )}
             </Fragment>

@@ -430,6 +430,20 @@
           "$description": "Highlighted paragraph style for important information. Uses increased weight to create focal points without disrupting content flow.\n\nCommon uses: Important notices, Key takeaways, Warnings, Summary points."
         }
       }
+    },
+    "pipeline": {
+      "card": {
+        "content": {
+          "$type": "typography",
+          "$value": {
+            "fontFamily": "{fontFamily.default}",
+            "fontWeight": "{fontWeight.default.normal.400}",
+            "fontSize": "{fontSize.half}",
+            "lineHeight": "{lineHeight.half.snug}",
+            "letterSpacing": "{tracking.normal}"
+          }
+        }
+      }
     }
   },
   "layout": {

@@ -65,7 +65,9 @@ const TableRoot = forwardRef<HTMLTableElement, TableRootV2Props>(
         className
       )}
     >
-      <table ref={ref} className={cn('cn-table-v2-element', tableClassName)} {...props} />
+      <div className="overflow-x-auto">
+        <table ref={ref} className={cn('cn-table-v2-element', tableClassName)} {...props} />
+      </div>
       {paginationProps && (
         <Pagination
           {...paginationProps}

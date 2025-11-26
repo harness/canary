@@ -24,6 +24,7 @@ import multiSelectStyles from './multi-select'
 import paginationStyles from './pagination'
 import popoverStyles from './popover'
 import progressStyles from './progress'
+import promptInputStyles from './prompt-input'
 import radioStyles from './radio'
 import repoLayout from './repo-layout'
 import sandboxLayout from './sandbox-layout'
@@ -78,6 +79,7 @@ export const ComponentStyles = [
   toggleStyles,
   toggleGroupStyles,
   buttonGroupStyle,
+  promptInputStyles,
   skeletonStyles,
   stackedListStyles,
   treeStyles,

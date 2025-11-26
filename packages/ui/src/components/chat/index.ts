@@ -5,3 +5,4 @@ export * from './chat-preview-wrapper'
 export * from './chat-empty-preview-wrapper'
 
 export * from './message-bubble'
+export * from './prompt-input'

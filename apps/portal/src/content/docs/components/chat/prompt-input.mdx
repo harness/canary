@@ -1,0 +1,103 @@
+---
+title: Prompt Input
+description: AI chat prompt input component for conversational interfaces
+beta: true
+---
+
+import { DocsPage } from "@/components/docs-page";
+
+The `PromptInput` component is a compound component for AI chat interfaces. It includes a textarea with auto-resize, keyboard shortcuts, and optional toolbar for actions.
+
+<DocsPage.ComponentExample
+  client:only
+  code={`
+  <div className="flex flex-col gap-cn-md w-[370px]">
+  <PromptInput.Root onSubmit={(e) => { e.preventDefault(); console.log('submitted'); }}>
+  <PromptInput.Textarea placeholder="Ask me anything..." />
+  <PromptInput.Toolbar>
+    <PromptInput.Tools>
+    </PromptInput.Tools>
+    <PromptInput.Submit />
+  </PromptInput.Toolbar>
+</PromptInput.Root>
+</div>`}
+/>
+
+## With Toolbar and Button
+
+<DocsPage.ComponentExample
+  client:only
+  code={`
+  <div className="flex flex-col gap-cn-md w-[370px]">
+  <PromptInput.Root onSubmit={(e) => { e.preventDefault(); console.log('submitted'); }}>
+  <PromptInput.Textarea placeholder="Ask me anything..." />
+  <PromptInput.Toolbar>
+    <PromptInput.Tools>
+      <PromptInput.Button>
+        <IconV2 name="plus" size="sm" />
+      </PromptInput.Button>
+    </PromptInput.Tools>
+    <PromptInput.Submit />
+  </PromptInput.Toolbar>
+</PromptInput.Root>
+</div>`}
+/>
+
+## Streaming State
+
+<DocsPage.ComponentExample
+  client:only
+  code={`
+  <div className="flex flex-col gap-cn-md w-[370px]">
+  <PromptInput.Root onSubmit={(e) => { e.preventDefault(); console.log('stop streaming'); }}>
+  <PromptInput.Textarea placeholder="Ask me anything..." value="Tell me about React hooks" />
+  <PromptInput.Toolbar>
+    <PromptInput.Tools>
+      <PromptInput.Button>
+        <IconV2 name="plus" size="sm" />
+      </PromptInput.Button>
+    </PromptInput.Tools>
+    <PromptInput.Submit status="streaming" />
+  </PromptInput.Toolbar>
+</PromptInput.Root>
+</div>`}
+/>
+
+## Usage
+
+```typescript jsx
+import { PromptInput } from '@harnessio/ui/components'
+
+return (
+  <PromptInput.Root onSubmit={handleSubmit}>
+    <PromptInput.Textarea
+      placeholder="What would you like to know?"
+      onChange={(e) => setValue(e.target.value)}
+    />
+    <PromptInput.Toolbar>
+      <PromptInput.Tools>
+        <PromptInput.Button>
+          <IconV2 name="plus" />
+        </PromptInput.Button>
+      </PromptInput.Tools>
+      <PromptInput.Submit />
+    </PromptInput.Toolbar>
+  </PromptInput.Root>
+)
+```
+
+## Component Structure
+
+- **PromptInput.Root** - Form wrapper with submit handling
+- **PromptInput.Textarea** - Auto-resizing textarea with keyboard shortcuts
+- **PromptInput.Toolbar** - Container for actions and submit button
+- **PromptInput.Tools** - Container for tool buttons
+- **PromptInput.Submit** - Submit button with streaming state support
+- **PromptInput.Button** - Action button for toolbar (attach, emoji, etc.)
+
+## Keyboard Shortcuts
+
+| Key             | Action            |
+| --------------- | ----------------- |
+| `Enter`         | Submit the form   |
+| `Shift + Enter` | Insert a new line |

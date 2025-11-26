@@ -45,6 +45,7 @@ const AnimatedSideBarRail: React.FC<AnimatedSideBarRailProps> = ({ className }) 
         'absolute w-6 top-[var(--cn-header-height)] bottom-0 z-20 flex items-center border-l border-t bg-cn-2 rounded-tl-cn-3',
         className
       )}
+      initial={false}
       animate={{
         x: shiftWithBump,
         transition: { type: 'tween', ease: 'easeOut' } // Smooth tween animation
@@ -52,21 +53,23 @@ const AnimatedSideBarRail: React.FC<AnimatedSideBarRailProps> = ({ className }) 
     >
       <Tooltip content={label} side="right" delay={0}>
         <div
-          className="flex items-center justify-center w-full h-6 relative text-gray-600 cursor-pointer"
+          className="w-full h-6 flex items-center justify-center text-gray-600 cursor-pointer -translate-x-1/2"
           onMouseEnter={() => setHover(true)}
           onMouseLeave={() => setHover(false)}
           aria-label={label}
         >
-          {hover ? (
-            <IconV2
-              name={open ? 'nav-arrow-left' : 'nav-arrow-right'}
-              size="lg"
-              className="text-cn-sidebar-toggle"
-              onClick={onClickHandler} // Toggle sidebar on icon click
-            />
-          ) : (
-            <Text className="text-cn-sidebar-toggle">|</Text> // Placeholder when not hovered
-          )}
+          <div className="relative left-cn-2xs">
+            {hover ? (
+              <IconV2
+                name={open ? 'nav-arrow-left' : 'nav-arrow-right'}
+                size="lg"
+                className="text-cn-sidebar-toggle"
+                onClick={onClickHandler} // Toggle sidebar on icon click
+              />
+            ) : (
+              <Text className="text-cn-sidebar-toggle">|</Text> // Placeholder when not hovered
+            )}
+          </div>
         </div>
       </Tooltip>
     </motion.div>

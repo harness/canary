@@ -11,7 +11,7 @@ import { DocsPage } from "@/components/docs-page";
 <DocsPage.ComponentExample
   client:only
   code={`<div className="flex flex-col gap-cn-2xl">
-    <TimeAgoCard timestamp={new Date().toISOString()} />
+    <TimeAgoCard timestamp={new Date(Date.now() - 30 * 1000).toISOString()} />
   </div>`}
 />
 
@@ -44,18 +44,72 @@ return (
   </div>`}
 />
 
-## cutoffDays variants
+## Time difference examples
 
-`cutoffDays` is the number of days after which the full date will be shown instead of "time ago". By default, it is set to 8 days.
+The component displays relative time in a narrow format for all time ranges:
 
 <DocsPage.ComponentExample
   client:only
-  code={`<div className="flex flex-col gap-cn-2xl">
+  code={`<div className="flex flex-col gap-cn-md">
     <Text>
-      more than cutoffDays default ago: <TimeAgoCard timestamp={new Date(Date.now() - 1000 * 60 * 60 * 24 * 9).toISOString()} />
+      1 second ago: <TimeAgoCard timestamp={new Date(Date.now() - 1000).toISOString()} />
     </Text>
     <Text>
-      less than cutoffDays default ago: <TimeAgoCard timestamp={new Date(Date.now() - 1000 * 60 * 60 * 24 * 5).toISOString()} />
+      30 seconds ago: <TimeAgoCard timestamp={new Date(Date.now() - 30 * 1000).toISOString()} />
+    </Text>
+    <Text>
+      3 minutes ago: <TimeAgoCard timestamp={new Date(Date.now() - 3 * 60 * 1000).toISOString()} />
+    </Text>
+    <Text>
+      2 hours ago: <TimeAgoCard timestamp={new Date(Date.now() - 2 * 60 * 60 * 1000).toISOString()} />
+    </Text>
+    <Text>
+      1 day ago: <TimeAgoCard timestamp={new Date(Date.now() - 24 * 60 * 60 * 1000).toISOString()} />
+    </Text>
+    <Text>
+      5 days ago: <TimeAgoCard timestamp={new Date(Date.now() - 5 * 24 * 60 * 60 * 1000).toISOString()} />
+    </Text>
+    <Text>
+      2 weeks ago: <TimeAgoCard timestamp={new Date(Date.now() - 14 * 24 * 60 * 60 * 1000).toISOString()} />
+    </Text>
+    <Text>
+      2 months ago: <TimeAgoCard timestamp={new Date(Date.now() - 60 * 24 * 60 * 60 * 1000).toISOString()} />
+    </Text>
+    <Text>
+      2 years ago: <TimeAgoCard timestamp={new Date(Date.now() - 730 * 24 * 60 * 60 * 1000).toISOString()} />
+    </Text>
+  </div>`}
+/>
+
+## Future timestamps
+
+The component also handles future timestamps:
+
+<DocsPage.ComponentExample
+  client:only
+  code={`<div className="flex flex-col gap-cn-md">
+    <Text>
+      in 1 day: <TimeAgoCard timestamp={new Date(Date.now() + 24 * 60 * 60 * 1000).toISOString()} />
+    </Text>
+    <Text>
+      in 3 months: <TimeAgoCard timestamp={new Date(Date.now() + 90 * 24 * 60 * 60 * 1000).toISOString()} />
+    </Text>
+    <Text>
+      in 1 year: <TimeAgoCard timestamp={new Date(Date.now() + 365 * 24 * 60 * 60 * 1000).toISOString()} />
+    </Text>
+  </div>`}
+/>
+
+## With prefix
+
+<DocsPage.ComponentExample
+  client:only
+  code={`<div className="flex flex-col gap-cn-md">
+    <Text>
+      <TimeAgoCard prefix="Updated" timestamp={new Date(Date.now() - 2 * 60 * 60 * 1000).toISOString()} />
+    </Text>
+    <Text>
+      <TimeAgoCard prefix="Created" timestamp={new Date(Date.now() - 5 * 24 * 60 * 60 * 1000).toISOString()} />
     </Text>
   </div>`}
 />
@@ -71,18 +125,10 @@ return (
       value: "'string' | 'number' | 'null'",
     },
     {
-      name: "cutoffDays",
-      description:
-        "The number of days after which the full date will be shown instead of 'time ago'.",
+      name: "prefix",
+      description: "Optional prefix text to display before the time ago text.",
       required: false,
-      value: "'number'",
-      defaultValue: "8",
-    },
-    {
-      name: "dateTimeFormatOptions",
-      description: "Options for formatting the date and time.",
-      required: false,
-      value: "'Intl.DateTimeFormatOptions'",
+      value: "'string'",
     },
     {
       name: "textProps",
@@ -103,10 +149,10 @@ return (
       value: "'string'",
     },
     {
-      name: "contentClassName",
-      description: "Class names for the content element.",
+      name: "triggerProps",
+      description: "Props for the trigger button element.",
       required: false,
-      value: "'string'",
+      value: "'ButtonHTMLAttributes<HTMLButtonElement>'",
     },
   ]}
 />

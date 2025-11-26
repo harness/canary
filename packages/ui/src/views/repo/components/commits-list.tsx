@@ -97,15 +97,7 @@ export const CommitsList: FC<CommitProps> = ({
                             {authorName && <Avatar name={authorName} src={avatarUrl} size="sm" rounded />}
                             <Text variant="body-single-line-strong">{authorName || ''}</Text>
                             <Text variant="body-single-line-normal" color="foreground-3">
-                              committed{' '}
-                              <TimeAgoCard
-                                timestamp={when}
-                                cutoffDays={3}
-                                beforeCutoffPrefix=""
-                                afterCutoffPrefix="on"
-                                dateTimeFormatOptions={{ dateStyle: 'medium' }}
-                                textProps={{ color: 'foreground-3' }}
-                              />
+                              committed <TimeAgoCard timestamp={when} textProps={{ color: 'foreground-3' }} />
                             </Text>
                           </div>
                         </Layout.Vertical>

@@ -80,12 +80,7 @@ export const RepoCommitDetailsView: FC<RepoCommitDetailsViewProps> = ({
                   </Text>
                   <Text variant="body-single-line-normal">
                     {t('views:commits.commitDetailsAuthored', 'authored')}{' '}
-                    <TimeAgoCard
-                      timestamp={new Date(commitData.author.when).getTime()}
-                      cutoffDays={3}
-                      beforeCutoffPrefix=""
-                      afterCutoffPrefix="on"
-                    />
+                    <TimeAgoCard timestamp={new Date(commitData.author.when).getTime()} />
                   </Text>
                 </Layout.Flex>
               )}

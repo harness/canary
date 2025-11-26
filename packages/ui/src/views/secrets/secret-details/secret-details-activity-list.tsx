@@ -69,14 +69,7 @@ export function SecretActivityList({
             <Table.Cell>
               <ScopeTag className="max-w-full" scopeType={activity.scope} scopedPath={activity.scopedPath} />
             </Table.Cell>
-            <Table.Cell>
-              {!!activity?.createdAt && (
-                <TimeAgoCard
-                  timestamp={activity.createdAt}
-                  dateTimeFormatOptions={{ day: 'numeric', month: 'short', year: 'numeric' }}
-                />
-              )}
-            </Table.Cell>
+            <Table.Cell>{!!activity?.createdAt && <TimeAgoCard timestamp={activity.createdAt} />}</Table.Cell>
           </Table.Row>
         ))}
       </Table.Body>

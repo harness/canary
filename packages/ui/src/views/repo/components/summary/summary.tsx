@@ -188,7 +188,6 @@ export const Summary = ({
                 {file.timestamp ? (
                   <TimeAgoCard
                     timestamp={file.timestamp}
-                    dateTimeFormatOptions={{ dateStyle: 'medium' }}
                     textProps={{ color: 'foreground-3', wrap: 'nowrap', align: 'right' }}
                     triggerProps={{ tabIndex: -1 }}
                   />

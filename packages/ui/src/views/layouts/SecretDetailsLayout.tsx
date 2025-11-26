@@ -20,12 +20,6 @@ enum SecretDetailsTabsKeys {
   RUNTIME_USAGE = 'runtime-usage'
 }
 
-const DATE_FORMAT_OPTIONS = {
-  month: 'short' as const,
-  day: 'numeric' as const,
-  year: 'numeric' as const
-}
-
 export const SecretDetailsLayout: FC<SecretDetailsLayoutProps> = ({
   secret,
   backButtonTo,
@@ -55,31 +49,19 @@ export const SecretDetailsLayout: FC<SecretDetailsLayoutProps> = ({
             {
               label: t('views:secretDetails.created', 'Created'),
               value: secret?.createdAt ? (
-                <TimeAgoCard
-                  timestamp={secret.createdAt}
-                  dateTimeFormatOptions={DATE_FORMAT_OPTIONS}
-                  textProps={{ color: 'foreground-1' }}
-                />
+                <TimeAgoCard timestamp={secret.createdAt} textProps={{ color: 'foreground-1' }} />
               ) : undefined
             },
             {
               label: t('views:secretDetails.updated', 'Updated'),
               value: secret?.updatedAt ? (
-                <TimeAgoCard
-                  timestamp={secret.updatedAt}
-                  dateTimeFormatOptions={DATE_FORMAT_OPTIONS}
-                  textProps={{ color: 'foreground-1' }}
-                />
+                <TimeAgoCard timestamp={secret.updatedAt} textProps={{ color: 'foreground-1' }} />
               ) : undefined
             },
             {
               label: t('views:secretDetails.lastUsed', 'Last used'),
               value: secret?.updatedAt ? (
-                <TimeAgoCard
-                  timestamp={secret.updatedAt}
-                  dateTimeFormatOptions={DATE_FORMAT_OPTIONS}
-                  textProps={{ color: 'foreground-1' }}
-                />
+                <TimeAgoCard timestamp={secret.updatedAt} textProps={{ color: 'foreground-1' }} />
               ) : undefined
             }
           ]}

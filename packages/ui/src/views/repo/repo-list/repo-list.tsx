@@ -183,14 +183,7 @@ export function RepoList({
             <StackedList.Field
               title={
                 <>
-                  {t('views:repos.updated', 'Updated')}{' '}
-                  <TimeAgoCard
-                    timestamp={repo.timestamp}
-                    cutoffDays={3}
-                    beforeCutoffPrefix=""
-                    afterCutoffPrefix="on"
-                    dateTimeFormatOptions={{ dateStyle: 'medium' }}
-                  />
+                  {t('views:repos.updated', 'Updated')} <TimeAgoCard timestamp={repo.timestamp} />
                 </>
               }
               description={<Stats pulls={repo.pulls} />}

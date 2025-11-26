@@ -197,12 +197,12 @@ export const ViewOnlyView = () => {
           data={[
             {
               label: 'Created',
-              value: <TimeAgoCard timestamp="Dec 6, 2024" dateTimeFormatOptions={{ dateStyle: 'medium' }} />
+              value: <TimeAgoCard timestamp="Dec 6, 2024" />
             },
             { label: 'Last updated', value: undefined },
             {
               label: 'Last status check',
-              value: <TimeAgoCard timestamp="Jun 6, 2025" dateTimeFormatOptions={{ dateStyle: 'medium' }} />
+              value: <TimeAgoCard timestamp="Jun 6, 2025" />
             },
             { label: 'Last successful check', value: undefined },
             {
@@ -275,11 +275,7 @@ export const ViewOnlyView = () => {
                     <Link to="/">default_project</Link>
                   </Table.Cell>
                   <Table.Cell>
-                    <TimeAgoCard
-                      timestamp="Dec 6, 2024"
-                      dateTimeFormatOptions={{ dateStyle: 'medium' }}
-                      textProps={{ wrap: 'nowrap' }}
-                    />
+                    <TimeAgoCard timestamp="Dec 6, 2024" textProps={{ wrap: 'nowrap' }} />
                   </Table.Cell>
                   <Table.Cell align="right" width="40">
                     <Toggle prefixIcon="pin" iconOnly tooltipProps={{ content: 'Toggle Pin' }} />
@@ -299,11 +295,7 @@ export const ViewOnlyView = () => {
                     <Link to="/">default_project</Link>
                   </Table.Cell>
                   <Table.Cell>
-                    <TimeAgoCard
-                      timestamp="Dec 6, 2024"
-                      dateTimeFormatOptions={{ dateStyle: 'medium' }}
-                      textProps={{ wrap: 'nowrap' }}
-                    />
+                    <TimeAgoCard timestamp="Dec 6, 2024" textProps={{ wrap: 'nowrap' }} />
                   </Table.Cell>
                   <Table.Cell align="right" width="40">
                     <Toggle prefixIcon="pin" iconOnly tooltipProps={{ content: 'Toggle Pin' }} />
@@ -323,11 +315,7 @@ export const ViewOnlyView = () => {
                     <Link to="/">default_project</Link>
                   </Table.Cell>
                   <Table.Cell>
-                    <TimeAgoCard
-                      timestamp="Dec 6, 2024"
-                      dateTimeFormatOptions={{ dateStyle: 'medium' }}
-                      textProps={{ wrap: 'nowrap' }}
-                    />
+                    <TimeAgoCard timestamp="Dec 6, 2024" textProps={{ wrap: 'nowrap' }} />
                   </Table.Cell>
                   <Table.Cell align="right" width="40">
                     <Toggle prefixIcon="pin" iconOnly tooltipProps={{ content: 'Toggle Pin' }} />
@@ -347,11 +335,7 @@ export const ViewOnlyView = () => {
                     <Link to="/">default_project</Link>
                   </Table.Cell>
                   <Table.Cell>
-                    <TimeAgoCard
-                      timestamp="Dec 6, 2024"
-                      dateTimeFormatOptions={{ dateStyle: 'medium' }}
-                      textProps={{ wrap: 'nowrap' }}
-                    />
+                    <TimeAgoCard timestamp="Dec 6, 2024" textProps={{ wrap: 'nowrap' }} />
                   </Table.Cell>
                   <Table.Cell align="right" width="40">
                     <Toggle prefixIcon="pin" iconOnly tooltipProps={{ content: 'Toggle Pin' }} />
@@ -371,11 +355,7 @@ export const ViewOnlyView = () => {
                     <Link to="/">default_project</Link>
                   </Table.Cell>
                   <Table.Cell>
-                    <TimeAgoCard
-                      timestamp="Dec 6, 2024"
-                      dateTimeFormatOptions={{ dateStyle: 'medium' }}
-                      textProps={{ wrap: 'nowrap' }}
-                    />
+                    <TimeAgoCard timestamp="Dec 6, 2024" textProps={{ wrap: 'nowrap' }} />
                   </Table.Cell>
                   <Table.Cell align="right" width="40">
                     <Toggle prefixIcon="pin" iconOnly tooltipProps={{ content: 'Toggle Pin' }} />
@@ -395,11 +375,7 @@ export const ViewOnlyView = () => {
                     <Link to="/">default_project</Link>
                   </Table.Cell>
                   <Table.Cell>
-                    <TimeAgoCard
-                      timestamp="Dec 6, 2024"
-                      dateTimeFormatOptions={{ dateStyle: 'medium' }}
-                      textProps={{ wrap: 'nowrap' }}
-                    />
+                    <TimeAgoCard timestamp="Dec 6, 2024" textProps={{ wrap: 'nowrap' }} />
                   </Table.Cell>
                   <Table.Cell align="right" width="40">
                     <Toggle prefixIcon="pin" iconOnly tooltipProps={{ content: 'Toggle Pin' }} />

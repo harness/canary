@@ -63,12 +63,7 @@ export function ChainedCommitsDropdown(props: ChainedCommitsDropdownProps) {
                   {item.name}
                 </Text>
                 {item.datetime && (
-                  <TimeAgoCard
-                    timestamp={item.datetime}
-                    textProps={{ className: 'whitespace-nowrap' }}
-                    cutoffDays={365}
-                    dateTimeFormatOptions={{ dateStyle: 'medium' }}
-                  />
+                  <TimeAgoCard timestamp={item.datetime} textProps={{ className: 'whitespace-nowrap' }} />
                 )}
               </div>
             }

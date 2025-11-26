@@ -3,7 +3,6 @@ import { ButtonHTMLAttributes, FC, forwardRef, Fragment, memo, Ref } from 'react
 import { StatusBadge, Text, TextProps, Tooltip, TooltipProps } from '@/components'
 import { cn } from '@utils/cn'
 import { LOCALE } from '@utils/TimeUtils'
-import { formatDistanceToNow } from 'date-fns'
 
 const getTimeZoneAbbreviation = () => {
   try {
@@ -52,31 +51,67 @@ const getFormatters = (locale?: string | string[]) => ({
   })
 })
 
-export const useFormattedTime = (
-  timestamp?: string | number | null,
-  cutoffDays: number = 8,
-  dateTimeFormatOptions: Intl.DateTimeFormatOptions = {
-    month: 'short',
-    day: 'numeric',
-    year: 'numeric',
-    hour: '2-digit',
-    minute: '2-digit',
-    second: '2-digit',
-    hour12: true
+/**
+ * This will be used as a placeholder for invalid/unknown timestamps
+ */
+const INVALID_TIME_INDICATOR = ''
+
+const timeAgo = (date: Date, locale: string | string[] = 'en-US') => {
+  try {
+    // Validate date is within reasonable bounds (not too far in past/future)
+    const timestamp = date.getTime()
+    const now = Date.now()
+    const diffSeconds = Math.floor((timestamp - now) / 1000)
+
+    // Handle extreme dates (beyond ~270,000 years)
+    if (!isFinite(diffSeconds)) {
+      console.warn('Invalid timestamp:', timestamp)
+      return INVALID_TIME_INDICATOR
+    }
+
+    const rtf = new Intl.RelativeTimeFormat(locale, {
+      numeric: 'always',
+      style: 'narrow'
+    })
+
+    const units: [Intl.RelativeTimeFormatUnit, number][] = [
+      ['year', 3600 * 24 * 365],
+      ['month', 3600 * 24 * 30],
+      ['week', 3600 * 24 * 7],
+      ['day', 3600 * 24],
+      ['hour', 3600],
+      ['minute', 60],
+      ['second', 1]
+    ]
+
+    for (const [unit, seconds] of units) {
+      if (Math.abs(diffSeconds) >= seconds || unit === 'second') {
+        const value = Math.round(diffSeconds / seconds)
+        return rtf.format(value, unit)
+      }
+    }
+
+    return rtf.format(0, 'second')
+  } catch (error) {
+    console.warn('Intl API error:', error)
+    // Fallback for any Intl API errors or locale issues
+    return INVALID_TIME_INDICATOR
   }
-) => {
-  const time = new Date(timestamp ?? 0)
-  const isValidTime = !isNaN(time.getTime())
-  const now = new Date()
-  const diff = now.getTime() - time.getTime()
-  const isBeyondCutoff = isValidTime && diff > cutoffDays * 24 * 60 * 60 * 1000
+}
+
+export const useFormattedTime = (timestamp?: string | number | null) => {
+  // Handle null, undefined, empty string, or invalid values
+  const time = timestamp ? new Date(timestamp) : new Date(0)
+  const isValidTime = !isNaN(time.getTime()) && isFinite(time.getTime())
 
   const formattedShort = () => {
-    if (!isValidTime) return 'Unknown time'
+    // Additional check for epoch time (0) which might indicate missing data
+    if (!isValidTime || time.getTime() === 0) {
+      console.warn('Invalid timestamp:', timestamp)
+      return INVALID_TIME_INDICATOR
+    }
 
-    return isBeyondCutoff
-      ? new Intl.DateTimeFormat(LOCALE, dateTimeFormatOptions).format(time)
-      : formatDistanceToNow(time, { addSuffix: true, includeSeconds: true })
+    return timeAgo(time, LOCALE)
   }
 
   const formatters = getFormatters(LOCALE)
@@ -97,16 +132,22 @@ export const useFormattedTime = (
     : []
 
   return {
-    formattedShort: formattedShort()
-      .replace(/^about\s+/i, '')
-      .replace(/less than\s+/i, ''),
+    formattedShort: formattedShort(),
     formattedFull,
-    time,
-    isBeyondCutoff
+    time
   }
 }
 
 export const TimeAgoContent: FC<{ formattedFullArray: FullTimeFormatters[] }> = ({ formattedFullArray }) => {
+  // Handle empty array case
+  if (formattedFullArray.length === 0) {
+    return (
+      <div className="cn-time-ago-card-content">
+        <Text variant="body-single-line-normal">Unknown time</Text>
+      </div>
+    )
+  }
+
   return (
     <div className="cn-time-ago-card-content">
       {formattedFullArray.map(({ date, time, label }) => (
@@ -134,10 +175,7 @@ export const TimeAgoContent: FC<{ formattedFullArray: FullTimeFormatters[] }> = 
 
 interface TimeAgoCardProps {
   timestamp?: string | number | null
-  dateTimeFormatOptions?: Intl.DateTimeFormatOptions
-  cutoffDays?: number
-  beforeCutoffPrefix?: string
-  afterCutoffPrefix?: string
+  prefix?: string
   textProps?: Omit<TextProps<'time' | 'span'>, 'ref'>
   tooltipProps?: TooltipProps
   triggerProps?: Omit<ButtonHTMLAttributes<HTMLButtonElement>, 'className'>
@@ -146,36 +184,17 @@ interface TimeAgoCardProps {
 
 export const TimeAgoCard = memo(
   forwardRef<HTMLButtonElement | HTMLSpanElement, TimeAgoCardProps>(
-    (
-      {
-        timestamp,
-        cutoffDays = 8,
-        dateTimeFormatOptions,
-        beforeCutoffPrefix,
-        afterCutoffPrefix,
-        textProps,
-        tooltipProps,
-        triggerProps,
-        triggerClassName
-      },
-      ref
-    ) => {
-      const { formattedShort, formattedFull, isBeyondCutoff } = useFormattedTime(
-        timestamp,
-        cutoffDays,
-        dateTimeFormatOptions
-      )
+    ({ timestamp, prefix, textProps, tooltipProps, triggerProps, triggerClassName }, ref) => {
+      const { formattedShort, formattedFull } = useFormattedTime(timestamp)
 
-      if (timestamp === null || timestamp === undefined) {
+      // Handle invalid timestamps
+      if (timestamp === null || timestamp === undefined || formattedShort === INVALID_TIME_INDICATOR) {
         return (
-          <Text as="span" {...textProps} ref={ref}>
-            Unknown time
+          <Text as="span" {...textProps} ref={ref as Ref<HTMLSpanElement>}>
+            {INVALID_TIME_INDICATOR}
           </Text>
         )
       }
-
-      const hasPrefix = beforeCutoffPrefix || afterCutoffPrefix
-      const prefix = hasPrefix ? (isBeyondCutoff ? afterCutoffPrefix : beforeCutoffPrefix) : undefined
 
       return (
         <Tooltip content={<TimeAgoContent formattedFullArray={formattedFull} />} {...tooltipProps}>

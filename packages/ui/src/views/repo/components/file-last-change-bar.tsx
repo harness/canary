@@ -23,11 +23,7 @@ const TopDetails: FC<LatestFileTypes> = ({ sha, timestamp, toCommitDetails }) =>
     <Layout.Flex align="center" gap="md">
       <CommitCopyActions toCommitDetails={toCommitDetails} sha={sha || ''} />
       <Separator orientation="vertical" className="h-3" />
-      <TimeAgoCard
-        timestamp={timestamp}
-        dateTimeFormatOptions={{ dateStyle: 'medium' }}
-        textProps={{ color: 'foreground-3' }}
-      />
+      <TimeAgoCard timestamp={timestamp} textProps={{ color: 'foreground-3' }} />
     </Layout.Flex>
   )
 }

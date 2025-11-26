@@ -129,11 +129,7 @@ export const BranchesList: FC<BranchListPageProps> = ({
               <Table.Cell>
                 <Layout.Flex align="center" gapX="xs">
                   <AvatarWithTooltip name={branch?.user?.name} src={branch?.user?.avatarUrl} size="xs" rounded />
-                  <TimeAgoCard
-                    timestamp={branch?.timestamp}
-                    dateTimeFormatOptions={{ dateStyle: 'medium' }}
-                    textProps={{ color: 'foreground-1', truncate: true }}
-                  />
+                  <TimeAgoCard timestamp={branch?.timestamp} textProps={{ color: 'foreground-1', truncate: true }} />
                 </Layout.Flex>
               </Table.Cell>
               {/* checkstatus: show in the playground, hide the check status column if the checks are null in the gitness without data */}

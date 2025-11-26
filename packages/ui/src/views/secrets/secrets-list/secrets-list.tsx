@@ -82,14 +82,10 @@ export function SecretList({
               </Text>
             </Table.Cell>
             <Table.Cell className="text-right">
-              {!!secret?.createdAt && (
-                <TimeAgoCard timestamp={secret.createdAt} dateTimeFormatOptions={{ dateStyle: 'medium' }} />
-              )}
+              {!!secret?.createdAt && <TimeAgoCard timestamp={secret.createdAt} />}
             </Table.Cell>
             <Table.Cell className="text-right">
-              {!!secret?.updatedAt && (
-                <TimeAgoCard timestamp={secret.updatedAt} dateTimeFormatOptions={{ dateStyle: 'medium' }} />
-              )}
+              {!!secret?.updatedAt && <TimeAgoCard timestamp={secret.updatedAt} />}
             </Table.Cell>
             <Table.Cell className="text-right">
               <RbacMoreActionsTooltip

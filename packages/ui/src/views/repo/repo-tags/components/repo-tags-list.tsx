@@ -207,7 +207,6 @@ export const RepoTagsList: FC<RepoTagsListProps> = ({
               {tag.tagger?.when ? (
                 <TimeAgoCard
                   timestamp={new Date(tag.tagger?.when).getTime()}
-                  dateTimeFormatOptions={{ dateStyle: 'medium' }}
                   textProps={{ variant: 'body-normal' }}
                   triggerClassName="text-left"
                 />

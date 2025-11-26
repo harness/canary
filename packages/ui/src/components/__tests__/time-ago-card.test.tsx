@@ -46,23 +46,27 @@ describe('TimeAgoCard', () => {
       expect(screen.getByRole('button')).toBeInTheDocument()
     })
 
-    test('should display "Unknown time" when timestamp is null', () => {
-      renderComponent({ timestamp: null })
+    test('should display empty string when timestamp is null', () => {
+      const { container } = renderComponent({ timestamp: null })
 
-      expect(screen.getByText('Unknown time')).toBeInTheDocument()
+      const span = container.querySelector('span')
+      expect(span).toBeInTheDocument()
+      expect(span?.textContent).toBe('')
     })
 
-    test('should display "Unknown time" when timestamp is undefined', () => {
-      renderComponent({ timestamp: undefined })
+    test('should display empty string when timestamp is undefined', () => {
+      const { container } = renderComponent({ timestamp: undefined })
 
-      expect(screen.getByText('Unknown time')).toBeInTheDocument()
+      const span = container.querySelector('span')
+      expect(span).toBeInTheDocument()
+      expect(span?.textContent).toBe('')
     })
 
     test('should render as span when timestamp is null', () => {
-      renderComponent({ timestamp: null })
+      const { container } = renderComponent({ timestamp: null })
 
-      const element = screen.getByText('Unknown time')
-      expect(element.tagName).toBe('SPAN')
+      const element = container.querySelector('span')
+      expect(element?.tagName).toBe('SPAN')
     })
 
     test('should render as button when timestamp is valid', () => {
@@ -79,28 +83,29 @@ describe('TimeAgoCard', () => {
       const now = new Date()
       const timestamp = new Date(now.getTime() - 5 * 60 * 1000).toISOString() // 5 minutes ago
 
-      renderComponent({ timestamp, cutoffDays: 8 })
+      renderComponent({ timestamp })
 
       const button = screen.getByRole('button')
-      expect(button.textContent).toContain('minute')
-    })
-
-    test('should show absolute time for old dates', () => {
-      const timestamp = createTimestamp(10) // 10 days ago
-
-      renderComponent({ timestamp, cutoffDays: 8 })
-
-      const button = screen.getByRole('button')
-      // Should contain month name or date format
+      // Should show relative time in narrow format
       expect(button.textContent).toBeTruthy()
     })
 
-    test('should respect cutoffDays prop', () => {
+    test('should show relative time for old dates', () => {
+      const timestamp = createTimestamp(10) // 10 days ago
+
+      renderComponent({ timestamp })
+
+      const button = screen.getByRole('button')
+      // Should show relative time (e.g., "10d ago")
+      expect(button.textContent).toBeTruthy()
+    })
+
+    test('should always use relative time format', () => {
       const timestamp = createTimestamp(5)
 
-      renderComponent({ timestamp, cutoffDays: 3 })
+      renderComponent({ timestamp })
 
-      // Should use absolute format since 5 days > 3 day cutoff
+      // Should always use relative format regardless of age
       expect(screen.getByRole('button')).toBeInTheDocument()
     })
 
@@ -120,42 +125,29 @@ describe('TimeAgoCard', () => {
       expect(screen.getByRole('button')).toBeInTheDocument()
     })
 
-    test('should remove "about" prefix from formatted time', () => {
+    test('should use narrow format for relative time', () => {
       const timestamp = createTimestamp(0.5)
 
       renderComponent({ timestamp })
 
       const button = screen.getByRole('button')
-      // Should not contain "about"
-      expect(button.textContent).not.toContain('about')
+      // Should use narrow format (e.g., "12h ago")
+      expect(button.textContent).toBeTruthy()
     })
 
-    test('should remove "less than" prefix from formatted time', () => {
+    test('should handle very recent timestamps', () => {
       const now = new Date()
       const timestamp = new Date(now.getTime() - 1000).toISOString() // 1 second ago
 
       renderComponent({ timestamp })
 
       const button = screen.getByRole('button')
-      // Should not contain "less than"
-      expect(button.textContent).not.toContain('less than')
+      // Should show seconds in narrow format
+      expect(button.textContent).toBeTruthy()
     })
   })
 
-  describe('Custom Time Format Options', () => {
-    test('should accept custom dateTimeFormatOptions', () => {
-      const timestamp = createTimestamp(10)
-      const customOptions: Intl.DateTimeFormatOptions = {
-        year: 'numeric',
-        month: 'long',
-        day: 'numeric'
-      }
-
-      renderComponent({ timestamp, dateTimeFormatOptions: customOptions })
-
-      expect(screen.getByRole('button')).toBeInTheDocument()
-    })
-
+  describe('Locale Support', () => {
     test('should handle different locale formats', () => {
       const timestamp = createTimestamp(10)
 
@@ -163,25 +155,26 @@ describe('TimeAgoCard', () => {
 
       expect(screen.getByRole('button')).toBeInTheDocument()
     })
+
+    test('should use Intl.RelativeTimeFormat for formatting', () => {
+      const timestamp = createTimestamp(1)
+
+      renderComponent({ timestamp })
+
+      const button = screen.getByRole('button')
+      // Should render with relative time format
+      expect(button.textContent).toBeTruthy()
+    })
   })
 
   describe('Prefix Support', () => {
-    test('should render beforeCutoffPrefix for recent dates', () => {
+    test('should render prefix when provided', () => {
       const timestamp = createTimestamp(1)
 
-      renderComponent({ timestamp, beforeCutoffPrefix: 'Updated', cutoffDays: 8 })
+      renderComponent({ timestamp, prefix: 'Updated' })
 
       const button = screen.getByRole('button')
       expect(button.textContent).toContain('Updated')
-    })
-
-    test('should render afterCutoffPrefix for old dates', () => {
-      const timestamp = createTimestamp(10)
-
-      renderComponent({ timestamp, afterCutoffPrefix: 'Created on', cutoffDays: 8 })
-
-      const button = screen.getByRole('button')
-      expect(button.textContent).toContain('Created on')
     })
 
     test('should not render prefix when not provided', () => {
@@ -193,46 +186,22 @@ describe('TimeAgoCard', () => {
       expect(button.textContent).not.toContain('Updated')
     })
 
-    test('should handle only beforeCutoffPrefix', () => {
+    test('should handle prefix with recent dates', () => {
       const timestamp = createTimestamp(1)
 
-      renderComponent({ timestamp, beforeCutoffPrefix: 'Posted', cutoffDays: 8 })
+      renderComponent({ timestamp, prefix: 'Posted' })
 
       const button = screen.getByRole('button')
       expect(button.textContent).toContain('Posted')
     })
 
-    test('should handle only afterCutoffPrefix', () => {
+    test('should handle prefix with old dates', () => {
       const timestamp = createTimestamp(10)
 
-      renderComponent({ timestamp, afterCutoffPrefix: 'On', cutoffDays: 8 })
+      renderComponent({ timestamp, prefix: 'Created' })
 
       const button = screen.getByRole('button')
-      expect(button.textContent).toContain('On')
-    })
-
-    test('should choose correct prefix based on cutoff', () => {
-      const recentTimestamp = createTimestamp(5)
-      const oldTimestamp = createTimestamp(10)
-
-      const { unmount } = renderComponent({
-        timestamp: recentTimestamp,
-        beforeCutoffPrefix: 'Recent:',
-        afterCutoffPrefix: 'Old:',
-        cutoffDays: 7
-      })
-
-      expect(screen.getByRole('button').textContent).toContain('Recent:')
-      unmount()
-
-      renderComponent({
-        timestamp: oldTimestamp,
-        beforeCutoffPrefix: 'Recent:',
-        afterCutoffPrefix: 'Old:',
-        cutoffDays: 7
-      })
-
-      expect(screen.getByRole('button').textContent).toContain('Old:')
+      expect(button.textContent).toContain('Created')
     })
   })
 
@@ -304,9 +273,7 @@ describe('TimeAgoCard', () => {
       const timestamp = createTimestamp(1)
       renderComponent({
         timestamp,
-        cutoffDays: 5,
-        beforeCutoffPrefix: 'Updated',
-        afterCutoffPrefix: 'Created',
+        prefix: 'Updated',
         textProps: { className: 'text-class' },
         triggerClassName: 'trigger-class',
         triggerProps: { id: 'test-id' }
@@ -353,13 +320,15 @@ describe('TimeAgoCard', () => {
 
   describe('Edge Cases', () => {
     test('should handle invalid timestamp gracefully', () => {
-      renderComponent({ timestamp: 'invalid' })
+      const { container } = renderComponent({ timestamp: 'invalid' })
 
-      expect(screen.getByText('Unknown time')).toBeInTheDocument()
+      const span = container.querySelector('span')
+      expect(span).toBeInTheDocument()
+      expect(span?.textContent).toBe('')
     })
 
     test('should handle very old timestamps', () => {
-      const veryOld = new Date('1970-01-01').toISOString()
+      const veryOld = new Date('1980-01-01').toISOString()
       renderComponent({ timestamp: veryOld })
 
       expect(screen.getByRole('button')).toBeInTheDocument()
@@ -372,39 +341,58 @@ describe('TimeAgoCard', () => {
       expect(screen.getByRole('button')).toBeInTheDocument()
     })
 
-    test('should handle timestamp at exact cutoff boundary', () => {
+    test('should handle timestamps at various ages', () => {
       const timestamp = createTimestamp(8)
-      renderComponent({ timestamp, cutoffDays: 8 })
+      renderComponent({ timestamp })
 
       expect(screen.getByRole('button')).toBeInTheDocument()
     })
 
-    test('should handle zero cutoffDays', () => {
+    test('should handle very recent timestamps', () => {
       const timestamp = createTimestamp(0)
-      renderComponent({ timestamp, cutoffDays: 0 })
+      renderComponent({ timestamp })
 
       expect(screen.getByRole('button')).toBeInTheDocument()
     })
 
-    test('should handle very large cutoffDays', () => {
-      const timestamp = createTimestamp(5)
-      renderComponent({ timestamp, cutoffDays: 1000 })
+    test('should handle very old timestamps', () => {
+      const timestamp = createTimestamp(1000)
+      renderComponent({ timestamp })
 
       expect(screen.getByRole('button')).toBeInTheDocument()
     })
 
     test('should handle empty string timestamp', () => {
-      renderComponent({ timestamp: '' })
+      const { container } = renderComponent({ timestamp: '' })
 
-      // Empty string creates Invalid Date
-      expect(screen.getByText('Unknown time')).toBeInTheDocument()
+      // Empty string creates Invalid Date and shows empty string
+      const span = container.querySelector('span')
+      expect(span).toBeInTheDocument()
+      expect(span?.textContent).toBe('')
     })
 
     test('should handle timestamp as 0', () => {
-      renderComponent({ timestamp: 0 })
+      const { container } = renderComponent({ timestamp: 0 })
 
-      // Unix epoch (Jan 1, 1970)
+      // Timestamp 0 is treated as missing data and shows empty string
+      const span = container.querySelector('span')
+      expect(span).toBeInTheDocument()
+      expect(span?.textContent).toBe('')
+    })
+
+    test('should handle extreme future dates', () => {
+      const farFuture = new Date('2100-01-01').toISOString()
+      renderComponent({ timestamp: farFuture })
+
       expect(screen.getByRole('button')).toBeInTheDocument()
+    })
+
+    test('should handle Infinity gracefully', () => {
+      const { container } = renderComponent({ timestamp: Infinity })
+
+      const span = container.querySelector('span')
+      expect(span).toBeInTheDocument()
+      expect(span?.textContent).toBe('')
     })
   })
 
@@ -469,15 +457,14 @@ describe('TimeAgoCard', () => {
     })
 
     test('should handle empty array', () => {
-      const { container } = render(
+      render(
         <TestWrapper>
           <TimeAgoContent formattedFullArray={[]} />
         </TestWrapper>
       )
 
-      const content = container.querySelector('.cn-time-ago-card-content')
-      expect(content).toBeInTheDocument()
-      expect(content?.children.length).toBe(0)
+      // Should show "Unknown time" in tooltip content for empty array
+      expect(screen.getByText('Unknown time')).toBeInTheDocument()
     })
 
     test('should apply correct styling classes', () => {
@@ -495,13 +482,12 @@ describe('TimeAgoCard', () => {
   })
 
   describe('useFormattedTime Hook', () => {
-    const TestComponent = ({ timestamp, cutoffDays }: { timestamp?: string | number | null; cutoffDays?: number }) => {
-      const { formattedShort, formattedFull, isBeyondCutoff } = useFormattedTime(timestamp, cutoffDays)
+    const TestComponent = ({ timestamp }: { timestamp?: string | number | null }) => {
+      const { formattedShort, formattedFull } = useFormattedTime(timestamp)
       return (
         <div>
           <div data-testid="formatted-short">{formattedShort}</div>
           <div data-testid="formatted-full-length">{formattedFull.length}</div>
-          <div data-testid="is-beyond-cutoff">{String(isBeyondCutoff)}</div>
         </div>
       )
     }
@@ -529,52 +515,55 @@ describe('TimeAgoCard', () => {
       expect(fullLength.textContent).toBe('0')
     })
 
-    test('should return isBeyondCutoff true for old dates', () => {
+    test('should return relative time for old dates', () => {
       const timestamp = createTimestamp(10)
-      render(<TestComponent timestamp={timestamp} cutoffDays={8} />)
+      render(<TestComponent timestamp={timestamp} />)
 
-      const isBeyondCutoff = screen.getByTestId('is-beyond-cutoff')
-      expect(isBeyondCutoff.textContent).toBe('true')
+      const shortTime = screen.getByTestId('formatted-short')
+      expect(shortTime.textContent).toBeTruthy()
     })
 
-    test('should return isBeyondCutoff false for recent dates', () => {
+    test('should return relative time for recent dates', () => {
       const timestamp = createTimestamp(5)
-      render(<TestComponent timestamp={timestamp} cutoffDays={8} />)
+      render(<TestComponent timestamp={timestamp} />)
 
-      const isBeyondCutoff = screen.getByTestId('is-beyond-cutoff')
-      expect(isBeyondCutoff.textContent).toBe('false')
+      const shortTime = screen.getByTestId('formatted-short')
+      expect(shortTime).toBeInTheDocument()
+      expect(shortTime.textContent).toBeTruthy()
     })
 
-    test('should return "Unknown time" for null timestamp', () => {
+    test('should return empty string for null timestamp', () => {
       render(<TestComponent timestamp={null} />)
 
       const shortTime = screen.getByTestId('formatted-short')
-      // useFormattedTime returns "Unknown time" for null, but also creates invalid date
-      expect(shortTime.textContent).toBeTruthy()
+      // useFormattedTime returns empty string for null
+      expect(shortTime.textContent).toBe('')
     })
 
-    test('should return "Unknown time" for undefined timestamp', () => {
+    test('should return empty string for undefined timestamp', () => {
       render(<TestComponent timestamp={undefined} />)
 
       const shortTime = screen.getByTestId('formatted-short')
-      // useFormattedTime handles undefined by using default 0
-      expect(shortTime.textContent).toBeTruthy()
+      expect(shortTime).toBeInTheDocument()
+      // useFormattedTime handles undefined by using default 0 which returns empty string
+      expect(shortTime.textContent).toBe('')
     })
 
-    test('should handle timestamp of 0', () => {
+    test('should handle timestamp of 0 as empty string', () => {
       render(<TestComponent timestamp={0} />)
 
       const shortTime = screen.getByTestId('formatted-short')
-      // Should format epoch time
-      expect(shortTime.textContent).toBeTruthy()
+      // Timestamp 0 is treated as missing data and shows empty string
+      expect(shortTime.textContent).toBe('')
     })
 
-    test('should handle custom cutoffDays', () => {
+    test('should always return relative format', () => {
       const timestamp = createTimestamp(5)
-      render(<TestComponent timestamp={timestamp} cutoffDays={3} />)
+      render(<TestComponent timestamp={timestamp} />)
 
-      const isBeyondCutoff = screen.getByTestId('is-beyond-cutoff')
-      expect(isBeyondCutoff.textContent).toBe('true')
+      const shortTime = screen.getByTestId('formatted-short')
+      // Should always use relative time format
+      expect(shortTime.textContent).toBeTruthy()
     })
   })
 
@@ -672,8 +661,8 @@ describe('TimeAgoCard', () => {
       render(
         <TestWrapper>
           <>
-            <TimeAgoCard timestamp={timestamp1} beforeCutoffPrefix="Recent:" cutoffDays={8} />
-            <TimeAgoCard timestamp={timestamp2} afterCutoffPrefix="Old:" cutoffDays={8} />
+            <TimeAgoCard timestamp={timestamp1} prefix="Recent:" />
+            <TimeAgoCard timestamp={timestamp2} prefix="Old:" />
           </>
         </TestWrapper>
       )

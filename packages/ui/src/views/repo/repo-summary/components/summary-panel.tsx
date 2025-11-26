@@ -71,7 +71,7 @@ const SummaryPanel: FC<SummaryPanelProps> = ({
 
             {!!timestamp?.length && (
               <Text as="span" color="foreground-3">
-                Created <TimeAgoCard timestamp={timestamp} dateTimeFormatOptions={{ dateStyle: 'medium' }} />
+                Created <TimeAgoCard timestamp={timestamp} />
               </Text>
             )}
           </Layout.Grid>

@@ -74,14 +74,7 @@ export function SecretReferencesList({
             <Table.Cell>
               <ScopeTag className="max-w-full" scopeType={reference.scope} scopedPath={reference.scopedPath} />
             </Table.Cell>
-            <Table.Cell>
-              {!!reference?.createdAt && (
-                <TimeAgoCard
-                  timestamp={reference.createdAt}
-                  dateTimeFormatOptions={{ day: 'numeric', month: 'short', year: 'numeric' }}
-                />
-              )}
-            </Table.Cell>
+            <Table.Cell>{!!reference?.createdAt && <TimeAgoCard timestamp={reference.createdAt} />}</Table.Cell>
           </Table.Row>
         ))}
       </Table.Body>

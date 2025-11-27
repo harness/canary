@@ -46,7 +46,7 @@ MessageBubbleContent.displayName = 'MessageBubbleContent'
 
 export interface MessageBubbleTextProps extends Omit<TextProps, 'ref'> {}
 
-const MessageBubbleText = ({ className, children, ...props }: MessageBubbleTextProps) => {
+const MessageBubbleText = ({ children, ...props }: MessageBubbleTextProps) => {
   return (
     <Text variant="body-normal" {...props}>
       {children}

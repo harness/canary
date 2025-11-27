@@ -89,6 +89,11 @@ export interface InputUIConfig {
   tooltip?: string
 
   /**
+   * Info configure additional important about input
+   */
+  info?: string
+
+  /**
    * Types of values allowed for this input.
    * Fixed: User must enter value when configuring the pipeline
    * Runtime: User must enter value when running the pipeline

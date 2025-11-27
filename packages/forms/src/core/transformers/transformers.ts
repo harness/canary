@@ -15,14 +15,17 @@ export function objectToArrayInputTransformer(): IInputTransformerFunc {
   }
 }
 
-export function arrayToObjectOutputTransformer(options?: { unsetIfEmpty?: boolean }): IOutputTransformerFunc {
+export function arrayToObjectOutputTransformer(options?: {
+  unsetIfEmpty?: boolean
+  fallbackValue?: unknown
+}): IOutputTransformerFunc {
   return function (value: { key: string; value: unknown }[], _values: Record<string, unknown>) {
     if (typeof value === 'undefined') return undefined
     if (!value) return { value }
 
     const retObj = {
       value: value.reduce((acc, rowValue) => {
-        return { ...acc, [rowValue.key]: rowValue.value }
+        return { ...acc, [rowValue.key]: rowValue.value ?? options?.fallbackValue }
       }, {})
     }
 

@@ -35,6 +35,8 @@ export function inputTransformValues(values: Record<string, any>, transformerIte
 
 /** convert form model to data model using output transformer functions  */
 export function outputTransformValues(values: Record<string, any>, transformerItems: TransformItem[]) {
+  const pathsToUnset: string[] = []
+
   const retValues = cloneDeep(values)
   transformerItems.forEach(transformItem => {
     if (transformItem.outputTransform) {
@@ -46,11 +48,21 @@ export function outputTransformValues(values: Record<string, any>, transformerIt
         const rawValue = get(retValues, transformItem.path)
         const transformedObj = outTransform(rawValue, retValues)
         if (transformedObj) {
-          set(retValues, transformedObj.path ?? transformItem.path, transformedObj.value)
+          if (transformedObj.path) {
+            set(retValues, transformedObj.path, transformedObj.value)
+            pathsToUnset.push(transformItem.path)
+          } else {
+            set(retValues, transformItem.path, transformedObj.value)
+          }
         }
       })
     }
   })
+
+  pathsToUnset.forEach(path => {
+    unset(retValues, path)
+  })
+
   return retValues
 }
 
@@ -138,7 +150,10 @@ export function convertFormModelToData(
   formData: Record<string, any>,
   formDefinition: IFormDefinition,
   metadata?: any,
-  options: { preserve?: string[] } = {}
+  options: {
+    /* path to preserve */
+    preserve?: string[]
+  } = {}
 ): Record<string, any> {
   const transformers = getTransformers(formDefinition)
   let data = unsetHiddenInputsValues(formDefinition, formData, metadata, options)

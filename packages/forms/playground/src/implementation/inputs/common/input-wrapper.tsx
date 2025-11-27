@@ -55,7 +55,7 @@ function InputWrapper({
         return (
           <>
             <InputLabel label={label} required={required} />
-            {'<+input. '}
+            {'<+inputs. '}
             <input
               autoFocus={true}
               placeholder={placeholder}

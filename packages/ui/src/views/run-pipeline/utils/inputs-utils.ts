@@ -189,7 +189,11 @@ export function pipelineInput2FormInput(
   }
 
   // special handling for each inputTypes
-  const { inputType: transformedType, inputConfig } = transformInputConfig(name, inputType, inputProps, baseConfig)
+  const {
+    inputType: transformedType,
+    inputConfig,
+    rootProps
+  } = transformInputConfig(name, inputType, inputProps, baseConfig)
 
   const fullPath = (options.prefix || '') + name
 
@@ -201,6 +205,7 @@ export function pipelineInput2FormInput(
     required: Boolean(inputProps.required),
     placeholder: inputProps.ui?.placeholder || '',
     description: inputProps.description,
+    ...rootProps,
     isVisible: function (values: { inputs: Record<string, unknown> | undefined }) {
       const camelCaseInputs = convertMapKeysToCamelCase(values?.inputs)
       try {
@@ -249,7 +254,9 @@ export function transformInputConfig(
   originalType: string,
   inputProps: PipelineInputDefinition,
   baseConfig: Record<string, any>
-): { inputType: string; inputConfig: Record<string, any> } {
+): { inputType: string; inputConfig: Record<string, any>; rootProps: Partial<IInputDefinition> } {
+  const rootProps: Partial<IInputDefinition> = {}
+
   let inputType = originalType
   const sourceOptions = inputProps.options ?? inputProps.enum ?? inputProps.items
 
@@ -269,7 +276,7 @@ export function transformInputConfig(
   }
 
   if (inputProps.ui?.warning) {
-    baseConfig.warning = {
+    rootProps.warning = {
       schema: function (values: { inputs: Record<string, unknown> | undefined }) {
         return z
           .any()
@@ -301,7 +308,15 @@ export function transformInputConfig(
     }
   }
 
-  return { inputType, inputConfig: baseConfig }
+  if (inputProps.ui?.tooltip) {
+    baseConfig.tooltip = inputProps.ui?.tooltip
+  }
+
+  if (inputProps.ui?.info) {
+    baseConfig.info = inputProps.ui?.info
+  }
+
+  return { inputType, inputConfig: baseConfig, rootProps }
 }
 
 /** pipeline input ui component / input type to form input type conversion */

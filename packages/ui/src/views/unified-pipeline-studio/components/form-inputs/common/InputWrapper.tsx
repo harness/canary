@@ -61,7 +61,7 @@ export function InputWrapper({
           <>
             <InputLabel label={label} required={required} />
             <div className="flex grow items-center gap-cn-3xs">
-              {'<+input.'}
+              {'<+inputs.'}
               <Input
                 wrapperClassName="flex-grow"
                 autoFocus={true}

@@ -29,7 +29,7 @@ export function extractRuntimeInputName(value?: string) {
   if (value.endsWith('>')) {
     inputName = inputName.slice(0, -1)
   }
-  if (value.startsWith('<+input.')) {
+  if (value.startsWith('<+inputs.')) {
     inputName = inputName.slice(8)
   }
 
@@ -38,5 +38,5 @@ export function extractRuntimeInputName(value?: string) {
 
 export function constructRuntimeInputValue(value?: string) {
   const inputName = extractRuntimeInputName(value)
-  return `<+input.${inputName}>`
+  return `<+inputs.${inputName}>`
 }

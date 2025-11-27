@@ -97,7 +97,7 @@ export function InputComponentRenderer<TValue, TConfig = unknown>({
       disabled,
       warning
     }),
-    [factory, initialValues, input, onChange, onUpdate, path, readonly, formState.errors, disabled]
+    [factory, initialValues, input, onChange, onUpdate, path, readonly, formState.errors, disabled, warning]
   )
 
   const component = useMemo(() => {

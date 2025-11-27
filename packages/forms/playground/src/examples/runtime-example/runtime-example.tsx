@@ -11,7 +11,7 @@ function RuntimeExample() {
   const [logs, setLogs] = useState<{ label: string; log: string }[]>([])
   const [defaultValues, setDefaultValues] = useState({
     ...collectDefaultValues(formDefinition),
-    input1: '<+input.sda>'
+    input1: '<+inputs.sda>'
   })
 
   const onSubmit = values => {
@@ -92,7 +92,7 @@ function RuntimeExample() {
       <div style={{ width: '400px' }}>
         <UpdateValues onUpdate={setDefaultValues} values={{ input1: 'Abcdefgh' }} label="Set invalid value" />
         <UpdateValues onUpdate={setDefaultValues} values={{ input1: '123456' }} label="Set valid value" />
-        <UpdateValues onUpdate={setDefaultValues} values={{ input1: '<+input.qwe>' }} label="Set runtime" />
+        <UpdateValues onUpdate={setDefaultValues} values={{ input1: '<+inputs.qwe>' }} label="Set runtime" />
       </div>
 
       <div style={{ flexGrow: '1' }}>

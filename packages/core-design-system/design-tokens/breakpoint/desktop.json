@@ -430,6 +430,72 @@
           "$description": "Highlighted paragraph style for important information. Uses increased weight to create focal points without disrupting content flow.\n\nCommon uses: Important notices, Key takeaways, Warnings, Summary points."
         }
       }
+    },
+    "markdown-sm": {
+      "title": {
+        "h1": {
+          "$type": "typography",
+          "$value": {
+            "fontFamily": "{fontFamily.default}",
+            "fontWeight": "{fontWeight.default.normal.500}",
+            "fontSize": "{fontSize.4}",
+            "lineHeight": "{lineHeight.4.snug}",
+            "letterSpacing": "{tracking.tight}",
+            "paragraphSpacing": "4px"
+          },
+          "$description": "Primary document heading that establishes the main topic with prominent visual weight and size. Creates the top level in document hierarchy.\n\nCommon uses: Document titles, Main article headings, Tutorial titles, Report titles."
+        },
+        "h2": {
+          "$type": "typography",
+          "$value": {
+            "fontFamily": "{fontFamily.default}",
+            "fontWeight": "{fontWeight.default.normal.500}",
+            "fontSize": "{fontSize.3}",
+            "lineHeight": "{lineHeight.3.normal}",
+            "letterSpacing": "{tracking.tight}",
+            "paragraphSpacing": "4px"
+          },
+          "$description": "Secondary heading for major content divisions. Creates clear breaks between primary sections while maintaining hierarchical relationship with H1.\n\nCommon uses: Chapter divisions, Major content sections, Topic groups, Process divisions."
+        },
+        "h3": {
+          "$type": "typography",
+          "$value": {
+            "fontFamily": "{fontFamily.default}",
+            "fontWeight": "{fontWeight.default.normal.600}",
+            "fontSize": "{fontSize.2}",
+            "lineHeight": "{lineHeight.2.normal}",
+            "letterSpacing": "{tracking.tight}",
+            "paragraphSpacing": "4px"
+          },
+          "$description": "Tertiary heading for smaller content groupings. Provides additional organization while preserving clear hierarchy within document structure.\n\nCommon uses: Subtopics, Feature headers, Step groupings, Related concept clusters."
+        }
+      },
+      "content": {
+        "paragraph": {
+          "$type": "typography",
+          "$value": {
+            "fontFamily": "{fontFamily.default}",
+            "fontWeight": "{fontWeight.default.normal.400}",
+            "fontSize": "{fontSize.3}",
+            "lineHeight": "{lineHeight.3.relaxed}",
+            "letterSpacing": "{tracking.tight}",
+            "paragraphSpacing": "{fontSize.3}"
+          },
+          "$description": "Standard typography for document body content. Optimized for comfortable reading with appropriate spacing and line height.\n\nCommon uses: Main content, Explanations, Process descriptions, Detailed information."
+        },
+        "emphasized": {
+          "$type": "typography",
+          "$value": {
+            "fontFamily": "{fontFamily.default}",
+            "fontWeight": "{fontWeight.default.normal.500}",
+            "fontSize": "{fontSize.3}",
+            "lineHeight": "{lineHeight.3.relaxed}",
+            "letterSpacing": "{tracking.tight}",
+            "paragraphSpacing": "{fontSize.3}"
+          },
+          "$description": "Highlighted paragraph style for important information. Uses increased weight to create focal points without disrupting content flow.\n\nCommon uses: Important notices, Key takeaways, Warnings, Summary points."
+        }
+      }
     }
   },
   "layout": {

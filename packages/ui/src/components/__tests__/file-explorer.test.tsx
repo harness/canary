@@ -4,7 +4,7 @@ import { render, screen } from '@testing-library/react'
 import userEvent from '@testing-library/user-event'
 import { describe, expect, test, vi } from 'vitest'
 
-import { FileItem, FolderItem, Item, Root } from '../file-explorer'
+import { CustomItem, FileItem, FolderItem, Root } from '../file-explorer'
 
 // Mock dependencies
 vi.mock('@/components', () => ({
@@ -203,292 +203,75 @@ describe('FileExplorer', () => {
     })
   })
 
-  describe('Item', () => {
-    test('renders as link when link prop is provided', () => {
-      render(
-        <Item icon="folder" link="/test-path">
-          Test Item
-        </Item>
+  describe('CustomItem (Base Component)', () => {
+    test('renders with children', () => {
+      render(<CustomItem>Test Item Content</CustomItem>)
+
+      expect(screen.getByText('Test Item Content')).toBeInTheDocument()
+    })
+
+    test('applies base-item class', () => {
+      const { container } = render(<CustomItem>Content</CustomItem>)
+
+      const item = container.firstChild as HTMLElement
+      expect(item.className).toContain('cn-file-tree-base-item')
+    })
+
+    test('applies custom className', () => {
+      const { container } = render(<CustomItem className="custom-class">Content</CustomItem>)
+
+      const item = container.firstChild as HTMLElement
+      expect(item.className).toContain('custom-class')
+      expect(item.className).toContain('cn-file-tree-base-item')
+    })
+
+    test('forwards ref correctly', () => {
+      const ref = React.createRef<HTMLDivElement>()
+
+      render(<CustomItem ref={ref}>Item</CustomItem>)
+
+      expect(ref.current).toBeInstanceOf(HTMLDivElement)
+    })
+
+    test('passes through HTML attributes', () => {
+      const { container } = render(
+        <CustomItem data-testid="custom-item" id="item-id">
+          Content
+        </CustomItem>
       )
 
-      const link = screen.getByTestId('link')
-      expect(link).toBeInTheDocument()
-      expect(link).toHaveAttribute('href', '/test-path')
-      expect(screen.getByText('Test Item')).toBeInTheDocument()
+      const item = container.firstChild as HTMLElement
+      expect(item).toHaveAttribute('data-testid', 'custom-item')
+      expect(item).toHaveAttribute('id', 'item-id')
     })
 
-    test('renders as button when link prop is not provided', () => {
-      render(<Item icon="folder">Test Item</Item>)
-
-      const grid = screen.getByTestId('layout-grid')
-      expect(grid).toBeInTheDocument()
-      expect(screen.getByText('Test Item')).toBeInTheDocument()
-    })
-
-    test('renders icon with correct name', () => {
-      render(<Item icon="empty-page">Test Item</Item>)
-
-      const icon = screen.getByTestId('icon')
-      expect(icon).toHaveAttribute('data-name', 'empty-page')
-      expect(icon).toHaveAttribute('data-size', 'md')
-    })
-
-    test('applies active class when isActive is true and not a folder', () => {
-      render(
-        <Item icon={'file' as any} isActive>
-          Active Item
-        </Item>
-      )
-
-      const grid = screen.getByTestId('layout-grid')
-      expect(grid.className).toContain('cn-file-tree-item-active')
-    })
-
-    test('does not apply active class when isFolder is true', () => {
-      render(
-        <Item icon="folder" isActive isFolder>
-          Folder Item
-        </Item>
-      )
-
-      const grid = screen.getByTestId('layout-grid')
-      expect(grid.className).not.toContain('cn-file-tree-item-active')
-    })
-
-    test('applies folder-specific classes when isFolder is true', () => {
-      render(
-        <Item icon="folder" isFolder>
-          Folder
-        </Item>
-      )
-
-      const grid = screen.getByTestId('layout-grid')
-      expect(grid.className).not.toContain('cn-file-tree-item-wrapper')
-      expect(grid.className).not.toContain('cn-file-tree-item-leaf')
-    })
-
-    test('applies leaf classes when isFolder is false', () => {
-      render(<Item icon={'file' as any}>File</Item>)
-
-      const grid = screen.getByTestId('layout-grid')
-      expect(grid.className).toContain('cn-file-tree-item-wrapper')
-      expect(grid.className).toContain('cn-file-tree-item-leaf')
-    })
-
-    test('renders action buttons when provided', () => {
+    test('handles onClick event', async () => {
       const handleClick = vi.fn()
 
-      render(
-        <Item
-          icon={'file' as any}
-          actionButtons={[
-            {
-              title: 'Delete',
-              iconName: 'trash',
-              onClick: handleClick
-            }
-          ]}
-        >
-          Item with actions
-        </Item>
-      )
+      render(<CustomItem onClick={handleClick}>Clickable Item</CustomItem>)
 
-      expect(screen.getByTestId('layout-horizontal')).toBeInTheDocument()
-      expect(screen.getByTestId('button')).toBeInTheDocument()
-      expect(screen.getByText('Delete')).toBeInTheDocument()
-    })
-
-    test('renders multiple action buttons', () => {
-      render(
-        <Item
-          icon={'file' as any}
-          actionButtons={[
-            { iconName: 'trash', onClick: vi.fn() },
-            { iconName: 'edit', onClick: vi.fn() },
-            { iconName: 'copy', onClick: vi.fn() }
-          ]}
-        >
-          Item
-        </Item>
-      )
-
-      const buttons = screen.getAllByTestId('button')
-      expect(buttons).toHaveLength(3)
-    })
-
-    test('action button onClick handler is called', async () => {
-      const handleClick = vi.fn()
-
-      render(
-        <Item
-          icon={'file' as any}
-          actionButtons={[
-            {
-              iconName: 'trash',
-              onClick: handleClick
-            }
-          ]}
-        >
-          Item
-        </Item>
-      )
-
-      const button = screen.getByTestId('button')
-      await userEvent.click(button)
+      const item = screen.getByText('Clickable Item')
+      await userEvent.click(item)
 
       expect(handleClick).toHaveBeenCalledTimes(1)
     })
 
-    test('renders action button with icon', () => {
+    test('renders nested elements correctly', () => {
       render(
-        <Item
-          icon={'file' as any}
-          actionButtons={[
-            {
-              iconName: 'trash',
-              onClick: vi.fn()
-            }
-          ]}
-        >
-          Item
-        </Item>
+        <CustomItem>
+          <span>First</span>
+          <span>Second</span>
+        </CustomItem>
       )
 
-      const icon = screen.getAllByTestId('icon').find(el => el.getAttribute('data-name') === 'trash')
-      expect(icon).toBeInTheDocument()
-    })
-
-    test('applies custom className', () => {
-      render(
-        <Item icon={'file' as any} className="custom-class">
-          Item
-        </Item>
-      )
-
-      const grid = screen.getByTestId('layout-grid')
-      expect(grid.className).toContain('custom-class')
-    })
-
-    test('renders with action buttons class when action buttons are present', () => {
-      render(
-        <Item
-          icon={'file' as any}
-          actionButtons={[
-            {
-              iconName: 'trash',
-              onClick: vi.fn()
-            }
-          ]}
-        >
-          Item
-        </Item>
-      )
-
-      const grid = screen.getByTestId('layout-grid')
-      expect(grid.className).toContain('cn-file-tree-item-with-action-buttons')
-    })
-
-    test('does not render action buttons when array is empty', () => {
-      render(
-        <Item icon={'file' as any} actionButtons={[]}>
-          Item
-        </Item>
-      )
-
-      // Empty array still renders the container but with no buttons
-      const horizontal = screen.queryByTestId('layout-horizontal')
-      if (horizontal) {
-        expect(screen.queryAllByTestId('button')).toHaveLength(0)
-      }
-    })
-
-    test('action button defaults to iconOnly true', () => {
-      render(
-        <Item
-          icon={'file' as any}
-          actionButtons={[
-            {
-              iconName: 'trash',
-              onClick: vi.fn()
-            }
-          ]}
-        >
-          Item
-        </Item>
-      )
-
-      const button = screen.getByTestId('button')
-      expect(button).toHaveAttribute('data-icon-only', 'true')
-    })
-
-    test('action button respects iconOnly prop when explicitly set', () => {
-      render(
-        <Item
-          icon={'file' as any}
-          actionButtons={[
-            {
-              iconName: 'trash',
-              iconOnly: false,
-              title: 'Delete',
-              onClick: vi.fn()
-            }
-          ]}
-        >
-          Item
-        </Item>
-      )
-
-      const button = screen.getByTestId('button')
-      expect(button).toHaveAttribute('data-icon-only', 'false')
-    })
-
-    test('renders with iconProps for action button', () => {
-      render(
-        <Item
-          icon={'file' as any}
-          actionButtons={[
-            {
-              iconName: 'trash',
-              iconProps: { size: 'lg' },
-              onClick: vi.fn()
-            }
-          ]}
-        >
-          Item
-        </Item>
-      )
-
-      const icon = screen.getAllByTestId('icon').find(el => el.getAttribute('data-name') === 'trash')
-      expect(icon).toHaveAttribute('data-size', 'lg')
-    })
-
-    test('forwards ref correctly for link items', () => {
-      const ref = React.createRef<HTMLAnchorElement>()
-
-      render(
-        <Item ref={ref as any} icon={'file' as any} link="/test">
-          Item
-        </Item>
-      )
-
-      expect(ref.current).toBeInstanceOf(HTMLAnchorElement)
-    })
-
-    test('forwards ref correctly for non-link items', () => {
-      const ref = React.createRef<HTMLDivElement>()
-
-      render(
-        <Item ref={ref as any} icon={'file' as any}>
-          Item
-        </Item>
-      )
-
-      // The ref is forwarded to the Layout.Grid which renders as a button by default
-      expect(ref.current).toBeTruthy()
+      expect(screen.getByText('First')).toBeInTheDocument()
+      expect(screen.getByText('Second')).toBeInTheDocument()
     })
   })
 
   describe('FileItem', () => {
+    // FileItem uses InteractiveItem internally, so these tests verify the interactive functionality
+
     test('renders file item with children', () => {
       render(
         <FileItem level={1} value="file1" onClick={vi.fn()}>
@@ -628,6 +411,8 @@ describe('FileExplorer', () => {
   })
 
   describe('FolderItem', () => {
+    // FolderItem uses InteractiveItem internally, so these tests verify the interactive functionality
+
     test('renders folder item with children', () => {
       render(
         <FolderItem level={1} value="folder1">

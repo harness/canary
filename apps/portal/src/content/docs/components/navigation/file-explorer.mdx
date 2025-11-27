@@ -69,6 +69,10 @@ return (
         <FileExplorer.Root value={expandedFolders} onValueChange={setExpandedFolders}>
           <FileExplorer.FileItem level={1}>index.ts</FileExplorer.FileItem>
           <FileExplorer.FileItem level={1}>App.tsx</FileExplorer.FileItem>
+          {/* Use CustomItem for custom non-interactive content */}
+          <FileExplorer.CustomItem className="text-cn-3 pl-cn-lg">
+            2 files total
+          </FileExplorer.CustomItem>
         </FileExplorer.Root>
       }
     >
@@ -506,6 +510,58 @@ components
 }`}
 />
 
+## Custom Content with CustomItem
+
+The `FileExplorer.CustomItem` component allows you to add custom, non-interactive content to your file explorer. Use it when you need to display informational content, placeholders, or any custom elements that don't require file/folder interactive behavior.
+
+<DocsPage.ComponentExample
+  client:only
+  code={`() => {
+  const [expanded, setExpanded] = React.useState(['project']);
+
+return <FileExplorer.Root value={expanded} onValueChange={setExpanded}>
+
+<FileExplorer.FolderItem
+  value="project"
+  level={0}
+  content={
+    <FileExplorer.Root value={expanded} onValueChange={setExpanded}>
+      <FileExplorer.FileItem level={1}>index.html</FileExplorer.FileItem>
+      <FileExplorer.FileItem level={1}>styles.css</FileExplorer.FileItem>
+      <FileExplorer.FileItem level={1}>script.js</FileExplorer.FileItem>
+
+      {/* Custom non-interactive content */}
+      <FileExplorer.CustomItem className="text-cn-3 italic pl-cn-lg">
+        3 files in this folder
+      </FileExplorer.CustomItem>
+
+      {/* Custom content with badges */}
+      <FileExplorer.CustomItem className="pl-cn-lg mt-cn-xs">
+        <div className="flex items-center gap-cn-xs">
+          <span className="text-cn-3 text-sm">Last modified:</span>
+          <span className="text-cn-2 text-sm">2 hours ago</span>
+        </div>
+      </FileExplorer.CustomItem>
+
+      {/* Empty state message */}
+      <FileExplorer.CustomItem className="text-cn-3 pl-cn-lg mt-cn-sm">
+        <div className="flex items-center gap-cn-xs">
+          <IconV2 name="info" size="xs" />
+          <span>Add more files to this folder</span>
+        </div>
+      </FileExplorer.CustomItem>
+    </FileExplorer.Root>
+
+}
+
+> project
+
+</FileExplorer.FolderItem>
+
+  </FileExplorer.Root>
+}`}
+/>
+
 ## API Reference
 
 ### Root Component Props
@@ -629,6 +685,37 @@ components
     },
   ]}
 />
+
+### CustomItem Component Props
+
+The `FileExplorer.CustomItem` component is a simple wrapper for custom, non-interactive content within the file explorer structure.
+
+<DocsPage.PropsTable
+  props={[
+    {
+      name: "children",
+      description:
+        "Custom content to display. Can be any React node including text, components, or HTML elements.",
+      required: true,
+      value: "React.ReactNode",
+    },
+    {
+      name: "className",
+      description:
+        "Additional CSS classes to apply to the item. The base tree item styling is automatically applied.",
+      required: false,
+      value: "string",
+    },
+    {
+      name: "ref",
+      description: "React ref to access the underlying div element.",
+      required: false,
+      value: "React.Ref<HTMLDivElement>",
+    },
+  ]}
+/>
+
+Use `FileExplorer.CustomItem` when you need full control over the content and styling without the standard file/folder behavior.
 
 ## Best Practices
 

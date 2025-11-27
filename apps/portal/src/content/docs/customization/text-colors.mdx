@@ -18,11 +18,13 @@ Foundation text colors for general content. Lower numbers provide higher contras
 <Text color="foreground-1">High contrast text for headings</Text>
 <Text color="foreground-2">Default body text</Text>
 <Text color="foreground-3">Subtle text for captions</Text>
+<Text color="foreground-4">Lowest contrast for subtle text</Text>
 
 // Using classes directly
 <h1 className="text-cn-1">Primary heading</h1>
 <p className="text-cn-2">Body content</p>
 <span className="text-cn-3">Secondary information</span>
+<span className="text-cn-4">Subtle text</span>
 ```
 
 **Usage guidelines:**
@@ -30,6 +32,7 @@ Foundation text colors for general content. Lower numbers provide higher contras
 - `text-cn-1` - Highest contrast for headings and primary content
 - `text-cn-2` - Default text color for body content
 - `text-cn-3` - Lower contrast for secondary or supporting text
+- `text-cn-4` - Lowest contrast for the most subtle text
 
 ## State Colors
 
@@ -130,15 +133,16 @@ Semantic text colors communicate meaning and should be paired with corresponding
 Base colors support Tailwind's opacity modifier:
 
 ```tsx
-// 50% opacity
-<Text className="text-cn-1/30">Semi-transparent text</Text>
-<Text className="text-cn-2/50">Semi-transparent text</Text>
-<Text className="text-cn-3/70">Semi-transparent text</Text>
+// With opacity modifiers
+<Text className="text-cn-1/30">Semi-transparent text (30%)</Text>
+<Text className="text-cn-2/50">Semi-transparent text (50%)</Text>
+<Text className="text-cn-3/70">Semi-transparent text (70%)</Text>
+<Text className="text-cn-4/90">Semi-transparent text (90%)</Text>
 ```
 
 ## Best Practices
 
-1. **Match contrast levels** - Use `text-cn-1` for high emphasis, `text-cn-2` for body, `text-cn-3` for de-emphasized content
+1. **Match contrast levels** - Use `text-cn-1` for high emphasis, `text-cn-2` for body, `text-cn-3` for de-emphasized content, and `text-cn-4` for the most subtle text
 2. **Pair semantic variants** - When using colored backgrounds, match text and background variants
 3. **Use defaults for standalone text** - Use `text-cn-success`, `text-cn-danger`, `text-cn-warning` for text without backgrounds
 4. **Brand colors for links** - Use `text-cn-brand` with `hover:text-cn-brand-hover` for interactive text
@@ -213,9 +217,10 @@ The Text component provides a `color` prop that maps to these text colors:
 <Text color="foreground-1">Highest contrast</Text>
 <Text color="foreground-2">Default</Text>
 <Text color="foreground-3">Lower contrast</Text>
+<Text color="foreground-4">Lowest contrast</Text>
 
 // State colors
-<Text color="state-disabled">Disabled</Text>
+<Text color="disabled">Disabled</Text>
 
 // Semantic colors (default variants)
 <Text color="success">Success text</Text>
@@ -234,7 +239,7 @@ For variant-specific semantic colors, use className:
 
 | Color Group                 | Purpose                      | Available Classes                                                                 |
 | --------------------------- | ---------------------------- | --------------------------------------------------------------------------------- |
-| **Base**                    | General text content         | `text-cn-1`, `text-cn-2`, `text-cn-3`                                             |
+| **Base**                    | General text content         | `text-cn-1`, `text-cn-2`, `text-cn-3`, `text-cn-4`                                |
 | **State**                   | Specific states              | `text-cn-disabled`, `text-cn-merged`                                              |
 | **Brand**                   | Brand and links              | `text-cn-brand`, `text-cn-brand-hover`                                            |
 | **Semantic (with default)** | Standalone semantic text     | `text-cn-success`, `text-cn-danger`, `text-cn-warning`                            |

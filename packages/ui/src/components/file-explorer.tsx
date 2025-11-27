@@ -41,7 +41,7 @@ interface LinkItemProps extends BaseItemProps, Omit<LinkProps, 'to'> {
 
 type ItemProps = DefaultItemProps | LinkItemProps
 
-const Item = forwardRef<HTMLDivElement, ItemProps>(
+const InteractiveItem = forwardRef<HTMLDivElement, ItemProps>(
   ({ className, children, icon, isActive, link, isFolder, actionButtons, ...props }: ItemProps, ref) => {
     const { Link } = useRouterContext()
 
@@ -97,7 +97,23 @@ const Item = forwardRef<HTMLDivElement, ItemProps>(
     )
   }
 )
-Item.displayName = 'FileExplorerItem'
+InteractiveItem.displayName = 'FileExplorerInteractiveItem'
+
+// Simple CustomItem component using base-item class
+interface CustomItemProps extends React.HTMLAttributes<HTMLDivElement> {
+  children: ReactNode
+}
+
+const CustomItem = forwardRef<HTMLDivElement, CustomItemProps>(
+  ({ className, children, ...props }: CustomItemProps, ref) => {
+    return (
+      <div ref={ref} className={cn('cn-file-tree-base-item', className)} {...props}>
+        {children}
+      </div>
+    )
+  }
+)
+CustomItem.displayName = 'FileExplorerCustomItem'
 
 interface FolderItemProps {
   children: ReactNode
@@ -121,9 +137,16 @@ function FolderItem({
   ...otherProps
 }: FolderItemProps) {
   const itemElement = (
-    <Item icon={icon} isActive={isActive} link={link} isFolder onClick={() => onClick?.(value)} {...otherProps}>
+    <InteractiveItem
+      icon={icon}
+      isActive={isActive}
+      link={link}
+      isFolder
+      onClick={() => onClick?.(value)}
+      {...otherProps}
+    >
       {children}
-    </Item>
+    </InteractiveItem>
   )
 
   return (
@@ -177,7 +200,7 @@ function FileItem({
   ...dataProps
 }: FileItemProps) {
   const comp = (
-    <Item
+    <InteractiveItem
       icon={icon}
       isActive={isActive}
       className="mb-cn-4xs"
@@ -186,7 +209,7 @@ function FileItem({
       {...dataProps}
     >
       {children}
-    </Item>
+    </InteractiveItem>
   )
 
   return tooltip ? <Tooltip content={tooltip}>{comp}</Tooltip> : comp
@@ -212,4 +235,4 @@ function Root({ children, onValueChange, value }: RootProps) {
   )
 }
 
-export { Root, FileItem, FolderItem, Item }
+export { Root, FileItem, FolderItem, CustomItem }

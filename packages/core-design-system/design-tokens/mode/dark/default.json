@@ -2712,6 +2712,57 @@
           }
         }
       }
+    },
+    "pipeline": {
+      "running": {
+        "border": {
+          "from": {
+            "$type": "color",
+            "$value": "{yellow.150}"
+          },
+          "to": {
+            "$extensions": {
+              "studio.tokens": {
+                "modify": {
+                  "type": "alpha",
+                  "value": "0",
+                  "space": "lch"
+                }
+              }
+            },
+            "$type": "color",
+            "$value": "{yellow.150}"
+          }
+        },
+        "glow": {
+          "from": {
+            "$extensions": {
+              "studio.tokens": {
+                "modify": {
+                  "type": "alpha",
+                  "value": "0.7",
+                  "space": "lch"
+                }
+              }
+            },
+            "$type": "color",
+            "$value": "{yellow.200}"
+          },
+          "to": {
+            "$extensions": {
+              "studio.tokens": {
+                "modify": {
+                  "type": "alpha",
+                  "value": "0",
+                  "space": "lch"
+                }
+              }
+            },
+            "$type": "color",
+            "$value": "{yellow.300}"
+          }
+        }
+      }
     }
   },
   "disabled": {

@@ -17,13 +17,17 @@ The MessageBubble component uses a compound pattern with `MessageBubble.Root` an
   code={`<div className="flex flex-col gap-cn-md w-full max-w-2xl">
   <MessageBubble.Root role="user">
     <MessageBubble.Content>
-      Hello! Can you help me with my code?
+      <MessageBubble.Text>
+        Hello! Can you help me with my code?
+      </MessageBubble.Text>
     </MessageBubble.Content>
   </MessageBubble.Root>
 
   <MessageBubble.Root role="assistant">
     <MessageBubble.Content>
-      Of course! I'd be happy to help. What do you need assistance with?
+      <MessageBubble.Text>
+        Of course! I'd be happy to help. What do you need assistance with?
+      </MessageBubble.Text>
     </MessageBubble.Content>
   </MessageBubble.Root>
 </div>`}
@@ -37,7 +41,9 @@ import { MessageBubble } from '@harnessio/ui/components'
 return (
   <MessageBubble.Root role="user">
     <MessageBubble.Content>
-      Your message here
+      <MessageBubble.Text>
+        Your message here
+      </MessageBubble.Text>
     </MessageBubble.Content>
   </MessageBubble.Root>
 )

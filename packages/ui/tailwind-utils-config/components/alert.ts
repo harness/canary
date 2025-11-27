@@ -122,9 +122,7 @@ export default {
 
     '&-close-button': {
       '&-icon': {
-        flexShrink: '0',
-        width: 'var(--cn-icon-size-sm)',
-        height: 'var(--cn-icon-size-sm)'
+        flexShrink: '0'
       },
 
       '&:where(:focus-visible)': {
@@ -143,8 +141,6 @@ export default {
       },
 
       '&-icon': {
-        width: 'var(--cn-icon-size-sm)',
-        height: 'var(--cn-icon-size-sm)',
 
         '&-rotate-180': {
           transform: 'rotate(180deg)',
@@ -155,8 +151,6 @@ export default {
 
     '&-icon': {
       flexShrink: '0',
-      width: 'var(--cn-icon-size-md)',
-      height: 'var(--cn-icon-size-md)',
       marginTop: 'var(--cn-spacing-px)'
     },
 

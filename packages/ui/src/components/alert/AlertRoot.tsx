@@ -92,11 +92,11 @@ export const AlertRoot = forwardRef<HTMLDivElement, AlertRootProps>(
             aria-label={t('component:alert.close', 'Close alert')}
             ignoreIconOnlyTooltip
           >
-            <IconV2 className="cn-alert-close-button-icon" name="xmark" skipSize />
+            <IconV2 className="cn-alert-close-button-icon" name="xmark" />
           </Button>
         )}
 
-        <IconV2 className="cn-alert-icon" name={iconName} skipSize />
+        <IconV2 className="cn-alert-icon" name={iconName} size="md" />
 
         <div className={cn('cn-alert-text-wrap', { 'cn-alert-text-wrap-expanded': isExpanded })}>
           <div
@@ -130,7 +130,6 @@ export const AlertRoot = forwardRef<HTMLDivElement, AlertRootProps>(
                     'cn-alert-expand-button-icon-rotate-180': isExpanded
                   })}
                   name="nav-arrow-down"
-                  skipSize
                 />
               </Button>
             </>

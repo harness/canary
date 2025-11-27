@@ -2703,6 +2703,48 @@
           }
         }
       }
+    },
+    "pipeline": {
+      "running": {
+        "border": {
+          "from": {
+            "$type": "color",
+            "$value": "{yellow.200}"
+          },
+          "to": {
+            "$extensions": {
+              "studio.tokens": {
+                "modify": {
+                  "type": "alpha",
+                  "value": "0",
+                  "space": "lch"
+                }
+              }
+            },
+            "$type": "color",
+            "$value": "{yellow.100}"
+          }
+        },
+        "glow": {
+          "from": {
+            "$type": "color",
+            "$value": "{yellow.50}"
+          },
+          "to": {
+            "$extensions": {
+              "studio.tokens": {
+                "modify": {
+                  "type": "alpha",
+                  "value": "0",
+                  "space": "lch"
+                }
+              }
+            },
+            "$type": "color",
+            "$value": "{yellow.100}"
+          }
+        }
+      }
     }
   },
   "disabled": {

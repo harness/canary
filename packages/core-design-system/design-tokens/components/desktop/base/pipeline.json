@@ -1,0 +1,10 @@
+{
+  "pipeline": {
+    "card": {
+      "running-glow": {
+        "$type": "dimension",
+        "$value": "20px"
+      }
+    }
+  }
+}

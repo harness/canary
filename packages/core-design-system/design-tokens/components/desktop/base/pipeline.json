@@ -1,7 +1,7 @@
 {
   "pipeline": {
     "card": {
-      "running-glow": {
+      "running-blur": {
         "$type": "dimension",
         "$value": "20px"
       }

@@ -1387,9 +1387,15 @@
     },
     "pipeline": {
       "running": {
-        "$type": "color",
-        "$value": "{set.warning.outline.border}",
-        "$description": "Animated gradient border for running pipeline states. Provides visual indication of active processing."
+        "border": {
+          "$type": "color",
+          "$value": "linear-gradient(180deg, {gradient.pipeline.running.border.from} 0%, {gradient.pipeline.running.border.to} 100%)",
+          "$description": "Animated gradient border for running pipeline states. Provides visual indication of active processing."
+        },
+        "glow": {
+          "$type": "color",
+          "$value": "linear-gradient(180deg, {gradient.pipeline.running.glow.from} 0%, {gradient.pipeline.running.glow.to} 100%)"
+        }
       },
       "dotes": {
         "$type": "color",
@@ -2665,6 +2671,48 @@
               "$type": "color",
               "$value": "{red.300}"
             }
+          }
+        }
+      }
+    },
+    "pipeline": {
+      "running": {
+        "border": {
+          "from": {
+            "$type": "color",
+            "$value": "{yellow.200}"
+          },
+          "to": {
+            "$extensions": {
+              "studio.tokens": {
+                "modify": {
+                  "type": "alpha",
+                  "value": "0",
+                  "space": "lch"
+                }
+              }
+            },
+            "$type": "color",
+            "$value": "{yellow.100}"
+          }
+        },
+        "glow": {
+          "from": {
+            "$type": "color",
+            "$value": "{yellow.50}"
+          },
+          "to": {
+            "$extensions": {
+              "studio.tokens": {
+                "modify": {
+                  "type": "alpha",
+                  "value": "0",
+                  "space": "lch"
+                }
+              }
+            },
+            "$type": "color",
+            "$value": "{yellow.100}"
           }
         }
       }

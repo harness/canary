@@ -1,5 +1,6 @@
 import { forwardRef, HTMLAttributes, ReactNode } from 'react'
 
+import { Text, TextProps } from '@components/text'
 import { cn } from '@utils/cn'
 
 export interface MessageBubbleRootProps extends HTMLAttributes<HTMLDivElement> {
@@ -43,7 +44,20 @@ const MessageBubbleContent = forwardRef<HTMLDivElement, MessageBubbleContentProp
 
 MessageBubbleContent.displayName = 'MessageBubbleContent'
 
+export interface MessageBubbleTextProps extends Omit<TextProps, 'ref'> {}
+
+const MessageBubbleText = ({ className, children, ...props }: MessageBubbleTextProps) => {
+  return (
+    <Text variant="body-normal" {...props}>
+      {children}
+    </Text>
+  )
+}
+
+MessageBubbleText.displayName = 'MessageBubbleText'
+
 export const MessageBubble = {
   Root: MessageBubbleRoot,
-  Content: MessageBubbleContent
+  Content: MessageBubbleContent,
+  Text: MessageBubbleText
 }

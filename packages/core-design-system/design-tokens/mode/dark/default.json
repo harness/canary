@@ -71,7 +71,7 @@
   "border": {
     "1": {
       "$type": "color",
-      "$value": "{chrome.700}",
+      "$value": "{chrome.300}",
       "$description": "High-contrast neutral border color for interactive states and emphasis. Provides strong visual definition without brand association for general UI interactions.\n\nCommon uses: Hover state borders, selected elements, interactive container outlines, emphasized dividers, modal boundaries."
     },
     "2": {

@@ -14,7 +14,6 @@ import {
   PushSettingsRuleDescriptionField,
   PushSettingsRuleListField,
   PushSettingsRuleNameField,
-  PushSettingsRuleTargetPatternsField,
   PushSettingsRuleToggleField
 } from './components/repo-push-rules-fields'
 import { IPushRulesStore, repoPushRuleSettingsFormSchema, RepoPushRulesSettingsFormFields } from './types'
@@ -154,9 +153,8 @@ export const RepoPushSettingsRulesPage: FC<RepoPushSettingsRulesPageProps> = ({
               repoQueryObj={repoQueryObj}
             />
           )}
-
-          <PushSettingsRuleTargetPatternsField setValue={setValue} watch={watch} register={register} errors={errors} />
-
+          {/* TODO: add target patterns field after BE supports it*/}
+          {/* <PushSettingsRuleTargetPatternsField setValue={setValue} watch={watch} register={register} errors={errors} /> */}
           <PushSettingsRuleBypassListField
             register={register}
             errors={errors}
@@ -167,7 +165,6 @@ export const RepoPushSettingsRulesPage: FC<RepoPushSettingsRulesPageProps> = ({
             principalsSearchQuery={principalsSearchQuery}
             bypassListPlaceholder={bypassListPlaceholder}
           />
-
           <PushSettingsRuleListField
             rules={rules}
             handleCheckboxChange={handleCheckboxChange}

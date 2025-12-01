@@ -157,26 +157,28 @@ const FilterGroupInner = <
                 {!!savedFiltersOptions?.length && (
                   <SavedFilters savedFilterKey={savedFilterKey} options={savedFiltersOptions} />
                 )}
-                <FilterHandler.Dropdown>
-                  {(addFilter, availableFilters, resetFilters) => {
-                    return (
-                      <SearchableDropdown<FilterOptionConfig<V, CustomValue>>
-                        options={filterOptions.filter(option => availableFilters.includes(option.value))}
-                        onChange={option => {
-                          addFilter(option.value)
-                          setOpenedFilter(option.value)
-                        }}
-                        onReset={() => resetFilters()}
-                        inputPlaceholder={t('component:filter.inputPlaceholder', 'Filter by...')}
-                        buttonLabel={t('component:filter.buttonLabel', 'Reset filters')}
-                        displayLabel={renderFilterSelectLabel({
-                          selectedFilters: filterOptions.length - availableFilters.length,
-                          displayLabel: t('component:filter.defaultLabel', 'Filter')
-                        })}
-                      />
-                    )
-                  }}
-                </FilterHandler.Dropdown>
+                {filterOptions.length > 0 && (
+                  <FilterHandler.Dropdown>
+                    {(addFilter, availableFilters, resetFilters) => {
+                      return (
+                        <SearchableDropdown<FilterOptionConfig<V, CustomValue>>
+                          options={filterOptions.filter(option => availableFilters.includes(option.value))}
+                          onChange={option => {
+                            addFilter(option.value)
+                            setOpenedFilter(option.value)
+                          }}
+                          onReset={() => resetFilters()}
+                          inputPlaceholder={t('component:filter.inputPlaceholder', 'Filter by...')}
+                          buttonLabel={t('component:filter.buttonLabel', 'Reset filters')}
+                          displayLabel={renderFilterSelectLabel({
+                            selectedFilters: filterOptions.length - availableFilters.length,
+                            displayLabel: t('component:filter.defaultLabel', 'Filter')
+                          })}
+                        />
+                      )
+                    }}
+                  </FilterHandler.Dropdown>
+                )}
                 {multiSortConfig && (
                   <Sort.Select
                     displayLabel={t('component:sort.defaultLabel', 'Sort')}

@@ -11,7 +11,7 @@ export default {
     },
     '&-item': {
       ...baseTreeItemStyles,
-      '@apply relative grid grid-flow-col grid-cols-[auto_1fr] items-center w-[fill-available]':
+      '@apply relative gap-cn-3xs grid grid-flow-col grid-cols-[auto_1fr] items-center w-[fill-available]':
         '',
 
       '&-with-action-buttons': {

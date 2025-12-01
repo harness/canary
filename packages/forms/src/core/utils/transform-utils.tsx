@@ -50,7 +50,9 @@ export function outputTransformValues(values: Record<string, any>, transformerIt
         if (transformedObj) {
           if (transformedObj.path) {
             set(retValues, transformedObj.path, transformedObj.value)
-            pathsToUnset.push(transformItem.path)
+            if (transformedObj.unset) {
+              pathsToUnset.push(transformItem.path)
+            }
           } else {
             set(retValues, transformItem.path, transformedObj.value)
           }

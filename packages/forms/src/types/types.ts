@@ -16,7 +16,19 @@ export interface IFormDefinition<
 }
 
 export type IInputTransformerFunc = (value: any, values: any) => { value: any; path?: string } | undefined
-export type IOutputTransformerFunc = (value: any, values: any) => { value: any; path?: string } | undefined
+export type IOutputTransformerFunc = (
+  value: any,
+  values: any
+) =>
+  | {
+      /* override value */
+      value: any
+      /* apply value to path */
+      path?: string
+      /* unset current path - this works together with path */
+      unset?: boolean
+    }
+  | undefined
 
 export interface IInputDefinition<TConfig = unknown, TValue = unknown, TInputType extends string = string> {
   /**

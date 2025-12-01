@@ -92,6 +92,10 @@ The default variant is `body-normal`, which renders as a `<p>` element. Other va
         <Text variant="body-single-line-normal">dummyText</Text>
     </div>
     <div>
+        <Text variant="heading-base" className="underline mb-cn-3xs">body-single-line-light:</Text>
+        <Text variant="body-single-line-light">dummyText</Text>
+    </div>
+    <div>
         <Text variant="heading-base" className="underline mb-cn-3xs">body-strong:</Text>
         <Text variant="body-strong">dummyText</Text>
     </div>
@@ -263,7 +267,7 @@ The `lineClamp` prop controls how many lines of text are shown before truncating
       defaultValue: "body-normal",
       required: false,
       value:
-        "'heading-hero' | 'heading-section' | 'heading-subsection' | 'heading-base' | 'heading-small' | 'body-normal' | 'body-single-line-normal' | 'body-strong' | 'body-single-line-strong' | 'body-code' | 'caption-normal' | 'caption-soft' | 'caption-single-line-normal' | 'caption-single-line-light'",
+        "'heading-hero' | 'heading-section' | 'heading-subsection' | 'heading-base' | 'heading-small' | 'body-normal' | 'body-single-line-normal' | 'body-single-line-light' | 'body-strong' | 'body-single-line-strong' | 'body-code' | 'caption-normal' | 'caption-light' | 'caption-strong' | 'caption-single-line-normal' | 'caption-single-line-light'",
     },
     {
       name: "color",
@@ -271,7 +275,7 @@ The `lineClamp` prop controls how many lines of text are shown before truncating
       defaultValue: "foreground-2",
       required: false,
       value:
-        "'inherit' | 'foreground-1' | 'foreground-2' | 'foreground-3' | 'state-disabled' | 'success' | 'warning' | 'danger'",
+        "'inherit' | 'foreground-1' | 'foreground-2' | 'foreground-3' | 'foreground-4' | 'disabled' | 'success' | 'warning' | 'danger' | 'merged' | 'brand'",
     },
     {
       name: "align",

@@ -3,9 +3,9 @@
     "id": "89bf9a3ab61c40d6291a24c452efc1591c4d41c0",
     "name": "source",
     "selectedTokenSets": {
-      "core/typography": "source",
-      "core/dimensions": "source",
-      "core/colors_lch": "source"
+      "core/typography": "enabled",
+      "core/dimensions": "enabled",
+      "core/colors_hex": "enabled"
     },
     "$figmaStyleReferences": {
       "colors.pure.white": "S:3cdd1e94ddf267f0a1b6df9582438d6230d12c7c,",
@@ -956,7 +956,7 @@
     "name": "dark",
     "selectedTokenSets": {
       "mode/dark/default": "enabled",
-      "mode/dark/icon-stroke-width": "enabled"
+      "mode/dark/figma-icon-stroke-width": "enabled"
     },
     "$figmaStyleReferences": {
       "brand_typography.text-xl": "S:1befb2b289e263331f60edbfe130631462dc9883,",
@@ -2152,7 +2152,6 @@
       "set.brand.outline.bg-hover": "e7a93546b27475ca365f71a7bbd4a7c450ae60eb",
       "set.brand.outline.bg-selected": "b68e9b16f39b46a0861bd1f9f799756f64edcb48",
       "set.ai.outline.text": "52ddfa5ea6aed729c40dadc69f5327434231ea59",
-      "set.ai.outline.bg": "47707bcec328fb320335ca0cb8fc19628a812889",
       "set.ai.outline.inner": "6425b07d537e95060d430e3eeb89098375f869aa",
       "set.gray.primary.text": "5087347f06426c2415ddea934d3641d1120f3662",
       "set.gray.primary.bg": "498d5985cbe806febb13511b25ff1a0dd690ee0e",
@@ -2384,9 +2383,17 @@
       "shadow-color.4": "2b2e0307d252bdc6db53a23ce2cc2e9bb4f6b914",
       "shadow-color.5": "5a6c707240bab54cb4403f47262abfe0756efc9a",
       "shadow-color.6": "928283d00759150575a8f155da90180a582be438",
+      "gradient.ai.from": "8db516caa68afc5b8fdd6fc6e5a9bad7715c5f26",
+      "gradient.ai.to": "c6d926e169e9c2fe7c8c8c8eb88b1164fd339a6a",
+      "gradient.ai.outline-bg.stop-1": "52c849bed3b3e0b3886dd262bd662d801269d294",
+      "gradient.ai.outline-bg.stop-2": "25137d674df20bcf4992b85f392589f9437cf64e",
+      "gradient.ai.outline-bg.stop-3": "0097385aca19f7b30af8df5e0a81b4b0a1dc1c37",
+      "gradient.ai.outline-bg.stop-4": "ae39b0a0bf6508f41c87e919434d1f6b90994f7a",
       "gradient.ai.glow.stop-1": "b2e5d4804dfc5bf37e3434bd8df2fa032ac3cbf1",
       "gradient.ai.glow.stop-2": "3315e7ad5b04ca0b0c7af652a68c1dc20dcac87f",
       "gradient.ai.glow.stop-3": "35ba38a9853ddfc86bc12a921f53c71268a7b55b",
+      "gradient.ai.chat.bubble.from": "00214980c3e4e4c760c9f5a043fe1484a4924d7e",
+      "gradient.ai.chat.bubble.to": "5d55427c48e05a5fd8dccc2639e9b3577af97869",
       "gradient.alert.fade-default": "e9403580a2eb5d575a1fca75c8571d4d42c23b39",
       "gradient.alert.fade-danger": "fb29e2c031f10f0b480dd0f3431721776219fe94",
       "gradient.alert.fade-warning": "aaf385f9f829f4c1159e33b219e779c8359b4eed",
@@ -2465,8 +2472,6 @@
       "icon.security": "8066563f865087eb0d6a353fd7ff552081856e5a",
       "icon.efficiency": "d3020e54b0702e0f06ba18db7a6af384dbc1ff9c",
       "icon.platform": "7b8f2b594d560d034ab6c59b7d0a8f07d41cf77e",
-      "gradient.ai.chat.bubble.from": "00214980c3e4e4c760c9f5a043fe1484a4924d7e",
-      "gradient.ai.chat.bubble.to": "5d55427c48e05a5fd8dccc2639e9b3577af97869",
       "set.warning.primary.bg-hover": "ac98bc8e51eb868206f643974d0c84f102c57998",
       "set.warning.primary.bg-selected": "95536067c676f7f1ab724d363e49d258a379c5b9",
       "set.blue.primary.bg-hover": "8f2fcb9a46a36695dc44779e5547b92d6d3d0352",
@@ -2474,13 +2479,7 @@
       "set.blue.secondary.bg-selected": "00305cd2b8c35091c478a472fd364beda3049f4c",
       "set.purple.primary.bg-hover": "926b386f6227e7cbdf4fda3bd4d42c8fc21d7d8f",
       "set.purple.primary.bg-selected": "2c7a9901521b1378bbdf0c0563690bf93182ab22",
-      "set.purple.secondary.bg-selected": "2a4b8f7459ce6ff8dc816c2aedf37060fe5dfcd8",
-      "comp.input-ai.blur": "3cbe0699211521009122a8145ce1c5e50d6753c8",
-      "gradient.ai.from": "8db516caa68afc5b8fdd6fc6e5a9bad7715c5f26",
-      "gradient.ai.outline-bg.stop-1": "52c849bed3b3e0b3886dd262bd662d801269d294",
-      "gradient.ai.outline-bg.stop-2": "25137d674df20bcf4992b85f392589f9437cf64e",
-      "gradient.ai.outline-bg.stop-3": "0097385aca19f7b30af8df5e0a81b4b0a1dc1c37",
-      "gradient.ai.outline-bg.stop-4": "ae39b0a0bf6508f41c87e919434d1f6b90994f7a"
+      "set.purple.secondary.bg-selected": "2a4b8f7459ce6ff8dc816c2aedf37060fe5dfcd8"
     },
     "$figmaCollectionId": "VariableCollectionId:1340:156918",
     "$figmaModeId": "1340:3",
@@ -3330,7 +3329,7 @@
     },
     "selectedTokenSets": {
       "mode/light/default": "enabled",
-      "mode/light/icon-stroke-width": "enabled"
+      "mode/light/figma-icon-stroke-width": "enabled"
     },
     "$figmaCollectionId": "VariableCollectionId:1340:156918",
     "$figmaModeId": "1340:4",
@@ -3608,9 +3607,17 @@
       "shadow-color.4": "2b2e0307d252bdc6db53a23ce2cc2e9bb4f6b914",
       "shadow-color.5": "5a6c707240bab54cb4403f47262abfe0756efc9a",
       "shadow-color.6": "928283d00759150575a8f155da90180a582be438",
+      "gradient.ai.from": "8db516caa68afc5b8fdd6fc6e5a9bad7715c5f26",
+      "gradient.ai.to": "c6d926e169e9c2fe7c8c8c8eb88b1164fd339a6a",
+      "gradient.ai.outline-bg.stop-1": "52c849bed3b3e0b3886dd262bd662d801269d294",
+      "gradient.ai.outline-bg.stop-2": "25137d674df20bcf4992b85f392589f9437cf64e",
+      "gradient.ai.outline-bg.stop-3": "0097385aca19f7b30af8df5e0a81b4b0a1dc1c37",
+      "gradient.ai.outline-bg.stop-4": "ae39b0a0bf6508f41c87e919434d1f6b90994f7a",
       "gradient.ai.glow.stop-1": "b2e5d4804dfc5bf37e3434bd8df2fa032ac3cbf1",
       "gradient.ai.glow.stop-2": "3315e7ad5b04ca0b0c7af652a68c1dc20dcac87f",
       "gradient.ai.glow.stop-3": "35ba38a9853ddfc86bc12a921f53c71268a7b55b",
+      "gradient.ai.chat.bubble.from": "00214980c3e4e4c760c9f5a043fe1484a4924d7e",
+      "gradient.ai.chat.bubble.to": "5d55427c48e05a5fd8dccc2639e9b3577af97869",
       "gradient.alert.fade-default": "e9403580a2eb5d575a1fca75c8571d4d42c23b39",
       "gradient.alert.fade-danger": "fb29e2c031f10f0b480dd0f3431721776219fe94",
       "gradient.alert.fade-warning": "aaf385f9f829f4c1159e33b219e779c8359b4eed",
@@ -3689,8 +3696,6 @@
       "icon.security": "8066563f865087eb0d6a353fd7ff552081856e5a",
       "icon.efficiency": "d3020e54b0702e0f06ba18db7a6af384dbc1ff9c",
       "icon.platform": "7b8f2b594d560d034ab6c59b7d0a8f07d41cf77e",
-      "gradient.ai.chat.bubble.from": "00214980c3e4e4c760c9f5a043fe1484a4924d7e",
-      "gradient.ai.chat.bubble.to": "5d55427c48e05a5fd8dccc2639e9b3577af97869",
       "set.warning.primary.bg-hover": "ac98bc8e51eb868206f643974d0c84f102c57998",
       "set.warning.primary.bg-selected": "95536067c676f7f1ab724d363e49d258a379c5b9",
       "set.blue.primary.bg-hover": "8f2fcb9a46a36695dc44779e5547b92d6d3d0352",
@@ -3699,11 +3704,9 @@
       "set.purple.primary.bg-hover": "926b386f6227e7cbdf4fda3bd4d42c8fc21d7d8f",
       "set.purple.primary.bg-selected": "2c7a9901521b1378bbdf0c0563690bf93182ab22",
       "set.purple.secondary.bg-selected": "2a4b8f7459ce6ff8dc816c2aedf37060fe5dfcd8",
-      "gradient.ai.from": "8db516caa68afc5b8fdd6fc6e5a9bad7715c5f26",
-      "gradient.ai.outline-bg.stop-1": "52c849bed3b3e0b3886dd262bd662d801269d294",
-      "gradient.ai.outline-bg.stop-2": "25137d674df20bcf4992b85f392589f9437cf64e",
-      "gradient.ai.outline-bg.stop-3": "0097385aca19f7b30af8df5e0a81b4b0a1dc1c37",
-      "gradient.ai.outline-bg.stop-4": "ae39b0a0bf6508f41c87e919434d1f6b90994f7a"
+      "comp.tooltip.inverse.bg": "384df2cd0392bb03acbb3445dd30508a319d36f0",
+      "comp.tooltip.inverse.border": "0c49eff88b5ae7aa932a7000311112e31826fd82",
+      "comp.tooltip.inverse.text": "3e3935d3508540a76af7bc9de63f96fc312426ae"
     },
     "group": "mode"
   },

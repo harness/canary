@@ -25,7 +25,7 @@ export type TooltipProps = {
   delay?: TooltipPrimitiveRootType['delayDuration']
   open?: boolean
   variant?: 'default' | 'inverse'
-} & Pick<TooltipPrimitiveContentType, 'side' | 'align' | 'className'>
+} & Pick<TooltipPrimitiveContentType, 'side' | 'align' | 'className' | 'sideOffset'>
 
 export const Tooltip = forwardRef<HTMLDivElement, TooltipProps>(
   (
@@ -39,11 +39,15 @@ export const Tooltip = forwardRef<HTMLDivElement, TooltipProps>(
       align = 'center',
       open,
       variant = 'default',
-      className
+      className,
+      sideOffset
     },
     ref
   ) => {
     const { portalContainer } = usePortal()
+    // Automatically increase sideOffset when arrow is hidden
+    const computedSideOffset = sideOffset ?? (hideArrow ? 6 : 2)
+
     return (
       <TooltipPrimitive.Root delayDuration={delay} open={open}>
         <TooltipPrimitive.Trigger asChild>{children}</TooltipPrimitive.Trigger>
@@ -63,7 +67,7 @@ export const Tooltip = forwardRef<HTMLDivElement, TooltipProps>(
             )}
             side={side}
             align={align}
-            sideOffset={4}
+            sideOffset={computedSideOffset}
           >
             <div className="cn-tooltip-content">
               {!!title && <span className="cn-tooltip-title">{title}</span>}

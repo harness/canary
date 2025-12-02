@@ -4,11 +4,11 @@ export default {
     maxWidth: 'var(--cn-tooltip-max)',
     maxHeight: 'calc(var(--radix-tooltip-content-available-height) - 4px)',
     borderRadius: 'var(--cn-tooltip-radius)',
-    border: 'var(--cn-tooltip-border) solid var(--cn-border-3)',
+    border: 'var(--cn-tooltip-border) solid var(--cn-border-2)',
     background: 'var(--cn-bg-3)',
     padding: 'var(--cn-tooltip-py) var(--cn-tooltip-px)',
     color: 'var(--cn-text-1)',
-    boxShadow: 'var(--cn-shadow-2)',
+    boxShadow: 'var(--cn-shadow-3)',
     willChange: 'transform, opacity',
     '@apply z-50 font-caption-normal': '',
 
@@ -20,14 +20,21 @@ export default {
       '@apply font-caption-strong': ''
     },
 
-    '& span:has(.cn-tooltip-arrow)': {
-      margin: '1px !important'
-    },
-
     '&-arrow': {
       color: 'var(--cn-bg-3)',
-      stroke: 'var(--cn-border-3)',
+      stroke: 'var(--cn-border-2)',
       '@apply w-5 h-2': ''
+    },
+
+    // Arrow positioning for align variants
+    '&[data-align="start"] span:has(.cn-tooltip-arrow)': {
+      left: 'var(--cn-spacing-2) !important',
+      right: 'auto !important'
+    },
+
+    '&[data-align="end"] span:has(.cn-tooltip-arrow)': {
+      right: 'var(--cn-spacing-2) !important',
+      left: 'auto !important'
     },
 
     '&-inverse': {

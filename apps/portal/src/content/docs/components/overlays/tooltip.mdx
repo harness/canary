@@ -11,12 +11,13 @@ import { DocsPage } from "@/components/docs-page";
 <DocsPage.ComponentExample
   client:only
   code={`<TooltipProvider>
-    <Tooltip
-        title="Full-Stack Development"
-        content="A comprehensive approach to building applications that covers both front-end and back-end technologies."
-    >
-        <Button>Trigger</Button>
-    </Tooltip>
+    <div className="flex justify-center">
+        <Tooltip
+            content="Tooltips provide helpful context and information."
+        >
+            <Button variant="secondary">Hover me</Button>
+        </Tooltip>
+    </div>
 </TooltipProvider>`}
 />
 
@@ -55,120 +56,117 @@ const comp = withTooltip(yourComp);
 
 ## Variants
 
-The `Tooltip` component supports two variants: `default` and `inverse`. The inverse variant provides a high-contrast appearance with inverted colors.
+The tooltip supports `default` and `inverse` variants. The inverse variant provides high-contrast appearance.
 
 <DocsPage.ComponentExample
   client:only
   code={`
     <TooltipProvider>
-      <ButtonLayout>
+      <ButtonLayout className="justify-center">
         <Tooltip
-          title="Default Variant"
-          content="This is a default tooltip with standard colors."
+          content="Standard tooltip styling."
         >
-          <Button>Default</Button>
+          <Button variant="secondary">Default Variant</Button>
         </Tooltip>
 
         <Tooltip
           variant="inverse"
-          title="Inverse Variant"
-          content="This is an inverse tooltip with high-contrast colors."
+          content="High-contrast tooltip styling."
         >
-          <Button>Inverse</Button>
+          <Button variant="secondary">Inverse Variant</Button>
         </Tooltip>
       </ButtonLayout>
     </TooltipProvider>
-
 `}
 />
 
-## Tooltip with no arrow
+## Hide Arrow
+
+Use `hideArrow` prop to remove the tooltip arrow.
 
 <DocsPage.ComponentExample
   client:only
   code={`
     <TooltipProvider>
-      <Tooltip title="Title" content={<p>This is a tooltip</p>} hideArrow>
-        <Button>trigger</Button>
-      </Tooltip>
+      <div className="flex justify-center">
+        <Tooltip content="Tooltip without arrow" hideArrow>
+          <Button variant="secondary">Tooltip Without Arrow</Button>
+        </Tooltip>
+      </div>
     </TooltipProvider>
   `}
 />
 
 ## Sides
 
-The `Tooltip` component can be displayed to any side of the trigger element. If there isn't any room to display the tooltip on the preferred side, the tooltip will instead be displayed on the opposite side. Using the `side` prop, the `Tooltip` component supports `top`, `bottom`, `left` and `right` sides.
+The tooltip can be positioned on any side: `top` (default), `bottom`, `left`, or `right`.
 
 <DocsPage.ComponentExample
   client:only
   code={`
     <TooltipProvider>
-      <ButtonLayout orientation="vertical">
+      <ButtonLayout orientation="vertical" className="items-center">
         <Tooltip
-          title="Full-Stack Development"
-          content="A comprehensive approach to building applications that covers both front-end and back-end technologies."
+          side="top"
+          content="Tooltip appears above the trigger."
         >
-          <Button>Top side</Button>
+          <Button variant="secondary">Top Side</Button>
         </Tooltip>
 
         <Tooltip
           side="bottom"
-          title="Full-Stack Development"
-          content="A comprehensive approach to building applications that covers both front-end and back-end technologies."
+          content="Tooltip appears below the trigger."
         >
-          <Button>Bottom side</Button>
+          <Button variant="secondary">Bottom Side</Button>
         </Tooltip>
 
         <Tooltip
           side="right"
-          title="Full-Stack Development"
-          content="A comprehensive approach to building applications that covers both front-end and back-end technologies."
+          content="Tooltip appears to the right."
         >
-          <Button>Right side</Button>
+          <Button variant="secondary">Right Side</Button>
         </Tooltip>
 
         <Tooltip
           side="left"
-          title="Full-Stack Development"
-          content="A comprehensive approach to building applications that covers both front-end and back-end technologies."
+          content="Tooltip appears to the left."
         >
-          <Button>Left side</Button>
+          <Button variant="secondary">Left Side</Button>
         </Tooltip>
       </ButtonLayout>
     </TooltipProvider>
-
 `}
 />
 
 ## Alignment
 
-The `Tooltip` component can be aligned relative to the anchor or trigger element using the `align` prop. It supports `start`, `center`, and `end` values. This controls how the tooltip is positioned along the side it appears on.
+Control tooltip alignment relative to the trigger using `align` prop: `start`, `center` (default), or `end`.
 
 <DocsPage.ComponentExample
   client:only
   code={`
     <TooltipProvider>
-      <ButtonLayout orientation="vertical">
-      <Tooltip
-        title="Full-Stack Development"
-        content="A comprehensive approach to building applications that covers both front-end and back-end technologies."
-      >
-        <Button>Center align</Button>
-      </Tooltip>
-      <Tooltip
-        align="start"
-        title="Full-Stack Development"
-        content="A comprehensive approach to building applications that covers both front-end and back-end technologies."
-      >
-        <Button>Start align</Button>
-      </Tooltip>
-      <Tooltip
-        align="end"
-        title="Full-Stack Development"
-        content="A comprehensive approach to building applications that covers both front-end and back-end technologies."
-      >
-        <Button>End align</Button>
-      </Tooltip>
+      <ButtonLayout className="justify-center">
+        <Tooltip
+          side="top"
+          content="Tooltip centered on the trigger."
+        >
+          <Button variant="secondary">Center (default)</Button>
+        </Tooltip>
+        <Tooltip
+          side="top"
+          align="start"
+          content="Tooltip aligned to the start."
+        >
+          <Button variant="secondary">Start Aligned</Button>
+        </Tooltip>
+        <Tooltip
+          side="top"
+          align="end"
+          content="Tooltip aligned to the end."
+        >
+          <Button variant="secondary">End Aligned Button</Button>
+        </Tooltip>
       </ButtonLayout>
     </TooltipProvider>
   `}
@@ -196,74 +194,79 @@ The provider component that manages tooltips. Typically wrapped around the entir
 <DocsPage.PropsTable
   props={[
     {
+      name: "children",
+      description: "Element to wrap the tooltip around.",
+      required: true,
+      value: "ReactNode",
+    },
+    {
       name: "content",
       description: "Content to display in the tooltip.",
       required: true,
       value: "ReactNode",
     },
     {
-      name: "className",
-      description: "Custom class name for the tooltip content.",
-      required: false,
-      value: "string",
-    },
-    {
       name: "title",
-      description: "String to use as the title of the tooltip.",
+      description: "Optional title displayed above the content.",
       required: false,
       value: "string",
-      defaultValue: "undefined",
     },
     {
       name: "variant",
       description:
-        "Visual variant of the tooltip. Use 'inverse' for high-contrast appearance.",
+        "Visual variant of the tooltip.",
       required: false,
       value: "'default' | 'inverse'",
-      defaultValue: "default",
+      defaultValue: "'default'",
     },
     {
       name: "side",
-      description: "Side of the element to display the tooltip.",
+      description: "Preferred side to display the tooltip.",
       required: false,
-      value: "'right' | 'left' | 'top' | 'bottom'",
-      defaultValue: "top",
+      value: "'top' | 'bottom' | 'left' | 'right'",
+      defaultValue: "'top'",
     },
     {
       name: "align",
-      description: "Where on the 'side' to align the tooltip.",
+      description: "Alignment of the tooltip relative to the trigger.",
       required: false,
       value: "'start' | 'center' | 'end'",
-      defaultValue: "center",
+      defaultValue: "'center'",
     },
     {
       name: "hideArrow",
-      description: "Pass or set to true to not display the arrow.",
+      description: "Hide the tooltip arrow pointer.",
       required: false,
       value: "boolean",
       defaultValue: "false",
     },
     {
-      name: "open",
-      description:
-        "Controls whether the tooltip is open or not. Useful for controlled components or debugging.",
+      name: "sideOffset",
+      description: "Distance in pixels from the trigger element. Automatically increases to 6px when arrow is hidden.",
       required: false,
-      value: "boolean",
-      defaultValue: "false",
+      value: "number",
+      defaultValue: "2 (6 when hideArrow is true)",
     },
     {
       name: "delay",
       description:
-        "Delay in ms between hovering/focusing the item and showing the tooltip.",
+        "Delay in ms before showing the tooltip.",
       required: false,
       value: "number",
       defaultValue: "500",
     },
     {
-      name: "children",
-      description: "Element to wrap the tooltip around.",
-      required: true,
-      value: "ReactNode",
+      name: "open",
+      description:
+        "Controlled open state. Useful for testing or controlled tooltips.",
+      required: false,
+      value: "boolean",
+    },
+    {
+      name: "className",
+      description: "Custom CSS class for the tooltip content.",
+      required: false,
+      value: "string",
     },
   ]}
 />

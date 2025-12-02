@@ -77,6 +77,7 @@ The tooltip supports `default` and `inverse` variants. The inverse variant provi
         </Tooltip>
       </ButtonLayout>
     </TooltipProvider>
+
 `}
 />
 
@@ -135,6 +136,7 @@ The tooltip can be positioned on any side: `top` (default), `bottom`, `left`, or
         </Tooltip>
       </ButtonLayout>
     </TooltipProvider>
+
 `}
 />
 
@@ -213,8 +215,7 @@ The provider component that manages tooltips. Typically wrapped around the entir
     },
     {
       name: "variant",
-      description:
-        "Visual variant of the tooltip.",
+      description: "Visual variant of the tooltip.",
       required: false,
       value: "'default' | 'inverse'",
       defaultValue: "'default'",
@@ -242,15 +243,15 @@ The provider component that manages tooltips. Typically wrapped around the entir
     },
     {
       name: "sideOffset",
-      description: "Distance in pixels from the trigger element. Automatically increases to 6px when arrow is hidden.",
+      description:
+        "Distance in pixels from the trigger element. Automatically increases to 6px when arrow is hidden.",
       required: false,
       value: "number",
       defaultValue: "2 (6 when hideArrow is true)",
     },
     {
       name: "delay",
-      description:
-        "Delay in ms before showing the tooltip.",
+      description: "Delay in ms before showing the tooltip.",
       required: false,
       value: "number",
       defaultValue: "500",

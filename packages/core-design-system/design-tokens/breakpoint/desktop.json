@@ -476,10 +476,10 @@
           "$value": {
             "fontFamily": "{fontFamily.default}",
             "fontWeight": "{fontWeight.default.normal.400}",
-            "fontSize": "{fontSize.3}",
-            "lineHeight": "{lineHeight.3.relaxed}",
+            "fontSize": "{fontSize.2}",
+            "lineHeight": "{lineHeight.2.relaxed}",
             "letterSpacing": "{tracking.tight}",
-            "paragraphSpacing": "{fontSize.3}"
+            "paragraphSpacing": "{fontSize.2}"
           },
           "$description": "Standard typography for document body content. Optimized for comfortable reading with appropriate spacing and line height.\n\nCommon uses: Main content, Explanations, Process descriptions, Detailed information."
         },
@@ -488,10 +488,10 @@
           "$value": {
             "fontFamily": "{fontFamily.default}",
             "fontWeight": "{fontWeight.default.normal.500}",
-            "fontSize": "{fontSize.3}",
-            "lineHeight": "{lineHeight.3.relaxed}",
+            "fontSize": "{fontSize.2}",
+            "lineHeight": "{lineHeight.2.relaxed}",
             "letterSpacing": "{tracking.tight}",
-            "paragraphSpacing": "{fontSize.3}"
+            "paragraphSpacing": "{fontSize.2}"
           },
           "$description": "Highlighted paragraph style for important information. Uses increased weight to create focal points without disrupting content flow.\n\nCommon uses: Important notices, Key takeaways, Warnings, Summary points."
         }

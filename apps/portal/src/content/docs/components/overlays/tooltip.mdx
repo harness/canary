@@ -53,6 +53,34 @@ import { withTooltip } from "@harnessio/ui/components";
 const comp = withTooltip(yourComp);
 ```
 
+## Variants
+
+The `Tooltip` component supports two variants: `default` and `inverse`. The inverse variant provides a high-contrast appearance with inverted colors.
+
+<DocsPage.ComponentExample
+  client:only
+  code={`
+    <TooltipProvider>
+      <ButtonLayout>
+        <Tooltip
+          title="Default Variant"
+          content="This is a default tooltip with standard colors."
+        >
+          <Button>Default</Button>
+        </Tooltip>
+
+        <Tooltip
+          variant="inverse"
+          title="Inverse Variant"
+          content="This is an inverse tooltip with high-contrast colors."
+        >
+          <Button>Inverse</Button>
+        </Tooltip>
+      </ButtonLayout>
+    </TooltipProvider>
+  `}
+/>
+
 ## Tooltip with no arrow
 
 <DocsPage.ComponentExample
@@ -184,6 +212,13 @@ The provider component that manages tooltips. Typically wrapped around the entir
       required: false,
       value: "string",
       defaultValue: "undefined",
+    },
+    {
+      name: "variant",
+      description: "Visual variant of the tooltip. Use 'inverse' for high-contrast appearance.",
+      required: false,
+      value: "'default' | 'inverse'",
+      defaultValue: "default",
     },
     {
       name: "side",

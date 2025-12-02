@@ -24,11 +24,12 @@ export type TooltipProps = {
   hideArrow?: boolean
   delay?: TooltipPrimitiveRootType['delayDuration']
   open?: boolean
+  variant?: 'default' | 'inverse'
 } & Pick<TooltipPrimitiveContentType, 'side' | 'align' | 'className'>
 
 export const Tooltip = forwardRef<HTMLDivElement, TooltipProps>(
   (
-    { children, title, content, hideArrow = false, delay = 500, side = 'top', align = 'center', open, className },
+    { children, title, content, hideArrow = false, delay = 500, side = 'top', align = 'center', open, variant = 'default', className },
     ref
   ) => {
     const { portalContainer } = usePortal()
@@ -38,13 +39,15 @@ export const Tooltip = forwardRef<HTMLDivElement, TooltipProps>(
         <TooltipPrimitive.Portal container={portalContainer}>
           <TooltipPrimitive.Content
             ref={ref}
-            className={cn('cn-tooltip', className)}
+            className={cn('cn-tooltip', variant === 'inverse' && 'cn-tooltip-inverse', className)}
             side={side}
             align={align}
             sideOffset={4}
           >
-            {!!title && <span className="cn-tooltip-title">{title}</span>}
-            <div>{content}</div>
+            <div className="cn-tooltip-content">
+              {!!title && <span className="cn-tooltip-title">{title}</span>}
+              <div className="cn-tooltip-text">{content}</div>
+            </div>
             {!hideArrow && (
               <TooltipPrimitive.Arrow width={20} height={8} asChild>
                 <Illustration className="cn-tooltip-arrow" name="tooltip-arrow" />

@@ -14,14 +14,14 @@ interface MenuGroupType {
 
 type NavbarItemIdType = number | string
 
-interface NavbarItemType {
-  id: NavbarItemIdType
+interface NavbarItemType<T = NavbarItemIdType> {
+  id: T
   title: string
   iconName?: IconV2NamesType
   description?: string
   to: string
   permanentlyPinned?: boolean
-  subItems?: NavbarItemType[]
+  subItems?: NavbarItemType<T>[] // recursive with same T
 }
 
 export enum UserMenuKeys {

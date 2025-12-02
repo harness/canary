@@ -1790,7 +1790,7 @@
         },
         "text": {
           "$type": "color",
-          "$value": "{pure.white}"
+          "$value": "{pure.black}"
         }
       }
     }

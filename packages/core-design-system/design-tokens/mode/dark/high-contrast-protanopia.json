@@ -1753,6 +1753,22 @@
         "$type": "color",
         "$value": "linear-gradient(95deg, {gradient.sidebar.selected.from} -13.12%, {gradient.sidebar.selected.to} 84.9%)"
       }
+    },
+    "tooltip": {
+      "inverse": {
+        "bg": {
+          "$type": "color",
+          "$value": "{chrome.200}"
+        },
+        "border": {
+          "$type": "color",
+          "$value": "{chrome.200}"
+        },
+        "text": {
+          "$type": "color",
+          "$value": "{pure.black}"
+        }
+      }
     }
   },
   "logo": {

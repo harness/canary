@@ -29,7 +29,18 @@ export type TooltipProps = {
 
 export const Tooltip = forwardRef<HTMLDivElement, TooltipProps>(
   (
-    { children, title, content, hideArrow = false, delay = 500, side = 'top', align = 'center', open, variant = 'default', className },
+    {
+      children,
+      title,
+      content,
+      hideArrow = false,
+      delay = 500,
+      side = 'top',
+      align = 'center',
+      open,
+      variant = 'default',
+      className
+    },
     ref
   ) => {
     const { portalContainer } = usePortal()

@@ -50,14 +50,24 @@ export const Tooltip = forwardRef<HTMLDivElement, TooltipProps>(
         <TooltipPrimitive.Portal container={portalContainer}>
           <TooltipPrimitive.Content
             ref={ref}
-            className={cn('cn-tooltip', variant === 'inverse' && 'cn-tooltip-inverse', className)}
+            className={cn(
+              'cn-tooltip',
+              'animate-in fade-in-0 zoom-in-95 duration-150',
+              'data-[state=closed]:animate-out data-[state=closed]:fade-out-0 data-[state=closed]:zoom-out-95',
+              'data-[side=bottom]:slide-in-from-top-2',
+              'data-[side=left]:slide-in-from-right-2',
+              'data-[side=right]:slide-in-from-left-2',
+              'data-[side=top]:slide-in-from-bottom-2',
+              variant === 'inverse' && 'cn-tooltip-inverse',
+              className
+            )}
             side={side}
             align={align}
             sideOffset={4}
           >
             <div className="cn-tooltip-content">
               {!!title && <span className="cn-tooltip-title">{title}</span>}
-              <div className="cn-tooltip-text">{content}</div>
+              <div>{content}</div>
             </div>
             {!hideArrow && (
               <TooltipPrimitive.Arrow width={20} height={8} asChild>

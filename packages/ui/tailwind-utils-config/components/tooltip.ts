@@ -1,7 +1,5 @@
 export default {
   '.cn-tooltip': {
-    '--tooltip-duration': '150ms',
-    '--tooltip-easing': 'cubic-bezier(0.16, 0.84, 0.44, 1)',
     minWidth: 'var(--cn-tooltip-min)',
     maxWidth: 'var(--cn-tooltip-max)',
     maxHeight: 'calc(var(--radix-tooltip-content-available-height) - 4px)',
@@ -11,27 +9,15 @@ export default {
     padding: 'var(--cn-tooltip-py) var(--cn-tooltip-px)',
     color: 'var(--cn-text-1)',
     boxShadow: 'var(--cn-shadow-2)',
-    '@apply z-50': '',
+    willChange: 'transform, opacity',
+    '@apply z-50 font-caption-normal': '',
 
     '&-content': {
-      willChange: 'transform, opacity',
-      '@apply flex flex-col font-body-normal': '',
-
-      '[data-state="open"] &': {
-        animation: 'tooltip-in var(--tooltip-duration) var(--tooltip-easing) forwards'
-      },
-
-      '[data-state="closed"] &': {
-        animation: 'tooltip-out var(--tooltip-duration) var(--tooltip-easing) forwards'
-      }
+      '@apply flex flex-col gap-cn-4xs': ''
     },
 
     '&-title': {
-      '@apply font-body-strong': ''
-    },
-
-    '&-text': {
-      '@apply font-body-normal': ''
+      '@apply font-caption-strong': ''
     },
 
     '& span:has(.cn-tooltip-arrow)': {
@@ -53,28 +39,6 @@ export default {
         color: 'var(--cn-comp-tooltip-inverse-bg)',
         stroke: 'var(--cn-comp-tooltip-inverse-border)'
       }
-    }
-  },
-
-  '@keyframes tooltip-in': {
-    '0%': {
-      opacity: '0',
-      transform: 'scale(0.97)'
-    },
-    '100%': {
-      opacity: '1',
-      transform: 'scale(1)'
-    }
-  },
-
-  '@keyframes tooltip-out': {
-    '0%': {
-      opacity: '1',
-      transform: 'scale(1)'
-    },
-    '100%': {
-      opacity: '0',
-      transform: 'scale(0.97)'
     }
   }
 }

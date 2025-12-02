@@ -2,7 +2,7 @@ import { ButtonHTMLAttributes, FC, forwardRef, Fragment, memo, Ref } from 'react
 
 import { StatusBadge, Text, TextProps, Tooltip, TooltipProps } from '@/components'
 import { cn } from '@utils/cn'
-import { LOCALE } from '@utils/TimeUtils'
+import { formatRelativeTime, LOCALE } from '@utils/TimeUtils'
 
 const getTimeZoneAbbreviation = () => {
   try {
@@ -56,49 +56,6 @@ const getFormatters = (locale?: string | string[]) => ({
  */
 const INVALID_TIME_INDICATOR = ''
 
-const timeAgo = (date: Date, locale: string | string[] = 'en-US') => {
-  try {
-    // Validate date is within reasonable bounds (not too far in past/future)
-    const timestamp = date.getTime()
-    const now = Date.now()
-    const diffSeconds = Math.floor((timestamp - now) / 1000)
-
-    // Handle extreme dates (beyond ~270,000 years)
-    if (!isFinite(diffSeconds)) {
-      console.warn('Invalid timestamp:', timestamp)
-      return INVALID_TIME_INDICATOR
-    }
-
-    const rtf = new Intl.RelativeTimeFormat(locale, {
-      numeric: 'always',
-      style: 'narrow'
-    })
-
-    const units: [Intl.RelativeTimeFormatUnit, number][] = [
-      ['year', 3600 * 24 * 365],
-      ['month', 3600 * 24 * 30],
-      ['week', 3600 * 24 * 7],
-      ['day', 3600 * 24],
-      ['hour', 3600],
-      ['minute', 60],
-      ['second', 1]
-    ]
-
-    for (const [unit, seconds] of units) {
-      if (Math.abs(diffSeconds) >= seconds || unit === 'second') {
-        const value = Math.round(diffSeconds / seconds)
-        return rtf.format(value, unit)
-      }
-    }
-
-    return rtf.format(0, 'second')
-  } catch (error) {
-    console.warn('Intl API error:', error)
-    // Fallback for any Intl API errors or locale issues
-    return INVALID_TIME_INDICATOR
-  }
-}
-
 export const useFormattedTime = (timestamp?: string | number | null) => {
   // Handle null, undefined, empty string, or invalid values
   const time = timestamp ? new Date(timestamp) : new Date(0)
@@ -111,7 +68,7 @@ export const useFormattedTime = (timestamp?: string | number | null) => {
       return INVALID_TIME_INDICATOR
     }
 
-    return timeAgo(time, LOCALE)
+    return formatRelativeTime(timestamp, LOCALE)
   }
 
   const formatters = getFormatters(LOCALE)

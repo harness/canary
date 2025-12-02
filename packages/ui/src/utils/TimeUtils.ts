@@ -138,3 +138,60 @@ export const timeDistance = (date1 = 0, date2 = 0, onlyHighestDenomination = fal
 export function formatNumber(num: number | bigint): string {
   return new Intl.NumberFormat(LOCALE).format(num)
 }
+
+/**
+ * This is the function that formats a timestamp to a relative time string.
+ * ⭐️ It is used in TimeAgoCard component.
+ *
+ * @param timestamp
+ * @param locale
+ * @returns
+ */
+export const formatRelativeTime = (timestamp?: number | string | null, locale: string | string[] = LOCALE): string => {
+  if (!timestamp) {
+    return ''
+  }
+  try {
+    const time = new Date(timestamp).getTime()
+
+    if (isNaN(time) || !isFinite(time) || time === 0) {
+      return ''
+    }
+
+    const now = Date.now()
+    const diffSeconds = Math.floor((time - now) / 1000)
+
+    if (!isFinite(diffSeconds)) {
+      console.warn('Invalid timestamp:', time)
+      return ''
+    }
+
+    const rtf = new Intl.RelativeTimeFormat(locale, {
+      numeric: 'always',
+      style: 'narrow'
+    })
+
+    const units: [Intl.RelativeTimeFormatUnit, number][] = [
+      ['year', 3600 * 24 * 365],
+      ['month', 3600 * 24 * 30],
+      ['week', 3600 * 24 * 7],
+      ['day', 3600 * 24],
+      ['hour', 3600],
+      ['minute', 60],
+      ['second', 1]
+    ]
+
+    for (const [unit, seconds] of units) {
+      if (Math.abs(diffSeconds) >= seconds || unit === 'second') {
+        const value = Math.round(diffSeconds / seconds)
+        return rtf.format(value, unit)
+      }
+    }
+
+    return rtf.format(0, 'second')
+  } catch (error) {
+    console.warn('Intl API error:', error)
+    // Fallback for any Intl API errors or locale issues
+    return ''
+  }
+}

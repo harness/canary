@@ -1720,15 +1720,15 @@
       "inverse": {
         "bg": {
           "$type": "color",
-          "$value": "{chrome.950}"
+          "$value": "{tuna.900}"
         },
         "border": {
           "$type": "color",
-          "$value": "{chrome.900}"
+          "$value": "{tuna.900}"
         },
         "text": {
           "$type": "color",
-          "$value": "{pure.white}"
+          "$value": "{chrome.25}"
         }
       }
     }

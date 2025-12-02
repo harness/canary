@@ -306,5 +306,46 @@
         @apply font-body-strong;
       }
     }
+
+    &.markdown-sm {
+      h1 {
+        font: var(--cn-comp-markdown-sm-title-h1);
+        @apply my-cn-md;
+      }
+
+      h2 {
+        font: var(--cn-comp-markdown-sm-title-h2);
+        @apply my-cn-sm;
+      }
+
+      h3 {
+        font: var(--cn-comp-markdown-sm-title-h3);
+        @apply my-cn-xs;
+      }
+
+      p {
+        font: var(--cn-comp-markdown-sm-content-paragraph);
+        @apply my-cn-xs;
+      }
+
+      ul,
+      ol {
+        font: var(--cn-comp-markdown-sm-content-paragraph);
+        @apply my-cn-xs;
+      }
+
+      a {
+        font: var(--cn-comp-markdown-sm-content-paragraph);
+      }
+
+      blockquote {
+        font: var(--cn-comp-markdown-sm-content-paragraph);
+        @apply my-cn-sm;
+      }
+
+      strong {
+        font: var(--cn-comp-markdown-sm-content-emphasized);
+      }
+    }
   }
 }

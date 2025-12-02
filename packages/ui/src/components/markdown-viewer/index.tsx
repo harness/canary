@@ -12,6 +12,7 @@ import './style.css'
 
 import { useRouterContext } from '@/context'
 import { cn } from '@utils/cn'
+import { cva, type VariantProps } from 'class-variance-authority'
 
 import { CodeSuggestionBlock, SuggestionBlock } from './CodeSuggestionBlock'
 
@@ -20,6 +21,18 @@ export const getIsMarkdown = (language?: string) => language === 'markdown'
 const isHeadingElement = (tagName: string) => /^h(1|2|3|4|5|6)/.test(tagName)
 const isRelativeLink = (href: string) =>
   href && !href.startsWith('/') && !href.startsWith('#') && !/^https?:|mailto:|tel:|data:|javascript:|sms:/.test(href)
+
+const markdownViewerVariants = cva('', {
+  variants: {
+    variant: {
+      default: '',
+      sm: 'markdown-sm'
+    }
+  },
+  defaultVariants: {
+    variant: 'default'
+  }
+})
 
 type MarkdownViewerProps = {
   source: string
@@ -35,7 +48,7 @@ type MarkdownViewerProps = {
   suggestionFooter?: ReactNode
   isLoading?: boolean
   imageUrlTransform?: (src: string) => string
-}
+} & VariantProps<typeof markdownViewerVariants>
 
 const MarkdownViewerLocal = ({
   source,
@@ -49,7 +62,8 @@ const MarkdownViewerLocal = ({
   suggestionTitle,
   suggestionFooter,
   isLoading = false,
-  imageUrlTransform
+  imageUrlTransform,
+  variant = 'default'
 }: MarkdownViewerProps) => {
   const { navigate } = useRouterContext()
   const refRootHref = useMemo(() => document.getElementById('repository-ref-root')?.getAttribute('href'), [])
@@ -214,7 +228,7 @@ const MarkdownViewerLocal = ({
       <div ref={ref} style={styles}>
         <MarkdownPreview
           source={source}
-          className={cn('prose prose-invert', markdownClassName)}
+          className={cn('prose prose-invert', markdownViewerVariants({ variant }), markdownClassName)}
           rehypeRewrite={rehypeRewrite}
           remarkPlugins={[remarkBreaks]}
           rehypePlugins={[

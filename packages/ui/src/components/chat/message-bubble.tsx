@@ -1,5 +1,6 @@
 import { forwardRef, HTMLAttributes, ReactNode } from 'react'
 
+import { MarkdownViewer, MarkdownViewerProps } from '@components/markdown-viewer'
 import { Text, TextProps } from '@components/text'
 import { cn } from '@utils/cn'
 
@@ -56,8 +57,19 @@ const MessageBubbleText = ({ children, ...props }: MessageBubbleTextProps) => {
 
 MessageBubbleText.displayName = 'MessageBubbleText'
 
+export interface MessageBubbleMarkdownProps extends Omit<MarkdownViewerProps, 'source'> {
+  children: string
+}
+
+const MessageBubbleMarkdown = ({ children, className, ...props }: MessageBubbleMarkdownProps) => {
+  return <MarkdownViewer variant="sm" className={cn('bg-transparent', className)} source={children} {...props} />
+}
+
+MessageBubbleMarkdown.displayName = 'MessageBubbleMarkdown'
+
 export const MessageBubble = {
   Root: MessageBubbleRoot,
   Content: MessageBubbleContent,
-  Text: MessageBubbleText
+  Text: MessageBubbleText,
+  Markdown: MessageBubbleMarkdown
 }

@@ -34,7 +34,7 @@ const markdownViewerVariants = cva('', {
   }
 })
 
-type MarkdownViewerProps = {
+export type MarkdownViewerProps = {
   source: string
   maxHeight?: string | number
   withBorder?: boolean

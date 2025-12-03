@@ -22,13 +22,23 @@ export function CodeSuggestionBlock({ code, suggestionBlock }: CodeSuggestionBlo
   const highlightedHtmlOld = useMemo(() => {
     const codeBlockContent = suggestionBlock?.source || ''
 
-    if (!language) return hljs.highlightAuto(codeBlockContent).value
-    return hljs.highlight(codeBlockContent, { language }).value
+    try {
+      if (!language) return hljs.highlightAuto(codeBlockContent).value
+      return hljs.highlight(codeBlockContent, { language }).value
+    } catch {
+      // Fallback to auto-detection if language is unknown
+      return hljs.highlightAuto(codeBlockContent).value
+    }
   }, [suggestionBlock?.source, language])
 
   const highlightedHtmlNew = useMemo(() => {
-    if (!language) return hljs.highlightAuto(code).value
-    return hljs.highlight(code, { language }).value
+    try {
+      if (!language) return hljs.highlightAuto(code).value
+      return hljs.highlight(code, { language }).value
+    } catch {
+      // Fallback to auto-detection if language is unknown
+      return hljs.highlightAuto(code).value
+    }
   }, [code, language])
 
   return (

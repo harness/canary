@@ -206,6 +206,7 @@
     "createRepository": "Créer un dépôt",
     "importRepository": "Importer un dépôt",
     "importRepositories": "Import repositories",
+    "cancelImport": "Cancel import",
     "importing": "Importing…",
     "updated": "Mis à jour",
     "SecretScanningEnabled": "Analyse de secrets activée",

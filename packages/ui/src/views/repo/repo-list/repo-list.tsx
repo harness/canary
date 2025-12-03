@@ -1,4 +1,5 @@
 import {
+  Button,
   Favorite,
   IconV2,
   Layout,
@@ -80,6 +81,7 @@ export function RepoList({
   toCreateRepo,
   toImportRepo,
   onFavoriteToggle,
+  onCancelImport,
   scope,
   showScope = false,
   isDirtyList,
@@ -153,7 +155,16 @@ export function RepoList({
           key={repo.name}
           paddingY="sm"
           actions={
-            !repo.importing && (
+            repo.importing ? (
+              <Button
+                variant="ghost"
+                iconOnly
+                tooltipProps={{ content: t('views:repos.cancelImport', 'Cancel import') }}
+                onClick={() => onCancelImport?.(repo.name)}
+              >
+                <IconV2 name="xmark" skipSize />
+              </Button>
+            ) : (
               <Favorite
                 isFavorite={repo.favorite}
                 onFavoriteToggle={isFavorite => onFavoriteToggle({ repoId: repo.id, isFavorite })}

@@ -62,7 +62,9 @@ export interface MessageBubbleMarkdownProps extends Omit<MarkdownViewerProps, 's
 }
 
 const MessageBubbleMarkdown = ({ children, className, ...props }: MessageBubbleMarkdownProps) => {
-  return <MarkdownViewer variant="sm" className={cn('bg-transparent', className)} source={children} {...props} />
+  return (
+    <MarkdownViewer variant="sm" markdownClassName={cn('bg-transparent', className)} source={children} {...props} />
+  )
 }
 
 MessageBubbleMarkdown.displayName = 'MessageBubbleMarkdown'

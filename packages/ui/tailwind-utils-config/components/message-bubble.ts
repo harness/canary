@@ -8,6 +8,7 @@ export default {
       alignSelf: 'flex-end',
 
       '.cn-message-bubble-content': {
+        padding: 'var(--cn-spacing-3)',
         background: 'var(--cn-comp-ai-chat-bubble)'
       }
     },
@@ -15,7 +16,6 @@ export default {
       alignSelf: 'flex-start'
     },
     '.cn-message-bubble-content': {
-      padding: 'var(--cn-spacing-3)',
       borderRadius: 'var(--cn-rounded-4)'
     }
   }

@@ -13,7 +13,7 @@ export interface DeleteAlertDialogProps {
   isLoading?: boolean
   error?: { type?: string; message: string } | null
   withForm?: boolean
-  message?: string
+  message?: React.ReactChild
   deletionItemName?: string
   deletionKeyword?: string
   violation?: boolean

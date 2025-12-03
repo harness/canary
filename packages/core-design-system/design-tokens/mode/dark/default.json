@@ -1779,19 +1779,17 @@
       }
     },
     "tooltip": {
-      "inverse": {
-        "bg": {
-          "$type": "color",
-          "$value": "{chrome.200}"
-        },
-        "border": {
-          "$type": "color",
-          "$value": "{chrome.200}"
-        },
-        "text": {
-          "$type": "color",
-          "$value": "{pure.black}"
-        }
+      "bg": {
+        "$type": "color",
+        "$value": "{chrome.200}"
+      },
+      "border": {
+        "$type": "color",
+        "$value": "{chrome.200}"
+      },
+      "text": {
+        "$type": "color",
+        "$value": "{pure.black}"
       }
     }
   },

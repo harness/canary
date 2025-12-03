@@ -1770,19 +1770,17 @@
       }
     },
     "tooltip": {
-      "inverse": {
-        "bg": {
-          "$type": "color",
-          "$value": "{tuna.900}"
-        },
-        "border": {
-          "$type": "color",
-          "$value": "{tuna.900}"
-        },
-        "text": {
-          "$type": "color",
-          "$value": "{chrome.25}"
-        }
+      "bg": {
+        "$type": "color",
+        "$value": "{tuna.900}"
+      },
+      "border": {
+        "$type": "color",
+        "$value": "{tuna.900}"
+      },
+      "text": {
+        "$type": "color",
+        "$value": "{chrome.25}"
       }
     }
   },

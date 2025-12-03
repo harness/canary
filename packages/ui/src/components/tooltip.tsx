@@ -24,7 +24,7 @@ export type TooltipProps = {
   hideArrow?: boolean
   delay?: TooltipPrimitiveRootType['delayDuration']
   open?: boolean
-  variant?: 'default' | 'inverse'
+  theme?: 'default' | 'subtle'
 } & Pick<TooltipPrimitiveContentType, 'side' | 'align' | 'className' | 'sideOffset'>
 
 export const Tooltip = forwardRef<HTMLDivElement, TooltipProps>(
@@ -38,7 +38,7 @@ export const Tooltip = forwardRef<HTMLDivElement, TooltipProps>(
       side = 'top',
       align = 'center',
       open,
-      variant = 'default',
+      theme = 'subtle',
       className,
       sideOffset
     },
@@ -62,7 +62,7 @@ export const Tooltip = forwardRef<HTMLDivElement, TooltipProps>(
               'data-[side=left]:slide-in-from-right-2',
               'data-[side=right]:slide-in-from-left-2',
               'data-[side=top]:slide-in-from-bottom-2',
-              variant === 'inverse' && 'cn-tooltip-inverse',
+              theme === 'default' && 'cn-tooltip-default',
               className
             )}
             side={side}

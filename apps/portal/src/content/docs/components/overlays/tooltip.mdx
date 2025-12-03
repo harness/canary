@@ -54,9 +54,9 @@ import { withTooltip } from "@harnessio/ui/components";
 const comp = withTooltip(yourComp);
 ```
 
-## Variants
+## Themes
 
-The tooltip supports `default` and `inverse` variants. The inverse variant provides high-contrast appearance.
+The tooltip supports `subtle` and `default` themes. The subtle theme provides standard appearance, while the default theme provides high-contrast appearance.
 
 <DocsPage.ComponentExample
   client:only
@@ -66,14 +66,14 @@ The tooltip supports `default` and `inverse` variants. The inverse variant provi
         <Tooltip
           content="Standard tooltip styling"
         >
-          <Button variant="secondary">Default Variant</Button>
+          <Button variant="secondary">Subtle Theme (default)</Button>
         </Tooltip>
 
         <Tooltip
-          variant="inverse"
+          theme="default"
           content="High-contrast tooltip styling"
         >
-          <Button variant="secondary">Inverse Variant</Button>
+          <Button variant="secondary">Default Theme</Button>
         </Tooltip>
       </ButtonLayout>
     </TooltipProvider>
@@ -214,11 +214,11 @@ The provider component that manages tooltips. Typically wrapped around the entir
       value: "string",
     },
     {
-      name: "variant",
-      description: "Visual variant of the tooltip.",
+      name: "theme",
+      description: "Visual theme of the tooltip.",
       required: false,
-      value: "'default' | 'inverse'",
-      defaultValue: "'default'",
+      value: "'subtle' | 'default'",
+      defaultValue: "'subtle'",
     },
     {
       name: "side",

@@ -37,14 +37,14 @@ export default {
       left: 'auto !important'
     },
 
-    '&-inverse': {
-      border: 'var(--cn-tooltip-border) solid var(--cn-comp-tooltip-inverse-border)',
-      background: 'var(--cn-comp-tooltip-inverse-bg)',
-      color: 'var(--cn-comp-tooltip-inverse-text)',
+    '&-default': {
+      border: 'var(--cn-tooltip-border) solid var(--cn-comp-tooltip-border)',
+      background: 'var(--cn-comp-tooltip-bg)',
+      color: 'var(--cn-comp-tooltip-text)',
 
       '& .cn-tooltip-arrow': {
-        color: 'var(--cn-comp-tooltip-inverse-bg)',
-        stroke: 'var(--cn-comp-tooltip-inverse-border)'
+        color: 'var(--cn-comp-tooltip-bg)',
+        stroke: 'var(--cn-comp-tooltip-border)'
       }
     }
   }

@@ -32,6 +32,7 @@ import scrollAreaStyles from './scroll-area'
 import selectStyles from './select'
 import shortcutStyle from './shortcut'
 import sidebarStyles from './sidebar'
+import sidebarv2Styles from './sidebarv2'
 import skeletonStyles from './skeleton'
 import stackedListStyles from './stacked-list'
 import switchStyles from './switch'
@@ -85,7 +86,7 @@ export const ComponentStyles = [
   treeStyles,
   meterStyles,
   messageBubbleStyles,
-
+  sidebarv2Styles,
   // Form styles
   selectStyles,
   formSharedStyles,

@@ -38,7 +38,7 @@ export const Tooltip = forwardRef<HTMLDivElement, TooltipProps>(
       side = 'top',
       align = 'center',
       open,
-      theme = 'subtle',
+      theme = 'default',
       className,
       sideOffset
     },

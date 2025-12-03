@@ -56,7 +56,7 @@ const comp = withTooltip(yourComp);
 
 ## Themes
 
-The tooltip supports `subtle` and `default` themes. The subtle theme provides standard appearance, while the default theme provides high-contrast appearance.
+The tooltip supports `default` and `subtle` themes. The default theme provides high-contrast appearance and is used by default. The subtle theme provides a lighter, standard appearance.
 
 <DocsPage.ComponentExample
   client:only
@@ -64,16 +64,16 @@ The tooltip supports `subtle` and `default` themes. The subtle theme provides st
     <TooltipProvider>
       <ButtonLayout className="justify-center">
         <Tooltip
-          content="Standard tooltip styling"
+          content="High-contrast tooltip styling"
         >
-          <Button variant="secondary">Subtle Theme (default)</Button>
+          <Button variant="secondary">Default Theme (default)</Button>
         </Tooltip>
 
         <Tooltip
-          theme="default"
-          content="High-contrast tooltip styling"
+          theme="subtle"
+          content="Standard tooltip styling"
         >
-          <Button variant="secondary">Default Theme</Button>
+          <Button variant="secondary">Subtle Theme</Button>
         </Tooltip>
       </ButtonLayout>
     </TooltipProvider>
@@ -217,8 +217,8 @@ The provider component that manages tooltips. Typically wrapped around the entir
       name: "theme",
       description: "Visual theme of the tooltip.",
       required: false,
-      value: "'subtle' | 'default'",
-      defaultValue: "'subtle'",
+      value: "'default' | 'subtle'",
+      defaultValue: "'default'",
     },
     {
       name: "side",

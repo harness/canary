@@ -32,10 +32,15 @@ export const tableVariants = cva('cn-table-v2', {
       normal: 'cn-table-v2-normal',
       relaxed: 'cn-table-v2-relaxed',
       compact: 'cn-table-v2-compact'
+    },
+    variant: {
+      default: '',
+      transparent: 'cn-table-v2-transparent'
     }
   },
   defaultVariants: {
-    size: 'normal'
+    size: 'normal',
+    variant: 'default'
   }
 })
 
@@ -49,6 +54,7 @@ const TableRoot = forwardRef<HTMLTableElement, TableRootV2Props>(
   (
     {
       size,
+      variant,
       className,
       tableClassName,
       disableHighlightOnHover = false,
@@ -60,7 +66,7 @@ const TableRoot = forwardRef<HTMLTableElement, TableRootV2Props>(
     <div
       className={cn(
         'cn-table-v2-container',
-        tableVariants({ size }),
+        tableVariants({ size, variant }),
         { 'cn-table-v2-highlight-hover': !disableHighlightOnHover },
         className
       )}

@@ -327,6 +327,47 @@ import { Aside } from "@astrojs/starlight/components";
 `}
 />
 
+### Transparent variant
+
+<DocsPage.ComponentExample
+  client:only
+  code={`
+<div>
+  <h5 className="mb-cn-xs">Transparent variant (no border, no header background)</h5>
+  <Table.Root variant="transparent">
+    <Table.Header>
+      <Table.Row>
+        <Table.Head>Name</Table.Head>
+        <Table.Head>Email</Table.Head>
+        <Table.Head>Display Name</Table.Head>
+        <Table.Head>Date added</Table.Head>
+      </Table.Row>
+    </Table.Header>
+    <Table.Body>
+      <Table.Row>
+        <Table.Cell>John Doe</Table.Cell>
+        <Table.Cell>john@example.com</Table.Cell>
+        <Table.Cell>John</Table.Cell>
+        <Table.Cell>2023-01-01</Table.Cell>
+      </Table.Row>
+      <Table.Row>
+        <Table.Cell>Jane Smith</Table.Cell>
+        <Table.Cell>jane@example.com</Table.Cell>
+        <Table.Cell>Jane</Table.Cell>
+        <Table.Cell>2023-02-15</Table.Cell>
+      </Table.Row>
+      <Table.Row>
+        <Table.Cell>Bob Johnson</Table.Cell>
+        <Table.Cell>bob@example.com</Table.Cell>
+        <Table.Cell>Bob</Table.Cell>
+        <Table.Cell>2023-03-20</Table.Cell>
+      </Table.Row>
+    </Table.Body>
+  </Table.Root>
+</div>
+`}
+/>
+
 ## Usage
 
 ```typescript jsx
@@ -411,6 +452,14 @@ The root component for the table.
       required: false,
       value: "'normal' | 'relaxed' | 'compact'",
       defaultValue: "'normal'",
+    },
+    {
+      name: "variant",
+      description:
+        "Visual variant of the table. Use 'transparent' to display table without borders and background color.",
+      required: false,
+      value: "'default' | 'transparent'",
+      defaultValue: "'default'",
     },
     {
       name: "className",

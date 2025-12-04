@@ -47,6 +47,25 @@ export default {
       }
     },
 
+    // Transparent variant
+    '&:where(.cn-table-v2-transparent)': {
+      '&.cn-table-v2-container': {
+        '@apply border-0': ''
+      },
+      '.cn-table-v2-header': {
+        '@apply border-0 bg-transparent': ''
+      },
+      '.cn-table-v2-head': {
+        '@apply bg-transparent': ''
+      },
+      '.cn-table-v2-row': {
+        '@apply border-b-0': ''
+      },
+      '.cn-table-v2-head-sortable:hover': {
+        '@apply bg-transparent': ''
+      }
+    },
+
     // Header
     '&-header': {
       '@apply border-b': '',

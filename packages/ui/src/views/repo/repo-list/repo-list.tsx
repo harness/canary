@@ -4,6 +4,8 @@ import {
   IconV2,
   Layout,
   NoData,
+  PermissionIdentifier,
+  ResourceType,
   ScopeTag,
   Skeleton,
   StackedList,
@@ -11,7 +13,7 @@ import {
   Text,
   TimeAgoCard
 } from '@/components'
-import { useTranslation } from '@/context'
+import { useComponents, useRouterContext, useTranslation } from '@/context'
 import { RepositoryType, Scope } from '@/views'
 import { determineScope, getScopedPath } from '@components/scope/utils'
 
@@ -80,6 +82,7 @@ export function RepoList({
   onClickRepo,
   toCreateRepo,
   toImportRepo,
+  toImportMultipleRepos,
   onFavoriteToggle,
   onCancelImport,
   scope,
@@ -89,6 +92,8 @@ export function RepoList({
 }: RepoListProps) {
   const { t } = useTranslation()
   const { repositories, totalItems, page, setPage, pageSize, setPageSize } = useRepoStore()
+  const { RbacSplitButton } = useComponents()
+  const { navigate } = useRouterContext()
 
   if (isLoading) {
     return <Skeleton.List linesCount={8} hasActions />
@@ -119,18 +124,46 @@ export function RepoList({
           t('views:noData.noReposProject', 'There are no repositories in this project yet.'),
           t('views:noData.createOrImportRepos', 'Create new or import an existing repository.')
         ]}
-        primaryButton={{
-          icon: 'plus',
-          label: t('views:repos.createRepository', 'Create Repository'),
-          to: toCreateRepo?.()
-        }}
-        secondaryButton={{
-          icon: 'import',
-          label: t('views:repos.importRepository', 'Import Repository'),
-          to: toImportRepo?.(),
-          variant: 'outline'
-        }}
-      />
+      >
+        <RbacSplitButton<string>
+          dropdownContentClassName="mt-0 min-w-[208px]"
+          handleButtonClick={() => navigate(toCreateRepo?.() || '')}
+          handleOptionChange={option => {
+            if (option === 'new') {
+              navigate(toCreateRepo?.() || '')
+            }
+            if (option === 'import') {
+              navigate(toImportRepo?.() || '')
+            }
+            if (option === 'import-multiple') {
+              navigate(toImportMultipleRepos?.() || '')
+            }
+          }}
+          options={[
+            {
+              value: 'new',
+              label: t('views:repos.createRepository', 'Create Repository')
+            },
+            {
+              value: 'import',
+              label: t('views:repos.importRepository', 'Import Repository')
+            },
+            {
+              value: 'import-multiple',
+              label: t('views:repos.importRepositories', 'Import Repositories')
+            }
+          ]}
+          rbac={{
+            resource: {
+              resourceType: ResourceType.CODE_REPOSITORY
+            },
+            permissions: [PermissionIdentifier.CODE_REPO_CREATE]
+          }}
+        >
+          <IconV2 name="plus" />
+          {t('views:repos.createRepository', 'Create Repository')}
+        </RbacSplitButton>
+      </NoData>
     )
   }
 

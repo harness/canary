@@ -245,6 +245,7 @@ const SandboxRepoListPage: FC<RepoListPageProps> = ({
           isLoading={isLoading}
           toCreateRepo={toCreateRepo}
           toImportRepo={toImportRepo}
+          toImportMultipleRepos={toImportMultipleRepos}
           onFavoriteToggle={onFavoriteToggle}
           onCancelImport={onCancelImport}
           scope={scope}

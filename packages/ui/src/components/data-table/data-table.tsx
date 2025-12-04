@@ -24,6 +24,7 @@ export interface DataTableProps<TData> {
   data: TData[]
   columns: ColumnDef<TData, unknown>[]
   size?: VariantProps<typeof tableVariants>['size']
+  variant?: VariantProps<typeof tableVariants>['variant']
   paginationProps?: PaginationProps
   getRowClassName?: (row: Row<TData>) => string | undefined
   onRowClick?: (data: TData, index: number) => void
@@ -91,6 +92,7 @@ export const DataTable = function DataTable<TData>({
   data = [],
   columns,
   size = 'normal',
+  variant = 'default',
   paginationProps,
   getRowClassName,
   onRowClick,
@@ -271,6 +273,7 @@ export const DataTable = function DataTable<TData>({
        */
       tableClassName={cn({ 'table-fixed': hasPinnedColumns })}
       size={size}
+      variant={variant}
       disableHighlightOnHover={disableHighlightOnHover}
       paginationProps={paginationProps}
     >

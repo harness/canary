@@ -314,6 +314,14 @@ function MyTable() {
       defaultValue: "'normal'",
     },
     {
+      name: "variant",
+      description:
+        "Visual variant of the table. Use 'transparent' to display table without borders and background color.",
+      required: false,
+      value: "'default' | 'transparent'",
+      defaultValue: "'default'",
+    },
+    {
       name: "getRowId",
       description: "Function to get a unique ID for each row",
       required: false,
@@ -750,6 +758,116 @@ function TableWithPinnedColumns() {
   columns requiring horizontal scrolling. For tables with few columns, pinning
   may not be necessary.
 </Aside>
+
+## Transparent Variant
+
+The `DataTable` component supports a `transparent` variant that removes the background and border styling, making it ideal for embedding tables in cards or within expandable table row or other containers where you want a cleaner, more integrated look.
+
+<DocsPage.ComponentExample
+  client:only
+  code={`() => {
+  const users = [
+    { name: 'John Doe', email: 'john@example.com', status: 'active', role: 'Admin' },
+    { name: 'Jane Smith', email: 'jane@example.com', status: 'active', role: 'Manager' },
+    { name: 'Bob Johnson', email: 'bob@example.com', status: 'inactive', role: 'Developer' },
+    { name: 'Alice Williams', email: 'alice@example.com', status: 'active', role: 'Designer' }
+  ]
+
+const columns = [
+{
+accessorKey: 'name',
+header: 'Name',
+enableSorting: true
+},
+{
+accessorKey: 'email',
+header: 'Email'
+},
+{
+accessorKey: 'role',
+header: 'Role'
+},
+{
+accessorKey: 'status',
+header: 'Status',
+cell: (info) => (
+
+<StatusBadge
+  theme={info.getValue() === "active" ? "success" : "default"}
+  size="sm"
+>
+  {info.getValue()}
+</StatusBadge>
+) } ]
+
+const [tableSorting, setTableSorting] = React.useState([])
+
+const sortedData = [...users].sort((a, b) => {
+if (tableSorting.length === 0) return 0
+const sort = tableSorting[0]
+const key = sort.id
+if (a[key] < b[key]) return sort.desc ? 1 : -1
+if (a[key] > b[key]) return sort.desc ? -1 : 1
+return 0
+})
+
+return (
+
+<DataTable
+  columns={columns}
+  data={sortedData}
+  getRowId={(row) => row.email}
+  size="compact"
+  variant="transparent"
+  currentSorting={tableSorting}
+  onSortingChange={setTableSorting}
+/>
+) }`} />
+
+### Usage
+
+```tsx
+import { DataTable, Card } from "@harnessio/ui/components";
+
+function TransparentTable() {
+  const columns = [
+    { accessorKey: "name", header: "Name" },
+    { accessorKey: "email", header: "Email" },
+  ];
+
+  const data = [
+    { name: "John Doe", email: "john@example.com" },
+    { name: "Jane Smith", email: "jane@example.com" },
+  ];
+
+  return (
+    <Card.Root>
+      <Card.Title>Users</Card.Title>
+      <Card.Content className="p-0">
+        <DataTable
+          columns={columns}
+          data={data}
+          variant="transparent"
+          size="compact"
+        />
+      </Card.Content>
+    </Card.Root>
+  );
+}
+```
+
+### Key Features
+
+- **No Background**: Removes the default table background for a cleaner look
+- **No Border**: Removes outer borders while maintaining internal structure
+- **Expandable Rows**: Perfect for embedding tables within expandable rows of another table.
+- **Maintains Functionality**: All features (sorting, selection, expansion) work normally
+
+### Best Practices
+
+- Use `transparent` variant when embedding tables in containers with their own backgrounds
+- Combine with `size="compact"` for a more condensed appearance in cards
+- Ideal for dashboard widgets and summary tables
 
 ## Examples
 

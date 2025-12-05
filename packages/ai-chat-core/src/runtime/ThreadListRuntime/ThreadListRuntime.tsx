@@ -1,3 +1,4 @@
+import { CapabilityExecutionManager } from '../../core'
 import { StreamAdapter, ThreadListAdapter } from '../../types/adapters'
 import { ThreadListItemState } from '../../types/thread'
 import { generateThreadId } from '../../utils/idGenerator'
@@ -16,6 +17,7 @@ export interface ThreadListState {
 export interface ThreadListRuntimeConfig {
   streamAdapter: StreamAdapter
   threadListAdapter?: ThreadListAdapter
+  capabilityExecutionManager?: CapabilityExecutionManager
 }
 
 export class ThreadListRuntime extends BaseSubscribable {
@@ -32,7 +34,8 @@ export class ThreadListRuntime extends BaseSubscribable {
     // Create main thread
     this._mainThreadId = generateThreadId()
     const mainCore = new ThreadRuntimeCore({
-      streamAdapter: config.streamAdapter
+      streamAdapter: config.streamAdapter,
+      capabilityExecutionManager: config.capabilityExecutionManager
     })
     this.main = new ThreadRuntime(mainCore)
     this._threads.set(this._mainThreadId, this.main)
@@ -136,7 +139,8 @@ export class ThreadListRuntime extends BaseSubscribable {
   public async switchToNewThread(): Promise<void> {
     const newThreadId = generateThreadId()
     const newCore = new ThreadRuntimeCore({
-      streamAdapter: this.config.streamAdapter
+      streamAdapter: this.config.streamAdapter,
+      capabilityExecutionManager: this.config.capabilityExecutionManager
     })
     const newThread = new ThreadRuntime(newCore)
 

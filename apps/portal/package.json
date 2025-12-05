@@ -40,6 +40,7 @@
   },
   "devDependencies": {
     "@astrojs/check": "^0.9.4",
+    "@emotion/is-prop-valid": "^1.4.0",
     "@types/react": "^17.0.3",
     "lint-staged": "^15.2.9",
     "prettier": "^3.4.2",

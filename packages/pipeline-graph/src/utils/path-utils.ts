@@ -39,3 +39,33 @@ export function getPathPieces(path: string) {
 
   return { arrayPath, index }
 }
+
+/**
+ * Extracts initial collapsed state from nodes
+ * Recursively traverses the tree and collects all nodes where
+ * config?.initialCollapsed === true and containerType is 'serial' or 'parallel'
+ */
+export function extractInitialCollapsedState(nodes: AnyNodeInternal[]): Record<string, boolean> {
+  const collapsedState: Record<string, boolean> = {}
+
+  function traverse(nodes: AnyNodeInternal[]) {
+    for (const node of nodes) {
+      // Only serial and parallel containers support collapsing
+      if (
+        (node.containerType === 'serial' || node.containerType === 'parallel') &&
+        node.config?.initialCollapsed === true &&
+        node.path
+      ) {
+        collapsedState[node.path] = true
+      }
+
+      // Recursively process children
+      if ('children' in node && node.children.length > 0) {
+        traverse(node.children)
+      }
+    }
+  }
+
+  traverse(nodes)
+  return collapsedState
+}

@@ -9,6 +9,7 @@ import Demo5Size from './demo5-size'
 import './playground.css'
 
 import Demo6TopAlign from './demo6-top-align'
+import Demo7Callbacks from './demo7-callbacks'
 
 type ExperimentalType = 'sharpLine' | 'sharpBorder' | 'skeleton'
 
@@ -36,6 +37,10 @@ const demoArr = [
   {
     name: 'Top align layout',
     component: Demo6TopAlign
+  },
+  {
+    name: 'Callbacks & Initial Collapsed',
+    component: Demo7Callbacks
   }
 ]
 

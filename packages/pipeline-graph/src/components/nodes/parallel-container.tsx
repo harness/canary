@@ -16,8 +16,9 @@ export default function ParallelNodeContainer(props: ContainerNodeProps<Parallel
 
   const myLevel = level + 1
 
-  const { isCollapsed, collapse } = useGraphContext()
-  const collapsed = useMemo(() => isCollapsed(props.node.path!), [isCollapsed])
+  const { isCollapsed, collapse, isCollapsing } = useGraphContext()
+  const collapsed = useMemo(() => isCollapsed(props.node.path!), [isCollapsed, props.node.path])
+  const isLoading = useMemo(() => isCollapsing(props.node.path!), [isCollapsing, props.node.path])
 
   const verticalAdjustment = parallelContainerConfig.parallelGroupAdjustment ?? 0
 
@@ -81,8 +82,13 @@ export default function ParallelNodeContainer(props: ContainerNodeProps<Parallel
       >
         <CollapseButton
           collapsed={collapsed}
+          isLoading={isLoading}
           onToggle={() => {
-            collapse(node.path!, !collapsed)
+            const callback = node.config?.onCollapseChange
+            const onSuccess = node.config?.onCollapseSuccess
+            const onError = node.config?.onCollapseError
+
+            collapse(node.path!, !collapsed, callback, node, onSuccess, onError)
           }}
         />
       </div>

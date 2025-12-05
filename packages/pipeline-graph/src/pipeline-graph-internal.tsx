@@ -9,7 +9,7 @@ import { AnyContainerNodeType } from './types/nodes'
 import { AnyNodeInternal } from './types/nodes-internal'
 import { connectPorts } from './utils/connects-utils'
 import { getFlexAlign } from './utils/layout-utils'
-import { addPaths } from './utils/path-utils'
+import { addPaths, extractInitialCollapsedState } from './utils/path-utils'
 
 export interface LayoutConfig {
   type?: 'center' | 'top'
@@ -32,7 +32,13 @@ export interface PipelineGraphInternalProps {
 }
 
 export function PipelineGraphInternal(props: PipelineGraphInternalProps) {
-  const { initialized, nodes: nodesBank, rerenderConnections, setInitialized } = useGraphContext()
+  const {
+    initialized,
+    nodes: nodesBank,
+    rerenderConnections,
+    setInitialized,
+    setInitialCollapsedState
+  } = useGraphContext()
   const { setCanvasTransform, canvasTransformRef, config: canvasConfig, setTargetEl } = useCanvasContext()
   const { serialContainerConfig } = useContainerNodeContext()
 
@@ -57,7 +63,13 @@ export function PipelineGraphInternal(props: PipelineGraphInternalProps) {
 
     setDataInternal(newData)
     dataInternalRef.current = newData
-  }, [data])
+
+    // Extract and set initial collapsed state
+    const initialCollapsedState = extractInitialCollapsedState(newData)
+    if (Object.keys(initialCollapsedState).length > 0) {
+      setInitialCollapsedState(initialCollapsedState)
+    }
+  }, [data, nodesBank, setInitialCollapsedState])
 
   useLayoutEffect(() => {
     if (

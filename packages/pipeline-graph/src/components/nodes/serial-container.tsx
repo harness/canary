@@ -16,8 +16,9 @@ export default function SerialNodeContainer(props: ContainerNodeProps<SerialNode
 
   const myLevel = level + 1
 
-  const { isCollapsed, collapse } = useGraphContext()
+  const { isCollapsed, collapse, isCollapsing } = useGraphContext()
   const collapsed = useMemo(() => isCollapsed(node.path!), [isCollapsed, node.path])
+  const isLoading = useMemo(() => isCollapsing(node.path!), [isCollapsing, node.path])
 
   const verticalAdjustment = serialContainerConfig.serialGroupAdjustment ?? 0
 
@@ -81,8 +82,13 @@ export default function SerialNodeContainer(props: ContainerNodeProps<SerialNode
       >
         <CollapseButton
           collapsed={collapsed}
+          isLoading={isLoading}
           onToggle={() => {
-            collapse(node.path!, !collapsed)
+            const callback = node.config?.onCollapseChange
+            const onSuccess = node.config?.onCollapseSuccess
+            const onError = node.config?.onCollapseError
+
+            collapse(node.path, !collapsed, callback, node, onSuccess, onError)
           }}
         />
       </div>

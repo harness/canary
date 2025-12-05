@@ -3,13 +3,22 @@ import { createContext, useCallback, useContext, useMemo, useRef, useState } fro
 import { forOwn } from 'lodash-es'
 
 import { NodeContent } from '../types/node-content'
+import { OnCollapseChangeCallback, OnCollapseErrorCallback, OnCollapseSuccessCallback } from '../types/nodes'
 
 interface GraphContextProps {
   initialized: boolean
   setInitialized: () => void
   nodes: Record<string, NodeContent>
-  collapse: (path: string, state: boolean) => void
+  collapse: (
+    path: string,
+    state: boolean,
+    callback?: OnCollapseChangeCallback,
+    node?: any,
+    onSuccess?: OnCollapseSuccessCallback,
+    onError?: OnCollapseErrorCallback
+  ) => void | Promise<void>
   isCollapsed: (path: string) => boolean
+  isCollapsing: (path: string) => boolean
   setNodeToRemove: (path: string | null) => void
   nodeToRemove: string | null
   // rerender connections
@@ -18,25 +27,37 @@ interface GraphContextProps {
   rerenderConnections: number
   // shift collapsed on node deletion
   shiftCollapsed: (path: string, index: number) => void
+  // set initial collapsed state
+  setInitialCollapsedState: (state: Record<string, boolean>) => void
 }
 
 const GraphContext = createContext<GraphContextProps>({
   initialized: false,
   setInitialized: () => undefined,
   nodes: {},
-  collapse: (_path: string, _state: boolean) => undefined,
+  collapse: (
+    _path: string,
+    _state: boolean,
+    _callback?: OnCollapseChangeCallback,
+    _node?: any,
+    _onSuccess?: OnCollapseSuccessCallback,
+    _onError?: OnCollapseErrorCallback
+  ) => undefined,
   isCollapsed: (_path: string) => false,
+  isCollapsing: (_path: string) => false,
   rerenderConnections: 0,
   setNodeToRemove: (_path: string | null) => undefined,
   nodeToRemove: null,
   shiftCollapsed: (_path: string, _index: number) => undefined,
-  rerender: () => undefined
+  rerender: () => undefined,
+  setInitialCollapsedState: (_state: Record<string, boolean>) => undefined
 })
 
 const GraphProvider = ({ nodes: nodesArr, children }: React.PropsWithChildren<{ nodes: NodeContent[] }>) => {
   const [initialized, setInitialized] = useState<boolean>(false)
 
   const [collapsed, setCollapsed] = useState<Record<string, boolean>>({})
+  const [collapsingPaths, setCollapsingPaths] = useState<Set<string>>(new Set())
   const [rerenderConnections, setRerenderConnections] = useState(1)
   const [nodeToRemove, setNodeToRemove] = useState<string | null>(null)
 
@@ -75,12 +96,92 @@ const GraphProvider = ({ nodes: nodesArr, children }: React.PropsWithChildren<{ 
   }
 
   const collapse = useCallback(
-    (path: string, state: boolean) => {
-      setCollapsed({ ...collapsed, [path]: state })
-      setRerenderConnections(rerenderConnections + 1)
+    async (
+      path: string,
+      state: boolean,
+      callback?: OnCollapseChangeCallback,
+      node?: any,
+      onSuccess?: OnCollapseSuccessCallback,
+      onError?: OnCollapseErrorCallback
+    ) => {
+      // BACKWARD COMPATIBILITY: If no callback provided, update collapsed state immediately (current default behavior)
+      if (!callback) {
+        setCollapsed({ ...collapsed, [path]: state })
+        setRerenderConnections(rerenderConnections + 1)
+        // Call onSuccess if provided (even without onCollapseChange)
+        if (onSuccess && typeof onSuccess === 'function') {
+          try {
+            await Promise.resolve(onSuccess(path, state, node))
+          } catch (error) {
+            console.error('onSuccess callback failed:', error)
+          }
+        }
+        return
+      }
+
+      // Callback provided: mark as collapsing and wait for callback
+      setCollapsingPaths(prev => new Set(prev).add(path))
+
+      try {
+        // Call the callback (await if it's a promise)
+        await Promise.resolve(callback(path, state, node))
+
+        // Only update collapsed state if callback succeeds
+        setCollapsed({ ...collapsed, [path]: state })
+        setRerenderConnections(rerenderConnections + 1)
+
+        // Call onSuccess callback if provided
+        if (onSuccess && typeof onSuccess === 'function') {
+          try {
+            await Promise.resolve(onSuccess(path, state, node))
+          } catch (error) {
+            console.error('onSuccess callback failed:', error)
+          }
+        }
+      } catch (error) {
+        // If callback throws/rejects, don't change state
+        const errorObj = error instanceof Error ? error : new Error(String(error))
+        console.error('Collapse callback failed:', errorObj)
+
+        // Call onError callback if provided
+        if (onError && typeof onError === 'function') {
+          try {
+            await Promise.resolve(onError(path, state, node, errorObj))
+          } catch (err) {
+            console.error('onError callback failed:', err)
+          }
+        }
+      } finally {
+        // Clear collapsing state after completion (even on error)
+        setCollapsingPaths(prev => {
+          const next = new Set(prev)
+          next.delete(path)
+          return next
+        })
+      }
     },
-    [collapsed, setCollapsed, rerenderConnections, setRerenderConnections]
+    [collapsed, rerenderConnections]
   )
+
+  const isCollapsing = useCallback(
+    (path: string) => {
+      return collapsingPaths.has(path)
+    },
+    [collapsingPaths]
+  )
+
+  const setInitialCollapsedState = useCallback((state: Record<string, boolean>) => {
+    // Only set initial state for paths that don't already exist (preserve user interactions)
+    setCollapsed(prev => {
+      const merged = { ...prev }
+      for (const [path, value] of Object.entries(state)) {
+        if (!(path in merged)) {
+          merged[path] = value
+        }
+      }
+      return merged
+    })
+  }, [])
 
   const rerender = useCallback(() => {
     setRerenderConnections(prev => prev + 1)
@@ -111,6 +212,7 @@ const GraphProvider = ({ nodes: nodesArr, children }: React.PropsWithChildren<{ 
         nodes,
         collapse,
         isCollapsed,
+        isCollapsing,
         setNodeToRemove,
         nodeToRemove,
         // force rerender
@@ -118,7 +220,9 @@ const GraphProvider = ({ nodes: nodesArr, children }: React.PropsWithChildren<{ 
         // shift collapsed on node deletion
         shiftCollapsed,
         // rerender connections
-        rerender
+        rerender,
+        // set initial collapsed state
+        setInitialCollapsedState
       }}
     >
       {children}

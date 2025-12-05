@@ -137,7 +137,7 @@ export class ThreadRuntimeCore extends BaseSubscribable {
     // Handle core events with type guards
     if (event.type === 'part-start') {
       this.handlePartStart(message, event as Extract<StreamEvent, { type: 'part-start' }>)
-    } else if (event.type === 'text-delta') {
+    } else if (event.type === 'text-delta' || event.type === 'assistant_thought') {
       this.handleTextDelta(message, event as Extract<StreamEvent, { type: 'text-delta' }>)
     } else if (event.type === 'part-finish') {
       this.handlePartFinish()

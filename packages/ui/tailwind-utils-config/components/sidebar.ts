@@ -199,6 +199,14 @@ export default {
         }
       },
 
+      '&-trigger': {
+        cursor: 'pointer',
+        '&-active': {
+          backgroundColor: 'var(--cn-state-hover)',
+          borderRadius: 'var(--cn-sidebar-item-radius)'
+        }
+      },
+
       '&-wrapper': {
         position: 'relative',
         display: 'grid',
@@ -225,7 +233,7 @@ export default {
           },
 
           // Active item
-          '&[data-active=true]': {
+          '&[data-active=true][data-clickable=true]': {
             '.cn-sidebar-item-content': {
               background: 'var(--cn-comp-sidebar-item-selected)'
             },

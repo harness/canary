@@ -12,6 +12,9 @@ interface NavbarItemProps {
   actionButtons?: SidebarItemProps['actionButtons']
   hideMenuItems?: boolean
   active?: boolean
+  draggable?: boolean
+  dragAttributes?: React.HTMLAttributes<HTMLElement>
+  dragListeners?: Record<string, Function | undefined>
 }
 
 export const AppSidebarItem = ({
@@ -23,7 +26,10 @@ export const AppSidebarItem = ({
   disabled = false,
   actionButtons,
   hideMenuItems = false,
-  active = false
+  active = false,
+  draggable,
+  dragAttributes,
+  dragListeners
 }: NavbarItemProps) => {
   const { t } = useTranslation()
 
@@ -53,6 +59,9 @@ export const AppSidebarItem = ({
       disabled={disabled}
       actionButtons={actionButtons}
       active={active}
+      draggable={draggable}
+      dragAttributes={dragAttributes}
+      dragListeners={dragListeners}
     />
   )
 }

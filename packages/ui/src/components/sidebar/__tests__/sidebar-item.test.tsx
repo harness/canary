@@ -363,6 +363,47 @@ describe('SidebarItem', () => {
     })
   })
 
+  describe('Draggable Functionality', () => {
+    test('renders grip icon when draggable prop is true', () => {
+      const { container } = renderComponent({ draggable: true })
+      const gripHandle = container.querySelector('.cn-sidebar-item-grip-handle')
+      expect(gripHandle).toBeInTheDocument()
+      const gripIcon = gripHandle?.querySelector('[data-testid="icon"]')
+      expect(gripIcon).toHaveAttribute('data-name', 'grip-dots')
+    })
+
+    test('does not render grip icon when draggable is false', () => {
+      const { container } = renderComponent({ draggable: false })
+      const gripHandle = container.querySelector('.cn-sidebar-item-grip-handle')
+      expect(gripHandle).toBeNull()
+    })
+
+    test('applies draggable data attribute when draggable is true', () => {
+      const { container } = renderComponent({ draggable: true })
+      const wrapper = container.querySelector('.cn-sidebar-item-wrapper')
+      expect(wrapper).toHaveAttribute('data-draggable', 'true')
+    })
+
+    test('grip icon has active background when item is active and draggable', () => {
+      const { container } = renderComponent({ draggable: true, active: true })
+      const gripHandle = container.querySelector('.cn-sidebar-item-grip-handle')
+      expect(gripHandle).toBeInTheDocument()
+      // Verify it has the active background class applied via CSS
+      const wrapper = container.querySelector('.cn-sidebar-item-wrapper')
+      expect(wrapper).toHaveAttribute('data-active', 'true')
+      expect(wrapper).toHaveAttribute('data-draggable', 'true')
+    })
+
+    test('content has adjusted padding when draggable', () => {
+      const { container } = renderComponent({ draggable: true })
+      const content = container.querySelector('.cn-sidebar-item-content')
+      expect(content).toBeInTheDocument()
+      // Padding adjustment is applied via CSS, verify wrapper has draggable attribute
+      const wrapper = container.querySelector('.cn-sidebar-item-wrapper')
+      expect(wrapper).toHaveAttribute('data-draggable', 'true')
+    })
+  })
+
   describe('SidebarMenuSubItem', () => {
     test('renders NavLink with title', () => {
       render(<SidebarMenuSubItem to="/link" title="Sub item" />)

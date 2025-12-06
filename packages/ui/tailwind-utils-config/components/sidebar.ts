@@ -53,29 +53,7 @@ export default {
       padding: '0 var(--cn-sidebar-container-px)',
 
       '&-wrapper': {
-        '@apply flex-1 overflow-hidden relative before:absolute before:inset-x-0 before:top-0 before:z-10 after:z-10 after:absolute after:inset-x-0 after:bottom-0':
-          '',
-
-        '&:before, &:after': {
-          height: '60px',
-          pointerEvents: 'none'
-        },
-
-        '&:before': {
-          backgroundImage: 'var(--cn-comp-sidebar-fade-start)'
-        },
-
-        '&:after': {
-          backgroundImage: 'var(--cn-comp-sidebar-fade-end)'
-        },
-
-        '&:where(.cn-sidebar-content-wrapper-top)': {
-          '@apply before:hidden': ''
-        },
-
-        '&:where(.cn-sidebar-content-wrapper-bottom)': {
-          '@apply after:hidden': ''
-        }
+        '@apply flex-1 overflow-hidden relative': ''
       }
     },
 
@@ -177,6 +155,7 @@ export default {
     '&-item': {
       maxWidth: '100%',
       overflow: 'hidden',
+      // position: 'relative',
       '@apply duration-150 transition-[max-width,margin-left,padding] ease-linear': '',
 
       '&:hover': {
@@ -199,6 +178,28 @@ export default {
         }
       },
 
+      '&-grip-handle': {
+        position: 'absolute',
+        left: '0',
+        top: '0',
+        bottom: '0',
+        width: 'var(--cn-icon-size-2xs)',
+        display: 'flex',
+        alignItems: 'center',
+        justifyContent: 'center',
+        zIndex: '1',
+        cursor: 'grab',
+        // Enable pointer events for drag functionality
+        pointerEvents: 'auto'
+      },
+
+      '&-grip-icon': {
+        color: 'var(--cn-comp-sidebar-item-text-subtle)',
+        width: 'var(--cn-icon-size-2xs)',
+        height: 'var(--cn-icon-size-2xs)',
+        flexShrink: '0'
+      },
+
       '&-wrapper': {
         position: 'relative',
         display: 'grid',
@@ -211,6 +212,11 @@ export default {
             '&[data-active=false]': {
               '.cn-sidebar-item-content': {
                 backgroundColor: 'var(--cn-state-hover)'
+                // },
+                // // Grip icon gets same background when content is hovered
+                // '&[data-draggable=true] .cn-sidebar-item .cn-sidebar-item-grip-handle': {
+                //   backgroundColor: 'var(--cn-state-hover)',
+                //   borderRadius: 'var(--cn-sidebar-item-radius) 0 0 var(--cn-sidebar-item-radius)'
               }
             },
             '.cn-sidebar-item-content-title': {
@@ -229,6 +235,11 @@ export default {
             '.cn-sidebar-item-content': {
               background: 'var(--cn-comp-sidebar-item-selected)'
             },
+            // Grip icon gets same background when content is active
+            // '&[data-draggable=true] .cn-sidebar-item .cn-sidebar-item-grip-handle': {
+            //   backgroundColor: 'var(--cn-comp-sidebar-item-selected)',
+            //   borderRadius: 'var(--cn-sidebar-item-radius) 0 0 var(--cn-sidebar-item-radius)'
+            // },
             '.cn-sidebar-item-content-title': {
               color: 'var(--cn-comp-sidebar-item-text-selected)'
             },
@@ -258,6 +269,12 @@ export default {
         padding: 'var(--cn-sidebar-item-py) var(--cn-sidebar-item-px)',
         borderRadius: 'var(--cn-sidebar-item-radius)',
         '@apply duration-150 transition-[padding,row-gap,column-gap] ease-linear': '',
+
+        // Adjust padding when grip icon is present (inside menu item)
+        '.cn-sidebar-item:has(.cn-sidebar-item-grip-handle) &': {
+          // Grip icon (12px) + spacing to prefix icon (4px) = 16px total from left edge
+          paddingLeft: 'calc(var(--cn-icon-size-2xs, 12px) + var(--cn-spacing-1, 4px))'
+        },
 
         '&:hover, &:focus-within': {
           color: 'var(--cn-text-1)',

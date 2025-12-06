@@ -1,4 +1,14 @@
-import { ComponentPropsWithoutRef, forwardRef, ReactNode, Ref, useCallback, useEffect, useMemo, useState } from 'react'
+import {
+  ComponentPropsWithoutRef,
+  forwardRef,
+  ReactNode,
+  Ref,
+  useCallback,
+  useEffect,
+  useMemo,
+  useRef,
+  useState
+} from 'react'
 
 import {
   Avatar,
@@ -45,6 +55,11 @@ interface SidebarItemCommonProps extends ComponentPropsWithoutRef<'button'> {
   tooltip?: ReactNode
   active?: boolean
   actionButtons?: SidebarItemActionButtonPropsType[]
+  draggable?: boolean
+  dragAttributes?: React.HTMLAttributes<HTMLElement>
+  dragListeners?: Record<string, Function | undefined>
+  /** Force collapse submenu (overrides internal state) - used during drag operations */
+  forceCollapse?: boolean
 }
 
 interface SidebarItemWithChildrenProps extends SidebarItemCommonProps {
@@ -166,6 +181,9 @@ const SidebarItemTrigger = forwardRef<HTMLButtonElement | HTMLAnchorElement, Sid
       withRightIndicator,
       active,
       actionButtons,
+      draggable,
+      dragAttributes,
+      dragListeners,
       ...restProps
     } = props
 
@@ -176,6 +194,7 @@ const SidebarItemTrigger = forwardRef<HTMLButtonElement | HTMLAnchorElement, Sid
     const withDropdownMenu = !!dropdownMenuContent
     const withActionButtons = !!actionButtons
     const withRightElement = withActionMenu || withDropdownMenu || !!badge || withSubmenu || withRightIndicator
+    const withDragHandle = !!draggable
 
     const badgeCommonProps: Pick<StatusBadgeProps, 'size' | 'theme' | 'className'> = {
       size: 'sm',
@@ -187,7 +206,7 @@ const SidebarItemTrigger = forwardRef<HTMLButtonElement | HTMLAnchorElement, Sid
       )
     }
 
-    const itemProps = omit(restProps, ['icon', 'logo', 'avatarFallback', 'src', 'badgeProps'])
+    const itemProps = omit(restProps, ['icon', 'logo', 'avatarFallback', 'src', 'badgeProps', 'forceCollapse'])
     const sidebarItemClassName = cn('cn-sidebar-item', className)
     const buttonRef = ref as Ref<HTMLButtonElement>
 
@@ -302,7 +321,12 @@ const SidebarItemTrigger = forwardRef<HTMLButtonElement | HTMLAnchorElement, Sid
     )
 
     return (
-      <div className="cn-sidebar-item-wrapper" data-disabled={itemProps.disabled} data-active={active}>
+      <div
+        className="cn-sidebar-item-wrapper"
+        data-disabled={itemProps.disabled}
+        data-active={active}
+        data-draggable={withDragHandle}
+      >
         {isLink && (
           <>
             {!itemProps.disabled && (
@@ -312,11 +336,21 @@ const SidebarItemTrigger = forwardRef<HTMLButtonElement | HTMLAnchorElement, Sid
                 {...(itemProps as SidebarItemLinkProps)}
                 role="menuitem"
               >
+                {withDragHandle && (
+                  <div className="cn-sidebar-item-grip-handle" {...dragAttributes} {...dragListeners}>
+                    <IconV2 name="grip-dots" size="2xs" className="cn-sidebar-item-grip-icon" />
+                  </div>
+                )}
                 {renderContent()}
               </NavLink>
             )}
             {itemProps.disabled && (
               <div className={sidebarItemClassName} role="menuitem" aria-disabled={itemProps.disabled}>
+                {withDragHandle && (
+                  <div className="cn-sidebar-item-grip-handle" {...dragAttributes} {...dragListeners}>
+                    <IconV2 name="grip-dots" size="2xs" className="cn-sidebar-item-grip-icon" />
+                  </div>
+                )}
                 {renderContent()}
               </div>
             )}
@@ -326,6 +360,11 @@ const SidebarItemTrigger = forwardRef<HTMLButtonElement | HTMLAnchorElement, Sid
         {withDropdownMenu && (
           <DropdownMenu.Root>
             <DropdownMenu.Trigger ref={buttonRef} className={sidebarItemClassName} {...itemProps} role="menuitem">
+              {withDragHandle && (
+                <div className="cn-sidebar-item-grip-handle">
+                  <IconV2 name="grip-dots" size="2xs" className="cn-sidebar-item-grip-icon" />
+                </div>
+              )}
               {renderContent()}
             </DropdownMenu.Trigger>
             <DropdownMenu.Content side="right" align="end" sideOffset={3}>
@@ -336,6 +375,11 @@ const SidebarItemTrigger = forwardRef<HTMLButtonElement | HTMLAnchorElement, Sid
 
         {!isLink && !withDropdownMenu && (
           <button ref={buttonRef} className={sidebarItemClassName} {...itemProps} role="menuitem">
+            {withDragHandle && (
+              <div className="cn-sidebar-item-grip-handle">
+                <IconV2 name="grip-dots" size="2xs" className="cn-sidebar-item-grip-icon" />
+              </div>
+            )}
             {renderContent()}
           </button>
         )}
@@ -357,7 +401,7 @@ const SidebarItemTrigger = forwardRef<HTMLButtonElement | HTMLAnchorElement, Sid
           </button>
         )}
 
-        <div className="absolute top-cn-sm h-3 w-0.5 cn-sidebar-item-active-indicator" />
+        <div className="absolute left-0 top-1/2 -translate-y-1/2 h-3 w-0.5 cn-sidebar-item-active-indicator" />
       </div>
     )
   }
@@ -368,11 +412,41 @@ export const SidebarItem = forwardRef<HTMLButtonElement | HTMLAnchorElement, Sid
   const { state } = useSidebar()
   const [submenuOpen, setSubmenuOpen] = useState(props.defaultSubmenuOpen || false)
 
-  const { title, tooltip } = props
+  const { title, tooltip, forceCollapse } = props
 
   const withSubmenu = !!props.children
 
   const toggleSubmenu = useCallback(() => setSubmenuOpen(prev => !prev), [])
+
+  // Track previous expanded state when forceCollapse is enabled
+  const previousSubmenuOpenRef = useRef<boolean | null>(null)
+  const previousForceCollapseRef = useRef(forceCollapse)
+
+  useEffect(() => {
+    const wasForceCollapsed = previousForceCollapseRef.current
+    const isForceCollapsed = forceCollapse
+
+    // Transition from false to true: save state and collapse
+    if (!wasForceCollapsed && isForceCollapsed) {
+      previousSubmenuOpenRef.current = submenuOpen
+      if (submenuOpen) {
+        setSubmenuOpen(false)
+      }
+    }
+    // Transition from true to false: restore state
+    else if (wasForceCollapsed && !isForceCollapsed) {
+      if (previousSubmenuOpenRef.current !== null) {
+        setSubmenuOpen(previousSubmenuOpenRef.current)
+        previousSubmenuOpenRef.current = null
+      }
+    }
+    // While forceCollapsed is true: ensure collapsed
+    else if (isForceCollapsed && submenuOpen) {
+      setSubmenuOpen(false)
+    }
+
+    previousForceCollapseRef.current = forceCollapse
+  }, [forceCollapse, submenuOpen])
 
   useEffect(() => {
     if (state === 'collapsed' && submenuOpen) {
@@ -401,7 +475,9 @@ export const SidebarItem = forwardRef<HTMLButtonElement | HTMLAnchorElement, Sid
   }
 
   if (withSubmenu) {
-    const filteredChildren = submenuOpen
+    // Use forceCollapse to override submenuOpen state during drag
+    const effectiveSubmenuOpen = forceCollapse ? false : submenuOpen
+    const filteredChildren = effectiveSubmenuOpen
       ? filterChildrenByDisplayNames(props.children, [SUBMENU_ITEM_DISPLAY_NAME])
       : []
     const rowsCount = filteredChildren.length + 1
@@ -413,8 +489,10 @@ export const SidebarItem = forwardRef<HTMLButtonElement | HTMLAnchorElement, Sid
           className="cn-sidebar-submenu-group"
           role="group"
           columns="auto 1fr"
-          data-state={submenuOpen ? 'open' : 'closed'}
-          style={{ ...(submenuOpen ? { maxHeight: `${rowsCount * 40}px` } : { maxHeight: '0px', padding: 0 }) }}
+          data-state={effectiveSubmenuOpen ? 'open' : 'closed'}
+          style={{
+            ...(effectiveSubmenuOpen ? { maxHeight: `${rowsCount * 40}px` } : { maxHeight: '0px', padding: 0 })
+          }}
         >
           <Separator orientation="vertical" style={{ gridRow: `1 / ${rowsCount}` }} />
           {filteredChildren}

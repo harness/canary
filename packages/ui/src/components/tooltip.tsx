@@ -24,7 +24,13 @@ export type TooltipProps = {
   hideArrow?: boolean
   delay?: TooltipPrimitiveRootType['delayDuration']
   open?: boolean
-  theme?: 'default' | 'subtle'
+  /**
+   * Theme variant of the tooltip
+   * - 'default': High-contrast appearance with fixed colors
+   * - 'themed': Follows the current theme's color palette
+   * @default 'default'
+   */
+  theme?: 'default' | 'themed'
 } & Pick<TooltipPrimitiveContentType, 'side' | 'align' | 'className' | 'sideOffset'>
 
 export const Tooltip = forwardRef<HTMLDivElement, TooltipProps>(

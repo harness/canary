@@ -117,18 +117,30 @@ type SidebarItemAvatarProps = SidebarItemBaseProps & {
   icon?: never
 }
 
-type SidebarItemExtendedProps = SidebarItemIconProps | SidebarItemLogoProps | SidebarItemAvatarProps
+type SidebarItemExtendedProps = (SidebarItemIconProps | SidebarItemLogoProps | SidebarItemAvatarProps) &
+  SidebarItemHoverProps
+
+type SidebarItemHoverProps = {
+  onHoverIn?: (e: React.MouseEvent<HTMLElement>) => void
+  onHoverOut?: (e: React.MouseEvent<HTMLElement>) => void
+}
 
 type SidebarItemButtonProps = SidebarItemExtendedProps &
   Omit<ComponentPropsWithoutRef<'button'>, keyof SidebarItemExtendedProps>
 
 type SidebarItemLinkProps = SidebarItemExtendedProps & NavLinkProps
 
-export type SidebarItemProps = SidebarItemButtonProps | SidebarItemLinkProps
+type SidebarItemDivProps = SidebarItemExtendedProps &
+  Omit<ComponentPropsWithoutRef<'div'>, keyof SidebarItemExtendedProps> & {
+    clickable?: boolean
+  }
+
+export type SidebarItemProps = SidebarItemButtonProps | SidebarItemLinkProps | SidebarItemDivProps
 
 export interface SidebarItemComponent {
   (props: SidebarItemButtonProps): JSX.Element
   (props: SidebarItemLinkProps): JSX.Element
+  (props: SidebarItemDivProps): JSX.Element
   displayName?: string
 }
 
@@ -144,6 +156,10 @@ const isBadgeProps = (props?: string | SidebarBadgeProps): props is SidebarBadge
 type SidebarItemTriggerProps = SidebarItemProps & {
   submenuOpen?: boolean
   toggleSubmenu?: () => void
+  /**
+   * If false, the item will be rendered as a non-clickable div
+   */
+  clickable?: boolean
 }
 
 const SidebarItemTrigger = forwardRef<HTMLButtonElement | HTMLAnchorElement, SidebarItemTriggerProps>(
@@ -166,6 +182,7 @@ const SidebarItemTrigger = forwardRef<HTMLButtonElement | HTMLAnchorElement, Sid
       withRightIndicator,
       active,
       actionButtons,
+      clickable = true,
       ...restProps
     } = props
 
@@ -190,6 +207,7 @@ const SidebarItemTrigger = forwardRef<HTMLButtonElement | HTMLAnchorElement, Sid
     const itemProps = omit(restProps, ['icon', 'logo', 'avatarFallback', 'src', 'badgeProps'])
     const sidebarItemClassName = cn('cn-sidebar-item', className)
     const buttonRef = ref as Ref<HTMLButtonElement>
+    const divRef = ref as Ref<HTMLDivElement>
 
     const actionButtonsContent = useMemo(() => {
       if (!withActionButtons) return null
@@ -302,7 +320,12 @@ const SidebarItemTrigger = forwardRef<HTMLButtonElement | HTMLAnchorElement, Sid
     )
 
     return (
-      <div className="cn-sidebar-item-wrapper" data-disabled={itemProps.disabled} data-active={active}>
+      <div
+        className="cn-sidebar-item-wrapper"
+        data-disabled={itemProps.disabled}
+        data-active={active}
+        data-clickable={clickable}
+      >
         {isLink && (
           <>
             {!itemProps.disabled && (
@@ -334,11 +357,25 @@ const SidebarItemTrigger = forwardRef<HTMLButtonElement | HTMLAnchorElement, Sid
           </DropdownMenu.Root>
         )}
 
-        {!isLink && !withDropdownMenu && (
-          <button ref={buttonRef} className={sidebarItemClassName} {...itemProps} role="menuitem">
-            {renderContent()}
-          </button>
-        )}
+        {!isLink &&
+          !withDropdownMenu &&
+          (clickable ? (
+            <button ref={buttonRef} className={sidebarItemClassName} {...itemProps} role="menuitem">
+              {renderContent()}
+            </button>
+          ) : (
+            <div
+              ref={divRef}
+              className={cn(
+                sidebarItemClassName,
+                active ? 'cn-sidebar-item-trigger-active' : 'cn-sidebar-item-trigger'
+              )}
+              onMouseEnter={props.onHoverIn}
+              onMouseLeave={props.onHoverIn}
+            >
+              {renderContent()}
+            </div>
+          ))}
 
         {withActionMenu && (
           <DropdownMenu.Root>

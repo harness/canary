@@ -34,7 +34,7 @@ export const Tooltip = forwardRef<HTMLDivElement, TooltipProps>(
       title,
       content,
       hideArrow = false,
-      delay = 500,
+      delay = 400,
       side = 'top',
       align = 'center',
       open,

@@ -54,9 +54,13 @@ export const Tooltip = forwardRef<HTMLDivElement, TooltipProps>(
         <TooltipPrimitive.Portal container={portalContainer}>
           <TooltipPrimitive.Content
             ref={ref}
-            className={cn('cn-tooltip', {
-              ['cn-tooltip-default']: theme === 'default'
-            }, className)}
+            className={cn(
+              'cn-tooltip',
+              {
+                ['cn-tooltip-default']: theme === 'default'
+              },
+              className
+            )}
             side={side}
             align={align}
             sideOffset={computedSideOffset}

@@ -12,6 +12,14 @@ export default {
     willChange: 'transform, opacity',
     '@apply z-50 font-caption-normal': '',
 
+    // Animation styles
+    '@apply animate-in fade-in-0 zoom-in-95 duration-150': '',
+    '@apply data-[state=closed]:animate-out data-[state=closed]:fade-out-0 data-[state=closed]:zoom-out-95': '',
+    '@apply data-[side=bottom]:slide-in-from-top-2': '',
+    '@apply data-[side=left]:slide-in-from-right-2': '',
+    '@apply data-[side=right]:slide-in-from-left-2': '',
+    '@apply data-[side=top]:slide-in-from-bottom-2': '',
+
     '&-content': {
       '@apply flex flex-col gap-cn-4xs': ''
     },

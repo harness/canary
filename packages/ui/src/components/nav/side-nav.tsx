@@ -151,7 +151,7 @@ export const SideNav: React.FC<{ routes?: RouteDefinitions }> = ({ routes }) => 
             <Drawer.Root direction="left" open={showMoreMenu} onOpenChange={setShowMoreMenu}>
               <Drawer.Trigger>
                 <Sidebar.Item
-                  title="more"
+                  title="More"
                   icon="menu-more-horizontal"
                   withRightIndicator
                   onHoverIn={() => setShowMoreMenu(true)}

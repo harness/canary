@@ -45,6 +45,8 @@ interface SidebarItemCommonProps extends ComponentPropsWithoutRef<'button'> {
   tooltip?: ReactNode
   active?: boolean
   actionButtons?: SidebarItemActionButtonPropsType[]
+  subMenuOpen?: boolean
+  onSubmenuChange?: (open: boolean) => void
 }
 
 interface SidebarItemWithChildrenProps extends SidebarItemCommonProps {
@@ -401,67 +403,94 @@ const SidebarItemTrigger = forwardRef<HTMLButtonElement | HTMLAnchorElement, Sid
 )
 SidebarItemTrigger.displayName = 'SidebarItemTrigger'
 
-export const SidebarItem = forwardRef<HTMLButtonElement | HTMLAnchorElement, SidebarItemProps>(({ ...props }, ref) => {
-  const { state } = useSidebar()
-  const [submenuOpen, setSubmenuOpen] = useState(props.defaultSubmenuOpen || false)
+export const SidebarItem = forwardRef<HTMLButtonElement | HTMLAnchorElement, SidebarItemProps>(
+  ({ subMenuOpen, defaultSubmenuOpen, onSubmenuChange, ...props }, ref) => {
+    const { state } = useSidebar()
 
-  const { title, tooltip } = props
+    // Is the component externally controlled?
+    const isControlled = subMenuOpen !== undefined
 
-  const withSubmenu = !!props.children
+    const [uncontrolledOpen, setUncontrolledOpen] = useState(defaultSubmenuOpen ?? false)
 
-  const toggleSubmenu = useCallback(() => setSubmenuOpen(prev => !prev), [])
+    const effectiveOpen = isControlled ? subMenuOpen! : uncontrolledOpen
 
-  useEffect(() => {
-    if (state === 'collapsed' && submenuOpen) {
-      setSubmenuOpen(false)
-    }
-  }, [state, submenuOpen])
-
-  const WrappedItemTrigger = () => {
-    if (tooltip) {
-      return (
-        <Tooltip side="right" align="center" content={tooltip}>
-          <SidebarItemTrigger ref={ref} {...props} toggleSubmenu={toggleSubmenu} submenuOpen={submenuOpen} />
-        </Tooltip>
-      )
-    }
-
-    if (state === 'collapsed') {
-      return (
-        <Tooltip side="right" align="center" content={title}>
-          <SidebarItemTrigger ref={ref} {...props} toggleSubmenu={toggleSubmenu} submenuOpen={submenuOpen} />
-        </Tooltip>
-      )
-    }
-
-    return <SidebarItemTrigger ref={ref} {...props} toggleSubmenu={toggleSubmenu} submenuOpen={submenuOpen} />
-  }
-
-  if (withSubmenu) {
-    const filteredChildren = submenuOpen
-      ? filterChildrenByDisplayNames(props.children, [SUBMENU_ITEM_DISPLAY_NAME])
-      : []
-    const rowsCount = filteredChildren.length + 1
-
-    return (
-      <div className="contents">
-        <WrappedItemTrigger />
-        <Layout.Grid
-          className="cn-sidebar-submenu-group"
-          role="group"
-          columns="auto 1fr"
-          data-state={submenuOpen ? 'open' : 'closed'}
-          style={{ ...(submenuOpen ? { maxHeight: `${rowsCount * 40}px` } : { maxHeight: '0px', padding: 0 }) }}
-        >
-          <Separator orientation="vertical" style={{ gridRow: `1 / ${rowsCount}` }} />
-          {filteredChildren}
-        </Layout.Grid>
-      </div>
+    const setOpen = useCallback(
+      (next: boolean) => {
+        if (isControlled) {
+          onSubmenuChange?.(next)
+        } else {
+          setUncontrolledOpen(next)
+        }
+      },
+      [isControlled, onSubmenuChange]
     )
-  }
 
-  return <WrappedItemTrigger />
-}) as SidebarItemComponent
+    const toggleSubmenu = useCallback(() => setOpen(!effectiveOpen), [setOpen, effectiveOpen])
+
+    // Close automatically if sidebar collapses
+    useEffect(() => {
+      if (state === 'collapsed' && effectiveOpen) {
+        setOpen(false)
+      }
+    }, [state, effectiveOpen, setOpen])
+
+    // Wrap trigger with tooltip logic
+    const WrappedItemTrigger = () => {
+      const trigger = (
+        <SidebarItemTrigger ref={ref} {...props} toggleSubmenu={toggleSubmenu} submenuOpen={effectiveOpen} />
+      )
+
+      // Prefer explicit tooltip first
+      if (props.tooltip) {
+        return (
+          <Tooltip side="right" align="center" content={props.tooltip}>
+            {trigger}
+          </Tooltip>
+        )
+      }
+
+      // Fallback tooltip when collapsed
+      if (state === 'collapsed') {
+        return (
+          <Tooltip side="right" align="center" content={props.title}>
+            {trigger}
+          </Tooltip>
+        )
+      }
+
+      return trigger
+    }
+
+    const withSubmenu = !!props.children
+
+    if (withSubmenu) {
+      const filteredChildren = effectiveOpen
+        ? filterChildrenByDisplayNames(props.children, [SUBMENU_ITEM_DISPLAY_NAME])
+        : []
+      const rowsCount = filteredChildren.length + 1
+
+      return (
+        <div className="contents">
+          <WrappedItemTrigger />
+          <Layout.Grid
+            className="cn-sidebar-submenu-group"
+            role="group"
+            columns="auto 1fr"
+            data-state={effectiveOpen ? 'open' : 'closed'}
+            style={{
+              ...(effectiveOpen ? { maxHeight: `${rowsCount * 40}px` } : { maxHeight: '0px', padding: 0 })
+            }}
+          >
+            <Separator orientation="vertical" style={{ gridRow: `1 / ${rowsCount}` }} />
+            {filteredChildren}
+          </Layout.Grid>
+        </div>
+      )
+    }
+
+    return <WrappedItemTrigger />
+  }
+) as SidebarItemComponent
 SidebarItem.displayName = 'SidebarItem'
 
 export const SidebarMenuSubItem = forwardRef<HTMLAnchorElement, NavLinkProps & { title: string; active?: boolean }>(

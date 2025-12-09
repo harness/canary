@@ -1,4 +1,4 @@
-import { useCallback, useMemo } from 'react'
+import { useCallback, useMemo, useState } from 'react'
 
 import { AppSidebarItem, IconV2NamesType, NavbarItemType, Sidebar } from '@/components'
 import { useNav } from '@hooks/useNav'
@@ -10,6 +10,7 @@ interface SidebarItemProps {
 }
 
 export default function SidebarItem({ item, isPinned }: SidebarItemProps) {
+  const [open, setOpen] = useState(true)
   const { setRecent, setPinned } = useNav()
 
   const handleChangePinnedMenuItem = useCallback(
@@ -38,9 +39,10 @@ export default function SidebarItem({ item, isPinned }: SidebarItemProps) {
         defaultSubmenuOpen={!isPinned}
         key={item.id}
         actionButtons={actionButtons}
-        to={item.to}
         icon={item.iconName}
         title={item.title}
+        subMenuOpen={open}
+        onSubmenuChange={setOpen}
       >
         {item.subItems.map(subItem => (
           <Sidebar.MenuSubItem key={subItem.id} title={subItem.title} to={subItem.to} />

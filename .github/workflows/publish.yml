@@ -20,7 +20,7 @@ jobs:
 
       - name: Authenticate to npm
         run: |
-          echo "//registry.npmjs.org/:_authToken=${{ secrets.NPM_PUBLISH_TOKEN }}" > ~/.npmrc
+          echo "//registry.npmjs.org/:_authToken=${{ secrets.NPM_GRANULAR_PUBLISH_TOKEN }}" > ~/.npmrc
 
       - name: Publish packages to npm
         run: pnpm publish:all

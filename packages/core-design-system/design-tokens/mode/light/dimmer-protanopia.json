@@ -1689,6 +1689,20 @@
         "$type": "color",
         "$value": "linear-gradient(95deg, {gradient.sidebar.selected.from} -13.12%, {gradient.sidebar.selected.to} 84.9%)"
       }
+    },
+    "tooltip": {
+      "bg": {
+        "$type": "color",
+        "$value": "{tuna.900}"
+      },
+      "border": {
+        "$type": "color",
+        "$value": "{tuna.900}"
+      },
+      "text": {
+        "$type": "color",
+        "$value": "{chrome.25}"
+      }
     }
   },
   "logo": {

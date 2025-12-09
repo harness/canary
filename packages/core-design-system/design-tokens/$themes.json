@@ -3671,7 +3671,10 @@
       "set.blue.secondary.bg-selected": "00305cd2b8c35091c478a472fd364beda3049f4c",
       "set.purple.primary.bg-hover": "926b386f6227e7cbdf4fda3bd4d42c8fc21d7d8f",
       "set.purple.primary.bg-selected": "2c7a9901521b1378bbdf0c0563690bf93182ab22",
-      "set.purple.secondary.bg-selected": "2a4b8f7459ce6ff8dc816c2aedf37060fe5dfcd8"
+      "set.purple.secondary.bg-selected": "2a4b8f7459ce6ff8dc816c2aedf37060fe5dfcd8",
+      "comp.tooltip.inverse.bg": "384df2cd0392bb03acbb3445dd30508a319d36f0",
+      "comp.tooltip.inverse.border": "0c49eff88b5ae7aa932a7000311112e31826fd82",
+      "comp.tooltip.inverse.text": "3e3935d3508540a76af7bc9de63f96fc312426ae"
     },
     "group": "mode"
   },

@@ -271,7 +271,7 @@ const SidebarItemTrigger = forwardRef<HTMLButtonElement | HTMLAnchorElement, Sid
           variant="body-single-line-normal"
           color={withDescription ? 'foreground-1' : 'foreground-2'}
           className="cn-sidebar-item-content-title"
-          wrap="wrap"
+          truncate
         >
           {title}
         </Text>
@@ -337,7 +337,7 @@ const SidebarItemTrigger = forwardRef<HTMLButtonElement | HTMLAnchorElement, Sid
                 role="menuitem"
               >
                 {withDragHandle && (
-                  <div className="cn-sidebar-item-grip-handle" {...dragAttributes} {...dragListeners}>
+                  <div className="cn-sidebar-item-grip-handle left-cn-4xs" {...dragAttributes} {...dragListeners}>
                     <IconV2 name="grip-dots" size="2xs" className="cn-sidebar-item-grip-icon" />
                   </div>
                 )}
@@ -347,7 +347,7 @@ const SidebarItemTrigger = forwardRef<HTMLButtonElement | HTMLAnchorElement, Sid
             {itemProps.disabled && (
               <div className={sidebarItemClassName} role="menuitem" aria-disabled={itemProps.disabled}>
                 {withDragHandle && (
-                  <div className="cn-sidebar-item-grip-handle" {...dragAttributes} {...dragListeners}>
+                  <div className="cn-sidebar-item-grip-handle left-cn-4xs" {...dragAttributes} {...dragListeners}>
                     <IconV2 name="grip-dots" size="2xs" className="cn-sidebar-item-grip-icon" />
                   </div>
                 )}
@@ -361,7 +361,7 @@ const SidebarItemTrigger = forwardRef<HTMLButtonElement | HTMLAnchorElement, Sid
           <DropdownMenu.Root>
             <DropdownMenu.Trigger ref={buttonRef} className={sidebarItemClassName} {...itemProps} role="menuitem">
               {withDragHandle && (
-                <div className="cn-sidebar-item-grip-handle">
+                <div className="cn-sidebar-item-grip-handle left-cn-4xs">
                   <IconV2 name="grip-dots" size="2xs" className="cn-sidebar-item-grip-icon" />
                 </div>
               )}
@@ -376,7 +376,7 @@ const SidebarItemTrigger = forwardRef<HTMLButtonElement | HTMLAnchorElement, Sid
         {!isLink && !withDropdownMenu && (
           <button ref={buttonRef} className={sidebarItemClassName} {...itemProps} role="menuitem">
             {withDragHandle && (
-              <div className="cn-sidebar-item-grip-handle">
+              <div className="cn-sidebar-item-grip-handle left-cn-4xs">
                 <IconV2 name="grip-dots" size="2xs" className="cn-sidebar-item-grip-icon" />
               </div>
             )}
@@ -433,12 +433,15 @@ export const SidebarItem = forwardRef<HTMLButtonElement | HTMLAnchorElement, Sid
         setSubmenuOpen(false)
       }
     }
-    // Transition from true to false: restore state
+    // Transition from true to false: keep collapsed, don't restore previous state
+    // This ensures all items remain collapsed after drag ends, but users can still manually expand
     else if (wasForceCollapsed && !isForceCollapsed) {
-      if (previousSubmenuOpenRef.current !== null) {
-        setSubmenuOpen(previousSubmenuOpenRef.current)
-        previousSubmenuOpenRef.current = null
+      // Keep item collapsed after drag ends
+      if (submenuOpen) {
+        setSubmenuOpen(false)
       }
+      // Clear previous state to prevent any future interference
+      previousSubmenuOpenRef.current = null
     }
     // While forceCollapsed is true: ensure collapsed
     else if (isForceCollapsed && submenuOpen) {

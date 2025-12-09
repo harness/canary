@@ -1,4 +1,4 @@
-import { getScopedPath } from '@harnessio/ui/components'
+import { determineScope, getScopedPath } from '@harnessio/ui/components'
 import { RepositoryType, Scope, ScopeType, ScopeValue } from '@harnessio/ui/views'
 
 export const getScopeType = ({ accountId, orgIdentifier, projectIdentifier }: Scope): ScopeType => {
@@ -81,4 +81,33 @@ export const getPullRequestUrl = ({
   }).split('/')
   const [orgId, projectId] = scopedPath
   return prependScopeToUrl({ url: pullRequestSubPath, scope, orgId, projectId })
+}
+
+/**
+ * Checks if a repository/PR belongs to the same scope as the current view.
+ * Used to determine navigation strategy (internal vs cross-scope MFE navigation).
+ *
+ * @param scope - Current scope context
+ * @param repoIdentifier - Repository name/identifier
+ * @param repoPath - Full repository path
+ * @returns true if same scope, false if cross-scope navigation needed
+ */
+export const checkIsSameScope = ({
+  scope,
+  repoIdentifier,
+  repoPath
+}: {
+  scope: Scope
+  repoIdentifier: string
+  repoPath: string
+}): boolean => {
+  /** Scope where the repo is currently displayed */
+  const currentScopeType = getScopeType(scope)
+  /** Scope where the repo actually belongs to */
+  const actualScopeType = determineScope({
+    accountId: scope.accountId,
+    repoIdentifier,
+    repoPath
+  })
+  return currentScopeType === actualScopeType
 }

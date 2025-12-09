@@ -10,6 +10,7 @@ export const transformRepoList = (repoList: RepoRepositoryOutput[]): RepositoryT
     archived: repo.archived,
     stars: 0,
     forks: repo.num_forks || 0,
+    default_branch: repo.default_branch || '',
     pulls: repo.num_pulls || 0,
     timestamp: repo.updated ? new Date(repo.updated).toISOString() : '',
     createdAt: repo.created || 0,

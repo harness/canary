@@ -1,5 +1,5 @@
 import { useEffect, useMemo, useRef, useState } from 'react'
-import { useParams } from 'react-router-dom'
+import { useNavigate, useParams } from 'react-router-dom'
 
 import {
   createFavorite,
@@ -8,8 +8,7 @@ import {
   useDeleteRepositoryMutation,
   useListReposQuery
 } from '@harnessio/code-service-client'
-import { determineScope, toast } from '@harnessio/ui/components'
-import { useRouterContext } from '@harnessio/ui/context'
+import { toast } from '@harnessio/ui/components'
 import { ExtendedScope, RepoListFilters, RepositoryType, SandboxRepoListPage } from '@harnessio/ui/views'
 
 import { useRoutes } from '../../framework/context/NavigationContext'
@@ -20,12 +19,13 @@ import { useQueryState } from '../../framework/hooks/useQueryState'
 import usePaginationQueryStateWithStore from '../../hooks/use-pagination-query-state-with-store-v2'
 import { PathParams } from '../../RouteDefinitions'
 import { PageResponseHeader } from '../../types'
-import { getRepoUrl, getScopeType } from '../../utils/scope-url-utils'
+import { checkIsSameScope, getRepoUrl } from '../../utils/scope-url-utils'
 import { useRepoStore } from './stores/repo-list-store'
 import { transformRepoList } from './transform-utils/repo-list-transform'
 
 export default function ReposListPage() {
   const routes = useRoutes()
+  const navigate = useNavigate()
   const { spaceId } = useParams<PathParams>()
   const spaceURL = useGetSpaceURLParam() ?? ''
   const {
@@ -41,13 +41,11 @@ export default function ReposListPage() {
     setImportToastId
   } = useRepoStore()
   const isMFE = useIsMFE()
-  const { navigate } = useRouterContext()
-
   const [query, setQuery] = useQueryState('query')
   const { queryPage, setQueryPage } = usePaginationQueryStateWithStore({ page, setPage })
   const [favorite, setFavorite] = useQueryState<boolean>('favorite')
   const [recursive, setRecursive] = useQueryState<boolean>('recursive')
-  const { scope, renderUrl, routeUtils } = useMFEContext()
+  const { scope, renderUrl, routes: parentRoutes, routeUtils } = useMFEContext()
   const basename = `/ng${renderUrl}`
   const [sort, setSort] = useState<ListReposQueryQueryParams['sort']>('last_git_push')
   const [order, setOrder] = useState<ListReposQueryQueryParams['order']>('desc')
@@ -174,34 +172,42 @@ export default function ReposListPage() {
   const { accountId, orgIdentifier, projectIdentifier } = scope
 
   const handleOnClickRepo = (repo: RepositoryType) => {
-    /** Scope where the repo is currently displayed */
-    const currentRepoScopeType = getScopeType(scope)
-    /** Scope where the repo actually belongs to */
-    const actualRepoScopeType = determineScope({
-      accountId,
-      repoIdentifier: repo.name,
-      repoPath: repo.path
-    })
-
-    const isSameScope = currentRepoScopeType === actualRepoScopeType
     const repoSummaryPath = routes.toRepoSummary({ spaceId, repoId: repo.name })
 
-    if (!isMFE || isSameScope) {
+    if (!isMFE || checkIsSameScope({ scope, repoIdentifier: repo.name, repoPath: repo.path })) {
       navigate(repoSummaryPath)
     } else {
       if (routeUtils?.toCODERepository) {
         // Navigate with parent app's React Router
         routeUtils.toCODERepository?.({ repoPath: repo.path })
-      } else {
-        // TODO: Remove this fallback once the routeUtils is available in all release branches
-        const fullPath = `${basename}${getRepoUrl({
-          repo,
-          scope,
-          repoSubPath: repoSummaryPath
-        })}`
-        window.location.href = fullPath
       }
     }
+  }
+
+  /**
+   * Returns the URL for repo summary page.
+   * This is used for command+click / "open in new tab" which triggers a full page load.
+   * For normal clicks, onClickRepo handles navigation.
+   */
+  const handleToRepoSummary = (repo: RepositoryType): string => {
+    const repoSummaryPath = routes.toRepoSummary({ spaceId, repoId: repo.name })
+
+    if (!isMFE || checkIsSameScope({ scope, repoIdentifier: repo.name, repoPath: repo.path })) {
+      return repoSummaryPath
+    }
+
+    // For cross-scope repos, return the parent app URL
+    if (parentRoutes?.toCodeRepositoryPath && repo.path) {
+      const baseRepoPath = parentRoutes.toCodeRepositoryPath({ repoPath: repo.path })
+      return `${baseRepoPath}/summary`
+    }
+
+    // Fallback: construct full path
+    return `${basename}${getRepoUrl({
+      repo,
+      scope,
+      repoSubPath: repoSummaryPath
+    })}`
   }
 
   const queryFilterValues = useMemo(
@@ -224,6 +230,7 @@ export default function ReposListPage() {
       setSearchQuery={setQuery}
       setQueryPage={setQueryPage}
       onClickRepo={handleOnClickRepo}
+      toRepoSummary={handleToRepoSummary}
       toCreateRepo={() => routes.toCreateRepo({ spaceId })}
       toImportRepo={() => routes.toImportRepo({ spaceId })}
       toImportMultipleRepos={() => routes.toImportMultipleRepos({ spaceId })}

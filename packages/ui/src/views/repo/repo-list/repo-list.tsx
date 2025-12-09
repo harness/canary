@@ -14,9 +14,10 @@ import {
   TimeAgoCard
 } from '@/components'
 import { useComponents, useRouterContext, useTranslation } from '@/context'
-import { RepositoryType, Scope } from '@/views'
+import { Scope } from '@/views'
 import { determineScope, getScopedPath } from '@components/scope/utils'
 
+import { RepositoryType } from '../repo.types'
 import { FavoriteProps, RepoStore, RoutingProps } from './types'
 
 export interface RepoListProps extends Partial<RoutingProps>, FavoriteProps {
@@ -80,6 +81,7 @@ export function RepoList({
   handleResetFiltersQueryAndPages,
   isLoading,
   onClickRepo,
+  toRepoSummary,
   toCreateRepo,
   toImportRepo,
   toImportMultipleRepos,
@@ -169,7 +171,6 @@ export function RepoList({
 
   const handleOnClickRepo = (repo: RepositoryType) => {
     if (repo.importing) return
-
     onClickRepo?.(repo)
   }
 
@@ -204,6 +205,7 @@ export function RepoList({
               />
             )
           }
+          to={toRepoSummary?.(repo)}
           {...(onClickRepo
             ? {
                 onClick: () => handleOnClickRepo(repo)

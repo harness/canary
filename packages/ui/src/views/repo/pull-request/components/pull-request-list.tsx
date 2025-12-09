@@ -119,11 +119,10 @@ export const PullRequestList: FC<PullRequestListProps> = ({
   }, [headerFilter, openPRs, closedPRs, mergedPRs])
 
   /**
-   * Prioritize the `toPullRequest` prop if provided, otherwise use the on click handler.
+   * Handle click for pull request navigation.
+   * This is called for normal clicks (not cmd+click which opens in new tab).
    */
   const prLinkClickHandler = (pullRequest: PullRequest) => {
-    if (toPullRequest) return
-
     onClickPullRequest?.({
       prNumber: pullRequest.number,
       repo: { name: pullRequest.repo?.identifier || '', path: pullRequest.repo?.path || '' }
@@ -163,11 +162,17 @@ export const PullRequestList: FC<PullRequestListProps> = ({
           <StackedList.Item
             key={`${pullRequest.number}-${pullRequest.repo?.path}`}
             paddingY="sm"
+            // `to` is used for cmd+click / "open in new tab"
             {...(toPullRequest && pullRequest.number
               ? {
-                  to: toPullRequest({ prNumber: pullRequest.number, repoId: pullRequest.repo?.identifier })
+                  to: toPullRequest({
+                    prNumber: pullRequest.number,
+                    repoId: pullRequest.repo?.identifier,
+                    repoPath: pullRequest.repo?.path
+                  })
                 }
               : {})}
+            // `onClick` handles normal clicks (modifier key detection is in stacked-list)
             {...(onClickPullRequest
               ? {
                   onClick: () => prLinkClickHandler(pullRequest)

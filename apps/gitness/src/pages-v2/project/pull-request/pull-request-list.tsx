@@ -1,5 +1,5 @@
 import { useEffect, useMemo, useRef, useState } from 'react'
-import { useParams, useSearchParams } from 'react-router-dom'
+import { useNavigate, useParams, useSearchParams } from 'react-router-dom'
 
 import { useQuery } from '@tanstack/react-query'
 
@@ -10,8 +10,6 @@ import {
   useGetUserQuery,
   useListPrincipalsQuery
 } from '@harnessio/code-service-client'
-import { determineScope } from '@harnessio/ui/components'
-import { useRouterContext } from '@harnessio/ui/context'
 import {
   RepositoryType,
   PullRequestListPage as SandboxPullRequestListPage,
@@ -25,7 +23,7 @@ import { useQueryState } from '../../../framework/hooks/useQueryState'
 import usePaginationQueryStateWithStore from '../../../hooks/use-pagination-query-state-with-store'
 import { useAPIPath } from '../../../hooks/useAPIPath'
 import { PathParams } from '../../../RouteDefinitions'
-import { getPullRequestUrl, getScopeType } from '../../../utils/scope-url-utils'
+import { checkIsSameScope, getPullRequestUrl } from '../../../utils/scope-url-utils'
 import { buildPRFilters } from '../../pull-request/pull-request-utils'
 import { usePullRequestListStore } from '../../pull-request/stores/pull-request-list-store'
 import { usePopulateLabelStore } from '../../repo/labels/hooks/use-populate-label-store'
@@ -34,6 +32,7 @@ import { useLabelsStore } from '../stores/labels-store'
 
 export default function PullRequestListPage() {
   const routes = useRoutes()
+  const navigate = useNavigate()
   const { setPullRequests, page, setPage, labelsQuery, prState, pageSize } = usePullRequestListStore()
   const { spaceId } = useParams<PathParams>()
 
@@ -50,10 +49,9 @@ export default function PullRequestListPage() {
   const oldPageRef = useRef(page)
   const [lastUpdatedPRFilter, setLastUpdatedPRFilter] = useState<{ updated_lt?: number; updated_gt?: number }>({})
 
-  const { scope, renderUrl, routeUtils } = useMFEContext()
+  const { scope, renderUrl, routes: parentRoutes, routeUtils } = useMFEContext()
   const basename = `/ng${renderUrl}`
   const isMFE = useIsMFE()
-  const { navigate } = useRouterContext()
 
   usePopulateLabelStore({ queryPage, query: labelsQuery, enabled: populateLabelStore, inherited: true })
   useFillLabelStoreWithProjectLabelValuesData({ queryPage, query: labelsQuery, inherited: true })
@@ -180,6 +178,37 @@ export default function PullRequestListPage() {
     }
   }, [labelBy])
 
+  const handleToPullRequest = ({
+    prNumber,
+    repoId = '',
+    repoPath = ''
+  }: {
+    prNumber?: number
+    repoId?: string
+    repoPath?: string
+  }) => {
+    const pullRequestPath = routes.toPullRequest({
+      spaceId,
+      repoId: repoId,
+      pullRequestId: prNumber?.toString()
+    })
+
+    if (!isMFE || checkIsSameScope({ scope, repoIdentifier: repoId, repoPath })) {
+      return pullRequestPath
+    }
+
+    if (parentRoutes?.toCodePullRequestPath) {
+      return parentRoutes.toCodePullRequestPath({ repoPath, pullRequestId: prNumber?.toString() ?? '' })
+    }
+
+    // TODO: Remove this fallback once parentRoutes is available in all release branches
+    return `${basename}${getPullRequestUrl({
+      repo: { name: repoId, path: repoPath },
+      scope: { accountId, orgIdentifier, projectIdentifier },
+      pullRequestSubPath: pullRequestPath
+    })}`
+  }
+
   const handleOnClickPullRequest = ({
     prNumber,
     repo
@@ -187,37 +216,19 @@ export default function PullRequestListPage() {
     prNumber?: number
     repo: Pick<RepositoryType, 'name' | 'path'>
   }) => {
-    /** Scope where the pull request is currently displayed */
-    const currentScopeType = getScopeType(scope)
-    /** Scope where the pull request actually belongs to */
-    const actualScopeType = determineScope({
-      accountId,
-      repoIdentifier: repo.name,
-      repoPath: repo.path
-    })
-
-    const isSameScope = currentScopeType === actualScopeType
     const pullRequestPath = routes.toPullRequest({
       spaceId,
       repoId: repo.name,
       pullRequestId: prNumber?.toString()
     })
 
-    if (!isMFE || isSameScope) {
+    if (!isMFE || checkIsSameScope({ scope, repoIdentifier: repo.name, repoPath: repo.path })) {
       navigate(pullRequestPath)
-    } else {
-      if (routeUtils?.toCODEPullRequest) {
-        // Navigate with parent app's React Router
-        routeUtils.toCODEPullRequest({ repoPath: repo.path, pullRequestId: prNumber?.toString() || '' })
-      } else {
-        // TODO: Remove this fallback once the routeUtils is available in all release branches
-        const fullPath = `${basename}${getPullRequestUrl({
-          repo,
-          scope: { accountId, orgIdentifier, projectIdentifier },
-          pullRequestSubPath: pullRequestPath
-        })}`
-        window.location.href = fullPath
-      }
+    }
+
+    if (routeUtils?.toCODEPullRequest) {
+      // Navigate with parent app's React Router
+      routeUtils.toCODEPullRequest({ repoPath: repo.path, pullRequestId: prNumber?.toString() || '' })
     }
   }
 
@@ -251,6 +262,7 @@ export default function PullRequestListPage() {
       searchQuery={query}
       setSearchQuery={setQuery}
       onClickPullRequest={handleOnClickPullRequest}
+      toPullRequest={handleToPullRequest}
       scope={scope}
       toBranch={({ branch, repoId }) => `${routes.toRepoFiles({ spaceId, repoId })}/${branch}`}
     />

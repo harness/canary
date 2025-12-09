@@ -7,39 +7,39 @@
     },
     "1": {
       "$type": "color",
-      "$value": "{chrome.1000}",
+      "$value": "{gray.1000}",
       "$description": "Level 1. Represents the lowest layer in the stack. This is the foundation that everything else sits on, like the app's main background.\n\nCommon uses: Application background, page base layer, lowest-level containers."
     },
     "2": {
       "$type": "color",
-      "$value": "{chrome.950}",
+      "$value": "{gray.950}",
       "$description": "Level 2. Represents elements that sit on top of the bottom layer. Creates visual hierarchy through subtle elevation.\n\nCommon uses: Cards, containers, form fields, dropdown menus."
     },
     "3": {
       "$type": "color",
-      "$value": "{chrome.950}",
+      "$value": "{gray.950}",
       "$description": "Level 3. Represents elements that sit on top of the middle layer. Creates strong visual emphasis through maximum elevation.\n\nCommon uses: Popovers, tooltips, highlighted containers."
     }
   },
   "text": {
     "1": {
       "$type": "color",
-      "$value": "{chrome.25}",
+      "$value": "{gray.25}",
       "$description": "Highest contrast color for text and icons in important content. Creates maximum readability and emphasis for key information.\n\nCommon uses: Headings, labels, emphasized text."
     },
     "2": {
       "$type": "color",
-      "$value": "{chrome.200}",
+      "$value": "{gray.200}",
       "$description": "Primary color for text and icons in general content. Provides optimal readability for extended reading while reducing visual strain.\n\nCommon uses: Body text, primary content, default icons, form inputs."
     },
     "3": {
       "$type": "color",
-      "$value": "{chrome.400}",
+      "$value": "{gray.400}",
       "$description": "Reduced emphasis color for text and icons in secondary information. Creates visual hierarchy through lower contrast.\n\nCommon uses: Supporting text, metadata, secondary information, placeholders."
     },
     "4": {
       "$type": "color",
-      "$value": "{chrome.500}",
+      "$value": "{gray.500}",
       "$description": "Lowest emphasis text color for unavailable options. Creates visual differentiation between interactive and non-interactive elements.\n\nCommon uses: Disabled buttons, inactive form elements, unavailable options, placeholders."
     },
     "success": {
@@ -71,12 +71,12 @@
   "border": {
     "1": {
       "$type": "color",
-      "$value": "{chrome.300}",
+      "$value": "{gray.300}",
       "$description": "High-contrast neutral border color for interactive states and emphasis. Provides strong visual definition without brand association for general UI interactions.\n\nCommon uses: Hover state borders, selected elements, interactive container outlines, emphasized dividers, modal boundaries."
     },
     "2": {
       "$type": "color",
-      "$value": "{chrome.850}",
+      "$value": "{gray.850}",
       "$description": "Default border color for general UI elements. Provides balanced visual separation without overwhelming the interface. Optimized for readability and visual hierarchy.\n\nCommon uses: Card borders, form field outlines, table borders, content dividers, modal boundaries, section separators, default form inputs."
     },
     "3": {
@@ -90,7 +90,7 @@
         }
       },
       "$type": "color",
-      "$value": "{chrome.850}",
+      "$value": "{gray.850}",
       "$description": "Subtle border color for minimal visual separation. Creates gentle boundaries that organize content without adding visual weight. Ideal for maintaining clean, uncluttered interfaces.\n\nCommon uses: Table row separators, grouped list items, subtle content dividers, secondary container outlines, background element borders."
     },
     "brand": {
@@ -126,7 +126,7 @@
         }
       },
       "$type": "color",
-      "$value": "{chrome.600}",
+      "$value": "{gray.600}",
       "$description": "Light overlay for gentle interactive effects. Creates subtle visual feedback during user interaction.\n\nCommon uses: Button hover states, link hover states, soft interactions, menu items."
     },
     "selected": {
@@ -254,71 +254,71 @@
       "primary": {
         "text": {
           "$type": "color",
-          "$value": "{chrome.1000}",
+          "$value": "{gray.1000}",
           "$description": "Text color for high-contrast gray surfaces."
         },
         "bg": {
           "$type": "color",
-          "$value": "{chrome.400}",
+          "$value": "{gray.400}",
           "$description": "Background color for prominent gray surfaces."
         },
         "bg-hover": {
           "$type": "color",
-          "$value": "{chrome.300}",
+          "$value": "{gray.300}",
           "$description": "Hover state background color for prominent gray surfaces."
         },
         "bg-selected": {
           "$type": "color",
-          "$value": "{chrome.200}",
+          "$value": "{gray.200}",
           "$description": "Selected state background color for prominent gray surfaces."
         }
       },
       "secondary": {
         "text": {
           "$type": "color",
-          "$value": "{chrome.100}",
+          "$value": "{gray.100}",
           "$description": "Text color for subtle gray surfaces with good contrast."
         },
         "bg": {
           "$type": "color",
-          "$value": "{chrome.850}",
+          "$value": "{gray.850}",
           "$description": "Background color for subdued gray surfaces."
         },
         "bg-hover": {
           "$type": "color",
-          "$value": "{chrome.800}",
+          "$value": "{gray.800}",
           "$description": "Hover state background color for interactive soft gray surfaces."
         },
         "bg-selected": {
           "$type": "color",
-          "$value": "{chrome.800}",
+          "$value": "{gray.800}",
           "$description": "Selected state background color for active soft gray items."
         }
       },
       "outline": {
         "text": {
           "$type": "color",
-          "$value": "{chrome.150}",
+          "$value": "{gray.150}",
           "$description": "Standard text color for gray surfaces with balanced readability."
         },
         "bg": {
           "$type": "color",
-          "$value": "{chrome.900}",
+          "$value": "{gray.900}",
           "$description": "Base background color for gray surfaces in default states."
         },
         "border": {
           "$type": "color",
-          "$value": "{chrome.850}",
+          "$value": "{gray.850}",
           "$description": "Border color for standard gray boundaries."
         },
         "bg-hover": {
           "$type": "color",
-          "$value": "{chrome.850}",
+          "$value": "{gray.850}",
           "$description": "Hover state background color for interactive gray surfaces."
         },
         "bg-selected": {
           "$type": "color",
-          "$value": "{chrome.850}",
+          "$value": "{gray.850}",
           "$description": "Selected state background color for active gray items."
         }
       }
@@ -1139,7 +1139,7 @@
           }
         },
         "$type": "color",
-        "$value": "{chrome.500}",
+        "$value": "{gray.500}",
         "$description": "Inset border color for avatars. Creates subtle definition inside the avatar element."
       }
     },
@@ -1293,12 +1293,12 @@
       },
       "plain-lineNumber-color": {
         "$type": "color",
-        "$value": "{chrome.200}",
+        "$value": "{gray.200}",
         "$description": "Text color for unchanged line numbers, visually subdued compared to changed content."
       },
       "empty-content": {
         "$type": "color",
-        "$value": "{chrome.1000}",
+        "$value": "{gray.1000}",
         "$description": "Background for placeholder spaces and empty lines, maintaining visual continuity."
       },
       "hunk-content": {
@@ -1331,7 +1331,7 @@
       },
       "hunk-content-color": {
         "$type": "color",
-        "$value": "{tuna.300}",
+        "$value": "{gray.300}",
         "$description": "Text color for section header content showing file position information."
       },
       "expand-content": {
@@ -1341,12 +1341,12 @@
       },
       "hljs": {
         "$type": "color",
-        "$value": "{chrome.150}",
+        "$value": "{gray.150}",
         "$description": "Base text color for code."
       },
       "hljs-comment": {
         "$type": "color",
-        "$value": "{chrome.400}",
+        "$value": "{gray.400}",
         "$description": "Color for code comments in syntax highlighting. Provides reduced emphasis to distinguish explanatory text from executable code."
       },
       "hljs-keyword": {
@@ -1397,7 +1397,7 @@
           }
         },
         "$type": "color",
-        "$value": "{chrome.600}",
+        "$value": "{gray.600}",
         "$description": "Hover color for header items. Creates distinct visual identification of interactive header elements."
       },
       "item-selected": {
@@ -1411,7 +1411,7 @@
           }
         },
         "$type": "color",
-        "$value": "{chrome.600}",
+        "$value": "{gray.600}",
         "$description": "Selected color for header items. Creates distinct visual identification of interactive header elements."
       }
     },
@@ -1452,7 +1452,7 @@
       },
       "dotes": {
         "$type": "color",
-        "$value": "{chrome.950}",
+        "$value": "{gray.950}",
         "$description": "Refers to the dotted pattern visible in the background of the workspace."
       },
       "stage-card": {
@@ -1509,7 +1509,7 @@
             }
           },
           "$type": "color",
-          "$value": "{chrome.600}",
+          "$value": "{gray.600}",
           "$description": "Background color for sidebar items on hover. Provides subtle visual feedback for interactive elements."
         },
         "selected": {
@@ -1541,7 +1541,7 @@
     "scrollbar": {
       "thumb": {
         "$type": "color",
-        "$value": "{chrome.850}",
+        "$value": "{gray.850}",
         "$description": "Color for scrollbar thumb/handle elements. Provides subtle contrast against the scrollbar track for improved usability."
       }
     },
@@ -1616,7 +1616,7 @@
       "track": {
         "base": {
           "$type": "color",
-          "$value": "{chrome.850}",
+          "$value": "{gray.850}",
           "$description": "Background color for slider tracks. Represents the full range of available values in an unselected state."
         },
         "progress": {
@@ -1653,12 +1653,12 @@
       "handle": {
         "bg": {
           "$type": "color",
-          "$value": "{chrome.100}",
+          "$value": "{gray.100}",
           "$description": "Background color for slider handles. Creates a distinct, interactive element for adjusting values."
         },
         "border": {
           "$type": "color",
-          "$value": "{chrome.850}",
+          "$value": "{gray.850}",
           "$description": "Border color for slider handles. Provides definition and contrast for the interactive control."
         }
       }
@@ -1666,7 +1666,7 @@
     "tab": {
       "selection-item": {
         "$type": "color",
-        "$value": "{chrome.900}"
+        "$value": "{gray.900}"
       }
     },
     "toast": {
@@ -1746,11 +1746,11 @@
     "tooltip": {
       "bg": {
         "$type": "color",
-        "$value": "{chrome.200}"
+        "$value": "{gray.200}"
       },
       "border": {
         "$type": "color",
-        "$value": "{chrome.200}"
+        "$value": "{gray.200}"
       },
       "text": {
         "$type": "color",
@@ -2116,7 +2116,7 @@
       "outline-bg": {
         "stop-1": {
           "$type": "color",
-          "$value": "{chrome.950}"
+          "$value": "{gray.950}"
         },
         "stop-2": {
           "$type": "color",
@@ -2171,7 +2171,7 @@
               }
             },
             "$type": "color",
-            "$value": "{chrome.600}"
+            "$value": "{gray.600}"
           }
         }
       }
@@ -2233,15 +2233,15 @@
     "skeleton": {
       "stop-1": {
         "$type": "color",
-        "$value": "{chrome.950}"
+        "$value": "{gray.950}"
       },
       "stop-2": {
         "$type": "color",
-        "$value": "{chrome.850}"
+        "$value": "{gray.850}"
       },
       "stop-3": {
         "$type": "color",
-        "$value": "{chrome.950}"
+        "$value": "{gray.950}"
       },
       "mask": {
         "from": {
@@ -2317,7 +2317,7 @@
             }
           },
           "$type": "color",
-          "$value": "{chrome.600}"
+          "$value": "{gray.600}"
         }
       }
     },
@@ -2366,27 +2366,27 @@
         "bg": {
           "stop-1": {
             "$type": "color",
-            "$value": "{chrome.600}"
+            "$value": "{gray.600}"
           },
           "stop-2": {
             "$type": "color",
-            "$value": "{chrome.800}"
+            "$value": "{gray.800}"
           },
           "stop-3": {
             "$type": "color",
-            "$value": "{chrome.850}"
+            "$value": "{gray.850}"
           },
           "stop-4": {
             "$type": "color",
-            "$value": "{chrome.900}"
+            "$value": "{gray.900}"
           },
           "stop-5": {
             "$type": "color",
-            "$value": "{chrome.950}"
+            "$value": "{gray.950}"
           },
           "stop-6": {
             "$type": "color",
-            "$value": "{chrome.1000}"
+            "$value": "{gray.1000}"
           }
         },
         "border": {
@@ -2420,21 +2420,21 @@
         "icon": {
           "stop-1": {
             "$type": "color",
-            "$value": "{chrome.100}"
+            "$value": "{gray.100}"
           },
           "stop-2": {
             "$type": "color",
-            "$value": "{chrome.200}"
+            "$value": "{gray.200}"
           },
           "stop-3": {
             "$type": "color",
-            "$value": "{chrome.400}"
+            "$value": "{gray.400}"
           }
         },
         "lines": {
           "from": {
             "$type": "color",
-            "$value": "{chrome.900}"
+            "$value": "{gray.900}"
           },
           "to": {
             "$type": "color",
@@ -2444,32 +2444,32 @@
         "logo": {
           "from": {
             "$type": "color",
-            "$value": "{chrome.25}"
+            "$value": "{gray.25}"
           },
           "to": {
             "$type": "color",
-            "$value": "{chrome.400}"
+            "$value": "{gray.400}"
           }
         },
         "bubble-t": {
           "bg": {
             "from": {
               "$type": "color",
-              "$value": "{chrome.850}"
+              "$value": "{gray.850}"
             },
             "to": {
               "$type": "color",
-              "$value": "{chrome.950}"
+              "$value": "{gray.950}"
             }
           },
           "icon": {
             "from": {
               "$type": "color",
-              "$value": "{chrome.800}"
+              "$value": "{gray.800}"
             },
             "to": {
               "$type": "color",
-              "$value": "{chrome.300}"
+              "$value": "{gray.300}"
             }
           }
         },
@@ -2477,21 +2477,21 @@
           "bg": {
             "from": {
               "$type": "color",
-              "$value": "{chrome.950}"
+              "$value": "{gray.950}"
             },
             "to": {
               "$type": "color",
-              "$value": "{chrome.850}"
+              "$value": "{gray.850}"
             }
           },
           "icon": {
             "from": {
               "$type": "color",
-              "$value": "{chrome.300}"
+              "$value": "{gray.300}"
             },
             "to": {
               "$type": "color",
-              "$value": "{chrome.800}"
+              "$value": "{gray.800}"
             }
           }
         }
@@ -2525,7 +2525,7 @@
                 }
               },
               "$type": "color",
-              "$value": "{chrome.850}"
+              "$value": "{gray.850}"
             }
           },
           "danger": {
@@ -2553,7 +2553,7 @@
                 }
               },
               "$type": "color",
-              "$value": "{chrome.850}"
+              "$value": "{gray.850}"
             }
           }
         },

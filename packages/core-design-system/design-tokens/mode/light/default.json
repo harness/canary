@@ -2,7 +2,7 @@
   "bg": {
     "0": {
       "$type": "color",
-      "$value": "{chrome.50}",
+      "$value": "{gray.50}",
       "$description": "Level 0 background - Foundational surface layer. Used for page navigation areas and as a container for elevated content (insets). Creates the base canvas that other elements sit upon.\n\nCommon uses: Page headers, navigation bars, sidebar backgrounds, main content containers."
     },
     "1": {
@@ -12,7 +12,7 @@
     },
     "2": {
       "$type": "color",
-      "$value": "{chrome.25}",
+      "$value": "{gray.25}",
       "$description": "Level 2. Represents elements that sit on top of the bottom layer. Creates visual hierarchy through subtle elevation.\n\nCommon uses: Cards, containers, form fields, dropdown menus."
     },
     "3": {
@@ -29,17 +29,17 @@
     },
     "2": {
       "$type": "color",
-      "$value": "{tuna.850}",
+      "$value": "{gray.850}",
       "$description": "Primary color for text and icons in general content. Provides optimal readability for extended reading while reducing visual strain.\n\nCommon uses: Body text, primary content, default icons, form inputs."
     },
     "3": {
       "$type": "color",
-      "$value": "{tuna.700}",
+      "$value": "{gray.700}",
       "$description": "Reduced emphasis color for text and icons in secondary information. Creates visual hierarchy through lower contrast.\n\nCommon uses: Supporting text, metadata, secondary information, placeholders."
     },
     "4": {
       "$type": "color",
-      "$value": "{chrome.600}",
+      "$value": "{gray.600}",
       "$description": "Lowest emphasis text color for unavailable options. Creates visual differentiation between interactive and non-interactive elements.\n\nCommon uses: Disabled buttons, inactive form elements, unavailable options, placeholders."
     },
     "success": {
@@ -71,17 +71,17 @@
   "border": {
     "1": {
       "$type": "color",
-      "$value": "{chrome.500}",
+      "$value": "{gray.500}",
       "$description": "High-contrast neutral border color for interactive states and emphasis. Provides strong visual definition without brand association for general UI interactions.\n\nCommon uses: Hover state borders, selected elements, interactive container outlines, emphasized dividers, modal boundaries."
     },
     "2": {
       "$type": "color",
-      "$value": "{chrome.150}",
+      "$value": "{gray.150}",
       "$description": "Default border color for general UI elements. Provides balanced visual separation without overwhelming the interface. Optimized for readability and visual hierarchy.\n\nCommon uses: Card borders, form field outlines, table borders, content dividers, modal boundaries, section separators."
     },
     "3": {
       "$type": "color",
-      "$value": "{chrome.100}",
+      "$value": "{gray.100}",
       "$description": "Subtle border color for minimal visual separation. Creates gentle boundaries that organize content without adding visual weight. Ideal for maintaining clean, uncluttered interfaces.\n\nCommon uses: Table row separators, grouped list items, subtle content dividers, secondary container outlines, background element borders."
     },
     "brand": {
@@ -117,7 +117,7 @@
         }
       },
       "$type": "color",
-      "$value": "{tuna.300}",
+      "$value": "{gray.300}",
       "$description": "Light overlay for gentle interactive effects. Creates subtle visual feedback during user interaction.\n\nCommon uses: Button hover states, link hover states, soft interactions, menu items."
     },
     "selected": {
@@ -241,66 +241,66 @@
         },
         "bg": {
           "$type": "color",
-          "$value": "{tuna.150}",
+          "$value": "{gray.150}",
           "$description": "Background color for prominent gray surfaces."
         },
         "bg-hover": {
           "$type": "color",
-          "$value": "{tuna.200}",
+          "$value": "{gray.200}",
           "$description": "Hover state background color for prominent gray surfaces."
         },
         "bg-selected": {
           "$type": "color",
-          "$value": "{tuna.200}",
+          "$value": "{gray.200}",
           "$description": "Selected state background color for prominent gray surfaces."
         }
       },
       "secondary": {
         "text": {
           "$type": "color",
-          "$value": "{tuna.850}",
+          "$value": "{gray.850}",
           "$description": "Text color for subtle gray surfaces with good contrast."
         },
         "bg": {
           "$type": "color",
-          "$value": "{tuna.50}",
+          "$value": "{gray.50}",
           "$description": "Background color for subdued gray surfaces."
         },
         "bg-hover": {
           "$type": "color",
-          "$value": "{tuna.100}",
+          "$value": "{gray.100}",
           "$description": "Hover state background color for interactive soft gray surfaces."
         },
         "bg-selected": {
           "$type": "color",
-          "$value": "{tuna.100}",
+          "$value": "{gray.100}",
           "$description": "Selected state background color for active soft gray items."
         }
       },
       "outline": {
         "text": {
           "$type": "color",
-          "$value": "{tuna.850}",
+          "$value": "{gray.850}",
           "$description": "Standard text color for gray surfaces with balanced readability."
         },
         "bg": {
           "$type": "color",
-          "$value": "{tuna.25}",
+          "$value": "{gray.25}",
           "$description": "Base background color for gray surfaces in default states."
         },
         "border": {
           "$type": "color",
-          "$value": "{chrome.150}",
+          "$value": "{gray.150}",
           "$description": "Border color for standard gray boundaries."
         },
         "bg-hover": {
           "$type": "color",
-          "$value": "{tuna.50}",
+          "$value": "{gray.50}",
           "$description": "Hover state background color for interactive gray surfaces."
         },
         "bg-selected": {
           "$type": "color",
-          "$value": "{tuna.50}",
+          "$value": "{gray.50}",
           "$description": "Selected state background color for active gray items."
         }
       }
@@ -1120,7 +1120,7 @@
           }
         },
         "$type": "color",
-        "$value": "{chrome.200}",
+        "$value": "{gray.200}",
         "$description": "Inset border color for avatars. Creates subtle definition inside the avatar element."
       }
     },
@@ -1136,7 +1136,7 @@
           }
         },
         "$type": "color",
-        "$value": "{tuna.800}",
+        "$value": "{gray.800}",
         "$description": "Overlay color behind dialog components. Creates focus on the dialog by dimming content underneath."
       },
       "backdrop-nested": {
@@ -1150,7 +1150,7 @@
           }
         },
         "$type": "color",
-        "$value": "{tuna.800}",
+        "$value": "{gray.800}",
         "$description": "Overlay color behind dialog components. Creates focus on the dialog by dimming content underneath."
       },
       "fade-start": {
@@ -1274,12 +1274,12 @@
       },
       "plain-lineNumber-color": {
         "$type": "color",
-        "$value": "{tuna.850}",
+        "$value": "{gray.850}",
         "$description": "Text color for unchanged line numbers, visually subdued compared to changed content."
       },
       "empty-content": {
         "$type": "color",
-        "$value": "{chrome.50}",
+        "$value": "{gray.50}",
         "$description": "Background for placeholder spaces and empty lines, maintaining visual continuity."
       },
       "hunk-content": {
@@ -1312,7 +1312,7 @@
       },
       "hunk-content-color": {
         "$type": "color",
-        "$value": "{tuna.800}",
+        "$value": "{gray.800}",
         "$description": "Text color for section header content showing file position information."
       },
       "expand-content": {
@@ -1327,7 +1327,7 @@
       },
       "hljs-comment": {
         "$type": "color",
-        "$value": "{tuna.700}",
+        "$value": "{gray.700}",
         "$description": "Color for code comments in syntax highlighting. Provides reduced emphasis to distinguish explanatory text from executable code."
       },
       "hljs-keyword": {
@@ -1378,7 +1378,7 @@
           }
         },
         "$type": "color",
-        "$value": "{tuna.300}",
+        "$value": "{gray.300}",
         "$description": "Hover color for header items. Creates distinct visual identification of interactive header elements."
       },
       "item-selected": {
@@ -1392,7 +1392,7 @@
           }
         },
         "$type": "color",
-        "$value": "{tuna.300}",
+        "$value": "{gray.300}",
         "$description": "Selected color for header items. Creates distinct visual identification of interactive header elements."
       }
     },
@@ -1433,7 +1433,7 @@
       },
       "dotes": {
         "$type": "color",
-        "$value": "{chrome.100}",
+        "$value": "{gray.100}",
         "$description": "Refers to the dotted pattern visible in the background of the workspace."
       },
       "stage-card": {
@@ -1490,7 +1490,7 @@
             }
           },
           "$type": "color",
-          "$value": "{tuna.300}",
+          "$value": "{gray.300}",
           "$description": "Background color for sidebar items on hover. Provides subtle visual feedback for interactive elements."
         },
         "selected": {
@@ -1522,7 +1522,7 @@
     "scrollbar": {
       "thumb": {
         "$type": "color",
-        "$value": "{chrome.200}",
+        "$value": "{gray.200}",
         "$description": "Color for scrollbar thumb/handle elements. Provides subtle contrast against the scrollbar track for improved usability."
       }
     },
@@ -1597,7 +1597,7 @@
       "track": {
         "base": {
           "$type": "color",
-          "$value": "{tuna.50}",
+          "$value": "{gray.50}",
           "$description": "Background color for slider tracks. Represents the full range of available values in an unselected state."
         },
         "progress": {
@@ -1634,12 +1634,12 @@
       "handle": {
         "bg": {
           "$type": "color",
-          "$value": "{chrome.100}",
+          "$value": "{gray.100}",
           "$description": "Background color for slider handles. Creates a distinct, interactive element for adjusting values."
         },
         "border": {
           "$type": "color",
-          "$value": "{chrome.900}",
+          "$value": "{gray.900}",
           "$description": "Border color for slider handles. Provides definition and contrast for the interactive control."
         }
       }
@@ -1681,12 +1681,12 @@
           },
           "text-hover": {
             "$type": "color",
-            "$value": "{chrome.850}",
+            "$value": "{gray.850}",
             "$description": "Hover text color for transparent buttons in danger toasts. Provides visual feedback for interactive elements."
           },
           "text-active": {
             "$type": "color",
-            "$value": "{chrome.850}",
+            "$value": "{gray.850}",
             "$description": "Active text color for transparent buttons in danger toasts. Indicates pressed state for interactive elements."
           }
         },
@@ -1728,22 +1728,22 @@
     "tooltip": {
       "bg": {
         "$type": "color",
-        "$value": "{tuna.900}"
+        "$value": "{gray.900}"
       },
       "border": {
         "$type": "color",
-        "$value": "{tuna.900}"
+        "$value": "{gray.900}"
       },
       "text": {
         "$type": "color",
-        "$value": "{chrome.25}"
+        "$value": "{gray.25}"
       }
     }
   },
   "logo": {
     "text": {
       "$type": "color",
-      "$value": "{chrome.950}",
+      "$value": "{gray.950}",
       "$description": "Text color for Logo in sidebar navigation."
     },
     "icon": {
@@ -1918,7 +1918,7 @@
         }
       },
       "$type": "color",
-      "$value": "{tuna.800}",
+      "$value": "{gray.800}",
       "$description": "Transparent shadow color. Used when no shadow effect is desired."
     },
     "1": {
@@ -1932,7 +1932,7 @@
         }
       },
       "$type": "color",
-      "$value": "{tuna.800}",
+      "$value": "{gray.800}",
       "$description": "Light shadow color. Creates subtle depth for small UI elements."
     },
     "2": {
@@ -1946,7 +1946,7 @@
         }
       },
       "$type": "color",
-      "$value": "{tuna.800}",
+      "$value": "{gray.800}",
       "$description": "Medium shadow color with 60% opacity. Provides balanced depth for common UI components."
     },
     "3": {
@@ -1960,7 +1960,7 @@
         }
       },
       "$type": "color",
-      "$value": "{tuna.800}",
+      "$value": "{gray.800}",
       "$description": "Medium shadow color. Creates moderate depth for elevated components."
     },
     "4": {
@@ -1974,7 +1974,7 @@
         }
       },
       "$type": "color",
-      "$value": "{tuna.800}",
+      "$value": "{gray.800}",
       "$description": "Deep shadow color. Provides significant depth for floating elements."
     },
     "5": {
@@ -1988,7 +1988,7 @@
         }
       },
       "$type": "color",
-      "$value": "{tuna.800}",
+      "$value": "{gray.800}",
       "$description": "Very deep shadow color. Creates dramatic elevation for modal content."
     },
     "6": {
@@ -2002,7 +2002,7 @@
         }
       },
       "$type": "color",
-      "$value": "{tuna.800}",
+      "$value": "{gray.800}",
       "$description": "Extremely deep shadow color. Provides maximum depth for highly elevated elements."
     }
   },
@@ -2162,7 +2162,7 @@
               }
             },
             "$type": "color",
-            "$value": "{tuna.300}"
+            "$value": "{gray.300}"
           }
         }
       }
@@ -2224,15 +2224,15 @@
     "skeleton": {
       "stop-1": {
         "$type": "color",
-        "$value": "{chrome.150}"
+        "$value": "{gray.150}"
       },
       "stop-2": {
         "$type": "color",
-        "$value": "{chrome.50}"
+        "$value": "{gray.50}"
       },
       "stop-3": {
         "$type": "color",
-        "$value": "{chrome.150}"
+        "$value": "{gray.150}"
       },
       "mask": {
         "from": {
@@ -2308,7 +2308,7 @@
             }
           },
           "$type": "color",
-          "$value": "{tuna.300}"
+          "$value": "{gray.300}"
         }
       }
     },
@@ -2365,19 +2365,19 @@
           },
           "stop-3": {
             "$type": "color",
-            "$value": "{chrome.25}"
+            "$value": "{gray.25}"
           },
           "stop-4": {
             "$type": "color",
-            "$value": "{chrome.25}"
+            "$value": "{gray.25}"
           },
           "stop-5": {
             "$type": "color",
-            "$value": "{chrome.50}"
+            "$value": "{gray.50}"
           },
           "stop-6": {
             "$type": "color",
-            "$value": "{chrome.100}"
+            "$value": "{gray.100}"
           }
         },
         "border": {
@@ -2411,21 +2411,21 @@
         "icon": {
           "stop-1": {
             "$type": "color",
-            "$value": "{chrome.200}"
+            "$value": "{gray.200}"
           },
           "stop-2": {
             "$type": "color",
-            "$value": "{chrome.300}"
+            "$value": "{gray.300}"
           },
           "stop-3": {
             "$type": "color",
-            "$value": "{chrome.400}"
+            "$value": "{gray.400}"
           }
         },
         "lines": {
           "from": {
             "$type": "color",
-            "$value": "{chrome.200}"
+            "$value": "{gray.200}"
           },
           "to": {
             "$type": "color",
@@ -2435,32 +2435,32 @@
         "logo": {
           "from": {
             "$type": "color",
-            "$value": "{chrome.1000}"
+            "$value": "{gray.1000}"
           },
           "to": {
             "$type": "color",
-            "$value": "{chrome.700}"
+            "$value": "{gray.700}"
           }
         },
         "bubble-t": {
           "bg": {
             "from": {
               "$type": "color",
-              "$value": "{chrome.50}"
+              "$value": "{gray.50}"
             },
             "to": {
               "$type": "color",
-              "$value": "{chrome.150}"
+              "$value": "{gray.150}"
             }
           },
           "icon": {
             "from": {
               "$type": "color",
-              "$value": "{chrome.600}"
+              "$value": "{gray.600}"
             },
             "to": {
               "$type": "color",
-              "$value": "{chrome.300}"
+              "$value": "{gray.300}"
             }
           }
         },
@@ -2468,21 +2468,21 @@
           "bg": {
             "from": {
               "$type": "color",
-              "$value": "{chrome.150}"
+              "$value": "{gray.150}"
             },
             "to": {
               "$type": "color",
-              "$value": "{chrome.50}"
+              "$value": "{gray.50}"
             }
           },
           "icon": {
             "from": {
               "$type": "color",
-              "$value": "{chrome.300}"
+              "$value": "{gray.300}"
             },
             "to": {
               "$type": "color",
-              "$value": "{chrome.600}"
+              "$value": "{gray.600}"
             }
           }
         }

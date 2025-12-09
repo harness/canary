@@ -1658,10 +1658,17 @@
                         <span id="historyCount" style="font-size:10px;min-width:12px">0</span>
                     </button>
                 </div>
-                <button class="btn" onclick="loadFile()" style="display:flex;align-items:center;gap:5px">
+                <button class="btn" onclick="loadFile()"
+                    style="display:flex;align-items:center;gap:5px;padding:6px 12px">
                     <i data-lucide="folder-open" style="width:14px;height:14px"></i> Load
                 </button>
-                <button class="btn btn-primary" onclick="showExport()" style="display:flex;align-items:center;gap:5px">
+                <button class="btn btn-primary" onclick="saveFiles()"
+                    style="display:flex;align-items:center;gap:5px;padding:6px 12px">
+                    <i data-lucide="save" style="width:14px;height:14px"></i> Save <kbd
+                        style="font-size:10px;padding:1px 4px">⌘S</kbd>
+                </button>
+                <button class="btn" onclick="showExport()"
+                    style="display:flex;align-items:center;gap:5px;padding:6px 12px">
                     <i data-lucide="download" style="width:14px;height:14px"></i> Export
                 </button>
             </div>
@@ -3191,29 +3198,119 @@
             setTimeout(() => t.style.display = 'none', 2000);
         }
 
+        // Generate HEX tokens from current LCH tokens
+        function generateHexTokens() {
+            const hexTokens = {};
+            Object.keys(state.tokens).forEach(fam => {
+                if (fam === 'pure') {
+                    hexTokens.pure = {};
+                    Object.keys(state.tokens.pure).forEach(k => {
+                        if (k.startsWith('$')) return;
+                        const v = state.tokens.pure[k].$value;
+                        const lc = parseLCH(v);
+                        const d = getDisplay(lc);
+                        hexTokens.pure[k] = { "$type": "color", "$value": d.hex };
+                    });
+                } else {
+                    hexTokens[fam] = { "$type": "color" };
+                    SHADES.forEach(s => {
+                        const v = getVal(fam, s);
+                        if (!v) return;
+                        const lc = parseLCH(v), d = getDisplay(lc);
+                        hexTokens[fam][s] = { "$value": d.hex };
+                    });
+                }
+            });
+            return hexTokens;
+        }
+
+        // Store file handles for quick save
+        let lchFileHandle = null;
+        let hexFileHandle = null;
+
+        async function saveFiles() {
+            // Confirmation dialog
+            const confirmed = confirm('Save changes to:\n• colors_lch_new.json\n• colors_hex_new.json (auto-generated fallback)\n\nThis will overwrite the files on disk.');
+            if (!confirmed) return;
+
+            const lchCode = JSON.stringify(state.tokens, null, 2);
+            const hexCode = JSON.stringify(generateHexTokens(), null, 2);
+
+            try {
+                if ('showSaveFilePicker' in window) {
+                    // First time: prompt for LCH file location
+                    if (!lchFileHandle) {
+                        lchFileHandle = await window.showSaveFilePicker({
+                            suggestedName: 'colors_lch_new.json',
+                            types: [{ description: 'JSON', accept: { 'application/json': ['.json'] } }]
+                        });
+                    }
+                    // Save LCH
+                    const lchWritable = await lchFileHandle.createWritable();
+                    await lchWritable.write(lchCode);
+                    await lchWritable.close();
+
+                    // First time: prompt for HEX file location
+                    if (!hexFileHandle) {
+                        hexFileHandle = await window.showSaveFilePicker({
+                            suggestedName: 'colors_hex_new.json',
+                            types: [{ description: 'JSON', accept: { 'application/json': ['.json'] } }]
+                        });
+                    }
+                    // Save HEX
+                    const hexWritable = await hexFileHandle.createWritable();
+                    await hexWritable.write(hexCode);
+                    await hexWritable.close();
+
+                    toast('✓ Saved LCH + HEX fallback');
+                } else {
+                    // Fallback: download both files
+                    const lchBlob = new Blob([lchCode], { type: 'application/json' });
+                    const hexBlob = new Blob([hexCode], { type: 'application/json' });
+
+                    const lchUrl = URL.createObjectURL(lchBlob);
+                    const hexUrl = URL.createObjectURL(hexBlob);
+
+                    const lchA = document.createElement('a');
+                    lchA.href = lchUrl;
+                    lchA.download = 'colors_lch_new.json';
+                    lchA.click();
+
+                    setTimeout(() => {
+                        const hexA = document.createElement('a');
+                        hexA.href = hexUrl;
+                        hexA.download = 'colors_hex_new.json';
+                        hexA.click();
+                        URL.revokeObjectURL(lchUrl);
+                        URL.revokeObjectURL(hexUrl);
+                    }, 100);
+
+                    toast('Downloaded LCH + HEX files');
+                }
+            } catch (err) {
+                if (err.name !== 'AbortError') {
+                    toast('Error: ' + err.message);
+                }
+            }
+        }
+
         async function saveToFile() {
             const code = document.getElementById('exportCode').textContent;
             const filename = state.tab === 'lch' ? 'colors_lch_new.json' : 'colors_hex_new.json';
-            const path = `../design-tokens/core/${filename}`;
 
             try {
-                // Try using File System Access API (modern browsers)
                 if ('showSaveFilePicker' in window) {
                     const handle = await window.showSaveFilePicker({
                         suggestedName: filename,
-                        types: [{
-                            description: 'JSON files',
-                            accept: { 'application/json': ['.json'] }
-                        }]
+                        types: [{ description: 'JSON', accept: { 'application/json': ['.json'] } }]
                     });
                     const writable = await handle.createWritable();
                     await writable.write(code);
                     await writable.close();
                     toast(`Saved ${filename}`);
                 } else {
-                    // Fallback to download
                     downloadCode();
-                    toast('File downloaded (save to design-tokens/core/ manually)');
+                    toast('File downloaded');
                 }
             } catch (err) {
                 if (err.name !== 'AbortError') {
@@ -3435,6 +3532,11 @@
             // Skip if typing in an input
             if (e.target.tagName === 'INPUT' || e.target.tagName === 'TEXTAREA') return;
 
+            // Ctrl+S / Cmd+S = Save
+            if ((e.ctrlKey || e.metaKey) && e.key === 's') {
+                e.preventDefault();
+                saveFiles();
+            }
             // Ctrl+Z / Cmd+Z = Undo
             if ((e.ctrlKey || e.metaKey) && e.key === 'z' && !e.shiftKey) {
                 e.preventDefault();

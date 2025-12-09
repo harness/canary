@@ -1658,6 +1658,15 @@
                         <span id="historyCount" style="font-size:10px;min-width:12px">0</span>
                     </button>
                 </div>
+                <button class="btn" onclick="fixAllOutOfGamut()" title="Fix all out-of-gamut colors"
+                    style="display:flex;align-items:center;gap:5px;padding:6px 12px">
+                    <i data-lucide="wand-2" style="width:14px;height:14px"></i> Fix OOG
+                </button>
+                <button class="btn" onclick="optimizeFor45Contrast()"
+                    title="Optimize shades to exactly 4.5:1 contrast with white"
+                    style="display:flex;align-items:center;gap:5px;padding:6px 12px">
+                    <i data-lucide="circle" style="width:14px;height:14px;fill:white;stroke:var(--text-3)"></i> 4.5
+                </button>
                 <button class="btn" onclick="loadFile()"
                     style="display:flex;align-items:center;gap:5px;padding:6px 12px">
                     <i data-lucide="folder-open" style="width:14px;height:14px"></i> Load
@@ -3316,6 +3325,174 @@
                 if (err.name !== 'AbortError') {
                     toast('Error: ' + err.message);
                 }
+            }
+        }
+
+        // Optimize shades to exactly 4.5:1 contrast with white (not over-darkened)
+        function optimizeFor45Contrast() {
+            let fixedCount = 0;
+            const fixes = [];
+            const white = { r: 1, g: 1, b: 1 };
+
+            getFams().forEach(fam => {
+                SHADES.forEach(shade => {
+                    const v = getVal(fam, shade);
+                    if (!v) return;
+
+                    const lc = parseLCH(v);
+                    if (!lc) return;
+
+                    const d = getDisplay(lc);
+                    const contrast = getCR(d.rgb, white);
+
+                    // Target shades near 4.5 threshold (between 4.3 and 5.0)
+                    if (contrast >= 4.3 && contrast <= 5.0) {
+                        // Binary search for optimal lightness
+                        let lowL = lc.l;
+                        let highL = Math.min(100, lc.l + 10);
+                        let optimalL = lc.l;
+
+                        // If contrast > 4.5, we can increase lightness (brighter)
+                        // If contrast < 4.5, we need to decrease lightness (darker)
+                        if (contrast > 4.5) {
+                            // Find brightest L that still passes 4.5
+                            for (let testL = lc.l; testL <= highL; testL += 0.5) {
+                                const testLc = { mode: 'lch', l: testL, c: lc.c, h: lc.h };
+                                const testD = getDisplay(testLc);
+                                const testCR = getCR(testD.rgb, white);
+                                if (testCR >= 4.5) {
+                                    optimalL = testL;
+                                } else {
+                                    break;
+                                }
+                            }
+                        } else {
+                            // Find minimum L needed to pass 4.5
+                            for (let testL = lc.l; testL >= Math.max(0, lc.l - 10); testL -= 0.5) {
+                                const testLc = { mode: 'lch', l: testL, c: lc.c, h: lc.h };
+                                const testD = getDisplay(testLc);
+                                const testCR = getCR(testD.rgb, white);
+                                if (testCR >= 4.5) {
+                                    optimalL = testL;
+                                    break;
+                                }
+                            }
+                        }
+
+                        // Only apply if there's a meaningful change
+                        const deltaL = Math.round(optimalL) - lc.l;
+                        if (deltaL !== 0) {
+                            const newL = Math.round(optimalL);
+                            const newLc = { mode: 'lch', l: newL, c: lc.c, h: lc.h };
+                            const newD = getDisplay(newLc);
+                            const newCR = getCR(newD.rgb, white);
+
+                            fixes.push({
+                                family: fam,
+                                shade,
+                                oldL: lc.l,
+                                newL: newL,
+                                oldCR: contrast.toFixed(2),
+                                newCR: newCR.toFixed(2)
+                            });
+
+                            setVal(fam, shade, fmtLCH(newL, lc.c, lc.h));
+                            fixedCount++;
+                        }
+                    }
+                });
+            });
+
+            if (fixedCount > 0) {
+                saveToHistory(`Optimized ${fixedCount} shades for 4.5:1`);
+                render();
+                broadcastColorChange();
+                toast(`✓ Optimized ${fixedCount} shades to 4.5:1 contrast`);
+                console.log('Optimized shades:', fixes);
+            } else {
+                toast('✓ All shades already optimized');
+            }
+        }
+
+        // Show which shades pass 4.5:1 contrast with black (for black text usage)
+        function showBlackContrastInfo() {
+            const black = { r: 0, g: 0, b: 0 };
+            const results = [];
+
+            getFams().forEach(fam => {
+                // Find the darkest shade that still passes 4.5:1 with black
+                let darkestPassing = null;
+                SHADES.forEach(shade => {
+                    const v = getVal(fam, shade);
+                    if (!v) return;
+
+                    const lc = parseLCH(v);
+                    if (!lc) return;
+
+                    const d = getDisplay(lc);
+                    const contrast = getCR(d.rgb, black);
+
+                    if (contrast >= 4.5) {
+                        darkestPassing = { shade, contrast: contrast.toFixed(2), l: lc.l };
+                    }
+                });
+
+                if (darkestPassing) {
+                    results.push(`${fam}: darkest passing = ${darkestPassing.shade} (${darkestPassing.contrast}:1, L:${darkestPassing.l})`);
+                }
+            });
+
+            console.log('=== Black Text Compatibility ===');
+            console.log('Darkest shade per family that passes 4.5:1 with black:');
+            results.forEach(r => console.log('  ' + r));
+            toast('Check console for black contrast info');
+        }
+
+        // Fix all out-of-gamut colors by reducing chroma to fit P3 gamut
+        function fixAllOutOfGamut() {
+            let fixedCount = 0;
+            const fixes = [];
+
+            getFams().forEach(fam => {
+                SHADES.forEach(shade => {
+                    const v = getVal(fam, shade);
+                    if (!v) return;
+
+                    const lc = parseLCH(v);
+                    if (!lc) return;
+
+                    const p3c = p3(lc);
+                    const inP3 = p3c && p3c.r >= 0 && p3c.r <= 1 && p3c.g >= 0 && p3c.g <= 1 && p3c.b >= 0 && p3c.b <= 1;
+
+                    if (!inP3) {
+                        // Use culori's clampChroma to find the max chroma that fits in P3
+                        const clamped = clampChroma(lc, 'lch', 'p3');
+                        const clampedLch = lch(clamped);
+
+                        // Round chroma down to be safe
+                        const newC = Math.floor(clampedLch.c);
+
+                        fixes.push({
+                            family: fam,
+                            shade,
+                            oldC: lc.c,
+                            newC: newC
+                        });
+
+                        setVal(fam, shade, fmtLCH(lc.l, newC, lc.h));
+                        fixedCount++;
+                    }
+                });
+            });
+
+            if (fixedCount > 0) {
+                saveToHistory(`Fixed ${fixedCount} OOG colors`);
+                render();
+                broadcastColorChange();
+                toast(`✓ Fixed ${fixedCount} out-of-gamut colors`);
+                console.log('Fixed colors:', fixes);
+            } else {
+                toast('✓ All colors already in P3 gamut');
             }
         }
 

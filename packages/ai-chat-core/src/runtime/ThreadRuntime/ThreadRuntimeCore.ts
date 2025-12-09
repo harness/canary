@@ -1,3 +1,5 @@
+import { CapabilityExecutionManager } from '../../core'
+import { CapabilityContent } from '../../types'
 import { StreamAdapter, StreamEvent } from '../../types/adapters'
 import { AppendMessage, Message, MessageContent, MessageStatus } from '../../types/message'
 import { RuntimeCapabilities } from '../../types/thread'
@@ -8,6 +10,7 @@ export interface ThreadRuntimeCoreConfig {
   streamAdapter: StreamAdapter
   initialMessages?: Message[]
   onMessagesChange?: (messages: Message[]) => void
+  capabilityExecutionManager?: CapabilityExecutionManager
 }
 
 export class ThreadRuntimeCore extends BaseSubscribable {
@@ -147,6 +150,28 @@ export class ThreadRuntimeCore extends BaseSubscribable {
         ...message.metadata,
         conversationId: metadataEvent.conversationId,
         interactionId: metadataEvent.interactionId
+      }
+    } else if (event.type === 'capability_execution') {
+      const capabilityEvent = event as Extract<StreamEvent, { type: 'capability_execution' }>
+      message.content = [
+        ...message.content,
+        {
+          type: 'capability',
+          capabilityId: capabilityEvent.capabilityId,
+          capabilityName: capabilityEvent.capabilityName,
+          args: capabilityEvent.args
+        } as CapabilityContent
+      ]
+
+      // Execute capability if manager is available
+      if (this.config.capabilityExecutionManager) {
+        this.config.capabilityExecutionManager.executeCapability(
+          capabilityEvent.capabilityName,
+          capabilityEvent.capabilityId,
+          capabilityEvent.args,
+          messageId,
+          capabilityEvent.strategy
+        )
       }
     } else if (event.type === 'error') {
       const errorEvent = event as Extract<StreamEvent, { type: 'error' }>

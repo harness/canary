@@ -33,6 +33,13 @@ export type StreamEvent =
       readonly error: string
     }
   | {
+      readonly type: 'capability_execution'
+      readonly capabilityName: string
+      readonly capabilityId: string
+      readonly args: any
+      readonly strategy?: 'queue' | 'parallel' | 'replace'
+    }
+  | {
       // Custom events - any other type
       readonly type: string
       readonly data?: any

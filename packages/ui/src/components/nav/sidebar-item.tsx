@@ -38,12 +38,11 @@ export default function SidebarItem({ item, isPinned }: SidebarItemProps) {
         defaultSubmenuOpen={!isPinned}
         key={item.id}
         actionButtons={actionButtons}
-        to={item.to}
         icon={item.iconName}
         title={item.title}
       >
         {item.subItems.map(subItem => (
-          <Sidebar.MenuSubItem key={subItem.id} title={subItem.title} to={subItem.to} />
+          <Sidebar.MenuSubItem key={subItem.id} title={subItem.title} to={subItem.to || ''} />
         ))}
       </Sidebar.Item>
     )

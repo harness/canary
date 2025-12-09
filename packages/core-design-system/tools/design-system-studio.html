@@ -1,0 +1,1582 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Design System Studio</title>
+  <script src="https://cdn.jsdelivr.net/npm/culori@4.0.1/bundled/culori.min.js"></script>
+  <style>
+    :root {
+      --bg-0: #09090b;
+      --bg-1: #111113;
+      --bg-2: #18181b;
+      --bg-3: #27272a;
+      --border-1: #27272a;
+      --border-2: #3f3f46;
+      --text-1: #fafafa;
+      --text-2: #a1a1aa;
+      --text-3: #71717a;
+      --accent: #8b5cf6;
+      --success: #22c55e;
+      --warning: #eab308;
+      --danger: #ef4444;
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      font-family: system-ui, -apple-system, sans-serif;
+      background: var(--bg-0);
+      color: var(--text-1);
+      font-size: 13px;
+      overflow: hidden;
+    }
+
+    .app {
+      display: grid;
+      grid-template-columns: 300px 1fr 380px;
+      grid-template-rows: auto 1fr auto;
+      height: 100vh;
+    }
+
+    .header {
+      grid-column: 1 / -1;
+      background: var(--bg-1);
+      border-bottom: 1px solid var(--border-1);
+      padding: 12px 20px;
+      display: flex;
+      align-items: center;
+      gap: 20px;
+    }
+
+    .header h1 {
+      font-size: 15px;
+      font-weight: 600;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .header-badge {
+      font-size: 10px;
+      padding: 3px 8px;
+      border-radius: 4px;
+      background: rgba(139, 92, 246, 0.15);
+      color: var(--accent);
+    }
+
+    .header-controls {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      margin-left: auto;
+    }
+
+    .mode-select {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      font-size: 12px;
+      color: var(--text-3);
+    }
+
+    .btn {
+      padding: 7px 12px;
+      border-radius: 5px;
+      border: 1px solid var(--border-2);
+      background: var(--bg-2);
+      color: var(--text-1);
+      font-size: 12px;
+      font-weight: 500;
+      cursor: pointer;
+      transition: all 0.15s;
+      display: inline-flex;
+      align-items: center;
+      gap: 5px;
+    }
+
+    .btn:hover {
+      background: var(--bg-3);
+    }
+
+    .btn-primary {
+      background: var(--accent);
+      border-color: var(--accent);
+    }
+
+    .select {
+      padding: 6px 10px;
+      border-radius: 5px;
+      border: 1px solid var(--border-1);
+      background: var(--bg-2);
+      color: var(--text-1);
+      font-size: 12px;
+    }
+
+    /* Panels */
+    .left-panel {
+      background: var(--bg-1);
+      border-right: 1px solid var(--border-1);
+      display: flex;
+      flex-direction: column;
+      overflow: hidden;
+    }
+
+    .middle-panel {
+      display: flex;
+      flex-direction: column;
+      overflow: hidden;
+    }
+
+    .right-panel {
+      background: var(--bg-1);
+      border-left: 1px solid var(--border-1);
+      display: flex;
+      flex-direction: column;
+      overflow: hidden;
+    }
+
+    .panel-header {
+      padding: 14px 16px;
+      border-bottom: 1px solid var(--border-1);
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+
+    .panel-title {
+      font-size: 12px;
+      font-weight: 600;
+      color: var(--text-2);
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+    }
+
+    .panel-content {
+      flex: 1;
+      overflow-y: auto;
+      padding: 12px;
+    }
+
+    /* Palette */
+    .palette-header {
+      display: flex;
+      padding-left: 56px;
+      margin-bottom: 4px;
+      gap: 2px;
+    }
+
+    .palette-header span {
+      width: 26px;
+      text-align: center;
+      font-size: 8px;
+      color: var(--text-3);
+    }
+
+    .palette-row {
+      display: flex;
+      align-items: center;
+      gap: 2px;
+      margin-bottom: 3px;
+    }
+
+    .palette-label {
+      width: 52px;
+      font-size: 10px;
+      font-weight: 600;
+      color: var(--text-3);
+      text-align: right;
+      padding-right: 4px;
+      text-transform: capitalize;
+    }
+
+    .shade {
+      width: 26px;
+      height: 22px;
+      border-radius: 3px;
+      cursor: pointer;
+      transition: all 0.15s;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 8px;
+      font-weight: 600;
+      border: 1px solid transparent;
+    }
+
+    .shade:hover {
+      transform: scale(1.4);
+      z-index: 10;
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.5);
+    }
+
+    .shade.selected {
+      outline: 2px solid var(--accent);
+      outline-offset: 1px;
+      z-index: 5;
+    }
+
+    /* Editor */
+    .editor-section {
+      background: var(--bg-2);
+      border-radius: 6px;
+      padding: 14px;
+      margin-top: 12px;
+    }
+
+    .editor-title {
+      font-size: 11px;
+      font-weight: 600;
+      color: var(--text-2);
+      margin-bottom: 12px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+
+    .color-preview {
+      height: 50px;
+      border-radius: 5px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 11px;
+      font-weight: 600;
+      margin-bottom: 12px;
+      font-family: monospace;
+    }
+
+    .form-group {
+      margin-bottom: 10px;
+    }
+
+    .form-label {
+      font-size: 10px;
+      color: var(--text-3);
+      margin-bottom: 4px;
+      display: flex;
+      justify-content: space-between;
+    }
+
+    .form-row {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .slider {
+      flex: 1;
+      height: 4px;
+      -webkit-appearance: none;
+      appearance: none;
+      background: var(--bg-3);
+      border-radius: 2px;
+    }
+
+    .slider::-webkit-slider-thumb {
+      -webkit-appearance: none;
+      width: 14px;
+      height: 14px;
+      border-radius: 50%;
+      background: var(--accent);
+      cursor: pointer;
+    }
+
+    .form-input {
+      width: 48px;
+      padding: 4px 6px;
+      border-radius: 3px;
+      border: 1px solid var(--border-1);
+      background: var(--bg-3);
+      color: var(--text-1);
+      font-size: 11px;
+      text-align: center;
+      font-family: monospace;
+    }
+
+    /* Tabs */
+    .tabs {
+      display: flex;
+      background: var(--bg-1);
+      border-bottom: 1px solid var(--border-1);
+      padding: 0 16px;
+    }
+
+    .tab {
+      padding: 10px 14px;
+      font-size: 12px;
+      font-weight: 500;
+      color: var(--text-3);
+      cursor: pointer;
+      border-bottom: 2px solid transparent;
+      margin-bottom: -1px;
+    }
+
+    .tab:hover {
+      color: var(--text-1);
+    }
+
+    .tab.active {
+      color: var(--text-1);
+      border-bottom-color: var(--accent);
+    }
+
+    .tab-badge {
+      margin-left: 5px;
+      padding: 2px 6px;
+      border-radius: 8px;
+      font-size: 9px;
+      background: var(--danger);
+      color: #fff;
+    }
+
+    /* Filter */
+    .filter-bar {
+      padding: 10px 16px;
+      border-bottom: 1px solid var(--border-1);
+      display: flex;
+      gap: 10px;
+      align-items: center;
+      background: var(--bg-1);
+    }
+
+    .filter-input {
+      flex: 1;
+      padding: 6px 10px;
+      border-radius: 4px;
+      border: 1px solid var(--border-1);
+      background: var(--bg-0);
+      color: var(--text-1);
+      font-size: 12px;
+    }
+
+    .filter-input::placeholder {
+      color: var(--text-3);
+    }
+
+    .checkbox-label {
+      display: flex;
+      align-items: center;
+      gap: 4px;
+      font-size: 11px;
+      color: var(--text-3);
+      cursor: pointer;
+    }
+
+    /* Token Tree */
+    .token-tree {
+      padding: 10px;
+    }
+
+    .token-group {
+      margin-bottom: 4px;
+    }
+
+    .token-group-header {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      padding: 6px 8px;
+      border-radius: 4px;
+      cursor: pointer;
+      font-size: 12px;
+      font-weight: 600;
+      color: var(--text-2);
+    }
+
+    .token-group-header:hover {
+      background: var(--bg-2);
+    }
+
+    .token-group-header .arrow {
+      font-size: 9px;
+      color: var(--text-3);
+      transition: transform 0.15s;
+    }
+
+    .token-group-header.expanded .arrow {
+      transform: rotate(90deg);
+    }
+
+    .token-group-content {
+      display: none;
+      padding-left: 14px;
+    }
+
+    .token-group-content.expanded {
+      display: block;
+    }
+
+    .token-item {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      padding: 5px 8px;
+      border-radius: 4px;
+      margin: 2px 0;
+      cursor: pointer;
+      border-left: 2px solid transparent;
+    }
+
+    .token-item:hover {
+      background: var(--bg-2);
+    }
+
+    .token-item.selected {
+      background: var(--bg-3);
+      border-left-color: var(--accent);
+    }
+
+    .token-item.has-issue {
+      border-left-color: var(--danger);
+    }
+
+    .token-swatch {
+      width: 18px;
+      height: 18px;
+      border-radius: 3px;
+      flex-shrink: 0;
+      border: 1px solid rgba(255, 255, 255, 0.1);
+    }
+
+    .token-name {
+      flex: 1;
+      font-size: 11px;
+      font-family: monospace;
+    }
+
+    .token-ref {
+      font-size: 9px;
+      color: var(--text-3);
+      font-family: monospace;
+      max-width: 100px;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      white-space: nowrap;
+    }
+
+    .badge {
+      display: inline-flex;
+      padding: 2px 5px;
+      border-radius: 3px;
+      font-size: 9px;
+      font-weight: 600;
+    }
+
+    .badge-pass {
+      background: rgba(34, 197, 94, 0.15);
+      color: #22c55e;
+    }
+
+    .badge-fail {
+      background: rgba(239, 68, 68, 0.15);
+      color: #ef4444;
+    }
+
+    .badge-warn {
+      background: rgba(234, 179, 8, 0.15);
+      color: #eab308;
+    }
+
+    /* Detail Panel */
+    .detail-content {
+      flex: 1;
+      overflow-y: auto;
+      padding: 16px;
+    }
+
+    .detail-header {
+      margin-bottom: 16px;
+    }
+
+    .detail-title {
+      font-size: 14px;
+      font-weight: 600;
+      font-family: monospace;
+      margin-bottom: 4px;
+    }
+
+    .detail-path {
+      font-size: 10px;
+      color: var(--text-3);
+      font-family: monospace;
+    }
+
+    .detail-preview {
+      height: 60px;
+      border-radius: 6px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 12px;
+      font-weight: 600;
+      margin-bottom: 16px;
+      font-family: monospace;
+    }
+
+    .detail-section {
+      margin-bottom: 16px;
+    }
+
+    .detail-section-title {
+      font-size: 10px;
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+      color: var(--text-3);
+      margin-bottom: 8px;
+      padding-bottom: 4px;
+      border-bottom: 1px solid var(--border-1);
+    }
+
+    .detail-row {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 4px 0;
+      font-size: 11px;
+    }
+
+    .detail-label {
+      color: var(--text-3);
+    }
+
+    .detail-value {
+      font-family: monospace;
+    }
+
+    /* Pair Test */
+    .pair-test {
+      background: var(--bg-2);
+      border-radius: 6px;
+      padding: 12px;
+      margin-bottom: 12px;
+    }
+
+    .pair-test-header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      margin-bottom: 10px;
+    }
+
+    .pair-test-title {
+      font-size: 11px;
+      font-weight: 600;
+      color: var(--text-2);
+    }
+
+    .pair-test-preview {
+      display: flex;
+      gap: 8px;
+      margin-bottom: 10px;
+    }
+
+    .pair-test-swatch {
+      flex: 1;
+      height: 44px;
+      border-radius: 4px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 10px;
+      font-weight: 600;
+    }
+
+    .pair-test-result {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 8px;
+      background: var(--bg-3);
+      border-radius: 4px;
+    }
+
+    .pair-test-ratio {
+      font-size: 16px;
+      font-weight: 700;
+      font-family: monospace;
+    }
+
+    .pair-test-badges {
+      display: flex;
+      gap: 4px;
+    }
+
+    /* Status Bar */
+    .status-bar {
+      grid-column: 1 / -1;
+      background: var(--bg-1);
+      border-top: 1px solid var(--border-1);
+      padding: 6px 16px;
+      font-size: 11px;
+      color: var(--text-3);
+      display: flex;
+      gap: 20px;
+    }
+
+    .status-item {
+      display: flex;
+      align-items: center;
+      gap: 4px;
+    }
+
+    .status-dot {
+      width: 6px;
+      height: 6px;
+      border-radius: 50%;
+    }
+
+    .status-dot.on {
+      background: var(--success);
+    }
+
+    .status-dot.off {
+      background: var(--text-3);
+    }
+
+    /* Modal */
+    .modal-overlay {
+      position: fixed;
+      inset: 0;
+      background: rgba(0, 0, 0, 0.8);
+      display: none;
+      align-items: center;
+      justify-content: center;
+      z-index: 200;
+    }
+
+    .modal-overlay.open {
+      display: flex;
+    }
+
+    .modal {
+      background: var(--bg-1);
+      border-radius: 8px;
+      border: 1px solid var(--border-1);
+      width: 90%;
+      max-width: 800px;
+      max-height: 80vh;
+      overflow: hidden;
+    }
+
+    .modal-header {
+      padding: 14px 20px;
+      border-bottom: 1px solid var(--border-1);
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    .modal-title {
+      font-size: 14px;
+      font-weight: 600;
+    }
+
+    .modal-close {
+      background: none;
+      border: none;
+      color: var(--text-2);
+      font-size: 20px;
+      cursor: pointer;
+    }
+
+    .modal-body {
+      padding: 20px;
+      overflow-y: auto;
+      max-height: calc(80vh - 60px);
+    }
+
+    .modal-tabs {
+      display: flex;
+      gap: 6px;
+      margin-bottom: 16px;
+    }
+
+    .modal-tab {
+      padding: 6px 12px;
+      border-radius: 4px;
+      background: var(--bg-2);
+      border: 1px solid var(--border-1);
+      color: var(--text-2);
+      cursor: pointer;
+      font-size: 11px;
+    }
+
+    .modal-tab.active {
+      background: var(--accent);
+      border-color: var(--accent);
+      color: #fff;
+    }
+
+    .export-code {
+      background: var(--bg-0);
+      border: 1px solid var(--border-1);
+      border-radius: 6px;
+      padding: 12px;
+      font-family: monospace;
+      font-size: 11px;
+      overflow: auto;
+      white-space: pre;
+      max-height: 350px;
+    }
+
+    .toast {
+      position: fixed;
+      bottom: 16px;
+      right: 16px;
+      background: var(--bg-2);
+      border: 1px solid var(--border-1);
+      border-radius: 6px;
+      padding: 10px 16px;
+      font-size: 12px;
+      z-index: 300;
+      display: none;
+    }
+
+    .empty-state {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      padding: 40px;
+      color: var(--text-3);
+      text-align: center;
+    }
+
+    .empty-state-icon {
+      font-size: 28px;
+      margin-bottom: 8px;
+      opacity: 0.5;
+    }
+  </style>
+</head>
+
+<body>
+  <div class="app">
+    <header class="header">
+      <h1>🎨 Design System Studio <span class="header-badge" id="p3Badge">P3</span></h1>
+      <div class="mode-select">
+        <span>Mode:</span>
+        <select class="select" id="modeSelect" onchange="switchMode(this.value)"></select>
+      </div>
+      <div class="header-controls">
+        <button class="btn" onclick="loadFiles()">📂 Load</button>
+        <button class="btn btn-primary" onclick="showExport()">💾 Export</button>
+      </div>
+    </header>
+
+    <div class="left-panel">
+      <div class="panel-header">
+        <span class="panel-title">LCH Palette</span>
+      </div>
+      <div class="panel-content">
+        <div id="paletteGrid"></div>
+        <div id="editorSection"></div>
+      </div>
+    </div>
+
+    <div class="middle-panel">
+      <div class="tabs">
+        <div class="tab active" data-tab="tokens" onclick="switchTab('tokens', this)">Tokens</div>
+        <div class="tab" data-tab="pairs" onclick="switchTab('pairs', this)">Color Pairs <span class="tab-badge"
+            id="pairIssueCount" style="display:none">0</span></div>
+        <div class="tab" data-tab="usage" onclick="switchTab('usage', this)">Usage</div>
+      </div>
+      <div class="filter-bar">
+        <input type="text" class="filter-input" id="filterInput" placeholder="Search tokens..."
+          oninput="filterTokens()">
+        <label class="checkbox-label">
+          <input type="checkbox" id="issuesOnly" onchange="filterTokens()">
+          <span>Issues only</span>
+        </label>
+      </div>
+      <div class="panel-content">
+        <div id="tokensTab" class="token-tree"></div>
+        <div id="pairsTab" style="display:none; padding:10px"></div>
+        <div id="usageTab" style="display:none; padding:10px"></div>
+      </div>
+    </div>
+
+    <div class="right-panel">
+      <div class="panel-header">
+        <span class="panel-title">Detail</span>
+      </div>
+      <div class="detail-content" id="detailPanel"></div>
+    </div>
+
+    <div class="status-bar">
+      <div class="status-item"><span class="status-dot" id="colorsStatus"></span> Colors: <span
+          id="colorsCount">0</span></div>
+      <div class="status-item"><span class="status-dot" id="tokensStatus"></span> Tokens: <span
+          id="tokensCount">0</span></div>
+      <div class="status-item"><span class="status-dot" id="issuesStatus"></span> Issues: <span
+          id="issuesCount">0</span></div>
+    </div>
+  </div>
+
+  <div class="modal-overlay" id="exportModal">
+    <div class="modal">
+      <div class="modal-header">
+        <span class="modal-title">Export</span>
+        <button class="modal-close" onclick="closeExport()">×</button>
+      </div>
+      <div class="modal-body">
+        <div class="modal-tabs">
+          <button class="modal-tab active" onclick="setExportTab('lch', this)">colors_lch.json</button>
+          <button class="modal-tab" onclick="setExportTab('css', this)">CSS Variables</button>
+          <button class="modal-tab" onclick="setExportTab('report', this)">A11y Report</button>
+        </div>
+        <div class="export-code" id="exportCode"></div>
+        <div style="margin-top:12px; display:flex; gap:8px">
+          <button class="btn btn-primary" onclick="copyExport()">📋 Copy</button>
+          <button class="btn" onclick="downloadExport()">⬇️ Download</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div id="toast" class="toast"></div>
+
+  <script>
+    const SHADES = ['25', '50', '100', '150', '200', '300', '400', '500', '600', '700', '800', '850', '900', '950', '1000'];
+    const PREFIX = 'cn';
+
+    const state = {
+      colors: null,
+      tokens: null,
+      mode: 'mode/light/default',
+      selFamily: 'blue',
+      selShade: '500',
+      selToken: null,
+      tab: 'tokens',
+      exportTab: 'lch',
+      filter: '',
+      hasP3: false,
+      resolved: new Map(),
+      pairs: [],
+      issues: []
+    };
+
+    const { lch, rgb, formatHex, clampChroma, p3 } = culori;
+
+    // ========== INIT ==========
+    async function init() {
+      console.log('Initializing...');
+      state.hasP3 = window.matchMedia && window.matchMedia('(color-gamut:p3)').matches;
+      document.getElementById('p3Badge').textContent = state.hasP3 ? 'P3 ✓' : 'sRGB';
+      populateModes();
+      await loadDefaultFiles();
+      render();
+      console.log('Init complete');
+    }
+
+    function populateModes() {
+      const modes = [
+        'mode/light/default',
+        'mode/light/dimmer',
+        'mode/light/high-contrast',
+        'mode/dark/default',
+        'mode/dark/dimmer',
+        'mode/dark/high-contrast'
+      ];
+      const sel = document.getElementById('modeSelect');
+      sel.innerHTML = modes.map(m =>
+        `<option value="${m}">${m.replace('mode/', '').replace('/', ' / ')}</option>`
+      ).join('');
+    }
+
+    async function loadDefaultFiles() {
+      try {
+        console.log('Loading files...');
+
+        const colorsRes = await fetch('../design-tokens/core/colors_lch.json');
+        console.log('Colors response:', colorsRes.status);
+        if (colorsRes.ok) {
+          state.colors = await colorsRes.json();
+          console.log('Colors loaded:', Object.keys(state.colors));
+          toast('Loaded colors_lch.json');
+        }
+
+        const tokensRes = await fetch('../design-tokens/' + state.mode + '.json');
+        console.log('Tokens response:', tokensRes.status);
+        if (tokensRes.ok) {
+          state.tokens = await tokensRes.json();
+          console.log('Tokens loaded:', Object.keys(state.tokens));
+          toast('Loaded ' + state.mode);
+        }
+
+        resolveAll();
+      } catch (e) {
+        console.error('Load failed:', e);
+        toast('Load failed: ' + e.message);
+      }
+    }
+
+    async function switchMode(m) {
+      state.mode = m;
+      try {
+        const res = await fetch('../design-tokens/' + m + '.json');
+        if (res.ok) {
+          state.tokens = await res.json();
+          resolveAll();
+          render();
+          toast('Switched to ' + m);
+        }
+      } catch (e) {
+        toast('Failed: ' + e.message);
+      }
+    }
+
+    // ========== COLOR UTILS ==========
+    function parseLCH(s) {
+      if (!s) return null;
+      const m = s.match(/lch\((\d+(?:\.\d+)?)%\s+(\d+(?:\.\d+)?)\s+(\d+(?:\.\d+)?)\)/);
+      return m ? { mode: 'lch', l: +m[1], c: +m[2], h: +m[3] } : null;
+    }
+
+    function fmtLCH(l, c, h) {
+      return 'lch(' + Math.round(l) + '% ' + (Math.round(c * 10) / 10) + ' ' + Math.round(h) + ')';
+    }
+
+    function getDisplay(lc) {
+      if (!lc) return { css: '#888', hex: '#888', gamut: 'ok', rgb: null, p3: null };
+      const p3c = p3(lc);
+      const inP3 = p3c && p3c.r >= 0 && p3c.r <= 1 && p3c.g >= 0 && p3c.g <= 1 && p3c.b >= 0 && p3c.b <= 1;
+      const rgbClamped = rgb(clampChroma(lc, 'lch', 'rgb'));
+      const hex = formatHex(rgbClamped);
+
+      if (inP3) {
+        const css = state.hasP3
+          ? 'color(display-p3 ' + p3c.r.toFixed(4) + ' ' + p3c.g.toFixed(4) + ' ' + p3c.b.toFixed(4) + ')'
+          : hex;
+        return { css: css, hex: hex, gamut: 'ok', rgb: rgbClamped, p3: p3c };
+      } else {
+        const clampedP3 = p3(clampChroma(lc, 'lch', 'p3'));
+        const css = state.hasP3
+          ? 'color(display-p3 ' + clampedP3.r.toFixed(4) + ' ' + clampedP3.g.toFixed(4) + ' ' + clampedP3.b.toFixed(4) + ')'
+          : hex;
+        return { css: css, hex: hex, gamut: 'oog', rgb: rgbClamped, p3: clampedP3 };
+      }
+    }
+
+    function getLum(c) {
+      if (!c) return 0;
+      var f = function (v) { return v <= 0.03928 ? v / 12.92 : Math.pow((v + 0.055) / 1.055, 2.4); };
+      return 0.2126 * f(c.r) + 0.7152 * f(c.g) + 0.0722 * f(c.b);
+    }
+
+    function getContrast(c1, c2) {
+      if (!c1 || !c2) return 1;
+      var l1 = getLum(c1), l2 = getLum(c2);
+      return (Math.max(l1, l2) + 0.05) / (Math.min(l1, l2) + 0.05);
+    }
+
+    function contrastLevel(r) {
+      return { ratio: r, AAL: r >= 3, AA: r >= 4.5, AAA: r >= 7 };
+    }
+
+    function txtColor(bg) {
+      return bg ? (getContrast(bg, { r: 1, g: 1, b: 1 }) > getContrast(bg, { r: 0, g: 0, b: 0 }) ? '#fff' : '#000') : '#fff';
+    }
+
+    // ========== TOKEN RESOLUTION ==========
+    function resolveRef(ref, visited) {
+      if (!visited) visited = new Set();
+      if (!ref || typeof ref !== 'string') return null;
+      if (visited.has(ref)) return null;
+      visited.add(ref);
+
+      var m = ref.match(/\{([^}]+)\}/);
+      if (!m) return ref;
+
+      var path = m[1].split('.');
+
+      // Try colors first
+      if (state.colors) {
+        var v = state.colors;
+        for (var i = 0; i < path.length; i++) {
+          if (!v) break;
+          v = v[path[i]];
+        }
+        if (v && v.$value) {
+          var r = resolveRef(v.$value, visited);
+          return (r && r.indexOf('{') === -1) ? r : null;
+        }
+      }
+
+      // Try tokens
+      if (state.tokens) {
+        var v2 = state.tokens;
+        for (var i = 0; i < path.length; i++) {
+          if (!v2) break;
+          v2 = v2[path[i]];
+        }
+        if (v2 && v2.$value) {
+          return resolveRef(v2.$value, visited);
+        }
+      }
+
+      return null;
+    }
+
+    function resolveAll() {
+      state.resolved.clear();
+      state.pairs = [];
+      state.issues = [];
+
+      if (!state.tokens) return;
+
+      var white = { r: 1, g: 1, b: 1 };
+      var black = { r: 0, g: 0, b: 0 };
+
+      function process(obj, path) {
+        if (!path) path = '';
+        for (var k in obj) {
+          if (k.charAt(0) === '$') continue;
+          var v = obj[k];
+          var tp = path ? path + '.' + k : k;
+
+          if (v && typeof v === 'object') {
+            if (v.$value !== undefined) {
+              var resolved = resolveRef(v.$value);
+              var lc = parseLCH(resolved);
+              var display = getDisplay(lc);
+              var cw = contrastLevel(getContrast(display.rgb, white));
+              var cb = contrastLevel(getContrast(display.rgb, black));
+
+              state.resolved.set(tp, {
+                path: tp,
+                ref: v.$value,
+                resolved: resolved,
+                lc: lc,
+                display: display,
+                cw: cw,
+                cb: cb,
+                desc: v.$description,
+                hasIssue: false,
+                pairBg: null,
+                pairContrast: null
+              });
+            } else {
+              process(v, tp);
+            }
+          }
+        }
+      }
+
+      process(state.tokens);
+
+      // Find and test color pairs
+      state.resolved.forEach(function (td, tp) {
+        var parts = tp.split('.');
+
+        // Set pairs: set.{color}.{variant}.text -> set.{color}.{variant}.bg
+        if (parts[0] === 'set' && parts.length >= 4 && parts[3] === 'text') {
+          var bgPath = parts[0] + '.' + parts[1] + '.' + parts[2] + '.bg';
+          var bgToken = state.resolved.get(bgPath);
+          if (bgToken) {
+            var ratio = getContrast(td.display.rgb, bgToken.display.rgb);
+            var level = contrastLevel(ratio);
+            td.pairBg = bgPath;
+            td.pairContrast = level;
+            if (!level.AA) {
+              td.hasIssue = true;
+              state.issues.push(td);
+            }
+            state.pairs.push({
+              text: tp,
+              bg: bgPath,
+              textToken: td,
+              bgToken: bgToken,
+              ratio: ratio,
+              level: level
+            });
+          }
+        }
+
+        // Global text vs bg.1
+        if (parts[0] === 'text' && parts.length === 2) {
+          var skip = ['success', 'danger', 'warning', 'merged', 'brand'];
+          if (skip.indexOf(parts[1]) === -1) {
+            var bgToken = state.resolved.get('bg.1');
+            if (bgToken) {
+              var ratio = getContrast(td.display.rgb, bgToken.display.rgb);
+              var level = contrastLevel(ratio);
+              td.pairBg = 'bg.1';
+              td.pairContrast = level;
+              if (!level.AA) {
+                td.hasIssue = true;
+                state.issues.push(td);
+              }
+              state.pairs.push({
+                text: tp,
+                bg: 'bg.1',
+                textToken: td,
+                bgToken: bgToken,
+                ratio: ratio,
+                level: level
+              });
+            }
+          }
+        }
+      });
+
+      // Update status
+      document.getElementById('colorsStatus').className = 'status-dot ' + (state.colors ? 'on' : 'off');
+      document.getElementById('tokensStatus').className = 'status-dot ' + (state.tokens ? 'on' : 'off');
+      document.getElementById('issuesStatus').className = 'status-dot ' + (state.issues.length ? 'on' : 'off');
+      document.getElementById('colorsCount').textContent = state.colors ? Object.keys(state.colors).length : 0;
+      document.getElementById('tokensCount').textContent = state.resolved.size;
+      document.getElementById('issuesCount').textContent = state.issues.length;
+
+      var badge = document.getElementById('pairIssueCount');
+      if (state.issues.length) {
+        badge.textContent = state.issues.length;
+        badge.style.display = 'inline';
+      } else {
+        badge.style.display = 'none';
+      }
+    }
+
+    // ========== PALETTE HELPERS ==========
+    function getFamilies() {
+      if (!state.colors) return [];
+      var result = [];
+      for (var k in state.colors) {
+        if (k === 'pure') continue;
+        var fam = state.colors[k];
+        if (fam && typeof fam === 'object' && (fam['500'] || fam['50'])) {
+          result.push(k);
+        }
+      }
+      return result;
+    }
+
+    function getVal(f, s) {
+      return state.colors && state.colors[f] && state.colors[f][s] ? state.colors[f][s].$value : null;
+    }
+
+    function setVal(f, s, v) {
+      if (state.colors && state.colors[f] && state.colors[f][s]) {
+        state.colors[f][s].$value = v;
+        resolveAll();
+      }
+    }
+
+    // ========== RENDER ==========
+    function render() {
+      renderPalette();
+      renderEditor();
+      renderTokens();
+      renderPairs();
+      renderUsage();
+      renderDetail();
+    }
+
+    function renderPalette() {
+      var grid = document.getElementById('paletteGrid');
+      var families = getFamilies();
+
+      if (!families.length) {
+        grid.innerHTML = '<div class="empty-state"><div class="empty-state-icon">📦</div>Load colors_lch.json</div>';
+        return;
+      }
+
+      var html = '<div class="palette-header">';
+      for (var i = 0; i < SHADES.length; i++) {
+        html += '<span>' + SHADES[i] + '</span>';
+      }
+      html += '</div>';
+
+      for (var fi = 0; fi < families.length; fi++) {
+        var f = families[fi];
+        html += '<div class="palette-row"><div class="palette-label">' + f + '</div>';
+
+        for (var si = 0; si < SHADES.length; si++) {
+          var s = SHADES[si];
+          var v = getVal(f, s);
+          if (!v) {
+            html += '<div class="shade" style="opacity:.2"></div>';
+          } else {
+            var lc = parseLCH(v);
+            var d = getDisplay(lc);
+            var tc = txtColor(d.rgb);
+            var sel = (state.selFamily === f && state.selShade === s) ? ' selected' : '';
+            html += '<div class="shade' + sel + '" style="background:' + d.css + ';color:' + tc + '" onclick="selectShade(\'' + f + '\',\'' + s + '\')">' + (lc ? Math.round(lc.l) : '') + '</div>';
+          }
+        }
+        html += '</div>';
+      }
+
+      grid.innerHTML = html;
+    }
+
+    function renderEditor() {
+      var el = document.getElementById('editorSection');
+      var v = getVal(state.selFamily, state.selShade);
+
+      if (!v) {
+        el.innerHTML = '<div class="empty-state"><div class="empty-state-icon">🎨</div>Select a shade</div>';
+        return;
+      }
+
+      var lc = parseLCH(v);
+      var d = getDisplay(lc);
+      var tc = txtColor(d.rgb);
+
+      el.innerHTML =
+        '<div class="editor-title"><span>' + state.selFamily + '-' + state.selShade + '</span><span class="badge ' + (d.gamut === 'ok' ? 'badge-pass' : 'badge-warn') + '">' + (d.gamut === 'ok' ? 'P3' : 'OOG') + '</span></div>' +
+        '<div class="color-preview" style="background:' + d.css + ';color:' + tc + '">' + v + '</div>' +
+        '<div class="form-group"><div class="form-label"><span>L</span><span>' + Math.round(lc ? lc.l : 0) + '%</span></div><div class="form-row"><input type="range" class="slider" min="0" max="100" value="' + (lc ? lc.l : 50) + '" oninput="updL(this.value)"><input type="number" class="form-input" value="' + Math.round(lc ? lc.l : 50) + '" onchange="updL(this.value)"></div></div>' +
+        '<div class="form-group"><div class="form-label"><span>C</span><span>' + Math.round((lc ? lc.c : 0) * 10) / 10 + '</span></div><div class="form-row"><input type="range" class="slider" min="0" max="150" step="0.5" value="' + (lc ? lc.c : 50) + '" oninput="updC(this.value)"><input type="number" class="form-input" value="' + Math.round((lc ? lc.c : 50) * 10) / 10 + '" onchange="updC(this.value)"></div></div>' +
+        '<div class="form-group"><div class="form-label"><span>H</span><span>' + Math.round(lc ? lc.h : 0) + '°</span></div><div class="form-row"><input type="range" class="slider" min="0" max="360" value="' + (lc ? lc.h : 0) + '" oninput="updH(this.value)"><input type="number" class="form-input" value="' + Math.round(lc ? lc.h : 0) + '" onchange="updH(this.value)"></div></div>';
+    }
+
+    function renderTokens() {
+      var el = document.getElementById('tokensTab');
+
+      if (!state.tokens) {
+        el.innerHTML = '<div class="empty-state"><div class="empty-state-icon">🎯</div>Load semantic tokens</div>';
+        return;
+      }
+
+      var filter = document.getElementById('filterInput').value.toLowerCase();
+      var issuesOnly = document.getElementById('issuesOnly').checked;
+
+      function renderGroup(obj, path, level) {
+        if (!path) path = '';
+        if (!level) level = 0;
+        var html = '';
+
+        for (var k in obj) {
+          if (k.charAt(0) === '$') continue;
+          var v = obj[k];
+          var tp = path ? path + '.' + k : k;
+
+          if (v && typeof v === 'object') {
+            if (v.$value !== undefined) {
+              var td = state.resolved.get(tp);
+              if (!td) continue;
+              if (filter && tp.toLowerCase().indexOf(filter) === -1) continue;
+              if (issuesOnly && !td.hasIssue) continue;
+
+              var sel = state.selToken === tp ? ' selected' : '';
+              var issue = td.hasIssue ? ' has-issue' : '';
+              html += '<div class="token-item' + sel + issue + '" onclick="selectToken(\'' + tp + '\')">' +
+                '<div class="token-swatch" style="background:' + td.display.css + '"></div>' +
+                '<span class="token-name">' + k + '</span>' +
+                '<span class="token-ref">' + v.$value + '</span>' +
+                (td.hasIssue ? '<span class="badge badge-fail">!</span>' : '') +
+                '</div>';
+            } else {
+              var content = renderGroup(v, tp, level + 1);
+              if (content || !filter) {
+                var expanded = level === 0 ? ' expanded' : '';
+                html += '<div class="token-group">' +
+                  '<div class="token-group-header' + expanded + '" onclick="toggleGroup(this)"><span class="arrow">▶</span><span>' + k + '</span></div>' +
+                  '<div class="token-group-content' + expanded + '">' + content + '</div>' +
+                  '</div>';
+              }
+            }
+          }
+        }
+        return html;
+      }
+
+      el.innerHTML = renderGroup(state.tokens);
+    }
+
+    function renderPairs() {
+      var el = document.getElementById('pairsTab');
+
+      if (!state.pairs.length) {
+        el.innerHTML = '<div class="empty-state"><div class="empty-state-icon">✅</div>No color pairs found</div>';
+        return;
+      }
+
+      var html = '';
+      for (var i = 0; i < state.pairs.length; i++) {
+        var p = state.pairs[i];
+        html += '<div class="pair-test" onclick="selectToken(\'' + p.text + '\')">' +
+          '<div class="pair-test-header"><span class="pair-test-title">' + p.text.split('.').slice(-2).join('.') + '</span><span class="badge ' + (p.level.AA ? 'badge-pass' : 'badge-fail') + '">' + (p.level.AA ? 'AA ✓' : 'AA ✗') + '</span></div>' +
+          '<div class="pair-test-preview">' +
+          '<div class="pair-test-swatch" style="background:' + p.bgToken.display.css + ';color:' + p.textToken.display.css + '">Text on BG</div>' +
+          '<div class="pair-test-swatch" style="background:' + p.textToken.display.css + ';color:' + p.bgToken.display.css + '">BG on Text</div>' +
+          '</div>' +
+          '<div class="pair-test-result"><span class="pair-test-ratio">' + p.ratio.toFixed(2) + ':1</span>' +
+          '<div class="pair-test-badges">' +
+          '<span class="badge ' + (p.level.AAL ? 'badge-pass' : 'badge-fail') + '">AA-L</span>' +
+          '<span class="badge ' + (p.level.AA ? 'badge-pass' : 'badge-fail') + '">AA</span>' +
+          '<span class="badge ' + (p.level.AAA ? 'badge-pass' : 'badge-fail') + '">AAA</span>' +
+          '</div></div></div>';
+      }
+      el.innerHTML = html;
+    }
+
+    function renderUsage() {
+      var el = document.getElementById('usageTab');
+
+      if (!state.selFamily || !state.selShade) {
+        el.innerHTML = '<div class="empty-state"><div class="empty-state-icon">🔍</div>Select a shade to see usage</div>';
+        return;
+      }
+
+      var ref = '{' + state.selFamily + '.' + state.selShade + '}';
+      var using = [];
+
+      state.resolved.forEach(function (td) {
+        if (td.ref === ref || (td.ref && td.ref.indexOf(state.selFamily + '.' + state.selShade) !== -1)) {
+          using.push(td);
+        }
+      });
+
+      if (!using.length) {
+        el.innerHTML = '<div class="empty-state"><div class="empty-state-icon">📭</div>No tokens use ' + state.selFamily + '.' + state.selShade + '</div>';
+        return;
+      }
+
+      var html = '<div style="margin-bottom:10px;font-size:11px;color:var(--text-3)">' + using.length + ' tokens use <strong>' + state.selFamily + '.' + state.selShade + '</strong></div><div class="usage-list">';
+      for (var i = 0; i < using.length; i++) {
+        var td = using[i];
+        html += '<div class="token-item" onclick="selectToken(\'' + td.path + '\')">' +
+          '<div class="token-swatch" style="background:' + td.display.css + '"></div>' +
+          '<span class="token-name">' + td.path + '</span>' +
+          (td.hasIssue ? '<span class="badge badge-fail">!</span>' : '') +
+          '</div>';
+      }
+      html += '</div>';
+      el.innerHTML = html;
+    }
+
+    function renderDetail() {
+      var el = document.getElementById('detailPanel');
+
+      if (!state.selToken) {
+        el.innerHTML = '<div class="empty-state"><div class="empty-state-icon">👈</div>Select a token</div>';
+        return;
+      }
+
+      var td = state.resolved.get(state.selToken);
+      if (!td) {
+        el.innerHTML = '<div class="empty-state">Token not found</div>';
+        return;
+      }
+
+      var tc = txtColor(td.display.rgb);
+      var pairHtml = '';
+
+      if (td.pairBg) {
+        var bgTd = state.resolved.get(td.pairBg);
+        if (bgTd) {
+          pairHtml = '<div class="pair-test">' +
+            '<div class="pair-test-header"><span class="pair-test-title">Pair: ' + td.pairBg + '</span></div>' +
+            '<div class="pair-test-preview"><div class="pair-test-swatch" style="background:' + bgTd.display.css + ';color:' + td.display.css + '">Text on BG</div></div>' +
+            '<div class="pair-test-result"><span class="pair-test-ratio">' + td.pairContrast.ratio.toFixed(2) + ':1</span>' +
+            '<div class="pair-test-badges">' +
+            '<span class="badge ' + (td.pairContrast.AAL ? 'badge-pass' : 'badge-fail') + '">AA-L</span>' +
+            '<span class="badge ' + (td.pairContrast.AA ? 'badge-pass' : 'badge-fail') + '">AA</span>' +
+            '<span class="badge ' + (td.pairContrast.AAA ? 'badge-pass' : 'badge-fail') + '">AAA</span>' +
+            '</div></div></div>';
+        }
+      }
+
+      el.innerHTML =
+        '<div class="detail-header"><div class="detail-title">' + state.selToken.split('.').pop() + '</div><div class="detail-path">' + state.selToken + '</div></div>' +
+        '<div class="detail-preview" style="background:' + td.display.css + ';color:' + tc + '">' + td.ref + '</div>' +
+        pairHtml +
+        '<div class="detail-section"><div class="detail-section-title">Resolution</div>' +
+        '<div class="detail-row"><span class="detail-label">Reference</span><span class="detail-value">' + td.ref + '</span></div>' +
+        '<div class="detail-row"><span class="detail-label">Resolved</span><span class="detail-value">' + (td.resolved || 'N/A') + '</span></div>' +
+        (td.lc ? '<div class="detail-row"><span class="detail-label">LCH</span><span class="detail-value">L:' + Math.round(td.lc.l) + ' C:' + Math.round(td.lc.c) + ' H:' + Math.round(td.lc.h) + '</span></div>' : '') +
+        '<div class="detail-row"><span class="detail-label">Hex</span><span class="detail-value">' + td.display.hex + '</span></div></div>' +
+        '<div class="detail-section"><div class="detail-section-title">Contrast vs White/Black</div>' +
+        '<div style="display:grid;grid-template-columns:1fr 1fr;gap:8px">' +
+        '<div class="pair-test" style="margin:0"><div class="pair-test-header"><span class="pair-test-title">vs White</span></div><div class="pair-test-result"><span class="pair-test-ratio">' + td.cw.ratio.toFixed(2) + ':1</span><div class="pair-test-badges"><span class="badge ' + (td.cw.AA ? 'badge-pass' : 'badge-fail') + '">AA</span><span class="badge ' + (td.cw.AAA ? 'badge-pass' : 'badge-fail') + '">AAA</span></div></div></div>' +
+        '<div class="pair-test" style="margin:0"><div class="pair-test-header"><span class="pair-test-title">vs Black</span></div><div class="pair-test-result"><span class="pair-test-ratio">' + td.cb.ratio.toFixed(2) + ':1</span><div class="pair-test-badges"><span class="badge ' + (td.cb.AA ? 'badge-pass' : 'badge-fail') + '">AA</span><span class="badge ' + (td.cb.AAA ? 'badge-pass' : 'badge-fail') + '">AAA</span></div></div></div>' +
+        '</div></div>' +
+        (td.desc ? '<div class="detail-section"><div class="detail-section-title">Description</div><div style="font-size:11px;color:var(--text-2);line-height:1.5">' + td.desc + '</div></div>' : '');
+    }
+
+    // ========== ACTIONS ==========
+    function selectShade(f, s) {
+      state.selFamily = f;
+      state.selShade = s;
+      render();
+    }
+
+    function selectToken(tp) {
+      state.selToken = tp;
+      renderTokens();
+      renderDetail();
+    }
+
+    function toggleGroup(el) {
+      el.classList.toggle('expanded');
+      el.nextElementSibling.classList.toggle('expanded');
+    }
+
+    function filterTokens() {
+      renderTokens();
+    }
+
+    function switchTab(tab, el) {
+      state.tab = tab;
+      var tabs = document.querySelectorAll('.tab');
+      for (var i = 0; i < tabs.length; i++) {
+        tabs[i].classList.remove('active');
+      }
+      el.classList.add('active');
+      document.getElementById('tokensTab').style.display = tab === 'tokens' ? 'block' : 'none';
+      document.getElementById('pairsTab').style.display = tab === 'pairs' ? 'block' : 'none';
+      document.getElementById('usageTab').style.display = tab === 'usage' ? 'block' : 'none';
+    }
+
+    function updL(v) {
+      var val = getVal(state.selFamily, state.selShade);
+      var lc = parseLCH(val);
+      if (!lc) return;
+      lc.l = +v;
+      setVal(state.selFamily, state.selShade, fmtLCH(lc.l, lc.c, lc.h));
+      render();
+    }
+
+    function updC(v) {
+      var val = getVal(state.selFamily, state.selShade);
+      var lc = parseLCH(val);
+      if (!lc) return;
+      lc.c = +v;
+      setVal(state.selFamily, state.selShade, fmtLCH(lc.l, lc.c, lc.h));
+      render();
+    }
+
+    function updH(v) {
+      var val = getVal(state.selFamily, state.selShade);
+      var lc = parseLCH(val);
+      if (!lc) return;
+      lc.h = +v;
+      setVal(state.selFamily, state.selShade, fmtLCH(lc.l, lc.c, lc.h));
+      render();
+    }
+
+    function loadFiles() {
+      var input = document.createElement('input');
+      input.type = 'file';
+      input.accept = '.json';
+      input.multiple = true;
+      input.onchange = async function (e) {
+        for (var i = 0; i < e.target.files.length; i++) {
+          var f = e.target.files[i];
+          var text = await f.text();
+          try {
+            var json = JSON.parse(text);
+            if (f.name.indexOf('colors') !== -1 || f.name.indexOf('lch') !== -1) {
+              state.colors = json;
+              toast('Loaded ' + f.name);
+            } else {
+              state.tokens = json;
+              toast('Loaded ' + f.name);
+            }
+          } catch (err) {
+            toast('Error: ' + err.message);
+          }
+        }
+        resolveAll();
+        render();
+      };
+      input.click();
+    }
+
+    // ========== EXPORT ==========
+    function showExport() {
+      document.getElementById('exportModal').classList.add('open');
+      updateExport();
+    }
+
+    function closeExport() {
+      document.getElementById('exportModal').classList.remove('open');
+    }
+
+    function setExportTab(t, el) {
+      state.exportTab = t;
+      var tabs = document.querySelectorAll('.modal-tab');
+      for (var i = 0; i < tabs.length; i++) {
+        tabs[i].classList.remove('active');
+      }
+      el.classList.add('active');
+      updateExport();
+    }
+
+    function updateExport() {
+      var code = '';
+      if (state.exportTab === 'lch') {
+        code = state.colors ? JSON.stringify(state.colors, null, 2) : '// No colors loaded';
+      } else if (state.exportTab === 'css') {
+        var lines = [':root {'];
+        state.resolved.forEach(function (td, tp) {
+          lines.push('  --' + PREFIX + '-' + tp.replace(/\./g, '-') + ': ' + td.display.hex + ';');
+        });
+        lines.push('}');
+        code = lines.join('\n');
+      } else if (state.exportTab === 'report') {
+        var failingPairs = [];
+        for (var i = 0; i < state.pairs.length; i++) {
+          var p = state.pairs[i];
+          if (!p.level.AA) {
+            failingPairs.push({
+              text: p.text,
+              bg: p.bg,
+              ratio: p.ratio.toFixed(2),
+              passAA: p.level.AA
+            });
+          }
+        }
+        var report = {
+          total: state.resolved.size,
+          pairs: state.pairs.length,
+          issues: state.issues.length,
+          failingPairs: failingPairs
+        };
+        code = JSON.stringify(report, null, 2);
+      }
+      document.getElementById('exportCode').textContent = code;
+    }
+
+    function copyExport() {
+      navigator.clipboard.writeText(document.getElementById('exportCode').textContent);
+      toast('Copied!');
+    }
+
+    function downloadExport() {
+      var code = document.getElementById('exportCode').textContent;
+      var ext = { lch: 'json', css: 'css', report: 'json' };
+      var blob = new Blob([code], { type: 'text/plain' });
+      var a = document.createElement('a');
+      a.href = URL.createObjectURL(blob);
+      a.download = 'export.' + ext[state.exportTab];
+      a.click();
+    }
+
+    function toast(msg) {
+      var t = document.getElementById('toast');
+      t.textContent = msg;
+      t.style.display = 'block';
+      setTimeout(function () { t.style.display = 'none'; }, 2000);
+    }
+
+    document.addEventListener('keydown', function (e) {
+      if (e.target.tagName === 'INPUT') return;
+      if (e.key === 'e' || e.key === 'E') showExport();
+      if (e.key === 'Escape') closeExport();
+    });
+
+    init();
+  </script>
+</body>
+
+</html>

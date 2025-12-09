@@ -100,6 +100,7 @@
     "@radix-ui/react-toggle": "^1.1.1",
     "@radix-ui/react-toggle-group": "^1.1.1",
     "@radix-ui/react-tooltip": "^1.1.6",
+    "@radix-ui/react-use-controllable-state": "^1.2.2",
     "@tailwindcss/typography": "^0.5.15",
     "@tanstack/react-table": "^8.21.3",
     "@uiw/react-markdown-preview": "^5.1.1",

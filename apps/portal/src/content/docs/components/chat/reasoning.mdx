@@ -1,0 +1,100 @@
+---
+title: Reasoning
+description: Collapsible AI reasoning component for displaying thinking process in chat interfaces
+beta: true
+---
+
+import { DocsPage } from "@/components/docs-page";
+
+The `Reasoning` component is a compound component for displaying AI reasoning or thinking processes in chat interfaces. It features automatic duration tracking, streaming state support, and collapsible content with smooth animations.
+
+## Basic Usage
+
+<DocsPage.ComponentExample
+  client:only
+  code={`<div className="flex flex-col gap-cn-md w-full max-w-2xl">
+  <Reasoning isStreaming={false} defaultOpen={true}>
+    <ReasoningTrigger />
+    <ReasoningContent>
+      I analyzed the code structure and identified that the function could be optimized by reducing the time complexity from O(n²) to O(n) using a hash map approach.
+    </ReasoningContent>
+  </Reasoning>
+</div>`}
+/>
+
+## Streaming State
+
+Show the reasoning component while AI is actively thinking:
+
+<DocsPage.ComponentExample
+  client:only
+  code={`<div className="flex flex-col gap-cn-md w-full max-w-2xl">
+  <Reasoning isStreaming={true} defaultOpen={true}>
+    <ReasoningTrigger />
+    <ReasoningContent>
+      Analyzing the problem...
+    </ReasoningContent>
+  </Reasoning>
+</div>`}
+/>
+
+## Custom Trigger
+
+Customize the trigger button with your own content:
+
+<DocsPage.ComponentExample
+  client:only
+  code={`<div className="flex flex-col gap-cn-md w-full max-w-2xl">
+  <Reasoning isStreaming={false} defaultOpen={false}>
+    <ReasoningTrigger>
+      <IconV2 name="brain" size="sm" />
+      <span>View AI reasoning</span>
+    </ReasoningTrigger>
+    <ReasoningContent>
+      The solution involves breaking down the problem into smaller steps and applying dynamic programming principles.
+    </ReasoningContent>
+  </Reasoning>
+</div>`}
+/>
+
+## Controlled State
+
+Control the open/closed state externally:
+
+<DocsPage.ComponentExample
+  client:only
+  code={`<div className="flex flex-col gap-cn-md w-full max-w-2xl">
+  <Reasoning 
+    open={true} 
+    onOpenChange={(open) => console.log('Open state:', open)}
+  >
+    <ReasoningTrigger />
+    <ReasoningContent>
+      This is a controlled reasoning component.
+    </ReasoningContent>
+  </Reasoning>
+</div>`}
+/>
+
+## Usage
+
+```typescript jsx
+import { Reasoning, ReasoningTrigger, ReasoningContent } from '@harnessio/ui/components'
+
+function ChatMessage() {
+  const [isStreaming, setIsStreaming] = useState(true)
+
+  return (
+    <Reasoning
+      isStreaming={isStreaming}
+      defaultOpen={true}
+      onOpenChange={(open) => console.log('Reasoning expanded:', open)}
+    >
+      <ReasoningTrigger />
+      <ReasoningContent>
+        AI reasoning content goes here...
+      </ReasoningContent>
+    </Reasoning>
+  )
+}
+```

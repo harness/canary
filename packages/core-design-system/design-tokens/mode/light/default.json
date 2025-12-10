@@ -364,7 +364,7 @@
         },
         "border": {
           "$type": "color",
-          "$value": "{green.200}",
+          "$value": "{green.150}",
           "$description": "Border color for standard green boundaries."
         },
         "bg-hover": {
@@ -383,22 +383,22 @@
       "primary": {
         "text": {
           "$type": "color",
-          "$value": "{pure.white}",
+          "$value": "{pure.black}",
           "$description": "Text color for high-contrast red surfaces."
         },
         "bg": {
           "$type": "color",
-          "$value": "{red.700}",
+          "$value": "{red.500}",
           "$description": "Background color for prominent red surfaces."
         },
         "bg-hover": {
           "$type": "color",
-          "$value": "{red.800}",
+          "$value": "{red.600}",
           "$description": "Background color for prominent red surfaces."
         },
         "bg-selected": {
           "$type": "color",
-          "$value": "{red.800}",
+          "$value": "{red.600}",
           "$description": "Background color for prominent red surfaces."
         }
       },
@@ -410,17 +410,17 @@
         },
         "bg": {
           "$type": "color",
-          "$value": "{red.50}",
+          "$value": "{red.100}",
           "$description": "Background color for subdued red surfaces."
         },
         "bg-hover": {
           "$type": "color",
-          "$value": "{red.100}",
+          "$value": "{red.150}",
           "$description": "Hover state for background color for subdued red surfaces."
         },
         "bg-selected": {
           "$type": "color",
-          "$value": "{red.100}",
+          "$value": "{red.150}",
           "$description": "Selected state for background color for subdued red surfaces."
         }
       },
@@ -442,12 +442,12 @@
         },
         "bg-hover": {
           "$type": "color",
-          "$value": "{red.50}",
+          "$value": "{red.100}",
           "$description": "Hover state background color for interactive red surfaces."
         },
         "bg-selected": {
           "$type": "color",
-          "$value": "{red.50}",
+          "$value": "{red.100}",
           "$description": "Selected state background color for active red items."
         }
       }
@@ -500,7 +500,7 @@
       "outline": {
         "text": {
           "$type": "color",
-          "$value": "{yellow.800}",
+          "$value": "{yellow.700}",
           "$description": "Standard text color for yellow surfaces with balanced readability."
         },
         "bg": {
@@ -520,7 +520,7 @@
         },
         "bg-selected": {
           "$type": "color",
-          "$value": "{yellow.100}",
+          "$value": "{yellow.50}",
           "$description": "Selected state background color for active yellow items."
         }
       }

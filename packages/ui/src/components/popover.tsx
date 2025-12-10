@@ -88,7 +88,7 @@ PopoverContent.displayName = PopoverPrimitive.Content.displayName
 type TriggerType = 'click' | 'hover'
 
 interface PopoverProps
-  extends PropsWithChildren<Omit<PopoverContentProps, 'children' | 'content' | 'onCloseAutoFocus' | 'onOpenAutoFocus'>>,
+  extends PropsWithChildren<Omit<PopoverContentProps, 'children' | 'content' | 'onCloseAutoFocus'>>,
     Omit<ComponentPropsWithoutRef<typeof PopoverPrimitive.Root>, 'children' | 'modal'> {
   content: ReactNode
   triggerType?: TriggerType

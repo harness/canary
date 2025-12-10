@@ -13,24 +13,29 @@ import { cn } from '@utils/cn'
 const markedFileClassName = 'w-full text-cn-1'
 const MAX_FILES = 50
 
+export interface FileItem {
+  label: string
+  value: string
+}
+
 /**
  * Get marked file component with query
- * @param file
- * @param query
- * @param matchIndex
+ * @param text - The text to display (label)
+ * @param query - The search query
+ * @param matchIndex - The index where the match starts
  */
-const getMarkedFileElement = (file: string, query: string, matchIndex: number): ReactNode => {
+const getMarkedFileElement = (text: string, query: string, matchIndex: number): ReactNode => {
   if (matchIndex === -1) {
     return (
       <Text className={markedFileClassName} truncate>
-        {file}
+        {text}
       </Text>
     )
   }
 
-  const startText = file.slice(0, matchIndex)
-  const matchedText = file.slice(matchIndex, matchIndex + query.length)
-  const endText = file.slice(matchIndex + query.length)
+  const startText = text.slice(0, matchIndex)
+  const matchedText = text.slice(matchIndex, matchIndex + query.length)
+  const endText = text.slice(matchIndex + query.length)
 
   return (
     <Text className={cn(markedFileClassName, 'break-words')}>
@@ -42,16 +47,27 @@ const getMarkedFileElement = (file: string, query: string, matchIndex: number): 
 }
 
 interface FilteredFile {
-  file: string
+  label: string
+  value: string
   element: ReactNode
 }
 
 interface SearchFilesProps {
   navigateToFile: (file: string) => void
-  filesList?: string[]
+  filesList?: string[] | FileItem[]
   searchInputSize?: SearchInputProps['size']
   inputContainerClassName?: string
   contentClassName?: string
+}
+
+/**
+ * Normalizes a file item to the { label, value } format
+ */
+const normalizeFileItem = (item: string | FileItem): FileItem => {
+  if (typeof item === 'string') {
+    return { label: item, value: item }
+  }
+  return item
 }
 
 export const SearchFiles = ({
@@ -81,14 +97,16 @@ export const SearchFiles = ({
     const lowerCaseQuery = currentQuery.toLowerCase()
     const _filteredFiles: FilteredFile[] = []
 
-    for (const file of filesList) {
-      const lowerCaseFile = file.toLowerCase()
-      const matchIndex = lowerCaseFile.indexOf(lowerCaseQuery)
+    for (const item of filesList) {
+      const { label, value } = normalizeFileItem(item)
+      const lowerCaseLabel = label.toLowerCase()
+      const matchIndex = lowerCaseLabel.indexOf(lowerCaseQuery)
 
       if (matchIndex > -1) {
         _filteredFiles.push({
-          file,
-          element: getMarkedFileElement(file, lowerCaseQuery, matchIndex)
+          label,
+          value,
+          element: getMarkedFileElement(label, lowerCaseQuery, matchIndex)
         })
       }
 
@@ -125,15 +143,15 @@ export const SearchFiles = ({
         onOpenAutoFocus={event => event.preventDefault()}
       >
         {filteredFiles.length ? (
-          filteredFiles?.map(({ file, element }, index) => {
+          filteredFiles?.map(({ value, element }, index) => {
             const { ref, onKeyDown } = getItemProps(index)
             return (
               <DropdownMenu.IconItem
-                key={file}
+                key={value}
                 ref={ref}
                 onKeyDown={onKeyDown}
                 onSelect={() => {
-                  navigateToFile(file)
+                  navigateToFile(value)
                   setIsOpen(false)
                 }}
                 title={element}

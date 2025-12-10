@@ -34,13 +34,13 @@
     },
     "3": {
       "$type": "color",
-      "$value": "{gray.500}",
-      "$description": "Reduced emphasis color for text and icons in secondary information. Creates visual hierarchy through lower contrast.\n\nCommon uses: Supporting text, metadata, secondary information, placeholders."
+      "$value": "{gray.750}",
+      "$description": "Reduced emphasis color for text and icons in secondary information. Creates visual hierarchy through lower contrast while maintaining AA accessibility.\n\nCommon uses: Supporting text, metadata, secondary information, placeholders."
     },
     "4": {
       "$type": "color",
-      "$value": "{gray.400}",
-      "$description": "Lowest emphasis text color for unavailable options. Creates visual differentiation between interactive and non-interactive elements.\n\nCommon uses: Disabled buttons, inactive form elements, unavailable options, placeholders."
+      "$value": "{gray.600}",
+      "$description": "Lowest emphasis text color for unavailable options and hints. Creates visual differentiation between interactive and non-interactive elements while maintaining AA accessibility (4.5:1).\n\nCommon uses: Disabled buttons, inactive form elements, unavailable options, hint text, placeholders."
     },
     "success": {
       "$type": "color",

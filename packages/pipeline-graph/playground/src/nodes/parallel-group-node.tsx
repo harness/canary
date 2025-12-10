@@ -1,8 +1,10 @@
 import React from 'react'
 
 import cx from 'classnames'
+import { noop } from 'lodash-es'
 
 import { ParallelNodeInternalType } from '../../../src/types/nodes-internal'
+import { CollapseButton } from './components/collapse-button'
 
 export interface ParallelGroupContentNodeDataType {
   yamlPath: string
@@ -15,8 +17,10 @@ export interface ParallelGroupContentNodeDataType {
 export function ParallelGroupNodeContent(props: {
   node: ParallelNodeInternalType<ParallelGroupContentNodeDataType>
   children: React.ReactElement
+  collapsed?: boolean
+  setCollapsed?: (collapsed: boolean) => void
 }) {
-  const { node, children } = props
+  const { node, children, collapsed = false, setCollapsed = noop } = props
   const { data } = node
 
   const name = `Parallel - ${node.path} (${node.children.length})`
@@ -58,6 +62,9 @@ export function ParallelGroupNodeContent(props: {
         >
           {name}
         </span>
+      </div>
+      <div style={{ position: 'absolute', top: '5px', left: '5px' }}>
+        <CollapseButton collapsed={collapsed} onCollapseChange={setCollapsed} />
       </div>
       {children}
     </div>

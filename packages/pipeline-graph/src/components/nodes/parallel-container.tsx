@@ -7,7 +7,6 @@ import { RenderNodeContent } from '../../render/render-node-content'
 import { ContainerNodeProps } from '../../types/container-node'
 import { AnyNodeInternal, ParallelNodeInternalType } from '../../types/nodes-internal'
 import { findAdjustment } from '../../utils/layout-utils'
-import CollapseButton from '../components/collapse'
 import Port from './port'
 
 export default function ParallelNodeContainer(props: ContainerNodeProps<ParallelNodeInternalType>) {
@@ -17,7 +16,13 @@ export default function ParallelNodeContainer(props: ContainerNodeProps<Parallel
   const myLevel = level + 1
 
   const { isCollapsed, collapse } = useGraphContext()
-  const collapsed = useMemo(() => isCollapsed(props.node.path!), [isCollapsed])
+  const collapsed = useMemo(() => isCollapsed(props.node.path!), [isCollapsed, props.node.path])
+  const setCollapsed = useMemo(
+    () => (collapsed: boolean) => {
+      collapse(props.node.path!, collapsed)
+    },
+    [collapse, props.node.path]
+  )
 
   const verticalAdjustment = parallelContainerConfig.parallelGroupAdjustment ?? 0
 
@@ -67,29 +72,10 @@ export default function ParallelNodeContainer(props: ContainerNodeProps<Parallel
           <Port side="right" id={`right-port-${node.path}`} adjustment={collapsed ? 0 : ADJUSTMENT} layout={layout} />
         ))}
 
-      <div
-        className="parallel-node-header"
-        style={{
-          position: 'absolute',
-          top: '10px',
-          left: '10px',
-          right: '0px',
-          height: '0px',
-          padding: '0px',
-          zIndex: '100'
-        }}
-      >
-        <CollapseButton
-          collapsed={collapsed}
-          onToggle={() => {
-            collapse(node.path!, !collapsed)
-          }}
-        />
-      </div>
-
       <RenderNodeContent
         node={node}
         collapsed={collapsed}
+        setCollapsed={setCollapsed}
         isFirst={isFirst}
         isLast={isLast}
         parentNodeType={parentNodeType}

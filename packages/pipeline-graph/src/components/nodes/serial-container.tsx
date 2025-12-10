@@ -7,7 +7,6 @@ import { RenderNodeContent } from '../../render/render-node-content'
 import { ContainerNodeProps } from '../../types/container-node'
 import { AnyNodeInternal, SerialNodeInternalType } from '../../types/nodes-internal'
 import { findAdjustment, getFlexAlign } from '../../utils/layout-utils'
-import CollapseButton from '../components/collapse'
 import Port from './port'
 
 export default function SerialNodeContainer(props: ContainerNodeProps<SerialNodeInternalType>) {
@@ -17,7 +16,13 @@ export default function SerialNodeContainer(props: ContainerNodeProps<SerialNode
   const myLevel = level + 1
 
   const { isCollapsed, collapse } = useGraphContext()
-  const collapsed = useMemo(() => isCollapsed(node.path!), [isCollapsed, node.path])
+  const collapsed = useMemo(() => isCollapsed(props.node.path!), [isCollapsed, props.node.path])
+  const setCollapsed = useMemo(
+    () => (collapsed: boolean) => {
+      collapse(props.node.path!, collapsed)
+    },
+    [collapse, props.node.path]
+  )
 
   const verticalAdjustment = serialContainerConfig.serialGroupAdjustment ?? 0
 
@@ -67,29 +72,10 @@ export default function SerialNodeContainer(props: ContainerNodeProps<SerialNode
           <Port side="right" id={`right-port-${node.path}`} adjustment={collapsed ? 0 : ADJUSTMENT} layout={layout} />
         ))}
 
-      <div
-        className="serial-node-header"
-        style={{
-          position: 'absolute',
-          top: '12px',
-          left: '12px',
-          right: '0px',
-          height: '0px',
-          padding: '0px',
-          zIndex: '100'
-        }}
-      >
-        <CollapseButton
-          collapsed={collapsed}
-          onToggle={() => {
-            collapse(node.path!, !collapsed)
-          }}
-        />
-      </div>
-
       <RenderNodeContent
         node={node}
         collapsed={collapsed}
+        setCollapsed={setCollapsed}
         isFirst={isFirst}
         isLast={isLast}
         parentNodeType={parentNodeType}

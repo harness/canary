@@ -34,7 +34,6 @@ function Demo6TopAlign() {
         data={data}
         nodes={nodes}
         layout={{ type: 'top', portPosition: 80 }}
-        collapseButtonComponent={() => <></>}
         parallelContainerConfig={{ paddingBottom: 0, paddingLeft: 0, paddingRight: 0, paddingTop: 0 }}
         portComponent={props => {
           return (

@@ -10,7 +10,7 @@ import { ParallelContainerConfigType, SerialContainerConfigType } from './types/
 
 export interface PipelineGraphProps
   extends PipelineGraphInternalProps,
-    Pick<ContainerNodeProviderProps, 'portComponent' | 'collapseButtonComponent'> {
+    Pick<ContainerNodeProviderProps, 'portComponent'> {
   nodes: NodeContent[]
   serialContainerConfig?: Partial<SerialContainerConfigType>
   parallelContainerConfig?: Partial<ParallelContainerConfigType>
@@ -26,7 +26,6 @@ export function PipelineGraph(props: PipelineGraphProps) {
     customCreateSVGPath,
     edgesConfig,
     portComponent,
-    collapseButtonComponent,
     layout
   } = props
 
@@ -36,7 +35,6 @@ export function PipelineGraph(props: PipelineGraphProps) {
         serialContainerConfig={serialContainerConfig}
         parallelContainerConfig={parallelContainerConfig}
         portComponent={portComponent}
-        collapseButtonComponent={collapseButtonComponent}
         layout={layout}
       >
         <Canvas>

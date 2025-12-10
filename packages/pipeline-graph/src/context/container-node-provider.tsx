@@ -1,6 +1,5 @@
 import { createContext, useContext, useMemo } from 'react'
 
-import { CollapseButtonProps } from '../components/components/collapse'
 import { LayoutConfig } from '../pipeline-graph-internal'
 import { ParallelContainerConfigType, SerialContainerConfigType } from '../types/container-node'
 
@@ -29,7 +28,6 @@ interface ContainerNodeContextProps {
     adjustment?: number
     layout?: LayoutConfig
   }) => JSX.Element
-  collapseButtonComponent?: (props: CollapseButtonProps) => JSX.Element
   layout: LayoutConfig
 }
 
@@ -48,7 +46,6 @@ export interface ContainerNodeProviderProps {
     adjustment?: number
     layout?: LayoutConfig
   }) => JSX.Element
-  collapseButtonComponent?: (props: CollapseButtonProps) => JSX.Element
   layout?: LayoutConfig
 }
 
@@ -56,7 +53,6 @@ const ContainerNodeProvider = ({
   serialContainerConfig,
   parallelContainerConfig,
   portComponent,
-  collapseButtonComponent,
   layout = { type: 'center', portPosition: 'center' },
   children
 }: React.PropsWithChildren<ContainerNodeProviderProps>) => {
@@ -78,7 +74,6 @@ const ContainerNodeProvider = ({
         serialContainerConfig: serialConfig,
         parallelContainerConfig: parallelConfig,
         portComponent,
-        collapseButtonComponent,
         layout
       }}
     >

@@ -9,6 +9,7 @@ export interface LeafNodeContent<T = any> {
     props: {
       node: LeafNodeInternalType<T>
       collapsed?: boolean
+      setCollapsed?: (collapsed: boolean) => void
       children?: React.ReactElement
       isFirst?: boolean
       isLast?: boolean
@@ -24,6 +25,7 @@ export interface SerialNodeContent<T = any> {
     props: {
       node: SerialNodeInternalType<T>
       collapsed?: boolean
+      setCollapsed?: (collapsed: boolean) => void
       children?: React.ReactElement
       isFirst?: boolean
       isLast?: boolean
@@ -39,6 +41,7 @@ export interface ParallelNodeContent<T = any> {
     props: {
       node: ParallelNodeInternalType<T>
       collapsed?: boolean
+      setCollapsed?: (collapsed: boolean) => void
       children?: React.ReactElement
       isFirst?: boolean
       isLast?: boolean

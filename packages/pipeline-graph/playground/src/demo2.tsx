@@ -2,7 +2,6 @@ import React, { useState } from 'react'
 
 import { parse } from 'yaml'
 
-import { CollapseButtonProps } from '../../src'
 import { CanvasProvider } from '../../src/context/canvas-provider'
 import { PipelineGraph } from '../../src/pipeline-graph'
 import { NodeContent } from '../../src/types/node-content'
@@ -115,7 +114,6 @@ function Demo2() {
           parallelGroupAdjustment: 30
         }}
         config={{ leftGap: 100 }}
-        collapseButtonComponent={CustomCollapseButtonComponent}
         data={data}
         nodes={nodes}
       />
@@ -125,8 +123,3 @@ function Demo2() {
 }
 
 export default Demo2
-
-const CustomCollapseButtonComponent = (props: CollapseButtonProps): JSX.Element => {
-  const { collapsed, onToggle } = props
-  return <button onClick={onToggle}>{collapsed ? '+' : '-'}</button>
-}

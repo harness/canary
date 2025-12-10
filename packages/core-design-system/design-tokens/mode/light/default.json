@@ -44,7 +44,7 @@
     },
     "success": {
       "$type": "color",
-      "$value": "{set.success.secondary.text}",
+      "$value": "{set.success.outline.text}",
       "$description": "Primary color for text and icons in success content. Communicates positive outcomes and completion states.\n\nCommon uses: Success message text, completion text, positive indicators."
     },
     "danger": {
@@ -167,12 +167,12 @@
         },
         "bg": {
           "$type": "color",
-          "$value": "{indigo.50}",
+          "$value": "{indigo.100}",
           "$description": "Background color for primary subtle brand items with strong emphasis."
         },
         "bg-hover": {
           "$type": "color",
-          "$value": "{indigo.100}",
+          "$value": "{indigo.150}",
           "$description": "Hover state background color for interactive brand subtle surfaces."
         },
         "bg-selected": {
@@ -189,12 +189,12 @@
         },
         "bg": {
           "$type": "color",
-          "$value": "{indigo.25}",
+          "$value": "{indigo.50}",
           "$description": "Background color for primary brand items with minimum emphasis."
         },
         "border": {
           "$type": "color",
-          "$value": "{indigo.200}",
+          "$value": "{indigo.300}",
           "$description": "Border color for primary brand with minimum emphasis boundaries."
         },
         "bg-hover": {
@@ -204,7 +204,7 @@
         },
         "bg-selected": {
           "$type": "color",
-          "$value": "{indigo.150}",
+          "$value": "{indigo.100}",
           "$description": "Selected state background color for active brand with minimum emphasis items."
         }
       }
@@ -310,29 +310,29 @@
       "primary": {
         "text": {
           "$type": "color",
-          "$value": "{pure.white}",
+          "$value": "{green.950}",
           "$description": "Text color for high-contrast green surfaces."
         },
         "bg": {
           "$type": "color",
-          "$value": "{green.700}",
+          "$value": "{green.200}",
           "$description": "Background color for prominent green surfaces."
         },
         "bg-hover": {
           "$type": "color",
-          "$value": "{green.800}",
+          "$value": "{green.300}",
           "$description": "Background color for prominent green surfaces."
         },
         "bg-selected": {
           "$type": "color",
-          "$value": "{green.800}",
+          "$value": "{green.300}",
           "$description": "Background color for prominent green surfaces."
         }
       },
       "secondary": {
         "text": {
           "$type": "color",
-          "$value": "{green.700}",
+          "$value": "{green.800}",
           "$description": "Text color for subtle green surfaces with good contrast."
         },
         "bg": {
@@ -2190,12 +2190,12 @@
     "ai": {
       "from": {
         "$type": "color",
-        "$value": "{cyan.300}",
+        "$value": "{blue.500}",
         "$description": "Starting color for AI-themed gradients."
       },
       "to": {
         "$type": "color",
-        "$value": "{indigo.600}",
+        "$value": "{indigo.800}",
         "$description": "Ending color for AI-themed gradients."
       },
       "outline-bg": {
@@ -2211,12 +2211,12 @@
         },
         "stop-3": {
           "$type": "color",
-          "$value": "{cyan.100}",
+          "$value": "{blue.100}",
           "$description": "Third gradient stop for AI outline backgrounds."
         },
         "stop-4": {
           "$type": "color",
-          "$value": "{cyan.200}",
+          "$value": "{blue.200}",
           "$description": "Fourth gradient stop for AI outline backgrounds."
         }
       },
@@ -2232,7 +2232,7 @@
             }
           },
           "$type": "color",
-          "$value": "{cyan.300}",
+          "$value": "{blue.300}",
           "$description": "First gradient stop for AI glow effects."
         },
         "stop-2": {
@@ -2259,7 +2259,7 @@
               }
             },
             "$type": "color",
-            "$value": "{cyan.100}",
+            "$value": "{blue.150}",
             "$description": "Starting color for AI chat bubble gradients."
           },
           "to": {

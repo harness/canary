@@ -237,7 +237,8 @@
             }
           },
           "$type": "color",
-          "$value": "{blue.600}"
+          "$value": "{blue.600}",
+          "$description": "Inner shadow color for AI-themed surfaces. Creates depth and dimension for AI-related elements."
         }
       }
     },
@@ -471,6 +472,16 @@
           "$type": "color",
           "$value": "{orange.300}",
           "$description": "Background color for prominent yellow surfaces."
+        },
+        "bg-hover": {
+          "$type": "color",
+          "$value": "{yellow.400}",
+          "$description": "Hover state background color for interactive primary warning surfaces."
+        },
+        "bg-selected": {
+          "$type": "color",
+          "$value": "{yellow.400}",
+          "$description": "Selected state background color for active primary warning items."
         }
       },
       "secondary": {
@@ -534,6 +545,16 @@
           "$type": "color",
           "$value": "{blue.300}",
           "$description": "Background color for prominent blue surfaces."
+        },
+        "bg-hover": {
+          "$type": "color",
+          "$value": "{blue.700}",
+          "$description": "Hover state background color for interactive primary blue surfaces."
+        },
+        "bg-selected": {
+          "$type": "color",
+          "$value": "{blue.700}",
+          "$description": "Selected state background color for active primary blue items."
         }
       },
       "secondary": {
@@ -551,6 +572,11 @@
           "$type": "color",
           "$value": "{blue.900}",
           "$description": "Hover background color for subdued blue surfaces."
+        },
+        "bg-selected": {
+          "$type": "color",
+          "$value": "{blue.100}",
+          "$description": "Selected state background color for active secondary blue items."
         }
       },
       "outline": {
@@ -592,6 +618,16 @@
           "$type": "color",
           "$value": "{cyan.300}",
           "$description": "Background color for prominent purple surfaces."
+        },
+        "bg-hover": {
+          "$type": "color",
+          "$value": "{purple.800}",
+          "$description": "Hover state background color for interactive primary purple surfaces."
+        },
+        "bg-selected": {
+          "$type": "color",
+          "$value": "{purple.800}",
+          "$description": "Selected state background color for active primary purple items."
         }
       },
       "secondary": {
@@ -609,6 +645,11 @@
           "$type": "color",
           "$value": "{cyan.900}",
           "$description": "Hover background color for subdued purple surfaces."
+        },
+        "bg-selected": {
+          "$type": "color",
+          "$value": "{purple.100}",
+          "$description": "Selected state background color for active secondary purple items."
         }
       },
       "outline": {
@@ -1069,19 +1110,23 @@
       "fade": {
         "default": {
           "$type": "color",
-          "$value": "linear-gradient(0deg, {set.gray.secondary.bg} 42%, {gradient.alert.fade-default} 100%)"
+          "$value": "linear-gradient(0deg, {set.gray.secondary.bg} 42%, {gradient.alert.fade-default} 100%)",
+          "$description": "Gradient fade for default alert backgrounds. Creates visual emphasis for notifications."
         },
         "danger": {
           "$type": "color",
-          "$value": "linear-gradient(0deg, {set.danger.secondary.bg} 42%, {gradient.alert.fade-danger} 100%)"
+          "$value": "linear-gradient(0deg, {set.danger.secondary.bg} 42%, {gradient.alert.fade-danger} 100%)",
+          "$description": "Gradient fade for danger alert backgrounds. Emphasizes critical messages."
         },
         "warning": {
           "$type": "color",
-          "$value": "linear-gradient(0deg, {set.warning.secondary.bg} 42%, {gradient.alert.fade-warning} 100%)"
+          "$value": "linear-gradient(0deg, {set.warning.secondary.bg} 42%, {gradient.alert.fade-warning} 100%)",
+          "$description": "Gradient fade for warning alert backgrounds. Highlights cautionary information."
         },
         "success": {
           "$type": "color",
-          "$value": "linear-gradient(0deg, {set.success.secondary.bg} 42%, {gradient.alert.fade-success} 100%)"
+          "$value": "linear-gradient(0deg, {set.success.secondary.bg} 42%, {gradient.alert.fade-success} 100%)",
+          "$description": "Gradient fade for success alert backgrounds. Celebrates positive outcomes."
         }
       }
     },
@@ -1132,11 +1177,13 @@
       },
       "fade-start": {
         "$type": "color",
-        "$value": "linear-gradient(0deg, {gradient.dialog.fade} 0%, {bg.2} 100%)"
+        "$value": "linear-gradient(0deg, {gradient.dialog.fade} 0%, {bg.2} 100%)",
+        "$description": "Gradient fade for dialog top edge. Creates smooth visual transition."
       },
       "fade-end": {
         "$type": "color",
-        "$value": "linear-gradient(0deg, {bg.2} 0%, {gradient.dialog.fade} 100%)"
+        "$value": "linear-gradient(0deg, {bg.2} 0%, {gradient.dialog.fade} 100%)",
+        "$description": "Gradient fade for dialog bottom edge. Creates smooth visual transition."
       }
     },
     "diff": {
@@ -1381,7 +1428,8 @@
       },
       "ai-glow": {
         "$type": "color",
-        "$value": "linear-gradient(111deg, {gradient.ai.glow.stop-1} 10%, {gradient.ai.glow.stop-2} 50%, {gradient.ai.glow.stop-3} 90%)"
+        "$value": "linear-gradient(111deg, {gradient.ai.glow.stop-1} 10%, {gradient.ai.glow.stop-2} 50%, {gradient.ai.glow.stop-3} 90%)",
+        "$description": "Gradient glow effect for AI-powered input fields. Creates distinctive visual indicator for AI features."
       }
     },
     "link": {
@@ -1405,7 +1453,8 @@
         },
         "glow": {
           "$type": "color",
-          "$value": "linear-gradient(180deg, {gradient.pipeline.running.glow.from} 0%, {gradient.pipeline.running.glow.to} 100%)"
+          "$value": "linear-gradient(180deg, {gradient.pipeline.running.glow.from} 0%, {gradient.pipeline.running.glow.to} 100%)",
+          "$description": "Gradient glow effect for running pipeline states. Provides visual indication of active processing."
         }
       },
       "dotes": {
@@ -1425,7 +1474,8 @@
             }
           },
           "$type": "color",
-          "$value": "{bg.3}"
+          "$value": "{bg.3}",
+          "$description": "Semi-transparent background for pipeline stage cards. Creates layered visual hierarchy."
         }
       }
     },
@@ -1445,7 +1495,8 @@
         },
         "item-hover": {
           "$type": "color",
-          "$value": "{text.2}"
+          "$value": "{text.2}",
+          "$description": "Hover text color for unselected items in selection controls."
         },
         "bg": {
           "$type": "color",
@@ -1454,7 +1505,8 @@
         },
         "bg-hover": {
           "$type": "color",
-          "$value": "{bg.2}"
+          "$value": "{bg.2}",
+          "$description": "Hover background color for unselected items in selection controls."
         },
         "border": {
           "$type": "color",
@@ -1463,7 +1515,8 @@
         },
         "border-hover": {
           "$type": "color",
-          "$value": "{border.brand}"
+          "$value": "{border.brand}",
+          "$description": "Hover border color for unselected items in selection controls."
         }
       },
       "selected": {
@@ -1479,7 +1532,8 @@
         },
         "bg-hover": {
           "$type": "color",
-          "$value": "{set.brand.primary.bg-hover}"
+          "$value": "{set.brand.primary.bg-hover}",
+          "$description": "Hover background color for selected items in selection controls."
         },
         "border": {
           "$type": "color",
@@ -1488,7 +1542,8 @@
         },
         "border-hover": {
           "$type": "color",
-          "$value": "{set.brand.primary.bg-hover}"
+          "$value": "{set.brand.primary.bg-hover}",
+          "$description": "Hover border color for selected items in selection controls."
         }
       }
     },
@@ -1500,7 +1555,8 @@
       },
       "mask": {
         "$type": "color",
-        "$value": "linear-gradient(180deg, {gradient.skeleton.mask.from} 50%, {gradient.skeleton.mask.to} 100%)"
+        "$value": "linear-gradient(180deg, {gradient.skeleton.mask.from} 50%, {gradient.skeleton.mask.to} 100%)",
+        "$description": "Gradient mask for skeleton loading animations. Creates fade effect at edges."
       }
     },
     "slider": {
@@ -1526,19 +1582,23 @@
             }
           },
           "$type": "color",
-          "$value": "{pure.black}"
+          "$value": "{pure.black}",
+          "$description": "Striped pattern overlay for slider progress track. Adds visual texture to indicate progress."
         },
         "warning": {
           "$type": "color",
-          "$value": "{set.warning.primary.bg}"
+          "$value": "{set.warning.primary.bg}",
+          "$description": "Warning state color for slider tracks. Indicates caution range."
         },
         "success": {
           "$type": "color",
-          "$value": "{set.success.primary.bg}"
+          "$value": "{set.success.primary.bg}",
+          "$description": "Success state color for slider tracks. Indicates optimal range."
         },
         "danger": {
           "$type": "color",
-          "$value": "{set.danger.primary.bg}"
+          "$value": "{set.danger.primary.bg}",
+          "$description": "Danger state color for slider tracks. Indicates critical range."
         }
       },
       "handle": {
@@ -1602,7 +1662,8 @@
         },
         "bg-draggable": {
           "$type": "color",
-          "$value": "{bg.2}"
+          "$value": "{bg.2}",
+          "$description": "Background color for draggable sidebar items. Provides visual feedback during drag operations."
         }
       },
       "separator": {
@@ -1624,7 +1685,8 @@
     "tab": {
       "selection-item": {
         "$type": "color",
-        "$value": "{chrome.900}"
+        "$value": "{chrome.900}",
+        "$description": "Background color for selected tab items. Provides clear visual indication of the active tab state."
       }
     },
     "toast": {
@@ -1698,21 +1760,39 @@
     "ai-chat": {
       "bubble": {
         "$type": "color",
-        "$value": "linear-gradient(95deg, {gradient.sidebar.selected.from} -13.12%, {gradient.sidebar.selected.to} 84.9%)"
+        "$value": "linear-gradient(95deg, {gradient.sidebar.selected.from} -13.12%, {gradient.sidebar.selected.to} 84.9%)",
+        "$description": "Background gradient for AI chat message bubbles. Creates distinctive AI conversation styling."
       }
     },
     "tooltip": {
       "bg": {
         "$type": "color",
-        "$value": "{chrome.200}"
+        "$value": "{chrome.200}",
+        "$description": "Background color for tooltip components. Provides high contrast backdrop for tooltip content."
       },
       "border": {
         "$type": "color",
-        "$value": "{chrome.200}"
+        "$value": "{chrome.200}",
+        "$description": "Border color for tooltip components. Defines tooltip boundaries."
       },
       "text": {
         "$type": "color",
-        "$value": "{pure.black}"
+        "$value": "{pure.black}",
+        "$description": "Text color for tooltip content. Ensures maximum readability against tooltip background."
+      }
+    },
+    "card": {
+      "fade": {
+        "default": {
+          "$type": "color",
+          "$value": "linear-gradient(0deg, {bg.1} 0%, {gradient.card.fade-default} 100%)",
+          "$description": "Gradient fade effect for default card backgrounds. Creates subtle visual depth."
+        },
+        "selected": {
+          "$type": "color",
+          "$value": "linear-gradient(0deg, {set.brand.outline.bg} 0%, {gradient.card.fade-selected} 100%)",
+          "$description": "Gradient fade effect for selected card backgrounds. Emphasizes active selection state."
+        }
       }
     }
   },
@@ -1864,7 +1944,8 @@
             "spread": "0.6",
             "color": "{comp.avatar.shadow}",
             "type": "innerShadow"
-          }
+          },
+          "$description": "Inner shadow for avatar components. Creates subtle inset border effect."
         }
       },
       "ai": {
@@ -1877,7 +1958,8 @@
             "spread": "0",
             "color": "{set.ai.outline.inner}",
             "type": "innerShadow"
-          }
+          },
+          "$description": "Inner shadow for AI-themed components. Adds depth to AI elements."
         }
       }
     }
@@ -1992,7 +2074,8 @@
         "spread": "4",
         "color": "{set.danger.secondary.bg}",
         "type": "dropShadow"
-      }
+      },
+      "$description": "Focus ring style for danger states. Provides accessible focus indicator for error contexts."
     },
     "danger-hover": {
       "$type": "boxShadow",
@@ -2003,7 +2086,8 @@
         "spread": "4",
         "color": "{set.danger.secondary.bg-hover}",
         "type": "dropShadow"
-      }
+      },
+      "$description": "Focus ring style for danger hover states. Enhances focus visibility during interaction."
     },
     "selected": {
       "$type": "boxShadow",
@@ -2014,7 +2098,8 @@
         "spread": "4",
         "color": "{set.gray.secondary.bg}",
         "type": "dropShadow"
-      }
+      },
+      "$description": "Focus ring style for selected states. Indicates active selection with accessible outline."
     },
     "success": {
       "$type": "boxShadow",
@@ -2025,7 +2110,8 @@
         "spread": "4",
         "color": "{set.success.secondary.bg}",
         "type": "dropShadow"
-      }
+      },
+      "$description": "Focus ring style for success states. Provides accessible focus indicator for positive contexts."
     },
     "success-hover": {
       "$type": "boxShadow",
@@ -2036,7 +2122,8 @@
         "spread": "4",
         "color": "{set.success.secondary.bg-hover}",
         "type": "dropShadow"
-      }
+      },
+      "$description": "Focus ring style for success hover states. Enhances focus visibility during interaction."
     },
     "warning": {
       "$type": "boxShadow",
@@ -2047,7 +2134,8 @@
         "spread": "4",
         "color": "{set.warning.secondary.bg}",
         "type": "dropShadow"
-      }
+      },
+      "$description": "Focus ring style for warning states. Provides accessible focus indicator for cautionary contexts."
     },
     "warning-hover": {
       "$type": "boxShadow",
@@ -2058,49 +2146,68 @@
         "spread": "4",
         "color": "{set.warning.secondary.bg-hover}",
         "type": "dropShadow"
-      }
+      },
+      "$description": "Focus ring style for warning hover states. Enhances focus visibility during interaction."
     }
   },
   "gradient": {
     "ai": {
       "from": {
         "$type": "color",
-        "$value": "{cyan.300}"
+        "$value": "{cyan.300}",
+        "$description": "Starting color for AI-themed gradients."
       },
       "to": {
         "$type": "color",
-        "$value": "{indigo.700}"
+        "$value": "{indigo.700}",
+        "$description": "Ending color for AI-themed gradients."
       },
       "outline-bg": {
         "stop-1": {
           "$type": "color",
-          "$value": "{chrome.950}"
+          "$value": "{chrome.950}",
+          "$description": "First gradient stop for AI outline backgrounds."
         },
         "stop-2": {
           "$type": "color",
-          "$value": "{cyan.1000}"
+          "$value": "{cyan.1000}",
+          "$description": "Second gradient stop for AI outline backgrounds."
         },
         "stop-3": {
           "$type": "color",
-          "$value": "{cyan.850}"
+          "$value": "{cyan.850}",
+          "$description": "Third gradient stop for AI outline backgrounds."
         },
         "stop-4": {
           "$type": "color",
-          "$value": "{blue.1000}"
+          "$value": "{blue.1000}",
+          "$description": "Fourth gradient stop for AI outline backgrounds."
         }
       },
       "glow": {
         "stop-1": {
           "$type": "color",
-          "$value": "{cyan.700}"
+          "$value": "{cyan.700}",
+          "$extensions": {
+            "studio.tokens": {
+              "modify": {
+                "type": "alpha",
+                "value": "0.6",
+                "space": "lch"
+              }
+            }
+          },
+          "$description": "First gradient stop for AI glow effects."
         },
         "stop-2": {
           "$type": "color",
-          "$value": "{bg.1}"
+          "$value": "{bg.1}",
+          "$description": "Second gradient stop for AI glow effects."
         },
         "stop-3": {
           "$type": "color",
-          "$value": "{indigo.800}"
+          "$value": "{indigo.800}",
+          "$description": "Third gradient stop for AI glow effects."
         }
       },
       "chat": {
@@ -2116,7 +2223,8 @@
               }
             },
             "$type": "color",
-            "$value": "{blue.800}"
+            "$value": "{blue.800}",
+            "$description": "Starting color for AI chat bubble gradients."
           },
           "to": {
             "$extensions": {
@@ -2129,7 +2237,8 @@
               }
             },
             "$type": "color",
-            "$value": "{chrome.600}"
+            "$value": "{chrome.600}",
+            "$description": "Ending color for AI chat bubble gradients."
           }
         }
       }
@@ -2146,7 +2255,8 @@
           }
         },
         "$type": "color",
-        "$value": "{set.gray.secondary.bg}"
+        "$value": "{set.gray.secondary.bg}",
+        "$description": "Transparent fade color for default alerts."
       },
       "fade-danger": {
         "$extensions": {
@@ -2159,7 +2269,8 @@
           }
         },
         "$type": "color",
-        "$value": "{set.danger.secondary.bg}"
+        "$value": "{set.danger.secondary.bg}",
+        "$description": "Transparent fade color for danger alerts."
       },
       "fade-warning": {
         "$extensions": {
@@ -2172,7 +2283,8 @@
           }
         },
         "$type": "color",
-        "$value": "{set.warning.secondary.bg}"
+        "$value": "{set.warning.secondary.bg}",
+        "$description": "Transparent fade color for warning alerts."
       },
       "fade-success": {
         "$extensions": {
@@ -2185,26 +2297,31 @@
           }
         },
         "$type": "color",
-        "$value": "{set.success.secondary.bg}"
+        "$value": "{set.success.secondary.bg}",
+        "$description": "Transparent fade color for success alerts."
       }
     },
     "skeleton": {
       "stop-1": {
         "$type": "color",
-        "$value": "{chrome.950}"
+        "$value": "{chrome.950}",
+        "$description": "First gradient stop for skeleton shimmer animation."
       },
       "stop-2": {
         "$type": "color",
-        "$value": "{chrome.850}"
+        "$value": "{chrome.850}",
+        "$description": "Second gradient stop for skeleton shimmer animation."
       },
       "stop-3": {
         "$type": "color",
-        "$value": "{chrome.950}"
+        "$value": "{chrome.950}",
+        "$description": "Third gradient stop for skeleton shimmer animation."
       },
       "mask": {
         "from": {
           "$type": "color",
-          "$value": "{pure.white}"
+          "$value": "{pure.white}",
+          "$description": "Starting color for skeleton mask gradient."
         },
         "to": {
           "$extensions": {
@@ -2217,7 +2334,8 @@
             }
           },
           "$type": "color",
-          "$value": "{pure.white}"
+          "$value": "{pure.white}",
+          "$description": "Ending color for skeleton mask gradient."
         }
       }
     },
@@ -2233,7 +2351,8 @@
           }
         },
         "$type": "color",
-        "$value": "{bg.2}"
+        "$value": "{bg.2}",
+        "$description": "Transparent fade color for dialog edges."
       }
     },
     "sidebar": {
@@ -2248,7 +2367,8 @@
           }
         },
         "$type": "color",
-        "$value": "{comp.sidebar.bg}"
+        "$value": "{comp.sidebar.bg}",
+        "$description": "Transparent fade color for sidebar edges."
       },
       "selected": {
         "from": {
@@ -2262,7 +2382,8 @@
             }
           },
           "$type": "color",
-          "$value": "{blue.800}"
+          "$value": "{blue.800}",
+          "$description": "Starting color for selected sidebar item gradients."
         },
         "to": {
           "$extensions": {
@@ -2275,7 +2396,8 @@
             }
           },
           "$type": "color",
-          "$value": "{chrome.600}"
+          "$value": "{chrome.600}",
+          "$description": "Ending color for selected sidebar item gradients."
         }
       }
     },
@@ -2292,11 +2414,13 @@
             }
           },
           "$type": "color",
-          "$value": "{bg.3}"
+          "$value": "{bg.3}",
+          "$description": "Ending color for default toast fade gradients."
         },
         "from": {
           "$type": "color",
-          "$value": "{bg.3}"
+          "$value": "{bg.3}",
+          "$description": "Starting color for default toast fade gradients."
         }
       },
       "danger": {
@@ -2311,11 +2435,13 @@
             }
           },
           "$type": "color",
-          "$value": "{comp.toast.danger.bg}"
+          "$value": "{comp.toast.danger.bg}",
+          "$description": "Ending color for danger toast fade gradients."
         },
         "from": {
           "$type": "color",
-          "$value": "{comp.toast.danger.bg}"
+          "$value": "{comp.toast.danger.bg}",
+          "$description": "Starting color for danger toast fade gradients."
         }
       }
     },
@@ -2324,27 +2450,33 @@
         "bg": {
           "stop-1": {
             "$type": "color",
-            "$value": "{chrome.600}"
+            "$value": "{chrome.600}",
+            "$description": "First gradient stop for empty state background."
           },
           "stop-2": {
             "$type": "color",
-            "$value": "{chrome.800}"
+            "$value": "{chrome.800}",
+            "$description": "Second gradient stop for empty state background."
           },
           "stop-3": {
             "$type": "color",
-            "$value": "{chrome.850}"
+            "$value": "{chrome.850}",
+            "$description": "Third gradient stop for empty state background."
           },
           "stop-4": {
             "$type": "color",
-            "$value": "{chrome.900}"
+            "$value": "{chrome.900}",
+            "$description": "Fourth gradient stop for empty state background."
           },
           "stop-5": {
             "$type": "color",
-            "$value": "{chrome.950}"
+            "$value": "{chrome.950}",
+            "$description": "Fifth gradient stop for empty state background."
           },
           "stop-6": {
             "$type": "color",
-            "$value": "{chrome.1000}"
+            "$value": "{chrome.1000}",
+            "$description": "Sixth gradient stop for empty state background."
           }
         },
         "border": {
@@ -2359,7 +2491,8 @@
               }
             },
             "$type": "color",
-            "$value": "{pure.white}"
+            "$value": "{pure.white}",
+            "$description": "Starting color for empty state border gradient."
           },
           "to": {
             "$extensions": {
@@ -2372,62 +2505,74 @@
               }
             },
             "$type": "color",
-            "$value": "{pure.white}"
+            "$value": "{pure.white}",
+            "$description": "Ending color for empty state border gradient."
           }
         },
         "icon": {
           "stop-1": {
             "$type": "color",
-            "$value": "{chrome.100}"
+            "$value": "{chrome.100}",
+            "$description": "First gradient stop for empty state icon."
           },
           "stop-2": {
             "$type": "color",
-            "$value": "{chrome.200}"
+            "$value": "{chrome.200}",
+            "$description": "Second gradient stop for empty state icon."
           },
           "stop-3": {
             "$type": "color",
-            "$value": "{chrome.400}"
+            "$value": "{chrome.400}",
+            "$description": "Third gradient stop for empty state icon."
           }
         },
         "lines": {
           "from": {
             "$type": "color",
-            "$value": "{chrome.900}"
+            "$value": "{chrome.900}",
+            "$description": "Starting color for empty state decorative lines."
           },
           "to": {
             "$type": "color",
-            "$value": "{pure.black}"
+            "$value": "{pure.black}",
+            "$description": "Ending color for empty state decorative lines."
           }
         },
         "logo": {
           "from": {
             "$type": "color",
-            "$value": "{chrome.25}"
+            "$value": "{chrome.25}",
+            "$description": "Starting color for empty state logo gradient."
           },
           "to": {
             "$type": "color",
-            "$value": "{chrome.400}"
+            "$value": "{chrome.400}",
+            "$description": "Ending color for empty state logo gradient."
           }
         },
         "bubble-t": {
           "bg": {
             "from": {
               "$type": "color",
-              "$value": "{chrome.850}"
+              "$value": "{chrome.850}",
+              "$description": "Starting color for empty state top bubble background."
             },
             "to": {
               "$type": "color",
-              "$value": "{chrome.950}"
+              "$value": "{chrome.950}",
+              "$description": "Ending color for empty state top bubble background."
             }
           },
           "icon": {
             "from": {
               "$type": "color",
-              "$value": "{chrome.800}"
+              "$value": "{chrome.800}",
+              "$description": "Starting color for empty state top bubble icon."
             },
             "to": {
               "$type": "color",
-              "$value": "{chrome.300}"
+              "$value": "{chrome.300}",
+              "$description": "Ending color for empty state top bubble icon."
             }
           }
         },
@@ -2435,21 +2580,25 @@
           "bg": {
             "from": {
               "$type": "color",
-              "$value": "{chrome.950}"
+              "$value": "{chrome.950}",
+              "$description": "Starting color for empty state bottom bubble background."
             },
             "to": {
               "$type": "color",
-              "$value": "{chrome.850}"
+              "$value": "{chrome.850}",
+              "$description": "Ending color for empty state bottom bubble background."
             }
           },
           "icon": {
             "from": {
               "$type": "color",
-              "$value": "{chrome.300}"
+              "$value": "{chrome.300}",
+              "$description": "Starting color for empty state bottom bubble icon."
             },
             "to": {
               "$type": "color",
-              "$value": "{chrome.800}"
+              "$value": "{chrome.800}",
+              "$description": "Ending color for empty state bottom bubble icon."
             }
           }
         }
@@ -2470,7 +2619,8 @@
                 }
               },
               "$type": "color",
-              "$value": "{cyan.200}"
+              "$value": "{cyan.200}",
+              "$description": "Starting color for default onboarding color bubble."
             },
             "to": {
               "$extensions": {
@@ -2483,7 +2633,8 @@
                 }
               },
               "$type": "color",
-              "$value": "{chrome.850}"
+              "$value": "{chrome.850}",
+              "$description": "Ending color for default onboarding color bubble."
             }
           },
           "danger": {
@@ -2498,7 +2649,8 @@
                 }
               },
               "$type": "color",
-              "$value": "{red.300}"
+              "$value": "{red.300}",
+              "$description": "Starting color for danger onboarding color bubble."
             },
             "to": {
               "$extensions": {
@@ -2511,7 +2663,8 @@
                 }
               },
               "$type": "color",
-              "$value": "{chrome.850}"
+              "$value": "{chrome.850}",
+              "$description": "Ending color for danger onboarding color bubble."
             }
           }
         },
@@ -2528,7 +2681,8 @@
                 }
               },
               "$type": "color",
-              "$value": "{cyan.200}"
+              "$value": "{cyan.200}",
+              "$description": "Starting color for default onboarding top ellipse 1."
             },
             "to": {
               "$extensions": {
@@ -2541,7 +2695,8 @@
                 }
               },
               "$type": "color",
-              "$value": "{cyan.200}"
+              "$value": "{cyan.200}",
+              "$description": "Ending color for default onboarding top ellipse 1."
             }
           },
           "danger": {
@@ -2556,7 +2711,8 @@
                 }
               },
               "$type": "color",
-              "$value": "{red.300}"
+              "$value": "{red.300}",
+              "$description": "Starting color for danger onboarding top ellipse 1."
             },
             "to": {
               "$extensions": {
@@ -2569,7 +2725,8 @@
                 }
               },
               "$type": "color",
-              "$value": "{red.300}"
+              "$value": "{red.300}",
+              "$description": "Ending color for danger onboarding top ellipse 1."
             }
           }
         },
@@ -2586,7 +2743,8 @@
                 }
               },
               "$type": "color",
-              "$value": "{cyan.200}"
+              "$value": "{cyan.200}",
+              "$description": "Starting color for default onboarding top ellipse 2."
             },
             "to": {
               "$extensions": {
@@ -2599,7 +2757,8 @@
                 }
               },
               "$type": "color",
-              "$value": "{cyan.200}"
+              "$value": "{cyan.200}",
+              "$description": "Ending color for default onboarding top ellipse 2."
             }
           },
           "danger": {
@@ -2614,7 +2773,8 @@
                 }
               },
               "$type": "color",
-              "$value": "{red.300}"
+              "$value": "{red.300}",
+              "$description": "Starting color for danger onboarding top ellipse 2."
             },
             "to": {
               "$extensions": {
@@ -2627,7 +2787,8 @@
                 }
               },
               "$type": "color",
-              "$value": "{red.300}"
+              "$value": "{red.300}",
+              "$description": "Ending color for danger onboarding top ellipse 2."
             }
           }
         },
@@ -2644,7 +2805,8 @@
                 }
               },
               "$type": "color",
-              "$value": "{cyan.200}"
+              "$value": "{cyan.200}",
+              "$description": "Starting color for default onboarding bottom ellipse."
             },
             "to": {
               "$extensions": {
@@ -2657,7 +2819,8 @@
                 }
               },
               "$type": "color",
-              "$value": "{cyan.200}"
+              "$value": "{cyan.200}",
+              "$description": "Ending color for default onboarding bottom ellipse."
             }
           },
           "danger": {
@@ -2672,7 +2835,8 @@
                 }
               },
               "$type": "color",
-              "$value": "{red.300}"
+              "$value": "{red.300}",
+              "$description": "Starting color for danger onboarding bottom ellipse."
             },
             "to": {
               "$extensions": {
@@ -2685,7 +2849,8 @@
                 }
               },
               "$type": "color",
-              "$value": "{red.300}"
+              "$value": "{red.300}",
+              "$description": "Ending color for danger onboarding bottom ellipse."
             }
           }
         }
@@ -2696,7 +2861,8 @@
         "border": {
           "from": {
             "$type": "color",
-            "$value": "{yellow.150}"
+            "$value": "{yellow.150}",
+            "$description": "Starting color for running pipeline border gradients."
           },
           "to": {
             "$extensions": {
@@ -2709,7 +2875,8 @@
               }
             },
             "$type": "color",
-            "$value": "{yellow.150}"
+            "$value": "{yellow.150}",
+            "$description": "Ending color for running pipeline border gradients."
           }
         },
         "glow": {
@@ -2724,7 +2891,8 @@
               }
             },
             "$type": "color",
-            "$value": "{yellow.200}"
+            "$value": "{yellow.200}",
+            "$description": "Starting color for running pipeline glow gradients."
           },
           "to": {
             "$extensions": {
@@ -2737,58 +2905,99 @@
               }
             },
             "$type": "color",
-            "$value": "{yellow.300}"
+            "$value": "{yellow.300}",
+            "$description": "Ending color for running pipeline glow gradients."
           }
         }
+      }
+    },
+    "card": {
+      "fade-default": {
+        "$extensions": {
+          "studio.tokens": {
+            "modify": {
+              "type": "alpha",
+              "value": "0",
+              "space": "lch"
+            }
+          }
+        },
+        "$type": "color",
+        "$value": "{bg.1}",
+        "$description": "Transparent fade color for default card backgrounds."
+      },
+      "fade-selected": {
+        "$extensions": {
+          "studio.tokens": {
+            "modify": {
+              "type": "alpha",
+              "value": "0",
+              "space": "lch"
+            }
+          }
+        },
+        "$type": "color",
+        "$value": "{set.brand.outline.bg}",
+        "$description": "Transparent fade color for selected card backgrounds."
       }
     }
   },
   "disabled": {
     "opacity": {
       "$type": "opacity",
-      "$value": "{opacity.60}"
+      "$value": "{opacity.60}",
+      "$description": "Opacity value for disabled interactive elements. Creates visual distinction for unavailable states."
     }
   },
   "img": {
     "empty-state": {
       "bg": {
         "$type": "color",
-        "$value": "radial-gradient(54% 83% at 50% 102%, {gradient.img.empty-state.bg.stop-1} 0%, {gradient.img.empty-state.bg.stop-2} 27%, {gradient.img.empty-state.bg.stop-3} 46%, {gradient.img.empty-state.bg.stop-4} 63%, {gradient.img.empty-state.bg.stop-5} 84%, {gradient.img.empty-state.bg.stop-6} 100%)"
+        "$value": "radial-gradient(54% 83% at 50% 102%, {gradient.img.empty-state.bg.stop-1} 0%, {gradient.img.empty-state.bg.stop-2} 27%, {gradient.img.empty-state.bg.stop-3} 46%, {gradient.img.empty-state.bg.stop-4} 63%, {gradient.img.empty-state.bg.stop-5} 84%, {gradient.img.empty-state.bg.stop-6} 100%)",
+        "$description": "Radial gradient background for empty state illustrations. Creates depth and visual interest."
       },
       "border": {
         "$type": "color",
-        "$value": "linear-gradient(180deg, {gradient.img.empty-state.border.from} 0%, {gradient.img.empty-state.border.to} 100%)"
+        "$value": "linear-gradient(180deg, {gradient.img.empty-state.border.from} 0%, {gradient.img.empty-state.border.to} 100%)",
+        "$description": "Linear gradient border for empty state illustrations. Provides subtle framing."
       },
       "icon": {
         "$type": "color",
-        "$value": "radial-gradient(31.5% 52.5% at 50% 64%, {gradient.img.empty-state.icon.stop-1} 0%, {gradient.img.empty-state.icon.stop-2} 38%, {gradient.img.empty-state.icon.stop-3} 100%)"
+        "$value": "radial-gradient(31.5% 52.5% at 50% 64%, {gradient.img.empty-state.icon.stop-1} 0%, {gradient.img.empty-state.icon.stop-2} 38%, {gradient.img.empty-state.icon.stop-3} 100%)",
+        "$description": "Radial gradient for empty state icon elements. Adds dimension to illustrations."
       },
       "lines": {
         "$type": "color",
-        "$value": "radial-gradient(60.84% 50% at 50% 50%, {gradient.img.empty-state.lines.from} 0%, {gradient.img.empty-state.lines.to} 100%)"
+        "$value": "radial-gradient(60.84% 50% at 50% 50%, {gradient.img.empty-state.lines.from} 0%, {gradient.img.empty-state.lines.to} 100%)",
+        "$description": "Radial gradient for empty state decorative lines. Creates visual texture."
       },
       "logo": {
         "$type": "color",
-        "$value": "radial-gradient(87.5% 87.5% at 50% 50%, {gradient.img.empty-state.logo.from} 0%, {gradient.img.empty-state.logo.to} 100%)"
+        "$value": "radial-gradient(87.5% 87.5% at 50% 50%, {gradient.img.empty-state.logo.from} 0%, {gradient.img.empty-state.logo.to} 100%)",
+        "$description": "Radial gradient for empty state logo elements. Emphasizes brand presence."
       },
       "bubble-t": {
         "bg": {
           "$type": "color",
-          "$value": "linear-gradient(44deg, {gradient.img.empty-state.bubble-t.bg.from} 11%, {gradient.img.empty-state.bubble-t.bg.to} 71%)"
+          "$value": "linear-gradient(44deg, {gradient.img.empty-state.bubble-t.bg.from} 11%, {gradient.img.empty-state.bubble-t.bg.to} 71%)",
+          "$description": "Linear gradient for empty state top bubble background. Creates layered visual effect."
         },
         "icon": {
           "$type": "color",
-          "$value": "linear-gradient(225deg, {gradient.img.empty-state.bubble-t.icon.from} 8%, {gradient.img.empty-state.bubble-t.icon.to} 92%)"
+          "$value": "linear-gradient(225deg, {gradient.img.empty-state.bubble-t.icon.from} 8%, {gradient.img.empty-state.bubble-t.icon.to} 92%)",
+          "$description": "Linear gradient for empty state top bubble icon. Adds visual interest."
         }
       },
       "bubble-b": {
         "bg": {
           "$type": "color",
-          "$value": "linear-gradient(44deg, {gradient.img.empty-state.bubble-b.bg.from} 11%, {gradient.img.empty-state.bubble-b.bg.to} 71%)"
+          "$value": "linear-gradient(44deg, {gradient.img.empty-state.bubble-b.bg.from} 11%, {gradient.img.empty-state.bubble-b.bg.to} 71%)",
+          "$description": "Linear gradient for empty state bottom bubble background. Creates layered visual effect."
         },
         "icon": {
           "$type": "color",
-          "$value": "linear-gradient(225deg, {gradient.img.empty-state.bubble-b.icon.from} 8%, {gradient.img.empty-state.bubble-b.icon.to} 92%)"
+          "$value": "linear-gradient(225deg, {gradient.img.empty-state.bubble-b.icon.from} 8%, {gradient.img.empty-state.bubble-b.icon.to} 92%)",
+          "$description": "Linear gradient for empty state bottom bubble icon. Adds visual interest."
         }
       }
     }
@@ -2798,41 +3007,49 @@
       "img-color-bubble": {
         "default": {
           "$type": "color",
-          "$value": "radial-gradient(50% 50% at 50% 50%, {gradient.flow.onboard.img-color-bubble.default.from} 0%, {gradient.flow.onboard.img-color-bubble.default.to} 100%)"
+          "$value": "radial-gradient(50% 50% at 50% 50%, {gradient.flow.onboard.img-color-bubble.default.from} 0%, {gradient.flow.onboard.img-color-bubble.default.to} 100%)",
+          "$description": "Radial gradient for default onboarding color bubble. Creates visual focal point."
         },
         "danger": {
           "$type": "color",
-          "$value": "radial-gradient(50% 50% at 50% 50%, {gradient.flow.onboard.img-color-bubble.danger.from} 0%, {gradient.flow.onboard.img-color-bubble.danger.to} 100%)"
+          "$value": "radial-gradient(50% 50% at 50% 50%, {gradient.flow.onboard.img-color-bubble.danger.from} 0%, {gradient.flow.onboard.img-color-bubble.danger.to} 100%)",
+          "$description": "Radial gradient for danger onboarding color bubble. Emphasizes error states."
         }
       },
       "ellipse-t-1": {
         "default": {
           "$type": "color",
-          "$value": "radial-gradient(50% 50% at 50% 50%, {gradient.flow.onboard.ellipse-t-1.default.from} 26%, {gradient.flow.onboard.ellipse-t-1.default.to} 100%)"
+          "$value": "radial-gradient(50% 50% at 50% 50%, {gradient.flow.onboard.ellipse-t-1.default.from} 26%, {gradient.flow.onboard.ellipse-t-1.default.to} 100%)",
+          "$description": "Radial gradient for default onboarding top ellipse 1. Creates atmospheric background effect."
         },
         "danger": {
           "$type": "color",
-          "$value": "radial-gradient(50% 50% at 50% 50%, {gradient.flow.onboard.ellipse-t-1.danger.from} 26%, {gradient.flow.onboard.ellipse-t-1.danger.to} 100%)"
+          "$value": "radial-gradient(50% 50% at 50% 50%, {gradient.flow.onboard.ellipse-t-1.danger.from} 26%, {gradient.flow.onboard.ellipse-t-1.danger.to} 100%)",
+          "$description": "Radial gradient for danger onboarding top ellipse 1. Emphasizes error context."
         }
       },
       "ellipse-t-2": {
         "default": {
           "$type": "color",
-          "$value": "radial-gradient(50% 50% at 50% 50%, {gradient.flow.onboard.ellipse-t-2.default.from} 26%, {gradient.flow.onboard.ellipse-t-2.default.to} 100%)"
+          "$value": "radial-gradient(50% 50% at 50% 50%, {gradient.flow.onboard.ellipse-t-2.default.from} 26%, {gradient.flow.onboard.ellipse-t-2.default.to} 100%)",
+          "$description": "Radial gradient for default onboarding top ellipse 2. Creates layered atmospheric effect."
         },
         "danger": {
           "$type": "color",
-          "$value": "radial-gradient(50% 50% at 50% 50%, {gradient.flow.onboard.ellipse-t-2.danger.from} 26%, {gradient.flow.onboard.ellipse-t-2.danger.to} 100%)"
+          "$value": "radial-gradient(50% 50% at 50% 50%, {gradient.flow.onboard.ellipse-t-2.danger.from} 26%, {gradient.flow.onboard.ellipse-t-2.danger.to} 100%)",
+          "$description": "Radial gradient for danger onboarding top ellipse 2. Emphasizes error context."
         }
       },
       "ellipse-b": {
         "default": {
           "$type": "color",
-          "$value": "radial-gradient(50% 50% at 50% 50%, {gradient.flow.onboard.ellipse-b.default.from} 26%, {gradient.flow.onboard.ellipse-b.default.to} 100%)"
+          "$value": "radial-gradient(50% 50% at 50% 50%, {gradient.flow.onboard.ellipse-b.default.from} 26%, {gradient.flow.onboard.ellipse-b.default.to} 100%)",
+          "$description": "Radial gradient for default onboarding bottom ellipse. Creates depth in background."
         },
         "danger": {
           "$type": "color",
-          "$value": "radial-gradient(50% 50% at 50% 50%, {gradient.flow.onboard.ellipse-b.danger.from} 26%, {gradient.flow.onboard.ellipse-b.danger.to} 100%)"
+          "$value": "radial-gradient(50% 50% at 50% 50%, {gradient.flow.onboard.ellipse-b.danger.from} 26%, {gradient.flow.onboard.ellipse-b.danger.to} 100%)",
+          "$description": "Radial gradient for danger onboarding bottom ellipse. Emphasizes error context."
         }
       }
     }
@@ -2840,23 +3057,28 @@
   "icon": {
     "devops": {
       "$type": "color",
-      "$value": "{lime.200}"
+      "$value": "{lime.200}",
+      "$description": "Brand color for DevOps category icons. Creates visual categorization."
     },
     "testing": {
       "$type": "color",
-      "$value": "{orange.200}"
+      "$value": "{orange.200}",
+      "$description": "Brand color for Testing category icons. Creates visual categorization."
     },
     "security": {
       "$type": "color",
-      "$value": "{blue.400}"
+      "$value": "{blue.400}",
+      "$description": "Brand color for Security category icons. Creates visual categorization."
     },
     "efficiency": {
       "$type": "color",
-      "$value": "{cyan.200}"
+      "$value": "{cyan.200}",
+      "$description": "Brand color for Efficiency category icons. Creates visual categorization."
     },
     "platform": {
       "$type": "color",
-      "$value": "{purple.300}"
+      "$value": "{purple.300}",
+      "$description": "Brand color for Platform category icons. Creates visual categorization."
     }
   },
   "focus": {
@@ -2865,6 +3087,7 @@
       "color": "{border.brand}",
       "width": "{borderWidth.2}",
       "style": "solid"
-    }
+    },
+    "$description": "Focus ring style for interactive elements. Provides accessible keyboard navigation indicator meeting WCAG requirements."
   }
 }

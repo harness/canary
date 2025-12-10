@@ -373,7 +373,7 @@ const SidebarItemTrigger = forwardRef<HTMLButtonElement | HTMLAnchorElement, Sid
           <DropdownMenu.Root>
             <DropdownMenu.Trigger ref={buttonRef} className={sidebarItemClassName} {...itemProps} role="menuitem">
               {withDragHandle && (
-                <div className="cn-sidebar-item-grip-handle left-cn-1xs">
+                <div className="cn-sidebar-item-grip-handle left-cn-1xs" {...dragAttributes} {...dragListeners}>
                   <IconV2 name="grip-dots" size="2xs" className="cn-sidebar-item-grip-icon" />
                 </div>
               )}
@@ -390,7 +390,7 @@ const SidebarItemTrigger = forwardRef<HTMLButtonElement | HTMLAnchorElement, Sid
           (clickable ? (
             <button ref={buttonRef} className={sidebarItemClassName} {...itemProps} role="menuitem">
               {withDragHandle && (
-                <div className="cn-sidebar-item-grip-handle left-cn-1xs">
+                <div className="cn-sidebar-item-grip-handle left-cn-1xs" {...dragAttributes} {...dragListeners}>
                   <IconV2 name="grip-dots" size="2xs" className="cn-sidebar-item-grip-icon" />
                 </div>
               )}
@@ -406,6 +406,11 @@ const SidebarItemTrigger = forwardRef<HTMLButtonElement | HTMLAnchorElement, Sid
               onMouseEnter={props.onHoverIn}
               onMouseLeave={props.onHoverIn}
             >
+              {withDragHandle && (
+                <div className="cn-sidebar-item-grip-handle left-cn-1xs" {...dragAttributes} {...dragListeners}>
+                  <IconV2 name="grip-dots" size="2xs" className="cn-sidebar-item-grip-icon" />
+                </div>
+              )}
               {renderContent()}
             </div>
           ))}

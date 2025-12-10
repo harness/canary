@@ -1162,6 +1162,18 @@
         "$value": "linear-gradient(0deg, {bg.2} 0%, {gradient.dialog.fade} 100%)"
       }
     },
+    "card": {
+      "fade": {
+        "default": {
+          "$type": "color",
+          "$value": "linear-gradient(0deg, {bg.1} 0%, {gradient.card.fade-default} 100%)"
+        },
+        "selected": {
+          "$type": "color",
+          "$value": "linear-gradient(0deg, {set.brand.outline.bg} 0%, {gradient.card.fade-selected} 100%)"
+        }
+      }
+    },
     "diff": {
       "grey": {
         "$type": "color",
@@ -2267,6 +2279,34 @@
         },
         "$type": "color",
         "$value": "{bg.2}"
+      }
+    },
+    "card": {
+      "fade-default": {
+        "$extensions": {
+          "studio.tokens": {
+            "modify": {
+              "type": "alpha",
+              "value": "0",
+              "space": "lch"
+            }
+          }
+        },
+        "$type": "color",
+        "$value": "{bg.1}"
+      },
+      "fade-selected": {
+        "$extensions": {
+          "studio.tokens": {
+            "modify": {
+              "type": "alpha",
+              "value": "0",
+              "space": "lch"
+            }
+          }
+        },
+        "$type": "color",
+        "$value": "{set.brand.outline.bg}"
       }
     },
     "sidebar": {

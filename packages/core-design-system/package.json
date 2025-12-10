@@ -13,7 +13,9 @@
     "build": "pnpm clean && pnpm build:styles",
     "build:ci": "pnpm build",
     "build:styles": "node scripts/build.js",
-    "clean": "rimraf dist"
+    "clean": "rimraf dist",
+    "palette": "python3 -m http.server 8080 & sleep 1 && open http://localhost:8080/tools/palette-generator.html",
+    "studio": "python3 -m http.server 8080 & sleep 1 && open http://localhost:8080/tools/design-system-studio.html"
   },
   "keywords": [
     "design-system",

@@ -34,7 +34,7 @@
     },
     "3": {
       "$type": "color",
-      "$value": "{gray.750}",
+      "$value": "{gray.700}",
       "$description": "Reduced emphasis color for text and icons in secondary information. Creates visual hierarchy through lower contrast while maintaining AA accessibility.\n\nCommon uses: Supporting text, metadata, secondary information, placeholders."
     },
     "4": {

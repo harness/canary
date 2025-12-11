@@ -167,17 +167,17 @@
         },
         "bg": {
           "$type": "color",
-          "$value": "{indigo.100}",
+          "$value": "{blue.100}",
           "$description": "Background color for primary subtle brand items with strong emphasis."
         },
         "bg-hover": {
           "$type": "color",
-          "$value": "{indigo.150}",
+          "$value": "{blue.150}",
           "$description": "Hover state background color for interactive brand subtle surfaces."
         },
         "bg-selected": {
           "$type": "color",
-          "$value": "{indigo.150}",
+          "$value": "{blue.150}",
           "$description": "Selected state background color for active brand subtle items."
         }
       },
@@ -189,12 +189,12 @@
         },
         "bg": {
           "$type": "color",
-          "$value": "{indigo.50}",
+          "$value": "{blue.50}",
           "$description": "Background color for primary brand items with minimum emphasis."
         },
         "border": {
           "$type": "color",
-          "$value": "{indigo.300}",
+          "$value": "{blue.300}",
           "$description": "Border color for primary brand with minimum emphasis boundaries."
         },
         "bg-hover": {
@@ -675,7 +675,7 @@
       "primary": {
         "text": {
           "$type": "color",
-          "$value": "{brown.1000}",
+          "$value": "{pure.black}",
           "$description": "Text color for high-contrast brown surfaces."
         },
         "bg": {
@@ -733,17 +733,17 @@
       "primary": {
         "text": {
           "$type": "color",
-          "$value": "{pure.white}",
+          "$value": "{cyan.1000}",
           "$description": "Text color for high-contrast cyan surfaces."
         },
         "bg": {
           "$type": "color",
-          "$value": "{cyan.700}",
+          "$value": "{cyan.400}",
           "$description": "Background color for prominent cyan surfaces."
         },
         "bg-hover": {
           "$type": "color",
-          "$value": "{cyan.800}",
+          "$value": "{cyan.500}",
           "$description": "Hover background color for prominent cyan surfaces."
         }
       },
@@ -767,7 +767,7 @@
       "outline": {
         "text": {
           "$type": "color",
-          "$value": "{cyan.800}",
+          "$value": "{cyan.700}",
           "$description": "Standard text color for cyan surfaces with balanced readability."
         },
         "bg": {
@@ -777,7 +777,7 @@
         },
         "border": {
           "$type": "color",
-          "$value": "{cyan.100}",
+          "$value": "{cyan.150}",
           "$description": "Border color for standard cyan boundaries."
         },
         "bg-hover": {
@@ -791,22 +791,22 @@
       "primary": {
         "text": {
           "$type": "color",
-          "$value": "{pure.white}",
+          "$value": "{pure.black}",
           "$description": "Text color for high-contrast indigo surfaces."
         },
         "bg": {
           "$type": "color",
-          "$value": "{indigo.700}",
+          "$value": "{indigo.500}",
           "$description": "Background color for prominent indigo surfaces."
         },
         "bg-hover": {
           "$type": "color",
-          "$value": "{indigo.800}",
+          "$value": "{indigo.600}",
           "$description": "Hover background color for prominent indigo surfaces."
         },
         "bg-selected": {
           "$type": "color",
-          "$value": "{indigo.800}",
+          "$value": "{indigo.600}",
           "$description": "Selected background color for prominent indigo surfaces."
         }
       },
@@ -818,19 +818,19 @@
         },
         "bg": {
           "$type": "color",
-          "$value": "{indigo.50}",
+          "$value": "{indigo.100}",
           "$description": "Background color for subdued indigo surfaces."
         },
         "bg-hover": {
           "$type": "color",
-          "$value": "{indigo.100}",
+          "$value": "{indigo.150}",
           "$description": "Hover background color for subdued indigo surfaces."
         }
       },
       "outline": {
         "text": {
           "$type": "color",
-          "$value": "{indigo.800}",
+          "$value": "{indigo.700}",
           "$description": "Standard text color for indigo surfaces with balanced readability."
         },
         "bg": {
@@ -840,7 +840,7 @@
         },
         "border": {
           "$type": "color",
-          "$value": "{indigo.100}",
+          "$value": "{indigo.200}",
           "$description": "Border color for standard indigo boundaries."
         },
         "bg-hover": {

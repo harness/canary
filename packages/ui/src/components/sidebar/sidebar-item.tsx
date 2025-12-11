@@ -49,8 +49,6 @@ interface SidebarItemCommonProps extends ComponentPropsWithoutRef<'button'> {
   draggable?: boolean
   dragAttributes?: React.HTMLAttributes<HTMLElement>
   dragListeners?: SyntheticListenerMap
-  /** Force collapse submenu (overrides internal state) - used during drag operations */
-  forceCollapse?: boolean
   subMenuOpen?: boolean
   onSubmenuChange?: (open: boolean) => void
 }
@@ -216,7 +214,7 @@ const SidebarItemTrigger = forwardRef<HTMLButtonElement | HTMLAnchorElement, Sid
       )
     }
 
-    const itemProps = omit(restProps, ['icon', 'logo', 'avatarFallback', 'src', 'badgeProps', 'forceCollapse'])
+    const itemProps = omit(restProps, ['icon', 'logo', 'avatarFallback', 'src', 'badgeProps'])
     const sidebarItemClassName = cn('cn-sidebar-item', className)
     const buttonRef = ref as Ref<HTMLButtonElement>
     const divRef = ref as Ref<HTMLDivElement>
@@ -442,7 +440,6 @@ SidebarItemTrigger.displayName = 'SidebarItemTrigger'
 export const SidebarItem = forwardRef<HTMLButtonElement | HTMLAnchorElement, SidebarItemProps>(
   ({ subMenuOpen, defaultSubmenuOpen, onSubmenuChange, ...props }, ref) => {
     const { state } = useSidebar()
-    const { forceCollapse } = props
 
     // Is the component externally controlled?
     const isControlled = subMenuOpen !== undefined
@@ -463,13 +460,6 @@ export const SidebarItem = forwardRef<HTMLButtonElement | HTMLAnchorElement, Sid
     )
 
     const toggleSubmenu = useCallback(() => setOpen(!effectiveOpen), [setOpen, effectiveOpen])
-
-    // Force collapse submenu during drag operations
-    useEffect(() => {
-      if (forceCollapse && effectiveOpen) {
-        setOpen(false)
-      }
-    }, [forceCollapse, effectiveOpen, setOpen])
 
     // Close automatically if sidebar collapses
     useEffect(() => {
@@ -508,9 +498,7 @@ export const SidebarItem = forwardRef<HTMLButtonElement | HTMLAnchorElement, Sid
     const withSubmenu = !!props.children
 
     if (withSubmenu) {
-      // Use forceCollapse to override effectiveOpen state during drag
-      const effectiveSubmenuOpen = forceCollapse ? false : effectiveOpen
-      const filteredChildren = effectiveSubmenuOpen
+      const filteredChildren = effectiveOpen
         ? filterChildrenByDisplayNames(props.children, [SUBMENU_ITEM_DISPLAY_NAME])
         : []
       const rowsCount = filteredChildren.length + 1
@@ -522,9 +510,9 @@ export const SidebarItem = forwardRef<HTMLButtonElement | HTMLAnchorElement, Sid
             className="cn-sidebar-submenu-group"
             role="group"
             columns="auto 1fr"
-            data-state={effectiveSubmenuOpen ? 'open' : 'closed'}
+            data-state={effectiveOpen ? 'open' : 'closed'}
             style={{
-              ...(effectiveSubmenuOpen ? { maxHeight: `${rowsCount * 40}px` } : { maxHeight: '0px', padding: 0 })
+              ...(effectiveOpen ? { maxHeight: `${rowsCount * 40}px` } : { maxHeight: '0px', padding: 0 })
             }}
           >
             <Separator orientation="vertical" style={{ gridRow: `1 / ${rowsCount}` }} />

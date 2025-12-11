@@ -543,5 +543,18 @@
       "$type": "number",
       "$value": "{spacing.20}"
     }
+  },
+  "micro": {
+    "normal": {
+      "$type": "typography",
+      "$value": {
+        "fontFamily": "{fontFamily.default}",
+        "fontWeight": "{fontWeight.default.normal.400}",
+        "fontSize": "{fontSize.0}",
+        "lineHeight": "{lineHeight.0.normal}",
+        "letterSpacing": "{tracking.wider}"
+      },
+      "$description": "The smallest service text (labels, signatures, technical information)"
+    }
   }
 }

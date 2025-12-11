@@ -2,11 +2,11 @@
   "header": {
     "height": {
       "$type": "sizing",
-      "$value": "{size.11}"
+      "$value": "{size.14}"
     },
     "pl": {
       "$type": "spacing",
-      "$value": "{spacing.5}"
+      "$value": "{spacing.4}"
     },
     "pr": {
       "$type": "spacing",

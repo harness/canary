@@ -2488,15 +2488,16 @@
     </div>
     <div class="section">
       <div class="section-title">Output</div>
-      <div style="display:flex;flex-direction:column;gap:4px;font-size:11px;font-family:monospace">
-        <div style="display:flex;gap:8px">
-          <span style="color:var(--text-3);min-width:28px">LCH</span>
-          <span style="color:var(--text-1)">lch(${lc?.l || 0}% ${lc?.c || 0} ${lc?.h || 0})</span>
-        </div>
-        <div style="display:flex;gap:8px">
-          <span style="color:var(--text-3);min-width:28px">Hex</span>
-          <span style="color:var(--text-2)">${d.hex}</span>
-        </div>
+      <div style="background:var(--bg-2);border-radius:6px;display:flex;align-items:center;padding:10px 12px;gap:10px;font-family:monospace;font-size:12px">
+        <span style="color:var(--text-1);flex:1;font-weight:500">lch(${lc?.l || 0}% ${lc?.c || 0} ${lc?.h || 0})</span>
+        <button onclick="copyToClipboard('lch(${lc?.l || 0}% ${lc?.c || 0} ${lc?.h || 0})')" style="background:var(--bg-3);border:none;color:var(--text-2);cursor:pointer;padding:4px 8px;display:flex;align-items:center;gap:4px;border-radius:4px;font-size:9px;font-family:inherit" title="Copy LCH"
+          onmouseover="this.style.background='var(--border-2)'" onmouseout="this.style.background='var(--bg-3)'"><i data-lucide="copy" style="width:10px;height:10px"></i>Copy</button>
+      </div>
+      <div style="display:flex;align-items:center;padding:6px 4px;gap:8px;margin-top:4px">
+        <span style="color:var(--text-3);font-size:10px">Fallback</span>
+        <span style="color:var(--text-3);font-family:monospace;font-size:11px">${d.hex}</span>
+        <button onclick="copyToClipboard('${d.hex}')" style="background:none;border:none;color:var(--text-3);cursor:pointer;padding:2px;display:flex;opacity:0.5" title="Copy HEX"
+          onmouseover="this.style.opacity='1'" onmouseout="this.style.opacity='0.5'"><i data-lucide="copy" style="width:10px;height:10px"></i></button>
       </div>
     </div>
     <div class="section">
@@ -3207,6 +3208,15 @@
             setTimeout(() => t.style.display = 'none', 2000);
         }
 
+        function copyToClipboard(text) {
+            navigator.clipboard.writeText(text).then(() => {
+                toast(`Copied: ${text}`);
+            }).catch(err => {
+                console.error('Failed to copy:', err);
+                toast('Failed to copy');
+            });
+        }
+
         // Generate HEX tokens from current LCH tokens
         function generateHexTokens() {
             const hexTokens = {};
@@ -3674,7 +3684,6 @@
             if (e.key === 'e' || e.key === 'E') showExport();
             if (e.key === 'l' || e.key === 'L') loadFile();
             if (e.key === 'Escape') { closeExport(); closeCompareModal(); }
-            if (e.key === 'c' || e.key === 'C') { if (state.oldTokens) showCompareModal(); }
         });
 
         // Load both JSON files on startup

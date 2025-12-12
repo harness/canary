@@ -854,17 +854,17 @@
       "primary": {
         "text": {
           "$type": "color",
-          "$value": "{pure.black}",
+          "$value": "{pure.white}",
           "$description": "Text color for high-contrast forest-green surfaces."
         },
         "bg": {
           "$type": "color",
-          "$value": "{forest.300}",
+          "$value": "{forest.700}",
           "$description": "Background color for prominent forest-green surfaces."
         },
         "bg-hover": {
           "$type": "color",
-          "$value": "{forest.500}",
+          "$value": "{forest.800}",
           "$description": "Hover background color for prominent forest-green surfaces."
         }
       },
@@ -876,12 +876,12 @@
         },
         "bg": {
           "$type": "color",
-          "$value": "{forest.50}",
+          "$value": "{forest.100}",
           "$description": "Background color for subdued forest-green surfaces."
         },
         "bg-hover": {
           "$type": "color",
-          "$value": "{forest.100}",
+          "$value": "{forest.150}",
           "$description": "Hover background color for subdued forest-green surfaces."
         }
       },
@@ -898,7 +898,7 @@
         },
         "border": {
           "$type": "color",
-          "$value": "{forest.150}",
+          "$value": "{forest.200}",
           "$description": "Border color for standard forest-green boundaries."
         },
         "bg-hover": {
@@ -912,17 +912,17 @@
       "primary": {
         "text": {
           "$type": "color",
-          "$value": "{mint.1000}",
+          "$value": "{pure.white}",
           "$description": "Text color for high-contrast mint surfaces."
         },
         "bg": {
           "$type": "color",
-          "$value": "{mint.300}",
+          "$value": "{mint.700}",
           "$description": "Background color for prominent mint surfaces."
         },
         "bg-hover": {
           "$type": "color",
-          "$value": "{mint.400}",
+          "$value": "{mint.800}",
           "$description": "Hover background color for prominent mint surfaces."
         }
       },
@@ -934,12 +934,12 @@
         },
         "bg": {
           "$type": "color",
-          "$value": "{mint.50}",
+          "$value": "{mint.100}",
           "$description": "Background color for subdued mint surfaces."
         },
         "bg-hover": {
           "$type": "color",
-          "$value": "{mint.100}",
+          "$value": "{mint.150}",
           "$description": "Hover background color for subdued mint surfaces."
         }
       },
@@ -956,7 +956,7 @@
         },
         "border": {
           "$type": "color",
-          "$value": "{mint.150}",
+          "$value": "{mint.200}",
           "$description": "Border color for standard mint boundaries."
         },
         "bg-hover": {
@@ -975,12 +975,12 @@
         },
         "bg": {
           "$type": "color",
-          "$value": "{orange.400}",
+          "$value": "{orange.500}",
           "$description": "Background color for solid orange surfaces."
         },
         "bg-hover": {
           "$type": "color",
-          "$value": "{orange.500}",
+          "$value": "{orange.600}",
           "$description": "Hover background color for solid orange surfaces."
         }
       },
@@ -1014,7 +1014,7 @@
         },
         "border": {
           "$type": "color",
-          "$value": "{orange.300}",
+          "$value": "{orange.400}",
           "$description": "Border color for standard orange boundaries."
         },
         "bg-hover": {
@@ -1028,17 +1028,17 @@
       "primary": {
         "text": {
           "$type": "color",
-          "$value": "{pure.white}",
+          "$value": "{pure.black}",
           "$description": "Text color for high-contrast pink surfaces."
         },
         "bg": {
           "$type": "color",
-          "$value": "{pink.700}",
+          "$value": "{pink.400}",
           "$description": "Background color for prominent pink surfaces."
         },
         "bg-hover": {
           "$type": "color",
-          "$value": "{pink.800}",
+          "$value": "{pink.500}",
           "$description": "Hover background color for prominent pink surfaces."
         }
       },
@@ -1050,19 +1050,19 @@
         },
         "bg": {
           "$type": "color",
-          "$value": "{pink.50}",
+          "$value": "{pink.100}",
           "$description": "Background color for subdued pink surfaces."
         },
         "bg-hover": {
           "$type": "color",
-          "$value": "{pink.100}",
+          "$value": "{pink.150}",
           "$description": "Hover background color for subdued pink surfaces."
         }
       },
       "outline": {
         "text": {
           "$type": "color",
-          "$value": "{pink.800}",
+          "$value": "{pink.700}",
           "$description": "Standard text color for pink surfaces with balanced readability."
         },
         "bg": {
@@ -1072,7 +1072,7 @@
         },
         "border": {
           "$type": "color",
-          "$value": "{pink.100}",
+          "$value": "{pink.300}",
           "$description": "Border color for standard pink boundaries."
         },
         "bg-hover": {
@@ -1108,12 +1108,12 @@
         },
         "bg": {
           "$type": "color",
-          "$value": "{violet.50}",
+          "$value": "{violet.100}",
           "$description": "Background color for subdued violet surfaces."
         },
         "bg-hover": {
           "$type": "color",
-          "$value": "{violet.100}",
+          "$value": "{violet.150}",
           "$description": "Hover background color for subdued violet surfaces."
         }
       },
@@ -1130,7 +1130,7 @@
         },
         "border": {
           "$type": "color",
-          "$value": "{violet.100}",
+          "$value": "{violet.300}",
           "$description": "Border color for standard violet boundaries."
         },
         "bg-hover": {

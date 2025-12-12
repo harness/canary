@@ -2021,7 +2021,7 @@
         }
       },
       "$type": "color",
-      "$value": "{gray.700}",
+      "$value": "{gray.600}",
       "$description": "Transparent shadow color. Used when no shadow effect is desired."
     },
     "1": {
@@ -2035,7 +2035,7 @@
         }
       },
       "$type": "color",
-      "$value": "{gray.700}",
+      "$value": "{gray.600}",
       "$description": "Light shadow color. Creates subtle depth for small UI elements."
     },
     "2": {
@@ -2049,7 +2049,7 @@
         }
       },
       "$type": "color",
-      "$value": "{gray.700}",
+      "$value": "{gray.600}",
       "$description": "Medium shadow color with 60% opacity. Provides balanced depth for common UI components."
     },
     "3": {
@@ -2063,7 +2063,7 @@
         }
       },
       "$type": "color",
-      "$value": "{gray.700}",
+      "$value": "{gray.600}",
       "$description": "Medium shadow color. Creates moderate depth for elevated components."
     },
     "4": {
@@ -2077,7 +2077,7 @@
         }
       },
       "$type": "color",
-      "$value": "{gray.700}",
+      "$value": "{gray.600}",
       "$description": "Deep shadow color. Provides significant depth for floating elements."
     },
     "5": {
@@ -2091,7 +2091,7 @@
         }
       },
       "$type": "color",
-      "$value": "{gray.700}",
+      "$value": "{gray.600}",
       "$description": "Very deep shadow color. Creates dramatic elevation for modal content."
     },
     "6": {
@@ -2105,7 +2105,7 @@
         }
       },
       "$type": "color",
-      "$value": "{gray.700}",
+      "$value": "{gray.600}",
       "$description": "Extremely deep shadow color. Provides maximum depth for highly elevated elements."
     }
   },

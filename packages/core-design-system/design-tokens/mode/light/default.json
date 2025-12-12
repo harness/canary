@@ -64,7 +64,7 @@
     },
     "brand": {
       "$type": "color",
-      "$value": "{indigo.800}",
+      "$value": "{set.brand.primary.bg}",
       "$description": "Primary brand color for text and icons. Used to reinforce brand identity and create visual connection to the product.\n\nCommon uses: Brand elements, primary links, brand-specific content, logo text."
     }
   },
@@ -1471,12 +1471,21 @@
     "link": {
       "text": {
         "$type": "color",
-        "$value": "{indigo.800}",
+        "$value": "{text.brand}",
         "$description": "Default color for text links. Creates distinct visual identification of interactive text elements."
       },
       "text-hover": {
+        "$extensions": {
+          "studio.tokens": {
+            "modify": {
+              "type": "darken",
+              "value": "0.1",
+              "space": "lch"
+            }
+          }
+        },
         "$type": "color",
-        "$value": "{indigo.700}",
+        "$value": "{text.brand}",
         "$description": "Hover color for text links."
       }
     },

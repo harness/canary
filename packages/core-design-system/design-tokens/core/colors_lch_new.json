@@ -297,7 +297,7 @@
     },
     "$type": "color"
   },
-  "green": {
+  "forest": {
     "25": {
       "$value": "lch(99% 6 150)"
     },

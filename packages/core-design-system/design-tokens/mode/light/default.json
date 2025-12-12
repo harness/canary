@@ -840,7 +840,7 @@
         },
         "border": {
           "$type": "color",
-          "$value": "{indigo.300}",
+          "$value": "{indigo.400}",
           "$description": "Border color for standard indigo boundaries."
         },
         "bg-hover": {

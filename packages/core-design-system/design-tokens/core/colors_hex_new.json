@@ -17,40 +17,40 @@
       "$value": "#f9f9fb"
     },
     "100": {
-      "$value": "#eaebf0"
+      "$value": "#e7e8ee"
     },
     "150": {
       "$value": "#d9dadf"
     },
     "200": {
-      "$value": "#d1d1da"
+      "$value": "#d0d1da"
     },
     "300": {
-      "$value": "#c3c3ce"
+      "$value": "#c2c3cf"
     },
     "400": {
-      "$value": "#babbc7"
+      "$value": "#b9bbc7"
     },
     "500": {
-      "$value": "#9d9da8"
+      "$value": "#9c9da8"
     },
     "600": {
-      "$value": "#888892"
+      "$value": "#878892"
     },
     "700": {
-      "$value": "#6a6a72"
+      "$value": "#696a73"
     },
     "800": {
-      "$value": "#4d4d54"
+      "$value": "#4c4d55"
     },
     "850": {
-      "$value": "#3b3b41"
+      "$value": "#3a3b41"
     },
     "900": {
-      "$value": "#2a2a2f"
+      "$value": "#292a2f"
     },
     "950": {
-      "$value": "#1f1f23"
+      "$value": "#1f1f24"
     },
     "1000": {
       "$value": "#17171b"
@@ -65,10 +65,10 @@
       "$value": "#fff4f4"
     },
     "100": {
-      "$value": "#ffe9e7"
+      "$value": "#ffe1e0"
     },
     "150": {
-      "$value": "#ffd6d3"
+      "$value": "#ffd2cf"
     },
     "200": {
       "$value": "#ffbab4"
@@ -89,7 +89,7 @@
       "$value": "#da2c34"
     },
     "800": {
-      "$value": "#b4282e"
+      "$value": "#c03537"
     },
     "850": {
       "$value": "#88272a"
@@ -128,7 +128,7 @@
       "$value": "#ff9355"
     },
     "500": {
-      "$value": "#ff701d"
+      "$value": "#ff7b31"
     },
     "600": {
       "$value": "#e95d00"
@@ -278,7 +278,7 @@
       "$value": "#4e9700"
     },
     "700": {
-      "$value": "#438300"
+      "$value": "#448600"
     },
     "800": {
       "$value": "#376d00"
@@ -401,7 +401,7 @@
       "$value": "#d5fffd"
     },
     "100": {
-      "$value": "#a0fbf9"
+      "$value": "#b3f8f6"
     },
     "150": {
       "$value": "#66f6f3"
@@ -461,10 +461,10 @@
       "$value": "#8cc8ff"
     },
     "400": {
-      "$value": "#6abcff"
+      "$value": "#62b9ff"
     },
     "500": {
-      "$value": "#00a8fc"
+      "$value": "#29adff"
     },
     "600": {
       "$value": "#008fd7"
@@ -512,10 +512,10 @@
       "$value": "#9aaeff"
     },
     "500": {
-      "$value": "#7b9bff"
+      "$value": "#7699ff"
     },
     "600": {
-      "$value": "#4684ff"
+      "$value": "#4e86ff"
     },
     "700": {
       "$value": "#006dea"

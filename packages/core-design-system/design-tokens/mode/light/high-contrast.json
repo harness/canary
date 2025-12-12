@@ -329,12 +329,12 @@
         },
         "bg-hover": {
           "$type": "color",
-          "$value": "{lime.700}",
+          "$value": "{forest.700}",
           "$description": "Background color for prominent green surfaces."
         },
         "bg-selected": {
           "$type": "color",
-          "$value": "{lime.700}",
+          "$value": "{forest.700}",
           "$description": "Background color for prominent green surfaces."
         }
       },
@@ -839,56 +839,56 @@
         }
       }
     },
-    "lime": {
+    "forest-green": {
       "primary": {
         "text": {
           "$type": "color",
-          "$value": "{purple.1000}",
-          "$description": "Text color for high-contrast purple surfaces."
+          "$value": "{forest.1000}",
+          "$description": "Text color for high-contrast forest-green surfaces."
         },
         "bg": {
           "$type": "color",
-          "$value": "{purple.200}",
-          "$description": "Background color for prominent purple surfaces."
+          "$value": "{forest.200}",
+          "$description": "Background color for prominent forest-green surfaces."
         }
       },
       "secondary": {
         "text": {
           "$type": "color",
-          "$value": "{lime.600}",
-          "$description": "Text color for subtle lime surfaces with good contrast."
+          "$value": "{forest.600}",
+          "$description": "Text color for subtle forest-green surfaces with good contrast."
         },
         "bg": {
           "$type": "color",
-          "$value": "{lime.100}",
-          "$description": "Background color for subdued lime surfaces."
+          "$value": "{forest.100}",
+          "$description": "Background color for subdued forest-green surfaces."
         },
         "bg-hover": {
           "$type": "color",
-          "$value": "{lime.100}",
-          "$description": "Hover background color for subdued lime surfaces."
+          "$value": "{forest.100}",
+          "$description": "Hover background color for subdued forest-green surfaces."
         }
       },
       "outline": {
         "text": {
           "$type": "color",
-          "$value": "{lime.600}",
-          "$description": "Standard text color for lime surfaces with balanced readability."
+          "$value": "{forest.600}",
+          "$description": "Standard text color for forest-green surfaces with balanced readability."
         },
         "bg": {
           "$type": "color",
-          "$value": "{lime.50}",
-          "$description": "Base background color for lime surfaces in default states."
+          "$value": "{forest.50}",
+          "$description": "Base background color for forest-green surfaces in default states."
         },
         "border": {
           "$type": "color",
-          "$value": "{lime.400}",
-          "$description": "Border color for standard lime boundaries."
+          "$value": "{forest.400}",
+          "$description": "Border color for standard forest-green boundaries."
         },
         "bg-hover": {
           "$type": "color",
-          "$value": "{lime.50}",
-          "$description": "Hover background color for lime surfaces."
+          "$value": "{forest.50}",
+          "$description": "Hover background color for forest-green surfaces."
         }
       }
     },
@@ -1203,7 +1203,7 @@
           }
         },
         "$type": "color",
-        "$value": "{lime.200}",
+        "$value": "{forest.200}",
         "$description": "Green background highlighting newly added code lines while maintaining readability."
       },
       "add-lineNumber": {
@@ -1217,7 +1217,7 @@
           }
         },
         "$type": "color",
-        "$value": "{lime.200}",
+        "$value": "{forest.200}",
         "$description": "Background for line numbers of added code, providing visual connection to added content."
       },
       "add-content-highlight": {
@@ -1231,7 +1231,7 @@
           }
         },
         "$type": "color",
-        "$value": "{lime.200}",
+        "$value": "{forest.200}",
         "$description": "Stronger emphasis color for specific character changes within added lines."
       },
       "add-widget": {
@@ -3048,7 +3048,7 @@
   "icon": {
     "devops": {
       "$type": "color",
-      "$value": "{lime.500}",
+      "$value": "{forest.500}",
       "$description": "Brand color for DevOps category icons. Creates visual categorization."
     },
     "testing": {

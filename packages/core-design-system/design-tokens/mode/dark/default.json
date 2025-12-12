@@ -848,56 +848,56 @@
         }
       }
     },
-    "lime": {
+    "forest-green": {
       "primary": {
         "text": {
           "$type": "color",
-          "$value": "{lime.1000}",
-          "$description": "Text color for high-contrast lime surfaces."
+          "$value": "{forest.1000}",
+          "$description": "Text color for high-contrast forest-green surfaces."
         },
         "bg": {
           "$type": "color",
-          "$value": "{lime.200}",
-          "$description": "Background color for prominent lime surfaces."
+          "$value": "{forest.200}",
+          "$description": "Background color for prominent forest-green surfaces."
         }
       },
       "secondary": {
         "text": {
           "$type": "color",
-          "$value": "{lime.150}",
-          "$description": "Text color for subtle lime surfaces with good contrast."
+          "$value": "{forest.150}",
+          "$description": "Text color for subtle forest-green surfaces with good contrast."
         },
         "bg": {
           "$type": "color",
-          "$value": "{lime.950}",
-          "$description": "Background color for subdued lime surfaces."
+          "$value": "{forest.950}",
+          "$description": "Background color for subdued forest-green surfaces."
         },
         "bg-hover": {
           "$type": "color",
-          "$value": "{lime.900}",
-          "$description": "Hover background color for subdued lime surfaces."
+          "$value": "{forest.900}",
+          "$description": "Hover background color for subdued forest-green surfaces."
         }
       },
       "outline": {
         "text": {
           "$type": "color",
-          "$value": "{lime.150}",
-          "$description": "Standard text color for lime surfaces with balanced readability."
+          "$value": "{forest.150}",
+          "$description": "Standard text color for forest-green surfaces with balanced readability."
         },
         "bg": {
           "$type": "color",
-          "$value": "{lime.1000}",
-          "$description": "Base background color for lime surfaces in default states."
+          "$value": "{forest.1000}",
+          "$description": "Base background color for forest-green surfaces in default states."
         },
         "border": {
           "$type": "color",
-          "$value": "{lime.900}",
-          "$description": "Border color for standard lime boundaries."
+          "$value": "{forest.900}",
+          "$description": "Border color for standard forest-green boundaries."
         },
         "bg-hover": {
           "$type": "color",
-          "$value": "{lime.950}",
-          "$description": "Hover background color for lime surfaces."
+          "$value": "{forest.950}",
+          "$description": "Hover background color for forest-green surfaces."
         }
       }
     },

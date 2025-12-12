@@ -27,6 +27,9 @@ export const typography = {
     '&-body-code': {
       font: 'var(--cn-body-code)'
     },
+    '&-body-single-line-code': {
+      font: 'var(--cn-body-single-line-code)'
+    },
     '&-caption-normal': {
       font: 'var(--cn-caption-normal)'
     },

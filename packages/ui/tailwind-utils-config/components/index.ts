@@ -34,6 +34,7 @@ import shortcutStyle from './shortcut'
 import sidebarStyles from './sidebar'
 import skeletonStyles from './skeleton'
 import stackedListStyles from './stacked-list'
+import studioCardStyles from './studio-card'
 import switchStyles from './switch'
 import tableV2Styles from './table-v2'
 import tabsStyles from './tabs'
@@ -82,6 +83,7 @@ export const ComponentStyles = [
   promptInputStyles,
   skeletonStyles,
   stackedListStyles,
+  studioCardStyles,
   treeStyles,
   meterStyles,
   messageBubbleStyles,

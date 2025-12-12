@@ -84,6 +84,7 @@ export * from './stats-panel'
 export * from './widgets'
 export * from './shortcut'
 export * from './stacked-list'
+export * from './studio-card/studio-card'
 
 export * as NodeGroup from './node-group'
 export * as ListActions from './list-actions'

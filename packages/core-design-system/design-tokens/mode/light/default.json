@@ -76,7 +76,7 @@
     },
     "2": {
       "$type": "color",
-      "$value": "{gray.150}",
+      "$value": "{gray.200}",
       "$description": "Default border color for general UI elements. Provides balanced visual separation without overwhelming the interface. Optimized for readability and visual hierarchy.\n\nCommon uses: Card borders, form field outlines, table borders, content dividers, modal boundaries, section separators."
     },
     "3": {
@@ -286,7 +286,7 @@
         },
         "bg": {
           "$type": "color",
-          "$value": "{gray.50}",
+          "$value": "{gray.25}",
           "$description": "Base background color for gray surfaces in default states."
         },
         "border": {
@@ -296,12 +296,12 @@
         },
         "bg-hover": {
           "$type": "color",
-          "$value": "{gray.100}",
+          "$value": "{gray.50}",
           "$description": "Hover state background color for interactive gray surfaces."
         },
         "bg-selected": {
           "$type": "color",
-          "$value": "{gray.100}",
+          "$value": "{gray.50}",
           "$description": "Selected state background color for active gray items."
         }
       }
@@ -310,71 +310,71 @@
       "primary": {
         "text": {
           "$type": "color",
-          "$value": "{green.950}",
+          "$value": "{pure.white}",
           "$description": "Text color for high-contrast green surfaces."
         },
         "bg": {
           "$type": "color",
-          "$value": "{green.200}",
+          "$value": "{forest.700}",
           "$description": "Background color for prominent green surfaces."
         },
         "bg-hover": {
           "$type": "color",
-          "$value": "{green.300}",
+          "$value": "{forest.800}",
           "$description": "Background color for prominent green surfaces."
         },
         "bg-selected": {
           "$type": "color",
-          "$value": "{green.300}",
+          "$value": "{forest.800}",
           "$description": "Background color for prominent green surfaces."
         }
       },
       "secondary": {
         "text": {
           "$type": "color",
-          "$value": "{green.800}",
+          "$value": "{forest.800}",
           "$description": "Text color for subtle green surfaces with good contrast."
         },
         "bg": {
           "$type": "color",
-          "$value": "{green.50}",
+          "$value": "{forest.100}",
           "$description": "Background color for subdued green surfaces."
         },
         "bg-hover": {
           "$type": "color",
-          "$value": "{green.100}",
+          "$value": "{forest.150}",
           "$description": "Background color for subdued green surfaces."
         },
         "bg-selected": {
           "$type": "color",
-          "$value": "{green.100}",
+          "$value": "{forest.150}",
           "$description": "Background color for subdued green surfaces."
         }
       },
       "outline": {
         "text": {
           "$type": "color",
-          "$value": "{green.700}",
+          "$value": "{forest.700}",
           "$description": "Standard text color for green surfaces with balanced readability."
         },
         "bg": {
           "$type": "color",
-          "$value": "{green.25}",
+          "$value": "{forest.25}",
           "$description": "Base background color for green surfaces in default states."
         },
         "border": {
           "$type": "color",
-          "$value": "{green.150}",
+          "$value": "{forest.300}",
           "$description": "Border color for standard green boundaries."
         },
         "bg-hover": {
           "$type": "color",
-          "$value": "{green.50}",
+          "$value": "{forest.50}",
           "$description": "Hover state background color for interactive green surfaces."
         },
         "bg-selected": {
           "$type": "color",
-          "$value": "{green.50}",
+          "$value": "{forest.50}",
           "$description": "Selected state background color for active green items."
         }
       }
@@ -383,29 +383,29 @@
       "primary": {
         "text": {
           "$type": "color",
-          "$value": "{pure.black}",
+          "$value": "{pure.white}",
           "$description": "Text color for high-contrast red surfaces."
         },
         "bg": {
           "$type": "color",
-          "$value": "{red.500}",
+          "$value": "{red.700}",
           "$description": "Background color for prominent red surfaces."
         },
         "bg-hover": {
           "$type": "color",
-          "$value": "{red.600}",
+          "$value": "{red.800}",
           "$description": "Background color for prominent red surfaces."
         },
         "bg-selected": {
           "$type": "color",
-          "$value": "{red.600}",
+          "$value": "{red.800}",
           "$description": "Background color for prominent red surfaces."
         }
       },
       "secondary": {
         "text": {
           "$type": "color",
-          "$value": "{red.700}",
+          "$value": "{red.800}",
           "$description": "Text color for subtle red surfaces with good contrast."
         },
         "bg": {
@@ -437,7 +437,7 @@
         },
         "border": {
           "$type": "color",
-          "$value": "{red.200}",
+          "$value": "{red.400}",
           "$description": "Border color for standard red boundaries."
         },
         "bg-hover": {
@@ -461,17 +461,17 @@
         },
         "bg": {
           "$type": "color",
-          "$value": "{yellow.300}",
+          "$value": "{yellow.400}",
           "$description": "Background color for prominent yellow surfaces."
         },
         "bg-hover": {
           "$type": "color",
-          "$value": "{yellow.400}",
+          "$value": "{yellow.500}",
           "$description": "Hover state background color for interactive primary warning surfaces."
         },
         "bg-selected": {
           "$type": "color",
-          "$value": "{yellow.400}",
+          "$value": "{yellow.500}",
           "$description": "Selected state background color for active primary warning items."
         }
       },
@@ -510,7 +510,7 @@
         },
         "border": {
           "$type": "color",
-          "$value": "{yellow.200}",
+          "$value": "{yellow.300}",
           "$description": "Border color for standard yellow boundaries."
         },
         "bg-hover": {
@@ -534,17 +534,17 @@
         },
         "bg": {
           "$type": "color",
-          "$value": "{blue.400}",
+          "$value": "{blue.500}",
           "$description": "Background color for prominent blue surfaces."
         },
         "bg-hover": {
           "$type": "color",
-          "$value": "{blue.500}",
+          "$value": "{blue.600}",
           "$description": "Hover state background color for interactive primary blue surfaces."
         },
         "bg-selected": {
           "$type": "color",
-          "$value": "{blue.500}",
+          "$value": "{blue.600}",
           "$description": "Selected state background color for active primary blue items."
         }
       },
@@ -556,17 +556,17 @@
         },
         "bg": {
           "$type": "color",
-          "$value": "{blue.100}",
+          "$value": "{blue.150}",
           "$description": "Background color for subdued blue surfaces."
         },
         "bg-hover": {
           "$type": "color",
-          "$value": "{blue.150}",
+          "$value": "{blue.200}",
           "$description": "Hover background color for subdued blue surfaces."
         },
         "bg-selected": {
           "$type": "color",
-          "$value": "{blue.150}",
+          "$value": "{blue.200}",
           "$description": "Selected state background color for active secondary blue items."
         }
       },
@@ -583,7 +583,7 @@
         },
         "border": {
           "$type": "color",
-          "$value": "{blue.200}",
+          "$value": "{blue.300}",
           "$description": "Border color for standard blue boundaries."
         },
         "bg-hover": {
@@ -602,22 +602,22 @@
       "primary": {
         "text": {
           "$type": "color",
-          "$value": "{purple.1000}",
+          "$value": "{pure.white}",
           "$description": "Text color for high-contrast purple surfaces."
         },
         "bg": {
           "$type": "color",
-          "$value": "{purple.500}",
+          "$value": "{purple.700}",
           "$description": "Background color for prominent purple surfaces."
         },
         "bg-hover": {
           "$type": "color",
-          "$value": "{purple.600}",
+          "$value": "{purple.800}",
           "$description": "Hover state background color for interactive primary purple surfaces."
         },
         "bg-selected": {
           "$type": "color",
-          "$value": "{purple.600}",
+          "$value": "{purple.800}",
           "$description": "Selected state background color for active primary purple items."
         }
       },
@@ -656,7 +656,7 @@
         },
         "border": {
           "$type": "color",
-          "$value": "{purple.200}",
+          "$value": "{purple.400}",
           "$description": "Border color for standard purple boundaries."
         },
         "bg-hover": {
@@ -719,7 +719,7 @@
         },
         "border": {
           "$type": "color",
-          "$value": "{brown.200}",
+          "$value": "{brown.300}",
           "$description": "Border color for standard brown boundaries."
         },
         "bg-hover": {
@@ -733,7 +733,7 @@
       "primary": {
         "text": {
           "$type": "color",
-          "$value": "{cyan.1000}",
+          "$value": "{pure.black}",
           "$description": "Text color for high-contrast cyan surfaces."
         },
         "bg": {
@@ -755,12 +755,12 @@
         },
         "bg": {
           "$type": "color",
-          "$value": "{cyan.50}",
+          "$value": "{cyan.100}",
           "$description": "Background color for subdued cyan surfaces."
         },
         "bg-hover": {
           "$type": "color",
-          "$value": "{cyan.100}",
+          "$value": "{cyan.150}",
           "$description": "Hover background color for subdued cyan surfaces."
         }
       },
@@ -777,7 +777,7 @@
         },
         "border": {
           "$type": "color",
-          "$value": "{cyan.150}",
+          "$value": "{cyan.200}",
           "$description": "Border color for standard cyan boundaries."
         },
         "bg-hover": {
@@ -818,12 +818,12 @@
         },
         "bg": {
           "$type": "color",
-          "$value": "{indigo.100}",
+          "$value": "{indigo.150}",
           "$description": "Background color for subdued indigo surfaces."
         },
         "bg-hover": {
           "$type": "color",
-          "$value": "{indigo.150}",
+          "$value": "{indigo.200}",
           "$description": "Hover background color for subdued indigo surfaces."
         }
       },
@@ -840,7 +840,7 @@
         },
         "border": {
           "$type": "color",
-          "$value": "{indigo.200}",
+          "$value": "{indigo.300}",
           "$description": "Border color for standard indigo boundaries."
         },
         "bg-hover": {
@@ -850,61 +850,61 @@
         }
       }
     },
-    "lime": {
+    "forest-green": {
       "primary": {
         "text": {
           "$type": "color",
           "$value": "{pure.black}",
-          "$description": "Text color for high-contrast lime surfaces."
+          "$description": "Text color for high-contrast forest-green surfaces."
         },
         "bg": {
           "$type": "color",
-          "$value": "{lime.300}",
-          "$description": "Background color for prominent lime surfaces."
+          "$value": "{forest.300}",
+          "$description": "Background color for prominent forest-green surfaces."
         },
         "bg-hover": {
           "$type": "color",
-          "$value": "{lime.500}",
-          "$description": "Hover background color for prominent lime surfaces."
+          "$value": "{forest.500}",
+          "$description": "Hover background color for prominent forest-green surfaces."
         }
       },
       "secondary": {
         "text": {
           "$type": "color",
-          "$value": "{lime.800}",
-          "$description": "Text color for subtle lime surfaces with good contrast."
+          "$value": "{forest.800}",
+          "$description": "Text color for subtle forest-green surfaces with good contrast."
         },
         "bg": {
           "$type": "color",
-          "$value": "{lime.50}",
-          "$description": "Background color for subdued lime surfaces."
+          "$value": "{forest.50}",
+          "$description": "Background color for subdued forest-green surfaces."
         },
         "bg-hover": {
           "$type": "color",
-          "$value": "{lime.100}",
-          "$description": "Hover background color for subdued lime surfaces."
+          "$value": "{forest.100}",
+          "$description": "Hover background color for subdued forest-green surfaces."
         }
       },
       "outline": {
         "text": {
           "$type": "color",
-          "$value": "{lime.700}",
-          "$description": "Standard text color for lime surfaces with balanced readability."
+          "$value": "{forest.700}",
+          "$description": "Standard text color for forest-green surfaces with balanced readability."
         },
         "bg": {
           "$type": "color",
-          "$value": "{lime.25}",
-          "$description": "Base background color for lime surfaces in default states."
+          "$value": "{forest.25}",
+          "$description": "Base background color for forest-green surfaces in default states."
         },
         "border": {
           "$type": "color",
-          "$value": "{lime.150}",
-          "$description": "Border color for standard lime boundaries."
+          "$value": "{forest.150}",
+          "$description": "Border color for standard forest-green boundaries."
         },
         "bg-hover": {
           "$type": "color",
-          "$value": "{lime.50}",
-          "$description": "Hover background color for lime surfaces."
+          "$value": "{forest.50}",
+          "$description": "Hover background color for forest-green surfaces."
         }
       }
     },
@@ -1014,7 +1014,7 @@
         },
         "border": {
           "$type": "color",
-          "$value": "{orange.200}",
+          "$value": "{orange.300}",
           "$description": "Border color for standard orange boundaries."
         },
         "bg-hover": {
@@ -1729,12 +1729,12 @@
       "danger": {
         "bg": {
           "$type": "color",
-          "$value": "{red.150}",
+          "$value": "{red.200}",
           "$description": "Background color for danger toast notifications. Provides visual context for error and critical messages."
         },
         "border": {
           "$type": "color",
-          "$value": "{red.300}",
+          "$value": "{red.500}",
           "$description": "Border color for danger toast notifications. Creates definition and emphasis for critical messages."
         },
         "text": {

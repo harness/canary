@@ -1375,7 +1375,7 @@
       },
       "hljs-string": {
         "$type": "color",
-        "$value": "{green.700}",
+        "$value": "{forest.700}",
         "$description": "Color for string literals in syntax highlighting. Distinguishes text content and string values from other code elements."
       },
       "hljs-title-function": {

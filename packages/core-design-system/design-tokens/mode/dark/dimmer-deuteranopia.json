@@ -1366,7 +1366,7 @@
       },
       "hljs-string": {
         "$type": "color",
-        "$value": "{green.100}",
+        "$value": "{forest.100}",
         "$description": "Color for string literals in syntax highlighting. Distinguishes text content and string values from other code elements."
       },
       "hljs-title-function": {
@@ -2186,8 +2186,6 @@
       },
       "glow": {
         "stop-1": {
-          "$type": "color",
-          "$value": "{cyan.700}",
           "$extensions": {
             "studio.tokens": {
               "modify": {
@@ -2197,6 +2195,8 @@
               }
             }
           },
+          "$type": "color",
+          "$value": "{cyan.700}",
           "$description": "First gradient stop for AI glow effects."
         },
         "stop-2": {

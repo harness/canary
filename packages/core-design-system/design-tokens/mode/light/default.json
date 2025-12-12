@@ -1844,12 +1844,12 @@
   "logo": {
     "text": {
       "$type": "color",
-      "$value": "{gray.950}",
+      "$value": "{gray.1000}",
       "$description": "Text color for Logo in sidebar navigation."
     },
     "icon": {
       "$type": "color",
-      "$value": "{cyan.400}",
+      "$value": "{blue.600}",
       "$description": "Icon color for Logo in sidebar navigation."
     }
   },

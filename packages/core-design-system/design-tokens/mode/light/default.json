@@ -2,7 +2,7 @@
   "bg": {
     "0": {
       "$type": "color",
-      "$value": "{gray.50}",
+      "$value": "{gray.25}",
       "$description": "Level 0 background - Foundational surface layer. Used for page navigation areas and as a container for elevated content (insets). Creates the base canvas that other elements sit upon.\n\nCommon uses: Page headers, navigation bars, sidebar backgrounds, main content containers."
     },
     "1": {

@@ -1,0 +1,353 @@
+import { StreamAdapter, StreamChunk, StreamRequest } from '../../../src'
+
+let messageIdCounter = 0
+let threadIdCounter = 0
+
+export function generateMessageId(): string {
+  return `msg-${Date.now()}-${++messageIdCounter}`
+}
+
+export function generateThreadId(): string {
+  return `thread-${Date.now()}-${++threadIdCounter}`
+}
+
+export function generateId(prefix = 'id'): string {
+  return `${prefix}-${Date.now()}-${Math.random().toString(36).substring(2, 9)}`
+}
+
+export class MockStreamAdapter implements StreamAdapter {
+  async *stream(request: StreamRequest): AsyncIterable<StreamChunk> {
+    const { signal } = request
+
+    await this.delay(500)
+
+    if (signal?.aborted) return
+
+    yield {
+      event: {
+        type: 'model_usage',
+        data: {}
+      }
+    }
+
+    await this.delay(200)
+    if (signal?.aborted) return
+
+    yield {
+      event: {
+        type: 'part-start',
+        part: {
+          id: '8d46ad1c-d445-4c94-beb8-abe102aa6870',
+          type: 'assistant_thought',
+          sequence: 1,
+          timestamp: '2025-12-03T21:55:01.455238Z'
+        }
+      }
+    }
+
+    await this.delay(200)
+    if (signal?.aborted) return
+
+    yield {
+      event: {
+        type: 'assistant_thought',
+        delta: "I'll create a simple wait pipeline for you using the AI DevOps agent."
+      }
+    }
+
+    await this.delay(300)
+    if (signal?.aborted) return
+
+    yield {
+      event: {
+        type: 'assistant_tool_request',
+        data: {
+          v: [
+            {
+              name: 'ask_ai_devops_agent',
+              id: 'toolu_01UNC25ReCH63yCDygWkVQHz',
+              arguments: {
+                action: 'CREATE_PIPELINE',
+                prompt: 'Create a simple wait pipeline with a wait step that waits for 30 seconds',
+                org_id: 'org_id',
+                project_id: 'proj_id'
+              }
+            }
+          ]
+        }
+      }
+    }
+
+    await this.delay(300)
+    if (signal?.aborted) return
+
+    yield {
+      event: {
+        type: 'assistant_thought',
+        delta:
+          'I am creating a simple pipeline with a single Custom stage that contains a Wait step configured to wait for 30 seconds.'
+      }
+    }
+
+    await this.delay(200)
+    if (signal?.aborted) return
+
+    yield {
+      event: {
+        type: 'partial_yaml_created',
+        data: {
+          yaml: 'pipeline:\n name: Wait Pipeline\n identifier: wait_pipeline\n stages:\n - wait_stage\n',
+          type: 'pipeline',
+          id: 'wait_pipeline'
+        }
+      }
+    }
+
+    await this.delay(300)
+    if (signal?.aborted) return
+
+    yield {
+      event: {
+        type: 'assistant_thought',
+        delta: 'I am creating a Custom stage with a single Wait step that pauses execution for 30 seconds.'
+      }
+    }
+
+    await this.delay(200)
+    if (signal?.aborted) return
+
+    yield {
+      event: {
+        type: 'partial_yaml_created',
+        data: {
+          yaml: 'stage:\n name: Wait Stage\n identifier: wait_stage\n type: Custom\n spec:\n execution:\n steps:\n - wait_step\n rollbackSteps: []\n',
+          type: 'stage',
+          id: 'wait_stage',
+          parent_id: 'wait_pipeline'
+        }
+      }
+    }
+
+    await this.delay(300)
+    if (signal?.aborted) return
+
+    yield {
+      event: {
+        type: 'assistant_thought',
+        delta: 'Creating a Wait step that pauses pipeline execution for 30 seconds before proceeding to the next step.'
+      }
+    }
+
+    await this.delay(200)
+    if (signal?.aborted) return
+
+    yield {
+      event: {
+        type: 'partial_yaml_created',
+        data: {
+          yaml: 'step:\n identifier: wait_step\n name: Wait Step\n type: Wait\n spec:\n duration: 30s\n timeout: 10m\n',
+          type: 'step',
+          id: 'wait_step',
+          parent_id: 'wait_stage'
+        }
+      }
+    }
+
+    await this.delay(200)
+    if (signal?.aborted) return
+
+    yield {
+      event: {
+        type: 'part-end',
+        data: {
+          id: '8d46ad1c-d445-4c94-beb8-abe102aa6870'
+        }
+      }
+    }
+
+    await this.delay(300)
+    if (signal?.aborted) return
+
+    yield {
+      event: {
+        type: 'final_yaml_created',
+        data: {
+          actions: ['REGENERATE', 'ACCEPT'],
+          entity_info: {
+            account_identifier: 'kmpy',
+            entity_type: 'pipeline',
+            identifier: 'wait_pipeline',
+            org_identifier: 'org_id',
+            project_identifier: 'proj_id',
+            request_action: 'CREATE_PIPELINE'
+          },
+          type: 'pipeline',
+          yaml: "pipeline:\n name: Wait Pipeline\n identifier: wait_pipeline\n stages:\n - stage:\n name: Wait Stage\n identifier: wait_stage\n type: Custom\n spec:\n execution:\n steps:\n - step:\n identifier: wait_step\n name: Wait Step\n type: Wait\n spec:\n duration: 30s\n timeout: 10m\n rollbackSteps: []\n description: This pipeline was generated by Harness AI on 2025-12-03 21:55:19 UTC.\n tags:\n ai_generated: 'true'\n"
+        }
+      }
+    }
+
+    await this.delay(200)
+    if (signal?.aborted) return
+
+    yield {
+      event: {
+        type: 'model_usage',
+        data: {
+          'claude-3-7-sonnet-20250219': {
+            count: 3,
+            prompt_tokens: 50602,
+            completion_tokens: 423
+          }
+        }
+      }
+    }
+
+    await this.delay(300)
+    if (signal?.aborted) return
+
+    yield {
+      event: {
+        type: 'assistant_tool_result',
+        data: {
+          v: [
+            {
+              name: 'ask_ai_devops_agent',
+              content:
+                '{"conversation_id":"91f14298-c63e-4ef3-9a6a-2acd9d6ad950","conversation_raw":"","response":"NOTE TO AGENT: The SSE events below have already been streamed to the end user in real-time.\\nDo not repeat the full content of these events in your response.\\nFocus on summarizing key outcomes and providing additional context or next steps.\\n---\\n\\n: ping\\n\\nevent: assistant_message\\ndata: {\\"v\\":\\"I am creating a simple pipeline with a single Custom stage that contains a Wait step configured to wait for 30 seconds.\\"}\\n\\nevent: partial_yaml_created\\ndata: {\\"yaml\\":\\"pipeline:\\\\n name: Wait Pipeline\\\\n identifier: wait_pipeline\\\\n stages:\\\\n - wait_stage\\\\n\\",\\"type\\":\\"pipeline\\",\\"id\\":\\"wait_pipeline\\"}\\n\\nevent: assistant_message\\ndata: {\\"v\\":\\"I am creating a Custom stage with a single Wait step that pauses execution for 30 seconds.\\"}\\n\\nevent: partial_yaml_created\\ndata: {\\"yaml\\":\\"stage:\\\\n name: Wait Stage\\\\n identifier: wait_stage\\\\n type: Custom\\\\n spec:\\\\n execution:\\\\n steps:\\\\n - wait_step\\\\n rollbackSteps: []\\\\n\\",\\"type\\":\\"stage\\",\\"id\\":\\"wait_stage\\",\\"parent_id\\":\\"wait_pipeline\\"}\\n\\nevent: assistant_message\\ndata: {\\"v\\":\\"Creating a Wait step that pauses pipeline execution for 30 seconds before proceeding to the next step.\\"}\\n\\nevent: partial_yaml_created\\ndata: {\\"yaml\\":\\"step:\\\\n identifier: wait_step\\\\n name: Wait Step\\\\n type: Wait\\\\n spec:\\\\n duration: 30s\\\\n timeout: 10m\\\\n\\",\\"type\\":\\"step\\",\\"id\\":\\"wait_step\\",\\"parent_id\\":\\"wait_stage\\"}\\n\\nevent: final_yaml_created\\ndata: {\\"actions\\":[\\"REGENERATE\\",\\"ACCEPT\\"],\\"entity_info\\":{\\"account_identifier\\":\\"kmpy\\",\\"entity_type\\":\\"pipeline\\",\\"identifier\\":\\"wait_pipeline\\",\\"org_identifier\\":\\"org_id\\",\\"project_identifier\\":\\"proj_id\\",\\"request_action\\":\\"CREATE_PIPELINE\\"},\\"type\\":\\"pipeline\\",\\"yaml\\":\\"pipeline:\\\\n name: Wait Pipeline\\\\n identifier: wait_pipeline\\\\n stages:\\\\n - stage:\\\\n name: Wait Stage\\\\n identifier: wait_stage\\\\n type: Custom\\\\n spec:\\\\n execution:\\\\n steps:\\\\n - step:\\\\n identifier: wait_step\\\\n name: Wait Step\\\\n type: Wait\\\\n spec:\\\\n duration: 30s\\\\n timeout: 10m\\\\n rollbackSteps: []\\\\n description: This pipeline was generated by Harness AI on 2025-12-03 21:55:19 UTC.\\\\n tags:\\\\n ai_generated: \'true\'\\\\n\\"}\\n\\nevent: model_usage\\ndata: {\\"claude-3-7-sonnet-20250219\\":{\\"count\\":3,\\"prompt_tokens\\":50602,\\"completion_tokens\\":423}}\\n\\nevent: error\\ndata: eof\\n\\n"}',
+              call_id: 'toolu_01UNC25ReCH63yCDygWkVQHz',
+              is_error: false
+            }
+          ]
+        }
+      }
+    }
+
+    await this.delay(200)
+    if (signal?.aborted) return
+
+    yield {
+      event: {
+        type: 'part-start',
+        part: {
+          type: 'text'
+        }
+      }
+    }
+
+    await this.delay(200)
+    if (signal?.aborted) return
+
+    const textChunks = [
+      "Perfect! I've successfully created a simple wait pipeline for you. ",
+      'Let me navigate you to the pipeline editor to view it.\n\n',
+      'Pipeline Overview:\n',
+      '- Name: Wait Pipeline\n',
+      '- Identifier: wait_pipeline\n',
+      '- Type: Custom stage pipeline\n\n',
+      'Pipeline Structure:\n',
+      '- Stage: Wait Stage (Custom type)\n',
+      '- Step: Wait Step that pauses execution for 30 seconds\n',
+      '- Timeout: 10 minutes (safety timeout for the step)\n\n'
+    ]
+
+    for (const chunk of textChunks) {
+      yield {
+        event: {
+          type: 'text-delta',
+          delta: chunk
+        }
+      }
+      await this.delay(100)
+      if (signal?.aborted) return
+    }
+
+    await this.delay(200)
+    if (signal?.aborted) return
+
+    yield {
+      event: {
+        type: 'part-finish'
+      }
+    }
+
+    await this.delay(300)
+    if (signal?.aborted) return
+
+    yield {
+      event: {
+        type: 'capability_execution',
+        capabilityName: 'navigate',
+        capabilityId: generateId('cap'),
+        args: {
+          title: 'Wait Pipeline Editor'
+        },
+        strategy: 'queue'
+      }
+    }
+
+    await this.delay(500)
+    if (signal?.aborted) return
+
+    yield {
+      event: {
+        type: 'part-start',
+        part: {
+          type: 'text'
+        }
+      }
+    }
+
+    await this.delay(200)
+    if (signal?.aborted) return
+
+    const finalChunks = [
+      'The pipeline is now ready and includes:\n',
+      '- A single Custom stage containing one Wait step\n',
+      '- The Wait step is configured to pause for 30 seconds\n',
+      '- Automatic AI generation tags and description\n',
+      '- Proper timeout configuration to prevent hanging\n\n',
+      "You can now accept this pipeline configuration to save it to your Harness project, or regenerate it if you'd like any modifications."
+    ]
+
+    for (const chunk of finalChunks) {
+      yield {
+        event: {
+          type: 'text-delta',
+          delta: chunk
+        }
+      }
+      await this.delay(100)
+      if (signal?.aborted) return
+    }
+
+    await this.delay(200)
+    if (signal?.aborted) return
+
+    yield {
+      event: {
+        type: 'part-finish'
+      }
+    }
+
+    await this.delay(200)
+    if (signal?.aborted) return
+
+    yield {
+      event: {
+        type: 'model_usage',
+        data: {
+          'claude-sonnet-4-20250514': {
+            count: 2,
+            prompt_tokens: 182308,
+            completion_tokens: 334
+          }
+        }
+      }
+    }
+  }
+
+  private delay(ms: number): Promise<void> {
+    return new Promise(resolve => setTimeout(resolve, ms))
+  }
+}

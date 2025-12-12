@@ -1,0 +1,10 @@
+{
+  "pipeline": {
+    "card": {
+      "running-blur": {
+        "$type": "dimension",
+        "$value": "20px"
+      }
+    }
+  }
+}

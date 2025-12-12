@@ -27,6 +27,7 @@ const SandboxRepoListPage: FC<RepoListPageProps> = ({
   toImportRepo,
   toImportMultipleRepos,
   onFavoriteToggle,
+  onCancelImport,
   onFilterChange,
   onSortChange,
   scope,
@@ -244,7 +245,9 @@ const SandboxRepoListPage: FC<RepoListPageProps> = ({
           isLoading={isLoading}
           toCreateRepo={toCreateRepo}
           toImportRepo={toImportRepo}
+          toImportMultipleRepos={toImportMultipleRepos}
           onFavoriteToggle={onFavoriteToggle}
+          onCancelImport={onCancelImport}
           scope={scope}
           showScope={showScope}
           {...routingProps}

@@ -22,6 +22,7 @@ export interface RepoStore {
 
 export interface RoutingProps {
   onClickRepo: (repo: RepositoryType) => void
+  onCancelImport: (repoId: string) => void
   toCreateRepo: () => string
   toImportRepo: () => string
   toImportMultipleRepos: () => string

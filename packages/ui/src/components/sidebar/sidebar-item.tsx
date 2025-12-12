@@ -21,6 +21,7 @@ import {
 } from '@/components'
 import { NavLinkProps, useRouterContext } from '@/context'
 import { filterChildrenByDisplayNames } from '@/utils'
+import { SyntheticListenerMap } from '@dnd-kit/core/dist/hooks/utilities'
 import { cn } from '@utils/cn'
 import omit from 'lodash-es/omit'
 
@@ -45,6 +46,11 @@ interface SidebarItemCommonProps extends ComponentPropsWithoutRef<'button'> {
   tooltip?: ReactNode
   active?: boolean
   actionButtons?: SidebarItemActionButtonPropsType[]
+  draggable?: boolean
+  dragAttributes?: React.HTMLAttributes<HTMLElement>
+  dragListeners?: SyntheticListenerMap
+  subMenuOpen?: boolean
+  onSubmenuChange?: (open: boolean) => void
 }
 
 interface SidebarItemWithChildrenProps extends SidebarItemCommonProps {
@@ -117,18 +123,30 @@ type SidebarItemAvatarProps = SidebarItemBaseProps & {
   icon?: never
 }
 
-type SidebarItemExtendedProps = SidebarItemIconProps | SidebarItemLogoProps | SidebarItemAvatarProps
+type SidebarItemExtendedProps = (SidebarItemIconProps | SidebarItemLogoProps | SidebarItemAvatarProps) &
+  SidebarItemHoverProps
+
+type SidebarItemHoverProps = {
+  onHoverIn?: (e: React.MouseEvent<HTMLElement>) => void
+  onHoverOut?: (e: React.MouseEvent<HTMLElement>) => void
+}
 
 type SidebarItemButtonProps = SidebarItemExtendedProps &
   Omit<ComponentPropsWithoutRef<'button'>, keyof SidebarItemExtendedProps>
 
 type SidebarItemLinkProps = SidebarItemExtendedProps & NavLinkProps
 
-export type SidebarItemProps = SidebarItemButtonProps | SidebarItemLinkProps
+type SidebarItemDivProps = SidebarItemExtendedProps &
+  Omit<ComponentPropsWithoutRef<'div'>, keyof SidebarItemExtendedProps> & {
+    clickable?: boolean
+  }
+
+export type SidebarItemProps = SidebarItemButtonProps | SidebarItemLinkProps | SidebarItemDivProps
 
 export interface SidebarItemComponent {
   (props: SidebarItemButtonProps): JSX.Element
   (props: SidebarItemLinkProps): JSX.Element
+  (props: SidebarItemDivProps): JSX.Element
   displayName?: string
 }
 
@@ -144,6 +162,10 @@ const isBadgeProps = (props?: string | SidebarBadgeProps): props is SidebarBadge
 type SidebarItemTriggerProps = SidebarItemProps & {
   submenuOpen?: boolean
   toggleSubmenu?: () => void
+  /**
+   * If false, the item will be rendered as a non-clickable div
+   */
+  clickable?: boolean
 }
 
 const SidebarItemTrigger = forwardRef<HTMLButtonElement | HTMLAnchorElement, SidebarItemTriggerProps>(
@@ -166,6 +188,10 @@ const SidebarItemTrigger = forwardRef<HTMLButtonElement | HTMLAnchorElement, Sid
       withRightIndicator,
       active,
       actionButtons,
+      clickable = true,
+      draggable,
+      dragAttributes,
+      dragListeners,
       ...restProps
     } = props
 
@@ -176,6 +202,7 @@ const SidebarItemTrigger = forwardRef<HTMLButtonElement | HTMLAnchorElement, Sid
     const withDropdownMenu = !!dropdownMenuContent
     const withActionButtons = !!actionButtons
     const withRightElement = withActionMenu || withDropdownMenu || !!badge || withSubmenu || withRightIndicator
+    const withDragHandle = !!draggable
 
     const badgeCommonProps: Pick<StatusBadgeProps, 'size' | 'theme' | 'className'> = {
       size: 'sm',
@@ -190,6 +217,7 @@ const SidebarItemTrigger = forwardRef<HTMLButtonElement | HTMLAnchorElement, Sid
     const itemProps = omit(restProps, ['icon', 'logo', 'avatarFallback', 'src', 'badgeProps'])
     const sidebarItemClassName = cn('cn-sidebar-item', className)
     const buttonRef = ref as Ref<HTMLButtonElement>
+    const divRef = ref as Ref<HTMLDivElement>
 
     const actionButtonsContent = useMemo(() => {
       if (!withActionButtons) return null
@@ -252,7 +280,7 @@ const SidebarItemTrigger = forwardRef<HTMLButtonElement | HTMLAnchorElement, Sid
           variant="body-single-line-normal"
           color={withDescription ? 'foreground-1' : 'foreground-2'}
           className="cn-sidebar-item-content-title"
-          wrap="wrap"
+          truncate
         >
           {title}
         </Text>
@@ -302,7 +330,13 @@ const SidebarItemTrigger = forwardRef<HTMLButtonElement | HTMLAnchorElement, Sid
     )
 
     return (
-      <div className="cn-sidebar-item-wrapper" data-disabled={itemProps.disabled} data-active={active}>
+      <div
+        className="cn-sidebar-item-wrapper"
+        data-disabled={itemProps.disabled}
+        data-active={active}
+        data-clickable={clickable}
+        data-draggable={withDragHandle}
+      >
         {isLink && (
           <>
             {!itemProps.disabled && (
@@ -312,11 +346,21 @@ const SidebarItemTrigger = forwardRef<HTMLButtonElement | HTMLAnchorElement, Sid
                 {...(itemProps as SidebarItemLinkProps)}
                 role="menuitem"
               >
+                {withDragHandle && (
+                  <div className="cn-sidebar-item-grip-handle left-cn-1xs" {...dragAttributes} {...dragListeners}>
+                    <IconV2 name="grip-dots" size="2xs" className="cn-sidebar-item-grip-icon" />
+                  </div>
+                )}
                 {renderContent()}
               </NavLink>
             )}
             {itemProps.disabled && (
               <div className={sidebarItemClassName} role="menuitem" aria-disabled={itemProps.disabled}>
+                {withDragHandle && (
+                  <div className="cn-sidebar-item-grip-handle left-cn-1xs" {...dragAttributes} {...dragListeners}>
+                    <IconV2 name="grip-dots" size="2xs" className="cn-sidebar-item-grip-icon" />
+                  </div>
+                )}
                 {renderContent()}
               </div>
             )}
@@ -326,6 +370,11 @@ const SidebarItemTrigger = forwardRef<HTMLButtonElement | HTMLAnchorElement, Sid
         {withDropdownMenu && (
           <DropdownMenu.Root>
             <DropdownMenu.Trigger ref={buttonRef} className={sidebarItemClassName} {...itemProps} role="menuitem">
+              {withDragHandle && (
+                <div className="cn-sidebar-item-grip-handle left-cn-1xs" {...dragAttributes} {...dragListeners}>
+                  <IconV2 name="grip-dots" size="2xs" className="cn-sidebar-item-grip-icon" />
+                </div>
+              )}
               {renderContent()}
             </DropdownMenu.Trigger>
             <DropdownMenu.Content side="right" align="end" sideOffset={3}>
@@ -334,11 +383,35 @@ const SidebarItemTrigger = forwardRef<HTMLButtonElement | HTMLAnchorElement, Sid
           </DropdownMenu.Root>
         )}
 
-        {!isLink && !withDropdownMenu && (
-          <button ref={buttonRef} className={sidebarItemClassName} {...itemProps} role="menuitem">
-            {renderContent()}
-          </button>
-        )}
+        {!isLink &&
+          !withDropdownMenu &&
+          (clickable ? (
+            <button ref={buttonRef} className={sidebarItemClassName} {...itemProps} role="menuitem">
+              {withDragHandle && (
+                <div className="cn-sidebar-item-grip-handle left-cn-1xs" {...dragAttributes} {...dragListeners}>
+                  <IconV2 name="grip-dots" size="2xs" className="cn-sidebar-item-grip-icon" />
+                </div>
+              )}
+              {renderContent()}
+            </button>
+          ) : (
+            <div
+              ref={divRef}
+              className={cn(
+                sidebarItemClassName,
+                active ? 'cn-sidebar-item-trigger-active' : 'cn-sidebar-item-trigger'
+              )}
+              onMouseEnter={props.onHoverIn}
+              onMouseLeave={props.onHoverIn}
+            >
+              {withDragHandle && (
+                <div className="cn-sidebar-item-grip-handle left-cn-1xs" {...dragAttributes} {...dragListeners}>
+                  <IconV2 name="grip-dots" size="2xs" className="cn-sidebar-item-grip-icon" />
+                </div>
+              )}
+              {renderContent()}
+            </div>
+          ))}
 
         {withActionMenu && (
           <DropdownMenu.Root>
@@ -357,74 +430,101 @@ const SidebarItemTrigger = forwardRef<HTMLButtonElement | HTMLAnchorElement, Sid
           </button>
         )}
 
-        <div className="absolute top-cn-sm h-3 w-0.5 cn-sidebar-item-active-indicator" />
+        <div className="absolute left-0 top-1/2 -translate-y-1/2 h-3 w-0.5 cn-sidebar-item-active-indicator" />
       </div>
     )
   }
 )
 SidebarItemTrigger.displayName = 'SidebarItemTrigger'
 
-export const SidebarItem = forwardRef<HTMLButtonElement | HTMLAnchorElement, SidebarItemProps>(({ ...props }, ref) => {
-  const { state } = useSidebar()
-  const [submenuOpen, setSubmenuOpen] = useState(props.defaultSubmenuOpen || false)
+export const SidebarItem = forwardRef<HTMLButtonElement | HTMLAnchorElement, SidebarItemProps>(
+  ({ subMenuOpen, defaultSubmenuOpen, onSubmenuChange, ...props }, ref) => {
+    const { state } = useSidebar()
 
-  const { title, tooltip } = props
+    // Is the component externally controlled?
+    const isControlled = subMenuOpen !== undefined
 
-  const withSubmenu = !!props.children
+    const [uncontrolledOpen, setUncontrolledOpen] = useState(defaultSubmenuOpen ?? false)
 
-  const toggleSubmenu = useCallback(() => setSubmenuOpen(prev => !prev), [])
+    const effectiveOpen = isControlled ? subMenuOpen! : uncontrolledOpen
 
-  useEffect(() => {
-    if (state === 'collapsed' && submenuOpen) {
-      setSubmenuOpen(false)
-    }
-  }, [state, submenuOpen])
-
-  const WrappedItemTrigger = () => {
-    if (tooltip) {
-      return (
-        <Tooltip side="right" align="center" content={tooltip}>
-          <SidebarItemTrigger ref={ref} {...props} toggleSubmenu={toggleSubmenu} submenuOpen={submenuOpen} />
-        </Tooltip>
-      )
-    }
-
-    if (state === 'collapsed') {
-      return (
-        <Tooltip side="right" align="center" content={title}>
-          <SidebarItemTrigger ref={ref} {...props} toggleSubmenu={toggleSubmenu} submenuOpen={submenuOpen} />
-        </Tooltip>
-      )
-    }
-
-    return <SidebarItemTrigger ref={ref} {...props} toggleSubmenu={toggleSubmenu} submenuOpen={submenuOpen} />
-  }
-
-  if (withSubmenu) {
-    const filteredChildren = submenuOpen
-      ? filterChildrenByDisplayNames(props.children, [SUBMENU_ITEM_DISPLAY_NAME])
-      : []
-    const rowsCount = filteredChildren.length + 1
-
-    return (
-      <div className="contents">
-        <WrappedItemTrigger />
-        <Layout.Grid
-          className="cn-sidebar-submenu-group"
-          role="group"
-          columns="auto 1fr"
-          data-state={submenuOpen ? 'open' : 'closed'}
-          style={{ ...(submenuOpen ? { maxHeight: `${rowsCount * 40}px` } : { maxHeight: '0px', padding: 0 }) }}
-        >
-          <Separator orientation="vertical" style={{ gridRow: `1 / ${rowsCount}` }} />
-          {filteredChildren}
-        </Layout.Grid>
-      </div>
+    const setOpen = useCallback(
+      (next: boolean) => {
+        if (isControlled) {
+          onSubmenuChange?.(next)
+        } else {
+          setUncontrolledOpen(next)
+        }
+      },
+      [isControlled, onSubmenuChange]
     )
-  }
 
-  return <WrappedItemTrigger />
-}) as SidebarItemComponent
+    const toggleSubmenu = useCallback(() => setOpen(!effectiveOpen), [setOpen, effectiveOpen])
+
+    // Close automatically if sidebar collapses
+    useEffect(() => {
+      if (state === 'collapsed' && effectiveOpen) {
+        setOpen(false)
+      }
+    }, [state, effectiveOpen, setOpen])
+
+    // Wrap trigger with tooltip logic
+    const WrappedItemTrigger = () => {
+      const trigger = (
+        <SidebarItemTrigger ref={ref} {...props} toggleSubmenu={toggleSubmenu} submenuOpen={effectiveOpen} />
+      )
+
+      // Prefer explicit tooltip first
+      if (props.tooltip) {
+        return (
+          <Tooltip side="right" align="center" content={props.tooltip}>
+            {trigger}
+          </Tooltip>
+        )
+      }
+
+      // Fallback tooltip when collapsed
+      if (state === 'collapsed') {
+        return (
+          <Tooltip side="right" align="center" content={props.title}>
+            {trigger}
+          </Tooltip>
+        )
+      }
+
+      return trigger
+    }
+
+    const withSubmenu = !!props.children
+
+    if (withSubmenu) {
+      const filteredChildren = effectiveOpen
+        ? filterChildrenByDisplayNames(props.children, [SUBMENU_ITEM_DISPLAY_NAME])
+        : []
+      const rowsCount = filteredChildren.length + 1
+
+      return (
+        <div className="contents">
+          <WrappedItemTrigger />
+          <Layout.Grid
+            className="cn-sidebar-submenu-group"
+            role="group"
+            columns="auto 1fr"
+            data-state={effectiveOpen ? 'open' : 'closed'}
+            style={{
+              ...(effectiveOpen ? { maxHeight: `${rowsCount * 40}px` } : { maxHeight: '0px', padding: 0 })
+            }}
+          >
+            <Separator orientation="vertical" style={{ gridRow: `1 / ${rowsCount}` }} />
+            {filteredChildren}
+          </Layout.Grid>
+        </div>
+      )
+    }
+
+    return <WrappedItemTrigger />
+  }
+) as SidebarItemComponent
 SidebarItem.displayName = 'SidebarItem'
 
 export const SidebarMenuSubItem = forwardRef<HTMLAnchorElement, NavLinkProps & { title: string; active?: boolean }>(

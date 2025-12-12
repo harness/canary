@@ -1,5 +1,6 @@
 import { NavbarItemType, Sidebar, SidebarItemProps } from '@/components'
 import { useTranslation } from '@/context'
+import { SyntheticListenerMap } from '@dnd-kit/core/dist/hooks/utilities'
 import { wrapConditionalArrayElements } from '@utils/mergeUtils'
 
 interface NavbarItemProps {
@@ -12,6 +13,9 @@ interface NavbarItemProps {
   actionButtons?: SidebarItemProps['actionButtons']
   hideMenuItems?: boolean
   active?: boolean
+  draggable?: boolean
+  dragAttributes?: React.HTMLAttributes<HTMLElement>
+  dragListeners?: SyntheticListenerMap
 }
 
 export const AppSidebarItem = ({
@@ -23,7 +27,10 @@ export const AppSidebarItem = ({
   disabled = false,
   actionButtons,
   hideMenuItems = false,
-  active = false
+  active = false,
+  draggable,
+  dragAttributes,
+  dragListeners
 }: NavbarItemProps) => {
   const { t } = useTranslation()
 
@@ -53,6 +60,9 @@ export const AppSidebarItem = ({
       disabled={disabled}
       actionButtons={actionButtons}
       active={active}
+      draggable={draggable}
+      dragAttributes={dragAttributes}
+      dragListeners={dragListeners}
     />
   )
 }

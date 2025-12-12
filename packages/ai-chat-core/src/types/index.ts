@@ -21,3 +21,13 @@ export type {
 } from './plugin'
 export type { StreamAdapter, ThreadListAdapter, StreamEvent, StreamRequest, StreamChunk } from './adapters'
 export type { SSEEvent } from '../utils/BaseSSEStreamAdapter'
+export type {
+  CapabilityStatus,
+  CapabilityExecutionContext,
+  CapabilityExecution,
+  CapabilityHandler,
+  CapabilityRendererProps,
+  CapabilityRenderer,
+  CapabilityConfig,
+  CapabilityContent
+} from './capability'

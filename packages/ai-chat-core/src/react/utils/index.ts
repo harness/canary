@@ -1,0 +1,1 @@
+export { makeCapability } from './makeCapability'

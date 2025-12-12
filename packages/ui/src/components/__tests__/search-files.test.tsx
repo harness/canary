@@ -1040,4 +1040,124 @@ describe('SearchFiles', () => {
       expect(screen.getByRole('textbox')).toBeInTheDocument()
     })
   })
+
+  describe('FileItem Object Array Support', () => {
+    const mockFilesListWithObjects = [
+      { label: 'Button Component', value: '/src/components/button.tsx' },
+      { label: 'Input Component', value: '/src/components/input.tsx' },
+      { label: 'Helper Utils', value: '/src/utils/helpers.ts' },
+      { label: 'Home Page', value: '/src/pages/home.tsx' },
+      { label: 'Button Tests', value: '/tests/button.test.tsx' }
+    ]
+
+    test('should filter files based on label when using object array', async () => {
+      render(
+        <TestWrapper>
+          <SearchFiles navigateToFile={mockNavigateToFile} filesList={mockFilesListWithObjects} />
+        </TestWrapper>
+      )
+
+      const input = screen.getByRole('textbox')
+      await userEvent.type(input, 'Helper')
+
+      await waitFor(() => {
+        const items = screen.queryAllByRole('menuitem')
+        expect(items.length).toBe(1)
+      })
+    })
+
+    test('should display label in dropdown items', async () => {
+      render(
+        <TestWrapper>
+          <SearchFiles navigateToFile={mockNavigateToFile} filesList={mockFilesListWithObjects} />
+        </TestWrapper>
+      )
+
+      const input = screen.getByRole('textbox')
+      await userEvent.type(input, 'Button')
+
+      await waitFor(() => {
+        // Text is split by <mark> highlighting, so check for items count
+        const items = screen.getAllByRole('menuitem')
+        expect(items.length).toBe(2) // Button Component and Button Tests
+      })
+    })
+
+    test('should call navigateToFile with value (not label) when file is selected', async () => {
+      mockNavigateToFile.mockClear()
+
+      render(
+        <TestWrapper>
+          <SearchFiles navigateToFile={mockNavigateToFile} filesList={mockFilesListWithObjects} />
+        </TestWrapper>
+      )
+
+      const input = screen.getByRole('textbox')
+      await userEvent.type(input, 'Helper Utils')
+
+      await waitFor(() => {
+        const items = screen.queryAllByRole('menuitem')
+        expect(items.length).toBeGreaterThan(0)
+      })
+
+      const fileItem = screen.getAllByRole('menuitem')[0]
+      await userEvent.click(fileItem)
+
+      await waitFor(() => {
+        expect(mockNavigateToFile).toHaveBeenCalledWith('/src/utils/helpers.ts')
+      })
+    })
+
+    test('should highlight matched text in label', async () => {
+      render(
+        <TestWrapper>
+          <SearchFiles navigateToFile={mockNavigateToFile} filesList={mockFilesListWithObjects} />
+        </TestWrapper>
+      )
+
+      const input = screen.getByRole('textbox')
+      await userEvent.type(input, 'Utils')
+
+      await waitFor(() => {
+        const mark = screen.getByText((content, element) => {
+          return element?.tagName.toLowerCase() === 'mark' && element?.textContent?.toLowerCase() === 'utils'
+        })
+        expect(mark).toBeInTheDocument()
+      })
+    })
+
+    test('should handle mixed string and object arrays gracefully', async () => {
+      // This tests the normalizeFileItem function indirectly
+      const mixedList = ['simple-file.tsx'] // String array still works
+
+      render(
+        <TestWrapper>
+          <SearchFiles navigateToFile={mockNavigateToFile} filesList={mixedList} />
+        </TestWrapper>
+      )
+
+      const input = screen.getByRole('textbox')
+      await userEvent.type(input, 'simple')
+
+      await waitFor(() => {
+        const items = screen.queryAllByRole('menuitem')
+        expect(items.length).toBe(1)
+      })
+    })
+
+    test('should handle empty object array', async () => {
+      render(
+        <TestWrapper>
+          <SearchFiles navigateToFile={mockNavigateToFile} filesList={[]} />
+        </TestWrapper>
+      )
+
+      const input = screen.getByRole('textbox')
+      await userEvent.type(input, 'test')
+
+      await waitFor(() => {
+        expect(screen.getByText('No file found.')).toBeInTheDocument()
+      })
+    })
+  })
 })

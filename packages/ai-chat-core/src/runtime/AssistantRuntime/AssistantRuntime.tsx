@@ -1,3 +1,4 @@
+import { CapabilityExecutionManager, CapabilityRegistry } from '../../core'
 import { PluginRegistry } from '../../core/PluginRegistry'
 import { Message } from '../../types/message'
 import { ChatPlugin } from '../../types/plugin'
@@ -13,6 +14,8 @@ export interface AssistantRuntimeConfig extends ThreadListRuntimeConfig {
 export class AssistantRuntime extends BaseSubscribable {
   public readonly threads: ThreadListRuntime
   public readonly pluginRegistry: PluginRegistry
+  public readonly capabilityRegistry: CapabilityRegistry
+  public readonly capabilityExecutionManager: CapabilityExecutionManager
   private _contentFocusRuntime: ContentFocusRuntime
   private _currentThreadUnsubscribe?: () => void
 
@@ -27,10 +30,15 @@ export class AssistantRuntime extends BaseSubscribable {
       })
     }
 
+    // Initialize capability registry
+    this.capabilityRegistry = new CapabilityRegistry()
+    this.capabilityExecutionManager = new CapabilityExecutionManager(name => this.capabilityRegistry.getHandler(name))
+
     // Initialize thread list
     this.threads = new ThreadListRuntime({
       streamAdapter: config.streamAdapter,
-      threadListAdapter: config.threadListAdapter
+      threadListAdapter: config.threadListAdapter,
+      capabilityExecutionManager: this.capabilityExecutionManager
     })
 
     this._contentFocusRuntime = new ContentFocusRuntime()

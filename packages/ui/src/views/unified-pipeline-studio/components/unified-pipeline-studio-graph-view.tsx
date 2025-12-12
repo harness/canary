@@ -17,7 +17,7 @@ export const PipelineStudioGraphView = ({ data }: { data: AnyContainerNodeType[]
   }, [])
 
   return (
-    <div className="bg-cn-graph-bg-gradient cn-graph-bg-size relative flex h-full grow">
+    <div className="cn-graph-bg-size relative flex h-full grow bg-cn-graph-bg-gradient">
       <CanvasProvider>
         <PipelineGraph
           customCreateSVGPath={props => {
@@ -32,7 +32,6 @@ export const PipelineStudioGraphView = ({ data }: { data: AnyContainerNodeType[]
             serialNodeOffset: 10
           }}
           portComponent={PipelineNodesComponents.Port}
-          collapseButtonComponent={PipelineNodesComponents.CollapseButton}
           serialContainerConfig={serialContainerConfig}
           parallelContainerConfig={parallelContainerConfig}
           data={data}

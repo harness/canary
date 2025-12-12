@@ -1,16 +1,19 @@
 import { Button } from '@components/button'
 import { IconV2 } from '@components/icon-v2'
 
-import { CollapseButtonProps } from '@harnessio/pipeline-graph'
+export interface CollapseButtonProps {
+  collapsed: boolean
+  onCollapseChange: (collapsed: boolean) => void
+}
 
-export const CollapseButton = ({ collapsed, onToggle }: CollapseButtonProps) => {
+export const CollapseButton = ({ collapsed, onCollapseChange }: CollapseButtonProps) => {
   return (
     <Button
       size="sm"
       variant="secondary"
       iconOnly
       onMouseDown={e => e.stopPropagation()}
-      onClick={onToggle}
+      onClick={() => onCollapseChange(!collapsed)}
       tooltipProps={{
         content: collapsed ? 'Expand' : 'Collapse'
       }}

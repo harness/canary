@@ -160,6 +160,17 @@ export default function ReposListPage() {
     }
   }
 
+  const onCancelImport = async (repoId: string) => {
+    try {
+      await deleteRepository({
+        queryParams: {},
+        repo_ref: `${spaceURL}/${repoId}/+`
+      })
+    } catch {
+      console.error('Error canceling import:', error)
+    }
+  }
+
   const { accountId, orgIdentifier, projectIdentifier } = scope
 
   const handleOnClickRepo = (repo: RepositoryType) => {
@@ -217,6 +228,7 @@ export default function ReposListPage() {
       toImportRepo={() => routes.toImportRepo({ spaceId })}
       toImportMultipleRepos={() => routes.toImportMultipleRepos({ spaceId })}
       onFavoriteToggle={onFavoriteToggle}
+      onCancelImport={onCancelImport}
       onFilterChange={({ favorite, recursive }: RepoListFilters) => {
         setFavorite(favorite ?? null)
         shouldResetPageRef.current = true

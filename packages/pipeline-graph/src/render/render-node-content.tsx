@@ -13,12 +13,13 @@ export function RenderNodeContent(
     node: AnyNodeInternal
     children?: React.ReactElement
     collapsed?: boolean
+    setCollapsed?: (collapsed: boolean) => void
     isFirst?: boolean
     isLast?: boolean
     parentNodeType?: ContainerNodeType
   } & NodeProps
 ) {
-  const { node, children, collapsed, isFirst, isLast, parentNodeType, mode } = props
+  const { node, children, collapsed, setCollapsed, isFirst, isLast, parentNodeType, mode } = props
   const { nodes } = useGraphContext()
 
   const nodeContent = nodes[node.type]
@@ -29,6 +30,7 @@ export function RenderNodeContent(
         <nodeContent.component
           node={node as LeafNodeInternalType<{}>}
           collapsed={collapsed}
+          setCollapsed={setCollapsed}
           isFirst={isFirst}
           isLast={isLast}
           parentNodeType={parentNodeType}
@@ -42,6 +44,7 @@ export function RenderNodeContent(
         <nodeContent.component
           node={node as SerialNodeInternalType<{}>}
           collapsed={collapsed}
+          setCollapsed={setCollapsed}
           isFirst={isFirst}
           isLast={isLast}
           parentNodeType={parentNodeType}
@@ -55,6 +58,7 @@ export function RenderNodeContent(
         <nodeContent.component
           node={node as ParallelNodeInternalType<{}>}
           collapsed={collapsed}
+          setCollapsed={setCollapsed}
           isFirst={isFirst}
           isLast={isLast}
           parentNodeType={parentNodeType}

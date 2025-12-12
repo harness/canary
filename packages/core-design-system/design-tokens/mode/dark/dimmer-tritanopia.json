@@ -1397,79 +1397,35 @@
       }
     },
     "pipeline": {
-      "arrow": {
+      "running": {
         "border": {
           "$type": "color",
-          "$value": "{border.1}",
-          "$description": "Border color for pipeline connection arrows. Defines the visual path between pipeline components."
+          "$value": "linear-gradient(180deg, {gradient.pipeline.running.border.from} 0%, {gradient.pipeline.running.border.to} 100%)",
+          "$description": "Animated gradient border for running pipeline states. Provides visual indication of active processing."
         },
-        "running": {
-          "border": {
-            "$type": "color",
-            "$value": "linear-gradient(90deg, {gradient.pipeline.arrows.stop-1} 0%, {gradient.pipeline.arrows.stop-2} 50%, {gradient.pipeline.arrows.stop-3} 100%)",
-            "$description": "Gradient border color for active pipeline arrows. Visually indicates data flow between active pipeline components."
-          }
+        "glow": {
+          "$type": "color",
+          "$value": "linear-gradient(180deg, {gradient.pipeline.running.glow.from} 0%, {gradient.pipeline.running.glow.to} 100%)"
         }
       },
-      "card": {
+      "dotes": {
+        "$type": "color",
+        "$value": "{chrome.950}",
+        "$description": "Refers to the dotted pattern visible in the background of the workspace."
+      },
+      "stage-card": {
         "bg": {
-          "$type": "color",
-          "$value": "radial-gradient(90% 100% at 15% 0%,{gradient.pipeline.card.bg.gradient-from} 10%, {gradient.pipeline.card.bg.gradient-to} 75%)",
-          "$description": "Gradient background for pipeline cards. Creates a visually distinctive surface for pipeline visualization elements."
-        },
-        "border": {
-          "$type": "color",
-          "$value": "radial-gradient(90% 100% at 15% 0%,{gradient.pipeline.card.border.gradient-from} 10%, {gradient.pipeline.card.border.gradient-to} 75%)",
-          "$description": "Gradient border for pipeline cards. Enhances the visual depth and distinction of pipeline components."
-        },
-        "running": {
-          "border": {
-            "$type": "color",
-            "$value": "radial-gradient(604% 142% at 0% 0%, {gradient.pipeline.running.stop-1} 0%, {gradient.pipeline.running.stop-2} 30%, {gradient.pipeline.running.stop-3} 100%)",
-            "$description": "Animated gradient border for running pipeline states. Provides visual indication of active processing."
-          }
-        }
-      },
-      "card-canvas": {
-        "1": {
-          "bg": {
-            "$type": "color",
-            "$value": "{bg.1}",
-            "$description": "The background color for the primary/top-level canvas where pipeline components are arranged. Creates the base visual layer for the main workflow area."
-          },
-          "border": {
-            "$type": "color",
-            "$value": "{border.3}",
-            "$description": "Solid border for the outermost pipeline canvas elements. Defines the boundaries of the top-level workflow container."
-          }
-        },
-        "2": {
-          "bg": {
-            "$type": "color",
-            "$value": "{bg.2}",
-            "$description": "Background color for nested/secondary canvas elements that appear within the main workflow. Provides visual distinction for grouped pipeline components."
-          },
-          "border": {
-            "$type": "color",
-            "$value": "{border.2}",
-            "$description": "Border styling applied to nested canvas containers. Creates clear visual boundaries between different sections within the pipeline visualization."
-          }
-        }
-      },
-      "bg": {
-        "dotes": {
           "$extensions": {
             "studio.tokens": {
               "modify": {
                 "type": "alpha",
-                "value": "0.6",
+                "value": "0.65",
                 "space": "lch"
               }
             }
           },
           "$type": "color",
-          "$value": "{chrome.850}",
-          "$description": "Refers to the dotted pattern visible in the background of the workspace."
+          "$value": "{bg.3}"
         }
       }
     },
@@ -1743,6 +1699,20 @@
       "bubble": {
         "$type": "color",
         "$value": "linear-gradient(95deg, {gradient.sidebar.selected.from} -13.12%, {gradient.sidebar.selected.to} 84.9%)"
+      }
+    },
+    "tooltip": {
+      "bg": {
+        "$type": "color",
+        "$value": "{chrome.200}"
+      },
+      "border": {
+        "$type": "color",
+        "$value": "{chrome.200}"
+      },
+      "text": {
+        "$type": "color",
+        "$value": "{pure.black}"
       }
     }
   },
@@ -2251,101 +2221,6 @@
         }
       }
     },
-    "pipeline": {
-      "running": {
-        "stop-1": {
-          "$type": "color",
-          "$value": "{blue.200}"
-        },
-        "stop-2": {
-          "$extensions": {
-            "studio.tokens": {
-              "modify": {
-                "type": "alpha",
-                "value": "0.4",
-                "space": "lch"
-              }
-            }
-          },
-          "$type": "color",
-          "$value": "{chrome.800}"
-        },
-        "stop-3": {
-          "$type": "color",
-          "$value": "{blue.200}"
-        }
-      },
-      "arrows": {
-        "stop-1": {
-          "$type": "color",
-          "$value": "{pure.white}"
-        },
-        "stop-2": {
-          "$type": "color",
-          "$value": "{blue.300}"
-        },
-        "stop-3": {
-          "$type": "color",
-          "$value": "{border.1}"
-        }
-      },
-      "card": {
-        "bg": {
-          "gradient-from": {
-            "$type": "color",
-            "$value": "{chrome.850}"
-          },
-          "gradient-to": {
-            "$type": "color",
-            "$value": "{chrome.900}"
-          }
-        },
-        "border": {
-          "gradient-from": {
-            "$type": "color",
-            "$value": "{chrome.800}"
-          },
-          "gradient-to": {
-            "$type": "color",
-            "$value": "{chrome.850}"
-          }
-        }
-      },
-      "widget": {
-        "number": {
-          "gradient-from": {
-            "$type": "color",
-            "$value": "{chrome.200}"
-          },
-          "gradient-to": {
-            "$type": "color",
-            "$value": "{chrome.600}"
-          }
-        },
-        "blob": {
-          "big": {
-            "gradient-from": {
-              "$type": "color",
-              "$value": "{chrome.850}"
-            },
-            "gradient-to": {
-              "$type": "color",
-              "$value": "{chrome.950}"
-            }
-          },
-          "small": {
-            "gradient-from": {
-              "$type": "color",
-              "$value": "{chrome.800}"
-            },
-            "gradient-to": {
-              "$type": "color",
-              "$value": "{chrome.850}"
-            }
-          }
-        }
-      }
-    },
     "dialog": {
       "fade": {
         "$extensions": {
@@ -2812,6 +2687,57 @@
               "$type": "color",
               "$value": "{red.300}"
             }
+          }
+        }
+      }
+    },
+    "pipeline": {
+      "running": {
+        "border": {
+          "from": {
+            "$type": "color",
+            "$value": "{yellow.150}"
+          },
+          "to": {
+            "$extensions": {
+              "studio.tokens": {
+                "modify": {
+                  "type": "alpha",
+                  "value": "0",
+                  "space": "lch"
+                }
+              }
+            },
+            "$type": "color",
+            "$value": "{yellow.150}"
+          }
+        },
+        "glow": {
+          "from": {
+            "$extensions": {
+              "studio.tokens": {
+                "modify": {
+                  "type": "alpha",
+                  "value": "0.7",
+                  "space": "lch"
+                }
+              }
+            },
+            "$type": "color",
+            "$value": "{yellow.200}"
+          },
+          "to": {
+            "$extensions": {
+              "studio.tokens": {
+                "modify": {
+                  "type": "alpha",
+                  "value": "0",
+                  "space": "lch"
+                }
+              }
+            },
+            "$type": "color",
+            "$value": "{yellow.300}"
           }
         }
       }

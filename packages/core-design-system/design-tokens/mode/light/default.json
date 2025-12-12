@@ -24,7 +24,7 @@
   "text": {
     "1": {
       "$type": "color",
-      "$value": "{pure.black}",
+      "$value": "{gray.1000}",
       "$description": "Highest contrast color for text and icons in important content. Creates maximum readability and emphasis for key information.\n\nCommon uses: Headings, labels, emphasized text."
     },
     "2": {
@@ -117,7 +117,7 @@
         }
       },
       "$type": "color",
-      "$value": "{gray.300}",
+      "$value": "{gray.200}",
       "$description": "Light overlay for gentle interactive effects. Creates subtle visual feedback during user interaction.\n\nCommon uses: Button hover states, link hover states, soft interactions, menu items."
     },
     "selected": {
@@ -125,13 +125,13 @@
         "studio.tokens": {
           "modify": {
             "type": "alpha",
-            "value": "0.11",
+            "value": "0.18",
             "space": "lch"
           }
         }
       },
       "$type": "color",
-      "$value": "{indigo.150}",
+      "$value": "{gray.300}",
       "$description": "Strong overlay for emphasized selection states. Creates distinct visual indication of active or selected elements.\n\nCommon uses: Selected list items, active tabs, chosen options, current navigation item."
     }
   },
@@ -1494,6 +1494,15 @@
         }
       },
       "dotes": {
+        "$extensions": {
+          "studio.tokens": {
+            "modify": {
+              "type": "alpha",
+              "value": "0.7",
+              "space": "lch"
+            }
+          }
+        },
         "$type": "color",
         "$value": "{gray.100}",
         "$description": "Refers to the dotted pattern visible in the background of the workspace."
@@ -2012,7 +2021,7 @@
         }
       },
       "$type": "color",
-      "$value": "{gray.800}",
+      "$value": "{gray.700}",
       "$description": "Transparent shadow color. Used when no shadow effect is desired."
     },
     "1": {
@@ -2026,7 +2035,7 @@
         }
       },
       "$type": "color",
-      "$value": "{gray.800}",
+      "$value": "{gray.700}",
       "$description": "Light shadow color. Creates subtle depth for small UI elements."
     },
     "2": {
@@ -2040,7 +2049,7 @@
         }
       },
       "$type": "color",
-      "$value": "{gray.800}",
+      "$value": "{gray.700}",
       "$description": "Medium shadow color with 60% opacity. Provides balanced depth for common UI components."
     },
     "3": {
@@ -2054,7 +2063,7 @@
         }
       },
       "$type": "color",
-      "$value": "{gray.800}",
+      "$value": "{gray.700}",
       "$description": "Medium shadow color. Creates moderate depth for elevated components."
     },
     "4": {
@@ -2068,7 +2077,7 @@
         }
       },
       "$type": "color",
-      "$value": "{gray.800}",
+      "$value": "{gray.700}",
       "$description": "Deep shadow color. Provides significant depth for floating elements."
     },
     "5": {
@@ -2082,7 +2091,7 @@
         }
       },
       "$type": "color",
-      "$value": "{gray.800}",
+      "$value": "{gray.700}",
       "$description": "Very deep shadow color. Creates dramatic elevation for modal content."
     },
     "6": {
@@ -2096,7 +2105,7 @@
         }
       },
       "$type": "color",
-      "$value": "{gray.800}",
+      "$value": "{gray.700}",
       "$description": "Extremely deep shadow color. Provides maximum depth for highly elevated elements."
     }
   },

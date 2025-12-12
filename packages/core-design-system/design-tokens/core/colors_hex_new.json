@@ -297,7 +297,7 @@
     },
     "$type": "color"
   },
-  "forest": {
+  "green": {
     "25": {
       "$value": "#f4fff6"
     },
@@ -356,7 +356,7 @@
       "$value": "#abfcd9"
     },
     "150": {
-      "$value": "#68f9c3"
+      "$value": "#81f5c8"
     },
     "200": {
       "$value": "#00eeb0"
@@ -404,7 +404,7 @@
       "$value": "#b3f8f6"
     },
     "150": {
-      "$value": "#66f6f3"
+      "$value": "#83f2ef"
     },
     "200": {
       "$value": "#27eae7"

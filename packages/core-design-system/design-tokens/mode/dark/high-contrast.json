@@ -1212,7 +1212,7 @@
           }
         },
         "$type": "color",
-        "$value": "{green.500}",
+        "$value": "{forest.500}",
         "$description": "Green background highlighting newly added code lines while maintaining readability."
       },
       "add-lineNumber": {
@@ -1226,7 +1226,7 @@
           }
         },
         "$type": "color",
-        "$value": "{green.500}",
+        "$value": "{forest.500}",
         "$description": "Background for line numbers of added code, providing visual connection to added content."
       },
       "add-content-highlight": {
@@ -1240,7 +1240,7 @@
           }
         },
         "$type": "color",
-        "$value": "{green.500}",
+        "$value": "{forest.500}",
         "$description": "Stronger emphasis color for specific character changes within added lines."
       },
       "add-widget": {
@@ -1375,7 +1375,7 @@
       },
       "hljs-string": {
         "$type": "color",
-        "$value": "{green.100}",
+        "$value": "{forest.100}",
         "$description": "Color for string literals in syntax highlighting. Distinguishes text content and string values from other code elements."
       },
       "hljs-title-function": {
@@ -2195,8 +2195,6 @@
       },
       "glow": {
         "stop-1": {
-          "$type": "color",
-          "$value": "{cyan.700}",
           "$extensions": {
             "studio.tokens": {
               "modify": {
@@ -2206,6 +2204,8 @@
               }
             }
           },
+          "$type": "color",
+          "$value": "{cyan.700}",
           "$description": "First gradient stop for AI glow effects."
         },
         "stop-2": {

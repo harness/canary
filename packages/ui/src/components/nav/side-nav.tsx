@@ -165,80 +165,102 @@ export const SideNav: React.FC<{ routes?: RouteDefinitions }> = ({ routes }) => 
   )
 }
 
-// {/* <Sidebar.Root className="z-10 cn-content-full-height">
-// <Sidebar.Content>
-//   <Sidebar.Group>
-//     {/* 👉 Static pinned menu */}
-//     <SidebarV2.Item selected iconName="account-solid" to="/home">
-//       New Sidebar Item
-//       <StatusBadge theme="info" size="sm" variant="outline">
-//         New
-//       </StatusBadge>
-//     </SidebarV2.Item>
-//     <SidebarV2.Item iconName="code" to="/home">
-//       Code Sidebar Item
-//     </SidebarV2.Item>
-//     <SidebarItem isPinned item={{ ...NavItems.get(NavEnum.Home)!, to: routes?.toHome?.(params) || '' }} />
-//     <SidebarItem
-//       isPinned
-//       item={{ ...NavItems.get(NavEnum.Activities)!, to: routes?.Activities?.(params) || '' }}
+// return (
+//   <>
+//     <Sidebar.Root className="z-10 cn-content-full-height">
+//       <Sidebar.Content>
+//         <Sidebar.Group>
+//           {/* 👉 Static pinned menu */}
+//           <SidebarItem isPinned item={{ ...NavItems.get(NavEnum.Home)!, to: routes?.toHome?.(params) || '' }} />
+//           <SidebarItem
+//             isPinned
+//             item={{ ...NavItems.get(NavEnum.Activities)!, to: routes?.Activities?.(params) || '' }}
+//           />
+
+//           {/* 👉 User pinned menu */}
+//           {pinnedMenu.map(item => (
+//             <SidebarItem isPinned key={item.id} item={item} />
+//           ))}
+
+//           {/* 👉 Settings menu */}
+//           <Drawer.Root direction="left" open={showSettingsMenu} onOpenChange={setShowSettingsMenu}>
+//             <Drawer.Trigger>
+//               <Sidebar.Item
+//                 withRightIndicator
+//                 title={NavItems.get(NavEnum.Settings)!.title}
+//                 icon={NavItems.get(NavEnum.Settings)!.iconName}
+//                 onHoverIn={() => setShowSettingsMenu(true)}
+//                 onHoverOut={() => setShowSettingsMenu(false)}
+//                 clickable={false}
+//               />
+//             </Drawer.Trigger>
+
+//             <Drawer.Content
+//               {...drawerContentCommonProps}
+//               size="2xs"
+//               onPointerDownOutside={() => setShowSettingsMenu(false)}
+//             >
+//               <Drawer.Title className="sr-only">Settings menu</Drawer.Title>
+//               <Drawer.Description className="sr-only">Settings menu</Drawer.Description>
+//               <Drawer.Body>
+//                 <SidebarGroupMenu menuItems={settingsMenuItems} columns={1} />
+//               </Drawer.Body>
+//             </Drawer.Content>
+//           </Drawer.Root>
+
+//           {/* 👉 More menu */}
+//           <Drawer.Root direction="left" open={showMoreMenu} onOpenChange={setShowMoreMenu}>
+//             <Drawer.Trigger>
+//               <Sidebar.Item
+//                 title="More"
+//                 icon="menu-more-horizontal"
+//                 withRightIndicator
+//                 onHoverIn={() => setShowMoreMenu(true)}
+//                 onHoverOut={() => setShowMoreMenu(false)}
+//                 clickable={false}
+//               />
+//             </Drawer.Trigger>
+
+//             <Drawer.Content
+//               {...drawerContentCommonProps}
+//               size="xs"
+//               onPointerDownOutside={() => setShowMoreMenu(false)}
+//             >
+//               <Drawer.Title className="sr-only">More menu</Drawer.Title>
+//               <Drawer.Description className="sr-only">More menu</Drawer.Description>
+//               <Drawer.Body>
+//                 <SidebarGroupMenu menuItems={moreMenuItems} columns={2} />
+//               </Drawer.Body>
+//             </Drawer.Content>
+//           </Drawer.Root>
+//         </Sidebar.Group>
+
+//         <Sidebar.Separator />
+
+//         {/* 👉 Recent menu */}
+//         <Sidebar.Group
+//           label="RECENT"
+//           onActionClick={() => {
+//             setShowManageNavigation(true)
+//           }}
+//         >
+//           {recentMenu.map(item => (
+//             <SidebarItem key={item.id} item={item} />
+//           ))}
+//         </Sidebar.Group>
+//       </Sidebar.Content>
+//     </Sidebar.Root>
+
+//     <ManageNavigation
+//       pinnedItems={pinnedMenu}
+//       recentItems={recentMenu}
+//       navbarMenuData={moreMenuItems}
+//       showManageNavigation={showManageNavigation}
+//       isSubmitting={false}
+//       submitted={false}
+//       onSave={handleSave}
+//       onClose={() => setShowManageNavigation(false)}
 //     />
-
-//     {pinnedMenu.map(item => (
-//       <SidebarItem isPinned key={item.id} item={item} />
-//     ))}
-
-//     <Drawer.Root direction="left" open={showSettingsMenu} onOpenChange={setShowSettingsMenu}>
-//       <Drawer.Trigger>
-//         <Sidebar.Item
-//           withRightIndicator
-//           title={NavItems.get(NavEnum.Settings)!.title}
-//           icon={NavItems.get(NavEnum.Settings)!.iconName}
-//         />
-//       </Drawer.Trigger>
-
-//       <Drawer.Content
-//         {...drawerContentCommonProps}
-//         size="2xs"
-//         onPointerDownOutside={() => setShowSettingsMenu(false)}
-//       >
-//         <Drawer.Title className="sr-only">Settings menu</Drawer.Title>
-//         <Drawer.Description className="sr-only">Settings menu</Drawer.Description>
-//         <Drawer.Body>
-//           <SidebarGroupMenu menuItems={settingsMenuItems} columns={1} />
-//         </Drawer.Body>
-//       </Drawer.Content>
-//     </Drawer.Root>
-
-//     <Drawer.Root direction="left" open={showMoreMenu} onOpenChange={setShowMoreMenu}>
-//       <Drawer.Trigger>
-//         <Sidebar.Item title="more" icon="menu-more-horizontal" withRightIndicator />
-//       </Drawer.Trigger>
-
-//       <Drawer.Content
-//         {...drawerContentCommonProps}
-//         size="xs"
-//         onPointerDownOutside={() => setShowMoreMenu(false)}
-//       >
-//         <Drawer.Title className="sr-only">More menu</Drawer.Title>
-//         <Drawer.Description className="sr-only">More menu</Drawer.Description>
-//         <Drawer.Body>
-//           <SidebarGroupMenu menuItems={moreMenuItems} columns={2} />
-//         </Drawer.Body>
-//       </Drawer.Content>
-//     </Drawer.Root>
-//   </Sidebar.Group>
-
-//   <Sidebar.Separator />
-//   <Sidebar.Group
-//     label="RECENT"
-//     onActionClick={() => {
-//       setShowManageNavigation(true)
-//     }}
-//   >
-//     {recentMenu.map(item => (
-//       <SidebarItem key={item.id} item={item} />
-//     ))}
-//   </Sidebar.Group>
-// </Sidebar.Content>
-// </Sidebar.Root> */}
+//   </>
+// )
+// }

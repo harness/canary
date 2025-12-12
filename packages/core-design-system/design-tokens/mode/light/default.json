@@ -91,17 +91,17 @@
     },
     "success": {
       "$type": "color",
-      "$value": "{set.success.primary.bg}",
+      "$value": "{set.success.outline.border}",
       "$description": "Border color for success containers. Reinforces positive status through visual framing.\n\nCommon uses: Success alert borders, confirmation boundaries, completed state indicators."
     },
     "danger": {
       "$type": "color",
-      "$value": "{set.danger.primary.bg}",
+      "$value": "{set.danger.outline.border}",
       "$description": "Border color for error containers. Emphasizes critical information through visual framing.\n\nCommon uses: Error alert borders, validation boundaries, destructive action containers."
     },
     "warning": {
       "$type": "color",
-      "$value": "{set.warning.primary.bg}",
+      "$value": "{set.warning.outline.border}",
       "$description": "Border color for warning containers. Frames cautionary information with distinct boundary.\n\nCommon uses: Warning alert borders, notice boundaries, attention-requiring elements."
     }
   },
@@ -315,66 +315,66 @@
         },
         "bg": {
           "$type": "color",
-          "$value": "{forest.700}",
+          "$value": "{lime.700}",
           "$description": "Background color for prominent green surfaces."
         },
         "bg-hover": {
           "$type": "color",
-          "$value": "{forest.800}",
+          "$value": "{lime.800}",
           "$description": "Background color for prominent green surfaces."
         },
         "bg-selected": {
           "$type": "color",
-          "$value": "{forest.800}",
+          "$value": "{lime.800}",
           "$description": "Background color for prominent green surfaces."
         }
       },
       "secondary": {
         "text": {
           "$type": "color",
-          "$value": "{forest.800}",
+          "$value": "{lime.800}",
           "$description": "Text color for subtle green surfaces with good contrast."
         },
         "bg": {
           "$type": "color",
-          "$value": "{forest.100}",
+          "$value": "{lime.100}",
           "$description": "Background color for subdued green surfaces."
         },
         "bg-hover": {
           "$type": "color",
-          "$value": "{forest.150}",
+          "$value": "{lime.150}",
           "$description": "Background color for subdued green surfaces."
         },
         "bg-selected": {
           "$type": "color",
-          "$value": "{forest.150}",
+          "$value": "{lime.150}",
           "$description": "Background color for subdued green surfaces."
         }
       },
       "outline": {
         "text": {
           "$type": "color",
-          "$value": "{forest.700}",
+          "$value": "{lime.700}",
           "$description": "Standard text color for green surfaces with balanced readability."
         },
         "bg": {
           "$type": "color",
-          "$value": "{forest.25}",
+          "$value": "{lime.25}",
           "$description": "Base background color for green surfaces in default states."
         },
         "border": {
           "$type": "color",
-          "$value": "{forest.300}",
+          "$value": "{lime.300}",
           "$description": "Border color for standard green boundaries."
         },
         "bg-hover": {
           "$type": "color",
-          "$value": "{forest.50}",
+          "$value": "{lime.50}",
           "$description": "Hover state background color for interactive green surfaces."
         },
         "bg-selected": {
           "$type": "color",
-          "$value": "{forest.50}",
+          "$value": "{lime.50}",
           "$description": "Selected state background color for active green items."
         }
       }
@@ -1239,7 +1239,7 @@
           }
         },
         "$type": "color",
-        "$value": "{green.200}",
+        "$value": "{forest.200}",
         "$description": "Green background highlighting newly added code lines while maintaining readability."
       },
       "add-lineNumber": {
@@ -1253,7 +1253,7 @@
           }
         },
         "$type": "color",
-        "$value": "{green.200}",
+        "$value": "{forest.200}",
         "$description": "Background for line numbers of added code, providing visual connection to added content."
       },
       "add-content-highlight": {
@@ -1267,7 +1267,7 @@
           }
         },
         "$type": "color",
-        "$value": "{green.200}",
+        "$value": "{forest.200}",
         "$description": "Stronger emphasis color for specific character changes within added lines."
       },
       "add-widget": {
@@ -1402,7 +1402,7 @@
       },
       "hljs-string": {
         "$type": "color",
-        "$value": "{green.700}",
+        "$value": "{forest.700}",
         "$description": "Color for string literals in syntax highlighting. Distinguishes text content and string values from other code elements."
       },
       "hljs-title-function": {

@@ -328,71 +328,71 @@
       "primary": {
         "text": {
           "$type": "color",
-          "$value": "{green.1000}",
+          "$value": "{forest.1000}",
           "$description": "Text color for high-contrast green surfaces."
         },
         "bg": {
           "$type": "color",
-          "$value": "{green.200}",
+          "$value": "{forest.200}",
           "$description": "Background color for prominent green surfaces."
         },
         "bg-hover": {
           "$type": "color",
-          "$value": "{green.150}",
+          "$value": "{forest.150}",
           "$description": "Background color for prominent green surfaces."
         },
         "bg-selected": {
           "$type": "color",
-          "$value": "{green.150}",
+          "$value": "{forest.150}",
           "$description": "Background color for prominent green surfaces."
         }
       },
       "secondary": {
         "text": {
           "$type": "color",
-          "$value": "{green.150}",
+          "$value": "{forest.150}",
           "$description": "Text color for subtle green surfaces with good contrast."
         },
         "bg": {
           "$type": "color",
-          "$value": "{green.950}",
+          "$value": "{forest.950}",
           "$description": "Background color for subdued green surfaces."
         },
         "bg-hover": {
           "$type": "color",
-          "$value": "{green.900}",
+          "$value": "{forest.900}",
           "$description": "Background color for subdued green surfaces."
         },
         "bg-selected": {
           "$type": "color",
-          "$value": "{green.900}",
+          "$value": "{forest.900}",
           "$description": "Background color for subdued green surfaces."
         }
       },
       "outline": {
         "text": {
           "$type": "color",
-          "$value": "{green.150}",
+          "$value": "{forest.150}",
           "$description": "Standard text color for green surfaces with balanced readability."
         },
         "bg": {
           "$type": "color",
-          "$value": "{green.1000}",
+          "$value": "{forest.1000}",
           "$description": "Base background color for green surfaces in default states."
         },
         "border": {
           "$type": "color",
-          "$value": "{green.900}",
+          "$value": "{forest.900}",
           "$description": "Border color for standard green boundaries."
         },
         "bg-hover": {
           "$type": "color",
-          "$value": "{green.950}",
+          "$value": "{forest.950}",
           "$description": "Hover state background color for interactive green surfaces."
         },
         "bg-selected": {
           "$type": "color",
-          "$value": "{green.900}",
+          "$value": "{forest.900}",
           "$description": "Selected state background color for active green items."
         }
       }
@@ -1212,7 +1212,7 @@
           }
         },
         "$type": "color",
-        "$value": "{green.400}",
+        "$value": "{forest.400}",
         "$description": "Green background highlighting newly added code lines while maintaining readability."
       },
       "add-lineNumber": {
@@ -1226,7 +1226,7 @@
           }
         },
         "$type": "color",
-        "$value": "{green.400}",
+        "$value": "{forest.400}",
         "$description": "Background for line numbers of added code, providing visual connection to added content."
       },
       "add-content-highlight": {
@@ -1240,7 +1240,7 @@
           }
         },
         "$type": "color",
-        "$value": "{green.400}",
+        "$value": "{forest.400}",
         "$description": "Stronger emphasis color for specific character changes within added lines."
       },
       "add-widget": {
@@ -1375,7 +1375,7 @@
       },
       "hljs-string": {
         "$type": "color",
-        "$value": "{green.200}",
+        "$value": "{forest.200}",
         "$description": "Color for string literals in syntax highlighting. Distinguishes text content and string values from other code elements."
       },
       "hljs-title-function": {
@@ -2195,8 +2195,6 @@
       },
       "glow": {
         "stop-1": {
-          "$type": "color",
-          "$value": "{cyan.700}",
           "$extensions": {
             "studio.tokens": {
               "modify": {
@@ -2206,6 +2204,8 @@
               }
             }
           },
+          "$type": "color",
+          "$value": "{cyan.700}",
           "$description": "First gradient stop for AI glow effects."
         },
         "stop-2": {

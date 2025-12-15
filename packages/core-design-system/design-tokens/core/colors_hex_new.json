@@ -62,7 +62,7 @@
       "$value": "#fff8f7"
     },
     "50": {
-      "$value": "#fff4f4"
+      "$value": "#fff0f0"
     },
     "100": {
       "$value": "#ffe1e0"
@@ -89,7 +89,7 @@
       "$value": "#da2c34"
     },
     "800": {
-      "$value": "#c03537"
+      "$value": "#c33035"
     },
     "850": {
       "$value": "#88272a"
@@ -110,7 +110,7 @@
       "$value": "#fffaf5"
     },
     "50": {
-      "$value": "#fff5eb"
+      "$value": "#fff1e4"
     },
     "100": {
       "$value": "#ffe6d1"
@@ -137,7 +137,7 @@
       "$value": "#c44d00"
     },
     "800": {
-      "$value": "#a04311"
+      "$value": "#a63d00"
     },
     "850": {
       "$value": "#77391c"
@@ -203,10 +203,10 @@
   },
   "brown": {
     "25": {
-      "$value": "#fefcfb"
+      "$value": "#fff8f6"
     },
     "50": {
-      "$value": "#fff4f1"
+      "$value": "#fff0ed"
     },
     "100": {
       "$value": "#ffe5df"
@@ -251,28 +251,28 @@
   },
   "lime": {
     "25": {
-      "$value": "#f6ffed"
+      "$value": "#f8ffeb"
     },
     "50": {
-      "$value": "#e3fbcb"
+      "$value": "#e8fac9"
     },
     "100": {
-      "$value": "#d2faad"
+      "$value": "#d9f8a9"
     },
     "150": {
-      "$value": "#b9ef89"
+      "$value": "#c3ed84"
     },
     "200": {
-      "$value": "#a5e26f"
+      "$value": "#ace16c"
     },
     "300": {
-      "$value": "#89d448"
+      "$value": "#97d240"
     },
     "400": {
-      "$value": "#6fc51f"
+      "$value": "#7ec30a"
     },
     "500": {
-      "$value": "#5cb100"
+      "$value": "#65b000"
     },
     "600": {
       "$value": "#4e9700"
@@ -491,7 +491,7 @@
   },
   "indigo": {
     "25": {
-      "$value": "#fafbff"
+      "$value": "#fcfcfe"
     },
     "50": {
       "$value": "#f5f6fe"
@@ -539,7 +539,7 @@
   },
   "violet": {
     "25": {
-      "$value": "#fbfafe"
+      "$value": "#fcfcfe"
     },
     "50": {
       "$value": "#f7f6ff"
@@ -587,7 +587,7 @@
   },
   "purple": {
     "25": {
-      "$value": "#fef9ff"
+      "$value": "#fefbff"
     },
     "50": {
       "$value": "#fef3ff"
@@ -635,7 +635,7 @@
   },
   "pink": {
     "25": {
-      "$value": "#fff9fc"
+      "$value": "#fffbfd"
     },
     "50": {
       "$value": "#fff3f8"

@@ -65,7 +65,7 @@
       "$value": "#fff0f1"
     },
     "100": {
-      "$value": "#ffe1e3"
+      "$value": "#ffe5e6"
     },
     "150": {
       "$value": "#ffd1d2"
@@ -254,13 +254,13 @@
       "$value": "#f8ffeb"
     },
     "50": {
-      "$value": "#e8fac9"
+      "$value": "#efffd4"
     },
     "100": {
-      "$value": "#dcf7b2"
+      "$value": "#dffab5"
     },
     "150": {
-      "$value": "#c5ec8a"
+      "$value": "#c8ef8c"
     },
     "200": {
       "$value": "#ace16c"

@@ -1194,7 +1194,7 @@
           }
         },
         "$type": "color",
-        "$value": "{gray.800}",
+        "$value": "{gray.600}",
         "$description": "Overlay color behind dialog components. Creates focus on the dialog by dimming content underneath."
       },
       "backdrop-nested": {
@@ -1208,17 +1208,17 @@
           }
         },
         "$type": "color",
-        "$value": "{gray.800}",
+        "$value": "{gray.600}",
         "$description": "Overlay color behind dialog components. Creates focus on the dialog by dimming content underneath."
       },
       "fade-start": {
         "$type": "color",
-        "$value": "linear-gradient(0deg, {gradient.dialog.fade} 0%, {bg.2} 100%)",
+        "$value": "linear-gradient(0deg, {gradient.dialog.fade} 0%, {bg.1} 100%)",
         "$description": "Gradient fade for dialog top edge. Creates smooth visual transition."
       },
       "fade-end": {
         "$type": "color",
-        "$value": "linear-gradient(0deg, {bg.2} 0%, {gradient.dialog.fade} 100%)",
+        "$value": "linear-gradient(0deg, {bg.1} 0%, {gradient.dialog.fade} 100%)",
         "$description": "Gradient fade for dialog bottom edge. Creates smooth visual transition."
       }
     },
@@ -1239,7 +1239,7 @@
           }
         },
         "$type": "color",
-        "$value": "{forest.200}",
+        "$value": "{lime.200}",
         "$description": "Green background highlighting newly added code lines while maintaining readability."
       },
       "add-lineNumber": {
@@ -1253,7 +1253,7 @@
           }
         },
         "$type": "color",
-        "$value": "{forest.200}",
+        "$value": "{lime.200}",
         "$description": "Background for line numbers of added code, providing visual connection to added content."
       },
       "add-content-highlight": {
@@ -1267,7 +1267,7 @@
           }
         },
         "$type": "color",
-        "$value": "{forest.200}",
+        "$value": "{lime.200}",
         "$description": "Stronger emphasis color for specific character changes within added lines."
       },
       "add-widget": {
@@ -1402,7 +1402,7 @@
       },
       "hljs-string": {
         "$type": "color",
-        "$value": "{forest.700}",
+        "$value": "{lime.700}",
         "$description": "Color for string literals in syntax highlighting. Distinguishes text content and string values from other code elements."
       },
       "hljs-title-function": {
@@ -1736,18 +1736,11 @@
         }
       }
     },
-    "tab": {
-      "selection-item": {
-        "$type": "color",
-        "$value": "{pure.white}",
-        "$description": "Background color for selected tab items. Provides clear visual indication of the active tab state."
-      }
-    },
     "toast": {
       "danger": {
         "bg": {
           "$type": "color",
-          "$value": "{red.200}",
+          "$value": "{red.300}",
           "$description": "Background color for danger toast notifications. Provides visual context for error and critical messages."
         },
         "border": {
@@ -2936,7 +2929,7 @@
         "glow": {
           "from": {
             "$type": "color",
-            "$value": "{yellow.50}",
+            "$value": "{yellow.100}",
             "$description": "Starting color for running pipeline glow gradients."
           },
           "to": {

@@ -17,6 +17,10 @@ export function useCodeLenses<T>({
   useEffect(() => {
     const disposable = monaco.languages.registerCodeLensProvider('yaml', {
       provideCodeLenses: async model => {
+        if (model?.uri?.toString() !== editorRef.current?.getModel()?.uri?.toString()) {
+          return { lenses: [], dispose: () => {} }
+        }
+
         const outlineModel = await getOutlineModel(model)
         const pathSymbolMap = processOutlineModel(outlineModel)
 

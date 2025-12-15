@@ -43,6 +43,7 @@ export interface YamlEditorProps<T> {
   animateOnUpdate?: boolean
   onAnimateEnd?: () => void
   instanceId?: string
+  height?: string | number
 }
 
 export const YamlEditor = function YamlEditor<T>(props: YamlEditorProps<T>): JSX.Element {
@@ -57,7 +58,8 @@ export const YamlEditor = function YamlEditor<T>(props: YamlEditorProps<T>): JSX
     options: userOptions,
     animateOnUpdate = false,
     onAnimateEnd,
-    instanceId: instanceIdFromProps
+    instanceId: instanceIdFromProps,
+    height
   } = props
   const monaco = useMonaco()
   const [instanceId] = useState(instanceIdFromProps ?? `yaml-editor-${Math.random()}`)
@@ -183,6 +185,7 @@ export const YamlEditor = function YamlEditor<T>(props: YamlEditorProps<T>): JSX
         options={mergedOptions}
         path={path}
         onMount={handleEditorDidMount}
+        height={height}
       />
     </div>
   )

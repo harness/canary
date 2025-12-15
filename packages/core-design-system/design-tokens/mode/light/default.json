@@ -189,7 +189,7 @@
         },
         "bg": {
           "$type": "color",
-          "$value": "{blue.50}",
+          "$value": "{blue.25}",
           "$description": "Background color for primary brand items with minimum emphasis."
         },
         "border": {
@@ -1814,12 +1814,12 @@
     "tooltip": {
       "bg": {
         "$type": "color",
-        "$value": "{gray.900}",
+        "$value": "{gray.1000}",
         "$description": "Background color for tooltip components. Provides high contrast backdrop for tooltip content."
       },
       "border": {
         "$type": "color",
-        "$value": "{gray.900}",
+        "$value": "{gray.1000}",
         "$description": "Border color for tooltip components. Defines tooltip boundaries."
       },
       "text": {

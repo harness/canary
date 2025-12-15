@@ -26,6 +26,7 @@
   "license": "Apache-2.0",
   "devDependencies": {
     "@tokens-studio/sd-transforms": "^1.2.9",
+    "culori": "^4.0.2",
     "figlet": "^1.8.0",
     "gradient-string": "^3.0.0",
     "rimraf": "^6.0.1",

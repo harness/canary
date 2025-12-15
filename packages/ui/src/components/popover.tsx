@@ -170,6 +170,9 @@ const PopoverComponent = ({
       </Popover.Trigger>
       <Popover.Content
         {...evenTriggerProps}
+        onOpenAutoFocus={(e: Event) => {
+          e.preventDefault()
+        }}
         onCloseAutoFocus={(e: Event) => {
           e.preventDefault()
           triggerRef.current?.focus()

@@ -3,7 +3,6 @@ export default {
     '&-content': {
       display: 'grid',
       minWidth: 'var(--cn-popover-min)',
-      maxWidth: 'var(--cn-popover-max)',
       padding: 'var(--cn-popover-py) var(--cn-popover-px)',
       gap: 'var(--cn-popover-gap)',
       borderRadius: 'var(--cn-popover-radius)',

@@ -719,7 +719,7 @@
         },
         "border": {
           "$type": "color",
-          "$value": "{brown.300}",
+          "$value": "{brown.200}",
           "$description": "Border color for standard brown boundaries."
         },
         "bg-hover": {

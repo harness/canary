@@ -4,8 +4,6 @@
     "core/colors_lch",
     "core/typography",
     "core/dimensions",
-    "core/colors_hex_new",
-    "core/colors_lch_new",
     "mode/dark/figma-icon-stroke-width",
     "mode/dark/icon-stroke-width",
     "mode/dark/default",

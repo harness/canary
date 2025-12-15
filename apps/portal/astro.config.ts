@@ -48,6 +48,7 @@ export default defineConfig({
           label: "Foundations",
           items: [
             "foundations/colors",
+            "foundations/variables",
             "foundations/spacings",
             "foundations/typography",
             "foundations/icons",

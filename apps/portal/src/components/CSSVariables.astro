@@ -1,0 +1,210 @@
+---
+import * as styles from "@harnessio/core-design-system/styles-esm";
+
+// Helper function to recursively extract CSS variables from design system objects
+function extractVariables(
+  obj: any,
+  prefix = "",
+): Array<{
+  name: string;
+  value: string;
+  category: string;
+  subcategory: string;
+}> {
+  const variables: Array<{
+    name: string;
+    value: string;
+    category: string;
+    subcategory: string;
+  }> = [];
+
+  for (const key in obj) {
+    const item = obj[key];
+
+    if (item && typeof item === "object") {
+      // If it has a name and $value, it's a token
+      if (item.name && item.$value !== undefined) {
+        variables.push({
+          name: `--${item.name}`,
+          value: String(item.$value),
+          category: "",
+          subcategory: "",
+        });
+      } else {
+        // Recursively process nested objects
+        variables.push(...extractVariables(item, prefix));
+      }
+    }
+  }
+
+  return variables;
+}
+
+// Extract variables from each category
+const breakpointVars = extractVariables(styles.breakpoint).map((v) => ({
+  ...v,
+  category: "Breakpoint",
+  subcategory: "Breakpoint Variables",
+}));
+const colorsVars = extractVariables(styles.colors);
+const coreVars = extractVariables(styles.core);
+
+// Categorize core variables
+const categorizeCore = (
+  vars: Array<{
+    name: string;
+    value: string;
+    category: string;
+    subcategory: string;
+  }>,
+) => {
+  const categories: Record<
+    string,
+    Record<
+      string,
+      Array<{
+        name: string;
+        value: string;
+        category: string;
+        subcategory: string;
+      }>
+    >
+  > = {
+    Typography: {
+      "Letter Spacing": [],
+      "Font Weight": [],
+      "Font Family": [],
+      "Text Decoration": [],
+      "Text Case": [],
+      "Font Size": [],
+      "Line Height": [],
+    },
+    Sizing: {
+      "Size Variables": [],
+      "Spacing Variables": [],
+      "Border Width": [],
+      "Border Radius": [],
+      "Icon Size": [],
+      "Logo Size": [],
+    },
+    Effects: {
+      Opacity: [],
+    },
+  };
+
+  vars.forEach((v) => {
+    const varWithCategory = { ...v, category: "", subcategory: "" };
+
+    if (v.name.includes("tracking")) {
+      varWithCategory.category = "Typography";
+      varWithCategory.subcategory = "Letter Spacing";
+      categories["Typography"]["Letter Spacing"].push(varWithCategory);
+    } else if (v.name.includes("font-weight")) {
+      varWithCategory.category = "Typography";
+      varWithCategory.subcategory = "Font Weight";
+      categories["Typography"]["Font Weight"].push(varWithCategory);
+    } else if (v.name.includes("font-family")) {
+      varWithCategory.category = "Typography";
+      varWithCategory.subcategory = "Font Family";
+      categories["Typography"]["Font Family"].push(varWithCategory);
+    } else if (v.name.includes("text-decoration")) {
+      varWithCategory.category = "Typography";
+      varWithCategory.subcategory = "Text Decoration";
+      categories["Typography"]["Text Decoration"].push(varWithCategory);
+    } else if (v.name.includes("text-case")) {
+      varWithCategory.category = "Typography";
+      varWithCategory.subcategory = "Text Case";
+      categories["Typography"]["Text Case"].push(varWithCategory);
+    } else if (v.name.includes("font-size")) {
+      varWithCategory.category = "Typography";
+      varWithCategory.subcategory = "Font Size";
+      categories["Typography"]["Font Size"].push(varWithCategory);
+    } else if (v.name.includes("line-height")) {
+      varWithCategory.category = "Typography";
+      varWithCategory.subcategory = "Line Height";
+      categories["Typography"]["Line Height"].push(varWithCategory);
+    } else if (v.name.includes("cn-size-")) {
+      varWithCategory.category = "Sizing";
+      varWithCategory.subcategory = "Size Variables";
+      categories["Sizing"]["Size Variables"].push(varWithCategory);
+    } else if (v.name.includes("spacing")) {
+      varWithCategory.category = "Sizing";
+      varWithCategory.subcategory = "Spacing Variables";
+      categories["Sizing"]["Spacing Variables"].push(varWithCategory);
+    } else if (v.name.includes("border-width")) {
+      varWithCategory.category = "Sizing";
+      varWithCategory.subcategory = "Border Width";
+      categories["Sizing"]["Border Width"].push(varWithCategory);
+    } else if (v.name.includes("rounded")) {
+      varWithCategory.category = "Sizing";
+      varWithCategory.subcategory = "Border Radius";
+      categories["Sizing"]["Border Radius"].push(varWithCategory);
+    } else if (v.name.includes("icon-size")) {
+      varWithCategory.category = "Sizing";
+      varWithCategory.subcategory = "Icon Size";
+      categories["Sizing"]["Icon Size"].push(varWithCategory);
+    } else if (v.name.includes("logo-size")) {
+      varWithCategory.category = "Sizing";
+      varWithCategory.subcategory = "Logo Size";
+      categories["Sizing"]["Logo Size"].push(varWithCategory);
+    } else if (v.name.includes("opacity")) {
+      varWithCategory.category = "Effects";
+      varWithCategory.subcategory = "Opacity";
+      categories["Effects"]["Opacity"].push(varWithCategory);
+    }
+  });
+
+  return categories;
+};
+
+// Categorize colors - only Pure Colors
+const categorizeColors = (
+  vars: Array<{
+    name: string;
+    value: string;
+    category: string;
+    subcategory: string;
+  }>,
+) => {
+  const categories: Record<
+    string,
+    Array<{
+      name: string;
+      value: string;
+      category: string;
+      subcategory: string;
+    }>
+  > = {
+    "Pure Colors": [],
+  };
+
+  vars.forEach((v) => {
+    if (v.name.includes("pure")) {
+      const varWithCategory = {
+        ...v,
+        category: "Colors",
+        subcategory: "Pure Colors",
+      };
+      categories["Pure Colors"].push(varWithCategory);
+    }
+  });
+
+  return categories;
+};
+
+const coreCategories = categorizeCore(coreVars);
+const colorCategories = categorizeColors(colorsVars);
+
+// Flatten all variables into a single array for search
+const allVariables = [
+  ...breakpointVars,
+  ...Object.values(colorCategories).flat(),
+  ...Object.values(coreCategories).flatMap((subCats) =>
+    Object.values(subCats).flat(),
+  ),
+];
+
+import { CSSVariablesClient } from "./docs-page/CSSVariablesClient";
+---
+
+<CSSVariablesClient client:load allVariables={allVariables} />

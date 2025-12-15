@@ -656,7 +656,7 @@
         },
         "border": {
           "$type": "color",
-          "$value": "{purple.400}",
+          "$value": "{purple.300}",
           "$description": "Border color for standard purple boundaries."
         },
         "bg-hover": {
@@ -777,7 +777,7 @@
         },
         "border": {
           "$type": "color",
-          "$value": "{cyan.200}",
+          "$value": "{cyan.150}",
           "$description": "Border color for standard cyan boundaries."
         },
         "bg-hover": {
@@ -840,7 +840,7 @@
         },
         "border": {
           "$type": "color",
-          "$value": "{indigo.400}",
+          "$value": "{indigo.300}",
           "$description": "Border color for standard indigo boundaries."
         },
         "bg-hover": {
@@ -1014,7 +1014,7 @@
         },
         "border": {
           "$type": "color",
-          "$value": "{orange.400}",
+          "$value": "{orange.300}",
           "$description": "Border color for standard orange boundaries."
         },
         "bg-hover": {
@@ -1072,7 +1072,7 @@
         },
         "border": {
           "$type": "color",
-          "$value": "{pink.300}",
+          "$value": "{pink.200}",
           "$description": "Border color for standard pink boundaries."
         },
         "bg-hover": {

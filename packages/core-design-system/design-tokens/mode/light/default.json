@@ -86,7 +86,7 @@
     },
     "brand": {
       "$type": "color",
-      "$value": "{set.brand.primary.bg}",
+      "$value": "{set.brand.outline.border}",
       "$description": "Brand-colored border for active states and focus indicators. Provides branded visual feedback for user interactions and meets accessibility requirements for focus visibility.\n\nCommon uses: Focus rings, active form field borders, primary button outlines, keyboard navigation highlights, selected interactive elements."
     },
     "success": {
@@ -2436,7 +2436,7 @@
             }
           },
           "$type": "color",
-          "$value": "{blue.200}",
+          "$value": "{blue.150}",
           "$description": "Starting color for selected sidebar item gradients."
         },
         "to": {

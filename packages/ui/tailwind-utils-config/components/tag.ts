@@ -6,8 +6,8 @@ const themes = [
   'brown',
   'cyan',
   'green',
+  'forest-green',
   'indigo',
-  'lime',
   'mint',
   'orange',
   'pink',
@@ -45,17 +45,17 @@ function createTagVariantStyles(variant: 'outline' | 'secondary'): CSSRuleObject
       },
       '&:where(.cn-tag-split-right)': isOutline
         ? {
-            borderColor: `var(--cn-set-${theme}-secondary-bg)`,
-            '.cn-tag-split.cn-tag-split-hoverable:hover &': {
-              borderColor: `var(--cn-set-${theme}-secondary-bg-hover)`
-            }
+          borderColor: `var(--cn-set-${theme}-secondary-bg)`,
+          '.cn-tag-split.cn-tag-split-hoverable:hover &': {
+            borderColor: `var(--cn-set-${theme}-secondary-bg-hover)`
           }
+        }
         : {
-            backgroundColor: `var(--cn-set-${theme}-outline-bg)`,
-            '.cn-tag-split.cn-tag-split-hoverable:hover &': {
-              backgroundColor: `var(--cn-set-${theme}-outline-bg-hover)`
-            }
-          },
+          backgroundColor: `var(--cn-set-${theme}-outline-bg)`,
+          '.cn-tag-split.cn-tag-split-hoverable:hover &': {
+            backgroundColor: `var(--cn-set-${theme}-outline-bg-hover)`
+          }
+        },
 
       // ICON STYLES
       '.cn-tag-icon': {

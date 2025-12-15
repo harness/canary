@@ -257,7 +257,7 @@
       "$value": "#efffd4"
     },
     "100": {
-      "$value": "#dffab5"
+      "$value": "#e5fbc0"
     },
     "150": {
       "$value": "#c8ef8c"
@@ -443,22 +443,22 @@
   },
   "blue": {
     "25": {
-      "$value": "#f6faff"
+      "$value": "#f4fafe"
     },
     "50": {
-      "$value": "#f1f7ff"
+      "$value": "#eef8ff"
     },
     "100": {
-      "$value": "#ddedff"
+      "$value": "#ddf1fe"
     },
     "150": {
-      "$value": "#c9e3ff"
+      "$value": "#c6e4ff"
     },
     "200": {
-      "$value": "#a9d4ff"
+      "$value": "#a3d5ff"
     },
     "300": {
-      "$value": "#8cc8ff"
+      "$value": "#89c8ff"
     },
     "400": {
       "$value": "#62b9ff"

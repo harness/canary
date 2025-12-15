@@ -3,9 +3,9 @@
     "id": "89bf9a3ab61c40d6291a24c452efc1591c4d41c0",
     "name": "source",
     "selectedTokenSets": {
-      "core/typography": "enabled",
-      "core/dimensions": "enabled",
-      "core/colors_hex_new": "enabled"
+      "core/typography": "source",
+      "core/dimensions": "source",
+      "core/colors_lch_new": "source"
     },
     "$figmaStyleReferences": {
       "colors.pure.white": "S:3cdd1e94ddf267f0a1b6df9582438d6230d12c7c,",

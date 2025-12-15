@@ -111,7 +111,7 @@
         "studio.tokens": {
           "modify": {
             "type": "alpha",
-            "value": "0.15",
+            "value": "0.2",
             "space": "lch"
           }
         }
@@ -125,7 +125,7 @@
         "studio.tokens": {
           "modify": {
             "type": "alpha",
-            "value": "0.18",
+            "value": "0.20",
             "space": "lch"
           }
         }

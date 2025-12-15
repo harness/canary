@@ -242,17 +242,17 @@
         },
         "bg": {
           "$type": "color",
-          "$value": "{gray.400}",
+          "$value": "{gray.300}",
           "$description": "Background color for prominent gray surfaces."
         },
         "bg-hover": {
           "$type": "color",
-          "$value": "{gray.500}",
+          "$value": "{gray.400}",
           "$description": "Hover state background color for prominent gray surfaces."
         },
         "bg-selected": {
           "$type": "color",
-          "$value": "{gray.500}",
+          "$value": "{gray.400}",
           "$description": "Selected state background color for prominent gray surfaces."
         }
       },

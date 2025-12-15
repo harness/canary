@@ -3095,27 +3095,27 @@
   "icon": {
     "devops": {
       "$type": "color",
-      "$value": "{mint.400}",
+      "$value": "{mint.500}",
       "$description": "Brand color for DevOps category icons. Creates visual categorization."
     },
     "testing": {
       "$type": "color",
-      "$value": "{orange.400}",
+      "$value": "{orange.500}",
       "$description": "Brand color for Testing category icons. Creates visual categorization."
     },
     "security": {
       "$type": "color",
-      "$value": "{indigo.500}",
+      "$value": "{indigo.600}",
       "$description": "Brand color for Security category icons. Creates visual categorization."
     },
     "efficiency": {
       "$type": "color",
-      "$value": "{cyan.400}",
+      "$value": "{cyan.500}",
       "$description": "Brand color for Efficiency category icons. Creates visual categorization."
     },
     "platform": {
       "$type": "color",
-      "$value": "{purple.400}",
+      "$value": "{purple.500}",
       "$description": "Brand color for Platform category icons. Creates visual categorization."
     }
   },

@@ -1682,13 +1682,6 @@
         "$description": "Gradient fade effect for sidebar bottom edge. Creates smooth visual transition from background to sidebar content."
       }
     },
-    "tab": {
-      "selection-item": {
-        "$type": "color",
-        "$value": "{chrome.900}",
-        "$description": "Background color for selected tab items. Provides clear visual indication of the active tab state."
-      }
-    },
     "toast": {
       "danger": {
         "bg": {

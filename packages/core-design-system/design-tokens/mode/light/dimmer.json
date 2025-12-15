@@ -1673,13 +1673,6 @@
         }
       }
     },
-    "tab": {
-      "selection-item": {
-        "$type": "color",
-        "$value": "{pure.white}",
-        "$description": "Background color for selected tab items. Provides clear visual indication of the active tab state."
-      }
-    },
     "toast": {
       "danger": {
         "bg": {

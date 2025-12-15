@@ -194,7 +194,7 @@
         },
         "border": {
           "$type": "color",
-          "$value": "{blue.200}",
+          "$value": "{blue.600}",
           "$description": "Border color for primary brand with minimum emphasis boundaries."
         },
         "bg-hover": {

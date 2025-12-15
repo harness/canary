@@ -251,25 +251,25 @@
   },
   "lime": {
     "25": {
-      "$value": "#f6ffed"
+      "$value": "#f7ffeb"
     },
     "50": {
-      "$value": "#e6fece"
+      "$value": "#e9fdcc"
     },
     "100": {
-      "$value": "#d5f5b5"
+      "$value": "#d8f4b4"
     },
     "150": {
-      "$value": "#c0ed97"
+      "$value": "#c5ec94"
     },
     "200": {
-      "$value": "#a9e176"
+      "$value": "#afe073"
     },
     "300": {
-      "$value": "#8cd34e"
+      "$value": "#94d249"
     },
     "400": {
-      "$value": "#68c600"
+      "$value": "#71c500"
     },
     "500": {
       "$value": "#5cb100"

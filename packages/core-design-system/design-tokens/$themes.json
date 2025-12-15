@@ -3298,7 +3298,7 @@
     },
     "selectedTokenSets": {
       "mode/light/default": "enabled",
-      "mode/light/figma-icon-stroke-width": "enabled"
+      "mode/light/icon-stroke-width": "enabled"
     },
     "$figmaCollectionId": "VariableCollectionId:1340:156918",
     "$figmaModeId": "1340:4",

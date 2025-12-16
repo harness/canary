@@ -20,6 +20,8 @@ import labelStyles from './label'
 import linkStyles from './link'
 import messageBubbleStyles from './message-bubble'
 import meterStyles from './meter'
+import reasoningStyles from './reasoning'
+import shimmerStyles from './shimmer'
 import multiSelectStyles from './multi-select'
 import paginationStyles from './pagination'
 import popoverStyles from './popover'
@@ -87,6 +89,8 @@ export const ComponentStyles = [
   treeStyles,
   meterStyles,
   messageBubbleStyles,
+  reasoningStyles,
+  shimmerStyles,
 
   // Form styles
   selectStyles,

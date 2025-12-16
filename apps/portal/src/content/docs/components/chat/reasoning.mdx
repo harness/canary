@@ -1,0 +1,172 @@
+---
+title: Reasoning
+description: Collapsible AI reasoning/thinking component for chat interfaces
+beta: true
+---
+
+import { DocsPage } from "@/components/docs-page";
+
+The `Reasoning` component displays AI reasoning or thinking content in a collapsible format. It automatically tracks streaming duration and can auto-collapse when streaming completes.
+
+## Usage
+
+The Reasoning component uses a compound pattern with `Reasoning.Root`, `Reasoning.Trigger`, and `Reasoning.Content` sub-components.
+
+<DocsPage.ComponentExample
+  client:only
+  code={`<Reasoning.Root defaultOpen={true}>
+  <Reasoning.Trigger />
+  <Reasoning.Content>
+    Let me think about this step by step...
+
+    1. First, I need to understand the problem
+    2. Then, I'll analyze the options
+    3. Finally, I'll provide a solution
+
+  </Reasoning.Content>
+</Reasoning.Root>`}
+/>
+
+## Streaming State
+
+When `isStreaming` is true, the trigger displays an animated shimmer effect. The component tracks the duration automatically.
+
+<DocsPage.ComponentExample
+  client:only
+  code={`<Reasoning.Root isStreaming={true} defaultOpen={true}>
+  <Reasoning.Trigger />
+  <Reasoning.Content>
+    Processing your request and analyzing the data...
+  </Reasoning.Content>
+</Reasoning.Root>`}
+/>
+
+## With Duration
+
+After streaming completes, the component displays how long the thinking took.
+
+<DocsPage.ComponentExample
+  client:only
+  code={`<Reasoning.Root duration={5} defaultOpen={false}>
+  <Reasoning.Trigger />
+  <Reasoning.Content>
+    After careful analysis, here's my reasoning:
+
+    - The input appears to be valid
+    - Processing was successful
+    - Results are ready
+
+  </Reasoning.Content>
+</Reasoning.Root>`}
+/>
+
+## Custom Thinking Message
+
+Customize the thinking message using the `getThinkingMessage` prop on the trigger.
+
+<DocsPage.ComponentExample
+  client:only
+  code={`<Reasoning.Root isStreaming={false} duration={3} defaultOpen={false}>
+  <Reasoning.Trigger
+    getThinkingMessage={(isStreaming, duration) => {
+      if (isStreaming) return <Shimmer duration={1}>Processing...</Shimmer>;
+      return <span>Analyzed for {duration}s</span>;
+    }}
+  />
+  <Reasoning.Content>
+    Custom reasoning content here.
+  </Reasoning.Content>
+</Reasoning.Root>`}
+/>
+
+## Usage
+
+```typescript jsx
+import { Reasoning } from '@harnessio/ui/components'
+
+// Basic usage
+<Reasoning.Root>
+  <Reasoning.Trigger />
+  <Reasoning.Content>
+    Your reasoning content here...
+  </Reasoning.Content>
+</Reasoning.Root>
+
+// With streaming state
+const [isStreaming, setIsStreaming] = useState(true)
+
+<Reasoning.Root isStreaming={isStreaming}>
+  <Reasoning.Trigger />
+  <Reasoning.Content>
+    {streamingContent}
+  </Reasoning.Content>
+</Reasoning.Root>
+
+// Controlled open state
+const [open, setOpen] = useState(false)
+
+<Reasoning.Root open={open} onOpenChange={setOpen}>
+  <Reasoning.Trigger />
+  <Reasoning.Content>
+    Controlled content visibility
+  </Reasoning.Content>
+</Reasoning.Root>
+```
+
+## Component Structure
+
+- **Reasoning.Root** - Container that manages state and provides context
+- **Reasoning.Trigger** - Clickable header with icon, message, and chevron
+- **Reasoning.Content** - Collapsible content area with markdown support
+
+## API Reference
+
+### Reasoning.Root
+
+| Prop           | Type                      | Default | Description                                     |
+| -------------- | ------------------------- | ------- | ----------------------------------------------- |
+| `isStreaming`  | `boolean`                 | `false` | Whether content is currently streaming          |
+| `open`         | `boolean`                 | —       | Controlled open state                           |
+| `defaultOpen`  | `boolean`                 | `true`  | Initial open state (uncontrolled)               |
+| `onOpenChange` | `(open: boolean) => void` | —       | Callback when open state changes                |
+| `duration`     | `number`                  | —       | Override the auto-calculated duration (seconds) |
+| `className`    | `string`                  | —       | Additional CSS classes                          |
+
+### Reasoning.Trigger
+
+| Prop                 | Type                                                     | Default                  | Description                       |
+| -------------------- | -------------------------------------------------------- | ------------------------ | --------------------------------- |
+| `getThinkingMessage` | `(isStreaming: boolean, duration?: number) => ReactNode` | Default message function | Custom function to render message |
+| `children`           | `ReactNode`                                              | —                        | Override entire trigger content   |
+| `className`          | `string`                                                 | —                        | Additional CSS classes            |
+
+### Reasoning.Content
+
+| Prop        | Type     | Default | Description                 |
+| ----------- | -------- | ------- | --------------------------- |
+| `children`  | `string` | —       | Markdown content to display |
+| `className` | `string` | —       | Additional CSS classes      |
+
+## Hooks
+
+### useReasoning
+
+Access the reasoning context from within child components.
+
+```typescript jsx
+import { useReasoning } from '@harnessio/ui/components'
+
+const CustomComponent = () => {
+  const { isStreaming, isOpen, duration } = useReasoning()
+
+  return <div>Streaming: {isStreaming ? 'Yes' : 'No'}</div>
+}
+```
+
+## Behavior
+
+1. **Auto-duration tracking**: When `isStreaming` transitions from `true` to `false`, the component automatically calculates and displays the elapsed time.
+
+2. **Auto-collapse**: When `defaultOpen={true}`, the component automatically collapses 1 second after streaming completes (only once per session).
+
+3. **Shimmer animation**: The trigger displays an animated shimmer effect while streaming to indicate ongoing activity.

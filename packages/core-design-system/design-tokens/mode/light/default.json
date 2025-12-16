@@ -2497,32 +2497,32 @@
         "bg": {
           "stop-1": {
             "$type": "color",
-            "$value": "{pure.white}",
+            "$value": "{gray.25}",
             "$description": "First gradient stop for empty state background."
           },
           "stop-2": {
             "$type": "color",
-            "$value": "{pure.white}",
+            "$value": "{gray.25}",
             "$description": "Second gradient stop for empty state background."
           },
           "stop-3": {
             "$type": "color",
-            "$value": "{gray.25}",
+            "$value": "{pure.white}",
             "$description": "Third gradient stop for empty state background."
           },
           "stop-4": {
             "$type": "color",
-            "$value": "{gray.25}",
+            "$value": "{pure.white}",
             "$description": "Fourth gradient stop for empty state background."
           },
           "stop-5": {
             "$type": "color",
-            "$value": "{gray.50}",
+            "$value": "{gray.25}",
             "$description": "Fifth gradient stop for empty state background."
           },
           "stop-6": {
             "$type": "color",
-            "$value": "{gray.100}",
+            "$value": "{gray.50}",
             "$description": "Sixth gradient stop for empty state background."
           }
         },
@@ -2559,17 +2559,17 @@
         "icon": {
           "stop-1": {
             "$type": "color",
-            "$value": "{gray.200}",
+            "$value": "{gray.300}",
             "$description": "First gradient stop for empty state icon."
           },
           "stop-2": {
             "$type": "color",
-            "$value": "{gray.300}",
+            "$value": "{gray.400}",
             "$description": "Second gradient stop for empty state icon."
           },
           "stop-3": {
             "$type": "color",
-            "$value": "{gray.400}",
+            "$value": "{gray.500}",
             "$description": "Third gradient stop for empty state icon."
           }
         },

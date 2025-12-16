@@ -29,6 +29,7 @@ interface PopoverContentProps extends ComponentPropsWithoutRef<typeof PopoverPri
   description?: string
   linkProps?: Omit<LinkProps, 'children'> & { text: string }
   hideArrow?: boolean
+  noMaxWidth?: boolean
 }
 
 const PopoverContent = forwardRef<ElementRef<typeof PopoverPrimitive.Content>, PopoverContentProps>(
@@ -42,6 +43,8 @@ const PopoverContent = forwardRef<ElementRef<typeof PopoverPrimitive.Content>, P
       hideArrow = false,
       align = 'center',
       sideOffset = 4,
+      noMaxWidth = false,
+      style,
       ...props
     },
     ref
@@ -51,10 +54,11 @@ const PopoverContent = forwardRef<ElementRef<typeof PopoverPrimitive.Content>, P
     return (
       <PopoverPrimitive.Portal container={portalContainer}>
         <PopoverPrimitive.Content
-          className={cn('cn-popover-content', className)}
+          className={cn('cn-popover-content', { 'cn-popover-content-max-size': !noMaxWidth }, className)}
           ref={ref}
           align={align}
           sideOffset={sideOffset}
+          style={style}
           {...props}
         >
           {(title || description) && (
@@ -94,6 +98,7 @@ interface PopoverProps
   triggerType?: TriggerType
   hoverDelay?: number
   closeDelay?: number
+  noMaxWidth?: boolean
 }
 
 const PopoverComponent = ({
@@ -105,6 +110,7 @@ const PopoverComponent = ({
   triggerType = 'click',
   hoverDelay = 200,
   closeDelay = 300,
+  noMaxWidth,
   ...props
 }: PopoverProps) => {
   const [internalOpen, setInternalOpen] = useState(defaultOpen || false)
@@ -177,6 +183,7 @@ const PopoverComponent = ({
           e.preventDefault()
           triggerRef.current?.focus()
         }}
+        noMaxWidth={noMaxWidth}
         {...props}
       >
         {content}

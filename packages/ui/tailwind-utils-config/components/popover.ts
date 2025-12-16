@@ -16,6 +16,9 @@ export default {
 
       '& > span:has(.cn-popover-arrow)': {
         margin: '1px !important'
+      },
+      '&-max-size': {
+        maxWidth: 'var(--cn-popover-max)'
       }
     },
 

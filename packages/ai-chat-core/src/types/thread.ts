@@ -14,6 +14,8 @@ export interface ThreadState {
   isDisabled: boolean
   isRunning: boolean
   capabilities: RuntimeCapabilities
+  conversationId?: string
+  title?: string
 }
 
 export interface ThreadListItemState {

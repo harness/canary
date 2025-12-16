@@ -27,6 +27,7 @@ export type StreamEvent =
       readonly type: 'metadata'
       readonly conversationId?: string
       readonly interactionId?: string
+      readonly title?: string
     }
   | {
       readonly type: 'error'
@@ -49,6 +50,7 @@ export type StreamEvent =
 
 export interface StreamRequest {
   messages: Message[]
+  conversationId?: string
   signal?: AbortSignal
   config?: Record<string, unknown>
 }

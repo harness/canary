@@ -33,12 +33,22 @@ export class ThreadRuntime extends BaseSubscribable {
     return this._core.capabilities
   }
 
+  public get conversationId(): string | undefined {
+    return this._core.conversationId
+  }
+
+  public get title(): string | undefined {
+    return this._core.title
+  }
+
   public getState(): ThreadState {
     return {
       threadId: 'main', // Will be set by ThreadListRuntime
       isDisabled: this._core.isDisabled,
       isRunning: this._core.isRunning,
-      capabilities: this._core.capabilities
+      capabilities: this._core.capabilities,
+      conversationId: this._core.conversationId,
+      title: this._core.title
     }
   }
 

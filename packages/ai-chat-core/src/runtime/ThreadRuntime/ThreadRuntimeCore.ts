@@ -18,6 +18,8 @@ export class ThreadRuntimeCore extends BaseSubscribable {
   private _isRunning = false
   private _isDisabled = false
   private _abortController: AbortController | null = null
+  private _conversationId?: string
+  private _title?: string
 
   // Track current part being accumulated
   private _currentPart: {
@@ -44,6 +46,14 @@ export class ThreadRuntimeCore extends BaseSubscribable {
 
   public get isDisabled(): boolean {
     return this._isDisabled
+  }
+
+  public get conversationId(): string | undefined {
+    return this._conversationId
+  }
+
+  public get title(): string | undefined {
+    return this._title
   }
 
   public get capabilities(): RuntimeCapabilities {
@@ -101,6 +111,7 @@ export class ThreadRuntimeCore extends BaseSubscribable {
     try {
       const stream = this.config.streamAdapter.stream({
         messages: this._messages,
+        conversationId: this._conversationId,
         signal: this._abortController.signal
       })
 
@@ -150,6 +161,14 @@ export class ThreadRuntimeCore extends BaseSubscribable {
         ...message.metadata,
         conversationId: metadataEvent.conversationId,
         interactionId: metadataEvent.interactionId
+      }
+
+      if (metadataEvent.conversationId && !this._conversationId) {
+        this._conversationId = metadataEvent.conversationId
+      }
+
+      if (metadataEvent.title && !this._title) {
+        this._title = metadataEvent.title
       }
     } else if (event.type === 'capability_execution') {
       const capabilityEvent = event as Extract<StreamEvent, { type: 'capability_execution' }>

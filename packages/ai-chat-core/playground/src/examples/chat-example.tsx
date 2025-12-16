@@ -1,8 +1,9 @@
-import { ContentRenderer, useComposer, useMessages } from '../../../src'
+import { ContentRenderer, useComposer, useCurrentThread, useMessages } from '../../../src'
 
 function ChatExample() {
   const messages = useMessages()
   const { text, setText, send, isSubmitting } = useComposer()
+  const thread = useCurrentThread()
 
   return (
     <div
@@ -24,7 +25,7 @@ function ChatExample() {
           fontSize: '16px'
         }}
       >
-        AI Chat
+        {thread.title || 'AI Chat'}
       </div>
 
       <div

@@ -397,24 +397,24 @@
         },
         "bg": {
           "$type": "color",
-          "$value": "{red.300}",
+          "$value": "{red.500}",
           "$description": "Background color for prominent red surfaces."
         },
         "bg-hover": {
           "$type": "color",
-          "$value": "{red.200}",
+          "$value": "{red.400}",
           "$description": "Background color for prominent red surfaces."
         },
         "bg-selected": {
           "$type": "color",
-          "$value": "{red.200}",
+          "$value": "{red.400}",
           "$description": "Background color for prominent red surfaces."
         }
       },
       "secondary": {
         "text": {
           "$type": "color",
-          "$value": "{red.200}",
+          "$value": "{red.300}",
           "$description": "Text color for subtle red surfaces with good contrast."
         },
         "bg": {
@@ -436,7 +436,7 @@
       "outline": {
         "text": {
           "$type": "color",
-          "$value": "{red.200}",
+          "$value": "{red.400}",
           "$description": "Standard text color for red surfaces with balanced readability."
         },
         "bg": {
@@ -1515,12 +1515,21 @@
     "link": {
       "text": {
         "$type": "color",
-        "$value": "{cyan.200}",
+        "$value": "{text.brand}",
         "$description": "Default color for text links. Creates distinct visual identification of interactive text elements."
       },
       "text-hover": {
+        "$extensions": {
+          "studio.tokens": {
+            "modify": {
+              "type": "lighten",
+              "value": "0.1",
+              "space": "lch"
+            }
+          }
+        },
         "$type": "color",
-        "$value": "{cyan.150}",
+        "$value": "{text.brand}",
         "$description": "Hover color for text links. "
       }
     },

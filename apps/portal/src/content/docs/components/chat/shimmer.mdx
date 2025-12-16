@@ -1,0 +1,125 @@
+---
+title: Shimmer
+description: Animated text shimmer effect for loading states and visual emphasis
+beta: true
+---
+
+import { DocsPage } from "@/components/docs-page";
+
+The `Shimmer` component creates an animated text shimmer effect, commonly used to indicate loading states or add visual emphasis to text elements in AI and chat interfaces.
+
+## Usage
+
+<DocsPage.ComponentExample
+  client:only
+  code={`<Shimmer>Loading response...</Shimmer>`}
+/>
+
+## With Different Duration
+
+Control the animation speed using the `duration` prop (in seconds).
+
+<DocsPage.ComponentExample
+  client:only
+  code={`<div className="flex flex-col gap-cn-md">
+  <Shimmer duration={1}>Fast shimmer (1s)</Shimmer>
+  <Shimmer duration={2}>Default shimmer (2s)</Shimmer>
+  <Shimmer duration={4}>Slow shimmer (4s)</Shimmer>
+</div>`}
+/>
+
+## With Different Spread
+
+The `spread` prop controls the width of the shimmer highlight effect. Higher values create a wider shimmer.
+
+<DocsPage.ComponentExample
+  client:only
+  code={`<div className="flex flex-col gap-cn-md">
+  <Shimmer spread={1}>Narrow spread</Shimmer>
+  <Shimmer spread={2}>Default spread</Shimmer>
+  <Shimmer spread={4}>Wide spread</Shimmer>
+</div>`}
+/>
+
+## With Different Colors
+
+Use the `color` prop to change the shimmer text color. Uses the same color system as the `Text` component.
+
+<DocsPage.ComponentExample
+  client:only
+  code={`<div className="flex flex-col gap-cn-md">
+  <Shimmer color="foreground-1">Foreground 1</Shimmer>
+  <Shimmer color="foreground-2">Foreground 2 (default)</Shimmer>
+  <Shimmer color="foreground-3">Foreground 3</Shimmer>
+  <Shimmer color="brand">Brand color</Shimmer>
+  <Shimmer color="success">Success color</Shimmer>
+</div>`}
+/>
+
+## Custom Element Type
+
+Use the `as` prop to render the shimmer as a different HTML element.
+
+<DocsPage.ComponentExample
+  client:only
+  code={`<div className="flex flex-col gap-cn-md">
+  <Shimmer as="span">Span element</Shimmer>
+  <Shimmer as="h3" className="text-xl font-semibold">Heading element</Shimmer>
+  <Shimmer as="div">Div element</Shimmer>
+</div>`}
+/>
+
+## Usage
+
+```typescript jsx
+import { Shimmer } from '@harnessio/ui/components'
+
+// Basic usage
+<Shimmer>Generating response...</Shimmer>
+
+// With custom color
+<Shimmer color="foreground-1">
+  Processing your request...
+</Shimmer>
+
+// With custom duration and spread
+<Shimmer duration={3} spread={3} color="brand">
+  Loading...
+</Shimmer>
+
+// As a different element
+<Shimmer as="h2" className="text-lg">
+  Loading title...
+</Shimmer>
+```
+
+## API Reference
+
+### Props
+
+| Prop        | Type            | Default          | Description                                                |
+| ----------- | --------------- | ---------------- | ---------------------------------------------------------- |
+| `children`  | `string`        | —                | The text content to display with the shimmer effect        |
+| `as`        | `ElementType`   | `"p"`            | The HTML element type to render                            |
+| `className` | `string`        | —                | Additional CSS classes to apply                            |
+| `duration`  | `number`        | `2`              | Animation duration in seconds                              |
+| `spread`    | `number`        | `2`              | Multiplier for the shimmer highlight width (based on text length) |
+| `color`     | `ShimmerColor`  | `"foreground-2"` | Text color using the design system color tokens            |
+
+### Color Variants
+
+The `color` prop accepts the following values:
+
+| Value          | Description                    |
+| -------------- | ------------------------------ |
+| `foreground-1` | Primary foreground color       |
+| `foreground-2` | Secondary foreground (default) |
+| `foreground-3` | Tertiary foreground            |
+| `foreground-4` | Quaternary foreground          |
+| `disabled`     | Disabled state color           |
+| `success`      | Success state color            |
+| `warning`      | Warning state color            |
+| `danger`       | Danger state color             |
+| `brand`        | Brand color                    |
+| `merged`       | Merged state color             |
+

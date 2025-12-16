@@ -91,17 +91,17 @@
     },
     "success": {
       "$type": "color",
-      "$value": "{set.success.outline.border}",
+      "$value": "{lime.500}",
       "$description": "Border color for success containers. Reinforces positive status through visual framing.\n\nCommon uses: Success alert borders, confirmation boundaries, completed state indicators."
     },
     "danger": {
       "$type": "color",
-      "$value": "{set.danger.outline.border}",
+      "$value": "{red.500}",
       "$description": "Border color for error containers. Emphasizes critical information through visual framing.\n\nCommon uses: Error alert borders, validation boundaries, destructive action containers."
     },
     "warning": {
       "$type": "color",
-      "$value": "{set.warning.outline.border}",
+      "$value": "{yellow.400}",
       "$description": "Border color for warning containers. Frames cautionary information with distinct boundary.\n\nCommon uses: Warning alert borders, notice boundaries, attention-requiring elements."
     }
   },
@@ -364,7 +364,7 @@
         },
         "border": {
           "$type": "color",
-          "$value": "{lime.300}",
+          "$value": "{lime.200}",
           "$description": "Border color for standard green boundaries."
         },
         "bg-hover": {
@@ -437,7 +437,7 @@
         },
         "border": {
           "$type": "color",
-          "$value": "{red.400}",
+          "$value": "{red.200}",
           "$description": "Border color for standard red boundaries."
         },
         "bg-hover": {
@@ -510,7 +510,7 @@
         },
         "border": {
           "$type": "color",
-          "$value": "{yellow.300}",
+          "$value": "{yellow.200}",
           "$description": "Border color for standard yellow boundaries."
         },
         "bg-hover": {
@@ -583,7 +583,7 @@
         },
         "border": {
           "$type": "color",
-          "$value": "{blue.300}",
+          "$value": "{blue.200}",
           "$description": "Border color for standard blue boundaries."
         },
         "bg-hover": {
@@ -656,7 +656,7 @@
         },
         "border": {
           "$type": "color",
-          "$value": "{purple.300}",
+          "$value": "{purple.200}",
           "$description": "Border color for standard purple boundaries."
         },
         "bg-hover": {
@@ -840,7 +840,7 @@
         },
         "border": {
           "$type": "color",
-          "$value": "{indigo.300}",
+          "$value": "{indigo.200}",
           "$description": "Border color for standard indigo boundaries."
         },
         "bg-hover": {
@@ -898,7 +898,7 @@
         },
         "border": {
           "$type": "color",
-          "$value": "{forest.200}",
+          "$value": "{forest.150}",
           "$description": "Border color for standard forest-green boundaries."
         },
         "bg-hover": {
@@ -956,7 +956,7 @@
         },
         "border": {
           "$type": "color",
-          "$value": "{mint.200}",
+          "$value": "{mint.150}",
           "$description": "Border color for standard mint boundaries."
         },
         "bg-hover": {
@@ -1014,7 +1014,7 @@
         },
         "border": {
           "$type": "color",
-          "$value": "{orange.300}",
+          "$value": "{orange.200}",
           "$description": "Border color for standard orange boundaries."
         },
         "bg-hover": {

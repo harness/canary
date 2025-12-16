@@ -324,17 +324,17 @@
         },
         "bg": {
           "$type": "color",
-          "$value": "{forest.500}",
+          "$value": "{forest.400}",
           "$description": "Background color for prominent green surfaces."
         },
         "bg-hover": {
           "$type": "color",
-          "$value": "{forest.400}",
+          "$value": "{forest.300}",
           "$description": "Background color for prominent green surfaces."
         },
         "bg-selected": {
           "$type": "color",
-          "$value": "{forest.400}",
+          "$value": "{forest.300}",
           "$description": "Background color for prominent green surfaces."
         }
       },
@@ -2464,7 +2464,7 @@
             }
           },
           "$type": "color",
-          "$value": "{blue.800}",
+          "$value": "{indigo.600}",
           "$description": "Starting color for selected sidebar item gradients."
         },
         "to": {
@@ -2472,7 +2472,7 @@
             "studio.tokens": {
               "modify": {
                 "type": "alpha",
-                "value": "0.12",
+                "value": "0.09",
                 "space": "lch"
               }
             }

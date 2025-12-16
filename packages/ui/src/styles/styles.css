@@ -37,6 +37,7 @@
 }
 
 @layer utilities {
+
   /*
     Handy CSS class to prevent Input background color becomes yellow in Chrome on autofill.
     Works as well with inputs with transparent background.
@@ -73,9 +74,7 @@
   --cn-tabs-nav-height: 45px;
   --cn-repo-header-height: 71px;
   --cn-page-nav-height: calc(var(--cn-tabs-nav-height) + var(--cn-breadcrumbs-height));
-  --cn-page-nav-full-height: calc(
-    var(--cn-tabs-nav-height) + var(--cn-breadcrumbs-height) + var(--cn-repo-header-height)
-  );
+  --cn-page-nav-full-height: calc(var(--cn-tabs-nav-height) + var(--cn-breadcrumbs-height) + var(--cn-repo-header-height));
 }
 
 .border-linear {
@@ -171,6 +170,7 @@
 }
 
 .diff-tailwindcss-wrapper {
+
   .diff-line-widget-new-content,
   .diff-line-widget-new-placeholder,
   .diff-line-new-placeholder,
@@ -392,9 +392,7 @@
 
 .diff-tailwindcss-wrapper .translate-x-\[-50\%\],
 .diff-tailwindcss-wrapper .translate-x-\[50\%\] {
-  transform: translate(var(--cn-tw-translate-x, 0), var(--cn-tw-translate-y, 0)) rotate(var(--cn-tw-rotate, 0))
-    skewX(var(--cn-tw-skew-x, 0)) skewY(var(--cn-tw-skew-y, 0)) scaleX(var(--cn-tw-scale-x, 1))
-    scaleY(var(--cn-tw-scale-y, 1));
+  transform: translate(var(--cn-tw-translate-x, 0), var(--cn-tw-translate-y, 0)) rotate(var(--cn-tw-rotate, 0)) skewX(var(--cn-tw-skew-x, 0)) skewY(var(--cn-tw-skew-y, 0)) scaleX(var(--cn-tw-scale-x, 1)) scaleY(var(--cn-tw-scale-y, 1));
 }
 
 .diff-tailwindcss-wrapper .translate-x-\[50\%\] {
@@ -403,9 +401,7 @@
 
 .diff-tailwindcss-wrapper .translate-y-\[-50\%\] {
   --cn-tw-translate-y: -50%;
-  transform: translate(var(--cn-tw-translate-x, 0), var(--cn-tw-translate-y, 0)) rotate(var(--cn-tw-rotate, 0))
-    skewX(var(--cn-tw-skew-x, 0)) skewY(var(--cn-tw-skew-y, 0)) scaleX(var(--cn-tw-scale-x, 1))
-    scaleY(var(--cn-tw-scale-y, 1));
+  transform: translate(var(--cn-tw-translate-x, 0), var(--cn-tw-translate-y, 0)) rotate(var(--cn-tw-rotate, 0)) skewX(var(--cn-tw-skew-x, 0)) skewY(var(--cn-tw-skew-y, 0)) scaleX(var(--cn-tw-scale-x, 1)) scaleY(var(--cn-tw-scale-y, 1));
 }
 
 .diff-tailwindcss-wrapper .cursor-pointer {
@@ -536,8 +532,7 @@
 }
 
 .diff-tailwindcss-wrapper .filter {
-  filter: var(--cn-tw-blur) var(--cn-tw-brightness) var(--cn-tw-contrast) var(--cn-tw-grayscale) var(--cn-tw-hue-rotate)
-    var(--cn-tw-invert) var(--cn-tw-saturate) var(--cn-tw-sepia) var(--cn-tw-drop-shadow);
+  filter: var(--cn-tw-blur) var(--cn-tw-brightness) var(--cn-tw-contrast) var(--cn-tw-grayscale) var(--cn-tw-hue-rotate) var(--cn-tw-invert) var(--cn-tw-saturate) var(--cn-tw-sepia) var(--cn-tw-drop-shadow);
 }
 
 .diff-tailwindcss-wrapper .transition-transform {
@@ -568,7 +563,7 @@
   stop {
     stop-color: var(--cn-text-2);
 
-    & + stop {
+    &+stop {
       stop-color: var(--cn-text-3);
     }
   }
@@ -581,6 +576,7 @@ mark {
 
 /* Hack for detecting scroll on select */
 @keyframes detect-scroll {
+
   from,
   to {
     --can-scroll: ;
@@ -651,7 +647,7 @@ mark {
   }
 }
 
-.monaco-scrollable-element > .scrollbar > .slider {
+.monaco-scrollable-element>.scrollbar>.slider {
   border-radius: var(--cn-rounded-full, 0.25rem);
   --vscode-scrollbarSlider-background: var(--cn-comp-scrollbar-thumb, lch(20.5% 2.62 285.74));
 }
@@ -670,11 +666,11 @@ mark {
   @apply invisible h-[var(--block-height)] [contain-intrinsic-height:auto_var(--block-height)] [content-visibility:auto];
 }
 
-.diffViewBlock.hiddenDiff > * {
+.diffViewBlock.hiddenDiff>* {
   visibility: hidden !important;
 }
 
-.diffViewBlock.hiddenDiff > * > * {
+.diffViewBlock.hiddenDiff>*>* {
   display: none !important;
 }
 
@@ -683,9 +679,7 @@ mark {
 }
 
 .repo-files-height {
-  height: calc(
-    100vh - var(--cn-page-nav-full-height) - var(--cn-inset-layout-indent) - var(--cn-inset-border-width) * 2
-  );
+  height: calc(100vh - var(--cn-page-nav-full-height) - var(--cn-inset-layout-indent) - var(--cn-inset-border-width) * 2);
 }
 
 .branch-selector-trigger-as-input {
@@ -702,6 +696,7 @@ mark {
 }
 
 .file-explorer-header {
+
   /* has-[:hover]:bg-cn-selected rounded */
   &:has(:hover) {
     @apply bg-cn-hover rounded;
@@ -735,6 +730,7 @@ mark {
     0% {
       transform: translate3d(0, 0, 0);
     }
+
     100% {
       transform: translate3d(calc((100% + var(--cn-inset-spacing)) * -1), 0, 0);
     }
@@ -754,4 +750,346 @@ mark {
       left: calc(var(--cn-size-14) + var(--cn-inset-spacing)) !important;
     }
   }
+
+  /**
+* @license
+*
+* Font Family: General Sans
+* Designed by: Frode Helland
+* URL: https://www.fontshare.com/fonts/general-sans
+* © 2025 Indian Type Foundry
+*
+* General Sans Extralight 
+* General Sans ExtralightItalic 
+* General Sans Light 
+* General Sans LightItalic 
+* General Sans Regular 
+* General Sans Italic 
+* General Sans Medium 
+* General Sans MediumItalic 
+* General Sans Semibold 
+* General Sans SemiboldItalic 
+* General Sans Bold 
+* General Sans BoldItalic 
+* General Sans Variable (Variable font)
+* General Sans VariableItalic (Variable font)
+
+*
+*/
+  @font-face {
+    font-family: 'GeneralSans-Extralight';
+    src: url('../fonts/GeneralSans-Extralight.woff2') format('woff2'),
+      url('../fonts/GeneralSans-Extralight.woff') format('woff'),
+      url('../fonts/GeneralSans-Extralight.ttf') format('truetype');
+    font-weight: 200;
+    font-display: swap;
+    font-style: normal;
+  }
+
+  @font-face {
+    font-family: 'GeneralSans-ExtralightItalic';
+    src: url('../fonts/GeneralSans-ExtralightItalic.woff2') format('woff2'),
+      url('../fonts/GeneralSans-ExtralightItalic.woff') format('woff'),
+      url('../fonts/GeneralSans-ExtralightItalic.ttf') format('truetype');
+    font-weight: 200;
+    font-display: swap;
+    font-style: italic;
+  }
+
+  @font-face {
+    font-family: 'GeneralSans-Light';
+    src: url('../fonts/GeneralSans-Light.woff2') format('woff2'),
+      url('../fonts/GeneralSans-Light.woff') format('woff'),
+      url('../fonts/GeneralSans-Light.ttf') format('truetype');
+    font-weight: 300;
+    font-display: swap;
+    font-style: normal;
+  }
+
+  @font-face {
+    font-family: 'GeneralSans-LightItalic';
+    src: url('../fonts/GeneralSans-LightItalic.woff2') format('woff2'),
+      url('../fonts/GeneralSans-LightItalic.woff') format('woff'),
+      url('../fonts/GeneralSans-LightItalic.ttf') format('truetype');
+    font-weight: 300;
+    font-display: swap;
+    font-style: italic;
+  }
+
+  @font-face {
+    font-family: 'GeneralSans-Regular';
+    src: url('../fonts/GeneralSans-Regular.woff2') format('woff2'),
+      url('../fonts/GeneralSans-Regular.woff') format('woff'),
+      url('../fonts/GeneralSans-Regular.ttf') format('truetype');
+    font-weight: 400;
+    font-display: swap;
+    font-style: normal;
+  }
+
+  @font-face {
+    font-family: 'GeneralSans-Italic';
+    src: url('../fonts/GeneralSans-Italic.woff2') format('woff2'),
+      url('../fonts/GeneralSans-Italic.woff') format('woff'),
+      url('../fonts/GeneralSans-Italic.ttf') format('truetype');
+    font-weight: 400;
+    font-display: swap;
+    font-style: italic;
+  }
+
+  @font-face {
+    font-family: 'GeneralSans-Medium';
+    src: url('../fonts/GeneralSans-Medium.woff2') format('woff2'),
+      url('../fonts/GeneralSans-Medium.woff') format('woff'),
+      url('../fonts/GeneralSans-Medium.ttf') format('truetype');
+    font-weight: 500;
+    font-display: swap;
+    font-style: normal;
+  }
+
+  @font-face {
+    font-family: 'GeneralSans-MediumItalic';
+    src: url('../fonts/GeneralSans-MediumItalic.woff2') format('woff2'),
+      url('../fonts/GeneralSans-MediumItalic.woff') format('woff'),
+      url('../fonts/GeneralSans-MediumItalic.ttf') format('truetype');
+    font-weight: 500;
+    font-display: swap;
+    font-style: italic;
+  }
+
+  @font-face {
+    font-family: 'GeneralSans-Semibold';
+    src: url('../fonts/GeneralSans-Semibold.woff2') format('woff2'),
+      url('../fonts/GeneralSans-Semibold.woff') format('woff'),
+      url('../fonts/GeneralSans-Semibold.ttf') format('truetype');
+    font-weight: 600;
+    font-display: swap;
+    font-style: normal;
+  }
+
+  @font-face {
+    font-family: 'GeneralSans-SemiboldItalic';
+    src: url('../fonts/GeneralSans-SemiboldItalic.woff2') format('woff2'),
+      url('../fonts/GeneralSans-SemiboldItalic.woff') format('woff'),
+      url('../fonts/GeneralSans-SemiboldItalic.ttf') format('truetype');
+    font-weight: 600;
+    font-display: swap;
+    font-style: italic;
+  }
+
+  @font-face {
+    font-family: 'GeneralSans-Bold';
+    src: url('../fonts/GeneralSans-Bold.woff2') format('woff2'),
+      url('../fonts/GeneralSans-Bold.woff') format('woff'),
+      url('../fonts/GeneralSans-Bold.ttf') format('truetype');
+    font-weight: 700;
+    font-display: swap;
+    font-style: normal;
+  }
+
+  @font-face {
+    font-family: 'GeneralSans-BoldItalic';
+    src: url('../fonts/GeneralSans-BoldItalic.woff2') format('woff2'),
+      url('../fonts/GeneralSans-BoldItalic.woff') format('woff'),
+      url('../fonts/GeneralSans-BoldItalic.ttf') format('truetype');
+    font-weight: 700;
+    font-display: swap;
+    font-style: italic;
+  }
+
+  /**
+* This is a variable font
+* You can control variable axes as shown below:
+* font-variation-settings: wght 700.0;
+*
+* available axes:
+'wght' (range from 200.0 to 700.0
+*/
+  @font-face {
+    font-family: 'GeneralSans-Variable';
+    src: url('../fonts/GeneralSans-Variable.woff2') format('woff2'),
+      url('../fonts/GeneralSans-Variable.woff') format('woff'),
+      url('../fonts/GeneralSans-Variable.ttf') format('truetype');
+    font-weight: 200 700;
+    font-display: swap;
+    font-style: normal;
+  }
+
+  /**
+* This is a variable font
+* You can control variable axes as shown below:
+* font-variation-settings: wght 700.0;
+*
+* available axes:
+'wght' (range from 200.0 to 700.0
+*/
+  @font-face {
+    font-family: 'GeneralSans-VariableItalic';
+    src: url('../fonts/GeneralSans-VariableItalic.woff2') format('woff2'),
+      url('../fonts/GeneralSans-VariableItalic.woff') format('woff'),
+      url('../fonts/GeneralSans-VariableItalic.ttf') format('truetype');
+    font-weight: 200 700;
+    font-display: swap;
+    font-style: italic;
+  }
+
+  /**
+* @license
+*
+* Font Family: Satoshi
+* Designed by: Deni Anggara
+* URL: https://www.fontshare.com/fonts/satoshi
+* © 2025 Indian Type Foundry
+*
+* Satoshi Light 
+* Satoshi LightItalic 
+* Satoshi Regular 
+* Satoshi Italic 
+* Satoshi Medium 
+* Satoshi MediumItalic 
+* Satoshi Bold 
+* Satoshi BoldItalic 
+* Satoshi Black 
+* Satoshi BlackItalic 
+* Satoshi Variable (Variable font)
+* Satoshi VariableItalic (Variable font)
+
+*
+*/
+  @font-face {
+    font-family: 'Satoshi-Light';
+    src: url('../fonts/Satoshi-Light.woff2') format('woff2'),
+      url('../fonts/Satoshi-Light.woff') format('woff'),
+      url('../fonts/Satoshi-Light.ttf') format('truetype');
+    font-weight: 300;
+    font-display: swap;
+    font-style: normal;
+  }
+
+  @font-face {
+    font-family: 'Satoshi-LightItalic';
+    src: url('../fonts/Satoshi-LightItalic.woff2') format('woff2'),
+      url('../fonts/Satoshi-LightItalic.woff') format('woff'),
+      url('../fonts/Satoshi-LightItalic.ttf') format('truetype');
+    font-weight: 300;
+    font-display: swap;
+    font-style: italic;
+  }
+
+  @font-face {
+    font-family: 'Satoshi-Regular';
+    src: url('../fonts/Satoshi-Regular.woff2') format('woff2'),
+      url('../fonts/Satoshi-Regular.woff') format('woff'),
+      url('../fonts/Satoshi-Regular.ttf') format('truetype');
+    font-weight: 400;
+    font-display: swap;
+    font-style: normal;
+  }
+
+  @font-face {
+    font-family: 'Satoshi-Italic';
+    src: url('../fonts/Satoshi-Italic.woff2') format('woff2'),
+      url('../fonts/Satoshi-Italic.woff') format('woff'),
+      url('../fonts/Satoshi-Italic.ttf') format('truetype');
+    font-weight: 400;
+    font-display: swap;
+    font-style: italic;
+  }
+
+  @font-face {
+    font-family: 'Satoshi-Medium';
+    src: url('../fonts/Satoshi-Medium.woff2') format('woff2'),
+      url('../fonts/Satoshi-Medium.woff') format('woff'),
+      url('../fonts/Satoshi-Medium.ttf') format('truetype');
+    font-weight: 500;
+    font-display: swap;
+    font-style: normal;
+  }
+
+  @font-face {
+    font-family: 'Satoshi-MediumItalic';
+    src: url('../fonts/Satoshi-MediumItalic.woff2') format('woff2'),
+      url('../fonts/Satoshi-MediumItalic.woff') format('woff'),
+      url('../fonts/Satoshi-MediumItalic.ttf') format('truetype');
+    font-weight: 500;
+    font-display: swap;
+    font-style: italic;
+  }
+
+  @font-face {
+    font-family: 'Satoshi-Bold';
+    src: url('../fonts/Satoshi-Bold.woff2') format('woff2'),
+      url('../fonts/Satoshi-Bold.woff') format('woff'),
+      url('../fonts/Satoshi-Bold.ttf') format('truetype');
+    font-weight: 700;
+    font-display: swap;
+    font-style: normal;
+  }
+
+  @font-face {
+    font-family: 'Satoshi-BoldItalic';
+    src: url('../fonts/Satoshi-BoldItalic.woff2') format('woff2'),
+      url('../fonts/Satoshi-BoldItalic.woff') format('woff'),
+      url('../fonts/Satoshi-BoldItalic.ttf') format('truetype');
+    font-weight: 700;
+    font-display: swap;
+    font-style: italic;
+  }
+
+  @font-face {
+    font-family: 'Satoshi-Black';
+    src: url('../fonts/Satoshi-Black.woff2') format('woff2'),
+      url('../fonts/Satoshi-Black.woff') format('woff'),
+      url('../fonts/Satoshi-Black.ttf') format('truetype');
+    font-weight: 900;
+    font-display: swap;
+    font-style: normal;
+  }
+
+  @font-face {
+    font-family: 'Satoshi-BlackItalic';
+    src: url('../fonts/Satoshi-BlackItalic.woff2') format('woff2'),
+      url('../fonts/Satoshi-BlackItalic.woff') format('woff'),
+      url('../fonts/Satoshi-BlackItalic.ttf') format('truetype');
+    font-weight: 900;
+    font-display: swap;
+    font-style: italic;
+  }
+
+  /**
+* This is a variable font
+* You can control variable axes as shown below:
+* font-variation-settings: wght 900.0;
+*
+* available axes:
+'wght' (range from 300.0 to 900.0
+*/
+  @font-face {
+    font-family: 'Satoshi-Variable';
+    src: url('../fonts/Satoshi-Variable.woff2') format('woff2'),
+      url('../fonts/Satoshi-Variable.woff') format('woff'),
+      url('../fonts/Satoshi-Variable.ttf') format('truetype');
+    font-weight: 300 900;
+    font-display: swap;
+    font-style: normal;
+  }
+
+  /**
+* This is a variable font
+* You can control variable axes as shown below:
+* font-variation-settings: wght 900.0;
+*
+* available axes:
+'wght' (range from 300.0 to 900.0
+*/
+  @font-face {
+    font-family: 'Satoshi-VariableItalic';
+    src: url('../fonts/Satoshi-VariableItalic.woff2') format('woff2'),
+      url('../fonts/Satoshi-VariableItalic.woff') format('woff'),
+      url('../fonts/Satoshi-VariableItalic.ttf') format('truetype');
+    font-weight: 300 900;
+    font-display: swap;
+    font-style: italic;
+  }
+
+
 }

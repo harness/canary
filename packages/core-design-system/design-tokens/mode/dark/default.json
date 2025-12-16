@@ -543,24 +543,24 @@
         },
         "bg": {
           "$type": "color",
-          "$value": "{blue.200}",
+          "$value": "{blue.300}",
           "$description": "Background color for prominent blue surfaces."
         },
         "bg-hover": {
           "$type": "color",
-          "$value": "{blue.150}",
+          "$value": "{blue.200}",
           "$description": "Hover state background color for interactive primary blue surfaces."
         },
         "bg-selected": {
           "$type": "color",
-          "$value": "{blue.150}",
+          "$value": "{blue.200}",
           "$description": "Selected state background color for active primary blue items."
         }
       },
       "secondary": {
         "text": {
           "$type": "color",
-          "$value": "{blue.150}",
+          "$value": "{blue.200}",
           "$description": "Text color for subtle blue surfaces with good contrast."
         },
         "bg": {
@@ -582,7 +582,7 @@
       "outline": {
         "text": {
           "$type": "color",
-          "$value": "{blue.150}",
+          "$value": "{blue.200}",
           "$description": "Standard text color for blue surfaces with balanced readability."
         },
         "bg": {
@@ -795,14 +795,24 @@
         },
         "bg": {
           "$type": "color",
-          "$value": "{indigo.200}",
+          "$value": "{indigo.300}",
           "$description": "Background color for prominent indigo surfaces."
+        },
+        "bg-hover": {
+          "$type": "color",
+          "$value": "{indigo.200}",
+          "$description": "Hover state background color for interactive primary indigo surfaces."
+        },
+        "bg-selected": {
+          "$type": "color",
+          "$value": "{indigo.200}",
+          "$description": "Selected state background color for active primary indigo items."
         }
       },
       "secondary": {
         "text": {
           "$type": "color",
-          "$value": "{indigo.150}",
+          "$value": "{indigo.200}",
           "$description": "Text color for subtle indigo surfaces with good contrast."
         },
         "bg": {
@@ -814,12 +824,17 @@
           "$type": "color",
           "$value": "{indigo.900}",
           "$description": "Hover background color for subdued indigo surfaces."
+        },
+        "bg-selected": {
+          "$type": "color",
+          "$value": "{indigo.900}",
+          "$description": "Selected state background color for active secondary indigo items."
         }
       },
       "outline": {
         "text": {
           "$type": "color",
-          "$value": "{indigo.150}",
+          "$value": "{indigo.200}",
           "$description": "Standard text color for indigo surfaces with balanced readability."
         },
         "bg": {
@@ -836,6 +851,11 @@
           "$type": "color",
           "$value": "{indigo.950}",
           "$description": "Hover background color for indigo surfaces."
+        },
+        "bg-selected": {
+          "$type": "color",
+          "$value": "{indigo.900}",
+          "$description": "Selected state background color for active indigo items."
         }
       }
     },
@@ -901,14 +921,24 @@
         },
         "bg": {
           "$type": "color",
-          "$value": "{mint.200}",
+          "$value": "{mint.300}",
           "$description": "Background color for prominent mint surfaces."
+        },
+        "bg-hover": {
+          "$type": "color",
+          "$value": "{mint.200}",
+          "$description": "Hover state background color for interactive primary mint surfaces."
+        },
+        "bg-selected": {
+          "$type": "color",
+          "$value": "{mint.200}",
+          "$description": "Selected state background color for active primary mint items."
         }
       },
       "secondary": {
         "text": {
           "$type": "color",
-          "$value": "{mint.150}",
+          "$value": "{mint.200}",
           "$description": "Text color for subtle mint surfaces with good contrast."
         },
         "bg": {
@@ -920,12 +950,17 @@
           "$type": "color",
           "$value": "{mint.900}",
           "$description": "Hover background color for subdued mint surfaces."
+        },
+        "bg-selected": {
+          "$type": "color",
+          "$value": "{mint.900}",
+          "$description": "Selected state background color for active secondary mint items."
         }
       },
       "outline": {
         "text": {
           "$type": "color",
-          "$value": "{mint.150}",
+          "$value": "{mint.200}",
           "$description": "Standard text color for mint surfaces with balanced readability."
         },
         "bg": {
@@ -942,6 +977,11 @@
           "$type": "color",
           "$value": "{mint.950}",
           "$description": "Hover background color for mint surfaces."
+        },
+        "bg-selected": {
+          "$type": "color",
+          "$value": "{mint.900}",
+          "$description": "Selected state background color for active mint items."
         }
       }
     },
@@ -1007,14 +1047,24 @@
         },
         "bg": {
           "$type": "color",
-          "$value": "{pink.200}",
+          "$value": "{pink.300}",
           "$description": "Background color for prominent pink surfaces."
+        },
+        "bg-hover": {
+          "$type": "color",
+          "$value": "{pink.200}",
+          "$description": "Hover state background color for interactive primary pink surfaces."
+        },
+        "bg-selected": {
+          "$type": "color",
+          "$value": "{pink.200}",
+          "$description": "Selected state background color for active primary pink items."
         }
       },
       "secondary": {
         "text": {
           "$type": "color",
-          "$value": "{pink.150}",
+          "$value": "{pink.200}",
           "$description": "Text color for subtle pink surfaces with good contrast."
         },
         "bg": {
@@ -1026,12 +1076,17 @@
           "$type": "color",
           "$value": "{pink.900}",
           "$description": "Hover background color for subdued pink surfaces."
+        },
+        "bg-selected": {
+          "$type": "color",
+          "$value": "{pink.900}",
+          "$description": "Selected state background color for active secondary pink items."
         }
       },
       "outline": {
         "text": {
           "$type": "color",
-          "$value": "{pink.150}",
+          "$value": "{pink.200}",
           "$description": "Standard text color for pink surfaces with balanced readability."
         },
         "bg": {
@@ -1048,6 +1103,11 @@
           "$type": "color",
           "$value": "{pink.950}",
           "$description": "Hover background color for pink surfaces."
+        },
+        "bg-selected": {
+          "$type": "color",
+          "$value": "{pink.900}",
+          "$description": "Selected state background color for active pink items."
         }
       }
     },
@@ -1060,14 +1120,24 @@
         },
         "bg": {
           "$type": "color",
-          "$value": "{violet.200}",
+          "$value": "{violet.300}",
           "$description": "Background color for prominent violet surfaces."
+        },
+        "bg-hover": {
+          "$type": "color",
+          "$value": "{violet.200}",
+          "$description": "Hover state background color for interactive primary violet surfaces."
+        },
+        "bg-selected": {
+          "$type": "color",
+          "$value": "{violet.200}",
+          "$description": "Selected state background color for active primary violet items."
         }
       },
       "secondary": {
         "text": {
           "$type": "color",
-          "$value": "{violet.150}",
+          "$value": "{violet.200}",
           "$description": "Text color for subtle violet surfaces with good contrast."
         },
         "bg": {
@@ -1079,12 +1149,17 @@
           "$type": "color",
           "$value": "{violet.900}",
           "$description": "Hover background color for subdued violet surfaces."
+        },
+        "bg-selected": {
+          "$type": "color",
+          "$value": "{violet.900}",
+          "$description": "Selected state background color for active secondary violet items."
         }
       },
       "outline": {
         "text": {
           "$type": "color",
-          "$value": "{violet.150}",
+          "$value": "{violet.200}",
           "$description": "Standard text color for violet surfaces with balanced readability."
         },
         "bg": {
@@ -1101,6 +1176,11 @@
           "$type": "color",
           "$value": "{violet.950}",
           "$description": "Hover background color for violet surfaces."
+        },
+        "bg-selected": {
+          "$type": "color",
+          "$value": "{violet.900}",
+          "$description": "Selected state background color for active violet items."
         }
       }
     }
@@ -1488,12 +1568,12 @@
       "item": {
         "text": {
           "$type": "color",
-          "$value": "{text.2}",
+          "$value": "{text.3}",
           "$description": "Default text color for sidebar navigation items. Provides optimal readability for menu labels."
         },
         "text-hover": {
           "$type": "color",
-          "$value": "{text.1}",
+          "$value": "{text.2}",
           "$description": "Text color for sidebar items on hover state. Creates higher contrast for interactive feedback."
         },
         "text-selected": {
@@ -1631,7 +1711,7 @@
       "track": {
         "base": {
           "$type": "color",
-          "$value": "{gray.850}",
+          "$value": "{gray.900}",
           "$description": "Background color for slider tracks. Represents the full range of available values in an unselected state."
         },
         "progress": {
@@ -1686,12 +1766,12 @@
       "danger": {
         "bg": {
           "$type": "color",
-          "$value": "{red.800}",
+          "$value": "{red.850}",
           "$description": "Background color for danger toast notifications. Provides visual context for error and critical messages."
         },
         "border": {
           "$type": "color",
-          "$value": "{red.600}",
+          "$value": "{red.800}",
           "$description": "Border color for danger toast notifications. Creates definition and emphasis for critical messages."
         },
         "text": {
@@ -1760,12 +1840,12 @@
     "tooltip": {
       "bg": {
         "$type": "color",
-        "$value": "{gray.200}",
+        "$value": "{gray.100}",
         "$description": "Background color for tooltip components. Provides high contrast backdrop for tooltip content."
       },
       "border": {
         "$type": "color",
-        "$value": "{gray.200}",
+        "$value": "{gray.100}",
         "$description": "Border color for tooltip components. Defines tooltip boundaries."
       },
       "text": {
@@ -1797,7 +1877,7 @@
     },
     "icon": {
       "$type": "color",
-      "$value": "{cyan.300}",
+      "$value": "{blue.500}",
       "$description": "Icon color for Logo in sidebar navigation."
     }
   },

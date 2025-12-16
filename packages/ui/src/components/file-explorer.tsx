@@ -25,6 +25,7 @@ type SidebarItemActionButtonPropsType = ButtonProps & {
 
 interface BaseItemProps {
   icon: NonNullable<IconPropsV2['name']>
+  hideIcon?: boolean
   isActive?: boolean
   actionButtons?: SidebarItemActionButtonPropsType[]
 }
@@ -42,8 +43,10 @@ interface LinkItemProps extends BaseItemProps, Omit<LinkProps, 'to'> {
 type ItemProps = DefaultItemProps | LinkItemProps
 
 const InteractiveItem = forwardRef<HTMLDivElement, ItemProps>(
-  ({ className, children, icon, isActive, link, isFolder, actionButtons, ...props }: ItemProps, ref) => {
+  ({ className, children, icon, hideIcon, isActive, link, isFolder, actionButtons, ...props }: ItemProps, ref) => {
     const { Link } = useRouterContext()
+
+    const showIcon = !hideIcon
 
     const actionButtonsContent = useMemo(() => {
       if (!actionButtons) return null
@@ -67,8 +70,7 @@ const InteractiveItem = forwardRef<HTMLDivElement, ItemProps>(
       'cn-file-tree-item',
       {
         'cn-file-tree-item-wrapper cn-file-tree-item-leaf': !isFolder,
-        'cn-file-tree-item-active': !isFolder && isActive,
-        'cn-file-tree-item-with-action-buttons': !!actionButtonsContent
+        'cn-file-tree-item-active': !isFolder && isActive
       },
       className
     )
@@ -80,20 +82,20 @@ const InteractiveItem = forwardRef<HTMLDivElement, ItemProps>(
         className={commonClassnames}
         {...(props as Omit<LinkItemProps, 'to'>)}
       >
-        <IconV2 name={icon} size="md" />
-        <Text align="left" color="inherit" truncate>
+        {showIcon && <IconV2 name={icon} size="md" />}
+        <Text className="flex-1" align="left" color="inherit" truncate>
           {children}
         </Text>
         {actionButtonsContent}
       </Link>
     ) : (
-      <Layout.Grid ref={ref} className={commonClassnames} as="button" {...(props as DefaultItemProps)}>
-        <IconV2 name={icon} size="md" />
-        <Text align="left" color="inherit" truncate>
+      <Layout.Flex ref={ref} className={commonClassnames} as="button" {...(props as DefaultItemProps)}>
+        {showIcon && <IconV2 name={icon} size="md" />}
+        <Text className="flex-1" align="left" color="inherit" truncate>
           {children}
         </Text>
         {actionButtonsContent}
-      </Layout.Grid>
+      </Layout.Flex>
     )
   }
 )

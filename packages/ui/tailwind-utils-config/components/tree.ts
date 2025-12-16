@@ -1,22 +1,17 @@
 const baseTreeItemStyles = {
   '@apply text-cn-2 font-body-normal': '',
   minHeight: 'var(--cn-tree-item-height)',
-  padding: 'var(--cn-tree-item-py) var(--cn-tree-item-pr) var(--cn-tree-item-py)',
+  padding: 'var(--cn-tree-item-py) var(--cn-tree-item-pr) var(--cn-tree-item-py)'
 }
 
 export default {
   '.cn-file-tree': {
     '&-base-item': {
-      ...baseTreeItemStyles,
+      ...baseTreeItemStyles
     },
     '&-item': {
       ...baseTreeItemStyles,
-      '@apply relative gap-cn-3xs grid grid-flow-col grid-cols-[auto_1fr] items-center w-[fill-available]':
-        '',
-
-      '&-with-action-buttons': {
-        '@apply grid-cols-[auto_1fr_auto]': ''
-      },
+      '@apply relative gap-cn-3xs flex items-center w-[fill-available]': '',
 
       '&-wrapper': {
         '@apply relative transition-colors': '',

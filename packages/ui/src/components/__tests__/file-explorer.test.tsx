@@ -85,14 +85,18 @@ vi.mock('@/components', () => ({
       GridComponent.displayName = 'LayoutGrid'
       return GridComponent
     })(),
-    Flex: Object.assign(
-      ({ children, className, ...props }: any) => (
-        <div data-testid="layout-flex" className={className} {...props}>
-          {children}
-        </div>
-      ),
-      { displayName: 'LayoutFlex' }
-    )
+    Flex: (() => {
+      const FlexComponent = React.forwardRef(({ children, className, as, ...props }: any, ref: any) => {
+        const Component = as || 'div'
+        return (
+          <Component ref={ref} data-testid="layout-flex" className={className} {...props}>
+            {children}
+          </Component>
+        )
+      })
+      FlexComponent.displayName = 'LayoutFlex'
+      return FlexComponent
+    })()
   },
   Text: ({ children, align, color, truncate, as, ...props }: any) => {
     const Component = as || 'span'
@@ -313,8 +317,8 @@ describe('FileExplorer', () => {
         </FileItem>
       )
 
-      const grid = screen.getByTestId('layout-grid')
-      await userEvent.click(grid)
+      const flex = screen.getByTestId('layout-flex')
+      await userEvent.click(flex)
 
       expect(handleClick).toHaveBeenCalledWith('file1')
     })
@@ -337,8 +341,8 @@ describe('FileExplorer', () => {
         </FileItem>
       )
 
-      const grid = screen.getByTestId('layout-grid')
-      expect(grid.className).toContain('cn-file-tree-item-active')
+      const flex = screen.getByTestId('layout-flex')
+      expect(flex.className).toContain('cn-file-tree-item-active')
     })
 
     test('renders with tooltip when tooltip prop is provided', () => {
@@ -369,9 +373,9 @@ describe('FileExplorer', () => {
         </FileItem>
       )
 
-      const grid = screen.getByTestId('layout-grid')
-      expect(grid).toHaveAttribute('data-test', 'custom-data')
-      expect(grid).toHaveAttribute('data-id', '123')
+      const flex = screen.getByTestId('layout-flex')
+      expect(flex).toHaveAttribute('data-test', 'custom-data')
+      expect(flex).toHaveAttribute('data-id', '123')
     })
 
     test('does not call onClick when onClick is not provided', async () => {
@@ -381,11 +385,11 @@ describe('FileExplorer', () => {
         </FileItem>
       )
 
-      const grid = screen.getByTestId('layout-grid')
-      await userEvent.click(grid)
+      const flex = screen.getByTestId('layout-flex')
+      await userEvent.click(flex)
 
       // Should not throw error
-      expect(grid).toBeInTheDocument()
+      expect(flex).toBeInTheDocument()
     })
 
     test('renders with level prop', () => {
@@ -405,8 +409,8 @@ describe('FileExplorer', () => {
         </FileItem>
       )
 
-      const grid = screen.getByTestId('layout-grid')
-      expect(grid.className).toContain('mb-cn-4xs')
+      const flex = screen.getByTestId('layout-flex')
+      expect(flex.className).toContain('mb-cn-4xs')
     })
   })
 
@@ -475,8 +479,10 @@ describe('FileExplorer', () => {
         </FolderItem>
       )
 
-      const grid = screen.getByTestId('layout-grid')
-      await userEvent.click(grid)
+      // Get the inner button (InteractiveItem), not the outer wrapper
+      const flexElements = screen.getAllByTestId('layout-flex')
+      const button = flexElements.find(el => el.tagName === 'BUTTON')
+      await userEvent.click(button!)
 
       expect(handleClick).toHaveBeenCalledWith('folder1')
     })
@@ -499,8 +505,10 @@ describe('FileExplorer', () => {
         </FolderItem>
       )
 
-      const flex = screen.getByTestId('layout-flex')
-      expect(flex.className).toContain('cn-file-tree-item-active')
+      // Get the outer wrapper which has the active class
+      const flexElements = screen.getAllByTestId('layout-flex')
+      const wrapper = flexElements.find(el => el.className.includes('cn-file-tree-folder-item'))
+      expect(wrapper?.className).toContain('cn-file-tree-item-active')
     })
 
     test('renders content when content prop is provided', () => {
@@ -531,11 +539,13 @@ describe('FileExplorer', () => {
         </FolderItem>
       )
 
-      const grid = screen.getByTestId('layout-grid')
-      await userEvent.click(grid)
+      // Get the inner button (InteractiveItem)
+      const flexElements = screen.getAllByTestId('layout-flex')
+      const button = flexElements.find(el => el.tagName === 'BUTTON')
+      await userEvent.click(button!)
 
       // Should not throw error
-      expect(grid).toBeInTheDocument()
+      expect(button).toBeInTheDocument()
     })
 
     test('renders with level prop', () => {
@@ -606,9 +616,11 @@ describe('FileExplorer', () => {
         </FolderItem>
       )
 
-      const flex = screen.getByTestId('layout-flex')
-      expect(flex.className).toContain('cn-file-tree-folder-item')
-      expect(flex.className).toContain('cn-file-tree-item-wrapper')
+      // Get the outer wrapper which has these classes
+      const flexElements = screen.getAllByTestId('layout-flex')
+      const wrapper = flexElements.find(el => el.className.includes('cn-file-tree-folder-item'))
+      expect(wrapper?.className).toContain('cn-file-tree-folder-item')
+      expect(wrapper?.className).toContain('cn-file-tree-item-wrapper')
     })
 
     test('renders with default value when value is empty string', () => {

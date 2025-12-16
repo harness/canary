@@ -305,7 +305,7 @@ function populateSchemaTreeRec<T = any>(
         const listSchemaObj: SchemaTreeNode = {}
         populateSchemaTreeRec(
           listSchemaObj,
-          (input.inputConfig as { inputs: (IInputDefinition & { relativePath: string })[] }).inputs.map(item => ({
+          (input.inputConfig as { inputs: (IInputDefinition & { relativePath: string })[] })?.inputs?.map(item => ({
             ...item,
             path: item.relativePath
           })),

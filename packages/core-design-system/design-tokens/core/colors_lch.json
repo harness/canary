@@ -6,7 +6,7 @@
     },
     "black": {
       "$type": "color",
-      "$value": "lch(5% 1 286)"
+      "$value": "lch(6% 0.5 290)"
     }
   },
   "gray": {
@@ -50,10 +50,10 @@
       "$value": "lch(17% 3.5 278)"
     },
     "950": {
-      "$value": "lch(12% 3 278)"
+      "$value": "lch(12% 2 278)"
     },
     "1000": {
-      "$value": "lch(8% 2.5 278)"
+      "$value": "lch(8% 1 278)"
     },
     "$type": "color"
   },

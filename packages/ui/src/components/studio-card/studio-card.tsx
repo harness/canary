@@ -1,6 +1,6 @@
 import { PropsWithChildren, useCallback, useMemo, type JSX } from 'react'
 
-import { IconV2, StatusBadge, Text } from '@/components'
+import { IconV2, IconV2NamesType, StatusBadge, Text } from '@/components'
 import { cn } from '@/utils'
 
 import {
@@ -147,6 +147,21 @@ function Status({ status }: StudioCardStatusProps): JSX.Element | null {
 }
 
 /**
+ *
+ */
+
+function Tag({ tagText, icon }: PropsWithChildren<{ tagText: string; icon?: IconV2NamesType }>): JSX.Element {
+  return (
+    <div className="cn-studio-card-tag">
+      {icon && <IconV2 name={icon} size="xs" />}
+      <Text className="text-cn-gray-outline" variant="caption-single-line-normal">
+        {tagText}
+      </Text>
+    </div>
+  )
+}
+
+/**
  * ====================
  * Footer Component
  * ====================
@@ -177,6 +192,7 @@ export const StudioCard = {
   Root,
   Header,
   Status,
+  Tag,
   Message,
   Content,
   Footer,

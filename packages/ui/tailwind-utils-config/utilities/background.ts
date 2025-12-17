@@ -27,6 +27,7 @@ export const backgroundColor = {
     backgroundImage: 'var(--cn-comp-pipeline-card-bg)'
   },
   '.bg-cn-graph-bg-gradient': {
-    backgroundImage: 'radial-gradient(circle, var(--cn-bg-1) 1px, transparent 1px)'
+    backgroundImage: 'radial-gradient(circle at center, var(--cn-comp-pipeline-dotes) 1.5px, transparent 0px)',
+    backgroundSize: '12px 12px'
   }
 }

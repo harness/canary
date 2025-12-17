@@ -3,7 +3,7 @@ export default {
     borderRadius: 'var(--cn-rounded-4)',
     border: '1px solid var(--cn-border-2)',
     backgroundColor: 'var(--cn-bg-3)',
-    '@apply flex flex-col overflow-hidden': '',
+    '@apply flex flex-col overflow-hidden shadow-cn-3': '',
 
     // Default size (single card)
     width: '220px',
@@ -45,6 +45,26 @@ export default {
   // Content Component
   '.cn-studio-card-content': {
     '@apply flex flex-col flex-grow gap-cn-sm px-cn-md pb-cn-lg pt-cn-sm': ''
+  },
+
+  // Tag Component
+  '.cn-studio-card-tag': {
+    '@apply flex gap-cn-3xs p-cn-2xs rounded-t-cn-4 bg-cn-gray-outline border border-cn-gray-outline top-[-28px] right-0 absolute text-cn-gray-outline select-none':
+      '',
+
+    /**
+     * For the corner scoop effect
+     */
+    '&::before': {
+      content: '""',
+      position: 'absolute',
+      bottom: '-8px',
+      right: '-1px',
+      width: '8px',
+      height: '8px',
+      background: `radial-gradient(circle at bottom left, transparent 0px, transparent 7px, var(--cn-set-gray-outline-border) 7px, var(--cn-set-gray-outline-border) 8px, var(--cn-set-gray-outline-bg) 7px)`,
+      borderRight: '1px solid var(--cn-set-gray-outline-border)'
+    }
   },
 
   // Message Component

@@ -176,18 +176,11 @@
   "fontFamily": {
     "default": {
       "$type": "fontFamilies",
-      "$value": [
-        "Inter",
-        "system-ui",
-        "sans-serif"
-      ]
+      "$value": ["Inter", "system-ui", "sans-serif"]
     },
     "mono": {
       "$type": "fontFamilies",
-      "$value": [
-        "JetBrains Mono",
-        "monospace"
-      ]
+      "$value": ["JetBrains Mono", "monospace"]
     }
   },
   "textDecoration": {

@@ -68,7 +68,7 @@ export default {
       gap: 'var(--cn-tabs-item-gap)',
       color: 'var(--cn-text-3)',
       border: 'var(--cn-tabs-item-border) solid transparent',
-      '@apply font-body-strong': '',
+      '@apply font-body-normal': '',
 
       '&:where(:not([disabled]).cn-tabs-trigger-active)': {
         backgroundColor: 'var(--cn-set-gray-secondary-bg)',

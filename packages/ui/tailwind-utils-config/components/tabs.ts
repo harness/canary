@@ -9,14 +9,14 @@ export default {
       borderRadius: 'var(--cn-tabs-container-radius)',
       border: 'var(--cn-tabs-container-border) solid var(--cn-border-3)',
       backgroundColor: 'var(--cn-bg-2)',
-      '@apply font-body-strong': ''
+      '@apply font-body-normal': ''
     },
 
     '&-ghost': {
       width: 'fit-content',
       padding: 'var(--cn-tabs-container)',
       borderRadius: 'var(--cn-tabs-container-radius)',
-      '@apply font-body-strong': ''
+      '@apply font-body-normal': ''
     },
 
     '&-overlined': {

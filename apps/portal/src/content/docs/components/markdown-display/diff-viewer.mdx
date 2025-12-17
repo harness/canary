@@ -1,0 +1,259 @@
+---
+title: DiffViewer
+description: A reusable component for displaying file diffs with syntax highlighting
+beta: true
+---
+
+The `DiffViewer` component provides a powerful way to display file differences with syntax highlighting. It supports both Split (side-by-side) and Unified (inline) display modes, making it perfect for code review interfaces, version comparison tools, and change visualization.
+
+import { DocsPage } from "@/components/docs-page";
+
+<DocsPage.ComponentExample
+  client:only
+  code={`<DiffViewer 
+  oldCode={\`name: CI Pipeline
+on:
+  push:
+    branches:
+      - main
+  pull_request:
+    branches:
+      - main
+
+jobs:
+build:
+runs-on: ubuntu-latest
+steps: - uses: actions/checkout@v2 - name: Setup Node
+uses: actions/setup-node@v2
+with:
+node-version: 14 - name: Install dependencies
+run: npm install - name: Run tests
+run: npm test - name: Build
+run: npm run build
+
+deploy:
+needs: build
+runs-on: ubuntu-latest
+steps: - name: Deploy to production
+run: echo "Deploying..."\`}
+
+newCode={\`name: CI/CD Pipeline
+on:
+push:
+branches: - main - develop
+pull_request:
+branches: - main - develop
+workflow_dispatch:
+
+env:
+NODE_VERSION: 18
+CACHE_KEY: node-modules
+
+jobs:
+build:
+runs-on: ubuntu-latest
+timeout-minutes: 15
+steps: - uses: actions/checkout@v3 - name: Setup Node
+uses: actions/setup-node@v3
+with:
+cache: 'npm' - name: Cache dependencies
+uses: actions/cache@v3
+with:
+path: node_modules
+run: npm ci - name: Run linter
+run: npm run lint - name: Run tests
+run: npm test -- --coverage - name: Build
+run: npm run build - name: Upload artifacts
+uses: actions/upload-artifact@v3
+with:
+name: build-output
+path: dist/
+
+deploy:
+needs: build
+runs-on: ubuntu-latest
+if: github.ref == 'refs/heads/main'
+environment:
+name: production
+url: https://example.com
+steps: - name: Download artifacts
+uses: actions/download-artifact@v3
+with:
+name: build-output - name: Deploy to production
+run: |
+echo "Deploying to production..."
+echo "Build completed successfully" - name: Notify team
+run: echo "Deployment complete"\`}
+lang="yaml"
+/>
+`}
+/>
+
+## Usage
+
+```tsx
+import { DiffViewer } from "@harnessio/ui/components";
+
+function MyComponent() {
+  const oldCode = `function hello() {\n  console.log("Hello");\n}`;
+  const newCode = `function hello(name) {\n  console.log(\`Hello \${name}\`);\n}`;
+
+  return <DiffViewer oldCode={oldCode} newCode={newCode} lang="typescript" />;
+}
+```
+
+**Note:** The `DiffViewer` requires `ThemeProvider` from `@harnessio/ui/context` to be present in your component tree for theme detection to work properly.
+
+## Features
+
+- **Split & Unified Modes** - View diffs side-by-side or inline
+- **Syntax Highlighting** - Powered by Shiki with support for 200+ languages
+- **Theme Support** - Automatically adapts to light/dark theme via ThemeProvider context
+- **Real-time Theme Switching** - Updates instantly when theme changes without page refresh
+- **Line Numbers** - Clear line number indicators for both old and new code
+- **Change Indicators** - Visual markers for additions, deletions, and modifications
+- **Responsive** - Works seamlessly across different screen sizes
+
+## Props
+
+<DocsPage.PropsTable
+  props={[
+    {
+      name: "oldCode",
+      description: "The original/old version of the code to compare",
+      required: true,
+      value: "string",
+    },
+    {
+      name: "newCode",
+      description: "The new/modified version of the code to compare",
+      required: true,
+      value: "string",
+    },
+    {
+      name: "lang",
+      description:
+        "Programming language for syntax highlighting. Supports all languages from Shiki highlighter (typescript, javascript, python, yaml, json, etc.)",
+      required: false,
+      value: "DiffHighlighterLang",
+      defaultValue: "'yaml'",
+    },
+    {
+      name: "diffViewWrap",
+      description:
+        "Enable line wrapping for long lines of code in the diff view",
+      required: false,
+      value: "boolean",
+      defaultValue: "false",
+    },
+  ]}
+/>
+
+## Language Support
+
+The component supports syntax highlighting for **200+ programming languages** through the Shiki highlighter.
+
+### Popular Languages
+
+- **Web Development**: `typescript`, `tsx`, `javascript`, `jsx`, `html`, `css`, `scss`, `less`, `vue`, `vue-html`
+- **Backend**: `python`, `go`, `java`, `csharp`, `php`, `ruby`, `rust`, `kotlin`, `swift`
+- **Data & Config**: `yaml`, `json`, `xml`, `ini`, `properties`, `sql`, `graphql`
+- **Shell & Scripts**: `bash`, `shell`, `powershell`, `dockerfile`, `makefile`
+- **Documentation**: `markdown`, `asciidoc`, `latex`
+- **Systems**: `c`, `cpp`, `objectivec`, `rust`, `go`, `assembly`
+
+### Supported Languages
+
+The component supports all languages from the Shiki/Highlight.js library including:
+
+`arduino`, `bash`, `c`, `cpp`, `csharp`, `css`, `diff`, `go`, `graphql`, `ini`, `java`, `javascript`, `jsx`, `json`, `kotlin`, `less`, `lua`, `makefile`, `markdown`, `objectivec`, `perl`, `php`, `plaintext`, `python`, `r`, `ruby`, `rust`, `scss`, `shell`, `sql`, `swift`, `typescript`, `tsx`, `vbnet`, `wasm`, `xml`, `yaml`, `vue`, `vue-html`, `actionscript`, `ada`, `apache`, `applescript`, `armasm`, `awk`, `clojure`, `cmake`, `coffeescript`, `crystal`, `dart`, `delphi`, `django`, `dockerfile`, `elixir`, `elm`, `erlang`, `fortran`, `fsharp`, `gherkin`, `glsl`, `gradle`, `groovy`, `haml`, `handlebars`, `haskell`, `haxe`, `julia`, `latex`, `lisp`, `llvm`, `matlab`, `nginx`, `nim`, `nix`, `ocaml`, `perl`, `pgsql`, `prolog`, `protobuf`, `puppet`, `scala`, `scheme`, `smalltalk`, `stylus`, `tcl`, `terraform`, `twig`, `verilog`, `vhdl`, `vim`, and many more.
+
+**Total**: 200+ languages supported
+
+## Display Modes
+
+The DiffViewer currently uses **Split mode** by default, which displays the old and new code side-by-side for easy comparison.
+
+### Split Mode (Side-by-Side)
+
+- Shows old code on the left, new code on the right
+- Ideal for detailed line-by-line comparisons
+- Best for desktop and larger screens
+- Clear visual separation of changes
+
+## Theme Integration
+
+The component automatically adapts to your application's theme using the `useTheme()` hook:
+
+### Automatic Theme Detection
+
+- The component reads the `isLightTheme` value from the `ThemeProvider` context
+- Theme changes are detected automatically and the diff view updates in real-time
+- No manual configuration needed - the theme synchronization happens automatically
+- Supports all theme modes from the design system (dark/light with various contrast levels)
+
+## Best Practices
+
+1. **Use Proper Language** - Always specify the correct `lang` prop for accurate syntax highlighting
+2. **Format Code** - Ensure code is properly formatted before passing to the component
+3. **Use `\n` for Line Breaks** - When defining code strings, use `\n` for newlines
+4. **Keep Code Readable** - For very large diffs, consider pagination or limiting the visible range
+5. **Provide Context** - Include enough surrounding code to make changes understandable
+
+## Examples
+
+### TypeScript Comparison
+
+```tsx
+<DiffViewer
+  oldCode={`interface User {
+  name: string;
+  age: number;
+}`}
+  newCode={`interface User {
+  name: string;
+  email: string;
+  age: number;
+  isActive: boolean;
+}`}
+  lang="typescript"
+/>
+```
+
+### JSON Configuration
+
+```tsx
+<DiffViewer
+  oldCode={`{
+  "version": "1.0.0",
+  "name": "my-app"
+}`}
+  newCode={`{
+  "version": "2.0.0",
+  "name": "my-app",
+  "description": "My awesome app"
+}`}
+  lang="json"
+/>
+```
+
+### Python Code
+
+```tsx
+<DiffViewer
+  oldCode={`def greet():
+    print("Hello")`}
+  newCode={`def greet(name="World"):
+    print(f"Hello, {name}!")`}
+  lang="python"
+/>
+```
+
+## Performance Considerations
+
+The component is optimized for performance:
+
+- **Async Loading** - Syntax highlighting is loaded asynchronously to avoid blocking
+- **Efficient Rendering** - Large diffs are rendered efficiently without performance degradation
+- **Optimized Theme Switching** - Theme changes don't trigger unnecessary re-renders
+- **Memoization** - Diff calculations are memoized to prevent redundant processing

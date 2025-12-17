@@ -1,5 +1,6 @@
 body {
-  @apply text-cn-2 text-cn-size-3 overscroll-none !important;
+  @apply text-cn-2 text-cn-size-3 overscroll-none tracking-cn-normal font-body-normal leading-10 !important;
+  @apply !leading-7 !text-cn-size-3;
   -webkit-font-smoothing: auto;
   -moz-osx-font-smoothing: auto;
   font-smooth: auto;
@@ -19,6 +20,30 @@ main {
 
 .sl-container :is(h3):not(:where(.not-content *)) {
   @apply text-cn-size-6 font-normal text-cn-1;
+}
+
+/* List styles for content */
+
+.sl-container :is(ul):not(:where(.not-content *, .right-sidebar-panel *)) {
+  @apply list-disc pl-cn-xl my-cn-md space-y-cn-xs;
+}
+
+.sl-container :is(ol):not(:where(.not-content *, .right-sidebar-panel *)) {
+  @apply list-decimal pl-cn-xl my-cn-md space-y-cn-xs;
+}
+
+.sl-container :is(li):not(:where(.not-content *, .right-sidebar-panel *)) {
+  @apply text-cn-2 leading-relaxed;
+}
+
+.sl-container :is(ul ul):not(:where(.not-content *, .right-sidebar-panel *)),
+.sl-container :is(ol ul):not(:where(.not-content *, .right-sidebar-panel *)) {
+  @apply list-disc mt-cn-xs;
+}
+
+.sl-container :is(ul ol):not(:where(.not-content *, .right-sidebar-panel *)),
+.sl-container :is(ol ol):not(:where(.not-content *, .right-sidebar-panel *)) {
+  @apply list-decimal mt-cn-xs;
 }
 
 code {

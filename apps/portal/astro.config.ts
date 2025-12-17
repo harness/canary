@@ -97,6 +97,10 @@ export default defineConfig({
               autogenerate: { directory: "components/chat" },
             },
             {
+              label: "Markdown & Display",
+              autogenerate: { directory: "components/markdown-display" },
+            },
+            {
               label: "Utilities",
               autogenerate: { directory: "components/utilities" },
             },

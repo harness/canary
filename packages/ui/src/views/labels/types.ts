@@ -18,8 +18,7 @@ export enum ColorsEnum {
   CYAN = 'cyan',
   ORANGE = 'orange',
   BROWN = 'brown',
-  MINT = 'mint',
-  LIME = 'lime'
+  MINT = 'mint'
 }
 
 export const createLabelFormSchema = z.object({

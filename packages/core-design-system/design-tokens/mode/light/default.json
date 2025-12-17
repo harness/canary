@@ -259,7 +259,7 @@
       "secondary": {
         "text": {
           "$type": "color",
-          "$value": "{gray.800}",
+          "$value": "{gray.850}",
           "$description": "Text color for subtle gray surfaces with good contrast."
         },
         "bg": {

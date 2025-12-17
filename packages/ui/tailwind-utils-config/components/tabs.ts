@@ -102,7 +102,7 @@ export default {
 
       '&:where(:not([disabled]):hover)': {
         // Adding important to override Blueprint reset CSS defaults
-        color: 'var(--cn-text-2) !important'
+        color: 'var(--cn-text-1) !important'
       },
 
       '&:where(:not([disabled]):focus-visible)': {
@@ -127,7 +127,7 @@ export default {
       },
 
       '&:where(:not([disabled]):hover)': {
-        color: 'var(--cn-text-2) !important'
+        color: 'var(--cn-text-1) !important'
       }
     },
 

@@ -32,7 +32,6 @@
 }
 
 @layer utilities {
-
   /*
     Handy CSS class to prevent Input background color becomes yellow in Chrome on autofill.
     Works as well with inputs with transparent background.
@@ -69,7 +68,9 @@
   --cn-tabs-nav-height: 45px;
   --cn-repo-header-height: 71px;
   --cn-page-nav-height: calc(var(--cn-tabs-nav-height) + var(--cn-breadcrumbs-height));
-  --cn-page-nav-full-height: calc(var(--cn-tabs-nav-height) + var(--cn-breadcrumbs-height) + var(--cn-repo-header-height));
+  --cn-page-nav-full-height: calc(
+    var(--cn-tabs-nav-height) + var(--cn-breadcrumbs-height) + var(--cn-repo-header-height)
+  );
 }
 
 .border-linear {
@@ -165,7 +166,6 @@
 }
 
 .diff-tailwindcss-wrapper {
-
   .diff-line-widget-new-content,
   .diff-line-widget-new-placeholder,
   .diff-line-new-placeholder,
@@ -387,7 +387,9 @@
 
 .diff-tailwindcss-wrapper .translate-x-\[-50\%\],
 .diff-tailwindcss-wrapper .translate-x-\[50\%\] {
-  transform: translate(var(--cn-tw-translate-x, 0), var(--cn-tw-translate-y, 0)) rotate(var(--cn-tw-rotate, 0)) skewX(var(--cn-tw-skew-x, 0)) skewY(var(--cn-tw-skew-y, 0)) scaleX(var(--cn-tw-scale-x, 1)) scaleY(var(--cn-tw-scale-y, 1));
+  transform: translate(var(--cn-tw-translate-x, 0), var(--cn-tw-translate-y, 0)) rotate(var(--cn-tw-rotate, 0))
+    skewX(var(--cn-tw-skew-x, 0)) skewY(var(--cn-tw-skew-y, 0)) scaleX(var(--cn-tw-scale-x, 1))
+    scaleY(var(--cn-tw-scale-y, 1));
 }
 
 .diff-tailwindcss-wrapper .translate-x-\[50\%\] {
@@ -396,7 +398,9 @@
 
 .diff-tailwindcss-wrapper .translate-y-\[-50\%\] {
   --cn-tw-translate-y: -50%;
-  transform: translate(var(--cn-tw-translate-x, 0), var(--cn-tw-translate-y, 0)) rotate(var(--cn-tw-rotate, 0)) skewX(var(--cn-tw-skew-x, 0)) skewY(var(--cn-tw-skew-y, 0)) scaleX(var(--cn-tw-scale-x, 1)) scaleY(var(--cn-tw-scale-y, 1));
+  transform: translate(var(--cn-tw-translate-x, 0), var(--cn-tw-translate-y, 0)) rotate(var(--cn-tw-rotate, 0))
+    skewX(var(--cn-tw-skew-x, 0)) skewY(var(--cn-tw-skew-y, 0)) scaleX(var(--cn-tw-scale-x, 1))
+    scaleY(var(--cn-tw-scale-y, 1));
 }
 
 .diff-tailwindcss-wrapper .cursor-pointer {
@@ -527,7 +531,8 @@
 }
 
 .diff-tailwindcss-wrapper .filter {
-  filter: var(--cn-tw-blur) var(--cn-tw-brightness) var(--cn-tw-contrast) var(--cn-tw-grayscale) var(--cn-tw-hue-rotate) var(--cn-tw-invert) var(--cn-tw-saturate) var(--cn-tw-sepia) var(--cn-tw-drop-shadow);
+  filter: var(--cn-tw-blur) var(--cn-tw-brightness) var(--cn-tw-contrast) var(--cn-tw-grayscale) var(--cn-tw-hue-rotate)
+    var(--cn-tw-invert) var(--cn-tw-saturate) var(--cn-tw-sepia) var(--cn-tw-drop-shadow);
 }
 
 .diff-tailwindcss-wrapper .transition-transform {
@@ -558,7 +563,7 @@
   stop {
     stop-color: var(--cn-text-2);
 
-    &+stop {
+    & + stop {
       stop-color: var(--cn-text-3);
     }
   }
@@ -571,7 +576,6 @@ mark {
 
 /* Hack for detecting scroll on select */
 @keyframes detect-scroll {
-
   from,
   to {
     --can-scroll: ;
@@ -642,7 +646,7 @@ mark {
   }
 }
 
-.monaco-scrollable-element>.scrollbar>.slider {
+.monaco-scrollable-element > .scrollbar > .slider {
   border-radius: var(--cn-rounded-full, 0.25rem);
   --vscode-scrollbarSlider-background: var(--cn-comp-scrollbar-thumb, lch(20.5% 2.62 285.74));
 }
@@ -661,11 +665,11 @@ mark {
   @apply invisible h-[var(--block-height)] [contain-intrinsic-height:auto_var(--block-height)] [content-visibility:auto];
 }
 
-.diffViewBlock.hiddenDiff>* {
+.diffViewBlock.hiddenDiff > * {
   visibility: hidden !important;
 }
 
-.diffViewBlock.hiddenDiff>*>* {
+.diffViewBlock.hiddenDiff > * > * {
   display: none !important;
 }
 
@@ -674,7 +678,9 @@ mark {
 }
 
 .repo-files-height {
-  height: calc(100vh - var(--cn-page-nav-full-height) - var(--cn-inset-layout-indent) - var(--cn-inset-border-width) * 2);
+  height: calc(
+    100vh - var(--cn-page-nav-full-height) - var(--cn-inset-layout-indent) - var(--cn-inset-border-width) * 2
+  );
 }
 
 .branch-selector-trigger-as-input {
@@ -691,7 +697,6 @@ mark {
 }
 
 .file-explorer-header {
-
   /* has-[:hover]:bg-cn-selected rounded */
   &:has(:hover) {
     @apply bg-cn-hover rounded;
@@ -745,5 +750,4 @@ mark {
       left: calc(var(--cn-size-14) + var(--cn-inset-spacing)) !important;
     }
   }
-
 }

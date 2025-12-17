@@ -81,9 +81,11 @@ Implementing custom controls example
 ```tsx
 const { increase, decrease, fit } = useCanvasContext()
 
-return <>
+return (
+  <>
     <button onClick={() => increase()}>+</button>
     <button onClick={() => decrease()}>-</button>
     <button onClick={() => fit()}>FIT</button>
-</>
+  </>
+)
 ```

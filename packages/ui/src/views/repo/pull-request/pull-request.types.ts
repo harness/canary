@@ -197,6 +197,7 @@ export type EnumLabelColor =
   | 'cyan'
   | 'green'
   | 'indigo'
+  | 'lime'
   | 'mint'
   | 'orange'
   | 'pink'

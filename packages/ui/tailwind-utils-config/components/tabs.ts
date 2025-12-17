@@ -38,7 +38,9 @@ export default {
     alignItems: 'center',
     color: 'var(--cn-text-3)',
     userSelect: 'none',
-    '@apply transition-colors': '',
+    transitionProperty: 'color, background-color, border-color',
+    transitionDuration: '150ms',
+    transitionTimingFunction: 'ease-in-out',
 
     '&-outlined': {
       minHeight: 'var(--cn-tabs-item-min-height)',

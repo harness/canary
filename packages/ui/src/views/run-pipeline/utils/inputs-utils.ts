@@ -39,12 +39,14 @@ export function pipelineInputs2FormInputs({
   pipelineInputs,
   options,
   pipelineInputLayout = [],
-  inputComponentFactory
+  inputComponentFactory,
+  ignoreDefaultValue
 }: {
   pipelineInputs: Record<string, PipelineInputDefinition>
   options: { prefix?: string }
   pipelineInputLayout?: InputLayout
   inputComponentFactory: InputFactory
+  ignoreDefaultValue?: boolean
 }): IInputDefinition[] {
   /**
    * Pre-process inputs for valid layout.
@@ -68,13 +70,14 @@ export function pipelineInputs2FormInputs({
     pipelineInputs,
     options,
     processedInputKeys,
-    inputComponentFactory
+    inputComponentFactory,
+    ignoreDefaultValue
   )
 
   const remainingInputs: IInputDefinition[] = []
   forOwn(pipelineInputs, (value, key) => {
     if (!processedInputKeys.has(key)) {
-      remainingInputs.push(pipelineInput2FormInput(key, value, options, inputComponentFactory))
+      remainingInputs.push(pipelineInput2FormInput(key, value, options, inputComponentFactory, ignoreDefaultValue))
     }
   })
 
@@ -95,7 +98,8 @@ const processLayout = (
   pipelineInputs: Record<string, PipelineInputDefinition>,
   options: { prefix?: string },
   processedInputKeys: Set<string>,
-  inputComponentFactory: InputFactory
+  inputComponentFactory: InputFactory,
+  ignoreDefaultValue?: boolean
 ): IInputDefinition[] => {
   // NOTE: group are added to accordion
   let accordion: IInputDefinition | null = null
@@ -105,10 +109,17 @@ const processLayout = (
       if (processedInputKeys.has(item) || !(item in pipelineInputs)) return []
       accordion = null
       processedInputKeys.add(item)
-      return pipelineInput2FormInput(item, pipelineInputs[item], options, inputComponentFactory)
+      return pipelineInput2FormInput(item, pipelineInputs[item], options, inputComponentFactory, ignoreDefaultValue)
     }
 
-    const layoutedInputs = processLayout(item.items, pipelineInputs, options, processedInputKeys, inputComponentFactory)
+    const layoutedInputs = processLayout(
+      item.items,
+      pipelineInputs,
+      options,
+      processedInputKeys,
+      inputComponentFactory,
+      ignoreDefaultValue
+    )
 
     // If group has no title, flatten its items
     if (!item.title && item.items && item.items.length > 0) {
@@ -178,7 +189,8 @@ export function pipelineInput2FormInput(
   name: string,
   inputProps: PipelineInputDefinition,
   options: { prefix?: string },
-  inputComponentFactory: InputFactory
+  inputComponentFactory: InputFactory,
+  ignoreDefaultValue?: boolean
 ): IInputDefinition<{ tooltip?: string } & RuntimeInputConfig> {
   const inputType = pipelineInputType2FormInputType(inputProps.type, inputProps.ui, inputComponentFactory)
 
@@ -197,12 +209,17 @@ export function pipelineInput2FormInput(
 
   const fullPath = (options.prefix || '') + name
 
+  // if we ignore default value we omit both required and default
+  const defaultAndOptional =
+    ignoreDefaultValue && typeof inputProps.default !== 'undefined'
+      ? {}
+      : { default: inputProps.default, required: Boolean(inputProps.required) }
+
   return {
     inputType: transformedType,
     path: fullPath,
     label: typeof inputProps.label === 'string' ? inputProps.label : name,
-    default: inputProps.default,
-    required: Boolean(inputProps.required),
+    ...defaultAndOptional,
     placeholder: inputProps.ui?.placeholder || '',
     description: inputProps.description,
     ...rootProps,

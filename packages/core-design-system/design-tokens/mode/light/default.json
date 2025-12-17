@@ -2217,17 +2217,17 @@
         },
         "stop-2": {
           "$type": "color",
-          "$value": "{indigo.50}",
+          "$value": "{blue.50}",
           "$description": "Second gradient stop for AI outline backgrounds."
         },
         "stop-3": {
           "$type": "color",
-          "$value": "{blue.100}",
+          "$value": "{blue.150}",
           "$description": "Third gradient stop for AI outline backgrounds."
         },
         "stop-4": {
           "$type": "color",
-          "$value": "{blue.200}",
+          "$value": "{blue.300}",
           "$description": "Fourth gradient stop for AI outline backgrounds."
         }
       },

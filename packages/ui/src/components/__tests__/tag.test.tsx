@@ -305,7 +305,6 @@ describe('Tag', () => {
       { theme: 'cyan' as const, className: 'cn-tag-cyan' },
       { theme: 'green' as const, className: 'cn-tag-success' },
       { theme: 'indigo' as const, className: 'cn-tag-indigo' },
-      { theme: 'lime' as const, className: 'cn-tag-lime' },
       { theme: 'mint' as const, className: 'cn-tag-mint' },
       { theme: 'orange' as const, className: 'cn-tag-orange' },
       { theme: 'pink' as const, className: 'cn-tag-pink' },

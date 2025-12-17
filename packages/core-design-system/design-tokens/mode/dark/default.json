@@ -111,7 +111,7 @@
         "studio.tokens": {
           "modify": {
             "type": "alpha",
-            "value": "0.12",
+            "value": "0.1",
             "space": "lch"
           }
         }
@@ -125,13 +125,13 @@
         "studio.tokens": {
           "modify": {
             "type": "alpha",
-            "value": "0.08",
+            "value": "0.12",
             "space": "lch"
           }
         }
       },
       "$type": "color",
-      "$value": "{blue.200}",
+      "$value": "{gray.600}",
       "$description": "Strong overlay for emphasized selection states. Creates distinct visual indication of active or selected elements.\n\nCommon uses: Selected list items, active tabs, chosen options, current navigation item."
     }
   },
@@ -189,7 +189,7 @@
         },
         "bg": {
           "$type": "color",
-          "$value": "{blue.1000}",
+          "$value": "{indigo.1000}",
           "$description": "Background color for primary brand items with minimum emphasis."
         },
         "border": {
@@ -2557,27 +2557,27 @@
           },
           "stop-2": {
             "$type": "color",
-            "$value": "{gray.800}",
+            "$value": "{gray.700}",
             "$description": "Second gradient stop for empty state background."
           },
           "stop-3": {
             "$type": "color",
-            "$value": "{gray.850}",
+            "$value": "{gray.800}",
             "$description": "Third gradient stop for empty state background."
           },
           "stop-4": {
             "$type": "color",
-            "$value": "{gray.900}",
+            "$value": "{gray.850}",
             "$description": "Fourth gradient stop for empty state background."
           },
           "stop-5": {
             "$type": "color",
-            "$value": "{gray.950}",
+            "$value": "{gray.900}",
             "$description": "Fifth gradient stop for empty state background."
           },
           "stop-6": {
             "$type": "color",
-            "$value": "{gray.1000}",
+            "$value": "{gray.950}",
             "$description": "Sixth gradient stop for empty state background."
           }
         },
@@ -2624,19 +2624,19 @@
           },
           "stop-3": {
             "$type": "color",
-            "$value": "{gray.400}",
+            "$value": "{gray.500}",
             "$description": "Third gradient stop for empty state icon."
           }
         },
         "lines": {
           "from": {
             "$type": "color",
-            "$value": "{gray.900}",
+            "$value": "{gray.800}",
             "$description": "Starting color for empty state decorative lines."
           },
           "to": {
             "$type": "color",
-            "$value": "{pure.black}",
+            "$value": "{gray.900}",
             "$description": "Ending color for empty state decorative lines."
           }
         },

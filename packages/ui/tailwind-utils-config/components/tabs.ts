@@ -7,7 +7,7 @@ export default {
       width: 'fit-content',
       padding: 'var(--cn-tabs-container)',
       borderRadius: 'var(--cn-tabs-container-radius)',
-      border: 'var(--cn-tabs-container-border) solid var(--cn-border-2)',
+      border: 'var(--cn-tabs-container-border) solid var(--cn-border-3)',
       backgroundColor: 'var(--cn-bg-2)',
       '@apply font-body-strong': ''
     },
@@ -36,7 +36,7 @@ export default {
     '@apply font-body-strong': '',
     display: 'flex',
     alignItems: 'center',
-    color: 'var(--cn-text-2)',
+    color: 'var(--cn-text-3)',
     userSelect: 'none',
     '@apply transition-colors': '',
 
@@ -72,8 +72,7 @@ export default {
         backgroundColor: 'var(--cn-set-gray-secondary-bg)',
         borderRadius: 'var(--cn-tabs-item-radius)',
         borderColor: 'var(--cn-set-gray-secondary-bg)',
-        color: 'var(--cn-set-gray-secondary-text)',
-        boxShadow: 'var(--cn-shadow-1)'
+        color: 'var(--cn-set-gray-secondary-text)'
       },
 
       '&:where(:not([disabled]):hover)': {
@@ -101,7 +100,7 @@ export default {
 
       '&:where(:not([disabled]):hover)': {
         // Adding important to override Blueprint reset CSS defaults
-        color: 'var(--cn-text-brand) !important'
+        color: 'var(--cn-text-2) !important'
       },
 
       '&:where(:not([disabled]):focus-visible)': {
@@ -116,7 +115,7 @@ export default {
       padding: 'var(--cn-tabs-item-underlined-py) var(--cn-tabs-item-underlined-px)',
       paddingBottom: 'calc(var(--cn-tabs-item-underlined-py) - 1px)', // to compensate for the border and keep the height consistent to the design
       gap: 'var(--cn-tabs-item-underlined-gap)',
-      color: 'var(--cn-text-2)',
+      color: 'var(--cn-text-3)',
       borderBottom: 'var(--cn-tabs-item-underlined-border) solid transparent',
       '@apply font-body-normal': '',
 
@@ -126,7 +125,7 @@ export default {
       },
 
       '&:where(:not([disabled]):hover)': {
-        color: 'var(--cn-text-brand) !important'
+        color: 'var(--cn-text-2) !important'
       }
     },
 

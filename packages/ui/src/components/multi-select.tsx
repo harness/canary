@@ -52,19 +52,20 @@ export interface MultiSelectOption {
   title?: string
   disable?: boolean
   theme?:
-  | 'gray'
-  | 'blue'
-  | 'brown'
-  | 'cyan'
-  | 'green'
-  | 'indigo'
-  | 'mint'
-  | 'orange'
-  | 'pink'
-  | 'purple'
-  | 'red'
-  | 'violet'
-  | 'yellow'
+    | 'gray'
+    | 'blue'
+    | 'brown'
+    | 'cyan'
+    | 'green'
+    | 'indigo'
+    | 'lime'
+    | 'mint'
+    | 'orange'
+    | 'pink'
+    | 'purple'
+    | 'red'
+    | 'violet'
+    | 'yellow'
   onReset?: () => void
 }
 

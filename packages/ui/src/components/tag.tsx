@@ -24,6 +24,7 @@ const tagVariants = cva('cn-tag', {
       green: 'cn-tag-success',
       'forest-green': 'cn-tag-forest-green',
       indigo: 'cn-tag-indigo',
+      lime: 'cn-tag-lime',
       mint: 'cn-tag-mint',
       orange: 'cn-tag-orange',
       pink: 'cn-tag-pink',

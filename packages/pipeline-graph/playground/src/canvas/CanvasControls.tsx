@@ -2,7 +2,7 @@ import { useCanvasContext } from '../../../src/context/canvas-provider'
 import { CanvasButton } from './CanvasButton'
 
 export function CanvasControls() {
-  const { increase, decrease, reset, fit } = useCanvasContext()
+  const { increase, decrease, reset, fit, scale } = useCanvasContext()
 
   return (
     <div
@@ -19,6 +19,7 @@ export function CanvasControls() {
       <CanvasButton onClick={() => decrease()}>-</CanvasButton>
       <CanvasButton onClick={() => reset()}>RESET</CanvasButton>
       <CanvasButton onClick={() => fit()}>FIT</CanvasButton>
+      <div>Scale: {scale}</div>
     </div>
   )
 }

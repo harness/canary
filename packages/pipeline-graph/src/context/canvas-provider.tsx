@@ -1,6 +1,7 @@
 import { createContext, useCallback, useContext, useRef } from 'react'
 
 import { calculateTransform } from '../components/canvas/canvas-utils'
+import { useDebouncedState } from '../hooks/useDebouncedState'
 import { useMultiCanvasContext } from './multi-canvas-provider'
 
 interface CanvasConfig {
@@ -27,6 +28,7 @@ interface CanvasContextProps {
   increase: () => void
   decrease: () => void
   config: CanvasConfig
+  scale: number
 }
 
 const CanvasContext = createContext<CanvasContextProps>({
@@ -37,7 +39,8 @@ const CanvasContext = createContext<CanvasContextProps>({
   reset: () => undefined,
   increase: () => undefined,
   decrease: () => undefined,
-  config: { minScale: 0.1, maxScale: 10, scaleFactor: 0.3, paddingForFit: 30 }
+  config: { minScale: 0.1, maxScale: 10, scaleFactor: 0.3, paddingForFit: 30 },
+  scale: 1
 })
 
 export interface CanvasProviderProps {
@@ -54,6 +57,7 @@ export const CanvasProvider = ({ children, config: configFromProps, id = '' }: C
   const initialTransformRef = useRef<CanvasTransform>({ scale: 1, translateX: 0, translateY: 0 })
 
   const { getCanvasTransformRef, setCanvasTransformRef } = useMultiCanvasContext()
+  const [scale, setScale] = useDebouncedState(1, 100)
 
   const setCanvasTransform = useCallback(
     (transform: CanvasTransform & { rootContainer?: HTMLDivElement; isInitial?: boolean }) => {
@@ -79,8 +83,9 @@ export const CanvasProvider = ({ children, config: configFromProps, id = '' }: C
       }
 
       setCanvasTransformRef(id, canvasTransformRef)
+      setScale(canvasTransformRef.current.scale)
     },
-    [id, getCanvasTransformRef, setCanvasTransformRef]
+    [setCanvasTransformRef, id, setScale, getCanvasTransformRef]
   )
 
   const setTargetEl = useCallback((targetEl: HTMLElement) => {
@@ -186,7 +191,8 @@ export const CanvasProvider = ({ children, config: configFromProps, id = '' }: C
         reset,
         increase,
         decrease,
-        config
+        config,
+        scale
       }}
     >
       {children}

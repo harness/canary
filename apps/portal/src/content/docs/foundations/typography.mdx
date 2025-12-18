@@ -5,240 +5,410 @@ description: Typography guidelines and styles for consistent text presentation
 
 import { DocsPage } from "@/components/docs-page";
 import { Text } from "@harnessio/ui/components";
+import { Aside } from "@astrojs/starlight/components";
 
 Consistency in typography helps users navigate content with ease. Always use hierarchy to guide attention and improve readability.
 
 Our typography system is built around a set of predefined text styles that provide consistent visual hierarchy and readability across the application. The `Text` component is the primary way to implement these typographic styles.
 
-## Text Variants
+## Type Scale Overview
 
-Our typography system is organized into three main categories: Headings, Body text, and Captions. Each category serves different purposes in the UI hierarchy.
+<DocsPage.ComponentExample
+  client:only
+  hideCode
+  code={`<div className="space-y-cn-sm">
+    <div className="flex items-baseline gap-cn-md border-b border-cn-borders-3 pb-cn-sm">
+        <span className="text-cn-size-0 text-cn-3 w-36 shrink-0 font-mono">heading-hero</span>
+        <span className="text-cn-size-0 text-cn-3 w-32 shrink-0">28px · 450 · tight</span>
+        <Text variant="heading-hero">Build anything</Text>
+    </div>
+    <div className="flex items-baseline gap-cn-md border-b border-cn-borders-3 pb-cn-sm">
+        <span className="text-cn-size-0 text-cn-3 w-36 shrink-0 font-mono">heading-section</span>
+        <span className="text-cn-size-0 text-cn-3 w-32 shrink-0">24px · 400 · snug</span>
+        <Text variant="heading-section">Build anything</Text>
+    </div>
+    <div className="flex items-baseline gap-cn-md border-b border-cn-borders-3 pb-cn-sm">
+        <span className="text-cn-size-0 text-cn-3 w-36 shrink-0 font-mono">heading-subsection</span>
+        <span className="text-cn-size-0 text-cn-3 w-32 shrink-0">18px · 400 · snug</span>
+        <Text variant="heading-subsection">Build anything</Text>
+    </div>
+    <div className="flex items-baseline gap-cn-md border-b border-cn-borders-3 pb-cn-sm">
+        <span className="text-cn-size-0 text-cn-3 w-36 shrink-0 font-mono">heading-base</span>
+        <span className="text-cn-size-0 text-cn-3 w-32 shrink-0">16px · 400 · tight</span>
+        <Text variant="heading-base">Build anything</Text>
+    </div>
+    <div className="flex items-baseline gap-cn-md border-b border-cn-borders-3 pb-cn-sm">
+        <span className="text-cn-size-0 text-cn-3 w-36 shrink-0 font-mono">heading-small</span>
+        <span className="text-cn-size-0 text-cn-3 w-32 shrink-0">14px · 450 · snug</span>
+        <Text variant="heading-small">Build anything</Text>
+    </div>
+    <div className="flex items-baseline gap-cn-md border-b border-cn-borders-3 pb-cn-sm">
+        <span className="text-cn-size-0 text-cn-3 w-36 shrink-0 font-mono">body</span>
+        <span className="text-cn-size-0 text-cn-3 w-32 shrink-0">14px · 400/450 · snug</span>
+        <div className="flex gap-cn-lg">
+            <Text variant="body-normal">normal</Text>
+            <Text variant="body-strong">strong</Text>
+        </div>
+    </div>
+    <div className="flex items-baseline gap-cn-md border-b border-cn-borders-3 pb-cn-sm">
+        <span className="text-cn-size-0 text-cn-3 w-36 shrink-0 font-mono">body-code</span>
+        <span className="text-cn-size-0 text-cn-3 w-32 shrink-0">13px · 300 · mono</span>
+        <Text variant="body-code">const x = 1</Text>
+    </div>
+    <div className="flex items-baseline gap-cn-md">
+        <span className="text-cn-size-0 text-cn-3 w-36 shrink-0 font-mono">caption</span>
+        <span className="text-cn-size-0 text-cn-3 w-32 shrink-0">13px · 350/400/450 · snug</span>
+        <div className="flex gap-cn-lg">
+            <Text variant="caption-light">light</Text>
+            <Text variant="caption-normal">normal</Text>
+            <Text variant="caption-strong">strong</Text>
+        </div>
+    </div>
+</div>`}
+/>
+
+## Text Variants
 
 ### Heading Variants
 
 Headings establish the information hierarchy and provide structure to content.
 
-<DocsPage.ComponentExample
-  client:only
-  code={`<div className="grid gap-cn-md">
-    <div>
-        <Text variant="heading-base" className="underline mb-cn-3xs">heading-hero:</Text>
-        <Text variant="heading-hero" color="foreground-2">Consistency in typography helps users navigate content with ease.</Text>
+<div style={{ marginTop: "-1rem" }}>
+  <DocsPage.ComponentExample
+    client:only
+    code={`<div className="space-y-cn-sm">
+    <div className="flex items-baseline gap-cn-md border-b border-cn-borders-3 pb-cn-sm">
+        <span className="text-cn-size-0 text-cn-3 w-32 shrink-0 font-mono">heading-hero</span>
+        <Text variant="heading-hero">The quick brown fox</Text>
     </div>
-    <div>
-        <Text variant="heading-base" className="underline mb-cn-3xs">heading-section:</Text>
-        <Text variant="heading-section" color="foreground-2">Consistency in typography helps users navigate content with ease.</Text>
+    <div className="flex items-baseline gap-cn-md border-b border-cn-borders-3 pb-cn-sm">
+        <span className="text-cn-size-0 text-cn-3 w-32 shrink-0 font-mono">heading-section</span>
+        <Text variant="heading-section">The quick brown fox</Text>
     </div>
-    <div>
-        <Text variant="heading-base" className="underline mb-cn-3xs">heading-subsection:</Text>
-        <Text variant="heading-subsection" color="foreground-2">Consistency in typography helps users navigate content with ease.</Text>
+    <div className="flex items-baseline gap-cn-md border-b border-cn-borders-3 pb-cn-sm">
+        <span className="text-cn-size-0 text-cn-3 w-32 shrink-0 font-mono">heading-subsection</span>
+        <Text variant="heading-subsection">The quick brown fox</Text>
     </div>
-    <div>
-        <Text variant="heading-base" className="underline mb-cn-3xs">heading-base:</Text>
-        <Text variant="heading-base" color="foreground-2">Consistency in typography helps users navigate content with ease.</Text>
+    <div className="flex items-baseline gap-cn-md border-b border-cn-borders-3 pb-cn-sm">
+        <span className="text-cn-size-0 text-cn-3 w-32 shrink-0 font-mono">heading-base</span>
+        <Text variant="heading-base">The quick brown fox</Text>
     </div>
-    <div>
-        <Text variant="heading-base" className="underline mb-cn-3xs">heading-small:</Text>
-        <Text variant="heading-small" color="foreground-2">Consistency in typography helps users navigate content with ease.</Text>
+    <div className="flex items-baseline gap-cn-md">
+        <span className="text-cn-size-0 text-cn-3 w-32 shrink-0 font-mono">heading-small</span>
+        <Text variant="heading-small">The quick brown fox</Text>
     </div>
 </div>`}
-/>
+  />
+</div>
 
 ### Body Variants
 
-Body text is used for the main content and supports both regular and strong emphasis.
+Body text is used for the main content.
 
-<DocsPage.ComponentExample
-  client:only
-  code={`<div className="grid gap-cn-md">
-    <div>
-        <Text variant="heading-base" className="underline mb-cn-3xs">body-normal:</Text>
-        <Text variant="body-normal">Consistency in typography helps users navigate content with ease. Always use hierarchy to guide attention and improve readability.</Text>
+<div style={{ marginTop: "-1rem" }}>
+  <DocsPage.ComponentExample
+    client:only
+    code={`<div className="space-y-cn-sm">
+    <div className="flex items-baseline gap-cn-md border-b border-cn-borders-3 pb-cn-sm">
+        <span className="text-cn-size-0 text-cn-3 w-40 shrink-0 font-mono">body-normal</span>
+        <Text variant="body-normal">The quick brown fox jumps over the lazy dog.</Text>
     </div>
-    <div>
-        <Text variant="heading-base" className="underline mb-cn-3xs">body-single-line-normal:</Text>
-        <Text variant="body-single-line-normal">Consistency in typography helps users navigate content with ease.</Text>
+    <div className="flex items-baseline gap-cn-md border-b border-cn-borders-3 pb-cn-sm">
+        <span className="text-cn-size-0 text-cn-3 w-40 shrink-0 font-mono">body-strong</span>
+        <Text variant="body-strong">The quick brown fox jumps over the lazy dog.</Text>
     </div>
-    <div>
-        <Text variant="heading-base" className="underline mb-cn-3xs">body-strong:</Text>
-        <Text variant="body-strong">Consistency in typography helps users navigate content with ease. Always use hierarchy to guide attention and improve readability.</Text>
+    <div className="flex items-baseline gap-cn-md border-b border-cn-borders-3 pb-cn-sm">
+        <span className="text-cn-size-0 text-cn-3 w-40 shrink-0 font-mono">body-single-line-normal</span>
+        <Text variant="body-single-line-normal">For UI components</Text>
     </div>
-    <div>
-        <Text variant="heading-base" className="underline mb-cn-3xs">body-single-line-strong:</Text>
-        <Text variant="body-single-line-strong">Consistency in typography helps users navigate content with ease.</Text>
+    <div className="flex items-baseline gap-cn-md border-b border-cn-borders-3 pb-cn-sm">
+        <span className="text-cn-size-0 text-cn-3 w-40 shrink-0 font-mono">body-single-line-strong</span>
+        <Text variant="body-single-line-strong">For UI components</Text>
     </div>
-    <div>
-        <Text variant="heading-base" className="underline mb-cn-3xs">body-code:</Text>
-        <Text variant="body-code" wrap="wrap">Consistency in typography helps users navigate content with ease.</Text>
+    <div className="flex items-baseline gap-cn-md border-b border-cn-borders-3 pb-cn-sm">
+        <span className="text-cn-size-0 text-cn-3 w-40 shrink-0 font-mono">body-single-line-light</span>
+        <Text variant="body-single-line-light">For UI components</Text>
+    </div>
+    <div className="flex items-baseline gap-cn-md">
+        <span className="text-cn-size-0 text-cn-3 w-40 shrink-0 font-mono">body-code</span>
+        <Text variant="body-code">npm install @harnessio/ui</Text>
     </div>
 </div>`}
-/>
+  />
+</div>
 
 ### Caption Variants
 
-Captions are used for auxiliary information, labels, and metadata.
+Captions are used for labels and metadata.
 
-<DocsPage.ComponentExample
-  client:only
-  code={`<div className="grid gap-cn-md">
-    <div>
-        <Text variant="heading-base" className="underline mb-cn-3xs">caption-normal:</Text>
-        <Text variant="caption-normal">Consistency in typography helps users navigate content with ease.</Text>
+<div style={{ marginTop: "-1rem" }}>
+  <DocsPage.ComponentExample
+    client:only
+    code={`<div className="space-y-cn-sm">
+    <div className="flex items-baseline gap-cn-md border-b border-cn-borders-3 pb-cn-sm">
+        <span className="text-cn-size-0 text-cn-3 w-44 shrink-0 font-mono">caption-normal</span>
+        <Text variant="caption-normal">Label text for UI elements</Text>
     </div>
-    <div>
-        <Text variant="heading-base" className="underline mb-cn-3xs">caption-light:</Text>
-        <Text variant="caption-light">Consistency in typography helps users navigate content with ease.</Text>
+    <div className="flex items-baseline gap-cn-md border-b border-cn-borders-3 pb-cn-sm">
+        <span className="text-cn-size-0 text-cn-3 w-44 shrink-0 font-mono">caption-strong</span>
+        <Text variant="caption-strong">Label text for UI elements</Text>
     </div>
-    <div>
-        <Text variant="heading-base" className="underline mb-cn-3xs">caption-single-line-normal:</Text>
-        <Text variant="caption-single-line-normal">Consistency in typography helps users navigate content with ease.</Text>
+    <div className="flex items-baseline gap-cn-md border-b border-cn-borders-3 pb-cn-sm">
+        <span className="text-cn-size-0 text-cn-3 w-44 shrink-0 font-mono">caption-light</span>
+        <Text variant="caption-light">Label text for UI elements</Text>
     </div>
-    <div>
-        <Text variant="heading-base" className="underline mb-cn-3xs">caption-single-line-light:</Text>
-        <Text variant="caption-single-line-light">Consistency in typography helps users navigate content with ease.</Text>
+    <div className="flex items-baseline gap-cn-md border-b border-cn-borders-3 pb-cn-sm">
+        <span className="text-cn-size-0 text-cn-3 w-44 shrink-0 font-mono">caption-single-line-normal</span>
+        <Text variant="caption-single-line-normal">For compact UI</Text>
+    </div>
+    <div className="flex items-baseline gap-cn-md">
+        <span className="text-cn-size-0 text-cn-3 w-44 shrink-0 font-mono">caption-single-line-light</span>
+        <Text variant="caption-single-line-light">For compact UI</Text>
     </div>
 </div>`}
-/>
+  />
+</div>
 
 ## Text Colors
 
-Text colors help establish hierarchy, provide emphasis, and communicate status or meaning. The default color is `foreground-2`.
+Text colors help establish visual hierarchy and convey meaning.
 
-<DocsPage.ComponentExample
-  client:only
-  code={`<div className="grid gap-cn-md">
-    <div>
-        <Text variant="heading-base" className="underline mb-cn-3xs">inherit:</Text>
-        <Text color="inherit">Consistency in typography helps users navigate content with ease.</Text>
+<div style={{ marginTop: "-1rem" }}>
+  <DocsPage.ComponentExample
+    client:only
+    code={`<div className="space-y-cn-sm">
+    <div className="pb-cn-xs">
+        <Text variant="caption-strong" color="foreground-3">Hierarchy</Text>
     </div>
-    <div>
-        <Text variant="heading-base" className="underline mb-cn-3xs">foreground-1:</Text>
-        <Text color="foreground-1">Consistency in typography helps users navigate content with ease.</Text>
+    <div className="flex items-center gap-cn-md border-b border-cn-borders-3 pb-cn-sm">
+        <span className="text-cn-size-0 text-cn-3 w-28 shrink-0 font-mono">foreground-1</span>
+        <span className="text-cn-size-0 text-cn-3 w-40 shrink-0">headings, primary content</span>
+        <Text color="foreground-1">Text-1</Text>
     </div>
-    <div>
-        <Text variant="heading-base" className="underline mb-cn-3xs">foreground-2:</Text>
-        <Text color="foreground-2">Consistency in typography helps users navigate content with ease.</Text>
+    <div className="flex items-center gap-cn-md border-b border-cn-borders-3 pb-cn-sm">
+        <span className="text-cn-size-0 text-cn-3 w-28 shrink-0 font-mono">foreground-2</span>
+        <span className="text-cn-size-0 text-cn-3 w-40 shrink-0">body text (default)</span>
+        <Text color="foreground-2">Text-2</Text>
     </div>
-    <div>
-        <Text variant="heading-base" className="underline mb-cn-3xs">foreground-3:</Text>
-        <Text color="foreground-3">Consistency in typography helps users navigate content with ease.</Text>
+    <div className="flex items-center gap-cn-md border-b border-cn-borders-3 pb-cn-sm">
+        <span className="text-cn-size-0 text-cn-3 w-28 shrink-0 font-mono">foreground-3</span>
+        <span className="text-cn-size-0 text-cn-3 w-40 shrink-0">labels, secondary info</span>
+        <Text color="foreground-3">Text-3</Text>
     </div>
-    <div>
-        <Text variant="heading-base" className="underline mb-cn-3xs">state-disabled:</Text>
-        <Text color="state-disabled">Consistency in typography helps users navigate content with ease.</Text>
+    <div className="flex items-center gap-cn-md border-b border-cn-borders-3 pb-cn-sm">
+        <span className="text-cn-size-0 text-cn-3 w-28 shrink-0 font-mono">foreground-4</span>
+        <span className="text-cn-size-0 text-cn-3 w-40 shrink-0">placeholders, disabled</span>
+        <Text color="foreground-4">Text-4</Text>
     </div>
-    <div>
-        <Text variant="heading-base" className="underline mb-cn-3xs">success:</Text>
-        <Text color="success">Consistency in typography helps users navigate content with ease.</Text>
+    <div className="pt-cn-sm pb-cn-xs">
+        <Text variant="caption-strong" color="foreground-3">Semantic</Text>
     </div>
-    <div>
-        <Text variant="heading-base" className="underline mb-cn-3xs">warning:</Text>
-        <Text color="warning">Consistency in typography helps users navigate content with ease.</Text>
+    <div className="flex items-center gap-cn-md border-b border-cn-borders-3 pb-cn-sm">
+        <span className="text-cn-size-0 text-cn-3 w-28 shrink-0 font-mono">success</span>
+        <span className="text-cn-size-0 text-cn-3 w-40 shrink-0">positive feedback</span>
+        <Text color="success">Success</Text>
     </div>
-    <div>
-        <Text variant="heading-base" className="underline mb-cn-3xs">danger:</Text>
-        <Text color="danger">Consistency in typography helps users navigate content with ease.</Text>
+    <div className="flex items-center gap-cn-md border-b border-cn-borders-3 pb-cn-sm">
+        <span className="text-cn-size-0 text-cn-3 w-28 shrink-0 font-mono">warning</span>
+        <span className="text-cn-size-0 text-cn-3 w-40 shrink-0">caution messages</span>
+        <Text color="warning">Warning</Text>
+    </div>
+    <div className="flex items-center gap-cn-md border-b border-cn-borders-3 pb-cn-sm">
+        <span className="text-cn-size-0 text-cn-3 w-28 shrink-0 font-mono">danger</span>
+        <span className="text-cn-size-0 text-cn-3 w-40 shrink-0">errors, destructive</span>
+        <Text color="danger">Error</Text>
+    </div>
+    <div className="flex items-center gap-cn-md border-b border-cn-borders-3 pb-cn-sm">
+        <span className="text-cn-size-0 text-cn-3 w-28 shrink-0 font-mono">merged</span>
+        <span className="text-cn-size-0 text-cn-3 w-40 shrink-0">git merged state</span>
+        <Text color="merged">Merged</Text>
+    </div>
+    <div className="flex items-center gap-cn-md">
+        <span className="text-cn-size-0 text-cn-3 w-28 shrink-0 font-mono">brand</span>
+        <span className="text-cn-size-0 text-cn-3 w-40 shrink-0">brand accent</span>
+        <Text color="brand">Brand</Text>
     </div>
 </div>`}
-/>
+  />
+</div>
 
 ## Text Alignment
 
-Text can be aligned to match different design requirements and content layouts.
+Control horizontal text alignment.
 
-<DocsPage.ComponentExample
-  client:only
-  code={`<div className="grid gap-cn-md">
-    <div>
-        <Text variant="heading-base" className="underline mb-cn-3xs">start:</Text>
-        <Text align="start">Consistency in typography helps users navigate content with ease.</Text>
+<div style={{ marginTop: "-1rem" }}>
+  <DocsPage.ComponentExample
+    client:only
+    code={`<div className="space-y-cn-sm">
+    <div className="flex items-center gap-cn-md border-b border-cn-borders-3 pb-cn-sm">
+        <span className="text-cn-size-0 text-cn-3 w-20 shrink-0 font-mono">left</span>
+        <Text align="left" className="flex-1">Left aligned text (default).</Text>
     </div>
-    <div>
-        <Text variant="heading-base" className="underline mb-cn-3xs">center:</Text>
-        <Text align="center">Consistency in typography helps users navigate content with ease.</Text>
+    <div className="flex items-center gap-cn-md border-b border-cn-borders-3 pb-cn-sm">
+        <span className="text-cn-size-0 text-cn-3 w-20 shrink-0 font-mono">center</span>
+        <Text align="center" className="flex-1">Center aligned text.</Text>
     </div>
-    <div>
-        <Text variant="heading-base" className="underline mb-cn-3xs">end:</Text>
-        <Text align="end">Consistency in typography helps users navigate content with ease.</Text>
+    <div className="flex items-center gap-cn-md">
+        <span className="text-cn-size-0 text-cn-3 w-20 shrink-0 font-mono">right</span>
+        <Text align="right" className="flex-1">Right aligned text.</Text>
     </div>
 </div>`}
-/>
+  />
+</div>
 
 ## Text Wrapping
 
-Control how text wraps and flows within its container.
+Control how text wraps within containers.
 
-<DocsPage.ComponentExample
-  client:only
-  code={`<div className="grid gap-cn-md">
+<div style={{ marginTop: "-1rem" }}>
+  <DocsPage.ComponentExample
+    client:only
+    code={`<div className="grid grid-cols-2 gap-cn-md">
     <div>
-        <Text variant="heading-base" className="underline mb-cn-3xs">wrap:</Text>
-        <Text wrap="wrap" className="max-w-xs">Consistency in typography helps users navigate content with ease. Always use hierarchy to guide attention and improve readability.</Text>
+        <span className="text-cn-size-0 text-cn-3 font-mono block mb-cn-2xs">wrap (default)</span>
+        <div className="w-48 border border-dashed border-cn-borders-3 p-cn-sm rounded-cn-3">
+            <Text wrap="wrap">This is a long sentence that will wrap normally at word boundaries.</Text>
+        </div>
     </div>
     <div>
-        <Text variant="heading-base" className="underline mb-cn-3xs">nowrap:</Text>
-        <Text wrap="nowrap" className="block overflow-hidden">Consistency in typography helps users navigate content with ease.</Text>
+        <span className="text-cn-size-0 text-cn-3 font-mono block mb-cn-2xs">nowrap</span>
+        <div className="w-48 border border-dashed border-cn-borders-3 p-cn-sm rounded-cn-3 overflow-hidden">
+            <Text wrap="nowrap">This text will not wrap and will overflow the container.</Text>
+        </div>
     </div>
     <div>
-        <Text variant="heading-base" className="underline mb-cn-3xs">balance:</Text>
-        <Text wrap="balance" className="max-w-xs">Consistency in typography helps users navigate content with ease. Always use hierarchy to guide attention and improve readability.</Text>
+        <span className="text-cn-size-0 text-cn-3 font-mono block mb-cn-2xs">balance</span>
+        <div className="w-48 border border-dashed border-cn-borders-3 p-cn-sm rounded-cn-3">
+            <Text wrap="balance">Text is balanced evenly across multiple lines.</Text>
+        </div>
     </div>
     <div>
-        <Text variant="heading-base" className="underline mb-cn-3xs">pretty:</Text>
-        <Text wrap="pretty" className="max-w-xs">Consistency in typography helps users navigate content with ease. Always use hierarchy to guide attention and improve readability.</Text>
+        <span className="text-cn-size-0 text-cn-3 font-mono block mb-cn-2xs">pretty</span>
+        <div className="w-48 border border-dashed border-cn-borders-3 p-cn-sm rounded-cn-3">
+            <Text wrap="pretty">Avoids orphan words at the end of paragraphs.</Text>
+        </div>
     </div>
 </div>`}
-/>
+  />
+</div>
 
-## Text Truncation
+## Truncation & Line Clamp
 
-When space is limited, text can be truncated with an ellipsis.
+Limit text display with truncation or line clamping.
 
-<DocsPage.ComponentExample
-  client:only
-  code={`<div className="grid gap-cn-md">
-    <div className="max-w-xs">
-        <Text variant="heading-base" className="underline mb-cn-3xs">Truncated text:</Text>
-        <Text truncate>Consistency in typography helps users navigate content with ease. Always use hierarchy to guide attention and improve readability.</Text>
+<div style={{ marginTop: "-1rem" }}>
+  <DocsPage.ComponentExample
+    client:only
+    code={`<div className="space-y-cn-sm max-w-lg">
+    <div className="flex items-start gap-cn-md border-b border-cn-borders-3 pb-cn-sm">
+        <span className="text-cn-size-0 text-cn-3 w-24 shrink-0 font-mono">truncate</span>
+        <Text truncate className="flex-1">The quick brown fox jumps over the lazy dog. Pack my box.</Text>
+    </div>
+    <div className="flex items-start gap-cn-md border-b border-cn-borders-3 pb-cn-sm">
+        <span className="text-cn-size-0 text-cn-3 w-24 shrink-0 font-mono">lineClamp=2</span>
+        <Text lineClamp={2} className="flex-1">The quick brown fox jumps over the lazy dog. Pack my box with five dozen liquor jugs. How vexingly quick daft zebras jump!</Text>
+    </div>
+    <div className="flex items-start gap-cn-md">
+        <span className="text-cn-size-0 text-cn-3 w-24 shrink-0 font-mono">lineClamp=3</span>
+        <Text lineClamp={3} className="flex-1">The quick brown fox jumps over the lazy dog. Pack my box with five dozen liquor jugs. How vexingly quick daft zebras jump! The five boxing wizards.</Text>
     </div>
 </div>`}
-/>
+  />
+</div>
 
-## Implementation
+## Usage
 
-The typography system is primarily implemented through the `Text` component:
-
-```typescript jsx
+```tsx
 import { Text } from '@harnessio/ui/components'
 
-// Basic usage
-<Text>Default text with body-normal variant</Text>
+// Variants
+<Text variant="heading-hero">Hero</Text>
+<Text variant="body-normal">Body text</Text>
+<Text variant="caption-light">Caption</Text>
 
-// With variants
-<Text variant="heading-section">Section Heading</Text> // Maps to <h2>
-<Text variant="body-strong">Important text with stronger emphasis</Text>
+// Colors
+<Text color="foreground-1">Primary</Text>
+<Text color="success">Success</Text>
+<Text color="danger">Error</Text>
 
-// With colors
-<Text color="foreground-1">High-contrast text</Text>
-<Text color="success">Success message</Text>
+// Truncation
+<Text truncate>Long text...</Text>
+<Text lineClamp={2}>Multi-line...</Text>
 
-// With custom HTML element
-<Text variant="heading-hero" as="h2">Hero heading as H2</Text> //  <h1> => <h2>
-<Text<'time'> as="time" dateTime="2025-07-07">July 7</Text>
+// Alignment & Wrapping
+<Text align="center">Centered</Text>
+<Text wrap="balance">Balanced</Text>
 
-// With truncation
-<Text truncate>This text will be truncated with an ellipsis if it overflows</Text>
-
-// With text wrapping options
-<Text wrap="balance">This text will be balanced for better readability</Text>
+// Custom element
+<Text as="h1" variant="heading-hero">Page Title</Text>
 ```
 
-## Best Practices
+## API Reference
 
-1. **Maintain Hierarchy**: Use the appropriate heading levels to establish clear content hierarchy.
+<DocsPage.PropsTable
+  client:only
+  props={[
+    {
+      name: "variant",
+      description: "The typographic style variant",
+      defaultValue: "body-normal",
+      required: false,
+      value:
+        "'heading-hero' | 'heading-section' | 'heading-subsection' | 'heading-base' | 'heading-small' | 'body-normal' | 'body-strong' | 'body-single-line-normal' | 'body-single-line-strong' | 'body-single-line-light' | 'body-code' | 'caption-normal' | 'caption-strong' | 'caption-light' | 'caption-single-line-normal' | 'caption-single-line-light'",
+    },
+    {
+      name: "color",
+      description: "The text color",
+      defaultValue: "foreground-2",
+      required: false,
+      value:
+        "'inherit' | 'foreground-1' | 'foreground-2' | 'foreground-3' | 'foreground-4' | 'success' | 'warning' | 'danger' | 'merged' | 'brand'",
+    },
+    {
+      name: "align",
+      description: "Text alignment",
+      required: false,
+      value: "'left' | 'center' | 'right'",
+    },
+    {
+      name: "wrap",
+      description: "Text wrapping behavior",
+      defaultValue: "wrap",
+      required: false,
+      value: "'wrap' | 'nowrap' | 'pretty' | 'balance'",
+    },
+    {
+      name: "truncate",
+      description: "Truncate text with ellipsis",
+      defaultValue: "false",
+      required: false,
+      value: "boolean",
+    },
+    {
+      name: "lineClamp",
+      description: "Limit text to N lines",
+      required: false,
+      value: "1 | 2 | 3 | 4 | 5 | 6",
+    },
+    {
+      name: "as",
+      description: "Override rendered HTML element",
+      defaultValue: "variant-based",
+      required: false,
+      value:
+        "'div' | 'span' | 'p' | 'h1' | 'h2' | 'h3' | 'h4' | 'h5' | 'h6' | ...",
+    },
+    {
+      name: "asChild",
+      description: "Merge props with child element",
+      defaultValue: "false",
+      required: false,
+      value: "boolean",
+    },
+  ]}
+/>
 
-2. **Readability First**: Choose variants and colors that optimize readability. Avoid using low-contrast combinations.
-
-3. **Semantic HTML**: The `Text` component automatically maps variants to semantic HTML elements, but you can override with the `as` prop when needed.
-
-4. **🚨 Consistent Usage**: Use the predefined text variants consistently rather than custom styling to ensure UI consistency.
+<Aside type="tip" title="Best Practice">
+  Always use predefined text variants instead of custom font styles to ensure
+  consistency across the application.
+</Aside>

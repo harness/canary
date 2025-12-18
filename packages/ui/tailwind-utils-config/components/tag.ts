@@ -6,6 +6,7 @@ const themes = [
   'brown',
   'cyan',
   'green',
+  'forest-green',
   'indigo',
   'lime',
   'mint',

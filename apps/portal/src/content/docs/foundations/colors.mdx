@@ -1,9 +1,21 @@
 ---
 title: Colors
+description: Color palette and tokens from Harness Design System
 ---
 
-Colors from Harness UI Design System
-
 import MainColorPalette from "@/components/MainColorPalette.astro";
+import ColorSystemDiagram from "@/components/ColorSystemDiagram.astro";
+
+Our color system uses **LCH color space** for perceptually uniform shades. Each color has 15 shades from lightest (25) to darkest (1000).
+
+## Core Palette
+
+This is the **reference palette** — raw color values used when defining semantic tokens. These shades should not be used directly in components.
+
+To support **theme switching** (light/dark modes), always use **semantic variables** instead. The semantic palette maps these core shades to meaningful roles (foreground, background, borders, etc.) that automatically adapt to the active theme.
+
+<ColorSystemDiagram />
+
+Click any swatch to copy its value.
 
 <MainColorPalette />

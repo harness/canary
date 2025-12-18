@@ -10,27 +10,31 @@ interface ColorToken {
 }
 
 // Get shade keys from blue (representative color)
-const shades = Object.keys(styles.colors.blue).filter(k => k !== '$type');
-const colorNames = Object.keys(styles.colors).filter(c => c !== "pure");
+const shades = Object.keys(styles.colors.blue).filter((k) => k !== "$type");
+const colorNames = Object.keys(styles.colors).filter((c) => c !== "pure");
 
 // Build color data with both LCH and HEX
-const colorData = colorNames.map(colorName => {
+const colorData = colorNames.map((colorName) => {
   const lchGroup = styles.colors[colorName as keyof typeof styles.colors];
   const hexGroup = colorsHex[colorName as keyof typeof colorsHex];
-  
-  const shadeData = shades.map(shade => {
+
+  const shadeData = shades.map((shade) => {
     const lchToken = lchGroup[shade as keyof typeof lchGroup] as ColorToken;
-    const hexToken = hexGroup?.[shade as keyof typeof hexGroup] as { $value?: string } | undefined;
-    
+    const hexToken = hexGroup?.[shade as keyof typeof hexGroup] as
+      | { $value?: string }
+      | undefined;
+
     return {
       shade,
-      lch: lchToken?.$value || '',
-      hex: hexToken?.$value || '',
-      cssVar: lchToken?.name ? `var(--${lchToken.name})` : `var(--cn-${colorName}-${shade})`,
+      lch: lchToken?.$value || "",
+      hex: hexToken?.$value || "",
+      cssVar: lchToken?.name
+        ? `var(--${lchToken.name})`
+        : `var(--cn-${colorName}-${shade})`,
       cssVarName: lchToken?.name || `cn-${colorName}-${shade}`,
     };
   });
-  
+
   return {
     name: colorName,
     shades: shadeData,
@@ -45,7 +49,9 @@ const colorDataJson = JSON.stringify(colorData);
   <div class="format-selector">
     <span class="format-label">Copy as:</span>
     <div class="format-buttons">
-      <button type="button" class="format-btn active" data-format="var">Variable</button>
+      <button type="button" class="format-btn active" data-format="var"
+        >Variable</button
+      >
       <button type="button" class="format-btn" data-format="lch">LCH</button>
       <button type="button" class="format-btn" data-format="hex">HEX</button>
     </div>
@@ -56,42 +62,49 @@ const colorDataJson = JSON.stringify(colorData);
     <!-- Header -->
     <div class="grid-header">
       <div class="color-name-cell"></div>
-      {shades.map(shade => (
-        <div class="shade-header">{shade}</div>
-      ))}
+      {shades.map((shade) => <div class="shade-header">{shade}</div>)}
     </div>
-    
+
     <!-- Color Rows -->
-    {colorData.map(color => (
-      <div class="color-row">
-        <div class="color-name-cell">
-          <span class="color-name">{color.name}</span>
-        </div>
-        {color.shades.map(s => (
-          <div class="swatch-cell">
-            <button
-              type="button"
-              class="swatch"
-              style={`background-color: ${s.lch};`}
-              data-lch={s.lch}
-              data-hex={s.hex}
-              data-var={s.cssVar}
-              data-name={`${color.name}-${s.shade}`}
-            >
-              <span class="swatch-tooltip">
-                <span class="tooltip-value" data-type="lch">{s.lch}</span>
-              </span>
-            </button>
+    {
+      colorData.map((color) => (
+        <div class="color-row">
+          <div class="color-name-cell">
+            <span class="color-name">{color.name}</span>
           </div>
-        ))}
-      </div>
-    ))}
+          {color.shades.map((s) => (
+            <div class="swatch-cell">
+              <button
+                type="button"
+                class="swatch"
+                style={`background-color: ${s.lch};`}
+                data-lch={s.lch}
+                data-hex={s.hex}
+                data-var={s.cssVar}
+                data-name={`${color.name}-${s.shade}`}
+              >
+                <span class="swatch-tooltip">
+                  <span class="tooltip-value" data-type="lch">
+                    {s.lch}
+                  </span>
+                </span>
+              </button>
+            </div>
+          ))}
+        </div>
+      ))
+    }
   </div>
-  
+
   <!-- Toast -->
   <div class="copy-toast" id="copyToast">
     <svg width="12" height="12" viewBox="0 0 16 16" fill="none">
-      <path d="M13.5 4.5L6 12L2.5 8.5" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+      <path
+        d="M13.5 4.5L6 12L2.5 8.5"
+        stroke="currentColor"
+        stroke-width="2"
+        stroke-linecap="round"
+        stroke-linejoin="round"></path>
     </svg>
     <span id="toastMessage">Copied!</span>
   </div>
@@ -103,7 +116,7 @@ const colorDataJson = JSON.stringify(colorData);
     --gap: 3px;
     --radius: 5px;
   }
-  
+
   /* Format Selector */
   .format-selector {
     display: flex;
@@ -111,12 +124,12 @@ const colorDataJson = JSON.stringify(colorData);
     gap: 8px;
     margin-bottom: 16px;
   }
-  
+
   .format-label {
     font-size: 12px;
     color: var(--sl-color-gray-3);
   }
-  
+
   .format-buttons {
     display: inline-flex;
     background: var(--sl-color-gray-6);
@@ -124,7 +137,7 @@ const colorDataJson = JSON.stringify(colorData);
     padding: 2px;
     gap: 1px;
   }
-  
+
   .format-btn {
     padding: 3px 10px;
     border: none;
@@ -136,24 +149,24 @@ const colorDataJson = JSON.stringify(colorData);
     background: transparent;
     color: var(--sl-color-gray-3);
   }
-  
+
   .format-btn:hover {
     color: var(--sl-color-gray-1);
   }
-  
+
   .format-btn.active {
     background: var(--sl-color-bg);
     color: var(--sl-color-white);
-    box-shadow: 0 1px 2px rgba(0,0,0,0.1);
+    box-shadow: 0 1px 2px rgba(0, 0, 0, 0.1);
   }
-  
+
   /* Color Grid */
   .color-grid {
     display: flex;
     flex-direction: column;
     gap: var(--gap);
   }
-  
+
   .grid-header,
   .color-row {
     display: grid;
@@ -161,50 +174,54 @@ const colorDataJson = JSON.stringify(colorData);
     gap: var(--gap);
     align-items: center;
   }
-  
+
   .shade-header {
     font-size: 10px;
     font-weight: 500;
     color: var(--sl-color-gray-2);
     text-align: center;
   }
-  
+
   .color-name-cell {
     padding-right: 8px;
   }
-  
+
   .color-name {
     font-size: 12px;
     font-weight: 500;
     color: var(--sl-color-gray-2);
     text-transform: capitalize;
   }
-  
+
   /* Swatch */
   .swatch-cell {
     position: relative;
   }
-  
+
   .swatch {
     width: 100%;
     aspect-ratio: 1.4;
     border: none;
     border-radius: var(--radius);
     cursor: pointer;
-    transition: box-shadow 0.1s ease, outline 0.1s ease;
+    transition:
+      box-shadow 0.1s ease,
+      outline 0.1s ease;
     position: relative;
     padding: 0;
   }
-  
+
   .swatch:hover {
-    box-shadow: 0 0 0 2px var(--sl-color-white), 0 0 0 4px currentColor;
+    box-shadow:
+      0 0 0 2px var(--sl-color-white),
+      0 0 0 4px currentColor;
     z-index: 10;
   }
-  
+
   .swatch:active {
     opacity: 0.9;
   }
-  
+
   /* Tooltip - inverted colors */
   .swatch-tooltip {
     position: absolute;
@@ -220,24 +237,24 @@ const colorDataJson = JSON.stringify(colorData);
     pointer-events: none;
     white-space: nowrap;
     z-index: 100;
-    box-shadow: 0 2px 8px rgba(0,0,0,0.15);
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.15);
     display: flex;
     align-items: center;
     justify-content: center;
   }
-  
+
   .swatch:hover .swatch-tooltip {
     opacity: 1;
     visibility: visible;
   }
-  
+
   .tooltip-value {
     font-size: 10px;
     line-height: 1;
     font-family: ui-monospace, monospace;
     color: var(--sl-color-bg);
   }
-  
+
   /* Toast - inverted colors */
   .copy-toast {
     position: fixed;
@@ -250,23 +267,23 @@ const colorDataJson = JSON.stringify(colorData);
     display: flex;
     align-items: center;
     gap: 6px;
-    box-shadow: 0 4px 12px rgba(0,0,0,0.2);
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
     opacity: 0;
     visibility: hidden;
     transition: all 0.15s ease;
     z-index: 1000;
   }
-  
+
   .copy-toast.show {
     opacity: 1;
     visibility: visible;
     transform: translateX(-50%) translateY(0);
   }
-  
+
   .copy-toast svg {
     color: #22c55e;
   }
-  
+
   #toastMessage {
     font-size: 11px;
     font-weight: 500;
@@ -276,79 +293,79 @@ const colorDataJson = JSON.stringify(colorData);
 </style>
 
 <script is:inline>
-(function() {
-  let currentFormat = 'var';
-  
-  function init() {
-    const formatBtns = document.querySelectorAll('.format-btn');
-    const swatches = document.querySelectorAll('.swatch');
-    const toast = document.getElementById('copyToast');
-    const toastMessage = document.getElementById('toastMessage');
-    const tooltipValues = document.querySelectorAll('.tooltip-value');
-    
-    // Update tooltip values based on format
-    function updateTooltips() {
-      swatches.forEach(swatch => {
-        const tooltip = swatch.querySelector('.tooltip-value');
-        if (tooltip) {
-          let value;
-          if (currentFormat === 'lch') {
-            value = swatch.getAttribute('data-lch');
-          } else if (currentFormat === 'hex') {
-            value = swatch.getAttribute('data-hex');
-          } else {
-            value = swatch.getAttribute('data-var');
-          }
-          tooltip.textContent = value || '';
-        }
-      });
-    }
-    
-    // Format button clicks
-    formatBtns.forEach(btn => {
-      btn.onclick = function() {
-        formatBtns.forEach(b => b.classList.remove('active'));
-        this.classList.add('active');
-        currentFormat = this.getAttribute('data-format');
-        updateTooltips();
-      };
-    });
-    
-    // Swatch clicks
-    swatches.forEach(swatch => {
-      swatch.onclick = function() {
-        let value;
-        if (currentFormat === 'lch') {
-          value = this.getAttribute('data-lch');
-        } else if (currentFormat === 'hex') {
-          value = this.getAttribute('data-hex');
-        } else {
-          value = this.getAttribute('data-var');
-        }
-        
-        if (navigator.clipboard && value) {
-          navigator.clipboard.writeText(value).then(() => {
-            if (toast && toastMessage) {
-              toastMessage.textContent = 'Copied: ' + value;
-              toast.classList.add('show');
-              setTimeout(() => {
-                toast.classList.remove('show');
-              }, 2000);
+  (function () {
+    let currentFormat = "var";
+
+    function init() {
+      const formatBtns = document.querySelectorAll(".format-btn");
+      const swatches = document.querySelectorAll(".swatch");
+      const toast = document.getElementById("copyToast");
+      const toastMessage = document.getElementById("toastMessage");
+      const tooltipValues = document.querySelectorAll(".tooltip-value");
+
+      // Update tooltip values based on format
+      function updateTooltips() {
+        swatches.forEach((swatch) => {
+          const tooltip = swatch.querySelector(".tooltip-value");
+          if (tooltip) {
+            let value;
+            if (currentFormat === "lch") {
+              value = swatch.getAttribute("data-lch");
+            } else if (currentFormat === "hex") {
+              value = swatch.getAttribute("data-hex");
+            } else {
+              value = swatch.getAttribute("data-var");
             }
-          });
-        }
-      };
-    });
-    
-    updateTooltips();
-  }
-  
-  if (document.readyState === 'loading') {
-    document.addEventListener('DOMContentLoaded', init);
-  } else {
-    init();
-  }
-  
-  document.addEventListener('astro:page-load', init);
-})();
+            tooltip.textContent = value || "";
+          }
+        });
+      }
+
+      // Format button clicks
+      formatBtns.forEach((btn) => {
+        btn.onclick = function () {
+          formatBtns.forEach((b) => b.classList.remove("active"));
+          this.classList.add("active");
+          currentFormat = this.getAttribute("data-format");
+          updateTooltips();
+        };
+      });
+
+      // Swatch clicks
+      swatches.forEach((swatch) => {
+        swatch.onclick = function () {
+          let value;
+          if (currentFormat === "lch") {
+            value = this.getAttribute("data-lch");
+          } else if (currentFormat === "hex") {
+            value = this.getAttribute("data-hex");
+          } else {
+            value = this.getAttribute("data-var");
+          }
+
+          if (navigator.clipboard && value) {
+            navigator.clipboard.writeText(value).then(() => {
+              if (toast && toastMessage) {
+                toastMessage.textContent = "Copied: " + value;
+                toast.classList.add("show");
+                setTimeout(() => {
+                  toast.classList.remove("show");
+                }, 2000);
+              }
+            });
+          }
+        };
+      });
+
+      updateTooltips();
+    }
+
+    if (document.readyState === "loading") {
+      document.addEventListener("DOMContentLoaded", init);
+    } else {
+      init();
+    }
+
+    document.addEventListener("astro:page-load", init);
+  })();
 </script>

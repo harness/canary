@@ -97,7 +97,6 @@ function generateSchemaRec(schemaObj: SchemaTreeNode, values: AnyFormValue, opti
       const innerSchema = _schemaObj?.___array
         ? generateSchemaRec({ ___array: _schemaObj.___array }, values, options)
         : { ___array: zod.any() }
-      // const arraySchema = zod.array(innerSchema.___array).optional()
       const arraySchema = createDynamicSchema(innerSchema, options)
 
       const enhancedSchema = getSchemaForArray(_schema, _input, values, options, arraySchema)

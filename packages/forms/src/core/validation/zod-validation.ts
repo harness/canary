@@ -97,7 +97,9 @@ function generateSchemaRec(schemaObj: SchemaTreeNode, values: AnyFormValue, opti
       const innerSchema = _schemaObj?.___array
         ? generateSchemaRec({ ___array: _schemaObj.___array }, values, options)
         : { ___array: zod.any() }
-      const arraySchema = zod.array(innerSchema.___array).optional()
+      // const arraySchema = zod.array(innerSchema.___array).optional()
+      const arraySchema = createDynamicSchema(innerSchema, options)
+
       const enhancedSchema = getSchemaForArray(_schema, _input, values, options, arraySchema)
       objectSchemas[key] = enhancedSchema!
     } else if (_schema && _input) {
@@ -133,6 +135,33 @@ function generateSchemaRec(schemaObj: SchemaTreeNode, values: AnyFormValue, opti
   })
 
   return objectSchemas
+}
+
+function createDynamicSchema(innerSchema: any, options?: any) {
+  return zod.union([
+    zod.array(innerSchema.___array).optional(),
+    zod.string().superRefine((value, ctx) => {
+      if (options?.validationConfig?.globalValidation) {
+        const validationRes = options.validationConfig.globalValidation(value, ctx, options.metadata)
+
+        if (validationRes.error) {
+          ctx.addIssue({
+            code: zod.ZodIssueCode.custom,
+            message: validationRes.error
+          })
+          return false // indicates validation failed
+        }
+
+        // If continue is false, skip further validation
+        if (!validationRes.continue) {
+          return true
+        }
+      }
+
+      // If you want other checks for strings, add here
+      return true
+    })
+  ])
 }
 
 function getSchemaForPrimitive(

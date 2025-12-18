@@ -5,6 +5,6 @@ export enum ContentNodeTypes {
   approval = 'approval',
   parallel = 'parallel',
   serial = 'serial',
-  stage = 'serial',
+  stage = 'stage',
   form = 'form'
 }

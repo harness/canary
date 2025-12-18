@@ -21,13 +21,20 @@ export function SerialGroupNodeContent(props: {
   setCollapsed?: (collapsed: boolean) => void
 }) {
   const { node, children, collapsed = false, setCollapsed = noop } = props
-  const { data } = node
 
   const name = `Serial - ${node.path} (${node.children.length})`
 
   return (
-    <div title={name}>
-      <div
+    <div
+      title={name}
+      style={{
+        boxSizing: 'border-box',
+        border: '1px dashed #454545',
+        borderRadius: '6px',
+        background: 'rgba(152, 150, 172, 0.01)'
+      }}
+    >
+      {/* <div
         className={cx('border', { loading: data.state === 'loading', selected: data.selected })}
         style={{
           position: 'absolute',
@@ -37,14 +44,14 @@ export function SerialGroupNodeContent(props: {
           borderRadius: '6px',
           background: 'rgba(152, 150, 172, 0.01)'
         }}
-      />
+      /> */}
       <div
         style={{
-          position: 'absolute',
-          top: '0px',
-          right: '0px',
-          left: '0px',
-          height: '36px',
+          // position: 'absolute',
+          // top: '0px',
+          // right: '0px',
+          // left: '0px',
+          height: '100px',
           wordBreak: 'break-all',
           display: 'flex',
           alignItems: 'center'
@@ -66,7 +73,7 @@ export function SerialGroupNodeContent(props: {
       <div style={{ position: 'absolute', top: '5px', left: '5px' }}>
         <CollapseButton collapsed={collapsed} onCollapseChange={setCollapsed} />
       </div>
-      {children}
+      <div style={{ padding: '20px' }}> {children}</div>
     </div>
   )
 }

@@ -25,7 +25,7 @@ const getPipelineInternal = ({
     type: 'start',
     config: {
       width: 60,
-      height: 60,
+      height: 160,
       hideLeftPort: true,
       hideDeleteButton: true
     },

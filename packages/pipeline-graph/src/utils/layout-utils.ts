@@ -1,4 +1,4 @@
-import { LayoutConfig } from '../pipeline-graph-internal'
+import { LayoutConfig } from '../types/layout'
 import { ContainerNode } from '../types/nodes'
 import { AnyNodeInternal, ParallelNodeInternalType, SerialNodeInternalType } from '../types/nodes-internal'
 

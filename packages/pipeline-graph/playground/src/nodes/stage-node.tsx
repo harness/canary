@@ -1,6 +1,5 @@
 import React from 'react'
 
-import cx from 'classnames'
 import { noop } from 'lodash-es'
 
 import { SerialNodeInternalType } from '../../../src/types/nodes-internal'
@@ -14,37 +13,29 @@ export interface StageNodeContentType {
   selected?: boolean
 }
 
-export function SerialGroupContentNode(props: {
+export function StageContentNode(props: {
   node: SerialNodeInternalType<StageNodeContentType>
   children: React.ReactElement
   collapsed?: boolean
   setCollapsed?: (collapsed: boolean) => void
 }) {
   const { node, children, collapsed = false, setCollapsed = noop } = props
-  const { data } = node
 
   const name = `Stage - ${node.path} (${node.children.length})`
 
   return (
-    <div title={name}>
-      <div
-        className={cx('border', { loading: data.state === 'loading', selected: data.selected })}
-        style={{
-          position: 'absolute',
-          inset: 0,
-          zIndex: -1,
-          border: '1px dashed #454545',
-          borderRadius: '6px',
-          background: 'rgba(152, 150, 172, 0.01)'
-        }}
-      />
+    <div
+      title={name}
+      style={{
+        boxSizing: 'border-box',
+        border: '1px dashed #454545',
+        borderRadius: '6px',
+        background: 'rgba(152, 150, 172, 0.01)'
+      }}
+    >
       <div
         style={{
-          position: 'absolute',
-          top: '0px',
-          right: '0px',
-          left: '0px',
-          height: '36px',
+          height: '150px',
           wordBreak: 'break-all',
           display: 'flex',
           alignItems: 'center'
@@ -66,7 +57,7 @@ export function SerialGroupContentNode(props: {
       <div style={{ position: 'absolute', top: '5px', left: '5px' }}>
         <CollapseButton collapsed={collapsed} onCollapseChange={setCollapsed} />
       </div>
-      {children}
+      <div style={{ padding: '20px' }}> {children}</div>
     </div>
   )
 }

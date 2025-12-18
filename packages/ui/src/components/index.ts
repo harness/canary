@@ -87,6 +87,7 @@ export * from './shortcut'
 export * from './stacked-list'
 export * from './studio-card/studio-card'
 export * from './shimmer'
+export * from './typing-animation'
 
 export * as NodeGroup from './node-group'
 export * as ListActions from './list-actions'

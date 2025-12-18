@@ -1,4 +1,4 @@
-import { LayoutConfig } from '../../pipeline-graph-internal'
+import { LayoutConfig } from '../../types/layout'
 
 export default function Port(props: {
   side: 'left' | 'right'
@@ -12,8 +12,10 @@ export default function Port(props: {
   const r = 7
 
   let top: string
-  if (typeof layout.portPosition === 'number') {
+  if (layout.type === 'top' && typeof layout.portPosition === 'number') {
     top = `${layout.portPosition}px`
+  } else if (layout.type == 'harness') {
+    top = `${adjustment - r / 2}px`
   } else {
     top = `calc( 50% - ${r / 2}px + ${adjustment}px)`
   }

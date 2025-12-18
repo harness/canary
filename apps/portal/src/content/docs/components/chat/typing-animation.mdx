@@ -1,0 +1,121 @@
+---
+title: Typing Animation
+description: Animated text typing effect for AI chat interfaces
+beta: true
+---
+
+import { DocsPage } from "@/components/docs-page";
+
+The `TypingAnimation` component creates an animated typing effect, commonly used for AI assistant responses or chat interfaces to simulate real-time text generation.
+
+## Usage
+
+<DocsPage.ComponentExample
+  client:only
+  code={`<TypingAnimation text="Hello! How can I help you today?" />`}
+/>
+
+## With Custom Speed
+
+Control the typing speed using the `typingSpeed` prop (in milliseconds per character).
+
+<DocsPage.ComponentExample
+  client:only
+  code={`<div className="flex flex-col gap-cn-md">
+  <TypingAnimation text="Fast typing (25ms)" typingSpeed={25} />
+  <TypingAnimation text="Default typing (50ms)" typingSpeed={50} />
+  <TypingAnimation text="Slow typing (100ms)" typingSpeed={100} />
+</div>`}
+/>
+
+## With Delay
+
+Add a delay before the typing animation starts using the `delay` prop (in milliseconds).
+
+<DocsPage.ComponentExample
+  client:only
+  code={`<TypingAnimation text="This appears after 1 second..." delay={1000} />`}
+/>
+
+## With Text Variants
+
+Since TypingAnimation extends TextProps, you can use all Text component variants.
+
+<DocsPage.ComponentExample
+  client:only
+  code={`<div className="flex flex-col gap-cn-md">
+  <TypingAnimation text="Heading style" variant="heading-base" />
+  <TypingAnimation text="Body style" variant="body-normal" />
+  <TypingAnimation text="Caption style" variant="caption-normal" />
+</div>`}
+/>
+
+## With Colors
+
+<DocsPage.ComponentExample
+  client:only
+  code={`<div className="flex flex-col gap-cn-md">
+  <TypingAnimation text="Primary text" color="foreground-1" />
+  <TypingAnimation text="Secondary text" color="foreground-2" />
+  <TypingAnimation text="Brand colored" color="brand" />
+</div>`}
+/>
+
+## Usage
+
+```typescript jsx
+import { TypingAnimation } from '@harnessio/ui/components'
+
+// Basic usage
+<TypingAnimation text="Hello, world!" />
+
+// With custom speed and delay
+<TypingAnimation
+  text="Welcome to the chat!"
+  typingSpeed={30}
+  delay={500}
+/>
+
+// With completion callback
+<TypingAnimation
+  text="Processing complete."
+  onComplete={() => console.log('Typing finished!')}
+/>
+
+// With Text styling
+<TypingAnimation
+  text="Important message"
+  variant="heading-small"
+  color="foreground-1"
+/>
+```
+
+## API Reference
+
+### Props
+
+| Prop          | Type         | Default | Description                                        |
+| ------------- | ------------ | ------- | -------------------------------------------------- |
+| `text`        | `string`     | —       | The text to animate                                |
+| `typingSpeed` | `number`     | `50`    | Milliseconds between each character                |
+| `delay`       | `number`     | `0`     | Milliseconds to wait before starting the animation |
+| `onComplete`  | `() => void` | —       | Callback fired when typing animation completes     |
+
+Additionally, all props from the `Text` component are supported (except `children` and `ref`), including:
+
+| Prop        | Type                                          | Default          | Description            |
+| ----------- | --------------------------------------------- | ---------------- | ---------------------- |
+| `variant`   | `TextVariant`                                 | `"body-normal"`  | Typography variant     |
+| `color`     | `TextColor`                                   | `"foreground-2"` | Text color             |
+| `align`     | `"left" \| "center" \| "right"`               | —                | Text alignment         |
+| `truncate`  | `boolean`                                     | `false`          | Enable text truncation |
+| `lineClamp` | `1 \| 2 \| 3 \| 4 \| 5 \| 6`                  | `1`              | Limit visible lines    |
+| `wrap`      | `"wrap" \| "nowrap" \| "pretty" \| "balance"` | —                | Text wrapping behavior |
+
+## Behavior
+
+1. **Single animation**: The typing effect only plays once. After completion, subsequent renders show the full text immediately.
+
+2. **Text changes**: When the `text` prop changes, the animation resets and plays again.
+
+3. **Line clamping**: By default, `lineClamp={1}` is applied to prevent layout shifts during animation.

@@ -43,6 +43,7 @@ yaml-editor-test/
 
 #local environment
 .env
+local-tools/
 
 #playwright
 test-results/

@@ -217,18 +217,18 @@ function CustomActions({ children }: PropsWithChildren<any>): JSX.Element {
 function StudioCardButton({
   children,
   className,
-  onclick,
+  onClick,
   icon
 }: PropsWithChildren<{
   className?: string
-  onclick: (e: React.MouseEvent<HTMLElement, MouseEvent>) => void
+  onClick: (e: React.MouseEvent<HTMLElement, MouseEvent>) => void
   icon?: IconV2NamesType
 }>): JSX.Element {
   return (
     <button
       onClick={e => {
         e.stopPropagation()
-        onclick(e)
+        onClick(e)
       }}
       type="button"
       className={cn('cn-studio-card-button', 'bg-cn-3 shadow-cn-none self-start', className)}

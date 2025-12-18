@@ -3,7 +3,7 @@ export default {
     borderRadius: 'var(--cn-rounded-4)',
     border: '1px solid var(--cn-border-2)',
     backgroundColor: 'var(--cn-bg-3)',
-    '@apply flex flex-col overflow-hidden shadow-cn-3': '',
+    '@apply flex flex-col overflow-hidden shadow-cn-3 select-none': '',
 
     // Default size (single card)
     width: '220px',
@@ -18,11 +18,34 @@ export default {
       maxWidth: 'none',
       height: 'auto',
 
+      '> .cn-studio-card-content': {
+        minHeight: '108px'
+      },
+
+      '> .cn-studio-card-content:not(:has(> .cn-studio-card-message))': {
+        '@apply justify-center items-start': ''
+      },
+
       '&:has(> .cn-studio-card-content > [data-expanded="false"])': {
         width: 'var(--cn-size-90)',
         minWidth: 'var(--cn-size-90)',
         maxWidth: 'var(--cn-size-90)'
       }
+    },
+
+    // Shimmer effect for executing status
+    '&:has(> [data-status="executing"])': {
+      '--border-angle': '0turn',
+      '--main-bg':
+        'conic-gradient(from var(--border-angle), var(--cn-bg-3), var(--cn-bg-3) 5%, var(--cn-bg-3) 60%, var(--cn-bg-3) 95%)',
+      '--gradient-border':
+        'conic-gradient(from var(--border-angle), transparent 25%, var(--cn-gradient-pipeline-running-border-from), var(--cn-gradient-pipeline-running-border-to) 99%, transparent)',
+
+      border: 'solid 2px transparent !important',
+      background:
+        'var(--main-bg) padding-box, var(--gradient-border) border-box, var(--cn-border-3) border-box !important',
+      backgroundPosition: 'center center',
+      animation: 'studio-card-border-spin 5s linear infinite'
     }
   },
 
@@ -92,40 +115,33 @@ export default {
     }
   },
 
+  '.cn-studio-card-expand-button-main, .cn-studio-card-button': {
+    zIndex: '2',
+    height: '28px',
+    transitionDuration: '100ms',
+    '@apply relative flex items-center gap-cn-3xs px-cn-sm py-cn-2xs shadow-cn-1 border border-cn-2 rounded-cn-3': ''
+  },
+
   // Expand Button Component
   '.cn-studio-card-expand-button': {
     position: 'relative',
     width: 'fit-content',
 
-    '&-main': {
-      position: 'relative',
-      zIndex: '2',
-      height: '28px',
-      borderRadius: 'var(--cn-rounded-3)',
-      border: '1px solid var(--cn-border-2)',
-      backgroundColor: 'var(--cn-bg-3)',
-      transitionDuration: '200ms',
-      '@apply flex items-center gap-cn-3xs px-cn-md py-cn-xs': ''
-    },
-
     // Stack layers
     '&-stack': {
-      position: 'absolute',
       pointerEvents: 'none',
-      borderRadius: 'var(--cn-rounded-4)',
-      border: '1px solid var(--cn-border-2)',
-      backgroundColor: 'var(--cn-bg-3)',
       transitionProperty: 'transform',
-      transitionDuration: '200ms',
+      transitionDuration: '100ms',
       transitionTimingFunction: 'ease-out',
       willChange: 'transform',
+      '@apply absolute shadow-cn-1 border border-cn-2 bg-cn-3 rounded-cn-4': '',
 
       // First stack layer (closer to button)
       '&-1': {
         zIndex: '1',
         insetBlock: '0',
         insetInline: '3px',
-        transform: 'translateY(3px)'
+        transform: 'translateY(4px)'
       },
 
       // Second stack layer (furthest from button)
@@ -133,17 +149,17 @@ export default {
         zIndex: '0',
         insetBlock: '0',
         insetInline: '6px',
-        transform: 'translateY(6px)'
+        transform: 'translateY(8px)'
       }
     },
 
     // Hover state - expand stacks
     '&:hover': {
       '.cn-studio-card-expand-button-stack-1': {
-        transform: 'translateY(4px)'
+        transform: 'translateY(6px)'
       },
       '.cn-studio-card-expand-button-stack-2': {
-        transform: 'translateY(8px)'
+        transform: 'translateY(12px)'
       }
     },
 

@@ -56,3 +56,17 @@ export const csvToObject = (
 
   return { data, metadata }
 }
+
+/**
+ * Pluralizes a word based on the count
+ * @param count The count of the word
+ * @param singular The singular form of the word
+ * @param plural The plural form of the word
+ * @param include Whether to include the count in the result
+ * @returns The pluralized word
+ */
+export const easyPluralize = (count: number, singular: string, plural: string, include = false): string => {
+  const word = count === 1 ? singular : plural
+
+  return include ? `${count} ${word}` : word
+}

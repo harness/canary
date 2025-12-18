@@ -119,6 +119,8 @@ import CollapsedItems from './icons/collapsed-items.svg'
 import Community from './icons/community.svg'
 import ConnectorsSolid from './icons/connectors-solid.svg'
 import Connectors from './icons/connectors.svg'
+import ContainersSolid from './icons/containers-solid.svg'
+import Containers from './icons/containers.svg'
 import Cookie from './icons/cookie.svg'
 import Copy from './icons/copy.svg'
 import CpuWarning from './icons/cpu-warning.svg'
@@ -241,6 +243,7 @@ import InfoCircleSolid from './icons/info-circle-solid.svg'
 import InfoCircle from './icons/info-circle.svg'
 import InfrastructureSolid from './icons/infrastructure-solid.svg'
 import Infrastructure from './icons/infrastructure.svg'
+import Instances from './icons/instances.svg'
 import Internet from './icons/internet.svg'
 import ItalicSquare from './icons/italic-square.svg'
 import Italic from './icons/italic.svg'
@@ -584,6 +587,8 @@ export const IconNameMapV2 = {
   community: Community,
   'connectors-solid': ConnectorsSolid,
   connectors: Connectors,
+  'containers-solid': ContainersSolid,
+  containers: Containers,
   cookie: Cookie,
   copy: Copy,
   'cpu-warning': CpuWarning,
@@ -706,6 +711,7 @@ export const IconNameMapV2 = {
   'info-circle': InfoCircle,
   'infrastructure-solid': InfrastructureSolid,
   infrastructure: Infrastructure,
+  instances: Instances,
   internet: Internet,
   'italic-square': ItalicSquare,
   italic: Italic,

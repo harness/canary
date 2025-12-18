@@ -73,10 +73,10 @@ Our typography system is built around a set of predefined text styles that provi
 
 Headings establish the information hierarchy and provide structure to content.
 
-<div style={{ marginTop: '-1rem' }}>
-<DocsPage.ComponentExample
-  client:only
-  code={`<div className="space-y-cn-sm">
+<div style={{ marginTop: "-1rem" }}>
+  <DocsPage.ComponentExample
+    client:only
+    code={`<div className="space-y-cn-sm">
     <div className="flex items-baseline gap-cn-md border-b border-cn-borders-3 pb-cn-sm">
         <span className="text-cn-size-0 text-cn-3 w-32 shrink-0 font-mono">heading-hero</span>
         <Text variant="heading-hero">The quick brown fox</Text>
@@ -98,17 +98,17 @@ Headings establish the information hierarchy and provide structure to content.
         <Text variant="heading-small">The quick brown fox</Text>
     </div>
 </div>`}
-/>
+  />
 </div>
 
 ### Body Variants
 
 Body text is used for the main content.
 
-<div style={{ marginTop: '-1rem' }}>
-<DocsPage.ComponentExample
-  client:only
-  code={`<div className="space-y-cn-sm">
+<div style={{ marginTop: "-1rem" }}>
+  <DocsPage.ComponentExample
+    client:only
+    code={`<div className="space-y-cn-sm">
     <div className="flex items-baseline gap-cn-md border-b border-cn-borders-3 pb-cn-sm">
         <span className="text-cn-size-0 text-cn-3 w-40 shrink-0 font-mono">body-normal</span>
         <Text variant="body-normal">The quick brown fox jumps over the lazy dog.</Text>
@@ -134,17 +134,17 @@ Body text is used for the main content.
         <Text variant="body-code">npm install @harnessio/ui</Text>
     </div>
 </div>`}
-/>
+  />
 </div>
 
 ### Caption Variants
 
 Captions are used for labels and metadata.
 
-<div style={{ marginTop: '-1rem' }}>
-<DocsPage.ComponentExample
-  client:only
-  code={`<div className="space-y-cn-sm">
+<div style={{ marginTop: "-1rem" }}>
+  <DocsPage.ComponentExample
+    client:only
+    code={`<div className="space-y-cn-sm">
     <div className="flex items-baseline gap-cn-md border-b border-cn-borders-3 pb-cn-sm">
         <span className="text-cn-size-0 text-cn-3 w-44 shrink-0 font-mono">caption-normal</span>
         <Text variant="caption-normal">Label text for UI elements</Text>
@@ -166,17 +166,17 @@ Captions are used for labels and metadata.
         <Text variant="caption-single-line-light">For compact UI</Text>
     </div>
 </div>`}
-/>
+  />
 </div>
 
 ## Text Colors
 
 Text colors help establish visual hierarchy and convey meaning.
 
-<div style={{ marginTop: '-1rem' }}>
-<DocsPage.ComponentExample
-  client:only
-  code={`<div className="space-y-cn-sm">
+<div style={{ marginTop: "-1rem" }}>
+  <DocsPage.ComponentExample
+    client:only
+    code={`<div className="space-y-cn-sm">
     <div className="pb-cn-xs">
         <Text variant="caption-strong" color="foreground-3">Hierarchy</Text>
     </div>
@@ -229,17 +229,17 @@ Text colors help establish visual hierarchy and convey meaning.
         <Text color="brand">Brand</Text>
     </div>
 </div>`}
-/>
+  />
 </div>
 
 ## Text Alignment
 
 Control horizontal text alignment.
 
-<div style={{ marginTop: '-1rem' }}>
-<DocsPage.ComponentExample
-  client:only
-  code={`<div className="space-y-cn-sm">
+<div style={{ marginTop: "-1rem" }}>
+  <DocsPage.ComponentExample
+    client:only
+    code={`<div className="space-y-cn-sm">
     <div className="flex items-center gap-cn-md border-b border-cn-borders-3 pb-cn-sm">
         <span className="text-cn-size-0 text-cn-3 w-20 shrink-0 font-mono">left</span>
         <Text align="left" className="flex-1">Left aligned text (default).</Text>
@@ -253,17 +253,17 @@ Control horizontal text alignment.
         <Text align="right" className="flex-1">Right aligned text.</Text>
     </div>
 </div>`}
-/>
+  />
 </div>
 
 ## Text Wrapping
 
 Control how text wraps within containers.
 
-<div style={{ marginTop: '-1rem' }}>
-<DocsPage.ComponentExample
-  client:only
-  code={`<div className="grid grid-cols-2 gap-cn-md">
+<div style={{ marginTop: "-1rem" }}>
+  <DocsPage.ComponentExample
+    client:only
+    code={`<div className="grid grid-cols-2 gap-cn-md">
     <div>
         <span className="text-cn-size-0 text-cn-3 font-mono block mb-cn-2xs">wrap (default)</span>
         <div className="w-48 border border-dashed border-cn-borders-3 p-cn-sm rounded-cn-3">
@@ -289,17 +289,17 @@ Control how text wraps within containers.
         </div>
     </div>
 </div>`}
-/>
+  />
 </div>
 
 ## Truncation & Line Clamp
 
 Limit text display with truncation or line clamping.
 
-<div style={{ marginTop: '-1rem' }}>
-<DocsPage.ComponentExample
-  client:only
-  code={`<div className="space-y-cn-sm max-w-lg">
+<div style={{ marginTop: "-1rem" }}>
+  <DocsPage.ComponentExample
+    client:only
+    code={`<div className="space-y-cn-sm max-w-lg">
     <div className="flex items-start gap-cn-md border-b border-cn-borders-3 pb-cn-sm">
         <span className="text-cn-size-0 text-cn-3 w-24 shrink-0 font-mono">truncate</span>
         <Text truncate className="flex-1">The quick brown fox jumps over the lazy dog. Pack my box.</Text>
@@ -313,7 +313,7 @@ Limit text display with truncation or line clamping.
         <Text lineClamp={3} className="flex-1">The quick brown fox jumps over the lazy dog. Pack my box with five dozen liquor jugs. How vexingly quick daft zebras jump! The five boxing wizards.</Text>
     </div>
 </div>`}
-/>
+  />
 </div>
 
 ## Usage
@@ -353,58 +353,62 @@ import { Text } from '@harnessio/ui/components'
       description: "The typographic style variant",
       defaultValue: "body-normal",
       required: false,
-      value: "'heading-hero' | 'heading-section' | 'heading-subsection' | 'heading-base' | 'heading-small' | 'body-normal' | 'body-strong' | 'body-single-line-normal' | 'body-single-line-strong' | 'body-single-line-light' | 'body-code' | 'caption-normal' | 'caption-strong' | 'caption-light' | 'caption-single-line-normal' | 'caption-single-line-light'"
+      value:
+        "'heading-hero' | 'heading-section' | 'heading-subsection' | 'heading-base' | 'heading-small' | 'body-normal' | 'body-strong' | 'body-single-line-normal' | 'body-single-line-strong' | 'body-single-line-light' | 'body-code' | 'caption-normal' | 'caption-strong' | 'caption-light' | 'caption-single-line-normal' | 'caption-single-line-light'",
     },
     {
       name: "color",
       description: "The text color",
       defaultValue: "foreground-2",
       required: false,
-      value: "'inherit' | 'foreground-1' | 'foreground-2' | 'foreground-3' | 'foreground-4' | 'success' | 'warning' | 'danger' | 'merged' | 'brand'"
+      value:
+        "'inherit' | 'foreground-1' | 'foreground-2' | 'foreground-3' | 'foreground-4' | 'success' | 'warning' | 'danger' | 'merged' | 'brand'",
     },
     {
       name: "align",
       description: "Text alignment",
       required: false,
-      value: "'left' | 'center' | 'right'"
+      value: "'left' | 'center' | 'right'",
     },
     {
       name: "wrap",
       description: "Text wrapping behavior",
       defaultValue: "wrap",
       required: false,
-      value: "'wrap' | 'nowrap' | 'pretty' | 'balance'"
+      value: "'wrap' | 'nowrap' | 'pretty' | 'balance'",
     },
     {
       name: "truncate",
       description: "Truncate text with ellipsis",
       defaultValue: "false",
       required: false,
-      value: "boolean"
+      value: "boolean",
     },
     {
       name: "lineClamp",
       description: "Limit text to N lines",
       required: false,
-      value: "1 | 2 | 3 | 4 | 5 | 6"
+      value: "1 | 2 | 3 | 4 | 5 | 6",
     },
     {
       name: "as",
       description: "Override rendered HTML element",
       defaultValue: "variant-based",
       required: false,
-      value: "'div' | 'span' | 'p' | 'h1' | 'h2' | 'h3' | 'h4' | 'h5' | 'h6' | ..."
+      value:
+        "'div' | 'span' | 'p' | 'h1' | 'h2' | 'h3' | 'h4' | 'h5' | 'h6' | ...",
     },
     {
       name: "asChild",
       description: "Merge props with child element",
       defaultValue: "false",
       required: false,
-      value: "boolean"
-    }
+      value: "boolean",
+    },
   ]}
 />
 
 <Aside type="tip" title="Best Practice">
-  Always use predefined text variants instead of custom font styles to ensure consistency across the application.
+  Always use predefined text variants instead of custom font styles to ensure
+  consistency across the application.
 </Aside>

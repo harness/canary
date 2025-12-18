@@ -1,7 +1,7 @@
 import { createContext, useContext, useMemo } from 'react'
 
+import { LayoutConfig } from '../pipeline-graph-internal'
 import { ParallelContainerConfigType, SerialContainerConfigType } from '../types/container-node'
-import { LayoutConfig } from '../types/layout'
 
 export const defaultSerialContainerConfig = {
   paddingLeft: 42,
@@ -34,7 +34,7 @@ interface ContainerNodeContextProps {
 const ContainerNodeContext = createContext<ContainerNodeContextProps>({
   serialContainerConfig: defaultSerialContainerConfig,
   parallelContainerConfig: defaultParallelContainerConfig,
-  layout: { type: 'center' }
+  layout: { type: 'center', portPosition: 'center' }
 })
 
 export interface ContainerNodeProviderProps {
@@ -53,7 +53,7 @@ const ContainerNodeProvider = ({
   serialContainerConfig,
   parallelContainerConfig,
   portComponent,
-  layout = { type: 'center' },
+  layout = { type: 'center', portPosition: 'center' },
   children
 }: React.PropsWithChildren<ContainerNodeProviderProps>) => {
   const serialConfig: SerialContainerConfigType = useMemo(() => {

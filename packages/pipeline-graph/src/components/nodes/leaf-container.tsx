@@ -15,16 +15,6 @@ export default function LeafNodeContainer(props: ContainerNodeProps<LeafNodeInte
   const minW = node.config?.minWidth ? node.config?.minWidth + 'px' : 'auto'
   const minH = node.config?.minHeight ? node.config?.minHeight + 'px' : 'auto'
 
-  let adjustment = 0
-  switch (layout.type) {
-    case 'harness':
-      adjustment = layout.leafPortPosition ?? 0
-      break
-
-    default:
-      adjustment = 0
-  }
-
   return (
     <div
       key={props.node.type + '-' + props.node.path}
@@ -42,16 +32,16 @@ export default function LeafNodeContainer(props: ContainerNodeProps<LeafNodeInte
     >
       {!node.config?.hideLeftPort &&
         (portComponent ? (
-          portComponent({ side: 'left', id: `left-port-${node.path}`, layout, adjustment })
+          portComponent({ side: 'left', id: `left-port-${node.path}`, layout })
         ) : (
-          <Port side="left" id={`left-port-${node.path}`} layout={layout} adjustment={adjustment} />
+          <Port side="left" id={`left-port-${node.path}`} layout={layout} />
         ))}
 
       {!node.config?.hideRightPort &&
         (portComponent ? (
-          portComponent({ side: 'right', id: `right-port-${node.path}`, layout, adjustment })
+          portComponent({ side: 'right', id: `right-port-${node.path}`, layout })
         ) : (
-          <Port side="right" id={`right-port-${node.path}`} layout={layout} adjustment={adjustment} />
+          <Port side="right" id={`right-port-${node.path}`} layout={layout} />
         ))}
 
       <RenderNodeContent node={node} isFirst={isFirst} isLast={isLast} parentNodeType={parentNodeType} mode={mode} />

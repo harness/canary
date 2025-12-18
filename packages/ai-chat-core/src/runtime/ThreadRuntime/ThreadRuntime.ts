@@ -86,14 +86,6 @@ export class ThreadRuntime extends BaseSubscribable {
     this._core.reset(messages)
   }
 
-  public setConversationId(conversationId: string | undefined): void {
-    this._core.setConversationId(conversationId)
-  }
-
-  public setTitle(title: string | undefined): void {
-    this._core.setTitle(title)
-  }
-
   public subscribe(callback: () => void): Unsubscribe {
     return super.subscribe(callback)
   }

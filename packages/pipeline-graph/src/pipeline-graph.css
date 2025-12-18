@@ -13,9 +13,6 @@
   pointer-events: none;
   z-index: 1;
 }
-.PipelineGraph-SvgContainer > svg {
-  overflow: visible;
-}
 
 .PipelineGraph-Canvas {
   width: 100%;

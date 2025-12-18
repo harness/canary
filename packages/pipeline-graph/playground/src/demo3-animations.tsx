@@ -11,8 +11,7 @@ import { CanvasControls } from './canvas/CanvasControls'
 import { ApprovalNode } from './nodes/approval-node'
 import { EndNode } from './nodes/end-node'
 import { ParallelGroupNodeContent } from './nodes/parallel-group-node'
-import { SerialGroupNodeContent } from './nodes/serial-group-node'
-import { StageContentNode } from './nodes/stage-node'
+import { SerialGroupContentNode } from './nodes/stage-node'
 import { StartNode } from './nodes/start-node'
 import { StepNode, StepNodeDataType } from './nodes/step-node'
 import { getIcon } from './parser/utils'
@@ -49,12 +48,7 @@ const nodes: NodeContent[] = [
   {
     type: ContentNodeTypes.serial,
     containerType: ContainerNode.serial,
-    component: SerialGroupNodeContent
-  } as NodeContent,
-  {
-    type: ContentNodeTypes.stage,
-    containerType: ContainerNode.serial,
-    component: StageContentNode
+    component: SerialGroupContentNode
   } as NodeContent
 ]
 
@@ -64,8 +58,8 @@ const plData = yaml2Nodes(yamlObject)
 const endNode = {
   type: ContentNodeTypes.start,
   config: {
-    width: 60,
-    height: 160
+    width: 80,
+    height: 80
   },
   data: {}
 }

@@ -36,14 +36,13 @@ function Demo6TopAlign() {
         layout={{ type: 'top', portPosition: 80 }}
         parallelContainerConfig={{ paddingBottom: 0, paddingLeft: 0, paddingRight: 0, paddingTop: 0 }}
         portComponent={props => {
-          const top = props.layout?.type === 'top' ? (props.layout?.portPosition ?? 0) : 0
           return (
             <div
               id={props.id}
               style={{
                 position: 'absolute',
                 [props.side === 'left' ? 'left' : 'right']: `-5px`,
-                top: top + 'px',
+                top: props.layout?.portPosition + 'px',
                 background: '#121214',
                 borderRadius: '50%',
                 boxSizing: 'border-box'

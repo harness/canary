@@ -6,7 +6,6 @@ import { renderNode } from '../../render/render-node'
 import { RenderNodeContent } from '../../render/render-node-content'
 import { ContainerNodeProps } from '../../types/container-node'
 import { AnyNodeInternal, ParallelNodeInternalType } from '../../types/nodes-internal'
-import { findAdjustmentForHarnessLayout } from '../../utils/harness-layout-utils'
 import { findAdjustment } from '../../utils/layout-utils'
 import Port from './port'
 
@@ -35,35 +34,6 @@ export default function ParallelNodeContainer(props: ContainerNodeProps<Parallel
       parentNode
     ) + verticalAdjustment
 
-  let top = 0
-  switch (layout.type) {
-    case 'harness': {
-      const getHeaderHeight = layout.getHeaderHeight ?? (() => 0)
-      top = level === 0 ? findAdjustmentForHarnessLayout(node, getHeaderHeight, isCollapsed, layout) : 0
-      break
-    }
-    default: {
-      top = collapsed || myLevel > 1 ? 0 : -ADJUSTMENT
-    }
-  }
-
-  let portAdjustment = 0
-  switch (layout.type) {
-    case 'harness': {
-      const getHeaderHeight = layout.getHeaderHeight ?? (() => 0)
-      if (collapsed) {
-        portAdjustment = layout.collapsedPortPositionPerType?.[node.type] ?? 0
-      } else {
-        portAdjustment =
-          (layout.leafPortPosition ?? 0) + findAdjustmentForHarnessLayout(node, getHeaderHeight, isCollapsed, layout)
-      }
-      break
-    }
-    default: {
-      portAdjustment = collapsed ? 0 : ADJUSTMENT
-    }
-  }
-
   return (
     <div
       className={'PipelineGraph-ParallelContainerNode'}
@@ -78,16 +48,16 @@ export default function ParallelNodeContainer(props: ContainerNodeProps<Parallel
         paddingRight: parallelContainerConfig.paddingRight + 'px',
         paddingTop: parallelContainerConfig.paddingTop + 'px',
         paddingBottom: parallelContainerConfig.paddingBottom + 'px',
-        top,
+        top: collapsed || myLevel > 1 ? 0 : -ADJUSTMENT + 'px',
         alignItems: 'center',
         flexShrink: 0 // IMPORTANT: do not remove this
       }}
     >
       {!node.config?.hideLeftPort &&
         (portComponent ? (
-          portComponent({ side: 'left', id: `left-port-${node.path}`, adjustment: portAdjustment, layout })
+          portComponent({ side: 'left', id: `left-port-${node.path}`, adjustment: collapsed ? 0 : ADJUSTMENT, layout })
         ) : (
-          <Port side="left" id={`left-port-${node.path}`} adjustment={portAdjustment} layout={layout} />
+          <Port side="left" id={`left-port-${node.path}`} adjustment={collapsed ? 0 : ADJUSTMENT} layout={layout} />
         ))}
 
       {!node.config?.hideRightPort &&
@@ -95,11 +65,11 @@ export default function ParallelNodeContainer(props: ContainerNodeProps<Parallel
           portComponent({
             side: 'right',
             id: `right-port-${node.path}`,
-            adjustment: portAdjustment,
+            adjustment: collapsed ? 0 : ADJUSTMENT,
             layout
           })
         ) : (
-          <Port side="right" id={`right-port-${node.path}`} adjustment={portAdjustment} layout={layout} />
+          <Port side="right" id={`right-port-${node.path}`} adjustment={collapsed ? 0 : ADJUSTMENT} layout={layout} />
         ))}
 
       <RenderNodeContent

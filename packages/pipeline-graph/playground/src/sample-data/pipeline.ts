@@ -1,42 +1,26 @@
-// export const pipeline = `pipeline:
-//   clone: false
-//   stages:
-//     - name: s1
-//       steps:
-//         - run:
-//             shell: bash
-//             script: <+input>
-//         - run:
-//             shell: bash
-//             script: '''
-
-// `
-
 export const pipeline = `pipeline:
   stages:
     - group:
         stages:
+          - parallel:
+              stages:
+                - steps:
+                    - run: go build
+                    - run: go test
+                - steps:
+                    - run: npm test
           - group:
               stages:
-                - parallel:
-                    stages:
-                      - steps:
+                - steps:
+                    - group:
+                        steps:
                           - run: go build
                           - run: go test
-                      - steps:
-                          - run: npm test
-                - group:
-                    stages:
-                      - steps:
-                          - group:
-                              steps:
-                                - run: go build
-                                - run: go test
 
-                          - parallel:
-                              steps:
-                                - run: go build
-                                - run: go test
+                    - parallel:
+                        steps:
+                          - run: go build
+                          - run: go test      
 `
 
 export const pipeline2 = `

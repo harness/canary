@@ -116,10 +116,6 @@ export class ThreadListRuntime extends BaseSubscribable {
       newMainState.isMain = true
       this._threadStates.set(threadId, newMainState)
       this._threadItems.get(threadId)?.updateState(newMainState)
-
-      // Update thread's conversationId and title
-      thread.setConversationId(newMainState.conversationId)
-      thread.setTitle(newMainState.title)
     }
 
     // Load thread messages if adapter exists

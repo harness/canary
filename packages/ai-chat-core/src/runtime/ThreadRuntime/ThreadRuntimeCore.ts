@@ -331,14 +331,4 @@ export class ThreadRuntimeCore extends BaseSubscribable {
   public reset(messages: Message[] = []): void {
     this.updateMessages([...messages])
   }
-
-  public setConversationId(conversationId: string | undefined): void {
-    this._conversationId = conversationId
-    this.notifySubscribers()
-  }
-
-  public setTitle(title: string | undefined): void {
-    this._title = title
-    this.notifySubscribers()
-  }
 }

@@ -14,7 +14,7 @@
 /apps/portal/* kevin.nagurski@harness.io pranesh.g@harness.io abhinav.rastogi@harness.io vardan.bansal@harness.io
 
 # Packages with shared ownership
-/packages/ui/* abhinav.rastogi@harness.io kevin.nagurski@harness.io vardan.bansal@harness.io pranesh.g@harness.io
+/packages/ui/* abhinav.rastogi@harness.io kevin.nagurski@harness.io vardan.bansal@harness.io pranesh.g@harness.io shaurya.kalia@harness.io
 
 # Packages with individual owners
 /packages/forms/* srdjan.arsic@harness.io

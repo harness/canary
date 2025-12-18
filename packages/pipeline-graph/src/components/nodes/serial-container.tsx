@@ -6,6 +6,7 @@ import { renderNode } from '../../render/render-node'
 import { RenderNodeContent } from '../../render/render-node-content'
 import { ContainerNodeProps } from '../../types/container-node'
 import { AnyNodeInternal, SerialNodeInternalType } from '../../types/nodes-internal'
+import { findAdjustmentForHarnessLayout } from '../../utils/harness-layout-utils'
 import { findAdjustment, getFlexAlign } from '../../utils/layout-utils'
 import Port from './port'
 
@@ -34,6 +35,35 @@ export default function SerialNodeContainer(props: ContainerNodeProps<SerialNode
       parentNode
     ) + verticalAdjustment
 
+  let top = 0
+  switch (layout.type) {
+    case 'harness': {
+      const getHeaderHeight = layout.getHeaderHeight ?? (() => 0)
+      top = level === 0 ? findAdjustmentForHarnessLayout(node, getHeaderHeight, isCollapsed, layout) : 0
+      break
+    }
+    default: {
+      top = collapsed || myLevel > 1 ? 0 : ADJUSTMENT
+    }
+  }
+
+  let portAdjustment = 0
+  switch (layout.type) {
+    case 'harness': {
+      const getHeaderHeight = layout.getHeaderHeight ?? (() => 0)
+      if (collapsed) {
+        portAdjustment = layout.collapsedPortPositionPerType?.[node.type] ?? 0
+      } else {
+        portAdjustment =
+          (layout.leafPortPosition ?? 0) + findAdjustmentForHarnessLayout(node, getHeaderHeight, isCollapsed, layout)
+      }
+      break
+    }
+    default: {
+      portAdjustment = collapsed ? 0 : ADJUSTMENT
+    }
+  }
+
   return (
     <div
       className={'node serial-node'}
@@ -49,15 +79,15 @@ export default function SerialNodeContainer(props: ContainerNodeProps<SerialNode
         paddingRight: serialContainerConfig.paddingRight + 'px',
         paddingTop: serialContainerConfig.paddingTop + 'px',
         paddingBottom: serialContainerConfig.paddingBottom + 'px',
-        top: collapsed || myLevel > 1 ? 0 : -ADJUSTMENT + 'px',
-        flexShrink: 0
+        flexShrink: 0,
+        top: -top + 'px'
       }}
     >
       {!node.config?.hideLeftPort &&
         (portComponent ? (
-          portComponent({ side: 'left', id: `left-port-${node.path}`, adjustment: collapsed ? 0 : ADJUSTMENT, layout })
+          portComponent({ side: 'left', id: `left-port-${node.path}`, adjustment: portAdjustment, layout })
         ) : (
-          <Port side="left" id={`left-port-${node.path}`} adjustment={collapsed ? 0 : ADJUSTMENT} layout={layout} />
+          <Port side="left" id={`left-port-${node.path}`} adjustment={portAdjustment} layout={layout} />
         ))}
 
       {!node.config?.hideRightPort &&
@@ -65,11 +95,11 @@ export default function SerialNodeContainer(props: ContainerNodeProps<SerialNode
           portComponent({
             side: 'right',
             id: `right-port-${node.path}`,
-            adjustment: collapsed ? 0 : ADJUSTMENT,
+            adjustment: portAdjustment,
             layout
           })
         ) : (
-          <Port side="right" id={`right-port-${node.path}`} adjustment={collapsed ? 0 : ADJUSTMENT} layout={layout} />
+          <Port side="right" id={`right-port-${node.path}`} adjustment={portAdjustment} layout={layout} />
         ))}
 
       <RenderNodeContent

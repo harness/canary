@@ -8,7 +8,7 @@ import { CanvasControls } from './canvas/CanvasControls'
 import { ApprovalNode } from './nodes/approval-node'
 import { EndNode } from './nodes/end-node'
 import { ParallelGroupNodeContent } from './nodes/parallel-group-node'
-import { SerialGroupContentNode } from './nodes/stage-node'
+import { SerialGroupNodeContent } from './nodes/serial-group-node'
 import { StartNode } from './nodes/start-node'
 import { StepNode } from './nodes/step-node'
 import { getPipeline } from './sample-data/pipeline-data'
@@ -43,7 +43,7 @@ const nodes: NodeContent[] = [
   {
     type: ContentNodeTypes.serial,
     containerType: ContainerNode.serial,
-    component: SerialGroupContentNode
+    component: SerialGroupNodeContent
   } as NodeContent
 ]
 
@@ -52,7 +52,27 @@ const data = getPipeline(9, 12, 3, 'success')
 function Demo4Performance() {
   return (
     <CanvasProvider>
-      <PipelineGraph data={data} nodes={nodes} />
+      <PipelineGraph
+        data={data}
+        nodes={nodes}
+        edgesConfig={{ parallelNodeOffset: 8, serialNodeOffset: 8, radius: 4 }}
+        serialContainerConfig={{
+          nodeGap: 16,
+          paddingBottom: 0,
+          paddingLeft: 0,
+          paddingRight: 0,
+          paddingTop: 0,
+          serialGroupAdjustment: 0
+        }}
+        parallelContainerConfig={{
+          nodeGap: 16,
+          paddingBottom: 0,
+          paddingLeft: 0,
+          paddingRight: 0,
+          paddingTop: 0,
+          parallelGroupAdjustment: 0
+        }}
+      />
       <CanvasControls />
     </CanvasProvider>
   )

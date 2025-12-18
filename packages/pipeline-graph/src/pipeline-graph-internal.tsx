@@ -5,16 +5,12 @@ import { useContainerNodeContext } from './context/container-node-provider'
 import { useGraphContext } from './context/graph-provider'
 import { renderNode } from './render/render-node'
 import { clear, CreateSVGPathType, getPortsConnectionPath } from './render/render-svg-lines'
+import { LayoutConfig } from './types/layout'
 import { AnyContainerNodeType } from './types/nodes'
 import { AnyNodeInternal } from './types/nodes-internal'
 import { connectPorts } from './utils/connects-utils'
 import { getFlexAlign } from './utils/layout-utils'
 import { addPaths } from './utils/path-utils'
-
-export interface LayoutConfig {
-  type?: 'center' | 'top'
-  portPosition?: number | 'center'
-}
 
 export interface PipelineGraphInternalProps {
   data: AnyContainerNodeType[]
@@ -123,10 +119,17 @@ export function PipelineGraphInternal(props: PipelineGraphInternalProps) {
           const parentEl = rootContainerEl.parentElement
           const { height: parentHeight } = parentEl?.getBoundingClientRect() ?? new DOMRect()
 
+          let translateY = 0
+          if (layout.type === 'harness') {
+            translateY = parentHeight / 2 - (layout.leafPortPosition ?? 0)
+          } else if (layout.type === 'center') {
+            translateY = parentHeight / 2 - graphHeight / 2
+          }
+
           setCanvasTransform({
             scale: 1,
             translateX: config?.leftGap ?? canvasConfig.paddingForFit ?? 80,
-            translateY: parentHeight / 2 - graphHeight / 2,
+            translateY,
             rootContainer: rootContainerRef?.current,
             isInitial: true
           })
@@ -146,8 +149,7 @@ export function PipelineGraphInternal(props: PipelineGraphInternalProps) {
             // kep "start node" in place (horizontally) - e.g when delete/add nodes
             if (graphHeight !== graphSizeRef.current.h) {
               let diffH = 0
-
-              if (layout.type == 'center') {
+              if (layout.type === 'center') {
                 diffH = (graphSizeRef.current.h - graphHeight) / 2
               }
 

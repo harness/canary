@@ -97,7 +97,7 @@ function generateSchemaRec(schemaObj: SchemaTreeNode, values: AnyFormValue, opti
       const innerSchema = _schemaObj?.___array
         ? generateSchemaRec({ ___array: _schemaObj.___array }, values, options)
         : { ___array: zod.any() }
-      const arraySchema = createDynamicSchema(innerSchema, options)
+      const arraySchema = createSchemaForArray(innerSchema, options)
 
       const enhancedSchema = getSchemaForArray(_schema, _input, values, options, arraySchema)
       objectSchemas[key] = enhancedSchema!
@@ -136,7 +136,16 @@ function generateSchemaRec(schemaObj: SchemaTreeNode, values: AnyFormValue, opti
   return objectSchemas
 }
 
-function createDynamicSchema(innerSchema: any, options?: any) {
+function createSchemaForArray(
+  innerSchema:
+    | {
+        [key: string]: zod.ZodType<unknown, zod.ZodTypeDef, unknown>
+      }
+    | {
+        ___array: zod.ZodAny
+      },
+  options?: IGetValidationSchemaOptions
+) {
   return zod.union([
     zod.array(innerSchema.___array).optional(),
     zod.string().superRefine((value, ctx) => {

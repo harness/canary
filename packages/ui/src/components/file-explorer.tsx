@@ -117,15 +117,13 @@ const CustomItem = forwardRef<HTMLDivElement, CustomItemProps>(
 )
 CustomItem.displayName = 'FileExplorerCustomItem'
 
-interface FolderItemProps {
+interface FolderItemProps extends Partial<Omit<BaseItemProps, 'actionButtons'>> {
   children: ReactNode
   level: number
   value: string
-  isActive?: boolean
   content?: ReactNode
   onClick?: (value: string) => void
   link?: string
-  icon?: IconV2NamesType
 }
 
 function FolderItem({
@@ -179,16 +177,14 @@ function FolderItem({
   )
 }
 
-type FileItemProps = {
+interface FileItemProps extends Partial<Omit<BaseItemProps, 'actionButtons'>> {
   level: number
   children: ReactNode
-  isActive?: boolean
   link?: string
   value: string
   onClick?: (value: string) => void
   tooltip?: TooltipProps['content']
   [key: `data-${string}`]: any
-  icon?: IconV2NamesType
 }
 
 function FileItem({

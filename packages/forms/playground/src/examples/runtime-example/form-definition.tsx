@@ -78,6 +78,19 @@ const inputs: IInputConfigWithConfig[] = [
         }
       }
     ]
+  },
+  {
+    inputType: InputType.array,
+    path: 'input7',
+    label: 'Array input',
+    required: true,
+    inputConfig: {
+      input: {
+        label: 'Integer input',
+        inputType: InputType.integer,
+        path: ''
+      }
+    }
   }
 ]
 

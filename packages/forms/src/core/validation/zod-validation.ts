@@ -97,7 +97,8 @@ function generateSchemaRec(schemaObj: SchemaTreeNode, values: AnyFormValue, opti
       const innerSchema = _schemaObj?.___array
         ? generateSchemaRec({ ___array: _schemaObj.___array }, values, options)
         : { ___array: zod.any() }
-      const arraySchema = zod.array(innerSchema.___array).optional()
+      const arraySchema = createSchemaForArray(innerSchema, _input, options)
+
       const enhancedSchema = getSchemaForArray(_schema, _input, values, options, arraySchema)
       objectSchemas[key] = enhancedSchema!
     } else if (_schema && _input) {
@@ -133,6 +134,42 @@ function generateSchemaRec(schemaObj: SchemaTreeNode, values: AnyFormValue, opti
   })
 
   return objectSchemas
+}
+
+function createSchemaForArray(
+  innerSchema:
+    | {
+        [key: string]: zod.ZodType<unknown, zod.ZodTypeDef, unknown>
+      }
+    | {
+        ___array: zod.ZodAny
+      },
+  input: IInputDefinition,
+  options?: IGetValidationSchemaOptions
+) {
+  return zod.union([
+    zod.array(innerSchema.___array).optional(),
+    zod.string().superRefine((value, ctx) => {
+      if (options?.validationConfig?.globalValidation) {
+        const validationRes = options.validationConfig.globalValidation(value, input, options.metadata)
+
+        if (validationRes.error) {
+          ctx.addIssue({
+            code: zod.ZodIssueCode.custom,
+            message: validationRes.error
+          })
+          return false
+        }
+
+        // If continue is false, skip further validation
+        if (!validationRes.continue) {
+          return true
+        }
+      }
+
+      return true
+    })
+  ])
 }
 
 function getSchemaForPrimitive(

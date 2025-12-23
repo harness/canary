@@ -347,5 +347,46 @@
         font: var(--cn-comp-markdown-sm-content-emphasized);
       }
     }
+
+    &.markdown-xs {
+      h1 {
+        font: var(--cn-comp-markdown-xs-title-h1);
+        @apply my-cn-sm;
+      }
+
+      h2 {
+        font: var(--cn-comp-markdown-xs-title-h2);
+        @apply my-cn-xs;
+      }
+
+      h3 {
+        font: var(--cn-comp-markdown-xs-title-h3);
+        @apply my-cn-2xs;
+      }
+
+      p {
+        font: var(--cn-comp-markdown-xs-content-paragraph);
+        @apply my-cn-2xs;
+      }
+
+      ul,
+      ol {
+        font: var(--cn-comp-markdown-xs-content-paragraph);
+        @apply my-cn-2xs;
+      }
+
+      a {
+        font: var(--cn-comp-markdown-xs-content-paragraph);
+      }
+
+      blockquote {
+        font: var(--cn-comp-markdown-xs-content-paragraph);
+        @apply my-cn-xs;
+      }
+
+      strong {
+        font: var(--cn-comp-markdown-xs-content-emphasized);
+      }
+    }
   }
 }

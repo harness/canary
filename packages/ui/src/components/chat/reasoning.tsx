@@ -183,7 +183,7 @@ export type ReasoningContentProps = ComponentPropsWithoutRef<typeof CollapsibleP
 const ReasoningContent = forwardRef<ElementRef<typeof CollapsiblePrimitive.Content>, ReasoningContentProps>(
   ({ className, children, ...props }, ref) => (
     <CollapsiblePrimitive.Content ref={ref} className={cn('cn-reasoning-content', className)} {...props}>
-      <MarkdownViewer className="text-cn-3" markdownClassName="bg-transparent" variant="sm" source={children} />
+      <MarkdownViewer className="text-cn-3" markdownClassName="bg-transparent" variant="xs" source={children} />
     </CollapsiblePrimitive.Content>
   )
 )

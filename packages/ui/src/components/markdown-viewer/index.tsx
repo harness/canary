@@ -26,7 +26,8 @@ const markdownViewerVariants = cva('', {
   variants: {
     variant: {
       default: '',
-      sm: 'markdown-sm'
+      sm: 'markdown-sm',
+      xs: 'markdown-xs'
     }
   },
   defaultVariants: {

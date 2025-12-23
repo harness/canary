@@ -21,7 +21,12 @@ import {
  */
 
 function Root({ children, isGroupCard = false }: PropsWithChildren<StudioCardRootProps>): JSX.Element {
-  return <div className={cn('cn-studio-card', { 'cn-studio-card-group': isGroupCard })}>{children}</div>
+  return (
+    <div className="cn-studio-card-wrapper">
+      <div className="cn-studio-card-animation" />
+      <div className={cn('cn-studio-card', { 'cn-studio-card-group': isGroupCard })}>{children}</div>
+    </div>
+  )
 }
 
 /**

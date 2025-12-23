@@ -1,5 +1,53 @@
 export default {
+  '.cn-studio-card-wrapper': {
+    position: 'relative',
+    '@apply overflow-hidden': '',
+
+    // Shimmer effect for executing status
+    '> .cn-studio-card:has(> [data-status="executing"])': {
+      '--border-angle': '0turn',
+      '--main-bg':
+        'conic-gradient(from var(--border-angle), var(--cn-bg-3), var(--cn-bg-3) 5%, var(--cn-bg-3) 60%, var(--cn-bg-3) 95%)',
+      '--gradient-border':
+        'conic-gradient(from var(--border-angle), transparent 20%, var(--cn-gradient-pipeline-running-border-from), var(--cn-gradient-pipeline-running-border-to) 99%, transparent)',
+
+      animation: 'studio-card-border-spin 5s linear infinite',
+
+      // '> .cn-studio-card': {
+      border: 'solid 2px transparent !important',
+      background:
+        'var(--main-bg) padding-box, var(--gradient-border) border-box, var(--cn-border-3) border-box !important',
+      backgroundPosition: 'center center'
+      // },
+
+      // '+ .cn-studio-card-animation': {
+      //   // content: '""',
+      //   position: 'absolute',
+      //   zIndex: '-1',
+      //   inset: '0',
+      //   height: '100%',
+      //   width: '100%',
+      //   background:
+      //     'conic-gradient(from var(--border-angle), transparent 20%, var(--cn-gradient-pipeline-running-border-from), var(--cn-gradient-pipeline-running-border-to) 99%, transparent)',
+      //   filter: 'blur(6px)',
+      //   pointerEvents: 'none'
+      // }
+    },
+    '&:has(> .cn-studio-card > [data-status="executing"]) > .cn-studio-card-animation ': {
+      position: 'absolute',
+      zIndex: '-1',
+      inset: '0',
+      height: '100%',
+      width: '100%',
+      background:
+        'conic-gradient(from var(--border-angle), transparent 20%, var(--cn-gradient-pipeline-running-border-from), var(--cn-gradient-pipeline-running-border-to) 99%, transparent)',
+      filter: 'blur(6px)',
+      pointerEvents: 'none'
+    }
+  },
+
   '.cn-studio-card': {
+    position: 'relative',
     borderRadius: 'var(--cn-rounded-4)',
     border: '1px solid var(--cn-border-2)',
     backgroundColor: 'var(--cn-bg-3)',
@@ -32,33 +80,32 @@ export default {
         minWidth: 'var(--cn-size-90)',
         maxWidth: 'var(--cn-size-90)'
       }
-    },
+    }
 
     // Shimmer effect for executing status
-    '&:has(> [data-status="executing"])': {
-      '--border-angle': '0turn',
-      '--main-bg':
-        'conic-gradient(from var(--border-angle), var(--cn-bg-3), var(--cn-bg-3) 5%, var(--cn-bg-3) 60%, var(--cn-bg-3) 95%)',
-      '--gradient-border':
-        'conic-gradient(from var(--border-angle), transparent 20%, var(--cn-gradient-pipeline-running-border-from), var(--cn-gradient-pipeline-running-border-to) 99%, transparent)',
+    // '&:has(> [data-status="executing"])': {
+    //   '--border-angle': '0turn',
+    //   '--main-bg':
+    //     'conic-gradient(from var(--border-angle), var(--cn-bg-3), var(--cn-bg-3) 5%, var(--cn-bg-3) 60%, var(--cn-bg-3) 95%)',
+    //   '--gradient-border':
+    //     'conic-gradient(from var(--border-angle), transparent 20%, var(--cn-gradient-pipeline-running-border-from), var(--cn-gradient-pipeline-running-border-to) 99%, transparent)',
+    //   border: 'solid 2px transparent !important',
+    //   background:
+    //     'var(--main-bg) padding-box, var(--gradient-border) border-box, var(--cn-border-3) border-box !important',
+    //   backgroundPosition: 'center center',
+    //   animation: 'studio-card-border-spin 5s linear infinite',
 
-      border: 'solid 2px transparent !important',
-      background:
-        'var(--main-bg) padding-box, var(--gradient-border) border-box, var(--cn-border-3) border-box !important',
-      backgroundPosition: 'center center',
-      animation: 'studio-card-border-spin 5s linear infinite',
-
-      '&::before': {
-        content: '""',
-        position: 'absolute',
-        background:
-          'conic-gradient(from var(--border-angle), transparent 20%, var(--cn-gradient-pipeline-running-border-from), var(--cn-gradient-pipeline-running-border-to) 99%, transparent)',
-        filter: 'blur(6px)',
-        zIndex: '-1',
-        height: 'inherit',
-        inset: '0'
-      }
-    }
+    //   '&::before': {
+    //     content: '""',
+    //     position: 'absolute',
+    //     background:
+    //       'conic-gradient(from var(--border-angle), transparent 20%, var(--cn-gradient-pipeline-running-border-from), var(--cn-gradient-pipeline-running-border-to) 99%, transparent)',
+    //     filter: 'blur(6px)',
+    //     zIndex: '-1',
+    //     height: 'inherit',
+    //     inset: '0'
+    //   }
+    // }
   },
 
   // Header Component

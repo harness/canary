@@ -76,6 +76,7 @@ interface SelectProps<T = string>
   value?: T
   defaultValue?: T
   onChange?: (value: T) => void
+  onOpen?: () => void | Promise<void>
   onScrollEnd?: () => void
   isLoading?: boolean
   theme?: VariantProps<typeof selectVariants>['theme']
@@ -130,6 +131,7 @@ function SelectInner<T = string>(
     value,
     defaultValue,
     onChange,
+    onOpen,
     disabled,
     onScrollEnd,
     placeholder: _placeholder,
@@ -395,6 +397,11 @@ function SelectInner<T = string>(
         <DropdownMenu.Root
           open={isOpen}
           onOpenChange={open => {
+            if (open && onOpen) {
+              Promise.resolve(onOpen()).catch(err => {
+                console.error('Error in onOpen callback:', err)
+              })
+            }
             setIsOpen(open)
             if (!open) setSearchQuery('')
           }}

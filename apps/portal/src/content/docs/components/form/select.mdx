@@ -344,6 +344,46 @@ Both the entire select and individual options can be disabled.
 }`}
 />
 
+## On Open Callback
+
+The `onOpen` callback is triggered when the dropdown menu opens. This is useful for lazy loading data, logging analytics, or triggering side effects when users interact with the select.
+
+<DocsPage.ComponentExample
+  client:only
+  code={`() => {
+    const [value, setValue] = React.useState()
+    const [openCount, setOpenCount] = React.useState(0)
+    const [options, setOptions] = React.useState([
+      { label: 'Apple', value: 'apple' },
+      { label: 'Banana', value: 'banana' },
+      { label: 'Orange', value: 'orange' },
+    ])
+
+    const handleOpen = () => {
+      setOpenCount(prev => prev + 1)
+      console.log('Select dropdown opened')
+
+      // Example: Fetch fresh data when dropdown opens
+      // fetchLatestOptions().then(setOptions)
+    }
+
+    return (
+      <div className="grid gap-cn-md">
+        <Select
+          label="Fruit selector"
+          options={options}
+          value={value}
+          onChange={setValue}
+          onOpen={handleOpen}
+          placeholder="Select a fruit"
+          caption={\`Dropdown opened \${openCount} time(s)\`}
+        />
+      </div>
+    )
+
+}`}
+/>
+
 ## Loading States
 
 The Select component provides clear loading indicators for different scenarios.
@@ -700,6 +740,7 @@ The `Select` component is the main component for creating dropdown selections.
   value={value}             // [OPTIONAL] controlled value
   defaultValue              // [OPTIONAL] default value for uncontrolled mode
   onChange={onChange}       // [OPTIONAL] change handler
+  onOpen={onOpen}           // [OPTIONAL] callback when dropdown opens
   disabled                  // [OPTIONAL] disable the select
   onScrollEnd={onScroll}    // [OPTIONAL] infinite scroll callback
   placeholder="Select..."   // [OPTIONAL] placeholder text
@@ -746,6 +787,13 @@ The `Select` component is the main component for creating dropdown selections.
       description: "Callback fired when selection changes.",
       required: false,
       value: "(value: T) => void",
+    },
+    {
+      name: "onOpen",
+      description:
+        "Callback fired when the dropdown opens. Useful for lazy loading data or tracking user interactions.",
+      required: false,
+      value: "() => void",
     },
     {
       name: "tooltipContent",

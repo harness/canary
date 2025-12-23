@@ -1,4 +1,4 @@
-import {
+import React, {
   ComponentPropsWithoutRef,
   createContext,
   ElementRef,
@@ -12,7 +12,6 @@ import {
 } from 'react'
 
 import { IconV2 } from '@components/icon-v2'
-import { MarkdownViewer } from '@components/markdown-viewer'
 import { Shimmer } from '@components/shimmer'
 import { Text } from '@components/text'
 import * as CollapsiblePrimitive from '@radix-ui/react-collapsible'
@@ -133,20 +132,20 @@ export type ReasoningTriggerProps = ComponentPropsWithoutRef<typeof CollapsibleP
 const defaultGetThinkingMessage = (isStreaming: boolean, duration?: number): ReactNode => {
   if (isStreaming || duration === 0) {
     return (
-      <Shimmer color={'foreground-3'} duration={1}>
+      <Shimmer variant={'caption-light'} color={'foreground-3'} duration={1}>
         Thinking...
       </Shimmer>
     )
   }
   if (duration === undefined) {
     return (
-      <Text variant={'body-normal'} color={'foreground-3'}>
+      <Text variant={'caption-light'} color={'foreground-3'}>
         Thought for a few seconds
       </Text>
     )
   }
   return (
-    <Text variant={'body-normal'} color={'foreground-3'}>
+    <Text variant={'caption-light'} color={'foreground-3'}>
       Thought for {duration} seconds
     </Text>
   )
@@ -177,15 +176,29 @@ const ReasoningTrigger = forwardRef<ElementRef<typeof CollapsiblePrimitive.Trigg
 ReasoningTrigger.displayName = 'ReasoningTrigger'
 
 export type ReasoningContentProps = ComponentPropsWithoutRef<typeof CollapsiblePrimitive.Content> & {
-  children: string
+  children: React.ReactNode
 }
 
 const ReasoningContent = forwardRef<ElementRef<typeof CollapsiblePrimitive.Content>, ReasoningContentProps>(
-  ({ className, children, ...props }, ref) => (
-    <CollapsiblePrimitive.Content ref={ref} className={cn('cn-reasoning-content', className)} {...props}>
-      <MarkdownViewer className="text-cn-3" markdownClassName="bg-transparent" variant="xs" source={children} />
-    </CollapsiblePrimitive.Content>
-  )
+  ({ className, children, ...props }, ref) => {
+    const scrollRef = useRef<HTMLDivElement>(null)
+    const { isStreaming } = useReasoning()
+
+    // Auto-scroll to bottom when content changes during streaming
+    useEffect(() => {
+      if (isStreaming && scrollRef.current) {
+        scrollRef.current.scrollTop = scrollRef.current.scrollHeight
+      }
+    }, [children, isStreaming])
+
+    return (
+      <CollapsiblePrimitive.Content ref={ref} className={cn('cn-reasoning-content', className)} {...props}>
+        <div ref={scrollRef} className="max-h-[200px] overflow-y-auto">
+          {children}
+        </div>
+      </CollapsiblePrimitive.Content>
+    )
+  }
 )
 
 ReasoningContent.displayName = 'ReasoningContent'

@@ -1,0 +1,614 @@
+---
+title: Markdown Viewer
+description: A powerful component for rendering markdown content with syntax highlighting, interactive checkboxes, and code suggestions
+beta: true
+---
+
+The `MarkdownViewer` component provides a comprehensive solution for rendering markdown content with advanced features like syntax highlighting, interactive task lists, code suggestions, and customizable image handling. Perfect for displaying documentation, comments, READMEs, and code review content.
+
+import { DocsPage } from "@/components/docs-page";
+
+## Basic Usage
+
+The `MarkdownViewer` renders standard markdown syntax including headings, lists, links, images, and code blocks.
+
+<DocsPage.ComponentExample
+  client:only
+  code={`
+  <MarkdownViewer
+    source={\`# Welcome to MarkdownViewer
+
+This is a **powerful** component for rendering _markdown_ content.
+
+## Features
+
+- Syntax highlighting for code blocks
+- Interactive task lists
+- Code suggestions
+- Image handling
+- And much more!
+
+### Code Example
+
+\\\`\\\`\\\`javascript
+function greet(name) {
+console.log(\\\`Hello, \${name}!\\\`);
+}
+
+greet('World');
+\\\`\\\`\\\`
+
+[Learn more](https://harness-design.netlify.app/components/markdown-display/markdown-viewer/)\`}
+/>
+`}
+/>
+
+## Usage
+
+```typescript jsx
+import { MarkdownViewer } from '@harnessio/ui/components'
+
+//...
+
+return (
+  <MarkdownViewer
+    source="# Hello World\n\nThis is **markdown** content."
+  />
+)
+```
+
+## With Border
+
+Add a bordered container around the markdown content using the `withBorder` prop.
+
+<DocsPage.ComponentExample
+  client:only
+  code={`
+  <MarkdownViewer
+    withBorder
+    source={\`# Bordered Content
+
+This markdown is displayed with a border and padding.
+
+- Feature one
+- Feature two
+- Feature three\`}
+  />
+  `}
+  />
+
+## Max Height
+
+Control the maximum height of the markdown container to create scrollable content.
+
+<DocsPage.ComponentExample
+  client:only
+  code={`
+  <MarkdownViewer
+    maxHeight={200}
+    withBorder
+    source={\`# Scrollable Content
+
+Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.
+
+## Section 1
+
+Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.
+
+## Section 2
+
+Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur.
+
+## Section 3
+
+Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
+
+## Section 4
+
+More content to demonstrate scrolling behavior when maxHeight is applied.\`}
+/>
+`}
+/>
+
+## Code Blocks with Syntax Highlighting
+
+Code blocks automatically receive syntax highlighting based on the language specified.
+
+<DocsPage.ComponentExample
+  client:only
+  code={`
+  <MarkdownViewer
+    source={\`## TypeScript Example
+
+\\\`\\\`\\\`typescript
+interface User {
+id: number;
+name: string;
+email: string;
+active: boolean;
+}
+
+const createUser = (data: Partial<User>): User => {
+return {
+id: Math.random(),
+active: true,
+...data,
+} as User;
+};
+\\\`\\\`\\\`
+
+## YAML Example
+
+\\\`\\\`\\\`yaml
+
+# Application Configuration
+
+name: harness-app
+version: 1.0.0
+
+services:
+api:
+image: harness/api:latest
+ports: - "8080:8080"
+environment:
+NODE_ENV: production
+DATABASE_URL: postgres://localhost:5432/db
+
+worker:
+image: harness/worker:latest
+replicas: 3
+resources:
+limits:
+memory: 512Mi
+cpu: "0.5"
+\\\`\\\`\\\`\`}
+/>
+`}
+/>
+
+## Code Blocks with Line Numbers
+
+Enable line numbers for code blocks using the `showLineNumbers` prop. This is especially useful for code reviews and documentation.
+
+<DocsPage.ComponentExample
+  client:only
+  code={`<MarkdownViewer
+    showLineNumbers
+    source={\`## With Line Numbers
+
+\\\`\\\`\\\`javascript
+function calculateTotal(items) {
+return items.reduce((sum, item) => {
+return sum + (item.price \* item.quantity);
+}, 0);
+}
+
+const cart = [
+{ name: 'Widget', price: 10, quantity: 2 },
+{ name: 'Gadget', price: 15, quantity: 1 },
+{ name: 'Tool', price: 8, quantity: 3 }
+];
+
+const total = calculateTotal(cart);
+\\\`\\\`\\\`\`}
+/>
+`}
+/>
+
+## Interactive Task Lists
+
+The MarkdownViewer supports interactive checkboxes in task lists. Use the `onCheckboxChange` prop to handle state updates.
+
+<DocsPage.ComponentExample
+  client:only
+  code={`() => {
+  const [markdown, setMarkdown] = React.useState(\`# Project Tasks
+
+## Phase 1: Setup
+
+- [x] Initialize repository
+- [x] Setup development environment
+- [ ] Configure CI/CD pipeline
+
+## Phase 2: Development
+
+- [ ] Implement authentication
+- [ ] Create dashboard
+- [ ] Build API endpoints
+- [ ] Write tests
+
+## Phase 3: Deployment
+
+- [ ] Deploy to staging
+- [ ] Run QA tests
+- [ ] Deploy to production\`);
+
+  return (
+
+                      <Layout.Vertical gap="md">
+
+                  <MarkdownViewer
+                      source={markdown}
+                      onCheckboxChange={setMarkdown}
+                      withBorder
+                    />
+
+              <Button
+
+  size="sm"
+  variant="outline"
+  onClick={() => {
+  const completed = (markdown.match(/- \[x\]/g) || []).length;
+  const total = (markdown.match(/- \[(x| )\]/g) || []).length;
+  alert(\`Progress: \${completed}/\${total} tasks completed\`);
+  }} >
+  Check Progress
+
+          </Button>
+
+      </Layout.Vertical>
+
+  );
+  }`}
+  />
+
+## Variant Sizes
+
+The MarkdownViewer supports two variants: `default` and `sm` for different typography scales.
+
+<DocsPage.ComponentExample
+  client:only
+  code={`<Layout.Flex>
+<MarkdownViewer
+    withBorder
+    source={\`# Main Heading
+This uses the **small** typography scale.
+## Subheading
+Compact body text with smaller sizing.\`}
+/>
+<MarkdownViewer
+    variant="sm"
+    withBorder
+    source={\`# Main Heading
+This uses the **small** typography scale.
+## Subheading
+Compact body text with smaller sizing.\`}
+/>
+</Layout.Flex>`}
+/>
+
+## Code Suggestions
+
+The MarkdownViewer can render special code suggestion blocks with custom headers and footers. Use the `suggestionBlock`, `suggestionTitle`, and `suggestionFooter` props.
+
+<DocsPage.ComponentExample
+  client:only
+  code={`() => {
+  const [accepted, setAccepted] = React.useState(false);
+
+const suggestionCode = \`\\\`\\\`\\\`suggestion
+function optimizedSearch(data, query) {
+// Use binary search for better performance
+return data.filter(item =>
+item.toLowerCase().includes(query.toLowerCase())
+);
+}
+\\\`\\\`\\\`\`;
+
+return (
+
+<MarkdownViewer
+  source={suggestionCode}
+  suggestionTitle="💡 Suggested Improvement"
+  suggestionFooter={
+    <Layout.Horizontal gap="sm">
+      <Button
+        size="sm"
+        onClick={() => {
+          setAccepted(true);
+          alert("Suggestion accepted!");
+        }}
+        disabled={accepted}
+      >
+        {accepted ? "Accepted" : "Accept Suggestion"}
+      </Button>
+      <Button
+        size="sm"
+        variant="outline"
+        onClick={() => alert("Suggestion rejected")}
+        disabled={accepted}
+      >
+        Reject
+      </Button>
+    </Layout.Horizontal>
+  }
+/>
+); }`} />
+
+## Image URL Transform
+
+Transform image URLs before rendering using the `imageUrlTransform` prop. Useful for handling relative paths or proxying images.
+
+<DocsPage.ComponentExample
+  client:only
+  code={`
+  <MarkdownViewer
+    source={\`# Image Examples
+
+![Sample Image](sample.png)
+
+This image URL will be transformed by the imageUrlTransform function.\`}
+imageUrlTransform={(src) => {
+// Transform relative paths to absolute URLs
+if (!src.startsWith('http')) {
+return \`https://via.placeholder.com/400x200?text=\${encodeURIComponent(src)}\`;
+}
+return src;
+}}
+withBorder
+/>
+`}
+/>
+
+## Tables and Blockquotes
+
+The MarkdownViewer fully supports markdown tables and blockquotes.
+
+<DocsPage.ComponentExample
+  client:only
+  code={`
+  <MarkdownViewer
+    source={\`## Comparison Table
+
+| Feature | Basic | Pro      | Enterprise |
+| ------- | ----- | -------- | ---------- |
+| Users   | 5     | 50       | Unlimited  |
+| Storage | 10GB  | 100GB    | 1TB        |
+| Support | Email | Priority | 24/7       |
+| Price   | $10   | $50      | Custom     |
+
+> **Note:** All plans include basic features and 99.9% uptime SLA.
+
+> 💡 **Pro Tip:** Enterprise plans can be customized to your specific needs.\`}
+
+    withBorder
+
+/>
+`}
+/>
+
+## External Links
+
+External links automatically open in a new tab with security attributes (`nofollow`, `noreferrer`, `noopener`).
+
+<DocsPage.ComponentExample
+  client:only
+  code={`
+  <MarkdownViewer
+    source={String.raw\`# Useful Links
+
+Visit these resources:
+
+- [Harness Platform](https://harness.io) - Opens in new tab
+- [Documentation](https://docs.harness.io) - Opens in new tab
+
+Internal links and anchors work differently and are handled by the router.\`}
+withBorder
+/>
+`}
+/>
+
+## Video Embeds
+
+The MarkdownViewer supports video file embeds for common video formats.
+
+<DocsPage.ComponentExample
+  client:only
+  code={`
+  <MarkdownViewer
+    source={\`# Demo Video
+
+![Demo](https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ForBiggerBlazes.mp4)
+
+Supported formats: mp4, mov, webm, mkv, flv\`}
+withBorder
+/>
+`}
+/>
+
+## Loading State
+
+Display a loading state to disable interactive elements while content is being updated.
+
+<DocsPage.ComponentExample
+  client:only
+  code={`<MarkdownViewer
+  source={\`# Content
+
+- [ ] Task 1
+- [ ] Task 2\`}
+      isLoading={true}
+      withBorder
+      />`}
+      />
+
+## Real-World Example: Comment System
+
+Here's a practical example combining multiple features for a comment/discussion system.
+
+<DocsPage.ComponentExample
+  client:only
+  code={`<Card.Root className="max-w-[800px]">
+  <Layout.Horizontal gap="md" className="items-start">
+    <Avatar size="md" name="Jane Developer" />
+    <Layout.Vertical gap="sm" className="flex-1">
+      <Layout.Horizontal gap="sm" className="items-center">
+        <Text variant="body-strong">Jane Developer</Text>
+        <Text variant="caption" color="foreground-3">2 hours ago</Text>
+      </Layout.Horizontal>
+      <MarkdownViewer
+        variant="sm"
+        showLineNumbers
+        source={\`## Code Review Comments
+
+### Suggested Changes
+
+- [x] Update error handling
+- [x] Add unit tests
+- [ ] Update documentation
+
+### Code Example
+
+\\\`\\\`\\\`typescript
+async function fetchUser(id: string): Promise<User> {
+if (!response.ok) throw new Error('User not found');
+return await response.json();
+}
+\\\`\\\`\\\`
+
+> **Note:** Don't forget error handling!\`}
+
+      />
+    </Layout.Vertical>
+
+  </Layout.Horizontal>
+</Card.Root>`}
+/>
+
+## API Reference
+
+<DocsPage.PropsTable
+  props={[
+    {
+      name: "source",
+      description: "The markdown content to render",
+      required: true,
+      value: "string",
+    },
+    {
+      name: "variant",
+      description: "Typography size variant",
+      required: false,
+      defaultValue: "'default'",
+      value: "'default' | 'sm'",
+    },
+    {
+      name: "maxHeight",
+      description: "Maximum height of the container (enables scrolling)",
+      required: false,
+      value: "string | number",
+    },
+    {
+      name: "withBorder",
+      description: "Add border and padding around the content",
+      required: false,
+      defaultValue: "false",
+      value: "boolean",
+    },
+    {
+      name: "className",
+      description: "Additional CSS classes for the container",
+      required: false,
+      value: "string",
+    },
+    {
+      name: "markdownClassName",
+      description: "Additional CSS classes for the markdown content",
+      required: false,
+      value: "string",
+    },
+    {
+      name: "showLineNumbers",
+      description: "Display line numbers in code blocks",
+      required: false,
+      defaultValue: "false",
+      value: "boolean",
+    },
+    {
+      name: "onCheckboxChange",
+      description:
+        "Callback fired when a task list checkbox is toggled. Receives the updated markdown source.",
+      required: false,
+      value: "(source: string) => void",
+    },
+    {
+      name: "isLoading",
+      description:
+        "Disable interactive elements (like checkboxes) during loading",
+      required: false,
+      defaultValue: "false",
+      value: "boolean",
+    },
+    {
+      name: "imageUrlTransform",
+      description:
+        "Transform image URLs before rendering. Useful for handling relative paths or proxying.",
+      required: false,
+      value: "(src: string) => string",
+    },
+    {
+      name: "suggestionBlock",
+      description: "Configuration for code suggestion blocks",
+      required: false,
+      value: "SuggestionBlock",
+    },
+    {
+      name: "suggestionCheckSum",
+      description: "Checksum for validating suggestion blocks",
+      required: false,
+      value: "string",
+    },
+    {
+      name: "suggestionTitle",
+      description: "Title displayed in the suggestion block header",
+      required: false,
+      value: "string",
+    },
+    {
+      name: "suggestionFooter",
+      description:
+        "Custom footer content for suggestion blocks (e.g., action buttons)",
+      required: false,
+      value: "ReactNode",
+    },
+  ]}
+/>
+
+## Features Summary
+
+### Markdown Support
+
+- **Standard Syntax**: Headings, paragraphs, lists, links, emphasis
+- **Tables**: Full table rendering with alignment
+- **Blockquotes**: Styled quote blocks
+- **Code Blocks**: Syntax highlighting with copy button
+- **Images**: Click to open in new tab
+- **Videos**: Embedded video support for common formats
+
+### Interactive Features
+
+- **Task Lists**: Clickable checkboxes with state management
+- **Code Suggestions**: Special rendering for code review suggestions
+- **Line Numbers**: Optional line numbering for code blocks
+
+### Security
+
+- **Sanitization**: Content is sanitized using rehype-sanitize
+- **External Links**: Automatically configured with security attributes
+- **XSS Protection**: Image props and event handlers are sanitized
+
+### Customization
+
+- **Typography Variants**: Default and small size options
+- **Image Transforms**: Custom URL transformation for images
+- **Styling**: Customizable with className props
+- **Layout**: Border and height constraints
+
+### Plugins
+
+The component uses several rehype and remark plugins:
+
+- `remark-breaks` - Convert line breaks to `<br>` tags
+- `rehype-sanitize` - Sanitize HTML output
+- `rehype-video` - Embed video files
+- `rehype-external-links` - Configure external link behavior

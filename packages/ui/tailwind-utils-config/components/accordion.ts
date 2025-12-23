@@ -67,7 +67,7 @@ export default {
         '@apply outline-offset-cn-tight': ''
       },
 
-      '&:where([data-state="open"])': {
+      '.cn-accordion-item-header:has(> [data-state="open"]) &': {
         '.cn-accordion-trigger-indicator': {
           '@apply rotate-180': ''
         }

@@ -70,7 +70,7 @@
         "lineHeight": "{lineHeight.3.tight}",
         "letterSpacing": "{tracking.tight}"
       },
-      "$description": "Versatile heading for content organization at the paragraph level. Provides subtle visual separation while maintaining content flow. Creates recognizable signposts for scanning without overwhelming surrounding text.\n\nCommin uses: Small widget headers, Related content groups, List section headers, Step-by-step instructions titles, Table headers."
+      "$description": "Versatile heading for content organization at the paragraph level. Provides subtle visual separation while maintaining content flow. Creates recognizable signposts for scanning without overwhelming surrounding text.\n\nCommon uses: Small widget headers, Related content groups, List section headers, Step-by-step instructions titles, Table headers."
     },
     "small": {
       "$type": "typography",
@@ -107,7 +107,8 @@
         "letterSpacing": "{tracking.tight}",
         "paragraphSpacing": "0.375rem",
         "textDecoration": "{textDecoration.line-through}"
-      }
+      },
+      "$description": "Strikethrough text for indicating removed, completed, or deprecated content. Maintains body typography properties while clearly signaling the content is no longer active.\n\nCommon uses: Completed tasks, Deleted content in diffs, Deprecated features, Price reductions."
     },
     "strong": {
       "$type": "typography",
@@ -141,7 +142,8 @@
         "lineHeight": "{lineHeight.2.snug}",
         "letterSpacing": "{tracking.tight}",
         "paragraphSpacing": "0.375rem"
-      }
+      },
+      "$description": "De-emphasized body text for secondary information. Uses reduced weight to create visual hierarchy while maintaining readability and size consistency with normal body text.\n\nCommon uses: Helper text, Placeholder content, Secondary descriptions, Supplementary information."
     },
     "single-line": {
       "code": {
@@ -185,7 +187,8 @@
           "fontSize": "{fontSize.2}",
           "lineHeight": "{lineHeight.2.none}",
           "letterSpacing": "{tracking.tight}"
-        }
+        },
+        "$description": "Subtle single-line text for tertiary information in compact UI elements. Combines reduced weight with zero line-height for minimal visual presence while remaining legible."
       }
     }
   },
@@ -211,7 +214,8 @@
         "lineHeight": "{lineHeight.1.snug}",
         "letterSpacing": "{tracking.normal}",
         "paragraphSpacing": "0.375rem"
-      }
+      },
+      "$description": "Emphasized caption for important supporting information. Increases visual weight to highlight key metadata or annotations while maintaining caption-level sizing.\n\nCommon uses: Important labels, Highlighted metadata, Key figure references, Critical timestamps."
     },
     "code": {
       "$type": "typography",
@@ -222,7 +226,8 @@
         "lineHeight": "{lineHeight.half.snug}",
         "letterSpacing": "{tracking.normal}",
         "paragraphSpacing": "0.375rem"
-      }
+      },
+      "$description": "Monospaced caption for inline technical references. Combines compact sizing with code-style formatting for technical annotations.\n\nCommon uses: Inline code references, Version numbers, Short file names, Technical identifiers."
     },
     "light": {
       "$type": "typography",
@@ -257,7 +262,8 @@
           "lineHeight": "{lineHeight.1.none}",
           "letterSpacing": "{tracking.wide}",
           "textCase": "{textCase.uppercase}"
-        }
+        },
+        "$description": "Uppercase caption for categorical labels and section identifiers. Uses wide letter-spacing for improved legibility at small sizes.\n\nCommon uses: Category tags, Section labels, Status indicators, Column headers."
       },
       "strong": {
         "$type": "typography",
@@ -267,7 +273,8 @@
           "fontSize": "{fontSize.1}",
           "lineHeight": "{lineHeight.1.none}",
           "letterSpacing": "{tracking.normal}"
-        }
+        },
+        "$description": "Emphasized single-line caption for important compact labels. Combines increased weight with zero line-height for prominent metadata in constrained UI elements.\n\nCommon uses: Badge text, Important tags, Highlighted counts, Key indicators."
       },
       "code": {
         "$type": "typography",
@@ -277,7 +284,8 @@
           "fontSize": "{fontSize.half}",
           "lineHeight": "{lineHeight.half.none}",
           "letterSpacing": "{tracking.normal}"
-        }
+        },
+        "$description": "Compact monospaced caption for inline technical content. Optimized for single-line display of code snippets in space-constrained UI elements.\n\nCommon uses: Inline variable names, Short commands, Version tags, Technical badges."
       },
       "light": {
         "$type": "typography",
@@ -316,7 +324,7 @@
           "letterSpacing": "{tracking.tight}",
           "textDecoration": "{textDecoration.underline}"
         },
-        "$description": "Default size link, hover state.\n\nCommon uses: In-paragraph text links, Navigation menu items, Action links in content, \"Learn more\" expansions, Related content links."
+        "$description": "Underlined link style for hover and focus states. Provides clear visual feedback for interactive text while maintaining typographic consistency with surrounding content.\n\nCommon uses: Hovered in-paragraph links, Focused navigation items, Active action links."
       },
       "sm": {
         "$type": "typography",
@@ -340,7 +348,7 @@
           "letterSpacing": "{tracking.normal}",
           "textDecoration": "{textDecoration.underline}"
         },
-        "$description": "Small size link, hover state.\n\nCommon uses: In-paragraph text links, Navigation menu items, Action links in content, \"Learn more\" expansions, Related content links."
+        "$description": "Small underlined link for hover and focus states. Provides clear visual feedback for compact interactive text elements.\n\nCommon uses: Hovered caption links, Focused metadata links, Active footer links."
       }
     },
     "dialog": {
@@ -443,7 +451,7 @@
             "letterSpacing": "{tracking.tight}",
             "paragraphSpacing": "4px"
           },
-          "$description": "Primary document heading that establishes the main topic with prominent visual weight and size. Creates the top level in document hierarchy.\n\nCommon uses: Document titles, Main article headings, Tutorial titles, Report titles."
+          "$description": "Compact primary heading for space-constrained markdown contexts. Maintains hierarchical prominence at reduced size for dense content layouts.\n\nCommon uses: Sidebar documentation, Compact cards, Tooltip content, Condensed articles."
         },
         "h2": {
           "$type": "typography",
@@ -455,7 +463,7 @@
             "letterSpacing": "{tracking.tight}",
             "paragraphSpacing": "4px"
           },
-          "$description": "Secondary heading for major content divisions. Creates clear breaks between primary sections while maintaining hierarchical relationship with H1.\n\nCommon uses: Chapter divisions, Major content sections, Topic groups, Process divisions."
+          "$description": "Compact secondary heading for dense markdown layouts. Provides clear section breaks while optimizing for limited vertical space.\n\nCommon uses: Sidebar sections, Compact card headers, Condensed documentation."
         },
         "h3": {
           "$type": "typography",
@@ -467,7 +475,7 @@
             "letterSpacing": "{tracking.tight}",
             "paragraphSpacing": "4px"
           },
-          "$description": "Tertiary heading for smaller content groupings. Provides additional organization while preserving clear hierarchy within document structure.\n\nCommon uses: Subtopics, Feature headers, Step groupings, Related concept clusters."
+          "$description": "Compact tertiary heading using increased weight for visibility at small sizes. Creates subtle groupings within dense markdown content.\n\nCommon uses: Nested subtopics, Compact feature lists, Dense documentation sections."
         }
       },
       "content": {
@@ -481,7 +489,7 @@
             "letterSpacing": "{tracking.tight}",
             "paragraphSpacing": "{fontSize.2}"
           },
-          "$description": "Standard typography for document body content. Optimized for comfortable reading with appropriate spacing and line height.\n\nCommon uses: Main content, Explanations, Process descriptions, Detailed information."
+          "$description": "Compact body text for space-constrained markdown contexts. Balances readability with density for secondary content areas.\n\nCommon uses: Sidebar content, Tooltip descriptions, Compact card content."
         },
         "emphasized": {
           "$type": "typography",
@@ -493,7 +501,73 @@
             "letterSpacing": "{tracking.tight}",
             "paragraphSpacing": "{fontSize.2}"
           },
-          "$description": "Highlighted paragraph style for important information. Uses increased weight to create focal points without disrupting content flow.\n\nCommon uses: Important notices, Key takeaways, Warnings, Summary points."
+          "$description": "Compact emphasized text for highlighting key information in dense layouts. Maintains visibility in space-constrained markdown contexts.\n\nCommon uses: Important sidebar notes, Highlighted tooltip content, Key compact card details."
+        }
+      }
+    },
+    "markdown-xs": {
+      "title": {
+        "h1": {
+          "$type": "typography",
+          "$value": {
+            "fontFamily": "{fontFamily.default}",
+            "fontWeight": "{fontWeight.default.normal.500}",
+            "fontSize": "{fontSize.3}",
+            "lineHeight": "{lineHeight.3.snug}",
+            "letterSpacing": "{tracking.tight}",
+            "paragraphSpacing": "4px"
+          },
+          "$description": "Extra-compact primary heading for minimal-space markdown contexts. Optimized for smallest content areas while maintaining clear hierarchy.\n\nCommon uses: Inline tooltips, Micro-cards, Condensed widgets, Compact popovers."
+        },
+        "h2": {
+          "$type": "typography",
+          "$value": {
+            "fontFamily": "{fontFamily.default}",
+            "fontWeight": "{fontWeight.default.normal.500}",
+            "fontSize": "{fontSize.2}",
+            "lineHeight": "{lineHeight.2.snug}",
+            "letterSpacing": "{tracking.tight}",
+            "paragraphSpacing": "4px"
+          },
+          "$description": "Extra-compact secondary heading for highly constrained spaces. Provides section breaks in the smallest markdown contexts.\n\nCommon uses: Tooltip sections, Micro-widget headers, Condensed popover content."
+        },
+        "h3": {
+          "$type": "typography",
+          "$value": {
+            "fontFamily": "{fontFamily.default}",
+            "fontWeight": "{fontWeight.default.normal.600}",
+            "fontSize": "{fontSize.1}",
+            "lineHeight": "{lineHeight.1.normal}",
+            "letterSpacing": "{tracking.tight}",
+            "paragraphSpacing": "4px"
+          },
+          "$description": "Extra-compact tertiary heading using increased weight for visibility at minimal sizes. Creates subtle groupings in the most constrained spaces.\n\nCommon uses: Nested tooltip items, Micro-card subsections, Condensed list headers."
+        }
+      },
+      "content": {
+        "paragraph": {
+          "$type": "typography",
+          "$value": {
+            "fontFamily": "{fontFamily.default}",
+            "fontWeight": "{fontWeight.default.normal.400}",
+            "fontSize": "{fontSize.1}",
+            "lineHeight": "{lineHeight.1.normal}",
+            "letterSpacing": "{tracking.tight}",
+            "paragraphSpacing": "{fontSize.1}"
+          },
+          "$description": "Extra-compact body text for minimal-space markdown contexts. Optimized for tooltip and popover content where space is at a premium.\n\nCommon uses: Tooltip descriptions, Popover content, Micro-card details."
+        },
+        "emphasized": {
+          "$type": "typography",
+          "$value": {
+            "fontFamily": "{fontFamily.default}",
+            "fontWeight": "{fontWeight.default.normal.500}",
+            "fontSize": "{fontSize.1}",
+            "lineHeight": "{lineHeight.1.normal}",
+            "letterSpacing": "{tracking.tight}",
+            "paragraphSpacing": "{fontSize.1}"
+          },
+          "$description": "Extra-compact emphasized text for critical information in minimal-space contexts. Ensures key details stand out even at smallest sizes.\n\nCommon uses: Important tooltip notes, Critical popover details, Key micro-card highlights."
         }
       }
     }
@@ -501,47 +575,58 @@
   "layout": {
     "4xs": {
       "$type": "number",
-      "$value": "{spacing.half}"
+      "$value": "{spacing.half}",
+      "$description": "Micro spacing for tightest element relationships. Use for minimal gaps between inline elements or compact icon-text pairs."
     },
     "3xs": {
       "$type": "number",
-      "$value": "{spacing.1}"
+      "$value": "{spacing.1}",
+      "$description": "Extra-small spacing for very tight layouts. Use for compact button groups, dense form fields, or tight list items."
     },
     "2xs": {
       "$type": "number",
-      "$value": "{spacing.1-half}"
+      "$value": "{spacing.1-half}",
+      "$description": "Small spacing for compact component internals. Use for padding within small components or gaps in dense layouts."
     },
     "xs": {
       "$type": "number",
-      "$value": "{spacing.2}"
+      "$value": "{spacing.2}",
+      "$description": "Base small spacing for general compact layouts. Use for standard component padding or gaps between related elements."
     },
     "sm": {
       "$type": "number",
-      "$value": "{spacing.3}"
+      "$value": "{spacing.3}",
+      "$description": "Standard spacing for typical component layouts. Use for card padding, form field gaps, or list item spacing."
     },
     "md": {
       "$type": "number",
-      "$value": "{spacing.4}"
+      "$value": "{spacing.4}",
+      "$description": "Medium spacing for comfortable content separation. Use for section padding, content block gaps, or modal padding."
     },
     "lg": {
       "$type": "number",
-      "$value": "{spacing.5}"
+      "$value": "{spacing.5}",
+      "$description": "Large spacing for clear visual separation. Use for major section breaks, page margins, or prominent content gaps."
     },
     "xl": {
       "$type": "number",
-      "$value": "{spacing.6}"
+      "$value": "{spacing.6}",
+      "$description": "Extra-large spacing for significant content divisions. Use for page-level sections, hero areas, or feature separations."
     },
     "2xl": {
       "$type": "number",
-      "$value": "{spacing.8}"
+      "$value": "{spacing.8}",
+      "$description": "Generous spacing for prominent layout divisions. Use for major page sections or landing page content blocks."
     },
     "3xl": {
       "$type": "number",
-      "$value": "{spacing.10}"
+      "$value": "{spacing.10}",
+      "$description": "Very large spacing for dramatic content separation. Use for hero sections, major feature areas, or landing page divisions."
     },
     "4xl": {
       "$type": "number",
-      "$value": "{spacing.20}"
+      "$value": "{spacing.20}",
+      "$description": "Maximum spacing for extreme visual separation. Use for full-page sections, massive hero areas, or dramatic visual breaks."
     }
   }
 }

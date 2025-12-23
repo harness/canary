@@ -27,6 +27,12 @@ export default {
         },
         '&:where(.cn-drawer-content-lg)': {
           width: 'var(--cn-drawer-lg)'
+        },
+        '&:where(.cn-drawer-content-xl)': {
+          width: 'var(--cn-drawer-xl)'
+        },
+        '&:where(.cn-drawer-content-2xl)': {
+          width: 'var(--cn-drawer-2xl)'
         }
       },
 
@@ -47,6 +53,12 @@ export default {
         },
         '&:where(.cn-drawer-content-lg)': {
           height: 'var(--cn-drawer-lg)'
+        },
+        '&:where(.cn-drawer-content-xl)': {
+          height: 'var(--cn-drawer-xl)'
+        },
+        '&:where(.cn-drawer-content-2xl)': {
+          height: 'var(--cn-drawer-2xl)'
         }
       },
 

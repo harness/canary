@@ -17,7 +17,7 @@ describe('Meter', () => {
       expect(meter).toBeInTheDocument()
       // Should render 11 empty bars when data is empty
       const bars = container.querySelectorAll('.cn-meter-bar')
-      expect(bars).toHaveLength(11)
+      expect(bars).toHaveLength(10)
     })
 
     test('should render with data array', () => {
@@ -29,7 +29,7 @@ describe('Meter', () => {
       const meter = container.querySelector('.cn-meter')
       expect(meter).toBeInTheDocument()
       const bars = container.querySelectorAll('.cn-meter-bar')
-      expect(bars).toHaveLength(11)
+      expect(bars).toHaveLength(10)
     })
 
     test('should apply custom className', () => {
@@ -89,7 +89,7 @@ describe('Meter', () => {
       const data = [{ id: '1', state: MeterState.Success }]
       const { container } = render(<Meter data={data} />)
       const bars = container.querySelectorAll('.cn-meter-bar')
-      expect(bars).toHaveLength(11)
+      expect(bars).toHaveLength(10)
     })
 
     test('should render 11 bars when data length is 5', () => {
@@ -102,7 +102,7 @@ describe('Meter', () => {
       ]
       const { container } = render(<Meter data={data} />)
       const bars = container.querySelectorAll('.cn-meter-bar')
-      expect(bars).toHaveLength(11)
+      expect(bars).toHaveLength(10)
     })
 
     test('should render 11 bars when data length is 10', () => {
@@ -112,17 +112,17 @@ describe('Meter', () => {
       }))
       const { container } = render(<Meter data={data} />)
       const bars = container.querySelectorAll('.cn-meter-bar')
-      expect(bars).toHaveLength(11)
+      expect(bars).toHaveLength(10)
     })
 
-    test('should render 11 bars when data length is 11', () => {
-      const data = Array.from({ length: 11 }, (_, i) => ({
+    test('should render 10 bars when data length is 10', () => {
+      const data = Array.from({ length: 10 }, (_, i) => ({
         id: `${i}`,
         state: MeterState.Success
       }))
       const { container } = render(<Meter data={data} />)
       const bars = container.querySelectorAll('.cn-meter-bar')
-      expect(bars).toHaveLength(11)
+      expect(bars).toHaveLength(10)
     })
   })
 
@@ -137,7 +137,7 @@ describe('Meter', () => {
       const bars = container.querySelectorAll('.cn-meter-bar')
 
       // Check that we have 11 total bars
-      expect(bars).toHaveLength(11)
+      expect(bars).toHaveLength(10)
 
       // Last 3 bars should have the correct colors for Success, Error, Warning
       const lastThreeBars = Array.from(bars).slice(-3)
@@ -155,7 +155,7 @@ describe('Meter', () => {
       ]
       const { container } = render(<Meter data={data} />)
       const bars = container.querySelectorAll('.cn-meter-bar')
-      expect(bars).toHaveLength(11)
+      expect(bars).toHaveLength(10)
     })
   })
 
@@ -164,7 +164,7 @@ describe('Meter', () => {
       const data = [{ state: MeterState.Success }, { state: MeterState.Error }]
       const { container } = render(<Meter data={data} />)
       const bars = container.querySelectorAll('.cn-meter-bar')
-      expect(bars).toHaveLength(11)
+      expect(bars).toHaveLength(10)
     })
 
     test('should render mixed data with and without ids', () => {
@@ -175,7 +175,7 @@ describe('Meter', () => {
       ]
       const { container } = render(<Meter data={data} />)
       const bars = container.querySelectorAll('.cn-meter-bar')
-      expect(bars).toHaveLength(11)
+      expect(bars).toHaveLength(10)
     })
   })
 
@@ -201,7 +201,7 @@ describe('Meter', () => {
     test('should render all 11 bars', () => {
       const { container } = render(<Meter />)
       const bars = container.querySelectorAll('.cn-meter-bar')
-      expect(bars).toHaveLength(11)
+      expect(bars).toHaveLength(10)
     })
   })
 
@@ -222,7 +222,7 @@ describe('Meter', () => {
       const { container } = render(<Meter />)
       const meter = container.querySelector('.cn-meter')
       const bars = meter?.querySelectorAll('.cn-meter-bar')
-      expect(bars).toHaveLength(11)
+      expect(bars).toHaveLength(10)
     })
 
     test('should be a div element', () => {
@@ -236,17 +236,17 @@ describe('Meter', () => {
     test('should handle undefined data', () => {
       const { container } = render(<Meter data={undefined} />)
       const bars = container.querySelectorAll('.cn-meter-bar')
-      expect(bars).toHaveLength(11)
+      expect(bars).toHaveLength(10)
     })
 
-    test('should handle exactly 11 data items', () => {
-      const data = Array.from({ length: 11 }, (_, i) => ({
+    test('should handle exactly 10 data items', () => {
+      const data = Array.from({ length: 10 }, (_, i) => ({
         id: `${i}`,
         state: i % 2 === 0 ? MeterState.Success : MeterState.Error
       }))
       const { container } = render(<Meter data={data} />)
       const bars = container.querySelectorAll('.cn-meter-bar')
-      expect(bars).toHaveLength(11)
+      expect(bars).toHaveLength(10)
     })
 
     test('should handle empty string className', () => {
@@ -268,7 +268,7 @@ describe('Meter', () => {
       const { rerender, container } = render(<Meter data={[{ id: '1', state: MeterState.Success }]} />)
 
       let bars = container.querySelectorAll('.cn-meter-bar')
-      expect(bars).toHaveLength(11)
+      expect(bars).toHaveLength(10)
 
       rerender(
         <Meter
@@ -280,7 +280,7 @@ describe('Meter', () => {
       )
 
       bars = container.querySelectorAll('.cn-meter-bar')
-      expect(bars).toHaveLength(11)
+      expect(bars).toHaveLength(10)
     })
 
     test('should update when className changes', () => {
@@ -300,7 +300,7 @@ describe('Meter', () => {
       const { rerender, container } = render(<Meter data={[]} />)
 
       let bars = container.querySelectorAll('.cn-meter-bar')
-      expect(bars).toHaveLength(11)
+      expect(bars).toHaveLength(10)
 
       const newData = Array.from({ length: 5 }, (_, i) => ({
         id: `${i}`,
@@ -309,7 +309,7 @@ describe('Meter', () => {
       rerender(<Meter data={newData} />)
 
       bars = container.querySelectorAll('.cn-meter-bar')
-      expect(bars).toHaveLength(11)
+      expect(bars).toHaveLength(10)
     })
   })
 
@@ -330,7 +330,7 @@ describe('Meter', () => {
       expect(meter).toHaveClass('custom-styling')
 
       const bars = container.querySelectorAll('.cn-meter-bar')
-      expect(bars).toHaveLength(11)
+      expect(bars).toHaveLength(10)
     })
 
     test('should maintain bar order with different states', () => {
@@ -343,7 +343,7 @@ describe('Meter', () => {
       const bars = container.querySelectorAll('.cn-meter-bar')
 
       // Bars should maintain order: empty bars first, then data bars
-      expect(bars).toHaveLength(11)
+      expect(bars).toHaveLength(10)
 
       // Last 3 bars should be the data in order
       const lastThreeBars = Array.from(bars).slice(-3)
@@ -359,7 +359,7 @@ describe('Meter', () => {
         const data = [{ id: 'single', state }]
         const { container } = render(<Meter data={data} />)
         const bars = container.querySelectorAll('.cn-meter-bar')
-        expect(bars).toHaveLength(11)
+        expect(bars).toHaveLength(10)
       })
     })
   })
@@ -384,7 +384,7 @@ describe('Meter', () => {
       const { container } = render(<Meter />)
       const bars = container.querySelectorAll('.cn-meter-bar')
       // Default empty array should create 11 empty bars
-      expect(bars).toHaveLength(11)
+      expect(bars).toHaveLength(10)
       // All bars should have empty state color
       bars.forEach(bar => {
         expect(bar).toHaveClass('bg-cn-gray-secondary')

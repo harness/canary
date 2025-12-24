@@ -179,7 +179,11 @@ ul.top-level summary svg {
 /* Search override */
 
 [aria-label="Search"] {
-  @apply bg-cn-3 border border-cn-3 rounded-cn-3 h-[36px] !important;
+  @apply bg-cn-3 border border-cn-3 rounded-cn-3 !important;
+}
+
+button[aria-label="Search"] {
+  @apply h-[36px] !important;
 }
 
 [aria-label="Search"] > kbd:first-of-type {

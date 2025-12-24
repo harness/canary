@@ -32,7 +32,7 @@ const stateToBgColor: { [key in MeterState]: string } = {
 }
 
 function Meter({ data = [], className }: IMeterProps) {
-  const emptyBarsCount = 11 - data.length
+  const emptyBarsCount = 10 - data.length
   const bars: IMeterProps['data'] = [...Array(emptyBarsCount).fill({ state: MeterState.Empty }), ...data]
 
   return (

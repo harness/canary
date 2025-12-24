@@ -19,15 +19,17 @@ export const defaultParallelContainerConfig = {
   nodeGap: 36
 }
 
+export type PortComponentType = (props: {
+  side: 'left' | 'right'
+  id?: string
+  adjustment?: number
+  layout?: LayoutConfig
+}) => JSX.Element
+
 interface ContainerNodeContextProps {
   serialContainerConfig: SerialContainerConfigType
   parallelContainerConfig: ParallelContainerConfigType
-  portComponent?: (props: {
-    side: 'left' | 'right'
-    id?: string
-    adjustment?: number
-    layout?: LayoutConfig
-  }) => JSX.Element
+  portComponent?: (props: { nodeType: string; position: 'before' | 'after'; collapsed?: boolean }) => PortComponentType
   layout: LayoutConfig
 }
 
@@ -40,12 +42,7 @@ const ContainerNodeContext = createContext<ContainerNodeContextProps>({
 export interface ContainerNodeProviderProps {
   serialContainerConfig?: Partial<SerialContainerConfigType>
   parallelContainerConfig?: Partial<ParallelContainerConfigType>
-  portComponent?: (props: {
-    side: 'left' | 'right'
-    id?: string
-    adjustment?: number
-    layout?: LayoutConfig
-  }) => JSX.Element
+  portComponent?: (props: { nodeType: string; position: 'before' | 'after'; collapsed?: boolean }) => PortComponentType
   layout?: LayoutConfig
 }
 

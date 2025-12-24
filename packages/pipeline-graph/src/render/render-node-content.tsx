@@ -17,9 +17,10 @@ export function RenderNodeContent(
     isFirst?: boolean
     isLast?: boolean
     parentNodeType?: ContainerNodeType
+    portPosition?: number
   } & NodeProps
 ) {
-  const { node, children, collapsed, setCollapsed, isFirst, isLast, parentNodeType, mode } = props
+  const { node, children, collapsed, setCollapsed, isFirst, isLast, parentNodeType, mode, portPosition } = props
   const { nodes } = useGraphContext()
 
   const nodeContent = nodes[node.type]
@@ -35,6 +36,7 @@ export function RenderNodeContent(
           isLast={isLast}
           parentNodeType={parentNodeType}
           mode={mode}
+          portPosition={portPosition}
         >
           {children}
         </nodeContent.component>
@@ -49,6 +51,7 @@ export function RenderNodeContent(
           isLast={isLast}
           parentNodeType={parentNodeType}
           mode={mode}
+          portPosition={portPosition}
         >
           {children}
         </nodeContent.component>
@@ -63,6 +66,7 @@ export function RenderNodeContent(
           isLast={isLast}
           parentNodeType={parentNodeType}
           mode={mode}
+          portPosition={portPosition}
         >
           {children}
         </nodeContent.component>

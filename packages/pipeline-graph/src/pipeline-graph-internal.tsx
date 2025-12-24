@@ -8,6 +8,7 @@ import { clear, CreateSVGPathType, getPortsConnectionPath } from './render/rende
 import { LayoutConfig } from './types/layout'
 import { AnyContainerNodeType } from './types/nodes'
 import { AnyNodeInternal } from './types/nodes-internal'
+import { GetPortSvgFuncType } from './types/port-types'
 import { connectPorts } from './utils/connects-utils'
 import { getFlexAlign } from './utils/layout-utils'
 import { addPaths } from './utils/path-utils'
@@ -25,14 +26,15 @@ export interface PipelineGraphInternalProps {
     serialNodeOffset?: number
   }
   layout?: LayoutConfig
+  getPort?: GetPortSvgFuncType
 }
 
 export function PipelineGraphInternal(props: PipelineGraphInternalProps) {
-  const { initialized, nodes: nodesBank, rerenderConnections, setInitialized } = useGraphContext()
+  const { initialized, nodes: nodesBank, rerenderConnections, setInitialized, isCollapsed } = useGraphContext()
   const { setCanvasTransform, canvasTransformRef, config: canvasConfig, setTargetEl } = useCanvasContext()
   const { serialContainerConfig } = useContainerNodeContext()
 
-  const { data, config = {}, customCreateSVGPath, edgesConfig, layout = { type: 'center' } } = props
+  const { data, config = {}, customCreateSVGPath, edgesConfig, layout = { type: 'center' }, getPort } = props
   const graphSizeRef = useRef<{ h: number; w: number } | undefined>()
 
   const svgGroupRef = useRef<SVGAElement | null>(null)
@@ -84,7 +86,9 @@ export function PipelineGraphInternal(props: PipelineGraphInternalProps) {
             pipelineGraphRoot: rootContainerEl,
             connection: portPair,
             customCreateSVGPath,
-            edgesConfig
+            edgesConfig,
+            isCollapsed,
+            getPortSvg: getPort
           })
           allPaths.level1.push(levelPaths.level1)
           allPaths.level2.push(levelPaths.level2)

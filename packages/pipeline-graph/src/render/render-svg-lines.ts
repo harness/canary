@@ -1,4 +1,5 @@
 import { AnyNodeInternal } from '..'
+import { GetPortSvgFuncType } from '../types/port-types'
 
 export type CreateSVGPathType = typeof createSVGPath
 
@@ -11,7 +12,9 @@ export function getPortsConnectionPath({
   pipelineGraphRoot,
   connection,
   customCreateSVGPath,
-  edgesConfig = {}
+  edgesConfig = {},
+  isCollapsed,
+  getPortSvg = getPortSvgDefault
 }: {
   parentEl: HTMLDivElement
   pipelineGraphRoot: HTMLDivElement
@@ -32,6 +35,8 @@ export function getPortsConnectionPath({
     parallelNodeOffset?: number
     serialNodeOffset?: number
   }
+  isCollapsed: (path: string) => boolean
+  getPortSvg?: GetPortSvgFuncType
 }) {
   const edgesConfigWithDefaults = {
     radius: 10,
@@ -61,7 +66,9 @@ export function getPortsConnectionPath({
     parallel,
     serial,
     targetNode,
-    edgesConfig: edgesConfigWithDefaults
+    edgesConfig: edgesConfigWithDefaults,
+    isCollapsed,
+    getPortSvg
   })
 
   return customCreateSVGPath
@@ -104,12 +111,15 @@ function getVArcConfig(direction: 'down' | 'up', r: number) {
 function getPath({
   startX,
   startY,
-  endX,
+  endX: endXFromProp,
   endY,
   parallel,
   serial,
   edgesConfig,
-  portAdjustment
+  portAdjustment,
+  targetNode,
+  isCollapsed,
+  getPortSvg
 }: {
   startX: number
   startY: number
@@ -128,8 +138,28 @@ function getPath({
     parallelNodeOffset: number
     serialNodeOffset: number
   }
+  isCollapsed: (path: string) => boolean
+  getPortSvg: GetPortSvgFuncType
 }) {
   let path = ''
+
+  const sourcePort = getPortSvg?.({
+    collapsed: isCollapsed(targetNode?.path ?? ''),
+    position: 'source',
+    targetNode,
+    x: startX + portAdjustment,
+    y: startY + portAdjustment
+  })
+
+  const targetPort = getPortSvg?.({
+    collapsed: isCollapsed(targetNode?.path ?? ''),
+    position: 'target',
+    targetNode,
+    x: endXFromProp + portAdjustment,
+    y: endY + portAdjustment
+  })
+
+  const endX = endXFromProp - targetPort.rightGap
 
   // NOTE: approximate line length (arc is not included in calc)
   let pathLength = 0
@@ -183,16 +213,26 @@ function getPath({
     pathLength = Math.abs(endX - startX) + Math.abs(endY - startY)
   }
 
-  return { path, pathLength }
+  return { path, pathLength, sourcePort, targetPort }
 }
 
 function createSVGPath({
   path,
+  sourcePort,
+  targetPort,
   id,
   pathLength,
   targetNode
 }: {
   path: string
+  sourcePort: {
+    portSvg: string
+    rightGap: number
+  }
+  targetPort: {
+    portSvg: string
+    rightGap: number
+  }
   id: string
   pathLength: number
   targetNode?: AnyNodeInternal
@@ -201,12 +241,52 @@ function createSVGPath({
   level2: string
 } {
   const pathStyle = targetNode?.data.state === 'executed' ? ` stroke="#43b5e6"` : ` stroke="#5D5B65"`
-  const staticPath = `<path d="${path}" id="${id}" fill="none" ${pathStyle} />`
+  let staticPath = `<path d="${path}" id="${id}" fill="none" ${pathStyle} />`
 
   let animationPath: string = ''
   if (targetNode?.data.state === 'executing') {
     animationPath = `<path d="${path}" id="${id}" fill="none" stroke="#43b5e6" class="PipelineGraph-AnimatePath" stroke-dasharray="${pathLength}" stroke-dashoffset="${pathLength}" />`
   }
 
+  if (sourcePort.portSvg) {
+    staticPath += sourcePort.portSvg
+  }
+  if (targetPort.portSvg) {
+    staticPath += targetPort.portSvg
+  }
+
   return { level1: staticPath, level2: animationPath }
+}
+
+const getPortSvgDefault: GetPortSvgFuncType = props => {
+  const { collapsed, position, targetNode, x, y } = props
+
+  const circleSvg = `<circle cx="${x}" cy="${y}" r="5" fill="white" />`
+  const arrowSize = 4
+
+  if (position === 'source') {
+    return {
+      portSvg: circleSvg,
+      rightGap: 0
+    }
+  } else if (position === 'target') {
+    const isArrow = collapsed || targetNode?.type === 'step' || targetNode?.type === 'end'
+    const rightGap = 4
+    if (isArrow) {
+      return {
+        portSvg: `<polyline points="${x - arrowSize - rightGap} ${y - arrowSize} ${x + 0 - rightGap} ${y + 0} ${x - arrowSize - rightGap} ${y + arrowSize}" stroke="white" fill="none"></polyline>`,
+        rightGap
+      }
+    } else {
+      return {
+        portSvg: circleSvg,
+        rightGap: 4
+      }
+    }
+  }
+
+  return {
+    portSvg: ``,
+    rightGap: 0
+  }
 }

@@ -1,6 +1,5 @@
 import { useEffect, useMemo, useState } from 'react'
 
-import { PipelineNodesComponents } from '@/components'
 import { parse } from 'yaml'
 
 import { AnyContainerNodeType, CanvasProvider, PipelineGraph } from '@harnessio/pipeline-graph'
@@ -57,7 +56,6 @@ export const PipelineStudioGraphViewSteps = ({ data: _data }: { data: AnyContain
             parallelNodeOffset: 10,
             serialNodeOffset: 10
           }}
-          portComponent={PipelineNodesComponents.Port}
           serialContainerConfig={serialContainerConfig}
           parallelContainerConfig={parallelContainerConfig}
           data={stepsData}

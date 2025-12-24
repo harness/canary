@@ -26,7 +26,8 @@ export function PipelineGraph(props: PipelineGraphProps) {
     customCreateSVGPath,
     edgesConfig,
     portComponent,
-    layout
+    layout,
+    getPort
   } = props
 
   return (
@@ -44,6 +45,7 @@ export function PipelineGraph(props: PipelineGraphProps) {
             customCreateSVGPath={customCreateSVGPath}
             edgesConfig={edgesConfig}
             layout={layout}
+            getPort={getPort}
           />
         </Canvas>
       </ContainerNodeProvider>

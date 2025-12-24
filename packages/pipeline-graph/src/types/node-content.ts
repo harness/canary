@@ -14,6 +14,7 @@ export interface LeafNodeContent<T = any> {
       isFirst?: boolean
       isLast?: boolean
       parentNodeType?: ContainerNodeType
+      portPosition?: number
     } & NodeProps
   ) => JSX.Element
 }
@@ -30,6 +31,7 @@ export interface SerialNodeContent<T = any> {
       isFirst?: boolean
       isLast?: boolean
       parentNodeType?: ContainerNodeType
+      portPosition?: number
     } & NodeProps
   ) => JSX.Element
 }
@@ -46,6 +48,7 @@ export interface ParallelNodeContent<T = any> {
       isFirst?: boolean
       isLast?: boolean
       parentNodeType?: ContainerNodeType
+      portPosition?: number
     } & NodeProps
   ) => JSX.Element
 }

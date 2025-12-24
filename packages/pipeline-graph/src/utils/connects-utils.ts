@@ -44,8 +44,7 @@ export function connectPorts(
           source: `right-port-${node.path}`,
           target: parent.right,
           serial: { position: 'right' },
-          // TODO
-          targetNode: node?.data.state === 'executed' ? node : undefined // TODO
+          targetNode: parent.node
         })
       }
     } else if (isParallel) {
@@ -60,8 +59,7 @@ export function connectPorts(
         source: nodeRightPort,
         target: parent.right,
         parallel: { position: 'right' },
-        // TODO
-        targetNode: node?.data.state === 'executed' ? node : undefined // TODO
+        targetNode: parent.node
       })
     }
 

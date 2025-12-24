@@ -64,6 +64,18 @@ export default function SerialNodeContainer(props: ContainerNodeProps<SerialNode
     }
   }
 
+  const customBeforePortComponent = useMemo(() => {
+    return typeof portComponent === 'function'
+      ? portComponent({ nodeType: node.type, position: 'before', collapsed })
+      : portComponent
+  }, [collapsed, node.type, portComponent])
+
+  const customAfterPortComponent = useMemo(() => {
+    return typeof portComponent === 'function'
+      ? portComponent({ nodeType: node.type, position: 'after', collapsed })
+      : portComponent
+  }, [collapsed, node.type, portComponent])
+
   return (
     <div
       className={'node serial-node'}
@@ -84,15 +96,15 @@ export default function SerialNodeContainer(props: ContainerNodeProps<SerialNode
       }}
     >
       {!node.config?.hideLeftPort &&
-        (portComponent ? (
-          portComponent({ side: 'left', id: `left-port-${node.path}`, adjustment: portAdjustment, layout })
+        (customBeforePortComponent ? (
+          customBeforePortComponent({ side: 'left', id: `left-port-${node.path}`, adjustment: portAdjustment, layout })
         ) : (
           <Port side="left" id={`left-port-${node.path}`} adjustment={portAdjustment} layout={layout} />
         ))}
 
       {!node.config?.hideRightPort &&
-        (portComponent ? (
-          portComponent({
+        (customAfterPortComponent ? (
+          customAfterPortComponent({
             side: 'right',
             id: `right-port-${node.path}`,
             adjustment: portAdjustment,
@@ -110,6 +122,7 @@ export default function SerialNodeContainer(props: ContainerNodeProps<SerialNode
         isLast={isLast}
         parentNodeType={parentNodeType}
         mode={mode}
+        portPosition={portAdjustment}
       >
         {!collapsed && node.children.length > 0 ? (
           <div

@@ -8,8 +8,7 @@ export default function Port(props: {
 }) {
   const { adjustment = 0, layout } = props
 
-  const lineWeight = 1
-  const r = 7
+  const r = 1
 
   let top: string
   if (layout.type === 'top' && typeof layout.portPosition === 'number') {
@@ -28,11 +27,7 @@ export default function Port(props: {
         [props.side === 'left' ? 'left' : 'right']: `-${r / 2}px`,
         top,
         width: `${r}px`,
-        height: `${r}px`,
-        background: '#121214',
-        border: `${lineWeight}px solid #6D6B75`,
-        borderRadius: '50%',
-        boxSizing: 'border-box'
+        height: `${r}px`
       }}
     ></div>
   )

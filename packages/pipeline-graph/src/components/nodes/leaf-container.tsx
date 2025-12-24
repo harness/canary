@@ -1,3 +1,5 @@
+import { useMemo } from 'react'
+
 import { useContainerNodeContext } from '../../context/container-node-provider'
 import { RenderNodeContent } from '../../render/render-node-content'
 import { ContainerNodeProps } from '../../types/container-node'
@@ -25,6 +27,18 @@ export default function LeafNodeContainer(props: ContainerNodeProps<LeafNodeInte
       adjustment = 0
   }
 
+  const customBeforePortComponent = useMemo(() => {
+    return typeof portComponent === 'function'
+      ? portComponent({ nodeType: node.type, position: 'before' })
+      : portComponent
+  }, [node.type, portComponent])
+
+  const customAfterPortComponent = useMemo(() => {
+    return typeof portComponent === 'function'
+      ? portComponent({ nodeType: node.type, position: 'after' })
+      : portComponent
+  }, [node.type, portComponent])
+
   return (
     <div
       key={props.node.type + '-' + props.node.path}
@@ -41,20 +55,27 @@ export default function LeafNodeContainer(props: ContainerNodeProps<LeafNodeInte
       }}
     >
       {!node.config?.hideLeftPort &&
-        (portComponent ? (
-          portComponent({ side: 'left', id: `left-port-${node.path}`, layout, adjustment })
+        (customBeforePortComponent ? (
+          customBeforePortComponent({ side: 'left', id: `left-port-${node.path}`, layout, adjustment })
         ) : (
           <Port side="left" id={`left-port-${node.path}`} layout={layout} adjustment={adjustment} />
         ))}
 
       {!node.config?.hideRightPort &&
-        (portComponent ? (
-          portComponent({ side: 'right', id: `right-port-${node.path}`, layout, adjustment })
+        (customAfterPortComponent ? (
+          customAfterPortComponent({ side: 'right', id: `right-port-${node.path}`, layout, adjustment })
         ) : (
           <Port side="right" id={`right-port-${node.path}`} layout={layout} adjustment={adjustment} />
         ))}
 
-      <RenderNodeContent node={node} isFirst={isFirst} isLast={isLast} parentNodeType={parentNodeType} mode={mode} />
+      <RenderNodeContent
+        node={node}
+        isFirst={isFirst}
+        isLast={isLast}
+        parentNodeType={parentNodeType}
+        mode={mode}
+        portPosition={adjustment}
+      />
     </div>
   )
 }

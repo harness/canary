@@ -2,6 +2,8 @@ export * from './components/canvas/canvas'
 
 export * from './pipeline-graph'
 export * from './types/nodes'
+export * from './types/port-types'
+
 export * from './types/nodes-internal'
 export { type LayoutConfig, type CenterLayout, type HarnessLayout, type TopLayout } from './types/layout'
 

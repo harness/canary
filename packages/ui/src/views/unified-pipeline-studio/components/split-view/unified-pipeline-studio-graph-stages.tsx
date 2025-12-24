@@ -1,7 +1,5 @@
 import { useMemo } from 'react'
 
-import { PipelineNodesComponents } from '@/components'
-
 import { AnyContainerNodeType, CanvasProvider, PipelineGraph } from '@harnessio/pipeline-graph'
 
 import { CanvasControls } from '../graph-implementation/canvas/canvas-controls'
@@ -31,7 +29,6 @@ export const PipelineStudioGraphViewStages = ({ data }: { data: AnyContainerNode
             parallelNodeOffset: 10,
             serialNodeOffset: 10
           }}
-          portComponent={PipelineNodesComponents.Port}
           serialContainerConfig={serialContainerConfig}
           parallelContainerConfig={parallelContainerConfig}
           data={data}

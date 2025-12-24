@@ -4,7 +4,7 @@
 .prettierrc.yml abhinav.rastogi@harness.io kevin.nagurski@harness.io vardan.bansal@harness.io
 
 # Common ownership for shared config files
-/packages/*/package.json abhinav.rastogi@harness.io kevin.nagurski@harness.io vardan.bansal@harness.io
+/packages/*/package.json abhinav.rastogi@harness.io kevin.nagurski@harness.io vardan.bansal@harness.io srdjan.arsic@harness.io pranesh.g@harness.io shaurya.kalia@harness.io 
 /apps/*/package.json abhinav.rastogi@harness.io kevin.nagurski@harness.io vardan.bansal@harness.io
 /packages/*/vite.config.ts abhinav.rastogi@harness.io kevin.nagurski@harness.io vardan.bansal@harness.io
 /apps/*/vite.config.ts abhinav.rastogi@harness.io kevin.nagurski@harness.io vardan.bansal@harness.io

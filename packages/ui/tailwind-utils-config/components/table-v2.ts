@@ -100,12 +100,25 @@ export default {
         '@apply [&_.cn-table-v2-cell-clickable-block]:no-underline': ''
       },
 
-      '&:where([data-checked=true])': {
+      '&:where([data-checked=true]) td': {
         backgroundColor: 'var(--cn-state-selected)'
       },
 
       '&-expanded': {
         backgroundColor: 'var(--cn-state-selected)'
+      },
+
+      '&.cn-table-row-active': {
+        '@apply border-cn-brand': '',
+        borderWidth: '1px',
+
+        '.cn-table-v2-cell': {
+          '@apply bg-cn-brand-secondary': ''
+        }
+      },
+
+      '&:has(+ .cn-table-row-active)': {
+        '@apply border-b-0': ''
       }
     },
 

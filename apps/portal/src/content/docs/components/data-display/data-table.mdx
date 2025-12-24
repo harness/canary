@@ -869,6 +869,92 @@ function TransparentTable() {
 - Combine with `size="compact"` for a more condensed appearance in cards
 - Ideal for dashboard widgets and summary tables
 
+## Adding active className to table row
+
+The `getRowClassName` prop allows you to conditionally apply CSS classes to table rows based on row data. This is useful for highlighting specific rows, such as marking active items or selected states.
+
+<DocsPage.ComponentExample
+  client:only
+  code={`() => {
+  const users = [
+    { id: 1, name: 'John Doe', email: 'john@example.com', status: 'active', isActive: true },
+    { id: 2, name: 'Jane Smith', email: 'jane@example.com', status: 'active', isActive: false },
+    { id: 3, name: 'Bob Johnson', email: 'bob@example.com', status: 'inactive', isActive: false },
+    { id: 4, name: 'Alice Williams', email: 'alice@example.com', status: 'active', isActive: true }
+  ]
+
+const columns = [
+{
+accessorKey: 'name',
+header: 'Name'
+},
+{
+accessorKey: 'email',
+header: 'Email'
+},
+{
+accessorKey: 'status',
+header: 'Status',
+cell: (info) => (
+
+<StatusBadge
+  theme={info.getValue() === "active" ? "success" : undefined}
+  size="sm"
+  variant="secondary"
+>
+  {info.getValue()}
+</StatusBadge>
+) } ]
+
+return (
+
+<DataTable
+  columns={columns}
+  data={users}
+  getRowId={(row) => row.id.toString()}
+  getRowClassName={(row) => {
+    return row.original.isActive ? "cn-table-row-active" : undefined;
+  }}
+  size="compact"
+/>
+) }`} />
+
+### Usage
+
+```tsx
+import { DataTable } from "@harnessio/ui/components";
+
+function TableWithActiveRows() {
+  const columns = [
+    { accessorKey: "name", header: "Name" },
+    { accessorKey: "email", header: "Email" },
+  ];
+
+  const data = [
+    { id: 1, name: "John Doe", email: "john@example.com", isActive: true },
+    { id: 2, name: "Jane Smith", email: "jane@example.com", isActive: false },
+  ];
+
+  return (
+    <DataTable
+      columns={columns}
+      data={data}
+      getRowId={(row) => row.id}
+      getRowClassName={(row) => {
+        return row.original.isActive ? "cn-table-row-active" : undefined;
+      }}
+    />
+  );
+}
+```
+
+### Key Points
+
+- The `getRowClassName` function receives a `Row<TData>` object from TanStack Table
+- Access row data via `row.original` to apply conditional logic
+- Return a string with class names or `undefined` for no custom styling
+- Use design system class names (e.g., `cn-table-row-active`) for consistent styling
+
 ## Examples
 
 ### Table with Custom Cell Rendering

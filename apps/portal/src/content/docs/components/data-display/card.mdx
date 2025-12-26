@@ -204,6 +204,12 @@ The root component for the card.
       required: false,
       value: "string",
     },
+    {
+      name: "wrapperClassname",
+      description: "Custom class name for the internal content wrapper div",
+      required: false,
+      value: "string",
+    },
   ]}
 />
 
@@ -223,6 +229,19 @@ The image component for the card.
 
 <DocsPage.PropsTable
   props={[
+    {
+      name: "src",
+      description: "The image source URL",
+      required: true,
+      value: "string",
+    },
+    {
+      name: "alt",
+      description:
+        "Alternative text for the image (important for accessibility)",
+      required: false,
+      value: "string",
+    },
     {
       name: "width",
       description: "Width of the image",

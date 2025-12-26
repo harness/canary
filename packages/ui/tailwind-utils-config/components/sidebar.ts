@@ -5,8 +5,10 @@ export default {
       flexDirection: 'column',
       height: 'var(--cn-sidebar-min-height)',
       width: 'var(--cn-sidebar-container-full-width)',
+      minHeight: 'var(--cn-sidebar-item-min-height)',
+      minWidth: 'var(--cn-sidebar-container-min-width)',
       backgroundColor: 'var(--cn-comp-sidebar-bg)',
-      padding: 'var(--cn-sidebar-container-pb) 0',
+      padding: 'var(--cn-sidebar-container-spacing) 0',
 
       '&-desktop': {
         top: '0px',
@@ -50,7 +52,7 @@ export default {
 
     '&-content': {
       height: '100%',
-      padding: '0 var(--cn-sidebar-container-px)',
+      padding: '0 var(--cn-sidebar-container-spacing)',
 
       '&-wrapper': {
         '@apply flex-1 overflow-hidden relative': ''
@@ -59,9 +61,10 @@ export default {
 
     '&-footer': {
       display: 'grid',
-      gap: 'var(--cn-sidebar-footer-gap)',
-      padding: 'var(--cn-sidebar-footer-pt) var(--cn-sidebar-container-px)',
-      paddingBottom: 'var(--cn-sidebar-footer-pb)'
+      gap: 'var(--cn-sidebar-group-gap)',
+      padding: 'var(--cn-sidebar-group-py) var(--cn-sidebar-container-spacing)',
+      marginTop: 'auto',
+      flexShrink: '0'
     },
 
     '&-separator': {
@@ -81,13 +84,49 @@ export default {
         justifySelf: 'start',
         overflow: 'hidden',
         userSelect: 'none',
+        font: 'var(--cn-micro-normal)',
+        color: 'var(--cn-text-3)',
         '@apply duration-150 transition-[max-height,padding,opacity,transform] ease-linear': ''
+      },
+
+      '&-items': {
+        display: 'grid',
+        gridTemplateColumns: 'repeat(2, 1fr)',
+        gap: 'var(--cn-spacing-1)',
+
+        '&-single-col': {
+          gridTemplateColumns: '1fr'
+        },
+
+        // Popover variant: use fixed width columns (230px per item)
+        // Default to 2 columns, can be overridden to 3 columns when content exceeds viewport
+        '&-popover': {
+          gridTemplateColumns: 'repeat(2, var(--cn-size-58))',
+          // Smooth transition when switching between 2 and 3 columns
+          transition: 'grid-template-columns 0.3s cubic-bezier(0.4, 0, 0.2, 1)'
+        },
+
+        // 3-column layout when content exceeds viewport
+        // Using both class and attribute selector for maximum compatibility
+        '&-popover-3col': {
+          gridTemplateColumns: 'repeat(3, var(--cn-size-58)) !important',
+          // Ensure transition applies when switching to 3 columns
+          transition: 'grid-template-columns 0.3s cubic-bezier(0.4, 0, 0.2, 1)'
+        },
+        '&-popover[data-columns="3"]': {
+          gridTemplateColumns: 'repeat(3, var(--cn-size-58)) !important',
+          // Ensure transition applies when switching to 3 columns
+          transition: 'grid-template-columns 0.3s cubic-bezier(0.4, 0, 0.2, 1)'
+        },
+
+        '&-single-col&-popover': {
+          gridTemplateColumns: 'var(--cn-size-58)'
+        }
       },
 
       '&-header': {
         display: 'flex',
-        minHeight: '28px',
-        padding: 'var(--cn-sidebar-item-py) var(--cn-sidebar-item-px)',
+        padding: '0px 0px var(--cn-spacing-2) calc(var(--cn-sidebar-item-container) + var(--cn-layout-sm))',
         alignItems: 'center',
         gap: 'var(--cn-sidebar-item-gap)',
         alignSelf: 'stretch',
@@ -110,9 +149,10 @@ export default {
 
     '&-submenu': {
       '&-group': {
-        padding: 'var(--cn-sidebar-sub-group-py) var(--cn-sidebar-sub-group-px)',
-        rowGap: 'var(--cn-sidebar-sub-group-gap)',
-        columnGap: 'var(--cn-sidebar-sub-group-gap-container)',
+        paddingLeft: 'var(--cn-layout-lg)',
+        paddingTop: 'var(--cn-sidebar-group-py)',
+        paddingBottom: 'var(--cn-sidebar-group-py)',
+        gap: 'var(--cn-spacing-2)',
         overflow: 'hidden',
 
         '&[data-state="open"]': {
@@ -128,8 +168,9 @@ export default {
         // Layout
         display: 'grid',
         alignItems: 'center',
-        minHeight: 'var(--cn-sidebar-sub-item-min)',
-        padding: 'var(--cn-sidebar-sub-item-py) var(--cn-sidebar-sub-item-px)',
+        minWidth: 'var(--cn-sidebar-item-min-width)',
+        padding: 'var(--cn-spacing-2)',
+        paddingLeft: 'var(--cn-layout-sm)',
         borderRadius: 'var(--cn-sidebar-item-radius)',
         outline: 'none',
 
@@ -142,7 +183,7 @@ export default {
         '&.active': {
           background: 'var(--cn-comp-sidebar-item-selected)',
           '.cn-sidebar-submenu-item-content': {
-            color: 'var(--cn-sidebar-text-hover)'
+            color: 'var(--cn-comp-sidebar-item-text-hover)'
           }
         },
 
@@ -187,7 +228,7 @@ export default {
 
       '&-grip-handle': {
         position: 'absolute',
-        left: '0',
+        left: '2px',
         top: '0',
         bottom: '0',
         width: 'var(--cn-icon-size-2xs)',
@@ -232,6 +273,14 @@ export default {
             },
             '.cn-sidebar-item-grip-handle': {
               opacity: '1'
+            },
+            // Expand icon (nav-arrow-right) color on hover - match action-button
+            '.cn-sidebar-item-content-right-element': {
+              color: 'var(--cn-text-1)',
+              '& svg, & path': {
+                color: 'var(--cn-text-1)',
+                fill: 'var(--cn-text-1)'
+              }
             }
           },
 
@@ -247,7 +296,17 @@ export default {
               opacity: '1'
             },
             '.cn-sidebar-item-active-indicator': {
-              backgroundColor: 'var(--cn-set-brand-primary-bg)'
+              backgroundColor: 'var(--cn-set-brand-primary-bg)',
+              height: '12px',
+              width: '2px'
+            },
+            // Expand icon (nav-arrow-right) color on active - match action-button
+            '.cn-sidebar-item-content-right-element': {
+              color: 'var(--cn-text-2)',
+              '& svg, & path': {
+                color: 'var(--cn-text-2)',
+                fill: 'var(--cn-text-2)'
+              }
             },
             '&:hover, &:focus-within': {
               '.cn-sidebar-item-grip-handle': {
@@ -264,14 +323,15 @@ export default {
       },
 
       '&-content': {
-        rowGap: 'var(--cn-spacing-1)',
-        minHeight: 'var(--cn-sidebar-item-min)',
-        columnGap: 'var(--cn-sidebar-item-gap)',
+        minHeight: 'var(--cn-sidebar-item-min-height)',
+        minWidth: 'var(--cn-sidebar-item-min-width)',
+        gap: 'var(--cn-sidebar-item-gap)',
         justifyItems: 'start',
         alignItems: 'center',
         gridTemplateColumns: 'var(--cn-icon-size-sm) 1fr',
         gridTemplateAreas: '"icon title"',
-        padding: 'var(--cn-sidebar-item-py) var(--cn-sidebar-item-px)',
+        padding: 'var(--cn-sidebar-item-container)',
+        paddingLeft: 'calc(var(--cn-sidebar-item-container) + var(--cn-layout-sm))',
         borderRadius: 'var(--cn-sidebar-item-radius)',
         '@apply duration-150 transition-[padding,row-gap,column-gap] ease-linear': '',
 
@@ -291,7 +351,7 @@ export default {
             "icon description"
           `,
           gridTemplateColumns: 'var(--cn-icon-size-lg) 1fr',
-          paddingBlock: 'var(--cn-sidebar-item-py)',
+          paddingBlock: 'var(--cn-sidebar-item-container)',
 
           '&:has(.cn-sidebar-item-content-action-buttons)': {
             gridTemplateAreas: `
@@ -318,7 +378,7 @@ export default {
             "icon description elem"
           `,
           gridTemplateColumns: 'var(--cn-avatar-size-lg) 1fr',
-          paddingBlock: 'var(--cn-sidebar-item-py)',
+          paddingBlock: 'var(--cn-sidebar-item-container)',
 
           '&:has(.cn-sidebar-item-content-action-buttons)': {
             gridTemplateAreas: `
@@ -345,6 +405,10 @@ export default {
                 },
               */
 
+        '&-icon': {
+          gridArea: 'icon'
+        },
+
         '&-title': {
           maxWidth: '100%',
           gridArea: 'title',
@@ -370,7 +434,17 @@ export default {
         },
 
         '&-right-element': {
-          gridArea: 'elem'
+          gridArea: 'elem',
+          display: 'grid',
+          placeContent: 'center',
+          width: 'var(--cn-size-7)',
+          height: 'var(--cn-size-7)',
+          color: 'var(--cn-text-2)',
+          justifyContent: 'flex-end',
+          '& svg, & path': {
+            color: 'var(--cn-text-2)',
+            fill: 'var(--cn-text-2)'
+          }
         },
 
         '&-action-buttons': {
@@ -425,7 +499,7 @@ export default {
       '&-skeleton': {
         display: 'flex',
         alignItems: 'center',
-        padding: 'var(--cn-sidebar-item-py) var(--cn-sidebar-item-px)',
+        padding: 'var(--cn-sidebar-item-container)',
         columnGap: 'var(--cn-sidebar-item-gap)',
 
         '&-icon, &-text': {
@@ -441,7 +515,7 @@ export default {
         },
 
         '&-text': {
-          width: '100%',
+          // width: '100%',
           maxWidth: 'var(--cn-sidebar-skeleton-width)'
         }
       }
@@ -449,10 +523,60 @@ export default {
 
     '&-drawer-content, &-drawer-overlay': {
       borderLeftWidth: '1px',
-      left: 'var(--cn-sidebar-container-full-width) !important',
+      left: 'var(--cn-size-56) !important',
 
       '&-collapsed': {
         left: 'var(--cn-size-16) !important'
+      }
+    },
+
+    '&-modules-container': {
+      display: 'flex',
+      flexDirection: 'column'
+    },
+
+    '&-item-popover': {
+      // Popover variant for sidebar items with bordered icons
+      width: 'var(--cn-size-58)',
+      minWidth: 'var(--cn-size-58)',
+      maxWidth: 'var(--cn-size-58)',
+
+      '.cn-sidebar-item-content': {
+        gridTemplateColumns: 'var(--cn-size-7) 1fr',
+        paddingLeft: 'var(--cn-sidebar-item-container)',
+
+        '&-title': {
+          font: 'var(--cn-body-single-line-normal)',
+          color: 'var(--cn-comp-sidebar-item-text)'
+        },
+
+        '&-icon': {
+          paddingLeft: '0'
+        }
+      },
+
+      // Icon with border container effect
+      // SVG is 16px (iconSize/sm), padding creates 28px total (size/7)
+      // Total: 16px + 5px*2 padding + 1px*2 border = 28px
+      '.cn-icon.cn-icon-2xs, .cn-icon.cn-icon-xs, .cn-icon.cn-icon-sm, .cn-icon.cn-icon-md, .cn-icon.cn-icon-lg, .cn-icon.cn-icon-xl':
+        {
+          width: 'var(--cn-icon-size-sm) !important',
+          minWidth: 'var(--cn-icon-size-sm) !important',
+          height: 'var(--cn-icon-size-sm) !important',
+          minHeight: 'var(--cn-icon-size-sm) !important',
+          padding: 'calc((var(--cn-size-7) - var(--cn-icon-size-sm) - 2px) / 2)',
+          boxSizing: 'content-box',
+          borderRadius: 'var(--cn-rounded-2)',
+          border: '1px solid var(--cn-border-2)',
+          backgroundColor: 'var(--cn-bg-1)',
+          flexShrink: '0',
+          color: 'var(--cn-comp-sidebar-item-text)'
+        },
+
+      '&:hover, &:focus-within': {
+        '.cn-sidebar-item-content-title': {
+          color: 'var(--cn-comp-sidebar-item-text-hover)'
+        }
       }
     },
 
@@ -500,6 +624,55 @@ export default {
           opacity: '0'
         }
       }
+    }
+  },
+
+  // Hidden measurement container for popover column calculation
+  '.cn-sidebar-popover-measurement': {
+    position: 'fixed',
+    visibility: 'hidden',
+    top: '-9999px',
+    left: '-9999px',
+    width: 'calc(2 * var(--cn-size-58) + var(--cn-sidebar-group-gap))',
+    pointerEvents: 'none',
+    paddingTop: 'var(--cn-layout-xs)',
+    paddingBottom: 'var(--cn-layout-xs)',
+    paddingLeft: 'var(--cn-popover-px)',
+    paddingRight: 'var(--cn-popover-px)',
+    zIndex: '-1',
+    margin: '0',
+    border: 'none',
+    outline: 'none'
+  },
+
+  // Sidebar popover
+  '.cn-popover-content.cn-sidebar-popover': {
+    paddingRight: 'var(--cn-popover-px)',
+    paddingBottom: 'var(--cn-layout-xs)',
+    paddingLeft: 'var(--cn-popover-px)',
+    backgroundColor: 'var(--cn-bg-2)',
+    // First group: Remove top padding to prevent overlap with popover padding
+    '& > div > div:first-child .cn-sidebar-group': {
+      paddingTop: '0'
+    },
+    // Reset padding left for group headers in popover (only side nav should have padding left)
+    '.cn-sidebar-group-header': {
+      paddingLeft: 'var(--cn-sidebar-item-container)'
+    },
+
+    // Last group (Go to settings footer button)
+    '.cn-sidebar-popover-footer': {
+      padding: 'var(--cn-layout-xs)',
+      width: 'fit-content',
+      justifyContent: 'flex-start'
+    },
+
+    // Separator styling for popover to match Figma
+    '.cn-sidebar-separator': {
+      margin: 'var(--cn-spacing-2) var(--cn-layout-4xs)',
+      height: '1px',
+      width: 'calc(100% - 2 * var(--cn-layout-4xs))',
+      backgroundColor: 'var(--cn-comp-sidebar-separator)'
     }
   }
 }

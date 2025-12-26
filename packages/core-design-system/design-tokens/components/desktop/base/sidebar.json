@@ -1,13 +1,9 @@
 {
   "sidebar": {
     "item": {
-      "px": {
+      "container": {
         "$type": "spacing",
-        "$value": "{spacing.2-half}"
-      },
-      "py": {
-        "$type": "spacing",
-        "$value": "{spacing.1}"
+        "$value": "{spacing.half}"
       },
       "gap": {
         "$type": "spacing",
@@ -17,9 +13,13 @@
         "$type": "borderRadius",
         "$value": "{rounded.4}"
       },
-      "min": {
+      "min-height": {
         "$type": "sizing",
         "$value": "{size.9}"
+      },
+      "min-width": {
+        "$type": "sizing",
+        "$value": "{size.11-half}"
       }
     },
     "group": {
@@ -33,85 +33,17 @@
       }
     },
     "container": {
-      "pb": {
+      "spacing": {
         "$type": "spacing",
         "$value": "{spacing.1-half}"
-      },
-      "pt": {
-        "$type": "spacing",
-        "$value": "{spacing.1-half}"
-      },
-      "px": {
-        "$type": "spacing",
-        "$value": "{spacing.3}"
       },
       "full-width": {
         "$type": "sizing",
         "$value": "{size.58}"
-      }
-    },
-    "header": {
-      "pt": {
-        "$type": "spacing",
-        "$value": "{spacing.2-half}"
       },
-      "pb": {
-        "$type": "spacing",
-        "$value": "{spacing.1}"
-      },
-      "gap": {
-        "$type": "spacing",
-        "$value": "{spacing.5}"
-      }
-    },
-    "footer": {
-      "pt": {
-        "$type": "spacing",
-        "$value": "{spacing.1}"
-      },
-      "pb": {
-        "$type": "spacing",
-        "$value": "{spacing.1-half}"
-      },
-      "gap": {
-        "$type": "spacing",
-        "$value": "{spacing.2-half}"
-      }
-    },
-    "sub-item": {
-      "px": {
-        "$type": "spacing",
-        "$value": "{spacing.2-half}"
-      },
-      "py": {
-        "$type": "spacing",
-        "$value": "{spacing.2}"
-      },
-      "gap": {
-        "$type": "spacing",
-        "$value": "{spacing.2}"
-      },
-      "min": {
+      "min-width": {
         "$type": "sizing",
-        "$value": "{size.8}"
-      }
-    },
-    "sub-group": {
-      "py": {
-        "$type": "spacing",
-        "$value": "{spacing.half}"
-      },
-      "px": {
-        "$type": "spacing",
-        "$value": "{spacing.4-half}"
-      },
-      "gap": {
-        "$type": "spacing",
-        "$value": "{spacing.1}"
-      },
-      "gap-container": {
-        "$type": "spacing",
-        "$value": "{spacing.1-half}"
+        "$value": "58px"
       }
     },
     "fade-height": {

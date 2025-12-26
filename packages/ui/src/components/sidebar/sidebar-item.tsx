@@ -347,7 +347,7 @@ const SidebarItemTrigger = forwardRef<HTMLButtonElement | HTMLAnchorElement, Sid
                 role="menuitem"
               >
                 {withDragHandle && (
-                  <div className="cn-sidebar-item-grip-handle left-cn-1xs" {...dragAttributes} {...dragListeners}>
+                  <div className="cn-sidebar-item-grip-handle" {...dragAttributes} {...dragListeners}>
                     <IconV2 name="grip-dots" size="2xs" className="cn-sidebar-item-grip-icon" />
                   </div>
                 )}
@@ -357,7 +357,7 @@ const SidebarItemTrigger = forwardRef<HTMLButtonElement | HTMLAnchorElement, Sid
             {itemProps.disabled && (
               <div className={sidebarItemClassName} role="menuitem" aria-disabled={itemProps.disabled}>
                 {withDragHandle && (
-                  <div className="cn-sidebar-item-grip-handle left-cn-1xs" {...dragAttributes} {...dragListeners}>
+                  <div className="cn-sidebar-item-grip-handle" {...dragAttributes} {...dragListeners}>
                     <IconV2 name="grip-dots" size="2xs" className="cn-sidebar-item-grip-icon" />
                   </div>
                 )}
@@ -430,7 +430,9 @@ const SidebarItemTrigger = forwardRef<HTMLButtonElement | HTMLAnchorElement, Sid
           </button>
         )}
 
-        <div className="absolute left-0 top-1/2 -translate-y-1/2 h-3 w-0.5 cn-sidebar-item-active-indicator" />
+        {active && (
+          <div className="absolute left-0 top-1/2 -translate-y-1/2 h-[12px] w-[2px] cn-sidebar-item-active-indicator" />
+        )}
       </div>
     )
   }

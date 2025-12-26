@@ -1,22 +1,36 @@
-import { Drawer, GridProps, Layout, Sidebar } from '@/components'
+import { Drawer, Layout, Sidebar } from '@/components'
+import { cn } from '@utils/cn'
 
 import { ScopedMenuGroupType, ScopedNavbarItemType } from './types'
 
 export default function SidebarGroupMenu({
   menuItems,
-  columns
+  columns = 2,
+  variant = 'default'
 }: {
   menuItems: ScopedMenuGroupType[]
-  columns: GridProps['columns']
+  columns?: number
+  variant?: 'default' | 'popover'
 }) {
+  const isPopover = variant === 'popover'
+
   const renderMenuItems = (items: ScopedNavbarItemType[]) => (
-    <Layout.Grid columns={columns} gap="4xs">
+    <div
+      className={cn('cn-sidebar-group-items', {
+        'cn-sidebar-group-items-single-col': columns === 1
+      })}
+    >
       {items.map(item => (
         <Drawer.Close key={item.id} asChild>
-          <Sidebar.Item to={item.to} title={item.title} icon={item.iconName} />
+          <Sidebar.Item
+            to={item.to}
+            title={item.title}
+            icon={item.iconName}
+            className={cn({ 'cn-sidebar-item-popover': isPopover })}
+          />
         </Drawer.Close>
       ))}
-    </Layout.Grid>
+    </div>
   )
 
   return (

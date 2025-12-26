@@ -14,24 +14,31 @@ export default function SidebarGroupMenu({
 }) {
   const isPopover = variant === 'popover'
 
-  const renderMenuItems = (items: ScopedNavbarItemType[]) => (
-    <div
-      className={cn('cn-sidebar-group-items', {
-        'cn-sidebar-group-items-single-col': columns === 1
-      })}
-    >
-      {items.map(item => (
-        <Drawer.Close key={item.id} asChild>
-          <Sidebar.Item
-            to={item.to}
-            title={item.title}
-            icon={item.iconName}
-            className={cn({ 'cn-sidebar-item-popover': isPopover })}
-          />
-        </Drawer.Close>
-      ))}
-    </div>
-  )
+  const renderMenuItems = (items: ScopedNavbarItemType[]) => {
+    const dataColumnsAttr = isPopover && columns === 3 ? { 'data-columns': '3' } : {}
+
+    return (
+      <div
+        className={cn('cn-sidebar-group-items', {
+          'cn-sidebar-group-items-single-col': columns === 1,
+          'cn-sidebar-group-items-popover': isPopover,
+          'cn-sidebar-group-items-popover-3col': isPopover && columns === 3
+        })}
+        {...dataColumnsAttr}
+      >
+        {items.map(item => (
+          <Drawer.Close key={item.id} asChild>
+            <Sidebar.Item
+              to={item.to}
+              title={item.title}
+              icon={item.iconName}
+              className={cn({ 'cn-sidebar-item-popover': isPopover })}
+            />
+          </Drawer.Close>
+        ))}
+      </div>
+    )
+  }
 
   return (
     <Layout.Flex direction="column" gap="none">

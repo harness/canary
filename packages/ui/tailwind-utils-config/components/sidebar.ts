@@ -106,19 +106,6 @@ export default {
           transition: 'grid-template-columns 0.3s cubic-bezier(0.4, 0, 0.2, 1)'
         },
 
-        // 3-column layout when content exceeds viewport
-        // Using both class and attribute selector for maximum compatibility
-        '&-popover-3col': {
-          gridTemplateColumns: 'repeat(3, var(--cn-size-58)) !important',
-          // Ensure transition applies when switching to 3 columns
-          transition: 'grid-template-columns 0.3s cubic-bezier(0.4, 0, 0.2, 1)'
-        },
-        '&-popover[data-columns="3"]': {
-          gridTemplateColumns: 'repeat(3, var(--cn-size-58)) !important',
-          // Ensure transition applies when switching to 3 columns
-          transition: 'grid-template-columns 0.3s cubic-bezier(0.4, 0, 0.2, 1)'
-        },
-
         '&-single-col&-popover': {
           gridTemplateColumns: 'var(--cn-size-58)'
         }
@@ -674,5 +661,12 @@ export default {
       width: 'calc(100% - 2 * var(--cn-layout-4xs))',
       backgroundColor: 'var(--cn-comp-sidebar-separator)'
     }
+  },
+
+  // 3-column layout when content exceeds viewport
+  '.cn-sidebar-group-items-popover-3col': {
+    gridTemplateColumns: 'repeat(3, var(--cn-size-48)) !important',
+    // Ensure transition applies when switching to 3 columns
+    transition: 'grid-template-columns 0.3s cubic-bezier(0.4, 0, 0.2, 1)'
   }
 }

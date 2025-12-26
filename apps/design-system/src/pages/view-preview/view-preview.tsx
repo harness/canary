@@ -51,6 +51,7 @@ import { SignInView } from '@subjects/views/signin'
 import { SignUpView } from '@subjects/views/signup'
 import { SpaceSettingsMembers } from '@subjects/views/space-settings-members/space-settings-members'
 import TableV2Demo from '@subjects/views/table-v2-demo'
+import WaterfallProgressDemo from '@subjects/views/waterfall-progress-demo'
 import { ViewOnlyView } from '@subjects/views/templates/view-only'
 import UnifiedPipelineStudioWrapper from '@subjects/views/unified-pipeline-studio/unified-pipeline-studio'
 
@@ -595,6 +596,19 @@ export const viewPreviews: Record<string, ViewPreviewGroup> = {
         element: (
           <RootViewWrapper>
             <NotFoundPage />
+          </RootViewWrapper>
+        )
+      }
+    }
+  },
+  components: {
+    label: 'Components',
+    items: {
+      'waterfall-progress-demo': {
+        label: 'Waterfall Progress',
+        element: (
+          <RootViewWrapper>
+            <WaterfallProgressDemo />
           </RootViewWrapper>
         )
       }

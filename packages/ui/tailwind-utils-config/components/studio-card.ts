@@ -3,6 +3,7 @@ export default {
     borderRadius: 'var(--cn-rounded-4)',
     border: '1px solid var(--cn-border-2)',
     backgroundColor: 'var(--cn-bg-3)',
+    zIndex: '0',
     '@apply flex flex-col overflow-hidden shadow-cn-3 select-none': '',
 
     // Default size (single card)
@@ -39,13 +40,24 @@ export default {
       '--main-bg':
         'conic-gradient(from var(--border-angle), var(--cn-bg-3), var(--cn-bg-3) 5%, var(--cn-bg-3) 60%, var(--cn-bg-3) 95%)',
       '--gradient-border':
-        'conic-gradient(from var(--border-angle), transparent 25%, var(--cn-gradient-pipeline-running-border-from), var(--cn-gradient-pipeline-running-border-to) 99%, transparent)',
+        'conic-gradient(from var(--border-angle), transparent 20%, var(--cn-gradient-pipeline-running-border-from), var(--cn-gradient-pipeline-running-border-to) 99%, transparent)',
 
       border: 'solid 2px transparent !important',
       background:
         'var(--main-bg) padding-box, var(--gradient-border) border-box, var(--cn-border-3) border-box !important',
       backgroundPosition: 'center center',
-      animation: 'studio-card-border-spin 5s linear infinite'
+      animation: 'studio-card-border-spin 5s linear infinite',
+
+      '&::before': {
+        content: '""',
+        position: 'absolute',
+        background:
+          'conic-gradient(from var(--border-angle),transparent 20%,var(--cn-gradient-pipeline-running-glow-from),var(--cn-gradient-pipeline-running-glow-to) 99%,transparent)',
+        filter: 'blur(6px)',
+        zIndex: '-1',
+        height: 'inherit',
+        inset: '0'
+      }
     }
   },
 

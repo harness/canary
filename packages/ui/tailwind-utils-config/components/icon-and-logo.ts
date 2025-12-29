@@ -31,6 +31,9 @@ export default {
     ...createIconandLogoSizeStyles('icon')
   },
   '.cn-logo': {
-    ...createIconandLogoSizeStyles('logo')
+    ...createIconandLogoSizeStyles('logo'),
+    // Inset border for logo background - uses semantic token for theme support
+    'box-shadow': 'inset 0 0 0 0.6px var(--cn-comp-avatar-shadow)',
+    'border-radius': '2px'
   }
 }

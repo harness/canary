@@ -273,28 +273,23 @@ class FigmaLogoDownloader {
                 children: existingChildren
               }
 
-              // Replace the SVG's children with just the group and optional background
-              if (fillColor) {
-                // Create a background rect element with border
-                const rectElement = {
-                  type: 'element',
-                  name: 'rect',
-                  attributes: {
-                    width: '100%',
-                    height: '100%',
-                    rx: '2px',
-                    ry: '2px',
-                    fill: fillColor,
-                    stroke: 'var(--cn-comp-avatar-shadow)',
-                    'stroke-width': '0.6'
-                  },
-                  children: []
-                }
-
-                svgElement.children = [rectElement, centeringGroup]
-              } else {
-                svgElement.children = [centeringGroup]
+              // Always create a background rect element
+              // Use fillColor from Figma description, or default to white
+              // Note: Border is applied via CSS on the component (box-shadow) to support theme tokens
+              const rectElement = {
+                type: 'element',
+                name: 'rect',
+                attributes: {
+                  width: '100%',
+                  height: '100%',
+                  rx: '2px',
+                  ry: '2px',
+                  fill: fillColor || '#FFFFFF'
+                },
+                children: []
               }
+
+              svgElement.children = [rectElement, centeringGroup]
             }
           }
         }

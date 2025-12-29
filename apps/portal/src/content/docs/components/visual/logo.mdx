@@ -1,18 +1,23 @@
 ---
 title: Logo
-description: Logo component
+description: Logo components for brand representation
 beta: true
 ---
 
 import { DocsPage } from "@/components/docs-page";
-import { LogoV2, LogoNameMapV2 } from "@harnessio/ui/components";
 
-The `LogoV2` component contains logos of various brands and can be used as icons. It follows the brand guidelines to choose colors.
+Logo components for displaying third-party brand logos. Available in two variants: `LogoV2` for full-color logos and `LogoV2Symbol` for monochrome symbols.
 
-## Usage
+## LogoV2
+
+Full-color brand logos with background. Use for prominent brand representation.
+
+### Usage
 
 ```typescript jsx
-<LogoV2 name="node-js" size="lg" />
+import { LogoV2 } from "@harnessio/ui/components";
+
+<LogoV2 name="docker" size="lg" />
 ```
 
 <DocsPage.ComponentExample
@@ -20,9 +25,7 @@ The `LogoV2` component contains logos of various brands and can be used as icons
   code={`<LogoV2 name="harness" size="lg" />`}
 />
 
-## Sizes
-
-The `LogoV2` component can be sized using the `size` prop.
+### Sizes
 
 <DocsPage.ComponentExample
   client:only
@@ -36,21 +39,13 @@ The `LogoV2` component can be sized using the `size` prop.
   `}
 />
 
-## API Reference
-
-```typescript jsx
-<LogoV2
-  name="logo-name"     // name of the logo
-  size="lg"       // [OPTIONAL] size variant of the logo
-  className="my-class" // [OPTIONAL] custom class name
-/>
-```
+### API Reference
 
 <DocsPage.PropsTable
   props={[
     {
       name: "name",
-      description: "Name of the logo",
+      description: "Name of the logo (e.g., 'docker', 'github', 'kubernetes')",
       required: true,
       value: "string",
     },
@@ -58,22 +53,124 @@ The `LogoV2` component can be sized using the `size` prop.
       name: "size",
       description: "Size variant of the logo",
       required: false,
-      value: " 'xs' |'sm' | 'md' | 'lg'",
+      value: "'xs' | 'sm' | 'md' | 'lg'",
       defaultValue: "'lg'",
     },
     {
-      name: "className",
-      description: "Custom class name",
+      name: "fallback",
+      description: "Fallback logo name if the primary logo is not found",
       required: false,
       value: "string",
     },
     {
-      name: "original",
-      description:
-        "If true, the logo will use its brand-specific color, otherwise will use `currentColor`",
+      name: "className",
+      description: "Additional CSS class name",
       required: false,
-      value: "boolean",
-      defaultValue: "true",
+      value: "string",
+    },
+  ]}
+/>
+
+---
+
+## LogoV2Symbol
+
+Monochrome logo symbols using `currentColor`. Use for subtle UI contexts or when brand colors would be too prominent.
+
+### Usage
+
+```typescript jsx
+import { LogoV2Symbol } from "@harnessio/ui/components";
+
+<LogoV2Symbol name="docker" size="lg" color="default" />
+```
+
+<DocsPage.ComponentExample
+  client:only
+  code={`
+  <Layout.Flex gap="md" justify="center" align="center">
+    <LogoV2Symbol name="harness" size="lg" color="default" />
+    <LogoV2Symbol name="harness" size="lg" color="muted" />
+    <LogoV2Symbol name="harness" size="lg" color="neutral" />
+  </Layout.Flex>
+  `}
+/>
+
+### Sizes
+
+<DocsPage.ComponentExample
+  client:only
+  code={`
+  <Layout.Flex gap="md" justify="center" align="end" className="min-w-[400px]">
+    <LogoV2Symbol name="harness" size="xs" />
+    <LogoV2Symbol name="harness" size="sm" />
+    <LogoV2Symbol name="harness" size="md" />
+    <LogoV2Symbol name="harness" size="lg" />
+  </Layout.Flex>
+  `}
+/>
+
+### Color Variants
+
+<DocsPage.ComponentExample
+  client:only
+  code={`
+  <Layout.Flex gap="lg" justify="center" align="center">
+    <Layout.Flex direction="column" align="center" gap="sm">
+      <LogoV2Symbol name="docker" size="lg" color="currentColor" />
+      <Text size={1} color="foreground-3">currentColor</Text>
+    </Layout.Flex>
+    <Layout.Flex direction="column" align="center" gap="sm">
+      <LogoV2Symbol name="docker" size="lg" color="default" />
+      <Text size={1} color="foreground-3">default</Text>
+    </Layout.Flex>
+    <Layout.Flex direction="column" align="center" gap="sm">
+      <LogoV2Symbol name="docker" size="lg" color="muted" />
+      <Text size={1} color="foreground-3">muted</Text>
+    </Layout.Flex>
+    <Layout.Flex direction="column" align="center" gap="sm">
+      <LogoV2Symbol name="docker" size="lg" color="neutral" />
+      <Text size={1} color="foreground-3">neutral</Text>
+    </Layout.Flex>
+  </Layout.Flex>
+  `}
+/>
+
+### API Reference
+
+<DocsPage.PropsTable
+  props={[
+    {
+      name: "name",
+      description: "Name of the logo symbol (e.g., 'docker', 'github', 'kubernetes')",
+      required: true,
+      value: "string",
+    },
+    {
+      name: "size",
+      description: "Size variant of the symbol",
+      required: false,
+      value: "'xs' | 'sm' | 'md' | 'lg'",
+      defaultValue: "'lg'",
+    },
+    {
+      name: "color",
+      description: "Color variant for the symbol",
+      required: false,
+      value: "'currentColor' | 'default' | 'muted' | 'neutral'",
+      defaultValue: "'default'",
+    },
+    {
+      name: "fallback",
+      description: "Fallback symbol name if the primary symbol is not found",
+      required: false,
+      value: "string",
+    },
+    {
+      name: "className",
+      description: "Additional CSS class name",
+      required: false,
+      value: "string",
     },
   ]}
 />

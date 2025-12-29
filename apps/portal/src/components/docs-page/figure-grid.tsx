@@ -42,7 +42,7 @@ export const FigureGrid = ({ type }: { type: FigureType }) => {
                 <LogoV2 name={name as keyof typeof LogoNameMapV2} />
               )}
               {type === "symbol" && (
-                <LogoV2Symbol name={name as keyof typeof LogoSymbolNameMap} />
+                <LogoV2Symbol name={name as keyof typeof LogoSymbolNameMap} size="sm" color="default" />
               )}
               {type === "illustration" && (
                 <Illustration

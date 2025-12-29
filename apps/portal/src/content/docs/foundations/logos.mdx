@@ -1,29 +1,60 @@
 ---
 title: Logos
-description: Logos foundations
+description: Brand logos and symbols for third-party integrations
 beta: true
 ---
 
 import { DocsPage } from "@/components/docs-page";
 
-Brand logos from the design system. Available in two versions:
+Brand logos for third-party services and integrations. Each logo is available in two variants optimized for different use cases.
 
-- **Default Logos**: Full-color brand logos with background. These preserve the original brand colors and include a colored background with rounded corners. Use for prominent brand representation.
-- **Logo Symbols**: Monochrome logo symbols using `currentColor`. These support CSS color styling and are ideal for lists, subtle UI contexts, or when brand colors would be too prominent.
+## Overview
+
+| Variant | Component | Use Case |
+|---------|-----------|----------|
+| **Default** | `LogoV2` | Prominent brand representation with original colors |
+| **Symbol** | `LogoV2Symbol` | Subtle contexts, lists, monochrome UI |
 
 ## Default Logos
 
-Full-color brand logos with background and 0.6px border.
+Full-color brand logos with colored background and subtle border. Use these when brand recognition is important.
+
+**Features:**
+- Original brand colors preserved
+- Rounded corners (2px radius)
+- Subtle inset border for definition
+- Available in 4 sizes: `xs`, `sm`, `md`, `lg`
 
 <DocsPage.FigureGrid client:only type="logo" />
 
 ## Logo Symbols
 
-Monochrome logo symbols using `currentColor`. Supports the following color variants via CSS:
+Monochrome logo shapes using `currentColor`. These inherit color from CSS and are ideal for lists, navigation, or when brand colors would be too prominent.
 
-- **default** — `text-cn-foreground-1` (primary text color)
-- **muted** — `text-cn-foreground-2` (secondary text color)
-- **neutral** — `text-cn-foreground-3` (tertiary text color)
-- **currentColor** — inherits color from parent element
+**Features:**
+- Uses `currentColor` for flexible styling
+- No background — just the logo shape
+- Supports color variants via component prop
+- Available in 4 sizes: `xs`, `sm`, `md`, `lg`
+
+**Color variants:**
+- **currentColor** — inherits from parent element
+- **default** — primary text color (`text-cn-foreground-1`)
+- **muted** — secondary text color (`text-cn-foreground-2`)
+- **neutral** — tertiary text color (`text-cn-foreground-3`)
 
 <DocsPage.FigureGrid client:only type="symbol" />
+
+## Usage Guidelines
+
+### When to use Default Logos
+- Hero sections or feature highlights
+- Integration cards or tiles
+- Settings pages showing connected services
+- Marketing materials
+
+### When to use Symbols
+- Lists of integrations
+- Sidebar navigation
+- Compact UI where color would be distracting
+- Dark/light mode adaptive contexts

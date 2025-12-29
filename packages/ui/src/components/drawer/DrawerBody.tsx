@@ -31,7 +31,7 @@ export const DrawerBody = forwardRef<
         </ScrollArea>
       ) : (
         <div className={cn('cn-drawer-body', scrollAreaClassName)} ref={ref} {...restProps}>
-          <div className={classNameContent}>{children}</div>
+          <div className={cn('cn-drawer-body-content', classNameContent)}>{children}</div>
         </div>
       )}
     </div>

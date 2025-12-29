@@ -4,6 +4,8 @@ import {
   CopyButton,
   LogoV2,
   LogoNameMapV2,
+  LogoV2Symbol,
+  LogoSymbolNameMap,
   IllustrationsNameMap,
   IconNameMapV2,
   Illustration,
@@ -12,10 +14,11 @@ import {
 } from "@harnessio/ui/components";
 import { SearchableArea } from "./searchable-area";
 
-type FigureType = "logo" | "illustration" | "icon";
+type FigureType = "logo" | "symbol" | "illustration" | "icon";
 
 const typeToFigureDictMap: Record<FigureType, Record<string, unknown>> = {
   logo: LogoNameMapV2,
+  symbol: LogoSymbolNameMap,
   illustration: IllustrationsNameMap,
   icon: IconNameMapV2,
 } as const;
@@ -37,6 +40,9 @@ export const FigureGrid = ({ type }: { type: FigureType }) => {
             <Card.Content className="gap-cn-sm grid place-items-center text-center">
               {type === "logo" && (
                 <LogoV2 name={name as keyof typeof LogoNameMapV2} />
+              )}
+              {type === "symbol" && (
+                <LogoV2Symbol name={name as keyof typeof LogoSymbolNameMap} />
               )}
               {type === "illustration" && (
                 <Illustration

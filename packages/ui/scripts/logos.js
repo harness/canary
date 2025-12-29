@@ -18,6 +18,7 @@ const DEFAULT_CONFIG = {
   FILE_ID: process.env.FIGMA_FILE_ID,
   PAGE_NAME: process.env.FIGMA_LOGO_PAGE_NAME,
   OUTPUT_DIR: './src/components/logo-v2/logos',
+  SYMBOL_OUTPUT_DIR: './src/components/logo-v2/symbols',
   FORMAT: 'svg', // 'svg', 'png', 'jpg', 'pdf'
   SCALE: 1, // Only for raster formats
   CONCURRENT_DOWNLOADS: 10
@@ -108,6 +109,43 @@ class FigmaLogoDownloader {
 
     page.children.forEach(child => traverseNode(child, 0))
     return logos
+  }
+
+  /**
+   * Fetch raw SVG content from URL
+   */
+  async fetchSvgContent(url) {
+    return new Promise((resolve, reject) => {
+      let parsedUrl
+
+      try {
+        parsedUrl = new URL(url)
+      } catch (error) {
+        reject(new Error(`Invalid URL: ${url} - ${error.message}`))
+        return
+      }
+
+      https
+        .get(parsedUrl, async res => {
+          if (res.statusCode >= 200 && res.statusCode < 300) {
+            let svgData = ''
+
+            res.on('data', chunk => {
+              svgData += chunk
+            })
+
+            res.on('end', () => {
+              resolve(svgData)
+            })
+          } else if (res.statusCode >= 300 && res.statusCode < 400 && res.headers.location) {
+            // Handle redirects
+            this.fetchSvgContent(res.headers.location).then(resolve).catch(reject)
+          } else {
+            reject(new Error(`HTTP ${res.statusCode}: ${res.statusMessage}`))
+          }
+        })
+        .on('error', reject)
+    })
   }
 
   async downloadFile(url, filepath, fillColor) {
@@ -299,6 +337,83 @@ class FigmaLogoDownloader {
     }
   }
 
+  /**
+   * Process SVG for symbol version - replaces colors with currentColor (like icons)
+   * Symbols support color variants: currentColor, default (text-1), muted (text-2), neutral (text-3)
+   */
+  processSvgForSymbol(svgContent) {
+    try {
+      const result = optimize(svgContent, {
+        plugins: [
+          {
+            name: 'preset-default',
+            params: {
+              overrides: {
+                // Disable some plugins from the preset
+                removeViewBox: false,
+                // Keep important attributes
+                removeUnknownsAndDefaults: {
+                  keepRoleAttr: true,
+                  keepAriaAttrs: true
+                }
+              }
+            }
+          },
+          // Remove width/height attributes from root SVG
+          {
+            name: 'removeAttrs',
+            params: {
+              attrs: ['width', 'height']
+            }
+          },
+          // Custom plugin to replace fill/stroke with currentColor (same as icons)
+          {
+            name: 'themify',
+            type: 'visitor',
+            fn: () => {
+              return {
+                element: {
+                  enter: node => {
+                    // Process style attribute
+                    if (node.attributes.style) {
+                      const styleAttr = node.attributes.style
+                      // Replace fill and stroke color values with currentColor
+                      node.attributes.style = styleAttr.replace(
+                        /(fill|stroke)\s*:\s*([^;]+)/g,
+                        (match, prop, value) => {
+                          if (value.trim() === 'none') {
+                            return match
+                          }
+                          return `${prop}:currentColor`
+                        }
+                      )
+                    }
+
+                    // Process fill attribute
+                    if (node.attributes.fill && node.attributes.fill !== 'none') {
+                      node.attributes.fill = 'currentColor'
+                    }
+
+                    // Process stroke attribute
+                    if (node.attributes.stroke && node.attributes.stroke !== 'none') {
+                      node.attributes.stroke = 'currentColor'
+                    }
+                  }
+                }
+              }
+            }
+          }
+        ]
+      })
+
+      return result.data
+    } catch (error) {
+      console.error('Error processing SVG for symbol:', error)
+      // Fallback to the original SVG content if SVGO processing fails
+      return svgContent
+    }
+  }
+
   sanitizeFilename(name) {
     // Remove or replace invalid filename characters
     return name
@@ -382,6 +497,64 @@ export const LogoNameMapV2 = {
     }
   }
 
+  /**
+   * Generate a logo-symbol-name-map.ts file with all successfully downloaded symbols
+   * @param {Array} results - Download results from downloadAllLogos
+   * @returns {Promise<void>}
+   */
+  async generateSymbolNameMap(results) {
+    try {
+      // Filter for successful downloads
+      const successfulDownloads = results
+        .filter(r => r.status === 'fulfilled' && r.value.success)
+        .map(r => r.value)
+        .sort((a, b) => a.filename.localeCompare(b.filename))
+
+      if (successfulDownloads.length === 0) {
+        console.log('⚠️ No successful downloads, skipping symbol map generation')
+        return
+      }
+
+      // Data for the LiquidJS template
+      const templateData = {
+        symbols: successfulDownloads.map(download => ({
+          filename: download.filename,
+          componentName: this.toComponentName(download.filename),
+          symbolKey: this.toLogoKey(download.filename)
+        }))
+      }
+
+      // File template
+      const template = `/**
+ * Harness Design System
+ * Generated logo symbol map - DO NOT EDIT DIRECTLY
+ * Symbols use currentColor and support color variants: currentColor, default (text-1), muted (text-2), neutral (text-3)
+ */
+{% for symbol in symbols %}
+import {{ symbol.componentName }} from './symbols/{{ symbol.filename }}'
+{%- endfor %}
+
+export const LogoSymbolNameMap = {
+{%- for symbol in symbols %}
+  {% if symbol.symbolKey contains '-' %}'{{ symbol.symbolKey }}'{% else %}{{ symbol.symbolKey }}{% endif %}: {{ symbol.componentName }}{%- unless forloop.last %},
+{%- endunless %}
+{%- endfor %}
+}
+`
+
+      // Render the template with the data
+      const mapFileContent = await engine.parseAndRender(template, templateData)
+
+      // Write the map file
+      const mapFilePath = path.join(this.config.SYMBOL_OUTPUT_DIR, '..', 'logo-symbol-name-map.ts')
+      await fs.writeFile(mapFilePath, mapFileContent, 'utf8')
+
+      console.log(`✅ Generated symbol map at: ${mapFilePath}`)
+    } catch (error) {
+      console.error('❌ Error generating symbol map:', error.message)
+    }
+  }
+
   async ensureDirectoryExists(dir) {
     try {
       await fs.access(dir)
@@ -437,8 +610,9 @@ export const LogoNameMapV2 = {
         return false
       }
 
-      // Ensure output directory exists
+      // Ensure output directories exist
       await this.ensureDirectoryExists(this.config.OUTPUT_DIR)
+      await this.ensureDirectoryExists(this.config.SYMBOL_OUTPUT_DIR)
 
       // Get image URLs
       const nodeIds = logos.map(logo => logo.id)
@@ -448,7 +622,7 @@ export const LogoNameMapV2 = {
         throw new Error(`Error getting image URLs: ${imageData.err}`)
       }
 
-      // Prepare download tasks
+      // Prepare download tasks - each task downloads both default logo and symbol
       const downloadTasks = logos.map((logo, index) => {
         return async () => {
           const imageUrl = imageData.images[logo.id]
@@ -458,11 +632,22 @@ export const LogoNameMapV2 = {
           }
 
           const filename = `${this.sanitizeFilename(logo.name)}.${this.config.FORMAT}`
-          const filepath = path.join(this.config.OUTPUT_DIR, filename)
+          const logoFilepath = path.join(this.config.OUTPUT_DIR, filename)
+          const symbolFilepath = path.join(this.config.SYMBOL_OUTPUT_DIR, filename)
 
           try {
-            await this.downloadFile(imageUrl, filepath, logo.fillColor)
-            console.log(`✅ Downloaded ${index + 1}/${logos.length}: ${filename}`)
+            // Fetch SVG content once
+            const svgContent = await this.fetchSvgContent(imageUrl)
+
+            // Process and save default logo (with background and brand colors)
+            const processedLogo = this.processSvgForTheming(svgContent, logo.fillColor)
+            await fs.writeFile(logoFilepath, processedLogo, 'utf8')
+
+            // Process and save symbol (currentColor, no background)
+            const processedSymbol = this.processSvgForSymbol(svgContent)
+            await fs.writeFile(symbolFilepath, processedSymbol, 'utf8')
+
+            console.log(`✅ Downloaded ${index + 1}/${logos.length}: ${filename} (logo + symbol)`)
             return { success: true, logo: logo.name, filename }
           } catch (error) {
             console.error(`❌ Failed to download ${logo.name}: ${error.message}`)
@@ -486,12 +671,14 @@ export const LogoNameMapV2 = {
         'Logo Status': {
           'Successfully Downloaded': `${successful} logos`,
           'Failed Downloads': failed > 0 ? `${failed} logos` : 0,
-          'Output Directory': path.resolve(this.config.OUTPUT_DIR)
+          'Logos Directory': path.resolve(this.config.OUTPUT_DIR),
+          'Symbols Directory': path.resolve(this.config.SYMBOL_OUTPUT_DIR)
         }
       })
 
-      // Generate logo-name-map.ts file
+      // Generate logo-name-map.ts and logo-symbol-name-map.ts files
       await this.generateLogoNameMap(results)
+      await this.generateSymbolNameMap(results)
 
       return true
     } catch (error) {

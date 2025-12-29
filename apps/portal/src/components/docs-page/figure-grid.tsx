@@ -5,7 +5,7 @@ import {
   LogoV2,
   LogoNameMapV2,
   LogoV2Symbol,
-  LogoSymbolNameMap,
+  LogoSymbolNameMapV2,
   IllustrationsNameMap,
   IconNameMapV2,
   Illustration,
@@ -18,7 +18,7 @@ type FigureType = "logo" | "symbol" | "illustration" | "icon";
 
 const typeToFigureDictMap: Record<FigureType, Record<string, unknown>> = {
   logo: LogoNameMapV2,
-  symbol: LogoSymbolNameMap,
+  symbol: LogoSymbolNameMapV2,
   illustration: IllustrationsNameMap,
   icon: IconNameMapV2,
 } as const;
@@ -42,7 +42,7 @@ export const FigureGrid = ({ type }: { type: FigureType }) => {
                 <LogoV2 name={name as keyof typeof LogoNameMapV2} />
               )}
               {type === "symbol" && (
-                <LogoV2Symbol name={name as keyof typeof LogoSymbolNameMap} size="sm" color="default" />
+                <LogoV2Symbol name={name as keyof typeof LogoSymbolNameMapV2} size="sm" color="default" />
               )}
               {type === "illustration" && (
                 <Illustration

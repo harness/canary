@@ -3,7 +3,7 @@ import { forwardRef, SVGProps } from 'react'
 import { cn } from '@utils/cn'
 import { cva, type VariantProps } from 'class-variance-authority'
 
-import { LogoSymbolNameMap } from './logo-symbol-name-map'
+import { LogoSymbolNameMapV2 } from './logo-v2-symbol-name-map'
 
 export const logoSymbolVariants = cva('cn-logo-symbol', {
     variants: {
@@ -26,7 +26,7 @@ export const logoSymbolVariants = cva('cn-logo-symbol', {
     }
 })
 
-export type LogoV2SymbolNamesType = keyof typeof LogoSymbolNameMap
+export type LogoV2SymbolNamesType = keyof typeof LogoSymbolNameMapV2
 
 interface BaseLogoSymbolProps extends Omit<SVGProps<SVGSVGElement>, 'color'> {
     size?: VariantProps<typeof logoSymbolVariants>['size']
@@ -49,18 +49,18 @@ export type LogoV2SymbolProps = LogoV2SymbolDefaultProps | LogoV2SymbolFallbackP
 
 const LogoV2Symbol = forwardRef<SVGSVGElement, LogoV2SymbolProps>(
     ({ name, size, color, className, skipSize = false, fallback }, ref) => {
-        const Component = name ? LogoSymbolNameMap[name] : undefined
+        const Component = name ? LogoSymbolNameMapV2[name] : undefined
         const sizeClasses = skipSize ? '' : logoSymbolVariants({ size, color })
 
         if (!Component && fallback) {
             console.warn(`LogoV2Symbol "${name}" not found, falling back to "${fallback}".`)
-            const FallbackComponent = LogoSymbolNameMap[fallback]
+            const FallbackComponent = LogoSymbolNameMapV2[fallback]
 
             return <FallbackComponent className={cn(sizeClasses, className)} ref={ref} />
         }
 
         if (!Component) {
-            console.warn(`LogoV2Symbol "${name}" not found in LogoSymbolNameMap.`)
+            console.warn(`LogoV2Symbol "${name}" not found in LogoSymbolNameMapV2.`)
             return null
         }
 

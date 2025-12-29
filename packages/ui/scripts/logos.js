@@ -531,7 +531,7 @@ export const LogoNameMapV2 = {
 import {{ symbol.componentName }} from './symbols/{{ symbol.filename }}'
 {%- endfor %}
 
-export const LogoSymbolNameMap = {
+export const LogoSymbolNameMapV2 = {
 {%- for symbol in symbols %}
   {% if symbol.symbolKey contains '-' %}'{{ symbol.symbolKey }}'{% else %}{{ symbol.symbolKey }}{% endif %}: {{ symbol.componentName }}{%- unless forloop.last %},
 {%- endunless %}
@@ -543,7 +543,7 @@ export const LogoSymbolNameMap = {
       const mapFileContent = await engine.parseAndRender(template, templateData)
 
       // Write the map file
-      const mapFilePath = path.join(this.config.SYMBOL_OUTPUT_DIR, '..', 'logo-symbol-name-map.ts')
+      const mapFilePath = path.join(this.config.SYMBOL_OUTPUT_DIR, '..', 'logo-v2-symbol-name-map.ts')
       await fs.writeFile(mapFilePath, mapFileContent, 'utf8')
 
       console.log(`✅ Generated symbol map at: ${mapFilePath}`)

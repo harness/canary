@@ -112,7 +112,7 @@ import Wiz from './symbols/wiz.svg'
 import Zap from './symbols/zap.svg'
 import Zoom from './symbols/zoom.svg'
 
-export const LogoSymbolNameMap = {
+export const LogoSymbolNameMapV2 = {
   anchore: Anchore,
   android: Android,
   'app-dynamics': AppDynamics,

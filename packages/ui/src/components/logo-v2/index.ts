@@ -1,4 +1,4 @@
 export { LogoNameMapV2 } from './logo-name-map'
-export { LogoSymbolNameMap } from './logo-symbol-name-map'
+export { LogoSymbolNameMapV2 } from './logo-v2-symbol-name-map'
 export * from './logo-v2'
-export * from './logo-symbol'
+export * from './logo-v2-symbol'

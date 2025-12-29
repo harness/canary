@@ -4,7 +4,6 @@ description: Logos foundations
 beta: true
 ---
 
-import { Tabs, TabsContent, TabsList, TabsTrigger } from "@harnessio/ui/components";
 import { DocsPage } from "@/components/docs-page";
 
 Brand logos from the design system. Available in two versions:
@@ -12,25 +11,19 @@ Brand logos from the design system. Available in two versions:
 - **Default Logos**: Full-color brand logos with background. These preserve the original brand colors and include a colored background with rounded corners. Use for prominent brand representation.
 - **Logo Symbols**: Monochrome logo symbols using `currentColor`. These support CSS color styling and are ideal for lists, subtle UI contexts, or when brand colors would be too prominent.
 
-## Logo Versions
+## Default Logos
 
-<Tabs defaultValue="default" client:only>
-  <TabsList>
-    <TabsTrigger value="default">Default Logos</TabsTrigger>
-    <TabsTrigger value="symbol">Symbols</TabsTrigger>
-  </TabsList>
-  <TabsContent value="default">
-    <DocsPage.FigureGrid client:only type="logo" />
-  </TabsContent>
-  <TabsContent value="symbol">
-    ### Symbol Color Variants
-    
-    Symbols use `currentColor` and support the following color variants via CSS:
-    - **default** — `text-cn-foreground-1` (primary text color)
-    - **muted** — `text-cn-foreground-2` (secondary text color)
-    - **neutral** — `text-cn-foreground-3` (tertiary text color)
-    - **currentColor** — inherits color from parent element
+Full-color brand logos with background and 0.6px border.
 
-    <DocsPage.FigureGrid client:only type="symbol" />
-  </TabsContent>
-</Tabs>
+<DocsPage.FigureGrid client:only type="logo" />
+
+## Logo Symbols
+
+Monochrome logo symbols using `currentColor`. Supports the following color variants via CSS:
+
+- **default** — `text-cn-foreground-1` (primary text color)
+- **muted** — `text-cn-foreground-2` (secondary text color)
+- **neutral** — `text-cn-foreground-3` (tertiary text color)
+- **currentColor** — inherits color from parent element
+
+<DocsPage.FigureGrid client:only type="symbol" />

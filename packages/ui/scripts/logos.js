@@ -275,7 +275,7 @@ class FigmaLogoDownloader {
 
               // Replace the SVG's children with just the group and optional background
               if (fillColor) {
-                // Create a background rect element
+                // Create a background rect element with border
                 const rectElement = {
                   type: 'element',
                   name: 'rect',
@@ -284,7 +284,9 @@ class FigmaLogoDownloader {
                     height: '100%',
                     rx: '2px',
                     ry: '2px',
-                    fill: fillColor
+                    fill: fillColor,
+                    stroke: 'var(--cn-comp-avatar-shadow)',
+                    'stroke-width': '0.6'
                   },
                   children: []
                 }

@@ -20,6 +20,14 @@
       "$type": "sizing",
       "$value": "920"
     },
+    "xl": {
+      "$type": "sizing",
+      "$value": "1200"
+    },
+    "full": {
+      "$type": "sizing",
+      "$value": "100%"
+    },
     "container": {
       "$type": "spacing",
       "$value": "{spacing.5}"

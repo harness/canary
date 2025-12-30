@@ -55,7 +55,7 @@ const Checkbox = forwardRef<ElementRef<typeof CheckboxPrimitive.Root>, Omit<Chec
               {label}
             </Label>
             <FormCaption disabled={props.disabled} variant={captionVariant}>
-              {caption}
+              {label}
             </FormCaption>
           </div>
         )}

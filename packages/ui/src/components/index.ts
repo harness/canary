@@ -88,6 +88,7 @@ export * from './stacked-list'
 export * from './studio-card/studio-card'
 export * from './shimmer'
 export * from './typing-animation'
+export * from './waterfall-progress'
 
 export * as NodeGroup from './node-group'
 export * as ListActions from './list-actions'

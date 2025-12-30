@@ -53,6 +53,7 @@ import { SpaceSettingsMembers } from '@subjects/views/space-settings-members/spa
 import TableV2Demo from '@subjects/views/table-v2-demo'
 import { ViewOnlyView } from '@subjects/views/templates/view-only'
 import UnifiedPipelineStudioWrapper from '@subjects/views/unified-pipeline-studio/unified-pipeline-studio'
+import WaterfallProgressDemo from '@subjects/views/waterfall-progress-demo'
 
 import { ChatEmptyPreviewWrapper, ChatPreviewWrapper } from '@harnessio/ui/components'
 import { NotFoundPage } from '@harnessio/ui/views'
@@ -595,6 +596,19 @@ export const viewPreviews: Record<string, ViewPreviewGroup> = {
         element: (
           <RootViewWrapper>
             <NotFoundPage />
+          </RootViewWrapper>
+        )
+      }
+    }
+  },
+  components: {
+    label: 'Components',
+    items: {
+      'waterfall-progress-demo': {
+        label: 'Waterfall Progress',
+        element: (
+          <RootViewWrapper>
+            <WaterfallProgressDemo />
           </RootViewWrapper>
         )
       }

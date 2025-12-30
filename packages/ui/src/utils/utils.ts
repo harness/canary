@@ -100,3 +100,11 @@ export const decodeURIPath = (path: string) => {
   const pathArr = path.split('/')
   return pathArr.map(decodeURIComponentIfValid).join('/')
 }
+
+/**
+ * Clamp a number between a minimum and maximum value.
+ * Ensures numeric values do not exceed expected bounds.
+ */
+export function clamp(value: number, min: number, max: number): number {
+  return Math.min(Math.max(value, min), max)
+}

@@ -1,7 +1,7 @@
 {
   "name": "@harnessio/ui",
   "description": "Harness Canary UI component library",
-  "version": "0.0.242",
+  "version": "0.0.243",
   "private": false,
   "type": "module",
   "main": "./dist/index.js",
@@ -39,6 +39,7 @@
     "build:watch": "NODE_OPTIONS=--max-old-space-size=8192 vite build --watch --emptyOutDir=false",
     "lint": "eslint ./src --quiet",
     "pretty": "prettier --check ./src",
+    "pretty:fix": "prettier --write ./src",
     "shadcn:update": "npx shadcn-ui@latest add -a -o -y",
     "prepublishOnly": "pnpm build",
     "pre-commit": "lint-staged",

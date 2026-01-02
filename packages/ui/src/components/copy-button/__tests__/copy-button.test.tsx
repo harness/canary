@@ -177,7 +177,6 @@ describe('CopyButton', () => {
   })
 
   test('should handle multiple rapid clicks', async () => {
-    vi.useFakeTimers()
     renderComponent()
 
     const button = screen.getByRole('button', { name: /copy/i })
@@ -186,9 +185,9 @@ describe('CopyButton', () => {
     await userEvent.click(button)
     await userEvent.click(button)
 
-    expect(mockCopy).toHaveBeenCalledTimes(3)
-
-    vi.useRealTimers()
+    await waitFor(() => {
+      expect(mockCopy).toHaveBeenCalledTimes(3)
+    })
   })
 
   test('should forward ref correctly', () => {

@@ -3,7 +3,7 @@ import { forwardRef } from 'react'
 import { Button, ButtonSizes, useCopyButton, UseCopyButtonProps, type ButtonVariants } from '@/components'
 
 export interface CopyButtonProps extends Omit<UseCopyButtonProps, 'copyData'> {
-  name: string
+  name: string | (() => string) | (() => Promise<string>)
   className?: string
   buttonVariant?: ButtonVariants
   size?: ButtonSizes

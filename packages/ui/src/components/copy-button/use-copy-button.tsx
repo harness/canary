@@ -5,7 +5,7 @@ import copy from 'clipboard-copy'
 
 export interface UseCopyButtonProps {
   onClick?: (e: MouseEvent<HTMLButtonElement>) => void
-  copyData: string
+  copyData: string | (() => string) | (() => Promise<string>)
   iconSize?: IconPropsV2['size']
   color?: IconV2Color
 }
@@ -17,9 +17,22 @@ export const useCopyButton = ({ onClick, copyData, color, iconSize }: UseCopyBut
     e.stopPropagation()
     e.preventDefault()
 
-    // Use clipboard-copy library for cross-browser compatibility
-    copy(copyData).then(() => setCopied(true))
+    // Handle the copy operation asynchronously without blocking the event handler
+    const performCopy = async () => {
+      try {
+        // Resolve copyData - handle string, sync function, or async function
+        const textToCopy = typeof copyData === 'function' ? await copyData() : copyData
 
+        // Use clipboard-copy library for cross-browser compatibility
+        await copy(textToCopy)
+        setCopied(true)
+      } catch (error) {
+        // Handle potential errors from async callbacks
+        console.error('Failed to copy:', error)
+      }
+    }
+
+    performCopy()
     onClick?.(e)
   }
 

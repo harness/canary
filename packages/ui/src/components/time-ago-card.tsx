@@ -112,16 +112,10 @@ export const TimeAgoContent: FC<{ formattedFullArray: FullTimeFormatters[] }> = 
           <StatusBadge variant="secondary" size="sm">
             {label}
           </StatusBadge>
-          <Text<'time'> variant="body-single-line-normal" as="time" dateTime={date}>
+          <Text<'time'> color="inherit" variant="body-single-line-normal" as="time" dateTime={date}>
             {date}
           </Text>
-          <Text<'time'>
-            variant="body-single-line-normal"
-            as="time"
-            dateTime={time}
-            color="foreground-3"
-            className="ml-auto"
-          >
+          <Text<'time'> variant="body-single-line-normal" as="time" dateTime={time} color="inherit" className="ml-auto">
             {time}
           </Text>
         </Fragment>

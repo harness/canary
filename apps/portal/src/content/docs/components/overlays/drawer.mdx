@@ -286,7 +286,7 @@ Nested drawers can be implemented by placing a `Drawer.Root` inside the parent `
 
 ## Drawer sizes
 
-The `Drawer.Content` component accepts a `size` prop to control its width (or height, depending on `direction`). Supported values are: `2xs`, `xs`, `sm`, `md`, and `lg`.
+The `Drawer.Content` component accepts a `size` prop to control its width (or height, depending on `direction`). Supported values are: `2xs`, `xs`, `sm`, `md`, `lg`, `xl`, and `full`.
 
 <DocsPage.ComponentExample
   client:only
@@ -394,6 +394,54 @@ The `Drawer.Content` component accepts a `size` prop to control its width (or he
       </Drawer.Trigger>
 
       <Drawer.Content size="lg">
+        <Drawer.Header>
+          <Drawer.Title>Title</Drawer.Title>
+        </Drawer.Header>
+
+        <Drawer.Body />
+
+        <Drawer.Footer>
+          <ButtonLayout.Root>
+            <ButtonLayout.Secondary>
+              <Drawer.Close asChild>
+                <Button variant="outline">Cancel</Button>
+              </Drawer.Close>
+            </ButtonLayout.Secondary>
+          </ButtonLayout.Root>
+        </Drawer.Footer>
+      </Drawer.Content>
+    </Drawer.Root>
+
+    <Drawer.Root>
+      <Drawer.Trigger>
+        <Button>Open Drawer with 'xl' size</Button>
+      </Drawer.Trigger>
+
+      <Drawer.Content size="xl">
+        <Drawer.Header>
+          <Drawer.Title>Title</Drawer.Title>
+        </Drawer.Header>
+
+        <Drawer.Body />
+
+        <Drawer.Footer>
+          <ButtonLayout.Root>
+            <ButtonLayout.Secondary>
+              <Drawer.Close asChild>
+                <Button variant="outline">Cancel</Button>
+              </Drawer.Close>
+            </ButtonLayout.Secondary>
+          </ButtonLayout.Root>
+        </Drawer.Footer>
+      </Drawer.Content>
+    </Drawer.Root>
+
+    <Drawer.Root>
+      <Drawer.Trigger>
+        <Button>Open Drawer with 'full' size</Button>
+      </Drawer.Trigger>
+
+      <Drawer.Content size="full">
         <Drawer.Header>
           <Drawer.Title>Title</Drawer.Title>
         </Drawer.Header>
@@ -717,7 +765,7 @@ Contains [`Drawer.Header`](#header), [`Drawer.Body`](#body) and [`Drawer.Footer`
       name: "size",
       description: "Width | height of the drawer.",
       required: false,
-      value: " '2xs' | 'xs' | 'sm' | 'md' | 'lg'",
+      value: " '2xs' | 'xs' | 'sm' | 'md' | 'lg' | 'xl' | 'full'",
       defaultValue: "sm",
     },
     {

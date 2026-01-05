@@ -16,7 +16,9 @@ const drawerContentVariants = cva('cn-drawer-content', {
       xs: 'cn-drawer-content-xs',
       sm: 'cn-drawer-content-sm',
       md: 'cn-drawer-content-md',
-      lg: 'cn-drawer-content-lg'
+      lg: 'cn-drawer-content-lg',
+      xl: 'cn-drawer-content-xl',
+      full: 'cn-drawer-content-full'
     },
     direction: {
       right: 'cn-drawer-content-right',

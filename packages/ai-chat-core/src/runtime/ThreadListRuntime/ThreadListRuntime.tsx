@@ -172,6 +172,7 @@ export class ThreadListRuntime extends BaseSubscribable {
 
     // Subscribe to new thread changes
     newThread.subscribe(() => {
+      this.syncThreadStateFromRuntime(newThreadId, newThread)
       this.notifySubscribers()
     })
 
@@ -226,6 +227,7 @@ export class ThreadListRuntime extends BaseSubscribable {
 
         // Subscribe to thread changes
         thread.subscribe(() => {
+          this.syncThreadStateFromRuntime(state.id, thread)
           this.notifySubscribers()
         })
       }
@@ -234,6 +236,24 @@ export class ThreadListRuntime extends BaseSubscribable {
     } finally {
       this._isLoading = false
       this.notifySubscribers()
+    }
+  }
+
+  /**
+   * Syncs conversationId and title from thread runtime to thread state
+   */
+  private syncThreadStateFromRuntime(threadId: string, thread: ThreadRuntime): void {
+    const currentState = this._threadStates.get(threadId)
+    if (currentState) {
+      const hasChanges = currentState.conversationId !== thread.conversationId || currentState.title !== thread.title
+
+      if (hasChanges) {
+        currentState.conversationId = thread.conversationId
+        currentState.title = thread.title || currentState.title
+        currentState.updatedAt = Date.now()
+        this._threadStates.set(threadId, currentState)
+        this._threadItems.get(threadId)?.updateState(currentState)
+      }
     }
   }
 

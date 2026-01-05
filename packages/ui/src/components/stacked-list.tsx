@@ -110,6 +110,15 @@ const ListItemComp = forwardRef<HTMLDivElement, ListItemProps>(
     const withLink = !!to || !!linkProps
     const withButton = !to && !linkProps && !!onClick
 
+    const handleLinkClick = (e: React.MouseEvent) => {
+      // If modifier keys are pressed (Cmd+click, Ctrl+click, Shift+click),
+      // let the browser handle it (opens in new tab/window) - don't call onClick
+      if (e.metaKey || e.ctrlKey || e.shiftKey) {
+        return
+      }
+      onClick?.()
+    }
+
     return (
       <Comp
         ref={ref}
@@ -125,7 +134,7 @@ const ListItemComp = forwardRef<HTMLDivElement, ListItemProps>(
             className="cn-stacked-list-item-clickable-block"
             to={to || ''}
             {...(linkProps || {})}
-            onClick={() => onClick?.()}
+            onClick={handleLinkClick}
           />
         )}
         {withButton && <button className="cn-stacked-list-item-clickable-block" onClick={() => onClick?.()} />}

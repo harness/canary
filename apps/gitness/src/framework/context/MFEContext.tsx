@@ -92,6 +92,8 @@ export interface MFEContextProps {
     toAccountSettings: () => string
     toOrgSettings: () => string
     toProjectSettings: () => string
+    toCodePullRequestPath: (params: { repoPath: string; pullRequestId: string }) => string
+    toCodeRepositoryPath: (params: { repoPath: string }) => string
   }>
   routeUtils: Partial<{
     toCODERepository: ({ repoPath }: { repoPath: string }) => void

@@ -36,7 +36,9 @@ describe('transformRepoList', () => {
         createdAt: 1617181723,
         importing: false,
         favorite: true,
-        path: 'accountId/repo1'
+        path: 'accountId/repo1',
+        archived: undefined,
+        default_branch: ''
       }
     ])
   })

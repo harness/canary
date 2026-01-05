@@ -1,3 +1,4 @@
+import * as components from '@/components'
 import * as TooltipPrimitive from '@radix-ui/react-tooltip'
 import { render, RenderResult, screen, waitFor } from '@testing-library/react'
 import userEvent from '@testing-library/user-event'
@@ -12,6 +13,7 @@ vi.mock('clipboard-copy', () => ({
 }))
 
 const mockCopy = copy as ReturnType<typeof vi.fn>
+const mockToastDanger = vi.spyOn(components.toast, 'danger')
 
 const COPY_TEXT = 'test-copy-text'
 
@@ -31,6 +33,8 @@ const renderComponent = (props: Partial<React.ComponentProps<typeof CopyButton>>
 describe('CopyButton', () => {
   beforeEach(() => {
     vi.clearAllMocks()
+    mockToastDanger.mockClear()
+    mockToastDanger.mockImplementation(() => 'toast-id')
   })
 
   afterEach(() => {
@@ -177,7 +181,6 @@ describe('CopyButton', () => {
   })
 
   test('should handle multiple rapid clicks', async () => {
-    vi.useFakeTimers()
     renderComponent()
 
     const button = screen.getByRole('button', { name: /copy/i })
@@ -186,9 +189,9 @@ describe('CopyButton', () => {
     await userEvent.click(button)
     await userEvent.click(button)
 
-    expect(mockCopy).toHaveBeenCalledTimes(3)
-
-    vi.useRealTimers()
+    await waitFor(() => {
+      expect(mockCopy).toHaveBeenCalledTimes(3)
+    })
   })
 
   test('should forward ref correctly', () => {
@@ -200,5 +203,52 @@ describe('CopyButton', () => {
     )
 
     expect(ref).toHaveBeenCalled()
+  })
+
+  test('should call name function and copy result when name is a function (success case)', async () => {
+    const functionText = 'function-returned-text'
+    const nameFunction = vi.fn(() => functionText)
+
+    render(
+      <TestWrapper>
+        <CopyButton name={nameFunction} />
+      </TestWrapper>
+    )
+
+    const button = screen.getByRole('button', { name: /copy/i })
+    userEvent.click(button)
+
+    await waitFor(() => {
+      expect(nameFunction).toHaveBeenCalledTimes(1)
+      expect(mockCopy).toHaveBeenCalledWith(functionText)
+      expect(mockCopy).toHaveBeenCalledTimes(1)
+    })
+    expect(mockToastDanger).not.toHaveBeenCalled()
+  })
+
+  test('should show toast error when name function throws an error', async () => {
+    const errorMessage = 'Function error message'
+    const nameFunction = vi.fn(() => {
+      throw new Error(errorMessage)
+    })
+
+    render(
+      <TestWrapper>
+        <CopyButton name={nameFunction} />
+      </TestWrapper>
+    )
+
+    const button = screen.getByRole('button', { name: /copy/i })
+    userEvent.click(button)
+
+    await waitFor(() => {
+      expect(mockToastDanger).toHaveBeenCalledWith({
+        title: 'Failed to copy',
+        description: errorMessage
+      })
+    })
+
+    expect(nameFunction).toHaveBeenCalledTimes(1)
+    expect(mockCopy).not.toHaveBeenCalled()
   })
 })

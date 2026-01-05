@@ -1,11 +1,11 @@
 import { MouseEvent, useEffect, useState } from 'react'
 
-import { ButtonProps, IconPropsV2, IconV2, IconV2Color } from '@/components'
+import { ButtonProps, IconPropsV2, IconV2, IconV2Color, toast } from '@/components'
 import copy from 'clipboard-copy'
 
 export interface UseCopyButtonProps {
   onClick?: (e: MouseEvent<HTMLButtonElement>) => void
-  copyData: string
+  copyData: string | (() => string)
   iconSize?: IconPropsV2['size']
   color?: IconV2Color
 }
@@ -17,9 +17,25 @@ export const useCopyButton = ({ onClick, copyData, color, iconSize }: UseCopyBut
     e.stopPropagation()
     e.preventDefault()
 
-    // Use clipboard-copy library for cross-browser compatibility
-    copy(copyData).then(() => setCopied(true))
+    // Handle the copy operation asynchronously (clipboard API is async)
+    const performCopy = async () => {
+      try {
+        // Resolve copyData - string or sync function
+        const textToCopy = typeof copyData === 'function' ? copyData() : copyData
 
+        // Use clipboard-copy library for cross-browser compatibility
+        await copy(textToCopy)
+        setCopied(true)
+      } catch (error) {
+        // Handle potential errors from copy operation
+        toast.danger({
+          title: 'Failed to copy',
+          description: error instanceof Error ? error.message : 'An unknown error occurred'
+        })
+      }
+    }
+
+    performCopy()
     onClick?.(e)
   }
 

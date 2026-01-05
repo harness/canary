@@ -4,7 +4,7 @@ description: CopyButton component documentation
 beta: true
 ---
 
-The `CopyButton` component provides a button that copies text to the clipboard when clicked. It includes visual feedback to indicate when the text has been copied successfully.
+The `CopyButton` component provides a button that copies text to the clipboard when clicked. It includes visual feedback to indicate when the text has been copied successfully. The `name` prop can be a string or a function that returns a string, allowing for dynamic text generation.
 
 import { DocsPage } from "@/components/docs-page";
 
@@ -15,6 +15,8 @@ import { DocsPage } from "@/components/docs-page";
 
 ## Usage
 
+### Basic Usage
+
 ```typescript jsx
 import { CopyButton } from '@harnessio/ui/components'
 
@@ -23,15 +25,55 @@ return (
 )
 ```
 
+### Using Function Callback (Success Case)
+
+You can pass a function to `name` that returns the text to copy. This is useful when the text needs to be computed dynamically:
+
+```typescript jsx
+import { CopyButton } from '@harnessio/ui/components'
+
+const getTextToCopy = () => {
+  // Compute or retrieve the text dynamically
+  return `Current timestamp: ${Date.now()}`
+}
+
+return (
+  <CopyButton name={getTextToCopy} />
+)
+```
+
+### Using Function Callback (Error Handling)
+
+If the function throws an error, a toast notification will be displayed to the user:
+
+```typescript jsx
+import { CopyButton } from '@harnessio/ui/components'
+
+const getTextToCopy = () => {
+  // This might throw an error in some cases
+  if (someCondition) {
+    throw new Error('Failed to retrieve text')
+  }
+  return 'Text to copy'
+}
+
+return (
+  <CopyButton name={getTextToCopy} />
+)
+```
+
+When an error occurs, a toast with the title "Failed to copy" and the error message will be shown to the user.
+
 ## API Reference
 
 <DocsPage.PropsTable
   props={[
     {
       name: "name",
-      description: "The text to be copied to the clipboard",
+      description:
+        "The text to be copied to the clipboard. Can be a string or a function that returns a string. If a function is provided, it will be called when the button is clicked. If the function throws an error, a toast notification will be displayed.",
       required: true,
-      value: "string",
+      value: "string | (() => string)",
     },
     {
       name: "className",

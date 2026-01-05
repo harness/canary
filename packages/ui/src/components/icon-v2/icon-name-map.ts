@@ -5,6 +5,7 @@
 
 import AccountSolid from './icons/account-solid.svg'
 import Account from './icons/account.svg'
+import Agents from './icons/agents.svg'
 import Agile from './icons/agile.svg'
 import AiDeepResearch from './icons/ai-deep-research.svg'
 import AiMlOpsSolid from './icons/ai-ml-ops-solid.svg'
@@ -15,6 +16,8 @@ import AiTest from './icons/ai-test.svg'
 import Ai from './icons/ai.svg'
 import AppDiscoverySolid from './icons/app-discovery-solid.svg'
 import AppDiscovery from './icons/app-discovery.svg'
+import AppLayerImgSolid from './icons/app-layer-img-solid.svg'
+import AppLayerImg from './icons/app-layer-img.svg'
 import AppSecurityTestsSolid from './icons/app-security-tests-solid.svg'
 import AppSecurityTests from './icons/app-security-tests.svg'
 import AppleShortcut from './icons/apple-shortcut.svg'
@@ -48,6 +51,8 @@ import Artifacts from './icons/artifacts.svg'
 import AtSign from './icons/at-sign.svg'
 import AttachmentImage from './icons/attachment-image.svg'
 import Attachment from './icons/attachment.svg'
+import BaseImgSolid from './icons/base-img-solid.svg'
+import BaseImg from './icons/base-img.svg'
 import BellOff from './icons/bell-off.svg'
 import Bell from './icons/bell.svg'
 import BoldSquere from './icons/bold-squere.svg'
@@ -255,6 +260,7 @@ import Label from './icons/label.svg'
 import Lamp from './icons/lamp.svg'
 import LaptopDevMode from './icons/laptop-dev-mode.svg'
 import LineSpace from './icons/line-space.svg'
+import Link from './icons/link.svg'
 import ListSelect from './icons/list-select.svg'
 import List from './icons/list.svg'
 import Loader from './icons/loader.svg'
@@ -364,6 +370,7 @@ import Satellite from './icons/satellite.svg'
 import ScissorAlt from './icons/scissor-alt.svg'
 import Scissor from './icons/scissor.svg'
 import SearchEngine from './icons/search-engine.svg'
+import SearchShield from './icons/search-shield.svg'
 import SearchWindow from './icons/search-window.svg'
 import Search from './icons/search.svg'
 import SecretSshSolid from './icons/secret-ssh-solid.svg'
@@ -443,6 +450,7 @@ import UndoAction from './icons/undo-action.svg'
 import UndoCircleSolid from './icons/undo-circle-solid.svg'
 import UndoCircle from './icons/undo-circle.svg'
 import Undo from './icons/undo.svg'
+import Unlink from './icons/unlink.svg'
 import UpDown from './icons/up-down.svg'
 import Upload from './icons/upload.svg'
 import UserBadgeCheck from './icons/user-badge-check.svg'
@@ -473,6 +481,7 @@ import ZoomOut from './icons/zoom-out.svg'
 export const IconNameMapV2 = {
   'account-solid': AccountSolid,
   account: Account,
+  agents: Agents,
   agile: Agile,
   'ai-deep-research': AiDeepResearch,
   'ai-ml-ops-solid': AiMlOpsSolid,
@@ -483,6 +492,8 @@ export const IconNameMapV2 = {
   ai: Ai,
   'app-discovery-solid': AppDiscoverySolid,
   'app-discovery': AppDiscovery,
+  'app-layer-img-solid': AppLayerImgSolid,
+  'app-layer-img': AppLayerImg,
   'app-security-tests-solid': AppSecurityTestsSolid,
   'app-security-tests': AppSecurityTests,
   'apple-shortcut': AppleShortcut,
@@ -516,6 +527,8 @@ export const IconNameMapV2 = {
   'at-sign': AtSign,
   'attachment-image': AttachmentImage,
   attachment: Attachment,
+  'base-img-solid': BaseImgSolid,
+  'base-img': BaseImg,
   'bell-off': BellOff,
   bell: Bell,
   'bold-squere': BoldSquere,
@@ -723,6 +736,7 @@ export const IconNameMapV2 = {
   lamp: Lamp,
   'laptop-dev-mode': LaptopDevMode,
   'line-space': LineSpace,
+  link: Link,
   'list-select': ListSelect,
   list: List,
   loader: Loader,
@@ -832,6 +846,7 @@ export const IconNameMapV2 = {
   'scissor-alt': ScissorAlt,
   scissor: Scissor,
   'search-engine': SearchEngine,
+  'search-shield': SearchShield,
   'search-window': SearchWindow,
   search: Search,
   'secret-ssh-solid': SecretSshSolid,
@@ -911,6 +926,7 @@ export const IconNameMapV2 = {
   'undo-circle-solid': UndoCircleSolid,
   'undo-circle': UndoCircle,
   undo: Undo,
+  unlink: Unlink,
   'up-down': UpDown,
   upload: Upload,
   'user-badge-check': UserBadgeCheck,

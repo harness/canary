@@ -53,6 +53,7 @@ interface FilteredFile {
 }
 
 interface SearchFilesProps {
+  onSearch?: (query: string) => void
   navigateToFile: (file: string) => void
   filesList?: string[] | FileItem[]
   searchInputSize?: SearchInputProps['size']
@@ -75,6 +76,7 @@ export const SearchFiles = ({
   filesList,
   searchInputSize = 'md',
   inputContainerClassName,
+  onSearch,
   contentClassName
 }: SearchFilesProps) => {
   const [isOpen, setIsOpen] = useState(false)
@@ -119,10 +121,14 @@ export const SearchFiles = ({
     setFilteredFiles(_filteredFiles)
   }, [filesList, currentQuery])
 
-  const handleInputChange = useCallback((searchQuery: string) => {
-    setIsOpen(searchQuery !== '')
-    setCurrentQuery(searchQuery)
-  }, [])
+  const handleInputChange = useCallback(
+    (searchQuery: string) => {
+      setIsOpen(searchQuery !== '')
+      setCurrentQuery(searchQuery)
+      onSearch?.(searchQuery)
+    },
+    [onSearch]
+  )
 
   return (
     <DropdownMenu.Root open={isOpen} onOpenChange={setIsOpen} modal={false}>

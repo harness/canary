@@ -11,6 +11,7 @@ import {
 } from 'react'
 
 import { cn, useMergeRefs } from '@/utils'
+import { Text } from '@components/text'
 import { cva, type VariantProps } from 'class-variance-authority'
 
 function InputAffix({ children, isPrefix = false }: PropsWithChildren<{ isPrefix?: boolean }>) {
@@ -99,16 +100,14 @@ const BaseInput = forwardRef<HTMLInputElement, InputProps>(
       <InputAffix isPrefix>{prefix}</InputAffix>
     )
 
-    // TODO: Update classed after design system update
     const wrappedLeadingSuffix = isLeadingSuffixComponent ? (
       cloneElement(leadingSuffix as ReactElement, {
-        className: cn(
-          'text-cn-3 text-cn-size-1 font-medium mr-cn-2xs whitespace-nowrap',
-          (leadingSuffix as ReactElement).props?.className
-        )
+        className: cn('mr-cn-2xs whitespace-nowrap', (leadingSuffix as ReactElement).props?.className)
       })
     ) : leadingSuffix ? (
-      <span className="text-cn-3 text-cn-size-1 font-medium mr-cn-2xs whitespace-nowrap">{leadingSuffix}</span>
+      <Text variant="caption-strong" color="foreground-3" wrap="nowrap" className="mr-cn-2xs">
+        {leadingSuffix}
+      </Text>
     ) : null
 
     const wrappedSuffix = isSuffixComponent ? (

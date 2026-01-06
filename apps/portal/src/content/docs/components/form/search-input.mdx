@@ -30,6 +30,94 @@ return (
 </div>
 ) }`} />
 
+## Search with Navigation
+
+Below is an example of how to implement a search input with navigation controls. The navigation buttons (previous, next, and clear) appear when you start typing.
+
+**Navigation:**
+
+- Click the **↑** button or press **Shift+Enter** to go to the previous result
+- Click the **↓** button or press **Enter** to go to the next result
+- Click the **×** button to clear the search
+- Click the **⌘F** badge or press **⌘F** (Mac) / **Ctrl+F** (Windows/Linux) to focus the search input
+
+<DocsPage.ComponentExample client:only code={`() => {
+  const [searchValue, setSearchValue] = React.useState("");
+  const [currentIndex, setCurrentIndex] = React.useState(0);
+  const searchInputRef = React.useRef(null);
+  
+  // Mock search results for demonstration
+  const mockResults = searchValue ? Array.from({ length: 1000 }, (_, i) => \`Result \${i + 1}\`) : [];
+  const totalResults = mockResults.length;
+
+const handlePrev = () => {
+setCurrentIndex((prev) => (prev > 0 ? prev - 1 : totalResults - 1));
+};
+
+const handleNext = () => {
+setCurrentIndex((prev) => (prev < totalResults - 1 ? prev + 1 : 0));
+};
+
+const handleEnter = (text, reverse) => {
+if (reverse) {
+handlePrev();
+} else {
+handleNext();
+}
+};
+
+const handleShortcutClick = () => {
+searchInputRef.current?.focus();
+};
+
+// Keyboard shortcut handler
+React.useEffect(() => {
+const handleKeyDown = (e) => {
+if ((e.metaKey || e.ctrlKey) && e.key === 'f') {
+e.preventDefault();
+searchInputRef.current?.focus();
+}
+};
+window.addEventListener('keydown', handleKeyDown);
+return () => window.removeEventListener('keydown', handleKeyDown);
+}, []);
+
+return (
+
+<div className="flex flex-col gap-cn-xl min-w-[400px]">
+  <div className="mb-cn-xs w-full font-bold mt-cn-xl">Search with Navigation:</div>
+  <SearchInput
+    ref={searchInputRef}
+    placeholder="Type to search..."
+    onChange={(value) => {
+      setSearchValue(value);
+      setCurrentIndex(0);
+    }}
+    showPrevNextButtons
+    counter={searchValue ? \`\${currentIndex + 1}/\${totalResults}\` : ""}
+    onPrev={handlePrev}
+    onNext={handleNext}
+    onEnter={handleEnter}
+    suffix={
+      <button 
+        onClick={handleShortcutClick}
+        className="mr-cn-2xs cursor-pointer bg-transparent border-0 p-0"
+      >
+        <Shortcut>⌘F</Shortcut>
+      </button>
+    }
+  />
+  <div className="rounded-cn-3 border p-cn-sm">
+    <div className="text-cn-size-2 font-medium underline underline-offset-2">
+      Current Result:
+    </div>
+    <p className="mt-cn-3xs font-body-code text-cn-size-2">
+      {searchValue && totalResults > 0 ? mockResults[currentIndex] : "(no results)"}
+    </p>
+  </div>
+</div>
+) }`} />
+
 ## Usage
 
 ```typescript jsx
@@ -183,6 +271,53 @@ return (
       required: false,
       defaultValue: "false",
       value: "boolean",
+    },
+    {
+      name: "showPrevNextButtons",
+      description:
+        "Whether to show navigation buttons (previous, next, clear) when search text is entered",
+      required: false,
+      defaultValue: "false",
+      value: "boolean",
+    },
+    {
+      name: "counter",
+      description:
+        "Text to display between the input and suffix (e.g., '1/10' for result count)",
+      required: false,
+      defaultValue: "",
+      value: "string",
+    },
+    {
+      name: "onEnter",
+      description:
+        "Callback when Enter key is pressed. Receives the search text and a boolean indicating if Shift was held (for reverse navigation)",
+      required: false,
+      defaultValue: "",
+      value: "(text: string, reverse?: boolean) => void",
+    },
+    {
+      name: "onPrev",
+      description:
+        "Callback when previous button is clicked. If not provided, falls back to onEnter with reverse=true",
+      required: false,
+      defaultValue: "",
+      value: "(text: string) => void",
+    },
+    {
+      name: "onNext",
+      description:
+        "Callback when next button is clicked. If not provided, falls back to onEnter with reverse=false",
+      required: false,
+      defaultValue: "",
+      value: "(text: string) => void",
+    },
+    {
+      name: "onKeyDown",
+      description: "Callback for keydown events on the input",
+      required: false,
+      defaultValue: "",
+      value: "(event: React.KeyboardEvent<HTMLInputElement>) => void",
     },
   ]}
 />

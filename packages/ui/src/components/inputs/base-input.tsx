@@ -48,10 +48,24 @@ export interface InputProps extends BaseInputProps {
   inputContainerClassName?: string
   prefix?: ReactNode
   suffix?: ReactNode
+  leadingSuffix?: ReactNode
 }
 
 const BaseInput = forwardRef<HTMLInputElement, InputProps>(
-  ({ theme, size, className, inputContainerClassName, prefix = null, suffix = null, autoFocus, ...props }, ref) => {
+  (
+    {
+      theme,
+      size,
+      className,
+      inputContainerClassName,
+      prefix = null,
+      suffix = null,
+      leadingSuffix,
+      autoFocus,
+      ...props
+    },
+    ref
+  ) => {
     const inputRef = useRef<HTMLInputElement | null>(null)
 
     const mergedRef = useMergeRefs<HTMLInputElement>([
@@ -71,9 +85,10 @@ const BaseInput = forwardRef<HTMLInputElement, InputProps>(
       }
     }, [autoFocus])
 
-    // Check if prefix/suffix is a valid React element
+    // Check if prefix/suffix/leadingSuffix is a valid React element
     const isPrefixComponent = isValidElement(prefix)
     const isSuffixComponent = isValidElement(suffix)
+    const isLeadingSuffixComponent = isValidElement(leadingSuffix)
 
     // Create wrapped versions with classes if they are components
     const wrappedPrefix = isPrefixComponent ? (
@@ -83,6 +98,18 @@ const BaseInput = forwardRef<HTMLInputElement, InputProps>(
     ) : (
       <InputAffix isPrefix>{prefix}</InputAffix>
     )
+
+    // TODO: Update classed after design system update
+    const wrappedLeadingSuffix = isLeadingSuffixComponent ? (
+      cloneElement(leadingSuffix as ReactElement, {
+        className: cn(
+          'text-cn-3 text-cn-size-1 font-medium mr-cn-2xs whitespace-nowrap',
+          (leadingSuffix as ReactElement).props?.className
+        )
+      })
+    ) : leadingSuffix ? (
+      <span className="text-cn-3 text-cn-size-1 font-medium mr-cn-2xs whitespace-nowrap">{leadingSuffix}</span>
+    ) : null
 
     const wrappedSuffix = isSuffixComponent ? (
       cloneElement(suffix as ReactElement, {
@@ -96,6 +123,7 @@ const BaseInput = forwardRef<HTMLInputElement, InputProps>(
       <div className={cn(inputVariants({ size, theme }), inputContainerClassName)}>
         {wrappedPrefix}
         <input className={cn('cn-input-input', className)} ref={mergedRef} {...props} />
+        {wrappedLeadingSuffix}
         {wrappedSuffix}
       </div>
     )

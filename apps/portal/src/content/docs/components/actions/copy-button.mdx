@@ -13,6 +13,57 @@ import { DocsPage } from "@/components/docs-page";
   code={`<CopyButton name="Text to copy" />`}
 />
 
+## Copy Button with Function Callback
+
+Below are examples showing how to use a function callback for dynamic text generation, including both success and error cases:
+
+<DocsPage.ComponentExample client:only code={`() => {
+  const [copyCount, setCopyCount] = React.useState(0);
+  const [shouldError, setShouldError] = React.useState(false);
+
+const getTextToCopy = () => {
+if (shouldError) {
+throw new Error('Failed to retrieve text - simulated error');
+}
+setCopyCount((prev) => prev + 1);
+return \`Copied \${copyCount + 1} times - Timestamp: \${Date.now()}\`;
+};
+
+const getErrorText = () => {
+throw new Error('This operation is not allowed');
+};
+
+return (
+
+<div className="flex flex-col gap-cn-xl min-w-[400px]">
+  <div className="mb-cn-xs w-full font-bold mt-cn-xl">Success Case:</div>
+  <div className="flex items-center gap-cn-md">
+    <CopyButton name={getTextToCopy} />
+    <span className="text-cn-size-2">Click to copy dynamic text (copied {copyCount} times)</span>
+  </div>
+
+<div className="mb-cn-xs w-full font-bold mt-cn-xl">Error Case:</div>
+<div className="flex items-center gap-cn-md">
+  <CopyButton name={getErrorText} />
+  <span className="text-cn-size-2">Click to see error toast notification</span>
+</div>
+
+  <div className="mb-cn-xs w-full font-bold mt-cn-xl">Toggle Error State:</div>
+  <div className="flex items-center gap-cn-md">
+    <CopyButton name={getTextToCopy} />
+    <label className="flex items-center gap-cn-xs cursor-pointer">
+      <input 
+        type="checkbox" 
+        checked={shouldError} 
+        onChange={(e) => setShouldError(e.target.checked)}
+        className="cursor-pointer"
+      />
+      <span className="text-cn-size-2">Simulate error on copy</span>
+    </label>
+  </div>
+</div>
+) }`} />
+
 ## Usage
 
 ### Basic Usage

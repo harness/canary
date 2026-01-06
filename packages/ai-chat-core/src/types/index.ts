@@ -19,7 +19,15 @@ export type {
   GroupRendererProps,
   PluginConfig
 } from './plugin'
-export type { StreamAdapter, ThreadListAdapter, StreamEvent, StreamRequest, StreamChunk } from './adapters'
+export type {
+  StreamAdapter,
+  ThreadListAdapter,
+  StreamEvent,
+  StreamRequest,
+  StreamChunk,
+  ThreadListLoadOptions,
+  ThreadListPaginatedResponse
+} from './adapters'
 export type { SSEEvent } from '../utils/BaseSSEStreamAdapter'
 export type {
   CapabilityStatus,

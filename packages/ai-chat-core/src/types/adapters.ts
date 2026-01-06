@@ -59,10 +59,26 @@ export interface StreamChunk {
   event: StreamEvent
 }
 
+export interface ThreadListLoadOptions {
+  query?: string
+  page?: number
+  size?: number
+}
+
+export interface ThreadListPaginatedResponse {
+  threads: ThreadListItemState[]
+  pagination?: {
+    total?: number
+    pageSize?: number
+    pageCount?: number
+    pageNumber?: number
+  }
+}
+
 export interface ThreadListAdapter {
   listThreads(): Promise<ThreadListItemState[]>
 
-  loadThreads(): Promise<ThreadListItemState[]>
+  loadThreads(options?: ThreadListLoadOptions): Promise<ThreadListItemState[] | ThreadListPaginatedResponse>
 
   loadThread(threadId: string): Promise<Message[]>
 

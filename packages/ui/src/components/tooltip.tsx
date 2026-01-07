@@ -10,7 +10,7 @@ import {
 } from 'react'
 
 import { usePortal } from '@/context'
-import { useTheme, ModeType, ColorType, ContrastType, FullTheme } from '@/context/theme'
+import { ColorType, ContrastType, FullTheme, ModeType, useTheme } from '@/context/theme'
 import * as TooltipPrimitive from '@radix-ui/react-tooltip'
 import { cn } from '@utils/cn'
 

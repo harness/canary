@@ -6,6 +6,30 @@
         "$value": "{spacing.2}"
       }
     },
+    "radial": {
+      "size": {
+        "2xs": {
+          "$type": "sizing",
+          "$value": "{size.half}"
+        },
+        "xs": {
+          "$type": "sizing",
+          "$value": "{size.1}"
+        },
+        "sm": {
+          "$type": "sizing",
+          "$value": "{size.1}"
+        },
+        "md": {
+          "$type": "sizing",
+          "$value": "{size.1-half}"
+        },
+        "lg": {
+          "$type": "sizing",
+          "$value": "{size.2}"
+        }
+      }
+    },
     "size": {
       "sm": {
         "$type": "sizing",

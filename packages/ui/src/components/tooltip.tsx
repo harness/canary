@@ -94,6 +94,18 @@ export const Tooltip = forwardRef<HTMLDivElement, TooltipProps>(
       return currentTheme
     }, [shouldSwapMode, currentTheme])
 
+    // Wrap custom content in theme container for mode switching
+    const wrappedContent = useMemo(() => {
+      if (shouldSwapMode && tooltipTheme) {
+        return (
+          <div data-theme={tooltipTheme}>
+            {content}
+          </div>
+        )
+      }
+      return content
+    }, [shouldSwapMode, tooltipTheme, content])
+
     return (
       <TooltipPrimitive.Root delayDuration={delay} open={open}>
         <TooltipPrimitive.Trigger asChild>{children}</TooltipPrimitive.Trigger>
@@ -122,7 +134,7 @@ export const Tooltip = forwardRef<HTMLDivElement, TooltipProps>(
           >
             <div className="cn-tooltip-content">
               {!!title && <span className="cn-tooltip-title">{title}</span>}
-              <div>{content}</div>
+              <div>{wrappedContent}</div>
             </div>
             {!hideArrow && (
               <TooltipPrimitive.Arrow width={20} height={8} asChild>

@@ -18,7 +18,8 @@ export const iconColorVariants = cva('', {
       success: 'text-cn-icon-success',
       info: 'text-cn-icon-info',
       neutral: 'text-cn-disabled',
-      merged: 'text-cn-icon-merged'
+      merged: 'text-cn-icon-merged',
+      risk: 'text-cn-icon-risk'
     }
   },
   defaultVariants: {

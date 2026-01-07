@@ -32,7 +32,7 @@ IconV2 supports multiple predefined size variants: `2xs`, `xs`, `sm`, `md`, `lg`
 
 ## Color Variants
 
-IconV2 supports predefined color variants through the `color` prop: `inherit`, `danger`, `warning`, `success`, `info`, and `disabled`. The default color is `inherit`.
+IconV2 supports predefined color variants through the `color` prop: `inherit`, `danger`, `warning`, `success`, `info`, `neutral`, `risk`, and `disabled`. The default color is `inherit`.
 
 <DocsPage.ComponentExample
   client:only
@@ -42,6 +42,7 @@ IconV2 supports predefined color variants through the `color` prop: `inherit`, `
     <IconV2 name="warning-triangle-solid" size="md" color="warning" />
     <IconV2 name="check" size="md" color="success" />
     <IconV2 name="info" size="md" color="info" />
+    <IconV2 name="warning-triangle-solid" size="md" color="risk" />
     <IconV2 name="check" size="md" color="neutral" />
   </Layout.Flex>`}
 />
@@ -79,7 +80,7 @@ The `IconV2` component can be sized using the `size` prop, which applies predefi
 <IconV2
   name="double-tick"   // name of the icon
   size="md"           // [OPTIONAL] size variant (2xs, xs, sm, md, lg, xl)
-  color="inherit"     // [OPTIONAL] color variant (inherit, danger, warning, success, info, disabled)
+  color="inherit"     // [OPTIONAL] color variant (inherit, danger, warning, success, info, risk, neutral, disabled)
   className="my-class" // [OPTIONAL] custom class name
   skipSize={false}    // [OPTIONAL] skip size classes if custom styling is applied
 />
@@ -118,7 +119,7 @@ The `IconV2` component can be sized using the `size` prop, which applies predefi
       description: "Color variant of the icon",
       required: false,
       value:
-        "'inherit' | 'danger' | 'warning' | 'success' | 'info' | 'disabled'",
+        "'inherit' | 'danger' | 'warning' | 'success' | 'info' | 'risk' | 'neutral' | 'disabled'",
       defaultValue: "'inherit'",
     },
     {

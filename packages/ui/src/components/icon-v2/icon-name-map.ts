@@ -182,6 +182,7 @@ import EnergyUsageWindow from './icons/energy-usage-window.svg'
 import EngineeringInsightsSolid from './icons/engineering-insights-solid.svg'
 import EngineeringInsights from './icons/engineering-insights.svg'
 import Enlarge from './icons/enlarge.svg'
+import EnvInfrastructure from './icons/env-infrastructure.svg'
 import Environments from './icons/environments.svg'
 import Erase from './icons/erase.svg'
 import ErrorTracking from './icons/error-tracking.svg'
@@ -259,6 +260,11 @@ import LabelSolid from './icons/label-solid.svg'
 import Label from './icons/label.svg'
 import Lamp from './icons/lamp.svg'
 import LaptopDevMode from './icons/laptop-dev-mode.svg'
+import LightBulbCircleSolid from './icons/light-bulb-circle-solid.svg'
+import LightBulbCircle from './icons/light-bulb-circle.svg'
+import LightBulbOff from './icons/light-bulb-off.svg'
+import LightBulbOnSolid from './icons/light-bulb-on-solid.svg'
+import LightBulbOn from './icons/light-bulb-on.svg'
 import LineSpace from './icons/line-space.svg'
 import Link from './icons/link.svg'
 import ListSelect from './icons/list-select.svg'
@@ -658,6 +664,7 @@ export const IconNameMapV2 = {
   'engineering-insights-solid': EngineeringInsightsSolid,
   'engineering-insights': EngineeringInsights,
   enlarge: Enlarge,
+  'env-infrastructure': EnvInfrastructure,
   environments: Environments,
   erase: Erase,
   'error-tracking': ErrorTracking,
@@ -735,6 +742,11 @@ export const IconNameMapV2 = {
   label: Label,
   lamp: Lamp,
   'laptop-dev-mode': LaptopDevMode,
+  'light-bulb-circle-solid': LightBulbCircleSolid,
+  'light-bulb-circle': LightBulbCircle,
+  'light-bulb-off': LightBulbOff,
+  'light-bulb-on-solid': LightBulbOnSolid,
+  'light-bulb-on': LightBulbOn,
   'line-space': LineSpace,
   link: Link,
   'list-select': ListSelect,

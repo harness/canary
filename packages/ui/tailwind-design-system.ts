@@ -164,7 +164,8 @@ const tailwindDesignSystem: TailwindConfig = {
         warning: 'var(--cn-set-warning-primary-bg)',
         success: 'var(--cn-set-success-primary-bg)',
         info: 'var(--cn-set-blue-primary-bg)',
-        merged: 'var(--cn-set-purple-primary-bg)'
+        merged: 'var(--cn-set-purple-primary-bg)',
+        risk: 'var(--cn-set-orange-primary-bg)'
       },
 
       /**

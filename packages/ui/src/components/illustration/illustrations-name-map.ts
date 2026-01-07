@@ -37,6 +37,12 @@ import NoSearchMagnifyingGlassLight from './images/no-search-magnifying-glass-li
 import NoSearchMagnifyingGlass from './images/no-search-magnifying-glass.svg'
 import SubMenuEllipse from './images/sub-menu-ellipse.svg'
 import TooltipArrow from './images/tooltip-arrow.svg'
+import VulnerabilityActiveIssues from './images/vulnerabilty-active-issues.svg'
+import VulnerabilityCritical from './images/vulnerabilty-critical.svg'
+import VulnerabilityHigh from './images/vulnerabilty-high.svg'
+import VulnerabilityInfo from './images/vulnerabilty-info.svg'
+import VulnerabilityLow from './images/vulnerabilty-low.svg'
+import VulnerabilityMedium from './images/vulnerabilty-medium.svg'
 
 export const IllustrationsNameMap = {
   'create-workspace': CreateWorkspace,
@@ -58,6 +64,12 @@ export const IllustrationsNameMap = {
   'sub-menu-ellipse': SubMenuEllipse,
   'chat-avatar': ChatAvatar,
   'tooltip-arrow': TooltipArrow,
+  'vulnerability-active-issues': VulnerabilityActiveIssues,
+  'vulnerability-info': VulnerabilityInfo,
+  'vulnerability-low': VulnerabilityLow,
+  'vulnerability-medium': VulnerabilityMedium,
+  'vulnerability-high': VulnerabilityHigh,
+  'vulnerability-critical': VulnerabilityCritical,
 
   // Light theme variants
   'chat-avatar-light': ChatAvatarLight,

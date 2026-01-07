@@ -5,10 +5,12 @@ import {
   ForwardRefExoticComponent,
   PropsWithoutRef,
   ReactNode,
-  RefAttributes
+  RefAttributes,
+  useMemo
 } from 'react'
 
 import { usePortal } from '@/context'
+import { useTheme, ModeType, ColorType, ContrastType, FullTheme } from '@/context/theme'
 import * as TooltipPrimitive from '@radix-ui/react-tooltip'
 import { cn } from '@utils/cn'
 
@@ -16,6 +18,30 @@ import { Illustration } from './illustration'
 
 type TooltipPrimitiveRootType = ComponentProps<typeof TooltipPrimitive.Root>
 type TooltipPrimitiveContentType = ComponentProps<typeof TooltipPrimitive.Content>
+
+/**
+ * Swaps the mode (light ↔ dark) while preserving color and contrast variants
+ */
+function swapMode(theme: FullTheme): FullTheme {
+  const parts = theme.split('-')
+  if (parts.length !== 3) return theme
+
+  const [, color, contrast] = parts as [string, ColorType, ContrastType]
+  const currentMode = parts[0] as ModeType
+
+  // Swap light ↔ dark
+  const swappedMode = currentMode === ModeType.Light ? ModeType.Dark : ModeType.Light
+
+  return `${swappedMode}-${color}-${contrast}` as FullTheme
+}
+
+/**
+ * Detects if content is custom (not just a simple string)
+ */
+function isCustomContent(content: ReactNode): boolean {
+  // If content is not a string, it's custom (React components, JSX, etc.)
+  return typeof content !== 'string'
+}
 
 export type TooltipProps = {
   children: ReactNode
@@ -51,8 +77,22 @@ export const Tooltip = forwardRef<HTMLDivElement, TooltipProps>(
     ref
   ) => {
     const { portalContainer } = usePortal()
+    const { theme: currentTheme } = useTheme()
+
     // Automatically increase sideOffset when arrow is hidden
     const computedSideOffset = sideOffset ?? (hideArrow ? 6 : 2)
+
+    // Auto-swap mode for custom content in default theme
+    const shouldSwapMode = useMemo(() => {
+      return theme === 'default' && isCustomContent(content) && currentTheme
+    }, [theme, content, currentTheme])
+
+    const tooltipTheme = useMemo(() => {
+      if (shouldSwapMode && currentTheme) {
+        return swapMode(currentTheme)
+      }
+      return currentTheme
+    }, [shouldSwapMode, currentTheme])
 
     return (
       <TooltipPrimitive.Root delayDuration={delay} open={open}>
@@ -71,8 +111,11 @@ export const Tooltip = forwardRef<HTMLDivElement, TooltipProps>(
               {
                 ['cn-tooltip-default']: theme === 'default'
               },
+              // Apply theme switching class for custom content in default theme
+              shouldSwapMode && tooltipTheme && `theme-${tooltipTheme}`,
               className
             )}
+            data-theme={shouldSwapMode ? tooltipTheme : undefined}
             side={side}
             align={align}
             sideOffset={computedSideOffset}

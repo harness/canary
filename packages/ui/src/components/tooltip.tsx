@@ -97,11 +97,7 @@ export const Tooltip = forwardRef<HTMLDivElement, TooltipProps>(
     // Wrap custom content in theme container for mode switching
     const wrappedContent = useMemo(() => {
       if (shouldSwapMode && tooltipTheme) {
-        return (
-          <div className={tooltipTheme}>
-            {content}
-          </div>
-        )
+        return <div className={tooltipTheme}>{content}</div>
       }
       return content
     }, [shouldSwapMode, tooltipTheme, content])

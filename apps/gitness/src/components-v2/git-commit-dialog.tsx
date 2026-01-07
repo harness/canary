@@ -88,7 +88,7 @@ export default function GitCommitDialog({
           sha
         }
       ],
-      branch: gitRef,
+      branch: deNormalizeGitRef(gitRef),
       new_branch: commitToGitRef === CommitToGitRefOption.NEW_BRANCH ? newBranchName : '',
       title: message || commitTitlePlaceholder,
       message: description,

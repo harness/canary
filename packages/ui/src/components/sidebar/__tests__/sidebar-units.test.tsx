@@ -51,7 +51,13 @@ vi.mock('@utils/cn', () => ({
 vi.mock('@/context', () => ({
   useTranslation: () => ({
     t: (_key: string, fallback: string) => fallback
-  })
+  }),
+  defaultTheme: 'dark-std-std',
+  ModeType: {
+    Dark: 'dark',
+    Light: 'light',
+    System: 'system'
+  }
 }))
 
 const mockUseScrollArea = vi.fn((_props?: any) => ({

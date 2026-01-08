@@ -39,3 +39,4 @@ export type {
   CapabilityConfig,
   CapabilityContent
 } from './capability'
+export type { ChatContextItem, ChatContextMap, ChatContextData, ChatContextValue } from './context'

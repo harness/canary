@@ -35,7 +35,7 @@ export default {
     },
 
     // Shimmer effect for executing status
-    '&:has(> [data-status="executing"])': {
+    '&:not(.cn-studio-card-group):has(> [data-status="executing"])': {
       '--border-angle': '0turn',
       '--main-bg':
         'conic-gradient(from var(--border-angle), var(--cn-bg-3), var(--cn-bg-3) 5%, var(--cn-bg-3) 60%, var(--cn-bg-3) 95%)',

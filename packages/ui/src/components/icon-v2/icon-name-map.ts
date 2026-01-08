@@ -333,6 +333,7 @@ import PinSlash from './icons/pin-slash.svg'
 import PinSolid from './icons/pin-solid.svg'
 import Pin from './icons/pin.svg'
 import PipelineExecutions from './icons/pipeline-executions.svg'
+import PipelineGroup from './icons/pipeline-group.svg'
 import PipelineSolid from './icons/pipeline-solid.svg'
 import Pipeline from './icons/pipeline.svg'
 import PlaySolid from './icons/play-solid.svg'
@@ -815,6 +816,7 @@ export const IconNameMapV2 = {
   'pin-solid': PinSolid,
   pin: Pin,
   'pipeline-executions': PipelineExecutions,
+  'pipeline-group': PipelineGroup,
   'pipeline-solid': PipelineSolid,
   pipeline: Pipeline,
   'play-solid': PlaySolid,

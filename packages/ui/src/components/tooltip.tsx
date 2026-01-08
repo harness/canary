@@ -119,11 +119,8 @@ export const Tooltip = forwardRef<HTMLDivElement, TooltipProps>(
               {
                 ['cn-tooltip-default']: theme === 'default'
               },
-              // Apply theme switching class for custom content in default theme
-              shouldSwapMode && tooltipTheme && `theme-${tooltipTheme}`,
               className
             )}
-            data-theme={shouldSwapMode ? tooltipTheme : undefined}
             side={side}
             align={align}
             sideOffset={computedSideOffset}

@@ -1,4 +1,4 @@
-import { useEffect, useMemo } from 'react'
+import { Fragment, useEffect, useMemo } from 'react'
 
 import { Button, Checkbox, IconV2, PaginationProps, Table, tableVariants } from '@/components'
 import {
@@ -311,9 +311,8 @@ export const DataTable = function DataTable<TData>({
       </Table.Header>
       <Table.Body>
         {table.getRowModel().rows.map(row => (
-          <>
+          <Fragment key={row.id}>
             <Table.Row
-              key={row.id}
               className={getRowClassName?.(row)}
               onClick={onRowClick ? () => onRowClick(row.original, row.index) : undefined}
               selected={enableRowSelection ? row.getIsSelected() : undefined}
@@ -336,12 +335,12 @@ export const DataTable = function DataTable<TData>({
               })}
             </Table.Row>
             {row.getIsExpanded() && renderSubComponent && (
-              <Table.Row key={`${row.id}-expanded`} className="bg-cn-2">
+              <Table.Row className="bg-cn-2">
                 <Table.Cell></Table.Cell>
                 <Table.Cell colSpan={row.getAllCells().length - 1}>{renderSubComponent({ row })}</Table.Cell>
               </Table.Row>
             )}
-          </>
+          </Fragment>
         ))}
       </Table.Body>
     </Table.Root>

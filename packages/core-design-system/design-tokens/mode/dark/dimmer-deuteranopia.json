@@ -1589,11 +1589,11 @@
       },
       "card-footer": {
         "$type": "color",
-        "$value": "{comp.pipeline.bg}"
+        "$value": "{gray.1000}"
       },
       "bg": {
         "$type": "color",
-        "$value": "{gray.1000}"
+        "$value": "{pure.black}"
       }
     },
     "sidebar": {

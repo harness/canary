@@ -1900,7 +1900,7 @@
     "data-viz": {
       "amber": {
         "$type": "color",
-        "$value": "{yellow.500}",
+        "$value": "{yellow.600}",
         "$description": "Amber data visualization color. Used for charts, graphs, and data representations."
       },
       "blue": {
@@ -1955,7 +1955,7 @@
       },
       "red": {
         "$type": "color",
-        "$value": "{red.500}",
+        "$value": "{red.600}",
         "$description": "Red data visualization color. Used for charts, graphs, and data representations."
       },
       "yellow": {

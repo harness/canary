@@ -1900,7 +1900,7 @@
     "data-viz": {
       "amber": {
         "$type": "color",
-        "$value": "{yellow.700}",
+        "$value": "{yellow.500}",
         "$description": "Amber data visualization color. Used for charts, graphs, and data representations."
       },
       "blue": {
@@ -1910,7 +1910,7 @@
       },
       "brown": {
         "$type": "color",
-        "$value": "{brown.700}",
+        "$value": "{brown.600}",
         "$description": "Brown data visualization color. Used for charts, graphs, and data representations."
       },
       "cyan": {
@@ -1920,32 +1920,32 @@
       },
       "forest": {
         "$type": "color",
-        "$value": "{forest.800}",
+        "$value": "{forest.400}",
         "$description": "Forest data visualization color. Used for charts, graphs, and data representations."
       },
       "gray": {
         "$type": "color",
-        "$value": "{gray.600}",
+        "$value": "{gray.500}",
         "$description": "Gray data visualization color. Used for charts, graphs, and data representations."
       },
       "green": {
         "$type": "color",
-        "$value": "{lime.600}",
+        "$value": "{forest.300}",
         "$description": "Green data visualization color. Used for charts, graphs, and data representations."
       },
       "indigo": {
         "$type": "color",
-        "$value": "{indigo.600}",
+        "$value": "{indigo.500}",
         "$description": "Indigo data visualization color. Used for charts, graphs, and data representations."
       },
       "orange": {
         "$type": "color",
-        "$value": "{orange.600}",
+        "$value": "{orange.500}",
         "$description": "Orange data visualization color. Used for charts, graphs, and data representations."
       },
       "pink": {
         "$type": "color",
-        "$value": "{pink.600}",
+        "$value": "{pink.500}",
         "$description": "Pink data visualization color. Used for charts, graphs, and data representations."
       },
       "purple": {
@@ -1955,7 +1955,7 @@
       },
       "red": {
         "$type": "color",
-        "$value": "{red.700}",
+        "$value": "{red.500}",
         "$description": "Red data visualization color. Used for charts, graphs, and data representations."
       },
       "yellow": {

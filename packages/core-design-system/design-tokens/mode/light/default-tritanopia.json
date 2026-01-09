@@ -1921,7 +1921,7 @@
       },
       "forest": {
         "$type": "color",
-        "$value": "{forest.600}",
+        "$value": "{forest.800}",
         "$description": "Forest data visualization color. Used for charts, graphs, and data representations."
       },
       "forest-inactive": {

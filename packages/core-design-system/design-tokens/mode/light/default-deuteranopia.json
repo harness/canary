@@ -1843,87 +1843,68 @@
       }
     },
     "data-viz": {
-      "amber": {
-        "$type": "color",
-        "$value": "{yellow.700}",
-        "$description": "Amber data visualization color. Used for charts, graphs, and data representations."
-      },
-      "blue": {
+      "01-blue": {
         "$type": "color",
         "$value": "{blue.500}",
         "$description": "Blue data visualization color. Used for charts, graphs, and data representations."
       },
-      "brown": {
-        "$type": "color",
-        "$value": "{brown.700}",
-        "$description": "Brown data visualization color. Used for charts, graphs, and data representations."
-      },
-      "cyan": {
-        "$type": "color",
-        "$value": "{cyan.400}",
-        "$description": "Cyan data visualization color. Used for charts, graphs, and data representations."
-      },
-      "forest": {
-        "$type": "color",
-        "$value": "{forest.800}",
-        "$description": "Forest data visualization color. Used for charts, graphs, and data representations."
-      },
-      "gray": {
-        "$type": "color",
-        "$value": "{gray.600}",
-        "$description": "Gray data visualization color. Used for charts, graphs, and data representations."
-      },
-      "green": {
-        "$type": "color",
-        "$value": "{lime.600}",
-        "$description": "Green data visualization color. Used for charts, graphs, and data representations."
-      },
-      "indigo": {
-        "$type": "color",
-        "$value": "{indigo.600}",
-        "$description": "Indigo data visualization color. Used for charts, graphs, and data representations."
-      },
-      "orange": {
-        "$type": "color",
-        "$value": "{orange.600}",
-        "$description": "Orange data visualization color. Used for charts, graphs, and data representations."
-      },
-      "pink": {
-        "$type": "color",
-        "$value": "{pink.600}",
-        "$description": "Pink data visualization color. Used for charts, graphs, and data representations."
-      },
-      "purple": {
+      "02-purple": {
         "$type": "color",
         "$value": "{purple.600}",
         "$description": "Purple data visualization color. Used for charts, graphs, and data representations."
       },
-      "red": {
+      "03-pink": {
+        "$type": "color",
+        "$value": "{pink.600}",
+        "$description": "Pink data visualization color. Used for charts, graphs, and data representations."
+      },
+      "04-green": {
+        "$type": "color",
+        "$value": "{lime.600}",
+        "$description": "Green data visualization color. Used for charts, graphs, and data representations."
+      },
+      "05-indigo": {
+        "$type": "color",
+        "$value": "{indigo.600}",
+        "$description": "Indigo data visualization color. Used for charts, graphs, and data representations."
+      },
+      "06-brown": {
+        "$type": "color",
+        "$value": "{brown.700}",
+        "$description": "Brown data visualization color. Used for charts, graphs, and data representations."
+      },
+      "07-cyan": {
+        "$type": "color",
+        "$value": "{cyan.400}",
+        "$description": "Cyan data visualization color. Used for charts, graphs, and data representations."
+      },
+      "08-orange": {
+        "$type": "color",
+        "$value": "{orange.600}",
+        "$description": "Orange data visualization color. Used for charts, graphs, and data representations."
+      },
+      "09-forest": {
+        "$type": "color",
+        "$value": "{forest.800}",
+        "$description": "Forest data visualization color. Used for charts, graphs, and data representations."
+      },
+      "10-red": {
         "$type": "color",
         "$value": "{red.700}",
         "$description": "Red data visualization color. Used for charts, graphs, and data representations."
       },
-      "yellow": {
+      "11-yellow": {
         "$type": "color",
         "$value": "{yellow.300}",
         "$description": "Yellow data visualization color. Used for charts, graphs, and data representations."
       },
+      "12-gray": {
+        "$type": "color",
+        "$value": "{gray.600}",
+        "$description": "Gray data visualization color. Used for charts, graphs, and data representations."
+      },
       "inactive": {
-        "amber": {
-          "$extensions": {
-            "studio.tokens": {
-              "modify": {
-                "type": "lighten",
-                "value": "0.6",
-                "space": "lch"
-              }
-            }
-          },
-          "$type": "color",
-          "$value": "{comp.data-viz.amber}",
-          "$description": "Inactive amber. Used for deselected or background data elements."
-        },
-        "blue": {
+        "01-blue": {
           "$extensions": {
             "studio.tokens": {
               "modify": {
@@ -1937,119 +1918,7 @@
           "$value": "{comp.data-viz.blue}",
           "$description": "Inactive blue. Used for deselected or background data elements."
         },
-        "brown": {
-          "$extensions": {
-            "studio.tokens": {
-              "modify": {
-                "type": "lighten",
-                "value": "0.6",
-                "space": "lch"
-              }
-            }
-          },
-          "$type": "color",
-          "$value": "{comp.data-viz.brown}",
-          "$description": "Inactive brown. Used for deselected or background data elements."
-        },
-        "cyan": {
-          "$extensions": {
-            "studio.tokens": {
-              "modify": {
-                "type": "lighten",
-                "value": "0.6",
-                "space": "lch"
-              }
-            }
-          },
-          "$type": "color",
-          "$value": "{comp.data-viz.cyan}",
-          "$description": "Inactive cyan. Used for deselected or background data elements."
-        },
-        "forest": {
-          "$extensions": {
-            "studio.tokens": {
-              "modify": {
-                "type": "lighten",
-                "value": "0.6",
-                "space": "lch"
-              }
-            }
-          },
-          "$type": "color",
-          "$value": "{comp.data-viz.forest}",
-          "$description": "Inactive forest. Used for deselected or background data elements."
-        },
-        "gray": {
-          "$extensions": {
-            "studio.tokens": {
-              "modify": {
-                "type": "lighten",
-                "value": "0.6",
-                "space": "lch"
-              }
-            }
-          },
-          "$type": "color",
-          "$value": "{comp.data-viz.gray}",
-          "$description": "Inactive gray. Used for deselected or background data elements."
-        },
-        "green": {
-          "$extensions": {
-            "studio.tokens": {
-              "modify": {
-                "type": "lighten",
-                "value": "0.6",
-                "space": "lch"
-              }
-            }
-          },
-          "$type": "color",
-          "$value": "{comp.data-viz.green}",
-          "$description": "Inactive green. Used for deselected or background data elements."
-        },
-        "indigo": {
-          "$extensions": {
-            "studio.tokens": {
-              "modify": {
-                "type": "lighten",
-                "value": "0.6",
-                "space": "lch"
-              }
-            }
-          },
-          "$type": "color",
-          "$value": "{comp.data-viz.indigo}",
-          "$description": "Inactive indigo. Used for deselected or background data elements."
-        },
-        "orange": {
-          "$extensions": {
-            "studio.tokens": {
-              "modify": {
-                "type": "lighten",
-                "value": "0.6",
-                "space": "lch"
-              }
-            }
-          },
-          "$type": "color",
-          "$value": "{comp.data-viz.orange}",
-          "$description": "Inactive orange. Used for deselected or background data elements."
-        },
-        "pink": {
-          "$extensions": {
-            "studio.tokens": {
-              "modify": {
-                "type": "lighten",
-                "value": "0.6",
-                "space": "lch"
-              }
-            }
-          },
-          "$type": "color",
-          "$value": "{comp.data-viz.pink}",
-          "$description": "Inactive pink. Used for deselected or background data elements."
-        },
-        "purple": {
+        "02-purple": {
           "$extensions": {
             "studio.tokens": {
               "modify": {
@@ -2063,7 +1932,105 @@
           "$value": "{comp.data-viz.purple}",
           "$description": "Inactive purple. Used for deselected or background data elements."
         },
-        "red": {
+        "03-pink": {
+          "$extensions": {
+            "studio.tokens": {
+              "modify": {
+                "type": "lighten",
+                "value": "0.6",
+                "space": "lch"
+              }
+            }
+          },
+          "$type": "color",
+          "$value": "{comp.data-viz.pink}",
+          "$description": "Inactive pink. Used for deselected or background data elements."
+        },
+        "04-green": {
+          "$extensions": {
+            "studio.tokens": {
+              "modify": {
+                "type": "lighten",
+                "value": "0.6",
+                "space": "lch"
+              }
+            }
+          },
+          "$type": "color",
+          "$value": "{comp.data-viz.green}",
+          "$description": "Inactive green. Used for deselected or background data elements."
+        },
+        "05-indigo": {
+          "$extensions": {
+            "studio.tokens": {
+              "modify": {
+                "type": "lighten",
+                "value": "0.6",
+                "space": "lch"
+              }
+            }
+          },
+          "$type": "color",
+          "$value": "{comp.data-viz.indigo}",
+          "$description": "Inactive indigo. Used for deselected or background data elements."
+        },
+        "06-brown": {
+          "$extensions": {
+            "studio.tokens": {
+              "modify": {
+                "type": "lighten",
+                "value": "0.6",
+                "space": "lch"
+              }
+            }
+          },
+          "$type": "color",
+          "$value": "{comp.data-viz.brown}",
+          "$description": "Inactive brown. Used for deselected or background data elements."
+        },
+        "07-cyan": {
+          "$extensions": {
+            "studio.tokens": {
+              "modify": {
+                "type": "lighten",
+                "value": "0.6",
+                "space": "lch"
+              }
+            }
+          },
+          "$type": "color",
+          "$value": "{comp.data-viz.cyan}",
+          "$description": "Inactive cyan. Used for deselected or background data elements."
+        },
+        "08-orange": {
+          "$extensions": {
+            "studio.tokens": {
+              "modify": {
+                "type": "lighten",
+                "value": "0.6",
+                "space": "lch"
+              }
+            }
+          },
+          "$type": "color",
+          "$value": "{comp.data-viz.orange}",
+          "$description": "Inactive orange. Used for deselected or background data elements."
+        },
+        "09-forest": {
+          "$extensions": {
+            "studio.tokens": {
+              "modify": {
+                "type": "lighten",
+                "value": "0.6",
+                "space": "lch"
+              }
+            }
+          },
+          "$type": "color",
+          "$value": "{comp.data-viz.forest}",
+          "$description": "Inactive forest. Used for deselected or background data elements."
+        },
+        "10-red": {
           "$extensions": {
             "studio.tokens": {
               "modify": {
@@ -2077,7 +2044,7 @@
           "$value": "{comp.data-viz.red}",
           "$description": "Inactive red. Used for deselected or background data elements."
         },
-        "yellow": {
+        "11-yellow": {
           "$extensions": {
             "studio.tokens": {
               "modify": {
@@ -2090,6 +2057,20 @@
           "$type": "color",
           "$value": "{comp.data-viz.yellow}",
           "$description": "Inactive yellow. Used for deselected or background data elements."
+        },
+        "12-gray": {
+          "$extensions": {
+            "studio.tokens": {
+              "modify": {
+                "type": "lighten",
+                "value": "0.6",
+                "space": "lch"
+              }
+            }
+          },
+          "$type": "color",
+          "$value": "{comp.data-viz.gray}",
+          "$description": "Inactive gray. Used for deselected or background data elements."
         }
       }
     }

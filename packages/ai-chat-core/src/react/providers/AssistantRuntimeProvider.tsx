@@ -1,7 +1,6 @@
 import { createContext, ReactNode, useContext } from 'react'
 
 import { AssistantRuntime } from '../../runtime/AssistantRuntime/AssistantRuntime'
-import { ChatContextProvider } from './ChatContextProvider'
 
 const AssistantRuntimeContext = createContext<AssistantRuntime | null>(null)
 
@@ -11,11 +10,7 @@ export interface AssistantRuntimeProviderProps {
 }
 
 export function AssistantRuntimeProvider({ runtime, children }: AssistantRuntimeProviderProps): JSX.Element {
-  return (
-    <AssistantRuntimeContext.Provider value={runtime}>
-      <ChatContextProvider>{children}</ChatContextProvider>
-    </AssistantRuntimeContext.Provider>
-  )
+  return <AssistantRuntimeContext.Provider value={runtime}>{children}</AssistantRuntimeContext.Provider>
 }
 
 export function useAssistantRuntimeContext(): AssistantRuntime {

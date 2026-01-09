@@ -1970,7 +1970,7 @@
             }
           },
           "$type": "color",
-          "$value": "{comp.data-viz.blue}",
+          "$value": "{comp.data-viz.01-blue}",
           "$description": "Inactive blue. Used for deselected or background data elements."
         },
         "02-purple": {
@@ -1984,7 +1984,7 @@
             }
           },
           "$type": "color",
-          "$value": "{comp.data-viz.purple}",
+          "$value": "{comp.data-viz.02-purple}",
           "$description": "Inactive purple. Used for deselected or background data elements."
         },
         "03-pink": {
@@ -1998,7 +1998,7 @@
             }
           },
           "$type": "color",
-          "$value": "{comp.data-viz.pink}",
+          "$value": "{comp.data-viz.03-pink}",
           "$description": "Inactive pink. Used for deselected or background data elements."
         },
         "04-green": {
@@ -2012,7 +2012,7 @@
             }
           },
           "$type": "color",
-          "$value": "{comp.data-viz.green}",
+          "$value": "{comp.data-viz.04-green}",
           "$description": "Inactive green. Used for deselected or background data elements."
         },
         "05-indigo": {
@@ -2026,7 +2026,7 @@
             }
           },
           "$type": "color",
-          "$value": "{comp.data-viz.indigo}",
+          "$value": "{comp.data-viz.05-indigo}",
           "$description": "Inactive indigo. Used for deselected or background data elements."
         },
         "06-brown": {
@@ -2040,7 +2040,7 @@
             }
           },
           "$type": "color",
-          "$value": "{comp.data-viz.brown}",
+          "$value": "{comp.data-viz.06-brown}",
           "$description": "Inactive brown. Used for deselected or background data elements."
         },
         "07-cyan": {
@@ -2054,7 +2054,7 @@
             }
           },
           "$type": "color",
-          "$value": "{comp.data-viz.cyan}",
+          "$value": "{comp.data-viz.07-cyan}",
           "$description": "Inactive cyan. Used for deselected or background data elements."
         },
         "08-orange": {
@@ -2068,7 +2068,7 @@
             }
           },
           "$type": "color",
-          "$value": "{comp.data-viz.orange}",
+          "$value": "{comp.data-viz.08-orange}",
           "$description": "Inactive orange. Used for deselected or background data elements."
         },
         "09-forest": {
@@ -2082,7 +2082,7 @@
             }
           },
           "$type": "color",
-          "$value": "{comp.data-viz.forest}",
+          "$value": "{comp.data-viz.09-forest}",
           "$description": "Inactive forest. Used for deselected or background data elements."
         },
         "10-red": {
@@ -2096,7 +2096,7 @@
             }
           },
           "$type": "color",
-          "$value": "{comp.data-viz.red}",
+          "$value": "{comp.data-viz.10-red}",
           "$description": "Inactive red. Used for deselected or background data elements."
         },
         "11-yellow": {
@@ -2110,7 +2110,7 @@
             }
           },
           "$type": "color",
-          "$value": "{comp.data-viz.yellow}",
+          "$value": "{comp.data-viz.11-yellow}",
           "$description": "Inactive yellow. Used for deselected or background data elements."
         },
         "12-gray": {
@@ -2124,7 +2124,7 @@
             }
           },
           "$type": "color",
-          "$value": "{comp.data-viz.gray}",
+          "$value": "{comp.data-viz.12-gray}",
           "$description": "Inactive gray. Used for deselected or background data elements."
         }
       }

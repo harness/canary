@@ -49,8 +49,8 @@ export type MarkdownViewerProps = {
   suggestionFooter?: ReactNode
   isLoading?: boolean
   imageUrlTransform?: (src: string) => string
-  /** Custom text color for markdown content. Accepts any CSS color value (e.g., 'var(--cn-text-3)', '#888', 'gray'). */
-  textColor?: string
+  /** Use muted text color (text-cn-3) for markdown content */
+  muted?: boolean
 } & VariantProps<typeof markdownViewerVariants>
 
 const MarkdownViewerLocal = ({
@@ -67,7 +67,7 @@ const MarkdownViewerLocal = ({
   isLoading = false,
   imageUrlTransform,
   variant = 'default',
-  textColor
+  muted = false
 }: MarkdownViewerProps) => {
   const { navigate } = useRouterContext()
   const refRootHref = useMemo(() => document.getElementById('repository-ref-root')?.getAttribute('href'), [])
@@ -82,9 +82,6 @@ const MarkdownViewerLocal = ({
   const filteredSource = useMemo(() => source.split('\n').filter(line => line !== '' && line !== '```'), [source])
 
   const styles: CSSProperties = maxHeight ? { maxHeight } : {}
-  const markdownStyles: CSSProperties = textColor
-    ? ({ '--color-fg-default': textColor, color: textColor } as CSSProperties)
-    : {}
 
   const rewriteRelativeLinks = useCallback(
     (href: string) => {
@@ -235,8 +232,12 @@ const MarkdownViewerLocal = ({
       <div ref={ref} style={styles}>
         <MarkdownPreview
           source={source}
-          style={markdownStyles}
-          className={cn('prose prose-invert', markdownViewerVariants({ variant }), markdownClassName)}
+          className={cn(
+            'prose prose-invert',
+            markdownViewerVariants({ variant }),
+            muted && 'markdown-muted',
+            markdownClassName
+          )}
           rehypeRewrite={rehypeRewrite}
           remarkPlugins={[remarkBreaks]}
           rehypePlugins={[

@@ -1920,7 +1920,7 @@
       },
       "forest": {
         "$type": "color",
-        "$value": "{forest.400}",
+        "$value": "{forest.700}",
         "$description": "Forest data visualization color. Used for charts, graphs, and data representations."
       },
       "gray": {
@@ -1930,7 +1930,7 @@
       },
       "green": {
         "$type": "color",
-        "$value": "{forest.300}",
+        "$value": "{forest.400}",
         "$description": "Green data visualization color. Used for charts, graphs, and data representations."
       },
       "indigo": {

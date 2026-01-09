@@ -7,8 +7,6 @@ export default {
     width: '100%',
     alignItems: 'center',
     gap: 'var(--cn-spacing-2)',
-    flexDirection: 'row-reverse',
-    justifyContent: 'flex-end',
     transition: 'color 150ms ease'
   },
   '.cn-reasoning-trigger-indicator': {
@@ -22,7 +20,7 @@ export default {
   '.cn-reasoning-content': {
     marginTop: 'var(--cn-spacing-4)',
     overflow: 'hidden',
-    borderLeftWidth: '2px',
+    borderLeftWidth: 'var(--cn-border-width-1)',
     borderLeftStyle: 'solid',
     borderLeftColor: 'var(--cn-border-3)',
     paddingLeft: 'var(--cn-layout-md)',

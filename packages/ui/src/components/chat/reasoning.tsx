@@ -159,13 +159,12 @@ const ReasoningTrigger = forwardRef<ElementRef<typeof CollapsiblePrimitive.Trigg
       <CollapsiblePrimitive.Trigger ref={ref} className={cn('cn-reasoning-trigger', className)} {...props}>
         {children ?? (
           <>
-            {/* <IconV2 name="ai-solid" size="sm" /> */}
-            {getThinkingMessage(isStreaming, duration)}
             <IconV2
               name="nav-arrow-down"
               size="xs"
               className={cn('cn-reasoning-trigger-indicator', isOpen && 'cn-reasoning-trigger-indicator-open')}
             />
+            {getThinkingMessage(isStreaming, duration)}
           </>
         )}
       </CollapsiblePrimitive.Trigger>

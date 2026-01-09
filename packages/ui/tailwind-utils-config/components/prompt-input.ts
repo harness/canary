@@ -29,7 +29,7 @@ export default {
       backgroundClip: 'padding-box, border-box',
       backgroundSize: '800% 800%, 100% 100%',
       border: 'var(--cn-input-ai-border) solid transparent',
-      boxShadow: '0 0 12px 2px rgba(43, 113, 230, 0.3)'
+      boxShadow: '0 0 12px 2px color-mix(in srgb, var(--cn-set-brand-primary-bg) 30%, transparent)'
     }
   }
 }

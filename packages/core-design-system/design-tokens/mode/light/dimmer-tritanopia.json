@@ -1841,6 +1841,255 @@
           "$description": "Gradient fade effect for selected card backgrounds. Emphasizes active selection state."
         }
       }
+    },
+    "data-viz": {
+      "amber": {
+        "$type": "color",
+        "$value": "{yellow.700}",
+        "$description": "Amber data visualization color. Used for charts, graphs, and data representations."
+      },
+      "amber-inactive": {
+        "$extensions": {
+          "studio.tokens": {
+            "modify": {
+              "type": "lighter",
+              "value": "0.5",
+              "space": "lch"
+            }
+          }
+        },
+        "$type": "color",
+        "$value": "{comp.data-viz.amber}",
+        "$description": "Inactive amber data visualization color. Used for deselected or background data elements."
+      },
+      "blue": {
+        "$type": "color",
+        "$value": "{blue.500}",
+        "$description": "Blue data visualization color. Used for charts, graphs, and data representations."
+      },
+      "blue-inactive": {
+        "$extensions": {
+          "studio.tokens": {
+            "modify": {
+              "type": "lighter",
+              "value": "0.5",
+              "space": "lch"
+            }
+          }
+        },
+        "$type": "color",
+        "$value": "{comp.data-viz.blue}",
+        "$description": "Inactive blue data visualization color. Used for deselected or background data elements."
+      },
+      "brown": {
+        "$type": "color",
+        "$value": "{brown.700}",
+        "$description": "Brown data visualization color. Used for charts, graphs, and data representations."
+      },
+      "brown-inactive": {
+        "$extensions": {
+          "studio.tokens": {
+            "modify": {
+              "type": "lighter",
+              "value": "0.5",
+              "space": "lch"
+            }
+          }
+        },
+        "$type": "color",
+        "$value": "{comp.data-viz.brown}",
+        "$description": "Inactive brown data visualization color. Used for deselected or background data elements."
+      },
+      "cyan": {
+        "$type": "color",
+        "$value": "{cyan.400}",
+        "$description": "Cyan data visualization color. Used for charts, graphs, and data representations."
+      },
+      "cyan-inactive": {
+        "$extensions": {
+          "studio.tokens": {
+            "modify": {
+              "type": "lighter",
+              "value": "0.5",
+              "space": "lch"
+            }
+          }
+        },
+        "$type": "color",
+        "$value": "{comp.data-viz.cyan}",
+        "$description": "Inactive cyan data visualization color. Used for deselected or background data elements."
+      },
+      "forest": {
+        "$type": "color",
+        "$value": "{forest.600}",
+        "$description": "Forest data visualization color. Used for charts, graphs, and data representations."
+      },
+      "forest-inactive": {
+        "$extensions": {
+          "studio.tokens": {
+            "modify": {
+              "type": "lighter",
+              "value": "0.5",
+              "space": "lch"
+            }
+          }
+        },
+        "$type": "color",
+        "$value": "{comp.data-viz.forest}",
+        "$description": "Inactive forest data visualization color. Used for deselected or background data elements."
+      },
+      "gray": {
+        "$type": "color",
+        "$value": "{gray.600}",
+        "$description": "Gray data visualization color. Used for charts, graphs, and data representations."
+      },
+      "gray-inactive": {
+        "$extensions": {
+          "studio.tokens": {
+            "modify": {
+              "type": "lighter",
+              "value": "0.5",
+              "space": "lch"
+            }
+          }
+        },
+        "$type": "color",
+        "$value": "{comp.data-viz.gray}",
+        "$description": "Inactive gray data visualization color. Used for deselected or background data elements."
+      },
+      "green": {
+        "$type": "color",
+        "$value": "{lime.600}",
+        "$description": "Green data visualization color. Used for charts, graphs, and data representations."
+      },
+      "green-inactive": {
+        "$extensions": {
+          "studio.tokens": {
+            "modify": {
+              "type": "lighter",
+              "value": "0.5",
+              "space": "lch"
+            }
+          }
+        },
+        "$type": "color",
+        "$value": "{comp.data-viz.green}",
+        "$description": "Inactive green data visualization color. Used for deselected or background data elements."
+      },
+      "indigo": {
+        "$type": "color",
+        "$value": "{indigo.600}",
+        "$description": "Indigo data visualization color. Used for charts, graphs, and data representations."
+      },
+      "indigo-inactive": {
+        "$extensions": {
+          "studio.tokens": {
+            "modify": {
+              "type": "lighter",
+              "value": "0.5",
+              "space": "lch"
+            }
+          }
+        },
+        "$type": "color",
+        "$value": "{comp.data-viz.indigo}",
+        "$description": "Inactive indigo data visualization color. Used for deselected or background data elements."
+      },
+      "orange": {
+        "$type": "color",
+        "$value": "{orange.600}",
+        "$description": "Orange data visualization color. Used for charts, graphs, and data representations."
+      },
+      "orange-inactive": {
+        "$extensions": {
+          "studio.tokens": {
+            "modify": {
+              "type": "lighter",
+              "value": "0.5",
+              "space": "lch"
+            }
+          }
+        },
+        "$type": "color",
+        "$value": "{comp.data-viz.orange}",
+        "$description": "Inactive orange data visualization color. Used for deselected or background data elements."
+      },
+      "pink": {
+        "$type": "color",
+        "$value": "{pink.600}",
+        "$description": "Pink data visualization color. Used for charts, graphs, and data representations."
+      },
+      "pink-inactive": {
+        "$extensions": {
+          "studio.tokens": {
+            "modify": {
+              "type": "lighter",
+              "value": "0.5",
+              "space": "lch"
+            }
+          }
+        },
+        "$type": "color",
+        "$value": "{comp.data-viz.pink}",
+        "$description": "Inactive pink data visualization color. Used for deselected or background data elements."
+      },
+      "purple": {
+        "$type": "color",
+        "$value": "{purple.600}",
+        "$description": "Purple data visualization color. Used for charts, graphs, and data representations."
+      },
+      "purple-inactive": {
+        "$extensions": {
+          "studio.tokens": {
+            "modify": {
+              "type": "lighter",
+              "value": "0.5",
+              "space": "lch"
+            }
+          }
+        },
+        "$type": "color",
+        "$value": "{comp.data-viz.purple}",
+        "$description": "Inactive purple data visualization color. Used for deselected or background data elements."
+      },
+      "red": {
+        "$type": "color",
+        "$value": "{red.700}",
+        "$description": "Red data visualization color. Used for charts, graphs, and data representations."
+      },
+      "red-inactive": {
+        "$extensions": {
+          "studio.tokens": {
+            "modify": {
+              "type": "lighter",
+              "value": "0.5",
+              "space": "lch"
+            }
+          }
+        },
+        "$type": "color",
+        "$value": "{comp.data-viz.red}",
+        "$description": "Inactive red data visualization color. Used for deselected or background data elements."
+      },
+      "yellow": {
+        "$type": "color",
+        "$value": "{yellow.300}",
+        "$description": "Yellow data visualization color. Used for charts, graphs, and data representations."
+      },
+      "yellow-inactive": {
+        "$extensions": {
+          "studio.tokens": {
+            "modify": {
+              "type": "lighter",
+              "value": "0.5",
+              "space": "lch"
+            }
+          }
+        },
+        "$type": "color",
+        "$value": "{comp.data-viz.yellow}",
+        "$description": "Inactive yellow data visualization color. Used for deselected or background data elements."
+      }
     }
   },
   "logo": {

@@ -407,6 +407,10 @@ const tailwindDesignSystem: TailwindConfig = {
       'cn-widest': 'var(--cn-tracking-widest)'
     },
     extend: {
+      backgroundImage: {
+        'cn-comp-card-fade-default': 'var(--cn-comp-card-fade-default)',
+        'cn-comp-card-fade-selected': 'var(--cn-comp-card-fade-selected)'
+      },
       opacity: {
         'cn-disabled': 'var(--cn-disabled-opacity)'
       },
@@ -537,21 +541,15 @@ const tailwindDesignSystem: TailwindConfig = {
     'prose-code',
 
     /** New design system Variants  */
-    { pattern: /^border-cn-/ },
-    { pattern: /^text-cn-/ },
+    { pattern: /-cn-/ },
     { pattern: /^hover:text-cn-/ },
-    { pattern: /^bg-cn-/ },
     { pattern: /^hover:bg-cn-/ },
 
     { pattern: /rounded-./ },
     { pattern: /border-./ },
     { pattern: /shadow-./ },
     // Important: used for generating max-width of SandboxLayout.Content
-    { pattern: /(?:(?:max|min)-)?(?:w|h)-.*/ },
-    { pattern: /^(p|px|py|pt|pb|pl|pr|m|mx|my|mt|mb|ml|mr|gap(?:-[xy])?|space(?:-[xy])?)-cn-.+$/ },
-
-    { pattern: /^h-cn-/ },
-    { pattern: /^w-cn-/ }
+    { pattern: /(?:(?:max|min)-)?(?:w|h)-.*/ }
   ]
 }
 

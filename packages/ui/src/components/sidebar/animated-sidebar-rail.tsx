@@ -42,7 +42,7 @@ const AnimatedSideBarRail: React.FC<AnimatedSideBarRailProps> = ({ className }) 
     <motion.div
       data-id="sidebar-rail"
       className={cn(
-        'absolute w-3 top-[var(--cn-header-height)] bottom-0 z-20 flex items-center border-l border-t bg-cn-2 rounded-tl-cn-3',
+        'absolute w-3 top-[var(--cn-header-height)] bottom-0 z-20 flex items-center border-l border-t rounded-tl-cn-3',
         className
       )}
       initial={false}
@@ -53,7 +53,7 @@ const AnimatedSideBarRail: React.FC<AnimatedSideBarRailProps> = ({ className }) 
     >
       <Tooltip content={label} side="right" delay={0}>
         <div
-          className="absolute w-10 h-10 flex items-center justify-center text-gray-600 cursor-pointer -translate-x-1/2"
+          className="text-gray-600 absolute flex size-10 -translate-x-1/2 cursor-pointer items-center justify-center"
           onMouseEnter={() => setHover(true)}
           onMouseLeave={() => setHover(false)}
           aria-label={label}

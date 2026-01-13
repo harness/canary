@@ -388,5 +388,11 @@
         font: var(--cn-comp-markdown-xs-content-emphasized);
       }
     }
+
+    /* Muted text color variant */
+    &.markdown-muted {
+      --color-fg-default: var(--cn-text-3);
+      color: var(--cn-text-3);
+    }
   }
 }

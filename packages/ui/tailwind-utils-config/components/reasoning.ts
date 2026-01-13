@@ -10,6 +10,7 @@ export default {
     transition: 'color 150ms ease'
   },
   '.cn-reasoning-trigger-indicator': {
+    color: 'var(--cn-text-3)',
     transition: 'transform 150ms ease',
 
     '&.cn-reasoning-trigger-indicator-open': {
@@ -19,6 +20,11 @@ export default {
   '.cn-reasoning-content': {
     marginTop: 'var(--cn-spacing-4)',
     overflow: 'hidden',
+    borderLeftWidth: 'var(--cn-border-width-1)',
+    borderLeftStyle: 'solid',
+    borderLeftColor: 'var(--cn-border-3)',
+    paddingLeft: 'var(--cn-layout-md)',
+    marginLeft: 'var(--cn-layout-2xs)',
 
     '&[data-state="open"]': {
       animation: 'collapsible-down 150ms ease-out'

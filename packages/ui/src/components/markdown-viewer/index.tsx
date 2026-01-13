@@ -49,6 +49,8 @@ export type MarkdownViewerProps = {
   suggestionFooter?: ReactNode
   isLoading?: boolean
   imageUrlTransform?: (src: string) => string
+  /** Use muted text color (text-cn-3) for markdown content */
+  muted?: boolean
 } & VariantProps<typeof markdownViewerVariants>
 
 const MarkdownViewerLocal = ({
@@ -64,7 +66,8 @@ const MarkdownViewerLocal = ({
   suggestionFooter,
   isLoading = false,
   imageUrlTransform,
-  variant = 'default'
+  variant = 'default',
+  muted = false
 }: MarkdownViewerProps) => {
   const { navigate } = useRouterContext()
   const refRootHref = useMemo(() => document.getElementById('repository-ref-root')?.getAttribute('href'), [])
@@ -229,7 +232,12 @@ const MarkdownViewerLocal = ({
       <div ref={ref} style={styles}>
         <MarkdownPreview
           source={source}
-          className={cn('prose prose-invert', markdownViewerVariants({ variant }), markdownClassName)}
+          className={cn(
+            'prose prose-invert',
+            markdownViewerVariants({ variant }),
+            { 'markdown-muted': muted },
+            markdownClassName
+          )}
           rehypeRewrite={rehypeRewrite}
           remarkPlugins={[remarkBreaks]}
           rehypePlugins={[

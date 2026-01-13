@@ -18,13 +18,13 @@ import { cn } from '@utils/cn'
 import { cva, type VariantProps } from 'class-variance-authority'
 
 const inputReferenceVariants = cva(
-  'h-cn-input-md border-cn-input rounded-cn-input bg-cn-input text-cn-1 flex cursor-pointer select-none items-center transition-colors min-w-0 grow',
+  'flex min-w-0 grow cursor-pointer select-none items-center text-cn-1 transition-colors border-cn-input bg-cn-input rounded-cn-input h-cn-input-md',
   {
     variants: {
       state: {
         default:
-          'hover:border-cn-brand focus-visible:shadow-cn-ring-selected focus-visible:outline-none focus-visible:border-cn-brand',
-        disabled: 'opacity-cn-disabled cursor-not-allowed'
+          'hover:border-cn-brand focus-visible:border-cn-brand focus-visible:shadow-cn-ring-selected focus-visible:outline-none',
+        disabled: 'cursor-not-allowed opacity-cn-disabled'
       }
     },
     defaultVariants: {
@@ -89,6 +89,11 @@ export interface InputReferenceProps<T> extends VariantProps<typeof inputReferen
   logo?: LogoPropsV2['name']
 
   /**
+   * Prefix element to display at the start of the input
+   */
+  prefix?: ReactNode
+
+  /**
    * Suffix element to display at the end of the input
    */
   suffix?: ReactNode
@@ -112,6 +117,26 @@ export interface InputReferenceProps<T> extends VariantProps<typeof inputReferen
   hideDropdownMenu?: boolean
 }
 
+function PrefixSuffix({ comp, className }: { comp?: React.ReactNode; className?: string }) {
+  return comp ? (
+    <div
+      className={cn('aspect-1 flex h-full items-center justify-center border-inherit', className)}
+      // Don't trigger onClick of the parent div when suffix is clicked
+      onPointerDown={e => {
+        e.stopPropagation()
+      }}
+      onKeyDown={e => {
+        if (e.key === 'Enter' || e.key === ' ') {
+          e.stopPropagation()
+        }
+      }}
+      role="none"
+    >
+      {comp}
+    </div>
+  ) : null
+}
+
 /**
  * InputReference is a component that looks like an input field but acts as a clickable
  * InputReference element that can trigger actions like opening a drawer, modal, or dropdown.
@@ -132,6 +157,7 @@ const InputReferenceInner = <T,>(
     caption,
     optional = false,
     renderValue,
+    prefix,
     suffix,
     onOpen,
     wrapperClassName = '',
@@ -211,7 +237,8 @@ const InputReferenceInner = <T,>(
             }}
             {...props}
           >
-            <Layout.Horizontal className="grow pi-cn-input-md min-w-0" gap="xs" align="center" justify="between">
+            <PrefixSuffix comp={prefix} className="rounded-r-cn-none border-r" />
+            <Layout.Horizontal className="min-w-0 grow pi-cn-input-md" gap="xs" align="center" justify="between">
               {iconProps && <IconV2 {...iconProps} fallback="circle" />}
 
               {logo && <LogoV2 name={logo} size="xs" />}
@@ -225,24 +252,7 @@ const InputReferenceInner = <T,>(
               </div>
               <IconV2 name="nav-arrow-right" size="xs" className="text-cn-3" />
             </Layout.Horizontal>
-
-            {suffix && (
-              <div
-                className="aspect-1 flex h-full items-center justify-center rounded-l-cn-none border-l border-inherit"
-                // Don't trigger onClick of the parent div when suffix is clicked
-                onPointerDown={e => {
-                  e.stopPropagation()
-                }}
-                onKeyDown={e => {
-                  if (e.key === 'Enter' || e.key === ' ') {
-                    e.stopPropagation()
-                  }
-                }}
-                role="none"
-              >
-                {suffix}
-              </div>
-            )}
+            <PrefixSuffix comp={suffix} className="rounded-l-cn-none border-l " />
           </div>
           {hasValue && !disabled && !hideDropdownMenu && (
             <ButtonGroup

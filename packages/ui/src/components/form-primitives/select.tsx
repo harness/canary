@@ -89,6 +89,7 @@ interface SelectProps<T = string>
   footer?: ReactNode
   contentWidth?: 'auto' | 'triggerWidth'
   contentClassName?: string
+  prefix?: ReactNode
   suffix?: ReactNode
   triggerClassName?: string
 }
@@ -125,6 +126,26 @@ const getAllValueOptions = <T,>(options: SelectOption<T>[]): ValueOption<T>[] =>
   return valueOptions
 }
 
+function PrefixSuffix({ comp, className }: { comp?: React.ReactNode; className?: string }) {
+  return comp ? (
+    <div
+      className={className}
+      // Don't trigger dropdown menu when suffix is clicked
+      onPointerDown={e => {
+        e.stopPropagation()
+      }}
+      onKeyDown={e => {
+        if (e.key === 'Enter' || e.key === ' ') {
+          e.stopPropagation()
+        }
+      }}
+      role="none"
+    >
+      {comp}
+    </div>
+  ) : null
+}
+
 function SelectInner<T = string>(
   {
     options: optionsProp,
@@ -151,6 +172,7 @@ function SelectInner<T = string>(
     footer,
     contentWidth = 'auto',
     contentClassName,
+    prefix,
     suffix,
     triggerClassName,
     wrapperClassName,
@@ -412,29 +434,14 @@ function SelectInner<T = string>(
             disabled={disabled}
             className={cn(selectVariants({ theme, size }), triggerClassName)}
           >
+            <PrefixSuffix comp={prefix} className="cn-select-prefix" />
             <div className="cn-select-trigger">
               <Text color={disabled ? 'disabled' : selectedOption ? 'foreground-1' : 'foreground-2'} truncate as="div">
                 {selectedOption ? selectedOption.label : placeholder}
               </Text>
               <IconV2 name="nav-arrow-down" size="xs" className="cn-select-indicator-icon" />
             </div>
-            {suffix ? (
-              <div
-                className="cn-select-suffix"
-                // Don't trigger dropdown menu when suffix is clicked
-                onPointerDown={e => {
-                  e.stopPropagation()
-                }}
-                onKeyDown={e => {
-                  if (e.key === 'Enter' || e.key === ' ') {
-                    e.stopPropagation()
-                  }
-                }}
-                role="none"
-              >
-                {suffix}
-              </div>
-            ) : null}
+            <PrefixSuffix comp={suffix} className="cn-select-suffix" />
           </DropdownMenu.Trigger>
 
           <DropdownMenu.Content

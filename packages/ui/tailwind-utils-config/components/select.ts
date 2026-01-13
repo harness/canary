@@ -78,6 +78,13 @@ export default {
       gap: 'var(--cn-input-md-gap)'
     },
 
+    '&-prefix': {
+      '@apply border-r flex items-center justify-center': '',
+      borderColor: 'inherit',
+      aspectRatio: '1',
+      height: '100%'
+    },
+
     '&-suffix': {
       '@apply border-l flex items-center justify-center': '',
       borderRadius: '0 var(--cn-input-radius) var(--cn-input-radius) 0',

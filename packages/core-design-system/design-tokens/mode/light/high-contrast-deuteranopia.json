@@ -1503,15 +1503,6 @@
         }
       },
       "dotes": {
-        "$extensions": {
-          "studio.tokens": {
-            "modify": {
-              "type": "alpha",
-              "value": "0.7",
-              "space": "lch"
-            }
-          }
-        },
         "$type": "color",
         "$value": "{gray.100}",
         "$description": "Refers to the dotted pattern visible in the background of the workspace."
@@ -1531,6 +1522,14 @@
           "$value": "{bg.3}",
           "$description": "Semi-transparent background for pipeline stage cards. Creates layered visual hierarchy."
         }
+      },
+      "bg": {
+        "$type": "color",
+        "$value": "{gray.50}"
+      },
+      "card-footer": {
+        "$type": "color",
+        "$value": "{comp.pipeline.bg}"
       }
     },
     "sidebar": {

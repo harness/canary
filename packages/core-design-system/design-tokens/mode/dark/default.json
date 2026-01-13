@@ -1586,6 +1586,14 @@
           "$value": "{bg.3}",
           "$description": "Semi-transparent background for pipeline stage cards. Creates layered visual hierarchy."
         }
+      },
+      "card-footer": {
+        "$type": "color",
+        "$value": "{gray.1000}"
+      },
+      "bg": {
+        "$type": "color",
+        "$value": "{pure.black}"
       }
     },
     "sidebar": {

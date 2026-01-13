@@ -2,7 +2,7 @@ export default {
   '.cn-meter': {
     '@apply flex h-[19px] items-stretch gap-cn-3xs': '',
 
-    '&:has(.cn-meter-tooltip-bar:hover) .cn-meter-tooltip-bar:not(:hover)': {
+    '&:has(.cn-meter-tooltip-bar:hover) .cn-meter-bar:not(:hover)': {
       opacity: '0.3'
     },
 

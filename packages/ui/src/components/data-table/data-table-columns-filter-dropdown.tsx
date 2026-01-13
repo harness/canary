@@ -1,6 +1,6 @@
 import { FC } from 'react'
 
-import { Button, CheckboxOptions, DropdownMenu, IconV2 } from '@/components'
+import { Button, CheckboxOptions, DropdownMenu, IconV2, Text } from '@/components'
 
 export interface DataTableColumnFilterDropdownProps {
   columns: CheckboxOptions[]
@@ -20,6 +20,9 @@ export const DataTableColumnFilterDropdown: FC<DataTableColumnFilterDropdownProp
       <DropdownMenu.Trigger asChild>
         <Button variant="outline">
           Columns
+          <Text color="foreground-4">
+            {visibleColumns?.length || 0}/{columns?.length || 0}
+          </Text>
           <IconV2 name="nav-arrow-down" />
         </Button>
       </DropdownMenu.Trigger>

@@ -47,7 +47,7 @@ const Header: FC<PageHeaderProps> = ({
   actions
 }) => {
   return (
-    <Layout.Horizontal justify="between" gap="xl" className="mb-cn-xl">
+    <Layout.Horizontal justify="between" gap="xl" className="mb-cn-md">
       <Layout.Vertical gap="xl">
         <Layout.Vertical>
           {!!backLink && (

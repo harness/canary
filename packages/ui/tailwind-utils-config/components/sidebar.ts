@@ -113,7 +113,7 @@ export default {
 
       '&-header': {
         display: 'flex',
-        padding: '0px 0px var(--cn-spacing-2) calc(var(--cn-sidebar-item-container) + var(--cn-layout-sm))',
+        padding: '0px 0px var(--cn-spacing-0) calc(var(--cn-sidebar-item-container) + var(--cn-layout-sm))',
         alignItems: 'center',
         gap: 'var(--cn-sidebar-item-gap)',
         alignSelf: 'stretch',
@@ -136,7 +136,7 @@ export default {
 
     '&-submenu': {
       '&-group': {
-        paddingLeft: 'var(--cn-layout-lg)',
+        paddingLeft: 'var(--cn-layout-xl)',
         paddingTop: 'var(--cn-sidebar-group-py)',
         paddingBottom: 'var(--cn-sidebar-group-py)',
         gap: 'var(--cn-spacing-2)',
@@ -456,7 +456,7 @@ export default {
         position: 'absolute',
         zIndex: '1',
         top: 'calc(50% - var(--cn-size-7)/2)',
-        right: '3px',
+        right: '4px',
         display: 'grid',
         placeContent: 'center',
         color: 'var(--cn-text-2)',
@@ -644,7 +644,8 @@ export default {
     },
     // Reset padding left for group headers in popover (only side nav should have padding left)
     '.cn-sidebar-group-header': {
-      paddingLeft: 'var(--cn-sidebar-item-container)'
+      paddingLeft: 'var(--cn-sidebar-item-container)',
+      paddingBottom: 'var(--cn-spacing-2)'
     },
 
     // Last group (Go to settings footer button)

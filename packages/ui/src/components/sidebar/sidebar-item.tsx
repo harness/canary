@@ -12,7 +12,6 @@ import {
   Layout,
   LogoPropsV2,
   LogoV2,
-  Separator,
   StatusBadge,
   StatusBadgeProps,
   Text,
@@ -229,7 +228,7 @@ const SidebarItemTrigger = forwardRef<HTMLButtonElement | HTMLAnchorElement, Sid
             return (
               <Button
                 key={index}
-                size="xs"
+                size="2xs"
                 variant="ghost"
                 iconOnly={iconOnly}
                 onClick={e => {
@@ -260,10 +259,10 @@ const SidebarItemTrigger = forwardRef<HTMLButtonElement | HTMLAnchorElement, Sid
         {withIcon &&
           (withDescription ? (
             <div className="cn-sidebar-item-content-icon cn-sidebar-item-content-icon-w-border">
-              <IconV2 name={props.icon} size="md" fallback="stop" />
+              <IconV2 name={props.icon} size="sm" fallback="stop" />
             </div>
           ) : (
-            <IconV2 name={props.icon} size="md" fallback="stop" className="cn-sidebar-item-content-icon" />
+            <IconV2 name={props.icon} size="sm" fallback="stop" className="cn-sidebar-item-content-icon" />
           ))}
         {withLogo && props.logo && (
           <LogoV2 name={props.logo} size={withDescription ? 'sm' : 'xs'} className="cn-sidebar-item-content-icon" />
@@ -426,7 +425,7 @@ const SidebarItemTrigger = forwardRef<HTMLButtonElement | HTMLAnchorElement, Sid
 
         {withSubmenu && (
           <button className="cn-sidebar-item-action-button" onClick={toggleSubmenu}>
-            <IconV2 name={submenuOpen ? 'nav-arrow-down' : 'nav-arrow-right'} size="xs" />
+            <IconV2 name={submenuOpen ? 'nav-arrow-down' : 'nav-arrow-right'} size="2xs" />
           </button>
         )}
 
@@ -511,13 +510,12 @@ export const SidebarItem = forwardRef<HTMLButtonElement | HTMLAnchorElement, Sid
           <Layout.Grid
             className="cn-sidebar-submenu-group"
             role="group"
-            columns="auto 1fr"
+            columns="1fr"
             data-state={effectiveOpen ? 'open' : 'closed'}
             style={{
               ...(effectiveOpen ? { maxHeight: `${rowsCount * 40}px` } : { maxHeight: '0px', padding: 0 })
             }}
           >
-            <Separator orientation="vertical" style={{ gridRow: `1 / ${rowsCount}` }} />
             {filteredChildren}
           </Layout.Grid>
         </div>

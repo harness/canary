@@ -134,7 +134,7 @@ export const getNavbarMoreMenuData: GetNavbarMenuData = ({ t, routes, params }) 
       },
       {
         id: 12,
-        iconName: 'warning-triangle',
+        iconName: 'incidents',
         title: t('component:navbar.incidents', 'Incidents'),
         description: 'Shift left security testing.',
         to: routes?.toIncidents?.(params) || ''

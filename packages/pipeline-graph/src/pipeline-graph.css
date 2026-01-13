@@ -19,6 +19,7 @@
 
 .PipelineGraph-Canvas {
   width: 100%;
+  box-shadow: 0 0 4.5px 0 rgba(0, 0, 0, 0.15) inset;
 }
 
 /* TODO: temporary */

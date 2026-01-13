@@ -92,7 +92,7 @@ export default {
       '&-items': {
         display: 'grid',
         gridTemplateColumns: 'repeat(2, 1fr)',
-        gap: 'var(--cn-spacing-1)',
+        gap: 'var(--cn-spacing-half)',
 
         '&-single-col': {
           gridTemplateColumns: '1fr'
@@ -648,11 +648,12 @@ export default {
     // Reset padding left for group headers in popover (only side nav should have padding left)
     '.cn-sidebar-group-header': {
       paddingLeft: 'var(--cn-sidebar-item-container)',
-      paddingBottom: 'var(--cn-spacing-2)'
+      paddingBottom: 'var(--cn-spacing-1-half)'
     },
 
     // Last group (Go to settings footer button)
     '.cn-sidebar-popover-footer': {
+      marginTop: 'calc(-1 * var(--cn-spacing-2))',
       padding: 'var(--cn-layout-xs)',
       width: 'fit-content',
       justifyContent: 'flex-start'
@@ -660,7 +661,10 @@ export default {
 
     // Separator styling for popover to match Figma
     '.cn-sidebar-separator': {
-      margin: 'var(--cn-spacing-2) var(--cn-layout-4xs)',
+      marginTop: 'var(--cn-spacing-0)',
+      marginBottom: 'calc(var(--cn-spacing-4) - var(--cn-spacing-px))',
+      marginLeft: 'var(--cn-spacing-half)',
+      marginRight: 'var(--cn-spacing-half)',
       height: '1px',
       width: 'calc(100% - 2 * var(--cn-layout-4xs))',
       backgroundColor: 'var(--cn-comp-sidebar-separator)'

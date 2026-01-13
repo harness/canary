@@ -7,6 +7,8 @@ export type MessageStatus =
   | { type: 'error'; error: string }
   | { type: 'cancelled' }
 
+export type ContentStatus = { type: 'streaming' } | { type: 'complete' } | { type: 'error'; error: string }
+
 export interface MessageMetadata {
   interactionId?: string
   conversationId?: string
@@ -51,6 +53,7 @@ export interface MessageContent<T = any> {
   type: string
   parentId?: string
   data?: T
+  status?: ContentStatus
 }
 
 export type AppendMessage = Omit<Message, 'id' | 'timestamp' | 'status'> & {

@@ -236,7 +236,8 @@ export class ThreadRuntimeCore extends BaseSubscribable {
         initialContent = {
           type: event.part.type,
           data: [],
-          parentId: event.part.parentId
+          parentId: event.part.parentId,
+          status: { type: 'streaming' }
         } as any
         break
 
@@ -245,14 +246,16 @@ export class ThreadRuntimeCore extends BaseSubscribable {
         initialContent = {
           type: event.part.type,
           data: '',
-          parentId: event.part.parentId
+          parentId: event.part.parentId,
+          status: { type: 'streaming' }
         } as any
         break
 
       default:
         initialContent = {
           type: event.part.type,
-          parentId: event.part.parentId
+          parentId: event.part.parentId,
+          status: { type: 'streaming' }
         } as any
     }
 
@@ -294,6 +297,26 @@ export class ThreadRuntimeCore extends BaseSubscribable {
     if (!this._currentPart) {
       console.warn('Received part-finish without part-start')
       return
+    }
+
+    // Find the message and content
+    const messageIndex = this._messages.findIndex(m => m.id === this._currentPart!.messageId)
+    if (messageIndex !== -1) {
+      const message = this._messages[messageIndex]
+      const content = message.content[this._currentPart.contentIndex] as any
+
+      if (content) {
+        // Mark this content as complete
+        content.status = { type: 'complete' }
+
+        // Update message to trigger re-render
+        const updatedMessages = [
+          ...this._messages.slice(0, messageIndex),
+          { ...message, timestamp: Date.now() },
+          ...this._messages.slice(messageIndex + 1)
+        ]
+        this.updateMessages(updatedMessages)
+      }
     }
 
     // Part is complete, clear tracking

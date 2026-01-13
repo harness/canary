@@ -213,7 +213,8 @@ const SidebarItemTrigger = forwardRef<HTMLButtonElement | HTMLAnchorElement, Sid
       )
     }
 
-    const itemProps = omit(restProps, ['icon', 'logo', 'avatarFallback', 'src', 'badgeProps'])
+    const { onClick: originalOnClick } = restProps
+    const itemProps = omit(restProps, ['icon', 'logo', 'avatarFallback', 'src', 'badgeProps', 'onClick'])
     const sidebarItemClassName = cn('cn-sidebar-item', className)
     const buttonRef = ref as Ref<HTMLButtonElement>
     const divRef = ref as Ref<HTMLDivElement>
@@ -322,10 +323,28 @@ const SidebarItemTrigger = forwardRef<HTMLButtonElement | HTMLAnchorElement, Sid
         {withRightIndicator && (
           <IconV2 name="nav-arrow-right" className="cn-sidebar-item-content-right-element" size="xs" />
         )}
+        {withSubmenu && (
+          <IconV2
+            name={submenuOpen ? 'nav-arrow-down' : 'nav-arrow-right'}
+            className="cn-sidebar-item-content-right-element"
+            size="2xs"
+          />
+        )}
         {((withActionMenu && !badge) || withSubmenu) && (
           <div className="cn-sidebar-item-content-action-item-placeholder" />
         )}
       </Layout.Grid>
+    )
+
+    const handleMainItemClick = useCallback(
+      (e: React.MouseEvent<HTMLElement>) => {
+        if (withSubmenu && toggleSubmenu) {
+          e.preventDefault()
+          toggleSubmenu()
+        }
+        originalOnClick?.(e as React.MouseEvent<HTMLButtonElement>)
+      },
+      [withSubmenu, toggleSubmenu, originalOnClick]
     )
 
     return (
@@ -344,6 +363,7 @@ const SidebarItemTrigger = forwardRef<HTMLButtonElement | HTMLAnchorElement, Sid
                 className={({ isActive }) => cn(sidebarItemClassName, { 'cn-sidebar-item-active': isActive })}
                 {...(itemProps as SidebarItemLinkProps)}
                 role="menuitem"
+                onClick={handleMainItemClick as React.MouseEventHandler<HTMLAnchorElement>}
               >
                 {withDragHandle && (
                   <div className="cn-sidebar-item-grip-handle" {...dragAttributes} {...dragListeners}>
@@ -368,7 +388,13 @@ const SidebarItemTrigger = forwardRef<HTMLButtonElement | HTMLAnchorElement, Sid
 
         {withDropdownMenu && (
           <DropdownMenu.Root>
-            <DropdownMenu.Trigger ref={buttonRef} className={sidebarItemClassName} {...itemProps} role="menuitem">
+            <DropdownMenu.Trigger
+              ref={buttonRef}
+              className={sidebarItemClassName}
+              {...itemProps}
+              role="menuitem"
+              onClick={handleMainItemClick as React.MouseEventHandler<HTMLButtonElement>}
+            >
               {withDragHandle && (
                 <div className="cn-sidebar-item-grip-handle left-cn-1xs" {...dragAttributes} {...dragListeners}>
                   <IconV2 name="grip-dots" size="2xs" className="cn-sidebar-item-grip-icon" />
@@ -385,7 +411,13 @@ const SidebarItemTrigger = forwardRef<HTMLButtonElement | HTMLAnchorElement, Sid
         {!isLink &&
           !withDropdownMenu &&
           (clickable ? (
-            <button ref={buttonRef} className={sidebarItemClassName} {...itemProps} role="menuitem">
+            <button
+              ref={buttonRef}
+              className={sidebarItemClassName}
+              {...itemProps}
+              role="menuitem"
+              onClick={handleMainItemClick as React.MouseEventHandler<HTMLButtonElement>}
+            >
               {withDragHandle && (
                 <div className="cn-sidebar-item-grip-handle left-cn-1xs" {...dragAttributes} {...dragListeners}>
                   <IconV2 name="grip-dots" size="2xs" className="cn-sidebar-item-grip-icon" />
@@ -402,6 +434,19 @@ const SidebarItemTrigger = forwardRef<HTMLButtonElement | HTMLAnchorElement, Sid
               )}
               onMouseEnter={props.onHoverIn}
               onMouseLeave={props.onHoverIn}
+              onClick={withSubmenu ? (handleMainItemClick as React.MouseEventHandler<HTMLDivElement>) : undefined}
+              role={withSubmenu ? 'button' : undefined}
+              tabIndex={withSubmenu ? 0 : undefined}
+              onKeyDown={
+                withSubmenu
+                  ? (e: React.KeyboardEvent<HTMLDivElement>) => {
+                      if (e.key === 'Enter' || e.key === ' ') {
+                        e.preventDefault()
+                        handleMainItemClick(e as unknown as React.MouseEvent<HTMLDivElement>)
+                      }
+                    }
+                  : undefined
+              }
             >
               {withDragHandle && (
                 <div className="cn-sidebar-item-grip-handle left-cn-1xs" {...dragAttributes} {...dragListeners}>
@@ -421,12 +466,6 @@ const SidebarItemTrigger = forwardRef<HTMLButtonElement | HTMLAnchorElement, Sid
               {actionMenuItems?.map((item, index) => <DropdownMenu.Item key={index} {...item} />)}
             </DropdownMenu.Content>
           </DropdownMenu.Root>
-        )}
-
-        {withSubmenu && (
-          <button className="cn-sidebar-item-action-button" onClick={toggleSubmenu}>
-            <IconV2 name={submenuOpen ? 'nav-arrow-down' : 'nav-arrow-right'} size="2xs" />
-          </button>
         )}
 
         {active && (

@@ -353,10 +353,8 @@ describe('SidebarItem', () => {
 
     test('toggles submenu state on button click', async () => {
       renderComponent({ children: submenuChild, defaultSubmenuOpen: false })
-      const toggleButton = screen
-        .getAllByRole('button')
-        .find(button => button.className.includes('cn-sidebar-item-action-button'))!
-      await userEvent.click(toggleButton)
+      const menuItemButton = screen.getByRole('menuitem')
+      await userEvent.click(menuItemButton)
       const grids = screen.getAllByTestId('layout-grid')
       const submenuGrid = grids[grids.length - 1]
       expect(submenuGrid).toHaveAttribute('data-state', 'open')

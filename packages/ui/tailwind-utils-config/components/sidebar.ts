@@ -266,7 +266,8 @@ export default {
               color: 'var(--cn-text-1)',
               '& svg, & path': {
                 color: 'var(--cn-text-1)',
-                fill: 'var(--cn-text-1)'
+                stroke: 'var(--cn-text-1)',
+                fill: 'none'
               }
             }
           },
@@ -292,7 +293,8 @@ export default {
               color: 'var(--cn-text-2)',
               '& svg, & path': {
                 color: 'var(--cn-text-2)',
-                fill: 'var(--cn-text-2)'
+                stroke: 'var(--cn-text-2)',
+                fill: 'none'
               }
             },
             '&:hover, &:focus-within': {
@@ -430,7 +432,8 @@ export default {
           justifyContent: 'flex-end',
           '& svg, & path': {
             color: 'var(--cn-text-2)',
-            fill: 'var(--cn-text-2)'
+            stroke: 'var(--cn-text-2)',
+            fill: 'none'
           }
         },
 

@@ -1,30 +1,27 @@
 /* IMPORTANT: Do not modify the variable names on the left side (--diff-*) as they are required by the third-party git-diff-view component.
    The right side variables (--cn-comp-*) are from the design system core.css file. */
 
-@layer themes {
-  :root,
-  :host,
-  .light,
-  .dark,
-  .light-std-std,
-  .dark-std-std {
-    --diff-grey: var(--cn-comp-diff-grey);
-    --diff-add-content--: var(--cn-comp-diff-add-content);
-    --diff-del-content--: var(--cn-comp-diff-del-content);
-    --diff-add-lineNumber--: var(--cn-comp-diff-add-line-number);
-    --diff-del-lineNumber--: var(--cn-comp-diff-del-line-number);
-    --diff-plain-content--: var(--cn-comp-diff-plain-content);
-    --diff-expand-content--: var(--cn-comp-diff-expand-content);
-    --diff-plain-lineNumber--: var(--cn-comp-diff-plain-line-number);
-    --diff-plain-lineNumber-color--: var(--cn-comp-diff-plain-line-number-color);
-    --diff-hunk-content--: var(--cn-comp-diff-hunk-content);
-    --diff-hunk-lineNumber--: var(--cn-comp-diff-hunk-line-number);
-    --diff-add-content-highlight--: var(--cn-comp-diff-add-content-highlight);
-    --diff-del-content-highlight--: var(--cn-comp-diff-del-content-highlight);
-    --diff-add-widget--: var(--cn-comp-diff-add-widget);
-    --diff-add-widget-color--: var(--cn-comp-diff-add-widget-color);
-    --diff-empty-content--: var(--cn-comp-diff-empty-content);
-    --diff-hunk-content-color--: var(--cn-comp-diff-hunk-content-color);
-    --diff-border--: var(--cn-border-2);
-  }
+/* Override library's default theme variables with design system tokens */
+.light .diff-tailwindcss-wrapper[data-theme='light'] .diff-style-root,
+.light-std-std .diff-tailwindcss-wrapper[data-theme='light'] .diff-style-root,
+.dark .diff-tailwindcss-wrapper[data-theme='dark'] .diff-style-root,
+.dark-std-std .diff-tailwindcss-wrapper[data-theme='dark'] .diff-style-root {
+  --diff-grey: var(--cn-comp-diff-grey);
+  --diff-add-content--: var(--cn-comp-diff-add-content);
+  --diff-del-content--: var(--cn-comp-diff-del-content);
+  --diff-add-lineNumber--: var(--cn-comp-diff-add-line-number);
+  --diff-del-lineNumber--: var(--cn-comp-diff-del-line-number);
+  --diff-plain-content--: var(--cn-comp-diff-plain-content);
+  --diff-expand-content--: var(--cn-comp-diff-expand-content);
+  --diff-plain-lineNumber--: var(--cn-comp-diff-plain-line-number);
+  --diff-plain-lineNumber-color--: var(--cn-comp-diff-plain-line-number-color);
+  --diff-hunk-content--: var(--cn-comp-diff-hunk-content);
+  --diff-hunk-lineNumber--: var(--cn-comp-diff-hunk-line-number);
+  --diff-add-content-highlight--: var(--cn-comp-diff-add-content-highlight);
+  --diff-del-content-highlight--: var(--cn-comp-diff-del-content-highlight);
+  --diff-add-widget--: var(--cn-comp-diff-add-widget);
+  --diff-add-widget-color--: var(--cn-comp-diff-add-widget-color);
+  --diff-empty-content--: var(--cn-comp-diff-empty-content);
+  --diff-hunk-content-color--: var(--cn-comp-diff-hunk-content-color);
+  --diff-border--: var(--cn-border-2);
 }

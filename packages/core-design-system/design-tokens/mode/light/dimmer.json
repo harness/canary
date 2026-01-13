@@ -1407,7 +1407,7 @@
       },
       "hljs-title-function": {
         "$type": "color",
-        "$value": "{blue.600}",
+        "$value": "{blue.700}",
         "$description": "Color for function names and method definitions in syntax highlighting. Emphasizes callable code blocks and procedures."
       },
       "hljs-name": {

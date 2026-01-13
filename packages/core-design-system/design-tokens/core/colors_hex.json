@@ -353,10 +353,10 @@
       "$value": "#d4fdea"
     },
     "100": {
-      "$value": "#b9f9dd"
+      "$value": "#CDF4E3"
     },
     "150": {
-      "$value": "#87f5c9"
+      "$value": "#ABEDD3"
     },
     "200": {
       "$value": "#4aebb4"
@@ -401,10 +401,10 @@
       "$value": "#d5fffd"
     },
     "100": {
-      "$value": "#bef6f4"
+      "$value": "#D7F4F3"
     },
     "150": {
-      "$value": "#83f2ef"
+      "$value": "#ADEBE9"
     },
     "200": {
       "$value": "#00eae8"
@@ -449,13 +449,13 @@
       "$value": "#eef8ff"
     },
     "100": {
-      "$value": "#ddf1fe"
+      "$value": "#E1F3FE"
     },
     "150": {
-      "$value": "#c6e4ff"
+      "$value": "#D3E9FD"
     },
     "200": {
-      "$value": "#a3d5ff"
+      "$value": "#B5DCFD"
     },
     "300": {
       "$value": "#89c8ff"
@@ -500,10 +500,10 @@
       "$value": "#e7eaff"
     },
     "150": {
-      "$value": "#d9deff"
+      "$value": "#E0E4FF"
     },
     "200": {
-      "$value": "#c7d0ff"
+      "$value": "#D1D8FA"
     },
     "300": {
       "$value": "#b1bfff"
@@ -545,10 +545,10 @@
       "$value": "#f7f6ff"
     },
     "100": {
-      "$value": "#ebe9ff"
+      "$value": "#ECEAFE"
     },
     "150": {
-      "$value": "#e0ddff"
+      "$value": "#E3E0FC"
     },
     "200": {
       "$value": "#d1cdff"
@@ -614,7 +614,7 @@
       "$value": "#d949f9"
     },
     "700": {
-      "$value": "#ba3dd6"
+      "$value": "#b035cc"
     },
     "800": {
       "$value": "#9537aa"

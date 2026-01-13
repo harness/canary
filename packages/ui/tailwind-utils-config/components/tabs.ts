@@ -1,4 +1,47 @@
 export default {
+  '.cn-tabs-scroll-container': {
+    position: 'relative',
+    width: '100%',
+    display: 'flex',
+    alignItems: 'center',
+    overflow: 'hidden'
+  },
+
+  '.cn-tabs-scroll-wrapper': {
+    flex: '1',
+    overflowX: 'auto',
+    overflowY: 'hidden',
+    scrollbarWidth: 'none',
+    '&::-webkit-scrollbar': {
+      display: 'none'
+    },
+    scrollBehavior: 'smooth',
+    '& .cn-tabs-list': {
+      flexWrap: 'nowrap',
+      width: 'max-content',
+      minWidth: '100%'
+    }
+  },
+
+  '.cn-tabs-fade': {
+    position: 'absolute',
+    top: '0',
+    bottom: '0',
+    width: 'var(--cn-spacing-6)',
+    pointerEvents: 'none',
+    zIndex: '1',
+
+    '&-left': {
+      left: '0',
+      background: 'linear-gradient(to right, var(--cn-bg-1), transparent)'
+    },
+
+    '&-right': {
+      right: '0',
+      background: 'linear-gradient(to left, var(--cn-bg-1), transparent)'
+    }
+  },
+
   '.cn-tabs-list': {
     display: 'flex',
     alignItems: 'center',
@@ -38,6 +81,8 @@ export default {
     alignItems: 'center',
     color: 'var(--cn-text-3)',
     userSelect: 'none',
+    whiteSpace: 'nowrap',
+    flexShrink: '0',
     transitionProperty: 'color, background-color, border-color',
     transitionDuration: '150ms',
     transitionTimingFunction: 'ease-in-out',

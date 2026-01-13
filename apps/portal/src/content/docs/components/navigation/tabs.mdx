@@ -328,6 +328,47 @@ Both `Tabs.Root` and `Tabs.NavRoot` can be controlled by passing `value` and `on
 }`}
 />
 
+## Scrollable Tabs
+
+When you have many tabs that overflow the container, the component automatically enables horizontal scrolling with fade indicators on both ends. The active tab will automatically scroll into view on mount and when changed.
+
+<DocsPage.ComponentExample
+  client:only
+  code={`<Tabs.Root className="grid gap-cn-sm" defaultValue="tab12">
+    <Tabs.List>
+        <Tabs.Trigger value="tab1">Tab 1</Tabs.Trigger>
+        <Tabs.Trigger value="tab2">Tab 2</Tabs.Trigger>
+        <Tabs.Trigger value="tab3">Tab 3</Tabs.Trigger>
+        <Tabs.Trigger value="tab4">Tab 4</Tabs.Trigger>
+        <Tabs.Trigger value="tab5">Tab 5</Tabs.Trigger>
+        <Tabs.Trigger value="tab6">Tab 6</Tabs.Trigger>
+        <Tabs.Trigger value="tab7">Tab 7</Tabs.Trigger>
+        <Tabs.Trigger value="tab8">Tab 8</Tabs.Trigger>
+        <Tabs.Trigger value="tab9">Tab 9</Tabs.Trigger>
+        <Tabs.Trigger value="tab10">Tab 10</Tabs.Trigger>
+        <Tabs.Trigger value="tab11">Tab 11</Tabs.Trigger>
+        <Tabs.Trigger value="tab12">Tab 12</Tabs.Trigger>
+        <Tabs.Trigger value="tab13">Tab 13</Tabs.Trigger>
+        <Tabs.Trigger value="tab14">Tab 14</Tabs.Trigger>
+        <Tabs.Trigger value="tab15">Tab 15</Tabs.Trigger>
+        <Tabs.Trigger value="tab16">Tab 16</Tabs.Trigger>
+        <Tabs.Trigger value="tab17">Tab 17</Tabs.Trigger>
+        <Tabs.Trigger value="tab18">Tab 18</Tabs.Trigger>
+    </Tabs.List>
+    
+    <Tabs.Content value="tab12">
+        <Text>Content for Tab 12 (Active by default)</Text>
+    </Tabs.Content>
+</Tabs.Root>`}
+/>
+
+<Aside type="tip">
+  The active tab will automatically scroll into view when the component mounts
+  or when the active tab changes. Fade overlays appear on the left and right
+  edges to indicate scrollable content. This behavior is automatic when tabs
+  overflow their container.
+</Aside>
+
 ## Custom Active Class
 
 You can customize the active tab styling using the `activeClassName` prop on `Tabs.List`.
@@ -634,3 +675,4 @@ The `Content` component represents the panel content associated with a tab.
 5. **Navigation Tabs**: Use `NavRoot` when tabs represent different routes in your application
 6. **Content Loading**: Consider lazy loading tab content for better performance with heavy content
 7. **Keyboard Navigation**: The component supports standard keyboard navigation (Arrow keys, Home, End)
+8. **Scrollable Tabs**: The component automatically handles overflow scenarios - tabs will scroll horizontally with fade indicators when there are too many to fit in the container

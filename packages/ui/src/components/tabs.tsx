@@ -129,7 +129,11 @@ interface TabsListProps
 const TabsList = forwardRef<ElementRef<typeof TabsPrimitive.List>, TabsListProps>(
   ({ className, children, variant, activeClassName, ...props }, ref) => {
     const contentRef = useRef<HTMLDivElement | null>(null)
-    const { type } = useContext(TabsContext)
+    const scrollContainerRef = useRef<HTMLDivElement | null>(null)
+    const { type, activeTabValue } = useContext(TabsContext)
+    const [showLeftFade, setShowLeftFade] = useState(false)
+    const [showRightFade, setShowRightFade] = useState(false)
+    const [isOverflowing, setIsOverflowing] = useState(false)
 
     const mergedRef = useMergeRefs<HTMLDivElement>([
       node => {
@@ -139,6 +143,88 @@ const TabsList = forwardRef<ElementRef<typeof TabsPrimitive.List>, TabsListProps
       },
       ref
     ])
+
+    const checkOverflow = useRef(() => {
+      const container = scrollContainerRef.current
+      if (!container) return
+
+      const hasOverflow = container.scrollWidth > container.clientWidth
+      setIsOverflowing(hasOverflow)
+    })
+
+    const updateFadeIndicators = useRef(() => {
+      const container = scrollContainerRef.current
+      if (!container) return
+
+      const { scrollLeft, scrollWidth, clientWidth } = container
+      const scrollableWidth = scrollWidth - clientWidth
+
+      setShowLeftFade(scrollLeft > 5)
+      setShowRightFade(scrollLeft < scrollableWidth - 5)
+    })
+
+    const scrollActiveTabIntoView = useRef(() => {
+      const container = scrollContainerRef.current
+      const contentEl = contentRef.current
+      if (!container || !contentEl) return
+
+      const activeTab = contentEl.querySelector<HTMLElement>('[role="tab"].cn-tabs-trigger-active')
+      if (!activeTab) return
+
+      const containerRect = container.getBoundingClientRect()
+      const activeTabRect = activeTab.getBoundingClientRect()
+
+      const isVisible = activeTabRect.left >= containerRect.left && activeTabRect.right <= containerRect.right
+
+      if (!isVisible) {
+        const scrollLeft = activeTab.offsetLeft - container.offsetWidth / 2 + activeTab.offsetWidth / 2
+        container.scrollTo({ left: scrollLeft, behavior: 'smooth' })
+      }
+    })
+
+    useEffect(() => {
+      scrollActiveTabIntoView.current()
+    }, [activeTabValue])
+
+    useEffect(() => {
+      const container = scrollContainerRef.current
+      const contentEl = contentRef.current
+      if (!container || !contentEl) return
+
+      checkOverflow.current()
+      updateFadeIndicators.current()
+      scrollActiveTabIntoView.current()
+
+      const handleScroll = () => {
+        updateFadeIndicators.current()
+      }
+
+      const resizeObserver = new ResizeObserver(() => {
+        checkOverflow.current()
+        updateFadeIndicators.current()
+      })
+
+      const mutationObserver = new MutationObserver(() => {
+        scrollActiveTabIntoView.current()
+      })
+
+      container.addEventListener('scroll', handleScroll, { passive: true })
+      resizeObserver.observe(container)
+
+      const triggers = contentEl.querySelectorAll('[role="tab"]')
+      triggers.forEach(trigger => {
+        mutationObserver.observe(trigger, {
+          attributes: true,
+          attributeFilter: ['class']
+        })
+      })
+
+      return () => {
+        container.removeEventListener('scroll', handleScroll)
+        resizeObserver.disconnect()
+        mutationObserver.disconnect()
+      }
+    }, [])
 
     /**
      * !!! This code is executed only when inside a ShadowRoot
@@ -198,7 +284,7 @@ const TabsList = forwardRef<ElementRef<typeof TabsPrimitive.List>, TabsListProps
       next.click()
     }
 
-    return (
+    const listContent = (
       <TabsListContext.Provider value={{ activeClassName, variant }}>
         {type === 'tabs' && (
           <TabsPrimitive.List
@@ -218,6 +304,16 @@ const TabsList = forwardRef<ElementRef<typeof TabsPrimitive.List>, TabsListProps
           </nav>
         )}
       </TabsListContext.Provider>
+    )
+
+    return (
+      <div className="cn-tabs-scroll-container">
+        {isOverflowing && showLeftFade && <div className="cn-tabs-fade cn-tabs-fade-left" />}
+        <div ref={scrollContainerRef} className="cn-tabs-scroll-wrapper">
+          {listContent}
+        </div>
+        {isOverflowing && showRightFade && <div className="cn-tabs-fade cn-tabs-fade-right" />}
+      </div>
     )
   }
 )

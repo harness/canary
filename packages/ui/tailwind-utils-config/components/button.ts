@@ -39,9 +39,9 @@ function createButtonVariantStyles() {
         }
 
         style[`&:active:not(:disabled, .cn-button-disabled), &:where(.cn-button-active), &:where([data-state=open])`] =
-          {
-            backgroundColor: `var(--cn-set-${themeStyle}-outline-bg-selected)`
-          }
+        {
+          backgroundColor: `var(--cn-set-${themeStyle}-outline-bg-selected)`
+        }
       } else {
         const themeStyleForVariant = variant === 'primary' && theme === 'default' ? 'brand' : themeStyle
 
@@ -55,23 +55,23 @@ function createButtonVariantStyles() {
         style[`&:hover:not(:disabled, .cn-button-disabled)`] =
           variant === 'outline'
             ? {
-                backgroundColor: `var(--cn-set-${themeStyleForVariant}-${variant}-bg-hover, var(--cn-set-${themeStyleForVariant}-${variant}-bg))`
-              }
+              backgroundColor: `var(--cn-set-${themeStyleForVariant}-${variant}-bg-hover, var(--cn-set-${themeStyleForVariant}-${variant}-bg))`
+            }
             : {
-                backgroundColor: `var(--cn-set-${themeStyleForVariant}-${variant}-bg-hover, var(--cn-set-${themeStyleForVariant}-${variant}-bg))`,
-                borderColor: `var(--cn-set-${themeStyleForVariant}-${variant}-bg-hover, var(--cn-set-${themeStyleForVariant}-${variant}-bg))`
-              }
+              backgroundColor: `var(--cn-set-${themeStyleForVariant}-${variant}-bg-hover, var(--cn-set-${themeStyleForVariant}-${variant}-bg))`,
+              borderColor: `var(--cn-set-${themeStyleForVariant}-${variant}-bg-hover, var(--cn-set-${themeStyleForVariant}-${variant}-bg))`
+            }
 
         // Active styles
         style[`&:active:not(:disabled, .cn-button-disabled), &:where(.cn-button-active), &:where([data-state=open])`] =
           variant === 'outline'
             ? {
-                backgroundColor: `var(--cn-set-${themeStyleForVariant}-${variant}-bg-selected, var(--cn-set-${themeStyleForVariant}-${variant}-bg))`
-              }
+              backgroundColor: `var(--cn-set-${themeStyleForVariant}-${variant}-bg-selected, var(--cn-set-${themeStyleForVariant}-${variant}-bg))`
+            }
             : {
-                backgroundColor: `var(--cn-set-${themeStyleForVariant}-${variant}-bg-selected, var(--cn-set-${themeStyleForVariant}-${variant}-bg))`,
-                borderColor: `var(--cn-set-${themeStyleForVariant}-${variant}-bg-selected, var(--cn-set-${themeStyleForVariant}-${variant}-bg))`
-              }
+              backgroundColor: `var(--cn-set-${themeStyleForVariant}-${variant}-bg-selected, var(--cn-set-${themeStyleForVariant}-${variant}-bg))`,
+              borderColor: `var(--cn-set-${themeStyleForVariant}-${variant}-bg-selected, var(--cn-set-${themeStyleForVariant}-${variant}-bg))`
+            }
 
         separatorStyles[`&:where(.cn-button-split-dropdown.cn-button-${variant}.cn-button-${theme})`] = {
           '&::before': {
@@ -166,17 +166,17 @@ export default {
       '&:hover:not(:disabled, .cn-button-disabled)': {
         // gradient matches the token one-to-one
         backgroundSize: '120% 120%, 100% 100%',
-        boxShadow: 'var(--cn-shadow-comp-ai-inner)'
+        boxShadow: 'var(--cn-comp-shadow-ai-inner)'
       },
       '&:active:not(:disabled, .cn-button-disabled), &:where(.cn-button-active)': {
         // slightly weaker than hover: slight zoom back
         backgroundSize: '100% 100%, 100% 100%',
-        boxShadow: 'var(--cn-shadow-comp-ai-inner)'
+        boxShadow: 'var(--cn-comp-shadow-ai-inner)'
       },
       '&[data-loading]': {
         // loading mirrors the active state so the gradient is clearly visible
         backgroundSize: '100% 100%, 100% 100%',
-        boxShadow: 'var(--cn-shadow-comp-ai-inner)'
+        boxShadow: 'var(--cn-comp-shadow-ai-inner)'
       }
     },
 

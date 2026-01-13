@@ -35,7 +35,7 @@ export default {
     overflow: 'hidden',
     position: 'relative',
     borderRadius: `var(--cn-avatar-radius-default)`,
-    boxShadow: `var(--cn-shadow-comp-avatar-inner)`,
+    boxShadow: `var(--cn-comp-shadow-avatar-inner)`,
     letterSpacing: `var(--cn-tracking-tight)`,
     '@apply shrink-0': '',
 

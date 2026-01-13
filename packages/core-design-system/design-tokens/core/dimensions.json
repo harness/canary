@@ -356,38 +356,6 @@
       "$type": "borderRadius",
       "$value": "9999px",
       "$description": "Fully rounded corners (circular)"
-    },
-    "8": {
-      "$type": "borderRadius",
-      "$value": "32px"
-    },
-    "9": {
-      "$type": "borderRadius",
-      "$value": "36px"
-    },
-    "10": {
-      "$type": "borderRadius",
-      "$value": "40px"
-    },
-    "11": {
-      "$type": "borderRadius",
-      "$value": "44px"
-    },
-    "12": {
-      "$type": "borderRadius",
-      "$value": "48px"
-    },
-    "16": {
-      "$type": "borderRadius",
-      "$value": "64px"
-    },
-    "20": {
-      "$type": "borderRadius",
-      "$value": "80px"
-    },
-    "24": {
-      "$type": "borderRadius",
-      "$value": "96px"
     }
   },
   "size": {
@@ -900,22 +868,6 @@
     "xl": {
       "$type": "sizing",
       "$value": "{size.8}"
-    },
-    "2xl": {
-      "$type": "sizing",
-      "$value": "{size.10}"
-    },
-    "3xl": {
-      "$type": "sizing",
-      "$value": "{size.12}"
-    },
-    "4xl": {
-      "$type": "sizing",
-      "$value": "{size.16}"
-    },
-    "5xl": {
-      "$type": "sizing",
-      "$value": "{size.20}"
     }
   },
   "opacity": {
@@ -981,14 +933,6 @@
       "$type": "sizing",
       "$value": "{size.11}",
       "$description": "\n"
-    },
-    "xl": {
-      "$type": "sizing",
-      "$value": "{size.16}"
-    },
-    "2xl": {
-      "$type": "sizing",
-      "$value": "{size.20}"
     }
   }
 }

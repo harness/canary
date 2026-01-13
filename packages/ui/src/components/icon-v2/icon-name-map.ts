@@ -49,6 +49,7 @@ import ArrowsUpdown from './icons/arrows-updown.svg'
 import ArtifactsSolid from './icons/artifacts-solid.svg'
 import Artifacts from './icons/artifacts.svg'
 import AtSign from './icons/at-sign.svg'
+import Atom from './icons/atom.svg'
 import AttachmentImage from './icons/attachment-image.svg'
 import Attachment from './icons/attachment.svg'
 import BaseImgSolid from './icons/base-img-solid.svg'
@@ -112,6 +113,7 @@ import CloudSync from './icons/cloud-sync.svg'
 import CloudUpload from './icons/cloud-upload.svg'
 import CloudXmark from './icons/cloud-xmark.svg'
 import Cloud from './icons/cloud.svg'
+import Cluster from './icons/cluster.svg'
 import CodeBracketsSquare from './icons/code-brackets-square.svg'
 import CodeBrackets from './icons/code-brackets.svg'
 import CodeDown from './icons/code-down.svg'
@@ -333,6 +335,7 @@ import PinSlash from './icons/pin-slash.svg'
 import PinSolid from './icons/pin-solid.svg'
 import Pin from './icons/pin.svg'
 import PipelineExecutions from './icons/pipeline-executions.svg'
+import PipelineGroup from './icons/pipeline-group.svg'
 import PipelineSolid from './icons/pipeline-solid.svg'
 import Pipeline from './icons/pipeline.svg'
 import PlaySolid from './icons/play-solid.svg'
@@ -531,6 +534,7 @@ export const IconNameMapV2 = {
   'artifacts-solid': ArtifactsSolid,
   artifacts: Artifacts,
   'at-sign': AtSign,
+  atom: Atom,
   'attachment-image': AttachmentImage,
   attachment: Attachment,
   'base-img-solid': BaseImgSolid,
@@ -594,6 +598,7 @@ export const IconNameMapV2 = {
   'cloud-upload': CloudUpload,
   'cloud-xmark': CloudXmark,
   cloud: Cloud,
+  cluster: Cluster,
   'code-brackets-square': CodeBracketsSquare,
   'code-brackets': CodeBrackets,
   'code-down': CodeDown,
@@ -815,6 +820,7 @@ export const IconNameMapV2 = {
   'pin-solid': PinSolid,
   pin: Pin,
   'pipeline-executions': PipelineExecutions,
+  'pipeline-group': PipelineGroup,
   'pipeline-solid': PipelineSolid,
   pipeline: Pipeline,
   'play-solid': PlaySolid,

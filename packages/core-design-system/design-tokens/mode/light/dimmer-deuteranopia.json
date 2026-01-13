@@ -1848,60 +1848,396 @@
         "$value": "{blue.500}",
         "$description": "Primary data visualization color (1st in sequence). Use as the default first color in charts and graphs."
       },
+      "01-blue-shadow-1": {
+        "$type": "color",
+        "$value": "{comp.data-viz.01-blue}",
+        "$extensions": {
+          "studio.tokens": {
+            "modify": {
+              "type": "alpha",
+              "value": "0.12",
+              "space": "lch"
+            }
+          }
+        },
+        "$description": "Outer glow shadow color for 01-blue (y:6px, blur:18px)"
+      },
+      "01-blue-shadow-2": {
+        "$type": "color",
+        "$value": "{comp.data-viz.01-blue}",
+        "$extensions": {
+          "studio.tokens": {
+            "modify": {
+              "type": "alpha",
+              "value": "0.24",
+              "space": "lch"
+            }
+          }
+        },
+        "$description": "Inner glow shadow color for 01-blue (y:5px, blur:13px)"
+      },
       "02-purple": {
         "$type": "color",
         "$value": "{purple.600}",
         "$description": "Secondary data visualization color (2nd in sequence). Use as the second color when multiple data series are needed."
+      },
+      "02-purple-shadow-1": {
+        "$type": "color",
+        "$value": "{comp.data-viz.02-purple}",
+        "$extensions": {
+          "studio.tokens": {
+            "modify": {
+              "type": "alpha",
+              "value": "0.12",
+              "space": "lch"
+            }
+          }
+        },
+        "$description": "Outer glow shadow color for 02-purple (y:6px, blur:18px)"
+      },
+      "02-purple-shadow-2": {
+        "$type": "color",
+        "$value": "{comp.data-viz.02-purple}",
+        "$extensions": {
+          "studio.tokens": {
+            "modify": {
+              "type": "alpha",
+              "value": "0.24",
+              "space": "lch"
+            }
+          }
+        },
+        "$description": "Inner glow shadow color for 02-purple (y:5px, blur:13px)"
       },
       "03-pink": {
         "$type": "color",
         "$value": "{pink.600}",
         "$description": "Data visualization color (3rd in sequence). Use as the third color in multi-series visualizations."
       },
+      "03-pink-shadow-1": {
+        "$type": "color",
+        "$value": "{comp.data-viz.03-pink}",
+        "$extensions": {
+          "studio.tokens": {
+            "modify": {
+              "type": "alpha",
+              "value": "0.12",
+              "space": "lch"
+            }
+          }
+        },
+        "$description": "Outer glow shadow color for 03-pink (y:6px, blur:18px)"
+      },
+      "03-pink-shadow-2": {
+        "$type": "color",
+        "$value": "{comp.data-viz.03-pink}",
+        "$extensions": {
+          "studio.tokens": {
+            "modify": {
+              "type": "alpha",
+              "value": "0.24",
+              "space": "lch"
+            }
+          }
+        },
+        "$description": "Inner glow shadow color for 03-pink (y:5px, blur:13px)"
+      },
       "04-green": {
         "$type": "color",
         "$value": "{lime.600}",
         "$description": "Data visualization color (4th in sequence). Use as the fourth color in multi-series visualizations."
+      },
+      "04-green-shadow-1": {
+        "$type": "color",
+        "$value": "{comp.data-viz.04-green}",
+        "$extensions": {
+          "studio.tokens": {
+            "modify": {
+              "type": "alpha",
+              "value": "0.12",
+              "space": "lch"
+            }
+          }
+        },
+        "$description": "Outer glow shadow color for 04-green (y:6px, blur:18px)"
+      },
+      "04-green-shadow-2": {
+        "$type": "color",
+        "$value": "{comp.data-viz.04-green}",
+        "$extensions": {
+          "studio.tokens": {
+            "modify": {
+              "type": "alpha",
+              "value": "0.24",
+              "space": "lch"
+            }
+          }
+        },
+        "$description": "Inner glow shadow color for 04-green (y:5px, blur:13px)"
       },
       "05-indigo": {
         "$type": "color",
         "$value": "{indigo.600}",
         "$description": "Data visualization color (5th in sequence). Use as the fifth color in multi-series visualizations."
       },
+      "05-indigo-shadow-1": {
+        "$type": "color",
+        "$value": "{comp.data-viz.05-indigo}",
+        "$extensions": {
+          "studio.tokens": {
+            "modify": {
+              "type": "alpha",
+              "value": "0.12",
+              "space": "lch"
+            }
+          }
+        },
+        "$description": "Outer glow shadow color for 05-indigo (y:6px, blur:18px)"
+      },
+      "05-indigo-shadow-2": {
+        "$type": "color",
+        "$value": "{comp.data-viz.05-indigo}",
+        "$extensions": {
+          "studio.tokens": {
+            "modify": {
+              "type": "alpha",
+              "value": "0.24",
+              "space": "lch"
+            }
+          }
+        },
+        "$description": "Inner glow shadow color for 05-indigo (y:5px, blur:13px)"
+      },
       "06-brown": {
         "$type": "color",
         "$value": "{brown.700}",
         "$description": "Data visualization color (6th in sequence). Use as the sixth color in multi-series visualizations."
+      },
+      "06-brown-shadow-1": {
+        "$type": "color",
+        "$value": "{comp.data-viz.06-brown}",
+        "$extensions": {
+          "studio.tokens": {
+            "modify": {
+              "type": "alpha",
+              "value": "0.12",
+              "space": "lch"
+            }
+          }
+        },
+        "$description": "Outer glow shadow color for 06-brown (y:6px, blur:18px)"
+      },
+      "06-brown-shadow-2": {
+        "$type": "color",
+        "$value": "{comp.data-viz.06-brown}",
+        "$extensions": {
+          "studio.tokens": {
+            "modify": {
+              "type": "alpha",
+              "value": "0.24",
+              "space": "lch"
+            }
+          }
+        },
+        "$description": "Inner glow shadow color for 06-brown (y:5px, blur:13px)"
       },
       "07-cyan": {
         "$type": "color",
         "$value": "{cyan.400}",
         "$description": "Data visualization color (7th in sequence). Use as the seventh color in multi-series visualizations."
       },
+      "07-cyan-shadow-1": {
+        "$type": "color",
+        "$value": "{comp.data-viz.07-cyan}",
+        "$extensions": {
+          "studio.tokens": {
+            "modify": {
+              "type": "alpha",
+              "value": "0.12",
+              "space": "lch"
+            }
+          }
+        },
+        "$description": "Outer glow shadow color for 07-cyan (y:6px, blur:18px)"
+      },
+      "07-cyan-shadow-2": {
+        "$type": "color",
+        "$value": "{comp.data-viz.07-cyan}",
+        "$extensions": {
+          "studio.tokens": {
+            "modify": {
+              "type": "alpha",
+              "value": "0.24",
+              "space": "lch"
+            }
+          }
+        },
+        "$description": "Inner glow shadow color for 07-cyan (y:5px, blur:13px)"
+      },
       "08-orange": {
         "$type": "color",
         "$value": "{orange.600}",
         "$description": "Data visualization color (8th in sequence). Use as the eighth color in multi-series visualizations."
+      },
+      "08-orange-shadow-1": {
+        "$type": "color",
+        "$value": "{comp.data-viz.08-orange}",
+        "$extensions": {
+          "studio.tokens": {
+            "modify": {
+              "type": "alpha",
+              "value": "0.12",
+              "space": "lch"
+            }
+          }
+        },
+        "$description": "Outer glow shadow color for 08-orange (y:6px, blur:18px)"
+      },
+      "08-orange-shadow-2": {
+        "$type": "color",
+        "$value": "{comp.data-viz.08-orange}",
+        "$extensions": {
+          "studio.tokens": {
+            "modify": {
+              "type": "alpha",
+              "value": "0.24",
+              "space": "lch"
+            }
+          }
+        },
+        "$description": "Inner glow shadow color for 08-orange (y:5px, blur:13px)"
       },
       "09-forest": {
         "$type": "color",
         "$value": "{forest.800}",
         "$description": "Data visualization color (9th in sequence). Use as the ninth color in multi-series visualizations."
       },
+      "09-forest-shadow-1": {
+        "$type": "color",
+        "$value": "{comp.data-viz.09-forest}",
+        "$extensions": {
+          "studio.tokens": {
+            "modify": {
+              "type": "alpha",
+              "value": "0.12",
+              "space": "lch"
+            }
+          }
+        },
+        "$description": "Outer glow shadow color for 09-forest (y:6px, blur:18px)"
+      },
+      "09-forest-shadow-2": {
+        "$type": "color",
+        "$value": "{comp.data-viz.09-forest}",
+        "$extensions": {
+          "studio.tokens": {
+            "modify": {
+              "type": "alpha",
+              "value": "0.24",
+              "space": "lch"
+            }
+          }
+        },
+        "$description": "Inner glow shadow color for 09-forest (y:5px, blur:13px)"
+      },
       "10-red": {
         "$type": "color",
         "$value": "{red.700}",
         "$description": "Data visualization color (10th in sequence). Use as the tenth color in multi-series visualizations."
+      },
+      "10-red-shadow-1": {
+        "$type": "color",
+        "$value": "{comp.data-viz.10-red}",
+        "$extensions": {
+          "studio.tokens": {
+            "modify": {
+              "type": "alpha",
+              "value": "0.12",
+              "space": "lch"
+            }
+          }
+        },
+        "$description": "Outer glow shadow color for 10-red (y:6px, blur:18px)"
+      },
+      "10-red-shadow-2": {
+        "$type": "color",
+        "$value": "{comp.data-viz.10-red}",
+        "$extensions": {
+          "studio.tokens": {
+            "modify": {
+              "type": "alpha",
+              "value": "0.24",
+              "space": "lch"
+            }
+          }
+        },
+        "$description": "Inner glow shadow color for 10-red (y:5px, blur:13px)"
       },
       "11-yellow": {
         "$type": "color",
         "$value": "{yellow.300}",
         "$description": "Data visualization color (11th in sequence). Use as the eleventh color in multi-series visualizations."
       },
+      "11-yellow-shadow-1": {
+        "$type": "color",
+        "$value": "{comp.data-viz.11-yellow}",
+        "$extensions": {
+          "studio.tokens": {
+            "modify": {
+              "type": "alpha",
+              "value": "0.12",
+              "space": "lch"
+            }
+          }
+        },
+        "$description": "Outer glow shadow color for 11-yellow (y:6px, blur:18px)"
+      },
+      "11-yellow-shadow-2": {
+        "$type": "color",
+        "$value": "{comp.data-viz.11-yellow}",
+        "$extensions": {
+          "studio.tokens": {
+            "modify": {
+              "type": "alpha",
+              "value": "0.24",
+              "space": "lch"
+            }
+          }
+        },
+        "$description": "Inner glow shadow color for 11-yellow (y:5px, blur:13px)"
+      },
       "12-gray": {
         "$type": "color",
-        "$value": "{gray.600}",
+        "$value": "{gray.400}",
         "$description": "Data visualization color (12th in sequence). Use last or for neutral/inactive data series."
+      },
+      "12-gray-shadow-1": {
+        "$type": "color",
+        "$value": "{comp.data-viz.12-gray}",
+        "$extensions": {
+          "studio.tokens": {
+            "modify": {
+              "type": "alpha",
+              "value": "0.12",
+              "space": "lch"
+            }
+          }
+        },
+        "$description": "Outer glow shadow color for 12-gray (y:6px, blur:18px)"
+      },
+      "12-gray-shadow-2": {
+        "$type": "color",
+        "$value": "{comp.data-viz.12-gray}",
+        "$extensions": {
+          "studio.tokens": {
+            "modify": {
+              "type": "alpha",
+              "value": "0.24",
+              "space": "lch"
+            }
+          }
+        },
+        "$description": "Inner glow shadow color for 12-gray (y:5px, blur:13px)"
       },
       "inactive": {
         "01-blue": {
@@ -1918,6 +2254,34 @@
           "$value": "{comp.data-viz.01-blue}",
           "$description": "Inactive state of primary data visualization color (1st). Used for deselected or background data elements."
         },
+        "01-blue-shadow-1": {
+          "$type": "color",
+          "$value": "{comp.data-viz.inactive.01-blue}",
+          "$extensions": {
+            "studio.tokens": {
+              "modify": {
+                "type": "alpha",
+                "value": "0.12",
+                "space": "lch"
+              }
+            }
+          },
+          "$description": "Outer glow shadow color for inactive 01-blue (y:6px, blur:18px)"
+        },
+        "01-blue-shadow-2": {
+          "$type": "color",
+          "$value": "{comp.data-viz.inactive.01-blue}",
+          "$extensions": {
+            "studio.tokens": {
+              "modify": {
+                "type": "alpha",
+                "value": "0.24",
+                "space": "lch"
+              }
+            }
+          },
+          "$description": "Inner glow shadow color for inactive 01-blue (y:5px, blur:13px)"
+        },
         "02-purple": {
           "$extensions": {
             "studio.tokens": {
@@ -1931,6 +2295,34 @@
           "$type": "color",
           "$value": "{comp.data-viz.02-purple}",
           "$description": "Inactive state of secondary data visualization color (2nd). Used for deselected or background data elements."
+        },
+        "02-purple-shadow-1": {
+          "$type": "color",
+          "$value": "{comp.data-viz.inactive.02-purple}",
+          "$extensions": {
+            "studio.tokens": {
+              "modify": {
+                "type": "alpha",
+                "value": "0.12",
+                "space": "lch"
+              }
+            }
+          },
+          "$description": "Outer glow shadow color for inactive 02-purple (y:6px, blur:18px)"
+        },
+        "02-purple-shadow-2": {
+          "$type": "color",
+          "$value": "{comp.data-viz.inactive.02-purple}",
+          "$extensions": {
+            "studio.tokens": {
+              "modify": {
+                "type": "alpha",
+                "value": "0.24",
+                "space": "lch"
+              }
+            }
+          },
+          "$description": "Inner glow shadow color for inactive 02-purple (y:5px, blur:13px)"
         },
         "03-pink": {
           "$extensions": {
@@ -1946,6 +2338,34 @@
           "$value": "{comp.data-viz.03-pink}",
           "$description": "Inactive state of data visualization color (3rd). Used for deselected or background data elements."
         },
+        "03-pink-shadow-1": {
+          "$type": "color",
+          "$value": "{comp.data-viz.inactive.03-pink}",
+          "$extensions": {
+            "studio.tokens": {
+              "modify": {
+                "type": "alpha",
+                "value": "0.12",
+                "space": "lch"
+              }
+            }
+          },
+          "$description": "Outer glow shadow color for inactive 03-pink (y:6px, blur:18px)"
+        },
+        "03-pink-shadow-2": {
+          "$type": "color",
+          "$value": "{comp.data-viz.inactive.03-pink}",
+          "$extensions": {
+            "studio.tokens": {
+              "modify": {
+                "type": "alpha",
+                "value": "0.24",
+                "space": "lch"
+              }
+            }
+          },
+          "$description": "Inner glow shadow color for inactive 03-pink (y:5px, blur:13px)"
+        },
         "04-green": {
           "$extensions": {
             "studio.tokens": {
@@ -1959,6 +2379,34 @@
           "$type": "color",
           "$value": "{comp.data-viz.04-green}",
           "$description": "Inactive state of data visualization color (4th). Used for deselected or background data elements."
+        },
+        "04-green-shadow-1": {
+          "$type": "color",
+          "$value": "{comp.data-viz.inactive.04-green}",
+          "$extensions": {
+            "studio.tokens": {
+              "modify": {
+                "type": "alpha",
+                "value": "0.12",
+                "space": "lch"
+              }
+            }
+          },
+          "$description": "Outer glow shadow color for inactive 04-green (y:6px, blur:18px)"
+        },
+        "04-green-shadow-2": {
+          "$type": "color",
+          "$value": "{comp.data-viz.inactive.04-green}",
+          "$extensions": {
+            "studio.tokens": {
+              "modify": {
+                "type": "alpha",
+                "value": "0.24",
+                "space": "lch"
+              }
+            }
+          },
+          "$description": "Inner glow shadow color for inactive 04-green (y:5px, blur:13px)"
         },
         "05-indigo": {
           "$extensions": {
@@ -1974,6 +2422,34 @@
           "$value": "{comp.data-viz.05-indigo}",
           "$description": "Inactive state of data visualization color (5th). Used for deselected or background data elements."
         },
+        "05-indigo-shadow-1": {
+          "$type": "color",
+          "$value": "{comp.data-viz.inactive.05-indigo}",
+          "$extensions": {
+            "studio.tokens": {
+              "modify": {
+                "type": "alpha",
+                "value": "0.12",
+                "space": "lch"
+              }
+            }
+          },
+          "$description": "Outer glow shadow color for inactive 05-indigo (y:6px, blur:18px)"
+        },
+        "05-indigo-shadow-2": {
+          "$type": "color",
+          "$value": "{comp.data-viz.inactive.05-indigo}",
+          "$extensions": {
+            "studio.tokens": {
+              "modify": {
+                "type": "alpha",
+                "value": "0.24",
+                "space": "lch"
+              }
+            }
+          },
+          "$description": "Inner glow shadow color for inactive 05-indigo (y:5px, blur:13px)"
+        },
         "06-brown": {
           "$extensions": {
             "studio.tokens": {
@@ -1987,6 +2463,34 @@
           "$type": "color",
           "$value": "{comp.data-viz.06-brown}",
           "$description": "Inactive state of data visualization color (6th). Used for deselected or background data elements."
+        },
+        "06-brown-shadow-1": {
+          "$type": "color",
+          "$value": "{comp.data-viz.inactive.06-brown}",
+          "$extensions": {
+            "studio.tokens": {
+              "modify": {
+                "type": "alpha",
+                "value": "0.12",
+                "space": "lch"
+              }
+            }
+          },
+          "$description": "Outer glow shadow color for inactive 06-brown (y:6px, blur:18px)"
+        },
+        "06-brown-shadow-2": {
+          "$type": "color",
+          "$value": "{comp.data-viz.inactive.06-brown}",
+          "$extensions": {
+            "studio.tokens": {
+              "modify": {
+                "type": "alpha",
+                "value": "0.24",
+                "space": "lch"
+              }
+            }
+          },
+          "$description": "Inner glow shadow color for inactive 06-brown (y:5px, blur:13px)"
         },
         "07-cyan": {
           "$extensions": {
@@ -2002,6 +2506,34 @@
           "$value": "{comp.data-viz.07-cyan}",
           "$description": "Inactive state of data visualization color (7th). Used for deselected or background data elements."
         },
+        "07-cyan-shadow-1": {
+          "$type": "color",
+          "$value": "{comp.data-viz.inactive.07-cyan}",
+          "$extensions": {
+            "studio.tokens": {
+              "modify": {
+                "type": "alpha",
+                "value": "0.12",
+                "space": "lch"
+              }
+            }
+          },
+          "$description": "Outer glow shadow color for inactive 07-cyan (y:6px, blur:18px)"
+        },
+        "07-cyan-shadow-2": {
+          "$type": "color",
+          "$value": "{comp.data-viz.inactive.07-cyan}",
+          "$extensions": {
+            "studio.tokens": {
+              "modify": {
+                "type": "alpha",
+                "value": "0.24",
+                "space": "lch"
+              }
+            }
+          },
+          "$description": "Inner glow shadow color for inactive 07-cyan (y:5px, blur:13px)"
+        },
         "08-orange": {
           "$extensions": {
             "studio.tokens": {
@@ -2015,6 +2547,34 @@
           "$type": "color",
           "$value": "{comp.data-viz.08-orange}",
           "$description": "Inactive state of data visualization color (8th). Used for deselected or background data elements."
+        },
+        "08-orange-shadow-1": {
+          "$type": "color",
+          "$value": "{comp.data-viz.inactive.08-orange}",
+          "$extensions": {
+            "studio.tokens": {
+              "modify": {
+                "type": "alpha",
+                "value": "0.12",
+                "space": "lch"
+              }
+            }
+          },
+          "$description": "Outer glow shadow color for inactive 08-orange (y:6px, blur:18px)"
+        },
+        "08-orange-shadow-2": {
+          "$type": "color",
+          "$value": "{comp.data-viz.inactive.08-orange}",
+          "$extensions": {
+            "studio.tokens": {
+              "modify": {
+                "type": "alpha",
+                "value": "0.24",
+                "space": "lch"
+              }
+            }
+          },
+          "$description": "Inner glow shadow color for inactive 08-orange (y:5px, blur:13px)"
         },
         "09-forest": {
           "$extensions": {
@@ -2030,6 +2590,34 @@
           "$value": "{comp.data-viz.09-forest}",
           "$description": "Inactive state of data visualization color (9th). Used for deselected or background data elements."
         },
+        "09-forest-shadow-1": {
+          "$type": "color",
+          "$value": "{comp.data-viz.inactive.09-forest}",
+          "$extensions": {
+            "studio.tokens": {
+              "modify": {
+                "type": "alpha",
+                "value": "0.12",
+                "space": "lch"
+              }
+            }
+          },
+          "$description": "Outer glow shadow color for inactive 09-forest (y:6px, blur:18px)"
+        },
+        "09-forest-shadow-2": {
+          "$type": "color",
+          "$value": "{comp.data-viz.inactive.09-forest}",
+          "$extensions": {
+            "studio.tokens": {
+              "modify": {
+                "type": "alpha",
+                "value": "0.24",
+                "space": "lch"
+              }
+            }
+          },
+          "$description": "Inner glow shadow color for inactive 09-forest (y:5px, blur:13px)"
+        },
         "10-red": {
           "$extensions": {
             "studio.tokens": {
@@ -2043,6 +2631,34 @@
           "$type": "color",
           "$value": "{comp.data-viz.10-red}",
           "$description": "Inactive state of data visualization color (10th). Used for deselected or background data elements."
+        },
+        "10-red-shadow-1": {
+          "$type": "color",
+          "$value": "{comp.data-viz.inactive.10-red}",
+          "$extensions": {
+            "studio.tokens": {
+              "modify": {
+                "type": "alpha",
+                "value": "0.12",
+                "space": "lch"
+              }
+            }
+          },
+          "$description": "Outer glow shadow color for inactive 10-red (y:6px, blur:18px)"
+        },
+        "10-red-shadow-2": {
+          "$type": "color",
+          "$value": "{comp.data-viz.inactive.10-red}",
+          "$extensions": {
+            "studio.tokens": {
+              "modify": {
+                "type": "alpha",
+                "value": "0.24",
+                "space": "lch"
+              }
+            }
+          },
+          "$description": "Inner glow shadow color for inactive 10-red (y:5px, blur:13px)"
         },
         "11-yellow": {
           "$extensions": {
@@ -2058,6 +2674,34 @@
           "$value": "{comp.data-viz.11-yellow}",
           "$description": "Inactive state of data visualization color (11th). Used for deselected or background data elements."
         },
+        "11-yellow-shadow-1": {
+          "$type": "color",
+          "$value": "{comp.data-viz.inactive.11-yellow}",
+          "$extensions": {
+            "studio.tokens": {
+              "modify": {
+                "type": "alpha",
+                "value": "0.12",
+                "space": "lch"
+              }
+            }
+          },
+          "$description": "Outer glow shadow color for inactive 11-yellow (y:6px, blur:18px)"
+        },
+        "11-yellow-shadow-2": {
+          "$type": "color",
+          "$value": "{comp.data-viz.inactive.11-yellow}",
+          "$extensions": {
+            "studio.tokens": {
+              "modify": {
+                "type": "alpha",
+                "value": "0.24",
+                "space": "lch"
+              }
+            }
+          },
+          "$description": "Inner glow shadow color for inactive 11-yellow (y:5px, blur:13px)"
+        },
         "12-gray": {
           "$extensions": {
             "studio.tokens": {
@@ -2071,6 +2715,34 @@
           "$type": "color",
           "$value": "{comp.data-viz.12-gray}",
           "$description": "Inactive state of data visualization color (12th). Used for deselected or background data elements."
+        },
+        "12-gray-shadow-1": {
+          "$type": "color",
+          "$value": "{comp.data-viz.inactive.12-gray}",
+          "$extensions": {
+            "studio.tokens": {
+              "modify": {
+                "type": "alpha",
+                "value": "0.12",
+                "space": "lch"
+              }
+            }
+          },
+          "$description": "Outer glow shadow color for inactive 12-gray (y:6px, blur:18px)"
+        },
+        "12-gray-shadow-2": {
+          "$type": "color",
+          "$value": "{comp.data-viz.inactive.12-gray}",
+          "$extensions": {
+            "studio.tokens": {
+              "modify": {
+                "type": "alpha",
+                "value": "0.24",
+                "space": "lch"
+              }
+            }
+          },
+          "$description": "Inner glow shadow color for inactive 12-gray (y:5px, blur:13px)"
         }
       }
     }
@@ -2239,6 +2911,538 @@
             "type": "innerShadow"
           },
           "$description": "Inner shadow for AI-themed components. Adds depth to AI elements."
+        }
+      },
+      "data-viz": {
+        "01-blue": {
+          "$type": "boxShadow",
+          "$value": [
+            {
+              "x": "0",
+              "y": "6",
+              "blur": "18",
+              "spread": "0",
+              "color": "{comp.data-viz.01-blue-shadow-1}",
+              "type": "dropShadow"
+            },
+            {
+              "x": "0",
+              "y": "5",
+              "blur": "13",
+              "spread": "0",
+              "color": "{comp.data-viz.01-blue-shadow-2}",
+              "type": "dropShadow"
+            }
+          ],
+          "$description": "Glow effect for data-viz 01-blue. Two-layer drop shadow for chart/graph elements."
+        },
+        "02-purple": {
+          "$type": "boxShadow",
+          "$value": [
+            {
+              "x": "0",
+              "y": "6",
+              "blur": "18",
+              "spread": "0",
+              "color": "{comp.data-viz.02-purple-shadow-1}",
+              "type": "dropShadow"
+            },
+            {
+              "x": "0",
+              "y": "5",
+              "blur": "13",
+              "spread": "0",
+              "color": "{comp.data-viz.02-purple-shadow-2}",
+              "type": "dropShadow"
+            }
+          ],
+          "$description": "Glow effect for data-viz 02-purple. Two-layer drop shadow for chart/graph elements."
+        },
+        "03-pink": {
+          "$type": "boxShadow",
+          "$value": [
+            {
+              "x": "0",
+              "y": "6",
+              "blur": "18",
+              "spread": "0",
+              "color": "{comp.data-viz.03-pink-shadow-1}",
+              "type": "dropShadow"
+            },
+            {
+              "x": "0",
+              "y": "5",
+              "blur": "13",
+              "spread": "0",
+              "color": "{comp.data-viz.03-pink-shadow-2}",
+              "type": "dropShadow"
+            }
+          ],
+          "$description": "Glow effect for data-viz 03-pink. Two-layer drop shadow for chart/graph elements."
+        },
+        "04-green": {
+          "$type": "boxShadow",
+          "$value": [
+            {
+              "x": "0",
+              "y": "6",
+              "blur": "18",
+              "spread": "0",
+              "color": "{comp.data-viz.04-green-shadow-1}",
+              "type": "dropShadow"
+            },
+            {
+              "x": "0",
+              "y": "5",
+              "blur": "13",
+              "spread": "0",
+              "color": "{comp.data-viz.04-green-shadow-2}",
+              "type": "dropShadow"
+            }
+          ],
+          "$description": "Glow effect for data-viz 04-green. Two-layer drop shadow for chart/graph elements."
+        },
+        "05-indigo": {
+          "$type": "boxShadow",
+          "$value": [
+            {
+              "x": "0",
+              "y": "6",
+              "blur": "18",
+              "spread": "0",
+              "color": "{comp.data-viz.05-indigo-shadow-1}",
+              "type": "dropShadow"
+            },
+            {
+              "x": "0",
+              "y": "5",
+              "blur": "13",
+              "spread": "0",
+              "color": "{comp.data-viz.05-indigo-shadow-2}",
+              "type": "dropShadow"
+            }
+          ],
+          "$description": "Glow effect for data-viz 05-indigo. Two-layer drop shadow for chart/graph elements."
+        },
+        "06-brown": {
+          "$type": "boxShadow",
+          "$value": [
+            {
+              "x": "0",
+              "y": "6",
+              "blur": "18",
+              "spread": "0",
+              "color": "{comp.data-viz.06-brown-shadow-1}",
+              "type": "dropShadow"
+            },
+            {
+              "x": "0",
+              "y": "5",
+              "blur": "13",
+              "spread": "0",
+              "color": "{comp.data-viz.06-brown-shadow-2}",
+              "type": "dropShadow"
+            }
+          ],
+          "$description": "Glow effect for data-viz 06-brown. Two-layer drop shadow for chart/graph elements."
+        },
+        "07-cyan": {
+          "$type": "boxShadow",
+          "$value": [
+            {
+              "x": "0",
+              "y": "6",
+              "blur": "18",
+              "spread": "0",
+              "color": "{comp.data-viz.07-cyan-shadow-1}",
+              "type": "dropShadow"
+            },
+            {
+              "x": "0",
+              "y": "5",
+              "blur": "13",
+              "spread": "0",
+              "color": "{comp.data-viz.07-cyan-shadow-2}",
+              "type": "dropShadow"
+            }
+          ],
+          "$description": "Glow effect for data-viz 07-cyan. Two-layer drop shadow for chart/graph elements."
+        },
+        "08-orange": {
+          "$type": "boxShadow",
+          "$value": [
+            {
+              "x": "0",
+              "y": "6",
+              "blur": "18",
+              "spread": "0",
+              "color": "{comp.data-viz.08-orange-shadow-1}",
+              "type": "dropShadow"
+            },
+            {
+              "x": "0",
+              "y": "5",
+              "blur": "13",
+              "spread": "0",
+              "color": "{comp.data-viz.08-orange-shadow-2}",
+              "type": "dropShadow"
+            }
+          ],
+          "$description": "Glow effect for data-viz 08-orange. Two-layer drop shadow for chart/graph elements."
+        },
+        "09-forest": {
+          "$type": "boxShadow",
+          "$value": [
+            {
+              "x": "0",
+              "y": "6",
+              "blur": "18",
+              "spread": "0",
+              "color": "{comp.data-viz.09-forest-shadow-1}",
+              "type": "dropShadow"
+            },
+            {
+              "x": "0",
+              "y": "5",
+              "blur": "13",
+              "spread": "0",
+              "color": "{comp.data-viz.09-forest-shadow-2}",
+              "type": "dropShadow"
+            }
+          ],
+          "$description": "Glow effect for data-viz 09-forest. Two-layer drop shadow for chart/graph elements."
+        },
+        "10-red": {
+          "$type": "boxShadow",
+          "$value": [
+            {
+              "x": "0",
+              "y": "6",
+              "blur": "18",
+              "spread": "0",
+              "color": "{comp.data-viz.10-red-shadow-1}",
+              "type": "dropShadow"
+            },
+            {
+              "x": "0",
+              "y": "5",
+              "blur": "13",
+              "spread": "0",
+              "color": "{comp.data-viz.10-red-shadow-2}",
+              "type": "dropShadow"
+            }
+          ],
+          "$description": "Glow effect for data-viz 10-red. Two-layer drop shadow for chart/graph elements."
+        },
+        "11-yellow": {
+          "$type": "boxShadow",
+          "$value": [
+            {
+              "x": "0",
+              "y": "6",
+              "blur": "18",
+              "spread": "0",
+              "color": "{comp.data-viz.11-yellow-shadow-1}",
+              "type": "dropShadow"
+            },
+            {
+              "x": "0",
+              "y": "5",
+              "blur": "13",
+              "spread": "0",
+              "color": "{comp.data-viz.11-yellow-shadow-2}",
+              "type": "dropShadow"
+            }
+          ],
+          "$description": "Glow effect for data-viz 11-yellow. Two-layer drop shadow for chart/graph elements."
+        },
+        "12-gray": {
+          "$type": "boxShadow",
+          "$value": [
+            {
+              "x": "0",
+              "y": "6",
+              "blur": "18",
+              "spread": "0",
+              "color": "{comp.data-viz.12-gray-shadow-1}",
+              "type": "dropShadow"
+            },
+            {
+              "x": "0",
+              "y": "5",
+              "blur": "13",
+              "spread": "0",
+              "color": "{comp.data-viz.12-gray-shadow-2}",
+              "type": "dropShadow"
+            }
+          ],
+          "$description": "Glow effect for data-viz 12-gray. Two-layer drop shadow for chart/graph elements."
+        },
+        "inactive": {
+          "01-blue": {
+            "$type": "boxShadow",
+            "$value": [
+              {
+                "x": "0",
+                "y": "6",
+                "blur": "18",
+                "spread": "0",
+                "color": "{comp.data-viz.inactive.01-blue-shadow-1}",
+                "type": "dropShadow"
+              },
+              {
+                "x": "0",
+                "y": "5",
+                "blur": "13",
+                "spread": "0",
+                "color": "{comp.data-viz.inactive.01-blue-shadow-2}",
+                "type": "dropShadow"
+              }
+            ],
+            "$description": "Glow effect for inactive data-viz 01-blue. Two-layer drop shadow for chart/graph elements."
+          },
+          "02-purple": {
+            "$type": "boxShadow",
+            "$value": [
+              {
+                "x": "0",
+                "y": "6",
+                "blur": "18",
+                "spread": "0",
+                "color": "{comp.data-viz.inactive.02-purple-shadow-1}",
+                "type": "dropShadow"
+              },
+              {
+                "x": "0",
+                "y": "5",
+                "blur": "13",
+                "spread": "0",
+                "color": "{comp.data-viz.inactive.02-purple-shadow-2}",
+                "type": "dropShadow"
+              }
+            ],
+            "$description": "Glow effect for inactive data-viz 02-purple. Two-layer drop shadow for chart/graph elements."
+          },
+          "03-pink": {
+            "$type": "boxShadow",
+            "$value": [
+              {
+                "x": "0",
+                "y": "6",
+                "blur": "18",
+                "spread": "0",
+                "color": "{comp.data-viz.inactive.03-pink-shadow-1}",
+                "type": "dropShadow"
+              },
+              {
+                "x": "0",
+                "y": "5",
+                "blur": "13",
+                "spread": "0",
+                "color": "{comp.data-viz.inactive.03-pink-shadow-2}",
+                "type": "dropShadow"
+              }
+            ],
+            "$description": "Glow effect for inactive data-viz 03-pink. Two-layer drop shadow for chart/graph elements."
+          },
+          "04-green": {
+            "$type": "boxShadow",
+            "$value": [
+              {
+                "x": "0",
+                "y": "6",
+                "blur": "18",
+                "spread": "0",
+                "color": "{comp.data-viz.inactive.04-green-shadow-1}",
+                "type": "dropShadow"
+              },
+              {
+                "x": "0",
+                "y": "5",
+                "blur": "13",
+                "spread": "0",
+                "color": "{comp.data-viz.inactive.04-green-shadow-2}",
+                "type": "dropShadow"
+              }
+            ],
+            "$description": "Glow effect for inactive data-viz 04-green. Two-layer drop shadow for chart/graph elements."
+          },
+          "05-indigo": {
+            "$type": "boxShadow",
+            "$value": [
+              {
+                "x": "0",
+                "y": "6",
+                "blur": "18",
+                "spread": "0",
+                "color": "{comp.data-viz.inactive.05-indigo-shadow-1}",
+                "type": "dropShadow"
+              },
+              {
+                "x": "0",
+                "y": "5",
+                "blur": "13",
+                "spread": "0",
+                "color": "{comp.data-viz.inactive.05-indigo-shadow-2}",
+                "type": "dropShadow"
+              }
+            ],
+            "$description": "Glow effect for inactive data-viz 05-indigo. Two-layer drop shadow for chart/graph elements."
+          },
+          "06-brown": {
+            "$type": "boxShadow",
+            "$value": [
+              {
+                "x": "0",
+                "y": "6",
+                "blur": "18",
+                "spread": "0",
+                "color": "{comp.data-viz.inactive.06-brown-shadow-1}",
+                "type": "dropShadow"
+              },
+              {
+                "x": "0",
+                "y": "5",
+                "blur": "13",
+                "spread": "0",
+                "color": "{comp.data-viz.inactive.06-brown-shadow-2}",
+                "type": "dropShadow"
+              }
+            ],
+            "$description": "Glow effect for inactive data-viz 06-brown. Two-layer drop shadow for chart/graph elements."
+          },
+          "07-cyan": {
+            "$type": "boxShadow",
+            "$value": [
+              {
+                "x": "0",
+                "y": "6",
+                "blur": "18",
+                "spread": "0",
+                "color": "{comp.data-viz.inactive.07-cyan-shadow-1}",
+                "type": "dropShadow"
+              },
+              {
+                "x": "0",
+                "y": "5",
+                "blur": "13",
+                "spread": "0",
+                "color": "{comp.data-viz.inactive.07-cyan-shadow-2}",
+                "type": "dropShadow"
+              }
+            ],
+            "$description": "Glow effect for inactive data-viz 07-cyan. Two-layer drop shadow for chart/graph elements."
+          },
+          "08-orange": {
+            "$type": "boxShadow",
+            "$value": [
+              {
+                "x": "0",
+                "y": "6",
+                "blur": "18",
+                "spread": "0",
+                "color": "{comp.data-viz.inactive.08-orange-shadow-1}",
+                "type": "dropShadow"
+              },
+              {
+                "x": "0",
+                "y": "5",
+                "blur": "13",
+                "spread": "0",
+                "color": "{comp.data-viz.inactive.08-orange-shadow-2}",
+                "type": "dropShadow"
+              }
+            ],
+            "$description": "Glow effect for inactive data-viz 08-orange. Two-layer drop shadow for chart/graph elements."
+          },
+          "09-forest": {
+            "$type": "boxShadow",
+            "$value": [
+              {
+                "x": "0",
+                "y": "6",
+                "blur": "18",
+                "spread": "0",
+                "color": "{comp.data-viz.inactive.09-forest-shadow-1}",
+                "type": "dropShadow"
+              },
+              {
+                "x": "0",
+                "y": "5",
+                "blur": "13",
+                "spread": "0",
+                "color": "{comp.data-viz.inactive.09-forest-shadow-2}",
+                "type": "dropShadow"
+              }
+            ],
+            "$description": "Glow effect for inactive data-viz 09-forest. Two-layer drop shadow for chart/graph elements."
+          },
+          "10-red": {
+            "$type": "boxShadow",
+            "$value": [
+              {
+                "x": "0",
+                "y": "6",
+                "blur": "18",
+                "spread": "0",
+                "color": "{comp.data-viz.inactive.10-red-shadow-1}",
+                "type": "dropShadow"
+              },
+              {
+                "x": "0",
+                "y": "5",
+                "blur": "13",
+                "spread": "0",
+                "color": "{comp.data-viz.inactive.10-red-shadow-2}",
+                "type": "dropShadow"
+              }
+            ],
+            "$description": "Glow effect for inactive data-viz 10-red. Two-layer drop shadow for chart/graph elements."
+          },
+          "11-yellow": {
+            "$type": "boxShadow",
+            "$value": [
+              {
+                "x": "0",
+                "y": "6",
+                "blur": "18",
+                "spread": "0",
+                "color": "{comp.data-viz.inactive.11-yellow-shadow-1}",
+                "type": "dropShadow"
+              },
+              {
+                "x": "0",
+                "y": "5",
+                "blur": "13",
+                "spread": "0",
+                "color": "{comp.data-viz.inactive.11-yellow-shadow-2}",
+                "type": "dropShadow"
+              }
+            ],
+            "$description": "Glow effect for inactive data-viz 11-yellow. Two-layer drop shadow for chart/graph elements."
+          },
+          "12-gray": {
+            "$type": "boxShadow",
+            "$value": [
+              {
+                "x": "0",
+                "y": "6",
+                "blur": "18",
+                "spread": "0",
+                "color": "{comp.data-viz.inactive.12-gray-shadow-1}",
+                "type": "dropShadow"
+              },
+              {
+                "x": "0",
+                "y": "5",
+                "blur": "13",
+                "spread": "0",
+                "color": "{comp.data-viz.inactive.12-gray-shadow-2}",
+                "type": "dropShadow"
+              }
+            ],
+            "$description": "Glow effect for inactive data-viz 12-gray. Two-layer drop shadow for chart/graph elements."
+          }
         }
       }
     }

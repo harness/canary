@@ -175,7 +175,7 @@ export const DataTable = function DataTable<TData>({
                   content: 'Toggle Row Expanded'
                 }}
               >
-                <IconV2 name={row.getIsExpanded() ? 'nav-arrow-down' : 'nav-arrow-up'} size="2xs" />
+                <IconV2 name={row.getIsExpanded() ? 'nav-arrow-up' : 'nav-arrow-down'} size="2xs" />
               </Button>
             ) : null
           },
@@ -336,8 +336,10 @@ export const DataTable = function DataTable<TData>({
             </Table.Row>
             {row.getIsExpanded() && renderSubComponent && (
               <Table.Row className="bg-cn-2">
-                <Table.Cell></Table.Cell>
-                <Table.Cell colSpan={row.getAllCells().length - 1}>{renderSubComponent({ row })}</Table.Cell>
+                <Table.Cell className="bg-transparent"></Table.Cell>
+                <Table.Cell className="bg-transparent" colSpan={row.getAllCells().length - 1}>
+                  {renderSubComponent({ row })}
+                </Table.Cell>
               </Table.Row>
             )}
           </Fragment>

@@ -82,7 +82,7 @@ ${sshUrl}
             title={t('views:repos.emptyRepoPage.noData.title', 'This repository is empty')}
             description={[
               t('views:repos.emptyRepoPage.noData.description.0', 'We recommend every repository include a'),
-              t('views:repos.emptyRepoPage.noData.description.1', 'README, LICENSE, and .gitignrore')
+              t('views:repos.emptyRepoPage.noData.description.1', 'README, LICENSE, and .gitignore')
             ]}
             primaryButton={{
               icon: 'plus',

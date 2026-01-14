@@ -275,7 +275,7 @@
         "title": "This repository is empty.",
         "description": {
           "0": "We recommend every repository include a",
-          "1": "README, LICENSE, and .gitignrore."
+          "1": "README, LICENSE, and .gitignore."
         },
         "createFile": "Créer un fichier"
       },
@@ -575,7 +575,7 @@
   },
   "pullRequests": {
     "conversation": "Conversation",
-    "commits": "Commets",
+    "commits": "Commits",
     "changes": "Changements",
     "noCommitsYet": "",
     "noCommitDataDescription": "",

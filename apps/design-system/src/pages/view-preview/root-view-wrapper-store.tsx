@@ -204,7 +204,7 @@ export const useRootViewWrapperStore = () => {
         {
           id: 21,
           iconName: 'delegates',
-          title: 'Delegeates',
+          title: 'Delegates',
           to: '/file-store'
         },
         {

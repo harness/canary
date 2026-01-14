@@ -275,7 +275,7 @@
         "title": "This repository is empty.",
         "description": {
           "0": "We recommend every repository include a",
-          "1": "README, LICENSE, and .gitignrore."
+          "1": "README, LICENSE, and .gitignore."
         },
         "createFile": "Create File"
       },
@@ -709,7 +709,7 @@
     "enterTokenPlaceholder": "Enter token name",
     "expiration": "Expiration",
     "token": "Token",
-    "tokenSuccessDescription": "Your token has been generated. Please make sure to copy and store your token somewhere safe, you won’t beable to see it again.",
+    "tokenSuccessDescription": "Your token has been generated. Please make sure to copy and store your token somewhere safe, you won't be able to see it again.",
     "select": "Select",
     "tokenExpiryNone": "Token will never expire",
     "tokenExpiryDate": " Token will expire on",

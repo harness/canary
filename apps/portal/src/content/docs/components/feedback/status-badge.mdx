@@ -138,7 +138,10 @@ import { StatusBadge } from '@harnessio/ui/components'
 // Status badge with pulse
 <StatusBadge variant="status" theme="success" pulse>Status</StatusBadge>
 
-// Other variants (pulse not allowed)
+// Status badge with square indicator
+<StatusBadge variant="status" theme="success" indicatorShape="square">Status</StatusBadge>
+
+// Other variants (pulse and indicatorShape not allowed)
 <StatusBadge variant="primary" theme="info">Info</StatusBadge>
 <StatusBadge variant="secondary" theme="warning">Warning</StatusBadge>
 <StatusBadge variant="outline" theme="danger">Danger</StatusBadge>
@@ -219,6 +222,19 @@ Status badges can optionally include a pulsing indicator to indicate activity us
 </div>`}
 />
 
+## Indicator Shape
+
+Status badges support different indicator shapes via the `indicatorShape` prop. The default is `circle` (fully rounded), and `square` provides a slightly rounded square indicator.
+
+<DocsPage.ComponentExample
+  client:only
+  code={`<div className="flex flex-wrap items-end gap-cn-sm">
+    <StatusBadge variant="status" theme="success">Circle (default)</StatusBadge>
+    <StatusBadge variant="status" theme="success" indicatorShape="square">Square</StatusBadge>
+    <StatusBadge variant="status" theme="warning" indicatorShape="square" pulse>Square with pulse</StatusBadge>
+</div>`}
+/>
+
 ## API Reference
 
 The `StatusBadge` component has several props to control its appearance:
@@ -261,6 +277,13 @@ The `StatusBadge` component has several props to control its appearance:
       required: false,
       value: "boolean",
       defaultValue: "false",
+    },
+    {
+      name: "indicatorShape",
+      description: "Shape of the status indicator (only for status variant)",
+      required: false,
+      value: "'circle' | 'square'",
+      defaultValue: "'circle'",
     },
     {
       name: "className",

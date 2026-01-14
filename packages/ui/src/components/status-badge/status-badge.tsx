@@ -35,6 +35,18 @@ const statusBadgeVariants = cva('cn-badge inline-flex w-fit items-center transit
   }
 })
 
+const statusIndicatorVariants = cva('cn-badge-indicator', {
+  variants: {
+    shape: {
+      circle: 'rounded-cn-full',
+      square: 'rounded-cn-px'
+    }
+  },
+  defaultVariants: {
+    shape: 'circle'
+  }
+})
+
 export type StatusBadgeTheme = VariantProps<typeof statusBadgeVariants>['theme']
 
 // Base props without theme-specific requirements
@@ -52,6 +64,7 @@ type StatusBadgeStatusVariantProps = BadgeBaseProps & {
   variant: 'status'
   pulse?: boolean
   icon?: never
+  indicatorShape?: VariantProps<typeof statusIndicatorVariants>['shape']
 }
 
 // Other theme props (variant is required)
@@ -59,13 +72,14 @@ type StatusBadgeOtherThemeProps = BadgeBaseProps & {
   theme?: StatusBadgeTheme
   variant: NonNullable<Exclude<VariantProps<typeof statusBadgeVariants>['variant'], 'status' | 'counter'>> // Make variant required
   pulse?: never
+  indicatorShape?: never
 }
 
 // Combined props using discriminated union
 export type StatusBadgeProps = StatusBadgeOtherThemeProps | StatusBadgeStatusVariantProps
 
 const StatusBadge = forwardRef<HTMLDivElement, StatusBadgeProps>(
-  ({ className, variant, size, pulse, theme = 'muted', children, icon, ...props }, ref) => {
+  ({ className, variant, size, pulse, theme = 'muted', children, icon, indicatorShape, ...props }, ref) => {
     const isStatusVariant = variant === 'status'
 
     return (
@@ -82,7 +96,12 @@ const StatusBadge = forwardRef<HTMLDivElement, StatusBadgeProps>(
         {...props}
       >
         {isStatusVariant && (
-          <span className={cn('cn-badge-indicator rounded-cn-full', { 'animate-pulse': pulse })} aria-hidden="true" />
+          <span
+            className={cn(statusIndicatorVariants({ shape: indicatorShape }), {
+              'animate-pulse': pulse
+            })}
+            aria-hidden="true"
+          />
         )}
         {icon && <IconV2 name={icon} />}
         {children}

@@ -1,4 +1,4 @@
-import { PropsWithChildren, useCallback, useMemo, type JSX } from 'react'
+import { PropsWithChildren, useCallback, useMemo, useRef, type JSX } from 'react'
 
 import { IconV2, IconV2NamesType, StatusBadge, Text } from '@/components'
 import { cn } from '@/utils'
@@ -20,8 +20,33 @@ import {
  * =================
  */
 
-function Root({ children, isGroupCard = false }: PropsWithChildren<StudioCardRootProps>): JSX.Element {
-  return <div className={cn('cn-studio-card', { 'cn-studio-card-group': isGroupCard })}>{children}</div>
+const CLICK_DRAG_THRESHOLD = 5
+function Root({ children, isGroupCard = false, onClick }: PropsWithChildren<StudioCardRootProps>): JSX.Element {
+  // Used to determine if a click was a drag or a click
+  const dragPos = useRef({ x: 0, y: 0 })
+
+  return (
+    <div
+      className={cn('cn-studio-card cursor-default', { 'cn-studio-card-group': isGroupCard })}
+      onMouseDown={e => {
+        dragPos.current = { x: e.clientX, y: e.clientY }
+      }}
+      onClick={e => {
+        const dx = Math.abs(e.clientX - dragPos.current.x)
+        const dy = Math.abs(e.clientY - dragPos.current.y)
+
+        // If the mouse moved more than 5px, it was a drag, not a click
+        if (dx > CLICK_DRAG_THRESHOLD || dy > CLICK_DRAG_THRESHOLD) return
+
+        e.stopPropagation()
+        onClick?.(e)
+      }}
+      role="button"
+      tabIndex={-1}
+    >
+      {children}
+    </div>
+  )
 }
 
 /**
@@ -109,7 +134,10 @@ function ExpandButton({ stepCount, isExpanded = false, onToggle }: StudioCardExp
 
       {/* Main button */}
       <button
-        onClick={onToggle}
+        onClick={e => {
+          e.stopPropagation()
+          onToggle?.()
+        }}
         className={cn('cn-studio-card-expand-button-main', {
           'bg-cn-2': isExpanded,
           'bg-cn-3': !isExpanded

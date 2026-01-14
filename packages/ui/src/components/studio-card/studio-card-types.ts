@@ -4,6 +4,7 @@ import { ExecutionStatusType } from '../pipeline-nodes/types/types'
 
 export interface StudioCardRootProps {
   isGroupCard?: boolean
+  onClick?: React.MouseEventHandler<HTMLDivElement>
 }
 
 export interface StudioCardHeaderProps {

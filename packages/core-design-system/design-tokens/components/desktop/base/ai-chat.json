@@ -2,7 +2,7 @@
   "ai-chat": {
     "container": {
       "$type": "spacing",
-      "$value": "{spacing.6}"
+      "$value": "{spacing.4}"
     },
     "content": {
       "max-width": {
@@ -12,7 +12,7 @@
     },
     "min-width": {
       "$type": "sizing",
-      "$value": "412px"
+      "$value": "320px"
     },
     "border": {
       "$type": "borderWidth",

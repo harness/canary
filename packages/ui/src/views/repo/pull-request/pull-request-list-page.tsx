@@ -447,14 +447,34 @@ const PullRequestListPage: FC<PullRequestPageProps> = ({
 
             <ListActions.Root>
               <ListActions.Left>
-                <SearchInput
-                  ref={searchRef}
-                  defaultValue={searchQuery || ''}
-                  placeholder={t('views:repos.search', 'Search')}
-                  inputContainerClassName="max-w-80"
-                  onChange={handleInputChange}
-                  autoFocus
-                />
+                <Layout.Horizontal gap="xs" align={'center'} justify={'start'} className="flex-1">
+                  <SearchInput
+                    ref={searchRef}
+                    defaultValue={searchQuery || ''}
+                    placeholder={t('views:repos.search', 'Search')}
+                    inputContainerClassName="max-w-80"
+                    onChange={handleInputChange}
+                    autoFocus
+                  />
+                  <PRListFilterHandler.Dropdown>
+                    {(addFilter, availableFilters, resetFilters) => (
+                      <SearchableDropdown<FilterOptionConfig<PRListFiltersKeys, LabelsValue>>
+                        options={PR_FILTER_OPTIONS.filter(option => availableFilters.includes(option.value))}
+                        onChange={option => {
+                          addFilter(option.value)
+                          setOpenedFilter(option.value)
+                        }}
+                        onReset={() => resetFilters()}
+                        inputPlaceholder={t('component:filter.inputPlaceholder', 'Filter by...')}
+                        buttonLabel={t('component:filter.buttonLabel', 'Reset filters')}
+                        displayLabel={renderFilterSelectLabel({
+                          selectedFilters: PR_FILTER_OPTIONS.length - availableFilters.length,
+                          displayLabel: t('component:filter.defaultLabel', 'Filter')
+                        })}
+                      />
+                    )}
+                  </PRListFilterHandler.Dropdown>
+                </Layout.Horizontal>
               </ListActions.Left>
               <ListActions.Right>
                 {isProjectLevel && (
@@ -471,24 +491,6 @@ const PullRequestListPage: FC<PullRequestPageProps> = ({
                   />
                 )}
 
-                <PRListFilterHandler.Dropdown>
-                  {(addFilter, availableFilters, resetFilters) => (
-                    <SearchableDropdown<FilterOptionConfig<PRListFiltersKeys, LabelsValue>>
-                      options={PR_FILTER_OPTIONS.filter(option => availableFilters.includes(option.value))}
-                      onChange={option => {
-                        addFilter(option.value)
-                        setOpenedFilter(option.value)
-                      }}
-                      onReset={() => resetFilters()}
-                      inputPlaceholder={t('component:filter.inputPlaceholder', 'Filter by...')}
-                      buttonLabel={t('component:filter.buttonLabel', 'Reset filters')}
-                      displayLabel={renderFilterSelectLabel({
-                        selectedFilters: PR_FILTER_OPTIONS.length - availableFilters.length,
-                        displayLabel: t('component:filter.defaultLabel', 'Filter')
-                      })}
-                    />
-                  )}
-                </PRListFilterHandler.Dropdown>
                 {/**
                  * Creating a pull request is permitted only when inside a repository.
                  */}

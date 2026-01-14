@@ -32,6 +32,7 @@ interface FilterGroupProps<
   onFilterSelectionChange?: (selectedFilters: (keyof T)[]) => void
   onFilterValueChange?: (filterType: T) => void
   handleFilterOpen?: (filter: V, isOpen: boolean) => void
+  quickFiltersSlot?: ReactNode
   multiSortConfig?: Omit<ComponentProps<typeof Sort.Root>, 'children'>
   simpleSortConfig?: ComponentProps<typeof SimpleSort>
   searchValue?: string
@@ -142,21 +143,16 @@ const FilterGroupInner = <
         <>
           <ListActions.Root>
             <ListActions.Left>
-              <SearchInput
-                width="full"
-                inputContainerClassName="max-w-80"
-                ref={searchRef}
-                defaultValue={searchValue || ''}
-                onChange={handleInputChange}
-                placeholder={t('views:repos.search', 'Search')}
-                autoFocus
-              />
-            </ListActions.Left>
-            <ListActions.Right>
-              <Layout.Horizontal gap="md">
-                {!!savedFiltersOptions?.length && (
-                  <SavedFilters savedFilterKey={savedFilterKey} options={savedFiltersOptions} />
-                )}
+              <Layout.Horizontal gap="xs" align={'center'} justify={'start'} className="flex-1">
+                <SearchInput
+                  inputContainerClassName="max-w-80 flex-1"
+                  ref={searchRef}
+                  defaultValue={searchValue || ''}
+                  onChange={handleInputChange}
+                  placeholder={t('views:repos.search', 'Search')}
+                  autoFocus
+                />
+                {props.quickFiltersSlot}
                 {filterOptions.length > 0 && (
                   <FilterHandler.Dropdown>
                     {(addFilter, availableFilters, resetFilters) => {
@@ -179,15 +175,22 @@ const FilterGroupInner = <
                     }}
                   </FilterHandler.Dropdown>
                 )}
+                {!!savedFiltersOptions?.length && (
+                  <SavedFilters savedFilterKey={savedFilterKey} options={savedFiltersOptions} />
+                )}
+              </Layout.Horizontal>
+            </ListActions.Left>
+            <ListActions.Right>
+              <Layout.Horizontal gap="xs">
                 {multiSortConfig && (
                   <Sort.Select
                     displayLabel={t('component:sort.defaultLabel', 'Sort')}
                     buttonLabel={t('component:sort.resetSort', 'Reset sort')}
                   />
                 )}
+                {simpleSortConfig && <SimpleSort {...simpleSortConfig} />}
+                {props.headerAction}
               </Layout.Horizontal>
-              {simpleSortConfig && <SimpleSort {...simpleSortConfig} />}
-              {props.headerAction}
             </ListActions.Right>
           </ListActions.Root>
           <>

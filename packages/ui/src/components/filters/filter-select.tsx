@@ -88,10 +88,10 @@ const renderFilterSelectLabel = ({
   displayLabel: React.ReactNode
 }) => {
   return (
-    <Button size="sm" variant="transparent">
+    <Button size="md" variant="ghost">
+      <IconV2 name="plus" />
       {displayLabel}
       {selectedFilters > 0 && <CounterBadge>{selectedFilters}</CounterBadge>}
-      <IconV2 name="solid-arrow-down" size="2xs" />
     </Button>
   )
 }

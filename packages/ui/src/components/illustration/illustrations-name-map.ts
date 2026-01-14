@@ -43,6 +43,8 @@ import VulnerabilityHigh from './images/vulnerabilty-high.svg'
 import VulnerabilityInfo from './images/vulnerabilty-info.svg'
 import VulnerabilityLow from './images/vulnerabilty-low.svg'
 import VulnerabilityMedium from './images/vulnerabilty-medium.svg'
+import Welcome from './images/welcome-dark.svg'
+import WelcomeLight from './images/welcome-light.svg'
 
 export const IllustrationsNameMap = {
   'create-workspace': CreateWorkspace,
@@ -70,6 +72,7 @@ export const IllustrationsNameMap = {
   'vulnerability-medium': VulnerabilityMedium,
   'vulnerability-high': VulnerabilityHigh,
   'vulnerability-critical': VulnerabilityCritical,
+  welcome: Welcome,
 
   // Light theme variants
   'chat-avatar-light': ChatAvatarLight,
@@ -87,5 +90,6 @@ export const IllustrationsNameMap = {
   'no-data-labels-light': NoDataLabelsLight,
   'no-data-webhooks-light': NoDataWebhooksLight,
   'no-delegates-light': NoDataDelegateLight,
-  'no-search-magnifying-glass-light': NoSearchMagnifyingGlassLight
+  'no-search-magnifying-glass-light': NoSearchMagnifyingGlassLight,
+  'welcome-light': WelcomeLight
 } as const satisfies Record<string, React.FunctionComponent<React.SVGProps<SVGSVGElement>>>

@@ -115,14 +115,14 @@ export default {
 
   // Footer Component
   '.cn-studio-card-footer': {
-    minHeight: 'var(--cn-size-14)',
+    minHeight: 'var(--cn-size-28)',
     borderTop: '1px solid var(--cn-border-2)',
     backgroundColor: 'var(--cn-set-gray-outline-bg)',
-    '@apply flex flex-col justify-center px-cn-md py-cn-xs': '',
+    '@apply flex flex-col justify-center px-cn-md py-cn-md': '',
 
     // Group card variant - adjust padding
     '.cn-studio-card-group > &': {
-      minHeight: 'auto',
+      minHeight: 'var(--cn-size-13)',
       '@apply py-cn-md': ''
     }
   },

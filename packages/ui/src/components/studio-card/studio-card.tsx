@@ -213,8 +213,6 @@ function Tag({ tagText, icon }: PropsWithChildren<{ tagText: string; icon?: Icon
  * ====================
  */
 function Footer({ message }: StudioCardFooterProps): JSX.Element | null {
-  if (!message) return null
-
   return (
     <div className="cn-studio-card-footer">
       <Text lineClamp={2} color="foreground-3" variant="caption-normal">

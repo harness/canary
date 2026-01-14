@@ -43,7 +43,7 @@ export default {
     color: 'var(--cn-text-3)',
     '@apply inline-flex items-center': '',
     '&:hover': {
-      color: 'var(--cn-set-brand-primary-bg)'
+      color: 'var(--cn-text-2)'
     },
     gap: 'var(--cn-spacing-1)'
   },

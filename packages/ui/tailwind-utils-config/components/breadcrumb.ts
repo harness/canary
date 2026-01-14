@@ -1,8 +1,7 @@
 export default {
   '.cn-breadcrumb': {
     '@apply flex flex-wrap items-center break-words select-none': '',
-    gap: 'var(--cn-spacing-1)',
-    color: 'var(--cn-set-brand-primary-bg)'
+    gap: 'var(--cn-spacing-1)'
   },
 
   '.cn-breadcrumb-default': {
@@ -14,7 +13,7 @@ export default {
     '& .cn-breadcrumb-item:last-child, & .cn-breadcrumb-page:last-child': {
       '@apply font-body-strong': '',
       borderRadius: '0',
-      color: 'var(--cn-set-brand-primary-bg)'
+      color: 'var(--cn-text-1)'
     }
   },
 
@@ -27,7 +26,7 @@ export default {
     '& .cn-breadcrumb-item:last-child, & .cn-breadcrumb-page:last-child': {
       '@apply font-caption-light': '',
       borderRadius: 'var(--cn-size-5)',
-      color: 'var(--cn-set-brand-primary-bg)'
+      color: 'var(--cn-text-1)'
     }
   },
 
@@ -41,6 +40,7 @@ export default {
   },
 
   '.cn-breadcrumb-item': {
+    color: 'var(--cn-text-3)',
     '@apply inline-flex items-center': '',
     '&:hover': {
       color: 'var(--cn-set-brand-primary-bg)'
@@ -57,7 +57,7 @@ export default {
   },
 
   '.cn-breadcrumb-separator': {
-    color: `var(--cn-state-disabled-text)`,
+    color: 'var(--cn-text-4)',
     '& > svg': {
       width: 'var(--cn-icon-size-sm)',
       height: 'var(--cn-icon-size-sm)'

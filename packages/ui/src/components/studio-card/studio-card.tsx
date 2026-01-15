@@ -61,7 +61,7 @@ function Header({ icon, title, actions }: StudioCardHeaderProps): JSX.Element {
   return (
     <div className="cn-studio-card-header">
       {headerIcon}
-      <Text className="cn-studio-card-header-title truncate" variant="body-strong">
+      <Text color="foreground-1" className="cn-studio-card-header-title truncate" variant="body-strong">
         {title}
       </Text>
 

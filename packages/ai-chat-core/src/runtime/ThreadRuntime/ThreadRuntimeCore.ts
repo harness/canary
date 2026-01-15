@@ -126,9 +126,11 @@ export class ThreadRuntimeCore extends BaseSubscribable {
       this.updateMessageStatus(assistantMessageId, { type: 'complete' })
     } catch (error) {
       if (error instanceof Error && error.name === 'AbortError') {
+        this.completeStreamingContent(assistantMessageId)
         this.updateMessageStatus(assistantMessageId, { type: 'cancelled' })
       } else {
         const errorMessage = error instanceof Error ? error.message : 'Unknown error'
+        this.completeStreamingContent(assistantMessageId)
         this.updateMessageStatus(assistantMessageId, {
           type: 'error',
           error: errorMessage
@@ -333,6 +335,35 @@ export class ThreadRuntimeCore extends BaseSubscribable {
         ...this._messages[messageIndex],
         status
       },
+      ...this._messages.slice(messageIndex + 1)
+    ]
+
+    this.updateMessages(updatedMessages)
+  }
+
+  private completeStreamingContent(messageId: string): void {
+    const messageIndex = this._messages.findIndex(m => m.id === messageId)
+    if (messageIndex === -1) return
+
+    const message = this._messages[messageIndex]
+
+    // Check if any content is streaming
+    const hasStreamingContent = message.content.some(content => content.status?.type === 'streaming')
+
+    if (!hasStreamingContent) return
+
+    // Update all streaming content to complete
+    const updatedContent = message.content.map(content => {
+      if (content.status?.type === 'streaming') {
+        return { ...content, status: { type: 'complete' } as const }
+      }
+      return content
+    })
+
+    // Update the message with completed content
+    const updatedMessages = [
+      ...this._messages.slice(0, messageIndex),
+      { ...message, content: updatedContent, timestamp: Date.now() },
       ...this._messages.slice(messageIndex + 1)
     ]
 

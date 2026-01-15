@@ -12,6 +12,26 @@ export default {
     maxWidth: '220px',
     height: 'var(--cn-size-40)',
 
+    // Selected state with theme-based borders
+    '&[data-selected="true"]': {
+      '&[data-theme="default"]': {
+        border: '1px solid var(--cn-border-brand)',
+        boxShadow: '0 0 0 3px color-mix(in srgb, var(--cn-border-brand) 20%, transparent)'
+      },
+      '&[data-theme="success"]': {
+        border: '1px solid var(--cn-border-success)',
+        boxShadow: '0 0 0 3px color-mix(in srgb, var(--cn-border-success) 20%, transparent)'
+      },
+      '&[data-theme="warning"]:not(:has(> [data-status="executing"]))': {
+        border: '1px solid var(--cn-border-warning)',
+        boxShadow: '0 0 0 3px color-mix(in srgb, var(--cn-border-warning) 20%, transparent)'
+      },
+      '&[data-theme="danger"]': {
+        border: '1px solid var(--cn-border-danger)',
+        boxShadow: '0 0 0 3px color-mix(in srgb, var(--cn-border-danger) 20%, transparent)'
+      }
+    },
+
     // Group card variant
     '&:where(.cn-studio-card-group)': {
       width: 'auto',

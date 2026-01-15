@@ -21,7 +21,13 @@ import {
  */
 
 const CLICK_DRAG_THRESHOLD = 5
-function Root({ children, isGroupCard = false, onClick }: PropsWithChildren<StudioCardRootProps>): JSX.Element {
+function Root({
+  children,
+  isGroupCard = false,
+  onClick,
+  theme = 'default',
+  selected = false
+}: PropsWithChildren<StudioCardRootProps>): JSX.Element {
   // Used to determine if a click was a drag or a click
   const dragPos = useRef({ x: 0, y: 0 })
 
@@ -43,6 +49,8 @@ function Root({ children, isGroupCard = false, onClick }: PropsWithChildren<Stud
       }}
       role="button"
       tabIndex={-1}
+      data-theme={theme}
+      data-selected={selected}
     >
       {children}
     </div>

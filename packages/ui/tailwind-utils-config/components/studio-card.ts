@@ -39,6 +39,10 @@ export default {
       maxWidth: 'none',
       height: 'auto',
 
+      '&:has(> .cn-studio-card-content > [data-expanded="true"])': {
+        '@apply bg-cn-3/50': ''
+      },
+
       '> .cn-studio-card-content': {
         minHeight: '108px'
       },

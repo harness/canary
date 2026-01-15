@@ -57,16 +57,11 @@ export const CanvasProvider = ({ children, config: configFromProps, id = '' }: C
   const initialTransformRef = useRef<CanvasTransform>({ scale: 1, translateX: 0, translateY: 0 })
 
   const { getCanvasTransformRef, setCanvasTransformRef } = useMultiCanvasContext()
-  const [scale, setScale] = useDebouncedState(1, 100)
+  const [scale, setScaleDebounced] = useDebouncedState(1, 100)
 
   const setCanvasTransform = useCallback(
     (transform: CanvasTransform & { rootContainer?: HTMLDivElement; isInitial?: boolean }) => {
       canvasTransformRef.current = transform
-
-      const el = targetElRef.current ?? transform.rootContainer
-      el?.style.setProperty('--scale', `${transform.scale}`)
-      el?.style.setProperty('--x', `${transform.translateX}px`)
-      el?.style.setProperty('--y', `${transform.translateY}px`)
 
       if (transform.isInitial) {
         initialTransformRef.current = {
@@ -83,9 +78,14 @@ export const CanvasProvider = ({ children, config: configFromProps, id = '' }: C
       }
 
       setCanvasTransformRef(id, canvasTransformRef)
-      setScale(canvasTransformRef.current.scale)
+      setScaleDebounced(canvasTransformRef.current.scale)
+
+      const el = targetElRef.current ?? transform.rootContainer
+      el?.style.setProperty('--scale', `${canvasTransformRef.current.scale}`)
+      el?.style.setProperty('--x', `${canvasTransformRef.current.translateX}px`)
+      el?.style.setProperty('--y', `${canvasTransformRef.current.translateY}px`)
     },
-    [setCanvasTransformRef, id, setScale, getCanvasTransformRef]
+    [setCanvasTransformRef, id, setScaleDebounced, getCanvasTransformRef]
   )
 
   const setTargetEl = useCallback((targetEl: HTMLElement) => {

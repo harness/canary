@@ -90,7 +90,7 @@ export default function ParallelNodeContainer(props: ContainerNodeProps<Parallel
         paddingRight: parallelContainerConfig.paddingRight + 'px',
         paddingTop: parallelContainerConfig.paddingTop + 'px',
         paddingBottom: parallelContainerConfig.paddingBottom + 'px',
-        top,
+        top: -top + 'px',
         alignItems: 'center',
         flexShrink: 0 // IMPORTANT: do not remove this
       }}

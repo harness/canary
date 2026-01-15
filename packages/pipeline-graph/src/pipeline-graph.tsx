@@ -1,5 +1,5 @@
 import { Canvas } from './components/canvas/canvas'
-import GraphProvider from './context/graph-provider'
+import GraphProvider, { GraphProviderProps } from './context/graph-provider'
 import PipelineGraphInternal, { PipelineGraphInternalProps } from './pipeline-graph-internal'
 import { NodeContent } from './types/node-content'
 
@@ -14,6 +14,8 @@ export interface PipelineGraphProps
   nodes: NodeContent[]
   serialContainerConfig?: Partial<SerialContainerConfigType>
   parallelContainerConfig?: Partial<ParallelContainerConfigType>
+  collapsed?: GraphProviderProps['collapsed']
+  collapse?: GraphProviderProps['collapse']
 }
 
 export function PipelineGraph(props: PipelineGraphProps) {
@@ -27,11 +29,13 @@ export function PipelineGraph(props: PipelineGraphProps) {
     edgesConfig,
     portComponent,
     layout,
-    getPort
+    getPort,
+    collapsed = {},
+    collapse = () => undefined
   } = props
 
   return (
-    <GraphProvider nodes={nodes}>
+    <GraphProvider nodes={nodes} collapsed={collapsed} collapse={collapse}>
       <ContainerNodeProvider
         serialContainerConfig={serialContainerConfig}
         parallelContainerConfig={parallelContainerConfig}

@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useCallback, useState } from 'react'
 
 import { parse } from 'yaml'
 
@@ -104,9 +104,20 @@ plData.push(endNode)
 function Demo1() {
   const [data] = useState<AnyContainerNodeType[]>(plData)
 
+  const [collapsed, setCollapsed] = useState<Record<string, boolean>>({})
+
+  const collapse = useCallback(
+    (path: string, state: boolean) => {
+      setCollapsed({ ...collapsed, [path]: state })
+    },
+    [collapsed, setCollapsed]
+  )
+
   return (
-    <CanvasProvider>
+    <CanvasProvider id="demo1">
       <PipelineGraph
+        collapse={collapse}
+        collapsed={collapsed}
         data={data}
         nodes={nodes}
         layout={{

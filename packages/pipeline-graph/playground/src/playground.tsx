@@ -8,6 +8,7 @@ import Demo5Size from './demo5-size'
 
 import './playground.css'
 
+import { MultiCanvasProvider } from '../../src/context/multi-canvas-provider'
 import Demo6TopAlign from './demo6-top-align'
 
 type ExperimentalType = 'sharpLine' | 'sharpBorder' | 'skeleton'
@@ -96,19 +97,21 @@ function Playground() {
         </div>
       </div>
 
-      <div
-        style={{
-          position: 'relative',
-          left: '5vw',
-          top: '10vh',
-          height: '80vh',
-          width: '90vw',
-          overflow: 'hidden',
-          border: '1px solid gray'
-        }}
-      >
-        <demo.component />
-      </div>
+      <MultiCanvasProvider>
+        <div
+          style={{
+            position: 'relative',
+            left: '5vw',
+            top: '10vh',
+            height: '80vh',
+            width: '90vw',
+            overflow: 'hidden',
+            border: '1px solid gray'
+          }}
+        >
+          <demo.component />
+        </div>
+      </MultiCanvasProvider>
     </>
   )
 }

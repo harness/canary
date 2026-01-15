@@ -1,6 +1,4 @@
-import { createContext, useCallback, useContext, useMemo, useRef, useState } from 'react'
-
-import { forOwn } from 'lodash-es'
+import { createContext, useCallback, useContext, useEffect, useMemo, useRef, useState } from 'react'
 
 import { NodeContent } from '../types/node-content'
 
@@ -14,10 +12,8 @@ interface GraphContextProps {
   nodeToRemove: string | null
   // rerender connections
   rerender: () => void
-  // rerenderConnections increments when in the rerender()
+  // rerenderConnections increments when when we call rerender
   rerenderConnections: number
-  // shift collapsed on node deletion
-  shiftCollapsed: (path: string, index: number) => void
 }
 
 const GraphContext = createContext<GraphContextProps>({
@@ -29,58 +25,71 @@ const GraphContext = createContext<GraphContextProps>({
   rerenderConnections: 0,
   setNodeToRemove: (_path: string | null) => undefined,
   nodeToRemove: null,
-  shiftCollapsed: (_path: string, _index: number) => undefined,
   rerender: () => undefined
 })
 
-const GraphProvider = ({ nodes: nodesArr, children }: React.PropsWithChildren<{ nodes: NodeContent[] }>) => {
+export interface GraphProviderProps {
+  nodes: NodeContent[]
+  collapse: (path: string, state: boolean) => void
+  collapsed: Record<string, boolean>
+}
+const GraphProvider = ({
+  nodes: nodesArr,
+  children,
+  collapsed,
+  collapse
+}: React.PropsWithChildren<GraphProviderProps>) => {
   const [initialized, setInitialized] = useState<boolean>(false)
 
-  const [collapsed, setCollapsed] = useState<Record<string, boolean>>({})
   const [rerenderConnections, setRerenderConnections] = useState(1)
   const [nodeToRemove, setNodeToRemove] = useState<string | null>(null)
 
   const collapsedRef = useRef(collapsed)
   collapsedRef.current = collapsed
 
+  useEffect(() => {
+    setRerenderConnections(prev => prev + 1)
+  }, [collapsed])
+
+  // TODO:  remove this functionality outside of library and implement properly
   // shift collapsed for 1 when node is deleted
-  const shiftCollapsed = (path: string, index: number) => {
-    const newpath = path + '.' + index
-    const oldpath = path + '.' + (index + 1)
+  // const shiftCollapsed = (path: string, index: number) => {
+  //   const newpath = path + '.' + index
+  //   const oldpath = path + '.' + (index + 1)
 
-    const newCollapsed: Record<string, boolean> = {}
+  //   const newCollapsed: Record<string, boolean> = {}
 
-    forOwn(collapsedRef.current, (value, key) => {
-      let peaces = key.split(path + '.')
+  //   forOwn(collapsedRef.current, (value, key) => {
+  //     let peaces = key.split(path + '.')
 
-      peaces = peaces[1].split('.')
+  //     peaces = peaces[1].split('.')
 
-      const collapsedIndex = parseInt(peaces[0])
+  //     const collapsedIndex = parseInt(peaces[0])
 
-      if (collapsedIndex > index) {
-        const newCollapsedIndex = collapsedIndex - 1
-        if (key === path + '.' + collapsedIndex) {
-          const newKey = key.replace(path + '.' + collapsedIndex, path + '.' + newCollapsedIndex)
-          newCollapsed[newKey] = value
-        } else {
-          const newKey = key.replace(path + '.' + collapsedIndex + '.', path + '.' + newCollapsedIndex + '.')
-          newCollapsed[newKey] = value
-        }
-      } else {
-        newCollapsed[key] = value
-      }
-    })
+  //     if (collapsedIndex > index) {
+  //       const newCollapsedIndex = collapsedIndex - 1
+  //       if (key === path + '.' + collapsedIndex) {
+  //         const newKey = key.replace(path + '.' + collapsedIndex, path + '.' + newCollapsedIndex)
+  //         newCollapsed[newKey] = value
+  //       } else {
+  //         const newKey = key.replace(path + '.' + collapsedIndex + '.', path + '.' + newCollapsedIndex + '.')
+  //         newCollapsed[newKey] = value
+  //       }
+  //     } else {
+  //       newCollapsed[key] = value
+  //     }
+  //   })
 
-    setCollapsed(newCollapsed)
-  }
+  //   setCollapsed(newCollapsed)
+  // }
 
-  const collapse = useCallback(
-    (path: string, state: boolean) => {
-      setCollapsed({ ...collapsed, [path]: state })
-      setRerenderConnections(rerenderConnections + 1)
-    },
-    [collapsed, setCollapsed, rerenderConnections, setRerenderConnections]
-  )
+  // const collapse = useCallback(
+  //   (path: string, state: boolean) => {
+  //     setCollapsed({ ...collapsed, [path]: state })
+  //     setRerenderConnections(rerenderConnections + 1)
+  //   },
+  //   [collapsed, setCollapsed, rerenderConnections, setRerenderConnections]
+  // )
 
   const rerender = useCallback(() => {
     setRerenderConnections(prev => prev + 1)
@@ -115,8 +124,6 @@ const GraphProvider = ({ nodes: nodesArr, children }: React.PropsWithChildren<{ 
         nodeToRemove,
         // force rerender
         rerenderConnections,
-        // shift collapsed on node deletion
-        shiftCollapsed,
         // rerender connections
         rerender
       }}

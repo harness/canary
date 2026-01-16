@@ -2,6 +2,7 @@ import { TFunctionWithFallback } from '@/context'
 import { ComboBoxOptions } from '@components/filters/filters-bar/actions/variants/combo-box'
 import {
   CalendarFilterOptionConfig,
+  CheckboxOptions,
   ComboBoxFilterOptionConfig,
   CustomFilterOptionConfig,
   FilterFieldTypes,
@@ -56,9 +57,9 @@ export const getPRListFilterOptions = ({
     {
       label: t('views:repos.prListFilterOptions.authorOption.label', 'Author'),
       value: 'created_by',
-      type: FilterFieldTypes.ComboBox,
+      type: FilterFieldTypes.MultiSelect,
       filterFieldConfig: {
-        options: principalData,
+        options: principalData.map(user => ({ label: String(user.label), value: user.value })),
         onSearch: onAuthorSearch,
         noResultsMessage: t('views:repos.prListFilterOptions.authorOption.noResults', 'No results found'),
         loadingMessage: t('views:repos.prListFilterOptions.authorOption.loading', 'Loading Authors...'),
@@ -66,9 +67,16 @@ export const getPRListFilterOptions = ({
         isLoading: isPrincipalsLoading
       },
       parser: {
-        parse: (value: string): ComboBoxOptions =>
-          principalData.find(user => user.value === value) || { label: '', value },
-        serialize: (value: ComboBoxOptions): string => value?.value || ''
+        parse: (value: string): CheckboxOptions[] => {
+          // Handle comma-separated author IDs (for URL state)
+          const authorIds = decodeURIComponent(value).split(',').filter(Boolean)
+          return authorIds.map(authorId => {
+            const user = principalData.find(u => u.value === authorId)
+            return { label: user ? String(user.label) : authorId, value: authorId }
+          })
+        },
+        // Serialize as comma-separated for URL state
+        serialize: (value: CheckboxOptions[]): string => value.map(v => v.value).join(',')
       }
     },
     {
@@ -88,40 +96,40 @@ export const getPRListFilterOptions = ({
      */
     ...(!(accountId && orgIdentifier && projectIdentifier) && isProjectLevel
       ? [
-          {
-            label: t('views:scope.label', 'Scope'),
-            value: 'include_subspaces' as keyof PRListFilters,
-            type: FilterFieldTypes.ComboBox as FilterFieldTypes.ComboBox,
-            defaultValue: scopeFilterDefaultValue,
-            filterFieldConfig: {
-              options: scopeFilterOptions,
-              placeholder: 'Select scope',
-              allowSearch: false
-            },
-            sticky: true,
-            parser: {
-              parse: (value: string): ComboBoxOptions => {
-                let selectedValue: string
-                if (accountId && orgIdentifier) {
-                  selectedValue = value === 'true' ? ExtendedScope.OrgProg : ExtendedScope.Organization
-                } else if (accountId) {
-                  selectedValue = value === 'true' ? ExtendedScope.All : ExtendedScope.Account
-                }
-
-                return scopeFilterOptions.find(scope => scope.value === selectedValue) || { label: '', value }
-              },
-              serialize: (value: ComboBoxOptions): string => {
-                const selected = value?.value
-
-                if (accountId && orgIdentifier && projectIdentifier) return ''
-                if (accountId && orgIdentifier) return String(selected === ExtendedScope.OrgProg)
-                if (accountId) return String(selected === ExtendedScope.All)
-
-                return ''
+        {
+          label: t('views:scope.label', 'Scope'),
+          value: 'include_subspaces' as keyof PRListFilters,
+          type: FilterFieldTypes.ComboBox as FilterFieldTypes.ComboBox,
+          defaultValue: scopeFilterDefaultValue,
+          filterFieldConfig: {
+            options: scopeFilterOptions,
+            placeholder: 'Select scope',
+            allowSearch: false
+          },
+          sticky: true,
+          parser: {
+            parse: (value: string): ComboBoxOptions => {
+              let selectedValue: string
+              if (accountId && orgIdentifier) {
+                selectedValue = value === 'true' ? ExtendedScope.OrgProg : ExtendedScope.Organization
+              } else if (accountId) {
+                selectedValue = value === 'true' ? ExtendedScope.All : ExtendedScope.Account
               }
+
+              return scopeFilterOptions.find(scope => scope.value === selectedValue) || { label: '', value }
+            },
+            serialize: (value: ComboBoxOptions): string => {
+              const selected = value?.value
+
+              if (accountId && orgIdentifier && projectIdentifier) return ''
+              if (accountId && orgIdentifier) return String(selected === ExtendedScope.OrgProg)
+              if (accountId) return String(selected === ExtendedScope.All)
+
+              return ''
             }
           }
-        ]
+        }
+      ]
       : []),
     ...customFilterOptions
   ]

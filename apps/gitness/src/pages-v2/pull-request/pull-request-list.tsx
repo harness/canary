@@ -43,7 +43,6 @@ export default function PullRequestListPage() {
   const [principalsSearchQuery, setPrincipalsSearchQuery] = useState<string>()
   const [populateLabelStore, setPopulateLabelStore] = useState(false)
   const [searchParams, setSearchParams] = useSearchParams()
-  const defaultAuthorId = searchParams.get('created_by')
   const labelBy = searchParams.get('label_by')
   const { scope } = useMFEContext()
   const { accountId = '', orgIdentifier, projectIdentifier } = scope || {}
@@ -132,13 +131,23 @@ export default function PullRequestListPage() {
     }
   )
 
+  // Parse multiple author IDs from URL
+  // Handles both comma-separated format (created_by=123,456) and explode format (created_by=123&created_by=456)
+  const defaultAuthorIds = searchParams
+    .getAll('created_by')
+    .flatMap(v => v.split(','))
+    .filter(Boolean)
+    .map(Number)
+  const firstAuthorId = defaultAuthorIds[0]
+
   const { data: { body: defaultSelectedAuthor } = {}, error: defaultSelectedAuthorError } = useGetPrincipalQuery(
     {
       queryParams: { page, accountIdentifier: accountId, ...filterValues },
-      id: Number(searchParams.get('created_by'))
+      id: firstAuthorId
     },
     // Adding staleTime to avoid refetching the data if authorId gets modified in searchParams
-    { enabled: !!defaultAuthorId, staleTime: Infinity, keepPreviousData: true }
+    // Note: For multi-select, we fetch the first author only for initial display
+    { enabled: !!firstAuthorId, staleTime: Infinity, keepPreviousData: true }
   )
 
   const { data: { body: principalDataList } = {}, isFetching: fetchingPrincipalData } = useListPrincipalsQuery(

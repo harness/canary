@@ -103,7 +103,14 @@ const PullRequestListPage: FC<PullRequestPageProps> = ({
     }
 
     const currentParams = new URLSearchParams(window.location.search)
-    if (currentParams.has('created_by') && currentParams.get('created_by') === String(currentUserId)) {
+    // Parse author IDs - handles both comma-separated (created_by=123,456) and explode format (created_by=123&created_by=456)
+    const createdByIds = currentParams
+      .getAll('created_by')
+      .flatMap(v => v.split(','))
+      .filter(Boolean)
+    const hasCurrentUserInFilter = createdByIds.includes(String(currentUserId))
+
+    if (currentParams.has('created_by') && hasCurrentUserInFilter && createdByIds.length === 1) {
       if (currentParams.has('review_decision')) {
         setActiveFilterGrp(PRFilterGroupTogglerOptions.ReviewRequested)
       } else {
@@ -117,7 +124,9 @@ const PullRequestListPage: FC<PullRequestPageProps> = ({
   }, [currentUserId, location.search, isProjectLevel])
 
   const computedPrincipalData = useMemo(() => {
-    return principalData || (defaultSelectedAuthor && !principalsSearchQuery ? [defaultSelectedAuthor] : [])
+    // Support multiple default selected authors for multi-select
+    const defaultAuthors = defaultSelectedAuthor ? (Array.isArray(defaultSelectedAuthor) ? defaultSelectedAuthor : [defaultSelectedAuthor]) : []
+    return principalData || (!principalsSearchQuery && defaultAuthors.length > 0 ? defaultAuthors : [])
   }, [principalData, defaultSelectedAuthor, principalsSearchQuery])
 
   const generateAuthorLabel = ({
@@ -280,20 +289,20 @@ const PullRequestListPage: FC<PullRequestPageProps> = ({
           description={
             repoId
               ? [
-                  t(
-                    'views:noData.noPullRequestsInRepo',
-                    `Start your contribution journey by creating a new pull request.`
-                  )
-                ]
+                t(
+                  'views:noData.noPullRequestsInRepo',
+                  `Start your contribution journey by creating a new pull request.`
+                )
+              ]
               : [t('views:noData.noPullRequestsInProject', `There are no pull requests in this project yet.`)]
           }
           primaryButton={
             repoId
               ? {
-                  icon: 'plus',
-                  label: t('views:noData.button.createPullRequest', 'Create Pull Request'),
-                  to: `${spaceId ? `/${spaceId}` : ''}/repos/${repoId}/pulls/compare/`
-                }
+                icon: 'plus',
+                label: t('views:noData.button.createPullRequest', 'Create Pull Request'),
+                to: `${spaceId ? `/${spaceId}` : ''}/repos/${repoId}/pulls/compare/`
+              }
               : undefined
           }
         />
@@ -319,20 +328,20 @@ const PullRequestListPage: FC<PullRequestPageProps> = ({
         paginationProps={
           isProjectLevel
             ? {
-                indeterminate: true,
-                currentPage: page,
-                hasPrevious: page > 1,
-                hasNext: (pullRequests?.length || 0) === pageSize,
-                onPrevious: () => setPage(page - 1),
-                onNext: () => setPage(page + 1)
-              }
+              indeterminate: true,
+              currentPage: page,
+              hasPrevious: page > 1,
+              hasNext: (pullRequests?.length || 0) === pageSize,
+              onPrevious: () => setPage(page - 1),
+              onNext: () => setPage(page + 1)
+            }
             : {
-                totalItems: totalItems,
-                pageSize: pageSize,
-                onPageSizeChange: setPageSize,
-                currentPage: page,
-                goToPage: setPage
-              }
+              totalItems: totalItems,
+              pageSize: pageSize,
+              onPageSizeChange: setPageSize,
+              currentPage: page,
+              goToPage: setPage
+            }
         }
         {...routingProps}
       />

@@ -213,7 +213,7 @@
       counter-reset: custom-counter;
       @apply list-none [counter-reset:custom-counter];
 
-      li {
+      > li {
         min-height: 1.25rem;
 
         &:before {

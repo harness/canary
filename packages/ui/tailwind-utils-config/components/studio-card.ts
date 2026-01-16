@@ -32,6 +32,10 @@ export default {
       }
     },
 
+    '.cn-studio-card-footer span': {
+      '@apply line-clamp-4': ''
+    },
+
     // Group card variant
     '&:where(.cn-studio-card-group)': {
       width: 'auto',
@@ -55,6 +59,10 @@ export default {
         width: 'var(--cn-size-90)',
         minWidth: 'var(--cn-size-90)',
         maxWidth: 'var(--cn-size-90)'
+      },
+
+      '.cn-studio-card-footer span': {
+        '@apply line-clamp-2': ''
       }
     },
 

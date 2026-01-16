@@ -142,7 +142,7 @@ export default {
     minHeight: 'var(--cn-size-29)',
     borderTop: '1px solid var(--cn-border-2)',
     backgroundColor: 'var(--cn-comp-pipeline-card-footer)',
-    '@apply flex flex-col justify-center px-cn-md py-cn-md font-caption-normal': '',
+    '@apply flex flex-col px-cn-md py-cn-md font-caption-normal': '',
 
     // Default: line-clamp-4 for regular cards
     '& span': {

@@ -73,7 +73,7 @@ export default {
     '&:where(.cn-table-v2-highlight-hover) tbody > tr': {
       '&:hover, &:has(.cn-table-v2-cell-clickable-block:focus-visible)': {
         '&>td': {
-          backgroundColor: 'var(--cn-bg-2)'
+          backgroundColor: 'var(--cn-state-hover)'
         }
       }
     },

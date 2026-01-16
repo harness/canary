@@ -15,9 +15,7 @@ export interface StudioCardHeaderProps {
   actions: JSX.Element | null
 }
 
-export interface StudioCardFooterProps {
-  message?: string
-}
+export interface StudioCardFooterProps {}
 
 export interface StudioCardMessageProps {
   message?: string

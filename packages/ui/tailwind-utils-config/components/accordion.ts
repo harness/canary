@@ -9,6 +9,17 @@ export default {
       gap: 'var(--cn-accordion-sm-card-gap-y)'
     },
 
+    '.cn-accordion-item-header button': {
+      '&:focus': {
+        outline: 'none'
+      },
+
+      '&:focus-visible': {
+        outline: 'var(--cn-focus)',
+        '@apply outline-offset-cn-tight': ''
+      }
+    },
+
     '&-md': {
       minWidth: 'var(--cn-accordion-md-min-width)',
       '--cn-accordion-sm-gap': 'var(--cn-accordion-md-gap)',

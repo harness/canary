@@ -1,6 +1,6 @@
 import { useState } from 'react'
 
-import { Button, DropdownMenu, IconV2, SortOption } from '@/components'
+import { Button, DropdownMenu, IconV2, SortOption, Text } from '@/components'
 
 interface SimpleSortProps {
   sortOptions: SortOption[]
@@ -17,9 +17,9 @@ export default function SimpleSort(props: SimpleSortProps) {
     <DropdownMenu.Root>
       <DropdownMenu.Trigger asChild>
         <Button size="md" variant="outline">
-          <IconV2 name="arrows-updown" size="2xs" />
-          {selectedOptionLabel || 'Sort'}
-          <IconV2 name="solid-arrow-down" size="2xs" />
+          <IconV2 name="arrows-updown" size="sm" />
+          <Text truncate>{selectedOptionLabel || 'Sort'}</Text>
+          <IconV2 name="nav-arrow-down" size="sm" />
         </Button>
       </DropdownMenu.Trigger>
       <DropdownMenu.Content align="end" className="min-w-56">

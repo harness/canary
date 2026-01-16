@@ -142,8 +142,8 @@ const FilterGroupInner = <
       {renderMultiSort(
         <>
           <ListActions.Root>
-            <ListActions.Left>
-              <Layout.Horizontal gap="xs" align={'center'} justify={'start'} className="flex-1">
+            <ListActions.Left className="min-w-0">
+              <Layout.Horizontal gap="xs" align={'center'} justify={'start'} className="min-w-0 flex-1">
                 <SearchInput
                   inputContainerClassName="max-w-80 flex-1"
                   ref={searchRef}
@@ -168,7 +168,7 @@ const FilterGroupInner = <
                           buttonLabel={t('component:filter.buttonLabel', 'Reset filters')}
                           displayLabel={renderFilterSelectLabel({
                             selectedFilters: filterOptions.length - availableFilters.length,
-                            displayLabel: t('component:filter.defaultLabel', 'Filter')
+                            displayLabel: t('component:filter.defaultLabel', 'Add filter')
                           })}
                         />
                       )

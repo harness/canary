@@ -82,10 +82,18 @@ const Header: FC<PageHeaderProps> = ({
 }
 Header.displayName = 'PageHeader'
 
-const Root = ({ children }: { children: ReactNode }) => {
+const Root = ({
+  children,
+  mainClassName,
+  contentClassName
+}: {
+  children: ReactNode
+  mainClassName?: string
+  contentClassName?: string
+}) => {
   return (
-    <SandboxLayout.Main>
-      <SandboxLayout.Content>{children}</SandboxLayout.Content>
+    <SandboxLayout.Main className={mainClassName}>
+      <SandboxLayout.Content className={contentClassName}>{children}</SandboxLayout.Content>
     </SandboxLayout.Main>
   )
 }

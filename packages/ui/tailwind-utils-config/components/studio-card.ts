@@ -35,7 +35,7 @@ export default {
     // Group card variant
     '&:where(.cn-studio-card-group)': {
       width: 'auto',
-      minWidth: 'var(--cn-size-90)',
+      minWidth: '220px',
       maxWidth: 'none',
       height: 'auto',
 

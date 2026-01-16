@@ -32,10 +32,6 @@ export default {
       }
     },
 
-    '.cn-studio-card-footer span': {
-      '@apply line-clamp-4': ''
-    },
-
     // Group card variant
     '&:where(.cn-studio-card-group)': {
       width: 'auto',
@@ -59,10 +55,6 @@ export default {
         width: 'var(--cn-size-90)',
         minWidth: 'var(--cn-size-90)',
         maxWidth: 'var(--cn-size-90)'
-      },
-
-      '.cn-studio-card-footer span': {
-        '@apply line-clamp-2': ''
       }
     },
 
@@ -152,10 +144,19 @@ export default {
     backgroundColor: 'var(--cn-comp-pipeline-card-footer)',
     '@apply flex flex-col justify-center px-cn-md py-cn-md font-caption-normal': '',
 
-    // Group card variant - adjust padding
+    // Default: line-clamp-4 for regular cards
+    '& span': {
+      '@apply line-clamp-4': ''
+    },
+
+    // Group card variant - adjust padding and line-clamp
     '.cn-studio-card-group > &': {
       minHeight: 'var(--cn-size-13)',
-      '@apply py-cn-md': ''
+      '@apply py-cn-md': '',
+
+      '& span': {
+        '@apply line-clamp-2': ''
+      }
     }
   },
 

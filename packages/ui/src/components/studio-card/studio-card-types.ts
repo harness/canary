@@ -7,6 +7,8 @@ export interface StudioCardRootProps {
   onClick?: React.MouseEventHandler<HTMLDivElement>
   theme?: 'default' | 'success' | 'warning' | 'danger'
   selected?: boolean
+  // It will be updated to a generic value later
+  variant?: 'default' | 'stage'
 }
 
 export interface StudioCardHeaderProps {

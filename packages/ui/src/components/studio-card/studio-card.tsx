@@ -26,14 +26,18 @@ function Root({
   isGroupCard = false,
   onClick,
   theme = 'default',
-  selected = false
+  selected = false,
+  variant = 'default'
 }: PropsWithChildren<StudioCardRootProps>): JSX.Element {
   // Used to determine if a click was a drag or a click
   const dragPos = useRef({ x: 0, y: 0 })
 
   return (
     <div
-      className={cn('cn-studio-card cursor-default', { 'cn-studio-card-group': isGroupCard })}
+      className={cn('cn-studio-card cursor-default', {
+        'cn-studio-card-group': isGroupCard,
+        'cn-studio-card-stage': variant === 'stage'
+      })}
       onMouseDown={e => {
         dragPos.current = { x: e.clientX, y: e.clientY }
       }}

@@ -39,6 +39,10 @@ export default {
       maxWidth: 'none',
       height: 'auto',
 
+      '&.cn-studio-card-stage': {
+        minWidth: 'var(--cn-size-90)'
+      },
+
       '&:has(> .cn-studio-card-content > [data-expanded="true"])': {
         '@apply bg-cn-3/50': ''
       },

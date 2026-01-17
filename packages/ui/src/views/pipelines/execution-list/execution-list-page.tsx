@@ -1,6 +1,6 @@
 import { FC } from 'react'
 
-import { Button, ListActions, Pagination, SearchInput, Spacer, Text } from '@/components'
+import { Button, IconV2, Layout, ListActions, Pagination, SearchInput, Spacer, Text } from '@/components'
 import { useRouterContext } from '@/context'
 import { SandboxLayout } from '@/views'
 
@@ -38,9 +38,12 @@ const ExecutionListPage: FC<IExecutionListPageProps> = ({
   return (
     <SandboxLayout.Main>
       <SandboxLayout.Content>
-        <Text as="h1" variant="heading-section">
-          Executions
-        </Text>
+        <Layout.Horizontal gap="xs" align="center">
+          <IconV2 name="executions" size="lg" />
+          <Text as="h1" variant="heading-section">
+            Executions
+          </Text>
+        </Layout.Horizontal>
         <Spacer size={6} />
         <ListActions.Root>
           <ListActions.Left>

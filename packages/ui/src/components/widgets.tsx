@@ -29,7 +29,7 @@ const Root: FC<WidgetsRootProps> = ({ children, isTwoColumn: isTwoColumnProp = f
 
 export interface WidgetsItemProps {
   children: ReactNode
-  title: string
+  title?: string
   moreLink?: LinkProps
   isWidgetTable?: boolean
   className?: string

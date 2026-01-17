@@ -10,7 +10,7 @@ export interface StatsPanelProps {
   gap?: GapSize
 }
 
-export const StatsPanel: FC<StatsPanelProps> = ({ data, isLoading = false, gap = 'sm' }) => {
+export const StatsPanel: FC<StatsPanelProps> = ({ data, isLoading = false, gap = '3xs' }) => {
   if (!data.length) return null
 
   return (

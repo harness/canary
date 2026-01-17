@@ -225,11 +225,11 @@ describe('StatsPanel', () => {
       expect(flex).toHaveAttribute('data-gap', '3xl')
     })
 
-    test('should apply gap="sm" to Vertical layout', () => {
+    test('should apply gap="3xs" to Vertical layout', () => {
       renderComponent()
       const verticals = screen.getAllByTestId('layout-vertical')
       verticals.forEach(vertical => {
-        expect(vertical).toHaveAttribute('data-gap', 'sm')
+        expect(vertical).toHaveAttribute('data-gap', '3xs')
       })
     })
   })

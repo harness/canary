@@ -43,9 +43,12 @@ export const RepoTagsListView: FC<RepoTagsListViewProps> = ({
       >
         <Layout.Vertical gap="xl" className="flex-1">
           {(!!tagsList?.length || !!searchQuery) && (
-            <Text as="h1" variant="heading-section">
-              {t('views:repos.tags', 'Tags')}
-            </Text>
+            <Layout.Horizontal gap="xs" align="center">
+              <IconV2 name="tag" size="lg" />
+              <Text as="h1" variant="heading-section">
+                {t('views:repos.tags', 'Tags')}
+              </Text>
+            </Layout.Horizontal>
           )}
           <Layout.Vertical gap="md" className="flex-1">
             {(!!tagsList?.length || !!searchQuery) && (

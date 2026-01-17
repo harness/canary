@@ -2,6 +2,7 @@ import { FC, useCallback, useMemo, useRef } from 'react'
 
 import { IconV2, Layout, NoData, PermissionIdentifier, ResourceType, SecretListFilters } from '@/components'
 import { useComponents, useCustomDialogTrigger, useRouterContext, useTranslation } from '@/context'
+import { settingsBackLink } from '@/utils/utils'
 import { Page } from '@/views'
 import FilterGroup, { FilterGroupRef } from '@views/components/FilterGroup'
 
@@ -114,22 +115,13 @@ const SecretListPage: FC<SecretListPageProps> = ({
   return (
     <Page.Root>
       <Page.Header
+        iconName="key"
         title={t('views:secrets.secretsTitle', 'Secrets')}
-        backLink={
-          routes?.toSettings
-            ? {
-                linkText: 'All Settings',
-                linkProps: {
-                  to: routes.toSettings({
-                    accountId,
-                    orgIdentifier,
-                    projectIdentifier,
-                    module: 'all'
-                  })
-                }
-              }
-            : undefined
-        }
+        backLink={settingsBackLink(routes?.toSettings, {
+          accountId,
+          orgIdentifier,
+          projectIdentifier
+        })}
       />
 
       <Page.Content>

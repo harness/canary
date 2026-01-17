@@ -69,7 +69,7 @@ export const SecretDetailsLayout: FC<SecretDetailsLayoutProps> = ({
       </Page.Header>
       <Page.Content>
         <Tabs.NavRoot>
-          <Tabs.List className="cn-sandbox-layout-tabs mb-cn-3xl" variant="overlined">
+          <Tabs.List className="cn-sandbox-layout-tabs mb-cn-3xl">
             <Tabs.Trigger value={SecretDetailsTabsKeys.OVERVIEW}>
               {t('views:secretDetails.configuration', 'Configuration')}
             </Tabs.Trigger>

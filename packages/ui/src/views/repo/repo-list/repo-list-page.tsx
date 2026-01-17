@@ -1,6 +1,6 @@
 import { FC, useCallback, useMemo, useRef, useState } from 'react'
 
-import { IconV2, NoData, PermissionIdentifier, ResourceType, Spacer, Text } from '@/components'
+import { IconV2, Layout, NoData, PermissionIdentifier, ResourceType, Spacer, Text } from '@/components'
 import { useComponents, useRouterContext, useTranslation } from '@/context'
 import { SandboxLayout } from '@/views'
 import { ComboBoxOptions } from '@components/filters/filters-bar/actions/variants/combo-box'
@@ -177,9 +177,12 @@ const SandboxRepoListPage: FC<RepoListPageProps> = ({
   return (
     <SandboxLayout.Main>
       <SandboxLayout.Content>
-        <Text variant="heading-section" as="h1">
-          {t('views:repos.repositories', 'Repositories')}
-        </Text>
+        <Layout.Horizontal gap="xs" align="center">
+          <IconV2 name="repository" size="lg" />
+          <Text variant="heading-section" as="h1">
+            {t('views:repos.repositories', 'Repositories')}
+          </Text>
+        </Layout.Horizontal>
         {(!!repositories?.length || isDirtyList) && (
           <>
             <Spacer size={6} />

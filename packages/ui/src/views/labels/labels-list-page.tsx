@@ -51,9 +51,12 @@ export const LabelsListPage: FC<LabelsListPageProps> = ({
 
   return (
     <Layout.Vertical className={cn('grow', className)} gapY="xl">
-      <Text as="h1" variant="heading-section">
-        {t('views:labelData.title', 'Labels')}
-      </Text>
+      <Layout.Horizontal gap="xs" align="center">
+        <IconV2 name="tag" size="lg" />
+        <Text as="h1" variant="heading-section">
+          {t('views:labelData.title', 'Labels')}
+        </Text>
+      </Layout.Horizontal>
 
       <Layout.Vertical grow gapY="md">
         {isRepository && (

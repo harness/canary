@@ -1,6 +1,6 @@
 import { FC } from 'react'
 
-import { Button, Dialog, ListActions, Pagination, SearchInput, Spacer, Text } from '@/components'
+import { Button, Dialog, IconV2, Layout, ListActions, Pagination, SearchInput, Spacer, Text } from '@/components'
 import { SandboxLayout } from '@/views'
 
 import { PipelineList } from './pipeline-list'
@@ -39,9 +39,12 @@ const PipelineListPage: FC<IPipelineListPageProps> = ({
       <SandboxLayout.Content>
         {pipelines && pipelines.length > 0 && (
           <>
-            <Text as="h1" variant="heading-section">
-              Pipelines
-            </Text>
+            <Layout.Horizontal gap="xs" align="center">
+              <IconV2 name="pipeline" size="lg" />
+              <Text as="h1" variant="heading-section">
+                Pipelines
+              </Text>
+            </Layout.Horizontal>
             <Spacer size={6} />
             <ListActions.Root>
               <ListActions.Left>

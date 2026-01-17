@@ -1,6 +1,6 @@
 import { FC, useMemo } from 'react'
 
-import { FormSeparator, Layout, NoData, Skeleton, StatusBadge, Table, Text, TimeAgoCard } from '@/components'
+import { FormSeparator, IconV2, Layout, NoData, Skeleton, StatusBadge, Table, Text, TimeAgoCard } from '@/components'
 import { useTranslation } from '@/context'
 import { WebhookStore } from '@/views'
 
@@ -67,9 +67,12 @@ const RepoWebhookExecutionsPage: FC<RepoWebhookExecutionsPageProps> = ({
       </Layout.Grid>
       <FormSeparator />
       <Layout.Vertical grow>
-        <Text as="h2" variant="heading-subsection">
-          {t('views:repos.webhookExecutions.title', 'Executions')}
-        </Text>
+        <Layout.Horizontal gap="xs" align="center">
+          <IconV2 name="executions" size="lg" />
+          <Text as="h2" variant="heading-subsection">
+            {t('views:repos.webhookExecutions.title', 'Executions')}
+          </Text>
+        </Layout.Horizontal>
         {isLoading && <Skeleton.List />}
         {hasExecutions && (
           <Table.Root

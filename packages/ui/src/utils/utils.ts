@@ -2,6 +2,8 @@ import { Children, isValidElement, ReactElement, ReactNode } from 'react'
 
 import { get } from 'lodash-es'
 
+import { Scope, ScopeType } from '../views/common/types'
+
 export const INITIAL_ZOOM_LEVEL = 1
 export const ZOOM_INC_DEC_LEVEL = 0.1
 
@@ -107,4 +109,51 @@ export const decodeURIPath = (path: string) => {
  */
 export function clamp(value: number, min: number, max: number): number {
   return Math.min(Math.max(value, min), max)
+}
+
+/**
+ * Gets the scope type from scope parameters
+ * @param params - Scope parameters
+ * @returns The scope type
+ */
+const getScopeFromParams = (params: Scope): ScopeType | undefined => {
+  if (params.projectIdentifier) return ScopeType.Project
+  if (params.orgIdentifier) return ScopeType.Organization
+  if (params.accountId) return ScopeType.Account
+}
+
+/**
+ * Creates a backLink object for Page.Header component
+ * @param toSettings - Optional route function to settings page
+ * @param params - Path parameters including accountId, orgIdentifier, projectIdentifier, and module
+ * @returns BackLink object with linkText and linkProps, or undefined if toSettings is not provided
+ */
+export const settingsBackLink = (
+  toSettings?: (params: Scope & { module?: string }) => string,
+  params?: Scope & { module?: string }
+): { linkText: string; linkProps: { to: string } } | undefined => {
+  if (!toSettings || !params) {
+    return undefined
+  }
+
+  const scope = getScopeFromParams({
+    accountId: params.accountId || '',
+    orgIdentifier: params.orgIdentifier || '',
+    projectIdentifier: params.projectIdentifier || ''
+  })
+
+  const scopeName =
+    scope === ScopeType.Project ? 'Project' : scope === ScopeType.Organization ? 'Organization' : 'Account'
+
+  return {
+    linkText: `${scopeName} settings`,
+    linkProps: {
+      to: toSettings({
+        accountId: params.accountId || '',
+        orgIdentifier: params.orgIdentifier || '',
+        projectIdentifier: params.projectIdentifier || '',
+        module: params.module
+      })
+    }
+  }
 }

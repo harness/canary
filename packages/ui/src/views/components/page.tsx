@@ -5,6 +5,8 @@ import {
   ButtonLayout,
   Favorite,
   FavoriteIconProps,
+  IconPropsV2,
+  IconV2,
   Layout,
   Link,
   LogoPropsV2,
@@ -28,7 +30,9 @@ export interface PageHeaderButtonProps {
 export interface PageHeaderProps {
   backLink?: PageHeaderBackProps
   logoName?: LogoPropsV2['name']
-  title: string
+  title: ReactNode
+  iconName?: IconPropsV2['name']
+  iconSize?: '2xs' | 'xs' | 'sm' | 'md' | 'lg' | 'xl'
   description?: ReactNode
   children?: ReactNode
   favoriteProps?: Omit<FavoriteIconProps, 'className'>
@@ -40,12 +44,23 @@ const Header: FC<PageHeaderProps> = ({
   backLink,
   logoName,
   title,
+  iconName,
+  iconSize = 'lg',
   description,
   children,
   favoriteProps,
   isLoading = false,
   actions
 }) => {
+  const titleElement =
+    typeof title === 'string' ? (
+      <Text as="h1" variant="heading-section" truncate>
+        {title}
+      </Text>
+    ) : (
+      title
+    )
+
   return (
     <Layout.Horizontal justify="between" gap="xl" className="mb-cn-md">
       <Layout.Vertical gap="xl">
@@ -64,9 +79,16 @@ const Header: FC<PageHeaderProps> = ({
             ) : (
               <>
                 {!!logoName && <LogoV2 className="mt-cn-4xs" name={logoName} size="md" />}
-                <Text as="h1" variant="heading-section" truncate>
-                  {title}
-                </Text>
+                {iconName ? (
+                  <Layout.Horizontal gap="xs" align="center">
+                    <div className="mt-cn-4xs">
+                      <IconV2 name={iconName} size={iconSize} />
+                    </div>
+                    {titleElement}
+                  </Layout.Horizontal>
+                ) : (
+                  titleElement
+                )}
               </>
             )}
             {!!favoriteProps && !isLoading && <Favorite className="mt-cn-4xs" {...favoriteProps} />}

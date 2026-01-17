@@ -428,9 +428,12 @@ const PullRequestListPage: FC<PullRequestPageProps> = ({
             onChange={onFilterValueChange}
             view="dropdown"
           >
-            <Text as="h1" variant="heading-section">
-              Pull requests
-            </Text>
+            <Layout.Horizontal gap="xs" align="center">
+              <IconV2 name="git-pull-request" size="lg" />
+              <Text as="h1" variant="heading-section">
+                Pull requests
+              </Text>
+            </Layout.Horizontal>
             <Spacer size={6} />
 
             {!isEmpty(prCandidateBranches) && (

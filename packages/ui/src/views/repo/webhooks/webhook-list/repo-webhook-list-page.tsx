@@ -84,9 +84,12 @@ const RepoWebhookListPage: FC<RepoWebhookListPageProps> = ({
 
   return (
     <Layout.Vertical gap="xl" grow>
-      <Text as="h1" variant="heading-section">
-        {t('views:repos.webhooks', 'Webhooks')}
-      </Text>
+      <Layout.Horizontal gap="xs" align="center">
+        <IconV2 name="webhook" size="lg" />
+        <Text as="h1" variant="heading-section">
+          {t('views:repos.webhooks', 'Webhooks')}
+        </Text>
+      </Layout.Horizontal>
 
       <Layout.Vertical grow>
         {withTopActions && (

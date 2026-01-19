@@ -3,8 +3,8 @@ import { forwardRef, useMemo, type HTMLAttributes, type ReactNode } from 'react'
 import { clamp, cn } from '@/utils'
 import { motion } from 'framer-motion'
 
-import { Popover } from './popover'
 import { Text } from './text'
+import { Tooltip } from './tooltip'
 
 type WaterfallTheme = 'muted' | 'info' | 'danger' | 'success' | 'warning'
 
@@ -16,7 +16,7 @@ export interface WaterfallProgressProps extends Omit<HTMLAttributes<HTMLDivEleme
   theme?: WaterfallTheme
   label?: string
   tooltipContent?: ReactNode
-  tooltipProps?: Partial<React.ComponentProps<typeof Popover>>
+  tooltipProps?: Partial<React.ComponentProps<typeof Tooltip>>
 }
 
 const THEME_TO_BG: Record<WaterfallTheme, string> = {
@@ -92,9 +92,9 @@ export const WaterfallProgress = forwardRef<HTMLDivElement, WaterfallProgressPro
     )
 
     const content = tooltipContent ? (
-      <Popover triggerType="hover" hoverDelay={200} closeDelay={300} content={tooltipContent} {...tooltipProps}>
+      <Tooltip delay={200} hideArrow content={tooltipContent} {...tooltipProps}>
         {track}
-      </Popover>
+      </Tooltip>
     ) : (
       track
     )

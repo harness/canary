@@ -144,8 +144,7 @@ const WaterfallProgressDemo = () => {
           tooltipContent={<StageTooltip label="Pre-deployment" durationMs={10000} range="45% - 55%" />}
           tooltipProps={{
             side: 'bottom',
-            align: 'center',
-            onOpenAutoFocus: e => e.preventDefault()
+            align: 'center'
           }}
         />
       </Layout.Flex>

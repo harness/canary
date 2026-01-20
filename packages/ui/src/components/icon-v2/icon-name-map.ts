@@ -376,6 +376,7 @@ import Run from './icons/run.svg'
 import RuntimeSecuritySolid from './icons/runtime-security-solid.svg'
 import RuntimeSecurity from './icons/runtime-security.svg'
 import Satellite from './icons/satellite.svg'
+import Scale from './icons/scale.svg'
 import ScissorAlt from './icons/scissor-alt.svg'
 import Scissor from './icons/scissor.svg'
 import SearchEngine from './icons/search-engine.svg'
@@ -436,6 +437,8 @@ import TableRows from './icons/table-rows.svg'
 import TagSolid from './icons/tag-solid.svg'
 import Tag from './icons/tag.svg'
 import Target from './icons/target.svg'
+import TasVars from './icons/tas-vars.svg'
+import Tas from './icons/tas.svg'
 import TaskList from './icons/task-list.svg'
 import Tasks from './icons/tasks.svg'
 import Templates from './icons/templates.svg'
@@ -484,6 +487,7 @@ import XmarkCircleSolid from './icons/xmark-circle-solid.svg'
 import XmarkCircle from './icons/xmark-circle.svg'
 import XmarkSquare from './icons/xmark-square.svg'
 import Xmark from './icons/xmark.svg'
+import Yaml from './icons/yaml.svg'
 import ZoomIn from './icons/zoom-in.svg'
 import ZoomOut from './icons/zoom-out.svg'
 
@@ -861,6 +865,7 @@ export const IconNameMapV2 = {
   'runtime-security-solid': RuntimeSecuritySolid,
   'runtime-security': RuntimeSecurity,
   satellite: Satellite,
+  scale: Scale,
   'scissor-alt': ScissorAlt,
   scissor: Scissor,
   'search-engine': SearchEngine,
@@ -921,6 +926,8 @@ export const IconNameMapV2 = {
   'tag-solid': TagSolid,
   tag: Tag,
   target: Target,
+  'tas-vars': TasVars,
+  tas: Tas,
   'task-list': TaskList,
   tasks: Tasks,
   templates: Templates,
@@ -969,6 +976,7 @@ export const IconNameMapV2 = {
   'xmark-circle': XmarkCircle,
   'xmark-square': XmarkSquare,
   xmark: Xmark,
+  yaml: Yaml,
   'zoom-in': ZoomIn,
   'zoom-out': ZoomOut
 }

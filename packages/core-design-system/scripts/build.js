@@ -146,6 +146,28 @@ async function run() {
       }
     })
 
+    /**
+     * Transform shadow tokens under comp.shadow.data-viz to CSS drop-shadow() format.
+     * drop-shadow() does not support spread, so we convert "x y blur spread color" to "drop-shadow(x y blur color)".
+     */
+    sd.registerTransform({
+      name: 'shadow/dropShadow',
+      type: 'value',
+      filter: token => token.$type === 'shadow' && token.path.includes('shadow') && token.path.includes('data-viz'),
+      transitive: true,
+      transform: token => {
+        const value = token.$value
+        if (!value || typeof value !== 'string') return value
+        // Parse box-shadow format: x y blur spread color
+        const match = value.match(/^(\S+)\s+(\S+)\s+(\S+)\s+\S+\s+(.+)$/)
+        if (match) {
+          const [, x, y, blur, color] = match
+          return `drop-shadow(${x} ${y} ${blur} ${color})`
+        }
+        return value
+      }
+    })
+
     await sd.cleanAllPlatforms()
     await sd.buildAllPlatforms()
   }

@@ -9,6 +9,7 @@ import AppDynamics from './logos/app-dynamics.svg'
 import Aqua from './logos/aqua.svg'
 import Argo from './logos/argo.svg'
 import Artifactory from './logos/artifactory.svg'
+import AutoScaler from './logos/auto-scaler.svg'
 import Aws from './logos/aws.svg'
 import Azure from './logos/azure.svg'
 import Bamboo from './logos/bamboo.svg'
@@ -58,6 +59,7 @@ import Jfrog from './logos/jfrog.svg'
 import Jira from './logos/jira.svg'
 import Katalon from './logos/katalon.svg'
 import Kubernetes from './logos/kubernetes.svg'
+import Kustomize from './logos/kustomize.svg'
 import Linux from './logos/linux.svg'
 import Local from './logos/local.svg'
 import Mend from './logos/mend.svg'
@@ -100,6 +102,8 @@ import Spot from './logos/spot.svg'
 import SumoLogic from './logos/sumo-logic.svg'
 import Sysdig from './logos/sysdig.svg'
 import Tanzu from './logos/tanzu.svg'
+import TasVars from './logos/tas-vars.svg'
+import Tas from './logos/tas.svg'
 import Tenable from './logos/tenable.svg'
 import Terraform from './logos/terraform.svg'
 import Terragrunt from './logos/terragrunt.svg'
@@ -107,6 +111,7 @@ import Traceable from './logos/traceable.svg'
 import Veracode from './logos/veracode.svg'
 import VueJs from './logos/vue-js.svg'
 import Wiz from './logos/wiz.svg'
+import Yaml from './logos/yaml.svg'
 import Zap from './logos/zap.svg'
 import Zoom from './logos/zoom.svg'
 
@@ -117,6 +122,7 @@ export const LogoNameMapV2 = {
   aqua: Aqua,
   argo: Argo,
   artifactory: Artifactory,
+  'auto-scaler': AutoScaler,
   aws: Aws,
   azure: Azure,
   bamboo: Bamboo,
@@ -166,6 +172,7 @@ export const LogoNameMapV2 = {
   jira: Jira,
   katalon: Katalon,
   kubernetes: Kubernetes,
+  kustomize: Kustomize,
   linux: Linux,
   local: Local,
   mend: Mend,
@@ -208,6 +215,8 @@ export const LogoNameMapV2 = {
   'sumo-logic': SumoLogic,
   sysdig: Sysdig,
   tanzu: Tanzu,
+  'tas-vars': TasVars,
+  tas: Tas,
   tenable: Tenable,
   terraform: Terraform,
   terragrunt: Terragrunt,
@@ -215,6 +224,7 @@ export const LogoNameMapV2 = {
   veracode: Veracode,
   'vue-js': VueJs,
   wiz: Wiz,
+  yaml: Yaml,
   zap: Zap,
   zoom: Zoom
 }

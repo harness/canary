@@ -480,6 +480,8 @@ The `Content` component represents the popover content with built-in support for
     text: "Learn more",
     href: "/docs"
   }}
+  theme="themed"               // [OPTIONAL] theme variant
+  custom={false}               // [OPTIONAL] custom content mode
   className="my-class"         // [OPTIONAL] custom class
   sideOffset={4}               // [OPTIONAL] offset from the trigger
   align="center"               // [OPTIONAL] alignment relative to trigger
@@ -554,6 +556,22 @@ The `Content` component represents the popover content with built-in support for
     {
       name: "showArrow",
       description: "Show an arrow pointing to the trigger",
+      required: false,
+      value: "boolean",
+      defaultValue: "false",
+    },
+    {
+      name: "theme",
+      description:
+        "Theme variant of the popover. 'default' provides high-contrast appearance with fixed colors, 'themed' follows the current theme's color palette.",
+      required: false,
+      value: "'default' | 'themed'",
+      defaultValue: "'themed'",
+    },
+    {
+      name: "custom",
+      description:
+        "Custom content mode - removes padding and min-width for fully custom popover content.",
       required: false,
       value: "boolean",
       defaultValue: "false",

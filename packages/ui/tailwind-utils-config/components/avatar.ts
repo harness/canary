@@ -64,9 +64,8 @@ export default {
       }
     },
 
-    '.cn-avatar-icon': {
-      width: '60%',
-      height: '60%'
-    }
+    // Icon sizing is handled by cn-icon classes (xs, sm, md) passed from the Avatar component
+    // Avatar xs → Icon xs, Avatar sm → Icon sm, Avatar md → Icon sm, Avatar lg → Icon md
+    '.cn-avatar-icon': {}
   }
 }

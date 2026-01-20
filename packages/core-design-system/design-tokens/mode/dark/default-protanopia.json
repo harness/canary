@@ -218,7 +218,7 @@
         },
         "border": {
           "$type": "color",
-          "$value": "linear-gradient(131deg, {gradient.ai.from} 27%, {gradient.ai.to} 112%)",
+          "$value": "linear-gradient(131deg, {gradient.ai.stop-1} 0%, {gradient.ai.stop-2} 50%, {gradient.ai.stop-3} 100%)",
           "$description": "Distinctive gradient border for AI-related areas, using a multi-color pattern."
         },
         "bg-gradient": {
@@ -251,17 +251,17 @@
         },
         "bg": {
           "$type": "color",
-          "$value": "{gray.600}",
+          "$value": "{gray.500}",
           "$description": "Background color for prominent gray surfaces."
         },
         "bg-hover": {
           "$type": "color",
-          "$value": "{gray.500}",
+          "$value": "{gray.400}",
           "$description": "Hover state background color for prominent gray surfaces."
         },
         "bg-selected": {
           "$type": "color",
-          "$value": "{gray.500}",
+          "$value": "{gray.400}",
           "$description": "Selected state background color for prominent gray surfaces."
         }
       },
@@ -3148,15 +3148,20 @@
   },
   "gradient": {
     "ai": {
-      "from": {
+      "stop-1": {
         "$type": "color",
         "$value": "{blue.500}",
-        "$description": "Starting color for AI-themed gradients."
+        "$description": "First gradient stop for AI-themed gradients."
       },
-      "to": {
+      "stop-2": {
         "$type": "color",
-        "$value": "{indigo.800}",
-        "$description": "Ending color for AI-themed gradients."
+        "$value": "{indigo.700}",
+        "$description": "Second gradient stop for AI-themed gradients."
+      },
+      "stop-3": {
+        "$type": "color",
+        "$value": "{violet.600}",
+        "$description": "Third gradient stop for AI-themed gradients."
       },
       "outline-bg": {
         "stop-1": {

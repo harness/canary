@@ -62,7 +62,8 @@ export function EntityReferenceList<T extends BaseEntityProps, S = string, F = s
           <Breadcrumb.List>
             {!!showBreadcrumbEllipsis && (
               <>
-                <Breadcrumb.Ellipsis className="text-cn-disabled" />
+                {/* TODO: Pass actual hidden breadcrumb items for proper UX */}
+                <Breadcrumb.Ellipsis items={[]} className="text-cn-disabled" />
                 <Breadcrumb.Separator className="text-cn-disabled" />
               </>
             )}

@@ -136,6 +136,38 @@ In case you want the fallback string to be without initials, pass the `noInitial
 </div>`}
 />
 
+## Custom Icon
+
+You can display a custom icon instead of initials or the default user icon using the `icon` prop.
+
+<DocsPage.ComponentExample
+  client:only
+  code={`<div className="flex items-center gap-cn-xl">
+    <Avatar icon="account" size="lg" rounded />
+    <Avatar icon="organizations" size="lg" rounded />
+    <Avatar icon="folder" size="lg" rounded />
+    <Avatar icon="git-branch" size="lg" rounded />
+</div>`}
+/>
+
+## With Tooltip
+
+Use `AvatarWithTooltip` to display a tooltip on hover.
+
+<DocsPage.ComponentExample
+  client:only
+  code={`<div className="flex items-center gap-cn-xl">
+    <AvatarWithTooltip name="John Doe" src="/avatar.png" size="lg" rounded />
+    <AvatarWithTooltip name="Jane Smith" size="lg" rounded />
+    <AvatarWithTooltip 
+      icon="folder" 
+      size="lg" 
+      rounded 
+      tooltipProps={{ content: "Project folder" }} 
+    />
+</div>`}
+/>
+
 ## API Reference
 
 The `Avatar` component has several props to control its appearance:
@@ -147,38 +179,66 @@ The `Avatar` component has several props to control its appearance:
       description:
         "Full name of the subject of the avatar. Used to generate initials for the fallback and alt text. If not provided, an Avatar Icon will be rendered if no `src` is provided.",
       required: false,
-      value: "string",
-      defaultValue: "undefined",
+      type: "string",
     },
     {
       name: "src",
       description:
         "The source URL of the image. If not provided, initials or an Avatar Icon will be rendered.",
       required: false,
-      value: "string",
-      defaultValue: "undefined",
+      type: "string",
     },
     {
       name: "size",
-      description:
-        "The size of the avatar. Can be one of 'xs', 'sm', 'md', or 'lg'.",
+      description: "The size of the avatar.",
       required: false,
-      value: "'xs' | 'sm' | 'md' | 'lg'",
+      type: "'xs' | 'sm' | 'md' | 'lg'",
       defaultValue: "'sm'",
     },
     {
       name: "rounded",
       description: "Whether to display the avatar as a circle.",
       required: false,
-      value: "boolean",
+      type: "boolean",
+      defaultValue: "false",
+    },
+    {
+      name: "icon",
+      description:
+        "Custom icon to display instead of initials or default user icon.",
+      required: false,
+      type: "IconV2NamesType",
+    },
+    {
+      name: "isGroup",
+      description: "Whether to display a group icon instead of user icon.",
+      required: false,
+      type: "boolean",
       defaultValue: "false",
     },
     {
       name: "noInitials",
-      description: "Whether to display fallback string without initials.",
+      description:
+        "Whether to display fallback string without converting to initials.",
       required: false,
-      value: "boolean",
+      type: "boolean",
       defaultValue: "false",
+    },
+  ]}
+/>
+
+### AvatarWithTooltip
+
+The `AvatarWithTooltip` component wraps `Avatar` with a tooltip. It accepts all `Avatar` props plus:
+
+<DocsPage.PropsTable
+  props={[
+    {
+      name: "tooltipProps",
+      description:
+        "Props to pass to the Tooltip component (title, content, side, align).",
+      required: false,
+      type: "AvatarTooltipProps",
     },
   ]}
 />

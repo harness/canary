@@ -12,20 +12,171 @@ import { DocsPage } from "@/components/docs-page";
 <DocsPage.ComponentExample
   client:only
   code={`<Breadcrumb.Root>
+  <Breadcrumb.List>
+    <Breadcrumb.Item>
+      <Breadcrumb.RootInteractive>Harness</Breadcrumb.RootInteractive>
+    </Breadcrumb.Item>
+    <Breadcrumb.Separator />
+    <Breadcrumb.Item>
+      <Breadcrumb.Link href="#" prefixIcon="folder">Project</Breadcrumb.Link>
+    </Breadcrumb.Item>
+    <Breadcrumb.Separator />
+    <Breadcrumb.Page>Settings</Breadcrumb.Page>
+  </Breadcrumb.List>
+</Breadcrumb.Root>`}
+/>
+
+## Overview
+
+<DocsPage.ComponentExample
+  client:only
+  hideCode
+  code={`<div className="space-y-cn-sm">
+  <div className="flex items-center gap-cn-md border-b border-cn-borders-3 pb-cn-sm">
+    <span className="text-cn-size-0 text-cn-3 w-32 shrink-0 font-mono">basic</span>
+    <Breadcrumb.Root>
+      <Breadcrumb.List>
+        <Breadcrumb.Item>
+          <Breadcrumb.Link href="#">Home</Breadcrumb.Link>
+        </Breadcrumb.Item>
+        <Breadcrumb.Separator />
+        <Breadcrumb.Item>
+          <Breadcrumb.Link href="#">Products</Breadcrumb.Link>
+        </Breadcrumb.Item>
+        <Breadcrumb.Separator />
+        <Breadcrumb.Page>Details</Breadcrumb.Page>
+      </Breadcrumb.List>
+    </Breadcrumb.Root>
+  </div>
+
+<div className="flex items-center gap-cn-md border-b border-cn-borders-3 pb-cn-sm">
+  <span className="text-cn-size-0 text-cn-3 w-32 shrink-0 font-mono">
+    with-icons
+  </span>
+  <Breadcrumb.Root>
     <Breadcrumb.List>
       <Breadcrumb.Item>
-        <Breadcrumb.Link href="#">Lorem</Breadcrumb.Link>
+        <Breadcrumb.Link href="#" prefixIcon="folder">
+          src
+        </Breadcrumb.Link>
       </Breadcrumb.Item>
-      <Breadcrumb.Separator />
-      <Breadcrumb.Ellipsis />
       <Breadcrumb.Separator />
       <Breadcrumb.Item>
-        <Breadcrumb.Link href="#">Ipsum</Breadcrumb.Link>
+        <Breadcrumb.Link href="#" prefixIcon="folder">
+          components
+        </Breadcrumb.Link>
       </Breadcrumb.Item>
       <Breadcrumb.Separator />
-      <Breadcrumb.Page>Dolor</Breadcrumb.Page>
+      <Breadcrumb.Page>Button.tsx</Breadcrumb.Page>
     </Breadcrumb.List>
-  </Breadcrumb.Root>`}
+  </Breadcrumb.Root>
+</div>
+
+<div className="flex items-center gap-cn-md border-b border-cn-borders-3 pb-cn-sm">
+  <span className="text-cn-size-0 text-cn-3 w-32 shrink-0 font-mono">
+    interactive-root
+  </span>
+  <Breadcrumb.Root>
+    <Breadcrumb.List>
+      <Breadcrumb.Item>
+        <Breadcrumb.RootInteractive>Organization</Breadcrumb.RootInteractive>
+      </Breadcrumb.Item>
+      <Breadcrumb.Separator />
+      <Breadcrumb.Item>
+        <Breadcrumb.Link href="#" prefixIcon="folder">
+          Project
+        </Breadcrumb.Link>
+      </Breadcrumb.Item>
+      <Breadcrumb.Separator />
+      <Breadcrumb.Page>Settings</Breadcrumb.Page>
+    </Breadcrumb.List>
+  </Breadcrumb.Root>
+</div>
+
+<div className="flex items-center gap-cn-md border-b border-cn-borders-3 pb-cn-sm">
+  <span className="text-cn-size-0 text-cn-3 w-32 shrink-0 font-mono">
+    with-truncation
+  </span>
+  <Breadcrumb.Root>
+    <Breadcrumb.List>
+      <Breadcrumb.Item>
+        <Breadcrumb.Link href="#" prefixIcon="folder">
+          src
+        </Breadcrumb.Link>
+      </Breadcrumb.Item>
+      <Breadcrumb.Separator />
+      <Breadcrumb.Ellipsis
+        items={[
+          { label: "components", href: "#" },
+          { label: "ui", href: "#" },
+        ]}
+      />
+      <Breadcrumb.Separator />
+      <Breadcrumb.Item>
+        <Breadcrumb.Link href="#" prefixIcon="folder">
+          breadcrumb
+        </Breadcrumb.Link>
+      </Breadcrumb.Item>
+      <Breadcrumb.Separator />
+      <Breadcrumb.Page>index.tsx</Breadcrumb.Page>
+    </Breadcrumb.List>
+  </Breadcrumb.Root>
+</div>
+
+<div className="flex items-center gap-cn-md border-b border-cn-borders-3 pb-cn-sm">
+  <span className="text-cn-size-0 text-cn-3 w-32 shrink-0 font-mono">
+    size-sm
+  </span>
+  <div
+    style={{
+      background: "rgba(59, 130, 246, 0.15)",
+      borderRadius: "4px",
+      height: "32px",
+      display: "flex",
+      alignItems: "center",
+      padding: "0 8px",
+      gap: "8px",
+    }}
+  >
+    <span className="text-cn-size-0 text-cn-3">32px</span>
+    <Breadcrumb.Root size="sm">
+      <Breadcrumb.List>
+        <Breadcrumb.Item>
+          <Breadcrumb.RootInteractive>Harness</Breadcrumb.RootInteractive>
+        </Breadcrumb.Item>
+        <Breadcrumb.Separator />
+        <Breadcrumb.Item>
+          <Breadcrumb.Link href="#" prefixIcon="folder">
+            Project
+          </Breadcrumb.Link>
+        </Breadcrumb.Item>
+        <Breadcrumb.Separator />
+        <Breadcrumb.Page>Settings</Breadcrumb.Page>
+      </Breadcrumb.List>
+    </Breadcrumb.Root>
+  </div>
+</div>
+
+  <div className="flex items-center gap-cn-md">
+    <span className="text-cn-size-0 text-cn-3 w-32 shrink-0 font-mono">size-xs</span>
+    <div style={{ background: 'rgba(59, 130, 246, 0.15)', borderRadius: '4px', height: '24px', display: 'flex', alignItems: 'center', padding: '0 8px', gap: '8px' }}>
+      <span className="text-cn-size-0 text-cn-3">24px</span>
+      <Breadcrumb.Root size="xs">
+        <Breadcrumb.List>
+          <Breadcrumb.Item>
+            <Breadcrumb.RootInteractive size="xs">Harness</Breadcrumb.RootInteractive>
+          </Breadcrumb.Item>
+          <Breadcrumb.Separator />
+          <Breadcrumb.Item>
+            <Breadcrumb.Link href="#" prefixIcon="folder">Project</Breadcrumb.Link>
+          </Breadcrumb.Item>
+          <Breadcrumb.Separator />
+          <Breadcrumb.Page>Settings</Breadcrumb.Page>
+        </Breadcrumb.List>
+      </Breadcrumb.Root>
+    </div>
+  </div>
+</div>`}
 />
 
 ## Usage
@@ -62,150 +213,284 @@ All parts of the `Breadcrumb` can be imported and composed as required.
 <Breadcrumb.Root>
   <Breadcrumb.List>
     <Breadcrumb.Item>
-      <Breadcrumb.Link />
+      <Breadcrumb.RootInteractive />  {/* Interactive root with avatar */}
     </Breadcrumb.Item>
     <Breadcrumb.Separator />
-    <Breadcrumb.Ellipsis />
-    <Breadcrumb.Page />
+    <Breadcrumb.Item>
+      <Breadcrumb.Link />        {/* Clickable link */}
+    </Breadcrumb.Item>
+    <Breadcrumb.Separator />
+    <Breadcrumb.Ellipsis />      {/* Truncation indicator with dropdown */}
+    <Breadcrumb.Separator />
+    <Breadcrumb.Page />          {/* Current page (non-clickable) */}
   </Breadcrumb.List>
+  <Breadcrumb.Copy />            {/* Copy path button (outside List) */}
 </Breadcrumb.Root>
 ```
 
-## API Reference
-
-### Root
-
-The `Root` component wraps the breadcrumb with a `nav` tag for use as page navigation.
-
-<DocsPage.PropsTable
-  props={[
-    {
-      name: "children",
-      description: "You can pass in your `Breadcrumb.List` as a child",
-      required: true,
-    },
-    { name: "className", required: false },
-  ]}
-/>
-
-### List
-
-The `List` component adds styling to ensure the breadcrumb is displayed inline as a list.
-
-```typescript jsx
-<Breadcrumb.List>
-  {/* Pass Breadcrumb.Item, Breadcrumb.Separator and Breadcrumb.Page elements as children */}
-</Breadcrumb.List>
-```
-
-<DocsPage.PropsTable
-  props={[
-    {
-      name: "children",
-      description: "You can pass in your `Breadcrumb.Item`s as children",
-      required: true,
-    },
-    { name: "className", required: false },
-  ]}
-/>
+## Components
 
 ### Item
 
 The `Item` component displays its contents as a node within the breadcrumb.
 
-```typescript jsx
-<Breadcrumb.Item>
-  {/* Pass text, JSX elements or Breadcrumb.Link elements as children */}
-</Breadcrumb.Item>
-```
-
-<DocsPage.PropsTable
-  props={[
-    { name: "children", description: "Content to display", required: true },
-    { name: "className", required: false },
-  ]}
+<DocsPage.ComponentExample
+  client:only
+  hideCode
+  code={`<div className="space-y-cn-sm">
+  <div className="flex items-center gap-cn-md border-b border-cn-borders-3 pb-cn-sm">
+    <span className="text-cn-size-0 text-cn-3 w-32 shrink-0 font-mono">simple</span>
+    <Breadcrumb.Root>
+      <Breadcrumb.List>
+        <Breadcrumb.Item>
+          <Breadcrumb.Link href="#">Item Content</Breadcrumb.Link>
+        </Breadcrumb.Item>
+      </Breadcrumb.List>
+    </Breadcrumb.Root>
+  </div>
+  <div className="flex items-center gap-cn-md">
+    <span className="text-cn-size-0 text-cn-3 w-32 shrink-0 font-mono">with-prefix-icon</span>
+    <Breadcrumb.Root>
+      <Breadcrumb.List>
+        <Breadcrumb.Item prefixIcon="folder">
+          <Breadcrumb.Link href="#">With Icon</Breadcrumb.Link>
+        </Breadcrumb.Item>
+      </Breadcrumb.List>
+    </Breadcrumb.Root>
+  </div>
+</div>`}
 />
 
 ### Link
 
 The `Link` component can be passed as a child to an `Item` component to display a clickable breadcrumb item.
 
-```typescript jsx
-<Breadcrumb.Item>
-  <Breadcrumb.Link href="#">
-    Lorem
-  </Breadcrumb.Link>
-</Breadcrumb.Item>
-
-<Breadcrumb.Item>
-  <Breadcrumb.Link asChild>
-    <button onClick={handleLinkClick}>Click me</button>
-  </Breadcrumb.Link>
-</Breadcrumb.Item>
-```
-
-<DocsPage.PropsTable
-  props={[
-    { name: "href", description: "Where to link to" },
-    {
-      name: "children",
-      description: "Content to display in the link",
-      required: true,
-    },
-    {
-      name: "asChild",
-      description:
-        "Render using the passed child element instead of as an anchor element",
-      defaultValue: "false",
-    },
-    { name: "className" },
-  ]}
+<DocsPage.ComponentExample
+  client:only
+  hideCode
+  code={`<div className="space-y-cn-sm">
+  <div className="flex items-center gap-cn-md border-b border-cn-borders-3 pb-cn-sm">
+    <span className="text-cn-size-0 text-cn-3 w-32 shrink-0 font-mono">simple</span>
+    <Breadcrumb.Root>
+      <Breadcrumb.List>
+        <Breadcrumb.Item>
+          <Breadcrumb.Link href="#">Link Text</Breadcrumb.Link>
+        </Breadcrumb.Item>
+      </Breadcrumb.List>
+    </Breadcrumb.Root>
+  </div>
+  <div className="flex items-center gap-cn-md">
+    <span className="text-cn-size-0 text-cn-3 w-32 shrink-0 font-mono">with-prefix-icon</span>
+    <Breadcrumb.Root>
+      <Breadcrumb.List>
+        <Breadcrumb.Item>
+          <Breadcrumb.Link href="#" prefixIcon="folder">With Icon</Breadcrumb.Link>
+        </Breadcrumb.Item>
+      </Breadcrumb.List>
+    </Breadcrumb.Root>
+  </div>
+</div>`}
 />
 
 ### Page
 
-The `Page` component displays its contents as a node within the breadcrumb with styling to denote that it is the current page.
+The `Page` component displays the current page (non-clickable, bold text).
 
-```typescript tsx
-<Breadcrumb.Page>Lorem ipsum</Breadcrumb.Page>
-```
-
-<DocsPage.PropsTable
-  props={[
-    { name: "children", description: "Content to display", required: true },
-    { name: "className", required: false },
-  ]}
-/>
-
-### Separator
-
-The `Separator` component displays a separator between the items of the breadcrumb.
-
-```typescript jsx
-<Breadcrumb.Separator />
-
-<Breadcrumb.Item>
-  Lorem ipsum
-</Breadcrumb.Item>
-
-<Breadcrumb.Separator>
-  &gt;
-</Breadcrumb.Separator>
-```
-
-<DocsPage.PropsTable
-  props={[
-    { name: "children", description: "Content to display", defaultValue: "/" },
-    { name: "className", required: false },
-  ]}
+<DocsPage.ComponentExample
+  client:only
+  hideCode
+  code={`<div className="space-y-cn-sm">
+  <div className="flex items-center gap-cn-md border-b border-cn-borders-3 pb-cn-sm">
+    <span className="text-cn-size-0 text-cn-3 w-32 shrink-0 font-mono">simple</span>
+    <Breadcrumb.Root>
+      <Breadcrumb.List>
+        <Breadcrumb.Page>Current Page</Breadcrumb.Page>
+      </Breadcrumb.List>
+    </Breadcrumb.Root>
+  </div>
+  <div className="flex items-center gap-cn-md">
+    <span className="text-cn-size-0 text-cn-3 w-32 shrink-0 font-mono">with-prefix-icon</span>
+    <Breadcrumb.Root>
+      <Breadcrumb.List>
+        <Breadcrumb.Page prefixIcon="folder">Current Folder</Breadcrumb.Page>
+      </Breadcrumb.List>
+    </Breadcrumb.Root>
+  </div>
+</div>`}
 />
 
 ### Ellipsis
 
-The `Ellipsis` component displays an ellipsis for use when there are too many items to display.
+The `Ellipsis` component displays a truncation indicator. Click to show a dropdown with hidden items.
 
-```typescript jsx
-<Breadcrumb.Ellipsis />
-```
+<DocsPage.ComponentExample
+  client:only
+  hideCode
+  code={`<Breadcrumb.Root>
+  <Breadcrumb.List>
+    <Breadcrumb.Item>
+      <Breadcrumb.Link href="#" prefixIcon="folder">Root</Breadcrumb.Link>
+    </Breadcrumb.Item>
+    <Breadcrumb.Separator />
+    <Breadcrumb.Ellipsis
+      items={[
+        { label: 'Hidden 1', href: '#' },
+        { label: 'Hidden 2', href: '#' },
+        { label: 'Hidden 3', href: '#' },
+      ]}
+    />
+    <Breadcrumb.Separator />
+    <Breadcrumb.Item>
+      <Breadcrumb.Link href="#" prefixIcon="folder">Parent</Breadcrumb.Link>
+    </Breadcrumb.Item>
+    <Breadcrumb.Separator />
+    <Breadcrumb.Page>Current</Breadcrumb.Page>
+  </Breadcrumb.List>
+</Breadcrumb.Root>`}
+/>
 
-<DocsPage.PropsTable props={[{ name: "className", required: false }]} />
+### Copy
+
+The `Copy` component displays a copy button to copy the breadcrumb path.
+
+<DocsPage.ComponentExample
+  client:only
+  hideCode
+  code={`<Breadcrumb.Root>
+  <Breadcrumb.List>
+    <Breadcrumb.Item>
+      <Breadcrumb.Link href="#" prefixIcon="folder">Folder</Breadcrumb.Link>
+    </Breadcrumb.Item>
+    <Breadcrumb.Separator />
+    <Breadcrumb.Page>File.tsx</Breadcrumb.Page>
+  </Breadcrumb.List>
+  <Breadcrumb.Copy name="Folder/File.tsx" />
+</Breadcrumb.Root>`}
+/>
+
+### RootInteractive
+
+The `RootInteractive` component displays an interactive root element with an avatar and dropdown chevron. Useful for header navigation.
+
+<DocsPage.ComponentExample
+  client:only
+  hideCode
+  code={`<div className="space-y-cn-sm">
+  <div className="flex items-center gap-cn-md border-b border-cn-borders-3 pb-cn-sm">
+    <span className="text-cn-size-0 text-cn-3 w-32 shrink-0 font-mono">isRootOnly</span>
+    <Breadcrumb.Root>
+      <Breadcrumb.List>
+        <Breadcrumb.Item>
+          <Breadcrumb.RootInteractive isRootOnly>Account</Breadcrumb.RootInteractive>
+        </Breadcrumb.Item>
+      </Breadcrumb.List>
+    </Breadcrumb.Root>
+  </div>
+  <div className="flex items-center gap-cn-md border-b border-cn-borders-3 pb-cn-sm">
+    <span className="text-cn-size-0 text-cn-3 w-32 shrink-0 font-mono">default</span>
+    <Breadcrumb.Root>
+      <Breadcrumb.List>
+        <Breadcrumb.Item>
+          <Breadcrumb.RootInteractive>Organization</Breadcrumb.RootInteractive>
+        </Breadcrumb.Item>
+        <Breadcrumb.Separator />
+        <Breadcrumb.Item>
+          <Breadcrumb.Link href="#" prefixIcon="folder">Project</Breadcrumb.Link>
+        </Breadcrumb.Item>
+        <Breadcrumb.Separator />
+        <Breadcrumb.Page>Settings</Breadcrumb.Page>
+      </Breadcrumb.List>
+    </Breadcrumb.Root>
+  </div>
+  <div className="flex items-center gap-cn-md">
+    <span className="text-cn-size-0 text-cn-3 w-32 shrink-0 font-mono">with-avatar</span>
+    <Breadcrumb.Root>
+      <Breadcrumb.List>
+        <Breadcrumb.Item>
+          <Breadcrumb.RootInteractive avatar={{ src: "/avatar.png" }}>John Doe</Breadcrumb.RootInteractive>
+        </Breadcrumb.Item>
+        <Breadcrumb.Separator />
+        <Breadcrumb.Item>
+          <Breadcrumb.Link href="#" prefixIcon="folder">Project</Breadcrumb.Link>
+        </Breadcrumb.Item>
+        <Breadcrumb.Separator />
+        <Breadcrumb.Page>Settings</Breadcrumb.Page>
+      </Breadcrumb.List>
+    </Breadcrumb.Root>
+  </div>
+</div>`}
+/>
+
+## API Reference
+
+<DocsPage.PropsTable
+  props={[
+    {
+      name: "Root.size",
+      description: "Size of the breadcrumb",
+      defaultValue: "sm",
+      type: "'sm' | 'xs'",
+    },
+    {
+      name: "Item.prefixIcon",
+      description: "Icon to display before content",
+      type: "IconV2NamesType",
+    },
+    { name: "Link.href", description: "URL to navigate to", type: "string" },
+    {
+      name: "Link.prefixIcon",
+      description: "Icon to display before content",
+      type: "IconV2NamesType",
+    },
+    {
+      name: "Link.asChild",
+      description: "Render as child element",
+      defaultValue: "false",
+      type: "boolean",
+    },
+    {
+      name: "Page.prefixIcon",
+      description: "Icon to display before content",
+      type: "IconV2NamesType",
+    },
+    {
+      name: "Separator.children",
+      description: "Custom separator content",
+      defaultValue: "/",
+    },
+    {
+      name: "Ellipsis.items",
+      description: "Hidden items to show in dropdown",
+      required: true,
+      type: "BreadcrumbEllipsisItem[]",
+    },
+    {
+      name: "Ellipsis.onItemSelect",
+      description: "Callback when item is selected",
+      type: "(item) => void",
+    },
+    {
+      name: "Copy.name",
+      description: "Text to copy to clipboard",
+      required: true,
+      type: "string",
+    },
+    {
+      name: "RootInteractive.size",
+      description: "Size (sm uses lg avatar, xs uses sm)",
+      defaultValue: "sm",
+      type: "'sm' | 'xs'",
+    },
+    {
+      name: "RootInteractive.isRootOnly",
+      description: "Show account icon when true, organizations when false",
+      defaultValue: "false",
+      type: "boolean",
+    },
+    {
+      name: "RootInteractive.avatar",
+      description: "Avatar props (src, icon, name)",
+      type: "AvatarProps",
+    },
+  ]}
+/>

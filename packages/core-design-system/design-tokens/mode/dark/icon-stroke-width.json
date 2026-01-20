@@ -2,11 +2,11 @@
   "iconStrokeWidth": {
     "2xs": {
       "$type": "borderWidth",
-      "$value": "1.4"
+      "$value": "1.8"
     },
     "xs": {
       "$type": "borderWidth",
-      "$value": "1.2"
+      "$value": "1.3"
     },
     "sm": {
       "$type": "borderWidth",

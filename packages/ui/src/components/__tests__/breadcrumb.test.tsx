@@ -3,6 +3,11 @@ import { describe, expect, test, vi } from 'vitest'
 
 import { Breadcrumb } from '../breadcrumb'
 
+const mockEllipsisItems = [
+  { label: 'Hidden 1', href: '/hidden-1' },
+  { label: 'Hidden 2', href: '/hidden-2' }
+]
+
 describe('Breadcrumb', () => {
   describe('Breadcrumb.Root', () => {
     test('should render with default props', () => {
@@ -16,24 +21,24 @@ describe('Breadcrumb', () => {
       expect(nav).toHaveAttribute('aria-label', 'breadcrumb')
     })
 
-    test('should render with default size', () => {
+    test('should render with default size (sm)', () => {
       const { container } = render(
         <Breadcrumb.Root>
           <div>Content</div>
         </Breadcrumb.Root>
       )
       const nav = container.querySelector('nav')
-      expect(nav).toHaveClass('cn-breadcrumb-default')
+      expect(nav).toHaveClass('cn-breadcrumb-sm')
     })
 
-    test('should render with sm size', () => {
+    test('should render with xs size', () => {
       const { container } = render(
-        <Breadcrumb.Root size="sm">
+        <Breadcrumb.Root size="xs">
           <div>Content</div>
         </Breadcrumb.Root>
       )
       const nav = container.querySelector('nav')
-      expect(nav).toHaveClass('cn-breadcrumb-sm')
+      expect(nav).toHaveClass('cn-breadcrumb-xs')
     })
 
     test('should apply custom className', () => {
@@ -232,21 +237,19 @@ describe('Breadcrumb', () => {
   })
 
   describe('Breadcrumb.Ellipsis', () => {
-    test('should render ellipsis with icon', () => {
+    test('should render ellipsis as button with icon', () => {
       const { container } = render(
         <Breadcrumb.Root>
           <Breadcrumb.List>
             <Breadcrumb.Item>Home</Breadcrumb.Item>
-            <Breadcrumb.Ellipsis />
+            <Breadcrumb.Ellipsis items={mockEllipsisItems} />
             <Breadcrumb.Item>Page</Breadcrumb.Item>
           </Breadcrumb.List>
         </Breadcrumb.Root>
       )
       const ellipsis = container.querySelector('.cn-breadcrumb-ellipsis')
       expect(ellipsis).toBeInTheDocument()
-      expect(ellipsis).toHaveAttribute('role', 'presentation')
-      expect(ellipsis).toHaveAttribute('aria-hidden', 'true')
-      expect(screen.getByText('More')).toHaveClass('sr-only')
+      expect(ellipsis?.tagName).toBe('BUTTON')
     })
 
     test('should apply custom className', () => {
@@ -254,13 +257,27 @@ describe('Breadcrumb', () => {
         <Breadcrumb.Root>
           <Breadcrumb.List>
             <Breadcrumb.Item>Home</Breadcrumb.Item>
-            <Breadcrumb.Ellipsis className="custom-ellipsis" />
+            <Breadcrumb.Ellipsis items={mockEllipsisItems} className="custom-ellipsis" />
             <Breadcrumb.Item>Page</Breadcrumb.Item>
           </Breadcrumb.List>
         </Breadcrumb.Root>
       )
       const ellipsis = container.querySelector('.cn-breadcrumb-ellipsis')
       expect(ellipsis).toHaveClass('custom-ellipsis')
+    })
+
+    test('should be clickable', async () => {
+      const onClick = vi.fn()
+      const { container } = render(
+        <Breadcrumb.Root>
+          <Breadcrumb.List>
+            <Breadcrumb.Ellipsis items={mockEllipsisItems} onClick={onClick} />
+          </Breadcrumb.List>
+        </Breadcrumb.Root>
+      )
+      const ellipsis = container.querySelector('.cn-breadcrumb-ellipsis') as HTMLButtonElement
+      ellipsis.click()
+      expect(onClick).toHaveBeenCalledTimes(1)
     })
   })
 
@@ -289,14 +306,14 @@ describe('Breadcrumb', () => {
     })
 
     test('should render breadcrumb with ellipsis', () => {
-      render(
+      const { container } = render(
         <Breadcrumb.Root>
           <Breadcrumb.List>
             <Breadcrumb.Item>
               <Breadcrumb.Link href="/">Home</Breadcrumb.Link>
             </Breadcrumb.Item>
             <Breadcrumb.Separator />
-            <Breadcrumb.Ellipsis />
+            <Breadcrumb.Ellipsis items={mockEllipsisItems} />
             <Breadcrumb.Separator />
             <Breadcrumb.Item>
               <Breadcrumb.Page>Current</Breadcrumb.Page>
@@ -305,7 +322,7 @@ describe('Breadcrumb', () => {
         </Breadcrumb.Root>
       )
       expect(screen.getByText('Home')).toBeInTheDocument()
-      expect(screen.getByText('More')).toBeInTheDocument()
+      expect(container.querySelector('.cn-breadcrumb-ellipsis')).toBeInTheDocument()
       expect(screen.getByText('Current')).toBeInTheDocument()
     })
   })
@@ -393,7 +410,7 @@ describe('Breadcrumb', () => {
       render(
         <Breadcrumb.Root>
           <Breadcrumb.List>
-            <Breadcrumb.Ellipsis ref={ref} />
+            <Breadcrumb.Ellipsis items={mockEllipsisItems} ref={ref} />
           </Breadcrumb.List>
         </Breadcrumb.Root>
       )
@@ -524,7 +541,7 @@ describe('Breadcrumb', () => {
       render(
         <Breadcrumb.Root>
           <Breadcrumb.List>
-            <Breadcrumb.Ellipsis data-testid="custom-ellipsis" title="More items" />
+            <Breadcrumb.Ellipsis items={mockEllipsisItems} data-testid="custom-ellipsis" title="More items" />
           </Breadcrumb.List>
         </Breadcrumb.Root>
       )
@@ -621,17 +638,6 @@ describe('Breadcrumb', () => {
   describe('Re-rendering with Prop Changes', () => {
     test('should update when size changes', () => {
       const { rerender, container } = render(
-        <Breadcrumb.Root size="default">
-          <Breadcrumb.List>
-            <Breadcrumb.Item>Test</Breadcrumb.Item>
-          </Breadcrumb.List>
-        </Breadcrumb.Root>
-      )
-
-      let nav = container.querySelector('nav')
-      expect(nav).toHaveClass('cn-breadcrumb-default')
-
-      rerender(
         <Breadcrumb.Root size="sm">
           <Breadcrumb.List>
             <Breadcrumb.Item>Test</Breadcrumb.Item>
@@ -639,9 +645,20 @@ describe('Breadcrumb', () => {
         </Breadcrumb.Root>
       )
 
-      nav = container.querySelector('nav')
+      let nav = container.querySelector('nav')
       expect(nav).toHaveClass('cn-breadcrumb-sm')
-      expect(nav).not.toHaveClass('cn-breadcrumb-default')
+
+      rerender(
+        <Breadcrumb.Root size="xs">
+          <Breadcrumb.List>
+            <Breadcrumb.Item>Test</Breadcrumb.Item>
+          </Breadcrumb.List>
+        </Breadcrumb.Root>
+      )
+
+      nav = container.querySelector('nav')
+      expect(nav).toHaveClass('cn-breadcrumb-xs')
+      expect(nav).not.toHaveClass('cn-breadcrumb-sm')
     })
 
     test('should update when className changes', () => {
@@ -749,40 +766,17 @@ describe('Breadcrumb', () => {
       expect(separator).toHaveAttribute('aria-hidden', 'true')
     })
 
-    test('should have role="presentation" on Ellipsis', () => {
+    test('should render Ellipsis as interactive button', () => {
       const { container } = render(
         <Breadcrumb.Root>
           <Breadcrumb.List>
-            <Breadcrumb.Ellipsis />
+            <Breadcrumb.Ellipsis items={mockEllipsisItems} />
           </Breadcrumb.List>
         </Breadcrumb.Root>
       )
       const ellipsis = container.querySelector('.cn-breadcrumb-ellipsis')
-      expect(ellipsis).toHaveAttribute('role', 'presentation')
-    })
-
-    test('should have aria-hidden on Ellipsis', () => {
-      const { container } = render(
-        <Breadcrumb.Root>
-          <Breadcrumb.List>
-            <Breadcrumb.Ellipsis />
-          </Breadcrumb.List>
-        </Breadcrumb.Root>
-      )
-      const ellipsis = container.querySelector('.cn-breadcrumb-ellipsis')
-      expect(ellipsis).toHaveAttribute('aria-hidden', 'true')
-    })
-
-    test('should have sr-only text in Ellipsis', () => {
-      render(
-        <Breadcrumb.Root>
-          <Breadcrumb.List>
-            <Breadcrumb.Ellipsis />
-          </Breadcrumb.List>
-        </Breadcrumb.Root>
-      )
-      const srText = screen.getByText('More')
-      expect(srText).toHaveClass('sr-only')
+      expect(ellipsis?.tagName).toBe('BUTTON')
+      expect(ellipsis).toHaveAttribute('type', 'button')
     })
   })
 
@@ -851,14 +845,14 @@ describe('Breadcrumb', () => {
     })
 
     test('should render with mixed navigation elements', () => {
-      render(
+      const { container } = render(
         <Breadcrumb.Root>
           <Breadcrumb.List>
             <Breadcrumb.Item>
               <Breadcrumb.Link href="/">Home</Breadcrumb.Link>
             </Breadcrumb.Item>
             <Breadcrumb.Separator />
-            <Breadcrumb.Ellipsis />
+            <Breadcrumb.Ellipsis items={mockEllipsisItems} />
             <Breadcrumb.Separator />
             <Breadcrumb.Item>
               <Breadcrumb.Link href="/products">Products</Breadcrumb.Link>
@@ -871,14 +865,14 @@ describe('Breadcrumb', () => {
         </Breadcrumb.Root>
       )
       expect(screen.getByText('Home')).toBeInTheDocument()
-      expect(screen.getByText('More')).toBeInTheDocument()
+      expect(container.querySelector('.cn-breadcrumb-ellipsis')).toBeInTheDocument()
       expect(screen.getByText('Products')).toBeInTheDocument()
       expect(screen.getByText('Current')).toBeInTheDocument()
     })
   })
 
   describe('Default Values', () => {
-    test('should use default size when not specified', () => {
+    test('should use default size (sm) when not specified', () => {
       const { container } = render(
         <Breadcrumb.Root>
           <Breadcrumb.List>
@@ -887,7 +881,7 @@ describe('Breadcrumb', () => {
         </Breadcrumb.Root>
       )
       const nav = container.querySelector('nav')
-      expect(nav).toHaveClass('cn-breadcrumb-default')
+      expect(nav).toHaveClass('cn-breadcrumb-sm')
     })
 
     test('should use default separator icon when children not provided', () => {
@@ -929,29 +923,32 @@ describe('Breadcrumb', () => {
     })
   })
 
-  describe('Ellipsis Icon Behavior', () => {
-    test('should render more-horizontal icon in ellipsis', () => {
+  describe('Ellipsis Button Behavior', () => {
+    test('should render ellipsis as ghost button with xs size', () => {
       const { container } = render(
         <Breadcrumb.Root>
           <Breadcrumb.List>
-            <Breadcrumb.Ellipsis />
+            <Breadcrumb.Ellipsis items={mockEllipsisItems} />
           </Breadcrumb.List>
         </Breadcrumb.Root>
       )
       const ellipsis = container.querySelector('.cn-breadcrumb-ellipsis')
       expect(ellipsis).toBeInTheDocument()
+      expect(ellipsis).toHaveClass('cn-button-ghost')
+      expect(ellipsis).toHaveClass('cn-button-xs')
     })
 
-    test('should use skipSize prop on ellipsis icon', () => {
+    test('should render more-horizontal icon in ellipsis button', () => {
       const { container } = render(
         <Breadcrumb.Root>
           <Breadcrumb.List>
-            <Breadcrumb.Ellipsis />
+            <Breadcrumb.Ellipsis items={mockEllipsisItems} />
           </Breadcrumb.List>
         </Breadcrumb.Root>
       )
       const ellipsis = container.querySelector('.cn-breadcrumb-ellipsis')
-      expect(ellipsis).toBeInTheDocument()
+      const icon = ellipsis?.querySelector('svg')
+      expect(icon).toBeInTheDocument()
     })
   })
 
@@ -1040,6 +1037,62 @@ describe('Breadcrumb', () => {
       const strong = screen.getByText('Current')
       expect(strong.tagName).toBe('STRONG')
       expect(screen.getByText('Page')).toBeInTheDocument()
+    })
+  })
+
+  describe('Prefix Icon', () => {
+    test('should render prefix icon in Item', () => {
+      const { container } = render(
+        <Breadcrumb.Root>
+          <Breadcrumb.List>
+            <Breadcrumb.Item prefixIcon="folder">Item content</Breadcrumb.Item>
+          </Breadcrumb.List>
+        </Breadcrumb.Root>
+      )
+      const icon = container.querySelector('.cn-breadcrumb-prefix-icon')
+      expect(icon).toBeInTheDocument()
+    })
+
+    test('should render prefix icon in Link', () => {
+      const { container } = render(
+        <Breadcrumb.Root>
+          <Breadcrumb.List>
+            <Breadcrumb.Item>
+              <Breadcrumb.Link href="/test" prefixIcon="folder">
+                Link content
+              </Breadcrumb.Link>
+            </Breadcrumb.Item>
+          </Breadcrumb.List>
+        </Breadcrumb.Root>
+      )
+      const icon = container.querySelector('.cn-breadcrumb-prefix-icon')
+      expect(icon).toBeInTheDocument()
+    })
+
+    test('should render prefix icon in Page', () => {
+      const { container } = render(
+        <Breadcrumb.Root>
+          <Breadcrumb.List>
+            <Breadcrumb.Item>
+              <Breadcrumb.Page prefixIcon="folder">Current Page</Breadcrumb.Page>
+            </Breadcrumb.Item>
+          </Breadcrumb.List>
+        </Breadcrumb.Root>
+      )
+      const icon = container.querySelector('.cn-breadcrumb-prefix-icon')
+      expect(icon).toBeInTheDocument()
+    })
+
+    test('should not render prefix icon when not provided', () => {
+      const { container } = render(
+        <Breadcrumb.Root>
+          <Breadcrumb.List>
+            <Breadcrumb.Item>Item without icon</Breadcrumb.Item>
+          </Breadcrumb.List>
+        </Breadcrumb.Root>
+      )
+      const icon = container.querySelector('.cn-breadcrumb-prefix-icon')
+      expect(icon).not.toBeInTheDocument()
     })
   })
 })

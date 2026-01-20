@@ -1,4 +1,4 @@
-import { ChangeEvent, Fragment } from 'react'
+import { ChangeEvent, Fragment, useMemo } from 'react'
 
 import { Breadcrumb, CopyButton, Layout, Tag, Text, TextInput } from '@/components'
 import { useRouterContext } from '@/context'
@@ -101,20 +101,68 @@ export const PathBreadcrumbs = ({ items, isEdit, isNew, ...props }: PathBreadcru
 
   const isRenderInput = isNew || isEdit
 
+  // Truncation logic: max 4 items visible
+  // If more than 4: root / ... / second-to-last / last
+  const MAX_VISIBLE_ITEMS = 4
+  const shouldTruncate = items.length > MAX_VISIBLE_ITEMS
+
+  // Memoize hidden items for the ellipsis dropdown
+  const hiddenItems = useMemo(() => {
+    if (!shouldTruncate) return []
+    // Hidden items are from index 1 to items.length - 2 (exclusive of last two)
+    return items.slice(1, items.length - 2).map(item => ({
+      label: decodeURIComponentIfValid(decodeURIComponentIfValid(item.path)),
+      href: item.parentPath
+    }))
+  }, [items, shouldTruncate])
+
+  // Memoize visible items
+  const visibleItems = useMemo(() => {
+    if (!shouldTruncate) return items
+
+    // Show: first item, ellipsis, second-to-last, last
+    return [
+      items[0], // root
+      null, // placeholder for ellipsis
+      items[items.length - 2], // second-to-last
+      items[items.length - 1] // last
+    ]
+  }, [items, shouldTruncate])
+
   return (
     <Layout.Flex gap="sm" wrap={isRenderInput ? 'wrap' : 'nowrap'} align="start">
       <Breadcrumb.Root className="mt-cn-xs">
         <Breadcrumb.List>
-          {items.map(({ parentPath, path }, idx) => (
-            <Fragment key={idx}>
-              <Breadcrumb.Item>
-                <Breadcrumb.Link asChild>
-                  <Link to={parentPath}>{decodeURIComponentIfValid(decodeURIComponentIfValid(path))}</Link>
-                </Breadcrumb.Link>
-              </Breadcrumb.Item>
-              {idx < items.length - 1 && <Breadcrumb.Separator />}
-            </Fragment>
-          ))}
+          {visibleItems.map((item, idx) => {
+            // Render ellipsis with hidden items dropdown
+            if (item === null) {
+              return (
+                <Fragment key="ellipsis">
+                  <Breadcrumb.Ellipsis
+                    items={hiddenItems}
+                    onItemSelect={selectedItem => {
+                      window.location.href = selectedItem.href
+                    }}
+                  />
+                  <Breadcrumb.Separator />
+                </Fragment>
+              )
+            }
+
+            const { parentPath, path } = item
+            const isLast = idx === visibleItems.length - 1
+
+            return (
+              <Fragment key={idx}>
+                <Breadcrumb.Item>
+                  <Breadcrumb.Link asChild>
+                    <Link to={parentPath}>{decodeURIComponentIfValid(decodeURIComponentIfValid(path))}</Link>
+                  </Breadcrumb.Link>
+                </Breadcrumb.Item>
+                {!isLast && <Breadcrumb.Separator />}
+              </Fragment>
+            )
+          })}
           {isRenderInput && <Breadcrumb.Separator />}
         </Breadcrumb.List>
       </Breadcrumb.Root>

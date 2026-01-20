@@ -1020,7 +1020,7 @@ describe('PathBreadcrumbs', () => {
       })
     })
 
-    test('should handle multiple breadcrumb items', () => {
+    test('should truncate when more than 4 items - shows root, ellipsis, second-to-last, last', () => {
       const manyItems: PathParts[] = Array.from({ length: 10 }, (_, i) => ({
         path: `folder${i}`,
         parentPath: i === 0 ? '/' : `/folder${i - 1}`
@@ -1028,8 +1028,65 @@ describe('PathBreadcrumbs', () => {
 
       const { container } = render(<PathBreadcrumbs items={manyItems} isEdit={false} isNew={false} />)
 
+      // Should only show 3 links (root, second-to-last, last) + ellipsis
       const links = container.querySelectorAll('a')
-      expect(links).toHaveLength(10)
+      expect(links).toHaveLength(3)
+
+      // Should show first item (folder0)
+      expect(screen.getByText('folder0')).toBeInTheDocument()
+      // Should show second-to-last item (folder8)
+      expect(screen.getByText('folder8')).toBeInTheDocument()
+      // Should show last item (folder9)
+      expect(screen.getByText('folder9')).toBeInTheDocument()
+
+      // Should have ellipsis
+      const ellipsis = container.querySelector('.cn-breadcrumb-ellipsis')
+      expect(ellipsis).toBeInTheDocument()
+    })
+
+    test('should not truncate when 4 or fewer items', () => {
+      const fourItems: PathParts[] = [
+        { path: 'root', parentPath: '/' },
+        { path: 'folder1', parentPath: '/root' },
+        { path: 'folder2', parentPath: '/root/folder1' },
+        { path: 'file.txt', parentPath: '/root/folder1/folder2' }
+      ]
+
+      const { container } = render(<PathBreadcrumbs items={fourItems} isEdit={false} isNew={false} />)
+
+      const links = container.querySelectorAll('a')
+      expect(links).toHaveLength(4)
+
+      // Should not have ellipsis
+      const ellipsis = container.querySelector('.cn-breadcrumb-ellipsis')
+      expect(ellipsis).not.toBeInTheDocument()
+    })
+
+    test('should truncate with exactly 5 items', () => {
+      const fiveItems: PathParts[] = [
+        { path: 'root', parentPath: '/' },
+        { path: 'folder1', parentPath: '/root' },
+        { path: 'folder2', parentPath: '/root/folder1' },
+        { path: 'folder3', parentPath: '/root/folder1/folder2' },
+        { path: 'file.txt', parentPath: '/root/folder1/folder2/folder3' }
+      ]
+
+      const { container } = render(<PathBreadcrumbs items={fiveItems} isEdit={false} isNew={false} />)
+
+      // Should show: root / ... / folder3 / file.txt (3 links + ellipsis)
+      const links = container.querySelectorAll('a')
+      expect(links).toHaveLength(3)
+
+      expect(screen.getByText('root')).toBeInTheDocument()
+      expect(screen.getByText('folder3')).toBeInTheDocument()
+      expect(screen.getByText('file.txt')).toBeInTheDocument()
+
+      // folder1 and folder2 should be hidden
+      expect(screen.queryByText('folder1')).not.toBeInTheDocument()
+      expect(screen.queryByText('folder2')).not.toBeInTheDocument()
+
+      const ellipsis = container.querySelector('.cn-breadcrumb-ellipsis')
+      expect(ellipsis).toBeInTheDocument()
     })
   })
 

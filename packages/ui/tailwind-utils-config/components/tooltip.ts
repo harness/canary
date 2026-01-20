@@ -4,11 +4,11 @@ export default {
     maxWidth: 'var(--cn-tooltip-max)',
     maxHeight: 'calc(var(--radix-tooltip-content-available-height) - 4px)',
     borderRadius: 'var(--cn-tooltip-radius)',
-    border: 'var(--cn-tooltip-border) solid var(--cn-border-2)',
+    border: 'var(--cn-tooltip-border) solid var(--cn-border-3)',
     background: 'var(--cn-bg-3)',
     padding: 'var(--cn-tooltip-py) var(--cn-tooltip-px)',
     color: 'var(--cn-text-1)',
-    boxShadow: 'var(--cn-shadow-3)',
+    boxShadow: 'var(--cn-shadow-4)',
     willChange: 'transform, opacity',
     '@apply z-50 font-caption-normal': '',
 
@@ -22,7 +22,7 @@ export default {
 
     '&-arrow': {
       color: 'var(--cn-bg-3)',
-      stroke: 'var(--cn-border-2)',
+      stroke: 'var(--cn-border-3)',
       '@apply w-5 h-2': ''
     },
 

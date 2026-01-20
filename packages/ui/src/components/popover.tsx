@@ -30,6 +30,18 @@ interface PopoverContentProps extends ComponentPropsWithoutRef<typeof PopoverPri
   linkProps?: Omit<LinkProps, 'children'> & { text: string }
   hideArrow?: boolean
   noMaxWidth?: boolean
+  /**
+   * Theme variant of the popover
+   * - 'default': High-contrast appearance with fixed colors
+   * - 'themed': Follows the current theme's color palette
+   * @default 'themed'
+   */
+  theme?: 'default' | 'themed'
+  /**
+   * Custom content mode - removes padding and min-width
+   * @default false
+   */
+  custom?: boolean
 }
 
 const PopoverContent = forwardRef<ElementRef<typeof PopoverPrimitive.Content>, PopoverContentProps>(
@@ -44,6 +56,8 @@ const PopoverContent = forwardRef<ElementRef<typeof PopoverPrimitive.Content>, P
       align = 'center',
       sideOffset = 4,
       noMaxWidth = false,
+      theme = 'themed',
+      custom = false,
       style,
       ...props
     },
@@ -51,10 +65,28 @@ const PopoverContent = forwardRef<ElementRef<typeof PopoverPrimitive.Content>, P
   ) => {
     const { portalContainer } = usePortal()
 
+    const contentClass = custom
+      ? theme === 'default'
+        ? 'cn-popover-content-custom-default'
+        : 'cn-popover-content-custom'
+      : theme === 'default'
+        ? 'cn-popover-content-default'
+        : 'cn-popover-content'
+
     return (
       <PopoverPrimitive.Portal container={portalContainer}>
         <PopoverPrimitive.Content
-          className={cn('cn-popover-content', { 'cn-popover-content-max-size': !noMaxWidth }, className)}
+          className={cn(
+            contentClass,
+            'animate-in fade-in-0 zoom-in-95 duration-150',
+            'data-[state=closed]:animate-out data-[state=closed]:fade-out-0 data-[state=closed]:zoom-out-95',
+            'data-[side=bottom]:slide-in-from-top-2',
+            'data-[side=left]:slide-in-from-right-2',
+            'data-[side=right]:slide-in-from-left-2',
+            'data-[side=top]:slide-in-from-bottom-2',
+            { 'cn-popover-content-max-size': !noMaxWidth && !custom },
+            className
+          )}
           ref={ref}
           align={align}
           sideOffset={sideOffset}
@@ -111,6 +143,8 @@ const PopoverComponent = ({
   hoverDelay = 200,
   closeDelay = 300,
   noMaxWidth,
+  theme,
+  custom,
   ...props
 }: PopoverProps) => {
   const [internalOpen, setInternalOpen] = useState(defaultOpen || false)
@@ -184,6 +218,8 @@ const PopoverComponent = ({
           triggerRef.current?.focus()
         }}
         noMaxWidth={noMaxWidth}
+        theme={theme}
+        custom={custom}
         {...props}
       >
         {content}

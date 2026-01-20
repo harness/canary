@@ -11,7 +11,7 @@ export default {
      * Align the checkbox indicator with the label
      */
     '&:where(:has(.cn-checkbox-label-wrapper)) .cn-checkbox-root': {
-      top: 'var(--cn-spacing-half)'
+      top: 'var(--cn-spacing-px)'
     }
   },
 
@@ -27,11 +27,12 @@ export default {
     justifyContent: 'center',
     flexShrink: '0',
     position: 'relative',
-    width: 'var(--cn-size-4)',
-    height: 'var(--cn-size-4)',
+    width: 'var(--cn-size-4-half)',
+    height: 'var(--cn-size-4-half)',
     border: 'var(--cn-border-width-1) solid var(--cn-comp-selection-unselected-border)',
-    borderRadius: 'var(--cn-rounded-1)',
+    borderRadius: 'var(--cn-rounded-2)',
     backgroundColor: 'var(--cn-comp-selection-unselected-bg)',
+    transition: 'background-color 200ms ease-out, border-color 200ms ease-out, box-shadow 200ms ease-out',
 
     '&:where(:not([disabled]))': {
       '&:focus-visible': {
@@ -41,7 +42,8 @@ export default {
 
       '&:hover': {
         backgroundColor: 'var(--cn-comp-selection-unselected-bg-hover)',
-        borderColor: 'var(--cn-comp-selection-unselected-border-hover)'
+        borderColor: 'var(--cn-comp-selection-unselected-border-hover)',
+        boxShadow: 'var(--cn-ring-selected)'
       },
 
       '&:where([data-state=checked]):hover': {

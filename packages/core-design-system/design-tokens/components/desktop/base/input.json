@@ -108,7 +108,7 @@
     "input-ai": {
       "blur": {
         "$type": "dimension",
-        "$value": "16px"
+        "$value": "12px"
       }
     }
   }

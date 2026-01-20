@@ -47,7 +47,6 @@ export interface SecretListPageProps extends SecretListProps {
   isSecretManagerIdentifierLoading: boolean
   isError?: boolean
   errorMessage?: string
-  onCreate: () => void
   currentPage: number
   totalItems: number
   pageSize: number

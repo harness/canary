@@ -30,7 +30,6 @@ const SecretsListPage = (): JSX.Element => (
     totalItems={10}
     pageSize={10}
     goToPage={noop}
-    onCreate={noop}
     scope={{
       accountId: 'account-id',
       orgIdentifier: 'org-id',

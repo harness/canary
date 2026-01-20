@@ -25,7 +25,7 @@ const SecretListPage: FC<SecretListPageProps> = ({
   secretManagerIdentifiers,
   isSecretManagerIdentifierLoading,
   secrets,
-  onCreate,
+  onCreateSecret,
   setSecretManagerSearchQuery,
   onDeleteSecret,
   onFilterChange,
@@ -136,7 +136,7 @@ const SecretListPage: FC<SecretListPageProps> = ({
               <RbacButton
                 ref={triggerRef}
                 onClick={() => {
-                  onCreate?.()
+                  onCreateSecret?.()
                   registerTrigger()
                 }}
                 rbac={{
@@ -158,7 +158,7 @@ const SecretListPage: FC<SecretListPageProps> = ({
               onDeleteSecret={onDeleteSecret}
               {...props}
               handleResetFiltersQueryAndPages={handleResetFiltersQueryAndPages}
-              onCreateSecret={onCreate}
+              onCreateSecret={onCreateSecret}
               isFiltered={isFiltered || !isEmpty(searchQuery)}
               paginationProps={{
                 totalItems: totalItems,

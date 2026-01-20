@@ -14,9 +14,17 @@ import { cn, useMergeRefs } from '@/utils'
 import { Text } from '@components/text'
 import { cva, type VariantProps } from 'class-variance-authority'
 
-function InputAffix({ children, isPrefix = false }: PropsWithChildren<{ isPrefix?: boolean }>) {
+function InputAffix({
+  children,
+  isPrefix = false,
+  className
+}: PropsWithChildren<{ isPrefix?: boolean; className?: string }>) {
   if (!children) return null
-  return <span className={cn('cn-input-affix', isPrefix ? 'cn-input-prefix' : 'cn-input-suffix')}>{children}</span>
+  return (
+    <span className={cn('cn-input-affix', isPrefix ? 'cn-input-prefix' : 'cn-input-suffix', className)}>
+      {children}
+    </span>
+  )
 }
 
 export interface BaseInputProps
@@ -48,7 +56,9 @@ export interface InputProps extends BaseInputProps {
   className?: string
   inputContainerClassName?: string
   prefix?: ReactNode
+  prefixClassName?: string
   suffix?: ReactNode
+  suffixClassName?: string
   leadingSuffix?: ReactNode
 }
 
@@ -63,6 +73,8 @@ const BaseInput = forwardRef<HTMLInputElement, InputProps>(
       suffix = null,
       leadingSuffix,
       autoFocus,
+      prefixClassName,
+      suffixClassName,
       ...props
     },
     ref
@@ -97,7 +109,9 @@ const BaseInput = forwardRef<HTMLInputElement, InputProps>(
         className: cn('cn-input-prefix', (prefix as ReactElement).props?.className)
       })
     ) : (
-      <InputAffix isPrefix>{prefix}</InputAffix>
+      <InputAffix isPrefix className={prefixClassName}>
+        {prefix}
+      </InputAffix>
     )
 
     const wrappedLeadingSuffix = isLeadingSuffixComponent ? (
@@ -115,7 +129,7 @@ const BaseInput = forwardRef<HTMLInputElement, InputProps>(
         className: cn('cn-input-suffix', (suffix as ReactElement).props?.className)
       })
     ) : (
-      <InputAffix>{suffix}</InputAffix>
+      <InputAffix className={suffixClassName}>{suffix}</InputAffix>
     )
 
     return (

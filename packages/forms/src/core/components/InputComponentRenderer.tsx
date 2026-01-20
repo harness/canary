@@ -7,6 +7,7 @@ import { IInputDefinition } from '../../types'
 import { useRootFormContext } from '../hooks/useRootFormikContext'
 //import { useRootFormikContext } from '../context/RootFormikContext'
 import type { InputProps } from './InputComponent'
+import { InputErrorBoundary } from './InputErrorBoundary'
 
 const InputComponentWrapper = ({
   children,
@@ -105,13 +106,15 @@ export function InputComponentRenderer<TValue, TConfig = unknown>({
       return (
         <>
           {input.before ? input.before : null}
-          {inputComponent?.renderComponent(commonProps)}
+          <InputErrorBoundary path={path} inputType={input.inputType}>
+            {inputComponent?.renderComponent(commonProps)}
+          </InputErrorBoundary>
           {input.after ? input.after : null}
         </>
       )
     }
     return null
-  }, [commonProps, input.after, input.before, inputComponent, isVisible, formState.errors])
+  }, [isVisible, input.before, input.inputType, input.after, path, inputComponent, commonProps, formState.errors])
 
   if (!inputComponent) {
     return (

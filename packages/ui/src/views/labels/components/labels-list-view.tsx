@@ -182,7 +182,6 @@ export const LabelsListView: FC<LabelsListViewProps> = ({
                 <MoreActionsTooltip
                   ref={triggerRef}
                   isInTable
-                  iconName="more-horizontal"
                   actions={[
                     {
                       title: t('views:labelData.edit', 'Edit label'),

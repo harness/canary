@@ -173,14 +173,7 @@ const ItemHeader: FC<ItemHeaderProps> = memo(
           </Layout.Horizontal>
         </Text>
         {(isComment || hasActionsInHeader) && !isDeleted && !isResolved && (
-          <MoreActionsTooltip
-            ref={triggerRef}
-            buttonSize="sm"
-            iconName="more-horizontal"
-            sideOffset={4}
-            alignOffset={0}
-            actions={actions}
-          />
+          <MoreActionsTooltip ref={triggerRef} buttonSize="sm" sideOffset={4} alignOffset={0} actions={actions} />
         )}
       </Layout.Horizontal>
     )

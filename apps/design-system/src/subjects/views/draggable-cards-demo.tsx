@@ -33,7 +33,6 @@ export const DraggableCardsDemo = () => {
                 onClick: () => {}
               }
             ]}
-            iconName="more-horizontal"
           />
         </div>
       ),

@@ -147,7 +147,7 @@ const FilterGroupInner = <
                 <SearchInput
                   inputContainerClassName="max-w-80 flex-1"
                   ref={searchRef}
-                  defaultValue={searchValue || ''}
+                  searchValue={searchValue || ''}
                   onChange={handleInputChange}
                   placeholder={t('views:repos.search', 'Search')}
                   autoFocus
@@ -196,7 +196,7 @@ const FilterGroupInner = <
           <>
             <ListControlBar<T, CustomValue, T[keyof T]>
               renderSelectedFilters={filterFieldRenderer => (
-                <FilterHandler.Content className={'flex items-center gap-x-cn-md'}>
+                <FilterHandler.Content className={'gap-x-cn-md flex items-center'}>
                   {filterOptions.map(filterOption => {
                     return (
                       <FilterHandler.Component<keyof T>
@@ -225,7 +225,7 @@ const FilterGroupInner = <
               renderFilterOptions={filterOptionsRenderer => (
                 <FilterHandler.Dropdown>
                   {(addFilter, availableFilters: Extract<keyof T, string>[], resetFilters) => (
-                    <div className="flex items-center gap-x-cn-md">
+                    <div className="gap-x-cn-md flex items-center">
                       {filterOptionsRenderer({ addFilter, resetFilters, availableFilters })}
                       {onSaveFilters && <SaveFiltersDialog onSubmit={onSaveFilters} />}
                     </div>

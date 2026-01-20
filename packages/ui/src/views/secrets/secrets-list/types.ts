@@ -27,10 +27,11 @@ export interface SecretListItem {
 export interface SecretListProps extends Partial<RoutingProps> {
   secrets: SecretListItem[]
   isLoading: boolean
+  isFiltered: boolean
+  onCreateSecret: () => void
   onEditSecret: (secret: SecretListItem) => void
   onDeleteSecret: (secretId: string) => void
   handleResetFiltersQueryAndPages?: () => void
-  isDirtyList?: boolean
   paginationProps?: PaginationProps
 }
 

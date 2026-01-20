@@ -83,7 +83,6 @@ export function RepoWebhookList({
                 <Table.Cell>
                   <MoreActionsTooltip
                     ref={triggerRef}
-                    iconName="more-horizontal"
                     actions={[
                       {
                         title: t('views:webhookData.edit', 'Edit Webhook'),

@@ -16,7 +16,6 @@ const SecretsListPage = (): JSX.Element => (
       updatedAt: secret.updatedAt,
       createdAt: secret.createdAt
     }))}
-    isDirtyList={false}
     setSecretManagerSearchQuery={noop}
     isLoading={false}
     secretManagerIdentifiers={mockSecretManager.data.content.map(secretManager => ({
@@ -37,6 +36,8 @@ const SecretsListPage = (): JSX.Element => (
       orgIdentifier: 'org-id',
       projectIdentifier: 'project-id'
     }}
+    isFiltered={false}
+    onCreateSecret={noop}
   />
 )
 

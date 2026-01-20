@@ -219,7 +219,6 @@ export const RepoTagsList: FC<RepoTagsListProps> = ({
                   ...action,
                   to: action?.to?.replace('${tag.name}', tag.name)
                 }))}
-                iconName="more-horizontal"
               />
             </Table.Cell>
           </Table.Row>

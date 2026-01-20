@@ -83,13 +83,7 @@ const PullRequestDescBox: FC<PullRequestDescBoxProps> = ({
                 <TimeAgoCard timestamp={createdAt} />
               </Layout.Horizontal>
 
-              <MoreActionsTooltip
-                buttonSize="sm"
-                iconName="more-horizontal"
-                sideOffset={4}
-                alignOffset={0}
-                actions={actions}
-              />
+              <MoreActionsTooltip buttonSize="sm" sideOffset={4} alignOffset={0} actions={actions} />
             </Layout.Horizontal>
           )
         }

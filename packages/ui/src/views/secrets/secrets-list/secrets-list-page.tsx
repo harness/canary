@@ -1,10 +1,11 @@
-import { FC, useCallback, useMemo, useRef } from 'react'
+import { FC, useCallback, useRef, useState } from 'react'
 
 import { IconV2, Layout, NoData, PermissionIdentifier, ResourceType, SecretListFilters } from '@/components'
 import { useComponents, useCustomDialogTrigger, useRouterContext, useTranslation } from '@/context'
 import { settingsBackLink } from '@/utils/utils'
 import { Page } from '@/views'
 import FilterGroup, { FilterGroupRef } from '@views/components/FilterGroup'
+import { isEmpty, isUndefined } from 'lodash-es'
 
 import { getSecretListFilterOptions, SECRET_SORT_OPTIONS } from './filter-options'
 import { SecretList } from './secrets-list'
@@ -36,11 +37,11 @@ const SecretListPage: FC<SecretListPageProps> = ({
   const { t } = useTranslation()
   const { navigate } = useRouterContext()
   const filterRef = useRef<FilterGroupRef>(null)
+  const [isFiltered, setIsFiltered] = useState<boolean>(false)
   const { RbacButton } = useComponents()
 
   const { accountId, orgIdentifier, projectIdentifier } = scope
 
-  const { triggerRef: noDataTriggerRef, registerTrigger: registerNoDataTrigger } = useCustomDialogTrigger()
   const { triggerRef, registerTrigger } = useCustomDialogTrigger()
 
   const secretManagerFilterOptions = secretManagerIdentifiers.map(secretManager => {
@@ -60,6 +61,7 @@ const SecretListPage: FC<SecretListPageProps> = ({
   })
 
   const onFilterValueChange = (filterValues: SecretListFilters) => {
+    setIsFiltered(!Object.values(filterValues).every(isUndefined))
     // Pass filter values to parent component if onFilterChange is provided
     onFilterChange?.(filterValues)
     goToPage(1)
@@ -79,12 +81,6 @@ const SecretListPage: FC<SecretListPageProps> = ({
     },
     [setSearchQuery, goToPage]
   )
-
-  const isDirtyList = useMemo(() => {
-    return currentPage !== 1 || !!searchQuery || secretManagerFilterOptions.length === 0
-  }, [currentPage, searchQuery])
-
-  const isEmpty = !isLoading && !secrets.length && !isDirtyList
 
   if (isError) {
     return (
@@ -125,72 +121,55 @@ const SecretListPage: FC<SecretListPageProps> = ({
       />
 
       <Page.Content>
-        {isEmpty && (
-          <NoData
-            imageName="no-data-cog"
-            title={t('views:noData.noSecrets', 'No secrets yet')}
-            description={[t('views:noData.noSecrets', 'There are no secrets in this project yet.')]}
-            primaryButton={{
-              ref: noDataTriggerRef,
-              icon: 'plus',
-              label: t('views:secrets.createNew', 'Create Secret'),
-              onClick: () => {
-                onCreate?.()
-                registerNoDataTrigger()
-              }
+        <Layout.Vertical gap="md" className="flex-1">
+          <FilterGroup<SecretListFilters, keyof SecretListFilters>
+            simpleSortConfig={{
+              sortOptions: SECRET_SORT_OPTIONS,
+              onSortChange,
+              defaultSort: 'lastModifiedAt,DESC'
             }}
-          />
-        )}
-
-        {!isEmpty && (
-          <Layout.Vertical gap="md" className="flex-1">
-            <FilterGroup<SecretListFilters, keyof SecretListFilters>
-              simpleSortConfig={{
-                sortOptions: SECRET_SORT_OPTIONS,
-                onSortChange,
-                defaultSort: 'lastModifiedAt,DESC'
-              }}
-              ref={filterRef}
-              onFilterValueChange={onFilterValueChange}
-              handleInputChange={handleSearch}
-              headerAction={
-                <RbacButton
-                  ref={triggerRef}
-                  onClick={() => {
-                    onCreate?.()
-                    registerTrigger()
-                  }}
-                  rbac={{
-                    resource: { resourceType: ResourceType.SECRET },
-                    permissions: [PermissionIdentifier.UPDATE_SECRET]
-                  }}
-                >
-                  <IconV2 name="plus" />
-                  {t('views:secrets.createNew', 'Create Secret')}
-                </RbacButton>
-              }
-              filterOptions={SECRET_FILTER_OPTIONS}
-            />
-
-            <Layout.Vertical gap="none" className="flex-1">
-              <SecretList
-                secrets={secrets}
-                isLoading={isLoading}
-                onDeleteSecret={onDeleteSecret}
-                {...props}
-                handleResetFiltersQueryAndPages={handleResetFiltersQueryAndPages}
-                isDirtyList={isDirtyList}
-                paginationProps={{
-                  totalItems: totalItems,
-                  pageSize: pageSize,
-                  onPageSizeChange: setPageSize,
-                  currentPage: currentPage,
-                  goToPage: goToPage
+            ref={filterRef}
+            onFilterValueChange={onFilterValueChange}
+            searchValue={searchQuery}
+            handleInputChange={handleSearch}
+            headerAction={
+              <RbacButton
+                ref={triggerRef}
+                onClick={() => {
+                  onCreate?.()
+                  registerTrigger()
                 }}
-              />
-            </Layout.Vertical>
+                rbac={{
+                  resource: { resourceType: ResourceType.SECRET },
+                  permissions: [PermissionIdentifier.UPDATE_SECRET]
+                }}
+              >
+                <IconV2 name="plus" />
+                {t('views:secrets.createNew', 'Create Secret')}
+              </RbacButton>
+            }
+            filterOptions={SECRET_FILTER_OPTIONS}
+          />
+
+          <Layout.Vertical gap="none" className="flex-1">
+            <SecretList
+              secrets={secrets}
+              isLoading={isLoading}
+              onDeleteSecret={onDeleteSecret}
+              {...props}
+              handleResetFiltersQueryAndPages={handleResetFiltersQueryAndPages}
+              onCreateSecret={onCreate}
+              isFiltered={isFiltered || !isEmpty(searchQuery)}
+              paginationProps={{
+                totalItems: totalItems,
+                pageSize: pageSize,
+                onPageSizeChange: setPageSize,
+                currentPage: currentPage,
+                goToPage: goToPage
+              }}
+            />
           </Layout.Vertical>
-        )}
+        </Layout.Vertical>
       </Page.Content>
     </Page.Root>
   )

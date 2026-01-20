@@ -207,7 +207,6 @@ export const BranchesList: FC<BranchListPageProps> = ({
               <Table.Cell className="text-right">
                 <MoreActionsTooltip
                   ref={triggerRef}
-                  iconName="more-horizontal"
                   actions={[
                     // Don't show Compare option for default branch
                     ...(!branch?.behindAhead?.default

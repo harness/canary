@@ -11,6 +11,7 @@ import { BaseInput, InputProps } from './base-input'
 
 // Custom onChange handler for search that works with strings instead of events
 export interface SearchInputProps extends Omit<InputProps, 'type' | 'onChange' | 'label'> {
+  searchValue?: string
   onChange?: (value: string) => void
   debounce?: number | boolean
   onEnter?: (text: string, reverse?: boolean) => void
@@ -36,11 +37,12 @@ const SearchInput = forwardRef<HTMLInputElement, SearchInputProps>(
       onKeyDown,
       showPrevNextButtons,
       counter,
+      searchValue = '',
       ...props
     },
     ref
   ) => {
-    const [value, setValue] = useState('')
+    const [value, setValue] = useState(searchValue)
     const inputRef = useRef<HTMLInputElement | null>(null)
 
     const mergedRef = useMergeRefs<HTMLInputElement>([
@@ -81,6 +83,10 @@ const SearchInput = forwardRef<HTMLInputElement, SearchInputProps>(
         debouncedFn.cancel()
       }
     }, [])
+
+    useEffect(() => {
+      setValue(searchValue)
+    }, [searchValue])
 
     // Handle input change
     const handleInputChange = useCallback(

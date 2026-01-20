@@ -8,11 +8,12 @@ import { SecretListProps } from './types'
 export function SecretList({
   secrets,
   isLoading,
+  isFiltered,
   toSecretDetails,
+  onCreateSecret,
   onDeleteSecret,
   onEditSecret,
   handleResetFiltersQueryAndPages,
-  isDirtyList,
   paginationProps
 }: SecretListProps): JSX.Element {
   const { t } = useTranslation()
@@ -32,8 +33,8 @@ export function SecretList({
     return <Skeleton.Table countRows={12} countColumns={5} />
   }
 
-  if (!secrets.length && isDirtyList) {
-    return (
+  if (!secrets.length) {
+    return isFiltered ? (
       <NoData
         withBorder
         imageName="no-search-magnifying-glass"
@@ -48,6 +49,21 @@ export function SecretList({
           onClick: handleResetFiltersQueryAndPages
         }}
       />
+    ) : (
+      <NoData
+        withBorder
+        imageName="no-data-cog"
+        title={t('views:noData.noSecrets', 'No secrets found')}
+        description={[
+          t('views:noData.noSecrets', 'There are no secrets in this project yet.'),
+          t('views:noData.createNewSecret', 'Create a new Secret if required.')
+        ]}
+        secondaryButton={{
+          icon: 'plus',
+          label: t('views:secrets.createNew', 'Create Secret'),
+          onClick: onCreateSecret
+        }}
+      />
     )
   }
 
@@ -55,17 +71,13 @@ export function SecretList({
     <Table.Root tableClassName="table-fixed" size="compact" paginationProps={paginationProps}>
       <Table.Header>
         <Table.Row>
-          <Table.Head className="w-3/6">{t('views:secret.title', 'Name')}</Table.Head>
-          <Table.Head className="w-1/6" contentClassName="truncate">
+          <Table.Head className="w-full">{t('views:secret.title', 'Name')}</Table.Head>
+          <Table.Head className="w-48 min-w-48 max-w-48" contentClassName="truncate">
             {t('views:common.manager', 'Secret Manager')}
           </Table.Head>
-          <Table.Head className="w-1/6" containerProps={{ justify: 'end' }}>
-            {t('views:common.created', 'Created')}
-          </Table.Head>
-          <Table.Head className="w-1/6" containerProps={{ justify: 'end' }}>
-            {t('views:common.updated', 'Updated')}
-          </Table.Head>
-          <Table.Head className="w-[68px]" />
+          <Table.Head className="w-36 min-w-36 max-w-36">{t('views:common.created', 'Created')}</Table.Head>
+          <Table.Head className="w-36 min-w-36 max-w-36">{t('views:common.updated', 'Updated')}</Table.Head>
+          <Table.Head className="w-16 min-w-16 max-w-16 text-right" />
         </Table.Row>
       </Table.Header>
       <Table.Body>
@@ -81,15 +93,10 @@ export function SecretList({
                   : secret.spec?.secretManagerIdentifier}
               </Text>
             </Table.Cell>
-            <Table.Cell className="text-right">
-              {!!secret?.createdAt && <TimeAgoCard timestamp={secret.createdAt} />}
-            </Table.Cell>
-            <Table.Cell className="text-right">
-              {!!secret?.updatedAt && <TimeAgoCard timestamp={secret.updatedAt} />}
-            </Table.Cell>
+            <Table.Cell>{!!secret?.createdAt && <TimeAgoCard timestamp={secret.createdAt} />}</Table.Cell>
+            <Table.Cell>{!!secret?.updatedAt && <TimeAgoCard timestamp={secret.updatedAt} />}</Table.Cell>
             <Table.Cell className="text-right">
               <RbacMoreActionsTooltip
-                iconName="more-horizontal"
                 isInTable
                 ref={triggerRef}
                 actions={[

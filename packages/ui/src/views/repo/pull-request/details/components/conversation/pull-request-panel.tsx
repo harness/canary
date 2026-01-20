@@ -574,7 +574,6 @@ const PullRequestPanel = ({
                       <MoreActionsTooltip
                         theme={buttonState.theme}
                         className="!ml-cn-xs"
-                        iconName="more-horizontal"
                         sideOffset={4}
                         actions={[
                           ...(!isDraft

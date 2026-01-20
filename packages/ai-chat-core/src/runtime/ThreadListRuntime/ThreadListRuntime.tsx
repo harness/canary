@@ -1,5 +1,5 @@
 import { CapabilityExecutionManager } from '../../core'
-import { StreamAdapter, ThreadListAdapter, ThreadListPaginatedResponse } from '../../types/adapters'
+import { StreamAdapter, ThreadListAdapter, ThreadListLoadOptions } from '../../types/adapters'
 import { ThreadListItemState } from '../../types/thread'
 import { generateThreadId } from '../../utils/idGenerator'
 import { BaseSubscribable } from '../../utils/Subscribable'
@@ -11,14 +11,7 @@ export interface ThreadListState {
   mainThreadId: string
   threads: readonly string[]
   isLoading: boolean
-  isLoadingMore: boolean
   threadItems: Record<string, ThreadListItemState>
-  pagination?: {
-    currentPage: number
-    totalPages: number
-    totalCount: number
-    hasMore: boolean
-  }
   searchQuery?: string
 }
 
@@ -34,11 +27,6 @@ export class ThreadListRuntime extends BaseSubscribable {
   private _threadItems = new Map<string, ThreadListItemRuntime>()
   private _threadStates = new Map<string, ThreadListItemState>()
   private _isLoading = false
-  private _isLoadingMore = false
-  private _currentPage = 0
-  private _totalPages = 0
-  private _totalCount = 0
-  private _hasMore = true
   private _searchQuery: string | undefined
   private _abortController: AbortController | null = null
   public readonly main: ThreadRuntime
@@ -80,10 +68,6 @@ export class ThreadListRuntime extends BaseSubscribable {
     return this._isLoading
   }
 
-  public get isLoadingMore(): boolean {
-    return this._isLoadingMore
-  }
-
   /**
    * Get the currently active main thread
    */
@@ -110,14 +94,7 @@ export class ThreadListRuntime extends BaseSubscribable {
       mainThreadId: this._mainThreadId,
       threads,
       isLoading: this._isLoading,
-      isLoadingMore: this._isLoadingMore,
       threadItems,
-      pagination: {
-        currentPage: this._currentPage,
-        totalPages: this._totalPages,
-        totalCount: this._totalCount,
-        hasMore: this._hasMore
-      },
       searchQuery: this._searchQuery
     }
   }
@@ -218,10 +195,14 @@ export class ThreadListRuntime extends BaseSubscribable {
     await this.switchToThread(newThreadId)
   }
 
-  public async loadThreads(query?: string, reset: boolean = false): Promise<void> {
+  public async loadThreads(options?: ThreadListLoadOptions): Promise<ThreadListItemState[]> {
     if (!this.config.threadListAdapter) {
       console.warn('No threadListAdapter configured')
-      return
+      return []
+    }
+
+    if (this._isLoading) {
+      return []
     }
 
     if (this._abortController) {
@@ -229,60 +210,16 @@ export class ThreadListRuntime extends BaseSubscribable {
     }
     this._abortController = new AbortController()
 
-    const isNewSearch = query !== this._searchQuery
-    const shouldReset = reset || isNewSearch
-
-    if (shouldReset) {
-      this._currentPage = 0
-      this._searchQuery = query
-      this._hasMore = true
-      this._threadStates.clear()
-      this._threads.clear()
-      this._threadItems.clear()
+    // Track search query for state
+    if (options?.query !== undefined) {
+      this._searchQuery = options.query
     }
 
-    if (!shouldReset && !this._hasMore) {
-      return
-    }
-
-    if (shouldReset) {
-      this._isLoading = true
-    } else {
-      this._isLoadingMore = true
-    }
+    this._isLoading = true
     this.notifySubscribers()
 
     try {
-      const result = await this.config.threadListAdapter.loadThreads({
-        query: this._searchQuery,
-        page: this._currentPage,
-        size: 50
-      })
-
-      // Handle both response types for backwards compatibility
-      let threads: ThreadListItemState[]
-      let pagination: ThreadListPaginatedResponse['pagination']
-
-      if (Array.isArray(result)) {
-        threads = result
-        pagination = undefined
-      } else {
-        threads = result.threads
-        pagination = result.pagination
-      }
-
-      // Update pagination state
-      if (pagination) {
-        this._totalPages = pagination.pageCount ?? 0
-        this._totalCount = pagination.total ?? 0
-        this._currentPage = pagination.pageNumber ?? this._currentPage
-        this._hasMore =
-          pagination.pageNumber !== undefined &&
-          pagination.pageCount !== undefined &&
-          pagination.pageNumber < pagination.pageCount - 1
-      } else {
-        this._hasMore = false
-      }
+      const threads = await this.config.threadListAdapter.loadThreads(options)
 
       // Add new threads to state
       for (const state of threads) {
@@ -311,29 +248,18 @@ export class ThreadListRuntime extends BaseSubscribable {
           this.notifySubscribers()
         })
       }
+
+      return threads
     } catch (error) {
       if (error instanceof Error && error.name !== 'AbortError') {
         console.error('Failed to load threads:', error)
       }
+      return []
     } finally {
       this._isLoading = false
-      this._isLoadingMore = false
       this._abortController = null
       this.notifySubscribers()
     }
-  }
-
-  public async loadMoreThreads(): Promise<void> {
-    if (this._isLoading || this._isLoadingMore || !this._hasMore) {
-      return
-    }
-
-    this._currentPage += 1
-    await this.loadThreads(this._searchQuery, false)
-  }
-
-  public async searchThreads(query: string): Promise<void> {
-    await this.loadThreads(query, true)
   }
 
   /**

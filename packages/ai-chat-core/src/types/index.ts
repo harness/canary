@@ -25,8 +25,7 @@ export type {
   StreamEvent,
   StreamRequest,
   StreamChunk,
-  ThreadListLoadOptions,
-  ThreadListPaginatedResponse
+  ThreadListLoadOptions
 } from './adapters'
 export type { SSEEvent } from '../utils/BaseSSEStreamAdapter'
 export type {

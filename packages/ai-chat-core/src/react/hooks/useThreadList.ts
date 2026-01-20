@@ -1,6 +1,7 @@
 import { useEffect, useState } from 'react'
 
 import { ThreadListState } from '../../runtime/ThreadListRuntime/ThreadListRuntime'
+import { ThreadListLoadOptions } from '../../types/adapters'
 import { useAssistantRuntime } from './useAssistantRuntime'
 
 export function useThreadList() {
@@ -9,9 +10,7 @@ export function useThreadList() {
   return {
     switchToThread: (threadId: string) => runtime.threads.switchToThread(threadId),
     switchToNewThread: () => runtime.threads.switchToNewThread(),
-    loadThreads: (query?: string, reset?: boolean) => runtime.threads.loadThreads(query, reset),
-    loadMoreThreads: () => runtime.threads.loadMoreThreads(),
-    searchThreads: (query: string) => runtime.threads.searchThreads(query),
+    loadThreads: (options?: ThreadListLoadOptions) => runtime.threads.loadThreads(options),
     renameThread: (threadId: string, title: string) => runtime.threads['renameThread']?.(threadId, title),
     deleteThread: (threadId: string) => runtime.threads['deleteThread']?.(threadId)
   }

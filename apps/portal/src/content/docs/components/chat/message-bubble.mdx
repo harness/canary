@@ -10,7 +10,7 @@ The `MessageBubble` component is a compound component for displaying conversatio
 
 ## Usage
 
-The MessageBubble component uses a compound pattern with `MessageBubble.Root` and `MessageBubble.Content` sub-components.
+The MessageBubble component uses a compound pattern with `MessageBubble.Root`, `MessageBubble.Content`, and `MessageBubble.Footer` sub-components.
 
 <DocsPage.ComponentExample
   client:only
@@ -21,6 +21,13 @@ The MessageBubble component uses a compound pattern with `MessageBubble.Root` an
         Hello! Can you help me with my code?
       </MessageBubble.Text>
     </MessageBubble.Content>
+    <MessageBubble.Footer>
+      <CopyButton name="Hello! Can you help me with my code?" buttonVariant="ghost" size="sm" />
+      <Button iconOnly variant="ghost" size="sm">
+        <IconV2 name="edit" />
+      </Button>
+      <Text variant="caption-normal" color="foreground-3">2:30 PM</Text>
+    </MessageBubble.Footer>
   </MessageBubble.Root>
 
   <MessageBubble.Root role="assistant">
@@ -33,20 +40,47 @@ The MessageBubble component uses a compound pattern with `MessageBubble.Root` an
 </div>`}
 />
 
-## Usage
+## Import
 
 ```typescript jsx
-import { MessageBubble } from '@harnessio/ui/components'
+import {
+  MessageBubble,
+  CopyButton,
+  Button,
+  IconV2,
+  Text,
+} from "@harnessio/ui/components";
+```
 
-return (
-  <MessageBubble.Root role="user">
-    <MessageBubble.Content>
-      <MessageBubble.Text>
-        Your message here
-      </MessageBubble.Text>
-    </MessageBubble.Content>
-  </MessageBubble.Root>
-)
+## Basic Usage
+
+```typescript jsx
+<MessageBubble.Root role="user">
+  <MessageBubble.Content>
+    <MessageBubble.Text>
+      Your message here
+    </MessageBubble.Text>
+  </MessageBubble.Content>
+</MessageBubble.Root>
+```
+
+## With Footer Actions
+
+```typescript jsx
+<MessageBubble.Root role="user">
+  <MessageBubble.Content>
+    <MessageBubble.Text>Your message here</MessageBubble.Text>
+  </MessageBubble.Content>
+  <MessageBubble.Footer>
+    <CopyButton name="Your message here" buttonVariant="ghost" size="sm" />
+    <Button iconOnly variant="ghost" size="sm" onClick={handleEdit}>
+      <IconV2 name="edit" />
+    </Button>
+    <Text variant="caption-normal" color="foreground-3">
+      {formatTime(timestamp)}
+    </Text>
+  </MessageBubble.Footer>
+</MessageBubble.Root>
 ```
 
 ## Component Structure
@@ -67,4 +101,13 @@ The content wrapper with role-based styling.
 **Props:**
 
 - `children`: React node - The message content
+- Extends `HTMLAttributes<HTMLDivElement>`
+
+### MessageBubble.Footer
+
+A flexible container for actions like copy, edit buttons, and timestamps.
+
+**Props:**
+
+- `children`: React node - Action buttons, timestamps, or any custom content
 - Extends `HTMLAttributes<HTMLDivElement>`

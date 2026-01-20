@@ -1,8 +1,8 @@
 export default {
   '.cn-message-bubble': {
     display: 'flex',
-    alignItems: 'center',
-    justifyContent: 'center',
+    flexDirection: 'column',
+    alignItems: 'flex-end',
 
     '&.cn-message-bubble-user': {
       alignSelf: 'flex-end',
@@ -13,10 +13,17 @@ export default {
       }
     },
     '&.cn-message-bubble-assistant': {
-      alignSelf: 'flex-start'
+      alignSelf: 'flex-start',
+      alignItems: 'flex-start'
     },
     '.cn-message-bubble-content': {
       borderRadius: 'var(--cn-rounded-4)'
+    },
+    '.cn-message-bubble-footer': {
+      display: 'flex',
+      alignItems: 'center',
+      marginTop: 'var(--cn-spacing-1)',
+      gap: 'var(--cn-spacing-1)'
     }
   }
 }

@@ -10,24 +10,36 @@ export interface MessageBubbleRootProps extends HTMLAttributes<HTMLDivElement> {
 }
 
 const MessageBubbleRoot = forwardRef<HTMLDivElement, MessageBubbleRootProps>(
-  ({ className, children, role, ...props }, ref) => {
-    return (
-      <div
-        ref={ref}
-        className={cn(
-          'cn-message-bubble',
-          { 'cn-message-bubble-user': role === 'user', 'cn-message-bubble-assistant': role === 'assistant' },
-          className
-        )}
-        {...props}
-      >
-        {children}
-      </div>
-    )
-  }
+  ({ className, children, role, ...props }, ref) => (
+    <div
+      ref={ref}
+      className={cn(
+        'cn-message-bubble',
+        { 'cn-message-bubble-user': role === 'user', 'cn-message-bubble-assistant': role === 'assistant' },
+        className
+      )}
+      {...props}
+    >
+      {children}
+    </div>
+  )
 )
 
 MessageBubbleRoot.displayName = 'MessageBubbleRoot'
+
+export interface MessageBubbleFooterProps extends HTMLAttributes<HTMLDivElement> {
+  children?: ReactNode
+}
+
+const MessageBubbleFooter = forwardRef<HTMLDivElement, MessageBubbleFooterProps>(
+  ({ className, children, ...props }, ref) => (
+    <div ref={ref} className={cn('cn-message-bubble-footer', className)} {...props}>
+      {children}
+    </div>
+  )
+)
+
+MessageBubbleFooter.displayName = 'MessageBubbleFooter'
 
 export interface MessageBubbleContentProps extends HTMLAttributes<HTMLDivElement> {
   children: ReactNode
@@ -73,5 +85,6 @@ export const MessageBubble = {
   Root: MessageBubbleRoot,
   Content: MessageBubbleContent,
   Text: MessageBubbleText,
-  Markdown: MessageBubbleMarkdown
+  Markdown: MessageBubbleMarkdown,
+  Footer: MessageBubbleFooter
 }

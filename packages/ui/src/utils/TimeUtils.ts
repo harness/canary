@@ -81,6 +81,22 @@ export const formatTimestamp = (epoch: number): string => {
   }).format(new Date(epoch))
 }
 
+/**
+ * Formats a Date to a 12-hour time string like "7:15pm".
+ *
+ * @param date - The Date object to format.
+ * @returns A formatted string representing the time in "h:mmam/pm" format.
+ */
+export const formatTime = (date: Date): string => {
+  return date
+    .toLocaleTimeString('en-US', {
+      hour: 'numeric',
+      minute: '2-digit',
+      hour12: true
+    })
+    .toLowerCase()
+}
+
 // Constants
 export const LOCALE = Intl.NumberFormat().resolvedOptions?.().locale || 'en-US'
 

@@ -36,6 +36,7 @@ export interface CodeEditorProps<_> {
   onSelectedLineChange?: (line: number | undefined) => void
   onSelectedLineButtonClick?: (ev: HTMLDivElement | undefined) => void
   highlightKeyword?: string
+  onMount?: (editor: monaco.editor.IStandaloneCodeEditor, monaco: Monaco) => void
 }
 
 export function CodeEditor<T>({
@@ -51,7 +52,8 @@ export function CodeEditor<T>({
   onSelectedLineButtonClick,
   highlightKeyword,
   height = '75vh',
-  className
+  className,
+  onMount
 }: CodeEditorProps<T>): JSX.Element {
   const instanceId = useRef(createRandomString(5))
 
@@ -80,8 +82,10 @@ export function CodeEditor<T>({
         noSyntaxValidation: true,
         noSemanticValidation: true
       })
+
+      onMount?.(editorVal, monaco)
     },
-    [codeRevision.code]
+    [codeRevision.code, onMount]
   )
 
   useEffect(() => {

@@ -472,7 +472,7 @@ const PullRequestListPage: FC<PullRequestPageProps> = ({
                         buttonLabel={t('component:filter.buttonLabel', 'Reset filters')}
                         displayLabel={renderFilterSelectLabel({
                           selectedFilters: PR_FILTER_OPTIONS.length - availableFilters.length,
-                          displayLabel: t('component:filter.defaultLabel', 'Filter')
+                          displayLabel: t('component:filter.defaultLabel', 'Add filter')
                         })}
                       />
                     )}

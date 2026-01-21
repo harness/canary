@@ -81,7 +81,8 @@ const startNode = {
     height: 160,
     hideDeleteButton: true,
     hideBeforeAdd: true,
-    hideLeftPort: true
+    hideLeftPort: true,
+    isRightPortHidden: true
   },
   data: {}
 } satisfies LeafContainerNodeType
@@ -93,7 +94,8 @@ const endNode = {
     height: 160,
     hideDeleteButton: true,
     hideAfterAdd: true,
-    hideRightPort: true
+    hideRightPort: true,
+    isLeftPortHidden: true
   },
   data: {}
 } satisfies LeafContainerNodeType

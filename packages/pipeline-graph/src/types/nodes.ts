@@ -15,12 +15,20 @@ export interface ContainerNodeConfig {
   height?: number
   maxHeight?: number
   minHeight?: number
+  /** Hide left port and edge that connects to it */
   hideLeftPort?: boolean
+  /** Hide right port and edge that connects to it */
   hideRightPort?: boolean
   hideDeleteButton?: boolean
+  /** Hide Add button before node */
   hideBeforeAdd?: boolean
+  /** Hide Add button after node */
   hideAfterAdd?: boolean
   selectable?: boolean
+  /** Hide left port. Edge remains */
+  isLeftPortHidden?: boolean
+  /** Hide right port. Edge remains */
+  isRightPortHidden?: boolean
 }
 export interface ContainerNodeCommonType<T> {
   data: T

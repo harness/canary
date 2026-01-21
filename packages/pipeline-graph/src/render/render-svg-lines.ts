@@ -47,17 +47,22 @@ export function getPortsConnectionPath({
 
   const { source, target, parallel, serial, targetNode } = connection
 
-  const fromEl = parentEl.querySelector(`[id="${source}"]`)
-  const toEl = parentEl.querySelector(`[id="${target}"]`)
+  const fromEl = parentEl.querySelector(`[id="${source}"]`) as HTMLElement
+  const toEl = parentEl.querySelector(`[id="${target}"]`) as HTMLElement
 
   if (!fromEl || !toEl) return { level1: '', level2: '' }
 
   const fromElBB = fromEl.getBoundingClientRect()
+  const formElBBVisible = fromEl.style.visibility !== 'hidden'
+
   const toElBB = toEl.getBoundingClientRect()
+  const toElBBVisible = toEl.style.visibility !== 'hidden'
 
   const pipelineGraphRootBB = pipelineGraphRoot?.getBoundingClientRect() ?? new DOMRect(0, 0)
 
   const pathObj = getPath({
+    leftPortVisible: formElBBVisible,
+    rightPortVisible: toElBBVisible,
     startX: fromElBB.left - pipelineGraphRootBB.left,
     startY: fromElBB.top - pipelineGraphRootBB.top,
     endX: toElBB.left - pipelineGraphRootBB.left,
@@ -119,7 +124,9 @@ function getPath({
   portAdjustment,
   targetNode,
   isCollapsed,
-  getPortSvg
+  getPortSvg,
+  leftPortVisible,
+  rightPortVisible
 }: {
   startX: number
   startY: number
@@ -140,24 +147,36 @@ function getPath({
   }
   isCollapsed: (path: string) => boolean
   getPortSvg: GetPortSvgFuncType
+  leftPortVisible: boolean
+  rightPortVisible: boolean
 }) {
   let path = ''
 
-  const sourcePort = getPortSvg?.({
-    collapsed: isCollapsed(targetNode?.path ?? ''),
-    position: 'source',
-    targetNode,
-    x: startX + portAdjustment,
-    y: startY + portAdjustment
-  })
+  const sourcePort = leftPortVisible
+    ? getPortSvg?.({
+        collapsed: isCollapsed(targetNode?.path ?? ''),
+        position: 'source',
+        targetNode,
+        x: startX + portAdjustment,
+        y: startY + portAdjustment
+      })
+    : {
+        portSvg: '',
+        rightGap: 0
+      }
 
-  const targetPort = getPortSvg?.({
-    collapsed: isCollapsed(targetNode?.path ?? ''),
-    position: 'target',
-    targetNode,
-    x: endXFromProp + portAdjustment,
-    y: endY + portAdjustment
-  })
+  const targetPort = rightPortVisible
+    ? getPortSvg?.({
+        collapsed: isCollapsed(targetNode?.path ?? ''),
+        position: 'target',
+        targetNode,
+        x: endXFromProp + portAdjustment,
+        y: endY + portAdjustment
+      })
+    : {
+        portSvg: '',
+        rightGap: 0
+      }
 
   const endX = endXFromProp - targetPort.rightGap
 
@@ -260,6 +279,13 @@ function createSVGPath({
 
 const getPortSvgDefault: GetPortSvgFuncType = props => {
   const { collapsed, position, targetNode, x, y } = props
+
+  if (targetNode?.type === 'start') {
+    return {
+      portSvg: ``,
+      rightGap: 0
+    }
+  }
 
   const circleSvg = `<circle cx="${x}" cy="${y}" r="5" fill="white" />`
   const arrowSize = 4

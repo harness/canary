@@ -99,7 +99,13 @@ export default function ParallelNodeContainer(props: ContainerNodeProps<Parallel
         (customBeforePortComponent ? (
           customBeforePortComponent({ side: 'left', id: `left-port-${node.path}`, adjustment: portAdjustment, layout })
         ) : (
-          <Port side="left" id={`left-port-${node.path}`} adjustment={portAdjustment} layout={layout} />
+          <Port
+            side="left"
+            id={`left-port-${node.path}`}
+            adjustment={portAdjustment}
+            layout={layout}
+            hidden={node.config?.isLeftPortHidden}
+          />
         ))}
 
       {!node.config?.hideRightPort &&
@@ -111,7 +117,13 @@ export default function ParallelNodeContainer(props: ContainerNodeProps<Parallel
             layout
           })
         ) : (
-          <Port side="right" id={`right-port-${node.path}`} adjustment={portAdjustment} layout={layout} />
+          <Port
+            side="right"
+            id={`right-port-${node.path}`}
+            adjustment={portAdjustment}
+            layout={layout}
+            hidden={node.config?.isLeftPortHidden}
+          />
         ))}
 
       <RenderNodeContent

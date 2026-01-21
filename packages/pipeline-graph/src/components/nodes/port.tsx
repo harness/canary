@@ -5,8 +5,9 @@ export default function Port(props: {
   id?: string
   adjustment?: number
   layout: LayoutConfig
+  hidden?: boolean
 }) {
-  const { adjustment = 0, layout } = props
+  const { adjustment = 0, layout, hidden } = props
 
   const r = 1
 
@@ -27,7 +28,8 @@ export default function Port(props: {
         [props.side === 'left' ? 'left' : 'right']: `-${r / 2}px`,
         top,
         width: `${r}px`,
-        height: `${r}px`
+        height: `${r}px`,
+        visibility: hidden ? 'hidden' : 'visible'
       }}
     ></div>
   )

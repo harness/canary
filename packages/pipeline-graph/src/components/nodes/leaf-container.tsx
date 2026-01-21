@@ -58,14 +58,26 @@ export default function LeafNodeContainer(props: ContainerNodeProps<LeafNodeInte
         (customBeforePortComponent ? (
           customBeforePortComponent({ side: 'left', id: `left-port-${node.path}`, layout, adjustment })
         ) : (
-          <Port side="left" id={`left-port-${node.path}`} layout={layout} adjustment={adjustment} />
+          <Port
+            side="left"
+            id={`left-port-${node.path}`}
+            layout={layout}
+            adjustment={adjustment}
+            hidden={node.config?.isLeftPortHidden}
+          />
         ))}
 
       {!node.config?.hideRightPort &&
         (customAfterPortComponent ? (
           customAfterPortComponent({ side: 'right', id: `right-port-${node.path}`, layout, adjustment })
         ) : (
-          <Port side="right" id={`right-port-${node.path}`} layout={layout} adjustment={adjustment} />
+          <Port
+            side="right"
+            id={`right-port-${node.path}`}
+            layout={layout}
+            adjustment={adjustment}
+            hidden={node.config?.isRightPortHidden}
+          />
         ))}
 
       <RenderNodeContent

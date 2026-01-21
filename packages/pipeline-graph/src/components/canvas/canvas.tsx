@@ -20,6 +20,11 @@ export function Canvas({ children }: React.PropsWithChildren<React.HTMLAttribute
 
         if (!targetEl || !mainRef.current) return
 
+        // return only if it is plain scroll and not when the user is zooming in or out
+        if (config.disableScroll && !event.ctrlKey) {
+          return
+        }
+
         event.preventDefault()
 
         if (!event.ctrlKey) {

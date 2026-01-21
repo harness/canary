@@ -9,6 +9,7 @@ interface CanvasConfig {
   maxScale: number
   scaleFactor: number
   paddingForFit: number
+  disableScroll: boolean
 }
 
 interface CanvasTransform {
@@ -39,7 +40,7 @@ const CanvasContext = createContext<CanvasContextProps>({
   reset: () => undefined,
   increase: () => undefined,
   decrease: () => undefined,
-  config: { minScale: 0.1, maxScale: 10, scaleFactor: 0.3, paddingForFit: 30 },
+  config: { minScale: 0.1, maxScale: 10, scaleFactor: 0.3, paddingForFit: 30, disableScroll: false },
   scale: 1
 })
 
@@ -50,7 +51,14 @@ export interface CanvasProviderProps {
 }
 
 export const CanvasProvider = ({ children, config: configFromProps, id = '' }: CanvasProviderProps) => {
-  const config = { minScale: 0.1, maxScale: 10, scaleFactor: 0.3, paddingForFit: 20, ...configFromProps }
+  const config = {
+    minScale: 0.1,
+    maxScale: 10,
+    scaleFactor: 0.3,
+    paddingForFit: 20,
+    disableScroll: false,
+    ...configFromProps
+  }
 
   const canvasTransformRef = useRef<CanvasTransform>({ scale: 1, translateX: 0, translateY: 0 })
   const targetElRef = useRef<HTMLElement>()

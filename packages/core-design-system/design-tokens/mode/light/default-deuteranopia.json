@@ -1684,7 +1684,7 @@
       "track": {
         "base": {
           "$type": "color",
-          "$value": "{gray.50}",
+          "$value": "{gray.100}",
           "$description": "Background color for slider tracks. Represents the full range of available values in an unselected state."
         },
         "progress": {

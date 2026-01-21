@@ -1,0 +1,356 @@
+{
+    "chart": {
+        "axis": {
+            "label": {
+                "$type": "typography",
+                "$value": {
+                    "fontFamily": "{fontFamily.default}",
+                    "fontWeight": "{fontWeight.default.normal.400}",
+                    "fontSize": "{fontSize.1}",
+                    "lineHeight": "{lineHeight.1.none}",
+                    "letterSpacing": "{tracking.normal}"
+                },
+                "$description": "Typography for axis labels"
+            }
+        },
+        "grid": {
+            "strokeWidth": {
+                "$type": "dimension",
+                "$value": "{borderWidth.1}",
+                "$description": "Stroke width for background grid lines"
+            },
+            "strokeStyle": {
+                "$type": "strokeStyle",
+                "$value": {
+                    "dashArray": [
+                        6,
+                        6
+                    ],
+                    "lineCap": "butt"
+                },
+                "$description": "Stroke style for dashed background grid lines"
+            }
+        },
+        "cartesian": {
+            "axisTick": {
+                "padding": {
+                    "$type": "dimension",
+                    "$value": "{layout.xs}",
+                    "$description": "Padding between axis tick and chart area"
+                }
+            },
+            "column": {
+                "maxWidth": {
+                    "$type": "dimension",
+                    "$value": "{size.20}",
+                    "$description": "Maximum width of columns"
+                },
+                "minWidth": {
+                    "$type": "dimension",
+                    "$value": "{size.2}",
+                    "$description": "Minimum width of columns"
+                },
+                "radius": {
+                    "$type": "dimension",
+                    "$value": "{rounded.1}",
+                    "$description": "Border radius of columns (2px)"
+                },
+                "gap": {
+                    "$type": "dimension",
+                    "$value": "{spacing.px}",
+                    "$description": "Gap between column-bars"
+                },
+                "minSpacing": {
+                    "$type": "dimension",
+                    "$value": "{layout.sm}",
+                    "$description": "Minimum spacing between columns"
+                }
+            },
+            "bar": {
+                "maxHeight": {
+                    "$type": "dimension",
+                    "$value": "{size.20}",
+                    "$description": "Maximum height of bars"
+                },
+                "minHeight": {
+                    "$type": "dimension",
+                    "$value": "{size.3-half}",
+                    "$description": "Minimum height of bars"
+                },
+                "radius": {
+                    "$type": "dimension",
+                    "$value": "{rounded.1}",
+                    "$description": "Border radius of bars"
+                },
+                "gap": {
+                    "$type": "dimension",
+                    "$value": "{spacing.px}",
+                    "$description": "Gap between bar-columns"
+                },
+                "minSpacing": {
+                    "$type": "dimension",
+                    "$value": "{layout.sm}",
+                    "$description": "Minimum spacing between bars"
+                }
+            },
+            "dashedLine": {
+                "strokeWidth": {
+                    "$type": "dimension",
+                    "$value": "{borderWidth.2}",
+                    "$description": "Stroke width for dashed lines"
+                },
+                "strokeStyle": {
+                    "$type": "strokeStyle",
+                    "$value": {
+                        "dashArray": [
+                            2,
+                            2
+                        ],
+                        "lineCap": "butt"
+                    },
+                    "$description": "Stroke style for dashed lines"
+                }
+            },
+            "line": {
+                "strokeWidth": {
+                    "$type": "dimension",
+                    "$value": "{borderWidth.2}",
+                    "$description": "Stroke width for solid lines"
+                }
+            },
+            "crosshair": {
+                "line": {
+                    "strokeWidth": {
+                        "$type": "dimension",
+                        "$value": "{borderWidth.1}",
+                        "$description": "Stroke width for crosshair lines"
+                    }
+                },
+                "point": {
+                    "size": {
+                        "$type": "dimension",
+                        "$value": "{size.1}",
+                        "$description": "Size of crosshair point"
+                    },
+                    "strokeWidth": {
+                        "$type": "dimension",
+                        "$value": "{borderWidth.2}",
+                        "$description": "Stroke width of crosshair point border"
+                    }
+                }
+            }
+        },
+        "legend": {
+            "font": {
+                "$type": "typography",
+                "$value": {
+                    "fontFamily": "{fontFamily.mono}",
+                    "fontWeight": "{fontWeight.mono.normal.500}",
+                    "fontSize": "{fontSize.1}",
+                    "lineHeight": "{lineHeight.1.none}",
+                    "letterSpacing": "{tracking.normal}"
+                },
+                "$description": "Typography for chart legend text"
+            },
+            "marker": {
+                "size": {
+                    "$type": "dimension",
+                    "$value": "{size.2}",
+                    "$description": "Size of legend colored marker"
+                },
+                "radius": {
+                    "$type": "dimension",
+                    "$value": "{rounded.1}",
+                    "$description": "Border radius of legend colored marker"
+                }
+            }
+        },
+        "donut": {
+            "size": {
+                "sm": {
+                    "$type": "dimension",
+                    "$value": "{size.32}",
+                    "$description": "Small donut diameter"
+                },
+                "lg": {
+                    "$type": "dimension",
+                    "$value": "{size.72}",
+                    "$description": "Large donut diameter"
+                }
+            },
+            "arc": {
+                "width": {
+                    "sm": {
+                        "$type": "dimension",
+                        "$value": "{size.5-half}",
+                        "$description": "Width of small donut arc segments"
+                    },
+                    "lg": {
+                        "$type": "dimension",
+                        "$value": "{size.12}",
+                        "$description": "Width of large donut arc segments"
+                    }
+                },
+                "gap": {
+                    "sm": {
+                        "$type": "dimension",
+                        "$value": "{spacing.px}",
+                        "$description": "Gap between small donut arc segments"
+                    },
+                    "lg": {
+                        "$type": "dimension",
+                        "$value": "{spacing.1}",
+                        "$description": "Gap between large donut arc segments"
+                    }
+                },
+                "radius": {
+                    "sm": {
+                        "$type": "dimension",
+                        "$value": "{rounded.1}",
+                        "$description": "Border radius of small donut arc segments"
+                    },
+                    "lg": {
+                        "$type": "dimension",
+                        "$value": "{rounded.2}",
+                        "$description": "Border radius of large donut arc segments"
+                    }
+                }
+            },
+            "label": {
+                "sm": {
+                    "$type": "typography",
+                    "$value": {
+                        "fontFamily": "{fontFamily.default}",
+                        "fontWeight": "{fontWeight.default.normal.400}",
+                        "fontSize": "{fontSize.3}",
+                        "lineHeight": "{lineHeight.3.none}",
+                        "letterSpacing": "{tracking.normal}"
+                    },
+                    "$description": "Typography for small donut label"
+                },
+                "lg": {
+                    "$type": "typography",
+                    "$value": {
+                        "fontFamily": "{fontFamily.default}",
+                        "fontWeight": "{fontWeight.default.normal.400}",
+                        "fontSize": "{fontSize.8}",
+                        "lineHeight": "{lineHeight.8.none}",
+                        "letterSpacing": "{tracking.normal}"
+                    },
+                    "$description": "Typography for large donut label"
+                }
+            },
+            "value": {
+                "sm": {
+                    "$type": "typography",
+                    "$value": {
+                        "fontFamily": "{fontFamily.default}",
+                        "fontWeight": "{fontWeight.default.normal.600}",
+                        "fontSize": "{fontSize.10}",
+                        "lineHeight": "{lineHeight.10.none}",
+                        "letterSpacing": "{tracking.tight}"
+                    },
+                    "$description": "Typography for small donut center value"
+                },
+                "lg": {
+                    "$type": "typography",
+                    "$value": {
+                        "fontFamily": "{fontFamily.default}",
+                        "fontWeight": "{fontWeight.default.normal.600}",
+                        "fontSize": "{fontSize.15}",
+                        "lineHeight": "{lineHeight.15.none}",
+                        "letterSpacing": "{tracking.tighter}"
+                    },
+                    "$description": "Typography for large donut center value"
+                }
+            },
+            "gap": {
+                "sm": {
+                    "$type": "dimension",
+                    "$value": "{layout.4xs}",
+                    "$description": "Gap between label and value in small donut"
+                },
+                "lg": {
+                    "$type": "dimension",
+                    "$value": "{layout.2xs}",
+                    "$description": "Gap between label and value in large donut"
+                }
+            }
+        },
+        "gauge": {
+            "base": {
+                "width": {
+                    "$type": "dimension",
+                    "$value": "{size.4}",
+                    "$description": "Width of gauge base (background)"
+                }
+            },
+            "track": {
+                "width": {
+                    "$type": "dimension",
+                    "$value": "{size.2}",
+                    "$description": "Width of default gauge track (thinner than base)"
+                }
+            },
+            "radius": {
+                "default": {
+                    "$type": "dimension",
+                    "$value": "{rounded.full}",
+                    "$description": "Border radius for default gauge (full rounded)"
+                },
+                "segmented": {
+                    "$type": "dimension",
+                    "$value": "{rounded.2}",
+                    "$description": "Border radius for segmented gauge"
+                }
+            },
+            "segment": {
+                "gap": {
+                    "$type": "dimension",
+                    "$value": "{spacing.1}",
+                    "$description": "Gap between segments in segmented gauge"
+                }
+            },
+            "value": {
+                "number": {
+                    "$type": "typography",
+                    "$value": {
+                        "fontFamily": "{fontFamily.default}",
+                        "fontWeight": "{fontWeight.default.normal.500}",
+                        "fontSize": "{fontSize.10}",
+                        "lineHeight": "{lineHeight.10.none}",
+                        "letterSpacing": "{tracking.tight}"
+                    },
+                    "$description": "Typography for gauge numeric value"
+                },
+                "unit": {
+                    "$type": "typography",
+                    "$value": {
+                        "fontFamily": "{fontFamily.default}",
+                        "fontWeight": "{fontWeight.default.normal.500}",
+                        "fontSize": "{fontSize.6}",
+                        "lineHeight": "{lineHeight.6.none}",
+                        "letterSpacing": "{tracking.normal}"
+                    },
+                    "$description": "Typography for gauge unit"
+                }
+            },
+            "label": {
+                "$type": "typography",
+                "$value": {
+                    "fontFamily": "{fontFamily.default}",
+                    "fontWeight": "{fontWeight.default.normal.400}",
+                    "fontSize": "{fontSize.4}",
+                    "lineHeight": "{lineHeight.4.none}",
+                    "letterSpacing": "{tracking.normal}"
+                },
+                "$description": "Typography for gauge label text"
+            },
+            "gap": {
+                "$type": "dimension",
+                "$value": "{layout.4xs}",
+                "$description": "Gap between gauge value and label"
+            }
+        }
+    }
+}

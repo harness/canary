@@ -18,6 +18,7 @@ export default {
     '&-content': {
       rowGap: 'var(--cn-layout-xs)',
       columnGap: 'var(--cn-layout-sm)',
+      padding: 'var(--cn-layout-3xs) 0',
       '@apply grid grid-cols-[auto_1fr_auto] items-center whitespace-nowrap': ''
     }
   }

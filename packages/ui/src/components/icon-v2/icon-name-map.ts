@@ -13,6 +13,7 @@ import AiMlOps from './icons/ai-ml-ops.svg'
 import AiSolid from './icons/ai-solid.svg'
 import AiTestSolid from './icons/ai-test-solid.svg'
 import AiTest from './icons/ai-test.svg'
+import AiVerify from './icons/ai-verify.svg'
 import Ai from './icons/ai.svg'
 import AppDiscoverySolid from './icons/app-discovery-solid.svg'
 import AppDiscovery from './icons/app-discovery.svg'
@@ -502,6 +503,7 @@ export const IconNameMapV2 = {
   'ai-solid': AiSolid,
   'ai-test-solid': AiTestSolid,
   'ai-test': AiTest,
+  'ai-verify': AiVerify,
   ai: Ai,
   'app-discovery-solid': AppDiscoverySolid,
   'app-discovery': AppDiscovery,

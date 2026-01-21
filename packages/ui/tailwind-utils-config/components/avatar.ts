@@ -10,7 +10,7 @@ function createAvatarSizeStyles() {
       styles[`&:where(.cn-avatar-${size})`] = {
         height: `var(--cn-avatar-size-${size})`,
         width: `var(--cn-avatar-size-${size})`,
-        fontSize: `var(--cn-font-size-min)`,
+        fontSize: `var(--cn-font-size-0)`,
         letterSpacing: `var(--cn-tracking-wide)`,
         fontWeight: `var(--cn-font-weight-default-normal-600)`
       }
@@ -18,7 +18,7 @@ function createAvatarSizeStyles() {
       styles[`&:where(.cn-avatar-${size})`] = {
         height: `var(--cn-avatar-size-${size})`,
         width: `var(--cn-avatar-size-${size})`,
-        fontSize: size === 'lg' ? `var(--cn-font-size-2)` : `var(--cn-font-size-0)`,
+        fontSize: size === 'lg' ? `var(--cn-font-size-5)` : `var(--cn-font-size-2)`,
         fontWeight: `var(--cn-font-weight-default-normal-500)`
       }
     }
@@ -60,7 +60,7 @@ export default {
       '@apply h-full w-full flex items-center justify-center select-none': '',
 
       '&-small': {
-        fontSize: `var(--cn-font-size-min)`
+        fontSize: `var(--cn-font-size-0)`
       }
     },
 

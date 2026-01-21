@@ -1877,12 +1877,12 @@
     "tooltip": {
       "bg": {
         "$type": "color",
-        "$value": "{gray.100}",
+        "$value": "{gray.25}",
         "$description": "Background color for tooltip components. Provides high contrast backdrop for tooltip content."
       },
       "border": {
         "$type": "color",
-        "$value": "{gray.100}",
+        "$value": "{gray.25}",
         "$description": "Border color for tooltip components. Defines tooltip boundaries."
       },
       "text": {

@@ -3,6 +3,7 @@ import { Component } from 'react'
 interface InputErrorBoundaryProps {
   path: string
   inputType: string
+  inputErrorHandler?: (error: Error) => void
   children: React.ReactNode
 }
 
@@ -19,8 +20,9 @@ export class InputErrorBoundary extends Component<InputErrorBoundaryProps, Input
     return { hasError: true }
   }
 
-  componentDidCatch(error: unknown, info: unknown) {
-    console.error(`Form Input [${this.props.inputType}] has failed at path [${this.props.path}].`, error, info)
+  componentDidCatch() {
+    const error = new Error(`Form input [${this.props.inputType}] has failed at path [${this.props.path}].`)
+    this.props.inputErrorHandler ? this.props.inputErrorHandler(error) : console.error(error)
   }
 
   render() {

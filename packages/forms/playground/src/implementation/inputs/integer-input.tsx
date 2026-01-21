@@ -1,3 +1,5 @@
+import { useEffect } from 'react'
+
 import { InputComponent, InputProps, useController, type AnyFormValue } from '../../../../src/index'
 import { InputError } from './common/input-error'
 import InputLabel from './common/input-label'
@@ -15,6 +17,12 @@ function IntegerInputInternal(props: InputProps<AnyFormValue>): JSX.Element {
   const { field } = useController({
     name: path
   })
+
+  useEffect(() => {
+    if (field.value == 444) {
+      throw new Error()
+    }
+  }, [field.value])
 
   return (
     <InputWrapper {...props}>

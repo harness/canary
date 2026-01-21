@@ -59,6 +59,7 @@ function RuntimeExample() {
         onValuesChange={onValuesChange}
         onValidationChange={onValidationChange}
         metadata={metadata}
+        onInputRenderError={error => console.error('INPUT RENDER ERROR', error)}
       >
         {rootForm => (
           <div style={{ border: '1px solid lightgray', padding: '10px', minWidth: '350px' }}>

@@ -38,7 +38,7 @@ export function InputComponentRenderer<TValue, TConfig = unknown>({
 }: InputComponentRendererProps<TConfig, TValue>): JSX.Element | null {
   const { formState, watch } = useFormContext()
   const { fixedValues = {} /*getValuesWithDependencies*/ } = {} as any // useRootFormikContext()
-  const { metadata, readonly: globalReadOnly } = useRootFormContext()
+  const { metadata, readonly: globalReadOnly, inputErrorHandler } = useRootFormContext()
 
   const inputComponent = factory?.getComponent<TValue>(input.inputType as string)
 
@@ -106,7 +106,7 @@ export function InputComponentRenderer<TValue, TConfig = unknown>({
       return (
         <>
           {input.before ? input.before : null}
-          <InputErrorBoundary path={path} inputType={input.inputType}>
+          <InputErrorBoundary path={path} inputType={input.inputType} inputErrorHandler={inputErrorHandler}>
             {inputComponent?.renderComponent(commonProps)}
           </InputErrorBoundary>
           {input.after ? input.after : null}

@@ -18,6 +18,7 @@ export interface RootFormProps<TFieldValues extends FieldValues = FieldValues, T
   onValuesChange?: (values: DeepPartial<TFieldValues>) => void
   onValidationChange?: (props: { isValid: boolean; isSubmitted: boolean }) => void
   onSubmit?: (values: FieldValues) => void
+  onInputRenderError?: (error: Error) => void
   shouldFocusError?: boolean
   mode: 'onBlur' | 'onChange' | 'onSubmit' | 'onTouched' | 'all' | undefined
   children:
@@ -64,6 +65,7 @@ export function RootForm<TFieldValues extends FieldValues = FieldValues, TContex
     onValuesChange,
     onValidationChange,
     onSubmit,
+    onInputRenderError,
     // validate,
     // validateDebounceInterval,
     // validationConfig,
@@ -155,7 +157,7 @@ export function RootForm<TFieldValues extends FieldValues = FieldValues, TContex
   }, [methods])
 
   return (
-    <RootFormProvider metadata={metadata} readonly={readonly}>
+    <RootFormProvider metadata={metadata} readonly={readonly} inputErrorHandler={onInputRenderError}>
       <FormProvider {...methods}>
         {typeof children === 'function'
           ? children({

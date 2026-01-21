@@ -134,6 +134,11 @@ const tailwindDesignSystem: TailwindConfig = {
         secondary: 'var(--cn-set-violet-secondary-bg)',
         outline: 'var(--cn-set-violet-outline-bg)'
       },
+      'cn-forest': {
+        primary: 'var(--cn-set-forest-green-primary-bg)',
+        secondary: 'var(--cn-set-forest-green-secondary-bg)',
+        outline: 'var(--cn-set-forest-green-outline-bg)'
+      },
       transparent: 'transparent',
       inherit: 'inherit',
       current: 'currentColor'
@@ -257,6 +262,11 @@ const tailwindDesignSystem: TailwindConfig = {
         secondary: 'var(--cn-set-violet-secondary-text)',
         outline: 'var(--cn-set-violet-outline-text)'
       },
+      'cn-forest': {
+        primary: 'var(--cn-set-forest-green-primary-text)',
+        secondary: 'var(--cn-set-forest-green-secondary-text)',
+        outline: 'var(--cn-set-forest-green-outline-text)'
+      },
       transparent: 'transparent',
       inherit: 'inherit',
       current: 'currentColor'
@@ -360,7 +370,21 @@ const tailwindDesignSystem: TailwindConfig = {
       'cn-ring-error': 'var(--cn-ring-error)',
       'cn-ring-selected': 'var(--cn-ring-selected)',
       'cn-ring-success': 'var(--cn-ring-success)',
-      'cn-ring-warning': 'var(--cn-ring-warning)'
+      'cn-ring-warning': 'var(--cn-ring-warning)',
+
+      // Data visualization shadows
+      'cn-blue': 'var(--cn-comp-shadow-data-viz-01-blue)',
+      'cn-purple': 'var(--cn-comp-shadow-data-viz-02-purple)',
+      'cn-pink': 'var(--cn-comp-shadow-data-viz-03-pink)',
+      'cn-green': 'var(--cn-comp-shadow-data-viz-04-green)',
+      'cn-indigo': 'var(--cn-comp-shadow-data-viz-05-indigo)',
+      'cn-brown': 'var(--cn-comp-shadow-data-viz-06-brown)',
+      'cn-cyan': 'var(--cn-comp-shadow-data-viz-07-cyan)',
+      'cn-orange': 'var(--cn-comp-shadow-data-viz-08-orange)',
+      'cn-forest': 'var(--cn-comp-shadow-data-viz-09-forest)',
+      'cn-red': 'var(--cn-comp-shadow-data-viz-10-red)',
+      'cn-yellow': 'var(--cn-comp-shadow-data-viz-11-yellow)',
+      'cn-gray': 'var(--cn-comp-shadow-data-viz-12-gray)'
     },
     spacing: {
       0: 'var(--cn-spacing-0)',

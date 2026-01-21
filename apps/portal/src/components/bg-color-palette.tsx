@@ -24,7 +24,7 @@ const ColorSwatch: React.FC<ColorSwatchProps> = ({
     <Text
       variant="caption-normal"
       color="inherit"
-      className="text-cn-size-1 font-mono"
+      className="text-cn-size-4 font-mono"
     >
       {label}
     </Text>
@@ -163,7 +163,7 @@ const SemanticColors: React.FC = () => {
               <Text
                 variant="caption-normal"
                 color="inherit"
-                className="text-cn-size-0 font-mono"
+                className="text-cn-size-4 font-mono"
               >
                 Primary
               </Text>
@@ -180,7 +180,7 @@ const SemanticColors: React.FC = () => {
               <Text
                 variant="caption-normal"
                 color="inherit"
-                className="text-cn-size-0 font-mono"
+                className="text-cn-size-4 font-mono"
               >
                 Secondary
               </Text>
@@ -197,7 +197,7 @@ const SemanticColors: React.FC = () => {
               <Text
                 variant="caption-normal"
                 color="inherit"
-                className="text-cn-size-0 font-mono"
+                className="text-cn-size-4 font-mono"
               >
                 Outline
               </Text>

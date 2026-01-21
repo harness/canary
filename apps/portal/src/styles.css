@@ -1,6 +1,6 @@
 body {
-  @apply text-cn-2 text-cn-size-3 overscroll-none tracking-cn-normal font-body-normal leading-10 !important;
-  @apply !leading-7 !text-cn-size-3;
+  @apply text-cn-2 text-cn-size-6 overscroll-none tracking-cn-normal font-body-normal leading-10 !important;
+  @apply !leading-7 !text-cn-size-6;
   -webkit-font-smoothing: auto;
   -moz-osx-font-smoothing: auto;
   font-smooth: auto;
@@ -11,15 +11,15 @@ main {
 }
 
 .sl-container :is(h1):not(:where(.not-content *)) {
-  @apply text-cn-size-8 font-normal text-cn-1;
+  @apply text-cn-size-10 font-normal text-cn-1;
 }
 
 .sl-container :is(h2):not(:where(.not-content *)) {
-  @apply text-cn-size-7 font-normal text-cn-1;
+  @apply text-cn-size-9 font-normal text-cn-1;
 }
 
 .sl-container :is(h3):not(:where(.not-content *)) {
-  @apply text-cn-size-6 font-normal text-cn-1;
+  @apply text-cn-size-7 font-normal text-cn-1;
 }
 
 /* List styles for content */
@@ -147,7 +147,7 @@ mobile-starlight-toc {
 }
 
 ul.top-level summary svg {
-  @apply font-normal text-cn-disabled text-cn-size-4;
+  @apply font-normal text-cn-disabled text-cn-size-5;
 }
 
 /* Right-hand page sidebar overrides */
@@ -161,7 +161,7 @@ ul.top-level summary svg {
 }
 
 .right-sidebar-panel h2 {
-  @apply font-normal text-cn-2 text-cn-size-2;
+  @apply font-normal text-cn-2 text-cn-size-4;
 }
 
 .right-sidebar-panel ul {
@@ -211,7 +211,7 @@ pre.prism-code {
 /* Pagination overrides */
 
 .pagination-links a {
-  @apply border border-cn-3 rounded-cn-3 text-cn-size-2 text-cn-3;
+  @apply border border-cn-3 rounded-cn-3 text-cn-size-4 text-cn-3;
 }
 
 .pagination-links a .link-title {

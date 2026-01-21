@@ -174,15 +174,30 @@ export class ThreadRuntimeCore extends BaseSubscribable {
       }
     } else if (event.type === 'capability_execution') {
       const capabilityEvent = event as Extract<StreamEvent, { type: 'capability_execution' }>
-      message.content = [
-        ...message.content,
-        {
-          type: 'capability',
-          capabilityId: capabilityEvent.capabilityId,
-          capabilityName: capabilityEvent.capabilityName,
-          args: capabilityEvent.args
-        } as CapabilityContent
-      ]
+      const capabilityContent = {
+        type: 'capability',
+        capabilityId: capabilityEvent.capabilityId,
+        capabilityName: capabilityEvent.capabilityName,
+        args: capabilityEvent.args
+      } as CapabilityContent
+
+      message.content.push(capabilityContent)
+
+      // Check if artifact field exists (from stream event)
+      const artifact = (capabilityEvent as any).artifact
+      if (artifact) {
+        message.content.push({
+          type: 'artifact',
+          data: {
+            capabilityName: capabilityEvent.capabilityName,
+            originalArgs: capabilityEvent.args,
+            displayData: {
+              name: artifact.displayName,
+              type: artifact.displayType
+            }
+          }
+        })
+      }
 
       // Execute capability if manager is available
       if (this.config.capabilityExecutionManager) {

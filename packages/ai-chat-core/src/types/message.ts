@@ -49,6 +49,18 @@ export interface CustomContent extends MessageContent {
   data: Record<string, unknown>
 }
 
+export interface ArtifactContent extends MessageContent {
+  type: 'artifact'
+  data: {
+    capabilityName: string
+    originalArgs: any
+    displayData: {
+      name: string
+      type?: string
+    }
+  }
+}
+
 export interface MessageContent<T = any> {
   type: string
   parentId?: string

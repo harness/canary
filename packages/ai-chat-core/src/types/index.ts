@@ -8,7 +8,8 @@ export type {
   ErrorContent,
   MetadataContent,
   AssistantThoughtContent,
-  CustomContent
+  CustomContent,
+  ArtifactContent
 } from './message'
 export type { ThreadListItemState, ThreadState, RuntimeCapabilities } from './thread'
 export type {

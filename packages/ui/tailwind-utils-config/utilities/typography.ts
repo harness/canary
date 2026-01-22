@@ -39,6 +39,12 @@ export const typography = {
     '&-caption-strong': {
       font: 'var(--cn-caption-strong)'
     },
+    '&-caption-code': {
+      font: 'var(--cn-caption-code)'
+    },
+    '&-caption-single-line-code': {
+      font: 'var(--cn-caption-single-line-code)'
+    },
     '&-link-default': {
       font: 'var(--cn-comp-link-default)'
     },

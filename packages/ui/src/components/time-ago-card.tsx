@@ -1,4 +1,4 @@
-import { ButtonHTMLAttributes, FC, forwardRef, Fragment, memo, Ref } from 'react'
+import { ButtonHTMLAttributes, FC, forwardRef, Fragment, memo, Ref, useEffect, useState } from 'react'
 
 import { StatusBadge, Text, TextProps, Tooltip, TooltipProps } from '@/components'
 import { cn } from '@utils/cn'
@@ -56,10 +56,26 @@ const getFormatters = (locale?: string | string[]) => ({
  */
 const INVALID_TIME_INDICATOR = ''
 
-export const useFormattedTime = (timestamp?: string | number | null) => {
+export const useFormattedTime = (timestamp?: string | number | null, live = false) => {
   // Handle null, undefined, empty string, or invalid values
   const time = timestamp ? new Date(timestamp) : new Date(0)
   const isValidTime = !isNaN(time.getTime()) && isFinite(time.getTime())
+
+  // State to trigger re-renders when live is true
+  const [, setTick] = useState(0)
+
+  // Set up interval for live updates
+  useEffect(() => {
+    if (!live || !isValidTime || time.getTime() === 0) {
+      return
+    }
+
+    const intervalId = setInterval(() => {
+      setTick(prev => prev + 1)
+    }, 1000)
+
+    return () => clearInterval(intervalId)
+  }, [live, isValidTime, time])
 
   const formattedShort = () => {
     // Additional check for epoch time (0) which might indicate missing data
@@ -127,6 +143,7 @@ export const TimeAgoContent: FC<{ formattedFullArray: FullTimeFormatters[] }> = 
 interface TimeAgoCardProps {
   timestamp?: string | number | null
   prefix?: string
+  live?: boolean
   textProps?: Omit<TextProps<'time' | 'span'>, 'ref'>
   tooltipProps?: TooltipProps
   triggerProps?: Omit<ButtonHTMLAttributes<HTMLButtonElement>, 'className'>
@@ -135,8 +152,8 @@ interface TimeAgoCardProps {
 
 export const TimeAgoCard = memo(
   forwardRef<HTMLButtonElement | HTMLSpanElement, TimeAgoCardProps>(
-    ({ timestamp, prefix, textProps, tooltipProps, triggerProps, triggerClassName }, ref) => {
-      const { formattedShort, formattedFull } = useFormattedTime(timestamp)
+    ({ timestamp, prefix, live = false, textProps, tooltipProps, triggerProps, triggerClassName }, ref) => {
+      const { formattedShort, formattedFull } = useFormattedTime(timestamp, live)
 
       // Handle invalid timestamps
       if (timestamp === null || timestamp === undefined || formattedShort === INVALID_TIME_INDICATOR) {

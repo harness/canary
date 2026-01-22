@@ -596,15 +596,26 @@ export default {
         },
 
         '&-content': {
+          gridTemplateColumns: '1fr',
+          gridTemplateAreas: '"icon"',
+          justifyItems: 'center',
+          paddingLeft: 'var(--cn-sidebar-item-container)',
+          paddingRight: 'var(--cn-sidebar-item-container)',
+
           '&-title, &-description, &-badge, &-right-element, &-action-item-placeholder, &-action-buttons': {
             maxWidth: '0',
             padding: '0',
             opacity: '0',
-            minWidth: '0'
+            minWidth: '0',
+            display: 'none'
           },
 
           '&-w-description, &-complete': {
             padding: '0'
+          },
+
+          '&-icon': {
+            justifySelf: 'center'
           }
         },
 
@@ -612,7 +623,19 @@ export default {
           maxWidth: '0',
           minWidth: '0',
           opacity: '0'
+        },
+
+        '&-wrapper': {
+          '&:hover, &:focus-within': {
+            '.cn-sidebar-item-content-action-buttons': {
+              display: 'none !important'
+            }
+          }
         }
+      },
+
+      '.cn-sidebar-item-content.justify-between': {
+        justifyContent: 'center !important'
       }
     }
   },

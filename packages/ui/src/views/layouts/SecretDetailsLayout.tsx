@@ -1,6 +1,6 @@
 import { FC, ReactNode } from 'react'
 
-import { StatsPanel, Tabs, Text, TimeAgoCard } from '@/components'
+import { IconV2, Layout, StatsPanel, Tabs, Text, TimeAgoCard } from '@/components'
 import { useRouterContext, useTranslation } from '@/context'
 import { Page, type SecretListItem } from '@/views'
 
@@ -32,6 +32,20 @@ export const SecretDetailsLayout: FC<SecretDetailsLayoutProps> = ({
   const { t } = useTranslation()
   const { Switch, Route } = useRouterContext()
 
+  const titleContent = (
+    <Layout.Horizontal gap="xs" align="center" className="justify-between">
+      <Layout.Horizontal gapX="xs" align="center">
+        <div className="mt-cn-4xs">
+          <IconV2 name="key" size="lg" />
+        </div>
+        <Text as="h1" variant="heading-section" truncate>
+          {secret?.name ?? ''}
+        </Text>
+      </Layout.Horizontal>
+      {actions}
+    </Layout.Horizontal>
+  )
+
   return (
     <Page.Root>
       <Page.Header
@@ -40,8 +54,7 @@ export const SecretDetailsLayout: FC<SecretDetailsLayoutProps> = ({
           linkText: t('views:secretDetails.backToSecrets', 'All Secrets'),
           linkProps: { to: backButtonTo?.() ?? '' }
         }}
-        title={secret?.name ?? ''}
-        actions={actions}
+        title={titleContent}
       >
         <StatsPanel
           isLoading={isLoading}
@@ -69,7 +82,7 @@ export const SecretDetailsLayout: FC<SecretDetailsLayoutProps> = ({
       </Page.Header>
       <Page.Content>
         <Tabs.NavRoot>
-          <Tabs.List className="cn-sandbox-layout-tabs mb-cn-3xl">
+          <Tabs.List className="mb-cn-sm -mt-cn-2xs">
             <Tabs.Trigger value={SecretDetailsTabsKeys.OVERVIEW}>
               {t('views:secretDetails.configuration', 'Configuration')}
             </Tabs.Trigger>

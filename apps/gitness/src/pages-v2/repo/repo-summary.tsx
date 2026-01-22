@@ -238,25 +238,36 @@ export default function RepoSummaryPage() {
     const entries = repoDetails?.content?.entries
     if (!entries?.length) return undefined
 
-    return entries.find(entry => entry.type === 'file' && /^readme(.md)?$/i.test(entry?.name || ''))
+    return entries.find(entry => entry.type === 'file' && /^readme(\.md)?$/i.test(entry?.name || ''))
   }, [repoDetails?.content?.entries])
 
   // Fetch README content only when readmeInfo exists
-  const { data: { body: readmeContent } = {} } = useGetContentQuery({
-    path: 'README.md',
-    repo_ref: repoRef,
-    queryParams: { include_commit: false, git_ref: normalizeGitRef(fullGitRef) }
-  })
+  const { data: { body: readmeContent } = {} } = useGetContentQuery(
+    {
+      path: readmeInfo?.path || 'README.md', // path is never undefined if query is enabled
+      repo_ref: repoRef,
+      queryParams: { include_commit: false, git_ref: normalizeGitRef(fullGitRef) }
+    },
+    {
+      enabled: !!readmeInfo?.path
+    }
+  )
 
   // Prepare README info with content for the UI component
   const readmeInfoWithContent = useMemo(() => {
-    if (!readmeInfo?.name || !readmeInfo?.path || !readmeInfo?.type || !readmeContent?.content?.data) return undefined
+    if (!readmeInfo?.name || !readmeInfo?.path || !readmeInfo?.type || !readmeContent?.content) return undefined
+
+    // content can be empty
+    let content = ''
+    if (readmeContent?.content?.data) {
+      content = decodeGitContent(readmeContent.content.data)
+    }
 
     return {
       name: readmeInfo.name,
       path: readmeInfo.path,
       type: readmeInfo.type,
-      content: decodeGitContent(readmeContent.content.data)
+      content: content
     }
   }, [readmeInfo, readmeContent])
 

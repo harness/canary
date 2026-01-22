@@ -300,9 +300,9 @@
         "title": "Or you can push an existing repository"
       }
     },
-    "readme": "README.md",
-    "editReadme": "Edit README.md",
-    "createReadme": "Create README.md",
+    "readme": "README",
+    "editReadme": "Edit README",
+    "createReadme": "Create README",
     "addReadme": {
       "title": "Create a README",
       "description": "Help people interested in this repository understand your project by creating a README.",

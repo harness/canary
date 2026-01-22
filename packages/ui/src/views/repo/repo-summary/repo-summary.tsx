@@ -36,7 +36,7 @@ interface ReadmeInfo {
   name: string
   path: string
   type: string
-  content?: string
+  content: string
 }
 
 interface RoutingProps {
@@ -49,9 +49,9 @@ interface RoutingProps {
   navigateToProfileKeys: () => void
 }
 
-const README_PATH = 'README.md'
-const doesReadmeExistInFiles = (files: RepoFile[]) => {
-  return files.some(file => file.id === README_PATH)
+const DEFAULT_README_NAME = 'README.md'
+const findReadmeNameInFiles = (files: RepoFile[]) => {
+  return files.find(file => /^readme(\.md)?$/i.test(file?.name || ''))?.name
 }
 
 export interface RepoSummaryViewProps extends Partial<RoutingProps> {
@@ -141,15 +141,18 @@ export function RepoSummaryView({
 
   // Helper function to construct README creation path
   const getReadmeCreationPath = useCallback(() => {
-    return `${toRepoFiles?.()}/new/${selectedBranchOrTag?.name || repository?.default_branch}/~/?name=${README_PATH}`
+    return `${toRepoFiles?.()}/new/${selectedBranchOrTag?.name || repository?.default_branch}/~/?name=${DEFAULT_README_NAME}`
   }, [toRepoFiles, selectedBranchOrTag?.name, repository?.default_branch])
 
   // Helper function to construct README edit path
   const getReadmeEditPath = useCallback(() => {
-    const action = doesReadmeExistInFiles(files) ? 'edit' : 'new'
+    const existingName = findReadmeNameInFiles(files)
+    const name = existingName ?? DEFAULT_README_NAME
+    const action = existingName ? 'edit' : 'new'
     const gitReference = gitRef || selectedBranchOrTag?.name
-    return `${toRepoFiles?.()}/${action}/${gitReference}/~/${README_PATH}`
-  }, [toRepoFiles, doesReadmeExistInFiles, files, gitRef, selectedBranchOrTag?.name])
+
+    return `${toRepoFiles?.()}/${action}/${gitReference}/~/${name}`
+  }, [toRepoFiles, findReadmeNameInFiles, files, gitRef, selectedBranchOrTag?.name])
 
   if (loading) {
     return (
@@ -263,7 +266,7 @@ export function RepoSummaryView({
             />
             <Spacer size={5} />
             {/* README Section - Show existing content or Create README prompt */}
-            {readmeInfo && readmeInfo.content ? (
+            {readmeInfo ? (
               // Existing README with content
               <>
                 <StackedList.Root rounded="top">
@@ -271,7 +274,7 @@ export function RepoSummaryView({
                     <StackedList.Field
                       title={
                         <Text variant="caption-single-line-normal" color="foreground-1">
-                          {t('views:repos.readme', 'README.md')}
+                          {t('views:repos.readme', 'README')}
                         </Text>
                       }
                     />
@@ -280,7 +283,7 @@ export function RepoSummaryView({
                         <Link
                           variant="secondary"
                           to={getReadmeEditPath()}
-                          aria-label={t('views:repos.editReadme', 'Edit README.md')}
+                          aria-label={t('views:repos.editReadme', 'Edit README')}
                         >
                           <IconV2 name="edit-pencil" size="sm" />
                         </Link>
@@ -303,7 +306,7 @@ export function RepoSummaryView({
                   <StackedList.Field
                     title={
                       <Text variant="caption-single-line-normal" color="foreground-1">
-                        {t('views:repos.readme', 'README.md')}
+                        {t('views:repos.readme', 'README')}
                       </Text>
                     }
                   />
@@ -312,7 +315,7 @@ export function RepoSummaryView({
                       <Link
                         variant="secondary"
                         to={getReadmeCreationPath()}
-                        aria-label={t('views:repos.createReadme', 'Create README.md')}
+                        aria-label={t('views:repos.createReadme', 'Create README')}
                       >
                         <IconV2 name="plus" size="sm" />
                       </Link>

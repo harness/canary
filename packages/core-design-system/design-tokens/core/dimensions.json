@@ -934,5 +934,12 @@
       "$value": "{size.11}",
       "$description": "\n"
     }
+  },
+  "animation": {
+    "slide-offset": {
+      "$type": "sizing",
+      "$value": "{size.1-half}",
+      "$description": "Offset for slide-in/slide-out animations (popover, tooltip)"
+    }
   }
 }

@@ -506,6 +506,35 @@ const tailwindDesignSystem: TailwindConfig = {
       addUtilities(borderRadiusStyles)
       addUtilities(heightStyles)
       addUtilities(widthStyles)
+
+      // Animation slide utilities using design token
+      // Using calc() to properly handle negative values with CSS variables
+      addUtilities({
+        '.slide-in-from-top-slide-offset': {
+          '--tw-enter-translate-y': 'calc(-1 * var(--cn-animation-slide-offset))'
+        },
+        '.slide-in-from-bottom-slide-offset': {
+          '--tw-enter-translate-y': 'var(--cn-animation-slide-offset)'
+        },
+        '.slide-in-from-left-slide-offset': {
+          '--tw-enter-translate-x': 'calc(-1 * var(--cn-animation-slide-offset))'
+        },
+        '.slide-in-from-right-slide-offset': {
+          '--tw-enter-translate-x': 'var(--cn-animation-slide-offset)'
+        },
+        '.slide-out-to-top-slide-offset': {
+          '--tw-exit-translate-y': 'calc(-1 * var(--cn-animation-slide-offset))'
+        },
+        '.slide-out-to-bottom-slide-offset': {
+          '--tw-exit-translate-y': 'var(--cn-animation-slide-offset)'
+        },
+        '.slide-out-to-left-slide-offset': {
+          '--tw-exit-translate-x': 'calc(-1 * var(--cn-animation-slide-offset))'
+        },
+        '.slide-out-to-right-slide-offset': {
+          '--tw-exit-translate-x': 'var(--cn-animation-slide-offset)'
+        }
+      })
     }),
     tailwindcssAnimate,
     typography,

@@ -63,6 +63,7 @@ export interface ThreadListLoadOptions {
   query?: string
   offset?: number
   limit?: number
+  replace?: boolean // If true, clears existing threads before loading
   // Allow custom pagination params for flexibility
   [key: string]: any
 }

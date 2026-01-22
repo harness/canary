@@ -215,6 +215,15 @@ export class ThreadListRuntime extends BaseSubscribable {
       this._searchQuery = options.query
     }
 
+    if (options?.replace) {
+      const threadsToDelete = Array.from(this._threads.keys()).filter(id => id !== this._mainThreadId)
+      for (const threadId of threadsToDelete) {
+        this._threads.delete(threadId)
+        this._threadItems.delete(threadId)
+        this._threadStates.delete(threadId)
+      }
+    }
+
     this._isLoading = true
     this.notifySubscribers()
 

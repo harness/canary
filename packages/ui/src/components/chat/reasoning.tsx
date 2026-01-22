@@ -192,7 +192,7 @@ const ReasoningContent = forwardRef<ElementRef<typeof CollapsiblePrimitive.Conte
 
     return (
       <CollapsiblePrimitive.Content ref={ref} className={cn('cn-reasoning-content', className)} {...props}>
-        <div ref={scrollRef} className="max-h-[200px] overflow-y-auto">
+        <div ref={scrollRef} className="max-h-[200px] overflow-y-auto scrollbar-hidden">
           {children}
         </div>
       </CollapsiblePrimitive.Content>

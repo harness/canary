@@ -134,11 +134,6 @@ export default {
     color: 'var(--cn-text-1)',
     '@apply flex items-center gap-cn-2xs p-cn-xs pl-cn-md w-full': '',
 
-    // Group card variant - add bottom border (direct child only)
-    '.cn-studio-card-group > &': {
-      borderBottom: '1px solid var(--cn-border-2)'
-    },
-
     '&-title': {
       '@apply flex-1': ''
     }

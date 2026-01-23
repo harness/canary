@@ -352,7 +352,7 @@ export default function FileContentViewer({ repoContent, loading }: FileContentV
         isNew={false}
       />
       <Tabs.Root
-        className="flex flex-col overflow-hidden grow"
+        className="flex grow flex-col overflow-hidden"
         value={view as string}
         onValueChange={val => {
           setSelectedLine(undefined)
@@ -395,7 +395,7 @@ export default function FileContentViewer({ repoContent, loading }: FileContentV
               {!fileError && !getIsMarkdown(language) && (
                 <ScrollArea className="h-full grid-cols-[100%]">
                   <CodeEditor
-                    className="overflow-hidden"
+                    className="overflow-hidden rounded-b-cn-3 border border-t-0 border-cn-3"
                     height="100%"
                     language={language}
                     codeRevision={{ code: fileContent }}
@@ -409,12 +409,12 @@ export default function FileContentViewer({ repoContent, loading }: FileContentV
           )}
         </Tabs.Content>
 
-        <Tabs.Content value="code" className="grow min-h-0">
+        <Tabs.Content value="code" className="min-h-0 grow">
           {loading && <Loader />}
 
           {!loading && (
             <CodeEditor
-              className="overflow-hidden"
+              className="overflow-hidden rounded-b-cn-3 border border-t-0 border-cn-3"
               height="100%"
               language={language}
               codeRevision={codeRevision}
@@ -429,7 +429,7 @@ export default function FileContentViewer({ repoContent, loading }: FileContentV
           )}
         </Tabs.Content>
 
-        <Tabs.Content value="blame" className="grow min-h-0">
+        <Tabs.Content value="blame" className="min-h-0 grow">
           {loading && <Loader />}
 
           {!loading && (

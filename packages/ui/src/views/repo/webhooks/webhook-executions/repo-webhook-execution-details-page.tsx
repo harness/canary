@@ -83,7 +83,7 @@ export const RepoWebhookExecutionDetailsPage: FC<RepoWebhookExecutionDetailsPage
     <ScrollArea className="h-full grid-cols-[100%]">
       <CodeEditor
         height="100%"
-        className="overflow-hidden"
+        className="overflow-hidden rounded-b-cn-3 border border-t-0 border-cn-3"
         language={language}
         codeRevision={codeRevision}
         themeConfig={themeConfig}

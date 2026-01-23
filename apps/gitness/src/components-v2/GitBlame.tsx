@@ -108,7 +108,7 @@ export default function GitBlame({ themeConfig, codeContent, language, height, t
 
   return (
     <Layout.Vertical className="h-full" gap="none">
-      <Layout.Flex align="center" className="px-cn-md py-cn-sm border-x border-b">
+      <Layout.Flex align="center" className="border-x border-b px-cn-md py-cn-sm">
         <Contributors contributors={contributors} />
       </Layout.Flex>
       <BlameEditorV2
@@ -119,7 +119,7 @@ export default function GitBlame({ themeConfig, codeContent, language, height, t
         blameData={blameBlocks}
         height={height ? height : undefined}
         theme={monacoTheme}
-        className="flex h-full grow min-h-0"
+        className="flex h-full min-h-0 grow rounded-b-cn-3 border border-t-0 border-cn-3"
       />
     </Layout.Vertical>
   )

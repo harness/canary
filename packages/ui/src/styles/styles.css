@@ -635,7 +635,7 @@ mark {
 }
 
 .monaco-editor .overflow-guard {
-  @apply border-cn-3 rounded-b-cn-3 border border-t-0;
+  @apply border-0;
 }
 
 .monaco-diff-editor .monaco-editor .overflow-guard {

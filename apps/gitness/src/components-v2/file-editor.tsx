@@ -204,7 +204,7 @@ export const FileEditor: FC<FileEditorProps> = ({ repoDetails, defaultBranch, lo
     <Layout.Flex
       align="center"
       justify="center"
-      className="rounded-b-cn-3 flex h-full rounded-t-cn-none border border-t-0"
+      className="flex h-full rounded-b-cn-3 rounded-t-cn-none border border-t-0"
     >
       <IconV2 className="animate-spin" name="loader" size="lg" />
     </Layout.Flex>
@@ -255,11 +255,12 @@ export const FileEditor: FC<FileEditorProps> = ({ repoDetails, defaultBranch, lo
       >
         <FileEditorControlBar showPreview={showPreview} />
 
-        <Tabs.Content value="edit" className="grow min-h-0">
+        <Tabs.Content value="edit" className="min-h-0 grow">
           {loading && <Loader />}
 
           {!loading && (
             <CodeEditor
+              className="rounded-b-cn-3 border border-t-0 border-cn-3"
               height="100%"
               language={language}
               codeRevision={{ ...contentRevision }}

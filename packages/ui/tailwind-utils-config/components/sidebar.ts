@@ -4,17 +4,14 @@ export default {
       display: 'flex',
       flexDirection: 'column',
       height: 'var(--cn-sidebar-min-height)',
-      width: 'var(--cn-sidebar-container-full-width)',
       minHeight: 'var(--cn-sidebar-item-min-height)',
-      minWidth: 'var(--cn-sidebar-container-min-width)',
       backgroundColor: 'var(--cn-comp-sidebar-bg)',
       padding: 'var(--cn-sidebar-container-spacing) 0',
 
       '&-desktop': {
         top: '0px',
         zIndex: '1',
-        position: 'sticky',
-        '@apply duration-200 transition-[width] ease-linear': ''
+        position: 'sticky'
       }
     },
 
@@ -571,11 +568,6 @@ export default {
     },
 
     '&[data-state=collapsed]': {
-      '&.cn-sidebar': {
-        width:
-          'var(--cn-size-16)' /* I don’t have a fixed value for the collapsed state in the design — it depends on the padding */
-      },
-
       '& .cn-input-prefix': {
         '@apply ml-0': ''
       },
@@ -596,18 +588,11 @@ export default {
         },
 
         '&-content': {
-          gridTemplateColumns: '1fr',
-          gridTemplateAreas: '"icon"',
-          justifyItems: 'center',
-          paddingLeft: 'var(--cn-sidebar-item-container)',
-          paddingRight: 'var(--cn-sidebar-item-container)',
-
           '&-title, &-description, &-badge, &-right-element, &-action-item-placeholder, &-action-buttons': {
             maxWidth: '0',
             padding: '0',
             opacity: '0',
-            minWidth: '0',
-            display: 'none'
+            minWidth: '0'
           },
 
           '&-w-description, &-complete': {
@@ -623,19 +608,7 @@ export default {
           maxWidth: '0',
           minWidth: '0',
           opacity: '0'
-        },
-
-        '&-wrapper': {
-          '&:hover, &:focus-within': {
-            '.cn-sidebar-item-content-action-buttons': {
-              display: 'none !important'
-            }
-          }
         }
-      },
-
-      '.cn-sidebar-item-content.justify-between': {
-        justifyContent: 'center !important'
       }
     }
   },

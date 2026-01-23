@@ -158,7 +158,7 @@ const TableRow = forwardRef<HTMLTableRowElement, TableRowProps>(({ className, se
     <tr
       ref={ref}
       className={cn('cn-table-v2-row', className)}
-      data-checked={selected ? 'true' : undefined}
+      data-checked={selected ? true : undefined}
       {...omit(props, ['onClick'])}
     >
       {rowChildren}

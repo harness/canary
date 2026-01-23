@@ -30,6 +30,7 @@ export interface DataTableProps<TData> {
   onRowClick?: (data: TData, index: number) => void
   disableHighlightOnHover?: boolean
   className?: string
+  tableClassName?: string
   currentSorting?: SortingState
   currentRowSelection?: RowSelectionState
   columnPinning?: ColumnPinningState
@@ -98,6 +99,7 @@ export const DataTable = function DataTable<TData>({
   onRowClick,
   disableHighlightOnHover = false,
   className,
+  tableClassName,
   currentSorting,
   currentRowSelection,
   onSortingChange: externalOnSortingChange,
@@ -193,7 +195,10 @@ export const DataTable = function DataTable<TData>({
       data,
       columns: tableColumns,
       getCoreRowModel: getCoreRowModel(),
-
+      defaultColumn: {
+        // @ts-expect-error: auto works and required
+        size: 'auto'
+      },
       getRowId: getRowId,
       // Enable manual sorting (server-side sorting)
       manualSorting: true,
@@ -271,7 +276,7 @@ export const DataTable = function DataTable<TData>({
       /* If there are pinned columns, we need to set the table to fixed layout to prevent columns
        *  from resizing based on their content.
        */
-      tableClassName={cn({ 'table-fixed': hasPinnedColumns })}
+      tableClassName={cn({ 'table-fixed': hasPinnedColumns }, tableClassName)}
       size={size}
       variant={variant}
       disableHighlightOnHover={disableHighlightOnHover}

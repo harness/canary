@@ -1,9 +1,34 @@
+/**
+ * Items in studio card to reduce the opacity when other group card is hovered
+ */
+const StudioCardHelperItems = '.cn-studio-card-header, .cn-studio-card-message, .cn-studio-card-footer, .cn-studio-card-content > .cn-studio-card-expand-button, .cn-studio-card-content > .cn-studio-card-button, .cn-studio-card-tag, .cn-studio-card-status'
+
+/**
+ * Styles to apply to StudioCardHelperItems when the other group card is hovered
+ */
+const StudioCardHelperItemsHoveredStyles = {
+  [StudioCardHelperItems]: {
+    opacity: '0.45 !important',
+    transition: 'opacity 200ms ease-in-out'
+  }
+}
+
+/**
+ * Shadow styles to apply to StudioCardHelperItems when the other group card is hovered
+ */
+const DimmedShadow3Style = {
+  boxShadow: '0 4px 6px -1px lch(from var(--cn-shadow-color-3) l c h / 0.05), 0 2px 8px -2px lch(from var(--cn-shadow-color-3) l c h / 0.05)'
+}
+
 export default {
   '.cn-studio-card': {
     borderRadius: 'var(--cn-rounded-4)',
     border: '1px solid var(--cn-border-2)',
     backgroundColor: 'var(--cn-bg-3)',
     '@apply flex flex-col overflow-hidden shadow-cn-3 select-none': '',
+    transitionProperty: 'background-color, opacity',
+    transitionDuration: '200ms',
+    transitionTimingFunction: 'ease-in-out',
 
     // Default size (single card)
     width: '220px',
@@ -28,6 +53,17 @@ export default {
       '&[data-theme="danger"]': {
         border: '1px solid var(--cn-border-danger)',
         boxShadow: '0 0 0 3px color-mix(in srgb, var(--cn-border-danger) 20%, transparent)'
+      }
+    },
+
+    '&:has(.cn-studio-card-group:hover)': {
+      backgroundColor: 'lch(from var(--cn-bg-3) l c h / 0.45) !important',
+      borderColor: 'lch(from var(--cn-border-2) l c h / 0.65) !important',
+      ...DimmedShadow3Style,
+
+
+      '>': {
+        ...StudioCardHelperItemsHoveredStyles
       }
     },
 
@@ -65,9 +101,9 @@ export default {
     '&:not(.cn-studio-card-group):has(> [data-status="executing"])': {
       '--border-angle': '0turn',
       '--main-bg':
-        'conic-gradient(from var(--border-angle), var(--cn-bg-3), var(--cn-bg-3) 5%, var(--cn-bg-3) 60%, var(--cn-bg-3) 95%)',
+        'conic-gradient(from var(--border-angle), var(--cn-bg-2), var(--cn-bg-2) 5%, var(--cn-bg-2) 60%, var(--cn-bg-2) 95%)',
       '--gradient-border':
-        'conic-gradient(from var(--border-angle), transparent 20%, var(--cn-gradient-pipeline-running-border-from), var(--cn-gradient-pipeline-running-border-to) 99%, transparent)',
+        'conic-gradient(from var(--border-angle), var(--cn-border-2) 20%, var(--cn-gradient-pipeline-running-border-from), lch(from var(--cn-gradient-pipeline-running-border-to) l c h / 0.50) 90%, var(--cn-border-2))',
 
       border: 'solid 2px transparent !important',
       background:
@@ -98,11 +134,6 @@ export default {
     color: 'var(--cn-text-1)',
     '@apply flex items-center gap-cn-2xs p-cn-xs pl-cn-md w-full': '',
 
-    // Group card variant - add bottom border (direct child only)
-    '.cn-studio-card-group > &': {
-      borderBottom: '1px solid var(--cn-border-2)'
-    },
-
     '&-title': {
       '@apply flex-1': ''
     }
@@ -110,7 +141,61 @@ export default {
 
   // Content Component
   '.cn-studio-card-content': {
-    '@apply flex flex-col flex-grow gap-cn-sm px-cn-md pb-cn-lg pt-cn-sm': ''
+    '@apply flex flex-col flex-grow gap-cn-sm px-cn-md pb-cn-lg pt-cn-sm': '',
+
+    // When a group card is hovered anywhere inside this content
+    '&:has(.cn-studio-card-group:hover)': {
+
+      // Dim parent card's own UI elements
+      '& > .cn-studio-card-expand-button, & > .cn-studio-card-button': {
+        opacity: '0.45 !important',
+        transitionProperty: 'opacity',
+        transitionDuration: '200ms',
+        transitionTimingFunction: 'ease-in-out'
+      },
+
+      // Dim ALL cards within this content area
+      // '& .cn-studio-card:not(:has(> [data-status="executing"])):not(:hover)': {
+      //   backgroundColor: 'lch(from var(--cn-bg-3) l c h / 0.45) !important',
+      //   borderColor: 'lch(from var(--cn-border-2) l c h / 0.65) !important',
+      //   ...DimmedShadow3Style,
+      //   ...StudioCardHelperItemsHoveredStyles
+      // },
+      '& .cn-studio-card:not(:hover)': {
+        backgroundColor: 'lch(from var(--cn-bg-3) l c h / 0.45) !important',
+
+        '&:not(:has(> [data-status="executing"]))': {
+          borderColor: 'lch(from var(--cn-border-2) l c h / 0.65) !important',
+        },
+        ...DimmedShadow3Style,
+        ...StudioCardHelperItemsHoveredStyles
+      },
+
+      // Preserve opacity for the hovered group itself
+      '& .cn-studio-card-group:hover': {
+        opacity: '1 !important'
+      },
+
+      // Preserve opacity for all descendants of the hovered group
+      '& .cn-studio-card-group:hover .cn-studio-card': {
+        opacity: '1 !important',
+
+        '&:not(:has(> [data-status="executing"]))': {
+          borderColor: 'var(--cn-border-2) !important',
+          // borderColor: 'lch(from var(--cn-border-2) l c h / 0.65) !important',
+        },
+        '@apply shadow-cn-3': '',
+
+        [StudioCardHelperItems]: {
+          opacity: '1 !important',
+        },
+      },
+
+      // Preserve opacity for all elements inside the hovered group
+      '& .cn-studio-card-group:hover *': {
+        opacity: '1 !important',
+      }
+    }
   },
 
   // Tag Component

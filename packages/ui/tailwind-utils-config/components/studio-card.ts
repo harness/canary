@@ -3,7 +3,6 @@ export default {
     borderRadius: 'var(--cn-rounded-4)',
     border: '1px solid var(--cn-border-2)',
     backgroundColor: 'var(--cn-bg-3)',
-    zIndex: '0',
     '@apply flex flex-col overflow-hidden shadow-cn-3 select-none': '',
 
     // Default size (single card)
@@ -87,6 +86,10 @@ export default {
         inset: '0'
       }
     }
+  },
+
+  '.cn-studio-card-execution': {
+    zIndex: '0'
   },
 
   // Header Component

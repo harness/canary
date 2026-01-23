@@ -9,6 +9,7 @@ export interface StudioCardRootProps {
   selected?: boolean
   // It will be updated to a generic value later
   variant?: 'default' | 'stage'
+  execution?: boolean
 }
 
 export interface StudioCardHeaderProps {

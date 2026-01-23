@@ -21,13 +21,15 @@ import {
  */
 
 const CLICK_DRAG_THRESHOLD = 5
+
 function Root({
   children,
   isGroupCard = false,
   onClick,
   theme = 'default',
   selected = false,
-  variant = 'default'
+  variant = 'default',
+  execution = false
 }: PropsWithChildren<StudioCardRootProps>): JSX.Element {
   // Used to determine if a click was a drag or a click
   const dragPos = useRef({ x: 0, y: 0 })
@@ -35,6 +37,7 @@ function Root({
   return (
     <div
       className={cn('cn-studio-card cursor-default', {
+        'cn-studio-card-execution': execution,
         'cn-studio-card-group': isGroupCard,
         'cn-studio-card-stage': variant === 'stage'
       })}

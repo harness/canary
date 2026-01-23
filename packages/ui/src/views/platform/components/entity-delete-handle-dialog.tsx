@@ -8,7 +8,7 @@ interface EntityDeleteHandleDialogProps {
   entityType: string
   entityId: string
   onClose: () => void
-  onViewReferences: () => void
+  onViewReferences?: () => void
   forceDeleteCallback?: () => void
   customMessage?: string
   customWarning?: string
@@ -57,9 +57,11 @@ export const EntityDeleteHandleDialog = ({
               )}
           </Text>
 
-          <Button variant="link" onClick={onViewReferences}>
-            {t('views:entity.viewReferences', 'View references')}
-          </Button>
+          {onViewReferences && (
+            <Button variant="link" onClick={onViewReferences}>
+              {t('views:entity.viewReferences', 'View references')}
+            </Button>
+          )}
           {forceDeleteCallback && (
             <Checkbox
               id="force-delete"

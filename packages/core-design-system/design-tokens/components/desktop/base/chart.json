@@ -278,30 +278,16 @@
             }
         },
         "gauge": {
-            "base": {
+            "arc": {
                 "width": {
                     "$type": "dimension",
                     "$value": "{size.4}",
-                    "$description": "Width of gauge base (background)"
-                }
-            },
-            "track": {
-                "width": {
-                    "$type": "dimension",
-                    "$value": "{size.2}",
-                    "$description": "Width of default gauge track (thinner than base)"
-                }
-            },
-            "radius": {
-                "default": {
+                    "$description": "Width of gauge arc"
+                },
+                "radius": {
                     "$type": "dimension",
                     "$value": "{rounded.full}",
-                    "$description": "Border radius for default gauge (full rounded)"
-                },
-                "segmented": {
-                    "$type": "dimension",
-                    "$value": "{rounded.2}",
-                    "$description": "Border radius for segmented gauge"
+                    "$description": "Border radius of gauge arc ends"
                 }
             },
             "segment": {

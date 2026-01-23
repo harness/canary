@@ -61,19 +61,19 @@ export default {
       boxShadow: '0 0 0 0 transparent, 0 0 0 0 transparent, 0 0 0 0 transparent'
     },
     to: {
-      boxShadow: '0 0 3px 0 color-mix(in srgb, var(--cn-gradient-ai-stop-1) 50%, transparent), 0 0 12px 2px color-mix(in srgb, var(--cn-gradient-ai-stop-1) 25%, transparent), 0 0 28px 6px color-mix(in srgb, var(--cn-gradient-ai-stop-1) 12%, transparent)'
+      boxShadow: '0 0 3px 0 color-mix(in srgb, var(--cn-gradient-ai-stop-1) 30%, transparent), 0 0 12px 2px color-mix(in srgb, var(--cn-gradient-ai-stop-1) 15%, transparent), 0 0 28px 6px color-mix(in srgb, var(--cn-gradient-ai-stop-1) 8%, transparent)'
     }
   },
 
   '@keyframes cn-glow': {
     '0%, 100%': {
-      boxShadow: '0 0 3px 0 color-mix(in srgb, var(--cn-gradient-ai-stop-1) 50%, transparent), 0 0 12px 2px color-mix(in srgb, var(--cn-gradient-ai-stop-1) 25%, transparent), 0 0 28px 6px color-mix(in srgb, var(--cn-gradient-ai-stop-1) 12%, transparent)'
+      boxShadow: '0 0 3px 0 color-mix(in srgb, var(--cn-gradient-ai-stop-1) 30%, transparent), 0 0 12px 2px color-mix(in srgb, var(--cn-gradient-ai-stop-1) 15%, transparent), 0 0 28px 6px color-mix(in srgb, var(--cn-gradient-ai-stop-1) 8%, transparent)'
     },
     '33%': {
-      boxShadow: '0 0 3px 0 color-mix(in srgb, var(--cn-gradient-ai-stop-2) 50%, transparent), 0 0 12px 2px color-mix(in srgb, var(--cn-gradient-ai-stop-2) 25%, transparent), 0 0 28px 6px color-mix(in srgb, var(--cn-gradient-ai-stop-2) 12%, transparent)'
+      boxShadow: '0 0 3px 0 color-mix(in srgb, var(--cn-gradient-ai-stop-2) 30%, transparent), 0 0 12px 2px color-mix(in srgb, var(--cn-gradient-ai-stop-2) 15%, transparent), 0 0 28px 6px color-mix(in srgb, var(--cn-gradient-ai-stop-2) 8%, transparent)'
     },
     '66%': {
-      boxShadow: '0 0 3px 0 color-mix(in srgb, var(--cn-gradient-ai-stop-3) 50%, transparent), 0 0 12px 2px color-mix(in srgb, var(--cn-gradient-ai-stop-3) 25%, transparent), 0 0 28px 6px color-mix(in srgb, var(--cn-gradient-ai-stop-3) 12%, transparent)'
+      boxShadow: '0 0 3px 0 color-mix(in srgb, var(--cn-gradient-ai-stop-3) 30%, transparent), 0 0 12px 2px color-mix(in srgb, var(--cn-gradient-ai-stop-3) 15%, transparent), 0 0 28px 6px color-mix(in srgb, var(--cn-gradient-ai-stop-3) 8%, transparent)'
     }
   }
 }

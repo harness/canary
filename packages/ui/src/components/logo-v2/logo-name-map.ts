@@ -3,6 +3,7 @@
  * Generated logo map - DO NOT EDIT DIRECTLY
  */
 
+import AiVerify from './logos/ai-verify.svg'
 import Anchore from './logos/anchore.svg'
 import Android from './logos/android.svg'
 import AppDynamics from './logos/app-dynamics.svg'
@@ -116,6 +117,7 @@ import Zap from './logos/zap.svg'
 import Zoom from './logos/zoom.svg'
 
 export const LogoNameMapV2 = {
+  'ai-verify': AiVerify,
   anchore: Anchore,
   android: Android,
   'app-dynamics': AppDynamics,

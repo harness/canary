@@ -197,7 +197,8 @@ export const DataTable = function DataTable<TData>({
       getCoreRowModel: getCoreRowModel(),
       defaultColumn: {
         // @ts-expect-error: auto works and required
-        size: 'auto'
+        size: 'auto',
+        minSize: 32
       },
       getRowId: getRowId,
       // Enable manual sorting (server-side sorting)

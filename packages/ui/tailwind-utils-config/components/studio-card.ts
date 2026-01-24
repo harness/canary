@@ -142,6 +142,7 @@ export default {
   // Content Component
   '.cn-studio-card-content': {
     '@apply flex flex-col flex-grow gap-cn-sm px-cn-md pb-cn-lg pt-cn-sm': '',
+    paddingTop: '0 !important',
 
     // When a group card is hovered anywhere inside this content
     '&:has(.cn-studio-card-group:hover)': {
@@ -154,13 +155,6 @@ export default {
         transitionTimingFunction: 'ease-in-out'
       },
 
-      // Dim ALL cards within this content area
-      // '& .cn-studio-card:not(:has(> [data-status="executing"])):not(:hover)': {
-      //   backgroundColor: 'lch(from var(--cn-bg-3) l c h / 0.45) !important',
-      //   borderColor: 'lch(from var(--cn-border-2) l c h / 0.65) !important',
-      //   ...DimmedShadow3Style,
-      //   ...StudioCardHelperItemsHoveredStyles
-      // },
       '& .cn-studio-card:not(:hover)': {
         backgroundColor: 'lch(from var(--cn-bg-3) l c h / 0.45) !important',
 
@@ -252,17 +246,37 @@ export default {
     }
   },
 
-  '.cn-studio-card-expand-button-main, .cn-studio-card-button': {
+  '.cn-studio-card-expand-button-main': {
+    zIndex: '2',
+    height: '100%',
+    width: '100%',
+    transitionProperty: 'transform',
+    transitionDuration: '100ms',
+    '@apply relative flex flex-col gap-cn-2xs shadow-cn-1 border border-cn-2 rounded-cn-3 overflow-hidden bg-cn-3': ''
+  },
+
+  '.cn-studio-card-button': {
     zIndex: '2',
     height: '28px',
     transitionDuration: '100ms',
     '@apply relative flex items-center gap-cn-3xs px-cn-sm py-cn-2xs shadow-cn-1 border border-cn-2 rounded-cn-3': ''
   },
 
+  '.cn-studio-card-expand-button-top': {
+    '@apply flex items-center gap-cn-2xs p-cn-xs pl-cn-md flex-1': ''
+  },
+
+  '.cn-studio-card-expand-button-bottom': {
+    '@apply flex items-center justify-end gap-cn-2xs py-cn-xs px-cn-md flex-1 border-t border-cn-2': '',
+    backgroundColor: 'var(--cn-comp-pipeline-card-footer)',
+  },
+
   // Expand Button Component
   '.cn-studio-card-expand-button': {
     position: 'relative',
-    width: 'fit-content',
+    width: '226px',
+    height: 'var(--cn-size-22)',
+    transition: 'transform 0.1s linear',
 
     // Stack layers
     '&-stack': {
@@ -271,32 +285,34 @@ export default {
       transitionDuration: '100ms',
       transitionTimingFunction: 'ease-out',
       willChange: 'transform',
-      '@apply absolute shadow-cn-1 border border-cn-2 bg-cn-3 rounded-cn-4': '',
+      '@apply absolute shadow-cn-1 border border-cn-2 bg-cn-3 rounded-cn-3': '',
 
       // First stack layer (closer to button)
       '&-1': {
         zIndex: '1',
-        insetBlock: '0',
-        insetInline: '3px',
-        transform: 'translateY(4px)'
+        insetBlock: '3px',
+        insetInline: '0',
+        transform: 'translateX(3px)'
       },
 
       // Second stack layer (furthest from button)
       '&-2': {
         zIndex: '0',
-        insetBlock: '0',
-        insetInline: '6px',
-        transform: 'translateY(8px)'
+        insetBlock: '6px',
+        insetInline: '0',
+        transform: 'translateX(6px)'
       }
     },
 
-    // Hover state - expand stacks
+    // Hover state - expand stacks and translate button right
     '&:hover': {
+      transform: 'scale(1.02)',
+
       '.cn-studio-card-expand-button-stack-1': {
-        transform: 'translateY(6px)'
+        transform: 'translateX(4px)'
       },
       '.cn-studio-card-expand-button-stack-2': {
-        transform: 'translateY(12px)'
+        transform: 'translateX(8px)'
       }
     },
 

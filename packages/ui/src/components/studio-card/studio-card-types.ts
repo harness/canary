@@ -36,4 +36,6 @@ export interface StudioCardExpandButtonProps {
   stepCount: number
   isExpanded?: boolean
   onToggle?: () => void
+  label: string
+  icon?: React.ReactElement
 }

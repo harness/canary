@@ -1,8 +1,7 @@
-import { PropsWithChildren, useCallback, useMemo, useRef, type JSX } from 'react'
+import { PropsWithChildren, useCallback, useMemo, useRef, useState, type JSX } from 'react'
 
 import { IconV2, IconV2NamesType, StatusBadge, Text } from '@/components'
 import { cn } from '@/utils'
-import { easyPluralize } from '@/utils/stringUtils'
 
 import {
   StudioCardContentProps,
@@ -121,7 +120,15 @@ function Message({ message }: StudioCardMessageProps): JSX.Element | null {
  * ==========================
  */
 
-function ExpandButton({ stepCount, isExpanded = false, onToggle }: StudioCardExpandButtonProps): JSX.Element | null {
+function ExpandButton({
+  stepCount,
+  isExpanded = false,
+  onToggle,
+  label,
+  icon
+}: StudioCardExpandButtonProps): JSX.Element | null {
+  const [isHovered, setIsHovered] = useState(false)
+
   // Calculate number of stacks to show (max 2)
   const stackCount = useMemo(() => {
     if (isExpanded || stepCount <= 1) return 0
@@ -129,13 +136,10 @@ function ExpandButton({ stepCount, isExpanded = false, onToggle }: StudioCardExp
     return 2 // For 3 or more steps
   }, [stepCount, isExpanded])
 
-  if (stepCount === 0) return null
-
-  const stepCountText = easyPluralize(stepCount, 'step', 'steps', true)
+  if (stepCount === 0 || isExpanded) return null
 
   return (
     <div className="cn-studio-card-expand-button" data-expanded={isExpanded}>
-      {/* Stacking cards - positioned behind the button */}
       {stackCount > 0 && (
         <>
           {stackCount >= 2 && (
@@ -153,15 +157,25 @@ function ExpandButton({ stepCount, isExpanded = false, onToggle }: StudioCardExp
           e.stopPropagation()
           onToggle?.()
         }}
-        className={cn('cn-studio-card-expand-button-main', {
-          'bg-cn-2': isExpanded,
-          'bg-cn-3': !isExpanded
-        })}
+        onMouseEnter={() => setIsHovered(true)}
+        onMouseLeave={() => setIsHovered(false)}
+        className="cn-studio-card-expand-button-main"
       >
-        <Text color="foreground-1" variant="body-single-line-code">
-          {stepCountText}
-        </Text>
-        <IconV2 className="text-cn-2" name={isExpanded ? 'collapse' : 'expand'} size="sm" />
+        {/* icon + label */}
+        <div className="cn-studio-card-expand-button-top">
+          {icon ?? <IconV2 name="harness-plugins" size="lg" />}
+          <Text color="foreground-1" variant="body-strong">
+            {label}
+          </Text>
+        </div>
+
+        {/* Count + expand icon */}
+        <div className="cn-studio-card-expand-button-bottom">
+          <Text color="foreground-1" variant="body-single-line-code">
+            +{stepCount} more
+          </Text>
+          <IconV2 className="text-cn-2" name={isHovered ? 'expand' : 'collapse'} size="sm" />
+        </div>
       </button>
     </div>
   )

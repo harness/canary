@@ -226,7 +226,7 @@ const TableHead = forwardRef<HTMLTableCellElement, TableHeadProps>(
           <span className="ml-cn-3xs">
             {sortDirection === 'asc' && <IconV2 name="arrow-up" size="2xs" />}
             {sortDirection === 'desc' && <IconV2 name="arrow-down" size="2xs" />}
-            {!sortDirection && <IconV2 name="up-down" />}
+            {!sortDirection && <IconV2 name="up-down" size="2xs" />}
           </span>
         )}
       </Layout.Horizontal>

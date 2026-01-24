@@ -1,4 +1,4 @@
-import { useCallback, useMemo } from 'react'
+import { useCallback, useEffect, useMemo } from 'react'
 
 import { CheckboxOptions } from '@harnessio/ui/components'
 
@@ -77,7 +77,24 @@ export function useColumnFilter({
   )
 
   // Persist visible columns in localStorage
-  const [visibleColumns, setVisibleColumns] = useLocalStorage<string[]>(storageKey, defaultColumns)
+  const [storedVisibleColumns, setVisibleColumns] = useLocalStorage<string[]>(storageKey, defaultColumns)
+
+  // Filter out any columns that don't exist in the current columns array
+  const validColumnValues = useMemo(() => new Set(columns.map(col => col.value)), [columns])
+  const visibleColumns = useMemo(
+    () => storedVisibleColumns.filter(col => validColumnValues.has(col)),
+    [storedVisibleColumns, validColumnValues]
+  )
+
+  // Sync cleaned column list back to localStorage if it changed
+  useEffect(() => {
+    const hasChanged =
+      visibleColumns.length !== storedVisibleColumns.length ||
+      visibleColumns.some((col, idx) => col !== storedVisibleColumns[idx])
+    if (hasChanged) {
+      setVisibleColumns(visibleColumns)
+    }
+  }, [visibleColumns, storedVisibleColumns, setVisibleColumns])
 
   // Toggle column visibility
   const toggleColumn = useCallback(

@@ -2473,6 +2473,25 @@
         "$description": "Shadow color for 12-gray data visualization drop-shadow filter."
       }
     },
+    "widget": {
+      "test-intelligence": {
+        "bg": {
+          "$type": "color",
+          "$value": "linear-gradient(105deg, {purple.1000} -18.5%, {bg.1} 84%)",
+          "$description": "Background gradient for test intelligence widget."
+        },
+        "gradient": {
+          "$type": "color",
+          "$value": "linear-gradient(90deg, {comp.data-viz.05-indigo} 0%, {comp.data-viz.02-purple} 100%)",
+          "$description": "Gradient background for test intelligence widget."
+        },
+        "text-gradient": {
+          "$type": "color",
+          "$value": "linear-gradient(90deg, {text.2} 0%, {comp.data-viz.05-indigo} 50%, {comp.data-viz.02-purple} 100%)",
+          "$description": "Text gradient for test intelligence widget."
+        }
+      }
+    },
     "shadow": {
       "avatar": {
         "inner": {

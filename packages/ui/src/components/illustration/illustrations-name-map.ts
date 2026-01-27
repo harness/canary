@@ -36,6 +36,9 @@ import NoDataWebhooks from './images/no-data-webhooks.svg'
 import NoSearchMagnifyingGlassLight from './images/no-search-magnifying-glass-light.svg'
 import NoSearchMagnifyingGlass from './images/no-search-magnifying-glass.svg'
 import SubMenuEllipse from './images/sub-menu-ellipse.svg'
+import TiSavingsCardLight from './images/ti-savings-card-light.svg'
+import TiSavingsCard from './images/ti-savings-card.svg'
+import TiSparksSolid from './images/ti-sparks-solid.svg'
 import TooltipArrow from './images/tooltip-arrow.svg'
 import VulnerabilityActiveIssues from './images/vulnerabilty-active-issues.svg'
 import VulnerabilityCritical from './images/vulnerabilty-critical.svg'
@@ -72,6 +75,8 @@ export const IllustrationsNameMap = {
   'vulnerability-medium': VulnerabilityMedium,
   'vulnerability-high': VulnerabilityHigh,
   'vulnerability-critical': VulnerabilityCritical,
+  'ti-sparks': TiSparksSolid,
+  'ti-savings-card': TiSavingsCard,
   welcome: Welcome,
 
   // Light theme variants
@@ -91,5 +96,6 @@ export const IllustrationsNameMap = {
   'no-data-webhooks-light': NoDataWebhooksLight,
   'no-delegates-light': NoDataDelegateLight,
   'no-search-magnifying-glass-light': NoSearchMagnifyingGlassLight,
+  'ti-savings-card-light': TiSavingsCardLight,
   'welcome-light': WelcomeLight
 } as const satisfies Record<string, React.FunctionComponent<React.SVGProps<SVGSVGElement>>>

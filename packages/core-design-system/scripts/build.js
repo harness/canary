@@ -162,7 +162,7 @@ async function run() {
         const match = value.match(/^(\S+)\s+(\S+)\s+(\S+)\s+\S+\s+(.+)$/)
         if (match) {
           const [, x, y, blur, color] = match
-          return `drop-shadow(${x} ${y} ${blur} ${color})`
+          return `${x} ${y} ${blur} ${color}`
         }
         return value
       }

@@ -37,6 +37,7 @@ export interface TextareaProps extends TextareaHTMLAttributes<HTMLTextAreaElemen
   resizable?: boolean
   maxCharacters?: number
   autoResize?: boolean
+  inputGroupClassName?: string
 }
 
 /**
@@ -64,6 +65,7 @@ const Textarea = forwardRef<HTMLTextAreaElement, TextareaProps>(
       tooltipProps,
       tooltipContent,
       wrapperClassName,
+      inputGroupClassName,
       autoFocus,
       autoResize = false,
       ...props
@@ -144,7 +146,7 @@ const Textarea = forwardRef<HTMLTextAreaElement, TextareaProps>(
           </ControlGroup.LabelWrapper>
         )}
 
-        <ControlGroup.InputWrapper>
+        <ControlGroup.InputWrapper className={inputGroupClassName}>
           {!!maxCharacters && isHorizontal && (
             <span className={cn('cn-textarea-counter', { 'cn-textarea-counter-disabled': disabled })} role="status">
               {counter} / {maxCharacters}

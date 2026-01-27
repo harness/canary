@@ -164,7 +164,7 @@ function ExpandButton({
         {/* icon + label */}
         <div className="cn-studio-card-expand-button-top">
           {icon ?? <IconV2 name="harness-plugins" size="lg" />}
-          <Text color="foreground-1" variant="body-strong">
+          <Text color="foreground-1" variant="body-strong" className="truncate">
             {label}
           </Text>
         </div>

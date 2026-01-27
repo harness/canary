@@ -10,6 +10,7 @@ export interface StudioCardRootProps {
   // It will be updated to a generic value later
   variant?: 'default' | 'stage'
   execution?: boolean
+  size?: 'sm' | 'md'
 }
 
 export interface StudioCardHeaderProps {

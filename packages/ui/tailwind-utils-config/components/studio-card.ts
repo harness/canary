@@ -36,6 +36,10 @@ export default {
     maxWidth: '220px',
     height: 'var(--cn-size-40)',
 
+    '&.cn-studio-card-sm': {
+      borderWidth: '2px !important',
+    },
+
     // Selected state with theme-based borders
     '&[data-selected="true"]': {
       '&[data-theme="default"]': {

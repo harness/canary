@@ -2,6 +2,7 @@ import { PropsWithChildren, useCallback, useMemo, useRef, useState, type JSX } f
 
 import { IconV2, IconV2NamesType, StatusBadge, Text } from '@/components'
 import { cn } from '@/utils'
+import { cva } from 'class-variance-authority'
 
 import {
   StudioCardContentProps,
@@ -19,6 +20,18 @@ import {
  * =================
  */
 
+const sizeVariants = cva('', {
+  variants: {
+    size: {
+      sm: 'cn-studio-card-sm',
+      md: ''
+    }
+  },
+  defaultVariants: {
+    size: 'md'
+  }
+})
+
 const CLICK_DRAG_THRESHOLD = 5
 
 function Root({
@@ -28,14 +41,15 @@ function Root({
   theme = 'default',
   selected = false,
   variant = 'default',
-  execution = false
+  execution = false,
+  size = 'md'
 }: PropsWithChildren<StudioCardRootProps>): JSX.Element {
   // Used to determine if a click was a drag or a click
   const dragPos = useRef({ x: 0, y: 0 })
 
   return (
     <div
-      className={cn('cn-studio-card cursor-default', {
+      className={cn('cn-studio-card cursor-default', sizeVariants({ size }), {
         'cn-studio-card-execution': execution,
         'cn-studio-card-group': isGroupCard,
         'cn-studio-card-stage': variant === 'stage'

@@ -25,6 +25,7 @@ export interface BranchSelectorDropdownProps {
   repoId: string
   spaceId: string
   isBranchOnly?: boolean
+  selectorTitle?: string
   searchQuery: string
   setSearchQuery: (query: string) => void
   dynamicWidth?: boolean

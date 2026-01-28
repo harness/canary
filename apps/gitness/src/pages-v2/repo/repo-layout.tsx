@@ -6,6 +6,7 @@ import { RepoHeader, SubHeaderWrapper } from '@harnessio/ui/views'
 
 import { useRoutes } from '../../framework/context/NavigationContext'
 import { useIsMFE } from '../../framework/hooks/useIsMFE'
+import { CustomHandle } from '../../framework/routing/types'
 import { useGitRef } from '../../hooks/useGitRef'
 import { useRepoCommits } from '../../hooks/useRepoCommits'
 import { PathParams } from '../../RouteDefinitions'
@@ -37,6 +38,7 @@ const RepoLayout = () => {
   // Removing gitRef from summary, files and commits path when navigating from compare page
   const matches = useMatches()
   const isComparePage = matches.some(match => match.pathname.includes('/pulls/compare/'))
+  const shouldHideLayout = matches.some(match => (match.handle as CustomHandle)?.hideLayout ?? false)
 
   const summaryPathRef = isComparePage ? defaultBranch : gitRefPath
   const filesPathRef = isComparePage ? defaultBranch : gitRefPath
@@ -44,25 +46,31 @@ const RepoLayout = () => {
 
   return (
     <>
-      <RepoHeader
-        name={repoData?.identifier ?? ''}
-        isPublic={!!repoData?.is_public}
-        isArchived={repoData?.archived}
-        isLoading={isLoading}
-        isFavorite={repoData?.is_favorite}
-        onFavoriteToggle={onFavoriteToggle}
-        archivedDate={repoData?.updated}
-      />
-      <SubHeaderWrapper>
-        <RepoSubheader
-          showPipelinesTab={!isMFE}
-          showSearchTab={isMFE}
-          summaryPath={routes.toRepoSummary({ spaceId, repoId, '*': summaryPathRef })}
-          filesPath={routes.toRepoFiles({ spaceId, repoId, '*': filesPathRef })}
-          commitsPath={toRepoCommits({ spaceId, repoId, fullGitRef, gitRefName: commitsPathRef })}
-          isRepoEmpty={!!repoData?.is_empty}
-        />
-      </SubHeaderWrapper>
+      {!shouldHideLayout && (
+        <>
+          <RepoHeader
+            name={repoData?.identifier ?? ''}
+            isPublic={!!repoData?.is_public}
+            isArchived={repoData?.archived}
+            isLoading={isLoading}
+            isFavorite={repoData?.is_favorite}
+            onFavoriteToggle={onFavoriteToggle}
+            archivedDate={repoData?.updated}
+          />
+
+          <SubHeaderWrapper>
+            <RepoSubheader
+              showPipelinesTab={!isMFE}
+              showSearchTab={isMFE}
+              summaryPath={routes.toRepoSummary({ spaceId, repoId, '*': summaryPathRef })}
+              filesPath={routes.toRepoFiles({ spaceId, repoId, '*': filesPathRef })}
+              commitsPath={toRepoCommits({ spaceId, repoId, fullGitRef, gitRefName: commitsPathRef })}
+              isRepoEmpty={!!repoData?.is_empty}
+            />
+          </SubHeaderWrapper>
+        </>
+      )}
+
       <Outlet />
     </>
   )

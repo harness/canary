@@ -128,12 +128,12 @@ export interface TypesPullReq {
   merger?: Partial<PrincipalType>
   number?: number
   source_branch?: string
-  source_repo_id?: number
+  source_repo_id?: number | null
   source_sha?: string
   state?: EnumPullReqState
   stats?: TypesPullReqStats
   target_branch?: string
-  target_repo_id?: number
+  target_repo_id?: number | null
   title?: string
   labels?: TypesLabelPullReqAssignmentInfo[]
   updated?: number

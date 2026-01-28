@@ -10,12 +10,14 @@ import {
   WebhookSettingsLayout
 } from '@harnessio/ui/views'
 
+import { FeatureGuard } from './components-v2/feature-guard'
 import { AppShellMFE } from './components-v2/mfe/app-shell'
 import { ProjectDropdown } from './components-v2/project-dropdown'
 import { AppShell } from './components-v2/standalone/app-shell'
 import { AppProvider } from './framework/context/AppContext'
 import { AppRouterProvider } from './framework/context/AppRouterProvider'
 import { ExplorerPathsProvider } from './framework/context/ExplorerPathsContext'
+import { FeatureFlag } from './framework/context/MFEContext.tsx'
 import { PageTitleProvider } from './framework/context/PageTitleContext'
 import { RbacButton } from './framework/rbac/rbac-button'
 import { RbacMoreActionsTooltip } from './framework/rbac/rbac-more-actions-tooltip.tsx'
@@ -55,6 +57,7 @@ import { CommitDiffContainer } from './pages-v2/repo/repo-commit-details-diff'
 import RepoCommitsPage from './pages-v2/repo/repo-commits'
 import { CreateRepo } from './pages-v2/repo/repo-create-page'
 import RepoExecutionListPage from './pages-v2/repo/repo-execution-list'
+import RepoForkPage from './pages-v2/repo/repo-fork.tsx'
 import { ImportMultipleRepos } from './pages-v2/repo/repo-import-multiple-container'
 import { ImportRepo } from './pages-v2/repo/repo-import-page'
 import RepoLayout from './pages-v2/repo/repo-layout'
@@ -80,6 +83,7 @@ import WebhookListPage from './pages-v2/webhooks/webhook-list'
 enum Page {
   Repositories = 'Repositories',
   Summary = 'Summary',
+  Fork = 'Fork',
   Commits = 'Commits',
   Pull_Requests = 'Pull requests',
   Branches = 'Branches',
@@ -228,6 +232,20 @@ export const repoRoutes: CustomRouteObject[] = [
           {
             index: true,
             element: <Navigate to="summary" replace />
+          },
+          {
+            path: 'fork',
+            element: (
+              <FeatureGuard featureFlag={FeatureFlag.CODE_FORK_ENABLED}>
+                <RepoForkPage />
+              </FeatureGuard>
+            ),
+            handle: {
+              breadcrumb: () => <span>{Page.Fork}</span>,
+              routeName: RouteConstants.toRepoFork,
+              pageTitle: Page.Fork,
+              hideLayout: true
+            }
           },
           {
             path: 'summary',

@@ -10,6 +10,7 @@ export enum RouteConstants {
   toImportMultipleRepos = 'toImportMultipleRepos',
   toRepositories = 'toRepositories',
   toRepoSummary = 'toRepoSummary',
+  toRepoFork = 'toRepoFork',
   toRepoBranchCommits = 'toRepoBranchCommits',
   toRepoTagCommits = 'toRepoTagCommits',
   toRepoPipelines = 'toRepoPipelines',
@@ -131,6 +132,11 @@ export interface CustomHandle {
    * Updates the document title based on route parameters.
    */
   pageTitle?: string | ((params: Params<string>) => string)
+
+  /**
+   * Whether to hide the layout.
+   */
+  hideLayout?: boolean
 }
 
 // Intersection of RouteObject with the custom handle

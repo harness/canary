@@ -51,7 +51,6 @@
     "zustand": "^4.5.4"
   },
   "devDependencies": {
-    "@emotion/is-prop-valid": "^1.4.0",
     "@eslint/js": "^9.9.0",
     "@git-diff-view/react": "^0.0.30",
     "@swc/core": "^1.12.1",

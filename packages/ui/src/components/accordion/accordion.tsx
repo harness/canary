@@ -143,7 +143,7 @@ const AccordionTrigger = forwardRef<ElementRef<typeof AccordionPrimitive.Trigger
         name="nav-arrow-down"
         size="xs"
         {...indicatorProps}
-        className={cn('cn-accordion-trigger-indicator', indicatorProps?.className)}
+        className={cn('cn-accordion-trigger-indicator pointer-events-none', indicatorProps?.className)}
       />
     )
 

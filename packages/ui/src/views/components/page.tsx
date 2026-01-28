@@ -65,7 +65,7 @@ const Header: FC<PageHeaderProps> = ({
     )
 
   return (
-    <Layout.Vertical gap="md" className={cn('w-full', children ? 'mb-cn-md' : 'mb-cn-3xl')}>
+    <Layout.Vertical gap="md" className={cn('w-full', children ? 'mb-cn-md' : 'mb-cn-2xl')}>
       <Layout.Horizontal className="h-cn-9">
         {!!backLink && (
           <Link prefixIcon {...backLink.linkProps}>

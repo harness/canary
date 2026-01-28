@@ -15,6 +15,7 @@ import {
   Text
 } from '@/components'
 import { SandboxLayout } from '@/views'
+import { cn } from '@utils/cn'
 
 export interface PageHeaderBackProps {
   linkText: string
@@ -64,7 +65,7 @@ const Header: FC<PageHeaderProps> = ({
     )
 
   return (
-    <Layout.Vertical gap="sm" className="mb-cn-3xl w-full">
+    <Layout.Vertical gap="md" className={cn('w-full', children ? 'mb-cn-md' : 'mb-cn-3xl')}>
       <Layout.Horizontal className="h-cn-9">
         {!!backLink && (
           <Link prefixIcon {...backLink.linkProps}>

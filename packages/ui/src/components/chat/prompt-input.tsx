@@ -69,7 +69,7 @@ export const PromptInputSubmit = ({ status, children, ...props }: PromptInputSub
     Icon = <IconV2 name="stop-solid" />
   }
   return (
-    <Button iconOnly type="submit" size="xs" {...props}>
+    <Button rounded iconOnly type="submit" size="xs" {...props}>
       {children ?? Icon}
     </Button>
   )

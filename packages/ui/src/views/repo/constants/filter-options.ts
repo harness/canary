@@ -1,4 +1,5 @@
 import { TFunctionWithFallback } from '@/context'
+import { PrincipalType } from '@/types'
 import { ComboBoxOptions } from '@components/filters/filters-bar/actions/variants/combo-box'
 import {
   CalendarFilterOptionConfig,
@@ -9,7 +10,6 @@ import {
   FilterOptionConfig,
   MultiSelectFilterOptionConfig
 } from '@components/filters/types'
-import { PrincipalType } from '@/types'
 import { Scope } from '@views/common'
 
 import { Parser } from '@harnessio/filters'
@@ -77,7 +77,11 @@ export const getPRListFilterOptions = ({
           // If we have original user data, use it to generate string label
           // Otherwise, try to extract string from React node or use value
           const userObj = principalUserData?.find(u => String(u.id) === user.value)
-          const stringLabel = userObj ? getAuthorStringLabel(userObj) : (typeof user.label === 'string' ? user.label : user.value)
+          const stringLabel = userObj
+            ? getAuthorStringLabel(userObj)
+            : typeof user.label === 'string'
+              ? user.label
+              : user.value
           return { label: stringLabel, value: user.value }
         }),
         onSearch: onAuthorSearch,
@@ -127,40 +131,40 @@ export const getPRListFilterOptions = ({
      */
     ...(!(accountId && orgIdentifier && projectIdentifier) && isProjectLevel
       ? [
-        {
-          label: t('views:scope.label', 'Scope'),
-          value: 'include_subspaces' as keyof PRListFilters,
-          type: FilterFieldTypes.ComboBox as FilterFieldTypes.ComboBox,
-          defaultValue: scopeFilterDefaultValue,
-          filterFieldConfig: {
-            options: scopeFilterOptions,
-            placeholder: 'Select scope',
-            allowSearch: false
-          },
-          sticky: true,
-          parser: {
-            parse: (value: string): ComboBoxOptions => {
-              let selectedValue: string
-              if (accountId && orgIdentifier) {
-                selectedValue = value === 'true' ? ExtendedScope.OrgProg : ExtendedScope.Organization
-              } else if (accountId) {
-                selectedValue = value === 'true' ? ExtendedScope.All : ExtendedScope.Account
-              }
-
-              return scopeFilterOptions.find(scope => scope.value === selectedValue) || { label: '', value }
+          {
+            label: t('views:scope.label', 'Scope'),
+            value: 'include_subspaces' as keyof PRListFilters,
+            type: FilterFieldTypes.ComboBox as FilterFieldTypes.ComboBox,
+            defaultValue: scopeFilterDefaultValue,
+            filterFieldConfig: {
+              options: scopeFilterOptions,
+              placeholder: 'Select scope',
+              allowSearch: false
             },
-            serialize: (value: ComboBoxOptions): string => {
-              const selected = value?.value
+            sticky: true,
+            parser: {
+              parse: (value: string): ComboBoxOptions => {
+                let selectedValue: string
+                if (accountId && orgIdentifier) {
+                  selectedValue = value === 'true' ? ExtendedScope.OrgProg : ExtendedScope.Organization
+                } else if (accountId) {
+                  selectedValue = value === 'true' ? ExtendedScope.All : ExtendedScope.Account
+                }
 
-              if (accountId && orgIdentifier && projectIdentifier) return ''
-              if (accountId && orgIdentifier) return String(selected === ExtendedScope.OrgProg)
-              if (accountId) return String(selected === ExtendedScope.All)
+                return scopeFilterOptions.find(scope => scope.value === selectedValue) || { label: '', value }
+              },
+              serialize: (value: ComboBoxOptions): string => {
+                const selected = value?.value
 
-              return ''
+                if (accountId && orgIdentifier && projectIdentifier) return ''
+                if (accountId && orgIdentifier) return String(selected === ExtendedScope.OrgProg)
+                if (accountId) return String(selected === ExtendedScope.All)
+
+                return ''
+              }
             }
           }
-        }
-      ]
+        ]
       : []),
     ...customFilterOptions
   ]

@@ -1,14 +1,14 @@
 import { useEffect, useMemo, useRef, useState } from 'react'
 import { useNavigate, useParams, useSearchParams } from 'react-router-dom'
 
-import { useQuery, useQueries } from '@tanstack/react-query'
+import { useQueries, useQuery } from '@tanstack/react-query'
 
 import {
+  getPrincipal,
   ListSpacePullReqQueryQueryParams,
   TypesPullReqRepo,
   useGetUserQuery,
-  useListPrincipalsQuery,
-  getPrincipal
+  useListPrincipalsQuery
 } from '@harnessio/code-service-client'
 import {
   RepositoryType,
@@ -260,8 +260,7 @@ export default function PullRequestListPage() {
   const combinedPrincipalData = [
     ...(principalDataList || []),
     ...selectedAuthors.filter(
-      selectedAuthor =>
-        selectedAuthor && !principalDataList?.some(principal => principal.id === selectedAuthor.id)
+      selectedAuthor => selectedAuthor && !principalDataList?.some(principal => principal.id === selectedAuthor.id)
     )
   ].filter((author): author is NonNullable<typeof author> => author !== undefined)
 

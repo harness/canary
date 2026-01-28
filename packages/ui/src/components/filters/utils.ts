@@ -87,7 +87,9 @@ export const getMultiSelectTooltipContent = <
       // Use the exact same logic as getFilterLabelValue (line 38-45)
       const labels = selectedValues.map(
         selectedOption =>
-          options?.find(option => option.value === selectedOption.value)?.label || selectedOption.label || selectedOption.value
+          options?.find(option => option.value === selectedOption.value)?.label ||
+          selectedOption.label ||
+          selectedOption.value
       )
       return labels.join(', ')
     }

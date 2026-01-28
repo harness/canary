@@ -125,7 +125,11 @@ const PullRequestListPage: FC<PullRequestPageProps> = ({
 
   const computedPrincipalData = useMemo(() => {
     // Support multiple default selected authors for multi-select
-    const defaultAuthors = defaultSelectedAuthor ? (Array.isArray(defaultSelectedAuthor) ? defaultSelectedAuthor : [defaultSelectedAuthor]) : []
+    const defaultAuthors = defaultSelectedAuthor
+      ? Array.isArray(defaultSelectedAuthor)
+        ? defaultSelectedAuthor
+        : [defaultSelectedAuthor]
+      : []
     return principalData || (!principalsSearchQuery && defaultAuthors.length > 0 ? defaultAuthors : [])
   }, [principalData, defaultSelectedAuthor, principalsSearchQuery])
 

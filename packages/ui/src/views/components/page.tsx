@@ -38,6 +38,7 @@ export interface PageHeaderProps {
   favoriteProps?: Omit<FavoriteIconProps, 'className'>
   isLoading?: boolean
   actions?: ReactNode
+  headerActions?: ReactNode
 }
 
 const Header: FC<PageHeaderProps> = ({
@@ -50,7 +51,8 @@ const Header: FC<PageHeaderProps> = ({
   children,
   favoriteProps,
   isLoading = false,
-  actions
+  actions,
+  headerActions
 }) => {
   const titleElement =
     typeof title === 'string' ? (
@@ -62,44 +64,44 @@ const Header: FC<PageHeaderProps> = ({
     )
 
   return (
-    <Layout.Horizontal justify="between" gap="xl" className="mb-cn-md">
-      <Layout.Vertical gap="md" className="w-full">
-        <Layout.Vertical>
-          {!!backLink && (
-            <Link prefixIcon {...backLink.linkProps}>
-              {backLink.linkText}
-            </Link>
+    <Layout.Vertical gap="sm" className="mb-cn-3xl w-full">
+      <Layout.Horizontal>
+        {!!backLink && (
+          <Link prefixIcon {...backLink.linkProps}>
+            {backLink.linkText}
+          </Link>
+        )}
+        {!!headerActions && <ButtonLayout className="flex-1">{headerActions}</ButtonLayout>}
+      </Layout.Horizontal>
+      <Layout.Horizontal>
+        <Layout.Grid gap="xs" flow="column">
+          {isLoading ? (
+            <>
+              <Skeleton.Logo className="mt-cn-4xs" size="md" />
+              <Skeleton.Typography className="w-80" variant="heading-section" />
+            </>
+          ) : (
+            <>
+              {!!logoName && <LogoV2 className="mt-cn-4xs" name={logoName} size="md" />}
+              {iconName ? (
+                <Layout.Horizontal gap="xs" align="center">
+                  <div className="mt-cn-4xs">
+                    <IconV2 name={iconName} size={iconSize} />
+                  </div>
+                  {titleElement}
+                </Layout.Horizontal>
+              ) : (
+                titleElement
+              )}
+            </>
           )}
-          <Layout.Grid gap="xs" flow="column">
-            {isLoading ? (
-              <>
-                <Skeleton.Logo className="mt-cn-4xs" size="md" />
-                <Skeleton.Typography className="w-80" variant="heading-section" />
-              </>
-            ) : (
-              <>
-                {!!logoName && <LogoV2 className="mt-cn-4xs" name={logoName} size="md" />}
-                {iconName ? (
-                  <Layout.Horizontal gap="xs" align="center">
-                    <div className="mt-cn-4xs">
-                      <IconV2 name={iconName} size={iconSize} />
-                    </div>
-                    {titleElement}
-                  </Layout.Horizontal>
-                ) : (
-                  titleElement
-                )}
-              </>
-            )}
-            {!!favoriteProps && !isLoading && <Favorite className="mt-cn-4xs" {...favoriteProps} />}
-          </Layout.Grid>
-        </Layout.Vertical>
-        {!!description && <Text>{description}</Text>}
-        {children}
-      </Layout.Vertical>
-
-      {!!actions && <ButtonLayout className="self-end">{actions}</ButtonLayout>}
-    </Layout.Horizontal>
+          {!!favoriteProps && !isLoading && <Favorite className="mt-cn-4xs" {...favoriteProps} />}
+        </Layout.Grid>
+        {!!actions && <ButtonLayout className="flex-1">{actions}</ButtonLayout>}
+      </Layout.Horizontal>
+      {!!description && <Text>{description}</Text>}
+      {children}
+    </Layout.Vertical>
   )
 }
 Header.displayName = 'PageHeader'

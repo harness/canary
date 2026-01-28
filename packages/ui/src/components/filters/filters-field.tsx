@@ -18,7 +18,7 @@ import {
   FilterOptionConfig,
   FilterValueTypes
 } from './types'
-import { getFilterLabelValue } from './utils'
+import { getFilterLabelValue, getMultiSelectTooltipContent } from './utils'
 
 export interface FiltersFieldProps<
   T extends string,
@@ -164,6 +164,9 @@ const FiltersField = <T extends string, V extends FilterValueTypes, CustomValue 
     )
   }
 
+  const valueLabel = getFilterLabelValue(filterOption, activeFilterOption)
+  const tooltipContent = getMultiSelectTooltipContent(filterOption, activeFilterOption)
+
   return (
     <FilterBoxWrapper
       contentClassName={cn(
@@ -176,7 +179,8 @@ const FiltersField = <T extends string, V extends FilterValueTypes, CustomValue 
       onOpenChange={onOpenChange}
       defaultOpen={shouldOpenFilter}
       filterLabel={filterOption.label}
-      valueLabel={getFilterLabelValue(filterOption, activeFilterOption)}
+      valueLabel={valueLabel}
+      tooltipContent={tooltipContent}
     >
       <FilterFieldInternal<T, V, CustomValue>
         filter={activeFilterOption}

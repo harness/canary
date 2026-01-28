@@ -69,3 +69,28 @@ export const getMultiSelectParser = (options: CheckboxOptions[]) => {
     serialize: (value?: CheckboxOptions[]) => value?.reduce((acc, val) => (acc += `${val.value},`), '') || ''
   }
 }
+
+// Helper function to get tooltip content for MultiSelect filters
+// Uses the exact same logic as getFilterLabelValue for consistency
+export const getMultiSelectTooltipContent = <
+  T extends string,
+  V extends FilterValueTypes,
+  CustomValue = Record<string, unknown>
+>(
+  filterOption: FilterOptionConfig<T, CustomValue>,
+  filter: FilterFieldConfig<V>
+): ReactNode | undefined => {
+  if (filterOption.type === FilterFieldTypes.MultiSelect) {
+    const options = filterOption.filterFieldConfig?.options
+    const selectedValues = filter.value as CheckboxOptions[]
+    if (selectedValues && selectedValues.length > 0) {
+      // Use the exact same logic as getFilterLabelValue (line 38-45)
+      const labels = selectedValues.map(
+        selectedOption =>
+          options?.find(option => option.value === selectedOption.value)?.label || selectedOption.label || selectedOption.value
+      )
+      return labels.join(', ')
+    }
+  }
+  return undefined
+}

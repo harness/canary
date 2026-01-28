@@ -226,6 +226,7 @@ const PullRequestListPage: FC<PullRequestPageProps> = ({
     isPrincipalsLoading,
     customFilterOptions,
     principalData: userSelectOptions,
+    principalUserData: computedPrincipalData,
     scope
   })
 

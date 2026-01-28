@@ -16,6 +16,7 @@ interface FiltersProps {
   isOpen: boolean
   setIsOpen: (open: boolean) => void
   valueLabel?: ReactNode
+  tooltipContent?: ReactNode
   contentClassName?: string
   children?: ReactNode
 }
@@ -28,6 +29,7 @@ const FilterBoxWrapper = ({
   isOpen,
   setIsOpen,
   valueLabel,
+  tooltipContent,
   onOpenChange,
   contentClassName
 }: FiltersProps) => {
@@ -51,7 +53,16 @@ const FilterBoxWrapper = ({
       }}
     >
       <DropdownMenu.Trigger asChild>
-        <Button variant="secondary">
+        <Button
+          variant="secondary"
+          tooltipProps={
+            tooltipContent
+              ? {
+                  content: tooltipContent
+                }
+              : undefined
+          }
+        >
           <Layout.Grid align="center" columns={valueLabel ? 'auto 1fr' : undefined} gapX="2xs">
             <Text as="span" color="foreground-1" truncate>
               {filterLabel}

@@ -1,0 +1,241 @@
+---
+title: ViewOnly
+description: ViewOnly component for displaying read-only label-value pairs
+beta: true
+---
+
+The `ViewOnly` component displays data in a read-only format with label-value pairs. It supports single-column and responsive two-column layouts, loading states, and custom content.
+
+import { DocsPage } from "@/components/docs-page";
+
+<DocsPage.ComponentExample
+  client:only
+  code={`<ViewOnly
+    title="User Details"
+    data={[
+      { label: "Name", value: "John Doe" },
+      { label: "Email", value: "john.doe@example.com" },
+      { label: "Role", value: "Administrator" },
+      { label: "Status", value: "Active" }
+    ]}
+  />`}
+/>
+
+## Usage
+
+```typescript jsx
+import { ViewOnly } from '@harnessio/ui'
+
+// ...
+
+return (
+  <ViewOnly
+    title="Section Title"
+    data={[
+      { label: "Label 1", value: "Value 1" },
+      { label: "Label 2", value: "Value 2" }
+    ]}
+  />
+)
+```
+
+## Single Column Layout
+
+Force a single-column layout regardless of container width using the `layout` prop.
+
+<DocsPage.ComponentExample
+  client:only
+  code={`<ViewOnly
+    title="Contact Information"
+    layout="singleColumn"
+    data={[
+      { label: "Phone", value: "+1 (555) 123-4567" },
+      { label: "Address", value: "123 Main Street, City, State 12345" },
+      { label: "Website", value: "https://example.com" }
+    ]}
+  />`}
+/>
+
+## Two-Column Layout
+
+By default, the component uses a responsive two-column layout when the container is wide enough (≥800px). Data is automatically split between columns.
+
+<DocsPage.ComponentExample
+  client:only
+  code={`<ViewOnly
+    title="Project Details"
+    layout="columns"
+    data={[
+      { label: "Project Name", value: "Canary UI" },
+      { label: "Version", value: "2.0.0" },
+      { label: "License", value: "MIT" },
+      { label: "Repository", value: "github.com/harness/canary" },
+      { label: "Last Updated", value: "January 2026" },
+      { label: "Contributors", value: "42" }
+    ]}
+  />`}
+/>
+
+## Loading State
+
+Display skeleton placeholders while data is being fetched.
+
+<DocsPage.ComponentExample
+  client:only
+  code={`<ViewOnly
+    title="Loading Data"
+    isLoading
+    data={[
+      { label: "Field 1", value: "Value 1" },
+      { label: "Field 2", value: "Value 2" },
+      { label: "Field 3", value: "Value 3" }
+    ]}
+  />`}
+/>
+
+## Empty Values
+
+When a value is empty or undefined, the component displays "empty" in a disabled style.
+
+<DocsPage.ComponentExample
+  client:only
+  code={`<ViewOnly
+    title="Partial Data"
+    data={[
+      { label: "Name", value: "John Doe" },
+      { label: "Middle Name", value: "" },
+      { label: "Nickname", value: null }
+    ]}
+  />`}
+/>
+
+## Custom Value Content
+
+Values can be any React node, allowing for custom formatting and components.
+
+<DocsPage.ComponentExample
+  client:only
+  code={`<ViewOnly
+    title="Custom Content"
+    data={[
+      { label: "Status", value: <Badge variant="success">Active</Badge> },
+      { label: "Tags", value: <div className="flex gap-cn-xs"><Badge>React</Badge><Badge>TypeScript</Badge></div> },
+      { label: "Description", value: <Text color="foreground-2">A longer description that wraps across multiple lines when needed.</Text> }
+    ]}
+  />`}
+/>
+
+## ViewOnlyItem
+
+You can also use the `ViewOnlyItem` component directly for more control.
+
+<DocsPage.ComponentExample
+  client:only
+  code={`<Layout.Vertical gap="sm">
+    <ViewOnlyItem label="Username" value="johndoe" />
+    <ViewOnlyItem label="Email" value="john@example.com" />
+    <ViewOnlyItem label="Loading Item" value="Loading..." isLoading />
+  </Layout.Vertical>`}
+/>
+
+## API Reference
+
+### `ViewOnly`
+
+The main component for displaying read-only data.
+
+```typescript jsx
+<ViewOnly
+  title="Section Title"          // [OPTIONAL] Title displayed above the data
+  data={[...]}                   // [REQUIRED] Array of label-value pairs or ReactNodes
+  layout="columns"               // [OPTIONAL] Layout mode
+  isLoading={false}              // [OPTIONAL] Show loading skeletons
+  className="custom-class"       // [OPTIONAL] Custom class name
+/>
+```
+
+<DocsPage.PropsTable
+  props={[
+    {
+      name: "title",
+      description: "Title displayed above the data section",
+      required: false,
+      value: "string",
+    },
+    {
+      name: "data",
+      description:
+        "Array of data items to display. Each item can be an object with label and value properties, or a ReactNode for custom content.",
+      required: true,
+      value: "ViewOnlyItemData[]",
+    },
+    {
+      name: "layout",
+      description:
+        "Layout mode. 'columns' enables responsive two-column layout when container is wide enough. 'singleColumn' forces single-column layout.",
+      required: false,
+      value: "'singleColumn' | 'columns'",
+      defaultValue: "'columns'",
+    },
+    {
+      name: "isLoading",
+      description:
+        "When true, displays skeleton placeholders instead of actual values",
+      required: false,
+      value: "boolean",
+      defaultValue: "false",
+    },
+    {
+      name: "className",
+      description: "Custom class name for the root element",
+      required: false,
+      value: "string",
+    },
+  ]}
+/>
+
+### `ViewOnlyItem`
+
+Individual item component for displaying a single label-value pair.
+
+```typescript jsx
+<ViewOnlyItem
+  label="Field Label"            // [REQUIRED] Label text
+  value="Field Value"            // [REQUIRED] Value to display
+  isLoading={false}              // [OPTIONAL] Show loading skeleton
+/>
+```
+
+<DocsPage.PropsTable
+  props={[
+    {
+      name: "label",
+      description: "The label text displayed on the left",
+      required: true,
+      value: "string",
+    },
+    {
+      name: "value",
+      description:
+        "The value to display. Can be a string or any ReactNode. Empty values display 'empty' text.",
+      required: true,
+      value: "ReactNode",
+    },
+    {
+      name: "isLoading",
+      description:
+        "When true, displays skeleton placeholders for both label and value",
+      required: false,
+      value: "boolean",
+      defaultValue: "false",
+    },
+  ]}
+/>
+
+### `ViewOnlyItemData`
+
+Type definition for data items.
+
+```typescript
+type ViewOnlyItemData = { label: string; value: ReactNode } | ReactNode;
+```

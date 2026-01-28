@@ -1,0 +1,187 @@
+---
+title: Widgets
+description: Widgets component for displaying content in a flexible widget layout
+beta: true
+---
+
+The `Widgets` component provides a flexible container for displaying content in widget-style layouts. It supports single-column and two-column configurations, with optional titles and "View more" links for each widget item.
+
+import { DocsPage } from "@/components/docs-page";
+
+<DocsPage.ComponentExample
+  client:only
+  code={`<Widgets.Root>
+    <Widgets.Item title="Recent Activity">
+      <div className="p-cn-md">Widget content goes here</div>
+    </Widgets.Item>
+    <Widgets.Item title="Statistics">
+      <div className="p-cn-md">Another widget with statistics</div>
+    </Widgets.Item>
+  </Widgets.Root>`}
+/>
+
+## Usage
+
+```typescript jsx
+import { Widgets } from '@harnessio/ui'
+
+// ...
+
+return (
+  <Widgets.Root>
+    <Widgets.Item title="Widget Title">
+      {/* Widget content */}
+    </Widgets.Item>
+  </Widgets.Root>
+)
+```
+
+## Two-Column Layout
+
+The `Widgets` component supports a two-column layout when `isTwoColumn` is set to `true` and there are more than one child items.
+
+<DocsPage.ComponentExample
+  client:only
+  code={`<Widgets.Root isTwoColumn>
+    <Widgets.Item title="First Widget">
+      <div className="p-cn-md">Content for the first widget</div>
+    </Widgets.Item>
+    <Widgets.Item title="Second Widget">
+      <div className="p-cn-md">Content for the second widget</div>
+    </Widgets.Item>
+    <Widgets.Item title="Third Widget">
+      <div className="p-cn-md">Content for the third widget</div>
+    </Widgets.Item>
+    <Widgets.Item title="Fourth Widget">
+      <div className="p-cn-md">Content for the fourth widget</div>
+    </Widgets.Item>
+  </Widgets.Root>`}
+/>
+
+## With "View More" Link
+
+Each widget item can include a "View more" link that navigates to additional content.
+
+<DocsPage.ComponentExample
+  client:only
+  code={`<Widgets.Root>
+    <Widgets.Item title="Recent Activity" moreLink={{ to: "/activity" }}>
+      <div className="p-cn-md">Widget content with a link to view more</div>
+    </Widgets.Item>
+  </Widgets.Root>`}
+/>
+
+## Widget Table Mode
+
+The `isWidgetTable` prop removes the default border and padding, useful when the widget contains a table or similar content that provides its own styling.
+
+<DocsPage.ComponentExample
+  client:only
+  code={`<Widgets.Root>
+    <Widgets.Item title="Data Table" isWidgetTable>
+      <div className="border border-cn-3 rounded-cn-3">
+        <div className="p-cn-md border-b border-cn-3">Table Header</div>
+        <div className="p-cn-md">Table Content</div>
+      </div>
+    </Widgets.Item>
+  </Widgets.Root>`}
+/>
+
+## Without Title
+
+Widget items can be rendered without a title for simpler layouts.
+
+<DocsPage.ComponentExample
+  client:only
+  code={`<Widgets.Root>
+    <Widgets.Item>
+      <div className="p-cn-md">Widget content without a title</div>
+    </Widgets.Item>
+  </Widgets.Root>`}
+/>
+
+## API Reference
+
+### `Root`
+
+The root container component for widgets.
+
+```typescript jsx
+<Widgets.Root
+  isTwoColumn={false}  // [OPTIONAL] Enable two-column layout
+>
+  {/* Widget items */}
+</Widgets.Root>
+```
+
+<DocsPage.PropsTable
+  props={[
+    {
+      name: "children",
+      description: "The widget items to render",
+      required: true,
+      value: "ReactNode",
+    },
+    {
+      name: "isTwoColumn",
+      description:
+        "When true and there are more than one child, displays widgets in a two-column layout",
+      required: false,
+      value: "boolean",
+      defaultValue: "false",
+    },
+  ]}
+/>
+
+### `Item`
+
+Individual widget item component.
+
+```typescript jsx
+<Widgets.Item
+  title="Widget Title"           // [OPTIONAL] Title displayed at the top of the widget
+  moreLink={{ to: "/path" }}     // [OPTIONAL] Link props for "View more" link
+  isWidgetTable={false}          // [OPTIONAL] Removes default border and padding
+  className="custom-class"       // [OPTIONAL] Custom class name
+>
+  {/* Widget content */}
+</Widgets.Item>
+```
+
+<DocsPage.PropsTable
+  props={[
+    {
+      name: "children",
+      description: "The content to render inside the widget",
+      required: true,
+      value: "ReactNode",
+    },
+    {
+      name: "title",
+      description: "The title displayed at the top of the widget",
+      required: false,
+      value: "string",
+    },
+    {
+      name: "moreLink",
+      description:
+        "Link props for the 'View more' link. Uses react-router-dom LinkProps.",
+      required: false,
+      value: "LinkProps",
+    },
+    {
+      name: "isWidgetTable",
+      description:
+        "When true, removes the default border and padding from the widget container",
+      required: false,
+      value: "boolean",
+      defaultValue: "false",
+    },
+    {
+      name: "className",
+      description: "Custom class name for the widget container",
+      required: false,
+      value: "string",
+    },
+  ]}
+/>

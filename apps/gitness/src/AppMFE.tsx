@@ -5,6 +5,8 @@ import { createBrowserRouter, RouterProvider } from 'react-router-dom'
 import { QueryClientProvider } from '@tanstack/react-query'
 
 import { CodeServiceAPIClient } from '@harnessio/code-service-client'
+import { NgManagerSwaggerServiceAPIClient } from '@harnessio/react-ng-manager-swagger-service-client'
+import { NGManagerServiceAPIClient } from '@harnessio/react-ng-manager-v2-client'
 import { TooltipProvider } from '@harnessio/ui/components'
 import { DialogProvider, PortalProvider, TranslationProvider } from '@harnessio/ui/context'
 
@@ -41,9 +43,9 @@ export default function AppMFE({
   routeUtils,
   hooks
 }: AppMFEProps) {
-  new CodeServiceAPIClient({
+  const createClientConfig = (basePath: string) => ({
     urlInterceptor: (url: string) =>
-      `${window.apiUrl || ''}/code/api/v1${url}${url.includes('?') ? '&' : '?'}routingId=${scope.accountId}`,
+      `${window.apiUrl || ''}${basePath}${url}${url.includes('?') ? '&' : '?'}routingId=${scope.accountId}`,
     requestInterceptor: (request: Request) => {
       const token = decode(localStorage.getItem('token') || '')
       const newRequest = request.clone()
@@ -59,6 +61,10 @@ export default function AppMFE({
       return response
     }
   })
+
+  new CodeServiceAPIClient(createClientConfig('/code/api/v1'))
+  new NGManagerServiceAPIClient(createClientConfig('/ng/api'))
+  new NgManagerSwaggerServiceAPIClient(createClientConfig('/ng/api'))
 
   // Apply host theme to MFE
   const { setTheme: setMFETheme } = useMFEThemeContext()

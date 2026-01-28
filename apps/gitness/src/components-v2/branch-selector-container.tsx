@@ -13,6 +13,7 @@ interface BranchSelectorContainerProps {
   selectedBranch?: BranchSelectorListItem
   onSelectBranchorTag: (branchTag: BranchSelectorListItem, type: BranchSelectorTab) => void
   isBranchOnly?: boolean
+  selectorTitle?: string
   dynamicWidth?: boolean
   preSelectedTab?: BranchSelectorTab
   setCreateBranchDialogOpen?: (open: boolean) => void
@@ -30,6 +31,7 @@ export const BranchSelectorContainer = forwardRef<HTMLButtonElement, BranchSelec
       selectedBranch,
       onSelectBranchorTag,
       isBranchOnly = false,
+      selectorTitle = '',
       dynamicWidth = false,
       preSelectedTab,
       setCreateBranchDialogOpen,
@@ -130,6 +132,7 @@ export const BranchSelectorContainer = forwardRef<HTMLButtonElement, BranchSelec
         setSearchQuery={setBranchTagQuery}
         onSelectBranch={onSelectBranchorTag}
         isBranchOnly={isBranchOnly}
+        selectorTitle={selectorTitle}
         dynamicWidth={dynamicWidth}
         preSelectedTab={preSelectedTab}
         setCreateBranchDialogOpen={setCreateBranchDialogOpen}

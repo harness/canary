@@ -18,6 +18,7 @@ interface BranchSelectorProps {
   selectedBranch?: BranchSelectorListItem
   onSelectBranch: (branchTag: BranchSelectorListItem, type: BranchSelectorTab) => void
   isBranchOnly?: boolean
+  selectorTitle?: string
   searchQuery?: string
   setSearchQuery: (query: string) => void
   dynamicWidth?: boolean
@@ -41,6 +42,7 @@ export const BranchSelectorV2 = forwardRef<HTMLButtonElement, BranchSelectorProp
       selectedBranch,
       onSelectBranch,
       isBranchOnly = false,
+      selectorTitle = '',
       searchQuery = '',
       setSearchQuery,
       dynamicWidth = false,
@@ -95,6 +97,7 @@ export const BranchSelectorV2 = forwardRef<HTMLButtonElement, BranchSelectorProp
           preSelectedTab={preSelectedTab}
           setCreateBranchDialogOpen={setCreateBranchDialogOpen}
           disabled={disabled}
+          selectorTitle={selectorTitle}
         />
       </Popover.Root>
     )

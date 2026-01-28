@@ -2487,7 +2487,7 @@
         },
         "text-gradient": {
           "$type": "color",
-          "$value": "linear-gradient(90deg, {text.2} 0%, {comp.data-viz.05-indigo} 50%, {comp.data-viz.02-purple} 100%)",
+          "$value": "linear-gradient(90deg, {text.2} 3%, {comp.data-viz.05-indigo} 75%, {comp.data-viz.02-purple} 100%)",
           "$description": "Text gradient for test intelligence widget."
         }
       }

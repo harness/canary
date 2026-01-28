@@ -23,8 +23,10 @@ import Blackduck from './logos/blackduck.svg'
 import Brakeman from './logos/brakeman.svg'
 import BuildKite from './logos/build-kite.svg'
 import Burb from './logos/burb.svg'
+import ChatGpt from './logos/chat-gpt.svg'
 import Checkmarx from './logos/checkmarx.svg'
 import Checkov from './logos/checkov.svg'
+import Claude from './logos/claude.svg'
 import Codecov from './logos/codecov.svg'
 import Confluence from './logos/confluence.svg'
 import Connector from './logos/connector.svg'
@@ -146,8 +148,10 @@ export const LogoNameMapV2 = {
   brakeman: Brakeman,
   'build-kite': BuildKite,
   burb: Burb,
+  'chat-gpt': ChatGpt,
   checkmarx: Checkmarx,
   checkov: Checkov,
+  claude: Claude,
   codecov: Codecov,
   confluence: Confluence,
   connector: Connector,

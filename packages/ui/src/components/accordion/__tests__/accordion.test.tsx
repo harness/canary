@@ -102,4 +102,16 @@ describe('Accordion', () => {
     expect(await screen.findByText('Content 2')).toBeInTheDocument()
     expect(screen.queryByText('Content 1')).not.toBeInTheDocument()
   })
+
+  test('indicator should have pointer-events-none to allow clicks to pass through', () => {
+    const { container } = renderComponent()
+
+    // Find the indicator icon (the arrow)
+    const indicator = container.querySelector('.cn-accordion-trigger-indicator')
+    expect(indicator).toBeInTheDocument()
+
+    // Verify it has pointer-events-none class applied
+    // This allows clicks on the indicator to pass through to the trigger beneath in the browser
+    expect(indicator).toHaveClass('pointer-events-none')
+  })
 })

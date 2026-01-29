@@ -201,9 +201,9 @@ function ExpandButton({
  * ====================
  */
 
-function Status({ theme, children }: PropsWithChildren<StudioCardStatusProps>): JSX.Element | null {
+function Status({ status, theme, children }: PropsWithChildren<StudioCardStatusProps>): JSX.Element | null {
   return (
-    <StatusBadge className="cn-studio-card-status" size="sm" variant="outline" theme={theme}>
+    <StatusBadge data-status={status} className="cn-studio-card-status" size="sm" variant="outline" theme={theme}>
       {children}
     </StatusBadge>
   )

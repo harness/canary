@@ -1236,7 +1236,7 @@
           "studio.tokens": {
             "modify": {
               "type": "alpha",
-              "value": "0.25",
+              "value": "0.18",
               "space": "lch"
             }
           }
@@ -3639,7 +3639,7 @@
                 }
               },
               "$type": "color",
-              "$value": "{cyan.200}",
+              "$value": "{blue.500}",
               "$description": "Starting color for default onboarding color bubble."
             },
             "to": {
@@ -3701,7 +3701,7 @@
                 }
               },
               "$type": "color",
-              "$value": "{cyan.200}",
+              "$value": "{blue.500}",
               "$description": "Starting color for default onboarding top ellipse 1."
             },
             "to": {
@@ -3715,7 +3715,7 @@
                 }
               },
               "$type": "color",
-              "$value": "{cyan.200}",
+              "$value": "{blue.500}",
               "$description": "Ending color for default onboarding top ellipse 1."
             }
           },
@@ -3763,7 +3763,7 @@
                 }
               },
               "$type": "color",
-              "$value": "{cyan.200}",
+              "$value": "{blue.500}",
               "$description": "Starting color for default onboarding top ellipse 2."
             },
             "to": {
@@ -3777,7 +3777,7 @@
                 }
               },
               "$type": "color",
-              "$value": "{cyan.200}",
+              "$value": "{blue.500}",
               "$description": "Ending color for default onboarding top ellipse 2."
             }
           },
@@ -3825,7 +3825,7 @@
                 }
               },
               "$type": "color",
-              "$value": "{cyan.200}",
+              "$value": "{blue.500}",
               "$description": "Starting color for default onboarding bottom ellipse."
             },
             "to": {
@@ -3839,7 +3839,7 @@
                 }
               },
               "$type": "color",
-              "$value": "{cyan.200}",
+              "$value": "{blue.500}",
               "$description": "Ending color for default onboarding bottom ellipse."
             }
           },

@@ -117,6 +117,7 @@
     "embla-carousel-react": "^8.1.5",
     "fast-diff": "^1.3.0",
     "framer-motion": "6",
+    "fuzzysort": "^3.1.0",
     "highlight.js": "^11.11.1",
     "i18next": "^24.0.2",
     "i18next-browser-languagedetector": "^8.0.0",

@@ -194,7 +194,7 @@
         },
         "border": {
           "$type": "color",
-          "$value": "{blue.600}",
+          "$value": "{indigo.600}",
           "$description": "Border color for primary brand with minimum emphasis boundaries."
         },
         "bg-hover": {
@@ -1611,7 +1611,7 @@
       "unselected": {
         "item": {
           "$type": "color",
-          "$value": "{text.3}",
+          "$value": "{text.2}",
           "$description": "Color for unselected items in selection controls. Provides readable but less emphasized styling for available options."
         },
         "item-hover": {

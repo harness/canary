@@ -29,17 +29,17 @@
     },
     "2": {
       "$type": "color",
-      "$value": "{gray.300}",
+      "$value": "{gray.200}",
       "$description": "Primary color for text and icons in general content. Provides optimal readability for extended reading while reducing visual strain.\n\nCommon uses: Body text, primary content, default icons, form inputs."
     },
     "3": {
       "$type": "color",
-      "$value": "{gray.600}",
+      "$value": "{gray.500}",
       "$description": "Reduced emphasis color for text and icons in secondary information. Creates visual hierarchy through lower contrast.\n\nCommon uses: Supporting text, metadata, secondary information, placeholders."
     },
     "4": {
       "$type": "color",
-      "$value": "{gray.700}",
+      "$value": "{gray.600}",
       "$description": "Lowest emphasis text color for unavailable options. Creates visual differentiation between interactive and non-interactive elements.\n\nCommon uses: Disabled buttons, inactive form elements, unavailable options, placeholders."
     },
     "success": {
@@ -111,13 +111,13 @@
         "studio.tokens": {
           "modify": {
             "type": "alpha",
-            "value": "0.1",
+            "value": "0.2",
             "space": "lch"
           }
         }
       },
       "$type": "color",
-      "$value": "{gray.600}",
+      "$value": "{gray.850}",
       "$description": "Light overlay for gentle interactive effects. Creates subtle visual feedback during user interaction.\n\nCommon uses: Button hover states, link hover states, soft interactions, menu items."
     },
     "selected": {
@@ -125,13 +125,13 @@
         "studio.tokens": {
           "modify": {
             "type": "alpha",
-            "value": "0.12",
+            "value": "0.25",
             "space": "lch"
           }
         }
       },
       "$type": "color",
-      "$value": "{gray.600}",
+      "$value": "{gray.850}",
       "$description": "Strong overlay for emphasized selection states. Creates distinct visual indication of active or selected elements.\n\nCommon uses: Selected list items, active tabs, chosen options, current navigation item."
     }
   },
@@ -194,7 +194,7 @@
         },
         "border": {
           "$type": "color",
-          "$value": "{blue.600}",
+          "$value": "{indigo.600}",
           "$description": "Border color for primary brand with minimum emphasis boundaries."
         },
         "bg-hover": {
@@ -1605,12 +1605,12 @@
       "item": {
         "text": {
           "$type": "color",
-          "$value": "{text.3}",
+          "$value": "{text.2}",
           "$description": "Default text color for sidebar navigation items. Provides optimal readability for menu labels."
         },
         "text-hover": {
           "$type": "color",
-          "$value": "{text.2}",
+          "$value": "{text.1}",
           "$description": "Text color for sidebar items on hover state. Creates higher contrast for interactive feedback."
         },
         "text-selected": {
@@ -1675,7 +1675,7 @@
       "unselected": {
         "item": {
           "$type": "color",
-          "$value": "{text.3}",
+          "$value": "{text.2}",
           "$description": "Color for unselected items in selection controls. Provides readable but less emphasized styling for available options."
         },
         "item-hover": {

@@ -34,8 +34,9 @@ const fontSizeMap = {
   'cn-size-11': 'var(--cn-font-size-11)',
   'cn-size-12': 'var(--cn-font-size-12)',
   'cn-size-13': 'var(--cn-font-size-13)',
-  'cn-size-half': 'var(--cn-font-size-half)',
-  'cn-size-min': 'var(--cn-font-size-min)'
+  'cn-size-14': 'var(--cn-font-size-14)',
+  'cn-size-15': 'var(--cn-font-size-15)',
+  'cn-size-16': 'var(--cn-font-size-16)'
 }
 const tailwindDesignSystem: TailwindConfig = {
   darkMode: ['class'],
@@ -205,7 +206,7 @@ const tailwindDesignSystem: TailwindConfig = {
         danger: 'var(--cn-set-danger-primary-bg)',
         warning: 'var(--cn-set-warning-primary-bg)',
         success: 'var(--cn-set-success-primary-bg)',
-        info: 'var(--cn-set-blue-primary-bg)',
+        info: 'var(--cn-set-brand-primary-bg)',
         merged: 'var(--cn-set-purple-primary-bg)',
         risk: 'var(--cn-set-orange-primary-bg)'
       },

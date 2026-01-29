@@ -34,7 +34,7 @@ export default {
     zIndex: '50',
     minWidth: 'var(--cn-dropdown-min-width)',
     maxHeight: 'calc(var(--radix-dropdown-menu-content-available-height) - 4px)',
-    border: 'var(--cn-dropdown-border) solid var(--cn-border-2)',
+    border: 'var(--cn-dropdown-border) solid var(--cn-border-3)',
     borderRadius: 'var(--cn-dropdown-radius)',
     backgroundColor: 'var(--cn-bg-3)',
     boxShadow: 'var(--cn-shadow-4)',

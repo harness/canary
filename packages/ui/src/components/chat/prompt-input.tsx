@@ -2,13 +2,45 @@ import { ChangeEvent, ComponentProps, HTMLAttributes, KeyboardEventHandler } fro
 
 import { Button } from '@components/button'
 import { Textarea } from '@components/form-primitives'
-import { IconV2 } from '@components/icon-v2'
+import { IconV2, IconV2NamesType } from '@components/icon-v2'
+import { Tag } from '@components/tag'
 import { cn } from '@utils/cn'
 
 export type PromptInputRootProps = HTMLAttributes<HTMLFormElement>
 export const PromptInputRoot = ({ className, ...props }: PromptInputRootProps) => (
   <form className={cn('cn-prompt-input w-full overflow-hidden', className)} {...props} />
 )
+
+export interface PromptInputTag {
+  id: string
+  displayName: string
+  icon?: IconV2NamesType
+}
+
+export type PromptInputTagsProps = HTMLAttributes<HTMLDivElement> & {
+  tags: PromptInputTag[]
+  onRemove?: (id: string) => void
+}
+
+export const PromptInputTags = ({ tags, onRemove, className, ...props }: PromptInputTagsProps) => {
+  if (!tags.length) return null
+
+  return (
+    <div className={cn('flex flex-wrap gap-cn-xs', className)} {...props}>
+      {tags.map(tag => (
+        <Tag
+          key={tag.id}
+          value={tag.displayName}
+          icon={tag.icon}
+          size="sm"
+          variant="secondary"
+          actionIcon="xmark"
+          onActionClick={() => onRemove?.(tag.id)}
+        />
+      ))}
+    </div>
+  )
+}
 
 export type PromptInputTextareaProps = ComponentProps<typeof Textarea>
 
@@ -82,6 +114,7 @@ export const PromptInputButton = ({ variant = 'outline', ...props }: PromptInput
 
 export const PromptInput = {
   Root: PromptInputRoot,
+  Tags: PromptInputTags,
   Textarea: PromptInputTextarea,
   Toolbar: PromptInputToolbar,
   Tools: PromptInputTools,

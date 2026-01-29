@@ -3,6 +3,7 @@ import { PropsWithChildren, useMemo, useRef, useState, type JSX } from 'react'
 import { IconV2, IconV2NamesType, StatusBadge, Text } from '@/components'
 import { cn } from '@/utils'
 import { cva } from 'class-variance-authority'
+import { AnimatePresence, motion } from 'framer-motion'
 
 import {
   StudioCardContentProps,
@@ -106,7 +107,11 @@ function Header({ icon, title, actions }: StudioCardHeaderProps): JSX.Element {
  */
 
 function Content({ children, className }: PropsWithChildren<StudioCardContentProps>): JSX.Element {
-  return <div className={cn('cn-studio-card-content', className)}>{children}</div>
+  return (
+    <motion.div className={cn('cn-studio-card-content', className)}>
+      <AnimatePresence>{children}</AnimatePresence>
+    </motion.div>
+  )
 }
 
 /**
@@ -134,6 +139,31 @@ function Message({ message }: StudioCardMessageProps): JSX.Element | null {
  * ==========================
  */
 
+const expandButtonVariants = {
+  hidden: {
+    opacity: 0,
+    scale: 0.8
+  },
+  visible: {
+    opacity: 1,
+    scale: 1,
+    transition: {
+      duration: 0.1,
+      // ease: [0.4, 0, 0.2, 1]
+      ease: 'easeOut'
+    }
+  },
+  exit: {
+    opacity: 0,
+    scale: 0,
+    transition: {
+      duration: 0.2,
+      // ease: [0.4, 0, 0.2, 1]
+      ease: 'easeOut'
+    }
+  }
+}
+
 function ExpandButton({
   stepCount,
   isExpanded = false,
@@ -153,7 +183,14 @@ function ExpandButton({
   if (stepCount === 0 || isExpanded) return null
 
   return (
-    <div className="cn-studio-card-expand-button" data-expanded={isExpanded}>
+    <motion.div
+      variants={expandButtonVariants}
+      initial="hidden"
+      animate="visible"
+      exit="exit"
+      className="cn-studio-card-expand-button"
+      data-expanded={isExpanded}
+    >
       {stackCount > 0 && (
         <>
           {stackCount >= 2 && (
@@ -191,7 +228,7 @@ function ExpandButton({
           <IconV2 className="text-cn-2" name={isHovered ? 'expand' : 'collapse'} size="sm" />
         </div>
       </button>
-    </div>
+    </motion.div>
   )
 }
 

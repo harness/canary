@@ -43,8 +43,8 @@ export const SearchableArea = ({
   };
 
   return (
-    <Layout.Vertical className="bg-cn-3 border-cn-2 p-cn-sm rounded border">
-      <SearchInput onChange={handleSearch} />
+    <Layout.Vertical gap="lg">
+      <SearchInput onChange={handleSearch} className="max-w-[300px]" />
       <div
         className={cn({ hidden: !hasResults }, containerClassName)}
         ref={containerRef}

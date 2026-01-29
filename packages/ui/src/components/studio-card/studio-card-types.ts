@@ -1,5 +1,6 @@
 import { JSX } from 'react'
 
+import { ExecutionStatusType } from '@components/pipeline-nodes/types/types'
 import { StatusBadgeTheme } from '@components/status-badge/status-badge'
 
 export interface StudioCardRootProps {
@@ -27,6 +28,7 @@ export interface StudioCardMessageProps {
 
 export interface StudioCardStatusProps {
   theme?: StatusBadgeTheme
+  status?: ExecutionStatusType
 }
 
 export interface StudioCardContentProps {

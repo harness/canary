@@ -74,7 +74,7 @@ export default {
     // Group card variant
     '&:where(.cn-studio-card-group)': {
       width: 'auto',
-      minWidth: '220px',
+      minWidth: 'var(--cn-size-90)',
       maxWidth: 'none',
       height: 'auto',
 
@@ -190,9 +190,9 @@ export default {
       },
 
       // Preserve opacity for all elements inside the hovered group
-      '& .cn-studio-card-group:hover *': {
-        opacity: '1 !important',
-      }
+      // '& .cn-studio-card-group:hover *': {
+      //   opacity: '1 !important',
+      // }
     }
   },
 

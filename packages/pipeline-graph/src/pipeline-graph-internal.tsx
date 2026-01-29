@@ -13,6 +13,8 @@ import { connectPorts } from './utils/connects-utils'
 import { getFlexAlign } from './utils/layout-utils'
 import { addPaths } from './utils/path-utils'
 
+import cn from 'classnames'
+
 export interface PipelineGraphInternalProps {
   data: AnyContainerNodeType[]
   customCreateSVGPath?: CreateSVGPathType
@@ -27,6 +29,8 @@ export interface PipelineGraphInternalProps {
   }
   layout?: LayoutConfig
   getPort?: GetPortSvgFuncType
+  showSvg?: boolean
+
 }
 
 export function PipelineGraphInternal(props: PipelineGraphInternalProps) {
@@ -34,7 +38,7 @@ export function PipelineGraphInternal(props: PipelineGraphInternalProps) {
   const { setCanvasTransform, canvasTransformRef, config: canvasConfig, setTargetEl } = useCanvasContext()
   const { serialContainerConfig } = useContainerNodeContext()
 
-  const { data, config = {}, customCreateSVGPath, edgesConfig, layout = { type: 'center' }, getPort } = props
+  const { data, config = {}, customCreateSVGPath, edgesConfig, layout = { type: 'center' }, getPort, showSvg } = props
   const graphSizeRef = useRef<{ h: number; w: number } | undefined>()
 
   const svgGroupRef = useRef<SVGAElement | null>(null)
@@ -188,7 +192,11 @@ export function PipelineGraphInternal(props: PipelineGraphInternalProps) {
       ref={rootContainerRef}
     >
       <div className="PipelineGraph-SvgContainer">
-        <svg ref={svgRef} width="1" height="1" className="PipelineGraph-Svg">
+        <svg ref={svgRef} width="1" height="1"
+          className={cn("PipelineGraph-Svg", {
+            "opacity-100 transition-opacity duration-150": showSvg,
+            "opacity-0": !showSvg
+          })}>
           <g ref={svgGroupRef} className="PipelineGraph-SvgGroup"></g>
         </svg>
       </div>

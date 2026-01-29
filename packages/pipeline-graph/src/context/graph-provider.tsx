@@ -14,6 +14,8 @@ interface GraphContextProps {
   rerender: () => void
   // rerenderConnections increments when when we call rerender
   rerenderConnections: number
+  setShowSvg: (show: boolean) => void
+  isMounted: React.MutableRefObject<boolean>
 }
 
 const GraphContext = createContext<GraphContextProps>({
@@ -25,19 +27,23 @@ const GraphContext = createContext<GraphContextProps>({
   rerenderConnections: 0,
   setNodeToRemove: (_path: string | null) => undefined,
   nodeToRemove: null,
-  rerender: () => undefined
+  rerender: () => undefined,
+  setShowSvg: (_show: boolean) => undefined,
+  isMounted: { current: false }
 })
 
 export interface GraphProviderProps {
   nodes: NodeContent[]
   collapse: (path: string, state: boolean) => void
   collapsed: Record<string, boolean>
+  setShowSvg: (show: boolean) => void
 }
 const GraphProvider = ({
   nodes: nodesArr,
   children,
   collapsed,
-  collapse
+  collapse,
+  setShowSvg
 }: React.PropsWithChildren<GraphProviderProps>) => {
   const [initialized, setInitialized] = useState<boolean>(false)
 
@@ -46,6 +52,8 @@ const GraphProvider = ({
 
   const collapsedRef = useRef(collapsed)
   collapsedRef.current = collapsed
+
+  const isMounted = useRef(false)
 
   useEffect(() => {
     setRerenderConnections(prev => prev + 1)
@@ -125,7 +133,9 @@ const GraphProvider = ({
         // force rerender
         rerenderConnections,
         // rerender connections
-        rerender
+        rerender,
+        setShowSvg,
+        isMounted,
       }}
     >
       {children}

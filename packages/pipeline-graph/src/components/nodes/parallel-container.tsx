@@ -1,4 +1,5 @@
-import { useMemo } from 'react'
+import { useCallback, useEffect, useMemo, useState } from 'react'
+import { AnimatePresence, motion, Variants } from 'framer-motion'
 
 import { useContainerNodeContext } from '../../context/container-node-provider'
 import { useGraphContext } from '../../context/graph-provider'
@@ -10,13 +11,62 @@ import { findAdjustmentForHarnessLayout } from '../../utils/harness-layout-utils
 import { findAdjustment } from '../../utils/layout-utils'
 import Port from './port'
 
+const containerVariants: Variants = {
+  hidden: {
+    height: 0,
+    width: 0,
+    opacity: 1,
+    scale: 1,
+    x: 0,
+  },
+  visible: {
+    height: 'auto',
+    width: 'auto',
+    opacity: 1,
+    transition: {
+      height: {
+        duration: 0.3,
+        ease: "easeOut"
+      },
+      width: {
+        duration: 0.3,
+        ease: "easeOut"
+      },
+      opacity: {
+        duration: 0.2
+      },
+      staggerChildren: 0.05,
+      delayChildren: 0.3
+    }
+  },
+  exit: {
+    opacity: 0,
+    height: 0,
+    width: 0,
+    transformOrigin: 'top left',
+    scale: 0,
+    transition: {
+      when: "afterChildren",
+      ease: "easeOut",
+      height: {
+        duration: 0.3
+      },
+      width: {
+        duration: 0.3
+      },
+      staggerChildren: 0.05,
+      staggerDirection: -1
+    }
+  }
+}
+
 export default function ParallelNodeContainer(props: ContainerNodeProps<ParallelNodeInternalType>) {
   const { node, level, parentNode, isFirst, isLast, parentNodeType, mode } = props
   const { parallelContainerConfig, serialContainerConfig, portComponent, layout } = useContainerNodeContext()
 
   const myLevel = level + 1
 
-  const { isCollapsed, collapse } = useGraphContext()
+  const { isCollapsed, collapse, rerender, setShowSvg, isMounted } = useGraphContext()
   const collapsed = useMemo(() => isCollapsed(props.node.path!), [isCollapsed, props.node.path])
   const setCollapsed = useMemo(
     () => (collapsed: boolean) => {
@@ -24,6 +74,41 @@ export default function ParallelNodeContainer(props: ContainerNodeProps<Parallel
     },
     [collapse, props.node.path]
   )
+
+  const [localCollapsed, setLocalCollapsed] = useState(collapsed)
+
+  /**
+ * This is to sync the global collapsed state with the local collapsed state
+ * 
+ * Global collapsed state may change programmatically, so we need to sync it with the local collapsed state.
+ */
+  useEffect(() => {
+    if (!collapsed && localCollapsed) {
+      setLocalCollapsed(false)
+    }
+  }, [collapsed])
+
+  const handleCollaspeLocalState = useCallback((collapsed: boolean) => {
+    if (!collapsed) {
+      setCollapsed(false)
+    }
+    setLocalCollapsed(collapsed)
+  }, [setCollapsed])
+
+
+  const handleAnimationComplete = useCallback((animationType) => {
+    rerender()
+
+    setShowSvg(true)
+
+    if (animationType === 'exit') {
+      setCollapsed(true)
+    }
+
+    if (!isMounted.current) {
+      isMounted.current = true
+    }
+  }, [setCollapsed, rerender, setShowSvg, isMounted])
 
   const verticalAdjustment = parallelContainerConfig.parallelGroupAdjustment ?? 0
 
@@ -129,36 +214,47 @@ export default function ParallelNodeContainer(props: ContainerNodeProps<Parallel
       <RenderNodeContent
         node={node}
         collapsed={collapsed}
-        setCollapsed={setCollapsed}
+        setCollapsed={handleCollaspeLocalState}
         isFirst={isFirst}
         isLast={isLast}
         parentNodeType={parentNodeType}
         mode={mode}
         portPosition={portAdjustment}
       >
-        {!collapsed && node.children.length > 0 ? (
-          <div
-            style={{
-              display: 'flex',
-              flexDirection: 'column',
-              alignItems: 'center',
-              rowGap: parallelContainerConfig.nodeGap + 'px'
-            }}
-          >
-            {node.children.map((item: AnyNodeInternal, index: number) =>
-              renderNode({
-                node: item,
-                parentNode: node,
-                level: myLevel,
-                parentNodeType: 'parallel',
-                relativeIndex: index,
-                isFirst: index === 0,
-                isLast: index === node.children.length - 1,
-                mode
-              })
-            )}
-          </div>
-        ) : undefined}
+        <AnimatePresence>
+          {!localCollapsed && node.children.length > 0 ? (
+            <motion.div
+              key="children-wrapper"
+              animate="visible"
+              exit="exit"
+              initial={!isMounted.current ? false : "hidden"}
+              variants={containerVariants}
+              onAnimationStart={() => {
+                setShowSvg(false)
+              }}
+              onAnimationComplete={handleAnimationComplete}
+              style={{
+                display: 'flex',
+                flexDirection: 'column',
+                alignItems: 'center',
+                rowGap: parallelContainerConfig.nodeGap + 'px'
+              }}
+            >
+              {node.children.map((item: AnyNodeInternal, index: number) =>
+                renderNode({
+                  node: item,
+                  parentNode: node,
+                  level: myLevel,
+                  parentNodeType: 'parallel',
+                  relativeIndex: index,
+                  isFirst: index === 0,
+                  isLast: index === node.children.length - 1,
+                  mode
+                })
+              )}
+            </motion.div>
+          ) : undefined}
+        </AnimatePresence>
       </RenderNodeContent>
     </div>
   )

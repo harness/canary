@@ -33,7 +33,7 @@
         "fontWeight": "{fontWeight.default.normal.500}",
         "fontSize": "{fontSize.10}",
         "lineHeight": "{lineHeight.10.tight}",
-        "letterSpacing": "{tracking.tighter}",
+        "letterSpacing": "{tracking.tight}",
         "textCase": "{textCase.none}"
       },
       "$description": "Extra-large display typography for high-impact visual elements. Establishes the primary focal point while maintaining readability across devices. Use with appropriate spacing to create breathing room around this dominant element.\n\nCommon uses: Landing page main headlines, Marketing campaign banners, Product feature introductions, Welcome screens, Section dividers in long-scrolling pages."
@@ -45,7 +45,7 @@
         "fontWeight": "{fontWeight.default.normal.400}",
         "fontSize": "{fontSize.9}",
         "lineHeight": "{lineHeight.9.snug}",
-        "letterSpacing": "{tracking.tighter}",
+        "letterSpacing": "{tracking.tight}",
         "textCase": "{textCase.none}"
       },
       "$description": "Primary organizational heading that creates clear content boundaries. Establishes consistent rhythm through proper spacing relationships with surrounding elements. Maintains sufficient contrast with body text while creating a harmonious scale progression.\n\nCommon uses: Main topic dividers in articles, Dashboard section headers, Product category headers, Page-level navigation anchors, Form section dividers."
@@ -634,7 +634,7 @@
       "$type": "typography",
       "$value": {
         "fontFamily": "{fontFamily.default}",
-        "fontWeight": "{fontWeight.default.normal.400}",
+        "fontWeight": "{fontWeight.default.normal.500}",
         "fontSize": "{fontSize.2}",
         "lineHeight": "{lineHeight.2.normal}",
         "letterSpacing": "{tracking.wider}"

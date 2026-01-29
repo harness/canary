@@ -81,9 +81,8 @@ export default {
         justifySelf: 'start',
         overflow: 'hidden',
         userSelect: 'none',
-        font: 'var(--cn-micro-normal)',
         color: 'var(--cn-text-3)',
-        '@apply duration-150 transition-[max-height,padding,opacity,transform] ease-linear': ''
+        '@apply font-micro-normal duration-150 transition-[max-height,padding,opacity,transform] ease-linear': ''
       },
 
       '&-items': {

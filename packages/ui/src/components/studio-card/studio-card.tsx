@@ -1,4 +1,4 @@
-import { PropsWithChildren, useCallback, useMemo, useRef, useState, type JSX } from 'react'
+import { PropsWithChildren, useMemo, useRef, useState, type JSX } from 'react'
 
 import { IconV2, IconV2NamesType, StatusBadge, Text } from '@/components'
 import { cn } from '@/utils'
@@ -201,32 +201,10 @@ function ExpandButton({
  * ====================
  */
 
-function Status({ status }: StudioCardStatusProps): JSX.Element | null {
-  const getStatusConfig = useCallback(() => {
-    switch (status) {
-      case 'queued':
-        return { theme: 'muted' as const, label: 'Queued' }
-      case 'executing':
-        return { theme: 'warning' as const, label: 'Running' }
-      case 'success':
-        return { theme: 'success' as const, label: 'Completed' }
-      case 'warning':
-        return { theme: 'warning' as const, label: 'Warning' }
-      case 'error':
-        return { theme: 'danger' as const, label: 'Error' }
-      default:
-        return { theme: 'muted' as const, label: 'Unknown' }
-    }
-  }, [status])
-
-  const { theme, label } = useMemo(() => getStatusConfig(), [getStatusConfig])
-
-  if (!status) return null
-
+function Status({ theme, children }: PropsWithChildren<StudioCardStatusProps>): JSX.Element | null {
   return (
-    <StatusBadge data-status={status} className="cn-studio-card-status" size="sm" variant="outline" theme={theme}>
-      {status === 'executing' && <IconV2 name="loader" className="animate-spin" size="xs" />}
-      {label}
+    <StatusBadge className="cn-studio-card-status" size="sm" variant="outline" theme={theme}>
+      {children}
     </StatusBadge>
   )
 }

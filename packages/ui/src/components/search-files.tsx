@@ -25,11 +25,13 @@ export interface FileItem {
  * @param indexes - Array of character positions that matched (from fuzzysort)
  */
 const getMarkedFileElement = (result: Fuzzysort.KeyResult<FileItem>): ReactNode => {
-  const parts = result.highlight((m) => <mark>{m}</mark>).
-    filter(part => typeof part !== 'string' || part.length > 0).
-    map(part => {
+  let spanKeyIndex = 0
+  const parts = result
+    .highlight((m, index) => <mark key={'m-' + index}>{m}</mark>)
+    .filter(part => typeof part !== 'string' || part.length > 0)
+    .map(part => {
       if (typeof part === 'string') {
-        return <span>{part}</span>
+        return <span key={'s-' + spanKeyIndex++}>{part}</span>
       }
       return part
     })
@@ -131,7 +133,7 @@ export const SearchFiles = ({
     [onSearch, setCurrentQuery, setIsOpen]
   )
 
-  const handleFocus = useCallback((e: React.FocusEvent<HTMLInputElement>) => {
+  const handleFocus = useCallback(() => {
     // Show dropdown if there's already content in the search box
     if (currentQuery) {
       setIsOpen(true)

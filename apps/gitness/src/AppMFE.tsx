@@ -1,4 +1,4 @@
-import { useEffect, useRef } from 'react'
+import { useRef } from 'react'
 import { I18nextProvider } from 'react-i18next'
 import { createBrowserRouter, RouterProvider } from 'react-router-dom'
 
@@ -11,7 +11,6 @@ import { DialogProvider, PortalProvider, TranslationProvider } from '@harnessio/
 import { ExitConfirmProvider } from './framework/context/ExitConfirmContext'
 import { MFEContext, MFEContextProps } from './framework/context/MFEContext'
 import { NavigationProvider } from './framework/context/NavigationContext'
-import { ThemeProvider, useThemeStore } from './framework/context/ThemeContext'
 import { queryClient } from './framework/queryClient'
 import i18n from './i18n/i18n'
 import { useTranslationStore } from './i18n/stores/i18n-store'
@@ -62,16 +61,7 @@ export default function AppMFE({
   })
 
   // Apply host theme to MFE
-  const { theme, setTheme: setMFETheme } = useMFEThemeContext()
-  const { setTheme } = useThemeStore()
-
-  useEffect(() => {
-    if (theme === 'Light') {
-      setTheme('light-std-std')
-    } else {
-      setTheme('dark-std-std')
-    }
-  }, [theme])
+  const { setTheme: setMFETheme } = useMFEThemeContext()
 
   // Radix UI elements will be rendered inside portalContainer
   const portalRef = useRef<HTMLDivElement>(null)
@@ -86,7 +76,7 @@ export default function AppMFE({
   const { t } = useTranslationStore()
 
   return (
-    <div id="code-mfe-root" className={theme.toLowerCase()} ref={portalRef}>
+    <div id="code-mfe-root" ref={portalRef}>
       <PortalProvider portalContainer={portalContainer}>
         <MFEContext.Provider
           value={{
@@ -104,21 +94,19 @@ export default function AppMFE({
           }}
         >
           <I18nextProvider i18n={i18n}>
-            <ThemeProvider defaultTheme={theme === 'Light' ? 'light-std-std' : 'dark-std-std'}>
-              <TranslationProvider t={t}>
-                <QueryClientProvider client={queryClient}>
-                  <TooltipProvider>
-                    <DialogProvider>
-                      <ExitConfirmProvider>
-                        <NavigationProvider routes={mfeRoutes}>
-                          <RouterProvider router={router} key={renderUrl} />
-                        </NavigationProvider>
-                      </ExitConfirmProvider>
-                    </DialogProvider>
-                  </TooltipProvider>
-                </QueryClientProvider>
-              </TranslationProvider>
-            </ThemeProvider>
+            <TranslationProvider t={t}>
+              <QueryClientProvider client={queryClient}>
+                <TooltipProvider>
+                  <DialogProvider>
+                    <ExitConfirmProvider>
+                      <NavigationProvider routes={mfeRoutes}>
+                        <RouterProvider router={router} key={renderUrl} />
+                      </NavigationProvider>
+                    </ExitConfirmProvider>
+                  </DialogProvider>
+                </TooltipProvider>
+              </QueryClientProvider>
+            </TranslationProvider>
           </I18nextProvider>
         </MFEContext.Provider>
       </PortalProvider>

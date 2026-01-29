@@ -53,10 +53,13 @@ import AtSign from './icons/at-sign.svg'
 import Atom from './icons/atom.svg'
 import AttachmentImage from './icons/attachment-image.svg'
 import Attachment from './icons/attachment.svg'
+import BarHorizontal from './icons/bar-horizontal.svg'
+import BarVertical from './icons/bar-vertical.svg'
 import BaseImgSolid from './icons/base-img-solid.svg'
 import BaseImg from './icons/base-img.svg'
 import BellOff from './icons/bell-off.svg'
 import Bell from './icons/bell.svg'
+import Blocks from './icons/blocks.svg'
 import BoldSquere from './icons/bold-squere.svg'
 import Bold from './icons/bold.svg'
 import BookmarkSolid from './icons/bookmark-solid.svg'
@@ -237,6 +240,7 @@ import GripDots from './icons/grip-dots.svg'
 import Group1 from './icons/group-1.svg'
 import HalfMoon from './icons/half-moon.svg'
 import HarnessPlugins from './icons/harness-plugins.svg'
+import Hashtag from './icons/hashtag.svg'
 import Header from './icons/header.svg'
 import HeadsetHelp from './icons/headset-help.svg'
 import HealthShieldSolid from './icons/health-shield-solid.svg'
@@ -268,6 +272,7 @@ import LightBulbCircle from './icons/light-bulb-circle.svg'
 import LightBulbOff from './icons/light-bulb-off.svg'
 import LightBulbOnSolid from './icons/light-bulb-on-solid.svg'
 import LightBulbOn from './icons/light-bulb-on.svg'
+import LineChart from './icons/line-chart.svg'
 import LineSpace from './icons/line-space.svg'
 import Link from './icons/link.svg'
 import ListSelect from './icons/list-select.svg'
@@ -331,6 +336,7 @@ import Pause from './icons/pause.svg'
 import PeaceHand from './icons/peace-hand.svg'
 import Phone from './icons/phone.svg'
 import PhysicalDataCenter from './icons/physical-data-center.svg'
+import PieChart from './icons/pie-chart.svg'
 import PinSlashSolid from './icons/pin-slash-solid.svg'
 import PinSlash from './icons/pin-slash.svg'
 import PinSolid from './icons/pin-solid.svg'
@@ -413,6 +419,8 @@ import SortDown from './icons/sort-down.svg'
 import SortUp from './icons/sort-up.svg'
 import SparksSolid from './icons/sparks-solid.svg'
 import Sparks from './icons/sparks.svg'
+import SplitViewBottom from './icons/split-view-bottom.svg'
+import SplitViewTop from './icons/split-view-top.svg'
 import SplitView from './icons/split-view.svg'
 import SquareDashed from './icons/square-dashed.svg'
 import SshKey from './icons/ssh-key.svg'
@@ -543,10 +551,13 @@ export const IconNameMapV2 = {
   atom: Atom,
   'attachment-image': AttachmentImage,
   attachment: Attachment,
+  'bar-horizontal': BarHorizontal,
+  'bar-vertical': BarVertical,
   'base-img-solid': BaseImgSolid,
   'base-img': BaseImg,
   'bell-off': BellOff,
   bell: Bell,
+  blocks: Blocks,
   'bold-squere': BoldSquere,
   bold: Bold,
   'bookmark-solid': BookmarkSolid,
@@ -727,6 +738,7 @@ export const IconNameMapV2 = {
   'group-1': Group1,
   'half-moon': HalfMoon,
   'harness-plugins': HarnessPlugins,
+  hashtag: Hashtag,
   header: Header,
   'headset-help': HeadsetHelp,
   'health-shield-solid': HealthShieldSolid,
@@ -758,6 +770,7 @@ export const IconNameMapV2 = {
   'light-bulb-off': LightBulbOff,
   'light-bulb-on-solid': LightBulbOnSolid,
   'light-bulb-on': LightBulbOn,
+  'line-chart': LineChart,
   'line-space': LineSpace,
   link: Link,
   'list-select': ListSelect,
@@ -821,6 +834,7 @@ export const IconNameMapV2 = {
   'peace-hand': PeaceHand,
   phone: Phone,
   'physical-data-center': PhysicalDataCenter,
+  'pie-chart': PieChart,
   'pin-slash-solid': PinSlashSolid,
   'pin-slash': PinSlash,
   'pin-solid': PinSolid,
@@ -903,6 +917,8 @@ export const IconNameMapV2 = {
   'sort-up': SortUp,
   'sparks-solid': SparksSolid,
   sparks: Sparks,
+  'split-view-bottom': SplitViewBottom,
+  'split-view-top': SplitViewTop,
   'split-view': SplitView,
   'square-dashed': SquareDashed,
   'ssh-key': SshKey,

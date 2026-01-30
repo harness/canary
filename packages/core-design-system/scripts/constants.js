@@ -21,7 +21,7 @@ export const COMMON_CONFIG = {
       return ['Harness Design System', 'Generated style tokens - DO NOT EDIT DIRECTLY', 'Copyright (c) Harness.']
     }
   },
-  transforms: ['name/kebab', 'attribute/themeable', 'ts/transform/alpha', 'shadow/dropShadow']
+  transforms: ['name/kebab', 'attribute/themeable', 'ts/transform/alpha', 'shadow/dropShadow', 'color/monacoToHex']
   // transformGroup: 'tokens-studio'
 }
 

@@ -1,6 +1,7 @@
 import fs from 'node:fs/promises'
 
 import { permutateThemes, register } from '@tokens-studio/sd-transforms'
+import Color from 'colorjs.io'
 import StyleDictionary from 'style-dictionary'
 import { getReferences, usesReferences } from 'style-dictionary/utils'
 
@@ -163,6 +164,33 @@ async function run() {
         if (match) {
           const [, x, y, blur, color] = match
           return `${x} ${y} ${blur} ${color}`
+        }
+        return value
+      }
+    })
+
+    /**
+     * Transform comp.monaco.* tokens from LCH to HEX format.
+     * Monaco Editor requires HEX colors, so we convert LCH values for monaco tokens only.
+     */
+    sd.registerTransform({
+      name: 'color/monacoToHex',
+      type: 'value',
+      filter: token => {
+        const path = token.path.join('.')
+        return path.startsWith('comp.monaco.')
+      },
+      transitive: true,
+      transform: token => {
+        const value = token.$value
+        if (typeof value === 'string' && value.startsWith('lch(')) {
+          try {
+            const color = new Color(value)
+            return color.to('srgb').toString({ format: 'hex' })
+          } catch (e) {
+            console.warn(`Failed to convert color: ${value}`, e)
+            return value
+          }
         }
         return value
       }

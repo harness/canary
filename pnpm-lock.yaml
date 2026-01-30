@@ -504,6 +504,9 @@ importers:
       '@tokens-studio/sd-transforms':
         specifier: ^1.2.9
         version: 1.2.12(style-dictionary@4.3.3)
+      colorjs.io:
+        specifier: ^0.5.0
+        version: 0.5.2
       figlet:
         specifier: ^1.8.0
         version: 1.8.0
@@ -5339,6 +5342,9 @@ packages:
 
   colorjs.io@0.4.5:
     resolution: {integrity: sha512-yCtUNCmge7llyfd/Wou19PMAcf5yC3XXhgFoAh6zsO2pGswhUPBaaUh8jzgHnXtXuZyFKzXZNAnyF5i+apICow==}
+
+  colorjs.io@0.5.2:
+    resolution: {integrity: sha512-twmVoizEW7ylZSN32OgKdXRmo1qg+wT5/6C3xu5b9QsWzSFAhHLn2xd8ro0diCsKfCj1RdaTP/nrcW+vAoQPIw==}
 
   colors@1.4.0:
     resolution: {integrity: sha512-a+UqTh4kgZg/SlGvfbzDHpgRu7AAQOmmqRHJnxhRZICKFUT91brVhNNt58CMWU9PsBbv3PDCZUHbVxuDiH2mtA==}
@@ -16106,6 +16112,8 @@ snapshots:
   colorette@2.0.20: {}
 
   colorjs.io@0.4.5: {}
+
+  colorjs.io@0.5.2: {}
 
   colors@1.4.0: {}
 

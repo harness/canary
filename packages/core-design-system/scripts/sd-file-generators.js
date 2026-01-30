@@ -65,8 +65,13 @@ export const generateThemeFiles = ({ destination, type, theme, format }) => {
       outputReferences: token => {
         // ADD REFERENCE ONLY TO NON-MODIFIED TOKENS
         // Alpha, darken, lighten tokens are transformed and need resolved values
+        // Monaco tokens should not use references - they need resolved HEX values for Monaco Editor
         const modifyType = token?.$extensions?.['studio.tokens']?.modify?.type
         if (modifyType === 'alpha' || modifyType === 'darken' || modifyType === 'lighten') {
+          return false
+        }
+        const path = token.path.join('.')
+        if (path.startsWith('comp.monaco.')) {
           return false
         }
         return true

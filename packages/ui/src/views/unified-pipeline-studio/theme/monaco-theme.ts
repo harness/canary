@@ -402,3 +402,6 @@ export const monacoThemesForBlame: ThemeDefinition[] = [
   { themeName: 'dark', themeData: harnessDarkTheme },
   { themeName: 'light', themeData: harnessLightTheme }
 ]
+
+// Re-export utilities for creating themes from CSS variables
+export { createMonacoThemeFromCSS, getCSSVariable, MONACO_CSS_VARIABLES } from './monaco-theme-utils'

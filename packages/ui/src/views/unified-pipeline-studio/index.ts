@@ -6,7 +6,13 @@ export * from './components/form-inputs'
 export { RUN_STEP_IDENTIFIER, RUN_STEP_DESCRIPTION, runStepFormDefinition } from './components/steps/run-step'
 
 // monaco theme
-export { monacoThemes, monacoThemesForBlame } from './theme/monaco-theme'
+export {
+  monacoThemes,
+  monacoThemesForBlame,
+  createMonacoThemeFromCSS,
+  getCSSVariable,
+  MONACO_CSS_VARIABLES
+} from './theme/monaco-theme'
 
 export { YamlEntityType } from './components/graph-implementation/types/yaml-entity-type'
 export type { YamlErrorDataType } from './components/unified-pipeline-studio-yaml-view'

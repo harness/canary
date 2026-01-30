@@ -329,6 +329,19 @@ function StudioCardButton({
   )
 }
 
+/**
+ * ====================
+ * CodePreview Component
+ * ====================
+ */
+function CodePreview({ children }: PropsWithChildren<unknown>): JSX.Element | null {
+  return (
+    <div className="cn-studio-card-code-preview">
+      <Text variant="body-code">{children}</Text>
+    </div>
+  )
+}
+
 export const StudioCard = {
   Root,
   Header,
@@ -339,7 +352,8 @@ export const StudioCard = {
   Tag,
   Button: StudioCardButton,
   ExpandButton,
-  CustomActions
+  CustomActions,
+  CodePreview
 }
 
 export type * from './studio-card-types'

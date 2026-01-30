@@ -23,14 +23,13 @@ import {
   Text,
   ViewTypeValue
 } from '@harnessio/ui/components'
-import { useRouterContext } from '@harnessio/ui/context'
+import { useRouterContext, useTheme } from '@harnessio/ui/context'
 import { cn, decodeURIComponentIfValid } from '@harnessio/ui/utils'
 import { CommitsList, FileReviewError, monacoThemes } from '@harnessio/ui/views'
 import { CodeEditor } from '@harnessio/yaml-editor'
 
 import GitCommitDialog from '../components-v2/git-commit-dialog'
 import { useRoutes } from '../framework/context/NavigationContext'
-import { useThemeStore } from '../framework/context/ThemeContext'
 import { useDownloadRawFile } from '../framework/hooks/useDownloadRawFile'
 import { useGetRepoRef } from '../framework/hooks/useGetRepoPath'
 import { parseAsInteger, useQueryState } from '../framework/hooks/useQueryState'
@@ -216,7 +215,7 @@ export default function FileContentViewer({ repoContent, loading }: FileContentV
   const [isDeleteFileDialogOpen, setIsDeleteFileDialogOpen] = useState(false)
   const { selectedBranchTag, selectedRefType } = useRepoBranchesStore()
   const [page, _setPage] = useQueryState('page', parseAsInteger.withDefault(1))
-  const { theme } = useThemeStore()
+  const { theme } = useTheme()
   const { selectedLine, setSelectedLine } = useCodeEditorSelectionState()
 
   const { gitRefName } = useGitRef()

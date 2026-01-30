@@ -1,6 +1,6 @@
 import { FC } from 'react'
 
-import { ButtonGroup, ButtonGroupButtonProps, IconV2, useCopyButton } from '@/components'
+import { ButtonGroup, ButtonGroupButtonProps, ButtonProps, IconV2, useCopyButton } from '@/components'
 
 export interface FileToolbarActionsProps {
   onDownloadClick: () => void
@@ -8,6 +8,7 @@ export interface FileToolbarActionsProps {
   copyContent: string
   showEdit?: boolean
   additionalButtonsProps?: ButtonGroupButtonProps[]
+  size?: ButtonProps['size']
 }
 
 export const FileToolbarActions: FC<FileToolbarActionsProps> = ({
@@ -15,12 +16,13 @@ export const FileToolbarActions: FC<FileToolbarActionsProps> = ({
   onEditClick,
   copyContent,
   showEdit = false,
-  additionalButtonsProps = []
+  additionalButtonsProps = [],
+  size = 'sm'
 }) => {
   const { copyButtonProps, CopyIcon } = useCopyButton({ copyData: copyContent })
   return (
     <ButtonGroup
-      size="sm"
+      size={size}
       iconOnly
       buttonsProps={[
         {

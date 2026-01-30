@@ -14,10 +14,9 @@ import {
 import { cn, decodeURIPath } from '@harnessio/ui/utils'
 import { monacoThemes, PathActionBar } from '@harnessio/ui/views'
 import { CodeDiffEditor, CodeEditor, CodeEditorProps } from '@harnessio/yaml-editor'
-
+import { useTheme } from '@harnessio/ui/context'
 import GitCommitDialog from '../components-v2/git-commit-dialog'
 import { useRoutes } from '../framework/context/NavigationContext'
-import { useThemeStore } from '../framework/context/ThemeContext'
 import { useExitPrompt } from '../framework/hooks/useExitPrompt'
 import useCodePathDetails from '../hooks/useCodePathDetails'
 import { useGitRef } from '../hooks/useGitRef'
@@ -51,7 +50,7 @@ export const FileEditor: FC<FileEditorProps> = ({ repoDetails, defaultBranch, lo
   const [isCommitDialogOpen, setIsCommitDialogOpen] = useState(false)
   useExitPrompt({ isDirty: dirty && !isCommitDialogOpen })
   const { selectedBranchTag, selectedRefType } = useRepoBranchesStore()
-  const { theme } = useThemeStore()
+  const { theme } = useTheme()
   // TODO: temporary solution for matching themes
   const monacoTheme = (theme ?? '').startsWith('dark') ? 'dark' : 'light'
 

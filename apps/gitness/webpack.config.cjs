@@ -59,6 +59,22 @@ module.exports = {
         'react-dom': {
           singleton: true,
           requiredVersion: false
+        },
+        '@harnessio/ui': {
+          singleton: true,
+          requiredVersion: false
+        },
+        '@harnessio/ui/context': {
+          singleton: true,
+          requiredVersion: false
+        },
+        '@harnessio/ui/components': {
+          singleton: true,
+          requiredVersion: false
+        },
+        '@harnessio/ui/views': {
+          singleton: true,
+          requiredVersion: false
         }
       }
     }),

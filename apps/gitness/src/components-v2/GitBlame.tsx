@@ -4,13 +4,12 @@ import { uniqWith } from 'lodash-es'
 
 import { useGetBlameQuery } from '@harnessio/code-service-client'
 import { Avatar, Layout, Text } from '@harnessio/ui/components'
-import { useRouterContext } from '@harnessio/ui/context'
+import { useRouterContext, useTheme } from '@harnessio/ui/context'
 import { formatDistanceToNow, getInitials } from '@harnessio/ui/utils'
 import { Contributors } from '@harnessio/ui/views'
 import { BlameEditorV2, BlameEditorV2Props, ThemeDefinition } from '@harnessio/yaml-editor'
 import { BlameItem } from '@harnessio/yaml-editor/dist/types/blame'
 
-import { useThemeStore } from '../framework/context/ThemeContext'
 import { useGetRepoRef } from '../framework/hooks/useGetRepoPath'
 import useCodePathDetails from '../hooks/useCodePathDetails'
 import { normalizeGitRef } from '../utils/git-utils'
@@ -101,7 +100,7 @@ export default function GitBlame({ themeConfig, codeContent, language, height, t
     }
   }, [gitBlame, toCommitDetails, navigate])
 
-  const { theme } = useThemeStore()
+  const { theme } = useTheme()
   const monacoTheme = (theme ?? '').startsWith('dark') ? 'dark' : 'light'
 
   if (isFetching || !blameBlocks.length) return null

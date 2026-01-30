@@ -227,15 +227,13 @@ export default function SerialNodeContainer(props: ContainerNodeProps<SerialNode
         <AnimatePresence>
           {!localCollapsed && node.children.length > 0 ? (
             <motion.div
-              key="children-wrapper"
               animate="visible"
               exit="exit"
               initial={!isMounted.current ? false : "hidden"}
               variants={containerVariants}
               onAnimationComplete={handleAnimationComplete}
               style={{
-                transformOrigin: 'top',
-                willChange: 'transform, opacity',
+                transformOrigin: 'top left',
                 display: 'flex',
                 flexDirection: 'row',
                 alignItems: getFlexAlign(layout.type),

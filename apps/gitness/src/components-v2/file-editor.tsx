@@ -81,13 +81,11 @@ export const FileEditor: FC<FileEditorProps> = ({ repoDetails, defaultBranch, lo
   const [showPreview, setShowPreview] = useState(isShowPreview())
 
   const pathToSplit = useMemo(() => {
-    if (isNew) {
-      return fullResourcePath || parentPath
-    } else if (parentPath?.length && fileName.length) {
+    if (parentPath?.length && fileName.length) {
       return [parentPath, fileName].join(FILE_SEPARATOR)
     }
     return parentPath?.length ? parentPath : fileName
-  }, [isNew, parentPath, fileName, fullResourcePath])
+  }, [parentPath, fileName])
 
   useEffect(() => {
     if (!fullResourcePath) return
@@ -97,7 +95,7 @@ export const FileEditor: FC<FileEditorProps> = ({ repoDetails, defaultBranch, lo
     if (parentPath !== newPath) {
       setParentPath(newPath)
     }
-  }, [isNew, fullResourcePath])
+  }, [isNew, fullResourcePath, setParentPath])
 
   useEffect(() => {
     setLanguage(filenameToLanguage(fileName) || '')

@@ -1,4 +1,4 @@
-import { ChangeEvent, Fragment, useMemo } from 'react'
+import { ChangeEvent, Fragment, KeyboardEvent, useEffect, useMemo, useRef, useState } from 'react'
 
 import { Breadcrumb, CopyButton, Layout, Tag, Text, TextInput } from '@/components'
 import { useRouterContext } from '@/context'
@@ -23,26 +23,82 @@ const InputPathBreadcrumbItem = ({
   parentPath,
   setParentPath
 }: InputPathBreadcrumbItemProps) => {
+  const inputRef = useRef<HTMLInputElement>(null)
+  const [cursorPosition, setCursorPosition] = useState<number | null>(null)
+
+  useEffect(() => {
+    if (cursorPosition === null || inputRef.current === null) {
+      return
+    }
+    inputRef.current.setSelectionRange(cursorPosition, cursorPosition)
+    setCursorPosition(null)
+  }, [cursorPosition])
+
   return (
     <Layout.Flex align="center" gap="2xs">
       <TextInput
+        ref={inputRef}
         className="w-[200px]"
         id="fileName"
         value={path}
         placeholder="Add a file name"
+        onKeyDown={(event: KeyboardEvent<HTMLInputElement>) => {
+          const value = event.currentTarget.value
+
+          // we only care in case backspace was pressed and cursor was at the beginning of the input.
+          if (
+            event.key !== 'Backspace' ||
+            event.currentTarget.selectionStart !== 0 ||
+            event.currentTarget.selectionEnd !== 0
+          ) {
+            return
+          }
+
+          event.preventDefault()
+
+          // no parentpath, nothing to do
+          if (!parentPath) {
+            return
+          }
+
+          // get last segment from parent path
+          const lastParentSeparatorIdx = parentPath.lastIndexOf('/')
+
+          // path is only one segment
+          if (lastParentSeparatorIdx === -1) {
+            setParentPath?.('')
+            changeFileName(parentPath + value)
+            setCursorPosition(parentPath.length) // cursor after the merged content
+            return
+          }
+
+          const newParentPath = parentPath.substring(0, lastParentSeparatorIdx)
+          const newFileName = parentPath.substring(lastParentSeparatorIdx + 1) + value
+
+          setParentPath?.(newParentPath)
+          changeFileName(newFileName)
+          setCursorPosition(newFileName.length - value.length) // cursor after the merged segment
+        }}
         onInput={(event: ChangeEvent<HTMLInputElement>) => {
-          changeFileName(event.currentTarget.value)
+          const value = event.currentTarget.value
+          const cursorPos = event.currentTarget.selectionStart || 0
+
+          // if there's no path separator, keep value as is
+          const lastSeparatorIdx = value.lastIndexOf('/')
+          if (lastSeparatorIdx === -1) {
+            changeFileName(value)
+            return
+          }
+
+          // otherwise, add any leading path segments to parentPath instead of file path
+          const newParentPath = (parentPath ? parentPath + '/' : '') + value.substring(0, lastSeparatorIdx)
+          const newFileName = value.substring(lastSeparatorIdx + 1)
+
+          setParentPath?.(newParentPath)
+          changeFileName(newFileName)
+          setCursorPosition(Math.max(0, cursorPos - (lastSeparatorIdx + 1)))
         }}
         onBlur={handleOnBlur}
-        onFocus={({ target }) => {
-          const value = (parentPath ? parentPath + '/' : '') + path
-          changeFileName(value)
-          setParentPath?.('')
-          setTimeout(() => {
-            target.setSelectionRange(value.length, value.length)
-            target.scrollLeft = Number.MAX_SAFE_INTEGER
-          }, 0)
-        }}
         autoFocus={!!isNew}
       />
       <Text variant="body-single-line-normal" color="foreground-3">
@@ -77,7 +133,13 @@ export interface PathBreadcrumbsInputProps {
 export type PathBreadcrumbsProps = PathBreadcrumbsBaseProps & Partial<PathBreadcrumbsInputProps>
 
 export const PathBreadcrumbs = ({ items, isEdit, isNew, ...props }: PathBreadcrumbsProps) => {
-  const { Link } = useRouterContext()
+  const { Link, navigate } = useRouterContext()
+
+  // in case of edit or new, last item is rendered as input and not as breadcrumb
+  const filteredItems = useMemo(
+    () => ((isEdit || isNew) && (props.fileName?.length || 0) > 0 ? items.slice(0, -1) : items),
+    [items, isEdit, isNew, props.fileName]
+  )
 
   const renderInput = () => {
     const { changeFileName, gitRefName, fileName, handleOnBlur, parentPath, setParentPath } = props
@@ -104,30 +166,30 @@ export const PathBreadcrumbs = ({ items, isEdit, isNew, ...props }: PathBreadcru
   // Truncation logic: max 4 items visible
   // If more than 4: root / ... / second-to-last / last
   const MAX_VISIBLE_ITEMS = 4
-  const shouldTruncate = items.length > MAX_VISIBLE_ITEMS
+  const shouldTruncate = filteredItems.length > MAX_VISIBLE_ITEMS
 
   // Memoize hidden items for the ellipsis dropdown
   const hiddenItems = useMemo(() => {
     if (!shouldTruncate) return []
     // Hidden items are from index 1 to items.length - 2 (exclusive of last two)
-    return items.slice(1, items.length - 2).map(item => ({
+    return filteredItems.slice(1, filteredItems.length - 2).map(item => ({
       label: decodeURIComponentIfValid(decodeURIComponentIfValid(item.path)),
       href: item.parentPath
     }))
-  }, [items, shouldTruncate])
+  }, [filteredItems, shouldTruncate])
 
   // Memoize visible items
   const visibleItems = useMemo(() => {
-    if (!shouldTruncate) return items
+    if (!shouldTruncate) return filteredItems
 
     // Show: first item, ellipsis, second-to-last, last
     return [
-      items[0], // root
+      filteredItems[0], // root
       null, // placeholder for ellipsis
-      items[items.length - 2], // second-to-last
-      items[items.length - 1] // last
+      filteredItems[filteredItems.length - 2], // second-to-last
+      filteredItems[filteredItems.length - 1] // last
     ]
-  }, [items, shouldTruncate])
+  }, [filteredItems, shouldTruncate])
 
   return (
     <Layout.Flex gap="sm" wrap={isRenderInput ? 'wrap' : 'nowrap'} align="start">
@@ -141,7 +203,7 @@ export const PathBreadcrumbs = ({ items, isEdit, isNew, ...props }: PathBreadcru
                   <Breadcrumb.Ellipsis
                     items={hiddenItems}
                     onItemSelect={selectedItem => {
-                      window.location.href = selectedItem.href
+                      navigate(selectedItem.href)
                     }}
                   />
                   <Breadcrumb.Separator />
@@ -169,11 +231,11 @@ export const PathBreadcrumbs = ({ items, isEdit, isNew, ...props }: PathBreadcru
 
       {isRenderInput && renderInput()}
 
-      {items.length > 1 && !isRenderInput && (
+      {filteredItems.length > 1 && !isRenderInput && (
         <CopyButton
           className="mt-cn-3xs"
           size="xs"
-          name={items
+          name={filteredItems
             .slice(1)
             .map(item => decodeURIComponentIfValid(decodeURIComponentIfValid(item.path)))
             .join('/')}

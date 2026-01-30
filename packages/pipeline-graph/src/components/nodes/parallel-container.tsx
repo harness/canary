@@ -224,7 +224,6 @@ export default function ParallelNodeContainer(props: ContainerNodeProps<Parallel
         <AnimatePresence>
           {!localCollapsed && node.children.length > 0 ? (
             <motion.div
-              key="children-wrapper"
               animate="visible"
               exit="exit"
               initial={!isMounted.current ? false : "hidden"}
@@ -234,6 +233,7 @@ export default function ParallelNodeContainer(props: ContainerNodeProps<Parallel
               }}
               onAnimationComplete={handleAnimationComplete}
               style={{
+                transformOrigin: 'top left',
                 display: 'flex',
                 flexDirection: 'column',
                 alignItems: 'center',

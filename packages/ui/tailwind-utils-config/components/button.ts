@@ -34,13 +34,20 @@ function createButtonVariantStyles() {
        */
       if (variant === 'ghost') {
         style[`color`] = `var(--cn-set-${themeStyle}-outline-text)`
+
+        // For default theme, use state tokens; for other themes use outline tokens
+        const hoverBg =
+          theme === 'default' ? 'var(--cn-state-hover)' : `var(--cn-set-${themeStyle}-outline-bg-hover)`
+        const selectedBg =
+          theme === 'default' ? 'var(--cn-state-hover)' : `var(--cn-set-${themeStyle}-outline-bg-selected)`
+
         style[`&:hover:not(:disabled, .cn-button-disabled)`] = {
-          backgroundColor: `var(--cn-set-${themeStyle}-outline-bg-hover)`
+          backgroundColor: hoverBg
         }
 
         style[`&:active:not(:disabled, .cn-button-disabled), &:where(.cn-button-active), &:where([data-state=open])`] =
         {
-          backgroundColor: `var(--cn-set-${themeStyle}-outline-bg-selected)`
+          backgroundColor: selectedBg
         }
       } else {
         const themeStyleForVariant = variant === 'primary' && theme === 'default' ? 'brand' : themeStyle

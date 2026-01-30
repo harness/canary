@@ -1287,10 +1287,10 @@
       }
     },
     "diff": {
-      "grey": {
+      "background": {
         "$type": "color",
-        "$value": "{bg.1}",
-        "$description": "Neutral base color for the diff interface that allows code and difference highlights to remain visually prominent."
+        "$value": "{bg.0}",
+        "$description": "Background color for the diff interface that allows code and difference highlights to remain visually prominent."
       },
       "add-content": {
         "$extensions": {
@@ -1441,7 +1441,7 @@
       },
       "expand-content": {
         "$type": "color",
-        "$value": "{bg.2}",
+        "$value": "{comp.diff.background}",
         "$description": "Background for controls that expand/collapse code sections to show additional context."
       },
       "hljs": {
@@ -1488,6 +1488,146 @@
         "$type": "color",
         "$value": "{orange.400}",
         "$description": "Color for HTML/XML attributes and object properties in syntax highlighting. Highlights configurable element properties."
+      }
+    },
+    "monaco": {
+      "foreground": {
+        "$type": "color",
+        "$value": "{comp.diff.hljs}",
+        "$description": "Default text color in Monaco Editor."
+      },
+      "background": {
+        "$type": "color",
+        "$value": "{comp.diff.background}",
+        "$description": "Background color of Monaco Editor."
+      },
+      "selection": {
+        "$extensions": {
+          "studio.tokens": {
+            "modify": {
+              "type": "lighten",
+              "value": "0.12",
+              "space": "lch"
+            }
+          }
+        },
+        "$type": "color",
+        "$value": "{comp.monaco.background}",
+        "$description": "Background color of selected text in Monaco Editor."
+      },
+      "line-highlight": {
+        "$extensions": {
+          "studio.tokens": {
+            "modify": {
+              "type": "lighten",
+              "value": "0.05",
+              "space": "lch"
+            }
+          }
+        },
+        "$type": "color",
+        "$value": "{comp.monaco.background}",
+        "$description": "Background color of the current line highlight in Monaco Editor."
+      },
+      "cursor": {
+        "$type": "color",
+        "$value": "{text.1}",
+        "$description": "Cursor color in Monaco Editor."
+      },
+      "whitespace": {
+        "$type": "color",
+        "$value": "{text.4}",
+        "$description": "Color of whitespace characters in Monaco Editor."
+      },
+      "key": {
+        "$type": "color",
+        "$value": "{comp.diff.hljs-attr}",
+        "$description": "Color for property keys and attributes. Highlights configuration keys and object property names."
+      },
+      "string": {
+        "$type": "color",
+        "$value": "{comp.diff.hljs-string}",
+        "$description": "Color for string values. Distinguishes text content from keys and other value types."
+      },
+      "number": {
+        "$type": "color",
+        "$value": "{comp.diff.hljs-literal}",
+        "$description": "Color for numeric values. Emphasizes numbers and numeric expressions."
+      },
+      "boolean": {
+        "$type": "color",
+        "$value": "{comp.diff.hljs-keyword}",
+        "$description": "Color for keywords, boolean and null values. Highlights special language constants."
+      },
+      "comment": {
+        "$type": "color",
+        "$value": "{comp.diff.hljs-comment}",
+        "$description": "Color for comments. Provides reduced emphasis to distinguish explanatory text from code."
+      },
+      "tag": {
+        "$type": "color",
+        "$value": "{comp.diff.hljs-title-class}",
+        "$description": "Color for class names, type definitions and support types."
+      },
+      "delimiter": {
+        "$type": "color",
+        "$value": "{comp.diff.hljs-comment}",
+        "$description": "Color for delimiters and operators. Provides subtle visual separation."
+      },
+      "anchor": {
+        "$type": "color",
+        "$value": "{comp.diff.hljs-name}",
+        "$description": "Color for HTML/XML tags, variables and reference markers."
+      },
+      "function": {
+        "$type": "color",
+        "$value": "{comp.diff.hljs-title-function}",
+        "$description": "Color for function names and method definitions."
+      },
+      "constant": {
+        "$type": "color",
+        "$value": "{set.orange.outline.text}",
+        "$description": "Color for constants and other static values."
+      },
+      "invalid-bg": {
+        "$type": "color",
+        "$value": "{set.warning.outline.bg}",
+        "$description": "Background color for invalid or error tokens."
+      },
+      "invalid-text": {
+        "$type": "color",
+        "$value": "{set.warning.outline.text}",
+        "$description": "Text color for invalid or error tokens."
+      },
+      "diff-inserted": {
+        "$type": "color",
+        "$value": "{text.success}",
+        "$description": "Color for inserted content in diff view."
+      },
+      "diff-deleted": {
+        "$type": "color",
+        "$value": "{text.danger}",
+        "$description": "Color for deleted content in diff view."
+      },
+      "diff-header-bg": {
+        "$type": "color",
+        "$value": "{set.brand.outline.bg}",
+        "$description": "Background color for diff headers."
+      },
+      "diff-range": {
+        "$type": "color",
+        "$value": "{text.brand}",
+        "$description": "Color for diff range indicators."
+      },
+      "line-number": {
+        "$type": "color",
+        "$value": "{text.4}",
+        "$description": "Color for line numbers in Monaco Editor gutter."
+      },
+      "line-number-active": {
+        "$type": "color",
+        "$value": "{comp.monaco.foreground}",
+        "$description": "Color for the active line number in Monaco Editor gutter."
       }
     },
     "header": {

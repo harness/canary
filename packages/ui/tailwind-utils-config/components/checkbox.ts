@@ -135,6 +135,7 @@ export default {
   '.cn-checkbox-label': {
     font: 'var(--cn-body-normal) !important',
     color: 'var(--cn-text-1) !important',
+    cursor: 'pointer',
     '&:where(.disabled)': {
       cursor: 'not-allowed',
       '@apply opacity-cn-disabled': ''

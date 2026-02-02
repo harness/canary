@@ -7,21 +7,26 @@ import AiVerify from './logos/ai-verify.svg'
 import Anchore from './logos/anchore.svg'
 import Android from './logos/android.svg'
 import AppDynamics from './logos/app-dynamics.svg'
+import Approval from './logos/approval.svg'
 import Aqua from './logos/aqua.svg'
 import Argo from './logos/argo.svg'
 import Artifactory from './logos/artifactory.svg'
 import AutoScaler from './logos/auto-scaler.svg'
 import Aws from './logos/aws.svg'
 import Azure from './logos/azure.svg'
+import Background from './logos/background.svg'
 import Bamboo from './logos/bamboo.svg'
 import Bandit from './logos/bandit.svg'
+import Barrier from './logos/barrier.svg'
 import Bitbucket from './logos/bitbucket.svg'
 import Blackduck from './logos/blackduck.svg'
 import Brakeman from './logos/brakeman.svg'
 import BuildKite from './logos/build-kite.svg'
 import Burb from './logos/burb.svg'
+import ChatGpt from './logos/chat-gpt.svg'
 import Checkmarx from './logos/checkmarx.svg'
 import Checkov from './logos/checkov.svg'
+import Claude from './logos/claude.svg'
 import Codecov from './logos/codecov.svg'
 import Confluence from './logos/confluence.svg'
 import Connector from './logos/connector.svg'
@@ -42,12 +47,14 @@ import Fortify from './logos/fortify.svg'
 import Fossa from './logos/fossa.svg'
 import Git from './logos/git.svg'
 import Gitea from './logos/gitea.svg'
+import GithubAction from './logos/github-action.svg'
 import Github from './logos/github.svg'
 import Gitlab from './logos/gitlab.svg'
 import Gitleaks from './logos/gitleaks.svg'
 import Go from './logos/go.svg'
 import Google from './logos/google.svg'
 import Grafana from './logos/grafana.svg'
+import Group from './logos/group.svg'
 import Grype from './logos/grype.svg'
 import Harness from './logos/harness.svg'
 import Hashicorp from './logos/hashicorp.svg'
@@ -81,13 +88,17 @@ import OpsGenie from './logos/ops-genie.svg'
 import Osv from './logos/osv.svg'
 import Owasp from './logos/owasp.svg'
 import Pagerduty from './logos/pagerduty.svg'
+import Parallel from './logos/parallel.svg'
 import PrismaCloud from './logos/prisma-cloud.svg'
 import Prometheus from './logos/prometheus.svg'
 import Prowler from './logos/prowler.svg'
 import Python from './logos/python.svg'
 import Qualys from './logos/qualys.svg'
+import Queue from './logos/queue.svg'
 import Qwiet from './logos/qwiet.svg'
 import Rancher from './logos/rancher.svg'
+import RunTest from './logos/run-test.svg'
+import Run from './logos/run.svg'
 import Salesforce from './logos/salesforce.svg'
 import SecretSsh from './logos/secret-ssh.svg'
 import SecureShell from './logos/secure-shell.svg'
@@ -121,21 +132,26 @@ export const LogoNameMapV2 = {
   anchore: Anchore,
   android: Android,
   'app-dynamics': AppDynamics,
+  approval: Approval,
   aqua: Aqua,
   argo: Argo,
   artifactory: Artifactory,
   'auto-scaler': AutoScaler,
   aws: Aws,
   azure: Azure,
+  background: Background,
   bamboo: Bamboo,
   bandit: Bandit,
+  barrier: Barrier,
   bitbucket: Bitbucket,
   blackduck: Blackduck,
   brakeman: Brakeman,
   'build-kite': BuildKite,
   burb: Burb,
+  'chat-gpt': ChatGpt,
   checkmarx: Checkmarx,
   checkov: Checkov,
+  claude: Claude,
   codecov: Codecov,
   confluence: Confluence,
   connector: Connector,
@@ -156,12 +172,14 @@ export const LogoNameMapV2 = {
   fossa: Fossa,
   git: Git,
   gitea: Gitea,
+  'github-action': GithubAction,
   github: Github,
   gitlab: Gitlab,
   gitleaks: Gitleaks,
   go: Go,
   google: Google,
   grafana: Grafana,
+  group: Group,
   grype: Grype,
   harness: Harness,
   hashicorp: Hashicorp,
@@ -195,13 +213,17 @@ export const LogoNameMapV2 = {
   osv: Osv,
   owasp: Owasp,
   pagerduty: Pagerduty,
+  parallel: Parallel,
   'prisma-cloud': PrismaCloud,
   prometheus: Prometheus,
   prowler: Prowler,
   python: Python,
   qualys: Qualys,
+  queue: Queue,
   qwiet: Qwiet,
   rancher: Rancher,
+  'run-test': RunTest,
+  run: Run,
   salesforce: Salesforce,
   'secret-ssh': SecretSsh,
   'secure-shell': SecureShell,

@@ -1,8 +1,9 @@
-import { PropsWithChildren, useCallback, useMemo, useRef, type JSX } from 'react'
+import { PropsWithChildren, useMemo, useRef, useState, type JSX } from 'react'
 
 import { IconV2, IconV2NamesType, StatusBadge, Text } from '@/components'
 import { cn } from '@/utils'
-import { easyPluralize } from '@/utils/stringUtils'
+import { cva } from 'class-variance-authority'
+import { AnimatePresence, motion } from 'framer-motion'
 
 import {
   StudioCardContentProps,
@@ -20,6 +21,18 @@ import {
  * =================
  */
 
+const sizeVariants = cva('', {
+  variants: {
+    size: {
+      sm: 'cn-studio-card-sm',
+      md: ''
+    }
+  },
+  defaultVariants: {
+    size: 'md'
+  }
+})
+
 const CLICK_DRAG_THRESHOLD = 5
 
 function Root({
@@ -29,14 +42,15 @@ function Root({
   theme = 'default',
   selected = false,
   variant = 'default',
-  execution = false
+  execution = false,
+  size = 'md'
 }: PropsWithChildren<StudioCardRootProps>): JSX.Element {
   // Used to determine if a click was a drag or a click
   const dragPos = useRef({ x: 0, y: 0 })
 
   return (
     <div
-      className={cn('cn-studio-card cursor-default', {
+      className={cn('cn-studio-card cursor-default', sizeVariants({ size }), {
         'cn-studio-card-execution': execution,
         'cn-studio-card-group': isGroupCard,
         'cn-studio-card-stage': variant === 'stage'
@@ -93,7 +107,11 @@ function Header({ icon, title, actions }: StudioCardHeaderProps): JSX.Element {
  */
 
 function Content({ children, className }: PropsWithChildren<StudioCardContentProps>): JSX.Element {
-  return <div className={cn('cn-studio-card-content', className)}>{children}</div>
+  return (
+    <motion.div className={cn('cn-studio-card-content', className)}>
+      <AnimatePresence>{children}</AnimatePresence>
+    </motion.div>
+  )
 }
 
 /**
@@ -121,7 +139,40 @@ function Message({ message }: StudioCardMessageProps): JSX.Element | null {
  * ==========================
  */
 
-function ExpandButton({ stepCount, isExpanded = false, onToggle }: StudioCardExpandButtonProps): JSX.Element | null {
+const expandButtonVariants = {
+  hidden: {
+    opacity: 0,
+    scale: 0.8
+  },
+  visible: {
+    opacity: 1,
+    scale: 1,
+    transition: {
+      duration: 0.1,
+      // ease: [0.4, 0, 0.2, 1]
+      ease: 'easeOut'
+    }
+  },
+  exit: {
+    opacity: 0,
+    scale: 0,
+    transition: {
+      duration: 0.2,
+      // ease: [0.4, 0, 0.2, 1]
+      ease: 'easeOut'
+    }
+  }
+}
+
+function ExpandButton({
+  stepCount,
+  isExpanded = false,
+  onToggle,
+  label,
+  icon
+}: StudioCardExpandButtonProps): JSX.Element | null {
+  const [isHovered, setIsHovered] = useState(false)
+
   // Calculate number of stacks to show (max 2)
   const stackCount = useMemo(() => {
     if (isExpanded || stepCount <= 1) return 0
@@ -129,13 +180,17 @@ function ExpandButton({ stepCount, isExpanded = false, onToggle }: StudioCardExp
     return 2 // For 3 or more steps
   }, [stepCount, isExpanded])
 
-  if (stepCount === 0) return null
-
-  const stepCountText = easyPluralize(stepCount, 'step', 'steps', true)
+  if (stepCount === 0 || isExpanded) return null
 
   return (
-    <div className="cn-studio-card-expand-button" data-expanded={isExpanded}>
-      {/* Stacking cards - positioned behind the button */}
+    <motion.div
+      variants={expandButtonVariants}
+      initial="hidden"
+      animate="visible"
+      exit="exit"
+      className="cn-studio-card-expand-button"
+      data-expanded={isExpanded}
+    >
       {stackCount > 0 && (
         <>
           {stackCount >= 2 && (
@@ -153,17 +208,27 @@ function ExpandButton({ stepCount, isExpanded = false, onToggle }: StudioCardExp
           e.stopPropagation()
           onToggle?.()
         }}
-        className={cn('cn-studio-card-expand-button-main', {
-          'bg-cn-2': isExpanded,
-          'bg-cn-3': !isExpanded
-        })}
+        onMouseEnter={() => setIsHovered(true)}
+        onMouseLeave={() => setIsHovered(false)}
+        className="cn-studio-card-expand-button-main"
       >
-        <Text color="foreground-1" variant="body-single-line-code">
-          {stepCountText}
-        </Text>
-        <IconV2 className="text-cn-2" name={isExpanded ? 'collapse' : 'expand'} size="sm" />
+        {/* icon + label */}
+        <div className="cn-studio-card-expand-button-top">
+          {icon ?? <IconV2 name="harness-plugins" size="lg" />}
+          <Text color="foreground-1" variant="body-strong" className="truncate">
+            {label}
+          </Text>
+        </div>
+
+        {/* Count + expand icon */}
+        <div className="cn-studio-card-expand-button-bottom">
+          <Text color="foreground-1" variant="body-single-line-code">
+            +{stepCount} more
+          </Text>
+          <IconV2 className="text-cn-2" name={isHovered ? 'expand' : 'collapse'} size="sm" />
+        </div>
       </button>
-    </div>
+    </motion.div>
   )
 }
 
@@ -173,32 +238,10 @@ function ExpandButton({ stepCount, isExpanded = false, onToggle }: StudioCardExp
  * ====================
  */
 
-function Status({ status }: StudioCardStatusProps): JSX.Element | null {
-  const getStatusConfig = useCallback(() => {
-    switch (status) {
-      case 'queued':
-        return { theme: 'muted' as const, label: 'Queued' }
-      case 'executing':
-        return { theme: 'warning' as const, label: 'Running' }
-      case 'success':
-        return { theme: 'success' as const, label: 'Completed' }
-      case 'warning':
-        return { theme: 'warning' as const, label: 'Warning' }
-      case 'error':
-        return { theme: 'danger' as const, label: 'Error' }
-      default:
-        return { theme: 'muted' as const, label: 'Unknown' }
-    }
-  }, [status])
-
-  const { theme, label } = useMemo(() => getStatusConfig(), [getStatusConfig])
-
-  if (!status) return null
-
+function Status({ status, theme, children }: PropsWithChildren<StudioCardStatusProps>): JSX.Element | null {
   return (
     <StatusBadge data-status={status} className="cn-studio-card-status" size="sm" variant="outline" theme={theme}>
-      {status === 'executing' && <IconV2 name="loader" className="animate-spin" size="xs" />}
-      {label}
+      {children}
     </StatusBadge>
   )
 }
@@ -286,6 +329,19 @@ function StudioCardButton({
   )
 }
 
+/**
+ * ====================
+ * CodePreview Component
+ * ====================
+ */
+function CodePreview({ children }: PropsWithChildren<unknown>): JSX.Element | null {
+  return (
+    <div className="cn-studio-card-code-preview">
+      <Text variant="body-code">{children}</Text>
+    </div>
+  )
+}
+
 export const StudioCard = {
   Root,
   Header,
@@ -296,7 +352,8 @@ export const StudioCard = {
   Tag,
   Button: StudioCardButton,
   ExpandButton,
-  CustomActions
+  CustomActions,
+  CodePreview
 }
 
 export type * from './studio-card-types'

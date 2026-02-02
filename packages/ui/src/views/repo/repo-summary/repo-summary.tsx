@@ -60,6 +60,7 @@ export interface RepoSummaryViewProps extends Partial<RoutingProps> {
   selectedBranchOrTag: BranchSelectorListItem | null
   loading: boolean
   isSSHEnabled?: boolean
+  isForkEnabled?: boolean
   filesList: string[]
   navigateToFile: (path: string) => void
   repository?: RepoRepositoryOutput
@@ -135,10 +136,10 @@ export function RepoSummaryView({
   scheduleFileMetaFetch,
   imageUrlTransform,
   isSSHEnabled,
+  isForkEnabled,
   ...props
 }: RepoSummaryViewProps) {
   const { t } = useTranslation()
-
   // Helper function to construct README creation path
   const getReadmeCreationPath = useCallback(() => {
     return `${toRepoFiles?.()}/new/${selectedBranchOrTag?.name || repository?.default_branch}/~/?name=${DEFAULT_README_NAME}`
@@ -240,6 +241,19 @@ export function RepoSummaryView({
                       </Link>
                     </Button>
                   ) : null}
+                  {isForkEnabled && (
+                    <Button variant="outline" asChild>
+                      <Link
+                        variant="secondary"
+                        noHoverUnderline
+                        className="relative grid grid-cols-[auto_1fr] items-center gap-cn-2xs"
+                        to={`${spaceId ? `/${spaceId}` : ''}/repos/${repoId}/fork`}
+                      >
+                        <IconV2 name="git-fork" />
+                        <span className="truncate">{t('views:repos.fork', 'Fork')}</span>
+                      </Link>
+                    </Button>
+                  )}
                   <CloneRepoDialog
                     isSSHEnabled={isSSHEnabled}
                     sshUrl={repository?.git_ssh_url}

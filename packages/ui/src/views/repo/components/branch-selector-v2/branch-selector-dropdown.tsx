@@ -24,6 +24,7 @@ export const BranchSelectorDropdown: FC<BranchSelectorDropdownProps> = ({
   repoId,
   spaceId,
   isBranchOnly = false,
+  selectorTitle = '',
   searchQuery,
   setSearchQuery,
   dynamicWidth = false,
@@ -58,14 +59,15 @@ export const BranchSelectorDropdown: FC<BranchSelectorDropdownProps> = ({
       hideArrow
       onOpenAutoFocus={e => e.preventDefault()}
       className="p-0"
-      style={{ width: dynamicWidth ? 'var(--radix-dropdown-menu-trigger-width)' : '358px' }}
+      style={{ width: dynamicWidth ? 'var(--radix-popover-trigger-width)' : '358px' }}
+      noMaxWidth={dynamicWidth}
       align="start"
     >
       <Command.Root className="bg-transparent">
         <div className="px-cn-sm pt-cn-sm">
           <Layout.Grid gapY="sm">
             <Text variant="body-single-line-strong" color="foreground-1">
-              {isBranchOnly ? 'Switch branches' : 'Switch branches/tags'}
+              {selectorTitle || (isBranchOnly ? 'Switch branches' : 'Switch branches/tags')}
             </Text>
 
             <SearchInput
@@ -146,7 +148,7 @@ export const BranchSelectorDropdown: FC<BranchSelectorDropdownProps> = ({
           })}
         </Command.List>
 
-        <div className="px-cn-sm border-cn-3 pt-cn-sm pb-cn-mb border-t border-solid">
+        <div className="px-cn-sm border-cn-3 py-cn-sm border-t border-solid">
           <Link to={viewAllUrl} variant="secondary" className="w-full" onKeyDown={onLinkEnter}>
             {t('views:repos.viewAll', `View all ${activeTab}`, {
               type:

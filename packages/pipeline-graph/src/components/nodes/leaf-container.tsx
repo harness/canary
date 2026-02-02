@@ -1,10 +1,37 @@
 import { useMemo } from 'react'
 
+import { motion } from 'framer-motion'
 import { useContainerNodeContext } from '../../context/container-node-provider'
 import { RenderNodeContent } from '../../render/render-node-content'
 import { ContainerNodeProps } from '../../types/container-node'
 import { LeafNodeInternalType } from '../../types/nodes-internal'
 import Port from './port'
+
+const itemVariants = {
+  hidden: {
+    opacity: 0,
+    // scale: 0.8,
+    x: 0
+  },
+  visible: {
+    opacity: 1,
+    // scale: 1,
+    x: 0,
+    transition: {
+      ease: "easeOut",
+      duration: 0.1,
+    }
+  },
+  exit: {
+    opacity: 0,
+    // scale: 0.9,
+    x: -30,
+    transition: {
+      duration: 0.1,
+      ease: "easeOut",
+    }
+  }
+};
 
 export default function LeafNodeContainer(props: ContainerNodeProps<LeafNodeInternalType>) {
   const { node, isFirst, isLast, parentNodeType, mode } = props
@@ -40,7 +67,8 @@ export default function LeafNodeContainer(props: ContainerNodeProps<LeafNodeInte
   }, [node.type, portComponent])
 
   return (
-    <div
+    <motion.div
+      variants={itemVariants}
       key={props.node.type + '-' + props.node.path}
       className={'PipelineGraph-LeafContainerNode'}
       style={{
@@ -88,6 +116,6 @@ export default function LeafNodeContainer(props: ContainerNodeProps<LeafNodeInte
         mode={mode}
         portPosition={adjustment}
       />
-    </div>
+    </motion.div>
   )
 }

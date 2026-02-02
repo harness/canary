@@ -29,17 +29,17 @@
     },
     "2": {
       "$type": "color",
-      "$value": "{gray.300}",
+      "$value": "{gray.200}",
       "$description": "Primary color for text and icons in general content. Provides optimal readability for extended reading while reducing visual strain.\n\nCommon uses: Body text, primary content, default icons, form inputs."
     },
     "3": {
       "$type": "color",
-      "$value": "{gray.600}",
+      "$value": "{gray.500}",
       "$description": "Reduced emphasis color for text and icons in secondary information. Creates visual hierarchy through lower contrast.\n\nCommon uses: Supporting text, metadata, secondary information, placeholders."
     },
     "4": {
       "$type": "color",
-      "$value": "{gray.700}",
+      "$value": "{gray.600}",
       "$description": "Lowest emphasis text color for unavailable options. Creates visual differentiation between interactive and non-interactive elements.\n\nCommon uses: Disabled buttons, inactive form elements, unavailable options, placeholders."
     },
     "success": {
@@ -111,13 +111,13 @@
         "studio.tokens": {
           "modify": {
             "type": "alpha",
-            "value": "0.1",
+            "value": "0.2",
             "space": "lch"
           }
         }
       },
       "$type": "color",
-      "$value": "{gray.600}",
+      "$value": "{gray.850}",
       "$description": "Light overlay for gentle interactive effects. Creates subtle visual feedback during user interaction.\n\nCommon uses: Button hover states, link hover states, soft interactions, menu items."
     },
     "selected": {
@@ -125,13 +125,13 @@
         "studio.tokens": {
           "modify": {
             "type": "alpha",
-            "value": "0.12",
+            "value": "0.25",
             "space": "lch"
           }
         }
       },
       "$type": "color",
-      "$value": "{gray.600}",
+      "$value": "{gray.850}",
       "$description": "Strong overlay for emphasized selection states. Creates distinct visual indication of active or selected elements.\n\nCommon uses: Selected list items, active tabs, chosen options, current navigation item."
     }
   },
@@ -194,7 +194,7 @@
         },
         "border": {
           "$type": "color",
-          "$value": "{blue.600}",
+          "$value": "{indigo.600}",
           "$description": "Border color for primary brand with minimum emphasis boundaries."
         },
         "bg-hover": {
@@ -1236,7 +1236,7 @@
           "studio.tokens": {
             "modify": {
               "type": "alpha",
-              "value": "0.25",
+              "value": "0.18",
               "space": "lch"
             }
           }
@@ -1287,10 +1287,10 @@
       }
     },
     "diff": {
-      "grey": {
+      "background": {
         "$type": "color",
-        "$value": "{bg.1}",
-        "$description": "Neutral base color for the diff interface that allows code and difference highlights to remain visually prominent."
+        "$value": "{bg.0}",
+        "$description": "Background color for the diff interface that allows code and difference highlights to remain visually prominent."
       },
       "add-content": {
         "$extensions": {
@@ -1441,7 +1441,7 @@
       },
       "expand-content": {
         "$type": "color",
-        "$value": "{bg.2}",
+        "$value": "{comp.diff.background}",
         "$description": "Background for controls that expand/collapse code sections to show additional context."
       },
       "hljs": {
@@ -1488,6 +1488,146 @@
         "$type": "color",
         "$value": "{orange.400}",
         "$description": "Color for HTML/XML attributes and object properties in syntax highlighting. Highlights configurable element properties."
+      }
+    },
+    "monaco": {
+      "foreground": {
+        "$type": "color",
+        "$value": "{comp.diff.hljs}",
+        "$description": "Default text color in Monaco Editor."
+      },
+      "background": {
+        "$type": "color",
+        "$value": "{comp.diff.background}",
+        "$description": "Background color of Monaco Editor."
+      },
+      "selection": {
+        "$extensions": {
+          "studio.tokens": {
+            "modify": {
+              "type": "lighten",
+              "value": "0.12",
+              "space": "lch"
+            }
+          }
+        },
+        "$type": "color",
+        "$value": "{comp.monaco.background}",
+        "$description": "Background color of selected text in Monaco Editor."
+      },
+      "line-highlight": {
+        "$extensions": {
+          "studio.tokens": {
+            "modify": {
+              "type": "lighten",
+              "value": "0.05",
+              "space": "lch"
+            }
+          }
+        },
+        "$type": "color",
+        "$value": "{comp.monaco.background}",
+        "$description": "Background color of the current line highlight in Monaco Editor."
+      },
+      "cursor": {
+        "$type": "color",
+        "$value": "{text.1}",
+        "$description": "Cursor color in Monaco Editor."
+      },
+      "whitespace": {
+        "$type": "color",
+        "$value": "{text.4}",
+        "$description": "Color of whitespace characters in Monaco Editor."
+      },
+      "key": {
+        "$type": "color",
+        "$value": "{comp.diff.hljs-attr}",
+        "$description": "Color for property keys and attributes. Highlights configuration keys and object property names."
+      },
+      "string": {
+        "$type": "color",
+        "$value": "{comp.diff.hljs-string}",
+        "$description": "Color for string values. Distinguishes text content from keys and other value types."
+      },
+      "number": {
+        "$type": "color",
+        "$value": "{comp.diff.hljs-literal}",
+        "$description": "Color for numeric values. Emphasizes numbers and numeric expressions."
+      },
+      "boolean": {
+        "$type": "color",
+        "$value": "{comp.diff.hljs-keyword}",
+        "$description": "Color for keywords, boolean and null values. Highlights special language constants."
+      },
+      "comment": {
+        "$type": "color",
+        "$value": "{comp.diff.hljs-comment}",
+        "$description": "Color for comments. Provides reduced emphasis to distinguish explanatory text from code."
+      },
+      "tag": {
+        "$type": "color",
+        "$value": "{comp.diff.hljs-title-class}",
+        "$description": "Color for class names, type definitions and support types."
+      },
+      "delimiter": {
+        "$type": "color",
+        "$value": "{comp.diff.hljs-comment}",
+        "$description": "Color for delimiters and operators. Provides subtle visual separation."
+      },
+      "anchor": {
+        "$type": "color",
+        "$value": "{comp.diff.hljs-name}",
+        "$description": "Color for HTML/XML tags, variables and reference markers."
+      },
+      "function": {
+        "$type": "color",
+        "$value": "{comp.diff.hljs-title-function}",
+        "$description": "Color for function names and method definitions."
+      },
+      "constant": {
+        "$type": "color",
+        "$value": "{set.orange.outline.text}",
+        "$description": "Color for constants and other static values."
+      },
+      "invalid-bg": {
+        "$type": "color",
+        "$value": "{set.warning.outline.bg}",
+        "$description": "Background color for invalid or error tokens."
+      },
+      "invalid-text": {
+        "$type": "color",
+        "$value": "{set.warning.outline.text}",
+        "$description": "Text color for invalid or error tokens."
+      },
+      "diff-inserted": {
+        "$type": "color",
+        "$value": "{text.success}",
+        "$description": "Color for inserted content in diff view."
+      },
+      "diff-deleted": {
+        "$type": "color",
+        "$value": "{text.danger}",
+        "$description": "Color for deleted content in diff view."
+      },
+      "diff-header-bg": {
+        "$type": "color",
+        "$value": "{set.brand.outline.bg}",
+        "$description": "Background color for diff headers."
+      },
+      "diff-range": {
+        "$type": "color",
+        "$value": "{text.brand}",
+        "$description": "Color for diff range indicators."
+      },
+      "line-number": {
+        "$type": "color",
+        "$value": "{text.4}",
+        "$description": "Color for line numbers in Monaco Editor gutter."
+      },
+      "line-number-active": {
+        "$type": "color",
+        "$value": "{comp.monaco.foreground}",
+        "$description": "Color for the active line number in Monaco Editor gutter."
       }
     },
     "header": {
@@ -1605,12 +1745,12 @@
       "item": {
         "text": {
           "$type": "color",
-          "$value": "{text.3}",
+          "$value": "{text.2}",
           "$description": "Default text color for sidebar navigation items. Provides optimal readability for menu labels."
         },
         "text-hover": {
           "$type": "color",
-          "$value": "{text.2}",
+          "$value": "{text.1}",
           "$description": "Text color for sidebar items on hover state. Creates higher contrast for interactive feedback."
         },
         "text-selected": {
@@ -1675,7 +1815,7 @@
       "unselected": {
         "item": {
           "$type": "color",
-          "$value": "{text.3}",
+          "$value": "{text.2}",
           "$description": "Color for unselected items in selection controls. Provides readable but less emphasized styling for available options."
         },
         "item-hover": {
@@ -2471,6 +2611,25 @@
           }
         },
         "$description": "Shadow color for 12-gray data visualization drop-shadow filter."
+      }
+    },
+    "widget": {
+      "test-intelligence": {
+        "bg": {
+          "$type": "color",
+          "$value": "linear-gradient(105deg, {purple.1000} -18.5%, {bg.1} 84%)",
+          "$description": "Background gradient for test intelligence widget."
+        },
+        "gradient": {
+          "$type": "color",
+          "$value": "linear-gradient(90deg, {comp.data-viz.05-indigo} 0%, {comp.data-viz.02-purple} 100%)",
+          "$description": "Gradient background for test intelligence widget."
+        },
+        "text-gradient": {
+          "$type": "color",
+          "$value": "linear-gradient(90deg, {text.2} 3%, {comp.data-viz.05-indigo} 75%, {comp.data-viz.02-purple} 100%)",
+          "$description": "Text gradient for test intelligence widget."
+        }
       }
     },
     "shadow": {
@@ -3620,7 +3779,7 @@
                 }
               },
               "$type": "color",
-              "$value": "{cyan.200}",
+              "$value": "{blue.500}",
               "$description": "Starting color for default onboarding color bubble."
             },
             "to": {
@@ -3682,7 +3841,7 @@
                 }
               },
               "$type": "color",
-              "$value": "{cyan.200}",
+              "$value": "{blue.500}",
               "$description": "Starting color for default onboarding top ellipse 1."
             },
             "to": {
@@ -3696,7 +3855,7 @@
                 }
               },
               "$type": "color",
-              "$value": "{cyan.200}",
+              "$value": "{blue.500}",
               "$description": "Ending color for default onboarding top ellipse 1."
             }
           },
@@ -3744,7 +3903,7 @@
                 }
               },
               "$type": "color",
-              "$value": "{cyan.200}",
+              "$value": "{blue.500}",
               "$description": "Starting color for default onboarding top ellipse 2."
             },
             "to": {
@@ -3758,7 +3917,7 @@
                 }
               },
               "$type": "color",
-              "$value": "{cyan.200}",
+              "$value": "{blue.500}",
               "$description": "Ending color for default onboarding top ellipse 2."
             }
           },
@@ -3806,7 +3965,7 @@
                 }
               },
               "$type": "color",
-              "$value": "{cyan.200}",
+              "$value": "{blue.500}",
               "$description": "Starting color for default onboarding bottom ellipse."
             },
             "to": {
@@ -3820,7 +3979,7 @@
                 }
               },
               "$type": "color",
-              "$value": "{cyan.200}",
+              "$value": "{blue.500}",
               "$description": "Ending color for default onboarding bottom ellipse."
             }
           },

@@ -59,7 +59,8 @@ export declare const usePermission: (permissionsRequest?: PermissionsRequest, de
 export enum FeatureFlag {
   SEMANTIC_SEARCH_ENABLED = 'SEMANTIC_SEARCH_ENABLED',
   CODE_SSH_ENABLED = 'CODE_SSH_ENABLED',
-  CODE_SECURITY_SCANNING_ON_PUSH = 'CODE_SECURITY_SCANNING_ON_PUSH'
+  CODE_SECURITY_SCANNING_ON_PUSH = 'CODE_SECURITY_SCANNING_ON_PUSH',
+  CODE_FORK_ENABLED = 'CODE_FORK_ENABLED'
 }
 
 export interface Hooks {

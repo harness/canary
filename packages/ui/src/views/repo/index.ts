@@ -60,3 +60,6 @@ export * from '@views/repo/repo-push-rules/types'
 
 // repo commit details
 export * from '@views/repo/repo-commit-details'
+
+// repo fork
+export * from '@views/repo/repo-fork/repo-fork-page'

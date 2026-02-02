@@ -112,6 +112,7 @@ const SecretListPage: FC<SecretListPageProps> = ({
     <Page.Root>
       <Page.Header
         iconName="key"
+        iconSize="xl"
         title={t('views:secrets.secretsTitle', 'Secrets')}
         backLink={settingsBackLink(routes?.toSettings, {
           accountId,

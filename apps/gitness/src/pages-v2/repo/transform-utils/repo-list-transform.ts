@@ -16,6 +16,16 @@ export const transformRepoList = (repoList: RepoRepositoryOutput[]): RepositoryT
     createdAt: repo.created || 0,
     importing: !!repo.importing,
     favorite: repo.is_favorite,
-    path: repo.path || ''
+    path: repo.path || '',
+    upstream: repo.upstream
+      ? {
+          identifier: repo.upstream.identifier || '',
+          default_branch: repo.upstream.default_branch || '',
+          path: repo.upstream.path || '',
+          fork_id: repo.upstream.fork_id || 0,
+          id: repo.upstream.id || 0,
+          parent_id: repo.upstream.parent_id || 0
+        }
+      : undefined
   }))
 }

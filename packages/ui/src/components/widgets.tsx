@@ -22,7 +22,7 @@ const Root: FC<WidgetsRootProps> = ({ children, isTwoColumn: isTwoColumnProp = f
 
   return (
     <WidgetsContext.Provider value={{ isTwoColumn }}>
-      <div className={cn('gap-cn-3xl', isTwoColumn ? 'columns-2' : 'flex flex-col')}>{children}</div>
+      <div className={cn('gap-cn-3xl w-full', isTwoColumn ? 'columns-2' : 'flex flex-col')}>{children}</div>
     </WidgetsContext.Provider>
   )
 }
@@ -43,16 +43,18 @@ const Item: FC<WidgetsItemProps> = ({ children, title, moreLink, isWidgetTable =
     <Layout.Vertical
       className={cn('overflow-hidden', { 'break-inside-avoid pb-[var(--cn-spacing-10)] last:pb-0': isTwoColumn })}
     >
-      <Layout.Flex justify="between" gap="md" align="start">
-        <Text as="h2" variant="heading-subsection">
-          {title}
-        </Text>
-        {!!moreLink && (
-          <Link className="shrink-0" {...moreLink} suffixIcon="nav-arrow-right">
-            {t('component:widgets.viewMore', 'View more')}
-          </Link>
-        )}
-      </Layout.Flex>
+      {title ? (
+        <Layout.Flex justify="between" gap="md" align="start">
+          <Text as="h2" variant="heading-subsection">
+            {title}
+          </Text>
+          {!!moreLink && (
+            <Link className="shrink-0" {...moreLink} suffixIcon="nav-arrow-right">
+              {t('component:widgets.viewMore', 'View more')}
+            </Link>
+          )}
+        </Layout.Flex>
+      ) : null}
       <div
         className={cn(
           '[contain:inline-size]',

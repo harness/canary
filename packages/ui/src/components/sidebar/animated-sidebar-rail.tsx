@@ -12,7 +12,7 @@ import { Tooltip } from '../tooltip'
 // Constants for sidebar positioning
 const BUMP_PX = 3 // Pixels to bump the sidebar on hover
 const EXPANDED_LEFT = 230 // Left position when sidebar is expanded
-const COLLAPSED_LEFT = 64 // Left position when sidebar is collapsed
+const COLLAPSED_LEFT = 61 // Left position when sidebar is collapsed
 
 interface AnimatedSideBarRailProps extends Pick<HTMLAttributes<HTMLElement>, 'className'> {}
 

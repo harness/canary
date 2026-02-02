@@ -218,6 +218,14 @@ export default function ReposListPage() {
     [favorite, recursive]
   )
 
+  const toUpstreamRepo = (parentRepoPath: string): string => {
+    if (parentRoutes?.toCodeRepositoryPath && parentRepoPath) {
+      const baseRepoPath = parentRoutes.toCodeRepositoryPath({ repoPath: parentRepoPath })
+      return `${baseRepoPath}/summary`
+    }
+    return ''
+  }
+
   return (
     <SandboxRepoListPage
       scope={scope}
@@ -261,6 +269,7 @@ export default function ReposListPage() {
         setOrder(orderKey)
         shouldResetPageRef.current = true
       }}
+      toUpstreamRepo={toUpstreamRepo}
     />
   )
 }

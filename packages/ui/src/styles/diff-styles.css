@@ -6,7 +6,7 @@
 .light-std-std .diff-tailwindcss-wrapper[data-theme='light'] .diff-style-root,
 .dark .diff-tailwindcss-wrapper[data-theme='dark'] .diff-style-root,
 .dark-std-std .diff-tailwindcss-wrapper[data-theme='dark'] .diff-style-root {
-  --diff-grey: var(--cn-comp-diff-grey);
+  --diff-grey: var(--cn-comp-diff-background);
   --diff-add-content--: var(--cn-comp-diff-add-content);
   --diff-del-content--: var(--cn-comp-diff-del-content);
   --diff-add-lineNumber--: var(--cn-comp-diff-add-line-number);

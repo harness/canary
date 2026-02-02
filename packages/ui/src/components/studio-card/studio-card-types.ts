@@ -1,6 +1,7 @@
 import { JSX } from 'react'
 
-import { ExecutionStatusType } from '../pipeline-nodes/types/types'
+import { ExecutionStatusType } from '@components/pipeline-nodes/types/types'
+import { StatusBadgeTheme } from '@components/status-badge/status-badge'
 
 export interface StudioCardRootProps {
   isGroupCard?: boolean
@@ -10,6 +11,7 @@ export interface StudioCardRootProps {
   // It will be updated to a generic value later
   variant?: 'default' | 'stage'
   execution?: boolean
+  size?: 'sm' | 'md'
 }
 
 export interface StudioCardHeaderProps {
@@ -25,6 +27,7 @@ export interface StudioCardMessageProps {
 }
 
 export interface StudioCardStatusProps {
+  theme?: StatusBadgeTheme
   status?: ExecutionStatusType
 }
 
@@ -36,4 +39,6 @@ export interface StudioCardExpandButtonProps {
   stepCount: number
   isExpanded?: boolean
   onToggle?: () => void
+  label: string
+  icon?: React.ReactElement
 }

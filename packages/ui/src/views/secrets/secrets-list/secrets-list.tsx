@@ -75,8 +75,8 @@ export function SecretList({
           <Table.Head className="w-48 min-w-48 max-w-48" contentClassName="truncate">
             {t('views:common.manager', 'Secret Manager')}
           </Table.Head>
-          <Table.Head className="w-36 min-w-36 max-w-36">{t('views:common.created', 'Created')}</Table.Head>
-          <Table.Head className="w-36 min-w-36 max-w-36">{t('views:common.updated', 'Updated')}</Table.Head>
+          <Table.Head className="w-28 min-w-28 max-w-28">{t('views:common.created', 'Created')}</Table.Head>
+          <Table.Head className="w-28 min-w-28 max-w-28">{t('views:common.updated', 'Updated')}</Table.Head>
           <Table.Head className="w-16 min-w-16 max-w-16 text-right" />
         </Table.Row>
       </Table.Header>

@@ -73,6 +73,14 @@ export interface RepositoryType {
   importing?: boolean
   favorite?: boolean
   path: string
+  upstream?: {
+    identifier: string
+    default_branch: string
+    path: string
+    fork_id: number
+    id: number
+    parent_id: number
+  }
 }
 
 export interface BranchData {

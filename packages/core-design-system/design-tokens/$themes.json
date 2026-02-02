@@ -30132,7 +30132,8 @@
       "components/desktop/base/header": "enabled",
       "components/desktop/base/popover": "enabled",
       "components/desktop/base/pipeline": "enabled",
-      "components/desktop/base/chart": "enabled"
+      "components/desktop/base/chart": "enabled",
+      "components/desktop/base/ai-chat": "enabled"
     },
     "$figmaCollectionId": "VariableCollectionId:630:194356",
     "$figmaModeId": "630:7",

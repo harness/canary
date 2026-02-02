@@ -1,4 +1,4 @@
-import { ChangeEvent, useRef } from 'react'
+import { ChangeEvent, useRef, useState } from 'react'
 
 import { Button, Card, IconV2, Input, Layout, Text } from '@/components'
 
@@ -11,8 +11,10 @@ export interface FileUploadProps {
 
 export function FileUpload({ selectedFile, onFileChange, error, accept }: FileUploadProps) {
   const fileInputRef = useRef<HTMLInputElement>(null)
+  const [isLoading, setIsLoading] = useState<boolean>(false)
 
   const handleFileChange = (e: ChangeEvent<HTMLInputElement>) => {
+    setIsLoading(true)
     if (e.target.files && e.target.files.length > 0) {
       onFileChange(e.target.files[0])
     }
@@ -25,6 +27,7 @@ export function FileUpload({ selectedFile, onFileChange, error, accept }: FileUp
   }
 
   const removeFile = (e?: React.MouseEvent) => {
+    setIsLoading(false)
     if (e) {
       e.preventDefault()
       e.stopPropagation()
@@ -41,6 +44,7 @@ export function FileUpload({ selectedFile, onFileChange, error, accept }: FileUp
   }
 
   const handleDrop = (e: React.DragEvent<HTMLDivElement>) => {
+    setIsLoading(true)
     e.preventDefault()
     e.stopPropagation()
 
@@ -53,15 +57,22 @@ export function FileUpload({ selectedFile, onFileChange, error, accept }: FileUp
     <div>
       {!selectedFile ? (
         <div
-          className="rounded-cn-3 border-2 border-dashed border-cn-2 p-cn-xl"
+          className="rounded-cn-3 border-cn-2 p-cn-xl border-2 border-dashed"
           onDragOver={handleDragOver}
           onDrop={handleDrop}
         >
-          <div className="flex flex-col gap-cn-xs items-center" onClick={openFileInput} role="button" tabIndex={0}>
-            <IconV2 name="cloud-upload" size="xl" className="mb-cn-md" />
-            <Text variant="heading-base">Click to browse or drag and drop a file</Text>
-            <Text variant="body-single-line-normal">Up to 50MB</Text>
-          </div>
+          {isLoading ? (
+            <div className="gap-cn-xs flex flex-col items-center">
+              <IconV2 className="mb-cn-md animate-spin" name="loader" size="xl" />
+              <Text variant="heading-base">Loading...</Text>
+            </div>
+          ) : (
+            <div className="gap-cn-xs flex flex-col items-center" onClick={openFileInput} role="button" tabIndex={0}>
+              <IconV2 name="cloud-upload" size="xl" className="mb-cn-md" />
+              <Text variant="heading-base">Click to browse or drag and drop a file</Text>
+              <Text variant="body-single-line-normal">Up to 50MB</Text>
+            </div>
+          )}
         </div>
       ) : (
         <Card.Root orientation="horizontal" size="sm" className="w-full" wrapperClassname="w-full">

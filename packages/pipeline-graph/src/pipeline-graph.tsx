@@ -7,10 +7,11 @@ import './pipeline-graph.css'
 
 import ContainerNodeProvider, { ContainerNodeProviderProps } from './context/container-node-provider'
 import { ParallelContainerConfigType, SerialContainerConfigType } from './types/container-node'
+import { useState } from 'react'
 
 export interface PipelineGraphProps
   extends PipelineGraphInternalProps,
-    Pick<ContainerNodeProviderProps, 'portComponent'> {
+  Pick<ContainerNodeProviderProps, 'portComponent'> {
   nodes: NodeContent[]
   serialContainerConfig?: Partial<SerialContainerConfigType>
   parallelContainerConfig?: Partial<ParallelContainerConfigType>
@@ -34,8 +35,11 @@ export function PipelineGraph(props: PipelineGraphProps) {
     collapse = () => undefined
   } = props
 
+  const [showSvg, setShowSvg] = useState(true)
+
+
   return (
-    <GraphProvider nodes={nodes} collapsed={collapsed} collapse={collapse}>
+    <GraphProvider nodes={nodes} collapsed={collapsed} collapse={collapse} setShowSvg={setShowSvg}>
       <ContainerNodeProvider
         serialContainerConfig={serialContainerConfig}
         parallelContainerConfig={parallelContainerConfig}
@@ -50,6 +54,7 @@ export function PipelineGraph(props: PipelineGraphProps) {
             edgesConfig={edgesConfig}
             layout={layout}
             getPort={getPort}
+            showSvg={showSvg}
           />
         </Canvas>
       </ContainerNodeProvider>

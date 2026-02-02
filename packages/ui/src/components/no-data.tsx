@@ -3,6 +3,7 @@ import { Dispatch, FC, Fragment, ReactNode, Ref, SetStateAction } from 'react'
 import {
   Button,
   ButtonProps,
+  ButtonVariants,
   Dialog,
   IconPropsV2,
   IconV2,
@@ -27,6 +28,7 @@ export interface NoDataProps {
     label: ReactNode | string
     to?: string
     isDialogTrigger?: boolean
+    variant?: ButtonVariants
   }
   secondaryButton?: ButtonProps & {
     ref?: Ref<HTMLButtonElement>

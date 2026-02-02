@@ -68,7 +68,13 @@ const FilterFieldInternal = <T extends string, V extends FilterValueTypes, Custo
     }
     case FilterFieldTypes.Text: {
       const textFilter = filter as FilterField<string>
-      return <Text filter={textFilter} onUpdateFilter={values => onUpdateFilter(values as V)} />
+      return (
+        <Text
+          filter={textFilter}
+          onUpdateFilter={values => onUpdateFilter(values as V)}
+          handleEnter={() => setIsOpen(false)}
+        />
+      )
     }
     case FilterFieldTypes.ComboBox: {
       const comboBoxFilter = filter as FilterField<ComboBoxOptions>

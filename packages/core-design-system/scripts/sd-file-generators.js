@@ -63,8 +63,13 @@ export const generateThemeFiles = ({ destination, type, theme, format }) => {
     destination: `${destination}/${entityName}.${type}`,
     options: {
       outputReferences: token => {
-        // ADD REFERENCE ONLY TO NON-ALPHA TOKENS, ALPHA TOKENS ARE TRANSFORMED AND REFERENCED MANUALLY
-        return token?.$extensions?.['studio.tokens']?.modify?.type !== 'alpha'
+        // ADD REFERENCE ONLY TO NON-MODIFIED TOKENS
+        // Alpha, darken, lighten tokens are transformed and need resolved values
+        const modifyType = token?.$extensions?.['studio.tokens']?.modify?.type
+        if (modifyType === 'alpha' || modifyType === 'darken' || modifyType === 'lighten') {
+          return false
+        }
+        return true
       },
       // To add .dark and .light to support MFE
       selector: `.${entityName}${mfeSupportedClass ? ', ' + mfeSupportedClass : ''}`

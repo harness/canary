@@ -18,6 +18,7 @@ const DEFAULT_CONFIG = {
   FILE_ID: process.env.FIGMA_FILE_ID,
   PAGE_NAME: process.env.FIGMA_LOGO_PAGE_NAME,
   OUTPUT_DIR: './src/components/logo-v2/logos',
+  SYMBOLS_OUTPUT_DIR: './src/components/logo-v2/symbols',
   FORMAT: 'svg', // 'svg', 'png', 'jpg', 'pdf'
   SCALE: 1, // Only for raster formats
   CONCURRENT_DOWNLOADS: 10
@@ -110,7 +111,7 @@ class FigmaLogoDownloader {
     return logos
   }
 
-  async downloadFile(url, filepath, fillColor) {
+  async downloadFile(url, filepath, fillColor, symbolFilepath = null) {
     return new Promise((resolve, reject) => {
       let parsedUrl
 
@@ -136,11 +137,16 @@ class FigmaLogoDownloader {
               // Process and save when complete
               res.on('end', async () => {
                 try {
-                  // Process SVG to replace colors with currentColor
+                  // Process SVG for default logo (with background, stroke, scaling)
                   const processedSvg = this.processSvgForTheming(svgData, fillColor)
-
-                  // Write the processed SVG to file
                   await fs.writeFile(filepath, processedSvg, 'utf8')
+
+                  // Also generate symbol version if symbolFilepath is provided
+                  if (symbolFilepath) {
+                    const symbolSvg = this.processSvgForSymbol(svgData)
+                    await fs.writeFile(symbolFilepath, symbolSvg, 'utf8')
+                  }
+
                   resolve(true)
                 } catch (error) {
                   reject(error)
@@ -148,7 +154,7 @@ class FigmaLogoDownloader {
               })
             } else if (res.statusCode >= 300 && res.statusCode < 400 && res.headers.location) {
               // Handle redirects
-              this.downloadFile(res.headers.location, filepath, fillColor).then(resolve).catch(reject)
+              this.downloadFile(res.headers.location, filepath, fillColor, symbolFilepath).then(resolve).catch(reject)
             } else {
               reject(new Error(`HTTP ${res.statusCode}: ${res.statusMessage}`))
             }
@@ -196,6 +202,12 @@ class FigmaLogoDownloader {
           if (item.type === 'root' && item.children?.[0]?.name === 'svg') {
             const svgElement = item.children[0]
 
+            // Add shape-rendering for better antialiasing
+            svgElement.attributes = {
+              ...svgElement.attributes,
+              'shape-rendering': 'geometricPrecision'
+            }
+
             // console.log('svgElement', svgElement)
 
             // Create a group to wrap all existing children with a transform for perfect centering
@@ -204,12 +216,12 @@ class FigmaLogoDownloader {
               const existingChildren = [...svgElement.children]
 
               // Get viewBox values to calculate proper centering
-              let viewBox = svgElement.attributes?.viewBox || '0 0 20 20'
+              let viewBox = svgElement.attributes?.viewBox || '0 0 22 22'
               let [minX, minY, width, height] = viewBox.split(' ').map(Number)
 
-              // Default to 20x20 if viewBox parsing fails
+              // Default to 22x22 if viewBox parsing fails
               if (isNaN(width) || isNaN(height)) {
-                width = height = 20
+                width = height = 22
                 minX = minY = 0
               }
 
@@ -222,7 +234,7 @@ class FigmaLogoDownloader {
               // 2. Apply scaling (using same 0.625 scale factor)
               // 3. Translate back by the scaled center point
               // This ensures perfect centering with proper scaling
-              const scale = 0.625
+              const scale = 0.7
               const transformValue = `translate(${centerX}, ${centerY}) scale(${scale}) translate(${-centerX}, ${-centerY})`
 
               // Add wrapper group for perfect centering
@@ -237,21 +249,42 @@ class FigmaLogoDownloader {
 
               // Replace the SVG's children with just the group and optional background
               if (fillColor) {
-                // Create a background rect element
-                const rectElement = {
+                // Create a background rect element with fill only
+                const bgRectElement = {
                   type: 'element',
                   name: 'rect',
                   attributes: {
-                    width: '100%',
-                    height: '100%',
-                    rx: '2px',
-                    ry: '2px',
+                    width: String(width),
+                    height: String(height),
+                    rx: '3',
+                    ry: '3',
                     fill: fillColor
                   },
                   children: []
                 }
 
-                svgElement.children = [rectElement, centeringGroup]
+                // Create a stroke rect element on top of everything (inside stroke effect)
+                // For inside stroke: offset by half stroke-width (0.3) and reduce size by stroke-width (0.6)
+                const strokeWidth = 0.6
+                const strokeRectElement = {
+                  type: 'element',
+                  name: 'rect',
+                  attributes: {
+                    x: String(minX + strokeWidth / 2),
+                    y: String(minY + strokeWidth / 2),
+                    width: String(width - strokeWidth),
+                    height: String(height - strokeWidth),
+                    rx: '3',
+                    ry: '3',
+                    fill: 'none',
+                    stroke: 'var(--cn-comp-avatar-shadow)',
+                    'stroke-width': String(strokeWidth)
+                  },
+                  children: []
+                }
+
+                // Order: background -> logo -> stroke overlay
+                svgElement.children = [bgRectElement, centeringGroup, strokeRectElement]
               } else {
                 svgElement.children = [centeringGroup]
               }
@@ -295,6 +328,63 @@ class FigmaLogoDownloader {
     } catch (error) {
       console.error('Error processing SVG with SVGO:', error)
       // Fallback to the original SVG content if SVGO processing fails
+      return svgContent
+    }
+  }
+
+  processSvgForSymbol(svgContent) {
+    try {
+      // Create a custom SVGO plugin that replaces all fills with currentColor
+      const replaceWithCurrentColorPlugin = {
+        name: 'replaceWithCurrentColor',
+        fn: () => {
+          return {
+            element: {
+              enter: node => {
+                // Replace fill colors with currentColor (except 'none')
+                if (node.attributes?.fill && node.attributes.fill !== 'none') {
+                  node.attributes.fill = 'currentColor'
+                }
+                // Replace stroke colors with currentColor (except 'none')
+                if (node.attributes?.stroke && node.attributes.stroke !== 'none') {
+                  node.attributes.stroke = 'currentColor'
+                }
+              }
+            }
+          }
+        }
+      }
+
+      // Optimize the SVG for symbol usage
+      const result = optimize(svgContent, {
+        plugins: [
+          {
+            name: 'preset-default',
+            params: {
+              overrides: {
+                removeViewBox: false,
+                removeUnknownsAndDefaults: {
+                  keepRoleAttr: true,
+                  keepAriaAttrs: true
+                }
+              }
+            }
+          },
+          // Remove width/height attributes from root SVG
+          {
+            name: 'removeAttrs',
+            params: {
+              attrs: ['width', 'height']
+            }
+          },
+          // Replace colors with currentColor
+          replaceWithCurrentColorPlugin
+        ]
+      })
+
+      return result.data
+    } catch (error) {
+      console.error('Error processing SVG for symbol:', error)
       return svgContent
     }
   }
@@ -352,8 +442,8 @@ class FigmaLogoDownloader {
         }))
       }
 
-      // File template
-      const template = `/**
+      // Logo map template
+      const logoTemplate = `/**
  * Harness Design System
  * Generated logo map - DO NOT EDIT DIRECTLY
  */
@@ -369,14 +459,34 @@ export const LogoNameMapV2 = {
 }
 `
 
-      // Render the template with the data
-      const mapFileContent = await engine.parseAndRender(template, templateData)
+      // Symbol map template
+      const symbolTemplate = `/**
+ * Harness Design System
+ * Generated symbol map - DO NOT EDIT DIRECTLY
+ */
+{% for logo in logos %}
+import {{ logo.componentName }} from './symbols/{{ logo.filename }}'
+{%- endfor %}
 
-      // Write the map file
-      const mapFilePath = path.join(this.config.OUTPUT_DIR, '..', 'logo-name-map.ts')
-      await fs.writeFile(mapFilePath, mapFileContent, 'utf8')
+export const SymbolNameMap = {
+{%- for logo in logos %}
+  {% if logo.logoKey contains '-' %}'{{ logo.logoKey }}'{% else %}{{ logo.logoKey }}{% endif %}: {{ logo.componentName }}{%- unless forloop.last %},
+{%- endunless %}
+{%- endfor %}
+}
+`
 
-      console.log(`✅ Generated logo map at: ${mapFilePath}`)
+      // Render and write logo map
+      const logoMapContent = await engine.parseAndRender(logoTemplate, templateData)
+      const logoMapFilePath = path.join(this.config.OUTPUT_DIR, '..', 'logo-name-map.ts')
+      await fs.writeFile(logoMapFilePath, logoMapContent, 'utf8')
+      console.log(`✅ Generated logo map at: ${logoMapFilePath}`)
+
+      // Render and write symbol map
+      const symbolMapContent = await engine.parseAndRender(symbolTemplate, templateData)
+      const symbolMapFilePath = path.join(this.config.OUTPUT_DIR, '..', 'symbol-name-map.ts')
+      await fs.writeFile(symbolMapFilePath, symbolMapContent, 'utf8')
+      console.log(`✅ Generated symbol map at: ${symbolMapFilePath}`)
     } catch (error) {
       console.error('❌ Error generating logo map:', error.message)
     }
@@ -437,8 +547,9 @@ export const LogoNameMapV2 = {
         return false
       }
 
-      // Ensure output directory exists
+      // Ensure output directories exist
       await this.ensureDirectoryExists(this.config.OUTPUT_DIR)
+      await this.ensureDirectoryExists(this.config.SYMBOLS_OUTPUT_DIR)
 
       // Get image URLs
       const nodeIds = logos.map(logo => logo.id)
@@ -459,10 +570,11 @@ export const LogoNameMapV2 = {
 
           const filename = `${this.sanitizeFilename(logo.name)}.${this.config.FORMAT}`
           const filepath = path.join(this.config.OUTPUT_DIR, filename)
+          const symbolFilepath = path.join(this.config.SYMBOLS_OUTPUT_DIR, filename)
 
           try {
-            await this.downloadFile(imageUrl, filepath, logo.fillColor)
-            console.log(`✅ Downloaded ${index + 1}/${logos.length}: ${filename}`)
+            await this.downloadFile(imageUrl, filepath, logo.fillColor, symbolFilepath)
+            console.log(`✅ Downloaded ${index + 1}/${logos.length}: ${filename} (+ symbol)`)
             return { success: true, logo: logo.name, filename }
           } catch (error) {
             console.error(`❌ Failed to download ${logo.name}: ${error.message}`)

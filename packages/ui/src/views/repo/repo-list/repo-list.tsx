@@ -3,6 +3,7 @@ import {
   Favorite,
   IconV2,
   Layout,
+  Link,
   NoData,
   PermissionIdentifier,
   ResourceType,
@@ -44,7 +45,9 @@ const Title = ({
   isArchived,
   scope,
   repoPath,
-  showScope = false
+  showScope = false,
+  upstream,
+  toUpstreamRepo
 }: {
   repoName: string
   isPrivate: boolean
@@ -52,28 +55,42 @@ const Title = ({
   scope: Scope
   repoPath: string
   showScope?: boolean
+  upstream?: RepositoryType['upstream']
+  toUpstreamRepo?: (path: string) => string
 }) => {
   const { t } = useTranslation()
   const repoScopeParams = { ...scope, repoIdentifier: repoName, repoPath }
   const scopeType = determineScope(repoScopeParams)
   const scopedPath = getScopedPath(repoScopeParams)
   return (
-    <Layout.Flex gap="xs" align="center">
-      <Text variant="heading-base" truncate>
-        {repoName}
-      </Text>
-      <Layout.Flex align="center" gap="xs">
-        <StatusBadge variant="outline" size="sm" theme={isPrivate ? 'muted' : 'success'}>
-          {isPrivate ? t('views:repos.private', 'Private') : t('views:repos.public', 'Public')}
-        </StatusBadge>
-        {isArchived && (
-          <StatusBadge variant="outline" size="sm" theme="warning">
-            {t('views:repos.archived', 'Archived')}
+    <Layout.Vertical gap="2xs">
+      <Layout.Flex gap="xs" align="center">
+        <Text variant="heading-base" truncate>
+          {repoName}
+        </Text>
+        <Layout.Flex align="center" gap="xs">
+          <StatusBadge variant="outline" size="sm" theme={isPrivate ? 'muted' : 'success'}>
+            {isPrivate ? t('views:repos.private', 'Private') : t('views:repos.public', 'Public')}
           </StatusBadge>
-        )}
-        {showScope && scopeType ? <ScopeTag scopeType={scopeType} scopedPath={scopedPath} size="sm" /> : null}
+          {isArchived && (
+            <StatusBadge variant="outline" size="sm" theme="warning">
+              {t('views:repos.archived', 'Archived')}
+            </StatusBadge>
+          )}
+          {showScope && scopeType ? <ScopeTag scopeType={scopeType} scopedPath={scopedPath} size="sm" /> : null}
+        </Layout.Flex>
       </Layout.Flex>
-    </Layout.Flex>
+      {upstream && (
+        <Text variant="body-normal" color="foreground-3">
+          {t('views:repos.forkedFrom', 'Forked from')}{' '}
+          {toUpstreamRepo && (
+            <Link external href={toUpstreamRepo(upstream.path)} onClick={e => e.stopPropagation()}>
+              {upstream.identifier}
+            </Link>
+          )}
+        </Text>
+      )}
+    </Layout.Vertical>
   )
 }
 
@@ -90,7 +107,8 @@ export function RepoList({
   scope,
   showScope = false,
   isDirtyList,
-  useRepoStore
+  useRepoStore,
+  toUpstreamRepo
 }: RepoListProps) {
   const { t } = useTranslation()
   const { repositories, totalItems, page, setPage, pageSize, setPageSize } = useRepoStore()
@@ -221,6 +239,8 @@ export function RepoList({
                 repoPath={repo.path}
                 scope={scope}
                 showScope={showScope}
+                upstream={repo.upstream}
+                toUpstreamRepo={toUpstreamRepo}
               />
             }
             description={repo.importing ? t('views:repos.importing', 'Importing…') : repo?.description}

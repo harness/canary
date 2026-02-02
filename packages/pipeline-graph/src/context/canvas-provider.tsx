@@ -134,11 +134,11 @@ export const CanvasProvider = ({ children, config: configFromProps, id = '' }: C
   }, [])
 
   const increase = useCallback(() => {
-    scaleInc(0.2)
+    scaleInc(0.25)
   }, [scaleInc])
 
   const decrease = useCallback(() => {
-    scaleInc(-0.2)
+    scaleInc(-0.25)
   }, [scaleInc])
 
   const reset = useCallback(() => {

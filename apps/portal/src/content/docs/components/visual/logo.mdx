@@ -1,47 +1,113 @@
 ---
 title: Logo
-description: Logo component
+description: Logo and LogoSymbol components for brand representation
 beta: true
 ---
 
 import { DocsPage } from "@/components/docs-page";
-import { LogoV2, LogoNameMapV2 } from "@harnessio/ui/components";
+import { LinkCard, CardGrid } from "@astrojs/starlight/components";
 
-The `LogoV2` component contains logos of various brands and can be used as icons. It follows the brand guidelines to choose colors.
+The design system provides two logo components for different use cases:
 
-## Usage
-
-```typescript jsx
-<LogoV2 name="node-js" size="lg" />
-```
-
-<DocsPage.ComponentExample
-  client:only
-  code={`<LogoV2 name="harness" size="lg" />`}
-/>
-
-## Sizes
-
-The `LogoV2` component can be sized using the `size` prop.
+- **LogoV2** — Full-color logos with brand-specific backgrounds
+- **LogoSymbol** — Monochrome symbols that inherit color from parent
 
 <DocsPage.ComponentExample
   client:only
   code={`
-  <Layout.Flex gap="md" justify="center" align="end" className="min-w-[400px]">
-    <LogoV2 name="harness" size="xs" />
-    <LogoV2 name="harness" size="sm" />
-    <LogoV2 name="harness" size="md" />
+  <Layout.Flex gap="lg" justify="center" align="center">
     <LogoV2 name="harness" size="lg" />
+    <LogoV2 name="github" size="lg" />
+    <LogoV2 name="docker" size="lg" />
+    <LogoV2 name="kubernetes" size="lg" />
+  </Layout.Flex>
+  `}
+/>
+
+## Usage
+
+```typescript jsx
+import { LogoV2, LogoSymbol } from '@harnessio/ui/components'
+
+// Full-color logo with brand background
+<LogoV2 name="github" size="lg" />
+
+// Monochrome symbol (inherits text color)
+<LogoSymbol name="github" size="lg" />
+```
+
+## LogoV2 vs LogoSymbol
+
+Use **LogoV2** when you need the official brand appearance. Use **LogoSymbol** when you need the logo to blend with your UI's color scheme.
+
+<DocsPage.ComponentExample
+  client:only
+  code={`
+  <Layout.Flex gap="xl" justify="center" align="center">
+    <Layout.Flex direction="column" gap="sm" align="center">
+      <LogoV2 name="docker" size="lg" />
+      <Text size="1" color="foreground-3">LogoV2</Text>
+    </Layout.Flex>
+    <Layout.Flex direction="column" gap="sm" align="center">
+      <LogoSymbol name="docker" size="lg" />
+      <Text size="1" color="foreground-3">LogoSymbol</Text>
+    </Layout.Flex>
+  </Layout.Flex>
+  `}
+/>
+
+## Size Variants
+
+Both components support the same size variants: `xs`, `sm`, `md`, and `lg`. The default size is `lg`.
+
+<DocsPage.ComponentExample
+  client:only
+  code={`
+  <Layout.Flex gap="lg" justify="center" align="end">
+    <Layout.Flex direction="column" gap="xs" align="center">
+      <LogoV2 name="harness" size="xs" />
+      <Text size="1" color="foreground-3">xs</Text>
+    </Layout.Flex>
+    <Layout.Flex direction="column" gap="xs" align="center">
+      <LogoV2 name="harness" size="sm" />
+      <Text size="1" color="foreground-3">sm</Text>
+    </Layout.Flex>
+    <Layout.Flex direction="column" gap="xs" align="center">
+      <LogoV2 name="harness" size="md" />
+      <Text size="1" color="foreground-3">md</Text>
+    </Layout.Flex>
+    <Layout.Flex direction="column" gap="xs" align="center">
+      <LogoV2 name="harness" size="lg" />
+      <Text size="1" color="foreground-3">lg</Text>
+    </Layout.Flex>
+  </Layout.Flex>
+  `}
+/>
+
+## LogoSymbol Colors
+
+Since `LogoSymbol` uses `currentColor`, it inherits color from its parent element.
+
+<DocsPage.ComponentExample
+  client:only
+  code={`
+  <Layout.Flex gap="lg" justify="center" align="center">
+    <div className="text-cn-1"><LogoSymbol name="docker" size="lg" /></div>
+    <div className="text-cn-2"><LogoSymbol name="docker" size="lg" /></div>
+    <div className="text-cn-3"><LogoSymbol name="docker" size="lg" /></div>
+    <div className="text-cn-4"><LogoSymbol name="docker" size="lg" /></div>
   </Layout.Flex>
   `}
 />
 
 ## API Reference
 
+### LogoV2
+
 ```typescript jsx
 <LogoV2
   name="logo-name"     // name of the logo
-  size="lg"       // [OPTIONAL] size variant of the logo
+  size="lg"            // [OPTIONAL] size variant
   className="my-class" // [OPTIONAL] custom class name
 />
 ```
@@ -50,7 +116,7 @@ The `LogoV2` component can be sized using the `size` prop.
   props={[
     {
       name: "name",
-      description: "Name of the logo",
+      description: "Name of the logo (see All Logos page for available names)",
       required: true,
       value: "string",
     },
@@ -58,7 +124,7 @@ The `LogoV2` component can be sized using the `size` prop.
       name: "size",
       description: "Size variant of the logo",
       required: false,
-      value: " 'xs' |'sm' | 'md' | 'lg'",
+      value: "'xs' | 'sm' | 'md' | 'lg'",
       defaultValue: "'lg'",
     },
     {
@@ -68,12 +134,66 @@ The `LogoV2` component can be sized using the `size` prop.
       value: "string",
     },
     {
-      name: "original",
-      description:
-        "If true, the logo will use its brand-specific color, otherwise will use `currentColor`",
+      name: "fallback",
+      description: "Fallback logo name if the specified logo is not found",
       required: false,
-      value: "boolean",
-      defaultValue: "true",
+      value: "string",
     },
   ]}
 />
+
+### LogoSymbol
+
+```typescript jsx
+<LogoSymbol
+  name="logo-name"     // name of the symbol
+  size="lg"            // [OPTIONAL] size variant
+  className="my-class" // [OPTIONAL] custom class name
+/>
+```
+
+<DocsPage.PropsTable
+  props={[
+    {
+      name: "name",
+      description: "Name of the symbol (same names as LogoV2)",
+      required: true,
+      value: "string",
+    },
+    {
+      name: "size",
+      description: "Size variant of the symbol",
+      required: false,
+      value: "'xs' | 'sm' | 'md' | 'lg'",
+      defaultValue: "'lg'",
+    },
+    {
+      name: "className",
+      description:
+        "Custom class name (use text color utilities to change color)",
+      required: false,
+      value: "string",
+    },
+    {
+      name: "fallback",
+      description: "Fallback symbol name if the specified symbol is not found",
+      required: false,
+      value: "string",
+    },
+  ]}
+/>
+
+## Related Pages
+
+<CardGrid>
+  <LinkCard
+    title="All Logos"
+    description="Browse the complete logo library with Default and Symbol variants"
+    href="/foundations/logos"
+  />
+  <LinkCard
+    title="Icons"
+    description="Icon component reference"
+    href="/components/visual/icon"
+  />
+</CardGrid>

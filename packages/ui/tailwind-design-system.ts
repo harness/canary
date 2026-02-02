@@ -14,6 +14,30 @@ import {
   width as widthStyles
 } from './tailwind-utils-config/utilities'
 
+// Width/Height sizing tokens (cn-1 to cn-96) - only for width/height, not spacing
+const sizeTokensMap = Object.fromEntries(
+  Array.from({ length: 96 }, (_, i) => [`cn-${i + 1}`, `var(--cn-size-${i + 1})`])
+)
+
+const fontSizeMap = {
+  'cn-size-0': 'var(--cn-font-size-0)',
+  'cn-size-1': 'var(--cn-font-size-1)',
+  'cn-size-2': 'var(--cn-font-size-2)',
+  'cn-size-3': 'var(--cn-font-size-3)',
+  'cn-size-4': 'var(--cn-font-size-4)',
+  'cn-size-5': 'var(--cn-font-size-5)',
+  'cn-size-6': 'var(--cn-font-size-6)',
+  'cn-size-7': 'var(--cn-font-size-7)',
+  'cn-size-8': 'var(--cn-font-size-8)',
+  'cn-size-9': 'var(--cn-font-size-9)',
+  'cn-size-10': 'var(--cn-font-size-10)',
+  'cn-size-11': 'var(--cn-font-size-11)',
+  'cn-size-12': 'var(--cn-font-size-12)',
+  'cn-size-13': 'var(--cn-font-size-13)',
+  'cn-size-14': 'var(--cn-font-size-14)',
+  'cn-size-15': 'var(--cn-font-size-15)',
+  'cn-size-16': 'var(--cn-font-size-16)'
+}
 const tailwindDesignSystem: TailwindConfig = {
   darkMode: ['class'],
   content: ['./src/**/*.{ts,tsx}'],
@@ -139,6 +163,20 @@ const tailwindDesignSystem: TailwindConfig = {
         secondary: 'var(--cn-set-forest-green-secondary-bg)',
         outline: 'var(--cn-set-forest-green-outline-bg)'
       },
+      'cn-data-viz': {
+        blue: 'var(--cn-comp-data-viz-01-blue)',
+        purple: 'var(--cn-comp-data-viz-02-purple)',
+        pink: 'var(--cn-comp-data-viz-03-pink)',
+        green: 'var(--cn-comp-data-viz-04-green)',
+        indigo: 'var(--cn-comp-data-viz-05-indigo)',
+        brown: 'var(--cn-comp-data-viz-06-brown)',
+        cyan: 'var(--cn-comp-data-viz-07-cyan)',
+        orange: 'var(--cn-comp-data-viz-08-orange)',
+        forest: 'var(--cn-comp-data-viz-09-forest)',
+        red: 'var(--cn-comp-data-viz-10-red)',
+        yellow: 'var(--cn-comp-data-viz-11-yellow)',
+        gray: 'var(--cn-comp-data-viz-12-gray)'
+      },
       transparent: 'transparent',
       inherit: 'inherit',
       current: 'currentColor'
@@ -168,7 +206,7 @@ const tailwindDesignSystem: TailwindConfig = {
         danger: 'var(--cn-set-danger-primary-bg)',
         warning: 'var(--cn-set-warning-primary-bg)',
         success: 'var(--cn-set-success-primary-bg)',
-        info: 'var(--cn-set-blue-primary-bg)',
+        info: 'var(--cn-set-brand-primary-bg)',
         merged: 'var(--cn-set-purple-primary-bg)',
         risk: 'var(--cn-set-orange-primary-bg)'
       },
@@ -372,7 +410,6 @@ const tailwindDesignSystem: TailwindConfig = {
       'cn-ring-success': 'var(--cn-ring-success)',
       'cn-ring-warning': 'var(--cn-ring-warning)',
 
-      // Data visualization shadows
       'cn-blue': 'var(--cn-comp-shadow-data-viz-01-blue)',
       'cn-purple': 'var(--cn-comp-shadow-data-viz-02-purple)',
       'cn-pink': 'var(--cn-comp-shadow-data-viz-03-pink)',
@@ -404,22 +441,7 @@ const tailwindDesignSystem: TailwindConfig = {
       full: '100%'
     },
     fontSize: {
-      'cn-size-0': 'var(--cn-font-size-0)',
-      'cn-size-1': 'var(--cn-font-size-1)',
-      'cn-size-2': 'var(--cn-font-size-2)',
-      'cn-size-3': 'var(--cn-font-size-3)',
-      'cn-size-4': 'var(--cn-font-size-4)',
-      'cn-size-5': 'var(--cn-font-size-5)',
-      'cn-size-6': 'var(--cn-font-size-6)',
-      'cn-size-7': 'var(--cn-font-size-7)',
-      'cn-size-8': 'var(--cn-font-size-8)',
-      'cn-size-9': 'var(--cn-font-size-9)',
-      'cn-size-10': 'var(--cn-font-size-10)',
-      'cn-size-11': 'var(--cn-font-size-11)',
-      'cn-size-12': 'var(--cn-font-size-12)',
-      'cn-size-13': 'var(--cn-font-size-13)',
-      'cn-size-half': 'var(--cn-font-size-half)',
-      'cn-size-min': 'var(--cn-font-size-min)'
+      ...fontSizeMap
     },
 
     letterSpacing: {
@@ -433,33 +455,62 @@ const tailwindDesignSystem: TailwindConfig = {
     extend: {
       backgroundImage: {
         'cn-comp-card-fade-default': 'var(--cn-comp-card-fade-default)',
-        'cn-comp-card-fade-selected': 'var(--cn-comp-card-fade-selected)'
+        'cn-comp-card-fade-selected': 'var(--cn-comp-card-fade-selected)',
+
+        // Test Intelligence Widget gradients
+        'cn-widget-ti-bg': 'var(--cn-comp-widget-test-intelligence-bg)',
+        'cn-widget-ti-gradient': 'var(--cn-comp-widget-test-intelligence-gradient)',
+        'cn-widget-ti-text-gradient': 'var(--cn-comp-widget-test-intelligence-text-gradient)'
       },
       opacity: {
         'cn-disabled': 'var(--cn-disabled-opacity)'
       },
       // Spreading props to keep the default tailwind values
+      // @TODO Need to clean out width and height tokens coming via spacing
+      // Adding sizeTokensMap for cn-1 to cn-96 tokens (only for width/height, not spacing)
       height: {
-        ...defaultTheme.spacing
+        ...defaultTheme.spacing,
+        ...sizeTokensMap
       },
       minHeight: {
-        ...defaultTheme.spacing
+        ...defaultTheme.spacing,
+        ...sizeTokensMap
       },
       maxHeight: {
-        ...defaultTheme.spacing
+        ...defaultTheme.spacing,
+        ...sizeTokensMap
       },
       minWidth: {
-        ...defaultTheme.spacing
+        ...defaultTheme.spacing,
+        ...sizeTokensMap
       },
       maxWidth: {
-        ...defaultTheme.spacing
+        ...defaultTheme.spacing,
+        ...sizeTokensMap
       },
       width: {
-        ...defaultTheme.spacing
+        ...defaultTheme.spacing,
+        ...sizeTokensMap
       },
       // Spreading here to keep "size-N" classnames working
       size: {
-        ...defaultTheme.spacing
+        ...defaultTheme.spacing,
+        ...sizeTokensMap
+      },
+
+      dropShadow: {
+        'cn-blue': 'var(--cn-comp-shadow-data-viz-01-blue)',
+        'cn-purple': 'var(--cn-comp-shadow-data-viz-02-purple)',
+        'cn-pink': 'var(--cn-comp-shadow-data-viz-03-pink)',
+        'cn-green': 'var(--cn-comp-shadow-data-viz-04-green)',
+        'cn-indigo': 'var(--cn-comp-shadow-data-viz-05-indigo)',
+        'cn-brown': 'var(--cn-comp-shadow-data-viz-06-brown)',
+        'cn-cyan': 'var(--cn-comp-shadow-data-viz-07-cyan)',
+        'cn-orange': 'var(--cn-comp-shadow-data-viz-08-orange)',
+        'cn-forest': 'var(--cn-comp-shadow-data-viz-09-forest)',
+        'cn-red': 'var(--cn-comp-shadow-data-viz-10-red)',
+        'cn-yellow': 'var(--cn-comp-shadow-data-viz-11-yellow)',
+        'cn-gray': 'var(--cn-comp-shadow-data-viz-12-gray)'
       },
 
       outlineOffset: {
@@ -592,11 +643,10 @@ const tailwindDesignSystem: TailwindConfig = {
     'prose-a',
     'prose-img',
     'prose-code',
+    ...Object.keys(fontSizeMap).map(key => `!text-${key}`),
 
     /** New design system Variants  */
     { pattern: /-cn-/ },
-    { pattern: /^hover:text-cn-/ },
-    { pattern: /^hover:bg-cn-/ },
 
     { pattern: /rounded-./ },
     { pattern: /border-./ },

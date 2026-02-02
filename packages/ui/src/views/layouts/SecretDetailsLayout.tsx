@@ -1,6 +1,6 @@
 import { FC, ReactNode } from 'react'
 
-import { IconV2, Layout, StatsPanel, Tabs, Text, TimeAgoCard } from '@/components'
+import { StatsPanel, Tabs, Text, TimeAgoCard } from '@/components'
 import { useRouterContext, useTranslation } from '@/context'
 import { Page, type SecretListItem } from '@/views'
 
@@ -32,20 +32,6 @@ export const SecretDetailsLayout: FC<SecretDetailsLayoutProps> = ({
   const { t } = useTranslation()
   const { Switch, Route } = useRouterContext()
 
-  const titleContent = (
-    <Layout.Horizontal gap="xs" align="center" className="justify-between">
-      <Layout.Horizontal gapX="xs" align="center">
-        <div className="mt-cn-4xs">
-          <IconV2 name="key" size="lg" />
-        </div>
-        <Text as="h1" variant="heading-section" truncate>
-          {secret?.name ?? ''}
-        </Text>
-      </Layout.Horizontal>
-      {actions}
-    </Layout.Horizontal>
-  )
-
   return (
     <Page.Root>
       <Page.Header
@@ -54,7 +40,10 @@ export const SecretDetailsLayout: FC<SecretDetailsLayoutProps> = ({
           linkText: t('views:secretDetails.backToSecrets', 'All Secrets'),
           linkProps: { to: backButtonTo?.() ?? '' }
         }}
-        title={titleContent}
+        iconName="key"
+        iconSize="xl"
+        title={secret?.name ?? ''}
+        actions={actions}
       >
         <StatsPanel
           isLoading={isLoading}

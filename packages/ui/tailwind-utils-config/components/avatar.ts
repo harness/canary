@@ -52,8 +52,8 @@ export default {
     },
 
     '.cn-avatar-fallback': {
-      backgroundColor: `var(--cn-set-gray-primary-bg)`,
-      color: `var(--cn-set-gray-primary-text)`,
+      backgroundColor: `var(--cn-set-gray-secondary-bg)`,
+      color: `var(--cn-set-gray-secondary-text)`,
       fontSize: 'inherit',
       borderRadius: 'inherit',
       boxShadow: 'inherit',

@@ -2,7 +2,7 @@
   "header": {
     "height": {
       "$type": "sizing",
-      "$value": "{size.14}"
+      "$value": "{size.13}"
     },
     "pl": {
       "$type": "spacing",

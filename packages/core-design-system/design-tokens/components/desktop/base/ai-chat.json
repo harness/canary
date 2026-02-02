@@ -2,7 +2,7 @@
   "ai-chat": {
     "container": {
       "$type": "spacing",
-      "$value": "{spacing.4}"
+      "$value": "{spacing.4-half}"
     },
     "content": {
       "max-width": {

@@ -25,7 +25,7 @@
     "group": {
       "py": {
         "$type": "spacing",
-        "$value": "{spacing.2}"
+        "$value": "{spacing.2-half}"
       },
       "gap": {
         "$type": "spacing",

@@ -88,7 +88,7 @@
       },
       "radius": {
         "$type": "borderRadius",
-        "$value": "{rounded.5}"
+        "$value": "{rounded.6}"
       },
       "min-height": {
         "$type": "sizing",

@@ -69,8 +69,7 @@ export default {
     height: 'var(--cn-size-3-half)',
     borderRadius: 'var(--cn-rounded-full)',
 
-    transition: 'transform',
-    'transition-duration': '100ms',
+    transition: 'transform 200ms ease-out, background-color 200ms ease-out',
 
     backgroundColor: `var(--cn-comp-selection-unselected-item)`,
 
@@ -92,7 +91,9 @@ export default {
   '.cn-switch-label': {
     font: 'var(--cn-body-normal) !important',
     color: 'var(--cn-text-1) !important',
+    cursor: 'pointer',
     '&:where([disabled])': {
+      cursor: 'not-allowed',
       '@apply opacity-cn-disabled': ''
     },
     '@apply truncate': ''

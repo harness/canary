@@ -84,13 +84,13 @@ export default {
       padding: 'var(--cn-dropdown-item-py) var(--cn-dropdown-item-px)',
       borderRadius: 'var(--cn-dropdown-item-radius)',
       userSelect: 'none',
+      cursor: 'pointer',
       '@apply transition-colors': '',
 
       '&:not(:where([aria-disabled=true]))': {
         '&:where([data-highlighted]), &:where([data-state="open"])': {
           backgroundColor: 'var(--cn-state-hover)',
-          outline: 'none',
-          cursor: 'default'
+          outline: 'none'
         }
       },
 

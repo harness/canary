@@ -24,7 +24,12 @@ export default {
   '.cn-radio-item-label-wrapper': {
     display: 'flex',
     flexDirection: 'column',
-    gap: 'var(--cn-layout-4xs)'
+    gap: 'var(--cn-layout-4xs)',
+    cursor: 'pointer',
+
+    '& .cn-label': {
+      cursor: 'pointer'
+    }
   },
 
   '.cn-radio-item': {
@@ -55,7 +60,12 @@ export default {
       '@apply opacity-cn-disabled': '',
 
       ' + .cn-radio-item-label-wrapper': {
-        '@apply opacity-cn-disabled': ''
+        cursor: 'not-allowed',
+        '@apply opacity-cn-disabled': '',
+
+        '& .cn-label': {
+          cursor: 'not-allowed'
+        }
       }
     },
 

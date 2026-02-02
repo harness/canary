@@ -68,11 +68,22 @@ export default {
     },
 
     '&-underlined': {
+      position: 'relative',
       minHeight: 'inherit',
       borderBottom: 'var(--cn-tabs-container-border) solid var(--cn-border-3)',
       gap: 'var(--cn-tabs-underlined-container-gap)',
       '@apply font-body-normal': ''
     }
+  },
+
+  '.cn-tabs-indicator': {
+    position: 'absolute',
+    bottom: '-1px',
+    height: 'var(--cn-tabs-item-underlined-border)',
+    backgroundColor: 'var(--cn-border-brand)',
+    transition: 'left 200ms ease-out, width 200ms ease-out',
+    pointerEvents: 'none',
+    zIndex: '1'
   },
 
   '.cn-tabs-trigger': {
@@ -167,7 +178,6 @@ export default {
       '@apply font-body-normal': '',
 
       '&:where(:not([disabled]).cn-tabs-trigger-active)': {
-        borderColor: 'var(--cn-border-brand)',
         color: 'var(--cn-text-1)'
       },
 

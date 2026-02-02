@@ -8,6 +8,7 @@ import {
   MouseEvent,
   ReactNode,
   Ref,
+  useCallback,
   useContext,
   useEffect,
   useRef,
@@ -134,6 +135,7 @@ const TabsList = forwardRef<ElementRef<typeof TabsPrimitive.List>, TabsListProps
     const [showLeftFade, setShowLeftFade] = useState(false)
     const [showRightFade, setShowRightFade] = useState(false)
     const [isOverflowing, setIsOverflowing] = useState(false)
+    const [indicatorStyle, setIndicatorStyle] = useState<{ left: number; width: number } | null>(null)
 
     const mergedRef = useMergeRefs<HTMLDivElement>([
       node => {
@@ -182,9 +184,31 @@ const TabsList = forwardRef<ElementRef<typeof TabsPrimitive.List>, TabsListProps
       }
     })
 
+    const updateIndicator = useCallback(() => {
+      if (variant && variant !== 'underlined') return
+
+      const contentEl = contentRef.current
+      if (!contentEl) return
+
+      const activeTab = contentEl.querySelector<HTMLElement>(
+        '[role="tab"][data-state="active"], [role="tab"].cn-tabs-trigger-active, [role="tab"][aria-current="page"]'
+      )
+
+      if (!activeTab) {
+        setIndicatorStyle(null)
+        return
+      }
+
+      setIndicatorStyle({
+        left: activeTab.offsetLeft,
+        width: activeTab.offsetWidth
+      })
+    }, [variant])
+
     useEffect(() => {
       scrollActiveTabIntoView.current()
-    }, [activeTabValue])
+      updateIndicator()
+    }, [activeTabValue, updateIndicator])
 
     useEffect(() => {
       const container = scrollContainerRef.current
@@ -194,6 +218,7 @@ const TabsList = forwardRef<ElementRef<typeof TabsPrimitive.List>, TabsListProps
       checkOverflow.current()
       updateFadeIndicators.current()
       scrollActiveTabIntoView.current()
+      updateIndicator()
 
       const handleScroll = () => {
         updateFadeIndicators.current()
@@ -202,10 +227,12 @@ const TabsList = forwardRef<ElementRef<typeof TabsPrimitive.List>, TabsListProps
       const resizeObserver = new ResizeObserver(() => {
         checkOverflow.current()
         updateFadeIndicators.current()
+        updateIndicator()
       })
 
       const mutationObserver = new MutationObserver(() => {
         scrollActiveTabIntoView.current()
+        updateIndicator()
       })
 
       container.addEventListener('scroll', handleScroll, { passive: true })
@@ -224,7 +251,7 @@ const TabsList = forwardRef<ElementRef<typeof TabsPrimitive.List>, TabsListProps
         resizeObserver.disconnect()
         mutationObserver.disconnect()
       }
-    }, [])
+    }, [updateIndicator])
 
     /**
      * !!! This code is executed only when inside a ShadowRoot
@@ -295,12 +322,30 @@ const TabsList = forwardRef<ElementRef<typeof TabsPrimitive.List>, TabsListProps
             onKeyDownCapture={handleKeyDownCapture}
           >
             {children}
+            {(!variant || variant === 'underlined') && indicatorStyle && (
+              <div
+                className="cn-tabs-indicator"
+                style={{
+                  left: indicatorStyle.left,
+                  width: indicatorStyle.width
+                }}
+              />
+            )}
           </TabsPrimitive.List>
         )}
 
         {type === 'tabsnav' && (
           <nav ref={mergedRef} className={cn(tabsListVariants({ variant }), className)} {...props}>
             {children}
+            {(!variant || variant === 'underlined') && indicatorStyle && (
+              <div
+                className="cn-tabs-indicator"
+                style={{
+                  left: indicatorStyle.left,
+                  width: indicatorStyle.width
+                }}
+              />
+            )}
           </nav>
         )}
       </TabsListContext.Provider>

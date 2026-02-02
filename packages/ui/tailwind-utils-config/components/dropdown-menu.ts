@@ -90,13 +90,13 @@ export default {
       borderRadius: 'var(--cn-dropdown-item-radius)',
       userSelect: 'none',
       minWidth: '0',
+      cursor: 'pointer',
       '@apply transition-colors': '',
 
       '&:not(:where([aria-disabled=true]))': {
         '&:where([data-highlighted]), &:where([data-state="open"])': {
           backgroundColor: 'var(--cn-state-hover)',
-          outline: 'none',
-          cursor: 'default'
+          outline: 'none'
         }
       },
 

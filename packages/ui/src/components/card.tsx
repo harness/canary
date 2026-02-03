@@ -52,15 +52,17 @@ const CardRoot = forwardRef<HTMLDivElement, CardRootProps>(
       size = 'md',
       selected = false,
       disabled = false,
-      interactive = true,
+      interactive,
       orientation = 'vertical',
       position = 'start',
       children,
       wrapperClassname,
+      onClick,
       ...props
     },
     ref
   ) => {
+    const isInteractive = interactive ?? !!onClick
     const { imageContent, otherContent } = Children.toArray(children).reduce<{
       imageContent: ReactNode | null
       otherContent: ReactNode[]
@@ -86,10 +88,11 @@ const CardRoot = forwardRef<HTMLDivElement, CardRootProps>(
             position,
             selected,
             disabled,
-            interactive
+            interactive: isInteractive
           }),
           className
         )}
+        onClick={onClick}
         {...props}
       >
         {imageContent}

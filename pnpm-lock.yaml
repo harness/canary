@@ -797,7 +797,7 @@ importers:
         specifier: ^3.2.2
         version: 3.2.2(react@17.0.2)
       '@emotion/is-prop-valid':
-        specifier: ^1.4.0
+        specifier: 1.4.0
         version: 1.4.0
       '@git-diff-view/file':
         specifier: ^0.0.30

@@ -16,8 +16,6 @@ import {
 } from 'react'
 import type { NavLinkRenderProps } from 'react-router-dom'
 
-import { motion } from 'framer-motion'
-
 import { CounterBadge } from '@/components/counter-badge'
 import { IconPropsV2, IconV2 } from '@/components/icon-v2'
 import { LogoPropsV2, LogoSymbol, LogoV2, SymbolNamesType } from '@/components/logo-v2'
@@ -25,6 +23,7 @@ import { NavLinkProps, useRouterContext } from '@/context'
 import { afterFrames, cn, getShadowActiveElement, useMergeRefs } from '@/utils'
 import * as TabsPrimitive from '@radix-ui/react-tabs'
 import { cva, type VariantProps } from 'class-variance-authority'
+import { motion } from 'framer-motion'
 
 const tabsListVariants = cva('cn-tabs-list', {
   variants: {
@@ -137,7 +136,12 @@ const TabsList = forwardRef<ElementRef<typeof TabsPrimitive.List>, TabsListProps
     const [showLeftFade, setShowLeftFade] = useState(false)
     const [showRightFade, setShowRightFade] = useState(false)
     const [isOverflowing, setIsOverflowing] = useState(false)
-    const [indicatorStyle, setIndicatorStyle] = useState<{ left: number; top?: number; width: number; height?: number } | null>(null)
+    const [indicatorStyle, setIndicatorStyle] = useState<{
+      left: number
+      top?: number
+      width: number
+      height?: number
+    } | null>(null)
 
     const mergedRef = useMergeRefs<HTMLDivElement>([
       node => {
@@ -440,7 +444,11 @@ interface TabsTriggerBasePropsWithSymbol extends TabsTriggerBaseProps {
   symbol?: SymbolNamesType
 }
 
-type TabsTriggerExtendedProps = (TabsTriggerBasePropsWithIcon | TabsTriggerBasePropsWithLogo | TabsTriggerBasePropsWithSymbol) & {
+type TabsTriggerExtendedProps = (
+  | TabsTriggerBasePropsWithIcon
+  | TabsTriggerBasePropsWithLogo
+  | TabsTriggerBasePropsWithSymbol
+) & {
   disabled?: boolean
 }
 

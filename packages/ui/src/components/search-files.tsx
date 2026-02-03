@@ -9,6 +9,7 @@ import {
 } from '@/components'
 import { useTranslation } from '@/context'
 import { cn } from '@utils/cn'
+import fuzzysort from 'fuzzysort'
 
 const markedFileClassName = 'w-full text-cn-1'
 const MAX_FILES = 50
@@ -19,31 +20,23 @@ export interface FileItem {
 }
 
 /**
- * Get marked file component with query
- * @param text - The text to display (label)
- * @param query - The search query
- * @param matchIndex - The index where the match starts
+ * Highlight matched characters based on fuzzysort match indices
+ * @param text - The text to display
+ * @param indexes - Array of character positions that matched (from fuzzysort)
  */
-const getMarkedFileElement = (text: string, query: string, matchIndex: number): ReactNode => {
-  if (matchIndex === -1) {
-    return (
-      <Text className={markedFileClassName} truncate>
-        {text}
-      </Text>
-    )
-  }
+const getMarkedFileElement = (result: Fuzzysort.KeyResult<FileItem>): ReactNode => {
+  let spanKeyIndex = 0
+  const parts = result
+    .highlight((m, index) => <mark key={'m-' + index}>{m}</mark>)
+    .filter(part => typeof part !== 'string' || part.length > 0)
+    .map(part => {
+      if (typeof part === 'string') {
+        return <span key={'s-' + spanKeyIndex++}>{part}</span>
+      }
+      return part
+    })
 
-  const startText = text.slice(0, matchIndex)
-  const matchedText = text.slice(matchIndex, matchIndex + query.length)
-  const endText = text.slice(matchIndex + query.length)
-
-  return (
-    <Text className={cn(markedFileClassName, 'break-words')}>
-      {startText && <span>{startText}</span>}
-      {matchedText && <mark>{matchedText}</mark>}
-      {endText && <span>{endText}</span>}
-    </Text>
-  )
+  return <Text className={cn(markedFileClassName, 'break-words')}>{parts}</Text>
 }
 
 interface FilteredFile {
@@ -90,36 +83,46 @@ export const SearchFiles = ({
     itemsLength: filteredFiles.length
   })
 
+  const handleKeyDown = useCallback(
+    (e: React.KeyboardEvent<HTMLInputElement>) => {
+      // add additional handling of escape key clearing the search input and removing the focus
+      if (e.key === 'Escape') {
+        setCurrentQuery('')
+        searchInputRef.current?.blur()
+        return
+      }
+
+      handleSearchKeyDown(e)
+    },
+    [handleSearchKeyDown, searchInputRef, setCurrentQuery]
+  )
+
   useEffect(() => {
     if (!filesList || !currentQuery) {
       setFilteredFiles([])
       return
     }
 
-    const lowerCaseQuery = currentQuery.toLowerCase()
-    const _filteredFiles: FilteredFile[] = []
+    const normalizedFiles = filesList.map(normalizeFileItem)
 
-    for (const item of filesList) {
-      const { label, value } = normalizeFileItem(item)
-      const lowerCaseLabel = label.toLowerCase()
-      const matchIndex = lowerCaseLabel.indexOf(lowerCaseQuery)
+    // Use fuzzysort for strict subsequence matching (like VS Code)
+    const results = fuzzysort.go(currentQuery, normalizedFiles, {
+      key: 'label',
+      limit: MAX_FILES
+    })
 
-      if (matchIndex > -1) {
-        _filteredFiles.push({
-          label,
-          value,
-          element: getMarkedFileElement(label, lowerCaseQuery, matchIndex)
-        })
+    // Map results with highlighted matches
+    const _filteredFiles: FilteredFile[] = results.map(result => {
+      const { label, value } = result.obj
+      return {
+        label,
+        value,
+        element: getMarkedFileElement(result)
       }
-
-      // Limiting the result to 50, refactor this once backend supports pagination
-      if (_filteredFiles.length === MAX_FILES) {
-        break
-      }
-    }
+    })
 
     setFilteredFiles(_filteredFiles)
-  }, [filesList, currentQuery])
+  }, [filesList, currentQuery, setFilteredFiles])
 
   const handleInputChange = useCallback(
     (searchQuery: string) => {
@@ -127,8 +130,15 @@ export const SearchFiles = ({
       setCurrentQuery(searchQuery)
       onSearch?.(searchQuery)
     },
-    [onSearch]
+    [onSearch, setCurrentQuery, setIsOpen]
   )
+
+  const handleFocus = useCallback(() => {
+    // Show dropdown if there's already content in the search box
+    if (currentQuery) {
+      setIsOpen(true)
+    }
+  }, [currentQuery, setIsOpen])
 
   return (
     <DropdownMenu.Root open={isOpen} onOpenChange={setIsOpen} modal={false}>
@@ -137,8 +147,11 @@ export const SearchFiles = ({
         <SearchInput
           ref={searchInputRef}
           size={searchInputSize}
+          searchValue={currentQuery}
+          debounce={false} // all data is local, no need to debounce
           onChange={handleInputChange}
-          onKeyDown={handleSearchKeyDown}
+          onKeyDown={handleKeyDown}
+          onFocus={handleFocus}
           autoFocus
         />
       </div>
@@ -147,6 +160,13 @@ export const SearchFiles = ({
         className={cn('w-[800px]', contentClassName)}
         align="start"
         onOpenAutoFocus={event => event.preventDefault()}
+        onCloseAutoFocus={event => event.preventDefault()}
+        onInteractOutside={event => {
+          // Prevent closing when clicking the search input
+          if (searchInputRef.current?.contains(event.target as Node)) {
+            event.preventDefault()
+          }
+        }}
       >
         {filteredFiles.length ? (
           filteredFiles?.map(({ value, element }, index) => {

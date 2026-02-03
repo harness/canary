@@ -771,6 +771,63 @@ describe('SearchFiles', () => {
       expect(screen.queryByRole('menu')).not.toBeInTheDocument()
     })
 
+    test('should handle exact match', async () => {
+      // Use userEvent directly
+      const files = ['file-name1.tsx', 'file_name2.tsx', 'file.name3.tsx']
+
+      render(
+        <TestWrapper>
+          <SearchFiles navigateToFile={mockNavigateToFile} filesList={files} />
+        </TestWrapper>
+      )
+
+      const input = screen.getByRole('textbox')
+      await userEvent.type(input, 'file-name1.tsx')
+
+      await waitFor(() => {
+        const items = screen.queryAllByRole('menuitem')
+        expect(items.length).toBe(1)
+      })
+    })
+
+    test('should handle suffix match', async () => {
+      // Use userEvent directly
+      const files = ['file-name1.tsx', 'file_name2.tsx', 'file.name3.tsx']
+
+      render(
+        <TestWrapper>
+          <SearchFiles navigateToFile={mockNavigateToFile} filesList={files} />
+        </TestWrapper>
+      )
+
+      const input = screen.getByRole('textbox')
+      await userEvent.type(input, 'tsx')
+
+      await waitFor(() => {
+        const items = screen.queryAllByRole('menuitem')
+        expect(items.length).toBe(3)
+      })
+    })
+
+    test('should handle prefix match', async () => {
+      // Use userEvent directly
+      const files = ['file-name1.tsx', 'file_name2.tsx', 'file.name3.tsx']
+
+      render(
+        <TestWrapper>
+          <SearchFiles navigateToFile={mockNavigateToFile} filesList={files} />
+        </TestWrapper>
+      )
+
+      const input = screen.getByRole('textbox')
+      await userEvent.type(input, 'file')
+
+      await waitFor(() => {
+        const items = screen.queryAllByRole('menuitem')
+        expect(items.length).toBe(3)
+      })
+    })
+
     test('should handle special characters in query', async () => {
       // Use userEvent directly
       const files = ['file-name.tsx', 'file_name.tsx', 'file.name.tsx']
@@ -881,6 +938,93 @@ describe('SearchFiles', () => {
 
       await waitFor(() => {
         expect(screen.getByText('No file found.')).toBeInTheDocument()
+      })
+    })
+
+    test('should handle empty string query', async () => {
+      // Use userEvent directly
+
+      render(
+        <TestWrapper>
+          <SearchFiles navigateToFile={mockNavigateToFile} filesList={mockFilesList} />
+        </TestWrapper>
+      )
+
+      const input = screen.getByRole('textbox')
+      await userEvent.type(input, '')
+
+      await waitFor(() => {
+        const items = screen.queryAllByRole('menuitem')
+        expect(items.length).toBe(0)
+      })
+    })
+
+    test('should handle substring query', async () => {
+      // Use userEvent directly
+      const files = ['api/handler/file1.tsx', 'api/handler/file2.tsx']
+
+      render(
+        <TestWrapper>
+          <SearchFiles navigateToFile={mockNavigateToFile} filesList={files} />
+        </TestWrapper>
+      )
+
+      const input = screen.getByRole('textbox')
+      await userEvent.type(input, 'handler')
+
+      await waitFor(() => {
+        const items = screen.queryAllByRole('menuitem')
+        expect(items.length).toBe(2)
+      })
+    })
+
+    test('should handle subsequence query', async () => {
+      // Use userEvent directly
+      const files = [
+        'api/handler/file1.tsx',
+        'api/handler/file2.tsx',
+        'api/handler/file3.js',
+        'src/components/file4.tsx',
+        'src/components/large/file5.tsx'
+      ]
+
+      render(
+        <TestWrapper>
+          <SearchFiles navigateToFile={mockNavigateToFile} filesList={files} />
+        </TestWrapper>
+      )
+
+      const input = screen.getByRole('textbox')
+      await userEvent.type(input, 'pll.ts')
+
+      await waitFor(() => {
+        const items = screen.queryAllByRole('menuitem')
+        expect(items.length).toBe(3)
+      })
+    })
+
+    test('should handle path separator', async () => {
+      // Use userEvent directly
+      const files = [
+        'file.tsx',
+        'api/file.tsx',
+        'api/handler/file.tsx',
+        'src/components/large/file.tsx',
+        'src/components/large/larger/file.tsx'
+      ]
+
+      render(
+        <TestWrapper>
+          <SearchFiles navigateToFile={mockNavigateToFile} filesList={files} />
+        </TestWrapper>
+      )
+
+      const input = screen.getByRole('textbox')
+      await userEvent.type(input, '///file')
+
+      await waitFor(() => {
+        const items = screen.queryAllByRole('menuitem')
+        expect(items.length).toBe(2)
       })
     })
 

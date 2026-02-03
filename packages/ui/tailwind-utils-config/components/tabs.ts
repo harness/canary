@@ -125,7 +125,7 @@ export default {
       gap: 'var(--cn-tabs-item-gap)',
       color: 'var(--cn-text-3)',
       border: 'var(--cn-tabs-item-border) solid transparent',
-      '@apply font-body-strong': '',
+      '@apply font-body-normal': '',
       position: 'relative',
       zIndex: '1',
 

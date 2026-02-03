@@ -198,9 +198,20 @@ describe('Card', () => {
     })
 
     describe('Interactive State', () => {
-      test('should be interactive by default', () => {
+      test('should not be interactive by default without onClick', () => {
         const { container } = renderComponent(
           <Card.Root>
+            <Card.Content>Content</Card.Content>
+          </Card.Root>
+        )
+
+        const card = container.querySelector('.cn-card-interactive')
+        expect(card).not.toBeInTheDocument()
+      })
+
+      test('should be interactive when onClick is provided', () => {
+        const { container } = renderComponent(
+          <Card.Root onClick={() => {}}>
             <Card.Content>Content</Card.Content>
           </Card.Root>
         )

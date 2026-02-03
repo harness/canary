@@ -78,10 +78,10 @@ export default {
 
   '.cn-tabs-indicator': {
     position: 'absolute',
+    left: '0',
     bottom: '-1px',
     height: 'var(--cn-tabs-item-underlined-border)',
     backgroundColor: 'var(--cn-border-brand)',
-    transition: 'left 200ms ease-out, width 200ms ease-out',
     pointerEvents: 'none',
     zIndex: '1'
   },

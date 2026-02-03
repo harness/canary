@@ -16,9 +16,11 @@ import {
 } from 'react'
 import type { NavLinkRenderProps } from 'react-router-dom'
 
+import { motion } from 'framer-motion'
+
 import { CounterBadge } from '@/components/counter-badge'
 import { IconPropsV2, IconV2 } from '@/components/icon-v2'
-import { LogoPropsV2, LogoV2 } from '@/components/logo-v2'
+import { LogoPropsV2, LogoSymbol, LogoV2, SymbolNamesType } from '@/components/logo-v2'
 import { NavLinkProps, useRouterContext } from '@/context'
 import { afterFrames, cn, getShadowActiveElement, useMergeRefs } from '@/utils'
 import * as TabsPrimitive from '@radix-ui/react-tabs'
@@ -323,11 +325,17 @@ const TabsList = forwardRef<ElementRef<typeof TabsPrimitive.List>, TabsListProps
           >
             {children}
             {(!variant || variant === 'underlined') && indicatorStyle && (
-              <div
+              <motion.div
                 className="cn-tabs-indicator"
-                style={{
-                  left: indicatorStyle.left,
+                initial={false}
+                animate={{
+                  x: indicatorStyle.left,
                   width: indicatorStyle.width
+                }}
+                transition={{
+                  type: 'tween',
+                  ease: 'easeOut',
+                  duration: 0.2
                 }}
               />
             )}
@@ -338,11 +346,17 @@ const TabsList = forwardRef<ElementRef<typeof TabsPrimitive.List>, TabsListProps
           <nav ref={mergedRef} className={cn(tabsListVariants({ variant }), className)} {...props}>
             {children}
             {(!variant || variant === 'underlined') && indicatorStyle && (
-              <div
+              <motion.div
                 className="cn-tabs-indicator"
-                style={{
-                  left: indicatorStyle.left,
+                initial={false}
+                animate={{
+                  x: indicatorStyle.left,
                   width: indicatorStyle.width
+                }}
+                transition={{
+                  type: 'tween',
+                  ease: 'easeOut',
+                  duration: 0.2
                 }}
               />
             )}
@@ -374,14 +388,22 @@ interface TabsTriggerBaseProps {
 interface TabsTriggerBasePropsWithIcon extends TabsTriggerBaseProps {
   icon?: IconPropsV2['name']
   logo?: never
+  symbol?: never
 }
 
 interface TabsTriggerBasePropsWithLogo extends TabsTriggerBaseProps {
   icon?: never
   logo?: LogoPropsV2['name']
+  symbol?: never
 }
 
-type TabsTriggerExtendedProps = (TabsTriggerBasePropsWithIcon | TabsTriggerBasePropsWithLogo) & {
+interface TabsTriggerBasePropsWithSymbol extends TabsTriggerBaseProps {
+  icon?: never
+  logo?: never
+  symbol?: SymbolNamesType
+}
+
+type TabsTriggerExtendedProps = (TabsTriggerBasePropsWithIcon | TabsTriggerBasePropsWithLogo | TabsTriggerBasePropsWithSymbol) & {
   disabled?: boolean
 }
 
@@ -403,7 +425,7 @@ interface TabsTriggerComponent {
 }
 
 const TabsTrigger = forwardRef<HTMLButtonElement | HTMLAnchorElement, TabsTriggerProps>((props, ref) => {
-  const { className, children, value, icon, logo, counter, ...restProps } = props
+  const { className, children, value, icon, logo, symbol, counter, ...restProps } = props
   const { variant, activeClassName } = useContext(TabsListContext)
   const { type, activeTabValue, onValueChange } = useContext(TabsContext)
   const { NavLink, isRouterVersion5 } = useRouterContext()
@@ -412,6 +434,7 @@ const TabsTrigger = forwardRef<HTMLButtonElement | HTMLAnchorElement, TabsTrigge
     <>
       {!!icon && <IconV2 size="sm" name={icon} />}
       {!!logo && <LogoV2 size="xs" name={logo} />}
+      {!!symbol && <LogoSymbol size="xs" name={symbol} />}
       {children}
       {Number.isInteger(counter) && <CounterBadge>{counter}</CounterBadge>}
     </>

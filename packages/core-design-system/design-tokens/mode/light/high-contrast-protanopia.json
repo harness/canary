@@ -76,7 +76,7 @@
     },
     "2": {
       "$type": "color",
-      "$value": "{gray.200}",
+      "$value": "{gray.150}",
       "$description": "Default border color for general UI elements. Provides balanced visual separation without overwhelming the interface. Optimized for readability and visual hierarchy.\n\nCommon uses: Card borders, form field outlines, table borders, content dividers, modal boundaries, section separators."
     },
     "3": {
@@ -259,7 +259,7 @@
       "secondary": {
         "text": {
           "$type": "color",
-          "$value": "{gray.850}",
+          "$value": "{text.1}",
           "$description": "Text color for subtle gray surfaces with good contrast."
         },
         "bg": {
@@ -281,17 +281,17 @@
       "outline": {
         "text": {
           "$type": "color",
-          "$value": "{gray.800}",
+          "$value": "{text.2}",
           "$description": "Standard text color for gray surfaces with balanced readability."
         },
         "bg": {
           "$type": "color",
-          "$value": "{gray.25}",
+          "$value": "{bg.2}",
           "$description": "Base background color for gray surfaces in default states."
         },
         "border": {
           "$type": "color",
-          "$value": "{gray.200}",
+          "$value": "{border.2}",
           "$description": "Border color for standard gray boundaries."
         },
         "bg-hover": {
@@ -442,12 +442,12 @@
         },
         "bg-hover": {
           "$type": "color",
-          "$value": "{red.100}",
+          "$value": "{red.50}",
           "$description": "Hover state background color for interactive red surfaces."
         },
         "bg-selected": {
           "$type": "color",
-          "$value": "{red.100}",
+          "$value": "{red.50}",
           "$description": "Selected state background color for active red items."
         }
       }
@@ -1387,42 +1387,42 @@
       },
       "hljs-comment": {
         "$type": "color",
-        "$value": "{gray.500}",
+        "$value": "{text.3}",
         "$description": "Color for code comments in syntax highlighting. Provides reduced emphasis to distinguish explanatory text from executable code."
       },
       "hljs-keyword": {
         "$type": "color",
-        "$value": "{purple.700}",
+        "$value": "{set.purple.outline.text}",
         "$description": "Color for programming language keywords in syntax highlighting. Emphasizes reserved words and language constructs."
       },
       "hljs-title-class": {
         "$type": "color",
-        "$value": "{orange.700}",
+        "$value": "{set.warning.outline.text}",
         "$description": "Color for class names and type definitions in syntax highlighting. Highlights object-oriented programming constructs and custom types."
       },
       "hljs-string": {
         "$type": "color",
-        "$value": "{lime.700}",
+        "$value": "{set.success.outline.text}",
         "$description": "Color for string literals in syntax highlighting. Distinguishes text content and string values from other code elements."
       },
       "hljs-title-function": {
         "$type": "color",
-        "$value": "{blue.700}",
+        "$value": "{set.blue.outline.text}",
         "$description": "Color for function names and method definitions in syntax highlighting. Emphasizes callable code blocks and procedures."
       },
       "hljs-name": {
         "$type": "color",
-        "$value": "{red.700}",
+        "$value": "{set.danger.outline.text}",
         "$description": "Color for element names and identifiers in syntax highlighting. Highlights variable names, element tags, and custom identifiers."
       },
       "hljs-literal": {
         "$type": "color",
-        "$value": "{cyan.700}",
+        "$value": "{set.cyan.outline.text}",
         "$description": "Color for literal values in syntax highlighting. Highlights numbers, boolean values, and other constant expressions."
       },
       "hljs-attr": {
         "$type": "color",
-        "$value": "{orange.800}",
+        "$value": "{set.orange.outline.text}",
         "$description": "Color for attributes and properties in syntax highlighting. Highlights HTML attributes, object properties, and configuration keys."
       }
     },
@@ -1616,7 +1616,7 @@
         },
         "item-hover": {
           "$type": "color",
-          "$value": "{text.2}",
+          "$value": "{set.brand.primary.bg}",
           "$description": "Hover text color for unselected items in selection controls."
         },
         "bg": {
@@ -2888,6 +2888,16 @@
         "$type": "color",
         "$value": "{comp.monaco.foreground}",
         "$description": "Color for the active line number in Monaco Editor gutter."
+      },
+      "indent-guide": {
+        "$type": "color",
+        "$value": "{border.3}",
+        "$description": "Color for indent guide lines in Monaco Editor. Shows code nesting levels."
+      },
+      "indent-guide-active": {
+        "$type": "color",
+        "$value": "{border.1}",
+        "$description": "Color for active indent guide line in Monaco Editor. Highlights current code block."
       }
     }
   },

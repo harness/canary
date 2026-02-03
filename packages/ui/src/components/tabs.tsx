@@ -137,7 +137,7 @@ const TabsList = forwardRef<ElementRef<typeof TabsPrimitive.List>, TabsListProps
     const [showLeftFade, setShowLeftFade] = useState(false)
     const [showRightFade, setShowRightFade] = useState(false)
     const [isOverflowing, setIsOverflowing] = useState(false)
-    const [indicatorStyle, setIndicatorStyle] = useState<{ left: number; width: number } | null>(null)
+    const [indicatorStyle, setIndicatorStyle] = useState<{ left: number; top?: number; width: number; height?: number } | null>(null)
 
     const mergedRef = useMergeRefs<HTMLDivElement>([
       node => {
@@ -187,7 +187,8 @@ const TabsList = forwardRef<ElementRef<typeof TabsPrimitive.List>, TabsListProps
     })
 
     const updateIndicator = useCallback(() => {
-      if (variant && variant !== 'underlined') return
+      // Skip for overlined variant (no sliding indicator)
+      if (variant === 'overlined') return
 
       const contentEl = contentRef.current
       if (!contentEl) return
@@ -203,7 +204,9 @@ const TabsList = forwardRef<ElementRef<typeof TabsPrimitive.List>, TabsListProps
 
       setIndicatorStyle({
         left: activeTab.offsetLeft,
-        width: activeTab.offsetWidth
+        top: activeTab.offsetTop,
+        width: activeTab.offsetWidth,
+        height: activeTab.offsetHeight
       })
     }, [variant])
 
@@ -323,6 +326,23 @@ const TabsList = forwardRef<ElementRef<typeof TabsPrimitive.List>, TabsListProps
             onFocusCapture={handleFocusCapture}
             onKeyDownCapture={handleKeyDownCapture}
           >
+            {(variant === 'ghost' || variant === 'outlined') && indicatorStyle && (
+              <motion.div
+                className="cn-tabs-pill"
+                initial={false}
+                animate={{
+                  x: indicatorStyle.left,
+                  y: indicatorStyle.top,
+                  width: indicatorStyle.width,
+                  height: indicatorStyle.height
+                }}
+                transition={{
+                  type: 'tween',
+                  ease: 'easeOut',
+                  duration: 0.2
+                }}
+              />
+            )}
             {children}
             {(!variant || variant === 'underlined') && indicatorStyle && (
               <motion.div
@@ -344,6 +364,23 @@ const TabsList = forwardRef<ElementRef<typeof TabsPrimitive.List>, TabsListProps
 
         {type === 'tabsnav' && (
           <nav ref={mergedRef} className={cn(tabsListVariants({ variant }), className)} {...props}>
+            {(variant === 'ghost' || variant === 'outlined') && indicatorStyle && (
+              <motion.div
+                className="cn-tabs-pill"
+                initial={false}
+                animate={{
+                  x: indicatorStyle.left,
+                  y: indicatorStyle.top,
+                  width: indicatorStyle.width,
+                  height: indicatorStyle.height
+                }}
+                transition={{
+                  type: 'tween',
+                  ease: 'easeOut',
+                  duration: 0.2
+                }}
+              />
+            )}
             {children}
             {(!variant || variant === 'underlined') && indicatorStyle && (
               <motion.div

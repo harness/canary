@@ -6,8 +6,9 @@ export default {
     '@apply flex overflow-hidden select-none': '',
 
     '&:where(.cn-card-interactive)': {
+      '@apply cursor-pointer': '',
       '&:hover:not(.cn-card-disabled)': {
-        borderColor: 'var(--cn-border-brand)'
+        borderColor: 'var(--cn-border-1)'
       }
     },
 

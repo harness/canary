@@ -47,6 +47,7 @@ export default {
     alignItems: 'center',
 
     '&-outlined': {
+      position: 'relative',
       width: 'fit-content',
       padding: 'var(--cn-tabs-container)',
       borderRadius: 'var(--cn-tabs-container-radius)',
@@ -56,6 +57,7 @@ export default {
     },
 
     '&-ghost': {
+      position: 'relative',
       width: 'fit-content',
       padding: 'var(--cn-tabs-container)',
       borderRadius: 'var(--cn-tabs-container-radius)',
@@ -86,6 +88,25 @@ export default {
     zIndex: '1'
   },
 
+  '.cn-tabs-pill': {
+    position: 'absolute',
+    left: '0',
+    top: '0',
+    borderRadius: 'var(--cn-tabs-item-radius)',
+    pointerEvents: 'none',
+    zIndex: '0'
+  },
+
+  '.cn-tabs-list-ghost .cn-tabs-pill': {
+    backgroundColor: 'var(--cn-set-gray-secondary-bg)'
+  },
+
+  '.cn-tabs-list-outlined .cn-tabs-pill': {
+    backgroundColor: 'var(--cn-bg-3)',
+    border: 'var(--cn-tabs-item-border) solid var(--cn-border-2)',
+    boxShadow: 'var(--cn-shadow-1)'
+  },
+
   '.cn-tabs-trigger': {
     '@apply font-body-strong': '',
     display: 'flex',
@@ -105,11 +126,10 @@ export default {
       color: 'var(--cn-text-3)',
       border: 'var(--cn-tabs-item-border) solid transparent',
       '@apply font-body-strong': '',
+      position: 'relative',
+      zIndex: '1',
 
       '&:where(:not([disabled]).cn-tabs-trigger-active)': {
-        borderColor: 'var(--cn-border-2)',
-        backgroundColor: 'var(--cn-bg-3)',
-        borderRadius: 'var(--cn-tabs-item-radius)',
         color: 'var(--cn-text-1)'
       },
 
@@ -125,11 +145,10 @@ export default {
       color: 'var(--cn-text-3)',
       border: 'var(--cn-tabs-item-border) solid transparent',
       '@apply font-body-normal': '',
+      position: 'relative',
+      zIndex: '1',
 
       '&:where(:not([disabled]).cn-tabs-trigger-active)': {
-        backgroundColor: 'var(--cn-set-gray-secondary-bg)',
-        borderRadius: 'var(--cn-tabs-item-radius)',
-        borderColor: 'var(--cn-set-gray-secondary-bg)',
         color: 'var(--cn-set-gray-secondary-text)'
       },
 

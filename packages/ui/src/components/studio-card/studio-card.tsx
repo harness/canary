@@ -169,7 +169,8 @@ function ExpandButton({
   isExpanded = false,
   onToggle,
   label,
-  icon
+  icon,
+  loading = false
 }: StudioCardExpandButtonProps): JSX.Element | null {
   const [isHovered, setIsHovered] = useState(false)
 
@@ -211,6 +212,7 @@ function ExpandButton({
         onMouseEnter={() => setIsHovered(true)}
         onMouseLeave={() => setIsHovered(false)}
         className="cn-studio-card-expand-button-main"
+        disabled={loading}
       >
         {/* icon + label */}
         <div className="cn-studio-card-expand-button-top">
@@ -225,7 +227,11 @@ function ExpandButton({
           <Text color="foreground-1" variant="body-single-line-code">
             +{stepCount} more
           </Text>
-          <IconV2 className="text-cn-2" name={isHovered ? 'expand' : 'collapse'} size="sm" />
+          <IconV2
+            className={cn('text-cn-2', loading && 'animate-spin')}
+            name={loading ? 'loader' : isHovered ? 'expand' : 'collapse'}
+            size="sm"
+          />
         </div>
       </button>
     </motion.div>

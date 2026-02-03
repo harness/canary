@@ -41,4 +41,5 @@ export interface StudioCardExpandButtonProps {
   onToggle?: () => void
   label: string
   icon?: React.ReactElement
+  loading?: boolean
 }

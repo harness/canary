@@ -8,10 +8,9 @@ import { useCodeLenses } from '../hooks/useCodeLens'
 import { useDecoration } from '../hooks/useDecoration'
 import { useProblems } from '../hooks/useProblems'
 import { useSchema } from '../hooks/useSchema'
-import { useTheme } from '../hooks/useTheme'
+import { MonacoThemeConfig, useTheme } from '../hooks/useTheme'
 import { InlineAction } from '../types/inline-actions'
 import { PathSelector } from '../types/selectors'
-import { ThemeDefinition } from '../types/themes'
 import { schemaIdToUrl } from '../utils/schema-utils'
 import { useYamlEditorContext } from './YamlProvider'
 
@@ -32,7 +31,7 @@ export interface YamlEditorProps<T> {
   onYamlRevisionChange: (yamlRevision: YamlRevision | undefined, ev: monaco.editor.IModelContentChangedEvent) => void
   schemaConfig?: { schema: any; uri: string }
   inlineActions?: { selectors: PathSelector[]; actions: InlineAction<T>[] }[]
-  themeConfig?: { rootElementSelector?: string; defaultTheme?: string; themes?: ThemeDefinition[] }
+  themeConfig?: MonacoThemeConfig
   theme?: string
   options?: monaco.editor.IStandaloneEditorConstructionOptions
   selection?: {

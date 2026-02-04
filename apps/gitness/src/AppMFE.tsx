@@ -8,12 +8,12 @@ import { CodeServiceAPIClient } from '@harnessio/code-service-client'
 import { NgManagerSwaggerServiceAPIClient } from '@harnessio/react-ng-manager-swagger-service-client'
 import { NGManagerServiceAPIClient } from '@harnessio/react-ng-manager-v2-client'
 import { TooltipProvider } from '@harnessio/ui/components'
-import { DialogProvider, PortalProvider, TranslationProvider } from '@harnessio/ui/context'
+import { DialogProvider, PortalProvider, ThemeProvider, TranslationProvider } from '@harnessio/ui/context'
 
 import { ExitConfirmProvider } from './framework/context/ExitConfirmContext'
 import { MFEContext, MFEContextProps } from './framework/context/MFEContext'
 import { NavigationProvider } from './framework/context/NavigationContext'
-import { ThemeProvider, useThemeStore } from './framework/context/ThemeContext'
+import { useThemeStore } from './framework/context/ThemeContext'
 import { queryClient } from './framework/queryClient'
 import i18n from './i18n/i18n'
 import { useTranslationStore } from './i18n/stores/i18n-store'
@@ -30,12 +30,15 @@ function decode<T = unknown>(arg: string): T {
   return JSON.parse(decodeURIComponent(atob(arg)))
 }
 
+const getTheme = (className: string) => {
+  return className.includes('light') || className.includes('light-std-std') ? 'light-std-std' : 'dark-std-std'
+}
+
 export default function AppMFE({
   scope,
   renderUrl,
   parentContextObj,
   on401,
-  useMFEThemeContext,
   parentLocationPath,
   onRouteChange,
   customHooks,
@@ -68,16 +71,42 @@ export default function AppMFE({
   new NgManagerSwaggerServiceAPIClient(createClientConfig('/ng/api'))
 
   // Apply host theme to MFE
-  const { theme, setTheme: setMFETheme } = useMFEThemeContext()
-  const { setTheme } = useThemeStore()
+  const { theme, setTheme } = useThemeStore()
 
+  // TODO: This is a hack to get the theme from the host and apply it to the MFE. Need to implement a proper fix.
   useEffect(() => {
-    if (theme === 'Light') {
-      setTheme('light-std-std')
+    const element = document.querySelector('html')
+
+    const themeClass = element?.className
+
+    const hasThemeInDOM = themeClass?.includes('light') || themeClass?.includes('dark')
+
+    if (hasThemeInDOM) {
+      setTheme(getTheme(themeClass ?? 'light-std-std'))
     } else {
-      setTheme('dark-std-std')
+      element?.classList.add(theme ?? 'light-std-std')
     }
-  }, [theme])
+
+    const observer = new MutationObserver(mutations => {
+      for (const mutation of mutations) {
+        if (mutation.type === 'attributes' && mutation.attributeName === 'class') {
+          const newTheme = getTheme(element?.className || '')
+          setTheme(newTheme)
+        }
+      }
+    })
+
+    if (element) {
+      observer.observe(element, {
+        attributes: true,
+        attributeFilter: ['class']
+      })
+    }
+
+    return () => {
+      observer.disconnect()
+    }
+  }, [])
 
   // Radix UI elements will be rendered inside portalContainer
   const portalRef = useRef<HTMLDivElement>(null)
@@ -92,7 +121,7 @@ export default function AppMFE({
   const { t } = useTranslationStore()
 
   return (
-    <div id="code-mfe-root" className={theme.toLowerCase()} ref={portalRef}>
+    <div id="code-mfe-root" ref={portalRef}>
       <PortalProvider portalContainer={portalContainer}>
         <MFEContext.Provider
           value={{
@@ -104,13 +133,17 @@ export default function AppMFE({
             routes,
             routeUtils,
             hooks,
-            setMFETheme,
+            setMFETheme: () => {},
             parentLocationPath,
             onRouteChange
           }}
         >
           <I18nextProvider i18n={i18n}>
-            <ThemeProvider defaultTheme={theme === 'Light' ? 'light-std-std' : 'dark-std-std'}>
+            <ThemeProvider
+              theme={theme ?? 'light-std-std'}
+              setTheme={setTheme}
+              isLightTheme={theme?.includes('light') ?? true}
+            >
               <TranslationProvider t={t}>
                 <QueryClientProvider client={queryClient}>
                   <TooltipProvider>

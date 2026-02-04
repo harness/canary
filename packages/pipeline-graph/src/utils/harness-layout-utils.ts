@@ -8,7 +8,7 @@ export function findAdjustmentForHarnessLayout(
   layout: HarnessLayout
 ): number {
   // if collapsed or empty
-  if (isCollapsed(node.path) || ('children' in node && node.children?.length === 0)) {
+  if (node.containerType !== 'leaf' && (isCollapsed(node.path) || ('children' in node && !node.children?.length))) {
     return (layout.collapsedPortPositionPerType?.[node.type] ?? 0) - (layout.leafPortPosition ?? 0)
   }
 

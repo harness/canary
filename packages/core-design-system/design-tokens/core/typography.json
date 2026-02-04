@@ -44,15 +44,15 @@
         },
         "300": {
           "$type": "fontWeights",
-          "$value": "350"
+          "$value": "310"
         },
         "400": {
           "$type": "fontWeights",
-          "$value": "Regular"
+          "$value": "360"
         },
         "500": {
           "$type": "fontWeights",
-          "$value": "450"
+          "$value": "440"
         },
         "600": {
           "$type": "fontWeights",

@@ -24,6 +24,7 @@ import AppSecurityTests from './icons/app-security-tests.svg'
 import AppleShortcut from './icons/apple-shortcut.svg'
 import Architect from './icons/architect.svg'
 import Archive from './icons/archive.svg'
+import AreaChart from './icons/area-chart.svg'
 import AreaSearch from './icons/area-search.svg'
 import ArrowDownCircle from './icons/arrow-down-circle.svg'
 import ArrowDownLeftCircle from './icons/arrow-down-left-circle.svg'
@@ -172,6 +173,7 @@ import Developer from './icons/developer.svg'
 import DocMagnifyingGlass from './icons/doc-magnifying-glass.svg'
 import DocStar from './icons/doc-star.svg'
 import Docs from './icons/docs.svg'
+import Donut from './icons/donut.svg'
 import DoubleCheck from './icons/double-check.svg'
 import DownloadCircleSolid from './icons/download-circle-solid.svg'
 import DownloadCircle from './icons/download-circle.svg'
@@ -223,6 +225,7 @@ import FolderWarning from './icons/folder-warning.svg'
 import Folder from './icons/folder.svg'
 import ForwardMessage from './icons/forward-message.svg'
 import FrameAltEmpty from './icons/frame-alt-empty.svg'
+import Gauge from './icons/gauge.svg'
 import GitBranch from './icons/git-branch.svg'
 import GitCherryPickCommit from './icons/git-cherry-pick-commit.svg'
 import GitCommit from './icons/git-commit.svg'
@@ -384,6 +387,7 @@ import RuntimeSecuritySolid from './icons/runtime-security-solid.svg'
 import RuntimeSecurity from './icons/runtime-security.svg'
 import Satellite from './icons/satellite.svg'
 import Scale from './icons/scale.svg'
+import ScatterPlot from './icons/scatter-plot.svg'
 import ScissorAlt from './icons/scissor-alt.svg'
 import Scissor from './icons/scissor.svg'
 import SearchEngine from './icons/search-engine.svg'
@@ -522,6 +526,7 @@ export const IconNameMapV2 = {
   'apple-shortcut': AppleShortcut,
   architect: Architect,
   archive: Archive,
+  'area-chart': AreaChart,
   'area-search': AreaSearch,
   'arrow-down-circle': ArrowDownCircle,
   'arrow-down-left-circle': ArrowDownLeftCircle,
@@ -670,6 +675,7 @@ export const IconNameMapV2 = {
   'doc-magnifying-glass': DocMagnifyingGlass,
   'doc-star': DocStar,
   docs: Docs,
+  donut: Donut,
   'double-check': DoubleCheck,
   'download-circle-solid': DownloadCircleSolid,
   'download-circle': DownloadCircle,
@@ -721,6 +727,7 @@ export const IconNameMapV2 = {
   folder: Folder,
   'forward-message': ForwardMessage,
   'frame-alt-empty': FrameAltEmpty,
+  gauge: Gauge,
   'git-branch': GitBranch,
   'git-cherry-pick-commit': GitCherryPickCommit,
   'git-commit': GitCommit,
@@ -882,6 +889,7 @@ export const IconNameMapV2 = {
   'runtime-security': RuntimeSecurity,
   satellite: Satellite,
   scale: Scale,
+  'scatter-plot': ScatterPlot,
   'scissor-alt': ScissorAlt,
   scissor: Scissor,
   'search-engine': SearchEngine,

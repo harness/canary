@@ -111,6 +111,7 @@ import Snyk from './logos/snyk.svg'
 import Sonarqube from './logos/sonarqube.svg'
 import Splunk from './logos/splunk.svg'
 import Spot from './logos/spot.svg'
+import SscaOrchestrate from './logos/ssca-orchestrate.svg'
 import SumoLogic from './logos/sumo-logic.svg'
 import Sysdig from './logos/sysdig.svg'
 import Tanzu from './logos/tanzu.svg'
@@ -236,6 +237,7 @@ export const LogoNameMapV2 = {
   sonarqube: Sonarqube,
   splunk: Splunk,
   spot: Spot,
+  'ssca-orchestrate': SscaOrchestrate,
   'sumo-logic': SumoLogic,
   sysdig: Sysdig,
   tanzu: Tanzu,

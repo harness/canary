@@ -111,6 +111,7 @@ import Snyk from './symbols/snyk.svg'
 import Sonarqube from './symbols/sonarqube.svg'
 import Splunk from './symbols/splunk.svg'
 import Spot from './symbols/spot.svg'
+import SscaOrchestrate from './symbols/ssca-orchestrate.svg'
 import SumoLogic from './symbols/sumo-logic.svg'
 import Sysdig from './symbols/sysdig.svg'
 import Tanzu from './symbols/tanzu.svg'
@@ -236,6 +237,7 @@ export const SymbolNameMap = {
   sonarqube: Sonarqube,
   splunk: Splunk,
   spot: Spot,
+  'ssca-orchestrate': SscaOrchestrate,
   'sumo-logic': SumoLogic,
   sysdig: Sysdig,
   tanzu: Tanzu,

@@ -46,7 +46,7 @@ import {
   IconV2,
   Text,
   NoData,
-  Layout
+  Layout,
 } from "@harnessio/ui/components";
 
 const ShowcaseGrid: FC = () => {
@@ -116,11 +116,7 @@ const ShowcaseGrid: FC = () => {
                 label="Card Number"
                 placeholder="1234 5678 9012 3456"
               />
-              <TextInput
-                id="cvv"
-                label="CVV"
-                placeholder="123"
-              />
+              <TextInput id="cvv" label="CVV" placeholder="123" />
             </div>
 
             <Text variant="caption-normal" className="mb-cn-xs text-cn-muted">
@@ -168,7 +164,9 @@ const ShowcaseGrid: FC = () => {
               <Checkbox
                 id="same-as-shipping"
                 checked={sameAsShipping}
-                onCheckedChange={(checked) => setSameAsShipping(checked as boolean)}
+                onCheckedChange={(checked) =>
+                  setSameAsShipping(checked as boolean)
+                }
               >
                 Same as shipping address
               </Checkbox>
@@ -197,16 +195,22 @@ const ShowcaseGrid: FC = () => {
               label: "Invite Members",
               icon: "plus",
               variant: "primary",
-              onClick: () => console.log("Invite clicked")
+              onClick: () => console.log("Invite clicked"),
             }}
           />
           <div className="flex flex-col gap-cn-lg w-full mt-cn-lg">
             <div className="flex flex-col gap-cn-sm">
               <Text variant="caption-strong">Status Updates</Text>
               <div className="flex flex-wrap gap-cn-sm">
-                <StatusBadge variant="status" theme="info">Syncing</StatusBadge>
-                <StatusBadge variant="status" theme="warning">Updating</StatusBadge>
-                <StatusBadge variant="status" theme="muted">Loading</StatusBadge>
+                <StatusBadge variant="status" theme="info">
+                  Syncing
+                </StatusBadge>
+                <StatusBadge variant="status" theme="warning">
+                  Updating
+                </StatusBadge>
+                <StatusBadge variant="status" theme="muted">
+                  Loading
+                </StatusBadge>
               </div>
             </div>
           </div>
@@ -227,7 +231,9 @@ const ShowcaseGrid: FC = () => {
                   Verify via email or phone number.
                 </Text>
               </div>
-              <Button variant="primary" size="sm">Enable</Button>
+              <Button variant="primary" size="sm">
+                Enable
+              </Button>
             </div>
 
             <div className="flex items-center gap-cn-sm p-cn-md border border-cn-3 rounded-cn-2">
@@ -264,7 +270,8 @@ const ShowcaseGrid: FC = () => {
                   <div>
                     <Text variant="body-strong">Kubernetes</Text>
                     <Text variant="caption-normal" className="text-cn-muted">
-                      Run GPU workloads on a K8s configured cluster. This is the default.
+                      Run GPU workloads on a K8s configured cluster. This is the
+                      default.
                     </Text>
                   </div>
                 </div>
@@ -275,7 +282,8 @@ const ShowcaseGrid: FC = () => {
                   <div>
                     <Text variant="body-strong">Virtual Machine</Text>
                     <Text variant="caption-normal" className="text-cn-muted">
-                      Access a VM configured cluster to run workloads. (Coming soon)
+                      Access a VM configured cluster to run workloads. (Coming
+                      soon)
                     </Text>
                   </div>
                 </div>
@@ -300,7 +308,6 @@ const ShowcaseGrid: FC = () => {
             </Text>
 
             <div className="flex items-center justify-between">
-
               <Switch
                 label="Enable Two-factor authentication"
                 checked={enableTwoFactor}
@@ -413,7 +420,6 @@ const ShowcaseGrid: FC = () => {
               label="Session Timeout"
               defaultValue={30}
               prefix="Minutes"
-
             />
 
             <Select
@@ -437,21 +443,9 @@ const ShowcaseGrid: FC = () => {
                   value="email"
                   label="Email notifications"
                 />
-                <Radio.Item
-                  id="sms"
-                  value="sms"
-                  label="SMS notifications"
-                />
-                <Radio.Item
-                  id="push"
-                  value="push"
-                  label="Push notifications"
-                />
-                <Radio.Item
-                  id="none"
-                  value="none"
-                  label="No notifications"
-                />
+                <Radio.Item id="sms" value="sms" label="SMS notifications" />
+                <Radio.Item id="push" value="push" label="Push notifications" />
+                <Radio.Item id="none" value="none" label="No notifications" />
               </Radio.Root>
             </div>
 
@@ -478,24 +472,15 @@ const ShowcaseGrid: FC = () => {
               <Text variant="caption-strong">Team Members</Text>
               <div className="flex gap-cn-md">
                 <div className="flex flex-col items-center gap-cn-xs">
-                  <Avatar
-                    name="Sarah Chen"
-                    size="md"
-                  />
+                  <Avatar name="Sarah Chen" size="md" />
                   <Text variant="caption-normal">Sarah</Text>
                 </div>
                 <div className="flex flex-col items-center gap-cn-xs">
-                  <Avatar
-                    name="Mike Johnson"
-                    size="md"
-                  />
+                  <Avatar name="Mike Johnson" size="md" />
                   <Text variant="caption-normal">Mike</Text>
                 </div>
                 <div className="flex flex-col items-center gap-cn-xs">
-                  <Avatar
-                    name="Alex Rodriguez"
-                    size="md"
-                  />
+                  <Avatar name="Alex Rodriguez" size="md" />
                   <Text variant="caption-normal">Alex</Text>
                 </div>
               </div>
@@ -524,7 +509,9 @@ const ShowcaseGrid: FC = () => {
                   <Accordion.Content>
                     <div className="flex flex-col gap-cn-xs">
                       <Text variant="caption-normal">Sarah Chen - Lead</Text>
-                      <Text variant="caption-normal">Mike Johnson - Developer</Text>
+                      <Text variant="caption-normal">
+                        Mike Johnson - Developer
+                      </Text>
                     </div>
                   </Accordion.Content>
                 </Accordion.Item>
@@ -532,7 +519,9 @@ const ShowcaseGrid: FC = () => {
                   <Accordion.Trigger>Backend Team</Accordion.Trigger>
                   <Accordion.Content>
                     <div className="flex flex-col gap-cn-xs">
-                      <Text variant="caption-normal">Alex Rodriguez - Lead</Text>
+                      <Text variant="caption-normal">
+                        Alex Rodriguez - Lead
+                      </Text>
                     </div>
                   </Accordion.Content>
                 </Accordion.Item>
@@ -560,19 +549,20 @@ const ShowcaseGrid: FC = () => {
               <Text variant="caption-strong">Confirmation Dialog</Text>
               <Dialog.Root>
                 <Dialog.Trigger>
-                  <Button variant="primary" size="sm">Confirm Changes</Button>
+                  <Button variant="primary" size="sm">
+                    Confirm Changes
+                  </Button>
                 </Dialog.Trigger>
                 <Dialog.Content>
                   <Dialog.Header>
                     <Dialog.Title>Confirm Changes</Dialog.Title>
                     <Dialog.Description>
-                      Are you sure you want to save these changes? This action will update your profile settings.
+                      Are you sure you want to save these changes? This action
+                      will update your profile settings.
                     </Dialog.Description>
                   </Dialog.Header>
                   <Dialog.Footer className="flex gap-cn-sm justify-end">
-                    <Dialog.Close>
-                      Cancel
-                    </Dialog.Close>
+                    <Dialog.Close>Cancel</Dialog.Close>
                     <Button variant="primary">Confirm</Button>
                   </Dialog.Footer>
                 </Dialog.Content>
@@ -581,7 +571,10 @@ const ShowcaseGrid: FC = () => {
 
             <div className="flex flex-col gap-cn-sm">
               <Text variant="caption-strong">Alert Dialog</Text>
-              <AlertDialog.Root onConfirm={() => console.log("Deleted")} theme="danger">
+              <AlertDialog.Root
+                onConfirm={() => console.log("Deleted")}
+                theme="danger"
+              >
                 <AlertDialog.Trigger>
                   <Button variant="outline" theme="danger" size="sm">
                     Delete Account
@@ -589,7 +582,8 @@ const ShowcaseGrid: FC = () => {
                 </AlertDialog.Trigger>
                 <AlertDialog.Content title="Delete Account">
                   <Text variant="body-normal">
-                    This will permanently delete your account and all associated data. This action cannot be undone.
+                    This will permanently delete your account and all associated
+                    data. This action cannot be undone.
                   </Text>
                 </AlertDialog.Content>
               </AlertDialog.Root>
@@ -663,9 +657,7 @@ const ShowcaseGrid: FC = () => {
               </Tabs.List>
               <Tabs.Content value="preview">
                 <div className="border rounded-cn-2 p-cn-md">
-                  <MarkdownViewer
-                    source="## Welcome\n\nThis is a preview of your content.\n\n- Easy to read\n- Well formatted\n- Beautiful display"
-                  />
+                  <MarkdownViewer source="## Welcome\n\nThis is a preview of your content.\n\n- Easy to read\n- Well formatted\n- Beautiful display" />
                 </div>
               </Tabs.Content>
               <Tabs.Content value="edit">
@@ -721,8 +713,6 @@ export const config = {
           </div>
         </Card.Root>
 
-
-
         {/* Card 11: AI Assistant */}
         <Card.Root className="p-cn-xl break-inside-avoid mb-cn-xl">
           <Text variant="heading-subsection" className="mb-cn-lg">
@@ -747,20 +737,28 @@ export const config = {
             <div className="flex flex-col gap-cn-md">
               <MessageBubble.Root>
                 <MessageBubble.Content>
-                  <MessageBubble.Text>How do I update my profile?</MessageBubble.Text>
+                  <MessageBubble.Text>
+                    How do I update my profile?
+                  </MessageBubble.Text>
                 </MessageBubble.Content>
               </MessageBubble.Root>
 
               <MessageBubble.Root>
                 <MessageBubble.Content>
                   <MessageBubble.Text>
-                    You can update your profile by going to Settings and clicking on Profile. From there, you can edit your information and save changes.
+                    You can update your profile by going to Settings and
+                    clicking on Profile. From there, you can edit your
+                    information and save changes.
                   </MessageBubble.Text>
                 </MessageBubble.Content>
               </MessageBubble.Root>
 
               <div className="flex items-center gap-cn-sm">
-                <TypingAnimation text="AI is thinking..." variant="caption-normal" className="text-cn-muted" />
+                <TypingAnimation
+                  text="AI is thinking..."
+                  variant="caption-normal"
+                  className="text-cn-muted"
+                />
               </div>
 
               <Shimmer className="h-cn-2xl w-full">Loading response...</Shimmer>
@@ -768,8 +766,12 @@ export const config = {
               <Reasoning.Root>
                 <Reasoning.Content>
                   <div className="flex flex-col gap-cn-sm">
-                    <Text variant="caption-normal">• Analyzing your question</Text>
-                    <Text variant="caption-normal">• Searching knowledge base</Text>
+                    <Text variant="caption-normal">
+                      • Analyzing your question
+                    </Text>
+                    <Text variant="caption-normal">
+                      • Searching knowledge base
+                    </Text>
                     <Text variant="caption-normal">• Generating response</Text>
                   </div>
                 </Reasoning.Content>
@@ -789,10 +791,7 @@ export const config = {
               <Text variant="caption-normal" className="text-cn-muted mb-cn-xs">
                 Select the option that best describes how you found us.
               </Text>
-              <Radio.Root
-                value={surveyAnswer}
-                onValueChange={setSurveyAnswer}
-              >
+              <Radio.Root value={surveyAnswer} onValueChange={setSurveyAnswer}>
                 <Radio.Item
                   id="social-media"
                   value="social-media"
@@ -803,22 +802,12 @@ export const config = {
                   value="search-engine"
                   label="Search Engine"
                 />
-                <Radio.Item
-                  id="referral"
-                  value="referral"
-                  label="Referral"
-                />
-                <Radio.Item
-                  id="other"
-                  value="other"
-                  label="Other"
-                />
+                <Radio.Item id="referral" value="referral" label="Referral" />
+                <Radio.Item id="other" value="other" label="Other" />
               </Radio.Root>
             </div>
 
-            <Checkbox id="terms">
-              I agree to the terms and conditions
-            </Checkbox>
+            <Checkbox id="terms">I agree to the terms and conditions</Checkbox>
 
             <div className="flex flex-col gap-cn-sm">
               <Text variant="caption-strong">Navigation</Text>
@@ -827,7 +816,7 @@ export const config = {
                   currentPage={1}
                   totalItems={30}
                   pageSize={10}
-                  goToPage={() => { }}
+                  goToPage={() => {}}
                 />
               </div>
             </div>
@@ -866,33 +855,12 @@ export const config = {
               <DraggableCard
                 id="pref-1"
                 title={<Text variant="body-strong">Display Settings</Text>}
-                description={<Text variant="caption-normal" className="text-cn-muted">Drag to reorder</Text>}
+                description={
+                  <Text variant="caption-normal" className="text-cn-muted">
+                    Drag to reorder
+                  </Text>
+                }
               />
-            </div>
-
-            <div className="flex flex-col gap-cn-sm">
-              <Text variant="caption-strong">Gallery</Text>
-              <Carousel.Root>
-                <Carousel.Content>
-                  <Carousel.Item>
-                    <div className="bg-cn-3 rounded-cn-2 h-[120px] flex items-center justify-center">
-                      <Text variant="body-strong">Image 1</Text>
-                    </div>
-                  </Carousel.Item>
-                  <Carousel.Item>
-                    <div className="bg-cn-3 rounded-cn-2 h-[120px] flex items-center justify-center">
-                      <Text variant="body-strong">Image 2</Text>
-                    </div>
-                  </Carousel.Item>
-                  <Carousel.Item>
-                    <div className="bg-cn-3 rounded-cn-2 h-[120px] flex items-center justify-center">
-                      <Text variant="body-strong">Image 3</Text>
-                    </div>
-                  </Carousel.Item>
-                </Carousel.Content>
-                <Carousel.Previous />
-                <Carousel.Next />
-              </Carousel.Root>
             </div>
           </div>
         </Card.Root>

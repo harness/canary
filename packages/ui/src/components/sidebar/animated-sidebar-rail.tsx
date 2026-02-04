@@ -41,10 +41,7 @@ const AnimatedSideBarRail: React.FC<AnimatedSideBarRailProps> = ({ className }) 
   return (
     <motion.div
       data-id="sidebar-rail"
-      className={cn(
-        'absolute w-3 top-[var(--cn-header-height)] bottom-0 z-20 flex items-center border-l border-t rounded-tl-cn-3',
-        className
-      )}
+      className={cn('absolute w-3 bottom-0 z-20 flex items-center border-l border-t rounded-tl-cn-3', className)}
       initial={false}
       animate={{
         x: shiftWithBump,

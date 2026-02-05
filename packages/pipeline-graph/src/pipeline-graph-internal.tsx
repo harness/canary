@@ -133,7 +133,7 @@ export function PipelineGraphInternal(props: PipelineGraphInternalProps) {
 
           let translateY = 0
           if (layout.type === 'harness') {
-            if (graphAlign === 'center') {
+            if (graphAlign === 'top') {
               const negativeMargin = getNegativeTopAdjustment(nodesContainerRef.current)
               translateY = topGap - negativeMargin
             } else {

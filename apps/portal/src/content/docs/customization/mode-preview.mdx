@@ -1,0 +1,1018 @@
+---
+title: Mode Preview
+description: Test page for theme mode validation
+---
+
+import { DocsPage } from "@/components/docs-page";
+
+This page contains all key components for testing theme modes. Use the theme selector to switch between Default, High Contrast, and Dimmer modes.
+
+## Typography
+
+<DocsPage.ComponentExample
+  client:only
+  code={`<div className="space-y-cn-lg">
+  <div className="space-y-cn-sm">
+    <Text variant="heading-section">Text Hierarchy</Text>
+    <div className="space-y-cn-xs">
+      <Text color="foreground-1">text-1: Primary text - headings, labels, emphasized content</Text>
+      <Text color="foreground-2">text-2: Secondary text - body content, descriptions</Text>
+      <Text color="foreground-3">text-3: Tertiary text - metadata, supporting info</Text>
+      <Text color="foreground-4">text-4: Quaternary text - disabled, placeholders</Text>
+    </div>
+  </div>
+  
+  <div className="space-y-cn-sm">
+    <Text variant="heading-section">Semantic Colors</Text>
+    <div className="space-y-cn-xs">
+      <Text className="text-cn-success">Success text - positive outcomes</Text>
+      <Text className="text-cn-warning">Warning text - caution, attention needed</Text>
+      <Text className="text-cn-danger">Danger text - errors, destructive actions</Text>
+      <Text className="text-cn-brand">Brand text - links, brand elements</Text>
+    </div>
+  </div>
+</div>`}
+/>
+
+## Backgrounds & Surfaces
+
+<DocsPage.ComponentExample
+  client:only
+  code={`<div className="space-y-cn-md">
+  <Text variant="heading-section">Background Levels</Text>
+  
+  <div className="bg-cn-0 rounded-cn-3 border border-cn-3 overflow-hidden">
+    <div className="p-cn-sm border-b border-cn-3">
+      <Text color="foreground-2" size="sm">bg-0 — Header, Navigation</Text>
+    </div>
+    
+    <div className="flex">
+      <div className="w-[120px] bg-cn-0 p-cn-md border-r border-cn-3">
+        <Text color="foreground-2" size="sm">bg-0</Text>
+        <Text color="foreground-3" size="sm">Sidebar</Text>
+      </div>
+      
+      <div className="flex-1 bg-cn-1 p-cn-lg">
+        <Text color="foreground-2" size="sm" className="mb-cn-sm">bg-1 — Main background</Text>
+        
+        <div className="bg-cn-2 rounded-cn-2 border border-cn-3 p-cn-md">
+          <Text color="foreground-2" size="sm" className="mb-cn-sm">bg-2 — Card</Text>
+          
+          <div className="bg-cn-3 rounded-cn-2 border border-cn-3 p-cn-sm inline-block">
+            <Text color="foreground-2" size="sm">bg-3 — Popover</Text>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>`}
+/>
+
+## Borders
+
+<DocsPage.ComponentExample
+  client:only
+  code={`<div className="space-y-cn-md">
+  <Text variant="heading-section">Border Levels</Text>
+  <div className="grid grid-cols-3 gap-cn-md">
+    <div className="p-cn-lg border border-cn-1 rounded-cn-2 bg-cn-background-1">
+      <Text color="foreground-1" className="font-medium">border-1</Text>
+      <Text color="foreground-3" size="sm">High contrast, hover states</Text>
+    </div>
+    <div className="p-cn-lg border border-cn-2 rounded-cn-2 bg-cn-background-1">
+      <Text color="foreground-1" className="font-medium">border-2</Text>
+      <Text color="foreground-3" size="sm">Default borders</Text>
+    </div>
+    <div className="p-cn-lg border border-cn-3 rounded-cn-2 bg-cn-background-1">
+      <Text color="foreground-1" className="font-medium">border-3</Text>
+      <Text color="foreground-3" size="sm">Subtle separators</Text>
+    </div>
+  </div>
+  
+  <Text variant="heading-subsection" className="mt-cn-lg">Semantic Borders</Text>
+  <div className="grid grid-cols-3 gap-cn-md">
+    <div className="p-cn-lg border border-cn-success rounded-cn-2 bg-cn-background-1">
+      <Text color="foreground-success" className="font-medium">border-success</Text>
+    </div>
+    <div className="p-cn-lg border border-cn-danger rounded-cn-2 bg-cn-background-1">
+      <Text color="foreground-danger" className="font-medium">border-danger</Text>
+    </div>
+    <div className="p-cn-lg border border-cn-warning rounded-cn-2 bg-cn-background-1">
+      <Text color="foreground-warning" className="font-medium">border-warning</Text>
+    </div>
+  </div>
+</div>`}
+/>
+
+## Buttons
+
+<DocsPage.ComponentExample
+  client:only
+  code={`<div className="space-y-cn-xl">
+  {/* Primary Buttons */}
+  <div className="space-y-cn-sm">
+    <Text variant="heading-subsection">Primary Buttons</Text>
+    <div className="flex flex-wrap gap-cn-sm">
+      <Button variant="primary" theme="default">Default</Button>
+      <Button variant="primary" theme="success">Success</Button>
+      <Button variant="primary" theme="danger">Danger</Button>
+      <Button variant="primary" disabled>Disabled</Button>
+      <Button variant="primary" loading>Loading</Button>
+    </div>
+  </div>
+
+{/* Secondary Buttons */}
+
+<div className="space-y-cn-sm">
+  <Text variant="heading-subsection">Secondary Buttons</Text>
+  <div className="flex flex-wrap gap-cn-sm">
+    <Button variant="secondary" theme="default">
+      Default
+    </Button>
+    <Button variant="secondary" theme="success">
+      Success
+    </Button>
+    <Button variant="secondary" theme="danger">
+      Danger
+    </Button>
+    <Button variant="secondary" disabled>
+      Disabled
+    </Button>
+  </div>
+</div>
+
+{/* Outline Buttons */}
+
+<div className="space-y-cn-sm">
+  <Text variant="heading-subsection">Outline Buttons</Text>
+  <div className="flex flex-wrap gap-cn-sm">
+    <Button variant="outline" theme="default">
+      Default
+    </Button>
+    <Button variant="outline" theme="success">
+      Success
+    </Button>
+    <Button variant="outline" theme="danger">
+      Danger
+    </Button>
+    <Button variant="outline" disabled>
+      Disabled
+    </Button>
+  </div>
+</div>
+
+{/* Ghost Buttons */}
+
+<div className="space-y-cn-sm">
+  <Text variant="heading-subsection">Ghost Buttons</Text>
+  <div className="flex flex-wrap gap-cn-sm">
+    <Button variant="ghost">Ghost</Button>
+    <Button variant="ghost" disabled>
+      Disabled
+    </Button>
+  </div>
+</div>
+
+{/* AI & Link Buttons */}
+
+  <div className="space-y-cn-sm">
+    <Text variant="heading-subsection">Special Buttons</Text>
+    <div className="flex flex-wrap gap-cn-sm">
+      <Button variant="ai">AI Button</Button>
+      <Button variant="link">Link Button</Button>
+      <Button variant="transparent">Transparent</Button>
+    </div>
+  </div>
+</div>`}
+/>
+
+## Alerts
+
+<DocsPage.ComponentExample
+  client:only
+  code={`<div className="w-full space-y-cn-md">
+  <Alert.Root theme="info">
+    <Alert.Title>Information</Alert.Title>
+    <Alert.Description>This is an informational message for the user.</Alert.Description>
+  </Alert.Root>
+
+<Alert.Root theme="success">
+  <Alert.Title>Success</Alert.Title>
+  <Alert.Description>Your action was completed successfully.</Alert.Description>
+</Alert.Root>
+
+<Alert.Root theme="warning">
+  <Alert.Title>Warning</Alert.Title>
+  <Alert.Description>
+    Please review this information before proceeding.
+  </Alert.Description>
+</Alert.Root>
+
+  <Alert.Root theme="danger">
+    <Alert.Title>Error</Alert.Title>
+    <Alert.Description>Something went wrong. Please try again.</Alert.Description>
+  </Alert.Root>
+</div>`}
+/>
+
+## Tags
+
+<DocsPage.ComponentExample
+  client:only
+  code={`<div className="space-y-cn-lg">
+  <div className="space-y-cn-sm">
+    <Text variant="heading-subsection">Outline (All Themes)</Text>
+    <div className="flex flex-wrap gap-cn-sm">
+      {["gray", "blue", "brown", "cyan", "green", "indigo", "forest-green", "mint", "orange", "pink", "purple", "red", "violet", "yellow"].map((theme) => (
+        <Tag key={theme} value={theme.charAt(0).toUpperCase() + theme.slice(1)} theme={theme} variant="outline" />
+      ))}
+    </div>
+  </div>
+  
+  <div className="space-y-cn-sm">
+    <Text variant="heading-subsection">Secondary (All Themes)</Text>
+    <div className="flex flex-wrap gap-cn-sm">
+      {["gray", "blue", "brown", "cyan", "green", "indigo", "forest-green", "mint", "orange", "pink", "purple", "red", "violet", "yellow"].map((theme) => (
+        <Tag key={theme} value={theme.charAt(0).toUpperCase() + theme.slice(1)} theme={theme} variant="secondary" />
+      ))}
+    </div>
+  </div>
+  
+  <div className="space-y-cn-sm">
+    <Text variant="heading-subsection">Split Tags (All Themes)</Text>
+    <div className="flex flex-wrap gap-cn-sm">
+      {["gray", "blue", "brown", "cyan", "green", "indigo", "forest-green", "mint", "orange", "pink", "purple", "red", "violet", "yellow"].map((theme) => (
+        <Tag key={theme} label="Label" value={theme.charAt(0).toUpperCase() + theme.slice(1)} theme={theme} variant="secondary" />
+      ))}
+    </div>
+  </div>
+</div>`}
+/>
+
+## Form Elements
+
+### Text Inputs
+
+<DocsPage.ComponentExample
+  client:only
+  code={`<div className="space-y-cn-lg max-w-md">
+  <div className="space-y-cn-sm">
+    <Text variant="heading-subsection">TextInput States</Text>
+    <TextInput label="Default TextInput" placeholder="Enter text..." />
+    <TextInput label="With Value" value="Some entered text" />
+    <TextInput label="With Caption" caption="This is a helpful caption" placeholder="Enter text..." />
+    <TextInput label="Error State" theme="danger" error="This field is required" value="Invalid input" />
+    <TextInput label="Disabled" disabled value="Cannot edit this" />
+    <TextInput label="With Icon" inputIconName="magnifying-glass" placeholder="Search..." />
+  </div>
+</div>`}
+/>
+
+### Textarea
+
+<DocsPage.ComponentExample
+  client:only
+  code={`<div className="space-y-cn-md max-w-md">
+  <Textarea label="Default Textarea" placeholder="Enter your message..." />
+  <Textarea label="With Value" value="This is some longer text content that spans multiple lines in the textarea component." />
+  <Textarea label="Disabled" disabled value="This content cannot be edited" />
+</div>`}
+/>
+
+### Select
+
+<DocsPage.ComponentExample
+  client:only
+  code={`() => {
+    const [value, setValue] = React.useState('option2');
+    const [disabled, setDisabled] = React.useState();
+
+    return (
+      <div className="space-y-cn-md max-w-md">
+        <Select
+          label="Default Select"
+          options={[
+            { label: 'Option 1', value: 'option1' },
+            { label: 'Option 2', value: 'option2' },
+            { label: 'Option 3', value: 'option3' },
+            { label: 'Disabled Option', value: 'option4', disabled: true },
+          ]}
+          value={value}
+          onChange={setValue}
+          placeholder="Select an option"
+        />
+
+        <Select
+          label="Disabled Select"
+          options={[
+            { label: 'Option 1', value: 'option1' },
+          ]}
+          value={disabled}
+          onChange={setDisabled}
+          disabled
+          placeholder="Cannot select"
+        />
+      </div>
+    );
+
+}`}
+/>
+
+### Checkbox
+
+<DocsPage.ComponentExample
+  client:only
+  code={`() => {
+    const [checked1, setChecked1] = React.useState(false);
+    const [checked2, setChecked2] = React.useState(true);
+    const [indeterminate, setIndeterminate] = React.useState('indeterminate');
+
+    return (
+      <div className="space-y-cn-lg">
+        <div className="space-y-cn-md">
+          <Text variant="heading-subsection">Checkbox States</Text>
+          <Checkbox
+            id="cb-unchecked"
+            checked={checked1}
+            onCheckedChange={setChecked1}
+            label="Unchecked checkbox"
+            caption="Click to check this option"
+          />
+          <Checkbox
+            id="cb-checked"
+            checked={checked2}
+            onCheckedChange={setChecked2}
+            label="Checked checkbox"
+            caption="This option is selected"
+          />
+          <Checkbox
+            id="cb-indeterminate"
+            checked={indeterminate}
+            onCheckedChange={() => setIndeterminate(indeterminate === 'indeterminate' ? false : 'indeterminate')}
+            label="Indeterminate checkbox"
+            caption="Partial selection state"
+          />
+          <Checkbox
+            id="cb-disabled"
+            checked={false}
+            disabled
+            label="Disabled checkbox"
+            caption="This option cannot be changed"
+          />
+          <Checkbox
+            id="cb-disabled-checked"
+            checked={true}
+            disabled
+            label="Disabled checked"
+            caption="This checked option cannot be changed"
+          />
+        </div>
+      </div>
+    );
+
+}`}
+/>
+
+### Radio
+
+<DocsPage.ComponentExample
+  client:only
+  code={`() => {
+    const [value, setValue] = React.useState('option1');
+
+    return (
+      <div className="space-y-cn-lg">
+        <Radio.Root
+          value={value}
+          onValueChange={setValue}
+          label="Radio Group"
+          caption="Select one option"
+        >
+          <Radio.Item value="option1" label="Option 1" caption="First option description" />
+          <Radio.Item value="option2" label="Option 2" caption="Second option description" />
+          <Radio.Item value="option3" label="Option 3" caption="Third option description" />
+          <Radio.Item value="option4" label="Disabled Option" caption="Cannot select this" disabled />
+        </Radio.Root>
+      </div>
+    );
+
+}`}
+/>
+
+### Switch
+
+<DocsPage.ComponentExample
+  client:only
+  code={`<div className="space-y-cn-lg">
+  <div className="space-y-cn-md">
+    <Text variant="heading-subsection">Switch States</Text>
+    <Switch
+      id="switch-off"
+      label="Off state"
+      caption="Toggle to enable this feature"
+    />
+    <Switch
+      id="switch-on"
+      label="On state"
+      caption="This feature is enabled"
+      defaultChecked
+    />
+    <Switch
+      id="switch-disabled-off"
+      label="Disabled off"
+      caption="Cannot toggle this switch"
+      disabled
+    />
+    <Switch
+      id="switch-disabled-on"
+      label="Disabled on"
+      caption="Cannot toggle this switch"
+      disabled
+      defaultChecked
+    />
+  </div>
+</div>`}
+/>
+
+## Cards
+
+<DocsPage.ComponentExample
+  client:only
+  code={`<div className="grid grid-cols-2 gap-cn-lg">
+  <Card.Root>
+    <Card.Title>Default Card</Card.Title>
+    <Card.Content>
+      <Text color="foreground-2">This is the card content area with some example text.</Text>
+      <div className="flex gap-cn-sm mt-cn-md">
+        <Button variant="outline" size="sm">Cancel</Button>
+        <Button variant="primary" size="sm">Save</Button>
+      </div>
+    </Card.Content>
+  </Card.Root>
+
+  <Card.Root>
+    <Card.Title>Interactive Card</Card.Title>
+    <Card.Content className="space-y-cn-md">
+      <TextInput label="Name" placeholder="Enter name" />
+      <Checkbox id="card-checkbox" label="Enable feature" />
+      <Button variant="primary" size="sm">Submit</Button>
+    </Card.Content>
+  </Card.Root>
+</div>`}
+/>
+
+## Tables
+
+<DocsPage.ComponentExample
+  client:only
+  code={`<Table.Root>
+  <Table.Header>
+    <Table.Row>
+      <Table.Head>Name</Table.Head>
+      <Table.Head>Status</Table.Head>
+      <Table.Head>Role</Table.Head>
+      <Table.Head>Actions</Table.Head>
+    </Table.Row>
+  </Table.Header>
+  <Table.Body>
+    <Table.Row>
+      <Table.Cell>
+        <Text color="foreground-1">John Doe</Text>
+      </Table.Cell>
+      <Table.Cell>
+        <Tag value="Active" theme="green" size="sm" />
+      </Table.Cell>
+      <Table.Cell>
+        <Text color="foreground-2">Admin</Text>
+      </Table.Cell>
+      <Table.Cell>
+        <Button variant="ghost" size="sm">Edit</Button>
+      </Table.Cell>
+    </Table.Row>
+    <Table.Row>
+      <Table.Cell>
+        <Text color="foreground-1">Jane Smith</Text>
+      </Table.Cell>
+      <Table.Cell>
+        <Tag value="Pending" theme="yellow" size="sm" />
+      </Table.Cell>
+      <Table.Cell>
+        <Text color="foreground-2">User</Text>
+      </Table.Cell>
+      <Table.Cell>
+        <Button variant="ghost" size="sm">Edit</Button>
+      </Table.Cell>
+    </Table.Row>
+    <Table.Row>
+      <Table.Cell>
+        <Text color="foreground-1">Bob Wilson</Text>
+      </Table.Cell>
+      <Table.Cell>
+        <Tag value="Inactive" theme="red" size="sm" />
+      </Table.Cell>
+      <Table.Cell>
+        <Text color="foreground-2">Guest</Text>
+      </Table.Cell>
+      <Table.Cell>
+        <Button variant="ghost" size="sm" disabled>Edit</Button>
+      </Table.Cell>
+    </Table.Row>
+  </Table.Body>
+</Table.Root>`}
+/>
+
+## Complete Form Example
+
+<DocsPage.ComponentExample
+  client:only
+  code={`() => {
+    const [formData, setFormData] = React.useState({
+      name: '',
+      email: '',
+      role: 'user',
+      notifications: true,
+      theme: 'light'
+    });
+
+    return (
+      <Card.Root className="max-w-lg">
+        <Card.Title>User Settings</Card.Title>
+        <Card.Content className="space-y-cn-lg">
+          <Text color="foreground-3">Update your account preferences</Text>
+
+          <TextInput
+            label="Full Name"
+            placeholder="Enter your name"
+            value={formData.name}
+            onChange={(e) => setFormData({...formData, name: e.target.value})}
+          />
+
+          <TextInput
+            label="Email"
+            placeholder="Enter your email"
+            value={formData.email}
+            onChange={(e) => setFormData({...formData, email: e.target.value})}
+            caption="We'll never share your email"
+          />
+
+          <Select
+            label="Role"
+            options={[
+              { label: 'User', value: 'user' },
+              { label: 'Admin', value: 'admin' },
+              { label: 'Moderator', value: 'moderator' },
+            ]}
+            value={formData.role}
+            onChange={(value) => setFormData({...formData, role: value})}
+          />
+
+          <Switch
+            id="notifications"
+            label="Email Notifications"
+            caption="Receive updates about your account"
+            checked={formData.notifications}
+            onCheckedChange={(checked) => setFormData({...formData, notifications: checked})}
+          />
+
+          <Radio.Root
+            value={formData.theme}
+            onValueChange={(value) => setFormData({...formData, theme: value})}
+            label="Preferred Theme"
+          >
+            <Radio.Item value="light" label="Light" />
+            <Radio.Item value="dark" label="Dark" />
+            <Radio.Item value="system" label="System" />
+          </Radio.Root>
+
+          <div className="flex justify-end gap-cn-sm pt-cn-md">
+            <Button variant="outline">Cancel</Button>
+            <Button variant="primary">Save Changes</Button>
+          </div>
+        </Card.Content>
+      </Card.Root>
+    );
+
+}`}
+/>
+
+## Tabs
+
+<DocsPage.ComponentExample
+  client:only
+  code={`<div className="space-y-cn-xl">
+  <div className="space-y-cn-sm">
+    <Text variant="heading-subsection">Underlined (Default)</Text>
+    <Tabs.Root defaultValue="tab1">
+      <Tabs.List>
+        <Tabs.Trigger value="tab1">Tab 1</Tabs.Trigger>
+        <Tabs.Trigger value="tab2">Tab 2</Tabs.Trigger>
+        <Tabs.Trigger value="tab3">Tab 3</Tabs.Trigger>
+        <Tabs.Trigger value="tab4" disabled>Disabled</Tabs.Trigger>
+      </Tabs.List>
+    </Tabs.Root>
+  </div>
+  
+  <div className="space-y-cn-sm">
+    <Text variant="heading-subsection">Overlined</Text>
+    <Tabs.Root defaultValue="tab1">
+      <Tabs.List variant="overlined">
+        <Tabs.Trigger value="tab1">Tab 1</Tabs.Trigger>
+        <Tabs.Trigger value="tab2">Tab 2</Tabs.Trigger>
+        <Tabs.Trigger value="tab3">Tab 3</Tabs.Trigger>
+        <Tabs.Trigger value="tab4" disabled>Disabled</Tabs.Trigger>
+      </Tabs.List>
+    </Tabs.Root>
+  </div>
+  
+  <div className="space-y-cn-sm">
+    <Text variant="heading-subsection">Ghost</Text>
+    <Tabs.Root defaultValue="tab1">
+      <Tabs.List variant="ghost">
+        <Tabs.Trigger value="tab1">Tab 1</Tabs.Trigger>
+        <Tabs.Trigger value="tab2">Tab 2</Tabs.Trigger>
+        <Tabs.Trigger value="tab3">Tab 3</Tabs.Trigger>
+        <Tabs.Trigger value="tab4" disabled>Disabled</Tabs.Trigger>
+      </Tabs.List>
+    </Tabs.Root>
+  </div>
+  
+  <div className="space-y-cn-sm">
+    <Text variant="heading-subsection">Outlined</Text>
+    <Tabs.Root defaultValue="tab1">
+      <Tabs.List variant="outlined">
+        <Tabs.Trigger value="tab1">Tab 1</Tabs.Trigger>
+        <Tabs.Trigger value="tab2">Tab 2</Tabs.Trigger>
+        <Tabs.Trigger value="tab3">Tab 3</Tabs.Trigger>
+        <Tabs.Trigger value="tab4" disabled>Disabled</Tabs.Trigger>
+      </Tabs.List>
+    </Tabs.Root>
+  </div>
+  
+  <div className="space-y-cn-sm">
+    <Text variant="heading-subsection">With Icons</Text>
+    <Tabs.Root defaultValue="overview">
+      <Tabs.List>
+        <Tabs.Trigger value="overview" icon="dashboard">Overview</Tabs.Trigger>
+        <Tabs.Trigger value="activity" icon="cookie">Activity</Tabs.Trigger>
+        <Tabs.Trigger value="settings" icon="settings">Settings</Tabs.Trigger>
+      </Tabs.List>
+    </Tabs.Root>
+  </div>
+  
+  <div className="space-y-cn-sm">
+    <Text variant="heading-subsection">With Counters</Text>
+    <Tabs.Root defaultValue="inbox">
+      <Tabs.List>
+        <Tabs.Trigger value="inbox" counter={24}>Inbox</Tabs.Trigger>
+        <Tabs.Trigger value="sent" counter={0}>Sent</Tabs.Trigger>
+        <Tabs.Trigger value="drafts" counter={3}>Drafts</Tabs.Trigger>
+      </Tabs.List>
+    </Tabs.Root>
+  </div>
+</div>`}
+/>
+
+## Accordion
+
+<DocsPage.ComponentExample
+  client:only
+  code={`<div className="min-w-[400px]">
+  <Accordion.Root type="single" collapsible defaultValue="item1">
+    <Accordion.Item value="item1">
+      <Accordion.Trigger>Getting Started</Accordion.Trigger>
+      <Accordion.Content>
+        <Text color="foreground-2">Learn the basics of setting up your project and configuring the environment.</Text>
+      </Accordion.Content>
+    </Accordion.Item>
+    <Accordion.Item value="item2">
+      <Accordion.Trigger>Configuration</Accordion.Trigger>
+      <Accordion.Content>
+        <Text color="foreground-2">Customize settings to match your workflow and preferences.</Text>
+      </Accordion.Content>
+    </Accordion.Item>
+    <Accordion.Item value="item3">
+      <Accordion.Trigger>Advanced Features</Accordion.Trigger>
+      <Accordion.Content>
+        <Text color="foreground-2">Explore powerful features for advanced users and complex use cases.</Text>
+      </Accordion.Content>
+    </Accordion.Item>
+  </Accordion.Root>
+</div>`}
+/>
+
+## Status Badge
+
+<DocsPage.ComponentExample
+  client:only
+  code={`<div className="space-y-cn-lg">
+  <div>
+    <Text variant="heading-subsection" className="mb-cn-sm">Primary</Text>
+    <div className="flex flex-wrap gap-cn-sm">
+      <StatusBadge>Default</StatusBadge>
+      <StatusBadge theme="success">Success</StatusBadge>
+      <StatusBadge theme="warning">Warning</StatusBadge>
+      <StatusBadge theme="danger">Danger</StatusBadge>
+      <StatusBadge theme="info">Info</StatusBadge>
+      <StatusBadge theme="merged">Merged</StatusBadge>
+    </div>
+  </div>
+  <div>
+    <Text variant="heading-subsection" className="mb-cn-sm">Secondary</Text>
+    <div className="flex flex-wrap gap-cn-sm">
+      <StatusBadge variant="secondary">Default</StatusBadge>
+      <StatusBadge theme="success" variant="secondary">Success</StatusBadge>
+      <StatusBadge theme="warning" variant="secondary">Warning</StatusBadge>
+      <StatusBadge theme="danger" variant="secondary">Danger</StatusBadge>
+      <StatusBadge theme="info" variant="secondary">Info</StatusBadge>
+      <StatusBadge theme="merged" variant="secondary">Merged</StatusBadge>
+    </div>
+  </div>
+  <div>
+    <Text variant="heading-subsection" className="mb-cn-sm">Outline</Text>
+    <div className="flex flex-wrap gap-cn-sm">
+      <StatusBadge variant="outline">Default</StatusBadge>
+      <StatusBadge theme="success" variant="outline">Success</StatusBadge>
+      <StatusBadge theme="warning" variant="outline">Warning</StatusBadge>
+      <StatusBadge theme="danger" variant="outline">Danger</StatusBadge>
+      <StatusBadge theme="info" variant="outline">Info</StatusBadge>
+      <StatusBadge theme="merged" variant="outline">Merged</StatusBadge>
+    </div>
+  </div>
+</div>`}
+/>
+
+## Skeleton
+
+<DocsPage.ComponentExample
+  client:only
+  code={`<div className="space-y-cn-lg">
+  <div>
+    <Text variant="heading-subsection" className="mb-cn-sm">Loading States</Text>
+    <div className="space-y-cn-md">
+      <div className="flex items-center gap-cn-md">
+        <Skeleton.Avatar size="lg" />
+        <div className="space-y-cn-xs flex-1">
+          <Skeleton.Box className="h-4 w-32" />
+          <Skeleton.Box className="h-3 w-48" />
+        </div>
+      </div>
+      <Skeleton.Box className="h-20 w-full" />
+      <div className="flex gap-cn-sm">
+        <Skeleton.Box className="h-8 w-20" />
+        <Skeleton.Box className="h-8 w-20" />
+      </div>
+    </div>
+  </div>
+</div>`}
+/>
+
+## Pagination
+
+<DocsPage.ComponentExample
+  client:only
+  code={`() => {
+  const [currentPage, setCurrentPage] = React.useState(1);
+  
+  return (
+    <div className="w-[550px]">
+      <Pagination
+        totalItems={100}
+        pageSize={10}
+        currentPage={currentPage}
+        goToPage={setCurrentPage}
+      />
+    </div>
+  );
+}`}
+/>
+
+## Dialog
+
+<DocsPage.ComponentExample
+  client:only
+  code={`<Dialog.Root>
+  <Dialog.Trigger>
+    <Button>Open Dialog</Button>
+  </Dialog.Trigger>
+  <Dialog.Content>
+    <Dialog.Header>
+      <Dialog.Title>Confirm Action</Dialog.Title>
+    </Dialog.Header>
+    <Dialog.Body>
+      <Text color="foreground-2">Are you sure you want to proceed with this action? This cannot be undone.</Text>
+    </Dialog.Body>
+    <Dialog.Footer>
+      <ButtonLayout>
+        <Dialog.Close>Cancel</Dialog.Close>
+        <Button variant="primary">Confirm</Button>
+      </ButtonLayout>
+    </Dialog.Footer>
+  </Dialog.Content>
+</Dialog.Root>`}
+/>
+
+## Toast
+
+<DocsPage.ComponentExample
+  client:only
+  code={`<div className="flex gap-cn-sm flex-wrap">
+  <Button
+    onClick={() => toast({ title: 'Default Toast', description: 'This is a default notification message.' })}
+  >
+    Default Toast
+  </Button>
+  <Button
+    variant="outline"
+    onClick={() => toast({ title: 'With Action', description: 'Click undo to revert changes.', options: { action: { label: 'Undo', onClick: () => {} } } })}
+  >
+    Toast with Action
+  </Button>
+</div>`}
+/>
+
+## Drawer
+
+<DocsPage.ComponentExample
+  client:only
+  code={`<Drawer.Root>
+  <Drawer.Trigger>
+    <Button>Open Drawer</Button>
+  </Drawer.Trigger>
+  <Drawer.Content>
+    <Drawer.Header>
+      <Drawer.Title>Settings</Drawer.Title>
+      <Drawer.Description>Configure your preferences</Drawer.Description>
+    </Drawer.Header>
+    <Drawer.Body>
+      <div className="space-y-cn-md">
+        <TextInput label="Display Name" placeholder="Enter your name" />
+        <Switch id="drawer-notifications" label="Enable Notifications" />
+        <Select
+          label="Language"
+          options={[
+            { label: 'English', value: 'en' },
+            { label: 'Spanish', value: 'es' },
+            { label: 'French', value: 'fr' },
+          ]}
+        />
+      </div>
+    </Drawer.Body>
+    <Drawer.Footer>
+      <ButtonLayout>
+        <Drawer.Close>Cancel</Drawer.Close>
+        <Button variant="primary">Save</Button>
+      </ButtonLayout>
+    </Drawer.Footer>
+  </Drawer.Content>
+</Drawer.Root>`}
+/>
+
+## Diff Viewer
+
+<DocsPage.ComponentExample
+  client:only
+  code={`<DiffViewer 
+  oldCode={\`function greet() {
+  console.log("Hello");
+  return true;
+}
+
+const config = {
+name: "app",
+version: "1.0.0"
+};\`}
+newCode={\`function greet(name) {
+console.log(\\\`Hello \\\${name}!\\\`);
+return { success: true };
+}
+
+const config = {
+name: "app",
+version: "2.0.0",
+features: ["dark-mode", "high-contrast"]
+};\`}
+lang="javascript"
+/>`}
+/>
+
+## Code Blocks
+
+### JavaScript
+
+<DocsPage.ComponentExample
+  client:only
+  code={`
+  <MarkdownViewer
+    source={\`\\\`\\\`\\\`javascript
+function greet(name) {
+  console.log("Hello, " + name + "!");
+  return true;
+}
+
+greet("World");
+
+const sum = (a, b) => a + b;
+console.log(sum(2, 3));
+\\\`\\\`\\\`\`}
+/>
+`}
+/>
+
+### TypeScript
+
+<DocsPage.ComponentExample
+  client:only
+  code={`
+  <MarkdownViewer
+    source={\`\\\`\\\`\\\`typescript
+type User = {
+  id: number
+  name: string
+  active: boolean
+}
+
+function createUser(name: string): User {
+return { id: Math.random(), name, active: true }
+}
+
+const user = createUser("John")
+\\\`\\\`\\\`\`}
+/>
+`}
+/>
+
+### YAML
+
+<DocsPage.ComponentExample
+  client:only
+  code={`
+  <MarkdownViewer
+    source={\`\\\`\\\`\\\`yaml
+name: harness-app
+version: 1.0.0
+services:
+  api:
+    image: harness/api:latest
+    ports:
+      - "8080:8080"
+  worker:
+    image: harness/worker:latest
+    replicas: 3
+\\\`\\\`\\\`\`}
+  />
+  `}
+/>
+
+### JSON
+
+<DocsPage.ComponentExample
+  client:only
+  code={`
+  <MarkdownViewer
+    source={\`\\\`\\\`\\\`json
+[
+  { "name": "config", "version": "2.0.0" },
+  { "theme": "dark", "contrast": "high" }
+]
+\\\`\\\`\\\`\`}
+  />
+  `}
+/>
+
+### CSS
+
+<DocsPage.ComponentExample
+  client:only
+  code={`
+  <MarkdownViewer
+    source={\`\\\`\\\`\\\`css
+.button-primary {
+  background-color: var(--cn-brand-bg);
+  color: var(--cn-brand-text);
+  border: 1px solid var(--cn-brand-border);
+}
+
+.button-primary:hover {
+background-color: var(--cn-brand-bg-hover);
+}
+\\\`\\\`\\\`\`}
+/>
+`}
+/>
+
+### Bash
+
+<DocsPage.ComponentExample
+  client:only
+  code={`
+  <MarkdownViewer
+    source={\`\\\`\\\`\\\`bash
+#!/bin/bash
+echo "Building project..."
+npm install
+npm run build
+echo "Build complete!"
+\\\`\\\`\\\`\`}
+  />
+  `}
+/>

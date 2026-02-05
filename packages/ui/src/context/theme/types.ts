@@ -7,7 +7,8 @@ export enum ModeType {
 export enum ColorType {
   Standard = 'std',
   Tritanopia = 'tri',
-  ProtanopiaAndDeuteranopia = 'pnd'
+  Protanopia = 'pro',
+  Deuteranopia = 'deu'
 }
 
 export enum ContrastType {

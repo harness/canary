@@ -56,6 +56,44 @@ export const generateThemeFiles = ({ destination, type, theme, format }) => {
     mfeSupportedClass = `.${entityName}-std-std, .${entityName}-test`
   }
 
+  // Map theme names to ThemeSelector format (mode-color-contrast)
+  // ColorType: std, tri, pro, deu
+  // ContrastType: std, low, high
+  const themeToSelectorMap = {
+    // High contrast (standard color)
+    'light-high-contrast': 'light-std-high',
+    'dark-high-contrast': 'dark-std-high',
+    // Dimmer/Low contrast (standard color)
+    'light-dimmer': 'light-std-low',
+    'dark-dimmer': 'dark-std-low',
+    // High contrast + color blindness
+    'light-high-contrast-deuteranopia': 'light-deu-high',
+    'dark-high-contrast-deuteranopia': 'dark-deu-high',
+    'light-high-contrast-protanopia': 'light-pro-high',
+    'dark-high-contrast-protanopia': 'dark-pro-high',
+    'light-high-contrast-tritanopia': 'light-tri-high',
+    'dark-high-contrast-tritanopia': 'dark-tri-high',
+    // Dimmer/Low contrast + color blindness
+    'light-dimmer-deuteranopia': 'light-deu-low',
+    'dark-dimmer-deuteranopia': 'dark-deu-low',
+    'light-dimmer-protanopia': 'light-pro-low',
+    'dark-dimmer-protanopia': 'dark-pro-low',
+    'light-dimmer-tritanopia': 'light-tri-low',
+    'dark-dimmer-tritanopia': 'dark-tri-low',
+    // Standard contrast + color blindness
+    'light-deuteranopia': 'light-deu-std',
+    'dark-deuteranopia': 'dark-deu-std',
+    'light-protanopia': 'light-pro-std',
+    'dark-protanopia': 'dark-pro-std',
+    'light-tritanopia': 'light-tri-std',
+    'dark-tritanopia': 'dark-tri-std'
+  }
+
+  const selectorClass = themeToSelectorMap[entityName]
+  if (selectorClass) {
+    mfeSupportedClass = mfeSupportedClass ? `${mfeSupportedClass}, .${selectorClass}` : `.${selectorClass}`
+  }
+
   // theme-specific outputs
   filesArr.push({
     format,

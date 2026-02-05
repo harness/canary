@@ -217,8 +217,8 @@ describe('ThemeDialog', () => {
     fireEvent.click(screen.getByTestId('select-option-high'))
     expect(defaultProps.setTheme).toHaveBeenCalledWith('light-std-high')
 
-    fireEvent.click(screen.getByTestId('select-option-pnd'))
-    expect(defaultProps.setTheme).toHaveBeenCalledWith('light-pnd-std')
+    fireEvent.click(screen.getByTestId('select-option-pro'))
+    expect(defaultProps.setTheme).toHaveBeenCalledWith('light-pro-std')
 
     const accentGrid = screen.getByText('Accent color').closest('div')!.parentElement as HTMLElement
     const accentButtonsContainer = accentGrid.querySelectorAll('div')[1] as HTMLElement

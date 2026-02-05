@@ -1,6 +1,18 @@
 .prose {
   .dark &,
-  .dark-std-std & {
+  .dark-std-std &,
+  .dark-std-high &,
+  .dark-std-low &,
+  .dark-pro-std &,
+  .dark-pro-high &,
+  .dark-pro-low &,
+  .dark-deu-std &,
+  .dark-deu-high &,
+  .dark-deu-low &,
+  .dark-tri-std &,
+  .dark-tri-high &,
+  .dark-tri-low &,
+  [class^='dark-'] & {
     &.wmde-markdown,
     &.wmde-markdown-var {
       color-scheme: dark;
@@ -66,7 +78,19 @@
   }
 
   .light &,
-  .light-std-std & {
+  .light-std-std &,
+  .light-std-high &,
+  .light-std-low &,
+  .light-pro-std &,
+  .light-pro-high &,
+  .light-pro-low &,
+  .light-deu-std &,
+  .light-deu-high &,
+  .light-deu-low &,
+  .light-tri-std &,
+  .light-tri-high &,
+  .light-tri-low &,
+  [class^='light-'] & {
     &.wmde-markdown,
     &.wmde-markdown-var {
       color-scheme: light;

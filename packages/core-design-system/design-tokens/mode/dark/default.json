@@ -1297,13 +1297,13 @@
           "studio.tokens": {
             "modify": {
               "type": "alpha",
-              "value": "0.08",
+              "value": "0.40",
               "space": "lch"
             }
           }
         },
         "$type": "color",
-        "$value": "{forest.400}",
+        "$value": "{set.success.secondary.bg}",
         "$description": "Green background highlighting newly added code lines while maintaining readability."
       },
       "add-lineNumber": {
@@ -1311,13 +1311,13 @@
           "studio.tokens": {
             "modify": {
               "type": "alpha",
-              "value": "0.18",
+              "value": "0.50",
               "space": "lch"
             }
           }
         },
         "$type": "color",
-        "$value": "{forest.400}",
+        "$value": "{set.success.secondary.bg-hover}",
         "$description": "Background for line numbers of added code, providing visual connection to added content."
       },
       "add-content-highlight": {
@@ -1325,13 +1325,13 @@
           "studio.tokens": {
             "modify": {
               "type": "alpha",
-              "value": "0.2",
+              "value": "0.70",
               "space": "lch"
             }
           }
         },
         "$type": "color",
-        "$value": "{forest.400}",
+        "$value": "{set.success.secondary.bg-hover}",
         "$description": "Stronger emphasis color for specific character changes within added lines."
       },
       "add-widget": {
@@ -1349,13 +1349,13 @@
           "studio.tokens": {
             "modify": {
               "type": "alpha",
-              "value": "0.08",
+              "value": "0.30",
               "space": "lch"
             }
           }
         },
         "$type": "color",
-        "$value": "{red.500}",
+        "$value": "{set.danger.secondary.bg}",
         "$description": "Red background highlighting removed code lines without causing eye strain."
       },
       "del-lineNumber": {
@@ -1363,13 +1363,13 @@
           "studio.tokens": {
             "modify": {
               "type": "alpha",
-              "value": "0.18",
+              "value": "0.60",
               "space": "lch"
             }
           }
         },
         "$type": "color",
-        "$value": "{red.500}",
+        "$value": "{set.danger.secondary.bg-hover}",
         "$description": "Background for line numbers of deleted code, connecting numbers to removed content."
       },
       "del-content-highlight": {
@@ -1377,13 +1377,13 @@
           "studio.tokens": {
             "modify": {
               "type": "alpha",
-              "value": "0.2",
+              "value": "0.80",
               "space": "lch"
             }
           }
         },
         "$type": "color",
-        "$value": "{red.500}",
+        "$value": "{set.danger.secondary.bg-hover}",
         "$description": "Stronger emphasis color for specific character changes within deleted lines."
       },
       "plain-content": {

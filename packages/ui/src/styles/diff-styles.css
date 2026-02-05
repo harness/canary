@@ -2,10 +2,34 @@
    The right side variables (--cn-comp-*) are from the design system core.css file. */
 
 /* Override library's default theme variables with design system tokens */
+/* Light themes */
 .light .diff-tailwindcss-wrapper[data-theme='light'] .diff-style-root,
 .light-std-std .diff-tailwindcss-wrapper[data-theme='light'] .diff-style-root,
+.light-std-low .diff-tailwindcss-wrapper[data-theme='light'] .diff-style-root,
+.light-std-high .diff-tailwindcss-wrapper[data-theme='light'] .diff-style-root,
+.light-tri-std .diff-tailwindcss-wrapper[data-theme='light'] .diff-style-root,
+.light-tri-low .diff-tailwindcss-wrapper[data-theme='light'] .diff-style-root,
+.light-tri-high .diff-tailwindcss-wrapper[data-theme='light'] .diff-style-root,
+.light-pro-std .diff-tailwindcss-wrapper[data-theme='light'] .diff-style-root,
+.light-pro-low .diff-tailwindcss-wrapper[data-theme='light'] .diff-style-root,
+.light-pro-high .diff-tailwindcss-wrapper[data-theme='light'] .diff-style-root,
+.light-deu-std .diff-tailwindcss-wrapper[data-theme='light'] .diff-style-root,
+.light-deu-low .diff-tailwindcss-wrapper[data-theme='light'] .diff-style-root,
+.light-deu-high .diff-tailwindcss-wrapper[data-theme='light'] .diff-style-root,
+/* Dark themes */
 .dark .diff-tailwindcss-wrapper[data-theme='dark'] .diff-style-root,
-.dark-std-std .diff-tailwindcss-wrapper[data-theme='dark'] .diff-style-root {
+.dark-std-std .diff-tailwindcss-wrapper[data-theme='dark'] .diff-style-root,
+.dark-std-low .diff-tailwindcss-wrapper[data-theme='dark'] .diff-style-root,
+.dark-std-high .diff-tailwindcss-wrapper[data-theme='dark'] .diff-style-root,
+.dark-tri-std .diff-tailwindcss-wrapper[data-theme='dark'] .diff-style-root,
+.dark-tri-low .diff-tailwindcss-wrapper[data-theme='dark'] .diff-style-root,
+.dark-tri-high .diff-tailwindcss-wrapper[data-theme='dark'] .diff-style-root,
+.dark-pro-std .diff-tailwindcss-wrapper[data-theme='dark'] .diff-style-root,
+.dark-pro-low .diff-tailwindcss-wrapper[data-theme='dark'] .diff-style-root,
+.dark-pro-high .diff-tailwindcss-wrapper[data-theme='dark'] .diff-style-root,
+.dark-deu-std .diff-tailwindcss-wrapper[data-theme='dark'] .diff-style-root,
+.dark-deu-low .diff-tailwindcss-wrapper[data-theme='dark'] .diff-style-root,
+.dark-deu-high .diff-tailwindcss-wrapper[data-theme='dark'] .diff-style-root {
   --diff-grey: var(--cn-comp-diff-background);
   --diff-add-content--: var(--cn-comp-diff-add-content);
   --diff-del-content--: var(--cn-comp-diff-del-content);

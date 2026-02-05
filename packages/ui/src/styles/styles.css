@@ -1,5 +1,5 @@
 @import url('@harnessio/core-design-system/core-styles');
-@import url('@harnessio/core-design-system/mfe-themes');
+@import url('@harnessio/core-design-system/themes');
 
 @import url('./diff-styles.css');
 

@@ -1,5 +1,7 @@
 import { useEffect, useLayoutEffect, useRef, useState } from 'react'
 
+import cn from 'classnames'
+
 import { useCanvasContext } from './context/canvas-provider'
 import { useContainerNodeContext } from './context/container-node-provider'
 import { useGraphContext } from './context/graph-provider'
@@ -10,16 +12,17 @@ import { AnyContainerNodeType } from './types/nodes'
 import { AnyNodeInternal } from './types/nodes-internal'
 import { GetPortSvgFuncType } from './types/port-types'
 import { connectPorts } from './utils/connects-utils'
+import { getNegativeTopAdjustment } from './utils/graph-position-utils'
 import { getFlexAlign } from './utils/layout-utils'
 import { addPaths } from './utils/path-utils'
-
-import cn from 'classnames'
 
 export interface PipelineGraphInternalProps {
   data: AnyContainerNodeType[]
   customCreateSVGPath?: CreateSVGPathType
   config?: {
+    topGap?: number
     leftGap?: number
+    align?: 'top' | 'center'
     mode?: 'Edit' | 'Execution'
   }
   edgesConfig?: {
@@ -30,7 +33,6 @@ export interface PipelineGraphInternalProps {
   layout?: LayoutConfig
   getPort?: GetPortSvgFuncType
   showSvg?: boolean
-
 }
 
 export function PipelineGraphInternal(props: PipelineGraphInternalProps) {
@@ -39,6 +41,8 @@ export function PipelineGraphInternal(props: PipelineGraphInternalProps) {
   const { serialContainerConfig } = useContainerNodeContext()
 
   const { data, config = {}, customCreateSVGPath, edgesConfig, layout = { type: 'center' }, getPort, showSvg } = props
+  const { topGap = 80, leftGap, align: graphAlign = 'center' } = config
+
   const graphSizeRef = useRef<{ h: number; w: number } | undefined>()
 
   const svgGroupRef = useRef<SVGAElement | null>(null)
@@ -129,14 +133,19 @@ export function PipelineGraphInternal(props: PipelineGraphInternalProps) {
 
           let translateY = 0
           if (layout.type === 'harness') {
-            translateY = parentHeight / 2 - (layout.leafPortPosition ?? 0)
+            if (graphAlign === 'center') {
+              const negativeMargin = getNegativeTopAdjustment(nodesContainerRef.current)
+              translateY = topGap - negativeMargin
+            } else {
+              translateY = parentHeight / 2 - (layout.leafPortPosition ?? 0)
+            }
           } else if (layout.type === 'center') {
             translateY = parentHeight / 2 - graphHeight / 2
           }
 
           setCanvasTransform({
             scale: 1,
-            translateX: config?.leftGap ?? canvasConfig.paddingForFit ?? 80,
+            translateX: leftGap ?? canvasConfig.paddingForFit ?? 80,
             translateY,
             rootContainer: rootContainerRef?.current,
             isInitial: true
@@ -192,11 +201,15 @@ export function PipelineGraphInternal(props: PipelineGraphInternalProps) {
       ref={rootContainerRef}
     >
       <div className="PipelineGraph-SvgContainer">
-        <svg ref={svgRef} width="1" height="1"
-          className={cn("PipelineGraph-Svg", {
-            "opacity-100 transition-opacity duration-150": showSvg,
-            "opacity-0": !showSvg
-          })}>
+        <svg
+          ref={svgRef}
+          width="1"
+          height="1"
+          className={cn('PipelineGraph-Svg', {
+            'opacity-100 transition-opacity duration-150': showSvg,
+            'opacity-0': !showSvg
+          })}
+        >
           <g ref={svgGroupRef} className="PipelineGraph-SvgGroup"></g>
         </svg>
       </div>

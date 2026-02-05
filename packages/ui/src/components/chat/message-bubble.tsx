@@ -1,4 +1,4 @@
-import { forwardRef, HTMLAttributes, ReactNode } from 'react'
+import { forwardRef, HTMLAttributes, ReactNode, useEffect, useState } from 'react'
 
 import { MarkdownViewer, MarkdownViewerProps } from '@components/markdown-viewer'
 import { Text, TextProps } from '@components/text'
@@ -57,12 +57,29 @@ const MessageBubbleContent = forwardRef<HTMLDivElement, MessageBubbleContentProp
 
 MessageBubbleContent.displayName = 'MessageBubbleContent'
 
-export interface MessageBubbleTextProps extends Omit<TextProps, 'ref'> {}
+export interface MessageBubbleTextProps extends Omit<TextProps, 'ref'> {
+  speed?: number
+}
 
 const MessageBubbleText = ({ children, ...props }: MessageBubbleTextProps) => {
+  const isTypewriterEffect = props.speed && typeof children === 'string'
+
+  const [displayedText, setDisplayedText] = useState('')
+  const [currentIndex, setCurrentIndex] = useState(0)
+
+  useEffect(() => {
+    if (isTypewriterEffect && currentIndex < children.length) {
+      const timeout = setTimeout(() => {
+        setDisplayedText(prev => prev + children[currentIndex])
+        setCurrentIndex(prev => prev + 1)
+      }, props.speed)
+      return () => clearTimeout(timeout)
+    }
+  }, [isTypewriterEffect, currentIndex, children, props.speed])
+
   return (
     <Text variant="body-normal" {...props}>
-      {children}
+      {isTypewriterEffect ? displayedText : children}
     </Text>
   )
 }

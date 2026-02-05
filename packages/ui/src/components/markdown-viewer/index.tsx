@@ -1,4 +1,4 @@
-import { CSSProperties, memo, ReactNode, useCallback, useEffect, useMemo, useRef } from 'react'
+import { CSSProperties, memo, ReactNode, useCallback, useEffect, useMemo, useRef, useState } from 'react'
 
 import { CopyButton, Text } from '@/components'
 import MarkdownPreview from '@uiw/react-markdown-preview'
@@ -37,6 +37,7 @@ const markdownViewerVariants = cva('', {
 
 export type MarkdownViewerProps = {
   source: string
+  speed?: number
   maxHeight?: string | number
   withBorder?: boolean
   className?: string
@@ -55,6 +56,7 @@ export type MarkdownViewerProps = {
 
 const MarkdownViewerLocal = ({
   source,
+  speed = 0,
   maxHeight,
   withBorder = false,
   className,
@@ -72,6 +74,9 @@ const MarkdownViewerLocal = ({
   const { navigate } = useRouterContext()
   const refRootHref = useMemo(() => document.getElementById('repository-ref-root')?.getAttribute('href'), [])
   const ref = useRef<HTMLDivElement>(null)
+
+  const [displayedText, setDisplayedText] = useState('')
+  const [currentIndex, setCurrentIndex] = useState(0)
 
   // Track checkbox indices and set to data-checkbox-index
   const checkboxCounter = useRef<number>(0)
@@ -226,12 +231,22 @@ const MarkdownViewerLocal = ({
     }
   }, [interceptClickEventOnViewerContainer])
 
+  useEffect(() => {
+    if (speed && currentIndex < source.length) {
+      const timeout = setTimeout(() => {
+        setDisplayedText(prev => prev + source[currentIndex])
+        setCurrentIndex(prev => prev + 1)
+      }, speed)
+      return () => clearTimeout(timeout)
+    }
+  }, [currentIndex, source, speed])
+
   return (
     // TODO: Replace px-[64px] with a proper spacing token when available
     <div className={cn({ 'rounded-b-cn-3 border-x border-b py-cn-xl px-[64px]': withBorder }, className)}>
       <div ref={ref} style={styles}>
         <MarkdownPreview
-          source={source}
+          source={speed ? displayedText : source}
           className={cn(
             'prose prose-invert',
             markdownViewerVariants({ variant }),
@@ -336,7 +351,7 @@ const MarkdownViewerLocal = ({
                   )}
                 >
                   <CopyButton
-                    className="absolute right-cn-sm top-cn-sm z-10"
+                    className="right-cn-sm top-cn-sm absolute z-10"
                     buttonVariant="outline"
                     name={code}
                     iconSize="xs"

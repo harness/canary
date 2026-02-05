@@ -6,7 +6,6 @@ export default {
       height: 'var(--cn-sidebar-min-height)',
       minHeight: 'var(--cn-sidebar-item-min-height)',
       backgroundColor: 'var(--cn-comp-sidebar-bg)',
-      padding: 'var(--cn-sidebar-container-spacing) 0',
 
       '&-desktop': {
         top: '0px',

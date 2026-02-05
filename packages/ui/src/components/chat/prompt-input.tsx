@@ -32,7 +32,6 @@ export const PromptInputTags = ({ tags, onRemove, className, ...props }: PromptI
           key={tag.id}
           value={tag.displayName}
           icon={tag.icon}
-          size="sm"
           variant="secondary"
           actionIcon="xmark"
           onActionClick={() => onRemove?.(tag.id)}

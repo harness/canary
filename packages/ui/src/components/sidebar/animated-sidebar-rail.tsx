@@ -2,6 +2,7 @@ import { HTMLAttributes, useCallback, useState } from 'react'
 
 import { useTranslation } from '@/context'
 import { cn } from '@utils/cn'
+import { getCssNumber } from '@utils/utils'
 import { motion } from 'framer-motion'
 
 import { useSidebar } from '.'
@@ -11,7 +12,6 @@ import { Tooltip } from '../tooltip'
 
 // Constants for sidebar positioning
 const BUMP_PX = 3 // Pixels to bump the sidebar on hover
-const EXPANDED_LEFT = 230 // Left position when sidebar is expanded
 const COLLAPSED_LEFT = 61 // Left position when sidebar is collapsed
 
 interface AnimatedSideBarRailProps extends Pick<HTMLAttributes<HTMLElement>, 'className'> {}
@@ -19,6 +19,9 @@ interface AnimatedSideBarRailProps extends Pick<HTMLAttributes<HTMLElement>, 'cl
 const AnimatedSideBarRail: React.FC<AnimatedSideBarRailProps> = ({ className }) => {
   const { t } = useTranslation()
   const { state, toggleSidebar } = useSidebar()
+
+  // Left position when sidebar is expanded
+  const EXPANDED_LEFT = getCssNumber('--cn-sidebar-container-full-width', 256)
 
   const open = state === 'expanded'
   const [hover, setHover] = useState(false)

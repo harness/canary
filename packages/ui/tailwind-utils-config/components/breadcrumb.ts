@@ -11,9 +11,10 @@ export default {
       '@apply font-caption-strong': '',
       color: 'var(--cn-text-1)'
     },
-    '& .cn-breadcrumb-item:last-child .cn-breadcrumb-prefix-icon, & .cn-breadcrumb-page:last-child .cn-breadcrumb-prefix-icon': {
-      color: 'var(--cn-text-1)'
-    }
+    '& .cn-breadcrumb-item:last-child .cn-breadcrumb-prefix-icon, & .cn-breadcrumb-page:last-child .cn-breadcrumb-prefix-icon':
+      {
+        color: 'var(--cn-text-1)'
+      }
   },
 
   '.cn-breadcrumb-sm': {
@@ -46,7 +47,7 @@ export default {
   },
 
   '.cn-breadcrumb-item': {
-    color: 'var(--cn-text-2)',
+    color: 'var(--cn-text-3)',
     '@apply inline-flex items-center transition-colors': '',
     '&:hover': {
       color: 'var(--cn-text-1)'
@@ -120,6 +121,5 @@ export default {
     '.cn-breadcrumb-dropdown:hover &': {
       color: 'var(--cn-text-1)'
     }
-  },
-
+  }
 }

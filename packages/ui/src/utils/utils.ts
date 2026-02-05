@@ -157,3 +157,12 @@ export const settingsBackLink = (
     }
   }
 }
+
+const getCSSPropetyValue = (property: string): string => {
+  return getComputedStyle(document.documentElement).getPropertyValue(property).trim()
+}
+
+export const getCssNumber = (variable: string, fallback: number): number => {
+  const value = parseFloat(getCSSPropetyValue(variable))
+  return Number.isFinite(value) ? value : fallback
+}

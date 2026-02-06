@@ -8,6 +8,7 @@ import {
 import { RepoWebhookExecutionDetailsPage, WebhookExecutionType } from '@harnessio/ui/views'
 
 import { useRoutes } from '../../framework/context/NavigationContext'
+import { useThemeStore } from '../../framework/context/ThemeContext'
 import { useGetRepoRef } from '../../framework/hooks/useGetRepoPath'
 import { PathParams } from '../../RouteDefinitions'
 import { useWebhookStore } from './stores/webhook-store'
@@ -18,6 +19,7 @@ export const WebhookExecutionDetailsContainer = () => {
   const { setExecutionId, updateExecution } = useWebhookStore()
   const navigate = useNavigate()
   const routes = useRoutes()
+  const { theme } = useThemeStore()
 
   useEffect(() => {
     setExecutionId(parseInt(executionId ?? ''))
@@ -64,6 +66,7 @@ export const WebhookExecutionDetailsContainer = () => {
       useWebhookStore={useWebhookStore}
       isLoading={isTriggeringExecution}
       handleRetriggerExecution={handleRetriggerExecution}
+      theme={theme}
     />
   )
 }

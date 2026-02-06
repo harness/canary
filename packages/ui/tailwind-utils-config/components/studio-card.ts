@@ -326,7 +326,7 @@ export default {
 
     // Hover state - expand stacks and translate button right
     '&:hover': {
-      transform: 'scale(1.02)',
+      transform: 'scale(1.02) !important',
 
       '.cn-studio-card-expand-button-stack-1': {
         transform: 'translateX(4px)'

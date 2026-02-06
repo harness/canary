@@ -1,4 +1,4 @@
-import { PropsWithChildren, useMemo, useRef, useState, type JSX } from 'react'
+import { PropsWithChildren, useMemo, useRef, type JSX } from 'react'
 
 import { IconV2, IconV2NamesType, StatusBadge, Text } from '@/components'
 import { cn } from '@/utils'
@@ -172,8 +172,6 @@ function ExpandButton({
   icon,
   loading = false
 }: StudioCardExpandButtonProps): JSX.Element | null {
-  const [isHovered, setIsHovered] = useState(false)
-
   // Calculate number of stacks to show (max 2)
   const stackCount = useMemo(() => {
     if (isExpanded || stepCount <= 1) return 0
@@ -209,8 +207,6 @@ function ExpandButton({
           e.stopPropagation()
           onToggle?.()
         }}
-        onMouseEnter={() => setIsHovered(true)}
-        onMouseLeave={() => setIsHovered(false)}
         className="cn-studio-card-expand-button-main"
         disabled={loading}
       >
@@ -229,7 +225,7 @@ function ExpandButton({
           </Text>
           <IconV2
             className={cn('text-cn-2', loading && 'animate-spin')}
-            name={loading ? 'loader' : isHovered ? 'expand' : 'collapse'}
+            name={loading ? 'loader' : 'expand'}
             size="sm"
           />
         </div>

@@ -97,6 +97,7 @@ export default {
         // Default to 2 columns, can be overridden to 3 columns when content exceeds viewport
         '&-popover': {
           gridTemplateColumns: 'repeat(2, var(--cn-size-58))',
+          gap: '0 var(--cn-layout-xs)',
           // Smooth transition when switching between 2 and 3 columns
           transition: 'grid-template-columns 0.3s cubic-bezier(0.4, 0, 0.2, 1)'
         },
@@ -555,7 +556,8 @@ export default {
           border: '1px solid var(--cn-border-2)',
           backgroundColor: 'var(--cn-bg-1)',
           flexShrink: '0',
-          color: 'var(--cn-comp-sidebar-item-text)'
+          color: 'var(--cn-comp-sidebar-item-text)',
+          marginLeft: 'var(--cn-layout-4xs)'
         },
 
       '&:hover, &:focus-within': {
@@ -631,9 +633,6 @@ export default {
 
   // Sidebar popover
   '.cn-popover-content.cn-sidebar-popover': {
-    paddingRight: 'var(--cn-popover-px)',
-    paddingBottom: 'var(--cn-layout-xs)',
-    paddingLeft: 'var(--cn-popover-px)',
     backgroundColor: 'var(--cn-bg-2)',
     // First group: Remove top padding to prevent overlap with popover padding
     '& > div > div:first-child .cn-sidebar-group': {

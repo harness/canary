@@ -101,7 +101,7 @@
     },
     "warning": {
       "$type": "color",
-      "$value": "{yellow.500}",
+      "$value": "{orange.500}",
       "$description": "Border color for warning containers. Frames cautionary information with distinct boundary.\n\nCommon uses: Warning alert borders, notice boundaries, attention-requiring elements."
     }
   },
@@ -470,66 +470,66 @@
         },
         "bg": {
           "$type": "color",
-          "$value": "{yellow.300}",
+          "$value": "{orange.300}",
           "$description": "Background color for prominent yellow surfaces."
         },
         "bg-hover": {
           "$type": "color",
-          "$value": "{yellow.500}",
+          "$value": "{orange.500}",
           "$description": "Hover state background color for interactive primary warning surfaces."
         },
         "bg-selected": {
           "$type": "color",
-          "$value": "{yellow.500}",
+          "$value": "{orange.500}",
           "$description": "Selected state background color for active primary warning items."
         }
       },
       "secondary": {
         "text": {
           "$type": "color",
-          "$value": "{yellow.850}",
+          "$value": "{orange.850}",
           "$description": "Text color for subtle yellow surfaces with good contrast."
         },
         "bg": {
           "$type": "color",
-          "$value": "{yellow.100}",
+          "$value": "{orange.100}",
           "$description": "Background color for subdued yellow surfaces."
         },
         "bg-hover": {
           "$type": "color",
-          "$value": "{yellow.150}",
+          "$value": "{orange.150}",
           "$description": "Hover state for background color for subdued yellow surfaces."
         },
         "bg-selected": {
           "$type": "color",
-          "$value": "{yellow.150}",
+          "$value": "{orange.150}",
           "$description": "Selected state for background color for subdued yellow surfaces."
         }
       },
       "outline": {
         "text": {
           "$type": "color",
-          "$value": "{yellow.800}",
+          "$value": "{orange.800}",
           "$description": "Standard text color for yellow surfaces with balanced readability."
         },
         "bg": {
           "$type": "color",
-          "$value": "{yellow.25}",
+          "$value": "{orange.25}",
           "$description": "Base background color for yellow surfaces in default states."
         },
         "border": {
           "$type": "color",
-          "$value": "{yellow.300}",
+          "$value": "{orange.300}",
           "$description": "Border color for standard yellow boundaries."
         },
         "bg-hover": {
           "$type": "color",
-          "$value": "{yellow.50}",
+          "$value": "{orange.50}",
           "$description": "Hover state background color for interactive yellow surfaces."
         },
         "bg-selected": {
           "$type": "color",
-          "$value": "{yellow.50}",
+          "$value": "{orange.50}",
           "$description": "Selected state background color for active yellow items."
         }
       }
@@ -625,66 +625,66 @@
         },
         "bg": {
           "$type": "color",
-          "$value": "{purple.800}",
+          "$value": "{pink.800}",
           "$description": "Background color for prominent purple surfaces."
         },
         "bg-hover": {
           "$type": "color",
-          "$value": "{purple.850}",
+          "$value": "{pink.850}",
           "$description": "Hover state background color for interactive primary purple surfaces."
         },
         "bg-selected": {
           "$type": "color",
-          "$value": "{purple.850}",
+          "$value": "{pink.850}",
           "$description": "Selected state background color for active primary purple items."
         }
       },
       "secondary": {
         "text": {
           "$type": "color",
-          "$value": "{purple.900}",
+          "$value": "{pink.900}",
           "$description": "Text color for subtle purple surfaces with good contrast."
         },
         "bg": {
           "$type": "color",
-          "$value": "{purple.150}",
+          "$value": "{pink.150}",
           "$description": "Background color for subdued purple surfaces."
         },
         "bg-hover": {
           "$type": "color",
-          "$value": "{purple.200}",
+          "$value": "{pink.200}",
           "$description": "Hover background color for subdued purple surfaces."
         },
         "bg-selected": {
           "$type": "color",
-          "$value": "{purple.200}",
+          "$value": "{pink.200}",
           "$description": "Selected state background color for active secondary purple items."
         }
       },
       "outline": {
         "text": {
           "$type": "color",
-          "$value": "{purple.800}",
+          "$value": "{pink.800}",
           "$description": "Standard text color for purple surfaces with balanced readability."
         },
         "bg": {
           "$type": "color",
-          "$value": "{purple.25}",
+          "$value": "{pink.25}",
           "$description": "Base background color for purple surfaces in default states."
         },
         "border": {
           "$type": "color",
-          "$value": "{purple.300}",
+          "$value": "{pink.300}",
           "$description": "Border color for standard purple boundaries."
         },
         "bg-hover": {
           "$type": "color",
-          "$value": "{purple.50}",
+          "$value": "{pink.50}",
           "$description": "Hover state background color for interactive purple surfaces."
         },
         "bg-selected": {
           "$type": "color",
-          "$value": "{purple.50}",
+          "$value": "{pink.50}",
           "$description": "Selected state background color for active purple items."
         }
       }
@@ -1002,7 +1002,7 @@
         },
         "bg": {
           "$type": "color",
-          "$value": "{orange.500}",
+          "$value": "{brown.500}",
           "$extensions": {
             "studio.tokens": {
               "modify": {
@@ -1016,46 +1016,46 @@
         },
         "bg-hover": {
           "$type": "color",
-          "$value": "{orange.700}",
+          "$value": "{brown.700}",
           "$description": "Hover background color for solid orange surfaces."
         }
       },
       "secondary": {
         "text": {
           "$type": "color",
-          "$value": "{orange.900}",
+          "$value": "{brown.900}",
           "$description": "Text color for subtle orange surfaces with good contrast."
         },
         "bg": {
           "$type": "color",
-          "$value": "{orange.150}",
+          "$value": "{brown.150}",
           "$description": "Background color for subdued orange surfaces."
         },
         "bg-hover": {
           "$type": "color",
-          "$value": "{orange.200}",
+          "$value": "{brown.200}",
           "$description": "Hover background color for subdued orange surfaces."
         }
       },
       "outline": {
         "text": {
           "$type": "color",
-          "$value": "{orange.800}",
+          "$value": "{brown.800}",
           "$description": "Standard text color for orange surfaces with balanced readability."
         },
         "bg": {
           "$type": "color",
-          "$value": "{orange.25}",
+          "$value": "{brown.25}",
           "$description": "Base background color for orange surfaces in default states."
         },
         "border": {
           "$type": "color",
-          "$value": "{orange.300}",
+          "$value": "{brown.300}",
           "$description": "Border color for standard orange boundaries."
         },
         "bg-hover": {
           "$type": "color",
-          "$value": "{orange.50}",
+          "$value": "{brown.50}",
           "$description": "Hover background color for orange surfaces."
         }
       }
@@ -1136,51 +1136,51 @@
         },
         "bg": {
           "$type": "color",
-          "$value": "{violet.800}",
+          "$value": "{red.800}",
           "$description": "Background color for prominent violet surfaces."
         },
         "bg-hover": {
           "$type": "color",
-          "$value": "{violet.850}",
+          "$value": "{red.850}",
           "$description": "Hover background color for prominent violet surfaces."
         }
       },
       "secondary": {
         "text": {
           "$type": "color",
-          "$value": "{violet.900}",
+          "$value": "{red.900}",
           "$description": "Text color for subtle violet surfaces with good contrast."
         },
         "bg": {
           "$type": "color",
-          "$value": "{violet.150}",
+          "$value": "{red.150}",
           "$description": "Background color for subdued violet surfaces."
         },
         "bg-hover": {
           "$type": "color",
-          "$value": "{violet.200}",
+          "$value": "{red.200}",
           "$description": "Hover background color for subdued violet surfaces."
         }
       },
       "outline": {
         "text": {
           "$type": "color",
-          "$value": "{violet.850}",
+          "$value": "{red.850}",
           "$description": "Standard text color for violet surfaces with balanced readability."
         },
         "bg": {
           "$type": "color",
-          "$value": "{violet.25}",
+          "$value": "{red.25}",
           "$description": "Base background color for violet surfaces in default states."
         },
         "border": {
           "$type": "color",
-          "$value": "{violet.300}",
+          "$value": "{red.300}",
           "$description": "Border color for standard violet boundaries."
         },
         "bg-hover": {
           "$type": "color",
-          "$value": "{violet.50}",
+          "$value": "{red.50}",
           "$description": "Hover background color for violet surfaces."
         }
       }
@@ -1894,7 +1894,7 @@
       },
       "02-purple": {
         "$type": "color",
-        "$value": "{purple.600}",
+        "$value": "{pink.600}",
         "$description": "Secondary data visualization color (2nd in sequence). Use as the second color when multiple data series are needed."
       },
       "03-pink": {
@@ -1924,7 +1924,7 @@
       },
       "08-orange": {
         "$type": "color",
-        "$value": "{orange.600}",
+        "$value": "{brown.600}",
         "$description": "Data visualization color (8th in sequence). Use as the eighth color in multi-series visualizations."
       },
       "09-forest": {
@@ -1939,7 +1939,7 @@
       },
       "11-yellow": {
         "$type": "color",
-        "$value": "{yellow.300}",
+        "$value": "{orange.300}",
         "$description": "Data visualization color (11th in sequence). Use as the eleventh color in multi-series visualizations."
       },
       "12-gray": {
@@ -2458,7 +2458,7 @@
       "test-intelligence": {
         "bg": {
           "$type": "color",
-          "$value": "linear-gradient(105deg, {purple.25} -18.5%, {bg.1} 84%)",
+          "$value": "linear-gradient(105deg, {pink.25} -18.5%, {bg.1} 84%)",
           "$description": "Background gradient for test intelligence widget."
         },
         "gradient": {
@@ -3310,7 +3310,7 @@
       },
       "stop-3": {
         "$type": "color",
-        "$value": "{violet.500}",
+        "$value": "{red.500}",
         "$description": "Third gradient stop for AI-themed gradients."
       },
       "outline-bg": {
@@ -4012,7 +4012,7 @@
         "border": {
           "from": {
             "$type": "color",
-            "$value": "{yellow.200}",
+            "$value": "{orange.200}",
             "$description": "Starting color for running pipeline border gradients."
           },
           "to": {
@@ -4026,14 +4026,14 @@
               }
             },
             "$type": "color",
-            "$value": "{yellow.100}",
+            "$value": "{orange.100}",
             "$description": "Ending color for running pipeline border gradients."
           }
         },
         "glow": {
           "from": {
             "$type": "color",
-            "$value": "{yellow.100}",
+            "$value": "{orange.100}",
             "$description": "Starting color for running pipeline glow gradients."
           },
           "to": {
@@ -4047,7 +4047,7 @@
               }
             },
             "$type": "color",
-            "$value": "{yellow.100}",
+            "$value": "{orange.100}",
             "$description": "Ending color for running pipeline glow gradients."
           }
         }
@@ -4204,7 +4204,7 @@
     },
     "testing": {
       "$type": "color",
-      "$value": "{orange.600}",
+      "$value": "{brown.600}",
       "$description": "Brand color for Testing category icons. Creates visual categorization."
     },
     "security": {
@@ -4219,7 +4219,7 @@
     },
     "platform": {
       "$type": "color",
-      "$value": "{purple.600}",
+      "$value": "{pink.600}",
       "$description": "Brand color for Platform category icons. Creates visual categorization."
     }
   },

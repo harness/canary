@@ -103,7 +103,7 @@ export default {
       },
 
       '&:where(:not([disabled]):hover)': {
-        color: 'var(--cn-text-2)'
+        color: 'var(--cn-text-1)'
       }
     },
 
@@ -123,7 +123,7 @@ export default {
       },
 
       '&:where(:not([disabled]):hover)': {
-        color: 'var(--cn-text-2)'
+        color: 'var(--cn-text-1)'
       }
     },
 

@@ -9,6 +9,7 @@ import { Button } from './button'
 import { CopyButton } from './copy-button'
 import { DropdownMenu } from './dropdown-menu'
 import { IconV2, IconV2NamesType } from './icon-v2'
+import { Link, type LinkProps } from './link'
 
 const breadcrumbVariants = cva('cn-breadcrumb', {
   variants: {
@@ -91,6 +92,41 @@ const BreadcrumbLink = forwardRef<HTMLAnchorElement, BreadcrumbLinkProps>(
   }
 )
 BreadcrumbLink.displayName = 'BreadcrumbLink'
+
+type BreadcrumbHeaderLinkProps = LinkProps & {
+  prefixIcon?: IconV2NamesType
+  isLast?: boolean
+}
+
+const BreadcrumbHeaderLink = forwardRef<HTMLAnchorElement, BreadcrumbHeaderLinkProps>(
+  ({ className, isLast, prefixIcon, children, ...props }, ref) => {
+    const content = prefixIcon ? (
+      <>
+        <IconV2 color="inherit" name={prefixIcon} size="sm" className="cn-breadcrumb-prefix-icon" />
+        {children}
+      </>
+    ) : (
+      children
+    )
+
+    const linkClassName = cn(
+      'cn-breadcrumb-link',
+      {
+        'cn-breadcrumb-link-with-icon': prefixIcon,
+        'text-cn-1': isLast,
+        'text-cn-3': !isLast
+      },
+      className
+    )
+
+    return (
+      <Link variant="secondary" noHoverUnderline ref={ref} className={linkClassName} {...props}>
+        {content}
+      </Link>
+    )
+  }
+)
+BreadcrumbHeaderLink.displayName = 'BreadcrumbHeaderLink'
 
 type BreadcrumbPageProps = ComponentPropsWithoutRef<'span'> & {
   prefixIcon?: IconV2NamesType
@@ -224,6 +260,7 @@ const Breadcrumb = {
   List: BreadcrumbList,
   Item: BreadcrumbItem,
   Link: BreadcrumbLink,
+  HeaderLink: BreadcrumbHeaderLink,
   Page: BreadcrumbPage,
   Copy: BreadcrumbCopy,
   Separator: BreadcrumbSeparator,

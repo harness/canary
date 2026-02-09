@@ -951,6 +951,11 @@
           "$type": "color",
           "$value": "{indigo.200}",
           "$description": "Hover background color for subdued indigo surfaces."
+        },
+        "bg-selected": {
+          "$type": "color",
+          "$value": "{indigo.200}",
+          "$description": "Selected background color for subdued indigo surfaces."
         }
       },
       "outline": {
@@ -982,6 +987,11 @@
           "$type": "color",
           "$value": "{indigo.50}",
           "$description": "Hover background color for indigo surfaces."
+        },
+        "bg-selected": {
+          "$type": "color",
+          "$value": "{indigo.50}",
+          "$description": "Selected background color for indigo surfaces."
         }
       }
     },

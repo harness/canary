@@ -938,7 +938,7 @@
   },
   {
     "id": "06c0447b12ae4d0bf224a0eb90b673f151ba8f24",
-    "name": "dark",
+    "name": "standard-dark",
     "selectedTokenSets": {
       "mode/dark/default": "enabled",
       "mode/dark/icon-stroke-width": "enabled"
@@ -2469,11 +2469,11 @@
     },
     "$figmaCollectionId": "VariableCollectionId:1340:156918",
     "$figmaModeId": "1340:3",
-    "group": "mode"
+    "group": "standard"
   },
   {
     "id": "1ab3cee078aadbe01119debf02edd406076ce57c",
-    "name": "light",
+    "name": "standard-light",
     "$figmaStyleReferences": {
       "shadow.0": "S:a2ed3778198048e91067a04633c27ba20e9fcbec,",
       "shadow.1": "S:947694488889f7271c428950bec937ee79f8a536,",
@@ -3681,11 +3681,11 @@
       "set.pink.primary.bg-hover": "727385ad440134769134c3c5b09972f100f5c93a",
       "set.violet.primary.bg-hover": "eccc0660327577b5e45964b0ff6ca2a15f25a963"
     },
-    "group": "mode"
+    "group": "standard"
   },
   {
     "id": "38c994e3875f18c0e27f7d87766f0b85d58945db",
-    "name": "dark-dimmer",
+    "name": "low-contrast-dark",
     "$figmaStyleReferences": {
       "shadow.0": "S:a2ed3778198048e91067a04633c27ba20e9fcbec,",
       "shadow.1": "S:947694488889f7271c428950bec937ee79f8a536,",
@@ -4873,11 +4873,11 @@
       "comp.pipeline.arrow": "85ba5cc12a135d2fd4d5b872af82422f6f552b02",
       "comp.pipeline.dotes": "3410e3416d4fbbc0776413f12fb05485fd72e145"
     },
-    "group": "mode"
+    "group": "low-contrast"
   },
   {
     "id": "9fb64e70b44bb178e7fa56a196dc42d9954f86a5",
-    "name": "dark-high-contrast",
+    "name": "high-contrast-dark",
     "$figmaStyleReferences": {
       "shadow.0": "S:a2ed3778198048e91067a04633c27ba20e9fcbec,",
       "shadow.1": "S:947694488889f7271c428950bec937ee79f8a536,",
@@ -6065,11 +6065,11 @@
       "comp.pipeline.arrow": "85ba5cc12a135d2fd4d5b872af82422f6f552b02",
       "comp.pipeline.dotes": "3410e3416d4fbbc0776413f12fb05485fd72e145"
     },
-    "group": "mode"
+    "group": "high-contrast"
   },
   {
     "id": "465affa895afefa955b28d7f6e4f4fb8ac1216f0",
-    "name": "dark-protanopia",
+    "name": "standard-protanopia-dark",
     "$figmaStyleReferences": {
       "shadow.0": "S:a2ed3778198048e91067a04633c27ba20e9fcbec,",
       "shadow.1": "S:947694488889f7271c428950bec937ee79f8a536,",
@@ -7257,11 +7257,11 @@
       "comp.pipeline.arrow": "85ba5cc12a135d2fd4d5b872af82422f6f552b02",
       "comp.pipeline.dotes": "3410e3416d4fbbc0776413f12fb05485fd72e145"
     },
-    "group": "mode"
+    "group": "standard-protanopia"
   },
   {
     "id": "16a6184320ed89d5fb0974f727a0c264ed771695",
-    "name": "dark-dimmer-protanopia",
+    "name": "low-contrast-protanopia-dark",
     "$figmaStyleReferences": {
       "shadow.0": "S:a2ed3778198048e91067a04633c27ba20e9fcbec,",
       "shadow.1": "S:947694488889f7271c428950bec937ee79f8a536,",
@@ -8449,11 +8449,11 @@
       "comp.pipeline.arrow": "85ba5cc12a135d2fd4d5b872af82422f6f552b02",
       "comp.pipeline.dotes": "3410e3416d4fbbc0776413f12fb05485fd72e145"
     },
-    "group": "mode"
+    "group": "low-contrast-protanopia"
   },
   {
     "id": "0bea34fa7b90e9f6c84366bfe10fdf7a9fe46738",
-    "name": "dark-high-contrast-protanopia",
+    "name": "high-contrast-protanopia-dark",
     "$figmaStyleReferences": {
       "shadow.0": "S:a2ed3778198048e91067a04633c27ba20e9fcbec,",
       "shadow.1": "S:947694488889f7271c428950bec937ee79f8a536,",
@@ -9641,11 +9641,11 @@
       "comp.pipeline.arrow": "85ba5cc12a135d2fd4d5b872af82422f6f552b02",
       "comp.pipeline.dotes": "3410e3416d4fbbc0776413f12fb05485fd72e145"
     },
-    "group": "mode"
+    "group": "high-contrast-protanopia"
   },
   {
     "id": "0ba820914a4b7a835ae16ab570e05388a4c122bf",
-    "name": "dark-deuteranopia",
+    "name": "standard-deuteranopia-dark",
     "$figmaStyleReferences": {
       "shadow.0": "S:a2ed3778198048e91067a04633c27ba20e9fcbec,",
       "shadow.1": "S:947694488889f7271c428950bec937ee79f8a536,",
@@ -10833,11 +10833,11 @@
       "comp.pipeline.arrow": "85ba5cc12a135d2fd4d5b872af82422f6f552b02",
       "comp.pipeline.dotes": "3410e3416d4fbbc0776413f12fb05485fd72e145"
     },
-    "group": "mode"
+    "group": "standard-deuteranopia"
   },
   {
     "id": "363ff162c776a42300fdcb513bbcf441ac503ec0",
-    "name": "dark-dimmer-deuteranopia",
+    "name": "low-contrast-deuteranopia-dark",
     "$figmaStyleReferences": {
       "shadow.0": "S:a2ed3778198048e91067a04633c27ba20e9fcbec,",
       "shadow.1": "S:947694488889f7271c428950bec937ee79f8a536,",
@@ -12025,11 +12025,11 @@
       "comp.pipeline.arrow": "85ba5cc12a135d2fd4d5b872af82422f6f552b02",
       "comp.pipeline.dotes": "3410e3416d4fbbc0776413f12fb05485fd72e145"
     },
-    "group": "mode"
+    "group": "low-contrast-deuteranopia"
   },
   {
     "id": "7f80f5e6690fe1739af7a58c69a0a0f737658f42",
-    "name": "dark-high-contrast-deuteranopia",
+    "name": "high-contrast-deuteranopia-dark",
     "$figmaStyleReferences": {
       "shadow.0": "S:a2ed3778198048e91067a04633c27ba20e9fcbec,",
       "shadow.1": "S:947694488889f7271c428950bec937ee79f8a536,",
@@ -13217,11 +13217,11 @@
       "comp.pipeline.arrow": "85ba5cc12a135d2fd4d5b872af82422f6f552b02",
       "comp.pipeline.dotes": "3410e3416d4fbbc0776413f12fb05485fd72e145"
     },
-    "group": "mode"
+    "group": "high-contrast-deuteranopia"
   },
   {
     "id": "bd69e42e558983d4c56a3140051437e81c6729c8",
-    "name": "dark-tritanopia",
+    "name": "standard-tritanopia-dark",
     "$figmaStyleReferences": {
       "shadow.0": "S:a2ed3778198048e91067a04633c27ba20e9fcbec,",
       "shadow.1": "S:947694488889f7271c428950bec937ee79f8a536,",
@@ -14409,11 +14409,11 @@
       "comp.pipeline.arrow": "85ba5cc12a135d2fd4d5b872af82422f6f552b02",
       "comp.pipeline.dotes": "3410e3416d4fbbc0776413f12fb05485fd72e145"
     },
-    "group": "mode"
+    "group": "standard-tritanopia"
   },
   {
     "id": "9650760429e819885a0a2acec035d2df980a09dd",
-    "name": "dark-dimmer-tritanopia",
+    "name": "low-contrast-tritanopia-dark",
     "$figmaStyleReferences": {
       "shadow.0": "S:a2ed3778198048e91067a04633c27ba20e9fcbec,",
       "shadow.1": "S:947694488889f7271c428950bec937ee79f8a536,",
@@ -15601,11 +15601,11 @@
       "comp.pipeline.arrow": "85ba5cc12a135d2fd4d5b872af82422f6f552b02",
       "comp.pipeline.dotes": "3410e3416d4fbbc0776413f12fb05485fd72e145"
     },
-    "group": "mode"
+    "group": "low-contrast-tritanopia"
   },
   {
     "id": "04442df78cb6f5028055bc8d002a42347b97e060",
-    "name": "dark-high-contrast-tritanopia",
+    "name": "high-contrast-tritanopia-dark",
     "$figmaStyleReferences": {
       "shadow.0": "S:a2ed3778198048e91067a04633c27ba20e9fcbec,",
       "shadow.1": "S:947694488889f7271c428950bec937ee79f8a536,",
@@ -16793,11 +16793,11 @@
       "comp.pipeline.arrow": "85ba5cc12a135d2fd4d5b872af82422f6f552b02",
       "comp.pipeline.dotes": "3410e3416d4fbbc0776413f12fb05485fd72e145"
     },
-    "group": "mode"
+    "group": "high-contrast-tritanopia"
   },
   {
     "id": "1e7b21d8c870a7b76afe2e78f27747667407aeed",
-    "name": "light-dimmer",
+    "name": "low-contrast-light",
     "$figmaStyleReferences": {
       "shadow.0": "S:a2ed3778198048e91067a04633c27ba20e9fcbec,",
       "shadow.1": "S:947694488889f7271c428950bec937ee79f8a536,",
@@ -17976,11 +17976,11 @@
       "comp.pipeline.arrow": "85ba5cc12a135d2fd4d5b872af82422f6f552b02",
       "comp.pipeline.dotes": "3410e3416d4fbbc0776413f12fb05485fd72e145"
     },
-    "group": "mode"
+    "group": "low-contrast"
   },
   {
     "id": "f43153843afd2dbad43db2dda6b0fa4f05209145",
-    "name": "light-high-contrast",
+    "name": "high-contrast-light",
     "$figmaStyleReferences": {
       "shadow.0": "S:a2ed3778198048e91067a04633c27ba20e9fcbec,",
       "shadow.1": "S:947694488889f7271c428950bec937ee79f8a536,",
@@ -19159,11 +19159,11 @@
       "comp.pipeline.arrow": "85ba5cc12a135d2fd4d5b872af82422f6f552b02",
       "comp.pipeline.dotes": "3410e3416d4fbbc0776413f12fb05485fd72e145"
     },
-    "group": "mode"
+    "group": "high-contrast"
   },
   {
     "id": "26d1309824ee633b0a4e5eff39d671e6c89c0bd7",
-    "name": "light-protanopia",
+    "name": "standard-protanopia-light",
     "$figmaStyleReferences": {
       "shadow.0": "S:a2ed3778198048e91067a04633c27ba20e9fcbec,",
       "shadow.1": "S:947694488889f7271c428950bec937ee79f8a536,",
@@ -20342,11 +20342,11 @@
       "comp.pipeline.arrow": "85ba5cc12a135d2fd4d5b872af82422f6f552b02",
       "comp.pipeline.dotes": "3410e3416d4fbbc0776413f12fb05485fd72e145"
     },
-    "group": "mode"
+    "group": "standard-protanopia"
   },
   {
     "id": "0b586f318efca1a6f4faef2382f14fc6acc5f496",
-    "name": "light-dimmer-protanopia",
+    "name": "low-contrast-protanopia-light",
     "$figmaStyleReferences": {
       "shadow.0": "S:a2ed3778198048e91067a04633c27ba20e9fcbec,",
       "shadow.1": "S:947694488889f7271c428950bec937ee79f8a536,",
@@ -21525,11 +21525,11 @@
       "comp.pipeline.arrow": "85ba5cc12a135d2fd4d5b872af82422f6f552b02",
       "comp.pipeline.dotes": "3410e3416d4fbbc0776413f12fb05485fd72e145"
     },
-    "group": "mode"
+    "group": "low-contrast-protanopia"
   },
   {
     "id": "d9839783f39c0b13df14b544704c66876c758183",
-    "name": "light-high-contrast-protanopia",
+    "name": "high-contrast-protanopia-light",
     "$figmaStyleReferences": {
       "shadow.0": "S:a2ed3778198048e91067a04633c27ba20e9fcbec,",
       "shadow.1": "S:947694488889f7271c428950bec937ee79f8a536,",
@@ -22708,11 +22708,11 @@
       "comp.pipeline.arrow": "85ba5cc12a135d2fd4d5b872af82422f6f552b02",
       "comp.pipeline.dotes": "3410e3416d4fbbc0776413f12fb05485fd72e145"
     },
-    "group": "mode"
+    "group": "high-contrast-protanopia"
   },
   {
     "id": "836ca7de20bb06ba9365a2e63b65c8a472669b47",
-    "name": "light-deuteranopia",
+    "name": "standard-deuteranopia-light",
     "$figmaStyleReferences": {
       "shadow.0": "S:a2ed3778198048e91067a04633c27ba20e9fcbec,",
       "shadow.1": "S:947694488889f7271c428950bec937ee79f8a536,",
@@ -23891,11 +23891,11 @@
       "comp.pipeline.arrow": "85ba5cc12a135d2fd4d5b872af82422f6f552b02",
       "comp.pipeline.dotes": "3410e3416d4fbbc0776413f12fb05485fd72e145"
     },
-    "group": "mode"
+    "group": "standard-deuteranopia"
   },
   {
     "id": "a0d2ea5d2b605e20e7a3bd70750268d6f85952bf",
-    "name": "light-dimmer-deuteranopia",
+    "name": "low-contrast-deuteranopia-light",
     "$figmaStyleReferences": {
       "shadow.0": "S:a2ed3778198048e91067a04633c27ba20e9fcbec,",
       "shadow.1": "S:947694488889f7271c428950bec937ee79f8a536,",
@@ -25099,11 +25099,11 @@
       "comp.pipeline.arrow": "85ba5cc12a135d2fd4d5b872af82422f6f552b02",
       "comp.pipeline.dotes": "3410e3416d4fbbc0776413f12fb05485fd72e145"
     },
-    "group": "mode"
+    "group": "low-contrast-deuteranopia"
   },
   {
     "id": "14096bcda91442f146b79b0f621c4aac26456134",
-    "name": "light-high-contrast-deuteranopia",
+    "name": "high-contrast-deuteranopia-light",
     "$figmaStyleReferences": {
       "shadow.0": "S:a2ed3778198048e91067a04633c27ba20e9fcbec,",
       "shadow.1": "S:947694488889f7271c428950bec937ee79f8a536,",
@@ -26282,11 +26282,11 @@
       "comp.pipeline.arrow": "85ba5cc12a135d2fd4d5b872af82422f6f552b02",
       "comp.pipeline.dotes": "3410e3416d4fbbc0776413f12fb05485fd72e145"
     },
-    "group": "mode"
+    "group": "high-contrast-deuteranopia"
   },
   {
     "id": "7c69cf5c03848280cbf1cdcb001ad3e8b14b97e3",
-    "name": "light-tritanopia",
+    "name": "standard-tritanopia-light",
     "$figmaStyleReferences": {
       "shadow.0": "S:a2ed3778198048e91067a04633c27ba20e9fcbec,",
       "shadow.1": "S:947694488889f7271c428950bec937ee79f8a536,",
@@ -27465,11 +27465,11 @@
       "comp.pipeline.arrow": "85ba5cc12a135d2fd4d5b872af82422f6f552b02",
       "comp.pipeline.dotes": "3410e3416d4fbbc0776413f12fb05485fd72e145"
     },
-    "group": "mode"
+    "group": "standard-tritanopia"
   },
   {
     "id": "d3ee9e10ed075e54d23af7c6362a35bb9867ce66",
-    "name": "light-dimmer-tritanopia",
+    "name": "low-contrast-tritanopia-light",
     "$figmaStyleReferences": {
       "shadow.0": "S:a2ed3778198048e91067a04633c27ba20e9fcbec,",
       "shadow.1": "S:947694488889f7271c428950bec937ee79f8a536,",
@@ -28648,11 +28648,11 @@
       "comp.pipeline.arrow": "85ba5cc12a135d2fd4d5b872af82422f6f552b02",
       "comp.pipeline.dotes": "3410e3416d4fbbc0776413f12fb05485fd72e145"
     },
-    "group": "mode"
+    "group": "low-contrast-tritanopia"
   },
   {
     "id": "b3258d74d3429d881e4fd4aa5b9fb3456dcfb038",
-    "name": "light-high-contrast-tritanopia",
+    "name": "high-contrast-tritanopia-light",
     "$figmaStyleReferences": {
       "shadow.0": "S:a2ed3778198048e91067a04633c27ba20e9fcbec,",
       "shadow.1": "S:947694488889f7271c428950bec937ee79f8a536,",
@@ -29831,7 +29831,7 @@
       "comp.pipeline.arrow": "85ba5cc12a135d2fd4d5b872af82422f6f552b02",
       "comp.pipeline.dotes": "3410e3416d4fbbc0776413f12fb05485fd72e145"
     },
-    "group": "mode"
+    "group": "high-contrast-tritanopia"
   },
   {
     "id": "859ec40c364b0922f609dfa64a502a7a90feb206",

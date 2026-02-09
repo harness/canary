@@ -48,45 +48,68 @@ export const generateThemeFiles = ({ destination, type, theme, format }) => {
   const themeLower = theme.toLowerCase().replace(/(source-|-desktop)/g, '')
 
   const entityName = themeLower.toLowerCase()
+  
+  // Extract simple mode name for filename (dark/light)
+  const simpleModeName = entityName.includes('-light') ? 'light' : 'dark'
 
   let mfeSupportedClass = ''
 
   // To support backward compatibility and testing. It will be removed in future.
-  if (entityName === `light` || entityName === `dark`) {
-    mfeSupportedClass = `.${entityName}-std-std, .${entityName}-test`
+  if (simpleModeName === `light` || simpleModeName === `dark`) {
+    mfeSupportedClass = `.${simpleModeName}-std-std, .${simpleModeName}-test`
   }
 
-  // Map theme names to ThemeSelector format (mode-color-contrast)
+  // Map theme names to ThemeSelector format (collection-mode)
   // ColorType: std, tri, pro, deu
   // ContrastType: std, low, high
   const themeToSelectorMap = {
-    // High contrast (standard color)
-    'light-high-contrast': 'light-std-high',
-    'dark-high-contrast': 'dark-std-high',
-    // Dimmer/Low contrast (standard color)
-    'light-dimmer': 'light-std-low',
-    'dark-dimmer': 'dark-std-low',
-    // High contrast + color blindness
-    'light-high-contrast-deuteranopia': 'light-deu-high',
-    'dark-high-contrast-deuteranopia': 'dark-deu-high',
-    'light-high-contrast-protanopia': 'light-pro-high',
-    'dark-high-contrast-protanopia': 'dark-pro-high',
-    'light-high-contrast-tritanopia': 'light-tri-high',
-    'dark-high-contrast-tritanopia': 'dark-tri-high',
-    // Dimmer/Low contrast + color blindness
-    'light-dimmer-deuteranopia': 'light-deu-low',
-    'dark-dimmer-deuteranopia': 'dark-deu-low',
-    'light-dimmer-protanopia': 'light-pro-low',
-    'dark-dimmer-protanopia': 'dark-pro-low',
-    'light-dimmer-tritanopia': 'light-tri-low',
-    'dark-dimmer-tritanopia': 'dark-tri-low',
-    // Standard contrast + color blindness
-    'light-deuteranopia': 'light-deu-std',
-    'dark-deuteranopia': 'dark-deu-std',
-    'light-protanopia': 'light-pro-std',
-    'dark-protanopia': 'dark-pro-std',
-    'light-tritanopia': 'light-tri-std',
-    'dark-tritanopia': 'dark-tri-std'
+    // Standard collection
+    'standard-dark': 'dark-std-std',
+    'standard-light': 'light-std-std',
+    
+    // High contrast collection
+    'high-contrast-dark': 'dark-std-high',
+    'high-contrast-light': 'light-std-high',
+    
+    // Low contrast collection
+    'low-contrast-dark': 'dark-std-low',
+    'low-contrast-light': 'light-std-low',
+    
+    // Standard protanopia collection
+    'standard-protanopia-dark': 'dark-pro-std',
+    'standard-protanopia-light': 'light-pro-std',
+    
+    // High contrast protanopia collection
+    'high-contrast-protanopia-dark': 'dark-pro-high',
+    'high-contrast-protanopia-light': 'light-pro-high',
+    
+    // Low contrast protanopia collection
+    'low-contrast-protanopia-dark': 'dark-pro-low',
+    'low-contrast-protanopia-light': 'light-pro-low',
+    
+    // Standard deuteranopia collection
+    'standard-deuteranopia-dark': 'dark-deu-std',
+    'standard-deuteranopia-light': 'light-deu-std',
+    
+    // High contrast deuteranopia collection
+    'high-contrast-deuteranopia-dark': 'dark-deu-high',
+    'high-contrast-deuteranopia-light': 'light-deu-high',
+    
+    // Low contrast deuteranopia collection
+    'low-contrast-deuteranopia-dark': 'dark-deu-low',
+    'low-contrast-deuteranopia-light': 'light-deu-low',
+    
+    // Standard tritanopia collection
+    'standard-tritanopia-dark': 'dark-tri-std',
+    'standard-tritanopia-light': 'light-tri-std',
+    
+    // High contrast tritanopia collection
+    'high-contrast-tritanopia-dark': 'dark-tri-high',
+    'high-contrast-tritanopia-light': 'light-tri-high',
+    
+    // Low contrast tritanopia collection
+    'low-contrast-tritanopia-dark': 'dark-tri-low',
+    'low-contrast-tritanopia-light': 'light-tri-low'
   }
 
   const selectorClass = themeToSelectorMap[entityName]
@@ -110,7 +133,7 @@ export const generateThemeFiles = ({ destination, type, theme, format }) => {
         return true
       },
       // To add .dark and .light to support MFE
-      selector: `.${entityName}${mfeSupportedClass ? ', ' + mfeSupportedClass : ''}`
+      selector: `.${simpleModeName}${mfeSupportedClass ? ', ' + mfeSupportedClass : ''}`
     }
   })
   return filesArr

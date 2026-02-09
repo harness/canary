@@ -12,7 +12,8 @@ import {
   DESIGN_SYSTEM_ROOT_ESM,
   getExportFileHeader,
   STYLE_BUILD_FORMATS,
-  THEME_MODE_FILENAME_PREFIX
+  THEME_MODE_FILENAME_PREFIX,
+  THEME_COLLECTIONS
 } from './constants.js'
 import { generateCoreFiles, generateThemeFiles } from './sd-file-generators.js'
 
@@ -26,7 +27,31 @@ async function run() {
     console.error('Error parsing $themes.json:', error)
     throw error
   }
-  const themes = permutateThemes($themes)
+  
+  // Don't use permutateThemes - process themes directly to avoid unwanted combinations
+  const themes = {}
+  
+  // Convert themes array to object with theme names as keys
+  $themes.forEach(theme => {
+    if (theme.name !== 'source' && theme.name !== 'desktop') {
+      // Create theme entry with selected token sets + core sets
+      const enabledSets = Object.keys(theme.selectedTokenSets).filter(set => 
+        theme.selectedTokenSets[set] === 'enabled'
+      )
+      
+      // Add core token sets to each theme
+      themes[theme.name] = [
+        'core/colors_hex',
+        'core/colors_lch', 
+        'core/typography',
+        'core/dimensions',
+        ...enabledSets
+      ]
+    }
+  })
+  
+  console.log(`Processing ${Object.keys(themes).length} themes:`, Object.keys(themes))
+  
   // collect all tokensets for all themes and dedupe
   const tokensets = [...new Set(Object.values(themes).reduce((acc, sets) => [...acc, ...sets], []))]
 
@@ -188,16 +213,24 @@ async function createCssFiles() {
   const cssFiles = (await fs.readdir(DESIGN_SYSTEM_ROOT)).filter(file => file.endsWith('.css')).sort()
 
   // Organize files by type
-  const coreFiles = cssFiles.filter(
-    file => !file.startsWith(THEME_MODE_FILENAME_PREFIX.DARK) && !file.startsWith(THEME_MODE_FILENAME_PREFIX.LIGHT)
-  )
-  const darkFiles = cssFiles.filter(file => file.startsWith(THEME_MODE_FILENAME_PREFIX.DARK))
-  const lightFiles = cssFiles.filter(file => file.startsWith(THEME_MODE_FILENAME_PREFIX.LIGHT))
+  const coreFiles = cssFiles.filter(file => {
+    const fileName = file.replace('.css', '')
+    return !THEME_COLLECTIONS.some(collection => 
+      fileName.startsWith(`${collection}-dark`) || fileName.startsWith(`${collection}-light`)
+    )
+  })
+  
+  const themeFiles = cssFiles.filter(file => {
+    const fileName = file.replace('.css', '')
+    return THEME_COLLECTIONS.some(collection => 
+      fileName.startsWith(`${collection}-dark`) || fileName.startsWith(`${collection}-light`)
+    )
+  })
 
   console.log('\n=== Theme File Summary ===')
   console.table([
-    { Type: 'Dark Theme Files', Count: darkFiles.length },
-    { Type: 'Light Theme Files', Count: lightFiles.length }
+    { Type: 'Core Files', Count: coreFiles.length },
+    { Type: 'Theme Files', Count: themeFiles.length }
   ])
   console.log('\n')
 
@@ -214,22 +247,25 @@ ${coreFiles.map(file => `@import './${file}';`).join('\n')}`
    * */
   const themesContent = `${getExportFileHeader()}
 
-/* Theme files - Dark */
-${darkFiles.map(file => `@import './${file}';`).join('\n')}
-
-/* Theme files - Light */
-${lightFiles.map(file => `@import './${file}';`).join('\n')}`
+/* Theme files */
+${themeFiles.map(file => `@import './${file}';`).join('\n')}`
 
   /**
    * MFE themes imports
    * */
   const mfeThemesContent = `${getExportFileHeader()}
 
-/* Theme files - Dark */
-@import './dark.css';
+/* Standard themes */
+@import './standard-dark.css';
+@import './standard-light.css';
 
-/* Theme files - Light */
-@import './light.css';`
+/* High contrast themes */
+@import './high-contrast-dark.css';
+@import './high-contrast-light.css';
+
+/* Low contrast themes */
+@import './low-contrast-dark.css';
+@import './low-contrast-light.css';`
 
   // Write file
   await Promise.all([
@@ -250,17 +286,25 @@ async function createEsmIndexFile() {
     .sort()
 
   // Organize files by type
-  const coreFiles = styleValueFiles.filter(
-    file => !file.startsWith(THEME_MODE_FILENAME_PREFIX.DARK) && !file.startsWith(THEME_MODE_FILENAME_PREFIX.LIGHT)
-  )
-  const darkFiles = styleValueFiles.filter(file => file.startsWith(THEME_MODE_FILENAME_PREFIX.DARK))
-  const lightFiles = styleValueFiles.filter(file => file.startsWith(THEME_MODE_FILENAME_PREFIX.LIGHT))
+  const coreFiles = styleValueFiles.filter(file => {
+    const fileName = file.replace('.ts', '')
+    return !THEME_COLLECTIONS.some(collection => 
+      fileName.startsWith(`${collection}-dark`) || fileName.startsWith(`${collection}-light`)
+    )
+  })
+  
+  const themeFiles = styleValueFiles.filter(file => {
+    const fileName = file.replace('.ts', '')
+    return THEME_COLLECTIONS.some(collection => 
+      fileName.startsWith(`${collection}-dark`) || fileName.startsWith(`${collection}-light`)
+    )
+  })
 
   console.log('\n=== Theme File Summary (ts) ===')
 
   console.table([
-    { Type: 'Dark Theme Files', Count: darkFiles.length },
-    { Type: 'Light Theme Files', Count: lightFiles.length }
+    { Type: 'Core Files', Count: coreFiles.length },
+    { Type: 'Theme Files', Count: themeFiles.length }
   ])
   console.log('\n')
 
@@ -272,7 +316,7 @@ async function createEsmIndexFile() {
 
   /* Theme files - Combined */
 export const designSystemThemeMap = {
-${[...darkFiles, ...lightFiles]
+${themeFiles
   .map(file => {
     const name = file.replace('.ts', '')
     return `'${name}': '${name}',`
@@ -289,17 +333,8 @@ ${coreFiles
   })
   .join('\n')}
 
-/* Theme files - Dark */
-${darkFiles
-  .map(file => {
-    const fileName = file.replace('.ts', '')
-    const name = fileName.replace(/-./g, x => x[1].toUpperCase())
-    return `export { default as ${name} } from './${fileName}';`
-  })
-  .join('\n')}
-
-/* Theme files - Light */
-${lightFiles
+/* Theme files */
+${themeFiles
   .map(file => {
     const fileName = file.replace('.ts', '')
     const name = fileName.replace(/-./g, x => x[1].toUpperCase())

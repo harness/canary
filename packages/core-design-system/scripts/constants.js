@@ -31,6 +31,23 @@ export const getExportFileHeader = () => `/**
     * DO NOT UPDATE IT MANUALLY
     */`
 
+export const THEME_COLLECTIONS = [
+  'standard',
+  'high-contrast', 
+  'low-contrast',
+  'standard-protanopia',
+  'high-contrast-protanopia',
+  'low-contrast-protanopia',
+  'standard-deuteranopia',
+  'high-contrast-deuteranopia',
+  'low-contrast-deuteranopia',
+  'standard-tritanopia',
+  'high-contrast-tritanopia',
+  'low-contrast-tritanopia'
+]
+
+export const THEME_MODES = ['dark', 'light']
+
 export const THEME_MODE_FILENAME_PREFIX = {
   DARK: 'dark',
   LIGHT: 'light'

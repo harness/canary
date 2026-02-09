@@ -4575,32 +4575,6 @@
           "$description": "Fourth gradient stop for AI outline backgrounds."
         }
       },
-      "glow": {
-        "stop-1": {
-          "$extensions": {
-            "studio.tokens": {
-              "modify": {
-                "type": "alpha",
-                "value": "0.6",
-                "space": "lch"
-              }
-            }
-          },
-          "$type": "color",
-          "$value": "{blue.700}",
-          "$description": "First gradient stop for AI glow effects."
-        },
-        "stop-2": {
-          "$type": "color",
-          "$value": "{bg.1}",
-          "$description": "Second gradient stop for AI glow effects."
-        },
-        "stop-3": {
-          "$type": "color",
-          "$value": "{indigo.800}",
-          "$description": "Third gradient stop for AI glow effects."
-        }
-      },
       "chat": {
         "bubble": {
           "from": {

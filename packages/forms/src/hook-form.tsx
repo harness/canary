@@ -40,4 +40,15 @@ export type {
   FieldValues as RHFFieldValues
 } from 'react-hook-form'
 
-export { useForm, Controller, FormProvider, Form, useWatch, useFormState, get, set } from 'react-hook-form'
+export {
+  useForm,
+  Controller,
+  FormProvider,
+  Form,
+  useWatch,
+  useFormState,
+  get,
+  set,
+  useFieldArray,
+  useFormContext
+} from 'react-hook-form'

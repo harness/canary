@@ -6,10 +6,6 @@ import {
   UseControllerReturn
 } from 'react-hook-form'
 
-import { afterFrames } from './utils'
-
-export * from 'react-hook-form'
-
 /**
  * !!!
  * Since useController from react-hook-form has an onBlur handler that triggers updates in useForm,
@@ -30,7 +26,18 @@ export function useController<TFieldValues extends FieldValues, TName extends Fi
     ...rest,
     field: {
       ...fieldRest,
-      onBlur: afterFrames(onBlur)
+      onBlur // Remove afterFrames to eliminate performance bottleneck
     }
   }
 }
+
+// Re-export all other functions from react-hook-form
+export type {
+  SubmitHandler,
+  SubmitErrorHandler,
+  Mode,
+  DefaultValues,
+  FieldValues as RHFFieldValues
+} from 'react-hook-form'
+
+export { useForm, Controller, FormProvider, Form, useWatch, useFormState, get, set } from 'react-hook-form'

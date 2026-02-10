@@ -1,3 +1,5 @@
+import { memo } from 'react'
+
 import { InputComponent, InputProps, useController, useRootFormContext, type AnyFormValue } from '../../../../src/index'
 import { FormMetadata } from '../../examples/runtime-example/types/types'
 import { InputError } from './common/input-error'
@@ -9,15 +11,12 @@ export interface TextInputConfig {
   inputType: InputType.text
 }
 
-function TextInputInternal(props: InputProps<AnyFormValue>): JSX.Element {
+const TextInputInternal = memo(function TextInputInternal(props: InputProps<AnyFormValue>): JSX.Element {
   const { readonly, path, input } = props
   const { label = '', required, placeholder } = input
 
   const { metadata } = useRootFormContext<FormMetadata>()
-
-  const { field } = useController({
-    name: path
-  })
+  const { field } = useController({ name: path })
 
   const labelWithMeta = metadata ? (
     <>
@@ -33,7 +32,7 @@ function TextInputInternal(props: InputProps<AnyFormValue>): JSX.Element {
       <InputError path={path} />
     </InputWrapper>
   )
-}
+})
 
 export class TextInput extends InputComponent<AnyFormValue> {
   public internalType = InputType.text

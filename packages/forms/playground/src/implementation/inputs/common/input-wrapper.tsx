@@ -1,4 +1,4 @@
-import { useRef, useState } from 'react'
+import { memo, useRef, useState } from 'react'
 
 import { AnyFormValue, InputProps, useController } from '../../../../../src'
 import InputValueTypeSelection from '../../../examples/runtime-example/components/input-value-type-selector'
@@ -16,7 +16,7 @@ export interface InputWrapperProps extends InputProps<AnyFormValue> {
   defaultEmptyValue?: any
 }
 
-function InputWrapper({
+const InputWrapper = memo(function InputWrapper({
   children,
   path,
   readonly,
@@ -122,6 +122,6 @@ function InputWrapper({
       />
     </div>
   )
-}
+})
 
 export default InputWrapper

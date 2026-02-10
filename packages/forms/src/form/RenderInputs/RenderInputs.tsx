@@ -12,7 +12,7 @@ export function RenderInputs(props: {
     <>
       {items.map(input => (
         <InputComponentRenderer
-          key={`${input.inputType}_${input.path}_${input.label}`}
+          key={`${input.inputType}_${input.path}`}
           input={input}
           path={input.path}
           {...restProps}

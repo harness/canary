@@ -3,6 +3,9 @@ import * as zod from 'zod'
 
 import type { AnyFormValue, IFormDefinition, IGlobalValidationConfig, IInputDefinition } from '../../types/types'
 
+// Validation schema cache with dependency tracking
+const validationSchemaCache = new Map<string, zod.ZodObject<zod.ZodRawShape>>()
+
 const REQUIRED_MESSAGE = 'Required field'
 
 export function processValidationParseResponse(anyArray: string | Record<string, unknown>): string | undefined {
@@ -62,13 +65,18 @@ export function getValidationSchema<T = any>(
   values: AnyFormValue,
   options?: IGetValidationSchemaOptions<T>
 ): zod.ZodObject<zod.ZodRawShape> {
+  // Generate cache key based on inputs structure and relevant values
+  const cacheKey = generateCacheKey(inputs, values, options)
+
+  // Return cached schema if available
+  if (validationSchemaCache.has(cacheKey)) {
+    return validationSchemaCache.get(cacheKey)!
+  }
+
   let schemaTreeNode: SchemaTreeNode = {}
 
-  // 1. Prepare three model
+  // 1. Prepare tree model
   populateSchemaTreeRec(schemaTreeNode, inputs.inputs, values, options)
-
-  // console.log('Internal model:')
-  // console.log(schemaTreeNode)
 
   if (options?.prefix) {
     const prefixWithoutDot = options?.prefix.replace(/.$/, '')
@@ -78,10 +86,105 @@ export function getValidationSchema<T = any>(
   // 2. Generate schema from model
   const schema = zod.object(generateSchemaRec(schemaTreeNode, values, options))
 
-  // console.log('Schema:')
-  // console.log(schema)
+  // Cache the generated schema
+  validationSchemaCache.set(cacheKey, schema)
 
   return schema
+}
+
+// Generate cache key based on inputs structure and values that affect validation
+function generateCacheKey(
+  inputs: IFormDefinition,
+  values: AnyFormValue,
+  options?: IGetValidationSchemaOptions
+): string {
+  // For simple forms with no dependencies, use a simpler cache key
+  const hasDependencies = inputs.inputs.some(
+    input =>
+      (input.isVisible && typeof input.isVisible === 'function') ||
+      typeof input.disabled === 'function' ||
+      (input.validation?.schema && typeof input.validation.schema === 'function')
+  )
+
+  if (!hasDependencies) {
+    // For forms without dependencies, only hash the inputs structure
+    return JSON.stringify({
+      inputsHash: hashInputs(inputs),
+      hasPrefix: !!options?.prefix,
+      hasValidationConfig: !!options?.validationConfig,
+      noDeps: true
+    })
+  }
+
+  // Only include values that are actually used in validation dependencies
+  const relevantValues = extractRelevantValues(inputs, values)
+  return JSON.stringify({
+    inputsHash: hashInputs(inputs),
+    relevantValues,
+    hasPrefix: !!options?.prefix,
+    hasValidationConfig: !!options?.validationConfig
+  })
+}
+
+// Extract only values that are relevant for validation (used in isVisible/disabled/validation functions)
+function extractRelevantValues(inputs: IFormDefinition, values: AnyFormValue): AnyFormValue {
+  const relevantPaths = new Set<string>()
+
+  function collectRelevantPaths(inputList: IInputDefinition[]) {
+    inputList.forEach(input => {
+      // Only collect paths for inputs that actually have dependencies
+      if (input.isVisible && typeof input.isVisible === 'function') {
+        // Extract actual field references from the isVisible function
+        // For now, we'll be conservative and only include the input's own path
+        relevantPaths.add(input.path)
+      }
+      if (typeof input.disabled === 'function') {
+        relevantPaths.add(input.path)
+      }
+      if (input.validation?.schema && typeof input.validation.schema === 'function') {
+        relevantPaths.add(input.path)
+      }
+      if (input.inputs) {
+        collectRelevantPaths(input.inputs)
+      }
+    })
+  }
+
+  collectRelevantPaths(inputs.inputs)
+
+  // If no dependencies found, return empty object to avoid unnecessary serialization
+  if (relevantPaths.size === 0) {
+    return {}
+  }
+
+  const result: AnyFormValue = {}
+  relevantPaths.forEach(path => {
+    if (values && path in values) {
+      result[path] = values[path]
+    }
+  })
+
+  return result
+}
+
+// Generate a hash of the inputs structure for cache key
+function hashInputs(inputs: IFormDefinition): string {
+  // Simple hash based on input types, paths, and validation structure
+  return JSON.stringify(
+    inputs.inputs.map(input => ({
+      inputType: input.inputType,
+      path: input.path,
+      hasValidation: !!input.validation?.schema,
+      hasIsVisible: !!input.isVisible,
+      hasDisabled: typeof input.disabled === 'function',
+      hasInputs: !!input.inputs
+    }))
+  )
+}
+
+// Clear cache when needed (e.g., when form definition changes significantly)
+export function clearValidationSchemaCache(): void {
+  validationSchemaCache.clear()
 }
 
 function generateSchemaRec(schemaObj: SchemaTreeNode, values: AnyFormValue, options?: IGetValidationSchemaOptions) {

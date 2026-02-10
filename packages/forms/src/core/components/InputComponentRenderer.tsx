@@ -1,7 +1,7 @@
-import { useMemo } from 'react'
+import { memo, useMemo } from 'react'
 import { get, useFormContext } from 'react-hook-form'
 
-import { cloneDeep, set } from 'lodash-es'
+import { set } from 'lodash-es'
 
 import { IInputDefinition } from '../../types'
 import { useRootFormContext } from '../hooks/useRootFormikContext'
@@ -27,7 +27,7 @@ export interface InputComponentRendererProps<TConfig, TValue> extends Omit<Input
   input: IInputDefinition<TConfig, TValue>
 }
 
-export function InputComponentRenderer<TValue, TConfig = unknown>({
+export const InputComponentRenderer = memo(function InputComponentRenderer<TValue, TConfig = unknown>({
   path,
   factory,
   onUpdate,
@@ -36,54 +36,61 @@ export function InputComponentRenderer<TValue, TConfig = unknown>({
   input,
   withoutWrapper = false
 }: InputComponentRendererProps<TConfig, TValue>): JSX.Element | null {
-  const { formState, watch } = useFormContext()
-  const { fixedValues = {} /*getValuesWithDependencies*/ } = {} as any // useRootFormikContext()
+  // Always call hooks (React rules)
+  const formContext = useFormContext()
+  const { formState } = formContext
+  const { fixedValues = {} } = {} as any
   const { metadata, readonly: globalReadOnly, inputErrorHandler } = useRootFormContext()
 
   const inputComponent = factory?.getComponent<TValue>(input.inputType as string)
 
-  const values = watch()
-  const valuesWithDependenciesAndStepPaths = cloneDeep(values) //getValuesWithDependencies(values, input as IInputDefinition)
+  // Only watch all values when absolutely necessary for dynamic behavior
+  const needsAllValues = !!(input.isVisible || typeof input.disabled === 'function')
+  const needsFieldValue = !!input.warning?.schema
+  const allValues = needsAllValues ? formContext.watch() : {}
+  const fieldValue = needsFieldValue
+    ? needsAllValues
+      ? get(allValues, input.path)
+      : formContext.watch(input.path)
+    : undefined
 
-  if (fixedValues) {
-    Object.keys(fixedValues).forEach(path => {
-      const fixedValue = fixedValues[path]
-      set(valuesWithDependenciesAndStepPaths, path, fixedValue)
-    })
-  }
+  // Memoize values with dependencies to avoid unnecessary recalculations
+  const valuesWithDependenciesAndStepPaths = useMemo(() => {
+    if (!needsAllValues) return {}
+
+    let values = allValues
+    if (fixedValues) {
+      Object.keys(fixedValues).forEach(fixedPath => {
+        const fixedValue = fixedValues[fixedPath]
+        values = set(values, fixedPath, fixedValue)
+      })
+    }
+    return values
+  }, [needsAllValues, allValues, fixedValues])
 
   // compute isVisible
   const isVisible = !input.isVisible || input.isVisible(valuesWithDependenciesAndStepPaths, metadata)
 
-  let readonly: boolean | undefined
-  let disabled: boolean | undefined
+  // compute readonly prop
+  const readonly = globalReadOnly || input.readonly
 
-  if (isVisible) {
-    // compute readonly prop
-    readonly = globalReadOnly || input.readonly
-
-    // compute disabled prop
-    disabled =
-      typeof input.disabled === 'function'
-        ? input.disabled(valuesWithDependenciesAndStepPaths, metadata)
-        : input.disabled
-  }
+  // compute disabled prop
+  const disabled =
+    typeof input.disabled === 'function' ? input.disabled(valuesWithDependenciesAndStepPaths, metadata) : input.disabled
 
   // compute warning prop
   const warningSchema = input.warning?.schema
   const warning = useMemo(() => {
     if (!isVisible || typeof warningSchema === 'undefined') return undefined
 
-    const value = get(values, input.path)
-
     const schema =
       typeof warningSchema === 'function' ? warningSchema(valuesWithDependenciesAndStepPaths) : warningSchema
 
-    const { success, error } = schema.safeParse(value)
+    const { success, error } = schema.safeParse(fieldValue)
     const errorMessage = error?.errors?.[0]?.message
 
     return !success && errorMessage ? errorMessage : undefined
-  }, [input.path, values, warningSchema, isVisible])
+  }, [input.path, fieldValue, warningSchema, isVisible])
 
   const commonProps = useMemo(
     () => ({
@@ -125,4 +132,4 @@ export function InputComponentRenderer<TValue, TConfig = unknown>({
   }
 
   return <InputComponentWrapper withoutWrapper={withoutWrapper}>{component}</InputComponentWrapper>
-}
+})

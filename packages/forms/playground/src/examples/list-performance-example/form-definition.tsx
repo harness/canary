@@ -4,10 +4,10 @@ import { InputConfigType, InputType } from '../../implementation/inputs/common/t
 type IInputConfigWithConfig = IInputDefinition & InputConfigType
 
 export const defaultValues = {
-  rootArray: new Array(5).fill({
-    secondArray: new Array(5).fill({
+  rootArray: new Array(10).fill({
+    secondArray: new Array(10).fill({
       secondArrayProp: 'second',
-      thirdArray: new Array(5).fill('third')
+      thirdArray: new Array(10).fill('third')
     })
   })
 }

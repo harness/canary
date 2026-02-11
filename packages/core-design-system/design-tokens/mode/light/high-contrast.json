@@ -144,15 +144,6 @@
           "$description": "Text and icon color for primary brand elements with maximum contrast."
         },
         "bg": {
-          "$extensions": {
-            "studio.tokens": {
-              "modify": {
-                "type": "darken",
-                "value": "0.064",
-                "space": "lch"
-              }
-            }
-          },
           "$type": "color",
           "$value": "{indigo.700}",
           "$description": "Background color for primary brand items with strong emphasis."
@@ -544,15 +535,6 @@
         "bg": {
           "$type": "color",
           "$value": "{blue.500}",
-          "$extensions": {
-            "studio.tokens": {
-              "modify": {
-                "type": "darken",
-                "value": "0.05",
-                "space": "lch"
-              }
-            }
-          },
           "$description": "Background color for prominent blue surfaces."
         },
         "bg-hover": {
@@ -757,15 +739,6 @@
         "bg": {
           "$type": "color",
           "$value": "{cyan.400}",
-          "$extensions": {
-            "studio.tokens": {
-              "modify": {
-                "type": "darken",
-                "value": "0.05",
-                "space": "lch"
-              }
-            }
-          },
           "$description": "Background color for prominent cyan surfaces."
         },
         "bg-hover": {
@@ -1013,15 +986,6 @@
         "bg": {
           "$type": "color",
           "$value": "{orange.500}",
-          "$extensions": {
-            "studio.tokens": {
-              "modify": {
-                "type": "darken",
-                "value": "0.05",
-                "space": "lch"
-              }
-            }
-          },
           "$description": "Background color for solid orange surfaces."
         },
         "bg-hover": {
@@ -1080,15 +1044,6 @@
         "bg": {
           "$type": "color",
           "$value": "{pink.400}",
-          "$extensions": {
-            "studio.tokens": {
-              "modify": {
-                "type": "darken",
-                "value": "0.05",
-                "space": "lch"
-              }
-            }
-          },
           "$description": "Background color for prominent pink surfaces."
         },
         "bg-hover": {

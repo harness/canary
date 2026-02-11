@@ -9,7 +9,10 @@ export interface IFormDefinition<
   TInput extends IInputDefinition<any, any, any> = IInputDefinition,
   TMetadata = unknown
 > {
-  /* hero is a very top element. it is displayed above Name/Identifier inputs */
+  /**
+   * Hero is a very top element displayed above inputs
+   * @deprecated do not use it
+   */
   hero?: JSX.Element
   metadata?: TMetadata
   inputs: TInput[]

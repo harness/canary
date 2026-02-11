@@ -21,3 +21,5 @@ export function RenderInputs(props: {
     </>
   )
 }
+
+RenderInputs.displayName = 'RenderInputs'

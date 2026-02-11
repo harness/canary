@@ -13,6 +13,9 @@ export const generateReadableLabel = (name = ''): string => {
   return capitalize(name.split('_').join(' '))
 }
 
+/**
+ * @deprecated not used
+ */
 export const afterFrames = (cb: () => void, frames = 2) => {
   let cancelled = false
   const step = () => {

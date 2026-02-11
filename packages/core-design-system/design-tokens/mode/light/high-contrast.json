@@ -985,7 +985,7 @@
         },
         "bg": {
           "$type": "color",
-          "$value": "{orange.500}",
+          "$value": "{orange.600}",
           "$description": "Background color for solid orange surfaces."
         },
         "bg-hover": {
@@ -1043,7 +1043,7 @@
         },
         "bg": {
           "$type": "color",
-          "$value": "{pink.400}",
+          "$value": "{pink.500}",
           "$description": "Background color for prominent pink surfaces."
         },
         "bg-hover": {
@@ -1730,12 +1730,12 @@
       "handle": {
         "bg": {
           "$type": "color",
-          "$value": "{gray.100}",
+          "$value": "{bg.0}",
           "$description": "Background color for slider handles. Creates a distinct, interactive element for adjusting values."
         },
         "border": {
           "$type": "color",
-          "$value": "{gray.900}",
+          "$value": "{text.2}",
           "$description": "Border color for slider handles. Provides definition and contrast for the interactive control."
         }
       }

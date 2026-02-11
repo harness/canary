@@ -1934,12 +1934,12 @@
       "handle": {
         "bg": {
           "$type": "color",
-          "$value": "{gray.100}",
+          "$value": "{bg.0}",
           "$description": "Background color for slider handles. Creates a distinct, interactive element for adjusting values."
         },
         "border": {
           "$type": "color",
-          "$value": "{gray.850}",
+          "$value": "{text.2}",
           "$description": "Border color for slider handles. Provides definition and contrast for the interactive control."
         }
       }

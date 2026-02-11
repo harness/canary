@@ -759,7 +759,7 @@
         },
         "bg": {
           "$type": "color",
-          "$value": "{blue.700}",
+          "$value": "{blue.600}",
           "$description": "Background color for prominent blue surfaces."
         },
         "bg-hover": {
@@ -780,27 +780,18 @@
           "$description": "Text color for subtle blue surfaces with good contrast."
         },
         "bg": {
-          "$extensions": {
-            "studio.tokens": {
-              "modify": {
-                "type": "darken",
-                "value": "0.20",
-                "space": "lch"
-              }
-            }
-          },
           "$type": "color",
-          "$value": "{blue.900}",
+          "$value": "{blue.950}",
           "$description": "Background color for subdued blue surfaces."
         },
         "bg-hover": {
           "$type": "color",
-          "$value": "{blue.950}",
+          "$value": "{blue.900}",
           "$description": "Hover background color for subdued blue surfaces."
         },
         "bg-selected": {
           "$type": "color",
-          "$value": "{blue.950}",
+          "$value": "{blue.900}",
           "$description": "Selected state background color for active secondary blue items."
         }
       },
@@ -863,22 +854,22 @@
       "primary": {
         "text": {
           "$type": "color",
-          "$value": "{pure.black}",
+          "$value": "{pure.white}",
           "$description": "Text color for high-contrast purple surfaces."
         },
         "bg": {
           "$type": "color",
-          "$value": "{purple.700}",
+          "$value": "{purple.800}",
           "$description": "Background color for prominent purple surfaces."
         },
         "bg-hover": {
           "$type": "color",
-          "$value": "{purple.600}",
+          "$value": "{purple.700}",
           "$description": "Hover state background color for interactive primary purple surfaces."
         },
         "bg-selected": {
           "$type": "color",
-          "$value": "{purple.600}",
+          "$value": "{purple.700}",
           "$description": "Selected state background color for active primary purple items."
         }
       },
@@ -890,17 +881,17 @@
         },
         "bg": {
           "$type": "color",
-          "$value": "{purple.1000}",
+          "$value": "{purple.950}",
           "$description": "Background color for subdued purple surfaces."
         },
         "bg-hover": {
           "$type": "color",
-          "$value": "{purple.1000}",
+          "$value": "{purple.900}",
           "$description": "Hover background color for subdued purple surfaces."
         },
         "bg-selected": {
           "$type": "color",
-          "$value": "{purple.1000}",
+          "$value": "{purple.900}",
           "$description": "Hover background color for subdued purple surfaces."
         }
       },
@@ -985,12 +976,12 @@
         },
         "bg": {
           "$type": "color",
-          "$value": "{brown.1000}",
+          "$value": "{brown.950}",
           "$description": "Background color for subdued brown surfaces."
         },
         "bg-hover": {
           "$type": "color",
-          "$value": "{brown.1000}",
+          "$value": "{brown.900}",
           "$description": "Hover background color for subdued brown surfaces."
         }
       },
@@ -1060,22 +1051,13 @@
           "$description": "Text color for subtle cyan surfaces with good contrast."
         },
         "bg": {
-          "$extensions": {
-            "studio.tokens": {
-              "modify": {
-                "type": "darken",
-                "value": "0.20",
-                "space": "lch"
-              }
-            }
-          },
           "$type": "color",
-          "$value": "{cyan.900}",
+          "$value": "{cyan.950}",
           "$description": "Background color for subdued cyan surfaces."
         },
         "bg-hover": {
           "$type": "color",
-          "$value": "{cyan.950}",
+          "$value": "{cyan.900}",
           "$description": "Hover background color for subdued cyan surfaces."
         }
       },
@@ -1150,17 +1132,8 @@
           "$description": "Text color for subtle indigo surfaces with good contrast."
         },
         "bg": {
-          "$extensions": {
-            "studio.tokens": {
-              "modify": {
-                "type": "darken",
-                "value": "0.20",
-                "space": "lch"
-              }
-            }
-          },
           "$type": "color",
-          "$value": "{indigo.900}",
+          "$value": "{indigo.950}",
           "$description": "Background color for subdued indigo surfaces."
         },
         "bg-hover": {
@@ -1255,12 +1228,12 @@
         },
         "bg": {
           "$type": "color",
-          "$value": "{lime.1000}",
+          "$value": "{lime.950}",
           "$description": "Background color for subdued forest-green surfaces."
         },
         "bg-hover": {
           "$type": "color",
-          "$value": "{lime.1000}",
+          "$value": "{lime.900}",
           "$description": "Hover background color for subdued forest-green surfaces."
         }
       },
@@ -1335,27 +1308,18 @@
           "$description": "Text color for subtle mint surfaces with good contrast."
         },
         "bg": {
-          "$extensions": {
-            "studio.tokens": {
-              "modify": {
-                "type": "darken",
-                "value": "0.20",
-                "space": "lch"
-              }
-            }
-          },
           "$type": "color",
-          "$value": "{mint.900}",
+          "$value": "{mint.950}",
           "$description": "Background color for subdued mint surfaces."
         },
         "bg-hover": {
           "$type": "color",
-          "$value": "{mint.950}",
+          "$value": "{mint.900}",
           "$description": "Hover background color for subdued mint surfaces."
         },
         "bg-selected": {
           "$type": "color",
-          "$value": "{mint.950}",
+          "$value": "{mint.900}",
           "$description": "Selected state background color for active secondary mint items."
         }
       },
@@ -1439,22 +1403,13 @@
           "$description": "Text color for subtle orange surfaces with good contrast."
         },
         "bg": {
-          "$extensions": {
-            "studio.tokens": {
-              "modify": {
-                "type": "darken",
-                "value": "0.20",
-                "space": "lch"
-              }
-            }
-          },
           "$type": "color",
-          "$value": "{orange.900}",
+          "$value": "{orange.950}",
           "$description": "Background color for subdued orange surfaces."
         },
         "bg-hover": {
           "$type": "color",
-          "$value": "{orange.950}",
+          "$value": "{orange.900}",
           "$description": "Hover background color for subdued orange surfaces."
         }
       },
@@ -1530,17 +1485,17 @@
         },
         "bg": {
           "$type": "color",
-          "$value": "{pink.1000}",
+          "$value": "{pink.950}",
           "$description": "Background color for subdued pink surfaces."
         },
         "bg-hover": {
           "$type": "color",
-          "$value": "{pink.1000}",
+          "$value": "{pink.900}",
           "$description": "Hover background color for subdued pink surfaces."
         },
         "bg-selected": {
           "$type": "color",
-          "$value": "{pink.1000}",
+          "$value": "{pink.900}",
           "$description": "Selected state background color for active secondary pink items."
         }
       },
@@ -1629,27 +1584,18 @@
           "$description": "Text color for subtle violet surfaces with good contrast."
         },
         "bg": {
-          "$extensions": {
-            "studio.tokens": {
-              "modify": {
-                "type": "darken",
-                "value": "0.20",
-                "space": "lch"
-              }
-            }
-          },
           "$type": "color",
-          "$value": "{violet.900}",
+          "$value": "{violet.950}",
           "$description": "Background color for subdued violet surfaces."
         },
         "bg-hover": {
           "$type": "color",
-          "$value": "{violet.950}",
+          "$value": "{violet.900}",
           "$description": "Hover background color for subdued violet surfaces."
         },
         "bg-selected": {
           "$type": "color",
-          "$value": "{violet.950}",
+          "$value": "{violet.900}",
           "$description": "Selected state background color for active secondary violet items."
         }
       },
@@ -1902,7 +1848,7 @@
       },
       "plain-lineNumber-color": {
         "$type": "color",
-        "$value": "{gray.500}",
+        "$value": "{gray.300}",
         "$description": "Text color for unchanged line numbers, visually subdued compared to changed content."
       },
       "empty-content": {
@@ -1939,17 +1885,8 @@
         "$description": "Background for line numbers in section headers."
       },
       "hunk-content-color": {
-        "$extensions": {
-          "studio.tokens": {
-            "modify": {
-              "type": "darken",
-              "value": "0.18",
-              "space": "lch"
-            }
-          }
-        },
         "$type": "color",
-        "$value": "{gray.300}",
+        "$value": "{gray.500}",
         "$description": "Text color for section header content showing file position information."
       },
       "expand-content": {
@@ -2336,7 +2273,7 @@
           }
         },
         "$type": "color",
-        "$value": "{gray.850}",
+        "$value": "{gray.900}",
         "$description": "Color for scrollbar thumb/handle elements. Provides subtle contrast against the scrollbar track for improved usability."
       }
     },
@@ -2458,7 +2395,7 @@
       "handle": {
         "bg": {
           "$type": "color",
-          "$value": "{gray.100}",
+          "$value": "{bg.0}",
           "$description": "Background color for slider handles. Creates a distinct, interactive element for adjusting values."
         },
         "border": {
@@ -2472,7 +2409,7 @@
             }
           },
           "$type": "color",
-          "$value": "{gray.850}",
+          "$value": "{text.2}",
           "$description": "Border color for slider handles. Provides definition and contrast for the interactive control."
         }
       }

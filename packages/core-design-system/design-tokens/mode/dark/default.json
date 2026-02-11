@@ -145,17 +145,17 @@
         },
         "bg": {
           "$type": "color",
-          "$value": "{indigo.600}",
+          "$value": "{indigo.700}",
           "$description": "Background color for primary brand items with strong emphasis."
         },
         "bg-hover": {
           "$type": "color",
-          "$value": "{indigo.700}",
+          "$value": "{indigo.600}",
           "$description": "Hover state background color for interactive brand surfaces."
         },
         "bg-selected": {
           "$type": "color",
-          "$value": "{indigo.700}",
+          "$value": "{indigo.600}",
           "$description": "Selected state background color for active brand items."
         }
       },

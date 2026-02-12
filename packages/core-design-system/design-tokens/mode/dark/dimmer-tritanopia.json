@@ -2416,6 +2416,16 @@
           "$type": "color",
           "$value": "{border.3}",
           "$description": "Border color for slider handles. Provides definition and contrast for the interactive control."
+        },
+        "bg-selected": {
+          "$type": "color",
+          "$value": "{set.gray.outline.bg}",
+          "$description": "Background color for selected slider handles. Indicates the active handle in multi-handle sliders."
+        },
+        "border-selected": {
+          "$type": "color",
+          "$value": "{border.brand}",
+          "$description": "Border color for selected slider handles. Provides brand-colored emphasis on the active handle."
         }
       },
       "range-gradient": {

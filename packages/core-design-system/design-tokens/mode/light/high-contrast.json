@@ -251,22 +251,22 @@
       "primary": {
         "text": {
           "$type": "color",
-          "$value": "{pure.white}",
+          "$value": "{pure.black}",
           "$description": "Text color for high-contrast gray surfaces."
         },
         "bg": {
           "$type": "color",
-          "$value": "{gray.800}",
+          "$value": "{gray.300}",
           "$description": "Background color for prominent gray surfaces."
         },
         "bg-hover": {
           "$type": "color",
-          "$value": "{gray.900}",
+          "$value": "{gray.400}",
           "$description": "Hover state background color for prominent gray surfaces."
         },
         "bg-selected": {
           "$type": "color",
-          "$value": "{gray.900}",
+          "$value": "{gray.400}",
           "$description": "Selected state background color for prominent gray surfaces."
         }
       },

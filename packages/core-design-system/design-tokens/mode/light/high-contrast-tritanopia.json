@@ -157,6 +157,20 @@
           "$type": "color",
           "$value": "{indigo.850}",
           "$description": "Selected state background color for active brand items."
+        },
+        "ring": {
+          "$extensions": {
+            "studio.tokens": {
+              "modify": {
+                "type": "alpha",
+                "value": "0.15",
+                "space": "lch"
+              }
+            }
+          },
+          "$type": "color",
+          "$value": "{indigo.700}",
+          "$description": "Ring color for brand primary focus and selection indicators. Semi-transparent brand color for accessible focus rings."
         }
       },
       "secondary": {
@@ -3247,7 +3261,7 @@
         "y": "0",
         "blur": "0",
         "spread": "4",
-        "color": "{set.brand.secondary.bg}",
+        "color": "{set.brand.primary.ring}",
         "type": "dropShadow"
       },
       "$description": "Focus ring style for selected states. Indicates active selection with accessible outline."

@@ -1794,7 +1794,7 @@
         },
         "border": {
           "$type": "color",
-          "$value": "{text.2}",
+          "$value": "{border.1}",
           "$description": "Border color for slider handles. Provides definition and contrast for the interactive control."
         }
       }

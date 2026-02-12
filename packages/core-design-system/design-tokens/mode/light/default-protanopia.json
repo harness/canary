@@ -1797,6 +1797,11 @@
           "$value": "{border.1}",
           "$description": "Border color for slider handles. Provides definition and contrast for the interactive control."
         }
+      },
+      "range-gradient": {
+        "$type": "color",
+        "$value": "linear-gradient(90deg, {set.gray.primary.bg} 15%, {set.warning.primary.bg} 40%, {set.orange.primary.bg} 60%, {set.danger.primary.bg} 80%)",
+        "$description": "Multi-stop gradient for slider range tracks. Visualizes severity or intensity progression from neutral through warning, orange, to danger."
       }
     },
     "toast": {

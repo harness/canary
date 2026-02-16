@@ -163,18 +163,14 @@ const SeveritySlider = forwardRef<ElementRef<typeof SliderPrimitive.Root>, Sever
     ref
   ) => {
     const id = useMemo(() => `severity-slider-${Math.random().toString(36).slice(2, 11)}`, [])
-    const [internalValue, setInternalValue] = useState<[number, number]>(defaultValue)
-    const currentValue = value ?? internalValue
 
     const handleValueChange = useCallback(
       (newValue: number[]) => {
         if (newValue.length >= 2) {
-          const next: [number, number] = [newValue[0], newValue[1]]
-          if (value === undefined) setInternalValue(next)
-          onValueChange?.(next)
+          onValueChange?.([newValue[0], newValue[1]])
         }
       },
-      [onValueChange, value]
+      [onValueChange]
     )
 
     const handleValueCommit = useCallback(

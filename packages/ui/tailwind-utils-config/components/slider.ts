@@ -80,7 +80,8 @@ export default {
         borderRadius: 'var(--cn-rounded-full)',
         backgroundColor: 'var(--cn-comp-slider-handle-bg)',
         border: 'var(--cn-border-width-1-half) solid var(--cn-comp-slider-handle-border)',
-        transition: 'width 150ms ease-out, height 150ms ease-out, border-color 150ms ease-out, background-color 150ms ease-out, box-shadow 150ms ease-out'
+        transition:
+          'width 150ms ease-out, height 150ms ease-out, border-color 150ms ease-out, background-color 150ms ease-out, box-shadow 150ms ease-out'
       },
 
       '&:hover::after': {
@@ -254,7 +255,8 @@ export default {
           borderRadius: 'var(--cn-rounded-full)',
           backgroundColor: 'var(--cn-comp-slider-handle-bg)',
           border: 'var(--cn-border-width-1-half) solid var(--cn-comp-slider-handle-border)',
-          transition: 'width 150ms ease-out, height 150ms ease-out, border-color 150ms ease-out, background-color 150ms ease-out, box-shadow 150ms ease-out'
+          transition:
+            'width 150ms ease-out, height 150ms ease-out, border-color 150ms ease-out, background-color 150ms ease-out, box-shadow 150ms ease-out'
         },
 
         '&:hover::after': {

@@ -1,7 +1,7 @@
 import { render, RenderResult, screen } from '@testing-library/react'
 import { vi } from 'vitest'
 
-import { Slider, SeveritySlider } from '../slider'
+import { SeveritySlider, Slider } from '../slider'
 
 // --- Slider ---
 

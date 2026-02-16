@@ -78,6 +78,7 @@ import { DocsPage } from "@/components/docs-page";
       defaultValue={[20, 80]}
       disabled
     />
+
 </div>`}
 />
 
@@ -111,6 +112,7 @@ A specialized variant with a gradient track and two thumbs for defining severity
       defaultValue={[30, 70]}
       disabled
     />
+
 </div>`}
 />
 
@@ -171,14 +173,16 @@ import { Slider, SeveritySlider } from '@harnessio/ui/components'
     },
     {
       name: "caption",
-      description: "Controls what appears below the slider: description text or min/max labels.",
+      description:
+        "Controls what appears below the slider: description text or min/max labels.",
       required: false,
       defaultValue: "'description'",
       value: "'description' | 'min-max'",
     },
     {
       name: "description",
-      description: "Description text shown below the slider (when caption='description').",
+      description:
+        "Description text shown below the slider (when caption='description').",
       required: false,
       value: "string",
     },
@@ -211,7 +215,8 @@ import { Slider, SeveritySlider } from '@harnessio/ui/components'
     },
     {
       name: "defaultValue",
-      description: "Initial value(s). Single element for single slider, two elements for range.",
+      description:
+        "Initial value(s). Single element for single slider, two elements for range.",
       required: false,
       value: "number[]",
     },
@@ -229,7 +234,8 @@ import { Slider, SeveritySlider } from '@harnessio/ui/components'
     },
     {
       name: "onValueCommit",
-      description: "Callback fired when the user releases the thumb (drag ends).",
+      description:
+        "Callback fired when the user releases the thumb (drag ends).",
       required: false,
       value: "(value: number[]) => void",
     },
@@ -263,7 +269,8 @@ import { Slider, SeveritySlider } from '@harnessio/ui/components'
     },
     {
       name: "name",
-      description: "Name attribute for form submission. Radix renders hidden inputs for each thumb.",
+      description:
+        "Name attribute for form submission. Radix renders hidden inputs for each thumb.",
       required: false,
       value: "string",
     },
@@ -314,7 +321,8 @@ import { Slider, SeveritySlider } from '@harnessio/ui/components'
     },
     {
       name: "onValueCommit",
-      description: "Callback fired when the user releases the thumb (drag ends).",
+      description:
+        "Callback fired when the user releases the thumb (drag ends).",
       required: false,
       value: "(value: [number, number]) => void",
     },

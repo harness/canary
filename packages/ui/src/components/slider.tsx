@@ -61,7 +61,10 @@ const Slider = forwardRef<ElementRef<typeof SliderPrimitive.Root>, SliderProps>(
     )
 
     return (
-      <div className={cn('cn-slider', props.disabled && 'cn-slider-disabled', className)} data-disabled={props.disabled || undefined}>
+      <div
+        className={cn('cn-slider', props.disabled && 'cn-slider-disabled', className)}
+        data-disabled={props.disabled || undefined}
+      >
         {label && <Label htmlFor={id}>{label}</Label>}
 
         <div className="cn-slider-body">
@@ -100,11 +103,7 @@ const Slider = forwardRef<ElementRef<typeof SliderPrimitive.Root>, SliderProps>(
                   forceRender(n => !n)
                 }}
               >
-                {isThumbActive(i) && (
-                  <span className="cn-slider-tooltip">
-                    {formatValue([val])}
-                  </span>
-                )}
+                {isThumbActive(i) && <span className="cn-slider-tooltip">{formatValue([val])}</span>}
               </SliderPrimitive.Thumb>
             ))}
           </SliderPrimitive.Root>
@@ -203,7 +202,7 @@ const SeveritySlider = forwardRef<ElementRef<typeof SliderPrimitive.Root>, Sever
             onValueChange={handleValueChange}
             onValueCommit={handleValueCommit}
             disabled={disabled}
-            minStepsBetweenThumbs={Math.max(1, Math.ceil((max - min) * 0.05 / step))}
+            minStepsBetweenThumbs={Math.max(1, Math.ceil(((max - min) * 0.05) / step))}
           >
             <SliderPrimitive.Track className="cn-slider-severity-track">
               <SliderPrimitive.Range className="cn-slider-severity-range" />

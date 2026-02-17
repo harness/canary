@@ -1,18 +1,18 @@
 export default {
   '.cn-slider': {
     display: 'flex',
-    flexDirection: 'column' as const,
+    flexDirection: 'column',
     gap: 'var(--cn-layout-xs)',
     width: '100%',
 
     '&-value-text': {
       font: 'var(--cn-body-single-line-normal, var(--cn-body-normal))',
       color: 'var(--cn-text-3)',
-      whiteSpace: 'nowrap' as const,
-      userSelect: 'none' as const,
+      whiteSpace: 'nowrap',
+      userSelect: 'none',
       flexShrink: '0',
       width: 'var(--cn-size-11)',
-      textAlign: 'right' as const,
+      textAlign: 'right',
 
       '&-range': {
         width: 'var(--cn-size-15)'
@@ -28,23 +28,22 @@ export default {
     },
 
     '&-root': {
-      position: 'relative' as const,
+      position: 'relative',
       display: 'flex',
       alignItems: 'center',
       flex: '1 0 0',
       height: '100%',
       touchAction: 'none',
-      userSelect: 'none' as const
+      userSelect: 'none'
     },
 
     '&:where(.cn-slider-disabled), &:where([data-disabled])': {
       '@apply opacity-cn-disabled': '',
       cursor: 'not-allowed',
-      pointerEvents: 'none' as const
     },
 
     '&-track': {
-      position: 'relative' as const,
+      position: 'relative',
       flexGrow: '1',
       height: 'var(--cn-progress-size-md)',
       borderRadius: 'var(--cn-progress-radius)',
@@ -52,7 +51,7 @@ export default {
     },
 
     '&-range': {
-      position: 'absolute' as const,
+      position: 'absolute',
       height: '100%',
       borderRadius: 'var(--cn-progress-radius)',
       backgroundColor: 'var(--cn-comp-slider-track-progress)'
@@ -65,13 +64,17 @@ export default {
       outline: 'none !important',
       cursor: 'grab',
 
+      '&[data-disabled="true"]': {
+        cursor: 'not-allowed',
+      },
+
       '&:focus, &:active': {
         zIndex: '2'
       },
 
       '&::after': {
         content: '""',
-        position: 'absolute' as const,
+        position: 'absolute',
         top: '50%',
         left: '50%',
         transform: 'translate(-50%, -50%)',
@@ -84,41 +87,42 @@ export default {
           'width 150ms ease-out, height 150ms ease-out, border-color 150ms ease-out, background-color 150ms ease-out, box-shadow 150ms ease-out'
       },
 
-      '&:hover::after': {
-        width: 'var(--cn-size-5)',
-        height: 'var(--cn-size-5)',
-        backgroundColor: 'var(--cn-comp-slider-handle-bg-selected)',
-        borderColor: 'var(--cn-comp-slider-handle-border-selected)',
-        boxShadow: 'var(--cn-ring-selected)'
-      },
+      '&:not([data-disabled="true"])': {
+        '&:hover::after': {
+          width: 'var(--cn-size-5)',
+          height: 'var(--cn-size-5)',
+          backgroundColor: 'var(--cn-comp-slider-handle-bg-selected)',
+          borderColor: 'var(--cn-comp-slider-handle-border-selected)',
+          boxShadow: 'var(--cn-ring-selected)'
+        },
 
-      '&:focus-visible::after': {
-        width: 'var(--cn-size-5)',
-        height: 'var(--cn-size-5)',
-        backgroundColor: 'var(--cn-comp-slider-handle-bg-selected)',
-        borderColor: 'var(--cn-comp-slider-handle-border-selected)',
-        boxShadow: 'var(--cn-ring-selected)'
-      },
+        '&:focus-visible::after': {
+          width: 'var(--cn-size-5)',
+          height: 'var(--cn-size-5)',
+          backgroundColor: 'var(--cn-comp-slider-handle-bg-selected)',
+          borderColor: 'var(--cn-comp-slider-handle-border-selected)',
+          boxShadow: 'var(--cn-ring-selected)'
+        },
 
-      '&:focus:not(:focus-visible):not(:active)::after': {
-        width: 'var(--cn-size-4-half)',
-        height: 'var(--cn-size-4-half)',
-        backgroundColor: 'var(--cn-comp-slider-handle-bg)',
-        borderColor: 'var(--cn-comp-slider-handle-border)',
-        boxShadow: 'none'
-      },
+        '&:focus:not(:focus-visible):not(:active)::after': {
+          width: 'var(--cn-size-4-half)',
+          height: 'var(--cn-size-4-half)',
+          backgroundColor: 'var(--cn-comp-slider-handle-bg)',
+          borderColor: 'var(--cn-comp-slider-handle-border)',
+          boxShadow: 'none'
+        },
+        '&:active': {
+          cursor: 'grabbing'
+        },
 
-      '&:active': {
-        cursor: 'grabbing'
+        '&:active::after': {
+          width: 'var(--cn-size-5)',
+          height: 'var(--cn-size-5)',
+          backgroundColor: 'var(--cn-comp-slider-handle-bg-selected)',
+          borderColor: 'var(--cn-comp-slider-handle-border-selected)',
+          boxShadow: 'var(--cn-ring-selected)'
+        }
       },
-
-      '&:active::after': {
-        width: 'var(--cn-size-5)',
-        height: 'var(--cn-size-5)',
-        backgroundColor: 'var(--cn-comp-slider-handle-bg-selected)',
-        borderColor: 'var(--cn-comp-slider-handle-border-selected)',
-        boxShadow: 'var(--cn-ring-selected)'
-      }
     },
 
     '&-description': {
@@ -128,7 +132,7 @@ export default {
 
     '&-tooltip': {
       display: 'inline-block',
-      position: 'absolute' as const,
+      position: 'absolute',
       bottom: 'calc(100% + 9px)',
       left: '50%',
       transform: 'translateX(-50%)',
@@ -138,9 +142,9 @@ export default {
       color: 'var(--cn-comp-tooltip-text)',
       padding: 'var(--cn-layout-4xs) var(--cn-layout-3xs)',
       minWidth: 'var(--cn-size-6)',
-      textAlign: 'center' as const,
-      whiteSpace: 'nowrap' as const,
-      pointerEvents: 'none' as const,
+      textAlign: 'center',
+      whiteSpace: 'nowrap',
+      pointerEvents: 'none',
       animation: 'cn-slider-tooltip-in 150ms ease-out',
       '@apply z-50 font-caption-normal': '',
 
@@ -162,24 +166,23 @@ export default {
       justifyContent: 'space-between',
       font: 'var(--cn-caption-normal)',
       color: 'var(--cn-text-3)',
-      userSelect: 'none' as const
+      userSelect: 'none'
     },
 
     // Severity slider
     '&-severity': {
       display: 'flex',
-      flexDirection: 'column' as const,
+      flexDirection: 'column',
       gap: 'var(--cn-layout-sm)',
       width: '100%',
 
       '&:where([data-disabled])': {
         '@apply opacity-cn-disabled': '',
         cursor: 'not-allowed',
-        pointerEvents: 'none' as const
       },
 
       '&-body': {
-        position: 'relative' as const,
+        position: 'relative',
         display: 'flex',
         alignItems: 'center',
         width: '100%',
@@ -187,13 +190,13 @@ export default {
       },
 
       '&-root': {
-        position: 'relative' as const,
+        position: 'relative',
         display: 'flex',
         alignItems: 'center',
         flex: '1 0 0',
         height: '100%',
         touchAction: 'none',
-        userSelect: 'none' as const,
+        userSelect: 'none',
 
         '&:where([data-disabled])': {
           cursor: 'not-allowed'
@@ -201,7 +204,7 @@ export default {
       },
 
       '&-track': {
-        position: 'relative' as const,
+        position: 'relative',
         flexGrow: '1',
         height: 'var(--cn-progress-size-md)',
         borderRadius: 'var(--cn-progress-radius)',
@@ -210,12 +213,12 @@ export default {
       },
 
       '&-range': {
-        position: 'absolute' as const,
+        position: 'absolute',
         height: '100%',
 
         '&::before, &::after': {
           content: '""',
-          position: 'absolute' as const,
+          position: 'absolute',
           top: '0',
           bottom: '0',
           backgroundColor: 'var(--cn-comp-slider-track-base)'
@@ -246,7 +249,7 @@ export default {
 
         '&::after': {
           content: '""',
-          position: 'absolute' as const,
+          position: 'absolute',
           top: '50%',
           left: '50%',
           transform: 'translate(-50%, -50%)',
@@ -302,7 +305,7 @@ export default {
         justifyContent: 'space-between',
         font: 'var(--cn-caption-normal)',
         color: 'var(--cn-text-3)',
-        userSelect: 'none' as const
+        userSelect: 'none'
       }
     }
   }

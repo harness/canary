@@ -62,7 +62,9 @@ const Slider = forwardRef<ElementRef<typeof SliderPrimitive.Root>, SliderProps>(
 
     return (
       <div
-        className={cn('cn-slider', props.disabled && 'cn-slider-disabled', className)}
+        className={cn('cn-slider', {
+          'cn-slider-disabled': props.disabled,
+        }, className)}
         data-disabled={props.disabled || undefined}
       >
         {label && <Label htmlFor={id}>{label}</Label>}
@@ -83,6 +85,7 @@ const Slider = forwardRef<ElementRef<typeof SliderPrimitive.Root>, SliderProps>(
             {currentValue.map((val, i) => (
               <SliderPrimitive.Thumb
                 key={i}
+                data-disabled={props.disabled}
                 className="cn-slider-thumb"
                 aria-label={currentValue.length > 1 ? (i === 0 ? 'Minimum value' : 'Maximum value') : undefined}
                 onPointerDown={() => {

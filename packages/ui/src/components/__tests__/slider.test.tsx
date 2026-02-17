@@ -69,7 +69,7 @@ describe('Slider', () => {
     renderSlider({ disabled: true })
 
     const slider = screen.getByRole('slider')
-    expect(slider).toHaveAttribute('data-disabled', '')
+    expect(slider).toHaveAttribute('data-disabled', "true")
   })
 
   test('should render with min and max', () => {

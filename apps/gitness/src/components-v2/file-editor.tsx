@@ -11,8 +11,9 @@ import {
   MarkdownViewer,
   Tabs
 } from '@harnessio/ui/components'
+import { useMonacoTheme } from '@harnessio/ui/hooks'
 import { cn, decodeURIPath } from '@harnessio/ui/utils'
-import { monacoThemes, PathActionBar } from '@harnessio/ui/views'
+import { PathActionBar } from '@harnessio/ui/views'
 import { CodeDiffEditor, CodeEditor, CodeEditorProps } from '@harnessio/yaml-editor'
 
 import GitCommitDialog from '../components-v2/git-commit-dialog'
@@ -52,17 +53,7 @@ export const FileEditor: FC<FileEditorProps> = ({ repoDetails, defaultBranch, lo
   useExitPrompt({ isDirty: dirty && !isCommitDialogOpen })
   const { selectedBranchTag, selectedRefType } = useRepoBranchesStore()
   const { theme } = useThemeStore()
-  // TODO: temporary solution for matching themes
-  const monacoTheme = (theme ?? '').startsWith('dark') ? 'dark' : 'light'
-
-  const themeConfig = useMemo(
-    () => ({
-      defaultTheme: monacoTheme,
-      monacoThemes
-    }),
-    [monacoTheme]
-  )
-
+  const themeConfig = useMonacoTheme(theme)
   const isNew = useMemo(() => !repoDetails || repoDetails?.type === 'dir', [repoDetails])
   const [parentPath, setParentPath] = useState('')
   const fileResourcePath = useMemo(
@@ -264,7 +255,7 @@ export const FileEditor: FC<FileEditorProps> = ({ repoDetails, defaultBranch, lo
               codeRevision={{ ...contentRevision }}
               onCodeRevisionChange={valueRevision => setContentRevision(valueRevision ?? { code: '' })}
               themeConfig={themeConfig}
-              theme={monacoTheme}
+              theme={theme}
               options={{ readOnly: false }}
             />
           )}
@@ -287,7 +278,7 @@ export const FileEditor: FC<FileEditorProps> = ({ repoDetails, defaultBranch, lo
               original={originalFileContent}
               modified={contentRevision.code}
               themeConfig={themeConfig}
-              theme={monacoTheme}
+              theme={theme}
               options={{ readOnly: true }}
             />
           )}

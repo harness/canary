@@ -11,8 +11,9 @@ import {
   Text,
   TimeAgoCard
 } from '@/components'
-import { ModeType, useTheme, useTranslation } from '@/context'
+import { FullTheme, useTranslation } from '@/context'
 import { WebhookStore } from '@/views'
+import { useMonacoTheme } from '@hooks/use-monaco-theme'
 import { formatDuration } from '@utils/TimeUtils'
 
 import { CodeEditor, CodeEditorProps } from '@harnessio/yaml-editor'
@@ -32,20 +33,20 @@ interface RepoWebhookExecutionDetailsPageProps {
   useWebhookStore: () => WebhookStore
   isLoading: boolean
   handleRetriggerExecution: () => void
+  theme?: FullTheme
 }
 
 export const RepoWebhookExecutionDetailsPage: FC<RepoWebhookExecutionDetailsPageProps> = ({
   useWebhookStore,
   isLoading,
-  handleRetriggerExecution
+  handleRetriggerExecution,
+  theme
 }) => {
   const { t } = useTranslation()
   const { executionId, executions } = useWebhookStore()
   const [view, setView] = useState('payload')
-  const { isLightTheme } = useTheme()
+  const themeConfig = useMonacoTheme(theme)
 
-  const monacoTheme = useMemo(() => (isLightTheme ? ModeType.Light : ModeType.Dark), [isLightTheme])
-  const themeConfig = useMemo(() => ({ defaultTheme: monacoTheme }), [monacoTheme])
   const execution = useMemo(() => executions?.find(e => e.id === executionId), [executions, executionId])
 
   const unescapeAndEscapeToJson = (escapedString: string) => {
@@ -87,7 +88,7 @@ export const RepoWebhookExecutionDetailsPage: FC<RepoWebhookExecutionDetailsPage
         language={language}
         codeRevision={codeRevision}
         themeConfig={themeConfig}
-        theme={monacoTheme}
+        theme={theme}
         options={{ readOnly: true }}
       />
     </ScrollArea>

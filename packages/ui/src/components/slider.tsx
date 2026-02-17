@@ -62,9 +62,13 @@ const Slider = forwardRef<ElementRef<typeof SliderPrimitive.Root>, SliderProps>(
 
     return (
       <div
-        className={cn('cn-slider', {
-          'cn-slider-disabled': props.disabled,
-        }, className)}
+        className={cn(
+          'cn-slider',
+          {
+            'cn-slider-disabled': props.disabled
+          },
+          className
+        )}
         data-disabled={props.disabled || undefined}
       >
         {label && <Label htmlFor={id}>{label}</Label>}

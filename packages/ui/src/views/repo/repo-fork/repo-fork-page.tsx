@@ -4,7 +4,6 @@ import {
   Alert,
   Button,
   ButtonLayout,
-  Checkbox,
   ControlGroup,
   Fieldset,
   FormInput,
@@ -101,7 +100,7 @@ export function RepoForkView({
         <Layout.Vertical gap="xl">
           <Layout.Vertical gap="md">
             <Text variant="heading-section">
-              {t('views:repos.createNewFork', 'Create a new fork of {repoName}', { repoName: repoIdentifier })}
+              {t('views:repos.createNewFork', 'Create a new fork of {{repoName}}', { repoName: repoIdentifier })}
             </Text>
             <Text className="max-w-[500px]">
               {t(
@@ -177,25 +176,36 @@ export function RepoForkView({
               </Layout.Vertical>
 
               <div>
-                {/* MAKE PRIVATE */}
+                {/* VISIBILITY */}
                 <Fieldset>
                   <ControlGroup>
-                    <Layout.Vertical gap="md">
-                      <Text variant="body-strong">
-                        {t('views:repos.fork.changeVisibility', 'Change the visibility of the fork')}
-                      </Text>
-
-                      <Layout.Vertical gap="xs">
-                        <Checkbox
-                          id="makePrivate"
-                          checked={isPublic ? makePrivateValue : true}
-                          disabled={!isPublic}
-                          onCheckedChange={handleMakePrivateChange}
-                          label={t('views:repos.fork.makePrivate', 'Make the fork private')}
-                          caption={t('views:repos.fork.makePrivateCaption', 'Hide this repository from the public')}
-                        />
-                      </Layout.Vertical>
-                    </Layout.Vertical>
+                    <Radio.Root
+                      value={makePrivateValue ? 'private' : 'public'}
+                      onValueChange={value => handleMakePrivateChange(value === 'private')}
+                      disabled={!isPublic}
+                      label={t('views:repos.visibility', 'Visibility')}
+                    >
+                      <Radio.Item
+                        id="visibility-public"
+                        value="public"
+                        disabled={!isPublic}
+                        label={t('views:repos.public', 'Public')}
+                        caption={t(
+                          'views:repos.fork.publicCaption',
+                          'Anyone with access to Harness can clone this repo.'
+                        )}
+                      />
+                      <Radio.Item
+                        id="visibility-private"
+                        value="private"
+                        disabled={!isPublic}
+                        label={t('views:repos.private', 'Private')}
+                        caption={t(
+                          'views:repos.fork.privateCaption',
+                          'You can choose who can see and commit to this repository.'
+                        )}
+                      />
+                    </Radio.Root>
                     {errors.makePrivate && (
                       <Message theme={MessageTheme.ERROR}>{errors.makePrivate.message?.toString()}</Message>
                     )}

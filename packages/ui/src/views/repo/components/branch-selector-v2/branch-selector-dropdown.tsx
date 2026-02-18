@@ -29,7 +29,8 @@ export const BranchSelectorDropdown: FC<BranchSelectorDropdownProps> = ({
   setSearchQuery,
   dynamicWidth = false,
   preSelectedTab = BranchSelectorTab.BRANCHES,
-  setCreateBranchDialogOpen
+  setCreateBranchDialogOpen,
+  hideViewAllLink = false
 }) => {
   const [activeTab, setActiveTab] = useState<BranchSelectorTab>(preSelectedTab)
   const { t } = useTranslation()
@@ -134,7 +135,7 @@ export const BranchSelectorDropdown: FC<BranchSelectorDropdownProps> = ({
 
             return (
               <Command.Item
-                className="py-cn-xs gap-cn-sm"
+                className="gap-cn-sm py-cn-xs"
                 onSelect={() => onSelectBranch?.(item, activeTab)}
                 key={item.name}
                 value={item.name}
@@ -147,17 +148,18 @@ export const BranchSelectorDropdown: FC<BranchSelectorDropdownProps> = ({
             )
           })}
         </Command.List>
-
-        <div className="px-cn-sm border-cn-3 py-cn-sm border-t border-solid">
-          <Link to={viewAllUrl} variant="secondary" className="w-full" onKeyDown={onLinkEnter}>
-            {t('views:repos.viewAll', `View all ${activeTab}`, {
-              type:
-                activeTab === BranchSelectorTab.BRANCHES
-                  ? t('views:repos.branchesLowercase', 'branches')
-                  : t('views:repos.tagsLowercase', 'tags')
-            })}
-          </Link>
-        </div>
+        {!hideViewAllLink && (
+          <div className="border-t border-solid border-cn-3 px-cn-sm pb-cn-md pt-cn-sm">
+            <Link to={viewAllUrl} variant="secondary" className="w-full" onKeyDown={onLinkEnter}>
+              {t('views:repos.viewAll', `View all ${activeTab}`, {
+                type:
+                  activeTab === BranchSelectorTab.BRANCHES
+                    ? t('views:repos.branchesLowercase', 'branches')
+                    : t('views:repos.tagsLowercase', 'tags')
+              })}
+            </Link>
+          </div>
+        )}
       </Command.Root>
     </Popover.Content>
   )

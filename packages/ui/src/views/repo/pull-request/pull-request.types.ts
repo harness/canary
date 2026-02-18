@@ -8,7 +8,8 @@ import {
   LabelType,
   RepositoryType,
   Scope,
-  TypesBranchTable
+  TypesBranchTable,
+  TypesRepositoryCore
 } from '@/views'
 import { CheckboxOptions } from '@components/filters'
 import { ComboBoxOptions } from '@components/filters/filters-bar/actions/variants/combo-box'
@@ -51,6 +52,7 @@ export interface PullRequestType {
   state?: EnumPullReqState
   updated: number
   labels: PRListLabelType[]
+  source_repo?: TypesRepositoryCore
 }
 
 export type PRState = EnumPullReqState
@@ -283,6 +285,7 @@ export interface PullRequestPageProps extends Partial<RoutingProps> {
   setSearchQuery: (query: string | null) => void
   onLabelClick?: (labelId: number) => void
   scope: Scope
+  toUpstreamRepo?: (path: string, subPath?: string) => string
 }
 
 export interface PullRequestListProps extends Partial<RoutingProps> {
@@ -303,6 +306,7 @@ export interface PullRequestListProps extends Partial<RoutingProps> {
   dirtyNoDataContent?: ReactNode
   isLoading?: boolean
   paginationProps?: StackedListPaginationProps
+  toUpstreamRepo?: (path: string, subPath?: string) => string
 }
 
 export type PRListFilters = {

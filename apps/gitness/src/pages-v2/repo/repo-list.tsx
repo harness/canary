@@ -17,6 +17,7 @@ import { useIsMFE } from '../../framework/hooks/useIsMFE'
 import { useMFEContext } from '../../framework/hooks/useMFEContext'
 import { useQueryState } from '../../framework/hooks/useQueryState'
 import usePaginationQueryStateWithStore from '../../hooks/use-pagination-query-state-with-store-v2'
+import { useUpstreamRepoUrl } from '../../hooks/useUpstreamRepoUrl'
 import { PathParams } from '../../RouteDefinitions'
 import { PageResponseHeader } from '../../types'
 import { checkIsSameScope, getRepoUrl } from '../../utils/scope-url-utils'
@@ -218,13 +219,7 @@ export default function ReposListPage() {
     [favorite, recursive]
   )
 
-  const toUpstreamRepo = (parentRepoPath: string): string => {
-    if (parentRoutes?.toCodeRepositoryPath && parentRepoPath) {
-      const baseRepoPath = parentRoutes.toCodeRepositoryPath({ repoPath: parentRepoPath })
-      return `${baseRepoPath}/summary`
-    }
-    return ''
-  }
+  const toUpstreamRepo = useUpstreamRepoUrl()
 
   return (
     <SandboxRepoListPage

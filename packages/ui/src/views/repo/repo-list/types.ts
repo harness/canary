@@ -27,7 +27,7 @@ export interface RoutingProps {
   toCreateRepo: () => string
   toImportRepo: () => string
   toImportMultipleRepos: () => string
-  toUpstreamRepo: (parentRepoPath: string) => string
+  toUpstreamRepo: (parentRepoPath: string, subPath?: string) => string
 }
 
 export interface FavoriteProps {

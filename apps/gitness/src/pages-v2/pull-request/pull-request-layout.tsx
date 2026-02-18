@@ -14,6 +14,7 @@ import { BranchSelectorContainer } from '../../components-v2/branch-selector-con
 import { usePageTitleContext } from '../../framework/context/PageTitleContext'
 import { useGetRepoRef } from '../../framework/hooks/useGetRepoPath'
 import useGetPullRequestTab from '../../hooks/useGetPullRequestTab'
+import { useUpstreamRepoUrl } from '../../hooks/useUpstreamRepoUrl'
 import { PathParams } from '../../RouteDefinitions'
 import { usePullRequestProviderStore } from './stores/pull-request-provider-store'
 import { usePullRequestStore } from './stores/pull-request-store'
@@ -26,6 +27,7 @@ const PullRequestLayout = () => {
 
   const repoRef = useGetRepoRef()
   const { setPageTitle } = usePageTitleContext()
+  const toUpstreamRepo = useUpstreamRepoUrl()
 
   const {
     data: { body: pullReqData } = {},
@@ -118,6 +120,7 @@ const PullRequestLayout = () => {
       updateTitleAndDescription={handleUpdateTitleAndDescription}
       updateTargetBranch={handleUpdateTargetBranch}
       branchSelectorRenderer={BranchSelectorContainer}
+      toUpstreamRepo={toUpstreamRepo}
     />
   )
 }

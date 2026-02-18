@@ -69,6 +69,7 @@ export const usePullRequestListStore = create<PullRequestListStore>(set => ({
       comments: item?.stats?.conversations,
       state: item?.state,
       updated: item?.updated ?? 0,
+      source_repo: item?.source_repo,
       labels:
         item?.labels?.map(label => ({
           key: label?.key || '',

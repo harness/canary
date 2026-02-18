@@ -32,6 +32,7 @@ export interface BranchSelectorDropdownProps {
   preSelectedTab?: BranchSelectorTab
   setCreateBranchDialogOpen?: (open: boolean) => void
   disabled?: boolean
+  hideViewAllLink?: boolean
 }
 
 export interface BranchSelectorProps extends BranchSelectorDropdownProps {

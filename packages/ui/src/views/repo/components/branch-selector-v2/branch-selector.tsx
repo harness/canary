@@ -27,6 +27,7 @@ interface BranchSelectorProps {
   className?: string
   disabled?: boolean
   preventCloseOnSelect?: boolean
+  hideViewAllLink?: boolean
 }
 export const BranchSelectorV2 = forwardRef<HTMLButtonElement, BranchSelectorProps>(
   (
@@ -50,7 +51,8 @@ export const BranchSelectorV2 = forwardRef<HTMLButtonElement, BranchSelectorProp
       setCreateBranchDialogOpen,
       className,
       disabled,
-      preventCloseOnSelect = false
+      preventCloseOnSelect = false,
+      hideViewAllLink = false
     },
     ref
   ) => {
@@ -98,6 +100,7 @@ export const BranchSelectorV2 = forwardRef<HTMLButtonElement, BranchSelectorProp
           setCreateBranchDialogOpen={setCreateBranchDialogOpen}
           disabled={disabled}
           selectorTitle={selectorTitle}
+          hideViewAllLink={hideViewAllLink}
         />
       </Popover.Root>
     )

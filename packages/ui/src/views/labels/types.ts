@@ -104,6 +104,7 @@ export interface TypesLabelAssignment {
 
 export type TypesRepositoryCore = {
   default_branch?: string
+  fork_id?: number
   id?: number
   identifier?: string
   parent_id?: number

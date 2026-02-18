@@ -37,6 +37,7 @@ import {
 } from '@harnessio/ui/views'
 
 import { BranchSelectorContainer } from '../../components-v2/branch-selector-container'
+import { ForkPRBranchSelectorContainer } from '../../components-v2/fork-pr-branch-selector-container.tsx'
 import { useAppContext } from '../../framework/context/AppContext'
 import { useRoutes } from '../../framework/context/NavigationContext'
 import { useGetRepoRef } from '../../framework/hooks/useGetRepoPath'
@@ -46,7 +47,7 @@ import { useMFEContext } from '../../framework/hooks/useMFEContext'
 import { useQueryState } from '../../framework/hooks/useQueryState'
 import { useAPIPath } from '../../hooks/useAPIPath.ts'
 import { PathParams } from '../../RouteDefinitions'
-import { decodeGitContent, normalizeGitRef } from '../../utils/git-utils'
+import { decodeGitContent, normalizeGitRefWithUpstream } from '../../utils/git-utils'
 import { getFileExtension } from '../../utils/path-utils.ts'
 import { useGetRepoLabelAndValuesData } from '../repo/labels/hooks/use-get-repo-label-and-values-data'
 import { useRepoCommitsStore } from '../repo/stores/repo-commits-store'
@@ -74,16 +75,36 @@ export const CreatePullRequest = () => {
   const diffRefs = params.diffRefs || params['*']
   const [isBranchSelected, setIsBranchSelected] = useState<boolean>(diffRefs ? true : false) // State to track branch selection
   const { currentUser } = useAppContext()
-  const [diffTargetBranch, diffSourceBranch] = diffRefs ? diffRefs.split('...') : [undefined, undefined]
+  const repoRef = useGetRepoRef()
+
+  const { data: { body: repoData } = {} } = useFindRepositoryQuery({ repo_ref: repoRef })
+  const isForkRepo = !!repoData?.upstream
+  const [targetBranchRaw, sourceBranchRaw] = diffRefs
+    ? decodeURIComponent(diffRefs).split('...')
+    : [undefined, undefined]
+
+  const isUpstreamTarget = targetBranchRaw?.startsWith('upstream:') || false
+  const isUpstreamSource = sourceBranchRaw?.startsWith('upstream:') || false
+
+  const diffTargetBranch = useMemo(
+    () => (isUpstreamTarget ? targetBranchRaw?.replace('upstream:', '') : targetBranchRaw),
+    [targetBranchRaw, isUpstreamTarget]
+  )
+  const diffSourceBranch = useMemo(
+    () => (isUpstreamSource ? sourceBranchRaw?.replace('upstream:', '') : sourceBranchRaw),
+    [sourceBranchRaw, isUpstreamSource]
+  )
+
   const {
     renderUrl,
-    scope: { accountId }
+    scope: { accountId },
+    routeUtils
   } = useMFEContext()
   const spaceURL = useGetSpaceURLParam()
 
   const navigate = useNavigate()
   const [apiError, setApiError] = useState<string | null>(null)
-  const repoRef = useGetRepoRef()
+
   const [selectedTargetBranch, setSelectedTargetBranch] = useState<BranchSelectorListItem | undefined>(
     diffTargetBranch ? { name: diffTargetBranch, sha: '' } : undefined
   )
@@ -108,6 +129,16 @@ export const CreatePullRequest = () => {
   ] = useState(defaultCommitRange)
   const targetRef = useMemo(() => selectedTargetBranch?.name, [selectedTargetBranch])
   const sourceRef = useMemo(() => selectedSourceBranch?.name, [selectedSourceBranch])
+
+  const normalizedTargetRef = useMemo(
+    () => normalizeGitRefWithUpstream(targetRef, isUpstreamTarget),
+    [targetRef, isUpstreamTarget]
+  )
+  const normalizedSourceRef = useMemo(
+    () => normalizeGitRefWithUpstream(sourceRef, isUpstreamSource),
+    [sourceRef, isUpstreamSource]
+  )
+
   const [cachedDiff, setCachedDiff] = useAtom(changesInfoAtom)
   const [mergeability, setMergeabilty] = useState<boolean>()
   const diffApiPath = useMemo(() => {
@@ -116,14 +147,17 @@ export const CreatePullRequest = () => {
     return commitRange.length > 0
       ? `${commitRange[0]}~1...${commitRange[commitRange.length - 1]}`
       : // show range of commits and user did not select a subrange
-        `${normalizeGitRef(targetRef)}...${normalizeGitRef(sourceRef)}`
-  }, [commitRange, targetRef, sourceRef])
+        `${normalizedTargetRef}...${normalizedSourceRef}`
+  }, [commitRange, normalizedTargetRef, normalizedSourceRef])
 
   const { data: { body: prTemplateData } = {} } = useGetContentQuery(
     {
       path: '.harness/pull_request_template.md',
       repo_ref: repoRef,
-      queryParams: { include_commit: false, git_ref: normalizeGitRef(diffTargetBranch || '') }
+      queryParams: {
+        include_commit: false,
+        git_ref: normalizedTargetRef
+      }
     },
     {
       enabled: !!repoRef && !!diffTargetBranch
@@ -281,6 +315,8 @@ export const CreatePullRequest = () => {
     }
   }, [repoMetadata, diffTargetBranch, diffSourceBranch])
 
+  const prRepoRef = isUpstreamTarget ? repoData?.upstream?.path + '/+' : repoRef
+
   const handleSubmit = (data: CompareFormFields, isDraft: boolean) => {
     const pullRequestBody: OpenapiCreatePullReqRequest = {
       description: data.description,
@@ -296,27 +332,36 @@ export const CreatePullRequest = () => {
           value: label.assigned_value?.value || undefined,
           value_id: label.assigned_value?.id || undefined
         }
-      })
+      }),
+      ...(isUpstreamTarget ? { source_repo_ref: repoData?.path } : {}),
+      ...(isUpstreamSource ? { source_repo_ref: repoData?.upstream?.path } : {})
     }
 
     createPullRequestMutation.mutate(
       {
         queryParams: {},
         body: pullRequestBody,
-        repo_ref: repoRef
+        repo_ref: prRepoRef
       },
       {
-        // TODO: fix this to navigate to the new pull request after transferring a pull request page to ui
         onSuccess: data => {
           setApiError(null)
           if (data?.body?.number) {
-            navigate(
-              routes.toPullRequest({
-                spaceId,
-                repoId,
-                pullRequestId: data?.body?.number.toString()
+            // When PR is created to upstream, navigate to upstream repo's PR
+            if (isUpstreamTarget && repoData?.upstream?.path && routeUtils?.toCODEPullRequest) {
+              routeUtils.toCODEPullRequest({
+                repoPath: repoData.upstream.path,
+                pullRequestId: data.body.number.toString()
               })
-            )
+            } else {
+              navigate(
+                routes.toPullRequest({
+                  spaceId,
+                  repoId,
+                  pullRequestId: data?.body?.number.toString()
+                })
+              )
+            }
           }
         },
         onError: (error: CreateRepositoryErrorResponse) => {
@@ -361,16 +406,16 @@ export const CreatePullRequest = () => {
 
   const { data: { body: pullReqData } = {} } = useGetPullReqByBranchesQuery(
     {
-      repo_ref: repoRef,
-      source_branch: sourceRef || '',
-      target_branch: targetRef || '',
+      repo_ref: prRepoRef,
+      source_branch: isUpstreamSource ? `upstream:${sourceRef}` : sourceRef || '',
+      target_branch: isUpstreamTarget ? `upstream:${targetRef}` : targetRef || '',
       queryParams: {
         include_checks: true,
         include_rules: true
       }
     },
     {
-      enabled: !!repoRef && !!sourceRef && !!targetRef
+      enabled: !!prRepoRef && !!sourceRef && !!targetRef
     }
   )
 
@@ -397,8 +442,8 @@ export const CreatePullRequest = () => {
         // query: query??'',
         page: 0,
         limit: 20,
-        after: normalizeGitRef(selectedTargetBranch?.name),
-        git_ref: normalizeGitRef(selectedSourceBranch?.name)
+        after: normalizedTargetRef,
+        git_ref: normalizedSourceRef
       }
     },
     {
@@ -561,8 +606,8 @@ export const CreatePullRequest = () => {
     if (repoMetadata && repoMetadata.path && selectedSourceBranch?.name && selectedTargetBranch?.name) {
       return await mutation.mutateAsync({
         repoMetadata,
-        baseRef: normalizeGitRef(selectedTargetBranch.name) || '',
-        headRef: normalizeGitRef(selectedSourceBranch.name) || ''
+        baseRef: normalizedTargetRef,
+        headRef: normalizedSourceRef
       })
     }
 
@@ -682,22 +727,54 @@ export const CreatePullRequest = () => {
         searchLabelQuery={searchLabel}
         setSearchLabelQuery={setSearchLabel}
         branchSelectorRenderer={
-          <Layout.Horizontal gapX="3xs" align="center">
-            <BranchSelectorContainer
-              className="max-w-80"
-              onSelectBranchorTag={branchTagName => handleSelectTargetBranchOrTag(branchTagName)}
-              selectedBranch={selectedTargetBranch}
-              branchPrefix="base"
+          isForkRepo ? (
+            <ForkPRBranchSelectorContainer
+              forkRepoRef={repoRef}
+              forkRepoIdentifier={repoId || ''}
+              forkDefaultBranch={repoData?.default_branch}
+              upstream={repoData?.upstream}
+              initialTargetBranch={diffTargetBranch}
+              initialSourceBranch={diffSourceBranch}
+              isUpstreamTarget={isUpstreamTarget}
+              isUpstreamSource={isUpstreamSource}
+              onSelectionChange={({ targetRepo, targetBranch, sourceRepo, sourceBranch }) => {
+                setSelectedTargetBranch(targetBranch)
+                setSelectedSourceBranch(sourceBranch)
+
+                // Update URL with upstream prefix when applicable
+                const targetRefForUrl = targetRepo.isUpstream ? `upstream:${targetBranch.name}` : targetBranch.name
+                const sourceRefForUrl = sourceRepo.isUpstream ? `upstream:${sourceBranch.name}` : sourceBranch.name
+
+                if (targetBranch.name && sourceBranch.name) {
+                  navigate(
+                    routes.toPullRequestCompare({
+                      spaceId,
+                      repoId,
+                      diffRefs: `${targetRefForUrl}...${sourceRefForUrl}`
+                    }),
+                    { replace: true }
+                  )
+                }
+              }}
             />
-            <IconV2 name="arrow-left" />
-            <BranchSelectorContainer
-              className="max-w-80"
-              onSelectBranchorTag={branchTagName => handleSelectSourceBranchOrTag(branchTagName)}
-              selectedBranch={selectedSourceBranch}
-              branchPrefix="compare"
-              autoSelectDefaultBranch={false}
-            />
-          </Layout.Horizontal>
+          ) : (
+            <Layout.Horizontal gapX="3xs" align="center">
+              <BranchSelectorContainer
+                className="max-w-80"
+                onSelectBranchorTag={branchTagName => handleSelectTargetBranchOrTag(branchTagName)}
+                selectedBranch={selectedTargetBranch}
+                branchPrefix="base"
+              />
+              <IconV2 name="arrow-left" />
+              <BranchSelectorContainer
+                className="max-w-80"
+                onSelectBranchorTag={branchTagName => handleSelectSourceBranchOrTag(branchTagName)}
+                selectedBranch={selectedSourceBranch}
+                branchPrefix="compare"
+                autoSelectDefaultBranch={false}
+              />
+            </Layout.Horizontal>
+          )
         }
         onGetFullDiff={onGetFullDiff}
         toRepoFileDetails={toRepoFileDetails}

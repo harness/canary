@@ -15,7 +15,8 @@ import {
   PathActionBar,
   RepoFile,
   SandboxLayout,
-  Summary
+  Summary,
+  TypesRepositoryCore
 } from '@/views'
 
 interface RepoFilesProps {
@@ -43,6 +44,9 @@ interface RepoFilesProps {
   showContributeBtn?: boolean
   repoDetailsError?: UsererrorError | null
   scheduleFileMetaFetch?: (paths: string[]) => void
+  upstream?: TypesRepositoryCore
+  onFetchAndMerge?: () => void
+  isFetchingUpstream?: boolean
 }
 
 export const RepoFiles: FC<RepoFilesProps> = ({
@@ -69,7 +73,10 @@ export const RepoFiles: FC<RepoFilesProps> = ({
   fullResourcePath,
   showContributeBtn,
   repoDetailsError,
-  scheduleFileMetaFetch
+  scheduleFileMetaFetch,
+  upstream,
+  onFetchAndMerge,
+  isFetchingUpstream
 }) => {
   const { t } = useTranslation()
 
@@ -94,7 +101,7 @@ export const RepoFiles: FC<RepoFilesProps> = ({
     if (isShowSummary && files.length && !repoDetailsError)
       return (
         <>
-          {selectedBranchTag?.name !== defaultBranchName && (
+          {(upstream || selectedBranchTag?.name !== defaultBranchName) && (
             <BranchInfoBar
               repoId={repoId}
               spaceId={spaceId}
@@ -106,6 +113,9 @@ export const RepoFiles: FC<RepoFilesProps> = ({
               }}
               refType={selectedRefType}
               showContributeBtn={showContributeBtn}
+              upstream={upstream}
+              onFetchAndMerge={onFetchAndMerge}
+              isFetchingUpstream={isFetchingUpstream}
             />
           )}
           <Summary
@@ -171,7 +181,7 @@ export const RepoFiles: FC<RepoFilesProps> = ({
 
   return (
     <SandboxLayout.Main className="repo-files-height min-w-0 bg-transparent">
-      <SandboxLayout.Content className="pl-cn-sm gap-y-cn-md flex h-full flex-col">
+      <SandboxLayout.Content className="flex h-full flex-col gap-y-cn-md pl-cn-sm">
         {isView && !isEmptyRepository && (
           <div className="-mt-cn-3xs">
             <PathActionBar

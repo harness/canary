@@ -3,7 +3,6 @@ import {
   Favorite,
   IconV2,
   Layout,
-  Link,
   NoData,
   PermissionIdentifier,
   ResourceType,
@@ -18,6 +17,7 @@ import { useComponents, useRouterContext, useTranslation } from '@/context'
 import { Scope } from '@/views'
 import { determineScope, getScopedPath } from '@components/scope/utils'
 
+import { ForkedFrom } from '../components/forked-from'
 import { RepositoryType } from '../repo.types'
 import { FavoriteProps, RepoStore, RoutingProps } from './types'
 
@@ -56,7 +56,7 @@ const Title = ({
   repoPath: string
   showScope?: boolean
   upstream?: RepositoryType['upstream']
-  toUpstreamRepo?: (path: string) => string
+  toUpstreamRepo?: (path: string, subPath?: string) => string
 }) => {
   const { t } = useTranslation()
   const repoScopeParams = { ...scope, repoIdentifier: repoName, repoPath }
@@ -80,16 +80,7 @@ const Title = ({
           {showScope && scopeType ? <ScopeTag scopeType={scopeType} scopedPath={scopedPath} size="sm" /> : null}
         </Layout.Flex>
       </Layout.Flex>
-      {upstream && (
-        <Text variant="body-normal" color="foreground-3">
-          {t('views:repos.forkedFrom', 'Forked from')}{' '}
-          {toUpstreamRepo && (
-            <Link external href={toUpstreamRepo(upstream.path)} onClick={e => e.stopPropagation()}>
-              {upstream.identifier}
-            </Link>
-          )}
-        </Text>
-      )}
+      {upstream && <ForkedFrom upstream={upstream} toUpstreamRepo={toUpstreamRepo} />}
     </Layout.Vertical>
   )
 }

@@ -98,7 +98,8 @@ export const PullRequestList: FC<PullRequestListProps> = ({
   showScope = false,
   toBranch,
   isLoading,
-  paginationProps
+  paginationProps,
+  toUpstreamRepo
 }) => {
   const { identifier: repoId } = repo || {}
 
@@ -207,6 +208,8 @@ export const PullRequestList: FC<PullRequestListProps> = ({
                       targetBranch={pullRequest.targetBranch || ''}
                       toBranch={toBranch}
                       repoId={pullRequest.repo?.identifier || ''}
+                      sourceRepo={pullRequest.source_repo}
+                      toUpstreamRepo={toUpstreamRepo}
                     />
                   )
                 }

@@ -211,8 +211,16 @@ const SeveritySlider = forwardRef<ElementRef<typeof SliderPrimitive.Root>, Sever
               <SliderPrimitive.Range className="cn-slider-severity-range" />
             </SliderPrimitive.Track>
 
-            <SliderPrimitive.Thumb className="cn-slider-severity-thumb" aria-label="Minimum value" />
-            <SliderPrimitive.Thumb className="cn-slider-severity-thumb" aria-label="Maximum value" />
+            <SliderPrimitive.Thumb
+              data-disabled={disabled}
+              className="cn-slider-severity-thumb"
+              aria-label="Minimum value"
+            />
+            <SliderPrimitive.Thumb
+              data-disabled={disabled}
+              className="cn-slider-severity-thumb"
+              aria-label="Maximum value"
+            />
           </SliderPrimitive.Root>
         </div>
 

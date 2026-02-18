@@ -111,6 +111,7 @@ export default {
           borderColor: 'var(--cn-comp-slider-handle-border)',
           boxShadow: 'none'
         },
+
         '&:active': {
           cursor: 'grabbing'
         },
@@ -243,6 +244,10 @@ export default {
         cursor: 'grab',
         zIndex: '1',
 
+        '&[data-disabled="true"]': {
+          cursor: 'not-allowed',
+        },
+
         '&:focus, &:active': {
           zIndex: '2'
         },
@@ -262,41 +267,43 @@ export default {
             'width 150ms ease-out, height 150ms ease-out, border-color 150ms ease-out, background-color 150ms ease-out, box-shadow 150ms ease-out'
         },
 
-        '&:hover::after': {
-          width: 'var(--cn-size-5)',
-          height: 'var(--cn-size-5)',
-          backgroundColor: 'var(--cn-comp-slider-handle-bg-selected)',
-          borderColor: 'var(--cn-comp-slider-handle-border-selected)',
-          boxShadow: 'var(--cn-ring-selected)'
-        },
+        '&:not([data-disabled="true"])': {
+          '&:hover::after': {
+            width: 'var(--cn-size-5)',
+            height: 'var(--cn-size-5)',
+            backgroundColor: 'var(--cn-comp-slider-handle-bg-selected)',
+            borderColor: 'var(--cn-comp-slider-handle-border-selected)',
+            boxShadow: 'var(--cn-ring-selected)'
+          },
 
-        '&:focus-visible::after': {
-          width: 'var(--cn-size-5)',
-          height: 'var(--cn-size-5)',
-          backgroundColor: 'var(--cn-comp-slider-handle-bg-selected)',
-          borderColor: 'var(--cn-comp-slider-handle-border-selected)',
-          boxShadow: 'var(--cn-ring-selected)'
-        },
+          '&:focus-visible::after': {
+            width: 'var(--cn-size-5)',
+            height: 'var(--cn-size-5)',
+            backgroundColor: 'var(--cn-comp-slider-handle-bg-selected)',
+            borderColor: 'var(--cn-comp-slider-handle-border-selected)',
+            boxShadow: 'var(--cn-ring-selected)'
+          },
 
-        '&:focus:not(:focus-visible):not(:active)::after': {
-          width: 'var(--cn-size-4-half)',
-          height: 'var(--cn-size-4-half)',
-          backgroundColor: 'var(--cn-comp-slider-handle-bg)',
-          borderColor: 'var(--cn-comp-slider-handle-border)',
-          boxShadow: 'none'
-        },
+          '&:focus:not(:focus-visible):not(:active)::after': {
+            width: 'var(--cn-size-4-half)',
+            height: 'var(--cn-size-4-half)',
+            backgroundColor: 'var(--cn-comp-slider-handle-bg)',
+            borderColor: 'var(--cn-comp-slider-handle-border)',
+            boxShadow: 'none'
+          },
 
-        '&:active': {
-          cursor: 'grabbing'
-        },
+          '&:active': {
+            cursor: 'grabbing'
+          },
 
-        '&:active::after': {
-          width: 'var(--cn-size-5)',
-          height: 'var(--cn-size-5)',
-          backgroundColor: 'var(--cn-comp-slider-handle-bg-selected)',
-          borderColor: 'var(--cn-comp-slider-handle-border-selected)',
-          boxShadow: 'var(--cn-ring-selected)'
-        }
+          '&:active::after': {
+            width: 'var(--cn-size-5)',
+            height: 'var(--cn-size-5)',
+            backgroundColor: 'var(--cn-comp-slider-handle-bg-selected)',
+            borderColor: 'var(--cn-comp-slider-handle-border-selected)',
+            boxShadow: 'var(--cn-ring-selected)'
+          }
+        },
       },
 
       '&-labels': {

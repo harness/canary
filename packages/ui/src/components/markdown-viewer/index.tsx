@@ -1,10 +1,10 @@
 import { CSSProperties, memo, ReactNode, useCallback, useEffect, useMemo, useRef, useState } from 'react'
 
-import { CopyButton, Text } from '@/components'
+import { CopyButton, IconV2, IconV2NamesType, Text } from '@/components'
 import MarkdownPreview from '@uiw/react-markdown-preview'
 import rehypeExternalLinks from 'rehype-external-links'
 import { getCodeString, RehypeRewriteOptions } from 'rehype-rewrite'
-import rehypeSanitize from 'rehype-sanitize'
+import rehypeSanitize, { defaultSchema } from 'rehype-sanitize'
 import rehypeVideo from 'rehype-video'
 import remarkBreaks from 'remark-breaks'
 
@@ -21,6 +21,31 @@ export const getIsMarkdown = (language?: string) => language === 'markdown'
 const isHeadingElement = (tagName: string) => /^h(1|2|3|4|5|6)/.test(tagName)
 const isRelativeLink = (href: string) =>
   href && !href.startsWith('/') && !href.startsWith('#') && !/^https?:|mailto:|tel:|data:|javascript:|sms:/.test(href)
+
+type AlertType = 'note' | 'tip' | 'important' | 'warning' | 'caution'
+
+const alertConfig: Record<AlertType, { title: string; icon: string }> = {
+  note: {
+    title: 'Note',
+    icon: 'info-circle-solid'
+  },
+  tip: {
+    title: 'Tip',
+    icon: 'light-bulb-circle-solid'
+  },
+  important: {
+    title: 'Important',
+    icon: 'warning-circle-solid'
+  },
+  warning: {
+    title: 'Warning',
+    icon: 'warning-triangle-solid'
+  },
+  caution: {
+    title: 'Caution',
+    icon: 'minus-circle-solid'
+  }
+}
 
 const markdownViewerVariants = cva('', {
   variants: {
@@ -241,6 +266,16 @@ const MarkdownViewerLocal = ({
     }
   }, [currentIndex, source, speed])
 
+  const sanitizeSchema = {
+    ...defaultSchema,
+    tagNames: [...(defaultSchema.tagNames || [])],
+    attributes: {
+      ...(defaultSchema.attributes || {}),
+      div: [...(defaultSchema.attributes?.div || []), 'className'],
+      p: [...(defaultSchema.attributes?.p || []), 'className']
+    }
+  }
+
   return (
     // TODO: Replace px-[64px] with a proper spacing token when available
     <div className={cn({ 'rounded-b-cn-3 border-x border-b py-cn-xl px-[64px]': withBorder }, className)}>
@@ -256,9 +291,9 @@ const MarkdownViewerLocal = ({
           rehypeRewrite={rehypeRewrite}
           remarkPlugins={[remarkBreaks]}
           rehypePlugins={[
-            [rehypeSanitize],
             [rehypeVideo, { test: /\.(mp4|mov|webm|mkv|flv)$/, details: false }],
-            [rehypeExternalLinks, { rel: ['nofollow noreferrer noopener'], target: '_blank' }]
+            [rehypeExternalLinks, { rel: ['nofollow noreferrer noopener'], target: '_blank' }],
+            [rehypeSanitize, sanitizeSchema]
           ]}
           components={{
             img: ({
@@ -313,6 +348,25 @@ const MarkdownViewerLocal = ({
                 )
               }
               return <input type={type} checked={checked} {...props} />
+            },
+            p: ({ className, children }) => {
+              const isAlertTitle = className?.includes('markdown-alert-title')
+
+              if (isAlertTitle && typeof children === 'string') {
+                const alertType = children.toLocaleLowerCase().trim() as AlertType
+                const config = alertConfig[alertType]
+
+                if (config) {
+                  return (
+                    <p className={className}>
+                      <IconV2 name={config.icon as IconV2NamesType} size="md" />
+                      {config.title}
+                    </p>
+                  )
+                }
+              }
+
+              return <p className={className}>{children}</p>
             },
             pre: ({ children, node }) => {
               const code = node && node.children ? getCodeString(node.children) : (children as string)

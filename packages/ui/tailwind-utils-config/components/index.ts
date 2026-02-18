@@ -22,6 +22,7 @@ import messageBubbleStyles from './message-bubble'
 import meterStyles from './meter'
 import reasoningStyles from './reasoning'
 import shimmerStyles from './shimmer'
+import sliderStyles from './slider'
 import multiSelectStyles from './multi-select'
 import paginationStyles from './pagination'
 import popoverStyles from './popover'
@@ -91,6 +92,7 @@ export const ComponentStyles = [
   messageBubbleStyles,
   reasoningStyles,
   shimmerStyles,
+  sliderStyles,
 
   // Form styles
   selectStyles,

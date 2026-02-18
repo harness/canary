@@ -74,15 +74,6 @@
       "$description": "Reduced emphasis color for text and icons in secondary information. Creates visual hierarchy through lower contrast.\n\nCommon uses: Supporting text, metadata, secondary information, placeholders."
     },
     "4": {
-      "$extensions": {
-        "studio.tokens": {
-          "modify": {
-            "type": "darken",
-            "value": "0.105",
-            "space": "lch"
-          }
-        }
-      },
       "$type": "color",
       "$value": "{gray.600}",
       "$description": "Lowest emphasis text color for unavailable options. Creates visual differentiation between interactive and non-interactive elements.\n\nCommon uses: Disabled buttons, inactive form elements, unavailable options, placeholders."
@@ -115,45 +106,18 @@
   },
   "border": {
     "1": {
-      "$extensions": {
-        "studio.tokens": {
-          "modify": {
-            "type": "darken",
-            "value": "0.40",
-            "space": "lch"
-          }
-        }
-      },
       "$type": "color",
-      "$value": "{gray.500}",
+      "$value": "{gray.800}",
       "$description": "High-contrast neutral border color for interactive states and emphasis. Provides strong visual definition without brand association for general UI interactions.\n\nCommon uses: Hover state borders, selected elements, interactive container outlines, emphasized dividers, modal boundaries."
     },
     "2": {
-      "$extensions": {
-        "studio.tokens": {
-          "modify": {
-            "type": "darken",
-            "value": "0.15",
-            "space": "lch"
-          }
-        }
-      },
       "$type": "color",
-      "$value": "{gray.850}",
+      "$value": "{gray.900}",
       "$description": "Default border color for general UI elements. Provides balanced visual separation without overwhelming the interface. Optimized for readability and visual hierarchy.\n\nCommon uses: Card borders, form field outlines, table borders, content dividers, modal boundaries, section separators, default form inputs."
     },
     "3": {
-      "$extensions": {
-        "studio.tokens": {
-          "modify": {
-            "type": "darken",
-            "value": "0.12",
-            "space": "lch"
-          }
-        }
-      },
       "$type": "color",
-      "$value": "{gray.900}",
+      "$value": "{gray.950}",
       "$description": "Subtle border color for minimal visual separation. Creates gentle boundaries that organize content without adding visual weight. Ideal for maintaining clean, uncluttered interfaces.\n\nCommon uses: Table row separators, grouped list items, subtle content dividers, secondary container outlines, background element borders."
     },
     "brand": {
@@ -216,46 +180,33 @@
           "$description": "Text color for danger toast notifications. Ensures maximum readability for critical messages."
         },
         "bg": {
+          "$type": "color",
+          "$value": "{indigo.600}",
+          "$description": "Background color for primary brand items with strong emphasis."
+        },
+        "bg-hover": {
+          "$type": "color",
+          "$value": "{indigo.700}",
+          "$description": "Hover state background color for interactive brand surfaces."
+        },
+        "bg-selected": {
+          "$type": "color",
+          "$value": "{indigo.700}",
+          "$description": "Selected state background color for active brand items."
+        },
+        "ring": {
           "$extensions": {
             "studio.tokens": {
               "modify": {
-                "type": "darken",
-                "value": "0.15",
+                "type": "alpha",
+                "value": "0.28",
                 "space": "lch"
               }
             }
           },
           "$type": "color",
           "$value": "{indigo.600}",
-          "$description": "Background color for primary brand items with strong emphasis."
-        },
-        "bg-hover": {
-          "$extensions": {
-            "studio.tokens": {
-              "modify": {
-                "type": "darken",
-                "value": "0.15",
-                "space": "lch"
-              }
-            }
-          },
-          "$type": "color",
-          "$value": "{indigo.700}",
-          "$description": "Hover state background color for interactive brand surfaces."
-        },
-        "bg-selected": {
-          "$extensions": {
-            "studio.tokens": {
-              "modify": {
-                "type": "darken",
-                "value": "0.15",
-                "space": "lch"
-              }
-            }
-          },
-          "$type": "color",
-          "$value": "{indigo.700}",
-          "$description": "Selected state background color for active brand items."
+          "$description": "Ring color for brand primary focus and selection indicators. Semi-transparent brand color for accessible focus rings."
         }
       },
       "secondary": {
@@ -265,43 +216,16 @@
           "$description": "Text and icon color for primary subtle brand elements with maximum contrast."
         },
         "bg": {
-          "$extensions": {
-            "studio.tokens": {
-              "modify": {
-                "type": "darken",
-                "value": "0.20",
-                "space": "lch"
-              }
-            }
-          },
           "$type": "color",
           "$value": "{blue.950}",
           "$description": "Background color for subdued gray surfaces."
         },
         "bg-hover": {
-          "$extensions": {
-            "studio.tokens": {
-              "modify": {
-                "type": "darken",
-                "value": "0.15",
-                "space": "lch"
-              }
-            }
-          },
           "$type": "color",
           "$value": "{blue.900}",
           "$description": "Hover state background color for interactive brand subtle surfaces."
         },
         "bg-selected": {
-          "$extensions": {
-            "studio.tokens": {
-              "modify": {
-                "type": "darken",
-                "value": "0.15",
-                "space": "lch"
-              }
-            }
-          },
           "$type": "color",
           "$value": "{blue.900}",
           "$description": "Selected state background color for active brand subtle items."
@@ -403,45 +327,18 @@
           "$description": "Text color for high-contrast gray surfaces."
         },
         "bg": {
-          "$extensions": {
-            "studio.tokens": {
-              "modify": {
-                "type": "darken",
-                "value": "0.15",
-                "space": "lch"
-              }
-            }
-          },
           "$type": "color",
-          "$value": "{gray.500}",
+          "$value": "{gray.700}",
           "$description": "Background color for prominent gray surfaces."
         },
         "bg-hover": {
-          "$extensions": {
-            "studio.tokens": {
-              "modify": {
-                "type": "darken",
-                "value": "0.15",
-                "space": "lch"
-              }
-            }
-          },
           "$type": "color",
-          "$value": "{gray.400}",
+          "$value": "{gray.600}",
           "$description": "Hover state background color for prominent gray surfaces."
         },
         "bg-selected": {
-          "$extensions": {
-            "studio.tokens": {
-              "modify": {
-                "type": "darken",
-                "value": "0.15",
-                "space": "lch"
-              }
-            }
-          },
           "$type": "color",
-          "$value": "{gray.400}",
+          "$value": "{gray.600}",
           "$description": "Selected state background color for prominent gray surfaces."
         }
       },
@@ -452,45 +349,18 @@
           "$description": "Text color for subtle gray surfaces with good contrast."
         },
         "bg": {
-          "$extensions": {
-            "studio.tokens": {
-              "modify": {
-                "type": "darken",
-                "value": "0.15",
-                "space": "lch"
-              }
-            }
-          },
           "$type": "color",
-          "$value": "{gray.850}",
+          "$value": "{gray.950}",
           "$description": "Background color for subdued gray surfaces."
         },
         "bg-hover": {
-          "$extensions": {
-            "studio.tokens": {
-              "modify": {
-                "type": "darken",
-                "value": "0.12",
-                "space": "lch"
-              }
-            }
-          },
           "$type": "color",
-          "$value": "{gray.800}",
+          "$value": "{gray.850}",
           "$description": "Hover state background color for interactive soft gray surfaces."
         },
         "bg-selected": {
-          "$extensions": {
-            "studio.tokens": {
-              "modify": {
-                "type": "darken",
-                "value": "0.12",
-                "space": "lch"
-              }
-            }
-          },
           "$type": "color",
-          "$value": "{gray.800}",
+          "$value": "{gray.850}",
           "$description": "Selected state background color for active soft gray items."
         }
       },
@@ -548,43 +418,16 @@
           "$description": "Text color for high-contrast green surfaces."
         },
         "bg": {
-          "$extensions": {
-            "studio.tokens": {
-              "modify": {
-                "type": "darken",
-                "value": "0.15",
-                "space": "lch"
-              }
-            }
-          },
           "$type": "color",
           "$value": "{indigo.400}",
           "$description": "Background color for prominent success surfaces."
         },
         "bg-hover": {
-          "$extensions": {
-            "studio.tokens": {
-              "modify": {
-                "type": "darken",
-                "value": "0.15",
-                "space": "lch"
-              }
-            }
-          },
           "$type": "color",
           "$value": "{indigo.300}",
           "$description": "Background color for prominent success surfaces."
         },
         "bg-selected": {
-          "$extensions": {
-            "studio.tokens": {
-              "modify": {
-                "type": "darken",
-                "value": "0.15",
-                "space": "lch"
-              }
-            }
-          },
           "$type": "color",
           "$value": "{indigo.300}",
           "$description": "Background color for prominent success surfaces."
@@ -611,29 +454,11 @@
           "$description": "Background color for subdued success surfaces."
         },
         "bg-hover": {
-          "$extensions": {
-            "studio.tokens": {
-              "modify": {
-                "type": "darken",
-                "value": "0.15",
-                "space": "lch"
-              }
-            }
-          },
           "$type": "color",
           "$value": "{indigo.850}",
           "$description": "Background color for subdued success surfaces."
         },
         "bg-selected": {
-          "$extensions": {
-            "studio.tokens": {
-              "modify": {
-                "type": "darken",
-                "value": "0.15",
-                "space": "lch"
-              }
-            }
-          },
           "$type": "color",
           "$value": "{indigo.850}",
           "$description": "Background color for subdued success surfaces."
@@ -765,29 +590,11 @@
           "$description": "Background color for subdued danger surfaces."
         },
         "bg-hover": {
-          "$extensions": {
-            "studio.tokens": {
-              "modify": {
-                "type": "darken",
-                "value": "0.15",
-                "space": "lch"
-              }
-            }
-          },
           "$type": "color",
           "$value": "{yellow.900}",
           "$description": "Hover state for background color for subdued danger surfaces."
         },
         "bg-selected": {
-          "$extensions": {
-            "studio.tokens": {
-              "modify": {
-                "type": "darken",
-                "value": "0.15",
-                "space": "lch"
-              }
-            }
-          },
           "$type": "color",
           "$value": "{yellow.900}",
           "$description": "Selected state for background color for subdued danger surfaces."
@@ -856,43 +663,16 @@
           "$description": "Text color for high-contrast warning surfaces."
         },
         "bg": {
-          "$extensions": {
-            "studio.tokens": {
-              "modify": {
-                "type": "darken",
-                "value": "0.15",
-                "space": "lch"
-              }
-            }
-          },
           "$type": "color",
           "$value": "{orange.400}",
           "$description": "Background color for prominent warning surfaces."
         },
         "bg-hover": {
-          "$extensions": {
-            "studio.tokens": {
-              "modify": {
-                "type": "darken",
-                "value": "0.15",
-                "space": "lch"
-              }
-            }
-          },
           "$type": "color",
           "$value": "{orange.500}",
           "$description": "Hover state background color for interactive primary warning surfaces."
         },
         "bg-selected": {
-          "$extensions": {
-            "studio.tokens": {
-              "modify": {
-                "type": "darken",
-                "value": "0.15",
-                "space": "lch"
-              }
-            }
-          },
           "$type": "color",
           "$value": "{orange.500}",
           "$description": "Selected state background color for active primary warning items."
@@ -919,29 +699,11 @@
           "$description": "Background color for subdued warning surfaces."
         },
         "bg-hover": {
-          "$extensions": {
-            "studio.tokens": {
-              "modify": {
-                "type": "darken",
-                "value": "0.15",
-                "space": "lch"
-              }
-            }
-          },
           "$type": "color",
           "$value": "{orange.900}",
           "$description": "Hover state for background color for subdued warning surfaces."
         },
         "bg-selected": {
-          "$extensions": {
-            "studio.tokens": {
-              "modify": {
-                "type": "darken",
-                "value": "0.15",
-                "space": "lch"
-              }
-            }
-          },
           "$type": "color",
           "$value": "{orange.900}",
           "$description": "Selected state for background color for subdued warning surfaces."
@@ -1010,43 +772,16 @@
           "$description": "Text color for high-contrast blue surfaces."
         },
         "bg": {
-          "$extensions": {
-            "studio.tokens": {
-              "modify": {
-                "type": "darken",
-                "value": "0.15",
-                "space": "lch"
-              }
-            }
-          },
           "$type": "color",
           "$value": "{blue.600}",
           "$description": "Background color for prominent blue surfaces."
         },
         "bg-hover": {
-          "$extensions": {
-            "studio.tokens": {
-              "modify": {
-                "type": "darken",
-                "value": "0.15",
-                "space": "lch"
-              }
-            }
-          },
           "$type": "color",
           "$value": "{blue.500}",
           "$description": "Hover state background color for interactive primary blue surfaces."
         },
         "bg-selected": {
-          "$extensions": {
-            "studio.tokens": {
-              "modify": {
-                "type": "darken",
-                "value": "0.15",
-                "space": "lch"
-              }
-            }
-          },
           "$type": "color",
           "$value": "{blue.500}",
           "$description": "Selected state background color for active primary blue items."
@@ -1059,45 +794,18 @@
           "$description": "Text color for subtle blue surfaces with good contrast."
         },
         "bg": {
-          "$extensions": {
-            "studio.tokens": {
-              "modify": {
-                "type": "darken",
-                "value": "0.20",
-                "space": "lch"
-              }
-            }
-          },
           "$type": "color",
-          "$value": "{blue.900}",
+          "$value": "{blue.950}",
           "$description": "Background color for subdued blue surfaces."
         },
         "bg-hover": {
-          "$extensions": {
-            "studio.tokens": {
-              "modify": {
-                "type": "darken",
-                "value": "0.15",
-                "space": "lch"
-              }
-            }
-          },
           "$type": "color",
-          "$value": "{blue.850}",
+          "$value": "{blue.900}",
           "$description": "Hover background color for subdued blue surfaces."
         },
         "bg-selected": {
-          "$extensions": {
-            "studio.tokens": {
-              "modify": {
-                "type": "darken",
-                "value": "0.15",
-                "space": "lch"
-              }
-            }
-          },
           "$type": "color",
-          "$value": "{blue.850}",
+          "$value": "{blue.900}",
           "$description": "Selected state background color for active secondary blue items."
         }
       },
@@ -1164,43 +872,16 @@
           "$description": "Text color for high-contrast purple surfaces."
         },
         "bg": {
-          "$extensions": {
-            "studio.tokens": {
-              "modify": {
-                "type": "darken",
-                "value": "0.1",
-                "space": "lch"
-              }
-            }
-          },
           "$type": "color",
           "$value": "{purple.600}",
           "$description": "Background color for prominent purple surfaces."
         },
         "bg-hover": {
-          "$extensions": {
-            "studio.tokens": {
-              "modify": {
-                "type": "darken",
-                "value": "0.1",
-                "space": "lch"
-              }
-            }
-          },
           "$type": "color",
           "$value": "{purple.500}",
           "$description": "Hover state background color for interactive primary purple surfaces."
         },
         "bg-selected": {
-          "$extensions": {
-            "studio.tokens": {
-              "modify": {
-                "type": "darken",
-                "value": "0.1",
-                "space": "lch"
-              }
-            }
-          },
           "$type": "color",
           "$value": "{purple.500}",
           "$description": "Selected state background color for active primary purple items."
@@ -1213,45 +894,18 @@
           "$description": "Text color for subtle purple surfaces with good contrast."
         },
         "bg": {
-          "$extensions": {
-            "studio.tokens": {
-              "modify": {
-                "type": "darken",
-                "value": "0.15",
-                "space": "lch"
-              }
-            }
-          },
           "$type": "color",
           "$value": "{purple.900}",
           "$description": "Background color for subdued purple surfaces."
         },
         "bg-hover": {
-          "$extensions": {
-            "studio.tokens": {
-              "modify": {
-                "type": "darken",
-                "value": "0.20",
-                "space": "lch"
-              }
-            }
-          },
           "$type": "color",
-          "$value": "{purple.850}",
+          "$value": "{purple.900}",
           "$description": "Hover background color for subdued purple surfaces."
         },
         "bg-selected": {
-          "$extensions": {
-            "studio.tokens": {
-              "modify": {
-                "type": "darken",
-                "value": "0.20",
-                "space": "lch"
-              }
-            }
-          },
           "$type": "color",
-          "$value": "{purple.850}",
+          "$value": "{purple.900}",
           "$description": "Hover background color for subdued purple surfaces."
         }
       },
@@ -1318,29 +972,11 @@
           "$description": "Text color for high-contrast brown surfaces."
         },
         "bg": {
-          "$extensions": {
-            "studio.tokens": {
-              "modify": {
-                "type": "darken",
-                "value": "0.15",
-                "space": "lch"
-              }
-            }
-          },
           "$type": "color",
           "$value": "{brown.800}",
           "$description": "Background color for prominent brown surfaces."
         },
         "bg-hover": {
-          "$extensions": {
-            "studio.tokens": {
-              "modify": {
-                "type": "darken",
-                "value": "0.15",
-                "space": "lch"
-              }
-            }
-          },
           "$type": "color",
           "$value": "{brown.700}",
           "$description": "Background color for prominent brown surfaces."
@@ -1353,31 +989,13 @@
           "$description": "Text color for subtle brown surfaces with good contrast."
         },
         "bg": {
-          "$extensions": {
-            "studio.tokens": {
-              "modify": {
-                "type": "darken",
-                "value": "0.15",
-                "space": "lch"
-              }
-            }
-          },
           "$type": "color",
           "$value": "{brown.900}",
           "$description": "Background color for subdued brown surfaces."
         },
         "bg-hover": {
-          "$extensions": {
-            "studio.tokens": {
-              "modify": {
-                "type": "darken",
-                "value": "0.2",
-                "space": "lch"
-              }
-            }
-          },
           "$type": "color",
-          "$value": "{brown.850}",
+          "$value": "{brown.900}",
           "$description": "Hover background color for subdued brown surfaces."
         }
       },
@@ -1430,29 +1048,11 @@
           "$description": "Text color for high-contrast cyan surfaces."
         },
         "bg": {
-          "$extensions": {
-            "studio.tokens": {
-              "modify": {
-                "type": "darken",
-                "value": "0.15",
-                "space": "lch"
-              }
-            }
-          },
           "$type": "color",
           "$value": "{cyan.400}",
           "$description": "Background color for prominent cyan surfaces."
         },
         "bg-hover": {
-          "$extensions": {
-            "studio.tokens": {
-              "modify": {
-                "type": "darken",
-                "value": "0.15",
-                "space": "lch"
-              }
-            }
-          },
           "$type": "color",
           "$value": "{cyan.300}",
           "$description": "Background color for prominent cyan surfaces."
@@ -1465,31 +1065,13 @@
           "$description": "Text color for subtle cyan surfaces with good contrast."
         },
         "bg": {
-          "$extensions": {
-            "studio.tokens": {
-              "modify": {
-                "type": "darken",
-                "value": "0.20",
-                "space": "lch"
-              }
-            }
-          },
           "$type": "color",
-          "$value": "{cyan.900}",
+          "$value": "{cyan.950}",
           "$description": "Background color for subdued cyan surfaces."
         },
         "bg-hover": {
-          "$extensions": {
-            "studio.tokens": {
-              "modify": {
-                "type": "darken",
-                "value": "0.15",
-                "space": "lch"
-              }
-            }
-          },
           "$type": "color",
-          "$value": "{cyan.850}",
+          "$value": "{cyan.900}",
           "$description": "Hover background color for subdued cyan surfaces."
         }
       },
@@ -1542,43 +1124,16 @@
           "$description": "Text color for high-contrast indigo surfaces."
         },
         "bg": {
-          "$extensions": {
-            "studio.tokens": {
-              "modify": {
-                "type": "darken",
-                "value": "0.15",
-                "space": "lch"
-              }
-            }
-          },
           "$type": "color",
           "$value": "{indigo.500}",
           "$description": "Background color for prominent indigo surfaces."
         },
         "bg-hover": {
-          "$extensions": {
-            "studio.tokens": {
-              "modify": {
-                "type": "darken",
-                "value": "0.15",
-                "space": "lch"
-              }
-            }
-          },
           "$type": "color",
           "$value": "{indigo.400}",
           "$description": "Hover state background color for interactive primary indigo surfaces."
         },
         "bg-selected": {
-          "$extensions": {
-            "studio.tokens": {
-              "modify": {
-                "type": "darken",
-                "value": "0.15",
-                "space": "lch"
-              }
-            }
-          },
           "$type": "color",
           "$value": "{indigo.400}",
           "$description": "Selected state background color for active primary indigo items."
@@ -1591,43 +1146,16 @@
           "$description": "Text color for subtle indigo surfaces with good contrast."
         },
         "bg": {
-          "$extensions": {
-            "studio.tokens": {
-              "modify": {
-                "type": "darken",
-                "value": "0.20",
-                "space": "lch"
-              }
-            }
-          },
           "$type": "color",
-          "$value": "{indigo.900}",
+          "$value": "{indigo.950}",
           "$description": "Background color for subdued indigo surfaces."
         },
         "bg-hover": {
-          "$extensions": {
-            "studio.tokens": {
-              "modify": {
-                "type": "darken",
-                "value": "0.15",
-                "space": "lch"
-              }
-            }
-          },
           "$type": "color",
           "$value": "{indigo.850}",
           "$description": "Hover background color for subdued indigo surfaces."
         },
         "bg-selected": {
-          "$extensions": {
-            "studio.tokens": {
-              "modify": {
-                "type": "darken",
-                "value": "0.15",
-                "space": "lch"
-              }
-            }
-          },
           "$type": "color",
           "$value": "{indigo.850}",
           "$description": "Selected state background color for active secondary indigo items."
@@ -1696,29 +1224,11 @@
           "$description": "Text color for high-contrast forest-green surfaces."
         },
         "bg": {
-          "$extensions": {
-            "studio.tokens": {
-              "modify": {
-                "type": "darken",
-                "value": "0.15",
-                "space": "lch"
-              }
-            }
-          },
           "$type": "color",
           "$value": "{lime.300}",
           "$description": "Background color for prominent forest-green surfaces."
         },
         "bg-hover": {
-          "$extensions": {
-            "studio.tokens": {
-              "modify": {
-                "type": "darken",
-                "value": "0.15",
-                "space": "lch"
-              }
-            }
-          },
           "$type": "color",
           "$value": "{lime.200}",
           "$description": "Background color for prominent forest-green surfaces."
@@ -1731,31 +1241,13 @@
           "$description": "Text color for subtle forest-green surfaces with good contrast."
         },
         "bg": {
-          "$extensions": {
-            "studio.tokens": {
-              "modify": {
-                "type": "darken",
-                "value": "0.15",
-                "space": "lch"
-              }
-            }
-          },
           "$type": "color",
-          "$value": "{lime.900}",
+          "$value": "{lime.950}",
           "$description": "Background color for subdued forest-green surfaces."
         },
         "bg-hover": {
-          "$extensions": {
-            "studio.tokens": {
-              "modify": {
-                "type": "darken",
-                "value": "0.2",
-                "space": "lch"
-              }
-            }
-          },
           "$type": "color",
-          "$value": "{lime.850}",
+          "$value": "{lime.900}",
           "$description": "Hover background color for subdued forest-green surfaces."
         }
       },
@@ -1808,43 +1300,16 @@
           "$description": "Text color for high-contrast mint surfaces."
         },
         "bg": {
-          "$extensions": {
-            "studio.tokens": {
-              "modify": {
-                "type": "darken",
-                "value": "0.15",
-                "space": "lch"
-              }
-            }
-          },
           "$type": "color",
           "$value": "{indigo.400}",
           "$description": "Background color for prominent mint surfaces."
         },
         "bg-hover": {
-          "$extensions": {
-            "studio.tokens": {
-              "modify": {
-                "type": "darken",
-                "value": "0.15",
-                "space": "lch"
-              }
-            }
-          },
           "$type": "color",
           "$value": "{indigo.300}",
           "$description": "Hover state background color for interactive primary mint surfaces."
         },
         "bg-selected": {
-          "$extensions": {
-            "studio.tokens": {
-              "modify": {
-                "type": "darken",
-                "value": "0.15",
-                "space": "lch"
-              }
-            }
-          },
           "$type": "color",
           "$value": "{indigo.300}",
           "$description": "Selected state background color for active primary mint items."
@@ -1857,45 +1322,18 @@
           "$description": "Text color for subtle mint surfaces with good contrast."
         },
         "bg": {
-          "$extensions": {
-            "studio.tokens": {
-              "modify": {
-                "type": "darken",
-                "value": "0.20",
-                "space": "lch"
-              }
-            }
-          },
           "$type": "color",
-          "$value": "{indigo.900}",
+          "$value": "{indigo.950}",
           "$description": "Background color for subdued mint surfaces."
         },
         "bg-hover": {
-          "$extensions": {
-            "studio.tokens": {
-              "modify": {
-                "type": "darken",
-                "value": "0.15",
-                "space": "lch"
-              }
-            }
-          },
           "$type": "color",
-          "$value": "{indigo.850}",
+          "$value": "{indigo.900}",
           "$description": "Hover background color for subdued mint surfaces."
         },
         "bg-selected": {
-          "$extensions": {
-            "studio.tokens": {
-              "modify": {
-                "type": "darken",
-                "value": "0.15",
-                "space": "lch"
-              }
-            }
-          },
           "$type": "color",
-          "$value": "{indigo.850}",
+          "$value": "{indigo.900}",
           "$description": "Selected state background color for active secondary mint items."
         }
       },
@@ -1962,29 +1400,11 @@
           "$description": "Text color for solid orange surfaces with good contrast."
         },
         "bg": {
-          "$extensions": {
-            "studio.tokens": {
-              "modify": {
-                "type": "darken",
-                "value": "0.15",
-                "space": "lch"
-              }
-            }
-          },
           "$type": "color",
           "$value": "{brown.500}",
           "$description": "Background color for solid orange surfaces."
         },
         "bg-hover": {
-          "$extensions": {
-            "studio.tokens": {
-              "modify": {
-                "type": "darken",
-                "value": "0.15",
-                "space": "lch"
-              }
-            }
-          },
           "$type": "color",
           "$value": "{brown.400}",
           "$description": "Background color for solid orange surfaces."
@@ -1997,31 +1417,13 @@
           "$description": "Text color for subtle orange surfaces with good contrast."
         },
         "bg": {
-          "$extensions": {
-            "studio.tokens": {
-              "modify": {
-                "type": "darken",
-                "value": "0.20",
-                "space": "lch"
-              }
-            }
-          },
           "$type": "color",
-          "$value": "{brown.900}",
+          "$value": "{brown.950}",
           "$description": "Background color for subdued orange surfaces."
         },
         "bg-hover": {
-          "$extensions": {
-            "studio.tokens": {
-              "modify": {
-                "type": "darken",
-                "value": "0.15",
-                "space": "lch"
-              }
-            }
-          },
           "$type": "color",
-          "$value": "{brown.850}",
+          "$value": "{brown.900}",
           "$description": "Hover background color for subdued orange surfaces."
         }
       },
@@ -2074,43 +1476,16 @@
           "$description": "Text color for high-contrast pink surfaces."
         },
         "bg": {
-          "$extensions": {
-            "studio.tokens": {
-              "modify": {
-                "type": "darken",
-                "value": "0.15",
-                "space": "lch"
-              }
-            }
-          },
           "$type": "color",
           "$value": "{purple.500}",
           "$description": "Background color for prominent pink surfaces."
         },
         "bg-hover": {
-          "$extensions": {
-            "studio.tokens": {
-              "modify": {
-                "type": "darken",
-                "value": "0.15",
-                "space": "lch"
-              }
-            }
-          },
           "$type": "color",
           "$value": "{purple.400}",
           "$description": "Hover state background color for interactive primary pink surfaces."
         },
         "bg-selected": {
-          "$extensions": {
-            "studio.tokens": {
-              "modify": {
-                "type": "darken",
-                "value": "0.15",
-                "space": "lch"
-              }
-            }
-          },
           "$type": "color",
           "$value": "{purple.400}",
           "$description": "Selected state background color for active primary pink items."
@@ -2123,45 +1498,18 @@
           "$description": "Text color for subtle pink surfaces with good contrast."
         },
         "bg": {
-          "$extensions": {
-            "studio.tokens": {
-              "modify": {
-                "type": "darken",
-                "value": "0.15",
-                "space": "lch"
-              }
-            }
-          },
           "$type": "color",
-          "$value": "{purple.900}",
+          "$value": "{purple.950}",
           "$description": "Background color for subdued pink surfaces."
         },
         "bg-hover": {
-          "$extensions": {
-            "studio.tokens": {
-              "modify": {
-                "type": "darken",
-                "value": "0.20",
-                "space": "lch"
-              }
-            }
-          },
           "$type": "color",
-          "$value": "{purple.850}",
+          "$value": "{purple.900}",
           "$description": "Hover background color for subdued pink surfaces."
         },
         "bg-selected": {
-          "$extensions": {
-            "studio.tokens": {
-              "modify": {
-                "type": "darken",
-                "value": "0.20",
-                "space": "lch"
-              }
-            }
-          },
           "$type": "color",
-          "$value": "{purple.850}",
+          "$value": "{purple.900}",
           "$description": "Selected state background color for active secondary pink items."
         }
       },
@@ -2228,43 +1576,16 @@
           "$description": "Text color for high-contrast violet surfaces."
         },
         "bg": {
-          "$extensions": {
-            "studio.tokens": {
-              "modify": {
-                "type": "darken",
-                "value": "0.15",
-                "space": "lch"
-              }
-            }
-          },
           "$type": "color",
           "$value": "{violet.600}",
           "$description": "Background color for prominent violet surfaces."
         },
         "bg-hover": {
-          "$extensions": {
-            "studio.tokens": {
-              "modify": {
-                "type": "darken",
-                "value": "0.15",
-                "space": "lch"
-              }
-            }
-          },
           "$type": "color",
           "$value": "{violet.500}",
           "$description": "Hover state background color for interactive primary violet surfaces."
         },
         "bg-selected": {
-          "$extensions": {
-            "studio.tokens": {
-              "modify": {
-                "type": "darken",
-                "value": "0.15",
-                "space": "lch"
-              }
-            }
-          },
           "$type": "color",
           "$value": "{violet.500}",
           "$description": "Selected state background color for active primary violet items."
@@ -2277,45 +1598,18 @@
           "$description": "Text color for subtle violet surfaces with good contrast."
         },
         "bg": {
-          "$extensions": {
-            "studio.tokens": {
-              "modify": {
-                "type": "darken",
-                "value": "0.20",
-                "space": "lch"
-              }
-            }
-          },
           "$type": "color",
-          "$value": "{violet.900}",
+          "$value": "{violet.950}",
           "$description": "Background color for subdued violet surfaces."
         },
         "bg-hover": {
-          "$extensions": {
-            "studio.tokens": {
-              "modify": {
-                "type": "darken",
-                "value": "0.15",
-                "space": "lch"
-              }
-            }
-          },
           "$type": "color",
-          "$value": "{violet.850}",
+          "$value": "{violet.900}",
           "$description": "Hover background color for subdued violet surfaces."
         },
         "bg-selected": {
-          "$extensions": {
-            "studio.tokens": {
-              "modify": {
-                "type": "darken",
-                "value": "0.15",
-                "space": "lch"
-              }
-            }
-          },
           "$type": "color",
-          "$value": "{violet.850}",
+          "$value": "{violet.900}",
           "$description": "Selected state background color for active secondary violet items."
         }
       },
@@ -2567,17 +1861,8 @@
         "$description": "Background for line numbers of unchanged code, maintaining visual rhythm."
       },
       "plain-lineNumber-color": {
-        "$extensions": {
-          "studio.tokens": {
-            "modify": {
-              "type": "darken",
-              "value": "0.18",
-              "space": "lch"
-            }
-          }
-        },
         "$type": "color",
-        "$value": "{gray.200}",
+        "$value": "{gray.300}",
         "$description": "Text color for unchanged line numbers, visually subdued compared to changed content."
       },
       "empty-content": {
@@ -2614,17 +1899,8 @@
         "$description": "Background for line numbers in section headers."
       },
       "hunk-content-color": {
-        "$extensions": {
-          "studio.tokens": {
-            "modify": {
-              "type": "darken",
-              "value": "0.18",
-              "space": "lch"
-            }
-          }
-        },
         "$type": "color",
-        "$value": "{gray.300}",
+        "$value": "{gray.500}",
         "$description": "Text color for section header content showing file position information."
       },
       "expand-content": {
@@ -2863,11 +2139,6 @@
         "$type": "color",
         "$value": "{bg.3}",
         "$description": "Background color for form input fields. Provides clear visual distinction from surrounding content while maintaining readability and accessibility standards."
-      },
-      "ai-glow": {
-        "$type": "color",
-        "$value": "linear-gradient(111deg, {gradient.ai.glow.stop-1} 10%, {gradient.ai.glow.stop-2} 50%, {gradient.ai.glow.stop-3} 90%)",
-        "$description": "Gradient glow effect for AI-powered input fields. Creates distinctive visual indicator for AI features."
       }
     },
     "link": {
@@ -2904,7 +2175,7 @@
           "$description": "Gradient glow effect for running pipeline states. Provides visual indication of active processing."
         }
       },
-       "dotes": {
+      "dotes": {
         "$extensions": {
           "$type": "color",
           "$value": "{gray.1000}",
@@ -3006,6 +2277,9 @@
     },
     "scrollbar": {
       "thumb": {
+        "$type": "color",
+        "$value": "{gray.900}",
+        "$description": "Color for scrollbar thumb/handle elements. Provides subtle contrast against the scrollbar track for improved usability.",
         "$extensions": {
           "studio.tokens": {
             "modify": {
@@ -3014,10 +2288,7 @@
               "space": "lch"
             }
           }
-        },
-        "$type": "color",
-        "$value": "{gray.850}",
-        "$description": "Color for scrollbar thumb/handle elements. Provides subtle contrast against the scrollbar track for improved usability."
+        }
       }
     },
     "selection": {
@@ -3138,23 +2409,29 @@
       "handle": {
         "bg": {
           "$type": "color",
-          "$value": "{gray.100}",
+          "$value": "{set.gray.primary.bg}",
           "$description": "Background color for slider handles. Creates a distinct, interactive element for adjusting values."
         },
         "border": {
-          "$extensions": {
-            "studio.tokens": {
-              "modify": {
-                "type": "lighten",
-                "value": "0.15",
-                "space": "lch"
-              }
-            }
-          },
           "$type": "color",
-          "$value": "{gray.850}",
+          "$value": "{border.3}",
           "$description": "Border color for slider handles. Provides definition and contrast for the interactive control."
+        },
+        "bg-selected": {
+          "$type": "color",
+          "$value": "{set.gray.outline.bg}",
+          "$description": "Background color for selected slider handles. Indicates the active handle in multi-handle sliders."
+        },
+        "border-selected": {
+          "$type": "color",
+          "$value": "{border.brand}",
+          "$description": "Border color for selected slider handles. Provides brand-colored emphasis on the active handle."
         }
+      },
+      "range-gradient": {
+        "$type": "color",
+        "$value": "linear-gradient(90deg, {set.gray.primary.bg} 15%, {set.warning.primary.bg} 40%, {set.orange.primary.bg} 60%, {set.danger.primary.bg} 80%)",
+        "$description": "Multi-stop gradient for slider range tracks. Visualizes severity or intensity progression from neutral through warning, orange, to danger."
       }
     },
     "toast": {
@@ -3174,15 +2451,6 @@
           "$description": "Background color for danger toast notifications. Provides visual context for error and critical messages."
         },
         "border": {
-          "$extensions": {
-            "studio.tokens": {
-              "modify": {
-                "type": "lighten",
-                "value": "0.18",
-                "space": "lch"
-              }
-            }
-          },
           "$type": "color",
           "$value": "{orange.800}",
           "$description": "Border color for danger toast notifications. Creates definition and emphasis for critical messages."
@@ -4487,7 +3755,7 @@
         "y": "0",
         "blur": "0",
         "spread": "4",
-        "color": "{set.brand.secondary.bg}",
+        "color": "{set.brand.primary.ring}",
         "type": "dropShadow"
       },
       "$description": "Focus ring style for selected states. Indicates active selection with accessible outline."
@@ -4578,32 +3846,6 @@
           "$type": "color",
           "$value": "{indigo.850}",
           "$description": "Fourth gradient stop for AI outline backgrounds."
-        }
-      },
-      "glow": {
-        "stop-1": {
-          "$extensions": {
-            "studio.tokens": {
-              "modify": {
-                "type": "alpha",
-                "value": "0.6",
-                "space": "lch"
-              }
-            }
-          },
-          "$type": "color",
-          "$value": "{blue.700}",
-          "$description": "First gradient stop for AI glow effects."
-        },
-        "stop-2": {
-          "$type": "color",
-          "$value": "{bg.1}",
-          "$description": "Second gradient stop for AI glow effects."
-        },
-        "stop-3": {
-          "$type": "color",
-          "$value": "{indigo.800}",
-          "$description": "Third gradient stop for AI glow effects."
         }
       },
       "chat": {

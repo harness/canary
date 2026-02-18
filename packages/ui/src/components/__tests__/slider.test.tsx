@@ -218,7 +218,7 @@ describe('SeveritySlider', () => {
 
     const sliders = screen.getAllByRole('slider')
     sliders.forEach(slider => {
-      expect(slider).toHaveAttribute('data-disabled', '')
+      expect(slider).toHaveAttribute('data-disabled', 'true')
     })
   })
 

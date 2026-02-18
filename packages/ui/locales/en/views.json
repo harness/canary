@@ -545,14 +545,14 @@
     "noWebhookExecutionsDescription": "Your webhook executions will appear here once they're completed. Trigger your webhook to see the results.",
     "noWebhooks": "No webhooks yet",
     "noWebhooksDescription": "Add or manage webhooks to automate tasks and connect external services to your project.",
+    "noUsers": "No Users Found",
+    "noUsersDescription": "There are no users in this scope. Click on the button below to start adding them.",
     "noActivity": "There is no secret activity in this project yet.",
     "noSecretActivity": "There is no secret activity yet.",
     "noSecretReferences": "No secret references yet",
     "noSecretReferencesDescription": "There are no references to this secret yet.",
     "noSecrets": "No secrets yet",
     "createNewSecret": "Create a new Secret if required.",
-    "noUsers": "No Users Found",
-    "noUsersDescription": "There are no users in this scope. Click on the button below to start adding them.",
     "createSecret": "Create secret.",
     "noDelegates": "No delegates yet",
     "noDelegatesDescription": "There are no delegates in this project yet.",
@@ -704,17 +704,6 @@
     "largeDiff": "Large diffs are not rendered by default.",
     "fileNoChanges": "File without changes.",
     "binaryNotShown": "Binary file not shown."
-  },
-  "secretDetails": {
-    "backToSecrets": "Back to secrets",
-    "created": "Created",
-    "updated": "Updated",
-    "lastUsed": "Last used",
-    "configuration": "Configuration",
-    "references": "References",
-    "activity": "Activity",
-    "configurationView": "Secret Configuration",
-    "lastUpdated": "Last updated"
   },
   "notFound": {
     "title": "Something went wrong…",
@@ -1041,62 +1030,6 @@
       "files": "{{fileCount}} file(s)"
     }
   },
-  "secretActivity": {
-    "event": "Event",
-    "entity": "Entity",
-    "scope": "Scope",
-    "timestamp": "Timestamp",
-    "type": "Type"
-  },
-  "secrets": {
-    "search": {
-      "placeholder": "Search"
-    },
-    "filterOptions": {
-      "secretType": {
-        "label": "Secret Type"
-      },
-      "secretManagerOption": {
-        "label": "Secret Manager Identifier",
-        "placeholder": "Select Secret Manager"
-      },
-      "descriptionOption": {
-        "label": "Description"
-      },
-      "tagsOption": {
-        "label": "Tags"
-      },
-      "typeOption": {
-        "label": "Type"
-      }
-    },
-    "secretsTitle": "Secrets",
-    "createNew": "Create Secret",
-    "viewDetails": "View Details",
-    "edit": "Edit",
-    "delete": "Delete",
-    "newSecret": "New Secret"
-  },
-  "entityReference": {
-    "entity": "Entity",
-    "type": "Type",
-    "scope": "Scope",
-    "created": "Created"
-  },
-  "secret": {
-    "title": "Secret"
-  },
-  "common": {
-    "manager": "Manager",
-    "created": "Created",
-    "updated": "Updated",
-    "lastActivity": "Last Activity",
-    "details": "Details",
-    "overview": "Overview",
-    "type": "Type",
-    "createdOn": "Created on",
-    "modifiedOn": "Modified on"
-  },
   "userManagement": {
     "createUser": {
       "title": "Add a new user",
@@ -1177,6 +1110,73 @@
       "editUser": "Edit user",
       "deleteUser": "Delete user"
     }
+  },
+  "secretDetails": {
+    "backToSecrets": "Back to secrets",
+    "created": "Created",
+    "updated": "Updated",
+    "lastUsed": "Last used",
+    "configuration": "Configuration",
+    "references": "References",
+    "activity": "Activity",
+    "configurationView": "Secret Configuration",
+    "lastUpdated": "Last updated"
+  },
+  "secretActivity": {
+    "event": "Event",
+    "entity": "Entity",
+    "scope": "Scope",
+    "timestamp": "Timestamp",
+    "type": "Type"
+  },
+  "secrets": {
+    "search": {
+      "placeholder": "Search"
+    },
+    "filterOptions": {
+      "secretType": {
+        "label": "Secret Type"
+      },
+      "secretManagerOption": {
+        "label": "Secret Manager Identifier",
+        "placeholder": "Select Secret Manager"
+      },
+      "descriptionOption": {
+        "label": "Description"
+      },
+      "tagsOption": {
+        "label": "Tags"
+      },
+      "typeOption": {
+        "label": "Type"
+      }
+    },
+    "secretsTitle": "Secrets",
+    "createNew": "Create Secret",
+    "viewDetails": "View Details",
+    "edit": "Edit",
+    "delete": "Delete",
+    "newSecret": "New Secret"
+  },
+  "entityReference": {
+    "entity": "Entity",
+    "type": "Type",
+    "scope": "Scope",
+    "created": "Created"
+  },
+  "secret": {
+    "title": "Secret"
+  },
+  "common": {
+    "manager": "Manager",
+    "created": "Created",
+    "updated": "Updated",
+    "lastActivity": "Last Activity",
+    "details": "Details",
+    "overview": "Overview",
+    "type": "Type",
+    "createdOn": "Created on",
+    "modifiedOn": "Modified on"
   },
   "delegates": {
     "delegate": "Delegate",

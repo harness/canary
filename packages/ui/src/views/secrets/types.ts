@@ -58,3 +58,21 @@ export interface onSubmitSecretProps {
   values: FieldValues
   intent: EntityIntent
 }
+
+export interface SecretListItem {
+  identifier: string
+  name?: string
+  spec?: {
+    secretManagerIdentifier?: string
+    valueType?: string
+    value?: string
+    additionalMetadata?: string
+  }
+  createdAt?: number
+  updatedAt?: number
+  description?: string
+  type?: string
+  tags?: {
+    [key: string]: string
+  }
+}

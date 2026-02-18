@@ -44,9 +44,6 @@ import { RepoTagsList } from '@subjects/views/repo-tags/repo-tags-list'
 import { RepoWebhooksCreate } from '@subjects/views/repo-webhooks-create/repo-webhooks-list'
 import { RepoWebhooksList } from '@subjects/views/repo-webhooks-list/repo-webhooks-list'
 import { SearchPagePreview } from '@subjects/views/search-page/search-page-preview'
-import { SecretInputExample } from '@subjects/views/secrets/secret-input'
-import { SecretsListPage } from '@subjects/views/secrets/secrets-list'
-import { SecretsMultiSelectPage } from '@subjects/views/secrets/secrets-multi-select'
 import { SignInView } from '@subjects/views/signin'
 import { SignUpView } from '@subjects/views/signup'
 import { SpaceSettingsMembers } from '@subjects/views/space-settings-members/space-settings-members'
@@ -68,7 +65,6 @@ import PullRequestLayoutWrapper from './pull-request-layout-wrapper'
 import { RepoFilesViewWrapper } from './repo-files-view-wrapper'
 import RepoViewWrapper from './repo-view-wrapper'
 import RootViewWrapper from './root-view-wrapper'
-import SecretDetailsLayoutWrapper from './secret-details-layout-wrapper'
 import ViewSettings from './view-settings'
 
 export interface ViewPreviewGroup {
@@ -99,7 +95,6 @@ export const viewPreviews: Record<string, ViewPreviewGroup> = {
           <SideNavWrapper>
             <Routes>
               {/* Dummy Implementation */}
-              <Route path="/" element={<SecretsListPage />} />
               <Route path="home" element={<div className="p-cn-xl">Home</div>} />
               <Route path="activity" element={<div className="p-cn-xl">Activity</div>} />
               {/* other routes */}
@@ -549,22 +544,6 @@ export const viewPreviews: Record<string, ViewPreviewGroup> = {
   platform: {
     label: 'Platform',
     items: {
-      'secrets-page': {
-        label: 'Secrets Page',
-        element: <SecretInputExample />
-      },
-      'secrets-list-page': {
-        label: 'Secrets List Page',
-        element: <SecretsListPage />
-      },
-      'secrets-multi-select-page': {
-        label: 'Secrets Multi Select Page',
-        element: <SecretsMultiSelectPage />
-      },
-      'secret-details': {
-        label: 'Secret Details Page',
-        element: <SecretDetailsLayoutWrapper />
-      },
       'draggable-cards-demo': {
         label: 'Draggable Cards Demo',
         element: <DraggableCardsDemo />

@@ -1,3 +1,4 @@
+import { useMemo } from 'react'
 import { I18nextProvider } from 'react-i18next'
 import { createBrowserRouter, RouterProvider } from 'react-router-dom'
 
@@ -31,8 +32,8 @@ export default function App() {
     }
   })
 
-  // Router Configuration
-  const router = createBrowserRouter(routes)
+  // Router Configuration - memoize to prevent recreation on every render
+  const router = useMemo(() => createBrowserRouter(routes), [])
 
   const { t } = useTranslationStore()
 

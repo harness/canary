@@ -1,4 +1,4 @@
-import { FC, useCallback, useState } from 'react'
+import { FC, useCallback } from 'react'
 
 import { SplitButton } from '@/components'
 
@@ -20,59 +20,35 @@ export const ReplySplitButton: FC<ReplySplitButtonProps> = ({
   handleSaveComment,
   toggleConversationStatus
 }) => {
-  const [replyType, setReplyType] = useState<REPLY_TYPE>(REPLY_TYPE.REPLY)
+  const handleReply = useCallback(
+    async (type: REPLY_TYPE) => {
+      try {
+        await handleSaveComment()
 
-  const handleButtonClick = useCallback(async () => {
-    try {
-      switch (replyType) {
-        case REPLY_TYPE.REPLY:
-          await handleSaveComment()
-          break
-
-        case REPLY_TYPE.REPLY_WITH_ACTION:
-          await handleSaveComment()
+        if (type === REPLY_TYPE.REPLY_WITH_ACTION) {
           toggleConversationStatus?.()
-          break
+        }
+      } catch (e) {
+        console.error('Error:', e)
       }
-    } catch (e) {
-      console.error('Error:', e)
-    }
-  }, [replyType, toggleConversationStatus])
-
-  const handleTypeChange = (value: REPLY_TYPE) => {
-    setReplyType(value)
-  }
-
-  const getButtonLabel = () => {
-    switch (replyType) {
-      case REPLY_TYPE.REPLY:
-        return 'Reply'
-      case REPLY_TYPE.REPLY_WITH_ACTION:
-        return isResolved ? 'Reply and unresolve' : 'Reply and resolve'
-      default:
-        return 'Reply'
-    }
-  }
+    },
+    [handleSaveComment, toggleConversationStatus]
+  )
 
   return (
     <>
       <SplitButton<REPLY_TYPE>
-        handleButtonClick={handleButtonClick}
+        handleButtonClick={() => handleReply(REPLY_TYPE.REPLY)}
         loading={isLoading}
-        selectedValue={replyType}
-        handleOptionChange={handleTypeChange}
+        handleOptionChange={handleReply}
         options={[
-          {
-            value: REPLY_TYPE.REPLY,
-            label: 'Reply'
-          },
           {
             value: REPLY_TYPE.REPLY_WITH_ACTION,
             label: isResolved ? 'Reply and unresolve' : 'Reply and resolve'
           }
         ]}
       >
-        {getButtonLabel()}
+        Reply
       </SplitButton>
     </>
   )

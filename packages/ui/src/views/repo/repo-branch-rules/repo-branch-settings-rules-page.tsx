@@ -203,6 +203,7 @@ export const RepoBranchSettingsRulesPage: FC<RepoBranchSettingsRulesPageProps> =
 
           <BranchSettingsRuleListField
             rules={rules}
+            ruleIdentifier={presetRuleData?.identifier}
             defaultReviewersOptions={combineAndNormalizePrincipalsAndGroups(
               principals?.filter(principal => principal.type === EnumBypassListType.USER) || [],
               userGroups

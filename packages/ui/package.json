@@ -33,7 +33,7 @@
   ],
   "scripts": {
     "dev": "vite",
-    "build": "NODE_OPTIONS=--max-old-space-size=8192 vite build && pnpm extract",
+    "build": "NODE_OPTIONS=--max-old-space-size=8192 vite build",
     "build:ci": "NODE_OPTIONS=--max-old-space-size=8192 vite build --config ./vite-base.config.ts",
     "build:analyse": "NODE_OPTIONS=--max-old-space-size=8192 vite build --config ./vite-analyse.config.ts",
     "build:watch": "NODE_OPTIONS=--max-old-space-size=8192 vite build --watch --emptyOutDir=false",

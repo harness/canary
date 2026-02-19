@@ -6,10 +6,6 @@ import {
   UseControllerReturn
 } from 'react-hook-form'
 
-import { afterFrames } from './utils'
-
-export * from 'react-hook-form'
-
 /**
  * !!!
  * Since useController from react-hook-form has an onBlur handler that triggers updates in useForm,
@@ -26,11 +22,34 @@ export function useController<TFieldValues extends FieldValues, TName extends Fi
     ...rest
   } = useControllerDefault(props)
 
+  // Smart onBlur: optimized for Vaul Drawer focus management
+  const handleBlur = (_event?: React.FocusEvent) => {
+    // All forms are in drawers, so we always defer to preserve TAB navigation
+    // But we use a single frame instead of 2 for better performance
+    requestAnimationFrame(() => onBlur())
+  }
+
   return {
     ...rest,
     field: {
       ...fieldRest,
-      onBlur: afterFrames(onBlur)
+      onBlur: handleBlur
     }
   }
 }
+
+// Re-export all other functions from react-hook-form
+export type { SubmitHandler, SubmitErrorHandler, Mode, DefaultValues, FieldValues } from 'react-hook-form'
+
+export {
+  useForm,
+  Controller,
+  FormProvider,
+  Form,
+  useWatch,
+  useFormState,
+  get,
+  set,
+  useFieldArray,
+  useFormContext
+} from 'react-hook-form'

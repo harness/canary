@@ -1,12 +1,12 @@
 import { IFormDefinition, IInputDefinition } from '../../../../src'
-import { InputConfigType, InputType } from '../../implementation/inputs/common/types'
+import { InputConfigType, InputType } from '../../implementation/types/input-types'
 
 type IInputConfigWithConfig = IInputDefinition & InputConfigType
 
 export const defaultValues = {
-  rootArray: new Array(5).fill({
-    secondArray: new Array(5).fill({
-      secondArrayProp: 'second',
+  rootList: new Array(5).fill({
+    secondList: new Array(5).fill({
+      secondListProp: 'second',
       thirdArray: new Array(5).fill('third')
     })
   })
@@ -15,7 +15,7 @@ export const defaultValues = {
 const inputs: IInputConfigWithConfig[] = [
   {
     inputType: InputType.list,
-    path: 'rootArray',
+    path: 'rootList',
     label: 'First list',
     required: true,
     inputConfig: {
@@ -23,11 +23,11 @@ const inputs: IInputConfigWithConfig[] = [
         {
           inputType: InputType.text,
           label: 'First list prop',
-          relativePath: 'firstArrayProp'
+          relativePath: 'firstListProp'
         },
         {
           inputType: InputType.list,
-          relativePath: 'secondArray',
+          relativePath: 'secondList',
           label: 'Second list',
           required: true,
           inputConfig: {
@@ -35,8 +35,8 @@ const inputs: IInputConfigWithConfig[] = [
             inputs: [
               {
                 inputType: InputType.text,
-                label: 'Second array prop',
-                relativePath: 'secondArrayProp',
+                label: 'Second list prop',
+                relativePath: 'secondListProp',
                 required: true
               },
               {

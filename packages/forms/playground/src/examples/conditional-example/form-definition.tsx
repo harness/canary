@@ -1,5 +1,5 @@
 import { unsetEmptyStringOutputTransformer, type IFormDefinition, type IInputDefinition } from '../../../../src'
-import { InputConfigType, InputType } from '../../implementation/inputs/common/types'
+import { InputConfigType, InputType } from '../../implementation/types/input-types'
 
 type IInputConfigWithConfig = IInputDefinition & InputConfigType
 

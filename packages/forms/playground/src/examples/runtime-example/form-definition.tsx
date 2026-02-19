@@ -1,7 +1,7 @@
 import * as z from 'zod'
 
 import type { IFormDefinition, IInputDefinition } from '../../../../src'
-import { InputConfigType, InputType } from '../../implementation/inputs/common/types'
+import { InputConfigType, InputType } from '../../implementation/types/input-types'
 
 type IInputConfigWithConfig = IInputDefinition & InputConfigType
 
@@ -23,12 +23,12 @@ const inputs: IInputConfigWithConfig[] = [
     }
   },
   {
-    inputType: InputType.integer,
+    inputType: InputType.number,
     path: 'input2',
     label: 'Integer input'
   },
   {
-    inputType: InputType.checkbox,
+    inputType: InputType.number,
     path: 'input3',
     label: 'Checkbox input'
   },
@@ -47,18 +47,18 @@ const inputs: IInputConfigWithConfig[] = [
     }
   },
   {
-    inputType: InputType.checkbox,
+    inputType: InputType.boolean,
     path: 'input5',
     label: 'Hide group input 1'
   },
   {
-    inputType: InputType.checkbox,
+    inputType: InputType.boolean,
     path: 'input6',
     label: 'Hide group input 2'
   },
   {
     inputType: InputType.group,
-    path: '',
+    path: 'group1',
     label: 'Group 1',
     inputs: [
       {
@@ -87,7 +87,7 @@ const inputs: IInputConfigWithConfig[] = [
     inputConfig: {
       input: {
         label: 'Integer input',
-        inputType: InputType.integer,
+        inputType: InputType.number,
         path: ''
       }
     }

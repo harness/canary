@@ -1,7 +1,11 @@
 import { useState } from 'react'
 
-import { RenderForm, RootForm, useZodValidationResolver } from '../../../../src'
-import { UpdateValues } from '../../helpers/update-values-btn'
+import { AnyFormValue, RenderForm, RootForm, useZodValidationResolver } from '@harnessio/forms'
+import { Button, Layout } from '@harnessio/ui/components'
+
+import { FormEvents } from '../../helpers/form-events'
+import { FormStatus } from '../../helpers/form-status'
+import { FormUpdate } from '../../helpers/form-update'
 import inputComponentFactory from '../../implementation/factory/factory'
 import { formDefinition } from './form-definition'
 
@@ -10,15 +14,15 @@ function DebugExample() {
   const [logs, setLogs] = useState<{ label: string; log: string }[]>([])
   const [defaultValues, setDefaultValues] = useState({ input1: '11' })
 
-  const onSubmit = values => {
+  const onSubmit = (values: AnyFormValue) => {
     addLog('SUBMIT', values)
   }
 
-  const onValuesChange = values => {
+  const onValuesChange = (values: AnyFormValue) => {
     addLog('VALUES CHANGED', values)
   }
 
-  const onValidationChange = formState => {
+  const onValidationChange = (formState: { isValid: boolean; isSubmitted: boolean }) => {
     setFormState(formState)
     addLog('VALIDATION', formState)
   }
@@ -31,62 +35,44 @@ function DebugExample() {
   const resolver = useZodValidationResolver(formDefinition)
 
   return (
-    <div style={{ display: 'flex', gap: '50px', alignItems: 'flex-start' }}>
-      <RootForm
-        defaultValues={defaultValues}
-        onSubmit={onSubmit}
-        resolver={resolver}
-        mode={'onSubmit'}
-        onValuesChange={onValuesChange}
-        onValidationChange={onValidationChange}
-      >
-        {rootForm => (
-          <div style={{ border: '1px solid lightgray', padding: '10px' }}>
-            <RenderForm factory={inputComponentFactory} inputs={formDefinition} />
-            <button onClick={() => rootForm.submitForm()} style={{ marginTop: '10px' }}>
-              Submit
-            </button>
-          </div>
-        )}
-      </RootForm>
-
-      <div style={{ width: '200px' }}>
-        <div>
-          Valid:{' '}
-          {formState.isValid ? (
-            <span style={{ color: 'green', fontWeight: 'bold' }}>Yes</span>
-          ) : (
-            <span style={{ color: 'red', fontWeight: 'bold' }}>No</span>
+    <Layout.Horizontal gap="xl" align="start">
+      {/* Column 1 */}
+      <div className="border-border bg-background p-cn-md rounded-cn-6 border" style={{ width: '400px' }}>
+        <RootForm
+          defaultValues={defaultValues}
+          onSubmit={onSubmit}
+          resolver={resolver}
+          mode={'onSubmit'}
+          onValuesChange={onValuesChange}
+          onValidationChange={onValidationChange}
+        >
+          {rootForm => (
+            <Layout.Vertical gap="lg">
+              <RenderForm factory={inputComponentFactory} inputs={formDefinition} className="space-y-cn-md" />
+              <Button onClick={() => rootForm.submitForm()} className="mt-2 self-start">
+                Submit
+              </Button>
+            </Layout.Vertical>
           )}
-        </div>
-        <div>
-          Submitted:{' '}
-          {formState.isSubmitted ? (
-            <span style={{ color: 'green', fontWeight: 'bold' }}>Yes</span>
-          ) : (
-            <span style={{ color: 'red', fontWeight: 'bold' }}>No</span>
-          )}
-        </div>
+        </RootForm>
       </div>
 
-      <div style={{ width: '400px' }}>
-        <UpdateValues onUpdate={setDefaultValues} values={{ input1: 'Abcdefgh' }} label="Set invalid value" />
-        <UpdateValues onUpdate={setDefaultValues} values={{ input1: '123456' }} label="Set valid value" />
+      {/* Column 2 */}
+      <div className="w-48">
+        <FormStatus formState={formState} />
       </div>
 
-      <div style={{ flexGrow: '1' }}>
-        <div style={{ border: '1px solid lightgray', padding: '10px' }}>
-          <button onClick={() => setLogs([])}>Clear logs</button>
+      {/* Column 3 */}
+      <Layout.Vertical gap="sm" className="w-96">
+        <FormUpdate onUpdate={setDefaultValues} values={{ input1: 'Abcdefgh' }} label="Set invalid value" />
+        <FormUpdate onUpdate={setDefaultValues} values={{ input1: '123456' }} label="Set valid value" />
+      </Layout.Vertical>
 
-          {logs.map(log => (
-            <>
-              <pre style={{ background: '#EEE' }}>{log.label}</pre>
-              <pre>{log.log}</pre>
-            </>
-          ))}
-        </div>
+      {/* Column 4 */}
+      <div className="min-w-0 flex-1">
+        <FormEvents logs={logs} onClearLogs={() => setLogs([])} />
       </div>
-    </div>
+    </Layout.Horizontal>
   )
 }
 

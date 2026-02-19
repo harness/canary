@@ -33,12 +33,13 @@ export default {
   '.cn-dropdown-menu': {
     zIndex: '50',
     minWidth: 'var(--cn-dropdown-min-width)',
+    maxWidth: 'var(--cn-size-69)',
     maxHeight: 'calc(var(--radix-dropdown-menu-content-available-height) - 4px)',
     border: 'var(--cn-dropdown-border) solid var(--cn-border-3)',
     borderRadius: 'var(--cn-dropdown-radius)',
     backgroundColor: 'var(--cn-bg-3)',
     boxShadow: 'var(--cn-shadow-4)',
-    '@apply flex flex-col data-[state=open]:animate-in data-[state=closed]:animate-out data-[state=closed]:fade-out-0 data-[state=open]:fade-in-0 data-[state=closed]:zoom-out-95 data-[state=open]:zoom-in-95':
+    '@apply flex min-w-0 flex-col overflow-hidden data-[state=open]:animate-in data-[state=closed]:animate-out data-[state=closed]:fade-out-0 data-[state=open]:fade-in-0 data-[state=closed]:zoom-out-95 data-[state=open]:zoom-in-95':
       '',
 
     '&[data-side=bottom]': {
@@ -59,6 +60,8 @@ export default {
 
     '&-container': {
       padding: 'var(--cn-dropdown-container)',
+      minWidth: '0',
+      overflow: 'hidden',
 
       '&-header': {
         borderBottom: 'var(--cn-dropdown-border) solid var(--cn-border-3)'
@@ -70,7 +73,9 @@ export default {
     },
 
     '&-content': {
-      maxHeight: 'var(--cn-dropdown-max-height)'
+      maxHeight: 'var(--cn-dropdown-max-height)',
+      minWidth: '0',
+      overflowX: 'hidden'
     },
 
     '&-base-item': {
@@ -84,6 +89,7 @@ export default {
       padding: 'var(--cn-dropdown-item-py) var(--cn-dropdown-item-px)',
       borderRadius: 'var(--cn-dropdown-item-radius)',
       userSelect: 'none',
+      minWidth: '0',
       '@apply transition-colors': '',
 
       '&:not(:where([aria-disabled=true]))': {

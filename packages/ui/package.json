@@ -1,7 +1,7 @@
 {
   "name": "@harnessio/ui",
   "description": "Harness Canary UI component library",
-  "version": "0.0.329",
+  "version": "0.0.330",
   "private": false,
   "type": "module",
   "main": "./dist/index.js",
@@ -143,7 +143,7 @@
     "zod": "^3.23.8"
   },
   "peerDependencies": {
-    "@harnessio/forms": "^0.7.0",
+    "@harnessio/forms": "^0.8.0",
     "react": "^17.0.2",
     "react-dom": "^17.0.2",
     "react-router-dom": ">=5"

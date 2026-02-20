@@ -1,5 +1,7 @@
 import { useMemo, useState } from 'react'
 
+import { merge } from 'lodash-es'
+
 import {
   AnyFormValue,
   collectDefaultValues,
@@ -25,16 +27,14 @@ import {
   insertInputsAtStructurePath,
   type InputInfo
 } from './form-utils'
-import { merge } from 'lodash-es'
 
 function DynamicExample() {
   const [formState, setFormState] = useState<{ isValid?: boolean; isSubmitted?: boolean }>({})
   const [logs, setLogs] = useState<{ label: string; log: string }[]>([])
-  // TODO: remove, use currentFormValues
-  const [_defaultValues, setDefaultValues] = useState({})
   const [currentFormDefinition, setCurrentFormDefinition] = useState<IFormDefinition>(formDefinition)
   const [selectedInsertionPoint, setSelectedInsertionPoint] = useState<string>('0')
   const [currentFormValues, setCurrentFormValues] = useState({})
+  const [defaultValues, setDefaultValues] = useState({})
 
   // Get available input paths for the select dropdown
   const inputPaths: InputInfo[] = extractInputPaths(currentFormDefinition.inputs)
@@ -105,13 +105,15 @@ function DynamicExample() {
     const newFormDefinition = deleteSlotByPath(currentFormDefinition, slotPath)
     setCurrentFormDefinition(newFormDefinition)
 
+    // TODO: implement proper logic here
+
     // Remove only the deleted slot's data, preserve all other form values
-    const newFormValues = { ...currentFormValues } as any
-    delete newFormValues[slotPath]
+    // const newFormValues = { ...currentFormValues } as any
+    // delete newFormValues[slotPath]
 
     // Update both current values and default values
-    setCurrentFormValues(newFormValues)
-    setDefaultValues(newFormValues)
+    // setCurrentFormValues(newFormValues)
+    // setDefaultValues(newFormValues)
   }
 
   const handleAppendPerformanceSchema = () => {
@@ -165,7 +167,7 @@ function DynamicExample() {
       {/* Column 1 */}
       <div className="border-border bg-background p-cn-md rounded-cn-6 border" style={{ width: '400px' }}>
         <RootForm
-          defaultValues={currentFormValues}
+          defaultValues={defaultValues}
           onSubmit={onSubmit}
           resolver={resolver}
           mode={'onSubmit'}
@@ -212,7 +214,12 @@ function DynamicExample() {
 
       {/* Column 3 */}
       <Layout.Vertical gap="sm" className="w-96">
-        <FormUpdate onUpdate={setDefaultValues} values={currentFormValues} label="Reset values" />
+        <FormUpdate
+          onUpdate={setDefaultValues}
+          resetValues={{ name: 'Default name' }}
+          values={currentFormValues}
+          label="Reset values"
+        />
 
         <div className="space-y-2">
           <div className="text-sm font-medium">Insert after:</div>

@@ -1,3 +1,4 @@
+import { useRef } from 'react'
 import {
   FieldPath,
   FieldValues,
@@ -5,6 +6,8 @@ import {
   UseControllerProps,
   UseControllerReturn
 } from 'react-hook-form'
+
+import { afterFrames } from './utils'
 
 /**
  * !!!
@@ -22,18 +25,13 @@ export function useController<TFieldValues extends FieldValues, TName extends Fi
     ...rest
   } = useControllerDefault(props)
 
-  // Smart onBlur: optimized for Vaul Drawer focus management
-  const handleBlur = (_event?: React.FocusEvent) => {
-    // All forms are in drawers, so we always defer to preserve TAB navigation
-    // But we use a single frame instead of 2 for better performance
-    requestAnimationFrame(() => onBlur())
-  }
+  const mountTimeRef = useRef<number>(Date.now())
 
   return {
     ...rest,
     field: {
       ...fieldRest,
-      onBlur: handleBlur
+      onBlur: afterFrames(onBlur, 2, mountTimeRef.current)
     }
   }
 }

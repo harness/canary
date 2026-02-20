@@ -637,7 +637,7 @@
         "fontWeight": "{fontWeight.default.normal.500}",
         "fontSize": "{fontSize.2}",
         "lineHeight": "{lineHeight.2.normal}",
-        "letterSpacing": "{tracking.wider}"
+        "letterSpacing": "{tracking.wide}"
       },
       "$description": "The smallest service text (labels, signatures, technical information)"
     }

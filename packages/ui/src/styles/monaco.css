@@ -1,0 +1,33 @@
+/*  MONACO EDITOR  */
+.monaco-editor.monaco-editor {
+  --vscode-editorGutter-background: transparent;
+  --vscode-editor-background: transparent;
+  --vscode-editorLineNumber-foreground: var(--cn-text-3);
+  --vscode-editorLineNumber-activeForeground: var(--cn-text-1);
+  outline-color: transparent !important;
+}
+
+.monaco-editor .overflow-guard {
+  @apply border-0;
+}
+
+.monaco-diff-editor .monaco-editor .overflow-guard {
+  @apply border-0;
+}
+
+.monaco-diff-editor .diffOverview .diffViewport {
+  background: var(--cn-comp-scrollbar-thumb, lch(20.5% 2.62 285.74));
+
+  &:hover {
+    background: var(--cn-comp-scrollbar-thumb, lch(20.5% 2.62 285.74));
+  }
+}
+
+.monaco-scrollable-element > .scrollbar > .slider {
+  border-radius: var(--cn-rounded-full, 0.25rem);
+  --vscode-scrollbarSlider-background: var(--cn-comp-scrollbar-thumb, lch(20.5% 2.62 285.74));
+}
+
+.monaco-diff-editor.side-by-side .editor.modified {
+  @apply !border-cn-2 !shadow-cn-none !border-l !border-solid;
+}

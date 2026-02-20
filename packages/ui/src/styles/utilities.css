@@ -1,0 +1,105 @@
+.border-linear {
+  @apply rounded-inherit pointer-events-none absolute inset-0 border border-transparent;
+  mask:
+    linear-gradient(#fff 0 0) padding-box,
+    linear-gradient(#fff 0 0);
+  mask-composite: exclude;
+}
+
+.connector-gradient {
+  @apply bg-gradient-to-b from-[#2F2F33]/0 to-[#161619]/100;
+}
+
+.ci-gradient {
+  @apply bg-gradient-to-r from-[#4f46e5] to-[#9333ea];
+}
+
+/* Text utilities */
+.text-radial-gradient {
+  /* remove hardcode colors */
+  @apply text-cn-1/70 from-[#CA9AF4]/70 to-[#CA9AF4]/0 bg-clip-text;
+}
+
+/* Card utilities */
+.card-auth {
+  @apply w-[362px] border-none;
+}
+
+.card-auth-header {
+  @apply space-x-0 space-y-0 p-0;
+}
+
+.card-auth-content {
+  @apply py-cn-xl w-full;
+}
+
+/* Form utilities */
+.text-form-error {
+  @apply text-cn-danger text-cn-size-2 mt-cn-xs font-light;
+}
+
+.cn-graph-bg-size {
+  background-size: 22px 22px;
+}
+
+.layer-high {
+  @apply z-[19];
+}
+
+.layer-medium {
+  @apply z-[15];
+}
+
+.layer-low {
+  @apply z-10;
+}
+
+.sub-menu-icon-bg {
+  stop {
+    stop-color: var(--cn-text-2);
+
+    & + stop {
+      stop-color: var(--cn-text-3);
+    }
+  }
+}
+
+mark {
+  background: var(--cn-set-brand-primary-bg);
+  color: var(--cn-set-brand-primary-text);
+}
+
+/* Hack for detecting scroll on select */
+@keyframes detect-scroll {
+  from,
+  to {
+    --can-scroll: ;
+  }
+}
+
+[data-radix-select-viewport] {
+  animation: detect-scroll linear;
+  animation-timeline: scroll(self);
+
+  --padding-if-can-scroll: var(--can-scroll) 4px 0 4px 4px;
+  --padding-if-cant-scroll: 4px;
+  padding: var(--padding-if-can-scroll, var(--padding-if-cant-scroll));
+}
+
+/* Select scrollbar */
+
+[data-radix-select-viewport] {
+  scrollbar-width: auto !important;
+}
+
+[data-radix-select-viewport]::-webkit-scrollbar {
+  width: 14px;
+  display: block !important;
+}
+
+[data-radix-select-viewport]::-webkit-scrollbar-thumb {
+  background-color: var(--cn-comp-scrollbar-thumb);
+  border: 4px solid transparent;
+  border-radius: 7px;
+  background-clip: content-box;
+}

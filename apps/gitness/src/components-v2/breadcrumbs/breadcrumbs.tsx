@@ -1,3 +1,4 @@
+import { Fragment } from 'react'
 import { UIMatch } from 'react-router-dom'
 
 import { Breadcrumb, IconV2, Separator, Sidebar, Topbar } from '@harnessio/ui/components'
@@ -40,22 +41,22 @@ export const Breadcrumbs = ({
               const breadcrumbContent = breadcrumb!(match.params)
 
               return (
-                <>
+                <Fragment key={match.pathname}>
                   {!isFirst && (
                     <Breadcrumb.Separator>
                       <IconV2 name="nav-arrow-right" className="text-cn-brand" size="2xs" />
                     </Breadcrumb.Separator>
                   )}
                   {isLast || !asLink ? (
-                    <Breadcrumb.Page key={match.pathname}>{breadcrumbContent}</Breadcrumb.Page>
+                    <Breadcrumb.Page>{breadcrumbContent}</Breadcrumb.Page>
                   ) : (
-                    <Breadcrumb.Item key={match.pathname}>
+                    <Breadcrumb.Item>
                       <Breadcrumb.Link asChild>
                         <Link to={match.pathname}>{breadcrumbContent}</Link>
                       </Breadcrumb.Link>
                     </Breadcrumb.Item>
                   )}
-                </>
+                </Fragment>
               )
             })}
           </Breadcrumb.List>

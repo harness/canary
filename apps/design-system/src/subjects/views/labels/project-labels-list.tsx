@@ -4,7 +4,7 @@ import { LabelsListStore } from '@subjects/stores/labels-store'
 import { noop } from '@utils/viewUtils'
 
 import { DeleteAlertDialog } from '@harnessio/ui/components'
-import { LabelsListPage, SandboxLayout } from '@harnessio/ui/views'
+import { LabelsListPage, SandboxLayout } from '@harnessio/views'
 
 export const ProjectLabelsList = () => {
   const [openAlertDeleteDialog, setOpenAlertDeleteDialog] = useState(false)

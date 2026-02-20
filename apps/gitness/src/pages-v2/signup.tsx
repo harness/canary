@@ -2,7 +2,7 @@ import { useEffect } from 'react'
 import { useNavigate } from 'react-router-dom'
 
 import { useOnRegisterMutation } from '@harnessio/code-service-client'
-import { SignUpData, SignUpPage } from '@harnessio/ui/views'
+import { SignUpData, SignUpPage } from '@harnessio/views'
 
 import { useRoutes } from '../framework/context/NavigationContext'
 

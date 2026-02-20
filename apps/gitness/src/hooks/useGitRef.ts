@@ -1,7 +1,7 @@
 import { useState } from 'react'
 
 import { useFindRepositoryQuery } from '@harnessio/code-service-client'
-import { BranchSelectorTab, CodeModes } from '@harnessio/ui/views'
+import { BranchSelectorTab, CodeModes } from '@harnessio/views'
 
 import { useGetRepoRef } from '../framework/hooks/useGetRepoPath'
 import { isRefACommitSHA, REFS_BRANCH_PREFIX, REFS_TAGS_PREFIX } from '../utils/git-utils'

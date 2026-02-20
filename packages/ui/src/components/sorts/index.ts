@@ -3,6 +3,8 @@ import SimpleSort from './simple-sort'
 import { Sort as SortRoot } from './sort'
 import SortSelect from './sort-select'
 
+export { default as SimpleSort } from './simple-sort'
+
 export const Sort = {
   Root: SortRoot,
   Select: SortSelect,

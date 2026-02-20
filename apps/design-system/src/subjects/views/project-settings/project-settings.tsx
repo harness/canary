@@ -1,4 +1,4 @@
-import { ProjectSettingsGeneralPage } from '@harnessio/ui/views'
+import { ProjectSettingsGeneralPage } from '@harnessio/views'
 
 export const ProjectSettingsView = () => {
   return (

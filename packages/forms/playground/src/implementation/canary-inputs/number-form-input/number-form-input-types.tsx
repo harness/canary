@@ -1,5 +1,5 @@
 import { IInputDefinition, InputProps } from '@harnessio/forms'
-import { RuntimeInputConfig } from '@harnessio/ui/views'
+import { RuntimeInputConfig } from '@harnessio/views'
 
 import { CommonFormInputConfig } from '../../types/types'
 

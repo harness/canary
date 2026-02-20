@@ -1,0 +1,115 @@
+import { useEffect, useState } from 'react'
+import { SubmitHandler, useForm } from 'react-hook-form'
+
+import { Alert, Button, FormInput, FormWrapper, Link, Spacer, Text } from '@harnessio/ui/components'
+import { zodResolver } from '@hookform/resolvers/zod'
+import { z } from 'zod'
+
+import { Floating1ColumnLayout } from '..'
+import { Agreements } from './components/agreements'
+import { AnimatedHarnessLogo } from './components/animated-harness-logo'
+
+interface ForgotPasswordPageProps {
+  isLoading?: boolean
+  onSubmit?: (emailData: ForgotPasswordData) => void
+  error?: string
+}
+
+export interface ForgotPasswordData {
+  email?: string
+}
+
+const forgotPasswordSchema = z.object({
+  email: z.string().email({ message: 'Invalid email address' })
+})
+
+export function ForgotPasswordPage({ isLoading, onSubmit, error }: ForgotPasswordPageProps) {
+  const [serverError, setServerError] = useState<string | null>(null)
+  const formMethods = useForm({
+    resolver: zodResolver(forgotPasswordSchema)
+  })
+
+  const {
+    register,
+    handleSubmit,
+    setError,
+    clearErrors,
+    trigger,
+    formState: { errors }
+  } = formMethods
+
+  const handleOnSubmit: SubmitHandler<ForgotPasswordData> = data => {
+    // Handle the submission of the forgot password form
+    if (onSubmit) {
+      onSubmit(data)
+    }
+  }
+
+  const handleInputChange = async () => {
+    if (serverError) {
+      setServerError(null)
+      clearErrors(['email'])
+      await trigger()
+    }
+  }
+
+  useEffect(() => {
+    if (error) {
+      setServerError(error)
+      setError('email', {
+        type: 'manual',
+        message: error
+      })
+    } else {
+      setServerError(null)
+      clearErrors(['email'])
+    }
+  }, [error, setError, clearErrors])
+
+  const hasError = Object.keys(errors).length > 0 || !!serverError
+
+  return (
+    <Floating1ColumnLayout
+      className="flex-col bg-cn-1 pt-cn-4xl sm:pt-[186px]"
+      highlightTheme={hasError ? 'error' : 'blue'}
+      verticalCenter
+    >
+      <div className="relative z-10 mb-cn-2xl w-80 max-w-full text-cn-1">
+        <div className="flex flex-col items-center">
+          <AnimatedHarnessLogo theme={hasError ? 'error' : 'blue'} />
+          <Text className="mt-cn-sm" variant="heading-section" align="center" as="h1">
+            Forgot password?
+          </Text>
+          <Text className="mt-cn-4xs" align="center">
+            Enter your email to receive the verification code.
+          </Text>
+        </div>
+        {serverError && (
+          <Alert.Root theme="danger">
+            <Alert.Title>{serverError}</Alert.Title>
+          </Alert.Root>
+        )}
+        <div className="mt-cn-3xl pt-0">
+          <FormWrapper {...formMethods} onSubmit={handleSubmit(handleOnSubmit)}>
+            <FormInput.Text
+              id="email"
+              type="email"
+              placeholder="Your email"
+              label="Email"
+              {...register('email', { onChange: handleInputChange })}
+              autoFocus
+            />
+            <Button className="mt-cn-3xl w-full" variant="outline" rounded type="submit" loading={isLoading}>
+              {isLoading ? 'Sending...' : 'Send'}
+            </Button>
+          </FormWrapper>
+          <Spacer size={4} />
+          <Text color="foreground-3" align="center">
+            Don’t have an account? <Link to="/signup">Sign up</Link>
+          </Text>
+        </div>
+      </div>
+      <Agreements />
+    </Floating1ColumnLayout>
+  )
+}

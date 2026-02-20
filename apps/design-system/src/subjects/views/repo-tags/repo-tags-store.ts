@@ -1,4 +1,4 @@
-import { RepoTagsStore } from '@harnessio/ui/views'
+import { RepoTagsStore } from '@harnessio/views'
 
 export const tagsStore: RepoTagsStore = {
   tags: [

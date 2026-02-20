@@ -3,7 +3,7 @@ import { FC, useCallback, useMemo, useState } from 'react'
 import { useGetProjectAggregateDtoListQuery } from '@harnessio/react-ng-manager-swagger-service-client'
 import { useGetOrganizationListQuery } from '@harnessio/react-ng-manager-v2-client'
 import { useDebounceSearch } from '@harnessio/ui/hooks'
-import { AccountInfo, DestinationSelectorDrawer, ScopeItem, ScopeType } from '@harnessio/ui/views'
+import { AccountInfo, DestinationSelectorDrawer, ScopeItem, ScopeType } from '@harnessio/views'
 
 import { useMFEContext } from '../framework/hooks/useMFEContext'
 

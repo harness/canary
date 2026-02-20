@@ -13,7 +13,7 @@ import {
   EnumPullReqState,
   PullRequestListPage as SandboxPullRequestListPage,
   type PRListFilters
-} from '@harnessio/ui/views'
+} from '@harnessio/views'
 
 import { useRoutes } from '../../framework/context/NavigationContext'
 import { useGetRepoRef } from '../../framework/hooks/useGetRepoPath'

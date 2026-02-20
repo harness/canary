@@ -1,4 +1,4 @@
-import { SearchResultItem, SemanticSearchResultItem } from '@harnessio/ui/views'
+import { SearchResultItem, SemanticSearchResultItem } from '@harnessio/views'
 
 export interface SearchResultsStore {
   results: SearchResultItem[]

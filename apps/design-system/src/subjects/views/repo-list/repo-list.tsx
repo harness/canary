@@ -2,7 +2,7 @@ import { FC, useCallback } from 'react'
 
 import { noop } from '@utils/viewUtils'
 
-import { RepoListPageProps, SandboxRepoListPage } from '@harnessio/ui/views'
+import { RepoListPageProps, SandboxRepoListPage } from '@harnessio/views'
 
 import repoListStore from './repo-list-store.json'
 

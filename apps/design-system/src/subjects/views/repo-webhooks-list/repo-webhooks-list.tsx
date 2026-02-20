@@ -3,7 +3,7 @@ import { useCallback, useState } from 'react'
 import { noop } from '@utils/viewUtils.ts'
 
 import { DeleteAlertDialog } from '@harnessio/ui/components'
-import { RepoWebhookListPage } from '@harnessio/ui/views'
+import { RepoWebhookListPage } from '@harnessio/views'
 
 import { repoWebhooksListStore } from './repo-webhooks-list-store'
 

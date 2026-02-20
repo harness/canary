@@ -1,7 +1,7 @@
 import { useNavigate, useParams } from 'react-router-dom'
 
 import { useSaveSpaceLabelMutation } from '@harnessio/code-service-client'
-import { CreateLabelFormFields, LabelFormPage, SandboxLayout } from '@harnessio/ui/views'
+import { CreateLabelFormFields, LabelFormPage, SandboxLayout } from '@harnessio/views'
 
 import { useRoutes } from '../../../framework/context/NavigationContext'
 import { PathParams } from '../../../RouteDefinitions'

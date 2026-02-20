@@ -9,7 +9,7 @@ import {
   useListReposQuery
 } from '@harnessio/code-service-client'
 import { toast } from '@harnessio/ui/components'
-import { ExtendedScope, RepoListFilters, RepositoryType, SandboxRepoListPage } from '@harnessio/ui/views'
+import { ExtendedScope, RepoListFilters, RepositoryType, SandboxRepoListPage } from '@harnessio/views'
 
 import { useRoutes } from '../../framework/context/NavigationContext'
 import { useGetSpaceURLParam } from '../../framework/hooks/useGetSpaceParam'

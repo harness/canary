@@ -1,4 +1,4 @@
-import { BranchRulesAction, BranchRulesActionType, MergeStrategy, Rule } from '@harnessio/ui/views'
+import { BranchRulesAction, BranchRulesActionType, MergeStrategy, Rule } from '@harnessio/views'
 
 import { handleRuleInterdependencies } from '../transform-utils/handle_rule_interdependencies'
 

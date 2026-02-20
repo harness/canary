@@ -1,4 +1,4 @@
-import { SummaryItemType, type RepoFile } from '@harnessio/ui/views'
+import { SummaryItemType, type RepoFile } from '@harnessio/views'
 
 import { getLogsText, sortFilesByType, sortPathsByType } from '../common-utils'
 

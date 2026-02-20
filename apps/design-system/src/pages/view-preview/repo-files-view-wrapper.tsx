@@ -11,7 +11,7 @@ import {
   RepoSidebar as RepoSidebarView,
   SIDEBAR_MAX_WIDTH,
   SIDEBAR_MIN_WIDTH
-} from '@harnessio/ui/views'
+} from '@harnessio/views'
 
 export const RepoFilesViewWrapper: FC<PropsWithChildren<HTMLAttributes<HTMLElement>>> = ({ children }) => {
   const [sidebarWidth, setSidebarWidth] = useState(SIDEBAR_MIN_WIDTH)

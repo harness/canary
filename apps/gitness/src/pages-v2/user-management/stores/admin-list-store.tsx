@@ -1,6 +1,6 @@
 import { create } from 'zustand'
 
-import { IAdminListUsersStore, UsersProps } from '@harnessio/ui/views'
+import { IAdminListUsersStore, UsersProps } from '@harnessio/views'
 
 import { PageResponseHeader } from '../../../types'
 

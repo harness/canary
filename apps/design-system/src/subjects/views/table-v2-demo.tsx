@@ -1,5 +1,5 @@
 import { Table } from '@harnessio/ui/components'
-import { SandboxLayout } from '@harnessio/ui/views'
+import { SandboxLayout } from '@harnessio/views'
 
 // Sample data types
 type User = {

@@ -50,6 +50,7 @@
     "zod": "^3.23.8"
   },
   "devDependencies": {
+    "@harnessio/views": "workspace:*",
     "@testing-library/jest-dom": "^6.9.1",
     "@testing-library/react": "^12.1.5",
     "@testing-library/user-event": "^13.5.0",

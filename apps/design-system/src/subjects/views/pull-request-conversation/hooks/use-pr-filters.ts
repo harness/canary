@@ -1,6 +1,6 @@
 import { useState } from 'react'
 
-import { orderSortDate, PRCommentFilterType } from '@harnessio/ui/views'
+import { orderSortDate, PRCommentFilterType } from '@harnessio/views'
 
 const dateFilters = [
   {

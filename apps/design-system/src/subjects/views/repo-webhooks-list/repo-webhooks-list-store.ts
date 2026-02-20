@@ -1,6 +1,6 @@
 import { noop } from '@utils/viewUtils'
 
-import { CreateWebhookFormFields, ListRepoWebhooksOkResponse, WebhookStore } from '@harnessio/ui/views'
+import { CreateWebhookFormFields, ListRepoWebhooksOkResponse, WebhookStore } from '@harnessio/views'
 
 interface RepoWebhooksListStore {
   useWebhookStore: () => WebhookStore

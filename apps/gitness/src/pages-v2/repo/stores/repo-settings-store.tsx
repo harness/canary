@@ -16,7 +16,7 @@ import {
   RuleDataType,
   RuleType,
   VulnerabilityScanningType
-} from '@harnessio/ui/views'
+} from '@harnessio/views'
 
 import { getTotalRulesApplied, transformDataFromApi } from '../../../utils/repo-branch-rules-utils'
 

@@ -2,7 +2,7 @@ import { FC } from 'react'
 
 import { noop } from '@utils/viewUtils'
 
-import { ExecutionListPage, RepoSummaryViewProps } from '@harnessio/ui/views'
+import { ExecutionListPage, RepoSummaryViewProps } from '@harnessio/views'
 
 import { useExecutionListStore } from './execution-list.store'
 

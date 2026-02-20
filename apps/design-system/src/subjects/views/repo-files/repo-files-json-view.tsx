@@ -1,4 +1,4 @@
-import { CodeModes } from '@harnessio/ui/views'
+import { CodeModes } from '@harnessio/views'
 
 import { RepoFilesWrapper } from './components/repo-files-wrapper'
 

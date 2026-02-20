@@ -1,7 +1,7 @@
 import { useNavigate } from 'react-router-dom'
 
 import { ImporterProviderType, ImportSpaceRequestBody, useImportSpaceMutation } from '@harnessio/code-service-client'
-import { ImportProjectFormFields, ImportProjectPage, ProviderOptionsEnum } from '@harnessio/ui/views'
+import { ImportProjectFormFields, ImportProjectPage, ProviderOptionsEnum } from '@harnessio/views'
 
 import { useRoutes } from '../../framework/context/NavigationContext'
 

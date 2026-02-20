@@ -2,7 +2,7 @@ import { FC, useCallback } from 'react'
 
 import { noop } from '@utils/viewUtils'
 
-import { BranchSelectorV2, PullRequestComparePage, PullRequestComparePageProps } from '@harnessio/ui/views'
+import { BranchSelectorV2, PullRequestComparePage, PullRequestComparePageProps } from '@harnessio/views'
 
 import { repoCommitStore } from './repo-commit-store'
 

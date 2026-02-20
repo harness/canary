@@ -1,6 +1,6 @@
 import { Tabs } from '@/components'
+import { SandboxLayout } from '@/components/layouts'
 import { useTranslation } from '@/context'
-import { SandboxLayout } from '@/views'
 
 export enum RepoTabsKeys {
   SUMMARY = 'summary',

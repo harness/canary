@@ -1,0 +1,112 @@
+import { IconV2, NoData, Skeleton, StackedList, Text, TimeAgoCard } from '@harnessio/ui/components'
+import { useTranslation } from '@harnessio/ui/context'
+import { timeDistance } from '@harnessio/ui/utils'
+import { PipelineExecutionStatus } from '@views'
+
+import { ExecutionStatusIcon } from '../components/execution-status-icon'
+import { IExecutionListProps, IExecutionType } from './types'
+
+const Title = ({ status, title }: { status?: PipelineExecutionStatus; title: string }) => {
+  return (
+    <div className="flex items-center gap-cn-2xs">
+      {status && <ExecutionStatusIcon status={status} />}
+      <Text as="span" variant="body-strong" color="foreground-3" truncate>
+        {title}
+      </Text>
+    </div>
+  )
+}
+
+const Description = ({
+  sha,
+  description,
+  version
+}: {
+  sha?: string
+  description?: IExecutionType
+  version?: string
+}) => {
+  return (
+    <div className="inline-flex max-w-full items-center gap-cn-xs overflow-hidden pl-cn-xl text-cn-size-2 leading-tight">
+      {description && <span className="w-full overflow-hidden break-words text-cn-3">{description}</span>}
+      {version && (
+        <div className="flex items-center gap-cn-3xs">
+          <IconV2 size="2xs" name="version" />
+          {version}
+        </div>
+      )}
+      {sha && (
+        <div className="flex h-4 items-center gap-cn-3xs rounded bg-cn-gray-secondary px-cn-2xs text-cn-size-1 text-cn-1">
+          <IconV2 className="text-cn-3" size="2xs" name="git-commit" />
+          {sha?.slice(0, 7)}
+        </div>
+      )}
+    </div>
+  )
+}
+
+export const ExecutionList = ({
+  executions,
+  handleResetQuery,
+  isLoading,
+  query,
+  handleExecutePipeline
+}: IExecutionListProps) => {
+  const noData = !executions || executions.length === 0
+
+  const { t } = useTranslation()
+
+  if (isLoading) {
+    return <Skeleton.List />
+  }
+
+  if (noData) {
+    return query ? (
+      <StackedList.Root className="grow place-content-center">
+        <NoData
+          imageName="no-search-magnifying-glass"
+          title="No search results"
+          description={[
+            t('views:noData.checkSpelling', 'Check your spelling and filter options,'),
+            t('views:noData.changeSearch', 'or search for a different keyword.')
+          ]}
+          secondaryButton={{
+            label: t('views:noData.clearSearch', 'Clear search'),
+            onClick: handleResetQuery
+          }}
+        />
+      </StackedList.Root>
+    ) : (
+      <NoData
+        imageName="no-data-folder"
+        title="No executions yet"
+        description={['There are no executions in this project yet.']}
+        primaryButton={{
+          label: 'Execute pipeline',
+          onClick: handleExecutePipeline
+        }}
+      />
+    )
+  }
+
+  return (
+    <StackedList.Root>
+      {executions.map(execution => (
+        <StackedList.Item key={execution.name} paddingY="sm" to={execution.id}>
+          <StackedList.Field
+            title={<Title status={execution.status} title={execution.name || ''} />}
+            description={
+              <Description sha={execution.sha} description={execution.description} version={execution.version} />
+            }
+          />
+          <StackedList.Field
+            title={`${timeDistance(execution.finished, execution.started)}`}
+            description={<TimeAgoCard timestamp={execution.started} />}
+            titleColor="foreground-2"
+            right
+          />
+        </StackedList.Item>
+      ))}
+    </StackedList.Root>
+  )
+}

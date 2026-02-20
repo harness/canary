@@ -1,6 +1,6 @@
 import { EnumCiStatus, TypesExecution } from '@harnessio/code-service-client'
 import { IconV2, MeterState } from '@harnessio/ui/components'
-import { PipelineExecutionStatus } from '@harnessio/ui/views'
+import { PipelineExecutionStatus } from '@harnessio/views'
 
 const renderBranch = (branch: string): React.ReactElement => {
   return (

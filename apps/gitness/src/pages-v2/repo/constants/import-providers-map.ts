@@ -1,5 +1,5 @@
 import { ImporterProviderType } from '@harnessio/code-service-client'
-import { ImportMultipleReposFormFields, ImportRepoFormFields, ProviderOptionsEnum } from '@harnessio/ui/views'
+import { ImportMultipleReposFormFields, ImportRepoFormFields, ProviderOptionsEnum } from '@harnessio/views'
 
 export const PROVIDER_TYPE_MAP: Record<ProviderOptionsEnum, ImporterProviderType> = {
   [ProviderOptionsEnum.GITHUB]: 'github',

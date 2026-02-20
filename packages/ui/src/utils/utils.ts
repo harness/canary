@@ -2,7 +2,7 @@ import { Children, isValidElement, ReactElement, ReactNode } from 'react'
 
 import { get } from 'lodash-es'
 
-import { Scope, ScopeType } from '../views/common/types'
+import { Scope, ScopeType } from '@/types'
 
 export const INITIAL_ZOOM_LEVEL = 1
 export const ZOOM_INC_DEC_LEVEL = 0.1

@@ -2,9 +2,9 @@ import * as React from 'react'
 import { createContext, forwardRef, useCallback, useContext, useEffect, useState } from 'react'
 
 import { IconV2, ScrollArea } from '@/components'
+import { ExecutionState } from '@/types'
 import * as AccordionPrimitive from '@radix-ui/react-accordion'
 import { cn } from '@utils/cn'
-import { ExecutionState } from '@views/repo/pull-request'
 
 type ExecutionDetail = {
   status: ExecutionState

@@ -12,7 +12,7 @@ import {
 } from '@harnessio/code-service-client'
 import { DeleteAlertDialog } from '@harnessio/ui/components'
 import { PrincipalType } from '@harnessio/ui/types'
-import { InviteMemberFormFields, MembersProps, ProjectMemberListView } from '@harnessio/ui/views'
+import { InviteMemberFormFields, MembersProps, ProjectMemberListView } from '@harnessio/views'
 
 import { useGetSpaceURLParam } from '../../framework/hooks/useGetSpaceParam'
 import { useMFEContext } from '../../framework/hooks/useMFEContext'

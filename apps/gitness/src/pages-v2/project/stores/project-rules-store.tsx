@@ -1,7 +1,7 @@
 import { create } from 'zustand'
 
 import { PrincipalType, TypesUserGroupInfo } from '@harnessio/ui/types'
-import { IProjectRulesStore } from '@harnessio/ui/views'
+import { IProjectRulesStore } from '@harnessio/views'
 
 import { PageResponseHeader } from '../../../types'
 

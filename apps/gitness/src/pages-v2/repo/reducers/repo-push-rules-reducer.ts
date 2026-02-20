@@ -1,4 +1,4 @@
-import { PushRule, PushRulesAction, PushRulesActionType } from '@harnessio/ui/views'
+import { PushRule, PushRulesAction, PushRulesActionType } from '@harnessio/views'
 
 export const pushRuleSettingsReducer = (state: PushRule[], action: PushRulesAction): PushRule[] => {
   switch (action.type) {

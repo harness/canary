@@ -1,7 +1,7 @@
 import { FC, HTMLAttributes, PropsWithChildren } from 'react'
 import { Route } from 'react-router-dom'
 
-import { ProjectSettingsTabNav, SubHeaderWrapper } from '@harnessio/ui/views'
+import { ProjectSettingsTabNav, SubHeaderWrapper } from '@harnessio/views'
 
 import RootViewWrapper from './root-view-wrapper'
 

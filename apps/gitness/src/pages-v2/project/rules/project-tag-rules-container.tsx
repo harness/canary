@@ -21,7 +21,7 @@ import {
   RepoTagSettingsRulesPage,
   SandboxLayout,
   TagRulesActionType
-} from '@harnessio/ui/views'
+} from '@harnessio/views'
 
 import { useRoutes } from '../../../framework/context/NavigationContext'
 import { useGetSpaceURLParam } from '../../../framework/hooks/useGetSpaceParam'

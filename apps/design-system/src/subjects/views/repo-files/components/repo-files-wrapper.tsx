@@ -1,6 +1,6 @@
 import { FC, useMemo } from 'react'
 
-import { BranchSelectorTab, CodeModes, RepoFiles } from '@harnessio/ui/views'
+import { BranchSelectorTab, CodeModes, RepoFiles } from '@harnessio/views'
 
 import { RepoFileContentViewer } from './repo-file-content-viewer'
 import { RepoFileEdit } from './repo-file-edit'

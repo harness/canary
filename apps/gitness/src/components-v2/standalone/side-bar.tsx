@@ -3,7 +3,7 @@ import { useLocation, useNavigate, useParams } from 'react-router-dom'
 
 import { ManageNavigation, MenuGroupType, MenuGroupTypes, NavbarItemType, Sidebar } from '@harnessio/ui/components'
 import { useTranslation } from '@harnessio/ui/context'
-import { SidebarView } from '@harnessio/ui/views'
+import { SidebarView } from '@harnessio/views'
 
 import { getNavbarMenuData } from '../../data/navbar-menu-data'
 import { useAppContext } from '../../framework/context/AppContext'

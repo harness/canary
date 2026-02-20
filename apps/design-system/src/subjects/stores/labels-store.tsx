@@ -5,7 +5,7 @@ import {
   LabelType,
   LabelValueType,
   SetRepoSpaceRefProps
-} from '@harnessio/ui/views'
+} from '@harnessio/views'
 
 interface RepoLabelsListStore {
   useLabelsStore: () => ILabelsStore

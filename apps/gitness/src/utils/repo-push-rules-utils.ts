@@ -6,7 +6,7 @@ import {
   PushRuleId,
   RepoPushRulesSettingsFormFields,
   TargetReposButtonType
-} from '@harnessio/ui/views'
+} from '@harnessio/views'
 
 export const transformFormOutput = (formOutput: RepoPushRulesSettingsFormFields): RepoRuleAddRequestBody => {
   const rulesMap = formOutput.rules.reduce<Record<string, PushRule>>((acc, rule) => {

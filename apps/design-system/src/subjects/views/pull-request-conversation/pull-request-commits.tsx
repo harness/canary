@@ -2,7 +2,7 @@ import { FC, PropsWithChildren, useCallback } from 'react'
 
 import { noop } from '@utils/viewUtils'
 
-import { PullRequestCommitsView } from '@harnessio/ui/views'
+import { PullRequestCommitsView } from '@harnessio/views'
 
 import { repoCommitStore } from '../pull-request-compare/repo-commit-store'
 

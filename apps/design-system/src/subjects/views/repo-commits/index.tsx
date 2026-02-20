@@ -1,6 +1,6 @@
 import { noop } from '@utils/viewUtils'
 
-import { BranchSelectorV2, RepoCommitsView as RepoCommitsUiView } from '@harnessio/ui/views'
+import { BranchSelectorV2, RepoCommitsView as RepoCommitsUiView } from '@harnessio/views'
 
 import { repoCommitsStore } from './repo-commits-store'
 

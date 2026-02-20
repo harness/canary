@@ -1,6 +1,6 @@
 import { LabelsListStore } from '@subjects/stores/labels-store.tsx'
 
-import { LabelFormPage } from '@harnessio/ui/views'
+import { LabelFormPage } from '@harnessio/views'
 
 export const LabelsForm = () => {
   return (

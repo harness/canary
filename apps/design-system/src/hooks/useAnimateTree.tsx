@@ -1,7 +1,7 @@
 import { useEffect, useState } from 'react'
 
 import { TreeViewElement } from '@harnessio/ui/components'
-import { ExecutionState } from '@harnessio/ui/views'
+import { ExecutionState } from '@harnessio/views'
 
 interface UseAnimateTreeProps {
   elements: TreeViewElement[]

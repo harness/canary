@@ -5,7 +5,7 @@ import { useQueryClient } from '@tanstack/react-query'
 import { OpenapiRuleType, useSpaceRuleDeleteMutation, useSpaceRuleListQuery } from '@harnessio/code-service-client'
 import { DeleteAlertDialog } from '@harnessio/ui/components'
 import { wrapConditionalObjectElement } from '@harnessio/ui/utils'
-import { ErrorTypes, ProjectRulesPage, RuleType } from '@harnessio/ui/views'
+import { ErrorTypes, ProjectRulesPage, RuleType } from '@harnessio/views'
 
 import { useRoutes } from '../../framework/context/NavigationContext'
 import { useGetSpaceURLParam } from '../../framework/hooks/useGetSpaceParam'

@@ -3,7 +3,7 @@ import { FC, PropsWithChildren, useCallback } from 'react'
 import { noop } from '@utils/viewUtils'
 
 import { CommitSuggestionsDialog } from '@harnessio/ui/components'
-import { PullRequestChangesPage, TypesCommit, TypesPullReqActivity } from '@harnessio/ui/views'
+import { PullRequestChangesPage, TypesCommit, TypesPullReqActivity } from '@harnessio/views'
 
 import { commitData, currentUser } from './pull-request-changes-data'
 import { mockDiffs, pullRequestProviderStore } from './pull-request-provider-store'

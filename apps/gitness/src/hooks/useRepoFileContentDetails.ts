@@ -1,7 +1,7 @@
 import { useCallback, useEffect, useMemo, useRef, useState } from 'react'
 
 import { OpenapiGetContentOutput, pathDetails, TypesPathDetails } from '@harnessio/code-service-client'
-import { RepoFile, SummaryItemType } from '@harnessio/ui/views'
+import { RepoFile, SummaryItemType } from '@harnessio/views'
 
 import { useRoutes } from '../framework/context/NavigationContext'
 import { sortPathsByType } from '../utils/common-utils'

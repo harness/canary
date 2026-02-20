@@ -3,7 +3,7 @@ import { useNavigate } from 'react-router-dom'
 
 import { ImportRepositoryRequestBody, useImportRepositoryMutation } from '@harnessio/code-service-client'
 import { toast } from '@harnessio/ui/components'
-import { ImportRepoFormFields, RepoImportPage as RepoImportPageView } from '@harnessio/ui/views'
+import { ImportRepoFormFields, RepoImportPage as RepoImportPageView } from '@harnessio/views'
 
 import { useRoutes } from '../../framework/context/NavigationContext'
 import { useGetSpaceURLParam } from '../../framework/hooks/useGetSpaceParam'

@@ -1,6 +1,6 @@
 import { create } from 'zustand'
 
-import { ILabelsStore, ILabelType, LabelValuesType, SetRepoSpaceRefProps } from '@harnessio/ui/views'
+import { ILabelsStore, ILabelType, LabelValuesType, SetRepoSpaceRefProps } from '@harnessio/views'
 
 export const useLabelsStore = create<ILabelsStore>(set => ({
   labels: [],

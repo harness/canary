@@ -1,4 +1,4 @@
-import { ScopeType } from '@/views/common/types'
+import { ScopeType } from '@/types'
 import { render } from '@testing-library/react'
 
 import { getScopeType, ScopeTag, scopeTypeToIconMap } from '../scope-tag'

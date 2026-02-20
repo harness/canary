@@ -1,6 +1,6 @@
 import { create } from 'zustand'
 
-import { RepositoryType, RepoStore } from '@harnessio/ui/views'
+import { RepositoryType, RepoStore } from '@harnessio/views'
 
 export const useRepoStore = create<RepoStore>(set => ({
   repositories: null,

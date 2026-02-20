@@ -7,5 +7,8 @@ export * from './TimeUtils'
 export * from './getComponentDisplayName'
 export * from './after-frames'
 export * from './get-shadow-active-element'
+export * from './pipeline-utils'
+export * from './schema'
+export * from './task'
 
 export { formatDistanceToNow } from 'date-fns'

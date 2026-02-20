@@ -28,7 +28,6 @@ export default defineConfig({
       cssFileName: 'styles',
       entry: {
         components: resolve(__dirname, 'src/components/index.ts'),
-        views: resolve(__dirname, 'src/views/index.ts'),
         utils: resolve(__dirname, 'src/utils/index.ts'),
         hooks: resolve(__dirname, 'src/hooks/index.ts'),
         locales: resolve(__dirname, 'locales/index.ts'),

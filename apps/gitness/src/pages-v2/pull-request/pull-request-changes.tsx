@@ -29,7 +29,7 @@ import {
   DiffFileEntry,
   FILE_VIEWED_OBSOLETE_SHA,
   PullRequestChangesPage
-} from '@harnessio/ui/views'
+} from '@harnessio/views'
 
 import CommitSuggestionsDialog from '../../components-v2/commit-suggestions-dialog'
 import { useAppContext } from '../../framework/context/AppContext'

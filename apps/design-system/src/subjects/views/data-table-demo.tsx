@@ -3,7 +3,7 @@ import { useMemo, useState } from 'react'
 import type { ColumnDef, ExpandedState, OnChangeFn, Row, RowSelectionState, SortingState } from '@tanstack/react-table'
 
 import { DataTable, StatusBadge } from '@harnessio/ui/components'
-import { SandboxLayout } from '@harnessio/ui/views'
+import { SandboxLayout } from '@harnessio/views'
 
 type User = {
   name: string

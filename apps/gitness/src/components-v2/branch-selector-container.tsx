@@ -2,7 +2,7 @@ import { forwardRef, useEffect, useState } from 'react'
 import { useParams } from 'react-router-dom'
 
 import { useFindRepositoryQuery, useListBranchesQuery, useListTagsQuery } from '@harnessio/code-service-client'
-import { BranchData, BranchSelectorListItem, BranchSelectorTab, BranchSelectorV2 } from '@harnessio/ui/views'
+import { BranchData, BranchSelectorListItem, BranchSelectorTab, BranchSelectorV2 } from '@harnessio/views'
 
 import { useGetRepoRef } from '../framework/hooks/useGetRepoPath'
 import { transformBranchList } from '../pages-v2/repo/transform-utils/branch-transform'

@@ -4,7 +4,7 @@ import { noop } from '@utils/viewUtils'
 
 import { DeleteAlertDialog } from '@harnessio/ui/components'
 import { PrincipalType } from '@harnessio/ui/types'
-import { ProjectMemberListView } from '@harnessio/ui/views'
+import { ProjectMemberListView } from '@harnessio/views'
 
 const usePrincipalListStore = () => {
   return {

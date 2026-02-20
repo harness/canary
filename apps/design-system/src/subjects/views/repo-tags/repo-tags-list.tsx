@@ -10,7 +10,7 @@ import {
   CreateBranchDialog,
   CreateTagDialog,
   RepoTagsListView
-} from '@harnessio/ui/views'
+} from '@harnessio/views'
 
 import { tagsStore } from './repo-tags-store'
 

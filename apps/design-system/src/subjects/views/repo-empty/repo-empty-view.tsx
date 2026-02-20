@@ -3,7 +3,7 @@ import { FC, useMemo } from 'react'
 import repoSummaryProps from '@subjects/views/repo-summary/repo-summary-props.json'
 import { noop } from '@utils/viewUtils'
 
-import { BranchSelectorV2, RepoSummaryView, RepoSummaryViewProps } from '@harnessio/ui/views'
+import { BranchSelectorV2, RepoSummaryView, RepoSummaryViewProps } from '@harnessio/views'
 
 export const RepoEmpty: FC<Partial<RepoSummaryViewProps>> = props => {
   const repoEntryPathToFileTypeMap = useMemo<RepoSummaryViewProps['repoEntryPathToFileTypeMap']>(() => {

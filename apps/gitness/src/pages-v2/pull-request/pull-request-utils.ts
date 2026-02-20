@@ -18,7 +18,7 @@ import {
   ExtendedScope,
   PRListFilters,
   Scope
-} from '@harnessio/ui/views'
+} from '@harnessio/views'
 
 import { extractInfoForPRPanelChangesProps, PullReqReviewDecision, TypeCheckData } from './types'
 

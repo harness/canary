@@ -2,7 +2,7 @@ import { useState } from 'react'
 import { useNavigate } from 'react-router-dom'
 
 import { ImportSpaceRequestBody } from '@harnessio/code-service-client'
-import { ImportMultipleReposFormFields, RepoImportMultiplePage } from '@harnessio/ui/views'
+import { ImportMultipleReposFormFields, RepoImportMultiplePage } from '@harnessio/views'
 
 import { useRoutes } from '../../framework/context/NavigationContext'
 import { useGetSpaceURLParam } from '../../framework/hooks/useGetSpaceParam'

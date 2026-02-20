@@ -3,7 +3,7 @@ import { useState } from 'react'
 import { noop } from '@utils/viewUtils'
 
 import { Drawer } from '@harnessio/ui/components'
-import { UnifiedPipelineStudio, UnifiedPipelineStudioProps } from '@harnessio/ui/views'
+import { UnifiedPipelineStudio, UnifiedPipelineStudioProps } from '@harnessio/views'
 import { YamlRevision } from '@harnessio/yaml-editor/dist/components/YamlEditor'
 
 import { pipeline1 } from './mocks/pipeline'

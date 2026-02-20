@@ -1,5 +1,5 @@
 import { ListBranchesOkResponse, TypesBranchExtended, TypesCommitDivergence } from '@harnessio/code-service-client'
-import { BranchData, PullRequestType } from '@harnessio/ui/views'
+import { BranchData, PullRequestType } from '@harnessio/views'
 
 export const transformBranchList = (
   branches: TypesBranchExtended[],

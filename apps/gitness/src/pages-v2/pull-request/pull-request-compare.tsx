@@ -34,7 +34,7 @@ import {
   PRReviewer,
   PullReqReviewDecision,
   PullRequestComparePage
-} from '@harnessio/ui/views'
+} from '@harnessio/views'
 
 import { BranchSelectorContainer } from '../../components-v2/branch-selector-container'
 import { ForkPRBranchSelectorContainer } from '../../components-v2/fork-pr-branch-selector-container.tsx'

@@ -4,7 +4,7 @@ import { LabelsListStore } from '@subjects/stores/labels-store'
 import { noop } from '@utils/viewUtils'
 
 import { DeleteAlertDialog } from '@harnessio/ui/components'
-import { LabelsListPage } from '@harnessio/ui/views'
+import { LabelsListPage } from '@harnessio/views'
 
 export const RepoLabelsList = () => {
   const [openAlertDeleteDialog, setOpenAlertDeleteDialog] = useState(false)

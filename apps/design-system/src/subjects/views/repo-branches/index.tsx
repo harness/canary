@@ -2,7 +2,7 @@ import { useCallback, useState } from 'react'
 
 import { noop } from '@utils/viewUtils'
 
-import { IBranchSelectorStore, RepoBranchListView } from '@harnessio/ui/views'
+import { IBranchSelectorStore, RepoBranchListView } from '@harnessio/views'
 
 import { repoBranchesStore } from './repo-branches-store'
 

@@ -8,7 +8,7 @@ import {
   useGetPullReqQuery,
   useUpdatePullReqMutation
 } from '@harnessio/code-service-client'
-import { PullRequestLayout as PullRequestLayoutView } from '@harnessio/ui/views'
+import { PullRequestLayout as PullRequestLayoutView } from '@harnessio/views'
 
 import { BranchSelectorContainer } from '../../components-v2/branch-selector-container'
 import { usePageTitleContext } from '../../framework/context/PageTitleContext'

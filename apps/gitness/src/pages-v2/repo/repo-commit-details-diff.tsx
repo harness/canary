@@ -11,7 +11,7 @@ import {
   useListPathsQuery
 } from '@harnessio/code-service-client'
 import { Layout } from '@harnessio/ui/components'
-import { CommitDiff, CommitSidebar, DraggableSidebarDivider, SIDEBAR_MIN_WIDTH } from '@harnessio/ui/views'
+import { CommitDiff, CommitSidebar, DraggableSidebarDivider, SIDEBAR_MIN_WIDTH } from '@harnessio/views'
 
 import Explorer from '../../components-v2/FileExplorer'
 import { useGetRepoRef } from '../../framework/hooks/useGetRepoPath'

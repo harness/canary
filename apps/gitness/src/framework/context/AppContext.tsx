@@ -12,7 +12,7 @@ import {
   UpdateUserErrorResponse
 } from '@harnessio/code-service-client'
 import { useLocalStorage, UserPreference } from '@harnessio/ui/hooks'
-import { ProfileSettingsErrorType } from '@harnessio/ui/views'
+import { ProfileSettingsErrorType } from '@harnessio/views'
 
 import { useIsMFE } from '../hooks/useIsMFE'
 import usePageTitle from '../hooks/usePageTitle'

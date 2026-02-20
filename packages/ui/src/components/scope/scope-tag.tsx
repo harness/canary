@@ -1,5 +1,5 @@
 import { IconV2NamesType } from '@components/icon-v2'
-import { ScopeType } from '@views/common'
+import { ScopeType } from '@/types'
 
 import { Tag, TagProps } from '../tag'
 

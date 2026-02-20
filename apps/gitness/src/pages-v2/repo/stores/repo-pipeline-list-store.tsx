@@ -1,6 +1,6 @@
 import { create } from 'zustand'
 
-import { IPipelineListStore } from '@harnessio/ui/views'
+import { IPipelineListStore } from '@harnessio/views'
 
 export const usePipelineListStore = create<IPipelineListStore>(set => ({
   pipelines: null,

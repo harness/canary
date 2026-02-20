@@ -4,7 +4,7 @@ import { Outlet, Route, Routes } from 'react-router-dom'
 import { noop } from '@utils/viewUtils'
 
 import { NavbarItemType, Sidebar } from '@harnessio/ui/components'
-import { MainContentLayout, SidebarView } from '@harnessio/ui/views'
+import { MainContentLayout, SidebarView } from '@harnessio/views'
 
 import { useRootViewWrapperStore } from './root-view-wrapper-store'
 

@@ -19,7 +19,7 @@ import {
   PushRulesActionType,
   RepoPushRulesSettingsFormFields,
   RepoPushSettingsRulesPage
-} from '@harnessio/ui/views'
+} from '@harnessio/views'
 
 import { useRoutes } from '../../../framework/context/NavigationContext'
 import { useGetRepoId } from '../../../framework/hooks/useGetRepoId'

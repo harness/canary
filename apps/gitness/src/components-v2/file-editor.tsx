@@ -13,7 +13,7 @@ import {
 } from '@harnessio/ui/components'
 import { useMonacoTheme } from '@harnessio/ui/hooks'
 import { cn, decodeURIPath } from '@harnessio/ui/utils'
-import { PathActionBar } from '@harnessio/ui/views'
+import { PathActionBar } from '@harnessio/views'
 import { CodeDiffEditor, CodeEditor, CodeEditorProps } from '@harnessio/yaml-editor'
 
 import GitCommitDialog from '../components-v2/git-commit-dialog'

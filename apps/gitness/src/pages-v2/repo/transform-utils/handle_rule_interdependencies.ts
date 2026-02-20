@@ -1,5 +1,5 @@
 import { MessageTheme } from '@harnessio/ui/components'
-import { BranchRuleId, EnumBypassListType, Rule } from '@harnessio/ui/views'
+import { BranchRuleId, EnumBypassListType, Rule } from '@harnessio/views'
 
 export const getDefaultReviewersValidationMessage = (
   minDefaultReviewerCount: number,

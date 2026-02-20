@@ -6,7 +6,7 @@ import {
   ProfileFields,
   ProfileSettingsErrorType,
   SettingsAccountGeneralPage
-} from '@harnessio/ui/views'
+} from '@harnessio/views'
 
 import { useAppContext } from '../../framework/context/AppContext.tsx'
 import { useProfileSettingsStore } from './stores/profile-settings-store'

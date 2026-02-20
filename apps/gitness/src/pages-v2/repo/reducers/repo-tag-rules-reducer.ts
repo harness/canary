@@ -1,4 +1,4 @@
-import { TagRule, TagRulesAction, TagRulesActionType } from '@harnessio/ui/views'
+import { TagRule, TagRulesAction, TagRulesActionType } from '@harnessio/views'
 
 export const tagSettingsReducer = (state: TagRule[], action: TagRulesAction): TagRule[] => {
   switch (action.type) {

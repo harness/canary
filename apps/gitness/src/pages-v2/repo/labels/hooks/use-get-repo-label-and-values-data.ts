@@ -1,7 +1,7 @@
 import { useEffect, useMemo, useState } from 'react'
 
 import { listRepoLabelValues, listSpaceLabelValues, useListRepoLabelsQuery } from '@harnessio/code-service-client'
-import { ILabelType, LabelValuesType, LabelValueType } from '@harnessio/ui/views'
+import { ILabelType, LabelValuesType, LabelValueType } from '@harnessio/views'
 
 import { useGetRepoRef } from '../../../../framework/hooks/useGetRepoPath'
 import { useGetSpaceURLParam } from '../../../../framework/hooks/useGetSpaceParam'

@@ -12,7 +12,7 @@ import {
   DraggableSidebarDivider,
   ICommitDetailsStore,
   SIDEBAR_MIN_WIDTH
-} from '@harnessio/ui/views'
+} from '@harnessio/views'
 
 export const CommitDetailsDiffViewWrapper: FC = () => {
   const useCommitDetailsStore = useCallback((): ICommitDetailsStore => commitDetailsStore, [])

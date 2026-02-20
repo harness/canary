@@ -1,0 +1,388 @@
+import { FC, useCallback, useMemo } from 'react'
+import { Fragment } from 'react/jsx-runtime'
+
+import {
+  Alert,
+  Button,
+  DropdownMenu,
+  IconV2,
+  Layout,
+  ListActions,
+  MoreActionsTooltip,
+  NoData,
+  ScopeTag,
+  SearchInput,
+  Separator,
+  Skeleton,
+  StackedList,
+  StackedListPaginationProps,
+  Tag,
+  Text
+} from '@harnessio/ui/components'
+import { Select } from '@harnessio/ui/components'
+import { useCustomDialogTrigger, useRouterContext, useTranslation } from '@harnessio/ui/context'
+import { ErrorTypes, RuleDataType, RuleType, ScopeType } from '@views'
+
+// Utility function to map numeric scope to ScopeType enum
+const getScopeType = (scope: number): ScopeType => {
+  switch (scope) {
+    case 0:
+      return ScopeType.Repository
+    case 3:
+      return ScopeType.Project
+    case 2:
+      return ScopeType.Organization
+    default:
+      return ScopeType.Account
+  }
+}
+
+interface DescriptionProps {
+  targetPatternsCount: number
+  rulesAppliedCount: number
+  bypassAllowed: boolean
+}
+
+const Description: FC<DescriptionProps> = ({ targetPatternsCount, rulesAppliedCount, bypassAllowed }) => {
+  const { t } = useTranslation()
+  return (
+    // TODO: Replace pl-[26px] with a proper spacing token when available
+    <Layout.Grid flow="column" gapX="xs" align="center" className="w-fit pl-[26px]">
+      {targetPatternsCount !== 0 && (
+        <>
+          <Text truncate>
+            {targetPatternsCount} {t('views:repos.targetPatterns', 'target patterns')}
+          </Text>
+          <Separator orientation="vertical" className="h-3" />
+        </>
+      )}
+      <Text truncate>
+        {rulesAppliedCount} {t('views:repos.rulesApplied', 'rules applied')}
+      </Text>
+      <Separator orientation="vertical" className="h-3" />
+      <Layout.Flex align="center" gapX="3xs">
+        {bypassAllowed ? (
+          <>
+            <IconV2 color="success" name="check" size="xs" />
+            <Text truncate>{t('views:repos.bypassAllowed', 'bypass allowed')}</Text>
+          </>
+        ) : (
+          <>
+            <IconV2 color="danger" name="warning-triangle" size="xs" />
+            <Text truncate>{t('views:repos.bypassNotAllowed', 'bypass not allowed')}</Text>
+          </>
+        )}
+      </Layout.Flex>
+    </Layout.Grid>
+  )
+}
+
+interface CreateButtonProps {
+  onClickTagRuleButton: () => void
+  onClickBranchRuleButton: () => void
+  onClickPushRuleButton: () => void
+}
+
+const CreateButton: FC<CreateButtonProps> = ({
+  onClickBranchRuleButton,
+  onClickTagRuleButton,
+  onClickPushRuleButton
+}) => {
+  const { t } = useTranslation()
+
+  return (
+    <DropdownMenu.Root>
+      <DropdownMenu.Trigger asChild>
+        <Button>
+          <IconV2 name="plus" size="sm" />
+          {t('views:repos.createRuleButton', 'Create Rule')}
+        </Button>
+      </DropdownMenu.Trigger>
+      <DropdownMenu.Content>
+        <DropdownMenu.Item
+          title={t('views:repos.createTagRuleButton', 'Create Tag Rule')}
+          onClick={onClickTagRuleButton}
+        />
+        <DropdownMenu.Item
+          title={t('views:repos.createBranchRuleButton', 'Create Branch Rule')}
+          onClick={onClickBranchRuleButton}
+        />
+        <DropdownMenu.Item
+          title={t('views:repos.createPushRuleButton', 'Create Push Rule')}
+          onClick={onClickPushRuleButton}
+        />
+      </DropdownMenu.Content>
+    </DropdownMenu.Root>
+  )
+}
+
+export interface RepoSettingsGeneralRulesProps {
+  rules: RuleDataType[] | null
+  apiError: { type: ErrorTypes; message: string } | null
+  handleRuleClick: (identifier: string, scope: number) => void
+  openRulesAlertDeleteDialog: (identifier: string, scope: number) => void
+  isLoading: boolean
+  rulesSearchQuery?: string
+  setRulesSearchQuery?: (query: string) => void
+  projectScope?: boolean
+  toBranchRuleCreate?: () => string
+  toTagRuleCreate?: () => string
+  toPushRuleCreate?: () => string
+  toRepoPushRuleCreate?: () => string
+  ruleTypeFilter?: 'branch' | 'tag' | 'push' | null
+  setRuleTypeFilter?: (filter: 'branch' | 'tag' | 'push' | null) => void
+  toProjectRuleDetails?: (identifier: string, scope: number) => void
+  paginationProps?: StackedListPaginationProps
+}
+
+export const RepoSettingsGeneralRules: FC<RepoSettingsGeneralRulesProps> = ({
+  rules,
+  apiError,
+  handleRuleClick,
+  openRulesAlertDeleteDialog,
+  isLoading,
+  rulesSearchQuery,
+  setRulesSearchQuery,
+  toBranchRuleCreate,
+  toTagRuleCreate,
+  toPushRuleCreate,
+  ruleTypeFilter,
+  setRuleTypeFilter,
+  toProjectRuleDetails,
+  paginationProps
+}) => {
+  const { navigate } = useRouterContext()
+  const { t } = useTranslation()
+
+  const handleSearchChange = useCallback(
+    (val: string) => {
+      setRulesSearchQuery?.(val)
+    },
+    [setRulesSearchQuery]
+  )
+
+  const { triggerRef, registerTrigger } = useCustomDialogTrigger()
+  const handleDeleteRule = useCallback(
+    (ruleId: string, scope: number) => {
+      registerTrigger()
+      openRulesAlertDeleteDialog(ruleId, scope)
+    },
+    [openRulesAlertDeleteDialog, registerTrigger]
+  )
+
+  const resetSearch = () => {
+    setRulesSearchQuery?.('')
+    setRuleTypeFilter?.(null)
+    paginationProps?.goToPage?.(1)
+  }
+
+  const isShowRulesContent = useMemo(() => {
+    return !!rules?.length || !!rulesSearchQuery?.length || ruleTypeFilter !== null
+  }, [rulesSearchQuery, rules, ruleTypeFilter])
+
+  const handleToProjectRuleDetails = (rule: RuleDataType) => {
+    toProjectRuleDetails?.(rule.identifier ?? '', rule.scope ?? 0)
+  }
+
+  const handleClickBranchRuleButton = () => navigate(toBranchRuleCreate?.() || '')
+  const handleClickTagRuleButton = () => navigate(toTagRuleCreate?.() || '')
+  const handleClickPushRuleButton = () => navigate(toPushRuleCreate?.() || '')
+  if (!isShowRulesContent) {
+    return (
+      <NoData
+        withBorder
+        textWrapperClassName="max-w-[350px]"
+        imageName="no-data-cog"
+        title={t('views:noData.noRules', 'No rules yet')}
+        description={[
+          t(
+            'views:noData.noRulesDescription',
+            'There are no rules in this project. Click on the button below to start adding rules.'
+          )
+        ]}
+      >
+        <CreateButton
+          onClickBranchRuleButton={handleClickBranchRuleButton}
+          onClickTagRuleButton={handleClickTagRuleButton}
+          onClickPushRuleButton={handleClickPushRuleButton}
+        />
+      </NoData>
+    )
+  }
+
+  const getTypeMeta = (type: RuleType | undefined) => {
+    switch (type) {
+      case 'branch':
+        return {
+          theme: 'blue' as const,
+          value: 'Branch Rule',
+          icon: 'git-branch' as const
+        }
+      case 'tag':
+        return {
+          theme: 'purple' as const,
+          value: 'Tag Rule',
+          icon: 'tag' as const
+        }
+      case 'push':
+        return {
+          theme: 'green' as const,
+          value: 'Push Rule',
+          icon: 'git-squash-merge' as const
+        }
+      default:
+        return {
+          theme: 'gray' as const,
+          value: type || '',
+          icon: undefined
+        }
+    }
+  }
+
+  return (
+    <Layout.Vertical gapY="sm" grow>
+      <ListActions.Root>
+        <ListActions.Left>
+          <SearchInput
+            id="search"
+            defaultValue={rulesSearchQuery}
+            inputContainerClassName="w-80"
+            placeholder={t('views:repos.search', 'Search')}
+            onChange={handleSearchChange}
+            autoFocus
+          />
+        </ListActions.Left>
+        <ListActions.Right className="gap-x-cn-sm">
+          <Select
+            options={[
+              { label: t('views:repos.allRules', 'All Rules'), value: null },
+              { label: t('views:repos.branchRules', 'Branch Rules'), value: 'branch' },
+              { label: t('views:repos.tagRules', 'Tag Rules'), value: 'tag' },
+              { label: t('views:repos.pushRules', 'Push Rules'), value: 'push' }
+            ]}
+            value={ruleTypeFilter}
+            onChange={value => setRuleTypeFilter?.(value as 'branch' | 'tag' | 'push' | null)}
+            size="md"
+            triggerClassName="min-w-[150px]"
+          />
+          <CreateButton
+            onClickBranchRuleButton={handleClickBranchRuleButton}
+            onClickTagRuleButton={handleClickTagRuleButton}
+            onClickPushRuleButton={handleClickPushRuleButton}
+          />
+        </ListActions.Right>
+      </ListActions.Root>
+
+      {isLoading && <Skeleton.List />}
+
+      {!isLoading && rules?.length !== 0 && (
+        <StackedList.Root paginationProps={paginationProps}>
+          {rules?.map((rule, idx) => {
+            if (!rule?.identifier) return <Fragment key={idx} />
+            const meta = getTypeMeta(rule.type as RuleType | undefined)
+            return (
+              <StackedList.Item
+                key={rule.identifier}
+                className="pr-cn-xs"
+                onClick={() => handleToProjectRuleDetails(rule)}
+                actions={
+                  <MoreActionsTooltip
+                    ref={triggerRef}
+                    actions={[
+                      {
+                        title: t('views:rules.edit', 'Edit Rule'),
+                        iconName: 'edit-pencil',
+                        onClick: () => handleRuleClick(rule.identifier ?? '', rule?.scope ?? 0)
+                      },
+                      {
+                        isDanger: true,
+                        title: t('views:rules.delete', 'Delete Rule'),
+                        iconName: 'trash',
+                        onClick: () => handleDeleteRule(rule.identifier!, rule?.scope ?? 0)
+                      }
+                    ]}
+                  />
+                }
+              >
+                <StackedList.Field
+                  title={
+                    <Layout.Grid flow="column" gapX="xs" align="center" className="w-fit">
+                      {rule.state === 'active' ? (
+                        <IconV2 color="success" name="check-circle" size="md" />
+                      ) : (
+                        <IconV2 color="neutral" name="prohibition" size="md" />
+                      )}
+                      <Text variant="heading-base" truncate>
+                        {rule.identifier}
+                      </Text>
+                      {rule.type && (
+                        <>
+                          <Separator orientation="vertical" className="h-3" />
+                          <Tag variant="outline" size="sm" theme={meta.theme} value={meta.value} icon={meta.icon} />
+                        </>
+                      )}
+                      <Separator orientation="vertical" className="h-3" />
+                      <ScopeTag
+                        scopeType={getScopeType(rule.scope ?? 0)}
+                        scopedPath={getScopeType(rule.scope ?? 0)}
+                        size="sm"
+                      />
+                    </Layout.Grid>
+                  }
+                  description={
+                    <Description
+                      targetPatternsCount={rule.targetPatternsCount ?? 0}
+                      rulesAppliedCount={rule.rulesAppliedCount ?? 0}
+                      bypassAllowed={rule.bypassAllowed ?? false}
+                    />
+                  }
+                />
+              </StackedList.Item>
+            )
+          })}
+        </StackedList.Root>
+      )}
+
+      {!isLoading && rules?.length === 0 && (
+        <NoData
+          withBorder
+          textWrapperClassName="max-w-[312px]"
+          title={t('views:noData.noResults', 'No search results')}
+          description={[
+            ruleTypeFilter
+              ? t(
+                  'views:noData.noResultsDescriptionWithFilter',
+                  `No {{filterName}} rules match your search. Try adjusting your keywords or filters.`,
+                  {
+                    filterName:
+                      ruleTypeFilter === 'branch'
+                        ? t('views:repos.branch', 'branch')
+                        : ruleTypeFilter === 'tag'
+                          ? t('views:repos.tag', 'tag')
+                          : ruleTypeFilter === 'push'
+                            ? t('views:repos.push', 'push')
+                            : ruleTypeFilter
+                  }
+                )
+              : t(
+                  'views:noData.noResultsDescription',
+                  'No rules match your search. Try adjusting your keywords or filters.',
+                  { type: 'rules' }
+                )
+          ]}
+          secondaryButton={{
+            icon: 'trash',
+            label: t('views:noData.clearSearch', 'Clear search'),
+            onClick: resetSearch
+          }}
+        />
+      )}
+
+      {apiError && apiError.type === ErrorTypes.FETCH_RULES && (
+        <Alert.Root>
+          <Alert.Title>{apiError.message}</Alert.Title>
+        </Alert.Root>
+      )}
+    </Layout.Vertical>
+  )
+}

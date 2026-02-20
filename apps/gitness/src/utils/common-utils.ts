@@ -1,5 +1,5 @@
 import { LivelogLine } from '@harnessio/code-service-client'
-import { RepoFile, SummaryItemType } from '@harnessio/ui/views'
+import { RepoFile, SummaryItemType } from '@harnessio/views'
 
 export const createAndDownloadBlob = (output: string, fileName: string) => {
   if (!output?.length) return

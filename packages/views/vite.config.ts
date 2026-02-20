@@ -8,11 +8,17 @@ import svgr from 'vite-plugin-svgr'
 
 import pkg from './package.json'
 
-const external = uniq(
+const externalPackages = uniq(
   Object.keys(pkg.devDependencies || [])
     .concat(Object.keys(pkg.peerDependencies || []))
     .concat(Object.keys(pkg.dependencies || []))
 )
+
+// Function to externalize packages and their subpath imports (e.g., @harnessio/ui/components)
+const external = (id: string) => {
+  // Check if the import matches any of our external packages or their subpaths
+  return externalPackages.some(pkg => id === pkg || id.startsWith(`${pkg}/`))
+}
 
 export default defineConfig({
   define: { 'process.env.NODE_ENV': '"production"' },

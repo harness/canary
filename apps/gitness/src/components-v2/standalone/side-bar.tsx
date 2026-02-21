@@ -1,7 +1,7 @@
 import { FC, useCallback, useEffect, useMemo, useState } from 'react'
 import { useLocation, useNavigate, useParams } from 'react-router-dom'
 
-import { ManageNavigation, MenuGroupType, MenuGroupTypes, NavbarItemType, Sidebar } from '@harnessio/ui/components'
+import { ManageNavigation, MenuGroupType, MenuGroupTypes, NavbarItemType, Sidebar, useSidebar } from '@harnessio/ui/components'
 import { useTranslation } from '@harnessio/ui/context'
 import { SidebarView } from '@harnessio/views'
 
@@ -143,6 +143,7 @@ const AppSideBar: FC<{ children: React.ReactNode }> = ({ children }) => {
         lang={i18n.language}
         moreMenu={moreMenu}
         settingsMenu={settingsMenu}
+        useSidebar={useSidebar}
       />
 
       <Sidebar.Inset>

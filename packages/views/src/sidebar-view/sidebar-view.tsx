@@ -17,7 +17,7 @@ import {
   Sidebar,
   SidebarSearch,
   ThemeDialog,
-  useSidebar
+  UseSidebarSignature
 } from '@harnessio/ui/components'
 import { useRouterContext, useTheme, useTranslation } from '@harnessio/ui/context'
 import { TypesUser } from '@harnessio/ui/types'
@@ -40,6 +40,8 @@ interface SidebarProps {
   lang: string
   settingsMenu: MenuGroupType[]
   moreMenu: MenuGroupType[]
+  /** Required: Pass in useSidebar hook to avoid context mismatch across packages */
+  useSidebar: UseSidebarSignature
 }
 
 export const SidebarView = ({
@@ -58,7 +60,8 @@ export const SidebarView = ({
   handleLogOut,
   hasToggle = true,
   changeLanguage,
-  lang
+  lang,
+  useSidebar
 }: SidebarProps) => {
   const { t } = useTranslation()
   const { theme, setTheme } = useTheme()

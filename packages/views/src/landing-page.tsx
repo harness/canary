@@ -1,7 +1,7 @@
-import { FC } from 'react'
+import { ComponentType, FC } from 'react'
 
 import { Button, ButtonLayout, DropdownMenu, IconV2, Text } from '@harnessio/ui/components'
-import { useRouterContext, useTranslation } from '@harnessio/ui/context'
+import { LinkProps, useTranslation } from '@harnessio/ui/context'
 import { SandboxLayout } from '@views'
 
 interface TypesSpace {
@@ -16,18 +16,24 @@ interface TypesSpace {
   updated?: number
 }
 
-interface RoutingProps {
-  toCreateProject: () => string
-}
-
-export interface LandingPageProps extends Partial<RoutingProps> {
+export interface LandingPageProps {
   spaces: TypesSpace[]
   getProjectPath: (spaceId?: string) => string
+  toCreateProject: () => string
+  /** Required: Navigate function for routing */
+  navigate: (to: string) => void
+  /** Required: Link component for rendering anchor elements */
+  Link: ComponentType<LinkProps>
 }
 
-export const LandingPageView: FC<LandingPageProps> = ({ spaces, getProjectPath, toCreateProject }) => {
-  const { Link } = useRouterContext()
+export const LandingPageView: FC<LandingPageProps> = ({ spaces, getProjectPath, toCreateProject, navigate, Link }) => {
   const { t } = useTranslation()
+
+  const handleProjectSelect = (event: Event, spacePath?: string) => {
+    // Prevent DropdownMenu from trying to close (and update state) after navigation unmounts the component
+    event.preventDefault()
+    navigate(getProjectPath(spacePath))
+  }
 
   return (
     <SandboxLayout.Main className="min-h-[inherit]">
@@ -55,9 +61,11 @@ export const LandingPageView: FC<LandingPageProps> = ({ spaces, getProjectPath, 
 
             <DropdownMenu.Content style={{ width: 'var(--radix-dropdown-menu-trigger-width)' }}>
               {spaces?.map(space => (
-                <Link key={space.id} to={getProjectPath(space?.path)}>
-                  <DropdownMenu.Item title={space.identifier} />
-                </Link>
+                <DropdownMenu.Item
+                  key={space.id}
+                  title={space.identifier}
+                  onSelect={event => handleProjectSelect(event, space?.path)}
+                />
               ))}
 
               {!spaces?.length && (

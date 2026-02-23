@@ -1,3 +1,6 @@
+// Import CSS for Tailwind processing - consumers should import @harnessio/views/styles.css
+import './styles.css'
+
 // types
 export * from './types/link-types'
 

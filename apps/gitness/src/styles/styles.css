@@ -1,5 +1,12 @@
 @import '@harnessio/ui/styles.css';
 
+/*
+ * Generate additional Tailwind utilities for classes used in views package
+ * that aren't included in the pre-built UI styles.
+ * This is processed by gitness's tailwind.config.js which scans views/src.
+ */
+@tailwind utilities;
+
 :root {
   --tab-width: 32px;
 }

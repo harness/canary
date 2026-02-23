@@ -1,4 +1,5 @@
 @import '@harnessio/ui/styles.css';
+@import '@harnessio/views/styles.css';
 
 /*
  * Generate additional Tailwind utilities for classes used in views package

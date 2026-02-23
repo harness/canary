@@ -1,5 +1,6 @@
 /* src/styles.css */
 @import '@harnessio/ui/styles.css';
+@import '@harnessio/views/styles.css';
 /* Monaco styles and fonts are included by monaco-editor-webpack-plugin. No separate import needed. */
 /* @import './styles/monaco-styles.css'; */
 @import '@harnessio/ui/markdown-preview-styles.css';

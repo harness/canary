@@ -2,6 +2,7 @@ import { resolve } from 'path'
 
 import react from '@vitejs/plugin-react-swc'
 import { defineConfig } from 'vite'
+import dts from 'vite-plugin-dts'
 import svgr from 'vite-plugin-svgr'
 import tsConfigPaths from 'vite-tsconfig-paths'
 
@@ -19,7 +20,7 @@ const external = [
 ]
 
 export default defineConfig({
-  plugins: [react(), svgr({ include: '**/*.svg' }), tsConfigPaths()],
+  plugins: [react(), svgr({ include: '**/*.svg' }), tsConfigPaths(), dts({ rollupTypes: true })],
   resolve: {
     alias: {
       'vaul/style.css?raw': resolve(__dirname, 'node_modules/vaul/style.css?raw')

@@ -27,6 +27,7 @@ export default defineConfig({
     svgr({ include: '**/*.svg' }),
     dts({
       outDir: 'dist',
+      entryRoot: 'src',
       tsconfigPath: './tsconfig.json'
     })
   ],

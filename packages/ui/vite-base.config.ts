@@ -14,7 +14,8 @@ const external = [
   'react/jsx-runtime',
   'react-i18next',
   'i18next',
-  '@harnessio/filters'
+  '@harnessio/filters',
+  'cmdk'
 ]
 
 export default defineConfig({

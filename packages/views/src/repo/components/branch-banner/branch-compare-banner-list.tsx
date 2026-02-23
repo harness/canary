@@ -1,8 +1,8 @@
-import { FC, useState } from 'react'
+import { FC, Fragment, useState } from 'react'
+
+import { Layout, Separator } from '@harnessio/ui/components'
 
 import { TypesBranchTable } from '@views'
-import { Layout } from '@harnessio/ui/components'
-import { Separator } from '@harnessio/ui/components'
 
 import BranchCompareBanner from './branch-compare-banner'
 
@@ -36,7 +36,7 @@ export const BranchCompareBannerList: FC<BranchCompareBannerListProps> = ({
       gap="sm"
     >
       {visibleCandidates?.map((branch, index) => (
-        <>
+        <Fragment key={branch.name}>
           <BranchCompareBanner
             branch={branch}
             defaultBranchName={defaultBranchName}
@@ -45,7 +45,7 @@ export const BranchCompareBannerList: FC<BranchCompareBannerListProps> = ({
             onDismiss={handleDismiss}
           />
           {index < visibleCandidates.length - 1 && <Separator className="bg-cn-success-primary" />}
-        </>
+        </Fragment>
       ))}
     </Layout.Grid>
   )

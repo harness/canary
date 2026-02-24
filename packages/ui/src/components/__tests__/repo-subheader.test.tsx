@@ -22,12 +22,12 @@ vi.mock('@/context', async importOriginal => {
 })
 
 // Mock SandboxLayout
-vi.mock('@/views', () => ({
+vi.mock('@/components/layouts', () => ({
   SandboxLayout: {
     SubHeader: ({ children, className }: { children: React.ReactNode; className?: string }) => (
-      <div className={className} data-testid="subheader">
+      <header className={className} data-testid="subheader">
         {children}
-      </div>
+      </header>
     )
   }
 }))

@@ -213,7 +213,7 @@ describe('SearchInput', () => {
   })
 
   test('passes through additional props to BaseInput', () => {
-    render(<SearchInput disabled value="test value" />)
+    render(<SearchInput disabled searchValue="test value" />)
 
     const input = screen.getByTestId('base-input')
     expect(input).toBeDisabled()

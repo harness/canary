@@ -291,9 +291,9 @@ const MarkdownViewerLocal = ({
           rehypeRewrite={rehypeRewrite}
           remarkPlugins={[remarkBreaks]}
           rehypePlugins={[
+            [rehypeSanitize, sanitizeSchema],
             [rehypeVideo, { test: /\.(mp4|mov|webm|mkv|flv)$/, details: false }],
-            [rehypeExternalLinks, { rel: ['nofollow noreferrer noopener'], target: '_blank' }],
-            [rehypeSanitize, sanitizeSchema]
+            [rehypeExternalLinks, { rel: ['nofollow noreferrer noopener'], target: '_blank' }]
           ]}
           components={{
             img: ({

@@ -68,7 +68,10 @@ type TreeViewProps = {
 } & React.HTMLAttributes<HTMLDivElement>
 
 const Tree = forwardRef<HTMLDivElement, TreeViewProps>(
-  ({ className, elements, initialSelectedId, initialExpendedItems, children, indicator = true, dir, ...props }, ref) => {
+  (
+    { className, elements, initialSelectedId, initialExpendedItems, children, indicator = true, dir, ...props },
+    ref
+  ) => {
     const [selectedId, setSelectedId] = useState<string | undefined>(initialSelectedId)
     const [expendedItems, setExpendedItems] = useState<string[] | undefined>(initialExpendedItems)
 

@@ -1,6 +1,6 @@
 import { useCallback, useEffect, useMemo } from 'react'
 
-import { CheckboxOptions } from '@harnessio/ui/components'
+import { CheckboxOptions } from '@/components'
 
 import { useLocalStorage } from './use-local-storage'
 

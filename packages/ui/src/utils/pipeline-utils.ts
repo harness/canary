@@ -1,6 +1,6 @@
-import { AnyNodeInternal } from '@harnessio/pipeline-graph'
-
 import { YamlEntityType } from '@/types/yaml-entity'
+
+import { AnyNodeInternal } from '@harnessio/pipeline-graph'
 
 export const getNestedStepsCount = (children?: AnyNodeInternal[]): number => {
   let count = 0

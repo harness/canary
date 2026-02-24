@@ -1,7 +1,7 @@
 import * as z from 'zod'
 
 import { IFormDefinition, IInputDefinition } from '../../../../src'
-import { InputConfigType, InputType } from '../../implementation/inputs/common/types'
+import { InputConfigType, InputType } from '../../implementation/types/input-types'
 
 type IInputConfigWithConfig = IInputDefinition & InputConfigType
 
@@ -57,6 +57,32 @@ const inputs: IInputConfigWithConfig[] = [
 
           return parsed
         })
+    }
+  },
+  {
+    inputType: InputType.text,
+    label: 'First Input',
+    path: 'firstInput',
+    required: true
+  },
+  {
+    inputType: InputType.text,
+    label: 'Second Input',
+    path: 'secondInput',
+    required: true,
+    validation: {
+      schema: (values) => {
+        const firstValue = values.firstInput
+        return z.string().refine(
+          val => {
+            // Second input must be longer than first input
+            return val.length > firstValue.length
+          },
+          {
+            message: `Second input must be longer than "${firstValue}"`
+          }
+        )
+      }
     }
   }
 ]

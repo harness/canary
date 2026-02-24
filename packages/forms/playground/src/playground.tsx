@@ -1,10 +1,12 @@
 import { useState } from 'react'
 
-import './playground.css'
-import './implementation/style.css'
+import '@harnessio/ui/styles.css'
+
+import { Layout, Tabs, Text, TooltipProvider } from '@harnessio/ui/components'
 
 import ConditionalExample from './examples/conditional-example/conditional-example'
 import DebugExample from './examples/debug-example/debug-example'
+import DynamicExample from './examples/dynamic-example/dynamic-example'
 import InputsExample from './examples/inputs-example/inputs-example'
 import ListPerformanceExample from './examples/list-performance-example/list-performance-example'
 import PerformanceExample from './examples/performance-example/performance-example'
@@ -19,6 +21,10 @@ const demoArr = [
   {
     name: 'Debug',
     component: DebugExample
+  },
+  {
+    name: 'Dynamic',
+    component: DynamicExample
   },
   {
     name: 'Basic',
@@ -46,24 +52,30 @@ function App() {
   const [demo, setDemo] = useState(demoArr[0])
 
   return (
-    <>
-      <div className="main-buttons-holder">
-        {demoArr.map(demoItem => (
-          <button
-            key={demoItem.name}
-            className={demoItem.name === demo.name ? 'active-button' : undefined}
-            onClick={() => {
-              setDemo(demoItem)
-            }}
-          >
-            {demoItem.name}
-          </button>
-        ))}
-      </div>
-      <div className="demo-holder">
+    <TooltipProvider>
+      <Layout.Vertical className="gap-cn-lg p-cn-xl h-screen">
+        <Text variant="heading-base">Forms Framework Playground</Text>
+        <Tabs.Root
+          defaultValue={demoArr[0].name}
+          value={demo.name}
+          onValueChange={value => {
+            const selectedDemo = demoArr.find(demoItem => demoItem.name === value)
+            if (selectedDemo) {
+              setDemo(selectedDemo)
+            }
+          }}
+        >
+          <Tabs.List>
+            {demoArr.map(demoItem => (
+              <Tabs.Trigger key={demoItem.name} value={demoItem.name}>
+                {demoItem.name}
+              </Tabs.Trigger>
+            ))}
+          </Tabs.List>
+        </Tabs.Root>
         <demo.component />
-      </div>
-    </>
+      </Layout.Vertical>
+    </TooltipProvider>
   )
 }
 

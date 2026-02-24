@@ -14,12 +14,11 @@ export function useZodValidationResolver(
   return useCallback(
     async (data: FieldValues, _: any, resolverOptions: ResolverOptions<FieldValues>) => {
       try {
-        const validationSchema = getValidationSchema(formDefinition, data, options)
-
-        await validationSchema.parseAsync(data)
+        const schema = getValidationSchema(formDefinition, data, options)
+        await schema.parseAsync(data)
 
         return {
-          values: data, // TODO: check this - values does not contains all data
+          values: data,
           errors: {}
         }
       } catch (error: any) {
@@ -33,6 +32,6 @@ export function useZodValidationResolver(
         throw error
       }
     },
-    [formDefinition]
+    [formDefinition, options]
   )
 }

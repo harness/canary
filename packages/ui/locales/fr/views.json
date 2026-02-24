@@ -32,8 +32,16 @@
     "hadRecentPushes": "had recent pushes ",
     "compareAndPullRequest": "Comparez et ouvrez une requête de tirage",
     "dismiss": "Dismiss",
-    "compareBranchesToSeeChanges": "Comparez les branches pour voir vos changements.",
-    "noNewCommits": "Pas encore de nouveaux commits",
+    "fetchUpstream": "Récupérer en amont",
+    "fetchAndMergeCommits_one": "Récupérer et fusionner {{count}} {{commits}}",
+    "fetchAndMergeCommits_many": "Récupérer et fusionner {{count}} {{commits}}",
+    "fetchAndMergeCommits_other": "Récupérer et fusionner {{count}} {{commits}}",
+    "noCommitsToFetch": "Aucun nouveau commit à récupérer",
+    "keepForkUpToDate": "Gardez ce fork à jour avec le dépôt en amont.",
+    "learnMore": "En savoir plus",
+    "compare": "Comparer",
+    "fetchAndMerge": "Récupérer et fusionner",
+    "openPullRequest": "Ouvrir une Pull Request",
     "branchDoesNotExist": "Branch does not exist.",
     "default": "Par défaut",
     "viewAll": "Voir tous les {{type}}",
@@ -49,6 +57,9 @@
     "selectScopePlaceholder": "Select scope type",
     "noResultsFound": "No results found",
     "noFile": "Aucun fichier disponible",
+    "selectRepository": "Sélectionner un dépôt",
+    "switchRepositories": "Changer de dépôt",
+    "forkedFrom": "Forked from",
     "createFile": "Create File",
     "private": "Privé",
     "public": "Public",
@@ -167,7 +178,6 @@
     "behind": "Behind",
     "ahead": "En avance",
     "pullRequest": "Pull Request",
-    "compare": "Compare",
     "browse": "Browse",
     "deleteBranch": "Delete Branch",
     "createBranchDialog": {
@@ -210,13 +220,27 @@
       "title": "No files yet",
       "description": "This repository is empty. Add your first file to get started."
     },
-    "createNewFork": "Create a new fork",
-    "forkDescription": "Fork a repository to create a new repository with the same files and history.",
-    "fork": "Fork",
+    "createNewFork": "Créer un nouveau fork de {{repoName}}",
+    "forkDescription": "Forker un dépôt pour créer un nouveau dépôt avec les mêmes fichiers et le même historique.",
+    "fork": {
+      "branchFork": "Branche",
+      "branchForkCaption": "Forker une seule branche",
+      "fullFork": "Fork complet du dépôt",
+      "fullForkCaption": "Forker l'intégralité du dépôt",
+      "branch": "Branche",
+      "publicCaption": "Toute personne ayant accès à Harness peut cloner ce dépôt.",
+      "privateCaption": "Vous pouvez choisir qui peut voir et contribuer à ce dépôt.",
+      "forkRepository": "Forker le dépôt",
+      "forkingRepository": "Fork en cours...",
+      "title": "Fork",
+      "changeVisibility": "Modifier la visibilité du fork",
+      "makePrivate": "Rendre privé",
+      "makePrivateCaption": "Restreindre la visibilité aux utilisateurs autorisés uniquement"
+    },
+    "visibility": "Visibilité",
     "createRepository": "Créer un dépôt",
     "importRepository": "Importer un dépôt",
     "importRepositories": "Import repositories",
-    "forkedFrom": "Forked from",
     "cancelImport": "Cancel import",
     "importing": "Importing…",
     "updated": "Mis à jour",
@@ -247,7 +271,6 @@
     "repoNamePlaceholder": "Entrez le nom du dépôt",
     "repoDescriptionPlaceholder": "Entrez une description pour ce dépôt...",
     "defaultBranch": "Branche par défaut",
-    "visibility": "Visibilité",
     "publicDescription": "Toute personne ayant accès à Harness peut cloner ce dépôt.",
     "privateDescription": "Vous pouvez choisir qui peut voir et contribuer à ce dépôt.",
     "rulesApplied": "Règles appliquées",
@@ -397,9 +420,8 @@
         "invalid": "Invalid"
       }
     },
-    "forkBranchDescription": "Fork a single branch",
-    "full": "Full repo fork",
-    "forkFullDescription": "Fork the entire repository",
+    "compareBranchesToSeeChanges": "Comparez les branches pour voir vos changements.",
+    "noNewCommits": "Pas encore de nouveaux commits",
     "allCommits": "Tous les commits",
     "uploadFiles": "Télécharger des fichiers",
     "newPullReq": "Nouvelle requête de tirage",
@@ -515,14 +537,14 @@
     "noWebhookExecutionsDescription": "Your webhook executions will appear here once they're completed. Trigger your webhook to see the results.",
     "noWebhooks": "No webhooks yet",
     "noWebhooksDescription": "Add or manage webhooks to automate tasks and connect external services to your project.",
+    "noUsers": "Aucun utilisateur trouvé",
+    "noUsersDescription": "Il n'y a aucun utilisateur dans ce périmètre. Cliquez sur le bouton ci-dessous pour commencer à les ajouter.",
     "noActivity": "There is no secret activity in this project yet.",
     "noSecretActivity": "There is no secret activity yet.",
     "noSecretReferences": "No secret references yet",
     "noSecretReferencesDescription": "There are no references to this secret yet.",
     "noSecrets": "Il n'y a pas encore de secrets dans ce projet.",
     "createNewSecret": "Create a new Secret if required.",
-    "noUsers": "Aucun utilisateur trouvé",
-    "noUsersDescription": "Il n'y a aucun utilisateur dans ce périmètre. Cliquez sur le bouton ci-dessous pour commencer à les ajouter.",
     "createSecret": "Créer un secret.",
     "noDelegates": "There are no delegates in this project yet.",
     "noActivities": "Aucune activité disponible",
@@ -667,17 +689,6 @@
     "largeDiff": "Les différences de grande taille ne sont pas affichées par défaut.",
     "fileNoChanges": "Fichier sans modifications.",
     "binaryNotShown": "Fichier binaire non affiché."
-  },
-  "secretDetails": {
-    "backToSecrets": "Back to secrets",
-    "created": "Created",
-    "updated": "Updated",
-    "lastUsed": "Last used",
-    "configuration": "Configuration",
-    "references": "References",
-    "activity": "Activity",
-    "configurationView": "Secret Configuration",
-    "lastUpdated": "Last updated"
   },
   "notFound": {
     "title": "Quelque chose s'est mal passé…",
@@ -1003,62 +1014,6 @@
       "files": "{{fileCount}} file(s)"
     }
   },
-  "secretActivity": {
-    "event": "Event",
-    "entity": "Entity",
-    "scope": "Scope",
-    "timestamp": "Timestamp",
-    "type": "Type"
-  },
-  "secrets": {
-    "search": {
-      "placeholder": "Search"
-    },
-    "filterOptions": {
-      "secretType": {
-        "label": "Secret Type"
-      },
-      "secretManagerOption": {
-        "label": "Secret Manager Identifier",
-        "placeholder": "Select Secret Manager"
-      },
-      "descriptionOption": {
-        "label": "Description"
-      },
-      "tagsOption": {
-        "label": "Tags"
-      },
-      "typeOption": {
-        "label": "Type"
-      }
-    },
-    "secretsTitle": "Secrets",
-    "createNew": "Créer un secret",
-    "viewDetails": "View Details",
-    "edit": "Edit",
-    "delete": "Supprimer",
-    "newSecret": "New Secret"
-  },
-  "entityReference": {
-    "entity": "Entity",
-    "type": "Type",
-    "scope": "Scope",
-    "created": "Created"
-  },
-  "secret": {
-    "title": "Secret"
-  },
-  "common": {
-    "manager": "Manager",
-    "created": "Created",
-    "updated": "Updated",
-    "lastActivity": "Last Activity",
-    "details": "Details",
-    "overview": "Overview",
-    "type": "Type",
-    "createdOn": "Created on",
-    "modifiedOn": "Modified on"
-  },
   "userManagement": {
     "createUser": {
       "title": "Ajouter un nouvel utilisateur",
@@ -1139,6 +1094,73 @@
       "editUser": "Modifier l'utilisateur",
       "deleteUser": "Supprimer l'utilisateur"
     }
+  },
+  "secretDetails": {
+    "backToSecrets": "Back to secrets",
+    "created": "Created",
+    "updated": "Updated",
+    "lastUsed": "Last used",
+    "configuration": "Configuration",
+    "references": "References",
+    "activity": "Activity",
+    "configurationView": "Secret Configuration",
+    "lastUpdated": "Last updated"
+  },
+  "secretActivity": {
+    "event": "Event",
+    "entity": "Entity",
+    "scope": "Scope",
+    "timestamp": "Timestamp",
+    "type": "Type"
+  },
+  "secrets": {
+    "search": {
+      "placeholder": "Search"
+    },
+    "filterOptions": {
+      "secretType": {
+        "label": "Secret Type"
+      },
+      "secretManagerOption": {
+        "label": "Secret Manager Identifier",
+        "placeholder": "Select Secret Manager"
+      },
+      "descriptionOption": {
+        "label": "Description"
+      },
+      "tagsOption": {
+        "label": "Tags"
+      },
+      "typeOption": {
+        "label": "Type"
+      }
+    },
+    "secretsTitle": "Secrets",
+    "createNew": "Créer un secret",
+    "viewDetails": "View Details",
+    "edit": "Edit",
+    "delete": "Supprimer",
+    "newSecret": "New Secret"
+  },
+  "entityReference": {
+    "entity": "Entity",
+    "type": "Type",
+    "scope": "Scope",
+    "created": "Created"
+  },
+  "secret": {
+    "title": "Secret"
+  },
+  "common": {
+    "manager": "Manager",
+    "created": "Created",
+    "updated": "Updated",
+    "lastActivity": "Last Activity",
+    "details": "Details",
+    "overview": "Overview",
+    "type": "Type",
+    "createdOn": "Created on",
+    "modifiedOn": "Modified on"
   },
   "delegates": {
     "delegate": "Delegate",

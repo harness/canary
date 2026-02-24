@@ -11,6 +11,7 @@ import {
 } from 'react-hook-form'
 
 import { RootFormProvider } from '../context/RootFormContext'
+import { cancelIdleCallbackPolyfill, requestIdleCallbackPolyfill } from '../utils/request-idle-callback'
 
 export interface RootFormProps<TFieldValues extends FieldValues = FieldValues, TContext = any, TMetadata = any> {
   defaultValues?: DefaultValues<TFieldValues>
@@ -92,6 +93,9 @@ export function RootForm<TFieldValues extends FieldValues = FieldValues, TContex
 
   // reset defaultValues to prevent default on recreated (deleted then created) array/list items
   useEffect(() => {
+    const requestIdleCallback = requestIdleCallbackPolyfill()
+    const cancelIdleCallback = cancelIdleCallbackPolyfill()
+
     const handle = requestIdleCallback(() => {
       methods.reset({} as TFieldValues, {
         keepErrors: true,
@@ -140,19 +144,13 @@ export function RootForm<TFieldValues extends FieldValues = FieldValues, TContex
   // auto focus
   useEffect(() => {
     if (autoFocusPath) {
-      if ('requestIdleCallback' in window) {
-        const handle = requestIdleCallback(() => {
-          methods.setFocus(autoFocusPath)
-        })
-        return () => cancelIdleCallback(handle)
-      }
-      // fallback for safari
-      else {
-        const handle = setTimeout(() => {
-          methods.setFocus(autoFocusPath)
-        }, 100)
-        return () => clearTimeout(handle)
-      }
+      const requestIdleCallback = requestIdleCallbackPolyfill()
+      const cancelIdleCallback = cancelIdleCallbackPolyfill()
+
+      const handle = requestIdleCallback(() => {
+        methods.setFocus(autoFocusPath)
+      })
+      return () => cancelIdleCallback(handle)
     }
   }, [methods])
 

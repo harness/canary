@@ -21,7 +21,8 @@ import {
   RepoFile,
   RepoRepositoryOutput,
   SandboxLayout,
-  TypesBranchTable
+  TypesBranchTable,
+  TypesRepositoryCore
 } from '@/views'
 import { BranchInfoBar, BranchSelectorTab, Summary } from '@/views/repo/components'
 import { isEmpty } from 'lodash-es'
@@ -53,7 +54,6 @@ const DEFAULT_README_NAME = 'README.md'
 const findReadmeNameInFiles = (files: RepoFile[]) => {
   return files.find(file => /^readme(\.md)?$/i.test(file?.name || ''))?.name
 }
-
 export interface RepoSummaryViewProps extends Partial<RoutingProps> {
   repoId: string
   spaceId: string
@@ -101,6 +101,9 @@ export interface RepoSummaryViewProps extends Partial<RoutingProps> {
   showContributeBtn?: boolean
   scheduleFileMetaFetch?: (paths: string[]) => void
   imageUrlTransform?: (url: string) => string
+  upstream?: TypesRepositoryCore
+  onFetchAndMerge?: () => void
+  isFetchingUpstream?: boolean
 }
 
 export function RepoSummaryView({
@@ -137,6 +140,9 @@ export function RepoSummaryView({
   imageUrlTransform,
   isSSHEnabled,
   isForkEnabled,
+  upstream,
+  onFetchAndMerge,
+  isFetchingUpstream,
   ...props
 }: RepoSummaryViewProps) {
   const { t } = useTranslation()
@@ -197,7 +203,7 @@ export function RepoSummaryView({
                 <Spacer size={4} />
               </>
             )}
-            {selectedBranchOrTag?.name !== repository?.default_branch && (
+            {(upstream || selectedBranchOrTag?.name !== repository?.default_branch) && (
               <>
                 <BranchInfoBar
                   defaultBranchName={repository?.default_branch}
@@ -210,6 +216,9 @@ export function RepoSummaryView({
                   }}
                   refType={refType}
                   showContributeBtn={showContributeBtn}
+                  upstream={upstream}
+                  onFetchAndMerge={onFetchAndMerge}
+                  isFetchingUpstream={isFetchingUpstream}
                 />
                 <Spacer size={4} />
               </>
@@ -241,6 +250,7 @@ export function RepoSummaryView({
                       </Link>
                     </Button>
                   ) : null}
+
                   {isForkEnabled && (
                     <Button variant="outline" asChild>
                       <Link
@@ -250,7 +260,7 @@ export function RepoSummaryView({
                         to={`${spaceId ? `/${spaceId}` : ''}/repos/${repoId}/fork`}
                       >
                         <IconV2 name="git-fork" />
-                        <span className="truncate">{t('views:repos.fork', 'Fork')}</span>
+                        <span className="truncate">{t('views:repos.fork.title', 'Fork')}</span>
                       </Link>
                     </Button>
                   )}
@@ -352,7 +362,7 @@ export function RepoSummaryView({
                       icon: 'plus',
                       to: getReadmeCreationPath()
                     }}
-                    className="!py-cn-xs !gap-cn-3xs [&_.py-cn-4xl]:!py-cn-xs"
+                    className="!gap-cn-3xs !py-cn-xs [&_.py-cn-4xl]:!py-cn-xs"
                   />
                 </StackedList.Item>
               </StackedList.Root>

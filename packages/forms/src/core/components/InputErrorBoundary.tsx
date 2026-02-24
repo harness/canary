@@ -1,4 +1,4 @@
-import { Component } from 'react'
+import { Component, ErrorInfo } from 'react'
 
 interface InputErrorBoundaryProps {
   path: string
@@ -20,9 +20,12 @@ export class InputErrorBoundary extends Component<InputErrorBoundaryProps, Input
     return { hasError: true }
   }
 
-  componentDidCatch() {
-    const error = new Error(`Form input [${this.props.inputType}] has failed at path [${this.props.path}].`)
-    this.props.inputErrorHandler ? this.props.inputErrorHandler(error) : console.error(error)
+  componentDidCatch(err: Error, errorInfo: ErrorInfo) {
+    console.error(err, errorInfo)
+    const error = new Error(
+      `Form input [${this.props.inputType}] has failed at path [${this.props.path}]. Error: ${err}, Error info: ${errorInfo}`
+    )
+    this.props.inputErrorHandler?.(error)
   }
 
   render() {

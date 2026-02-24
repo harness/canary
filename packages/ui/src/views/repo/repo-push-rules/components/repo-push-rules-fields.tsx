@@ -1,4 +1,4 @@
-import { FC, Fragment, useMemo, useState } from 'react'
+import { FC, Fragment, useEffect, useMemo, useState } from 'react'
 
 import {
   Checkbox,
@@ -46,7 +46,7 @@ export const PushSettingsRuleNameField: FC<PushRuleFieldProps & { disabled: bool
       label={t('views:repos.name', 'Name')}
       {...register!('identifier')}
       placeholder={t('views:repos.enterRuleName', 'Enter the rule name here')}
-      autoFocus
+      autoFocus={!disabled}
       disabled={disabled}
     />
   )
@@ -198,11 +198,26 @@ export const PushSettingsRuleBypassListField: FC<
 
 export const PushSettingsRuleListField: FC<{
   rules: PushRule[]
+  ruleIdentifier?: string
   handleCheckboxChange: (ruleId: string, checked: boolean) => void
   handleInputChange: (ruleId: string, value: string) => void
-}> = ({ rules, handleCheckboxChange, handleInputChange }) => {
+}> = ({ rules, ruleIdentifier, handleCheckboxChange, handleInputChange }) => {
   const { t } = useTranslation()
   const pushRules = getPushRules(t)
+  const [lastCheckedRule, setLastCheckedRule] = useState<string | null>(null)
+
+  // Reset when switching to a different rule
+  useEffect(() => {
+    setLastCheckedRule(null)
+  }, [ruleIdentifier])
+
+  const handleCheckboxChangeWithTracking = (ruleId: string, checked: boolean) => {
+    if (checked) {
+      setLastCheckedRule(ruleId)
+    }
+    handleCheckboxChange(ruleId, checked)
+  }
+
   return (
     <Layout.Vertical gapY="xl">
       <Label>{t('views:repos.rulesTitle', 'Rules: select all that apply')}</Label>
@@ -221,7 +236,7 @@ export const PushSettingsRuleListField: FC<{
               <Checkbox
                 id={rule.id}
                 checked={isChecked}
-                onCheckedChange={checked => handleCheckboxChange(rule.id, checked === true)}
+                onCheckedChange={checked => handleCheckboxChangeWithTracking(rule.id, checked === true)}
                 disabled={isDisabled}
                 label={rule.label}
                 caption={rule.description}
@@ -237,7 +252,7 @@ export const PushSettingsRuleListField: FC<{
                   }
                   value={inputValue || ''}
                   onChange={e => handleInputChange(rule.id, e.target.value)}
-                  autoFocus
+                  autoFocus={rule.id === lastCheckedRule}
                   min={0}
                   integerOnly
                 />

@@ -1,4 +1,4 @@
-import { FC, Fragment, useMemo, useState } from 'react'
+import { FC, Fragment, useEffect, useMemo, useState } from 'react'
 
 import {
   Checkbox,
@@ -59,7 +59,7 @@ export const BranchSettingsRuleNameField: FC<FieldProps & { disabled: boolean }>
       label={t('views:repos.name', 'Name')}
       {...register!('identifier')}
       placeholder={t('views:repos.enterRuleName', 'Enter the rule name here')}
-      autoFocus
+      autoFocus={!disabled}
       disabled={disabled}
     />
   )
@@ -220,6 +220,7 @@ export const BranchSettingsRuleDefaultReviewersField: FC<
     principalsSearchQuery?: string
     setPrincipalsSearchQuery?: (val: string) => void
     handleSelectChangeForRule: (ruleId: string, options: MultiSelectOption[]) => void
+    shouldAutoFocus?: boolean
   }
 > = ({
   className,
@@ -227,7 +228,8 @@ export const BranchSettingsRuleDefaultReviewersField: FC<
   rule,
   setPrincipalsSearchQuery,
   principalsSearchQuery,
-  handleSelectChangeForRule
+  handleSelectChangeForRule,
+  shouldAutoFocus = false
 }) => {
   const { t } = useTranslation()
   const { validationMessage, selectOptions } = rule || {}
@@ -265,7 +267,7 @@ export const BranchSettingsRuleDefaultReviewersField: FC<
         setSearchQuery={handleStringSearchChange}
         disallowCreation
         inputProps={{
-          autoFocus: true
+          autoFocus: shouldAutoFocus
         }}
       />
       {validationMessage && !isEmpty(validationMessage.message) && (
@@ -281,6 +283,7 @@ export const BranchSettingsRuleDefaultReviewersField: FC<
 
 export const BranchSettingsRuleListField: FC<{
   rules: Rule[]
+  ruleIdentifier?: string
   recentStatusChecks?: string[] | null
   defaultReviewersOptions?: NormalizedPrincipal[] | null
   handleCheckboxChange: (ruleId: string, checked: boolean) => void
@@ -291,6 +294,7 @@ export const BranchSettingsRuleListField: FC<{
   principalsSearchQuery?: string
 }> = ({
   rules,
+  ruleIdentifier,
   recentStatusChecks,
   defaultReviewersOptions,
   handleCheckboxChange,
@@ -302,6 +306,19 @@ export const BranchSettingsRuleListField: FC<{
 }) => {
   const { t } = useTranslation()
   const branchRules = getBranchRules(t)
+  const [lastCheckedRule, setLastCheckedRule] = useState<string | null>(null)
+
+  // Reset when switching to a different rule
+  useEffect(() => {
+    setLastCheckedRule(null)
+  }, [ruleIdentifier])
+
+  const handleCheckboxChangeWithTracking = (ruleId: string, checked: boolean) => {
+    if (checked) {
+      setLastCheckedRule(ruleId)
+    }
+    handleCheckboxChange(ruleId, checked)
+  }
   return (
     <Layout.Vertical gapY="xl">
       <Text as="h4" variant="body-strong">
@@ -325,7 +342,7 @@ export const BranchSettingsRuleListField: FC<{
                 <Checkbox
                   id={rule.id}
                   checked={isChecked}
-                  onCheckedChange={checked => handleCheckboxChange(rule.id, checked === true)}
+                  onCheckedChange={checked => handleCheckboxChangeWithTracking(rule.id, checked === true)}
                   disabled={isDisabled}
                   label={rule.label}
                   caption={rule.description}
@@ -359,7 +376,7 @@ export const BranchSettingsRuleListField: FC<{
                     options={recentStatusChecks?.map(check => ({ id: check, key: check })) ?? []}
                     disallowCreation
                     inputProps={{
-                      autoFocus: true
+                      autoFocus: rule.id === lastCheckedRule
                     }}
                   />
                 )}
@@ -372,6 +389,7 @@ export const BranchSettingsRuleListField: FC<{
                     setPrincipalsSearchQuery={setPrincipalsSearchQuery}
                     principalsSearchQuery={principalsSearchQuery}
                     handleSelectChangeForRule={handleSelectChangeForRule}
+                    shouldAutoFocus={rule.id === lastCheckedRule}
                   />
                 )}
 
@@ -385,7 +403,7 @@ export const BranchSettingsRuleListField: FC<{
                     }
                     value={rules[index].input || ''}
                     onChange={e => handleInputChange(rule.id, e.target.value)}
-                    autoFocus
+                    autoFocus={rule.id === lastCheckedRule}
                   />
                 )}
               </Fragment>

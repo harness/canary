@@ -1,0 +1,364 @@
+---
+title: Slider
+description: Slider component
+beta: true
+---
+
+The `Slider` component allows users to select a single value or a range by dragging thumbs along a track.
+Built on [Radix UI Slider](https://www.radix-ui.com/primitives/docs/components/slider) with custom styling.
+
+import { DocsPage } from "@/components/docs-page";
+
+<DocsPage.ComponentExample
+  client:only
+  code={`<div className="w-[400px] flex flex-col gap-cn-lg">
+    <h5>Single value</h5>
+    <Slider
+      label="Pipeline timeout"
+      description="Maximum execution time in minutes"
+      showValue
+      defaultValue={[30]}
+      min={5}
+      max={120}
+      step={5}
+      formatValue={(v) => v[0] + 'm'}
+    />
+
+    <hr className="my-cn-xs" />
+
+    <h5>Range</h5>
+    <Slider
+      label="CPU cores"
+      description="Min and max cores for build containers"
+      showValue
+      defaultValue={[2, 8]}
+      min={1}
+      max={16}
+    />
+
+    <hr className="my-cn-xs" />
+
+    <h5>Min / Max labels</h5>
+    <Slider
+      label="Deployment rollout"
+      caption="min-max"
+      minLabel="0%"
+      maxLabel="100%"
+      defaultValue={[25]}
+    />
+
+    <hr className="my-cn-xs" />
+
+    <h5>Custom format</h5>
+    <Slider
+      label="Canary rollout"
+      description="Percentage of traffic to route to canary"
+      showValue
+      defaultValue={[25]}
+      step={5}
+      formatValue={(v) => v[0] + '%'}
+    />
+
+    <hr className="my-cn-xs" />
+
+    <h5>Disabled</h5>
+    <Slider
+      label="Max replicas"
+      description="Upgrade your plan to adjust scaling limits"
+      showValue
+      defaultValue={[3]}
+      min={1}
+      max={10}
+      disabled
+    />
+
+    <Slider
+      label="Failure rate threshold"
+      showValue
+      defaultValue={[20, 80]}
+      disabled
+    />
+
+</div>`}
+/>
+
+## Severity Slider
+
+A specialized variant with a gradient track and two thumbs for defining severity thresholds.
+
+<DocsPage.ComponentExample
+  client:only
+  code={`<div className="w-[400px] flex flex-col gap-cn-lg">
+    <h5>Default</h5>
+    <SeveritySlider
+      label="Alert thresholds"
+      defaultValue={[25, 75]}
+    />
+
+    <hr className="my-cn-xs" />
+
+    <h5>Custom labels</h5>
+    <SeveritySlider
+      label="Incident priority"
+      labels={["Info", "Warning", "Error", "Fatal"]}
+      defaultValue={[20, 60]}
+    />
+
+    <hr className="my-cn-xs" />
+
+    <h5>Disabled</h5>
+    <SeveritySlider
+      label="SLO thresholds (locked)"
+      defaultValue={[30, 70]}
+      disabled
+    />
+
+</div>`}
+/>
+
+## Usage
+
+```typescript jsx
+import { Slider, SeveritySlider } from '@harnessio/ui/components'
+
+// Pipeline timeout with tooltip
+<Slider
+  label="Pipeline timeout"
+  description="Maximum execution time in minutes"
+  showValue
+  defaultValue={[30]}
+  min={5}
+  max={120}
+  step={5}
+  formatValue={(v) => v[0] + 'm'}
+  onValueChange={(value) => console.log(value)}
+/>
+
+// Resource allocation range
+<Slider
+  label="CPU allocation"
+  description="Min and max cores for build containers"
+  showValue
+  defaultValue={[2, 8]}
+  min={1}
+  max={16}
+/>
+
+// Deployment rollout with min-max labels
+<Slider
+  label="Deployment rollout"
+  caption="min-max"
+  minLabel="0%"
+  maxLabel="100%"
+  defaultValue={[25]}
+/>
+
+// Alert severity thresholds
+<SeveritySlider
+  label="Alert thresholds"
+  defaultValue={[25, 75]}
+  onValueChange={(value) => console.log(value)}
+/>
+```
+
+## API Reference — Slider
+
+<DocsPage.PropsTable
+  props={[
+    {
+      name: "label",
+      description: "Label displayed above the slider.",
+      required: false,
+      value: "string",
+    },
+    {
+      name: "caption",
+      description:
+        "Controls what appears below the slider: description text or min/max labels.",
+      required: false,
+      defaultValue: "'description'",
+      value: "'description' | 'min-max'",
+    },
+    {
+      name: "description",
+      description:
+        "Description text shown below the slider (when caption='description').",
+      required: false,
+      value: "string",
+    },
+    {
+      name: "minLabel",
+      description: "Left label text (when caption='min-max').",
+      required: false,
+      defaultValue: "'0'",
+      value: "string",
+    },
+    {
+      name: "maxLabel",
+      description: "Right label text (when caption='min-max').",
+      required: false,
+      defaultValue: "'100'",
+      value: "string",
+    },
+    {
+      name: "showValue",
+      description: "Show the current value next to the slider track.",
+      required: false,
+      defaultValue: "false",
+      value: "boolean",
+    },
+    {
+      name: "formatValue",
+      description: "Custom formatter for the displayed value.",
+      required: false,
+      value: "(value: number[]) => string",
+    },
+    {
+      name: "defaultValue",
+      description:
+        "Initial value(s). Single element for single slider, two elements for range.",
+      required: false,
+      value: "number[]",
+    },
+    {
+      name: "value",
+      description: "Controlled value(s).",
+      required: false,
+      value: "number[]",
+    },
+    {
+      name: "onValueChange",
+      description: "Callback fired on every value change during drag.",
+      required: false,
+      value: "(value: number[]) => void",
+    },
+    {
+      name: "onValueCommit",
+      description:
+        "Callback fired when the user releases the thumb (drag ends).",
+      required: false,
+      value: "(value: number[]) => void",
+    },
+    {
+      name: "min",
+      description: "Minimum value.",
+      required: false,
+      defaultValue: "0",
+      value: "number",
+    },
+    {
+      name: "max",
+      description: "Maximum value.",
+      required: false,
+      defaultValue: "100",
+      value: "number",
+    },
+    {
+      name: "step",
+      description: "Step increment.",
+      required: false,
+      defaultValue: "1",
+      value: "number",
+    },
+    {
+      name: "disabled",
+      description: "Whether the slider is disabled.",
+      required: false,
+      defaultValue: "false",
+      value: "boolean",
+    },
+    {
+      name: "name",
+      description:
+        "Name attribute for form submission. Radix renders hidden inputs for each thumb.",
+      required: false,
+      value: "string",
+    },
+    {
+      name: "className",
+      description: "Additional class names.",
+      required: false,
+      value: "string",
+    },
+  ]}
+/>
+
+## API Reference — SeveritySlider
+
+<DocsPage.PropsTable
+  props={[
+    {
+      name: "label",
+      description: "Label displayed above the slider.",
+      required: false,
+      value: "string",
+    },
+    {
+      name: "labels",
+      description: "Labels displayed below the gradient track.",
+      required: false,
+      defaultValue: "['Low', 'Medium', 'High', 'Critical']",
+      value: "string[]",
+    },
+    {
+      name: "defaultValue",
+      description: "Initial range as [min, max] tuple.",
+      required: false,
+      defaultValue: "[20, 70]",
+      value: "[number, number]",
+    },
+    {
+      name: "value",
+      description: "Controlled range value.",
+      required: false,
+      value: "[number, number]",
+    },
+    {
+      name: "onValueChange",
+      description: "Callback fired on every value change during drag.",
+      required: false,
+      value: "(value: [number, number]) => void",
+    },
+    {
+      name: "onValueCommit",
+      description:
+        "Callback fired when the user releases the thumb (drag ends).",
+      required: false,
+      value: "(value: [number, number]) => void",
+    },
+    {
+      name: "min",
+      description: "Minimum value.",
+      required: false,
+      defaultValue: "0",
+      value: "number",
+    },
+    {
+      name: "max",
+      description: "Maximum value.",
+      required: false,
+      defaultValue: "100",
+      value: "number",
+    },
+    {
+      name: "step",
+      description: "Step increment.",
+      required: false,
+      defaultValue: "1",
+      value: "number",
+    },
+    {
+      name: "disabled",
+      description: "Whether the slider is disabled.",
+      required: false,
+      defaultValue: "false",
+      value: "boolean",
+    },
+    {
+      name: "className",
+      description: "Additional class names.",
+      required: false,
+      value: "string",
+    },
+  ]}
+/>

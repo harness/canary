@@ -12,6 +12,7 @@ import {
   Text,
   TimeAgoCard
 } from '@/components'
+import { TypesRepositoryCore } from '@/views'
 import { cn } from '@utils/cn'
 import { BranchSelectorContainerProps } from '@views/repo'
 
@@ -34,10 +35,14 @@ interface PullRequestTitleProps {
     spaceId?: string
     repoId?: string
     description?: string
+    source_repo_id?: number | null
+    target_repo_id?: number | null
+    source_repo?: TypesRepositoryCore
   }
   updateTitle: (title: string) => void
   updateTargetBranch: (branchName: string) => void
   branchSelectorRenderer: React.ComponentType<BranchSelectorContainerProps>
+  toUpstreamRepo?: (path: string, subPath?: string) => string
 }
 
 export const PullRequestHeader: React.FC<PullRequestTitleProps> = ({
@@ -54,11 +59,15 @@ export const PullRequestHeader: React.FC<PullRequestTitleProps> = ({
     is_draft,
     state,
     spaceId,
-    repoId
+    repoId,
+    source_repo_id,
+    target_repo_id,
+    source_repo
   },
   updateTitle,
   updateTargetBranch,
-  branchSelectorRenderer
+  branchSelectorRenderer,
+  toUpstreamRepo
 }) => {
   const stateObject = getPrState(is_draft, merged, state)
 
@@ -71,6 +80,7 @@ export const PullRequestHeader: React.FC<PullRequestTitleProps> = ({
   )
 
   const [isEditing, setIsEditing] = useState(false)
+  const isForkPR = source_repo_id !== target_repo_id
 
   return (
     <>
@@ -82,7 +92,7 @@ export const PullRequestHeader: React.FC<PullRequestTitleProps> = ({
           </Text>
           <Dialog.Trigger>
             <Button
-              className="ml-cn-xs group inline-flex"
+              className="group ml-cn-xs inline-flex"
               variant="ghost"
               iconOnly
               aria-label="Edit"
@@ -117,7 +127,21 @@ export const PullRequestHeader: React.FC<PullRequestTitleProps> = ({
               </Text>
               <BranchTag branchName={target_branch || ''} spaceId={spaceId || ''} repoId={repoId || ''} />
               <Text variant="body-single-line-normal">from</Text>
-              <BranchTag branchName={source_branch || ''} spaceId={spaceId || ''} repoId={repoId || ''} />
+              <BranchTag
+                branchName={source_branch || ''}
+                spaceId={spaceId || ''}
+                repoId={repoId || ''}
+                forkData={
+                  isForkPR && source_repo
+                    ? {
+                        branchName: source_branch || '',
+                        path: source_repo.path || '',
+                        repoId: source_repo.identifier || ''
+                      }
+                    : undefined
+                }
+                toUpstreamRepo={toUpstreamRepo}
+              />
               <Separator orientation="vertical" className="mx-cn-4xs h-4" />
               <TimeAgoCard timestamp={merged || created} />
             </Layout.Horizontal>

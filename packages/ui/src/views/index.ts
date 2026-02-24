@@ -9,7 +9,6 @@ export * from './layouts/content-layout-with-sidebar'
 export * from './layouts/webhooks-settings-layout'
 export * from './layouts/subheader-wrapper'
 export * from './layouts/main-content-layout'
-export * from './layouts/SecretDetailsLayout'
 
 // components
 export { default as FilterGroup } from './components/FilterGroup'

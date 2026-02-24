@@ -6,7 +6,17 @@ import type { AnyFormValue, IFormDefinition, IGlobalValidationConfig, IInputDefi
 const REQUIRED_MESSAGE = 'Required field'
 
 export function processValidationParseResponse(anyArray: string | Record<string, unknown>): string | undefined {
-  const error = typeof anyArray === 'string' ? JSON.parse(anyArray) : anyArray
+  let error: any
+  if (typeof anyArray === 'string') {
+    try {
+      error = JSON.parse(anyArray)
+    } catch {
+      // If it's not valid JSON, treat it as a plain string error message
+      error = anyArray
+    }
+  } else {
+    error = anyArray
+  }
 
   if (typeof error === 'string') {
     return error
@@ -64,11 +74,8 @@ export function getValidationSchema<T = any>(
 ): zod.ZodObject<zod.ZodRawShape> {
   let schemaTreeNode: SchemaTreeNode = {}
 
-  // 1. Prepare three model
+  // 1. Prepare tree model
   populateSchemaTreeRec(schemaTreeNode, inputs.inputs, values, options)
-
-  // console.log('Internal model:')
-  // console.log(schemaTreeNode)
 
   if (options?.prefix) {
     const prefixWithoutDot = options?.prefix.replace(/.$/, '')
@@ -77,9 +84,6 @@ export function getValidationSchema<T = any>(
 
   // 2. Generate schema from model
   const schema = zod.object(generateSchemaRec(schemaTreeNode, values, options))
-
-  // console.log('Schema:')
-  // console.log(schema)
 
   return schema
 }

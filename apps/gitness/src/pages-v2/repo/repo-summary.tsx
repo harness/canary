@@ -32,6 +32,7 @@ import { useGetRepoRef } from '../../framework/hooks/useGetRepoPath'
 import { useIsMFE } from '../../framework/hooks/useIsMFE'
 import { useMFEContext } from '../../framework/hooks/useMFEContext'
 import { useAPIPath } from '../../hooks/useAPIPath'
+import { useForkSync } from '../../hooks/useForkSync'
 import { useGitRef } from '../../hooks/useGitRef'
 import { useRepoCommits } from '../../hooks/useRepoCommits'
 import { useRepoFileContentDetails } from '../../hooks/useRepoFileContentDetails'
@@ -157,13 +158,24 @@ export default function RepoSummaryPage() {
       calculateDivergence({
         repo_ref: repoRef,
         body: {
-          requests: [{ from: normalizeGitRef(fullGitRefWoDefault), to: normalizeGitRef(repoData?.default_branch) }]
+          requests: [
+            {
+              from: normalizeGitRef(fullGitRefWoDefault),
+              to: repoData?.upstream
+                ? `upstream:${normalizeGitRef(repoData?.upstream?.default_branch)}`
+                : normalizeGitRef(repoData?.default_branch)
+            }
+          ]
         }
       })
     }
   }, [fullGitRefWoDefault, repoData?.default_branch, calculateDivergence])
 
-  const { data: { body: repoDetails } = {}, isLoading: isLoadingRepoDetails } = useGetContentQuery({
+  const {
+    data: { body: repoDetails } = {},
+    isLoading: isLoadingRepoDetails,
+    refetch: refetchRepoDetails
+  } = useGetContentQuery({
     path: '',
     repo_ref: repoRef,
     queryParams: { include_commit: true, git_ref: normalizeGitRef(fullGitRef) }
@@ -219,8 +231,12 @@ export default function RepoSummaryPage() {
   }, [MFEtokenData, tokenHash])
 
   const showContributeBtn = useMemo(() => {
-    return gitRefName !== repoData?.default_branch && !isRefACommitSHA(fullGitRef) && !isRefATag(fullGitRef)
-  }, [repoData?.default_branch, gitRefName])
+    return (
+      (repoData?.upstream || gitRefName !== repoData?.default_branch) &&
+      !isRefACommitSHA(fullGitRef) &&
+      !isRefATag(fullGitRef)
+    )
+  }, [repoData?.default_branch, gitRefName, repoData?.upstream])
 
   const repoEntryPathToFileTypeMap: Map<string, OpenapiGetContentOutput['type']> = useMemo(() => {
     const entries = repoDetails?.content?.entries
@@ -242,7 +258,7 @@ export default function RepoSummaryPage() {
   }, [repoDetails?.content?.entries])
 
   // Fetch README content only when readmeInfo exists
-  const { data: { body: readmeContent } = {} } = useGetContentQuery(
+  const { data: { body: readmeContent } = {}, refetch: refetchReadmeContent } = useGetContentQuery(
     {
       path: readmeInfo?.path || 'README.md', // path is never undefined if query is enabled
       repo_ref: repoRef,
@@ -332,6 +348,19 @@ export default function RepoSummaryPage() {
     [repoRef, apiPath]
   )
 
+  const { handleFetchAndMerge, isSyncingFork } = useForkSync({
+    repoRef,
+    gitRefName,
+    fullGitRefWoDefault,
+    repoData,
+    latestCommitSha: repoDetails?.latest_commit?.sha,
+    calculateDivergence,
+    onSyncSuccess: () => {
+      refetchRepoDetails()
+      refetchReadmeContent()
+    }
+  })
+
   return (
     <>
       <RepoSummaryView
@@ -383,6 +412,9 @@ export default function RepoSummaryPage() {
         imageUrlTransform={imageUrlTransform}
         isSSHEnabled={isSSHEnabled}
         isForkEnabled={isForkEnabled}
+        upstream={repoData?.upstream}
+        onFetchAndMerge={handleFetchAndMerge}
+        isFetchingUpstream={isSyncingFork}
       />
       <CreateBranchDialog
         open={isCreateBranchDialogOpen}

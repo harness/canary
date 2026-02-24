@@ -1,0 +1,39 @@
+{
+  "inputs": [
+    {
+      "inputType": "text",
+      "path": "dynamic.text",
+      "label": "Dynamic Text Input",
+      "default": "",
+      "placeholder": "Enter dynamic text value"
+    },
+    {
+      "inputType": "boolean",
+      "path": "dynamic.boolean",
+      "label": "Dynamic Boolean Input",
+      "default": ""
+    },
+    {
+      "inputType": "select",
+      "path": "dynamic.select",
+      "label": "Dynamic Select Input",
+      "default": "",
+      "inputConfig": {
+        "options": [
+          {
+            "label": "Option A",
+            "value": "option-a"
+          },
+          {
+            "label": "Option B",
+            "value": "option-b"
+          },
+          {
+            "label": "Option C",
+            "value": "option-c"
+          }
+        ]
+      }
+    }
+  ]
+}

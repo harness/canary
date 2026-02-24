@@ -45,7 +45,7 @@ export const TagSettingsRuleNameField: FC<TagFieldProps & { disabled: boolean }>
       label={t('views:repos.name', 'Name')}
       {...register!('identifier')}
       placeholder={t('views:repos.enterRuleName', 'Enter the rule name here')}
-      autoFocus
+      autoFocus={!disabled}
       disabled={disabled}
     />
   )

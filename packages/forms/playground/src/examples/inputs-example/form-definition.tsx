@@ -1,5 +1,5 @@
 import type { IFormDefinition, IInputDefinition } from '../../../../src'
-import { InputConfigType, InputType } from '../../implementation/inputs/common/types'
+import { InputConfigType, InputType } from '../../implementation/types/input-types'
 
 type IInputConfigWithConfig = IInputDefinition & InputConfigType
 
@@ -10,12 +10,12 @@ const inputs: IInputConfigWithConfig[] = [
     label: 'String input'
   },
   {
-    inputType: InputType.integer,
+    inputType: InputType.number,
     path: 'input2',
     label: 'Integer input'
   },
   {
-    inputType: InputType.checkbox,
+    inputType: InputType.boolean,
     path: 'input3',
     label: 'Checkbox input'
   }

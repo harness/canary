@@ -24,8 +24,9 @@ import {
   ViewTypeValue
 } from '@harnessio/ui/components'
 import { useRouterContext } from '@harnessio/ui/context'
+import { useMonacoTheme } from '@harnessio/ui/hooks'
 import { cn, decodeURIComponentIfValid } from '@harnessio/ui/utils'
-import { CommitsList, FileReviewError, monacoThemes } from '@harnessio/ui/views'
+import { CommitsList, FileReviewError } from '@harnessio/ui/views'
 import { CodeEditor } from '@harnessio/yaml-editor'
 
 import GitCommitDialog from '../components-v2/git-commit-dialog'
@@ -217,6 +218,8 @@ export default function FileContentViewer({ repoContent, loading }: FileContentV
   const { selectedBranchTag, selectedRefType } = useRepoBranchesStore()
   const [page, _setPage] = useQueryState('page', parseAsInteger.withDefault(1))
   const { theme } = useThemeStore()
+  const themeConfig = useMonacoTheme(theme)
+
   const { selectedLine, setSelectedLine } = useCodeEditorSelectionState()
 
   const { gitRefName } = useGitRef()
@@ -249,9 +252,6 @@ export default function FileContentViewer({ repoContent, loading }: FileContentV
     return cachedRenameDetails || null
   }, [commitData?.rename_details, cachedRenameDetails])
 
-  // TODO: temporary solution for matching themes
-  const monacoTheme = (theme ?? '').startsWith('dark') ? 'dark' : 'light'
-
   /**
    * Toggle delete dialog open state
    * @param value
@@ -274,14 +274,6 @@ export default function FileContentViewer({ repoContent, loading }: FileContentV
   useEffect(() => {
     setView(getDefaultView(language))
   }, [language])
-
-  const themeConfig = useMemo(
-    () => ({
-      defaultTheme: monacoTheme,
-      monacoThemes
-    }),
-    [monacoTheme]
-  )
 
   const codeRevision = useMemo(
     () => ({
@@ -401,7 +393,7 @@ export default function FileContentViewer({ repoContent, loading }: FileContentV
                     codeRevision={{ code: fileContent }}
                     themeConfig={themeConfig}
                     options={{ readOnly: true }}
-                    theme={monacoTheme}
+                    theme={theme}
                   />
                 </ScrollArea>
               )}
@@ -420,7 +412,7 @@ export default function FileContentViewer({ repoContent, loading }: FileContentV
               codeRevision={codeRevision}
               themeConfig={themeConfig}
               options={{ readOnly: true }}
-              theme={monacoTheme}
+              theme={theme}
               enableLinesSelection={true}
               onSelectedLineChange={setSelectedLine}
               selectedLine={selectedLine}
@@ -436,6 +428,7 @@ export default function FileContentViewer({ repoContent, loading }: FileContentV
             <GitBlame
               height="100%"
               themeConfig={themeConfig}
+              theme={theme}
               codeContent={fileContent}
               language={language}
               toCommitDetails={({ sha }: { sha: string }) => {

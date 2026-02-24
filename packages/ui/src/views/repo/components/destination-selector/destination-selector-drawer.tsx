@@ -2,7 +2,6 @@ import { FC, useCallback, useMemo, useState } from 'react'
 
 import {
   Button,
-  ButtonLayout,
   Drawer,
   IconV2,
   Layout,
@@ -138,6 +137,7 @@ export const DestinationSelectorDrawer: FC<DestinationSelectorDrawerProps> = ({
           { value: account.value, label: account.label, scopeType: ScopeType.Account },
           ScopeType.Account
         )
+        setIsOpen(false)
       }
     },
     [account, onDestinationSelection, onScopeTypeChange]
@@ -285,16 +285,6 @@ export const DestinationSelectorDrawer: FC<DestinationSelectorDrawerProps> = ({
               )}
             </Layout.Vertical>
           </Drawer.Body>
-
-          <Drawer.Footer>
-            <ButtonLayout.Root>
-              <ButtonLayout.Secondary>
-                <Drawer.Close asChild>
-                  <Button variant="outline">{t('views:repos.cancel', 'Cancel')}</Button>
-                </Drawer.Close>
-              </ButtonLayout.Secondary>
-            </ButtonLayout.Root>
-          </Drawer.Footer>
         </Drawer.Content>
       </Drawer.Root>
     </Layout.Vertical>

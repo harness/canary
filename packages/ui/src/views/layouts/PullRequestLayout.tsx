@@ -14,6 +14,7 @@ interface PullRequestLayoutProps {
   updateTitleAndDescription: (title: string, description: string) => void
   updateTargetBranch: (branchName: string) => void
   branchSelectorRenderer: React.ComponentType<BranchSelectorContainerProps>
+  toUpstreamRepo?: (path: string, subPath?: string) => string
 }
 
 enum PullRequestTabsKeys {
@@ -28,7 +29,8 @@ export const PullRequestLayout: FC<PullRequestLayoutProps> = ({
   repoId,
   updateTitleAndDescription,
   updateTargetBranch,
-  branchSelectorRenderer
+  branchSelectorRenderer,
+  toUpstreamRepo
 }) => {
   const { Outlet } = useRouterContext()
   const { pullRequest } = usePullRequestStore()
@@ -46,6 +48,7 @@ export const PullRequestLayout: FC<PullRequestLayoutProps> = ({
             updateTargetBranch={updateTargetBranch}
             data={{ ...pullRequest, spaceId, repoId }}
             branchSelectorRenderer={branchSelectorRenderer}
+            toUpstreamRepo={toUpstreamRepo}
           />
         )}
 

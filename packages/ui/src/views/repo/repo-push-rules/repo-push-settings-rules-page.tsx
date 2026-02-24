@@ -167,6 +167,7 @@ export const RepoPushSettingsRulesPage: FC<RepoPushSettingsRulesPageProps> = ({
           />
           <PushSettingsRuleListField
             rules={rules}
+            ruleIdentifier={presetRuleData?.identifier}
             handleCheckboxChange={handleCheckboxChange}
             handleInputChange={handleInputChange}
           />

@@ -3,6 +3,7 @@ import { createContext } from 'react'
 export interface RootFormContextProps<T> {
   metadata?: T
   readonly?: boolean
+  inputErrorHandler?: (error: Error) => void
 }
 
 export const RootFormContext = createContext<RootFormContextProps<unknown>>({})

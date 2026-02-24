@@ -215,12 +215,18 @@ const DropdownBaseItem = ({
   checkmark,
   withSubIndicator
 }: DropdownBaseItemProps) => (
-  <div className={cn('cn-dropdown-menu-base-item', className)}>
+  <div className={cn('cn-dropdown-menu-base-item min-w-0', className)}>
     {children}
     {(!!title || !!description) && (
-      <Layout.Grid gapX="2xs" className="w-fit">
-        {typeof title === 'string' ? <Text color="foreground-1">{title}</Text> : title}
-        {typeof description === 'string' ? <Text>{description}</Text> : description}
+      <Layout.Grid gapX="2xs" className="min-w-0 max-w-full overflow-hidden">
+        {typeof title === 'string' ? (
+          <Text color="foreground-1" truncate>
+            {title}
+          </Text>
+        ) : (
+          title
+        )}
+        {typeof description === 'string' ? <Text truncate>{description}</Text> : description}
       </Layout.Grid>
     )}
 

@@ -1,0 +1,320 @@
+{
+    "inputs": [
+        {
+            "path": "name",
+            "label": "Name",
+            "inputType": "text",
+            "placeholder": "Enter name",
+            "inputConfig": {
+                "allowedValueTypes": [
+                    "fixed"
+                ]
+            }
+        },
+        {
+            "inputType": "select",
+            "path": "run.shell",
+            "label": "Shell",
+            "inputConfig": {
+                "options": [
+                    {
+                        "label": "Sh",
+                        "value": "sh"
+                    },
+                    {
+                        "label": "Bash",
+                        "value": "bash"
+                    },
+                    {
+                        "label": "Powershell",
+                        "value": "powershell"
+                    },
+                    {
+                        "label": "Pwsh",
+                        "value": "pwsh"
+                    },
+                    {
+                        "label": "Python",
+                        "value": "python"
+                    }
+                ],
+                "allowedValueTypes": [
+                    "fixed"
+                ]
+            }
+        },
+        {
+            "inputType": "text",
+            "path": "run.script",
+            "label": "Script",
+            "required": true,
+            "inputConfig": {
+                "allowedValueTypes": [
+                    "fixed",
+                    "expression",
+                    "runtime"
+                ]
+            }
+        },
+        {
+            "inputType": "group",
+            "path": "run.container",
+            "label": "Container",
+            "inputs": [
+                {
+                    "inputType": "text",
+                    "path": "run.container.image",
+                    "label": "Image"
+                },
+                {
+                    "inputType": "group",
+                    "path": "run.container.credentials",
+                    "label": "Credentials",
+                    "inputs": [
+                        {
+                            "inputType": "text",
+                            "path": "run.container.credentials.username",
+                            "label": "Username"
+                        },
+                        {
+                            "inputType": "text",
+                            "path": "run.container.credentials.password",
+                            "label": "Password"
+                        }
+                    ]
+                },
+                {
+                    "inputType": "select",
+                    "path": "run.container.pull",
+                    "label": "Pull",
+                    "inputConfig": {
+                        "options": [
+                            {
+                                "label": "Always",
+                                "value": "always"
+                            },
+                            {
+                                "label": "Never",
+                                "value": "never"
+                            },
+                            {
+                                "label": "If not exists",
+                                "value": "if-not-exists"
+                            }
+                        ]
+                    }
+                },
+                {
+                    "inputType": "array",
+                    "path": "run.container.entrypoint",
+                    "label": "Entrypoint",
+                    "inputConfig": {
+                        "input": {
+                            "inputType": "text",
+                            "path": ""
+                        }
+                    }
+                },
+                {
+                    "inputType": "array",
+                    "path": "run.container.args",
+                    "label": "Args",
+                    "inputConfig": {
+                        "input": {
+                            "inputType": "text",
+                            "path": ""
+                        }
+                    }
+                },
+                {
+                    "inputType": "array",
+                    "path": "run.container.dns",
+                    "label": "DNS",
+                    "inputConfig": {
+                        "input": {
+                            "inputType": "text",
+                            "path": ""
+                        }
+                    }
+                },
+                {
+                    "inputType": "list",
+                    "path": "run.container.env",
+                    "label": "Environment",
+                    "inputConfig": {
+                        "layout": "grid",
+                        "inputs": [
+                            {
+                                "inputType": "text",
+                                "relativePath": "key",
+                                "label": "Key"
+                            },
+                            {
+                                "inputType": "text",
+                                "relativePath": "value",
+                                "label": "Value"
+                            }
+                        ]
+                    }
+                },
+                {
+                    "inputType": "array",
+                    "path": "run.container.extra-hosts",
+                    "label": "Extra hosts",
+                    "inputConfig": {
+                        "input": {
+                            "inputType": "text",
+                            "path": ""
+                        }
+                    }
+                },
+                {
+                    "inputType": "text",
+                    "path": "run.container.network",
+                    "label": "Network"
+                },
+                {
+                    "inputType": "text",
+                    "path": "run.container.network-mode",
+                    "label": "Network mode"
+                },
+                {
+                    "inputType": "boolean",
+                    "path": "run.container.privileged",
+                    "label": "Privileged"
+                },
+                {
+                    "inputType": "text",
+                    "path": "run.container.workdir",
+                    "label": "Workdir"
+                },
+                {
+                    "inputType": "array",
+                    "path": "run.container.ports",
+                    "label": "Ports",
+                    "inputConfig": {
+                        "input": {
+                            "inputType": "text",
+                            "path": ""
+                        }
+                    }
+                },
+                {
+                    "inputType": "list",
+                    "path": "run.container.volumes",
+                    "label": "Volumes",
+                    "inputConfig": {
+                        "layout": "grid",
+                        "inputs": [
+                            {
+                                "inputType": "text",
+                                "relativePath": "source",
+                                "label": "Source"
+                            },
+                            {
+                                "inputType": "text",
+                                "relativePath": "target",
+                                "label": "Target"
+                            }
+                        ]
+                    }
+                },
+                {
+                    "inputType": "text",
+                    "path": "run.container.user",
+                    "label": "User"
+                },
+                {
+                    "inputType": "text",
+                    "path": "run.container.group",
+                    "label": "Group"
+                },
+                {
+                    "inputType": "text",
+                    "path": "run.container.cpu",
+                    "label": "Cpu"
+                },
+                {
+                    "inputType": "text",
+                    "path": "run.container.memory",
+                    "label": "Memory"
+                },
+                {
+                    "inputType": "text",
+                    "path": "run.container.shm-size",
+                    "label": "Shm size"
+                }
+            ]
+        },
+        {
+            "inputType": "list",
+            "path": "run.env",
+            "label": "Environment",
+            "inputConfig": {
+                "layout": "grid",
+                "inputs": [
+                    {
+                        "inputType": "text",
+                        "relativePath": "key",
+                        "label": "Key"
+                    },
+                    {
+                        "inputType": "text",
+                        "relativePath": "value",
+                        "label": "Value"
+                    }
+                ]
+            }
+        },
+        {
+            "inputType": "list",
+            "path": "run.report",
+            "label": "Report",
+            "description": "Report uploads reports at the provided paths",
+            "inputConfig": {
+                "layout": "grid",
+                "inputs": [
+                    {
+                        "inputType": "select",
+                        "relativePath": "type",
+                        "label": "Type",
+                        "inputConfig": {
+                            "options": [
+                                {
+                                    "label": "junit",
+                                    "value": "junit"
+                                },
+                                {
+                                    "label": "xunit",
+                                    "value": "xunit"
+                                },
+                                {
+                                    "label": "nunit",
+                                    "value": "nunit"
+                                }
+                            ]
+                        }
+                    },
+                    {
+                        "inputType": "text",
+                        "relativePath": "path",
+                        "label": "Path",
+                        "inputConfig": {
+                            "allowedValueTypes": [
+                                "fixed",
+                                "runtime",
+                                "expression"
+                            ]
+                        }
+                    }
+                ],
+                "allowedValueTypes": [
+                    "fixed",
+                    "runtime",
+                    "expression"
+                ]
+            }
+        }
+    ],
+    "metadata": {}
+}

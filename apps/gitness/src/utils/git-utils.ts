@@ -243,3 +243,12 @@ export const createCommitFilterFromSHA = (
   }
   return [defaultFilter]
 }
+
+/**
+ * Normalizes a git ref and optionally prepends the 'upstream:' prefix.
+ * Use this when working with fork upstream references.
+ */
+export const normalizeGitRefWithUpstream = (gitRef: string | undefined, isUpstream: boolean): string => {
+  const normalized = normalizeGitRef(gitRef) ?? ''
+  return isUpstream ? `upstream:${normalized}` : normalized
+}

@@ -4,10 +4,11 @@ import { uniqWith } from 'lodash-es'
 
 import { useGetBlameQuery } from '@harnessio/code-service-client'
 import { Avatar, Layout, Text } from '@harnessio/ui/components'
-import { useRouterContext } from '@harnessio/ui/context'
+import { FullTheme, useRouterContext } from '@harnessio/ui/context'
 import { formatDistanceToNow, getInitials } from '@harnessio/ui/utils'
 import { Contributors } from '@harnessio/ui/views'
-import { BlameEditorV2, BlameEditorV2Props, ThemeDefinition } from '@harnessio/yaml-editor'
+import { BlameEditorV2, BlameEditorV2Props } from '@harnessio/yaml-editor'
+import { MonacoThemeConfig } from '@harnessio/yaml-editor/dist/hooks/useTheme'
 import { BlameItem } from '@harnessio/yaml-editor/dist/types/blame'
 
 import { useThemeStore } from '../framework/context/ThemeContext'
@@ -16,7 +17,8 @@ import useCodePathDetails from '../hooks/useCodePathDetails'
 import { normalizeGitRef } from '../utils/git-utils'
 
 interface GitBlameProps {
-  themeConfig: { rootElementSelector?: string; defaultTheme?: string; themes?: ThemeDefinition[] }
+  themeConfig?: MonacoThemeConfig
+  theme?: FullTheme
   codeContent: string
   language: string
   height?: BlameEditorV2Props['height']
@@ -102,7 +104,6 @@ export default function GitBlame({ themeConfig, codeContent, language, height, t
   }, [gitBlame, toCommitDetails, navigate])
 
   const { theme } = useThemeStore()
-  const monacoTheme = (theme ?? '').startsWith('dark') ? 'dark' : 'light'
 
   if (isFetching || !blameBlocks.length) return null
 
@@ -118,7 +119,7 @@ export default function GitBlame({ themeConfig, codeContent, language, height, t
         lineNumbersPosition="center"
         blameData={blameBlocks}
         height={height ? height : undefined}
-        theme={monacoTheme}
+        theme={theme}
         className="flex h-full min-h-0 grow rounded-b-cn-3 border border-t-0 border-cn-3"
       />
     </Layout.Vertical>

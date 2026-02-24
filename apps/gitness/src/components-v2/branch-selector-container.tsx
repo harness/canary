@@ -24,6 +24,8 @@ interface BranchSelectorContainerProps {
   disabled?: boolean
   autoSelectDefaultBranch?: boolean
   preventCloseOnSelect?: boolean
+  repoRef?: string
+  hideViewAllLink?: boolean
 }
 export const BranchSelectorContainer = forwardRef<HTMLButtonElement, BranchSelectorContainerProps>(
   (
@@ -41,11 +43,14 @@ export const BranchSelectorContainer = forwardRef<HTMLButtonElement, BranchSelec
       isUpdating,
       disabled,
       autoSelectDefaultBranch = true,
-      preventCloseOnSelect = false
+      preventCloseOnSelect = false,
+      repoRef: repoRefProp,
+      hideViewAllLink = false
     },
     ref
   ) => {
-    const repoRef = useGetRepoRef()
+    const defaultRepoRef = useGetRepoRef()
+    const repoRef = repoRefProp || defaultRepoRef
     const { spaceId, repoId } = useParams<PathParams>()
     const [branchTagQuery, setBranchTagQuery] = useState<string | null>(null)
     const [branchList, setBranchList] = useState<BranchData[]>([])
@@ -139,6 +144,7 @@ export const BranchSelectorContainer = forwardRef<HTMLButtonElement, BranchSelec
         branchPrefix={branchPrefix}
         disabled={disabled}
         preventCloseOnSelect={preventCloseOnSelect}
+        hideViewAllLink={hideViewAllLink}
       />
     )
   }

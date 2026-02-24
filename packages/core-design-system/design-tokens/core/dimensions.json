@@ -828,6 +828,11 @@
       "$value": "1px",
       "$description": "Default border width (border)"
     },
+    "1-half": {
+      "$type": "borderWidth",
+      "$value": "1.5px",
+      "$description": "One and a half border width (border-1-half)"
+    },
     "2": {
       "$type": "borderWidth",
       "$value": "2px",

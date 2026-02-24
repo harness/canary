@@ -2,7 +2,7 @@ import { FC, useMemo } from 'react'
 
 import { Button, IconV2, Layout, Link, Popover, Link as StyledLink, Tag, Text } from '@/components'
 import { useTranslation } from '@/context'
-import { BranchSelectorListItem, BranchSelectorTab, easyPluralize } from '@/views'
+import { BranchSelectorListItem, BranchSelectorTab, easyPluralize, TypesRepositoryCore } from '@/views'
 
 interface BranchInfoBarProps {
   defaultBranchName?: string
@@ -15,6 +15,9 @@ interface BranchInfoBarProps {
   }
   refType?: BranchSelectorTab
   showContributeBtn?: boolean
+  upstream?: TypesRepositoryCore
+  onFetchAndMerge?: () => void
+  isFetchingUpstream?: boolean
 }
 
 export const BranchInfoBar: FC<BranchInfoBarProps> = ({
@@ -24,20 +27,24 @@ export const BranchInfoBar: FC<BranchInfoBarProps> = ({
   selectedBranchTag,
   currentBranchDivergence,
   refType = BranchSelectorTab.BRANCHES,
-  showContributeBtn
+  showContributeBtn,
+  upstream,
+  onFetchAndMerge,
+  isFetchingUpstream
 }) => {
   const { t } = useTranslation()
   const { behind, ahead } = currentBranchDivergence
   const hasBehind = !!behind
   const hasAhead = !!ahead
+  const compareDefaultBranch = upstream ? `upstream:${upstream.default_branch}` : defaultBranchName
 
   const compareUrls = useMemo(() => {
     const baseUrl = `${spaceId ? `/${spaceId}` : ''}/repos/${repoId}/pulls/compare`
     return {
-      aheadCompare: `${baseUrl}/${defaultBranchName}...${selectedBranchTag?.name}`,
-      behindCompare: `${baseUrl}/${selectedBranchTag?.name}...${defaultBranchName}`
+      aheadCompare: `${baseUrl}/${compareDefaultBranch}...${selectedBranchTag?.name}`,
+      behindCompare: `${baseUrl}/${selectedBranchTag?.name}...${compareDefaultBranch}`
     }
-  }, [spaceId, repoId, defaultBranchName, selectedBranchTag?.name])
+  }, [spaceId, repoId, compareDefaultBranch, selectedBranchTag?.name])
 
   const defaultBranchUrl = useMemo(
     () => `${spaceId ? `/${spaceId}` : ''}/repos/${repoId}/files/${defaultBranchName}`,
@@ -77,7 +84,7 @@ export const BranchInfoBar: FC<BranchInfoBarProps> = ({
 
   return (
     <Layout.Flex
-      className="border-cn-2 bg-cn-2 min-h-[3.25rem] rounded-cn-3 border py-cn-xs pl-cn-md pr-cn-xs"
+      className="min-h-[3.25rem] rounded-cn-3 border border-cn-2 bg-cn-2 py-cn-xs pl-cn-md pr-cn-xs"
       align="center"
       justify="between"
       gapX="xs"
@@ -85,62 +92,83 @@ export const BranchInfoBar: FC<BranchInfoBarProps> = ({
       <Layout.Horizontal align="center" gap="xs">
         <Text color="foreground-1">{statusContent}</Text>
         <Link noHoverUnderline to={defaultBranchUrl}>
-          <Tag variant="secondary" theme="gray" icon="git-branch" value={defaultBranchName} className="align-middle" />
+          <Tag
+            variant="secondary"
+            theme="gray"
+            icon="git-branch"
+            value={compareDefaultBranch}
+            className="align-middle"
+          />
         </Link>
       </Layout.Horizontal>
 
-      {showContributeBtn && (
-        <Popover.Root>
-          <Popover.Trigger asChild>
-            <Button variant="outline">
-              <IconV2 name="git-pull-request" size="xs" />
-              Contribute
-              <IconV2 className="chevron-down" name="nav-arrow-down" size="2xs" />
-            </Button>
-          </Popover.Trigger>
-          <Popover.Content align="end" className="w-80" hideArrow>
-            <Layout.Grid gapY="xs">
-              <Layout.Grid flow="column" gapX="xs">
-                <div className="border-cn-3 rounded-cn-2 flex size-8 shrink-0 items-center justify-center border">
-                  <IconV2 name="git-pull-request" size="md" />
-                </div>
-                <Layout.Grid gapY="xs">
-                  <Text variant="body-single-line-strong" color="foreground-1">
-                    {hasAhead
-                      ? `This branch is ${ahead} ${easyPluralize(ahead, 'commit', 'commits')} ahead of`
-                      : 'This branch is not ahead of'}
-                    &nbsp;
-                    <Tag
-                      className="mt-cn-4xs align-sub"
-                      variant="secondary"
-                      theme="gray"
-                      value={defaultBranchName}
-                      icon="git-branch"
-                    />
-                  </Text>
+      <Layout.Horizontal gap="xs">
+        {upstream && (
+          <Popover.Root>
+            <Popover.Trigger asChild>
+              <Button variant="outline">
+                <IconV2 name="refresh-double" size="xs" />
+                {t('views:repos.fetchUpstream', 'Fetch Upstream')}
+                <IconV2 className="chevron-down" name="nav-arrow-down" size="2xs" />
+              </Button>
+            </Popover.Trigger>
+            <Popover.Content align="end" className="w-80" hideArrow>
+              <Layout.Grid gapY="xs">
+                <Layout.Grid flow="column" gapX="xs">
+                  <div className="flex size-8 shrink-0 items-center justify-center rounded-cn-2 border border-cn-3">
+                    <IconV2 name="git-pull-request" size="md" />
+                  </div>
+                  <Layout.Grid gapY="xs">
+                    <Text variant="body-single-line-strong" color="foreground-1">
+                      {hasBehind
+                        ? t('views:repos.fetchAndMergeCommits', 'Fetch and merge {{count}} {{commits}}', {
+                            count: behind,
+                            commits: easyPluralize(behind, 'commit', 'commits')
+                          })
+                        : t('views:repos.noCommitsToFetch', 'No new commits to fetch')}
+                    </Text>
 
-                  <Text color="foreground-3">
-                    {hasAhead
-                      ? t(
-                          'views:repos.compareBranchesToSeeChanges',
-                          'Open a pull request to contribute your changes upstream.'
-                        )
-                      : t('views:repos.noNewCommits', 'No new commits yet.')}
-                  </Text>
+                    <Text color="foreground-3">
+                      {t('views:repos.keepForkUpToDate', 'Keep this fork up-to-date with upstream repository.')}{' '}
+                      <Link to="https://developer.harness.io/docs/code-repository" target="_blank">
+                        {t('views:repos.learnMore', 'Learn more')}
+                      </Link>
+                    </Text>
+                  </Layout.Grid>
                 </Layout.Grid>
-              </Layout.Grid>
 
-              {hasAhead && (
                 <Button className="w-full" variant="outline" asChild>
-                  <Link noHoverUnderline variant="secondary" to={compareUrls.aheadCompare}>
-                    Compare
+                  <Link noHoverUnderline variant="secondary" to={compareUrls.behindCompare}>
+                    {t('views:repos.compare', 'Compare')}
                   </Link>
                 </Button>
-              )}
-            </Layout.Grid>
-          </Popover.Content>
-        </Popover.Root>
-      )}
+
+                {hasBehind && (
+                  <Button className="w-full" onClick={onFetchAndMerge} loading={isFetchingUpstream}>
+                    {t('views:repos.fetchAndMerge', 'Fetch and merge')}
+                  </Button>
+                )}
+              </Layout.Grid>
+            </Popover.Content>
+          </Popover.Root>
+        )}
+
+        {showContributeBtn && (
+          <Button variant="outline" disabled={!hasAhead} asChild={hasAhead}>
+            {hasAhead ? (
+              <Link noHoverUnderline variant="secondary" to={compareUrls.aheadCompare}>
+                <IconV2 name="git-pull-request" size="xs" />
+                {t('views:repos.openPullRequest', 'Open Pull Request')}
+              </Link>
+            ) : (
+              <>
+                <IconV2 name="git-pull-request" size="xs" />
+                {t('views:repos.openPullRequest', 'Open Pull Request')}
+              </>
+            )}
+          </Button>
+        )}
+      </Layout.Horizontal>
     </Layout.Flex>
   )
 }

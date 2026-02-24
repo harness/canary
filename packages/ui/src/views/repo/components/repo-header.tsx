@@ -3,6 +3,9 @@ import { useTranslation } from '@/context'
 import { cn } from '@/utils'
 import { formatDate } from '@/utils/TimeUtils'
 
+import { RepositoryType } from '../repo.types'
+import { ForkedFrom } from './forked-from'
+
 interface RepoHeaderProps {
   name: string
   isPublic: boolean
@@ -12,6 +15,8 @@ interface RepoHeaderProps {
   isFavorite?: boolean
   onFavoriteToggle: (isFavorite: boolean) => void
   archivedDate?: number
+  upstream?: RepositoryType['upstream']
+  toUpstreamRepo?: (path: string, subPath?: string) => string
 }
 
 export const RepoHeader = ({
@@ -22,7 +27,9 @@ export const RepoHeader = ({
   className,
   isFavorite,
   onFavoriteToggle,
-  archivedDate
+  archivedDate,
+  upstream,
+  toUpstreamRepo
 }: RepoHeaderProps) => {
   const { t } = useTranslation()
 
@@ -30,36 +37,40 @@ export const RepoHeader = ({
 
   return (
     <Layout.Grid className={cn('cn-repo-header', className)} gapY="md">
-      <Layout.Flex gap="3xs" justify="start" align="center">
-        {isLoading ? (
-          <>
-            <Layout.Flex gap="xs" justify="start" align="center">
-              <Skeleton.Box className="h-[var(--cn-line-height-7-tight)] w-28" />
+      <Layout.Flex direction="column" gap="3xs">
+        <Layout.Flex justify="start" align="center">
+          {isLoading ? (
+            <>
+              <Layout.Flex gap="xs" justify="start" align="center">
+                <Skeleton.Box className="h-[var(--cn-line-height-7-tight)] w-28" />
+                <Skeleton.Box className="h-6 w-14" />
+              </Layout.Flex>
               <Skeleton.Box className="h-6 w-14" />
-            </Layout.Flex>
-            <Skeleton.Box className="h-6 w-14" />
-          </>
-        ) : (
-          <>
-            <Layout.Flex gap="xs" justify="start" align="center">
-              <Text className="truncate" variant="heading-hero" as="h2">
-                {name}
-              </Text>
+            </>
+          ) : (
+            <>
+              <Layout.Flex gap="xs" justify="start" align="center">
+                <Text className="truncate" variant="heading-hero" as="h2">
+                  {name}
+                </Text>
 
-              <StatusBadge variant="outline" theme={!isPublic ? 'muted' : 'success'} size="md">
-                {!isPublic ? t('views:repos.private', 'Private') : t('views:repos.public', 'Public')}
-              </StatusBadge>
-
-              {isArchived && (
-                <StatusBadge variant="outline" theme="warning" size="md">
-                  {t('views:repos.archived', 'Archived')}
+                <StatusBadge variant="outline" theme={!isPublic ? 'muted' : 'success'} size="md">
+                  {!isPublic ? t('views:repos.private', 'Private') : t('views:repos.public', 'Public')}
                 </StatusBadge>
-              )}
-            </Layout.Flex>
 
-            <Favorite isFavorite={isFavorite} onFavoriteToggle={onFavoriteToggle} />
-          </>
-        )}
+                {isArchived && (
+                  <StatusBadge variant="outline" theme="warning" size="md">
+                    {t('views:repos.archived', 'Archived')}
+                  </StatusBadge>
+                )}
+              </Layout.Flex>
+
+              <Favorite isFavorite={isFavorite} onFavoriteToggle={onFavoriteToggle} />
+            </>
+          )}
+        </Layout.Flex>
+
+        {upstream && <ForkedFrom upstream={upstream} toUpstreamRepo={toUpstreamRepo} />}
       </Layout.Flex>
 
       {isArchived && (

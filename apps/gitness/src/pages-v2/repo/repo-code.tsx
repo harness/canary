@@ -13,6 +13,7 @@ import FileContentViewer from '../../components-v2/file-content-viewer'
 import { FileEditor } from '../../components-v2/file-editor'
 import { useRoutes } from '../../framework/context/NavigationContext'
 import { useGetRepoRef } from '../../framework/hooks/useGetRepoPath'
+import { useForkSync } from '../../hooks/useForkSync'
 import { useGitRef } from '../../hooks/useGitRef'
 import { useRepoFileContentDetails } from '../../hooks/useRepoFileContentDetails'
 import { PathParams } from '../../RouteDefinitions'
@@ -119,7 +120,14 @@ export const RepoCode = () => {
       calculateDivergence({
         repo_ref: repoRef,
         body: {
-          requests: [{ from: normalizeGitRef(fullGitRefWoDefault), to: normalizeGitRef(repoData?.default_branch) }]
+          requests: [
+            {
+              from: normalizeGitRef(fullGitRefWoDefault),
+              to: repoData?.upstream
+                ? `upstream:${normalizeGitRef(repoData?.upstream?.default_branch)}`
+                : normalizeGitRef(repoData?.default_branch)
+            }
+          ]
         }
       })
     }
@@ -130,8 +138,12 @@ export const RepoCode = () => {
   }, [codeMode, refetchRepoContent])
 
   const showContributeBtn = useMemo(() => {
-    return gitRefName !== repoData?.default_branch && !isRefACommitSHA(fullGitRef) && !isRefATag(fullGitRef)
-  }, [repoData?.default_branch, gitRefName])
+    return (
+      (repoData?.upstream || gitRefName !== repoData?.default_branch) &&
+      !isRefACommitSHA(fullGitRef) &&
+      !isRefATag(fullGitRef)
+    )
+  }, [repoData?.default_branch, gitRefName, repoData?.upstream])
 
   /**
    * Render File content view or Edit file view
@@ -149,6 +161,18 @@ export const RepoCode = () => {
 
     return <></>
   }, [codeMode, repoDetails, repoData?.default_branch, loading, isLoadingRepoDetails])
+
+  const { handleFetchAndMerge, isSyncingFork } = useForkSync({
+    repoRef,
+    gitRefName,
+    fullGitRefWoDefault,
+    repoData,
+    latestCommitSha: repoDetails?.latest_commit?.sha,
+    calculateDivergence,
+    onSyncSuccess: () => {
+      refetchRepoContent()
+    }
+  })
 
   if (!repoId) return <></>
 
@@ -177,6 +201,9 @@ export const RepoCode = () => {
       showContributeBtn={showContributeBtn}
       repoDetailsError={repoDetailsError}
       scheduleFileMetaFetch={scheduleFileMetaFetch}
+      upstream={repoData?.upstream}
+      onFetchAndMerge={handleFetchAndMerge}
+      isFetchingUpstream={isSyncingFork}
     >
       {renderCodeView}
     </RepoFiles>

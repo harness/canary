@@ -285,6 +285,63 @@
       @apply text-cn-3 my-cn-md before:bg-cn-separator before:rounded-cn-1 pl-cn-md relative border-0 pr-0 before:absolute before:inset-y-0 before:left-0 before:w-1;
     }
 
+    /* GitHub-style Alerts */
+    .markdown-alert {
+      @apply my-cn-md pl-cn-md py-cn-xs;
+      border-left: 6px solid;
+      background: transparent;
+      /* font: var(--cn-comp-markdown-content-paragraph); */
+
+      &::before {
+        display: none;
+      }
+
+      p {
+        @apply my-cn-2xs text-cn-2;
+
+        &:first-of-type {
+          @apply mt-0;
+        }
+
+        &:last-of-type {
+          @apply mb-0;
+        }
+      }
+    }
+
+    .markdown-alert-title {
+      @apply font-heading-small mb-cn-2xs gap-cn-xs flex items-center;
+      margin-top: 0 !important;
+
+      svg {
+        flex-shrink: 0;
+      }
+    }
+
+    .markdown-alert-note {
+      --alert-color: var(--cn-set-blue-primary-bg);
+    }
+    .markdown-alert-tip {
+      --alert-color: var(--cn-set-success-primary-bg);
+    }
+    .markdown-alert-important {
+      --alert-color: var(--cn-set-warning-primary-bg);
+    }
+    .markdown-alert-warning {
+      --alert-color: var(--cn-set-orange-primary-bg);
+    }
+    .markdown-alert-caution {
+      --alert-color: var(--cn-set-danger-primary-bg);
+    }
+
+    .markdown-alert {
+      border-left-color: var(--alert-color);
+
+      .markdown-alert-title {
+        color: var(--alert-color);
+      }
+    }
+
     table {
       @apply my-cn-md;
 

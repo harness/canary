@@ -74,12 +74,12 @@ export interface RepositoryType {
   favorite?: boolean
   path: string
   upstream?: {
-    identifier: string
-    default_branch: string
-    path: string
-    fork_id: number
-    id: number
-    parent_id: number
+    identifier?: string
+    default_branch?: string
+    path?: string
+    fork_id?: number
+    id?: number
+    parent_id?: number
   }
 }
 

@@ -24,12 +24,12 @@
   "text": {
     "1": {
       "$type": "color",
-      "$value": "{pure.black}",
+      "$value": "{gray.900}",
       "$description": "Highest contrast color for text and icons in important content. Creates maximum readability and emphasis for key information.\n\nCommon uses: Headings, labels, emphasized text."
     },
     "2": {
       "$type": "color",
-      "$value": "{gray.850}",
+      "$value": "{gray.800}",
       "$description": "Primary color for text and icons in general content. Provides optimal readability for extended reading while reducing visual strain.\n\nCommon uses: Body text, primary content, default icons, form inputs."
     },
     "3": {
@@ -75,29 +75,11 @@
       "$description": "High-contrast neutral border color for interactive states and emphasis. Provides strong visual definition without brand association for general UI interactions.\n\nCommon uses: Hover state borders, selected elements, interactive container outlines, emphasized dividers, modal boundaries."
     },
     "2": {
-      "$extensions": {
-        "studio.tokens": {
-          "modify": {
-            "type": "lighten",
-            "value": "0.02",
-            "space": "lch"
-          }
-        }
-      },
       "$type": "color",
       "$value": "{gray.150}",
       "$description": "Default border color for general UI elements. Provides balanced visual separation without overwhelming the interface. Optimized for readability and visual hierarchy.\n\nCommon uses: Card borders, form field outlines, table borders, content dividers, modal boundaries, section separators."
     },
     "3": {
-      "$extensions": {
-        "studio.tokens": {
-          "modify": {
-            "type": "lighten",
-            "value": "0.015",
-            "space": "lch"
-          }
-        }
-      },
       "$type": "color",
       "$value": "{gray.100}",
       "$description": "Subtle border color for minimal visual separation. Creates gentle boundaries that organize content without adding visual weight. Ideal for maintaining clean, uncluttered interfaces.\n\nCommon uses: Table row separators, grouped list items, subtle content dividers, secondary container outlines, background element borders."
@@ -108,15 +90,6 @@
       "$description": "Brand-colored border for active states and focus indicators. Provides branded visual feedback for user interactions and meets accessibility requirements for focus visibility.\n\nCommon uses: Focus rings, active form field borders, primary button outlines, keyboard navigation highlights, selected interactive elements."
     },
     "success": {
-      "$extensions": {
-        "studio.tokens": {
-          "modify": {
-            "type": "lighten",
-            "value": "0.02",
-            "space": "lch"
-          }
-        }
-      },
       "$type": "color",
       "$value": "{indigo.400}",
       "$description": "Border color for success containers. Reinforces positive status through visual framing.\n\nCommon uses: Success alert borders, confirmation boundaries, completed state indicators."
@@ -171,46 +144,33 @@
           "$description": "Text and icon color for primary brand elements with maximum contrast."
         },
         "bg": {
+          "$type": "color",
+          "$value": "{indigo.700}",
+          "$description": "Background color for primary brand items with strong emphasis."
+        },
+        "bg-hover": {
+          "$type": "color",
+          "$value": "{indigo.800}",
+          "$description": "Hover state background color for interactive brand surfaces."
+        },
+        "bg-selected": {
+          "$type": "color",
+          "$value": "{indigo.800}",
+          "$description": "Selected state background color for active brand items."
+        },
+        "ring": {
           "$extensions": {
             "studio.tokens": {
               "modify": {
-                "type": "lighten",
-                "value": "0.02",
+                "type": "alpha",
+                "value": "0.15",
                 "space": "lch"
               }
             }
           },
           "$type": "color",
           "$value": "{indigo.700}",
-          "$description": "Background color for primary brand items with strong emphasis."
-        },
-        "bg-hover": {
-          "$extensions": {
-            "studio.tokens": {
-              "modify": {
-                "type": "lighten",
-                "value": "0.02",
-                "space": "lch"
-              }
-            }
-          },
-          "$type": "color",
-          "$value": "{indigo.800}",
-          "$description": "Hover state background color for interactive brand surfaces."
-        },
-        "bg-selected": {
-          "$extensions": {
-            "studio.tokens": {
-              "modify": {
-                "type": "lighten",
-                "value": "0.02",
-                "space": "lch"
-              }
-            }
-          },
-          "$type": "color",
-          "$value": "{indigo.800}",
-          "$description": "Selected state background color for active brand items."
+          "$description": "Ring color for brand primary focus and selection indicators. Semi-transparent brand color for accessible focus rings."
         }
       },
       "secondary": {
@@ -247,15 +207,6 @@
           "$description": "Background color for primary brand items with minimum emphasis."
         },
         "border": {
-          "$extensions": {
-            "studio.tokens": {
-              "modify": {
-                "type": "lighten",
-                "value": "0.02",
-                "space": "lch"
-              }
-            }
-          },
           "$type": "color",
           "$value": "{indigo.600}",
           "$description": "Border color for primary brand with minimum emphasis boundaries."
@@ -426,15 +377,6 @@
           "$description": "Base background color for success surfaces in default states."
         },
         "border": {
-          "$extensions": {
-            "studio.tokens": {
-              "modify": {
-                "type": "lighten",
-                "value": "0.02",
-                "space": "lch"
-              }
-            }
-          },
           "$type": "color",
           "$value": "{indigo.150}",
           "$description": "Border color for standard success boundaries."
@@ -508,15 +450,6 @@
           "$description": "Base background color for danger surfaces in default states."
         },
         "border": {
-          "$extensions": {
-            "studio.tokens": {
-              "modify": {
-                "type": "lighten",
-                "value": "0.02",
-                "space": "lch"
-              }
-            }
-          },
           "$type": "color",
           "$value": "{yellow.150}",
           "$description": "Border color for standard danger boundaries."
@@ -590,15 +523,6 @@
           "$description": "Base background color for warning surfaces in default states."
         },
         "border": {
-          "$extensions": {
-            "studio.tokens": {
-              "modify": {
-                "type": "lighten",
-                "value": "0.02",
-                "space": "lch"
-              }
-            }
-          },
           "$type": "color",
           "$value": "{orange.150}",
           "$description": "Border color for standard warning boundaries."
@@ -672,15 +596,6 @@
           "$description": "Base background color for blue surfaces in default states."
         },
         "border": {
-          "$extensions": {
-            "studio.tokens": {
-              "modify": {
-                "type": "lighten",
-                "value": "0.02",
-                "space": "lch"
-              }
-            }
-          },
           "$type": "color",
           "$value": "{cyan.150}",
           "$description": "Border color for standard blue boundaries."
@@ -754,15 +669,6 @@
           "$description": "Base background color for purple surfaces in default states."
         },
         "border": {
-          "$extensions": {
-            "studio.tokens": {
-              "modify": {
-                "type": "lighten",
-                "value": "0.02",
-                "space": "lch"
-              }
-            }
-          },
           "$type": "color",
           "$value": "{purple.150}",
           "$description": "Border color for standard purple boundaries."
@@ -826,15 +732,6 @@
           "$description": "Base background color for brown surfaces in default states."
         },
         "border": {
-          "$extensions": {
-            "studio.tokens": {
-              "modify": {
-                "type": "lighten",
-                "value": "0.02",
-                "space": "lch"
-              }
-            }
-          },
           "$type": "color",
           "$value": "{brown.150}",
           "$description": "Border color for standard brown boundaries."
@@ -893,15 +790,6 @@
           "$description": "Base background color for cyan surfaces in default states."
         },
         "border": {
-          "$extensions": {
-            "studio.tokens": {
-              "modify": {
-                "type": "lighten",
-                "value": "0.02",
-                "space": "lch"
-              }
-            }
-          },
           "$type": "color",
           "$value": "{cyan.150}",
           "$description": "Border color for standard cyan boundaries."
@@ -951,6 +839,11 @@
           "$type": "color",
           "$value": "{indigo.200}",
           "$description": "Hover background color for subdued indigo surfaces."
+        },
+        "bg-selected": {
+          "$type": "color",
+          "$value": "{indigo.200}",
+          "$description": "Selected background color for subdued indigo surfaces."
         }
       },
       "outline": {
@@ -965,15 +858,6 @@
           "$description": "Base background color for indigo surfaces in default states."
         },
         "border": {
-          "$extensions": {
-            "studio.tokens": {
-              "modify": {
-                "type": "lighten",
-                "value": "0.02",
-                "space": "lch"
-              }
-            }
-          },
           "$type": "color",
           "$value": "{indigo.200}",
           "$description": "Border color for standard indigo boundaries."
@@ -982,6 +866,11 @@
           "$type": "color",
           "$value": "{indigo.50}",
           "$description": "Hover background color for indigo surfaces."
+        },
+        "bg-selected": {
+          "$type": "color",
+          "$value": "{indigo.50}",
+          "$description": "Selected background color for indigo surfaces."
         }
       }
     },
@@ -1032,15 +921,6 @@
           "$description": "Base background color for forest-green surfaces in default states."
         },
         "border": {
-          "$extensions": {
-            "studio.tokens": {
-              "modify": {
-                "type": "lighten",
-                "value": "0.02",
-                "space": "lch"
-              }
-            }
-          },
           "$type": "color",
           "$value": "{cyan.100}",
           "$description": "Border color for standard forest-green boundaries."
@@ -1068,6 +948,11 @@
           "$type": "color",
           "$value": "{indigo.800}",
           "$description": "Hover background color for prominent mint surfaces."
+        },
+        "bg-selected": {
+          "$type": "color",
+          "$value": "{indigo.800}",
+          "$description": "Selected background color for prominent mint surfaces."
         }
       },
       "secondary": {
@@ -1085,6 +970,11 @@
           "$type": "color",
           "$value": "{indigo.150}",
           "$description": "Hover background color for subdued mint surfaces."
+        },
+        "bg-selected": {
+          "$type": "color",
+          "$value": "{indigo.150}",
+          "$description": "Selected background color for subdued mint surfaces."
         }
       },
       "outline": {
@@ -1099,15 +989,6 @@
           "$description": "Base background color for mint surfaces in default states."
         },
         "border": {
-          "$extensions": {
-            "studio.tokens": {
-              "modify": {
-                "type": "lighten",
-                "value": "0.02",
-                "space": "lch"
-              }
-            }
-          },
           "$type": "color",
           "$value": "{indigo.100}",
           "$description": "Border color for standard mint boundaries."
@@ -1116,6 +997,11 @@
           "$type": "color",
           "$value": "{indigo.50}",
           "$description": "Hover background color for mint surfaces."
+        },
+        "bg-selected": {
+          "$type": "color",
+          "$value": "{indigo.50}",
+          "$description": "Selected background color for mint surfaces."
         }
       }
     },
@@ -1166,15 +1052,6 @@
           "$description": "Base background color for orange surfaces in default states."
         },
         "border": {
-          "$extensions": {
-            "studio.tokens": {
-              "modify": {
-                "type": "lighten",
-                "value": "0.02",
-                "space": "lch"
-              }
-            }
-          },
           "$type": "color",
           "$value": "{brown.150}",
           "$description": "Border color for standard orange boundaries."
@@ -1202,6 +1079,11 @@
           "$type": "color",
           "$value": "{purple.500}",
           "$description": "Hover background color for prominent pink surfaces."
+        },
+        "bg-selected": {
+          "$type": "color",
+          "$value": "{purple.500}",
+          "$description": "Selected background color for prominent pink surfaces."
         }
       },
       "secondary": {
@@ -1219,6 +1101,11 @@
           "$type": "color",
           "$value": "{purple.150}",
           "$description": "Hover background color for subdued pink surfaces."
+        },
+        "bg-selected": {
+          "$type": "color",
+          "$value": "{purple.150}",
+          "$description": "Selected background color for subdued pink surfaces."
         }
       },
       "outline": {
@@ -1233,15 +1120,6 @@
           "$description": "Base background color for pink surfaces in default states."
         },
         "border": {
-          "$extensions": {
-            "studio.tokens": {
-              "modify": {
-                "type": "lighten",
-                "value": "0.02",
-                "space": "lch"
-              }
-            }
-          },
           "$type": "color",
           "$value": "{purple.150}",
           "$description": "Border color for standard pink boundaries."
@@ -1250,6 +1128,11 @@
           "$type": "color",
           "$value": "{purple.50}",
           "$description": "Hover background color for pink surfaces."
+        },
+        "bg-selected": {
+          "$type": "color",
+          "$value": "{purple.50}",
+          "$description": "Selected background color for pink surfaces."
         }
       }
     },
@@ -1269,6 +1152,11 @@
           "$type": "color",
           "$value": "{violet.800}",
           "$description": "Hover background color for prominent violet surfaces."
+        },
+        "bg-selected": {
+          "$type": "color",
+          "$value": "{violet.800}",
+          "$description": "Selected background color for prominent violet surfaces."
         }
       },
       "secondary": {
@@ -1286,6 +1174,11 @@
           "$type": "color",
           "$value": "{violet.150}",
           "$description": "Hover background color for subdued violet surfaces."
+        },
+        "bg-selected": {
+          "$type": "color",
+          "$value": "{violet.150}",
+          "$description": "Selected background color for subdued violet surfaces."
         }
       },
       "outline": {
@@ -1300,15 +1193,6 @@
           "$description": "Base background color for violet surfaces in default states."
         },
         "border": {
-          "$extensions": {
-            "studio.tokens": {
-              "modify": {
-                "type": "lighten",
-                "value": "0.02",
-                "space": "lch"
-              }
-            }
-          },
           "$type": "color",
           "$value": "{violet.150}",
           "$description": "Border color for standard violet boundaries."
@@ -1317,6 +1201,11 @@
           "$type": "color",
           "$value": "{violet.50}",
           "$description": "Hover background color for violet surfaces."
+        },
+        "bg-selected": {
+          "$type": "color",
+          "$value": "{violet.50}",
+          "$description": "Selected background color for violet surfaces."
         }
       }
     }
@@ -1641,11 +1530,6 @@
         "$type": "color",
         "$value": "{bg.3}",
         "$description": "Background color for form input fields. Provides elevated surface that distinguishes interactive form elements from surrounding content."
-      },
-      "ai-glow": {
-        "$type": "color",
-        "$value": "linear-gradient(111deg, {gradient.ai.glow.stop-1} 10%, {gradient.ai.glow.stop-2} 50%, {gradient.ai.glow.stop-3} 90%)",
-        "$description": "Gradient glow effect for AI-powered input fields. Creates distinctive visual indicator for AI features."
       }
     },
     "link": {
@@ -1683,15 +1567,6 @@
         }
       },
       "dotes": {
-        "$extensions": {
-          "studio.tokens": {
-            "modify": {
-              "type": "lighten",
-              "value": "0.02",
-              "space": "lch"
-            }
-          }
-        },
         "$type": "color",
         "$value": "{gray.100}",
         "$description": "Refers to the dotted pattern visible in the background of the workspace."
@@ -1914,23 +1789,29 @@
       "handle": {
         "bg": {
           "$type": "color",
-          "$value": "{gray.100}",
+          "$value": "{bg.0}",
           "$description": "Background color for slider handles. Creates a distinct, interactive element for adjusting values."
         },
         "border": {
-          "$extensions": {
-            "studio.tokens": {
-              "modify": {
-                "type": "lighten",
-                "value": "0.02",
-                "space": "lch"
-              }
-            }
-          },
           "$type": "color",
-          "$value": "{gray.900}",
+          "$value": "{border.1}",
           "$description": "Border color for slider handles. Provides definition and contrast for the interactive control."
+        },
+        "bg-selected": {
+          "$type": "color",
+          "$value": "{bg.3}",
+          "$description": "Background color for selected slider handles. Indicates the active handle in multi-handle sliders."
+        },
+        "border-selected": {
+          "$type": "color",
+          "$value": "{border.brand}",
+          "$description": "Border color for selected slider handles. Provides brand-colored emphasis on the active handle."
         }
+      },
+      "range-gradient": {
+        "$type": "color",
+        "$value": "linear-gradient(90deg, {set.gray.primary.bg} 15%, {set.warning.primary.bg} 40%, {set.orange.primary.bg} 60%, {set.danger.primary.bg} 80%)",
+        "$description": "Multi-stop gradient for slider range tracks. Visualizes severity or intensity progression from neutral through warning, orange, to danger."
       }
     },
     "toast": {
@@ -3395,7 +3276,7 @@
         "y": "0",
         "blur": "0",
         "spread": "4",
-        "color": "{set.brand.secondary.bg}",
+        "color": "{set.brand.primary.ring}",
         "type": "dropShadow"
       },
       "$description": "Focus ring style for selected states. Indicates active selection with accessible outline."
@@ -3486,32 +3367,6 @@
           "$type": "color",
           "$value": "{blue.300}",
           "$description": "Fourth gradient stop for AI outline backgrounds."
-        }
-      },
-      "glow": {
-        "stop-1": {
-          "$extensions": {
-            "studio.tokens": {
-              "modify": {
-                "type": "alpha",
-                "value": "0.6",
-                "space": "lch"
-              }
-            }
-          },
-          "$type": "color",
-          "$value": "{blue.300}",
-          "$description": "First gradient stop for AI glow effects."
-        },
-        "stop-2": {
-          "$type": "color",
-          "$value": "{bg.1}",
-          "$description": "Second gradient stop for AI glow effects."
-        },
-        "stop-3": {
-          "$type": "color",
-          "$value": "{indigo.150}",
-          "$description": "Third gradient stop for AI glow effects."
         }
       },
       "chat": {

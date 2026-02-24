@@ -103,13 +103,5 @@
         "$value": "1.5px"
       }
     }
-  },
-  "comp": {
-    "input-ai": {
-      "blur": {
-        "$type": "dimension",
-        "$value": "12px"
-      }
-    }
   }
 }

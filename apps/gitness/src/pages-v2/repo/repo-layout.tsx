@@ -9,6 +9,7 @@ import { useIsMFE } from '../../framework/hooks/useIsMFE'
 import { CustomHandle } from '../../framework/routing/types'
 import { useGitRef } from '../../hooks/useGitRef'
 import { useRepoCommits } from '../../hooks/useRepoCommits'
+import { useUpstreamRepoUrl } from '../../hooks/useUpstreamRepoUrl'
 import { PathParams } from '../../RouteDefinitions'
 
 const RepoLayout = () => {
@@ -17,6 +18,7 @@ const RepoLayout = () => {
   const { spaceId, repoId } = useParams<PathParams>()
   const { toRepoCommits } = useRepoCommits()
   const { isLoading, gitRefName, gitRefPath, repoData, fullGitRef, refetchRepo, defaultBranch } = useGitRef()
+  const toUpstreamRepo = useUpstreamRepoUrl()
 
   const onFavoriteToggle = async (isFavorite: boolean) => {
     try {
@@ -56,6 +58,8 @@ const RepoLayout = () => {
             isFavorite={repoData?.is_favorite}
             onFavoriteToggle={onFavoriteToggle}
             archivedDate={repoData?.updated}
+            upstream={repoData?.upstream}
+            toUpstreamRepo={toUpstreamRepo}
           />
 
           <SubHeaderWrapper>

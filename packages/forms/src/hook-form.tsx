@@ -1,3 +1,4 @@
+import { useRef } from 'react'
 import {
   FieldPath,
   FieldValues,
@@ -7,8 +8,6 @@ import {
 } from 'react-hook-form'
 
 import { afterFrames } from './utils'
-
-export * from 'react-hook-form'
 
 /**
  * !!!
@@ -26,11 +25,29 @@ export function useController<TFieldValues extends FieldValues, TName extends Fi
     ...rest
   } = useControllerDefault(props)
 
+  const mountTimeRef = useRef<number>(Date.now())
+
   return {
     ...rest,
     field: {
       ...fieldRest,
-      onBlur: afterFrames(onBlur)
+      onBlur: afterFrames(onBlur, 2, mountTimeRef.current)
     }
   }
 }
+
+// Re-export all other functions from react-hook-form
+export type { SubmitHandler, SubmitErrorHandler, Mode, DefaultValues, FieldValues } from 'react-hook-form'
+
+export {
+  useForm,
+  Controller,
+  FormProvider,
+  Form,
+  useWatch,
+  useFormState,
+  get,
+  set,
+  useFieldArray,
+  useFormContext
+} from 'react-hook-form'

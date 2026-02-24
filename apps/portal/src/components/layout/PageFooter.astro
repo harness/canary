@@ -1,0 +1,22 @@
+---
+import FeedbackButtons from "./FeedbackButtons";
+const lastUpdated = Astro.locals.starlightRoute?.lastUpdated;
+const formattedDate = lastUpdated
+  ? new Date(lastUpdated).toLocaleDateString("en-US", {
+      year: "numeric",
+      month: "short",
+      day: "numeric",
+    })
+  : null;
+---
+
+<div class="not-content mt-cn-4xl pt-cn-lg pb-cn-lg border-t border-cn-3/30">
+  <div class="flex items-center justify-between">
+    <FeedbackButtons client:load />
+    {formattedDate && (
+      <span class="text-cn-size-3 text-cn-4">
+        Last updated {formattedDate}
+      </span>
+    )}
+  </div>
+</div>

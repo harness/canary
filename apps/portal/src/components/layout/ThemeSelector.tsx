@@ -36,6 +36,7 @@ export function ThemeSelector() {
         showAccessibilityThemeOptions
       >
         <Button
+          variant="outline"
           iconOnly
           onClick={() => setOpen(true)}
           tooltipProps={{ content: "Appearance settings" }}
@@ -58,7 +59,7 @@ export default function ThemeSelectorWrapper() {
 
   return (
     <TooltipProvider>
-      <Button iconOnly ignoreIconOnlyTooltip>
+      <Button variant="outline" iconOnly ignoreIconOnlyTooltip>
         <IconV2 name="theme" />
       </Button>
     </TooltipProvider>

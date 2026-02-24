@@ -22,6 +22,10 @@ if (!("document" in globalThis)) {
 
 // https://astro.build/config
 export default defineConfig({
+  prefetch: {
+    prefetchAll: true,
+    defaultStrategy: "hover",
+  },
   integrations: [
     starlight({
       title: "Harness Design System",
@@ -44,6 +48,11 @@ export default defineConfig({
           label: "Getting Started",
           collapsed: true,
           items: [
+            {
+              slug: "design-system/introduction",
+              label: "Introduction",
+              attrs: { "data-icon": "architect" },
+            },
             {
               slug: "getting-started/installation",
               label: "Installation",
@@ -224,6 +233,8 @@ export default defineConfig({
         "@harnessio/ui/styles.css",
       ],
       components: {
+        Head: "./src/components/layout/Head.astro",
+        ThemeProvider: "./src/components/layout/ThemeProvider.astro",
         PageFrame: "./src/components/layout/PageFrame.astro",
         TwoColumnContent: "./src/components/layout/TwoColumnContent.astro",
         PageTitle: "./src/components/layout/PageTitle.astro",

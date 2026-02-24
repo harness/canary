@@ -53,5 +53,36 @@ import ConditionalPageSidebar from "./ConditionalPageSidebar.astro";
     if (selected) {
       selected.scrollIntoView({ block: 'center', behavior: 'instant' });
     }
+
+    // Copy button enhancements (delayed to ensure EC has rendered)
+    setTimeout(() => {
+      document.querySelectorAll('.expressive-code').forEach((block) => {
+        const lines = block.querySelectorAll('.ec-line');
+        const copyDiv = block.querySelector('.copy');
+        const btn = copyDiv?.querySelector('button');
+
+        // Center copy button for single-line code blocks
+        if (lines.length <= 1 && copyDiv) {
+          const pre = block.querySelector('pre');
+          if (pre) {
+            const preRect = pre.getBoundingClientRect();
+            const copyRect = copyDiv.getBoundingClientRect();
+            const currentTop = copyRect.top - preRect.top;
+            const targetTop = (preRect.height - copyRect.height) / 2;
+            const offset = targetTop - currentTop;
+            const currentInset = parseFloat(getComputedStyle(copyDiv).insetBlockStart) || 0;
+            copyDiv.style.setProperty('inset-block-start', `${currentInset + offset}px`, 'important');
+          }
+        }
+
+        // Swap icon to checkmark on click
+        if (btn) {
+          btn.addEventListener('click', () => {
+            btn.classList.add('copied');
+            setTimeout(() => btn.classList.remove('copied'), 2000);
+          });
+        }
+      });
+    }, 100);
   });
 </script>

@@ -2,15 +2,4 @@
 import ThemeSelector from "./ThemeSelector";
 ---
 
-<ThemeSelector client:only />
-
-<script is:inline>
-  (() => {
-    const theme = localStorage.getItem("canary-theme") || "dark-std-std";
-
-    document.body.classList.add(theme);
-    document.querySelector("html").dataset.theme = theme.startsWith("dark")
-      ? "dark"
-      : "light";
-  })();
-</script>
+<ThemeSelector client:only="react" />

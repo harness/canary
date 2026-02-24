@@ -45,7 +45,8 @@ main {
   @apply list-decimal mt-cn-xs;
 }
 
-code {
+/* Inline code only - exclude expressive-code blocks */
+code:not(.expressive-code code) {
   @apply bg-cn-gray-secondary !important;
 }
 
@@ -375,22 +376,105 @@ button[aria-label="Search"] {
   box-shadow: none !important;
 }
 
-/* Code/Preview override */
-
-.expressive-code pre {
-  @apply rounded-cn-3 overflow-hidden border border-cn-3 bg-cn-3 !important;
-}
+/* Code/Preview override - apply DS tokens directly on elements */
 
 .expressive-code .frame {
   box-shadow: none !important;
+}
+
+.expressive-code pre {
+  --tw-bg-opacity: 1 !important;
+  background-color: lch(from var(--cn-bg-0) l c h / var(--tw-bg-opacity, 1)) !important;
+  color: var(--cn-text-2) !important;
+  border: 1px solid var(--cn-border-3) !important;
+  border-radius: var(--cn-rounded-6) !important;
+  overflow: hidden !important;
 }
 
 .expressive-code pre > code {
   overflow-x: auto !important;
 }
 
-pre.prism-code {
-  @apply overflow-hidden bg-cn-2 !important;
+/* When code block has a VISIBLE title, connect header with code block */
+.expressive-code:has(.header .title) pre {
+  border-top-left-radius: 0 !important;
+  border-top-right-radius: 0 !important;
+  border-top: none !important;
+}
+
+.expressive-code .header:has(.title) {
+  background: var(--cn-set-gray-secondary-bg) !important;
+  color: var(--cn-text-3) !important;
+  border: 1px solid var(--cn-border-2) !important;
+  border-bottom: none !important;
+  border-top-left-radius: var(--cn-rounded-6) !important;
+  border-top-right-radius: var(--cn-rounded-6) !important;
+  border-bottom-left-radius: 0 !important;
+  border-bottom-right-radius: 0 !important;
+}
+
+/* Terminal window dots - override EC default colors with DS tokens */
+.expressive-code .frame.is-terminal .header::before {
+  background-color: var(--cn-set-gray-secondary-text) !important;
+  opacity: 0.35 !important;
+}
+
+/* Copy button - match sidebar theme toggle button style */
+.expressive-code .copy {
+  margin: var(--cn-spacing-1) !important;
+}
+
+/* Single-line code blocks get centered copy button via JS */
+
+.expressive-code .copy button {
+  color: var(--cn-text-3) !important;
+  opacity: 1 !important;
+  transition: all 0.15s !important;
+  background: transparent !important;
+  border: 1px solid var(--cn-border-3) !important;
+  border-radius: var(--cn-rounded-5) !important;
+}
+
+.expressive-code .copy button:hover {
+  color: var(--cn-text-2) !important;
+  opacity: 1 !important;
+  border-color: var(--cn-border-2) !important;
+}
+
+/* Reset EC inner layers */
+.expressive-code .copy button div {
+  background: transparent !important;
+  opacity: 0 !important;
+}
+
+.expressive-code .copy button::before {
+  border: none !important;
+  opacity: 0 !important;
+}
+
+/* Replace EC icon with DS copy icon via mask-image */
+.expressive-code .copy button::after {
+  background-color: currentColor !important;
+  mask-image: url("/icons/copy.svg") !important;
+  -webkit-mask-image: url("/icons/copy.svg") !important;
+  mask-size: contain !important;
+  -webkit-mask-size: contain !important;
+  mask-repeat: no-repeat !important;
+  -webkit-mask-repeat: no-repeat !important;
+  mask-position: center !important;
+  -webkit-mask-position: center !important;
+  border-radius: 0 !important;
+}
+
+/* Swap to check icon after copy */
+.expressive-code .copy button.copied::after {
+  mask-image: url("/icons/check.svg") !important;
+  -webkit-mask-image: url("/icons/check.svg") !important;
+}
+
+/* Hide EC "Copied!" tooltip */
+.expressive-code .copy .feedback {
+  display: none !important;
 }
 
 /* Pagination overrides */
@@ -403,11 +487,6 @@ pre.prism-code {
   @apply text-cn-size-4 leading-tight;
 }
 
-@media (prefers-reduced-motion: no-preference) {
-  @view-transition {
-    navigation: auto;
-  }
-}
 
 .example-expand {
   .disclosure-icon {

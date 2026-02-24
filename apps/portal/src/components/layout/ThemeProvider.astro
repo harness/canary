@@ -1,0 +1,24 @@
+---
+// Custom ThemeProvider that applies canary-theme BEFORE any rendering.
+// This prevents FOUC (Flash Of Unstyled Content) on every page load.
+// The React ThemeSelector mounts later via client:only but the theme
+// is already visually correct by the time it hydrates.
+---
+
+{/* Intentionally inlined to prevent FOUC — runs synchronously in <head> */}
+<script is:inline>
+  (function () {
+    var theme = typeof localStorage !== 'undefined'
+      && localStorage.getItem('canary-theme')
+      || 'dark-std-std';
+    var root = document.documentElement;
+    // Set data-theme for CSS selectors (light/dark)
+    root.dataset.theme = theme.startsWith('dark') ? 'dark' : 'light';
+    // Set theme class for design system tokens
+    root.classList.add(theme);
+    // Apply to body when it exists (for components that read body class)
+    document.addEventListener('DOMContentLoaded', function() {
+      document.body.classList.add(theme);
+    });
+  })();
+</script>

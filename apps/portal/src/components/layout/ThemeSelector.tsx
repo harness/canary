@@ -17,11 +17,20 @@ export function ThemeSelector() {
   );
 
   useEffect(() => {
-    document.body.className = "";
-    document.body.classList.add(theme!);
-    document.querySelector("html")!.dataset.theme = theme?.startsWith("dark")
-      ? "dark"
-      : "light";
+    const root = document.documentElement;
+    const body = document.body;
+
+    // Skip DOM updates if ThemeProvider already applied the correct theme
+    // This prevents flash on initial mount after page navigation
+    if (root.classList.contains(theme!)) return;
+
+    // Remove only previous theme classes, not all classes
+    body.className = body.className.replace(/\b(dark|light)-\S+/g, '').trim();
+    root.className = root.className.replace(/\b(dark|light)-\S+/g, '').trim();
+
+    body.classList.add(theme!);
+    root.classList.add(theme!);
+    root.dataset.theme = theme?.startsWith("dark") ? "dark" : "light";
 
     localStorage.setItem("canary-theme", theme!);
   }, [theme]);

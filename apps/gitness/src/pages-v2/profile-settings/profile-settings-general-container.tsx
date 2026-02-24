@@ -1,12 +1,7 @@
 import { FC, useEffect, useState } from 'react'
 
 import { updateUser, UpdateUserErrorResponse } from '@harnessio/code-service-client'
-import {
-  PasswordFields,
-  ProfileFields,
-  ProfileSettingsErrorType,
-  SettingsAccountGeneralPage
-} from '@harnessio/views'
+import { PasswordFields, ProfileFields, ProfileSettingsErrorType, SettingsAccountGeneralPage } from '@harnessio/views'
 
 import { useAppContext } from '../../framework/context/AppContext.tsx'
 import { useProfileSettingsStore } from './stores/profile-settings-store'

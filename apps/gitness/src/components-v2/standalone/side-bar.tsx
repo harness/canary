@@ -1,7 +1,14 @@
 import { FC, useCallback, useEffect, useMemo, useState } from 'react'
 import { useLocation, useNavigate, useParams } from 'react-router-dom'
 
-import { ManageNavigation, MenuGroupType, MenuGroupTypes, NavbarItemType, Sidebar, useSidebar } from '@harnessio/ui/components'
+import {
+  ManageNavigation,
+  MenuGroupType,
+  MenuGroupTypes,
+  NavbarItemType,
+  Sidebar,
+  useSidebar
+} from '@harnessio/ui/components'
 import { useTranslation } from '@harnessio/ui/context'
 import { SidebarView } from '@harnessio/views'
 

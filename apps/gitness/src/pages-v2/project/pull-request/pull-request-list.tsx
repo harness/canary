@@ -10,11 +10,7 @@ import {
   useGetUserQuery,
   useListPrincipalsQuery
 } from '@harnessio/code-service-client'
-import {
-  RepositoryType,
-  PullRequestListPage as SandboxPullRequestListPage,
-  type PRListFilters
-} from '@harnessio/views'
+import { RepositoryType, PullRequestListPage as SandboxPullRequestListPage, type PRListFilters } from '@harnessio/views'
 
 import { useRoutes } from '../../../framework/context/NavigationContext'
 import { useIsMFE } from '../../../framework/hooks/useIsMFE'

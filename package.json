@@ -6,7 +6,7 @@
     "clean:node_modules": "pnpm -r --parallel exec -- rimraf node_modules",
     "deps": "pnpm -r i",
     "deps:clean": "pnpm clean:node_modules && pnpm deps",
-    "build": "pnpm -r build",
+    "build": "pnpm -r -F '!@harnessio/views' build && pnpm -r -F @harnessio/views build",
     "lint": "pnpm -r lint",
     "pretty": "pnpm -r pretty",
     "typecheck": "pnpm -r typecheck",

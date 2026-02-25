@@ -12,7 +12,7 @@ const formattedDate = lastUpdated
 
 <div class="not-content mt-cn-4xl pt-cn-lg pb-cn-lg border-t border-cn-3/30">
   <div class="flex items-center justify-between">
-    <FeedbackButtons client:load />
+    <FeedbackButtons client:only="react" />
     {formattedDate && (
       <span class="text-cn-size-3 text-cn-4">
         Last updated {formattedDate}

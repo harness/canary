@@ -14,17 +14,20 @@ import darkModeImage from '@/svgs/theme-dark.png'
 import lightModeImage from '@/svgs/theme-light.png'
 import { cn } from '@/utils/cn'
 
-import { AccentColor, GrayColor, ThemeDialogProps } from './types'
+import { ThemeDialogProps } from './types'
 
-const contrastOptions: SelectValueOption<ContrastType>[] = Object.entries(ContrastType).map(([key, value]) => ({
-  label: key,
-  value
-}))
+const contrastOptions: SelectValueOption<ContrastType>[] = [
+  { label: 'Standard', value: ContrastType.Standard },
+  { label: 'Low contrast', value: ContrastType.Low },
+  { label: 'High contrast', value: ContrastType.High }
+]
 
-const colorOptions: SelectValueOption<ColorType>[] = Object.entries(ColorType).map(([key, value]) => ({
-  label: key,
-  value
-}))
+const colorOptions: SelectValueOption<ColorType>[] = [
+  { label: 'Standard', value: ColorType.Standard },
+  { label: 'Tritanopia (Blue-Yellow)', value: ColorType.Tritanopia },
+  { label: 'Protanopia (Red-Green)', value: ColorType.Protanopia },
+  { label: 'Deuteranopia (Red-Green)', value: ColorType.Deuteranopia }
+]
 
 const ThemeDialog: FC<ThemeDialogProps> = ({
   theme,
@@ -33,12 +36,8 @@ const ThemeDialog: FC<ThemeDialogProps> = ({
   onOpenChange,
   children,
   showSystemMode,
-  showAccentColor,
-  showGrayColor,
   showAccessibilityThemeOptions = false
 }) => {
-  const [accentColor, setAccentColor] = useState<AccentColor>(AccentColor.Blue)
-  const [grayColor, setGrayColor] = useState<GrayColor>(GrayColor.First)
 
   const mediaQuery = window.matchMedia('(prefers-color-scheme: dark)')
   const [systemMode, setSystemMode] = useState<ModeType>(mediaQuery.matches ? ModeType.Dark : ModeType.Light)
@@ -70,56 +69,38 @@ const ThemeDialog: FC<ThemeDialogProps> = ({
           <Dialog.Title>Appearance settings</Dialog.Title>
         </Dialog.Header>
         <Dialog.Body>
-          <div className="flex flex-col">
-            <Text variant="heading-base">Mode</Text>
-            <Text className="mt-cn-2xs" color="foreground-3">
-              Choose Dark mode for low light or Light mode for bright spaces.
-            </Text>
-            <div className="mt-cn-md gap-cn-md grid grid-cols-2">
-              {Object.entries(ModeType).map(([key, value]) => {
-                if (!showSystemMode && value === ModeType.System) return null
-                const valueMode = value === ModeType.System ? systemMode : value
-                // TODO: Design system: Update buttons here.
-                return (
-                  <button
-                    className="gap-y-cn-xs flex flex-col focus-visible:outline-none"
-                    key={key}
-                    onClick={() => {
-                      setTheme(`${value}-${colorAdjustment}-${contrast}`)
-                    }}
-                  >
-                    <div className="relative">
-                      <img
-                        src={valueMode === ModeType.Dark ? darkModeImage : lightModeImage}
-                        alt=""
-                        className={cn(
-                          'w-full h-auto rounded border',
-                          mode === value ? 'border-cn-brand' : 'border-cn-3'
-                        )}
-                      />
-                      {mode === value && (
-                        <IconV2 className="text-cn-1 bottom-cn-xs left-cn-xs absolute" name="check-circle-solid" />
+          <div className="gap-cn-md grid grid-cols-2">
+            {Object.entries(ModeType).map(([key, value]) => {
+              if (!showSystemMode && value === ModeType.System) return null
+              const valueMode = value === ModeType.System ? systemMode : value
+              // TODO: Design system: Update buttons here.
+              return (
+                <button
+                  className="gap-y-cn-xs flex flex-col focus-visible:outline-none"
+                  key={key}
+                  onClick={() => {
+                    setTheme(`${value}-${colorAdjustment}-${contrast}`)
+                  }}
+                >
+                  <div className="relative">
+                    <img
+                      src={valueMode === ModeType.Dark ? darkModeImage : lightModeImage}
+                      alt=""
+                      className={cn(
+                        'w-full h-auto rounded-cn-5 border',
+                        mode === value ? 'border-cn-brand' : 'border-cn-3'
                       )}
-                      <div
-                        className="rounded-cn-1 absolute right-[27px] top-[61px] h-2 w-9"
-                        style={{
-                          backgroundColor:
-                            accentColor === AccentColor.White
-                              ? value === ModeType.Light
-                                ? 'hsla(240, 6%, 40%, 1)'
-                                : 'hsla(240, 9%, 67%, 1)'
-                              : accentColor
-                        }}
-                        aria-hidden
-                      />
-                    </div>
-                    <Text as="span" color="foreground-1">
-                      {key}
-                    </Text>
-                  </button>
-                )
-              })}
-            </div>
+                    />
+                    {mode === value && (
+                      <IconV2 className="text-cn-1 bottom-cn-xs left-cn-xs absolute" name="check-circle-solid" />
+                    )}
+                  </div>
+                  <Text as="span" color="foreground-1">
+                    {key}
+                  </Text>
+                </button>
+              )
+            })}
           </div>
           {isAccessibilityThemeEnabled && (
             <>
@@ -130,10 +111,9 @@ const ThemeDialog: FC<ThemeDialogProps> = ({
                 <div>
                   <Text variant="heading-base">Contrast</Text>
                   <Text className="mt-cn-2xs" color="foreground-3">
-                    High contrast improves readability, Dimmer mode reduces glare.
+                    High contrast improves readability, Low contrast reduces glare.
                   </Text>
                 </div>
-
                 <Select
                   value={contrast}
                   options={contrastOptions}
@@ -149,10 +129,9 @@ const ThemeDialog: FC<ThemeDialogProps> = ({
                 <div>
                   <Text variant="heading-base">Color adjustment</Text>
                   <Text className="mt-cn-2xs" color="foreground-3">
-                    Adjust colors for different types of color blindness.
+                    Adjust colors for different types of color vision deficiency.
                   </Text>
                 </div>
-
                 <Select
                   value={colorAdjustment}
                   options={colorOptions}
@@ -160,79 +139,6 @@ const ThemeDialog: FC<ThemeDialogProps> = ({
                   placeholder="Select"
                 />
               </div>
-
-              <Separator className="bg-cn-2 h-px" />
-
-              {/* Accent Color */}
-              {showAccentColor ? (
-                <>
-                  <Separator className="bg-cn-2 h-px" />
-                  <div className="gap-x-cn-2xl grid grid-cols-[246px_1fr]">
-                    <div>
-                      <Text variant="heading-base">Accent color</Text>
-                      <Text className="mt-cn-2xs" color="foreground-3">
-                        Select your application accent color.
-                      </Text>
-                    </div>
-                    <div className="gap-cn-2xs flex flex-wrap">
-                      {Object.values(AccentColor).map(item => (
-                        <button
-                          key={item}
-                          className={cn(
-                            'focus-visible:rounded-cn-full h-[26px] w-[26px] rounded-cn-full',
-                            accentColor === item && 'border border-cn-brand'
-                          )}
-                          onClick={() => {
-                            setAccentColor(item)
-                          }}
-                        >
-                          <span
-                            style={{
-                              backgroundColor:
-                                item === AccentColor.White && mode === ModeType.Light ? 'hsla(240, 6%, 40%, 1)' : item
-                            }}
-                            className="m-auto block size-[18px] rounded-cn-full"
-                          />
-                        </button>
-                      ))}
-                    </div>
-                  </div>
-                </>
-              ) : null}
-
-              {/* Gray Color */}
-              {showGrayColor ? (
-                <>
-                  <Separator className="bg-cn-2 h-px" />
-                  <div className="gap-x-cn-2xl grid grid-cols-[246px_1fr]">
-                    <div>
-                      <Text variant="heading-base">Gray color</Text>
-                      <Text className="mt-cn-2xs" color="foreground-3">
-                        Select your application gray color.
-                      </Text>
-                    </div>
-                    <div className="gap-cn-2xs flex flex-wrap">
-                      {Object.values(GrayColor).map(item => (
-                        <button
-                          key={item}
-                          className={cn(
-                            'focus-visible:rounded-cn-full h-[26px] w-[26px] rounded-cn-full',
-                            grayColor === item && 'border border-cn-2'
-                          )}
-                          onClick={() => {
-                            setGrayColor(item)
-                          }}
-                        >
-                          <span
-                            style={{ backgroundColor: item }}
-                            className="m-auto block size-[18px] rounded-cn-full"
-                          />
-                        </button>
-                      ))}
-                    </div>
-                  </div>
-                </>
-              ) : null}
             </>
           )}
         </Dialog.Body>

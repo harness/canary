@@ -354,7 +354,8 @@ button[aria-label="Search"] {
 
 /* Shortcut badge (⌘K) — wrapper kbd */
 .cn-sidebar-search kbd {
-  @apply text-cn-3 !important;
+  background-color: var(--cn-set-gray-secondary-bg) !important;
+  color: var(--cn-set-gray-secondary-text) !important;
   font-size: 11px !important;
   padding: 2px 7px !important;
   line-height: 1.2 !important;

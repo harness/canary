@@ -29,6 +29,14 @@ export class ThreadRuntime extends BaseSubscribable {
     return this._core.isDisabled
   }
 
+  public get isWaitingForUser(): boolean {
+    return this._core.isWaitingForUser
+  }
+
+  public get pendingCapability(): { capabilityId: string; capabilityName: string } | null {
+    return this._core.pendingCapability
+  }
+
   public get capabilities(): RuntimeCapabilities {
     return this._core.capabilities
   }
@@ -46,6 +54,7 @@ export class ThreadRuntime extends BaseSubscribable {
       threadId: 'main', // Will be set by ThreadListRuntime
       isDisabled: this._core.isDisabled,
       isRunning: this._core.isRunning,
+      isWaitingForUser: this._core.isWaitingForUser,
       capabilities: this._core.capabilities,
       conversationId: this._core.conversationId,
       title: this._core.title
@@ -62,6 +71,15 @@ export class ThreadRuntime extends BaseSubscribable {
     this.composer.setSubmitting(true)
 
     try {
+      // If waiting for user action, auto-cancel the pending capability first
+      if (this._core.isWaitingForUser && this._core.pendingCapability) {
+        await this._core.startSystemEventRun({
+          event_type: 'action_cancelled',
+          capability_id: this._core.pendingCapability.capabilityName,
+          result: { success: false }
+        })
+      }
+
       this.composer.clear()
       await this._core.startRun({
         role: 'user',
@@ -71,6 +89,14 @@ export class ThreadRuntime extends BaseSubscribable {
       // TODO: Handle error
     } finally {
       this.composer.setSubmitting(false)
+    }
+  }
+
+  public async sendSystemEvent(systemEvent: Record<string, unknown>): Promise<void> {
+    try {
+      await this._core.startSystemEventRun(systemEvent)
+    } catch (e) {
+      // TODO: Handle error
     }
   }
 

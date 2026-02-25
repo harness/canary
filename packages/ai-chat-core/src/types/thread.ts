@@ -13,6 +13,7 @@ export interface ThreadState {
   threadId: string
   isDisabled: boolean
   isRunning: boolean
+  isWaitingForUser: boolean
   capabilities: RuntimeCapabilities
   conversationId?: string
   title?: string

@@ -17,6 +17,8 @@ export class ThreadRuntimeCore extends BaseSubscribable {
   private _messages: Message[] = []
   private _isRunning = false
   private _isDisabled = false
+  private _isWaitingForUser = false
+  private _pendingCapability: { capabilityId: string; capabilityName: string } | null = null
   private _abortController: AbortController | null = null
   private _conversationId?: string
   private _title?: string
@@ -46,6 +48,14 @@ export class ThreadRuntimeCore extends BaseSubscribable {
 
   public get isDisabled(): boolean {
     return this._isDisabled
+  }
+
+  public get isWaitingForUser(): boolean {
+    return this._isWaitingForUser
+  }
+
+  public get pendingCapability(): { capabilityId: string; capabilityName: string } | null {
+    return this._pendingCapability
   }
 
   public get conversationId(): string | undefined {
@@ -87,11 +97,72 @@ export class ThreadRuntimeCore extends BaseSubscribable {
     this.updateMessages([...this._messages, newMessage])
   }
 
+  public async startSystemEventRun(systemEvent: Record<string, unknown>): Promise<void> {
+    if (this._isRunning) {
+      throw new Error('A run is already in progress')
+    }
+
+    this._isWaitingForUser = false
+    this._pendingCapability = null
+    this._isRunning = true
+    this._abortController = new AbortController()
+    this._currentPart = null
+
+    const assistantMessageId = generateMessageId()
+    const assistantMessage: Message = {
+      id: assistantMessageId,
+      role: 'assistant',
+      content: [],
+      status: { type: 'running' },
+      timestamp: Date.now()
+    }
+
+    this.updateMessages([...this._messages, assistantMessage])
+
+    try {
+      const stream = this.config.streamAdapter.stream({
+        messages: this._messages,
+        conversationId: this._conversationId,
+        signal: this._abortController.signal,
+        systemEvent
+      })
+
+      for await (const event of stream) {
+        if (this._abortController.signal.aborted) {
+          break
+        }
+
+        this.handleStreamEvent(assistantMessageId, event.event)
+      }
+
+      this.updateMessageStatus(assistantMessageId, { type: 'complete' })
+    } catch (error) {
+      if (error instanceof Error && error.name === 'AbortError') {
+        this.completeStreamingContent(assistantMessageId)
+        this.updateMessageStatus(assistantMessageId, { type: 'cancelled' })
+      } else {
+        const errorMessage = error instanceof Error ? error.message : 'Unknown error'
+        this.completeStreamingContent(assistantMessageId)
+        this.updateMessageStatus(assistantMessageId, {
+          type: 'error',
+          error: errorMessage
+        })
+      }
+    } finally {
+      this._isRunning = false
+      this._abortController = null
+      this._currentPart = null
+      this.notifySubscribers()
+    }
+  }
+
   public async startRun(userMessage: AppendMessage): Promise<void> {
     if (this._isRunning) {
       throw new Error('A run is already in progress')
     }
 
+    this._isWaitingForUser = false
+    this._pendingCapability = null
     this.append(userMessage)
     this._isRunning = true
     this._abortController = new AbortController()
@@ -208,6 +279,16 @@ export class ThreadRuntimeCore extends BaseSubscribable {
           messageId,
           capabilityEvent.strategy
         )
+      }
+
+      // Track waiting_for_user status so the UI can show a waiting indicator
+      const capabilityStatus = (capabilityEvent as any).status
+      if (capabilityStatus === 'waiting_for_user') {
+        this._isWaitingForUser = true
+        this._pendingCapability = {
+          capabilityId: capabilityEvent.capabilityId,
+          capabilityName: capabilityEvent.capabilityName
+        }
       }
     } else if (event.type === 'error') {
       const errorEvent = event as Extract<StreamEvent, { type: 'error' }>

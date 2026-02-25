@@ -38,6 +38,7 @@ export type StreamEvent =
       readonly capabilityName: string
       readonly capabilityId: string
       readonly args: any
+      readonly status?: 'executing' | 'waiting_for_user' | 'waiting_for_confirmation' | 'completed'
       readonly strategy?: 'queue' | 'parallel' | 'replace'
     }
   | {
@@ -53,6 +54,7 @@ export interface StreamRequest {
   conversationId?: string
   signal?: AbortSignal
   config?: Record<string, unknown>
+  systemEvent?: Record<string, unknown>
 }
 
 export interface StreamChunk {

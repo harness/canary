@@ -1,4 +1,4 @@
-import { StreamAdapter, StreamChunk } from '../types/adapters'
+import { StreamAdapter, StreamChunk, StreamRequest } from '../types/adapters'
 import { Message } from '../types/message'
 
 export interface SSEEvent {
@@ -9,7 +9,7 @@ export interface SSEEvent {
 export abstract class BaseSSEStreamAdapter<TAllowedEvents extends readonly string[] = readonly string[]>
   implements StreamAdapter
 {
-  protected abstract prepareRequest(params: { messages: Message[]; conversationId?: string; signal?: AbortSignal }): {
+  protected abstract prepareRequest(params: StreamRequest & { messages: Message[]; conversationId?: string; signal?: AbortSignal }): {
     url: string
     options: RequestInit
   }
@@ -26,11 +26,7 @@ export abstract class BaseSSEStreamAdapter<TAllowedEvents extends readonly strin
     return allowedEvents.includes(eventType)
   }
 
-  async *stream(params: {
-    messages: Message[]
-    conversationId?: string
-    signal?: AbortSignal
-  }): AsyncGenerator<StreamChunk, void, unknown> {
+  async *stream(params: StreamRequest): AsyncGenerator<StreamChunk, void, unknown> {
     const { signal } = params
     const { url, options } = this.prepareRequest(params)
 

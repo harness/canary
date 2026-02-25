@@ -346,29 +346,7 @@
       @apply my-cn-md;
 
       th {
-        @apply text-cn-1 font-heading-small py-cn-2xs pr-cn-3xl border-l-0 border-r-0 border-t-0 px-0;
-      }
-
-      td {
-        @apply py-cn-sm border-l-0 border-r-0 px-0;
-
-        &:not(:last-child) {
-          @apply pr-cn-3xl;
-        }
-      }
-
-      tr {
-        @apply !bg-transparent;
-
-        &:last-child {
-          td {
-            @apply border-0;
-          }
-        }
-      }
-
-      thead tr {
-        @apply border-0;
+        @apply text-cn-1 font-heading-small;
       }
     }
 

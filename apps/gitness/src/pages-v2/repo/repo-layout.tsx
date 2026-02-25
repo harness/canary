@@ -2,7 +2,7 @@ import { Outlet, useMatches, useParams } from 'react-router-dom'
 
 import { createFavorite, deleteFavorite, EnumResourceType } from '@harnessio/code-service-client'
 import { RepoSubheader } from '@harnessio/ui/components'
-import { RepoHeader, SubHeaderWrapper } from '@harnessio/ui/views'
+import { NotFoundPage, RepoHeader, SubHeaderWrapper } from '@harnessio/ui/views'
 
 import { useRoutes } from '../../framework/context/NavigationContext'
 import { useIsMFE } from '../../framework/hooks/useIsMFE'
@@ -17,7 +17,8 @@ const RepoLayout = () => {
   const routes = useRoutes()
   const { spaceId, repoId } = useParams<PathParams>()
   const { toRepoCommits } = useRepoCommits()
-  const { isLoading, gitRefName, gitRefPath, repoData, fullGitRef, refetchRepo, defaultBranch } = useGitRef()
+  const { isLoading, gitRefName, gitRefPath, repoData, fullGitRef, refetchRepo, defaultBranch, repoFetchError } =
+    useGitRef()
   const toUpstreamRepo = useUpstreamRepoUrl()
 
   const onFavoriteToggle = async (isFavorite: boolean) => {
@@ -45,6 +46,10 @@ const RepoLayout = () => {
   const summaryPathRef = isComparePage ? defaultBranch : gitRefPath
   const filesPathRef = isComparePage ? defaultBranch : gitRefPath
   const commitsPathRef = isComparePage ? defaultBranch : gitRefName
+
+  if (repoFetchError) {
+    return <NotFoundPage titleText={repoFetchError.message} pageTypeText="repositories" />
+  }
 
   return (
     <>

@@ -339,6 +339,7 @@ function renderTree(
       const isActive = activeDiff === node.path
       const addedLines = getDiffFileAddedLines(diffsData || [], node.path)
       const deletedLines = getDiffFileDeletedLines(diffsData || [], node.path)
+      const hasLineChanges = addedLines > 0 || deletedLines > 0
       return (
         <FileExplorer.FileItem
           value={node.path}
@@ -347,18 +348,20 @@ function renderTree(
           level={level}
           onClick={() => goToDiff(node.path)}
           tooltip={
-            <Layout.Flex gapX="3xs" align="center">
-              {addedLines > 0 && (
-                <StatusBadge variant="secondary" size="sm" theme="success">
-                  +{addedLines}
-                </StatusBadge>
-              )}
-              {deletedLines > 0 && (
-                <StatusBadge variant="secondary" size="sm" theme="danger">
-                  -{deletedLines}
-                </StatusBadge>
-              )}
-            </Layout.Flex>
+            hasLineChanges ? (
+              <Layout.Flex gapX="3xs" align="center">
+                {addedLines > 0 && (
+                  <StatusBadge variant="secondary" size="sm" theme="success">
+                    +{addedLines}
+                  </StatusBadge>
+                )}
+                {deletedLines > 0 && (
+                  <StatusBadge variant="secondary" size="sm" theme="danger">
+                    -{deletedLines}
+                  </StatusBadge>
+                )}
+              </Layout.Flex>
+            ) : undefined
           }
           data-explorer-path={node.path}
         >

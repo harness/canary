@@ -589,6 +589,8 @@ button[aria-label="Search"] {
   padding: 2px 6px !important;
   margin-inline: var(--cn-layout-4xs) !important;
   border-radius: var(--cn-rounded-4) !important;
+  white-space: nowrap !important;
+  word-break: keep-all !important;
 }
 
 /* Tip — success/green tint */
@@ -617,6 +619,8 @@ button[aria-label="Search"] {
   padding: 2px 6px !important;
   margin-inline: var(--cn-layout-4xs) !important;
   border-radius: var(--cn-rounded-4) !important;
+  white-space: nowrap !important;
+  word-break: keep-all !important;
 }
 
 /* Caution — warning/yellow tint */
@@ -645,6 +649,8 @@ button[aria-label="Search"] {
   padding: 2px 6px !important;
   margin-inline: var(--cn-layout-4xs) !important;
   border-radius: var(--cn-rounded-4) !important;
+  white-space: nowrap !important;
+  word-break: keep-all !important;
 }
 
 /* Danger — danger/red tint */
@@ -673,6 +679,8 @@ button[aria-label="Search"] {
   padding: 2px 6px !important;
   margin-inline: var(--cn-layout-4xs) !important;
   border-radius: var(--cn-rounded-4) !important;
+  white-space: nowrap !important;
+  word-break: keep-all !important;
 }
 
 .live-provider-router-wrapper > div {

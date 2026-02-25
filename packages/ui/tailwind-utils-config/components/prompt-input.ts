@@ -6,7 +6,7 @@ export default {
   },
 
   '.cn-prompt-input': {
-    borderRadius: 'var(--cn-ai-border-radius)',
+    borderRadius: 'var(--cn-input-ai-radius)',
     padding: 'var(--cn-input-ai-container)',
     backgroundColor: 'var(--cn-comp-input-bg)',
     // Default: solid border using background trick for consistent transitions

@@ -22,7 +22,8 @@ export function useGitRef() {
   const {
     data: { body: repoData } = {},
     isLoading,
-    refetch: refetchRepo
+    refetch: refetchRepo,
+    error: repoFetchError
   } = useFindRepositoryQuery({ repo_ref: repoRef })
   const prefixedDefaultBranch = repoData?.default_branch ? `${REFS_BRANCH_PREFIX}${repoData?.default_branch}` : ''
   const fullGitRef = fullGitRefWoDefault || prefixedDefaultBranch || ''
@@ -34,6 +35,7 @@ export function useGitRef() {
 
   return {
     isLoading,
+    repoFetchError,
     fullGitRef,
     gitRefName,
     gitRefPath,

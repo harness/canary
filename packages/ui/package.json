@@ -26,7 +26,7 @@
     "./types": "./dist/types.js"
   },
   "files": [
-    "dist/**.*",
+    "dist",
     "src/shared-style-variables.css",
     "src/components/markdown-viewer/style.css"
   ],

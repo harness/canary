@@ -12,7 +12,7 @@ import ConditionalPageSidebar from "./ConditionalPageSidebar.astro";
     class="cn-portal-sidebar flex flex-col w-[248px] shrink-0 sticky top-0 h-screen border-r border-cn-3"
   >
     <!-- Logo + Theme toggle -->
-    <div class="cn-sidebar-header flex-shrink-0 flex items-center justify-between pr-cn-xs pt-cn-sm pb-cn-xs" style="padding-left: 16px;">
+    <div class="cn-sidebar-header flex-shrink-0 flex items-center justify-between pl-cn-lg pr-cn-sm pt-cn-md pb-cn-sm">
       <SidebarLogo />
       <div class="cn-sidebar-theme-toggle flex-shrink-0">
         <ThemeSelect />
@@ -20,13 +20,13 @@ import ConditionalPageSidebar from "./ConditionalPageSidebar.astro";
     </div>
 
     <!-- Search -->
-    <div class="cn-sidebar-search flex-shrink-0 px-cn-xs pb-cn-xs">
+    <div class="cn-sidebar-search flex-shrink-0 px-cn-sm pb-cn-sm">
       <Search />
     </div>
 
     <!-- Scrollable nav -->
     <div class="cn-sidebar-scroll flex-1 min-h-0 overflow-hidden">
-      <div class="cn-sidebar-scroll-inner h-full overflow-y-auto overscroll-contain px-cn-xs pb-cn-md">
+      <div class="cn-sidebar-scroll-inner h-full overflow-y-auto overscroll-contain px-cn-sm pb-cn-md">
         <Sidebar />
       </div>
     </div>

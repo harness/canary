@@ -124,7 +124,7 @@ code:not(.expressive-code code) {
   justify-content: flex-start !important;
   border-radius: var(--cn-rounded-5) !important;
   border: var(--cn-border-width-1) solid var(--cn-border-3) !important;
-  padding: var(--cn-spacing-1-half) var(--cn-spacing-2) !important;
+  padding: var(--cn-spacing-1-half) var(--cn-spacing-2) var(--cn-spacing-1-half) var(--cn-layout-sm) !important;
   min-height: var(--cn-size-9) !important;
   max-width: 100% !important;
   background-color: var(--cn-bg-2) !important;
@@ -143,7 +143,24 @@ code:not(.expressive-code code) {
   background-color: var(--cn-bg-1);
 
   details {
-    @apply border-b-0 py-cn-xs;
+    @apply py-cn-sm mx-0;
+    border-bottom: none !important;
+    box-shadow: none;
+    position: relative;
+    margin-inline: calc(-1 * var(--cn-layout-sm));
+    padding-inline: var(--cn-layout-sm);
+
+    &::after {
+      content: "" !important;
+      display: block !important;
+      position: absolute !important;
+      bottom: 0;
+      left: 0;
+      right: 0;
+      height: 1px;
+      background-color: var(--cn-border-3);
+      pointer-events: none;
+    }
 
     ul {
       @apply pl-0;
@@ -157,7 +174,7 @@ code:not(.expressive-code code) {
 
       a {
         @apply text-cn-2 text-cn-size-5 transition-colors duration-150;
-        padding: var(--cn-layout-2xs) var(--cn-layout-xs);
+        padding: var(--cn-layout-2xs) var(--cn-layout-xs) var(--cn-layout-2xs) var(--cn-layout-sm);
         border-radius: var(--cn-rounded-5);
         min-height: var(--cn-size-9);
         display: flex;
@@ -251,12 +268,22 @@ code:not(.expressive-code code) {
     }
 
     &[open] > summary {
-      @apply pb-cn-2xs;
+      @apply pb-cn-sm;
     }
+  }
+
+  details:last-child::after {
+    display: none;
   }
 
   details details {
     @apply border-b-0 py-0;
+    margin-inline: 0;
+    padding-inline: 0;
+
+    &::after {
+      display: none;
+    }
 
     summary {
       @apply py-cn-3xs;
@@ -274,7 +301,10 @@ code:not(.expressive-code code) {
   }
 
   summary {
-    @apply flex items-center py-cn-3xs px-cn-xs;
+    @apply flex items-center px-cn-sm;
+    padding-top: var(--cn-layout-xs);
+    padding-bottom: var(--cn-layout-xs);
+    min-height: var(--cn-size-10);
 
     .group-label {
       span {

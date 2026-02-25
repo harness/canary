@@ -541,6 +541,140 @@ button[aria-label="Search"] {
   }
 }
 
+/* ============================================================
+   ASIDES (Note, Tip, Caution, Danger)
+   ============================================================ */
+
+.starlight-aside {
+  border-radius: var(--cn-rounded-6);
+  border-width: 1px;
+  border-style: solid;
+  padding: var(--cn-layout-md) var(--cn-layout-lg);
+  margin: var(--cn-layout-md) 0;
+}
+
+.starlight-aside .starlight-aside__title {
+  font-size: var(--cn-font-size-5);
+  font-weight: 500;
+  gap: var(--cn-layout-2xs);
+}
+
+.starlight-aside .starlight-aside__content p {
+  font-size: var(--cn-font-size-5);
+}
+
+/* Note — indigo tint */
+.starlight-aside--note {
+  background-color: var(--cn-set-indigo-outline-bg);
+  border-color: var(--cn-set-indigo-outline-border);
+  border-left-width: 4px;
+}
+
+.starlight-aside--note .starlight-aside__title {
+  color: var(--cn-set-indigo-outline-text);
+}
+
+.starlight-aside--note .starlight-aside__icon {
+  color: var(--cn-set-indigo-outline-text);
+}
+
+.starlight-aside--note .starlight-aside__content p {
+  color: var(--cn-set-indigo-outline-text);
+}
+
+.sl-markdown-content .starlight-aside--note :not(pre) > code {
+  background-color: var(--cn-set-indigo-outline-bg) !important;
+  color: var(--cn-set-indigo-outline-text) !important;
+  border: 1px solid var(--cn-set-indigo-outline-border) !important;
+  padding: 2px 6px !important;
+  margin-inline: var(--cn-layout-4xs) !important;
+  border-radius: var(--cn-rounded-4) !important;
+}
+
+/* Tip — success/green tint */
+.starlight-aside--tip {
+  background-color: var(--cn-set-success-outline-bg);
+  border-color: var(--cn-set-success-outline-border);
+  border-left-width: 4px;
+}
+
+.starlight-aside--tip .starlight-aside__title {
+  color: var(--cn-set-success-outline-text);
+}
+
+.starlight-aside--tip .starlight-aside__icon {
+  color: var(--cn-set-success-outline-text);
+}
+
+.starlight-aside--tip .starlight-aside__content p {
+  color: var(--cn-set-success-outline-text);
+}
+
+.sl-markdown-content .starlight-aside--tip :not(pre) > code {
+  background-color: var(--cn-set-success-outline-bg) !important;
+  color: var(--cn-set-success-outline-text) !important;
+  border: 1px solid var(--cn-set-success-outline-border) !important;
+  padding: 2px 6px !important;
+  margin-inline: var(--cn-layout-4xs) !important;
+  border-radius: var(--cn-rounded-4) !important;
+}
+
+/* Caution — warning/yellow tint */
+.starlight-aside--caution {
+  background-color: var(--cn-set-warning-outline-bg);
+  border-color: var(--cn-set-warning-outline-border);
+  border-left-width: 4px;
+}
+
+.starlight-aside--caution .starlight-aside__title {
+  color: var(--cn-set-warning-outline-text);
+}
+
+.starlight-aside--caution .starlight-aside__icon {
+  color: var(--cn-set-warning-outline-text);
+}
+
+.starlight-aside--caution .starlight-aside__content p {
+  color: var(--cn-set-warning-outline-text);
+}
+
+.sl-markdown-content .starlight-aside--caution :not(pre) > code {
+  background-color: var(--cn-set-warning-outline-bg) !important;
+  color: var(--cn-set-warning-outline-text) !important;
+  border: 1px solid var(--cn-set-warning-outline-border) !important;
+  padding: 2px 6px !important;
+  margin-inline: var(--cn-layout-4xs) !important;
+  border-radius: var(--cn-rounded-4) !important;
+}
+
+/* Danger — danger/red tint */
+.starlight-aside--danger {
+  background-color: var(--cn-set-danger-outline-bg);
+  border-color: var(--cn-set-danger-outline-border);
+  border-left-width: 4px;
+}
+
+.starlight-aside--danger .starlight-aside__title {
+  color: var(--cn-set-danger-outline-text);
+}
+
+.starlight-aside--danger .starlight-aside__icon {
+  color: var(--cn-set-danger-outline-text);
+}
+
+.starlight-aside--danger .starlight-aside__content p {
+  color: var(--cn-set-danger-outline-text);
+}
+
+.sl-markdown-content .starlight-aside--danger :not(pre) > code {
+  background-color: var(--cn-set-danger-outline-bg) !important;
+  color: var(--cn-set-danger-outline-text) !important;
+  border: 1px solid var(--cn-set-danger-outline-border) !important;
+  padding: 2px 6px !important;
+  margin-inline: var(--cn-layout-4xs) !important;
+  border-radius: var(--cn-rounded-4) !important;
+}
+
 .live-provider-router-wrapper > div {
   @apply w-full;
   min-width: 0;

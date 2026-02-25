@@ -159,6 +159,7 @@ export const DataTable = function DataTable<TData>({
         {
           id: 'expander',
           header: () => null,
+          enableHiding: false,
           cell: ({ row }: { row: Row<TData> }) => {
             return row.getCanExpand() ? (
               <Button

@@ -14,6 +14,10 @@ function DebugExample() {
   const [logs, setLogs] = useState<{ label: string; log: string }[]>([])
   const [defaultValues, setDefaultValues] = useState({ input1: '11' })
 
+  const updateValues = (newValues: any) => {
+    setDefaultValues(prev => ({ ...prev, ...newValues }))
+  }
+
   const onSubmit = (values: AnyFormValue) => {
     addLog('SUBMIT', values)
   }
@@ -64,8 +68,8 @@ function DebugExample() {
 
       {/* Column 3 */}
       <Layout.Vertical gap="sm" className="w-96">
-        <FormUpdate onUpdate={setDefaultValues} values={{ input1: 'Abcdefgh' }} label="Set invalid value" />
-        <FormUpdate onUpdate={setDefaultValues} values={{ input1: '123456' }} label="Set valid value" />
+        <FormUpdate onUpdate={updateValues} values={{ input1: 'Abcdefgh' }} label="Set invalid value" />
+        <FormUpdate onUpdate={updateValues} values={{ input1: '123456' }} label="Set valid value" />
       </Layout.Vertical>
 
       {/* Column 4 */}

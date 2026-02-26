@@ -41,6 +41,7 @@ type SchemaTreeNode = { [key: string]: SchemaTreeNode } & {
   _input?: IInputDefinition
   _isList?: boolean
   _isArrayItem?: boolean
+  _isTuple?: boolean
   _schema?: zod.ZodType<unknown> | ((values: any) => zod.ZodType<unknown>)
   _schemaObj?: { [key: string]: SchemaTreeNode }
   _requiredOnly?: boolean
@@ -88,11 +89,53 @@ export function getValidationSchema<T = any>(
   return schema
 }
 
+function buildTupleSchema(
+  node: SchemaTreeNode,
+  values: AnyFormValue,
+  options?: IGetValidationSchemaOptions
+): zod.ZodTypeAny | null {
+  // Extract numeric keys (tuple indices)
+  const numericKeys = Object.keys(node)
+    .filter(k => /^\d+$/.test(k) && !k.startsWith('_'))
+    .map(k => parseInt(k, 10))
+    .sort((a, b) => a - b)
+
+  if (numericKeys.length === 0) return null
+
+  // Build tuple items, filling gaps with zod.any().optional()
+  const maxIndex = Math.max(...numericKeys)
+  const tupleItems: zod.ZodTypeAny[] = []
+
+  for (let i = 0; i <= maxIndex; i++) {
+    if (numericKeys.includes(i)) {
+      const itemNode = node[i]
+      const itemSchemas = generateSchemaRec({ item: itemNode }, values, options)
+      tupleItems.push(itemSchemas.item || zod.any().optional())
+    } else {
+      // Fill gaps with optional any
+      tupleItems.push(zod.any().optional())
+    }
+  }
+
+  return zod.tuple(tupleItems as any).rest(zod.any()).optional()
+}
+
 function generateSchemaRec(schemaObj: SchemaTreeNode, values: AnyFormValue, options?: IGetValidationSchemaOptions) {
   const objectSchemas: { [key: string]: zod.Schema<unknown> } = {}
 
   Object.keys(schemaObj).forEach(key => {
-    const { _requiredOnly, _schemaObj, _input, _isList, _isArrayItem, _schema /*...nestedSchemaObj*/ } = schemaObj[key]
+    const { _requiredOnly, _schemaObj, _input, _isList, _isArrayItem, _isTuple, _schema /*...nestedSchemaObj*/ } =
+      schemaObj[key]
+
+    // Handle tuple schemas
+    if (_isTuple && !_isList && !_isArrayItem) {
+      const tupleSchema = buildTupleSchema(schemaObj[key], values, options)
+      if (tupleSchema) {
+        objectSchemas[key] = tupleSchema
+        return
+      }
+    }
+
     if (_isList && _schemaObj && _input) {
       const arraySchema = zod.array(zod.object(generateSchemaRec(_schemaObj, values, options))).optional()
       const enhancedSchema = getSchemaForArray(_schema, _input, values, options, arraySchema)
@@ -381,6 +424,27 @@ function populateSchemaTreeRec<T = any>(
           })
         )
       }
+    }
+  })
+
+  // Second pass: mark tuple containers after all nodes are created
+  inputsArr.forEach(input => {
+    const valuesWithDependencies = utils?.getValuesWithDependencies
+      ? utils?.getValuesWithDependencies(values, input)
+      : values
+
+    if (!input.isVisible || input.isVisible?.(valuesWithDependencies, options?.metadata)) {
+      const pathSegments = input.path.split('.')
+      pathSegments.forEach((segment, index) => {
+        if (index > 0 && /^\d+$/.test(segment)) {
+          // Found numeric segment, mark parent as tuple container
+          const parentPath = pathSegments.slice(0, index).join('.')
+          const parent = parentPath ? get(schemaObj, parentPath) : schemaObj
+          if (parent && typeof parent === 'object') {
+            parent._isTuple = true
+          }
+        }
+      })
     }
   })
 }

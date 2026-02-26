@@ -18,6 +18,10 @@ function RuntimeExample() {
     input1: '<+input>'
   })
 
+  const updateValues = (newValues: any) => {
+    setDefaultValues(prev => ({ ...prev, ...newValues }))
+  }
+
   const onSubmit = (values: AnyFormValue) => {
     addLog('SUBMIT', values)
   }
@@ -88,9 +92,9 @@ function RuntimeExample() {
 
       {/* Column 3 */}
       <Layout.Vertical gap="sm" className="w-96">
-        <FormUpdate onUpdate={setDefaultValues} values={{ input1: 'Abcdefgh' }} label="Set invalid value" />
-        <FormUpdate onUpdate={setDefaultValues} values={{ input1: '123456' }} label="Set valid value" />
-        <FormUpdate onUpdate={setDefaultValues} values={{ input1: '<+inputs.qwe>' }} label="Set runtime" />
+        <FormUpdate onUpdate={updateValues} values={{ input1: 'Abcdefgh' }} label="Set invalid value" />
+        <FormUpdate onUpdate={updateValues} values={{ input1: '123456' }} label="Set valid value" />
+        <FormUpdate onUpdate={updateValues} values={{ input1: '<+inputs.qwe>' }} label="Set runtime" />
       </Layout.Vertical>
 
       {/* Column 4 */}

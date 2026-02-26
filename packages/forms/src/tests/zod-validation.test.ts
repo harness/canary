@@ -419,4 +419,206 @@ describe('Zod Validation System', () => {
       })
     })
   })
+
+  describe('Tuple Validation Support', () => {
+    it('should validate tuple-style paths with fixed indices', async () => {
+      const formDefinition: IFormDefinition = {
+        inputs: [
+          {
+            inputType: 'text',
+            path: 'users.0.name',
+            label: 'First User Name',
+            required: true
+          },
+          {
+            inputType: 'text',
+            path: 'users.0.email',
+            label: 'First User Email',
+            validation: {
+              schema: z.string().email('Invalid email')
+            }
+          },
+          {
+            inputType: 'text',
+            path: 'users.1.name',
+            label: 'Second User Name',
+            required: true
+          }
+        ]
+      }
+
+      const values = {
+        users: [
+          { name: 'John', email: 'john@example.com' },
+          { name: 'Jane' }
+        ]
+      }
+      const schema = getValidationSchema(formDefinition, values)
+
+      // Test valid data
+      const validResult = await schema.safeParseAsync(values)
+      expect(validResult.success).toBe(true)
+
+      // Test missing required field in first position
+      const invalidResult = await schema.safeParseAsync({
+        users: [{ email: 'john@example.com' }, { name: 'Jane' }]
+      })
+      expect(invalidResult.success).toBe(false)
+
+      // Test invalid email format
+      const invalidEmail = await schema.safeParseAsync({
+        users: [{ name: 'John', email: 'invalid' }, { name: 'Jane' }]
+      })
+      expect(invalidEmail.success).toBe(false)
+    })
+
+    it('should handle sparse tuple indices', async () => {
+      const formDefinition: IFormDefinition = {
+        inputs: [
+          {
+            inputType: 'text',
+            path: 'items.0.value',
+            label: 'First Item',
+            required: true
+          },
+          {
+            inputType: 'text',
+            path: 'items.5.value',
+            label: 'Sixth Item',
+            required: true
+          }
+        ]
+      }
+
+      // Positions 1-4 can be anything or missing
+      const values = {
+        items: [
+          { value: 'first' },
+          'random', // index 1 - not validated
+          { other: 'data' }, // index 2 - not validated
+          undefined, // index 3 - not validated
+          null, // index 4 - not validated
+          { value: 'sixth' }
+        ]
+      }
+      const schema = getValidationSchema(formDefinition, values)
+
+      const result = await schema.safeParseAsync(values)
+      expect(result.success).toBe(true)
+    })
+
+    it('should allow extra items beyond tuple definition', async () => {
+      const formDefinition: IFormDefinition = {
+        inputs: [
+          {
+            inputType: 'text',
+            path: 'tags.0',
+            label: 'First Tag',
+            validation: {
+              schema: z.string().min(3, 'Tag must be at least 3 characters')
+            }
+          }
+        ]
+      }
+
+      // Array has more items than defined in tuple
+      const values = { tags: ['tag1', 'tag2', 'tag3', 'tag4'] }
+      const schema = getValidationSchema(formDefinition, values)
+
+      const result = await schema.safeParseAsync(values)
+      expect(result.success).toBe(true)
+
+      // Test with invalid first tag
+      const invalidResult = await schema.safeParseAsync({ tags: ['ab', 'tag2', 'tag3'] })
+      expect(invalidResult.success).toBe(false)
+    })
+
+    it('should handle nested object paths within tuple items', async () => {
+      const formDefinition: IFormDefinition = {
+        inputs: [
+          {
+            inputType: 'text',
+            path: 'config.sources.0.type',
+            label: 'First Source Type',
+            required: true
+          },
+          {
+            inputType: 'text',
+            path: 'config.sources.0.url',
+            label: 'First Source URL',
+            validation: {
+              schema: z.string().url('Invalid URL')
+            }
+          }
+        ]
+      }
+
+      const values = {
+        config: {
+          sources: [{ type: 'git', url: 'https://github.com/test/repo' }]
+        }
+      }
+      const schema = getValidationSchema(formDefinition, values)
+
+      const validResult = await schema.safeParseAsync(values)
+      expect(validResult.success).toBe(true)
+
+      const invalidUrl = await schema.safeParseAsync({
+        config: { sources: [{ type: 'git', url: 'not-a-url' }] }
+      })
+      expect(invalidUrl.success).toBe(false)
+    })
+
+    it('should fail validation when tuple array is shorter than defined indices', async () => {
+      const formDefinition: IFormDefinition = {
+        inputs: [
+          {
+            inputType: 'text',
+            path: 'users.2.name',
+            label: 'Third User',
+            required: true
+          }
+        ]
+      }
+
+      // Array only has 2 items, but we're validating index 2 (third item)
+      const values = { users: ['user1', 'user2'] }
+      const schema = getValidationSchema(formDefinition, values)
+
+      const result = await schema.safeParseAsync(values)
+      expect(result.success).toBe(false)
+    })
+
+    it('should handle simple tuple path without nested objects', async () => {
+      const formDefinition: IFormDefinition = {
+        inputs: [
+          {
+            inputType: 'text',
+            path: 'coordinates.0',
+            label: 'X Coordinate',
+            validation: {
+              schema: z.number().min(0, 'X must be non-negative')
+            }
+          },
+          {
+            inputType: 'text',
+            path: 'coordinates.1',
+            label: 'Y Coordinate',
+            validation: {
+              schema: z.number().min(0, 'Y must be non-negative')
+            }
+          }
+        ]
+      }
+
+      const values = { coordinates: [10, 20] }
+      const schema = getValidationSchema(formDefinition, values)
+
+      const validResult = await schema.safeParseAsync(values)
+      expect(validResult.success).toBe(true)
+
+      const invalidResult = await schema.safeParseAsync({ coordinates: [-5, 20] })
+      expect(invalidResult.success).toBe(false)
+    })
+  })
 })

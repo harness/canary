@@ -10,15 +10,6 @@ import inputComponentFactory from '../../implementation/factory/factory'
 import { formDefinition } from './form-definition'
 
 const initialFormValues = {
-  // Dynamic array - can add/remove items
-  tags: ['frontend', 'backend'],
-
-  // Dynamic list - can add/remove items
-  contributors: [
-    { name: 'John Doe', email: 'john@example.com' },
-    { name: 'Jane Smith', email: 'jane@example.com' }
-  ],
-
   // Tuple - fixed positions (0, 1)
   coordinates: [10, 20],
 
@@ -36,7 +27,16 @@ const initialFormValues = {
   ],
 
   // Tuple with sparse indices - only positions 0 and 5 are validated
-  priorities: ['Critical', 'unused1', 'unused2', 'unused3', 'unused4', 'Low']
+  priorities: ['Critical', null, null, null, null, 'Low'],
+
+  // Dynamic array - can add/remove items
+  tags: ['frontend', 'backend'],
+
+  // Dynamic list - can add/remove items
+  contributors: [
+    { name: 'John Doe', email: 'john@example.com' },
+    { name: 'Jane Smith', email: 'jane@example.com' }
+  ]
 }
 
 function TupleExample() {

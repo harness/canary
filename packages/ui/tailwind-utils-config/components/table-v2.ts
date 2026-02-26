@@ -119,6 +119,14 @@ export default {
 
       '&:has(+ .cn-table-row-active)': {
         '@apply border-b-0': ''
+      },
+
+      '&:where([data-disabled=true])': {
+        '@apply opacity-50 cursor-not-allowed pointer-events-none': ''
+      },
+
+      '&:where([data-disabled=true]) td': {
+        '@apply pointer-events-auto cursor-not-allowed': ''
       }
     },
 

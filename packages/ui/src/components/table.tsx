@@ -105,11 +105,12 @@ TableFooter.displayName = 'TableFooter'
 interface TableRowProps extends HTMLAttributes<HTMLTableRowElement> {
   children?: ReactNode
   selected?: boolean
+  disabled?: boolean
   to?: string
   linkProps?: Omit<LinkProps, 'to'>
 }
 
-const TableRow = forwardRef<HTMLTableRowElement, TableRowProps>(({ className, selected, ...props }, ref) => {
+const TableRow = forwardRef<HTMLTableRowElement, TableRowProps>(({ className, selected, disabled, ...props }, ref) => {
   let rowChildren = props.children
   let isFirstLink = true
 
@@ -124,7 +125,7 @@ const TableRow = forwardRef<HTMLTableRowElement, TableRowProps>(({ className, se
       } as TableHeadProps)
     }
 
-    if (props.to || props.linkProps || props?.onClick) {
+    if (!disabled && (props.to || props.linkProps || props?.onClick)) {
       if (child.props.disableLink) return child
 
       const currentTabIndex = isFirstLink ? 0 : -1
@@ -159,6 +160,7 @@ const TableRow = forwardRef<HTMLTableRowElement, TableRowProps>(({ className, se
       ref={ref}
       className={cn('cn-table-v2-row', className)}
       data-checked={selected ? 'true' : undefined}
+      data-disabled={disabled ? 'true' : undefined}
       {...omit(props, ['onClick'])}
     >
       {rowChildren}

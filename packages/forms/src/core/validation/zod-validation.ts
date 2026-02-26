@@ -117,7 +117,10 @@ function buildTupleSchema(
     }
   }
 
-  return zod.tuple(tupleItems as any).rest(zod.any()).optional()
+  return zod
+    .tuple(tupleItems as any)
+    .rest(zod.any())
+    .optional()
 }
 
 function generateSchemaRec(schemaObj: SchemaTreeNode, values: AnyFormValue, options?: IGetValidationSchemaOptions) {

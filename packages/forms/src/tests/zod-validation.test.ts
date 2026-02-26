@@ -448,10 +448,7 @@ describe('Zod Validation System', () => {
       }
 
       const values = {
-        users: [
-          { name: 'John', email: 'john@example.com' },
-          { name: 'Jane' }
-        ]
+        users: [{ name: 'John', email: 'john@example.com' }, { name: 'Jane' }]
       }
       const schema = getValidationSchema(formDefinition, values)
 

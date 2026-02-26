@@ -48,7 +48,7 @@ export const SidebarRoot = forwardRef<HTMLDivElement, ComponentProps<'div'> & { 
     }
 
     return (
-      <div ref={ref} className={cn('group peer hidden md:block')} data-state={state} data-side={side}>
+      <div ref={ref} className={cn('group peer cn-sidebar-root-responsive')} data-state={state} data-side={side}>
         <div className={cn('cn-sidebar cn-sidebar-desktop', className)} data-state={state} {...props}>
           {children}
         </div>

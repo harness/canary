@@ -20,6 +20,7 @@
     "playwright:report": "exec playwright show-report",
     "gitness:build": "pnpm -r -F @harnessio/ui build:ci && pnpm -r -F './packages/*' build:ci && pnpm -r -F ./apps/gitness build",
     "gitness:dev": "pnpm -r -F './packages/*' build && pnpm -r -F ./apps/gitness dev",
+    "gitness:mfe": "pnpm -r -F './packages/*' build && pnpm -r -F ./apps/gitness start:webpack",
     "portal:build": "pnpm -r -F @harnessio/ui build:ci && pnpm -r -F './packages/*' build:ci && pnpm -r -F ./apps/portal build",
     "portal:dev": "pnpm -r -F './packages/*' build && pnpm -r -F ./apps/portal dev",
     "view-preview:build": "pnpm -r -F @harnessio/ui build:ci && pnpm -r -F './packages/*' build:ci && pnpm -r -F ./apps/design-system build",

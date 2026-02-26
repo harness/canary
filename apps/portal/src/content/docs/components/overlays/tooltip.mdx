@@ -98,6 +98,123 @@ Use `hideArrow` prop to remove the tooltip arrow.
   `}
 />
 
+## Vertical Scroll
+
+Content scrolls when it exceeds the max height.
+
+<DocsPage.ComponentExample
+  client:only
+  code={`
+    <TooltipProvider>
+      <div className="flex justify-center">
+        <Tooltip
+          title="Tooltip with scroll"
+          content={
+            <ul className="flex flex-col gap-y-cn-4xs">
+              {Array.from({ length: 30 }, (_, i) => i + 1).map((i) => (
+                <li key={i}>Item {i}</li>
+              ))}
+            </ul>
+          }
+        >
+          <Button variant="secondary">Hover for scrollable list</Button>
+        </Tooltip>
+      </div>
+    </TooltipProvider>
+  `}
+/>
+
+## Horizontal Scroll
+
+Content scrolls when it exceeds the max width.
+
+<DocsPage.ComponentExample
+  client:only
+  code={`
+    <TooltipProvider>
+      <div className="flex justify-center">
+        <Tooltip
+          title="Tooltip with horizontal scroll"
+          content={
+            <div className="flex flex-col gap-y-cn-4xs">
+              {Array.from({ length: 3 }, (_, row) => (
+                <div key={row} className="flex gap-x-cn-md whitespace-nowrap">
+                  {Array.from({ length: 15 }, (_, i) => row * 15 + i + 1).map((i) => (
+                    <span key={i}>Item {i}</span>
+                  ))}
+                </div>
+              ))}
+            </div>
+          }
+        >
+          <Button variant="secondary">Hover for scrollable list</Button>
+        </Tooltip>
+      </div>
+    </TooltipProvider>
+  `}
+/>
+
+## Both Horizontal and Vertical Scroll
+
+Content scrolls when it exceeds the max height and max width.
+
+<DocsPage.ComponentExample
+  client:only
+  code={`
+    <TooltipProvider>
+      <div className="flex justify-center">
+        <Tooltip
+          title="Tooltip with both scrolls"
+          content={
+            <div className="flex flex-col gap-y-cn-4xs">
+              {Array.from({ length: 25 }, (_, row) => (
+                <div key={row} className="flex gap-x-cn-md whitespace-nowrap">
+                  {Array.from({ length: 12 }, (_, col) => (
+                    <span key={col}>R{row + 1}C{col + 1}</span>
+                  ))}
+                </div>
+              ))}
+            </div>
+          }
+        >
+          <Button variant="secondary">Hover for scrollable grid</Button>
+        </Tooltip>
+      </div>
+    </TooltipProvider>
+  `}
+/>
+
+## Footer
+
+Use the `footer` prop for content that stays fixed at the bottom when the body scrolls.
+
+<DocsPage.ComponentExample
+  client:only
+  code={`
+    <TooltipProvider>
+      <div className="flex justify-center">
+        <Tooltip
+          title="Tooltip with footer"
+          content={
+            <ul className="flex flex-col gap-y-cn-4xs">
+              {Array.from({ length: 20 }, (_, i) => i + 1).map((i) => (
+                <li key={i}>Item {i}</li>
+              ))}
+            </ul>
+          }
+          footer={
+            <Button variant="link" size="md">
+              View details
+            </Button>
+          }
+        >
+          <Button variant="secondary">Hover for tooltip with footer</Button>
+        </Tooltip>
+      </div>
+    </TooltipProvider>
+  `}
+/>
+
 ## Sides
 
 The tooltip can be positioned on any side: `top` (default), `bottom`, `left`, or `right`.
@@ -212,6 +329,13 @@ The provider component that manages tooltips. Typically wrapped around the entir
       description: "Optional title displayed above the content.",
       required: false,
       value: "string",
+    },
+    {
+      name: "footer",
+      description:
+        "Optional footer displayed below the scrollable content. Stays fixed when content scrolls.",
+      required: false,
+      value: "ReactNode",
     },
     {
       name: "theme",

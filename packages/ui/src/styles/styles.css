@@ -613,6 +613,20 @@ mark {
   background-clip: content-box;
 }
 
+/* Tooltip scrollbar - Harness design system */
+.cn-tooltip-content-body {
+  scrollbar-width: thin;
+  scrollbar-color: var(--cn-comp-scrollbar-thumb) transparent;
+}
+.cn-tooltip-content-body::-webkit-scrollbar {
+  width: 6px;
+  height: 6px;
+}
+.cn-tooltip-content-body::-webkit-scrollbar-thumb {
+  background-color: var(--cn-comp-scrollbar-thumb);
+  border-radius: 3px;
+}
+
 .layer-high {
   @apply z-[19];
 }

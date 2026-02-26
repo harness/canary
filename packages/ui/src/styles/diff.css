@@ -1,5 +1,5 @@
+/* Diff view styles: tooltips, wrapper, syntax (hljs), view blocks */
 @import url('./diff-styles.css');
-
 @import 'highlight.js/styles/atom-one-dark.css';
 
 .diff-style-root tr {
@@ -54,6 +54,7 @@
   border-left-width: 1px;
 }
 
+/* diff-tailwindcss-wrapper: layout + hljs syntax colors */
 .diff-tailwindcss-wrapper {
   .diff-line-widget-new-content,
   .diff-line-widget-new-placeholder,
@@ -448,12 +449,11 @@
   scrollbar-width: none;
 }
 
-/* In View Diff Renderer */
+/* Diff view blocks (content-visibility) */
 .diffViewBlock {
   @apply visible box-border flex h-auto min-h-[48px] flex-col;
 }
 
-/* .hidden extension */
 .diffViewBlock.hiddenDiff {
   @apply invisible h-[var(--block-height)] [contain-intrinsic-height:auto_var(--block-height)] [content-visibility:auto];
 }
@@ -465,3 +465,4 @@
 .diffViewBlock.hiddenDiff > * > * {
   display: none !important;
 }
+

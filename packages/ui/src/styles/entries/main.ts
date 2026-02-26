@@ -1,5 +1,1 @@
-import '../base.css'
-import '../utilities.css'
-import '../monaco.css'
-import '../layout.css'
-import '../overrides.css'
+import '../main.css'

@@ -9,7 +9,7 @@ const distDir = join(root, 'dist')
 const stylesDir = join(distDir, 'styles')
 const chunkTempDir = join(distDir, 'chunk-temp')
 
-const CHUNKS = ['base', 'utilities', 'diff', 'monaco', 'layout', 'overrides']
+const CHUNKS = ['main', 'diff']
 
 await mkdir(stylesDir, { recursive: true })
 

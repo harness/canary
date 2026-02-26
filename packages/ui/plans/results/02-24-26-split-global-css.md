@@ -1,6 +1,6 @@
-# Styles chunking: before vs after
+# Split global CSS: main.css + diff.css
 
-Comparison of bundle size and behavior before and after splitting `@harnessio/ui` styles into optional chunks. Chunks live under `dist/styles/` (e.g. `dist/styles/base.css`). All sizes below are minified production builds.
+Optional style chunks are reduced to two files under `dist/styles/`: **main.css** (base, utilities, monaco, layout, overrides) and **diff.css** (diff/PR views). The full bundle `styles.css` is unchanged. All sizes below are minified production builds.
 
 ---
 
@@ -10,28 +10,22 @@ Comparison of bundle size and behavior before and after splitting `@harnessio/ui
 | ------ | -------------------- | -------------------- | ------------------------- |
 | Full bundle raw | 3.07 MB | 3.07 MB (unchanged) | Same |
 | Full bundle gzip | 743 KB | 743 KB (unchanged) | Same |
-| Lazy load (diff + monaco deferred) | — | — | 15.5 KB raw / 3.5 KB gzip off initial |
-| Cache invalidation (one file changed) | 743 KB | 743 KB | 0.4–849 KB (chunk only) |
+| Lazy load (diff deferred) | — | — | ~14 KB raw / ~3 KB gzip off initial |
+| Cache invalidation (one file changed) | 743 KB | 743 KB | ~3 KB (diff) or ~851 KB (main) |
 
-**Before:** One `styles.css` (~773 lines source), one `dist/styles.css`. Every consumer loaded the full sheet up front.
+**Before:** One `styles.css`, one `dist/styles.css`. Every consumer loaded the full sheet up front.
 
-**After:** Full bundle unchanged. Six optional chunks in `dist/styles/`: `base.css`, `utilities.css`, `diff.css`, `monaco.css`, `layout.css`, `overrides.css`. Consumers can keep using `@harnessio/ui/styles.css` or import specific chunks.
+**After:** Full bundle unchanged. Two optional chunks in `dist/styles/`: **main.css** and **diff.css**. Consumers can use `@harnessio/ui/styles.css` or import `main.css` + optionally lazy-load `diff.css`.
 
 ---
 
 ## Chunk sizes (gzip)
 
-| Chunk | Raw | Gzip | % of full bundle |
-| ----- | ----- | ------ | ------------------- |
-| base | 4.06 MB | 849 KB | 114% |
-| utilities | 3.6 KB | 1.1 KB | 0.15% |
-| diff | 14.2 KB | 3.0 KB | 0.40% |
-| monaco | 1.3 KB | 0.5 KB | 0.07% |
-| layout | 0.8 KB | 0.4 KB | 0.05% |
-| overrides | 1.5 KB | 0.7 KB | 0.09% |
-| **Sum (all 6)** | **~4.08 MB** | **~857 KB** | — |
-
-Full bundle is smaller than the chunk sum because Tailwind is built once and deduplicated; `base.css` as a standalone chunk includes full Tailwind layers.
+| Chunk | Raw | Gzip | Notes |
+| ----- | ----- | ------ | ----- |
+| main | ~4.06 MB | ~851 KB | Base + utilities + monaco + layout + overrides |
+| diff | ~14 KB | ~3 KB | Diff/PR views, highlight.js |
+| **Sum** | **~4.07 MB** | **~854 KB** | Full bundle (3.07 MB / 743 KB) is smaller due to Tailwind dedup in single build |
 
 ---
 
@@ -40,21 +34,17 @@ Full bundle is smaller than the chunk sum because Tailwind is built once and ded
 | Changed | Re-download |
 | ------- | ----------- |
 | Full bundle | 743 KB |
-| base | 849 KB |
-| utilities | 1.1 KB |
-| diff | 3.0 KB |
-| monaco | 0.5 KB |
-| layout | 0.4 KB |
-| overrides | 0.7 KB |
+| main | ~851 KB |
+| diff | ~3 KB |
 
 ---
 
 ## Benefits (when using chunks)
 
 - **Backward compatible:** `import '@harnessio/ui/styles.css'` and full-bundle size unchanged.
-- **Lazy load:** Defer `diff.css` and `monaco.css` until diff/editor views; ~3.5 KB gzip off critical path.
+- **Lazy load:** Defer `diff.css` until diff/PR views; ~3 KB gzip off critical path.
 - **Cache:** Only the changed chunk is re-downloaded (e.g. 3 KB for diff vs 743 KB full bundle).
-- **Maintainability:** Domain-scoped files; easier to reason about impact of changes.
+- **Simplicity:** Two chunks instead of six; main + diff covers all use cases.
 
 ---
 
@@ -66,21 +56,16 @@ Full bundle is smaller than the chunk sum because Tailwind is built once and ded
 import '@harnessio/ui/styles.css'
 ```
 
-**Chunks (e.g. lazy diff / Monaco):**
+**Chunks (lazy diff):**
 
 ```ts
-import '@harnessio/ui/styles/base.css'
-import '@harnessio/ui/styles/utilities.css'
-import '@harnessio/ui/styles/layout.css'
-import '@harnessio/ui/styles/overrides.css'
-// When entering diff view:
+import '@harnessio/ui/styles/main.css'
+// When entering diff/PR view:
 import('@harnessio/ui/styles/diff.css')
-// When opening editor:
-import('@harnessio/ui/styles/monaco.css')
 ```
 
-**Exports:** `@harnessio/ui/styles.css` (full), `@harnessio/ui/styles/base.css`, `utilities.css`, `diff.css`, `monaco.css`, `layout.css`, `overrides.css`.
+**Exports:** `@harnessio/ui/styles.css` (full), `@harnessio/ui/styles/main.css`, `@harnessio/ui/styles/diff.css`.
 
 ---
 
-For up-to-date sizes: run `pnpm build` and the style-chunks script in `packages/ui`, then inspect `dist/styles.css` and `dist/styles/*.css`.
+For up-to-date sizes: run `pnpm build` and the style-chunks script in `packages/ui`, then inspect `dist/styles.css` and `dist/styles/main.css`, `dist/styles/diff.css`.

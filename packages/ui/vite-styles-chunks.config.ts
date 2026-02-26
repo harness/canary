@@ -3,7 +3,7 @@ import { resolve } from 'path'
 import { defineConfig } from 'vite'
 import tsConfigPaths from 'vite-tsconfig-paths'
 
-const STYLE_CHUNKS = ['base', 'utilities', 'diff', 'monaco', 'layout', 'overrides'] as const
+const STYLE_CHUNKS = ['main', 'diff'] as const
 const chunk = (process.env.STYLE_CHUNK ?? '') as (typeof STYLE_CHUNKS)[number]
 
 if (!STYLE_CHUNKS.includes(chunk)) {

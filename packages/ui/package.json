@@ -21,12 +21,8 @@
       "default": "./dist/tailwind-design-system.js"
     },
     "./styles.css": "./dist/styles.css",
-    "./styles/base.css": "./dist/styles/base.css",
-    "./styles/utilities.css": "./dist/styles/utilities.css",
+    "./styles/main.css": "./dist/styles/main.css",
     "./styles/diff.css": "./dist/styles/diff.css",
-    "./styles/monaco.css": "./dist/styles/monaco.css",
-    "./styles/layout.css": "./dist/styles/layout.css",
-    "./styles/overrides.css": "./dist/styles/overrides.css",
     "./shared-style-variables.css": "./src/styles/shared-style-variables.css",
     "./markdown-preview-styles.css": "./src/components/markdown-viewer/style.css",
     "./context": "./dist/context.js",

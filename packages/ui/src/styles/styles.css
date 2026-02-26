@@ -1,6 +1,2 @@
-@import './base.css';
-@import './utilities.css';
+@import './main.css';
 @import './diff.css';
-@import './monaco.css';
-@import './layout.css';
-@import './overrides.css';

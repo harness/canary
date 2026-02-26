@@ -368,6 +368,53 @@ import { Aside } from "@astrojs/starlight/components";
 `}
 />
 
+### Disabled rows
+
+<DocsPage.ComponentExample
+  client:only
+  code={`
+<div>
+  <h5 className="mb-cn-xs">Disabled rows (reduced opacity, not-allowed cursor, click suppressed)</h5>
+  <Table.Root>
+    <Table.Header>
+      <Table.Row>
+        <Table.Head>Name</Table.Head>
+        <Table.Head>Email</Table.Head>
+        <Table.Head>Status</Table.Head>
+        <Table.Head>Date added</Table.Head>
+      </Table.Row>
+    </Table.Header>
+    <Table.Body>
+      <Table.Row onClick={() => alert('John clicked')}>
+        <Table.Cell>John Doe</Table.Cell>
+        <Table.Cell>john@example.com</Table.Cell>
+        <Table.Cell>Active</Table.Cell>
+        <Table.Cell>2023-01-01</Table.Cell>
+      </Table.Row>
+      <Table.Row disabled onClick={() => alert('Jane clicked')}>
+        <Table.Cell>Jane Smith</Table.Cell>
+        <Table.Cell>jane@example.com</Table.Cell>
+        <Table.Cell>Inactive</Table.Cell>
+        <Table.Cell>2023-02-15</Table.Cell>
+      </Table.Row>
+      <Table.Row onClick={() => alert('Bob clicked')}>
+        <Table.Cell>Bob Johnson</Table.Cell>
+        <Table.Cell>bob@example.com</Table.Cell>
+        <Table.Cell>Active</Table.Cell>
+        <Table.Cell>2023-03-20</Table.Cell>
+      </Table.Row>
+      <Table.Row disabled onClick={() => alert('Alice clicked')}>
+        <Table.Cell>Alice Williams</Table.Cell>
+        <Table.Cell>alice@example.com</Table.Cell>
+        <Table.Cell>Inactive</Table.Cell>
+        <Table.Cell>2023-04-10</Table.Cell>
+      </Table.Row>
+    </Table.Body>
+  </Table.Root>
+</div>
+`}
+/>
+
 ## Usage
 
 ```typescript jsx
@@ -566,6 +613,7 @@ The footer section of the table.
 <Table.Row
   className="custom-class" // [OPTIONAL] Custom class name
   selected={true} // [OPTIONAL] Whether the row is checked/selected
+  disabled={false} // [OPTIONAL] Whether the row is disabled
   onClick={(e) => console.log('Row clicked', e)} // [OPTIONAL] Click handler for the row
 >
   {/* Row content */}
@@ -583,6 +631,13 @@ The footer section of the table.
     {
       name: "selected",
       description: "Whether the row is checked/selected",
+      required: false,
+      value: "boolean",
+    },
+    {
+      name: "disabled",
+      description:
+        "Whether the row is disabled. Disabled rows have reduced opacity, show a not-allowed cursor, and do not respond to click events.",
       required: false,
       value: "boolean",
     },

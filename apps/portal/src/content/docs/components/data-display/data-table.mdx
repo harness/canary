@@ -406,6 +406,13 @@ function MyTable() {
       value: "(row: Row<TData>) => boolean",
     },
     {
+      name: "getIsRowDisabled",
+      description:
+        "Function to determine if a row is disabled. Disabled rows have reduced opacity, show a not-allowed cursor, and cannot be clicked, selected, or expanded.",
+      required: false,
+      value: "(row: Row<TData>) => boolean",
+    },
+    {
       name: "currentExpanded",
       description: "Current expanded rows state",
       required: false,
@@ -954,6 +961,116 @@ function TableWithActiveRows() {
 - Access row data via `row.original` to apply conditional logic
 - Return a string with class names or `undefined` for no custom styling
 - Use design system class names (e.g., `cn-table-row-active`) for consistent styling
+
+## Disabled Rows
+
+The `getIsRowDisabled` prop allows you to disable specific rows based on row data. Disabled rows have reduced opacity, show a not-allowed cursor, and cannot be clicked, selected, or expanded.
+
+<DocsPage.ComponentExample
+  client:only
+  code={`() => {
+  const users = [
+    { id: 1, name: 'John Doe', email: 'john@example.com', status: 'active' },
+    { id: 2, name: 'Jane Smith', email: 'jane@example.com', status: 'inactive' },
+    { id: 3, name: 'Bob Johnson', email: 'bob@example.com', status: 'active' },
+    { id: 4, name: 'Alice Williams', email: 'alice@example.com', status: 'inactive' }
+  ]
+
+const [expanded, setExpanded] = React.useState({})
+const [rowSelection, setRowSelection] = React.useState({})
+
+const columns = [
+{
+accessorKey: 'name',
+header: 'Name'
+},
+{
+accessorKey: 'email',
+header: 'Email'
+},
+{
+accessorKey: 'status',
+header: 'Status',
+cell: (info) => (
+
+<StatusBadge
+  theme={info.getValue() === "active" ? "success" : "default"}
+  size="sm"
+>
+  {info.getValue()}
+</StatusBadge>
+) } ]
+
+const renderSubComponent = ({ row }) => {
+const user = row.original
+return (
+
+<div>
+  <p>
+    Details for {user.name}: {user.email}
+  </p>
+</div>
+) }
+
+return (
+
+<DataTable
+  columns={columns}
+  data={users}
+  getRowId={(row) => row.id.toString()}
+  size="compact"
+  enableRowSelection
+  enableExpanding
+  renderSubComponent={renderSubComponent}
+  currentExpanded={expanded}
+  onExpandedChange={setExpanded}
+  currentRowSelection={rowSelection}
+  onRowSelectionChange={setRowSelection}
+  onRowClick={(data) => alert(data.name + " clicked")}
+  getIsRowDisabled={(row) => row.original.status === "inactive"}
+/>
+) }`} />
+
+### Usage
+
+```tsx
+import { DataTable } from "@harnessio/ui/components";
+
+function TableWithDisabledRows() {
+  const columns = [
+    { accessorKey: "name", header: "Name" },
+    { accessorKey: "email", header: "Email" },
+  ];
+
+  const data = [
+    { id: 1, name: "John Doe", email: "john@example.com", status: "active" },
+    {
+      id: 2,
+      name: "Jane Smith",
+      email: "jane@example.com",
+      status: "inactive",
+    },
+  ];
+
+  return (
+    <DataTable
+      columns={columns}
+      data={data}
+      getRowId={(row) => row.id.toString()}
+      getIsRowDisabled={(row) => row.original.status === "inactive"}
+      onRowClick={(data) => console.log("Clicked:", data.name)}
+    />
+  );
+}
+```
+
+### Key Points
+
+- The `getIsRowDisabled` function receives a `Row<TData>` object from TanStack Table
+- Access row data via `row.original` to apply conditional logic
+- Disabled rows cannot be clicked, selected, or expanded
+- The "Select all" checkbox skips disabled rows
+- Disabled rows are visually distinguished with reduced opacity and a not-allowed cursor
 
 ## Examples
 

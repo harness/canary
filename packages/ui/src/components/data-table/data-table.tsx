@@ -69,6 +69,12 @@ export interface DataTableProps<TData> {
    */
   getRowCanSelect?: (row: Row<TData>) => boolean
   /**
+   * Function to determine if a row is disabled.
+   * Disabled rows have reduced opacity, show a not-allowed cursor,
+   * and cannot be clicked, selected, or expanded.
+   */
+  getIsRowDisabled?: (row: Row<TData>) => boolean
+  /**
    * Current expanded rows state
    */
   currentExpanded?: ExpandedState
@@ -106,6 +112,7 @@ export const DataTable = function DataTable<TData>({
   enableExpanding = false,
   getRowCanExpand,
   getRowCanSelect,
+  getIsRowDisabled,
   currentExpanded,
   onExpandedChange: externalOnExpandedChange,
   renderSubComponent,
@@ -202,7 +209,9 @@ export const DataTable = function DataTable<TData>({
       //  React table gives it to us directly
       onSortingChange: externalOnSortingChange,
       // Enable row selection if specified
-      enableRowSelection: enableRowSelection ? getRowCanSelect || (() => true) : undefined,
+      enableRowSelection: enableRowSelection
+        ? (row: Row<TData>) => !getIsRowDisabled?.(row) && (getRowCanSelect?.(row) ?? true)
+        : undefined,
       // Handle row selection changes
       onRowSelectionChange: externalOnRowSelectionChange,
       // Enable row expansion if specified
@@ -212,7 +221,9 @@ export const DataTable = function DataTable<TData>({
       // Handle expanded state changes
       onExpandedChange: externalOnExpandedChange,
       // Use custom getRowCanExpand function if provided, otherwise make all rows expandable if expansion is enabled
-      getRowCanExpand: enableExpanding ? getRowCanExpand || (() => true) : undefined,
+      getRowCanExpand: enableExpanding
+        ? (row: Row<TData>) => !getIsRowDisabled?.(row) && (getRowCanExpand?.(row) ?? true)
+        : undefined,
       // Enable column resizing if specified
       enableColumnResizing: _enableColumnResizing,
       columnResizeMode: 'onChange',
@@ -232,6 +243,7 @@ export const DataTable = function DataTable<TData>({
       externalOnSortingChange,
       enableRowSelection,
       getRowCanSelect,
+      getIsRowDisabled,
       externalOnRowSelectionChange,
       enableExpanding,
       externalOnExpandedChange,
@@ -315,8 +327,9 @@ export const DataTable = function DataTable<TData>({
           <Fragment key={row.id}>
             <Table.Row
               className={getRowClassName?.(row)}
-              onClick={onRowClick ? () => onRowClick(row.original, row.index) : undefined}
+              onClick={onRowClick && !getIsRowDisabled?.(row) ? () => onRowClick(row.original, row.index) : undefined}
               selected={enableRowSelection ? row.getIsSelected() : undefined}
+              disabled={getIsRowDisabled?.(row)}
             >
               {row.getVisibleCells().map(cell => {
                 const column = cell.column

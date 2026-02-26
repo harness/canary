@@ -10,7 +10,7 @@
     "lint": "pnpm -r lint",
     "pretty": "pnpm -r pretty",
     "typecheck": "pnpm -r typecheck",
-    "publish:all": "pnpm publish -r --access public",
+    "publish:all": "pnpm publish -r --access public --no-git-checks",
     "preinstall": "npx only-allow pnpm",
     "pre-commit": "pnpm run -r --workspace-concurrency=1 pre-commit",
     "test": "pnpm -r test",

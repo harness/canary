@@ -1,6 +1,8 @@
 import fs from 'node:fs/promises'
+import path from 'node:path'
 
 import { permutateThemes, register } from '@tokens-studio/sd-transforms'
+import CleanCSS from 'clean-css'
 import StyleDictionary from 'style-dictionary'
 import { getReferences, usesReferences } from 'style-dictionary/utils'
 
@@ -181,13 +183,26 @@ async function run() {
   harnessLog()
 }
 
+function minifyCss(content) {
+  const result = new CleanCSS({ inline: false }).minify(content)
+  if (result.errors.length > 0) {
+    throw new Error(`Minification failed: ${result.errors.join(', ')}`)
+  }
+  return result.styles
+}
+
 async function createCssFiles() {
-  console.log(`\n\x1b[34mCreating import files in ${DESIGN_SYSTEM_ROOT}...\x1b[0m`)
+  console.log(`\n\x1b[34mCreating and minifying CSS in ${DESIGN_SYSTEM_ROOT}...\x1b[0m`)
 
-  // Get list of all CSS files
+  // All CSS files in dist/styles (core + theme) — minify every one
   const cssFiles = (await fs.readdir(DESIGN_SYSTEM_ROOT)).filter(file => file.endsWith('.css')).sort()
+  for (const file of cssFiles) {
+    const filePath = path.join(DESIGN_SYSTEM_ROOT, file)
+    const content = await fs.readFile(filePath, 'utf8')
+    await fs.writeFile(filePath, minifyCss(content))
+  }
 
-  // Organize files by type
+  // Organize for import index files (core vs dark/light theme)
   const coreFiles = cssFiles.filter(
     file => !file.startsWith(THEME_MODE_FILENAME_PREFIX.DARK) && !file.startsWith(THEME_MODE_FILENAME_PREFIX.LIGHT)
   )
@@ -231,14 +246,18 @@ ${lightFiles.map(file => `@import './${file}';`).join('\n')}`
 /* Theme files - Light */
 @import './light.css';`
 
-  // Write file
+  // Write import index files (also minified)
   await Promise.all([
-    fs.writeFile(`${DESIGN_SYSTEM_ROOT}/themes.css`, themesContent),
-    fs.writeFile(`${DESIGN_SYSTEM_ROOT}/mfe-themes.css`, mfeThemesContent),
-    fs.writeFile(`${DESIGN_SYSTEM_ROOT}/core-imports.css`, coreStyles)
+    fs.writeFile(`${DESIGN_SYSTEM_ROOT}/themes.css`, minifyCss(themesContent)),
+    fs.writeFile(`${DESIGN_SYSTEM_ROOT}/mfe-themes.css`, minifyCss(mfeThemesContent)),
+    fs.writeFile(`${DESIGN_SYSTEM_ROOT}/core-imports.css`, minifyCss(coreStyles))
   ])
 
-  console.log('\n\x1b[1m\x1b[32m%s\x1b[0m', `✔︎ Created import files in ${DESIGN_SYSTEM_ROOT}`)
+  const totalMinified = cssFiles.length + 3
+  console.log(
+    '\n\x1b[1m\x1b[32m%s\x1b[0m',
+    `✔︎ All ${totalMinified} CSS files in ${DESIGN_SYSTEM_ROOT} minified (core + theme + import index)`
+  )
 }
 
 async function createEsmIndexFile() {

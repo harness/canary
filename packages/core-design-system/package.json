@@ -23,6 +23,7 @@
   "author": "",
   "license": "Apache-2.0",
   "devDependencies": {
+    "clean-css": "^5.3.3",
     "@tokens-studio/sd-transforms": "^1.2.9",
     "figlet": "^1.8.0",
     "gradient-string": "^3.0.0",

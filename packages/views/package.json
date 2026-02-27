@@ -1,6 +1,6 @@
 {
   "name": "@harnessio/views",
-  "version": "0.0.3",
+  "version": "0.0.4",
   "description": "Harness Canary Views Library",
   "private": false,
   "type": "module",
@@ -44,7 +44,6 @@
     "cel-js": "^0.7.1",
     "class-variance-authority": "^0.7.0",
     "clsx": "^2.1.1",
-    "cmdk": "^1.0.0",
     "date-fns": "^3.6.0",
     "diff2html": "3.4.22",
     "framer-motion": "6",

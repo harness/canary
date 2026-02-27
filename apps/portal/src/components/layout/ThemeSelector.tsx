@@ -6,6 +6,7 @@ import {
   TooltipProvider,
 } from "@harnessio/ui/components";
 import { DialogProvider } from "@harnessio/ui/context";
+import { themeManifest } from "@harnessio/ui/themes/theme-manifest";
 import { useEffect, useState } from "react";
 
 export function ThemeSelector() {
@@ -34,6 +35,8 @@ export function ThemeSelector() {
         setTheme={setTheme}
         theme={theme}
         showAccessibilityThemeOptions
+        themesBasePath="/themes"
+        themeManifest={themeManifest}
       >
         <Button
           iconOnly

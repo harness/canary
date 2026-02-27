@@ -4,6 +4,7 @@ import {
   Dialog,
   getModeColorContrastFromFullTheme,
   IconV2,
+  Layout,
   Select,
   SelectValueOption,
   Separator,
@@ -35,7 +36,8 @@ const ThemeDialog: FC<ThemeDialogProps> = ({
   showSystemMode,
   showAccentColor,
   showGrayColor,
-  showAccessibilityThemeOptions = false
+  showAccessibilityThemeOptions = false,
+  isThemeLoading
 }) => {
   const [accentColor, setAccentColor] = useState<AccentColor>(AccentColor.Blue)
   const [grayColor, setGrayColor] = useState<GrayColor>(GrayColor.First)
@@ -69,7 +71,13 @@ const ThemeDialog: FC<ThemeDialogProps> = ({
         <Dialog.Header>
           <Dialog.Title>Appearance settings</Dialog.Title>
         </Dialog.Header>
-        <Dialog.Body>
+        <Dialog.Body className="relative">
+          {isThemeLoading && (
+            <Layout.Horizontal align="center" justify="center" className="bg-cn-0/50 absolute inset-0 z-10 rounded">
+              <Text variant="body-normal">Loading theme...</Text>
+              <IconV2 size="lg" name="loader" className="text-cn-2 animate-spin" />
+            </Layout.Horizontal>
+          )}
           <div className="flex flex-col">
             <Text variant="heading-base">Mode</Text>
             <Text className="mt-cn-2xs" color="foreground-3">

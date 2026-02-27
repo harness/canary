@@ -110,7 +110,23 @@ export default defineConfig({
       formats: ['es']
     },
     rollupOptions: {
-      external
+      external,
+      output: {
+        entryFileNames: '[name].js',
+        chunkFileNames: 'chunks/[name]-[hash:7].js',
+        assetFileNames: 'assets/[name]-[hash:7][extname]',
+        manualChunks(id) {
+          if (id.includes('node_modules')) {
+            if (id.includes('monaco-editor')) return 'monaco-editor'
+            if (id.includes('@harnessio/yaml-editor')) return 'yaml-editor'
+            if (id.includes('sonner')) return 'sonner'
+            if (id.includes('@git-diff-view')) return 'git-diff-view'
+            if (id.includes('@harnessio/pipeline-graph')) return 'pipeline-graph'
+            if (id.includes('framer-motion')) return 'framer-motion'
+            if (id.includes('lodash-es')) return 'lodash-es'
+          }
+        }
+      }
     },
     sourcemap: true
   }

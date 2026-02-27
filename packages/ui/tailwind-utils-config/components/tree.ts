@@ -11,7 +11,7 @@ export default {
     },
     '&-item': {
       ...baseTreeItemStyles,
-      '@apply relative gap-cn-3xs flex items-center w-[fill-available]': '',
+      '@apply relative gap-cn-3xs flex items-center w-[stretch]': '',
 
       '&-wrapper': {
         '@apply relative transition-colors': '',

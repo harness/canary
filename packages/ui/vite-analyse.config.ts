@@ -3,4 +3,13 @@ import { analyzer } from 'vite-bundle-analyzer'
 
 import config from './vite.config'
 
-export default mergeConfig(config, { plugins: [analyzer()] })
+export default mergeConfig(config, {
+  plugins: [
+    analyzer({
+      analyzerMode: 'static',
+      fileName: 'stats',
+      openAnalyzer: false,
+      summary: true
+    })
+  ]
+})

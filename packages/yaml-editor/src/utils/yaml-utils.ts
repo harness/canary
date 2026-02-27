@@ -1,11 +1,14 @@
 import { parse } from 'yaml'
 
-export function parseYamlSafe(yaml: string) {
-  let yamlObject: Record<string, unknown> | undefined = undefined
+export function parseYamlSafe<T = Record<string, unknown>>(yaml: string): {
+  yamlObject: T | undefined
+  isYamlSyntaxValid: boolean
+} {
+  let yamlObject: T | undefined = undefined
   let isYamlSyntaxValid = true
 
   try {
-    yamlObject = parse(yaml)
+    yamlObject = parse(yaml) as T
   } catch (ex) {
     isYamlSyntaxValid = false
   }

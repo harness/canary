@@ -22,7 +22,6 @@ export function useThemeCSSLoader(themesBasePath: string, manifest: ThemeManifes
        * dark-std-std, light-std-std themes are already bundled, so no need to load them
        */
       if (!cssName) {
-        // existingLinks.forEach(link => link.remove())
         removeAllThemeLinks()
         return Promise.resolve()
       }
@@ -42,17 +41,13 @@ export function useThemeCSSLoader(themesBasePath: string, manifest: ThemeManifes
         link.href = href
 
         link.onload = () => {
-          // existingLinks.forEach(link => link.remove())
           removeAllThemeLinks()
-          // link.id = LINK_ELEMENT_ID
           link.setAttribute(THEME_ATTR, THEME_ATTR_VALUE)
           resolve()
         }
 
         link.onerror = () => {
-          // existingLinks.forEach(link => link.remove())
           removeAllThemeLinks()
-          // link.id = LINK_ELEMENT_ID
           link.setAttribute(THEME_ATTR, THEME_ATTR_VALUE)
           resolve()
         }

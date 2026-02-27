@@ -1,6 +1,8 @@
 import { IconPropsV2, ToggleGroup } from '@harnessio/ui/components'
+import type { VisualYamlValue } from '@harnessio/yaml-editor'
 
-export type VisualYamlValue = 'visual' | 'yaml'
+// Re-export from yaml-editor for backward compatibility
+export type { VisualYamlValue } from '@harnessio/yaml-editor'
 
 interface VisualYamlToggleProps {
   view: VisualYamlValue

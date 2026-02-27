@@ -13,6 +13,7 @@ import { monacoThemes, monacoThemesForBlame } from './theme/monaco-themes'
 import { InlineAction } from './types/inline-actions'
 import { SelectorType, type ContainsPathSelector, type PathSelector } from './types/selectors'
 import { ThemeDefinition } from './types/themes'
+import { VisualYamlValue, YamlErrorDataType } from './types/yaml-editor-types'
 import { MonacoGlobals } from './utils/monaco-globals'
 import { parseYamlSafe } from './utils/yaml-utils'
 
@@ -47,3 +48,5 @@ export type { DiffEditorProps }
 export { parseYamlSafe }
 
 export { monacoThemes, monacoThemesForBlame }
+
+export type { VisualYamlValue, YamlErrorDataType }

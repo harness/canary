@@ -1,12 +1,14 @@
 import { useCallback, useEffect, useMemo, useRef, useState } from 'react'
 
-import type { Problem, ProblemSeverity } from '@harnessio/ui/components'
-import { editor } from 'monaco-editor'
 import { ILanguageFeaturesService } from 'monaco-editor/esm/vs/editor/common/services/languageFeatures.js'
 import { OutlineModel } from 'monaco-editor/esm/vs/editor/contrib/documentSymbols/browser/outlineModel.js'
 import { StandaloneServices } from 'monaco-editor/esm/vs/editor/standalone/browser/standaloneServices.js'
 
 import { InlineAction, MonacoGlobals, useYamlEditorContext, YamlEditor } from '@harnessio/yaml-editor'
+import type { YamlErrorDataType } from '@harnessio/yaml-editor'
+
+// Re-export from yaml-editor for backward compatibility
+export type { YamlErrorDataType } from '@harnessio/yaml-editor'
 
 import { useUnifiedPipelineStudioContext } from '../context/unified-pipeline-studio-context'
 import unifiedSchema from '../schema/unified-schema.json'
@@ -22,12 +24,6 @@ MonacoGlobals.set({
   OutlineModel,
   StandaloneServices
 })
-
-export type YamlErrorDataType = {
-  problems: Problem<editor.IMarker>[]
-  problemsCount: Record<ProblemSeverity | 'all', number>
-  isYamlValid: boolean
-}
 
 const PipelineStudioYamlView = (): JSX.Element => {
   const {

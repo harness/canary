@@ -8,6 +8,7 @@ export * from './branch-selector'
 export * from './highlighter'
 export * from './yaml-entity'
 export * from './entity'
+export * from './secret'
 
 export interface TypesUser {
   admin?: boolean

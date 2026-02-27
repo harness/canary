@@ -1,6 +1,6 @@
 {
   "name": "@harnessio/views",
-  "version": "0.1.0-gitness-only-views.0",
+  "version": "0.1.0-gitness-only-views.1",
   "description": "Harness Canary Views Library",
   "private": false,
   "type": "module",

@@ -1,5 +1,8 @@
+import { PaginationProps } from '@/components'
+import { TFunctionWithFallback } from '@/context/translation-context'
 import { ComboBoxOptions } from '@components/filters/filters-bar/actions/variants/combo-box'
 import { RepositoryType } from '@views/repo/repo.types'
+import { OnChangeFn, SortingState } from '@tanstack/react-table'
 
 import { Scope } from '../..'
 
@@ -79,4 +82,23 @@ export enum RepoSortMethod {
   Newest = 'created,desc',
   Oldest = 'created,asc',
   LastPush = 'last_git_push,desc'
+}
+
+export interface RepoListProps {
+  repositories: RepositoryType[]
+  visibleColumns: string[]
+  currentSorting?: SortingState
+  onSortingChange?: OnChangeFn<SortingState>
+  paginationProps?: PaginationProps
+  isLoading: boolean
+  isDirtyList: boolean
+  handleResetFiltersQueryAndPages: () => void
+  onRowClick?: (repo: RepositoryType) => void
+  // Column-level dependencies
+  t: TFunctionWithFallback
+  scope: Scope
+  showScope?: boolean
+  onFavoriteToggle: FavoriteProps['onFavoriteToggle']
+  onCancelImport?: (repoId: string) => void
+  toUpstreamRepo?: (parentRepoPath: string, subPath?: string) => string
 }

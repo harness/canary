@@ -1,6 +1,6 @@
 import { useCallback } from 'react'
 
-import { type FullTheme, getThemeCSSName } from '@/context/theme/types'
+import { getThemeCSSName, type FullTheme } from '@/context/theme/types'
 
 export type ThemeManifest = Record<string, string>
 
@@ -19,8 +19,8 @@ export function useThemeCSSLoader(themesBasePath: string, manifest: ThemeManifes
       const existingLinks = document.querySelectorAll(SELECTOR) as NodeListOf<HTMLLinkElement>
 
       /**
-      * dark-std-std, light-std-std themes are already bundled, so no need to load them
-      */
+       * dark-std-std, light-std-std themes are already bundled, so no need to load them
+       */
       if (!cssName) {
         // existingLinks.forEach(link => link.remove())
         removeAllThemeLinks()

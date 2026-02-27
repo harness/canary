@@ -32,3 +32,4 @@ const Sidebar = {
 }
 
 export { Sidebar, useSidebar, type SidebarItemProps, type UseSidebarSignature }
+export { DraggableSidebarDivider, SIDEBAR_MIN_WIDTH, SIDEBAR_MAX_WIDTH } from './draggable-sidebar-divider'

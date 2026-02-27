@@ -1,5 +1,14 @@
 {
+  "entity": {
+    "cantDelete": "Can't delete {{entity}}",
+    "cantDeleteMessage": "The {{entity}} [{{entityId}}] is being referenced in other entities. Please remove the referenced {{entity}} from affected entities before deleting.",
+    "viewReferences": "View references",
+    "forceDelete": "Forcefully delete this {{entity}} now",
+    "forceDeleteWarning": "Forceful deletion might render entities referencing this {{entity}} invalid and will need to be updated.",
+    "delete": "Delete"
+  },
   "repos": {
+    "search": "Search",
     "summary": "Summary",
     "files": "Files",
     "pipelines": "Pipelines",
@@ -12,7 +21,6 @@
       "commitsAhead": "commits ahead",
       "createBranch": "Create Branch"
     },
-    "search": "Search",
     "settings": "Settings",
     "descriptionPlaceholder": "Enter a description",
     "description": "Description",
@@ -710,14 +718,6 @@
     "descriptionWithType": "The requested page is not found. You can go back to view all {{type}} and manage your settings.",
     "description": "The requested page is not found.",
     "button": "Reload Page"
-  },
-  "entity": {
-    "cantDelete": "Can't delete {{entity}}",
-    "cantDeleteMessage": "The {{entity}} [{{entityId}}] is being referenced in other entities. Please remove the referenced {{entity}} from affected entities before deleting.",
-    "viewReferences": "View references",
-    "forceDelete": "Forcefully delete this {{entity}} now",
-    "forceDeleteWarning": "Forceful deletion might render entities referencing this {{entity}} invalid and will need to be updated.",
-    "delete": "Delete"
   },
   "profileSettings": {
     "newSshKey": "New SSH key",

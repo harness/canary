@@ -108,12 +108,12 @@
     "noOptions": "Aucune option disponible"
   },
   "filter": {
-    "delete": "Delete filter",
     "inputPlaceholder": "Filtrer par...",
     "buttonLabel": "Réinitialiser les filtres",
     "defaultLabel": "Filtrer",
-    "saveFilter": "Save Filter",
     "reset": "Réinitialiser",
+    "saveFilter": "Save Filter",
+    "delete": "Delete filter",
     "search": {
       "placeholder": "Search"
     },
@@ -141,6 +141,17 @@
     "author": "Auteur",
     "createdBefore": "Created Before",
     "createdAfter": "Created After"
+  },
+  "sort": {
+    "defaultLabel": "Trier",
+    "resetSort": "Reset sort",
+    "buttonLabel": "Réinitialiser le tri",
+    "inputPlaceholder": "Trier par...",
+    "lastUpdated": "Dernière mise à jour",
+    "stars": "Étoiles",
+    "forks": "Bifurcations",
+    "pullRequests": "Demandes de fusion",
+    "title": "Titre"
   },
   "select": {
     "placeholder": "Sélectionnez une option",
@@ -218,17 +229,6 @@
   },
   "widgets": {
     "viewMore": "View more"
-  },
-  "sort": {
-    "defaultLabel": "Trier",
-    "resetSort": "Reset sort",
-    "buttonLabel": "Réinitialiser le tri",
-    "inputPlaceholder": "Trier par...",
-    "lastUpdated": "Dernière mise à jour",
-    "stars": "Étoiles",
-    "forks": "Bifurcations",
-    "pullRequests": "Demandes de fusion",
-    "title": "Titre"
   },
   "branchDialog": {
     "violationMessages": {

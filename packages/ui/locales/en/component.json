@@ -109,12 +109,12 @@
     "noOptions": "No options available"
   },
   "filter": {
-    "delete": "Delete Filter",
     "inputPlaceholder": "Filter by...",
     "buttonLabel": "Reset filters",
     "defaultLabel": "Filter",
-    "saveFilter": "Save Filter",
     "reset": "Reset",
+    "saveFilter": "Save Filter",
+    "delete": "Delete Filter",
     "search": {
       "placeholder": "Search"
     },
@@ -142,6 +142,16 @@
     "author": "Author",
     "createdBefore": "Created Before",
     "createdAfter": "Created After"
+  },
+  "sort": {
+    "defaultLabel": "Sort",
+    "resetSort": "Reset sort",
+    "inputPlaceholder": "Sort by...",
+    "lastUpdated": "Last updated",
+    "stars": "Stars",
+    "forks": "Forks",
+    "pullRequests": "Pull Requests",
+    "title": "Title"
   },
   "select": {
     "placeholder": "Select an option",
@@ -219,16 +229,6 @@
   },
   "widgets": {
     "viewMore": "View more"
-  },
-  "sort": {
-    "defaultLabel": "Sort",
-    "resetSort": "Reset sort",
-    "inputPlaceholder": "Sort by...",
-    "lastUpdated": "Last updated",
-    "stars": "Stars",
-    "forks": "Forks",
-    "pullRequests": "Pull Requests",
-    "title": "Title"
   },
   "branchDialog": {
     "violationMessages": {

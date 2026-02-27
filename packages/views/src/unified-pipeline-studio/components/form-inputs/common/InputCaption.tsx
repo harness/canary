@@ -1,17 +1,2 @@
-import { FormCaption } from '@harnessio/ui/components'
-
-export interface InputCaptionProps {
-  error?: string
-  caption?: string
-}
-
-const InputCaption = ({ error, caption }: InputCaptionProps) => {
-  if (error) {
-    return <FormCaption theme="danger">{error}</FormCaption>
-  }
-
-  return caption ? <FormCaption>{caption}</FormCaption> : null
-}
-InputCaption.displayName = 'InputCaption'
-
-export { InputCaption }
+// Re-export from @harnessio/ui/components for backward compatibility
+export { InputCaption, type InputCaptionProps } from '@harnessio/ui/components'

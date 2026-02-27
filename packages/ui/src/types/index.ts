@@ -7,6 +7,7 @@ export * from './execution'
 export * from './branch-selector'
 export * from './highlighter'
 export * from './yaml-entity'
+export * from './entity'
 
 export interface TypesUser {
   admin?: boolean
@@ -71,3 +72,8 @@ export interface TypesUserGroupInfo {
 }
 
 export type NonEmptyReactNode = Exclude<ReactNode, boolean | null | undefined>
+
+export interface SelectOption {
+  label: string
+  value: string
+}

@@ -9,10 +9,12 @@ import {
   YamlEditorContextInterface,
   YamlEditorContextProvider
 } from './components/YamlProvider'
+import { monacoThemes, monacoThemesForBlame } from './theme/monaco-themes'
 import { InlineAction } from './types/inline-actions'
 import { SelectorType, type ContainsPathSelector, type PathSelector } from './types/selectors'
 import { ThemeDefinition } from './types/themes'
 import { MonacoGlobals } from './utils/monaco-globals'
+import { parseYamlSafe } from './utils/yaml-utils'
 
 export { YamlEditorContext, YamlEditorContextProvider, useYamlEditorContext }
 export type { YamlEditorContextInterface }
@@ -41,3 +43,7 @@ export type { BlameEditorV2Props }
 
 export { CodeDiffEditor }
 export type { DiffEditorProps }
+
+export { parseYamlSafe }
+
+export { monacoThemes, monacoThemesForBlame }

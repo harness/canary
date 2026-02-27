@@ -11,13 +11,12 @@ import {
   type AnyFormValue
 } from '@harnessio/forms'
 
+import { SelectOption } from '@harnessio/ui/types'
+
 import { InputWrapper } from './common/InputWrapper'
 import { RuntimeInputConfig } from './types/types'
 
-export interface SelectOption {
-  label: string
-  value: string
-}
+export type { SelectOption }
 
 export interface SelectFormInputConfig extends RuntimeInputConfig {
   options: SelectOption[]

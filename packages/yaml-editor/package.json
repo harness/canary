@@ -1,6 +1,6 @@
 {
   "name": "@harnessio/yaml-editor",
-  "version": "0.25.0",
+  "version": "0.26.0-gitness-only-views.0",
   "private": false,
   "author": "Harness Inc.",
   "license": "Apache-2.0",
@@ -35,7 +35,8 @@
     "monaco-editor": "^0.40.0",
     "monaco-yaml": "^4.0.4",
     "react": "^17.0.2",
-    "react-dom": "^17.0.2"
+    "react-dom": "^17.0.2",
+    "yaml": "^2.0.0"
   },
   "devDependencies": {
     "@babel/core": "^7.24.7",
@@ -71,7 +72,8 @@
     "watch": "^1.0.2",
     "webpack": "^5.92.1",
     "webpack-cli": "^5.1.4",
-    "webpack-dev-server": "^5.0.4"
+    "webpack-dev-server": "^5.0.4",
+    "yaml": "^2.8.2"
   },
   "lint-staged": {
     "*.{js,jsx,ts,tsx}": [

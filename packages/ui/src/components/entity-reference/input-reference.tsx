@@ -1,0 +1,293 @@
+import { ForwardedRef, forwardRef, ReactNode, Ref } from 'react'
+
+import { cva, type VariantProps } from 'class-variance-authority'
+
+import { ButtonGroup } from '../button-group'
+import { DropdownMenu } from '../dropdown-menu'
+import { ControlGroup, FormCaption, Label } from '../form-primitives'
+import { IconPropsV2, IconV2 } from '../icon-v2'
+import { CommonInputsProp } from '../inputs'
+import { Layout } from '../layout'
+import { LogoPropsV2, LogoV2 } from '../logo-v2'
+import { Text } from '../text'
+import { cn } from '../../utils/cn'
+
+const inputReferenceVariants = cva(
+  'flex min-w-0 grow cursor-pointer select-none items-center text-cn-1 transition-colors border-cn-input bg-cn-input rounded-cn-input h-cn-input-md',
+  {
+    variants: {
+      state: {
+        default:
+          'hover:border-cn-brand focus-visible:border-cn-brand focus-visible:shadow-cn-ring-selected focus-visible:outline-none',
+        disabled: 'cursor-not-allowed opacity-cn-disabled'
+      }
+    },
+    defaultVariants: {
+      state: 'default'
+    }
+  }
+)
+
+export interface InputReferenceProps<T> extends VariantProps<typeof inputReferenceVariants>, CommonInputsProp {
+  /**
+   * The initial value to display in the input reference
+   */
+  placeholder: string | ReactNode
+
+  /**
+   * The current value of the input reference
+   */
+  value?: T | null
+
+  /**
+   * Function called when the input reference is clicked
+   */
+  onClick?: () => void
+
+  /**
+   * Function called when the edit (pencil) icon is clicked
+   */
+  onEdit?: () => void
+
+  /**
+   * Function called when the clear (cross) icon is clicked
+   */
+  onClear?: () => void
+
+  /**
+   * Function to render the value as a ReactNode
+   */
+  renderValue?: (value: T) => ReactNode | string
+
+  /**
+   * Whether the input reference is disabled
+   */
+  disabled?: boolean
+
+  /**
+   * Additional className for styling
+   */
+  className?: string
+
+  /**
+   * Icon to display at the start of the input
+   */
+  iconProps?: {
+    name: IconPropsV2['name']
+    size?: IconPropsV2['size']
+    color?: IconPropsV2['color']
+  }
+
+  /**
+   * Logo to display at the start of the input
+   */
+  logo?: LogoPropsV2['name']
+
+  /**
+   * Prefix element to display at the start of the input
+   */
+  prefix?: ReactNode
+
+  /**
+   * Suffix element to display at the end of the input
+   */
+  suffix?: ReactNode
+
+  /**
+   * Whether to show the reset button
+   */
+  showReset?: boolean
+
+  /**
+   * Function called when the open (arrow) icon is clicked
+   */
+  onOpen?: () => void
+
+  dropdownTriggerRef?: Ref<HTMLButtonElement>
+
+  /**
+   * Whether to hide the dropdown menu (3 dots menu)
+   * @default true
+   */
+  hideDropdownMenu?: boolean
+}
+
+function PrefixSuffix({ comp, className }: { comp?: React.ReactNode; className?: string }) {
+  return comp ? (
+    <div
+      className={cn('aspect-1 flex h-full items-center justify-center border-inherit', className)}
+      // Don't trigger onClick of the parent div when suffix is clicked
+      onPointerDown={e => {
+        e.stopPropagation()
+      }}
+      onKeyDown={e => {
+        if (e.key === 'Enter' || e.key === ' ') {
+          e.stopPropagation()
+        }
+      }}
+      role="none"
+    >
+      {comp}
+    </div>
+  ) : null
+}
+
+/**
+ * InputReference is a component that looks like an input field but acts as a clickable
+ * InputReference element that can trigger actions like opening a drawer, modal, or dropdown.
+ * It supports generic types for values.
+ */
+const InputReferenceInner = <T,>(
+  {
+    placeholder,
+    value,
+    onClick,
+    onEdit,
+    onClear,
+    disabled = false,
+    className,
+    iconProps,
+    logo,
+    label,
+    caption,
+    optional = false,
+    renderValue,
+    prefix,
+    suffix,
+    onOpen,
+    wrapperClassName = '',
+    orientation = 'vertical',
+    labelSuffix,
+    tooltipProps,
+    tooltipContent,
+    dropdownTriggerRef,
+    hideDropdownMenu = true,
+    ...props
+  }: InputReferenceProps<T>,
+  ref: ForwardedRef<HTMLDivElement>
+) => {
+  // Determine what to display: rendered value if value exists, otherwise placeholder
+  const hasValue = value !== null && value !== undefined
+  const displayContent = hasValue ? (renderValue ? renderValue(value as T) : value) : placeholder
+
+  const handleClear = (e: React.MouseEvent) => {
+    e.stopPropagation()
+    onClear?.()
+  }
+
+  const handleEdit = (e: React.MouseEvent) => {
+    e.stopPropagation()
+    if (onEdit) {
+      onEdit()
+    } else if (onClick) {
+      onClick()
+    }
+  }
+
+  const handleOpen = (e: React.MouseEvent) => {
+    e.stopPropagation()
+    if (onOpen) {
+      onOpen()
+    } else if (onClick) {
+      onClick()
+    }
+  }
+
+  const state = disabled ? 'disabled' : 'default'
+  const isHorizontal = orientation === 'horizontal'
+
+  return (
+    <ControlGroup.Root className={wrapperClassName} orientation={orientation}>
+      {(!!label || (isHorizontal && !!caption)) && (
+        <ControlGroup.LabelWrapper>
+          {!!label && (
+            <Label
+              disabled={disabled}
+              optional={optional}
+              suffix={labelSuffix}
+              tooltipProps={tooltipProps}
+              tooltipContent={tooltipContent}
+            >
+              {label}
+            </Label>
+          )}
+          {isHorizontal && !!caption && <FormCaption disabled={disabled}>{caption}</FormCaption>}
+        </ControlGroup.LabelWrapper>
+      )}
+
+      <ControlGroup.InputWrapper>
+        <Layout.Horizontal gap="sm" className="w-full">
+          <div
+            ref={ref}
+            onClick={disabled ? undefined : onClick}
+            className={cn(inputReferenceVariants({ state }), className)}
+            role="button"
+            tabIndex={disabled ? -1 : 0}
+            aria-disabled={disabled}
+            onKeyDown={e => {
+              if (disabled) return
+              if (e.key === 'Enter' || e.key === ' ') {
+                onClick?.()
+              }
+            }}
+            {...props}
+          >
+            <PrefixSuffix comp={prefix} className="rounded-r-cn-none border-r" />
+            <Layout.Horizontal className="min-w-0 grow pi-cn-input-md" gap="xs" align="center" justify="between">
+              {iconProps && <IconV2 {...iconProps} fallback="circle" />}
+
+              {logo && <LogoV2 name={logo} size="xs" />}
+
+              <div
+                className={cn(`flex-1 truncate`, {
+                  'text-cn-disabled': !hasValue
+                })}
+              >
+                {displayContent}
+              </div>
+              <IconV2 name="nav-arrow-right" size="xs" className="text-cn-3" />
+            </Layout.Horizontal>
+            <PrefixSuffix comp={suffix} className="rounded-l-cn-none border-l " />
+          </div>
+          {hasValue && !disabled && !hideDropdownMenu && (
+            <ButtonGroup
+              iconOnly
+              size="md"
+              buttonsProps={[
+                {
+                  ref: dropdownTriggerRef,
+                  children: <IconV2 name="more-vert" />,
+                  dropdownProps: {
+                    contentProps: {
+                      align: 'end'
+                    },
+                    content: (
+                      <>
+                        <DropdownMenu.IconItem title="Replace" icon="refresh-double" onClick={handleOpen} />
+                        <DropdownMenu.IconItem title="Edit" icon="edit-pencil" onClick={handleEdit} />
+                        <DropdownMenu.IconItem
+                          title={<Text color="danger">Clear</Text>}
+                          icon="trash"
+                          onClick={handleClear}
+                          iconClassName="text-cn-danger"
+                        />
+                      </>
+                    )
+                  }
+                }
+              ]}
+            />
+          )}
+        </Layout.Horizontal>
+
+        {caption && !isHorizontal && <FormCaption disabled={disabled}>{caption}</FormCaption>}
+      </ControlGroup.InputWrapper>
+    </ControlGroup.Root>
+  )
+}
+
+const InputReference = forwardRef(InputReferenceInner) as <T>(
+  props: InputReferenceProps<T> & { ref?: ForwardedRef<HTMLDivElement> }
+) => ReturnType<typeof InputReferenceInner>
+
+export { InputReference }

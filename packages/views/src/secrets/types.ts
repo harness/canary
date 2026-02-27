@@ -1,6 +1,9 @@
-import { BaseEntityProps } from '@views/platform'
+import { BaseEntityProps, EntityIntent } from '@harnessio/ui/types'
 
 import { FieldValues } from '@harnessio/forms'
+
+// Re-export EntityIntent from UI for backward compatibility
+export { EntityIntent } from '@harnessio/ui/types'
 
 export interface SecretDataType {
   type: SecretCreationType
@@ -20,11 +23,6 @@ export enum SecretCreationType {
 export enum SecretType {
   NEW = 'new',
   EXISTING = 'existing'
-}
-
-export enum EntityIntent {
-  CREATE = 'create',
-  EDIT = 'edit'
 }
 
 export interface SecretData {

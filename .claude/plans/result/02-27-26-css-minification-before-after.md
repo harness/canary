@@ -44,5 +44,3 @@ All CSS generated under `packages/core-design-system/dist/styles` is now minifie
 - **~1.11 MB saved** in `dist/styles` (55% smaller).
 - Theme files see the largest absolute and relative savings (~51% smaller) due to many rules and whitespace.
 - Core and import index files are also minified; size reduction is consistent across all 34 files.
-
----

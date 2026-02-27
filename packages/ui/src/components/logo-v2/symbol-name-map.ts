@@ -10,6 +10,7 @@ import AppDynamics from './symbols/app-dynamics.svg'
 import Approval from './symbols/approval.svg'
 import Aqua from './symbols/aqua.svg'
 import Argo from './symbols/argo.svg'
+import ArrowUpCircle from './symbols/arrow-up-circle.svg'
 import Artifactory from './symbols/artifactory.svg'
 import AutoScaler from './symbols/auto-scaler.svg'
 import Aws from './symbols/aws.svg'
@@ -35,6 +36,7 @@ import CustomIngest from './symbols/custom-ingest.svg'
 import CustomScan from './symbols/custom-scan.svg'
 import CustomSecretManager from './symbols/custom-secret-manager.svg'
 import DataDog from './symbols/data-dog.svg'
+import DatabaseCheck from './symbols/database-check.svg'
 import DefaultSecretManager from './symbols/default-secret-manager.svg'
 import Docker from './symbols/docker.svg'
 import Dynatrace from './symbols/dynatrace.svg'
@@ -43,6 +45,7 @@ import ErrorTracking from './symbols/error-tracking.svg'
 import EventRelay from './symbols/event-relay.svg'
 import Fairwinds from './symbols/fairwinds.svg'
 import FireHydrant from './symbols/fire-hydrant.svg'
+import Flyway from './symbols/flyway.svg'
 import Fortify from './symbols/fortify.svg'
 import Fossa from './symbols/fossa.svg'
 import Git from './symbols/git.svg'
@@ -69,6 +72,7 @@ import Katalon from './symbols/katalon.svg'
 import Kubernetes from './symbols/kubernetes.svg'
 import Kustomize from './symbols/kustomize.svg'
 import Linux from './symbols/linux.svg'
+import Liquibase from './symbols/liquibase.svg'
 import Local from './symbols/local.svg'
 import Mend from './symbols/mend.svg'
 import Metasploit from './symbols/metasploit.svg'
@@ -111,6 +115,8 @@ import Snyk from './symbols/snyk.svg'
 import Sonarqube from './symbols/sonarqube.svg'
 import Splunk from './symbols/splunk.svg'
 import Spot from './symbols/spot.svg'
+import SqlRollback from './symbols/sql-rollback.svg'
+import Sql from './symbols/sql.svg'
 import SscaOrchestrate from './symbols/ssca-orchestrate.svg'
 import SumoLogic from './symbols/sumo-logic.svg'
 import Sysdig from './symbols/sysdig.svg'
@@ -121,6 +127,7 @@ import Tenable from './symbols/tenable.svg'
 import Terraform from './symbols/terraform.svg'
 import Terragrunt from './symbols/terragrunt.svg'
 import Traceable from './symbols/traceable.svg'
+import UndoCircle from './symbols/undo-circle.svg'
 import Veracode from './symbols/veracode.svg'
 import VueJs from './symbols/vue-js.svg'
 import Wiz from './symbols/wiz.svg'
@@ -136,6 +143,7 @@ export const SymbolNameMap = {
   approval: Approval,
   aqua: Aqua,
   argo: Argo,
+  'arrow-up-circle': ArrowUpCircle,
   artifactory: Artifactory,
   'auto-scaler': AutoScaler,
   aws: Aws,
@@ -161,6 +169,7 @@ export const SymbolNameMap = {
   'custom-scan': CustomScan,
   'custom-secret-manager': CustomSecretManager,
   'data-dog': DataDog,
+  'database-check': DatabaseCheck,
   'default-secret-manager': DefaultSecretManager,
   docker: Docker,
   dynatrace: Dynatrace,
@@ -169,6 +178,7 @@ export const SymbolNameMap = {
   'event-relay': EventRelay,
   fairwinds: Fairwinds,
   'fire-hydrant': FireHydrant,
+  flyway: Flyway,
   fortify: Fortify,
   fossa: Fossa,
   git: Git,
@@ -195,6 +205,7 @@ export const SymbolNameMap = {
   kubernetes: Kubernetes,
   kustomize: Kustomize,
   linux: Linux,
+  liquibase: Liquibase,
   local: Local,
   mend: Mend,
   metasploit: Metasploit,
@@ -237,6 +248,8 @@ export const SymbolNameMap = {
   sonarqube: Sonarqube,
   splunk: Splunk,
   spot: Spot,
+  'sql-rollback': SqlRollback,
+  sql: Sql,
   'ssca-orchestrate': SscaOrchestrate,
   'sumo-logic': SumoLogic,
   sysdig: Sysdig,
@@ -247,6 +260,7 @@ export const SymbolNameMap = {
   terraform: Terraform,
   terragrunt: Terragrunt,
   traceable: Traceable,
+  'undo-circle': UndoCircle,
   veracode: Veracode,
   'vue-js': VueJs,
   wiz: Wiz,

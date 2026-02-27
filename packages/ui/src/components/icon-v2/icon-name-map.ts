@@ -426,6 +426,8 @@ import Sparks from './icons/sparks.svg'
 import SplitViewBottom from './icons/split-view-bottom.svg'
 import SplitViewTop from './icons/split-view-top.svg'
 import SplitView from './icons/split-view.svg'
+import SqlRollback from './icons/sql-rollback.svg'
+import Sql from './icons/sql.svg'
 import SquareDashed from './icons/square-dashed.svg'
 import SshKey from './icons/ssh-key.svg'
 import StarDashed from './icons/star-dashed.svg'
@@ -928,6 +930,8 @@ export const IconNameMapV2 = {
   'split-view-bottom': SplitViewBottom,
   'split-view-top': SplitViewTop,
   'split-view': SplitView,
+  'sql-rollback': SqlRollback,
+  sql: Sql,
   'square-dashed': SquareDashed,
   'ssh-key': SshKey,
   'star-dashed': StarDashed,

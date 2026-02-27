@@ -1,4 +1,4 @@
-import { forwardRef } from 'react'
+import { forwardRef, useCallback, useEffect, useRef, useState } from 'react'
 
 import { useRouterContext } from '@/context'
 import { Button, ButtonProps, ButtonSizes, ButtonVariants } from '@components/button'
@@ -8,6 +8,9 @@ import { Tooltip, TooltipProps } from '@components/tooltip'
 import { cn } from '@utils/cn'
 
 import { Text } from './text'
+
+/** Suppress tooltip briefly after dropdown closes to avoid focus-triggered tooltip popup. */
+const TOOLTIP_SUPPRESS_AFTER_CLOSE_MS = 300
 
 export interface ActionData {
   iconName?: IconPropsV2['name']
@@ -51,10 +54,22 @@ export const MoreActionsTooltip = forwardRef<HTMLButtonElement, MoreActionsToolt
     ref
   ) => {
     const { Link } = useRouterContext()
+    const [suppressTooltip, setSuppressTooltip] = useState(false)
+    const timeoutRef = useRef<ReturnType<typeof setTimeout>>()
+
+    const handleDropdownOpenChange = useCallback((open: boolean) => {
+      if (open) return
+      clearTimeout(timeoutRef.current)
+      setSuppressTooltip(true)
+      timeoutRef.current = setTimeout(() => setSuppressTooltip(false), TOOLTIP_SUPPRESS_AFTER_CLOSE_MS)
+    }, [])
+
+    useEffect(() => () => clearTimeout(timeoutRef.current), [])
+
     if (!actions.length) return <></>
 
     return (
-      <DropdownMenu.Root>
+      <DropdownMenu.Root onOpenChange={handleDropdownOpenChange}>
         <DropdownMenu.Trigger ref={ref} disabled={disabled} asChild>
           <Button
             theme={theme}
@@ -64,7 +79,8 @@ export const MoreActionsTooltip = forwardRef<HTMLButtonElement, MoreActionsToolt
             size={buttonSize}
             aria-label="Show more actions"
             tooltipProps={{
-              content: 'Show more actions'
+              content: 'Show more actions',
+              open: suppressTooltip ? false : undefined
             }}
           >
             <IconV2 name={iconName} />

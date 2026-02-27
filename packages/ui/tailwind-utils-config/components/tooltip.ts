@@ -10,7 +10,7 @@ export default {
     color: 'var(--cn-text-1)',
     boxShadow: 'var(--cn-shadow-4)',
     willChange: 'transform, opacity',
-    '@apply z-50 flex flex-col overflow-visible font-caption-normal': '',
+    '@apply z-50 flex flex-col select-none overflow-visible font-caption-normal': '',
 
     '&-content': {
       '@apply flex min-h-0 flex-1 flex-col gap-cn-4xs overflow-hidden': ''

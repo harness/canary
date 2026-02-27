@@ -47,6 +47,7 @@ export type TooltipProps = {
   children: ReactNode
   title?: string
   content: ReactNode
+  footer?: ReactNode
   hideArrow?: boolean
   delay?: TooltipPrimitiveRootType['delayDuration']
   open?: boolean
@@ -65,6 +66,7 @@ export const Tooltip = forwardRef<HTMLDivElement, TooltipProps>(
       children,
       title,
       content,
+      footer,
       hideArrow = false,
       delay = 400,
       side = 'top',
@@ -94,13 +96,15 @@ export const Tooltip = forwardRef<HTMLDivElement, TooltipProps>(
       return currentTheme
     }, [shouldSwapMode, currentTheme])
 
-    // Wrap custom content in theme container for mode switching
-    const wrappedContent = useMemo(() => {
-      if (shouldSwapMode && tooltipTheme) {
-        return <div className={tooltipTheme}>{content}</div>
-      }
-      return content
-    }, [shouldSwapMode, tooltipTheme, content])
+    // Wrap content/footer in theme container when using default theme with custom content.
+    const wrapWithTheme = (node: ReactNode) =>
+      shouldSwapMode && tooltipTheme ? <div className={tooltipTheme}>{node}</div> : node
+
+    const wrappedContent = useMemo(() => wrapWithTheme(content), [shouldSwapMode, tooltipTheme, content])
+    const wrappedFooter = useMemo(
+      () => (footer ? wrapWithTheme(footer) : footer),
+      [footer, shouldSwapMode, tooltipTheme]
+    )
 
     return (
       <TooltipPrimitive.Root delayDuration={delay} open={open}>
@@ -127,7 +131,8 @@ export const Tooltip = forwardRef<HTMLDivElement, TooltipProps>(
           >
             <div className="cn-tooltip-content">
               {!!title && <span className="cn-tooltip-title">{title}</span>}
-              <div>{wrappedContent}</div>
+              <div className="cn-tooltip-content-body">{wrappedContent}</div>
+              {!!footer && <div className="cn-tooltip-content-footer">{wrappedFooter}</div>}
             </div>
             {!hideArrow && (
               <TooltipPrimitive.Arrow width={20} height={8} asChild>

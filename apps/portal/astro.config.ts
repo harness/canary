@@ -22,6 +22,10 @@ if (!("document" in globalThis)) {
 
 // https://astro.build/config
 export default defineConfig({
+  vite: {
+    // logs only errors and warnings
+    logLevel: "warn",
+  },
   integrations: [
     starlight({
       title: "Harness Design System",

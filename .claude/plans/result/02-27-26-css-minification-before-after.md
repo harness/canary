@@ -46,8 +46,3 @@ All CSS generated under `packages/core-design-system/dist/styles` is now minifie
 - Core and import index files are also minified; size reduction is consistent across all 34 files.
 
 ---
-
-## How to reproduce
-
-- **After (minified):** `pnpm build:styles` in `packages/core-design-system` (default).
-- **Before (unminified):** `SKIP_CSS_MINIFY=1 pnpm build:styles` in `packages/core-design-system` (skips minification for comparison).

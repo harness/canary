@@ -67,11 +67,22 @@ const Content = forwardRef<HTMLDivElement, ContentProps>(
       [_onCloseAutoFocus, handleCloseAutoFocus]
     )
 
+    const containerChildren: ReactNode[] = []
+    const footerChildren: ReactNode[] = []
+
+    Children.forEach(children, child => {
+      if (isValidElement(child) && child.type === Footer) {
+        footerChildren.push(child)
+      } else {
+        containerChildren.push(child)
+      }
+    })
+
     return (
       <DialogPrimitive.Portal container={portalContainer}>
         {/* !!! */}
         {/* For the scroll to work when using the dialog in Shadow DOM, the Overlay needs to wrap the Content */}
-        {/* Here’s the issue for the scroll bug in Shadow DOM - https://github.com/radix-ui/primitives/issues/3353 */}
+        {/* Here's the issue for the scroll bug in Shadow DOM - https://github.com/radix-ui/primitives/issues/3353 */}
         <DialogPrimitive.Overlay className="cn-modal-dialog-overlay">
           <DialogPrimitive.Content
             ref={ref}
@@ -79,14 +90,17 @@ const Content = forwardRef<HTMLDivElement, ContentProps>(
             {...props}
             onCloseAutoFocus={onCloseAutoFocus}
           >
-            {!hideClose && (
-              <DialogPrimitive.Close asChild>
-                <Button className="cn-modal-dialog-close" variant="transparent" iconOnly ignoreIconOnlyTooltip>
-                  <IconV2 name="xmark" />
-                </Button>
-              </DialogPrimitive.Close>
-            )}
-            {children}
+            <div className="cn-modal-dialog-container">
+              {!hideClose && (
+                <DialogPrimitive.Close asChild>
+                  <Button className="cn-modal-dialog-close" variant="transparent" iconOnly ignoreIconOnlyTooltip>
+                    <IconV2 name="xmark" />
+                  </Button>
+                </DialogPrimitive.Close>
+              )}
+              {containerChildren}
+            </div>
+            {footerChildren}
           </DialogPrimitive.Content>
         </DialogPrimitive.Overlay>
       </DialogPrimitive.Portal>

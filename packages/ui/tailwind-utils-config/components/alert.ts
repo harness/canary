@@ -141,7 +141,6 @@ export default {
       },
 
       '&-icon': {
-
         '&-rotate-180': {
           transform: 'rotate(180deg)',
           transition: 'transform 0.2s ease-out'

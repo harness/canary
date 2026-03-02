@@ -39,7 +39,7 @@ export default {
 
     '&:where(.cn-slider-disabled), &:where([data-disabled])': {
       '@apply opacity-cn-disabled': '',
-      cursor: 'not-allowed',
+      cursor: 'not-allowed'
     },
 
     '&-track': {
@@ -65,7 +65,7 @@ export default {
       cursor: 'grab',
 
       '&[data-disabled="true"]': {
-        cursor: 'not-allowed',
+        cursor: 'not-allowed'
       },
 
       '&:focus, &:active': {
@@ -123,7 +123,7 @@ export default {
           borderColor: 'var(--cn-comp-slider-handle-border-selected)',
           boxShadow: 'var(--cn-ring-selected)'
         }
-      },
+      }
     },
 
     '&-description': {
@@ -179,7 +179,7 @@ export default {
 
       '&:where([data-disabled])': {
         '@apply opacity-cn-disabled': '',
-        cursor: 'not-allowed',
+        cursor: 'not-allowed'
       },
 
       '&-body': {
@@ -245,7 +245,7 @@ export default {
         zIndex: '1',
 
         '&[data-disabled="true"]': {
-          cursor: 'not-allowed',
+          cursor: 'not-allowed'
         },
 
         '&:focus, &:active': {
@@ -303,7 +303,7 @@ export default {
             borderColor: 'var(--cn-comp-slider-handle-border-selected)',
             boxShadow: 'var(--cn-ring-selected)'
           }
-        },
+        }
       },
 
       '&-labels': {

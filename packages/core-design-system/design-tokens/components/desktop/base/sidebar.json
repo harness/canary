@@ -7,7 +7,7 @@
       },
       "gap": {
         "$type": "spacing",
-        "$value": "{spacing.2}"
+        "$value": "{spacing.3-half}"
       },
       "radius": {
         "$type": "borderRadius",
@@ -19,7 +19,7 @@
       },
       "min-width": {
         "$type": "sizing",
-        "$value": "{size.11-half}"
+        "$value": "{size.12}"
       }
     },
     "group": {
@@ -33,9 +33,13 @@
       }
     },
     "container": {
-      "spacing": {
+      "px": {
         "$type": "spacing",
-        "$value": "{spacing.1-half}"
+        "$value": "{spacing.2-half}"
+      },
+      "py": {
+        "$type": "spacing",
+        "$value": "{spacing.5}"
       },
       "full-width": {
         "$type": "sizing",
@@ -43,7 +47,7 @@
       },
       "min-width": {
         "$type": "sizing",
-        "$value": "58px"
+        "$value": "56px"
       }
     },
     "fade-height": {

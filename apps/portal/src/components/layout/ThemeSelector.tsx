@@ -33,6 +33,7 @@ export function ThemeSelector() {
         onOpenChange={setOpen}
         setTheme={setTheme}
         theme={theme}
+        showAccessibilityThemeOptions
       >
         <Button
           iconOnly

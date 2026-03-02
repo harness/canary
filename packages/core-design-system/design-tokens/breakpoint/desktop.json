@@ -13,7 +13,7 @@
       "$value": "1919"
     }
   },
-  "container": {
+  "page-container": {
     "spacing-px": {
       "$type": "number",
       "$value": "{spacing.4}",
@@ -640,6 +640,20 @@
         "letterSpacing": "{tracking.wider}"
       },
       "$description": "The smallest service text (labels, signatures, technical information)"
+    }
+  },
+  "shell": {
+    "container": {
+      "$type": "number",
+      "$value": "{layout.xs}"
+    },
+    "gap": {
+      "$type": "number",
+      "$value": "{layout.sm}"
+    },
+    "radius": {
+      "$type": "number",
+      "$value": "{rounded.6}"
     }
   }
 }

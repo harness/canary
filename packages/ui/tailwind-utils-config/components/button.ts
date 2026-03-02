@@ -36,8 +36,7 @@ function createButtonVariantStyles() {
         style[`color`] = `var(--cn-set-${themeStyle}-outline-text)`
 
         // For default theme, use state tokens; for other themes use outline tokens
-        const hoverBg =
-          theme === 'default' ? 'var(--cn-state-hover)' : `var(--cn-set-${themeStyle}-outline-bg-hover)`
+        const hoverBg = theme === 'default' ? 'var(--cn-state-hover)' : `var(--cn-set-${themeStyle}-outline-bg-hover)`
         const selectedBg =
           theme === 'default' ? 'var(--cn-state-hover)' : `var(--cn-set-${themeStyle}-outline-bg-selected)`
 
@@ -46,9 +45,9 @@ function createButtonVariantStyles() {
         }
 
         style[`&:active:not(:disabled, .cn-button-disabled), &:where(.cn-button-active), &:where([data-state=open])`] =
-        {
-          backgroundColor: selectedBg
-        }
+          {
+            backgroundColor: selectedBg
+          }
       } else {
         const themeStyleForVariant = variant === 'primary' && theme === 'default' ? 'brand' : themeStyle
 
@@ -62,23 +61,23 @@ function createButtonVariantStyles() {
         style[`&:hover:not(:disabled, .cn-button-disabled)`] =
           variant === 'outline'
             ? {
-              backgroundColor: `var(--cn-set-${themeStyleForVariant}-${variant}-bg-hover, var(--cn-set-${themeStyleForVariant}-${variant}-bg))`
-            }
+                backgroundColor: `var(--cn-set-${themeStyleForVariant}-${variant}-bg-hover, var(--cn-set-${themeStyleForVariant}-${variant}-bg))`
+              }
             : {
-              backgroundColor: `var(--cn-set-${themeStyleForVariant}-${variant}-bg-hover, var(--cn-set-${themeStyleForVariant}-${variant}-bg))`,
-              borderColor: `var(--cn-set-${themeStyleForVariant}-${variant}-bg-hover, var(--cn-set-${themeStyleForVariant}-${variant}-bg))`
-            }
+                backgroundColor: `var(--cn-set-${themeStyleForVariant}-${variant}-bg-hover, var(--cn-set-${themeStyleForVariant}-${variant}-bg))`,
+                borderColor: `var(--cn-set-${themeStyleForVariant}-${variant}-bg-hover, var(--cn-set-${themeStyleForVariant}-${variant}-bg))`
+              }
 
         // Active styles
         style[`&:active:not(:disabled, .cn-button-disabled), &:where(.cn-button-active), &:where([data-state=open])`] =
           variant === 'outline'
             ? {
-              backgroundColor: `var(--cn-set-${themeStyleForVariant}-${variant}-bg-selected, var(--cn-set-${themeStyleForVariant}-${variant}-bg))`
-            }
+                backgroundColor: `var(--cn-set-${themeStyleForVariant}-${variant}-bg-selected, var(--cn-set-${themeStyleForVariant}-${variant}-bg))`
+              }
             : {
-              backgroundColor: `var(--cn-set-${themeStyleForVariant}-${variant}-bg-selected, var(--cn-set-${themeStyleForVariant}-${variant}-bg))`,
-              borderColor: `var(--cn-set-${themeStyleForVariant}-${variant}-bg-selected, var(--cn-set-${themeStyleForVariant}-${variant}-bg))`
-            }
+                backgroundColor: `var(--cn-set-${themeStyleForVariant}-${variant}-bg-selected, var(--cn-set-${themeStyleForVariant}-${variant}-bg))`,
+                borderColor: `var(--cn-set-${themeStyleForVariant}-${variant}-bg-selected, var(--cn-set-${themeStyleForVariant}-${variant}-bg))`
+              }
 
         separatorStyles[`&:where(.cn-button-split-dropdown.cn-button-${variant}.cn-button-${theme})`] = {
           '&::before': {

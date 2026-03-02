@@ -12,7 +12,7 @@
       "$type": "sizing",
       "$value": "660"
     },
-    "px": {
+    "container": {
       "$type": "spacing",
       "$value": "{spacing.5}"
     },
@@ -20,7 +20,7 @@
       "$type": "spacing",
       "$value": "{spacing.3-half}"
     },
-    "py": {
+    "footer-py": {
       "$type": "spacing",
       "$value": "{spacing.3-half}"
     },

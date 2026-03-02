@@ -24,11 +24,8 @@ export default {
     width: 'var(--cn-dialog-width)',
     maxWidth: 'calc(100vw - (var(--cn-dialog-safezone) * 2))',
     maxHeight: 'calc(100vh - (var(--cn-dialog-safezone) * 2))',
-    paddingTop: 'var(--cn-dialog-px)',
-    paddingBottom: 'var(--cn-dialog-py)',
-    paddingLeft: 'var(--cn-dialog-px)',
-    paddingRight: 'var(--cn-dialog-px)',
     '@apply fixed left-1/2 top-1/2 z-50 flex flex-col translate-x-[-50%] translate-y-[-50%] min-h-0': '',
+    overflow: 'clip',
     '@apply duration-200 data-[state=open]:animate-in data-[state=closed]:animate-out data-[state=closed]:fade-out-0 data-[state=open]:fade-in-0 data-[state=closed]:zoom-out-95 data-[state=open]:zoom-in-95':
       '',
     '&[data-state="open"]': {
@@ -57,6 +54,14 @@ export default {
     }
   },
 
+  // Container (inner wrapper for header + description + body)
+  '.cn-modal-dialog-container': {
+    position: 'relative',
+    padding: 'var(--cn-dialog-container)',
+    gap: 'var(--cn-dialog-gap)',
+    '@apply flex flex-col min-h-0': ''
+  },
+
   // Header Component
   '.cn-modal-dialog-header': {
     '@apply flex flex-col': '',
@@ -82,8 +87,8 @@ export default {
   '.cn-modal-dialog-header-title-row': {
     gap: 'var(--cn-spacing-1-half)',
     '@apply flex': '',
-    '.cn-modal-dialog-content:has(.cn-modal-dialog-close) > .cn-modal-dialog-header &': {
-      paddingRight: 'var(--cn-spacing-8)'
+    '.cn-modal-dialog-container:has(.cn-modal-dialog-close) > .cn-modal-dialog-header &': {
+      paddingRight: 'var(--cn-spacing-6)'
     }
   },
   '.cn-modal-dialog-header-icon': {
@@ -104,18 +109,15 @@ export default {
   // Header Description
   '.cn-modal-dialog-description': {
     color: 'var(--cn-text-2)',
-    marginTop: 'var(--cn-dialog-gap)',
     '@apply font-body-normal': ''
   },
 
   // Body Component
   '.cn-modal-dialog-body': {
     '--cn-modal-dialog-scroll-compensation': '4px',
+    marginInline: 'calc(-1 * var(--cn-modal-dialog-scroll-compensation))',
     paddingInline: 'var(--cn-modal-dialog-scroll-compensation)',
     paddingBottom: 'var(--cn-modal-dialog-scroll-compensation)',
-    marginInline: 'calc(var(--cn-modal-dialog-scroll-compensation) * -1)',
-    marginBottom: 'calc(var(--cn-modal-dialog-scroll-compensation) * -1)',
-    marginTop: 'var(--cn-dialog-gap)',
     height: '100%',
 
     '&.cn-scroll-area': {
@@ -126,7 +128,7 @@ export default {
     '&-content': {
       display: 'flex',
       flexDirection: 'column',
-      gap: 'var(--cn-layout-xl)'
+      gap: 'var(--cn-dialog-gap)'
     }
   },
 
@@ -134,19 +136,16 @@ export default {
   '.cn-modal-dialog-footer': {
     borderTop: '1px solid var(--cn-border-3)',
     borderTopWidth: 'var(--cn-dialog-border)',
-    paddingTop: 'var(--cn-dialog-py)',
-    paddingLeft: 'var(--cn-dialog-px)',
-    paddingRight: 'var(--cn-dialog-px)',
-    marginTop: 'var(--cn-dialog-px)',
-    marginLeft: 'calc(-1 * var(--cn-dialog-px))',
-    marginRight: 'calc(-1 * var(--cn-dialog-px))'
+    paddingTop: 'var(--cn-dialog-footer-py)',
+    paddingBottom: 'var(--cn-dialog-footer-py)',
+    paddingInline: 'var(--cn-dialog-container)'
   },
 
   // Close (X) Button
   '.cn-modal-dialog-close': {
     position: 'absolute',
-    top: '16px',
-    right: '10px'
+    top: 'var(--cn-dialog-container)',
+    right: 'var(--cn-dialog-container)'
   },
 
   '.dialog': {

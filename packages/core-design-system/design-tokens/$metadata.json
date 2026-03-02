@@ -57,6 +57,7 @@
     "components/desktop/base/tree-view",
     "components/desktop/base/sidebar",
     "components/desktop/base/pipeline",
-    "components/desktop/base/calendar"
+    "components/desktop/base/calendar",
+    "components/desktop/base/chart"
   ]
 }

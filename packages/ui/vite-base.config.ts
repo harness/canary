@@ -1,3 +1,4 @@
+import { createHash } from 'crypto'
 import { mkdirSync, readFileSync, readdirSync, writeFileSync } from 'fs'
 import { resolve, basename, extname, join } from 'path'
 
@@ -80,12 +81,63 @@ function extractCssFontsPlugin(fontDir: string): Plugin {
   }
 }
 
+/**
+ * Copies individual theme CSS files from core-design-system into dist/themes/
+ * with content-hash filenames for long-lived caching. Generates a
+ * theme-manifest.json that maps logical theme names to hashed filenames.
+ */
+function buildThemesPlugin(): Plugin {
+  return {
+    name: 'build-themes',
+    apply: 'build',
+    writeBundle(options) {
+      const outDir = options.dir || 'dist'
+      const themesDir = resolve(__dirname, 'src/styles/themes')
+      const outThemesDir = join(outDir, 'themes')
+
+      let themeFiles: string[]
+      try {
+        themeFiles = readdirSync(themesDir).filter(f => f.endsWith('.css'))
+      } catch {
+        return
+      }
+
+      if (themeFiles.length === 0) return
+
+      mkdirSync(outThemesDir, { recursive: true })
+
+      const manifest: Record<string, string> = {}
+
+      for (const file of themeFiles) {
+        const themeName = basename(file, '.css')
+        const sourcePath = resolve(__dirname, '../core-design-system/dist/styles', `${themeName}.css`)
+        const themeContent = readFileSync(sourcePath, 'utf-8')
+
+        const hash = createHash('md5').update(themeContent).digest('hex').slice(0, 8)
+        const hashedFilename = `${themeName}.${hash}.css`
+
+        writeFileSync(join(outThemesDir, hashedFilename), themeContent)
+        manifest[themeName] = hashedFilename
+      }
+
+      writeFileSync(join(outThemesDir, 'theme-manifest.json'), JSON.stringify(manifest, null, 2))
+
+      const jsContent = `export const themeManifest = ${JSON.stringify(manifest, null, 2)};\n`
+      writeFileSync(join(outThemesDir, 'theme-manifest.js'), jsContent)
+
+      const dtsContent = `export declare const themeManifest: Record<string, string>;\n`
+      writeFileSync(join(outThemesDir, 'theme-manifest.d.ts'), dtsContent)
+    }
+  }
+}
+
 export default defineConfig({
   plugins: [
     react(),
     svgr({ include: '**/*.svg' }),
     tsConfigPaths(),
-    extractCssFontsPlugin(resolve(__dirname, 'src/fonts'))
+    extractCssFontsPlugin(resolve(__dirname, 'src/fonts')),
+    buildThemesPlugin()
   ],
   resolve: {
     alias: {

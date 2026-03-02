@@ -21,6 +21,11 @@
       "default": "./dist/tailwind-design-system.js"
     },
     "./styles.css": "./dist/styles.css",
+    "./themes/theme-manifest.json": "./dist/themes/theme-manifest.json",
+    "./themes/theme-manifest": {
+      "types": "./dist/themes/theme-manifest.d.ts",
+      "default": "./dist/themes/theme-manifest.js"
+    },
     "./shared-style-variables.css": "./src/styles/shared-style-variables.css",
     "./markdown-preview-styles.css": "./src/components/markdown-viewer/style.css",
     "./context": "./dist/context.js",

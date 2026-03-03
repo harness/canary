@@ -25,11 +25,7 @@ export default defineConfig({
   plugins: [
     react(),
     svgr({ include: '**/*.svg' }),
-    dts({
-      outDir: 'dist',
-      entryRoot: 'src',
-      tsconfigPath: './tsconfig.json'
-    })
+    dts({ rollupTypes: true })
   ],
   resolve: {
     alias: {

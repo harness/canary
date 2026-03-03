@@ -25,6 +25,8 @@ import NoDataMembersLight from './images/no-data-members-light.svg'
 import NoDataMembers from './images/no-data-members.svg'
 import NoDataMergeLight from './images/no-data-merge-light.svg'
 import NoDataMerge from './images/no-data-merge.svg'
+import NoDataMetricsLight from './images/no-data-metrics-light.svg'
+import NoDataMetrics from './images/no-data-metrics.svg'
 import NoDataPRLight from './images/no-data-pr-light.svg'
 import NoDataPR from './images/no-data-pr.svg'
 import NoRepositoryLight from './images/no-data-repository-light.svg'
@@ -63,6 +65,7 @@ export const IllustrationsNameMap = {
   'no-data-tags': NoDataTags,
   'no-data-labels': NoDataLabels,
   'no-data-webhooks': NoDataWebhooks,
+  'no-data-metrics': NoDataMetrics,
   'no-search-magnifying-glass': NoSearchMagnifyingGlass,
   'no-delegates': NoDataDelegate,
   'harness-logo-text': HarnessLogoText,
@@ -86,6 +89,7 @@ export const IllustrationsNameMap = {
   'no-data-cog-light': NoDataCogLight,
   'no-data-commits-light': NoDataCommitsLight,
   'no-data-error-light': NoDataErrorLight,
+  'no-data-metrics-light': NoDataMetricsLight,
   'no-data-folder-light': NoDataFolderLight,
   'no-data-members-light': NoDataMembersLight,
   'no-data-merge-light': NoDataMergeLight,

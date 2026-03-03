@@ -35,6 +35,7 @@ function DynamicExample() {
   const [selectedInsertionPoint, setSelectedInsertionPoint] = useState<string>('0')
   const [currentFormValues, setCurrentFormValues] = useState({})
   const [defaultValues, setDefaultValues] = useState({})
+  const [formKey, setFormKey] = useState(0)
 
   // Get available input paths for the select dropdown
   const inputPaths: InputInfo[] = extractInputPaths(currentFormDefinition.inputs)
@@ -94,6 +95,7 @@ function DynamicExample() {
     const appendSchemaDefaults = collectDefaultValues(appendInputsSchema)
     const newDefaultValues = merge(currentFormValues, appendSchemaDefaults)
     setDefaultValues(newDefaultValues)
+    setFormKey(prev => prev + 1) // Force remount with new defaultValues
 
     addLog(
       'SLOT CREATED',
@@ -148,6 +150,7 @@ function DynamicExample() {
       [slotPath]: performanceSchemaDefaults
     }
     setDefaultValues(newDefaultValues)
+    setFormKey(prev => prev + 1) // Force remount with new defaultValues
 
     addLog(
       'PERFORMANCE SLOT CREATED',
@@ -167,6 +170,7 @@ function DynamicExample() {
       {/* Column 1 */}
       <div className="border-border bg-background p-cn-md rounded-cn-6 border" style={{ width: '400px' }}>
         <RootForm
+          key={formKey}
           defaultValues={defaultValues}
           onSubmit={onSubmit}
           resolver={resolver}
@@ -215,9 +219,11 @@ function DynamicExample() {
       {/* Column 3 */}
       <Layout.Vertical gap="sm" className="w-96">
         <FormUpdate
-          onUpdate={setDefaultValues}
-          resetValues={{ name: 'Default name' }}
-          values={currentFormValues}
+          onUpdate={values => {
+            setDefaultValues(values)
+            setFormKey(prev => prev + 1)
+          }}
+          values={{ name: 'Default name' }}
           label="Reset values"
         />
 

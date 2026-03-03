@@ -14,6 +14,15 @@ import { RootFormProvider } from '../context/RootFormContext'
 import { cancelIdleCallbackPolyfill, requestIdleCallbackPolyfill } from '../utils/request-idle-callback'
 
 export interface RootFormProps<TFieldValues extends FieldValues = FieldValues, TContext = any, TMetadata = any> {
+  /**
+   * Default values for the form (UNCONTROLLED COMPONENT).
+   * These values are only used on initial mount.
+   * Changing this prop will NOT update the form values.
+   *
+   * To update form values after mount:
+   * - Use form.setValue() for programmatic updates (preserves form state)
+   * - Change the `key` prop to remount with new defaultValues (resets form state)
+   */
   defaultValues?: DefaultValues<TFieldValues>
   resolver: Resolver<TFieldValues, TContext> | undefined
   onValuesChange?: (values: DeepPartial<TFieldValues>) => void

@@ -13,10 +13,16 @@ import { FormMetadata } from './types/types'
 function RuntimeExample() {
   const [formState, setFormState] = useState<{ isValid?: boolean; isSubmitted?: boolean }>({})
   const [logs, setLogs] = useState<{ label: string; log: string }[]>([])
+  const [formKey, setFormKey] = useState(0)
   const [defaultValues, setDefaultValues] = useState({
     ...collectDefaultValues(formDefinition),
     input1: '<+input>'
   })
+
+  const updateValues = (newValues: any) => {
+    setDefaultValues(prev => ({ ...prev, ...newValues }))
+    setFormKey(prev => prev + 1) // Force remount with new defaultValues
+  }
 
   const onSubmit = (values: AnyFormValue) => {
     addLog('SUBMIT', values)
@@ -58,6 +64,7 @@ function RuntimeExample() {
       {/* Column 1 */}
       <div className="border-border bg-background p-cn-md rounded-cn-6 border" style={{ width: '400px' }}>
         <RootForm
+          key={formKey}
           defaultValues={defaultValues}
           onSubmit={onSubmit}
           resolver={resolver}
@@ -88,9 +95,9 @@ function RuntimeExample() {
 
       {/* Column 3 */}
       <Layout.Vertical gap="sm" className="w-96">
-        <FormUpdate onUpdate={setDefaultValues} values={{ input1: 'Abcdefgh' }} label="Set invalid value" />
-        <FormUpdate onUpdate={setDefaultValues} values={{ input1: '123456' }} label="Set valid value" />
-        <FormUpdate onUpdate={setDefaultValues} values={{ input1: '<+inputs.qwe>' }} label="Set runtime" />
+        <FormUpdate onUpdate={updateValues} values={{ input1: 'Abcdefgh' }} label="Set invalid value" />
+        <FormUpdate onUpdate={updateValues} values={{ input1: '123456' }} label="Set valid value" />
+        <FormUpdate onUpdate={updateValues} values={{ input1: '<+inputs.qwe>' }} label="Set runtime" />
       </Layout.Vertical>
 
       {/* Column 4 */}

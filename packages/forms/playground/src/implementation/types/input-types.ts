@@ -21,7 +21,8 @@ export enum InputType {
   select = 'select',
   array = 'array',
   list = 'list',
-  group = 'group'
+  group = 'group',
+  slot = 'slot'
 }
 
 export type InputConfigType =

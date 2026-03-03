@@ -44,6 +44,7 @@ export default defineConfig({
         index: resolve(__dirname, 'src/index.ts'),
         locales: resolve(__dirname, 'locales/index.ts')
       },
+      cssFileName: 'index',
       formats: ['es']
     },
     rollupOptions: { external }

@@ -95,6 +95,7 @@ Complete reference for all properties available in input definitions:
 - `inputType: string` - Identifies the input component type (matches `internalType` in factory)
 - `path: string` - Dot-notation path for the field in form data (e.g., `"user.email"`)
   - Supports nested objects using dot notation
+  - Supports numeric indices for tuples (e.g., `"coordinates.0"`, `"servers.1.name"`)
 - `label?: string` - Display label for the input
 - `placeholder?: string` - Placeholder text
 - `description?: string` - Help text or description shown with the input
@@ -141,7 +142,33 @@ Complete reference for all properties available in input definitions:
 - `pathRegExp?: RegExp` - Regular expression for dynamic path matching
   - Enables pattern-based input resolution
 
-**Note:** All path strings support dot-notation for nested objects (e.g., `"address.street"`).
+**Note:** All path strings support dot-notation for nested objects (e.g., `"address.street"`) and numeric indices for tuples (e.g., `"coordinates.0"`, `"servers.1.name"`).
+
+### Tuple Support (Fixed-Position Arrays)
+
+Paths can use numeric indices to reference fixed positions in arrays (tuples):
+
+```typescript
+// Simple tuple: coordinates = [10, 20]
+{ inputType: 'number', path: 'coordinates.0', label: 'X' }
+{ inputType: 'number', path: 'coordinates.1', label: 'Y' }
+
+// Nested objects in tuple: servers = [{ name: 'Primary', url: '...' }, { name: 'Backup', url: '...' }]
+{ inputType: 'text', path: 'servers.0.name', label: 'Primary Server' }
+{ inputType: 'text', path: 'servers.1.name', label: 'Backup Server' }
+```
+
+**When to use tuples:**
+- Fixed number of elements with specific meanings (e.g., [x, y] coordinates, [primary, backup] servers)
+- Each position can have different validation schemas
+- Positions are predefined (not added/removed dynamically)
+
+**Use dynamic arrays (`array`/`list` inputs) when:**
+- Users need to add/remove items
+- All items have the same schema
+- Number of items is variable
+
+**Note:** The forms package automatically generates Zod tuple schemas for numeric-indexed paths. Gaps in indices are filled with `z.any().optional()` automatically.
 
 ## Data Transformation System
 
@@ -209,6 +236,8 @@ The package supports various input types, each serving different purposes. The p
 ### Composite Input Types
 - `array` - Dynamic list of values (can add/remove items)
 - `list` - Table-like list of structured items with multiple fields per row
+
+**Note:** For fixed-position arrays (tuples), use numeric path indices instead of `array` input type (e.g., `path: 'servers.0.name'`, `path: 'servers.1.name'`). See [Tuple Support](#tuple-support-fixed-position-arrays) section.
 
 ### Container Input Types
 - `group` - Grouping related inputs together
@@ -457,6 +486,7 @@ const resolver = useZodValidationResolver(
 ### Nested Form Structures
 
 - Use **dot-notation** for simple nested objects: `"user.email"`
+- Use **numeric indices** for tuples (fixed-position arrays): `"coordinates.0"`, `"servers.1.name"`
 - Use nested `inputs` array for groups and accordion containers
 - Validation schemas are recursive automatically
 - Consider component composition for complex nested forms
@@ -783,6 +813,14 @@ The playground directory contains practical examples demonstrating different fea
 - Value tracking and monitoring
 - Helpful for development and troubleshooting
 
+### 8. Tuple Example (`TupleExample.tsx`)
+- Fixed-position arrays using numeric path indices
+- Simple tuple values (coordinates)
+- Nested objects in tuples (servers with name/url)
+- Different schemas per position (mixed owner types)
+- Sparse indices (non-consecutive positions)
+- Comparison with dynamic arrays
+
 ### Input Types Demonstrated
 
 The playground examples showcase various input types:
@@ -790,6 +828,7 @@ The playground examples showcase various input types:
 - **Composite**: `array` (dynamic list of values), `list` (table-like rows)
 - **Containers**: `group`, `accordion` (collapsible sections)
 - **Dynamic**: `slot` (runtime content insertion)
+- **Tuples**: Fixed-position arrays using numeric paths (not an input type, uses path syntax like `field.0`, `field.1.name`)
 
 Each example includes complete implementation showing:
 - Component registration with `InputFactory`

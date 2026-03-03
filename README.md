@@ -1,4 +1,4 @@
-# Canary
+# Canary - verify
 
 Welcome to the Harness Canary monorepo! This repository contains multiple projects for Harness' next generation Unified UI.
 

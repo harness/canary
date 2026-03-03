@@ -235,14 +235,19 @@ const Filters = forwardRef(function Filters<T extends Record<string, unknown>>(
     // add sticky filters
     // update filters from search params;
     // updating filters map state from search params
-    searchParams?.forEach((value, key) => {
-      if (map[key as FilterKeys]) {
+    // Use a Set to track processed keys so repeated params (explode format) are merged
+    const processedKeys = new Set<string>()
+    searchParams?.forEach((_value, key) => {
+      if (map[key as FilterKeys] && !processedKeys.has(key)) {
+        processedKeys.add(key)
+        // Merge all values for this key (handles explode format: key=a&key=b → "a,b")
+        const mergedValue = searchParams.getAll(key).join(',')
         const parser = config?.[key as FilterKeys]?.parser
-        const parsedValue = parser ? parser.parse(value) : value
+        const parsedValue = parser ? parser.parse(mergedValue) : mergedValue
 
         map[key as FilterKeys] = {
           value: parsedValue,
-          query: value,
+          query: mergedValue,
           state: FilterStatus.FILTER_APPLIED
         }
       }

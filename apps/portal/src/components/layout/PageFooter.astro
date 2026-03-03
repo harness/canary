@@ -1,5 +1,4 @@
 ---
-import FeedbackButtons from "./FeedbackButtons";
 const lastUpdated = Astro.locals.starlightRoute?.lastUpdated;
 const formattedDate = lastUpdated
   ? new Date(lastUpdated).toLocaleDateString("en-US", {
@@ -10,15 +9,10 @@ const formattedDate = lastUpdated
   : null;
 ---
 
-<div class="not-content mt-cn-4xl pt-cn-lg pb-cn-lg border-t border-cn-3/30">
-  <div class="flex items-center justify-between">
-    <FeedbackButtons client:only="react" />
-    {
-      formattedDate && (
-        <span class="text-cn-size-3 text-cn-4">
-          Last updated {formattedDate}
-        </span>
-      )
-    }
-  </div>
-</div>
+{
+  formattedDate && (
+    <div class="not-content mt-cn-4xl pt-cn-lg pb-cn-lg border-t border-cn-3/30">
+      <span class="text-cn-size-3 text-cn-4">Last updated {formattedDate}</span>
+    </div>
+  )
+}

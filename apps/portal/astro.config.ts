@@ -22,7 +22,7 @@ if (!("document" in globalThis)) {
 
 // https://astro.build/config
 export default defineConfig({
-vite: {
+  vite: {
     // logs only errors and warnings
     logLevel: "warn",
   },
@@ -53,9 +53,9 @@ vite: {
           collapsed: true,
           items: [
             {
-              slug: "getting-started/installation",
-              label: "Installation",
-              attrs: { "data-icon": "download" },
+              slug: "getting-started/introduction",
+              label: "Introduction",
+              attrs: { "data-icon": "star" },
             },
           ],
         },
@@ -248,6 +248,6 @@ vite: {
     react(),
   ],
   redirects: {
-    "/": "/getting-started/installation",
+    "/": "/getting-started/introduction",
   },
 });

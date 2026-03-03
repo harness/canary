@@ -38,6 +38,7 @@ export type StreamEvent =
       readonly capabilityName: string
       readonly capabilityId: string
       readonly args: any
+      readonly status?: 'executing' | 'waiting_for_user' | 'waiting_for_confirmation' | 'completed'
       readonly strategy?: 'queue' | 'parallel' | 'replace'
     }
   | {
@@ -48,11 +49,21 @@ export type StreamEvent =
       [key: string]: any // Allow any additional properties
     }
 
+export type SystemEventType = 'action_completed' | 'action_cancelled'
+
+export interface SystemEvent {
+  event_type: SystemEventType
+  capability_id: string
+  result?: { success: boolean; [key: string]: unknown }
+  target_page_id?: string
+}
+
 export interface StreamRequest {
   messages: Message[]
   conversationId?: string
   signal?: AbortSignal
   config?: Record<string, unknown>
+  systemEvent?: SystemEvent
 }
 
 export interface StreamChunk {

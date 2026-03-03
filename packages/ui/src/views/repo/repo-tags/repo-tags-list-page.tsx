@@ -59,7 +59,6 @@ export const RepoTagsListView: FC<RepoTagsListViewProps> = ({
                     defaultValue={searchQuery || ''}
                     onChange={handleSearchChange}
                     placeholder={t('views:repos.search', 'Search')}
-                    autoFocus
                   />
                 </ListActions.Left>
                 <ListActions.Right>

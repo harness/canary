@@ -148,11 +148,13 @@ import CustomizeNavigation from './icons/customize-navigation.svg'
 import DashboardSolid from './icons/dashboard-solid.svg'
 import DashboardSpeed from './icons/dashboard-speed.svg'
 import Dashboard from './icons/dashboard.svg'
+import DatabaseApplySchema from './icons/database-apply-schema.svg'
 import DatabaseBackup from './icons/database-backup.svg'
 import DatabaseCheck from './icons/database-check.svg'
 import DatabaseExport from './icons/database-export.svg'
+import DatabaseImport from './icons/database-import.svg'
 import DatabaseMonitor from './icons/database-monitor.svg'
-import DatabaseRestore from './icons/database-restore.svg'
+import DatabaseRollback from './icons/database-rollback.svg'
 import DatabaseScript from './icons/database-script.svg'
 import DatabaseSearch from './icons/database-search.svg'
 import DatabaseStar from './icons/database-star.svg'
@@ -426,6 +428,8 @@ import Sparks from './icons/sparks.svg'
 import SplitViewBottom from './icons/split-view-bottom.svg'
 import SplitViewTop from './icons/split-view-top.svg'
 import SplitView from './icons/split-view.svg'
+import SqlRollback from './icons/sql-rollback.svg'
+import Sql from './icons/sql.svg'
 import SquareDashed from './icons/square-dashed.svg'
 import SshKey from './icons/ssh-key.svg'
 import StarDashed from './icons/star-dashed.svg'
@@ -650,11 +654,13 @@ export const IconNameMapV2 = {
   'dashboard-solid': DashboardSolid,
   'dashboard-speed': DashboardSpeed,
   dashboard: Dashboard,
+  'database-apply-schema': DatabaseApplySchema,
   'database-backup': DatabaseBackup,
   'database-check': DatabaseCheck,
   'database-export': DatabaseExport,
+  'database-import': DatabaseImport,
   'database-monitor': DatabaseMonitor,
-  'database-restore': DatabaseRestore,
+  'database-rollback': DatabaseRollback,
   'database-script': DatabaseScript,
   'database-search': DatabaseSearch,
   'database-star': DatabaseStar,
@@ -928,6 +934,8 @@ export const IconNameMapV2 = {
   'split-view-bottom': SplitViewBottom,
   'split-view-top': SplitViewTop,
   'split-view': SplitView,
+  'sql-rollback': SqlRollback,
+  sql: Sql,
   'square-dashed': SquareDashed,
   'ssh-key': SshKey,
   'star-dashed': StarDashed,

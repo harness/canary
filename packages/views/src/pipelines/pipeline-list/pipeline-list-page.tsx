@@ -52,7 +52,6 @@ const PipelineListPage: FC<IPipelineListPageProps> = ({
                   inputContainerClassName="max-w-96"
                   defaultValue={searchQuery || ''}
                   onChange={handleSearchChange}
-                  autoFocus
                 />
               </ListActions.Left>
               <ListActions.Right>

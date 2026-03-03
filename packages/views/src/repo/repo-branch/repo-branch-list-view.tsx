@@ -79,7 +79,6 @@ export const RepoBranchListView: FC<RepoBranchListViewProps> = ({
                   placeholder={t('views:repos.search', 'Search')}
                   inputContainerClassName="max-w-80"
                   onChange={handleSearchChange}
-                  autoFocus
                 />
               </ListActions.Left>
               <ListActions.Right>

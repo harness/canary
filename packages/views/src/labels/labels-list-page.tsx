@@ -76,7 +76,6 @@ export const LabelsListPage: FC<LabelsListPageProps> = ({
                 defaultValue={searchQuery || ''}
                 onChange={handleSearchChange}
                 placeholder={t('views:repos.search', 'Search')}
-                autoFocus
               />
             </ListActions.Left>
             <ListActions.Right>

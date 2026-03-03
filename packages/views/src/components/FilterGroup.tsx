@@ -155,7 +155,6 @@ const FilterGroupInner = <
                   searchValue={searchValue || ''}
                   onChange={handleInputChange}
                   placeholder={t('views:repos.search', 'Search')}
-                  autoFocus
                 />
                 {props.quickFiltersSlot}
                 {filterOptions.length > 0 && (

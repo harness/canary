@@ -1,8 +1,7 @@
 import { Outlet, useMatches, useParams } from 'react-router-dom'
 
 import { createFavorite, deleteFavorite, EnumResourceType } from '@harnessio/code-service-client'
-import { RepoSubheader } from '@harnessio/ui/components'
-import { NotFoundPage, RepoHeader, SubHeaderWrapper } from '@harnessio/views'
+import { NotFoundPage, RepoHeader, RepoSubheader, SubHeaderWrapper } from '@harnessio/views'
 
 import { useRoutes } from '../../framework/context/NavigationContext'
 import { useIsMFE } from '../../framework/hooks/useIsMFE'

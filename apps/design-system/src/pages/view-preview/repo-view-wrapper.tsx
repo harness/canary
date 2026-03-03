@@ -3,8 +3,7 @@ import { Route } from 'react-router-dom'
 
 import { noop } from '@tanstack/react-table'
 
-import { RepoSubheader } from '@harnessio/ui/components'
-import { RepoHeader, SubHeaderWrapper } from '@harnessio/views'
+import { RepoHeader, RepoSubheader, SubHeaderWrapper } from '@harnessio/views'
 
 import RootViewWrapper from './root-view-wrapper'
 

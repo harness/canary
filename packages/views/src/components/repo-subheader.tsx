@@ -1,6 +1,5 @@
-import { Tabs } from '@/components'
-import { SandboxLayout } from '@/components/layouts'
-import { useTranslation } from '@/context'
+import { Tabs, SandboxLayout } from '@harnessio/ui/components'
+import { useTranslation } from '@harnessio/ui/context'
 
 export enum RepoTabsKeys {
   SUMMARY = 'summary',

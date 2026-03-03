@@ -40,9 +40,10 @@ export default defineConfig({
     sourcemap: true,
     copyPublicDir: false,
     lib: {
-      entry: resolve(__dirname, 'src/index.ts'),
-      name: 'views',
-      fileName: 'index',
+      entry: {
+        index: resolve(__dirname, 'src/index.ts'),
+        locales: resolve(__dirname, 'locales/index.ts')
+      },
       formats: ['es']
     },
     rollupOptions: { external }

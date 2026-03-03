@@ -18,6 +18,7 @@ export { default as FilterGroup } from './components/FilterGroup'
 export * from './components/FilterGroup'
 export * from './components/page'
 export * from './components/contributors'
+export * from './components/repo-subheader'
 
 // Account
 export * from './account'

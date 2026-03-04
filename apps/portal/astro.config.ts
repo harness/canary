@@ -60,23 +60,44 @@ export default defineConfig({
           ],
         },
         {
+          label: "Architecture",
+          collapsed: true,
+          items: [
+            {
+              slug: "design-system/introduction",
+              label: "Overview",
+              attrs: { "data-icon": "star" },
+            },
+            {
+              slug: "design-system/color-system",
+              label: "Color System",
+              attrs: { "data-icon": "donut" },
+            },
+            {
+              slug: "design-system/theming",
+              label: "Theming & Build",
+              attrs: { "data-icon": "donut" },
+            },
+            {
+              slug: "design-system/usage",
+              label: "Developer Guide",
+              attrs: { "data-icon": "code" },
+            },
+          ],
+        },
+        {
           label: "Foundations",
           collapsed: true,
           items: [
             {
               slug: "foundations/colors",
-              label: "Core Palette",
+              label: "Colors",
               attrs: { "data-icon": "donut" },
             },
             {
-              slug: "foundations/layout",
-              label: "Layout System",
-              attrs: { "data-icon": "view-grid" },
-            },
-            {
-              slug: "foundations/variables",
-              label: "CSS Variables",
-              attrs: { "data-icon": "variables" },
+              slug: "foundations/typography",
+              label: "Typography",
+              attrs: { "data-icon": "text-size" },
             },
             {
               slug: "foundations/spacings",
@@ -84,9 +105,9 @@ export default defineConfig({
               attrs: { "data-icon": "arrow-long-right" },
             },
             {
-              slug: "foundations/typography",
-              label: "Typography",
-              attrs: { "data-icon": "text-size" },
+              slug: "foundations/layout",
+              label: "Layout",
+              attrs: { "data-icon": "view-grid" },
             },
             {
               slug: "foundations/icons",
@@ -102,6 +123,11 @@ export default defineConfig({
               slug: "foundations/logos",
               label: "Logos",
               attrs: { "data-icon": "star" },
+            },
+            {
+              slug: "foundations/variables",
+              label: "CSS Variables",
+              attrs: { "data-icon": "variables" },
             },
           ],
         },

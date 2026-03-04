@@ -131,7 +131,7 @@ const SemanticColors: React.FC = () => {
     { name: "Brown", color: "brown" },
     { name: "Cyan", color: "cyan" },
     { name: "Indigo", color: "indigo" },
-    { name: "Lime", color: "lime" },
+    { name: "Forest", color: "forest" },
     { name: "Mint", color: "mint" },
     { name: "Orange", color: "orange" },
     { name: "Pink", color: "pink" },

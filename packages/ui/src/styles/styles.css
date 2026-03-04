@@ -25,12 +25,6 @@
   src: url('../fonts/JetBrainsMono-Variable.woff2') format('woff2-variations');
 }
 
-@layer base {
-  body {
-    @apply bg-cn-0 text-cn-2 font-body-normal overscroll-y-none;
-  }
-}
-
 @layer utilities {
   /*
     Handy CSS class to prevent Input background color becomes yellow in Chrome on autofill.

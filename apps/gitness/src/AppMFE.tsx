@@ -121,7 +121,7 @@ export default function AppMFE({
   const { t } = useTranslationStore()
 
   return (
-    <div id="code-mfe-root" ref={portalRef}>
+    <div id="code-mfe-root" className="bg-cn-0 text-cn-2 font-body-normal overscroll-y-none" ref={portalRef}>
       <PortalProvider portalContainer={portalContainer}>
         <MFEContext.Provider
           value={{

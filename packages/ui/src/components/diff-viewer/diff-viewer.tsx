@@ -1,7 +1,7 @@
 import { generateDiffFile, type DiffHighlighterLang } from '@git-diff-view/file'
 import { DiffModeEnum, DiffView } from '@git-diff-view/react'
 
-import '@git-diff-view/react/styles/diff-view.css'
+import '@git-diff-view/react/styles/diff-view-pure.css'
 
 import { useMemo } from 'react'
 

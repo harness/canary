@@ -5,6 +5,7 @@ description: Color architecture — LCH color space, semantic levels, color sets
 
 import { Aside } from "@astrojs/starlight/components";
 import { AllSetsShowcase } from "@/components/color-set-showcase";
+import { GrayShadesPreview } from "@/components/gray-shades-preview";
 
 Colors are the most complex part of the design system. This page explains how they're structured, from raw LCH values to the semantic pairs developers use in code.
 
@@ -28,6 +29,8 @@ HEX values exist only as a Figma export fallback. <span style="font-weight: 600"
 ```
 
 Each color family has 14 stops (25–1000) plus `pure.white` and `pure.black`. The full palette includes: gray, red, blue, indigo, forest, yellow, purple, cyan, mint, orange, pink, violet, brown, lime, amber.
+
+<GrayShadesPreview client:only />
 
 → See the full interactive palette in [Colors](/foundations/colors)
 

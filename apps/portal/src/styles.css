@@ -666,6 +666,7 @@ button[aria-label="Search"] {
 
 .starlight-aside .starlight-aside__content p {
   font-size: var(--cn-font-size-5);
+  margin-top: var(--cn-spacing-1);
 }
 
 /* Note — indigo tint */

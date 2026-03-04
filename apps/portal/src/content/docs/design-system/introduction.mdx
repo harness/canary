@@ -3,6 +3,8 @@ title: Introduction
 description: Architecture, token layers, and usage guide for the Harness Design System
 ---
 
+import { Aside } from "@astrojs/starlight/components";
+
 The Harness Design System is a shared contract between design and engineering. 
 
 Design tokens — stored as JSON — are the single source of truth. From that single source, Figma styles and production CSS/TypeScript are generated automatically.
@@ -110,7 +112,9 @@ These map **intent** to **value** — `bg.0` means "page-level background", not 
 
 #### Color Sets — The Core Pattern
 
-The most important architectural concept. Every semantic color (brand, success, danger, warning, and 12 additional hues) is defined as a **set** with three emphasis levels, each containing coordinated bg + text + interaction tokens:
+The most important architectural concept. The core idea is <span style="font-weight: 600">pre-built color pairs</span> — coordinated background + text combinations for different usage scenarios. Each pair is verified for WCAG contrast compliance, so developers never need to manually check accessibility.
+
+Every semantic color (brand, success, danger, warning, and 12 additional hues) is defined as a **set** with three emphasis levels. Each level provides a ready-to-use bg + text + interaction pair tuned for a specific visual weight:
 
 ```
 set.{color}.primary     → bg, bg-hover, bg-selected, text, ring
@@ -133,7 +137,11 @@ set.{color}.outline     → bg, bg-hover, bg-selected, text, border
 </div>
 </div>
 
-**Critical rule:** always pair bg and text from the _same_ set and level:
+<Aside type="caution" title="Critical rule">
+  Always pair background and text from the **same set and level**. 
+  
+  Mixing levels breaks contrast and accessibility.
+</Aside>
 
 ```tsx
 {/* ✅ Correct — same set, same level */}
@@ -187,9 +195,9 @@ Every theme is a combination of three dimensions:
 <tr className="cn-table-v2-row"><th className="cn-table-v2-head">Dimension</th><th className="cn-table-v2-head">Options</th></tr>
 </thead>
 <tbody className="cn-table-v2-body">
-<tr className="cn-table-v2-row"><td className="cn-table-v2-cell">Mode</td><td className="cn-table-v2-cell">`light`, `dark`</td></tr>
-<tr className="cn-table-v2-row"><td className="cn-table-v2-cell">Contrast</td><td className="cn-table-v2-cell">default, dimmer, high-contrast</td></tr>
-<tr className="cn-table-v2-row"><td className="cn-table-v2-cell">Color vision</td><td className="cn-table-v2-cell">standard, protanopia, deuteranopia, tritanopia</td></tr>
+<tr className="cn-table-v2-row"><td className="cn-table-v2-cell">Mode</td><td className="cn-table-v2-cell"><code>light</code>, <code>dark</code></td></tr>
+<tr className="cn-table-v2-row"><td className="cn-table-v2-cell">Contrast</td><td className="cn-table-v2-cell"><code>default</code>, <code>dimmer</code>, <code>high-contrast</code></td></tr>
+<tr className="cn-table-v2-row"><td className="cn-table-v2-cell">Color vision</td><td className="cn-table-v2-cell"><code>standard</code>, <code>protanopia</code>, <code>deuteranopia</code>, <code>tritanopia</code></td></tr>
 </tbody>
 </table>
 </div>

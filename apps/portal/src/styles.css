@@ -48,6 +48,30 @@ main {
 /* Inline code only - exclude expressive-code blocks */
 code:not(.expressive-code code) {
   @apply bg-cn-gray-secondary !important;
+  border-radius: var(--cn-rounded-3) !important;
+  padding: 2px 6px !important;
+  white-space: nowrap !important;
+}
+
+/* Table text — match cn-table-v2 component */
+.cn-table-v2-head {
+  font-size: var(--cn-font-size-4, 0.8125rem) !important;
+  line-height: var(--cn-line-height-4, 1.125rem) !important;
+  font-weight: 360 !important;
+}
+
+.cn-table-v2-cell {
+  font-size: var(--cn-font-size-5) !important;
+  line-height: var(--cn-line-height-5, 1.25rem) !important;
+}
+
+.cn-table-v2-cell code {
+  font-size: var(--cn-font-size-4) !important;
+}
+
+.cn-table-v2-container {
+  border-radius: var(--cn-rounded-6) !important;
+  overflow: hidden !important;
 }
 
 .content-panel {

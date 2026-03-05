@@ -47,6 +47,8 @@
   "author": "",
   "license": "Apache-2.0",
   "devDependencies": {
+    "@csstools/postcss-minify": "^3.0.0",
+    "postcss": "^8.5.8",
     "@tokens-studio/sd-transforms": "^1.2.9",
     "figlet": "^1.8.0",
     "gradient-string": "^3.0.0",

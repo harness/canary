@@ -13,8 +13,9 @@ RUN --mount=type=cache,id=pnpm,target=/pnpm/store pnpm install --prod --frozen-l
 FROM base AS build
 # install deps
 RUN --mount=type=cache,id=pnpm,target=/pnpm/store pnpm install --frozen-lockfile
-# build all the packages and apps except portal and design-system
-RUN pnpm --filter \!portal --filter \!design-system run build
+# Build packages sequentially to ensure dependencies are built before dependents
+# (views depends on ui's dist/tailwind.config.js at vite config load time)
+RUN pnpm -r --workspace-concurrency=1 --filter \!portal --filter \!design-system run build
 
 FROM us-west1-docker.pkg.dev/gar-setup/docker/alpine:3.21 AS final
 COPY --from=build /canary/apps/gitness/dist /canary-dist

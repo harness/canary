@@ -13,8 +13,8 @@ RUN --mount=type=cache,id=pnpm,target=/pnpm/store pnpm install --prod --frozen-l
 FROM base AS build
 # install deps
 RUN --mount=type=cache,id=pnpm,target=/pnpm/store pnpm install --frozen-lockfile
-# build all the packages and apps except gitness
-RUN pnpm --filter \!gitness run build
+# build all the packages in correct dependency order (views depends on ui's built output)
+RUN pnpm -r -F './packages/*' -F '!@harnessio/views' build && pnpm -r -F @harnessio/views build
 # build the microfrontend
 WORKDIR /canary/apps/gitness
 RUN rm -rf dist

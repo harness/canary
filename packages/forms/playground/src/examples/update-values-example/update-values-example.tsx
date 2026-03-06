@@ -89,7 +89,7 @@ function UpdateValuesExample() {
                     </Button>
                     <Button
                       onClick={() => {
-                        rootForm.reset()
+                        rootForm.reset(defaultValues)
                         addLog('FORM RESET', 'Form reset to default values')
                       }}
                       variant="secondary"

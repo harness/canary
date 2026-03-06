@@ -87,7 +87,7 @@ export const SearchResultsList: FC<SearchResultsListProps> = ({
       <NoData
         imageName="no-search-magnifying-glass"
         title={t('views:search.emptyState.title', 'Start searching')}
-        description={[t('views:search.emptyState.description', 'Enter search terms to find relevant results,')]}
+        description={[t('views:search.emptyState.description', 'Enter search terms to find relevant results')]}
       />
     )
   }

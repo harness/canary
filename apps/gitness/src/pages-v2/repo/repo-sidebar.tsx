@@ -154,19 +154,16 @@ export const RepoSidebar = () => {
 
   const selectBranchOrTag = useCallback(
     (branchTagName: BranchSelectorListItem, type: BranchSelectorTab) => {
+      const pathSuffix = fullResourcePath ? `/~/${fullResourcePath}` : ''
       if (type === BranchSelectorTab.BRANCHES) {
         setPreSelectedTab(type)
-        navigate(
-          `${routes.toRepoFiles({ spaceId, repoId })}/${REFS_BRANCH_PREFIX + branchTagName.name}/~/${fullResourcePath}`
-        )
+        navigate(`${routes.toRepoFiles({ spaceId, repoId })}/${REFS_BRANCH_PREFIX + branchTagName.name}${pathSuffix}`)
       } else if (type === BranchSelectorTab.TAGS) {
         setPreSelectedTab(type)
-        navigate(
-          `${routes.toRepoFiles({ spaceId, repoId })}/${REFS_TAGS_PREFIX + branchTagName.name}/~/${fullResourcePath}`
-        )
+        navigate(`${routes.toRepoFiles({ spaceId, repoId })}/${REFS_TAGS_PREFIX + branchTagName.name}${pathSuffix}`)
       }
     },
-    [navigate, repoId, spaceId]
+    [navigate, repoId, spaceId, fullResourcePath]
   )
 
   const navigateToNewFile = useCallback(() => {

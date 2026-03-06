@@ -90,7 +90,7 @@ const RepoWebhookExecutionsPage: FC<RepoWebhookExecutionsPageProps> = ({
                 <Table.Head className="w-32">{t('views:repos.webhookExecutions.table.id', 'ID')}</Table.Head>
                 <Table.Head>{t('views:repos.webhookExecutions.table.event', 'Event')}</Table.Head>
                 <Table.Head className="w-1/6">{t('views:repos.webhookExecutions.table.status', 'Status')}</Table.Head>
-                <Table.Head className="w-1/5" containerProps={{ justify: 'end' }}>
+                <Table.Head className="w-1/5">
                   {t('views:repos.webhookExecutions.table.lastTriggeredAt', 'Last triggered at')}
                 </Table.Head>
               </Table.Row>

@@ -68,9 +68,9 @@ export default {
     },
 
     '&-group': {
-      '--sidebar-group-label-scale': '1',
       display: 'grid',
       padding: 'var(--cn-layout-md) 0',
+      gap: 'var(--cn-layout-xs)',
 
       '&-label': {
         opacity: 'var(--sidebar-group-label-scale)',
@@ -631,14 +631,9 @@ export default {
   // Sidebar popover
   '.cn-popover-content.cn-sidebar-popover': {
     backgroundColor: 'var(--cn-bg-2)',
-    // First group: Remove top padding to prevent overlap with popover padding
-    '& > div > div:first-child .cn-sidebar-group': {
-      paddingTop: '0'
-    },
     // Reset padding left for group headers in popover (only side nav should have padding left)
     '.cn-sidebar-group-header': {
-      paddingLeft: 'var(--cn-sidebar-item-container)',
-      paddingBottom: 'var(--cn-spacing-1-half)'
+      padding: 'var(--cn-layout-3xs) var(--cn-sidebar-item-container)'
     },
 
     // Last group (Go to settings footer button)

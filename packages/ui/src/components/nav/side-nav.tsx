@@ -130,7 +130,7 @@ export const SideNav: React.FC<{ routes?: RouteDefinitions }> = ({ routes }) => 
                   icon={NavItems.get(NavEnum.Settings)!.iconName}
                   onHoverIn={() => setShowSettingsMenu(true)}
                   onHoverOut={() => setShowSettingsMenu(false)}
-                  clickable={true}
+                  clickable={false}
                 />
               </Drawer.Trigger>
 
@@ -142,7 +142,7 @@ export const SideNav: React.FC<{ routes?: RouteDefinitions }> = ({ routes }) => 
                 <Drawer.Title className="sr-only">Settings menu</Drawer.Title>
                 <Drawer.Description className="sr-only">Settings menu</Drawer.Description>
                 <Drawer.Body>
-                  <SidebarGroupMenu menuItems={settingsMenuItems} />
+                  <SidebarGroupMenu menuItems={settingsMenuItems} columns={1} />
                 </Drawer.Body>
               </Drawer.Content>
             </Drawer.Root>
@@ -156,7 +156,7 @@ export const SideNav: React.FC<{ routes?: RouteDefinitions }> = ({ routes }) => 
                   withRightIndicator
                   onHoverIn={() => setShowMoreMenu(true)}
                   onHoverOut={() => setShowMoreMenu(false)}
-                  clickable={true}
+                  clickable={false}
                 />
               </Drawer.Trigger>
 
@@ -168,7 +168,7 @@ export const SideNav: React.FC<{ routes?: RouteDefinitions }> = ({ routes }) => 
                 <Drawer.Title className="sr-only">More menu</Drawer.Title>
                 <Drawer.Description className="sr-only">More menu</Drawer.Description>
                 <Drawer.Body>
-                  <SidebarGroupMenu menuItems={moreMenuItems} />
+                  <SidebarGroupMenu menuItems={moreMenuItems} columns={2} />
                 </Drawer.Body>
               </Drawer.Content>
             </Drawer.Root>

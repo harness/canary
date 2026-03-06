@@ -1,25 +1,15 @@
 export default {
   '.cn-popover': {
     '&-content': {
-      display: 'grid',
+      display: 'flex',
+      flexDirection: 'column',
       minWidth: 'var(--cn-popover-min)',
-      padding: 'var(--cn-popover-py) var(--cn-popover-px)',
-      gap: 'var(--cn-popover-gap)',
-      borderRadius: 'var(--cn-popover-radius)',
+      padding: '0 var(--cn-layout-md)',
       border: 'var(--cn-popover-border) solid var(--cn-border-3)',
       backgroundColor: 'var(--cn-bg-3)',
       boxShadow: 'var(--cn-shadow-4)',
       color: 'var(--cn-text-1)',
-      outline: 'none',
-      willChange: 'transform, opacity',
-      '@apply z-50': '',
-
-      '& > span:has(.cn-popover-arrow)': {
-        margin: '1px !important'
-      },
-      '&-max-size': {
-        maxWidth: 'var(--cn-popover-max)'
-      }
+      outline: 'none'
     },
 
     '&-arrow': {

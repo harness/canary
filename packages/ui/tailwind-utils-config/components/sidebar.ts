@@ -70,8 +70,7 @@ export default {
     '&-group': {
       '--sidebar-group-label-scale': '1',
       display: 'grid',
-      gap: 'var(--cn-sidebar-group-gap)',
-      padding: 'var(--cn-sidebar-group-py) 0',
+      padding: 'var(--cn-layout-md) 0',
 
       '&-label': {
         opacity: 'var(--sidebar-group-label-scale)',
@@ -109,9 +108,9 @@ export default {
 
       '&-header': {
         display: 'flex',
-        padding: '0px 0px var(--cn-spacing-0) calc(var(--cn-sidebar-item-container) + var(--cn-layout-sm))',
+        padding: 'var(--cn-layout-3xs) var(--cn-sidebar-item-container)',
         alignItems: 'center',
-        gap: 'var(--cn-sidebar-item-gap)',
+        gap: 'var(--cn-layout-xs)',
         alignSelf: 'stretch',
         '&-action-button': {
           '@apply opacity-0 transition-opacity duration-150': ''
@@ -526,7 +525,7 @@ export default {
       width: 'auto',
 
       '.cn-sidebar-item-content': {
-        gridTemplateColumns: 'var(--cn-size-7) 1fr',
+        gridTemplateColumns: 'var(--cn-size-8) 1fr',
         paddingLeft: 'var(--cn-sidebar-item-container)',
 
         '&-title': {

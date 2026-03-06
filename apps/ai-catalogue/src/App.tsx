@@ -2,6 +2,7 @@ import { FC, useMemo } from 'react'
 import { createBrowserRouter, Navigate, RouterProvider } from 'react-router-dom'
 
 import { AssistantRuntime, AssistantRuntimeProvider } from '@harnessio/ai-chat-core'
+import { defaultPlugin } from '@harnessio/ai-chat-components'
 
 import { Layout } from './components/layout'
 import { CataloguePage } from './pages/catalogue/catalogue-page'
@@ -11,7 +12,6 @@ import { CatalogueMockStreamAdapter } from './plugin/adapters/mock-stream-adapte
 import { DrawerCapability } from './plugin/capabilities/drawer-capability'
 import { NavigateCapability } from './plugin/capabilities/navigate-capability'
 import { ConfirmCapability } from './plugin/capabilities/confirm-capability'
-import { cataloguePlugin } from './plugin/catalogue-plugin'
 
 function GlobalCapabilities() {
   return (
@@ -39,7 +39,7 @@ const App: FC = () => {
   const runtime = useMemo(() => {
     return new AssistantRuntime({
       streamAdapter: new CatalogueMockStreamAdapter(),
-      plugins: [cataloguePlugin]
+      plugins: [defaultPlugin]
     })
   }, [])
 

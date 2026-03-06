@@ -1,14 +1,12 @@
 import { ChatPlugin, MessageRenderer } from '@harnessio/ai-chat-core'
 
 import { ArtifactRenderer } from './renderers/artifact-renderer'
-import { ErrorRenderer } from './renderers/error-renderer'
-import { FeedbackRenderer } from './renderers/feedback-renderer'
+import { FeedbackContentRenderer } from './renderers/feedback/feedback-content-renderer'
 import { PromptsRenderer } from './renderers/prompts-renderer'
-import { SuggestedActionsRenderer } from './renderers/suggested-actions-renderer'
-import { TextRenderer } from './renderers/text-renderer'
+import TextRenderer from './renderers/text-renderer'
 import { ThoughtProcessRenderer } from './renderers/thought-process-renderer'
 
-const textRenderer: MessageRenderer = {
+export const textRenderer: MessageRenderer = {
   type: 'text',
   component: TextRenderer,
   priority: 0,
@@ -30,7 +28,7 @@ const textRenderer: MessageRenderer = {
   }
 }
 
-const thoughtProcessRenderer: MessageRenderer = {
+export const thoughtProcessRenderer: MessageRenderer = {
   type: 'assistant_thought',
   component: ThoughtProcessRenderer,
   priority: 1,
@@ -60,7 +58,7 @@ const thoughtProcessRenderer: MessageRenderer = {
   }
 }
 
-const promptsRenderer: MessageRenderer = {
+export const promptsRenderer: MessageRenderer = {
   type: 'prompts',
   component: PromptsRenderer,
   priority: 1,
@@ -98,9 +96,9 @@ const promptsRenderer: MessageRenderer = {
   }
 }
 
-const feedbackRenderer: MessageRenderer = {
+export const feedbackRenderer: MessageRenderer = {
   type: 'feedback',
-  component: FeedbackRenderer,
+  component: FeedbackContentRenderer,
   priority: 1,
   catalogue: {
     displayName: 'Feedback Widget',
@@ -127,7 +125,7 @@ const feedbackRenderer: MessageRenderer = {
   }
 }
 
-const artifactRenderer: MessageRenderer = {
+export const artifactRenderer: MessageRenderer = {
   type: 'artifact',
   component: ArtifactRenderer,
   priority: 1,
@@ -165,66 +163,8 @@ const artifactRenderer: MessageRenderer = {
   }
 }
 
-const suggestedActionsRenderer: MessageRenderer = {
-  type: 'suggested_actions',
-  component: SuggestedActionsRenderer,
-  priority: 1,
-  catalogue: {
-    displayName: 'Suggested Actions',
-    description: 'Displays action buttons as chips/pills. Used for quick actions the user can take.',
-    category: 'custom',
-    backendEvents: [
-      {
-        eventName: 'suggested_actions',
-        examplePayload: {
-          title: 'Quick Actions',
-          actions: ['View Pipeline', 'Run Pipeline', 'Edit Configuration']
-        }
-      }
-    ],
-    mockContent: {
-      type: 'suggested_actions',
-      data: {
-        title: 'Quick Actions',
-        actions: ['View Pipeline', 'Run Pipeline', 'Edit Configuration', 'View Logs']
-      }
-    },
-    tags: ['actions', 'buttons', 'quick-actions']
-  }
-}
-
-const errorRenderer: MessageRenderer = {
-  type: 'error',
-  component: ErrorRenderer,
-  priority: 1,
-  catalogue: {
-    displayName: 'Error Message',
-    description: 'Displays an error message when something goes wrong during streaming or processing.',
-    category: 'core',
-    backendEvents: [
-      {
-        eventName: 'error',
-        examplePayload: { error: 'Failed to generate pipeline: invalid stage configuration' }
-      }
-    ],
-    mockContent: {
-      type: 'error',
-      data: 'Failed to generate pipeline: invalid stage configuration. Please check your inputs and try again.'
-    },
-    tags: ['error', 'failure']
-  }
-}
-
-export const cataloguePlugin: ChatPlugin = {
-  id: 'ai-catalogue',
-  name: 'AI Catalogue Plugin',
-  renderers: [
-    textRenderer,
-    thoughtProcessRenderer,
-    promptsRenderer,
-    feedbackRenderer,
-    artifactRenderer,
-    suggestedActionsRenderer,
-    errorRenderer
-  ]
+export const defaultPlugin: ChatPlugin = {
+  id: 'default',
+  name: 'Default Plugin',
+  renderers: [textRenderer, thoughtProcessRenderer, promptsRenderer, feedbackRenderer, artifactRenderer]
 }

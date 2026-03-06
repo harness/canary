@@ -17,21 +17,21 @@ export function JsonViewer({ data, title, maxHeight = '200px' }: JsonViewerProps
   }
 
   return (
-    <div className="border border-cn-borders-3 rounded-md overflow-hidden">
+    <div className="border border-cn-3 rounded-cn-2 overflow-hidden">
       {title && (
-        <div className="flex items-center justify-between px-3 py-1.5 bg-cn-background-3 border-b border-cn-borders-3">
-          <span className="text-[11px] font-medium text-cn-foreground-3 uppercase tracking-wider">{title}</span>
+        <div className="flex items-center justify-between px-cn-sm py-cn-3xs bg-cn-3 border-b border-cn-3">
+          <span className="text-cn-size-0 font-medium text-cn-3 uppercase tracking-wider">{title}</span>
           <button
             type="button"
             onClick={handleCopy}
-            className="text-[11px] text-cn-foreground-4 hover:text-cn-foreground-1 transition-colors"
+            className="text-cn-size-0 text-cn-4 hover:text-cn-1 transition-colors"
           >
             {copied ? 'Copied!' : 'Copy'}
           </button>
         </div>
       )}
       <pre
-        className="px-3 py-2 text-xs text-cn-foreground-2 bg-cn-background-1 overflow-auto font-mono leading-relaxed"
+        className="px-cn-sm py-cn-xs text-cn-size-0 text-cn-2 bg-cn-1 overflow-auto font-mono leading-relaxed"
         style={{ maxHeight }}
       >
         {jsonString}

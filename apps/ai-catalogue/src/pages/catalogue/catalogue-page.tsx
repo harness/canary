@@ -1,13 +1,12 @@
 import { extractCatalogueEntries } from '@harnessio/ai-chat-core'
+import { defaultPlugin } from '@harnessio/ai-chat-components'
 import { useMemo, useState } from 'react'
-
-import { cataloguePlugin } from '../../plugin/catalogue-plugin'
 import { ComponentCard } from './component-card'
 
 const CATEGORIES = ['all', 'core', 'feedback', 'capability', 'custom'] as const
 
 export function CataloguePage() {
-  const entries = useMemo(() => extractCatalogueEntries(cataloguePlugin), [])
+  const entries = useMemo(() => extractCatalogueEntries(defaultPlugin), [])
   const [activeCategory, setActiveCategory] = useState<string>('all')
   const [searchQuery, setSearchQuery] = useState('')
 
@@ -24,27 +23,25 @@ export function CataloguePage() {
   }, [entries, activeCategory, searchQuery])
 
   return (
-    <div className="p-6">
-      {/* Header */}
-      <div className="mb-6">
-        <h2 className="text-xl font-bold text-cn-foreground-1">Component Catalogue</h2>
-        <p className="text-sm text-cn-foreground-3 mt-1">
+    <div className="p-cn-xl">
+      <div className="mb-cn-lg">
+        <h2 className="text-cn-size-5 font-bold text-cn-1">Component Catalogue</h2>
+        <p className="text-cn-size-2 text-cn-3 mt-cn-3xs">
           All available AI chat renderers. Hover over any component to inspect its backend event data.
         </p>
       </div>
 
-      {/* Filters */}
-      <div className="flex items-center gap-4 mb-6">
-        <div className="flex items-center gap-1 bg-cn-background-2 rounded-lg p-1">
+      <div className="flex items-center gap-cn-md mb-cn-lg">
+        <div className="flex items-center gap-cn-4xs bg-cn-2 rounded-cn-3 p-cn-4xs">
           {CATEGORIES.map(cat => (
             <button
               key={cat}
               type="button"
               onClick={() => setActiveCategory(cat)}
-              className={`px-3 py-1.5 text-xs rounded-md transition-colors capitalize ${
+              className={`px-cn-sm py-cn-3xs text-cn-size-1 rounded-cn-2 transition-colors capitalize ${
                 activeCategory === cat
-                  ? 'bg-cn-background-1 text-cn-foreground-1 font-medium shadow-sm'
-                  : 'text-cn-foreground-3 hover:text-cn-foreground-1'
+                  ? 'bg-cn-1 text-cn-1 font-medium shadow-cn-1'
+                  : 'text-cn-3 hover:text-cn-1'
               }`}
             >
               {cat}
@@ -56,23 +53,22 @@ export function CataloguePage() {
           value={searchQuery}
           onChange={e => setSearchQuery(e.target.value)}
           placeholder="Search components..."
-          className="px-3 py-1.5 text-sm border border-cn-borders-3 rounded-lg bg-cn-background-1 text-cn-foreground-1 placeholder:text-cn-foreground-4 focus:outline-none focus:ring-1 focus:ring-blue-500 w-64"
+          className="px-cn-sm py-cn-3xs text-cn-size-2 border border-cn-3 rounded-cn-3 bg-cn-1 text-cn-1 placeholder:text-cn-4 focus:outline-none focus:ring-1 focus:ring-cn-brand w-64"
         />
-        <div className="ml-auto text-xs text-cn-foreground-3">
+        <div className="ml-auto text-cn-size-1 text-cn-3">
           {filtered.length} component{filtered.length !== 1 ? 's' : ''}
         </div>
       </div>
 
-      {/* Grid */}
-      <div className="grid grid-cols-1 xl:grid-cols-2 gap-5">
+      <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fill, minmax(500px, 1fr))', gap: 'var(--cn-layout-md)' }}>
         {filtered.map(entry => (
           <ComponentCard key={entry.type} entry={entry} />
         ))}
       </div>
 
       {filtered.length === 0 && (
-        <div className="text-center py-16 text-cn-foreground-3">
-          <p className="text-sm">No components match your filters.</p>
+        <div className="text-center py-cn-4xl text-cn-3">
+          <p className="text-cn-size-2">No components match your filters.</p>
         </div>
       )}
     </div>

@@ -1,20 +1,35 @@
+@import '../../../packages/core-design-system/dist/styles/core-imports.css';
+@import '../../../packages/core-design-system/dist/styles/mfe-themes.css';
+
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
 
-body {
-  margin: 0;
-  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+@font-face {
+  font-family: 'Inter';
+  font-style: normal;
+  font-weight: 100 900;
+  font-display: swap;
+  src: url('../../../packages/ui/src/fonts/InterVariable.woff2') format('woff2-variations');
 }
 
-#root {
-  min-height: 100vh;
+@font-face {
+  font-family: 'JetBrains Mono';
+  font-style: normal;
+  font-weight: 100 800;
+  font-display: swap;
+  src: url('../../../packages/ui/src/fonts/JetBrainsMono-Variable.woff2') format('woff2-variations');
+}
+
+@layer base {
+  body {
+    @apply bg-cn-0 text-cn-2 font-body-normal overscroll-y-none;
+  }
 }
 
 .drag-over {
-  outline: 2px dashed #3b82f6;
+  outline: 2px dashed var(--cn-border-brand, #3b82f6);
   outline-offset: -2px;
-  background-color: rgba(59, 130, 246, 0.05);
 }
 
 .dragging {

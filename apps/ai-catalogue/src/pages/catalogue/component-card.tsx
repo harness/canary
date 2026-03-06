@@ -1,18 +1,18 @@
-import { CatalogueEntry, ContentRenderer, Message, MessageContent } from '@harnessio/ai-chat-core'
+import { CatalogueEntry, ContentRenderer, Message, MessageContent, MessageRendererProps } from '@harnessio/ai-chat-core'
 import { useMemo, useState } from 'react'
 
 import { EventOverlay } from '../../components/event-overlay'
 import { JsonViewer } from '../../components/json-viewer'
 
 interface ComponentCardProps {
-  entry: CatalogueEntry & { type: string; component: React.ComponentType }
+  entry: CatalogueEntry & { type: string; component: React.ComponentType<MessageRendererProps> }
 }
 
-const CATEGORY_COLORS: Record<string, string> = {
-  core: 'bg-blue-100 text-blue-700',
-  feedback: 'bg-amber-100 text-amber-700',
-  capability: 'bg-purple-100 text-purple-700',
-  custom: 'bg-green-100 text-green-700'
+const CATEGORY_STYLES: Record<string, string> = {
+  core: 'bg-cn-blue-secondary text-cn-blue-secondary',
+  feedback: 'bg-cn-warning-secondary text-cn-warning-secondary',
+  capability: 'bg-cn-purple-secondary text-cn-purple-secondary',
+  custom: 'bg-cn-success-secondary text-cn-success-secondary'
 }
 
 export function ComponentCard({ entry }: ComponentCardProps) {
@@ -30,89 +30,77 @@ export function ComponentCard({ entry }: ComponentCardProps) {
   )
 
   return (
-    <div className="border border-cn-borders-3 rounded-xl overflow-hidden bg-cn-background-1 hover:shadow-md transition-shadow">
-      {/* Card Header */}
-      <div className="px-4 py-3 border-b border-cn-borders-3 flex items-start justify-between">
-        <div className="flex-1 min-w-0">
-          <div className="flex items-center gap-2 mb-1">
-            <h3 className="text-sm font-semibold text-cn-foreground-1">{entry.displayName}</h3>
-            <span
-              className={`px-2 py-0.5 text-[10px] font-medium rounded-full ${CATEGORY_COLORS[entry.category] ?? 'bg-gray-100 text-gray-700'}`}
-            >
+    <div className="border border-cn-3 rounded-cn-4 overflow-hidden bg-cn-1 hover:shadow-cn-2 transition-shadow">
+      {/* Header */}
+      <div className="px-cn-md py-cn-sm border-b border-cn-3 flex items-start justify-between">
+        <div style={{ flex: '1 1 0', minWidth: 0 }}>
+          <div className="flex items-center gap-cn-xs mb-cn-4xs">
+            <h3 className="text-cn-size-2 font-semibold text-cn-1">{entry.displayName}</h3>
+            <span className={`px-cn-xs py-cn-4xs text-cn-size-0 font-medium rounded-cn-full ${CATEGORY_STYLES[entry.category] ?? 'bg-cn-gray-secondary text-cn-gray-secondary'}`}>
               {entry.category}
             </span>
             {entry.supportsStreaming && (
-              <span className="px-2 py-0.5 text-[10px] font-medium rounded-full bg-cyan-100 text-cyan-700">
+              <span className="px-cn-xs py-cn-4xs text-cn-size-0 font-medium rounded-cn-full bg-cn-cyan-secondary text-cn-cyan-secondary">
                 streaming
               </span>
             )}
           </div>
-          <p className="text-xs text-cn-foreground-3 leading-relaxed">{entry.description}</p>
+          <p className="text-cn-size-1 text-cn-3 leading-relaxed">{entry.description}</p>
           {entry.tags && entry.tags.length > 0 && (
-            <div className="flex flex-wrap gap-1 mt-2">
+            <div className="flex flex-wrap gap-cn-4xs mt-cn-xs">
               {entry.tags.map(tag => (
-                <span key={tag} className="px-1.5 py-0.5 text-[10px] bg-cn-background-3 text-cn-foreground-3 rounded">
+                <span key={tag} className="px-cn-3xs py-cn-4xs text-cn-size-0 bg-cn-3 text-cn-3 rounded-cn-2">
                   {tag}
                 </span>
               ))}
             </div>
           )}
         </div>
-        <div className="flex items-center gap-1 ml-3">
-          <code className="text-[10px] font-mono bg-cn-background-3 px-1.5 py-0.5 rounded text-cn-foreground-2">
-            {entry.type}
-          </code>
-        </div>
+        <code className="text-cn-size-0 font-mono bg-cn-3 px-cn-3xs py-cn-4xs rounded-cn-2 text-cn-2 ml-cn-sm shrink-0">
+          {entry.type}
+        </code>
       </div>
 
       {/* Live Preview */}
       <EventOverlay entry={entry}>
-        <div className="px-4 py-4 bg-cn-background-2 min-h-[60px]">
-          <div className="text-[10px] text-cn-foreground-4 uppercase tracking-wider mb-2 font-medium">
+        <div className="px-cn-md py-cn-md bg-cn-2" style={{ minHeight: 60 }}>
+          <div className="text-cn-size-0 text-cn-4 uppercase tracking-wider mb-cn-xs font-medium">
             Live Preview
           </div>
-          <div className="relative">
-            <ContentRenderer message={mockMessage} content={entry.mockContent as MessageContent} />
-          </div>
+          <ContentRenderer message={mockMessage} content={entry.mockContent as MessageContent} />
         </div>
       </EventOverlay>
 
       {/* Event Toggle */}
-      <div className="border-t border-cn-borders-3">
+      <div className="border-t border-cn-3">
         <button
           type="button"
           onClick={() => setShowEvents(!showEvents)}
-          className="w-full px-4 py-2 text-xs text-cn-foreground-3 hover:text-cn-foreground-1 hover:bg-cn-background-2 transition-colors flex items-center gap-1.5"
+          className="w-full px-cn-md py-cn-xs text-cn-size-1 text-cn-3 hover:text-cn-1 hover:bg-cn-2 transition-colors flex items-center gap-cn-3xs"
         >
-          <span className={`transition-transform ${showEvents ? 'rotate-90' : ''}`}>▶</span>
+          <span className={`transition-transform ${showEvents ? 'rotate-90' : ''}`} style={{ display: 'inline-block' }}>&#9654;</span>
           {showEvents ? 'Hide' : 'Show'} Backend Events
         </button>
 
         {showEvents && (
-          <div className="px-4 pb-4 space-y-3">
-            {/* SSE Events */}
+          <div className="px-cn-md pb-cn-md" style={{ display: 'flex', flexDirection: 'column', gap: 'var(--cn-layout-sm)' }}>
             <div>
-              <h4 className="text-[11px] font-medium text-cn-foreground-2 mb-1.5 uppercase tracking-wider">
+              <h4 className="text-cn-size-0 font-medium text-cn-2 mb-cn-3xs uppercase tracking-wider">
                 SSE Events (what the backend sends)
               </h4>
               {entry.backendEvents.map((event, idx) => (
-                <div
-                  key={idx}
-                  className="bg-cn-background-2 rounded px-3 py-2 font-mono text-[11px] mb-1.5 last:mb-0"
-                >
+                <div key={idx} className="bg-cn-2 rounded-cn-2 px-cn-sm py-cn-xs font-mono text-cn-size-0 mb-cn-3xs last:mb-0">
                   <div>
-                    <span className="text-blue-500">event:</span>{' '}
-                    <span className="text-cn-foreground-1">{event.eventName}</span>
+                    <span className="text-cn-brand">event:</span>{' '}
+                    <span className="text-cn-1">{event.eventName}</span>
                   </div>
                   <div>
-                    <span className="text-blue-500">data:</span>{' '}
-                    <span className="text-cn-foreground-2">{JSON.stringify(event.examplePayload)}</span>
+                    <span className="text-cn-brand">data:</span>{' '}
+                    <span className="text-cn-2">{JSON.stringify(event.examplePayload)}</span>
                   </div>
                 </div>
               ))}
             </div>
-
-            {/* MessageContent */}
             <JsonViewer data={entry.mockContent} title="MessageContent (stored in message)" />
           </div>
         )}

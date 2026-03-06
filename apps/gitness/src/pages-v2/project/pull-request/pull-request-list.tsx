@@ -121,13 +121,12 @@ export default function PullRequestListPage() {
     })
   })
 
-  // Parse multiple author IDs from URL
-  // Handles both comma-separated format (created_by=123,456) and explode format (created_by=123&created_by=456)
+  // Parse multiple author IDs from URL (comma-separated: created_by=123,456)
   const defaultAuthorIds = searchParams
-    .getAll('created_by')
-    .flatMap(v => v.split(','))
+    .get('created_by')
+    ?.split(',')
     .filter(Boolean)
-    .map(Number)
+    .map(Number) ?? []
 
   // Fetch all selected authors in parallel
   const selectedAuthorQueries = useQueries({

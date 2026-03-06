@@ -103,10 +103,9 @@ const PullRequestListPage: FC<PullRequestPageProps> = ({
     }
 
     const currentParams = new URLSearchParams(window.location.search)
-    // Parse author IDs - handles both comma-separated (created_by=123,456) and explode format (created_by=123&created_by=456)
-    const createdByIds = currentParams
-      .getAll('created_by')
-      .flatMap(v => v.split(','))
+    // Parse author IDs (comma-separated: created_by=123,456)
+    const createdByIds = (currentParams.get('created_by') || '')
+      .split(',')
       .filter(Boolean)
     const hasCurrentUserInFilter = createdByIds.includes(String(currentUserId))
 

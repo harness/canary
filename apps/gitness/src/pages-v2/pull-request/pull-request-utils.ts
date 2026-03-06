@@ -600,7 +600,6 @@ export const buildPRFilters = ({
   }
 
   if (filterData.created_by && Array.isArray(filterData.created_by)) {
-    // Multi-select author filter: return as array for explode format (created_by=1&created_by=2)
     filters.created_by = filterData.created_by.map((item: { value: string }) => Number(item.value))
   }
 

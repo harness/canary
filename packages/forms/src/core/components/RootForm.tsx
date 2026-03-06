@@ -87,7 +87,7 @@ export function RootForm<TFieldValues extends FieldValues = FieldValues, TContex
   } = props
 
   const methods = useForm<TFieldValues>({
-    mode: mode ?? 'onSubmit',
+    mode,
     reValidateMode: 'onChange',
     defaultValues,
     shouldFocusError,
@@ -121,24 +121,45 @@ export function RootForm<TFieldValues extends FieldValues = FieldValues, TContex
     return () => cancelIdleCallback(handle)
   }, [])
 
-  const { getValues, handleSubmit } = methods
-  const values = getValues()
+  const { handleSubmit } = methods
 
-  // trigger validation on value change
-  const skipInitialValueChangeRef = useRef(true)
+  // Store onValuesChange in ref to avoid recreating subscription
+  const onValuesChangeRef = useRef(onValuesChange)
   useEffect(() => {
-    if (skipInitialValueChangeRef.current) {
-      skipInitialValueChangeRef.current = false
-      return
-    }
+    onValuesChangeRef.current = onValuesChange
+  }, [onValuesChange])
 
-    onValuesChange?.({ ...(values as any) })
+  // Store onValidationChange in ref to avoid recreating subscription
+  const onValidationChangeRef = useRef(onValidationChange)
+  useEffect(() => {
+    onValidationChangeRef.current = onValidationChange
+  }, [onValidationChange])
 
-    // NOTE: required for validating dependant fields
-    if (submittedRef.current === true) {
-      methods.trigger()
+  const isValidatingRef = useRef(false)
+
+  useEffect(() => {
+    const subscription = methods.watch(values => {
+      // Skip if we're currently validating to prevent infinite loop
+      if (isValidatingRef.current) {
+        return
+      }
+
+      onValuesChangeRef.current?.({ ...(values as any) })
+
+      // NOTE: required for validating dependent fields
+      if (submittedRef.current === true) {
+        // trigger validation on value change
+        isValidatingRef.current = true
+        methods.trigger().finally(() => {
+          isValidatingRef.current = false
+        })
+      }
+    })
+
+    return () => {
+      subscription.unsubscribe()
     }
-  }, [JSON.stringify(values)])
+  }, [methods])
 
   const skipInitialValidationChangeRef = useRef(true)
   useEffect(() => {
@@ -147,7 +168,7 @@ export function RootForm<TFieldValues extends FieldValues = FieldValues, TContex
       return
     }
 
-    onValidationChange?.({ isValid: methods.formState.isValid, isSubmitted: methods.formState.isSubmitted })
+    onValidationChangeRef.current?.({ isValid: methods.formState.isValid, isSubmitted: methods.formState.isSubmitted })
   }, [methods.formState.isValid, methods.formState.isSubmitted])
 
   // auto focus
@@ -161,7 +182,7 @@ export function RootForm<TFieldValues extends FieldValues = FieldValues, TContex
       })
       return () => cancelIdleCallback(handle)
     }
-  }, [methods])
+  }, [methods, autoFocusPath])
 
   return (
     <RootFormProvider metadata={metadata} readonly={readonly} inputErrorHandler={onInputRenderError}>

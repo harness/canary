@@ -11,7 +11,6 @@ import {
   TypesBranchTable
 } from '@/views'
 import { CheckboxOptions } from '@components/filters'
-import { ComboBoxOptions } from '@components/filters/filters-bar/actions/variants/combo-box'
 import { StackedListPaginationProps } from '@components/stacked-list'
 
 import { LabelsValue } from './components/labels'

@@ -6,6 +6,7 @@ import { useQueries } from '@tanstack/react-query'
 import {
   getPrincipal,
   ListPullReqQueryQueryParams,
+  TypesPrincipalInfo,
   useGetUserQuery,
   useListPrincipalsQuery,
   useListPullReqQuery,
@@ -151,16 +152,14 @@ export default function PullRequestListPage() {
         })
         return response
       },
-      staleTime: Infinity,
+      staleTime: 300000,
       enabled: !!authorId
     }))
   })
 
-  // Extract fetched authors
   const selectedAuthors = selectedAuthorQueries
-    .filter(query => query.data?.body)
-    .map(query => query.data?.body)
-    .filter((author): author is NonNullable<typeof author> => author !== undefined)
+    .map(q => q.data?.body)
+    .filter((author): author is TypesPrincipalInfo => Boolean(author))
 
   // For backward compatibility, keep first author as defaultSelectedAuthor
   const defaultSelectedAuthor = selectedAuthors[0]

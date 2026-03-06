@@ -104,9 +104,7 @@ const PullRequestListPage: FC<PullRequestPageProps> = ({
 
     const currentParams = new URLSearchParams(window.location.search)
     // Parse author IDs (comma-separated: created_by=123,456)
-    const createdByIds = (currentParams.get('created_by') || '')
-      .split(',')
-      .filter(Boolean)
+    const createdByIds = (currentParams.get('created_by') || '').split(',').filter(Boolean)
     const hasCurrentUserInFilter = createdByIds.includes(String(currentUserId))
 
     if (currentParams.has('created_by') && hasCurrentUserInFilter && createdByIds.length === 1) {
@@ -293,20 +291,20 @@ const PullRequestListPage: FC<PullRequestPageProps> = ({
           description={
             repoId
               ? [
-                t(
-                  'views:noData.noPullRequestsInRepo',
-                  `Start your contribution journey by creating a new pull request.`
-                )
-              ]
+                  t(
+                    'views:noData.noPullRequestsInRepo',
+                    `Start your contribution journey by creating a new pull request.`
+                  )
+                ]
               : [t('views:noData.noPullRequestsInProject', `There are no pull requests in this project yet.`)]
           }
           primaryButton={
             repoId
               ? {
-                icon: 'plus',
-                label: t('views:noData.button.createPullRequest', 'Create Pull Request'),
-                to: `${spaceId ? `/${spaceId}` : ''}/repos/${repoId}/pulls/compare/`
-              }
+                  icon: 'plus',
+                  label: t('views:noData.button.createPullRequest', 'Create Pull Request'),
+                  to: `${spaceId ? `/${spaceId}` : ''}/repos/${repoId}/pulls/compare/`
+                }
               : undefined
           }
         />
@@ -332,20 +330,20 @@ const PullRequestListPage: FC<PullRequestPageProps> = ({
         paginationProps={
           isProjectLevel
             ? {
-              indeterminate: true,
-              currentPage: page,
-              hasPrevious: page > 1,
-              hasNext: (pullRequests?.length || 0) === pageSize,
-              onPrevious: () => setPage(page - 1),
-              onNext: () => setPage(page + 1)
-            }
+                indeterminate: true,
+                currentPage: page,
+                hasPrevious: page > 1,
+                hasNext: (pullRequests?.length || 0) === pageSize,
+                onPrevious: () => setPage(page - 1),
+                onNext: () => setPage(page + 1)
+              }
             : {
-              totalItems: totalItems,
-              pageSize: pageSize,
-              onPageSizeChange: setPageSize,
-              currentPage: page,
-              goToPage: setPage
-            }
+                totalItems: totalItems,
+                pageSize: pageSize,
+                onPageSizeChange: setPageSize,
+                currentPage: page,
+                goToPage: setPage
+              }
         }
         {...routingProps}
       />
@@ -523,10 +521,10 @@ const PullRequestListPage: FC<PullRequestPageProps> = ({
                   {PR_FILTER_OPTIONS.map(filterOption => {
                     return (
                       <PRListFilterHandler.Component
-                        parser={filterOption.parser}
+                        parser={filterOption.parser as any}
                         filterKey={filterOption.value}
                         sticky={filterOption.sticky}
-                        defaultValue={filterOption.defaultValue}
+                        defaultValue={filterOption.defaultValue as any}
                         key={filterOption.value}
                       >
                         {({ onChange, removeFilter, value }) =>

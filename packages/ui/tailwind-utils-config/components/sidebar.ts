@@ -87,7 +87,7 @@ export default {
       '&-items': {
         display: 'grid',
         gridTemplateColumns: 'repeat(2, 1fr)',
-        gap: 'var(--cn-spacing-half)',
+        gap: 'var(--cn-layout-sm)',
 
         '&-single-col': {
           gridTemplateColumns: '1fr'
@@ -308,13 +308,14 @@ export default {
       },
 
       '&-content': {
+        display: 'grid',
+        gridTemplateColumns: 'auto 1fr',
+        gridTemplateAreas: '"icon title"',
+        gap: '8px',
         minHeight: 'var(--cn-sidebar-item-min-height)',
         minWidth: 'var(--cn-sidebar-item-min-width)',
-        gap: 'var(--cn-sidebar-item-gap)',
         justifyItems: 'start',
         alignItems: 'center',
-        gridTemplateColumns: 'var(--cn-icon-size-sm) 1fr',
-        gridTemplateAreas: '"icon title"',
         padding: 'var(--cn-sidebar-item-container)',
         paddingLeft: 'calc(var(--cn-sidebar-item-container) + var(--cn-layout-sm))',
         borderRadius: 'var(--cn-sidebar-item-radius)',
@@ -327,7 +328,7 @@ export default {
 
         '&-only-action-buttons': {
           gridTemplateAreas: '"icon title action-buttons"',
-          gridTemplateColumns: 'var(--cn-icon-size-sm) 1fr auto'
+          gridTemplateColumns: 'auto 1fr auto'
         },
 
         '&-w-description': {
@@ -335,7 +336,7 @@ export default {
             "icon title"
             "icon description"
           `,
-          gridTemplateColumns: 'var(--cn-icon-size-lg) 1fr',
+          gridTemplateColumns: 'auto 1fr',
           paddingBlock: 'var(--cn-sidebar-item-container)',
 
           '&:has(.cn-sidebar-item-content-action-buttons)': {
@@ -343,17 +344,17 @@ export default {
             "icon title action-buttons"
             "icon description action-buttons"
           `,
-            gridTemplateColumns: 'var(--cn-icon-size-lg) 1fr auto'
+            gridTemplateColumns: 'auto 1fr auto'
           }
         },
 
         '&-w-r-element': {
           gridTemplateAreas: '"icon title elem"',
-          gridTemplateColumns: 'var(--cn-icon-size-sm) 1fr auto',
+          gridTemplateColumns: 'auto 1fr auto',
 
           '&:has(.cn-sidebar-item-content-action-buttons)': {
             gridTemplateAreas: '"icon title action-buttons elem"',
-            gridTemplateColumns: 'var(--cn-icon-size-sm) 1fr auto auto'
+            gridTemplateColumns: 'auto 1fr auto auto'
           }
         },
 
@@ -362,7 +363,7 @@ export default {
             "icon title       elem"
             "icon description elem"
           `,
-          gridTemplateColumns: 'var(--cn-avatar-size-lg) 1fr',
+          gridTemplateColumns: 'auto 1fr auto',
           paddingBlock: 'var(--cn-sidebar-item-container)',
 
           '&:has(.cn-sidebar-item-content-action-buttons)': {
@@ -370,7 +371,7 @@ export default {
             "icon title action-buttons elem"
             "icon description action-buttons elem"
           `,
-            gridTemplateColumns: 'var(--cn-avatar-size-lg) 1fr auto auto'
+            gridTemplateColumns: 'auto 1fr auto auto'
           }
         },
         /* Deprecated class
@@ -522,10 +523,7 @@ export default {
     },
 
     '&-item-popover': {
-      // Popover variant for sidebar items with bordered icons
-      width: 'var(--cn-size-58)',
-      minWidth: 'var(--cn-size-58)',
-      maxWidth: 'var(--cn-size-58)',
+      width: 'auto',
 
       '.cn-sidebar-item-content': {
         gridTemplateColumns: 'var(--cn-size-7) 1fr',

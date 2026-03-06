@@ -9,6 +9,31 @@
 @tailwind components;
 @tailwind utilities;
 
+@layer base {
+  *,
+  *::before,
+  *::after {
+    border-style: unset;
+    border-width: unset;
+    border-color: unset;
+  }
+
+  body {
+    line-height: initial;
+  }
+}
+
+/* This should be removed when we completely migrate to the new design system from NG-UI */
+:where(.cn-root) {
+  *,
+  *::before,
+  *::after {
+    border-style: solid;
+    border-width: 0;
+    border-color: var(--cn-border-3);
+  }
+}
+
 @font-face {
   font-family: 'Inter';
   font-style: normal;

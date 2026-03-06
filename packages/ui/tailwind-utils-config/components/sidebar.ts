@@ -85,24 +85,12 @@ export default {
 
       '&-items': {
         display: 'grid',
-        gridTemplateColumns: 'repeat(2, 1fr)',
+        gridTemplateColumns: '1fr',
         gap: 'var(--cn-layout-sm)',
 
-        '&-single-col': {
-          gridTemplateColumns: '1fr'
-        },
-
-        // Popover variant: use fixed width columns (230px per item)
-        // Default to 2 columns, can be overridden to 3 columns when content exceeds viewport
         '&-popover': {
-          gridTemplateColumns: 'repeat(2, var(--cn-size-58))',
-          gap: '0 var(--cn-layout-xs)',
-          // Smooth transition when switching between 2 and 3 columns
-          transition: 'grid-template-columns 0.3s cubic-bezier(0.4, 0, 0.2, 1)'
-        },
-
-        '&-single-col&-popover': {
-          gridTemplateColumns: 'var(--cn-size-58)'
+          gridTemplateColumns: 'var(--cn-size-58)',
+          gap: '0 var(--cn-layout-xs)'
         }
       },
 
@@ -654,12 +642,5 @@ export default {
       width: 'calc(100% - 2 * var(--cn-layout-4xs))',
       backgroundColor: 'var(--cn-comp-sidebar-separator)'
     }
-  },
-
-  // 3-column layout when content exceeds viewport
-  '.cn-sidebar-group-items-popover-3col': {
-    gridTemplateColumns: 'repeat(3, var(--cn-size-48)) !important',
-    // Ensure transition applies when switching to 3 columns
-    transition: 'grid-template-columns 0.3s cubic-bezier(0.4, 0, 0.2, 1)'
   }
 }

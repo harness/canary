@@ -13,6 +13,7 @@ export type {
 } from './message'
 export type { ThreadListItemState, ThreadState, RuntimeCapabilities } from './thread'
 export type {
+  CatalogueEntry,
   ChatPlugin,
   MessageRenderer,
   MessageRendererProps,

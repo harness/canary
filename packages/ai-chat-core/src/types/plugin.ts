@@ -1,6 +1,20 @@
 import { FocusContext } from '../runtime/ContentFocusRuntime/ContentFocusRuntime'
 import { Message, MessageContent } from './message'
 
+export interface CatalogueEntry {
+  displayName: string
+  description: string
+  category: 'core' | 'feedback' | 'capability' | 'custom'
+  backendEvents: Array<{
+    eventName: string
+    examplePayload: Record<string, unknown>
+  }>
+  mockContent: MessageContent
+  mockMessage?: Partial<Message>
+  tags?: string[]
+  supportsStreaming?: boolean
+}
+
 export interface MessageRendererProps<T extends MessageContent = MessageContent> {
   content: T
   message: Message
@@ -23,6 +37,8 @@ export interface MessageRenderer<T extends MessageContent = any> {
   }
 
   canHandle?: (message: Message, content: MessageContent) => boolean
+
+  catalogue?: CatalogueEntry
 }
 
 export interface GroupRendererProps {

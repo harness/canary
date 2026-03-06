@@ -12,6 +12,10 @@
       "types": "./dist/index.d.ts",
       "import": "./dist/index.js"
     },
+    "./pipeline": {
+      "types": "./dist/pipeline.d.ts",
+      "import": "./dist/pipeline.js"
+    },
     "./locales": {
       "types": "./dist/locales.d.ts",
       "import": "./dist/locales.js"
@@ -40,7 +44,6 @@
     "@git-diff-view/shiki": "^0.0.21",
     "@harnessio/filters": "workspace:*",
     "@harnessio/forms": "workspace:*",
-    "@harnessio/pipeline-graph": "workspace:*",
     "@harnessio/ui": "workspace:*",
     "@harnessio/yaml-editor": "workspace:*",
     "@hookform/resolvers": "^3.6.0",
@@ -62,9 +65,15 @@
     "zod": "^3.23.8"
   },
   "peerDependencies": {
+    "@harnessio/pipeline-graph": "workspace:*",
     "react": "^17.0.2",
     "react-dom": "^17.0.2",
     "react-router-dom": ">=5"
+  },
+  "peerDependenciesMeta": {
+    "@harnessio/pipeline-graph": {
+      "optional": true
+    }
   },
   "devDependencies": {
     "@types/lodash-es": "^4.17.12",

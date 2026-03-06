@@ -46,13 +46,10 @@ export * from './landing-page'
 // profile-settings
 export * from './profile-settings'
 
-// pipelines
+// Pipeline-related views (also available via @harnessio/views/pipeline)
+// Apps not needing pipelines can import from @harnessio/views/pipeline to enable better tree-shaking
 export * from './pipelines'
-
-// unified-pipeline-studio
 export * from './unified-pipeline-studio'
-
-// run pipeline from
 export * from './run-pipeline'
 
 // user-management

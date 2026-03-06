@@ -3,7 +3,10 @@ import { JSX, ReactNode } from 'react'
 import { ComboBoxOptions } from '@components/filters/filters-bar/actions/variants/combo-box'
 import { MultiSelectOption, MultiSelectProps } from '@components/multi-select'
 
-import { Parser } from '@harnessio/filters'
+export type Parser<T> = {
+  parse: (value: string) => T
+  serialize: (value: T) => string
+}
 
 export enum FilterFieldTypes {
   Calendar = 'calendar',

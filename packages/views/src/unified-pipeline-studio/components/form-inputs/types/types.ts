@@ -1,5 +1,2 @@
-export type InputValueType = 'fixed' | 'runtime' | 'expression'
-
-export interface RuntimeInputConfig {
-  allowedValueTypes?: InputValueType[]
-}
+// Re-export from @harnessio/forms - these types are defined there as the canonical source
+export type { InputValueType, RuntimeInputConfig } from '@harnessio/forms'

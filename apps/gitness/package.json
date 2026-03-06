@@ -24,7 +24,6 @@
     "@emotion/is-prop-valid": "^1.4.0",
     "@harnessio/code-service-client": "3.10.0",
     "@harnessio/forms": "workspace:*",
-    "@harnessio/pipeline-graph": "workspace:*",
     "@harnessio/react-ng-manager-swagger-service-client": "1.7.1",
     "@harnessio/react-ng-manager-v2-client": "1.1.0",
     "@harnessio/ui": "workspace:*",

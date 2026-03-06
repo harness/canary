@@ -16,8 +16,7 @@ const external = [
   'react-router',
   'react/jsx-runtime',
   'react-i18next',
-  'i18next',
-  '@harnessio/filters'
+  'i18next'
 ]
 
 /**

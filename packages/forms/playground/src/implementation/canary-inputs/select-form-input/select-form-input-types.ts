@@ -1,5 +1,4 @@
-import { AnyFormValue, IInputDefinition, InputProps } from '@harnessio/forms'
-import { RuntimeInputConfig } from '@harnessio/views'
+import { AnyFormValue, IInputDefinition, InputProps, RuntimeInputConfig } from '@harnessio/forms'
 
 import { CommonFormInputConfig, ViewFormInputConfig } from '../../types/types'
 

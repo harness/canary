@@ -1,7 +1,7 @@
 {
   "name": "@harnessio/ui",
   "description": "Harness Canary UI component library",
-  "version": "1.0.0",
+  "version": "0.3.0",
   "private": false,
   "type": "module",
   "main": "./dist/index.js",
@@ -76,7 +76,6 @@
     "@git-diff-view/react": "^0.0.30",
     "@git-diff-view/shiki": "^0.0.21",
     "@harnessio/core-design-system": "workspace:*",
-    "@harnessio/filters": "workspace:*",
     "@harnessio/forms": "workspace:*",
     "@harnessio/pipeline-graph": "workspace:*",
     "@harnessio/yaml-editor": "workspace:*",

@@ -38,6 +38,7 @@ export default defineConfig({
     lib: {
       entry: {
         index: resolve(__dirname, 'src/index.ts'),
+        pipeline: resolve(__dirname, 'src/pipeline.ts'),
         locales: resolve(__dirname, 'locales/index.ts')
       },
       cssFileName: 'index',

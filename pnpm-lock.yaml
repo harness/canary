@@ -171,9 +171,6 @@ importers:
       '@harnessio/forms':
         specifier: workspace:*
         version: link:../../packages/forms
-      '@harnessio/pipeline-graph':
-        specifier: workspace:*
-        version: link:../../packages/pipeline-graph
       '@harnessio/react-ng-manager-swagger-service-client':
         specifier: 1.7.1
         version: 1.7.1
@@ -591,7 +588,7 @@ importers:
     dependencies:
       '@harnessio/ui':
         specifier: ^0.0.328
-        version: 0.0.328(@harnessio/forms@0.9.0)(@types/react-dom@17.0.26(@types/react@17.0.83))(@types/react@17.0.83)(monaco-yaml@4.0.4(monaco-editor@0.40.0))(react-dom@17.0.2(react@17.0.2))(react-router-dom@6.30.0(react-dom@17.0.2(react@17.0.2))(react@17.0.2))(react@17.0.2)(tailwindcss@3.4.17(ts-node@10.9.2(typescript@5.9.2)))(typescript@5.9.2)
+        version: 0.0.328(@harnessio/forms@0.10.1)(@types/react-dom@17.0.26(@types/react@17.0.83))(@types/react@17.0.83)(monaco-yaml@4.0.4(monaco-editor@0.40.0))(react-dom@17.0.2(react@17.0.2))(react-router-dom@6.30.0(react-dom@17.0.2(react@17.0.2))(react@17.0.2))(react@17.0.2)(tailwindcss@3.4.17(ts-node@10.9.2(typescript@5.9.2)))(typescript@5.9.2)
       '@hookform/resolvers':
         specifier: ^3.9.0
         version: 3.10.0(react-hook-form@7.54.2(react@17.0.2))
@@ -614,9 +611,6 @@ importers:
         specifier: ^3.23.8
         version: 3.24.2
     devDependencies:
-      '@harnessio/views':
-        specifier: workspace:*
-        version: link:../views
       '@testing-library/jest-dom':
         specifier: ^6.9.1
         version: 6.9.1
@@ -1153,7 +1147,7 @@ importers:
         version: 3.8.0(vite@6.2.5(@types/node@22.13.9)(jiti@1.21.7)(terser@5.39.0)(yaml@2.7.0))
       autoprefixer:
         specifier: ^10.4.14
-        version: 10.4.21(postcss@8.5.3)
+        version: 10.4.21(postcss@8.5.8)
       tailwindcss:
         specifier: ^3.4.14
         version: 3.4.17(ts-node@10.9.2(@types/node@22.13.9)(typescript@5.9.2))
@@ -2799,8 +2793,8 @@ packages:
       react-dom: 17.0.2
       react-router-dom: '>=5.0.0 <7.0.0'
 
-  '@harnessio/forms@0.9.0':
-    resolution: {integrity: sha512-thvQYtnMVEUoErAra90Bi+cngiAPFHqgMfnyUXMo4PrIPedXe3sPF8qZwFLG3m6+x+g2fUe36ZyI3p3x8Puxeg==}
+  '@harnessio/forms@0.10.1':
+    resolution: {integrity: sha512-CtOLRyWX4b70A3wXPYMS7FggqUrRThHet53DCiGXouSV+glOYrgP1s6ONn9iIHPknyY1B/1xM95VwwtxTLanWg==}
     peerDependencies:
       '@harnessio/ui': ^0.0.328
       '@hookform/resolvers': ^3.9.0
@@ -12957,9 +12951,9 @@ snapshots:
       react-dom: 17.0.2(react@17.0.2)
       react-router-dom: 6.30.0(react-dom@17.0.2(react@17.0.2))(react@17.0.2)
 
-  '@harnessio/forms@0.9.0(@harnessio/ui@0.0.328)(@hookform/resolvers@3.10.0(react-hook-form@7.54.2(react@17.0.2)))(lodash-es@4.17.21)(react-dom@17.0.2(react@17.0.2))(react-hook-form@7.54.2(react@17.0.2))(react@17.0.2)(uuid@8.3.2)(yup@0.29.3)(zod@3.24.2)':
+  '@harnessio/forms@0.10.1(@harnessio/ui@0.0.328)(@hookform/resolvers@3.10.0(react-hook-form@7.54.2(react@17.0.2)))(lodash-es@4.17.21)(react-dom@17.0.2(react@17.0.2))(react-hook-form@7.54.2(react@17.0.2))(react@17.0.2)(uuid@8.3.2)(yup@0.29.3)(zod@3.24.2)':
     dependencies:
-      '@harnessio/ui': 0.0.328(@harnessio/forms@0.9.0)(@types/react-dom@17.0.26(@types/react@17.0.83))(@types/react@17.0.83)(monaco-yaml@4.0.4(monaco-editor@0.40.0))(react-dom@17.0.2(react@17.0.2))(react-router-dom@6.30.0(react-dom@17.0.2(react@17.0.2))(react@17.0.2))(react@17.0.2)(tailwindcss@3.4.17(ts-node@10.9.2(typescript@5.9.2)))(typescript@5.9.2)
+      '@harnessio/ui': 0.0.328(@harnessio/forms@0.10.1)(@types/react-dom@17.0.26(@types/react@17.0.83))(@types/react@17.0.83)(monaco-yaml@4.0.4(monaco-editor@0.40.0))(react-dom@17.0.2(react@17.0.2))(react-router-dom@6.30.0(react-dom@17.0.2(react@17.0.2))(react@17.0.2))(react@17.0.2)(tailwindcss@3.4.17(ts-node@10.9.2(typescript@5.9.2)))(typescript@5.9.2)
       '@hookform/resolvers': 3.10.0(react-hook-form@7.54.2(react@17.0.2))
       lodash-es: 4.17.21
       react: 17.0.2
@@ -13022,7 +13016,7 @@ snapshots:
       - react
       - typescript
 
-  '@harnessio/ui@0.0.328(@harnessio/forms@0.9.0)(@types/react-dom@17.0.26(@types/react@17.0.83))(@types/react@17.0.83)(monaco-yaml@4.0.4(monaco-editor@0.40.0))(react-dom@17.0.2(react@17.0.2))(react-router-dom@6.30.0(react-dom@17.0.2(react@17.0.2))(react@17.0.2))(react@17.0.2)(tailwindcss@3.4.17(ts-node@10.9.2(typescript@5.9.2)))(typescript@5.9.2)':
+  '@harnessio/ui@0.0.328(@harnessio/forms@0.10.1)(@types/react-dom@17.0.26(@types/react@17.0.83))(@types/react@17.0.83)(monaco-yaml@4.0.4(monaco-editor@0.40.0))(react-dom@17.0.2(react@17.0.2))(react-router-dom@6.30.0(react-dom@17.0.2(react@17.0.2))(react@17.0.2))(react@17.0.2)(tailwindcss@3.4.17(ts-node@10.9.2(typescript@5.9.2)))(typescript@5.9.2)':
     dependencies:
       '@dnd-kit/core': 6.3.1(react-dom@17.0.2(react@17.0.2))(react@17.0.2)
       '@dnd-kit/sortable': 8.0.0(@dnd-kit/core@6.3.1(react-dom@17.0.2(react@17.0.2))(react@17.0.2))(react@17.0.2)
@@ -13032,7 +13026,7 @@ snapshots:
       '@git-diff-view/shiki': 0.0.21
       '@harnessio/core-design-system': 0.0.1
       '@harnessio/filters': 0.0.4(react-dom@17.0.2(react@17.0.2))(react-router-dom@6.30.0(react-dom@17.0.2(react@17.0.2))(react@17.0.2))(react@17.0.2)
-      '@harnessio/forms': 0.9.0(@harnessio/ui@0.0.328)(@hookform/resolvers@3.10.0(react-hook-form@7.54.2(react@17.0.2)))(lodash-es@4.17.21)(react-dom@17.0.2(react@17.0.2))(react-hook-form@7.54.2(react@17.0.2))(react@17.0.2)(uuid@8.3.2)(yup@0.29.3)(zod@3.24.2)
+      '@harnessio/forms': 0.10.1(@harnessio/ui@0.0.328)(@hookform/resolvers@3.10.0(react-hook-form@7.54.2(react@17.0.2)))(lodash-es@4.17.21)(react-dom@17.0.2(react@17.0.2))(react-hook-form@7.54.2(react@17.0.2))(react@17.0.2)(uuid@8.3.2)(yup@0.29.3)(zod@3.24.2)
       '@harnessio/pipeline-graph': 1.9.6(@types/react-dom@17.0.26(@types/react@17.0.83))(@types/react@17.0.83)(react-dom@17.0.2(react@17.0.2))(react@17.0.2)
       '@harnessio/yaml-editor': 0.25.0(monaco-editor@0.40.0)(monaco-yaml@4.0.4(monaco-editor@0.40.0))(react-dom@17.0.2(react@17.0.2))(react@17.0.2)
       '@hookform/resolvers': 3.10.0(react-hook-form@7.54.2(react@17.0.2))
@@ -16041,6 +16035,16 @@ snapshots:
       normalize-range: 0.1.2
       picocolors: 1.1.1
       postcss: 8.5.3
+      postcss-value-parser: 4.2.0
+
+  autoprefixer@10.4.21(postcss@8.5.8):
+    dependencies:
+      browserslist: 4.24.4
+      caniuse-lite: 1.0.30001702
+      fraction.js: 4.3.7
+      normalize-range: 0.1.2
+      picocolors: 1.1.1
+      postcss: 8.5.8
       postcss-value-parser: 4.2.0
 
   available-typed-arrays@1.0.7:

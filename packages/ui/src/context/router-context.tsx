@@ -21,6 +21,8 @@ import type {
 
 import { noop } from 'lodash-es'
 
+import { RouterContextProvider as FiltersRouterContextProvider } from '@harnessio/filters'
+
 interface SwitchProps {
   children?: React.ReactNode
   location?: Location
@@ -192,7 +194,9 @@ export const RouterContextProvider = ({
         useParams
       }}
     >
-      {children}
+      <FiltersRouterContextProvider location={location} navigate={navigate}>
+        {children}
+      </FiltersRouterContextProvider>
     </RouterContext.Provider>
   )
 }

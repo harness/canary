@@ -7,7 +7,7 @@ import {
   ProfileSettingsKeysCreateDialog,
   ProfileSettingsTokenCreateDialog,
   SettingsAccountKeysPage
-} from '@harnessio/ui/views'
+} from '@harnessio/views'
 
 import { mockProfileSettingsStore } from '../profile-settings/profile-settings-store'
 

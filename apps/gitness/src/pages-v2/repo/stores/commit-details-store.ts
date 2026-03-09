@@ -1,6 +1,6 @@
 import { create } from 'zustand'
 
-import { ICommitDetailsStore } from '@harnessio/ui/views'
+import { ICommitDetailsStore } from '@harnessio/views'
 
 export const useCommitDetailsStore = create<ICommitDetailsStore>(set => ({
   diffs: [],

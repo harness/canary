@@ -1,6 +1,6 @@
 import { EnumCiStatus, TypesExecution } from '@harnessio/code-service-client'
 import { MeterState } from '@harnessio/ui/components'
-import { PipelineExecutionStatus } from '@harnessio/ui/views'
+import { PipelineExecutionStatus } from '@harnessio/views'
 
 import { getExecutionStatus, getLabel, getMeterState } from '../execution-utils'
 

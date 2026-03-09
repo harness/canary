@@ -14,7 +14,7 @@ import {
   SSLVerificationEnum,
   TriggerEventsEnum,
   WebhookTriggerEnum
-} from '@harnessio/ui/views'
+} from '@harnessio/views'
 
 import { useRoutes } from '../../framework/context/NavigationContext'
 import { useGetRepoRef } from '../../framework/hooks/useGetRepoPath'

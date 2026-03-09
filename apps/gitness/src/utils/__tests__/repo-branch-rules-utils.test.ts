@@ -1,5 +1,5 @@
 import { EnumRuleState, type RepoRuleGetOkResponse } from '@harnessio/code-service-client'
-import { BranchRuleId, EnumBypassListType, MergeStrategy, PatternsButtonType, Rule } from '@harnessio/ui/views'
+import { BranchRuleId, EnumBypassListType, MergeStrategy, PatternsButtonType, Rule } from '@harnessio/views'
 
 import { getTotalRulesApplied, transformDataFromApi, transformFormOutput } from '../repo-branch-rules-utils'
 

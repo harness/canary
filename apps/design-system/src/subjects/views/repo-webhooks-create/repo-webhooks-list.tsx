@@ -1,4 +1,4 @@
-import { RepoWebhooksCreatePage } from '@harnessio/ui/views'
+import { RepoWebhooksCreatePage } from '@harnessio/views'
 
 import { repoWebhooksListStore } from '../repo-webhooks-list/repo-webhooks-list-store'
 

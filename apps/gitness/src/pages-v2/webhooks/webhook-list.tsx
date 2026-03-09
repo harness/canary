@@ -11,7 +11,7 @@ import {
   useUpdateRepoWebhookMutation
 } from '@harnessio/code-service-client'
 import { DeleteAlertDialog, DeleteAlertDialogProps } from '@harnessio/ui/components'
-import { ErrorTypes, RepoWebhookListPage } from '@harnessio/ui/views'
+import { ErrorTypes, RepoWebhookListPage } from '@harnessio/views'
 
 import { useRoutes } from '../../framework/context/NavigationContext'
 import { useGetRepoRef } from '../../framework/hooks/useGetRepoPath'

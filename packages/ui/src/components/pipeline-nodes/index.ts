@@ -8,6 +8,7 @@ import { StartNode } from './start-node'
 import { StepNode } from './step-node'
 
 export * from './components'
+export * from './types/types'
 
 export const PipelineNodes = {
   AddNode,

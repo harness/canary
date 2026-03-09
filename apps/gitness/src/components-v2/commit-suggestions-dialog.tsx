@@ -9,7 +9,7 @@ import {
   CommitSuggestionsDialog as CommitSuggestionsDialogComp,
   CommitSuggestionsFormType
 } from '@harnessio/ui/components'
-import { CommitSuggestion } from '@harnessio/ui/views'
+import { CommitSuggestion } from '@harnessio/views'
 
 import { useGetRepoRef } from '../framework/hooks/useGetRepoPath'
 

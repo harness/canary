@@ -16,7 +16,7 @@ import {
   CreateTagFormFields,
   orderSortDate,
   RepoTagsListView
-} from '@harnessio/ui/views'
+} from '@harnessio/views'
 
 import { BranchSelectorContainer } from '../../components-v2/branch-selector-container'
 import { CreateBranchDialog } from '../../components-v2/create-branch-dialog'

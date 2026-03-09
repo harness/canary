@@ -1,5 +1,5 @@
 import { ListPipelinesOkResponse } from '@harnessio/code-service-client'
-import { IPipeline } from '@harnessio/ui/views'
+import { IPipeline } from '@harnessio/views'
 
 import { getExecutionStatus, getMeterState } from '../../../utils/execution-utils'
 

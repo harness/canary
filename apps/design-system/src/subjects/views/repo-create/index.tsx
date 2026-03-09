@@ -1,6 +1,6 @@
 import { noop } from '@utils/viewUtils'
 
-import { RepoCreatePage } from '@harnessio/ui/views'
+import { RepoCreatePage } from '@harnessio/views'
 
 import { useRepoCreateStore } from './repo-create-store'
 

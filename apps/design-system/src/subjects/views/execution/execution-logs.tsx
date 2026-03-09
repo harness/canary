@@ -13,7 +13,7 @@ import {
   ILogsStore,
   LivelogLine,
   NodeSelectionProps
-} from '@harnessio/ui/views'
+} from '@harnessio/views'
 
 import { elements, logsBank } from './mocks/mock-data'
 

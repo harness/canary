@@ -5,3 +5,6 @@ import FilterField from './filters-field'
 export { FilterSelect, FilterField, FilterBoxWrapper }
 
 export * from './types'
+export * from './filter-select'
+export * from './filters-field'
+export * from './filters-bar/actions/variants/combo-box'

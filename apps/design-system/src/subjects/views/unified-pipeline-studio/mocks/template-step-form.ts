@@ -1,4 +1,4 @@
-import { InputDefinition } from '@harnessio/ui/views'
+import { InputDefinition } from '@harnessio/views'
 
 const inputs: InputDefinition[] = [
   {

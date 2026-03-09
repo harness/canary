@@ -12,7 +12,7 @@ import {
 } from '@harnessio/pipeline-graph'
 import { IconV2, PipelineNodes } from '@harnessio/ui/components'
 
-// import { PipelineStudioFooter } from '@harnessio/ui/views'
+// import { PipelineStudioFooter } from '@harnessio/views'
 
 // *****************************************************
 // 1. Import CSS

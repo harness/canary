@@ -3,7 +3,7 @@ import { useParams } from 'react-router-dom'
 
 import { OpenapiRule, useSpaceRuleGetQuery } from '@harnessio/code-service-client'
 import { Skeleton } from '@harnessio/ui/components'
-import { NotFoundPage, RuleType } from '@harnessio/ui/views'
+import { NotFoundPage, RuleType } from '@harnessio/views'
 
 import { useGetSpaceURLParam } from '../../../framework/hooks/useGetSpaceParam'
 import { transformDataFromApi } from '../../../utils/repo-branch-rules-utils'

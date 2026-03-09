@@ -37,12 +37,20 @@ const SearchInput = forwardRef<HTMLInputElement, SearchInputProps>(
       onKeyDown,
       showPrevNextButtons,
       counter,
-      searchValue = '',
+      searchValue,
+      // Exclude value and defaultValue since this component manages its own internal value state.
+      // Consumers should use searchValue prop instead.
+      // eslint-disable-next-line @typescript-eslint/no-unused-vars
+      value: _value,
+      // eslint-disable-next-line @typescript-eslint/no-unused-vars
+      defaultValue: _defaultValue,
       ...props
     },
     ref
   ) => {
-    const [value, setValue] = useState(searchValue)
+    // Use searchValue if provided, fall back to defaultValue for backwards compatibility, then empty string
+    const initialValue = searchValue ?? (typeof _defaultValue === 'string' ? _defaultValue : '')
+    const [value, setValue] = useState(initialValue)
     const inputRef = useRef<HTMLInputElement | null>(null)
 
     const mergedRef = useMergeRefs<HTMLInputElement>([
@@ -85,7 +93,9 @@ const SearchInput = forwardRef<HTMLInputElement, SearchInputProps>(
     }, [])
 
     useEffect(() => {
-      setValue(searchValue)
+      if (searchValue !== undefined) {
+        setValue(searchValue)
+      }
     }, [searchValue])
 
     // Handle input change

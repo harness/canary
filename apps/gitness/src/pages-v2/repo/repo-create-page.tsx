@@ -6,7 +6,7 @@ import {
   useListGitignoreQuery,
   useListLicensesQuery
 } from '@harnessio/code-service-client'
-import { FormFields, RepoCreatePage as RepoCreatePageView } from '@harnessio/ui/views'
+import { FormFields, RepoCreatePage as RepoCreatePageView } from '@harnessio/views'
 
 import { useRoutes } from '../../framework/context/NavigationContext'
 import { useGetSpaceURLParam } from '../../framework/hooks/useGetSpaceParam'

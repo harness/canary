@@ -1,6 +1,6 @@
 import { create } from 'zustand'
 
-import { RepoTagsStore } from '@harnessio/ui/views'
+import { RepoTagsStore } from '@harnessio/views'
 
 export const useRepoTagsStore = create<RepoTagsStore>(set => ({
   tags: [],

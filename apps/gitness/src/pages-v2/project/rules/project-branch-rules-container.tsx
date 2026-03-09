@@ -21,7 +21,7 @@ import {
   RepoBranchSettingsFormFields,
   RepoBranchSettingsRulesPage,
   SandboxLayout
-} from '@harnessio/ui/views'
+} from '@harnessio/views'
 
 import { useGetSpaceURLParam } from '../../../framework/hooks/useGetSpaceParam'
 import { useIsMFE } from '../../../framework/hooks/useIsMFE'

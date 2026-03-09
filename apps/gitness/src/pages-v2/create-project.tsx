@@ -1,7 +1,7 @@
 import { useNavigate } from 'react-router-dom'
 
 import { useCreateSpaceMutation } from '@harnessio/code-service-client'
-import { CreateProjectFields, CreateProjectPage } from '@harnessio/ui/views'
+import { CreateProjectFields, CreateProjectPage } from '@harnessio/views'
 
 import { useAppContext } from '../framework/context/AppContext'
 import { useRoutes } from '../framework/context/NavigationContext'

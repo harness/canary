@@ -16,6 +16,7 @@
     "@harnessio/forms": "workspace:*",
     "@harnessio/pipeline-graph": "workspace:*",
     "@harnessio/ui": "workspace:*",
+    "@harnessio/views": "workspace:*",
     "@harnessio/yaml-editor": "workspace:*",
     "@tanstack/react-table": "^8.21.3",
     "@types/lodash-es": "^4.17.12",

@@ -1,7 +1,7 @@
 import { noop } from '@utils/viewUtils.ts'
 
 import { EnumPrincipalType } from '@harnessio/ui/types'
-import { EnumPullReqState } from '@harnessio/ui/views'
+import { EnumPullReqState } from '@harnessio/views'
 
 export const pullRequestStore = {
   pullRequest: {

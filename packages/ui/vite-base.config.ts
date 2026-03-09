@@ -4,6 +4,7 @@ import { resolve, basename, extname, join } from 'path'
 
 import react from '@vitejs/plugin-react-swc'
 import { defineConfig, type Plugin } from 'vite'
+import dts from 'vite-plugin-dts'
 import svgr from 'vite-plugin-svgr'
 import tsConfigPaths from 'vite-tsconfig-paths'
 
@@ -136,6 +137,7 @@ export default defineConfig({
     react(),
     svgr({ include: '**/*.svg' }),
     tsConfigPaths(),
+    dts({ rollupTypes: true }),
     extractCssFontsPlugin(resolve(__dirname, 'src/fonts')),
     buildThemesPlugin()
   ],
@@ -150,7 +152,6 @@ export default defineConfig({
       cssFileName: 'styles',
       entry: {
         components: resolve(__dirname, 'src/components/index.ts'),
-        views: resolve(__dirname, 'src/views/index.ts'),
         utils: resolve(__dirname, 'src/utils/index.ts'),
         hooks: resolve(__dirname, 'src/hooks/index.ts'),
         locales: resolve(__dirname, 'locales/index.ts'),

@@ -3,7 +3,7 @@ import { useNavigate, useParams } from 'react-router-dom'
 
 import { useDeleteRepoLabelMutation, useDeleteSpaceLabelMutation } from '@harnessio/code-service-client'
 import { DeleteAlertDialog, MessageTheme } from '@harnessio/ui/components'
-import { ILabelType, LabelsListPage } from '@harnessio/ui/views'
+import { ILabelType, LabelsListPage } from '@harnessio/views'
 
 import { useRoutes } from '../../../framework/context/NavigationContext'
 import { useMFEContext } from '../../../framework/hooks/useMFEContext.ts'

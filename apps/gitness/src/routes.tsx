@@ -8,7 +8,7 @@ import {
   RepoSettingsLayout,
   SandboxLayout,
   WebhookSettingsLayout
-} from '@harnessio/ui/views'
+} from '@harnessio/views'
 
 import { FeatureGuard } from './components-v2/feature-guard'
 import { AppShellMFE } from './components-v2/mfe/app-shell'

@@ -1,7 +1,7 @@
 import { noop } from '@utils/viewUtils'
 
 import { MeterState } from '@harnessio/ui/components'
-import { IPipeline, IPipelineListStore, PipelineExecutionStatus } from '@harnessio/ui/views'
+import { IPipeline, IPipelineListStore, PipelineExecutionStatus } from '@harnessio/views'
 
 const pipelines: IPipeline[] = [
   {

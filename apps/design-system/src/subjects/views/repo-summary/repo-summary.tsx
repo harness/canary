@@ -1,6 +1,6 @@
 import { FC, useMemo } from 'react'
 
-import { BranchSelectorV2, RepoSummaryView, RepoSummaryViewProps } from '@harnessio/ui/views'
+import { BranchSelectorV2, RepoSummaryView, RepoSummaryViewProps } from '@harnessio/views'
 
 import repoSummaryProps from './repo-summary-props.json'
 

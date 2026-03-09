@@ -1,4 +1,4 @@
-import { RepoCommitsViewProps } from '@harnessio/ui/views'
+import { RepoCommitsViewProps } from '@harnessio/views'
 
 interface RepoCommitsStore {
   commits: RepoCommitsViewProps['commitsList']

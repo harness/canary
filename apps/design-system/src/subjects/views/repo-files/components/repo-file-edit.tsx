@@ -11,7 +11,7 @@ import {
   MarkdownViewer,
   Tabs
 } from '@harnessio/ui/components'
-import { BranchSelectorTab, CodeModes, PathActionBar } from '@harnessio/ui/views'
+import { BranchSelectorTab, CodeModes, PathActionBar } from '@harnessio/views'
 import { CodeDiffEditor, CodeEditor } from '@harnessio/yaml-editor'
 
 import { useExitConfirm } from '../hooks/use-exit-confirm'

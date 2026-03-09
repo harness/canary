@@ -19,7 +19,7 @@ import {
   RepoSidebar as RepoSidebarView,
   SIDEBAR_MAX_WIDTH,
   SIDEBAR_MIN_WIDTH
-} from '@harnessio/ui/views'
+} from '@harnessio/views'
 
 import { BranchSelectorContainer } from '../../components-v2/branch-selector-container'
 import { CreateBranchDialog } from '../../components-v2/create-branch-dialog'

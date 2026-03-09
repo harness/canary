@@ -5,7 +5,7 @@ import {
   useGetRepoWebhookExecutionQuery,
   useRetriggerRepoWebhookExecutionMutation
 } from '@harnessio/code-service-client'
-import { RepoWebhookExecutionDetailsPage, WebhookExecutionType } from '@harnessio/ui/views'
+import { RepoWebhookExecutionDetailsPage, WebhookExecutionType } from '@harnessio/views'
 
 import { useRoutes } from '../../framework/context/NavigationContext'
 import { useThemeStore } from '../../framework/context/ThemeContext'

@@ -1,7 +1,7 @@
 import { useNavigate, useParams } from 'react-router-dom'
 
 import { useForkCreateMutation } from '@harnessio/code-service-client'
-import { ForkType, RepoForkFormFields, RepoForkView } from '@harnessio/ui/views'
+import { ForkType, RepoForkFormFields, RepoForkView } from '@harnessio/views'
 
 import { BranchSelectorContainer } from '../../components-v2/branch-selector-container'
 import { DestinationSelector } from '../../components-v2/destination-selector'

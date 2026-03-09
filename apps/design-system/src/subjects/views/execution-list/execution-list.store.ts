@@ -1,6 +1,6 @@
 import { noop } from '@utils/viewUtils'
 
-import { IExecution, IExecutionListStore, PipelineExecutionStatus } from '@harnessio/ui/views'
+import { IExecution, IExecutionListStore, PipelineExecutionStatus } from '@harnessio/views'
 
 const executions: IExecution[] = [
   {

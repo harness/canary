@@ -1,6 +1,6 @@
 import { noop } from '@utils/viewUtils'
 
-import { DiffFileEntry, ICommitDetailsStore } from '@harnessio/ui/views'
+import { DiffFileEntry, ICommitDetailsStore } from '@harnessio/views'
 
 export const commitDetailsStore: ICommitDetailsStore = {
   commitSHA: '',
@@ -881,7 +881,7 @@ export const commitDetailsStore: ICommitDetailsStore = {
               newNumber: 6
             },
             {
-              content: " import { SandboxLayout } from '@harnessio/ui/views'",
+              content: " import { SandboxLayout } from '@harnessio/views'",
               type: 'context',
               oldNumber: 16,
               newNumber: 7
@@ -2711,7 +2711,7 @@ export const commitDetailsStore: ICommitDetailsStore = {
               newNumber: 3
             },
             {
-              content: " import { EmptyPage, RepoSettingsPage, SandboxLayout } from '@harnessio/ui/views'",
+              content: " import { EmptyPage, RepoSettingsPage, SandboxLayout } from '@harnessio/views'",
               type: 'context',
               oldNumber: 4,
               newNumber: 4
@@ -2857,7 +2857,7 @@ export const commitDetailsStore: ICommitDetailsStore = {
       contentId: 'content-apps/gitness/src/routes.tsx::::apps/gitness/src/routes.tsx',
       fileId: 'apps/gitness/src/routes.tsx::::apps/gitness/src/routes.tsx',
       filePath: 'apps/gitness/src/routes.tsx',
-      raw: "diff --git a/apps/gitness/src/routes.tsx b/apps/gitness/src/routes.tsx\nindex f2d3a7332bea9f8fe67a416afed29bf524f3cd18..4f0fe9334a9cad3ce85910b0c540c319826b2205 100644\n--- a/apps/gitness/src/routes.tsx\n+++ b/apps/gitness/src/routes.tsx\n@@ -1,6 +1,6 @@\n import { Navigate } from 'react-router-dom'\n \n-import { BreadcrumbSeparator, Text } from '@harnessio/ui/components'\n+import { Breadcrumb, Text } from '@harnessio/ui/components'\n import { EmptyPage, RepoSettingsPage, SandboxLayout } from '@harnessio/ui/views'\n \n import AppShell from './components-v2/app-shell'\n@@ -486,7 +486,7 @@ export const routes: CustomRouteObject[] = [\n           breadcrumb: () => (\n             <>\n               <Text>Account</Text>\n-              <BreadcrumbSeparator />\n+              <Breadcrumb.Separator />\n               <Text>Users</Text>\n             </>\n           )\n@@ -499,7 +499,7 @@ export const routes: CustomRouteObject[] = [\n           breadcrumb: () => (\n             <>\n               <Text>User</Text>\n-              <BreadcrumbSeparator className=\"mx-cn-xs\" />\n+              <Breadcrumb.Separator className=\"mx-cn-xs\" />\n               <Text>Settings</Text>\n             </>\n           )\n"
+      raw: "diff --git a/apps/gitness/src/routes.tsx b/apps/gitness/src/routes.tsx\nindex f2d3a7332bea9f8fe67a416afed29bf524f3cd18..4f0fe9334a9cad3ce85910b0c540c319826b2205 100644\n--- a/apps/gitness/src/routes.tsx\n+++ b/apps/gitness/src/routes.tsx\n@@ -1,6 +1,6 @@\n import { Navigate } from 'react-router-dom'\n \n-import { BreadcrumbSeparator, Text } from '@harnessio/ui/components'\n+import { Breadcrumb, Text } from '@harnessio/ui/components'\n import { EmptyPage, RepoSettingsPage, SandboxLayout } from '@harnessio/views'\n \n import AppShell from './components-v2/app-shell'\n@@ -486,7 +486,7 @@ export const routes: CustomRouteObject[] = [\n           breadcrumb: () => (\n             <>\n               <Text>Account</Text>\n-              <BreadcrumbSeparator />\n+              <Breadcrumb.Separator />\n               <Text>Users</Text>\n             </>\n           )\n@@ -499,7 +499,7 @@ export const routes: CustomRouteObject[] = [\n           breadcrumb: () => (\n             <>\n               <Text>User</Text>\n-              <BreadcrumbSeparator className=\"mx-cn-xs\" />\n+              <Breadcrumb.Separator className=\"mx-cn-xs\" />\n               <Text>Settings</Text>\n             </>\n           )\n"
     },
     {
       blocks: [

@@ -7,7 +7,7 @@ import {
   useCalculateCommitDivergenceMutation,
   useGetContentQuery
 } from '@harnessio/code-service-client'
-import { BranchSelectorTab, CodeModes, CommitDivergenceType, RepoFiles } from '@harnessio/ui/views'
+import { BranchSelectorTab, CodeModes, CommitDivergenceType, RepoFiles } from '@harnessio/views'
 
 import FileContentViewer from '../../components-v2/file-content-viewer'
 import { FileEditor } from '../../components-v2/file-editor'

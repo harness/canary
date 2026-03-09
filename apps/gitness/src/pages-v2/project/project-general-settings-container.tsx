@@ -9,7 +9,7 @@ import {
   useUpdateSpaceMutation
 } from '@harnessio/code-service-client'
 import { DeleteAlertDialog, DeleteAlertDialogProps } from '@harnessio/ui/components'
-import { ProjectSettingsGeneralFields, ProjectSettingsGeneralPage } from '@harnessio/ui/views'
+import { ProjectSettingsGeneralFields, ProjectSettingsGeneralPage } from '@harnessio/views'
 
 import { useAppContext } from '../../framework/context/AppContext'
 import { useRoutes } from '../../framework/context/NavigationContext.tsx'

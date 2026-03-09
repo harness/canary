@@ -53,7 +53,7 @@ import UnifiedPipelineStudioWrapper from '@subjects/views/unified-pipeline-studi
 import WaterfallProgressDemo from '@subjects/views/waterfall-progress-demo'
 
 import { ChatEmptyPreviewWrapper, ChatPreviewWrapper } from '@harnessio/ui/components'
-import { NotFoundPage } from '@harnessio/ui/views'
+import { NotFoundPage } from '@harnessio/views'
 
 import { AppViewWrapper } from './app-view-wrapper'
 import { CommitDetailsDiffViewWrapper } from './commit-details-diff-view-wrapper'

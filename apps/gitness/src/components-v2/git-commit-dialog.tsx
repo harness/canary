@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react'
+import { useCallback, useEffect, useRef, useState } from 'react'
 
 import { useQueryClient } from '@tanstack/react-query'
 
@@ -61,6 +61,24 @@ export default function GitCommitDialog({
   const queryClient = useQueryClient()
   const { violation, bypassable, bypassed, setAllStates, resetViolation } = useRuleViolationCheck()
   const { mutateAsync: commitChanges } = useCommitFilesMutation({})
+  const isMountedRef = useRef(true)
+
+  useEffect(() => {
+    isMountedRef.current = true
+    return () => {
+      isMountedRef.current = false
+    }
+  }, [])
+
+  // Wrap setAllStates to prevent state updates after unmount
+  const safeSetAllStates = useCallback(
+    (payload: Parameters<typeof setAllStates>[0]) => {
+      if (isMountedRef.current) {
+        setAllStates(payload)
+      }
+    },
+    [setAllStates]
+  )
 
   const commitTitle =
     commitAction === GitCommitAction.DELETE
@@ -100,14 +118,16 @@ export default function GitCommitDialog({
       body: { ...data }
     })
       .then(response => {
+        if (!isMountedRef.current) return
         if ([GitCommitAction.MOVE, GitCommitAction.CREATE, GitCommitAction.DELETE].includes(commitAction)) {
           queryClient.invalidateQueries(['folderContents', repoRef, gitRef])
         }
         onSuccess(response.body, commitToGitRef === CommitToGitRefOption.NEW_BRANCH, newBranchName || '', fileName)
       })
       .catch(_error => {
+        if (!isMountedRef.current) return
         if (_error?.violations?.length > 0) {
-          setAllStates({
+          safeSetAllStates({
             violation: true,
             bypassed: true,
             bypassable: _error?.violations[0]?.bypassable
@@ -119,6 +139,7 @@ export default function GitCommitDialog({
   }
 
   const dryRun = async (commitToGitRef: CommitToGitRefOption, fileName?: string) => {
+    if (!isMountedRef.current) return
     resetViolation()
     setDisableCTA(false)
     const path = oldResourcePath ?? (isNew && resourcePath.length < 1 ? '/' + fileName : resourcePath)
@@ -145,8 +166,9 @@ export default function GitCommitDialog({
           repo_ref: repoRef,
           body: { ...data }
         })
+        if (!isMountedRef.current) return
         if (response?.rule_violations?.length) {
-          setAllStates({
+          safeSetAllStates({
             violation: true,
             bypassed: true,
             bypassable: response?.rule_violations[0]?.bypassable
@@ -154,7 +176,7 @@ export default function GitCommitDialog({
           setDisableCTA(!response?.rule_violations[0]?.bypassable)
         }
       } catch (_error) {
-        // Todo: error via toast?
+        if (!isMountedRef.current) return
         console.log(_error, 'error')
       }
     }
@@ -184,7 +206,7 @@ export default function GitCommitDialog({
       bypassable={bypassable}
       currentBranch={currentBranch.replace('refs/heads/', '')}
       isFileNameRequired={isNew && resourcePath?.length < 1}
-      setAllStates={setAllStates}
+      setAllStates={safeSetAllStates}
       // TODO: Add a loading state for submission
       isSubmitting={false}
     />

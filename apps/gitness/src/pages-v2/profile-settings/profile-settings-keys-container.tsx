@@ -26,7 +26,7 @@ import {
   ProfileSettingsTokenCreateDialog,
   SettingsAccountKeysPage,
   TokensList
-} from '@harnessio/ui/views'
+} from '@harnessio/views'
 
 import { useProfileSettingsStore } from './stores/profile-settings-store'
 

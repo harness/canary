@@ -1,6 +1,6 @@
 import { create } from 'zustand'
 
-import { BranchData, BranchSelectorListItem, BranchSelectorTab, IBranchSelectorStore } from '@harnessio/ui/views'
+import { BranchData, BranchSelectorListItem, BranchSelectorTab, IBranchSelectorStore } from '@harnessio/views'
 
 export const useRepoBranchesStore = create<IBranchSelectorStore>(set => ({
   // initial state

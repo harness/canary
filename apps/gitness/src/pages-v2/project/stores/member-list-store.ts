@@ -1,7 +1,7 @@
 import { create } from 'zustand'
 
 import { TypesMembershipUser } from '@harnessio/code-service-client'
-import { MemberData } from '@harnessio/ui/views'
+import { MemberData } from '@harnessio/views'
 
 import { timeAgoFromEpochTime } from '../../../utils/time-utils'
 

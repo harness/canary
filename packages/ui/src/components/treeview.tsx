@@ -2,9 +2,9 @@ import * as React from 'react'
 import { createContext, forwardRef, useCallback, useContext, useEffect, useState } from 'react'
 
 import { IconV2, ScrollArea } from '@/components'
+import { ExecutionState } from '@/types'
 import * as AccordionPrimitive from '@radix-ui/react-accordion'
 import { cn } from '@utils/cn'
-import { ExecutionState } from '@views/repo/pull-request'
 
 type ExecutionDetail = {
   status: ExecutionState
@@ -68,7 +68,10 @@ type TreeViewProps = {
 } & React.HTMLAttributes<HTMLDivElement>
 
 const Tree = forwardRef<HTMLDivElement, TreeViewProps>(
-  ({ className, elements, initialSelectedId, initialExpendedItems, children, indicator = true, dir, ...props }) => {
+  (
+    { className, elements, initialSelectedId, initialExpendedItems, children, indicator = true, dir, ...props },
+    ref
+  ) => {
     const [selectedId, setSelectedId] = useState<string | undefined>(initialSelectedId)
     const [expendedItems, setExpendedItems] = useState<string[] | undefined>(initialExpendedItems)
 
@@ -134,7 +137,7 @@ const Tree = forwardRef<HTMLDivElement, TreeViewProps>(
         }}
       >
         <ScrollArea className="pt-cn-md" direction={dir as Direction}>
-          <div className={cn('size-full', className)}>
+          <div ref={ref} className={cn('size-full', className)}>
             <AccordionPrimitive.Root
               {...props}
               type="multiple"
@@ -165,12 +168,13 @@ type FolderProps = {
   ExecutionDetail
 
 const Folder = forwardRef<HTMLDivElement, FolderProps & React.HTMLAttributes<HTMLDivElement>>(
-  ({ className, element, value, isSelectable = true, isSelect, children, status, duration, level, ...props }) => {
+  ({ className, element, value, isSelectable = true, isSelect, children, status, duration, level, ...props }, ref) => {
     const { direction, handleExpand, expendedItems, setExpendedItems } = useTree()
 
     return (
       <AccordionPrimitive.Item
         {...props}
+        ref={ref}
         value={value}
         className="pb-cn-sm -mb-cn-sm relative size-full overflow-hidden"
       >

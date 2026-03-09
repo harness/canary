@@ -1,6 +1,6 @@
 import { noop } from '@utils/viewUtils'
 
-import { RepoImportPage } from '@harnessio/ui/views'
+import { RepoImportPage } from '@harnessio/views'
 
 export const ImportRepoView = () => {
   return (

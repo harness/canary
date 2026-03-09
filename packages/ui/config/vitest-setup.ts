@@ -45,18 +45,6 @@ vi.mock('@/views/repo/pull-request/components/reviewers', () => ({
   PullRequestReviewers: () => null
 }))
 
-// Mock form-input components that may have circular dependencies
-vi.mock('@harnessio/forms', () => ({
-  //  Mock necessary exports from forms package
-  default: {},
-  InputFactory: class InputFactory {
-    createInput() {
-      return null
-    }
-  },
-  unsetEmptyStringOutputTransformer: () => (value: any) => value
-}))
-
 // Mock form-input to avoid circular dependency with Radio
 vi.mock('@/components/form-input', () => ({
   FormInput: {

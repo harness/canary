@@ -3,8 +3,8 @@ import { Outlet, Route, Routes } from 'react-router-dom'
 
 import { noop } from '@utils/viewUtils'
 
-import { NavbarItemType, Sidebar } from '@harnessio/ui/components'
-import { MainContentLayout, SidebarView } from '@harnessio/ui/views'
+import { NavbarItemType, Sidebar, useSidebar } from '@harnessio/ui/components'
+import { MainContentLayout, SidebarView } from '@harnessio/views'
 
 import { useRootViewWrapperStore } from './root-view-wrapper-store'
 
@@ -106,6 +106,7 @@ export const AppViewWrapper: FC<PropsWithChildren<AppViewWrapperProps>> = ({
               lang="en"
               moreMenu={moreMenu}
               settingsMenu={settingsMenu}
+              useSidebar={useSidebar}
             />
             <Sidebar.Inset>
               {breadcrumbs}

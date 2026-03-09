@@ -3,7 +3,7 @@ import { isEmpty, isEqual } from 'lodash-es'
 import { create } from 'zustand'
 
 import { commentStatusPullReq as apiCommentStatusPullReq, mergePullReqOp } from '@harnessio/code-service-client'
-import { CodeCommentState, DiffStatistics, PullRequestDataState, PullRequestState } from '@harnessio/ui/views'
+import { CodeCommentState, DiffStatistics, PullRequestDataState, PullRequestState } from '@harnessio/views'
 
 import { extractSpecificViolations, getCommentsInfoData } from '../pull-request-utils'
 

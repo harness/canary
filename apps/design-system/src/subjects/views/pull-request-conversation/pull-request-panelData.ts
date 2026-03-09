@@ -13,7 +13,7 @@ import {
   LabelAssignmentType,
   LabelType,
   TypesPullReqActivity
-} from '@harnessio/ui/views'
+} from '@harnessio/views'
 
 export const prPanelInfo = {
   ruleViolation: true,

@@ -1,7 +1,7 @@
 import { create } from 'zustand'
 
 import { RepoRepositoryOutput, TypesPullReq } from '@harnessio/code-service-client'
-import { ColorsEnum, PRState, PullRequest } from '@harnessio/ui/views'
+import { ColorsEnum, PRState, PullRequest } from '@harnessio/views'
 
 import { PageResponseHeader } from '../../../types'
 

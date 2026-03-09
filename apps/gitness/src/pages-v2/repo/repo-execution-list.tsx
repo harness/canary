@@ -5,7 +5,7 @@ import { noop } from 'lodash-es'
 
 import { ListExecutionsOkResponse, TypesExecution, useListExecutionsQuery } from '@harnessio/code-service-client'
 import { IconV2 } from '@harnessio/ui/components'
-import { ExecutionListPage, IExecution } from '@harnessio/ui/views'
+import { ExecutionListPage, IExecution } from '@harnessio/views'
 
 import { useGetRepoRef } from '../../framework/hooks/useGetRepoPath'
 import { parseAsInteger, useQueryState } from '../../framework/hooks/useQueryState'

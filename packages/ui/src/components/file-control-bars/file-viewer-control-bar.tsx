@@ -13,7 +13,7 @@ import {
   ViewTypeValue
 } from '@/components'
 import { useCustomDialogTrigger } from '@/context'
-import { BranchSelectorTab } from '@views/repo/components/branch-selector-v2/types'
+import { BranchSelectorTab } from '@/types'
 
 export interface FileViewerControlBarProps {
   view: ViewTypeValue

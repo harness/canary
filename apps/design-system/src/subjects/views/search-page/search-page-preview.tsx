@@ -1,6 +1,6 @@
 import { useCallback, useState } from 'react'
 
-import { SearchPageView } from '@harnessio/ui/views'
+import { SearchPageView } from '@harnessio/views'
 
 import { searchResultsStore } from './search-results-store'
 

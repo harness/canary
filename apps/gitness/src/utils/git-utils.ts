@@ -1,6 +1,6 @@
 import langMap from 'lang-map'
 
-import { CommitFilterItemProps, TypesCommit } from '@harnessio/ui/views'
+import { CommitFilterItemProps, TypesCommit } from '@harnessio/views'
 
 export enum GitCommitAction {
   DELETE = 'DELETE',

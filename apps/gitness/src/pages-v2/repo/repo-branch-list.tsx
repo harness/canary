@@ -11,7 +11,7 @@ import {
   useListBranchesQuery
 } from '@harnessio/code-service-client'
 import { DeleteAlertDialog } from '@harnessio/ui/components'
-import { RepoBranchListView } from '@harnessio/ui/views'
+import { RepoBranchListView } from '@harnessio/views'
 
 import { CreateBranchDialog } from '../../components-v2/create-branch-dialog'
 import { useRoutes } from '../../framework/context/NavigationContext'

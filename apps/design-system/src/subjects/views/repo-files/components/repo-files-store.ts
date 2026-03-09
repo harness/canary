@@ -1,5 +1,5 @@
 import { PathParts } from '@harnessio/ui/components'
-import { BranchData, IBranchSelectorStore, LatestFileTypes, RepoFile } from '@harnessio/ui/views'
+import { BranchData, IBranchSelectorStore, LatestFileTypes, RepoFile } from '@harnessio/views'
 import { BlameItem } from '@harnessio/yaml-editor/dist/types/blame'
 
 export interface RepoRepositoryOutput {
@@ -591,11 +591,8 @@ export const repoFilesStore: RepoFilesStoreType = {
     'packages/ui/config/vitest-setup.ts',
     'packages/ui/i18n.config.ts',
     'packages/ui/locales/en/component.json',
-    'packages/ui/locales/en/views.json',
     'packages/ui/locales/es/component.json',
-    'packages/ui/locales/es/views.json',
     'packages/ui/locales/fr/component.json',
-    'packages/ui/locales/fr/views.json',
     'packages/ui/locales/index.ts',
     'packages/ui/package.json',
     'packages/ui/postcss.config.js',
@@ -952,6 +949,11 @@ export const repoFilesStore: RepoFilesStoreType = {
     'packages/unified-pipeline/vite.config.ts',
     'packages/views/.gitignore',
     'packages/views/global.d.ts',
+    'packages/views/i18n.config.ts',
+    'packages/views/locales/en/views.json',
+    'packages/views/locales/es/views.json',
+    'packages/views/locales/fr/views.json',
+    'packages/views/locales/index.ts',
     'packages/views/package.json',
     'packages/views/src/components/TabsTriggerItem.tsx',
     'packages/views/src/components/alert-delete-dialog-form.tsx',

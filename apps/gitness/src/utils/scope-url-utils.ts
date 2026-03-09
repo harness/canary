@@ -1,5 +1,5 @@
 import { determineScope, getScopedPath } from '@harnessio/ui/components'
-import { RepositoryType, Scope, ScopeType, ScopeValue } from '@harnessio/ui/views'
+import { RepositoryType, Scope, ScopeType, ScopeValue } from '@harnessio/views'
 
 export const getScopeType = ({ accountId, orgIdentifier, projectIdentifier }: Scope): ScopeType => {
   if (accountId && orgIdentifier && projectIdentifier) return ScopeType.Project

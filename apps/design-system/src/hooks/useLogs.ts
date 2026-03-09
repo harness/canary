@@ -1,6 +1,6 @@
 import { useEffect, useRef, useState } from 'react'
 
-import { LivelogLine } from '@harnessio/ui/views'
+import { LivelogLine } from '@harnessio/views'
 
 interface UseLogsProps {
   logs: LivelogLine[]

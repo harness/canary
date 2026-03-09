@@ -1,4 +1,4 @@
-import { ScopeType } from '@views/common'
+import { ScopeType } from '@/types'
 
 /**
  * Determines the scope type (Account, Organization, or Project) based on the provided

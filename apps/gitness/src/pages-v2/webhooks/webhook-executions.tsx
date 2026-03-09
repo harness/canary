@@ -2,7 +2,7 @@ import { useEffect } from 'react'
 import { useParams } from 'react-router-dom'
 
 import { useListRepoWebhookExecutionsQuery } from '@harnessio/code-service-client'
-import { RepoWebhookExecutionsPage, WebhookExecutionType } from '@harnessio/ui/views'
+import { RepoWebhookExecutionsPage, WebhookExecutionType } from '@harnessio/views'
 
 import { useRoutes } from '../../framework/context/NavigationContext'
 import { useGetRepoRef } from '../../framework/hooks/useGetRepoPath'

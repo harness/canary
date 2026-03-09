@@ -1,5 +1,5 @@
 import { RepoRepositoryOutput } from '@harnessio/code-service-client'
-import { RepositoryType } from '@harnessio/ui/views'
+import { RepositoryType } from '@harnessio/views'
 
 export const transformRepoList = (repoList: RepoRepositoryOutput[]): RepositoryType[] => {
   return repoList.map(repo => ({

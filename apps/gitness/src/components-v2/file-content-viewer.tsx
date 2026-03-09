@@ -26,7 +26,7 @@ import {
 import { useRouterContext } from '@harnessio/ui/context'
 import { useMonacoTheme } from '@harnessio/ui/hooks'
 import { cn, decodeURIComponentIfValid } from '@harnessio/ui/utils'
-import { CommitsList, FileReviewError } from '@harnessio/ui/views'
+import { CommitsList, FileReviewError } from '@harnessio/views'
 import { CodeEditor } from '@harnessio/yaml-editor'
 
 import GitCommitDialog from '../components-v2/git-commit-dialog'

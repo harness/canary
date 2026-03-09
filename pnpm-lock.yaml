@@ -92,6 +92,9 @@ importers:
       '@harnessio/ui':
         specifier: workspace:*
         version: link:../../packages/ui
+      '@harnessio/views':
+        specifier: workspace:*
+        version: link:../../packages/views
       '@harnessio/yaml-editor':
         specifier: workspace:*
         version: link:../../packages/yaml-editor
@@ -159,15 +162,18 @@ importers:
 
   apps/gitness:
     dependencies:
+      '@emotion/is-prop-valid':
+        specifier: ^1.4.0
+        version: 1.4.0
       '@harnessio/code-service-client':
         specifier: 3.10.0
         version: 3.10.0
+      '@harnessio/filters':
+        specifier: workspace:*
+        version: link:../../packages/filters
       '@harnessio/forms':
         specifier: workspace:*
         version: link:../../packages/forms
-      '@harnessio/pipeline-graph':
-        specifier: workspace:*
-        version: link:../../packages/pipeline-graph
       '@harnessio/react-ng-manager-swagger-service-client':
         specifier: 1.7.1
         version: 1.7.1
@@ -177,6 +183,9 @@ importers:
       '@harnessio/ui':
         specifier: workspace:*
         version: link:../../packages/ui
+      '@harnessio/views':
+        specifier: workspace:*
+        version: link:../../packages/views
       '@harnessio/yaml-editor':
         specifier: workspace:*
         version: link:../../packages/yaml-editor
@@ -582,7 +591,7 @@ importers:
     dependencies:
       '@harnessio/ui':
         specifier: ^0.0.328
-        version: 0.0.328(@harnessio/forms@0.9.0)(@types/react-dom@17.0.26(@types/react@17.0.83))(@types/react@17.0.83)(monaco-yaml@4.0.4(monaco-editor@0.40.0))(react-dom@17.0.2(react@17.0.2))(react-router-dom@6.30.0(react-dom@17.0.2(react@17.0.2))(react@17.0.2))(react@17.0.2)(tailwindcss@3.4.17(ts-node@10.9.2(typescript@5.9.2)))(typescript@5.9.2)
+        version: 0.0.328(@harnessio/forms@0.10.1)(@types/react-dom@17.0.26(@types/react@17.0.83))(@types/react@17.0.83)(monaco-yaml@4.0.4(monaco-editor@0.40.0))(react-dom@17.0.2(react@17.0.2))(react-router-dom@6.30.0(react-dom@17.0.2(react@17.0.2))(react@17.0.2))(react@17.0.2)(tailwindcss@3.4.17(ts-node@10.9.2(typescript@5.9.2)))(typescript@5.9.2)
       '@hookform/resolvers':
         specifier: ^3.9.0
         version: 3.10.0(react-hook-form@7.54.2(react@17.0.2))
@@ -744,12 +753,6 @@ importers:
       '@harnessio/core-design-system':
         specifier: workspace:*
         version: link:../core-design-system
-      '@harnessio/filters':
-        specifier: workspace:*
-        version: link:../filters
-      '@harnessio/forms':
-        specifier: workspace:*
-        version: link:../forms
       '@harnessio/pipeline-graph':
         specifier: workspace:*
         version: link:../pipeline-graph
@@ -1039,6 +1042,124 @@ importers:
       vitest:
         specifier: ^3.0.6
         version: 3.0.7(@types/debug@4.1.12)(@types/node@22.13.9)(@vitest/ui@3.0.7)(jiti@1.21.7)(jsdom@25.0.1)(terser@5.39.0)(yaml@2.7.0)
+
+  packages/views:
+    dependencies:
+      '@git-diff-view/file':
+        specifier: ^0.0.30
+        version: 0.0.30
+      '@git-diff-view/react':
+        specifier: ^0.0.30
+        version: 0.0.30(react-dom@17.0.2(react@17.0.2))(react@17.0.2)
+      '@git-diff-view/shiki':
+        specifier: ^0.0.21
+        version: 0.0.21
+      '@harnessio/filters':
+        specifier: workspace:*
+        version: link:../filters
+      '@harnessio/forms':
+        specifier: workspace:*
+        version: link:../forms
+      '@harnessio/pipeline-graph':
+        specifier: workspace:*
+        version: link:../pipeline-graph
+      '@harnessio/ui':
+        specifier: workspace:*
+        version: link:../ui
+      '@harnessio/yaml-editor':
+        specifier: workspace:*
+        version: link:../yaml-editor
+      '@hookform/resolvers':
+        specifier: ^3.6.0
+        version: 3.10.0(react-hook-form@7.54.2(react@17.0.2))
+      '@tanstack/react-table':
+        specifier: ^8.21.3
+        version: 8.21.3(react-dom@17.0.2(react@17.0.2))(react@17.0.2)
+      cel-js:
+        specifier: ^0.7.1
+        version: 0.7.1
+      class-variance-authority:
+        specifier: ^0.7.0
+        version: 0.7.1
+      clsx:
+        specifier: ^2.1.1
+        version: 2.1.1
+      date-fns:
+        specifier: ^3.6.0
+        version: 3.6.0
+      diff2html:
+        specifier: 3.4.22
+        version: 3.4.22
+      framer-motion:
+        specifier: '6'
+        version: 6.5.1(react-dom@17.0.2(react@17.0.2))(react@17.0.2)
+      i18next:
+        specifier: ^24.0.2
+        version: 24.2.2(typescript@5.9.2)
+      lodash-es:
+        specifier: ^4.17.21
+        version: 4.17.21
+      monaco-editor:
+        specifier: ^0.40.0
+        version: 0.40.0
+      overlayscrollbars:
+        specifier: ^2.10.0
+        version: 2.11.1
+      react:
+        specifier: 17.0.2
+        version: 17.0.2
+      react-dom:
+        specifier: 17.0.2
+        version: 17.0.2(react@17.0.2)
+      react-hook-form:
+        specifier: ^7.28.0
+        version: 7.54.2(react@17.0.2)
+      react-i18next:
+        specifier: ^15.1.1
+        version: 15.4.1(i18next@24.2.2(typescript@5.9.2))(react-dom@17.0.2(react@17.0.2))(react@17.0.2)
+      react-intersection-observer:
+        specifier: ^9.15.1
+        version: 9.15.1(react-dom@17.0.2(react@17.0.2))(react@17.0.2)
+      react-router-dom:
+        specifier: '>=5'
+        version: 6.30.0(react-dom@17.0.2(react@17.0.2))(react@17.0.2)
+      yaml:
+        specifier: ^2.7.0
+        version: 2.7.0
+      zod:
+        specifier: ^3.23.8
+        version: 3.24.2
+    devDependencies:
+      '@types/lodash-es':
+        specifier: ^4.17.12
+        version: 4.17.12
+      '@types/node':
+        specifier: ^22.9.0
+        version: 22.13.9
+      '@types/react':
+        specifier: ^17.0.3
+        version: 17.0.83
+      '@vitejs/plugin-react-swc':
+        specifier: ^3.8.0
+        version: 3.8.0(vite@6.2.5(@types/node@22.13.9)(jiti@1.21.7)(terser@5.39.0)(yaml@2.7.0))
+      autoprefixer:
+        specifier: ^10.4.14
+        version: 10.4.21(postcss@8.5.8)
+      tailwindcss:
+        specifier: ^3.4.14
+        version: 3.4.17(ts-node@10.9.2(@types/node@22.13.9)(typescript@5.9.2))
+      vite:
+        specifier: ^6.1.1
+        version: 6.2.5(@types/node@22.13.9)(jiti@1.21.7)(terser@5.39.0)(yaml@2.7.0)
+      vite-plugin-dts:
+        specifier: ^4.5.0
+        version: 4.5.3(@types/node@22.13.9)(rollup@4.34.9)(typescript@5.9.2)(vite@6.2.5(@types/node@22.13.9)(jiti@1.21.7)(terser@5.39.0)(yaml@2.7.0))
+      vite-plugin-svgr:
+        specifier: ^4.3.0
+        version: 4.3.0(rollup@4.34.9)(typescript@5.9.2)(vite@6.2.5(@types/node@22.13.9)(jiti@1.21.7)(terser@5.39.0)(yaml@2.7.0))
+      vitest:
+        specifier: ^3.0.6
+        version: 3.0.7(@types/debug@4.1.12)(@types/node@22.13.9)(@vitest/ui@3.0.7)(jiti@1.21.7)(jsdom@26.1.0)(terser@5.39.0)(yaml@2.7.0)
 
   packages/yaml-editor:
     dependencies:
@@ -2021,8 +2142,14 @@ packages:
   '@emotion/is-prop-valid@0.8.8':
     resolution: {integrity: sha512-u5WtneEAr5IDG2Wv65yhunPSMLIpuKsbuOktRojfrEiEvRyC85LgPMZI63cr7NUqT8ZIGdSVg8ZKGxIug4lXcA==}
 
+  '@emotion/is-prop-valid@1.4.0':
+    resolution: {integrity: sha512-QgD4fyscGcbbKwJmqNvUMSE02OsHUa+lAWKdEUIJKgqe5IwRSKd7+KhibEWdaKwgjLj0DRSHA9biAIqGBk05lw==}
+
   '@emotion/memoize@0.7.4':
     resolution: {integrity: sha512-Ja/Vfqe3HpuzRsG1oBtWTHk2PGZ7GR+2Vz5iYGelAw8dx32K0y7PjVuxK6z1nMpZOqAFsRUPCkK1YjJ56qJlgw==}
+
+  '@emotion/memoize@0.9.0':
+    resolution: {integrity: sha512-30FAj7/EoJ5mwVPOWhAyCX+FPfMDrVecJAM+Iw9NRoSl4BBAQeqj4cApHHUXOVvIPgLVDsCFoz/hGD+5QQD1GQ==}
 
   '@esbuild/aix-ppc64@0.21.5':
     resolution: {integrity: sha512-1SDgH6ZSPTlggy1yI6+Dbkiz8xzpHJEVAlF/AM1tHPLsf5STom9rwtjE4hKAF20FfXXNTFqEYXyJNWh1GiZedQ==}
@@ -2663,8 +2790,8 @@ packages:
       react-dom: 17.0.2
       react-router-dom: '>=5.0.0 <7.0.0'
 
-  '@harnessio/forms@0.9.0':
-    resolution: {integrity: sha512-thvQYtnMVEUoErAra90Bi+cngiAPFHqgMfnyUXMo4PrIPedXe3sPF8qZwFLG3m6+x+g2fUe36ZyI3p3x8Puxeg==}
+  '@harnessio/forms@0.10.1':
+    resolution: {integrity: sha512-CtOLRyWX4b70A3wXPYMS7FggqUrRThHet53DCiGXouSV+glOYrgP1s6ONn9iIHPknyY1B/1xM95VwwtxTLanWg==}
     peerDependencies:
       '@harnessio/ui': ^0.0.328
       '@hookform/resolvers': ^3.9.0
@@ -12416,8 +12543,14 @@ snapshots:
       '@emotion/memoize': 0.7.4
     optional: true
 
+  '@emotion/is-prop-valid@1.4.0':
+    dependencies:
+      '@emotion/memoize': 0.9.0
+
   '@emotion/memoize@0.7.4':
     optional: true
+
+  '@emotion/memoize@0.9.0': {}
 
   '@esbuild/aix-ppc64@0.21.5':
     optional: true
@@ -12815,9 +12948,9 @@ snapshots:
       react-dom: 17.0.2(react@17.0.2)
       react-router-dom: 6.30.0(react-dom@17.0.2(react@17.0.2))(react@17.0.2)
 
-  '@harnessio/forms@0.9.0(@harnessio/ui@0.0.328)(@hookform/resolvers@3.10.0(react-hook-form@7.54.2(react@17.0.2)))(lodash-es@4.17.21)(react-dom@17.0.2(react@17.0.2))(react-hook-form@7.54.2(react@17.0.2))(react@17.0.2)(uuid@8.3.2)(yup@0.29.3)(zod@3.24.2)':
+  '@harnessio/forms@0.10.1(@harnessio/ui@0.0.328)(@hookform/resolvers@3.10.0(react-hook-form@7.54.2(react@17.0.2)))(lodash-es@4.17.21)(react-dom@17.0.2(react@17.0.2))(react-hook-form@7.54.2(react@17.0.2))(react@17.0.2)(uuid@8.3.2)(yup@0.29.3)(zod@3.24.2)':
     dependencies:
-      '@harnessio/ui': 0.0.328(@harnessio/forms@0.9.0)(@types/react-dom@17.0.26(@types/react@17.0.83))(@types/react@17.0.83)(monaco-yaml@4.0.4(monaco-editor@0.40.0))(react-dom@17.0.2(react@17.0.2))(react-router-dom@6.30.0(react-dom@17.0.2(react@17.0.2))(react@17.0.2))(react@17.0.2)(tailwindcss@3.4.17(ts-node@10.9.2(typescript@5.9.2)))(typescript@5.9.2)
+      '@harnessio/ui': 0.0.328(@harnessio/forms@0.10.1)(@types/react-dom@17.0.26(@types/react@17.0.83))(@types/react@17.0.83)(monaco-yaml@4.0.4(monaco-editor@0.40.0))(react-dom@17.0.2(react@17.0.2))(react-router-dom@6.30.0(react-dom@17.0.2(react@17.0.2))(react@17.0.2))(react@17.0.2)(tailwindcss@3.4.17(ts-node@10.9.2(typescript@5.9.2)))(typescript@5.9.2)
       '@hookform/resolvers': 3.10.0(react-hook-form@7.54.2(react@17.0.2))
       lodash-es: 4.17.21
       react: 17.0.2
@@ -12880,7 +13013,7 @@ snapshots:
       - react
       - typescript
 
-  '@harnessio/ui@0.0.328(@harnessio/forms@0.9.0)(@types/react-dom@17.0.26(@types/react@17.0.83))(@types/react@17.0.83)(monaco-yaml@4.0.4(monaco-editor@0.40.0))(react-dom@17.0.2(react@17.0.2))(react-router-dom@6.30.0(react-dom@17.0.2(react@17.0.2))(react@17.0.2))(react@17.0.2)(tailwindcss@3.4.17(ts-node@10.9.2(typescript@5.9.2)))(typescript@5.9.2)':
+  '@harnessio/ui@0.0.328(@harnessio/forms@0.10.1)(@types/react-dom@17.0.26(@types/react@17.0.83))(@types/react@17.0.83)(monaco-yaml@4.0.4(monaco-editor@0.40.0))(react-dom@17.0.2(react@17.0.2))(react-router-dom@6.30.0(react-dom@17.0.2(react@17.0.2))(react@17.0.2))(react@17.0.2)(tailwindcss@3.4.17(ts-node@10.9.2(typescript@5.9.2)))(typescript@5.9.2)':
     dependencies:
       '@dnd-kit/core': 6.3.1(react-dom@17.0.2(react@17.0.2))(react@17.0.2)
       '@dnd-kit/sortable': 8.0.0(@dnd-kit/core@6.3.1(react-dom@17.0.2(react@17.0.2))(react@17.0.2))(react@17.0.2)
@@ -12890,7 +13023,7 @@ snapshots:
       '@git-diff-view/shiki': 0.0.21
       '@harnessio/core-design-system': 0.0.1
       '@harnessio/filters': 0.0.4(react-dom@17.0.2(react@17.0.2))(react-router-dom@6.30.0(react-dom@17.0.2(react@17.0.2))(react@17.0.2))(react@17.0.2)
-      '@harnessio/forms': 0.9.0(@harnessio/ui@0.0.328)(@hookform/resolvers@3.10.0(react-hook-form@7.54.2(react@17.0.2)))(lodash-es@4.17.21)(react-dom@17.0.2(react@17.0.2))(react-hook-form@7.54.2(react@17.0.2))(react@17.0.2)(uuid@8.3.2)(yup@0.29.3)(zod@3.24.2)
+      '@harnessio/forms': 0.10.1(@harnessio/ui@0.0.328)(@hookform/resolvers@3.10.0(react-hook-form@7.54.2(react@17.0.2)))(lodash-es@4.17.21)(react-dom@17.0.2(react@17.0.2))(react-hook-form@7.54.2(react@17.0.2))(react@17.0.2)(uuid@8.3.2)(yup@0.29.3)(zod@3.24.2)
       '@harnessio/pipeline-graph': 1.9.6(@types/react-dom@17.0.26(@types/react@17.0.83))(@types/react@17.0.83)(react-dom@17.0.2(react@17.0.2))(react@17.0.2)
       '@harnessio/yaml-editor': 0.25.0(monaco-editor@0.40.0)(monaco-yaml@4.0.4(monaco-editor@0.40.0))(react-dom@17.0.2(react@17.0.2))(react@17.0.2)
       '@hookform/resolvers': 3.10.0(react-hook-form@7.54.2(react@17.0.2))
@@ -15175,6 +15308,13 @@ snapshots:
     transitivePeerDependencies:
       - '@swc/helpers'
 
+  '@vitejs/plugin-react-swc@3.8.0(vite@6.2.5(@types/node@22.13.9)(jiti@1.21.7)(terser@5.39.0)(yaml@2.7.0))':
+    dependencies:
+      '@swc/core': 1.12.1
+      vite: 6.2.5(@types/node@22.13.9)(jiti@1.21.7)(terser@5.39.0)(yaml@2.7.0)
+    transitivePeerDependencies:
+      - '@swc/helpers'
+
   '@vitejs/plugin-react@4.3.4(vite@4.5.9(@types/node@16.18.126)(terser@5.39.0))':
     dependencies:
       '@babel/core': 7.26.9
@@ -15892,6 +16032,16 @@ snapshots:
       normalize-range: 0.1.2
       picocolors: 1.1.1
       postcss: 8.5.3
+      postcss-value-parser: 4.2.0
+
+  autoprefixer@10.4.21(postcss@8.5.8):
+    dependencies:
+      browserslist: 4.24.4
+      caniuse-lite: 1.0.30001702
+      fraction.js: 4.3.7
+      normalize-range: 0.1.2
+      picocolors: 1.1.1
+      postcss: 8.5.8
       postcss-value-parser: 4.2.0
 
   available-typed-arrays@1.0.7:
@@ -23119,6 +23269,25 @@ snapshots:
       - rollup
       - supports-color
 
+  vite-plugin-dts@4.5.3(@types/node@22.13.9)(rollup@4.34.9)(typescript@5.9.2)(vite@6.2.5(@types/node@22.13.9)(jiti@1.21.7)(terser@5.39.0)(yaml@2.7.0)):
+    dependencies:
+      '@microsoft/api-extractor': 7.51.1(@types/node@22.13.9)
+      '@rollup/pluginutils': 5.1.4(rollup@4.34.9)
+      '@volar/typescript': 2.4.11
+      '@vue/language-core': 2.2.0(typescript@5.9.2)
+      compare-versions: 6.1.1
+      debug: 4.4.0
+      kolorist: 1.8.0
+      local-pkg: 1.1.1
+      magic-string: 0.30.17
+      typescript: 5.9.2
+    optionalDependencies:
+      vite: 6.2.5(@types/node@22.13.9)(jiti@1.21.7)(terser@5.39.0)(yaml@2.7.0)
+    transitivePeerDependencies:
+      - '@types/node'
+      - rollup
+      - supports-color
+
   vite-plugin-monaco-editor@1.1.0(monaco-editor@0.40.0):
     dependencies:
       monaco-editor: 0.40.0
@@ -23151,6 +23320,17 @@ snapshots:
       '@svgr/core': 8.1.0(typescript@5.9.2)
       '@svgr/plugin-jsx': 8.1.0(@svgr/core@8.1.0(typescript@5.9.2))
       vite: 6.2.5(@types/node@16.18.126)(jiti@1.21.7)(terser@5.39.0)(yaml@2.7.0)
+    transitivePeerDependencies:
+      - rollup
+      - supports-color
+      - typescript
+
+  vite-plugin-svgr@4.3.0(rollup@4.34.9)(typescript@5.9.2)(vite@6.2.5(@types/node@22.13.9)(jiti@1.21.7)(terser@5.39.0)(yaml@2.7.0)):
+    dependencies:
+      '@rollup/pluginutils': 5.1.4(rollup@4.34.9)
+      '@svgr/core': 8.1.0(typescript@5.9.2)
+      '@svgr/plugin-jsx': 8.1.0(@svgr/core@8.1.0(typescript@5.9.2))
+      vite: 6.2.5(@types/node@22.13.9)(jiti@1.21.7)(terser@5.39.0)(yaml@2.7.0)
     transitivePeerDependencies:
       - rollup
       - supports-color
@@ -23302,6 +23482,47 @@ snapshots:
       '@types/node': 22.13.9
       '@vitest/ui': 3.0.7(vitest@3.0.7)
       jsdom: 25.0.1
+    transitivePeerDependencies:
+      - jiti
+      - less
+      - lightningcss
+      - msw
+      - sass
+      - sass-embedded
+      - stylus
+      - sugarss
+      - supports-color
+      - terser
+      - tsx
+      - yaml
+
+  vitest@3.0.7(@types/debug@4.1.12)(@types/node@22.13.9)(@vitest/ui@3.0.7)(jiti@1.21.7)(jsdom@26.1.0)(terser@5.39.0)(yaml@2.7.0):
+    dependencies:
+      '@vitest/expect': 3.0.7
+      '@vitest/mocker': 3.0.7(vite@6.2.5(@types/node@22.13.9)(jiti@1.21.7)(terser@5.39.0)(yaml@2.7.0))
+      '@vitest/pretty-format': 3.0.7
+      '@vitest/runner': 3.0.7
+      '@vitest/snapshot': 3.0.7
+      '@vitest/spy': 3.0.7
+      '@vitest/utils': 3.0.7
+      chai: 5.2.0
+      debug: 4.4.0
+      expect-type: 1.2.0
+      magic-string: 0.30.17
+      pathe: 2.0.3
+      std-env: 3.8.1
+      tinybench: 2.9.0
+      tinyexec: 0.3.2
+      tinypool: 1.0.2
+      tinyrainbow: 2.0.0
+      vite: 6.2.5(@types/node@22.13.9)(jiti@1.21.7)(terser@5.39.0)(yaml@2.7.0)
+      vite-node: 3.0.7(@types/node@22.13.9)(jiti@1.21.7)(terser@5.39.0)(yaml@2.7.0)
+      why-is-node-running: 2.3.0
+    optionalDependencies:
+      '@types/debug': 4.1.12
+      '@types/node': 22.13.9
+      '@vitest/ui': 3.0.7(vitest@3.0.7)
+      jsdom: 26.1.0
     transitivePeerDependencies:
       - jiti
       - less

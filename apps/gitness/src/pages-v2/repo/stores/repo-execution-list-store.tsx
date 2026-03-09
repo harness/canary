@@ -1,6 +1,6 @@
 import { create } from 'zustand'
 
-import { IExecutionListStore } from '@harnessio/ui/views'
+import { IExecutionListStore } from '@harnessio/views'
 
 export const useExecutionListStore = create<IExecutionListStore>(set => ({
   executions: null,

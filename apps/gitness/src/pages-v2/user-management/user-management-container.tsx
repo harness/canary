@@ -9,7 +9,7 @@ import {
   useAdminUpdateUserMutation,
   useUpdateUserAdminMutation
 } from '@harnessio/code-service-client'
-import { ICreateUserData, IUpdateUserData, UserManagementPage } from '@harnessio/ui/views'
+import { ICreateUserData, IUpdateUserData, UserManagementPage } from '@harnessio/views'
 
 import { useQueryState } from '../../framework/hooks/useQueryState'
 import usePaginationQueryStateWithStore from '../../hooks/use-pagination-query-state-with-store'

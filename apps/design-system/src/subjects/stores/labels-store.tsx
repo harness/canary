@@ -1,11 +1,4 @@
-import {
-  ColorsEnum,
-  ILabelsStore,
-  ILabelType,
-  LabelType,
-  LabelValueType,
-  SetRepoSpaceRefProps
-} from '@harnessio/ui/views'
+import { ColorsEnum, ILabelsStore, ILabelType, LabelType, LabelValueType, SetRepoSpaceRefProps } from '@harnessio/views'
 
 interface RepoLabelsListStore {
   useLabelsStore: () => ILabelsStore

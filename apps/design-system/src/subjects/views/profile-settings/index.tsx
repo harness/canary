@@ -2,7 +2,7 @@ import { useEffect, useState } from 'react'
 
 import { noop } from '@utils/viewUtils'
 
-import { SettingsAccountGeneralPage } from '@harnessio/ui/views'
+import { SettingsAccountGeneralPage } from '@harnessio/views'
 
 import { mockProfileSettingsStore } from './profile-settings-store.ts'
 

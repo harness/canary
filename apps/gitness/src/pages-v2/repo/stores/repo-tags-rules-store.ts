@@ -1,7 +1,7 @@
 import { create } from 'zustand'
 
 import { getT } from '@harnessio/ui/context'
-import { getTagRules, ITagRulesStore, TagRule, TagRulesAction } from '@harnessio/ui/views'
+import { getTagRules, ITagRulesStore, TagRule, TagRulesAction } from '@harnessio/views'
 
 import i18n from '../../../i18n/i18n'
 import { tagSettingsReducer } from '../reducers/repo-tag-rules-reducer'

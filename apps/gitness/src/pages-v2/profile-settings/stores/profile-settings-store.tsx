@@ -1,7 +1,7 @@
 import { create } from 'zustand'
 
 // import { GetUserOkResponse } from '@harnessio/code-service-client'
-import { IProfileSettingsStore, KeysList, ProfileFields, TokenFormType, TokensList } from '@harnessio/ui/views'
+import { IProfileSettingsStore, KeysList, ProfileFields, TokenFormType, TokensList } from '@harnessio/views'
 
 export const useProfileSettingsStore = create<IProfileSettingsStore>(set => ({
   publicKeys: [],

@@ -6,7 +6,7 @@ import {
   TagRule,
   TagRuleId,
   TargetReposButtonType
-} from '@harnessio/ui/views'
+} from '@harnessio/views'
 
 export const transformFormOutput = (formOutput: RepoTagSettingsFormFields): RepoRuleAddRequestBody => {
   const rulesMap = formOutput.rules.reduce<Record<string, TagRule>>((acc, rule) => {

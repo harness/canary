@@ -1,7 +1,7 @@
 import { atom } from 'jotai'
 
 import { TypesCheck } from '@harnessio/code-service-client'
-import { PullRequestChangesSectionProps } from '@harnessio/ui/views'
+import { PullRequestChangesSectionProps } from '@harnessio/views'
 
 export enum PullReqReviewDecision {
   approved = 'approved',

@@ -10,7 +10,7 @@ import {
   useListCommitsQuery,
   useListPullReqActivitiesQuery
 } from '@harnessio/code-service-client'
-import { RepoRepositoryOutput } from '@harnessio/ui/views'
+import { RepoRepositoryOutput } from '@harnessio/views'
 
 import { eventManager } from '../../framework/event/EventManager'
 import { useGetRepoRef } from '../../framework/hooks/useGetRepoPath'

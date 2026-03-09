@@ -1,7 +1,7 @@
 import { create } from 'zustand'
 
 import { ListCommitsOkResponse } from '@harnessio/code-service-client'
-import { CommitSelectorListItem, TypesCommit } from '@harnessio/ui/views'
+import { CommitSelectorListItem, TypesCommit } from '@harnessio/views'
 
 import { PageResponseHeader } from '../../../types'
 

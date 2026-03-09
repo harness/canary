@@ -19,7 +19,7 @@ import {
   ViewOnlyProps,
   Widgets
 } from '@harnessio/ui/components'
-import { Page } from '@harnessio/ui/views'
+import { Page } from '@harnessio/views'
 
 const dataMock: ViewOnlyProps[] = [
   {

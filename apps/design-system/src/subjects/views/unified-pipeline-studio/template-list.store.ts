@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react'
 
-import { ITemplateListItem, ITemplateListStore } from '@harnessio/ui/views'
+import { ITemplateListItem, ITemplateListStore } from '@harnessio/views'
 
 import { templateStepForm } from './mocks/template-step-form'
 

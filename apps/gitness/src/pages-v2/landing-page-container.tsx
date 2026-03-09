@@ -1,4 +1,6 @@
-import { LandingPageView } from '@harnessio/ui/views'
+import { Link, useNavigate } from 'react-router-dom'
+
+import { LandingPageView } from '@harnessio/views'
 
 import { useAppContext } from '../framework/context/AppContext'
 import { useRoutes } from '../framework/context/NavigationContext'
@@ -6,10 +8,15 @@ import { useRoutes } from '../framework/context/NavigationContext'
 export const LandingPage = () => {
   const routes = useRoutes()
   const { spaces } = useAppContext()
-
-  const getProjectPath = (spaceId?: string) => routes.toRepositories({ spaceId })
+  const navigate = useNavigate()
 
   return (
-    <LandingPageView spaces={spaces} getProjectPath={getProjectPath} toCreateProject={() => routes.toProjectCreate()} />
+    <LandingPageView
+      spaces={spaces}
+      getProjectPath={spaceId => routes.toRepositories({ spaceId })}
+      toCreateProject={() => routes.toProjectCreate()}
+      navigate={navigate}
+      Link={Link}
+    />
   )
 }

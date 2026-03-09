@@ -4,7 +4,7 @@ import { useParams } from 'react-router-dom'
 import { useMutation } from '@tanstack/react-query'
 
 import { useListReposQuery } from '@harnessio/code-service-client'
-import { SearchPageView, SearchResultItem, SemanticSearchResultItem, Stats } from '@harnessio/ui/views'
+import { SearchPageView, SearchResultItem, SemanticSearchResultItem, Stats } from '@harnessio/views'
 
 import { useMFEContext } from '../framework/hooks/useMFEContext'
 import { parseAsBoolean, useQueryState } from '../framework/hooks/useQueryState'

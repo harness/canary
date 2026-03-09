@@ -6,7 +6,7 @@ import {
   BranchSelectorTab,
   CreateBranchDialog as CreateBranchDialogComp,
   CreateBranchFormFields
-} from '@harnessio/ui/views'
+} from '@harnessio/views'
 
 import { useGetRepoRef } from '../framework/hooks/useGetRepoPath'
 import { useRuleViolationCheck } from '../framework/hooks/useRuleViolationCheck'

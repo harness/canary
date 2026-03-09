@@ -46,7 +46,7 @@ import {
   PullRequestConversationPage as PullRequestConversationView,
   PullRequestPanelProps,
   TypesPullReq
-} from '@harnessio/ui/views'
+} from '@harnessio/views'
 
 import CommitSuggestionsDialog from '../../components-v2/commit-suggestions-dialog'
 import { useAppContext } from '../../framework/context/AppContext'

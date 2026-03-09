@@ -2,7 +2,7 @@ import { memo } from 'react'
 import { Outlet } from 'react-router-dom'
 
 import { Toaster } from '@harnessio/ui/components'
-import { MainContentLayout } from '@harnessio/ui/views'
+import { MainContentLayout } from '@harnessio/views'
 
 import { useGetSpaceURLParam } from '../../framework/hooks/useGetSpaceParam'
 import useSpaceSSEWithPubSub from '../../framework/hooks/useSpaceSSEWithPubSub'

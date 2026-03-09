@@ -13,8 +13,8 @@ RUN --mount=type=cache,id=pnpm,target=/pnpm/store pnpm install --prod --frozen-l
 FROM base AS build
 # install deps
 RUN --mount=type=cache,id=pnpm,target=/pnpm/store pnpm install --frozen-lockfile
-# build all the packages and apps except portal and design-system
-RUN pnpm --filter \!portal --filter \!design-system run build
+# Build packages and gitness app only (pnpm handles dependency ordering)
+RUN pnpm -r -F './packages/*' -F ./apps/gitness build
 
 FROM us-west1-docker.pkg.dev/gar-setup/docker/alpine:3.21 AS final
 COPY --from=build /canary/apps/gitness/dist /canary-dist

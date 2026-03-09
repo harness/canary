@@ -2,7 +2,7 @@ import { FC } from 'react'
 import { useNavigate } from 'react-router-dom'
 
 import { useOnLoginMutation } from '@harnessio/code-service-client'
-import { SignInData, SignInPage } from '@harnessio/ui/views'
+import { SignInData, SignInPage } from '@harnessio/views'
 
 import { useRoutes } from '../framework/context/NavigationContext'
 

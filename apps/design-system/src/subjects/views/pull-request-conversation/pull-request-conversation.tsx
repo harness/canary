@@ -16,7 +16,7 @@ import {
   TypesCodeOwnerEvaluation,
   TypesCodeOwnerEvaluationEntry,
   TypesPullReqReviewer
-} from '@harnessio/ui/views'
+} from '@harnessio/views'
 
 import {
   changesInfoData,

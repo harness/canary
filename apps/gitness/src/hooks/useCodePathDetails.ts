@@ -1,6 +1,6 @@
 import { useLocation, useParams } from 'react-router-dom'
 
-import { CodeModes } from '@harnessio/ui/views'
+import { CodeModes } from '@harnessio/views'
 
 import { isRefABranch, isRefATag, REFS_BRANCH_PREFIX, REFS_TAGS_PREFIX } from '../utils/git-utils'
 import { removeLeadingSlash, removeTrailingSlash } from '../utils/path-utils'

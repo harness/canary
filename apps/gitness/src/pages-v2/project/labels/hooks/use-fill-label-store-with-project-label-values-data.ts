@@ -1,7 +1,7 @@
 import { useEffect, useMemo, useState } from 'react'
 
 import { listSpaceLabelValues, useListSpaceLabelsQuery } from '@harnessio/code-service-client'
-import { ILabelType, LabelValuesType, LabelValueType, ScopeValue } from '@harnessio/ui/views'
+import { ILabelType, LabelValuesType, LabelValueType, ScopeValue } from '@harnessio/views'
 
 import { useGetSpaceURLParam } from '../../../../framework/hooks/useGetSpaceParam'
 import { PageResponseHeader } from '../../../../types'

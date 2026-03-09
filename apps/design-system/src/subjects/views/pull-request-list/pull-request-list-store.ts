@@ -1,6 +1,6 @@
 import { noop } from '@utils/viewUtils'
 
-import { ColorsEnum, PullRequestListStore } from '@harnessio/ui/views'
+import { ColorsEnum, PullRequestListStore } from '@harnessio/views'
 
 export const pullRequestListStore: PullRequestListStore = {
   pullRequests: [

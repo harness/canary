@@ -3,7 +3,7 @@ import { useNavigate, useParams } from 'react-router-dom'
 
 import { useDeleteSpaceLabelMutation } from '@harnessio/code-service-client'
 import { DeleteAlertDialog, MessageTheme } from '@harnessio/ui/components'
-import { ILabelType, LabelsListPage, SandboxLayout } from '@harnessio/ui/views'
+import { ILabelType, LabelsListPage, SandboxLayout } from '@harnessio/views'
 
 import { useGetSpaceURLParam } from '../../../framework/hooks/useGetSpaceParam'
 import { useMFEContext } from '../../../framework/hooks/useMFEContext.ts'

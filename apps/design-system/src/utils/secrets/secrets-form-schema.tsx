@@ -1,5 +1,5 @@
 import { IFormDefinition } from '@harnessio/forms'
-import { InputDefinition } from '@harnessio/ui/views'
+import { InputDefinition } from '@harnessio/views'
 
 const metadataInputs: InputDefinition[] = [
   {

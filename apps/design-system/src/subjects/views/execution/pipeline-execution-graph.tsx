@@ -18,7 +18,7 @@ import { Button, ButtonLayout, Drawer, IconV2, PipelineNodes } from '@harnessio/
 
 import '@harnessio/pipeline-graph/dist/index.css'
 
-import { ExecutionHeader, ExecutionInfo, ExecutionState, LivelogLine } from '@harnessio/ui/views'
+import { ExecutionHeader, ExecutionInfo, ExecutionState, LivelogLine } from '@harnessio/views'
 
 import { logs } from './mocks/mock-data'
 

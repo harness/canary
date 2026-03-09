@@ -1,6 +1,6 @@
 import { FC, useCallback, useState } from 'react'
 
-import { BranchSelectorListItem, ForkPRBranchSelectorView, RepoOption, TypesRepositoryCore } from '@harnessio/ui/views'
+import { BranchSelectorListItem, ForkPRBranchSelectorView, RepoOption, TypesRepositoryCore } from '@harnessio/views'
 
 import { BranchSelectorContainer } from './branch-selector-container'
 

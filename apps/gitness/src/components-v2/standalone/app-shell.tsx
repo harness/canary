@@ -3,7 +3,7 @@ import { Outlet, useParams } from 'react-router-dom'
 
 import { NavbarItemType, Toaster, useSidebar } from '@harnessio/ui/components'
 import { useTranslation } from '@harnessio/ui/context'
-import { MainContentLayout } from '@harnessio/ui/views'
+import { MainContentLayout } from '@harnessio/views'
 
 import { getNavbarMenuData } from '../../data/navbar-menu-data'
 import { getPinnedMenuItemsData } from '../../data/pinned-items'

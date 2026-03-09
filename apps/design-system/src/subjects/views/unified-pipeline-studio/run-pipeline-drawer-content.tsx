@@ -12,7 +12,7 @@ import {
   TextFormInput,
   VisualYamlValue,
   type InputLayout
-} from '@harnessio/ui/views'
+} from '@harnessio/views'
 import { YamlRevision } from '@harnessio/yaml-editor'
 
 const inputComponentFactory = new InputFactory()

@@ -18,7 +18,7 @@ import {
   RepoBranchSettingsFormFields,
   Rule,
   TargetReposButtonType
-} from '@harnessio/ui/views'
+} from '@harnessio/views'
 
 import { getDefaultReviewersValidationMessage } from '../pages-v2/repo/transform-utils/handle_rule_interdependencies'
 

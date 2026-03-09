@@ -1,6 +1,6 @@
 import { create } from 'zustand'
 
-import { CreateWebhookFormFields, WebhookExecutionType, WebhookStore } from '@harnessio/ui/views'
+import { CreateWebhookFormFields, WebhookExecutionType, WebhookStore } from '@harnessio/views'
 
 import { PageResponseHeader } from '../../../types'
 import { timeAgoFromEpochTime } from '../../../utils/time-utils'

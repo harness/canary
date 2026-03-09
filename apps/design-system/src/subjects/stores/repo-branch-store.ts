@@ -1,6 +1,6 @@
 import { noop } from '@utils/viewUtils.ts'
 
-import { BranchSelectorTab, IBranchSelectorStore } from '@harnessio/ui/views'
+import { BranchSelectorTab, IBranchSelectorStore } from '@harnessio/views'
 
 export const repoBranchListStore = {
   selectedBranchTag: { name: 'main', sha: '1d0e5a9461b340ebb3d7e092a2d35ff6d0d5c952', default: true },

@@ -1,8 +1,8 @@
 import React from 'react'
 
+import { ExecutionState } from '@/types'
 import { render, screen } from '@testing-library/react'
 import userEvent from '@testing-library/user-event'
-import { ExecutionState } from '@views/repo/pull-request'
 import { describe, expect, test, vi } from 'vitest'
 
 import { CollapseButton, File, Folder, Tree, type TreeViewElement } from '../treeview'

@@ -2,7 +2,7 @@ import { useEffect } from 'react'
 import { useLocation, useParams } from 'react-router-dom'
 
 import { useListPullReqCommitsQuery } from '@harnessio/code-service-client'
-import { PullRequestCommitsView } from '@harnessio/ui/views'
+import { PullRequestCommitsView } from '@harnessio/views'
 
 import { useRoutes } from '../../framework/context/NavigationContext'
 import { useGetRepoRef } from '../../framework/hooks/useGetRepoPath'

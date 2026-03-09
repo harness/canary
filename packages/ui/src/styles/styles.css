@@ -33,6 +33,21 @@
 
 @layer utilities {
   /*
+    Sidebar responsive visibility class.
+    Uses a specific class name to avoid conflicts with MFE host apps that may have
+    their own .hidden class (e.g., harness-core-ui's Tailwind CSS).
+  */
+  .cn-sidebar-root-responsive {
+    display: none;
+  }
+
+  @media (min-width: 768px) {
+    .cn-sidebar-root-responsive {
+      display: block;
+    }
+  }
+
+  /*
     Handy CSS class to prevent Input background color becomes yellow in Chrome on autofill.
     Works as well with inputs with transparent background.
 

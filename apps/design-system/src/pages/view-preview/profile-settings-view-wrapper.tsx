@@ -1,7 +1,7 @@
 import { FC, HTMLAttributes, PropsWithChildren } from 'react'
 import { Route, Routes } from 'react-router-dom'
 
-import { ProfileSettingsLayout } from '@harnessio/ui/views'
+import { ProfileSettingsLayout } from '@harnessio/views'
 
 export const ProfileSettingsViewWrapper: FC<PropsWithChildren<HTMLAttributes<HTMLElement>>> = ({ children }) => {
   return (

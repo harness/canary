@@ -3,7 +3,7 @@ import { useCallback, useEffect, useState } from 'react'
 import { useRepoRulesStore } from '@subjects/views/repo-general-settings/use-repo-rules-store'
 
 import { Skeleton } from '@harnessio/ui/components'
-import { RepoBranchSettingsRulesPage } from '@harnessio/ui/views'
+import { RepoBranchSettingsRulesPage } from '@harnessio/views'
 
 const errors = {
   principals: null,

@@ -1,4 +1,4 @@
-import { ExecutionHeader, ExecutionState, ExecutionTabs } from '@harnessio/ui/views'
+import { ExecutionHeader, ExecutionState, ExecutionTabs } from '@harnessio/views'
 
 import PipelineExecutionGraph from './pipeline-execution-graph'
 

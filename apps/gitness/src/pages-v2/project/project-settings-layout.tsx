@@ -1,6 +1,6 @@
 import { Outlet } from 'react-router-dom'
 
-import { ProjectSettingsTabNav, SubHeaderWrapper } from '@harnessio/ui/views'
+import { ProjectSettingsTabNav, SubHeaderWrapper } from '@harnessio/views'
 
 import { useIsMFE } from '../../framework/hooks/useIsMFE'
 

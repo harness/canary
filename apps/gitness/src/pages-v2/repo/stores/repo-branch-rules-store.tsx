@@ -2,7 +2,7 @@ import { create } from 'zustand'
 
 import { MessageTheme } from '@harnessio/ui/components'
 import { getT } from '@harnessio/ui/context'
-import { BranchRulesAction, getBranchRules, IBranchRulesStore, Rule } from '@harnessio/ui/views'
+import { BranchRulesAction, getBranchRules, IBranchRulesStore, Rule } from '@harnessio/views'
 
 import i18n from '../../../i18n/i18n'
 import { branchSettingsReducer } from '../reducers/repo-branch-rules-reducer'

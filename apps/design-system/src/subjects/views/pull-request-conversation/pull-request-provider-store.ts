@@ -1,5 +1,5 @@
 import { EnumPrincipalType } from '@harnessio/ui/types'
-import { DiffFileEntry, EnumPullReqState, TypesPullReqActivity, TypesRuleViolations } from '@harnessio/ui/views'
+import { DiffFileEntry, EnumPullReqState, TypesPullReqActivity, TypesRuleViolations } from '@harnessio/views'
 
 export const pullRequestProviderStore = {
   repoMetadata: {

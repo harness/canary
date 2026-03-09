@@ -4,7 +4,7 @@ import { useRepoRulesStore } from '@subjects/views/repo-general-settings/use-rep
 import { noop } from 'lodash-es'
 
 import { DeleteAlertDialog } from '@harnessio/ui/components'
-import { ErrorTypes, RepoSettingsGeneralPage } from '@harnessio/ui/views'
+import { ErrorTypes, RepoSettingsGeneralPage } from '@harnessio/views'
 
 const loadingStates = {
   isLoadingRepoData: false,

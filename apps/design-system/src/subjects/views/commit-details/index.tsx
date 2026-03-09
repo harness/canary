@@ -1,6 +1,6 @@
 import { useCallback } from 'react'
 
-import { ICommitDetailsStore, RepoCommitDetailsView } from '@harnessio/ui/views'
+import { ICommitDetailsStore, RepoCommitDetailsView } from '@harnessio/views'
 
 import { commitDetailsStore } from './commit-details-store'
 

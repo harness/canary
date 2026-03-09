@@ -2,7 +2,7 @@ import { create } from 'zustand'
 
 import { MessageTheme } from '@harnessio/ui/components'
 import { getT } from '@harnessio/ui/context'
-import { getPushRules, IPushRulesStore, PushRule, PushRulesAction } from '@harnessio/ui/views'
+import { getPushRules, IPushRulesStore, PushRule, PushRulesAction } from '@harnessio/views'
 
 import i18n from '../../../i18n/i18n'
 import { pushRuleSettingsReducer } from '../reducers/repo-push-rules-reducer'

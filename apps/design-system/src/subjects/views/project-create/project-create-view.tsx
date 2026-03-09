@@ -1,6 +1,6 @@
 import { noop } from '@utils/viewUtils'
 
-import { CreateProjectPage } from '@harnessio/ui/views'
+import { CreateProjectPage } from '@harnessio/views'
 
 export const CreateProjectView = ({ isAdditional = false }: { isAdditional?: boolean }) => {
   const commonProps = {

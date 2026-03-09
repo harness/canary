@@ -18,7 +18,7 @@ import { IconV2, Text } from '@harnessio/ui/components'
 
 import '@harnessio/pipeline-graph/dist/index.css'
 
-// import { VisualYamlToggle, type VisualYamlValue } from '@harnessio/ui/views'
+// import { VisualYamlToggle, type VisualYamlValue } from '@harnessio/views'
 
 // *****************************************************
 // 2. Define content nodes types

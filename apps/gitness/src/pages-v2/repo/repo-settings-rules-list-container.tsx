@@ -12,7 +12,7 @@ import {
   useSpaceRuleDeleteMutation
 } from '@harnessio/code-service-client'
 import { DeleteAlertDialog } from '@harnessio/ui/components'
-import { ErrorTypes, RepoSettingsRulesPage } from '@harnessio/ui/views'
+import { ErrorTypes, RepoSettingsRulesPage } from '@harnessio/views'
 
 import { useRoutes } from '../../framework/context/NavigationContext'
 import { useGetRepoId } from '../../framework/hooks/useGetRepoId'

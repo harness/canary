@@ -1,7 +1,7 @@
 import { useCallback, useMemo, useState } from 'react'
 
 import { useAssignLabelMutation, useListLabelsQuery, useUnassignLabelMutation } from '@harnessio/code-service-client'
-import { HandleAddLabelType, LabelAssignmentType } from '@harnessio/ui/views'
+import { HandleAddLabelType, LabelAssignmentType } from '@harnessio/views'
 
 interface UsePrConversationLabelsProps {
   repoRef: string

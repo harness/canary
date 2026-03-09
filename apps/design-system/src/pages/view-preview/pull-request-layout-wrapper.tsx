@@ -4,7 +4,7 @@ import { Route } from 'react-router-dom'
 import { pullRequestStore } from '@subjects/views/pull-request-conversation/pull-request-store'
 import { noop } from 'lodash-es'
 
-import { BranchSelectorV2, PullRequestLayout } from '@harnessio/ui/views'
+import { BranchSelectorV2, PullRequestLayout } from '@harnessio/views'
 
 import RootViewWrapper from './root-view-wrapper'
 

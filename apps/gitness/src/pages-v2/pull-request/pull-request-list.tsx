@@ -1,9 +1,12 @@
 import { useEffect, useState } from 'react'
 import { useParams, useSearchParams } from 'react-router-dom'
 
+import { useQueries } from '@tanstack/react-query'
+
 import {
+  getPrincipal,
   ListPullReqQueryQueryParams,
-  useGetPrincipalQuery,
+  TypesPrincipalInfo,
   useGetUserQuery,
   useListPrincipalsQuery,
   useListPullReqQuery,
@@ -44,7 +47,6 @@ export default function PullRequestListPage() {
   const [principalsSearchQuery, setPrincipalsSearchQuery] = useState<string>()
   const [populateLabelStore, setPopulateLabelStore] = useState(false)
   const [searchParams, setSearchParams] = useSearchParams()
-  const defaultAuthorId = searchParams.get('created_by')
   const labelBy = searchParams.get('label_by')
   const { scope } = useMFEContext()
   const { accountId = '', orgIdentifier, projectIdentifier } = scope || {}
@@ -134,14 +136,32 @@ export default function PullRequestListPage() {
     }
   )
 
-  const { data: { body: defaultSelectedAuthor } = {}, error: defaultSelectedAuthorError } = useGetPrincipalQuery(
-    {
-      queryParams: { page, accountIdentifier: accountId, ...filterValues },
-      id: Number(searchParams.get('created_by'))
-    },
-    // Adding staleTime to avoid refetching the data if authorId gets modified in searchParams
-    { enabled: !!defaultAuthorId, staleTime: Infinity, keepPreviousData: true }
-  )
+  // Parse multiple author IDs from URL (comma-separated: created_by=123,456)
+  const defaultAuthorIds = searchParams.get('created_by')?.split(',').filter(Boolean).map(Number) ?? []
+
+  // Fetch all selected authors in parallel
+  const selectedAuthorQueries = useQueries({
+    queries: defaultAuthorIds.map(authorId => ({
+      queryKey: ['principal', authorId, accountId],
+      queryFn: async () => {
+        const response = await getPrincipal({
+          id: authorId,
+          queryParams: { accountIdentifier: accountId, ...filterValues }
+        })
+        return response
+      },
+      staleTime: 300000,
+      enabled: !!authorId
+    }))
+  })
+
+  const selectedAuthors = selectedAuthorQueries
+    .map(q => q.data?.body)
+    .filter((author): author is TypesPrincipalInfo => Boolean(author))
+
+  // For backward compatibility, keep first author as defaultSelectedAuthor
+  const defaultSelectedAuthor = selectedAuthors[0]
+  const defaultSelectedAuthorError = selectedAuthorQueries.find(q => q.error)?.error || undefined
 
   const { data: { body: principalDataList } = {}, isFetching: fetchingPrincipalData } = useListPrincipalsQuery(
     {
@@ -250,6 +270,14 @@ export default function PullRequestListPage() {
     }
   }, [labelBy])
 
+  // Combine principalDataList with selectedAuthors to ensure all selected authors are available
+  const combinedPrincipalData = [
+    ...(principalDataList || []),
+    ...selectedAuthors.filter(
+      selectedAuthor => selectedAuthor && !principalDataList?.some(principal => principal.id === selectedAuthor.id)
+    )
+  ].filter((author): author is NonNullable<typeof author> => author !== undefined)
+
   return (
     <SandboxPullRequestListPage
       repoId={repoId}
@@ -259,7 +287,7 @@ export default function PullRequestListPage() {
       prCandidateBranches={prCandidateBranches}
       principalsSearchQuery={principalsSearchQuery}
       defaultSelectedAuthorError={defaultSelectedAuthorError}
-      principalData={principalDataList}
+      principalData={combinedPrincipalData}
       currentUser={currentUser}
       defaultSelectedAuthor={defaultSelectedAuthor}
       repository={repoData}

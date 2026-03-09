@@ -309,12 +309,15 @@ describe('buildPRFilters', () => {
     expect(result.created_lt).toBe(dateLt.getTime().toString())
   })
 
-  it('should extract value from created_by object', () => {
+  it('should extract values from created_by array (multi-select)', () => {
     const filterData = {
-      created_by: { value: 'user123', label: 'User 123' }
+      created_by: [
+        { value: '123', label: 'User 123' },
+        { value: '456', label: 'User 456' }
+      ]
     }
     const result = buildPRFilters({ filterData })
-    expect(result.created_by).toBe('user123')
+    expect(result.created_by).toEqual([123, 456])
   })
 
   it('should handle label_by with labelId and valueId', () => {

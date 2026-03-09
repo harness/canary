@@ -170,6 +170,8 @@ const FiltersField = <T extends string, V extends FilterValueTypes, CustomValue 
     )
   }
 
+  const valueLabel = getFilterLabelValue(filterOption, activeFilterOption)
+
   return (
     <FilterBoxWrapper
       contentClassName={cn(
@@ -182,7 +184,8 @@ const FiltersField = <T extends string, V extends FilterValueTypes, CustomValue 
       onOpenChange={onOpenChange}
       defaultOpen={shouldOpenFilter}
       filterLabel={filterOption.label}
-      valueLabel={getFilterLabelValue(filterOption, activeFilterOption)}
+      valueLabel={valueLabel}
+      tooltipContent={valueLabel}
     >
       <FilterFieldInternal<T, V, CustomValue>
         filter={activeFilterOption}

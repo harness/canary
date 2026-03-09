@@ -12,7 +12,6 @@ import {
   TypesRepositoryCore
 } from '@/views'
 import { CheckboxOptions } from '@components/filters'
-import { ComboBoxOptions } from '@components/filters/filters-bar/actions/variants/combo-box'
 import { StackedListPaginationProps } from '@components/stacked-list'
 
 import { LabelsValue } from './components/labels'
@@ -274,7 +273,8 @@ export interface PullRequestPageProps extends Partial<RoutingProps> {
   isPrincipalsLoading?: boolean
   prCandidateBranches?: TypesBranchTable[]
   principalsSearchQuery?: string
-  defaultSelectedAuthor?: Partial<PrincipalType>
+  /** Supports single author or array of authors for multi-select filter */
+  defaultSelectedAuthor?: Partial<PrincipalType> | Partial<PrincipalType>[]
   currentUser?: Partial<PrincipalType>
   principalData?: Partial<PrincipalType>[]
   repository?: RepoRepositoryOutput
@@ -310,7 +310,7 @@ export interface PullRequestListProps extends Partial<RoutingProps> {
 }
 
 export type PRListFilters = {
-  created_by?: ComboBoxOptions
+  created_by?: CheckboxOptions[]
   created_lt?: Date
   created_gt?: Date
   label_by?: LabelsValue

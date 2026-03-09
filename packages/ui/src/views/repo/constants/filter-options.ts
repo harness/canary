@@ -1,7 +1,9 @@
 import { TFunctionWithFallback } from '@/context'
+import { PrincipalType } from '@/types'
 import { ComboBoxOptions } from '@components/filters/filters-bar/actions/variants/combo-box'
 import {
   CalendarFilterOptionConfig,
+  CheckboxOptions,
   ComboBoxFilterOptionConfig,
   CustomFilterOptionConfig,
   FilterFieldTypes,
@@ -16,6 +18,15 @@ import { ExtendedScope } from '../common'
 import { getFilterScopeOptions } from '../common/util'
 import { LabelsValue } from '../pull-request/components/labels'
 import { PRListFilters } from '../pull-request/pull-request.types'
+
+// Helper function to generate a string label from user data
+const getAuthorStringLabel = (user: Partial<PrincipalType>): string => {
+  const { display_name, email } = user
+  if (display_name && email && display_name !== email) {
+    return `${display_name} (${email})`
+  }
+  return display_name || email || String(user.id || '')
+}
 
 const dateParser: Parser<Date> = {
   parse: (value: string): Date => (value ? new Date(Number(value)) : new Date()),
@@ -38,6 +49,8 @@ interface PRListFilterOptions {
   isPrincipalsLoading?: boolean
   isProjectLevel?: boolean
   principalData: { label: string | React.ReactNode; value: string }[]
+  // Original user data for generating string labels
+  principalUserData?: Partial<PrincipalType>[]
   customFilterOptions?: PRListFilterOptionConfig
 }
 
@@ -46,6 +59,7 @@ export const getPRListFilterOptions = ({
   onAuthorSearch,
   isPrincipalsLoading,
   principalData,
+  principalUserData,
   isProjectLevel,
   customFilterOptions = [],
   scope
@@ -56,9 +70,20 @@ export const getPRListFilterOptions = ({
     {
       label: t('views:repos.prListFilterOptions.authorOption.label', 'Author'),
       value: 'created_by',
-      type: FilterFieldTypes.ComboBox,
+      type: FilterFieldTypes.MultiSelect,
       filterFieldConfig: {
-        options: principalData,
+        // Use React node labels for dropdown display, but map to string labels for filter options
+        options: principalData.map(user => {
+          // If we have original user data, use it to generate string label
+          // Otherwise, try to extract string from React node or use value
+          const userObj = principalUserData?.find(u => String(u.id) === user.value)
+          const stringLabel = userObj
+            ? getAuthorStringLabel(userObj)
+            : typeof user.label === 'string'
+              ? user.label
+              : user.value
+          return { label: stringLabel, value: user.value }
+        }),
         onSearch: onAuthorSearch,
         noResultsMessage: t('views:repos.prListFilterOptions.authorOption.noResults', 'No results found'),
         loadingMessage: t('views:repos.prListFilterOptions.authorOption.loading', 'Loading Authors...'),
@@ -66,9 +91,27 @@ export const getPRListFilterOptions = ({
         isLoading: isPrincipalsLoading
       },
       parser: {
-        parse: (value: string): ComboBoxOptions =>
-          principalData.find(user => user.value === value) || { label: '', value },
-        serialize: (value: ComboBoxOptions): string => value?.value || ''
+        parse: (value: string): CheckboxOptions[] => {
+          // Handle comma-separated author IDs (for URL state)
+          const authorIds = decodeURIComponent(value).split(',').filter(Boolean)
+          return authorIds.map(authorId => {
+            // Try to find in original user data first
+            const userObj = principalUserData?.find(u => String(u.id) === authorId)
+            if (userObj) {
+              return { label: getAuthorStringLabel(userObj), value: authorId }
+            }
+            // Fallback to principalData
+            const user = principalData.find(u => u.value === authorId)
+            if (user) {
+              const stringLabel = typeof user.label === 'string' ? user.label : user.value
+              return { label: stringLabel, value: authorId }
+            }
+            // Last resort: use the ID
+            return { label: authorId, value: authorId }
+          })
+        },
+        // Serialize as comma-separated for URL state
+        serialize: (value: CheckboxOptions[]): string => value.map(v => v.value).join(',')
       }
     },
     {

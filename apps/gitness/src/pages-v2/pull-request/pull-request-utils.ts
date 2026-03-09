@@ -599,8 +599,8 @@ export const buildPRFilters = ({
     filters.created_lt = filterData.created_lt.getTime().toString()
   }
 
-  if (filterData.created_by && typeof filterData.created_by === 'object' && 'value' in filterData.created_by) {
-    filters.created_by = filterData.created_by.value
+  if (filterData.created_by && Array.isArray(filterData.created_by)) {
+    filters.created_by = filterData.created_by.map((item: { value: string }) => Number(item.value))
   }
 
   if (filterData.review_decision && Array.isArray(filterData.review_decision)) {

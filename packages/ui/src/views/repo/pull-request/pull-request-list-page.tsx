@@ -104,7 +104,11 @@ const PullRequestListPage: FC<PullRequestPageProps> = ({
     }
 
     const currentParams = new URLSearchParams(window.location.search)
-    if (currentParams.has('created_by') && currentParams.get('created_by') === String(currentUserId)) {
+    // Parse author IDs (comma-separated: created_by=123,456)
+    const createdByIds = (currentParams.get('created_by') || '').split(',').filter(Boolean)
+    const hasCurrentUserInFilter = createdByIds.includes(String(currentUserId))
+
+    if (currentParams.has('created_by') && hasCurrentUserInFilter && createdByIds.length === 1) {
       if (currentParams.has('review_decision')) {
         setActiveFilterGrp(PRFilterGroupTogglerOptions.ReviewRequested)
       } else {
@@ -118,7 +122,13 @@ const PullRequestListPage: FC<PullRequestPageProps> = ({
   }, [currentUserId, location.search, isProjectLevel])
 
   const computedPrincipalData = useMemo(() => {
-    return principalData || (defaultSelectedAuthor && !principalsSearchQuery ? [defaultSelectedAuthor] : [])
+    // Support multiple default selected authors for multi-select
+    const defaultAuthors = defaultSelectedAuthor
+      ? Array.isArray(defaultSelectedAuthor)
+        ? defaultSelectedAuthor
+        : [defaultSelectedAuthor]
+      : []
+    return principalData || (!principalsSearchQuery && defaultAuthors.length > 0 ? defaultAuthors : [])
   }, [principalData, defaultSelectedAuthor, principalsSearchQuery])
 
   const generateAuthorLabel = ({
@@ -218,6 +228,7 @@ const PullRequestListPage: FC<PullRequestPageProps> = ({
     isPrincipalsLoading,
     customFilterOptions,
     principalData: userSelectOptions,
+    principalUserData: computedPrincipalData,
     scope
   })
 
@@ -514,10 +525,10 @@ const PullRequestListPage: FC<PullRequestPageProps> = ({
                   {PR_FILTER_OPTIONS.map(filterOption => {
                     return (
                       <PRListFilterHandler.Component
-                        parser={filterOption.parser}
+                        parser={filterOption.parser as any}
                         filterKey={filterOption.value}
                         sticky={filterOption.sticky}
-                        defaultValue={filterOption.defaultValue}
+                        defaultValue={filterOption.defaultValue as any}
                         key={filterOption.value}
                       >
                         {({ onChange, removeFilter, value }) =>

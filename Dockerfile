@@ -13,9 +13,8 @@ RUN --mount=type=cache,id=pnpm,target=/pnpm/store pnpm install --prod --frozen-l
 FROM base AS build
 # install deps
 RUN --mount=type=cache,id=pnpm,target=/pnpm/store pnpm install --frozen-lockfile
-# Build packages in correct dependency order (views depends on ui's dist/tailwind.config.js at vite config load time)
-# First build all packages except views, then build views, then build apps
-RUN pnpm -r -F './packages/*' -F '!@harnessio/views' build && pnpm -r -F @harnessio/views build && pnpm -r -F './apps/*' build
+# Build packages then apps (pnpm handles dependency ordering)
+RUN pnpm -r -F './packages/*' build && pnpm -r -F './apps/*' build
 
 FROM us-west1-docker.pkg.dev/gar-setup/docker/alpine:3.21 AS final
 COPY --from=build /canary/apps/gitness/dist /canary-dist

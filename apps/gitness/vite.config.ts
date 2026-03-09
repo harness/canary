@@ -26,6 +26,7 @@ function workspaceDedupePlugin(): Plugin {
     '@harnessio/ui/locales': resolve(uiDist, 'locales.js'),
     // Views package
     '@harnessio/views': resolve(viewsDist, 'index.js'),
+    '@harnessio/views/pipeline': resolve(viewsDist, 'pipeline.js'),
     '@harnessio/views/locales': resolve(viewsDist, 'locales.js'),
     '@harnessio/filters': resolve(filtersDist, 'index.js')
   }

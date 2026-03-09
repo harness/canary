@@ -168,6 +168,9 @@ importers:
       '@harnessio/code-service-client':
         specifier: 3.10.0
         version: 3.10.0
+      '@harnessio/filters':
+        specifier: workspace:*
+        version: link:../../packages/filters
       '@harnessio/forms':
         specifier: workspace:*
         version: link:../../packages/forms
@@ -750,9 +753,6 @@ importers:
       '@harnessio/core-design-system':
         specifier: workspace:*
         version: link:../core-design-system
-      '@harnessio/filters':
-        specifier: workspace:*
-        version: link:../filters
       '@harnessio/forms':
         specifier: workspace:*
         version: link:../forms

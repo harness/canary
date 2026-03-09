@@ -10,6 +10,7 @@ import {
   useSearchParams
 } from 'react-router-dom'
 
+import { RouterContextProvider as FiltersRouterContextProvider } from '@harnessio/filters'
 import { RouterContextProvider } from '@harnessio/ui/context'
 
 interface AppRouterProviderProps {
@@ -31,7 +32,9 @@ const AppRouterProvider: FC<AppRouterProviderProps> = ({ children }) => {
       useMatches={useMatches}
       useParams={useParams}
     >
-      {children}
+      <FiltersRouterContextProvider location={location} navigate={navigate}>
+        {children}
+      </FiltersRouterContextProvider>
     </RouterContextProvider>
   )
 }

@@ -21,6 +21,22 @@ import type {
 
 import { noop } from 'lodash-es'
 
+// Props from react-router that shouldn't be passed to native anchor elements
+type RouterLinkExcludedProps = Partial<
+  Pick<LinkProps, 'reloadDocument' | 'replace' | 'state' | 'preventScrollReset' | 'relative'>
+> & {
+  viewTransition?: boolean
+}
+
+// Additional v5 props that NavLink might receive at runtime
+type RouterNavLinkV5Props = {
+  activeClassName?: string
+  activeStyle?: React.CSSProperties
+  exact?: boolean
+  strict?: boolean
+  isActive?: (match: unknown, location: unknown) => boolean
+}
+
 interface SwitchProps {
   children?: React.ReactNode
   location?: Location
@@ -30,8 +46,19 @@ const resolveTo = (to: LinkProps['to']) => (typeof to === 'string' ? to : to.pat
 
 const LinkDefault = forwardRef<HTMLAnchorElement, LinkProps>(({ to, children, ...props }, ref) => {
   const href = resolveTo(to)
+  // Filter out react-router specific props that shouldn't be passed to the DOM
+  // These are destructured and prefixed with _ to exclude them from domSafeProps
+  const {
+    reloadDocument: _reloadDocument,
+    replace: _replace,
+    state: _state,
+    preventScrollReset: _preventScrollReset,
+    relative: _relative,
+    viewTransition: _viewTransition,
+    ...domSafeProps
+  } = props as Omit<LinkProps, 'to' | 'children'> & RouterLinkExcludedProps
   return (
-    <a href={href} {...props} ref={ref}>
+    <a href={href} {...domSafeProps} ref={ref}>
       {children}
     </a>
   )
@@ -49,8 +76,27 @@ const NavLinkDefault = forwardRef<HTMLAnchorElement, NavLinkProps>(
     const finalStyle =
       typeof style === 'function' ? style({ isActive, isPending: false, isTransitioning: false }) : style
 
+    // Filter out react-router v5/v6 specific props that shouldn't be passed to the DOM
+    // These are destructured and prefixed with _ to exclude them from domSafeProps
+    const {
+      reloadDocument: _reloadDocument,
+      replace: _replace,
+      state: _state,
+      preventScrollReset: _preventScrollReset,
+      relative: _relative,
+      viewTransition: _viewTransition,
+      activeClassName: _activeClassName,
+      activeStyle: _activeStyle,
+      exact: _exact,
+      strict: _strict,
+      isActive: _isActive,
+      ...domSafeProps
+    } = props as Omit<NavLinkProps, 'to' | 'children' | 'className' | 'style'> &
+      RouterLinkExcludedProps &
+      RouterNavLinkV5Props
+
     return (
-      <a ref={ref} href={href} className={finalClassName} style={finalStyle} {...props}>
+      <a ref={ref} href={href} className={finalClassName} style={finalStyle} {...domSafeProps}>
         {children}
       </a>
     )

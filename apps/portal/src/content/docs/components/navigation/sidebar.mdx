@@ -83,6 +83,21 @@ code={`() => {
                 <Sidebar.MenuSubItem title="Project Zeta" to="/projects/zeta" />
                 <Sidebar.MenuSubItem title="Project Eta" to="/projects/eta" />
               </Sidebar.Item>
+              <Sidebar.Popover
+              content={
+                <Layout.Flex direction="column">
+                  <Sidebar.MenuSubItem title="Project Alpha" to="/projects/alpha" />
+                  <Sidebar.MenuSubItem title="Project Beta" to="/projects/beta" />
+                  <Sidebar.MenuSubItem title="Project Gamma" to="/projects/gamma" />
+                  <Sidebar.MenuSubItem title="Project Delta" to="/projects/delta" />
+                  <Sidebar.MenuSubItem title="Project Epsilon" to="/projects/epsilon" />
+                  <Sidebar.MenuSubItem title="Project Zeta" to="/projects/zeta" />
+                  <Sidebar.MenuSubItem title="Project Eta" to="/projects/eta" />
+                </Layout.Flex>}
+              side="right"
+              sideOffset={0}>
+                <Sidebar.Item title="more" icon="menu-more-horizontal" showRightChevron/>
+              </Sidebar.Popover>
             </Sidebar.Group>
 
             <Sidebar.Separator />

@@ -1,5 +1,6 @@
 import { SidebarProvider, useSidebar, UseSidebarSignature } from './sidebar-context'
 import { SidebarItem, SidebarItemProps, SidebarMenuSubItem } from './sidebar-item'
+import { SidebarPopover } from './sidebar-popover'
 import { SidebarToggleMenuButton } from './sidebar-toggle-menu-button'
 import {
   SidebarContent,
@@ -24,6 +25,7 @@ const Sidebar = {
   Item: SidebarItem,
   MenuSkeleton: SidebarMenuSkeleton,
   MenuSubItem: SidebarMenuSubItem,
+  Popover: SidebarPopover,
   Provider: SidebarProvider,
   Rail: SidebarRail,
   Separator: SidebarSeparator,

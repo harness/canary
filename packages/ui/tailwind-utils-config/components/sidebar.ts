@@ -68,10 +68,9 @@ export default {
     },
 
     '&-group': {
-      '--sidebar-group-label-scale': '1',
       display: 'grid',
-      gap: 'var(--cn-sidebar-group-gap)',
-      padding: 'var(--cn-sidebar-group-py) 0',
+      padding: 'var(--cn-layout-md) 0',
+      gap: 'var(--cn-layout-xs)',
 
       '&-label': {
         opacity: 'var(--sidebar-group-label-scale)',
@@ -86,32 +85,20 @@ export default {
 
       '&-items': {
         display: 'grid',
-        gridTemplateColumns: 'repeat(2, 1fr)',
-        gap: 'var(--cn-spacing-half)',
+        gridTemplateColumns: '1fr',
+        gap: 'var(--cn-layout-sm)',
 
-        '&-single-col': {
-          gridTemplateColumns: '1fr'
-        },
-
-        // Popover variant: use fixed width columns (230px per item)
-        // Default to 2 columns, can be overridden to 3 columns when content exceeds viewport
         '&-popover': {
-          gridTemplateColumns: 'repeat(2, var(--cn-size-58))',
-          gap: '0 var(--cn-layout-xs)',
-          // Smooth transition when switching between 2 and 3 columns
-          transition: 'grid-template-columns 0.3s cubic-bezier(0.4, 0, 0.2, 1)'
-        },
-
-        '&-single-col&-popover': {
-          gridTemplateColumns: 'var(--cn-size-58)'
+          gridTemplateColumns: 'var(--cn-size-58)',
+          gap: '0 var(--cn-layout-xs)'
         }
       },
 
       '&-header': {
         display: 'flex',
-        padding: '0px 0px var(--cn-spacing-0) calc(var(--cn-sidebar-item-container) + var(--cn-layout-sm))',
+        padding: 'var(--cn-layout-3xs) var(--cn-sidebar-item-container)',
         alignItems: 'center',
-        gap: 'var(--cn-sidebar-item-gap)',
+        gap: 'var(--cn-layout-xs)',
         alignSelf: 'stretch',
         '&-action-button': {
           '@apply opacity-0 transition-opacity duration-150': ''
@@ -308,13 +295,14 @@ export default {
       },
 
       '&-content': {
+        display: 'grid',
+        gridTemplateColumns: 'auto 1fr',
+        gridTemplateAreas: '"icon title"',
+        gap: '8px',
         minHeight: 'var(--cn-sidebar-item-min-height)',
         minWidth: 'var(--cn-sidebar-item-min-width)',
-        gap: 'var(--cn-sidebar-item-gap)',
         justifyItems: 'start',
         alignItems: 'center',
-        gridTemplateColumns: 'var(--cn-icon-size-sm) 1fr',
-        gridTemplateAreas: '"icon title"',
         padding: 'var(--cn-sidebar-item-container)',
         paddingLeft: 'calc(var(--cn-sidebar-item-container) + var(--cn-layout-sm))',
         borderRadius: 'var(--cn-sidebar-item-radius)',
@@ -327,7 +315,7 @@ export default {
 
         '&-only-action-buttons': {
           gridTemplateAreas: '"icon title action-buttons"',
-          gridTemplateColumns: 'var(--cn-icon-size-sm) 1fr auto'
+          gridTemplateColumns: 'auto 1fr auto'
         },
 
         '&-w-description': {
@@ -335,7 +323,7 @@ export default {
             "icon title"
             "icon description"
           `,
-          gridTemplateColumns: 'var(--cn-icon-size-lg) 1fr',
+          gridTemplateColumns: 'auto 1fr',
           paddingBlock: 'var(--cn-sidebar-item-container)',
 
           '&:has(.cn-sidebar-item-content-action-buttons)': {
@@ -343,17 +331,17 @@ export default {
             "icon title action-buttons"
             "icon description action-buttons"
           `,
-            gridTemplateColumns: 'var(--cn-icon-size-lg) 1fr auto'
+            gridTemplateColumns: 'auto 1fr auto'
           }
         },
 
         '&-w-r-element': {
           gridTemplateAreas: '"icon title elem"',
-          gridTemplateColumns: 'var(--cn-icon-size-sm) 1fr auto',
+          gridTemplateColumns: 'auto 1fr auto',
 
           '&:has(.cn-sidebar-item-content-action-buttons)': {
             gridTemplateAreas: '"icon title action-buttons elem"',
-            gridTemplateColumns: 'var(--cn-icon-size-sm) 1fr auto auto'
+            gridTemplateColumns: 'auto 1fr auto auto'
           }
         },
 
@@ -362,7 +350,7 @@ export default {
             "icon title       elem"
             "icon description elem"
           `,
-          gridTemplateColumns: 'var(--cn-avatar-size-lg) 1fr',
+          gridTemplateColumns: 'auto 1fr auto',
           paddingBlock: 'var(--cn-sidebar-item-container)',
 
           '&:has(.cn-sidebar-item-content-action-buttons)': {
@@ -370,7 +358,7 @@ export default {
             "icon title action-buttons elem"
             "icon description action-buttons elem"
           `,
-            gridTemplateColumns: 'var(--cn-avatar-size-lg) 1fr auto auto'
+            gridTemplateColumns: 'auto 1fr auto auto'
           }
         },
         /* Deprecated class
@@ -522,13 +510,10 @@ export default {
     },
 
     '&-item-popover': {
-      // Popover variant for sidebar items with bordered icons
-      width: 'var(--cn-size-58)',
-      minWidth: 'var(--cn-size-58)',
-      maxWidth: 'var(--cn-size-58)',
+      width: 'auto',
 
       '.cn-sidebar-item-content': {
-        gridTemplateColumns: 'var(--cn-size-7) 1fr',
+        gridTemplateColumns: 'var(--cn-size-8) 1fr',
         paddingLeft: 'var(--cn-sidebar-item-container)',
 
         '&-title': {
@@ -544,7 +529,7 @@ export default {
       // Icon with border container effect
       // SVG is 16px (iconSize/sm), padding creates 28px total (size/7)
       // Total: 16px + 5px*2 padding + 1px*2 border = 28px
-      '.cn-icon.cn-icon-2xs, .cn-icon.cn-icon-xs, .cn-icon.cn-icon-sm, .cn-icon.cn-icon-md, .cn-icon.cn-icon-lg, .cn-icon.cn-icon-xl':
+      '.cn-icon.cn-icon-2xs:not(.cn-sidebar-item-expand-icon), .cn-icon.cn-icon-xs:not(.cn-sidebar-item-expand-icon), .cn-icon.cn-icon-sm:not(.cn-sidebar-item-expand-icon), .cn-icon.cn-icon-md:not(.cn-sidebar-item-expand-icon), .cn-icon.cn-icon-lg:not(.cn-sidebar-item-expand-icon), .cn-icon.cn-icon-xl:not(.cn-sidebar-item-expand-icon)':
         {
           width: 'var(--cn-icon-size-sm) !important',
           minWidth: 'var(--cn-icon-size-sm) !important',
@@ -631,17 +616,19 @@ export default {
     outline: 'none'
   },
 
+  // Sidebar nested popover (e.g. drawer-style panel)
+  '.cn-sidebar-nested-popover': {
+    width: 'var(--cn-size-84)',
+    height: '100vh',
+    borderRadius: '0 var(--cn-popover-radius) var(--cn-popover-radius) 0'
+  },
+
   // Sidebar popover
   '.cn-popover-content.cn-sidebar-popover': {
     backgroundColor: 'var(--cn-bg-2)',
-    // First group: Remove top padding to prevent overlap with popover padding
-    '& > div > div:first-child .cn-sidebar-group': {
-      paddingTop: '0'
-    },
     // Reset padding left for group headers in popover (only side nav should have padding left)
     '.cn-sidebar-group-header': {
-      paddingLeft: 'var(--cn-sidebar-item-container)',
-      paddingBottom: 'var(--cn-spacing-1-half)'
+      padding: 'var(--cn-layout-3xs) var(--cn-sidebar-item-container)'
     },
 
     // Last group (Go to settings footer button)
@@ -662,12 +649,5 @@ export default {
       width: 'calc(100% - 2 * var(--cn-layout-4xs))',
       backgroundColor: 'var(--cn-comp-sidebar-separator)'
     }
-  },
-
-  // 3-column layout when content exceeds viewport
-  '.cn-sidebar-group-items-popover-3col': {
-    gridTemplateColumns: 'repeat(3, var(--cn-size-48)) !important',
-    // Ensure transition applies when switching to 3 columns
-    transition: 'grid-template-columns 0.3s cubic-bezier(0.4, 0, 0.2, 1)'
   }
 }

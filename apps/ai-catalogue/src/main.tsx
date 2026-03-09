@@ -4,10 +4,13 @@ import { render } from 'react-dom'
 import App from './App'
 
 import './styles.css'
+import { TooltipProvider } from '@harnessio/ui/components'
 
 render(
   <StrictMode>
-    <App />
+    <TooltipProvider>
+      <App />
+    </TooltipProvider>
   </StrictMode>,
   document.getElementById('root')
 )

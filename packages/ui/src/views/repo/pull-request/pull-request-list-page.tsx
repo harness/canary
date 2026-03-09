@@ -292,20 +292,20 @@ const PullRequestListPage: FC<PullRequestPageProps> = ({
           description={
             repoId
               ? [
-                t(
-                  'views:noData.noPullRequestsInRepo',
-                  `Start your contribution journey by creating a new pull request.`
-                )
-              ]
+                  t(
+                    'views:noData.noPullRequestsInRepo',
+                    `Start your contribution journey by creating a new pull request.`
+                  )
+                ]
               : [t('views:noData.noPullRequestsInProject', `There are no pull requests in this project yet.`)]
           }
           primaryButton={
             repoId
               ? {
-                icon: 'plus',
-                label: t('views:noData.button.createPullRequest', 'Create Pull Request'),
-                to: `${spaceId ? `/${spaceId}` : ''}/repos/${repoId}/pulls/compare/`
-              }
+                  icon: 'plus',
+                  label: t('views:noData.button.createPullRequest', 'Create Pull Request'),
+                  to: `${spaceId ? `/${spaceId}` : ''}/repos/${repoId}/pulls/compare/`
+                }
               : undefined
           }
         />
@@ -332,20 +332,20 @@ const PullRequestListPage: FC<PullRequestPageProps> = ({
         paginationProps={
           isProjectLevel
             ? {
-              indeterminate: true,
-              currentPage: page,
-              hasPrevious: page > 1,
-              hasNext: (pullRequests?.length || 0) === pageSize,
-              onPrevious: () => setPage(page - 1),
-              onNext: () => setPage(page + 1)
-            }
+                indeterminate: true,
+                currentPage: page,
+                hasPrevious: page > 1,
+                hasNext: (pullRequests?.length || 0) === pageSize,
+                onPrevious: () => setPage(page - 1),
+                onNext: () => setPage(page + 1)
+              }
             : {
-              totalItems: totalItems,
-              pageSize: pageSize,
-              onPageSizeChange: setPageSize,
-              currentPage: page,
-              goToPage: setPage
-            }
+                totalItems: totalItems,
+                pageSize: pageSize,
+                onPageSizeChange: setPageSize,
+                currentPage: page,
+                goToPage: setPage
+              }
         }
         {...routingProps}
       />
@@ -521,7 +521,9 @@ const PullRequestListPage: FC<PullRequestPageProps> = ({
             </ListActions.Root>
             <ListControlBar<PRListFilters, LabelsValue, PRListFilters[PRListFiltersKeys]>
               renderSelectedFilters={filterFieldRenderer => (
-                <PRListFilterHandler.Content className={'flex items-center gap-x-cn-xs [&>div>button]:min-w-0 [&>div>button]:max-w-80'}>
+                <PRListFilterHandler.Content
+                  className={'flex items-center gap-x-cn-xs [&>div>button]:min-w-0 [&>div>button]:max-w-80'}
+                >
                   {PR_FILTER_OPTIONS.map(filterOption => {
                     return (
                       <PRListFilterHandler.Component

@@ -38,6 +38,7 @@ import { useGetRepoRef } from '../../framework/hooks/useGetRepoPath'
 import { useIsMFE } from '../../framework/hooks/useIsMFE'
 import { useMFEContext } from '../../framework/hooks/useMFEContext'
 import { PathParams } from '../../RouteDefinitions'
+import { getErrorMessage } from '../../utils/error-utils'
 import { useRepoRulesStore } from './stores/repo-settings-store'
 
 export const RepoSettingsGeneralPageContainer = () => {
@@ -72,7 +73,7 @@ export const RepoSettingsGeneralPageContainer = () => {
     { repo_ref: repoRef },
     {
       onError: (error: FindRepositoryErrorResponse) => {
-        const message = error.message || 'Error fetching repo'
+        const message = getErrorMessage(error) || 'Error fetching repo'
         setApiError({ type: ErrorTypes.FETCH_REPO, message })
       }
     }
@@ -93,7 +94,7 @@ export const RepoSettingsGeneralPageContainer = () => {
       onError: (error: UpdateRepositoryErrorResponse) => {
         queryClient.invalidateQueries({ queryKey: ['findRepository', repoRef] })
 
-        const message = error.message || 'Error updating repository'
+        const message = getErrorMessage(error) || 'Error updating repository'
         setApiError({ type: ErrorTypes.DESCRIPTION_UPDATE, message })
       }
     }
@@ -111,7 +112,8 @@ export const RepoSettingsGeneralPageContainer = () => {
       onError: (error: UpdateRepositoryErrorResponse) => {
         queryClient.invalidateQueries({ queryKey: ['findRepository', repoRef] })
 
-        const message = error.message || 'Error archiving repository'
+        const fallback = repoDataStore?.archived ? 'Error unarchiving repository' : 'Error archiving repository'
+        const message = getErrorMessage(error) || fallback
         setApiError({ type: ErrorTypes.ARCHIVE_REPO, message })
       }
     }
@@ -129,10 +131,9 @@ export const RepoSettingsGeneralPageContainer = () => {
         setApiError(null)
       },
       onError: (error: UpdateDefaultBranchErrorResponse) => {
-        // Invalidate the query to refetch the data from the server
         queryClient.invalidateQueries({ queryKey: ['listBranches', repoRef] })
 
-        const message = error.message || 'Error updating default branch'
+        const message = getErrorMessage(error) || 'Error updating default branch'
         setApiError({ type: ErrorTypes.BRANCH_UPDATE, message })
       }
     }
@@ -150,10 +151,9 @@ export const RepoSettingsGeneralPageContainer = () => {
         setRepoData(newData)
       },
       onError: (error: UpdatePublicAccessErrorResponse) => {
-        // Invalidate the query to refetch the data from the server
         queryClient.invalidateQueries({ queryKey: ['findRepository', repoRef] })
 
-        const message = error.message || 'Error updating public access'
+        const message = getErrorMessage(error) || 'Error updating public access'
         setApiError({ type: ErrorTypes.UPDATE_ACCESS, message })
       }
     }
@@ -170,7 +170,7 @@ export const RepoSettingsGeneralPageContainer = () => {
         setApiError(null)
       },
       onError: (error: FindSecuritySettingsErrorResponse) => {
-        const message = error.message || 'Error fetching security settings'
+        const message = getErrorMessage(error) || 'Error fetching security settings'
         setApiError({ type: ErrorTypes.FETCH_SECURITY, message })
       }
     }
@@ -184,7 +184,7 @@ export const RepoSettingsGeneralPageContainer = () => {
         setApiError(null)
       },
       onError: error => {
-        const message = error.message || 'Error fetching general settings'
+        const message = getErrorMessage(error) || 'Error fetching general settings'
         setApiError({ type: ErrorTypes.FETCH_GENERAL, message })
       }
     }
@@ -198,7 +198,7 @@ export const RepoSettingsGeneralPageContainer = () => {
         setApiError(null)
       },
       onError: error => {
-        const message = error.message || 'Error updating general settings'
+        const message = getErrorMessage(error) || 'Error updating general settings'
         setApiError({ type: ErrorTypes.UPDATE_GENERAL, message })
       }
     }
@@ -215,7 +215,7 @@ export const RepoSettingsGeneralPageContainer = () => {
         setApiError(null)
       },
       onError: (error: UpdateSecuritySettingsErrorResponse) => {
-        const message = error.message || 'Error updating security settings'
+        const message = getErrorMessage(error) || 'Error updating security settings'
         setApiError({ type: ErrorTypes.UPDATE_SECURITY, message })
       }
     }
@@ -229,7 +229,7 @@ export const RepoSettingsGeneralPageContainer = () => {
         setApiError(null)
       },
       onError: (error: DeleteRepositoryErrorResponse) => {
-        const message = error.message || 'Error deleting repository'
+        const message = getErrorMessage(error) || 'Error deleting repository'
         setApiError({ type: ErrorTypes.DELETE_REPO, message })
       }
     }
@@ -242,8 +242,8 @@ export const RepoSettingsGeneralPageContainer = () => {
         await updateRepoForArchive({ body: { state: 4 } })
       }
     } catch (error: unknown) {
-      // Handle error with proper type checking
-      const message = error instanceof Error ? error.message : 'Error archiving repository'
+      const fallback = repoDataStore?.archived ? 'Error unarchiving repository' : 'Error archiving repository'
+      const message = getErrorMessage(error) || fallback
       setApiError({ type: ErrorTypes.ARCHIVE_REPO, message })
     }
   }

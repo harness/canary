@@ -66,7 +66,7 @@ export const EntityReferenceSort: React.FC<EntityReferenceSortProps> = ({
       )}
       <DropdownMenu.Root>
         <DropdownMenu.Trigger asChild>
-          <Button variant="outline" size="sm" className="px-cn-xs" iconOnly>
+          <Button variant="outline" size="md" className="px-cn-xs" iconOnly>
             <IconV2 name="sort-2" size="sm" />
           </Button>
         </DropdownMenu.Trigger>

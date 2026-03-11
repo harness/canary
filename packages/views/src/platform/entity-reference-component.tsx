@@ -6,18 +6,18 @@ import { afterFrames, cn } from '@harnessio/ui/utils'
 import { EntityReferenceFilter } from './components/entity-reference-filter'
 import { EntityReferenceSort } from './components/entity-reference-sort'
 import { EntityReferenceList } from './entity-reference-list'
-import { BaseEntityProps, EntityRendererProps, Scope } from './types'
+import { BaseEntityProps, EntityRendererProps, EntityReferenceScope } from './types'
 import { defaultEntityComparator } from './utils/utils'
 
 export interface CommonEntityReferenceProps<T extends BaseEntityProps> {
   // Data
   entities: T[]
-  selectedScope: Scope
+  selectedScope: EntityReferenceScope
   selectedEntity?: T | null
   selectedEntities?: T[]
 
   // Callbacks
-  onScopeChange: (scope: Scope) => void
+  onScopeChange: (scope: EntityReferenceScope) => void
   onFilterChange?: (filter: string) => void
   onFavoriteChange?: (favorite: boolean) => void
   onCreateClick?: () => void
@@ -119,7 +119,7 @@ export function EntityReference<T extends BaseEntityProps>({
   )
 
   const handleScopeChangeInternal = useCallback(
-    (scope: Scope) => {
+    (scope: EntityReferenceScope) => {
       onScopeChange(scope)
       afterFrames(() => inputRef.current?.focus())
     },
@@ -139,19 +139,19 @@ export function EntityReference<T extends BaseEntityProps>({
     )
   }
 
-  const scopeLabels: Record<Scope, string> = {
+  const scopeLabels: Record<EntityReferenceScope, string> = {
     account: 'Account',
     org: 'Organization',
     project: 'Project'
   }
 
-  const scopes: Scope[] = [Scope.ACCOUNT, Scope.ORG, Scope.PROJECT]
+  const scopes: EntityReferenceScope[] = [EntityReferenceScope.ACCOUNT, EntityReferenceScope.ORG, EntityReferenceScope.PROJECT]
 
   return (
     <Layout.Vertical>
       <Tabs.Root
         value={selectedScope}
-        onValueChange={value => handleScopeChangeInternal(value as Scope)}
+        onValueChange={value => handleScopeChangeInternal(value as EntityReferenceScope)}
         className="w-full"
       >
         <Tabs.List variant="outlined" className="w-full">

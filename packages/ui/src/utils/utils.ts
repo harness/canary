@@ -157,7 +157,15 @@ export const settingsBackLink = (
   }
 }
 
+/**
+ * Reads a CSS custom property from the document root.
+ * Guards against SSR/Node: `document` and `getComputedStyle` are undefined in those environments
+ * (e.g. Astro/Vite build, SSR), so we return '' so callers like `getCssNumber` fall back to their fallback value.
+ */
 const getCSSPropetyValue = (property: string): string => {
+  if (typeof document === 'undefined' || typeof getComputedStyle === 'undefined') {
+    return ''
+  }
   return getComputedStyle(document.documentElement).getPropertyValue(property).trim()
 }
 

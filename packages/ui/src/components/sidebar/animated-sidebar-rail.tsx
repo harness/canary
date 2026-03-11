@@ -12,16 +12,16 @@ import { Tooltip } from '../tooltip'
 
 // Constants for sidebar positioning
 const BUMP_PX = 3 // Pixels to bump the sidebar on hover
-const COLLAPSED_LEFT = 61 // Left position when sidebar is collapsed
+// Left position when sidebar is collapsed
+const COLLAPSED_LEFT = getCssNumber('--cn-sidebar-container-min-width', 56)
+// Left position when sidebar is expanded
+const EXPANDED_LEFT = getCssNumber('--cn-sidebar-container-full-width', 256)
 
 interface AnimatedSideBarRailProps extends Pick<HTMLAttributes<HTMLElement>, 'className'> {}
 
 const AnimatedSideBarRail: React.FC<AnimatedSideBarRailProps> = ({ className }) => {
   const { t } = useTranslation()
   const { state, toggleSidebar } = useSidebar()
-
-  // Left position when sidebar is expanded
-  const EXPANDED_LEFT = getCssNumber('--cn-sidebar-container-full-width', 256)
 
   const open = state === 'expanded'
   const [hover, setHover] = useState(false)
@@ -37,7 +37,7 @@ const AnimatedSideBarRail: React.FC<AnimatedSideBarRailProps> = ({ className }) 
    * Calculate the sidebar position with bump effect on hover.
    * When collapsed, the absolute rail needs to be slightly outside the left edge by BUMP_PX.
    */
-  const sidebarShift = open ? EXPANDED_LEFT : COLLAPSED_LEFT - BUMP_PX
+  const sidebarShift = open ? EXPANDED_LEFT : COLLAPSED_LEFT
   const bump = hover ? (open ? -1 * BUMP_PX : BUMP_PX) : 0
   const shiftWithBump = sidebarShift + bump
 

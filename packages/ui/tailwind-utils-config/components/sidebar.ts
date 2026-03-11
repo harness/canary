@@ -13,8 +13,16 @@ const collapsedSidebarStyles = {
 
   '.cn-sidebar-item': {
     '&-content': {
-      // Hide text and extra elements; icon stays centered
+      // Single-column layout when collapsed so the content box wraps only the icon and border radius is visible
+      gridTemplateColumns: '1fr',
+      gridTemplateAreas: '"icon"',
+      justifyItems: 'center',
+      justifyContent: 'center',
+      padding: 'var(--cn-sidebar-item-container)',
+      minWidth: 'calc(var(--cn-sidebar-item-min-width) - 2 * var(--cn-sidebar-container-px))',
+      // Hide text and extra elements; icon stays centered (place in icon area so they don't create extra grid columns)
       '&-title, &-description, &-badge, &-right-element, &-action-item-placeholder, &-action-buttons': {
+        gridArea: 'icon',
         maxWidth: '0',
         padding: '0',
         opacity: '0',
@@ -22,6 +30,11 @@ const collapsedSidebarStyles = {
       },
       '&-w-description, &-complete': {
         padding: '0'
+      },
+      // Override variant grids so single-column layout wins (e.g. -only-action-buttons uses 3 columns when expanded)
+      '&-only-action-buttons, &-w-r-element, &-complete': {
+        gridTemplateColumns: '1fr',
+        gridTemplateAreas: '"icon"'
       },
       '&-icon': {
         justifySelf: 'center'
@@ -74,18 +87,8 @@ export default {
       backgroundColor: 'var(--cn-bg-1)'
     },
 
-    /*'&-header': {
-      padding:
-        'var(--cn-sidebar-header-pt) var(--cn-sidebar-container-px) var(--cn-sidebar-header-pb) var(--cn-sidebar-container-px)',
-
-      '& .cn-input-prefix': {
-        '@apply transition-[margin-left,width] duration-150 ease-linear': ''
-      }
-    }, We don't have this section anymore */
-
     '&-content': {
       height: '100%',
-      padding: '0 var(--cn-sidebar-container-spacing)',
 
       '&-wrapper': {
         '@apply flex-1 overflow-hidden relative': ''

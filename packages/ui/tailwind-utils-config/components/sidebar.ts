@@ -498,14 +498,14 @@ export default {
 
         '&-icon, &-text': {
           flexShrink: '0',
-          height: 'var(--cn-icon-size-sm)',
+          height: 'var(--cn-icon-size-lg)',
           borderRadius: 'var(--cn-rounded-1)',
           backgroundColor: 'var(--cn-bg-1)',
           '@apply animate-pulse': ''
         },
 
         '&-icon': {
-          width: 'var(--cn-icon-size-sm)'
+          width: 'var(--cn-icon-size-lg)'
         },
 
         '&-text': {
@@ -548,14 +548,14 @@ export default {
       },
 
       // Icon with border container effect: container is var(--cn-size-8)
-      // Padding centers the icon (var(--cn-icon-size-sm)) inside; border is 1px
+      // Padding centers the icon (var(--cn-icon-size-lg)) inside; border is 1px
       '.cn-icon.cn-icon-2xs:not(.cn-sidebar-item-expand-icon), .cn-icon.cn-icon-xs:not(.cn-sidebar-item-expand-icon), .cn-icon.cn-icon-sm:not(.cn-sidebar-item-expand-icon), .cn-icon.cn-icon-md:not(.cn-sidebar-item-expand-icon), .cn-icon.cn-icon-lg:not(.cn-sidebar-item-expand-icon), .cn-icon.cn-icon-xl:not(.cn-sidebar-item-expand-icon)':
         {
           width: 'var(--cn-size-8) !important',
           minWidth: 'var(--cn-size-8) !important',
           height: 'var(--cn-size-8) !important',
           minHeight: 'var(--cn-size-8) !important',
-          padding: 'calc((var(--cn-size-8) - var(--cn-icon-size-sm) - 2px) / 2)',
+          padding: 'calc((var(--cn-size-8) - var(--cn-icon-size-lg) - 2px) / 2)',
           boxSizing: 'border-box',
           borderRadius: 'var(--cn-rounded-2)',
           border: '1px solid var(--cn-border-2)',

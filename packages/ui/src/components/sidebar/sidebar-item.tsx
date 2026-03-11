@@ -263,11 +263,11 @@ const SidebarItemTrigger = forwardRef<HTMLButtonElement | HTMLAnchorElement, Sid
       >
         {withIcon &&
           (withDescription ? (
-            <div className="cn-sidebar-item-content-icon cn-sidebar-item-content-icon-w-border">
-              <IconV2 name={props.icon} size="sm" fallback="stop" />
+            <div className="cn-sidebar-item-content-icon">
+              <IconV2 name={props.icon} size="lg" fallback="stop" />
             </div>
           ) : (
-            <IconV2 name={props.icon} size="sm" fallback="stop" className="cn-sidebar-item-content-icon" />
+            <IconV2 name={props.icon} size="lg" fallback="stop" className="cn-sidebar-item-content-icon" />
           ))}
         {withLogo && props.logo && (
           <LogoV2 name={props.logo} size={withDescription ? 'sm' : 'xs'} className="cn-sidebar-item-content-icon" />
@@ -291,7 +291,7 @@ const SidebarItemTrigger = forwardRef<HTMLButtonElement | HTMLAnchorElement, Sid
         {withDescription && (
           <Text
             variant="caption-single-line-light"
-            color="foreground-3"
+            color="foreground-4"
             className="cn-sidebar-item-content-description"
             truncate
           >

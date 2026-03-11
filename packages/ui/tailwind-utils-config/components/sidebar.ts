@@ -1,3 +1,40 @@
+// --- Collapsed sidebar state: applied when sidebar has data-state="collapsed" ---
+const collapsedSidebarStyles = {
+  '& .cn-input-prefix': {
+    '@apply ml-0': ''
+  },
+
+  '.cn-sidebar-group': {
+    '--sidebar-group-label-scale': '0',
+    '&-header': {
+      display: 'none'
+    }
+  },
+
+  '.cn-sidebar-item': {
+    '&-content': {
+      // Hide text and extra elements; icon stays centered
+      '&-title, &-description, &-badge, &-right-element, &-action-item-placeholder, &-action-buttons': {
+        maxWidth: '0',
+        padding: '0',
+        opacity: '0',
+        minWidth: '0'
+      },
+      '&-w-description, &-complete': {
+        padding: '0'
+      },
+      '&-icon': {
+        justifySelf: 'center'
+      }
+    },
+    '&-action-button': {
+      maxWidth: '0',
+      minWidth: '0',
+      opacity: '0'
+    }
+  }
+}
+
 export default {
   '.cn-sidebar': {
     '&.cn-sidebar': {
@@ -178,10 +215,6 @@ export default {
         textDecoration: 'none !important'
       },
 
-      '&-big': {
-        maxWidth: '100%'
-      },
-
       '&-active': {
         '.cn-sidebar-item-content-title': {
           color: 'var(--cn-comp-sidebar-item-text-selected)'
@@ -298,13 +331,13 @@ export default {
         display: 'grid',
         gridTemplateColumns: 'auto 1fr',
         gridTemplateAreas: '"icon title"',
-        gap: '8px',
+        gap: 'var(--cn-layout-xs)',
         minHeight: 'var(--cn-sidebar-item-min-height)',
         minWidth: 'var(--cn-sidebar-item-min-width)',
         justifyItems: 'start',
         alignItems: 'center',
-        padding: 'var(--cn-sidebar-item-container)',
-        paddingLeft: 'calc(var(--cn-sidebar-item-container) + var(--cn-layout-sm))',
+        padding:
+          'var(--cn-sidebar-item-container) var(--cn-sidebar-item-container) var(--cn-sidebar-item-container) var(--cn-layout-sm)',
         borderRadius: 'var(--cn-sidebar-item-radius)',
         '@apply duration-150 transition-[padding,row-gap,column-gap] ease-linear': '',
 
@@ -361,22 +394,6 @@ export default {
             gridTemplateColumns: 'auto 1fr auto auto'
           }
         },
-        /* Deprecated class
-
-                '&-icon': {
-                  gridArea: 'icon',
-        
-                  '&-w-border': {
-                    width: 'var(--cn-icon-size-lg)',
-                    height: 'var(--cn-icon-size-lg)',
-                    borderRadius: 'var(--cn-rounded-2)',
-                    border: '1px solid var(--cn-border-2)',
-                    display: 'grid',
-                    placeContent: 'center',
-                    backgroundImage: 'var(--cn-comp-sidebar-icon-asset-bg)'
-                  }
-                },
-              */
 
         '&-icon': {
           gridArea: 'icon'
@@ -410,8 +427,8 @@ export default {
           gridArea: 'elem',
           display: 'grid',
           placeContent: 'center',
-          width: 'var(--cn-size-7)',
-          height: 'var(--cn-size-7)',
+          width: 'var(--cn-size-8)',
+          height: 'var(--cn-size-8)',
           color: 'var(--cn-text-2)',
           justifyContent: 'flex-end',
           '& svg, & path': {
@@ -442,13 +459,13 @@ export default {
       '&-action-button': {
         position: 'absolute',
         zIndex: '1',
-        top: 'calc(50% - var(--cn-size-7)/2)',
+        top: 'calc(50% - var(--cn-size-8)/2)',
         right: '4px',
         display: 'grid',
         placeContent: 'center',
         color: 'var(--cn-text-2)',
-        width: 'var(--cn-size-7)',
-        height: 'var(--cn-size-7)',
+        width: 'var(--cn-size-8)',
+        height: 'var(--cn-size-8)',
         borderRadius: 'var(--cn-rounded-2)',
         opacity: '1',
         overflow: 'hidden',
@@ -513,6 +530,7 @@ export default {
       width: 'auto',
 
       '.cn-sidebar-item-content': {
+        gap: 'var(--cn-layout-3xs) var(--cn-layout-xs)',
         gridTemplateColumns: 'var(--cn-size-8) 1fr',
         paddingLeft: 'var(--cn-sidebar-item-container)',
 
@@ -526,23 +544,21 @@ export default {
         }
       },
 
-      // Icon with border container effect
-      // SVG is 16px (iconSize/sm), padding creates 28px total (size/7)
-      // Total: 16px + 5px*2 padding + 1px*2 border = 28px
+      // Icon with border container effect: container is var(--cn-size-8)
+      // Padding centers the icon (var(--cn-icon-size-sm)) inside; border is 1px
       '.cn-icon.cn-icon-2xs:not(.cn-sidebar-item-expand-icon), .cn-icon.cn-icon-xs:not(.cn-sidebar-item-expand-icon), .cn-icon.cn-icon-sm:not(.cn-sidebar-item-expand-icon), .cn-icon.cn-icon-md:not(.cn-sidebar-item-expand-icon), .cn-icon.cn-icon-lg:not(.cn-sidebar-item-expand-icon), .cn-icon.cn-icon-xl:not(.cn-sidebar-item-expand-icon)':
         {
-          width: 'var(--cn-icon-size-sm) !important',
-          minWidth: 'var(--cn-icon-size-sm) !important',
-          height: 'var(--cn-icon-size-sm) !important',
-          minHeight: 'var(--cn-icon-size-sm) !important',
-          padding: 'calc((var(--cn-size-7) - var(--cn-icon-size-sm) - 2px) / 2)',
-          boxSizing: 'content-box',
+          width: 'var(--cn-size-8) !important',
+          minWidth: 'var(--cn-size-8) !important',
+          height: 'var(--cn-size-8) !important',
+          minHeight: 'var(--cn-size-8) !important',
+          padding: 'calc((var(--cn-size-8) - var(--cn-icon-size-sm) - 2px) / 2)',
+          boxSizing: 'border-box',
           borderRadius: 'var(--cn-rounded-2)',
           border: '1px solid var(--cn-border-2)',
           backgroundColor: 'var(--cn-bg-1)',
           flexShrink: '0',
-          color: 'var(--cn-comp-sidebar-item-text)',
-          marginLeft: 'var(--cn-layout-4xs)'
+          color: 'var(--cn-comp-sidebar-item-text)'
         },
 
       '&:hover, &:focus-within': {
@@ -552,50 +568,7 @@ export default {
       }
     },
 
-    '&[data-state=collapsed]': {
-      '& .cn-input-prefix': {
-        '@apply ml-0': ''
-      },
-
-      '.cn-sidebar-group': {
-        '--sidebar-group-label-scale': '0',
-
-        '&-header': {
-          display: 'none'
-        }
-      },
-
-      '.cn-sidebar-item': {
-        '&-big': {
-          maxWidth:
-            '38px' /* I don’t have a fixed value for the collapsed state in the design — it depends on the padding */
-          /* marginLeft: '2px' / Why we need that? */
-        },
-
-        '&-content': {
-          '&-title, &-description, &-badge, &-right-element, &-action-item-placeholder, &-action-buttons': {
-            maxWidth: '0',
-            padding: '0',
-            opacity: '0',
-            minWidth: '0'
-          },
-
-          '&-w-description, &-complete': {
-            padding: '0'
-          },
-
-          '&-icon': {
-            justifySelf: 'center'
-          }
-        },
-
-        '&-action-button': {
-          maxWidth: '0',
-          minWidth: '0',
-          opacity: '0'
-        }
-      }
-    }
+    '&[data-state=collapsed]': collapsedSidebarStyles
   },
 
   // Hidden measurement container for popover column calculation
@@ -620,12 +593,31 @@ export default {
   '.cn-sidebar-nested-popover': {
     width: 'var(--cn-size-84)',
     height: '100vh',
-    borderRadius: '0 var(--cn-popover-radius) var(--cn-popover-radius) 0'
+    borderRadius: '0 var(--cn-popover-radius) var(--cn-popover-radius) 0',
+
+    // Stretch icon in items with title + description so spacing is even
+    '.cn-sidebar-item-content.cn-sidebar-item-content-w-description': {
+      '.cn-sidebar-item-content-icon': {
+        alignSelf: 'stretch',
+        display: 'flex',
+        alignItems: 'center'
+      }
+    }
   },
 
   // Sidebar popover
   '.cn-popover-content.cn-sidebar-popover': {
     backgroundColor: 'var(--cn-bg-2)',
+
+    // Stretch icon in items with title + description so spacing is even
+    '.cn-sidebar-item-content.cn-sidebar-item-content-w-description': {
+      '.cn-sidebar-item-content-icon': {
+        alignSelf: 'stretch',
+        display: 'flex',
+        alignItems: 'center'
+      }
+    },
+
     // Reset padding left for group headers in popover (only side nav should have padding left)
     '.cn-sidebar-group-header': {
       padding: 'var(--cn-layout-3xs) var(--cn-sidebar-item-container)'

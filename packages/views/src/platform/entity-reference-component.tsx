@@ -1,41 +1,33 @@
 import { useCallback, useRef } from 'react'
 
-import { Checkbox, IconV2, Layout, SearchInput, StackedList } from '@harnessio/ui/components'
-import { afterFrames } from '@harnessio/ui/utils'
-import { cn } from '@harnessio/ui/utils'
+import { Button, Checkbox, IconV2, Layout, SearchInput, StackedList, Tabs } from '@harnessio/ui/components'
+import { afterFrames, cn } from '@harnessio/ui/utils'
 
 import { EntityReferenceFilter } from './components/entity-reference-filter'
 import { EntityReferenceSort } from './components/entity-reference-sort'
 import { EntityReferenceList } from './entity-reference-list'
-import {
-  BaseEntityProps,
-  ChildFolderRendererProps,
-  DirectionEnum,
-  EntityRendererProps,
-  ParentFolderRendererProps
-} from './types'
+import { BaseEntityProps, EntityRendererProps, Scope } from './types'
 import { defaultEntityComparator } from './utils/utils'
 
-export interface CommonEntityReferenceProps<T extends BaseEntityProps, S = string, F = string> {
+export interface CommonEntityReferenceProps<T extends BaseEntityProps> {
   // Data
   entities: T[]
-  parentFolder: S | null
-  childFolder: F | null
-  currentFolder: string | null
+  selectedScope: Scope
   selectedEntity?: T | null
   selectedEntities?: T[]
 
   // Callbacks
-  onScopeChange: (direction: DirectionEnum) => void
+  onScopeChange: (scope: Scope) => void
   onFilterChange?: (filter: string) => void
   onFavoriteChange?: (favorite: boolean) => void
+  onCreateClick?: () => void
 
   // UI Configuration
   showFilter?: boolean
   showSort?: boolean
   enableFavorite?: boolean
-  showBreadcrumbEllipsis?: boolean
   filterTypes?: Record<string, string>
+  createBtnTitle?: string
 
   // Custom renderers
   renderEntity?: (props: EntityRendererProps<T>) => React.ReactNode
@@ -55,44 +47,42 @@ export interface CommonEntityReferenceProps<T extends BaseEntityProps, S = strin
   }
 }
 
-export interface SingleSelectEntityReferenceProps<T extends BaseEntityProps, S = string, F = string>
-  extends CommonEntityReferenceProps<T, S, F> {
+export interface SingleSelectEntityReferenceProps<T extends BaseEntityProps>
+  extends CommonEntityReferenceProps<T> {
   enableMultiSelect?: false
   onSelectEntity: (entity: T) => void
 }
 
-export interface MultiSelectEntityReferenceProps<T extends BaseEntityProps, S = string, F = string>
-  extends CommonEntityReferenceProps<T, S, F> {
+export interface MultiSelectEntityReferenceProps<T extends BaseEntityProps> extends CommonEntityReferenceProps<T> {
   enableMultiSelect: true
   onSelectEntity: (entities: T[]) => void
 }
 
-export type EntityReferenceProps<T extends BaseEntityProps, S = string, F = string> =
-  | SingleSelectEntityReferenceProps<T, S, F>
-  | MultiSelectEntityReferenceProps<T, S, F>
+export type EntityReferenceProps<T extends BaseEntityProps> =
+  | SingleSelectEntityReferenceProps<T>
+  | MultiSelectEntityReferenceProps<T>
 
-export function EntityReference<T extends BaseEntityProps, S = string, F = string>({
+export function EntityReference<T extends BaseEntityProps>({
   // Data
   entities,
   selectedEntity,
   selectedEntities = [],
-  parentFolder,
-  childFolder,
-  currentFolder,
+  selectedScope,
 
   // Callbacks
   onSelectEntity,
   onScopeChange,
   onFilterChange,
   onFavoriteChange,
+  onCreateClick,
 
   // configs
   showFilter = true,
   showSort = false,
   enableFavorite = true,
-  showBreadcrumbEllipsis = false,
   filterTypes,
   enableMultiSelect,
+  createBtnTitle,
 
   // Custom renderers
   renderEntity,
@@ -107,16 +97,14 @@ export function EntityReference<T extends BaseEntityProps, S = string, F = strin
 
   // Pagination
   paginationProps
-}: EntityReferenceProps<T, S, F>): JSX.Element {
+}: EntityReferenceProps<T>): JSX.Element {
   const inputRef = useRef<HTMLInputElement>(null)
 
   const handleSelectEntity = useCallback(
     (entity: T) => {
       if (enableMultiSelect) {
-        // Use either the custom comparator or the default one
         const compareEntities = compareFn || defaultEntityComparator
 
-        // Handle entity selection logic
         const isEntitySelected = selectedEntities.some(item => compareEntities(item, entity))
         const newSelectedEntities = isEntitySelected
           ? selectedEntities.filter(item => !compareEntities(item, entity))
@@ -130,9 +118,9 @@ export function EntityReference<T extends BaseEntityProps, S = string, F = strin
     [onSelectEntity, enableMultiSelect, selectedEntities, compareFn]
   )
 
-  const handleScopeChange = useCallback(
-    (direction: DirectionEnum) => {
-      onScopeChange?.(direction)
+  const handleScopeChangeInternal = useCallback(
+    (scope: Scope) => {
+      onScopeChange(scope)
       afterFrames(() => inputRef.current?.focus())
     },
     [onScopeChange]
@@ -151,42 +139,35 @@ export function EntityReference<T extends BaseEntityProps, S = string, F = strin
     )
   }
 
-  const parentFolderRenderer = ({ parentFolder, onSelect }: ParentFolderRendererProps<S>) => {
-    if (!parentFolder) return null
-    return (
-      <StackedList.Item
-        paddingY="xs"
-        className="gap-x-cn-xs min-h-12 first:!rounded-cn-none"
-        onClick={() => onSelect?.(parentFolder)}
-        thumbnail={<IconV2 name="folder" size="md" className="text-cn-2" />}
-      >
-        <StackedList.Field title=".." />
-      </StackedList.Item>
-    )
+  const scopeLabels: Record<Scope, string> = {
+    account: 'Account',
+    org: 'Organization',
+    project: 'Project'
   }
 
-  const childFolderRenderer = ({ folder, onSelect }: ChildFolderRendererProps<F>) => {
-    if (!folder) return null
-    return (
-      <StackedList.Item
-        paddingY="xs"
-        className="gap-x-cn-xs min-h-12 first:!rounded-cn-none"
-        onClick={() => onSelect?.(folder)}
-        thumbnail={<IconV2 name="folder" size="md" className="text-cn-2" />}
-      >
-        <StackedList.Field className="grid capitalize" title={String(folder)} />
-      </StackedList.Item>
-    )
-  }
+  const scopes: Scope[] = [Scope.ACCOUNT, Scope.ORG, Scope.PROJECT]
 
   return (
-    <>
-      <Layout.Vertical gapY="lg">
-        <Layout.Horizontal gapX="sm">
+    <Layout.Vertical>
+      <Tabs.Root
+        value={selectedScope}
+        onValueChange={value => handleScopeChangeInternal(value as Scope)}
+        className="w-full"
+      >
+        <Tabs.List variant="outlined" className="w-full">
+          {scopes.map(scope => (
+            <Tabs.Trigger key={scope} value={scope} className="flex-1 justify-center">
+              {scopeLabels[scope]}
+            </Tabs.Trigger>
+          ))}
+        </Tabs.List>
+      </Tabs.Root>
+
+      <Layout.Horizontal className="items-center justify-between">
+        <Layout.Horizontal className="flex-1">
           <SearchInput
             ref={inputRef}
             width="full"
-            className={cn({ 'max-w-96': filterTypes })}
             defaultValue={searchValue}
             onChange={handleChangeSearchValue}
             placeholder="Search"
@@ -200,32 +181,31 @@ export function EntityReference<T extends BaseEntityProps, S = string, F = strin
             />
           )}
           {showFilter && filterTypes && (
-            <EntityReferenceFilter onFilterChange={onFilterChange} filterTypes={filterTypes} defaultValue={'all'} />
+            <EntityReferenceFilter onFilterChange={onFilterChange} filterTypes={filterTypes} defaultValue="all" />
           )}
         </Layout.Horizontal>
-        <>
-          <EntityReferenceList<T, S, F>
-            entities={entities}
-            selectedEntity={selectedEntity}
-            selectedEntities={selectedEntities}
-            parentFolder={parentFolder}
-            childFolder={childFolder}
-            currentFolder={currentFolder}
-            handleSelectEntity={handleSelectEntity}
-            handleScopeChange={handleScopeChange}
-            renderEntity={renderEntity}
-            defaultEntityRenderer={defaultEntityRenderer}
-            parentFolderRenderer={parentFolderRenderer}
-            childFolderRenderer={childFolderRenderer}
-            showBreadcrumbEllipsis={showBreadcrumbEllipsis}
-            enableMultiSelect={enableMultiSelect}
-            compareFn={compareFn}
-            isLoading={isLoading}
-            paginationProps={paginationProps}
-          />
-        </>
-      </Layout.Vertical>
-    </>
+
+        {onCreateClick && (
+          <Button variant="outline" onClick={onCreateClick}>
+            <IconV2 name="plus" size="sm" />
+            {createBtnTitle || 'Create'}
+          </Button>
+        )}
+      </Layout.Horizontal>
+
+      <EntityReferenceList<T>
+        entities={entities}
+        selectedEntity={selectedEntity}
+        selectedEntities={selectedEntities}
+        handleSelectEntity={handleSelectEntity}
+        renderEntity={renderEntity}
+        defaultEntityRenderer={defaultEntityRenderer}
+        enableMultiSelect={enableMultiSelect}
+        compareFn={compareFn}
+        isLoading={isLoading}
+        paginationProps={paginationProps}
+      />
+    </Layout.Vertical>
   )
 }
 

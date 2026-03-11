@@ -1,6 +1,6 @@
 import { useCallback, useState } from 'react'
 
-import { Button, Checkbox, DropdownMenu, IconV2, Text } from '@harnessio/ui/components'
+import { Button, Checkbox, DropdownMenu, IconV2 } from '@harnessio/ui/components'
 
 export interface EntityReferenceSortProps {
   onSortChange?: (type: string) => void
@@ -66,11 +66,8 @@ export const EntityReferenceSort: React.FC<EntityReferenceSortProps> = ({
       )}
       <DropdownMenu.Root>
         <DropdownMenu.Trigger asChild>
-          <Button variant="outline" className="gap-x-cn-2xs">
-            <Text truncate color="foreground-1">
-              {selectedSort}
-            </Text>
-            <IconV2 name="nav-arrow-down" size="2xs" className="chevron-down" />
+          <Button variant="outline" size="sm" className="px-cn-xs" iconOnly>
+            <IconV2 name="sort-2" size="sm" />
           </Button>
         </DropdownMenu.Trigger>
         <DropdownMenu.Content align="end">

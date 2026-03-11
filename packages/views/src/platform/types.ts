@@ -3,6 +3,12 @@ export enum DirectionEnum {
   CHILD = 'child'
 }
 
+export enum Scope {
+  PROJECT = 'project',
+  ORG = 'org',
+  ACCOUNT = 'account'
+}
+
 // Base properties that all entities must have
 export interface BaseEntityProps {
   id: string

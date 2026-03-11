@@ -1,30 +1,17 @@
 import { Fragment } from 'react'
 
-import { Breadcrumb, Button, ScrollArea, Skeleton, StackedList } from '@harnessio/ui/components'
+import { Button, ScrollArea, Skeleton, StackedList } from '@harnessio/ui/components'
 
-import {
-  BaseEntityProps,
-  ChildFolderRendererProps,
-  DirectionEnum,
-  EntityRendererProps,
-  ParentFolderRendererProps
-} from './types'
+import { BaseEntityProps, EntityRendererProps } from './types'
 import { defaultEntityComparator } from './utils/utils'
 
-export interface EntityReferenceListProps<T extends BaseEntityProps, S = string, F = string> {
+export interface EntityReferenceListProps<T extends BaseEntityProps> {
   entities: T[]
   selectedEntity?: T | null
   selectedEntities?: T[]
-  parentFolder: S | null
-  childFolder: F | null
-  currentFolder: string | null
   handleSelectEntity: (entity: T) => void
-  handleScopeChange: (direction: DirectionEnum) => void
   renderEntity?: (props: EntityRendererProps<T>) => React.ReactNode
   defaultEntityRenderer: (props: EntityRendererProps<T>) => React.ReactNode
-  parentFolderRenderer: (props: ParentFolderRendererProps<S>) => React.ReactNode
-  childFolderRenderer: (props: ChildFolderRendererProps<F>) => React.ReactNode
-  showBreadcrumbEllipsis?: boolean
   enableMultiSelect?: boolean
   compareFn?: (entity1: T, entity2: T) => boolean
   isLoading: boolean
@@ -35,73 +22,26 @@ export interface EntityReferenceListProps<T extends BaseEntityProps, S = string,
   }
 }
 
-export function EntityReferenceList<T extends BaseEntityProps, S = string, F = string>({
+export function EntityReferenceList<T extends BaseEntityProps>({
   entities,
   selectedEntity,
   selectedEntities = [],
-  parentFolder,
-  childFolder,
-  currentFolder,
   handleSelectEntity,
-  handleScopeChange,
   renderEntity,
   defaultEntityRenderer,
-  parentFolderRenderer,
-  childFolderRenderer,
-  showBreadcrumbEllipsis = false,
   enableMultiSelect = false,
   compareFn,
   isLoading,
   paginationProps
-}: EntityReferenceListProps<T, S, F>): JSX.Element {
+}: EntityReferenceListProps<T>): JSX.Element {
   return (
     <StackedList.Root>
-      {/* Breadcrumb header */}
-      <StackedList.Header className="sticky top-0" paddingY="sm">
-        <Breadcrumb.Root className="font-body-normal">
-          <Breadcrumb.List>
-            {!!showBreadcrumbEllipsis && (
-              <>
-                {/* TODO: Pass actual hidden breadcrumb items for proper UX */}
-                <Breadcrumb.Ellipsis items={[]} className="text-cn-disabled" />
-                <Breadcrumb.Separator className="text-cn-disabled" />
-              </>
-            )}
-            {!!parentFolder && (
-              <>
-                <Breadcrumb.Item className="text-cn-3 hover:!text-cn-1">
-                  <Breadcrumb.Link
-                    onClick={e => {
-                      e.preventDefault()
-                      handleScopeChange(DirectionEnum.PARENT)
-                    }}
-                    href="#"
-                  >
-                    {parentFolder}
-                  </Breadcrumb.Link>
-                </Breadcrumb.Item>
-                <Breadcrumb.Separator className="text-cn-disabled" />
-              </>
-            )}
-            <Breadcrumb.Page className="last:!text-cn-1 text-cn-3 hover:!text-cn-1">{currentFolder}</Breadcrumb.Page>
-          </Breadcrumb.List>
-        </Breadcrumb.Root>
-      </StackedList.Header>
-
       <ScrollArea className="max-h-[calc(100vh-530px)]">
-        {/* scopes */}
-        {parentFolderRenderer({ parentFolder, onSelect: () => handleScopeChange(DirectionEnum.PARENT) })}
-
-        {/* folders */}
-        {childFolderRenderer({ folder: childFolder, onSelect: () => handleScopeChange(DirectionEnum.CHILD) })}
-
-        {/* entities */}
         {isLoading ? (
           <Skeleton.List />
         ) : entities.length > 0 ? (
           <>
             {entities.map(entity => {
-              // Use either the custom comparator or the default one
               const compareEntities = compareFn || defaultEntityComparator
 
               const isSelected =

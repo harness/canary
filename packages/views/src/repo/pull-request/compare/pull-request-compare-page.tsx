@@ -1,9 +1,7 @@
 import { FC, ReactElement, useEffect, useRef, useState } from 'react'
 import { useForm } from 'react-hook-form'
 
-import { Avatar, Button, IconV2, Layout, Link, LinkProps, NoData, Skeleton, Tabs, Text } from '@harnessio/ui/components'
-import { TFunctionWithFallback, useRouterContext, useTranslation } from '@harnessio/ui/context'
-import { TypesDiffStats, TypesUser } from '@harnessio/ui/types'
+import { zodResolver } from '@hookform/resolvers/zod'
 import {
   CommitSelectorListItem,
   CommitsList,
@@ -17,12 +15,15 @@ import {
   SandboxLayout,
   TypesCommit
 } from '@views'
-import { zodResolver } from '@hookform/resolvers/zod'
 import PullRequestCompareButton from '@views/repo/pull-request/compare/components/pull-request-compare-button'
 import PullRequestCompareForm from '@views/repo/pull-request/compare/components/pull-request-compare-form'
 import { combineAndNormalizePrincipalsAndGroups } from '@views/repo/utils'
 import { noop } from 'lodash-es'
 import { z } from 'zod'
+
+import { Avatar, Button, IconV2, Layout, Link, LinkProps, NoData, Skeleton, Tabs, Text } from '@harnessio/ui/components'
+import { TFunctionWithFallback, useRouterContext, useTranslation } from '@harnessio/ui/context'
+import { TypesDiffStats, TypesUser } from '@harnessio/ui/types'
 
 import {
   EnumPullReqReviewDecision,
@@ -48,10 +49,6 @@ export const getPullRequestFormSchema = (t: TFunctionWithFallback) =>
 
 export type CompareFormFields = z.infer<ReturnType<typeof getPullRequestFormSchema>>
 
-export const DiffModeOptions = [
-  { name: 'Split', value: 'Split' },
-  { name: 'Unified', value: 'Unified' }
-]
 interface RoutingProps {
   toCommitDetails?: ({ sha }: { sha: string }) => string
   toCode?: ({ sha }: { sha: string }) => string

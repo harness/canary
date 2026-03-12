@@ -8,14 +8,20 @@ import { noop } from '@utils/viewUtils'
 import { FileExplorer, Layout } from '@harnessio/ui/components'
 import {
   CommitDiff,
+  CommitDiffsViewProps,
   CommitSidebar,
   DraggableSidebarDivider,
   ICommitDetailsStore,
   SIDEBAR_MIN_WIDTH
 } from '@harnessio/views'
 
+type DiffMode = CommitDiffsViewProps['diffMode']
+
+const SPLIT_MODE = 1 as DiffMode
+
 export const CommitDetailsDiffViewWrapper: FC = () => {
   const useCommitDetailsStore = useCallback((): ICommitDetailsStore => commitDetailsStore, [])
+  const [diffMode, setDiffMode] = useState<DiffMode>(SPLIT_MODE)
   const [sidebarWidth, setSidebarWidth] = useState(SIDEBAR_MIN_WIDTH)
   const containerRef = useRef<HTMLDivElement>(null)
 
@@ -27,7 +33,7 @@ export const CommitDetailsDiffViewWrapper: FC = () => {
         </FileExplorer.Root>
       </CommitSidebar>
       <DraggableSidebarDivider width={sidebarWidth} setWidth={setSidebarWidth} containerRef={containerRef} />
-      <CommitDiff useCommitDetailsStore={useCommitDetailsStore} />
+      <CommitDiff useCommitDetailsStore={useCommitDetailsStore} diffMode={diffMode} setDiffMode={setDiffMode} />
     </Layout.Flex>
   )
 }

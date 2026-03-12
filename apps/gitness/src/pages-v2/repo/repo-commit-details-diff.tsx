@@ -1,6 +1,7 @@
 import { useEffect, useRef, useState } from 'react'
 import { useParams } from 'react-router-dom'
 
+import { DiffModeEnum } from '@git-diff-view/react'
 import * as Diff2Html from 'diff2html'
 import { compact } from 'lodash-es'
 
@@ -11,6 +12,7 @@ import {
   useListPathsQuery
 } from '@harnessio/code-service-client'
 import { Layout } from '@harnessio/ui/components'
+import { useLocalStorage, UserPreference } from '@harnessio/ui/hooks'
 import { CommitDiff, CommitSidebar, DraggableSidebarDivider, SIDEBAR_MIN_WIDTH } from '@harnessio/views'
 
 import Explorer from '../../components-v2/FileExplorer'
@@ -33,6 +35,7 @@ export const CommitDiffContainer = ({ showSidebar = true }: { showSidebar?: bool
   const isMfe = useIsMFE()
   const { fullGitRef } = useCodePathDetails()
   const { setDiffs, setDiffStats, setCommitSHA } = useCommitDetailsStore()
+  const [diffMode, setDiffMode] = useLocalStorage<DiffModeEnum>(UserPreference.DIFF_VIEW_STYLE, DiffModeEnum.Split)
   const [sidebarWidth, setSidebarWidth] = useState(SIDEBAR_MIN_WIDTH)
   const containerRef = useRef<HTMLDivElement>(null)
 
@@ -128,6 +131,8 @@ export const CommitDiffContainer = ({ showSidebar = true }: { showSidebar?: bool
 
       <CommitDiff
         useCommitDetailsStore={useCommitDetailsStore}
+        diffMode={diffMode}
+        setDiffMode={setDiffMode}
         toRepoFileDetails={({ path }: { path: string }) => {
           return isMfe ? `/repos/${repoId}/${path}` : `/${spaceId}/repos/${repoId}/${path}`
         }}

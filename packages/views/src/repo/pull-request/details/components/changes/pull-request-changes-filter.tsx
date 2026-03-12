@@ -1,10 +1,11 @@
 import { useEffect, useMemo, useState } from 'react'
 
+import { DiffModeEnum } from '@git-diff-view/react'
+import { ChangedFilesShortInfo, DiffModeOptions, TypesCommit } from '@views'
+
 import { Button, CounterBadge, Dialog, DropdownMenu, IconV2, Layout, SplitButton } from '@harnessio/ui/components'
 import { useTranslation } from '@harnessio/ui/context'
 import { TypesUser } from '@harnessio/ui/types'
-import { ChangedFilesShortInfo, DiffModeOptions, TypesCommit } from '@views'
-import { DiffModeEnum } from '@git-diff-view/react'
 import { cn } from '@harnessio/ui/utils'
 
 import {
@@ -208,7 +209,7 @@ export const PullRequestChangesFilter: React.FC<PullRequestChangesFilterProps> =
         </DropdownMenu.Root>
 
         <DropdownMenu.Root>
-          <DropdownMenu.Trigger className="text-cn-size-2 group flex items-center gap-x-cn-2xs" asChild>
+          <DropdownMenu.Trigger className="group flex items-center gap-x-cn-2xs" asChild>
             <Button size="sm" variant="transparent">
               {diffMode === DiffModeEnum.Split ? t('views:pullRequests.split') : t('views:pullRequests.unified')}
               <IconV2 name="solid-arrow-down" size="2xs" />

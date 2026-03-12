@@ -91,6 +91,21 @@ const inputs: IInputConfigWithConfig[] = [
         path: ''
       }
     }
+  },
+  {
+    inputType: InputType.list,
+    path: 'input8',
+    label: 'List',
+    required: true,
+    inputConfig: {
+      inputs: [
+        {
+          label: 'Integer input',
+          inputType: InputType.number,
+          relativePath: 'number9'
+        }
+      ]
+    }
   }
 ]
 

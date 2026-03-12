@@ -140,7 +140,11 @@ function generateSchemaRec(schemaObj: SchemaTreeNode, values: AnyFormValue, opti
     }
 
     if (_isList && _schemaObj && _input) {
-      const arraySchema = zod.array(zod.object(generateSchemaRec(_schemaObj, values, options))).optional()
+      const innerObjectSchema = zod.object(generateSchemaRec(_schemaObj, values, options))
+      const arraySchema = zod.union([
+        zod.array(innerObjectSchema).optional(),
+        createStringSchemaWithGlobalValidation(_input, options)
+      ])
       const enhancedSchema = getSchemaForArray(_schema, _input, values, options, arraySchema)
       objectSchemas[key] = enhancedSchema!
     } else if (_isArrayItem && _input) {
@@ -186,6 +190,35 @@ function generateSchemaRec(schemaObj: SchemaTreeNode, values: AnyFormValue, opti
   return objectSchemas
 }
 
+/**
+ * Creates a string schema with global validation support for runtime values
+ */
+function createStringSchemaWithGlobalValidation(
+  input: IInputDefinition,
+  options?: IGetValidationSchemaOptions
+): zod.ZodEffects<zod.ZodString, string, string> {
+  return zod.string().superRefine((value, ctx) => {
+    if (options?.validationConfig?.globalValidation) {
+      const validationRes = options.validationConfig.globalValidation(value, input, options.metadata)
+
+      if (validationRes.error) {
+        ctx.addIssue({
+          code: zod.ZodIssueCode.custom,
+          message: validationRes.error
+        })
+        return false
+      }
+
+      // If continue is false, skip further validation
+      if (!validationRes.continue) {
+        return true
+      }
+    }
+
+    return true
+  })
+}
+
 function createSchemaForArray(
   innerSchema:
     | {
@@ -197,29 +230,7 @@ function createSchemaForArray(
   input: IInputDefinition,
   options?: IGetValidationSchemaOptions
 ) {
-  return zod.union([
-    zod.array(innerSchema.___array).optional(),
-    zod.string().superRefine((value, ctx) => {
-      if (options?.validationConfig?.globalValidation) {
-        const validationRes = options.validationConfig.globalValidation(value, input, options.metadata)
-
-        if (validationRes.error) {
-          ctx.addIssue({
-            code: zod.ZodIssueCode.custom,
-            message: validationRes.error
-          })
-          return false
-        }
-
-        // If continue is false, skip further validation
-        if (!validationRes.continue) {
-          return true
-        }
-      }
-
-      return true
-    })
-  ])
+  return zod.union([zod.array(innerSchema.___array).optional(), createStringSchemaWithGlobalValidation(input, options)])
 }
 
 function getSchemaForPrimitive(
@@ -315,7 +326,7 @@ function getSchemaForArray(
           })
           return zod.NEVER
         } else if (!validationRes.continue) {
-          return zod.NEVER
+          return true
         }
       }
 
@@ -436,7 +447,7 @@ function populateSchemaTreeRec<T = any>(
       ? utils?.getValuesWithDependencies(values, input)
       : values
 
-    if (!input.isVisible || input.isVisible?.(valuesWithDependencies, options?.metadata)) {
+    if ((!input.isVisible || input.isVisible?.(valuesWithDependencies, options?.metadata)) && input.path) {
       const pathSegments = input.path.split('.')
       pathSegments.forEach((segment, index) => {
         if (index > 0 && /^\d+$/.test(segment)) {

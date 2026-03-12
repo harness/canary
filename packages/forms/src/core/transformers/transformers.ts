@@ -1,11 +1,11 @@
-import { get, isArray, isEmpty, isNil, isNull, isObject, isString, isUndefined, omitBy } from 'lodash-es'
+import { get, isArray, isEmpty, isNil, isNull, isObject, isPlainObject, isString, isUndefined, omitBy } from 'lodash-es'
 
 import { IInputTransformerFunc, IOutputTransformerFunc } from '../../types'
 
 export function objectToArrayInputTransformer(): IInputTransformerFunc {
   return function (value: Record<string, unknown>, _values: Record<string, unknown>) {
     if (typeof value === 'undefined') return undefined
-    if (!value) return { value }
+    if (!value || !isPlainObject(value)) return { value }
 
     return {
       value: Object.getOwnPropertyNames(value).map(key => {
@@ -22,7 +22,7 @@ export function arrayToObjectOutputTransformer(options?: {
 }): IOutputTransformerFunc {
   return function (value: { key: string; value: unknown }[], _values: Record<string, unknown>) {
     if (typeof value === 'undefined') return undefined
-    if (!value) return { value }
+    if (!value || !isArray(value)) return { value }
 
     const retObj = {
       value: value.reduce((acc, rowValue) => {

@@ -95,8 +95,13 @@ export function RootForm<TFieldValues extends FieldValues = FieldValues, TContex
   })
 
   const submittedRef = useRef(false)
+  // Track the serialized defaultValues to detect reset-originated watch callbacks
+  const serializedDefaultValuesRef = useRef<string>(JSON.stringify(defaultValues ?? {}))
 
   useEffect(() => {
+    // Update the tracked defaultValues and reset the form
+    // This prevents infinite loops when onValuesChange updates state that feeds back into defaultValues
+    serializedDefaultValuesRef.current = JSON.stringify(defaultValues ?? {})
     methods.reset(defaultValues, {})
   }, [methods.reset, defaultValues])
 
@@ -141,6 +146,12 @@ export function RootForm<TFieldValues extends FieldValues = FieldValues, TContex
     const subscription = methods.watch(values => {
       // Skip if we're currently validating to prevent infinite loop
       if (isValidatingRef.current) {
+        return
+      }
+
+      // Skip if values equal defaultValues (prevents infinite loop when
+      // onValuesChange updates state that feeds back into defaultValues)
+      if (JSON.stringify(values ?? {}) === serializedDefaultValuesRef.current) {
         return
       }
 

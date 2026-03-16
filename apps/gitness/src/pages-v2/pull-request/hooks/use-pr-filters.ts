@@ -1,4 +1,4 @@
-import { useMemo } from 'react'
+import { useMemo, useState } from 'react'
 
 import { useLocalStorage, UserPreference } from '@harnessio/ui/hooks'
 
@@ -48,10 +48,7 @@ export const usePrFilters = () => {
     UserPreference.PULL_REQUEST_ACTIVITY_ORDER,
     dateFilters[0]
   )
-  const [activityFilter, setActivityFilter] = useLocalStorage<FilterOption>(
-    UserPreference.PULL_REQUEST_ACTIVITY_FILTER,
-    activityFilters[0]
-  )
+  const [activityFilter, setActivityFilter] = useState<FilterOption>(activityFilters[0])
 
   return useMemo(
     () => ({

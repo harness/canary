@@ -16,7 +16,7 @@
     // Set data-theme for CSS selectors (light/dark)
     root.dataset.theme = theme.startsWith("dark") ? "dark" : "light";
     // Set theme class for design system tokens
-    root.classList.add(theme);
+    root.classList.add(theme, "cn-root");
     // Apply to body when it exists (for components that read body class)
     document.addEventListener("DOMContentLoaded", function () {
       document.body.classList.add(theme);

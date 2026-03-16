@@ -597,7 +597,7 @@ export const viewPreviews: Record<string, ViewPreviewGroup> = {
 
 const ViewPreview: FC = () => {
   return (
-    <>
+    <div className="cn-root">
       <Routes>
         {Object.entries(viewPreviews).map(([_, group]) =>
           Object.entries(group.items).map(([route, { element }]) => (
@@ -607,7 +607,7 @@ const ViewPreview: FC = () => {
         <Route path="/" element={<Navigate to={Object.keys(viewPreviews)[0]} />} />
       </Routes>
       <ViewSettings routes={Object.keys(viewPreviews)} />
-    </>
+    </div>
   )
 }
 

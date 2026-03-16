@@ -345,9 +345,10 @@ export const PullRequestComparePage: FC<PullRequestComparePageProps> = ({
                 )}
               </Layout.Grid>
               <Button
-                onClick={() =>
-                  navigate(toPullRequestConversation?.({ pullRequestId: prBranchCombinationExists.number }) ?? '')
-                }
+                onClick={() => {
+                  const url = toPullRequestConversation?.({ pullRequestId: prBranchCombinationExists.number })
+                  if (url) navigate(url)
+                }}
               >
                 {t('views:pullRequests.compareChangesViewPRLink', 'View pull request')}
               </Button>

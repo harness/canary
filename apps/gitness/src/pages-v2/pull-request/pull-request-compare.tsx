@@ -406,7 +406,7 @@ export const CreatePullRequest = () => {
 
   const { data: { body: pullReqData } = {} } = useGetPullReqByBranchesQuery(
     {
-      repo_ref: prRepoRef,
+      repo_ref: repoRef,
       source_branch: isUpstreamSource ? `upstream:${sourceRef}` : sourceRef || '',
       target_branch: isUpstreamTarget ? `upstream:${targetRef}` : targetRef || '',
       queryParams: {
@@ -415,7 +415,7 @@ export const CreatePullRequest = () => {
       }
     },
     {
-      enabled: !!prRepoRef && !!sourceRef && !!targetRef
+      enabled: !!repoRef && !!sourceRef && !!targetRef
     }
   )
 
@@ -651,9 +651,16 @@ export const CreatePullRequest = () => {
         handleUpload={handleUpload}
         toCode={({ sha }: { sha: string }) => `${routes.toRepoFiles({ spaceId, repoId })}/${sha}`}
         toCommitDetails={({ sha }: { sha: string }) => routes.toRepoCommitDetails({ spaceId, repoId, commitSHA: sha })}
-        toPullRequestConversation={({ pullRequestId }: { pullRequestId: number }) =>
-          routes.toPullRequestConversation({ spaceId, repoId, pullRequestId: pullRequestId.toString() })
-        }
+        toPullRequestConversation={({ pullRequestId }: { pullRequestId: number }) => {
+          if (isUpstreamTarget && repoData?.upstream?.path && routeUtils?.toCODEPullRequest) {
+            routeUtils.toCODEPullRequest({
+              repoPath: repoData.upstream.path,
+              pullRequestId: pullRequestId.toString()
+            })
+            return ''
+          }
+          return routes.toPullRequestConversation({ spaceId, repoId, pullRequestId: pullRequestId.toString() })
+        }}
         currentUser={currentUser}
         setSearchCommitQuery={setQuery}
         searchCommitQuery={query}

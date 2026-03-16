@@ -148,6 +148,10 @@ export function RepoForkView({
                   })}
                 </Fieldset>
 
+                {errors.forkDestination && (
+                  <Message theme={MessageTheme.ERROR}>{errors.forkDestination.message?.toString()}</Message>
+                )}
+
                 {/* NAME */}
                 <Fieldset>
                   <FormInput.Text

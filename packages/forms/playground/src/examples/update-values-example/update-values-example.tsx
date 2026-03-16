@@ -133,12 +133,14 @@ function UpdateValuesExample() {
         </Text>
 
         <Button
-          onClick={() => {
+          onClick={async () => {
             if (formMethodsRef.current) {
               formMethodsRef.current.setValue('name', 'John Doe')
               formMethodsRef.current.setValue('email', 'john@example.com')
               formMethodsRef.current.setValue('age', 25)
-              addLog('UPDATE', 'Updated name, email, and age using setValue()')
+              // Trigger validation after setting all values
+              await formMethodsRef.current.trigger()
+              addLog('UPDATE', 'Updated name, email, and age using setValue() + trigger()')
             }
           }}
           variant="secondary"
@@ -148,12 +150,14 @@ function UpdateValuesExample() {
         </Button>
 
         <Button
-          onClick={() => {
+          onClick={async () => {
             if (formMethodsRef.current) {
               formMethodsRef.current.setValue('name', 'AB') // Too short - invalid
               formMethodsRef.current.setValue('email', 'invalid-email') // Invalid format
               formMethodsRef.current.setValue('age', 15) // Too young - invalid
-              addLog('UPDATE', 'Updated with invalid values using setValue()')
+              // Trigger validation after setting all values to show all errors
+              await formMethodsRef.current.trigger()
+              addLog('UPDATE', 'Updated with invalid values using setValue() + trigger()')
             }
           }}
           variant="secondary"
@@ -189,19 +193,46 @@ function UpdateValuesExample() {
           Update Optional Fields
         </Button>
 
+        <Button
+          onClick={() => {
+            if (formMethodsRef.current) {
+              // Alternative approach: use shouldValidate option on each setValue
+              formMethodsRef.current.setValue('name', 'XY', { shouldValidate: true })
+              formMethodsRef.current.setValue('email', 'bad-email', { shouldValidate: true })
+              formMethodsRef.current.setValue('age', 10, { shouldValidate: true })
+              addLog('UPDATE', 'Updated with invalid values using setValue({ shouldValidate: true })')
+            }
+          }}
+          variant="secondary"
+          className="self-start"
+        >
+          Set Invalid Values (with shouldValidate)
+        </Button>
+
         <Card.Root className="mt-4">
-          <Card.Title>Key Differences</Card.Title>
+          <Card.Title>Setting Multiple Values</Card.Title>
           <Card.Content>
             <Text className="text-muted-foreground text-sm">
-              <strong>setValue() approach (this example):</strong>
+              <strong>Approach 1: setValue() + trigger()</strong>
               <br />
-              ✓ Preserves form state (isDirty, touched, errors)
+              Set all values first, then call trigger() to validate all fields at once.
               <br />
-              ✓ No component remount
+              <code className="bg-muted px-1 text-xs">
+                setValue('field1', val1)
+                <br />
+                setValue('field2', val2)
+                <br />
+                await trigger()
+              </code>
               <br />
-              ✓ Granular field updates
               <br />
-              ✓ Better performance for single field updates
+              <strong>Approach 2: setValue with shouldValidate</strong>
+              <br />
+              Validate each field immediately as it's set.
+              <br />
+              <code className="bg-muted px-1 text-xs">
+                setValue('field', val, {'{'} shouldValidate: true {'}'})
+              </code>
               <br />
               <br />
               <strong>key prop approach (other examples):</strong>
@@ -209,8 +240,6 @@ function UpdateValuesExample() {
               ✓ Complete form reset
               <br />
               ✓ Fresh form instance
-              <br />
-              ✓ New defaultValues on remount
               <br />✓ Simpler for "start over" scenarios
             </Text>
           </Card.Content>

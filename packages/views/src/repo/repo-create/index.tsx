@@ -1,6 +1,11 @@
 import { useEffect, useMemo } from 'react'
 import { useForm } from 'react-hook-form'
 
+import { zodResolver } from '@hookform/resolvers/zod'
+import { SandboxLayout } from '@views'
+import { isEmpty } from 'lodash-es'
+import { z } from 'zod'
+
 import {
   Alert,
   Button,
@@ -14,16 +19,14 @@ import {
   Link,
   Message,
   MessageTheme,
+  MultiSelect,
+  MultiSelectOption,
   Radio,
   Select,
   SelectValueOption,
   Text
 } from '@harnessio/ui/components'
 import { useTranslation } from '@harnessio/ui/context'
-import { SandboxLayout } from '@views'
-import { zodResolver } from '@hookform/resolvers/zod'
-import { isEmpty } from 'lodash-es'
-import { z } from 'zod'
 
 import { DefaultBranchDialog } from './default-branch-dialog'
 
@@ -40,7 +43,17 @@ const formSchema = z.object({
   gitignore: z.string().optional(),
   license: z.string().optional(),
   access: z.enum(['1', '2'], { errorMap: () => ({ message: 'Please select who has access' }) }),
-  readme: z.boolean()
+  readme: z.boolean(),
+  tags: z
+    .array(
+      z.object({
+        id: z.union([z.string(), z.number()]),
+        key: z.string(),
+        value: z.string().optional()
+      })
+    )
+    .optional()
+    .default([])
 })
 
 export type FormFields = z.infer<typeof formSchema> // Automatically generate a type from the schema
@@ -77,7 +90,8 @@ export function RepoCreatePage({
       gitignore: '',
       license: '',
       access: '2',
-      readme: false
+      readme: false,
+      tags: []
     }
   })
 
@@ -93,6 +107,7 @@ export function RepoCreatePage({
   const gitignoreValue = watch('gitignore')
   const licenseValue = watch('license')
   const readmeValue = watch('readme')
+  const tagsValue = watch('tags')
 
   const gitIgnoreOptions: SelectValueOption[] = useMemo(
     () => _gitIgnoreOptions?.map(option => ({ value: option, label: option })) ?? [],
@@ -110,6 +125,10 @@ export function RepoCreatePage({
 
   const handleReadmeChange = (value: boolean) => {
     setValue('readme', value, { shouldValidate: true })
+  }
+
+  const handleTagsChange = (options: MultiSelectOption[]) => {
+    setValue('tags', options, { shouldValidate: true })
   }
 
   useEffect(() => {
@@ -161,6 +180,15 @@ export function RepoCreatePage({
                     resizable
                     rows={6}
                     wrapperClassName="w-full"
+                  />
+
+                  {/* TAGS */}
+                  <MultiSelect
+                    label={t('views:repos.createNewRepoForm.tags.label', 'Tags')}
+                    optional
+                    placeholder={t('views:repos.createNewRepoForm.tags.placeholder', 'Add tags')}
+                    value={tagsValue}
+                    onChange={handleTagsChange}
                   />
 
                   <DefaultBranchDialog formMethods={formMethods} />

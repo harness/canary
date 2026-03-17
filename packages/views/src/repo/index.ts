@@ -15,6 +15,9 @@ export * from '@views/repo/repo-summary/repo-empty-view'
 // repo types
 export * from '@views/repo/repo.types'
 
+// repo utils
+export { tagsRecordToOptions, tagsOptionsToRecord } from '@views/repo/utils'
+
 // repo files
 export * from '@views/repo/repo-files'
 

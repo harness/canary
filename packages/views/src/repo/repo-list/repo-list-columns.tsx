@@ -1,7 +1,21 @@
-import { Button, determineScope, Favorite, getScopedPath, IconV2, Layout, ScopeTag, StatusBadge, Text, TimeAgoCard } from '@harnessio/ui/components'
-import { TFunctionWithFallback } from '@harnessio/ui/context'
-import { Scope } from '@views'
 import { ColumnDef } from '@tanstack/react-table'
+import { Scope } from '@views'
+
+import {
+  Button,
+  determineScope,
+  Favorite,
+  getScopedPath,
+  IconV2,
+  Layout,
+  ScopeTag,
+  StatusBadge,
+  Tag,
+  Text,
+  TimeAgoCard,
+  Tooltip
+} from '@harnessio/ui/components'
+import { TFunctionWithFallback } from '@harnessio/ui/context'
 
 import { ForkedFrom } from '../components/forked-from'
 import { RepositoryType } from '../repo.types'
@@ -115,6 +129,43 @@ export const getRepoListColumns = ({
     size: 100,
     maxSize: 100,
     cell: ({ row }) => <TimeAgoCard timestamp={row.original.createdAt} />
+  },
+  {
+    id: RepoListColumn.TAGS,
+    header: t('views:repos.tags', 'Tags'),
+    enableSorting: false,
+    enableHiding: true,
+    size: 230,
+    maxSize: 230,
+    cell: ({ row }) => {
+      const tags = row.original.tags ? Object.entries(row.original.tags) : []
+      const maxVisibleTags = 3
+      const visibleTags = tags.slice(0, maxVisibleTags)
+      const remainingCount = tags.length - maxVisibleTags
+
+      if (!tags.length) return null
+
+      return (
+        <Layout.Horizontal className="overflow-hidden" wrap="wrap" gap="3xs">
+          {visibleTags.map(([key, value]) => (
+            <Tag key={key} label={key || value} value={value || ''} variant="outline" size="sm" theme="gray" />
+          ))}
+          {remainingCount > 0 && (
+            <Tooltip
+              content={
+                <Layout.Horizontal className="w-cn-tooltip-md p-cn-xs" gap="3xs" wrap="wrap">
+                  {tags.map(([key, value]) => (
+                    <Tag key={key} label={key || value} value={value || ''} variant="outline" theme="gray" size="sm" />
+                  ))}
+                </Layout.Horizontal>
+              }
+            >
+              <Tag value={`+${remainingCount}`} variant="outline" size="sm" />
+            </Tooltip>
+          )}
+        </Layout.Horizontal>
+      )
+    }
   },
   {
     id: RepoListColumn.DESCRIPTION,

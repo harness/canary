@@ -5,6 +5,7 @@ export enum RepoListColumn {
   SCOPE = 'scope',
   VISIBILITY = 'visibility',
   PR = 'pr',
+  TAGS = 'tags',
   DESCRIPTION = 'description',
   UPDATED = 'updated',
   CREATED = 'created'
@@ -17,6 +18,7 @@ export const COLUMN_OPTIONS: CheckboxOptions[] = [
   { label: 'Scope', value: RepoListColumn.SCOPE },
   { label: 'Visibility', value: RepoListColumn.VISIBILITY },
   { label: 'Pull Requests', value: RepoListColumn.PR },
+  { label: 'Tags', value: RepoListColumn.TAGS },
   { label: 'Updated', value: RepoListColumn.UPDATED },
   { label: 'Created', value: RepoListColumn.CREATED }
 ]

@@ -1,5 +1,10 @@
-import { FC, useEffect, useState } from 'react'
+import { FC, useEffect, useMemo, useState } from 'react'
 import { SubmitHandler, useForm } from 'react-hook-form'
+
+import { zodResolver } from '@hookform/resolvers/zod'
+import { AccessLevel, ErrorTypes, errorTypes, generalSettingsFormSchema, RepoData, RepoUpdateData } from '@views'
+import { BranchSelectorContainerProps } from '@views/repo/components'
+import { tagsRecordToOptions } from '@views/repo/utils'
 
 import {
   Button,
@@ -9,14 +14,13 @@ import {
   FormWrapper,
   IconV2,
   Label,
+  MultiSelect,
+  MultiSelectOption,
   Radio,
   Skeleton,
   Text
 } from '@harnessio/ui/components'
 import { useCustomDialogTrigger, useTranslation } from '@harnessio/ui/context'
-import { AccessLevel, ErrorTypes, errorTypes, generalSettingsFormSchema, RepoData, RepoUpdateData } from '@views'
-import { BranchSelectorContainerProps } from '@views/repo/components'
-import { zodResolver } from '@hookform/resolvers/zod'
 
 export const RepoSettingsGeneralForm: FC<{
   repoData: RepoData
@@ -56,7 +60,8 @@ export const RepoSettingsGeneralForm: FC<{
       name: repoData.name || '',
       description: repoData.description || '',
       branch: repoData.defaultBranch,
-      access: repoData.isPublic ? AccessLevel.PUBLIC : AccessLevel.PRIVATE
+      access: repoData.isPublic ? AccessLevel.PUBLIC : AccessLevel.PRIVATE,
+      tags: tagsRecordToOptions(repoData.tags)
     }
   })
 
@@ -69,18 +74,19 @@ export const RepoSettingsGeneralForm: FC<{
     formState: { isDirty }
   } = formMethods
 
+  const initialTags = useMemo(() => tagsRecordToOptions(repoData.tags), [repoData.tags])
+
   useEffect(() => {
-    // Don't reset the form during updates to prevent UI flakiness
-    // Only reset when not updating and when repoData changes
     if (!isUpdatingRepoData) {
       reset({
         name: repoData.name || '',
         description: repoData.description || '',
         branch: repoData.defaultBranch,
-        access: repoData.isPublic ? AccessLevel.PUBLIC : AccessLevel.PRIVATE
+        access: repoData.isPublic ? AccessLevel.PUBLIC : AccessLevel.PRIVATE,
+        tags: initialTags
       })
     }
-  }, [repoData, reset, isUpdatingRepoData])
+  }, [repoData, reset, isUpdatingRepoData, initialTags])
 
   // Reset form after successful update to ensure we have the latest data from server
   useEffect(() => {
@@ -89,12 +95,18 @@ export const RepoSettingsGeneralForm: FC<{
         name: repoData.name || '',
         description: repoData.description || '',
         branch: repoData.defaultBranch,
-        access: repoData.isPublic ? AccessLevel.PUBLIC : AccessLevel.PRIVATE
+        access: repoData.isPublic ? AccessLevel.PUBLIC : AccessLevel.PRIVATE,
+        tags: initialTags
       })
     }
-  }, [isRepoUpdateSuccess, isUpdatingRepoData, repoData, reset])
+  }, [isRepoUpdateSuccess, isUpdatingRepoData, repoData, reset, initialTags])
 
   const branchValue = watch('branch')
+  const tagsValue = watch('tags')
+
+  const handleTagsChange = (newTags: MultiSelectOption[]) => {
+    setValue('tags', newTags, { shouldDirty: true })
+  }
 
   useEffect(() => {
     let timeoutId: number
@@ -143,6 +155,13 @@ export const RepoSettingsGeneralForm: FC<{
         rows={6}
       />
 
+      <MultiSelect
+        label={t('views:repos.tags', 'Tags')}
+        optional
+        placeholder={t('views:repos.tagsPlaceholder', 'Add tags')}
+        value={tagsValue}
+        onChange={handleTagsChange}
+      />
       <ControlGroup>
         <Label>{t('views:repos.defaultBranch', 'Default Branch')}</Label>
         <BranchSelector

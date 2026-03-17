@@ -6,7 +6,7 @@ import {
   useListGitignoreQuery,
   useListLicensesQuery
 } from '@harnessio/code-service-client'
-import { FormFields, RepoCreatePage as RepoCreatePageView } from '@harnessio/views'
+import { FormFields, RepoCreatePage as RepoCreatePageView, tagsOptionsToRecord } from '@harnessio/views'
 
 import { useRoutes } from '../../framework/context/NavigationContext'
 import { useGetSpaceURLParam } from '../../framework/hooks/useGetSpaceParam'
@@ -28,7 +28,8 @@ export const CreateRepo = () => {
       license: data.license,
       is_public: data.access === '1',
       readme: data.readme,
-      identifier: data.name
+      identifier: data.name,
+      tags: data.tags?.length ? tagsOptionsToRecord(data.tags) : undefined
     }
 
     createRepository(

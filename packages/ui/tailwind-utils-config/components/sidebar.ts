@@ -430,8 +430,8 @@ export default {
           gridArea: 'elem',
           display: 'grid',
           placeContent: 'center',
-          width: 'var(--cn-size-8)',
-          height: 'var(--cn-size-8)',
+          width: 'var(--cn-size-6)',
+          height: 'var(--cn-size-6)',
           color: 'var(--cn-text-2)',
           justifyContent: 'flex-end',
           '& svg, & path': {
@@ -462,13 +462,13 @@ export default {
       '&-action-button': {
         position: 'absolute',
         zIndex: '1',
-        top: 'calc(50% - var(--cn-size-8)/2)',
+        top: 'calc(50% - var(--cn-size-6)/2)',
         right: '4px',
         display: 'grid',
         placeContent: 'center',
         color: 'var(--cn-text-2)',
-        width: 'var(--cn-size-8)',
-        height: 'var(--cn-size-8)',
+        width: 'var(--cn-size-6)',
+        height: 'var(--cn-size-6)',
         borderRadius: 'var(--cn-rounded-2)',
         opacity: '1',
         overflow: 'hidden',
@@ -498,14 +498,14 @@ export default {
 
         '&-icon, &-text': {
           flexShrink: '0',
-          height: 'var(--cn-icon-size-lg)',
+          height: 'var(--cn-icon-size-sm)',
           borderRadius: 'var(--cn-rounded-1)',
           backgroundColor: 'var(--cn-bg-1)',
           '@apply animate-pulse': ''
         },
 
         '&-icon': {
-          width: 'var(--cn-icon-size-lg)'
+          width: 'var(--cn-icon-size-sm)'
         },
 
         '&-text': {
@@ -517,7 +517,7 @@ export default {
 
     '&-drawer-content, &-drawer-overlay': {
       borderLeftWidth: '1px',
-      left: 'var(--cn-size-56) !important',
+      left: 'var(--cn-size-64) !important',
 
       '&-collapsed': {
         left: 'var(--cn-size-16) !important'
@@ -534,7 +534,7 @@ export default {
 
       '.cn-sidebar-item-content': {
         gap: 'var(--cn-layout-3xs) var(--cn-layout-xs)',
-        gridTemplateColumns: 'var(--cn-size-8) 1fr',
+        gridTemplateColumns: 'var(--cn-size-6) 1fr',
         paddingLeft: 'var(--cn-sidebar-item-container)',
 
         '&-title': {
@@ -547,15 +547,15 @@ export default {
         }
       },
 
-      // Icon with border container effect: container is var(--cn-size-8)
-      // Padding centers the icon (var(--cn-icon-size-lg)) inside; border is 1px
+      // Icon with border container effect: container is var(--cn-size-6)
+      // Padding centers the icon (var(--cn-icon-size-sm)) inside; border is 1px
       '.cn-icon.cn-icon-2xs:not(.cn-sidebar-item-expand-icon), .cn-icon.cn-icon-xs:not(.cn-sidebar-item-expand-icon), .cn-icon.cn-icon-sm:not(.cn-sidebar-item-expand-icon), .cn-icon.cn-icon-md:not(.cn-sidebar-item-expand-icon), .cn-icon.cn-icon-lg:not(.cn-sidebar-item-expand-icon), .cn-icon.cn-icon-xl:not(.cn-sidebar-item-expand-icon)':
         {
-          width: 'var(--cn-size-8) !important',
-          minWidth: 'var(--cn-size-8) !important',
-          height: 'var(--cn-size-8) !important',
-          minHeight: 'var(--cn-size-8) !important',
-          padding: 'calc((var(--cn-size-8) - var(--cn-icon-size-lg) - 2px) / 2)',
+          width: 'var(--cn-size-6) !important',
+          minWidth: 'var(--cn-size-6) !important',
+          height: 'var(--cn-size-6) !important',
+          minHeight: 'var(--cn-size-6) !important',
+          padding: 'var(--cn-layout-3xs)',
           boxSizing: 'border-box',
           borderRadius: 'var(--cn-rounded-2)',
           border: '1px solid var(--cn-border-2)',
@@ -594,7 +594,7 @@ export default {
 
   // Sidebar nested popover (e.g. drawer-style panel)
   '.cn-sidebar-nested-popover': {
-    width: 'var(--cn-size-84)',
+    width: 'var(--cn-size-64)',
     height: '100vh',
     borderRadius: '0 var(--cn-popover-radius) var(--cn-popover-radius) 0',
 

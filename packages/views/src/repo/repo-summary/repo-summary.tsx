@@ -1,6 +1,18 @@
 import { cloneElement, useCallback } from 'react'
 
 import {
+  BranchSelectorListItem,
+  CommitDivergenceType,
+  RepoFile,
+  RepoRepositoryOutput,
+  SandboxLayout,
+  TypesBranchTable,
+  TypesRepositoryCore
+} from '@views'
+import { BranchInfoBar, BranchSelectorTab, Summary } from '@views/repo/components'
+import { isEmpty } from 'lodash-es'
+
+import {
   Button,
   ButtonLayout,
   IconV2,
@@ -15,17 +27,6 @@ import {
   Text
 } from '@harnessio/ui/components'
 import { useTranslation } from '@harnessio/ui/context'
-import {
-  BranchSelectorListItem,
-  CommitDivergenceType,
-  RepoFile,
-  RepoRepositoryOutput,
-  SandboxLayout,
-  TypesBranchTable,
-  TypesRepositoryCore
-} from '@views'
-import { BranchInfoBar, BranchSelectorTab, Summary } from '@views/repo/components'
-import { isEmpty } from 'lodash-es'
 
 import BranchCompareBannerList from '../components/branch-banner/branch-compare-banner-list'
 import { CloneRepoDialog } from './components/clone-repo-dialog'
@@ -405,6 +406,7 @@ export function RepoSummaryView({
               ]}
               timestamp={repository?.created ? new Date(repository.created).toISOString() : ''}
               description={repository?.description}
+              tags={repository?.tags}
               saveDescription={saveDescription}
               updateRepoError={updateRepoError}
               isEditDialogOpen={isEditDialogOpen}

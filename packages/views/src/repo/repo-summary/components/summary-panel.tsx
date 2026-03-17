@@ -9,6 +9,7 @@ import {
   Layout,
   Link,
   Separator,
+  Tag,
   Text,
   TimeAgoCard
 } from '@harnessio/ui/components'
@@ -29,6 +30,7 @@ interface SummaryPanelProps {
   details: DetailItem[]
   timestamp?: string
   description?: string
+  tags?: Record<string, string>
   saveDescription: (description: string) => void
   updateRepoError?: string
   isEditDialogOpen: boolean
@@ -40,6 +42,7 @@ const SummaryPanel: FC<SummaryPanelProps> = ({
   details,
   timestamp,
   description = '',
+  tags,
   saveDescription,
   updateRepoError,
   isEditDialogOpen,
@@ -108,9 +111,18 @@ const SummaryPanel: FC<SummaryPanelProps> = ({
             <Text variant="body-normal" lineClamp={6} color="foreground-1">
               {description}
             </Text>
-            <Separator />
           </Layout.Grid>
         )}
+
+        {!!tags && !!Object.keys(tags).length && (
+          <Layout.Flex wrap="wrap" gap="3xs">
+            {Object.entries(tags).map(([key, value]) => (
+              <Tag key={key} label={key || value} value={value || ''} variant="outline" size="sm" theme="gray" />
+            ))}
+          </Layout.Flex>
+        )}
+
+        <Separator />
 
         <Layout.Grid gapY="sm">
           {details?.map(item => (

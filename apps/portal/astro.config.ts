@@ -55,7 +55,27 @@ export default defineConfig({
             {
               slug: "getting-started/introduction",
               label: "Introduction",
-              attrs: { "data-icon": "star" },
+              attrs: { "data-icon": "view-grid" },
+            },
+            {
+              slug: "design-system/introduction",
+              label: "Architecture Overview",
+              attrs: { "data-icon": "delegates" },
+            },
+            {
+              slug: "design-system/color-system",
+              label: "Color System",
+              attrs: { "data-icon": "sparks" },
+            },
+            {
+              slug: "design-system/theming",
+              label: "Theming & Build",
+              attrs: { "data-icon": "theme" },
+            },
+            {
+              slug: "design-system/usage",
+              label: "Developer Guide",
+              attrs: { "data-icon": "docs" },
             },
           ],
         },
@@ -65,18 +85,13 @@ export default defineConfig({
           items: [
             {
               slug: "foundations/colors",
-              label: "Core Palette",
+              label: "Colors",
               attrs: { "data-icon": "donut" },
             },
             {
-              slug: "foundations/layout",
-              label: "Layout System",
-              attrs: { "data-icon": "view-grid" },
-            },
-            {
-              slug: "foundations/variables",
-              label: "CSS Variables",
-              attrs: { "data-icon": "variables" },
+              slug: "foundations/typography",
+              label: "Typography",
+              attrs: { "data-icon": "text-size" },
             },
             {
               slug: "foundations/spacings",
@@ -84,9 +99,9 @@ export default defineConfig({
               attrs: { "data-icon": "arrow-long-right" },
             },
             {
-              slug: "foundations/typography",
-              label: "Typography",
-              attrs: { "data-icon": "text-size" },
+              slug: "foundations/layout",
+              label: "Layout",
+              attrs: { "data-icon": "view-grid" },
             },
             {
               slug: "foundations/icons",
@@ -99,9 +114,19 @@ export default defineConfig({
               attrs: { "data-icon": "frame-alt-empty" },
             },
             {
+              slug: "foundations/shadows",
+              label: "Shadows",
+              attrs: { "data-icon": "half-moon" },
+            },
+            {
               slug: "foundations/logos",
               label: "Logos",
               attrs: { "data-icon": "star" },
+            },
+            {
+              slug: "foundations/variables",
+              label: "CSS Variables",
+              attrs: { "data-icon": "variables" },
             },
           ],
         },
@@ -177,52 +202,6 @@ export default defineConfig({
             "components/chat/typing-animation",
             "components/data-display/view-only",
             "components/data-display/widgets",
-          ],
-        },
-        {
-          label: "Customization",
-          collapsed: true,
-          items: [
-            {
-              slug: "customization/overview",
-              label: "Customization Guide",
-              attrs: { "data-icon": "settings" },
-            },
-            {
-              slug: "customization/spacings",
-              label: "Spacing & Sizing",
-              attrs: { "data-icon": "arrow-long-right" },
-            },
-            {
-              slug: "customization/typography-scale",
-              label: "Typography",
-              attrs: { "data-icon": "text-size" },
-            },
-            {
-              slug: "customization/bg-colors",
-              label: "Background Colors",
-              attrs: { "data-icon": "donut" },
-            },
-            {
-              slug: "customization/text-colors",
-              label: "Text Colors",
-              attrs: { "data-icon": "text-size" },
-            },
-            {
-              slug: "customization/border-colors",
-              label: "Border Colors",
-              attrs: { "data-icon": "blocks" },
-            },
-            {
-              slug: "customization/shadows",
-              label: "Shadows",
-              attrs: { "data-icon": "half-moon" },
-            },
-            {
-              slug: "customization/border-radius",
-              label: "Border Radius",
-              attrs: { "data-icon": "circle-with-sector" },
-            },
           ],
         },
       ],

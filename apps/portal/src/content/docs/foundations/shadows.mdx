@@ -1,0 +1,314 @@
+---
+title: Shadows
+description: Elevation system built on semantic shadow tokens with theme-aware colors
+---
+
+import { DocsPage } from "@/components/docs-page";
+import { Aside } from "@astrojs/starlight/components";
+import LinkCard from "@/components/LinkCard.astro";
+
+## Component Usage
+
+The design system maps specific shadow levels to component categories:
+
+<div className="cn-table-v2 cn-table-v2-normal not-content">
+  <div className="cn-table-v2-container">
+    <table className="cn-table-v2-element">
+      <thead className="cn-table-v2-header">
+        <tr className="cn-table-v2-row">
+          <th className="cn-table-v2-head" style={{ width: "160px" }}>
+            Shadow
+          </th>
+          <th className="cn-table-v2-head">Components</th>
+        </tr>
+      </thead>
+      <tbody className="cn-table-v2-body">
+        <tr className="cn-table-v2-row">
+          <td className="cn-table-v2-cell">`shadow-0`</td>
+          <td className="cn-table-v2-cell">
+            Flat elements, disabled states, mobile resets
+          </td>
+        </tr>
+        <tr className="cn-table-v2-row">
+          <td className="cn-table-v2-cell">`shadow-1`</td>
+          <td className="cn-table-v2-cell">
+            Buttons (rest state), form inputs, subtle UI
+          </td>
+        </tr>
+        <tr className="cn-table-v2-row">
+          <td className="cn-table-v2-cell">`shadow-2`</td>
+          <td className="cn-table-v2-cell">
+            Cards, containers, default elevation
+          </td>
+        </tr>
+        <tr className="cn-table-v2-row">
+          <td className="cn-table-v2-cell">`shadow-3`</td>
+          <td className="cn-table-v2-cell">
+            Toasts, elevated cards, hover states
+          </td>
+        </tr>
+        <tr className="cn-table-v2-row">
+          <td className="cn-table-v2-cell">`shadow-4`</td>
+          <td className="cn-table-v2-cell">
+            Dropdowns, popovers, tooltips, context menus
+          </td>
+        </tr>
+        <tr className="cn-table-v2-row">
+          <td className="cn-table-v2-cell">`shadow-5`</td>
+          <td className="cn-table-v2-cell">Dialogs, drawers, modal overlays</td>
+        </tr>
+        <tr className="cn-table-v2-row">
+          <td className="cn-table-v2-cell">`shadow-6`</td>
+          <td className="cn-table-v2-cell">
+            Full-screen overlays, maximum emphasis
+          </td>
+        </tr>
+        <tr className="cn-table-v2-row">
+          <td className="cn-table-v2-cell">`shadow-inner`</td>
+          <td className="cn-table-v2-cell">
+            Inset containers, recessed surfaces
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+</div>
+
+## CSS Variables
+
+All shadow tokens are available as CSS custom properties:
+
+```css
+/* Shadow definitions */
+var(--cn-shadow-0)      /* none */
+var(--cn-shadow-1)      /* subtle */
+var(--cn-shadow-2)      /* default */
+var(--cn-shadow-3)      /* medium */
+var(--cn-shadow-4)      /* prominent */
+var(--cn-shadow-5)      /* strong */
+var(--cn-shadow-6)      /* maximum */
+var(--cn-shadow-inner)  /* inset */
+
+/* Shadow colors (for custom shadows) */
+var(--cn-shadow-color-0)
+var(--cn-shadow-color-1)
+/* ... through shadow-color-6 and shadow-color-inner */
+```
+
+## Tailwind Utilities
+
+Use the `shadow-cn-{level}` utilities in Tailwind:
+
+```tsx
+<div className="shadow-cn-2">Default card shadow</div>
+<div className="shadow-cn-4">Dropdown shadow</div>
+<div className="shadow-cn-inner">Inset shadow</div>
+<div className="shadow-cn-none">No shadow</div>
+
+{/* Combine with hover for interactive elevation */}
+<div className="shadow-cn-2 hover:shadow-cn-4 transition-shadow">
+  Elevates on hover
+</div>
+```
+
+## Token Architecture
+
+Each shadow level is composed of two parts:
+
+1. **`shadow-color.{n}`** — a color token with an `alpha` modifier applied in LCH color space
+2. **`shadow.{n}`** — a `boxShadow` token referencing `shadow-color.{n}` with offset/blur/spread values
+
+This separation means shadow geometry stays constant across themes, while shadow intensity adapts automatically.
+
+<div className="cn-table-v2 cn-table-v2-normal not-content">
+  <div className="cn-table-v2-container">
+    <table className="cn-table-v2-element">
+      <thead className="cn-table-v2-header">
+        <tr className="cn-table-v2-row">
+          <th className="cn-table-v2-head">Token</th>
+          <th className="cn-table-v2-head">Light</th>
+          <th className="cn-table-v2-head">Dark</th>
+        </tr>
+      </thead>
+      <tbody className="cn-table-v2-body">
+        <tr className="cn-table-v2-row">
+          <td className="cn-table-v2-cell">`shadow-color.0`</td>
+          <td className="cn-table-v2-cell">`gray.600` / alpha `0`</td>
+          <td className="cn-table-v2-cell">`pure.black` / alpha `0`</td>
+        </tr>
+        <tr className="cn-table-v2-row">
+          <td className="cn-table-v2-cell">`shadow-color.1`</td>
+          <td className="cn-table-v2-cell">`gray.600` / alpha `0.13`</td>
+          <td className="cn-table-v2-cell">`pure.black` / alpha `0.6`</td>
+        </tr>
+        <tr className="cn-table-v2-row">
+          <td className="cn-table-v2-cell">`shadow-color.2`</td>
+          <td className="cn-table-v2-cell">`gray.600` / alpha `0.13`</td>
+          <td className="cn-table-v2-cell">`pure.black` / alpha `0.6`</td>
+        </tr>
+        <tr className="cn-table-v2-row">
+          <td className="cn-table-v2-cell">`shadow-color.3`</td>
+          <td className="cn-table-v2-cell">`gray.600` / alpha `0.08`</td>
+          <td className="cn-table-v2-cell">`pure.black` / alpha `0.5`</td>
+        </tr>
+        <tr className="cn-table-v2-row">
+          <td className="cn-table-v2-cell">`shadow-color.4`</td>
+          <td className="cn-table-v2-cell">`gray.600` / alpha `0.08`</td>
+          <td className="cn-table-v2-cell">`pure.black` / alpha `0.5`</td>
+        </tr>
+        <tr className="cn-table-v2-row">
+          <td className="cn-table-v2-cell">`shadow-color.5`</td>
+          <td className="cn-table-v2-cell">`gray.600` / alpha `0.08`</td>
+          <td className="cn-table-v2-cell">`pure.black` / alpha `0.5`</td>
+        </tr>
+        <tr className="cn-table-v2-row">
+          <td className="cn-table-v2-cell">`shadow-color.6`</td>
+          <td className="cn-table-v2-cell">`gray.600` / alpha `0.10`</td>
+          <td className="cn-table-v2-cell">`pure.black` / alpha `0.6`</td>
+        </tr>
+        <tr className="cn-table-v2-row">
+          <td className="cn-table-v2-cell">`shadow-color.inner`</td>
+          <td className="cn-table-v2-cell">`pure.black` / alpha `0.15`</td>
+          <td className="cn-table-v2-cell">`pure.black` / alpha `0.6`</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+</div>
+
+<Aside type="tip" title="Why higher alpha in dark mode?">
+  Dark backgrounds absorb shadows, so dark themes use significantly higher alpha
+  values (0.5–0.6 vs 0.08–0.13) to keep elevation perceivable. The base color
+  also shifts from `gray.600` to `pure.black` for deeper contrast.
+</Aside>
+
+## Elevation Scale
+
+Seven levels (0–6) plus an inner shadow provide a complete elevation vocabulary.
+
+<DocsPage.ComponentExample
+  hideCode
+  client:only
+  code={`<Layout.Vertical gap="lg" className="min-w-[500px] p-cn-xl bg-cn-0">
+  <Layout.Horizontal gap="lg" className="flex-wrap">
+    <Layout.Vertical gap="xs" align="center" className="flex-1 min-w-[140px]">
+      <Layout.Horizontal className="bg-cn-1 rounded-cn-3 shadow-cn-0 p-cn-lg w-full h-20" justify="center" align="center">
+        <Text variant="caption-normal" color="foreground-3">0 — none</Text>
+      </Layout.Horizontal>
+    </Layout.Vertical>
+    <Layout.Vertical gap="xs" align="center" className="flex-1 min-w-[140px]">
+      <Layout.Horizontal className="bg-cn-1 rounded-cn-3 shadow-cn-1 p-cn-lg w-full h-20" justify="center" align="center">
+        <Text variant="caption-normal" color="foreground-3">1 — subtle</Text>
+      </Layout.Horizontal>
+    </Layout.Vertical>
+    <Layout.Vertical gap="xs" align="center" className="flex-1 min-w-[140px]">
+      <Layout.Horizontal className="bg-cn-1 rounded-cn-3 shadow-cn-2 p-cn-lg w-full h-20" justify="center" align="center">
+        <Text variant="caption-normal" color="foreground-3">2 — default</Text>
+      </Layout.Horizontal>
+    </Layout.Vertical>
+  </Layout.Horizontal>
+  <Layout.Horizontal gap="lg" className="flex-wrap">
+    <Layout.Vertical gap="xs" align="center" className="flex-1 min-w-[140px]">
+      <Layout.Horizontal className="bg-cn-1 rounded-cn-3 shadow-cn-3 p-cn-lg w-full h-20" justify="center" align="center">
+        <Text variant="caption-normal" color="foreground-3">3 — medium</Text>
+      </Layout.Horizontal>
+    </Layout.Vertical>
+    <Layout.Vertical gap="xs" align="center" className="flex-1 min-w-[140px]">
+      <Layout.Horizontal className="bg-cn-1 rounded-cn-3 shadow-cn-4 p-cn-lg w-full h-20" justify="center" align="center">
+        <Text variant="caption-normal" color="foreground-3">4 — prominent</Text>
+      </Layout.Horizontal>
+    </Layout.Vertical>
+    <Layout.Vertical gap="xs" align="center" className="flex-1 min-w-[140px]">
+      <Layout.Horizontal className="bg-cn-1 rounded-cn-3 shadow-cn-5 p-cn-lg w-full h-20" justify="center" align="center">
+        <Text variant="caption-normal" color="foreground-3">5 — strong</Text>
+      </Layout.Horizontal>
+    </Layout.Vertical>
+  </Layout.Horizontal>
+  <Layout.Horizontal gap="lg" className="flex-wrap" justify="center">
+    <Layout.Vertical gap="xs" align="center" className="flex-1 min-w-[140px] max-w-[200px]">
+      <Layout.Horizontal className="bg-cn-1 rounded-cn-3 shadow-cn-6 p-cn-lg w-full h-20" justify="center" align="center">
+        <Text variant="caption-normal" color="foreground-3">6 — max</Text>
+      </Layout.Horizontal>
+    </Layout.Vertical>
+    <Layout.Vertical gap="xs" align="center" className="flex-1 min-w-[140px] max-w-[200px]">
+      <Layout.Horizontal className="bg-cn-1 rounded-cn-3 shadow-cn-inner p-cn-lg w-full h-20" justify="center" align="center">
+        <Text variant="caption-normal" color="foreground-3">inner</Text>
+      </Layout.Horizontal>
+    </Layout.Vertical>
+  </Layout.Horizontal>
+</Layout.Vertical>`}
+/>
+
+## Shadow Geometry
+
+Each level defines specific offset, blur, and spread values. Levels 2–5 use **dual-layer shadows** (two `box-shadow` values) for more natural depth.
+
+<div className="cn-table-v2 cn-table-v2-normal not-content">
+  <div className="cn-table-v2-container">
+    <table className="cn-table-v2-element">
+      <thead className="cn-table-v2-header">
+        <tr className="cn-table-v2-row">
+          <th className="cn-table-v2-head">Level</th>
+          <th className="cn-table-v2-head">CSS Value</th>
+          <th className="cn-table-v2-head">Layers</th>
+        </tr>
+      </thead>
+      <tbody className="cn-table-v2-body">
+        <tr className="cn-table-v2-row">
+          <td className="cn-table-v2-cell">`shadow-0`</td>
+          <td className="cn-table-v2-cell">`0 0 0 0`</td>
+          <td className="cn-table-v2-cell">Single</td>
+        </tr>
+        <tr className="cn-table-v2-row">
+          <td className="cn-table-v2-cell">`shadow-1`</td>
+          <td className="cn-table-v2-cell">`0 1px 2px 0`</td>
+          <td className="cn-table-v2-cell">Single</td>
+        </tr>
+        <tr className="cn-table-v2-row">
+          <td className="cn-table-v2-cell">`shadow-2`</td>
+          <td className="cn-table-v2-cell">
+            `0 1px 3px 0` , `0 1px 15px -1px`
+          </td>
+          <td className="cn-table-v2-cell">Dual</td>
+        </tr>
+        <tr className="cn-table-v2-row">
+          <td className="cn-table-v2-cell">`shadow-3`</td>
+          <td className="cn-table-v2-cell">
+            `0 4px 6px -1px` , `0 2px 8px -2px`
+          </td>
+          <td className="cn-table-v2-cell">Dual</td>
+        </tr>
+        <tr className="cn-table-v2-row">
+          <td className="cn-table-v2-cell">`shadow-4`</td>
+          <td className="cn-table-v2-cell">
+            `0 10px 15px -3px` , `0 4px 8px -4px`
+          </td>
+          <td className="cn-table-v2-cell">Dual</td>
+        </tr>
+        <tr className="cn-table-v2-row">
+          <td className="cn-table-v2-cell">`shadow-5`</td>
+          <td className="cn-table-v2-cell">
+            `0 20px 25px -5px` , `0 8px 10px -6px`
+          </td>
+          <td className="cn-table-v2-cell">Dual</td>
+        </tr>
+        <tr className="cn-table-v2-row">
+          <td className="cn-table-v2-cell">`shadow-6`</td>
+          <td className="cn-table-v2-cell">`0 25px 50px -12px`</td>
+          <td className="cn-table-v2-cell">Single</td>
+        </tr>
+        <tr className="cn-table-v2-row">
+          <td className="cn-table-v2-cell">`shadow-inner`</td>
+          <td className="cn-table-v2-cell">`inset 0 0 4.5px 0`</td>
+          <td className="cn-table-v2-cell">Single (inset)</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+</div>
+
+<Aside>
+  Dual-layer shadows combine a tight, focused shadow with a wider, softer one.
+  This mimics real-world light behavior where objects cast both a sharp contact
+  shadow and a diffuse ambient shadow.
+</Aside>

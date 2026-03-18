@@ -1,0 +1,171 @@
+---
+title: Theming
+description: Theme matrix, CSS selectors, color vision adaptations, and build pipeline
+---
+
+## Theme Matrix
+
+Every theme is a combination of three dimensions:
+
+<div className="cn-table-v2 cn-table-v2-normal not-content">
+  <div className="cn-table-v2-container">
+    <table className="cn-table-v2-element">
+      <thead className="cn-table-v2-header">
+        <tr className="cn-table-v2-row">
+          <th className="cn-table-v2-head">Dimension</th>
+          <th className="cn-table-v2-head">Options</th>
+        </tr>
+      </thead>
+      <tbody className="cn-table-v2-body">
+        <tr className="cn-table-v2-row">
+          <td className="cn-table-v2-cell">Mode</td>
+          <td className="cn-table-v2-cell">
+            <code>light</code>, <code>dark</code>
+          </td>
+        </tr>
+        <tr className="cn-table-v2-row">
+          <td className="cn-table-v2-cell">Contrast</td>
+          <td className="cn-table-v2-cell">
+            <code>default</code>, <code>dimmer</code>,{" "}
+            <code>high-contrast</code>
+          </td>
+        </tr>
+        <tr className="cn-table-v2-row">
+          <td className="cn-table-v2-cell">Color vision</td>
+          <td className="cn-table-v2-cell">
+            <code>standard</code>, <code>protanopia</code>,{" "}
+            <code>deuteranopia</code>, <code>tritanopia</code>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+</div>
+
+This produces <span style="font-weight: 600">24 theme variants</span>. Token JSON files live in `mode/{dark,light}/`:
+
+```
+default.json                  → dark + default contrast + standard vision
+dimmer.json                   → dark + dimmer + standard vision
+high-contrast.json            → dark + high-contrast + standard vision
+default-protanopia.json       → dark + default + protanopia
+dimmer-deuteranopia.json      → dark + dimmer + deuteranopia
+high-contrast-tritanopia.json → dark + high-contrast + tritanopia
+...
+```
+
+---
+
+## CSS Selectors
+
+The build script maps each theme file to CSS class selectors in the format `.{mode}-{color}-{contrast}`:
+
+<div className="cn-table-v2 cn-table-v2-normal not-content">
+  <div className="cn-table-v2-container">
+    <table className="cn-table-v2-element">
+      <thead className="cn-table-v2-header">
+        <tr className="cn-table-v2-row">
+          <th className="cn-table-v2-head">Token file</th>
+          <th className="cn-table-v2-head">CSS selectors</th>
+        </tr>
+      </thead>
+      <tbody className="cn-table-v2-body">
+        <tr className="cn-table-v2-row">
+          <td className="cn-table-v2-cell">`dark/default.json`</td>
+          <td className="cn-table-v2-cell">`.dark`, `.dark-std-std`</td>
+        </tr>
+        <tr className="cn-table-v2-row">
+          <td className="cn-table-v2-cell">`light/default.json`</td>
+          <td className="cn-table-v2-cell">`.light`, `.light-std-std`</td>
+        </tr>
+        <tr className="cn-table-v2-row">
+          <td className="cn-table-v2-cell">`dark/dimmer.json`</td>
+          <td className="cn-table-v2-cell">`.dark-dimmer`, `.dark-std-low`</td>
+        </tr>
+        <tr className="cn-table-v2-row">
+          <td className="cn-table-v2-cell">`light/high-contrast.json`</td>
+          <td className="cn-table-v2-cell">
+            `.light-high-contrast`, `.light-std-high`
+          </td>
+        </tr>
+        <tr className="cn-table-v2-row">
+          <td className="cn-table-v2-cell">`dark/default-protanopia.json`</td>
+          <td className="cn-table-v2-cell">
+            `.dark-protanopia`, `.dark-pro-std`
+          </td>
+        </tr>
+        <tr className="cn-table-v2-row">
+          <td className="cn-table-v2-cell">`light/dimmer-tritanopia.json`</td>
+          <td className="cn-table-v2-cell">
+            `.light-dimmer-tritanopia`, `.light-tri-low`
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+</div>
+
+To switch themes at runtime, set the class on `<body>`:
+
+```tsx
+document.body.className = "dark-std-std";
+```
+
+All CSS custom properties update instantly — no JS rerender needed for color changes.
+
+---
+
+## Color Vision Adaptations
+
+Color-blind modes remap semantic hues to preserve information through brightness hierarchy rather than hue alone:
+
+<span style="font-weight: 600">Protanopia & Deuteranopia</span> (red-green): -
+<span style="font-weight: 600">Brand</span>: indigo → blue (brighter) -
+<span style="font-weight: 600">Success</span>: forest → indigo -
+<span style="font-weight: 600">Danger</span>: red → yellow (brighter than
+warning) - <span style="font-weight: 600">Warning</span>: yellow → orange
+(darker than danger)
+
+<span style="font-weight: 600">Tritanopia</span> (blue-yellow): -
+<span style="font-weight: 600">Warning</span>: yellow → orange - `set.orange` →
+brown, `set.purple` → pink, `set.violet` → red
+
+---
+
+## Build Pipeline
+
+```bash
+cd packages/core-design-system
+pnpm build     # → node scripts/build.js
+```
+
+The build uses <span style="font-weight: 600">Style Dictionary</span> + <span style="font-weight: 600">@tokens-studio/sd-transforms</span>:
+
+1. Reads `$themes.json` and permutates all theme combinations
+2. Resolves token references (`{gray.500}` → actual LCH value)
+3. Applies custom transforms: `alpha`, `darken`, `lighten` in LCH space; `dropShadow` for data-viz
+4. Marks tokens as `themeable` or `core` (determines which output file they land in)
+5. Outputs to `dist/`:
+
+```
+dist/
+├── styles/
+│   ├── core-imports.css       # @imports for all core files
+│   ├── colors.css             # Core color primitives (:root)
+│   ├── core.css               # Dimensions, typography (:root)
+│   ├── breakpoint.css         # Layout tokens (:root)
+│   ├── components.css         # Component tokens (:root)
+│   ├── themes.css             # @imports for all 24 theme files
+│   ├── dark.css               # Semantic tokens under .dark selector
+│   ├── light.css
+│   ├── dark-dimmer.css
+│   ├── ...                    # 24 theme files total
+│   └── mfe-themes.css         # Subset for micro-frontend consumers
+│
+└── styles-esm/
+    ├── index.ts               # Theme map + re-exports
+    ├── colors.ts              # Programmatic access to primitives
+    └── ...                    # TypeScript module per file
+```
+
+All CSS properties use the `cn` prefix: `--cn-bg-0`, `--cn-text-1`, `--cn-set-brand-primary-bg`, etc.

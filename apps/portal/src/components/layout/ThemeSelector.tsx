@@ -1,68 +1,55 @@
-import {
-  Button,
-  IconV2,
-  ThemeDialog,
-  type ThemeDialogProps,
-  TooltipProvider,
-} from "@harnessio/ui/components";
-import { DialogProvider } from "@harnessio/ui/context";
+import { Button, IconV2, TooltipProvider } from "@harnessio/ui/components";
 import { useThemeCSSLoader } from "@harnessio/ui/hooks";
 import themeManifest from "@harnessio/ui/themes/theme-manifest.json";
 import { useEffect, useState } from "react";
 
+type Theme = "dark-std-std" | "light-std-std";
+
 export function ThemeSelector() {
-  const [open, setOpen] = useState(false);
-  const [isThemeLoading, setIsThemeLoading] = useState(false);
-  const [theme, setTheme] = useState<ThemeDialogProps["theme"]>(
-    () =>
-      (localStorage.getItem("canary-theme") as ThemeDialogProps["theme"]) ||
-      "dark-std-std",
+  const [theme, setTheme] = useState<Theme>(
+    () => (localStorage.getItem("canary-theme") as Theme) || "dark-std-std",
   );
 
   const { loadTheme } = useThemeCSSLoader("/themes", themeManifest);
+
+  const isDark = theme.startsWith("dark");
 
   useEffect(() => {
     const root = document.documentElement;
     const body = document.body;
 
     // Skip DOM updates if ThemeProvider already applied the correct theme
-    // This prevents flash on initial mount after page navigation
-    if (root.classList.contains(theme!)) return;
+    if (root.classList.contains(theme)) return;
 
     // Remove only previous theme classes, not all classes
     body.className = body.className.replace(/\b(dark|light)-\S+/g, "").trim();
     root.className = root.className.replace(/\b(dark|light)-\S+/g, "").trim();
 
-    body.classList.add(theme!);
-    root.classList.add(theme!);
-    root.dataset.theme = theme?.startsWith("dark") ? "dark" : "light";
+    body.classList.add(theme);
+    root.classList.add(theme);
+    root.dataset.theme = isDark ? "dark" : "light";
 
-    localStorage.setItem("canary-theme", theme!);
+    localStorage.setItem("canary-theme", theme);
 
-    // Load theme CSS file (base themes are already bundled, others load on-demand)
-    setIsThemeLoading(true);
-    loadTheme(theme!).finally(() => setIsThemeLoading(false));
-  }, [theme, loadTheme]);
+    // Load theme CSS file
+    loadTheme(theme);
+  }, [theme, loadTheme, isDark]);
+
+  const toggleTheme = () => {
+    setTheme(isDark ? "light-std-std" : "dark-std-std");
+  };
 
   return (
-    <DialogProvider>
-      <ThemeDialog
-        open={open}
-        onOpenChange={setOpen}
-        setTheme={setTheme}
-        theme={theme}
-        isThemeLoading={isThemeLoading}
-      >
-        <Button
-          variant="outline"
-          iconOnly
-          onClick={() => setOpen(true)}
-          tooltipProps={{ content: "Appearance settings" }}
-        >
-          <IconV2 name="theme" />
-        </Button>
-      </ThemeDialog>
-    </DialogProvider>
+    <Button
+      variant="ghost"
+      iconOnly
+      onClick={toggleTheme}
+      tooltipProps={{
+        content: isDark ? "Switch to light mode" : "Switch to dark mode",
+      }}
+    >
+      <IconV2 name={isDark ? "half-moon" : "sun-light"} />
+    </Button>
   );
 }
 
@@ -77,8 +64,8 @@ export default function ThemeSelectorWrapper() {
 
   return (
     <TooltipProvider>
-      <Button variant="outline" iconOnly ignoreIconOnlyTooltip>
-        <IconV2 name="theme" />
+      <Button variant="ghost" iconOnly ignoreIconOnlyTooltip>
+        <IconV2 name="half-moon" />
       </Button>
     </TooltipProvider>
   );

@@ -48,6 +48,30 @@ main {
 /* Inline code only - exclude expressive-code blocks */
 code:not(.expressive-code code) {
   @apply bg-cn-gray-secondary !important;
+  border-radius: var(--cn-rounded-3) !important;
+  padding: 2px 6px !important;
+  white-space: nowrap !important;
+}
+
+/* Table text — match cn-table-v2 component */
+.cn-table-v2-head {
+  font-size: var(--cn-font-size-4, 0.8125rem) !important;
+  line-height: var(--cn-line-height-4, 1.125rem) !important;
+  font-weight: 360 !important;
+}
+
+.cn-table-v2-cell {
+  font-size: var(--cn-font-size-5) !important;
+  line-height: var(--cn-line-height-5, 1.25rem) !important;
+}
+
+.cn-table-v2-cell code {
+  font-size: var(--cn-font-size-4) !important;
+}
+
+.cn-table-v2-container {
+  border-radius: var(--cn-rounded-6) !important;
+  overflow: hidden !important;
 }
 
 .content-panel {
@@ -142,6 +166,11 @@ code:not(.expressive-code code) {
 
 .cn-portal-sidebar {
   background-color: var(--cn-bg-1);
+
+  svg.caret {
+    width: 18px !important;
+    height: 18px !important;
+  }
 
   details {
     @apply py-cn-sm mx-0;
@@ -344,6 +373,14 @@ code:not(.expressive-code code) {
       a[data-icon="book-open"]::before {
         mask-image: url("/icons/sidebar/book-open.svg");
         -webkit-mask-image: url("/icons/sidebar/book-open.svg");
+      }
+      a[data-icon="delegates"]::before {
+        mask-image: url("/icons/sidebar/delegates.svg");
+        -webkit-mask-image: url("/icons/sidebar/delegates.svg");
+      }
+      a[data-icon="docs"]::before {
+        mask-image: url("/icons/sidebar/docs.svg");
+        -webkit-mask-image: url("/icons/sidebar/docs.svg");
       }
     }
 
@@ -592,12 +629,63 @@ button[aria-label="Search"] {
 
 /* Pagination overrides */
 
-.pagination-links a {
-  @apply border border-cn-3 rounded-cn-3 text-cn-size-4 text-cn-3;
+.pagination-links {
+  gap: 16px !important;
+  margin-top: 48px !important;
 }
 
-.pagination-links a .link-title {
-  @apply text-cn-size-4 leading-tight;
+.pagination-links a {
+  flex: 1 !important;
+  border: 1px solid var(--cn-border-3) !important;
+  border-radius: var(--cn-rounded-6) !important;
+  background: transparent !important;
+  box-shadow: 0 1px 2px rgba(0, 0, 0, 0.04) !important;
+  padding: 16px 20px !important;
+  transition: all 0.15s ease !important;
+}
+
+.pagination-links a:hover {
+  border-color: var(--cn-border-2) !important;
+  background: var(--cn-bg-hover) !important;
+}
+
+.pagination-links a:hover .link-title {
+  color: var(--cn-text-1) !important;
+}
+
+.pagination-links a > span {
+  color: var(--cn-text-4) !important;
+  font-size: var(--cn-font-size-5) !important;
+  line-height: 1.4 !important;
+}
+
+.pagination-links a > span > .link-title {
+  display: block !important;
+  font-size: var(--cn-font-size-4) !important;
+  font-weight: 500 !important;
+  color: var(--cn-text-1) !important;
+  line-height: 1.3 !important;
+  margin-top: 2px !important;
+}
+
+.pagination-links a svg {
+  width: 24px !important;
+  height: 24px !important;
+  color: var(--cn-text-4) !important;
+  transition: all 0.15s ease !important;
+  flex-shrink: 0 !important;
+}
+
+.pagination-links a:hover svg {
+  color: var(--cn-text-3) !important;
+}
+
+.pagination-links a[rel="prev"]:hover svg {
+  transform: translateX(-4px);
+}
+
+.pagination-links a[rel="next"]:hover svg {
+  transform: translateX(4px);
 }
 
 .example-expand {
@@ -642,6 +730,7 @@ button[aria-label="Search"] {
 
 .starlight-aside .starlight-aside__content p {
   font-size: var(--cn-font-size-5);
+  margin-top: var(--cn-spacing-1);
 }
 
 /* Note — indigo tint */

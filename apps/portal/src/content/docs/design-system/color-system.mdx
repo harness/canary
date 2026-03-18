@@ -1,0 +1,238 @@
+---
+title: Color System
+description: Color architecture — LCH color space, semantic levels, color sets, and state tokens
+---
+
+import { Aside } from "@astrojs/starlight/components";
+import { AllSetsShowcase } from "@/components/color-set-showcase";
+import { GrayShadesPreview } from "@/components/gray-shades-preview";
+import LinkCard from "@/components/LinkCard.astro";
+
+Colors are the most complex part of the design system. This page explains how they're structured, from raw LCH values to the semantic pairs developers use in code.
+
+## Why LCH?
+
+All colors are authored in <span style="font-weight: 600">LCH color space</span> (Lightness, Chroma, Hue). LCH is perceptually uniform — equal numeric steps produce equal visual differences. This makes it straightforward to build consistent color ramps and verify contrast ratios mathematically.
+
+HEX values exist only as a Figma export fallback. <span style="font-weight: 600">LCH is the source of truth</span>.
+
+```json
+{
+  "gray": {
+    "25": { "$value": "lch(99% 0 272)" },
+    "50": { "$value": "lch(97% 0 272)" },
+    "100": { "$value": "lch(92% 1 272)" },
+    "500": { "$value": "lch(65% 6 272)" },
+    "900": { "$value": "lch(16% 6 280)" },
+    "1000": { "$value": "lch(7.5% 1 280)" }
+  }
+}
+```
+
+Each color family has 14 stops (25–1000) plus `pure.white` and `pure.black`. The full palette includes: gray, red, blue, indigo, forest, yellow, purple, cyan, mint, orange, pink, violet, brown, lime, amber.
+
+<div className="h-0.5" />
+
+<GrayShadesPreview client:only />
+
+<div className="h-0.5" />
+
+<LinkCard
+  href="/foundations/colors"
+  title="Full Color Palette"
+  description="Interactive palette with all 15 color families and 14 stops each"
+/>
+
+<div className="h-4" />
+
+---
+
+## Semantic Levels
+
+Core primitives have no meaning — `gray.500` is just a value. <span style="font-weight: 600">Semantic tokens</span> assign purpose. They're defined per-theme in `design-tokens/mode/{dark,light}/` and map <span style="font-weight: 600">intent</span> to <span style="font-weight: 600">value</span>.
+
+### Backgrounds
+
+Four levels create depth hierarchy — from navigation chrome to floating surfaces:
+
+<div className="not-content grid grid-cols-4 gap-cn-xs mt-cn-sm">
+  <div className="flex items-center justify-center rounded-cn-3 h-10 bg-cn-0 text-cn-1 border border-cn-3">
+    <span className="text-cn-size-3 font-mono">bg-cn-0</span>
+  </div>
+  <div className="flex items-center justify-center rounded-cn-3 h-10 bg-cn-1 text-cn-1 border border-cn-3">
+    <span className="text-cn-size-3 font-mono">bg-cn-1</span>
+  </div>
+  <div className="flex items-center justify-center rounded-cn-3 h-10 bg-cn-2 text-cn-1 border border-cn-3">
+    <span className="text-cn-size-3 font-mono">bg-cn-2</span>
+  </div>
+  <div className="flex items-center justify-center rounded-cn-3 h-10 bg-cn-3 text-cn-1 border border-cn-3">
+    <span className="text-cn-size-3 font-mono">bg-cn-3</span>
+  </div>
+</div>
+
+```tsx
+<div className="bg-cn-0">Navigation, sidebar</div>
+<div className="bg-cn-1">Application background</div>
+<div className="bg-cn-2">Cards, containers, form fields</div>
+<div className="bg-cn-3">Popovers, tooltips</div>
+```
+
+### Text
+
+Four levels create typographic hierarchy:
+
+<div className="not-content grid grid-cols-4 gap-cn-xs mt-cn-sm">
+  <div className="flex items-center justify-center rounded-cn-3 h-10 bg-cn-2">
+    <span className="text-cn-size-5 font-semibold text-cn-1">text-cn-1</span>
+  </div>
+  <div className="flex items-center justify-center rounded-cn-3 h-10 bg-cn-2">
+    <span className="text-cn-size-5 text-cn-2">text-cn-2</span>
+  </div>
+  <div className="flex items-center justify-center rounded-cn-3 h-10 bg-cn-2">
+    <span className="text-cn-size-5 text-cn-3">text-cn-3</span>
+  </div>
+  <div className="flex items-center justify-center rounded-cn-3 h-10 bg-cn-2">
+    <span className="text-cn-size-5 text-cn-4">text-cn-4</span>
+  </div>
+</div>
+
+```tsx
+<h2 className="text-cn-1">Headings, labels — max contrast</h2>
+<p className="text-cn-2">Body text, default content</p>
+<span className="text-cn-3">Secondary text, metadata</span>
+<span className="text-cn-4">Disabled text</span>
+```
+
+### Interactive States
+
+Overlay colors for hover and selection feedback:
+
+<div className="not-content grid grid-cols-2 gap-cn-xs mt-cn-sm">
+  <div className="flex items-center justify-center rounded-cn-3 h-10 bg-cn-hover text-cn-1">
+    <span className="text-cn-size-3 font-mono">bg-cn-hover</span>
+  </div>
+  <div className="flex items-center justify-center rounded-cn-3 h-10 bg-cn-selected text-cn-1">
+    <span className="text-cn-size-3 font-mono">bg-cn-selected</span>
+  </div>
+</div>
+
+```tsx
+<div className="bg-cn-hover">Hover overlay</div>
+<div className="bg-cn-selected">Selected overlay</div>
+```
+
+---
+
+## Color Sets — The Core Pattern
+
+The most important architectural concept. Color sets are <span style="font-weight: 600">pre-built color pairs</span> — coordinated background + text combinations for different usage scenarios. Each pair is verified for WCAG contrast compliance, so developers never need to manually check accessibility.
+
+Every semantic color is defined as a <span style="font-weight: 600">set</span> with three emphasis levels:
+
+```
+set.{color}.primary     → bg, bg-hover, bg-selected, text, ring
+set.{color}.secondary   → bg, bg-hover, bg-selected, text
+set.{color}.outline     → bg, bg-hover, bg-selected, text, border
+```
+
+<div className="cn-table-v2 cn-table-v2-normal not-content">
+  <div className="cn-table-v2-container">
+    <table className="cn-table-v2-element">
+      <thead className="cn-table-v2-header">
+        <tr className="cn-table-v2-row">
+          <th className="cn-table-v2-head">Level</th>
+          <th className="cn-table-v2-head">Background</th>
+          <th className="cn-table-v2-head">Text</th>
+          <th className="cn-table-v2-head">Use case</th>
+        </tr>
+      </thead>
+      <tbody className="cn-table-v2-body">
+        <tr className="cn-table-v2-row">
+          <td className="cn-table-v2-cell">primary</td>
+          <td className="cn-table-v2-cell">Saturated fill</td>
+          <td className="cn-table-v2-cell">
+            High-contrast (usually black/white)
+          </td>
+          <td className="cn-table-v2-cell">Buttons, strong badges</td>
+        </tr>
+        <tr className="cn-table-v2-row">
+          <td className="cn-table-v2-cell">secondary</td>
+          <td className="cn-table-v2-cell">Muted tint</td>
+          <td className="cn-table-v2-cell">Colored</td>
+          <td className="cn-table-v2-cell">Soft badges, subtle highlights</td>
+        </tr>
+        <tr className="cn-table-v2-row">
+          <td className="cn-table-v2-cell">outline</td>
+          <td className="cn-table-v2-cell">Near-transparent</td>
+          <td className="cn-table-v2-cell">Colored</td>
+          <td className="cn-table-v2-cell">Alerts, bordered containers</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+</div>
+
+Each set has three levels visualized below — primary (saturated fill), secondary (muted tint), outline (near-transparent with border):
+
+<div className="h-1.5" />
+
+<AllSetsShowcase client:only />
+
+<Aside type="caution" title="Critical rule">
+  Always pair background and text from the{" "}
+  <span style="font-weight: 600">same set and level</span>. Mixing levels breaks
+  contrast and accessibility.
+</Aside>
+
+```tsx
+{
+  /* ✅ Correct — same set, same level */
+}
+<Badge className="bg-cn-success-secondary text-cn-success-secondary">
+  Done
+</Badge>;
+
+{
+  /* ❌ Wrong — mixed levels break contrast */
+}
+<Badge className="bg-cn-success-secondary text-cn-success-primary">Done</Badge>;
+```
+
+---
+
+## State Tokens & Color Modifiers
+
+Interactive states use the `$extensions` system from Token Studio to apply LCH-space transformations:
+
+```json
+{
+  "state": {
+    "hover": {
+      "$value": "{gray.850}",
+      "$extensions": {
+        "studio.tokens": {
+          "modify": { "type": "alpha", "value": "0.2", "space": "lch" }
+        }
+      }
+    }
+  }
+}
+```
+
+This produces `lch(from var(--cn-gray-850) l c h / 0.2)` — a relative-color alpha overlay. The same modifier system supports `darken` and `lighten` operations for contrast variant themes (dimmer, high-contrast).
+
+### Available Modifiers
+
+Token Studio supports four color modifiers:
+
+- **alpha** — adjusts opacity (0 = transparent, 1 = solid)
+- **lighten** — increases lightness by percentage (0.2 = 20% lighter)
+- **darken** — reduces lightness by percentage (0.2 = 20% darker)
+- **mix** — blends with another color (0.5 = 50/50 mix)
+
+<LinkCard
+  href="https://docs.tokens.studio/tokens/color-modifiers"
+  title="Token Studio Color Modifiers"
+  description="Full documentation on alpha, lighten, darken, and mix modifiers"
+  external
+/>

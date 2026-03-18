@@ -1,0 +1,95 @@
+---
+interface Props {
+  href: string;
+  title: string;
+  description?: string;
+  external?: boolean;
+}
+
+const { href, title, description, external = false } = Astro.props;
+const isExternal = external || href.startsWith("http");
+---
+
+<a
+  href={href}
+  class="link-card not-content"
+  target={isExternal ? "_blank" : undefined}
+  rel={isExternal ? "noopener noreferrer" : undefined}
+>
+  <div class="link-card-content">
+    <span class="link-card-title">{title}</span>
+    {description && <span class="link-card-description">{description}</span>}
+  </div>
+  <div class="link-card-arrow">
+    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 16 16">
+      <path
+        stroke="currentColor"
+        stroke-linecap="round"
+        stroke-linejoin="round"
+        d="M2 14 14 2m0 0v11.52M14 2H2.48"></path>
+    </svg>
+  </div>
+</a>
+
+<style>
+  .link-card {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 16px;
+    padding: 16px 20px;
+    margin-top: 16px;
+    border-radius: var(--cn-rounded-6, 8px);
+    border: 1px solid var(--cn-set-blue-outline-border);
+    background: var(--cn-set-blue-outline-bg);
+    text-decoration: none;
+    transition: all 0.15s ease;
+  }
+
+  .link-card:hover {
+    border-color: var(--cn-set-blue-outline-border);
+    background: var(--cn-set-blue-outline-bg-hover);
+  }
+
+  .link-card:hover .link-card-arrow {
+    transform: translate(3px, -3px);
+    color: var(--cn-text-brand);
+  }
+
+  .link-card:hover .link-card-title {
+    color: var(--cn-text-brand);
+  }
+
+  .link-card-content {
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+    min-width: 0;
+  }
+
+  .link-card-title {
+    font-size: var(--cn-font-size-4, 0.875rem);
+    font-weight: 500;
+    color: var(--cn-text-1);
+    line-height: 1.4;
+  }
+
+  .link-card-description {
+    font-size: var(--cn-font-size-5, 0.8125rem);
+    color: var(--cn-text-3);
+    line-height: 1.4;
+  }
+
+  .link-card-arrow {
+    flex-shrink: 0;
+    width: 24px;
+    height: 24px;
+    color: var(--cn-text-3);
+    transition: all 0.15s ease;
+  }
+
+  .link-card-arrow svg {
+    width: 100%;
+    height: 100%;
+  }
+</style>

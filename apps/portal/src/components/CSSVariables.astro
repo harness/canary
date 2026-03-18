@@ -1,208 +1,199 @@
 ---
 import * as styles from "@harnessio/core-design-system/styles-esm";
 
-// Helper function to recursively extract CSS variables from design system objects
-function extractVariables(
-  obj: any,
-  prefix = "",
-): Array<{
+type Var = {
   name: string;
   value: string;
+  description: string;
   category: string;
   subcategory: string;
-}> {
-  const variables: Array<{
-    name: string;
-    value: string;
-    category: string;
-    subcategory: string;
-  }> = [];
+};
 
+function extractVariables(obj: any): Var[] {
+  const vars: Var[] = [];
   for (const key in obj) {
     const item = obj[key];
-
     if (item && typeof item === "object") {
-      // If it has a name and $value, it's a token
       if (item.name && item.$value !== undefined) {
-        variables.push({
+        vars.push({
           name: `--${item.name}`,
           value: String(item.$value),
+          description: item.$description || "",
           category: "",
           subcategory: "",
         });
       } else {
-        // Recursively process nested objects
-        variables.push(...extractVariables(item, prefix));
+        vars.push(...extractVariables(item));
       }
     }
   }
-
-  return variables;
+  return vars;
 }
 
-// Extract variables from each category
-const breakpointVars = extractVariables(styles.breakpoint).map((v) => ({
-  ...v,
-  category: "Breakpoint",
-  subcategory: "Breakpoint Variables",
-}));
-const colorsVars = extractVariables(styles.colors);
+// --- Extract all sources ---
 const coreVars = extractVariables(styles.core);
+const breakpointVars = extractVariables(styles.breakpoint);
+const colorsVars = extractVariables(styles.colors);
+const componentVars = extractVariables(styles.components);
+const semanticVars = extractVariables(styles.light);
 
-// Categorize core variables
-const categorizeCore = (
-  vars: Array<{
-    name: string;
-    value: string;
-    category: string;
-    subcategory: string;
-  }>,
-) => {
-  const categories: Record<
-    string,
-    Record<
-      string,
-      Array<{
-        name: string;
-        value: string;
-        category: string;
-        subcategory: string;
-      }>
-    >
-  > = {
-    Typography: {
-      "Letter Spacing": [],
-      "Font Weight": [],
-      "Font Family": [],
-      "Text Decoration": [],
-      "Text Case": [],
-      "Font Size": [],
-      "Line Height": [],
-    },
-    Sizing: {
-      "Size Variables": [],
-      "Spacing Variables": [],
-      "Border Width": [],
-      "Border Radius": [],
-      "Icon Size": [],
-      "Logo Size": [],
-    },
-    Effects: {
-      Opacity: [],
-    },
-  };
-
-  vars.forEach((v) => {
-    const varWithCategory = { ...v, category: "", subcategory: "" };
-
-    if (v.name.includes("tracking")) {
-      varWithCategory.category = "Typography";
-      varWithCategory.subcategory = "Letter Spacing";
-      categories["Typography"]["Letter Spacing"].push(varWithCategory);
-    } else if (v.name.includes("font-weight")) {
-      varWithCategory.category = "Typography";
-      varWithCategory.subcategory = "Font Weight";
-      categories["Typography"]["Font Weight"].push(varWithCategory);
-    } else if (v.name.includes("font-family")) {
-      varWithCategory.category = "Typography";
-      varWithCategory.subcategory = "Font Family";
-      categories["Typography"]["Font Family"].push(varWithCategory);
-    } else if (v.name.includes("text-decoration")) {
-      varWithCategory.category = "Typography";
-      varWithCategory.subcategory = "Text Decoration";
-      categories["Typography"]["Text Decoration"].push(varWithCategory);
-    } else if (v.name.includes("text-case")) {
-      varWithCategory.category = "Typography";
-      varWithCategory.subcategory = "Text Case";
-      categories["Typography"]["Text Case"].push(varWithCategory);
-    } else if (v.name.includes("font-size")) {
-      varWithCategory.category = "Typography";
-      varWithCategory.subcategory = "Font Size";
-      categories["Typography"]["Font Size"].push(varWithCategory);
-    } else if (v.name.includes("line-height")) {
-      varWithCategory.category = "Typography";
-      varWithCategory.subcategory = "Line Height";
-      categories["Typography"]["Line Height"].push(varWithCategory);
-    } else if (v.name.includes("cn-size-")) {
-      varWithCategory.category = "Sizing";
-      varWithCategory.subcategory = "Size Variables";
-      categories["Sizing"]["Size Variables"].push(varWithCategory);
-    } else if (v.name.includes("spacing")) {
-      varWithCategory.category = "Sizing";
-      varWithCategory.subcategory = "Spacing Variables";
-      categories["Sizing"]["Spacing Variables"].push(varWithCategory);
-    } else if (v.name.includes("border-width")) {
-      varWithCategory.category = "Sizing";
-      varWithCategory.subcategory = "Border Width";
-      categories["Sizing"]["Border Width"].push(varWithCategory);
-    } else if (v.name.includes("rounded")) {
-      varWithCategory.category = "Sizing";
-      varWithCategory.subcategory = "Border Radius";
-      categories["Sizing"]["Border Radius"].push(varWithCategory);
-    } else if (v.name.includes("icon-size")) {
-      varWithCategory.category = "Sizing";
-      varWithCategory.subcategory = "Icon Size";
-      categories["Sizing"]["Icon Size"].push(varWithCategory);
-    } else if (v.name.includes("logo-size")) {
-      varWithCategory.category = "Sizing";
-      varWithCategory.subcategory = "Logo Size";
-      categories["Sizing"]["Logo Size"].push(varWithCategory);
-    } else if (v.name.includes("opacity")) {
-      varWithCategory.category = "Effects";
-      varWithCategory.subcategory = "Opacity";
-      categories["Effects"]["Opacity"].push(varWithCategory);
-    }
-  });
-
-  return categories;
+// --- Component name map ---
+const componentNameMap: Record<string, string> = {
+  input: "Input",
+  btn: "Button",
+  tabs: "Tabs",
+  table: "Table",
+  card: "Card",
+  badge: "Badge",
+  tree: "Tree View",
+  tag: "Tag",
+  toast: "Toast",
+  sidebar: "Sidebar",
+  drawer: "Drawer",
+  progress: "Progress",
+  dialog: "Dialog",
+  dropdown: "Dropdown",
+  accordion: "Accordion",
+  popover: "Popover",
+  alert: "Alert",
+  tooltip: "Tooltip",
+  avatar: "Avatar",
+  diff: "Diff Editor",
+  header: "Header",
+  ai: "AI Chat",
+  link: "Link",
+  pipeline: "Pipeline",
+  pagination: "Pagination",
+  chart: "Chart",
+  markdown: "Markdown",
 };
 
-// Categorize colors - only Pure Colors
-const categorizeColors = (
-  vars: Array<{
-    name: string;
-    value: string;
-    category: string;
-    subcategory: string;
-  }>,
-) => {
-  const categories: Record<
-    string,
-    Array<{
-      name: string;
-      value: string;
-      category: string;
-      subcategory: string;
-    }>
-  > = {
-    "Pure Colors": [],
-  };
+function deriveComponentName(varName: string): string {
+  const stripped = varName.replace(/^--cn-comp-/, "").replace(/^--cn-/, "");
+  const prefix = stripped.split("-")[0];
+  return (
+    componentNameMap[prefix] || prefix.charAt(0).toUpperCase() + prefix.slice(1)
+  );
+}
 
-  vars.forEach((v) => {
-    if (v.name.includes("pure")) {
-      const varWithCategory = {
-        ...v,
-        category: "Colors",
-        subcategory: "Pure Colors",
-      };
-      categories["Pure Colors"].push(varWithCategory);
-    }
-  });
+// --- Categorize semantic tokens (from light.ts theme) ---
+function categorizeSemantic(v: Var): Var {
+  const n = v.name;
+  if (n.startsWith("--cn-bg-"))
+    return { ...v, category: "Semantic", subcategory: "Background" };
+  if (n.startsWith("--cn-text-"))
+    return { ...v, category: "Semantic", subcategory: "Text" };
+  if (n.startsWith("--cn-border-"))
+    return { ...v, category: "Semantic", subcategory: "Border" };
+  if (n.startsWith("--cn-state-"))
+    return { ...v, category: "Semantic", subcategory: "State" };
+  if (n.startsWith("--cn-disabled"))
+    return { ...v, category: "Semantic", subcategory: "State" };
+  if (n.startsWith("--cn-focus"))
+    return { ...v, category: "Semantic", subcategory: "State" };
+  if (n.startsWith("--cn-shadow-"))
+    return { ...v, category: "Semantic", subcategory: "Shadows" };
+  if (n.startsWith("--cn-ring-"))
+    return { ...v, category: "Semantic", subcategory: "Focus Rings" };
+  if (n.startsWith("--cn-set-")) {
+    const rest = n.replace("--cn-set-", "");
+    const setName = rest.split("-")[0];
+    const label = setName.charAt(0).toUpperCase() + setName.slice(1);
+    return { ...v, category: "Semantic", subcategory: `Set: ${label}` };
+  }
+  if (n.startsWith("--cn-comp-"))
+    return { ...v, category: "Component", subcategory: deriveComponentName(n) };
+  if (n.startsWith("--cn-gradient-"))
+    return { ...v, category: "Component", subcategory: "Gradients" };
+  if (n.startsWith("--cn-icon-"))
+    return { ...v, category: "Component", subcategory: "Icons" };
+  if (n.startsWith("--cn-img-"))
+    return { ...v, category: "Component", subcategory: "Images" };
+  if (n.startsWith("--cn-logo-"))
+    return { ...v, category: "Component", subcategory: "Logo" };
+  if (n.startsWith("--cn-flow-"))
+    return { ...v, category: "Component", subcategory: "Flow" };
+  return { ...v, category: "Semantic", subcategory: "Other" };
+}
 
-  return categories;
-};
+// --- Categorize breakpoint module (mixed: typography + layout + comp) ---
+function categorizeBreakpoint(v: Var): Var {
+  const n = v.name;
+  if (n.includes("heading-"))
+    return { ...v, category: "Semantic", subcategory: "Headings" };
+  if (n.includes("body-"))
+    return { ...v, category: "Semantic", subcategory: "Body" };
+  if (n.includes("caption-"))
+    return { ...v, category: "Semantic", subcategory: "Caption" };
+  if (n.includes("micro-"))
+    return { ...v, category: "Semantic", subcategory: "Micro" };
+  if (n.includes("comp-"))
+    return { ...v, category: "Component", subcategory: deriveComponentName(n) };
+  if (n.includes("layout-"))
+    return { ...v, category: "Semantic", subcategory: "Layout" };
+  if (n.includes("shell-"))
+    return { ...v, category: "Semantic", subcategory: "Shell" };
+  if (n.includes("page-container"))
+    return { ...v, category: "Semantic", subcategory: "Page Container" };
+  if (n.includes("breakpoint-"))
+    return { ...v, category: "Semantic", subcategory: "Breakpoints" };
+  return { ...v, category: "Global", subcategory: "Other" };
+}
 
-const coreCategories = categorizeCore(coreVars);
-const colorCategories = categorizeColors(colorsVars);
+// --- Categorize core module ---
+function categorizeCore(v: Var): Var {
+  const n = v.name;
+  if (n.includes("font-size"))
+    return { ...v, category: "Global", subcategory: "Font Size" };
+  if (n.includes("line-height"))
+    return { ...v, category: "Global", subcategory: "Line Height" };
+  if (n.includes("font-weight"))
+    return { ...v, category: "Global", subcategory: "Font Weight" };
+  if (n.includes("font-family"))
+    return { ...v, category: "Global", subcategory: "Font Family" };
+  if (n.includes("tracking"))
+    return { ...v, category: "Global", subcategory: "Letter Spacing" };
+  if (n.includes("text-decoration"))
+    return { ...v, category: "Global", subcategory: "Text Decoration" };
+  if (n.includes("text-case"))
+    return { ...v, category: "Global", subcategory: "Text Case" };
+  if (n.includes("cn-size-"))
+    return { ...v, category: "Global", subcategory: "Size Scale" };
+  if (n.includes("spacing"))
+    return { ...v, category: "Global", subcategory: "Spacing Scale" };
+  if (n.includes("border-width"))
+    return { ...v, category: "Global", subcategory: "Border Width" };
+  if (n.includes("rounded"))
+    return { ...v, category: "Global", subcategory: "Border Radius" };
+  if (n.includes("icon-size"))
+    return { ...v, category: "Global", subcategory: "Icon Size" };
+  if (n.includes("logo-size"))
+    return { ...v, category: "Global", subcategory: "Logo Size" };
+  if (n.includes("opacity"))
+    return { ...v, category: "Global", subcategory: "Opacity" };
+  if (n.includes("animation"))
+    return { ...v, category: "Global", subcategory: "Animation" };
+  return { ...v, category: "Global", subcategory: "Other" };
+}
 
-// Flatten all variables into a single array for search
-const allVariables = [
-  ...breakpointVars,
-  ...Object.values(colorCategories).flat(),
-  ...Object.values(coreCategories).flatMap((subCats) =>
-    Object.values(subCats).flat(),
-  ),
+// --- Build all variables ---
+const allSemantic = semanticVars.map(categorizeSemantic);
+
+const allGlobal = [
+  ...colorsVars
+    .filter((v) => v.name.includes("pure"))
+    .map((v) => ({ ...v, category: "Global", subcategory: "Pure Colors" })),
+  ...coreVars.map(categorizeCore),
+  ...breakpointVars.map(categorizeBreakpoint),
 ];
+
+const allComponent = componentVars.map((v) => ({
+  ...v,
+  category: "Component",
+  subcategory: deriveComponentName(v.name),
+}));
+
+const allVariables = [...allSemantic, ...allGlobal, ...allComponent];
 
 import { CSSVariablesClient } from "./docs-page/CSSVariablesClient";
 ---

@@ -1,0 +1,201 @@
+---
+title: Developer Guide
+description: Quick-start guide for using the Harness Design System in code
+---
+
+import { Aside } from "@astrojs/starlight/components";
+import LinkCard from "@/components/LinkCard.astro";
+
+## Setup
+
+Install dependencies and build all packages (tokens → CSS → components):
+
+```bash
+pnpm install
+pnpm build
+```
+
+Import styles and components in your app:
+
+```tsx
+import "@harnessio/core-design-system/core-styles";
+import "@harnessio/core-design-system/themes";
+import { Button, Text, IconV2 } from "@harnessio/ui/components";
+```
+
+---
+
+## The `cn-` Prefix
+
+Every design token compiles to a CSS custom property (`--cn-*`) and a Tailwind utility class (`cn-*`). The `cn-` prefix is the namespace for the entire system.
+
+The Tailwind config in `packages/ui/tailwind-design-system.ts` maps every CSS variable to a utility class automatically.
+
+---
+
+## Core Patterns
+
+### Neutral Colors — Numeric Levels
+
+Backgrounds, text, and borders use numeric levels for visual hierarchy:
+
+```tsx
+<div className="bg-cn-1">
+  {" "}
+  {/* App background */}
+  <div className="bg-cn-2 border border-cn-3">
+    {" "}
+    {/* Card */}
+    <h2 className="text-cn-1">Title</h2> {/* Primary text */}
+    <p className="text-cn-2">Description</p> {/* Body text */}
+    <span className="text-cn-3">Meta</span> {/* Secondary text */}
+  </div>
+</div>
+```
+
+<LinkCard
+  href="/foundations/colors"
+  title="Core Palette"
+  description="Full color palette with all 15 color families"
+/>
+
+### Color Sets — Semantic Pairs
+
+Use color sets for semantic UI (success, danger, warning). Always match bg + text at the <span style="font-weight: 600">same set and level</span>:
+
+```tsx
+<Badge className="bg-cn-success-primary text-cn-success-primary">Pass</Badge>
+<Badge className="bg-cn-danger-secondary text-cn-danger-secondary">Fail</Badge>
+```
+
+Three levels: `primary` (bold), `secondary` (muted), `outline` (subtle). See [Introduction — Color Sets](/design-system/introduction#color-sets--the-core-pattern) for details.
+
+### Typography — Semantic Variants
+
+Use the `Text` component with named variants, not raw size classes:
+
+```tsx
+<Text variant="heading-section">Section title</Text>
+<Text variant="body-normal">Body text</Text>
+<Text variant="caption-strong">Label</Text>
+```
+
+<LinkCard
+  href="/foundations/typography"
+  title="Typography"
+  description="All text variants and font styles"
+/>
+
+### Spacing — T-Shirt Scale
+
+Spacing uses a t-shirt scale: `cn-4xs` through `cn-4xl`:
+
+```tsx
+<div className="p-cn-md gap-cn-sm mt-cn-lg">
+  {/* padding: medium, gap: small, margin-top: large */}
+</div>
+```
+
+<LinkCard
+  href="/foundations/spacings"
+  title="Spacings"
+  description="All spacing values from 4xs to 4xl"
+/>
+
+### Border Radius & Shadows
+
+```tsx
+<div className="rounded-cn-4 shadow-cn-1">Card</div>
+```
+
+Radius: `cn-px` · `cn-1`–`cn-7` · `cn-full` · `cn-none`. Shadows: `cn-1`–`cn-6`.
+
+### Icons
+
+Icons inherit `currentColor`, so they follow the text color of their container:
+
+```tsx
+<IconV2 name="check-circle" className="text-cn-success-primary" size="sm" />
+```
+
+→ Browse all icons in [Icons](/foundations/icons)
+
+---
+
+## Full Example
+
+Here's how all patterns come together in a real component:
+
+```tsx
+import { Button, Text, IconV2 } from "@harnessio/ui/components";
+
+function ProjectCard({ title, status, lastUpdated }) {
+  return (
+    <div className="bg-cn-2 border border-cn-3 rounded-cn-4 p-cn-lg shadow-cn-1">
+      <div className="flex items-center justify-between mb-cn-md">
+        <Text variant="heading-base" className="text-cn-1">
+          {title}
+        </Text>
+        <IconV2 name="more-vertical" className="text-cn-3" />
+      </div>
+
+      <div
+        className={`
+        inline-flex items-center gap-cn-3xs px-cn-sm py-cn-3xs rounded-cn-3
+        ${
+          status === "success"
+            ? "bg-cn-success-secondary text-cn-success-secondary"
+            : "bg-cn-danger-secondary text-cn-danger-secondary"
+        }
+      `}
+      >
+        <IconV2
+          name={status === "success" ? "check-circle" : "alert-circle"}
+          size="xs"
+        />
+        {status === "success" ? "Active" : "Failed"}
+      </div>
+
+      <div className="mt-cn-lg pt-cn-md border-t border-cn-3">
+        <Text variant="caption-light" className="text-cn-3">
+          Updated {lastUpdated}
+        </Text>
+      </div>
+    </div>
+  );
+}
+```
+
+Every value in this component adapts automatically across all 24 theme variants — no conditional logic needed.
+
+---
+
+## Workflow
+
+### For Designers
+
+1. Edit JSON token files in `packages/core-design-system/design-tokens/`
+2. Export to Figma via <span style="font-weight: 600">Token Studio</span> plugin or <span style="font-weight: 600">Figma Console MCP</span>
+3. Set Figma color profile to <span style="font-weight: 600">Display P3</span> for accurate LCH color rendering
+
+### For Developers
+
+When tokens change, re-run the build — all CSS vars update, no code changes needed:
+
+```bash
+pnpm build
+```
+
+To sync icons or logos from Figma:
+
+```bash
+cd packages/ui
+pnpm update:icons     # Themed SVGs (inherit currentColor)
+pnpm update:logos     # Brand logos (retain original colors)
+```
+
+<LinkCard
+  href="/foundations/variables"
+  title="CSS Variables"
+  description="Full list of generated CSS custom properties"
+/>

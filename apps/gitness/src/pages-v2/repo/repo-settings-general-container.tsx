@@ -28,7 +28,8 @@ import {
   RepoSettingsFeaturesFormFields,
   RepoSettingsGeneralPage,
   RepoUpdateData,
-  SecurityScanning
+  SecurityScanning,
+  tagsOptionsToRecord
 } from '@harnessio/views'
 
 import { BranchSelectorContainer } from '../../components-v2/branch-selector-container'
@@ -253,8 +254,10 @@ export const RepoSettingsGeneralPageContainer = () => {
   }
 
   const handleRepoUpdate = async (data: RepoUpdateData) => {
+    const tags = tagsOptionsToRecord(data.tags)
+
     await Promise.all([
-      updateRepo({ body: { description: data.description } }),
+      updateRepo({ body: { description: data.description, tags } }),
       updateBranch({ body: { name: data.branch } }),
       updatePublicAccess({ body: { is_public: data.access === AccessLevel.PUBLIC } })
     ])

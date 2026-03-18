@@ -1,6 +1,7 @@
-import { PrincipalType, TypesUserGroupInfo } from '@harnessio/ui/types'
 import { RepoBranchSettingsFormFields } from '@views'
 import { z } from 'zod'
+
+import { PrincipalType, TypesUserGroupInfo } from '@harnessio/ui/types'
 
 export interface RepoBranch {
   name?: string
@@ -13,6 +14,7 @@ export interface RepoData {
   defaultBranch: string
   isPublic: boolean
   archived: boolean
+  tags?: Record<string, string>
 }
 
 export enum AccessLevel {
@@ -105,7 +107,17 @@ export const generalSettingsFormSchema = z.object({
   name: z.string().min(1, 'Name is required'),
   description: z.string(),
   branch: z.string(),
-  access: z.enum([AccessLevel.PUBLIC, AccessLevel.PRIVATE], {})
+  access: z.enum([AccessLevel.PUBLIC, AccessLevel.PRIVATE], {}),
+  tags: z
+    .array(
+      z.object({
+        id: z.union([z.string(), z.number()]),
+        key: z.string(),
+        value: z.string().optional()
+      })
+    )
+    .optional()
+    .default([])
 })
 
 export const errorTypes = new Set([

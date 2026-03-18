@@ -50,7 +50,8 @@ export const useRepoRulesStore = create<IRepoStore>(set => ({
     description: '',
     defaultBranch: '',
     isPublic: false,
-    archived: false
+    archived: false,
+    tags: {}
   },
   branches: [],
   presetRuleData: null,
@@ -71,7 +72,8 @@ export const useRepoRulesStore = create<IRepoStore>(set => ({
         description: repoData.description || '',
         defaultBranch: repoData.default_branch || '',
         isPublic: repoData.is_public ?? false,
-        archived: repoData.archived ?? false
+        archived: repoData.archived ?? false,
+        tags: (repoData.tags as Record<string, string>) ?? {}
       }
     }),
   setRules: data => {

@@ -1,6 +1,5 @@
 import { ReactNode } from 'react'
 
-import { PrincipalType, UsererrorError } from '@harnessio/ui/types'
 import {
   ColorsEnum,
   EnumBypassListType,
@@ -11,7 +10,9 @@ import {
   TypesBranchTable,
   TypesRepositoryCore
 } from '@views'
+
 import { CheckboxOptions, ComboBoxOptions, StackedListPaginationProps } from '@harnessio/ui/components'
+import { PrincipalType, UsererrorError } from '@harnessio/ui/types'
 
 import { LabelsValue } from './components/labels'
 
@@ -96,6 +97,7 @@ export interface RepoRepositoryOutput {
   size?: number
   size_updated?: number
   state?: EnumRepoState
+  tags?: Record<string, string>
   updated?: number
 }
 

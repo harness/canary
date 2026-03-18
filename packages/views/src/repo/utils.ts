@@ -1,8 +1,21 @@
+import { MessageTheme, MultiSelectOption } from '@harnessio/ui/components'
 import { UsererrorError } from '@harnessio/ui/types'
-import { MessageTheme } from '@harnessio/ui/components'
 
 import { RepoRepositoryOutput, TypesPrincipalInfo, TypesUserGroupInfo } from './pull-request'
 import { EnumBypassListType, NormalizedPrincipal, Rule } from './repo-branch-rules/types'
+
+export function tagsRecordToOptions(tags?: Record<string, string>): MultiSelectOption[] {
+  if (!tags) return []
+  return Object.entries(tags).map(([key, value]) => ({ id: key, key, value }))
+}
+
+export function tagsOptionsToRecord(tags?: MultiSelectOption[]): Record<string, string> {
+  if (!tags?.length) return {}
+  return tags.reduce<Record<string, string>>((acc, tag) => {
+    acc[tag.key] = tag.value ?? ''
+    return acc
+  }, {})
+}
 
 export function combineAndNormalizePrincipalsAndGroups(
   principals: TypesPrincipalInfo[] | null,

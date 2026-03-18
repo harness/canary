@@ -17,6 +17,7 @@ export const transformRepoList = (repoList: RepoRepositoryOutput[]): RepositoryT
     importing: !!repo.importing,
     favorite: repo.is_favorite,
     path: repo.path || '',
+    tags: repo.tags as Record<string, string> | undefined,
     upstream: repo.upstream
       ? {
           identifier: repo.upstream.identifier || '',

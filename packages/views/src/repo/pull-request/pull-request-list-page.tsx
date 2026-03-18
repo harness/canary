@@ -26,10 +26,9 @@ import { ExtendedScope, SandboxLayout } from '@views'
 import { splitObjectProps } from '@harnessio/ui/utils'
 import { isEmpty } from 'lodash-es'
 
-import { createFilters, FilterRefType } from '@harnessio/filters'
+import { createFilters, FilterRefType, ListControlBar } from '@harnessio/filters'
 
 import BranchCompareBannerList from '../components/branch-banner/branch-compare-banner-list'
-import ListControlBar from '../components/list-control-bar'
 import { getPRListFilterOptions } from '../constants/filter-options'
 import { filterLabelRenderer, getParserConfig, LabelsFilter, LabelsValue } from './components/labels'
 import { PullRequestList as PullRequestListContent } from './components/pull-request-list'

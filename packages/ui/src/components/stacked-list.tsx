@@ -111,13 +111,12 @@ const ListItemComp = forwardRef<HTMLDivElement, ListItemProps>(
     const withButton = !to && !linkProps && !!onClick
 
     const handleLinkClick = (e: React.MouseEvent) => {
+      // If modifier keys are pressed (Cmd+click, Ctrl+click, Shift+click),
+      // let the browser handle it (opens in new tab/window) - don't call onClick
       if (e.metaKey || e.ctrlKey || e.shiftKey) {
         return
       }
-      if (onClick) {
-        e.preventDefault()
-        onClick()
-      }
+      onClick?.()
     }
 
     return (

@@ -10,7 +10,8 @@ import {
   SerialNodeContent,
   SerialNodeInternalType
 } from '@harnessio/pipeline-graph'
-import { Button, ButtonLayout, Drawer, IconV2, PipelineNodes } from '@harnessio/ui/components'
+import { Button, ButtonLayout, Drawer, IconV2 } from '@harnessio/ui/components'
+import { PipelineNodes } from '@harnessio/views'
 
 // *****************************************************
 // 1. Import CSS

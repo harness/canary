@@ -1,7 +1,6 @@
 import { useMemo } from 'react'
 
-import { PipelineNodes } from '@harnessio/ui/components'
-import { CollapsedGroupNode } from '@harnessio/ui/components'
+import { PipelineNodes, CollapsedGroupNode } from '../../../../pipeline-nodes'
 
 import { SerialNodeInternalType } from '@harnessio/pipeline-graph'
 

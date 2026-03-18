@@ -1,6 +1,6 @@
-import { Button } from '@components/button'
-import { IconV2 } from '@components/icon-v2'
-import { cn } from '@utils/cn'
+import { Button } from '@harnessio/ui/components'
+import { IconV2 } from '@harnessio/ui/components'
+import { cn } from '@harnessio/ui/utils'
 
 import { ParallelContainerConfigType, SerialContainerConfigType } from '@harnessio/pipeline-graph'
 

@@ -1,4 +1,4 @@
-import { YamlEntityType } from '@/types/yaml-entity'
+import { YamlEntityType } from '@harnessio/ui/types'
 
 import { AnyNodeInternal } from '@harnessio/pipeline-graph'
 

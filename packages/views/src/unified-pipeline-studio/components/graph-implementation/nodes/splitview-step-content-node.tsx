@@ -1,7 +1,6 @@
 import { useMemo } from 'react'
 
-import { PipelineNodes } from '@harnessio/ui/components'
-import { ExecutionStatusType } from '@harnessio/ui/components'
+import { PipelineNodes, ExecutionStatusType } from '../../../../pipeline-nodes'
 
 import { LeafNodeInternalType } from '@harnessio/pipeline-graph'
 

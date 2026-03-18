@@ -1,4 +1,4 @@
-import { StatusBadge } from '@/components'
+import { StatusBadge } from '@harnessio/ui/components'
 
 import { ExecutionStatusType } from '../types/types'
 

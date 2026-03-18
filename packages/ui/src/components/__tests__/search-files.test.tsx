@@ -96,7 +96,7 @@ describe('SearchFiles', () => {
       expect(screen.getByRole('textbox')).toBeInTheDocument()
     })
 
-    test('should render search input', () => {
+    test('should render with autoFocus on input', () => {
       render(
         <TestWrapper>
           <SearchFiles navigateToFile={mockNavigateToFile} />

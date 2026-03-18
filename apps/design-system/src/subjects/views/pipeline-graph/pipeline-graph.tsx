@@ -10,7 +10,8 @@ import {
   SerialNodeContent,
   SerialNodeInternalType
 } from '@harnessio/pipeline-graph'
-import { IconV2, PipelineNodes } from '@harnessio/ui/components'
+import { IconV2 } from '@harnessio/ui/components'
+import { PipelineNodes } from '@harnessio/views'
 
 // import { PipelineStudioFooter } from '@harnessio/views'
 

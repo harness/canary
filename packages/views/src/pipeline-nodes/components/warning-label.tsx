@@ -1,5 +1,5 @@
-import { IconV2 } from '@components/icon-v2'
-import { Text } from '@components/text'
+import { IconV2 } from '@harnessio/ui/components'
+import { Text } from '@harnessio/ui/components'
 
 export function WarningLabel({ children }: { children: JSX.Element | string }) {
   return (

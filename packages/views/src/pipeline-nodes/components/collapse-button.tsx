@@ -1,5 +1,5 @@
-import { Button } from '@components/button'
-import { IconV2 } from '@components/icon-v2'
+import { Button } from '@harnessio/ui/components'
+import { IconV2 } from '@harnessio/ui/components'
 
 export interface CollapseButtonProps {
   collapsed: boolean

@@ -1,4 +1,4 @@
-import { PipelineNodes } from '@harnessio/ui/components'
+import { PipelineNodes } from '../../../../pipeline-nodes'
 
 import { LeafNodeInternalType } from '@harnessio/pipeline-graph'
 

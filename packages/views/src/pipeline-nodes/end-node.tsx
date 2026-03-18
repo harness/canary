@@ -1,6 +1,6 @@
-import { useTheme } from '@/context'
-import { cn } from '@/utils'
-import { IconV2 } from '@components/icon-v2'
+import { useTheme } from '@harnessio/ui/context'
+import { cn } from '@harnessio/ui/utils'
+import { IconV2 } from '@harnessio/ui/components'
 
 export function EndNode() {
   const { isLightTheme } = useTheme()

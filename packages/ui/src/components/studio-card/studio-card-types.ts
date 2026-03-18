@@ -1,7 +1,8 @@
 import { JSX } from 'react'
 
-import { ExecutionStatusType } from '@components/pipeline-nodes/types/types'
 import { StatusBadgeTheme } from '@components/status-badge/status-badge'
+
+export type ExecutionStatusType = 'executing' | 'success' | 'warning' | 'error' | 'queued' | undefined
 
 export interface StudioCardRootProps {
   isGroupCard?: boolean

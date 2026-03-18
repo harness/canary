@@ -1,8 +1,8 @@
-import { cn } from '@utils/cn'
+import { cn } from '@harnessio/ui/utils'
 
 import { ParallelContainerConfigType, SerialContainerConfigType } from '@harnessio/pipeline-graph'
 
-import { IconV2, Text } from '..'
+import { IconV2, Text } from '@harnessio/ui/components'
 import { ExecutionStatus } from './components/execution-status'
 import { FloatingAddButton } from './components/floating-add-button'
 import { NodeMenuTrigger } from './components/node-menu-trigger'

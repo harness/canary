@@ -58,8 +58,18 @@ vi.mock('@/components/form-input', () => ({
 
 // Mock router context for Link component
 vi.mock('@/context/router-context', () => ({
-  useRouter: () => ({
+  useRouterContext: () => ({
+    Link: 'a',
+    NavLink: 'a',
     navigate: vi.fn(),
-    currentPath: '/'
-  })
+    location: { pathname: '/', search: '', hash: '', state: {}, key: '' },
+    isRouterVersion5: false,
+    Outlet: () => null,
+    Switch: ({ children }: { children: React.ReactNode }) => children,
+    Route: ({ children }: { children: React.ReactNode }) => children,
+    useSearchParams: () => [new URLSearchParams(), vi.fn()],
+    useMatches: () => [],
+    useParams: () => ({})
+  }),
+  RouterContextProvider: ({ children }: { children: React.ReactNode }) => children
 }))

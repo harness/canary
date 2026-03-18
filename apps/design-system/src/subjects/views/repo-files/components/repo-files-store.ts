@@ -1,6 +1,6 @@
 import { PathParts } from '@harnessio/ui/components'
 import { BranchData, IBranchSelectorStore, LatestFileTypes, RepoFile } from '@harnessio/views'
-import { BlameItem } from '@harnessio/yaml-editor/dist/types/blame'
+import { BlameItem } from '@harnessio/yaml-editor'
 
 export interface RepoRepositoryOutput {
   created?: number

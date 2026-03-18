@@ -1,8 +1,8 @@
-import { cn } from '@utils/cn'
+import { cn } from '@harnessio/ui/utils'
 
 import './step-node.css'
 
-import { Text } from '@components/text'
+import { Text } from '@harnessio/ui/components'
 
 import { ParallelContainerConfigType, SerialContainerConfigType } from '@harnessio/pipeline-graph'
 

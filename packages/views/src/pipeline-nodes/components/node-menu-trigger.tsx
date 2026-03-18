@@ -1,7 +1,7 @@
 import { FC } from 'react'
 
-import { Button } from '@components/button'
-import { IconV2 } from '@components/icon-v2'
+import { Button } from '@harnessio/ui/components'
+import { IconV2 } from '@harnessio/ui/components'
 
 import { SerialGroupNodeProps } from '../serial-group-node'
 

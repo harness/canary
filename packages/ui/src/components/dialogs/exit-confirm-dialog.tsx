@@ -1,6 +1,10 @@
 import { FC } from 'react'
 
-import { Alert, Button, ButtonLayout, Dialog } from '@/components'
+// Direct imports to avoid circular dependency with context barrel
+import { Alert } from '../alert'
+import { Button } from '../button'
+import { ButtonLayout } from '../button-layout'
+import { Dialog } from '../dialog'
 
 export interface ExitConfirmOptions {
   title?: string

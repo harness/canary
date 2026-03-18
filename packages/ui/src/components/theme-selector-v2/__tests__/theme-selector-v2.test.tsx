@@ -1,7 +1,7 @@
 import * as React from 'react'
 
 import { ColorType, ContrastType, ModeType } from '@/context/theme/types'
-import { fireEvent, render, screen } from '@testing-library/react'
+import { fireEvent, render, screen, within } from '@testing-library/react'
 import { vi, type Mock } from 'vitest'
 
 import { ThemeDialog } from '../theme-dialog'
@@ -203,12 +203,14 @@ describe('ThemeDialog', () => {
     expect(matchMediaMock.removeEventListener).toHaveBeenCalledWith('change', registeredListener)
   })
 
-  it('renders accessibility options and allows updates to contrast and color selections', () => {
-    render(
+  it('renders accessibility options and allows updates to contrast, color, accent, and gray selections', () => {
+    const { rerender } = render(
       <ThemeDialog
         {...defaultProps}
         theme={`${ModeType.Light}-${ColorType.Standard}-${ContrastType.Standard}`}
         showAccessibilityThemeOptions
+        showAccentColor
+        showGrayColor
       />
     )
 
@@ -217,5 +219,49 @@ describe('ThemeDialog', () => {
 
     fireEvent.click(screen.getByTestId('select-option-pro'))
     expect(defaultProps.setTheme).toHaveBeenCalledWith('light-pro-std')
+
+    const accentGrid = screen.getByText('Accent color').closest('div')!.parentElement as HTMLElement
+    const accentButtonsContainer = accentGrid.querySelectorAll('div')[1] as HTMLElement
+    const accentButtons = within(accentButtonsContainer).getAllByRole('button')
+    const whiteAccentButton = accentButtons[accentButtons.length - 1] as HTMLButtonElement
+
+    fireEvent.click(whiteAccentButton)
+    expect(whiteAccentButton.className).toContain('border-cn-brand')
+    const whiteSwatch = whiteAccentButton.querySelector('span') as HTMLSpanElement
+    expect(whiteSwatch.style.backgroundColor).toContain('96, 96, 108')
+
+    rerender(
+      <ThemeDialog
+        {...defaultProps}
+        theme={`${ModeType.Dark}-${ColorType.Standard}-${ContrastType.Standard}`}
+        showAccessibilityThemeOptions
+        showAccentColor
+        showGrayColor
+      />
+    )
+
+    const darkAccentGrid = screen.getByText('Accent color').closest('div')!.parentElement as HTMLElement
+    const darkAccentContainer = darkAccentGrid.querySelectorAll('div')[1] as HTMLElement
+    const darkAccentButtons = within(darkAccentContainer).getAllByRole('button')
+    const darkWhiteButton = darkAccentButtons[darkAccentButtons.length - 1] as HTMLButtonElement
+    const darkSwatch = darkWhiteButton.querySelector('span') as HTMLSpanElement
+    expect(darkSwatch.style.backgroundColor).toContain('255, 255, 255')
+
+    const grayGrid = screen.getByText('Gray color').closest('div')!.parentElement as HTMLElement
+    const grayButtonsContainer = grayGrid.querySelectorAll('div')[1] as HTMLElement
+    const grayButtons = within(grayButtonsContainer).getAllByRole('button')
+    const targetGray = grayButtons[1] as HTMLButtonElement
+
+    fireEvent.click(targetGray)
+    expect(targetGray.className).toContain('border-cn-2')
+  })
+
+  it('omits accent and gray sections when disabled even if accessibility options are enabled', () => {
+    render(
+      <ThemeDialog {...defaultProps} showAccessibilityThemeOptions showAccentColor={false} showGrayColor={false} />
+    )
+
+    expect(screen.queryByText('Accent color')).not.toBeInTheDocument()
+    expect(screen.queryByText('Gray color')).not.toBeInTheDocument()
   })
 })

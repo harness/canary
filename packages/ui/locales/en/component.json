@@ -220,6 +220,14 @@
   "widgets": {
     "viewMore": "View more"
   },
+  "entity": {
+    "cantDelete": "Can't delete {{entity}}",
+    "cantDeleteMessage": "The {{entity}} [{{entityId}}] is being referenced in other entities. Please remove the referenced {{entity}} from affected entities before deleting.",
+    "viewReferences": "View references",
+    "forceDelete": "Forcefully delete this {{entity}} now",
+    "forceDeleteWarning": "Forceful deletion might render entities referencing this {{entity}} invalid and will need to be updated.",
+    "delete": "Delete"
+  },
   "sort": {
     "defaultLabel": "Sort",
     "resetSort": "Reset sort",

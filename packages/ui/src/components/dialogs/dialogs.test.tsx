@@ -118,15 +118,93 @@ vi.mock('@/components', () => ({
   )
 }))
 
-vi.mock('@/context', () => ({
-  useTranslation: () => ({
-    t: (_key: string, fallback: string) => fallback
-  })
+// Mock direct imports used by exit-confirm-dialog (which uses direct paths to avoid circular deps)
+vi.mock('../alert', () => ({
+  Alert: {
+    Root: ({ children, theme }: { children: React.ReactNode; theme?: string }) => (
+      <div data-testid={`alert-root-${theme ?? 'default'}`}>{children}</div>
+    ),
+    Title: ({ children }: { children: React.ReactNode }) => <h4 data-testid="alert-title">{children}</h4>,
+    Description: ({ children }: { children: React.ReactNode }) => <p data-testid="alert-description">{children}</p>
+  }
 }))
 
-vi.mock('@utils/utils', () => ({
-  getErrorMessage: (error: Error | { message?: string }, defaultMsg: string) => error.message || defaultMsg
+vi.mock('../button', () => ({
+  Button: ({ children, onClick, disabled }: React.ButtonHTMLAttributes<HTMLButtonElement>) => (
+    <button
+      data-testid={`button-${typeof children === 'string' ? children : 'custom'}`}
+      onClick={onClick}
+      disabled={disabled}
+    >
+      {children}
+    </button>
+  )
 }))
+
+vi.mock('../button-layout', () => ({
+  ButtonLayout: ({ children }: { children: React.ReactNode }) => <div data-testid="button-layout">{children}</div>
+}))
+
+vi.mock('../dialog', () => ({
+  Dialog: {
+    Root: ({ children, open, onOpenChange }: any) => (
+      <div data-testid="dialog-root" data-open={open} data-onchange-handler="true">
+        <button
+          data-testid="dialog-root-trigger-false"
+          onClick={() => onOpenChange?.(false)}
+          style={{ display: 'none' }}
+        >
+          Trigger onOpenChange false
+        </button>
+        <button data-testid="dialog-root-trigger-true" onClick={() => onOpenChange?.(true)} style={{ display: 'none' }}>
+          Trigger onOpenChange true
+        </button>
+        {React.Children.map(children, (child: React.ReactElement) =>
+          React.isValidElement(child) ? React.cloneElement(child as any, { __onOpenChange: onOpenChange }) : child
+        )}
+      </div>
+    ),
+    Content: ({ children, className }: { children: React.ReactNode; className?: string }) => (
+      <div data-testid="dialog-content" className={className}>
+        {children}
+      </div>
+    ),
+    Header: ({ children }: { children: React.ReactNode }) => <header>{children}</header>,
+    Footer: ({ children }: { children: React.ReactNode }) => <footer>{children}</footer>,
+    Title: ({ children }: { children: React.ReactNode }) => <h2>{children}</h2>,
+    Description: ({ children }: { children: React.ReactNode }) => <p>{children}</p>,
+    Close: ({ children, onClick, disabled, __onOpenChange }: any) => (
+      <button
+        data-testid="dialog-close"
+        disabled={disabled}
+        onClick={() => {
+          onClick?.()
+          __onOpenChange?.(false)
+        }}
+      >
+        {children}
+      </button>
+    )
+  }
+}))
+
+vi.mock('@/context', async () => {
+  const actual = await vi.importActual('@/context')
+  return {
+    ...actual,
+    useTranslation: () => ({
+      t: (_key: string, fallback: string) => fallback
+    })
+  }
+})
+
+vi.mock('@utils/utils', async () => {
+  const actual = await vi.importActual('@utils/utils')
+  return {
+    ...actual,
+    getErrorMessage: (error: Error | { message?: string }, defaultMsg: string) => error.message || defaultMsg
+  }
+})
 
 beforeEach(() => {
   vi.useFakeTimers()

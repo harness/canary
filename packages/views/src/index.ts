@@ -14,8 +14,6 @@ export * from './layouts/subheader-wrapper'
 export * from './layouts/main-content-layout'
 
 // components
-export { default as FilterGroup } from './components/FilterGroup'
-export * from './components/FilterGroup'
 export * from './components/page'
 export * from './components/contributors'
 export * from './components/repo-subheader'
@@ -51,6 +49,9 @@ export * from './profile-settings'
 export * from './pipelines'
 export * from './unified-pipeline-studio'
 export * from './run-pipeline'
+
+// Pipeline nodes (visualization components for pipeline graphs)
+export * from './pipeline-nodes'
 
 // user-management
 export * from './user-management'

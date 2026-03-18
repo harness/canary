@@ -50,8 +50,6 @@ interface SidebarItemCommonProps extends ComponentPropsWithoutRef<'button'> {
   dragListeners?: SyntheticListenerMap
   subMenuOpen?: boolean
   onSubmenuChange?: (open: boolean) => void
-  /** When true, shows only the nav-arrow-right icon. */
-  showRightChevron?: boolean
 }
 
 interface SidebarItemWithChildrenProps extends SidebarItemCommonProps {
@@ -187,7 +185,6 @@ const SidebarItemTrigger = forwardRef<HTMLButtonElement | HTMLAnchorElement, Sid
       submenuOpen,
       toggleSubmenu,
       withRightIndicator,
-      showRightChevron,
       active,
       actionButtons,
       clickable = true,
@@ -203,8 +200,7 @@ const SidebarItemTrigger = forwardRef<HTMLButtonElement | HTMLAnchorElement, Sid
     const withActionMenu = state === 'expanded' && !!actionMenuItems && actionMenuItems.length > 0
     const withDropdownMenu = !!dropdownMenuContent
     const withActionButtons = !!actionButtons
-    const withRightElement =
-      withActionMenu || withDropdownMenu || !!badge || withSubmenu || withRightIndicator || !!showRightChevron
+    const withRightElement = withActionMenu || withDropdownMenu || !!badge || withSubmenu || withRightIndicator
     const withDragHandle = !!draggable
 
     const badgeCommonProps: Pick<StatusBadgeProps, 'size' | 'theme' | 'className'> = {
@@ -263,7 +259,7 @@ const SidebarItemTrigger = forwardRef<HTMLButtonElement | HTMLAnchorElement, Sid
       >
         {withIcon &&
           (withDescription ? (
-            <div className="cn-sidebar-item-content-icon">
+            <div className="cn-sidebar-item-content-icon cn-sidebar-item-content-icon-w-border">
               <IconV2 name={props.icon} size="sm" fallback="stop" />
             </div>
           ) : (
@@ -291,7 +287,7 @@ const SidebarItemTrigger = forwardRef<HTMLButtonElement | HTMLAnchorElement, Sid
         {withDescription && (
           <Text
             variant="caption-single-line-light"
-            color="foreground-4"
+            color="foreground-3"
             className="cn-sidebar-item-content-description"
             truncate
           >
@@ -324,13 +320,6 @@ const SidebarItemTrigger = forwardRef<HTMLButtonElement | HTMLAnchorElement, Sid
         )}
         {/* Action buttons */}
         {actionButtonsContent}
-        {showRightChevron && (
-          <IconV2
-            name="nav-arrow-right"
-            className="cn-sidebar-item-content-right-element cn-sidebar-item-expand-icon"
-            size="xs"
-          />
-        )}
         {withRightIndicator && (
           <IconV2 name="nav-arrow-right" className="cn-sidebar-item-content-right-element" size="xs" />
         )}

@@ -46,5 +46,6 @@ export interface ThemeDialogProps {
   showAccentColor?: boolean
   showGrayColor?: boolean
   showAccessibilityThemeOptions?: boolean
+  /** Optional loading state indicator */
   isThemeLoading?: boolean
 }

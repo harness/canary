@@ -4,7 +4,7 @@ import { noop } from '@utils/viewUtils'
 
 import { Drawer } from '@harnessio/ui/components'
 import { UnifiedPipelineStudio, UnifiedPipelineStudioProps } from '@harnessio/views'
-import { YamlRevision } from '@harnessio/yaml-editor/dist/components/YamlEditor'
+import { YamlRevision } from '@harnessio/yaml-editor'
 
 import { pipeline1 } from './mocks/pipeline'
 import RunPipelineDrawerContent from './run-pipeline-drawer-content'

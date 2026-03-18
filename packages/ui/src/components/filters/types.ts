@@ -18,13 +18,6 @@ export enum FilterFieldTypes {
   MultiTag = 'multitag'
 }
 
-export type SecretListFilters = {
-  secretTypes?: CheckboxOptions[]
-  secretManagerIdentifiers?: CheckboxOptions[]
-  description?: string
-  tags?: string
-}
-
 export interface CheckboxOptions {
   label: string
   value: string

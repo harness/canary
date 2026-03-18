@@ -1,7 +1,7 @@
 import { YamlEntityType } from '@harnessio/ui/types'
 
-// Re-export getNestedStepsCount from UI utils for backward compatibility
-export { getNestedStepsCount } from '@harnessio/ui/utils'
+// Re-export getNestedStepsCount from pipeline-nodes utils
+export { getNestedStepsCount } from '../../../../pipeline-nodes/utils/pipeline-utils'
 
 export const getIsRunStep = (step: Record<string, any>) => typeof step === 'object' && 'run' in step
 

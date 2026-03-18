@@ -1,4 +1,4 @@
-import { ExecutionStatusType } from '@harnessio/ui/components'
+import { ExecutionStatusType } from '../../../../pipeline-nodes/types/types'
 
 import { YamlEntityType } from './yaml-entity-type'
 

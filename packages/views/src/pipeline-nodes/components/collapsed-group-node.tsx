@@ -1,5 +1,6 @@
-import { getNestedStepsCount } from '@/utils/pipeline-utils'
-import { cn } from '@utils/cn'
+import { cn } from '@harnessio/ui/utils'
+
+import { getNestedStepsCount } from '../utils/pipeline-utils'
 
 import {
   ParallelNodeInternalType,

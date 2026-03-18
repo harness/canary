@@ -1,6 +1,6 @@
 {
   "name": "@harnessio/yaml-editor",
-  "version": "0.25.0",
+  "version": "0.26.0",
   "private": false,
   "author": "Harness Inc.",
   "license": "Apache-2.0",
@@ -10,10 +10,12 @@
   "files": [
     "dist"
   ],
-  ".": {
-    "require": "./dist/index.cjs",
-    "import": "./dist/index.js",
-    "types": "./dist/index.d.ts"
+  "exports": {
+    ".": {
+      "types": "./dist/index.d.ts",
+      "require": "./dist/index.cjs",
+      "import": "./dist/index.js"
+    }
   },
   "types": "./dist/index.d.ts",
   "scripts": {
@@ -29,7 +31,8 @@
     "playground": "vite dev --config vite.config.playground.ts"
   },
   "dependencies": {
-    "@monaco-editor/react": "4.6.0"
+    "@monaco-editor/react": "4.6.0",
+    "yaml": "^2.7.1"
   },
   "peerDependencies": {
     "monaco-editor": "^0.40.0",

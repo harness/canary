@@ -1,12 +1,5 @@
 import type { Schema } from 'zod'
 
-// Runtime input types - used by form inputs that support multiple value types (fixed/runtime/expression)
-export type InputValueType = 'fixed' | 'runtime' | 'expression'
-
-export interface RuntimeInputConfig {
-  allowedValueTypes?: InputValueType[]
-}
-
 /** @deprecated use AnyFormValue */
 export type AnyFormikValue = any
 

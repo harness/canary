@@ -4,6 +4,8 @@ import { Layout, Separator, Skeleton, Text } from '@/components'
 import { useResizeObserver } from '@/hooks'
 import { cn, wrapConditionalObjectElement } from '@/utils'
 
+export type ViewOnlyItemLayout = 'horizontal' | 'vertical'
+
 export type ViewOnlyItemData = { label: string; value: ReactNode } | ReactNode
 
 function splitArray<T>(array: T[]): [T[], T[]] {
@@ -21,11 +23,13 @@ function splitArray<T>(array: T[]): [T[], T[]] {
 export const ViewOnlyItem = ({
   label,
   value,
-  isLoading = false
+  isLoading = false,
+  itemLayout = 'horizontal'
 }: {
   label: string
   value: ReactNode
   isLoading?: boolean
+  itemLayout?: ViewOnlyItemLayout
 }) => {
   const valueNode = !value ? (
     <Text as="span" color="disabled">
@@ -38,6 +42,28 @@ export const ViewOnlyItem = ({
   ) : (
     value
   )
+
+  if (itemLayout === 'vertical') {
+    return (
+      <Layout.Vertical key={label} gapY="4xs">
+        {isLoading ? (
+          <>
+            <Skeleton.Typography className="w-1/3" />
+            <Skeleton.Typography className="w-2/3" />
+          </>
+        ) : (
+          <>
+            <Text color="foreground-3" variant="body-normal">
+              {label}
+            </Text>
+            <Text color="foreground-1" variant="body-normal">
+              {valueNode}
+            </Text>
+          </>
+        )}
+      </Layout.Vertical>
+    )
+  }
 
   return (
     <Layout.Grid key={label} flow="row" gapX="2xl" columns="minmax(0, 200px) minmax(0, 1fr)" align="start">
@@ -66,11 +92,19 @@ export interface ViewOnlyProps {
   title?: string
   data: ViewOnlyItemData[]
   layout?: 'singleColumn' | 'columns'
+  itemLayout?: ViewOnlyItemLayout
   className?: string
   isLoading?: boolean
 }
 
-export const ViewOnly = ({ className, title, data, layout = 'columns', isLoading = false }: ViewOnlyProps) => {
+export const ViewOnly = ({
+  className,
+  title,
+  data,
+  layout = 'columns',
+  itemLayout = 'horizontal',
+  isLoading = false
+}: ViewOnlyProps) => {
   const [isLayoutColumns, setIsLayoutColumns] = useState(layout === 'columns')
   const contentRef = useRef<HTMLDivElement>(null)
 
@@ -96,14 +130,22 @@ export const ViewOnly = ({ className, title, data, layout = 'columns', isLoading
   const renderItem = useCallback(
     (item: ViewOnlyItemData) => {
       if (item instanceof Object && 'label' in item && 'value' in item && typeof item.label === 'string') {
-        return <ViewOnlyItem key={item.label} label={item.label} value={item.value} isLoading={isLoading} />
+        return (
+          <ViewOnlyItem
+            key={item.label}
+            label={item.label}
+            value={item.value}
+            isLoading={isLoading}
+            itemLayout={itemLayout}
+          />
+        )
       } else if (isValidElement(item)) {
         return item
       }
 
       return null
     },
-    [isLoading]
+    [isLoading, itemLayout]
   )
 
   if (!data || data.length === 0) return null

@@ -1,6 +1,6 @@
 import { createHash } from 'crypto'
-import { mkdirSync, readFileSync, readdirSync, writeFileSync } from 'fs'
-import { resolve, basename, extname, join } from 'path'
+import { mkdirSync, readdirSync, readFileSync, writeFileSync } from 'fs'
+import { basename, extname, join, resolve } from 'path'
 
 import react from '@vitejs/plugin-react-swc'
 import { defineConfig, type Plugin } from 'vite'
@@ -16,7 +16,8 @@ const external = [
   'react-router',
   'react/jsx-runtime',
   'react-i18next',
-  'i18next'
+  'i18next',
+  'zod'
 ]
 
 /**
@@ -54,7 +55,7 @@ function extractCssFontsPlugin(fontDir: string): Plugin {
         // fontDir missing — nothing to match against
       }
 
-      const cssFiles = readdirSync(outDir).filter((f) => f.endsWith('.css'))
+      const cssFiles = readdirSync(outDir).filter(f => f.endsWith('.css'))
 
       for (const cssFile of cssFiles) {
         const cssPath = join(outDir, cssFile)

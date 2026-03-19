@@ -16,6 +16,10 @@
       "types": "./dist/pipeline.d.ts",
       "import": "./dist/pipeline.js"
     },
+    "./filters": {
+      "types": "./dist/filters.d.ts",
+      "import": "./dist/filters.js"
+    },
     "./locales": {
       "types": "./dist/locales.d.ts",
       "import": "./dist/locales.js"
@@ -42,9 +46,7 @@
     "@git-diff-view/file": "^0.0.30",
     "@git-diff-view/react": "^0.0.30",
     "@git-diff-view/shiki": "^0.0.21",
-    "@harnessio/filters": "workspace:*",
     "@harnessio/forms": "workspace:*",
-    "@harnessio/ui": "workspace:*",
     "@harnessio/yaml-editor": "workspace:*",
     "@hookform/resolvers": "^3.6.0",
     "@tanstack/react-table": "^8.21.3",
@@ -66,12 +68,17 @@
   },
   "peerDependencies": {
     "@harnessio/pipeline-graph": "workspace:*",
+    "@harnessio/filters": "workspace:*",
+    "@harnessio/ui": "workspace:*",
     "react": "^17.0.2",
     "react-dom": "^17.0.2",
     "react-router-dom": ">=5"
   },
   "peerDependenciesMeta": {
     "@harnessio/pipeline-graph": {
+      "optional": true
+    },
+    "@harnessio/filters": {
       "optional": true
     }
   },

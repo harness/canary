@@ -12,7 +12,7 @@
       },
       "$type": "color",
       "$value": "{pure.black}",
-      "$description": "Level 0 background - Foundational surface layer. Used for page navigation areas and as a container for elevated content (insets). Creates the base canvas that other elements sit upon.\n\nCommon uses: Page headers, navigation bars, sidebar backgrounds, main content containers."
+      "$description": "Level 0. Foundational surface layer. Used for page navigation areas and as a container for elevated content (insets). Creates the base canvas that other elements sit upon.\n\nCommon uses: Page headers, navigation bars, sidebar backgrounds, main content containers."
     },
     "1": {
       "$extensions": {

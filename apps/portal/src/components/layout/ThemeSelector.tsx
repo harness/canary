@@ -7,7 +7,11 @@ type Theme = "dark-std-std" | "light-std-std";
 
 export function ThemeSelector() {
   const [theme, setTheme] = useState<Theme>(
-    () => (localStorage.getItem("canary-theme") as Theme) || "dark-std-std",
+    () =>
+      (localStorage.getItem("canary-theme") as Theme) ||
+      (window.matchMedia("(prefers-color-scheme: dark)").matches
+        ? "dark-std-std"
+        : "light-std-std"),
   );
 
   const { loadTheme } = useThemeCSSLoader("/themes", themeManifest);

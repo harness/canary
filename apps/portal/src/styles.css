@@ -9,6 +9,10 @@ main {
   @apply px-0 py-0 w-full !important;
 }
 
+.sl-container {
+  max-width: 100% !important;
+}
+
 .sl-container :is(h1):not(:where(.not-content *)) {
   @apply text-cn-size-10 font-normal text-cn-1;
 }

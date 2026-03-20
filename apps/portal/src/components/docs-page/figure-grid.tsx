@@ -131,7 +131,7 @@ const IllustrationGridItem = ({ name }: { name: string }) => {
 
   return (
     <div
-      className="group relative h-[120px] flex flex-col items-center justify-center gap-cn-sm rounded-cn-3 hover:bg-cn-hover transition-colors cursor-pointer !mt-0"
+      className="group relative flex flex-col items-center justify-end gap-cn-xs rounded-cn-5 bg-cn-2 p-cn-sm hover:bg-cn-hover transition-colors cursor-pointer !mt-0"
       title={`Click to copy "${name}"`}
       data-figure-name={name.toLowerCase()}
       onClick={handleCopy}
@@ -141,14 +141,16 @@ const IllustrationGridItem = ({ name }: { name: string }) => {
         size="xs"
         className={`absolute top-cn-2xs right-cn-2xs transition-opacity ${copied ? "opacity-100 text-cn-success" : "opacity-0 group-hover:opacity-100 text-cn-3"}`}
       />
-      <Illustration
-        name={name as keyof typeof IllustrationsNameMap}
-        className="!mt-0"
-      />
+      <div className="flex-1 flex items-center justify-center w-full overflow-hidden">
+        <Illustration
+          name={name as keyof typeof IllustrationsNameMap}
+          className="!mt-0 max-h-[64px] max-w-full object-contain"
+        />
+      </div>
       <Text
         align="center"
         color="foreground-3"
-        className="!mt-0 text-cn-size-1"
+        className="!mt-0 text-cn-size-1 truncate w-full"
       >
         {name}
       </Text>
@@ -199,12 +201,19 @@ export const FigureGrid = ({ type }: { type: FigureType }) => {
     return (
       <TooltipProvider>
         <SearchableArea
-          containerClassName="grid grid-cols-[repeat(auto-fill,minmax(120px,1fr))] gap-cn-md"
+          containerClassName="grid grid-cols-[repeat(auto-fill,minmax(140px,1fr))] gap-cn-sm"
           dataAttributeSelector="data-figure-name"
         >
-          {Object.keys(IllustrationsNameMap).map((name) => (
-            <IllustrationGridItem key={name} name={name} />
-          ))}
+          {Object.keys(IllustrationsNameMap)
+            .sort((a, b) => {
+              const aLight = a.endsWith("-light");
+              const bLight = b.endsWith("-light");
+              if (aLight !== bLight) return aLight ? 1 : -1;
+              return a.localeCompare(b);
+            })
+            .map((name) => (
+              <IllustrationGridItem key={name} name={name} />
+            ))}
         </SearchableArea>
       </TooltipProvider>
     );

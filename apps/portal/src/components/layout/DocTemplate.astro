@@ -36,18 +36,18 @@ import ConditionalPageSidebar from "./ConditionalPageSidebar.astro";
     </div>
   </nav>
 
-  <!-- Content + TOC centered in remaining space -->
+  <!-- Content + TOC -->
   <div class="flex-1 flex justify-center" style="padding-top: 20px;">
-    <!-- Main Content -->
-    <div class="w-full" style="max-width: 860px; padding: 0 40px;">
-      <slot />
-    </div>
-
-    <!-- TOC Sidebar -->
     <div
-      class="w-[200px] shrink-0 sticky top-0 h-screen"
-      style="padding-top: 20px;"
+      class="flex gap-cn-xl w-full"
+      style="max-width: 1200px; padding: 0 40px;"
     >
+      <!-- Main Content -->
+      <div class="flex-1 min-w-0">
+        <slot />
+      </div>
+
+      <!-- TOC Sidebar (only rendered when has headings) -->
       <ConditionalPageSidebar />
     </div>
   </div>

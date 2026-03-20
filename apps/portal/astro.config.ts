@@ -81,7 +81,6 @@ export default defineConfig({
         },
         {
           label: "Foundations",
-          collapsed: true,
           items: [
             {
               slug: "foundations/colors",
@@ -125,14 +124,13 @@ export default defineConfig({
             },
             {
               slug: "foundations/variables",
-              label: "CSS Variables",
+              label: "Styles & Classes",
               attrs: { "data-icon": "variables" },
             },
           ],
         },
         {
           label: "Components",
-          collapsed: true,
           items: [
             "components/data-display/accordion",
             "components/feedback/alert",

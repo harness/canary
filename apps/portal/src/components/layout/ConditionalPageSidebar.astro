@@ -5,4 +5,13 @@ const headings = Astro.locals.starlightRoute?.headings ?? [];
 const hasEnoughHeadings = headings.filter((h: any) => h.depth <= 3).length >= 3;
 ---
 
-{hasEnoughHeadings && <PageSidebar />}
+{
+  hasEnoughHeadings && (
+    <div
+      class="w-[200px] shrink-0 sticky top-0 h-screen"
+      style="padding-top: 20px;"
+    >
+      <PageSidebar />
+    </div>
+  )
+}

@@ -7,6 +7,7 @@ type Var = {
   description: string;
   category: string;
   subcategory: string;
+  twClasses: string[];
 };
 
 function extractVariables(obj: any): Var[] {
@@ -21,6 +22,7 @@ function extractVariables(obj: any): Var[] {
           description: item.$description || "",
           category: "",
           subcategory: "",
+          twClasses: [],
         });
       } else {
         vars.push(...extractVariables(item));
@@ -28,6 +30,123 @@ function extractVariables(obj: any): Var[] {
     }
   }
   return vars;
+}
+
+// --- CSS variable → Tailwind class mapping ---
+const SET_COLOR_MAP: Record<string, string> = { "forest-green": "forest" };
+
+function getTwClasses(n: string): string[] {
+  let m: RegExpMatchArray | null;
+
+  // bg: --cn-bg-{N} → bg-cn-{N}
+  if ((m = n.match(/^--cn-bg-(\d)$/))) return [`bg-cn-${m[1]}`];
+
+  // text: --cn-text-{N} → text-cn-{N}
+  if ((m = n.match(/^--cn-text-(\d)$/))) return [`text-cn-${m[1]}`];
+  if (n === "--cn-text-merged") return ["text-cn-merged"];
+  if (n === "--cn-text-brand") return ["text-cn-brand"];
+  if (n === "--cn-text-success") return ["text-cn-success"];
+  if (n === "--cn-text-danger") return ["text-cn-danger"];
+  if (n === "--cn-text-warning") return ["text-cn-warning"];
+
+  // border: --cn-border-{N} → border-cn-{N}
+  if ((m = n.match(/^--cn-border-(\d)$/))) return [`border-cn-${m[1]}`];
+  if (n === "--cn-border-brand") return ["border-cn-brand"];
+  if (n === "--cn-border-success") return ["border-cn-success"];
+  if (n === "--cn-border-danger") return ["border-cn-danger"];
+  if (n === "--cn-border-warning") return ["border-cn-warning"];
+  if (n === "--cn-state-disabled-border") return ["border-cn-disabled"];
+
+  // state: --cn-state-hover/selected → bg-cn-hover/selected
+  if (n === "--cn-state-hover") return ["bg-cn-hover"];
+  if (n === "--cn-state-selected") return ["bg-cn-selected"];
+
+  // set tokens: --cn-set-{color}-{variant}-{prop}[-suffix]
+  if (
+    (m = n.match(
+      /^--cn-set-(.+?)-(primary|secondary|outline)-(bg|text|border)(-hover|-selected)?$/,
+    ))
+  ) {
+    const [, raw, variant, prop, suffix] = m;
+    const c = SET_COLOR_MAP[raw] || raw;
+    const pfx = prop === "bg" ? "bg" : prop === "text" ? "text" : "border";
+    return [`${pfx}-cn-${c}-${variant}${suffix || ""}`];
+  }
+
+  // border radius: --cn-rounded-{val} → rounded-cn-{val}
+  if ((m = n.match(/^--cn-rounded-(.+)$/))) return [`rounded-cn-${m[1]}`];
+
+  // shadows: --cn-shadow-{N}
+  if (n === "--cn-shadow-0") return ["shadow-cn-none"];
+  if ((m = n.match(/^--cn-shadow-(\d)$/))) return [`shadow-cn-${m[1]}`];
+
+  // rings: --cn-ring-{type} → shadow-cn-ring-{type}
+  if ((m = n.match(/^--cn-ring-(.+)$/))) return [`shadow-cn-ring-${m[1]}`];
+
+  // spacing: --cn-layout-{size} → gap/p/m-cn-{size}
+  if ((m = n.match(/^--cn-layout-(.+)$/)))
+    return [`gap-cn-${m[1]}`, `p-cn-${m[1]}`, `m-cn-${m[1]}`];
+  if (n === "--cn-spacing-0") return ["gap-0", "p-0", "m-0"];
+  if (n === "--cn-spacing-px") return ["gap-px", "p-px", "m-px"];
+
+  // font size: --cn-font-size-{N} → text-cn-size-{N}
+  if ((m = n.match(/^--cn-font-size-(\d+)$/))) return [`text-cn-size-${m[1]}`];
+
+  // letter spacing: --cn-tracking-{name} → tracking-cn-{name}
+  if ((m = n.match(/^--cn-tracking-(.+)$/))) return [`tracking-cn-${m[1]}`];
+
+  // size tokens: --cn-size-{N} → w-cn-{N}, h-cn-{N}
+  if ((m = n.match(/^--cn-size-(\d+)$/)))
+    return [`w-cn-${m[1]}`, `h-cn-${m[1]}`];
+
+  // font weight: --cn-font-weight-{name} → font-{name} (standard TW)
+  if ((m = n.match(/^--cn-font-weight-(.+)$/))) return [`font-[var(${n})]`];
+
+  // opacity
+  if (n === "--cn-disabled-opacity") return ["opacity-cn-disabled"];
+
+  // logo
+  if (n === "--cn-logo-icon") return ["text-cn-logo-icon"];
+  if (n === "--cn-logo-text") return ["text-cn-logo-text"];
+
+  // typography composites (plugin utilities)
+  const typoPatterns: [RegExp, string][] = [
+    [/^--cn-heading-(.+)$/, "font-heading-"],
+    [/^--cn-body-(.+)$/, "font-body-"],
+    [/^--cn-caption-(.+)$/, "font-caption-"],
+    [/^--cn-micro-(.+)$/, "font-micro-"],
+  ];
+  for (const [re, pfx] of typoPatterns) {
+    if ((m = n.match(re))) return [`${pfx}${m[1]}`];
+  }
+
+  // comp: link
+  if (n === "--cn-comp-link-text-hover") return ["text-cn-brand-hover"];
+  if (n === "--cn-comp-link-default") return ["font-link-default"];
+  if (n === "--cn-comp-link-sm") return ["font-link-sm"];
+  if (n === "--cn-comp-dialog-title") return ["font-dialog-title"];
+
+  // comp: custom bg utilities
+  if (n === "--cn-comp-input-bg") return ["bg-cn-input"];
+  if (n === "--cn-comp-dialog-backdrop") return ["bg-cn-backdrop"];
+  if (n === "--cn-comp-diff-add-content") return ["bg-cn-diff-success"];
+  if (n === "--cn-comp-diff-del-content") return ["bg-cn-diff-danger"];
+  if (n === "--cn-input-radius") return ["rounded-cn-input"];
+  if (n === "--cn-input-size-md") return ["h-cn-input-md"];
+  if (n === "--cn-comp-card-fade-default")
+    return ["bg-cn-comp-card-fade-default"];
+  if (n === "--cn-comp-card-fade-selected")
+    return ["bg-cn-comp-card-fade-selected"];
+
+  // comp: data-viz bg
+  if ((m = n.match(/^--cn-comp-data-viz-\d+-(.+)$/)))
+    return [`bg-cn-data-viz-${m[1]}`];
+
+  // comp: data-viz shadows
+  if ((m = n.match(/^--cn-comp-shadow-data-viz-\d+-(.+)$/)))
+    return [`shadow-cn-${m[1]}`, `drop-shadow-cn-${m[1]}`];
+
+  return [];
 }
 
 // --- Extract all sources ---
@@ -193,7 +312,9 @@ const allComponent = componentVars.map((v) => ({
   subcategory: deriveComponentName(v.name),
 }));
 
-const allVariables = [...allSemantic, ...allGlobal, ...allComponent];
+const allVariables = [...allSemantic, ...allGlobal, ...allComponent].map(
+  (v) => ({ ...v, twClasses: getTwClasses(v.name) }),
+);
 
 import { CSSVariablesClient } from "./docs-page/CSSVariablesClient";
 ---

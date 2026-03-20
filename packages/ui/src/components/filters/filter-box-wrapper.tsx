@@ -82,15 +82,16 @@ const FilterBoxWrapper = ({
         <DropdownMenu.Header>
           <Layout.Flex align="center" justify="between">
             <Text as="span">{filterLabel}</Text>
+            {/* Using ignoreIconOnlyTooltip instead of tooltipProps to avoid
+                "Tooltip must be used within TooltipProvider" error when this
+                button renders inside portaled DropdownMenu.Content in MFE contexts */}
             <Button
               iconOnly
               variant="outline"
               size="2xs"
               onClick={handleRemoveFilter}
               aria-label={t('component:filter.delete', 'Delete filter')}
-              tooltipProps={{
-                content: t('component:filter.delete', 'Delete filter')
-              }}
+              ignoreIconOnlyTooltip
             >
               <IconV2 name="trash" skipSize />
             </Button>

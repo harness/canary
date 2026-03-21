@@ -8,6 +8,7 @@ import {
   useCalculateCommitDivergenceMutation,
   useCreateTokenMutation,
   useGetContentQuery,
+  useGetLanguagesQuery,
   useListPathsQuery,
   usePrCandidatesQuery,
   useSummaryQuery,
@@ -20,6 +21,7 @@ import {
   BranchSelectorTab,
   CloneCredentialDialog,
   CommitDivergenceType,
+  LanguageStat,
   RepoSummaryView,
   TokenFormType
 } from '@harnessio/views'
@@ -79,6 +81,8 @@ export default function RepoSummaryPage() {
     repo_ref: repoRef,
     queryParams: { include_commit: false, sort: 'date', order: 'asc', limit: 20, page: 1 }
   })
+
+  const { data: { body: languagesData } = {} } = useGetLanguagesQuery({ repo_ref: repoRef })
 
   const { branch_count, default_branch_commit_count, pull_req_summary, tag_count } = repoSummary || {}
 
@@ -330,6 +334,21 @@ export default function RepoSummaryPage() {
     [default_branch_commit_count, branch_count, tag_count, pull_req_summary]
   )
 
+  const languages: LanguageStat[] = useMemo(() => {
+    if (!languagesData?.length) return []
+
+    const totalBytes = languagesData.reduce((sum, lang) => sum + (lang.Bytes ?? 0), 0)
+    if (totalBytes === 0) return []
+
+    return languagesData
+      .map(lang => ({
+        name: (lang.Language as string) ?? '',
+        percentage: ((lang.Bytes as number) / totalBytes) * 100
+      }))
+      .filter(lang => lang.name && lang.percentage > 0)
+      .sort((a, b) => b.percentage - a.percentage)
+  }, [languagesData])
+
   const isLoading = loading || isLoadingRepoDetails
 
   const { triggerRef, registerTrigger } = useCustomDialogTrigger()
@@ -412,6 +431,7 @@ export default function RepoSummaryPage() {
         imageUrlTransform={imageUrlTransform}
         isSSHEnabled={isSSHEnabled}
         isForkEnabled={isForkEnabled}
+        languages={languages}
         upstream={repoData?.upstream}
         onFetchAndMerge={handleFetchAndMerge}
         isFetchingUpstream={isSyncingFork}

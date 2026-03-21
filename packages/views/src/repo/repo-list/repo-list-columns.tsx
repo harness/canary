@@ -18,6 +18,7 @@ import {
 import { TFunctionWithFallback } from '@harnessio/ui/context'
 
 import { ForkedFrom } from '../components/forked-from'
+import { getLanguageColor } from '../constants/language-colors'
 import { RepositoryType } from '../repo.types'
 import { RepoListColumn } from './constant'
 import { FavoriteProps } from './types'
@@ -95,6 +96,27 @@ export const getRepoListColumns = ({
         {row.original.private ? t('views:repos.private', 'Private') : t('views:repos.public', 'Public')}
       </StatusBadge>
     )
+  },
+  {
+    id: RepoListColumn.LANGUAGE,
+    header: t('views:repos.language', 'Language'),
+    enableSorting: false,
+    enableHiding: true,
+    size: 130,
+    maxSize: 130,
+    cell: ({ row }) => {
+      const { language } = row.original
+      if (!language) return null
+
+      return (
+        <Layout.Flex gap="2xs" align="center">
+          <div className="rounded-cn-full size-2.5 shrink-0" style={{ backgroundColor: getLanguageColor(language) }} />
+          <Text color="foreground-2" truncate>
+            {language}
+          </Text>
+        </Layout.Flex>
+      )
+    }
   },
   {
     id: RepoListColumn.PR,

@@ -261,18 +261,19 @@ export interface GeneralPayload extends TypesPullReqActivity {
 }
 
 export type EnumPullReqActivityType =
+  | 'auto-merge-unsupported-merge-method'
   | 'branch-delete'
+  | 'branch-restore'
   | 'branch-update'
   | 'code-comment'
   | 'comment'
+  | 'label-modify'
   | 'merge'
+  | 'non-unique-merge-base'
   | 'review-submit'
+  | 'reviewer-add'
   | 'reviewer-delete'
   | 'state-change'
-  | 'title-change'
-  | 'reviewer-add'
-  | 'label-modify'
-  | 'branch-restore'
   | 'target-branch-change'
   | 'title-change'
   | 'user-group-reviewer-add'

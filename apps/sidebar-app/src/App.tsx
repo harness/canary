@@ -15,7 +15,7 @@ import {
   useSearchParams
 } from 'react-router-dom'
 
-import { Sidebar, TooltipProvider, type SidebarItemProps } from '@harnessio/ui/components'
+import { Layout, Sidebar, TooltipProvider, useSidebar, type SidebarItemProps } from '@harnessio/ui/components'
 import {
   defaultTheme,
   DialogProvider,
@@ -40,6 +40,12 @@ const demoItems: SidebarItemProps[] = [
 const Shell: FC = () => {
   const navigate = useNavigate()
   const location = useLocation()
+  const { state: sidebarState } = useSidebar()
+  const isSidebarCollapsed = sidebarState === 'collapsed'
+
+  const gridColumns = isSidebarCollapsed
+    ? 'var(--cn-sidebar-container-min-width) 1fr'
+    : 'var(--cn-sidebar-container-full-width) 1fr'
 
   return (
     <RouterContextProvider
@@ -52,8 +58,8 @@ const Shell: FC = () => {
       useMatches={useMatches}
       useParams={useParams}
     >
-      <Sidebar.Provider defaultOpen className="bg-cn-0">
-        <Sidebar.Root>
+      <Layout.Grid columns={gridColumns} className="bg-cn-0 w-full transition-all duration-200 ease-in-out">
+        <Sidebar.Root className="cn-sidebar-content-height">
           <Sidebar.Content>
             <Sidebar.Group>
               {demoItems.map(item => (
@@ -62,7 +68,8 @@ const Shell: FC = () => {
             </Sidebar.Group>
           </Sidebar.Content>
         </Sidebar.Root>
-      </Sidebar.Provider>
+        <Sidebar.Rail animate className="top-cn-xs w-5 rounded-tl-cn-6 rounded-bl-cn-6 bottom-cn-xs" />
+      </Layout.Grid>
     </RouterContextProvider>
   )
 }
@@ -74,7 +81,14 @@ const App: FC = () => (
         <DialogProvider>
           <BrowserRouter>
             <Routes>
-              <Route path="*" element={<Shell />} />
+              <Route
+                path="*"
+                element={
+                  <Sidebar.Provider>
+                    <Shell />
+                  </Sidebar.Provider>
+                }
+              />
             </Routes>
           </BrowserRouter>
         </DialogProvider>

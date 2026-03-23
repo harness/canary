@@ -1,0 +1,253 @@
+---
+title: Date Range Filter
+description: A filter component for selecting date ranges via presets or a custom calendar picker
+beta: true
+---
+
+The `DateRangeFilter` is a new filter field type (`FilterFieldTypes.DateRange`) in the filters system. It presents a dropdown with grouped preset date ranges (Recommended, Relative dates, Calendar months) and a "Select custom range" option. Clicking "Select custom range" reveals a two-month calendar alongside the preset list for picking an arbitrary date range.
+
+import { DocsPage } from "@/components/docs-page";
+
+<DocsPage.ComponentExample
+  client:only
+  code={`() => {
+    const [value, setValue] = React.useState(undefined);
+
+    return (
+      <FilterField
+        filterOption={{
+          type: FilterFieldTypes.DateRange,
+          label: 'Timeframe',
+          value: 'timeframe',
+        }}
+        removeFilter={() => {
+          setValue(undefined);
+        }}
+        shouldOpenFilter={false}
+        onChange={(val) => setValue(val)}
+        value={value}
+      />
+    );
+}`}
+/>
+
+## Usage
+
+```typescript jsx
+import { FilterField, FilterFieldTypes } from '@harnessio/ui/components'
+import type { DateRangeValue } from '@harnessio/ui/components'
+
+const MyComponent = () => {
+  const [value, setValue] = useState<DateRangeValue | undefined>();
+
+  return (
+    <FilterField
+      filterOption={{
+        type: FilterFieldTypes.DateRange,
+        label: 'Timeframe',
+        value: 'timeframe',
+      }}
+      removeFilter={() => {}}
+      shouldOpenFilter={false}
+      onChange={(val) => setValue(val)}
+      value={value}
+    />
+  );
+};
+```
+
+## With Custom Presets
+
+You can provide your own set of presets via `filterFieldConfig.presets`. Each preset defines a `label`, a unique `value`, a `group` for visual grouping, and a `getRange` function that returns `{ from: Date, to: Date }`.
+
+<DocsPage.ComponentExample
+  client:only
+  code={`() => {
+    const [value, setValue] = React.useState(undefined);
+
+    const now = new Date();
+    const customPresets = [
+      {
+        label: 'Today',
+        value: 'today',
+        group: 'recommended',
+        getRange: () => {
+          const start = new Date(now);
+          start.setHours(0, 0, 0, 0);
+          return { from: start, to: now };
+        },
+      },
+      {
+        label: 'Yesterday',
+        value: 'yesterday',
+        group: 'recommended',
+        getRange: () => {
+          const start = new Date(now);
+          start.setDate(start.getDate() - 1);
+          start.setHours(0, 0, 0, 0);
+          const end = new Date(start);
+          end.setHours(23, 59, 59, 999);
+          return { from: start, to: end };
+        },
+      },
+      {
+        label: 'Last 14 Days',
+        value: 'last_14_days',
+        group: 'relative',
+        getRange: () => {
+          const start = new Date(now);
+          start.setDate(start.getDate() - 14);
+          return { from: start, to: now };
+        },
+      },
+    ];
+
+    return (
+      <FilterField
+        filterOption={{
+          type: FilterFieldTypes.DateRange,
+          label: 'Period',
+          value: 'period',
+          filterFieldConfig: {
+            presets: customPresets,
+            showCustomRange: true,
+          },
+        }}
+        removeFilter={() => setValue(undefined)}
+        shouldOpenFilter={false}
+        onChange={(val) => setValue(val)}
+        value={value}
+      />
+    );
+}`}
+/>
+
+## Without Custom Range
+
+Set `showCustomRange: false` to hide the "Select custom range" option and only show presets.
+
+<DocsPage.ComponentExample
+  client:only
+  code={`() => {
+    const [value, setValue] = React.useState(undefined);
+
+    return (
+      <FilterField
+        filterOption={{
+          type: FilterFieldTypes.DateRange,
+          label: 'Timeframe',
+          value: 'timeframe',
+          filterFieldConfig: {
+            showCustomRange: false,
+          },
+        }}
+        removeFilter={() => setValue(undefined)}
+        shouldOpenFilter={false}
+        onChange={(val) => setValue(val)}
+        value={value}
+      />
+    );
+}`}
+/>
+
+## API Reference
+
+### FilterFieldTypes.DateRange
+
+Use `FilterFieldTypes.DateRange` as the `type` in a `FilterOptionConfig` to render a date range filter.
+
+<DocsPage.PropsTable
+  props={[
+    {
+      name: "type",
+      description: "Must be FilterFieldTypes.DateRange",
+      required: true,
+      value: "FilterFieldTypes.DateRange",
+    },
+    {
+      name: "label",
+      description: "The display label shown on the filter trigger button.",
+      required: true,
+      value: "string",
+    },
+    {
+      name: "value",
+      description: "The filter key used to identify this filter.",
+      required: true,
+      value: "string",
+    },
+    {
+      name: "filterFieldConfig.presets",
+      description: "Custom preset date ranges. If not provided, a default set of presets is used (Last 7 Days, This Month, Last 30 Days, etc.).",
+      required: false,
+      value: "DateRangePreset[]",
+    },
+    {
+      name: "filterFieldConfig.showCustomRange",
+      description: "Whether to show the 'Select custom range' option. When clicked, a two-month calendar appears alongside the preset list.",
+      required: false,
+      defaultValue: "true",
+      value: "boolean",
+    },
+  ]}
+/>
+
+### DateRangeValue
+
+The value emitted by the filter when a range is selected.
+
+<DocsPage.PropsTable
+  props={[
+    {
+      name: "from",
+      description: "The start date of the range.",
+      required: true,
+      value: "Date",
+    },
+    {
+      name: "to",
+      description: "The end date of the range.",
+      required: true,
+      value: "Date",
+    },
+    {
+      name: "preset",
+      description: "The preset key if a preset was selected, undefined for custom ranges.",
+      required: false,
+      value: "string",
+    },
+  ]}
+/>
+
+### DateRangePreset
+
+Defines a preset date range option.
+
+<DocsPage.PropsTable
+  props={[
+    {
+      name: "label",
+      description: "Display text for the preset.",
+      required: true,
+      value: "string",
+    },
+    {
+      name: "value",
+      description: "Unique identifier for the preset.",
+      required: true,
+      value: "string",
+    },
+    {
+      name: "getRange",
+      description: "Function returning the from/to dates for this preset.",
+      required: true,
+      value: "() => { from: Date; to: Date }",
+    },
+    {
+      name: "group",
+      description: "Visual group the preset belongs to.",
+      required: true,
+      value: "'recommended' | 'relative' | 'calendar'",
+    },
+  ]}
+/>

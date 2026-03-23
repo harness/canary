@@ -32,7 +32,11 @@ export const DataTableColumnFilterDropdown: FC<DataTableColumnFilterDropdownProp
             key={column.value}
             title={column.label}
             checked={visibleColumns.includes(column.value)}
-            onCheckedChange={checked => onCheckedChange(column.value, checked)}
+            disabled={column.disabled}
+            onCheckedChange={checked => {
+              if (column.disabled) return
+              onCheckedChange(column.value, checked)
+            }}
           />
         ))}
         {onReset && (

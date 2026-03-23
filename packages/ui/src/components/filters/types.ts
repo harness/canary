@@ -21,6 +21,7 @@ export enum FilterFieldTypes {
 export interface CheckboxOptions {
   label: string
   value: string
+  disabled?: boolean
 }
 
 interface FilterFieldConfig<T = string | number> {

@@ -1,0 +1,31 @@
+{
+  "name": "sidebar-app",
+  "private": true,
+  "version": "0.0.0",
+  "type": "module",
+  "scripts": {
+    "dev": "vite",
+    "build": "vite build",
+    "build:ci": "vite build",
+    "lint": "eslint ./src",
+    "pretty": "prettier --check ./src",
+    "typecheck": "tsc -b"
+  },
+  "dependencies": {
+    "@emotion/is-prop-valid": "0.8.8",
+    "@harnessio/ui": "workspace:*",
+    "react": "^17.0.2",
+    "react-dom": "^17.0.2",
+    "react-router-dom": "^6.26.0"
+  },
+  "devDependencies": {
+    "@types/react": "^17.0.3",
+    "@types/react-dom": "^17.0.3",
+    "@vitejs/plugin-react-swc": "^3.7.2",
+    "eslint": "^8.57.1",
+    "eslint-plugin-react-hooks": "^4.6.2",
+    "globals": "^15.12.0",
+    "typescript-eslint": "^8.15.0",
+    "vite": "^6.0.3"
+  }
+}

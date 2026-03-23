@@ -15,7 +15,7 @@ import {
   useSearchParams
 } from 'react-router-dom'
 
-import { Layout, Sidebar, TooltipProvider, useSidebar, type SidebarItemProps } from '@harnessio/ui/components'
+import { Layout, Sidebar, Text, TooltipProvider, useSidebar, type SidebarItemProps } from '@harnessio/ui/components'
 import {
   defaultTheme,
   DialogProvider,
@@ -76,6 +76,11 @@ const Shell: FC = () => {
             </Sidebar.Content>
           </Sidebar.Root>
           <Sidebar.Rail animate className="top-cn-xs rounded-tl-cn-6 rounded-bl-cn-6 bottom-cn-xs w-5" />
+          <Sidebar.Inset className="w-full">
+            <Layout.Flex justify="center" align="center" className="h-full w-full">
+              <Text variant="body-normal">Chat</Text>
+            </Layout.Flex>
+          </Sidebar.Inset>
         </Layout.Grid>
       </div>
     </RouterContextProvider>

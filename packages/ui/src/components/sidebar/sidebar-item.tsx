@@ -330,7 +330,7 @@ const SidebarItemTrigger = forwardRef<HTMLButtonElement | HTMLAnchorElement, Sid
             size="2xs"
           />
         )}
-        {((withActionMenu && !badge) || withSubmenu) && (
+        {((withActionMenu && !badge) || withSubmenu || withRightIndicator) && (
           <div className="cn-sidebar-item-content-action-item-placeholder" />
         )}
       </Layout.Grid>

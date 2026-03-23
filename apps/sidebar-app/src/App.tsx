@@ -1,6 +1,6 @@
 import '@harnessio/ui/styles.css'
 
-import { FC } from 'react'
+import { FC, useEffect, useState } from 'react'
 import {
   BrowserRouter,
   Link,
@@ -21,8 +21,13 @@ import {
   DialogProvider,
   RouterContextProvider,
   ThemeProvider,
-  TranslationProvider
+  TranslationProvider,
+  type FullTheme
 } from '@harnessio/ui/context'
+
+import { Header } from './header'
+
+const LIGHT_THEME = 'light-std-std' as FullTheme
 
 const demoItems: SidebarItemProps[] = [
   { to: '/repos', title: 'Repositories', icon: 'folder' },
@@ -58,43 +63,56 @@ const Shell: FC = () => {
       useMatches={useMatches}
       useParams={useParams}
     >
-      <Layout.Grid columns={gridColumns} className="bg-cn-0 w-full transition-all duration-200 ease-in-out">
-        <Sidebar.Root className="cn-sidebar-content-height">
-          <Sidebar.Content>
-            <Sidebar.Group>
-              {demoItems.map(item => (
-                <Sidebar.Item key={item.title} {...item} />
-              ))}
-            </Sidebar.Group>
-          </Sidebar.Content>
-        </Sidebar.Root>
-        <Sidebar.Rail animate className="top-cn-xs w-5 rounded-tl-cn-6 rounded-bl-cn-6 bottom-cn-xs" />
-      </Layout.Grid>
+      <div className="bg-cn-0 flex min-h-screen w-full flex-col">
+        <Header />
+        <Layout.Grid columns={gridColumns} className="w-full flex-1 transition-all duration-200 ease-in-out">
+          <Sidebar.Root className="cn-sidebar-content-height">
+            <Sidebar.Content>
+              <Sidebar.Group>
+                {demoItems.map(item => (
+                  <Sidebar.Item key={item.title} {...item} />
+                ))}
+              </Sidebar.Group>
+            </Sidebar.Content>
+          </Sidebar.Root>
+          <Sidebar.Rail animate className="top-cn-xs rounded-tl-cn-6 rounded-bl-cn-6 bottom-cn-xs w-5" />
+        </Layout.Grid>
+      </div>
     </RouterContextProvider>
   )
 }
 
-const App: FC = () => (
-  <ThemeProvider theme={defaultTheme} setTheme={() => {}} isLightTheme={false}>
-    <TranslationProvider>
-      <TooltipProvider>
-        <DialogProvider>
-          <BrowserRouter>
-            <Routes>
-              <Route
-                path="*"
-                element={
-                  <Sidebar.Provider>
-                    <Shell />
-                  </Sidebar.Provider>
-                }
-              />
-            </Routes>
-          </BrowserRouter>
-        </DialogProvider>
-      </TooltipProvider>
-    </TranslationProvider>
-  </ThemeProvider>
-)
+const App: FC = () => {
+  const [theme, setTheme] = useState<FullTheme>(defaultTheme)
+
+  useEffect(() => {
+    document.documentElement.className = theme
+  }, [theme])
+
+  const isLight = theme === LIGHT_THEME
+
+  return (
+    <ThemeProvider theme={theme} setTheme={setTheme} isLightTheme={isLight}>
+      <TranslationProvider>
+        <TooltipProvider>
+          <DialogProvider>
+            <BrowserRouter>
+              <Routes>
+                <Route
+                  path="*"
+                  element={
+                    <Sidebar.Provider>
+                      <Shell />
+                    </Sidebar.Provider>
+                  }
+                />
+              </Routes>
+            </BrowserRouter>
+          </DialogProvider>
+        </TooltipProvider>
+      </TranslationProvider>
+    </ThemeProvider>
+  )
+}
 
 export default App

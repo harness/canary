@@ -431,17 +431,21 @@ export const CreatePullRequest = () => {
     }
   }, [pullReqData, targetRef, sourceRef])
   const [query, setQuery] = useQueryState('query')
+  const [commitsPage, setCommitsPage] = useState(1)
+  const [commitsPageSize, setCommitsPageSize] = useState(25)
 
-  // TODO:handle pagination in compare commit tab
+  const handleCommitsPageSizeChange = useCallback((size: number) => {
+    setCommitsPageSize(size)
+    setCommitsPage(1)
+  }, [])
+
   const { data: { body: commitData, headers } = {}, isFetching: isFetchingCommits } = useListCommitsQuery(
     {
       repo_ref: repoRef,
 
       queryParams: {
-        // TODO: add query when commit list api has query abilities
-        // query: query??'',
-        page: 0,
-        limit: 20,
+        page: commitsPage,
+        limit: commitsPageSize,
         after: normalizedTargetRef,
         git_ref: normalizedSourceRef
       }
@@ -725,6 +729,11 @@ export const CreatePullRequest = () => {
         handleDeleteReviewer={handleDeleteReviewer}
         handleDeleteUserGroupReviewer={handleDeleteUserGroupReviewer}
         isFetchingCommits={isFetchingCommits}
+        totalCommits={commitData?.total_commits ?? 0}
+        commitsPage={commitsPage}
+        commitsPageSize={commitsPageSize}
+        setCommitsPage={setCommitsPage}
+        setCommitsPageSize={handleCommitsPageSizeChange}
         labelsList={labelsList}
         labelsValues={labelsValues}
         PRLabels={labels}

@@ -11,10 +11,7 @@ const PullRequestCommits: FC<PropsWithChildren<React.HTMLAttributes<HTMLElement>
     () => ({
       ...repoCommitStore,
       commitsList: repoCommitStore.commits,
-      setPage: noop,
       isFetchingCommits: false,
-      xNextPage: 0,
-      xPrevPage: 0,
       setIsFetchingCommits: noop,
       setCommitList: noop
     }),

@@ -21,7 +21,19 @@ import { combineAndNormalizePrincipalsAndGroups } from '@views/repo/utils'
 import { noop } from 'lodash-es'
 import { z } from 'zod'
 
-import { Avatar, Button, IconV2, Layout, Link, LinkProps, NoData, Skeleton, Tabs, Text } from '@harnessio/ui/components'
+import {
+  Avatar,
+  Button,
+  IconV2,
+  Layout,
+  Link,
+  LinkProps,
+  NoData,
+  Pagination,
+  Skeleton,
+  Tabs,
+  Text
+} from '@harnessio/ui/components'
 import { TFunctionWithFallback, useRouterContext, useTranslation } from '@harnessio/ui/context'
 import { TypesDiffStats, TypesUser } from '@harnessio/ui/types'
 
@@ -88,6 +100,11 @@ export interface PullRequestComparePageProps extends Partial<RoutingProps> {
   setDesc: (desc: string) => void
   prTemplate?: string
   isFetchingCommits?: boolean
+  totalCommits?: number
+  commitsPage?: number
+  commitsPageSize?: number
+  setCommitsPage?: (page: number) => void
+  setCommitsPageSize?: (size: number) => void
   labelsList?: ILabelType[]
   labelsValues?: LabelValuesType
   PRLabels?: LabelAssignmentType[]
@@ -135,6 +152,11 @@ export const PullRequestComparePage: FC<PullRequestComparePageProps> = ({
   setDesc,
   prTemplate,
   isFetchingCommits,
+  totalCommits,
+  commitsPage,
+  commitsPageSize,
+  setCommitsPage,
+  setCommitsPageSize,
   onGetFullDiff,
   toRepoFileDetails,
   sourceBranch,
@@ -429,22 +451,32 @@ export const PullRequestComparePage: FC<PullRequestComparePageProps> = ({
                       </Tabs.Content>
                     )}
                     <Tabs.Content className="pt-cn-lg" value="commits">
-                      {/* TODO: add pagination to this */}
                       {isFetchingCommits ? (
                         <Skeleton.List />
                       ) : (
-                        <CommitsList
-                          toCode={toCode}
-                          toCommitDetails={toCommitDetails}
-                          data={commitData?.map((item: TypesCommit) => ({
-                            sha: item.sha,
-                            parent_shas: item.parent_shas,
-                            title: item.title,
-                            message: item.message,
-                            author: item.author,
-                            committer: item.committer
-                          }))}
-                        />
+                        <>
+                          <CommitsList
+                            toCode={toCode}
+                            toCommitDetails={toCommitDetails}
+                            data={commitData?.map((item: TypesCommit) => ({
+                              sha: item.sha,
+                              parent_shas: item.parent_shas,
+                              title: item.title,
+                              message: item.message,
+                              author: item.author,
+                              committer: item.committer
+                            }))}
+                          />
+                          {totalCommits && commitsPageSize && commitsPage && setCommitsPage ? (
+                            <Pagination
+                              currentPage={commitsPage}
+                              totalItems={totalCommits}
+                              pageSize={commitsPageSize}
+                              onPageSizeChange={setCommitsPageSize}
+                              goToPage={setCommitsPage}
+                            />
+                          ) : null}
+                        </>
                       )}
                     </Tabs.Content>
                     <Tabs.Content value="changes">

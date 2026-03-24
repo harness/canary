@@ -115,8 +115,10 @@ Use the `shadow-cn-{level}` utilities in Tailwind:
 
 Each shadow level is composed of two parts:
 
-1. **`shadow-color.{n}`** — a color token with an `alpha` modifier applied in LCH color space
-2. **`shadow.{n}`** — a `boxShadow` token referencing `shadow-color.{n}` with offset/blur/spread values
+1. <span style="font-weight: 600">`shadow-color.{n}`</span> — a color token with
+   an `alpha` modifier applied in LCH color space
+2. <span style="font-weight: 600">`shadow.{n}`</span> — a `boxShadow` token
+   referencing `shadow-color.{n}` with offset/blur/spread values
 
 This separation means shadow geometry stays constant across themes, while shadow intensity adapts automatically.
 
@@ -241,7 +243,7 @@ Seven levels (0–6) plus an inner shadow provide a complete elevation vocabular
 
 ## Shadow Geometry
 
-Each level defines specific offset, blur, and spread values. Levels 2–5 use **dual-layer shadows** (two `box-shadow` values) for more natural depth.
+Each level defines specific offset, blur, and spread values. Levels 2–5 use <span style="font-weight: 600">dual-layer shadows</span> (two `box-shadow` values) for more natural depth.
 
 <div className="cn-table-v2 cn-table-v2-normal not-content">
   <div className="cn-table-v2-container">

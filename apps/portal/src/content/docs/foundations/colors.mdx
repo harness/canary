@@ -1,21 +1,26 @@
 ---
-title: Colors
-description: Color palette and tokens from Harness Design System
+title: Color Primitives
+description: Reference palette of LCH color primitives — test shades, check contrast, then use in semantic tokens
 ---
 
 import MainColorPalette from "@/components/MainColorPalette.astro";
-import ColorSystemDiagram from "@/components/ColorSystemDiagram.astro";
+import LinkCard from "@/components/LinkCard.astro";
 
-Our color system uses **LCH color space** for perceptually uniform shades. Each color has 15 shades from lightest (25) to darkest (1000).
+This is the <span style={{fontWeight: 600}}>reference palette</span> — raw LCH color primitives that the design system is built from. Each of the 15 color families has 14 shades (25–1000), authored in <span style={{fontWeight: 600}}>LCH color space</span> for perceptual uniformity.
 
-## Core Palette
+These values are <span style={{fontWeight: 600}}>not used directly</span> in components. Instead, they serve as building blocks for <a href="/design-system/color-system">semantic tokens</a> — which map color intent (background, text, border, status) to specific shades per theme.
 
-This is the **reference palette** — raw color values used when defining semantic tokens. These shades should not be used directly in components.
+<span style={{ fontWeight: 600 }}>Use this page to:</span>- Browse shades and
+inspect their Lightness, Chroma, and Hue values - Test color pairs for WCAG 2.1
+contrast compliance (AA / AAA) - Find the right primitives before assigning them
+to semantic roles
 
-To support **theme switching** (light/dark modes), always use **semantic variables** instead. The semantic palette maps these core shades to meaningful roles (foreground, background, borders, etc.) that automatically adapt to the active theme.
+<LinkCard
+  href="/design-system/color-system"
+  title="Color System"
+  description="Semantic tokens, color sets, themes, and how primitives map to meaningful roles"
+/>
 
-<ColorSystemDiagram />
-
-Click any swatch to copy its value.
+<div class="h-6" />
 
 <MainColorPalette />

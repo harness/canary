@@ -56,6 +56,46 @@ high-contrast-tritanopia.json → dark + high-contrast + tritanopia
 
 ---
 
+## Build Pipeline
+
+```bash
+cd packages/core-design-system
+pnpm build     # → node scripts/build.js
+```
+
+The build uses <span style="font-weight: 600">Style Dictionary</span> + <span style="font-weight: 600">@tokens-studio/sd-transforms</span>:
+
+1. Reads `$themes.json` and permutates all theme combinations
+2. Resolves token references (`{gray.500}` → actual LCH value)
+3. Applies custom transforms: `alpha`, `darken`, `lighten` in LCH space; `dropShadow` for data-viz
+4. Marks tokens as `themeable` or `core` (determines which output file they land in)
+5. Outputs to `dist/`:
+
+```
+dist/
+├── styles/
+│   ├── core-imports.css       # @imports for all core files
+│   ├── colors.css             # Core color primitives (:root)
+│   ├── core.css               # Dimensions, typography (:root)
+│   ├── breakpoint.css         # Layout tokens (:root)
+│   ├── components.css         # Component tokens (:root)
+│   ├── themes.css             # @imports for all 24 theme files
+│   ├── dark.css               # Semantic tokens under .dark selector
+│   ├── light.css
+│   ├── dark-dimmer.css
+│   ├── ...                    # 24 theme files total
+│   └── mfe-themes.css         # Subset for micro-frontend consumers
+│
+└── styles-esm/
+    ├── index.ts               # Theme map + re-exports
+    ├── colors.ts              # Programmatic access to primitives
+    └── ...                    # TypeScript module per file
+```
+
+All CSS properties use the `cn` prefix: `--cn-bg-0`, `--cn-text-1`, `--cn-set-brand-primary-bg`, etc.
+
+---
+
 ## CSS Selectors
 
 The build script maps each theme file to CSS class selectors in the format `.{mode}-{color}-{contrast}`:
@@ -115,57 +155,1848 @@ All CSS custom properties update instantly — no JS rerender needed for color c
 
 ---
 
-## Color Vision Adaptations
+## Contrast Modes
 
-Color-blind modes remap semantic hues to preserve information through brightness hierarchy rather than hue alone:
+Three contrast levels let users tune the visual intensity of the interface. Each level shifts shade steps and alpha values uniformly — no layout or component changes needed.
 
-<span style="font-weight: 600">Protanopia & Deuteranopia</span> (red-green): -
-<span style="font-weight: 600">Brand</span>: indigo → blue (brighter) -
-<span style="font-weight: 600">Success</span>: forest → indigo -
-<span style="font-weight: 600">Danger</span>: red → yellow (brighter than
-warning) - <span style="font-weight: 600">Warning</span>: yellow → orange
-(darker than danger)
+### Standard <span style="color: var(--cn-text-3); font-weight: 400">(default)</span>
 
-<span style="font-weight: 600">Tritanopia</span> (blue-yellow): -
-<span style="font-weight: 600">Warning</span>: yellow → orange - `set.orange` →
-brown, `set.purple` → pink, `set.violet` → red
+The baseline. Optimized for typical displays in well-lit environments. Text-to-background ratios comfortably exceed WCAG AA across all semantic roles.
+
+### Low Contrast <span style="color: var(--cn-text-3); font-weight: 400">(dimmer)</span>
+
+Reduces visual intensity for low-light or eye-strain situations. Every token shifts ~1 shade step toward the background: text softens, borders lighten, interactive-state alphas decrease. In dark mode, backgrounds are additionally darkened via LCH transforms to create a deeper, less luminous base.
+
+### High Contrast
+
+Amplifies separation between foreground and background for bright environments, small screens, or users who need stronger differentiation. Text shifts ~1 step darker (light mode) or brighter (dark mode), borders become more prominent, and interactive-state alphas increase.
+
+### Light mode
+
+<div className="cn-table-v2 cn-table-v2-normal not-content">
+  <div className="cn-table-v2-container">
+    <table className="cn-table-v2-element">
+      <thead className="cn-table-v2-header">
+        <tr className="cn-table-v2-row">
+          <th className="cn-table-v2-head">Token</th>
+          <th className="cn-table-v2-head">Standard</th>
+          <th className="cn-table-v2-head">Dimmer</th>
+          <th className="cn-table-v2-head">High Contrast</th>
+        </tr>
+      </thead>
+      <tbody className="cn-table-v2-body">
+        <tr className="cn-table-v2-row">
+          <td className="cn-table-v2-cell">
+            <code>bg.0</code>
+          </td>
+          <td className="cn-table-v2-cell">
+            <span className="shade-label">
+              <span
+                className="shade-preview"
+                style={{ background: "var(--cn-gray-25)" }}
+              ></span>{" "}
+              <code>gray.25</code>
+            </span>
+          </td>
+          <td className="cn-table-v2-cell">
+            <span className="shade-label">
+              <span
+                className="shade-preview"
+                style={{ background: "var(--cn-gray-50)" }}
+              ></span>{" "}
+              <code>gray.50</code>
+            </span>
+          </td>
+          <td className="cn-table-v2-cell">
+            <span className="shade-label">
+              <span
+                className="shade-preview"
+                style={{ background: "var(--cn-gray-25)" }}
+              ></span>{" "}
+              <code>gray.25</code>
+            </span>
+          </td>
+        </tr>
+        <tr className="cn-table-v2-row">
+          <td className="cn-table-v2-cell">
+            <code>bg.1</code>
+          </td>
+          <td className="cn-table-v2-cell">
+            <span className="shade-label">
+              <span
+                className="shade-preview"
+                style={{ background: "var(--cn-pure-white)" }}
+              ></span>{" "}
+              <code>pure.white</code>
+            </span>
+          </td>
+          <td className="cn-table-v2-cell">
+            <span className="shade-label">
+              <span
+                className="shade-preview"
+                style={{ background: "var(--cn-gray-25)" }}
+              ></span>{" "}
+              <code>gray.25</code>
+            </span>
+          </td>
+          <td className="cn-table-v2-cell">
+            <span className="shade-label">
+              <span
+                className="shade-preview"
+                style={{ background: "var(--cn-pure-white)" }}
+              ></span>{" "}
+              <code>pure.white</code>
+            </span>
+          </td>
+        </tr>
+        <tr className="cn-table-v2-row">
+          <td className="cn-table-v2-cell">
+            <code>bg.2</code>
+          </td>
+          <td className="cn-table-v2-cell">
+            <span className="shade-label">
+              <span
+                className="shade-preview"
+                style={{ background: "var(--cn-gray-25)" }}
+              ></span>{" "}
+              <code>gray.25</code>
+            </span>
+          </td>
+          <td className="cn-table-v2-cell">
+            <span className="shade-label">
+              <span
+                className="shade-preview"
+                style={{ background: "var(--cn-gray-50)" }}
+              ></span>{" "}
+              <code>gray.50</code>
+            </span>
+          </td>
+          <td className="cn-table-v2-cell">
+            <span className="shade-label">
+              <span
+                className="shade-preview"
+                style={{ background: "var(--cn-gray-25)" }}
+              ></span>{" "}
+              <code>gray.25</code>
+            </span>
+          </td>
+        </tr>
+        <tr className="cn-table-v2-row">
+          <td className="cn-table-v2-cell">
+            <code>bg.3</code>
+          </td>
+          <td className="cn-table-v2-cell">
+            <span className="shade-label">
+              <span
+                className="shade-preview"
+                style={{ background: "var(--cn-pure-white)" }}
+              ></span>{" "}
+              <code>pure.white</code>
+            </span>
+          </td>
+          <td className="cn-table-v2-cell">
+            <span className="shade-label">
+              <span
+                className="shade-preview"
+                style={{ background: "var(--cn-gray-25)" }}
+              ></span>{" "}
+              <code>gray.25</code>
+            </span>
+          </td>
+          <td className="cn-table-v2-cell">
+            <span className="shade-label">
+              <span
+                className="shade-preview"
+                style={{ background: "var(--cn-pure-white)" }}
+              ></span>{" "}
+              <code>pure.white</code>
+            </span>
+          </td>
+        </tr>
+        <tr className="cn-table-v2-row">
+          <td className="cn-table-v2-cell">
+            <code>text.1</code>
+          </td>
+          <td className="cn-table-v2-cell">
+            <span className="shade-label">
+              <span
+                className="shade-preview"
+                style={{ background: "var(--cn-pure-black)" }}
+              ></span>{" "}
+              <code>pure.black</code>
+            </span>
+          </td>
+          <td className="cn-table-v2-cell">
+            <span className="shade-label">
+              <span
+                className="shade-preview"
+                style={{ background: "var(--cn-gray-900)" }}
+              ></span>{" "}
+              <code>gray.900</code>
+            </span>
+          </td>
+          <td className="cn-table-v2-cell">
+            <span className="shade-label">
+              <span
+                className="shade-preview"
+                style={{ background: "var(--cn-pure-black)" }}
+              ></span>{" "}
+              <code>pure.black</code>
+            </span>
+          </td>
+        </tr>
+        <tr className="cn-table-v2-row">
+          <td className="cn-table-v2-cell">
+            <code>text.2</code>
+          </td>
+          <td className="cn-table-v2-cell">
+            <span className="shade-label">
+              <span
+                className="shade-preview"
+                style={{ background: "var(--cn-gray-850)" }}
+              ></span>{" "}
+              <code>gray.850</code>
+            </span>
+          </td>
+          <td className="cn-table-v2-cell">
+            <span className="shade-label">
+              <span
+                className="shade-preview"
+                style={{ background: "var(--cn-gray-800)" }}
+              ></span>{" "}
+              <code>gray.800</code>
+            </span>
+          </td>
+          <td className="cn-table-v2-cell">
+            <span className="shade-label">
+              <span
+                className="shade-preview"
+                style={{ background: "var(--cn-gray-850)" }}
+              ></span>{" "}
+              <code>gray.850</code>
+            </span>
+          </td>
+        </tr>
+        <tr className="cn-table-v2-row">
+          <td className="cn-table-v2-cell">
+            <code>text.3</code>
+          </td>
+          <td className="cn-table-v2-cell">
+            <span className="shade-label">
+              <span
+                className="shade-preview"
+                style={{ background: "var(--cn-gray-700)" }}
+              ></span>{" "}
+              <code>gray.700</code>
+            </span>
+          </td>
+          <td className="cn-table-v2-cell">
+            <span className="shade-label">
+              <span
+                className="shade-preview"
+                style={{ background: "var(--cn-gray-700)" }}
+              ></span>{" "}
+              <code>gray.700</code>
+            </span>
+          </td>
+          <td className="cn-table-v2-cell">
+            <span className="shade-label">
+              <span
+                className="shade-preview"
+                style={{ background: "var(--cn-gray-800)" }}
+              ></span>{" "}
+              <code>gray.800</code>
+            </span>
+          </td>
+        </tr>
+        <tr className="cn-table-v2-row">
+          <td className="cn-table-v2-cell">
+            <code>text.4</code>
+          </td>
+          <td className="cn-table-v2-cell">
+            <span className="shade-label">
+              <span
+                className="shade-preview"
+                style={{ background: "var(--cn-gray-600)" }}
+              ></span>{" "}
+              <code>gray.600</code>
+            </span>
+          </td>
+          <td className="cn-table-v2-cell">
+            <span className="shade-label">
+              <span
+                className="shade-preview"
+                style={{ background: "var(--cn-gray-600)" }}
+              ></span>{" "}
+              <code>gray.600</code>
+            </span>
+          </td>
+          <td className="cn-table-v2-cell">
+            <span className="shade-label">
+              <span
+                className="shade-preview"
+                style={{ background: "var(--cn-gray-700)" }}
+              ></span>{" "}
+              <code>gray.700</code>
+            </span>
+          </td>
+        </tr>
+        <tr className="cn-table-v2-row">
+          <td className="cn-table-v2-cell">
+            <code>border.1</code>
+          </td>
+          <td className="cn-table-v2-cell">
+            <span className="shade-label">
+              <span
+                className="shade-preview"
+                style={{ background: "var(--cn-gray-500)" }}
+              ></span>{" "}
+              <code>gray.500</code>
+            </span>
+          </td>
+          <td className="cn-table-v2-cell">
+            <span className="shade-label">
+              <span
+                className="shade-preview"
+                style={{ background: "var(--cn-gray-400)" }}
+              ></span>{" "}
+              <code>gray.400</code>
+            </span>
+          </td>
+          <td className="cn-table-v2-cell">
+            <span className="shade-label">
+              <span
+                className="shade-preview"
+                style={{ background: "var(--cn-gray-600)" }}
+              ></span>{" "}
+              <code>gray.600</code>
+            </span>
+          </td>
+        </tr>
+        <tr className="cn-table-v2-row">
+          <td className="cn-table-v2-cell">
+            <code>border.2</code>
+          </td>
+          <td className="cn-table-v2-cell">
+            <span className="shade-label">
+              <span
+                className="shade-preview"
+                style={{ background: "var(--cn-gray-150)" }}
+              ></span>{" "}
+              <code>gray.150</code>
+            </span>
+          </td>
+          <td className="cn-table-v2-cell">
+            <span className="shade-label">
+              <span
+                className="shade-preview"
+                style={{ background: "var(--cn-gray-150)" }}
+              ></span>{" "}
+              <code>gray.150</code>
+            </span>
+          </td>
+          <td className="cn-table-v2-cell">
+            <span className="shade-label">
+              <span
+                className="shade-preview"
+                style={{ background: "var(--cn-gray-300)" }}
+              ></span>{" "}
+              <code>gray.300</code>
+            </span>
+          </td>
+        </tr>
+        <tr className="cn-table-v2-row">
+          <td className="cn-table-v2-cell">
+            <code>border.3</code>
+          </td>
+          <td className="cn-table-v2-cell">
+            <span className="shade-label">
+              <span
+                className="shade-preview"
+                style={{ background: "var(--cn-gray-100)" }}
+              ></span>{" "}
+              <code>gray.100</code>
+            </span>
+          </td>
+          <td className="cn-table-v2-cell">
+            <span className="shade-label">
+              <span
+                className="shade-preview"
+                style={{ background: "var(--cn-gray-100)" }}
+              ></span>{" "}
+              <code>gray.100</code>
+            </span>
+          </td>
+          <td className="cn-table-v2-cell">
+            <span className="shade-label">
+              <span
+                className="shade-preview"
+                style={{ background: "var(--cn-gray-200)" }}
+              ></span>{" "}
+              <code>gray.200</code>
+            </span>
+          </td>
+        </tr>
+        <tr className="cn-table-v2-row">
+          <td className="cn-table-v2-cell">
+            <code>border.success</code>
+          </td>
+          <td className="cn-table-v2-cell">
+            <span className="shade-label">
+              <span
+                className="shade-preview"
+                style={{ background: "var(--cn-lime-500)" }}
+              ></span>{" "}
+              <code>lime.500</code>
+            </span>
+          </td>
+          <td className="cn-table-v2-cell">
+            <span className="shade-label">
+              <span
+                className="shade-preview"
+                style={{ background: "var(--cn-lime-400)" }}
+              ></span>{" "}
+              <code>lime.400</code>
+            </span>
+          </td>
+          <td className="cn-table-v2-cell">
+            <span className="shade-label">
+              <span
+                className="shade-preview"
+                style={{ background: "var(--cn-lime-600)" }}
+              ></span>{" "}
+              <code>lime.600</code>
+            </span>
+          </td>
+        </tr>
+        <tr className="cn-table-v2-row">
+          <td className="cn-table-v2-cell">
+            <code>border.danger</code>
+          </td>
+          <td className="cn-table-v2-cell">
+            <span className="shade-label">
+              <span
+                className="shade-preview"
+                style={{ background: "var(--cn-red-500)" }}
+              ></span>{" "}
+              <code>red.500</code>
+            </span>
+          </td>
+          <td className="cn-table-v2-cell">
+            <span className="shade-label">
+              <span
+                className="shade-preview"
+                style={{ background: "var(--cn-red-400)" }}
+              ></span>{" "}
+              <code>red.400</code>
+            </span>
+          </td>
+          <td className="cn-table-v2-cell">
+            <span className="shade-label">
+              <span
+                className="shade-preview"
+                style={{ background: "var(--cn-red-600)" }}
+              ></span>{" "}
+              <code>red.600</code>
+            </span>
+          </td>
+        </tr>
+        <tr className="cn-table-v2-row">
+          <td className="cn-table-v2-cell">
+            <code>border.warning</code>
+          </td>
+          <td className="cn-table-v2-cell">
+            <span className="shade-label">
+              <span
+                className="shade-preview"
+                style={{ background: "var(--cn-yellow-400)" }}
+              ></span>{" "}
+              <code>yellow.400</code>
+            </span>
+          </td>
+          <td className="cn-table-v2-cell">
+            <span className="shade-label">
+              <span
+                className="shade-preview"
+                style={{ background: "var(--cn-yellow-300)" }}
+              ></span>{" "}
+              <code>yellow.300</code>
+            </span>
+          </td>
+          <td className="cn-table-v2-cell">
+            <span className="shade-label">
+              <span
+                className="shade-preview"
+                style={{ background: "var(--cn-yellow-500)" }}
+              ></span>{" "}
+              <code>yellow.500</code>
+            </span>
+          </td>
+        </tr>
+        <tr className="cn-table-v2-row">
+          <td className="cn-table-v2-cell">
+            <code>state.hover</code>
+          </td>
+          <td className="cn-table-v2-cell">
+            <span className="shade-label">
+              <span
+                className="shade-preview"
+                style={{ background: "var(--cn-gray-200)" }}
+              ></span>{" "}
+              <code>gray.200</code>
+            </span>{" "}
+            <span style="color: var(--cn-text-4)">alpha 0.23</span>
+          </td>
+          <td className="cn-table-v2-cell">
+            <span className="shade-label">
+              <span
+                className="shade-preview"
+                style={{ background: "var(--cn-gray-200)" }}
+              ></span>{" "}
+              <code>gray.200</code>
+            </span>{" "}
+            <span style="color: var(--cn-text-4)">alpha 0.16</span>
+          </td>
+          <td className="cn-table-v2-cell">
+            <span className="shade-label">
+              <span
+                className="shade-preview"
+                style={{ background: "var(--cn-gray-200)" }}
+              ></span>{" "}
+              <code>gray.200</code>
+            </span>{" "}
+            <span style="color: var(--cn-text-4)">alpha 0.30</span>
+          </td>
+        </tr>
+        <tr className="cn-table-v2-row">
+          <td className="cn-table-v2-cell">
+            <code>state.selected</code>
+          </td>
+          <td className="cn-table-v2-cell">
+            <span className="shade-label">
+              <span
+                className="shade-preview"
+                style={{ background: "var(--cn-gray-300)" }}
+              ></span>{" "}
+              <code>gray.300</code>
+            </span>{" "}
+            <span style="color: var(--cn-text-4)">alpha 0.26</span>
+          </td>
+          <td className="cn-table-v2-cell">
+            <span className="shade-label">
+              <span
+                className="shade-preview"
+                style={{ background: "var(--cn-gray-300)" }}
+              ></span>{" "}
+              <code>gray.300</code>
+            </span>{" "}
+            <span style="color: var(--cn-text-4)">alpha 0.19</span>
+          </td>
+          <td className="cn-table-v2-cell">
+            <span className="shade-label">
+              <span
+                className="shade-preview"
+                style={{ background: "var(--cn-gray-300)" }}
+              ></span>{" "}
+              <code>gray.300</code>
+            </span>{" "}
+            <span style="color: var(--cn-text-4)">alpha 0.34</span>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+</div>
+
+### Dark mode
+
+<div className="cn-table-v2 cn-table-v2-normal not-content">
+  <div className="cn-table-v2-container">
+    <table className="cn-table-v2-element">
+      <thead className="cn-table-v2-header">
+        <tr className="cn-table-v2-row">
+          <th className="cn-table-v2-head">Token</th>
+          <th className="cn-table-v2-head">Standard</th>
+          <th className="cn-table-v2-head">Dimmer</th>
+          <th className="cn-table-v2-head">High Contrast</th>
+        </tr>
+      </thead>
+      <tbody className="cn-table-v2-body">
+        <tr className="cn-table-v2-row">
+          <td className="cn-table-v2-cell">
+            <code>bg.0</code>
+          </td>
+          <td className="cn-table-v2-cell">
+            <span className="shade-label">
+              <span
+                className="shade-preview"
+                style={{ background: "var(--cn-pure-black)" }}
+              ></span>{" "}
+              <code>pure.black</code>
+            </span>
+          </td>
+          <td className="cn-table-v2-cell">
+            <span className="shade-label">
+              <span
+                className="shade-preview"
+                style={{ background: "var(--cn-pure-black)" }}
+              ></span>{" "}
+              <code>pure.black</code>
+            </span>{" "}
+            <span style="color: var(--cn-text-4)">darken 0.80</span>
+          </td>
+          <td className="cn-table-v2-cell">
+            <span className="shade-label">
+              <span
+                className="shade-preview"
+                style={{ background: "var(--cn-pure-black)" }}
+              ></span>{" "}
+              <code>pure.black</code>
+            </span>
+          </td>
+        </tr>
+        <tr className="cn-table-v2-row">
+          <td className="cn-table-v2-cell">
+            <code>bg.1</code>
+          </td>
+          <td className="cn-table-v2-cell">
+            <span className="shade-label">
+              <span
+                className="shade-preview"
+                style={{ background: "var(--cn-gray-1000)" }}
+              ></span>{" "}
+              <code>gray.1000</code>
+            </span>
+          </td>
+          <td className="cn-table-v2-cell">
+            <span className="shade-label">
+              <span
+                className="shade-preview"
+                style={{ background: "var(--cn-gray-1000)" }}
+              ></span>{" "}
+              <code>gray.1000</code>
+            </span>{" "}
+            <span style="color: var(--cn-text-4)">darken 0.60</span>
+          </td>
+          <td className="cn-table-v2-cell">
+            <span className="shade-label">
+              <span
+                className="shade-preview"
+                style={{ background: "var(--cn-gray-1000)" }}
+              ></span>{" "}
+              <code>gray.1000</code>
+            </span>
+          </td>
+        </tr>
+        <tr className="cn-table-v2-row">
+          <td className="cn-table-v2-cell">
+            <code>bg.2</code>
+          </td>
+          <td className="cn-table-v2-cell">
+            <span className="shade-label">
+              <span
+                className="shade-preview"
+                style={{ background: "var(--cn-gray-950)" }}
+              ></span>{" "}
+              <code>gray.950</code>
+            </span>
+          </td>
+          <td className="cn-table-v2-cell">
+            <span className="shade-label">
+              <span
+                className="shade-preview"
+                style={{ background: "var(--cn-gray-950)" }}
+              ></span>{" "}
+              <code>gray.950</code>
+            </span>{" "}
+            <span style="color: var(--cn-text-4)">darken 0.56</span>
+          </td>
+          <td className="cn-table-v2-cell">
+            <span className="shade-label">
+              <span
+                className="shade-preview"
+                style={{ background: "var(--cn-gray-950)" }}
+              ></span>{" "}
+              <code>gray.950</code>
+            </span>
+          </td>
+        </tr>
+        <tr className="cn-table-v2-row">
+          <td className="cn-table-v2-cell">
+            <code>bg.3</code>
+          </td>
+          <td className="cn-table-v2-cell">
+            <span className="shade-label">
+              <span
+                className="shade-preview"
+                style={{ background: "var(--cn-gray-950)" }}
+              ></span>{" "}
+              <code>gray.950</code>
+            </span>
+          </td>
+          <td className="cn-table-v2-cell">
+            <span className="shade-label">
+              <span
+                className="shade-preview"
+                style={{ background: "var(--cn-gray-950)" }}
+              ></span>{" "}
+              <code>gray.950</code>
+            </span>{" "}
+            <span style="color: var(--cn-text-4)">darken 0.56</span>
+          </td>
+          <td className="cn-table-v2-cell">
+            <span className="shade-label">
+              <span
+                className="shade-preview"
+                style={{ background: "var(--cn-gray-950)" }}
+              ></span>{" "}
+              <code>gray.950</code>
+            </span>
+          </td>
+        </tr>
+        <tr className="cn-table-v2-row">
+          <td className="cn-table-v2-cell">
+            <code>text.1</code>
+          </td>
+          <td className="cn-table-v2-cell">
+            <span className="shade-label">
+              <span
+                className="shade-preview"
+                style={{ background: "var(--cn-gray-25)" }}
+              ></span>{" "}
+              <code>gray.25</code>
+            </span>
+          </td>
+          <td className="cn-table-v2-cell">
+            <span className="shade-label">
+              <span
+                className="shade-preview"
+                style={{ background: "var(--cn-gray-150)" }}
+              ></span>{" "}
+              <code>gray.150</code>
+            </span>
+          </td>
+          <td className="cn-table-v2-cell">
+            <span className="shade-label">
+              <span
+                className="shade-preview"
+                style={{ background: "var(--cn-pure-white)" }}
+              ></span>{" "}
+              <code>pure.white</code>
+            </span>
+          </td>
+        </tr>
+        <tr className="cn-table-v2-row">
+          <td className="cn-table-v2-cell">
+            <code>text.2</code>
+          </td>
+          <td className="cn-table-v2-cell">
+            <span className="shade-label">
+              <span
+                className="shade-preview"
+                style={{ background: "var(--cn-gray-200)" }}
+              ></span>{" "}
+              <code>gray.200</code>
+            </span>
+          </td>
+          <td className="cn-table-v2-cell">
+            <span className="shade-label">
+              <span
+                className="shade-preview"
+                style={{ background: "var(--cn-gray-300)" }}
+              ></span>{" "}
+              <code>gray.300</code>
+            </span>
+          </td>
+          <td className="cn-table-v2-cell">
+            <span className="shade-label">
+              <span
+                className="shade-preview"
+                style={{ background: "var(--cn-gray-150)" }}
+              ></span>{" "}
+              <code>gray.150</code>
+            </span>
+          </td>
+        </tr>
+        <tr className="cn-table-v2-row">
+          <td className="cn-table-v2-cell">
+            <code>text.3</code>
+          </td>
+          <td className="cn-table-v2-cell">
+            <span className="shade-label">
+              <span
+                className="shade-preview"
+                style={{ background: "var(--cn-gray-500)" }}
+              ></span>{" "}
+              <code>gray.500</code>
+            </span>
+          </td>
+          <td className="cn-table-v2-cell">
+            <span className="shade-label">
+              <span
+                className="shade-preview"
+                style={{ background: "var(--cn-gray-500)" }}
+              ></span>{" "}
+              <code>gray.500</code>
+            </span>
+          </td>
+          <td className="cn-table-v2-cell">
+            <span className="shade-label">
+              <span
+                className="shade-preview"
+                style={{ background: "var(--cn-gray-400)" }}
+              ></span>{" "}
+              <code>gray.400</code>
+            </span>
+          </td>
+        </tr>
+        <tr className="cn-table-v2-row">
+          <td className="cn-table-v2-cell">
+            <code>text.4</code>
+          </td>
+          <td className="cn-table-v2-cell">
+            <span className="shade-label">
+              <span
+                className="shade-preview"
+                style={{ background: "var(--cn-gray-600)" }}
+              ></span>{" "}
+              <code>gray.600</code>
+            </span>
+          </td>
+          <td className="cn-table-v2-cell">
+            <span className="shade-label">
+              <span
+                className="shade-preview"
+                style={{ background: "var(--cn-gray-600)" }}
+              ></span>{" "}
+              <code>gray.600</code>
+            </span>
+          </td>
+          <td className="cn-table-v2-cell">
+            <span className="shade-label">
+              <span
+                className="shade-preview"
+                style={{ background: "var(--cn-gray-500)" }}
+              ></span>{" "}
+              <code>gray.500</code>
+            </span>
+          </td>
+        </tr>
+        <tr className="cn-table-v2-row">
+          <td className="cn-table-v2-cell">
+            <code>text.brand</code>
+          </td>
+          <td className="cn-table-v2-cell">
+            <span className="shade-label">
+              <span
+                className="shade-preview"
+                style={{ background: "var(--cn-blue-400)" }}
+              ></span>{" "}
+              <code>blue.400</code>
+            </span>
+          </td>
+          <td className="cn-table-v2-cell">
+            <span className="shade-label">
+              <span
+                className="shade-preview"
+                style={{ background: "var(--cn-blue-500)" }}
+              ></span>{" "}
+              <code>blue.500</code>
+            </span>
+          </td>
+          <td className="cn-table-v2-cell">
+            <span className="shade-label">
+              <span
+                className="shade-preview"
+                style={{ background: "var(--cn-blue-300)" }}
+              ></span>{" "}
+              <code>blue.300</code>
+            </span>
+          </td>
+        </tr>
+        <tr className="cn-table-v2-row">
+          <td className="cn-table-v2-cell">
+            <code>border.1</code>
+          </td>
+          <td className="cn-table-v2-cell">
+            <span className="shade-label">
+              <span
+                className="shade-preview"
+                style={{ background: "var(--cn-gray-500)" }}
+              ></span>{" "}
+              <code>gray.500</code>
+            </span>
+          </td>
+          <td className="cn-table-v2-cell">
+            <span className="shade-label">
+              <span
+                className="shade-preview"
+                style={{ background: "var(--cn-gray-800)" }}
+              ></span>{" "}
+              <code>gray.800</code>
+            </span>
+          </td>
+          <td className="cn-table-v2-cell">
+            <span className="shade-label">
+              <span
+                className="shade-preview"
+                style={{ background: "var(--cn-gray-400)" }}
+              ></span>{" "}
+              <code>gray.400</code>
+            </span>
+          </td>
+        </tr>
+        <tr className="cn-table-v2-row">
+          <td className="cn-table-v2-cell">
+            <code>border.2</code>
+          </td>
+          <td className="cn-table-v2-cell">
+            <span className="shade-label">
+              <span
+                className="shade-preview"
+                style={{ background: "var(--cn-gray-850)" }}
+              ></span>{" "}
+              <code>gray.850</code>
+            </span>
+          </td>
+          <td className="cn-table-v2-cell">
+            <span className="shade-label">
+              <span
+                className="shade-preview"
+                style={{ background: "var(--cn-gray-900)" }}
+              ></span>{" "}
+              <code>gray.900</code>
+            </span>
+          </td>
+          <td className="cn-table-v2-cell">
+            <span className="shade-label">
+              <span
+                className="shade-preview"
+                style={{ background: "var(--cn-gray-800)" }}
+              ></span>{" "}
+              <code>gray.800</code>
+            </span>
+          </td>
+        </tr>
+        <tr className="cn-table-v2-row">
+          <td className="cn-table-v2-cell">
+            <code>border.3</code>
+          </td>
+          <td className="cn-table-v2-cell">
+            <span className="shade-label">
+              <span
+                className="shade-preview"
+                style={{ background: "var(--cn-gray-900)" }}
+              ></span>{" "}
+              <code>gray.900</code>
+            </span>
+          </td>
+          <td className="cn-table-v2-cell">
+            <span className="shade-label">
+              <span
+                className="shade-preview"
+                style={{ background: "var(--cn-gray-950)" }}
+              ></span>{" "}
+              <code>gray.950</code>
+            </span>
+          </td>
+          <td className="cn-table-v2-cell">
+            <span className="shade-label">
+              <span
+                className="shade-preview"
+                style={{ background: "var(--cn-gray-850)" }}
+              ></span>{" "}
+              <code>gray.850</code>
+            </span>
+          </td>
+        </tr>
+        <tr className="cn-table-v2-row">
+          <td className="cn-table-v2-cell">
+            <code>border.success</code>
+          </td>
+          <td className="cn-table-v2-cell">
+            <span className="shade-label">
+              <span
+                className="shade-preview"
+                style={{ background: "var(--cn-forest-500)" }}
+              ></span>{" "}
+              <code>forest.500</code>
+            </span>
+          </td>
+          <td className="cn-table-v2-cell">
+            <span className="shade-label">
+              <span
+                className="shade-preview"
+                style={{ background: "var(--cn-forest-600)" }}
+              ></span>{" "}
+              <code>forest.600</code>
+            </span>
+          </td>
+          <td className="cn-table-v2-cell">
+            <span className="shade-label">
+              <span
+                className="shade-preview"
+                style={{ background: "var(--cn-forest-400)" }}
+              ></span>{" "}
+              <code>forest.400</code>
+            </span>
+          </td>
+        </tr>
+        <tr className="cn-table-v2-row">
+          <td className="cn-table-v2-cell">
+            <code>border.danger</code>
+          </td>
+          <td className="cn-table-v2-cell">
+            <span className="shade-label">
+              <span
+                className="shade-preview"
+                style={{ background: "var(--cn-red-600)" }}
+              ></span>{" "}
+              <code>red.600</code>
+            </span>
+          </td>
+          <td className="cn-table-v2-cell">
+            <span className="shade-label">
+              <span
+                className="shade-preview"
+                style={{ background: "var(--cn-red-700)" }}
+              ></span>{" "}
+              <code>red.700</code>
+            </span>
+          </td>
+          <td className="cn-table-v2-cell">
+            <span className="shade-label">
+              <span
+                className="shade-preview"
+                style={{ background: "var(--cn-red-500)" }}
+              ></span>{" "}
+              <code>red.500</code>
+            </span>
+          </td>
+        </tr>
+        <tr className="cn-table-v2-row">
+          <td className="cn-table-v2-cell">
+            <code>border.warning</code>
+          </td>
+          <td className="cn-table-v2-cell">
+            <span className="shade-label">
+              <span
+                className="shade-preview"
+                style={{ background: "var(--cn-yellow-500)" }}
+              ></span>{" "}
+              <code>yellow.500</code>
+            </span>
+          </td>
+          <td className="cn-table-v2-cell">
+            <span className="shade-label">
+              <span
+                className="shade-preview"
+                style={{ background: "var(--cn-yellow-600)" }}
+              ></span>{" "}
+              <code>yellow.600</code>
+            </span>
+          </td>
+          <td className="cn-table-v2-cell">
+            <span className="shade-label">
+              <span
+                className="shade-preview"
+                style={{ background: "var(--cn-yellow-400)" }}
+              ></span>{" "}
+              <code>yellow.400</code>
+            </span>
+          </td>
+        </tr>
+        <tr className="cn-table-v2-row">
+          <td className="cn-table-v2-cell">
+            <code>state.hover</code>
+          </td>
+          <td className="cn-table-v2-cell">
+            <span className="shade-label">
+              <span
+                className="shade-preview"
+                style={{ background: "var(--cn-gray-850)" }}
+              ></span>{" "}
+              <code>gray.850</code>
+            </span>{" "}
+            <span style="color: var(--cn-text-4)">alpha 0.20</span>
+          </td>
+          <td className="cn-table-v2-cell">
+            <span className="shade-label">
+              <span
+                className="shade-preview"
+                style={{ background: "var(--cn-gray-850)" }}
+              ></span>{" "}
+              <code>gray.850</code>
+            </span>{" "}
+            <span style="color: var(--cn-text-4)">alpha 0.16</span>
+          </td>
+          <td className="cn-table-v2-cell">
+            <span className="shade-label">
+              <span
+                className="shade-preview"
+                style={{ background: "var(--cn-gray-850)" }}
+              ></span>{" "}
+              <code>gray.850</code>
+            </span>{" "}
+            <span style="color: var(--cn-text-4)">alpha 0.36</span>
+          </td>
+        </tr>
+        <tr className="cn-table-v2-row">
+          <td className="cn-table-v2-cell">
+            <code>state.selected</code>
+          </td>
+          <td className="cn-table-v2-cell">
+            <span className="shade-label">
+              <span
+                className="shade-preview"
+                style={{ background: "var(--cn-gray-850)" }}
+              ></span>{" "}
+              <code>gray.850</code>
+            </span>{" "}
+            <span style="color: var(--cn-text-4)">alpha 0.25</span>
+          </td>
+          <td className="cn-table-v2-cell">
+            <span className="shade-label">
+              <span
+                className="shade-preview"
+                style={{ background: "var(--cn-gray-850)" }}
+              ></span>{" "}
+              <code>gray.850</code>
+            </span>{" "}
+            <span style="color: var(--cn-text-4)">alpha 0.20</span>
+          </td>
+          <td className="cn-table-v2-cell">
+            <span className="shade-label">
+              <span
+                className="shade-preview"
+                style={{ background: "var(--cn-gray-850)" }}
+              ></span>{" "}
+              <code>gray.850</code>
+            </span>{" "}
+            <span style="color: var(--cn-text-4)">alpha 0.40</span>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+</div>
 
 ---
 
-## Build Pipeline
+## Color Vision Adaptations
 
-```bash
-cd packages/core-design-system
-pnpm build     # → node scripts/build.js
-```
+Color-blind modes remap semantic hues so that information is conveyed through <span style="font-weight: 600">brightness hierarchy</span> rather than hue alone. The human retina has three cone types — L (red), M (green), and S (blue). When one type is absent, certain color pairs become indistinguishable. Our adaptations shift the affected hues to perceptually distinct alternatives.
 
-The build uses <span style="font-weight: 600">Style Dictionary</span> + <span style="font-weight: 600">@tokens-studio/sd-transforms</span>:
+Each CVD type is a separate theme mode (e.g. `light-std-protanopia`, `dark-std-deuteranopia`). The remapping is applied at the token level — components need no changes.
 
-1. Reads `$themes.json` and permutates all theme combinations
-2. Resolves token references (`{gray.500}` → actual LCH value)
-3. Applies custom transforms: `alpha`, `darken`, `lighten` in LCH space; `dropShadow` for data-viz
-4. Marks tokens as `themeable` or `core` (determines which output file they land in)
-5. Outputs to `dist/`:
+### Protanopia <span style="color: var(--cn-text-3); font-weight: 400">(red-blind)</span>
 
-```
-dist/
-├── styles/
-│   ├── core-imports.css       # @imports for all core files
-│   ├── colors.css             # Core color primitives (:root)
-│   ├── core.css               # Dimensions, typography (:root)
-│   ├── breakpoint.css         # Layout tokens (:root)
-│   ├── components.css         # Component tokens (:root)
-│   ├── themes.css             # @imports for all 24 theme files
-│   ├── dark.css               # Semantic tokens under .dark selector
-│   ├── light.css
-│   ├── dark-dimmer.css
-│   ├── ...                    # 24 theme files total
-│   └── mfe-themes.css         # Subset for micro-frontend consumers
-│
-└── styles-esm/
-    ├── index.ts               # Theme map + re-exports
-    ├── colors.ts              # Programmatic access to primitives
-    └── ...                    # TypeScript module per file
-```
+Missing <span style="font-weight: 600">L-cones</span> (long wavelength). Red appears dark and muddy, indistinguishable from dark green or brown. Affects ~1.3% of males, ~0.02% of females. Because red is severely darkened, we shift danger to the brighter yellow and cascade other warm hues down. Brand (indigo) remains unchanged since blue-violet perception is intact.
 
-All CSS properties use the `cn` prefix: `--cn-bg-0`, `--cn-text-1`, `--cn-set-brand-primary-bg`, etc.
+<div className="cn-table-v2 cn-table-v2-normal not-content">
+  <div className="cn-table-v2-container">
+    <table className="cn-table-v2-element">
+      <thead className="cn-table-v2-header">
+        <tr className="cn-table-v2-row">
+          <th className="cn-table-v2-head">Role</th>
+          <th className="cn-table-v2-head">Default</th>
+          <th className="cn-table-v2-head"></th>
+          <th className="cn-table-v2-head">Adapted</th>
+          <th className="cn-table-v2-head">Rationale</th>
+        </tr>
+      </thead>
+      <tbody className="cn-table-v2-body">
+        <tr className="cn-table-v2-row">
+          <td className="cn-table-v2-cell">
+            <code>brand</code>
+          </td>
+          <td className="cn-table-v2-cell">
+            <span className="shade-label">
+              <span
+                className="shade-preview"
+                style={{ background: "var(--cn-indigo-600)" }}
+              ></span>{" "}
+              indigo
+            </span>
+          </td>
+          <td
+            className="cn-table-v2-cell"
+            style={{ color: "var(--cn-text-4)", textAlign: "center" }}
+          >
+            —
+          </td>
+          <td className="cn-table-v2-cell">
+            <span className="shade-label">
+              <span
+                className="shade-preview"
+                style={{ background: "var(--cn-indigo-600)" }}
+              ></span>{" "}
+              indigo
+            </span>
+          </td>
+          <td className="cn-table-v2-cell">Unchanged, blue-violet visible</td>
+        </tr>
+        <tr className="cn-table-v2-row">
+          <td className="cn-table-v2-cell">
+            <code>success</code>
+          </td>
+          <td className="cn-table-v2-cell">
+            <span className="shade-label">
+              <span
+                className="shade-preview"
+                style={{ background: "var(--cn-lime-700)" }}
+              ></span>{" "}
+              lime
+            </span>
+          </td>
+          <td
+            className="cn-table-v2-cell"
+            style={{ color: "var(--cn-text-4)", textAlign: "center" }}
+          >
+            →
+          </td>
+          <td className="cn-table-v2-cell">
+            <span className="shade-label">
+              <span
+                className="shade-preview"
+                style={{ background: "var(--cn-indigo-500)" }}
+              ></span>{" "}
+              indigo
+            </span>
+          </td>
+          <td className="cn-table-v2-cell">
+            Green invisible, shift to blue-violet
+          </td>
+        </tr>
+        <tr className="cn-table-v2-row">
+          <td className="cn-table-v2-cell">
+            <code>danger</code>
+          </td>
+          <td className="cn-table-v2-cell">
+            <span className="shade-label">
+              <span
+                className="shade-preview"
+                style={{ background: "var(--cn-red-600)" }}
+              ></span>{" "}
+              red
+            </span>
+          </td>
+          <td
+            className="cn-table-v2-cell"
+            style={{ color: "var(--cn-text-4)", textAlign: "center" }}
+          >
+            →
+          </td>
+          <td className="cn-table-v2-cell">
+            <span className="shade-label">
+              <span
+                className="shade-preview"
+                style={{ background: "var(--cn-yellow-500)" }}
+              ></span>{" "}
+              yellow
+            </span>
+          </td>
+          <td className="cn-table-v2-cell">
+            Red invisible, shift to bright warm
+          </td>
+        </tr>
+        <tr className="cn-table-v2-row">
+          <td className="cn-table-v2-cell">
+            <code>warning</code>
+          </td>
+          <td className="cn-table-v2-cell">
+            <span className="shade-label">
+              <span
+                className="shade-preview"
+                style={{ background: "var(--cn-yellow-500)" }}
+              ></span>{" "}
+              yellow
+            </span>
+          </td>
+          <td
+            className="cn-table-v2-cell"
+            style={{ color: "var(--cn-text-4)", textAlign: "center" }}
+          >
+            →
+          </td>
+          <td className="cn-table-v2-cell">
+            <span className="shade-label">
+              <span
+                className="shade-preview"
+                style={{ background: "var(--cn-orange-500)" }}
+              ></span>{" "}
+              orange
+            </span>
+          </td>
+          <td className="cn-table-v2-cell">Darker than danger for hierarchy</td>
+        </tr>
+        <tr className="cn-table-v2-row">
+          <td className="cn-table-v2-cell">
+            <code>set.blue</code>
+          </td>
+          <td className="cn-table-v2-cell">
+            <span className="shade-label">
+              <span
+                className="shade-preview"
+                style={{ background: "var(--cn-blue-500)" }}
+              ></span>{" "}
+              blue
+            </span>
+          </td>
+          <td
+            className="cn-table-v2-cell"
+            style={{ color: "var(--cn-text-4)", textAlign: "center" }}
+          >
+            →
+          </td>
+          <td className="cn-table-v2-cell">
+            <span className="shade-label">
+              <span
+                className="shade-preview"
+                style={{ background: "var(--cn-cyan-500)" }}
+              ></span>{" "}
+              cyan
+            </span>
+          </td>
+          <td className="cn-table-v2-cell">
+            Differentiate from brand (indigo)
+          </td>
+        </tr>
+        <tr className="cn-table-v2-row">
+          <td className="cn-table-v2-cell">
+            <code>set.forest-green</code>
+          </td>
+          <td className="cn-table-v2-cell">
+            <span className="shade-label">
+              <span
+                className="shade-preview"
+                style={{ background: "var(--cn-forest-500)" }}
+              ></span>{" "}
+              forest
+            </span>
+          </td>
+          <td
+            className="cn-table-v2-cell"
+            style={{ color: "var(--cn-text-4)", textAlign: "center" }}
+          >
+            →
+          </td>
+          <td className="cn-table-v2-cell">
+            <span className="shade-label">
+              <span
+                className="shade-preview"
+                style={{ background: "var(--cn-cyan-500)" }}
+              ></span>{" "}
+              cyan
+            </span>
+          </td>
+          <td className="cn-table-v2-cell">
+            Green invisible, shift to cool blue
+          </td>
+        </tr>
+        <tr className="cn-table-v2-row">
+          <td className="cn-table-v2-cell">
+            <code>set.mint</code>
+          </td>
+          <td className="cn-table-v2-cell">
+            <span className="shade-label">
+              <span
+                className="shade-preview"
+                style={{ background: "var(--cn-mint-500)" }}
+              ></span>{" "}
+              mint
+            </span>
+          </td>
+          <td
+            className="cn-table-v2-cell"
+            style={{ color: "var(--cn-text-4)", textAlign: "center" }}
+          >
+            →
+          </td>
+          <td className="cn-table-v2-cell">
+            <span className="shade-label">
+              <span
+                className="shade-preview"
+                style={{ background: "var(--cn-indigo-500)" }}
+              ></span>{" "}
+              indigo
+            </span>
+          </td>
+          <td className="cn-table-v2-cell">Green-teal invisible</td>
+        </tr>
+        <tr className="cn-table-v2-row">
+          <td className="cn-table-v2-cell">
+            <code>set.orange</code>
+          </td>
+          <td className="cn-table-v2-cell">
+            <span className="shade-label">
+              <span
+                className="shade-preview"
+                style={{ background: "var(--cn-orange-500)" }}
+              ></span>{" "}
+              orange
+            </span>
+          </td>
+          <td
+            className="cn-table-v2-cell"
+            style={{ color: "var(--cn-text-4)", textAlign: "center" }}
+          >
+            →
+          </td>
+          <td className="cn-table-v2-cell">
+            <span className="shade-label">
+              <span
+                className="shade-preview"
+                style={{ background: "var(--cn-brown-500)" }}
+              ></span>{" "}
+              brown
+            </span>
+          </td>
+          <td className="cn-table-v2-cell">Freed for warning</td>
+        </tr>
+        <tr className="cn-table-v2-row">
+          <td className="cn-table-v2-cell">
+            <code>set.pink</code>
+          </td>
+          <td className="cn-table-v2-cell">
+            <span className="shade-label">
+              <span
+                className="shade-preview"
+                style={{ background: "var(--cn-pink-500)" }}
+              ></span>{" "}
+              pink
+            </span>
+          </td>
+          <td
+            className="cn-table-v2-cell"
+            style={{ color: "var(--cn-text-4)", textAlign: "center" }}
+          >
+            →
+          </td>
+          <td className="cn-table-v2-cell">
+            <span className="shade-label">
+              <span
+                className="shade-preview"
+                style={{ background: "var(--cn-purple-500)" }}
+              ></span>{" "}
+              purple
+            </span>
+          </td>
+          <td className="cn-table-v2-cell">Red component invisible</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+</div>
+
+### Deuteranopia <span style="color: var(--cn-text-3); font-weight: 400">(green-blind)</span>
+
+Missing <span style="font-weight: 600">M-cones</span> (medium wavelength). Green merges with red into a brownish-khaki range. Affects ~1.2% of males, ~0.01% of females. Similar confusion axis to protanopia, but reds are <span style="font-weight: 600">not</span> darkened — only hue is lost. Brand shifts from indigo to blue for stronger separation from the success role (also remapped to indigo).
+
+<div className="cn-table-v2 cn-table-v2-normal not-content">
+  <div className="cn-table-v2-container">
+    <table className="cn-table-v2-element">
+      <thead className="cn-table-v2-header">
+        <tr className="cn-table-v2-row">
+          <th className="cn-table-v2-head">Role</th>
+          <th className="cn-table-v2-head">Default</th>
+          <th className="cn-table-v2-head"></th>
+          <th className="cn-table-v2-head">Adapted</th>
+          <th className="cn-table-v2-head">Rationale</th>
+        </tr>
+      </thead>
+      <tbody className="cn-table-v2-body">
+        <tr className="cn-table-v2-row">
+          <td className="cn-table-v2-cell">
+            <code>brand</code>
+          </td>
+          <td className="cn-table-v2-cell">
+            <span className="shade-label">
+              <span
+                className="shade-preview"
+                style={{ background: "var(--cn-indigo-600)" }}
+              ></span>{" "}
+              indigo
+            </span>
+          </td>
+          <td
+            className="cn-table-v2-cell"
+            style={{ color: "var(--cn-text-4)", textAlign: "center" }}
+          >
+            →
+          </td>
+          <td className="cn-table-v2-cell">
+            <span className="shade-label">
+              <span
+                className="shade-preview"
+                style={{ background: "var(--cn-blue-600)" }}
+              ></span>{" "}
+              blue
+            </span>
+          </td>
+          <td className="cn-table-v2-cell">Separate from success (indigo)</td>
+        </tr>
+        <tr className="cn-table-v2-row">
+          <td className="cn-table-v2-cell">
+            <code>success</code>
+          </td>
+          <td className="cn-table-v2-cell">
+            <span className="shade-label">
+              <span
+                className="shade-preview"
+                style={{ background: "var(--cn-lime-700)" }}
+              ></span>{" "}
+              lime
+            </span>
+          </td>
+          <td
+            className="cn-table-v2-cell"
+            style={{ color: "var(--cn-text-4)", textAlign: "center" }}
+          >
+            →
+          </td>
+          <td className="cn-table-v2-cell">
+            <span className="shade-label">
+              <span
+                className="shade-preview"
+                style={{ background: "var(--cn-indigo-500)" }}
+              ></span>{" "}
+              indigo
+            </span>
+          </td>
+          <td className="cn-table-v2-cell">
+            Green invisible, shift to blue-violet
+          </td>
+        </tr>
+        <tr className="cn-table-v2-row">
+          <td className="cn-table-v2-cell">
+            <code>danger</code>
+          </td>
+          <td className="cn-table-v2-cell">
+            <span className="shade-label">
+              <span
+                className="shade-preview"
+                style={{ background: "var(--cn-red-600)" }}
+              ></span>{" "}
+              red
+            </span>
+          </td>
+          <td
+            className="cn-table-v2-cell"
+            style={{ color: "var(--cn-text-4)", textAlign: "center" }}
+          >
+            →
+          </td>
+          <td className="cn-table-v2-cell">
+            <span className="shade-label">
+              <span
+                className="shade-preview"
+                style={{ background: "var(--cn-yellow-500)" }}
+              ></span>{" "}
+              yellow
+            </span>
+          </td>
+          <td className="cn-table-v2-cell">
+            Red merges with green, shift to warm
+          </td>
+        </tr>
+        <tr className="cn-table-v2-row">
+          <td className="cn-table-v2-cell">
+            <code>warning</code>
+          </td>
+          <td className="cn-table-v2-cell">
+            <span className="shade-label">
+              <span
+                className="shade-preview"
+                style={{ background: "var(--cn-yellow-500)" }}
+              ></span>{" "}
+              yellow
+            </span>
+          </td>
+          <td
+            className="cn-table-v2-cell"
+            style={{ color: "var(--cn-text-4)", textAlign: "center" }}
+          >
+            →
+          </td>
+          <td className="cn-table-v2-cell">
+            <span className="shade-label">
+              <span
+                className="shade-preview"
+                style={{ background: "var(--cn-orange-500)" }}
+              ></span>{" "}
+              orange
+            </span>
+          </td>
+          <td className="cn-table-v2-cell">Darker than danger for hierarchy</td>
+        </tr>
+        <tr className="cn-table-v2-row">
+          <td className="cn-table-v2-cell">
+            <code>set.forest-green</code>
+          </td>
+          <td className="cn-table-v2-cell">
+            <span className="shade-label">
+              <span
+                className="shade-preview"
+                style={{ background: "var(--cn-forest-500)" }}
+              ></span>{" "}
+              forest
+            </span>
+          </td>
+          <td
+            className="cn-table-v2-cell"
+            style={{ color: "var(--cn-text-4)", textAlign: "center" }}
+          >
+            →
+          </td>
+          <td className="cn-table-v2-cell">
+            <span className="shade-label">
+              <span
+                className="shade-preview"
+                style={{ background: "var(--cn-blue-500)" }}
+              ></span>{" "}
+              blue
+            </span>
+          </td>
+          <td className="cn-table-v2-cell">Green invisible, shift to blue</td>
+        </tr>
+        <tr className="cn-table-v2-row">
+          <td className="cn-table-v2-cell">
+            <code>set.mint</code>
+          </td>
+          <td className="cn-table-v2-cell">
+            <span className="shade-label">
+              <span
+                className="shade-preview"
+                style={{ background: "var(--cn-mint-500)" }}
+              ></span>{" "}
+              mint
+            </span>
+          </td>
+          <td
+            className="cn-table-v2-cell"
+            style={{ color: "var(--cn-text-4)", textAlign: "center" }}
+          >
+            →
+          </td>
+          <td className="cn-table-v2-cell">
+            <span className="shade-label">
+              <span
+                className="shade-preview"
+                style={{ background: "var(--cn-indigo-500)" }}
+              ></span>{" "}
+              indigo
+            </span>
+          </td>
+          <td className="cn-table-v2-cell">Green-teal invisible</td>
+        </tr>
+        <tr className="cn-table-v2-row">
+          <td className="cn-table-v2-cell">
+            <code>set.orange</code>
+          </td>
+          <td className="cn-table-v2-cell">
+            <span className="shade-label">
+              <span
+                className="shade-preview"
+                style={{ background: "var(--cn-orange-500)" }}
+              ></span>{" "}
+              orange
+            </span>
+          </td>
+          <td
+            className="cn-table-v2-cell"
+            style={{ color: "var(--cn-text-4)", textAlign: "center" }}
+          >
+            →
+          </td>
+          <td className="cn-table-v2-cell">
+            <span className="shade-label">
+              <span
+                className="shade-preview"
+                style={{ background: "var(--cn-brown-500)" }}
+              ></span>{" "}
+              brown
+            </span>
+          </td>
+          <td className="cn-table-v2-cell">Freed for warning</td>
+        </tr>
+        <tr className="cn-table-v2-row">
+          <td className="cn-table-v2-cell">
+            <code>set.pink</code>
+          </td>
+          <td className="cn-table-v2-cell">
+            <span className="shade-label">
+              <span
+                className="shade-preview"
+                style={{ background: "var(--cn-pink-500)" }}
+              ></span>{" "}
+              pink
+            </span>
+          </td>
+          <td
+            className="cn-table-v2-cell"
+            style={{ color: "var(--cn-text-4)", textAlign: "center" }}
+          >
+            →
+          </td>
+          <td className="cn-table-v2-cell">
+            <span className="shade-label">
+              <span
+                className="shade-preview"
+                style={{ background: "var(--cn-purple-500)" }}
+              ></span>{" "}
+              purple
+            </span>
+          </td>
+          <td className="cn-table-v2-cell">Red component invisible</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+</div>
+
+### Tritanopia <span style="color: var(--cn-text-3); font-weight: 400">(blue-yellow blind)</span>
+
+Missing <span style="font-weight: 600">S-cones</span> (short wavelength). Blue merges with green, and yellow becomes indistinguishable from light pink. Very rare — affects ~0.003% of the population, equally across genders (not X-linked). Brand (indigo) stays unchanged since even without S-cones, the luminance channel still differentiates blue from other hues.
+
+<div className="cn-table-v2 cn-table-v2-normal not-content">
+  <div className="cn-table-v2-container">
+    <table className="cn-table-v2-element">
+      <thead className="cn-table-v2-header">
+        <tr className="cn-table-v2-row">
+          <th className="cn-table-v2-head">Role</th>
+          <th className="cn-table-v2-head">Default</th>
+          <th className="cn-table-v2-head"></th>
+          <th className="cn-table-v2-head">Adapted</th>
+          <th className="cn-table-v2-head">Rationale</th>
+        </tr>
+      </thead>
+      <tbody className="cn-table-v2-body">
+        <tr className="cn-table-v2-row">
+          <td className="cn-table-v2-cell">
+            <code>warning</code>
+          </td>
+          <td className="cn-table-v2-cell">
+            <span className="shade-label">
+              <span
+                className="shade-preview"
+                style={{ background: "var(--cn-yellow-500)" }}
+              ></span>{" "}
+              yellow
+            </span>
+          </td>
+          <td
+            className="cn-table-v2-cell"
+            style={{ color: "var(--cn-text-4)", textAlign: "center" }}
+          >
+            →
+          </td>
+          <td className="cn-table-v2-cell">
+            <span className="shade-label">
+              <span
+                className="shade-preview"
+                style={{ background: "var(--cn-orange-500)" }}
+              ></span>{" "}
+              orange
+            </span>
+          </td>
+          <td className="cn-table-v2-cell">Yellow invisible</td>
+        </tr>
+        <tr className="cn-table-v2-row">
+          <td className="cn-table-v2-cell">
+            <code>set.orange</code>
+          </td>
+          <td className="cn-table-v2-cell">
+            <span className="shade-label">
+              <span
+                className="shade-preview"
+                style={{ background: "var(--cn-orange-500)" }}
+              ></span>{" "}
+              orange
+            </span>
+          </td>
+          <td
+            className="cn-table-v2-cell"
+            style={{ color: "var(--cn-text-4)", textAlign: "center" }}
+          >
+            →
+          </td>
+          <td className="cn-table-v2-cell">
+            <span className="shade-label">
+              <span
+                className="shade-preview"
+                style={{ background: "var(--cn-brown-500)" }}
+              ></span>{" "}
+              brown
+            </span>
+          </td>
+          <td className="cn-table-v2-cell">Freed for warning</td>
+        </tr>
+        <tr className="cn-table-v2-row">
+          <td className="cn-table-v2-cell">
+            <code>set.purple</code>
+          </td>
+          <td className="cn-table-v2-cell">
+            <span className="shade-label">
+              <span
+                className="shade-preview"
+                style={{ background: "var(--cn-purple-500)" }}
+              ></span>{" "}
+              purple
+            </span>
+          </td>
+          <td
+            className="cn-table-v2-cell"
+            style={{ color: "var(--cn-text-4)", textAlign: "center" }}
+          >
+            →
+          </td>
+          <td className="cn-table-v2-cell">
+            <span className="shade-label">
+              <span
+                className="shade-preview"
+                style={{ background: "var(--cn-pink-500)" }}
+              ></span>{" "}
+              pink
+            </span>
+          </td>
+          <td className="cn-table-v2-cell">
+            Blue component confused with green
+          </td>
+        </tr>
+        <tr className="cn-table-v2-row">
+          <td className="cn-table-v2-cell">
+            <code>set.violet</code>
+          </td>
+          <td className="cn-table-v2-cell">
+            <span className="shade-label">
+              <span
+                className="shade-preview"
+                style={{ background: "var(--cn-violet-500)" }}
+              ></span>{" "}
+              violet
+            </span>
+          </td>
+          <td
+            className="cn-table-v2-cell"
+            style={{ color: "var(--cn-text-4)", textAlign: "center" }}
+          >
+            →
+          </td>
+          <td className="cn-table-v2-cell">
+            <span className="shade-label">
+              <span
+                className="shade-preview"
+                style={{ background: "var(--cn-red-500)" }}
+              ></span>{" "}
+              red
+            </span>
+          </td>
+          <td className="cn-table-v2-cell">
+            Blue component confused with green
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+</div>

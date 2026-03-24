@@ -61,6 +61,7 @@ import BaseImg from './icons/base-img.svg'
 import BellOff from './icons/bell-off.svg'
 import Bell from './icons/bell.svg'
 import Blocks from './icons/blocks.svg'
+import BlueGreen from './icons/blue-green.svg'
 import BoldSquere from './icons/bold-squere.svg'
 import Bold from './icons/bold.svg'
 import BookmarkSolid from './icons/bookmark-solid.svg'
@@ -84,6 +85,7 @@ import CalendarPlus from './icons/calendar-plus.svg'
 import CalendarRotate from './icons/calendar-rotate.svg'
 import CalendarXmark from './icons/calendar-xmark.svg'
 import Calendar from './icons/calendar.svg'
+import Canary from './icons/canary.svg'
 import Cell2x2 from './icons/cell2x2.svg'
 import ChaosTestsSolid from './icons/chaos-tests-solid.svg'
 import ChaosTests from './icons/chaos-tests.svg'
@@ -261,6 +263,7 @@ import InfoCircleSolid from './icons/info-circle-solid.svg'
 import InfoCircle from './icons/info-circle.svg'
 import InfrastructureSolid from './icons/infrastructure-solid.svg'
 import Infrastructure from './icons/infrastructure.svg'
+import InputSet from './icons/input-set.svg'
 import Instances from './icons/instances.svg'
 import Internet from './icons/internet.svg'
 import ItalicSquare from './icons/italic-square.svg'
@@ -335,6 +338,7 @@ import PagePlusMinusIn from './icons/page-plus-minus-in.svg'
 import PagePlus from './icons/page-plus.svg'
 import PageRight from './icons/page-right.svg'
 import PageUp from './icons/page-up.svg'
+import Palette from './icons/palette.svg'
 import PasteClipboard from './icons/paste-clipboard.svg'
 import PathArrow from './icons/path-arrow.svg'
 import Pause from './icons/pause.svg'
@@ -382,6 +386,7 @@ import RepositorySolid from './icons/repository-solid.svg'
 import Repository from './icons/repository.svg'
 import Restart from './icons/restart.svg'
 import Roles from './icons/roles.svg'
+import Rolling from './icons/rolling.svg'
 import Ruler from './icons/ruler.svg'
 import RunTest from './icons/run-test.svg'
 import Run from './icons/run.svg'
@@ -567,6 +572,7 @@ export const IconNameMapV2 = {
   'bell-off': BellOff,
   bell: Bell,
   blocks: Blocks,
+  'blue-green': BlueGreen,
   'bold-squere': BoldSquere,
   bold: Bold,
   'bookmark-solid': BookmarkSolid,
@@ -590,6 +596,7 @@ export const IconNameMapV2 = {
   'calendar-rotate': CalendarRotate,
   'calendar-xmark': CalendarXmark,
   calendar: Calendar,
+  canary: Canary,
   cell2x2: Cell2x2,
   'chaos-tests-solid': ChaosTestsSolid,
   'chaos-tests': ChaosTests,
@@ -767,6 +774,7 @@ export const IconNameMapV2 = {
   'info-circle': InfoCircle,
   'infrastructure-solid': InfrastructureSolid,
   infrastructure: Infrastructure,
+  'input-set': InputSet,
   instances: Instances,
   internet: Internet,
   'italic-square': ItalicSquare,
@@ -841,6 +849,7 @@ export const IconNameMapV2 = {
   'page-plus': PagePlus,
   'page-right': PageRight,
   'page-up': PageUp,
+  palette: Palette,
   'paste-clipboard': PasteClipboard,
   'path-arrow': PathArrow,
   pause: Pause,
@@ -888,6 +897,7 @@ export const IconNameMapV2 = {
   repository: Repository,
   restart: Restart,
   roles: Roles,
+  rolling: Rolling,
   ruler: Ruler,
   'run-test': RunTest,
   run: Run,

@@ -133,7 +133,7 @@ const ShowcaseGrid: FC = () => {
       <div className="columns-1 md:columns-2 gap-cn-xl">
         {/* Card 1: Payment Method Form */}
         <Card.Root
-          className="p-cn-xl break-inside-avoid mb-cn-xl"
+          className="p-cn-xl break-inside-avoid mb-cn-xl border-cn-3 rounded-cn-6"
           interactive={false}
         >
           <Text variant="heading-subsection" className="mb-cn-lg">
@@ -227,7 +227,7 @@ const ShowcaseGrid: FC = () => {
 
         {/* Card 2: Team Collaboration */}
         <Card.Root
-          className="p-cn-xl break-inside-avoid mb-cn-xl"
+          className="p-cn-xl break-inside-avoid mb-cn-xl border-cn-3 rounded-cn-6"
           interactive={false}
         >
           <NoData
@@ -260,7 +260,7 @@ const ShowcaseGrid: FC = () => {
 
         {/* Card 3: Settings & Authentication */}
         <Card.Root
-          className="p-cn-xl break-inside-avoid mb-cn-xl"
+          className="p-cn-xl break-inside-avoid mb-cn-xl border-cn-3 rounded-cn-6"
           interactive={false}
         >
           <Text variant="heading-subsection" className="mb-cn-lg">
@@ -301,7 +301,7 @@ const ShowcaseGrid: FC = () => {
 
         {/* Card 4: Compute Environment Selection */}
         <Card.Root
-          className="p-cn-xl break-inside-avoid mb-cn-xl"
+          className="p-cn-xl break-inside-avoid mb-cn-xl border-cn-3 rounded-cn-6"
           interactive={false}
         >
           <Text variant="heading-subsection" className="mb-cn-lg">
@@ -367,7 +367,7 @@ const ShowcaseGrid: FC = () => {
 
         {/* Card 5: Search & Navigation */}
         <Card.Root
-          className="p-cn-xl break-inside-avoid mb-cn-xl"
+          className="p-cn-xl break-inside-avoid mb-cn-xl border-cn-3 rounded-cn-6"
           interactive={false}
         >
           <Text variant="heading-subsection" className="mb-cn-lg">
@@ -456,7 +456,7 @@ const ShowcaseGrid: FC = () => {
 
         {/* Card 6: Account Settings Form */}
         <Card.Root
-          className="p-cn-xl break-inside-avoid mb-cn-xl"
+          className="p-cn-xl break-inside-avoid mb-cn-xl border-cn-3 rounded-cn-6"
           interactive={false}
         >
           <Text variant="heading-subsection" className="mb-cn-lg">
@@ -518,7 +518,7 @@ const ShowcaseGrid: FC = () => {
 
         {/* Card 7: User Management */}
         <Card.Root
-          className="p-cn-xl break-inside-avoid mb-cn-xl"
+          className="p-cn-xl break-inside-avoid mb-cn-xl border-cn-3 rounded-cn-6"
           interactive={false}
         >
           <Text variant="heading-subsection" className="mb-cn-lg">
@@ -598,7 +598,7 @@ const ShowcaseGrid: FC = () => {
 
         {/* Card 8: Modal Dialogs */}
         <Card.Root
-          className="p-cn-xl break-inside-avoid mb-cn-xl"
+          className="p-cn-xl break-inside-avoid mb-cn-xl border-cn-3 rounded-cn-6"
           interactive={false}
         >
           <Text variant="heading-subsection" className="mb-cn-lg">
@@ -707,7 +707,7 @@ const ShowcaseGrid: FC = () => {
 
         {/* Card 9: Content Editor */}
         <Card.Root
-          className="p-cn-xl break-inside-avoid mb-cn-xl"
+          className="p-cn-xl break-inside-avoid mb-cn-xl border-cn-3 rounded-cn-6"
           interactive={false}
         >
           <Text variant="heading-subsection" className="mb-cn-lg">
@@ -794,7 +794,7 @@ export const config = {
 
         {/* Card 11: AI Assistant */}
         <Card.Root
-          className="p-cn-xl break-inside-avoid mb-cn-xl"
+          className="p-cn-xl break-inside-avoid mb-cn-xl border-cn-3 rounded-cn-6"
           interactive={false}
         >
           <Text variant="heading-subsection" className="mb-cn-lg">
@@ -864,7 +864,7 @@ export const config = {
 
         {/* Card 12: Survey & Additional Components */}
         <Card.Root
-          className="p-cn-xl break-inside-avoid mb-cn-xl"
+          className="p-cn-xl break-inside-avoid mb-cn-xl border-cn-3 rounded-cn-6"
           interactive={false}
         >
           <Text variant="heading-subsection" className="mb-cn-lg">
@@ -947,7 +947,7 @@ export const config = {
 
         {/* Card 13: Activity & Sharing */}
         <Card.Root
-          className="p-cn-xl break-inside-avoid mb-cn-xl"
+          className="p-cn-xl break-inside-avoid mb-cn-xl border-cn-3 rounded-cn-6"
           interactive={false}
         >
           <Text variant="heading-subsection" className="mb-cn-lg">

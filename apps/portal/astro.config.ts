@@ -50,7 +50,7 @@ export default defineConfig({
       sidebar: [
         {
           label: "Getting Started",
-          collapsed: true,
+          collapsed: false,
           items: [
             {
               slug: "getting-started/introduction",
@@ -58,7 +58,7 @@ export default defineConfig({
               attrs: { "data-icon": "view-grid" },
             },
             {
-              slug: "design-system/introduction",
+              slug: "design-system/architecture-overview",
               label: "Architecture Overview",
               attrs: { "data-icon": "delegates" },
             },
@@ -74,7 +74,7 @@ export default defineConfig({
             },
             {
               slug: "design-system/usage",
-              label: "Developer Guide",
+              label: "Setup Guide",
               attrs: { "data-icon": "docs" },
             },
           ],
@@ -84,8 +84,8 @@ export default defineConfig({
           items: [
             {
               slug: "foundations/colors",
-              label: "Colors",
-              attrs: { "data-icon": "donut" },
+              label: "Color Primitives",
+              attrs: { "data-icon": "palette" },
             },
             {
               slug: "foundations/typography",
@@ -110,7 +110,7 @@ export default defineConfig({
             {
               slug: "foundations/illustrations",
               label: "Illustrations",
-              attrs: { "data-icon": "frame-alt-empty" },
+              attrs: { "data-icon": "attachment-image" },
             },
             {
               slug: "foundations/shadows",

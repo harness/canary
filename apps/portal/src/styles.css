@@ -73,6 +73,23 @@ code:not(.expressive-code code) {
   font-size: var(--cn-font-size-4) !important;
 }
 
+.shade-preview {
+  display: inline-block;
+  width: 14px;
+  height: 14px;
+  border-radius: var(--cn-rounded-3);
+  vertical-align: middle;
+  margin-right: var(--cn-spacing-1-half);
+  box-shadow: inset 0 0 0 1px lch(0 0 0 / 0.1);
+  flex-shrink: 0;
+}
+
+.shade-label {
+  display: inline-flex;
+  align-items: center;
+  white-space: nowrap;
+}
+
 .cn-table-v2-container {
   border-radius: var(--cn-rounded-6) !important;
   overflow: hidden !important;
@@ -294,9 +311,9 @@ code:not(.expressive-code code) {
         mask-image: url("/icons/sidebar/architect.svg");
         -webkit-mask-image: url("/icons/sidebar/architect.svg");
       }
-      a[data-icon="donut"]::before {
-        mask-image: url("/icons/sidebar/donut.svg");
-        -webkit-mask-image: url("/icons/sidebar/donut.svg");
+      a[data-icon="palette"]::before {
+        mask-image: url("/icons/sidebar/palette.svg");
+        -webkit-mask-image: url("/icons/sidebar/palette.svg");
       }
       a[data-icon="text-size"]::before {
         mask-image: url("/icons/sidebar/text-size.svg");
@@ -321,6 +338,10 @@ code:not(.expressive-code code) {
       a[data-icon="frame-alt-empty"]::before {
         mask-image: url("/icons/sidebar/frame-alt-empty.svg");
         -webkit-mask-image: url("/icons/sidebar/frame-alt-empty.svg");
+      }
+      a[data-icon="attachment-image"]::before {
+        mask-image: url("/icons/sidebar/attachment-image.svg");
+        -webkit-mask-image: url("/icons/sidebar/attachment-image.svg");
       }
       a[data-icon="star"]::before {
         mask-image: url("/icons/sidebar/star.svg");
@@ -860,4 +881,105 @@ button[aria-label="Search"] {
 .live-provider-router-wrapper > div {
   @apply w-full;
   min-width: 0;
+}
+
+/* Feature Grid (Introduction hero) */
+.cn-feature-grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: var(--cn-spacing-4);
+  margin-top: var(--cn-layout-md);
+  margin-bottom: var(--cn-layout-sm);
+}
+
+.cn-feature-item {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0;
+  padding: var(--cn-layout-md) var(--cn-spacing-4) var(--cn-layout-sm);
+  justify-content: center;
+  border: 1px solid var(--cn-border-3);
+  border-radius: var(--cn-rounded-6);
+  background: var(--cn-bg-0);
+}
+
+.cn-feature-value {
+  font-size: var(--cn-font-size-9);
+  font-weight: 550;
+  color: var(--cn-text-1);
+  line-height: 1.1;
+  letter-spacing: -0.02em;
+}
+
+.cn-feature-label {
+  font-size: var(--cn-font-size-3);
+  font-weight: 500;
+  color: var(--cn-text-2);
+}
+
+/* Component Grid */
+.cn-component-grid-category-title {
+  font-size: var(--cn-font-size-5);
+  font-weight: 500;
+  color: var(--cn-text-1);
+  margin-bottom: var(--cn-spacing-4);
+}
+
+.cn-component-grid {
+  display: grid;
+  gap: var(--cn-spacing-4);
+  grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+}
+
+/* Component Grid Cards */
+.cn-component-card {
+  display: flex;
+  flex-direction: column;
+  border: 1px solid var(--cn-border-3);
+  border-radius: var(--cn-rounded-6);
+  overflow: hidden;
+  text-decoration: none !important;
+  transition:
+    border-color 0.15s ease,
+    box-shadow 0.15s ease;
+  background: var(--cn-bg-0);
+}
+
+.cn-component-card:hover {
+  border-color: var(--cn-border-1);
+  box-shadow: 0 2px 8px lch(0 0 0 / 0.06);
+}
+
+.cn-component-card-preview {
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 148px;
+  padding: var(--cn-spacing-5);
+  background: var(--cn-bg-1);
+  overflow: hidden;
+  pointer-events: none;
+  user-select: none;
+}
+
+.cn-component-card-preview-inner {
+  transform-origin: center center;
+  flex-shrink: 0;
+}
+
+.cn-component-card-label {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  padding: var(--cn-spacing-3) var(--cn-spacing-5);
+  border-top: 1px solid var(--cn-border-3);
+}
+
+.cn-component-card-name {
+  font-size: var(--cn-font-size-3);
+  font-weight: 500;
+  line-height: 1.3;
+  color: var(--cn-text-1);
 }

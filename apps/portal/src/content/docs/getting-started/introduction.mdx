@@ -6,59 +6,43 @@ tableOfContents: false
 ---
 
 import ShowcaseGrid from "@/components/showcase-grid";
+import ComponentGrid from "@/components/component-grid";
 
-The Harness Design System is built on a token-based architecture that ensures consistent styling across all components. Every component uses design tokens (prefixed with `cn-`) for colors, spacing, typography, and other visual properties, enabling seamless theme switching between light, dark, and high-contrast modes with multiple accessibility variants. This approach provides flexibility and maintainability while ensuring a cohesive user experience across the entire platform.
+The Harness Design System provides a unified component library built on design tokens. Every component uses `cn-` prefixed tokens for colors, spacing, and typography — enabling seamless theme switching across light, dark, and high-contrast modes with accessibility variants.
+
+<div className="cn-feature-grid not-content">
+  <div className="cn-feature-item">
+    <span className="cn-feature-value">60+</span>
+    <span className="cn-feature-label">Components</span>
+  </div>
+  <div className="cn-feature-item">
+    <span className="cn-feature-value">24</span>
+    <span className="cn-feature-label">Theme variants</span>
+  </div>
+  <div className="cn-feature-item">
+    <span className="cn-feature-value">WCAG</span>
+    <span className="cn-feature-label">AA accessible</span>
+  </div>
+  <div className="cn-feature-item">
+    <span className="cn-feature-value">LCH</span>
+    <span className="cn-feature-label">Perceptual colors</span>
+  </div>
+</div>
 
 ## Examples
+
+See how components compose into real interfaces.
 
 <div className="not-content" style="max-width: 100%; width: 100%;">
   <ShowcaseGrid client:only="react" />
 </div>
 
----
+<hr style="margin: var(--cn-layout-2xl) 0; border: none; border-top: 1px solid var(--cn-border-3);" />
 
-## Components by category
+## Components
 
-### Form & Inputs
+Browse all available components grouped by category.
 
-[Text Input](/components/form/text-input) · [Textarea](/components/form/textarea) · [Number Input](/components/form/number-input) · [Search Input](/components/form/search-input) · [Select](/components/form/select) · [Multi Select](/components/form/multi-select) · [Checkbox](/components/form/checkbox) · [Radio](/components/form/radio) · [Switch](/components/form/switch) · [Slider](/components/form/slider) · [Calendar](/components/form/calendar) · [Label](/components/form/label) · [Caption](/components/form/caption) · [Form](/components/form/form)
-
-### Actions
-
-[Button](/components/actions/button) · [Button Group](/components/actions/button-group) · [Button Layout](/components/actions/button-layout) · [Split Button](/components/actions/split-button) · [Toggle](/components/actions/toggle) · [Toggle Group](/components/actions/toggle-group) · [Copy Button](/components/actions/copy-button)
-
-### Navigation
-
-[Breadcrumb](/components/navigation/breadcrumb) · [Tabs](/components/navigation/tabs) · [Sidebar](/components/navigation/sidebar) · [Pagination](/components/navigation/pagination) · [Tree View](/components/navigation/tree-view) · [File Explorer](/components/navigation/file-explorer) · [Link](/components/navigation/link)
-
-### Data Display
-
-[Data Table](/components/data-display/data-table) · [Table V2](/components/data-display/table-v2) · [Card](/components/data-display/card) · [Card Select](/components/data-display/card-select) · [Accordion](/components/data-display/accordion) · [Stacked List](/components/data-display/stacked-list) · [Draggable Card](/components/data-display/draggable-card) · [View Only](/components/data-display/view-only) · [Widgets](/components/data-display/widgets)
-
-### Overlays & Dialogs
-
-[Dialog](/components/overlays/dialog) · [Alert Dialog](/components/overlays/alert-dialog) · [Drawer](/components/overlays/drawer) · [Sheet](/components/overlays/sheet) · [Popover](/components/overlays/popover) · [Dropdown Menu](/components/overlays/dropdown-menu) · [Tooltip](/components/overlays/tooltip) · [Time Ago Card](/components/overlays/time-ago-card)
-
-### Feedback & Status
-
-[Alert](/components/feedback/alert) · [Status Badge](/components/feedback/status-badge) · [Tag](/components/feedback/tag) · [Counter Badge](/components/feedback/counter-badge) · [Progress](/components/feedback/progress) · [Skeleton](/components/feedback/skeleton) · [Toast](/components/feedback/toast)
-
-### Media & Visual
-
-[Avatar](/components/visual/avatar) · [Icon](/components/visual/icon) · [Logo](/components/visual/logo) · [Illustration](/components/visual/illustration) · [Carousel](/components/visual/carousel)
-
-### AI & Chat
-
-[Message Bubble](/components/chat/message-bubble) · [Prompt Input](/components/chat/prompt-input) · [Reasoning](/components/chat/reasoning) · [Shimmer](/components/chat/shimmer) · [Typing Animation](/components/chat/typing-animation)
-
-### Markdown & Display
-
-[Markdown Viewer](/components/markdown-display/markdown-viewer) · [Diff Viewer](/components/markdown-display/diff-viewer)
-
-### Foundations
-
-[Text](/components/foundations/text) · [Layout](/components/foundations/layout)
-
-### Utilities
-
-[Scroll Area](/components/utilities/scroll-area) · [Spacer](/components/utilities/spacer)
+<div className="not-content" style="max-width: 100%; width: 100%;">
+  <ComponentGrid client:only="react" />
+</div>

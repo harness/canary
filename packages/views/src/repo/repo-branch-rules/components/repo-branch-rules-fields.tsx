@@ -1,6 +1,18 @@
 import { FC, Fragment, useEffect, useMemo, useState } from 'react'
 
 import {
+  BranchRuleId,
+  EnumBypassListType,
+  FieldProps,
+  getBranchRules,
+  MergeStrategy,
+  NormalizedPrincipal,
+  PatternsButtonType,
+  Rule
+} from '@views'
+import { isEmpty } from 'lodash-es'
+
+import {
   Checkbox,
   ControlGroup,
   Fieldset,
@@ -14,25 +26,14 @@ import {
   MultiSelectOption,
   NumberInput,
   ResetTag,
+  Separator,
   SplitButton,
   Switch,
   Text
 } from '@harnessio/ui/components'
-import { Separator } from '@harnessio/ui/components'
 import { useTranslation } from '@harnessio/ui/context'
-import {
-  BranchRuleId,
-  EnumBypassListType,
-  FieldProps,
-  getBranchRules,
-  MergeStrategy,
-  NormalizedPrincipal,
-  PatternsButtonType,
-  Rule
-} from '@views'
 import { useDebounceSearch } from '@harnessio/ui/hooks'
 import { cn } from '@harnessio/ui/utils'
-import { isEmpty } from 'lodash-es'
 
 import { getIcon } from '../../utils'
 
@@ -374,7 +375,6 @@ export const BranchSettingsRuleListField: FC<{
                       handleSelectChangeForRule(rule.id, options)
                     }}
                     options={recentStatusChecks?.map(check => ({ id: check, key: check })) ?? []}
-                    disallowCreation
                     inputProps={{
                       autoFocus: rule.id === lastCheckedRule
                     }}

@@ -28,6 +28,7 @@ import { DocsPage } from "@/components/docs-page";
         value={value}
       />
     );
+
 }`}
 />
 
@@ -119,6 +120,7 @@ You can provide your own set of presets via `filterFieldConfig.presets`. Each pr
         value={value}
       />
     );
+
 }`}
 />
 
@@ -147,6 +149,7 @@ Set `showCustomRange: false` to hide the "Select custom range" option and only s
         value={value}
       />
     );
+
 }`}
 />
 
@@ -178,13 +181,15 @@ Use `FilterFieldTypes.DateRange` as the `type` in a `FilterOptionConfig` to rend
     },
     {
       name: "filterFieldConfig.presets",
-      description: "Custom preset date ranges. If not provided, a default set of presets is used (Last 7 Days, This Month, Last 30 Days, etc.).",
+      description:
+        "Custom preset date ranges. If not provided, a default set of presets is used (Last 7 Days, This Month, Last 30 Days, etc.).",
       required: false,
       value: "DateRangePreset[]",
     },
     {
       name: "filterFieldConfig.showCustomRange",
-      description: "Whether to show the 'Select custom range' option. When clicked, a two-month calendar appears alongside the preset list.",
+      description:
+        "Whether to show the 'Select custom range' option. When clicked, a two-month calendar appears alongside the preset list.",
       required: false,
       defaultValue: "true",
       value: "boolean",
@@ -212,7 +217,8 @@ The value emitted by the filter when a range is selected.
     },
     {
       name: "preset",
-      description: "The preset key if a preset was selected, undefined for custom ranges.",
+      description:
+        "The preset key if a preset was selected, undefined for custom ranges.",
       required: false,
       value: "string",
     },

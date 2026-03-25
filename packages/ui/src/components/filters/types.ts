@@ -119,8 +119,7 @@ interface CheckboxFilterOptionConfig<T extends string = string> extends FilterOp
   }
 }
 
-interface DateRangeFilterOptionConfig<T extends string = string>
-  extends FilterOptionConfigBase<T, DateRangeValue> {
+interface DateRangeFilterOptionConfig<T extends string = string> extends FilterOptionConfigBase<T, DateRangeValue> {
   type: FilterFieldTypes.DateRange
   filterFieldConfig?: {
     presets?: DateRangePreset[]

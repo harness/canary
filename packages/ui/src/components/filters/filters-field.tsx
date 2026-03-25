@@ -7,9 +7,9 @@ import { cn } from '@utils/cn'
 
 import FilterBoxWrapper from './filter-box-wrapper'
 import Calendar from './filters-bar/actions/variants/calendar-field'
-import DateRangeField from './filters-bar/actions/variants/date-range-field'
 import { MultiSelectFilter } from './filters-bar/actions/variants/checkbox'
 import Combobox, { ComboBoxOptions } from './filters-bar/actions/variants/combo-box'
+import DateRangeField from './filters-bar/actions/variants/date-range-field'
 import MultiTagFilter from './filters-bar/actions/variants/multi-tag'
 import Text from './filters-bar/actions/variants/text-field'
 import {

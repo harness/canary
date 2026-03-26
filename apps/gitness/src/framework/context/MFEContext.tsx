@@ -126,13 +126,17 @@ export interface MFEContextProps {
   setMFETheme: (newTheme: string) => void
   parentLocationPath: string
   onRouteChange: (updatedLocationPathname: string) => void
+  isPublicAccessEnabledOnResources: boolean
+  isCurrentSessionPublic: boolean
 }
 
 export const defaultContext: MFEContextProps = {
   scope: { accountId: '' },
   renderUrl: '',
   parentContextObj: {
-    appStoreContext: createContext({ currentUserInfo: { uuid: '' } })
+    appStoreContext: createContext({
+      currentUserInfo: { uuid: '' }
+    })
   },
   customHooks: {
     usePreferenceStore: () => ({ preference: undefined, setPreference: noop }),
@@ -144,7 +148,9 @@ export const defaultContext: MFEContextProps = {
   hooks: {},
   setMFETheme: noop,
   parentLocationPath: '',
-  onRouteChange: noop
+  onRouteChange: noop,
+  isPublicAccessEnabledOnResources: false,
+  isCurrentSessionPublic: false
 }
 
 export const MFEContext = createContext<MFEContextProps>(defaultContext)

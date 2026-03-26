@@ -46,6 +46,7 @@ const generateRouteEntries = ({
     const routeNamePrefix = route.path?.replace(/[:/]/g, '_') || 'index'
     const routeName = parentName ? `${parentName}_${routeNamePrefix}` : routeNamePrefix
     const routeNameKey = route.handle?.routeName as keyof typeof RouteConstants
+    // if publicAccess enabled and route Public -> then push public route
     if (routeNameKey) {
       entries.push({
         name: routeNameKey,

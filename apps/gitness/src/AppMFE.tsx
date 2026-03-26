@@ -45,12 +45,16 @@ export default function AppMFE({
   customUtils,
   routes,
   routeUtils,
-  hooks
+  hooks,
+  isPublicAccessEnabledOnResources,
+  isCurrentSessionPublic
 }: AppMFEProps) {
   const createClientConfig = (basePath: string) => ({
     urlInterceptor: (url: string) =>
       `${window.apiUrl || ''}${basePath}${url}${url.includes('?') ? '&' : '?'}routingId=${scope.accountId}`,
     requestInterceptor: (request: Request) => {
+      if (isCurrentSessionPublic) return request
+
       const token = decode(localStorage.getItem('token') || '')
       const newRequest = request.clone()
       newRequest.headers.set('Authorization', `Bearer ${token}`)
@@ -59,7 +63,7 @@ export default function AppMFE({
     responseInterceptor: (response: Response) => {
       switch (response.status) {
         case 401:
-          on401?.()
+          if (!isCurrentSessionPublic) on401?.()
           break
       }
       return response
@@ -135,7 +139,9 @@ export default function AppMFE({
             hooks,
             setMFETheme: () => {},
             parentLocationPath,
-            onRouteChange
+            onRouteChange,
+            isPublicAccessEnabledOnResources,
+            isCurrentSessionPublic
           }}
         >
           <I18nextProvider i18n={i18n}>

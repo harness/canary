@@ -53,10 +53,10 @@ export const ViewOnlyItem = ({
           </>
         ) : (
           <>
-            <Text color="foreground-3" variant="body-normal">
+            <Text color="foreground-1" variant="body-normal">
               {label}
             </Text>
-            <Text color="foreground-1" variant="body-normal" className="break-all">
+            <Text color="foreground-3" variant="body-normal" className="break-all">
               {valueNode}
             </Text>
           </>

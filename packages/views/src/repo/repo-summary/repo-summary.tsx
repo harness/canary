@@ -30,6 +30,7 @@ import { useTranslation } from '@harnessio/ui/context'
 
 import BranchCompareBannerList from '../components/branch-banner/branch-compare-banner-list'
 import { CloneRepoDialog } from './components/clone-repo-dialog'
+import { LanguageBar, LanguageStat } from './components/language-bar'
 import SummaryPanel from './components/summary-panel'
 import { RepoEmptyView } from './repo-empty-view'
 
@@ -102,6 +103,7 @@ export interface RepoSummaryViewProps extends Partial<RoutingProps> {
   showContributeBtn?: boolean
   scheduleFileMetaFetch?: (paths: string[]) => void
   imageUrlTransform?: (url: string) => string
+  languages?: LanguageStat[]
   upstream?: TypesRepositoryCore
   onFetchAndMerge?: () => void
   isFetchingUpstream?: boolean
@@ -141,6 +143,7 @@ export function RepoSummaryView({
   imageUrlTransform,
   isSSHEnabled,
   isForkEnabled,
+  languages,
   upstream,
   onFetchAndMerge,
   isFetchingUpstream,
@@ -412,6 +415,12 @@ export function RepoSummaryView({
               isEditDialogOpen={isEditDialogOpen}
               setEditDialogOpen={setEditDialogOpen}
             />
+            {!!languages?.length && (
+              <>
+                <Spacer size={5} />
+                <LanguageBar languages={languages} />
+              </>
+            )}
             {renderSidebarComponent}
           </SandboxLayout.Content>
         </SandboxLayout.Column>

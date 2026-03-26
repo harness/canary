@@ -73,6 +73,7 @@ export interface RepositoryType {
   importing?: boolean
   favorite?: boolean
   path: string
+  language?: string
   tags?: Record<string, string>
   upstream?: {
     identifier?: string

@@ -150,7 +150,7 @@ export const CreatePullRequest = () => {
         `${normalizedTargetRef}...${normalizedSourceRef}`
   }, [commitRange, normalizedTargetRef, normalizedSourceRef])
 
-  const { data: { body: prTemplateData } = {} } = useGetContentQuery(
+  const { data: { body: prTemplateData } = {}, isFetching: isTemplateFetching } = useGetContentQuery(
     {
       path: '.harness/pull_request_template.md',
       repo_ref: repoRef,
@@ -678,6 +678,7 @@ export const CreatePullRequest = () => {
         onFormCancel={onCancel}
         apiError={apiError}
         isLoading={createPullRequestMutation.isLoading}
+        isTemplateFetching={isTemplateFetching}
         isSuccess={createPullRequestMutation.isSuccess}
         onFormDraftSubmit={onDraftSubmit}
         mergeability={mergeability}

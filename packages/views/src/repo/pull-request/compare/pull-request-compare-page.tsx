@@ -120,6 +120,7 @@ export interface PullRequestComparePageProps extends Partial<RoutingProps> {
   sourceBranch?: string
   targetBranch?: string
   isLabelsLoading?: boolean
+  isTemplateFetching?: boolean
 }
 
 export const PullRequestComparePage: FC<PullRequestComparePageProps> = ({
@@ -172,7 +173,8 @@ export const PullRequestComparePage: FC<PullRequestComparePageProps> = ({
   editLabelsProps,
   branchSelectorRenderer,
   toPullRequestConversation,
-  isLabelsLoading
+  isLabelsLoading,
+  isTemplateFetching
 }) => {
   const { commits: commitData } = useRepoCommitsStore()
 
@@ -340,6 +342,8 @@ export const PullRequestComparePage: FC<PullRequestComparePageProps> = ({
                 isSubmitted={isSubmitted}
                 isValid={isValid}
                 isLoading={isLoading}
+                isTemplateFetching={isTemplateFetching}
+                description={desc}
                 formRef={formRef}
                 getFormValues={getValues}
                 onFormDraftSubmit={onFormDraftSubmit}
@@ -409,6 +413,7 @@ export const PullRequestComparePage: FC<PullRequestComparePageProps> = ({
                                 ref={formRef}
                                 apiError={apiError}
                                 isLoading={isLoading}
+                                isTemplateFetching={isTemplateFetching}
                                 onFormDraftSubmit={onFormDraftSubmit}
                                 onFormSubmit={onFormSubmit}
                                 formMethods={formMethods}

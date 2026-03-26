@@ -9,6 +9,7 @@ import { getNavbarMenuData } from '../../data/navbar-menu-data'
 import { getPinnedMenuItemsData } from '../../data/pinned-items'
 import { useRoutes } from '../../framework/context/NavigationContext'
 import { useGetSpaceURLParam } from '../../framework/hooks/useGetSpaceParam'
+import { useIsUnifiedExperience } from '../../framework/hooks/useIsUnifiedExperience'
 import { useLocationChange } from '../../framework/hooks/useLocationChange'
 import { useSelectedSpaceId } from '../../framework/hooks/useSelectedSpaceId'
 import useSpaceSSEWithPubSub from '../../framework/hooks/useSpaceSSEWithPubSub'
@@ -36,6 +37,9 @@ export const AppShell: FC = () => {
   const spaceIdPathParam = spaceId ?? selectedSpaceId ?? ''
 
   const { breadcrumbs } = useGetBreadcrumbs()
+  const isUnifiedExperience = useIsUnifiedExperience()
+
+  const showBreadcrumbs = !isUnifiedExperience && breadcrumbs.length > 0
 
   const pinnedMenuItemsData = useMemo(
     () => getPinnedMenuItemsData({ t, routes, spaceId: spaceIdPathParam }),
@@ -73,8 +77,8 @@ export const AppShell: FC = () => {
   return (
     <>
       <AppSideBar>
-        <Breadcrumbs breadcrumbs={breadcrumbs} isMobile={isMobile} withMobileSidebarToggle />
-        <MainContentLayout useSidebar={useSidebar} withBreadcrumbs={breadcrumbs.length > 0}>
+        {showBreadcrumbs && <Breadcrumbs breadcrumbs={breadcrumbs} isMobile={isMobile} withMobileSidebarToggle />}
+        <MainContentLayout useSidebar={useSidebar} withBreadcrumbs={showBreadcrumbs}>
           <Outlet />
         </MainContentLayout>
       </AppSideBar>

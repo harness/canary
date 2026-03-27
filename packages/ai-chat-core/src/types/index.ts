@@ -18,7 +18,8 @@ export type {
   MessageRendererProps,
   GroupRenderer,
   GroupRendererProps,
-  PluginConfig
+  PluginConfig,
+  AuxiliaryRendererProps
 } from './plugin'
 export type {
   StreamAdapter,

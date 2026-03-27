@@ -5,26 +5,19 @@ import { ScopedMenuGroupType, ScopedNavbarItemType } from './types'
 
 export default function SidebarGroupMenu({
   menuItems,
-  columns = 2,
   variant = 'default'
 }: {
   menuItems: ScopedMenuGroupType[]
-  columns?: number
   variant?: 'default' | 'popover'
 }) {
   const isPopover = variant === 'popover'
 
   const renderMenuItems = (items: ScopedNavbarItemType[]) => {
-    const dataColumnsAttr = isPopover && columns === 3 ? { 'data-columns': '3' } : {}
-
     return (
       <div
         className={cn('cn-sidebar-group-items', {
-          'cn-sidebar-group-items-single-col': columns === 1,
-          'cn-sidebar-group-items-popover': isPopover,
-          'cn-sidebar-group-items-popover-3col': isPopover && columns === 3
+          'cn-sidebar-group-items-popover': isPopover
         })}
-        {...dataColumnsAttr}
       >
         {items.map(item => (
           <Drawer.Close key={item.id} asChild>

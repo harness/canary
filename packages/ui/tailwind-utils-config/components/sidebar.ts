@@ -120,7 +120,7 @@ export default {
     '&-footer': {
       display: 'grid',
       gap: 'var(--cn-sidebar-group-gap)',
-      padding: 'var(--cn-sidebar-group-py) var(--cn-sidebar-container-spacing)',
+      padding: 'var(--cn-sidebar-group-py) var(--cn-sidebar-item-container)',
       marginTop: 'auto',
       flexShrink: '0'
     },
@@ -299,13 +299,12 @@ export default {
         display: 'grid',
         gridTemplateColumns: 'auto 1fr',
         gridTemplateAreas: '"icon title"',
-        gap: 'var(--cn-layout-xs)',
+        gap: 'var(--cn-sidebar-item-gap, var(--cn-layout-xs))',
         minHeight: 'var(--cn-sidebar-item-min-height)',
         minWidth: 'var(--cn-sidebar-item-min-width)',
         justifyItems: 'start',
         alignItems: 'center',
-        padding:
-          'var(--cn-sidebar-item-container) var(--cn-sidebar-item-container) var(--cn-sidebar-item-container) var(--cn-layout-sm)',
+        padding: 'var(--cn-sidebar-item-container)',
         borderRadius: 'var(--cn-sidebar-item-radius)',
         '@apply duration-150 transition-[padding,row-gap,column-gap] ease-linear': '',
         // Icons use stroke currentColor; base row color keeps them visible on dark sidebars
@@ -447,7 +446,7 @@ export default {
         display: 'flex',
         alignItems: 'center',
         padding: 'var(--cn-sidebar-item-container)',
-        columnGap: 'var(--cn-sidebar-item-gap)',
+        gap: 'var(--cn-sidebar-item-gap, var(--cn-layout-xs))',
         '&-icon, &-text': {
           flexShrink: '0',
           height: 'var(--cn-icon-size-sm)',
@@ -479,7 +478,7 @@ export default {
       width: 'auto',
 
       '.cn-sidebar-item-content': {
-        gap: 'var(--cn-layout-3xs) var(--cn-layout-xs)',
+        gap: 'var(--cn-layout-3xs) var(--cn-sidebar-item-gap, var(--cn-layout-xs))',
         gridTemplateColumns: 'var(--cn-size-6) 1fr',
         paddingLeft: 'var(--cn-sidebar-item-container)',
         '&-title': {

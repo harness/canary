@@ -221,8 +221,8 @@ vi.mock('../data/pinned-menu-items', () => ({
 }))
 
 vi.mock('../sidebar-group-menu', () => ({
-  default: ({ menuItems, columns }: { menuItems: any[]; columns?: number }) => (
-    <div data-testid="sidebar-group-menu" data-columns={columns}>
+  default: ({ menuItems }: { menuItems: any[] }) => (
+    <div data-testid="sidebar-group-menu">
       {menuItems.map(group => (
         <div key={group.groupId} data-testid={`menu-group-${group.groupId}`}>
           {group.items.map((item: any) => (

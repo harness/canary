@@ -62,7 +62,7 @@ const collapsedSidebarStyles: CSSRuleObject = {
         gridTemplateColumns: '1fr',
         gridTemplateAreas: '"icon"'
       },
-      '&-icon': { justifySelf: 'center' }
+      '&-icon': { justifySelf: 'center', marginLeft: '0' }
     },
     '&-action-button': {
       maxWidth: '0',
@@ -120,7 +120,7 @@ export default {
     '&-footer': {
       display: 'grid',
       gap: 'var(--cn-sidebar-group-gap)',
-      padding: 'var(--cn-sidebar-group-py) var(--cn-sidebar-container-spacing)',
+      padding: 'var(--cn-sidebar-group-py) var(--cn-sidebar-item-container)',
       marginTop: 'auto',
       flexShrink: '0'
     },
@@ -158,7 +158,7 @@ export default {
 
       '&-header': {
         display: 'flex',
-        padding: 'var(--cn-layout-3xs) var(--cn-sidebar-item-container)',
+        padding: 'var(--cn-layout-2xs)',
         alignItems: 'center',
         gap: 'var(--cn-layout-xs)',
         alignSelf: 'stretch',
@@ -304,8 +304,7 @@ export default {
         minWidth: 'var(--cn-sidebar-item-min-width)',
         justifyItems: 'start',
         alignItems: 'center',
-        padding:
-          'var(--cn-sidebar-item-container) var(--cn-sidebar-item-container) var(--cn-sidebar-item-container) var(--cn-layout-sm)',
+        padding: 'var(--cn-sidebar-item-container)',
         borderRadius: 'var(--cn-sidebar-item-radius)',
         '@apply duration-150 transition-[padding,row-gap,column-gap] ease-linear': '',
         // Icons use stroke currentColor; base row color keeps them visible on dark sidebars
@@ -364,7 +363,8 @@ export default {
           ...descriptionRowIcon
         },
 
-        '&-icon': { gridArea: 'icon' },
+        /** Reserves space for active bar + grip handle so icon/title stay stable when active or dragging */
+        '&-icon': { gridArea: 'icon', marginLeft: 'var(--cn-layout-sm)' },
 
         '&-title': {
           maxWidth: '100%',
@@ -447,7 +447,7 @@ export default {
         display: 'flex',
         alignItems: 'center',
         padding: 'var(--cn-sidebar-item-container)',
-        columnGap: 'var(--cn-sidebar-item-gap)',
+        gap: 'var(--cn-layout-xs)',
         '&-icon, &-text': {
           flexShrink: '0',
           height: 'var(--cn-icon-size-sm)',
@@ -481,12 +481,12 @@ export default {
       '.cn-sidebar-item-content': {
         gap: 'var(--cn-layout-3xs) var(--cn-layout-xs)',
         gridTemplateColumns: 'var(--cn-size-6) 1fr',
-        paddingLeft: 'var(--cn-sidebar-item-container)',
+        padding: 'var(--cn-layout-2xs)',
         '&-title': {
           font: 'var(--cn-body-single-line-normal)',
           color: 'var(--cn-comp-sidebar-item-text)'
         },
-        '&-icon': { paddingLeft: '0' }
+        '&-icon': { paddingLeft: '0', marginLeft: '0' }
       },
 
       '.cn-icon.cn-icon-2xs:not(.cn-sidebar-item-expand-icon), .cn-icon.cn-icon-xs:not(.cn-sidebar-item-expand-icon), .cn-icon.cn-icon-sm:not(.cn-sidebar-item-expand-icon), .cn-icon.cn-icon-md:not(.cn-sidebar-item-expand-icon), .cn-icon.cn-icon-lg:not(.cn-sidebar-item-expand-icon), .cn-icon.cn-icon-xl:not(.cn-sidebar-item-expand-icon)':
@@ -543,7 +543,7 @@ export default {
     ...descriptionIconStretch,
 
     '.cn-sidebar-group-header': {
-      padding: 'var(--cn-layout-3xs) var(--cn-sidebar-item-container)'
+      padding: 'var(--cn-layout-2xs)'
     },
 
     '.cn-sidebar-popover-footer': {

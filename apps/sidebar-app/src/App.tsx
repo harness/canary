@@ -32,7 +32,7 @@ const LIGHT_THEME = 'light-std-std' as FullTheme
 const demoItems: SidebarItemProps[] = [
   { to: '/repos', title: 'Repositories', icon: 'folder' },
   { to: '/pipelines', title: 'Pipelines', icon: 'play' },
-  { to: '/connectors', title: 'Connectors', icon: 'connectors' },
+  { to: '/connectors', title: 'Connectors', icon: 'connectors', active: true },
   {
     to: '/account',
     title: 'Account',

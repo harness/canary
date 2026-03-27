@@ -31,6 +31,13 @@ export const CloneRepoDialog: FC<CloneRepoDialogProps> = ({
     _handleCreateToken()
   }
 
+  const enhanceTokenErrorMessage = (error: string): string => {
+    if (/Maximum.*Token.*limit.*reached/i.test(error)) {
+      return `${error}. The maximum token limit is 5. Please navigate to your user profile to remove some existing tokens and create new ones.`
+    }
+    return error
+  }
+
   return (
     <Popover.Root>
       <Popover.Trigger asChild>
@@ -76,7 +83,7 @@ export const CloneRepoDialog: FC<CloneRepoDialogProps> = ({
 
               {!!tokenGenerationError && (
                 <Alert.Root theme="danger">
-                  <Alert.Description>{tokenGenerationError}</Alert.Description>
+                  <Alert.Description>{enhanceTokenErrorMessage(tokenGenerationError)}</Alert.Description>
                 </Alert.Root>
               )}
             </Layout.Vertical>

@@ -27,6 +27,13 @@ export const RepoEmptyView: React.FC<RepoEmptyViewProps> = ({
 }) => {
   const { t } = useTranslation()
 
+  const enhanceTokenErrorMessage = (error: string): string => {
+    if (/Maximum.*Token.*limit.*reached/i.test(error)) {
+      return `${error}. The maximum token limit is 5. Please navigate to your user profile to remove some existing tokens and create new ones.`
+    }
+    return error
+  }
+
   const getInitialCommitMarkdown = () => {
     return `
 \`\`\`shell
@@ -117,7 +124,7 @@ ${sshUrl}
 
             {tokenGenerationError && (
               <Alert.Root theme="danger">
-                <Alert.Description>{tokenGenerationError}</Alert.Description>
+                <Alert.Description>{enhanceTokenErrorMessage(tokenGenerationError)}</Alert.Description>
               </Alert.Root>
             )}
 

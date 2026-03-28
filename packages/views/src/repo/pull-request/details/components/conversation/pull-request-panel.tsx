@@ -712,7 +712,7 @@ const PullRequestPanel = ({
               <Layout.Horizontal align="center" wrap="wrap" gap="2xs">
                 <Avatar name={pullReqMetadata?.merger?.display_name || ''} rounded />
                 <Text variant="body-single-line-strong">{pullReqMetadata?.merger?.display_name}</Text>
-                <Text variant="body-single-line-normal">
+                <Text variant="body-single-line-normal" color="foreground-3">
                   {areRulesBypassed ? `bypassed rules and ${mergeMethod}` : `${mergeMethod}`} into
                 </Text>
                 <BranchTag
@@ -721,7 +721,7 @@ const PullRequestPanel = ({
                   repoId={repoId}
                   variant="secondary"
                 />
-                <Text variant="body-single-line-normal">from</Text>
+                <Text variant="body-single-line-normal" color="foreground-3">from</Text>
                 <BranchTag
                   branchName={pullReqMetadata?.source_branch || ''}
                   spaceId={spaceId}

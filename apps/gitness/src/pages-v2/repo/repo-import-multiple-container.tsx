@@ -31,7 +31,8 @@ export const ImportMultipleRepos = () => {
         password: data.password,
         type: PROVIDER_TYPE_MAP[data.provider]
       },
-      provider_space
+      provider_space,
+      ...(data.include_subgroups_repos !== undefined && { include_subgroups_repos: data.include_subgroups_repos })
     }
 
     try {

@@ -169,6 +169,17 @@ export interface TypesIdentity {
   avatarUrl?: string
 }
 
+export type CommitSignatureResult = 'good' | 'unverified' | 'revoked'
+
+export interface TypesCommitSignature {
+  created?: number
+  updated?: number
+  result?: CommitSignatureResult
+  key_scheme?: string
+  key_id?: string
+  key_fingerprint?: string
+}
+
 export interface TypesCommit {
   author?: TypesSignature
   committer?: TypesSignature
@@ -177,6 +188,7 @@ export interface TypesCommit {
   sha?: string
   stats?: TypesCommitStats
   title?: string
+  signature?: TypesCommitSignature | null
 }
 export interface TypesCommitStats {
   files?: TypesCommitFileStats[]

@@ -110,7 +110,8 @@ const RenameHistorySection: React.FC<RenameHistorySectionProps> = ({
                     title: item.title,
                     message: item.message,
                     author: item.author,
-                    committer: item.committer
+                    committer: item.committer,
+                    signature: item.signature
                   }))}
                 />
               ) : (
@@ -455,7 +456,8 @@ export default function FileContentViewer({ repoContent, loading }: FileContentV
                   title: item.title,
                   message: item.message,
                   author: item.author,
-                  committer: item.committer
+                  committer: item.committer,
+                  signature: item.signature
                 }))}
               />
 

@@ -1,10 +1,23 @@
-import { FC } from 'react'
+import { FC, ReactNode, useMemo } from 'react'
 
 import { Popover, StatusBadge, Text } from '@harnessio/ui/components'
-import { useTranslation } from '@harnessio/ui/context'
+import { ColorType, ContrastType, FullTheme, ModeType, useTheme, useTranslation } from '@harnessio/ui/context'
 import { formatDate } from '@harnessio/ui/utils'
 
 import { CommitSignatureResult, TypesCommitSignature } from '../repo.types'
+
+
+function swapMode(theme: FullTheme): FullTheme {
+  const parts = theme.split('-')
+  if (parts.length !== 3) return theme
+
+  const [, color, contrast] = parts as [string, ColorType, ContrastType]
+  const currentMode = parts[0] as ModeType
+
+  const swappedMode = currentMode === ModeType.Light ? ModeType.Dark : ModeType.Light
+
+  return `${swappedMode}-${color}-${contrast}` as FullTheme
+}
 
 export interface CommitVerificationBadgeProps {
   signature?: TypesCommitSignature | null
@@ -38,14 +51,20 @@ const getVerificationTheme = (result: CommitSignatureResult): 'success' | 'warni
 
 const getPopoverContent = (
   result: CommitSignatureResult
-): { title: string; hint?: string } => {
+): { title: ReactNode; hint?: string } => {
   switch (result) {
     case 'good':
-      return { title: "This commit was signed with the committer's verified signature." }
+      return {
+        title: (
+          <>
+            This commit was signed with the committer&apos;s <strong>verified signature</strong>.
+          </>
+        )
+      }
     case 'unverified':
       return {
         title: 'This commit signature could not be verified.',
-        hint: 'Upload your public key in your user profile to verify commits.'
+        hint: 'Uploading public keys to user profiles enables commit verification.'
       }
     case 'revoked':
       return { title: 'The key used to sign this commit has been revoked.' }
@@ -56,6 +75,12 @@ const getPopoverContent = (
 
 export const CommitVerificationBadge: FC<CommitVerificationBadgeProps> = ({ signature }) => {
   const { t } = useTranslation()
+  const { theme: currentTheme } = useTheme()
+
+  // Swap theme mode for popover content to match Tooltip default behavior
+  const swappedTheme = useMemo(() => {
+    return currentTheme ? swapMode(currentTheme) : currentTheme
+  }, [currentTheme])
 
   if (!signature || !signature.result) {
     return null
@@ -69,21 +94,23 @@ export const CommitVerificationBadge: FC<CommitVerificationBadgeProps> = ({ sign
   const keyLabel = key_scheme?.toUpperCase() || 'GPG'
 
   const popoverContent = (
-    <div className="flex flex-col gap-cn-4xs">
-      {content.hint && <Text className="break-words">{content.hint}</Text>}
-      {key_fingerprint && <Text className="break-all">{keyLabel} Key ID: {key_fingerprint}</Text>}
-      {created && (
-        <Text>
-          {t('views:commits.verifiedOn', 'Verified on')} {formatDate(created)}
-        </Text>
-      )}
+    <div className={swappedTheme}>
+      <div className="flex flex-col gap-cn-4xs">
+        <Text color="foreground-1">{content.title}</Text>
+        {content.hint && <Text className="break-words">{content.hint}</Text>}
+        {key_fingerprint && <Text className="break-all">{keyLabel} Key ID: {key_fingerprint}</Text>}
+        {created && (
+          <Text>
+            {t('views:commits.verifiedOn', 'Verified on')} {formatDate(created)}
+          </Text>
+        )}
+      </div>
     </div>
   )
 
   return (
     <Popover
       content={popoverContent}
-      title={content.title}
       side="bottom"
       align="center"
       theme="default"

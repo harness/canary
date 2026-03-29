@@ -1,6 +1,6 @@
 import '@harnessio/ui/styles.css'
 
-import { FC, useEffect, useState } from 'react'
+import { FC, Fragment, useEffect, useState } from 'react'
 import {
   BrowserRouter,
   Link,
@@ -42,6 +42,17 @@ const demoItems: SidebarItemProps[] = [
   { to: '', title: 'More', icon: 'menu-more-horizontal', withRightIndicator: true }
 ]
 
+const infrastructureNav = {
+  parent: { title: 'Infrastructure', icon: 'infrastructure' as const },
+  subItems: [
+    { to: '/infra/clusters', title: 'Clusters' },
+    { to: '/infra/environments', title: 'Environments' }
+  ]
+} as const
+
+const submenuInsertAfterTitle =
+  demoItems.find(i => 'to' in i && i.to === '/connectors')?.title ?? ''
+
 const Shell: FC = () => {
   const navigate = useNavigate()
   const location = useLocation()
@@ -70,7 +81,16 @@ const Shell: FC = () => {
             <Sidebar.Content>
               <Sidebar.Group>
                 {demoItems.map(item => (
-                  <Sidebar.Item key={item.title} {...item} />
+                  <Fragment key={item.title}>
+                    <Sidebar.Item {...item} />
+                    {item.title === submenuInsertAfterTitle ? (
+                      <Sidebar.Item {...infrastructureNav.parent} defaultSubmenuOpen>
+                        {infrastructureNav.subItems.map(sub => (
+                          <Sidebar.MenuSubItem key={sub.to} {...sub} />
+                        ))}
+                      </Sidebar.Item>
+                    ) : null}
+                  </Fragment>
                 ))}
               </Sidebar.Group>
             </Sidebar.Content>

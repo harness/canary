@@ -34,6 +34,7 @@ import selectStyles from './select'
 import shimmerStyles from './shimmer'
 import shortcutStyle from './shortcut'
 import sidebarStyles from './sidebar'
+import sidebarV2Styles from './sidebar-v2'
 import skeletonStyles from './skeleton'
 import sliderStyles from './slider'
 import stackedListStyles from './stacked-list'
@@ -76,6 +77,7 @@ export const ComponentStyles = [
   tooltipStyles,
   toastStyles,
   sidebarStyles,
+  sidebarV2Styles,
   breadcrumbStyles,
   iconsAndLogos,
   timeAgoCardStyles,

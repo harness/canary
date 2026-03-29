@@ -1,4 +1,4 @@
-import { ComponentProps, useEffect, useRef, useState } from 'react'
+import { ComponentProps, useCallback, useEffect, useMemo, useState } from 'react'
 
 import { DialogOpenContext, usePortal } from '@/context'
 import { Drawer as DrawerPrimitive } from 'vaul'
@@ -13,13 +13,10 @@ export const DrawerRoot = ({
   onOpenChange,
   ...props
 }: ComponentProps<typeof DrawerPrimitive.Root>) => {
-  const triggerRef = useRef<HTMLButtonElement>(null)
-  const closeRef = useRef<HTMLButtonElement>(null)
   const { portalContainer } = usePortal()
 
-  // In case if drawer is opened via trigger, to track if any nested drawer is opened
-  const [isTriggerOpen, setIsTriggerOpen] = useState(false)
-  const { isParentOpen } = useDrawerContext()
+  const [childDrawerOpen, setChildDrawerOpen] = useState(false)
+  const { isParentOpen, onChildOpenChange } = useDrawerContext()
   const nested = isParentOpen
 
   useEffect(() => {
@@ -32,48 +29,46 @@ export const DrawerRoot = ({
     portalContainer?.appendChild(style)
   }, [portalContainer])
 
+  // Notify parent when this drawer's open state changes
   useEffect(() => {
-    if (!nested) return
-
-    if (open && triggerRef.current) {
-      triggerRef.current.click()
+    if (nested && onChildOpenChange) {
+      onChildOpenChange(open || false)
     }
+  }, [nested, open, onChildOpenChange])
 
-    if (!open && closeRef.current) {
-      closeRef.current.click()
-    }
-  }, [nested, open])
-
-  const FakeTriggers = (
-    <>
-      <DrawerPrimitive.Trigger asChild>
-        <button className="sr-only" ref={triggerRef} aria-hidden="true" tabIndex={-1} />
-      </DrawerPrimitive.Trigger>
-      <DrawerPrimitive.Close asChild>
-        <button className="sr-only" ref={closeRef} aria-hidden="true" tabIndex={-1} />
-      </DrawerPrimitive.Close>
-    </>
-  )
+  // Callback for child drawers to notify this drawer
+  const handleChildOpenChange = useCallback((isOpen: boolean) => {
+    setChildDrawerOpen(isOpen)
+  }, [])
 
   const RootComponent = nested ? DrawerPrimitive.NestedRoot : DrawerPrimitive.Root
 
-  const rootProps = {
-    direction,
-    onOpenChange: (open: boolean) => {
-      setIsTriggerOpen(open)
-      onOpenChange?.(open)
-    },
-    ...(!nested && { open }),
-    ...props
-  }
+  const rootProps = useMemo(
+    () => ({
+      direction,
+      onOpenChange,
+      open,
+      ...props
+    }),
+    [direction, onOpenChange, open, props]
+  )
+
+  const contextValue = useMemo(
+    () => ({
+      direction,
+      nested,
+      isParentOpen: isParentOpen || open,
+      hasOpenChild: childDrawerOpen,
+      onChildOpenChange: handleChildOpenChange,
+      modal: props?.modal ?? true
+    }),
+    [direction, nested, isParentOpen, open, childDrawerOpen, handleChildOpenChange, props?.modal]
+  )
 
   return (
-    <DrawerContext.Provider
-      value={{ direction, nested, isParentOpen: isParentOpen || open || isTriggerOpen, modal: props?.modal ?? true }}
-    >
+    <DrawerContext.Provider value={contextValue}>
       <DialogOpenContext.Provider value={{ open }}>
         <RootComponent handleOnly {...rootProps} container={portalContainer as HTMLElement} data-root="drawer">
-          {nested && FakeTriggers}
           {children}
         </RootComponent>
       </DialogOpenContext.Provider>

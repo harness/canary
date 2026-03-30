@@ -1,0 +1,104 @@
+/**
+ * Sidebar shell aligned to Figma ❖ sidebar-menu / default (node 3878:4002):
+ * container padding, group vertical rhythm, item column gap, optional footer spacing.
+ *
+ * Height chain: grid row → .sidebar-app-shell → .cn-sidebar-root-responsive → .cn-sidebar
+ * so Sidebar.Content (flex-1 + ScrollArea) gets a bounded height and scrolls vertically.
+ */
+.sidebar-app-shell {
+  min-height: 0;
+  height: 100%;
+}
+
+.sidebar-app-shell > .cn-sidebar-root-responsive {
+  height: 100%;
+  min-height: 0;
+}
+
+.sidebar-app-figma.cn-sidebar.cn-sidebar-desktop {
+  box-sizing: border-box;
+  /* Fill parent; library default uses --cn-sidebar-min-height (often unset → broken % chain) */
+  --cn-sidebar-min-height: 100%;
+  height: 100%;
+  min-height: 0;
+  overflow: hidden;
+  /* Figma: layout/sm vertical, sidebar/container/px horizontal (10px) */
+  padding: var(--cn-layout-sm) 10px;
+}
+
+.sidebar-app-figma .sidebar-app-sidebar-header {
+  flex-shrink: 0;
+  width: 100%;
+}
+
+.sidebar-app-figma .sidebar-app-sidebar-group-pinned {
+  flex-shrink: 0;
+  /* Figma: sidebar/group/py 10px, sidebar/group/gap 2px */
+  padding-top: 10px;
+  padding-bottom: 10px;
+  gap: 2px;
+}
+
+.sidebar-app-figma .sidebar-app-sidebar-group-recent {
+  padding-top: 10px;
+  padding-bottom: 10px;
+  gap: 2px;
+}
+
+.sidebar-app-figma .cn-sidebar-content-wrapper {
+  flex: 1 1 0;
+  min-height: 0;
+}
+
+/* Flex/grid default min-height:auto prevents overflow; scroll viewport must shrink */
+.sidebar-app-figma .cn-sidebar-content.cn-scroll-area {
+  min-height: 0;
+  height: 100%;
+}
+
+.sidebar-app-figma .cn-sidebar-separator {
+  flex-shrink: 0;
+}
+
+.sidebar-app-figma .sidebar-app-sidebar-footer {
+  flex-shrink: 0;
+  width: 100%;
+}
+
+/* Figma: sidebar/item/gap 14px between leading icon and label column */
+.sidebar-app-figma .cn-sidebar-item-content {
+  column-gap: 14px;
+}
+
+/* More menu drawer — Figma inner-container (node 3878:4005) */
+.cn-drawer-body-content.more-drawer {
+  min-height: 0;
+}
+
+.more-drawer-search {
+  padding-top: var(--cn-layout-md);
+  padding-bottom: var(--cn-layout-md);
+}
+
+.more-drawer-group {
+  padding-top: var(--cn-layout-md);
+  padding-bottom: var(--cn-layout-md);
+  gap: var(--cn-layout-4xs);
+}
+
+/* Bordered 24px leading icon (Figma sidebar/menu-button/to-pin) */
+.more-drawer-row .cn-sidebar-item-content-icon {
+  box-sizing: border-box;
+  display: flex;
+  width: 24px;
+  height: 24px;
+  min-width: 24px;
+  min-height: 24px;
+  align-items: center;
+  justify-content: center;
+  border: 1px solid var(--cn-border-2);
+  border-radius: 4px;
+  margin-left: var(--cn-layout-sm);
+  background-color: var(--cn-bg-1);
+}
+

@@ -174,11 +174,10 @@ const PullRequestChangesSection: FC<PullRequestChangesSectionProps> = ({
                 <StatusBadge variant="status" theme="warning">
                   {t(
                     'views:repo.pullRequest.changesSection.pendingLatestApprovalsMessage',
-                    '{{latestApprovalsCount}} {{approval}} pending on latest changes',
+                    '{{currentCount}}/{{requiredCount}} approvals on latest changes',
                     {
-                      latestApprovalsCount:
-                        (latestApprovalArr && latestApprovalArr.length) || minReqLatestApproval || 0,
-                      approval: easyPluralize(latestApprovalsCount, 'approval', 'approvals')
+                      currentCount: (latestApprovalArr && latestApprovalArr.length) || 0,
+                      requiredCount: minReqLatestApproval || 0
                     }
                   )}
                 </StatusBadge>

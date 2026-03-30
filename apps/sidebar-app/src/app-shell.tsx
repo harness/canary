@@ -14,8 +14,8 @@ import { Layout, useSidebar } from '@harnessio/ui/components'
 import { RouterContextProvider } from '@harnessio/ui/context'
 
 import { AppShellContent } from './app-content'
-import { AppShellHeader } from './app-shell-header'
 import { AppNav } from './app-nav'
+import { AppShellHeader } from './app-shell-header'
 
 const appShellMainClass = 'app-shell-main'
 const appShellRootClass = 'app-shell'
@@ -32,9 +32,6 @@ const AppShellLayout: FC<{ header?: ReactNode; children: ReactNode }> = ({ heade
     : 'var(--cn-sidebar-container-full-width) 1fr'
 
   const childList = Children.toArray(children)
-  if (process.env.NODE_ENV !== 'production' && childList.length !== 2) {
-    console.warn('AppShell.Layout: expected exactly two children (AppShell.Nav, AppShell.Content)')
-  }
   const [navColumn, contentColumn] = childList
 
   return (
@@ -55,9 +52,7 @@ const AppShellLayout: FC<{ header?: ReactNode; children: ReactNode }> = ({ heade
           className={`${appShellBodyClass} min-h-0 w-full flex-1 transition-all duration-200 ease-in-out`}
         >
           {navColumn}
-          <div className={`${appShellMainClass} flex h-full min-h-0 min-w-0 flex-col`}>
-            {contentColumn}
-          </div>
+          <div className={`${appShellMainClass} flex h-full min-h-0 min-w-0 flex-col`}>{contentColumn}</div>
         </Layout.Grid>
       </div>
     </RouterContextProvider>

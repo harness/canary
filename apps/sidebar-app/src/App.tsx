@@ -1,6 +1,6 @@
 import type { ReactNode } from 'react'
 
-import '@harnessio/ui/base.css'
+import '@harnessio/ui/styles.css'
 import './App.css'
 
 import { AppShell } from './app-shell'

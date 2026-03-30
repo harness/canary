@@ -148,6 +148,11 @@
   min-height: var(--cn-sidebar-item-min-height);
 }
 
+/* Ghost row actions (Recents pin, etc.): last grid column is content-sized, so inset from the padded edge */
+.sidebar-app-figma .cn-sidebar-item-content .cn-sidebar-item-content-action-buttons {
+  margin-right: var(--cn-layout-xs);
+}
+
 /* More menu drawer panel width — cn-size-64 (see Drawer.Content className in App.tsx) */
 .sidebar-app-more-menu-drawer {
   width: var(--cn-size-64) !important;

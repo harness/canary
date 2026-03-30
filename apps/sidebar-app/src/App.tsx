@@ -47,6 +47,7 @@ const appShellBodyClass = 'app-shell-body'
 const recentNavMaxItems = 5
 const recentNavStorageKey = 'sidebar-app-recent-nav-v1'
 const recentPinAriaLabel = 'Pin'
+const pinnedUnpinAriaLabel = 'Unpin'
 
 const defaultFixedNavPath =
   defaultAppNavFixedHome.type === 'item' &&
@@ -76,7 +77,7 @@ const SidebarAppShell: FC = () => {
     [pinnedFromRecents]
   )
 
-  const { recentItems, removeRecentByTo } = useRecentNavItems({
+  const { recentItems, removeRecentByTo, prependRecentItem } = useRecentNavItems({
     maxItems: recentNavMaxItems,
     storageKey: recentNavStorageKey,
     getItemForPath: getSidebarItemForPathname,
@@ -109,6 +110,16 @@ const SidebarAppShell: FC = () => {
     })
   }, [])
 
+  const handleUnpinToRecents = useCallback(
+    (item: SidebarItemProps) => {
+      if (!('to' in item) || typeof item.to !== 'string') return
+      const to = item.to
+      setPinnedFromRecents(prev => prev.filter(p => !('to' in p) || p.to !== to))
+      prependRecentItem(sidebarItemWithoutRowActions(item))
+    },
+    [prependRecentItem]
+  )
+
   const fixedItems = useMemo<AppNavFixedItem[]>(() => {
     const pinRows: AppNavFixedItem[] = pinnedFromRecents.map(p => {
       const base = sidebarItemWithoutRowActions(p)
@@ -117,13 +128,25 @@ const SidebarAppShell: FC = () => {
         type: 'item' as const,
         item: {
           ...base,
-          active: 'to' in base && base.to === location.pathname
+          active: 'to' in base && base.to === location.pathname,
+          actionButtons: to
+            ? [
+                {
+                  iconName: 'pin-slash' as const,
+                  iconOnly: true,
+                  onClick: () => {
+                    handleUnpinToRecents(p)
+                  },
+                  'aria-label': pinnedUnpinAriaLabel
+                }
+              ]
+            : undefined
         },
         ...(to ? { sortableId: to } : {})
       }
     })
     return [defaultAppNavFixedHome, ...pinRows, defaultAppNavFixedMore]
-  }, [pinnedFromRecents, location.pathname])
+  }, [handleUnpinToRecents, pinnedFromRecents, location.pathname])
 
   const nav: AppNavProps = useMemo(
     () => ({

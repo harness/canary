@@ -55,6 +55,11 @@ export type UseRecentNavItemsResult = {
   recentItems: SidebarItemProps[]
   clearRecents: () => void
   removeRecentByTo: (to: string) => void
+  /**
+   * Insert or promote a row to the front of Recents (e.g. after unpin from fixed nav).
+   * Respects `maxItems`, dedupes by `to`, and persists when `storageKey` is set.
+   */
+  prependRecentItem: (item: SidebarItemProps) => void
 }
 
 /**
@@ -133,5 +138,19 @@ export function useRecentNavItems(options: UseRecentNavItemsOptions): UseRecentN
     [persist]
   )
 
-  return { recentItems, clearRecents, removeRecentByTo }
+  const prependRecentItem = useCallback(
+    (item: SidebarItemProps) => {
+      const entry = toStorageEntry(item)
+      if (!entry) return
+      setRecentItems(prev => {
+        const without = prev.filter(p => !('to' in p) || p.to !== entry.to)
+        const next = [fromStorageEntry(entry), ...without].slice(0, maxItems)
+        persist(next)
+        return next
+      })
+    },
+    [maxItems, persist]
+  )
+
+  return { recentItems, clearRecents, removeRecentByTo, prependRecentItem }
 }

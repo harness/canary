@@ -97,6 +97,9 @@ export class AssistantRuntime extends BaseSubscribable {
       this._currentThreadUnsubscribe()
     }
 
+    // Clear focus when switching threads (e.g., starting new conversation)
+    this._contentFocusRuntime.blur()
+
     // Subscribe to new main thread
     this._currentThreadUnsubscribe = this.thread.subscribe(() => {
       this.handleMessagesChange(this.thread.messages)
@@ -117,7 +120,6 @@ export class AssistantRuntime extends BaseSubscribable {
 
   private autoFocusLastContent(messages: readonly Message[]): void {
     if (messages.length === 0) return
-    if (this._contentFocusRuntime.isActive) return // Don't override existing focus
 
     // Find last assistant message
     for (let i = messages.length - 1; i >= 0; i--) {
@@ -130,7 +132,16 @@ export class AssistantRuntime extends BaseSubscribable {
         const renderer = this.pluginRegistry.getRenderersByType(content.type)
 
         if (renderer.length > 0 && renderer[0].capabilities?.supportsFocus) {
-          this._contentFocusRuntime.focus(content, message, j, 'detail')
+          // Check if we're already focusing this exact content
+          const isAlreadyFocused =
+            this._contentFocusRuntime.isActive &&
+            this._contentFocusRuntime.focusedMessageId === message.id &&
+            this._contentFocusRuntime.focusedContentIndex === j
+
+          // Only focus if it's new content
+          if (!isAlreadyFocused) {
+            this._contentFocusRuntime.focus(content, message, j, 'detail')
+          }
           return
         }
       }

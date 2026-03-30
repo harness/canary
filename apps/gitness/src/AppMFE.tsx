@@ -55,7 +55,8 @@ export default function AppMFE({
     requestInterceptor: (request: Request) => {
       if (isCurrentSessionPublic) return request
 
-      const token = decode(localStorage.getItem('token') || '')
+      const rawToken = localStorage.getItem('token')
+      const token = rawToken ? decode(rawToken) : undefined
       const newRequest = request.clone()
       newRequest.headers.set('Authorization', `Bearer ${token}`)
       return newRequest

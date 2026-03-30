@@ -1,4 +1,81 @@
 /**
+ * App shell: one viewport-tall row — [ full-height Nav | Main column (Content) ].
+ */
+.app-shell {
+  height: 100vh;
+  max-height: 100vh;
+}
+
+.app-shell-body {
+  min-height: 0;
+}
+
+.app-shell-nav-column {
+  height: 100%;
+  min-height: 0;
+}
+
+/* Library .cn-sidebar-inset defaults to ~100vh; grow within .app-shell-main */
+.app-shell-main .cn-sidebar-inset.app-shell-content {
+  flex: 1 1 0;
+  min-height: 0;
+  max-height: 100%;
+}
+
+/**
+ * Inset main area: canvas (cn-bg-1) behind two raised cards — AI chat | page content.
+ * Gutters ~10px; cards use design-system radius 6 and hairline border (Figma-style inset).
+ */
+.app-shell-main .cn-sidebar-inset.app-shell-inset {
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+}
+
+.app-shell-inset-inner {
+  box-sizing: border-box;
+  display: flex;
+  flex: 1 1 0;
+  min-height: 0;
+  min-width: 0;
+  align-items: stretch;
+  gap: 10px;
+  padding: 10px;
+}
+
+.app-shell-inset-card {
+  box-sizing: border-box;
+  min-height: 0;
+  min-width: 0;
+  overflow: hidden;
+  border: 1px solid var(--cn-border-2);
+  border-radius: var(--cn-rounded-6);
+  background-color: var(--cn-bg-0);
+  box-shadow: var(--cn-shadow-1);
+}
+
+.app-shell-inset-chat {
+  display: flex;
+  flex: 0 0 clamp(280px, 32vw, 380px);
+  flex-direction: column;
+}
+
+.app-shell-inset-page {
+  display: flex;
+  flex: 1 1 0;
+  flex-direction: column;
+}
+
+.app-shell-inset-placeholder {
+  display: flex;
+  flex: 1 1 0;
+  min-height: 0;
+  align-items: center;
+  justify-content: center;
+  padding: var(--cn-layout-md);
+}
+
+/**
  * Sidebar shell aligned to Figma ❖ sidebar-menu / default (node 3878:4002):
  * container padding, group vertical rhythm, item column gap, optional footer spacing.
  *
@@ -65,9 +142,17 @@
   width: 100%;
 }
 
-/* Figma: sidebar/item/gap 14px between leading icon and label column */
+/* Figma: sidebar/item/gap 14px between leading icon and label column; row height from design tokens */
 .sidebar-app-figma .cn-sidebar-item-content {
   column-gap: 14px;
+  min-height: var(--cn-sidebar-item-min-height);
+}
+
+/* More menu drawer panel width — cn-size-64 (see Drawer.Content className in App.tsx) */
+.sidebar-app-more-menu-drawer {
+  width: var(--cn-size-64) !important;
+  min-width: var(--cn-size-64);
+  max-width: var(--cn-size-64);
 }
 
 /* More menu drawer — Figma inner-container (node 3878:4005) */
@@ -80,14 +165,73 @@
   padding-bottom: var(--cn-layout-md);
 }
 
-.more-drawer-group {
+/*
+ * More menu section groups — Figma drawer node 3878:4004:
+ * - layout/xs (8px) between section label, item list, and More/Less
+ * - layout/4xs (2px) between rows inside the list (items container in Figma)
+ */
+.cn-drawer-body-content.more-drawer .cn-sidebar-group.more-drawer-group {
+  display: flex;
+  flex-direction: column;
+  gap: var(--cn-layout-xs);
   padding-top: var(--cn-layout-md);
   padding-bottom: var(--cn-layout-md);
+}
+
+.cn-drawer-body-content.more-drawer .more-drawer-group-items {
+  display: flex;
+  flex-direction: column;
   gap: var(--cn-layout-4xs);
+  width: 100%;
+  min-width: 0;
+}
+
+/* Match Figma group label row: same horizontal inset as Modules/Resources (sidebar/item/container + 3xs vertical) */
+.cn-drawer-body-content.more-drawer .cn-sidebar-group.more-drawer-group > .cn-sidebar-group-header {
+  padding: var(--cn-layout-3xs) var(--cn-sidebar-item-container);
+}
+
+.more-drawer-toggle {
+  display: flex;
+  width: 100%;
+  box-sizing: border-box;
+  align-items: center;
+  justify-content: flex-start;
+  gap: var(--cn-layout-3xs);
+  min-height: var(--cn-sidebar-item-min-height);
+  padding: var(--cn-layout-3xs) var(--cn-sidebar-item-container);
+  border: none;
+  border-radius: var(--cn-sidebar-item-radius);
+  background: transparent;
+  cursor: pointer;
+  color: var(--cn-text-2);
+  text-align: left;
+}
+
+.more-drawer-toggle .more-drawer-toggle-chevron {
+  flex-shrink: 0;
+}
+
+.more-drawer-toggle:hover {
+  background-color: var(--cn-state-hover);
+  color: var(--cn-text-1);
+}
+
+/*
+ * Drawer nav rows: one value for top + left padding so they always match (same var reference).
+ * Right/bottom still use the sidebar item token (identical when the token is a single length).
+ */
+.cn-drawer-body-content.more-drawer .more-drawer-row.cn-sidebar-item .cn-sidebar-item-content {
+  --drawer-nav-row-inset: var(--cn-sidebar-item-container);
+  padding-top: var(--drawer-nav-row-inset);
+  padding-left: var(--drawer-nav-row-inset);
+  padding-right: var(--cn-sidebar-item-container);
+  padding-bottom: var(--cn-sidebar-item-container);
+  min-height: var(--cn-sidebar-item-min-height);
 }
 
 /* Bordered 24px leading icon (Figma sidebar/menu-button/to-pin) */
-.more-drawer-row .cn-sidebar-item-content-icon {
+.cn-drawer-body-content.more-drawer .more-drawer-row .cn-sidebar-item-content-icon {
   box-sizing: border-box;
   display: flex;
   width: 24px;
@@ -98,7 +242,6 @@
   justify-content: center;
   border: 1px solid var(--cn-border-2);
   border-radius: 4px;
-  margin-left: var(--cn-layout-sm);
+  margin-left: 0;
   background-color: var(--cn-bg-1);
 }
-

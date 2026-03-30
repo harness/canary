@@ -35,6 +35,15 @@ export const DrawerRoot = ({
     setChildDrawerOpen(isOpen)
   }, [])
 
+  // Track controlled `open` prop changes and notify parent
+  useEffect(() => {
+    // When controlled `open` prop changes, we need to notify parent
+    // (wrappedOnOpenChange won't be called by Vaul in this case)
+    if (open !== undefined && nested && onChildOpenChange) {
+      onChildOpenChange(open)
+    }
+  }, [open, nested, onChildOpenChange])
+
   // Wrap user's onOpenChange to intercept all state changes (controlled and trigger mode)
   const wrappedOnOpenChange = useCallback(
     (isOpen: boolean) => {

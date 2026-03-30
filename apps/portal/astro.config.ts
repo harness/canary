@@ -149,6 +149,7 @@ export default defineConfig({
             "components/actions/copy-button",
             "components/feedback/counter-badge",
             "components/data-display/data-table",
+            "components/form/date-range-filter",
             "components/overlays/dialog",
             "components/markdown-display/diff-viewer",
             "components/data-display/draggable-card",

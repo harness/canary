@@ -3,7 +3,14 @@ import { ReactNode } from 'react'
 import { format } from 'date-fns'
 
 import { ComboBoxOptions } from './filters-bar/actions/variants/combo-box'
-import { CheckboxOptions, FilterFieldConfig, FilterFieldTypes, FilterOptionConfig, FilterValueTypes } from './types'
+import {
+  CheckboxOptions,
+  DateRangeValue,
+  FilterFieldConfig,
+  FilterFieldTypes,
+  FilterOptionConfig,
+  FilterValueTypes
+} from './types'
 
 export const getFilterLabelValue = <
   T extends string,
@@ -25,6 +32,25 @@ export const getFilterLabelValue = <
       }
 
       return formatDate(filterValue)
+    }
+    case FilterFieldTypes.DateRange: {
+      const filterValue = filter.value as DateRangeValue | undefined
+      if (!filterValue) return ''
+
+      const currentYear = new Date().getFullYear()
+      const fromDate = new Date(filterValue.from)
+      const toDate = new Date(filterValue.to)
+      const sameYear = fromDate.getFullYear() === toDate.getFullYear() && fromDate.getFullYear() === currentYear
+
+      if (sameYear) {
+        return `${format(fromDate, 'MMM d')} - ${format(toDate, 'MMM d')}`
+      }
+
+      if (fromDate.getFullYear() === toDate.getFullYear()) {
+        return `${format(fromDate, 'MMM d')} - ${format(toDate, 'MMM d, yyyy')}`
+      }
+
+      return `${format(fromDate, 'MMM d, yyyy')} - ${format(toDate, 'MMM d, yyyy')}`
     }
     case FilterFieldTypes.ComboBox: {
       const filterValue = filter.value as ComboBoxOptions | undefined

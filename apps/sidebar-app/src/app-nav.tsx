@@ -1,4 +1,7 @@
-import { type FC, Fragment, type MouseEvent, useMemo, useState } from 'react'
+import { closestCenter, DndContext, type DragEndEvent, PointerSensor, useSensor, useSensors } from '@dnd-kit/core'
+import { arrayMove, SortableContext, useSortable, verticalListSortingStrategy } from '@dnd-kit/sortable'
+import { CSS } from '@dnd-kit/utilities'
+import { type FC, Fragment, type MouseEvent, useCallback, useMemo, useState } from 'react'
 
 import {
   Drawer,
@@ -16,6 +19,10 @@ import { cn } from '@harnessio/ui/utils'
 
 import {
   DEFAULT_MORE_DRAWER_PREVIEW_COUNT,
+  type AppNavFixedItem,
+  type AppNavFixedItemMore,
+  type AppNavFixedItemRow,
+  type AppNavFixedItemRowWithSortable,
   type AppNavMoreItemGroup,
   type AppNavProps
 } from './types/app-nav-types'
@@ -146,11 +153,116 @@ function fixedItemKey(entry: AppNavProps['fixedItems'][number], index: number): 
   return item.title ?? `fixed-${index}`
 }
 
+function partitionFixedItemsForSortable(items: AppNavFixedItem[]): {
+  prefix: AppNavFixedItem[]
+  sortable: AppNavFixedItemRowWithSortable[]
+  suffix: AppNavFixedItem[]
+} {
+  const runs: { start: number; end: number }[] = []
+  let runStart = -1
+  for (let i = 0; i <= items.length; i++) {
+    const e = items[i]
+    const isSort = !!(e && e.type === 'item' && e.sortableId != null && e.sortableId !== '')
+    if (isSort) {
+      if (runStart < 0) runStart = i
+    } else if (runStart >= 0) {
+      runs.push({ start: runStart, end: i - 1 })
+      runStart = -1
+    }
+  }
+  if (runs.length === 0) {
+    return { prefix: items, sortable: [], suffix: [] }
+  }
+  if (runs.length > 1) {
+    console.warn(
+      'AppNav: multiple contiguous sortable fixed-item runs are not supported; using the first run only'
+    )
+  }
+  const { start, end } = runs[0]
+  const sortable = items.slice(start, end + 1).filter(
+    (e): e is AppNavFixedItemRowWithSortable =>
+      e.type === 'item' &&
+      typeof (e as AppNavFixedItemRow).sortableId === 'string' &&
+      (e as AppNavFixedItemRow).sortableId !== ''
+  )
+  return {
+    prefix: items.slice(0, start),
+    sortable,
+    suffix: items.slice(end + 1)
+  }
+}
+
+function defaultShowFixedItemDragGrip(_row: AppNavFixedItemRow): boolean {
+  return true
+}
+
+const SortableFixedSidebarRow: FC<{
+  entry: AppNavFixedItemRowWithSortable
+  showGrip: boolean
+}> = ({ entry, showGrip }) => {
+  const { attributes, listeners, setNodeRef, transform, transition, isDragging } = useSortable({
+    id: entry.sortableId,
+    disabled: !showGrip
+  })
+
+  const style = {
+    transform: CSS.Translate.toString(transform),
+    transition,
+    opacity: isDragging ? 0.55 : undefined,
+    zIndex: isDragging ? 1 : undefined
+  }
+
+  return (
+    <div ref={setNodeRef} style={style}>
+      <Sidebar.Item
+        {...entry.item}
+        draggable={showGrip}
+        dragAttributes={showGrip ? attributes : undefined}
+        dragListeners={showGrip ? listeners : undefined}
+      >
+        {entry.children}
+      </Sidebar.Item>
+    </div>
+  )
+}
+
 /** Full-height nav column: sidebar + rail (single grid cell beside main). */
-export const AppNav: FC<AppNavProps> = ({ headerItem, fixedItems, recentSection }) => {
+export const AppNav: FC<AppNavProps> = ({
+  headerItem,
+  fixedItems,
+  recentSection,
+  onReorderSortableFixedItems,
+  showFixedItemDragGrip = defaultShowFixedItemDragGrip
+}) => {
   const { state: sidebarState } = useSidebar()
   const isSidebarCollapsed = sidebarState === 'collapsed'
   const [openMoreId, setOpenMoreId] = useState<string | null>(null)
+
+  const { prefix, sortable, suffix } = useMemo(
+    () => partitionFixedItemsForSortable(fixedItems),
+    [fixedItems]
+  )
+
+  const sortableIds = useMemo(() => sortable.map(s => s.sortableId), [sortable])
+
+  const sensors = useSensors(
+    useSensor(PointerSensor, {
+      activationConstraint: { delay: 100, tolerance: 5 }
+    })
+  )
+
+  const handleSortableDragEnd = useCallback(
+    (event: DragEndEvent) => {
+      if (!onReorderSortableFixedItems || sortableIds.length === 0) return
+      const { active, over } = event
+      if (!over || active.id === over.id) return
+      const oldIndex = sortableIds.indexOf(active.id as string)
+      const newIndex = sortableIds.indexOf(over.id as string)
+      if (oldIndex < 0 || newIndex < 0) return
+      onReorderSortableFixedItems(arrayMove(sortableIds, oldIndex, newIndex))
+    },
+    [onReorderSortableFixedItems, sortableIds]
+  )
 
   const moreMenuDrawerContentProps: DrawerContentProps = useMemo(
     () => ({
@@ -170,6 +282,69 @@ export const AppNav: FC<AppNavProps> = ({ headerItem, fixedItems, recentSection 
     [isSidebarCollapsed]
   )
 
+  const renderMoreFixedItem = (entry: AppNavFixedItemMore) => {
+    const searchId = entry.drawerSearchInputId ?? `${entry.id}-search`
+    const searchLabel = entry.drawerSearchPlaceholder?.trim()
+      ? entry.drawerSearchPlaceholder
+      : 'Search'
+
+    return (
+      <Drawer.Root
+        key={entry.id}
+        direction={moreDrawerDirection}
+        open={openMoreId === entry.id}
+        onOpenChange={open => setOpenMoreId(open ? entry.id : null)}
+      >
+        <Sidebar.Item
+          {...entry.trigger}
+          onClick={(e: MouseEvent<HTMLButtonElement>) => {
+            entry.trigger.onClick?.(e)
+            setOpenMoreId(entry.id)
+          }}
+        />
+        <Drawer.Content {...moreMenuDrawerContentProps}>
+          <Drawer.Title className="sr-only">{entry.trigger.title}</Drawer.Title>
+          <Drawer.Description className="sr-only">{entry.trigger.title}</Drawer.Description>
+          <Drawer.Body classNameContent={moreDrawerBodyContentClass}>
+            <Layout.Flex direction={moreDrawerLayoutColumn} gap={moreDrawerLayoutGap}>
+              <div className="more-drawer-search">
+                <Input
+                  id={searchId}
+                  inputIconName={moreDrawerSearchInputIcon}
+                  placeholder={entry.drawerSearchPlaceholder ?? ''}
+                  wrapperClassName={moreDrawerInputWrapperClass}
+                  aria-label={searchLabel}
+                />
+              </div>
+              <Sidebar.Separator />
+              {entry.itemGroups.map((group, sectionIndex) => (
+                <Fragment key={group.groupId}>
+                  <MoreDrawerSectionGroup section={group} />
+                  {sectionIndex < entry.itemGroups.length - 1 ? <Sidebar.Separator /> : null}
+                </Fragment>
+              ))}
+            </Layout.Flex>
+          </Drawer.Body>
+        </Drawer.Content>
+      </Drawer.Root>
+    )
+  }
+
+  const renderFixedSegment = (segment: AppNavFixedItem[], keyGroup: number) =>
+    segment.map((entry, i) => {
+      if (entry.type === 'item') {
+        return (
+          <Sidebar.Item key={`${keyGroup}-${fixedItemKey(entry, i)}`} {...entry.item}>
+            {entry.children}
+          </Sidebar.Item>
+        )
+      }
+      return renderMoreFixedItem(entry)
+    })
+
+  const sortableEnabled =
+    sortable.length > 0 && typeof onReorderSortableFixedItems === 'function'
+
   return (
     <div className="app-shell-nav-column relative flex h-full min-h-0 min-w-0">
       <div className="sidebar-app-shell h-full min-h-0 min-w-0 flex-1">
@@ -179,61 +354,34 @@ export const AppNav: FC<AppNavProps> = ({ headerItem, fixedItems, recentSection 
           </Sidebar.Header>
 
           <Sidebar.Group className="sidebar-app-sidebar-group-pinned">
-            {fixedItems.map((entry, index) => {
-              if (entry.type === 'item') {
-                return (
-                  <Sidebar.Item key={fixedItemKey(entry, index)} {...entry.item}>
-                    {entry.children}
-                  </Sidebar.Item>
-                )
-              }
-
-              const searchId = entry.drawerSearchInputId ?? `${entry.id}-search`
-              const searchLabel = entry.drawerSearchPlaceholder?.trim()
-                ? entry.drawerSearchPlaceholder
-                : 'Search'
-
-              return (
-                <Drawer.Root
-                  key={entry.id}
-                  direction={moreDrawerDirection}
-                  open={openMoreId === entry.id}
-                  onOpenChange={open => setOpenMoreId(open ? entry.id : null)}
-                >
-                  <Sidebar.Item
-                    {...entry.trigger}
-                    onClick={(e: MouseEvent<HTMLButtonElement>) => {
-                      entry.trigger.onClick?.(e)
-                      setOpenMoreId(entry.id)
-                    }}
-                  />
-                  <Drawer.Content {...moreMenuDrawerContentProps}>
-                    <Drawer.Title className="sr-only">{entry.trigger.title}</Drawer.Title>
-                    <Drawer.Description className="sr-only">{entry.trigger.title}</Drawer.Description>
-                    <Drawer.Body classNameContent={moreDrawerBodyContentClass}>
-                      <Layout.Flex direction={moreDrawerLayoutColumn} gap={moreDrawerLayoutGap}>
-                        <div className="more-drawer-search">
-                          <Input
-                            id={searchId}
-                            inputIconName={moreDrawerSearchInputIcon}
-                            placeholder={entry.drawerSearchPlaceholder ?? ''}
-                            wrapperClassName={moreDrawerInputWrapperClass}
-                            aria-label={searchLabel}
-                          />
-                        </div>
-                        <Sidebar.Separator />
-                        {entry.itemGroups.map((group, sectionIndex) => (
-                          <Fragment key={group.groupId}>
-                            <MoreDrawerSectionGroup section={group} />
-                            {sectionIndex < entry.itemGroups.length - 1 ? <Sidebar.Separator /> : null}
-                          </Fragment>
-                        ))}
-                      </Layout.Flex>
-                    </Drawer.Body>
-                  </Drawer.Content>
-                </Drawer.Root>
-              )
-            })}
+            {renderFixedSegment(prefix, 0)}
+            {sortableEnabled ? (
+              <DndContext
+                sensors={sensors}
+                collisionDetection={closestCenter}
+                onDragEnd={handleSortableDragEnd}
+              >
+                <SortableContext items={sortableIds} strategy={verticalListSortingStrategy}>
+                  {sortable.map(entry => {
+                    const showGrip = showFixedItemDragGrip(entry)
+                    return (
+                      <SortableFixedSidebarRow
+                        key={entry.sortableId}
+                        entry={entry}
+                        showGrip={showGrip}
+                      />
+                    )
+                  })}
+                </SortableContext>
+              </DndContext>
+            ) : (
+              sortable.map((entry, i) => (
+                <Sidebar.Item key={`o-${fixedItemKey(entry, i)}`} {...entry.item}>
+                  {entry.children}
+                </Sidebar.Item>
+              ))
+            )}
+            {renderFixedSegment(suffix, 1)}
           </Sidebar.Group>
 
           <Sidebar.Separator />

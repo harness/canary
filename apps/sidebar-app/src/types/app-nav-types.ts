@@ -33,7 +33,14 @@ export type AppNavFixedItemRow = {
   type: 'item'
   item: SidebarItemProps
   children?: ReactNode
+  /**
+   * When set with {@link AppNavProps.onReorderSortableFixedItems}, this row joins the sortable block
+   * (must be one contiguous run — e.g. pins between Home and More). Grip + drag use `Sidebar.Item` dnd props.
+   */
+  sortableId?: string
 }
+
+export type AppNavFixedItemRowWithSortable = AppNavFixedItemRow & { sortableId: string }
 
 export type AppNavFixedItem = AppNavFixedItemRow | AppNavFixedItemMore
 
@@ -47,4 +54,14 @@ export type AppNavProps = {
   headerItem: SidebarItemProps
   fixedItems: AppNavFixedItem[]
   recentSection?: AppNavRecentSection
+  /**
+   * Called after a successful reorder within the contiguous `sortableId` fixed rows.
+   * Provide together with `sortableId` on those rows to enable drag-and-drop.
+   */
+  onReorderSortableFixedItems?: (orderedSortableIds: string[]) => void
+  /**
+   * Per-row gate for showing the drag grip and enabling drag (rows still need `sortableId` + `onReorderSortableFixedItems`).
+   * Omit to show grip for every sortable row.
+   */
+  showFixedItemDragGrip?: (row: AppNavFixedItemRow) => boolean
 }

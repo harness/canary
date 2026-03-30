@@ -97,15 +97,29 @@ const SidebarAppShell: FC = () => {
     [removeRecentByTo]
   )
 
+  const handleReorderPinned = useCallback((orderedIds: string[]) => {
+    setPinnedFromRecents(prev => {
+      const byTo = new Map(
+        prev.map(p => {
+          const to = 'to' in p && typeof p.to === 'string' ? p.to : ''
+          return [to, p] as const
+        }).filter((e): e is readonly [string, SidebarItemProps] => e[0] !== '')
+      )
+      return orderedIds.map(id => byTo.get(id)).filter((p): p is SidebarItemProps => p != null)
+    })
+  }, [])
+
   const fixedItems = useMemo<AppNavFixedItem[]>(() => {
     const pinRows: AppNavFixedItem[] = pinnedFromRecents.map(p => {
       const base = sidebarItemWithoutRowActions(p)
+      const to = 'to' in base && typeof base.to === 'string' ? base.to : null
       return {
         type: 'item' as const,
         item: {
           ...base,
           active: 'to' in base && base.to === location.pathname
-        }
+        },
+        ...(to ? { sortableId: to } : {})
       }
     })
     return [defaultAppNavFixedHome, ...pinRows, defaultAppNavFixedMore]
@@ -115,6 +129,8 @@ const SidebarAppShell: FC = () => {
     () => ({
       ...defaultAppNavProps,
       fixedItems,
+      onReorderSortableFixedItems: handleReorderPinned,
+      showFixedItemDragGrip: row => Boolean(row.sortableId),
       recentSection:
         recentItems.length > 0
           ? {
@@ -148,7 +164,7 @@ const SidebarAppShell: FC = () => {
             }
           : undefined
     }),
-    [fixedItems, handlePinFromRecents, recentItems, location.pathname]
+    [fixedItems, handlePinFromRecents, handleReorderPinned, recentItems, location.pathname]
   )
 
   return <AppShell nav={nav} />
@@ -239,6 +255,7 @@ export type {
   AppNavFixedItem,
   AppNavFixedItemMore,
   AppNavFixedItemRow,
+  AppNavFixedItemRowWithSortable,
   AppNavMoreItemGroup,
   AppNavProps,
   AppNavRecentSection

@@ -244,7 +244,24 @@ export default {
         zIndex: '1',
         cursor: 'grab',
         pointerEvents: 'auto',
-        opacity: '0'
+        opacity: '0',
+        border: 'none',
+        borderRadius: 'var(--cn-rounded-2)',
+        backgroundColor: 'transparent',
+        padding: '0',
+        margin: '0',
+        '@apply appearance-none': '',
+        '&:hover': {
+          backgroundColor: 'var(--cn-state-hover)'
+        },
+        '&:focus-visible': {
+          outline: '2px solid var(--cn-set-brand-primary-bg)',
+          outlineOffset: '1px',
+          opacity: '1'
+        },
+        '&:active': {
+          cursor: 'grabbing'
+        }
       },
       '&-grip-icon': {
         color: 'var(--cn-comp-sidebar-item-text-subtle)',

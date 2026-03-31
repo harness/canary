@@ -406,7 +406,12 @@ describe('Drawer', () => {
       test('should hide close button when hideClose is true', () => {
         const { container } = renderComponent(
           <Drawer.Root open>
-            <Drawer.Content hideClose>Content</Drawer.Content>
+            <Drawer.Content>
+              <Drawer.Header hideClose>
+                <Drawer.Title>Title</Drawer.Title>
+              </Drawer.Header>
+              <Drawer.Body>Body Content</Drawer.Body>
+            </Drawer.Content>
           </Drawer.Root>
         )
 

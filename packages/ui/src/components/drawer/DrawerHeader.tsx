@@ -1,6 +1,6 @@
 import { Children, forwardRef, HTMLAttributes, ReactNode } from 'react'
 
-import { IconV2, IconV2NamesType, LogoV2, LogoV2NamesType } from '@/components'
+import { Button, IconV2, IconV2NamesType, LogoV2, LogoV2NamesType } from '@/components'
 import { cn, getComponentDisplayName } from '@/utils'
 import { Drawer as DrawerPrimitive } from 'vaul'
 
@@ -8,6 +8,7 @@ import { DrawerTagline } from './Drawer.Tagline'
 
 type DrawerHeaderBaseProps = Omit<HTMLAttributes<HTMLDivElement>, 'children'> & {
   children: ReactNode
+  hideClose?: boolean
 }
 
 type DrawerHeaderIconOnlyProps = {
@@ -29,7 +30,7 @@ export type DrawerHeaderProps = DrawerHeaderBaseProps &
   (DrawerHeaderIconOnlyProps | DrawerHeaderLogoOnlyProps | DrawerHeaderNoIconOrLogoProps)
 
 export const DrawerHeader = forwardRef<HTMLDivElement, DrawerHeaderProps>(
-  ({ className, children, icon, logo, ...props }, ref) => {
+  ({ className, children, icon, logo, hideClose = false, ...props }, ref) => {
     const IconOrLogoComp =
       (!!icon && <IconV2 className="cn-drawer-header-icon cn-drawer-header-icon-color" name={icon} size="xl" />) ||
       (!!logo && <LogoV2 className="cn-drawer-header-icon" name={logo} size="md" />) ||
@@ -55,9 +56,16 @@ export const DrawerHeader = forwardRef<HTMLDivElement, DrawerHeaderProps>(
     return (
       <div className={cn('cn-drawer-header', className)} ref={ref} {...props}>
         {(!!titleChildren.length || !!IconOrLogoComp) && (
-          <div className="cn-drawer-header-top">
+          <div className="cn-drawer-header-top gap-cn-xs flex items-center">
             {IconOrLogoComp}
-            <div className="cn-drawer-header-title">{titleChildren}</div>
+            <div className="cn-drawer-header-title flex-1">{titleChildren}</div>
+            {!hideClose && (
+              <DrawerPrimitive.Close asChild>
+                <Button className="cn-drawer-close-button" variant="ghost" iconOnly ignoreIconOnlyTooltip>
+                  <IconV2 className="cn-drawer-close-button-icon" name="xmark" skipSize />
+                </Button>
+              </DrawerPrimitive.Close>
+            )}
           </div>
         )}
         {otherChildren}

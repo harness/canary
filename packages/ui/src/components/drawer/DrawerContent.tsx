@@ -1,6 +1,5 @@
 import { ComponentPropsWithoutRef, ElementRef, forwardRef, useCallback, useEffect, useRef } from 'react'
 
-import { Button, IconV2 } from '@/components'
 import { usePortal, useRegisterDialog } from '@/context'
 import { cn, useMergeRefs } from '@/utils'
 import { cva, VariantProps } from 'class-variance-authority'
@@ -48,7 +47,6 @@ export type DrawerContentVariantsDirection = VariantProps<typeof drawerContentVa
 
 export type DrawerContentProps = ComponentPropsWithoutRef<typeof DrawerPrimitive.Content> & {
   size?: DrawerContentVariantsSize
-  hideClose?: boolean
   overlayClassName?: string
   forceWithOverlay?: boolean
 }
@@ -59,7 +57,6 @@ export const DrawerContent = forwardRef<ElementRef<typeof DrawerPrimitive.Conten
       className,
       children,
       size = 'sm',
-      hideClose = false,
       overlayClassName,
       forceWithOverlay = false,
       onOpenAutoFocus,
@@ -148,13 +145,6 @@ export const DrawerContent = forwardRef<ElementRef<typeof DrawerPrimitive.Conten
           contentRef.current.focus()
         }}
       >
-        {!hideClose && (
-          <DrawerPrimitive.Close asChild>
-            <Button className="cn-drawer-close-button" variant="ghost" iconOnly ignoreIconOnlyTooltip>
-              <IconV2 className="cn-drawer-close-button-icon" name="xmark" skipSize />
-            </Button>
-          </DrawerPrimitive.Close>
-        )}
         {children}
       </DrawerPrimitive.Content>
     )

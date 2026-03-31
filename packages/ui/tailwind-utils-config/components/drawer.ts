@@ -84,8 +84,6 @@ export default {
     },
 
     '&-close-button': {
-      '@apply absolute right-cn-xs top-cn-md z-50': '',
-
       '&-icon': {
         flexShrink: '0',
         width: `var(--cn-icon-size-sm)`,
@@ -119,7 +117,6 @@ export default {
 
       '&-top': {
         gap: 'var(--cn-spacing-2-half)',
-        paddingRight: 'var(--cn-spacing-6)',
         '@apply flex items-center': ''
       },
 

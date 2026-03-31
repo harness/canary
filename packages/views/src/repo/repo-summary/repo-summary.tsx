@@ -21,6 +21,7 @@ import {
   MarkdownViewer,
   NoData,
   SearchFiles,
+  Separator,
   Skeleton,
   Spacer,
   StackedList,
@@ -417,6 +418,8 @@ export function RepoSummaryView({
             />
             {!!languages?.length && (
               <>
+                <Spacer size={5} />
+                <Separator />
                 <Spacer size={5} />
                 <LanguageBar languages={languages} />
               </>

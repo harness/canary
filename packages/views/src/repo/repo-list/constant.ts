@@ -13,11 +13,11 @@ export enum RepoListColumn {
 }
 
 export const DEFAULT_VISIBLE_COLUMNS = [
+  RepoListColumn.SCOPE,
   RepoListColumn.VISIBILITY,
   RepoListColumn.LANGUAGE,
-  RepoListColumn.UPDATED,
-  RepoListColumn.PR,
-  RepoListColumn.TAGS
+  RepoListColumn.TAGS,
+  RepoListColumn.UPDATED
 ]
 
 export const COLUMN_OPTIONS: CheckboxOptions[] = [
@@ -25,8 +25,8 @@ export const COLUMN_OPTIONS: CheckboxOptions[] = [
   { label: 'Scope', value: RepoListColumn.SCOPE },
   { label: 'Visibility', value: RepoListColumn.VISIBILITY },
   { label: 'Language', value: RepoListColumn.LANGUAGE },
-  { label: 'Pull Requests', value: RepoListColumn.PR },
-  { label: 'Tags', value: RepoListColumn.TAGS },
+  { label: 'Resource Tags', value: RepoListColumn.TAGS },
   { label: 'Updated', value: RepoListColumn.UPDATED },
-  { label: 'Created', value: RepoListColumn.CREATED }
+  { label: 'Created', value: RepoListColumn.CREATED },
+  { label: 'Pull requests', value: RepoListColumn.PR }
 ]

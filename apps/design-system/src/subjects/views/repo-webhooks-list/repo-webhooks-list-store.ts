@@ -11,6 +11,7 @@ export const repoWebhooksListStore: RepoWebhooksListStore = {
     webhooks: [
       {
         id: 6,
+        identifier: 'test',
         enabled: true,
         display_name: 'Test',
         description: 'test desc',
@@ -21,6 +22,7 @@ export const repoWebhooksListStore: RepoWebhooksListStore = {
       },
       {
         id: 7,
+        identifier: 'test-2',
         enabled: false,
         display_name: 'Test 2',
         description: 'test desc',

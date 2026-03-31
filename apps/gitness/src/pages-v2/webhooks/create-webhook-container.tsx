@@ -53,7 +53,8 @@ export const CreateWebhookContainer = () => {
     isLoading: updatingWebHook,
     error: updateWebhookError
   } = useUpdateRepoWebhookMutation(
-    { repo_ref: repo_ref, webhook_identifier: Number(webhookId) },
+    // @ts-expect-error webhook_identifier accepts string identifiers; OpenAPI spec incorrectly types it as number
+    { repo_ref: repo_ref, webhook_identifier: webhookId ?? '' },
     {
       onSuccess: () => {
         navigate(routes.toRepoWebhooks({ spaceId, repoId }))
@@ -64,7 +65,8 @@ export const CreateWebhookContainer = () => {
   const { data: { body: webhookData } = {}, isLoading: getWebhookIsLoading } = useGetRepoWebhookQuery(
     {
       repo_ref,
-      webhook_identifier: Number(webhookId)
+      // @ts-expect-error webhook_identifier accepts string identifiers; OpenAPI spec incorrectly types it as number
+      webhook_identifier: webhookId ?? ''
     },
     {
       onSuccess: ({ body: data }) => {
@@ -110,7 +112,8 @@ export const CreateWebhookContainer = () => {
     if (webhookId) {
       updateWebHook({
         repo_ref: repo_ref,
-        webhook_identifier: Number(webhookId),
+        // @ts-expect-error webhook_identifier accepts string identifiers; OpenAPI spec incorrectly types it as number
+        webhook_identifier: webhookId ?? '',
         body: webhookRequest
       })
     } else {

@@ -27,6 +27,7 @@ export const useWebhookStore = create<WebhookStore>(set => ({
   setWebhooks: data => {
     const transformedWebhooks = data.map(webhook => ({
       id: webhook.id || 0,
+      identifier: webhook.identifier || '',
       enabled: !!webhook.enabled,
       display_name: webhook.display_name || '',
       description: webhook.description || '',

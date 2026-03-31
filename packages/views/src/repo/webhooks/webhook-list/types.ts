@@ -2,6 +2,7 @@ import { CreateWebhookFormFields } from '@views/repo/webhooks/webhook-create/typ
 
 export interface WebhookType {
   id: number
+  identifier: string
   display_name: string
   enabled: boolean
   createdAt: string

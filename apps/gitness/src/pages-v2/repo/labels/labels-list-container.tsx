@@ -6,7 +6,7 @@ import { DeleteAlertDialog, MessageTheme } from '@harnessio/ui/components'
 import { ILabelType, LabelsListPage } from '@harnessio/views'
 
 import { useRoutes } from '../../../framework/context/NavigationContext'
-import { useMFEContext } from '../../../framework/hooks/useMFEContext.ts'
+import { useMFEContext } from '@harnessio/mfe-wrapper'
 import { useQueryState } from '../../../framework/hooks/useQueryState'
 import usePaginationQueryStateWithStore from '../../../hooks/use-pagination-query-state-with-store'
 import { PathParams } from '../../../RouteDefinitions'

@@ -5,7 +5,7 @@ import { useGetOrganizationListQuery } from '@harnessio/react-ng-manager-v2-clie
 import { useDebounceSearch } from '@harnessio/ui/hooks'
 import { AccountInfo, DestinationSelectorDrawer, ScopeItem, ScopeType } from '@harnessio/views'
 
-import { useMFEContext } from '../framework/hooks/useMFEContext'
+import { useMFEContext } from '@harnessio/mfe-wrapper'
 
 export interface DestinationSelectorProps {
   title?: string

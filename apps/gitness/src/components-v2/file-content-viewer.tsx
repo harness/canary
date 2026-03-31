@@ -31,7 +31,7 @@ import { CodeEditor } from '@harnessio/yaml-editor'
 
 import GitCommitDialog from '../components-v2/git-commit-dialog'
 import { useRoutes } from '../framework/context/NavigationContext'
-import { useThemeStore } from '../framework/context/ThemeContext'
+import { useThemeStore } from '@harnessio/mfe-wrapper'
 import { useDownloadRawFile } from '../framework/hooks/useDownloadRawFile'
 import { useGetRepoRef } from '../framework/hooks/useGetRepoPath'
 import { parseAsInteger, useQueryState } from '../framework/hooks/useQueryState'
@@ -374,7 +374,7 @@ export default function FileContentViewer({ repoContent, loading }: FileContentV
             <>
               {fileError && (
                 <div className="flex h-full items-center justify-center">
-                  <FileReviewError onButtonClick={() => {}} className="my-0 h-full rounded-t-cn-none border-t-0" />
+                  <FileReviewError onButtonClick={() => { }} className="my-0 h-full rounded-t-cn-none border-t-0" />
                 </div>
               )}
 

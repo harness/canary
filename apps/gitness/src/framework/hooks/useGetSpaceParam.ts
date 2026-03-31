@@ -2,7 +2,7 @@ import { useParams } from 'react-router-dom'
 
 import type { PathParams } from '../../RouteDefinitions'
 import { useIsMFE } from './useIsMFE'
-import { useMFEContext } from './useMFEContext'
+import { useMFEContext } from '@harnessio/mfe-wrapper'
 
 export function useGetSpaceURLParam(): string | undefined {
   const { spaceId } = useParams<PathParams>()

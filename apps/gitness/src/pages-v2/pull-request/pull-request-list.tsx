@@ -20,7 +20,7 @@ import {
 
 import { useRoutes } from '../../framework/context/NavigationContext'
 import { useGetRepoRef } from '../../framework/hooks/useGetRepoPath'
-import { useMFEContext } from '../../framework/hooks/useMFEContext'
+import { useMFEContext } from '@harnessio/mfe-wrapper'
 import { useQueryState } from '../../framework/hooks/useQueryState'
 import usePaginationQueryStateWithStore from '../../hooks/use-pagination-query-state-with-store'
 import { useGitRef } from '../../hooks/useGitRef'

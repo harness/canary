@@ -14,7 +14,7 @@ import { ExtendedScope, RepoListFilters, RepositoryType, SandboxRepoListPage } f
 import { useRoutes } from '../../framework/context/NavigationContext'
 import { useGetSpaceURLParam } from '../../framework/hooks/useGetSpaceParam'
 import { useIsMFE } from '../../framework/hooks/useIsMFE'
-import { useMFEContext } from '../../framework/hooks/useMFEContext'
+import { useMFEContext } from '@harnessio/mfe-wrapper'
 import { useQueryState } from '../../framework/hooks/useQueryState'
 import usePaginationQueryStateWithStore from '../../hooks/use-pagination-query-state-with-store-v2'
 import { useUpstreamRepoUrl } from '../../hooks/useUpstreamRepoUrl'

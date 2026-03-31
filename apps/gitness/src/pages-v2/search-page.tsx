@@ -6,7 +6,7 @@ import { useMutation } from '@tanstack/react-query'
 import { useListReposQuery } from '@harnessio/code-service-client'
 import { SearchPageView, SearchResultItem, SemanticSearchResultItem, Stats } from '@harnessio/views'
 
-import { useMFEContext } from '../framework/hooks/useMFEContext'
+import { useMFEContext } from '@harnessio/mfe-wrapper'
 import { parseAsBoolean, useQueryState } from '../framework/hooks/useQueryState'
 import { useAPIPath } from '../hooks/useAPIPath'
 import { transformRepoList } from './repo/transform-utils/repo-list-transform'

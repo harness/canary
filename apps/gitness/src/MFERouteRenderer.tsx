@@ -3,7 +3,7 @@ import { matchPath } from 'react-router-dom'
 
 import { useRouterContext } from '@harnessio/ui/context'
 
-import { useMFEContext } from './framework/hooks/useMFEContext'
+import { useMFEContext } from '@harnessio/mfe-wrapper'
 import { extractRedirectRouteObjects } from './framework/routing/utils'
 import { repoRoutes } from './routes'
 import { decodeURIComponentIfValid } from './utils/path-utils'

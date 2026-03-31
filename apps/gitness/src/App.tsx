@@ -7,8 +7,10 @@ import { CodeServiceAPIClient } from '@harnessio/code-service-client'
 import { TooltipProvider } from '@harnessio/ui/components'
 import { DialogProvider, TranslationProvider } from '@harnessio/ui/context'
 
+import { MfeContext } from '@harnessio/mfe-wrapper'
+import type { MFEContextProps } from '@harnessio/mfe-wrapper'
+
 import { ExitConfirmProvider } from './framework/context/ExitConfirmContext'
-import { defaultContext, MFEContext } from './framework/context/MFEContext'
 import { NavigationProvider } from './framework/context/NavigationContext'
 import { ThemeProvider } from './framework/context/ThemeContext'
 import { queryClient } from './framework/queryClient'
@@ -17,6 +19,15 @@ import { useTranslationStore } from './i18n/stores/i18n-store'
 import { routes } from './routes'
 
 const BASE_URL_PREFIX = `${window.apiUrl || ''}/api/v1`
+
+const defaultMFEContext: MFEContextProps = {
+  scope: {},
+  renderUrl: '',
+  customHooks: {},
+  customUtils: {},
+  customPromises: {},
+  hooks: {}
+}
 
 export default function App() {
   new CodeServiceAPIClient({
@@ -37,7 +48,7 @@ export default function App() {
   const { t } = useTranslationStore()
 
   return (
-    <MFEContext.Provider value={defaultContext}>
+    <MfeContext.Provider value={defaultMFEContext}>
       <I18nextProvider i18n={i18n}>
         <ThemeProvider defaultTheme="dark-std-std">
           <TranslationProvider t={t}>
@@ -55,6 +66,6 @@ export default function App() {
           </TranslationProvider>
         </ThemeProvider>
       </I18nextProvider>
-    </MFEContext.Provider>
+    </MfeContext.Provider>
   )
 }

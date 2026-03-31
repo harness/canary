@@ -18,7 +18,7 @@ import { CodeDiffEditor, CodeEditor, CodeEditorProps } from '@harnessio/yaml-edi
 
 import GitCommitDialog from '../components-v2/git-commit-dialog'
 import { useRoutes } from '../framework/context/NavigationContext'
-import { useThemeStore } from '../framework/context/ThemeContext'
+import { useThemeStore } from '@harnessio/mfe-wrapper'
 import { useExitPrompt } from '../framework/hooks/useExitPrompt'
 import useCodePathDetails from '../hooks/useCodePathDetails'
 import { useGitRef } from '../hooks/useGitRef'

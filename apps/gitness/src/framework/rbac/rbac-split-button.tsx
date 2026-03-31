@@ -2,7 +2,7 @@ import { isUndefined } from 'lodash-es'
 
 import { RbacSplitButtonProps, rbacTooltip, Resource, SplitButton, Tooltip } from '@harnessio/ui/components'
 
-import { useMFEContext } from '../hooks/useMFEContext'
+import { useMFEContext } from '@harnessio/mfe-wrapper'
 
 export const RbacSplitButton = <T extends string>({
   rbac,
@@ -20,29 +20,29 @@ export const RbacSplitButton = <T extends string>({
   const hasPermission = isUndefined(rbac)
     ? true
     : (hooks
-        .usePermission?.({
-          resource: rbac.resource ?? ({} as Resource),
-          permissions: rbac.permissions ?? []
-        })
-        ?.some(Boolean) ?? true)
+      .usePermission?.({
+        resource: rbac.resource ?? ({} as Resource),
+        permissions: rbac.permissions ?? []
+      })
+      ?.some(Boolean) ?? true)
 
   const hasButtonPermission = isUndefined(buttonRbac)
     ? true
     : (hooks
-        .usePermission?.({
-          resource: buttonRbac.resource ?? ({} as Resource),
-          permissions: buttonRbac.permissions ?? []
-        })
-        ?.some(Boolean) ?? true)
+      .usePermission?.({
+        resource: buttonRbac.resource ?? ({} as Resource),
+        permissions: buttonRbac.permissions ?? []
+      })
+      ?.some(Boolean) ?? true)
 
   const hasDropdownPermission = isUndefined(dropdownRbac)
     ? true
     : (hooks
-        .usePermission?.({
-          resource: dropdownRbac.resource ?? ({} as Resource),
-          permissions: dropdownRbac.permissions ?? []
-        })
-        ?.some(Boolean) ?? true)
+      .usePermission?.({
+        resource: dropdownRbac.resource ?? ({} as Resource),
+        permissions: dropdownRbac.permissions ?? []
+      })
+      ?.some(Boolean) ?? true)
 
   const button = (
     <SplitButton<T>

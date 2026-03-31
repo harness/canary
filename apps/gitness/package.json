@@ -25,6 +25,7 @@
     "@harnessio/code-service-client": "3.11.0",
     "@harnessio/filters": "workspace:*",
     "@harnessio/forms": "workspace:*",
+    "@harnessio/mfe-wrapper": "file:.yalc/@harnessio/mfe-wrapper",
     "@harnessio/react-ng-manager-swagger-service-client": "1.7.1",
     "@harnessio/react-ng-manager-v2-client": "1.1.0",
     "@harnessio/ui": "workspace:*",

@@ -35,7 +35,7 @@ import CommitSuggestionsDialog from '../../components-v2/commit-suggestions-dial
 import { useAppContext } from '../../framework/context/AppContext'
 import { useGetRepoRef } from '../../framework/hooks/useGetRepoPath'
 import { useIsMFE } from '../../framework/hooks/useIsMFE'
-import { useMFEContext } from '../../framework/hooks/useMFEContext'
+import { useMFEContext } from '@harnessio/mfe-wrapper'
 import { useQueryState } from '../../framework/hooks/useQueryState'
 import { PathParams } from '../../RouteDefinitions'
 import { createCommitFilterFromSHA, filenameToLanguage, normalizeGitRef } from '../../utils/git-utils'

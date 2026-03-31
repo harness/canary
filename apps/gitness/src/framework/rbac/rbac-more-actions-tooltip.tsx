@@ -10,7 +10,7 @@ import {
   rbacTooltip
 } from '@harnessio/ui/components'
 
-import { useMFEContext } from '../hooks/useMFEContext.ts'
+import { useMFEContext } from '@harnessio/mfe-wrapper'
 
 export const RbacMoreActionsTooltip = forwardRef<HTMLButtonElement, RbacMoreActionsTooltipProps>(
   ({ ...props }: RbacMoreActionsTooltipProps, ref) => {

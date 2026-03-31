@@ -1,8 +1,8 @@
 import { Navigate, useParams } from 'react-router-dom'
 
-import { FeatureFlag } from '../framework/context/MFEContext'
+import { FeatureFlag } from '../framework/constants/feature-flags'
 import { useRoutes } from '../framework/context/NavigationContext'
-import { useMFEContext } from '../framework/hooks/useMFEContext'
+import { useMFEContext } from '@harnessio/mfe-wrapper'
 import { PathParams } from '../RouteDefinitions'
 
 interface FeatureGuardProps {

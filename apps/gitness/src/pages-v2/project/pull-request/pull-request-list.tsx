@@ -15,7 +15,7 @@ import { RepositoryType, PullRequestListPage as SandboxPullRequestListPage, type
 
 import { useRoutes } from '../../../framework/context/NavigationContext'
 import { useIsMFE } from '../../../framework/hooks/useIsMFE'
-import { useMFEContext } from '../../../framework/hooks/useMFEContext'
+import { useMFEContext } from '@harnessio/mfe-wrapper'
 import { useQueryState } from '../../../framework/hooks/useQueryState'
 import usePaginationQueryStateWithStore from '../../../hooks/use-pagination-query-state-with-store'
 import { useAPIPath } from '../../../hooks/useAPIPath'

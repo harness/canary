@@ -1,7 +1,7 @@
 import { useMemo } from 'react'
 import { useLocation, useMatches } from 'react-router-dom'
 
-import { useMFEContext } from '../../framework/hooks/useMFEContext'
+import { useMFEContext } from '@harnessio/mfe-wrapper'
 import { CustomHandle } from '../../framework/routing/types'
 
 export const usePublicAccess = () => {

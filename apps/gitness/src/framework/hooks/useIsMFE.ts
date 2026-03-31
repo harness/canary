@@ -1,6 +1,6 @@
 import { isEmpty } from 'lodash-es'
 
-import { useMFEContext } from './useMFEContext'
+import { useMFEContext } from '@harnessio/mfe-wrapper'
 
 export const useIsMFE = () => {
   const mfeContext = useMFEContext()

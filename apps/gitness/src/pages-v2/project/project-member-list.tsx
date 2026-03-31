@@ -15,7 +15,7 @@ import { PrincipalType } from '@harnessio/ui/types'
 import { InviteMemberFormFields, MembersProps, ProjectMemberListView } from '@harnessio/views'
 
 import { useGetSpaceURLParam } from '../../framework/hooks/useGetSpaceParam'
-import { useMFEContext } from '../../framework/hooks/useMFEContext'
+import { useMFEContext } from '@harnessio/mfe-wrapper'
 import { useQueryState } from '../../framework/hooks/useQueryState'
 import usePaginationQueryStateWithStore from '../../hooks/use-pagination-query-state-with-store'
 import { orderSortDate, PageResponseHeader } from '../../types'

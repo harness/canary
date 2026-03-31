@@ -174,6 +174,9 @@ importers:
       '@harnessio/forms':
         specifier: workspace:*
         version: link:../../packages/forms
+      '@harnessio/mfe-wrapper':
+        specifier: file:.yalc/@harnessio/mfe-wrapper
+        version: file:apps/gitness/.yalc/@harnessio/mfe-wrapper(@harness/microfrontends@2.237.1)(@harnessio/filters@packages+filters)(@harnessio/ui@packages+ui)(lodash-es@4.17.21)(react-dom@17.0.2(react@17.0.2))(react-router-dom@6.30.0(react-dom@17.0.2(react@17.0.2))(react@17.0.2))(react@17.0.2)(zustand@4.5.6(@types/react@17.0.83)(immer@10.1.1)(react@17.0.2))
       '@harnessio/react-ng-manager-swagger-service-client':
         specifier: 1.7.1
         version: 1.7.1
@@ -2835,6 +2838,9 @@ packages:
     resolution: {integrity: sha512-kjotm7XJrJ6v+7knhPaRgaT6q8F8K2jiafwYdNHLzmV0uGLuZY43FK6smNSHUPrhq5kX2slCUy+RGG/xGqmIKA==}
     engines: {node: '>=10.13.0'}
 
+  '@harness/microfrontends@2.237.1':
+    resolution: {integrity: sha512-Ee7gsfCSKdpT/11t6/PzOlYxGCG2nAon7TDW08QH1tmulDdonhGF6ETlmOzlZ0ET/rmzbzaEZhlqIZM8kXfJRg==, tarball: https://npm.pkg.github.com/download/@harness/microfrontends/2.237.1/3e4d25cb2c559161bfa8e553e61048cf06aac059}
+
   '@harnessio/code-service-client@3.11.0':
     resolution: {integrity: sha512-tyULwUv786ZIhxYfAPvkYC75URLcg1wARSxxXnPsNiIvgbTS9Qb01XbSr380CumLXrDBD+FsoxGpT60rZR270w==}
 
@@ -2859,6 +2865,18 @@ packages:
       uuid: ^8.3.0
       yup: ^0.29.1
       zod: ^3.23.8
+
+  '@harnessio/mfe-wrapper@file:apps/gitness/.yalc/@harnessio/mfe-wrapper':
+    resolution: {directory: apps/gitness/.yalc/@harnessio/mfe-wrapper, type: directory}
+    peerDependencies:
+      '@harness/microfrontends': ^2.235.1
+      '@harnessio/filters': ^0.2.0
+      '@harnessio/ui': ^0.5.7
+      lodash-es: ^4.17.21
+      react: 17.0.2
+      react-dom: 17.0.2
+      react-router-dom: ^5
+      zustand: ^4.5.4
 
   '@harnessio/oats-cli@4.0.0':
     resolution: {integrity: sha512-t1voPxeyt3Id1xlglxrcdgnjFPbj2WBZjJe/X2/u50ym+i6WsSayIzv98i+frERS2txcubrvQo7FiFbD8SHG/Q==}
@@ -12998,6 +13016,8 @@ snapshots:
     dependencies:
       is-negated-glob: 1.0.0
 
+  '@harness/microfrontends@2.237.1': {}
+
   '@harnessio/code-service-client@3.11.0': {}
 
   '@harnessio/core-design-system@0.0.1': {}
@@ -13018,6 +13038,17 @@ snapshots:
       uuid: 8.3.2
       yup: 0.29.3
       zod: 3.24.2
+
+  '@harnessio/mfe-wrapper@file:apps/gitness/.yalc/@harnessio/mfe-wrapper(@harness/microfrontends@2.237.1)(@harnessio/filters@packages+filters)(@harnessio/ui@packages+ui)(lodash-es@4.17.21)(react-dom@17.0.2(react@17.0.2))(react-router-dom@6.30.0(react-dom@17.0.2(react@17.0.2))(react@17.0.2))(react@17.0.2)(zustand@4.5.6(@types/react@17.0.83)(immer@10.1.1)(react@17.0.2))':
+    dependencies:
+      '@harness/microfrontends': 2.237.1
+      '@harnessio/filters': link:packages/filters
+      '@harnessio/ui': link:packages/ui
+      lodash-es: 4.17.21
+      react: 17.0.2
+      react-dom: 17.0.2(react@17.0.2)
+      react-router-dom: 6.30.0(react-dom@17.0.2(react@17.0.2))(react@17.0.2)
+      zustand: 4.5.6(@types/react@17.0.83)(immer@10.1.1)(react@17.0.2)
 
   '@harnessio/oats-cli@4.0.0(typescript@5.9.2)':
     dependencies:

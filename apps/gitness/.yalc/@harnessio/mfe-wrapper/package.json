@@ -1,0 +1,38 @@
+{
+  "name": "@harnessio/mfe-wrapper",
+  "version": "0.1.2",
+  "private": false,
+  "type": "module",
+  "main": "dist/index.js",
+  "module": "dist/index.js",
+  "types": "dist/index.d.ts",
+  "files": [
+    "dist"
+  ],
+  "exports": {
+    ".": {
+      "import": {
+        "types": "./dist/index.d.ts",
+        "default": "./dist/index.js"
+      }
+    }
+  },
+  "scripts": {
+    "build": "vite build",
+    "build:watch": "vite build --watch",
+    "typecheck": "tsc --noEmit",
+    "prepublishOnly": "pnpm build"
+  },
+  "peerDependencies": {
+    "@harness/microfrontends": "^2.235.1",
+    "@harnessio/filters": "^0.2.0",
+    "@harnessio/ui": "^0.5.7",
+    "lodash-es": "^4.17.21",
+    "react": "17.0.2",
+    "react-dom": "17.0.2",
+    "react-router-dom": "^5",
+    "zustand": "^4.5.4"
+  },
+  "license": "Apache-2.0",
+  "yalcSig": "3da5672ea3448d7c3ef115f4dc7bbdbb"
+}

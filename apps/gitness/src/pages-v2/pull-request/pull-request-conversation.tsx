@@ -54,7 +54,7 @@ import { useRoutes } from '../../framework/context/NavigationContext'
 import { eventManager } from '../../framework/event/EventManager.ts'
 import { useGetRepoRef } from '../../framework/hooks/useGetRepoPath'
 import { useGetSpaceURLParam } from '../../framework/hooks/useGetSpaceParam.ts'
-import { useMFEContext } from '../../framework/hooks/useMFEContext'
+import { useMFEContext } from '@harnessio/mfe-wrapper'
 import { useQueryState } from '../../framework/hooks/useQueryState'
 import { useAPIPath } from '../../hooks/useAPIPath.ts'
 import { PathParams } from '../../RouteDefinitions'
@@ -87,69 +87,69 @@ const getMockPullRequestActions = (
   return [
     ...(pullReqMetadata?.closed
       ? [
+        {
+          id: '0',
+          title: 'Open for review',
+          description: 'Open this pull request for review.',
+          action: () => handlePrState('open')
+        }
+      ]
+      : pullReqMetadata?.is_draft
+        ? [
           {
             id: '0',
-            title: 'Open for review',
+            title: 'Ready for review',
             description: 'Open this pull request for review.',
             action: () => handlePrState('open')
           }
         ]
-      : pullReqMetadata?.is_draft
-        ? [
-            {
-              id: '0',
-              title: 'Ready for review',
-              description: 'Open this pull request for review.',
-              action: () => handlePrState('open')
-            }
-          ]
         : [
-            {
-              id: '0',
-              title: 'Squash and merge',
-              description: 'All commits from this branch will be combined into one commit in the base branch.',
-              action: () => {
-                setSelectedMergeMethod?.('squash')
-                handleMerge('squash')
-              },
-              loading: isMerging,
-              disabled: !prPanelData?.allowedMethods?.includes('squash')
+          {
+            id: '0',
+            title: 'Squash and merge',
+            description: 'All commits from this branch will be combined into one commit in the base branch.',
+            action: () => {
+              setSelectedMergeMethod?.('squash')
+              handleMerge('squash')
             },
-            {
-              id: '1',
-              title: 'Merge pull request',
-              description: 'All commits from this branch will be added to the base branch via a merge commit.',
-              action: () => {
-                setSelectedMergeMethod?.('merge')
-                handleMerge('merge')
-              },
-              loading: isMerging,
-              disabled: !prPanelData?.allowedMethods?.includes('merge')
+            loading: isMerging,
+            disabled: !prPanelData?.allowedMethods?.includes('squash')
+          },
+          {
+            id: '1',
+            title: 'Merge pull request',
+            description: 'All commits from this branch will be added to the base branch via a merge commit.',
+            action: () => {
+              setSelectedMergeMethod?.('merge')
+              handleMerge('merge')
             },
-            {
-              id: '2',
-              title: 'Rebase and merge',
-              description: 'All commits from this branch will be rebased and added to the base branch.',
-              action: () => {
-                setSelectedMergeMethod?.('rebase')
-                handleMerge('rebase')
-              },
-              loading: isMerging,
-              disabled: !prPanelData?.allowedMethods?.includes('rebase')
+            loading: isMerging,
+            disabled: !prPanelData?.allowedMethods?.includes('merge')
+          },
+          {
+            id: '2',
+            title: 'Rebase and merge',
+            description: 'All commits from this branch will be rebased and added to the base branch.',
+            action: () => {
+              setSelectedMergeMethod?.('rebase')
+              handleMerge('rebase')
             },
-            {
-              id: '3',
-              title: 'Fast-forward merge',
-              description:
-                'All commits from this branch will be added to the base branch without a merge commit. Rebase may be required.',
-              action: () => {
-                setSelectedMergeMethod?.('fast-forward')
-                handleMerge('fast-forward')
-              },
-              loading: isMerging,
-              disabled: !prPanelData?.allowedMethods?.includes('fast-forward')
-            }
-          ])
+            loading: isMerging,
+            disabled: !prPanelData?.allowedMethods?.includes('rebase')
+          },
+          {
+            id: '3',
+            title: 'Fast-forward merge',
+            description:
+              'All commits from this branch will be added to the base branch without a merge commit. Rebase may be required.',
+            action: () => {
+              setSelectedMergeMethod?.('fast-forward')
+              handleMerge('fast-forward')
+            },
+            loading: isMerging,
+            disabled: !prPanelData?.allowedMethods?.includes('fast-forward')
+          }
+        ])
   ]
 }
 
@@ -604,11 +604,7 @@ export default function PullRequestConversationPage() {
     if (!commentId || isScrolledToComment || prPanelData.PRStateLoading || activityData?.length === 0) return
     // Slight timeout so the UI has time to expand/hydrate
     const timeoutId = setTimeout(() => {
-      const mfeRoot = document.getElementById('code-mfe-root')
-      const shadowRoot = mfeRoot?.shadowRoot as ShadowRoot
-      const elem = mfeRoot
-        ? shadowRoot?.getElementById(`comment-${commentId}`)
-        : document.getElementById(`comment-${commentId}`)
+      const elem = document.getElementById(`comment-${commentId}`)
       if (!elem) return
       elem.scrollIntoView({ behavior: 'smooth', block: 'center' })
       setIsScrolledToComment(true)
@@ -841,20 +837,20 @@ export default function PullRequestConversationPage() {
     const payload: RebaseBranchRequestBody = {
       ...(pullReqMetadata?.target_branch
         ? {
-            base_branch: pullReqMetadata.target_branch
-          }
+          base_branch: pullReqMetadata.target_branch
+        }
         : {}),
       bypass_rules: true,
       dry_run_rules: false,
       ...(pullReqMetadata?.source_branch
         ? {
-            head_branch: pullReqMetadata.source_branch
-          }
+          head_branch: pullReqMetadata.source_branch
+        }
         : {}),
       ...(pullReqMetadata?.source_sha
         ? {
-            head_commit_sha: pullReqMetadata.source_sha
-          }
+          head_commit_sha: pullReqMetadata.source_sha
+        }
         : {})
     }
 

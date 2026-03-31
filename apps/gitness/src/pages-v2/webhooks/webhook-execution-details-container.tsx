@@ -8,7 +8,7 @@ import {
 import { RepoWebhookExecutionDetailsPage, WebhookExecutionType } from '@harnessio/views'
 
 import { useRoutes } from '../../framework/context/NavigationContext'
-import { useThemeStore } from '../../framework/context/ThemeContext'
+import { useThemeStore } from '@harnessio/mfe-wrapper'
 import { useGetRepoRef } from '../../framework/hooks/useGetRepoPath'
 import { PathParams } from '../../RouteDefinitions'
 import { useWebhookStore } from './stores/webhook-store'

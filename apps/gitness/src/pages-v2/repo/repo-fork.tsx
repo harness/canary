@@ -8,7 +8,7 @@ import { DestinationSelector } from '../../components-v2/destination-selector'
 import { useRoutes } from '../../framework/context/NavigationContext'
 import { useGetRepoRef } from '../../framework/hooks/useGetRepoPath'
 import { useIsMFE } from '../../framework/hooks/useIsMFE'
-import { useMFEContext } from '../../framework/hooks/useMFEContext'
+import { useMFEContext } from '@harnessio/mfe-wrapper'
 import { useGitRef } from '../../hooks/useGitRef'
 import { PathParams } from '../../RouteDefinitions'
 

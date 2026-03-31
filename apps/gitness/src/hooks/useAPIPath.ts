@@ -1,6 +1,6 @@
 import { useCallback } from 'react'
 
-import { useMFEContext } from '../framework/hooks/useMFEContext'
+import { useMFEContext } from '@harnessio/mfe-wrapper'
 
 export function useAPIPath() {
   const { renderUrl, scope } = useMFEContext()

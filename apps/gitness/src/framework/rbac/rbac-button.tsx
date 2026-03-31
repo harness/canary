@@ -1,6 +1,6 @@
 import { Button, RbacButtonProps, rbacTooltip, Resource, Tooltip } from '@harnessio/ui/components'
 
-import { useMFEContext } from '../hooks/useMFEContext'
+import { useMFEContext } from '@harnessio/mfe-wrapper'
 
 export const RbacButton = ({ rbac, tooltip, ...rest }: RbacButtonProps) => {
   const { hooks } = useMFEContext()

@@ -9,7 +9,7 @@ import { formatDistanceToNow, getInitials } from '@harnessio/ui/utils'
 import { Contributors } from '@harnessio/views'
 import { BlameEditorV2, BlameEditorV2Props, BlameItem, MonacoThemeConfig } from '@harnessio/yaml-editor'
 
-import { useThemeStore } from '../framework/context/ThemeContext'
+import { useThemeStore } from '@harnessio/mfe-wrapper'
 import { useGetRepoRef } from '../framework/hooks/useGetRepoPath'
 import useCodePathDetails from '../hooks/useCodePathDetails'
 import { normalizeGitRef } from '../utils/git-utils'

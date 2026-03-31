@@ -25,7 +25,7 @@ import {
 
 import { useGetSpaceURLParam } from '../../../framework/hooks/useGetSpaceParam'
 import { useIsMFE } from '../../../framework/hooks/useIsMFE'
-import { useMFEContext } from '../../../framework/hooks/useMFEContext'
+import { useMFEContext } from '@harnessio/mfe-wrapper'
 import { transformDataFromApi, transformFormOutput } from '../../../utils/repo-branch-rules-utils'
 import { useBranchRulesStore } from '../../repo/stores/repo-branch-rules-store'
 import { useProjectRulesStore } from '../stores/project-rules-store'

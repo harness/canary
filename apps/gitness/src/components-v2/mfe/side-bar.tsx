@@ -18,7 +18,7 @@ import {
 import { useTheme, useTranslation } from '@harnessio/ui/context'
 
 import { useAppContext } from '../../framework/context/AppContext'
-import { useMFEContext } from '../../framework/hooks/useMFEContext'
+import { useMFEContext } from '@harnessio/mfe-wrapper'
 import { useTranslationStore } from '../../i18n/stores/i18n-store'
 
 const AppSidebar: FC<{ children: ReactNode }> = ({ children }) => {
@@ -27,7 +27,7 @@ const AppSidebar: FC<{ children: ReactNode }> = ({ children }) => {
   const [openLanguageDialog, setOpenLanguageDialog] = useState(false)
   const { t } = useTranslation()
   const { theme } = useTheme()
-  const { routes, hooks, setMFETheme } = useMFEContext()
+  const { routes, hooks } = useMFEContext()
   const { forceLogout } = hooks?.useLogout?.() || {}
 
   const { changeLanguage, i18n } = useTranslationStore()
@@ -111,8 +111,8 @@ const AppSidebar: FC<{ children: ReactNode }> = ({ children }) => {
       <ThemeDialog
         theme={theme}
         setTheme={newTheme => {
-          const effectiveTheme = (newTheme ?? '').startsWith('dark') ? 'Dark' : 'Light'
-          setMFETheme(effectiveTheme)
+          // const effectiveTheme = (newTheme ?? '').startsWith('dark') ? 'Dark' : 'Light'
+          console.info('newTheme', newTheme)
         }}
         open={openThemeDialog}
         onOpenChange={() => setOpenThemeDialog(false)}

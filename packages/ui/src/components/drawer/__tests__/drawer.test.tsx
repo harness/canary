@@ -395,7 +395,12 @@ describe('Drawer', () => {
       test('should render close button by default', () => {
         const { container } = renderComponent(
           <Drawer.Root open>
-            <Drawer.Content>Content</Drawer.Content>
+            <Drawer.Content>
+              <Drawer.Header hideClose>
+                <Drawer.Title>Title</Drawer.Title>
+              </Drawer.Header>
+              <Drawer.Body>Body Content</Drawer.Body>
+            </Drawer.Content>
           </Drawer.Root>
         )
 

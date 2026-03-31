@@ -109,8 +109,8 @@ return (
       <Button>Open drawer</Button>
     </Drawer.Trigger>
 
-    <Drawer.Content size="md" hideClose>
-      <Drawer.Header icon="info-circle-solid">
+    <Drawer.Content size="md">
+      <Drawer.Header icon="info-circle-solid" hideClose>
         <Drawer.Tagline>Section</Drawer.Tagline>
         <Drawer.Title>Title of the drawer</Drawer.Title>
         <Drawer.Description>Description of the drawer</Drawer.Description>
@@ -769,13 +769,6 @@ Contains [`Drawer.Header`](#header), [`Drawer.Body`](#body) and [`Drawer.Footer`
       defaultValue: "sm",
     },
     {
-      name: "hideClose",
-      description: "When set, do not display the close 'x' button.",
-      required: false,
-      value: "boolean",
-      defaultValue: "false",
-    },
-    {
       name: "children",
       description: "Drawer.Header, Drawer.Body and Drawer.Footer components.",
       required: true,
@@ -811,6 +804,13 @@ An optional container for the [`Drawer.Tagline`](#tagline), [`Drawer.Title`](#ti
       required: false,
       value: "string",
       defaultValue: "undefined",
+    },
+    {
+      name: "hideClose",
+      description: "When set, do not display the close 'x' button.",
+      required: false,
+      value: "boolean",
+      defaultValue: "false",
     },
     {
       name: "logo",

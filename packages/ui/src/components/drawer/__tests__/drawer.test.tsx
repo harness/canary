@@ -396,7 +396,7 @@ describe('Drawer', () => {
         const { container } = renderComponent(
           <Drawer.Root open>
             <Drawer.Content>
-              <Drawer.Header hideClose>
+              <Drawer.Header>
                 <Drawer.Title>Title</Drawer.Title>
               </Drawer.Header>
               <Drawer.Body>Body Content</Drawer.Body>

@@ -422,7 +422,12 @@ describe('Drawer', () => {
       test('should render xmark icon in close button', () => {
         const { container } = renderComponent(
           <Drawer.Root open>
-            <Drawer.Content>Content</Drawer.Content>
+            <Drawer.Content>
+              <Drawer.Header>
+                <Drawer.Title>Title</Drawer.Title>
+              </Drawer.Header>
+              <Drawer.Body>Body Content</Drawer.Body>
+            </Drawer.Content>
           </Drawer.Root>
         )
 

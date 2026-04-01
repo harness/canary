@@ -8,7 +8,7 @@ export const LANGUAGE_COLORS: Record<string, string> = {
   Zig: '#F7A41D',
   V: '#5D87BF',
   Nim: '#FFE953',
-  Java: '#007396',
+  Java: '#B07219',
   Kotlin: '#7F52FF',
   Scala: '#DE3423',
   Groovy: '#4298B8',

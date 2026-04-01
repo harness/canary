@@ -1,5 +1,9 @@
 import { FC, useCallback, useEffect, useMemo, useRef, useState } from 'react'
 
+import { ExtendedScope, SandboxLayout } from '@views'
+import { isEmpty } from 'lodash-es'
+
+import { createFilters, FilterRefType, ListControlBar } from '@harnessio/filters'
 import {
   Button,
   ButtonGroup,
@@ -22,11 +26,7 @@ import {
 } from '@harnessio/ui/components'
 import { useRouterContext, useTranslation } from '@harnessio/ui/context'
 import { PrincipalType } from '@harnessio/ui/types'
-import { ExtendedScope, SandboxLayout } from '@views'
 import { splitObjectProps } from '@harnessio/ui/utils'
-import { isEmpty } from 'lodash-es'
-
-import { createFilters, FilterRefType, ListControlBar } from '@harnessio/filters'
 
 import BranchCompareBannerList from '../components/branch-banner/branch-compare-banner-list'
 import { getPRListFilterOptions } from '../constants/filter-options'
@@ -216,6 +216,12 @@ const PullRequestListPage: FC<PullRequestPageProps> = ({
 
   const customFilterOptions = [labelsFilterConfig, ...(isProjectLevel ? [reviewFilterConfig] : [])]
 
+  const principalUserDataWithCurrentUser = useMemo(() => {
+    if (!currentUser?.id) return computedPrincipalData
+    if (computedPrincipalData.some(u => u.id === currentUser.id)) return computedPrincipalData
+    return [currentUser, ...computedPrincipalData]
+  }, [computedPrincipalData, currentUser])
+
   const PR_FILTER_OPTIONS = getPRListFilterOptions({
     t,
     onAuthorSearch: searchText => {
@@ -225,7 +231,7 @@ const PullRequestListPage: FC<PullRequestPageProps> = ({
     isPrincipalsLoading,
     customFilterOptions,
     principalData: userSelectOptions,
-    principalUserData: computedPrincipalData,
+    principalUserData: principalUserDataWithCurrentUser,
     scope
   })
 

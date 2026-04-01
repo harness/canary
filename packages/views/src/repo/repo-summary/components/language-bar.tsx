@@ -16,6 +16,11 @@ interface LanguageBarProps {
 
 const MAX_LEGEND_ITEMS = 6
 
+const formatPercentage = (pct: number): string => {
+  if (pct > 0 && pct < 0.1) return '< 0.1'
+  return pct.toFixed(1)
+}
+
 export const LanguageBar: FC<LanguageBarProps> = ({ languages }) => {
   const { t } = useTranslation()
 
@@ -34,7 +39,7 @@ export const LanguageBar: FC<LanguageBarProps> = ({ languages }) => {
 
       <Layout.Horizontal gap="3xs" className="rounded-cn-full overflow-hidden">
         {sorted.map(lang => (
-          <Tooltip key={lang.name} content={`${lang.name} ${lang.percentage.toFixed(1)}%`}>
+          <Tooltip key={lang.name} content={`${lang.name} ${formatPercentage(lang.percentage)}%`}>
             <div
               className="rounded-cn-full h-2"
               style={{
@@ -54,7 +59,7 @@ export const LanguageBar: FC<LanguageBarProps> = ({ languages }) => {
               {lang.name}
             </Text>
             <Text variant="caption-single-line-normal" color="foreground-4">
-              {lang.percentage.toFixed(1)}%
+              {formatPercentage(lang.percentage)}%
             </Text>
           </Layout.Horizontal>
         ))}
@@ -65,7 +70,7 @@ export const LanguageBar: FC<LanguageBarProps> = ({ languages }) => {
               {t('views:repos.otherLanguages', 'Other')}
             </Text>
             <Text variant="caption-single-line-normal" color="foreground-4">
-              {otherPercent.toFixed(1)}%
+              {formatPercentage(otherPercent)}%
             </Text>
           </Layout.Horizontal>
         )}

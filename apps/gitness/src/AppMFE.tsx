@@ -8,7 +8,7 @@ import { CodeServiceAPIClient } from '@harnessio/code-service-client'
 import { NgManagerSwaggerServiceAPIClient } from '@harnessio/react-ng-manager-swagger-service-client'
 import { NGManagerServiceAPIClient } from '@harnessio/react-ng-manager-v2-client'
 import { TooltipProvider } from '@harnessio/ui/components'
-import { DialogProvider, PortalProvider, ThemeProvider, TranslationProvider } from '@harnessio/ui/context'
+import { DialogProvider, FullTheme, PortalProvider, ThemeProvider, TranslationProvider } from '@harnessio/ui/context'
 
 import { ExitConfirmProvider } from './framework/context/ExitConfirmContext'
 import { MFEContext, MFEContextProps } from './framework/context/MFEContext'
@@ -28,10 +28,6 @@ interface AppMFEProps extends MFEContextProps {
 
 function decode<T = unknown>(arg: string): T {
   return JSON.parse(decodeURIComponent(atob(arg)))
-}
-
-const getTheme = (className: string) => {
-  return className.includes('light') || className.includes('light-std-std') ? 'light-std-std' : 'dark-std-std'
 }
 
 export default function AppMFE({
@@ -77,25 +73,28 @@ export default function AppMFE({
   // Apply host theme to MFE
   const { theme, setTheme } = useThemeStore()
 
-  // TODO: This is a hack to get the theme from the host and apply it to the MFE. Need to implement a proper fix.
+  // // TODO: This is a hack to get the theme from the host and apply it to the MFE. Need to implement a proper fix.
   useEffect(() => {
     const element = document.querySelector('html')
 
-    const themeClass = element?.className
-
-    const hasThemeInDOM = themeClass?.includes('light') || themeClass?.includes('dark')
-
-    if (hasThemeInDOM) {
-      setTheme(getTheme(themeClass ?? 'light-std-std'))
-    } else {
-      element?.classList.add(theme ?? 'light-std-std')
-    }
+    /**
+     * As we are wapping CodeV2 in MFEWrapper from PlatformUI,
+     * this is required if CodeV2 is rendered in NGUI without PlatformUI.
+     */
+    element?.classList.add(theme ?? 'light-std-std')
 
     const observer = new MutationObserver(mutations => {
       for (const mutation of mutations) {
         if (mutation.type === 'attributes' && mutation.attributeName === 'class') {
-          const newTheme = getTheme(element?.className || '')
-          setTheme(newTheme)
+          const oldClasses = new Set((mutation.oldValue || '').split(/\s+/).filter(Boolean))
+          const newClasses = new Set((element?.className || '').split(/\s+/).filter(Boolean))
+          const addedClasses = [...newClasses].filter(cls => !oldClasses.has(cls))
+
+          const newTheme = addedClasses.find(cls => cls.includes('light-') || cls.includes('dark-'))
+
+          if (newTheme) {
+            setTheme(newTheme as FullTheme)
+          }
         }
       }
     })
@@ -103,7 +102,8 @@ export default function AppMFE({
     if (element) {
       observer.observe(element, {
         attributes: true,
-        attributeFilter: ['class']
+        attributeFilter: ['class'],
+        attributeOldValue: true
       })
     }
 

@@ -1,10 +1,10 @@
 import { useCallback, useEffect, useRef, useState } from 'react'
 import { useLocation } from 'react-router-dom'
 
-import type { SidebarItemProps } from '@harnessio/ui/components'
+import type { IconV2NamesType, SidebarItemProps } from '@harnessio/ui/components'
 
 /** Minimal shape stored in memory / optional localStorage (no `active`, etc.). */
-export type RecentNavStorageEntry = Pick<SidebarItemProps, 'to' | 'title' | 'icon'> & { to: string }
+export type RecentNavStorageEntry = { to: string; title: string; icon?: IconV2NamesType }
 
 function isRecentNavStorageEntry(x: unknown): x is RecentNavStorageEntry {
   if (!x || typeof x !== 'object') return false
@@ -95,7 +95,9 @@ export function useRecentNavItems(options: UseRecentNavItemsOptions): UseRecentN
     const excluded = new Set(excludeFromRecents)
     if (excluded.size === 0) return
     setRecentItems(prev => {
-      const next = prev.filter(p => !('to' in p) || !excluded.has(p.to))
+      const next = prev.filter(
+        p => !('to' in p) || typeof p.to !== 'string' || !excluded.has(p.to)
+      )
       if (next.length === prev.length) return prev
       persist(next)
       return next
@@ -109,7 +111,9 @@ export function useRecentNavItems(options: UseRecentNavItemsOptions): UseRecentN
     if (excludeFromRecents.includes(entry.to)) return
 
     setRecentItems(prev => {
-      const without = prev.filter(p => !('to' in p) || p.to !== entry.to)
+      const without = prev.filter(
+        p => !('to' in p) || typeof p.to !== 'string' || p.to !== entry.to
+      )
       const next = [fromStorageEntry(entry), ...without].slice(0, maxItems)
       persist(next)
       return next
@@ -130,7 +134,9 @@ export function useRecentNavItems(options: UseRecentNavItemsOptions): UseRecentN
   const removeRecentByTo = useCallback(
     (to: string) => {
       setRecentItems(prev => {
-        const next = prev.filter(p => !('to' in p) || p.to !== to)
+        const next = prev.filter(
+          p => !('to' in p) || typeof p.to !== 'string' || p.to !== to
+        )
         persist(next)
         return next
       })
@@ -143,7 +149,9 @@ export function useRecentNavItems(options: UseRecentNavItemsOptions): UseRecentN
       const entry = toStorageEntry(item)
       if (!entry) return
       setRecentItems(prev => {
-        const without = prev.filter(p => !('to' in p) || p.to !== entry.to)
+        const without = prev.filter(
+          p => !('to' in p) || typeof p.to !== 'string' || p.to !== entry.to
+        )
         const next = [fromStorageEntry(entry), ...without].slice(0, maxItems)
         persist(next)
         return next

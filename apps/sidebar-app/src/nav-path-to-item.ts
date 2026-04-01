@@ -27,7 +27,7 @@ const exactPathToItem: Map<string, SidebarItemProps> = (() => {
   merge(pathMapFromEntries(demoItems))
   merge(pathMapFromEntries([buildsNav.parent]))
   merge(pathMapFromEntries(buildsNav.subItems as SidebarItemProps[]))
-  merge(pathMapFromEntries(infrastructureNav.subItems as SidebarItemProps[]))
+  merge(pathMapFromEntries(Array.from(infrastructureNav.subItems, i => ({ ...i })) as SidebarItemProps[]))
   merge(pathMapFromEntries(moreMenuModuleItems))
   merge(pathMapFromEntries(moreMenuResourceItems))
 

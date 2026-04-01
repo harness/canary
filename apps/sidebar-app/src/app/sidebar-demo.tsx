@@ -15,7 +15,7 @@ import {
   defaultAppNavProps
 } from '../default-app-nav-config'
 import { getSidebarItemForPathname } from '../nav-path-to-item'
-import type { AppNavFixedItem, AppNavProps } from '../types/app-nav-types'
+import type { AppNavFixedItem, AppNavFixedItemRow, AppNavProps } from '../types/app-nav-types'
 import type { AppProps } from '../types/app-shell-types'
 import { useRecentNavItems } from '../use-recent-nav-items'
 import { useDemoAppNavFooterItem } from '../components/use-demo-app-nav-footer-item'
@@ -130,7 +130,7 @@ export const SidebarDemo: FC = () => {
         ...(to ? { sortableId: to } : {})
       }
     })
-    const homeItem = defaultAppNavFixedHome.item
+    const homeItem = (defaultAppNavFixedHome as AppNavFixedItemRow).item
     const homeTo = 'to' in homeItem && typeof homeItem.to === 'string' ? homeItem.to : null
     const homeFixed: AppNavFixedItem = {
       type: 'item',

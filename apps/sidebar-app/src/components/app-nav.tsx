@@ -47,11 +47,11 @@ const moreDrawerInputWrapperClass = 'w-full'
 
 const moreDrawerBodyClassName = cn('more-drawer min-h-0')
 
-const sidebarDesktopStyle: CSSProperties = {
+const sidebarDesktopStyle = {
   '--cn-sidebar-min-height': '100%',
   paddingLeft: 10,
   paddingRight: 10
-}
+} as CSSProperties
 
 const MoreDrawerSectionGroup: FC<MoreDrawerSectionGroupProps> = ({ section }) => {
   const { groupId, label, defaultExpanded, items } = section

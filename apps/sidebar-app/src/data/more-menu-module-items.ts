@@ -1,6 +1,7 @@
-import type { SidebarItemProps } from '@harnessio/ui/components'
+import type { IconV2NamesType } from '@harnessio/ui/components'
 
-export type MoreMenuDrawerItem = Pick<SidebarItemProps, 'to' | 'title' | 'icon'> & { to: string }
+/** Link row in the more-menu drawer (avoids Pick over SidebarItemProps union / NavLink `to`). */
+export type MoreMenuDrawerItem = { to: string; title: string; icon: IconV2NamesType }
 
 export const moreMenuModuleItems: MoreMenuDrawerItem[] = [
   { to: '/drawer/pipelines', title: 'Pipelines', icon: 'pipeline' },

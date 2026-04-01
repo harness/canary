@@ -4,7 +4,7 @@ import '@harnessio/ui/styles.css'
 import './App.css'
 
 import { AppShell } from './app-shell'
-import { type AppNavProps } from './types/app-nav-types'
+import { type AppNavProps } from '../types/app-nav-types'
 
 export type AppProps = { nav: AppNavProps; header?: ReactNode }
 

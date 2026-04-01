@@ -4,16 +4,16 @@ import { useLocation } from 'react-router-dom'
 import { type SidebarItemProps } from '@harnessio/ui/components'
 
 import { App } from './App'
-import { recentSectionLabel } from './data/app-nav-demo-data'
+import { recentSectionLabel } from '../data/app-nav-demo-data'
 import {
   defaultAppNavFixedHome,
   defaultAppNavFixedMore,
   defaultAppNavProps
-} from './default-app-nav-config'
-import { getSidebarItemForPathname } from './nav-path-to-item'
-import type { AppNavFixedItem, AppNavProps } from './types/app-nav-types'
+} from '../default-app-nav-config'
+import { getSidebarItemForPathname } from '../nav-path-to-item'
+import type { AppNavFixedItem, AppNavProps } from '../types/app-nav-types'
 import { useDemoAppNavFooterItem } from './use-demo-app-nav-footer-item'
-import { useRecentNavItems } from './use-recent-nav-items'
+import { useRecentNavItems } from '../use-recent-nav-items'
 
 const recentNavMaxItems = 5
 const recentNavStorageKey = 'sidebar-app-recent-nav-v1'

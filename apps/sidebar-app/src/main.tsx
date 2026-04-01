@@ -1,7 +1,7 @@
 import { StrictMode } from 'react'
 import { render } from 'react-dom'
 
-import { AppRoot } from './app-root'
+import { AppRoot } from './components/app-root'
 
 render(
   <StrictMode>

@@ -24,7 +24,7 @@ import {
   type AppNavMoreItemGroup,
   type AppNavContentProps,
   type AppNavProps
-} from './types/app-nav-types'
+} from '../types/app-nav-types'
 
 const moreDrawerToggleMoreLabel = 'More'
 const moreDrawerToggleLessLabel = 'Less'

@@ -51,19 +51,19 @@ export type {
   AppNavMoreItemGroup,
   AppNavProps,
   AppNavRecentSection
-} from './types/app-nav-types'
-export { DEFAULT_MORE_DRAWER_PREVIEW_COUNT } from './types/app-nav-types'
+} from '../types/app-nav-types'
+export { DEFAULT_MORE_DRAWER_PREVIEW_COUNT } from '../types/app-nav-types'
 
-export type { DefaultAppNavPropsBase } from './default-app-nav-config'
-export { defaultAppNavFixedHome, defaultAppNavFixedMore, defaultAppNavProps } from './default-app-nav-config'
+export type { DefaultAppNavPropsBase } from '../default-app-nav-config'
+export { defaultAppNavFixedHome, defaultAppNavFixedMore, defaultAppNavProps } from '../default-app-nav-config'
 export { useDemoAppNavFooterItem } from './use-demo-app-nav-footer-item'
-export { getSidebarItemForPathname } from './nav-path-to-item'
+export { getSidebarItemForPathname } from '../nav-path-to-item'
 export {
   useRecentNavItems,
   type RecentNavStorageEntry,
   type UseRecentNavItemsOptions,
   type UseRecentNavItemsResult
-} from './use-recent-nav-items'
+} from '../use-recent-nav-items'
 export {
   buildsNav,
   demoAppNavHeaderItem,
@@ -71,7 +71,7 @@ export {
   infrastructureNav,
   pinnedHomeItem,
   recentSectionLabel
-} from './data/app-nav-demo-data'
+} from '../data/app-nav-demo-data'
 
 export { AppNav } from './app-nav'
 export { AppShell } from './app-shell'

@@ -5,7 +5,7 @@ import { Sidebar, TooltipProvider } from '@harnessio/ui/components'
 import { defaultTheme, DialogProvider, ThemeProvider, TranslationProvider, type FullTheme } from '@harnessio/ui/context'
 
 import { AppRouterProvider } from './app-router-provider'
-import { SidebarDemo } from './sidebar-demo'
+import { SidebarDemo } from '../app/sidebar-demo'
 
 const LIGHT_THEME = 'light-std-std' as FullTheme
 
@@ -76,4 +76,4 @@ export {
 export { AppNav } from './app-nav'
 export { AppShell } from './app-shell'
 export type { AppProps } from '../types/app-shell-types'
-export { App, SidebarDemo } from './sidebar-demo'
+export { App, SidebarDemo } from '../app/sidebar-demo'

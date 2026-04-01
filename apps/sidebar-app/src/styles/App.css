@@ -1,0 +1,8 @@
+/**
+ * App shell: sidebar column height reaches outer .cn-sidebar-root-responsive
+ * (className on Sidebar.Root applies to inner .cn-sidebar only).
+ */
+.sidebar-app-shell > .cn-sidebar-root-responsive {
+  height: 100%;
+  min-height: 0;
+}

@@ -2,11 +2,12 @@ import { type FC, useCallback, useMemo, useState } from 'react'
 import { useLocation } from 'react-router-dom'
 
 import '@harnessio/ui/styles.css'
-import './App.css'
+import '../styles/App.css'
+import '../styles/sidebar.css'
 
 import { type SidebarItemProps } from '@harnessio/ui/components'
 
-import { AppShell } from './app-shell'
+import { AppShell } from '../components/app-shell'
 import { recentSectionLabel } from '../data/app-nav-demo-data'
 import {
   defaultAppNavFixedHome,
@@ -17,7 +18,7 @@ import { getSidebarItemForPathname } from '../nav-path-to-item'
 import type { AppNavFixedItem, AppNavProps } from '../types/app-nav-types'
 import type { AppProps } from '../types/app-shell-types'
 import { useRecentNavItems } from '../use-recent-nav-items'
-import { useDemoAppNavFooterItem } from './use-demo-app-nav-footer-item'
+import { useDemoAppNavFooterItem } from '../components/use-demo-app-nav-footer-item'
 
 /** Layout only: `AppShell.Layout` → `AppShell.Nav` + `AppShell.Content`. Providers and nav data live outside (e.g. `AppRoot`, `SidebarDemo`). */
 export const App = ({ nav, header }: AppProps) => (

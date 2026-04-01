@@ -1,14 +1,7 @@
 /**
- * Scoped overrides for @harnessio/ui internals where props don’t expose className
- * (e.g. ScrollArea inside Sidebar.Content) or tokens aren’t shipped as utilities
- * in dist/styles.css (e.g. column-gap: 14px, drawer row padding sync).
+ * Sidebar column + “more” drawer: scoped overrides where @harnessio/ui doesn’t expose
+ * className (e.g. ScrollArea in Sidebar.Content) or tokens aren’t utilities in dist/styles.css.
  */
-
-/* className on Sidebar.Root applies to inner .cn-sidebar, not this outer node */
-.sidebar-app-shell > .cn-sidebar-root-responsive {
-  height: 100%;
-  min-height: 0;
-}
 
 .sidebar-app-figma .cn-sidebar-content.cn-scroll-area {
   min-height: 0;

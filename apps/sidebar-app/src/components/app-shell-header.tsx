@@ -9,5 +9,5 @@ export const AppShellHeader: FC<AppShellHeaderProps> = ({ children, className })
   if (children == null) {
     return null
   }
-  return <header className={cn('app-shell-header flex-shrink-0', className)}>{children}</header>
+  return <header className={cn('shrink-0', className)}>{children}</header>
 }

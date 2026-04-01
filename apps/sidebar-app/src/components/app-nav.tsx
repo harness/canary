@@ -1,7 +1,15 @@
 import { closestCenter, DndContext, type DragEndEvent, PointerSensor, useSensor, useSensors } from '@dnd-kit/core'
 import { arrayMove, SortableContext, useSortable, verticalListSortingStrategy } from '@dnd-kit/sortable'
 import { CSS } from '@dnd-kit/utilities'
-import { type FC, Fragment, type MouseEvent, useCallback, useMemo, useState } from 'react'
+import {
+  type CSSProperties,
+  type FC,
+  Fragment,
+  type MouseEvent,
+  useCallback,
+  useMemo,
+  useState
+} from 'react'
 
 import {
   Drawer,
@@ -31,13 +39,19 @@ const moreDrawerToggleMoreLabel = 'More'
 const moreDrawerToggleLessLabel = 'Less'
 
 const moreDrawerDirection = 'left' as const
-const moreDrawerBodyContentClass = 'more-drawer'
 const moreDrawerNavRowClass = 'more-drawer-row'
-const moreDrawerGroupItemsClass = 'more-drawer-group-items'
 const moreDrawerLayoutColumn = 'column' as const
 const moreDrawerLayoutGap = 'none' as const
 const moreDrawerSearchInputIcon = 'search' as const
 const moreDrawerInputWrapperClass = 'w-full'
+
+const moreDrawerBodyClassName = cn('more-drawer min-h-0')
+
+const sidebarDesktopStyle: CSSProperties = {
+  '--cn-sidebar-min-height': '100%',
+  paddingLeft: 10,
+  paddingRight: 10
+}
 
 const MoreDrawerSectionGroup: FC<MoreDrawerSectionGroupProps> = ({ section }) => {
   const { groupId, label, defaultExpanded, items } = section
@@ -47,8 +61,11 @@ const MoreDrawerSectionGroup: FC<MoreDrawerSectionGroupProps> = ({ section }) =>
   const visibleItems = !needsToggle || expanded ? items : items.slice(0, previewCount)
 
   return (
-    <Sidebar.Group label={label} className="more-drawer-group">
-      <div className={moreDrawerGroupItemsClass}>
+    <Sidebar.Group
+      label={label}
+      className={cn('more-drawer-group flex flex-col gap-cn-xs py-cn-md')}
+    >
+      <div className={cn('flex min-h-0 min-w-0 w-full flex-col gap-cn-4xs')}>
         {visibleItems.map(item => (
           <Drawer.Close key={`${groupId}-${item.to}`} asChild>
             <Sidebar.Item {...item} className={moreDrawerNavRowClass} />
@@ -58,7 +75,9 @@ const MoreDrawerSectionGroup: FC<MoreDrawerSectionGroupProps> = ({ section }) =>
       {needsToggle ? (
         <button
           type="button"
-          className="more-drawer-toggle"
+          className={cn(
+            'more-drawer-toggle flex w-full cursor-pointer items-center justify-start gap-cn-3xs border-none rounded-cn-4 bg-transparent min-h-cn-9 text-left text-cn-2'
+          )}
           onClick={() => setExpanded(v => !v)}
           aria-expanded={expanded}
         >
@@ -68,7 +87,7 @@ const MoreDrawerSectionGroup: FC<MoreDrawerSectionGroupProps> = ({ section }) =>
           <IconV2
             name={expanded ? 'nav-arrow-up' : 'nav-arrow-down'}
             size="xs"
-            className="more-drawer-toggle-chevron"
+            className={cn('shrink-0')}
           />
         </button>
       ) : null}
@@ -198,7 +217,7 @@ export const AppNav: FC<AppNavProps> = ({ header, content, footer }) => {
   const moreMenuDrawerContentProps: DrawerContentProps = useMemo(
     () => ({
       className: cn(
-        'cn-sidebar-drawer-content sidebar-app-more-menu-drawer z-20 overflow-x-hidden rounded',
+        'cn-sidebar-drawer-content z-20 max-w-cn-64 min-w-cn-64 w-cn-64 overflow-x-hidden rounded',
         {
           'cn-sidebar-menu-drawer-content-collapsed': isSidebarCollapsed
         }
@@ -236,9 +255,9 @@ export const AppNav: FC<AppNavProps> = ({ header, content, footer }) => {
         <Drawer.Content {...moreMenuDrawerContentProps}>
           <Drawer.Title className="sr-only">{entry.trigger.title}</Drawer.Title>
           <Drawer.Description className="sr-only">{entry.trigger.title}</Drawer.Description>
-          <Drawer.Body classNameContent={moreDrawerBodyContentClass}>
+          <Drawer.Body classNameContent={moreDrawerBodyClassName}>
             <Layout.Flex direction={moreDrawerLayoutColumn} gap={moreDrawerLayoutGap}>
-              <div className="more-drawer-search">
+              <div className={cn('pt-cn-md pb-cn-md')}>
                 <Input
                   id={searchId}
                   inputIconName={moreDrawerSearchInputIcon}
@@ -247,11 +266,13 @@ export const AppNav: FC<AppNavProps> = ({ header, content, footer }) => {
                   aria-label={searchLabel}
                 />
               </div>
-              <Sidebar.Separator />
+              <Sidebar.Separator className={cn('shrink-0')} />
               {entry.itemGroups.map((group, sectionIndex) => (
                 <Fragment key={group.groupId}>
                   <MoreDrawerSectionGroup section={group} />
-                  {sectionIndex < entry.itemGroups.length - 1 ? <Sidebar.Separator /> : null}
+                  {sectionIndex < entry.itemGroups.length - 1 ? (
+                    <Sidebar.Separator className={cn('shrink-0')} />
+                  ) : null}
                 </Fragment>
               ))}
             </Layout.Flex>
@@ -277,15 +298,20 @@ export const AppNav: FC<AppNavProps> = ({ header, content, footer }) => {
     sortable.length > 0 && typeof onReorderSortableFixedItems === 'function'
 
   return (
-    <div className="app-shell-nav-column relative flex h-full min-h-0 min-w-0">
+    <div className="relative flex h-full min-h-0 min-w-0">
       <div className="sidebar-app-shell h-full min-h-0 min-w-0 flex-1">
-        <Sidebar.Root className="sidebar-app-figma">
-          <Sidebar.Header className="sidebar-app-sidebar-header">
+        <Sidebar.Root
+          className={cn(
+            'sidebar-app-figma box-border h-full min-h-0 overflow-hidden py-cn-sm'
+          )}
+          style={sidebarDesktopStyle}
+        >
+          <Sidebar.Header className={cn('w-full shrink-0')}>
             <Sidebar.Item {...header} />
           </Sidebar.Header>
 
-          <Sidebar.Content>
-            <Sidebar.Group className="sidebar-app-sidebar-group-pinned">
+          <Sidebar.Content className={cn('min-h-0 flex-1')}>
+            <Sidebar.Group className={cn('gap-cn-4xs py-cn-sm')}>
               {renderFixedSegment(prefix, 0)}
               {sortableEnabled ? (
                 <DndContext
@@ -318,8 +344,11 @@ export const AppNav: FC<AppNavProps> = ({ header, content, footer }) => {
 
             {recentSection ? (
               <>
-                <Sidebar.Separator />
-                <Sidebar.Group label={recentSection.label} className="sidebar-app-sidebar-group-recent">
+                <Sidebar.Separator className={cn('shrink-0')} />
+                <Sidebar.Group
+                  label={recentSection.label}
+                  className={cn('gap-cn-4xs py-cn-sm')}
+                >
                   {'items' in recentSection
                     ? recentSection.items.map((item, itemIndex) => (
                         <Sidebar.Item
@@ -337,7 +366,7 @@ export const AppNav: FC<AppNavProps> = ({ header, content, footer }) => {
             ) : null}
           </Sidebar.Content>
 
-          <Sidebar.Footer className="sidebar-app-sidebar-footer">
+          <Sidebar.Footer className={cn('w-full shrink-0')}>
             <Sidebar.Item {...footer} />
           </Sidebar.Footer>
         </Sidebar.Root>

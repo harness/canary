@@ -33,12 +33,12 @@ const recentNavStorageKey = 'sidebar-app-recent-nav-v1'
 const recentPinAriaLabel = 'Pin'
 const pinnedUnpinAriaLabel = 'Unpin'
 
-const defaultFixedNavPath =
-  defaultAppNavFixedHome.type === 'item' &&
-  'to' in defaultAppNavFixedHome.item &&
-  typeof defaultAppNavFixedHome.item.to === 'string'
-    ? defaultAppNavFixedHome.item.to
-    : null
+/** `to` values for default fixed rows (excludes `more` and other non-route fixed entries). */
+const defaultFixedNavPaths = defaultAppNavProps.content.fixedItems.flatMap(entry =>
+  entry.type === 'item' && 'to' in entry.item && typeof entry.item.to === 'string'
+    ? [entry.item.to]
+    : []
+)
 
 function sidebarItemWithoutRowActions(item: SidebarItemProps): SidebarItemProps {
   const { actionButtons: _actionButtons, active: _active, ...rest } = item as SidebarItemProps & {
@@ -54,19 +54,19 @@ export const SidebarDemo: FC = () => {
   const footerItem = useDemoAppNavFooterItem()
   const [pinnedFromRecents, setPinnedFromRecents] = useState<SidebarItemProps[]>([])
 
-  const pinnedPaths = useMemo(
-    () =>
-      pinnedFromRecents
-        .map(p => ('to' in p && typeof p.to === 'string' ? p.to : '') as string)
-        .filter(Boolean),
-    [pinnedFromRecents]
-  )
+  const excludeFromRecents = useMemo(() => {
+    const paths = new Set<string>(defaultFixedNavPaths)
+    for (const p of pinnedFromRecents) {
+      if ('to' in p && typeof p.to === 'string' && p.to) paths.add(p.to)
+    }
+    return Array.from(paths)
+  }, [pinnedFromRecents])
 
   const { recentItems, removeRecentByTo, prependRecentItem } = useRecentNavItems({
     maxItems: recentNavMaxItems,
     storageKey: recentNavStorageKey,
     getItemForPath: getSidebarItemForPathname,
-    excludeFromRecents: pinnedPaths
+    excludeFromRecents
   })
 
   const handlePinFromRecents = useCallback(
@@ -130,11 +130,28 @@ export const SidebarDemo: FC = () => {
         ...(to ? { sortableId: to } : {})
       }
     })
-    return [defaultAppNavFixedHome, ...pinRows, defaultAppNavFixedMore]
+    const homeItem = defaultAppNavFixedHome.item
+    const homeTo = 'to' in homeItem && typeof homeItem.to === 'string' ? homeItem.to : null
+    const homeFixed: AppNavFixedItem = {
+      type: 'item',
+      item: {
+        ...homeItem,
+        active: homeTo != null && homeTo === location.pathname
+      }
+    }
+
+    return [homeFixed, ...pinRows, defaultAppNavFixedMore]
   }, [handleUnpinToRecents, pinnedFromRecents, location.pathname])
 
-  const nav: AppNavProps = useMemo(
-    () => ({
+  const nav: AppNavProps = useMemo(() => {
+    const recentsForList = recentItems.filter(
+      item =>
+        !('to' in item) ||
+        typeof item.to !== 'string' ||
+        !excludeFromRecents.includes(item.to)
+    )
+
+    return {
       ...defaultAppNavProps,
       footer: footerItem,
       content: {
@@ -143,20 +160,13 @@ export const SidebarDemo: FC = () => {
         onReorderSortableFixedItems: handleReorderPinned,
         showFixedItemDragGrip: row => Boolean(row.sortableId),
         recentSection:
-          recentItems.length > 0
+          recentsForList.length > 0
             ? {
                 label: recentSectionLabel,
-                items: recentItems.map(item => {
+                items: recentsForList.map(item => {
                   const row: SidebarItemProps = {
                     ...item,
                     active: 'to' in item && item.to === location.pathname
-                  }
-                  const isAlreadyDefaultFixed =
-                    defaultFixedNavPath != null &&
-                    'to' in item &&
-                    item.to === defaultFixedNavPath
-                  if (isAlreadyDefaultFixed) {
-                    return row
                   }
                   return {
                     ...row,
@@ -175,9 +185,16 @@ export const SidebarDemo: FC = () => {
               }
             : undefined
       }
-    }),
-    [fixedItems, footerItem, handlePinFromRecents, handleReorderPinned, recentItems, location.pathname]
-  )
+    }
+  }, [
+    excludeFromRecents,
+    fixedItems,
+    footerItem,
+    handlePinFromRecents,
+    handleReorderPinned,
+    recentItems,
+    location.pathname
+  ])
 
   return <App nav={nav} />
 }

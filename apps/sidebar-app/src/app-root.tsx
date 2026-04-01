@@ -4,6 +4,7 @@ import { BrowserRouter, Route, Routes } from 'react-router-dom'
 import { Sidebar, TooltipProvider } from '@harnessio/ui/components'
 import { defaultTheme, DialogProvider, ThemeProvider, TranslationProvider, type FullTheme } from '@harnessio/ui/context'
 
+import { AppRouterProvider } from './app-router-provider'
 import { SidebarDemo } from './sidebar-demo'
 
 const LIGHT_THEME = 'light-std-std' as FullTheme
@@ -21,16 +22,18 @@ export const AppRoot: FC = () => {
         <TooltipProvider>
           <DialogProvider>
             <BrowserRouter>
-              <Routes>
-                <Route
-                  path="*"
-                  element={
-                    <Sidebar.Provider>
-                      <SidebarDemo />
-                    </Sidebar.Provider>
-                  }
-                />
-              </Routes>
+              <AppRouterProvider>
+                <Routes>
+                  <Route
+                    path="*"
+                    element={
+                      <Sidebar.Provider>
+                        <SidebarDemo />
+                      </Sidebar.Provider>
+                    }
+                  />
+                </Routes>
+              </AppRouterProvider>
             </BrowserRouter>
           </DialogProvider>
         </TooltipProvider>
@@ -40,6 +43,7 @@ export const AppRoot: FC = () => {
 }
 
 export type {
+  AppNavContentProps,
   AppNavFixedItem,
   AppNavFixedItemMore,
   AppNavFixedItemRow,
@@ -50,7 +54,9 @@ export type {
 } from './types/app-nav-types'
 export { DEFAULT_MORE_DRAWER_PREVIEW_COUNT } from './types/app-nav-types'
 
+export type { DefaultAppNavPropsBase } from './default-app-nav-config'
 export { defaultAppNavFixedHome, defaultAppNavFixedMore, defaultAppNavProps } from './default-app-nav-config'
+export { useDemoAppNavFooterItem } from './use-demo-app-nav-footer-item'
 export { getSidebarItemForPathname } from './nav-path-to-item'
 export {
   useRecentNavItems,
@@ -60,11 +66,11 @@ export {
 } from './use-recent-nav-items'
 export {
   buildsNav,
+  demoAppNavHeaderItem,
   demoItems,
   infrastructureNav,
   pinnedHomeItem,
-  recentSectionLabel,
-  workspaceSwitcher
+  recentSectionLabel
 } from './data/app-nav-demo-data'
 
 export { AppNav } from './app-nav'

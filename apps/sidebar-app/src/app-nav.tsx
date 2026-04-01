@@ -5,7 +5,6 @@ import { type FC, Fragment, type MouseEvent, useCallback, useMemo, useState } fr
 
 import {
   Drawer,
-  DropdownMenu,
   IconV2,
   Input,
   Layout,
@@ -14,7 +13,6 @@ import {
   useSidebar,
   type DrawerContentProps
 } from '@harnessio/ui/components'
-import { useRouterContext, useTheme, type FullTheme } from '@harnessio/ui/context'
 import { cn } from '@harnessio/ui/utils'
 
 import {
@@ -24,22 +22,9 @@ import {
   type AppNavFixedItemRow,
   type AppNavFixedItemRowWithSortable,
   type AppNavMoreItemGroup,
+  type AppNavContentProps,
   type AppNavProps
 } from './types/app-nav-types'
-
-const LIGHT_THEME = 'light-std-std' as FullTheme
-const DARK_THEME = 'dark-std-std' as FullTheme
-
-const footerUserMenuProfile = 'Profile'
-const footerUserMenuDocumentation = 'Documentation'
-const footerUserMenuTheme = 'Theme'
-const footerUserMenuPrivacy = 'Privacy'
-const footerUserMenuLogout = 'Logout'
-
-const footerUserSidebarTitle = 'vardan.bansal@harness.io'
-const footerUserAvatarName = 'Vardan Bansal'
-
-const footerDocumentationUrl = 'https://developer.harness.io/'
 
 const moreDrawerToggleMoreLabel = 'More'
 const moreDrawerToggleLessLabel = 'Less'
@@ -52,58 +37,6 @@ const moreDrawerLayoutColumn = 'column' as const
 const moreDrawerLayoutGap = 'none' as const
 const moreDrawerSearchInputIcon = 'search' as const
 const moreDrawerInputWrapperClass = 'w-full'
-
-const AppNavFooterUser: FC = () => {
-  const { Link } = useRouterContext()
-  const { theme, setTheme } = useTheme()
-  const isLight = theme === LIGHT_THEME
-
-  return (
-    <Sidebar.Item
-      title={footerUserSidebarTitle}
-      avatarFallback={footerUserAvatarName}
-      dropdownMenuContent={
-        <>
-          <DropdownMenu.Group>
-            <Link to="/profile">
-              <DropdownMenu.IconItem icon="user" title={footerUserMenuProfile} />
-            </Link>
-          </DropdownMenu.Group>
-          <DropdownMenu.Separator />
-          <DropdownMenu.Group>
-            <DropdownMenu.IconItem
-              icon="empty-page"
-              title={footerUserMenuDocumentation}
-              onSelect={e => {
-                e.preventDefault()
-                window.open(footerDocumentationUrl, '_blank', 'noopener,noreferrer')
-              }}
-            />
-            <DropdownMenu.IconItem
-              icon="theme"
-              title={footerUserMenuTheme}
-              onSelect={e => {
-                e.preventDefault()
-                setTheme(isLight ? DARK_THEME : LIGHT_THEME)
-              }}
-            />
-            <Link to="/privacy">
-              <DropdownMenu.IconItem icon="shield" title={footerUserMenuPrivacy} />
-            </Link>
-          </DropdownMenu.Group>
-          <DropdownMenu.Separator />
-          <DropdownMenu.IconItem
-            icon="logout"
-            title={footerUserMenuLogout}
-            onSelect={e => {
-              e.preventDefault()
-            }}
-          />
-        </>
-      }
-    />
-  )
-}
 
 const MoreDrawerSectionGroup: FC<{ section: AppNavMoreItemGroup }> = ({ section }) => {
   const { groupId, label, defaultExpanded, items } = section
@@ -142,7 +75,7 @@ const MoreDrawerSectionGroup: FC<{ section: AppNavMoreItemGroup }> = ({ section 
   )
 }
 
-function fixedItemKey(entry: AppNavProps['fixedItems'][number], index: number): string {
+function fixedItemKey(entry: AppNavContentProps['fixedItems'][number], index: number): string {
   if (entry.type === 'more') {
     return entry.id
   }
@@ -226,14 +159,14 @@ const SortableFixedSidebarRow: FC<{
   )
 }
 
-/** Full-height nav column: sidebar + rail (single grid cell beside main). */
-export const AppNav: FC<AppNavProps> = ({
-  headerItem,
-  fixedItems,
-  recentSection,
-  onReorderSortableFixedItems,
-  showFixedItemDragGrip = defaultShowFixedItemDragGrip
-}) => {
+/** Full-height nav column: header (scope) → scrollable content (nav items) → footer (user menu). */
+export const AppNav: FC<AppNavProps> = ({ header, content, footer }) => {
+  const {
+    fixedItems,
+    recentSection,
+    onReorderSortableFixedItems,
+    showFixedItemDragGrip = defaultShowFixedItemDragGrip
+  } = content
   const { state: sidebarState } = useSidebar()
   const isSidebarCollapsed = sidebarState === 'collapsed'
   const [openMoreId, setOpenMoreId] = useState<string | null>(null)
@@ -350,63 +283,64 @@ export const AppNav: FC<AppNavProps> = ({
       <div className="sidebar-app-shell h-full min-h-0 min-w-0 flex-1">
         <Sidebar.Root className="sidebar-app-figma">
           <Sidebar.Header className="sidebar-app-sidebar-header">
-            <Sidebar.Item {...headerItem} />
+            <Sidebar.Item {...header} />
           </Sidebar.Header>
 
-          <Sidebar.Group className="sidebar-app-sidebar-group-pinned">
-            {renderFixedSegment(prefix, 0)}
-            {sortableEnabled ? (
-              <DndContext
-                sensors={sensors}
-                collisionDetection={closestCenter}
-                onDragEnd={handleSortableDragEnd}
-              >
-                <SortableContext items={sortableIds} strategy={verticalListSortingStrategy}>
-                  {sortable.map(entry => {
-                    const showGrip = showFixedItemDragGrip(entry)
-                    return (
-                      <SortableFixedSidebarRow
-                        key={entry.sortableId}
-                        entry={entry}
-                        showGrip={showGrip}
-                      />
-                    )
-                  })}
-                </SortableContext>
-              </DndContext>
-            ) : (
-              sortable.map((entry, i) => (
-                <Sidebar.Item key={`o-${fixedItemKey(entry, i)}`} {...entry.item}>
-                  {entry.children}
-                </Sidebar.Item>
-              ))
-            )}
-            {renderFixedSegment(suffix, 1)}
-          </Sidebar.Group>
-
-          <Sidebar.Separator />
-
           <Sidebar.Content>
+            <Sidebar.Group className="sidebar-app-sidebar-group-pinned">
+              {renderFixedSegment(prefix, 0)}
+              {sortableEnabled ? (
+                <DndContext
+                  sensors={sensors}
+                  collisionDetection={closestCenter}
+                  onDragEnd={handleSortableDragEnd}
+                >
+                  <SortableContext items={sortableIds} strategy={verticalListSortingStrategy}>
+                    {sortable.map(entry => {
+                      const showGrip = showFixedItemDragGrip(entry)
+                      return (
+                        <SortableFixedSidebarRow
+                          key={entry.sortableId}
+                          entry={entry}
+                          showGrip={showGrip}
+                        />
+                      )
+                    })}
+                  </SortableContext>
+                </DndContext>
+              ) : (
+                sortable.map((entry, i) => (
+                  <Sidebar.Item key={`o-${fixedItemKey(entry, i)}`} {...entry.item}>
+                    {entry.children}
+                  </Sidebar.Item>
+                ))
+              )}
+              {renderFixedSegment(suffix, 1)}
+            </Sidebar.Group>
+
             {recentSection ? (
-              <Sidebar.Group label={recentSection.label} className="sidebar-app-sidebar-group-recent">
-                {'items' in recentSection
-                  ? recentSection.items.map((item, itemIndex) => (
-                      <Sidebar.Item
-                        key={
-                          'to' in item && item.to
-                            ? String(item.to)
-                            : `${item.title ?? 'item'}-${itemIndex}`
-                        }
-                        {...item}
-                      />
-                    ))
-                  : recentSection.children}
-              </Sidebar.Group>
+              <>
+                <Sidebar.Separator />
+                <Sidebar.Group label={recentSection.label} className="sidebar-app-sidebar-group-recent">
+                  {'items' in recentSection
+                    ? recentSection.items.map((item, itemIndex) => (
+                        <Sidebar.Item
+                          key={
+                            'to' in item && item.to
+                              ? String(item.to)
+                              : `${item.title ?? 'item'}-${itemIndex}`
+                          }
+                          {...item}
+                        />
+                      ))
+                    : recentSection.children}
+                </Sidebar.Group>
+              </>
             ) : null}
           </Sidebar.Content>
 
           <Sidebar.Footer className="sidebar-app-sidebar-footer">
-            <AppNavFooterUser />
+            <Sidebar.Item {...footer} />
           </Sidebar.Footer>
         </Sidebar.Root>
       </div>

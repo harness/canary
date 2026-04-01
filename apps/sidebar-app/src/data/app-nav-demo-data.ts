@@ -2,7 +2,7 @@ import type { MouseEvent } from 'react'
 
 import type { SidebarItemProps } from '@harnessio/ui/components'
 
-export const workspaceSwitcher: SidebarItemProps = {
+export const demoAppNavHeaderItem: SidebarItemProps = {
   to: '/',
   title: 'Harness',
   description: 'default',

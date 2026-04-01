@@ -12,6 +12,7 @@ import {
 } from './default-app-nav-config'
 import { getSidebarItemForPathname } from './nav-path-to-item'
 import type { AppNavFixedItem, AppNavProps } from './types/app-nav-types'
+import { useDemoAppNavFooterItem } from './use-demo-app-nav-footer-item'
 import { useRecentNavItems } from './use-recent-nav-items'
 
 const recentNavMaxItems = 5
@@ -37,6 +38,7 @@ function sidebarItemWithoutRowActions(item: SidebarItemProps): SidebarItemProps 
 /** Demo: pinned-from-recents, reorder, and `nav` config for `App`. */
 export const SidebarDemo: FC = () => {
   const location = useLocation()
+  const footerItem = useDemoAppNavFooterItem()
   const [pinnedFromRecents, setPinnedFromRecents] = useState<SidebarItemProps[]>([])
 
   const pinnedPaths = useMemo(
@@ -121,43 +123,47 @@ export const SidebarDemo: FC = () => {
   const nav: AppNavProps = useMemo(
     () => ({
       ...defaultAppNavProps,
-      fixedItems,
-      onReorderSortableFixedItems: handleReorderPinned,
-      showFixedItemDragGrip: row => Boolean(row.sortableId),
-      recentSection:
-        recentItems.length > 0
-          ? {
-              label: recentSectionLabel,
-              items: recentItems.map(item => {
-                const row: SidebarItemProps = {
-                  ...item,
-                  active: 'to' in item && item.to === location.pathname
-                }
-                const isAlreadyDefaultFixed =
-                  defaultFixedNavPath != null &&
-                  'to' in item &&
-                  item.to === defaultFixedNavPath
-                if (isAlreadyDefaultFixed) {
-                  return row
-                }
-                return {
-                  ...row,
-                  actionButtons: [
-                    {
-                      iconName: 'pin' as const,
-                      iconOnly: true,
-                      onClick: () => {
-                        handlePinFromRecents(item)
-                      },
-                      'aria-label': recentPinAriaLabel
-                    }
-                  ]
-                }
-              })
-            }
-          : undefined
+      footer: footerItem,
+      content: {
+        ...defaultAppNavProps.content,
+        fixedItems,
+        onReorderSortableFixedItems: handleReorderPinned,
+        showFixedItemDragGrip: row => Boolean(row.sortableId),
+        recentSection:
+          recentItems.length > 0
+            ? {
+                label: recentSectionLabel,
+                items: recentItems.map(item => {
+                  const row: SidebarItemProps = {
+                    ...item,
+                    active: 'to' in item && item.to === location.pathname
+                  }
+                  const isAlreadyDefaultFixed =
+                    defaultFixedNavPath != null &&
+                    'to' in item &&
+                    item.to === defaultFixedNavPath
+                  if (isAlreadyDefaultFixed) {
+                    return row
+                  }
+                  return {
+                    ...row,
+                    actionButtons: [
+                      {
+                        iconName: 'pin' as const,
+                        iconOnly: true,
+                        onClick: () => {
+                          handlePinFromRecents(item)
+                        },
+                        'aria-label': recentPinAriaLabel
+                      }
+                    ]
+                  }
+                })
+              }
+            : undefined
+      }
     }),
-    [fixedItems, handlePinFromRecents, handleReorderPinned, recentItems, location.pathname]
+    [fixedItems, footerItem, handlePinFromRecents, handleReorderPinned, recentItems, location.pathname]
   )
 
   return <App nav={nav} />

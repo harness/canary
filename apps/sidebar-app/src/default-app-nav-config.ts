@@ -1,7 +1,10 @@
 import type { AppNavFixedItem, AppNavProps } from './types/app-nav-types'
-import { pinnedHomeItem, workspaceSwitcher } from './data/app-nav-demo-data'
+import { demoAppNavHeaderItem, pinnedHomeItem } from './data/app-nav-demo-data'
 import { moreMenuModuleItems } from './data/more-menu-module-items'
 import { moreMenuResourceItems } from './data/more-menu-resource-items'
+
+/** Base nav config without `footer` (footer often needs router/theme; see `useDemoAppNavFooterItem`). */
+export type DefaultAppNavPropsBase = Omit<AppNavProps, 'footer'>
 
 const moreMenuSearchPlaceholder = 'Search'
 
@@ -36,8 +39,10 @@ export const defaultAppNavFixedMore: AppNavFixedItem = {
   ]
 }
 
-/** Sidebar chrome without Recents; consumers merge `recentSection` from app-level state. */
-export const defaultAppNavProps: AppNavProps = {
-  headerItem: workspaceSwitcher,
-  fixedItems: [defaultAppNavFixedHome, defaultAppNavFixedMore]
+/** Sidebar chrome without `footer` or Recents; merge `footer` and `content.recentSection` at the app. */
+export const defaultAppNavProps: DefaultAppNavPropsBase = {
+  header: demoAppNavHeaderItem,
+  content: {
+    fixedItems: [defaultAppNavFixedHome, defaultAppNavFixedMore]
+  }
 }

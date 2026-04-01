@@ -21,9 +21,10 @@ import {
   type AppNavFixedItemMore,
   type AppNavFixedItemRow,
   type AppNavFixedItemRowWithSortable,
-  type AppNavMoreItemGroup,
   type AppNavContentProps,
-  type AppNavProps
+  type AppNavProps,
+  type MoreDrawerSectionGroupProps,
+  type SortableFixedSidebarRowProps
 } from '../types/app-nav-types'
 
 const moreDrawerToggleMoreLabel = 'More'
@@ -38,7 +39,7 @@ const moreDrawerLayoutGap = 'none' as const
 const moreDrawerSearchInputIcon = 'search' as const
 const moreDrawerInputWrapperClass = 'w-full'
 
-const MoreDrawerSectionGroup: FC<{ section: AppNavMoreItemGroup }> = ({ section }) => {
+const MoreDrawerSectionGroup: FC<MoreDrawerSectionGroupProps> = ({ section }) => {
   const { groupId, label, defaultExpanded, items } = section
   const previewCount = section.previewCount ?? DEFAULT_MORE_DRAWER_PREVIEW_COUNT
   const [expanded, setExpanded] = useState(defaultExpanded)
@@ -129,10 +130,7 @@ function defaultShowFixedItemDragGrip(_row: AppNavFixedItemRow): boolean {
   return true
 }
 
-const SortableFixedSidebarRow: FC<{
-  entry: AppNavFixedItemRowWithSortable
-  showGrip: boolean
-}> = ({ entry, showGrip }) => {
+const SortableFixedSidebarRow: FC<SortableFixedSidebarRowProps> = ({ entry, showGrip }) => {
   const { attributes, listeners, setNodeRef, transform, transition, isDragging } = useSortable({
     id: entry.sortableId,
     disabled: !showGrip

@@ -16,6 +16,8 @@ export type AppNavMoreItemGroup = {
   items: MoreMenuDrawerItem[]
 }
 
+export type MoreDrawerSectionGroupProps = { section: AppNavMoreItemGroup }
+
 /** Pinned row that opens the more-menu drawer with grouped links + search. */
 export type AppNavFixedItemMore = {
   type: 'more'
@@ -41,6 +43,11 @@ export type AppNavFixedItemRow = {
 }
 
 export type AppNavFixedItemRowWithSortable = AppNavFixedItemRow & { sortableId: string }
+
+export type SortableFixedSidebarRowProps = {
+  entry: AppNavFixedItemRowWithSortable
+  showGrip: boolean
+}
 
 export type AppNavFixedItem = AppNavFixedItemRow | AppNavFixedItemMore
 

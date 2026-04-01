@@ -1,4 +1,4 @@
-import { type FC, type ReactNode } from 'react'
+import { type FC } from 'react'
 import {
   Link,
   NavLink,
@@ -12,8 +12,10 @@ import {
 
 import { RouterContextProvider } from '@harnessio/ui/context'
 
+import type { AppRouterProviderProps } from '../types/app-shell-types'
+
 /** Bridges `react-router-dom` into `@harnessio/ui` so hooks like `useRouterContext` work under `BrowserRouter`. */
-export const AppRouterProvider: FC<{ children: ReactNode }> = ({ children }) => {
+export const AppRouterProvider: FC<AppRouterProviderProps> = ({ children }) => {
   const navigate = useNavigate()
   const location = useLocation()
 

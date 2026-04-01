@@ -1,7 +1,8 @@
-import { Children, type FC, type ReactNode } from 'react'
+import { Children, type FC } from 'react'
 
 import { Layout, useSidebar } from '@harnessio/ui/components'
 
+import type { AppShellLayoutProps } from '../types/app-shell-types'
 import { AppShellContent } from './app-content'
 import { AppNav } from './app-nav'
 import { AppShellHeader } from './app-shell-header'
@@ -10,7 +11,7 @@ const appShellMainClass = 'app-shell-main'
 const appShellRootClass = 'app-shell'
 const appShellBodyClass = 'app-shell-body'
 
-const AppShellLayout: FC<{ header?: ReactNode; children: ReactNode }> = ({ header, children }) => {
+const AppShellLayout: FC<AppShellLayoutProps> = ({ header, children }) => {
   const { state: sidebarState } = useSidebar()
   const isSidebarCollapsed = sidebarState === 'collapsed'
 

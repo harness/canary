@@ -75,5 +75,5 @@ export {
 
 export { AppNav } from './app-nav'
 export { AppShell } from './app-shell'
-export { App } from './App'
-export { SidebarDemo } from './sidebar-demo'
+export type { AppProps } from '../types/app-shell-types'
+export { App, SidebarDemo } from './sidebar-demo'

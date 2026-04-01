@@ -55,7 +55,9 @@ const collapsedSidebarStyles: CSSRuleObject = {
         maxWidth: '0',
         padding: '0',
         opacity: '0',
-        minWidth: '0'
+        minWidth: '0',
+        // Invisible row actions still stack in the icon cell; without this they steal clicks from the NavLink.
+        pointerEvents: 'none'
       },
       '&-w-description, &-complete': { padding: '0' },
       '&-only-action-buttons, &-w-r-element, &-complete': {

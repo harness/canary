@@ -18,7 +18,7 @@ import { getSidebarItemForPathname } from '../nav-path-to-item'
 import type { AppNavFixedItem, AppNavFixedItemRow, AppNavProps } from '../types/app-nav-types'
 import type { AppProps } from '../types/app-shell-types'
 import { useRecentNavItems } from '../use-recent-nav-items'
-import { useDemoAppNavFooterItem } from '../components/use-demo-app-nav-footer-item'
+import { useDemoAppNavFooterItem } from './use-demo-app-nav-footer-item'
 
 /** Layout only: `AppShell.Layout` → `AppShell.Nav` + `AppShell.Content`. Providers and nav data live outside (e.g. `AppRoot`, `SidebarDemo`). */
 export const App = ({ nav, header }: AppProps) => (

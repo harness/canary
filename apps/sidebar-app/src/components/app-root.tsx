@@ -56,7 +56,7 @@ export { DEFAULT_MORE_DRAWER_PREVIEW_COUNT } from '../types/app-nav-types'
 
 export type { DefaultAppNavPropsBase } from '../default-app-nav-config'
 export { defaultAppNavFixedHome, defaultAppNavFixedMore, defaultAppNavProps } from '../default-app-nav-config'
-export { useDemoAppNavFooterItem } from './use-demo-app-nav-footer-item'
+export { useDemoAppNavFooterItem } from '../app/use-demo-app-nav-footer-item'
 export { getSidebarItemForPathname } from '../nav-path-to-item'
 export {
   useRecentNavItems,

@@ -346,6 +346,13 @@ function MyTable() {
       value: "(data: TData, index: number) => void",
     },
     {
+      name: "getRowLink",
+      description:
+        "Function to generate a navigation link for a row. When provided, the row renders as a link navigating to the returned URL. Disabled rows (via getIsRowDisabled) will not render as links.",
+      required: false,
+      value: "(data: TData, index: number) => string",
+    },
+    {
       name: "disableHighlightOnHover",
       description: "Disable row highlighting on hover",
       required: false,
@@ -1071,6 +1078,93 @@ function TableWithDisabledRows() {
 - Disabled rows cannot be clicked, selected, or expanded
 - The "Select all" checkbox skips disabled rows
 - Disabled rows are visually distinguished with reduced opacity and a not-allowed cursor
+
+## Row Links
+
+The `getRowLink` prop allows you to make rows navigable by returning a URL string for each row. When provided, rows render as links. Rows disabled via `getIsRowDisabled` will not render as links.
+
+<DocsPage.ComponentExample
+  client:only
+  code={`() => {
+  const users = [
+    { id: 1, name: 'John Doe', email: 'john@example.com', status: 'active' },
+    { id: 2, name: 'Jane Smith', email: 'jane@example.com', status: 'active' },
+    { id: 3, name: 'Bob Johnson', email: 'bob@example.com', status: 'inactive' }
+  ]
+
+const columns = [
+{
+accessorKey: 'name',
+header: 'Name'
+},
+{
+accessorKey: 'email',
+header: 'Email'
+},
+{
+accessorKey: 'status',
+header: 'Status',
+cell: (info) => (
+
+<StatusBadge
+  theme={info.getValue() === "active" ? "success" : "default"}
+  size="sm"
+>
+  {info.getValue()}
+</StatusBadge>
+) } ]
+
+return (
+
+<DataTable
+  columns={columns}
+  data={users}
+  getRowId={(row) => row.id.toString()}
+  size="compact"
+  getRowLink={(data) => \`/users/\${data.id}\`}
+  getIsRowDisabled={(row) => row.original.status === "inactive"}
+/>
+) }`} />
+
+### Usage
+
+```tsx
+import { DataTable } from "@harnessio/ui/components";
+
+function TableWithRowLinks() {
+  const columns = [
+    { accessorKey: "name", header: "Name" },
+    { accessorKey: "email", header: "Email" },
+  ];
+
+  const data = [
+    { id: 1, name: "John Doe", email: "john@example.com", status: "active" },
+    {
+      id: 2,
+      name: "Jane Smith",
+      email: "jane@example.com",
+      status: "inactive",
+    },
+  ];
+
+  return (
+    <DataTable
+      columns={columns}
+      data={data}
+      getRowId={(row) => row.id.toString()}
+      getRowLink={(data) => `/users/${data.id}`}
+      getIsRowDisabled={(row) => row.original.status === "inactive"}
+    />
+  );
+}
+```
+
+### Key Points
+
+- `getRowLink` receives the row's data and its index, and must return a string URL
+- Rows with a link render as navigable elements
+- Disabled rows (via `getIsRowDisabled`) are excluded from link rendering
+- `getRowLink` and `onRowClick` can coexist; the link takes precedence for navigation
 
 ## Examples
 

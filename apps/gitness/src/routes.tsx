@@ -270,7 +270,10 @@ export const repoRoutes: CustomRouteObject[] = [
             children: [
               {
                 path: '*',
-                element: <RepoSummaryPage />
+                element: <RepoSummaryPage />,
+                handle: {
+                  publicAccess: true
+                }
               }
             ]
           },

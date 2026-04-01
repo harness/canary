@@ -2,7 +2,7 @@ import { useState } from 'react'
 import { useNavigate } from 'react-router-dom'
 
 import { ImportSpaceRequestBody } from '@harnessio/code-service-client'
-import { ImportMultipleReposFormFields, RepoImportMultiplePage } from '@harnessio/views'
+import { ImportMultipleReposFormFields, ProviderOptionsEnum, RepoImportMultiplePage } from '@harnessio/views'
 
 import { useRoutes } from '../../framework/context/NavigationContext'
 import { useGetSpaceURLParam } from '../../framework/hooks/useGetSpaceParam'
@@ -31,7 +31,10 @@ export const ImportMultipleRepos = () => {
         password: data.password,
         type: PROVIDER_TYPE_MAP[data.provider]
       },
-      provider_space
+      provider_space,
+      ...([ProviderOptionsEnum.GITLAB, ProviderOptionsEnum.GITLAB_SELF_HOSTED].includes(data.provider) && {
+        include_subgroups_repos: data.include_subgroups_repos
+      })
     }
 
     try {

@@ -1,8 +1,8 @@
-import { ComboBoxOptions, FilterFieldTypes, FilterOptionConfig, IconV2 } from '@harnessio/ui/components'
-import { TFunctionWithFallback } from '@harnessio/ui/context'
 import { Scope } from '@views/common/types'
 
 import { booleanParser } from '@harnessio/filters'
+import { ComboBoxOptions, FilterFieldTypes, FilterOptionConfig, IconV2 } from '@harnessio/ui/components'
+import { TFunctionWithFallback } from '@harnessio/ui/context'
 
 import { ExtendedScope } from '../common'
 import { getFilterScopeOptions } from '../common/util'
@@ -38,6 +38,12 @@ export const getRepoListFilterOptions = (
         label: <IconV2 name="pin-solid" size="md" className="cursor-pointer" />
       },
       parser: booleanParser
+    }
+
+    const tagsFilterOption: FilterOptionConfig<keyof RepoListFilters> = {
+      label: t('views:repos.filterOptions.tagsOption.label', 'Tags'),
+      value: 'tags',
+      type: FilterFieldTypes.Text
     }
 
     if (!projectIdentifier) {
@@ -77,9 +83,9 @@ export const getRepoListFilterOptions = (
         }
       }
 
-      return [favoriteFilterOption, recursiveFilterOption]
+      return [favoriteFilterOption, recursiveFilterOption, tagsFilterOption]
     }
-    return [favoriteFilterOption]
+    return [favoriteFilterOption, tagsFilterOption]
   }
 
   return buildFilterOptions()

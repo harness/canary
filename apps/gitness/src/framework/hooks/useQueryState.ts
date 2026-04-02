@@ -1,4 +1,4 @@
-import { useCallback, useEffect, useState } from 'react'
+import { useCallback, useEffect, useRef, useState } from 'react'
 
 import { useRouterContext } from '@harnessio/ui/context'
 
@@ -23,11 +23,15 @@ const useQueryState = <T = string>(
   // Initialize state from URL query parameter using the parser
   const [value, setValue] = useState<T>(() => parser.parse(searchParams.get(key)))
 
+  // Keep a ref to the latest searchParams so setQuery can read fresh values
+  const searchParamsRef = useRef(searchParams)
+  searchParamsRef.current = searchParams
+
   // Effect to sync state when the URL changes (e.g., browser back/forward navigation)
   useEffect(() => {
     const urlValue = parser.parse(searchParams.get(key))
     setValue(urlValue)
-  }, [searchParams, key])
+  }, [searchParams, key, parser])
 
   /**
    * Setter function to update both state and URL query parameter
@@ -35,22 +39,22 @@ const useQueryState = <T = string>(
    */
   const setQuery = useCallback(
     (newValue: T | null) => {
-      // Update local React state immediately
-      if (newValue === null || newValue === undefined) {
-        setValue(parser.parse(null)) // fallback to parser's default
+      const currentParam = searchParamsRef.current.get(key)
+      const isEmpty = newValue === null || newValue === undefined || newValue === ''
+      const newParam = isEmpty ? null : String(newValue)
+
+      if (currentParam === newParam) return
+
+      const newParams = new URLSearchParams(searchParamsRef.current.toString())
+
+      if (isEmpty) {
+        setValue(parser.parse(null))
+        newParams.delete(key)
       } else {
-        setValue(newValue)
+        setValue(newValue!)
+        newParams.set(key, newParam!)
       }
 
-      // Update the URL query parameter
-      const newParams = new URLSearchParams(window.location.search)
-      if (newValue === null || newValue === undefined || newValue === '') {
-        newParams.delete(key) // remove query param if empty
-      } else {
-        newParams.set(key, String(newValue)) // update query param
-      }
-
-      // Replace the current history entry to avoid creating a new browser history state
       setSearchParams(newParams, { replace: true })
     },
     [key, setSearchParams, parser]

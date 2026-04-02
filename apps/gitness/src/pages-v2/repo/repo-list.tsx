@@ -46,6 +46,7 @@ export default function ReposListPage() {
   const { queryPage, setQueryPage } = usePaginationQueryStateWithStore({ page, setPage })
   const [favorite, setFavorite] = useQueryState<boolean>('favorite')
   const [recursive, setRecursive] = useQueryState<boolean>('recursive')
+  const [tags, setTags] = useState<string | null>(null)
   const { scope, renderUrl, routes: parentRoutes, routeUtils } = useMFEContext()
   const basename = `/ng${renderUrl}`
   const [sort, setSort] = useState<ListReposQueryQueryParams['sort']>('last_git_push')
@@ -69,7 +70,9 @@ export default function ReposListPage() {
         recursive,
         sort,
         order,
-        limit: pageSize
+        limit: pageSize,
+        // @ts-expect-error tag filter not yet in OpenAPI spec
+        tag: tags || undefined
       },
       space_ref: `${spaceURL}/+`
     },
@@ -97,7 +100,7 @@ export default function ReposListPage() {
       setQueryPage(1)
       shouldResetPageRef.current = false
     }
-  }, [favorite, recursive, sort, order, setQueryPage])
+  }, [favorite, recursive, tags, sort, order, setQueryPage])
 
   useEffect(() => {
     const totalItems = parseInt(headers?.get(PageResponseHeader.xTotal) || '0')
@@ -214,9 +217,10 @@ export default function ReposListPage() {
   const queryFilterValues = useMemo(
     () => ({
       favorite,
-      recursive
+      recursive,
+      tags
     }),
-    [favorite, recursive]
+    [favorite, recursive, tags]
   )
 
   const toUpstreamRepo = useUpstreamRepoUrl()
@@ -239,8 +243,9 @@ export default function ReposListPage() {
       toImportMultipleRepos={() => routes.toImportMultipleRepos({ spaceId })}
       onFavoriteToggle={onFavoriteToggle}
       onCancelImport={onCancelImport}
-      onFilterChange={({ favorite, recursive }: RepoListFilters) => {
+      onFilterChange={({ favorite, recursive, tags: newTags }: RepoListFilters) => {
         setFavorite(favorite ?? null)
+        setTags(newTags || null)
         shouldResetPageRef.current = true
 
         if (!recursive) return

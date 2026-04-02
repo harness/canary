@@ -54,6 +54,7 @@ export const RepoSettingsGeneralPageContainer = () => {
     setSecurityScanning,
     setVerifyCommitterIdentity,
     setGitLfsEnabled,
+    setAutoMergeEnabled,
     setVulnerabilityScanning
   } = useRepoRulesStore()
   const [apiError, setApiError] = useState<{ type: ErrorTypes; message: string } | null>(null)
@@ -182,6 +183,7 @@ export const RepoSettingsGeneralPageContainer = () => {
     {
       onSuccess: ({ body: data }) => {
         setGitLfsEnabled(data.git_lfs_enabled || false)
+        setAutoMergeEnabled(data.auto_merge_enabled || false)
         setApiError(null)
       },
       onError: error => {
@@ -196,6 +198,7 @@ export const RepoSettingsGeneralPageContainer = () => {
     {
       onSuccess: ({ body: data }) => {
         setGitLfsEnabled(data.git_lfs_enabled || false)
+        setAutoMergeEnabled(data.auto_merge_enabled || false)
         setApiError(null)
       },
       onError: error => {
@@ -284,7 +287,12 @@ export const RepoSettingsGeneralPageContainer = () => {
   }
 
   const handleUpdateFeaturesSettings = (data: RepoSettingsFeaturesFormFields) => {
-    updateFeaturesSettings({ body: { git_lfs_enabled: data.gitLfsEnabled } })
+    updateFeaturesSettings({
+      body: {
+        git_lfs_enabled: data.gitLfsEnabled,
+        auto_merge_enabled: data.autoMergeEnabled
+      }
+    })
   }
 
   const loadingStates = {

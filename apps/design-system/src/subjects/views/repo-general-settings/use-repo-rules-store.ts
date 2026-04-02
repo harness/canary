@@ -20,6 +20,7 @@ export const useRepoRulesStore = (): IRepoStore => ({
   securityScanning: false,
   verifyCommitterIdentity: false,
   gitLfsEnabled: false,
+  autoMergeEnabled: false,
   presetRuleData: null,
   vulnerabilityScanning: VulnerabilityScanningType.DISABLED,
   principals: [

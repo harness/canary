@@ -30,11 +30,13 @@ interface IRepoStore {
   recentStatusChecks: ListStatusCheckRecentOkResponse | null
   verifyCommitterIdentity: boolean
   gitLfsEnabled: boolean
+  autoMergeEnabled: boolean
   vulnerabilityScanning: VulnerabilityScanningType
   setRepoData: (data: FindRepositoryOkResponse) => void
   setRules: (data: RepoRuleListOkResponse) => void
   setSecurityScanning: (enabled: boolean) => void
   setGitLfsEnabled: (enabled: boolean) => void
+  setAutoMergeEnabled: (enabled: boolean) => void
   setPresetRuleData: (data: RepoRuleGetOkResponse | null) => void
   setUserGroups: (data: ListUsergroupsOkResponse | null) => void
   setPrincipals: (data: ListPrincipalsOkResponse | null) => void
@@ -56,6 +58,7 @@ export const useRepoRulesStore = create<IRepoStore>(set => ({
   branches: [],
   presetRuleData: null,
   gitLfsEnabled: false,
+  autoMergeEnabled: false,
   rules: null,
   securityScanning: false,
   verifyCommitterIdentity: false,
@@ -93,6 +96,7 @@ export const useRepoRulesStore = create<IRepoStore>(set => ({
   },
   setSecurityScanning: enabled => set({ securityScanning: enabled }),
   setGitLfsEnabled: enabled => set({ gitLfsEnabled: enabled }),
+  setAutoMergeEnabled: enabled => set({ autoMergeEnabled: enabled }),
   setPresetRuleData: data => {
     if (!data) {
       set({ presetRuleData: null })

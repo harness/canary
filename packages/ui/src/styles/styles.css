@@ -105,6 +105,7 @@
   --cn-page-nav-full-height: calc(
     var(--cn-tabs-nav-height) + var(--cn-breadcrumbs-height) + var(--cn-repo-header-height)
   );
+  --cn-sticky-breadcrumb-offset: var(--cn-breadcrumbs-height);
 }
 
 .border-linear {
@@ -726,13 +727,20 @@ mark {
 }
 
 .nested-sidebar-height {
-  height: calc(100vh - var(--cn-breadcrumbs-height) - var(--cn-inset-layout-indent) - var(--cn-inset-border-width) * 2);
+  height: calc(
+    100vh - var(--cn-sticky-breadcrumb-offset) - var(--cn-inset-layout-indent) - var(--cn-inset-border-width) * 2
+  );
 }
 
 .repo-files-height {
   height: calc(
     100vh - var(--cn-page-nav-full-height) - var(--cn-inset-layout-indent) - var(--cn-inset-border-width) * 2
   );
+}
+
+#main-content-layout:not(.cn-with-legacy-breadcrumb-band) {
+  --cn-sticky-breadcrumb-offset: 0px;
+  --cn-page-nav-full-height: calc(var(--cn-tabs-nav-height) + var(--cn-repo-header-height));
 }
 
 .branch-selector-trigger-as-input {

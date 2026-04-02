@@ -166,7 +166,7 @@ export const PullRequestChangesFilter: React.FC<PullRequestChangesFilterProps> =
       align="center"
       justify="between"
       gap="xl"
-      className="layer-high bg-cn-1 pt-cn-xl sticky top-[var(--cn-breadcrumbs-height)] pb-cn-xs"
+      className="layer-high bg-cn-1 pt-cn-xl sticky top-[var(--cn-sticky-breadcrumb-offset)] pb-cn-xs"
     >
       <Layout.Horizontal className="grow" align="center">
         {!showExplorer && (
@@ -184,7 +184,7 @@ export const PullRequestChangesFilter: React.FC<PullRequestChangesFilterProps> =
         )}
 
         <DropdownMenu.Root>
-          <DropdownMenu.Trigger className="group flex items-center gap-x-cn-2xs" asChild>
+          <DropdownMenu.Trigger className="gap-x-cn-2xs group flex items-center" asChild>
             <Button size="sm" variant="transparent">
               {selectedCommits[0].value === 'ALL' ? (
                 <>
@@ -209,7 +209,7 @@ export const PullRequestChangesFilter: React.FC<PullRequestChangesFilterProps> =
         </DropdownMenu.Root>
 
         <DropdownMenu.Root>
-          <DropdownMenu.Trigger className="group flex items-center gap-x-cn-2xs" asChild>
+          <DropdownMenu.Trigger className="gap-x-cn-2xs group flex items-center" asChild>
             <Button size="sm" variant="transparent">
               {diffMode === DiffModeEnum.Split ? t('views:pullRequests.split') : t('views:pullRequests.unified')}
               <IconV2 name="solid-arrow-down" size="2xs" />

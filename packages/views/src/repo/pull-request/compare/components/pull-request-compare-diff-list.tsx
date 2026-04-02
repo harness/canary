@@ -1,9 +1,6 @@
 import { FC, RefObject, useCallback, useEffect, useMemo, useRef, useState } from 'react'
 
-import { Button, IconV2, Layout, ListActions } from '@harnessio/ui/components'
-import { useTranslation } from '@harnessio/ui/context'
-import { useLocalStorage, UserPreference } from '@harnessio/ui/hooks'
-import { TypesUser } from '@harnessio/ui/types'
+import { DiffModeEnum } from '@git-diff-view/react'
 import {
   ChangedFilesShortInfo,
   DiffModeOptions,
@@ -14,9 +11,13 @@ import {
   SIDEBAR_MIN_WIDTH,
   TypesDiffStats
 } from '@views'
-import { DiffModeEnum } from '@git-diff-view/react'
-import { cn } from '@harnessio/ui/utils'
 import { chunk } from 'lodash-es'
+
+import { Button, IconV2, Layout, ListActions } from '@harnessio/ui/components'
+import { useTranslation } from '@harnessio/ui/context'
+import { useLocalStorage, UserPreference } from '@harnessio/ui/hooks'
+import { TypesUser } from '@harnessio/ui/types'
+import { cn } from '@harnessio/ui/utils'
 
 import { HeaderProps, PullRequestAccordion } from '../../components/pull-request-accordian'
 import { PullRequestDiffSidebar } from '../../components/pull-request-diff-sidebar'
@@ -122,7 +123,7 @@ const PullRequestCompareDiffList: FC<PullRequestCompareDiffListProps> = ({
           align="center"
           justify="between"
           gap="xl"
-          className="layer-high bg-cn-1 pt-cn-xl pb-cn-xs sticky top-[var(--cn-breadcrumbs-height)]"
+          className="layer-high bg-cn-1 pt-cn-xl pb-cn-xs sticky top-[var(--cn-sticky-breadcrumb-offset)]"
         >
           <Layout.Horizontal className="grow" align="center">
             {!showExplorer && (

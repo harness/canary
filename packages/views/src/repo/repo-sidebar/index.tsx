@@ -23,7 +23,7 @@ export const RepoSidebar = ({
 }: RepoSidebarProps) => {
   return (
     <>
-      <div className="repo-files-height sticky top-[var(--cn-page-nav-full-height)]">
+      <div className="repo-files-height sticky">
         <Layout.Flex direction="column" className="pr-cn-sm pl-cn-2xl pt-cn-xl max-h-full overflow-hidden" gapY="sm">
           <Layout.Grid columns="1fr auto" flow="column" align="center" gapX="xs">
             {branchSelectorRenderer}

@@ -1,7 +1,5 @@
 import { FC, useMemo } from 'react'
 
-import { Avatar, BranchTag, CommitCopyActions, IconPropsV2, IconV2, Text } from '@harnessio/ui/components'
-import { useRouterContext } from '@harnessio/ui/context'
 import {
   ColorsEnum,
   CommentItem,
@@ -17,6 +15,9 @@ import {
 } from '@views'
 import { TypesPullReq } from '@views/repo/pull-request/pull-request.types'
 import { noop } from 'lodash-es'
+
+import { Avatar, BranchTag, CommitCopyActions, IconPropsV2, IconV2, Text } from '@harnessio/ui/components'
+import { useRouterContext } from '@harnessio/ui/context'
 
 import PullRequestTimelineItem, { TimelineItemProps } from './pull-request-timeline-item'
 
@@ -454,6 +455,30 @@ const PullRequestSystemComments: FC<SystemCommentProps> = ({
             )
           },
           icon: <IconV2 name="edit-pencil" size="xs" />
+        }
+      }
+
+      case CommentType.AUTO_MERGE_FAILED: {
+        const unsupportedMethod =
+          merge_method === MergeStrategy.SQUASH
+            ? 'squash'
+            : merge_method === MergeStrategy.REBASE
+              ? 'rebase'
+              : merge_method === MergeStrategy.FAST_FORWARD
+                ? 'fast-forward'
+                : null
+
+        return {
+          header: {
+            description: (
+              <Text variant="body-single-line-normal" color="foreground-3">
+                {unsupportedMethod
+                  ? `disabled auto-merge — ${unsupportedMethod} is no longer a supported merge method`
+                  : 'disabled auto-merge — the selected merge method is no longer supported'}
+              </Text>
+            )
+          },
+          icon: <IconV2 name="xmark-circle-solid" size="xs" className="text-cn-danger" />
         }
       }
 

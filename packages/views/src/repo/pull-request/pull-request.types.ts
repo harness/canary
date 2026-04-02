@@ -11,7 +11,7 @@ import {
   TypesRepositoryCore
 } from '@views'
 
-import { CheckboxOptions, ComboBoxOptions, StackedListPaginationProps } from '@harnessio/ui/components'
+import { CheckboxOptions, StackedListPaginationProps } from '@harnessio/ui/components'
 import { PrincipalType, UsererrorError } from '@harnessio/ui/types'
 
 import { LabelsValue } from './components/labels'
@@ -133,6 +133,7 @@ export interface TypesPullReq {
   source_repo_id?: number | null
   source_sha?: string
   state?: EnumPullReqState
+  substate?: EnumPullReqSubState
   stats?: TypesPullReqStats
   target_branch?: string
   target_repo_id?: number | null
@@ -145,6 +146,8 @@ export interface TypesPullReq {
 }
 
 export type EnumMergeMethod = 'fast-forward' | 'merge' | 'rebase' | 'squash'
+
+export type EnumPullReqSubState = '' | 'auto_merge'
 
 export type EnumPullReqState = 'closed' | 'merged' | 'open'
 

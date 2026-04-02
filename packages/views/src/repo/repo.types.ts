@@ -170,6 +170,19 @@ export interface TypesIdentity {
   avatarUrl?: string
 }
 
+export type CommitSignatureResult = 'good' | 'unverified' | 'revoked' | 'invalid' | 'bad' | 'unsupported' | 'key_expired'
+
+export type PublicKeyScheme = 'pgp' | 'ssh'
+
+export interface TypesCommitSignature {
+  created?: number
+  updated?: number
+  result?: CommitSignatureResult
+  key_scheme?: PublicKeyScheme
+  key_id?: string
+  key_fingerprint?: string
+}
+
 export interface TypesCommit {
   author?: TypesSignature
   committer?: TypesSignature
@@ -178,6 +191,7 @@ export interface TypesCommit {
   sha?: string
   stats?: TypesCommitStats
   title?: string
+  signature?: TypesCommitSignature | null
 }
 export interface TypesCommitStats {
   files?: TypesCommitFileStats[]

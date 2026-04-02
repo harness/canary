@@ -16,6 +16,7 @@ import { formatDate } from '@harnessio/ui/utils'
 import { TypesCommit } from '@views'
 
 import { CommitTitleWithPRLink } from './CommitTitleWithPRLink'
+import { CommitVerificationBadge } from './commit-verification-badge'
 
 type CommitsGroupedByDate = Record<string, TypesCommit[]>
 
@@ -104,6 +105,7 @@ export const CommitsList: FC<CommitProps> = ({
 
                         {!!commit?.sha && (
                           <Layout.Horizontal gap="xs" align="center">
+                            <CommitVerificationBadge signature={commit.signature} />
                             <CommitCopyActions sha={commit.sha} toCommitDetails={toCommitDetails} size="sm" />
                             <Button
                               variant="outline"

@@ -61,7 +61,8 @@ const PullRequestCommitsView: FC<RepoPullRequestCommitsViewProps> = ({
             title: item.title,
             message: item.message,
             author: item.author,
-            committer: item.committer
+            committer: item.committer,
+            signature: item.signature
           }))}
         />
       )}

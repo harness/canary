@@ -212,14 +212,15 @@ function ExpandButton({
       >
         {/* icon + label */}
         <div className="cn-studio-card-expand-button-top">
-          {icon ?? <IconV2 name="harness-plugins" size="lg" />}
+          {/* {icon ?? <IconV2 name="harness-plugins" size="lg" />} */}
           <Text color="foreground-1" variant="body-strong" className="truncate">
             {label}
           </Text>
+          <IconV2 name="expand" />
         </div>
 
         {/* Count + expand icon */}
-        <div className="cn-studio-card-expand-button-bottom">
+        {/* <div className="cn-studio-card-expand-button-bottom">
           <Text color="foreground-1" variant="body-single-line-code">
             +{stepCount} more
           </Text>
@@ -228,7 +229,7 @@ function ExpandButton({
             name={loading ? 'loader' : 'expand'}
             size="sm"
           />
-        </div>
+        </div> */}
       </button>
     </motion.div>
   )

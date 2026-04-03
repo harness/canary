@@ -75,30 +75,30 @@ export default {
     // Group card variant
     '&:where(.cn-studio-card-group)': {
       width: 'auto',
-      minWidth: 'var(--cn-size-90)',
+      minWidth: 'var(--cn-size-41)',
       maxWidth: 'none',
       height: 'auto',
 
       '&.cn-studio-card-stage': {
-        minWidth: 'var(--cn-size-90)'
+        minWidth: 'var(--cn-size-41)'
       },
 
       '&:has(> .cn-studio-card-content > [data-expanded="true"])': {
         '@apply bg-cn-3/50': ''
       },
 
-      '> .cn-studio-card-content': {
-        minHeight: '108px'
-      },
+      // '> .cn-studio-card-content': {
+      //   minHeight: '63px'
+      // },
 
       '> .cn-studio-card-content:not(:has(> .cn-studio-card-message))': {
         '@apply justify-center items-start': ''
       },
 
       '&:has(> .cn-studio-card-content > [data-expanded="false"])': {
-        width: 'var(--cn-size-90)',
-        minWidth: 'var(--cn-size-90)',
-        maxWidth: 'var(--cn-size-90)'
+        width: 'var(--cn-size-41)',
+        minWidth: 'var(--cn-size-41)',
+        maxWidth: 'var(--cn-size-41)'
       }
     },
 
@@ -283,7 +283,7 @@ export default {
   },
 
   '.cn-studio-card-expand-button-top': {
-    '@apply flex items-center gap-cn-2xs p-cn-xs pl-cn-md flex-1': ''
+    '@apply flex items-center gap-cn-2xs p-cn-2xs px-cn-sm flex-1': ''
   },
 
   '.cn-studio-card-expand-button-bottom': {
@@ -294,8 +294,8 @@ export default {
   // Expand Button Component
   '.cn-studio-card-expand-button': {
     position: 'relative',
-    width: '226px',
-    height: 'var(--cn-size-22)',
+    // width: '226px',
+    // height: 'var(--cn-size-22)',
     transition: 'transform 0.1s linear',
 
     // Stack layers
@@ -310,17 +310,17 @@ export default {
       // First stack layer (closer to button)
       '&-1': {
         zIndex: '1',
-        insetBlock: '3px',
-        insetInline: '0',
-        transform: 'translateX(3px)'
+        insetBlock: '0px',
+        insetInline: '3px',
+        transform: 'translateY(3px)'
       },
 
       // Second stack layer (furthest from button)
       '&-2': {
         zIndex: '0',
-        insetBlock: '6px',
-        insetInline: '0',
-        transform: 'translateX(6px)'
+        insetBlock: '0px',
+        insetInline: '6px',
+        transform: 'translateY(6px)'
       }
     },
 
@@ -329,10 +329,10 @@ export default {
       transform: 'scale(1.02) !important',
 
       '.cn-studio-card-expand-button-stack-1': {
-        transform: 'translateX(4px)'
+        transform: 'translateY(4px)'
       },
       '.cn-studio-card-expand-button-stack-2': {
-        transform: 'translateX(8px)'
+        transform: 'translateY(8px)'
       }
     },
 

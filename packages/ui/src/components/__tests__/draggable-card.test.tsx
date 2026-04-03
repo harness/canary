@@ -80,11 +80,25 @@ describe('DraggableCard', () => {
       expect(dragHandle).toBeInTheDocument()
     })
 
-    test('should hide drag handle when disableDragAndDrop is true', () => {
+    test('should hide drag handle when disableDragAndDrop is true (grip inside)', () => {
       const { container } = renderComponent({ disableDragAndDrop: true })
 
       const dragHandle = container.querySelector('.cursor-grab')
       expect(dragHandle).not.toBeInTheDocument()
+    })
+
+    test('should show grip outside card when disabled but gripPosition is outside', () => {
+      const { container } = renderComponent({
+        disableDragAndDrop: true,
+        gripPosition: 'outside',
+        title: 'Solo'
+      })
+
+      expect(container.querySelector('.cursor-grab')).not.toBeInTheDocument()
+      const card = container.querySelector('.cn-card')
+      expect(card).toBeInTheDocument()
+      expect(card?.previousElementSibling).toBeTruthy()
+      expect(card?.previousElementSibling?.className).toContain('cursor-default')
     })
 
     test('should render as Card component', () => {
@@ -92,6 +106,16 @@ describe('DraggableCard', () => {
 
       const card = container.querySelector('.cn-card')
       expect(card).toBeInTheDocument()
+    })
+
+    test('should place grip outside the card when gripPosition is outside', () => {
+      const { container } = renderComponent({ gripPosition: 'outside', title: 'Row title' })
+
+      const card = container.querySelector('.cn-card')
+      const dragHandle = container.querySelector('.cursor-grab')
+      expect(card).toBeInTheDocument()
+      expect(dragHandle).toBeInTheDocument()
+      expect(card?.contains(dragHandle as Node)).toBe(false)
     })
   })
 

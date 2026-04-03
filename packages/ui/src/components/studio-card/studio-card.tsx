@@ -24,6 +24,7 @@ import {
 const sizeVariants = cva('', {
   variants: {
     size: {
+      xs: 'cn-studio-card-xs',
       sm: 'cn-studio-card-sm',
       md: ''
     }
@@ -170,7 +171,9 @@ function ExpandButton({
   onToggle,
   label,
   icon,
-  loading = false
+  loading = false,
+  stackDirection = 'right',
+  variant = 'default'
 }: StudioCardExpandButtonProps): JSX.Element | null {
   // Calculate number of stacks to show (max 2)
   const stackCount = useMemo(() => {
@@ -189,6 +192,8 @@ function ExpandButton({
       exit="exit"
       className="cn-studio-card-expand-button"
       data-expanded={isExpanded}
+      data-stack-direction={stackDirection}
+      data-variant={variant}
     >
       {stackCount > 0 && (
         <>
@@ -212,24 +217,26 @@ function ExpandButton({
       >
         {/* icon + label */}
         <div className="cn-studio-card-expand-button-top">
-          {/* {icon ?? <IconV2 name="harness-plugins" size="lg" />} */}
+          {variant === 'default' && (icon ?? <IconV2 name="harness-plugins" size="lg" />)}
           <Text color="foreground-1" variant="body-strong" className="truncate">
             {label}
           </Text>
-          <IconV2 name="expand" />
+          {variant === 'minimal' && <IconV2 name="expand" />}
         </div>
 
         {/* Count + expand icon */}
-        {/* <div className="cn-studio-card-expand-button-bottom">
-          <Text color="foreground-1" variant="body-single-line-code">
-            +{stepCount} more
-          </Text>
-          <IconV2
-            className={cn('text-cn-2', loading && 'animate-spin')}
-            name={loading ? 'loader' : 'expand'}
-            size="sm"
-          />
-        </div> */}
+        {variant === 'default' && (
+          <div className="cn-studio-card-expand-button-bottom">
+            <Text color="foreground-1" variant="body-single-line-code">
+              +{stepCount} more
+            </Text>
+            <IconV2
+              className={cn('text-cn-2', loading && 'animate-spin')}
+              name={loading ? 'loader' : 'expand'}
+              size="sm"
+            />
+          </div>
+        )}
       </button>
     </motion.div>
   )

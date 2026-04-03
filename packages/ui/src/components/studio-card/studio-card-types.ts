@@ -12,7 +12,7 @@ export interface StudioCardRootProps {
   // It will be updated to a generic value later
   variant?: 'default' | 'stage'
   execution?: boolean
-  size?: 'sm' | 'md'
+  size?: 'xs' | 'sm' | 'md'
 }
 
 export interface StudioCardHeaderProps {
@@ -43,4 +43,6 @@ export interface StudioCardExpandButtonProps {
   label: string
   icon?: React.ReactElement
   loading?: boolean
+  stackDirection?: 'right' | 'bottom'
+  variant?: 'default' | 'minimal'
 }

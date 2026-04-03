@@ -38,6 +38,10 @@ export default {
     maxWidth: '220px',
     height: 'var(--cn-size-40)',
 
+    '&.cn-studio-card-xs': {
+      // Extra small variant - used with group cards for compact layout
+    },
+
     '&.cn-studio-card-sm': {
       borderWidth: '2px !important'
     },
@@ -75,24 +79,43 @@ export default {
     // Group card variant
     '&:where(.cn-studio-card-group)': {
       width: 'auto',
-      minWidth: 'var(--cn-size-41)',
+      minWidth: 'var(--cn-size-90)',
       maxWidth: 'none',
       height: 'auto',
 
       '&.cn-studio-card-stage': {
-        minWidth: 'var(--cn-size-41)'
+        minWidth: 'var(--cn-size-90)'
       },
 
       '&:has(> .cn-studio-card-content > [data-expanded="true"])': {
         '@apply bg-cn-3/50': ''
       },
 
-      // '> .cn-studio-card-content': {
-      //   minHeight: '63px'
-      // },
+      '> .cn-studio-card-content': {
+        minHeight: '108px'
+      },
 
       '> .cn-studio-card-content:not(:has(> .cn-studio-card-message))': {
         '@apply justify-center items-start': ''
+      },
+
+      '&:has(> .cn-studio-card-content > [data-expanded="false"])': {
+        width: 'var(--cn-size-90)',
+        minWidth: 'var(--cn-size-90)',
+        maxWidth: 'var(--cn-size-90)'
+      }
+    },
+
+    // Group card variant with xs size - compact layout
+    '&:where(.cn-studio-card-group.cn-studio-card-xs)': {
+      minWidth: 'var(--cn-size-41)',
+
+      '&.cn-studio-card-stage': {
+        minWidth: 'var(--cn-size-41)'
+      },
+
+      '> .cn-studio-card-content': {
+        minHeight: '63px'
       },
 
       '&:has(> .cn-studio-card-content > [data-expanded="false"])': {
@@ -283,7 +306,7 @@ export default {
   },
 
   '.cn-studio-card-expand-button-top': {
-    '@apply flex items-center gap-cn-2xs p-cn-2xs px-cn-sm flex-1': ''
+    '@apply flex items-center gap-cn-2xs p-cn-xs pl-cn-md flex-1': ''
   },
 
   '.cn-studio-card-expand-button-bottom': {
@@ -294,11 +317,11 @@ export default {
   // Expand Button Component
   '.cn-studio-card-expand-button': {
     position: 'relative',
-    // width: '226px',
-    // height: 'var(--cn-size-22)',
+    width: '226px',
+    height: 'var(--cn-size-22)',
     transition: 'transform 0.1s linear',
 
-    // Stack layers
+    // Stack layers - default direction is "right"
     '&-stack': {
       pointerEvents: 'none',
       transitionProperty: 'transform',
@@ -310,29 +333,63 @@ export default {
       // First stack layer (closer to button)
       '&-1': {
         zIndex: '1',
-        insetBlock: '0px',
-        insetInline: '3px',
-        transform: 'translateY(3px)'
+        insetBlock: '3px',
+        insetInline: '0',
+        transform: 'translateX(3px)'
       },
 
       // Second stack layer (furthest from button)
       '&-2': {
         zIndex: '0',
-        insetBlock: '0px',
-        insetInline: '6px',
-        transform: 'translateY(6px)'
+        insetBlock: '6px',
+        insetInline: '0',
+        transform: 'translateX(6px)'
       }
     },
 
-    // Hover state - expand stacks and translate button right
+    // Hover state - expand stacks and translate button
     '&:hover': {
       transform: 'scale(1.02) !important',
 
       '.cn-studio-card-expand-button-stack-1': {
-        transform: 'translateY(4px)'
+        transform: 'translateX(4px)'
       },
       '.cn-studio-card-expand-button-stack-2': {
-        transform: 'translateY(8px)'
+        transform: 'translateX(8px)'
+      }
+    },
+
+    // Bottom stack direction variant
+    '&[data-stack-direction="bottom"]': {
+      '.cn-studio-card-expand-button-stack-1': {
+        insetBlock: '0px',
+        insetInline: '3px',
+        transform: 'translateY(3px)'
+      },
+
+      '.cn-studio-card-expand-button-stack-2': {
+        insetBlock: '0px',
+        insetInline: '6px',
+        transform: 'translateY(6px)'
+      },
+
+      '&:hover': {
+        '.cn-studio-card-expand-button-stack-1': {
+          transform: 'translateY(4px)'
+        },
+        '.cn-studio-card-expand-button-stack-2': {
+          transform: 'translateY(8px)'
+        }
+      }
+    },
+
+    // Minimal variant
+    '&[data-variant="minimal"]': {
+      width: 'auto',
+      height: 'auto',
+
+      '.cn-studio-card-expand-button-top': {
+        '@apply p-cn-2xs px-cn-sm': ''
       }
     },
 

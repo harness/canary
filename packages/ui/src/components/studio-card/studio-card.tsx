@@ -280,9 +280,9 @@ function Tag({ tagText, icon }: PropsWithChildren<{ tagText: string; icon?: Icon
  * Footer Component
  * ====================
  */
-function Footer({ children }: PropsWithChildren<StudioCardFooterProps>): JSX.Element {
+function Footer({ children, size = 'default' }: PropsWithChildren<StudioCardFooterProps>): JSX.Element {
   return (
-    <div className="cn-studio-card-footer">
+    <div className="cn-studio-card-footer" data-size={size}>
       {typeof children === 'string' ? (
         <Text color="foreground-3" variant="caption-normal">
           {children}

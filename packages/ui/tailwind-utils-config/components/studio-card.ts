@@ -39,7 +39,8 @@ export default {
     height: 'var(--cn-size-40)',
 
     '&.cn-studio-card-xs': {
-      // Extra small variant - used with group cards for compact layout
+      // Extra small variant - reduces height for regular cards, width for group cards
+      height: 'auto'
     },
 
     '&.cn-studio-card-sm': {
@@ -276,6 +277,30 @@ export default {
     // Default: line-clamp-4 for regular cards
     '& span': {
       '@apply line-clamp-4': ''
+    },
+
+    // Explicit compact size via prop
+    '&[data-size="compact"]': {
+      minHeight: 'var(--cn-size-13)',
+      '& span': {
+        '@apply line-clamp-2': ''
+      }
+    },
+
+    // Auto-detect parent Root size - xs cards get compact footer
+    '.cn-studio-card-xs > &': {
+      minHeight: 'var(--cn-size-13)',
+      '& span': {
+        '@apply line-clamp-2': ''
+      }
+    },
+
+    // Auto-detect parent Root size - sm cards get slightly reduced footer
+    '.cn-studio-card-sm > &': {
+      minHeight: 'var(--cn-size-20)',
+      '& span': {
+        '@apply line-clamp-3': ''
+      }
     },
 
     // Group card variant - adjust padding and line-clamp

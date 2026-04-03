@@ -21,7 +21,9 @@ export interface StudioCardHeaderProps {
   actions: JSX.Element | null
 }
 
-export interface StudioCardFooterProps {}
+export interface StudioCardFooterProps {
+  size?: 'compact' | 'default'
+}
 
 export interface StudioCardMessageProps {
   message?: string

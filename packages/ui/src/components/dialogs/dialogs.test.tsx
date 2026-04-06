@@ -86,6 +86,7 @@ vi.mock('@/components', () => ({
       </div>
     ),
     Header: ({ children }: { children: ReactNode }) => <header>{children}</header>,
+    Body: ({ children }: { children: ReactNode }) => <div data-testid="dialog-body">{children}</div>,
     Footer: ({ children }: { children: ReactNode }) => <footer>{children}</footer>,
     Title: ({ children }: { children: ReactNode }) => <h2>{children}</h2>,
     Description: ({ children }: { children: ReactNode }) => <p>{children}</p>,
@@ -170,6 +171,7 @@ vi.mock('../dialog', () => ({
       </div>
     ),
     Header: ({ children }: { children: React.ReactNode }) => <header>{children}</header>,
+    Body: ({ children }: { children: React.ReactNode }) => <div data-testid="dialog-body">{children}</div>,
     Footer: ({ children }: { children: React.ReactNode }) => <footer>{children}</footer>,
     Title: ({ children }: { children: React.ReactNode }) => <h2>{children}</h2>,
     Description: ({ children }: { children: React.ReactNode }) => <p>{children}</p>,
@@ -334,8 +336,8 @@ describe('ExitConfirmDialog', () => {
   test('shows default content and error message', () => {
     renderDialog({ error: 'Save failed' })
 
-    expect(screen.getByText('You have unsaved changes')).toBeInTheDocument()
-    expect(screen.getByText('Are you sure you want to leave this page without saving?')).toBeInTheDocument()
+    expect(screen.getByText('Unsaved changes')).toBeInTheDocument()
+    expect(screen.getByText('You have unsaved changes that will be lost if you leave now.')).toBeInTheDocument()
     expect(screen.getByText('Save failed')).toBeInTheDocument()
   })
 
@@ -349,7 +351,7 @@ describe('ExitConfirmDialog', () => {
   test('calls confirm handler and respects loading state', async () => {
     const { rerender } = renderDialog()
 
-    await userEvent.click(screen.getByTestId('button-Leave'))
+    await userEvent.click(screen.getByTestId('button-Leave anyway'))
     expect(onConfirm).toHaveBeenCalled()
 
     rerender(<ExitConfirmDialog open onCancel={onCancel} onConfirm={onConfirm} error="" isLoading />)
@@ -400,7 +402,7 @@ describe('ExitConfirmDialog', () => {
   test('does not invoke onCancel when onCancel is not provided', () => {
     render(<ExitConfirmDialog open onConfirm={onConfirm} error="" isLoading={false} />)
 
-    expect(screen.getByText('You have unsaved changes')).toBeInTheDocument()
+    expect(screen.getByText('Unsaved changes')).toBeInTheDocument()
   })
 
   test('handles onOpenChange callback when open changes to false', async () => {
@@ -444,14 +446,14 @@ describe('ExitConfirmDialog', () => {
   test('does not disable buttons when isLoading is false', () => {
     renderDialog({ isLoading: false })
 
-    expect(screen.getByTestId('button-Leave')).not.toBeDisabled()
+    expect(screen.getByTestId('button-Leave anyway')).not.toBeDisabled()
     expect(screen.getByTestId('dialog-close')).not.toBeDisabled()
   })
 
   test('uses default isLoading value when not provided', () => {
     render(<ExitConfirmDialog open onCancel={onCancel} onConfirm={onConfirm} error="" />)
 
-    expect(screen.getByTestId('button-Leave')).not.toBeDisabled()
+    expect(screen.getByTestId('button-Leave anyway')).not.toBeDisabled()
     expect(screen.getByTestId('dialog-close')).not.toBeDisabled()
   })
 

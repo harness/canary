@@ -428,6 +428,10 @@ import SolidArrowUp from './icons/solid-arrow-up.svg'
 import Sort2 from './icons/sort-2.svg'
 import SortDown from './icons/sort-down.svg'
 import SortUp from './icons/sort-up.svg'
+import SoundHigh from './icons/sound-high.svg'
+import SoundLow from './icons/sound-low.svg'
+import SoundMin from './icons/sound-min.svg'
+import SoundOff from './icons/sound-off.svg'
 import SparksSolid from './icons/sparks-solid.svg'
 import Sparks from './icons/sparks.svg'
 import SplitViewBottom from './icons/split-view-bottom.svg'
@@ -456,6 +460,7 @@ import SupplyChainSolid from './icons/supply-chain-solid.svg'
 import SupplyChain from './icons/supply-chain.svg'
 import SystemRestart from './icons/system-restart.svg'
 import TableRows from './icons/table-rows.svg'
+import TagCheck from './icons/tag-check.svg'
 import TagSolid from './icons/tag-solid.svg'
 import Tag from './icons/tag.svg'
 import Target from './icons/target.svg'
@@ -939,6 +944,10 @@ export const IconNameMapV2 = {
   'sort-2': Sort2,
   'sort-down': SortDown,
   'sort-up': SortUp,
+  'sound-high': SoundHigh,
+  'sound-low': SoundLow,
+  'sound-min': SoundMin,
+  'sound-off': SoundOff,
   'sparks-solid': SparksSolid,
   sparks: Sparks,
   'split-view-bottom': SplitViewBottom,
@@ -967,6 +976,7 @@ export const IconNameMapV2 = {
   'supply-chain': SupplyChain,
   'system-restart': SystemRestart,
   'table-rows': TableRows,
+  'tag-check': TagCheck,
   'tag-solid': TagSolid,
   tag: Tag,
   target: Target,

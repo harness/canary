@@ -4,6 +4,7 @@ import { FC, useEffect, useState } from 'react'
 import {
   BrowserRouter,
   Link,
+  Navigate,
   NavLink,
   Outlet,
   Route,
@@ -29,10 +30,13 @@ import { Header } from './header'
 
 const LIGHT_THEME = 'light-std-std' as FullTheme
 
-const demoItems: SidebarItemProps[] = [
+const fixedNavItems: SidebarItemProps[] = [
   { to: '/repos', title: 'Repositories', icon: 'folder' },
-  { to: '/pipelines', title: 'Pipelines', icon: 'play' },
-  { to: '/connectors', title: 'Connectors', icon: 'connectors', active: true },
+  { to: '/pipelines', title: 'Pipelines', icon: 'play' }
+]
+
+const remainingNavItems: SidebarItemProps[] = [
+  { to: '/connectors', title: 'Connectors', icon: 'connectors' },
   {
     to: '/account',
     title: 'Account',
@@ -41,6 +45,16 @@ const demoItems: SidebarItemProps[] = [
   { to: '/settings', title: 'Settings', icon: 'settings' },
   { to: '', title: 'More', icon: 'menu-more-horizontal', withRightIndicator: true }
 ]
+
+const SettingsNavItem: FC = () => {
+  return (
+    <Sidebar.Item title="Organization" icon="organizations" defaultSubmenuOpen>
+      <Sidebar.MenuSubItem to="/org/overview" title="Overview" active={true} />
+      <Sidebar.MenuSubItem to="/org/settings" title="Team settings" />
+      <Sidebar.MenuSubItem to="/org/members" title="Members" />
+    </Sidebar.Item>
+  )
+}
 
 const Shell: FC = () => {
   const navigate = useNavigate()
@@ -69,7 +83,11 @@ const Shell: FC = () => {
           <Sidebar.Root className="cn-sidebar-content-height">
             <Sidebar.Content>
               <Sidebar.Group>
-                {demoItems.map(item => (
+                {fixedNavItems.map(item => (
+                  <Sidebar.Item key={item.title} {...item} />
+                ))}
+                <SettingsNavItem />
+                {remainingNavItems.map(item => (
                   <Sidebar.Item key={item.title} {...item} />
                 ))}
               </Sidebar.Group>
@@ -103,6 +121,7 @@ const App: FC = () => {
           <DialogProvider>
             <BrowserRouter>
               <Routes>
+                <Route path="/" element={<Navigate to="/org/settings" replace />} />
                 <Route
                   path="*"
                   element={

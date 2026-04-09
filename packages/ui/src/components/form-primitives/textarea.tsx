@@ -54,6 +54,7 @@ const Textarea = forwardRef<HTMLTextAreaElement, TextareaProps>(
       warning,
       caption,
       optional,
+      required,
       disabled,
       onChange,
       className,
@@ -127,6 +128,7 @@ const Textarea = forwardRef<HTMLTextAreaElement, TextareaProps>(
                 <Label
                   disabled={disabled}
                   optional={optional}
+                  required={required}
                   htmlFor={id}
                   suffix={labelSuffix}
                   tooltipProps={tooltipProps}

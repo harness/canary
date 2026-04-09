@@ -2,7 +2,7 @@ import { InputOrientationProp, LabelProps } from '@/components'
 
 export interface CommonInputsProp
   extends InputOrientationProp,
-    Pick<LabelProps, 'optional' | 'tooltipProps' | 'tooltipContent'> {
+    Pick<LabelProps, 'optional' | 'required' | 'tooltipProps' | 'tooltipContent'> {
   label?: string
   wrapperClassName?: string
   caption?: string

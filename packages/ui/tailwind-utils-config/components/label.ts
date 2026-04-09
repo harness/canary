@@ -15,6 +15,10 @@ export default {
       '@apply opacity-cn-disabled': ''
     },
 
+    '&:where(.cn-label-disabled) .cn-label-required': {
+      '@apply opacity-cn-disabled': ''
+    },
+
     '&-container': {
       display: 'flex',
       alignItems: 'center',
@@ -24,6 +28,10 @@ export default {
     '&-optional': {
       '@apply font-body-normal': '',
       color: 'var(--cn-text-3)'
+    },
+
+    '&-required': {
+      '@apply font-body-normal text-cn-danger-secondary': ''
     }
   }
 }

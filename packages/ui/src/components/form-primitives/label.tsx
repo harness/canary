@@ -5,16 +5,24 @@ import { NonEmptyReactNode } from '@/types'
 import * as LabelPrimitive from '@radix-ui/react-label'
 import { cn } from '@utils/cn'
 
+/**
+ * Legacy form labels used a trailing ":" and a "(optional)" suffix; accordion section headers could show "Optional".
+ * Set to `true` to restore that behavior. `formatLabel` in platformUI follows this flag for colons.
+ */
+export const FORM_LABEL_LEGACY_AFFIXES = false
+
 export type LabelProps = Omit<ComponentPropsWithoutRef<typeof LabelPrimitive.Root>, 'color'> & {
   disabled?: boolean
   optional?: boolean
+  /** When true, shows a required-field indicator after the label text. */
+  required?: boolean
   tooltipProps?: IconWithTooltipProps
   tooltipContent?: NonEmptyReactNode
   suffix?: ReactNode
 }
 
 const Label = forwardRef<ElementRef<typeof LabelPrimitive.Root>, LabelProps>(
-  ({ className, children, optional, disabled, tooltipContent, tooltipProps, suffix, ...props }, ref) => {
+  ({ className, children, optional, required, disabled, tooltipContent, tooltipProps, suffix, ...props }, ref) => {
     if (!children) return null
 
     const LabelComponent = ({ className }: { className?: string }) => (
@@ -23,8 +31,15 @@ const Label = forwardRef<ElementRef<typeof LabelPrimitive.Root>, LabelProps>(
         className={cn('cn-label', { 'cn-label-disabled': disabled }, className)}
         {...props}
       >
-        <span className="cn-label-text">{children}</span>
-        {optional && <span className="cn-label-optional">(optional)</span>}
+        <span className="cn-label-text">
+          {children}
+          {required ? (
+            <span className="cn-label-required ml-cn-3xs" aria-hidden>
+              *
+            </span>
+          ) : null}
+        </span>
+        {optional && FORM_LABEL_LEGACY_AFFIXES ? <span className="cn-label-optional">(optional)</span> : null}
       </LabelPrimitive.Root>
     )
 

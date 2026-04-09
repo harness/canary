@@ -13,6 +13,7 @@ const TextInput = forwardRef<HTMLInputElement, TextInputProps>((props, ref) => {
     label,
     labelSuffix,
     optional,
+    required,
     caption,
     error,
     warning,
@@ -39,6 +40,7 @@ const TextInput = forwardRef<HTMLInputElement, TextInputProps>((props, ref) => {
             <Label
               disabled={disabled}
               optional={optional}
+              required={required}
               htmlFor={inputId}
               suffix={labelSuffix}
               tooltipProps={tooltipProps}

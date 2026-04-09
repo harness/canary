@@ -59,10 +59,10 @@ describe('Textarea', () => {
       expect(textarea).toBeInTheDocument()
     })
 
-    test('should render optional label', () => {
+    test('should not render optional suffix when legacy form affixes are disabled', () => {
       renderComponent({ label: 'Description', optional: true })
 
-      expect(screen.getByText('(optional)')).toBeInTheDocument()
+      expect(screen.queryByText('(optional)')).not.toBeInTheDocument()
     })
   })
 
@@ -647,7 +647,7 @@ describe('Textarea', () => {
 
       expect(screen.getByText('Complete Textarea')).toBeInTheDocument()
       expect(screen.getByText('Error message')).toBeInTheDocument()
-      expect(screen.getByText('(optional)')).toBeInTheDocument()
+      expect(screen.queryByText('(optional)')).not.toBeInTheDocument()
       expect(screen.getByText('0 / 500')).toBeInTheDocument()
       expect(screen.getByPlaceholderText('Type here...')).toBeInTheDocument()
     })
@@ -691,7 +691,7 @@ describe('Textarea', () => {
 
       expect(screen.getByText('Description')).toBeInTheDocument()
       expect(screen.getByText('Helper text')).toBeInTheDocument()
-      expect(screen.getByText('(optional)')).toBeInTheDocument()
+      expect(screen.queryByText('(optional)')).not.toBeInTheDocument()
       expect(screen.getByText('0 / 200')).toBeInTheDocument()
     })
   })

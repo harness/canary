@@ -25,6 +25,7 @@ export const NumberInput = forwardRef<HTMLInputElement, NumberInputProps>(
       id,
       disabled,
       optional,
+      required,
       caption,
       error,
       warning,
@@ -107,6 +108,7 @@ export const NumberInput = forwardRef<HTMLInputElement, NumberInputProps>(
               <Label
                 disabled={disabled}
                 optional={optional}
+                required={required}
                 htmlFor={inputId}
                 suffix={labelSuffix}
                 tooltipProps={tooltipProps}

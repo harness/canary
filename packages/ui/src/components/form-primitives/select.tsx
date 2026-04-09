@@ -164,6 +164,7 @@ function SelectInner<T = string>(
     warning,
     caption,
     optional,
+    required,
     allowSearch = false,
     onSearch,
     searchValue,
@@ -393,6 +394,7 @@ function SelectInner<T = string>(
             <Label
               disabled={disabled}
               optional={optional}
+              required={required}
               htmlFor={id}
               suffix={labelSuffix}
               tooltipProps={tooltipProps}

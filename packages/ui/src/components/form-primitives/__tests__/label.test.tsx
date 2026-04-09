@@ -25,7 +25,7 @@ describe('Label', () => {
     expect(container.firstChild).toBeNull()
   })
 
-  it('renders base label with text and optional indicator', () => {
+  it('does not render optional span when legacy form affixes are disabled', () => {
     render(
       <Label className="extra" optional>
         Name
@@ -34,7 +34,14 @@ describe('Label', () => {
 
     const element = screen.getByText('Name').closest('[data-mock="label"]')
     expect(element).toHaveClass('cn-label', 'extra')
-    expect(element?.querySelector('.cn-label-optional')).toHaveTextContent('(optional)')
+    expect(element?.querySelector('.cn-label-optional')).toBeNull()
+  })
+
+  it('renders required indicator when required is set', () => {
+    render(<Label required>Name</Label>)
+
+    const element = screen.getByText('Name').closest('[data-mock="label"]')
+    expect(element?.querySelector('.cn-label-required')).toHaveTextContent('*')
   })
 
   it('wraps label when tooltip or suffix provided', () => {

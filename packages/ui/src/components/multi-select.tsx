@@ -117,6 +117,7 @@ export const MultiSelect = forwardRef<MultiSelectRef, MultiSelectProps>(
       warning,
       caption,
       optional,
+      required,
       wrapperClassName,
       orientation,
       tooltipProps,
@@ -280,6 +281,7 @@ export const MultiSelect = forwardRef<MultiSelectRef, MultiSelectProps>(
               <Label
                 disabled={disabled}
                 optional={optional}
+                required={required}
                 htmlFor={id}
                 suffix={labelSuffix}
                 tooltipProps={tooltipProps}

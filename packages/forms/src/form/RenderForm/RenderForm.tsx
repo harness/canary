@@ -18,14 +18,14 @@ export const RenderForm = forwardRef<HTMLDivElement, RenderFormProps>((props, re
     return (
       <Fragment>
         {inputs.hero}
-        <RenderInputs items={inputs.inputs} factory={factory} withoutWrapper={withoutWrapper} />
+        <RenderInputs items={inputs.inputs} factory={factory} />
       </Fragment>
     )
   }
   return (
     <div className={className} ref={ref}>
       {inputs.hero}
-      <RenderInputs items={inputs.inputs} factory={factory} withoutWrapper={withoutWrapper} />
+      <RenderInputs items={inputs.inputs} factory={factory} />
     </div>
   )
 })

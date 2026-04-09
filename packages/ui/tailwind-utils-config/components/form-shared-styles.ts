@@ -1,11 +1,16 @@
+/** Label-to-control gap class; lives here for Tailwind builds. */
+export const CONTROL_GROUP_STACK_GAP = 'gap-cn-sm' as const
+
+/** Vertical gap between sibling form fields (`.cn-form`, accordions aligned with forms). */
+export const FORM_FIELD_STACK_GAP = 'gap-cn-xl' as const
+
 export default {
   '.cn-form': {
-    '@apply flex flex-col gap-cn-xl': ''
+    [`@apply flex flex-col ${FORM_FIELD_STACK_GAP}`]: ''
   },
 
   ':where(.cn-control-group)': {
-    gap: 'var(--cn-input-wrapper-gap)',
-    '@apply relative flex flex-col': '',
+    [`@apply relative flex flex-col ${CONTROL_GROUP_STACK_GAP}`]: '',
     maxWidth: '100%',
 
     '&.cn-control-group-horizontal': {
@@ -27,7 +32,6 @@ export default {
   },
 
   ':where(.cn-control-group-input)': {
-    gap: 'var(--cn-input-wrapper-gap)',
-    '@apply relative flex flex-col': ''
+    [`@apply relative flex flex-col ${CONTROL_GROUP_STACK_GAP}`]: ''
   }
 }

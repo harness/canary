@@ -88,13 +88,13 @@ export const InputComponentRenderer = memo(function InputComponentRenderer<TValu
     if (!isVisible || typeof warningSchema === 'undefined') return undefined
 
     const schema =
-      typeof warningSchema === 'function' ? warningSchema(valuesWithDependenciesAndStepPaths) : warningSchema
+      typeof warningSchema === 'function' ? warningSchema(valuesWithDependenciesAndStepPaths, metadata) : warningSchema
 
     const { success, error } = schema.safeParse(fieldValue)
     const errorMessage = error?.errors?.[0]?.message
 
     return !success && errorMessage ? errorMessage : undefined
-  }, [input.path, fieldValue, warningSchema, isVisible])
+  }, [input.path, fieldValue, warningSchema, isVisible, metadata])
 
   const commonProps = useMemo(
     () => ({

@@ -383,6 +383,56 @@ describe('Validation Workflows Tests', () => {
       })
     })
 
+    it('should support metadata in dynamic warning schema', async () => {
+      const formDefinition: IFormDefinition = {
+        inputs: [
+          {
+            inputType: 'text',
+            path: 'description',
+            label: 'Description',
+            warning: {
+              schema: (_values: any, metadata: any) =>
+                z.string().min(metadata?.minLength ?? 10, `Must be at least ${metadata?.minLength ?? 10} chars`)
+            }
+          }
+        ]
+      }
+
+      const defaultValues = { description: 'Short' }
+
+      render(
+        <RootForm
+          defaultValues={defaultValues}
+          onSubmit={mockOnSubmit}
+          resolver={undefined}
+          mode="onSubmit"
+          metadata={{ minLength: 20 }}
+        >
+          {({ submitForm }) => (
+            <div>
+              <RenderForm factory={inputComponentFactory} inputs={formDefinition} />
+              <button onClick={submitForm} data-testid="submit-button">
+                Submit
+              </button>
+            </div>
+          )}
+        </RootForm>
+      )
+
+      // Warning should be rendered using metadata-driven min length
+      await waitFor(() => {
+        expect(screen.getByTestId('warning-description')).toBeInTheDocument()
+        expect(screen.getByTestId('warning-description')).toHaveTextContent('Must be at least 20 chars')
+      })
+
+      // Should still be able to submit despite warning
+      await userEvent.click(screen.getByTestId('submit-button'))
+
+      await waitFor(() => {
+        expect(mockOnSubmit).toHaveBeenCalledWith({ description: 'Short' })
+      })
+    })
+
     it('should render warning message when warning is triggered', async () => {
       const formDefinition: IFormDefinition = {
         inputs: [

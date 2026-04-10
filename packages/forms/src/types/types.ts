@@ -101,7 +101,7 @@ export interface IInputDefinition<TConfig = unknown, TValue = unknown, TInputTyp
    * Warning validation schema
    */
   warning?: {
-    schema?: Schema<unknown> | ((values: any) => Schema<unknown>)
+    schema?: Schema<unknown> | ((values: any, metadata: any) => Schema<unknown>)
   }
 
   before?: JSX.Element | string

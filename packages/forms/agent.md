@@ -125,9 +125,10 @@ Complete reference for all properties available in input definitions:
 - `validation?: { schema?: ZodSchema | ((values: FormValues) => ZodSchema) }` - Zod validation schema
   - Can be static schema or dynamic function receiving form values
   - Enables dependent/cross-field validation
-- `warning?: { schema?: ZodSchema | ((values: FormValues) => ZodSchema) }` - Non-blocking warning schema
+- `warning?: { schema?: ZodSchema | ((values: FormValues, metadata: TMetadata) => ZodSchema) }` - Non-blocking warning schema
   - Warnings don't prevent form submission
   - Useful for advisory messages
+  - Dynamic schemas receive both form values and metadata
 
 ### Data Transformation
 - `inputTransform?: IInputTransformerFunc | IInputTransformerFunc[]` - Transform data from component state to form state
@@ -533,7 +534,8 @@ The forms package uses Zod for schema validation with a three-level validation h
 - Non-blocking validation via `input.warning.schema`
 - Rendered separately from errors
 - Warnings don't prevent form submission
-- Also support static or dynamic schemas
+- Also support static or dynamic schemas: `(values, metadata) => ZodSchema`
+- Dynamic warning schemas receive form values and metadata (e.g., for permission-based or context-aware warnings)
 - Useful for advisory messages without blocking user
 
 ### IGlobalValidationConfig Interface
@@ -598,7 +600,7 @@ Complete reference for all props available on the `RootForm` component:
 - `readonly?: boolean` - Global readonly mode for entire form
 
 ### Context & State
-- `metadata?: TMetadata` - Arbitrary metadata passed to `isVisible`, `disabled`, and validation functions
+- `metadata?: TMetadata` - Arbitrary metadata passed to `isVisible`, `disabled`, warning, and validation functions
   - Useful for passing user permissions
   - Provides context for conditional validation
   - Shares app state with form components

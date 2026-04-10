@@ -1,10 +1,20 @@
 import { FC, useCallback, useMemo, useRef, useState } from 'react'
 
-import { DataTable, IconV2, Layout, NoData, PermissionIdentifier, ResourceType, Spacer, Text } from '@harnessio/ui/components'
+import { SandboxLayout } from '@views'
+
+import { FilterGroup, FilterGroupRef } from '@harnessio/filters'
+import {
+  DataTable,
+  IconV2,
+  Layout,
+  NoData,
+  PermissionIdentifier,
+  ResourceType,
+  Spacer,
+  Text
+} from '@harnessio/ui/components'
 import { useComponents, useRouterContext, useTranslation } from '@harnessio/ui/context'
 import { useColumnFilter } from '@harnessio/ui/hooks'
-import { FilterGroup, FilterGroupRef } from '@harnessio/filters'
-import { SandboxLayout } from '@views'
 
 import { ExtendedScope } from '../common'
 import { COLUMN_OPTIONS, DEFAULT_VISIBLE_COLUMNS } from './constant'
@@ -24,6 +34,7 @@ const SandboxRepoListPage: FC<RepoListPageProps> = ({
   toCreateRepo,
   toImportRepo,
   toImportMultipleRepos,
+  toLinkRepo,
   onFavoriteToggle,
   onCancelImport,
   onFilterChange,
@@ -121,11 +132,13 @@ const SandboxRepoListPage: FC<RepoListPageProps> = ({
                 if (option === 'new') navigate(toCreateRepo?.() || '')
                 if (option === 'import') navigate(toImportRepo?.() || '')
                 if (option === 'import-multiple') navigate(toImportMultipleRepos?.() || '')
+                if (option === 'link') navigate(toLinkRepo?.() || '')
               }}
               options={[
                 { value: 'new', label: t('views:repos.createRepository', 'Create Repository') },
                 { value: 'import', label: t('views:repos.importRepository', 'Import Repository') },
-                { value: 'import-multiple', label: t('views:repos.importRepositories', 'Import Repositories') }
+                { value: 'import-multiple', label: t('views:repos.importRepositories', 'Import Repositories') },
+                { value: 'link', label: t('views:repos.linkRepository', 'Link Repository') }
               ]}
               rbac={{
                 resource: { resourceType: ResourceType.CODE_REPOSITORY },
@@ -176,11 +189,13 @@ const SandboxRepoListPage: FC<RepoListPageProps> = ({
                   if (option === 'new') navigate(toCreateRepo?.() || '')
                   if (option === 'import') navigate(toImportRepo?.() || '')
                   if (option === 'import-multiple') navigate(toImportMultipleRepos?.() || '')
+                  if (option === 'link') navigate(toLinkRepo?.() || '')
                 }}
                 options={[
                   { value: 'new', label: t('views:repos.createRepository', 'Create Repository') },
                   { value: 'import', label: t('views:repos.importRepository', 'Import Repository') },
-                  { value: 'import-multiple', label: t('views:repos.importRepositories', 'Import Repositories') }
+                  { value: 'import-multiple', label: t('views:repos.importRepositories', 'Import Repositories') },
+                  { value: 'link', label: t('views:repos.linkRepository', 'Link Repository') }
                 ]}
                 rbac={{
                   resource: { resourceType: ResourceType.CODE_REPOSITORY },

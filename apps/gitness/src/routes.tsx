@@ -61,6 +61,7 @@ import RepoForkPage from './pages-v2/repo/repo-fork.tsx'
 import { ImportMultipleRepos } from './pages-v2/repo/repo-import-multiple-container'
 import { ImportRepo } from './pages-v2/repo/repo-import-page'
 import RepoLayout from './pages-v2/repo/repo-layout'
+import { LinkRepo } from './pages-v2/repo/repo-link-page'
 import ReposListPage from './pages-v2/repo/repo-list'
 import { RepoSettingsGeneralPageContainer } from './pages-v2/repo/repo-settings-general-container'
 import { RepoSettingsRulesListContainer } from './pages-v2/repo/repo-settings-rules-list-container'
@@ -219,6 +220,14 @@ export const repoRoutes: CustomRouteObject[] = [
         handle: {
           routeName: RouteConstants.toImportMultipleRepos,
           pageTitle: 'Import Repositories'
+        }
+      },
+      {
+        path: 'link',
+        element: <LinkRepo />,
+        handle: {
+          routeName: RouteConstants.toLinkRepo,
+          pageTitle: 'Link Repository'
         }
       },
       {

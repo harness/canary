@@ -71,6 +71,7 @@ export interface RepositoryType {
   createdAt: number
   timestamp: string
   importing?: boolean
+  repoType?: string
   favorite?: boolean
   path: string
   language?: string
@@ -170,7 +171,14 @@ export interface TypesIdentity {
   avatarUrl?: string
 }
 
-export type CommitSignatureResult = 'good' | 'unverified' | 'revoked' | 'invalid' | 'bad' | 'unsupported' | 'key_expired'
+export type CommitSignatureResult =
+  | 'good'
+  | 'unverified'
+  | 'revoked'
+  | 'invalid'
+  | 'bad'
+  | 'unsupported'
+  | 'key_expired'
 
 export type PublicKeyScheme = 'pgp' | 'ssh'
 

@@ -71,3 +71,6 @@ export * from '@views/repo/repo-commit-details'
 
 // repo fork
 export * from '@views/repo/repo-fork/repo-fork-page'
+
+// repo link
+export * from '@views/repo/repo-link/repo-link-page'

@@ -45,7 +45,8 @@ export const getRepoListColumns = ({
     enableSorting: true,
     enableHiding: false,
     cell: ({ row }) => {
-      const { name, archived, upstream, importing } = row.original
+      const { name, archived, upstream, importing, repoType } = row.original
+      const isLinked = repoType === 'linked'
 
       return (
         <Layout.Vertical gap="2xs">
@@ -62,7 +63,7 @@ export const getRepoListColumns = ({
           {upstream && <ForkedFrom upstream={upstream} toUpstreamRepo={toUpstreamRepo} />}
           {importing && (
             <Text color="foreground-4" truncate>
-              {t('views:repos.importing', 'Importing…')}
+              {isLinked ? t('views:repos.linking', 'Linking…') : t('views:repos.importing', 'Importing…')}
             </Text>
           )}
         </Layout.Vertical>
@@ -195,25 +196,19 @@ export const getRepoListColumns = ({
     header: t('views:repos.created', 'Created'),
     enableSorting: false,
     enableHiding: true,
-    size: 100,
-    maxSize: 100,
-    cell: ({ row }) => <TimeAgoCard timestamp={row.original.createdAt} />
-  },
-  {
-    id: RepoListColumn.PR,
-    header: t('views:repos.pullRequests', 'Pull Requests'),
-    enableSorting: false,
-    enableHiding: true,
-    size: 100,
-    maxSize: 100,
-    cell: ({ row }) => (
-      <Layout.Flex gap="3xs" align="center">
-        <IconV2 name="git-pull-request" />
-        <Text as="span" color="foreground-1">
-          {row.original.pulls || 0}
-        </Text>
-      </Layout.Flex>
-    )
+    size: 200,
+    maxSize: 200,
+    cell: ({ row }) => {
+      if (row.original.importing) {
+        const isLinked = row.original.repoType === 'linked'
+        return (
+          <Text color="foreground-4" truncate>
+            {isLinked ? t('views:repos.linking', 'Linking…') : t('views:repos.importing', 'Importing…')}
+          </Text>
+        )
+      }
+      return <TimeAgoCard timestamp={row.original.createdAt} />
+    }
   },
   {
     id: 'actions',

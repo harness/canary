@@ -241,6 +241,7 @@ export default function ReposListPage() {
       toCreateRepo={() => routes.toCreateRepo({ spaceId })}
       toImportRepo={() => routes.toImportRepo({ spaceId })}
       toImportMultipleRepos={() => routes.toImportMultipleRepos({ spaceId })}
+      toLinkRepo={() => routes.toLinkRepo({ spaceId })}
       onFavoriteToggle={onFavoriteToggle}
       onCancelImport={onCancelImport}
       onFilterChange={({ favorite, recursive, tags: newTags }: RepoListFilters) => {

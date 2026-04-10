@@ -15,6 +15,7 @@ export const transformRepoList = (repoList: RepoRepositoryOutput[]): RepositoryT
     timestamp: repo.updated ? new Date(repo.updated).toISOString() : '',
     createdAt: repo.created || 0,
     importing: !!repo.importing,
+    repoType: repo.repo_type || undefined,
     favorite: repo.is_favorite,
     path: repo.path || '',
     language: repo.language || undefined,

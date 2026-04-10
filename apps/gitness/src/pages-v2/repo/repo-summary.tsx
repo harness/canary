@@ -315,12 +315,13 @@ export default function RepoSummaryPage() {
   )
 
   const latestCommitInfo = useMemo(() => {
-    const { author, message, sha } = repoDetails?.latest_commit || {}
+    const { author, message, sha, signature } = repoDetails?.latest_commit || {}
     return {
       userName: author?.identity?.name || '',
       message: message || '',
       timestamp: author?.when ?? '',
-      sha: sha ?? null
+      sha: sha ?? null,
+      signature
     }
   }, [repoDetails?.latest_commit])
 

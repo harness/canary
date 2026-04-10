@@ -202,10 +202,8 @@ export function flattenInputs(inputs: IInputDefinition[]): IInputDefinition[] {
   const result: IInputDefinition[] = []
 
   for (const input of inputs) {
-    if (input.inputType === 'accordion' || input.inputType === 'group' || input.inputType === 'slot') {
-      if ((input as any).inputs) {
-        result.push(...flattenInputs((input as any).inputs))
-      }
+    if (Array.isArray(input.inputs)) {
+      result.push(...flattenInputs(input.inputs))
     } else {
       result.push(input)
     }

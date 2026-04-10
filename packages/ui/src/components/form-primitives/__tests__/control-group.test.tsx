@@ -2,6 +2,7 @@ import type { ReactElement } from 'react'
 
 import { render, screen } from '@testing-library/react'
 
+import { CONTROL_GROUP_STACK_GAP } from '../../../../tailwind-utils-config/components/form-shared-styles'
 import { ControlGroup } from '../control-group'
 
 const renderGroup = (ui: ReactElement) => {
@@ -17,7 +18,7 @@ describe('ControlGroup', () => {
       </ControlGroup.Root>
     )
 
-    expect(group).toHaveClass('cn-control-group')
+    expect(group).toHaveClass('cn-control-group', CONTROL_GROUP_STACK_GAP)
     expect(group).not.toHaveClass('cn-control-group-horizontal')
     expect(group).toHaveAttribute('aria-label', 'Input control group')
   })
@@ -29,7 +30,7 @@ describe('ControlGroup', () => {
       </ControlGroup.Root>
     )
 
-    expect(group).toHaveClass('cn-control-group', 'cn-control-group-horizontal')
+    expect(group).toHaveClass('cn-control-group', 'cn-control-group-horizontal', CONTROL_GROUP_STACK_GAP)
   })
 
   it('does not apply horizontal styling when type is button', () => {
@@ -39,7 +40,7 @@ describe('ControlGroup', () => {
       </ControlGroup.Root>
     )
 
-    expect(group).toHaveClass('cn-control-group')
+    expect(group).toHaveClass('cn-control-group', CONTROL_GROUP_STACK_GAP)
     expect(group).not.toHaveClass('cn-control-group-horizontal')
     expect(group).toHaveAttribute('aria-label', 'Button control group')
   })
@@ -52,7 +53,7 @@ describe('ControlGroup', () => {
     )
 
     const group = screen.getByTestId('composite-group')
-    expect(group).toHaveClass('cn-control-group', 'cn-control-group-horizontal', 'custom')
+    expect(group).toHaveClass('cn-control-group', 'cn-control-group-horizontal', CONTROL_GROUP_STACK_GAP, 'custom')
     expect(group).toHaveAttribute('aria-label', 'Input control group')
   })
 

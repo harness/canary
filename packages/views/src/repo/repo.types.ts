@@ -57,6 +57,7 @@ export interface RepoFile {
   path: string
   toCommitDetails?: ({ sha }: { sha: string }) => string
   status?: string
+  signature?: TypesCommitSignature | null
 }
 
 export interface RepositoryType {
@@ -114,7 +115,7 @@ export interface BranchData {
   }
 }
 
-export type LatestFileTypes = Pick<RepoFile, 'user' | 'lastCommitMessage' | 'timestamp' | 'sha' | 'toCommitDetails'>
+export type LatestFileTypes = Pick<RepoFile, 'user' | 'lastCommitMessage' | 'timestamp' | 'sha' | 'toCommitDetails' | 'signature'>
 
 export type CommitDivergenceType = {
   ahead?: number

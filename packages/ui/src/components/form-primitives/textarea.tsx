@@ -163,6 +163,7 @@ const Textarea = forwardRef<HTMLTextAreaElement, TextareaProps>(
               className
             )}
             disabled={disabled}
+            required={required}
             onChange={handleChange}
             {...props}
           />

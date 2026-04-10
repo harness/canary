@@ -31,7 +31,7 @@ export function extractInputPaths(inputs: IInputDefinition[], parentPath: string
     }
 
     // Handle group inputs - recurse into them
-    if (input.inputType === 'group' && input.inputs) {
+    if (Array.isArray(input.inputs)) {
       result.push({
         structurePath: currentStructurePath,
         path: input.path,
@@ -103,7 +103,7 @@ export function deleteSlotByPath(formDefinition: IFormDefinition, slotPath: stri
         if (input.path === targetPath) return null as any
 
         // If this input has nested inputs, check recursively
-        if (input.inputs) {
+        if (Array.isArray(input.inputs)) {
           return {
             ...input,
             inputs: deleteSlotByPathRec(input.inputs, targetPath)
@@ -130,7 +130,7 @@ export function flattenInputs(inputs: IInputDefinition[]): IInputDefinition[] {
   for (const input of inputs) {
     result.push(input)
 
-    if (input.inputType === 'group' && input.inputs) {
+    if (Array.isArray(input.inputs)) {
       result.push(...flattenInputs(input.inputs))
     }
   }

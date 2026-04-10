@@ -7,9 +7,9 @@ export const getDefaultValuesFromFormDefinition = (formDef: IFormDefinition): An
 
   const populateDefaults = (inputs: IInputDefinition[]) => {
     inputs.forEach(input => {
-      const { path, default: def, inputType, inputs: children } = input
+      const { path, default: def, inputs: children } = input
 
-      if ((inputType === 'group' || inputType === 'accordion') && Array.isArray(children)) {
+      if (Array.isArray(children)) {
         // dive into nested group/accordion
         populateDefaults(children)
       } else {

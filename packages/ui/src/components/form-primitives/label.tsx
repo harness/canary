@@ -7,9 +7,7 @@ import { cn } from '@utils/cn'
 
 export type LabelProps = Omit<ComponentPropsWithoutRef<typeof LabelPrimitive.Root>, 'color'> & {
   disabled?: boolean
-  /** Retained for API compatibility; optional text is not rendered. */
   optional?: boolean
-  /** When true, shows a required-field indicator after the label text. */
   required?: boolean
   tooltipProps?: IconWithTooltipProps
   tooltipContent?: NonEmptyReactNode

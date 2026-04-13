@@ -24,6 +24,11 @@ export default {
     '&-optional': {
       '@apply font-body-normal': '',
       color: 'var(--cn-text-3)'
+    },
+
+    '&-required': {
+      '@apply font-body-normal': '',
+      color: 'var(--cn-set-danger-secondary-text)'
     }
   }
 }

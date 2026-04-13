@@ -17,14 +17,22 @@ const Label = forwardRef<ElementRef<typeof LabelPrimitive.Root>, LabelProps>(
   ({ className, children, optional, disabled, tooltipContent, tooltipProps, suffix, ...props }, ref) => {
     if (!children) return null
 
+    const showRequiredIndicator = optional !== true
+
     const LabelComponent = ({ className }: { className?: string }) => (
       <LabelPrimitive.Root
         ref={ref}
         className={cn('cn-label', { 'cn-label-disabled': disabled }, className)}
         {...props}
       >
-        <span className="cn-label-text">{children}</span>
-        {optional && <span className="cn-label-optional">(optional)</span>}
+        <span className="cn-label-text">
+          {children}
+          {showRequiredIndicator ? (
+            <span className="cn-label-required ml-cn-3xs" aria-hidden>
+              *
+            </span>
+          ) : null}
+        </span>
       </LabelPrimitive.Root>
     )
 

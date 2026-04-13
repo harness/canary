@@ -27,17 +27,17 @@ describe('Radio', () => {
     test('should render all radio items', () => {
       renderComponent()
 
-      expect(screen.getByLabelText('Option 1')).toBeInTheDocument()
-      expect(screen.getByLabelText('Option 2')).toBeInTheDocument()
-      expect(screen.getByLabelText('Option 3')).toBeInTheDocument()
+      expect(screen.getByRole('radio', { name: 'Option 1' })).toBeInTheDocument()
+      expect(screen.getByRole('radio', { name: 'Option 2' })).toBeInTheDocument()
+      expect(screen.getByRole('radio', { name: 'Option 3' })).toBeInTheDocument()
     })
 
     test('should have no radio selected by default', () => {
       renderComponent()
 
-      const radio1 = screen.getByLabelText('Option 1') as HTMLInputElement
-      const radio2 = screen.getByLabelText('Option 2') as HTMLInputElement
-      const radio3 = screen.getByLabelText('Option 3') as HTMLInputElement
+      const radio1 = screen.getByRole('radio', { name: 'Option 1' }) as HTMLInputElement
+      const radio2 = screen.getByRole('radio', { name: 'Option 2' }) as HTMLInputElement
+      const radio3 = screen.getByRole('radio', { name: 'Option 3' }) as HTMLInputElement
 
       expect(radio1).not.toBeChecked()
       expect(radio2).not.toBeChecked()
@@ -47,7 +47,7 @@ describe('Radio', () => {
     test('should select default value', () => {
       renderComponent({ defaultValue: 'option2' })
 
-      const radio2 = screen.getByLabelText('Option 2') as HTMLInputElement
+      const radio2 = screen.getByRole('radio', { name: 'Option 2' }) as HTMLInputElement
       expect(radio2).toBeChecked()
     })
 
@@ -55,7 +55,7 @@ describe('Radio', () => {
       const handleChange = vi.fn()
       renderComponent({ onValueChange: handleChange })
 
-      const radio1 = screen.getByLabelText('Option 1')
+      const radio1 = screen.getByRole('radio', { name: 'Option 1' })
       await userEvent.click(radio1)
 
       expect(handleChange).toHaveBeenCalledWith('option1')
@@ -66,8 +66,8 @@ describe('Radio', () => {
       const handleChange = vi.fn()
       renderComponent({ onValueChange: handleChange })
 
-      const radio1 = screen.getByLabelText('Option 1')
-      const radio2 = screen.getByLabelText('Option 2')
+      const radio1 = screen.getByRole('radio', { name: 'Option 1' })
+      const radio2 = screen.getByRole('radio', { name: 'Option 2' })
 
       await userEvent.click(radio1)
       expect(handleChange).toHaveBeenCalledWith('option1')
@@ -80,8 +80,8 @@ describe('Radio', () => {
     test('should only allow one radio to be selected at a time', async () => {
       renderComponent()
 
-      const radio1 = screen.getByLabelText('Option 1') as HTMLInputElement
-      const radio2 = screen.getByLabelText('Option 2') as HTMLInputElement
+      const radio1 = screen.getByRole('radio', { name: 'Option 1' }) as HTMLInputElement
+      const radio2 = screen.getByRole('radio', { name: 'Option 2' }) as HTMLInputElement
 
       await userEvent.click(radio1)
       expect(radio1).toBeChecked()
@@ -107,9 +107,9 @@ describe('Radio', () => {
     test('should disable all radios when disabled prop is true', () => {
       renderComponent({ disabled: true })
 
-      const radio1 = screen.getByLabelText('Option 1')
-      const radio2 = screen.getByLabelText('Option 2')
-      const radio3 = screen.getByLabelText('Option 3')
+      const radio1 = screen.getByRole('radio', { name: 'Option 1' })
+      const radio2 = screen.getByRole('radio', { name: 'Option 2' })
+      const radio3 = screen.getByRole('radio', { name: 'Option 3' })
 
       expect(radio1).toBeDisabled()
       expect(radio2).toBeDisabled()
@@ -120,7 +120,7 @@ describe('Radio', () => {
       const handleChange = vi.fn()
       renderComponent({ disabled: true, onValueChange: handleChange })
 
-      const radio1 = screen.getByLabelText('Option 1')
+      const radio1 = screen.getByRole('radio', { name: 'Option 1' })
       await userEvent.click(radio1)
 
       expect(handleChange).not.toHaveBeenCalled()
@@ -162,7 +162,7 @@ describe('Radio', () => {
         </Radio.Root>
       )
 
-      const radio1 = screen.getByLabelText('Option 1') as HTMLInputElement
+      const radio1 = screen.getByRole('radio', { name: 'Option 1' }) as HTMLInputElement
       expect(radio1).toBeChecked()
 
       rerender(
@@ -172,7 +172,7 @@ describe('Radio', () => {
         </Radio.Root>
       )
 
-      const radio2 = screen.getByLabelText('Option 2') as HTMLInputElement
+      const radio2 = screen.getByRole('radio', { name: 'Option 2' }) as HTMLInputElement
       expect(radio2).toBeChecked()
     })
 
@@ -210,7 +210,7 @@ describe('Radio', () => {
         </Radio.Root>
       )
 
-      expect(screen.getByLabelText('Test Option')).toBeInTheDocument()
+      expect(screen.getByRole('radio', { name: 'Test Option' })).toBeInTheDocument()
     })
 
     test('should render radio item with caption', () => {
@@ -242,8 +242,8 @@ describe('Radio', () => {
         </Radio.Root>
       )
 
-      const radio1 = screen.getByLabelText('Option 1')
-      const radio2 = screen.getByLabelText('Option 2')
+      const radio1 = screen.getByRole('radio', { name: 'Option 1' })
+      const radio2 = screen.getByRole('radio', { name: 'Option 2' })
 
       expect(radio1).toBeDisabled()
       expect(radio2).not.toBeDisabled()
@@ -267,7 +267,7 @@ describe('Radio', () => {
         </Radio.Root>
       )
 
-      const radio = screen.getByLabelText('Test')
+      const radio = screen.getByRole('radio', { name: 'Test' })
       expect(radio).toHaveAttribute('id', 'custom-radio-id')
     })
 
@@ -278,7 +278,7 @@ describe('Radio', () => {
         </Radio.Root>
       )
 
-      const radio = screen.getByLabelText('Test')
+      const radio = screen.getByRole('radio', { name: 'Test' })
       const id = radio.getAttribute('id')
 
       expect(id).toBeTruthy()
@@ -299,7 +299,7 @@ describe('Radio', () => {
     test('should handle keyboard navigation', async () => {
       renderComponent()
 
-      const radio1 = screen.getByLabelText('Option 1')
+      const radio1 = screen.getByRole('radio', { name: 'Option 1' })
       radio1.focus()
 
       expect(radio1).toHaveFocus()
@@ -313,7 +313,7 @@ describe('Radio', () => {
       const handleChange = vi.fn()
       renderComponent({ onValueChange: handleChange })
 
-      const radio1 = screen.getByLabelText('Option 1')
+      const radio1 = screen.getByRole('radio', { name: 'Option 1' })
       radio1.focus()
 
       await userEvent.keyboard(' ')
@@ -354,8 +354,8 @@ describe('Radio', () => {
       expect(radioGroup).toBeInTheDocument()
 
       // Verify items are part of the same group
-      const radio1 = screen.getByLabelText('Option 1')
-      const radio2 = screen.getByLabelText('Option 2')
+      const radio1 = screen.getByRole('radio', { name: 'Option 1' })
+      const radio2 = screen.getByRole('radio', { name: 'Option 2' })
       expect(radio1).toBeInTheDocument()
       expect(radio2).toBeInTheDocument()
     })
@@ -394,8 +394,8 @@ describe('Radio', () => {
         </Radio.Root>
       )
 
-      expect(screen.getByLabelText('Option 1')).toBeInTheDocument()
-      expect(screen.getByLabelText('Option 10')).toBeInTheDocument()
+      expect(screen.getByRole('radio', { name: 'Option 1' })).toBeInTheDocument()
+      expect(screen.getByRole('radio', { name: 'Option 10' })).toBeInTheDocument()
     })
 
     test('should handle mixed disabled and enabled items', async () => {
@@ -408,9 +408,9 @@ describe('Radio', () => {
         </Radio.Root>
       )
 
-      const radio1 = screen.getByLabelText('Option 1')
-      const radio2 = screen.getByLabelText('Option 2')
-      const radio3 = screen.getByLabelText('Option 3')
+      const radio1 = screen.getByRole('radio', { name: 'Option 1' })
+      const radio2 = screen.getByRole('radio', { name: 'Option 2' })
+      const radio3 = screen.getByRole('radio', { name: 'Option 3' })
 
       await userEvent.click(radio1)
       expect(handleChange).toHaveBeenCalledWith('option1')
@@ -443,7 +443,7 @@ describe('Radio', () => {
         </Radio.Root>
       )
 
-      expect(screen.getByLabelText('Empty')).toBeInTheDocument()
+      expect(screen.getByRole('radio', { name: 'Empty' })).toBeInTheDocument()
     })
 
     test('should handle numeric value', () => {
@@ -454,7 +454,7 @@ describe('Radio', () => {
         </Radio.Root>
       )
 
-      expect(screen.getByLabelText('One')).toBeInTheDocument()
+      expect(screen.getByRole('radio', { name: 'One' })).toBeInTheDocument()
     })
 
     test('should handle special characters in value', () => {
@@ -464,7 +464,7 @@ describe('Radio', () => {
         </Radio.Root>
       )
 
-      expect(screen.getByLabelText('Special')).toBeInTheDocument()
+      expect(screen.getByRole('radio', { name: 'Special' })).toBeInTheDocument()
     })
 
     test('should handle very long label text', () => {
@@ -475,7 +475,7 @@ describe('Radio', () => {
         </Radio.Root>
       )
 
-      expect(screen.getByLabelText(longLabel)).toBeInTheDocument()
+      expect(screen.getByRole('radio', { name: longLabel })).toBeInTheDocument()
     })
 
     test('should handle very long caption text', () => {
@@ -533,7 +533,7 @@ describe('Radio', () => {
     test('should default disabled to false', () => {
       renderComponent()
 
-      const radio1 = screen.getByLabelText('Option 1')
+      const radio1 = screen.getByRole('radio', { name: 'Option 1' })
       expect(radio1).not.toBeDisabled()
     })
   })
@@ -548,7 +548,7 @@ describe('Radio', () => {
         </Radio.Root>
       )
 
-      const radio1 = screen.getByLabelText('Option 1') as HTMLInputElement
+      const radio1 = screen.getByRole('radio', { name: 'Option 1' }) as HTMLInputElement
       expect(radio1).toBeChecked()
 
       rerender(
@@ -559,7 +559,7 @@ describe('Radio', () => {
         </Radio.Root>
       )
 
-      const radio3 = screen.getByLabelText('Option 3') as HTMLInputElement
+      const radio3 = screen.getByRole('radio', { name: 'Option 3' }) as HTMLInputElement
       expect(radio3).toBeChecked()
       expect(radio1).not.toBeChecked()
     })
@@ -571,7 +571,7 @@ describe('Radio', () => {
         </Radio.Root>
       )
 
-      const radio = screen.getByLabelText('Option 1')
+      const radio = screen.getByRole('radio', { name: 'Option 1' })
       expect(radio).not.toBeDisabled()
 
       rerender(
@@ -606,7 +606,7 @@ describe('Radio', () => {
         </Radio.Root>
       )
 
-      const radio = screen.getByLabelText('Test')
+      const radio = screen.getByRole('radio', { name: 'Test' })
       expect(radio).toHaveAttribute('id', 'custom-id')
     })
 
@@ -617,7 +617,7 @@ describe('Radio', () => {
         </Radio.Root>
       )
 
-      const radio = screen.getByLabelText('Option 1')
+      const radio = screen.getByRole('radio', { name: 'Option 1' })
       expect(radio).toBeDisabled()
     })
   })

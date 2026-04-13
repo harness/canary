@@ -25,7 +25,7 @@ describe('Label', () => {
     expect(container.firstChild).toBeNull()
   })
 
-  it('renders base label with text and optional indicator', () => {
+  it('does not render required asterisk when optional is true', () => {
     render(
       <Label className="extra" optional>
         Name
@@ -34,7 +34,14 @@ describe('Label', () => {
 
     const element = screen.getByText('Name').closest('[data-mock="label"]')
     expect(element).toHaveClass('cn-label', 'extra')
-    expect(element?.querySelector('.cn-label-optional')).toHaveTextContent('(optional)')
+    expect(element?.querySelector('.cn-label-required')).toBeNull()
+  })
+
+  it('renders required asterisk when field is not optional', () => {
+    render(<Label>Name</Label>)
+
+    const element = screen.getByText('Name').closest('[data-mock="label"]')
+    expect(element?.querySelector('.cn-label-required')).toHaveTextContent('*')
   })
 
   it('wraps label when tooltip or suffix provided', () => {

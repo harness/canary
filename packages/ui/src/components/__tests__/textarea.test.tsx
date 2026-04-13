@@ -60,9 +60,10 @@ describe('Textarea', () => {
     })
 
     test('should render optional label', () => {
-      renderComponent({ label: 'Description', optional: true })
+      const { container } = renderComponent({ label: 'Description', optional: true })
 
-      expect(screen.getByText('(optional)')).toBeInTheDocument()
+      expect(screen.getByText('Description')).toBeInTheDocument()
+      expect(container.querySelector('.cn-label-required')).not.toBeInTheDocument()
     })
   })
 
@@ -626,7 +627,7 @@ describe('Textarea', () => {
 
   describe('Complex Scenarios', () => {
     test('should handle all props together', () => {
-      renderComponent({
+      const { container } = renderComponent({
         label: 'Complete Textarea',
         caption: 'Enter your description',
         error: 'Error message',
@@ -647,7 +648,7 @@ describe('Textarea', () => {
 
       expect(screen.getByText('Complete Textarea')).toBeInTheDocument()
       expect(screen.getByText('Error message')).toBeInTheDocument()
-      expect(screen.getByText('(optional)')).toBeInTheDocument()
+      expect(container.querySelector('.cn-label-required')).not.toBeInTheDocument()
       expect(screen.getByText('0 / 500')).toBeInTheDocument()
       expect(screen.getByPlaceholderText('Type here...')).toBeInTheDocument()
     })
@@ -681,7 +682,7 @@ describe('Textarea', () => {
     })
 
     test('should handle horizontal layout with all features', () => {
-      renderComponent({
+      const { container } = renderComponent({
         label: 'Description',
         caption: 'Helper text',
         maxCharacters: 200,
@@ -691,7 +692,7 @@ describe('Textarea', () => {
 
       expect(screen.getByText('Description')).toBeInTheDocument()
       expect(screen.getByText('Helper text')).toBeInTheDocument()
-      expect(screen.getByText('(optional)')).toBeInTheDocument()
+      expect(container.querySelector('.cn-label-required')).not.toBeInTheDocument()
       expect(screen.getByText('0 / 200')).toBeInTheDocument()
     })
   })
@@ -734,9 +735,9 @@ describe('Textarea', () => {
     })
 
     test('should default optional to false', () => {
-      renderComponent({ label: 'Label' })
+      const { container } = renderComponent({ label: 'Label' })
 
-      expect(screen.queryByText('(optional)')).not.toBeInTheDocument()
+      expect(container.querySelector('.cn-label-required')).toBeInTheDocument()
     })
   })
 })

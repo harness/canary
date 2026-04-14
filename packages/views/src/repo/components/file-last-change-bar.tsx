@@ -4,6 +4,8 @@ import { Avatar, CommitCopyActions, Layout, Separator, StackedList, Text, TimeAg
 import { useTranslation } from '@harnessio/ui/context'
 import { LatestFileTypes } from '@views'
 
+import { CommitVerificationBadge } from './commit-verification-badge'
+
 const TopTitle: FC<LatestFileTypes> = ({ user, lastCommitMessage }) => {
   return (
     <Layout.Flex align="center" gap="xs">
@@ -18,9 +20,10 @@ const TopTitle: FC<LatestFileTypes> = ({ user, lastCommitMessage }) => {
   )
 }
 
-const TopDetails: FC<LatestFileTypes> = ({ sha, timestamp, toCommitDetails }) => {
+const TopDetails: FC<LatestFileTypes> = ({ sha, timestamp, toCommitDetails, signature }) => {
   return (
     <Layout.Flex align="center" gap="md">
+      <CommitVerificationBadge signature={signature} />
       <CommitCopyActions toCommitDetails={toCommitDetails} sha={sha || ''} />
       <Separator orientation="vertical" className="h-3" />
       <TimeAgoCard timestamp={timestamp} textProps={{ color: 'foreground-3' }} />

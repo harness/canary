@@ -7,6 +7,7 @@ import {
   RepoRepositoryOutput,
   SandboxLayout,
   TypesBranchTable,
+  TypesCommitSignature,
   TypesRepositoryCore
 } from '@views'
 import { BranchInfoBar, BranchSelectorTab, Summary } from '@views/repo/components'
@@ -86,6 +87,7 @@ export interface RepoSummaryViewProps extends Partial<RoutingProps> {
     message: string
     timestamp: string
     sha: string | null
+    signature?: TypesCommitSignature | null
   }
   saveDescription: (description: string) => void
   updateRepoError?: string
@@ -286,7 +288,8 @@ export function RepoSummaryView({
                 user: { name: latestCommitInfo?.userName || '', avatarUrl: latestCommitInfo?.avatarUrl },
                 lastCommitMessage: latestCommitInfo?.message || '',
                 timestamp: latestCommitInfo?.timestamp || '',
-                sha: latestCommitInfo?.sha || ''
+                sha: latestCommitInfo?.sha || '',
+                signature: latestCommitInfo?.signature
               }}
               files={files}
               toRepoFileDetails={toRepoFileDetails}

@@ -3,6 +3,7 @@ import { FC } from 'react'
 import { Avatar, Button, CommitCopyActions, IconV2, Layout, Skeleton, Text, TimeAgoCard } from '@harnessio/ui/components'
 import { useRouterContext, useTranslation } from '@harnessio/ui/context'
 import { ICommitDetailsStore, SandboxLayout } from '@views'
+import { CommitVerificationBadge } from '@views/repo/components'
 
 import { CommitTitleWithPRLink } from '../components/CommitTitleWithPRLink'
 
@@ -85,7 +86,10 @@ export const RepoCommitDetailsView: FC<RepoCommitDetailsViewProps> = ({
                 </Layout.Flex>
               )}
 
-              <CommitCopyActions toCommitDetails={toCommitDetails} sha={commitData?.sha || ''} />
+              <Layout.Flex align="center" gapX="xs">
+                <CommitVerificationBadge signature={commitData?.signature} />
+                <CommitCopyActions toCommitDetails={toCommitDetails} sha={commitData?.sha || ''} />
+              </Layout.Flex>
             </Layout.Flex>
           </div>
         </Layout.Grid>

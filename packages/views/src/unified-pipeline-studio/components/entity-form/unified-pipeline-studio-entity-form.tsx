@@ -1,6 +1,5 @@
-import { ElementType, useEffect, useState } from 'react'
+import { useEffect, useMemo, useState } from 'react'
 
-import { Button, ButtonLayout, Drawer, EntityFormLayout, IconV2, Skeleton, Text } from '@harnessio/ui/components'
 import { useUnifiedPipelineStudioContext } from '@views/unified-pipeline-studio/context/unified-pipeline-studio-context'
 import { addNameInput } from '@views/unified-pipeline-studio/utils/entity-form-utils'
 import { get, isEmpty, isUndefined, omit, omitBy } from 'lodash-es'
@@ -15,45 +14,18 @@ import {
   RootForm,
   useZodValidationResolver
 } from '@harnessio/forms'
+import { Button, ButtonLayout, Drawer, IconV2, Skeleton, Text } from '@harnessio/ui/components'
 
 import { getHarnessSteOrGroupIdentifier, getHarnessStepOrGroupDefinition, isHarnessGroup } from '../steps/harness-steps'
 import { TEMPLATE_CD_STEP_IDENTIFIER, TEMPLATE_CI_STEP_IDENTIFIER } from '../steps/types'
 
-const componentsMap: Record<
-  'true' | 'false',
-  {
-    Header: ElementType
-    Title: ElementType
-    Description: ElementType
-    Body: ElementType
-    Footer: ElementType
-  }
-> = {
-  true: {
-    Header: Drawer.Header,
-    Title: Drawer.Title,
-    Description: Drawer.Description,
-    Body: Drawer.Body,
-    Footer: Drawer.Footer
-  },
-  false: {
-    Header: EntityFormLayout.Header,
-    Title: EntityFormLayout.Title,
-    Description: EntityFormLayout.Description,
-    Body: EntityFormLayout.Form,
-    Footer: EntityFormLayout.Footer
-  }
-}
-
 interface UnifiedPipelineStudioEntityFormProps {
   requestClose: () => void
-  isDrawer?: boolean
   isDirtyRef: { current?: boolean }
 }
 
 export const UnifiedPipelineStudioEntityForm = (props: UnifiedPipelineStudioEntityFormProps) => {
-  const { requestClose, isDrawer = false, isDirtyRef } = props
-  const { Header, Title, Description, Body, Footer } = componentsMap[isDrawer ? 'true' : 'false']
+  const { requestClose, isDirtyRef } = props
   const {
     yamlRevision,
     addStepIntention,
@@ -162,6 +134,19 @@ export const UnifiedPipelineStudioEntityForm = (props: UnifiedPipelineStudioEnti
 
   const loading = !formDefinition || externalLoading
 
+  const stepDrawerTitle = useMemo(() => {
+    const stepDrawerRaw =
+      formEntity?.data?.identifier ??
+      defaultStepValues[TEMPLATE_CI_STEP_IDENTIFIER]?.uses ??
+      defaultStepValues[TEMPLATE_CD_STEP_IDENTIFIER]?.uses ??
+      ''
+    const harnessDef =
+      stepDrawerRaw && !stepDrawerRaw.includes('@') && !stepDrawerRaw.includes('/')
+        ? getHarnessStepOrGroupDefinition(stepDrawerRaw, stepsDefinitions)
+        : undefined
+    return harnessDef?.name ?? stepDrawerRaw
+  }, [defaultStepValues, formEntity, stepsDefinitions])
+
   return (
     <RootForm
       autoFocusPath={formDefinition?.inputs?.[0]?.path}
@@ -237,17 +222,11 @@ export const UnifiedPipelineStudioEntityForm = (props: UnifiedPipelineStudioEnti
 
         return (
           <>
-            <Header>
-              <Title>
-                {editStepIntention ? 'Edit' : 'Add'} Step :{' '}
-                {formEntity?.data?.identifier ??
-                  defaultStepValues[TEMPLATE_CI_STEP_IDENTIFIER]?.uses ??
-                  defaultStepValues[TEMPLATE_CD_STEP_IDENTIFIER]?.uses}
-              </Title>
-              <Description>{formEntity?.data.description}</Description>
-              {/*<AIButton label="AI Autofill" />*/}
-            </Header>
-            <Body>
+            <Drawer.Header>
+              <Drawer.Tagline>{editStepIntention ? 'Edit step' : 'Add step'}</Drawer.Tagline>
+              <Drawer.Title>{stepDrawerTitle}</Drawer.Title>
+            </Drawer.Header>
+            <Drawer.Body>
               {/* <StepFormSection.Header> */}
               {/* <StepFormSection.Title>General</StepFormSection.Title> */}
               {/* <StepFormSection.Description>Read documentation to learn more.</StepFormSection.Description> */}
@@ -259,15 +238,12 @@ export const UnifiedPipelineStudioEntityForm = (props: UnifiedPipelineStudioEnti
               ) : (
                 <RenderForm className="space-y-cn-xl" factory={inputComponentFactory} inputs={formDefinition} />
               )}
-            </Body>
-            <Footer>
+            </Drawer.Body>
+            <Drawer.Footer>
               <ButtonLayout.Root>
-                <ButtonLayout.Primary className="flex gap-x-cn-sm">
+                <ButtonLayout.Primary className="gap-x-cn-sm flex">
                   <Button disabled={loading || !!error?.message} onClick={() => rootForm.submitForm()}>
-                    Submit
-                  </Button>
-                  <Button variant="secondary" onClick={requestClose}>
-                    Cancel
+                    {editStepIntention ? 'Update step' : 'Add step'}
                   </Button>
                 </ButtonLayout.Primary>
                 {!!editStepIntention && (
@@ -287,7 +263,7 @@ export const UnifiedPipelineStudioEntityForm = (props: UnifiedPipelineStudioEnti
                   </ButtonLayout.Secondary>
                 )}
               </ButtonLayout.Root>
-            </Footer>
+            </Drawer.Footer>
           </>
         )
       }}

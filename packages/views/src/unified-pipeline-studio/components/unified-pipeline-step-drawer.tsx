@@ -1,7 +1,8 @@
 import { useRef } from 'react'
 
-import { Drawer } from '@harnessio/ui/components'
 import { useExitConfirm } from '@views'
+
+import { Drawer } from '@harnessio/ui/components'
 
 import { useUnifiedPipelineStudioContext } from '../context/unified-pipeline-studio-context'
 import { RightDrawer } from '../types/right-drawer-types'
@@ -31,12 +32,7 @@ export const UnifiedPipelineStepDrawer = () => {
         }}
       >
         <Drawer.Content>
-          <UnifiedPipelineStudioStepPalette
-            requestClose={() => {
-              handleClose()
-            }}
-            isDrawer
-          />
+          <UnifiedPipelineStudioStepPalette isDrawer />
         </Drawer.Content>
       </Drawer.Root>
       {/* TODO: temporary outside to bypass shadow dom issue */}
@@ -67,7 +63,6 @@ export const UnifiedPipelineStepDrawer = () => {
             requestClose={() => {
               handleClose()
             }}
-            isDrawer
           />
         </Drawer.Content>
       </Drawer.Root>

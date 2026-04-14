@@ -1,4 +1,4 @@
-import { JSX } from 'react'
+import * as React from 'react'
 
 import { Button, ButtonProps, DropdownMenu, IconPropsV2, IconV2 } from '@harnessio/ui/components'
 
@@ -14,6 +14,7 @@ export interface StyledMultiTypeSelectProps extends MultiTypeSelectProps {
   className?: string
   buttonClassName?: string
   variant?: ButtonProps['variant']
+  size?: ButtonProps['size']
   style?: React.CSSProperties
   allowedValueTypes?: InputValueType[]
 }
@@ -21,15 +22,15 @@ export interface StyledMultiTypeSelectProps extends MultiTypeSelectProps {
 const getButtonIcon = (inputValueType: InputValueType) => {
   switch (inputValueType) {
     case 'fixed':
-      return <IconV2 name="code-brackets" size="xs" className="text-cn-blue-surface" />
+      return <IconV2 name="code-brackets" size="xs" className="text-cn-blue-outline" />
     case 'runtime':
-      return <IconV2 name="code" size="xs" className="text-cn-purple-surface" />
+      return <IconV2 name="code" size="xs" className="text-cn-purple-outline" />
     case 'expression':
-      return <IconV2 name="variables" size="xs" className="text-cn-orange-surface" />
+      return <IconV2 name="variables" size="xs" className="text-cn-orange-outline" />
   }
 }
 
-function MultiTypeSelectForPrefix(props: MultiTypeSelectProps): JSX.Element {
+function MultiTypeSelectForPrefix(props: MultiTypeSelectProps): React.JSX.Element {
   return (
     <MultiTypeSelectBase
       {...props}
@@ -41,17 +42,18 @@ function MultiTypeSelectForPrefix(props: MultiTypeSelectProps): JSX.Element {
   )
 }
 
-function MultiTypeSelectForLabel(props: MultiTypeSelectProps): JSX.Element {
-  return <MultiTypeSelectBase {...props} variant="outline" />
+function MultiTypeSelectForLabel(props: MultiTypeSelectProps): React.JSX.Element {
+  return <MultiTypeSelectBase {...props} variant="outline" size="xs" />
 }
 
-function MultiTypeSelectBase(props: StyledMultiTypeSelectProps): JSX.Element {
+function MultiTypeSelectBase(props: StyledMultiTypeSelectProps): React.JSX.Element {
   const {
     inputValueType,
     setInputValueType,
     className,
     buttonClassName,
     variant = 'outline',
+    size,
     style,
     allowedValueTypes
   } = props
@@ -60,19 +62,19 @@ function MultiTypeSelectBase(props: StyledMultiTypeSelectProps): JSX.Element {
     {
       value: 'fixed',
       icon: 'code-brackets',
-      iconClassName: 'text-cn-blue-surface',
+      iconClassName: 'text-cn-blue-outline',
       title: 'Fixed'
     },
     {
       value: 'runtime',
       icon: 'code',
-      iconClassName: 'text-cn-purple-surface',
+      iconClassName: 'text-cn-purple-outline',
       title: 'Runtime'
     },
     {
       value: 'expression',
       icon: 'variables',
-      iconClassName: 'text-cn-orange-surface',
+      iconClassName: 'text-cn-orange-outline',
       title: 'Expression'
     }
   ]
@@ -86,7 +88,7 @@ function MultiTypeSelectBase(props: StyledMultiTypeSelectProps): JSX.Element {
   return (
     <DropdownMenu.Root>
       <DropdownMenu.Trigger className={className}>
-        <Button variant={variant} style={style} iconOnly className={buttonClassName}>
+        <Button variant={variant} size={size} style={style} iconOnly className={buttonClassName}>
           {getButtonIcon(inputValueType)}
         </Button>
       </DropdownMenu.Trigger>

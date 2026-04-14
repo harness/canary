@@ -1,8 +1,9 @@
 import { ElementType, useCallback, useMemo, useRef } from 'react'
 
+import { useUnifiedPipelineStudioContext } from '@views/unified-pipeline-studio/context/unified-pipeline-studio-context'
+import { RightDrawer } from '@views/unified-pipeline-studio/types/right-drawer-types'
+
 import {
-  Button,
-  ButtonLayout,
   Drawer,
   EntityFormLayout,
   Layout,
@@ -12,8 +13,6 @@ import {
   Spacer,
   Text
 } from '@harnessio/ui/components'
-import { useUnifiedPipelineStudioContext } from '@views/unified-pipeline-studio/context/unified-pipeline-studio-context'
-import { RightDrawer } from '@views/unified-pipeline-studio/types/right-drawer-types'
 
 import { harnessStepGroups, harnessSteps } from '../steps/harness-steps'
 import { StepPaletteSection } from './components/step-palette-section'
@@ -24,31 +23,27 @@ const componentsMap: Record<
     Header: ElementType
     Title: ElementType
     Body: ElementType
-    Footer: ElementType
   }
 > = {
   true: {
     Header: Drawer.Header,
     Title: Drawer.Title,
-    Body: Drawer.Body,
-    Footer: Drawer.Footer
+    Body: Drawer.Body
   },
   false: {
     Header: EntityFormLayout.Header,
     Title: EntityFormLayout.Title,
-    Body: 'div',
-    Footer: EntityFormLayout.Footer
+    Body: 'div'
   }
 }
 
 interface PipelineStudioStepFormProps {
-  requestClose: () => void
   isDrawer?: boolean
 }
 
 export const UnifiedPipelineStudioStepPalette = (props: PipelineStudioStepFormProps): JSX.Element => {
-  const { requestClose, isDrawer = false } = props
-  const { Header, Title, Body, Footer } = componentsMap[isDrawer ? 'true' : 'false']
+  const { isDrawer = false } = props
+  const { Header, Title, Body } = componentsMap[isDrawer ? 'true' : 'false']
   const { setFormEntity, setRightDrawer, useTemplateListStore } = useUnifiedPipelineStudioContext()
   const {
     page,
@@ -88,7 +83,7 @@ export const UnifiedPipelineStudioStepPalette = (props: PipelineStudioStepFormPr
   return (
     <>
       <Header>
-        <Title>Add Step</Title>
+        <Title>Add step</Title>
         <SearchInput
           autoFocus
           id="search"
@@ -159,15 +154,6 @@ export const UnifiedPipelineStudioStepPalette = (props: PipelineStudioStepFormPr
           <Spacer size={8} />
         </Layout.Flex>
       </Body>
-      <Footer>
-        <ButtonLayout.Root>
-          <ButtonLayout.Secondary>
-            <Button variant="secondary" onClick={requestClose}>
-              Cancel
-            </Button>
-          </ButtonLayout.Secondary>
-        </ButtonLayout.Root>
-      </Footer>
     </>
   )
 }

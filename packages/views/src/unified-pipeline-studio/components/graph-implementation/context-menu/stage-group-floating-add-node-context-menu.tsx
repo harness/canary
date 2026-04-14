@@ -24,7 +24,7 @@ export const StageGroupFloatingAddNodeContextMenu = ({ outsidePosition }: { outs
       >
         <DropdownMenu.IconItem
           icon="plus"
-          title="Add Serial Stages Group"
+          title="Add serial stages group"
           key={`add-${YamlEntityType.SerialStageGroup}-before`}
           onSelect={() => {
             onAddIntention(contextMenuData.nodeData, outsidePosition, YamlEntityType.SerialStageGroup)
@@ -33,7 +33,7 @@ export const StageGroupFloatingAddNodeContextMenu = ({ outsidePosition }: { outs
         <DropdownMenu.Separator />
         <DropdownMenu.IconItem
           icon="plus"
-          title="Add Parallel Stages Group"
+          title="Add parallel stages group"
           key={`add-${YamlEntityType.ParallelStageGroup}-before`}
           onSelect={() => {
             onAddIntention(contextMenuData.nodeData, outsidePosition, YamlEntityType.ParallelStageGroup)

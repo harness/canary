@@ -24,7 +24,7 @@ export const StageGroupAddInNodeContextMenu = () => {
       >
         <DropdownMenu.IconItem
           icon="plus"
-          title="Add Stage"
+          title="Add stage"
           key={`add-${YamlEntityType.Stage}`}
           onSelect={() => {
             onAddIntention(contextMenuData.nodeData, 'in', YamlEntityType.Stage)
@@ -33,7 +33,7 @@ export const StageGroupAddInNodeContextMenu = () => {
         <DropdownMenu.Separator />
         <DropdownMenu.IconItem
           icon="plus"
-          title="Add Serial group"
+          title="Add serial group"
           key={`add-${YamlEntityType.SerialStageGroup}`}
           onSelect={() => {
             onAddIntention(contextMenuData.nodeData, 'in', YamlEntityType.SerialStageGroup)
@@ -41,7 +41,7 @@ export const StageGroupAddInNodeContextMenu = () => {
         />
         <DropdownMenu.IconItem
           icon="plus"
-          title="Add Parallel group"
+          title="Add parallel group"
           key={`add-${YamlEntityType.ParallelStageGroup}`}
           onSelect={() => {
             onAddIntention(contextMenuData.nodeData, 'in', YamlEntityType.ParallelStageGroup)

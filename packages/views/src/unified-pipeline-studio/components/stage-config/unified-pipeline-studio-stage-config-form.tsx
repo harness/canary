@@ -1,6 +1,5 @@
 import { ElementType, Fragment, useEffect, useState } from 'react'
 
-import { Button, ButtonLayout, Drawer, EntityFormLayout, IconV2 } from '@harnessio/ui/components'
 import { get } from 'lodash-es'
 import { parse } from 'yaml'
 
@@ -12,6 +11,7 @@ import {
   RootForm,
   useZodValidationResolver
 } from '@harnessio/forms'
+import { Button, ButtonLayout, Drawer, EntityFormLayout, IconV2 } from '@harnessio/ui/components'
 
 import { useUnifiedPipelineStudioContext } from '../../context/unified-pipeline-studio-context'
 import { basicStageFormDefinition } from './form-definition/stage-form-definition'
@@ -119,7 +119,7 @@ export const UnifiedPipelineStudioStageConfigForm = (props: UnifiedPipelineStudi
         return (
           <Content>
             <Header>
-              <Title>{editStageIntention ? 'Edit' : 'Add'} Stage</Title>
+              <Title>{editStageIntention ? 'Edit stage' : 'Add stage'}</Title>
               <Description>
                 Configure a stage for your pipeline. Stages are logical groupings of steps that execute together.
               </Description>
@@ -130,10 +130,9 @@ export const UnifiedPipelineStudioStageConfigForm = (props: UnifiedPipelineStudi
             <Footer>
               <ButtonLayout.Root>
                 <ButtonLayout.Primary>
-                  <Button variant="secondary" onClick={requestClose}>
-                    Cancel
+                  <Button onClick={() => rootForm.submitForm()}>
+                    {editStageIntention ? 'Update stage' : 'Add stage'}
                   </Button>
-                  <Button onClick={() => rootForm.submitForm()}>Submit</Button>
                 </ButtonLayout.Primary>
                 {!!editStageIntention && (
                   <ButtonLayout.Secondary>
@@ -144,8 +143,8 @@ export const UnifiedPipelineStudioStageConfigForm = (props: UnifiedPipelineStudi
                         requestYamlModifications.deleteInArray({ path: editStageIntention.path })
                         requestClose()
                       }}
-                      aria-label="Remove Stage"
-                      tooltipProps={{ content: 'Remove Stage' }}
+                      aria-label="Remove stage"
+                      tooltipProps={{ content: 'Remove stage' }}
                     >
                       <IconV2 name="trash" />
                     </Button>

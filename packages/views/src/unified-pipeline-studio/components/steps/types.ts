@@ -30,6 +30,7 @@ export type HARNESS_STEP_AND_STEP_GROUP_IDENTIFIER = HARNESS_STEP_IDENTIFIER | H
 export type AnyStepDefinition<T = string, M = IFormDefinition<InputDefinition>> = {
   identifier: T
   description: string
+  name?: string
   formDefinition: M
 }
 

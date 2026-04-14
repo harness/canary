@@ -47,6 +47,7 @@ import ArrowUpLeft from './icons/arrow-up-left.svg'
 import ArrowUpRightCircle from './icons/arrow-up-right-circle.svg'
 import ArrowUpRight from './icons/arrow-up-right.svg'
 import ArrowUp from './icons/arrow-up.svg'
+import ArrowsLeftright from './icons/arrows-leftright.svg'
 import ArrowsUpdown from './icons/arrows-updown.svg'
 import ArtifactsSolid from './icons/artifacts-solid.svg'
 import Artifacts from './icons/artifacts.svg'
@@ -563,6 +564,7 @@ export const IconNameMapV2 = {
   'arrow-up-right-circle': ArrowUpRightCircle,
   'arrow-up-right': ArrowUpRight,
   'arrow-up': ArrowUp,
+  'arrows-leftright': ArrowsLeftright,
   'arrows-updown': ArrowsUpdown,
   'artifacts-solid': ArtifactsSolid,
   artifacts: Artifacts,

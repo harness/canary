@@ -6,7 +6,6 @@ import react from '@vitejs/plugin-react-swc'
 import { defineConfig, type Plugin } from 'vite'
 import dts from 'vite-plugin-dts'
 import svgr from 'vite-plugin-svgr'
-import tsConfigPaths from 'vite-tsconfig-paths'
 
 const external = [
   'react',
@@ -84,6 +83,27 @@ function extractCssFontsPlugin(fontDir: string): Plugin {
 }
 
 /**
+ * Redirects `use-sync-external-store/shim` imports to the local ESM shim.
+ *
+ * The published package resolves to CJS that inlines `require("react")`;
+ * Rolldown bundles that into dist, breaking Astro SSR and other ESM consumers.
+ */
+function syncExternalStoreShimPlugin(): Plugin {
+  const SHIM_PATH = resolve(__dirname, 'src/shims/use-sync-external-store-shim.ts')
+  const IDS = ['use-sync-external-store/shim', 'use-sync-external-store/shim/index.js']
+
+  return {
+    name: 'use-sync-external-store-shim',
+    enforce: 'pre',
+    resolveId(source) {
+      if (IDS.includes(source)) {
+        return SHIM_PATH
+      }
+    }
+  }
+}
+
+/**
  * Copies individual theme CSS files from core-design-system into dist/themes/
  * with content-hash filenames for long-lived caching. Generates a
  * theme-manifest.json that maps logical theme names to hashed filenames.
@@ -135,20 +155,23 @@ function buildThemesPlugin(): Plugin {
 
 export default defineConfig({
   plugins: [
+    syncExternalStoreShimPlugin(),
     react(),
     svgr({ include: '**/*.svg' }),
-    tsConfigPaths(),
     dts({ rollupTypes: true }),
     extractCssFontsPlugin(resolve(__dirname, 'src/fonts')),
     buildThemesPlugin()
   ],
+  devtools: {
+    enabled: !!process.env.VITE_DEVTOOLS
+  },
   resolve: {
+    tsconfigPaths: true,
     alias: {
       'vaul/style.css?raw': resolve(__dirname, 'node_modules/vaul/style.css?raw')
     }
   },
   build: {
-    cssMinify: 'esbuild',
     lib: {
       cssFileName: 'styles',
       entry: {
@@ -164,7 +187,7 @@ export default defineConfig({
       },
       formats: ['es']
     },
-    rollupOptions: {
+    rolldownOptions: {
       external
     },
     sourcemap: true

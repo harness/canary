@@ -9,7 +9,7 @@ export default mergeConfig(viteConfig, {
     globals: true,
     coverage: {
       provider: 'istanbul',
-      include: ['src'],
+      include: ['src/**/*.{ts,tsx,js,jsx}'],
       exclude: [
         'src/index.ts',
         'src/components/index.ts',
@@ -18,8 +18,7 @@ export default mergeConfig(viteConfig, {
         'src/locales/index.ts',
         'src/**/*.test.*',
         'src/utils/cn.ts'
-      ],
-      extension: ['ts', 'js', 'tsx', 'jsx']
+      ]
       // thresholds: {
       //   branches: 80,
       //   lines: 80,

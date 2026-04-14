@@ -1,5 +1,5 @@
 import type * as Diff2Html from 'diff2html'
-import HoganJsUtils from 'diff2html/lib/hoganjs-utils'
+import HoganJsUtils from 'diff2html/lib-esm/hoganjs-utils'
 import { get, isEmpty } from 'lodash-es'
 
 import {

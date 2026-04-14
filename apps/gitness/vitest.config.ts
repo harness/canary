@@ -1,7 +1,7 @@
 import { resolve } from 'path'
 
-import { defineConfig } from 'vitest/config'
 import react from '@vitejs/plugin-react-swc'
+import { defineConfig } from 'vitest/config'
 
 const appNodeModules = resolve(__dirname, 'node_modules')
 
@@ -10,7 +10,7 @@ export default defineConfig({
   resolve: {
     alias: {
       // Force all react imports to resolve to the same instance in the app's node_modules
-      'react': resolve(appNodeModules, 'react'),
+      react: resolve(appNodeModules, 'react'),
       'react-dom': resolve(appNodeModules, 'react-dom'),
       'react/jsx-runtime': resolve(appNodeModules, 'react/jsx-runtime.js'),
       'react/jsx-dev-runtime': resolve(appNodeModules, 'react/jsx-dev-runtime.js'),
@@ -28,9 +28,8 @@ export default defineConfig({
     globals: true,
     coverage: {
       provider: 'istanbul',
-      include: ['src'],
-      exclude: ['src/main.tsx', 'src/App.tsx', 'src/**/*.test.*'],
-      extension: ['ts', 'js', 'tsx', 'jsx']
+      include: ['src/**/*.{ts,tsx,js,jsx}'],
+      exclude: ['src/main.tsx', 'src/App.tsx', 'src/**/*.test.*']
     }
   }
 })

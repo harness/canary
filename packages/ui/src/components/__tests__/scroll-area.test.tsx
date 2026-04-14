@@ -5,14 +5,18 @@ import { describe, expect, test, vi } from 'vitest'
 
 import { ScrollArea, useScrollArea } from '../scroll-area'
 
-// Mock IntersectionObserver
-const mockIntersectionObserver = vi.fn()
-mockIntersectionObserver.mockReturnValue({
-  observe: vi.fn(),
-  unobserve: vi.fn(),
-  disconnect: vi.fn()
+// Mock IntersectionObserver (Vitest 4+: constructor mocks must use `function`, not arrow fns)
+const mockIntersectionObserver = vi.fn(function MockIntersectionObserver(
+  _callback: IntersectionObserverCallback,
+  _options?: IntersectionObserverInit
+) {
+  return {
+    observe: vi.fn(),
+    unobserve: vi.fn(),
+    disconnect: vi.fn()
+  }
 })
-window.IntersectionObserver = mockIntersectionObserver as any
+window.IntersectionObserver = mockIntersectionObserver as unknown as typeof IntersectionObserver
 
 // Mock sessionStorage
 const mockSessionStorage = (() => {
@@ -353,7 +357,7 @@ describe('ScrollArea', () => {
       const handleScrollTop = vi.fn()
       let observerCallback: any = null
 
-      mockIntersectionObserver.mockImplementation((callback: any) => {
+      mockIntersectionObserver.mockImplementation(function (callback: any) {
         observerCallback = callback
         return {
           observe: vi.fn(),
@@ -380,7 +384,7 @@ describe('ScrollArea', () => {
       const handleScrollBottom = vi.fn()
       let observerCallback: any = null
 
-      mockIntersectionObserver.mockImplementation((callback: any) => {
+      mockIntersectionObserver.mockImplementation(function (callback: any) {
         observerCallback = callback
         return {
           observe: vi.fn(),
@@ -406,7 +410,7 @@ describe('ScrollArea', () => {
       const handleScrollLeft = vi.fn()
       let observerCallback: any = null
 
-      mockIntersectionObserver.mockImplementation((callback: any) => {
+      mockIntersectionObserver.mockImplementation(function (callback: any) {
         observerCallback = callback
         return {
           observe: vi.fn(),
@@ -432,7 +436,7 @@ describe('ScrollArea', () => {
       const handleScrollRight = vi.fn()
       let observerCallback: any = null
 
-      mockIntersectionObserver.mockImplementation((callback: any) => {
+      mockIntersectionObserver.mockImplementation(function (callback: any) {
         observerCallback = callback
         return {
           observe: vi.fn(),

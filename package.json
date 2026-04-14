@@ -29,7 +29,7 @@
     "update:logos": "pnpm -r -F './packages/*' update:logos"
   },
   "engines": {
-    "node": ">=18.17.1"
+    "node": ">=20.19.0"
   },
   "license": "Apache-2.0",
   "resolutions": {

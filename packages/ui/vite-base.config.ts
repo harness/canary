@@ -172,6 +172,7 @@ export default defineConfig({
     }
   },
   build: {
+    cssMinify: 'esbuild',
     lib: {
       cssFileName: 'styles',
       entry: {

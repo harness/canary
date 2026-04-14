@@ -8,6 +8,7 @@ export default defineConfig({
   },
   plugins: [
     react(),
+    // @ts-expect-error: CJS-only package — Rolldown's ESM interop doesn't auto-unwrap exports.default
     monacoEditorPlugin.default({
       globalAPI: true,
       customWorkers: [{ entry: 'monaco-yaml/yaml.worker', label: 'yaml' }]

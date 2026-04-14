@@ -3,7 +3,7 @@ import { resolve } from 'path'
 import react from '@vitejs/plugin-react-swc'
 import { defineConfig } from 'vite'
 import dts from 'vite-plugin-dts'
-import * as monacoEditorPlugin from 'vite-plugin-monaco-editor'
+import monacoEditorPlugin from 'vite-plugin-monaco-editor'
 
 import pkg from './package.json'
 
@@ -19,6 +19,7 @@ export default defineConfig({
       outDir: 'dist',
       tsconfigPath: './tsconfig.json'
     }),
+    // @ts-expect-error: CJS-only package — Rolldown's ESM interop doesn't auto-unwrap exports.default
     monacoEditorPlugin.default({ customWorkers: [{ entry: 'monaco-yaml/yaml.worker', label: 'yaml' }] })
   ],
   build: {

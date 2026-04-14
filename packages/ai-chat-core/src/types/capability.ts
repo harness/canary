@@ -42,6 +42,7 @@ export interface CapabilityRenderer<TArgs = any, TResult = any> {
 
 export interface CapabilityConfig<TArgs = any, TResult = any> {
   name: string
+  priority?: number
   execute?: (args: TArgs, context: CapabilityExecutionContext) => Promise<TResult> | TResult
   render?: React.ComponentType<CapabilityRendererProps<TArgs, TResult>>
 }

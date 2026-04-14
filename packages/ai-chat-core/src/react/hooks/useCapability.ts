@@ -7,16 +7,22 @@ export function useCapability<TArgs = any, TResult = any>(config: CapabilityConf
   const runtime = useAssistantRuntime()
 
   useEffect(() => {
+    const priority = config.priority ?? 0
+
     // Register handler
     if (config.execute) {
-      runtime.capabilityRegistry.registerHandler(config.name, { execute: config.execute })
+      runtime.capabilityRegistry.registerHandler(config.name, { execute: config.execute }, priority)
     }
 
     // Register renderer
     if (config.render) {
-      runtime.capabilityRegistry.registerRenderer(config.name, {
-        component: config.render
-      })
+      runtime.capabilityRegistry.registerRenderer(
+        config.name,
+        {
+          component: config.render
+        },
+        priority
+      )
     }
 
     // Cleanup on unmount

@@ -1,15 +1,47 @@
 import { CapabilityHandler, CapabilityRenderer } from '../types/capability'
 
-export class CapabilityRegistry {
-  private handlers = new Map<string, CapabilityHandler>()
-  private renderers = new Map<string, CapabilityRenderer>()
+interface HandlerEntry {
+  handler: CapabilityHandler
+  priority: number
+}
 
-  public registerHandler(name: string, handler: CapabilityHandler): void {
-    this.handlers.set(name, handler)
+interface RendererEntry {
+  renderer: CapabilityRenderer
+  priority: number
+}
+
+export class CapabilityRegistry {
+  private handlers = new Map<string, HandlerEntry[]>()
+  private renderers = new Map<string, RendererEntry[]>()
+
+  public registerHandler(name: string, handler: CapabilityHandler, priority = 0): void {
+    const entries = this.handlers.get(name) || []
+    const entry: HandlerEntry = { handler, priority }
+
+    // Insert in sorted order (highest priority first)
+    const insertIndex = entries.findIndex(e => e.priority < priority)
+    if (insertIndex === -1) {
+      entries.push(entry)
+    } else {
+      entries.splice(insertIndex, 0, entry)
+    }
+
+    this.handlers.set(name, entries)
   }
 
-  public registerRenderer(name: string, renderer: CapabilityRenderer): void {
-    this.renderers.set(name, renderer)
+  public registerRenderer(name: string, renderer: CapabilityRenderer, priority = 0): void {
+    const entries = this.renderers.get(name) || []
+    const entry: RendererEntry = { renderer, priority }
+
+    // Insert in sorted order (highest priority first)
+    const insertIndex = entries.findIndex(e => e.priority < priority)
+    if (insertIndex === -1) {
+      entries.push(entry)
+    } else {
+      entries.splice(insertIndex, 0, entry)
+    }
+
+    this.renderers.set(name, entries)
   }
 
   public unregister(name: string): void {
@@ -18,11 +50,13 @@ export class CapabilityRegistry {
   }
 
   public getHandler(name: string): CapabilityHandler | undefined {
-    return this.handlers.get(name)
+    const entries = this.handlers.get(name)
+    return entries?.[0]?.handler
   }
 
   public getRenderer(name: string): CapabilityRenderer | undefined {
-    return this.renderers.get(name)
+    const entries = this.renderers.get(name)
+    return entries?.[0]?.renderer
   }
 
   public getStrategy() {
@@ -30,11 +64,13 @@ export class CapabilityRegistry {
   }
 
   public hasHandler(name: string): boolean {
-    return this.handlers.has(name)
+    const entries = this.handlers.get(name)
+    return entries !== undefined && entries.length > 0
   }
 
   public hasRenderer(name: string): boolean {
-    return this.renderers.has(name)
+    const entries = this.renderers.get(name)
+    return entries !== undefined && entries.length > 0
   }
 
   public clear(): void {

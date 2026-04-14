@@ -1,9 +1,585 @@
 ---
 title: Spacings
+description: Spacing scale, semantic aliases, and usage guidelines
 ---
 
-Spacings from Harness UI Design System
+The spacing system uses a two-layer approach: a numeric primitive scale (`spacing.0`–`spacing.96`) and a set of semantic aliases (`4xs`–`4xl`) that map to the primitives. Components and layouts should always reference the semantic aliases — they give consistent rhythm and can be adjusted per breakpoint without touching component code.
 
-import SpacingsTable from "@/components/spacings-table";
+## Semantic Scale
 
-<SpacingsTable />
+Each alias resolves to a CSS custom property `--cn-spacing-{name}` and a Tailwind utility class. Use `gap-cn-*`, `p-cn-*`, `m-cn-*`, and `space-y-cn-*` in your markup.
+
+<div className="cn-table-v2 cn-table-v2-normal not-content">
+  <div className="cn-table-v2-container">
+    <table className="cn-table-v2-element">
+      <thead className="cn-table-v2-header">
+        <tr className="cn-table-v2-row">
+          <th className="cn-table-v2-head" style={{ width: "64px" }}>
+            Token
+          </th>
+          <th className="cn-table-v2-head" style={{ width: "48px" }}>
+            Value
+          </th>
+          <th className="cn-table-v2-head" style={{ width: "100px" }}>
+            Preview
+          </th>
+          <th className="cn-table-v2-head">CSS Variable</th>
+          <th className="cn-table-v2-head">Tailwind Class</th>
+        </tr>
+      </thead>
+      <tbody className="cn-table-v2-body">
+        <tr className="cn-table-v2-row">
+          <td className="cn-table-v2-cell">
+            <code>0</code>
+          </td>
+          <td className="cn-table-v2-cell">0px</td>
+          <td className="cn-table-v2-cell"></td>
+          <td className="cn-table-v2-cell">
+            <code>--cn-spacing-0</code>
+          </td>
+          <td className="cn-table-v2-cell">
+            <code>gap-0</code>
+          </td>
+        </tr>
+        <tr className="cn-table-v2-row">
+          <td className="cn-table-v2-cell">
+            <code>px</code>
+          </td>
+          <td className="cn-table-v2-cell">1px</td>
+          <td className="cn-table-v2-cell">
+            <div
+              style={{
+                width: "1px",
+                height: "12px",
+                borderRadius: "1px",
+                background: "var(--cn-set-brand-primary-bg)",
+              }}
+            ></div>
+          </td>
+          <td className="cn-table-v2-cell">
+            <code>--cn-spacing-px</code>
+          </td>
+          <td className="cn-table-v2-cell">
+            <code>gap-px</code>
+          </td>
+        </tr>
+        <tr className="cn-table-v2-row">
+          <td className="cn-table-v2-cell">
+            <code>4xs</code>
+          </td>
+          <td className="cn-table-v2-cell">2px</td>
+          <td className="cn-table-v2-cell">
+            <div
+              style={{
+                width: "2px",
+                height: "12px",
+                borderRadius: "2px",
+                background: "var(--cn-set-brand-primary-bg)",
+              }}
+            ></div>
+          </td>
+          <td className="cn-table-v2-cell">
+            <code>--cn-layout-4xs</code>
+          </td>
+          <td className="cn-table-v2-cell">
+            <code>gap-cn-4xs</code>
+          </td>
+        </tr>
+        <tr className="cn-table-v2-row">
+          <td className="cn-table-v2-cell">
+            <code>3xs</code>
+          </td>
+          <td className="cn-table-v2-cell">4px</td>
+          <td className="cn-table-v2-cell">
+            <div
+              style={{
+                width: "4px",
+                height: "12px",
+                borderRadius: "2px",
+                background: "var(--cn-set-brand-primary-bg)",
+              }}
+            ></div>
+          </td>
+          <td className="cn-table-v2-cell">
+            <code>--cn-layout-3xs</code>
+          </td>
+          <td className="cn-table-v2-cell">
+            <code>gap-cn-3xs</code>
+          </td>
+        </tr>
+        <tr className="cn-table-v2-row">
+          <td className="cn-table-v2-cell">
+            <code>2xs</code>
+          </td>
+          <td className="cn-table-v2-cell">6px</td>
+          <td className="cn-table-v2-cell">
+            <div
+              style={{
+                width: "6px",
+                height: "12px",
+                borderRadius: "2px",
+                background: "var(--cn-set-brand-primary-bg)",
+              }}
+            ></div>
+          </td>
+          <td className="cn-table-v2-cell">
+            <code>--cn-layout-2xs</code>
+          </td>
+          <td className="cn-table-v2-cell">
+            <code>gap-cn-2xs</code>
+          </td>
+        </tr>
+        <tr className="cn-table-v2-row">
+          <td className="cn-table-v2-cell">
+            <code>xs</code>
+          </td>
+          <td className="cn-table-v2-cell">8px</td>
+          <td className="cn-table-v2-cell">
+            <div
+              style={{
+                width: "8px",
+                height: "12px",
+                borderRadius: "2px",
+                background: "var(--cn-set-brand-primary-bg)",
+              }}
+            ></div>
+          </td>
+          <td className="cn-table-v2-cell">
+            <code>--cn-layout-xs</code>
+          </td>
+          <td className="cn-table-v2-cell">
+            <code>gap-cn-xs</code>
+          </td>
+        </tr>
+        <tr className="cn-table-v2-row">
+          <td className="cn-table-v2-cell">
+            <code>sm</code>
+          </td>
+          <td className="cn-table-v2-cell">12px</td>
+          <td className="cn-table-v2-cell">
+            <div
+              style={{
+                width: "12px",
+                height: "12px",
+                borderRadius: "2px",
+                background: "var(--cn-set-brand-primary-bg)",
+              }}
+            ></div>
+          </td>
+          <td className="cn-table-v2-cell">
+            <code>--cn-layout-sm</code>
+          </td>
+          <td className="cn-table-v2-cell">
+            <code>gap-cn-sm</code>
+          </td>
+        </tr>
+        <tr className="cn-table-v2-row">
+          <td className="cn-table-v2-cell">
+            <code>md</code>
+          </td>
+          <td className="cn-table-v2-cell">16px</td>
+          <td className="cn-table-v2-cell">
+            <div
+              style={{
+                width: "16px",
+                height: "12px",
+                borderRadius: "2px",
+                background: "var(--cn-set-brand-primary-bg)",
+              }}
+            ></div>
+          </td>
+          <td className="cn-table-v2-cell">
+            <code>--cn-layout-md</code>
+          </td>
+          <td className="cn-table-v2-cell">
+            <code>gap-cn-md</code>
+          </td>
+        </tr>
+        <tr className="cn-table-v2-row">
+          <td className="cn-table-v2-cell">
+            <code>lg</code>
+          </td>
+          <td className="cn-table-v2-cell">20px</td>
+          <td className="cn-table-v2-cell">
+            <div
+              style={{
+                width: "20px",
+                height: "12px",
+                borderRadius: "2px",
+                background: "var(--cn-set-brand-primary-bg)",
+              }}
+            ></div>
+          </td>
+          <td className="cn-table-v2-cell">
+            <code>--cn-layout-lg</code>
+          </td>
+          <td className="cn-table-v2-cell">
+            <code>gap-cn-lg</code>
+          </td>
+        </tr>
+        <tr className="cn-table-v2-row">
+          <td className="cn-table-v2-cell">
+            <code>xl</code>
+          </td>
+          <td className="cn-table-v2-cell">24px</td>
+          <td className="cn-table-v2-cell">
+            <div
+              style={{
+                width: "24px",
+                height: "12px",
+                borderRadius: "2px",
+                background: "var(--cn-set-brand-primary-bg)",
+              }}
+            ></div>
+          </td>
+          <td className="cn-table-v2-cell">
+            <code>--cn-layout-xl</code>
+          </td>
+          <td className="cn-table-v2-cell">
+            <code>gap-cn-xl</code>
+          </td>
+        </tr>
+        <tr className="cn-table-v2-row">
+          <td className="cn-table-v2-cell">
+            <code>2xl</code>
+          </td>
+          <td className="cn-table-v2-cell">32px</td>
+          <td className="cn-table-v2-cell">
+            <div
+              style={{
+                width: "32px",
+                height: "12px",
+                borderRadius: "2px",
+                background: "var(--cn-set-brand-primary-bg)",
+              }}
+            ></div>
+          </td>
+          <td className="cn-table-v2-cell">
+            <code>--cn-layout-2xl</code>
+          </td>
+          <td className="cn-table-v2-cell">
+            <code>gap-cn-2xl</code>
+          </td>
+        </tr>
+        <tr className="cn-table-v2-row">
+          <td className="cn-table-v2-cell">
+            <code>3xl</code>
+          </td>
+          <td className="cn-table-v2-cell">40px</td>
+          <td className="cn-table-v2-cell">
+            <div
+              style={{
+                width: "40px",
+                height: "12px",
+                borderRadius: "2px",
+                background: "var(--cn-set-brand-primary-bg)",
+              }}
+            ></div>
+          </td>
+          <td className="cn-table-v2-cell">
+            <code>--cn-layout-3xl</code>
+          </td>
+          <td className="cn-table-v2-cell">
+            <code>gap-cn-3xl</code>
+          </td>
+        </tr>
+        <tr className="cn-table-v2-row">
+          <td className="cn-table-v2-cell">
+            <code>4xl</code>
+          </td>
+          <td className="cn-table-v2-cell">80px</td>
+          <td className="cn-table-v2-cell">
+            <div
+              style={{
+                width: "80px",
+                height: "12px",
+                borderRadius: "2px",
+                background: "var(--cn-set-brand-primary-bg)",
+              }}
+            ></div>
+          </td>
+          <td className="cn-table-v2-cell">
+            <code>--cn-layout-4xl</code>
+          </td>
+          <td className="cn-table-v2-cell">
+            <code>gap-cn-4xl</code>
+          </td>
+        </tr>
+        <tr className="cn-table-v2-row">
+          <td className="cn-table-v2-cell">
+            <code>auto</code>
+          </td>
+          <td className="cn-table-v2-cell">auto</td>
+          <td className="cn-table-v2-cell"></td>
+          <td className="cn-table-v2-cell">—</td>
+          <td className="cn-table-v2-cell">
+            <code>m-auto</code>
+          </td>
+        </tr>
+        <tr className="cn-table-v2-row">
+          <td className="cn-table-v2-cell">
+            <code>full</code>
+          </td>
+          <td className="cn-table-v2-cell">100%</td>
+          <td className="cn-table-v2-cell"></td>
+          <td className="cn-table-v2-cell">—</td>
+          <td className="cn-table-v2-cell">
+            <code>w-full</code>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+</div>
+
+## Tailwind Classes
+
+All semantic tokens are available as Tailwind utilities with the `cn-` prefix:
+
+<div className="cn-table-v2 cn-table-v2-normal not-content">
+  <div className="cn-table-v2-container">
+    <table className="cn-table-v2-element">
+      <thead className="cn-table-v2-header">
+        <tr className="cn-table-v2-row">
+          <th className="cn-table-v2-head">Property</th>
+          <th className="cn-table-v2-head">Pattern</th>
+          <th className="cn-table-v2-head">Example</th>
+        </tr>
+      </thead>
+      <tbody className="cn-table-v2-body">
+        <tr className="cn-table-v2-row">
+          <td className="cn-table-v2-cell">Gap</td>
+          <td className="cn-table-v2-cell">
+            <code>gap-cn-{"{size}"}</code>
+          </td>
+          <td className="cn-table-v2-cell">
+            <code>gap-cn-sm</code>
+          </td>
+        </tr>
+        <tr className="cn-table-v2-row">
+          <td className="cn-table-v2-cell">Padding</td>
+          <td className="cn-table-v2-cell">
+            <code>p-cn-{"{size}"}</code>
+          </td>
+          <td className="cn-table-v2-cell">
+            <code>p-cn-md</code>, <code>px-cn-lg</code>, <code>pt-cn-xs</code>
+          </td>
+        </tr>
+        <tr className="cn-table-v2-row">
+          <td className="cn-table-v2-cell">Margin</td>
+          <td className="cn-table-v2-cell">
+            <code>m-cn-{"{size}"}</code>
+          </td>
+          <td className="cn-table-v2-cell">
+            <code>m-cn-md</code>, <code>mx-cn-xl</code>, <code>mb-cn-sm</code>
+          </td>
+        </tr>
+        <tr className="cn-table-v2-row">
+          <td className="cn-table-v2-cell">Space between</td>
+          <td className="cn-table-v2-cell">
+            <code>space-y-cn-{"{size}"}</code>
+          </td>
+          <td className="cn-table-v2-cell">
+            <code>space-y-cn-md</code>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+</div>
+
+## When to Use What
+
+- <span style="font-weight: 600">4xs–3xs</span> — Micro gaps: icon-to-label,
+  inline badge padding, compact chip internals
+- <span style="font-weight: 600">2xs–xs</span> — Tight component internals:
+  button padding, input padding, dense list items
+- <span style="font-weight: 600">sm–md</span> — Standard component spacing: card
+  padding, form field gaps, list item spacing
+- <span style="font-weight: 600">lg–xl</span> — Section-level separation:
+  content block gaps, modal padding, sidebar sections
+- <span style="font-weight: 600">2xl–4xl</span> — Page-level divisions: hero
+  sections, major feature areas, page margins
+
+## Primitive Scale
+
+The full numeric scale (`spacing.0`–`spacing.96`) follows a 4px base grid. Semantic aliases reference these primitives. For most use cases, stick with the semantic tokens above — the primitives are available for edge cases where an exact pixel value is needed.
+
+<div className="cn-table-v2 cn-table-v2-normal not-content">
+  <div className="cn-table-v2-container">
+    <table className="cn-table-v2-element">
+      <thead className="cn-table-v2-header">
+        <tr className="cn-table-v2-row">
+          <th className="cn-table-v2-head" style={{ width: "80px" }}>
+            Token
+          </th>
+          <th className="cn-table-v2-head" style={{ width: "56px" }}>
+            Value
+          </th>
+          <th className="cn-table-v2-head" style={{ width: "80px" }}>
+            Token
+          </th>
+          <th className="cn-table-v2-head" style={{ width: "56px" }}>
+            Value
+          </th>
+          <th className="cn-table-v2-head" style={{ width: "80px" }}>
+            Token
+          </th>
+          <th className="cn-table-v2-head" style={{ width: "56px" }}>
+            Value
+          </th>
+        </tr>
+      </thead>
+      <tbody className="cn-table-v2-body">
+        <tr className="cn-table-v2-row">
+          <td className="cn-table-v2-cell">
+            <code>0</code>
+          </td>
+          <td className="cn-table-v2-cell">0px</td>
+          <td className="cn-table-v2-cell">
+            <code>9</code>
+          </td>
+          <td className="cn-table-v2-cell">36px</td>
+          <td className="cn-table-v2-cell">
+            <code>18</code>
+          </td>
+          <td className="cn-table-v2-cell">72px</td>
+        </tr>
+        <tr className="cn-table-v2-row">
+          <td className="cn-table-v2-cell">
+            <code>px</code>
+          </td>
+          <td className="cn-table-v2-cell">1px</td>
+          <td className="cn-table-v2-cell">
+            <code>10</code>
+          </td>
+          <td className="cn-table-v2-cell">40px</td>
+          <td className="cn-table-v2-cell">
+            <code>20</code>
+          </td>
+          <td className="cn-table-v2-cell">80px</td>
+        </tr>
+        <tr className="cn-table-v2-row">
+          <td className="cn-table-v2-cell">
+            <code>half</code>
+          </td>
+          <td className="cn-table-v2-cell">2px</td>
+          <td className="cn-table-v2-cell">
+            <code>11</code>
+          </td>
+          <td className="cn-table-v2-cell">44px</td>
+          <td className="cn-table-v2-cell">
+            <code>24</code>
+          </td>
+          <td className="cn-table-v2-cell">96px</td>
+        </tr>
+        <tr className="cn-table-v2-row">
+          <td className="cn-table-v2-cell">
+            <code>1</code>
+          </td>
+          <td className="cn-table-v2-cell">4px</td>
+          <td className="cn-table-v2-cell">
+            <code>12</code>
+          </td>
+          <td className="cn-table-v2-cell">48px</td>
+          <td className="cn-table-v2-cell">
+            <code>32</code>
+          </td>
+          <td className="cn-table-v2-cell">128px</td>
+        </tr>
+        <tr className="cn-table-v2-row">
+          <td className="cn-table-v2-cell">
+            <code>2</code>
+          </td>
+          <td className="cn-table-v2-cell">8px</td>
+          <td className="cn-table-v2-cell">
+            <code>13</code>
+          </td>
+          <td className="cn-table-v2-cell">52px</td>
+          <td className="cn-table-v2-cell">
+            <code>40</code>
+          </td>
+          <td className="cn-table-v2-cell">160px</td>
+        </tr>
+        <tr className="cn-table-v2-row">
+          <td className="cn-table-v2-cell">
+            <code>3</code>
+          </td>
+          <td className="cn-table-v2-cell">12px</td>
+          <td className="cn-table-v2-cell">
+            <code>14</code>
+          </td>
+          <td className="cn-table-v2-cell">56px</td>
+          <td className="cn-table-v2-cell">
+            <code>48</code>
+          </td>
+          <td className="cn-table-v2-cell">192px</td>
+        </tr>
+        <tr className="cn-table-v2-row">
+          <td className="cn-table-v2-cell">
+            <code>4</code>
+          </td>
+          <td className="cn-table-v2-cell">16px</td>
+          <td className="cn-table-v2-cell">
+            <code>15</code>
+          </td>
+          <td className="cn-table-v2-cell">60px</td>
+          <td className="cn-table-v2-cell">
+            <code>56</code>
+          </td>
+          <td className="cn-table-v2-cell">224px</td>
+        </tr>
+        <tr className="cn-table-v2-row">
+          <td className="cn-table-v2-cell">
+            <code>5</code>
+          </td>
+          <td className="cn-table-v2-cell">20px</td>
+          <td className="cn-table-v2-cell">
+            <code>16</code>
+          </td>
+          <td className="cn-table-v2-cell">64px</td>
+          <td className="cn-table-v2-cell">
+            <code>64</code>
+          </td>
+          <td className="cn-table-v2-cell">256px</td>
+        </tr>
+        <tr className="cn-table-v2-row">
+          <td className="cn-table-v2-cell">
+            <code>6</code>
+          </td>
+          <td className="cn-table-v2-cell">24px</td>
+          <td className="cn-table-v2-cell">
+            <code>17</code>
+          </td>
+          <td className="cn-table-v2-cell">68px</td>
+          <td className="cn-table-v2-cell">
+            <code>96</code>
+          </td>
+          <td className="cn-table-v2-cell">384px</td>
+        </tr>
+        <tr className="cn-table-v2-row">
+          <td className="cn-table-v2-cell">
+            <code>7</code>
+          </td>
+          <td className="cn-table-v2-cell">28px</td>
+          <td className="cn-table-v2-cell"></td>
+          <td className="cn-table-v2-cell"></td>
+          <td className="cn-table-v2-cell"></td>
+          <td className="cn-table-v2-cell"></td>
+        </tr>
+        <tr className="cn-table-v2-row">
+          <td className="cn-table-v2-cell">
+            <code>8</code>
+          </td>
+          <td className="cn-table-v2-cell">32px</td>
+          <td className="cn-table-v2-cell"></td>
+          <td className="cn-table-v2-cell"></td>
+          <td className="cn-table-v2-cell"></td>
+          <td className="cn-table-v2-cell"></td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+</div>
+
+Half-step tokens (`1-half` through `12-half`) are also available for fine-grained adjustments: `spacing.1-half` = 6px, `spacing.2-half` = 10px, etc.

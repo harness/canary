@@ -1,14 +1,14 @@
 import { RefObject } from 'react'
 
-import { TypesUser } from '@harnessio/ui/types'
-import { createRequestIdleCallbackTaskPool } from '@harnessio/ui/utils'
-import { dispatchCustomEvent } from '@harnessio/ui/hooks'
 import { get, isEmpty } from 'lodash-es'
 
-import { PR_ACCORDION_STICKY_TOP } from '../components/pull-request-accordian'
+import { dispatchCustomEvent } from '@harnessio/ui/hooks'
+import { TypesUser } from '@harnessio/ui/types'
+import { createRequestIdleCallbackTaskPool } from '@harnessio/ui/utils'
+
 import { DiffViewerCustomEvent, DiffViewerEvent } from '../components/pull-request-diff-viewer'
 import { PullReqReviewDecision } from '../pull-request.types'
-import { innerBlockName, outterBlockName } from '../utils'
+import { getPullRequestAccordionStickyTopPx, innerBlockName, outterBlockName } from '../utils'
 import {
   ApprovalItem,
   ApprovalItems,
@@ -372,7 +372,7 @@ export const jumpToFile = (
     if (outerBlockDOM && innerBlockDOM) {
       const rect = innerBlockDOM.getBoundingClientRect()
       const currentScrollTop = scrollContainer.scrollTop || window.scrollY
-      const exactScrollTop = currentScrollTop + rect.top - PR_ACCORDION_STICKY_TOP
+      const exactScrollTop = currentScrollTop + rect.top - getPullRequestAccordionStickyTopPx()
 
       // Cache the exact position for future use
       diffScrollCache?.set(filePath, Math.max(0, exactScrollTop))

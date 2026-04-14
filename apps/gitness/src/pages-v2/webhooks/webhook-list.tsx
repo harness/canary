@@ -123,8 +123,8 @@ export default function WebhookListPage() {
         setSearchQuery={setQuery}
         webhookLoading={isFetching}
         handleEnableWebhook={handleEnableWebhook}
-        toRepoWebhookDetails={({ webhookId }: { webhookId: number }) =>
-          routes.toRepoWebhookDetails({ spaceId, repoId, webhookId: webhookId.toString() })
+        toRepoWebhookDetails={({ webhookId }: { webhookId: string }) =>
+          routes.toRepoWebhookDetails({ spaceId, repoId, webhookId })
         }
         toRepoWebhookCreate={() => routes.toRepoWebhookCreate({ spaceId, repoId })}
       />

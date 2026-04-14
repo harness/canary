@@ -1,8 +1,9 @@
 import { FC } from 'react'
 
+import { BranchSelectorContainerProps } from '@views/repo/components'
+
 import { FormSeparator, Layout, Text } from '@harnessio/ui/components'
 import { useTranslation } from '@harnessio/ui/context'
-import { BranchSelectorContainerProps } from '@views/repo/components'
 
 import { RepoSettingsGeneralDelete } from './components/repo-settings-general-delete'
 import { RepoSettingsFeaturesForm, RepoSettingsFeaturesFormFields } from './components/repo-settings-general-features'
@@ -53,8 +54,14 @@ export const RepoSettingsGeneralPage: FC<RepoSettingsGeneralPageProps> = ({
 }) => {
   const { t } = useTranslation()
 
-  const { repoData, securityScanning, verifyCommitterIdentity, gitLfsEnabled, vulnerabilityScanning } =
-    useRepoRulesStore()
+  const {
+    repoData,
+    securityScanning,
+    verifyCommitterIdentity,
+    gitLfsEnabled,
+    autoMergeEnabled,
+    vulnerabilityScanning
+  } = useRepoRulesStore()
 
   return (
     <Layout.Vertical className="settings-form-width" gap="xl">
@@ -88,6 +95,7 @@ export const RepoSettingsGeneralPage: FC<RepoSettingsGeneralPageProps> = ({
         <FormSeparator />
         <RepoSettingsFeaturesForm
           gitLfsEnabled={gitLfsEnabled}
+          autoMergeEnabled={autoMergeEnabled}
           handleUpdateFeaturesSettings={handleUpdateFeaturesSettings}
           apiError={apiError}
           isUpdatingFeaturesSettings={loadingStates.isUpdatingFeaturesSettings}

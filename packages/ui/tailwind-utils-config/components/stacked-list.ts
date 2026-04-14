@@ -44,7 +44,10 @@ export default {
       },
 
       '&-with-hover': {
-        '@apply hover:bg-cn-hover cursor-pointer duration-150 ease-in-out': ''
+        '@apply hover:bg-cn-hover cursor-pointer duration-150 ease-in-out': '',
+        '&:hover .cn-row-pin:not(.cn-row-pin-on), &:focus-within .cn-row-pin:not(.cn-row-pin-on)': {
+          opacity: '1'
+        }
       },
 
       '&-clickable-block': {

@@ -44,7 +44,8 @@ export function MainContentLayout({
         {
           'rounded-cn-3': isMobile || enableInset,
           'min-h-[calc(100vh-var(--cn-breadcrumbs-height)-var(--cn-inset-layout-indent))] mb-[var(--cn-inset-layout-indent)] mt-0':
-            withBreadcrumbs
+            withBreadcrumbs,
+          'cn-with-legacy-breadcrumb-band': withBreadcrumbs
         },
         className
       )}
@@ -59,10 +60,7 @@ export function MainContentLayout({
         <div
           aria-hidden
           role="presentation"
-          className={cn(
-            'sticky w-[calc(100%+2px)] flex justify-between left-0 right-0 top-0 -mx-px -mt-px -mb-[var(--cn-inset-layout-indent)] z-20',
-            { 'top-[var(--cn-breadcrumbs-height)]': withBreadcrumbs }
-          )}
+          className="sticky top-[var(--cn-sticky-breadcrumb-offset)] z-20 flex w-[calc(100%+2px)] justify-between -mx-px -mt-px -mb-[var(--cn-inset-layout-indent)]"
         >
           <HalfArch className="left-0" />
           <div className="w-full border-t" />

@@ -76,6 +76,7 @@ export interface IRepoStore {
   verifyCommitterIdentity: boolean
   vulnerabilityScanning: VulnerabilityScanningType
   gitLfsEnabled: boolean
+  autoMergeEnabled: boolean
   presetRuleData: RepoBranchSettingsFormFields | null
   principals: PrincipalType[] | null
   userGroups: TypesUserGroupInfo[] | null

@@ -1,8 +1,11 @@
-import { FC, useCallback } from 'react'
+import { FC } from 'react'
+
+import { CommitsList, IPullRequestCommitsStore, TypesCommit } from '@views'
 
 import { NoData, Pagination, Skeleton } from '@harnessio/ui/components'
 import { useTranslation } from '@harnessio/ui/context'
-import { CommitsList, IPullRequestCommitsStore, TypesCommit } from '@views'
+
+const getPageLink = (pageNum: number) => `?page=${pageNum}`
 
 interface RoutingProps {
   toCommitDetails?: ({ sha }: { sha: string }) => string
@@ -11,25 +14,24 @@ interface RoutingProps {
 }
 interface RepoPullRequestCommitsViewProps extends Partial<RoutingProps> {
   usePullRequestCommitsStore: () => IPullRequestCommitsStore
+  currentPage?: number
+  totalCommits?: number
+  pageSize?: number
+  setPageSize?: (size: number) => void
 }
 
 const PullRequestCommitsView: FC<RepoPullRequestCommitsViewProps> = ({
   usePullRequestCommitsStore,
   toCommitDetails,
   toPullRequestChange,
-
-  toCode
+  toCode,
+  currentPage,
+  totalCommits,
+  pageSize,
+  setPageSize
 }) => {
-  const { commitsList, xNextPage, xPrevPage, isFetchingCommits, page } = usePullRequestCommitsStore()
+  const { commitsList, isFetchingCommits } = usePullRequestCommitsStore()
   const { t } = useTranslation()
-
-  const getPrevPageLink = useCallback(() => {
-    return `?page=${xPrevPage}`
-  }, [xPrevPage])
-
-  const getNextPageLink = useCallback(() => {
-    return `?page=${xNextPage}`
-  }, [xNextPage])
 
   if (isFetchingCommits) {
     return <Skeleton.List className="mt-cn-xl" />
@@ -59,19 +61,21 @@ const PullRequestCommitsView: FC<RepoPullRequestCommitsViewProps> = ({
             title: item.title,
             message: item.message,
             author: item.author,
-            committer: item.committer
+            committer: item.committer,
+            signature: item.signature
           }))}
         />
       )}
 
-      <Pagination
-        indeterminate
-        currentPage={page}
-        hasNext={xNextPage > 0}
-        hasPrevious={xPrevPage > 0}
-        getPrevPageLink={getPrevPageLink}
-        getNextPageLink={getNextPageLink}
-      />
+      {totalCommits && pageSize && currentPage ? (
+        <Pagination
+          currentPage={currentPage}
+          totalItems={totalCommits}
+          pageSize={pageSize}
+          onPageSizeChange={setPageSize}
+          getPageLink={getPageLink}
+        />
+      ) : null}
     </>
   )
 }

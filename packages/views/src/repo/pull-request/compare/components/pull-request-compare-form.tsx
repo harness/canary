@@ -1,7 +1,7 @@
 import { forwardRef } from 'react'
 import { SubmitHandler, UseFormReturn } from 'react-hook-form'
 
-import { Alert, FormInput, FormWrapper, Layout, Text } from '@harnessio/ui/components'
+import { Alert, FormInput, FormWrapper, Layout, Skeleton, Text } from '@harnessio/ui/components'
 import { useTranslation } from '@harnessio/ui/context'
 import { HandleAiPullRequestSummaryType, HandleUploadType, PrincipalPropsType, PullRequestCommentBox } from '@views'
 import { isEmpty, noop } from 'lodash-es'
@@ -26,6 +26,7 @@ interface PullRequestFormProps {
   formMethods: UseFormReturn<FormFields>
   principalProps: PrincipalPropsType
   isLoading: boolean
+  isTemplateFetching?: boolean
 }
 
 const PullRequestCompareForm = forwardRef<HTMLFormElement, PullRequestFormProps>(
@@ -34,6 +35,7 @@ const PullRequestCompareForm = forwardRef<HTMLFormElement, PullRequestFormProps>
       apiError,
       onFormSubmit,
       isLoading,
+      isTemplateFetching,
       handleUpload,
       description,
       setDescription,
@@ -71,29 +73,38 @@ const PullRequestCompareForm = forwardRef<HTMLFormElement, PullRequestFormProps>
               {t('views:pullRequests.compareChangesFormDescriptionHeading', 'Add a description')}
             </Text>
 
-            <PullRequestCommentBox
-              hideAvatar
-              preserveCommentOnSave
-              allowEmptyValue
-              isLoading={isLoading}
-              buttonTitle="Create Pull Request"
-              onSaveComment={formattedComment => {
-                if (isEmpty(errors)) {
-                  onFormSubmit({ title: formMethods.getValues('title'), description: formattedComment })
-                }
-              }}
-              textareaPlaceholder={t(
-                'views:pullRequests.compareChangesFormDescriptionPlaceholder',
-                'Enter pull request description'
-              )}
-              comment={description ?? ''}
-              setComment={setDescription}
-              handleAiPullRequestSummary={handleAiPullRequestSummary}
-              principalProps={principalProps}
-              handleUpload={handleUpload}
-              principalsMentionMap={{}}
-              setPrincipalsMentionMap={noop}
-            />
+            {isTemplateFetching ? (
+              <Layout.Vertical gap="sm">
+                <Skeleton.List />
+                <Text variant="body-single-line-normal" color="foreground-3">
+                  {t('views:pullRequests.compareChangesTemplateLoading', 'Loading pull request template…')}
+                </Text>
+              </Layout.Vertical>
+            ) : (
+              <PullRequestCommentBox
+                hideAvatar
+                preserveCommentOnSave
+                allowEmptyValue
+                isLoading={isLoading}
+                buttonTitle="Create Pull Request"
+                onSaveComment={formattedComment => {
+                  if (isEmpty(errors)) {
+                    onFormSubmit({ title: formMethods.getValues('title'), description: formattedComment })
+                  }
+                }}
+                textareaPlaceholder={t(
+                  'views:pullRequests.compareChangesFormDescriptionPlaceholder',
+                  'Enter pull request description'
+                )}
+                comment={description ?? ''}
+                setComment={setDescription}
+                handleAiPullRequestSummary={handleAiPullRequestSummary}
+                principalProps={principalProps}
+                handleUpload={handleUpload}
+                principalsMentionMap={{}}
+                setPrincipalsMentionMap={noop}
+              />
+            )}
           </Layout.Vertical>
         </Layout.Vertical>
         {apiError && apiError !== "head branch doesn't contain any new commits." && (

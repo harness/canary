@@ -643,17 +643,21 @@
     }
   },
   "shell": {
+    "$description": "App shell — the main content area right of the sidebar that holds page blocks (panels)",
     "container": {
       "$type": "number",
-      "$value": "{layout.xs}"
+      "$value": "{layout.xs}",
+      "$description": "Outer padding of the shell area (top, bottom, right)"
     },
     "gap": {
       "$type": "number",
-      "$value": "{layout.sm}"
+      "$value": "{layout.sm}",
+      "$description": "Gap between page blocks inside the shell (e.g. between AI chat panel and main content)"
     },
     "radius": {
       "$type": "number",
-      "$value": "{rounded.6}"
+      "$value": "{rounded.6}",
+      "$description": "Border radius of page blocks inside the shell"
     }
   }
 }

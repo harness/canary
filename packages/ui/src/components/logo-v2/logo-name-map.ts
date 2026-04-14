@@ -10,6 +10,7 @@ import AppDynamics from './logos/app-dynamics.svg'
 import Approval from './logos/approval.svg'
 import Aqua from './logos/aqua.svg'
 import Argo from './logos/argo.svg'
+import ArmoreCode from './logos/armore-code.svg'
 import Artifactory from './logos/artifactory.svg'
 import AutoScaler from './logos/auto-scaler.svg'
 import Aws from './logos/aws.svg'
@@ -30,6 +31,7 @@ import Claude from './logos/claude.svg'
 import Codecov from './logos/codecov.svg'
 import Confluence from './logos/confluence.svg'
 import Connector from './logos/connector.svg'
+import Cursor from './logos/cursor.svg'
 import CustomDeployment from './logos/custom-deployment.svg'
 import CustomIngest from './logos/custom-ingest.svg'
 import CustomScan from './logos/custom-scan.svg'
@@ -98,6 +100,7 @@ import PrismaCloud from './logos/prisma-cloud.svg'
 import Prometheus from './logos/prometheus.svg'
 import Prowler from './logos/prowler.svg'
 import Python from './logos/python.svg'
+import Qtest from './logos/qtest.svg'
 import Qualys from './logos/qualys.svg'
 import Queue from './logos/queue.svg'
 import Qwiet from './logos/qwiet.svg'
@@ -130,6 +133,7 @@ import Terragrunt from './logos/terragrunt.svg'
 import Traceable from './logos/traceable.svg'
 import Veracode from './logos/veracode.svg'
 import VueJs from './logos/vue-js.svg'
+import Windsurf from './logos/windsurf.svg'
 import Wiz from './logos/wiz.svg'
 import Yaml from './logos/yaml.svg'
 import Zap from './logos/zap.svg'
@@ -143,6 +147,7 @@ export const LogoNameMapV2 = {
   approval: Approval,
   aqua: Aqua,
   argo: Argo,
+  'armore-code': ArmoreCode,
   artifactory: Artifactory,
   'auto-scaler': AutoScaler,
   aws: Aws,
@@ -163,6 +168,7 @@ export const LogoNameMapV2 = {
   codecov: Codecov,
   confluence: Confluence,
   connector: Connector,
+  cursor: Cursor,
   'custom-deployment': CustomDeployment,
   'custom-ingest': CustomIngest,
   'custom-scan': CustomScan,
@@ -232,6 +238,7 @@ export const LogoNameMapV2 = {
   prowler: Prowler,
   python: Python,
   qualys: Qualys,
+  qtest: Qtest,
   queue: Queue,
   qwiet: Qwiet,
   rancher: Rancher,
@@ -264,6 +271,7 @@ export const LogoNameMapV2 = {
   veracode: Veracode,
   'vue-js': VueJs,
   wiz: Wiz,
+  windsurf: Windsurf,
   yaml: Yaml,
   zap: Zap,
   zoom: Zoom

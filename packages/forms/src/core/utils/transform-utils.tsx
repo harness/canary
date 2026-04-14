@@ -70,7 +70,7 @@ export function outputTransformValues(values: Record<string, any>, transformerIt
 
 function flattenInputsRec(inputs: IInputDefinition[]): IInputDefinition[] {
   const flattenInputs = inputs.reduce<IInputDefinition[]>((acc, input) => {
-    if ((input.inputType === 'group' || input.inputType === 'accordion') && input.inputs) {
+    if (Array.isArray(input.inputs)) {
       return [...acc, input, ...flattenInputsRec(input.inputs)]
     } else {
       return [...acc, input]

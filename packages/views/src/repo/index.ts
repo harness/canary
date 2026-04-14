@@ -11,9 +11,14 @@ export * from '@views/repo/repo-create'
 // repo summary
 export * from '@views/repo/repo-summary/repo-summary'
 export * from '@views/repo/repo-summary/repo-empty-view'
+export { LanguageBar } from '@views/repo/repo-summary/components/language-bar'
+export type { LanguageStat } from '@views/repo/repo-summary/components/language-bar'
 
 // repo types
 export * from '@views/repo/repo.types'
+
+// repo constants
+export { getLanguageColor, LANGUAGE_COLORS } from '@views/repo/constants/language-colors'
 
 // repo utils
 export { tagsRecordToOptions, tagsOptionsToRecord } from '@views/repo/utils'

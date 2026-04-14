@@ -82,6 +82,15 @@ export const shouldRetainDiffChildren = (dom: HTMLElement | null) =>
 export const outterBlockName = (blockIndex: number) => `outter-${blockIndex}`
 export const innerBlockName = (filePath: string) => `inner-${filePath}`
 
+/** Pixel offset for sticky PR diff headers (breadcrumb band + commits bar). */
+export function getPullRequestAccordionStickyTopPx(): number {
+  const toolbar = 68
+  if (typeof document === 'undefined') return 55 + toolbar
+  const layout = document.getElementById('main-content-layout')
+  const band = !layout || layout.classList.contains('cn-with-legacy-breadcrumb-band') ? 55 : 0
+  return band + toolbar
+}
+
 // If there are more than 200 diffs, we decrease the detection margin to make sure browser do not crash. As a result, Cmd-F won't work well on diffs that got hidden/out of viewport.
 export const calculateDetectionMargin = (diffsLength: number) =>
   diffsLength >= 200 ? 5000 : IN_VIEWPORT_DETECTION_MARGIN

@@ -1,4 +1,3 @@
-import { ExecutionState, PrincipalType, UsererrorError } from '@harnessio/ui/types'
 import {
   EnumPullReqReviewDecision,
   PRReviewer,
@@ -8,6 +7,8 @@ import {
   TypesPullReq,
   TypesPullReqStats
 } from '@views'
+
+import { ExecutionState, PrincipalType, UsererrorError } from '@harnessio/ui/types'
 
 export interface PullReqCount {
   error: number
@@ -261,18 +262,19 @@ export interface GeneralPayload extends TypesPullReqActivity {
 }
 
 export type EnumPullReqActivityType =
+  | 'auto-merge-unsupported-merge-method'
   | 'branch-delete'
+  | 'branch-restore'
   | 'branch-update'
   | 'code-comment'
   | 'comment'
+  | 'label-modify'
   | 'merge'
+  | 'non-unique-merge-base'
   | 'review-submit'
+  | 'reviewer-add'
   | 'reviewer-delete'
   | 'state-change'
-  | 'title-change'
-  | 'reviewer-add'
-  | 'label-modify'
-  | 'branch-restore'
   | 'target-branch-change'
   | 'title-change'
   | 'user-group-reviewer-add'
@@ -649,7 +651,8 @@ export enum CommentType {
   USER_GROUP_REVIEWER_DELETE = 'user-group-reviewer-delete',
   LABEL_MODIFY = 'label-modify',
   BRANCH_RESTORE = 'branch-restore',
-  TARGET_BRANCH_CHANGE = 'target-branch-change'
+  TARGET_BRANCH_CHANGE = 'target-branch-change',
+  AUTO_MERGE_FAILED = 'auto-merge-unsupported-merge-method'
 }
 
 export enum LabelActivity {

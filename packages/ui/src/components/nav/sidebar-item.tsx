@@ -45,7 +45,7 @@ export default function SidebarItem({ item, isPinned }: SidebarItemProps) {
         onSubmenuChange={setOpen}
       >
         {item.subItems.map(subItem => (
-          <Sidebar.MenuSubItem key={subItem.id} title={subItem.title} to={subItem.to} />
+          <Sidebar.MenuSubItem key={subItem.id} title={subItem.title} to={subItem.to} active={subItem.active} />
         ))}
       </Sidebar.Item>
     )

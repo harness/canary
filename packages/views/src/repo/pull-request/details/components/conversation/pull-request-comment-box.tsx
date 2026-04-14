@@ -268,7 +268,7 @@ export const PullRequestCommentBox = ({
   const handleUploadCallback = (file: File) => {
     setFile(file)
 
-    handleUpload?.(file, setTextComment, textComment, currentSelection())
+    handleUpload?.(file, setComment, textComment, currentSelection())
   }
 
   const handleFileSelect = () => {

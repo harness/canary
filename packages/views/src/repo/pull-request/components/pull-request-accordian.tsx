@@ -1,8 +1,6 @@
 import { useCallback, useEffect, useMemo, useState } from 'react'
 
-import { Accordion, Button, Checkbox, CopyButton, CounterBadge, IconV2, Layout, Link, Tag, Text } from '@harnessio/ui/components'
-import { useTranslation } from '@harnessio/ui/context'
-import { TypesUser } from '@harnessio/ui/types'
+import { DiffModeEnum } from '@git-diff-view/react'
 import {
   CommentItem,
   CommitFilterItemProps,
@@ -16,12 +14,26 @@ import {
   TypesPullReq,
   TypesPullReqActivity
 } from '@views'
-import { DiffModeEnum } from '@git-diff-view/react'
-import { cn } from '@harnessio/ui/utils'
 import PullRequestDiffViewer from '@views/repo/pull-request/components/pull-request-diff-viewer'
 import { FILE_VIEWED_OBSOLETE_SHA } from '@views/repo/pull-request/details/pull-request-utils'
 import { useDiffConfig } from '@views/repo/pull-request/hooks/useDiffConfig'
 import { parseStartingLineIfOne, PULL_REQUEST_LARGE_DIFF_CHANGES_LIMIT } from '@views/repo/pull-request/utils'
+
+import {
+  Accordion,
+  Button,
+  Checkbox,
+  CopyButton,
+  CounterBadge,
+  IconV2,
+  Layout,
+  Link,
+  Tag,
+  Text
+} from '@harnessio/ui/components'
+import { useTranslation } from '@harnessio/ui/context'
+import { TypesUser } from '@harnessio/ui/types'
+import { cn } from '@harnessio/ui/utils'
 
 export interface HeaderProps {
   text: string
@@ -343,7 +355,7 @@ export const PullRequestAccordion: React.FC<{
             'bg-cn-2 border-cn-2 group-[[data-state=closed]]:rounded-cn-3 border px-cn-md py-cn-xs transition-[border-radius] duration-300 [&>.cn-accordion-trigger-indicator]:m-0 [&>.cn-accordion-trigger-indicator]:self-center',
             isOpen ? 'rounded-t-cn-3' : 'rounded-cn-3'
           )}
-          headerClassName="z-[18] sticky top-[123px] bg-cn-1 group"
+          headerClassName={cn('z-[18] sticky bg-cn-1 group', 'top-[calc(var(--cn-sticky-breadcrumb-offset)+68px)]')}
         >
           <LineTitle
             header={header}

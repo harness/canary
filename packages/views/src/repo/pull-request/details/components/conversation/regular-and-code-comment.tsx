@@ -325,7 +325,7 @@ const PullRequestRegularAndCodeCommentInternal: FC<PullRequestRegularAndCodeComm
           ? {
               description: (
                 <Layout.Horizontal align="center" gap="3xs">
-                  <Text variant="body-single-line-normal">reviewed</Text>
+                  <Text variant="body-single-line-normal" color="foreground-3">reviewed</Text>
                   <TimeAgoCard timestamp={payload.created} />
                   {payload?.code_comment?.outdated && (
                     <>
@@ -410,7 +410,7 @@ const PullRequestRegularAndCodeCommentInternal: FC<PullRequestRegularAndCodeComm
           ? {
               description: (
                 <Layout.Horizontal align="center" gap="3xs">
-                  <Text variant="body-normal">commented</Text>
+                  <Text variant="body-normal" color="foreground-3">commented</Text>
                   <TimeAgoCard timestamp={payload.created} />
                 </Layout.Horizontal>
               )

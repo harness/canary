@@ -22,7 +22,7 @@
   },
   "dependencies": {
     "@emotion/is-prop-valid": "^1.4.0",
-    "@harnessio/code-service-client": "3.10.0",
+    "@harnessio/code-service-client": "3.11.0",
     "@harnessio/filters": "workspace:*",
     "@harnessio/forms": "workspace:*",
     "@harnessio/react-ng-manager-swagger-service-client": "1.7.1",

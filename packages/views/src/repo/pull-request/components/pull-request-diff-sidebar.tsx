@@ -31,7 +31,7 @@ export const PullRequestDiffSidebar: FC<PullRequestDiffSidebarProps> = ({
 
   return (
     <div
-      className="nested-sidebar-height pr-cn-sm -ml-cn-2xl sticky top-[var(--cn-breadcrumbs-height)] overflow-hidden"
+      className="nested-sidebar-height pr-cn-sm -ml-cn-2xl sticky top-[var(--cn-sticky-breadcrumb-offset)] overflow-hidden"
       style={{
         width: `${sidebarWidth}px`,
         minWidth: `${SIDEBAR_MIN_WIDTH}px`,

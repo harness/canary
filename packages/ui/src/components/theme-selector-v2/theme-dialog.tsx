@@ -21,8 +21,15 @@ const contrastOptions: SelectValueOption<ContrastType>[] = Object.entries(Contra
   value
 }))
 
-const colorOptions: SelectValueOption<ColorType>[] = Object.entries(ColorType).map(([key, value]) => ({
-  label: key,
+const colorLabels: Record<ColorType, string> = {
+  [ColorType.Standard]: 'Standard',
+  [ColorType.Protanopia]: 'Protanopia (red-blind)',
+  [ColorType.Deuteranopia]: 'Deuteranopia (green-blind)',
+  [ColorType.Tritanopia]: 'Tritanopia (blue-blind)'
+}
+
+const colorOptions: SelectValueOption<ColorType>[] = Object.values(ColorType).map(value => ({
+  label: colorLabels[value],
   value
 }))
 
@@ -73,7 +80,7 @@ const ThemeDialog: FC<ThemeDialogProps> = ({
           <div className="flex flex-col">
             <Text variant="heading-base">Mode</Text>
             <Text className="mt-cn-2xs" color="foreground-3">
-              Choose Dark mode for low light or Light mode for bright spaces.
+              Choose Dark mode for low light or Light mode for bright spaces. System follows your device settings.
             </Text>
             <div className="mt-cn-md gap-cn-md grid grid-cols-2">
               {Object.entries(ModeType).map(([key, value]) => {
@@ -93,7 +100,7 @@ const ThemeDialog: FC<ThemeDialogProps> = ({
                         src={valueMode === ModeType.Dark ? darkModeImage : lightModeImage}
                         alt=""
                         className={cn(
-                          'w-full h-auto rounded border',
+                          'w-full h-auto rounded-cn-3 border',
                           mode === value ? 'border-cn-brand' : 'border-cn-3'
                         )}
                       />
@@ -130,7 +137,7 @@ const ThemeDialog: FC<ThemeDialogProps> = ({
                 <div>
                   <Text variant="heading-base">Contrast</Text>
                   <Text className="mt-cn-2xs" color="foreground-3">
-                    High contrast improves readability, Dimmer mode reduces glare.
+                    High contrast improves readability, Low contrast reduces glare.
                   </Text>
                 </div>
 
@@ -149,7 +156,7 @@ const ThemeDialog: FC<ThemeDialogProps> = ({
                 <div>
                   <Text variant="heading-base">Color adjustment</Text>
                   <Text className="mt-cn-2xs" color="foreground-3">
-                    Adjust colors for different types of color blindness.
+                    Adjust colors for different types of color vision deficiency.
                   </Text>
                 </div>
 

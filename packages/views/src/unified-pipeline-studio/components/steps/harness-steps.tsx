@@ -28,46 +28,55 @@ export const harnessSteps: (HarnessStepDefinitionType | HarnessStepGroupDefiniti
   {
     identifier: RUN_STEP_IDENTIFIER,
     description: RUN_STEP_DESCRIPTION,
+    name: 'Run',
     formDefinition: runStepFormDefinition
   },
   {
     identifier: RUN_TEST_STEP_IDENTIFIER,
     description: RUN_TEST_STEP_DESCRIPTION,
+    name: 'Run test',
     formDefinition: runTestStepFormDefinition
   },
   {
     identifier: QUEUE_STEP_IDENTIFIER,
     description: QUEUE_STEP_DESCRIPTION,
+    name: 'Queue',
     formDefinition: queueStepFormDefinition
   },
   {
     identifier: BACKGROUND_STEP_IDENTIFIER,
     description: BACKGROUND_STEP_DESCRIPTION,
+    name: 'Background',
     formDefinition: backgroundStepFormDefinition
   },
   {
     identifier: APPROVAL_STEP_IDENTIFIER,
     description: APPROVAL_STEP_DESCRIPTION,
+    name: 'Approval',
     formDefinition: approvalStepFormDefinition
   },
   {
     identifier: BARRIER_STEP_IDENTIFIER,
     description: BARRIER_STEP_DESCRIPTION,
+    name: 'Barrier',
     formDefinition: barrierStepFormDefinition
   },
   {
     identifier: ACTION_STEP_IDENTIFIER,
     description: ACTION_STEP_DESCRIPTION,
+    name: 'Action',
     formDefinition: actionStepFormDefinition
   },
   {
     identifier: GROUP_IDENTIFIER,
     description: GROUP_DESCRIPTION,
+    name: 'Group',
     formDefinition: groupFormDefinition
   },
   {
     identifier: PARALLEL_IDENTIFIER,
     description: PARALLEL_DESCRIPTION,
+    name: 'Parallel',
     formDefinition: parallelFormDefinition
   }
 ]
@@ -81,11 +90,13 @@ export const harnessStepGroups: HarnessStepGroupDefinitionType[] = [
   {
     identifier: GROUP_IDENTIFIER,
     description: GROUP_DESCRIPTION,
+    name: 'Group',
     formDefinition: groupFormDefinition
   },
   {
     identifier: PARALLEL_IDENTIFIER,
     description: PARALLEL_DESCRIPTION,
+    name: 'Parallel',
     formDefinition: parallelFormDefinition
   }
 ]

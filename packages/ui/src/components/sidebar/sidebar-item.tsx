@@ -28,6 +28,12 @@ import { useSidebar } from './sidebar-context'
 
 const SUBMENU_ITEM_DISPLAY_NAME = 'SidebarMenuSubItem'
 
+function hasActiveSubmenuChild(children: ReactNode): boolean {
+  return filterChildrenByDisplayNames(children, [SUBMENU_ITEM_DISPLAY_NAME]).some(
+    el => !!(el.props as { active?: boolean }).active
+  )
+}
+
 interface SidebarBadgeProps extends Omit<StatusBadgeProps, 'children' | 'size' | 'content'> {
   content?: ReactNode
 }
@@ -330,7 +336,7 @@ const SidebarItemTrigger = forwardRef<HTMLButtonElement | HTMLAnchorElement, Sid
             size="2xs"
           />
         )}
-        {((withActionMenu && !badge) || withSubmenu) && (
+        {((withActionMenu && !badge) || withSubmenu || withRightIndicator) && (
           <div className="cn-sidebar-item-content-action-item-placeholder" />
         )}
       </Layout.Grid>
@@ -481,6 +487,10 @@ export const SidebarItem = forwardRef<HTMLButtonElement | HTMLAnchorElement, Sid
   ({ subMenuOpen, defaultSubmenuOpen, onSubmenuChange, ...props }, ref) => {
     const { state } = useSidebar()
 
+    const collapsedSubmenuActive = state === 'collapsed' && !!props.children && hasActiveSubmenuChild(props.children)
+
+    const itemProps = { ...props, active: props.active || collapsedSubmenuActive }
+
     // Is the component externally controlled?
     const isControlled = subMenuOpen !== undefined
 
@@ -511,13 +521,13 @@ export const SidebarItem = forwardRef<HTMLButtonElement | HTMLAnchorElement, Sid
     // Wrap trigger with tooltip logic
     const WrappedItemTrigger = () => {
       const trigger = (
-        <SidebarItemTrigger ref={ref} {...props} toggleSubmenu={toggleSubmenu} submenuOpen={effectiveOpen} />
+        <SidebarItemTrigger ref={ref} {...itemProps} toggleSubmenu={toggleSubmenu} submenuOpen={effectiveOpen} />
       )
 
       // Prefer explicit tooltip first
-      if (props.tooltip) {
+      if (itemProps.tooltip) {
         return (
-          <Tooltip side="right" align="center" content={props.tooltip}>
+          <Tooltip side="right" align="center" content={itemProps.tooltip}>
             {trigger}
           </Tooltip>
         )
@@ -526,7 +536,7 @@ export const SidebarItem = forwardRef<HTMLButtonElement | HTMLAnchorElement, Sid
       // Fallback tooltip when collapsed
       if (state === 'collapsed') {
         return (
-          <Tooltip side="right" align="center" content={props.title}>
+          <Tooltip side="right" align="center" content={itemProps.title}>
             {trigger}
           </Tooltip>
         )
@@ -535,11 +545,11 @@ export const SidebarItem = forwardRef<HTMLButtonElement | HTMLAnchorElement, Sid
       return trigger
     }
 
-    const withSubmenu = !!props.children
+    const withSubmenu = !!itemProps.children
 
     if (withSubmenu) {
       const filteredChildren = effectiveOpen
-        ? filterChildrenByDisplayNames(props.children, [SUBMENU_ITEM_DISPLAY_NAME])
+        ? filterChildrenByDisplayNames(itemProps.children, [SUBMENU_ITEM_DISPLAY_NAME])
         : []
       const rowsCount = filteredChildren.length + 1
 

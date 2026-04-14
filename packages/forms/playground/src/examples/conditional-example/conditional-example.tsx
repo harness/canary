@@ -25,7 +25,12 @@ function ConditionalExample() {
       <RootForm onSubmit={onSubmit} resolver={undefined} mode={undefined}>
         {rootForm => (
           <Layout.Vertical gap="lg">
-            <RenderForm factory={inputComponentFactory} inputs={formDefinition} className="space-y-cn-md" />
+            <RenderForm
+              factory={inputComponentFactory}
+              inputs={formDefinition}
+              className="space-y-cn-md"
+              withoutWrapper
+            />
             <Button onClick={() => rootForm.submitForm()} className="self-start">
               Submit
             </Button>

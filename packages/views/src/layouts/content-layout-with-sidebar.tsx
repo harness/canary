@@ -43,7 +43,7 @@ export const ContentLayoutWithSidebar: FC<ContentLayoutWithSidebarProps> = ({
 
   return (
     <SandboxLayout.Content className="gap-x-cn-4xl relative flex-row">
-      <Layout.Grid className={cn('top-[var(--cn-breadcrumbs-height)] sticky w-[228px] h-fit shrink-0')} gapY="lg">
+      <Layout.Grid className={cn('top-[var(--cn-sticky-breadcrumb-offset)] sticky w-[228px] h-fit shrink-0')} gapY="lg">
         {showBackButton && (
           <Link size="sm" prefixIcon to={backButtonTo?.() ?? ''}>
             {backButtonLabel}

@@ -1,7 +1,8 @@
 import { ReactNode } from 'react'
 
-import { Layout, ScrollArea, SearchFiles } from '@harnessio/ui/components'
 import { SIDEBAR_MAX_WIDTH, SIDEBAR_MIN_WIDTH } from '@views/repo/components'
+
+import { Layout, ScrollArea, SearchFiles } from '@harnessio/ui/components'
 
 interface CommitsSidebarProps {
   navigateToFile: (file: string) => void
@@ -13,7 +14,7 @@ interface CommitsSidebarProps {
 export const CommitSidebar = ({ navigateToFile, filesList, children, sidebarWidth }: CommitsSidebarProps) => {
   return (
     <div
-      className="nested-sidebar-height pt-cn-xl sticky top-[var(--cn-breadcrumbs-height)]"
+      className="nested-sidebar-height pt-cn-xl sticky top-[var(--cn-sticky-breadcrumb-offset)]"
       style={{
         width: `${sidebarWidth}px`,
         minWidth: `${SIDEBAR_MIN_WIDTH}px`,

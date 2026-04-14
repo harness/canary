@@ -60,7 +60,9 @@ export enum FeatureFlag {
   SEMANTIC_SEARCH_ENABLED = 'SEMANTIC_SEARCH_ENABLED',
   CODE_SSH_ENABLED = 'CODE_SSH_ENABLED',
   CODE_SECURITY_SCANNING_ON_PUSH = 'CODE_SECURITY_SCANNING_ON_PUSH',
-  CODE_FORK_ENABLED = 'CODE_FORK_ENABLED'
+  CODE_FORK_ENABLED = 'CODE_FORK_ENABLED',
+  PL_ENABLE_CANARY_UI = 'PL_ENABLE_CANARY_UI',
+  PL_UNIFIED_OPT_IN_ENABLED = 'PL_UNIFIED_OPT_IN_ENABLED'
 }
 
 export interface Hooks {
@@ -126,13 +128,17 @@ export interface MFEContextProps {
   setMFETheme: (newTheme: string) => void
   parentLocationPath: string
   onRouteChange: (updatedLocationPathname: string) => void
+  isPublicAccessEnabledOnResources: boolean
+  isCurrentSessionPublic: boolean
 }
 
 export const defaultContext: MFEContextProps = {
   scope: { accountId: '' },
   renderUrl: '',
   parentContextObj: {
-    appStoreContext: createContext({ currentUserInfo: { uuid: '' } })
+    appStoreContext: createContext({
+      currentUserInfo: { uuid: '' }
+    })
   },
   customHooks: {
     usePreferenceStore: () => ({ preference: undefined, setPreference: noop }),
@@ -144,7 +150,9 @@ export const defaultContext: MFEContextProps = {
   hooks: {},
   setMFETheme: noop,
   parentLocationPath: '',
-  onRouteChange: noop
+  onRouteChange: noop,
+  isPublicAccessEnabledOnResources: false,
+  isCurrentSessionPublic: false
 }
 
 export const MFEContext = createContext<MFEContextProps>(defaultContext)

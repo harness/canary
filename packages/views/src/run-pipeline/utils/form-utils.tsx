@@ -9,7 +9,7 @@ export function collectDefaultValues(formDefinition: IFormDefinition): Record<st
     inputs.forEach(input => {
       const { default: defaultValue, path, inputType, inputs: children } = input
 
-      if ((inputType === 'group' || inputType === 'accordion') && Array.isArray(children)) {
+      if (Array.isArray(children)) {
         // dive into nested group/accordion
         traverse(children)
       } else if (defaultValue !== undefined) {

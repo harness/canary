@@ -9,6 +9,7 @@ import {
   FormInput,
   FormSeparator,
   FormWrapper,
+  IconWithTooltip,
   Select,
   Spacer,
   Text
@@ -24,6 +25,7 @@ const formSchema = z
     hostUrl: z.string().optional(),
     pipelines: z.boolean().optional(),
     repositories: z.boolean().optional(),
+    include_subgroups_repos: z.boolean().optional(),
     provider: z.nativeEnum(ProviderOptionsEnum, { message: 'Please select a provider' }),
     password: z.string().optional(),
     organization: z.string().optional(),
@@ -262,6 +264,20 @@ export function RepoImportMultiplePage({
               <FormInput.Checkbox {...register('pipelines')} id="pipelines" label="Pipelines" />
             </ControlGroup>
           </Fieldset>
+
+          {/* Include subgroups - GitLab only */}
+          {[ProviderOptionsEnum.GITLAB, ProviderOptionsEnum.GITLAB_SELF_HOSTED].includes(watch('provider')) && (
+            <Fieldset>
+              <ControlGroup className="flex flex-row items-center gap-cn-sm">
+                <FormInput.Checkbox
+                  {...register('include_subgroups_repos')}
+                  id="include_subgroups_repos"
+                  label="Include subgroups repositories"
+                />
+                <IconWithTooltip content="Subgroup repos will be imported flat under this project." />
+              </ControlGroup>
+            </Fieldset>
+          )}
 
           {!!apiErrorsValue && (
             <Alert.Root theme="danger" expandable>

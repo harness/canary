@@ -1,3 +1,5 @@
+import { FORM_FIELD_STACK_GAP } from './form-shared-styles'
+
 export default {
   '.cn-accordion': {
     display: 'flex',
@@ -31,7 +33,7 @@ export default {
       },
 
       '&.cn-accordion-card': {
-        gap: 'var(--cn-accordion-md-card-gap-y)'
+        [`@apply ${FORM_FIELD_STACK_GAP}`]: ''
       }
     },
 

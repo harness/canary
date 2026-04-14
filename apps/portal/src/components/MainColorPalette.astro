@@ -1,60 +1,254 @@
 ---
-import * as styles from "@harnessio/core-design-system/styles-esm";
+import colorsLch from "../../../../packages/core-design-system/design-tokens/core/colors_lch.json";
 import colorsHex from "../../../../packages/core-design-system/design-tokens/core/colors_hex.json";
 
-interface ColorToken {
-  name?: string;
-  $value?: string;
-  $type?: string;
-  [key: string]: unknown;
+// Parse lch(L% C H) into components
+function parseLch(value: string) {
+  const m = value.match(/lch\(\s*([\d.]+)%?\s+([\d.]+)\s+([\d.]+)\s*\)/);
+  if (!m) return { l: 0, c: 0, h: 0 };
+  return { l: parseFloat(m[1]), c: parseFloat(m[2]), h: parseFloat(m[3]) };
 }
 
-// Get shade keys from blue (representative color)
-const shades = Object.keys(styles.colors.blue).filter((k) => k !== "$type");
-const colorNames = Object.keys(styles.colors).filter((c) => c !== "pure");
+const colorNames = Object.keys(colorsLch).filter((c) => c !== "pure");
+const shades = Object.keys(colorsLch.gray).filter((k) => k !== "$type");
 
-// Build color data with both LCH and HEX
 const colorData = colorNames.map((colorName) => {
-  const lchGroup = styles.colors[colorName as keyof typeof styles.colors];
-  const hexGroup = colorsHex[colorName as keyof typeof colorsHex];
+  const lchGroup = colorsLch[colorName as keyof typeof colorsLch] as Record<
+    string,
+    { $value?: string }
+  >;
+  const hexGroup = (
+    colorsHex as Record<string, Record<string, { $value?: string }>>
+  )[colorName];
 
   const shadeData = shades.map((shade) => {
-    const lchToken = lchGroup[shade as keyof typeof lchGroup] as ColorToken;
-    const hexToken = hexGroup?.[shade as keyof typeof hexGroup] as
-      | { $value?: string }
-      | undefined;
+    const lchRaw = lchGroup[shade]?.$value || "";
+    const hex = hexGroup?.[shade]?.$value || "";
+    const { l, c, h } = parseLch(lchRaw);
 
     return {
       shade,
-      lch: lchToken?.$value || "",
-      hex: hexToken?.$value || "",
-      cssVar: lchToken?.name
-        ? `var(--${lchToken.name})`
-        : `var(--cn-${colorName}-${shade})`,
-      cssVarName: lchToken?.name || `cn-${colorName}-${shade}`,
+      lch: lchRaw,
+      hex,
+      l,
+      c,
+      h,
+      cssVar: `var(--cn-${colorName}-${shade})`,
     };
   });
 
-  return {
-    name: colorName,
-    shades: shadeData,
-  };
+  return { name: colorName, shades: shadeData };
 });
 
-const colorDataJson = JSON.stringify(colorData);
+const pureWhiteLch =
+  (colorsLch.pure as Record<string, { $value?: string }>).white?.$value || "";
+const pureBlackLch =
+  (colorsLch.pure as Record<string, { $value?: string }>).black?.$value || "";
+const pureWhiteHex =
+  (colorsHex as Record<string, Record<string, { $value?: string }>>).pure.white
+    ?.$value || "";
+const pureBlackHex =
+  (colorsHex as Record<string, Record<string, { $value?: string }>>).pure.black
+    ?.$value || "";
+
+const pureColors = [
+  {
+    key: "white",
+    lch: pureWhiteLch,
+    hex: pureWhiteHex,
+    ...parseLch(pureWhiteLch),
+    cssVar: "var(--cn-pure-white)",
+    name: "pure-white",
+  },
+  {
+    key: "black",
+    lch: pureBlackLch,
+    hex: pureBlackHex,
+    ...parseLch(pureBlackLch),
+    cssVar: "var(--cn-pure-black)",
+    name: "pure-black",
+  },
+];
 ---
 
 <div class="not-content color-palette-container">
-  <!-- Format Selector -->
-  <div class="format-selector">
-    <span class="format-label">Copy as:</span>
-    <div class="format-buttons">
-      <button type="button" class="format-btn active" data-format="var"
-        >Variable</button
-      >
-      <button type="button" class="format-btn" data-format="lch">LCH</button>
-      <button type="button" class="format-btn" data-format="hex">HEX</button>
+  <!-- Controls -->
+  <div class="palette-controls">
+    <div class="view-selector">
+      <span class="format-label">Show:</span>
+      <div class="format-buttons">
+        <button type="button" class="view-btn active" data-view="L"
+          >Lightness</button
+        >
+        <button type="button" class="view-btn" data-view="C">Chroma</button>
+        <button type="button" class="view-btn" data-view="H">Hue</button>
+      </div>
     </div>
+    <div class="format-selector">
+      <span class="format-label">Copy as:</span>
+      <div class="format-buttons">
+        <button type="button" class="format-btn active" data-format="var"
+          >Variable</button
+        >
+        <button type="button" class="format-btn" data-format="lch">LCH</button>
+        <button type="button" class="format-btn" data-format="hex">HEX</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Contrast Panel (always visible) -->
+  <div class="contrast-panel" id="contrastPanel">
+    <div class="contrast-panel-inner">
+      <!-- Empty state -->
+      <div class="cp-empty" id="cpEmpty">
+        <span class="cp-empty-text"
+          >Hold <kbd>⌥ Option</kbd> / <kbd>Alt</kbd> and click two swatches to check
+          contrast <span class="cp-empty-hint">(WCAG 2.1 AA / AAA)</span></span
+        >
+      </div>
+
+      <!-- Active state: two-row compact -->
+      <div class="cp-active" id="cpActive">
+        <!-- Row 1: colors + ratio + close -->
+        <div class="cp-row1">
+          <div class="cp-pair">
+            <div class="cp-color">
+              <button
+                type="button"
+                class="cp-swatch"
+                id="contrastSlotFg"
+                title="Foreground (text)"
+              >
+                <span class="cp-swatch-placeholder">Fg</span>
+              </button>
+              <span class="cp-color-name" id="cpFgName">Foreground</span>
+            </div>
+            <span class="cp-on">on</span>
+            <div class="cp-color">
+              <button
+                type="button"
+                class="cp-swatch"
+                id="contrastSlotBg"
+                title="Background"
+              >
+                <span class="cp-swatch-placeholder">Bg</span>
+              </button>
+              <span class="cp-color-name" id="cpBgName">Background</span>
+            </div>
+          </div>
+          <div class="cp-ratio">
+            <span class="cp-ratio-value" id="contrastRatioValue">—</span>
+            <span class="cp-ratio-label">contrast</span>
+          </div>
+          <button
+            type="button"
+            class="cp-close"
+            id="contrastClear"
+            title="Clear selection"
+          >
+            <svg width="16" height="16" viewBox="0 0 16 16" fill="none">
+              <path
+                d="M12 4L4 12M4 4l8 8"
+                stroke="currentColor"
+                stroke-width="1.5"
+                stroke-linecap="round"></path>
+            </svg>
+          </button>
+        </div>
+        <!-- Row 2: WCAG badges horizontal -->
+        <div class="cp-row2">
+          <div class="cp-wcag-group">
+            <span class="cp-wcag-size">Text</span>
+            <span class="cp-wcag-badge" id="badgeAA">AA min 4.5</span>
+            <span class="cp-wcag-badge" id="badgeAAA">AAA min 7</span>
+          </div>
+          <div class="cp-wcag-divider"></div>
+          <div class="cp-wcag-group">
+            <span class="cp-wcag-size"
+              >Large text <span class="cp-wcag-hint">(≥ 24px)</span></span
+            >
+            <span class="cp-wcag-badge" id="badgeAALarge">AA min 3</span>
+            <span class="cp-wcag-badge" id="badgeAAALarge">AAA min 4.5</span>
+          </div>
+          <div class="cp-wcag-divider"></div>
+          <div class="cp-wcag-group">
+            <span class="cp-wcag-size"
+              >Non-text <span class="cp-wcag-hint">(UI, icons)</span></span
+            >
+            <span class="cp-wcag-badge" id="badgeGraphics">AA min 3</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Pure Swatches -->
+  <div class="pure-row">
+    <div class="color-name-cell"></div>
+    {pureColors.map((pure) => <div class="pure-swatch-label">{pure.key}</div>)}
+  </div>
+  <div class="pure-row pure-row-swatches">
+    <div class="color-name-cell">
+      <span class="color-name">Pure</span>
+    </div>
+    {
+      pureColors.map((pure) => (
+        <div class="swatch-cell">
+          <button
+            type="button"
+            class="swatch"
+            style={`background-color: ${pure.lch};`}
+            data-lch={pure.lch}
+            data-hex={pure.hex}
+            data-var={pure.cssVar}
+            data-l={pure.l}
+            data-c={pure.c}
+            data-h={pure.h}
+            data-name={pure.name}
+          >
+            <span
+              class="swatch-label"
+              style={
+                pure.l > 55
+                  ? "color: var(--cn-pure-black);"
+                  : "color: var(--cn-pure-white);"
+              }
+              data-l={pure.l}
+              data-c={pure.c}
+              data-h={Math.round(pure.h)}
+              data-hex={pure.hex.replace("#", "").toUpperCase()}
+            >
+              {Math.round(pure.l)}
+            </span>
+            <span class="swatch-tooltip">
+              <span class="tooltip-grid">
+                <span class="tooltip-row">
+                  <span class="tooltip-key">L</span>
+                  <span class="tooltip-val">{pure.l}</span>
+                </span>
+                <span class="tooltip-row">
+                  <span class="tooltip-key">C</span>
+                  <span class="tooltip-val">{pure.c}</span>
+                </span>
+                <span class="tooltip-row">
+                  <span class="tooltip-key">H</span>
+                  <span class="tooltip-val">{pure.h}</span>
+                </span>
+                <span class="tooltip-divider" />
+                <span class="tooltip-row">
+                  <span class="tooltip-key">hex</span>
+                  <span class="tooltip-val">{pure.hex}</span>
+                </span>
+                <span class="tooltip-row">
+                  <span class="tooltip-key">var</span>
+                  <span class="tooltip-val">--cn-{pure.name}</span>
+                </span>
+              </span>
+            </span>
+          </button>
+        </div>
+      ))
+    }
   </div>
 
   <!-- Color Grid -->
@@ -81,11 +275,50 @@ const colorDataJson = JSON.stringify(colorData);
                 data-lch={s.lch}
                 data-hex={s.hex}
                 data-var={s.cssVar}
+                data-l={s.l}
+                data-c={s.c}
+                data-h={s.h}
                 data-name={`${color.name}-${s.shade}`}
               >
+                <span
+                  class="swatch-label"
+                  style={
+                    s.l > 55
+                      ? "color: var(--cn-pure-black);"
+                      : "color: var(--cn-pure-white);"
+                  }
+                  data-l={s.l}
+                  data-c={s.c}
+                  data-h={Math.round(s.h)}
+                  data-hex={s.hex.replace("#", "").toUpperCase()}
+                >
+                  {Math.round(s.l)}
+                </span>
                 <span class="swatch-tooltip">
-                  <span class="tooltip-value" data-type="lch">
-                    {s.lch}
+                  <span class="tooltip-grid">
+                    <span class="tooltip-row">
+                      <span class="tooltip-key">L</span>
+                      <span class="tooltip-val">{s.l}</span>
+                    </span>
+                    <span class="tooltip-row">
+                      <span class="tooltip-key">C</span>
+                      <span class="tooltip-val">{s.c}</span>
+                    </span>
+                    <span class="tooltip-row">
+                      <span class="tooltip-key">H</span>
+                      <span class="tooltip-val">{s.h}</span>
+                    </span>
+                    <span class="tooltip-divider" />
+                    <span class="tooltip-row">
+                      <span class="tooltip-key">hex</span>
+                      <span class="tooltip-val">{s.hex}</span>
+                    </span>
+                    <span class="tooltip-row">
+                      <span class="tooltip-key">var</span>
+                      <span class="tooltip-val">
+                        --cn-{color.name}-{s.shade}
+                      </span>
+                    </span>
                   </span>
                 </span>
               </button>
@@ -113,51 +346,95 @@ const colorDataJson = JSON.stringify(colorData);
 <style>
   .color-palette-container {
     --name-width: 64px;
-    --gap: 3px;
-    --radius: 5px;
+    --gap: 2px;
+    container-type: inline-size;
   }
 
-  /* Format Selector */
+  /* Controls */
+  .palette-controls {
+    display: flex;
+    align-items: center;
+    gap: var(--cn-layout-sm);
+    margin-bottom: var(--cn-layout-sm);
+    flex-wrap: wrap;
+  }
+
+  .view-selector {
+    display: flex;
+    align-items: center;
+    gap: var(--cn-spacing-2);
+  }
+
   .format-selector {
     display: flex;
     align-items: center;
-    gap: 8px;
-    margin-bottom: 16px;
+    gap: var(--cn-spacing-2);
+    margin-left: auto;
   }
 
   .format-label {
-    font-size: 12px;
-    color: var(--sl-color-gray-3);
+    font-size: var(--cn-font-size-3);
+    color: var(--cn-text-3);
   }
 
   .format-buttons {
     display: inline-flex;
-    background: var(--sl-color-gray-6);
-    border-radius: 8px;
-    padding: 2px;
-    gap: 1px;
+    background: var(--cn-bg-2);
+    border: var(--cn-tabs-container-border) solid var(--cn-border-2);
+    border-radius: var(--cn-tabs-container-radius);
+    padding: var(--cn-tabs-container);
   }
 
-  .format-btn {
-    padding: 3px 10px;
-    border: none;
-    border-radius: 6px;
-    font-size: 11px;
-    font-weight: 500;
+  .format-btn,
+  .view-btn {
+    padding: var(--cn-tabs-item-py) var(--cn-tabs-item-px);
+    border: var(--cn-tabs-item-border) solid transparent;
+    border-radius: var(--cn-tabs-item-radius);
+    font-size: var(--cn-font-size-3);
     cursor: pointer;
-    transition: all 0.15s ease;
+    transition:
+      color 0.15s ease,
+      background-color 0.15s ease,
+      border-color 0.15s ease;
     background: transparent;
-    color: var(--sl-color-gray-3);
+    color: var(--cn-text-3);
+    @apply font-body-strong;
   }
 
-  .format-btn:hover {
-    color: var(--sl-color-gray-1);
+  .format-btn:hover,
+  .view-btn:hover {
+    color: var(--cn-text-1);
   }
 
-  .format-btn.active {
-    background: var(--sl-color-bg);
-    color: var(--sl-color-white);
-    box-shadow: 0 1px 2px rgba(0, 0, 0, 0.1);
+  .format-btn.active,
+  .view-btn.active {
+    border-color: var(--cn-border-2);
+    background: var(--cn-bg-3);
+    color: var(--cn-text-1);
+  }
+
+  /* Pure Row */
+  .pure-row {
+    display: grid;
+    grid-template-columns: var(--name-width) repeat(2, 1fr);
+    gap: var(--gap);
+    align-items: center;
+    width: calc(
+      var(--name-width) + 2 *
+        ((100cqw - var(--name-width) - 14 * var(--gap)) / 15) + var(--gap)
+    );
+  }
+
+  .pure-row-swatches {
+    margin-bottom: var(--cn-spacing-4);
+  }
+
+  .pure-swatch-label {
+    font-size: var(--cn-font-size-2);
+    font-weight: 500;
+    color: var(--cn-text-3);
+    text-align: center;
+    text-transform: capitalize;
   }
 
   /* Color Grid */
@@ -176,20 +453,20 @@ const colorDataJson = JSON.stringify(colorData);
   }
 
   .shade-header {
-    font-size: 10px;
+    font-size: var(--cn-font-size-2);
     font-weight: 500;
-    color: var(--sl-color-gray-2);
+    color: var(--cn-text-3);
     text-align: center;
   }
 
   .color-name-cell {
-    padding-right: 8px;
+    padding-right: var(--cn-spacing-2);
   }
 
   .color-name {
-    font-size: 12px;
+    font-size: var(--cn-font-size-3);
     font-weight: 500;
-    color: var(--sl-color-gray-2);
+    color: var(--cn-text-2);
     text-transform: capitalize;
   }
 
@@ -200,21 +477,24 @@ const colorDataJson = JSON.stringify(colorData);
 
   .swatch {
     width: 100%;
-    aspect-ratio: 1.4;
+    aspect-ratio: 1;
     border: none;
-    border-radius: var(--radius);
+    border-radius: var(--cn-rounded-3);
     cursor: pointer;
-    transition:
-      box-shadow 0.1s ease,
-      outline 0.1s ease;
+    transition: box-shadow 0.1s ease;
     position: relative;
     padding: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    box-shadow: inset 0 0 0 1px lch(from currentColor l c h / 0.15);
   }
 
   .swatch:hover {
     box-shadow:
-      0 0 0 2px var(--sl-color-white),
-      0 0 0 4px currentColor;
+      inset 0 0 0 1px lch(from currentColor l c h / 0.15),
+      0 0 0 2px var(--cn-bg-0),
+      0 0 0 3.5px currentColor;
     z-index: 10;
   }
 
@@ -222,25 +502,31 @@ const colorDataJson = JSON.stringify(colorData);
     opacity: 0.9;
   }
 
-  /* Tooltip - inverted colors */
+  /* Label inside swatch */
+  .swatch-label {
+    font-size: var(--cn-font-size-1);
+    font-weight: 600;
+    font-family: var(--cn-font-family-mono);
+    line-height: 1;
+    pointer-events: none;
+  }
+
+  /* Tooltip */
   .swatch-tooltip {
     position: absolute;
-    bottom: calc(100% + 6px);
+    top: calc(100% + 8px);
     left: 50%;
     transform: translateX(-50%);
-    background: var(--sl-color-text);
-    border-radius: 6px;
-    padding: 3px 8px;
+    background: var(--cn-text-1);
+    border-radius: var(--cn-rounded-5);
+    padding: var(--cn-spacing-2) var(--cn-spacing-2-half);
     opacity: 0;
     visibility: hidden;
     transition: opacity 0.1s ease;
     pointer-events: none;
     white-space: nowrap;
     z-index: 100;
-    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.15);
-    display: flex;
-    align-items: center;
-    justify-content: center;
+    box-shadow: var(--cn-shadow-3);
   }
 
   .swatch:hover .swatch-tooltip {
@@ -248,26 +534,315 @@ const colorDataJson = JSON.stringify(colorData);
     visibility: visible;
   }
 
-  .tooltip-value {
-    font-size: 10px;
-    line-height: 1;
-    font-family: ui-monospace, monospace;
-    color: var(--sl-color-bg);
+  .tooltip-grid {
+    display: flex;
+    flex-direction: column;
+    gap: 3px;
   }
 
-  /* Toast - inverted colors */
+  .tooltip-row {
+    display: flex;
+    align-items: baseline;
+    gap: var(--cn-spacing-2);
+    font-family: var(--cn-font-family-mono);
+    font-size: var(--cn-font-size-2);
+    line-height: 1.3;
+  }
+
+  .tooltip-key {
+    color: var(--cn-text-4);
+    min-width: 20px;
+    font-weight: 500;
+    text-transform: uppercase;
+    font-size: var(--cn-font-size-1);
+  }
+
+  .tooltip-val {
+    color: var(--cn-bg-0);
+    font-weight: 400;
+  }
+
+  .tooltip-divider {
+    height: 1px;
+    background: var(--cn-border-2);
+    opacity: 0.3;
+    margin: 2px 0;
+  }
+
+  /* Selected swatch */
+  .swatch.selected-fg {
+    box-shadow:
+      inset 0 0 0 1px lch(from currentColor l c h / 0.15),
+      0 0 0 2px var(--cn-bg-0),
+      0 0 0 4px var(--cn-set-brand-primary-bg);
+    z-index: 11;
+  }
+
+  .swatch.selected-bg {
+    box-shadow:
+      inset 0 0 0 1px lch(from currentColor l c h / 0.15),
+      0 0 0 2px var(--cn-bg-0),
+      0 0 0 4px var(--cn-set-success-primary-bg);
+    z-index: 11;
+  }
+
+  /* ── Contrast Panel ── */
+  .contrast-panel {
+    position: sticky;
+    top: 0;
+    z-index: 50;
+    margin-bottom: var(--cn-layout-xs);
+    padding-top: var(--cn-spacing-3);
+  }
+
+  .contrast-panel-inner {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: var(--cn-spacing-3) var(--cn-spacing-5);
+    background: lch(from var(--cn-bg-1) l c h / 0.9);
+    backdrop-filter: blur(16px);
+    -webkit-backdrop-filter: blur(16px);
+    border-radius: var(--cn-rounded-6);
+    border: var(--cn-border-width-1) solid
+      lch(from var(--cn-border-2) l c h / 0.6);
+    position: relative;
+    min-height: 48px;
+  }
+
+  /* Empty state */
+  .cp-empty {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  .cp-empty-text {
+    font-size: var(--cn-font-size-3);
+    color: var(--cn-text-2);
+  }
+
+  .cp-empty-text kbd {
+    display: inline-block;
+    padding: 1px 5px;
+    margin: 0 2px;
+    font-size: var(--cn-font-size-2);
+    font-family: var(--cn-font-family-mono);
+    background: var(--cn-bg-3);
+    border: var(--cn-border-width-1) solid var(--cn-border-3);
+    border-radius: var(--cn-rounded-3);
+    box-shadow: 0 1px 0 var(--cn-border-3);
+  }
+
+  .cp-empty-hint {
+    color: var(--cn-text-3);
+  }
+
+  .cp-empty.hidden {
+    display: none;
+  }
+
+  /* Active state — two-row compact */
+  .cp-active {
+    display: none;
+    flex-direction: column;
+    gap: var(--cn-spacing-2);
+    width: 100%;
+  }
+
+  .cp-active.visible {
+    display: flex;
+  }
+
+  /* Row 1: colors + ratio + close */
+  .cp-row1 {
+    display: flex;
+    align-items: center;
+    gap: var(--cn-spacing-4);
+  }
+
+  .cp-pair {
+    display: flex;
+    align-items: center;
+    gap: var(--cn-spacing-2-half);
+  }
+
+  .cp-color {
+    display: flex;
+    align-items: center;
+    gap: var(--cn-spacing-1-half);
+  }
+
+  .cp-swatch {
+    width: 28px;
+    height: 28px;
+    border-radius: var(--cn-rounded-4);
+    border: var(--cn-border-width-1) dashed var(--cn-border-2);
+    background: transparent;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: all 0.15s ease;
+    padding: 0;
+    flex-shrink: 0;
+  }
+
+  .cp-swatch.filled {
+    border-style: solid;
+    border-color: var(--cn-border-3);
+    box-shadow: inset 0 0 0 1px lch(0 0 0 / 0.1);
+  }
+
+  .cp-swatch-placeholder {
+    font-size: 10px;
+    font-weight: 600;
+    font-family: var(--cn-font-family-mono);
+    color: var(--cn-text-4);
+    text-transform: uppercase;
+  }
+
+  .cp-swatch.filled .cp-swatch-placeholder {
+    display: none;
+  }
+
+  .cp-color-name {
+    font-size: var(--cn-font-size-3);
+    font-weight: 500;
+    color: var(--cn-text-2);
+    white-space: nowrap;
+    font-family: var(--cn-font-family-mono);
+  }
+
+  .cp-on {
+    font-size: var(--cn-font-size-2);
+    color: var(--cn-text-4);
+    flex-shrink: 0;
+  }
+
+  /* Ratio */
+  .cp-ratio {
+    display: flex;
+    align-items: baseline;
+    gap: var(--cn-spacing-1-half);
+    margin-left: auto;
+  }
+
+  .cp-ratio-value {
+    font-size: var(--cn-font-size-7);
+    font-weight: 700;
+    font-family: var(--cn-font-family-mono);
+    color: var(--cn-text-1);
+    line-height: 1;
+  }
+
+  .cp-ratio-label {
+    font-size: var(--cn-font-size-2);
+    color: var(--cn-text-4);
+    font-weight: 500;
+    text-transform: uppercase;
+    letter-spacing: 0.04em;
+  }
+
+  /* Close */
+  .cp-close {
+    padding: var(--cn-spacing-1-half);
+    margin-left: var(--cn-spacing-2);
+    border: none;
+    background: transparent;
+    color: var(--cn-text-4);
+    cursor: pointer;
+    border-radius: var(--cn-rounded-4);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+  }
+
+  .cp-close:hover {
+    background: var(--cn-state-hover);
+    color: var(--cn-text-1);
+  }
+
+  /* Row 2: WCAG badges horizontal */
+  .cp-row2 {
+    display: flex;
+    align-items: center;
+    gap: var(--cn-spacing-4);
+    padding-top: var(--cn-spacing-2);
+    border-top: var(--cn-border-width-1) solid var(--cn-border-2);
+  }
+
+  .cp-wcag-group {
+    display: flex;
+    align-items: center;
+    gap: var(--cn-spacing-2);
+  }
+
+  .cp-wcag-divider {
+    width: 1px;
+    height: 16px;
+    background: var(--cn-border-2);
+    flex-shrink: 0;
+  }
+
+  .cp-wcag-size {
+    font-size: var(--cn-font-size-2);
+    color: var(--cn-text-3);
+    white-space: nowrap;
+  }
+
+  .cp-wcag-hint {
+    color: var(--cn-text-4);
+  }
+
+  .cp-wcag-badge {
+    font-size: var(--cn-font-size-2);
+    font-weight: 600;
+    font-family: var(--cn-font-family-mono);
+    padding: 2px var(--cn-spacing-1-half);
+    border-radius: var(--cn-rounded-3);
+    background: var(--cn-bg-3);
+    color: var(--cn-text-4);
+    white-space: nowrap;
+    line-height: 1.3;
+    display: inline-flex;
+    align-items: center;
+    gap: 3px;
+  }
+
+  .cp-wcag-badge svg {
+    flex-shrink: 0;
+  }
+
+  .cp-wcag-min {
+    font-weight: 400;
+    opacity: 0.7;
+  }
+
+  .cp-wcag-badge.pass {
+    background: var(--cn-set-success-secondary-bg);
+    color: var(--cn-set-success-secondary-text);
+  }
+
+  .cp-wcag-badge.fail {
+    background: var(--cn-set-danger-secondary-bg);
+    color: var(--cn-set-danger-secondary-text);
+  }
+
+  /* Toast */
   .copy-toast {
     position: fixed;
     bottom: 20px;
     left: 50%;
     transform: translateX(-50%) translateY(12px);
-    background: var(--sl-color-text);
-    border-radius: 8px;
-    padding: 6px 10px;
+    background: var(--cn-text-1);
+    border-radius: var(--cn-rounded-5);
+    padding: var(--cn-spacing-1-half) var(--cn-spacing-2-half);
     display: flex;
     align-items: center;
-    gap: 6px;
-    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+    gap: var(--cn-spacing-1-half);
+    box-shadow: var(--cn-shadow-3);
     opacity: 0;
     visibility: hidden;
     transition: all 0.15s ease;
@@ -281,60 +856,249 @@ const colorDataJson = JSON.stringify(colorData);
   }
 
   .copy-toast svg {
-    color: #22c55e;
+    color: var(--cn-set-success-primary-bg);
   }
 
   #toastMessage {
-    font-size: 11px;
+    font-size: var(--cn-font-size-3);
     font-weight: 500;
-    font-family: ui-monospace, monospace;
-    color: var(--sl-color-bg);
+    font-family: var(--cn-font-family-mono);
+    color: var(--cn-bg-0);
   }
 </style>
 
 <script is:inline>
   (function () {
-    let currentFormat = "var";
+    var currentFormat = "var";
+    var currentView = "L";
+    var contrastFg = null;
+    var contrastBg = null;
+
+    // WCAG relative luminance from hex
+    function hexToRgb(hex) {
+      hex = hex.replace("#", "");
+      if (hex.length === 3)
+        hex = hex[0] + hex[0] + hex[1] + hex[1] + hex[2] + hex[2];
+      var r = parseInt(hex.slice(0, 2), 16) / 255;
+      var g = parseInt(hex.slice(2, 4), 16) / 255;
+      var b = parseInt(hex.slice(4, 6), 16) / 255;
+      return [r, g, b];
+    }
+
+    function linearize(c) {
+      return c <= 0.03928 ? c / 12.92 : Math.pow((c + 0.055) / 1.055, 2.4);
+    }
+
+    function relativeLuminance(hex) {
+      var rgb = hexToRgb(hex);
+      return (
+        0.2126 * linearize(rgb[0]) +
+        0.7152 * linearize(rgb[1]) +
+        0.0722 * linearize(rgb[2])
+      );
+    }
+
+    function contrastRatio(hex1, hex2) {
+      var l1 = relativeLuminance(hex1);
+      var l2 = relativeLuminance(hex2);
+      var lighter = Math.max(l1, l2);
+      var darker = Math.min(l1, l2);
+      return (lighter + 0.05) / (darker + 0.05);
+    }
+
+    function updateContrastPanel() {
+      var slotFg = document.getElementById("contrastSlotFg");
+      var slotBg = document.getElementById("contrastSlotBg");
+      var fgName = document.getElementById("cpFgName");
+      var bgName = document.getElementById("cpBgName");
+      var ratioEl = document.getElementById("contrastRatioValue");
+      var badgeAA = document.getElementById("badgeAA");
+      var badgeAAA = document.getElementById("badgeAAA");
+      var badgeAALg = document.getElementById("badgeAALarge");
+      var badgeAAALg = document.getElementById("badgeAAALarge");
+      var badgeGfx = document.getElementById("badgeGraphics");
+
+      var hasAny = contrastFg || contrastBg;
+      var emptyEl = document.getElementById("cpEmpty");
+      var activeEl = document.getElementById("cpActive");
+      emptyEl.classList.toggle("hidden", !!hasAny);
+      activeEl.classList.toggle("visible", !!hasAny);
+
+      // Update Fg slot
+      if (contrastFg) {
+        slotFg.style.background = contrastFg.lch;
+        slotFg.classList.add("filled");
+        fgName.textContent = contrastFg.name;
+      } else {
+        slotFg.style.background = "";
+        slotFg.classList.remove("filled");
+        fgName.textContent = "Foreground";
+      }
+
+      // Update Bg slot
+      if (contrastBg) {
+        slotBg.style.background = contrastBg.lch;
+        slotBg.classList.add("filled");
+        bgName.textContent = contrastBg.name;
+      } else {
+        slotBg.style.background = "";
+        slotBg.classList.remove("filled");
+        bgName.textContent = "Background";
+      }
+
+      // Both selected — compute contrast
+      if (contrastFg && contrastBg) {
+        var ratio = contrastRatio(contrastFg.hex, contrastBg.hex);
+        ratioEl.textContent = ratio.toFixed(2) + ":1";
+
+        var checkSvg =
+          '<svg width="12" height="12" viewBox="0 0 16 16" fill="none"><path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="m2 8.857 3.429 3.429L14 3.714"/></svg>';
+        var xmarkSvg =
+          '<svg width="12" height="12" viewBox="0 0 16 16" fill="none"><path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M2.5 13.5 8 8m0 0 5.5-5.5M8 8 2.5 2.5M8 8l5.5 5.5"/></svg>';
+        function setBadge(el, level, pass, min) {
+          el.classList.toggle("pass", pass);
+          el.classList.toggle("fail", !pass);
+          el.innerHTML =
+            level +
+            ' <span class="cp-wcag-min">min</span><span class="cp-wcag-min">' +
+            min +
+            "</span>" +
+            (pass ? checkSvg : xmarkSvg);
+        }
+        setBadge(badgeAA, "AA", ratio >= 4.5, "4.5");
+        setBadge(badgeAAA, "AAA", ratio >= 7, "7");
+        setBadge(badgeAALg, "AA", ratio >= 3, "3");
+        setBadge(badgeAAALg, "AAA", ratio >= 4.5, "4.5");
+        setBadge(badgeGfx, "AA", ratio >= 3, "3");
+      } else {
+        ratioEl.textContent = "\u2014";
+        var defaults = [
+          [badgeAA, "AA", "4.5"],
+          [badgeAAA, "AAA", "7"],
+          [badgeAALg, "AA", "3"],
+          [badgeAAALg, "AAA", "4.5"],
+          [badgeGfx, "AA", "3"],
+        ];
+        defaults.forEach(function (item) {
+          item[0].classList.remove("pass", "fail");
+          item[0].innerHTML =
+            item[1] +
+            ' <span class="cp-wcag-min">min</span><span class="cp-wcag-min">' +
+            item[2] +
+            "</span>";
+        });
+      }
+    }
+
+    function clearContrast() {
+      contrastFg = null;
+      contrastBg = null;
+      document
+        .querySelectorAll(".swatch.selected-fg, .swatch.selected-bg")
+        .forEach(function (s) {
+          s.classList.remove("selected-fg", "selected-bg");
+        });
+      updateContrastPanel();
+    }
+
+    function selectSwatch(swatch) {
+      var info = {
+        hex: swatch.getAttribute("data-hex"),
+        lch: swatch.getAttribute("data-lch"),
+        name: swatch.getAttribute("data-name"),
+      };
+
+      if (!contrastFg) {
+        // Set foreground
+        contrastFg = info;
+        swatch.classList.add("selected-fg");
+      } else if (!contrastBg) {
+        // Set background
+        contrastBg = info;
+        swatch.classList.add("selected-bg");
+      } else {
+        // Both set — replace bg, shift fg
+        document.querySelectorAll(".swatch.selected-fg").forEach(function (s) {
+          s.classList.remove("selected-fg");
+        });
+        document.querySelectorAll(".swatch.selected-bg").forEach(function (s) {
+          s.classList.remove("selected-bg");
+          s.classList.add("selected-fg");
+        });
+        contrastFg = contrastBg;
+        contrastBg = info;
+        swatch.classList.add("selected-bg");
+      }
+
+      updateContrastPanel();
+    }
 
     function init() {
-      const formatBtns = document.querySelectorAll(".format-btn");
-      const swatches = document.querySelectorAll(".swatch");
-      const toast = document.getElementById("copyToast");
-      const toastMessage = document.getElementById("toastMessage");
-      const tooltipValues = document.querySelectorAll(".tooltip-value");
+      var formatBtns = document.querySelectorAll(".format-btn");
+      var viewBtns = document.querySelectorAll(".view-btn");
+      var swatches = document.querySelectorAll(".swatch");
+      var toast = document.getElementById("copyToast");
+      var toastMessage = document.getElementById("toastMessage");
+      var clearBtn = document.getElementById("contrastClear");
+      var slotFg = document.getElementById("contrastSlotFg");
+      var slotBg = document.getElementById("contrastSlotBg");
 
-      // Update tooltip values based on format
-      function updateTooltips() {
-        swatches.forEach((swatch) => {
-          const tooltip = swatch.querySelector(".tooltip-value");
-          if (tooltip) {
-            let value;
-            if (currentFormat === "lch") {
-              value = swatch.getAttribute("data-lch");
-            } else if (currentFormat === "hex") {
-              value = swatch.getAttribute("data-hex");
-            } else {
-              value = swatch.getAttribute("data-var");
-            }
-            tooltip.textContent = value || "";
+      function updateLabels() {
+        swatches.forEach(function (swatch) {
+          var label = swatch.querySelector(".swatch-label");
+          if (!label) return;
+          var v;
+          switch (currentView) {
+            case "L":
+              v = Math.round(parseFloat(label.getAttribute("data-l")));
+              break;
+            case "C":
+              v = parseFloat(
+                parseFloat(label.getAttribute("data-c")).toFixed(1),
+              );
+              break;
+            case "H":
+              v = label.getAttribute("data-h");
+              break;
+            default:
+              v = Math.round(parseFloat(label.getAttribute("data-l")));
           }
+          label.textContent = v;
         });
       }
 
-      // Format button clicks
-      formatBtns.forEach((btn) => {
+      // View button clicks
+      viewBtns.forEach(function (btn) {
         btn.onclick = function () {
-          formatBtns.forEach((b) => b.classList.remove("active"));
+          viewBtns.forEach(function (b) {
+            b.classList.remove("active");
+          });
           this.classList.add("active");
-          currentFormat = this.getAttribute("data-format");
-          updateTooltips();
+          currentView = this.getAttribute("data-view");
+          updateLabels();
         };
       });
 
-      // Swatch clicks
-      swatches.forEach((swatch) => {
-        swatch.onclick = function () {
-          let value;
+      // Format button clicks
+      formatBtns.forEach(function (btn) {
+        btn.onclick = function () {
+          formatBtns.forEach(function (b) {
+            b.classList.remove("active");
+          });
+          this.classList.add("active");
+          currentFormat = this.getAttribute("data-format");
+        };
+      });
+
+      // Swatch clicks — Alt/Option for contrast, normal for copy
+      swatches.forEach(function (swatch) {
+        swatch.onclick = function (e) {
+          if (e.altKey) {
+            selectSwatch(this);
+            return;
+          }
+
+          var value;
           if (currentFormat === "lch") {
             value = this.getAttribute("data-lch");
           } else if (currentFormat === "hex") {
@@ -344,11 +1108,11 @@ const colorDataJson = JSON.stringify(colorData);
           }
 
           if (navigator.clipboard && value) {
-            navigator.clipboard.writeText(value).then(() => {
+            navigator.clipboard.writeText(value).then(function () {
               if (toast && toastMessage) {
                 toastMessage.textContent = "Copied: " + value;
                 toast.classList.add("show");
-                setTimeout(() => {
+                setTimeout(function () {
                   toast.classList.remove("show");
                 }, 2000);
               }
@@ -357,7 +1121,37 @@ const colorDataJson = JSON.stringify(colorData);
         };
       });
 
-      updateTooltips();
+      // Clear button
+      if (clearBtn) clearBtn.onclick = clearContrast;
+
+      // Clicking filled slots clears that slot
+      if (slotFg)
+        slotFg.onclick = function () {
+          if (contrastFg) {
+            document
+              .querySelectorAll(".swatch.selected-fg")
+              .forEach(function (s) {
+                s.classList.remove("selected-fg");
+              });
+            contrastFg = null;
+            updateContrastPanel();
+          }
+        };
+      if (slotBg)
+        slotBg.onclick = function () {
+          if (contrastBg) {
+            document
+              .querySelectorAll(".swatch.selected-bg")
+              .forEach(function (s) {
+                s.classList.remove("selected-bg");
+              });
+            contrastBg = null;
+            updateContrastPanel();
+          }
+        };
+
+      updateLabels();
+      updateContrastPanel();
     }
 
     if (document.readyState === "loading") {
@@ -366,6 +1160,10 @@ const colorDataJson = JSON.stringify(colorData);
       init();
     }
 
-    document.addEventListener("astro:page-load", init);
+    document.addEventListener("astro:page-load", function () {
+      contrastFg = null;
+      contrastBg = null;
+      init();
+    });
   })();
 </script>

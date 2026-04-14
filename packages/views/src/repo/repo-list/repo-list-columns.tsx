@@ -18,6 +18,7 @@ import {
 import { TFunctionWithFallback } from '@harnessio/ui/context'
 
 import { ForkedFrom } from '../components/forked-from'
+import { getLanguageColor } from '../constants/language-colors'
 import { RepositoryType } from '../repo.types'
 import { RepoListColumn } from './constant'
 import { FavoriteProps } from './types'
@@ -69,6 +70,31 @@ export const getRepoListColumns = ({
     }
   },
   {
+    id: RepoListColumn.DESCRIPTION,
+    header: t('views:repos.description', 'Description'),
+    enableSorting: false,
+    enableHiding: true,
+    size: 200,
+    maxSize: 200,
+    cell: ({ row }) => {
+      if (row.original.importing) {
+        return (
+          <Text color="foreground-4" truncate>
+            {t('views:repos.importing', 'Importing…')}
+          </Text>
+        )
+      }
+      if (!row.original.description) {
+        return <Text color="disabled">-</Text>
+      }
+      return (
+        <Text color="foreground-2" truncate>
+          {row.original.description}
+        </Text>
+      )
+    }
+  },
+  {
     id: RepoListColumn.SCOPE,
     header: t('views:scope.label', 'Scope'),
     enableSorting: false,
@@ -79,7 +105,7 @@ export const getRepoListColumns = ({
       const repoScopeParams = { ...scope, repoIdentifier: name, repoPath: path }
       const scopeType = determineScope(repoScopeParams)
       const scopedPath = getScopedPath(repoScopeParams)
-      if (!scopeType) return null
+      if (!scopeType) return <Text color="disabled">-</Text>
       return <ScopeTag scopeType={scopeType} scopedPath={scopedPath} size="sm" />
     }
   },
@@ -97,42 +123,29 @@ export const getRepoListColumns = ({
     )
   },
   {
-    id: RepoListColumn.PR,
-    header: t('views:repos.pullRequests', 'Pull Requests'),
+    id: RepoListColumn.LANGUAGE,
+    header: t('views:repos.language', 'Language'),
     enableSorting: false,
     enableHiding: true,
-    size: 100,
-    maxSize: 100,
-    cell: ({ row }) => (
-      <Layout.Flex gap="3xs" align="center">
-        <IconV2 name="git-pull-request" />
-        <Text as="span" color="foreground-1">
-          {row.original.pulls || 0}
-        </Text>
-      </Layout.Flex>
-    )
-  },
-  {
-    id: RepoListColumn.UPDATED,
-    header: t('views:repos.updated', 'Updated'),
-    enableSorting: true,
-    enableHiding: true,
-    size: 100,
-    maxSize: 100,
-    cell: ({ row }) => (row.original.importing ? null : <TimeAgoCard timestamp={row.original.timestamp} />)
-  },
-  {
-    id: RepoListColumn.CREATED,
-    header: t('views:repos.created', 'Created'),
-    enableSorting: false,
-    enableHiding: true,
-    size: 100,
-    maxSize: 100,
-    cell: ({ row }) => <TimeAgoCard timestamp={row.original.createdAt} />
+    size: 130,
+    maxSize: 130,
+    cell: ({ row }) => {
+      const { language } = row.original
+      if (!language) return <Text color="disabled">-</Text>
+
+      return (
+        <Layout.Flex gap="2xs" align="center">
+          <div className="rounded-cn-full size-2.5 shrink-0" style={{ backgroundColor: getLanguageColor(language) }} />
+          <Text color="foreground-2" truncate>
+            {language}
+          </Text>
+        </Layout.Flex>
+      )
+    }
   },
   {
     id: RepoListColumn.TAGS,
-    header: t('views:repos.tags', 'Tags'),
+    header: t('views:repos.resourceTags', 'Resource Tags'),
     enableSorting: false,
     enableHiding: true,
     size: 230,
@@ -143,7 +156,7 @@ export const getRepoListColumns = ({
       const visibleTags = tags.slice(0, maxVisibleTags)
       const remainingCount = tags.length - maxVisibleTags
 
-      if (!tags.length) return null
+      if (!tags.length) return <Text color="disabled">-</Text>
 
       return (
         <Layout.Horizontal className="overflow-hidden" wrap="wrap" gap="3xs">
@@ -168,26 +181,39 @@ export const getRepoListColumns = ({
     }
   },
   {
-    id: RepoListColumn.DESCRIPTION,
-    header: t('views:repos.description', 'Description'),
+    id: RepoListColumn.UPDATED,
+    header: t('views:repos.updated', 'Updated'),
+    enableSorting: true,
+    enableHiding: true,
+    size: 100,
+    maxSize: 100,
+    cell: ({ row }) =>
+      row.original.importing ? <Text color="disabled">-</Text> : <TimeAgoCard timestamp={row.original.timestamp} />
+  },
+  {
+    id: RepoListColumn.CREATED,
+    header: t('views:repos.created', 'Created'),
     enableSorting: false,
     enableHiding: true,
-    size: 200,
-    maxSize: 200,
-    cell: ({ row }) => {
-      if (row.original.importing) {
-        return (
-          <Text color="foreground-4" truncate>
-            {t('views:repos.importing', 'Importing…')}
-          </Text>
-        )
-      }
-      return (
-        <Text color="foreground-2" truncate>
-          {row.original.description}
+    size: 100,
+    maxSize: 100,
+    cell: ({ row }) => <TimeAgoCard timestamp={row.original.createdAt} />
+  },
+  {
+    id: RepoListColumn.PR,
+    header: t('views:repos.pullRequests', 'Pull Requests'),
+    enableSorting: false,
+    enableHiding: true,
+    size: 100,
+    maxSize: 100,
+    cell: ({ row }) => (
+      <Layout.Flex gap="3xs" align="center">
+        <IconV2 name="git-pull-request" />
+        <Text as="span" color="foreground-1">
+          {row.original.pulls || 0}
         </Text>
-      )
-    }
+      </Layout.Flex>
+    )
   },
   {
     id: 'actions',

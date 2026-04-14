@@ -9,10 +9,12 @@ import FilterBoxWrapper from './filter-box-wrapper'
 import Calendar from './filters-bar/actions/variants/calendar-field'
 import { MultiSelectFilter } from './filters-bar/actions/variants/checkbox'
 import Combobox, { ComboBoxOptions } from './filters-bar/actions/variants/combo-box'
+import DateRangeField from './filters-bar/actions/variants/date-range-field'
 import MultiTagFilter from './filters-bar/actions/variants/multi-tag'
 import Text from './filters-bar/actions/variants/text-field'
 import {
   CheckboxOptions,
+  DateRangeValue,
   FilterFieldConfig as FilterField,
   FilterFieldTypes,
   FilterOptionConfig,
@@ -61,6 +63,20 @@ const FilterFieldInternal = <T extends string, V extends FilterValueTypes, Custo
           onUpdateFilter={values => {
             onUpdateFilter(values as V)
             // Currently this supports only single selection, will be handled based on calendar type
+            values && setIsOpen(false)
+          }}
+        />
+      )
+    }
+    case FilterFieldTypes.DateRange: {
+      const dateRangeFilter = filter as FilterField<DateRangeValue>
+      return (
+        <DateRangeField
+          filter={dateRangeFilter}
+          presets={filterOption.filterFieldConfig?.presets}
+          showCustomRange={filterOption.filterFieldConfig?.showCustomRange}
+          onUpdateFilter={values => {
+            onUpdateFilter(values as V)
             values && setIsOpen(false)
           }}
         />
@@ -176,6 +192,7 @@ const FiltersField = <T extends string, V extends FilterValueTypes, CustomValue 
     <FilterBoxWrapper
       contentClassName={cn(
         filterOption.type === FilterFieldTypes.Calendar ? 'w-[250px]' : '',
+        filterOption.type === FilterFieldTypes.DateRange ? 'w-auto min-w-[400px] max-w-none' : '',
         dropdownContentClassName
       )}
       handleRemoveFilter={() => removeFilter()}

@@ -30,7 +30,8 @@ export const WebhookExecutionsContainer = () => {
   const { data: { body: executions, headers } = {}, isLoading } = useListRepoWebhookExecutionsQuery(
     {
       repo_ref,
-      webhook_identifier: parseInt(webhookId ?? ''),
+      // @ts-expect-error webhook_identifier accepts string identifiers; OpenAPI spec incorrectly types it as number
+      webhook_identifier: webhookId ?? '',
       queryParams: {
         page: queryPage,
         limit: pageSize

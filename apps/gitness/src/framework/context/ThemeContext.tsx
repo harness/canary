@@ -16,7 +16,12 @@ export const useThemeStore = create<IThemeStore>()(
       isLightTheme: false
     }),
     {
-      name: 'canary-ui-theme' // LocalStorage key
+      name: 'canary-ui-theme',
+      version: 1,
+      partialize: state => ({
+        theme: state.theme,
+        isLightTheme: state.isLightTheme
+      })
     }
   )
 )

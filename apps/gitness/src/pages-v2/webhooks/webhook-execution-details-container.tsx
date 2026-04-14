@@ -28,7 +28,8 @@ export const WebhookExecutionDetailsContainer = () => {
   const { data: { body: execution } = {} } = useGetRepoWebhookExecutionQuery(
     {
       repo_ref: repo_ref ?? '',
-      webhook_identifier: parseInt(webhookId ?? ''),
+      // @ts-expect-error webhook_identifier accepts string identifiers; OpenAPI spec incorrectly types it as number
+      webhook_identifier: webhookId ?? '',
       webhook_execution_id: parseInt(executionId ?? ''),
       queryParams: {}
     },
@@ -56,7 +57,8 @@ export const WebhookExecutionDetailsContainer = () => {
   const handleRetriggerExecution = () => {
     retriggerExecution({
       repo_ref: repo_ref ?? '',
-      webhook_identifier: parseInt(webhookId ?? ''),
+      // @ts-expect-error webhook_identifier accepts string identifiers; OpenAPI spec incorrectly types it as number
+      webhook_identifier: webhookId ?? '',
       webhook_execution_id: parseInt(executionId ?? '')
     })
   }

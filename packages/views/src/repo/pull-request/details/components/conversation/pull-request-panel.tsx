@@ -1,6 +1,20 @@
 import { useCallback, useEffect, useState } from 'react'
 
 import {
+  EnumCheckStatus,
+  extractInfoFromRuleViolationArr,
+  MergeCheckStatus,
+  PRPanelData,
+  PullRequestAction,
+  PullRequestChangesSectionProps,
+  PullRequestFilterOption,
+  PullRequestState,
+  TypesListCommitResponse,
+  TypesPullReqCheck
+} from '@views'
+import { EnumMergeMethod, PrState, TypesPullReq } from '@views/repo/pull-request/pull-request.types'
+
+import {
   Accordion,
   Alert,
   Avatar,
@@ -22,20 +36,7 @@ import {
   TimeAgoCard,
   type ButtonThemes
 } from '@harnessio/ui/components'
-import {
-  EnumCheckStatus,
-  extractInfoFromRuleViolationArr,
-  MergeCheckStatus,
-  PRPanelData,
-  PullRequestAction,
-  PullRequestChangesSectionProps,
-  PullRequestFilterOption,
-  PullRequestState,
-  TypesListCommitResponse,
-  TypesPullReqCheck
-} from '@views'
 import { cn } from '@harnessio/ui/utils'
-import { PrState, TypesPullReq } from '@views/repo/pull-request/pull-request.types'
 
 import {
   DefaultReviewersDataProps,
@@ -65,6 +66,19 @@ export const getMergeMethodDisplay = (mergeMethodType: MergeStrategy): string =>
   return mergeMethodMapping[mergeMethodType]
 }
 
+const AUTO_MERGE_STRATEGY_LABELS: Record<MergeStrategy, string> = {
+  [MergeStrategy.SQUASH]: 'Squash and merge',
+  [MergeStrategy.REBASE]: 'Rebase and merge',
+  [MergeStrategy.FAST_FORWARD]: 'Fast-forward merge',
+  [MergeStrategy.MERGE]: 'Merge'
+}
+
+const AUTO_MERGE_SHORT_LABELS: Partial<Record<MergeStrategy, string>> = {
+  [MergeStrategy.SQUASH]: 'squash',
+  [MergeStrategy.REBASE]: 'rebase',
+  [MergeStrategy.FAST_FORWARD]: 'fast-forward'
+}
+
 interface HeaderProps {
   isDraft?: boolean
   isClosed: boolean
@@ -72,6 +86,10 @@ interface HeaderProps {
   mergeable: boolean
   isOpen: boolean
   ruleViolation?: boolean
+  isAutoMergeActive?: boolean
+  isAutoMergeConfirm?: boolean
+  autoMergeMethod?: MergeStrategy
+  activeAutoMergeStrategy?: EnumMergeMethod
   pullReqMetadata: TypesPullReq | undefined
   onRestoreBranch: () => void
   onDeleteBranch: () => void
@@ -95,8 +113,21 @@ interface ButtonStateProps {
 }
 
 const HeaderTitle = ({ ...props }: HeaderProps) => {
-  const { pullReqMetadata, isDraft, isClosed, unchecked, mergeable, isOpen, ruleViolation, actions, mergeButtonValue } =
-    props
+  const {
+    pullReqMetadata,
+    isDraft,
+    isClosed,
+    unchecked,
+    mergeable,
+    isOpen,
+    ruleViolation,
+    isAutoMergeActive,
+    isAutoMergeConfirm,
+    autoMergeMethod,
+    activeAutoMergeStrategy,
+    actions,
+    mergeButtonValue
+  } = props
   const isRebasable = pullReqMetadata?.merge_target_sha !== pullReqMetadata?.merge_base_sha && !pullReqMetadata?.merged
 
   // Get the current selected merge method
@@ -121,6 +152,7 @@ const HeaderTitle = ({ ...props }: HeaderProps) => {
   const isMerged = pullReqMetadata?.state === PullRequestFilterOption.MERGED
 
   const getStatusTextColor = (): TextProps['color'] => {
+    if (isAutoMergeConfirm) return 'foreground-1'
     if (isDraft) return 'foreground-1'
     if (isClosed) return 'brand'
     if (isMerged) return 'merged'
@@ -135,23 +167,26 @@ const HeaderTitle = ({ ...props }: HeaderProps) => {
     return 'foreground-1'
   }
 
+  const getHeaderText = (): string => {
+    if (isAutoMergeConfirm && autoMergeMethod) {
+      return `Automatically ${AUTO_MERGE_STRATEGY_LABELS[autoMergeMethod].toLocaleLowerCase()} pull request when ready`
+    }
+    if (isDraft) return 'This pull request is still a work in progress'
+    if (isMerged) return 'This pull request is merged'
+    if (isClosed) return 'This pull request is closed'
+    if (isAutoMergeActive && isOpen) {
+      return `This pull request will ${activeAutoMergeStrategy ? AUTO_MERGE_STRATEGY_LABELS[activeAutoMergeStrategy as MergeStrategy].toLowerCase() : 'merge'} automatically when all requirements are met`
+    }
+    if (unchecked) return 'Checking for ability to merge automatically...'
+    if ((mergeable === false && isOpen) || ruleViolation || isFastForwardNotPossible) {
+      return 'Cannot merge pull request'
+    }
+    return 'Pull request can be merged'
+  }
+
   return (
     <Text variant="body-strong" as="h4" color={getStatusTextColor()}>
-      {isDraft
-        ? 'This pull request is still a work in progress'
-        : isMerged
-          ? 'This pull request is merged'
-          : isClosed
-            ? 'This pull request is closed'
-            : unchecked
-              ? 'Checking for ability to merge automatically...'
-              : mergeable === false && isOpen
-                ? 'Cannot merge pull request'
-                : ruleViolation
-                  ? 'Cannot merge pull request'
-                  : isFastForwardNotPossible
-                    ? 'Cannot merge pull request'
-                    : `Pull request can be merged`}
+      {getHeaderText()}
     </Text>
   )
 }
@@ -272,6 +307,13 @@ export interface PullRequestPanelProps
   isRebasing?: boolean
   onMergeMethodSelect?: (method: string) => void
   className?: string
+  isRepoAutoMergeEnabled?: boolean
+  isAutoMergeActive?: boolean
+  autoMergeData?: { merge_method?: EnumMergeMethod; title?: string; message?: string } | null
+  onEnableAutoMerge?: (method: EnumMergeMethod) => void
+  onDisableAutoMerge?: () => void
+  isEnablingAutoMerge?: boolean
+  isDisablingAutoMerge?: boolean
 }
 
 const PullRequestPanel = ({
@@ -312,6 +354,13 @@ const PullRequestPanel = ({
   isMerging,
   isRebasing,
   onMergeMethodSelect,
+  isRepoAutoMergeEnabled,
+  isAutoMergeActive,
+  autoMergeData: _autoMergeData,
+  onEnableAutoMerge,
+  onDisableAutoMerge,
+  isEnablingAutoMerge,
+  isDisablingAutoMerge,
   ...routingProps
 }: PullRequestPanelProps) => {
   const [notBypassable, setNotBypassable] = useState(false)
@@ -324,6 +373,10 @@ const PullRequestPanel = ({
   const [showActionBtn, setShowActionBtn] = useState(false)
   const [mergeInitiated, setMergeInitiated] = useState(false)
   const [cancelInitiated, setCancelInitiated] = useState(false)
+
+  const [isAutoMergeConfirm, setIsAutoMergeConfirm] = useState(false)
+  const [autoMergeMethod, setAutoMergeMethod] = useState<MergeStrategy | undefined>(undefined)
+  const [showAutoMergeInputs, setShowAutoMergeInputs] = useState(false)
 
   useEffect(() => {
     setMergeTitle(`${pullReqMetadata?.title} (#${pullReqMetadata?.number})`)
@@ -385,6 +438,43 @@ const PullRequestPanel = ({
     if (actionIdx !== -1) {
       actions[actionIdx]?.action?.()
     }
+  }
+
+  const handleAutoMergeTypeSelect = (value: string) => {
+    const selectedAction = actions[parseInt(value)]
+    const strategy = getMergeStrategyFromTitle(selectedAction?.title)
+    if (!strategy) return
+
+    setAutoMergeMethod(strategy)
+    setMergeButtonValue(value)
+    setIsAutoMergeConfirm(true)
+
+    const showInputs = strategy === MergeStrategy.MERGE || strategy === MergeStrategy.SQUASH
+    setShowAutoMergeInputs(showInputs)
+
+    if (strategy === MergeStrategy.SQUASH) {
+      setMergeMessage(
+        pullReqCommits?.commits
+          ?.map(commit => `* ${commit?.sha?.substring(0, 6)} ${commit?.title}`)
+          .join('\n\n')
+          ?.slice(0, 1000) ?? ''
+      )
+    } else {
+      setMergeMessage('')
+    }
+  }
+
+  const handleCancelAutoMerge = () => {
+    setIsAutoMergeConfirm(false)
+    setAutoMergeMethod(undefined)
+    setShowAutoMergeInputs(false)
+  }
+
+  const handleConfirmAutoMerge = () => {
+    if (autoMergeMethod && onEnableAutoMerge) {
+      onEnableAutoMerge(autoMergeMethod as EnumMergeMethod)
+    }
+    setShowAutoMergeInputs(false)
   }
 
   // Check if Fast-Forward merge should be disabled
@@ -464,6 +554,22 @@ const PullRequestPanel = ({
     }
   }, [mergeInitiated, isMerging, pullReqMetadata?.is_draft])
 
+  useEffect(() => {
+    if (isAutoMergeActive && isAutoMergeConfirm) {
+      setIsAutoMergeConfirm(false)
+      setAutoMergeMethod(undefined)
+      setShowAutoMergeInputs(false)
+    }
+  }, [isAutoMergeActive, isAutoMergeConfirm])
+
+  useEffect(() => {
+    if (error && isAutoMergeConfirm) {
+      setIsAutoMergeConfirm(false)
+      setAutoMergeMethod(undefined)
+      setShowAutoMergeInputs(false)
+    }
+  }, [error, isAutoMergeConfirm])
+
   const buttonState = getButtonState({
     isMergeable,
     ruleViolation: prPanelData.ruleViolation,
@@ -475,6 +581,9 @@ const PullRequestPanel = ({
 
   const fastForwardDisabled = shouldDisableFastForwardMerge()
   const getPrState = (): PrState => {
+    if (isAutoMergeConfirm) {
+      return PrState.Ready
+    }
     if (pullReqMetadata?.state === PullRequestFilterOption.MERGED) {
       return PrState.Merged
     } else if (isClosed && !pullReqMetadata?.merged) {
@@ -499,17 +608,42 @@ const PullRequestPanel = ({
     'bg-cn-purple-outline': prState === PrState.Merged
   })
 
-  const shouldShowConfirmation = actions && !pullReqMetadata?.closed && (showActionBtn || isMerging || mergeInitiated)
+  const bypassOverridesAutoMerge = isAutoMergeActive && !!checkboxBypass
 
-  const shouldShowSplitButton =
+  const shouldShowConfirmation =
+    actions &&
+    !pullReqMetadata?.closed &&
+    (!isAutoMergeActive || bypassOverridesAutoMerge) &&
+    (showActionBtn || isMerging || mergeInitiated)
+
+  const baseSplitButtonVisible =
     actions?.length > 1 &&
     !pullReqMetadata?.closed &&
     !showActionBtn &&
     !isMerging &&
     !pullReqMetadata?.merged &&
-    !mergeInitiated
+    !mergeInitiated &&
+    (!isAutoMergeActive || bypassOverridesAutoMerge) &&
+    !isAutoMergeConfirm
 
-  const shouldShowMoreActions = !shouldShowConfirmation && isOpen
+  const canShowAutoMergeSplitButton =
+    baseSplitButtonVisible &&
+    isRepoAutoMergeEnabled &&
+    isOpen &&
+    !isDraft &&
+    buttonState.disabled &&
+    !prPanelData.mergeBlockedViaRule &&
+    isMergeable
+
+  const shouldShowSplitButton = baseSplitButtonVisible && !canShowAutoMergeSplitButton
+
+  const shouldShowAutoMergeConfirmation = isAutoMergeConfirm && !pullReqMetadata?.closed && !pullReqMetadata?.merged
+
+  const shouldShowDisableAutoMerge =
+    isAutoMergeActive && isOpen && !pullReqMetadata?.merged && !bypassOverridesAutoMerge
+
+  const shouldShowMoreActions = !shouldShowConfirmation && !shouldShowAutoMergeConfirmation && isOpen
+
   const areRulesBypassed = pullReqMetadata?.merge_violations_bypassed
   const mergeMethod = getMergeMethodDisplay(pullReqMetadata?.merge_method as MergeStrategy)
 
@@ -532,6 +666,10 @@ const PullRequestPanel = ({
                 mergeable={isMergeable}
                 isOpen={isOpen}
                 ruleViolation={prPanelData.ruleViolation}
+                isAutoMergeActive={isAutoMergeActive}
+                isAutoMergeConfirm={isAutoMergeConfirm}
+                autoMergeMethod={autoMergeMethod}
+                activeAutoMergeStrategy={_autoMergeData?.merge_method}
                 pullReqMetadata={pullReqMetadata}
                 onRestoreBranch={onRestoreBranch}
                 onDeleteBranch={onDeleteBranch}
@@ -675,6 +813,59 @@ const PullRequestPanel = ({
                         {actions[parseInt(mergeButtonValue)].title}
                       </SplitButton>
                     )}
+
+                    {shouldShowDisableAutoMerge && (
+                      <Button
+                        variant="primary"
+                        theme={buttonState.theme}
+                        onClick={onDisableAutoMerge}
+                        loading={isDisablingAutoMerge}
+                      >
+                        Disable auto-merge
+                      </Button>
+                    )}
+
+                    {canShowAutoMergeSplitButton && !isAutoMergeConfirm && (
+                      <SplitButton
+                        theme={buttonState.theme}
+                        variant={buttonState.variant}
+                        handleOptionChange={handleAutoMergeTypeSelect}
+                        options={actions
+                          .filter(action => {
+                            const mergeActionTitles = new Set(Object.values(MERGE_METHOD_TITLES))
+                            return mergeActionTitles.has(action.title)
+                          })
+                          .map(action => ({
+                            value: action.id,
+                            label: action.title,
+                            description: action.description
+                          }))}
+                        handleButtonClick={() => handleAutoMergeTypeSelect(mergeButtonValue)}
+                        size="md"
+                      >
+                        Enable auto-merge
+                        {(() => {
+                          const strategy = getMergeStrategyFromTitle(actions[parseInt(mergeButtonValue)]?.title)
+                          const shortLabel = strategy && AUTO_MERGE_SHORT_LABELS[strategy]
+                          return shortLabel ? ` (${shortLabel})` : ''
+                        })()}
+                      </SplitButton>
+                    )}
+
+                    {shouldShowAutoMergeConfirmation && (
+                      <ButtonLayout>
+                        <Button variant="outline" onClick={handleCancelAutoMerge}>
+                          Cancel
+                        </Button>
+                        <Button
+                          theme={buttonState.theme}
+                          onClick={handleConfirmAutoMerge}
+                          loading={isEnablingAutoMerge}
+                        >
+                          Confirm auto-merge
+                        </Button>
+                      </ButtonLayout>
+                    )}
                   </Layout.Horizontal>
                 }
               />
@@ -702,6 +893,30 @@ const PullRequestPanel = ({
                   />
                 </Layout.Vertical>
               )}
+              {showAutoMergeInputs && isAutoMergeConfirm && (
+                <Layout.Vertical className="bg-cn-1 gap-cn-md p-cn-sm rounded-cn-3 mb-cn-3xs w-full">
+                  <TextInput
+                    id="auto-merge-title"
+                    label="Commit message"
+                    className="bg-cn-1 w-full"
+                    value={mergeTitle}
+                    onChange={(e: React.ChangeEvent<HTMLInputElement>) => setMergeTitle(e.target.value)}
+                    optional
+                    placeholder="Enter commit message (optional)"
+                  />
+                  <Textarea
+                    id="auto-merge-message"
+                    label="Commit description"
+                    className="bg-cn-1 w-full"
+                    value={mergeMessage}
+                    onChange={(e: React.ChangeEvent<HTMLTextAreaElement>) => setMergeMessage(e.target.value)}
+                    optional
+                    resizable
+                    rows={5}
+                    placeholder="Enter commit description (optional)"
+                  />
+                </Layout.Vertical>
+              )}
             </>
           )}
         </StackedList.Item>
@@ -712,7 +927,7 @@ const PullRequestPanel = ({
               <Layout.Horizontal align="center" wrap="wrap" gap="2xs">
                 <Avatar name={pullReqMetadata?.merger?.display_name || ''} rounded />
                 <Text variant="body-single-line-strong">{pullReqMetadata?.merger?.display_name}</Text>
-                <Text variant="body-single-line-normal">
+                <Text variant="body-single-line-normal" color="foreground-3">
                   {areRulesBypassed ? `bypassed rules and ${mergeMethod}` : `${mergeMethod}`} into
                 </Text>
                 <BranchTag
@@ -721,7 +936,9 @@ const PullRequestPanel = ({
                   repoId={repoId}
                   variant="secondary"
                 />
-                <Text variant="body-single-line-normal">from</Text>
+                <Text variant="body-single-line-normal" color="foreground-3">
+                  from
+                </Text>
                 <BranchTag
                   branchName={pullReqMetadata?.source_branch || ''}
                   spaceId={spaceId}

@@ -1,15 +1,16 @@
 import { useCallback } from 'react'
 
+import { WebhookStore } from '@views'
+
 import { Layout, MoreActionsTooltip, StatusBadge, Switch, Table, Text } from '@harnessio/ui/components'
 import { useCustomDialogTrigger, useRouterContext, useTranslation } from '@harnessio/ui/context'
-import { WebhookStore } from '@views'
 
 import { formatWebhookTriggers } from '../../utils'
 
 export interface RepoWebhookListProps {
   openDeleteWebhookDialog: (id: number) => void
   handleEnableWebhook: (id: number, enabled: boolean) => void
-  toRepoWebhookDetails?: ({ webhookId }: { webhookId: number }) => string
+  toRepoWebhookDetails?: ({ webhookId }: { webhookId: string }) => string
   useWebhookStore: () => WebhookStore
 }
 
@@ -58,7 +59,9 @@ export function RepoWebhookList({
           {(webhooks ?? []).map(webhook => {
             const isSuccess = webhook.latest_execution_result === 'success'
             const isError = ['fatal_error', 'retriable_error'].includes(webhook.latest_execution_result ?? '')
-            const webhooksUrl = toRepoWebhookDetails ? toRepoWebhookDetails({ webhookId: webhook.id }) : `${webhook.id}`
+            const webhooksUrl = toRepoWebhookDetails
+              ? toRepoWebhookDetails({ webhookId: webhook.identifier })
+              : webhook.identifier
             return (
               <Table.Row to={webhooksUrl} key={webhook.id}>
                 <Table.Cell className="!pr-0">

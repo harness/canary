@@ -42,7 +42,7 @@ const inputs: InputDefinition[] = [
           {
             inputType: 'list',
             path: `variables`,
-            label: 'Stage Variables',
+            label: 'Stage variables',
             inputConfig: {
               layout: 'grid',
               inputs: [

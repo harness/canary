@@ -10,6 +10,8 @@ interface PullRequestCompareButtonProps {
   isSubmitted: boolean
   isValid: boolean
   isLoading: boolean
+  isTemplateFetching?: boolean
+  description?: string
   formRef: RefObject<HTMLFormElement>
   getFormValues: UseFormGetValues<CompareFormFields>
   onFormSubmit: (data: CompareFormFields) => void
@@ -24,6 +26,8 @@ enum PR_TYPE {
 const PullRequestCompareButton: FC<PullRequestCompareButtonProps> = ({
   isSubmitted,
   isLoading,
+  isTemplateFetching,
+  description,
   getFormValues,
   onFormDraftSubmit,
   onFormSubmit
@@ -34,7 +38,7 @@ const PullRequestCompareButton: FC<PullRequestCompareButtonProps> = ({
   const handleButtonClick = useCallback(
     (e: MouseEvent) => {
       e.preventDefault()
-      const data = getFormValues()
+      const data = { ...getFormValues(), description }
 
       switch (prType) {
         case PR_TYPE.DRAFT:
@@ -45,7 +49,7 @@ const PullRequestCompareButton: FC<PullRequestCompareButtonProps> = ({
           break
       }
     },
-    [getFormValues, onFormDraftSubmit, onFormSubmit, prType]
+    [getFormValues, description, onFormDraftSubmit, onFormSubmit, prType]
   )
 
   const handlePrTypeChange = (value: PR_TYPE) => {
@@ -58,6 +62,7 @@ const PullRequestCompareButton: FC<PullRequestCompareButtonProps> = ({
         <SplitButton<PR_TYPE>
           handleButtonClick={handleButtonClick}
           loading={isLoading}
+          disabled={isTemplateFetching}
           selectedValue={prType}
           handleOptionChange={handlePrTypeChange}
           options={[

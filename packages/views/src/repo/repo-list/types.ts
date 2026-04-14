@@ -1,7 +1,8 @@
-import { ComboBoxOptions, PaginationProps } from '@harnessio/ui/components'
-import { TFunctionWithFallback } from '@harnessio/ui/context'
 import { OnChangeFn, SortingState } from '@tanstack/react-table'
 import { RepositoryType } from '@views/repo/repo.types'
+
+import { ComboBoxOptions, PaginationProps } from '@harnessio/ui/components'
+import { TFunctionWithFallback } from '@harnessio/ui/context'
 
 import { Scope } from '../..'
 
@@ -39,6 +40,7 @@ export interface FavoriteProps {
 export type RepoListFilters = {
   favorite?: boolean
   recursive?: ComboBoxOptions
+  tags?: string
 }
 
 export interface RepoListQueryFilters {
@@ -50,6 +52,7 @@ export interface RepoListQueryFilters {
    */
   favorite: boolean | string
   recursive: boolean | string
+  tags: string | null
 }
 
 export interface FilterProps {

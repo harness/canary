@@ -1,8 +1,9 @@
 import { FC, useCallback, useMemo } from 'react'
 
+import { NotFoundPage } from '@views/not-found-page'
+
 import { Button, IconV2, Layout, ListActions, NoData, SearchInput, Skeleton, Text } from '@harnessio/ui/components'
 import { useRouterContext, useTranslation } from '@harnessio/ui/context'
-import { NotFoundPage } from '@views/not-found-page'
 
 import { RepoWebhookList } from './components/repo-webhook-list'
 import { WebhookStore } from './types'
@@ -14,7 +15,7 @@ interface RepoWebhookListPageProps {
   setSearchQuery: (query: string | null) => void
   webhookLoading: boolean
   handleEnableWebhook: (id: number, enabled: boolean) => void
-  toRepoWebhookDetails?: ({ webhookId }: { webhookId: number }) => string
+  toRepoWebhookDetails?: ({ webhookId }: { webhookId: string }) => string
   toRepoWebhookCreate?: () => string
 }
 

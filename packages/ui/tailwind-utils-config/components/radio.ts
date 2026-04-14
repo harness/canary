@@ -1,11 +1,12 @@
+import { CONTROL_GROUP_STACK_GAP } from './form-shared-styles'
+
 export default {
   ':where(.cn-radio-control)': {
-    gap: 'var(--cn-layout-sm) var(--cn-input-wrapper-gap)'
+    [`@apply ${CONTROL_GROUP_STACK_GAP}`]: ''
   },
 
   ':where(.cn-radio-root)': {
-    '@apply grid': '',
-    gap: 'var(--cn-layout-sm)'
+    [`@apply grid ${CONTROL_GROUP_STACK_GAP}`]: ''
   },
 
   '.cn-radio-item-wrapper': {

@@ -1,26 +1,55 @@
-// --- Collapsed sidebar state: applied when sidebar has data-state="collapsed" ---
-const collapsedSidebarStyles = {
+import type { CSSRuleObject } from 'tailwindcss/types/config'
+
+/** Outline icons: stroke tracks `color` / currentColor */
+const strokeIcon = (token: string): CSSRuleObject => ({
+  color: token,
+  '& svg, & path': { color: token, stroke: token, fill: 'none' }
+})
+
+const itemLabelHover = {
+  '.cn-sidebar-item-content-title': { color: 'var(--cn-comp-sidebar-item-text-hover)' },
+  '.cn-sidebar-item-content-icon': { color: 'var(--cn-comp-sidebar-item-text-hover)' }
+}
+
+const itemLabelSelected = {
+  '.cn-sidebar-item-content-title': { color: 'var(--cn-comp-sidebar-item-text-selected)' },
+  '.cn-sidebar-item-content-icon': { color: 'var(--cn-comp-sidebar-item-text-selected)' }
+}
+
+/** Title row uses foreground-1; match icon to that row */
+const descriptionRowIcon = {
+  '& .cn-sidebar-item-content-icon': { color: 'var(--cn-text-1)' }
+}
+
+const descriptionIconStretch: CSSRuleObject = {
+  '.cn-sidebar-item-content.cn-sidebar-item-content-w-description': {
+    '.cn-sidebar-item-content-icon': {
+      alignSelf: 'stretch',
+      display: 'flex',
+      alignItems: 'center'
+    }
+  }
+}
+
+// Collapsed sidebar: data-state="collapsed" on .cn-sidebar
+const collapsedSidebarStyles: CSSRuleObject = {
   '& .cn-input-prefix': {
     '@apply ml-0': ''
   },
 
   '.cn-sidebar-group': {
     '--sidebar-group-label-scale': '0',
-    '&-header': {
-      display: 'none'
-    }
+    '&-header': { display: 'none' }
   },
 
   '.cn-sidebar-item': {
     '&-content': {
-      // Single-column layout when collapsed so the content box wraps only the icon and border radius is visible
       gridTemplateColumns: '1fr',
       gridTemplateAreas: '"icon"',
       justifyItems: 'center',
       justifyContent: 'center',
       padding: 'var(--cn-sidebar-item-container)',
       minWidth: 'calc(var(--cn-sidebar-item-min-width) - 2 * var(--cn-sidebar-container-px))',
-      // Hide text and extra elements; icon stays centered (place in icon area so they don't create extra grid columns)
       '&-title, &-description, &-badge, &-right-element, &-action-item-placeholder, &-action-buttons': {
         gridArea: 'icon',
         maxWidth: '0',
@@ -28,17 +57,12 @@ const collapsedSidebarStyles = {
         opacity: '0',
         minWidth: '0'
       },
-      '&-w-description, &-complete': {
-        padding: '0'
-      },
-      // Override variant grids so single-column layout wins (e.g. -only-action-buttons uses 3 columns when expanded)
+      '&-w-description, &-complete': { padding: '0' },
       '&-only-action-buttons, &-w-r-element, &-complete': {
         gridTemplateColumns: '1fr',
         gridTemplateAreas: '"icon"'
       },
-      '&-icon': {
-        justifySelf: 'center'
-      }
+      '&-icon': { justifySelf: 'center', marginLeft: '0' }
     },
     '&-action-button': {
       maxWidth: '0',
@@ -66,7 +90,6 @@ export default {
 
     '&-wrapper': {
       '--cn-sidebar-min-height': '100vh',
-
       display: 'flex',
       justifyContent: 'space-between',
       width: '100%',
@@ -89,7 +112,6 @@ export default {
 
     '&-content': {
       height: '100%',
-
       '&-wrapper': {
         '@apply flex-1 overflow-hidden relative': ''
       }
@@ -98,7 +120,7 @@ export default {
     '&-footer': {
       display: 'grid',
       gap: 'var(--cn-sidebar-group-gap)',
-      padding: 'var(--cn-sidebar-group-py) var(--cn-sidebar-container-spacing)',
+      padding: 'var(--cn-sidebar-group-py) var(--cn-sidebar-item-container)',
       marginTop: 'auto',
       flexShrink: '0'
     },
@@ -136,14 +158,13 @@ export default {
 
       '&-header': {
         display: 'flex',
-        padding: 'var(--cn-layout-3xs) var(--cn-sidebar-item-container)',
+        padding: 'var(--cn-layout-2xs)',
         alignItems: 'center',
         gap: 'var(--cn-layout-xs)',
         alignSelf: 'stretch',
         '&-action-button': {
           '@apply opacity-0 transition-opacity duration-150': ''
         },
-
         '&:hover, &:focus-within': {
           '.cn-sidebar-group-header-action-button': {
             '@apply opacity-100': ''
@@ -164,18 +185,11 @@ export default {
         paddingBottom: 'var(--cn-sidebar-group-py)',
         gap: 'var(--cn-spacing-2)',
         overflow: 'hidden',
-
-        '&[data-state="open"]': {
-          '@apply animate-accordion-down': ''
-        },
-
-        '&[data-state="closed"]': {
-          '@apply animate-accordion-up': ''
-        }
+        '&[data-state="open"]': { '@apply animate-accordion-down': '' },
+        '&[data-state="closed"]': { '@apply animate-accordion-up': '' }
       },
 
       '&-item': {
-        // Layout
         display: 'grid',
         alignItems: 'center',
         minWidth: 'var(--cn-sidebar-item-min-width)',
@@ -183,20 +197,15 @@ export default {
         paddingLeft: 'var(--cn-layout-sm)',
         borderRadius: 'var(--cn-sidebar-item-radius)',
         outline: 'none',
-
-        // States
         '&:hover, &:focus-within': {
           backgroundColor: 'var(--cn-state-hover)'
         },
-
-        // Modifiers
         '&.active': {
           background: 'var(--cn-comp-sidebar-item-selected)',
           '.cn-sidebar-submenu-item-content': {
             color: 'var(--cn-comp-sidebar-item-text-hover)'
           }
         },
-
         '&-active-indicator': {
           backgroundColor: 'var(--cn-set-brand-primary-bg)'
         }
@@ -208,20 +217,11 @@ export default {
       overflow: 'hidden',
       '@apply duration-150 transition-[max-width,margin-left,padding] ease-linear': '',
 
-      '&:hover': {
-        /**
-         * This is to override the parent default styles
-         */
-        '.cn-sidebar-item-content-title': {
-          color: 'var(--cn-comp-sidebar-item-text-hover)'
-        },
-        textDecoration: 'none !important'
-      },
+      // Router-active (e.g. NavLink); label colors — hover is handled on .cn-sidebar-item-wrapper
+      '&-active': itemLabelSelected,
 
-      '&-active': {
-        '.cn-sidebar-item-content-title': {
-          color: 'var(--cn-comp-sidebar-item-text-selected)'
-        }
+      '&:hover': {
+        textDecoration: 'none !important'
       },
 
       '&-trigger': {
@@ -243,7 +243,6 @@ export default {
         justifyContent: 'center',
         zIndex: '1',
         cursor: 'grab',
-        // Enable pointer events for drag functionality
         pointerEvents: 'auto',
         opacity: '0'
       },
@@ -261,65 +260,31 @@ export default {
         overflow: 'hidden',
 
         '&:not([data-disabled=true])': {
-          // Hover/focus for non-active items
           '&:hover, &:focus-within': {
-            '&[data-active=false]': {
-              '.cn-sidebar-item-content': {
-                backgroundColor: 'var(--cn-state-hover)'
-              }
+            '&[data-active=false] .cn-sidebar-item-content': {
+              backgroundColor: 'var(--cn-state-hover)'
             },
-            '.cn-sidebar-item-content-title': {
-              color: 'var(--cn-comp-sidebar-item-text-hover)'
-            },
-            '.cn-sidebar-item-action-menu': {
-              opacity: '1'
-            },
-            '.cn-sidebar-item-content-action-buttons': {
-              display: 'flex !important'
-            },
-            '.cn-sidebar-item-grip-handle': {
-              opacity: '1'
-            },
-            // Expand icon (nav-arrow-right) color on hover - match action-button
-            '.cn-sidebar-item-content-right-element': {
-              color: 'var(--cn-text-1)',
-              '& svg, & path': {
-                color: 'var(--cn-text-1)',
-                stroke: 'var(--cn-text-1)',
-                fill: 'none'
-              }
-            }
+            ...itemLabelHover,
+            '.cn-sidebar-item-action-menu': { opacity: '1' },
+            '.cn-sidebar-item-content-action-buttons': { display: 'flex !important' },
+            '.cn-sidebar-item-grip-handle': { opacity: '1' },
+            '.cn-sidebar-item-content-right-element': strokeIcon('var(--cn-text-1)')
           },
 
-          // Active item
           '&[data-active=true][data-clickable=true]': {
             '.cn-sidebar-item-content': {
               background: 'var(--cn-comp-sidebar-item-selected)'
             },
-            '.cn-sidebar-item-content-title': {
-              color: 'var(--cn-comp-sidebar-item-text-selected)'
-            },
-            '.cn-sidebar-item-action-menu': {
-              opacity: '1'
-            },
+            ...itemLabelSelected,
+            '.cn-sidebar-item-action-menu': { opacity: '1' },
             '.cn-sidebar-item-active-indicator': {
               backgroundColor: 'var(--cn-set-brand-primary-bg)',
               height: '12px',
               width: '2px'
             },
-            // Expand icon (nav-arrow-right) color on active - match action-button
-            '.cn-sidebar-item-content-right-element': {
-              color: 'var(--cn-text-2)',
-              '& svg, & path': {
-                color: 'var(--cn-text-2)',
-                stroke: 'var(--cn-text-2)',
-                fill: 'none'
-              }
-            },
+            '.cn-sidebar-item-content-right-element': strokeIcon('var(--cn-text-2)'),
             '&:hover, &:focus-within': {
-              '.cn-sidebar-item-grip-handle': {
-                opacity: '1'
-              }
+              '.cn-sidebar-item-grip-handle': { opacity: '1' }
             }
           }
         },
@@ -339,10 +304,11 @@ export default {
         minWidth: 'var(--cn-sidebar-item-min-width)',
         justifyItems: 'start',
         alignItems: 'center',
-        padding:
-          'var(--cn-sidebar-item-container) var(--cn-sidebar-item-container) var(--cn-sidebar-item-container) var(--cn-layout-sm)',
+        padding: 'var(--cn-sidebar-item-container)',
         borderRadius: 'var(--cn-sidebar-item-radius)',
         '@apply duration-150 transition-[padding,row-gap,column-gap] ease-linear': '',
+        // Icons use stroke currentColor; base row color keeps them visible on dark sidebars
+        color: 'var(--cn-text-2)',
 
         '&:hover, &:focus-within': {
           color: 'var(--cn-text-1)',
@@ -361,20 +327,19 @@ export default {
           `,
           gridTemplateColumns: 'auto 1fr',
           paddingBlock: 'var(--cn-sidebar-item-container)',
-
           '&:has(.cn-sidebar-item-content-action-buttons)': {
             gridTemplateAreas: `
             "icon title action-buttons"
             "icon description action-buttons"
           `,
             gridTemplateColumns: 'auto 1fr auto'
-          }
+          },
+          ...descriptionRowIcon
         },
 
         '&-w-r-element': {
           gridTemplateAreas: '"icon title elem"',
           gridTemplateColumns: 'auto 1fr auto',
-
           '&:has(.cn-sidebar-item-content-action-buttons)': {
             gridTemplateAreas: '"icon title action-buttons elem"',
             gridTemplateColumns: 'auto 1fr auto auto'
@@ -388,19 +353,18 @@ export default {
           `,
           gridTemplateColumns: 'auto 1fr auto',
           paddingBlock: 'var(--cn-sidebar-item-container)',
-
           '&:has(.cn-sidebar-item-content-action-buttons)': {
             gridTemplateAreas: `
             "icon title action-buttons elem"
             "icon description action-buttons elem"
           `,
             gridTemplateColumns: 'auto 1fr auto auto'
-          }
+          },
+          ...descriptionRowIcon
         },
 
-        '&-icon': {
-          gridArea: 'icon'
-        },
+        /** Reserves space for active bar + grip handle so icon/title stay stable when active or dragging */
+        '&-icon': { gridArea: 'icon', marginLeft: 'var(--cn-layout-sm)' },
 
         '&-title': {
           maxWidth: '100%',
@@ -416,11 +380,7 @@ export default {
 
         '&-badge': {
           margin: '-2px 0',
-
-          '&-secondary': {
-            opacity: '1'
-          },
-
+          '&-secondary': { opacity: '1' },
           '&.cn-sidebar-item-content-badge-secondary': {
             '@apply duration-150 transition-[opacity] ease-linear': ''
           }
@@ -432,13 +392,8 @@ export default {
           placeContent: 'center',
           width: 'var(--cn-size-6)',
           height: 'var(--cn-size-6)',
-          color: 'var(--cn-text-2)',
           justifyContent: 'flex-end',
-          '& svg, & path': {
-            color: 'var(--cn-text-2)',
-            stroke: 'var(--cn-text-2)',
-            fill: 'none'
-          }
+          ...strokeIcon('var(--cn-text-2)')
         },
 
         '&-action-buttons': {
@@ -466,16 +421,15 @@ export default {
         right: '4px',
         display: 'grid',
         placeContent: 'center',
-        color: 'var(--cn-text-2)',
         width: 'var(--cn-size-6)',
         height: 'var(--cn-size-6)',
         borderRadius: 'var(--cn-rounded-2)',
         opacity: '1',
         overflow: 'hidden',
         '@apply duration-150 transition-[opacity] ease-linear': '',
-
+        ...strokeIcon('var(--cn-text-2)'),
         '&:hover, &:focus-within': {
-          color: 'var(--cn-text-1)',
+          ...strokeIcon('var(--cn-text-1)'),
           backgroundColor: 'var(--cn-state-hover)'
         }
       },
@@ -483,7 +437,6 @@ export default {
       '&-action-menu': {
         opacity: '0',
         '@apply transition-opacity duration-200 ease-linear': '',
-
         '&[data-state="open"]': {
           color: 'var(--cn-text-1)',
           opacity: '1'
@@ -494,8 +447,7 @@ export default {
         display: 'flex',
         alignItems: 'center',
         padding: 'var(--cn-sidebar-item-container)',
-        columnGap: 'var(--cn-sidebar-item-gap)',
-
+        gap: 'var(--cn-layout-xs)',
         '&-icon, &-text': {
           flexShrink: '0',
           height: 'var(--cn-icon-size-sm)',
@@ -503,13 +455,8 @@ export default {
           backgroundColor: 'var(--cn-bg-1)',
           '@apply animate-pulse': ''
         },
-
-        '&-icon': {
-          width: 'var(--cn-icon-size-sm)'
-        },
-
+        '&-icon': { width: 'var(--cn-icon-size-sm)' },
         '&-text': {
-          // width: '100%',
           maxWidth: 'var(--cn-sidebar-skeleton-width)'
         }
       }
@@ -518,7 +465,6 @@ export default {
     '&-drawer-content, &-drawer-overlay': {
       borderLeftWidth: '1px',
       left: 'var(--cn-size-64) !important',
-
       '&-collapsed': {
         left: 'var(--cn-size-16) !important'
       }
@@ -535,20 +481,14 @@ export default {
       '.cn-sidebar-item-content': {
         gap: 'var(--cn-layout-3xs) var(--cn-layout-xs)',
         gridTemplateColumns: 'var(--cn-size-6) 1fr',
-        paddingLeft: 'var(--cn-sidebar-item-container)',
-
+        padding: 'var(--cn-layout-2xs)',
         '&-title': {
           font: 'var(--cn-body-single-line-normal)',
           color: 'var(--cn-comp-sidebar-item-text)'
         },
-
-        '&-icon': {
-          paddingLeft: '0'
-        }
+        '&-icon': { paddingLeft: '0', marginLeft: '0' }
       },
 
-      // Icon with border container effect: container is var(--cn-size-6)
-      // Padding centers the icon (var(--cn-icon-size-sm)) inside; border is 1px
       '.cn-icon.cn-icon-2xs:not(.cn-sidebar-item-expand-icon), .cn-icon.cn-icon-xs:not(.cn-sidebar-item-expand-icon), .cn-icon.cn-icon-sm:not(.cn-sidebar-item-expand-icon), .cn-icon.cn-icon-md:not(.cn-sidebar-item-expand-icon), .cn-icon.cn-icon-lg:not(.cn-sidebar-item-expand-icon), .cn-icon.cn-icon-xl:not(.cn-sidebar-item-expand-icon)':
         {
           width: 'var(--cn-size-6) !important',
@@ -574,7 +514,6 @@ export default {
     '&[data-state=collapsed]': collapsedSidebarStyles
   },
 
-  // Hidden measurement container for popover column calculation
   '.cn-sidebar-popover-measurement': {
     position: 'fixed',
     visibility: 'hidden',
@@ -592,41 +531,21 @@ export default {
     outline: 'none'
   },
 
-  // Sidebar nested popover (e.g. drawer-style panel)
   '.cn-sidebar-nested-popover': {
     width: 'var(--cn-size-64)',
     height: '100vh',
     borderRadius: '0 var(--cn-popover-radius) var(--cn-popover-radius) 0',
-
-    // Stretch icon in items with title + description so spacing is even
-    '.cn-sidebar-item-content.cn-sidebar-item-content-w-description': {
-      '.cn-sidebar-item-content-icon': {
-        alignSelf: 'stretch',
-        display: 'flex',
-        alignItems: 'center'
-      }
-    }
+    ...descriptionIconStretch
   },
 
-  // Sidebar popover
   '.cn-popover-content.cn-sidebar-popover': {
     backgroundColor: 'var(--cn-bg-2)',
+    ...descriptionIconStretch,
 
-    // Stretch icon in items with title + description so spacing is even
-    '.cn-sidebar-item-content.cn-sidebar-item-content-w-description': {
-      '.cn-sidebar-item-content-icon': {
-        alignSelf: 'stretch',
-        display: 'flex',
-        alignItems: 'center'
-      }
-    },
-
-    // Reset padding left for group headers in popover (only side nav should have padding left)
     '.cn-sidebar-group-header': {
-      padding: 'var(--cn-layout-3xs) var(--cn-sidebar-item-container)'
+      padding: 'var(--cn-layout-2xs)'
     },
 
-    // Last group (Go to settings footer button)
     '.cn-sidebar-popover-footer': {
       marginTop: 'calc(-1 * var(--cn-spacing-2))',
       padding: 'var(--cn-layout-xs)',
@@ -634,7 +553,6 @@ export default {
       justifyContent: 'flex-start'
     },
 
-    // Separator styling for popover to match Figma
     '.cn-sidebar-separator': {
       marginTop: 'var(--cn-spacing-0)',
       marginBottom: 'calc(var(--cn-spacing-4) - var(--cn-spacing-px))',

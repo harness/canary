@@ -5,7 +5,7 @@ beta: true
 ---
 
 import { DocsPage } from "@/components/docs-page";
-import { LinkCard, CardGrid } from "@astrojs/starlight/components";
+import LinkCard from "@/components/LinkCard.astro";
 
 The design system provides two logo components for different use cases:
 
@@ -185,15 +185,15 @@ Since `LogoSymbol` uses `currentColor`, it inherits color from its parent elemen
 
 ## Related Pages
 
-<CardGrid>
+<div className="not-content grid grid-cols-1 sm:grid-cols-2 gap-cn-xs">
   <LinkCard
+    href="/foundations/logos"
     title="All Logos"
     description="Browse the complete logo library with Default and Symbol variants"
-    href="/foundations/logos"
   />
   <LinkCard
+    href="/components/visual/icon"
     title="Icons"
     description="Icon component reference"
-    href="/components/visual/icon"
   />
-</CardGrid>
+</div>

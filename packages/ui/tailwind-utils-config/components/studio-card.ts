@@ -38,6 +38,13 @@ export default {
     maxWidth: '220px',
     height: 'var(--cn-size-40)',
 
+    '&.cn-studio-card-xs': {
+      // Extra small variant - reduces dimensions for compact cards
+      width: 'auto',
+      minWidth: 'var(--cn-size-41)',
+      height: 'auto'
+    },
+
     '&.cn-studio-card-sm': {
       borderWidth: '2px !important'
     },
@@ -75,16 +82,18 @@ export default {
     // Group card variant
     '&:where(.cn-studio-card-group)': {
       width: 'auto',
-      minWidth: 'var(--cn-size-90)',
+      // minWidth: 'var(--cn-size-90)',
       maxWidth: 'none',
       height: 'auto',
 
       '&.cn-studio-card-stage': {
-        minWidth: 'var(--cn-size-90)'
+        // minWidth: 'var(--cn-size-90)'
       },
 
+      // When expanded - remove max-width to fit children
       '&:has(> .cn-studio-card-content > [data-expanded="true"])': {
-        '@apply bg-cn-3/50': ''
+        '@apply bg-cn-3/50': '',
+        maxWidth: 'none'
       },
 
       '> .cn-studio-card-content': {
@@ -95,10 +104,36 @@ export default {
         '@apply justify-center items-start': ''
       },
 
+      // When collapsed - fixed width
       '&:has(> .cn-studio-card-content > [data-expanded="false"])': {
-        width: 'var(--cn-size-90)',
-        minWidth: 'var(--cn-size-90)',
-        maxWidth: 'var(--cn-size-90)'
+        // width: 'var(--cn-size-90)',
+        // minWidth: 'var(--cn-size-90)',
+        // maxWidth: 'var(--cn-size-90)'
+      }
+    },
+
+    // Group card variant with xs size - compact layout
+    '&:where(.cn-studio-card-group.cn-studio-card-xs)': {
+      minWidth: 'var(--cn-size-41)',
+
+      '&.cn-studio-card-stage': {
+        minWidth: 'var(--cn-size-41)'
+      },
+
+      '> .cn-studio-card-content': {
+        minHeight: '63px'
+      },
+
+      // When expanded - remove max-width to fit children
+      '&:has(> .cn-studio-card-content > [data-expanded="true"])': {
+        maxWidth: 'none'
+      },
+
+      // When collapsed - fixed width
+      '&:has(> .cn-studio-card-content > [data-expanded="false"])': {
+        width: 'var(--cn-size-41)',
+        minWidth: 'var(--cn-size-41)',
+        maxWidth: 'var(--cn-size-41)'
       }
     },
 
@@ -144,8 +179,14 @@ export default {
     }
   },
 
+  // Compact header padding for xs cards
+  '.cn-studio-card-xs .cn-studio-card-header': {
+    '@apply p-cn-2xs pl-cn-xs': ''
+  },
+
   '.cn-studio-card-code-preview': {
     '@apply relative h-full overflow-hidden': '',
+    minHeight: 'var(--cn-size-13)',
     '&::before': {
       '@apply absolute inset-y-0 right-0 w-8': '',
       content: '""',
@@ -157,12 +198,20 @@ export default {
       content: '""',
       zIndex: '2',
       background: `linear-gradient(to bottom, color-mix(in lch, var(--cn-comp-pipeline-card-footer) 0%, transparent), var(--cn-comp-pipeline-card-footer))`
+    },
+
+    // Allow pre tags to wrap and prevent width expansion
+    '& pre': {
+      position: 'absolute',
+      whiteSpace: 'pre-wrap',
+      wordBreak: 'break-word',
+      overflowWrap: 'break-word'
     }
   },
 
   // Content Component
   '.cn-studio-card-content': {
-    '@apply flex flex-col flex-grow gap-cn-sm px-cn-md pb-cn-lg pt-cn-sm': '',
+    '@apply flex flex-col flex-grow gap-cn-sm px-cn-md pb-cn-md pt-cn-sm': '',
     paddingTop: '0 !important',
 
     // When a group card is hovered anywhere inside this content
@@ -255,6 +304,31 @@ export default {
       '@apply line-clamp-4': ''
     },
 
+    // Explicit compact size via prop
+    '&[data-size="compact"]': {
+      minHeight: 'var(--cn-size-13)',
+      '& span': {
+        '@apply line-clamp-2': ''
+      }
+    },
+
+    // Auto-detect parent Root size - xs cards get compact footer
+    '.cn-studio-card-xs > &': {
+      minHeight: 'var(--cn-size-16)',
+      '@apply px-cn-xs py-cn-xs': '',
+      '& span': {
+        '@apply line-clamp-2': ''
+      }
+    },
+
+    // Auto-detect parent Root size - sm cards get slightly reduced footer
+    '.cn-studio-card-sm > &': {
+      minHeight: 'var(--cn-size-20)',
+      '& span': {
+        '@apply line-clamp-3': ''
+      }
+    },
+
     // Group card variant - adjust padding and line-clamp
     '.cn-studio-card-group > &': {
       minHeight: 'var(--cn-size-13)',
@@ -298,7 +372,7 @@ export default {
     height: 'var(--cn-size-22)',
     transition: 'transform 0.1s linear',
 
-    // Stack layers
+    // Stack layers - default direction is "right"
     '&-stack': {
       pointerEvents: 'none',
       transitionProperty: 'transform',
@@ -324,7 +398,7 @@ export default {
       }
     },
 
-    // Hover state - expand stacks and translate button right
+    // Hover state - expand stacks and translate button
     '&:hover': {
       transform: 'scale(1.02) !important',
 
@@ -333,6 +407,40 @@ export default {
       },
       '.cn-studio-card-expand-button-stack-2': {
         transform: 'translateX(8px)'
+      }
+    },
+
+    // Bottom stack direction variant
+    '&[data-stack-direction="bottom"]': {
+      '.cn-studio-card-expand-button-stack-1': {
+        insetBlock: '0px',
+        insetInline: '3px',
+        transform: 'translateY(3px)'
+      },
+
+      '.cn-studio-card-expand-button-stack-2': {
+        insetBlock: '0px',
+        insetInline: '6px',
+        transform: 'translateY(6px)'
+      },
+
+      '&:hover': {
+        '.cn-studio-card-expand-button-stack-1': {
+          transform: 'translateY(4px)'
+        },
+        '.cn-studio-card-expand-button-stack-2': {
+          transform: 'translateY(8px)'
+        }
+      }
+    },
+
+    // Minimal variant
+    '&[data-variant="minimal"]': {
+      width: 'auto',
+      height: 'auto',
+
+      '.cn-studio-card-expand-button-top': {
+        '@apply p-cn-2xs px-cn-sm': ''
       }
     },
 

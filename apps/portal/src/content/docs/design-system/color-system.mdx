@@ -6,9 +6,12 @@ description: Color architecture — LCH color space, semantic levels, color sets
 import { Aside } from "@astrojs/starlight/components";
 import { AllSetsShowcase } from "@/components/color-set-showcase";
 import { GrayShadesPreview } from "@/components/gray-shades-preview";
+import ColorSystemDiagram from "@/components/ColorSystemDiagram.astro";
 import LinkCard from "@/components/LinkCard.astro";
 
 Colors are the most complex part of the design system. This page explains how they're structured, from raw LCH values to the semantic pairs developers use in code.
+
+<ColorSystemDiagram />
 
 ## Why LCH?
 
@@ -51,6 +54,167 @@ Each color family has 14 stops (25–1000) plus `pure.white` and `pure.black`. T
 
 Core primitives have no meaning — `gray.500` is just a value. <span style="font-weight: 600">Semantic tokens</span> assign purpose. They're defined per-theme in `design-tokens/mode/{dark,light}/` and map <span style="font-weight: 600">intent</span> to <span style="font-weight: 600">value</span>.
 
+Here's how the same semantic tokens resolve to different core primitives depending on the active theme:
+
+<div className="cn-table-v2 cn-table-v2-normal not-content">
+  <div className="cn-table-v2-container">
+    <table className="cn-table-v2-element">
+      <thead className="cn-table-v2-header">
+        <tr className="cn-table-v2-row">
+          <th className="cn-table-v2-head">Semantic token</th>
+          <th className="cn-table-v2-head">Light</th>
+          <th className="cn-table-v2-head">Dark</th>
+          <th className="cn-table-v2-head">Role</th>
+        </tr>
+      </thead>
+      <tbody className="cn-table-v2-body">
+        <tr className="cn-table-v2-row">
+          <td className="cn-table-v2-cell">
+            <code>bg.0</code>
+          </td>
+          <td className="cn-table-v2-cell">
+            <span
+              className="shade-preview"
+              style={{ background: "var(--cn-gray-25)" }}
+            ></span>
+            <code>gray.25</code>
+          </td>
+          <td className="cn-table-v2-cell">
+            <span
+              className="shade-preview"
+              style={{ background: "var(--cn-pure-black)" }}
+            ></span>
+            <code>pure.black</code>
+          </td>
+          <td className="cn-table-v2-cell">Navigation, sidebar</td>
+        </tr>
+        <tr className="cn-table-v2-row">
+          <td className="cn-table-v2-cell">
+            <code>bg.1</code>
+          </td>
+          <td className="cn-table-v2-cell">
+            <span
+              className="shade-preview"
+              style={{ background: "var(--cn-pure-white)" }}
+            ></span>
+            <code>pure.white</code>
+          </td>
+          <td className="cn-table-v2-cell">
+            <span
+              className="shade-preview"
+              style={{ background: "var(--cn-gray-1000)" }}
+            ></span>
+            <code>gray.1000</code>
+          </td>
+          <td className="cn-table-v2-cell">App background</td>
+        </tr>
+        <tr className="cn-table-v2-row">
+          <td className="cn-table-v2-cell">
+            <code>text.1</code>
+          </td>
+          <td className="cn-table-v2-cell">
+            <span
+              className="shade-preview"
+              style={{ background: "var(--cn-pure-black)" }}
+            ></span>
+            <code>pure.black</code>
+          </td>
+          <td className="cn-table-v2-cell">
+            <span
+              className="shade-preview"
+              style={{ background: "var(--cn-gray-25)" }}
+            ></span>
+            <code>gray.25</code>
+          </td>
+          <td className="cn-table-v2-cell">Headings, max contrast</td>
+        </tr>
+        <tr className="cn-table-v2-row">
+          <td className="cn-table-v2-cell">
+            <code>text.2</code>
+          </td>
+          <td className="cn-table-v2-cell">
+            <span
+              className="shade-preview"
+              style={{ background: "var(--cn-gray-850)" }}
+            ></span>
+            <code>gray.850</code>
+          </td>
+          <td className="cn-table-v2-cell">
+            <span
+              className="shade-preview"
+              style={{ background: "var(--cn-gray-200)" }}
+            ></span>
+            <code>gray.200</code>
+          </td>
+          <td className="cn-table-v2-cell">Body text</td>
+        </tr>
+        <tr className="cn-table-v2-row">
+          <td className="cn-table-v2-cell">
+            <code>text.3</code>
+          </td>
+          <td className="cn-table-v2-cell">
+            <span
+              className="shade-preview"
+              style={{ background: "var(--cn-gray-700)" }}
+            ></span>
+            <code>gray.700</code>
+          </td>
+          <td className="cn-table-v2-cell">
+            <span
+              className="shade-preview"
+              style={{ background: "var(--cn-gray-500)" }}
+            ></span>
+            <code>gray.500</code>
+          </td>
+          <td className="cn-table-v2-cell">Secondary, metadata</td>
+        </tr>
+        <tr className="cn-table-v2-row">
+          <td className="cn-table-v2-cell">
+            <code>border.1</code>
+          </td>
+          <td className="cn-table-v2-cell">
+            <span
+              className="shade-preview"
+              style={{ background: "var(--cn-gray-500)" }}
+            ></span>
+            <code>gray.500</code>
+          </td>
+          <td className="cn-table-v2-cell">
+            <span
+              className="shade-preview"
+              style={{ background: "var(--cn-gray-500)" }}
+            ></span>
+            <code>gray.500</code>
+          </td>
+          <td className="cn-table-v2-cell">Strong borders, focus</td>
+        </tr>
+        <tr className="cn-table-v2-row">
+          <td className="cn-table-v2-cell">
+            <code>border.2</code>
+          </td>
+          <td className="cn-table-v2-cell">
+            <span
+              className="shade-preview"
+              style={{ background: "var(--cn-gray-150)" }}
+            ></span>
+            <code>gray.150</code>
+          </td>
+          <td className="cn-table-v2-cell">
+            <span
+              className="shade-preview"
+              style={{ background: "var(--cn-gray-850)" }}
+            ></span>
+            <code>gray.850</code>
+          </td>
+          <td className="cn-table-v2-cell">Default borders</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+</div>
+
+The pattern is consistent: light themes pick from the light end of a ramp (25–500), dark themes pick from the dark end (500–1000). This is why components never reference core primitives directly — the theme file handles the mapping.
+
 ### Backgrounds
 
 Four levels create depth hierarchy — from navigation chrome to floating surfaces:
@@ -79,19 +243,19 @@ Four levels create depth hierarchy — from navigation chrome to floating surfac
 
 ### Text
 
-Four levels create typographic hierarchy:
+Four neutral levels create typographic hierarchy:
 
 <div className="not-content grid grid-cols-4 gap-cn-xs mt-cn-sm">
-  <div className="flex items-center justify-center rounded-cn-3 h-10 bg-cn-2">
+  <div className="flex items-center justify-center rounded-cn-3 h-10 bg-cn-2 border border-cn-3">
     <span className="text-cn-size-5 font-semibold text-cn-1">text-cn-1</span>
   </div>
-  <div className="flex items-center justify-center rounded-cn-3 h-10 bg-cn-2">
+  <div className="flex items-center justify-center rounded-cn-3 h-10 bg-cn-2 border border-cn-3">
     <span className="text-cn-size-5 text-cn-2">text-cn-2</span>
   </div>
-  <div className="flex items-center justify-center rounded-cn-3 h-10 bg-cn-2">
+  <div className="flex items-center justify-center rounded-cn-3 h-10 bg-cn-2 border border-cn-3">
     <span className="text-cn-size-5 text-cn-3">text-cn-3</span>
   </div>
-  <div className="flex items-center justify-center rounded-cn-3 h-10 bg-cn-2">
+  <div className="flex items-center justify-center rounded-cn-3 h-10 bg-cn-2 border border-cn-3">
     <span className="text-cn-size-5 text-cn-4">text-cn-4</span>
   </div>
 </div>
@@ -101,6 +265,90 @@ Four levels create typographic hierarchy:
 <p className="text-cn-2">Body text, default content</p>
 <span className="text-cn-3">Secondary text, metadata</span>
 <span className="text-cn-4">Disabled text</span>
+```
+
+Semantic text colors for status and brand — these are shortcuts that reference color sets internally, so the theme file picks the right shade automatically:
+
+<div className="not-content grid grid-cols-5 gap-cn-xs mt-cn-sm">
+  <div className="flex items-center justify-center rounded-cn-3 h-10 bg-cn-2 border border-cn-3">
+    <span className="text-cn-size-4 font-mono text-cn-success">
+      text-cn-success
+    </span>
+  </div>
+  <div className="flex items-center justify-center rounded-cn-3 h-10 bg-cn-2 border border-cn-3">
+    <span className="text-cn-size-4 font-mono text-cn-danger">
+      text-cn-danger
+    </span>
+  </div>
+  <div className="flex items-center justify-center rounded-cn-3 h-10 bg-cn-2 border border-cn-3">
+    <span className="text-cn-size-4 font-mono text-cn-warning">
+      text-cn-warning
+    </span>
+  </div>
+  <div className="flex items-center justify-center rounded-cn-3 h-10 bg-cn-2 border border-cn-3">
+    <span className="text-cn-size-4 font-mono text-cn-brand">
+      text-cn-brand
+    </span>
+  </div>
+  <div className="flex items-center justify-center rounded-cn-3 h-10 bg-cn-2 border border-cn-3">
+    <span className="text-cn-size-4 font-mono text-cn-merged">
+      text-cn-merged
+    </span>
+  </div>
+</div>
+
+```tsx
+<span className="text-cn-success">Passed</span>
+<span className="text-cn-danger">Failed</span>
+<span className="text-cn-warning">Pending</span>
+<span className="text-cn-brand">Link</span>
+<span className="text-cn-merged">Merged</span>
+```
+
+### Borders
+
+Three neutral levels from strong to subtle:
+
+<div className="not-content grid grid-cols-3 gap-cn-xs mt-cn-sm">
+  <div className="flex items-center justify-center rounded-cn-3 h-10 bg-cn-2 border-2 border-cn-1">
+    <span className="text-cn-size-3 font-mono">border-cn-1</span>
+  </div>
+  <div className="flex items-center justify-center rounded-cn-3 h-10 bg-cn-2 border border-cn-2">
+    <span className="text-cn-size-3 font-mono">border-cn-2</span>
+  </div>
+  <div className="flex items-center justify-center rounded-cn-3 h-10 bg-cn-2 border border-cn-3">
+    <span className="text-cn-size-3 font-mono">border-cn-3</span>
+  </div>
+</div>
+
+```tsx
+<div className="border border-cn-1">Focus rings, hover outlines</div>
+<div className="border border-cn-2">Cards, form fields, dividers</div>
+<div className="border border-cn-3">Table rows, subtle separators</div>
+```
+
+Semantic border colors for status and brand:
+
+<div className="not-content grid grid-cols-4 gap-cn-xs mt-cn-sm">
+  <div className="flex items-center justify-center rounded-cn-3 h-10 bg-cn-2 border border-cn-brand">
+    <span className="text-cn-size-4 font-mono">border-cn-brand</span>
+  </div>
+  <div className="flex items-center justify-center rounded-cn-3 h-10 bg-cn-2 border border-cn-success">
+    <span className="text-cn-size-4 font-mono">border-cn-success</span>
+  </div>
+  <div className="flex items-center justify-center rounded-cn-3 h-10 bg-cn-2 border border-cn-danger">
+    <span className="text-cn-size-4 font-mono">border-cn-danger</span>
+  </div>
+  <div className="flex items-center justify-center rounded-cn-3 h-10 bg-cn-2 border border-cn-warning">
+    <span className="text-cn-size-4 font-mono">border-cn-warning</span>
+  </div>
+</div>
+
+```tsx
+<div className="border border-cn-brand">Focus rings, active inputs</div>
+<div className="border border-cn-success">Success alert borders</div>
+<div className="border border-cn-danger">Error alert borders</div>
+<div className="border border-cn-warning">Warning alert borders</div>
 ```
 
 ### Interactive States
@@ -172,6 +420,121 @@ set.{color}.outline     → bg, bg-hover, bg-selected, text, border
   </div>
 </div>
 
+Here's how `set.success` resolves to core primitives across themes — notice that light uses <span style="font-weight: 600">lime</span> while dark switches to <span style="font-weight: 600">forest</span> for better contrast on dark surfaces:
+
+<div className="cn-table-v2 cn-table-v2-normal not-content">
+  <div className="cn-table-v2-container">
+    <table className="cn-table-v2-element">
+      <thead className="cn-table-v2-header">
+        <tr className="cn-table-v2-row">
+          <th className="cn-table-v2-head">Token</th>
+          <th className="cn-table-v2-head">Light</th>
+          <th className="cn-table-v2-head">Dark</th>
+        </tr>
+      </thead>
+      <tbody className="cn-table-v2-body">
+        <tr className="cn-table-v2-row">
+          <td className="cn-table-v2-cell">
+            <code>set.success.primary.bg</code>
+          </td>
+          <td className="cn-table-v2-cell">
+            <span
+              className="shade-preview"
+              style={{ background: "var(--cn-lime-700)" }}
+            ></span>
+            <code>lime.700</code>
+          </td>
+          <td className="cn-table-v2-cell">
+            <span
+              className="shade-preview"
+              style={{ background: "var(--cn-forest-400)" }}
+            ></span>
+            <code>forest.400</code>
+          </td>
+        </tr>
+        <tr className="cn-table-v2-row">
+          <td className="cn-table-v2-cell">
+            <code>set.success.primary.text</code>
+          </td>
+          <td className="cn-table-v2-cell">
+            <span
+              className="shade-preview"
+              style={{ background: "var(--cn-pure-white)" }}
+            ></span>
+            <code>pure.white</code>
+          </td>
+          <td className="cn-table-v2-cell">
+            <span
+              className="shade-preview"
+              style={{ background: "var(--cn-pure-black)" }}
+            ></span>
+            <code>pure.black</code>
+          </td>
+        </tr>
+        <tr className="cn-table-v2-row">
+          <td className="cn-table-v2-cell">
+            <code>set.success.secondary.bg</code>
+          </td>
+          <td className="cn-table-v2-cell">
+            <span
+              className="shade-preview"
+              style={{ background: "var(--cn-lime-100)" }}
+            ></span>
+            <code>lime.100</code>
+          </td>
+          <td className="cn-table-v2-cell">
+            <span
+              className="shade-preview"
+              style={{ background: "var(--cn-forest-900)" }}
+            ></span>
+            <code>forest.900</code>
+          </td>
+        </tr>
+        <tr className="cn-table-v2-row">
+          <td className="cn-table-v2-cell">
+            <code>set.success.secondary.text</code>
+          </td>
+          <td className="cn-table-v2-cell">
+            <span
+              className="shade-preview"
+              style={{ background: "var(--cn-lime-800)" }}
+            ></span>
+            <code>lime.800</code>
+          </td>
+          <td className="cn-table-v2-cell">
+            <span
+              className="shade-preview"
+              style={{ background: "var(--cn-forest-150)" }}
+            ></span>
+            <code>forest.150</code>
+          </td>
+        </tr>
+        <tr className="cn-table-v2-row">
+          <td className="cn-table-v2-cell">
+            <code>set.success.outline.border</code>
+          </td>
+          <td className="cn-table-v2-cell">
+            <span
+              className="shade-preview"
+              style={{ background: "var(--cn-lime-150)" }}
+            ></span>
+            <code>lime.150</code>
+          </td>
+          <td className="cn-table-v2-cell">
+            <span
+              className="shade-preview"
+              style={{ background: "var(--cn-forest-800)" }}
+            ></span>
+            <code>forest.800</code>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+</div>
+
+The same structure repeats for all 14 color sets (brand, danger, warning, blue, purple, etc.). Secondary and outline levels flip between light and dark ends of the ramp — and some sets switch color families entirely between themes.
+
 Each set has three levels visualized below — primary (saturated fill), secondary (muted tint), outline (near-transparent with border):
 
 <div className="h-1.5" />
@@ -200,6 +563,23 @@ Each set has three levels visualized below — primary (saturated fill), seconda
 
 ---
 
+## Component-Specific Colors
+
+Some components need colors that don't fit the generic semantic tokens — gradients, overlays with custom alpha, or domain-specific highlights. These live in the `comp.*` namespace and reference semantic tokens internally:
+
+```json
+{
+  "comp.alert.fade.danger": "linear-gradient(0deg, {set.danger.secondary.bg} 42%, ...)",
+  "comp.dialog.backdrop": "{gray.600} + alpha(0.2)",
+  "comp.diff.add-content": "{set.success.secondary.bg} + alpha(0.45)",
+  "comp.avatar.shadow": "{gray.1000} + alpha(0.08)"
+}
+```
+
+Component tokens follow the same theme-switching rules — their source values (`set.*`, `bg.*`, `gray.*`) are resolved per theme, so component colors adapt automatically.
+
+---
+
 ## State Tokens & Color Modifiers
 
 Interactive states use the `$extensions` system from Token Studio to apply LCH-space transformations:
@@ -225,10 +605,14 @@ This produces `lch(from var(--cn-gray-850) l c h / 0.2)` — a relative-color al
 
 Token Studio supports four color modifiers:
 
-- **alpha** — adjusts opacity (0 = transparent, 1 = solid)
-- **lighten** — increases lightness by percentage (0.2 = 20% lighter)
-- **darken** — reduces lightness by percentage (0.2 = 20% darker)
-- **mix** — blends with another color (0.5 = 50/50 mix)
+- <span style="font-weight: 600">alpha</span> — adjusts opacity (0 =
+  transparent, 1 = solid)
+- <span style="font-weight: 600">lighten</span> — increases lightness by
+  percentage (0.2 = 20% lighter)
+- <span style="font-weight: 600">darken</span> — reduces lightness by percentage
+  (0.2 = 20% darker)
+- <span style="font-weight: 600">mix</span> — blends with another color (0.5 =
+  50/50 mix)
 
 <LinkCard
   href="https://docs.tokens.studio/tokens/color-modifiers"
@@ -236,3 +620,20 @@ Token Studio supports four color modifiers:
   description="Full documentation on alpha, lighten, darken, and mix modifiers"
   external
 />
+
+---
+
+## Further Reading
+
+<div className="not-content grid grid-cols-1 sm:grid-cols-2 gap-cn-xs">
+  <LinkCard
+    href="/design-system/theming"
+    title="Theming"
+    description="Theme matrix (24 variants), CSS selectors, color vision adaptations, and build pipeline"
+  />
+  <LinkCard
+    href="/design-system/usage"
+    title="Setup Guide"
+    description="The cn- prefix, Tailwind utilities, code patterns, and full component example"
+  />
+</div>

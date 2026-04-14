@@ -1,6 +1,6 @@
 import { memo, RefObject, useCallback, useEffect, useRef, useState } from 'react'
 
-import { TypesUser } from '@harnessio/ui/types'
+import { DiffModeEnum } from '@git-diff-view/react'
 import {
   CommentItem,
   CommitFilterItemProps,
@@ -13,13 +13,10 @@ import {
   TypesPullReq,
   TypesPullReqActivity
 } from '@views'
-import { DiffModeEnum } from '@git-diff-view/react'
-import {
-  HeaderProps,
-  PR_ACCORDION_STICKY_TOP,
-  PullRequestAccordion
-} from '@views/repo/pull-request/components/pull-request-accordian'
-import { innerBlockName, outterBlockName } from '@views/repo/pull-request/utils'
+import { HeaderProps, PullRequestAccordion } from '@views/repo/pull-request/components/pull-request-accordian'
+import { getPullRequestAccordionStickyTopPx, innerBlockName, outterBlockName } from '@views/repo/pull-request/utils'
+
+import { TypesUser } from '@harnessio/ui/types'
 
 interface DataProps {
   data: HeaderProps[]
@@ -121,6 +118,7 @@ function PullRequestChangesInternal({
 
   const jumpToDiff = useCallback(
     (fileText: string, delay: number = 0) => {
+      const accordionStickyTopPx = getPullRequestAccordionStickyTopPx()
       if (scrollTimeoutRef.current) {
         clearTimeout(scrollTimeoutRef.current)
       }
@@ -135,8 +133,7 @@ function PullRequestChangesInternal({
               `[data-diff-content="${diffItem.filePath}"]`
             ) as HTMLElement | null
             const contentRect = accordionContent?.getBoundingClientRect()
-            const hasContentScrolledBehindHeader = contentRect && contentRect?.top < PR_ACCORDION_STICKY_TOP
-            // Only jump if content has actually scrolled behind the sticky header (at PR_ACCORDION_STICKY_TOP)
+            const hasContentScrolledBehindHeader = contentRect && contentRect?.top < accordionStickyTopPx
             if (hasContentScrolledBehindHeader) {
               scrollTimeoutRef.current = setTimeout(() => {
                 jumpToFile(

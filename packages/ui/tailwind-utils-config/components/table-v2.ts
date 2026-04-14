@@ -68,12 +68,14 @@ export default {
       '@apply border-b': '',
       borderColor: 'var(--cn-border-3)'
     },
-
     // Container highlight on hover
     '&:where(.cn-table-v2-highlight-hover) tbody > tr': {
       '&:hover, &:has(.cn-table-v2-cell-clickable-block:focus-visible)': {
         '&>td': {
           backgroundColor: 'var(--cn-state-hover)'
+        },
+        '& .cn-row-pin:not(.cn-row-pin-on)': {
+          opacity: '1'
         }
       }
     },
@@ -190,5 +192,14 @@ export default {
     '&-caption': {
       '@apply mt-cn-md': ''
     }
+  },
+
+  '.cn-row-pin': {
+    opacity: '0',
+    transitionProperty: 'opacity'
+  },
+
+  '.cn-row-pin-on': {
+    opacity: '1'
   }
 }

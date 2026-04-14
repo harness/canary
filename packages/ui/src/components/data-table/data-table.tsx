@@ -75,6 +75,11 @@ export interface DataTableProps<TData> {
    */
   getIsRowDisabled?: (row: Row<TData>) => boolean
   /**
+   * Function to generate a navigation link for a row.
+   * When provided, the row renders as a link navigating to the returned URL.
+   */
+  getRowLink?: (data: TData, index: number) => string
+  /**
    * Current expanded rows state
    */
   currentExpanded?: ExpandedState
@@ -102,6 +107,7 @@ export const DataTable = function DataTable<TData>({
   paginationProps,
   getRowClassName,
   onRowClick,
+  getRowLink,
   disableHighlightOnHover = false,
   className,
   currentSorting,
@@ -328,6 +334,7 @@ export const DataTable = function DataTable<TData>({
             <Table.Row
               className={getRowClassName?.(row)}
               onClick={onRowClick && !getIsRowDisabled?.(row) ? () => onRowClick(row.original, row.index) : undefined}
+              to={getRowLink && !getIsRowDisabled?.(row) ? getRowLink(row.original, row.index) : undefined}
               selected={enableRowSelection ? row.getIsSelected() : undefined}
               disabled={getIsRowDisabled?.(row)}
             >

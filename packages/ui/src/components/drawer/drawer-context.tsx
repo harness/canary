@@ -6,6 +6,8 @@ type DrawerRootProps = ComponentPropsWithoutRef<typeof DrawerPrimitive.Root>
 
 type DrawerContextType = Pick<DrawerRootProps, 'direction' | 'nested' | 'modal'> & {
   isParentOpen?: boolean
+  hasOpenChild?: boolean
+  onChildOpenChange?: (isOpen: boolean) => void
 }
 
 export const DrawerContext = createContext<DrawerContextType>({

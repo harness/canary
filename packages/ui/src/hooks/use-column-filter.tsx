@@ -70,6 +70,8 @@ export function useColumnFilter({
   columns,
   defaultVisibleColumns
 }: UseColumnFilterProps): UseColumnFilterReturn {
+  const fixedColumnValues = useMemo(() => columns.filter(col => col.disabled).map(col => col.value), [columns])
+
   // Initialize default visible columns (all columns if not specified)
   const defaultColumns = useMemo(
     () => defaultVisibleColumns ?? columns.map(col => col.value),
@@ -81,10 +83,16 @@ export function useColumnFilter({
 
   // Filter out any columns that don't exist in the current columns array
   const validColumnValues = useMemo(() => new Set(columns.map(col => col.value)), [columns])
-  const visibleColumns = useMemo(
-    () => storedVisibleColumns.filter(col => validColumnValues.has(col)),
-    [storedVisibleColumns, validColumnValues]
-  )
+  const visibleColumns = useMemo(() => {
+    const filtered = storedVisibleColumns.filter(col => validColumnValues.has(col))
+    const merged = [...filtered]
+    for (const fixed of fixedColumnValues) {
+      if (!merged.includes(fixed)) {
+        merged.push(fixed)
+      }
+    }
+    return merged
+  }, [storedVisibleColumns, validColumnValues, fixedColumnValues])
 
   // Sync cleaned column list back to localStorage if it changed
   useEffect(() => {
@@ -99,6 +107,9 @@ export function useColumnFilter({
   // Toggle column visibility
   const toggleColumn = useCallback(
     (columnName: string, checked: boolean) => {
+      if (columns.some(col => col.value === columnName && col.disabled)) {
+        return
+      }
       if (checked) {
         // Add column if not already present
         const newColumns = visibleColumns.includes(columnName) ? visibleColumns : [...visibleColumns, columnName]
@@ -109,13 +120,13 @@ export function useColumnFilter({
         setVisibleColumns(newColumns)
       }
     },
-    [visibleColumns, setVisibleColumns]
+    [visibleColumns, setVisibleColumns, columns]
   )
 
   // Reset to default columns
   const resetColumns = useCallback(() => {
-    setVisibleColumns(defaultColumns)
-  }, [setVisibleColumns, defaultColumns])
+    setVisibleColumns([...new Set([...defaultColumns, ...fixedColumnValues])])
+  }, [setVisibleColumns, defaultColumns, fixedColumnValues])
 
   return {
     visibleColumns,

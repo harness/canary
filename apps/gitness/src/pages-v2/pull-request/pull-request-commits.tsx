@@ -1,4 +1,4 @@
-import { useEffect } from 'react'
+import { useCallback, useEffect, useState } from 'react'
 import { useLocation, useParams } from 'react-router-dom'
 
 import { useListPullReqCommitsQuery } from '@harnessio/code-service-client'
@@ -9,6 +9,7 @@ import { useGetRepoRef } from '../../framework/hooks/useGetRepoPath'
 import { parseAsInteger, useQueryState } from '../../framework/hooks/useQueryState'
 import { PathParams } from '../../RouteDefinitions'
 import { usePullRequestCommitsStore } from './stores/pull-request-commit-store'
+import { usePullRequestProviderStore } from './stores/pull-request-provider-store'
 
 export function PullRequestCommitPage() {
   const routes = useRoutes()
@@ -17,13 +18,17 @@ export function PullRequestCommitPage() {
   const repoRef = useGetRepoRef()
   const { pullRequestId } = useParams<PathParams>()
   const prId = (pullRequestId && Number(pullRequestId)) || -1
-  const [queryPage, _setQueryPage] = useQueryState('page', parseAsInteger.withDefault(1))
+  const [queryPage, setQueryPage] = useQueryState('page', parseAsInteger.withDefault(1))
+  const [pageSize, setPageSize] = useState(25)
   const { pathname } = useLocation()
 
-  const { setCommitList, setIsFetchingCommits, setPaginationFromHeaders } = usePullRequestCommitsStore()
+  const { pullReqMetadata } = usePullRequestProviderStore()
+  const totalCommits = pullReqMetadata?.stats?.commits ?? 0
 
-  const { isFetching, data: { body: commits, headers } = {} } = useListPullReqCommitsQuery({
-    queryParams: { page: queryPage },
+  const { setCommitList, setIsFetchingCommits } = usePullRequestCommitsStore()
+
+  const { isFetching, data: { body: commits } = {} } = useListPullReqCommitsQuery({
+    queryParams: { page: queryPage, limit: pageSize },
     repo_ref: repoRef,
     pullreq_number: prId
   })
@@ -39,9 +44,13 @@ export function PullRequestCommitPage() {
     setIsFetchingCommits(isFetching)
   }, [isFetching])
 
-  useEffect(() => {
-    setPaginationFromHeaders(headers)
-  }, [headers, setPaginationFromHeaders])
+  const handlePageSizeChange = useCallback(
+    (size: number) => {
+      setPageSize(size)
+      setQueryPage(1)
+    },
+    [setQueryPage]
+  )
 
   return (
     <PullRequestCommitsView
@@ -51,6 +60,10 @@ export function PullRequestCommitPage() {
         routes.toPullRequestChange({ spaceId, repoId, commitSHA, pullRequestId: String(pullRequestId) })
       }
       usePullRequestCommitsStore={usePullRequestCommitsStore}
+      currentPage={queryPage}
+      totalCommits={totalCommits}
+      pageSize={pageSize}
+      setPageSize={handlePageSizeChange}
     />
   )
 }

@@ -3,6 +3,7 @@ import { Outlet, useMatches, useParams } from 'react-router-dom'
 import { createFavorite, deleteFavorite, EnumResourceType } from '@harnessio/code-service-client'
 import { NotFoundPage, RepoHeader, RepoSubheader, SubHeaderWrapper } from '@harnessio/views'
 
+import { PublicAccessGuard } from '../../components-v2/public-access'
 import { useRoutes } from '../../framework/context/NavigationContext'
 import { useIsMFE } from '../../framework/hooks/useIsMFE'
 import { CustomHandle } from '../../framework/routing/types'
@@ -79,7 +80,9 @@ const RepoLayout = () => {
         </>
       )}
 
-      <Outlet />
+      <PublicAccessGuard>
+        <Outlet />
+      </PublicAccessGuard>
     </>
   )
 }

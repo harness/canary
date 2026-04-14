@@ -15,6 +15,7 @@ interface Variable {
   description: string;
   category: string;
   subcategory: string;
+  twClasses: string[];
 }
 
 interface CSSVariablesClientProps {
@@ -133,7 +134,8 @@ export const CSSVariablesClient = ({
       (v) =>
         v.name.toLowerCase().includes(query) ||
         v.value.toLowerCase().includes(query) ||
-        v.subcategory.toLowerCase().includes(query),
+        v.subcategory.toLowerCase().includes(query) ||
+        v.twClasses.some((c) => c.toLowerCase().includes(query)),
     );
   }, [allVariables, searchQuery]);
 
@@ -155,6 +157,21 @@ export const CSSVariablesClient = ({
     });
     return { grouped, counts };
   }, [filteredVars]);
+
+  // Auto-switch tab when search results are only in other tabs
+  useEffect(() => {
+    if (!searchQuery) return;
+
+    const currentCount = counts[activeTab] || 0;
+    if (currentCount > 0) return; // Current tab has results, stay here
+
+    // Find first tab with results
+    const tabOrder = ["Semantic", "Global", "Component"];
+    const tabWithResults = tabOrder.find((tab) => (counts[tab] || 0) > 0);
+    if (tabWithResults && tabWithResults !== activeTab) {
+      setActiveTab(tabWithResults);
+    }
+  }, [searchQuery, counts, activeTab]);
 
   const renderGroup = (
     groupedData: Record<string, Variable[]>,
@@ -210,8 +227,9 @@ export const CSSVariablesClient = ({
               >
                 <Table.Header>
                   <Table.Row>
-                    <Table.Head className="w-[500px]">Variable</Table.Head>
-                    <Table.Head className="w-[500px]">Value</Table.Head>
+                    <Table.Head className="w-[40%]">Variable</Table.Head>
+                    <Table.Head className="w-[30%]">Class</Table.Head>
+                    <Table.Head className="w-[30%]">Value</Table.Head>
                   </Table.Row>
                 </Table.Header>
                 <Table.Body>
@@ -259,6 +277,29 @@ export const CSSVariablesClient = ({
                           </div>
                         </Table.Cell>
                         <Table.Cell>
+                          {v.twClasses.length > 0 ? (
+                            <div className="flex flex-wrap gap-cn-3xs">
+                              {v.twClasses.map((cls) => (
+                                <Text
+                                  key={cls}
+                                  variant="body-single-line-code"
+                                  className="!border-0 !p-0"
+                                >
+                                  {cls}
+                                </Text>
+                              ))}
+                            </div>
+                          ) : (
+                            <Text
+                              variant="body-single-line-code"
+                              className="!border-0 !p-0"
+                              color="foreground-3"
+                            >
+                              —
+                            </Text>
+                          )}
+                        </Table.Cell>
+                        <Table.Cell>
                           <Text
                             variant="body-single-line-code"
                             className="!border-0 !p-0"
@@ -292,7 +333,7 @@ export const CSSVariablesClient = ({
       <div className="not-content w-full">
         <div className="my-cn-xl">
           <SearchInput
-            placeholder="Search variables by name, value, or category..."
+            placeholder="Search by variable, class, value, or category..."
             value={searchQuery}
             onChange={setSearchQuery}
             debounce={false}

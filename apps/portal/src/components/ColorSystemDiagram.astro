@@ -1,217 +1,150 @@
 ---
-// Color System Diagram - shows flow from Core Palette to Semantic Tokens to Themes
+// Color System Architecture Diagram
+// Technical tree-style view of the token pipeline and theme composition
 ---
 
-<div class="diagram not-content">
-  <div class="card">
-    <div class="card-content">
-      <div class="palette-grid">
-        <span style="background: #ef4444;"></span>
-        <span style="background: #f97316;"></span>
-        <span style="background: #eab308;"></span>
-        <span style="background: #22c55e;"></span>
-        <span style="background: #3b82f6;"></span>
-        <span style="background: #8b5cf6;"></span>
-        <span style="background: #06b6d4;"></span>
-        <span style="background: #71717a;"></span>
-        <span style="background: #ec4899;"></span>
-      </div>
-    </div>
-    <div class="card-label">Core Palette</div>
+<div class="csd-arch not-content">
+  <div class="csd-block">
+    <div class="csd-title">Color Token Structure</div>
+    <pre
+      class="csd-tree"
+      set:html={`<span class="csd-dir">design-tokens/</span>
+<span class="csd-dim">├─</span> <span class="csd-dir">core/</span>
+<span class="csd-dim">│</span>  <span class="csd-dim">├─</span> <span class="csd-file">colors_lch.json</span>             <span class="csd-comment"># 15 color families × 14 stops — LCH source of truth</span>
+<span class="csd-dim">│</span>  <span class="csd-dim">├─</span> <span class="csd-file">colors_hex.json</span>             <span class="csd-comment"># HEX fallback (Figma export only)</span>
+<span class="csd-dim">│</span>  <span class="csd-dim">└─</span> ...                         <span class="csd-comment"># dimensions.json, typography.json</span>
+<span class="csd-dim">│</span>
+<span class="csd-dim">├─</span> <span class="csd-dir">mode/</span>                          <span class="csd-comment"># Semantic color tokens — one file per theme variant</span>
+<span class="csd-dim">│</span>  <span class="csd-dim">├─</span> <span class="csd-dir">light/</span>                      <span class="csd-comment"># Each file maps: bg, text, border, state, set.*</span>
+<span class="csd-dim">│</span>  <span class="csd-dim">│</span>  <span class="csd-dim">├─</span> <span class="csd-file">default.json</span>             <span class="csd-comment"># bg.0→<span class="csd-val">&#123;gray.25&#125;</span>  text.1→<span class="csd-val">&#123;pure.black&#125;</span>  set.brand.primary.bg→<span class="csd-val">&#123;indigo.700&#125;</span></span>
+<span class="csd-dim">│</span>  <span class="csd-dim">│</span>  <span class="csd-dim">├─</span> <span class="csd-file">dimmer.json</span>              <span class="csd-comment"># Reduced contrast: bg.0→<span class="csd-val">&#123;gray.50&#125;</span></span>
+<span class="csd-dim">│</span>  <span class="csd-dim">│</span>  <span class="csd-dim">├─</span> <span class="csd-file">high-contrast.json</span>       <span class="csd-comment"># Max contrast: bg.0→<span class="csd-val">&#123;pure.white&#125;</span></span>
+<span class="csd-dim">│</span>  <span class="csd-dim">│</span>  <span class="csd-dim">├─</span> <span class="csd-file">default-deuteranopia.json</span>
+<span class="csd-dim">│</span>  <span class="csd-dim">│</span>  <span class="csd-dim">├─</span> <span class="csd-file">default-protanopia.json</span>
+<span class="csd-dim">│</span>  <span class="csd-dim">│</span>  <span class="csd-dim">├─</span> <span class="csd-file">default-tritanopia.json</span>
+<span class="csd-dim">│</span>  <span class="csd-dim">│</span>  <span class="csd-dim">└─</span> ...                      <span class="csd-comment"># 12 variants total (3 contrast × 4 vision)</span>
+<span class="csd-dim">│</span>  <span class="csd-dim">└─</span> <span class="csd-dir">dark/</span>                       <span class="csd-comment"># Same structure, inverted mappings</span>
+<span class="csd-dim">│</span>     <span class="csd-dim">├─</span> <span class="csd-file">default.json</span>             <span class="csd-comment"># bg.0→<span class="csd-val">&#123;pure.black&#125;</span>  text.1→<span class="csd-val">&#123;gray.25&#125;</span>  set.brand.primary.bg→<span class="csd-val">&#123;blue.500&#125;</span></span>
+<span class="csd-dim">│</span>     <span class="csd-dim">├─</span> <span class="csd-file">dimmer.json</span>              <span class="csd-comment"># bg.0 darken(0.80)  text.1→<span class="csd-val">&#123;gray.150&#125;</span></span>
+<span class="csd-dim">│</span>     <span class="csd-dim">└─</span> ...                      <span class="csd-comment"># 12 variants total</span>
+<span class="csd-dim">│</span>
+<span class="csd-dim">└─</span> <span class="csd-dir">components/desktop/base/</span>       <span class="csd-comment"># Component dimensions only (spacing, radius, sizing)</span>
+   <span class="csd-dim">└─</span> ...                         <span class="csd-comment"># 26 files — no colors here</span>
+
+<span class="csd-comment"># All color tokens live in mode/ files, including:</span>
+<span class="csd-comment">#   bg.*, text.*, border.*, state.*, set.*, comp.*, gradient.*, shadow.*</span>`}
+    />
   </div>
 
-  <svg class="arrow" width="20" height="10" viewBox="0 0 20 10">
-    <path
-      d="M0 5 L14 5 M10 1 L16 5 L10 9"
-      stroke="currentColor"
-      stroke-width="1.2"
-      fill="none"
-      stroke-linecap="round"
-      stroke-linejoin="round"></path>
-  </svg>
-
-  <div class="card semantic">
-    <div class="card-content">
-      <div class="list">
-        <div class="row">
-          <span class="dot" style="background: var(--sl-color-text);"
-          ></span>text
-        </div>
-        <div class="row">
-          <span
-            class="dot"
-            style="background: var(--sl-color-bg); border: 1px solid var(--sl-color-gray-5);"
-          ></span>bg
-        </div>
-        <div class="row">
-          <span class="dot" style="background: var(--sl-color-accent);"
-          ></span>accent
-        </div>
-      </div>
-    </div>
-    <div class="card-label">Semantic</div>
+  <div class="csd-block">
+    <div class="csd-title">Build Pipeline</div>
+    <pre
+      class="csd-tree"
+      set:html={`<span class="csd-hl">Token Studio JSON</span> <span class="csd-comment">(design-tokens/ — single source of truth)</span>
+  <span class="csd-dim">│</span>
+  <span class="csd-dim">├──→</span> <span class="csd-hl">Figma Variables</span>             <span class="csd-comment"># synced via Token Studio plugin</span>
+  <span class="csd-dim">│</span>
+  <span class="csd-dim">└──→</span> <span class="csd-hl">Style Dictionary</span>            <span class="csd-comment"># scripts/build.js</span>
+       <span class="csd-dim">│</span>
+       <span class="csd-dim">▼</span>
+     <span class="csd-hl">CSS Custom Properties</span>
+       <span class="csd-tok">--cn-gray-500</span>:              <span class="csd-val">lch(65% 6 272)</span>
+       <span class="csd-tok">--cn-text-2</span>:                <span class="csd-val">var(--cn-gray-850)</span>
+       <span class="csd-tok">--cn-set-brand-primary-bg</span>:  <span class="csd-val">var(--cn-indigo-700)</span>
+       <span class="csd-dim">│</span>
+       <span class="csd-dim">▼</span>
+     <span class="csd-hl">Tailwind Utilities</span>            <span class="csd-comment"># tailwind-design-system.ts</span>
+       <span class="csd-tok">text-cn-2</span>, <span class="csd-tok">bg-cn-brand-primary</span>, <span class="csd-tok">border-cn-3</span>, ...`}
+    />
   </div>
 
-  <svg class="arrow" width="20" height="10" viewBox="0 0 20 10">
-    <path
-      d="M0 5 L14 5 M10 1 L16 5 L10 9"
-      stroke="currentColor"
-      stroke-width="1.2"
-      fill="none"
-      stroke-linecap="round"
-      stroke-linejoin="round"></path>
-  </svg>
+  <div class="csd-block">
+    <div class="csd-title">Theme Composition (2 × 3 × 4 = 24 variants)</div>
+    <pre
+      class="csd-tree"
+      set:html={`<span class="csd-hl">Mode</span>          <span class="csd-hl">Contrast</span>        <span class="csd-hl">Vision Adaptation</span>
+<span class="csd-dim">─────         ────────        ─────────────────</span>
+light    ×    default    ×    standard
+dark          dimmer          deuteranopia           <span class="csd-comment">(red-green)</span>
+              high-contrast   protanopia             <span class="csd-comment">(red-green)</span>
+                              tritanopia             <span class="csd-comment">(blue-yellow)</span>
 
-  <div class="card">
-    <div class="card-content themes-content">
-      <div class="themes-group">
-        <div class="themes-row">
-          <div class="theme-chip light">Light</div>
-          <div class="theme-chip dark">Dark</div>
-        </div>
-        <div class="themes-more">+ other modes...</div>
-      </div>
-    </div>
-    <div class="card-label">Themes</div>
+Example: <span class="csd-file">dark/dimmer-deuteranopia.json</span>
+  <span class="csd-dim">├─</span> inherits <span class="csd-file">dark/dimmer.json</span>     <span class="csd-comment">(contrast adjustments via darken modifiers)</span>
+  <span class="csd-dim">└─</span> overrides danger colors       <span class="csd-comment">(red → orange shift for visibility)</span>`}
+    />
   </div>
 </div>
 
 <style>
-  .diagram {
+  .csd-arch {
     display: flex;
-    align-items: center;
-    justify-content: center;
-    gap: 10px;
-    padding: 16px 0;
+    flex-direction: column;
+    gap: var(--cn-layout-md);
+    margin: var(--cn-layout-sm) 0;
   }
 
-  .card {
-    width: 105px;
-    background: var(--sl-color-gray-7);
-    border: 1px solid var(--sl-color-gray-5);
-    border-radius: 10px;
+  .csd-block {
+    display: flex;
+    flex-direction: column;
+    border: 1px solid var(--cn-border-2);
+    border-radius: var(--cn-rounded-6);
     overflow: hidden;
   }
 
-  .card.semantic {
-    background: color-mix(in srgb, var(--sl-color-accent) 5%, transparent);
-    border-color: color-mix(in srgb, var(--sl-color-accent) 30%, transparent);
-  }
-
-  .card-content {
-    height: 70px;
-    padding: 10px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-  }
-
-  .card-label {
-    font-size: 8px;
-    font-weight: 600;
-    color: var(--sl-color-gray-3);
-    text-transform: uppercase;
-    letter-spacing: 0.4px;
-    padding: 5px;
-    background: var(--sl-color-gray-6);
-    border-top: 1px solid var(--sl-color-gray-5);
-    text-align: center;
-  }
-
-  .card.semantic .card-label {
-    background: color-mix(in srgb, var(--sl-color-accent) 12%, transparent);
-    border-color: color-mix(in srgb, var(--sl-color-accent) 20%, transparent);
-  }
-
-  .arrow {
-    color: var(--sl-color-gray-4);
-    flex-shrink: 0;
-  }
-
-  /* Core Palette Grid */
-  .palette-grid {
-    display: grid;
-    grid-template-columns: repeat(3, 1fr);
-    gap: 4px;
-  }
-
-  .palette-grid span {
-    width: 14px;
-    height: 14px;
-    border-radius: 3px;
-  }
-
-  /* List for Semantic */
-  .list {
-    display: flex;
-    flex-direction: column;
-    gap: 3px;
-    width: 100%;
-  }
-
-  .row {
-    display: flex;
-    align-items: center;
-    gap: 5px;
-    font-size: 9px;
-    font-family: ui-monospace, monospace;
-    color: var(--sl-color-gray-2);
-    line-height: 1;
-  }
-
-  /* Semantic dots */
-  .dot {
-    width: 8px;
-    height: 8px;
-    border-radius: 50%;
-    flex-shrink: 0;
-  }
-
-  /* Themes */
-  .themes-content {
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    gap: 0;
-    width: 100%;
-    height: 100%;
-  }
-
-  .themes-group {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    gap: 0;
-  }
-
-  .themes-row {
-    display: flex;
-    gap: 4px;
-  }
-
-  .theme-chip {
-    padding: 2px 7px;
-    border-radius: 3px;
-    font-size: 9px;
+  .csd-title {
+    font-size: var(--cn-font-size-2);
     font-weight: 500;
-    line-height: 1.2;
+    color: var(--cn-text-3);
+    padding: var(--cn-spacing-3) var(--cn-spacing-5);
+    background: var(--cn-set-gray-secondary-bg);
+    border-bottom: 1px solid var(--cn-border-2);
   }
 
-  .theme-chip.light {
-    background: #fff;
-    color: #27272a;
-    border: 1px solid #e4e4e7;
+  .csd-tree {
+    margin: 0;
+    padding: var(--cn-spacing-5) var(--cn-spacing-6);
+    background: var(--cn-bg-0);
+    overflow-x: auto;
+    line-height: 1.6;
+    font-size: 14px;
+    color: var(--cn-text-2);
   }
 
-  .theme-chip.dark {
-    background: #18181b;
-    color: #fafafa;
-    border: 1px solid #3f3f46;
+  /* Tree characters: ├─ └─ │ ▼ */
+  .csd-dim {
+    color: var(--cn-text-4);
   }
 
-  .themes-more {
-    font-size: 8px;
-    color: var(--sl-color-gray-3);
-    margin-top: 1px;
+  /* Directories */
+  .csd-dir {
+    color: var(--cn-text-1);
+    font-weight: 500;
+  }
+
+  /* File names */
+  .csd-file {
+    color: var(--cn-text-brand);
+  }
+
+  /* Comments */
+  .csd-comment {
+    color: var(--cn-text-3);
+  }
+
+  /* Section headings in pipeline */
+  .csd-hl {
+    color: var(--cn-text-1);
+    font-weight: 500;
+  }
+
+  /* Token names (CSS vars, Tailwind classes) */
+  .csd-tok {
+    color: var(--cn-text-brand);
+  }
+
+  /* Values */
+  .csd-val {
+    color: var(--cn-set-success-outline-text);
   }
 </style>

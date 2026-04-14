@@ -45,7 +45,8 @@ vi.mock('@/context', () => {
 
   return {
     useRouterContext: () => ({
-      NavLink
+      NavLink,
+      location: { pathname: '/' }
     })
   }
 })
@@ -330,7 +331,7 @@ describe('SidebarItem', () => {
   })
 
   describe('Submenu Behaviour', () => {
-    const submenuChild = <SidebarMenuSubItem to="/child" title="Child" key="child" />
+    const submenuChild = <SidebarMenuSubItem to="/child" title="Child" key="child" active />
 
     test('filters submenu children when open', () => {
       const { rerender } = renderComponent({
@@ -358,6 +359,20 @@ describe('SidebarItem', () => {
       const grids = screen.getAllByTestId('layout-grid')
       const submenuGrid = grids[grids.length - 1]
       expect(submenuGrid).toHaveAttribute('data-state', 'open')
+    })
+
+    test('marks parent active when collapsed and a sub-item has active', () => {
+      sidebarContext.state = 'collapsed'
+      const { container } = renderComponent({ children: submenuChild, defaultSubmenuOpen: true })
+      const wrapper = container.querySelector('.cn-sidebar-item-wrapper')
+      expect(wrapper).toHaveAttribute('data-active', 'true')
+    })
+
+    test('does not mark parent active from sub-item active when expanded', () => {
+      sidebarContext.state = 'expanded'
+      const { container } = renderComponent({ children: submenuChild, defaultSubmenuOpen: true })
+      const wrapper = container.querySelector('.cn-sidebar-item-wrapper')
+      expect(wrapper).toHaveAttribute('data-active', 'false')
     })
   })
 

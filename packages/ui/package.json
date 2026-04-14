@@ -1,7 +1,7 @@
 {
   "name": "@harnessio/ui",
   "description": "Harness Canary UI component library",
-  "version": "0.5.1",
+  "version": "0.5.22",
   "private": false,
   "type": "module",
   "main": "./dist/index.js",
@@ -28,12 +28,14 @@
     "./shared-style-variables.css": "./src/styles/shared-style-variables.css",
     "./markdown-preview-styles.css": "./src/components/markdown-viewer/style.css",
     "./context": "./dist/context.js",
-    "./types": "./dist/types.js"
+    "./types": "./dist/types.js",
+    "./.claude/manifest.json": "./.claude/manifest.json"
   },
   "files": [
     "dist",
     "src/shared-style-variables.css",
-    "src/components/markdown-viewer/style.css"
+    "src/components/markdown-viewer/style.css",
+    ".claude"
   ],
   "scripts": {
     "dev": "vite",

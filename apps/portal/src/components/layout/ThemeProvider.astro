@@ -8,10 +8,14 @@
 {/* Intentionally inlined to prevent FOUC — runs synchronously in <head> */}
 <script is:inline>
   (function () {
+    var stored =
+      typeof localStorage !== "undefined" &&
+      localStorage.getItem("canary-theme");
     var theme =
-      (typeof localStorage !== "undefined" &&
-        localStorage.getItem("canary-theme")) ||
-      "dark-std-std";
+      stored ||
+      (window.matchMedia("(prefers-color-scheme: dark)").matches
+        ? "dark-std-std"
+        : "light-std-std");
     var root = document.documentElement;
     // Set data-theme for CSS selectors (light/dark)
     root.dataset.theme = theme.startsWith("dark") ? "dark" : "light";

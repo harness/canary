@@ -122,7 +122,7 @@ const gapVariants = cva('', {
  * | 3xl  | var(--cn-spacing-10) |
  * | 4xl  | var(--cn-spacing-20) |
  */
-type GapSize = 'none' | '4xs' | '3xs' | '2xs' | 'xs' | 'sm' | 'md' | 'lg' | 'xl' | '2xl' | '3xl' | '4xl'
+export type GapSize = 'none' | '4xs' | '3xs' | '2xs' | 'xs' | 'sm' | 'md' | 'lg' | 'xl' | '2xl' | '3xl' | '4xl'
 
 interface LayoutProps {
   children?: ReactNode

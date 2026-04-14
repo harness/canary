@@ -23,10 +23,14 @@ import {
   useCodeownersPullReqQuery,
   useCreateBranchMutation,
   useDeletePullReqSourceBranchMutation,
+  useFindGeneralSettingsQuery,
   useGetBranchQuery,
   useListPrincipalsQuery,
   useListPullReqActivitiesQuery,
   useListUsergroupsQuery,
+  usePrAutoMergeDisableMutation,
+  usePrAutoMergeEnableMutation,
+  usePrAutoMergeGetQuery,
   useRebaseBranchMutation,
   useRestorePullReqSourceBranchMutation,
   useRevertPullReqOpMutation,
@@ -222,6 +226,43 @@ export default function PullRequestConversationPage() {
   const { pullRequestId } = useParams<PathParams>()
 
   const prId = (pullRequestId && Number(pullRequestId)) || -1
+
+  const { data: { body: generalSettings } = {} } = useFindGeneralSettingsQuery({ repo_ref: repoRef })
+
+  const isRepoAutoMergeEnabled = generalSettings?.auto_merge_enabled ?? false
+
+  const { data: { body: autoMergeData } = {}, refetch: refetchAutoMerge } = usePrAutoMergeGetQuery(
+    { repo_ref: repoRef, pullreq_number: prId },
+    { enabled: isRepoAutoMergeEnabled && prId > 0, retry: false }
+  )
+
+  const isAutoMergeActive = pullReqMetadata?.substate === 'auto_merge'
+
+  const { mutate: enableAutoMerge, isLoading: isEnablingAutoMerge } = usePrAutoMergeEnableMutation(
+    { repo_ref: repoRef, pullreq_number: prId },
+    {
+      onSuccess: () => {
+        refetchPullReq()
+        refetchAutoMerge()
+      },
+      onError: error => {
+        setMergeErrorMessage(error?.message || 'Failed to enable auto-merge')
+      }
+    }
+  )
+
+  const { mutate: disableAutoMerge, isLoading: isDisablingAutoMerge } = usePrAutoMergeDisableMutation(
+    { repo_ref: repoRef, pullreq_number: prId },
+    {
+      onSuccess: () => {
+        refetchPullReq()
+        refetchAutoMerge()
+      },
+      onError: error => {
+        setMergeErrorMessage(error?.message || 'Failed to disable auto-merge')
+      }
+    }
+  )
 
   const filtersData = usePrFilters()
 
@@ -750,6 +791,22 @@ export default function PullRequestConversationPage() {
     setSelectedMergeMethod(method as EnumMergeMethod)
   }, [])
 
+  const handleEnableAutoMerge = useCallback(
+    (method: EnumMergeMethod) => {
+      const body: { method: EnumMergeMethod; title?: string; message?: string; delete_source_branch?: boolean } = {
+        method
+      }
+
+      if (method === 'merge' || method === 'squash') {
+        body.title = mergeTitle
+        body.message = mergeMessage
+      }
+
+      enableAutoMerge({ body })
+    },
+    [enableAutoMerge, mergeTitle, mergeMessage]
+  )
+
   const handleMerge = useCallback(
     (method: EnumMergeMethod) => {
       setIsMerging(true)
@@ -1010,7 +1067,14 @@ export default function PullRequestConversationPage() {
       setMergeMessage,
       isMerging,
       isRebasing,
-      onMergeMethodSelect: handleMergeMethodSelect
+      onMergeMethodSelect: handleMergeMethodSelect,
+      isRepoAutoMergeEnabled,
+      isAutoMergeActive,
+      autoMergeData,
+      onEnableAutoMerge: handleEnableAutoMerge,
+      onDisableAutoMerge: () => disableAutoMerge({}),
+      isEnablingAutoMerge,
+      isDisablingAutoMerge
     }
   }, [
     handleRebaseBranch,
@@ -1052,7 +1116,14 @@ export default function PullRequestConversationPage() {
     isRebasing,
     setSelectedMergeMethod,
     handleMergeMethodSelect,
-    handleViewUnresolvedComments
+    handleViewUnresolvedComments,
+    isRepoAutoMergeEnabled,
+    isAutoMergeActive,
+    autoMergeData,
+    handleEnableAutoMerge,
+    disableAutoMerge,
+    isEnablingAutoMerge,
+    isDisablingAutoMerge
   ])
 
   if (prPanelData?.PRStateLoading || (changesLoading && !!pullReqMetadata?.closed)) {

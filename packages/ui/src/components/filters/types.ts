@@ -10,6 +10,7 @@ export type Parser<T> = {
 
 export enum FilterFieldTypes {
   Calendar = 'calendar',
+  DateRange = 'daterange',
   Text = 'text',
   ComboBox = 'combobox',
   Custom = 'custom',
@@ -18,9 +19,30 @@ export enum FilterFieldTypes {
   MultiTag = 'multitag'
 }
 
+export interface DateRangeValue {
+  from: Date
+  to: Date
+  preset?: string
+}
+
+export interface DateRangePreset {
+  label: string
+  value: string
+  getRange: () => { from: Date; to: Date }
+  group: 'recommended' | 'relative' | 'calendar'
+}
+
+export type SecretListFilters = {
+  secretTypes?: CheckboxOptions[]
+  secretManagerIdentifiers?: CheckboxOptions[]
+  description?: string
+  tags?: string
+}
+
 export interface CheckboxOptions {
   label: string
   value: string
+  disabled?: boolean
 }
 
 interface FilterFieldConfig<T = string | number> {
@@ -97,9 +119,18 @@ interface CheckboxFilterOptionConfig<T extends string = string> extends FilterOp
   }
 }
 
+interface DateRangeFilterOptionConfig<T extends string = string> extends FilterOptionConfigBase<T, DateRangeValue> {
+  type: FilterFieldTypes.DateRange
+  filterFieldConfig?: {
+    presets?: DateRangePreset[]
+    showCustomRange?: boolean
+  }
+}
+
 type FilterOptionConfig<T extends string = string, V = Record<string, unknown>> =
   | ComboBoxFilterOptionConfig<T>
   | CalendarFilterOptionConfig<T>
+  | DateRangeFilterOptionConfig<T>
   | TextFilterOptionConfig<T>
   | CheckboxFilterOptionConfig<T>
   | MultiSelectFilterOptionConfig<T>
@@ -116,5 +147,6 @@ export type {
   MultiSelectFilterOptionConfig,
   CheckboxFilterOptionConfig,
   TextFilterOptionConfig,
-  CalendarFilterOptionConfig
+  CalendarFilterOptionConfig,
+  DateRangeFilterOptionConfig
 }

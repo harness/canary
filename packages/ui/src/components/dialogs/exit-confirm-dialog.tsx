@@ -23,10 +23,10 @@ export const ExitConfirmDialog: FC<ExitConfirmDialogProps> = ({
   open,
   onCancel,
   onConfirm,
-  title = 'You have unsaved changes',
-  subtitle = 'Are you sure you want to leave this page without saving?',
-  confirmText = 'Leave',
-  cancelText = 'Stay',
+  title = 'Unsaved changes',
+  subtitle = 'You have unsaved changes that will be lost if you leave now.',
+  confirmText = 'Leave anyway',
+  cancelText = 'Keep editing',
   error,
   isLoading = false
 }) => {
@@ -40,8 +40,10 @@ export const ExitConfirmDialog: FC<ExitConfirmDialogProps> = ({
       <Dialog.Content className="max-w-[500px]">
         <Dialog.Header>
           <Dialog.Title>{title}</Dialog.Title>
-          <Dialog.Description>{subtitle}</Dialog.Description>
         </Dialog.Header>
+        <Dialog.Body>
+          <Dialog.Description>{subtitle}</Dialog.Description>
+        </Dialog.Body>
         <Dialog.Footer>
           <ButtonLayout>
             <Dialog.Close onClick={() => onCancel?.()} disabled={isLoading}>

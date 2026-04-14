@@ -20,6 +20,7 @@ interface NavbarItemType<T = NavbarItemIdType> {
   iconName?: IconV2NamesType
   description?: string
   to: string
+  active?: boolean
   permanentlyPinned?: boolean
   subItems?: NavbarItemType<T>[] // recursive with same T
 }

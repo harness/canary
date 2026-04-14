@@ -14,8 +14,10 @@ export interface DeleteAlertDialogProps {
   error?: { type?: string; message: string } | null
   withForm?: boolean
   message?: React.ReactChild
+  title?: string
   deletionItemName?: string
   deletionKeyword?: string
+  deleteConfirmText?: string
   violation?: boolean
   bypassable?: boolean
 }
@@ -30,7 +32,9 @@ export const DeleteAlertDialog: FC<DeleteAlertDialogProps> = ({
   error,
   withForm = false,
   message,
+  title,
   deletionItemName,
+  deleteConfirmText,
   deletionKeyword = 'DELETE',
   violation = false,
   bypassable = false
@@ -106,7 +110,7 @@ export const DeleteAlertDialog: FC<DeleteAlertDialogProps> = ({
       onConfirm={handleDelete}
       loading={isLoading}
     >
-      <AlertDialog.Content title={t('component:deleteDialog.title', 'Are you sure?')}>
+      <AlertDialog.Content title={title ?? t('component:deleteDialog.title', 'Are you sure?')}>
         <Text className="break-words" wrap="wrap">
           {displayMessageContent}
         </Text>
@@ -155,7 +159,7 @@ export const DeleteAlertDialog: FC<DeleteAlertDialogProps> = ({
 
         <AlertDialog.Cancel />
         <AlertDialog.Confirm disabled={violation && !bypassable}>
-          {violation && bypassable ? `Bypass rules and delete` : `Yes`}
+          {violation && bypassable ? `Bypass rules and delete` : deleteConfirmText || `Yes`}
         </AlertDialog.Confirm>
       </AlertDialog.Content>
     </AlertDialog.Root>

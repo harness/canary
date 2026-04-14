@@ -10,6 +10,7 @@ import AppDynamics from './symbols/app-dynamics.svg'
 import Approval from './symbols/approval.svg'
 import Aqua from './symbols/aqua.svg'
 import Argo from './symbols/argo.svg'
+import ArmoreCode from './symbols/armore-code.svg'
 import Artifactory from './symbols/artifactory.svg'
 import AutoScaler from './symbols/auto-scaler.svg'
 import Aws from './symbols/aws.svg'
@@ -30,6 +31,7 @@ import Claude from './symbols/claude.svg'
 import Codecov from './symbols/codecov.svg'
 import Confluence from './symbols/confluence.svg'
 import Connector from './symbols/connector.svg'
+import Cursor from './symbols/cursor.svg'
 import CustomDeployment from './symbols/custom-deployment.svg'
 import CustomIngest from './symbols/custom-ingest.svg'
 import CustomScan from './symbols/custom-scan.svg'
@@ -98,6 +100,7 @@ import PrismaCloud from './symbols/prisma-cloud.svg'
 import Prometheus from './symbols/prometheus.svg'
 import Prowler from './symbols/prowler.svg'
 import Python from './symbols/python.svg'
+import Qtest from './symbols/qtest.svg'
 import Qualys from './symbols/qualys.svg'
 import Queue from './symbols/queue.svg'
 import Qwiet from './symbols/qwiet.svg'
@@ -130,6 +133,7 @@ import Terragrunt from './symbols/terragrunt.svg'
 import Traceable from './symbols/traceable.svg'
 import Veracode from './symbols/veracode.svg'
 import VueJs from './symbols/vue-js.svg'
+import Windsurf from './symbols/windsurf.svg'
 import Wiz from './symbols/wiz.svg'
 import Yaml from './symbols/yaml.svg'
 import Zap from './symbols/zap.svg'
@@ -143,6 +147,7 @@ export const SymbolNameMap = {
   approval: Approval,
   aqua: Aqua,
   argo: Argo,
+  'armore-code': ArmoreCode,
   artifactory: Artifactory,
   'auto-scaler': AutoScaler,
   aws: Aws,
@@ -163,6 +168,7 @@ export const SymbolNameMap = {
   codecov: Codecov,
   confluence: Confluence,
   connector: Connector,
+  cursor: Cursor,
   'custom-deployment': CustomDeployment,
   'custom-ingest': CustomIngest,
   'custom-scan': CustomScan,
@@ -232,6 +238,7 @@ export const SymbolNameMap = {
   prowler: Prowler,
   python: Python,
   qualys: Qualys,
+  qtest: Qtest,
   queue: Queue,
   qwiet: Qwiet,
   rancher: Rancher,
@@ -264,6 +271,7 @@ export const SymbolNameMap = {
   veracode: Veracode,
   'vue-js': VueJs,
   wiz: Wiz,
+  windsurf: Windsurf,
   yaml: Yaml,
   zap: Zap,
   zoom: Zoom

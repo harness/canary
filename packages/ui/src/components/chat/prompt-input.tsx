@@ -4,6 +4,7 @@ import { Button } from '@components/button'
 import { Textarea } from '@components/form-primitives'
 import { IconV2, IconV2NamesType } from '@components/icon-v2'
 import { Tag } from '@components/tag'
+import { Toggle, type ToggleProps } from '@components/toggle'
 import { cn } from '@utils/cn'
 
 export type PromptInputRootProps = HTMLAttributes<HTMLFormElement>
@@ -106,9 +107,9 @@ export const PromptInputSubmit = ({ status, children, ...props }: PromptInputSub
   )
 }
 
-export type PromptInputButtonProps = ComponentProps<typeof Button>
-export const PromptInputButton = ({ variant = 'outline', ...props }: PromptInputButtonProps) => {
-  return <Button iconOnly size="xs" type="button" variant={variant} {...props} />
+export type PromptInputButtonProps = ToggleProps
+export const PromptInputButton = ({ variant = 'outline', size = 'xs', ...props }: PromptInputButtonProps) => {
+  return <Toggle {...props} variant={variant} size={size} iconOnly />
 }
 
 export const PromptInput = {

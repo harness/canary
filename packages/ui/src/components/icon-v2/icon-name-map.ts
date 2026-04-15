@@ -156,6 +156,7 @@ import DatabaseBackup from './icons/database-backup.svg'
 import DatabaseCheck from './icons/database-check.svg'
 import DatabaseExport from './icons/database-export.svg'
 import DatabaseImport from './icons/database-import.svg'
+import DatabaseInstances from './icons/database-instances.svg'
 import DatabaseMonitor from './icons/database-monitor.svg'
 import DatabaseRollback from './icons/database-rollback.svg'
 import DatabaseScript from './icons/database-script.svg'
@@ -673,6 +674,7 @@ export const IconNameMapV2 = {
   'database-check': DatabaseCheck,
   'database-export': DatabaseExport,
   'database-import': DatabaseImport,
+  'database-instances': DatabaseInstances,
   'database-monitor': DatabaseMonitor,
   'database-rollback': DatabaseRollback,
   'database-script': DatabaseScript,

@@ -133,11 +133,6 @@ const tailwindDesignSystem: TailwindConfig = {
         secondary: 'var(--cn-set-indigo-secondary-bg)',
         outline: 'var(--cn-set-indigo-outline-bg)'
       },
-      'cn-lime': {
-        primary: 'var(--cn-set-lime-primary-bg)',
-        secondary: 'var(--cn-set-lime-secondary-bg)',
-        outline: 'var(--cn-set-lime-outline-bg)'
-      },
       'cn-mint': {
         primary: 'var(--cn-set-mint-primary-bg)',
         secondary: 'var(--cn-set-mint-secondary-bg)',
@@ -275,11 +270,6 @@ const tailwindDesignSystem: TailwindConfig = {
         secondary: 'var(--cn-set-indigo-secondary-text)',
         outline: 'var(--cn-set-indigo-outline-text)'
       },
-      'cn-lime': {
-        primary: 'var(--cn-set-lime-primary-text)',
-        secondary: 'var(--cn-set-lime-secondary-text)',
-        outline: 'var(--cn-set-lime-outline-text)'
-      },
       'cn-mint': {
         primary: 'var(--cn-set-mint-primary-text)',
         secondary: 'var(--cn-set-mint-secondary-text)',
@@ -362,9 +352,6 @@ const tailwindDesignSystem: TailwindConfig = {
       'cn-indigo': {
         outline: 'var(--cn-set-indigo-outline-border)'
       },
-      'cn-lime': {
-        outline: 'var(--cn-set-lime-outline-border)'
-      },
       'cn-mint': {
         outline: 'var(--cn-set-mint-outline-border)'
       },
@@ -376,6 +363,9 @@ const tailwindDesignSystem: TailwindConfig = {
       },
       'cn-violet': {
         outline: 'var(--cn-set-violet-outline-border)'
+      },
+      'cn-forest': {
+        outline: 'var(--cn-set-forest-green-outline-border)'
       },
       transparent: 'transparent',
       inherit: 'inherit',

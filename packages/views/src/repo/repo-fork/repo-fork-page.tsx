@@ -1,5 +1,10 @@
 import { useForm } from 'react-hook-form'
 
+import { zodResolver } from '@hookform/resolvers/zod'
+import { SandboxLayout } from '@views'
+import { isEmpty } from 'lodash-es'
+import { z } from 'zod'
+
 import {
   Alert,
   Button,
@@ -15,10 +20,6 @@ import {
   Text
 } from '@harnessio/ui/components'
 import { useTranslation } from '@harnessio/ui/context'
-import { SandboxLayout } from '@views'
-import { zodResolver } from '@hookform/resolvers/zod'
-import { isEmpty } from 'lodash-es'
-import { z } from 'zod'
 
 export enum ForkType {
   Branch = 'branch',
@@ -32,9 +33,8 @@ const forkFormSchema = z.object({
   name: z
     .string()
     .min(1, { message: 'Please provide a name' })
-    .regex(/^[a-z0-9-_.]+$/i, { message: 'Name can only contain letters, numbers, dash, dot, or underscore' }),
+    .regex(/^[a-z0-9-_.]+$/i, { message: 'Name can only contain letters, numbers, dash, dot, or underscore' })
   // description: z.string(),
-  makePrivate: z.boolean()
 })
 
 export type RepoForkFormFields = z.infer<typeof forkFormSchema>
@@ -47,7 +47,6 @@ interface RepoForkPageProps {
   destinationSelectorRenderer: (onDestinationSelect: (destination: string) => void) => React.ReactNode
   apiError?: string
   repoIdentifier?: string
-  isPublic?: boolean
   defaultBranchName?: string
 }
 
@@ -59,7 +58,6 @@ export function RepoForkView({
   destinationSelectorRenderer,
   apiError,
   repoIdentifier = '',
-  isPublic = false,
   defaultBranchName = ''
 }: RepoForkPageProps) {
   const { t } = useTranslation()
@@ -72,8 +70,7 @@ export function RepoForkView({
       // description: '',
       forkType: ForkType.Branch,
       branchToFork: defaultBranchName || '',
-      forkDestination: '',
-      makePrivate: !isPublic
+      forkDestination: ''
     }
   })
 
@@ -88,11 +85,6 @@ export function RepoForkView({
   // const _descriptionValue = watch('description')
   const forkTypeValue = watch('forkType')
   const branchToForkValue = watch('branchToFork')
-  const makePrivateValue = watch('makePrivate')
-
-  const handleMakePrivateChange = (value: boolean) => {
-    setValue('makePrivate', !isPublic ? true : value, { shouldValidate: true })
-  }
 
   return (
     <SandboxLayout.Main>
@@ -180,42 +172,6 @@ export function RepoForkView({
               </Layout.Vertical>
 
               <div>
-                {/* VISIBILITY */}
-                <Fieldset>
-                  <ControlGroup>
-                    <Radio.Root
-                      value={makePrivateValue ? 'private' : 'public'}
-                      onValueChange={value => handleMakePrivateChange(value === 'private')}
-                      disabled={!isPublic}
-                      label={t('views:repos.visibility', 'Visibility')}
-                    >
-                      <Radio.Item
-                        id="visibility-public"
-                        value="public"
-                        disabled={!isPublic}
-                        label={t('views:repos.public', 'Public')}
-                        caption={t(
-                          'views:repos.fork.publicCaption',
-                          'Anyone with access to Harness can clone this repo.'
-                        )}
-                      />
-                      <Radio.Item
-                        id="visibility-private"
-                        value="private"
-                        disabled={!isPublic}
-                        label={t('views:repos.private', 'Private')}
-                        caption={t(
-                          'views:repos.fork.privateCaption',
-                          'You can choose who can see and commit to this repository.'
-                        )}
-                      />
-                    </Radio.Root>
-                    {errors.makePrivate && (
-                      <Message theme={MessageTheme.ERROR}>{errors.makePrivate.message?.toString()}</Message>
-                    )}
-                  </ControlGroup>
-                </Fieldset>
-
                 {apiError && (
                   <Alert.Root theme="danger">
                     <Alert.Description>{apiError}</Alert.Description>

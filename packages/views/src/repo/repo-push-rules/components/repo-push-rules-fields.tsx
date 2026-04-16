@@ -8,6 +8,7 @@ import {
   IconV2,
   Label,
   Layout,
+  Text,
   MultiSelectOption,
   NumberInput,
   ResetTag,
@@ -56,6 +57,7 @@ export const PushSettingsRuleDescriptionField: FC<PushRuleFieldProps> = ({ regis
   const { t } = useTranslation()
   return (
     <FormInput.Textarea
+      optional
       label={t('views:repos.description', 'Description')}
       id="description"
       {...register!('description')}
@@ -88,7 +90,9 @@ export const PushSettingsRuleTargetPatternsField: FC<PushRuleFieldProps> = ({ se
   return (
     <Layout.Grid gapY="md">
       <ControlGroup>
-        <Label htmlFor="target-patterns">{t('views:repos.targetPatterns', 'Target patterns')}</Label>
+        <Label htmlFor="target-patterns" optional>
+          {t('views:repos.targetPatterns', 'Target patterns')}
+        </Label>
         <Layout.Grid columns="1fr auto" align="start" gap="sm">
           <FormInput.Text
             id="pattern"
@@ -172,6 +176,7 @@ export const PushSettingsRuleBypassListField: FC<
   return (
     <Fieldset className="gap-y-cn-md">
       <FormInput.MultiSelect
+        optional
         label={t('views:repos.bypassList', 'Bypass list')}
         name="bypass"
         options={multiSelectOptions}
@@ -220,7 +225,9 @@ export const PushSettingsRuleListField: FC<{
 
   return (
     <Layout.Vertical gapY="xl">
-      <Label>{t('views:repos.rulesTitle', 'Rules: select all that apply')}</Label>
+      <Text as="h4" variant="body-strong">
+        {t('views:repos.rulesTitle', 'Rules: select all that apply')}
+      </Text>
       <Layout.Vertical gapY="lg">
         {pushRules.map((rule, index) => {
           const matchingRule = rules.find(r => r.id === rule.id)

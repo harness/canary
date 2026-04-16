@@ -8,6 +8,7 @@ import {
   IconV2,
   Label,
   Layout,
+  Text,
   MultiSelectOption,
   ResetTag,
   SplitButton,
@@ -55,6 +56,7 @@ export const TagSettingsRuleDescriptionField: FC<TagFieldProps> = ({ register })
   const { t } = useTranslation()
   return (
     <FormInput.Textarea
+      optional
       label={t('views:repos.description', 'Description')}
       id="description"
       {...register!('description')}
@@ -87,7 +89,9 @@ export const TagSettingsRuleTargetPatternsField: FC<TagFieldProps> = ({ setValue
   return (
     <Layout.Grid gapY="md">
       <ControlGroup>
-        <Label htmlFor="target-patterns">{t('views:repos.targetPatterns', 'Target patterns')}</Label>
+        <Label htmlFor="target-patterns" optional>
+          {t('views:repos.targetPatterns', 'Target patterns')}
+        </Label>
         <Layout.Grid columns="1fr auto" align="start" gap="sm">
           <FormInput.Text
             id="pattern"
@@ -171,6 +175,7 @@ export const TagSettingsRuleBypassListField: FC<
   return (
     <Fieldset className="gap-y-cn-md">
       <FormInput.MultiSelect
+        optional
         label={t('views:repos.bypassList', 'Bypass list')}
         name="bypass"
         options={multiSelectOptions}
@@ -204,7 +209,9 @@ export const TagSettingsRuleListField: FC<{
 
   return (
     <Layout.Vertical gapY="xl">
-      <Label>{t('views:repos.rulesTitle', 'Rules: select all that apply')}</Label>
+      <Text as="h4" variant="body-strong">
+        {t('views:repos.rulesTitle', 'Rules: select all that apply')}
+      </Text>
       <Layout.Vertical gapY="lg">
         {tagRules.map((rule, index) => {
           const matchingRule = rules.find(r => r.id === rule.id)

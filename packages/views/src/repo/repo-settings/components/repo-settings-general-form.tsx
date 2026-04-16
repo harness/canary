@@ -163,7 +163,7 @@ export const RepoSettingsGeneralForm: FC<{
         onChange={handleTagsChange}
       />
       <ControlGroup>
-        <Label>{t('views:repos.defaultBranch', 'Default Branch')}</Label>
+        <Label optional>{t('views:repos.defaultBranch', 'Default Branch')}</Label>
         <BranchSelector
           ref={triggerRef}
           onSelectBranchorTag={value => {
@@ -179,7 +179,12 @@ export const RepoSettingsGeneralForm: FC<{
         />
       </ControlGroup>
 
-      <FormInput.Radio label={t('views:repos.visibility', 'Visibility')} id="visibility" {...register('access')}>
+      <FormInput.Radio
+        optional
+        label={t('views:repos.visibility', 'Visibility')}
+        id="visibility"
+        {...register('access')}
+      >
         <Radio.Item
           id="access-public"
           value="1"

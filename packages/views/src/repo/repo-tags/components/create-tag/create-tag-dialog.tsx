@@ -97,7 +97,9 @@ export const CreateTagDialog: FC<CreateTagDialogProps> = ({
             />
 
             <ControlGroup>
-              <Label htmlFor="target">{t('views:forms.basedOn', 'Based on')}</Label>
+              <Label htmlFor="target" optional>
+                {t('views:forms.basedOn', 'Based on')}
+              </Label>
               <BranchSelectorContainer />
             </ControlGroup>
 

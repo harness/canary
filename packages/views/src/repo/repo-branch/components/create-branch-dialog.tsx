@@ -123,7 +123,9 @@ export function CreateBranchDialog({
             />
 
             <ControlGroup>
-              <Label htmlFor="target">{t('views:forms.basedOn', 'Based on')}</Label>
+              <Label htmlFor="target" optional>
+                {t('views:forms.basedOn', 'Based on')}
+              </Label>
               {branchSelectorContainer}
             </ControlGroup>
 

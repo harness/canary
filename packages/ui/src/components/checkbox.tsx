@@ -49,7 +49,7 @@ const Checkbox = forwardRef<ElementRef<typeof CheckboxPrimitive.Root>, Omit<Chec
           <div className="cn-checkbox-label-wrapper">
             <Label
               htmlFor={checkboxId}
-              optional={showOptionalLabel}
+              optional={showOptionalLabel !== false}
               className={cn('cn-checkbox-label', { disabled: props.disabled, truncate: truncateLabel })}
             >
               {label}

@@ -24,7 +24,7 @@ const Switch = forwardRef<
       </SwitchPrimitives.Root>
       {(label || caption) && (
         <div className="cn-switch-label-wrapper flex-1 overflow-hidden">
-          <Label htmlFor={props.id || switchId} optional={showOptionalLabel} className="cn-switch-label">
+          <Label htmlFor={props.id || switchId} optional={showOptionalLabel !== false} className="cn-switch-label">
             {label}
           </Label>
           {/* TODO: Design system: update to Text component once available */}

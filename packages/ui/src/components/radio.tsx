@@ -101,8 +101,7 @@ const RadioRoot = forwardRef<ElementRef<typeof RadioGroupPrimitive.Root>, RadioP
     },
     ref
   ) => {
-    // If there is no label for the group, the optionality indicator is shown on the radio item label.
-    const optionalValue = !label && optional
+    const optionalValue = label ? true : optional !== false
 
     return (
       <RadioContext.Provider value={{ optional: optionalValue, disabled: props?.disabled }}>

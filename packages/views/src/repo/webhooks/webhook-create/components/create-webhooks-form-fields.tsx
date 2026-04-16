@@ -35,6 +35,7 @@ export const WebhookDescriptionField: FC<WebhookFormFieldProps> = ({ register })
   const { t } = useTranslation()
   return (
     <FormInput.Textarea
+      optional
       id="description"
       {...register('description')}
       placeholder={t('views:repos.descriptionPlaceholder', 'Enter a description')}
@@ -63,6 +64,7 @@ export const WebhookSecretField: FC<WebhookFormFieldProps> = ({ register }) => {
   const { t } = useTranslation()
   return (
     <FormInput.Text
+      optional
       autoComplete="new-password"
       data-form-type="other"
       id="secret"
@@ -77,6 +79,7 @@ export const WebhookSSLVerificationField: FC<WebhookFormFieldProps> = ({ registe
   const { t } = useTranslation()
   return (
     <FormInput.Radio
+      optional
       label={t('views:repos.sslVerification', 'SSL Verification')}
       id="insecure"
       {...register('insecure')}
@@ -97,6 +100,7 @@ export const WebhookTriggerField: FC<WebhookFormFieldProps> = ({ register }) => 
   const { t } = useTranslation()
   return (
     <FormInput.Radio
+      optional
       label={t('views:repos.evenTriggerLabel', 'Which events would you like to use to trigger this webhook?')}
       id="trigger"
       {...register('trigger')}

@@ -121,6 +121,7 @@ export const DeleteAlertDialog: FC<DeleteAlertDialogProps> = ({
             value={verification}
             placeholder=""
             onChange={handleChangeVerification}
+            optional
             label={`${t('component:deleteDialog.inputLabel', `To confirm, type`)} "${deletionKeyword}"`}
             disabled={isLoading}
             autoFocus

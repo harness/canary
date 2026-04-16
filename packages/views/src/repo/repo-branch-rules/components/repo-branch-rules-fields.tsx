@@ -70,6 +70,7 @@ export const BranchSettingsRuleDescriptionField: FC<FieldProps> = ({ register })
   const { t } = useTranslation()
   return (
     <FormInput.Textarea
+      optional
       label={t('views:repos.description', 'Description')}
       id="description"
       {...register!('description')}
@@ -93,7 +94,9 @@ export const BranchSettingsRuleTargetPatternsField: FC<
   return (
     <Layout.Grid gapY="md">
       <ControlGroup>
-        <Label htmlFor="target-patterns">{t('views:repos.targetPatterns', 'Target patterns')}</Label>
+        <Label htmlFor="target-patterns" optional>
+          {t('views:repos.targetPatterns', 'Target patterns')}
+        </Label>
         <Layout.Grid columns="1fr auto" align="start" gap="sm">
           <FormInput.Text
             id="pattern"
@@ -187,6 +190,7 @@ export const BranchSettingsRuleBypassListField: FC<
   return (
     <Fieldset className="gap-y-cn-md">
       <FormInput.MultiSelect
+        optional
         label={t('views:repos.bypassList', 'Bypass list')}
         name="bypass"
         options={multiSelectOptions}

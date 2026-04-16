@@ -4,7 +4,13 @@ export default {
     width: '100%',
     display: 'flex',
     alignItems: 'center',
-    overflow: 'hidden'
+    overflow: 'hidden',
+
+    '&-vertical': {
+      flexDirection: 'column',
+      height: '100%',
+      width: 'auto'
+    }
   },
 
   '.cn-tabs-scroll-wrapper': {
@@ -20,31 +26,76 @@ export default {
       flexWrap: 'nowrap',
       width: 'max-content',
       minWidth: '100%'
+    },
+
+    '&-vertical': {
+      overflowX: 'hidden',
+      overflowY: 'auto',
+      '& .cn-tabs-list': {
+        height: 'max-content',
+        minHeight: '100%',
+        width: 'auto',
+        minWidth: 'auto'
+      }
     }
   },
 
   '.cn-tabs-fade': {
     position: 'absolute',
-    top: '0',
-    bottom: '0',
-    width: 'var(--cn-spacing-6)',
     pointerEvents: 'none',
     zIndex: '1',
 
     '&-left': {
       left: '0',
+      top: '0',
+      bottom: '0',
+      width: 'var(--cn-spacing-6)',
       background: 'linear-gradient(to right, var(--cn-bg-1), transparent)'
     },
 
     '&-right': {
       right: '0',
+      top: '0',
+      bottom: '0',
+      width: 'var(--cn-spacing-6)',
       background: 'linear-gradient(to left, var(--cn-bg-1), transparent)'
+    },
+
+    '&-top': {
+      top: '0',
+      left: '0',
+      right: '0',
+      height: 'var(--cn-spacing-6)',
+      background: 'linear-gradient(to bottom, var(--cn-bg-1), transparent)'
+    },
+
+    '&-bottom': {
+      bottom: '0',
+      left: '0',
+      right: '0',
+      height: 'var(--cn-spacing-6)',
+      background: 'linear-gradient(to top, var(--cn-bg-1), transparent)'
     }
   },
 
   '.cn-tabs-list': {
     display: 'flex',
     alignItems: 'center',
+
+    '&-vertical': {
+      flexDirection: 'column',
+      alignItems: 'stretch',
+
+      '&.cn-tabs-list-underlined': {
+        borderBottom: 'none',
+        borderRight: 'var(--cn-tabs-container-border) solid var(--cn-border-3)'
+      },
+
+      '&.cn-tabs-list-overlined': {
+        borderBottom: 'none',
+        borderRight: 'var(--cn-tabs-container-border) solid var(--cn-border-3)'
+      }
+    },
 
     '&-outlined': {
       width: 'fit-content',
@@ -152,6 +203,19 @@ export default {
 
       '&:where(:not([disabled]):focus-visible)': {
         '@apply z-[1] outline-offset-cn-tight': ''
+      },
+
+      '.cn-tabs-list-vertical &': {
+        marginBottom: '0',
+        marginRight: '-1px',
+        marginLeft: '0',
+        borderRadius:
+          'var(--cn-tabs-item-overlined-rt) var(--cn-tabs-item-overlined-rb) var(--cn-tabs-item-overlined-rb) var(--cn-tabs-item-overlined-rt)',
+
+        '&:where(:not([disabled]).cn-tabs-trigger-active)': {
+          borderColor: 'var(--cn-border-3)',
+          borderRightColor: 'transparent'
+        }
       }
     },
 
@@ -173,6 +237,19 @@ export default {
 
       '&:where(:not([disabled]):hover)': {
         color: 'var(--cn-text-1) !important'
+      },
+
+      '.cn-tabs-list-vertical &': {
+        bottom: 'auto',
+        right: '-1px',
+        padding: 'var(--cn-tabs-item-underlined-px) var(--cn-tabs-item-underlined-py)',
+        paddingRight: 'calc(var(--cn-tabs-item-underlined-py) - 1px)',
+        borderBottom: 'none',
+        borderRight: 'var(--cn-tabs-item-underlined-border) solid transparent',
+
+        '&:where(:not([disabled]).cn-tabs-trigger-active)': {
+          borderColor: 'var(--cn-border-brand)'
+        }
       }
     },
 

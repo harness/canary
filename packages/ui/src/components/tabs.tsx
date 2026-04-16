@@ -30,10 +30,15 @@ const tabsListVariants = cva('cn-tabs-list', {
       overlined: 'cn-tabs-list-overlined',
       ghost: 'cn-tabs-list-ghost',
       outlined: 'cn-tabs-list-outlined'
+    },
+    orientation: {
+      horizontal: '',
+      vertical: 'cn-tabs-list-vertical'
     }
   },
   defaultVariants: {
-    variant: 'underlined'
+    variant: 'underlined',
+    orientation: 'horizontal'
   }
 })
 
@@ -51,13 +56,49 @@ const tabsTriggerVariants = cva('cn-tabs-trigger', {
   }
 })
 
+const tabsScrollContainerVariants = cva('cn-tabs-scroll-container', {
+  variants: {
+    orientation: {
+      horizontal: '',
+      vertical: 'cn-tabs-scroll-container-vertical'
+    }
+  },
+  defaultVariants: {
+    orientation: 'horizontal'
+  }
+})
+
+const tabsScrollWrapperVariants = cva('cn-tabs-scroll-wrapper', {
+  variants: {
+    orientation: {
+      horizontal: '',
+      vertical: 'cn-tabs-scroll-wrapper-vertical'
+    }
+  },
+  defaultVariants: {
+    orientation: 'horizontal'
+  }
+})
+
+const tabsFadeVariants = cva('cn-tabs-fade', {
+  variants: {
+    position: {
+      left: 'cn-tabs-fade-left',
+      right: 'cn-tabs-fade-right',
+      top: 'cn-tabs-fade-top',
+      bottom: 'cn-tabs-fade-bottom'
+    }
+  }
+})
+
 type TabsContextType = {
   type: 'tabs' | 'tabsnav'
   activeTabValue?: string
   onValueChange?: (value: string) => void
+  orientation?: 'horizontal' | 'vertical'
 }
 
-const TabsContext = createContext<TabsContextType>({ type: 'tabs' })
+const TabsContext = createContext<TabsContextType>({ type: 'tabs', orientation: 'horizontal' })
 
 interface TabsProps {
   children: ReactNode
@@ -65,6 +106,7 @@ interface TabsProps {
   value?: string
   defaultValue?: string
   className?: string
+  orientation?: 'horizontal' | 'vertical'
 }
 
 const useManageActiveTabValue = ({
@@ -90,7 +132,7 @@ const useManageActiveTabValue = ({
   return { activeTabValue, handleValueChange }
 }
 
-const TabsRoot = ({ children, onValueChange, value, defaultValue, className }: TabsProps) => {
+const TabsRoot = ({ children, onValueChange, value, defaultValue, className, orientation }: TabsProps) => {
   const { activeTabValue, handleValueChange } = useManageActiveTabValue({
     type: 'tabs',
     value,
@@ -99,12 +141,13 @@ const TabsRoot = ({ children, onValueChange, value, defaultValue, className }: T
   })
 
   return (
-    <TabsContext.Provider value={{ type: 'tabs', activeTabValue, onValueChange: handleValueChange }}>
+    <TabsContext.Provider value={{ type: 'tabs', activeTabValue, onValueChange: handleValueChange, orientation }}>
       <TabsPrimitive.Root
         className={className}
         onValueChange={handleValueChange}
         value={value}
         defaultValue={defaultValue}
+        orientation={orientation}
       >
         {children}
       </TabsPrimitive.Root>
@@ -130,7 +173,7 @@ const TabsList = forwardRef<ElementRef<typeof TabsPrimitive.List>, TabsListProps
   ({ className, children, variant, activeClassName, ...props }, ref) => {
     const contentRef = useRef<HTMLDivElement | null>(null)
     const scrollContainerRef = useRef<HTMLDivElement | null>(null)
-    const { type, activeTabValue } = useContext(TabsContext)
+    const { type, activeTabValue, orientation = 'horizontal' } = useContext(TabsContext)
     const [showLeftFade, setShowLeftFade] = useState(false)
     const [showRightFade, setShowRightFade] = useState(false)
     const [isOverflowing, setIsOverflowing] = useState(false)
@@ -148,7 +191,10 @@ const TabsList = forwardRef<ElementRef<typeof TabsPrimitive.List>, TabsListProps
       const container = scrollContainerRef.current
       if (!container) return
 
-      const hasOverflow = container.scrollWidth > container.clientWidth
+      const hasOverflow =
+        orientation === 'vertical'
+          ? container.scrollHeight > container.clientHeight
+          : container.scrollWidth > container.clientWidth
       setIsOverflowing(hasOverflow)
     })
 
@@ -156,11 +202,19 @@ const TabsList = forwardRef<ElementRef<typeof TabsPrimitive.List>, TabsListProps
       const container = scrollContainerRef.current
       if (!container) return
 
-      const { scrollLeft, scrollWidth, clientWidth } = container
-      const scrollableWidth = scrollWidth - clientWidth
+      if (orientation === 'vertical') {
+        const { scrollTop, scrollHeight, clientHeight } = container
+        const scrollableHeight = scrollHeight - clientHeight
 
-      setShowLeftFade(scrollLeft > 5)
-      setShowRightFade(scrollLeft < scrollableWidth - 5)
+        setShowLeftFade(scrollTop > 5)
+        setShowRightFade(scrollTop < scrollableHeight - 5)
+      } else {
+        const { scrollLeft, scrollWidth, clientWidth } = container
+        const scrollableWidth = scrollWidth - clientWidth
+
+        setShowLeftFade(scrollLeft > 5)
+        setShowRightFade(scrollLeft < scrollableWidth - 5)
+      }
     })
 
     const scrollActiveTabIntoView = useRef(() => {
@@ -174,11 +228,20 @@ const TabsList = forwardRef<ElementRef<typeof TabsPrimitive.List>, TabsListProps
       const containerRect = container.getBoundingClientRect()
       const activeTabRect = activeTab.getBoundingClientRect()
 
-      const isVisible = activeTabRect.left >= containerRect.left && activeTabRect.right <= containerRect.right
+      if (orientation === 'vertical') {
+        const isVisible = activeTabRect.top >= containerRect.top && activeTabRect.bottom <= containerRect.bottom
 
-      if (!isVisible) {
-        const scrollLeft = activeTab.offsetLeft - container.offsetWidth / 2 + activeTab.offsetWidth / 2
-        container.scrollTo({ left: scrollLeft, behavior: 'smooth' })
+        if (!isVisible) {
+          const scrollTop = activeTab.offsetTop - container.offsetHeight / 2 + activeTab.offsetHeight / 2
+          container.scrollTo({ top: scrollTop, behavior: 'smooth' })
+        }
+      } else {
+        const isVisible = activeTabRect.left >= containerRect.left && activeTabRect.right <= containerRect.right
+
+        if (!isVisible) {
+          const scrollLeft = activeTab.offsetLeft - container.offsetWidth / 2 + activeTab.offsetWidth / 2
+          container.scrollTo({ left: scrollLeft, behavior: 'smooth' })
+        }
       }
     })
 
@@ -250,7 +313,7 @@ const TabsList = forwardRef<ElementRef<typeof TabsPrimitive.List>, TabsListProps
     /**
      * !!! This code is executed only when inside a ShadowRoot
      *
-     * To navigate between tabs using the left and right arrow keys
+     * To navigate between tabs using the arrow keys (orientation-aware)
      */
     const handleKeyDownCapture = (e: KeyboardEvent<HTMLDivElement>) => {
       props?.onKeyDownCapture?.(e)
@@ -262,8 +325,8 @@ const TabsList = forwardRef<ElementRef<typeof TabsPrimitive.List>, TabsListProps
       const { isShadowRoot, activeEl } = getShadowActiveElement(rootEl)
       if (!isShadowRoot) return
 
-      const isPrev = e.key === 'ArrowLeft'
-      const isNext = e.key === 'ArrowRight'
+      const isPrev = orientation === 'vertical' ? e.key === 'ArrowUp' : e.key === 'ArrowLeft'
+      const isNext = orientation === 'vertical' ? e.key === 'ArrowDown' : e.key === 'ArrowRight'
       if (!isPrev && !isNext) return
 
       const triggers = Array.from(rootEl.querySelectorAll<HTMLElement>('[role="tab"]:not([data-disabled])'))
@@ -289,7 +352,7 @@ const TabsList = forwardRef<ElementRef<typeof TabsPrimitive.List>, TabsListProps
         {type === 'tabs' && (
           <TabsPrimitive.List
             ref={mergedRef}
-            className={cn(tabsListVariants({ variant }), className)}
+            className={cn(tabsListVariants({ variant, orientation }), className)}
             {...props}
             onFocusCapture={handleFocusCapture}
             onKeyDownCapture={handleKeyDownCapture}
@@ -299,7 +362,7 @@ const TabsList = forwardRef<ElementRef<typeof TabsPrimitive.List>, TabsListProps
         )}
 
         {type === 'tabsnav' && (
-          <nav ref={mergedRef} className={cn(tabsListVariants({ variant }), className)} {...props}>
+          <nav ref={mergedRef} className={cn(tabsListVariants({ variant, orientation }), className)} {...props}>
             {children}
           </nav>
         )}
@@ -307,12 +370,16 @@ const TabsList = forwardRef<ElementRef<typeof TabsPrimitive.List>, TabsListProps
     )
 
     return (
-      <div className="cn-tabs-scroll-container">
-        {isOverflowing && showLeftFade && <div className="cn-tabs-fade cn-tabs-fade-left" />}
-        <div ref={scrollContainerRef} className="cn-tabs-scroll-wrapper">
+      <div className={tabsScrollContainerVariants({ orientation })}>
+        {isOverflowing && showLeftFade && (
+          <div className={tabsFadeVariants({ position: orientation === 'vertical' ? 'top' : 'left' })} />
+        )}
+        <div ref={scrollContainerRef} className={tabsScrollWrapperVariants({ orientation })}>
           {listContent}
         </div>
-        {isOverflowing && showRightFade && <div className="cn-tabs-fade cn-tabs-fade-right" />}
+        {isOverflowing && showRightFade && (
+          <div className={tabsFadeVariants({ position: orientation === 'vertical' ? 'bottom' : 'right' })} />
+        )}
       </div>
     )
   }

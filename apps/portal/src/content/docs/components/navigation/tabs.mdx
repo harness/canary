@@ -328,6 +328,66 @@ Both `Tabs.Root` and `Tabs.NavRoot` can be controlled by passing `value` and `on
 }`}
 />
 
+## Orientation
+
+The `Tabs` component supports both horizontal (default) and vertical orientations via the `orientation` prop on `Tabs.Root`. This affects both the visual layout and keyboard navigation behavior.
+
+<DocsPage.ComponentExample
+  client:only
+  code={`<div className="flex gap-cn-lg">
+    {/* Horizontal (default) */}
+    <Tabs.Root className="flex-1" defaultValue="tab1" orientation="horizontal">
+        <div className="grid gap-cn-sm">
+            <Tabs.List>
+                <Tabs.Trigger value="tab1">Horizontal 1</Tabs.Trigger>
+                <Tabs.Trigger value="tab2">Horizontal 2</Tabs.Trigger>
+                <Tabs.Trigger value="tab3">Horizontal 3</Tabs.Trigger>
+            </Tabs.List>
+            
+            <Tabs.Content value="tab1">
+                <Text>Horizontal content 1 (use Left/Right arrows)</Text>
+            </Tabs.Content>
+            <Tabs.Content value="tab2">
+                <Text>Horizontal content 2</Text>
+            </Tabs.Content>
+            <Tabs.Content value="tab3">
+                <Text>Horizontal content 3</Text>
+            </Tabs.Content>
+        </div>
+    </Tabs.Root>
+    
+    {/* Vertical */}
+    <Tabs.Root className="flex-1" defaultValue="tab1" orientation="vertical">
+        <div className="flex gap-cn-sm">
+            <Tabs.List>
+                <Tabs.Trigger value="tab1">Vertical 1</Tabs.Trigger>
+                <Tabs.Trigger value="tab2">Vertical 2</Tabs.Trigger>
+                <Tabs.Trigger value="tab3">Vertical 3</Tabs.Trigger>
+            </Tabs.List>
+            
+            <Tabs.Content value="tab1">
+                <Text>Vertical content 1 (use Up/Down arrows)</Text>
+            </Tabs.Content>
+            <Tabs.Content value="tab2">
+                <Text>Vertical content 2</Text>
+            </Tabs.Content>
+            <Tabs.Content value="tab3">
+                <Text>Vertical content 3</Text>
+            </Tabs.Content>
+        </div>
+    </Tabs.Root>
+</div>`}
+/>
+
+<Aside type="tip">
+  - **Visual Layout**: In vertical orientation, tabs are stacked vertically. For
+  `underlined` variant, the border moves from bottom to right; for `overlined`
+  variant, it moves from bottom to left. - **Keyboard Navigation**: Horizontal
+  tabs use Left/Right arrow keys, while vertical tabs use Up/Down arrow keys. -
+  **Scrolling**: Vertical tabs support automatic overflow scrolling with
+  top/bottom fade indicators when content exceeds the container height.
+</Aside>
+
 ## Scrollable Tabs
 
 When you have many tabs that overflow the container, the component automatically enables horizontal scrolling with fade indicators on both ends. The active tab will automatically scroll into view on mount and when changed.
@@ -408,6 +468,7 @@ The `Root` component serves as the main container for regular tabs functionality
   value={activeTab}         // [OPTIONAL] controlled active tab value
   onValueChange={onChange}  // [OPTIONAL] callback when active tab changes
   defaultValue="tab1"       // [OPTIONAL] default active tab (uncontrolled)
+  orientation="horizontal"  // [OPTIONAL] tab orientation
 >
   {/* List and Content components */}
 </Tabs.Root>
@@ -433,7 +494,13 @@ The `Root` component serves as the main container for regular tabs functionality
       required: false,
       value: "(value: string) => void",
     },
-
+    {
+      name: "orientation",
+      description: "The orientation of the tabs. Affects both visual layout (horizontal row vs vertical column) and keyboard navigation (Left/Right for horizontal, Up/Down for vertical). Also impacts scrolling behavior and border placement for underlined/overlined variants.",
+      required: false,
+      value: "'horizontal' | 'vertical'",
+      defaultValue: "'horizontal'",
+    },
     {
       name: "children",
       description: "Tab List and Content components",

@@ -1,4 +1,4 @@
-import { FORM_FIELD_STACK_GAP } from './form-shared-styles'
+import { FORM_FIELD_STACK_GAP } from './form-constants'
 
 export default {
   '.cn-accordion': {

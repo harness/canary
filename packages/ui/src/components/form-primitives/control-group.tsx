@@ -2,7 +2,7 @@ import { HTMLAttributes } from 'react'
 
 import { cn } from '@utils/cn'
 
-import { CONTROL_GROUP_STACK_GAP } from '../../../tailwind-utils-config/components/form-shared-styles'
+import { CONTROL_GROUP_STACK_GAP } from '../../../tailwind-utils-config/components/form-constants'
 
 export interface InputOrientationProp {
   orientation?: 'vertical' | 'horizontal'

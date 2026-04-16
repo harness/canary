@@ -1,4 +1,4 @@
-import { CONTROL_GROUP_STACK_GAP } from './form-shared-styles'
+import { CONTROL_GROUP_STACK_GAP } from './form-constants'
 
 export default {
   ':where(.cn-radio-control)': {

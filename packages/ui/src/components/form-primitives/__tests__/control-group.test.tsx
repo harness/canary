@@ -2,7 +2,7 @@ import type { ReactElement } from 'react'
 
 import { render, screen } from '@testing-library/react'
 
-import { CONTROL_GROUP_STACK_GAP } from '../../../../tailwind-utils-config/components/form-shared-styles'
+import { CONTROL_GROUP_STACK_GAP } from '../../../../tailwind-utils-config/components/form-constants'
 import { ControlGroup } from '../control-group'
 
 const renderGroup = (ui: ReactElement) => {

@@ -77,6 +77,8 @@ import Kustomize from './logos/kustomize.svg'
 import Linux from './logos/linux.svg'
 import Liquibase from './logos/liquibase.svg'
 import Local from './logos/local.svg'
+import McpConnector from './logos/mcp-connector.svg'
+import Mcp from './logos/mcp.svg'
 import Mend from './logos/mend.svg'
 import Metasploit from './logos/metasploit.svg'
 import Microsoft from './logos/microsoft.svg'
@@ -214,6 +216,8 @@ export const LogoNameMapV2 = {
   linux: Linux,
   liquibase: Liquibase,
   local: Local,
+  'mcp-connector': McpConnector,
+  mcp: Mcp,
   mend: Mend,
   metasploit: Metasploit,
   microsoft: Microsoft,
@@ -237,8 +241,8 @@ export const LogoNameMapV2 = {
   prometheus: Prometheus,
   prowler: Prowler,
   python: Python,
-  qualys: Qualys,
   qtest: Qtest,
+  qualys: Qualys,
   queue: Queue,
   qwiet: Qwiet,
   rancher: Rancher,
@@ -270,8 +274,8 @@ export const LogoNameMapV2 = {
   traceable: Traceable,
   veracode: Veracode,
   'vue-js': VueJs,
-  wiz: Wiz,
   windsurf: Windsurf,
+  wiz: Wiz,
   yaml: Yaml,
   zap: Zap,
   zoom: Zoom

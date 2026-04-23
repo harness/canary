@@ -39,15 +39,16 @@ const collapsedSidebarStyles: CSSRuleObject = {
 
   '.cn-sidebar-group': {
     '--sidebar-group-label-scale': '0',
-    '&-header': { display: 'none' }
+    '&-header': {
+      maxHeight: '0',
+      '@apply overflow-hidden opacity-0 p-0 gap-0': ''
+    }
   },
 
   '.cn-sidebar-item': {
     '&-content': {
       gridTemplateColumns: '1fr',
       gridTemplateAreas: '"icon"',
-      justifyItems: 'center',
-      justifyContent: 'center',
       padding: 'var(--cn-sidebar-item-container)',
       minWidth: 'calc(var(--cn-sidebar-item-min-width) - 2 * var(--cn-sidebar-container-px))',
       '&-title, &-description, &-badge, &-right-element, &-action-item-placeholder, &-action-buttons': {
@@ -61,8 +62,7 @@ const collapsedSidebarStyles: CSSRuleObject = {
       '&-only-action-buttons, &-w-r-element, &-complete': {
         gridTemplateColumns: '1fr',
         gridTemplateAreas: '"icon"'
-      },
-      '&-icon': { justifySelf: 'center', marginLeft: '0' }
+      }
     },
     '&-action-button': {
       maxWidth: '0',
@@ -162,6 +162,8 @@ export default {
         alignItems: 'center',
         gap: 'var(--cn-layout-xs)',
         alignSelf: 'stretch',
+        maxHeight: '3rem',
+        '@apply overflow-hidden duration-150 transition-[max-height,opacity,padding,gap] ease-linear': '',
         '&-action-button': {
           '@apply opacity-0 transition-opacity duration-150': ''
         },

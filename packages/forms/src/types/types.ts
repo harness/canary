@@ -33,6 +33,23 @@ export type IOutputTransformerFunc = (
     }
   | undefined
 
+/**
+ * Single override configuration for an input definition.
+ * Allows partial override of input properties while maintaining type safety.
+ */
+export type IInputOverride<TConfig = unknown, TValue = unknown, TInputType extends string = string> = Partial<
+  Omit<IInputDefinition<TConfig, TValue, TInputType>, 'inputType' | 'path' | 'pathRegExp' | 'override'>
+>
+
+/**
+ * Multiple named overrides for an input definition.
+ * Each key represents an override name, and the value is the override configuration.
+ */
+export type IInputOverrides<TConfig = unknown, TValue = unknown, TInputType extends string = string> = Record<
+  string,
+  IInputOverride<TConfig, TValue, TInputType>
+>
+
 export interface IInputDefinition<TConfig = unknown, TValue = unknown, TInputType extends string = string> {
   /**
    * Input type
@@ -112,6 +129,23 @@ export interface IInputDefinition<TConfig = unknown, TValue = unknown, TInputTyp
   outputTransform?: IOutputTransformerFunc | IOutputTransformerFunc[] | undefined
 
   autofocus?: boolean
+
+  /**
+   * Multiple named overrides for this input definition.
+   * Use applyFormOverrides(form, 'overrideName') to apply a specific override.
+   *
+   * @example
+   * {
+   *   inputType: 'text',
+   *   path: 'username',
+   *   label: 'Username',
+   *   override: {
+   *     mobile: { placeholder: 'Enter username', required: true },
+   *     desktop: { placeholder: 'Your username' }
+   *   }
+   * }
+   */
+  override?: IInputOverrides<TConfig, TValue, TInputType>
 }
 // TODO:
 // dependencies?: UIInputDependency[]

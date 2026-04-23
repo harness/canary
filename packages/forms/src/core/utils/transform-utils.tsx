@@ -21,29 +21,30 @@ export function inputTransformValues(values: Record<string, any>, transformerIte
         ? transformItem.inputTransform
         : [transformItem.inputTransform]
 
-      inputTransform.forEach(inTransform => {
-        // IMPORTANT: Check if we're accessing a child property of a primitive
-        // If so, don't call get() as it would access prototype methods
-        let rawValue: any
-        const pathParts = transformItem.path.split('.')
+      // Start with the raw value from the initial values
+      let currentValue: any
+      const pathParts = transformItem.path.split('.')
 
-        if (pathParts.length > 1) {
-          const parentPath = pathParts.slice(0, -1).join('.')
-          const parentValue = get(retValues, parentPath)
+      if (pathParts.length > 1) {
+        const parentPath = pathParts.slice(0, -1).join('.')
+        const parentValue = get(retValues, parentPath)
 
-          // If parent is primitive, pass undefined to avoid prototype access
-          // The transformer will read the parent directly if it needs to
-          if (typeof parentValue === 'string' || typeof parentValue === 'number' || typeof parentValue === 'boolean') {
-            rawValue = undefined
-          } else {
-            rawValue = get(retValues, transformItem.path)
-          }
+        // If parent is primitive, pass undefined to avoid prototype access
+        if (typeof parentValue === 'string' || typeof parentValue === 'number' || typeof parentValue === 'boolean') {
+          currentValue = undefined
         } else {
-          rawValue = get(retValues, transformItem.path)
+          currentValue = get(retValues, transformItem.path)
         }
+      } else {
+        currentValue = get(retValues, transformItem.path)
+      }
 
-        const transformedObj = inTransform(rawValue, retValues)
+      inputTransform.forEach(inTransform => {
+        // Each transformer in the chain receives the output from the previous transformer
+        const transformedObj = inTransform(currentValue, retValues)
         if (transformedObj) {
+          // Update currentValue for the next transformer in the chain
+          currentValue = transformedObj.value
           set(retValues, transformedObj.path ?? transformItem.path, transformedObj.value)
         }
       })
@@ -73,10 +74,16 @@ export function outputTransformValues(
         ? transformItem.outputTransform
         : [transformItem.outputTransform]
 
+      // Start with the raw value from the form
+      let currentValue = get(rawValues, transformItem.path)
+
       outputTransform.forEach(outTransform => {
-        const rawValue = get(rawValues, transformItem.path)
-        const transformedObj = outTransform(rawValue, rawValues)
+        // Each transformer in the chain receives the output from the previous transformer
+        const transformedObj = outTransform(currentValue, rawValues)
         if (transformedObj) {
+          // Update currentValue for the next transformer in the chain
+          currentValue = transformedObj.value
+
           if (transformedObj.path) {
             set(targetValues, transformedObj.path, transformedObj.value)
             if (transformedObj.unset) {

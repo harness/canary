@@ -1,6 +1,6 @@
 {
   "name": "@harnessio/ai-chat-core",
-  "version": "0.0.20",
+  "version": "0.0.21",
   "main": "dist/index.js",
   "types": "dist/index.d.ts",
   "scripts": {
@@ -9,6 +9,7 @@
     "build": "vite build",
     "build:ci": "vite build",
     "build:watch": "vite build --watch",
+    "test": "jest",
     "prepublishOnly": "pnpm build",
     "pretty": "prettier --check ./src",
     "pre-commit": "lint-staged"

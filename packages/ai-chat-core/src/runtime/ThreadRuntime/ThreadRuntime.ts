@@ -93,12 +93,21 @@ export class ThreadRuntime extends BaseSubscribable {
     }
   }
 
+  /**
+   * Dispatches a system event (e.g. a user click on an elicitation card).
+   *
+   * Prior to this change, this method wrapped startSystemEventRun in a
+   * try/catch that silently swallowed the "A run is already in progress"
+   * error thrown by the core when _isRunning was still true — causing
+   * clicks fired during the tail of the previous run to disappear.
+   *
+   * Now we await waitForIdle() before dispatching so the event is
+   * reliably delivered as soon as the in-flight run completes. Callers
+   * do not need their own queueing primitive.
+   */
   public async sendSystemEvent(systemEvent: SystemEvent): Promise<void> {
-    try {
-      await this._core.startSystemEventRun(systemEvent)
-    } catch (e) {
-      // TODO: Handle error
-    }
+    await this._core.waitForIdle()
+    await this._core.startSystemEventRun(systemEvent)
   }
 
   public cancelRun(): void {

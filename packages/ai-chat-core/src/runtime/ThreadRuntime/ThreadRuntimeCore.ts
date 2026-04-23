@@ -23,6 +23,12 @@ export class ThreadRuntimeCore extends BaseSubscribable {
   private _conversationId?: string
   private _title?: string
 
+  // Resolvers waiting for _isRunning to flip to false. Drained in the
+  // finally block of every run path so callers can serialize their
+  // dispatch against an in-progress run instead of having their error
+  // swallowed by the caller's try/catch.
+  private _idleWaiters: Array<() => void> = []
+
   // Track current part being accumulated
   private _currentPart: {
     messageId: string
@@ -97,6 +103,35 @@ export class ThreadRuntimeCore extends BaseSubscribable {
     this.updateMessages([...this._messages, newMessage])
   }
 
+  /**
+   * Resolves when _isRunning flips to false. Use this to queue a
+   * follow-on dispatch (e.g. a system event from a card click that
+   * fires during the tail of the previous run) without racing the
+   * in-progress run's guard.
+   *
+   * Resolves immediately if nothing is running.
+   */
+  public waitForIdle(): Promise<void> {
+    if (!this._isRunning) return Promise.resolve()
+    return new Promise<void>(resolve => {
+      this._idleWaiters.push(resolve)
+    })
+  }
+
+  private drainIdleWaiters(): void {
+    if (this._idleWaiters.length === 0) return
+    const waiters = this._idleWaiters
+    this._idleWaiters = []
+    for (const w of waiters) {
+      try {
+        w()
+      } catch {
+        // Resolver callbacks should not throw; swallow defensively so
+        // a single bad waiter can't block the rest.
+      }
+    }
+  }
+
   public async startSystemEventRun(systemEvent: SystemEvent): Promise<void> {
     if (this._isRunning) {
       throw new Error('A run is already in progress')
@@ -153,6 +188,7 @@ export class ThreadRuntimeCore extends BaseSubscribable {
       this._abortController = null
       this._currentPart = null
       this.notifySubscribers()
+      this.drainIdleWaiters()
     }
   }
 
@@ -212,6 +248,7 @@ export class ThreadRuntimeCore extends BaseSubscribable {
       this._abortController = null
       this._currentPart = null // Clean up
       this.notifySubscribers()
+      this.drainIdleWaiters()
     }
   }
 

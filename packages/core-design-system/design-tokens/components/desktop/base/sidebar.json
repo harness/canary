@@ -47,7 +47,7 @@
       },
       "min-width": {
         "$type": "sizing",
-        "$value": "56px"
+        "$value": "62px"
       }
     },
     "fade-height": {

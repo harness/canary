@@ -238,7 +238,7 @@ export function pipelineInput2FormInput(
         }
         return true
       } catch (e) {
-        console.error(`Error evaluating isVisible for input ${name}`, e)
+        // silently fail
         return false
       }
     },
@@ -315,9 +315,7 @@ export function transformInputConfig(
                   })
                 }
               } catch (e) {
-                console.error(`Error evaluating warning for input ${name}`, e)
-
-                console.log(e)
+                // silently fail
               }
             }
           })

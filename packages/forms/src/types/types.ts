@@ -30,6 +30,9 @@ export type IOutputTransformerFunc = (
       path?: string
       /* unset current path - this works together with path */
       unset?: boolean
+      /* deep merge value with existing value at a path, 
+         NOTE: only used when path is provided */
+      merge?: boolean
     }
   | undefined
 

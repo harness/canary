@@ -1,4 +1,4 @@
-import { cloneDeep, get, isArray, set, unset } from 'lodash-es'
+import { cloneDeep, get, isArray, merge, set, unset } from 'lodash-es'
 
 import { IFormDefinition, IInputDefinition } from '../../types/types'
 import { removeTemporaryFieldsValue } from './temporary-field-utils'
@@ -85,7 +85,19 @@ export function outputTransformValues(
           currentValue = transformedObj.value
 
           if (transformedObj.path) {
-            set(targetValues, transformedObj.path, transformedObj.value)
+            if (transformedObj.merge) {
+              const existingValue = get(targetValues, transformedObj.path)
+              let mergedValues
+              if (existingValue) {
+                mergedValues = merge({}, existingValue, transformedObj.value)
+              } else {
+                mergedValues = transformedObj.value
+              }
+
+              set(targetValues, transformedObj.path, mergedValues)
+            } else {
+              set(targetValues, transformedObj.path, transformedObj.value)
+            }
             if (transformedObj.unset) {
               pathsToUnset.push(transformItem.path)
             }

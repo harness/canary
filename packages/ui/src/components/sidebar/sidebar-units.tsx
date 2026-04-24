@@ -165,9 +165,9 @@ export const SidebarSeparator = forwardRef<ElementRef<typeof Separator>, Compone
 )
 SidebarSeparator.displayName = 'SidebarSeparator'
 
-export const SidebarContent = (props: ComponentProps<typeof ScrollArea>) => {
+export const SidebarContent = (props: ComponentProps<typeof ScrollArea> & { contentClassName?: string }) => {
   const { isTop, isBottom, onScrollTop, onScrollBottom } = useScrollArea(props)
-  const { className } = props
+  const { className, contentClassName, ...rest } = props
 
   return (
     <div
@@ -178,10 +178,10 @@ export const SidebarContent = (props: ComponentProps<typeof ScrollArea>) => {
       )}
     >
       <ScrollArea
-        {...props}
+        {...rest}
         onScrollTop={onScrollTop}
         onScrollBottom={onScrollBottom}
-        className="cn-sidebar-content"
+        className={cn('cn-sidebar-content', contentClassName)}
         role="menu"
       />
     </div>

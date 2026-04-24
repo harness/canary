@@ -14,9 +14,16 @@ interface DiffViewerProps {
   newCode: string
   lang?: DiffHighlighterLang
   diffViewWrap?: boolean
+  diffViewMode?: DiffModeEnum
 }
 
-const DiffViewer = ({ newCode, oldCode, lang = 'yaml', diffViewWrap = false }: DiffViewerProps) => {
+const DiffViewer = ({
+  newCode,
+  oldCode,
+  lang = 'yaml',
+  diffViewWrap = false,
+  diffViewMode = DiffModeEnum.Split
+}: DiffViewerProps) => {
   const { isLightTheme } = useTheme()
   const highlighter = useDiffHighlighter({ setLoading: () => {} })
 
@@ -36,7 +43,7 @@ const DiffViewer = ({ newCode, oldCode, lang = 'yaml', diffViewWrap = false }: D
       diffViewHighlight
       diffViewWrap={diffViewWrap}
       registerHighlighter={highlighter}
-      diffViewMode={DiffModeEnum.Split}
+      diffViewMode={diffViewMode}
       diffViewTheme={isLightTheme ? 'light' : 'dark'}
     />
   )

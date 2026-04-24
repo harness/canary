@@ -89,6 +89,25 @@ lang="yaml"
 `}
 />
 
+### Unified Mode
+
+Pass `diffViewMode={DiffModeEnum.Unified}` to render the diff inline instead of side-by-side.
+
+<DocsPage.ComponentExample
+  client:only
+  code={`<DiffViewer
+  oldCode={\`function greet(name) {
+  console.log("Hello, " + name);
+}\`}
+  newCode={\`function greet(name = "World") {
+  console.log(\\\`Hello, \\\${name}!\\\`);
+}\`}
+  lang="typescript"
+  diffViewMode={DiffModeEnum.Unified}
+/>
+`}
+/>
+
 ## Usage
 
 ```tsx
@@ -146,6 +165,14 @@ function MyComponent() {
       value: "boolean",
       defaultValue: "false",
     },
+    {
+      name: "diffViewMode",
+      description:
+        "Display mode for the diff. Use `DiffModeEnum.Split` for side-by-side or `DiffModeEnum.Unified` for inline view. Import `DiffModeEnum` from `@harnessio/ui/components`.",
+      required: false,
+      value: "DiffModeEnum",
+      defaultValue: "DiffModeEnum.Split",
+    },
   ]}
 />
 
@@ -172,14 +199,25 @@ The component supports all languages from the Shiki/Highlight.js library includi
 
 ## Display Modes
 
-The DiffViewer currently uses **Split mode** by default, which displays the old and new code side-by-side for easy comparison.
+The DiffViewer supports two display modes via the `diffViewMode` prop. It defaults to **Split mode** when no mode is provided.
 
 ### Split Mode (Side-by-Side)
+
+`diffViewMode={DiffModeEnum.Split}` (default)
 
 - Shows old code on the left, new code on the right
 - Ideal for detailed line-by-line comparisons
 - Best for desktop and larger screens
 - Clear visual separation of changes
+
+### Unified Mode (Inline)
+
+`diffViewMode={DiffModeEnum.Unified}`
+
+- Shows old and new code stacked inline in a single column
+- Ideal for narrow layouts or focused review of small changes
+- Easier to follow short, sequential edits
+- Works well in side panels and mobile viewports
 
 ## Theme Integration
 

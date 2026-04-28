@@ -22,6 +22,7 @@
     "@harnessio/ui": "workspace:^",
     "@hookform/resolvers": "^3.6.0",
     "@radix-ui/react-navigation-menu": "^1.2.3",
+    "@tanstack/react-virtual": "^3.13.0",
     "astro": "^5.6.1",
     "class-variance-authority": "^0.7.0",
     "clsx": "^2.1.1",

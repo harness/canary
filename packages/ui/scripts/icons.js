@@ -16,7 +16,7 @@ dotenvConfig()
 const DEFAULT_CONFIG = {
   FIGMA_TOKEN: process.env.FIGMA_TOKEN,
   FILE_ID: process.env.FIGMA_FILE_ID,
-  PAGE_NAME: process.env.FIGMA_PAGE_NAME,
+  PAGE_NAME: process.env.FIGMA_PAGE_NAME || process.env.FIGMA_LOGO_PAGE_NAME,
   OUTPUT_DIR: './src/components/icon-v2/icons',
   FORMAT: 'svg', // 'svg', 'png', 'jpg', 'pdf'
   SCALE: 1, // Only for raster formats
@@ -371,6 +371,12 @@ export const IconNameMapV2 = {
 
       if (!this.config.FILE_ID) {
         throw new Error('Please set your FIGMA_FILE_ID in the configuration or environment variables')
+      }
+
+      if (!this.config.PAGE_NAME) {
+        throw new Error(
+          'Please set FIGMA_PAGE_NAME (or FIGMA_LOGO_PAGE_NAME) in the configuration or environment variables'
+        )
       }
 
       // Get file structure

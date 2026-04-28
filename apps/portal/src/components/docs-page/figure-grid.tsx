@@ -1,4 +1,5 @@
-import { useState } from "react";
+import { useVirtualizer } from "@tanstack/react-virtual";
+import { useMemo, useRef, useState } from "react";
 import {
   Text,
   LogoV2,
@@ -11,16 +12,27 @@ import {
   IconV2,
   TooltipProvider,
   Tabs,
+  Layout,
+  SearchInput,
 } from "@harnessio/ui/components";
 import { SearchableArea } from "./searchable-area";
 
-type FigureType = "logo" | "illustration" | "icon";
+/** Sorted once — large list; virtualizer only mounts visible rows. */
+const SORTED_ICON_NAMES = Object.keys(IconNameMapV2).sort((a, b) =>
+  a.localeCompare(b),
+);
 
-const typeToFigureDictMap: Record<FigureType, Record<string, unknown>> = {
-  logo: LogoNameMapV2,
-  illustration: IllustrationsNameMap,
-  icon: IconNameMapV2,
-} as const;
+const ICON_GRID_COLUMNS = 5;
+
+function chunkIntoRows(names: string[], columns: number): string[][] {
+  const rows: string[][] = [];
+  for (let i = 0; i < names.length; i += columns) {
+    rows.push(names.slice(i, i + columns));
+  }
+  return rows;
+}
+
+type FigureType = "logo" | "illustration" | "icon";
 
 const LogoGridItem = ({
   name,
@@ -158,6 +170,82 @@ const IllustrationGridItem = ({ name }: { name: string }) => {
   );
 };
 
+const VirtualizedIconGrid = () => {
+  const [query, setQuery] = useState("");
+  const scrollRef = useRef<HTMLDivElement>(null);
+
+  const filteredNames = useMemo(() => {
+    const q = query.trim().toLowerCase();
+    if (!q) {
+      return SORTED_ICON_NAMES;
+    }
+    return SORTED_ICON_NAMES.filter((n) => n.toLowerCase().includes(q));
+  }, [query]);
+
+  const rows = useMemo(
+    () => chunkIntoRows(filteredNames, ICON_GRID_COLUMNS),
+    [filteredNames],
+  );
+
+  const virtualizer = useVirtualizer({
+    count: rows.length,
+    getScrollElement: () => scrollRef.current,
+    estimateSize: () => 112,
+    overscan: 6,
+  });
+
+  return (
+    <TooltipProvider>
+      <Layout.Vertical gap="lg">
+        <SearchInput
+          onChange={setQuery}
+          className="max-w-[300px]"
+          debounce={200}
+        />
+        {filteredNames.length === 0 ? (
+          <Layout.Vertical
+            gap="md"
+            align="center"
+            justify="center"
+            className="py-cn-4xl px-cn-2xl !m-0 my-auto size-full grow"
+          >
+            <Text variant="heading-section" align="center">
+              No search results
+            </Text>
+          </Layout.Vertical>
+        ) : (
+          <div
+            ref={scrollRef}
+            className="max-h-[min(75vh,56rem)] w-full overflow-auto"
+          >
+            <div
+              className="relative w-full"
+              style={{ height: virtualizer.getTotalSize() }}
+            >
+              {virtualizer.getVirtualItems().map((virtualRow) => (
+                <div
+                  key={virtualRow.index}
+                  data-index={virtualRow.index}
+                  ref={virtualizer.measureElement}
+                  className="absolute left-0 top-0 grid w-full gap-cn-md pb-cn-md"
+                  style={{
+                    transform: `translateY(${virtualRow.start}px)`,
+                    gridTemplateColumns: `repeat(${ICON_GRID_COLUMNS}, minmax(0, 1fr))`,
+                  }}
+                >
+                  {rows[virtualRow.index]?.map((name) => (
+                    <IconGridItem key={name} name={name} />
+                  ))}
+                </div>
+              ))}
+            </div>
+          </div>
+        )}
+      </Layout.Vertical>
+    </TooltipProvider>
+  );
+};
+
 export const FigureGrid = ({ type }: { type: FigureType }) => {
   const [logoView, setLogoView] = useState<"default" | "symbol">("default");
 
@@ -183,18 +271,7 @@ export const FigureGrid = ({ type }: { type: FigureType }) => {
   }
 
   if (type === "icon") {
-    return (
-      <TooltipProvider>
-        <SearchableArea
-          containerClassName="grid grid-cols-5 gap-cn-md"
-          dataAttributeSelector="data-figure-name"
-        >
-          {Object.keys(IconNameMapV2).map((name) => (
-            <IconGridItem key={name} name={name} />
-          ))}
-        </SearchableArea>
-      </TooltipProvider>
-    );
+    return <VirtualizedIconGrid />;
   }
 
   if (type === "illustration") {

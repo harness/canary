@@ -1,8 +1,6 @@
 import { useCallback, useEffect, useRef, useState } from 'react'
 
-import { Avatar, Layout, Separator, Tag, Text, TextInput, TimeAgoCard } from '@harnessio/ui/components'
-import { useTheme, useTranslation } from '@harnessio/ui/context'
-import { TypesUser } from '@harnessio/ui/types'
+import { DiffFile, DiffModeEnum, DiffViewProps, SplitSide } from '@git-diff-view/react'
 import {
   activitiesToDiffCommentItems,
   CommentItem,
@@ -14,14 +12,15 @@ import {
   PullRequestCommentBox,
   TypesPullReqActivity
 } from '@views'
-import { DiffFile, DiffModeEnum, DiffViewProps, SplitSide } from '@git-diff-view/react'
-import { useCustomEventListener } from '@harnessio/ui/hooks'
-import { useResizeObserver } from '@harnessio/ui/hooks'
-import { cn } from '@harnessio/ui/utils'
-import { getInitials } from '@harnessio/ui/utils'
 import { DiffBlock } from 'diff2html/lib/types'
 import { debounce, get } from 'lodash-es'
 import { OverlayScrollbars } from 'overlayscrollbars'
+
+import { Avatar, Layout, Separator, Tag, Text, TextInput, TimeAgoCard } from '@harnessio/ui/components'
+import { useTheme, useTranslation } from '@harnessio/ui/context'
+import { useCustomEventListener, useResizeObserver } from '@harnessio/ui/hooks'
+import { TypesUser } from '@harnessio/ui/types'
+import { cn, getInitials } from '@harnessio/ui/utils'
 
 import PRCommentView from '../details/components/common/pull-request-comment-view'
 import {
@@ -58,6 +57,8 @@ interface PullRequestDiffviewerProps {
   wrap: boolean
   addWidget: boolean
   fileName: string
+  /** Pre-rename path. When provided, comments on the old (left) side are anchored to it. */
+  oldFileName?: string
   lang: string
   fullContent?: string
   addedLines?: number
@@ -96,6 +97,7 @@ const PullRequestDiffViewer = ({
   addWidget,
   lang,
   fileName,
+  oldFileName,
   fullContent,
   currentUser,
   comments,
@@ -343,6 +345,9 @@ const PullRequestDiffViewer = ({
       const commentKey = `${side}:${lineNumber}`
       const commentText = newComments[commentKey] ?? ''
 
+      // Renamed files: anchor old-side comments to the pre-rename path.
+      const commentPath = sideKey === 'oldFile' && oldFileName ? oldFileName : fileName
+
       return (
         <div className="bg-cn-1 p-cn-md flex w-full flex-col">
           <PullRequestCommentBox
@@ -359,7 +364,7 @@ const PullRequestDiffViewer = ({
                   line_end_new: sideKey === 'newFile',
                   line_start: lineFromNumber,
                   line_start_new: sideKey === 'newFile',
-                  path: fileName
+                  path: commentPath
                 }).then(() => {
                   onClose()
                   setNewComments(prev => ({ ...prev, [commentKey]: '' }))
@@ -386,7 +391,7 @@ const PullRequestDiffViewer = ({
         </div>
       )
     },
-    [handleSaveComment, fileName, newComments, currentUser, handleUpload, principalProps]
+    [handleSaveComment, fileName, oldFileName, newComments, currentUser, handleUpload, principalProps]
   )
 
   // comment display

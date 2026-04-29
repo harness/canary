@@ -7,6 +7,7 @@ import {
   GridProps,
   IconPropsV2,
   IconV2,
+  IconV2Color,
   IconV2NamesType,
   Layout,
   Text,
@@ -25,6 +26,7 @@ type SidebarItemActionButtonPropsType = ButtonProps & {
 
 interface BaseItemProps {
   icon: NonNullable<IconPropsV2['name']>
+  iconColor?: IconV2Color
   hideIcon?: boolean
   isActive?: boolean
   actionButtons?: SidebarItemActionButtonPropsType[]
@@ -43,7 +45,10 @@ interface LinkItemProps extends BaseItemProps, Omit<LinkProps, 'to'> {
 type ItemProps = DefaultItemProps | LinkItemProps
 
 const InteractiveItem = forwardRef<HTMLDivElement, ItemProps>(
-  ({ className, children, icon, hideIcon, isActive, link, isFolder, actionButtons, ...props }: ItemProps, ref) => {
+  (
+    { className, children, icon, iconColor, hideIcon, isActive, link, isFolder, actionButtons, ...props }: ItemProps,
+    ref
+  ) => {
     const { Link } = useRouterContext()
 
     const showIcon = !hideIcon
@@ -82,7 +87,7 @@ const InteractiveItem = forwardRef<HTMLDivElement, ItemProps>(
         className={commonClassnames}
         {...(props as Omit<LinkItemProps, 'to'>)}
       >
-        {showIcon && <IconV2 name={icon} size="md" />}
+        {showIcon && <IconV2 name={icon} size="md" color={iconColor} />}
         <Text className="flex-1" align="left" color="inherit" truncate>
           {children}
         </Text>
@@ -90,7 +95,7 @@ const InteractiveItem = forwardRef<HTMLDivElement, ItemProps>(
       </Link>
     ) : (
       <Layout.Flex ref={ref} className={commonClassnames} as="button" {...(props as DefaultItemProps)}>
-        {showIcon && <IconV2 name={icon} size="md" />}
+        {showIcon && <IconV2 name={icon} size="md" color={iconColor} />}
         <Text className="flex-1" align="left" color="inherit" truncate>
           {children}
         </Text>

@@ -1,9 +1,6 @@
 import { FC, useCallback, useMemo, useRef, useState } from 'react'
 
-import { Layout, Skeleton } from '@harnessio/ui/components'
-import { TypesUser } from '@harnessio/ui/types'
 import { DiffModeEnum } from '@git-diff-view/react'
-import { cn } from '@harnessio/ui/utils'
 import {
   activityToCommentItem,
   FILE_VIEWED_OBSOLETE_SHA,
@@ -12,6 +9,10 @@ import {
   TypesCommit
 } from '@views/index'
 import { chunk, orderBy } from 'lodash-es'
+
+import { Layout, Skeleton } from '@harnessio/ui/components'
+import { TypesUser } from '@harnessio/ui/types'
+import { cn } from '@harnessio/ui/utils'
 
 import { DraggableSidebarDivider, SIDEBAR_MIN_WIDTH } from '../../components/draggable-sidebar-divider'
 import { PullRequestDiffSidebar } from '../components/pull-request-diff-sidebar'
@@ -258,6 +259,8 @@ const PullRequestChangesPage: FC<RepoPullRequestChangesPageProps> = ({
                 lang: item.filePath.split('.')[1],
                 filePath: item.filePath,
                 isDeleted: !!item.isDeleted,
+                isNew: !!item.isNew,
+                isRename: !!item.isRename,
                 unchangedPercentage: item.unchangedPercentage || 0
               })) || []
             }

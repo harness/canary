@@ -419,6 +419,7 @@ export const PullRequestAccordion: React.FC<{
                   wrap={wrap}
                   addWidget={addWidget}
                   fileName={header?.title ?? ''}
+                  oldFileName={header?.isRename ? header?.oldName : undefined}
                   lang={header?.lang ?? ''}
                   currentUser={currentUser}
                   comments={comments}

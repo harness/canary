@@ -1,6 +1,6 @@
 import { memo, RefObject, useEffect, useMemo, useRef, useState } from 'react'
 
-import { FileExplorer, Layout, StatusBadge } from '@harnessio/ui/components'
+import { FileExplorer, IconV2Color, IconV2NamesType, Layout, StatusBadge } from '@harnessio/ui/components'
 
 type TreeNode = FolderNode | FileNode
 
@@ -26,6 +26,8 @@ export interface ExplorerDiffData {
   filePath: string
   isDeleted: boolean
   unchangedPercentage: number
+  isNew?: boolean
+  isRename?: boolean
 }
 
 /**
@@ -337,15 +339,19 @@ function renderTree(
       )
     } else {
       const isActive = activeDiff === node.path
-      const addedLines = getDiffFileAddedLines(diffsData || [], node.path)
-      const deletedLines = getDiffFileDeletedLines(diffsData || [], node.path)
+      const fileDiff = getDiffFile(diffsData || [], node.path)
+      const addedLines = fileDiff?.addedLines || 0
+      const deletedLines = fileDiff?.deletedLines || 0
       const hasLineChanges = addedLines > 0 || deletedLines > 0
+      const statusIcon = getFileStatusIcon(fileDiff)
       return (
         <FileExplorer.FileItem
           value={node.path}
           key={node.path}
           isActive={isActive}
           level={level}
+          icon={statusIcon?.name}
+          iconColor={statusIcon?.color}
           onClick={() => goToDiff(node.path)}
           tooltip={
             hasLineChanges ? (
@@ -372,12 +378,14 @@ function renderTree(
   })
 }
 
-function getDiffFileAddedLines(diffsData: ExplorerDiffData[], filePath: string): number {
-  const diff = diffsData?.find(diff => diff.filePath === filePath)
-  return diff?.addedLines || 0
+function getDiffFile(diffsData: ExplorerDiffData[], filePath: string): ExplorerDiffData | undefined {
+  return diffsData?.find(diff => diff.filePath === filePath)
 }
 
-function getDiffFileDeletedLines(diffsData: ExplorerDiffData[], filePath: string): number {
-  const diff = diffsData?.find(diff => diff.filePath === filePath)
-  return diff?.deletedLines || 0
+function getFileStatusIcon(diff?: ExplorerDiffData): { name: IconV2NamesType; color: IconV2Color } | undefined {
+  if (!diff) return undefined
+  if (diff.isDeleted) return { name: 'page-minus-in', color: 'danger' }
+  if (diff.isNew) return { name: 'page-plus-in', color: 'success' }
+  if (diff.isRename) return { name: 'submit-document', color: 'warning' }
+  return undefined
 }

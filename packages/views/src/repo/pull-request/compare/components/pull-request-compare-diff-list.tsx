@@ -110,6 +110,8 @@ const PullRequestCompareDiffList: FC<PullRequestCompareDiffListProps> = ({
                 lang: item.filePath.split('.')[1],
                 filePath: item.filePath,
                 isDeleted: !!item.isDeleted,
+                isNew: !!item.diffData?.isNew,
+                isRename: !!item.isRename,
                 unchangedPercentage: item.unchangedPercentage || 0
               })) || []
             }

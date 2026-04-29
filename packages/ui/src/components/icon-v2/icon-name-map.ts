@@ -298,6 +298,7 @@ import MailOpen from './icons/mail-open.svg'
 import MailOut from './icons/mail-out.svg'
 import Mail from './icons/mail.svg'
 import Maximize from './icons/maximize.svg'
+import McpConnector from './icons/mcp-connector.svg'
 import MenuMoreHorizontal from './icons/menu-more-horizontal.svg'
 import MenuScale from './icons/menu-scale.svg'
 import Menu from './icons/menu.svg'
@@ -460,6 +461,7 @@ import Suggestion from './icons/suggestion.svg'
 import SunLight from './icons/sun-light.svg'
 import SupplyChainSolid from './icons/supply-chain-solid.svg'
 import SupplyChain from './icons/supply-chain.svg'
+import SystemEvent from './icons/system-event.svg'
 import SystemRestart from './icons/system-restart.svg'
 import TableRows from './icons/table-rows.svg'
 import TagCheck from './icons/tag-check.svg'
@@ -816,6 +818,7 @@ export const IconNameMapV2 = {
   'mail-out': MailOut,
   mail: Mail,
   maximize: Maximize,
+  'mcp-connector': McpConnector,
   'menu-more-horizontal': MenuMoreHorizontal,
   'menu-scale': MenuScale,
   menu: Menu,
@@ -978,6 +981,7 @@ export const IconNameMapV2 = {
   'sun-light': SunLight,
   'supply-chain-solid': SupplyChainSolid,
   'supply-chain': SupplyChain,
+  'system-event': SystemEvent,
   'system-restart': SystemRestart,
   'table-rows': TableRows,
   'tag-check': TagCheck,

@@ -48,6 +48,9 @@ export * from '@views/repo/repo-settings/repo-settings-general-page'
 export * from '@views/repo/repo-settings/repo-settings-rules-page'
 export * from '@views/repo/repo-settings/types'
 
+// repo AI code review settings
+export * from '@views/repo/repo-aicr-settings'
+
 // repo import
 export * from '@views/repo/repo-import/repo-import'
 export * from '@views/repo/repo-import/repo-import-mulitple'

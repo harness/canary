@@ -97,7 +97,8 @@ export enum RouteConstants {
   toProjectPushRuleCreate = 'toProjectPushRuleCreate',
   toProjectRules = 'toProjectRules',
   toProjectRuleDetails = 'toProjectRuleDetails',
-  toRepoLabelDetails = 'toRepoLabelDetails'
+  toRepoLabelDetails = 'toRepoLabelDetails',
+  toRepoAicrSettings = 'toRepoAicrSettings'
 }
 
 export interface RouteEntry {

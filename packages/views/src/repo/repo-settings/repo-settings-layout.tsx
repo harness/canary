@@ -1,7 +1,13 @@
-import { TFunctionWithFallback, useRouterContext, useTranslation } from '@harnessio/ui/context'
 import { ContentLayoutWithSidebar } from '@views'
 
-const getNavItems = (t: TFunctionWithFallback) => [
+import { TFunctionWithFallback, useRouterContext, useTranslation } from '@harnessio/ui/context'
+
+export interface RepoSettingsLayoutProps {
+  /** Toggles the "AI Code Review" sidebar entry. Driven by host feature flag. */
+  aiCodeReviewEnabled?: boolean
+}
+
+const getNavItems = (t: TFunctionWithFallback, { aiCodeReviewEnabled }: RepoSettingsLayoutProps = {}) => [
   {
     groupId: 0,
     // title: t('views:repos.general', 'General'),
@@ -9,7 +15,10 @@ const getNavItems = (t: TFunctionWithFallback) => [
       { id: 0, title: t('views:repos.general', 'General'), to: 'general' },
       { id: 1, title: t('views:repos.labels', 'Labels'), to: 'labels' },
       { id: 2, title: t('views:repos.rules', 'Rules'), to: 'rules' },
-      { id: 3, title: t('views:repos.webhooks', 'Webhooks'), to: 'webhooks' }
+      { id: 3, title: t('views:repos.webhooks', 'Webhooks'), to: 'webhooks' },
+      ...(aiCodeReviewEnabled
+        ? [{ id: 4, title: t('views:repos.aiCodeReview', 'AI Code Review'), to: 'code-review' }]
+        : [])
     ]
   }
   // {
@@ -51,12 +60,12 @@ const getNavItems = (t: TFunctionWithFallback) => [
   // }
 ]
 
-export function RepoSettingsLayout() {
+export function RepoSettingsLayout({ aiCodeReviewEnabled }: RepoSettingsLayoutProps = {}) {
   const { Outlet } = useRouterContext()
   const { t } = useTranslation()
 
   return (
-    <ContentLayoutWithSidebar sidebarMenu={getNavItems(t)}>
+    <ContentLayoutWithSidebar sidebarMenu={getNavItems(t, { aiCodeReviewEnabled })}>
       <Outlet />
     </ContentLayoutWithSidebar>
   )

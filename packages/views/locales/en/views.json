@@ -296,6 +296,7 @@
     "labels": "Labels",
     "rules": "Rules",
     "webhooks": "Webhooks",
+    "aiCodeReview": "AI Code Review",
     "rulesDescription": "Define standards and automate workflows to ensure better collaboration and control in your repository.",
     "cloneRepo": "Clone Repository",
     "cloneHttps": "HTTPS",
@@ -1196,5 +1197,46 @@
     "noDelegatesInstalled": "Haven't installed a delegate yet?",
     "installDelegate": "Install delegate"
   },
-  "code": "Code"
+  "code": "Code",
+  "aicrSettings": {
+    "title": "AI Code Review",
+    "description": "Configure the AI-powered code review agent for pull requests in this repository.",
+    "successCriteria": {
+      "title": "Success Criteria",
+      "description": "Define the checks the code review agent will evaluate on each pull request.",
+      "addNewCheck": "Add a new check",
+      "namePlaceholder": "Must use our design system",
+      "descriptionPlaceholder": "Check description (optional)",
+      "addCheck": "Add check",
+      "deleteCheck": "Delete check",
+      "empty": "No checks configured yet. Add a check below to start enforcing review criteria."
+    },
+    "llmConnector": {
+      "title": "LLM Connector",
+      "description": "Select the LLM connector used by the code review agent.",
+      "placeholder": "Select a connector"
+    },
+    "agent": {
+      "title": "Agent",
+      "description": "Select a pre-configured agent or create a custom one.",
+      "placeholder": "Select an agent",
+      "createCustom": "Create custom code review agent"
+    },
+    "knowledgeGraph": {
+      "title": "Knowledge Graph",
+      "description": "Select which Harness module data sources the agent can access for context-aware code reviews."
+    },
+    "systemPrompt": {
+      "title": "System Prompt",
+      "description": "Customize the system prompt sent to the code review agent. This controls the agent's behavior and focus areas.",
+      "resetToDefault": "Reset to default",
+      "save": "Save settings",
+      "saving": "Saving..."
+    },
+    "agentSkills": {
+      "title": "Agent Skills",
+      "description": "Select the skills available to the code review agent. More skills give the agent greater capability but may increase review time.",
+      "placeholder": "Add skills"
+    }
+  }
 }

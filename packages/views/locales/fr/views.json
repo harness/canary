@@ -297,6 +297,7 @@
     "labels": "Labels",
     "rules": "Règles",
     "webhooks": "Webhooks",
+    "aiCodeReview": "Revue de code IA",
     "rulesDescription": "Define standards and automate workflows to ensure better collaboration and control in your repository.",
     "cloneRepo": "Cloner le dépôt",
     "cloneHttps": "HTTPS",
@@ -1180,5 +1181,46 @@
     "noDelegatesInstalled": "Haven't installed a delegate yet?",
     "installDelegate": "Install Delegate"
   },
-  "code": "Code"
+  "code": "Code",
+  "aicrSettings": {
+    "title": "Revue de code IA",
+    "description": "Configurer l'agent de revue de code IA pour les pull requests de ce dépôt.",
+    "successCriteria": {
+      "title": "Critères de réussite",
+      "description": "Définissez les vérifications que l'agent de revue de code évaluera sur chaque pull request.",
+      "addNewCheck": "Ajouter une vérification",
+      "namePlaceholder": "Doit utiliser notre design system",
+      "descriptionPlaceholder": "Description de la vérification (facultatif)",
+      "addCheck": "Ajouter la vérification",
+      "deleteCheck": "Supprimer la vérification",
+      "empty": "Aucune vérification configurée. Ajoutez une vérification ci-dessous pour commencer."
+    },
+    "llmConnector": {
+      "title": "Connecteur LLM",
+      "description": "Sélectionnez le connecteur LLM utilisé par l'agent de revue de code.",
+      "placeholder": "Sélectionner un connecteur"
+    },
+    "agent": {
+      "title": "Agent",
+      "description": "Sélectionnez un agent préconfiguré ou créez-en un personnalisé.",
+      "placeholder": "Sélectionner un agent",
+      "createCustom": "Créer un agent de revue personnalisé"
+    },
+    "knowledgeGraph": {
+      "title": "Graphe de connaissances",
+      "description": "Sélectionnez les sources de données Harness auxquelles l'agent peut accéder pour des revues contextuelles."
+    },
+    "systemPrompt": {
+      "title": "Prompt système",
+      "description": "Personnalisez le prompt système envoyé à l'agent de revue de code.",
+      "resetToDefault": "Réinitialiser",
+      "save": "Enregistrer",
+      "saving": "Enregistrement..."
+    },
+    "agentSkills": {
+      "title": "Compétences de l'agent",
+      "description": "Sélectionnez les compétences disponibles pour l'agent de revue de code.",
+      "placeholder": "Ajouter des compétences"
+    }
+  }
 }

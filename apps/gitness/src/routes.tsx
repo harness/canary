@@ -2,13 +2,7 @@ import { Navigate, redirect } from 'react-router-dom'
 
 import { Breadcrumb, Layout, Sidebar } from '@harnessio/ui/components'
 import { ComponentProvider } from '@harnessio/ui/context'
-import {
-  EmptyPage,
-  ProfileSettingsLayout,
-  RepoSettingsLayout,
-  SandboxLayout,
-  WebhookSettingsLayout
-} from '@harnessio/views'
+import { EmptyPage, ProfileSettingsLayout, SandboxLayout, WebhookSettingsLayout } from '@harnessio/views'
 
 import { FeatureGuard } from './components-v2/feature-guard'
 import { AppShellMFE } from './components-v2/mfe/app-shell'
@@ -62,7 +56,9 @@ import { ImportMultipleRepos } from './pages-v2/repo/repo-import-multiple-contai
 import { ImportRepo } from './pages-v2/repo/repo-import-page'
 import RepoLayout from './pages-v2/repo/repo-layout'
 import ReposListPage from './pages-v2/repo/repo-list'
+import { RepoSettingsAicrContainer } from './pages-v2/repo/repo-settings-aicr-container'
 import { RepoSettingsGeneralPageContainer } from './pages-v2/repo/repo-settings-general-container'
+import { RepoSettingsLayoutContainer } from './pages-v2/repo/repo-settings-layout-container'
 import { RepoSettingsRulesListContainer } from './pages-v2/repo/repo-settings-rules-list-container'
 import { RepoSidebar } from './pages-v2/repo/repo-sidebar'
 import RepoSummaryPage from './pages-v2/repo/repo-summary'
@@ -102,7 +98,8 @@ enum Page {
   Home = 'Home',
   Theme = 'Theme',
   Search = 'Search',
-  Tags = 'Tags'
+  Tags = 'Tags',
+  AI_Code_Review = 'AI Code Review'
 }
 
 const labelsRoute = {
@@ -569,7 +566,7 @@ export const repoRoutes: CustomRouteObject[] = [
           },
           {
             path: 'settings',
-            element: <RepoSettingsLayout />,
+            element: <RepoSettingsLayoutContainer />,
             handle: {
               breadcrumb: () => <span>{Page.Settings}</span>,
               pageTitle: Page.Settings
@@ -688,6 +685,19 @@ export const repoRoutes: CustomRouteObject[] = [
                     }
                   }
                 ]
+              },
+              {
+                path: 'code-review',
+                element: (
+                  <FeatureGuard featureFlag={FeatureFlag.CODE_AICR_ENABLED}>
+                    <RepoSettingsAicrContainer />
+                  </FeatureGuard>
+                ),
+                handle: {
+                  breadcrumb: () => <span>{Page.AI_Code_Review}</span>,
+                  pageTitle: Page.AI_Code_Review,
+                  routeName: RouteConstants.toRepoAicrSettings
+                }
               }
             ]
           },

@@ -1,0 +1,40 @@
+{
+  "name": "@harnessio/icons",
+  "description": "Tree-shakeable icon components for Harness UI",
+  "version": "0.1.0",
+  "private": false,
+  "type": "module",
+  "sideEffects": false,
+  "exports": {
+    ".": {
+      "types": "./dist/index.d.ts",
+      "import": "./dist/index.js"
+    },
+    "./*": {
+      "types": "./dist/icons/*.svg.d.ts",
+      "import": "./dist/icons/*.svg.js"
+    }
+  },
+  "types": "./dist/index.d.ts",
+  "files": [
+    "dist"
+  ],
+  "peerDependencies": {
+    "react": ">=17",
+    "react-dom": ">=17"
+  },
+  "devDependencies": {
+    "@vitejs/plugin-react-swc": "^3.8.0",
+    "react": "^18.3.1",
+    "react-dom": "^18.3.1",
+    "typescript": "^5.9.2",
+    "vite": "^6.1.1",
+    "vite-plugin-svgr": "^4.3.0"
+  },
+  "scripts": {
+    "build": "vite build",
+    "typecheck": "tsc -b",
+    "generate": "node scripts/generate.js",
+    "update:icons": "node scripts/generate.js"
+  }
+}

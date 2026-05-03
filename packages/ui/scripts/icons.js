@@ -466,3 +466,17 @@ async function downloadIcons() {
 
 // Execute icons download
 await downloadIcons()
+
+// Sync SVGs to @harnessio/icons package
+const iconsPackageDir = path.resolve(import.meta.dirname, '../../icons/src/icons')
+try {
+  await fs.cp(DEFAULT_CONFIG.OUTPUT_DIR, iconsPackageDir, { recursive: true })
+  const { execSync } = await import('child_process')
+  execSync('node scripts/generate.js', {
+    cwd: path.resolve(import.meta.dirname, '../../icons'),
+    stdio: 'inherit'
+  })
+  console.log('✅ Synced icons to @harnessio/icons package')
+} catch (error) {
+  console.warn('⚠️ Could not sync to @harnessio/icons:', error.message)
+}

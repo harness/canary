@@ -263,8 +263,11 @@ export default {
 
   // Tag Component
   '.cn-studio-card-tag': {
-    '@apply flex gap-cn-3xs p-cn-2xs rounded-t-cn-4 bg-cn-gray-outline border border-cn-gray-outline top-[-28px] right-0 absolute text-cn-gray-outline select-none':
+    '@apply flex gap-cn-3xs p-cn-2xs border rounded-t-cn-4 top-[-28px] right-0 absolute select-none':
       '',
+    'color': 'var(--cn-set-purple-outline-text)',
+    'background-color': 'var(--cn-set-purple-outline-bg)',
+    'border-color': 'var(--cn-set-purple-outline-border)',
 
     /**
      * For the corner scoop effect
@@ -276,8 +279,8 @@ export default {
       right: '-1px',
       width: '8px',
       height: '8px',
-      background: `radial-gradient(circle at bottom left, transparent 0px, transparent 7px, var(--cn-set-gray-outline-border) 7px, var(--cn-set-gray-outline-border) 8px, var(--cn-set-gray-outline-bg) 7px)`,
-      borderRight: '1px solid var(--cn-set-gray-outline-border)'
+      background: `radial-gradient(circle at bottom left, transparent 0px, transparent 7px, var(--cn-set-purple-outline-border) 7px, var(--cn-set-purple-outline-border) 8px, var(--cn-set-purple-outline-bg) 7px)`,
+      borderRight: '1px solid var(--cn-set-purple-outline-border)'
     }
   },
 
@@ -357,7 +360,7 @@ export default {
   },
 
   '.cn-studio-card-expand-button-top': {
-    '@apply flex items-center gap-cn-2xs p-cn-xs pl-cn-md flex-1': ''
+    '@apply flex items-center gap-cn-2xs p-cn-xs pl-cn-md flex-1 text-cn-1': ''
   },
 
   '.cn-studio-card-expand-button-bottom': {

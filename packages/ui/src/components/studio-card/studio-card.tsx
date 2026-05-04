@@ -219,7 +219,7 @@ function ExpandButton({
         <div className="cn-studio-card-expand-button-top">
           {variant === 'default' && (icon ?? <IconV2 name="harness-plugins" size="lg" />)}
           <Text
-            color="foreground-1"
+            color="inherit"
             variant={variant === 'minimal' ? 'caption-single-line-code' : 'body-strong'}
             className="truncate"
           >
@@ -272,7 +272,7 @@ function Tag({ tagText, icon }: PropsWithChildren<{ tagText: string; icon?: Icon
   return (
     <div className="cn-studio-card-tag">
       {icon && <IconV2 name={icon} size="xs" />}
-      <Text title={tagText} className="text-cn-gray-outline" variant="caption-single-line-normal">
+      <Text title={tagText} color="inherit" variant="caption-single-line-normal">
         {truncatedText}
       </Text>
     </div>

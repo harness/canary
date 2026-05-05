@@ -119,16 +119,26 @@ export function shorthandObjectInputTransformer(parentPath: string): IInputTrans
   }
 }
 
-export function shorthandObjectOutputTransformer(parentPath: string): IOutputTransformerFunc {
+/**
+ * Collapses `{ parent: { [fieldKey]: value, ...empty siblings } }` into `{ parent: value }`
+ * when `fieldKey` is the only meaningful sibling under `parent`.
+ *
+ * Pass `fieldKey` explicitly so the collapse decision does not depend on the order in which
+ * sibling fields happen to be registered with React Hook Form.
+ */
+export function shorthandObjectOutputTransformer(parentPath: string, fieldKey?: string): IOutputTransformerFunc {
   return function (value: unknown, values: Record<string, unknown>) {
     if (typeof value === 'undefined') return undefined
     if (!value) return { value }
 
     const parentObj = get(values, parentPath)
 
-    if (typeof parentObj === 'object') {
+    if (typeof parentObj === 'object' && parentObj !== null) {
       const cleanParentObj = cleanUpObject(parentObj)
-      if (Object.getOwnPropertyNames(cleanParentObj).length === 1) {
+      const keys = Object.keys(cleanParentObj)
+      const shouldCollapse = fieldKey ? keys.length === 1 && keys[0] === fieldKey : keys.length === 1
+
+      if (shouldCollapse) {
         return { value, path: parentPath }
       }
     }
@@ -185,13 +195,15 @@ export function shorthandArrayOutputTransformer(
 }
 
 function isEmptyRec(obj: unknown): boolean {
-  if (typeof obj === 'object') {
+  if (Array.isArray(obj)) {
+    return obj.every(item => isEmptyRec(item))
+  }
+  if (typeof obj === 'object' && obj !== null) {
     return !Object.getOwnPropertyNames(obj).some(item => {
       return !isEmptyRec((obj as Record<string, unknown>)[item])
     })
-  } else {
-    return isUndefined(obj)
   }
+  return isUndefined(obj)
 }
 
 function cleanUpObject(obj: object | null) {

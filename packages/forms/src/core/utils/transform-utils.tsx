@@ -53,13 +53,39 @@ export function inputTransformValues(values: Record<string, any>, transformerIte
   return retValues
 }
 
-/** convert form model to data model using output transformer functions  */
+/**
+ * Returns true when `parentPath` is a STRICT ancestor of `childPath` (i.e. an outer path,
+ * not the same path).
+ *
+ * Examples:
+ *   isStrictAncestorPath('run', 'run.script')        === true
+ *   isStrictAncestorPath('run.report', 'run.report') === false   // same path, NOT a collapse
+ *   isStrictAncestorPath('run.container', 'run')     === false
+ *
+ * We deliberately exclude same-path writes because transformers like can return `{ path: 'some.path' }` from a
+ * transformer at `some.path` — that's a regular self-write with `unset: true`, not a
+ * collapse-to-ancestor. Treating it as a collapse caused it to be deferred and re-clobber
+ * a previously deferred ancestor write (e.g. `set(targetValues, 'run', 'echo')` followed
+ * by `set(targetValues, 'run.report', undefined)` re-explodes `run` into an object).
+ */
+function isStrictAncestorPath(parentPath: string, childPath: string): boolean {
+  if (parentPath === childPath) return false
+  return childPath.startsWith(`${parentPath}.`)
+}
+
 export function outputTransformValues(
   values: Record<string, any>,
   transformerItems: TransformItem[],
   cleanOutput?: boolean
 ) {
   const pathsToUnset: string[] = []
+
+  /**
+   * Holds writes that target an ancestor of the transformer's own path.
+   * They are deferred until after every other write has happened, otherwise sibling
+   * transformers would replace the primitive at `targetValues.some.path` with `{ some: { path: undefined } }`, undoing the collapse.
+   */
+  const deferredCollapseWrites: { path: string; value: unknown }[] = []
 
   let targetValues: Record<string, any> = {}
   if (!cleanOutput) {
@@ -85,7 +111,16 @@ export function outputTransformValues(
           currentValue = transformedObj.value
 
           if (transformedObj.path) {
-            if (transformedObj.merge) {
+            const isCollapseWrite = isStrictAncestorPath(transformedObj.path, transformItem.path)
+
+            if (isCollapseWrite) {
+              // Defer ancestor writes so later sibling transforms cannot clobber them via
+              // lodash `set` re-creating intermediate objects on the collapsed primitive.
+              deferredCollapseWrites.push({
+                path: transformedObj.path,
+                value: transformedObj.value
+              })
+            } else if ((transformedObj as { merge?: boolean }).merge) {
               const existingValue = get(targetValues, transformedObj.path)
               let mergedValues
               if (existingValue) {
@@ -111,6 +146,12 @@ export function outputTransformValues(
 
   pathsToUnset.forEach(path => {
     unset(targetValues, path)
+  })
+
+  // Apply deferred collapse writes last so they win over any sibling write that may have
+  // touched intermediate paths (e.g. unset transforms creating empty objects along the way).
+  deferredCollapseWrites.forEach(({ path, value }) => {
+    set(targetValues, path, value)
   })
 
   return targetValues

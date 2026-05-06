@@ -1,6 +1,6 @@
 import { FC, useCallback, useEffect, useMemo, useRef, useState } from 'react'
 
-import { ExtendedScope, SandboxLayout } from '@views'
+import { ExtendedScope } from '@views'
 import { isEmpty } from 'lodash-es'
 
 import { createFilters, FilterRefType, ListControlBar } from '@harnessio/filters'
@@ -17,10 +17,10 @@ import {
   ListActions,
   MultiSelectFilterOptionConfig,
   NoData,
+  Page,
   renderFilterSelectLabel,
   SearchableDropdown,
   SearchInput,
-  Spacer,
   StackedList,
   Text
 } from '@harnessio/ui/components'
@@ -435,8 +435,22 @@ const PullRequestListPage: FC<PullRequestPageProps> = ({
   }
 
   return (
-    <SandboxLayout.Main>
-      <SandboxLayout.Content>
+    <Page.Root>
+      <Page.HeaderV2
+        title={t('views:repos.pullRequests', 'Pull requests')}
+        iconName="git-pull-request"
+        actions={
+          repoId ? (
+            <Button asChild>
+              <Link to={`${spaceId ? `/${spaceId}` : ''}/repos/${repoId}/pulls/compare/`}>
+                <IconV2 name="plus" />
+                {t('views:repos.createPullReq', 'Create Pull Request.')}
+              </Link>
+            </Button>
+          ) : undefined
+        }
+      />
+      <Page.Content>
         {showTopBar && (
           <PRListFilterHandler
             ref={filtersRef}
@@ -444,24 +458,14 @@ const PullRequestListPage: FC<PullRequestPageProps> = ({
             onChange={onFilterValueChange}
             view="dropdown"
           >
-            <Layout.Horizontal gap="xs" align="center">
-              <IconV2 name="git-pull-request" size="lg" />
-              <Text as="h1" variant="heading-section">
-                Pull requests
-              </Text>
-            </Layout.Horizontal>
-            <Spacer size={6} />
 
             {!isEmpty(prCandidateBranches) && (
-              <>
-                <BranchCompareBannerList
-                  prCandidateBranches={prCandidateBranches}
-                  defaultBranchName={repository?.default_branch || 'main'}
-                  repoId={repoId}
-                  spaceId={spaceId}
-                />
-                <Spacer size={4} />
-              </>
+              <BranchCompareBannerList
+                prCandidateBranches={prCandidateBranches}
+                defaultBranchName={repository?.default_branch || 'main'}
+                repoId={repoId}
+                spaceId={spaceId}
+              />
             )}
 
             <ListActions.Root>
@@ -508,18 +512,6 @@ const PullRequestListPage: FC<PullRequestPageProps> = ({
                     size="sm"
                   />
                 )}
-
-                {/**
-                 * Creating a pull request is permitted only when inside a repository.
-                 */}
-                {repoId ? (
-                  <Button asChild>
-                    <Link to={`${spaceId ? `/${spaceId}` : ''}/repos/${repoId}/pulls/compare/`}>
-                      <IconV2 name="plus" />
-                      {t('views:repos.createPullReq', 'Create Pull Request.')}
-                    </Link>
-                  </Button>
-                ) : null}
               </ListActions.Right>
             </ListActions.Root>
             <ListControlBar<PRListFilters, LabelsValue, PRListFilters[PRListFiltersKeys]>
@@ -566,12 +558,11 @@ const PullRequestListPage: FC<PullRequestPageProps> = ({
               selectedFiltersCnt={selectedFiltersCnt}
               filterOptions={PR_FILTER_OPTIONS}
             />
-            <Spacer size={5} />
           </PRListFilterHandler>
         )}
         {renderListContent()}
-      </SandboxLayout.Content>
-    </SandboxLayout.Main>
+      </Page.Content>
+    </Page.Root>
   )
 }
 export { PullRequestListPage }

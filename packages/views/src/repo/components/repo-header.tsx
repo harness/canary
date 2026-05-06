@@ -1,4 +1,4 @@
-import { Alert, Favorite, Layout, Skeleton, StatusBadge, Text } from '@harnessio/ui/components'
+import { Alert, Breadcrumb, BreadcrumbItems, Favorite, Layout, Skeleton, StatusBadge, Text } from '@harnessio/ui/components'
 import { useTranslation } from '@harnessio/ui/context'
 import { cn } from '@harnessio/ui/utils'
 import { formatDate } from '@harnessio/ui/utils'
@@ -17,6 +17,7 @@ interface RepoHeaderProps {
   archivedDate?: number
   upstream?: RepositoryType['upstream']
   toUpstreamRepo?: (path: string, subPath?: string) => string
+  breadcrumbs?: BreadcrumbItems
 }
 
 export const RepoHeader = ({
@@ -29,7 +30,8 @@ export const RepoHeader = ({
   onFavoriteToggle,
   archivedDate,
   upstream,
-  toUpstreamRepo
+  toUpstreamRepo,
+  breadcrumbs
 }: RepoHeaderProps) => {
   const { t } = useTranslation()
 
@@ -37,6 +39,7 @@ export const RepoHeader = ({
 
   return (
     <Layout.Grid className={cn('cn-repo-header', className)} gapY="md">
+      {breadcrumbs && breadcrumbs.length > 0 && <Breadcrumb.Nav items={breadcrumbs} />}
       <Layout.Flex direction="column" gap="3xs">
         <Layout.Flex justify="start" align="center">
           {isLoading ? (

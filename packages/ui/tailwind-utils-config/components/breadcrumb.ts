@@ -57,6 +57,15 @@ export default {
 
   '.cn-breadcrumb-link': {
     '@apply inline-flex items-center cursor-pointer': '',
+    color: 'inherit !important',
+    font: 'inherit !important',
+    letterSpacing: 'inherit !important',
+    textDecoration: 'none !important',
+
+    '&:hover': {
+      color: 'inherit !important',
+      textDecoration: 'none !important'
+    },
 
     '&:focus-visible': {
       outline: 'var(--cn-focus)'

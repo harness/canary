@@ -1,8 +1,10 @@
 import { ComponentProps, ComponentPropsWithoutRef, ComponentPropsWithRef, forwardRef, ReactNode } from 'react'
 
 import { Slot } from '@radix-ui/react-slot'
+import { NonEmptyString } from '@/types'
 import { cn } from '@utils/cn'
 import { cva, type VariantProps } from 'class-variance-authority'
+
 
 import { Avatar, AvatarProps, AvatarSize } from './avatar'
 import { Button } from './button'
@@ -10,6 +12,19 @@ import { CopyButton } from './copy-button'
 import { DropdownMenu } from './dropdown-menu'
 import { IconV2, IconV2NamesType } from './icon-v2'
 import { Link, type LinkProps } from './link'
+
+export interface BreadcrumbLinkItem<T extends string = string> {
+  label: string
+  to: NonEmptyString<T>
+  prefixIcon?: IconV2NamesType
+}
+
+export interface BreadcrumbPageItem {
+  label: string
+  prefixIcon?: IconV2NamesType
+}
+
+export type BreadcrumbItems = [...BreadcrumbLinkItem[], BreadcrumbPageItem]
 
 const breadcrumbVariants = cva('cn-breadcrumb', {
   variants: {
@@ -255,6 +270,70 @@ const BreadcrumbRootInteractive = forwardRef<HTMLButtonElement, BreadcrumbRootIn
 )
 BreadcrumbRootInteractive.displayName = 'BreadcrumbRootInteractive'
 
+interface BreadcrumbNavProps {
+  items: BreadcrumbItems
+}
+
+// Parses the URL rather than using shell route functions (e.g. routes.toMode) because this
+// component lives in @harnessio/ui which has no access to shell route definitions.
+function getHomePath(pathname: string): string {
+  // Gitness/standalone: path contains /+/ scope delimiter
+  const scopeEnd = pathname.indexOf('/+')
+  if (scopeEnd !== -1) {
+    return pathname.slice(0, scopeEnd + 2)
+  }
+
+  // Shell: /ng/account/{id}/{mode}[/module]/orgs/{org}/projects/{project}/...
+  // Strip the module segment and everything after the project to get project home.
+  const modeMatch = pathname.match(/^(\/ng\/account\/[^/]+\/[^/]+)/)
+  if (modeMatch) {
+    const modeBase = modeMatch[1]
+    const orgsMatch = pathname.match(/\/orgs\/[^/]+\/projects\/[^/]+/)
+    if (orgsMatch) {
+      return `${modeBase}${orgsMatch[0]}`
+    }
+    return modeBase
+  }
+
+  return '/'
+}
+
+const BreadcrumbNav = ({ items }: BreadcrumbNavProps) => {
+  // Uses window.location (not router context location) because MFEs like Code run their own
+  // React Router with a basename — their context location only sees relative paths (e.g. "/repos").
+  const pathname = typeof window !== 'undefined' ? window.location.pathname : '/'
+  const homeTo = getHomePath(pathname)
+  const linkItems = items.slice(0, -1) as BreadcrumbLinkItem[]
+  const pageItem = items[items.length - 1]
+
+  return (
+    <BreadcrumbRoot size="sm">
+      <BreadcrumbList>
+        {/* Uses <a href> instead of router Link because Home navigates outside the current
+            MFE's router scope — the Code MFE's v6 router would prepend its basename. */}
+        <BreadcrumbItem>
+          <BreadcrumbLink href={homeTo}>Home</BreadcrumbLink>
+          <BreadcrumbSeparator />
+        </BreadcrumbItem>
+        {linkItems.map((item, index) => (
+          <BreadcrumbItem key={index} prefixIcon={item.prefixIcon}>
+            <BreadcrumbLink asChild>
+              <Link variant="secondary" noHoverUnderline to={item.to}>
+                {item.label}
+              </Link>
+            </BreadcrumbLink>
+            <BreadcrumbSeparator />
+          </BreadcrumbItem>
+        ))}
+        <BreadcrumbItem prefixIcon={pageItem.prefixIcon}>
+          <BreadcrumbPage>{pageItem.label}</BreadcrumbPage>
+        </BreadcrumbItem>
+      </BreadcrumbList>
+    </BreadcrumbRoot>
+  )
+}
+BreadcrumbNav.displayName = 'BreadcrumbNav'
+
 const Breadcrumb = {
   Root: BreadcrumbRoot,
   List: BreadcrumbList,
@@ -265,7 +344,8 @@ const Breadcrumb = {
   Copy: BreadcrumbCopy,
   Separator: BreadcrumbSeparator,
   Ellipsis: BreadcrumbEllipsis,
-  RootInteractive: BreadcrumbRootInteractive
+  RootInteractive: BreadcrumbRootInteractive,
+  Nav: BreadcrumbNav
 }
 
 export {

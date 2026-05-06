@@ -1,8 +1,7 @@
 import { FC, useCallback, useMemo } from 'react'
 
-import { Button, Dialog, IconV2, Layout, ListActions, NoData, SearchInput, Text } from '@harnessio/ui/components'
+import { Button, Dialog, IconV2, Layout, ListActions, NoData, Page, SearchInput } from '@harnessio/ui/components'
 import { useTranslation } from '@harnessio/ui/context'
-import { SandboxLayout } from '@views'
 import { cn } from '@harnessio/ui/utils'
 
 import { BranchesList } from './components/branch-list'
@@ -64,13 +63,21 @@ export const RepoBranchListView: FC<RepoBranchListViewProps> = ({
   }
 
   return (
-    <SandboxLayout.Main>
-      <SandboxLayout.Content className={cn({ 'h-full': !isLoading && !branchList.length && !searchQuery })}>
+    <Page.Root>
+      <Page.HeaderV2
+        title={t('views:repos.branches.title', 'Branches')}
+        iconName="git-branch"
+        actions={
+          <Dialog.Trigger>
+            <Button onClick={openCreateBranchDialog} size="md" variant="primary" theme="default">
+              <IconV2 name="plus" />
+              {t('views:repos.branches.createBranch', 'Create Branch')}
+            </Button>
+          </Dialog.Trigger>
+        }
+      />
+      <Page.Content className={cn({ 'h-full': !isLoading && !branchList.length && !searchQuery })}>
         <Layout.Flex direction="column" gapY="xl" className="grow">
-          <Text as="h2" variant="heading-section">
-            {t('views:repos.branches.title', 'Branches')}
-          </Text>
-
           <Layout.Grid gapY="md">
             <ListActions.Root>
               <ListActions.Left>
@@ -81,14 +88,6 @@ export const RepoBranchListView: FC<RepoBranchListViewProps> = ({
                   onChange={handleSearchChange}
                 />
               </ListActions.Left>
-              <ListActions.Right>
-                <Dialog.Trigger>
-                  <Button onClick={openCreateBranchDialog} size="md" variant="primary" theme="default">
-                    <IconV2 name="plus" />
-                    {t('views:repos.branches.createBranch', 'Create Branch')}
-                  </Button>
-                </Dialog.Trigger>
-              </ListActions.Right>
             </ListActions.Root>
 
             {!noSearchResults && (
@@ -125,7 +124,7 @@ export const RepoBranchListView: FC<RepoBranchListViewProps> = ({
             />
           )}
         </Layout.Flex>
-      </SandboxLayout.Content>
-    </SandboxLayout.Main>
+      </Page.Content>
+    </Page.Root>
   )
 }

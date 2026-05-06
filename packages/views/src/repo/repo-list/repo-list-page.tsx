@@ -1,10 +1,9 @@
 import { FC, useCallback, useMemo, useRef, useState } from 'react'
 
-import { DataTable, IconV2, Layout, NoData, PermissionIdentifier, ResourceType, Spacer, Text } from '@harnessio/ui/components'
+import { FilterGroup, FilterGroupRef } from '@harnessio/filters'
+import { DataTable, IconV2, NoData, Page, PermissionIdentifier, ResourceType } from '@harnessio/ui/components'
 import { useComponents, useRouterContext, useTranslation } from '@harnessio/ui/context'
 import { useColumnFilter } from '@harnessio/ui/hooks'
-import { FilterGroup, FilterGroupRef } from '@harnessio/filters'
-import { SandboxLayout } from '@views'
 
 import { ExtendedScope } from '../common'
 import { COLUMN_OPTIONS, DEFAULT_VISIBLE_COLUMNS } from './constant'
@@ -103,8 +102,8 @@ const SandboxRepoListPage: FC<RepoListPageProps> = ({
 
   if (!repositories?.length && !isDirtyList && !isLoading) {
     return (
-      <SandboxLayout.Main>
-        <SandboxLayout.Content>
+      <Page.Root>
+        <Page.Content>
           <NoData
             withBorder
             imageName="no-repository"
@@ -136,21 +135,41 @@ const SandboxRepoListPage: FC<RepoListPageProps> = ({
               {t('views:repos.createRepository', 'Create Repository')}
             </RbacSplitButton>
           </NoData>
-        </SandboxLayout.Content>
-      </SandboxLayout.Main>
+        </Page.Content>
+      </Page.Root>
     )
   }
 
   return (
-    <SandboxLayout.Main>
-      <SandboxLayout.Content>
-        <Layout.Horizontal gap="xs" align="center">
-          <IconV2 name="repository" size="lg" />
-          <Text variant="heading-section" as="h1">
-            {t('views:repos.repositories', 'Repositories')}
-          </Text>
-        </Layout.Horizontal>
-        <Spacer size={6} />
+    <Page.Root>
+      <Page.HeaderV2
+        breadcrumbs={[{ label: t('views:repos.repositories', 'Repositories') }]}
+        title={t('views:repos.repositories', 'Repositories')}
+        iconName="repository"
+        actions={
+          <RbacSplitButton<string>
+            dropdownContentClassName="mt-0 min-w-[208px]"
+            handleButtonClick={() => navigate(toCreateRepo?.() || '')}
+            handleOptionChange={option => {
+              if (option === 'new') navigate(toCreateRepo?.() || '')
+              if (option === 'import') navigate(toImportRepo?.() || '')
+              if (option === 'import-multiple') navigate(toImportMultipleRepos?.() || '')
+            }}
+            options={[
+              { value: 'new', label: t('views:repos.createRepository', 'Create Repository') },
+              { value: 'import', label: t('views:repos.importRepository', 'Import Repository') },
+              { value: 'import-multiple', label: t('views:repos.importRepositories', 'Import Repositories') }
+            ]}
+            rbac={{
+              resource: { resourceType: ResourceType.CODE_REPOSITORY },
+              permissions: [PermissionIdentifier.CODE_REPO_CREATE]
+            }}
+          >
+            <IconV2 name="plus" />
+            {t('views:repos.createRepository', 'Create Repository')}
+          </RbacSplitButton>
+        }
+      >
         <FilterGroup<RepoListFilters, keyof RepoListFilters>
           simpleSortConfig={{
             sortOptions: REPO_SORT_OPTIONS,
@@ -162,39 +181,17 @@ const SandboxRepoListPage: FC<RepoListPageProps> = ({
           ref={filterRef}
           handleInputChange={handleSearch}
           headerAction={
-            <Layout.Horizontal gap="xs">
-              <DataTable.ColumnFilter
-                columns={COLUMN_OPTIONS}
-                visibleColumns={visibleColumns}
-                onCheckedChange={toggleColumn}
-                onReset={resetColumns}
-              />
-              <RbacSplitButton<string>
-                dropdownContentClassName="mt-0 min-w-[208px]"
-                handleButtonClick={() => navigate(toCreateRepo?.() || '')}
-                handleOptionChange={option => {
-                  if (option === 'new') navigate(toCreateRepo?.() || '')
-                  if (option === 'import') navigate(toImportRepo?.() || '')
-                  if (option === 'import-multiple') navigate(toImportMultipleRepos?.() || '')
-                }}
-                options={[
-                  { value: 'new', label: t('views:repos.createRepository', 'Create Repository') },
-                  { value: 'import', label: t('views:repos.importRepository', 'Import Repository') },
-                  { value: 'import-multiple', label: t('views:repos.importRepositories', 'Import Repositories') }
-                ]}
-                rbac={{
-                  resource: { resourceType: ResourceType.CODE_REPOSITORY },
-                  permissions: [PermissionIdentifier.CODE_REPO_CREATE]
-                }}
-              >
-                <IconV2 name="plus" />
-                {t('views:repos.createRepository', 'Create Repository')}
-              </RbacSplitButton>
-            </Layout.Horizontal>
+            <DataTable.ColumnFilter
+              columns={COLUMN_OPTIONS}
+              visibleColumns={visibleColumns}
+              onCheckedChange={toggleColumn}
+              onReset={resetColumns}
+            />
           }
           filterOptions={filterOptions}
         />
-        <Spacer size={4.5} />
+      </Page.HeaderV2>
+      <Page.Content>
         <RepoList
           repositories={repositories ?? []}
           visibleColumns={visibleColumns}
@@ -223,8 +220,8 @@ const SandboxRepoListPage: FC<RepoListPageProps> = ({
           }
           toUpstreamRepo={toUpstreamRepo}
         />
-      </SandboxLayout.Content>
-    </SandboxLayout.Main>
+      </Page.Content>
+    </Page.Root>
   )
 }
 

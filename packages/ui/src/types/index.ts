@@ -72,6 +72,8 @@ export interface TypesUserGroupInfo {
 
 export type NonEmptyReactNode = Exclude<ReactNode, boolean | null | undefined>
 
+export type NonEmptyString<T extends string = string> = T extends '' ? never : T
+
 export interface SelectOption {
   label: string
   value: string

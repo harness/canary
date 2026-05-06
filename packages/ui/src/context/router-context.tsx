@@ -179,12 +179,14 @@ interface RouterContextType {
   Route: ComponentType<ExtendedRouteProps>
   location: Location
   navigate: NavigateFunction
+  navigateToRoute?: (path: string) => void
   useSearchParams: typeof useSearchParamsDefault
   useMatches: typeof useMatchesDefault
   useParams: typeof useParamsDefault
 }
 
-type UseRouterContextType = Required<RouterContextType> & { isRouterVersion5: boolean }
+type UseRouterContextType = Required<Omit<RouterContextType, 'navigateToRoute'>> &
+  Pick<RouterContextType, 'navigateToRoute'> & { isRouterVersion5: boolean }
 
 const RouterContext = createContext<RouterContextType>({
   Link: LinkDefault,
@@ -217,6 +219,7 @@ export const RouterContextProvider = ({
   Route = RouteDefault,
   location = defaultLocation,
   navigate = navigateFnDefault,
+  navigateToRoute,
   useSearchParams = useSearchParamsDefault,
   useMatches = useMatchesDefault,
   useParams = useParamsDefault
@@ -233,6 +236,7 @@ export const RouterContextProvider = ({
         Route,
         location,
         navigate,
+        navigateToRoute,
         useSearchParams,
         useMatches,
         useParams

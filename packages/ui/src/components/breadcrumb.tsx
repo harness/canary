@@ -1,10 +1,17 @@
-import { ComponentProps, ComponentPropsWithoutRef, ComponentPropsWithRef, forwardRef, ReactNode } from 'react'
+import {
+  ComponentProps,
+  ComponentPropsWithoutRef,
+  ComponentPropsWithRef,
+  forwardRef,
+  ReactNode,
+  useCallback
+} from 'react'
 
-import { Slot } from '@radix-ui/react-slot'
+import { useRouterContext } from '@/context/router-context'
 import { NonEmptyString } from '@/types'
+import { Slot } from '@radix-ui/react-slot'
 import { cn } from '@utils/cn'
 import { cva, type VariantProps } from 'class-variance-authority'
-
 
 import { Avatar, AvatarProps, AvatarSize } from './avatar'
 import { Button } from './button'
@@ -306,13 +313,26 @@ const BreadcrumbNav = ({ items }: BreadcrumbNavProps) => {
   const linkItems = items.slice(0, -1) as BreadcrumbLinkItem[]
   const pageItem = items[items.length - 1]
 
+  const { navigateToRoute } = useRouterContext()
+
+  const handleHomeClick = useCallback(
+    (e: React.MouseEvent<HTMLAnchorElement>) => {
+      if (!navigateToRoute) return
+      e.preventDefault()
+      navigateToRoute(homeTo)
+    },
+    [navigateToRoute, homeTo]
+  )
+
   return (
     <BreadcrumbRoot size="sm">
       <BreadcrumbList>
-        {/* Uses <a href> instead of router Link because Home navigates outside the current
-            MFE's router scope — the Code MFE's v6 router would prepend its basename. */}
+        {/* Uses <a href> so it works even without navigateToRoute (falls back to full page load).
+            When navigateToRoute is provided, onClick intercepts for client-side navigation. */}
         <BreadcrumbItem>
-          <BreadcrumbLink href={homeTo}>Home</BreadcrumbLink>
+          <BreadcrumbLink href={homeTo} onClick={handleHomeClick}>
+            Home
+          </BreadcrumbLink>
           <BreadcrumbSeparator />
         </BreadcrumbItem>
         {linkItems.map((item, index) => (

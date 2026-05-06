@@ -1,5 +1,6 @@
 import { render, screen } from '@testing-library/react'
 import { describe, expect, test } from 'vitest'
+
 import { Tabs } from '../../tabs'
 import { Page } from '../index'
 
@@ -15,11 +16,7 @@ describe('HeaderV2', () => {
   })
 
   test('renders a ReactNode title as-is', () => {
-    render(
-      <HeaderV2
-        title={<div data-testid="custom-title">Custom Title Node</div>}
-      />
-    )
+    render(<HeaderV2 title={<div data-testid="custom-title">Custom Title Node</div>} />)
 
     const customTitle = screen.getByTestId('custom-title')
     expect(customTitle).toBeInTheDocument()
@@ -27,15 +24,7 @@ describe('HeaderV2', () => {
   })
 
   test('renders breadcrumbs when provided', () => {
-    render(
-      <HeaderV2
-        title="Test Page"
-        breadcrumbs={[
-          { label: 'Projects', to: '/projects' },
-          { label: 'Current' },
-        ]}
-      />
-    )
+    render(<HeaderV2 title="Test Page" breadcrumbs={[{ label: 'Projects', to: '/projects' }, { label: 'Current' }]} />)
     expect(screen.getByRole('navigation', { name: 'breadcrumb' })).toBeInTheDocument()
     expect(screen.getByText('Home')).toBeInTheDocument()
     expect(screen.getByText('Projects')).toBeInTheDocument()
@@ -48,14 +37,7 @@ describe('HeaderV2', () => {
   })
 
   test('renders the last breadcrumb as the current page (not a link)', () => {
-    render(
-      <HeaderV2
-        title="Test Page"
-        breadcrumbs={[
-          { label: 'Current' },
-        ]}
-      />
-    )
+    render(<HeaderV2 title="Test Page" breadcrumbs={[{ label: 'Current' }]} />)
     const currentPage = screen.getByText('Current')
     expect(currentPage.closest('[aria-current="page"]')).toBeInTheDocument()
   })
@@ -71,18 +53,13 @@ describe('HeaderV2', () => {
   })
 
   test('does not render description when not provided', () => {
-    const { container } = render(<HeaderV2 title="Test Page" />)
+    render(<HeaderV2 title="Test Page" />)
     // Just verify heading exists and no extra text nodes
     expect(screen.getByRole('heading', { level: 1, name: 'Test Page' })).toBeInTheDocument()
   })
 
   test('renders actions slot on the right side of the title row', () => {
-    render(
-      <HeaderV2
-        title="Test Page"
-        actions={<button data-testid="custom-action">Run</button>}
-      />
-    )
+    render(<HeaderV2 title="Test Page" actions={<button data-testid="custom-action">Run</button>} />)
     expect(screen.getByTestId('custom-action')).toBeInTheDocument()
     expect(screen.getByRole('button', { name: 'Run' })).toBeInTheDocument()
   })
@@ -99,7 +76,7 @@ describe('HeaderV2', () => {
           title="Test Page"
           tabs={[
             { label: 'Tab 1', value: 'tab1' },
-            { label: 'Tab 2', value: 'tab2' },
+            { label: 'Tab 2', value: 'tab2' }
           ]}
         />
       </Tabs.Root>
@@ -121,7 +98,7 @@ describe('HeaderV2', () => {
           title="Test Page"
           tabs={[
             { label: 'Tab 1', value: 'tab1' },
-            { label: 'Tab 2', value: 'tab2', disabled: true },
+            { label: 'Tab 2', value: 'tab2', disabled: true }
           ]}
         />
       </Tabs.Root>
@@ -130,23 +107,13 @@ describe('HeaderV2', () => {
   })
 
   test('shows description skeleton when isLoading and description is provided', () => {
-    const { container } = render(
-      <HeaderV2 title="Test Page" description="Some desc" isLoading />
-    )
+    const { container } = render(<HeaderV2 title="Test Page" description="Some desc" isLoading />)
     expect(screen.queryByText('Some desc')).not.toBeInTheDocument()
     expect(container.querySelector('.cn-skeleton-base')).toBeInTheDocument()
   })
 
   test('still shows breadcrumbs when isLoading', () => {
-    render(
-      <HeaderV2
-        title="Test Page"
-        isLoading
-        breadcrumbs={[
-          { label: 'Current' },
-        ]}
-      />
-    )
+    render(<HeaderV2 title="Test Page" isLoading breadcrumbs={[{ label: 'Current' }]} />)
     expect(screen.getByRole('navigation', { name: 'breadcrumb' })).toBeInTheDocument()
   })
 
@@ -156,13 +123,7 @@ describe('HeaderV2', () => {
   })
 
   test('hides actions when isLoading', () => {
-    render(
-      <HeaderV2
-        title="Test Page"
-        isLoading
-        actions={<button data-testid="action-btn">Run</button>}
-      />
-    )
+    render(<HeaderV2 title="Test Page" isLoading actions={<button data-testid="action-btn">Run</button>} />)
     expect(screen.queryByTestId('action-btn')).not.toBeInTheDocument()
   })
 
@@ -174,7 +135,7 @@ describe('HeaderV2', () => {
           isLoading
           tabs={[
             { label: 'Tab 1', value: 'tab1' },
-            { label: 'Tab 2', value: 'tab2' },
+            { label: 'Tab 2', value: 'tab2' }
           ]}
         />
       </Tabs.Root>
@@ -186,11 +147,7 @@ describe('HeaderV2', () => {
   test('renders children between description and tabs', () => {
     render(
       <Tabs.Root defaultValue="tab1">
-        <HeaderV2
-          title="Test Page"
-          description="A description"
-          tabs={[{ label: 'Tab 1', value: 'tab1' }]}
-        >
+        <HeaderV2 title="Test Page" description="A description" tabs={[{ label: 'Tab 1', value: 'tab1' }]}>
           <div data-testid="custom-content">Dashboard Widgets</div>
         </HeaderV2>
       </Tabs.Root>
@@ -220,7 +177,7 @@ describe('HeaderV2', () => {
           breadcrumbs={[
             { label: 'Projects', to: '/projects' },
             { label: 'Pipelines', to: '/pipelines' },
-            { label: 'My Pipeline' },
+            { label: 'My Pipeline' }
           ]}
           title="My Pipeline"
           iconName="repository"
@@ -235,7 +192,7 @@ describe('HeaderV2', () => {
           tabs={[
             { label: 'Overview', value: 'overview' },
             { label: 'Executions', value: 'executions', counter: 12 },
-            { label: 'Settings', value: 'settings' },
+            { label: 'Settings', value: 'settings' }
           ]}
         />
       </Tabs.Root>

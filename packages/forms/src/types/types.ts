@@ -21,7 +21,9 @@ export interface IFormDefinition<
 export type IInputTransformerFunc = (value: any, values: any) => { value: any; path?: string } | undefined
 export type IOutputTransformerFunc = (
   value: any,
-  values: any
+  values: any,
+  targetValue: any,
+  targetValues: any
 ) =>
   | {
       /* override value */
@@ -30,7 +32,7 @@ export type IOutputTransformerFunc = (
       path?: string
       /* unset current path - this works together with path */
       unset?: boolean
-      /* deep merge value with existing value at a path, 
+      /* deep merge value with existing value at a path,
          NOTE: only used when path is provided */
       merge?: boolean
     }
@@ -130,6 +132,17 @@ export interface IInputDefinition<TConfig = unknown, TValue = unknown, TInputTyp
 
   inputTransform?: IInputTransformerFunc | IInputTransformerFunc[] | undefined
   outputTransform?: IOutputTransformerFunc | IOutputTransformerFunc[] | undefined
+
+  /**
+   * Transformer execution priority. Controls the order transformers run relative to other transformers.
+   * - 'early': Runs before 'normal' (useful for expanding shorthand forms on input)
+   * - 'normal': Default priority
+   * - 'late': Runs after 'normal' (useful for collapsing to shorthand forms on output)
+   */
+  transformerPriority?: {
+    input?: 'early' | 'normal' | 'late'
+    output?: 'early' | 'normal' | 'late'
+  }
 
   autofocus?: boolean
 

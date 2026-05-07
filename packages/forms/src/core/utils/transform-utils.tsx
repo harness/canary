@@ -10,12 +10,60 @@ type TransformItem = {
   isPrimitive: boolean
   inputTransform?: IInputDefinition['inputTransform']
   outputTransform?: IInputDefinition['outputTransform']
+  inputPriority: 'early' | 'normal' | 'late'
+  outputPriority: 'early' | 'normal' | 'late'
+}
+
+/**
+ * Sort INPUT transformers by depth (shallower first) and then by primitive type.
+ * INPUT transformers need parent context before children can process.
+ */
+const sortInputTransformers = (a: TransformItem, b: TransformItem) => {
+  if (a.level !== b.level) return a.level - b.level // Shallow first
+  return !a.isPrimitive ? -1 : 1 // Non-primitives first at same level
+}
+
+/**
+ * Sort OUTPUT transformers by depth (deeper first) and then by primitive type.
+ * OUTPUT transformers need children to populate before parents can clean up.
+ */
+const sortOutputTransformers = (a: TransformItem, b: TransformItem) => {
+  if (a.level !== b.level) return b.level - a.level // Deep first (reversed!)
+  return a.isPrimitive ? -1 : 1 // Primitives first at same level
+}
+
+/**
+ * Sets a value at a path only if either the current value or new value is not undefined.
+ * Prevents lodash from creating empty parent objects when both values are undefined.
+ */
+function safeSet(obj: Record<string, any>, path: string, value: any): void {
+  const currentValue = get(obj, path)
+
+  if (currentValue === undefined && value === undefined) {
+    return
+  }
+
+  set(obj, path, value)
 }
 
 /** convert data model to form model using input transformer functions */
 export function inputTransformValues(values: Record<string, any>, transformerItems: TransformItem[]) {
   const retValues = cloneDeep(values)
-  transformerItems.forEach(transformItem => {
+
+  // Group transformers by input priority: early, normal, late
+  const earlyPriority = transformerItems.filter(t => t.inputPriority === 'early')
+  const normalPriority = transformerItems.filter(t => t.inputPriority === 'normal')
+  const latePriority = transformerItems.filter(t => t.inputPriority === 'late')
+
+  // Sort each group by depth (shallower first for INPUT transformers)
+  earlyPriority.sort(sortInputTransformers)
+  normalPriority.sort(sortInputTransformers)
+  latePriority.sort(sortInputTransformers)
+
+  // Execute in priority order: early → normal → late
+  const orderedTransformers = [...earlyPriority, ...normalPriority, ...latePriority]
+
+  orderedTransformers.forEach(transformItem => {
     if (transformItem.inputTransform) {
       const inputTransform = isArray(transformItem.inputTransform)
         ? transformItem.inputTransform
@@ -45,7 +93,7 @@ export function inputTransformValues(values: Record<string, any>, transformerIte
         if (transformedObj) {
           // Update currentValue for the next transformer in the chain
           currentValue = transformedObj.value
-          set(retValues, transformedObj.path ?? transformItem.path, transformedObj.value)
+          safeSet(retValues, transformedObj.path ?? transformItem.path, transformedObj.value)
         }
       })
     }
@@ -59,6 +107,19 @@ export function outputTransformValues(
   transformerItems: TransformItem[],
   cleanOutput?: boolean
 ) {
+  // Group transformers by output priority: early, normal, late
+  const earlyPriority = transformerItems.filter(t => t.outputPriority === 'early')
+  const normalPriority = transformerItems.filter(t => t.outputPriority === 'normal')
+  const latePriority = transformerItems.filter(t => t.outputPriority === 'late')
+
+  // Sort each group by depth (deeper first for OUTPUT transformers)
+  earlyPriority.sort(sortOutputTransformers)
+  normalPriority.sort(sortOutputTransformers)
+  latePriority.sort(sortOutputTransformers)
+
+  // Execute in priority order: early → normal → late
+  const orderedTransformers = [...earlyPriority, ...normalPriority, ...latePriority]
+
   const pathsToUnset: string[] = []
 
   let targetValues: Record<string, any> = {}
@@ -68,7 +129,7 @@ export function outputTransformValues(
 
   const rawValues = cloneDeep(values)
 
-  transformerItems.forEach(transformItem => {
+  orderedTransformers.forEach(transformItem => {
     if (transformItem.outputTransform) {
       const outputTransform = isArray(transformItem.outputTransform)
         ? transformItem.outputTransform
@@ -79,7 +140,10 @@ export function outputTransformValues(
 
       outputTransform.forEach(outTransform => {
         // Each transformer in the chain receives the output from the previous transformer
-        const transformedObj = outTransform(currentValue, rawValues)
+        // Pass both raw and target versions for context
+        const currentTargetValue = get(targetValues, transformItem.path)
+        const transformedObj = outTransform(currentValue, rawValues, currentTargetValue, targetValues)
+
         if (transformedObj) {
           // Update currentValue for the next transformer in the chain
           currentValue = transformedObj.value
@@ -94,15 +158,16 @@ export function outputTransformValues(
                 mergedValues = transformedObj.value
               }
 
-              set(targetValues, transformedObj.path, mergedValues)
+              safeSet(targetValues, transformedObj.path, mergedValues)
             } else {
-              set(targetValues, transformedObj.path, transformedObj.value)
+              safeSet(targetValues, transformedObj.path, transformedObj.value)
             }
+
             if (transformedObj.unset) {
               pathsToUnset.push(transformItem.path)
             }
           } else {
-            set(targetValues, transformItem.path, transformedObj.value)
+            safeSet(targetValues, transformItem.path, transformedObj.value)
           }
         }
       })
@@ -165,7 +230,9 @@ export function getTransformers(formDefinition: IFormDefinition, addDefaultTrans
         inputTransform: input.inputTransform,
         outputTransform: input.outputTransform,
         level: input.path.split('.').length,
-        isPrimitive
+        isPrimitive,
+        inputPriority: input.transformerPriority?.input ?? 'normal',
+        outputPriority: input.transformerPriority?.output ?? 'normal'
       })
     } else if (addDefaultTransformer && !shouldSkipDefaultTransformer) {
       acc.push({
@@ -173,18 +240,17 @@ export function getTransformers(formDefinition: IFormDefinition, addDefaultTrans
         inputTransform: defaultInputTransform,
         outputTransform: defaultOutputTransform,
         level: input.path.split('.').length,
-        isPrimitive
+        isPrimitive,
+        inputPriority: 'normal',
+        outputPriority: 'normal'
       })
     }
 
     return acc
   }, [])
 
-  ret.sort((a, b) => {
-    if (a.level === b.level) return !a.isPrimitive ? -1 : 1
-    return a.level < b.level ? -1 : 1 // Shallower first (parent before child)
-  })
-
+  // Note: Sorting is done in inputTransformValues() and outputTransformValues()
+  // based on their respective priorities (inputPriority vs outputPriority)
   return ret
 }
 

@@ -100,7 +100,7 @@ export default {
 
   '.cn-switch-description': {
     font: 'var(--cn-body-normal)',
-    color: 'var(--cn-text-2)',
+    color: 'var(--cn-text-3)',
     '&:where(.disabled)': {
       '@apply opacity-cn-disabled': ''
     },

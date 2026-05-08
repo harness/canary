@@ -1,8 +1,8 @@
 import { FC, useCallback } from 'react'
 
-import { Button, Dialog, IconV2, Layout, ListActions, Page, SearchInput } from '@harnessio/ui/components'
+import { Button, Dialog, IconV2, Layout, ListActions, SearchInput, Text } from '@harnessio/ui/components'
 import { useTranslation } from '@harnessio/ui/context'
-import { RepoTagsListViewProps } from '@views'
+import { RepoTagsListViewProps, SandboxLayout } from '@views'
 import { cn } from '@harnessio/ui/utils'
 
 import { RepoTagsList } from './components/repo-tags-list'
@@ -34,28 +34,22 @@ export const RepoTagsListView: FC<RepoTagsListViewProps> = ({
   }, [setPage, setSearchQuery])
 
   return (
-    <Page.Root>
-      {(!!tagsList?.length || !!searchQuery) && (
-        <Page.HeaderV2
-          title={t('views:repos.tags', 'Tags')}
-          iconName="tag"
-          actions={
-            <Dialog.Trigger>
-              <Button onClick={openCreateTagDialog}>
-                <IconV2 name="plus" />
-                <span>{t('views:repos.createTag', 'Create Tag')}</span>
-              </Button>
-            </Dialog.Trigger>
-          }
-        />
-      )}
-      <Page.Content
+    <SandboxLayout.Main>
+      <SandboxLayout.Content
         className={cn({
           'mx-auto': isLoading || tagsList.length || searchQuery,
           'h-full': !isLoading && !tagsList.length && !searchQuery
         })}
       >
         <Layout.Vertical gap="xl" className="flex-1">
+          {(!!tagsList?.length || !!searchQuery) && (
+            <Layout.Horizontal gap="xs" align="center">
+              <IconV2 name="tag" size="lg" />
+              <Text as="h1" variant="heading-section">
+                {t('views:repos.tags', 'Tags')}
+              </Text>
+            </Layout.Horizontal>
+          )}
           <Layout.Vertical gap="md" className="flex-1">
             {(!!tagsList?.length || !!searchQuery) && (
               <ListActions.Root>
@@ -67,6 +61,14 @@ export const RepoTagsListView: FC<RepoTagsListViewProps> = ({
                     placeholder={t('views:repos.search', 'Search')}
                   />
                 </ListActions.Left>
+                <ListActions.Right>
+                  <Dialog.Trigger>
+                    <Button onClick={openCreateTagDialog}>
+                      <IconV2 name="plus" />
+                      <span>{t('views:repos.createTag', 'Create Tag')}</span>
+                    </Button>
+                  </Dialog.Trigger>
+                </ListActions.Right>
               </ListActions.Root>
             )}
 
@@ -84,7 +86,7 @@ export const RepoTagsListView: FC<RepoTagsListViewProps> = ({
             </Layout.Vertical>
           </Layout.Vertical>
         </Layout.Vertical>
-      </Page.Content>
-    </Page.Root>
+      </SandboxLayout.Content>
+    </SandboxLayout.Main>
   )
 }

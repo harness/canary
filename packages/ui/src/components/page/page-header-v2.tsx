@@ -1,10 +1,8 @@
 import { type FC, type ReactNode } from 'react'
 
 import { cn } from '../../utils/cn'
-import { Breadcrumb, type BreadcrumbItems } from '../breadcrumb'
 import { IconV2, type IconV2NamesType } from '../icon-v2'
 import { Layout } from '../layout'
-import { Skeleton } from '../skeletons'
 import { Tabs } from '../tabs'
 import { Text } from '../text'
 
@@ -17,7 +15,7 @@ export interface HeaderV2TabItem {
 }
 
 export interface PageHeaderV2Props {
-  breadcrumbs?: BreadcrumbItems
+  breadcrumbs?: ReactNode
   title: string | ReactNode
   iconName?: IconV2NamesType
   iconSize?: 'sm' | 'md' | 'lg' | 'xl'
@@ -61,8 +59,7 @@ const TitleSection: FC<TitleSectionProps> = ({ title, iconName, iconSize, descri
           </Layout.Horizontal>
         )}
       </Layout.Horizontal>
-      {isLoading && description !== undefined && <Skeleton.Box className="h-5 w-96" />}
-      {!isLoading && description && <Text color="foreground-3">{description}</Text>}
+      {description && <Text color="foreground-3">{description}</Text>}
     </Layout.Vertical>
   )
 }
@@ -93,7 +90,7 @@ export const HeaderV2: FC<PageHeaderV2Props> = ({
 }) => {
   return (
     <Layout.Vertical gap="lg" className={cn('w-full', tabs ? 'mb-0' : 'mb-cn-lg', className)}>
-      {breadcrumbs && breadcrumbs.length > 0 && <Breadcrumb.Nav items={breadcrumbs} />}
+      {breadcrumbs}
       <TitleSection
         title={title}
         iconName={iconName}

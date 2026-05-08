@@ -65,10 +65,6 @@ const RepoLayout = () => {
             archivedDate={repoData?.updated}
             upstream={repoData?.upstream}
             toUpstreamRepo={toUpstreamRepo}
-            breadcrumbs={[
-              { label: 'Repositories', to: routes.toRepositories({ spaceId }) },
-              { label: repoData?.identifier ?? '' }
-            ]}
           />
 
           <SubHeaderWrapper>

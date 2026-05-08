@@ -1,8 +1,8 @@
 import { FC, useCallback } from 'react'
 
-import { Layout, NoData, Page, Pagination, Skeleton } from '@harnessio/ui/components'
+import { Layout, NoData, Pagination, Skeleton, Text } from '@harnessio/ui/components'
 import { useTranslation } from '@harnessio/ui/context'
-import { CommitsList, TypesCommit } from '@views'
+import { CommitsList, SandboxLayout, TypesCommit } from '@views'
 
 interface RoutingProps {
   toCommitDetails?: ({ sha }: { sha: string }) => string
@@ -55,13 +55,13 @@ export const RepoCommitsView: FC<RepoCommitsViewProps> = ({
   }, [xNextPage])
 
   return (
-    <Page.Root>
-      <Page.HeaderV2
-        title={t('views:repos.commits', 'Commits')}
-        iconName="git-commit"
-      />
-      <Page.Content>
+    <SandboxLayout.Main>
+      <SandboxLayout.Content>
         <Layout.Flex direction="column" gapY="xl" grow>
+          <Text variant="heading-section" as="h2">
+            Commits
+          </Text>
+
           <Layout.Flex direction="column" gapY="md" grow>
             <div>
               <BranchSelectorContainer />
@@ -138,7 +138,7 @@ export const RepoCommitsView: FC<RepoCommitsViewProps> = ({
             )}
           </Layout.Flex>
         </Layout.Flex>
-      </Page.Content>
-    </Page.Root>
+      </SandboxLayout.Content>
+    </SandboxLayout.Main>
   )
 }

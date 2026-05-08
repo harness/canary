@@ -1,6 +1,7 @@
 import { render, screen } from '@testing-library/react'
 import { describe, expect, test } from 'vitest'
 
+import { Breadcrumb } from '../../breadcrumb'
 import { Tabs } from '../../tabs'
 import { Page } from '../index'
 
@@ -23,10 +24,26 @@ describe('HeaderV2', () => {
     expect(customTitle).toHaveTextContent('Custom Title Node')
   })
 
-  test('renders breadcrumbs when provided', () => {
-    render(<HeaderV2 title="Test Page" breadcrumbs={[{ label: 'Projects', to: '/projects' }, { label: 'Current' }]} />)
+  test('renders breadcrumbs when provided as ReactNode', () => {
+    render(
+      <HeaderV2
+        title="Test Page"
+        breadcrumbs={
+          <Breadcrumb.Root>
+            <Breadcrumb.List>
+              <Breadcrumb.Item>
+                <Breadcrumb.Link href="/projects">Projects</Breadcrumb.Link>
+              </Breadcrumb.Item>
+              <Breadcrumb.Separator />
+              <Breadcrumb.Item>
+                <Breadcrumb.Page>Current</Breadcrumb.Page>
+              </Breadcrumb.Item>
+            </Breadcrumb.List>
+          </Breadcrumb.Root>
+        }
+      />
+    )
     expect(screen.getByRole('navigation', { name: 'breadcrumb' })).toBeInTheDocument()
-    expect(screen.getByText('Home')).toBeInTheDocument()
     expect(screen.getByText('Projects')).toBeInTheDocument()
     expect(screen.getByText('Current')).toBeInTheDocument()
   })
@@ -34,12 +51,6 @@ describe('HeaderV2', () => {
   test('does not render breadcrumb nav when breadcrumbs is not provided', () => {
     render(<HeaderV2 title="Test Page" />)
     expect(screen.queryByRole('navigation', { name: 'breadcrumb' })).not.toBeInTheDocument()
-  })
-
-  test('renders the last breadcrumb as the current page (not a link)', () => {
-    render(<HeaderV2 title="Test Page" breadcrumbs={[{ label: 'Current' }]} />)
-    const currentPage = screen.getByText('Current')
-    expect(currentPage.closest('[aria-current="page"]')).toBeInTheDocument()
   })
 
   test('renders an icon next to the title when iconName is provided', () => {
@@ -54,7 +65,6 @@ describe('HeaderV2', () => {
 
   test('does not render description when not provided', () => {
     render(<HeaderV2 title="Test Page" />)
-    // Just verify heading exists and no extra text nodes
     expect(screen.getByRole('heading', { level: 1, name: 'Test Page' })).toBeInTheDocument()
   })
 
@@ -106,14 +116,14 @@ describe('HeaderV2', () => {
     expect(screen.getByRole('tab', { name: 'Tab 2' })).toBeDisabled()
   })
 
-  test('shows description skeleton when isLoading and description is provided', () => {
-    const { container } = render(<HeaderV2 title="Test Page" description="Some desc" isLoading />)
-    expect(screen.queryByText('Some desc')).not.toBeInTheDocument()
-    expect(container.querySelector('.cn-skeleton-base')).toBeInTheDocument()
-  })
-
   test('still shows breadcrumbs when isLoading', () => {
-    render(<HeaderV2 title="Test Page" isLoading breadcrumbs={[{ label: 'Current' }]} />)
+    render(
+      <HeaderV2
+        title="Test Page"
+        isLoading
+        breadcrumbs={<nav aria-label="breadcrumb">Breadcrumb content</nav>}
+      />
+    )
     expect(screen.getByRole('navigation', { name: 'breadcrumb' })).toBeInTheDocument()
   })
 
@@ -174,11 +184,23 @@ describe('HeaderV2', () => {
     render(
       <Tabs.Root defaultValue="overview">
         <HeaderV2
-          breadcrumbs={[
-            { label: 'Projects', to: '/projects' },
-            { label: 'Pipelines', to: '/pipelines' },
-            { label: 'My Pipeline' }
-          ]}
+          breadcrumbs={
+            <Breadcrumb.Root>
+              <Breadcrumb.List>
+                <Breadcrumb.Item>
+                  <Breadcrumb.Link href="/projects">Projects</Breadcrumb.Link>
+                </Breadcrumb.Item>
+                <Breadcrumb.Separator />
+                <Breadcrumb.Item>
+                  <Breadcrumb.Link href="/pipelines">Pipelines</Breadcrumb.Link>
+                </Breadcrumb.Item>
+                <Breadcrumb.Separator />
+                <Breadcrumb.Item>
+                  <Breadcrumb.Page>My Pipeline</Breadcrumb.Page>
+                </Breadcrumb.Item>
+              </Breadcrumb.List>
+            </Breadcrumb.Root>
+          }
           title="My Pipeline"
           iconName="repository"
           description="Builds and deploys the frontend service"

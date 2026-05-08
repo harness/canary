@@ -89,7 +89,6 @@ export interface MFEContextProps {
     useFeatureFlags: Unknown
   }>
   customUtils: Partial<{
-    navigate: (path: string) => void
     navigateToUserProfile: Unknown
   }>
   routes: Partial<{

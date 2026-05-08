@@ -181,6 +181,32 @@ export default {
       gap: 'var(--cn-drawer-gap)',
       padding: 'var(--cn-drawer-container)',
       '@apply flex flex-col border-t': ''
+    },
+
+    '&-header-v2': {
+      borderBottomWidth: 'var(--cn-border-width-1)',
+      borderBottomColor: 'var(--cn-border-3)',
+      padding: 'var(--cn-drawer-container)',
+      '@apply flex flex-col border-b': '',
+      gap: 'var(--cn-spacing-3)',
+
+      '&-title-row': {
+        '@apply flex items-start': '',
+        gap: 'var(--cn-spacing-2)'
+      },
+
+      '&-icon': {
+        '@apply shrink-0': ''
+      },
+
+      '&-metadata': {
+        paddingTop: 'var(--cn-spacing-1)'
+      },
+
+      '&-tabs': {
+        marginTop: 'calc(-1 * var(--cn-spacing-3))',
+        marginBottom: 'calc(-1 * var(--cn-drawer-container))'
+      }
     }
   }
 }

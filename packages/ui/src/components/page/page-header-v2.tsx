@@ -89,22 +89,24 @@ export const HeaderV2: FC<PageHeaderV2Props> = ({
   className
 }) => {
   return (
-    <Layout.Vertical gap="lg" className={cn('w-full', tabs ? 'mb-0' : 'mb-cn-lg', className)}>
+    <Layout.Vertical gap="none" className={cn('w-full', tabs ? 'mb-0' : 'mb-cn-lg', className)}>
       {breadcrumbs}
-      <TitleSection
-        title={title}
-        iconName={iconName}
-        iconSize={iconSize}
-        description={description}
-        actions={actions}
-        isLoading={isLoading}
-      />
-      {(children || tabs) && (
-        <Layout.Vertical gap="none">
-          {children}
-          {tabs && tabs.length > 0 && <TabsSection items={tabs} />}
-        </Layout.Vertical>
-      )}
+      <Layout.Vertical gap="lg" className={breadcrumbs ? 'mt-cn-xs' : undefined}>
+        <TitleSection
+          title={title}
+          iconName={iconName}
+          iconSize={iconSize}
+          description={description}
+          actions={actions}
+          isLoading={isLoading}
+        />
+        {(children || tabs) && (
+          <Layout.Vertical gap="none">
+            {children}
+            {tabs && tabs.length > 0 && <TabsSection items={tabs} />}
+          </Layout.Vertical>
+        )}
+      </Layout.Vertical>
     </Layout.Vertical>
   )
 }

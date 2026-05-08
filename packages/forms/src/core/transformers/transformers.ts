@@ -1,4 +1,16 @@
-import { get, isArray, isEmpty, isNil, isNull, isObject, isPlainObject, isString, isUndefined, omitBy } from 'lodash-es'
+import {
+  cloneDeep,
+  get,
+  isArray,
+  isEmpty,
+  isNil,
+  isNull,
+  isObject,
+  isPlainObject,
+  isString,
+  isUndefined,
+  omitBy
+} from 'lodash-es'
 
 import { IInputTransformerFunc, IOutputTransformerFunc } from '../../types'
 
@@ -20,7 +32,7 @@ export function arrayToObjectOutputTransformer(options?: {
   fallbackValue?: unknown
   assignKeyToValue?: boolean
 }): IOutputTransformerFunc {
-  return function (value: { key: string; value: unknown }[], _values: Record<string, unknown>) {
+  return function (value: { key: string; value: unknown }[]) {
     if (typeof value === 'undefined') return undefined
     if (!value || !isArray(value)) return { value }
 
@@ -45,7 +57,7 @@ export function arrayToObjectOutputTransformer(options?: {
  * unset property if it contains empty array
  */
 export function unsetEmptyArrayOutputTransformer(): IOutputTransformerFunc {
-  return function (value: unknown, _values: Record<string, unknown>) {
+  return function (value: unknown) {
     if (typeof value === 'undefined') return undefined
 
     if (isArray(value) && isEmpty(value)) {
@@ -59,23 +71,35 @@ export function unsetEmptyArrayOutputTransformer(): IOutputTransformerFunc {
 /**
  * unset property if it contains empty object
  * @param path - If path is passed it will unset empty object on the path
+ * @param useTargetValue - If true, use currentTargetValue instead of currentRawValue (useful for cleanup after child transformers)
  */
-export function unsetEmptyObjectOutputTransformer(path?: string): IOutputTransformerFunc {
-  return function (inputValue: any, values: Record<string, any>) {
-    const value = path ? get(values, path) : inputValue
+export function unsetEmptyObjectOutputTransformer(path?: string, useTargetValue?: boolean): IOutputTransformerFunc {
+  return function (value: any, values: Record<string, any>, targetValue: any, targetValues: Record<string, any>) {
+    // Choose which value to check based on parameters
+    let checkValue: any
+    if (path) {
+      // When path is provided, get from appropriate values object
+      checkValue = get(useTargetValue && targetValues ? targetValues : values, path)
+    } else {
+      // When no path, use current value (raw or target based on flag)
+      checkValue = useTargetValue ? targetValue : value
+    }
 
-    if (typeof value === 'undefined') return undefined
+    if (typeof checkValue === 'undefined') return undefined
 
-    if (isNull(value)) return { value: undefined, path }
+    if (isNull(checkValue)) return { value: undefined, path }
 
-    if (isObject(value)) {
-      const cleanObj = omitBy(value, isNil)
-      if (isEmpty(cleanObj)) {
+    if (isObject(checkValue)) {
+      const cleanObj = cleanUpObject(cloneDeep(checkValue))
+      if (Object.getOwnPropertyNames(cleanObj).length === 0) {
         return { value: undefined, path }
+      } else {
+        // if its object and not empty, just ignore it
+        return undefined
       }
     }
 
-    return { value, path }
+    return { value: checkValue, path }
   }
 }
 
@@ -83,7 +107,7 @@ export function unsetEmptyObjectOutputTransformer(path?: string): IOutputTransfo
  * unset property if it contains empty string
  */
 export function unsetEmptyStringOutputTransformer(): IOutputTransformerFunc {
-  return function (value: unknown, _values: Record<string, unknown>) {
+  return function (value: unknown) {
     if (typeof value === 'undefined') return undefined
 
     if (isString(value) && isEmpty(value)) {
@@ -120,11 +144,18 @@ export function shorthandObjectInputTransformer(parentPath: string): IInputTrans
 }
 
 export function shorthandObjectOutputTransformer(parentPath: string): IOutputTransformerFunc {
-  return function (value: unknown, values: Record<string, unknown>) {
+  return function (
+    value: unknown,
+    values: Record<string, unknown>,
+    _targetValue: unknown,
+    targetValues: Record<string, unknown>
+  ) {
     if (typeof value === 'undefined') return undefined
     if (!value) return { value }
 
-    const parentObj = get(values, parentPath)
+    // Use targetValues instead of rawValues to check if we should collapse to shorthand
+    // This ensures we see the result of previous transformers (like unsetEmptyStringOutputTransformer)
+    const parentObj = get(targetValues || values, parentPath)
 
     if (typeof parentObj === 'object') {
       const cleanParentObj = cleanUpObject(parentObj)
@@ -185,13 +216,21 @@ export function shorthandArrayOutputTransformer(
 }
 
 function isEmptyRec(obj: unknown): boolean {
+  if (isNil(obj)) {
+    return true
+  }
+
+  if (isArray(obj)) {
+    return obj.length === 0
+  }
+
   if (typeof obj === 'object') {
     return !Object.getOwnPropertyNames(obj).some(item => {
       return !isEmptyRec((obj as Record<string, unknown>)[item])
     })
-  } else {
-    return isUndefined(obj)
   }
+
+  return isUndefined(obj)
 }
 
 function cleanUpObject(obj: object | null) {

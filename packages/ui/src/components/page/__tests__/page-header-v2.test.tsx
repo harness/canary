@@ -117,13 +117,7 @@ describe('HeaderV2', () => {
   })
 
   test('still shows breadcrumbs when isLoading', () => {
-    render(
-      <HeaderV2
-        title="Test Page"
-        isLoading
-        breadcrumbs={<nav aria-label="breadcrumb">Breadcrumb content</nav>}
-      />
-    )
+    render(<HeaderV2 title="Test Page" isLoading breadcrumbs={<nav aria-label="breadcrumb">Breadcrumb content</nav>} />)
     expect(screen.getByRole('navigation', { name: 'breadcrumb' })).toBeInTheDocument()
   })
 

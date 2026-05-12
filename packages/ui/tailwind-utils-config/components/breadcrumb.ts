@@ -57,7 +57,6 @@ export default {
 
   '.cn-breadcrumb-link': {
     '@apply inline-flex items-center cursor-pointer': '',
-
     '&:focus-visible': {
       outline: 'var(--cn-focus)'
     }

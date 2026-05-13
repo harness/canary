@@ -163,7 +163,7 @@
           "fontFamily": "{fontFamily.default}",
           "fontWeight": "{fontWeight.default.normal.400}",
           "fontSize": "{fontSize.5}",
-          "lineHeight": "{lineHeight.5.none}",
+          "lineHeight": "{lineHeight.4.tight}",
           "letterSpacing": "{tracking.tight}"
         },
         "$description": "Component-optimized text style with zero line-height for precise vertical positioning. Designed specifically for UI elements with fixed height constraints where text must maintain consistent vertical alignment."
@@ -174,7 +174,7 @@
           "fontFamily": "{fontFamily.default}",
           "fontWeight": "{fontWeight.default.normal.500}",
           "fontSize": "{fontSize.5}",
-          "lineHeight": "{lineHeight.5.none}",
+          "lineHeight": "{lineHeight.4.tight}",
           "letterSpacing": "{tracking.tight}"
         },
         "$description": "Emphasized component text for important interactive elements. Increases visual prominence without affecting component height. Ensures consistent vertical alignment within fixed-height UI elements."
@@ -185,7 +185,7 @@
           "fontFamily": "{fontFamily.default}",
           "fontWeight": "{fontWeight.default.normal.300}",
           "fontSize": "{fontSize.5}",
-          "lineHeight": "{lineHeight.5.none}",
+          "lineHeight": "{lineHeight.4.tight}",
           "letterSpacing": "{tracking.tight}"
         },
         "$description": "Subtle single-line text for tertiary information in compact UI elements. Combines reduced weight with zero line-height for minimal visual presence while remaining legible."

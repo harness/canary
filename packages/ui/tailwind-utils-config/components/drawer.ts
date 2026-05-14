@@ -146,7 +146,7 @@ export default {
 
       '&-content': {
         padding: 'var(--cn-drawer-container)',
-        overflowX: 'hidden'
+        overflowX: 'clip'
       }
     },
 

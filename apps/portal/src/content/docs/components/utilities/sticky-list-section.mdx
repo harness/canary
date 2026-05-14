@@ -1,0 +1,217 @@
+---
+title: Sticky List Section
+description: Compound component for sticky section headers inside scrollable containers
+beta: true
+---
+
+The `StickyListSection` component provides sticky section headers that pin to the top of a scroll container while the section is visible, then push out as the next section scrolls in. Built with IntersectionObserver, it detects when a header becomes stuck and applies a subtle shadow.
+
+import { DocsPage } from "@/components/docs-page";
+import { Aside } from "@astrojs/starlight/components";
+
+<DocsPage.ComponentExample
+  client:only
+  code={`() => {
+  const [serviceCards, setServiceCards] = React.useState([
+    { id: 's1', size: 'md', gripPosition: 'outside', title: 'auth-service' },
+    { id: 's2', size: 'md', gripPosition: 'outside', title: 'api-gateway' },
+    { id: 's3', size: 'md', gripPosition: 'outside', title: 'notification-svc' },
+    { id: 's4', size: 'md', gripPosition: 'outside', title: 'billing-service' },
+    { id: 's5', size: 'md', gripPosition: 'outside', title: 'user-service' },
+    { id: 's6', size: 'md', gripPosition: 'outside', title: 'search-indexer' },
+    { id: 's7', size: 'md', gripPosition: 'outside', title: 'email-worker' },
+    { id: 's8', size: 'md', gripPosition: 'outside', title: 'config-manager' },
+  ])
+
+const [envCards, setEnvCards] = React.useState([
+{ id: 'e1', size: 'md', gripPosition: 'outside', title: 'production' },
+{ id: 'e2', size: 'md', gripPosition: 'outside', title: 'staging' },
+{ id: 'e3', size: 'md', gripPosition: 'outside', title: 'development' },
+{ id: 'e4', size: 'md', gripPosition: 'outside', title: 'qa-environment' },
+{ id: 'e5', size: 'md', gripPosition: 'outside', title: 'load-testing' },
+{ id: 'e6', size: 'md', gripPosition: 'outside', title: 'sandbox' },
+{ id: 'e7', size: 'md', gripPosition: 'outside', title: 'pre-production' },
+{ id: 'e8', size: 'md', gripPosition: 'outside', title: 'integration' },
+{ id: 'e9', size: 'md', gripPosition: 'outside', title: 'canary' },
+{ id: 'e10', size: 'md', gripPosition: 'outside', title: 'disaster-recovery' },
+{ id: 'e11', size: 'md', gripPosition: 'outside', title: 'perf-testing' },
+{ id: 'e12', size: 'md', gripPosition: 'outside', title: 'blue-green-a' },
+{ id: 'e13', size: 'md', gripPosition: 'outside', title: 'blue-green-b' },
+{ id: 'e14', size: 'md', gripPosition: 'outside', title: 'feature-flags' },
+{ id: 'e15', size: 'md', gripPosition: 'outside', title: 'data-migration' },
+{ id: 'e16', size: 'md', gripPosition: 'outside', title: 'hotfix' },
+])
+
+const SectionHeader = ({ label }) => (
+
+<Layout.Horizontal align="center" className="py-cn-xs w-full justify-between">
+  <Text className="text-sm font-medium" color="foreground-1">
+    {label}
+  </Text>
+  <Button variant="outline" size="sm">
+    <IconV2 name="plus" size="sm" />
+    Add {label.toLowerCase()}
+  </Button>
+</Layout.Horizontal>
+)
+
+return (
+
+<Drawer.Root>
+  <Drawer.Trigger>
+    <Button>Open Drawer</Button>
+  </Drawer.Trigger>
+  <Drawer.Content size="sm">
+    <Drawer.Header>
+      <Drawer.Title>Configure stage</Drawer.Title>
+    </Drawer.Header>
+    <Drawer.Body>
+      <Layout.Vertical gap="md">
+        <StickyListSection.Root>
+          <StickyListSection.Header>
+            <SectionHeader label="Service" />
+          </StickyListSection.Header>
+          <StickyListSection.Content>
+            <DraggableCardList
+              cards={serviceCards}
+              setCards={setServiceCards}
+              listGap="sm"
+            />
+          </StickyListSection.Content>
+        </StickyListSection.Root>
+        <StickyListSection.Root>
+          <StickyListSection.Header>
+            <SectionHeader label="Environment" />
+          </StickyListSection.Header>
+          <StickyListSection.Content>
+            <DraggableCardList
+              cards={envCards}
+              setCards={setEnvCards}
+              listGap="sm"
+            />
+          </StickyListSection.Content>
+        </StickyListSection.Root>
+      </Layout.Vertical>
+    </Drawer.Body>
+    <Drawer.Footer>
+      <Button>Submit</Button>
+    </Drawer.Footer>
+  </Drawer.Content>
+</Drawer.Root>
+) }`} />
+
+<Aside type="tip">
+  Open the drawer and scroll to see the sticky headers in action. Each section
+  header stays pinned until its content scrolls out, then the next header takes
+  over.
+</Aside>
+
+## Usage
+
+### Compound Component (direct usage)
+
+```typescript jsx
+import { StickyListSection } from '@harnessio/ui/components'
+
+<StickyListSection.Root>
+  <StickyListSection.Header>
+    <div>Section Title</div>
+  </StickyListSection.Header>
+  <StickyListSection.Content>
+    {/* Scrollable list content */}
+  </StickyListSection.Content>
+</StickyListSection.Root>
+```
+
+### DraggableCardList Convenience Props
+
+For the common case of sticky headers above a draggable card list, use the `header` and `sticky` props directly:
+
+```typescript jsx
+import { DraggableCardList } from '@harnessio/ui/components'
+
+<DraggableCardList
+  sticky
+  header={<div>Section Title</div>}
+  cards={cards}
+  setCards={setCards}
+/>
+```
+
+## Anatomy
+
+```typescript jsx
+<StickyListSection.Root>       {/* Container with sentinel for stuck detection */}
+  <StickyListSection.Header>   {/* Sticky header — gains shadow when stuck */}
+    {children}
+  </StickyListSection.Header>
+  <StickyListSection.Content>  {/* Section content */}
+    {children}
+  </StickyListSection.Content>
+</StickyListSection.Root>
+```
+
+## API Reference
+
+### `StickyListSection.Root`
+
+The container component that manages stuck detection via IntersectionObserver.
+
+<DocsPage.PropsTable
+  props={[
+    {
+      name: "children",
+      description: "Header and Content sub-components",
+      required: true,
+      value: "ReactNode",
+    },
+    {
+      name: "className",
+      description: "Additional CSS classes",
+      required: false,
+      value: "string",
+    },
+  ]}
+/>
+
+### `StickyListSection.Header`
+
+The sticky header that pins to the top of the scroll container. Applies a shadow when stuck.
+
+<DocsPage.PropsTable
+  props={[
+    {
+      name: "children",
+      description: "Header content (e.g. title, action buttons)",
+      required: true,
+      value: "ReactNode",
+    },
+    {
+      name: "className",
+      description: "Additional CSS classes",
+      required: false,
+      value: "string",
+    },
+  ]}
+/>
+
+### `StickyListSection.Content`
+
+Wrapper for the section's scrollable content.
+
+<DocsPage.PropsTable
+  props={[
+    {
+      name: "children",
+      description: "Section content (e.g. a list of cards)",
+      required: true,
+      value: "ReactNode",
+    },
+    {
+      name: "className",
+      description: "Additional CSS classes",
+      required: false,
+      value: "string",
+    },
+  ]}
+/>

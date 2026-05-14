@@ -7,6 +7,7 @@ import { cn } from '@utils/cn'
 import { Card, type CardRootProps } from './card'
 import { IconV2 } from './icon-v2'
 import { Layout, type GapSize } from './layout'
+import { StickyListSection } from './sticky-list-section'
 
 interface DraggableCardProps extends Omit<CardRootProps, 'title' | 'children'> {
   id: string
@@ -93,12 +94,16 @@ export const DraggableCardList = ({
   cards,
   setCards,
   listGap = 'md',
-  className
+  className,
+  header,
+  sticky
 }: {
   cards: CardData[]
   setCards: (newCards: CardData[]) => void
   listGap?: GapSize
   className?: string
+  header?: React.ReactNode
+  sticky?: boolean
 }) => {
   const { handleDragEnd, getItemId } = useDragAndDrop({
     items: cards,
@@ -107,7 +112,6 @@ export const DraggableCardList = ({
 
   const sensors = useSensors(
     useSensor(PointerSensor, {
-      // Add a small delay to allow clicks to be processed before starting drag
       activationConstraint: {
         delay: 100,
         tolerance: 0
@@ -115,7 +119,7 @@ export const DraggableCardList = ({
     })
   )
 
-  return (
+  const cardList = (
     <DndContext sensors={sensors} onDragEnd={handleDragEnd} collisionDetection={closestCenter}>
       <SortableContext items={cards.map((_, index) => getItemId(index))}>
         <Layout.Flex direction="column" gap={listGap} className={cn('w-full min-w-0', className)}>
@@ -132,4 +136,24 @@ export const DraggableCardList = ({
       </SortableContext>
     </DndContext>
   )
+
+  if (header && sticky) {
+    return (
+      <StickyListSection.Root>
+        <StickyListSection.Header>{header}</StickyListSection.Header>
+        <StickyListSection.Content>{cardList}</StickyListSection.Content>
+      </StickyListSection.Root>
+    )
+  }
+
+  if (header) {
+    return (
+      <>
+        {header}
+        {cardList}
+      </>
+    )
+  }
+
+  return cardList
 }

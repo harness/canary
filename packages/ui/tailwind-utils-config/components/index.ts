@@ -37,6 +37,7 @@ import sidebarStyles from './sidebar'
 import skeletonStyles from './skeleton'
 import sliderStyles from './slider'
 import stackedListStyles from './stacked-list'
+import stickyListSectionStyles from './sticky-list-section'
 import studioCardStyles from './studio-card'
 import switchStyles from './switch'
 import tableV2Styles from './table-v2'
@@ -86,6 +87,7 @@ export const ComponentStyles = [
   promptInputStyles,
   skeletonStyles,
   stackedListStyles,
+  stickyListSectionStyles,
   studioCardStyles,
   treeStyles,
   meterStyles,

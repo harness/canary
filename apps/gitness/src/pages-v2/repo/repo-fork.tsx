@@ -50,7 +50,6 @@ export default function RepoForkPage() {
       body: {
         identifier: data.name,
         parent_ref: data.forkDestination,
-        is_public: false,
         ...(data.forkType === ForkType.Branch && { fork_branch: data.branchToFork })
       }
     })

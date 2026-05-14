@@ -1,10 +1,20 @@
 import { FC, useCallback, useMemo, useRef, useState } from 'react'
 
-import { DataTable, IconV2, Layout, NoData, PermissionIdentifier, ResourceType, Spacer, Text } from '@harnessio/ui/components'
+import { SandboxLayout } from '@views'
+
+import { FilterGroup, FilterGroupRef } from '@harnessio/filters'
+import {
+  DataTable,
+  IconV2,
+  Layout,
+  NoData,
+  PermissionIdentifier,
+  ResourceType,
+  Spacer,
+  Text
+} from '@harnessio/ui/components'
 import { useComponents, useRouterContext, useTranslation } from '@harnessio/ui/context'
 import { useColumnFilter } from '@harnessio/ui/hooks'
-import { FilterGroup, FilterGroupRef } from '@harnessio/filters'
-import { SandboxLayout } from '@views'
 
 import { ExtendedScope } from '../common'
 import { COLUMN_OPTIONS, DEFAULT_VISIBLE_COLUMNS } from './constant'
@@ -24,6 +34,7 @@ const SandboxRepoListPage: FC<RepoListPageProps> = ({
   toCreateRepo,
   toImportRepo,
   toImportMultipleRepos,
+  toLinkRepo,
   onFavoriteToggle,
   onCancelImport,
   onFilterChange,
@@ -62,6 +73,26 @@ const SandboxRepoListPage: FC<RepoListPageProps> = ({
   const isDirtyList = useMemo(() => {
     return page !== 1 || !!searchQuery || filterOptions.some(filter => !filter.isDefaultValue)
   }, [page, searchQuery, filterOptions])
+
+  const createOptions = useMemo(
+    () => [
+      { value: 'new', label: t('views:repos.createRepository', 'Create Repository') },
+      { value: 'import', label: t('views:repos.importRepository', 'Import Repository') },
+      { value: 'import-multiple', label: t('views:repos.importRepositories', 'Import Repositories') },
+      ...(toLinkRepo ? [{ value: 'link', label: t('views:repos.linkRepository', 'Link Repository') }] : [])
+    ],
+    [t, toLinkRepo]
+  )
+
+  const handleCreateOptionChange = useCallback(
+    (option: string) => {
+      if (option === 'new') navigate(toCreateRepo?.() || '')
+      if (option === 'import') navigate(toImportRepo?.() || '')
+      if (option === 'import-multiple') navigate(toImportMultipleRepos?.() || '')
+      if (option === 'link') navigate(toLinkRepo?.() || '')
+    },
+    [navigate, toCreateRepo, toImportRepo, toImportMultipleRepos, toLinkRepo]
+  )
 
   if (isError) {
     return (
@@ -117,16 +148,8 @@ const SandboxRepoListPage: FC<RepoListPageProps> = ({
             <RbacSplitButton<string>
               dropdownContentClassName="mt-0 min-w-[208px]"
               handleButtonClick={() => navigate(toCreateRepo?.() || '')}
-              handleOptionChange={option => {
-                if (option === 'new') navigate(toCreateRepo?.() || '')
-                if (option === 'import') navigate(toImportRepo?.() || '')
-                if (option === 'import-multiple') navigate(toImportMultipleRepos?.() || '')
-              }}
-              options={[
-                { value: 'new', label: t('views:repos.createRepository', 'Create Repository') },
-                { value: 'import', label: t('views:repos.importRepository', 'Import Repository') },
-                { value: 'import-multiple', label: t('views:repos.importRepositories', 'Import Repositories') }
-              ]}
+              handleOptionChange={handleCreateOptionChange}
+              options={createOptions}
               rbac={{
                 resource: { resourceType: ResourceType.CODE_REPOSITORY },
                 permissions: [PermissionIdentifier.CODE_REPO_CREATE]
@@ -172,16 +195,8 @@ const SandboxRepoListPage: FC<RepoListPageProps> = ({
               <RbacSplitButton<string>
                 dropdownContentClassName="mt-0 min-w-[208px]"
                 handleButtonClick={() => navigate(toCreateRepo?.() || '')}
-                handleOptionChange={option => {
-                  if (option === 'new') navigate(toCreateRepo?.() || '')
-                  if (option === 'import') navigate(toImportRepo?.() || '')
-                  if (option === 'import-multiple') navigate(toImportMultipleRepos?.() || '')
-                }}
-                options={[
-                  { value: 'new', label: t('views:repos.createRepository', 'Create Repository') },
-                  { value: 'import', label: t('views:repos.importRepository', 'Import Repository') },
-                  { value: 'import-multiple', label: t('views:repos.importRepositories', 'Import Repositories') }
-                ]}
+                handleOptionChange={handleCreateOptionChange}
+                options={createOptions}
                 rbac={{
                   resource: { resourceType: ResourceType.CODE_REPOSITORY },
                   permissions: [PermissionIdentifier.CODE_REPO_CREATE]

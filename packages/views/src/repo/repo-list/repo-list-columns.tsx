@@ -45,7 +45,8 @@ export const getRepoListColumns = ({
     enableSorting: true,
     enableHiding: false,
     cell: ({ row }) => {
-      const { name, archived, upstream, importing } = row.original
+      const { name, archived, upstream, importing, repoType } = row.original
+      const isLinked = repoType === 'linked'
 
       return (
         <Layout.Vertical gap="2xs">
@@ -53,6 +54,11 @@ export const getRepoListColumns = ({
             <Text variant="heading-base" truncate>
               {name}
             </Text>
+            {isLinked && (
+              <StatusBadge variant="outline" size="sm" theme="info">
+                {t('views:repos.linked', 'Linked')}
+              </StatusBadge>
+            )}
             {archived && (
               <StatusBadge variant="outline" size="sm" theme="warning">
                 {t('views:repos.archived', 'Archived')}
@@ -62,7 +68,7 @@ export const getRepoListColumns = ({
           {upstream && <ForkedFrom upstream={upstream} toUpstreamRepo={toUpstreamRepo} />}
           {importing && (
             <Text color="foreground-4" truncate>
-              {t('views:repos.importing', 'Importing…')}
+              {isLinked ? t('views:repos.linking', 'Linking…') : t('views:repos.importing', 'Importing…')}
             </Text>
           )}
         </Layout.Vertical>
@@ -197,7 +203,8 @@ export const getRepoListColumns = ({
     enableHiding: true,
     size: 100,
     maxSize: 100,
-    cell: ({ row }) => <TimeAgoCard timestamp={row.original.createdAt} />
+    cell: ({ row }) =>
+      row.original.importing ? <Text color="disabled">-</Text> : <TimeAgoCard timestamp={row.original.createdAt} />
   },
   {
     id: RepoListColumn.PR,

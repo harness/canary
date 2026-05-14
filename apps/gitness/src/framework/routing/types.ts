@@ -8,6 +8,7 @@ export enum RouteConstants {
   toCreateRepo = 'toCreateRepo',
   toImportRepo = 'toImportRepo',
   toImportMultipleRepos = 'toImportMultipleRepos',
+  toLinkRepo = 'toLinkRepo',
   toRepositories = 'toRepositories',
   toRepoSummary = 'toRepoSummary',
   toRepoFork = 'toRepoFork',

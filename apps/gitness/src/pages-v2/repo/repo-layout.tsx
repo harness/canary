@@ -1,16 +1,24 @@
 import { Outlet, useMatches, useParams } from 'react-router-dom'
 
-import { createFavorite, deleteFavorite, EnumResourceType } from '@harnessio/code-service-client'
+import {
+  createFavorite,
+  deleteFavorite,
+  EnumResourceType,
+  useLinkedSyncRepositoryMutation
+} from '@harnessio/code-service-client'
+import { toast } from '@harnessio/ui/components'
 import { NotFoundPage, RepoHeader, RepoSubheader, SubHeaderWrapper } from '@harnessio/views'
 
 import { PublicAccessGuard } from '../../components-v2/public-access'
 import { useRoutes } from '../../framework/context/NavigationContext'
+import { useGetRepoRef } from '../../framework/hooks/useGetRepoPath'
 import { useIsMFE } from '../../framework/hooks/useIsMFE'
 import { CustomHandle } from '../../framework/routing/types'
 import { useGitRef } from '../../hooks/useGitRef'
 import { useRepoCommits } from '../../hooks/useRepoCommits'
 import { useUpstreamRepoUrl } from '../../hooks/useUpstreamRepoUrl'
 import { PathParams } from '../../RouteDefinitions'
+import { isRefABranch } from '../../utils/git-utils'
 
 const RepoLayout = () => {
   const isMFE = useIsMFE()
@@ -20,6 +28,26 @@ const RepoLayout = () => {
   const { isLoading, gitRefName, gitRefPath, repoData, fullGitRef, refetchRepo, defaultBranch, repoFetchError } =
     useGitRef()
   const toUpstreamRepo = useUpstreamRepoUrl()
+
+  const repoRef = useGetRepoRef()
+
+  const { mutate: syncLinkedRepo, isLoading: isSyncing } = useLinkedSyncRepositoryMutation(
+    { repo_ref: repoRef },
+    {
+      onSuccess: () => {
+        toast.success({ title: 'Sync started successfully' })
+      },
+      onError: err => {
+        toast.danger({ title: err?.message || 'Failed to start sync' })
+      }
+    }
+  )
+
+  const isOnBranch = isRefABranch(fullGitRef)
+
+  const onSyncLinked = () => {
+    syncLinkedRepo({ repo_ref: repoRef, body: { branches: [gitRefName] } })
+  }
 
   const onFavoriteToggle = async (isFavorite: boolean) => {
     try {
@@ -59,9 +87,12 @@ const RepoLayout = () => {
             name={repoData?.identifier ?? ''}
             isPublic={!!repoData?.is_public}
             isArchived={repoData?.archived}
+            isLinked={repoData?.repo_type === 'linked'}
             isLoading={isLoading}
             isFavorite={repoData?.is_favorite}
             onFavoriteToggle={onFavoriteToggle}
+            onSyncLinked={isOnBranch ? onSyncLinked : undefined}
+            isSyncing={isSyncing}
             archivedDate={repoData?.updated}
             upstream={repoData?.upstream}
             toUpstreamRepo={toUpstreamRepo}

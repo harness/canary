@@ -47,7 +47,8 @@ export default function ReposListPage() {
   const [favorite, setFavorite] = useQueryState<boolean>('favorite')
   const [recursive, setRecursive] = useQueryState<boolean>('recursive')
   const [tags, setTags] = useState<string | null>(null)
-  const { scope, renderUrl, routes: parentRoutes, routeUtils } = useMFEContext()
+  const { scope, renderUrl, routes: parentRoutes, routeUtils, customHooks } = useMFEContext()
+  const { CODE_LINK_REPOS_ENABLED: isLinkReposEnabled } = customHooks?.useFeatureFlags?.() || {}
   const basename = `/ng${renderUrl}`
   const [sort, setSort] = useState<ListReposQueryQueryParams['sort']>('last_git_push')
   const [order, setOrder] = useState<ListReposQueryQueryParams['order']>('desc')
@@ -241,6 +242,7 @@ export default function ReposListPage() {
       toCreateRepo={() => routes.toCreateRepo({ spaceId })}
       toImportRepo={() => routes.toImportRepo({ spaceId })}
       toImportMultipleRepos={() => routes.toImportMultipleRepos({ spaceId })}
+      toLinkRepo={isLinkReposEnabled ? () => routes.toLinkRepo({ spaceId }) : undefined}
       onFavoriteToggle={onFavoriteToggle}
       onCancelImport={onCancelImport}
       onFilterChange={({ favorite, recursive, tags: newTags }: RepoListFilters) => {

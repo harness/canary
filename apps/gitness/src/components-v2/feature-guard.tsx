@@ -18,7 +18,9 @@ export function FeatureGuard({ featureFlag, children }: FeatureGuardProps) {
   const featureFlags = customHooks?.useFeatureFlags?.() || {}
   const isEnabled = featureFlags[featureFlag]
 
-  return isEnabled ? <>{children}</> : <Navigate to={routes.toRepoSummary({ spaceId, repoId })} replace />
+  const fallback = repoId ? routes.toRepoSummary({ spaceId, repoId }) : routes.toRepositories({ spaceId })
+
+  return isEnabled ? <>{children}</> : <Navigate to={fallback} replace />
 }
 
 FeatureGuard.displayName = 'FeatureGuard'

@@ -30,6 +30,7 @@ export interface RoutingProps {
   toCreateRepo: () => string
   toImportRepo: () => string
   toImportMultipleRepos: () => string
+  toLinkRepo: () => string
   toUpstreamRepo: (parentRepoPath: string, subPath?: string) => string
 }
 

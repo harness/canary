@@ -9,15 +9,30 @@ import {
   DrawerContentVariantsSize
 } from './DrawerContent'
 import { DrawerDescription } from './DrawerDescription'
+import { DrawerDualPane } from './DrawerDualPane'
+import { DrawerDualPaneMain } from './DrawerDualPaneMain'
 import { DrawerFooter } from './DrawerFooter'
 import { DrawerHeader, DrawerHeaderProps } from './DrawerHeader'
+import { DrawerRail, type DrawerRailProps } from './DrawerRail'
 import { DrawerRoot } from './DrawerRoot'
+import { DrawerStep, type DrawerStepProps } from './DrawerStep'
+import { DrawerSteps, type DrawerStepsProps } from './DrawerSteps'
+import { DrawerSubStep, type DrawerSubStepProps } from './DrawerSubStep'
 import { DrawerTitle } from './DrawerTitle'
 import { DrawerTrigger } from './DrawerTrigger'
 
 const DrawerClose = DrawerPrimitive.Close
 
-export type { DrawerContentVariantsSize, DrawerContentVariantsDirection, DrawerContentProps, DrawerHeaderProps }
+export type {
+  DrawerContentVariantsSize,
+  DrawerContentVariantsDirection,
+  DrawerContentProps,
+  DrawerHeaderProps,
+  DrawerRailProps,
+  DrawerStepProps,
+  DrawerStepsProps,
+  DrawerSubStepProps
+}
 
 export const Drawer = {
   Root: DrawerRoot,
@@ -29,5 +44,11 @@ export const Drawer = {
   Title: DrawerTitle,
   Description: DrawerDescription,
   Close: DrawerClose,
-  Tagline: DrawerTagline
+  Tagline: DrawerTagline,
+  DualPane: DrawerDualPane,
+  Rail: DrawerRail,
+  Steps: DrawerSteps,
+  Step: DrawerStep,
+  SubStep: DrawerSubStep,
+  DualPaneMain: DrawerDualPaneMain
 }

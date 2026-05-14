@@ -182,45 +182,75 @@ All parts of the `Drawer` component can be imported and composed as required.
 
 Nested drawers can be implemented by placing a `Drawer.Root` inside the parent `Drawer.Content`.
 
+When a wider drawer opens over a narrower one, the narrower drawer automatically expands to peek out from behind, preserving the visual stacking effect.
+
 <DocsPage.ComponentExample
   client:only
   code={`
     <Drawer.Root>
       <Drawer.Trigger>
-        <Button>Open Drawer with Nested Drawers</Button>
+        <Button>Open Drawer (sm)</Button>
       </Drawer.Trigger>
 
-      <Drawer.Content>
+      <Drawer.Content size="sm">
         <Drawer.Header>
-          <Drawer.Title>Title</Drawer.Title>
+          <Drawer.Title>Small Drawer</Drawer.Title>
           <Drawer.Description>
-            Description
+            This drawer will expand when a wider nested drawer opens
           </Drawer.Description>
         </Drawer.Header>
 
         <Drawer.Body>
           <Drawer.Root>
             <Drawer.Trigger>
-              <Button>Open Nested Drawer</Button>
+              <Button>Open Nested Drawer (lg)</Button>
             </Drawer.Trigger>
 
-            <Drawer.Content>
+            <Drawer.Content size="lg">
               <Drawer.Header>
-                <Drawer.Title>Title</Drawer.Title>
+                <Drawer.Title>Large Nested Drawer (2)</Drawer.Title>
               </Drawer.Header>
 
               <Drawer.Body>
                 <Drawer.Root>
                   <Drawer.Trigger>
-                    <Button>Open Nested Drawer</Button>
+                    <Button>Open Nested Drawer (md)</Button>
                   </Drawer.Trigger>
 
-                  <Drawer.Content>
+                  <Drawer.Content size="md">
                     <Drawer.Header>
-                      <Drawer.Title>Title</Drawer.Title>
+                      <Drawer.Title>Medium Nested Drawer (3)</Drawer.Title>
                     </Drawer.Header>
 
-                    <Drawer.Body />
+                    <Drawer.Body>
+                      <Drawer.Root>
+                        <Drawer.Trigger>
+                          <Button>Open Nested Drawer (lg)</Button>
+                        </Drawer.Trigger>
+
+                        <Drawer.Content size="lg">
+                          <Drawer.Header>
+                            <Drawer.Title>Large Nested Drawer (4)</Drawer.Title>
+                          </Drawer.Header>
+
+                          <Drawer.Body>
+                            <Drawer.Root>
+                              <Drawer.Trigger>
+                                <Button>Open Nested Drawer (md)</Button>
+                              </Drawer.Trigger>
+
+                              <Drawer.Content size="md">
+                                <Drawer.Header>
+                                  <Drawer.Title>Medium Nested Drawer (5)</Drawer.Title>
+                                </Drawer.Header>
+
+                                <Drawer.Body />
+                              </Drawer.Content>
+                            </Drawer.Root>
+                          </Drawer.Body>
+                        </Drawer.Content>
+                      </Drawer.Root>
+                    </Drawer.Body>
                   </Drawer.Content>
                 </Drawer.Root>
               </Drawer.Body>
@@ -278,6 +308,95 @@ Nested drawers can be implemented by placing a `Drawer.Root` inside the parent `
             <Button>Action</Button>
           </ButtonLayout>
         </Drawer.Footer>
+      </Drawer.Content>
+    </Drawer.Root>
+
+`}
+/>
+
+## Max stack depth
+
+The `Drawer.Root` component accepts a `maxStackDepth` prop (default `7`) that controls how many nested drawers visually stack. Drawers beyond this limit still open normally but cover the deepest visible drawer instead of adding more visual offset.
+
+<DocsPage.ComponentExample
+  client:only
+  code={`
+    <Drawer.Root maxStackDepth={3}>
+      <Drawer.Trigger>
+        <Button>Open Drawer 1 (sm)</Button>
+      </Drawer.Trigger>
+
+      <Drawer.Content size="sm">
+        <Drawer.Header>
+          <Drawer.Title>Drawer 1 (sm)</Drawer.Title>
+          <Drawer.Description>maxStackDepth is set to 3 — only 3 drawers visually stack</Drawer.Description>
+        </Drawer.Header>
+
+        <Drawer.Body>
+          <Drawer.Root>
+            <Drawer.Trigger>
+              <Button>Open Drawer 2 (lg)</Button>
+            </Drawer.Trigger>
+
+            <Drawer.Content size="lg">
+              <Drawer.Header>
+                <Drawer.Title>Drawer 2 (lg)</Drawer.Title>
+              </Drawer.Header>
+
+              <Drawer.Body>
+                <Drawer.Root>
+                  <Drawer.Trigger>
+                    <Button>Open Drawer 3 (md)</Button>
+                  </Drawer.Trigger>
+
+                  <Drawer.Content size="md">
+                    <Drawer.Header>
+                      <Drawer.Title>Drawer 3 (md)</Drawer.Title>
+                      <Drawer.Description>Visual stacking limit reached — next drawer will cover this one</Drawer.Description>
+                    </Drawer.Header>
+
+                    <Drawer.Body>
+                      <Drawer.Root>
+                        <Drawer.Trigger>
+                          <Button>Open Drawer 4 (lg)</Button>
+                        </Drawer.Trigger>
+
+                        <Drawer.Content size="lg">
+                          <Drawer.Header>
+                            <Drawer.Title>Drawer 4 (lg)</Drawer.Title>
+                          </Drawer.Header>
+
+                          <Drawer.Body>
+                            <Drawer.Root>
+                              <Drawer.Trigger>
+                                <Button>Open Drawer 5 (md)</Button>
+                              </Drawer.Trigger>
+
+                              <Drawer.Content size="md">
+                                <Drawer.Header>
+                                  <Drawer.Title>Drawer 5 (md)</Drawer.Title>
+                                </Drawer.Header>
+
+                                <Drawer.Body>
+                                  <p>This is the deepest drawer in the stack.</p>
+                                </Drawer.Body>
+                              </Drawer.Content>
+                            </Drawer.Root>
+                          </Drawer.Body>
+                        </Drawer.Content>
+                      </Drawer.Root>
+                    </Drawer.Body>
+                  </Drawer.Content>
+                </Drawer.Root>
+              </Drawer.Body>
+            </Drawer.Content>
+          </Drawer.Root>
+
+          <p className="mt-cn-md">
+            Open all 5 drawers to see the visual stacking cap in action.
+            Drawers 1–3 will visually stack, but drawers 4 and 5 will cover drawer 3 instead of pushing it further back.
+          </p>
+        </Drawer.Body>
       </Drawer.Content>
     </Drawer.Root>
 
@@ -712,6 +831,14 @@ Contains [`Drawer.Trigger`](#trigger) and [`Drawer.Content`](#content) component
       required: false,
       value: "boolean",
       defaultValue: "true",
+    },
+    {
+      name: "maxStackDepth",
+      description:
+        "Maximum number of nested drawers that visually stack. Drawers beyond this limit still open but cover the deepest visible drawer instead of adding more offset.",
+      required: false,
+      value: "number",
+      defaultValue: "7",
     },
     {
       name: "children",

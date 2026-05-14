@@ -74,6 +74,9 @@ export default {
         '&>td': {
           backgroundColor: 'var(--cn-state-hover)'
         },
+        '&>td.cn-table-v2-cell-pinned': {
+          background: 'linear-gradient(var(--cn-state-hover), var(--cn-state-hover)), var(--cn-bg-1)'
+        },
         '& .cn-row-pin:not(.cn-row-pin-on)': {
           opacity: '1'
         }

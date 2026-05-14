@@ -343,6 +343,8 @@ export const DataTable = function DataTable<TData>({
                 return (
                   <Table.Cell
                     key={cell.id}
+                    // Temporary fix to prevent text bleeding in cell when it is pinned
+                    className={cn({ 'cn-table-v2-cell-pinned': column.getIsPinned() })}
                     style={{
                       ...getCommonPinningStyles<TData>(column),
                       width: column.getSize(),

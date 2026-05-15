@@ -303,7 +303,11 @@ export const DataTable = function DataTable<TData>({
               <Table.Head
                 colSpan={header.colSpan}
                 key={header.id}
-                className={cn(_enableColumnResizing ? 'relative' : undefined)}
+                // Temporary fix to prevent text bleeding in header when it is pinned
+                className={cn(
+                  { 'cn-table-v2-cell-pinned': header.column.getIsPinned() },
+                  _enableColumnResizing ? 'relative' : undefined
+                )}
                 sortable={header.column.getCanSort()}
                 sortDirection={header.column.getCanSort() ? header.column.getIsSorted() || false : undefined}
                 onClick={header.column.getCanSort() ? header.column.getToggleSortingHandler() : undefined}

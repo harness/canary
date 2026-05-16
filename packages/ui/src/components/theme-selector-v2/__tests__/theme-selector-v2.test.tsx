@@ -175,11 +175,8 @@ describe('ThemeDialog', () => {
     expect(screen.getByTestId('icon-check-circle-solid')).toBeInTheDocument()
   })
 
-  it('updates system preview based on matchMedia and cleans up listener on unmount', () => {
-    const matchMediaMock = createMatchMedia(true)
-    ;(window.matchMedia as unknown as Mock).mockReturnValueOnce(matchMediaMock)
-
-    const view = render(
+  it('renders system preview with both dark and light images overlaid', () => {
+    render(
       <ThemeDialog
         {...defaultProps}
         theme={`${ModeType.System}-${ColorType.Standard}-${ContrastType.Low}`}
@@ -187,20 +184,12 @@ describe('ThemeDialog', () => {
       />
     )
 
-    expect(matchMediaMock.addEventListener).toHaveBeenCalledWith('change', expect.any(Function))
     const systemButton = screen.getByRole('button', { name: /System$/ })
-    const systemImage = systemButton.querySelector('img') as HTMLImageElement
-    expect(systemImage.getAttribute('src')).toBe('dark-image')
-
-    matchMediaMock.__setMatches(false)
-    expect(systemImage.getAttribute('src')).toBe('light-image')
-
-    matchMediaMock.__setMatches(true)
-    expect(systemImage.getAttribute('src')).toBe('dark-image')
-
-    view.unmount()
-    const [, registeredListener] = matchMediaMock.addEventListener.mock.calls[0]
-    expect(matchMediaMock.removeEventListener).toHaveBeenCalledWith('change', registeredListener)
+    const images = systemButton.querySelectorAll('img')
+    expect(images).toHaveLength(2)
+    expect(images[0].getAttribute('src')).toBe('light-image')
+    expect(images[1].getAttribute('src')).toBe('dark-image')
+    expect(images[1].style.clipPath).toBe('polygon(0 0, 100% 0, 100% 100%)')
   })
 
   it('renders accessibility options and allows updates to contrast, color, accent, and gray selections', () => {

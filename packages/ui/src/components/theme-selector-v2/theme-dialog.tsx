@@ -1,4 +1,4 @@
-import { FC, useEffect, useState } from 'react'
+import { FC, useState } from 'react'
 
 import {
   Dialog,
@@ -47,20 +47,6 @@ const ThemeDialog: FC<ThemeDialogProps> = ({
   const [accentColor, setAccentColor] = useState<AccentColor>(AccentColor.Blue)
   const [grayColor, setGrayColor] = useState<GrayColor>(GrayColor.First)
 
-  const mediaQuery = window.matchMedia('(prefers-color-scheme: dark)')
-  const [systemMode, setSystemMode] = useState<ModeType>(mediaQuery.matches ? ModeType.Dark : ModeType.Light)
-  useEffect(() => {
-    const updateSystemTheme = () => {
-      setSystemMode(mediaQuery.matches ? ModeType.Dark : ModeType.Light)
-    }
-
-    mediaQuery.addEventListener('change', updateSystemTheme)
-
-    return () => {
-      mediaQuery.removeEventListener('change', updateSystemTheme)
-    }
-  }, [])
-
   const { mode, color: colorAdjustment, contrast } = getModeColorContrastFromFullTheme(theme)
 
   /**
@@ -82,43 +68,61 @@ const ThemeDialog: FC<ThemeDialogProps> = ({
             <Text className="mt-cn-2xs" color="foreground-3">
               Choose Dark mode for low light or Light mode for bright spaces. System follows your device settings.
             </Text>
-            <div className="mt-cn-md gap-cn-md grid grid-cols-2">
+            <div className={cn('mt-cn-md gap-cn-md grid', showSystemMode ? 'grid-cols-3' : 'grid-cols-2')}>
               {Object.entries(ModeType).map(([key, value]) => {
                 if (!showSystemMode && value === ModeType.System) return null
-                const valueMode = value === ModeType.System ? systemMode : value
-                // TODO: Design system: Update buttons here.
+                const isSystem = value === ModeType.System
                 return (
                   <button
-                    className="gap-y-cn-xs flex flex-col focus-visible:outline-none"
+                    className="flex flex-col gap-y-cn-xs focus-visible:outline-none"
                     key={key}
                     onClick={() => {
                       setTheme(`${value}-${colorAdjustment}-${contrast}`)
                     }}
                   >
                     <div className="relative">
-                      <img
-                        src={valueMode === ModeType.Dark ? darkModeImage : lightModeImage}
-                        alt=""
-                        className={cn(
-                          'w-full h-auto rounded-cn-3 border',
-                          mode === value ? 'border-cn-brand' : 'border-cn-3'
-                        )}
-                      />
-                      {mode === value && (
-                        <IconV2 className="text-cn-1 bottom-cn-xs left-cn-xs absolute" name="check-circle-solid" />
+                      {isSystem ? (
+                        <div
+                          className={cn(
+                            'relative w-full overflow-hidden rounded-cn-3 border',
+                            mode === value ? 'border-cn-brand' : 'border-cn-3'
+                          )}
+                        >
+                          <img src={lightModeImage} alt="" className="block h-auto w-full" />
+                          <img
+                            src={darkModeImage}
+                            alt=""
+                            className="absolute inset-0 h-auto w-full"
+                            style={{ clipPath: 'polygon(0 0, 100% 0, 100% 100%)' }}
+                          />
+                        </div>
+                      ) : (
+                        <img
+                          src={value === ModeType.Dark ? darkModeImage : lightModeImage}
+                          alt=""
+                          className={cn(
+                            'w-full h-auto rounded-cn-3 border',
+                            mode === value ? 'border-cn-brand' : 'border-cn-3'
+                          )}
+                        />
                       )}
-                      <div
-                        className="rounded-cn-1 absolute right-[27px] top-[61px] h-2 w-9"
-                        style={{
-                          backgroundColor:
-                            accentColor === AccentColor.White
-                              ? value === ModeType.Light
-                                ? 'hsla(240, 6%, 40%, 1)'
-                                : 'hsla(240, 9%, 67%, 1)'
-                              : accentColor
-                        }}
-                        aria-hidden
-                      />
+                      {mode === value && (
+                        <IconV2 className="absolute bottom-cn-xs left-cn-xs text-cn-1" name="check-circle-solid" />
+                      )}
+                      {!isSystem && (
+                        <div
+                          className="absolute right-[27px] top-[61px] h-2 w-9 rounded-cn-1"
+                          style={{
+                            backgroundColor:
+                              accentColor === AccentColor.White
+                                ? value === ModeType.Light
+                                  ? 'hsla(240, 6%, 40%, 1)'
+                                  : 'hsla(240, 9%, 67%, 1)'
+                                : accentColor
+                          }}
+                          aria-hidden
+                        />
+                      )}
                     </div>
                     <Text as="span" color="foreground-1">
                       {key}
@@ -130,10 +134,10 @@ const ThemeDialog: FC<ThemeDialogProps> = ({
           </div>
           {isAccessibilityThemeEnabled && (
             <>
-              <Separator className="bg-cn-2 h-px" />
+              <Separator className="h-px bg-cn-2" />
 
               {/* Contrast */}
-              <div className="gap-x-cn-2xl grid grid-cols-[246px_1fr]">
+              <div className="grid grid-cols-[246px_1fr] gap-x-cn-2xl">
                 <div>
                   <Text variant="heading-base">Contrast</Text>
                   <Text className="mt-cn-2xs" color="foreground-3">
@@ -149,10 +153,10 @@ const ThemeDialog: FC<ThemeDialogProps> = ({
                 />
               </div>
 
-              <Separator className="bg-cn-2 h-px" />
+              <Separator className="h-px bg-cn-2" />
 
               {/* Color Adjustment */}
-              <div className="gap-x-cn-2xl grid grid-cols-[246px_1fr]">
+              <div className="grid grid-cols-[246px_1fr] gap-x-cn-2xl">
                 <div>
                   <Text variant="heading-base">Color adjustment</Text>
                   <Text className="mt-cn-2xs" color="foreground-3">
@@ -168,20 +172,20 @@ const ThemeDialog: FC<ThemeDialogProps> = ({
                 />
               </div>
 
-              <Separator className="bg-cn-2 h-px" />
+              <Separator className="h-px bg-cn-2" />
 
               {/* Accent Color */}
               {showAccentColor ? (
                 <>
-                  <Separator className="bg-cn-2 h-px" />
-                  <div className="gap-x-cn-2xl grid grid-cols-[246px_1fr]">
+                  <Separator className="h-px bg-cn-2" />
+                  <div className="grid grid-cols-[246px_1fr] gap-x-cn-2xl">
                     <div>
                       <Text variant="heading-base">Accent color</Text>
                       <Text className="mt-cn-2xs" color="foreground-3">
                         Select your application accent color.
                       </Text>
                     </div>
-                    <div className="gap-cn-2xs flex flex-wrap">
+                    <div className="flex flex-wrap gap-cn-2xs">
                       {Object.values(AccentColor).map(item => (
                         <button
                           key={item}
@@ -210,15 +214,15 @@ const ThemeDialog: FC<ThemeDialogProps> = ({
               {/* Gray Color */}
               {showGrayColor ? (
                 <>
-                  <Separator className="bg-cn-2 h-px" />
-                  <div className="gap-x-cn-2xl grid grid-cols-[246px_1fr]">
+                  <Separator className="h-px bg-cn-2" />
+                  <div className="grid grid-cols-[246px_1fr] gap-x-cn-2xl">
                     <div>
                       <Text variant="heading-base">Gray color</Text>
                       <Text className="mt-cn-2xs" color="foreground-3">
                         Select your application gray color.
                       </Text>
                     </div>
-                    <div className="gap-cn-2xs flex flex-wrap">
+                    <div className="flex flex-wrap gap-cn-2xs">
                       {Object.values(GrayColor).map(item => (
                         <button
                           key={item}

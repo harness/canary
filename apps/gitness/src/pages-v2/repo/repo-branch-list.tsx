@@ -46,6 +46,11 @@ export function RepoBranchesListPage() {
   const [query, setQuery] = useQueryState('query')
   const { queryPage } = usePaginationQueryStateWithStore({ page, setPage })
 
+  // Reset page to 1 when search query changes
+  useEffect(() => {
+    setPage(1)
+  }, [query, setPage])
+
   const [isCreateBranchDialogOpen, setCreateBranchDialogOpen] = useState(false)
   const [deleteBranchName, setDeleteBranchName] = useState<string | null>(null)
   const [isDeleteDialogOpen, setIsDeleteDialogOpen] = useState(false)

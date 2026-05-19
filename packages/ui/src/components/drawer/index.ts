@@ -1,5 +1,6 @@
 import { Drawer as DrawerPrimitive } from 'vaul'
 
+import { DrawerHeaderV2, DrawerHeaderV2Props } from './drawer-header-v2'
 import { DrawerTagline } from './Drawer.Tagline'
 import { DrawerBody } from './DrawerBody'
 import {
@@ -28,6 +29,7 @@ export type {
   DrawerContentVariantsDirection,
   DrawerContentProps,
   DrawerHeaderProps,
+  DrawerHeaderV2Props,
   DrawerRailProps,
   DrawerStepProps,
   DrawerStepsProps,
@@ -39,6 +41,7 @@ export const Drawer = {
   Trigger: DrawerTrigger,
   Content: DrawerContent,
   Header: DrawerHeader,
+  HeaderV2: DrawerHeaderV2,
   Body: DrawerBody,
   Footer: DrawerFooter,
   Title: DrawerTitle,

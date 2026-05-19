@@ -6,7 +6,7 @@ beta: true
 
 The `Drawer` component provides a way to display content in a panel that slides in from the edge of the screen. Supports multiple configuration options, including direction (left, right, top, bottom), size constraints, and nested drawers for building complex, multi-level interfaces.
 
-It is composed of several subcomponents such as `Drawer.Root`, `Drawer.Trigger`, `Drawer.Content`, `Drawer.Header`, `Drawer.Tagline`, `Drawer.Title`, `Drawer.Description`, `Drawer.Body`, `Drawer.Footer`, `Drawer.DualPane`, `Drawer.Rail`, `Drawer.Steps`, `Drawer.Step`, `Drawer.SubStep`, `Drawer.DualPaneMain` and `Drawer.Close` to offer a structured and customizable interface.
+It is composed of several subcomponents such as `Drawer.Root`, `Drawer.Trigger`, `Drawer.Content`, `Drawer.Header`, `Drawer.HeaderV2`, `Drawer.Tagline`, `Drawer.Title`, `Drawer.Description`, `Drawer.Body`, `Drawer.Footer`, `Drawer.DualPane`, `Drawer.Rail`, `Drawer.Steps`, `Drawer.Step`, `Drawer.SubStep`, `Drawer.DualPaneMain` and `Drawer.Close` to offer a structured and customizable interface.
 
 import { DocsPage } from "@/components/docs-page";
 
@@ -746,6 +746,240 @@ return (
 
 </>
 )}`}
+/>
+
+## HeaderV2
+
+`Drawer.HeaderV2` is a structured, opinionated header that consolidates icon/logo, title, description, actions, metadata (children), and tabs into a single component. It replaces the compositional pattern of `Drawer.Header` > `Drawer.Title` > `Drawer.Description` when you want a standardized layout with optional loading state.
+
+### Basic
+
+<DocsPage.ComponentExample
+  client:only
+  code={`
+    <Drawer.Root>
+      <Drawer.Trigger>
+        <Button>Open Drawer with HeaderV2</Button>
+      </Drawer.Trigger>
+
+      <Drawer.Content size="md">
+        <Drawer.HeaderV2
+          title="Pipeline Settings"
+          description="Configure your pipeline execution settings"
+          icon="settings"
+        />
+        <Drawer.Body>
+          <p>Drawer body content goes here.</p>
+        </Drawer.Body>
+        <Drawer.Footer>
+          <ButtonLayout.Root>
+            <ButtonLayout.Primary>
+              <Button>Save</Button>
+            </ButtonLayout.Primary>
+            <ButtonLayout.Secondary>
+              <Drawer.Close asChild>
+                <Button variant="outline">Cancel</Button>
+              </Drawer.Close>
+            </ButtonLayout.Secondary>
+          </ButtonLayout.Root>
+        </Drawer.Footer>
+      </Drawer.Content>
+    </Drawer.Root>
+
+`}
+/>
+
+### With logo, actions, and metadata
+
+<DocsPage.ComponentExample
+  client:only
+  code={`
+    <Drawer.Root>
+      <Drawer.Trigger>
+        <Button>Full Featured HeaderV2</Button>
+      </Drawer.Trigger>
+
+      <Drawer.Content size="md">
+        <Drawer.HeaderV2
+          title="my-service"
+          description="Production deployment service"
+          icon={{ logo: 'harness' }}
+          actions={
+            <ButtonLayout.Root>
+              <ButtonLayout.Primary>
+                <Button size="sm">Deploy</Button>
+              </ButtonLayout.Primary>
+              <ButtonLayout.Secondary>
+                <Button size="sm" variant="outline">Edit</Button>
+              </ButtonLayout.Secondary>
+            </ButtonLayout.Root>
+          }
+        >
+          <Layout.Horizontal gap="lg">
+            <Text variant="body-normal" color="foreground-3">Last deployed: 2 hours ago</Text>
+            <Text variant="body-normal" color="foreground-3">Region: us-west-2</Text>
+          </Layout.Horizontal>
+        </Drawer.HeaderV2>
+        <Drawer.Body>
+          <p>Full featured header with logo, actions, and metadata children slot.</p>
+        </Drawer.Body>
+      </Drawer.Content>
+    </Drawer.Root>
+
+`}
+/>
+
+### With tabs
+
+Wrap the drawer content in a `Tabs.Root` to enable tab switching. `Drawer.HeaderV2` renders the tab strip at the bottom of the header when `tabs` is provided.
+
+<DocsPage.ComponentExample
+  client:only
+  code={`() => {
+    const [tab, setTab] = React.useState('overview');
+
+    return (
+      <Drawer.Root>
+        <Drawer.Trigger>
+          <Button>HeaderV2 with Tabs</Button>
+        </Drawer.Trigger>
+
+        <Drawer.Content size="md">
+          <Tabs.Root value={tab} onValueChange={setTab}>
+            <Drawer.HeaderV2
+              title="Build #1234"
+              description="Triggered by push to main"
+              icon="pipeline"
+              tabs={[
+                { label: 'Overview', value: 'overview' },
+                { label: 'Logs', value: 'logs' },
+                { label: 'Artifacts', value: 'artifacts', counter: 3 },
+                { label: 'Tests', value: 'tests', disabled: true },
+              ]}
+              actions={<Button size="sm" variant="outline">Re-run</Button>}
+            />
+            <Drawer.Body>
+              <Tabs.Content value="overview">
+                <p>Overview tab content</p>
+              </Tabs.Content>
+              <Tabs.Content value="logs">
+                <p>Logs tab content</p>
+              </Tabs.Content>
+              <Tabs.Content value="artifacts">
+                <p>Artifacts tab content (3 items)</p>
+              </Tabs.Content>
+            </Drawer.Body>
+          </Tabs.Root>
+        </Drawer.Content>
+      </Drawer.Root>
+    );
+
+}`}
+/>
+
+### Loading state
+
+When `isLoading` is true, actions are hidden and the children (metadata) slot renders a skeleton placeholder.
+
+<DocsPage.ComponentExample
+  client:only
+  code={`
+    <Drawer.Root>
+      <Drawer.Trigger>
+        <Button>HeaderV2 Loading State</Button>
+      </Drawer.Trigger>
+
+      <Drawer.Content size="md">
+        <Drawer.HeaderV2
+          title="Loading Resource..."
+          description="Fetching details"
+          icon="repository"
+          isLoading
+          actions={<Button size="sm">Action</Button>}
+        >
+          <span>This metadata is hidden while loading</span>
+        </Drawer.HeaderV2>
+        <Drawer.Body>
+          <p>The header hides actions and shows a skeleton for children while loading.</p>
+        </Drawer.Body>
+      </Drawer.Content>
+    </Drawer.Root>
+
+`}
+/>
+
+### `HeaderV2`
+
+<DocsPage.PropsTable
+  props={[
+    {
+      name: "title",
+      description: "The drawer title displayed as heading text.",
+      required: true,
+      value: "string",
+    },
+    {
+      name: "description",
+      description: "Optional description displayed below the title.",
+      required: false,
+      value: "string",
+      defaultValue: "undefined",
+    },
+    {
+      name: "icon",
+      description:
+        "Icon name (string) or logo object ({ logo: LogoV2NamesType }).",
+      required: false,
+      value: "IconV2NamesType | { logo: LogoV2NamesType }",
+      defaultValue: "undefined",
+    },
+    {
+      name: "actions",
+      description:
+        "ReactNode rendered to the right of the title row. Hidden when isLoading is true.",
+      required: false,
+      value: "ReactNode",
+      defaultValue: "undefined",
+    },
+    {
+      name: "tabs",
+      description:
+        "Array of tab items rendered as an underlined tab strip at the bottom of the header.",
+      required: false,
+      value: "HeaderV2TabItem[]",
+      defaultValue: "undefined",
+    },
+    {
+      name: "hideClose",
+      description: "When true, the close button is not rendered.",
+      required: false,
+      value: "boolean",
+      defaultValue: "false",
+    },
+    {
+      name: "isLoading",
+      description:
+        "When true, hides actions and renders a skeleton in place of children.",
+      required: false,
+      value: "boolean",
+      defaultValue: "false",
+    },
+    {
+      name: "children",
+      description:
+        "Metadata slot rendered between description and tabs. Shows skeleton when isLoading.",
+      required: false,
+      value: "ReactNode",
+      defaultValue: "undefined",
+    },
+    {
+      name: "className",
+      description: "Class to apply to the header wrapper.",
+      required: false,
+      value: "string",
+      defaultValue: "undefined",
+    },
+  ]}
 />
 
 ## Dual pane drawer

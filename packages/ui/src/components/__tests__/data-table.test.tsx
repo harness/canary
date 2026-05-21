@@ -1346,4 +1346,292 @@ describe('DataTable', () => {
       expect(screen.queryAllByLabelText('Resize column')).toHaveLength(0)
     })
   })
+
+  describe('Tree Mode (getSubRows)', () => {
+    interface TreeData {
+      id: string
+      name: string
+      value: number
+      children?: TreeData[]
+    }
+
+    const treeData: TreeData[] = [
+      {
+        id: '1',
+        name: 'Parent A',
+        value: 100,
+        children: [
+          {
+            id: '1-1',
+            name: 'Child A1',
+            value: 60,
+            children: [{ id: '1-1-1', name: 'Grandchild A1a', value: 30 }]
+          },
+          { id: '1-2', name: 'Child A2', value: 40 }
+        ]
+      },
+      { id: '2', name: 'Parent B', value: 50 }
+    ]
+
+    const treeColumns: ColumnDef<TreeData>[] = [
+      { accessorKey: 'name', header: 'Name', cell: info => info.getValue() },
+      { accessorKey: 'value', header: 'Value', cell: info => info.getValue() }
+    ]
+
+    const getSubRows = (row: TreeData) => row.children
+
+    test('should only render top-level rows when collapsed', () => {
+      render(
+        <TestWrapper>
+          <DataTable
+            data={treeData}
+            columns={treeColumns}
+            enableExpanding
+            getSubRows={getSubRows}
+            currentExpanded={{}}
+          />
+        </TestWrapper>
+      )
+
+      expect(screen.getByText('Parent A')).toBeInTheDocument()
+      expect(screen.getByText('Parent B')).toBeInTheDocument()
+      expect(screen.queryByText('Child A1')).not.toBeInTheDocument()
+      expect(screen.queryByText('Child A2')).not.toBeInTheDocument()
+    })
+
+    test('should show child rows when parent is expanded', () => {
+      render(
+        <TestWrapper>
+          <DataTable
+            data={treeData}
+            columns={treeColumns}
+            enableExpanding
+            getSubRows={getSubRows}
+            getRowId={row => row.id}
+            currentExpanded={{ '1': true }}
+          />
+        </TestWrapper>
+      )
+
+      expect(screen.getByText('Parent A')).toBeInTheDocument()
+      expect(screen.getByText('Child A1')).toBeInTheDocument()
+      expect(screen.getByText('Child A2')).toBeInTheDocument()
+      expect(screen.queryByText('Grandchild A1a')).not.toBeInTheDocument()
+    })
+
+    test('should show deeply nested rows when multiple levels expanded', () => {
+      render(
+        <TestWrapper>
+          <DataTable
+            data={treeData}
+            columns={treeColumns}
+            enableExpanding
+            getSubRows={getSubRows}
+            getRowId={row => row.id}
+            currentExpanded={{ '1': true, '1-1': true }}
+          />
+        </TestWrapper>
+      )
+
+      expect(screen.getByText('Parent A')).toBeInTheDocument()
+      expect(screen.getByText('Child A1')).toBeInTheDocument()
+      expect(screen.getByText('Grandchild A1a')).toBeInTheDocument()
+    })
+
+    test('should indent expander based on row depth', () => {
+      const { container } = render(
+        <TestWrapper>
+          <DataTable
+            data={treeData}
+            columns={treeColumns}
+            enableExpanding
+            getSubRows={getSubRows}
+            getRowId={row => row.id}
+            currentExpanded={{ '1': true, '1-1': true }}
+          />
+        </TestWrapper>
+      )
+
+      const rows = container.querySelectorAll('tbody tr')
+      const getExpanderDiv = (row: Element) => row.querySelector('td:first-child > div[data-depth]')
+
+      // Parent A (depth 0) — no indentation style
+      expect(getExpanderDiv(rows[0])?.getAttribute('data-depth')).toBe('0')
+      expect(getExpanderDiv(rows[0])?.getAttribute('style')).toBeNull()
+
+      // Child A1 (depth 1)
+      expect(getExpanderDiv(rows[1])?.getAttribute('data-depth')).toBe('1')
+
+      // Grandchild A1a (depth 2)
+      expect(getExpanderDiv(rows[2])?.getAttribute('data-depth')).toBe('2')
+    })
+
+    test('should call onExpandedChange when toggling tree row', async () => {
+      const handleExpandedChange = vi.fn()
+
+      render(
+        <TestWrapper>
+          <DataTable
+            data={treeData}
+            columns={treeColumns}
+            enableExpanding
+            getSubRows={getSubRows}
+            currentExpanded={{}}
+            onExpandedChange={handleExpandedChange}
+          />
+        </TestWrapper>
+      )
+
+      const expander = screen.getAllByLabelText('Toggle Row Expanded')[0]
+      await userEvent.click(expander)
+
+      expect(handleExpandedChange).toHaveBeenCalled()
+    })
+
+    test('should not show expander for leaf rows', () => {
+      render(
+        <TestWrapper>
+          <DataTable
+            data={treeData}
+            columns={treeColumns}
+            enableExpanding
+            getSubRows={getSubRows}
+            getRowId={row => row.id}
+            currentExpanded={{ '1': true }}
+          />
+        </TestWrapper>
+      )
+
+      const expanders = screen.getAllByLabelText('Toggle Row Expanded')
+      // Parent A (has children) and Child A1 (has children) get expanders.
+      // Child A2 and Parent B do not (leaf / no children).
+      expect(expanders).toHaveLength(2)
+    })
+
+    test('should embed chevron in first content column, not a separate column', () => {
+      const { container } = render(
+        <TestWrapper>
+          <DataTable
+            data={treeData}
+            columns={treeColumns}
+            enableExpanding
+            getSubRows={getSubRows}
+            getRowId={row => row.id}
+            currentExpanded={{}}
+          />
+        </TestWrapper>
+      )
+
+      // In tree mode there should be no separate expander header (only data column headers)
+      const headers = container.querySelectorAll('thead th')
+      expect(headers).toHaveLength(treeColumns.length)
+
+      // The chevron and content should be in the same cell
+      const firstRow = container.querySelector('tbody tr')!
+      const firstCell = firstRow.querySelector('td')!
+      expect(firstCell.querySelector('[data-depth]')).toBeTruthy()
+      expect(firstCell.textContent).toContain('Parent A')
+    })
+
+    test('should not render renderSubComponent in tree mode', () => {
+      const renderSubComponent = ({ row }: any) => <div>Detail for {row.original.name}</div>
+
+      render(
+        <TestWrapper>
+          <DataTable
+            data={treeData}
+            columns={treeColumns}
+            enableExpanding
+            getSubRows={getSubRows}
+            getRowId={row => row.id}
+            renderSubComponent={renderSubComponent}
+            currentExpanded={{ '1': true }}
+          />
+        </TestWrapper>
+      )
+
+      expect(screen.queryByText(/Detail for/)).not.toBeInTheDocument()
+      expect(screen.getByText('Child A1')).toBeInTheDocument()
+    })
+
+    test('detail-panel mode still works without getSubRows', () => {
+      const renderSubComponent = ({ row }: any) => <div>Detail for {row.original.name}</div>
+
+      render(
+        <TestWrapper>
+          <DataTable
+            data={treeData}
+            columns={treeColumns}
+            enableExpanding
+            renderSubComponent={renderSubComponent}
+            currentExpanded={{ '0': true }}
+          />
+        </TestWrapper>
+      )
+
+      expect(screen.getByText(/Detail for Parent A/)).toBeInTheDocument()
+    })
+
+    test('should not apply indentation in detail-panel mode', () => {
+      const { container } = render(
+        <TestWrapper>
+          <DataTable data={treeData} columns={treeColumns} enableExpanding currentExpanded={{}} />
+        </TestWrapper>
+      )
+
+      const depthDivs = container.querySelectorAll('td:first-child > div[data-depth]')
+      expect(depthDivs).toHaveLength(0)
+    })
+
+    test('should keep all rows collapsed by default', () => {
+      render(
+        <TestWrapper>
+          <DataTable data={treeData} columns={treeColumns} enableExpanding getSubRows={getSubRows} />
+        </TestWrapper>
+      )
+
+      expect(screen.getByText('Parent A')).toBeInTheDocument()
+      expect(screen.getByText('Parent B')).toBeInTheDocument()
+      expect(screen.queryByText('Child A1')).not.toBeInTheDocument()
+    })
+
+    test('should expand all rows when initiallyExpandAllRows is true', () => {
+      render(
+        <TestWrapper>
+          <DataTable
+            data={treeData}
+            columns={treeColumns}
+            enableExpanding
+            getSubRows={getSubRows}
+            initiallyExpandAllRows
+          />
+        </TestWrapper>
+      )
+
+      expect(screen.getByText('Parent A')).toBeInTheDocument()
+      expect(screen.getByText('Child A1')).toBeInTheDocument()
+      expect(screen.getByText('Child A2')).toBeInTheDocument()
+      expect(screen.getByText('Grandchild A1a')).toBeInTheDocument()
+      expect(screen.getByText('Parent B')).toBeInTheDocument()
+    })
+
+    test('currentExpanded should override initiallyExpandAllRows', () => {
+      render(
+        <TestWrapper>
+          <DataTable
+            data={treeData}
+            columns={treeColumns}
+            enableExpanding
+            getSubRows={getSubRows}
+            getRowId={row => row.id}
+            initiallyExpandAllRows
+            currentExpanded={{}}
+          />
+        </TestWrapper>
+      )
+
+      expect(screen.getByText('Parent A')).toBeInTheDocument()
+      expect(screen.queryByText('Child A1')).not.toBeInTheDocument()
+    })
+  })
 })

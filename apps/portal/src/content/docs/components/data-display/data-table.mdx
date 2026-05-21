@@ -204,17 +204,28 @@ onReset={resetColumns}
 ## Anatomy
 
 ```jsx
+// Detail-panel expansion
 <DataTable
-  columns={columns} // Column definitions
-  data={data} // Data to display
-  size="normal" // Size variant
-  getRowId={(row) => row.id} // Function to get unique row ID
-  enableRowSelection // Enable row selection
-  enableExpanding // Enable row expansion
-  renderSubComponent={renderSubComponent} // Render expanded content
-  currentSorting={sorting} // Current sorting state
-  onSortingChange={setSorting} // Sorting change handler
-  pagination={paginationProps} // Pagination configuration
+  columns={columns}
+  data={data}
+  size="normal"
+  getRowId={(row) => row.id}
+  enableRowSelection
+  enableExpanding
+  renderSubComponent={renderSubComponent}
+  currentSorting={sorting}
+  onSortingChange={setSorting}
+  pagination={paginationProps}
+/>
+
+// Tree/nested rows
+<DataTable
+  columns={columns}
+  data={data}
+  enableExpanding
+  getSubRows={(row) => row.children}
+  currentExpanded={expanded}
+  onExpandedChange={setExpanded}
 />
 ```
 
@@ -433,9 +444,17 @@ function MyTable() {
     },
     {
       name: "renderSubComponent",
-      description: "Render function for expanded row content",
+      description:
+        "Render function for expanded row content (detail-panel mode). Ignored when getSubRows is provided.",
       required: false,
       value: "(props: { row: Row<TData> }) => React.ReactNode",
+    },
+    {
+      name: "getSubRows",
+      description:
+        "Extract child rows from a data item to enable tree/nested row mode. When provided, expanded rows render their children as indented table rows sharing the same column structure.",
+      required: false,
+      value: "(originalRow: TData, index: number) => TData[] | undefined",
     },
     {
       name: "enableColumnResizing",
@@ -1165,6 +1184,181 @@ function TableWithRowLinks() {
 - Rows with a link render as navigable elements
 - Disabled rows (via `getIsRowDisabled`) are excluded from link rendering
 - `getRowLink` and `onRowClick` can coexist; the link takes precedence for navigation
+
+## Nested Rows (Tree Mode)
+
+The `DataTable` supports tree/nested row rendering via the `getSubRows` prop. When provided, child rows are rendered as indented rows sharing the same column structure, instead of a full-width detail panel. Rows with children show an expand/collapse chevron; leaf rows do not.
+
+<DocsPage.ComponentExample
+  client:only
+  code={`() => {
+  const data = [
+    {
+      id: 'platform',
+      name: 'Platform',
+      type: 'project',
+      total: 38166,
+      children: [
+        {
+          id: 'api-call',
+          name: 'API Call',
+          type: 'API_CALL',
+          total: 20663,
+          children: [
+            { id: 'api-internal', name: 'Internal APIs', type: 'INTERNAL', total: 12400 },
+            { id: 'api-external', name: 'External APIs', type: 'EXTERNAL', total: 8263 }
+          ]
+        },
+        { id: 'webhook', name: 'Webhook Event', type: 'WEBHOOK_EVENT', total: 11481 },
+        { id: 'connector', name: 'Connector Test', type: 'CONNECTOR_TEST', total: 6021 }
+      ]
+    },
+    {
+      id: 'cd',
+      name: 'Continuous Delivery',
+      type: 'project',
+      total: 28980,
+      children: [
+        { id: 'cd-deploy', name: 'Deployments', type: 'DEPLOYMENT', total: 18200 },
+        { id: 'cd-rollback', name: 'Rollbacks', type: 'ROLLBACK', total: 10780 }
+      ]
+    },
+    { id: 'feature-flags', name: 'Feature Flags', type: 'project', total: 9450 }
+  ]
+
+const columns = [
+{
+accessorKey: 'name',
+header: 'Project',
+cell: (info) => (
+
+<Text variant="body-normal" color={info.row.depth === 0 ? 'foreground-1' : 'foreground-3'}>
+{info.getValue()}
+</Text>
+)
+},
+{
+accessorKey: 'type',
+header: 'Type',
+cell: (info) => (
+<Text variant="caption-normal" color="foreground-3">{info.getValue()}</Text>
+)
+},
+{
+accessorKey: 'total',
+header: 'Year Total (HSU)',
+cell: (info) => (
+<Text variant="body-normal">{info.getValue().toLocaleString()}</Text>
+)
+}
+]
+
+const [expanded, setExpanded] = React.useState({ platform: true, 'api-call': true })
+
+return (
+
+<DataTable
+  columns={columns}
+  data={data}
+  getRowId={(row) => row.id}
+  size="compact"
+  enableExpanding
+  getSubRows={(row) => row.children}
+  currentExpanded={expanded}
+  onExpandedChange={setExpanded}
+/>
+) }`} />
+
+### Usage
+
+```tsx
+import { DataTable } from "@harnessio/ui/components";
+import { useState } from "react";
+import type { ExpandedState } from "@tanstack/react-table";
+
+interface ProjectData {
+  id: string;
+  name: string;
+  type: string;
+  total: number;
+  children?: ProjectData[];
+}
+
+function NestedTable() {
+  const [expanded, setExpanded] = useState<ExpandedState>({});
+
+  const data: ProjectData[] = [
+    {
+      id: "platform",
+      name: "Platform",
+      type: "project",
+      total: 38166,
+      children: [
+        {
+          id: "api-call",
+          name: "API Call",
+          type: "API_CALL",
+          total: 20663,
+          children: [
+            {
+              id: "api-internal",
+              name: "Internal APIs",
+              type: "INTERNAL",
+              total: 12400,
+            },
+            {
+              id: "api-external",
+              name: "External APIs",
+              type: "EXTERNAL",
+              total: 8263,
+            },
+          ],
+        },
+        {
+          id: "webhook",
+          name: "Webhook Event",
+          type: "WEBHOOK_EVENT",
+          total: 11481,
+        },
+      ],
+    },
+    {
+      id: "feature-flags",
+      name: "Feature Flags",
+      type: "project",
+      total: 9450,
+    },
+  ];
+
+  const columns = [
+    { accessorKey: "name", header: "Project" },
+    { accessorKey: "type", header: "Type" },
+    { accessorKey: "total", header: "Year Total (HSU)" },
+  ];
+
+  return (
+    <DataTable
+      columns={columns}
+      data={data}
+      getRowId={(row) => row.id}
+      enableExpanding
+      getSubRows={(row) => row.children}
+      currentExpanded={expanded}
+      onExpandedChange={setExpanded}
+    />
+  );
+}
+```
+
+### Key Points
+
+- `getSubRows` tells the table how to extract child rows from each data item
+- Child rows share the same column definitions as parent rows
+- The expander column automatically indents based on nesting depth using the `md` spacing token
+- Leaf rows (no children) do not render an expand/collapse chevron
+- `renderSubComponent` is ignored when `getSubRows` is provided
+- Works with `currentExpanded` and `onExpandedChange` for controlled expansion state
+- Compatible with other features like sorting, row selection, and row links
 
 ## Examples
 

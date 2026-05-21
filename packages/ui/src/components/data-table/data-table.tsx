@@ -7,6 +7,7 @@ import {
   ExpandedState,
   flexRender,
   getCoreRowModel,
+  getExpandedRowModel,
   OnChangeFn,
   Row,
   RowSelectionState,
@@ -80,6 +81,11 @@ export interface DataTableProps<TData> {
    */
   getRowLink?: (data: TData, index: number) => string
   /**
+   * When true, all rows are expanded initially. Defaults to false (all collapsed).
+   * Overridden by `currentExpanded` when provided.
+   */
+  initiallyExpandAllRows?: boolean
+  /**
    * Current expanded rows state
    */
   currentExpanded?: ExpandedState
@@ -88,9 +94,16 @@ export interface DataTableProps<TData> {
    */
   onExpandedChange?: OnChangeFn<ExpandedState>
   /**
-   * Render function for expanded row content
+   * Render function for expanded row content (detail-panel mode).
+   * Ignored when `getSubRows` is provided (tree mode).
    */
   renderSubComponent?: (props: { row: Row<TData> }) => React.ReactNode
+  /**
+   * Extract child rows from a data item to enable tree/nested row mode.
+   * When provided, expanded rows render their children as indented table rows
+   * sharing the same column structure, instead of a detail-panel sub-component.
+   */
+  getSubRows?: (originalRow: TData, index: number) => TData[] | undefined
   /**
    * @internal
    * Enable column resizing - NOT READY FOR PUBLIC USE
@@ -119,9 +132,11 @@ export const DataTable = function DataTable<TData>({
   getRowCanExpand,
   getRowCanSelect,
   getIsRowDisabled,
+  initiallyExpandAllRows = false,
   currentExpanded,
   onExpandedChange: externalOnExpandedChange,
   renderSubComponent,
+  getSubRows,
   _enableColumnResizing = false,
   getRowId,
   visibleColumns,
@@ -166,41 +181,81 @@ export const DataTable = function DataTable<TData>({
       ]
     }
 
-    // If expanding is enabled, add an expander column at the beginning
     if (enableExpanding) {
-      cols = [
-        {
-          id: 'expander',
-          header: () => null,
-          enableHiding: false,
-          cell: ({ row }: { row: Row<TData> }) => {
-            return row.getCanExpand() ? (
-              <Button
-                onClick={e => {
-                  e.stopPropagation()
-                  row.toggleExpanded()
-                }}
-                aria-label="Toggle Row Expanded"
-                variant="ghost"
-                size="xs"
-                iconOnly
-                role="button"
-                tooltipProps={{
-                  content: 'Toggle Row Expanded'
-                }}
-              >
-                <IconV2 name={row.getIsExpanded() ? 'nav-arrow-up' : 'nav-arrow-down'} size="2xs" />
-              </Button>
-            ) : null
+      const isTree = !!getSubRows
+
+      if (isTree) {
+        const firstDataColIndex = 0
+        const firstCol = cols[firstDataColIndex]
+        const originalCell = firstCol.cell
+
+        cols[firstDataColIndex] = {
+          ...firstCol,
+          cell: (info: any) => {
+            const { row } = info
+            const indent = row.depth > 0 ? { paddingLeft: `calc(${row.depth} * var(--cn-layout-2xl))` } : undefined
+
+            const originalContent = typeof originalCell === 'function' ? originalCell(info) : info.getValue()
+
+            return (
+              <div style={indent} data-depth={row.depth} className="flex items-center gap-cn-sm">
+                <span className="inline-flex w-5 shrink-0 justify-center">
+                  {row.getCanExpand() ? (
+                    <Button
+                      onClick={(e: React.MouseEvent) => {
+                        e.stopPropagation()
+                        row.toggleExpanded()
+                      }}
+                      aria-label="Toggle Row Expanded"
+                      variant="ghost"
+                      size="xs"
+                      iconOnly
+                      role="button"
+                    >
+                      <IconV2 name={row.getIsExpanded() ? 'nav-arrow-down' : 'nav-arrow-right'} size="2xs" />
+                    </Button>
+                  ) : null}
+                </span>
+                <span className="min-w-0">{originalContent}</span>
+              </div>
+            )
+          }
+        }
+      } else {
+        cols = [
+          {
+            id: 'expander',
+            header: () => null,
+            enableHiding: false,
+            cell: ({ row }: { row: Row<TData> }) => {
+              return row.getCanExpand() ? (
+                <Button
+                  onClick={e => {
+                    e.stopPropagation()
+                    row.toggleExpanded()
+                  }}
+                  aria-label="Toggle Row Expanded"
+                  variant="ghost"
+                  size="xs"
+                  iconOnly
+                  role="button"
+                  tooltipProps={{
+                    content: 'Toggle Row Expanded'
+                  }}
+                >
+                  <IconV2 name={row.getIsExpanded() ? 'nav-arrow-down' : 'nav-arrow-right'} size="2xs" />
+                </Button>
+              ) : null
+            },
+            size: 20
           },
-          size: 20
-        },
-        ...cols
-      ]
+          ...cols
+        ]
+      }
     }
 
     return cols
-  }, [columns, enableRowSelection, enableExpanding])
+  }, [columns, enableRowSelection, enableExpanding, getSubRows])
 
   const tableOptions = useMemo<TableOptions<TData>>(
     () => ({
@@ -220,16 +275,24 @@ export const DataTable = function DataTable<TData>({
         : undefined,
       // Handle row selection changes
       onRowSelectionChange: externalOnRowSelectionChange,
-      // Enable row expansion if specified
       enableExpanding,
-      // enable manual expansion
-      manualExpanding: true,
-      // Handle expanded state changes
       onExpandedChange: externalOnExpandedChange,
-      // Use custom getRowCanExpand function if provided, otherwise make all rows expandable if expansion is enabled
       getRowCanExpand: enableExpanding
-        ? (row: Row<TData>) => !getIsRowDisabled?.(row) && (getRowCanExpand?.(row) ?? true)
+        ? (row: Row<TData>) => {
+            if (getIsRowDisabled?.(row)) return false
+            if (getRowCanExpand) return getRowCanExpand(row)
+            if (getSubRows) return (row.subRows?.length ?? 0) > 0
+            return true
+          }
         : undefined,
+      ...(getSubRows
+        ? {
+            getSubRows,
+            getExpandedRowModel: getExpandedRowModel()
+          }
+        : {
+            manualExpanding: true
+          }),
       // Enable column resizing if specified
       enableColumnResizing: _enableColumnResizing,
       columnResizeMode: 'onChange',
@@ -238,7 +301,7 @@ export const DataTable = function DataTable<TData>({
       state: {
         sorting: currentSorting,
         rowSelection: currentRowSelection || {},
-        expanded: currentExpanded || {},
+        expanded: currentExpanded ?? (initiallyExpandAllRows ? true : {}),
         columnPinning
       }
     }),
@@ -254,9 +317,11 @@ export const DataTable = function DataTable<TData>({
       enableExpanding,
       externalOnExpandedChange,
       getRowCanExpand,
+      getSubRows,
       _enableColumnResizing,
       currentSorting,
       currentRowSelection,
+      initiallyExpandAllRows,
       currentExpanded,
       columnPinning
     ]
@@ -357,7 +422,7 @@ export const DataTable = function DataTable<TData>({
                 )
               })}
             </Table.Row>
-            {row.getIsExpanded() && renderSubComponent && (
+            {row.getIsExpanded() && renderSubComponent && !getSubRows && (
               <Table.Row className="bg-cn-2">
                 <Table.Cell className="bg-transparent"></Table.Cell>
                 <Table.Cell className="bg-transparent" colSpan={row.getAllCells().length - 1}>

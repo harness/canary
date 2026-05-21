@@ -528,4 +528,20 @@ export class ThreadRuntimeCore extends BaseSubscribable {
     this._title = title
     this.notifySubscribers()
   }
+
+  public updateMessageContent(messageId: string, updater: (content: MessageContent[]) => MessageContent[]): void {
+    const messageIndex = this._messages.findIndex(m => m.id === messageId)
+    if (messageIndex === -1) return
+
+    const message = this._messages[messageIndex]
+    const updatedContent = updater(message.content)
+
+    const updatedMessages = [
+      ...this._messages.slice(0, messageIndex),
+      { ...message, content: updatedContent, timestamp: Date.now() },
+      ...this._messages.slice(messageIndex + 1)
+    ]
+
+    this.updateMessages(updatedMessages)
+  }
 }

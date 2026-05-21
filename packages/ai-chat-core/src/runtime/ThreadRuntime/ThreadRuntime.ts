@@ -1,5 +1,5 @@
 import { SystemEvent } from '../../types/adapters'
-import { AppendMessage, Message, TextContent } from '../../types/message'
+import { AppendMessage, Message, MessageContent, TextContent } from '../../types/message'
 import { RuntimeCapabilities, ThreadState } from '../../types/thread'
 import { BaseSubscribable, Unsubscribe } from '../../utils/Subscribable'
 import ComposerRuntime from '../ComposerRuntime/ComposerRuntime'
@@ -128,6 +128,10 @@ export class ThreadRuntime extends BaseSubscribable {
 
   public setTitle(title: string | undefined): void {
     this._core.setTitle(title)
+  }
+
+  public updateMessageContent(messageId: string, updater: (content: MessageContent[]) => MessageContent[]): void {
+    this._core.updateMessageContent(messageId, updater)
   }
 
   public subscribe(callback: () => void): Unsubscribe {

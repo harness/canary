@@ -6,61 +6,41 @@ import { YamlEditorProps } from '@harnessio/yaml-editor'
 
 type ThemeConfig = YamlEditorProps<unknown>['themeConfig']
 
+const THEME_CLASS_PATTERN = /\b(light|dark)-[a-z]+-[a-z]+\b/
+const DEFAULT_THEME = 'light-std-std'
+
+function readThemeFromRoot(rootSelector: string): string | undefined {
+  if (typeof document === 'undefined') return undefined
+  const rootEl = document.querySelector(rootSelector)
+  return rootEl?.className.match(THEME_CLASS_PATTERN)?.[0]
+}
+
 export function useMonacoTheme(theme?: string, rootSelector = 'html'): ThemeConfig {
-  const [themeConfig, setThemeConfig] = useState<ThemeConfig>(undefined)
+  const [themeConfig, setThemeConfig] = useState<ThemeConfig>(() => {
+    const initial = theme ?? readThemeFromRoot(rootSelector) ?? DEFAULT_THEME
+    return { defaultTheme: initial, themes: getMonacoThemes(initial) }
+  })
 
   useEffect(() => {
-    if (!theme) return
+    const apply = (next: string) => setThemeConfig({ defaultTheme: next, themes: getMonacoThemes(next) })
 
-    let attempts = 0
-    const maxAttempts = 5
-    const intervalMs = 100
-    let intervalId: number | undefined
-
-    const tryApplyTheme = () => {
-      attempts++
-
-      const rootEl = document.querySelector(rootSelector)
-      if (!rootEl) return false
-
-      const htmlClass = rootEl.className
-      const hasThemeClass = htmlClass.includes(theme)
-
-      if (hasThemeClass) {
-        setThemeConfig({
-          defaultTheme: theme,
-          themes: getMonacoThemes(theme)
-        })
-
-        if (intervalId) {
-          clearInterval(intervalId)
-        }
-
-        return true
-      }
-
-      if (attempts >= maxAttempts) {
-        if (intervalId) {
-          clearInterval(intervalId)
-        }
-      }
-
-      return false
+    if (theme) {
+      apply(theme)
+      return
     }
 
-    // Execute immediately
-    const appliedImmediately = tryApplyTheme()
+    const rootEl = typeof document !== 'undefined' ? document.querySelector(rootSelector) : null
+    if (!rootEl) return
 
-    // Poll if not execute immediately
-    if (!appliedImmediately) {
-      intervalId = window.setInterval(tryApplyTheme, intervalMs)
-    }
+    apply(readThemeFromRoot(rootSelector) ?? DEFAULT_THEME)
 
-    return () => {
-      if (intervalId) {
-        clearInterval(intervalId)
-      }
-    }
+    const observer = new MutationObserver(() => {
+      const next = readThemeFromRoot(rootSelector)
+      if (next) apply(next)
+    })
+
+    observer.observe(rootEl, { attributes: true, attributeFilter: ['class'] })
+    return () => observer.disconnect()
   }, [rootSelector, theme])
 
   return themeConfig

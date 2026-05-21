@@ -43,3 +43,10 @@ export type {
   CapabilityContent
 } from './capability'
 export type { ChatContextItem, ChatContextMap, ChatContextData, ChatContextValue } from './context'
+export type {
+  QuickAction,
+  QuickActionConfig,
+  QuickActionScopeMode,
+  QuickActionScopeConfig,
+  QuickActionFilter
+} from './quick-action'

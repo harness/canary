@@ -1,5 +1,6 @@
 import { CapabilityExecutionManager, CapabilityRegistry } from '../../core'
 import { PluginRegistry } from '../../core/PluginRegistry'
+import { QuickActionRegistry } from '../../core/QuickActionRegistry'
 import { Message } from '../../types/message'
 import { ChatPlugin } from '../../types/plugin'
 import { BaseSubscribable } from '../../utils/Subscribable'
@@ -16,6 +17,7 @@ export class AssistantRuntime extends BaseSubscribable {
   public readonly pluginRegistry: PluginRegistry
   public readonly capabilityRegistry: CapabilityRegistry
   public readonly capabilityExecutionManager: CapabilityExecutionManager
+  public readonly quickActionRegistry: QuickActionRegistry
   private _contentFocusRuntime: ContentFocusRuntime
   private _currentThreadUnsubscribe?: () => void
 
@@ -33,6 +35,9 @@ export class AssistantRuntime extends BaseSubscribable {
     // Initialize capability registry
     this.capabilityRegistry = new CapabilityRegistry()
     this.capabilityExecutionManager = new CapabilityExecutionManager(name => this.capabilityRegistry.getHandler(name))
+
+    // Initialize quick action registry
+    this.quickActionRegistry = new QuickActionRegistry()
 
     // Initialize thread list
     this.threads = new ThreadListRuntime({

@@ -8,6 +8,7 @@ import { ProfileSettingsViewWrapper } from '@/pages/view-preview/profile-setting
 import { RepoSettingsViewWrapper } from '@/pages/view-preview/repo-settings-view-wrapper'
 import { SideNavWrapper } from '@/pages/view-preview/side-nav-wrapper'
 import DataTableDemo from '@subjects/views/data-table-demo'
+import DataTableGroupedHeadersDemo from '@subjects/views/data-table-grouped-headers-demo'
 import DraggableCardsDemo from '@subjects/views/draggable-cards-demo'
 import ExecutionListWrapper from '@subjects/views/execution-list/execution-list'
 import { LabelsForm } from '@subjects/views/labels/labels-form'
@@ -538,6 +539,10 @@ export const viewPreviews: Record<string, ViewPreviewGroup> = {
       'data-table-demo': {
         label: 'Data Table Demo',
         element: <DataTableDemo />
+      },
+      'data-table-grouped-headers-demo': {
+        label: 'Data Table Grouped Headers',
+        element: <DataTableGroupedHeadersDemo />
       }
     }
   },

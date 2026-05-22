@@ -1213,15 +1213,111 @@ describe('DataTable', () => {
     })
   })
 
+  describe('Grouped Headers', () => {
+    const groupedColumns: ColumnDef<TestData>[] = [
+      {
+        id: 'name',
+        accessorKey: 'name',
+        header: 'Name',
+        enableSorting: true
+      },
+      {
+        id: 'contact',
+        header: 'Contact',
+        enableSorting: false,
+        columns: [
+          {
+            id: 'age',
+            accessorKey: 'age',
+            header: 'Age',
+            enableSorting: true
+          },
+          {
+            id: 'email',
+            accessorKey: 'email',
+            header: 'Email',
+            enableSorting: false
+          }
+        ]
+      }
+    ]
+
+    test('should render two header rows for nested columns', () => {
+      const { container } = render(
+        <TestWrapper>
+          <DataTable data={mockData} columns={groupedColumns} />
+        </TestWrapper>
+      )
+
+      const headerRows = container.querySelectorAll('thead tr')
+      expect(headerRows).toHaveLength(2)
+    })
+
+    test('should render group header with correct colSpan', () => {
+      render(
+        <TestWrapper>
+          <DataTable data={mockData} columns={groupedColumns} />
+        </TestWrapper>
+      )
+
+      const contactGroupHeader = screen.getByText('Contact')
+      expect(contactGroupHeader.closest('th')).toHaveAttribute('colspan', '2')
+    })
+
+    test('should render top-level leaf columns with rowSpan instead of placeholders', () => {
+      const { container } = render(
+        <TestWrapper>
+          <DataTable data={mockData} columns={groupedColumns} />
+        </TestWrapper>
+      )
+
+      const nameCell = screen.getByText('Name').closest('th')
+      expect(nameCell).toHaveAttribute('rowspan', '2')
+
+      // The group row should not contain the leaf header for top-level columns
+      const groupRow = container.querySelector('thead tr[data-header-depth="0"]')
+      const groupRowCells = groupRow?.querySelectorAll('th')
+      expect(groupRowCells?.length).toBe(2)
+    })
+
+    test('should call onSortingChange only from leaf-row sortable headers', async () => {
+      const handleSortingChange = vi.fn()
+
+      render(
+        <TestWrapper>
+          <DataTable data={mockData} columns={groupedColumns} onSortingChange={handleSortingChange} />
+        </TestWrapper>
+      )
+
+      await userEvent.click(screen.getByText('Contact'))
+      expect(handleSortingChange).not.toHaveBeenCalled()
+
+      await userEvent.click(screen.getByText('Age'))
+      expect(handleSortingChange).toHaveBeenCalled()
+    })
+
+    test('should call onSortingChange from ungrouped leaf headers', async () => {
+      const handleSortingChange = vi.fn()
+
+      render(
+        <TestWrapper>
+          <DataTable data={mockData} columns={groupedColumns} onSortingChange={handleSortingChange} />
+        </TestWrapper>
+      )
+
+      await userEvent.click(screen.getByText('Name'))
+      expect(handleSortingChange).toHaveBeenCalled()
+    })
+  })
+
   describe('Table Structure', () => {
-    test('should render table with header groups', () => {
+    test('should render flat table headers', () => {
       render(
         <TestWrapper>
           <DataTable data={mockData} columns={mockColumns} />
         </TestWrapper>
       )
 
-      // Headers should be in the table
       expect(screen.getByText('Name')).toBeInTheDocument()
       expect(screen.getByText('Age')).toBeInTheDocument()
       expect(screen.getByText('Email')).toBeInTheDocument()

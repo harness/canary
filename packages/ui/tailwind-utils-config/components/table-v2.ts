@@ -66,7 +66,13 @@ export default {
     // Header
     '&-header': {
       '@apply border-b': '',
-      borderColor: 'var(--cn-border-3)'
+      borderColor: 'var(--cn-border-3)',
+
+      // Separator between group row and leaf row in multi-row headers
+      'tr[data-header-depth="0"]:not(:last-child)': {
+        '@apply border-b': '',
+        borderColor: 'var(--cn-border-3)'
+      }
     },
     // Container highlight on hover
     '&:where(.cn-table-v2-highlight-hover) tbody > tr': {
@@ -140,12 +146,18 @@ export default {
       '@apply text-cn-3 text-left align-middle font-medium overflow-hidden bg-cn-2 transition-colors': '',
       '@apply [&:has([role=checkbox])]:py-0 [&:has([role=checkbox])]:!pr-0 [&>[role=checkbox]]:translate-y-[2px]': '',
       '@apply [&:has([role=button])]:py-0 [&:has([role=button])]:!pr-0': '',
+
       paddingLeft: 'var(--cn-table-header-px)',
       paddingRight: 'var(--cn-table-header-px)',
       paddingTop: 'var(--cn-table-header-py)',
       paddingBottom: 'var(--cn-table-header-py)',
       gap: 'var(--cn-table-header-gap)',
       minHeight: 'var(--cn-table-header-min)'
+    },
+
+    // Group header cell (parent column spanning child columns)
+    '&-head-group': {
+      '@apply uppercase': ''
     },
 
     // Sortable head cell

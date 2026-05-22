@@ -19,6 +19,8 @@ import {
 import { cn } from '@utils/cn'
 import { type VariantProps } from 'class-variance-authority'
 
+import './types'
+
 import { getCommonPinningStyles } from './utils'
 
 export interface DataTableProps<TData> {
@@ -362,36 +364,73 @@ export const DataTable = function DataTable<TData>({
       paginationProps={paginationProps}
     >
       <Table.Header>
-        {table.getHeaderGroups().map(headerGroup => (
-          <Table.Row key={headerGroup.id}>
-            {headerGroup.headers.map(header => (
-              <Table.Head
-                colSpan={header.colSpan}
-                key={header.id}
-                className={cn(_enableColumnResizing ? 'relative' : undefined)}
-                sortable={header.column.getCanSort()}
-                sortDirection={header.column.getCanSort() ? header.column.getIsSorted() || false : undefined}
-                onClick={header.column.getCanSort() ? header.column.getToggleSortingHandler() : undefined}
-                style={{
-                  width: header.getSize(),
-                  minWidth: header.column.columnDef.minSize ?? header.getSize(),
-                  maxWidth: header.column.columnDef.maxSize ?? header.getSize(),
-                  ...getCommonPinningStyles<TData>(header.column)
-                }}
-              >
-                {header.isPlaceholder ? null : flexRender(header.column.columnDef.header, header.getContext())}
-                {_enableColumnResizing && header.column.getCanResize() && (
-                  <button
-                    type="button"
-                    onMouseDown={header.getResizeHandler()}
-                    className="absolute right-0 top-0 h-full w-1 cursor-col-resize"
-                    aria-label="Resize column"
-                  />
-                )}
-              </Table.Head>
-            ))}
-          </Table.Row>
-        ))}
+        {(() => {
+          const headerGroups = table.getHeaderGroups()
+          const totalHeaderRows = headerGroups.length
+          const hasGroupedHeaders = totalHeaderRows > 1
+
+          return headerGroups.map((headerGroup, rowIdx) => (
+            <Table.Row key={headerGroup.id} data-header-depth={rowIdx}>
+              {headerGroup.headers.map(header => {
+                const column = header.column
+                const meta = column.columnDef.meta
+                const isLeafColumn = column.columns.length === 0
+                /**
+                 * A top-level leaf column when other top-level columns are groups.
+                 * TanStack inserts a placeholder header for it at each shallower
+                 * depth, and renders the real header at the deepest depth.
+                 * We instead render the real header once at row 0 with a vertical
+                 * rowSpan, mirroring the typical grouped-header UI.
+                 */
+                const isFloatingTopLevelLeaf = hasGroupedHeaders && isLeafColumn && !column.parent
+
+                if (isFloatingTopLevelLeaf) {
+                  if (rowIdx > 0) return null
+                } else if (header.isPlaceholder) {
+                  return null
+                }
+
+                const rowSpan = isFloatingTopLevelLeaf ? totalHeaderRows : 1
+                const canSort = column.getCanSort()
+                const isGroupHeaderCell = meta?.isGroupHeader ?? !isLeafColumn
+
+                return (
+                  <Table.Head
+                    colSpan={header.colSpan}
+                    rowSpan={rowSpan > 1 ? rowSpan : undefined}
+                    key={header.id}
+                    data-header-depth={rowIdx}
+                    className={cn(
+                      _enableColumnResizing ? 'relative' : undefined,
+                      meta?.headerClassName,
+                      isGroupHeaderCell && 'cn-table-v2-head-group',
+                      isLeafColumn && !isGroupHeaderCell && 'cn-table-v2-head-leaf'
+                    )}
+                    sortable={canSort}
+                    sortDirection={canSort ? column.getIsSorted() || false : undefined}
+                    onClick={canSort ? column.getToggleSortingHandler() : undefined}
+                    style={{
+                      width: header.getSize(),
+                      minWidth: column.columnDef.minSize ?? header.getSize(),
+                      maxWidth: column.columnDef.maxSize ?? header.getSize(),
+                      ...getCommonPinningStyles<TData>(column)
+                    }}
+                  >
+                    {flexRender(column.columnDef.header, header.getContext())}
+                    {_enableColumnResizing && column.getCanResize() && (
+                      <button
+                        type="button"
+                        onMouseDown={header.getResizeHandler()}
+                        className="absolute right-0 top-0 h-full w-1 cursor-col-resize"
+                        aria-label="Resize column"
+                      />
+                    )}
+                  </Table.Head>
+                )
+              })}
+            </Table.Row>
+          ))
+        })()}
       </Table.Header>
       <Table.Body>
         {table.getRowModel().rows.map(row => (

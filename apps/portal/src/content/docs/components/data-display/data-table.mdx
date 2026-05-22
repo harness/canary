@@ -300,6 +300,86 @@ function MyTable() {
 }
 ```
 
+## Grouped headers
+
+DataTable supports multi-row column headers via TanStack Table's nested `columns` API. Use a parent column with a `columns` array for each group. Ungrouped top-level columns (and any injected `select` / `expander` columns) automatically span both header rows.
+
+<DocsPage.ComponentExample
+  client:only
+  code={`() => {
+  const people = [
+    { name: 'Alice Chen', age: 28, visits: 142, status: 'active', profileProgress: 88 },
+    { name: 'Bob Martinez', age: 35, visits: 67, status: 'inactive', profileProgress: 42 },
+    { name: 'Priya Patel', age: 31, visits: 203, status: 'active', profileProgress: 95 },
+    { name: 'Diego Rivera', age: 26, visits: 18, status: 'pending', profileProgress: 25 },
+    { name: 'Mei Lin', age: 42, visits: 178, status: 'active', profileProgress: 76 },
+    { name: 'Marcus Lee', age: 30, visits: 91, status: 'active', profileProgress: 60 }
+  ]
+
+const columns = [
+{ id: 'name', accessorKey: 'name', header: 'Name', enableSorting: true },
+{
+id: 'info',
+header: 'Info',
+enableSorting: false,
+columns: [
+{ id: 'age', accessorKey: 'age', header: 'Age', enableSorting: true },
+{ id: 'visits', accessorKey: 'visits', header: 'Visits', enableSorting: true },
+{
+id: 'status',
+accessorKey: 'status',
+header: 'Status',
+enableSorting: true,
+cell: (info) => {
+const value = info.getValue()
+const theme = value === 'active' ? 'success' : value === 'inactive' ? 'danger' : 'warning'
+return (
+
+<StatusBadge variant="secondary" theme={theme} size="sm">
+{value}
+</StatusBadge>
+)
+}
+},
+{ id: 'profileProgress', accessorKey: 'profileProgress', header: 'Profile Progress', enableSorting: true }
+]
+}
+]
+
+const [tableSorting, setTableSorting] = React.useState([])
+
+const sortedData = [...people].sort((a, b) => {
+if (tableSorting.length === 0) return 0
+const sort = tableSorting[0]
+const key = sort.id
+if (a[key] < b[key]) return sort.desc ? 1 : -1
+if (a[key] > b[key]) return sort.desc ? -1 : 1
+return 0
+})
+
+return (
+
+<DataTable
+  columns={columns}
+  data={sortedData}
+  getRowId={(row) => row.name}
+  currentSorting={tableSorting}
+  onSortingChange={setTableSorting}
+/>
+) }`} />
+
+### Guidelines
+
+- Set an explicit `id` on every parent and child column when using `visibleColumns` or column filters.
+- Keep sorting state keyed by **leaf** column `id`s. Group parent headers are not interactive.
+- Set `enableSorting: false` on group parent columns.
+- Use custom `header` renderers on leaf columns for tooltips or info icons.
+- Optional `meta.headerClassName` and `meta.isGroupHeader` on `ColumnDef` customize header cell styling.
+
+### Row selection and expansion
+
+When `enableRowSelection` or `enableExpanding` is enabled, the injected columns are prepended as ungrouped leaf columns and automatically span both header rows.
+
 ## Props
 
 <DocsPage.PropsTable

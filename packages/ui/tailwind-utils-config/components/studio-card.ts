@@ -263,9 +263,8 @@ export default {
 
   // Tag Component
   '.cn-studio-card-tag': {
-    '@apply flex gap-cn-3xs p-cn-2xs border rounded-t-cn-4 top-[-28px] right-0 absolute select-none':
-      '',
-    'color': 'var(--cn-set-purple-outline-text)',
+    '@apply flex gap-cn-3xs p-cn-2xs border rounded-t-cn-4 top-[-28px] right-0 absolute select-none': '',
+    color: 'var(--cn-set-purple-outline-text)',
     'background-color': 'var(--cn-set-purple-outline-bg)',
     'border-color': 'var(--cn-set-purple-outline-border)',
 
@@ -341,6 +340,14 @@ export default {
         '@apply line-clamp-2': ''
       }
     }
+  },
+
+  // Stage footer (all sizes): exclude from intrinsic card width; fill width set by steps
+  '.cn-studio-card-group.cn-studio-card-stage > .cn-studio-card-footer': {
+    width: '0',
+    minWidth: '100%',
+    maxWidth: '100%',
+    overflow: 'hidden'
   },
 
   '.cn-studio-card-expand-button-main': {

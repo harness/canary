@@ -26,7 +26,7 @@ export const backgroundColor = {
   '.bg-cn-graph-card-gradient': {
     backgroundImage: 'var(--cn-comp-pipeline-card-bg)'
   },
-  '.bg-cn-graph-bg-gradient': {
+  '.bg-cn-graph-bg-gradients': {
     backgroundImage:
       'linear-gradient(90deg, var(--cn-comp-pipeline-bg) 50%, transparent 50%), linear-gradient(var(--cn-comp-pipeline-bg) 50%, transparent 50%), linear-gradient(90deg, transparent 25%, var(--cn-comp-pipeline-bg) 25%, var(--cn-comp-pipeline-bg) 75%, transparent 75%), linear-gradient(transparent 25%, var(--cn-comp-pipeline-bg) 25%, var(--cn-comp-pipeline-bg) 75%, transparent 75%)',
     backgroundSize: '8px 8px',

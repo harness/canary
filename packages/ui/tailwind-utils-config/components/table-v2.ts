@@ -1,3 +1,6 @@
+const tablePinnedLayeredBackground =
+  'linear-gradient(var(--cn-table-pinned-overlay), var(--cn-table-pinned-overlay)), var(--cn-table-pinned-base)'
+
 export default {
   '.cn-table-v2': {
     '@apply w-full': '',
@@ -74,6 +77,7 @@ export default {
         borderColor: 'var(--cn-border-3)'
       }
     },
+
     // Container highlight on hover
     '&:where(.cn-table-v2-highlight-hover) tbody > tr': {
       '&:hover, &:has(.cn-table-v2-cell-clickable-block:focus-visible)': {
@@ -81,7 +85,8 @@ export default {
           backgroundColor: 'var(--cn-state-hover)'
         },
         '&>td.cn-table-v2-cell-pinned': {
-          background: 'linear-gradient(var(--cn-state-hover), var(--cn-state-hover)), var(--cn-bg-1)'
+          '--cn-table-pinned-overlay': 'var(--cn-state-hover)',
+          background: tablePinnedLayeredBackground
         },
         '& .cn-row-pin:not(.cn-row-pin-on)': {
           opacity: '1'
@@ -115,6 +120,11 @@ export default {
         backgroundColor: 'var(--cn-state-selected)'
       },
 
+      '&:where([data-checked=true]) td.cn-table-v2-cell-pinned': {
+        '--cn-table-pinned-overlay': 'var(--cn-state-selected)',
+        background: tablePinnedLayeredBackground
+      },
+
       '&-expanded': {
         backgroundColor: 'var(--cn-state-selected)'
       },
@@ -143,7 +153,9 @@ export default {
 
     // Head cell
     '&-head': {
-      '@apply text-cn-3 text-left align-middle font-medium overflow-hidden bg-cn-2 transition-colors': '',
+      '--cn-table-pinned-base': 'var(--cn-bg-2)',
+      backgroundColor: 'var(--cn-table-pinned-base)',
+      '@apply text-cn-3 text-left align-middle font-medium overflow-hidden transition-colors': '',
       '@apply [&:has([role=checkbox])]:py-0 [&:has([role=checkbox])]:!pr-0 [&>[role=checkbox]]:translate-y-[2px]': '',
       '@apply [&:has([role=button])]:py-0 [&:has([role=button])]:!pr-0': '',
 
@@ -167,6 +179,10 @@ export default {
     '&-head-sortable:hover': {
       backgroundColor: 'var(--cn-state-hover)'
     },
+    '&-head-sortable.cn-table-v2-cell-pinned:hover': {
+      '--cn-table-pinned-overlay': 'var(--cn-state-hover)',
+      background: tablePinnedLayeredBackground
+    },
 
     '&-head-divider': {
       position: 'absolute',
@@ -177,8 +193,10 @@ export default {
 
     // Data cell
     '&-cell': {
+      '--cn-table-pinned-base': 'var(--cn-bg-1)',
+      backgroundColor: 'var(--cn-table-pinned-base)',
       position: 'relative',
-      '@apply align-middle bg-cn-1 transition-colors': '',
+      '@apply align-middle transition-colors': '',
       '@apply [&:has([role=checkbox])]:py-0 [&:has([role=checkbox])]:!pr-0 [&>[role=checkbox]]:translate-y-[2px]': '',
       '@apply [&:has([role=button])]:py-0 [&:has([role=button])]:!pr-0': '',
       paddingLeft: 'var(--cn-table-cell-px)',

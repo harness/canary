@@ -401,6 +401,8 @@ export const DataTable = function DataTable<TData>({
                     key={header.id}
                     data-header-depth={rowIdx}
                     className={cn(
+                      // Temporary fix to prevent text bleeding in header when it is pinned
+                      { 'cn-table-v2-cell-pinned': header.column.getIsPinned() },
                       _enableColumnResizing ? 'relative' : undefined,
                       meta?.headerClassName,
                       isGroupHeaderCell && 'cn-table-v2-head-group',

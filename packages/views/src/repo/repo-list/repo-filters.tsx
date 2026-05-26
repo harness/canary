@@ -29,7 +29,7 @@ export const getRepoListFilterOptions = (
 
     const favoriteFilterOption: FilterOptionConfig<keyof RepoListFilters> = {
       defaultValue: favoriteFilterDefaultValue,
-      isDefaultValue: queryFilterValues?.favorite === String(favoriteFilterDefaultValue),
+      isDefaultValue: queryFilterValues?.favorite !== true,
       label: t('views:connectors.filterOptions.statusOption.pinned', 'Pinned'),
       value: 'favorite',
       type: FilterFieldTypes.Checkbox,
@@ -43,6 +43,7 @@ export const getRepoListFilterOptions = (
     const tagsFilterOption: FilterOptionConfig<keyof RepoListFilters> = {
       label: t('views:repos.filterOptions.tagsOption.label', 'Tags'),
       value: 'tags',
+      isDefaultValue: !queryFilterValues?.tags,
       type: FilterFieldTypes.Text
     }
 

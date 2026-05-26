@@ -135,31 +135,28 @@ const SandboxRepoListPage: FC<RepoListPageProps> = ({
   if (!repositories?.length && !isDirtyList && !isLoading) {
     return (
       <SandboxLayout.Main>
-        <SandboxLayout.Content>
-          <NoData
-            withBorder
-            imageName="no-repository"
-            title={t('views:noData.noRepos', 'No repositories yet')}
-            description={[
-              t('views:noData.noReposProject', 'There are no repositories in this project yet.'),
-              t('views:noData.createOrImportRepos', 'Create new or import an existing repository.')
-            ]}
+        <NoData
+          imageName="no-repository"
+          title={t('views:noData.noRepos', 'No repositories yet')}
+          description={[
+            t('views:noData.noReposProject', 'There are no repositories in this project yet.'),
+            t('views:noData.createOrImportRepos', 'Create new or import an existing repository.')
+          ]}
+        >
+          <RbacSplitButton<string>
+            dropdownContentClassName="mt-0 min-w-[208px]"
+            handleButtonClick={() => navigate(toCreateRepo?.() || '')}
+            handleOptionChange={handleCreateOptionChange}
+            options={createOptions}
+            rbac={{
+              resource: { resourceType: ResourceType.CODE_REPOSITORY },
+              permissions: [PermissionIdentifier.CODE_REPO_CREATE]
+            }}
           >
-            <RbacSplitButton<string>
-              dropdownContentClassName="mt-0 min-w-[208px]"
-              handleButtonClick={() => navigate(toCreateRepo?.() || '')}
-              handleOptionChange={handleCreateOptionChange}
-              options={createOptions}
-              rbac={{
-                resource: { resourceType: ResourceType.CODE_REPOSITORY },
-                permissions: [PermissionIdentifier.CODE_REPO_CREATE]
-              }}
-            >
-              <IconV2 name="plus" />
-              {t('views:repos.createRepository', 'Create Repository')}
-            </RbacSplitButton>
-          </NoData>
-        </SandboxLayout.Content>
+            <IconV2 name="plus" />
+            {t('views:repos.createRepository', 'Create Repository')}
+          </RbacSplitButton>
+        </NoData>
       </SandboxLayout.Main>
     )
   }

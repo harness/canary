@@ -2,6 +2,7 @@ import { Navigate, redirect } from 'react-router-dom'
 
 import { Breadcrumb, Layout, Sidebar } from '@harnessio/ui/components'
 import { ComponentProvider } from '@harnessio/ui/context'
+import { getTrimmedSha } from '@harnessio/ui/utils'
 import {
   EmptyPage,
   ProfileSettingsLayout,
@@ -320,7 +321,7 @@ export const repoRoutes: CustomRouteObject[] = [
             path: 'commit/:commitSHA',
             element: <RepoCommitDetailsPage />,
             handle: {
-              breadcrumb: ({ commitSHA }: { commitSHA: string }) => <span>{commitSHA.substring(0, 7)}</span>,
+              breadcrumb: ({ commitSHA }: { commitSHA: string }) => <span>{getTrimmedSha(commitSHA)}</span>,
               routeName: RouteConstants.toRepoCommitDetails,
               publicAccess: true
             },

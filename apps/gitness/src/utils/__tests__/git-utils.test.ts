@@ -184,14 +184,18 @@ describe('Git Reference Functions', () => {
 })
 
 describe('getTrimmedSha', () => {
-  it('should trim SHA to 7 characters', () => {
+  it('should trim SHA to 6 characters', () => {
     const fullSha = '1234567890abcdef1234567890abcdef12345678'
-    expect(getTrimmedSha(fullSha)).toBe('1234567')
+    expect(getTrimmedSha(fullSha)).toBe('123456')
   })
 
-  it('should handle short SHA', () => {
-    const shortSha = '1234567'
-    expect(getTrimmedSha(shortSha)).toBe('1234567')
+  it('should leave SHAs shorter than 6 characters unchanged', () => {
+    const shortSha = '12345'
+    expect(getTrimmedSha(shortSha)).toBe('12345')
+  })
+
+  it('should return an empty string when SHA is undefined', () => {
+    expect(getTrimmedSha(undefined)).toBe('')
   })
 })
 
@@ -246,7 +250,7 @@ describe('createCommitFilterFromSHA', () => {
 
     expect(result).toEqual([
       {
-        name: 'Commit xyz9876',
+        name: 'Commit xyz987',
         count: 1,
         value: 'xyz9876543210fed'
       }

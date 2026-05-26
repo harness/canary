@@ -1,4 +1,4 @@
-import { csvToObject, getInitials } from '../stringUtils'
+import { csvToObject, getInitials, getTrimmedSha, TRIMMED_SHA_LENGTH } from '../stringUtils'
 
 describe('getInitials', () => {
   it('should return the initials of a single word', () => {
@@ -137,5 +137,34 @@ describe('csvToObject', () => {
       data: { ':a': ':a', key: 'value', ':b': ':b' },
       metadata: { ':a': false, key: true, ':b': false }
     })
+  })
+})
+
+describe('getTrimmedSha', () => {
+  it('should expose the standardised short-SHA display length', () => {
+    expect(TRIMMED_SHA_LENGTH).toBe(6)
+  })
+
+  it('should return the first 6 characters of a full 40-char SHA', () => {
+    const fullSha = '1234567890abcdef1234567890abcdef12345678'
+    expect(getTrimmedSha(fullSha)).toBe('123456')
+    expect(getTrimmedSha(fullSha)).toHaveLength(TRIMMED_SHA_LENGTH)
+  })
+
+  it('should return the SHA unchanged when it is exactly 6 characters', () => {
+    expect(getTrimmedSha('abcdef')).toBe('abcdef')
+  })
+
+  it('should return the SHA unchanged when it is shorter than 6 characters', () => {
+    expect(getTrimmedSha('abc')).toBe('abc')
+    expect(getTrimmedSha('1')).toBe('1')
+  })
+
+  it('should return an empty string for an empty input', () => {
+    expect(getTrimmedSha('')).toBe('')
+  })
+
+  it('should return an empty string for an undefined input', () => {
+    expect(getTrimmedSha(undefined)).toBe('')
   })
 })

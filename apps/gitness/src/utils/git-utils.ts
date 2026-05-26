@@ -1,5 +1,6 @@
 import langMap from 'lang-map'
 
+import { getTrimmedSha, TRIMMED_SHA_LENGTH } from '@harnessio/ui/utils'
 import { CommitFilterItemProps, TypesCommit } from '@harnessio/views'
 
 export enum GitCommitAction {
@@ -218,11 +219,7 @@ export const deNormalizeGitRef = (gitRef: string | undefined) => {
   }
 }
 
-const TRIMMED_SHA_LIMIT = 7
-
-export const getTrimmedSha = (sha: string): string => {
-  return sha.slice(0, TRIMMED_SHA_LIMIT)
-}
+export { getTrimmedSha, TRIMMED_SHA_LENGTH }
 
 export const createCommitFilterFromSHA = (
   commitSHA: string | undefined,
@@ -234,7 +231,7 @@ export const createCommitFilterFromSHA = (
     if (matchingCommit) {
       return [
         {
-          name: matchingCommit.title || `Commit ${commitSHA.substring(0, 7)}`,
+          name: matchingCommit.title || `Commit ${getTrimmedSha(commitSHA)}`,
           count: 1,
           value: commitSHA
         }

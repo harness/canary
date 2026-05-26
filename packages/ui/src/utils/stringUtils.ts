@@ -1,3 +1,11 @@
+export const TRIMMED_SHA_LENGTH = 6
+
+/**
+ * Trim a git commit SHA to the standardised short-SHA display length.
+ * Safely handles `undefined` and SHAs shorter than the limit (returned unchanged).
+ */
+export const getTrimmedSha = (sha?: string): string => (sha ?? '').slice(0, TRIMMED_SHA_LENGTH)
+
 export const getInitials = (name: string, length = 2) => {
   // Split the name into an array of words, ignoring empty strings
   const words = name.split(' ').filter(Boolean)

@@ -1,5 +1,6 @@
 import { ButtonGroup, ButtonGroupButtonProps, ButtonProps, Text, useCopyButton } from '@/components'
 import { useRouterContext } from '@/context'
+import { getTrimmedSha } from '@/utils'
 
 interface CommitCopyActionsProps {
   sha: string
@@ -36,7 +37,7 @@ export const CommitCopyActions = ({
         {
           children: (
             <Text className="font-body-code" color="inherit">
-              {sha.substring(0, 6)}
+              {getTrimmedSha(sha)}
             </Text>
           ),
 

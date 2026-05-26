@@ -270,6 +270,8 @@ export type EnumPullReqActivityType =
   | 'comment'
   | 'label-modify'
   | 'merge'
+  | 'merge-queue-added'
+  | 'merge-queue-removed'
   | 'non-unique-merge-base'
   | 'review-submit'
   | 'reviewer-add'

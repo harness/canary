@@ -147,7 +147,7 @@ export interface TypesPullReq {
 
 export type EnumMergeMethod = 'fast-forward' | 'merge' | 'rebase' | 'squash'
 
-export type EnumPullReqSubState = '' | 'auto_merge'
+export type EnumPullReqSubState = '' | 'auto_merge' | 'merge_queue'
 
 export type EnumPullReqState = 'closed' | 'merged' | 'open'
 

@@ -123,7 +123,7 @@ export const usePullRequestProviderStore = create<
               requiresCommentApproval,
               resolvedCommentArrParams: resolvedCommentArr?.params
             }),
-            defaultReviewersApprovals: res?.default_reviewer_aprovals
+            defaultReviewersApprovals: res?.default_reviewer_approvals
           }
 
           // We are adding data object comparison,

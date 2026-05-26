@@ -96,4 +96,6 @@ export type EnumWebhookTrigger =
   | 'tag_updated'
   | 'artifact_created'
   | 'artifact_deleted'
+  | 'merge_queue_checks_canceled'
+  | 'merge_queue_checks_requested'
   | 'pullreq_target_branch_changed'

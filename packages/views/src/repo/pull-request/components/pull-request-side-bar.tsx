@@ -100,6 +100,7 @@ export const PullRequestSideBar: FC<PullRequestSideBarProps> = ({
           pullRequestMetadata={pullRequestMetadata}
           processReviewDecision={processReviewDecision}
           handleDelete={handleDelete}
+          handleUserGroupReviewerDelete={handleUserGroupReviewerDelete}
           addReviewerError={addReviewerError}
           removeReviewerError={removeReviewerError}
         />

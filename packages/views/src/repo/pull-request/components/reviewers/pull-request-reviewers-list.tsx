@@ -1,7 +1,6 @@
-import { Alert } from '@harnessio/ui/components'
-import { Layout } from '@harnessio/ui/components'
-import { Text } from '@harnessio/ui/components'
 import { isEmpty } from 'lodash-es'
+
+import { Alert, Layout, Text } from '@harnessio/ui/components'
 
 import { EnumPullReqReviewDecision, PRReviewer, PullReqReviewDecision } from '../../pull-request.types'
 import { ReviewerItem } from './pull-request-reviewers-item'
@@ -38,7 +37,7 @@ const ReviewersList: React.FC<ReviewersListProps> = ({
     )}
 
     {!isEmpty(reviewers) || !isEmpty(userGroupReviewers) ? (
-      [...userGroupReviewers, ...reviewers].map(({ reviewer, review_decision, sha }) => (
+      [...userGroupReviewers, ...reviewers].map(({ reviewer, review_decision, sha, fetchGroupMembers }) => (
         <ReviewerItem
           key={reviewer?.id}
           reviewer={reviewer}
@@ -47,6 +46,7 @@ const ReviewersList: React.FC<ReviewersListProps> = ({
           sourceSHA={pullRequestMetadata?.source_sha}
           processReviewDecision={processReviewDecision}
           handleDelete={handleDelete}
+          fetchGroupMembers={fetchGroupMembers}
         />
       ))
     ) : (

@@ -183,6 +183,8 @@ export interface PRReviewer {
   reviewer: { display_name: string; id: number; email: string; type: EnumBypassListType }
   review_decision?: EnumPullReqReviewDecision
   sha?: string
+  groupUsers?: { display_name: string; id: number; email: string; type: EnumBypassListType }[]
+  fetchGroupMembers?: () => Promise<Array<{ name?: string; email: string; uuid: string }>>
 }
 
 export interface TypesLabelPullReqAssignmentInfo {

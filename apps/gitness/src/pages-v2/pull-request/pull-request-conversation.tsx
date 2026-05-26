@@ -39,6 +39,7 @@ import {
   userGroupReviewerDeletePullReq,
   useUpdatePullReqMutation
 } from '@harnessio/code-service-client'
+import { getUserListInUserGroup } from '@harnessio/react-ng-manager-v2-client'
 import { Skeleton } from '@harnessio/ui/components'
 import {
   CodeOwnersData,
@@ -305,6 +306,35 @@ export default function PullRequestConversationPage() {
     repo_ref: repoRef,
     pullreq_number: prId
   })
+
+  const fetchGroupMembers = useCallback(
+    (
+      identifier: string
+    ): Promise<
+      Array<{
+        name?: string
+        email: string
+        uuid: string
+        disabled: boolean
+        externallyManaged: boolean
+        locked: boolean
+      }>
+    > => {
+      if (!accountId) return Promise.resolve([])
+
+      return getUserListInUserGroup({
+        identifier,
+        queryParams: { accountIdentifier: accountId, pageIndex: 0, pageSize: 50 },
+        body: {}
+      })
+        .then(response => response.body?.data?.content || [])
+        .catch(error => {
+          console.warn('Failed to fetch user group members:', error)
+          return []
+        })
+    },
+    [accountId]
+  )
 
   const { data: { body: codeOwners } = {}, refetch: refetchCodeOwners } = useCodeownersPullReqQuery({
     repo_ref: repoRef,
@@ -1190,7 +1220,8 @@ export default function PullRequestConversationPage() {
               type: EnumBypassListType.USER_GROUP
             },
             review_decision: val?.decision,
-            sha: val?.sha
+            sha: val?.sha,
+            fetchGroupMembers: () => fetchGroupMembers(val.user_group?.identifier || '')
           })),
           assignableLabels: assignableLabels,
           PRLabels: appliedLabels,

@@ -1,8 +1,9 @@
-import { forwardRef } from 'react'
+import { forwardRef, useEffect, useState } from 'react'
+
+import { EnumBypassListType, PRReviewer, PullReqReviewDecision, ReviewerItemProps } from '@views'
+import { getIcon } from '@views/repo/utils'
 
 import { Avatar, AvatarProps, Button, IconV2, Layout, ScrollArea, withTooltip } from '@harnessio/ui/components'
-import { EnumBypassListType, PullReqReviewDecision, ReviewerItemProps } from '@views'
-import { getIcon } from '@views/repo/utils'
 
 import { ReviewerInfo } from './reviewer-info'
 
@@ -55,7 +56,7 @@ const User = ({
           name={name}
           tooltipProps={{
             content: (
-              <ScrollArea className="-mx-cn-2xs px-cn-2xs max-h-60 w-64">
+              <ScrollArea className="px-cn-2xs max-h-60 w-64">
                 <Layout.Vertical gapY="sm" className="w-full">
                   {groupUsers?.map(user => (
                     <User
@@ -85,9 +86,25 @@ const ReviewerItem = ({
   sourceSHA,
   processReviewDecision,
   handleDelete,
-  groupUsers
+  fetchGroupMembers
 }: ReviewerItemProps) => {
   const { id, type, display_name, email } = reviewer || {}
+  const [groupUsers, setGroupUsers] = useState<PRReviewer['reviewer'][]>([])
+
+  useEffect(() => {
+    if (!fetchGroupMembers || type !== EnumBypassListType.USER_GROUP) return
+
+    fetchGroupMembers().then(members => {
+      setGroupUsers(
+        members.map(user => ({
+          display_name: user.name || '',
+          id: 0,
+          email: user.email || '',
+          type: EnumBypassListType.USER
+        }))
+      )
+    })
+  }, [fetchGroupMembers, type])
 
   const updatedReviewDecision = reviewDecision && processReviewDecision(reviewDecision, sha, sourceSHA)
 

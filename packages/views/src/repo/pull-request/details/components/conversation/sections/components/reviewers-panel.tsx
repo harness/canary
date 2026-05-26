@@ -1,11 +1,19 @@
 import { FC, useMemo } from 'react'
 
-import { Avatar, IconV2, IconWithTooltip, Layout, StackedList, Text } from '@harnessio/ui/components'
-import { AvatarTooltipProps, AvatarWithTooltip } from '@harnessio/ui/components'
 import { EnumBypassListType } from '@views/repo'
 import { TypesPrincipalInfo, TypesUserGroupInfo } from '@views/repo/pull-request/details/pull-request-details-types'
 import { combineAndNormalizePrincipalsAndGroups } from '@views/repo/utils'
 import { isEmpty } from 'lodash-es'
+
+import {
+  Avatar,
+  AvatarTooltipProps,
+  AvatarWithTooltip,
+  IconV2,
+  Layout,
+  StackedList,
+  Text
+} from '@harnessio/ui/components'
 
 interface ReviewerPanelProps {
   principals?: TypesPrincipalInfo[]
@@ -45,21 +53,15 @@ export const ReviewersPanel: FC<ReviewerPanelProps> = ({ principals, userGroups 
                 )
               }
 
-              if (principal?.type === EnumBypassListType.USER_GROUP) {
-                return (
-                  <IconWithTooltip
-                    {...tooltipProps}
-                    key={principal?.id || idx}
-                    iconProps={{ name: 'group-1', size: 'lg' }}
-                  />
-                )
-              }
               return (
                 <AvatarWithTooltip
                   key={principal?.id || idx}
                   name={principal?.display_name || ''}
                   size="sm"
-                  rounded={principal?.type === EnumBypassListType.USER}
+                  rounded={
+                    principal?.type === EnumBypassListType.USER || principal?.type === EnumBypassListType.USER_GROUP
+                  }
+                  isGroup={principal?.type === EnumBypassListType.USER_GROUP}
                   tooltipProps={tooltipProps}
                 />
               )

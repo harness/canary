@@ -286,6 +286,207 @@ return <DraggableCardList cards={cards} setCards={setCards} />
 }`}
 />
 
+## Sticky Headers
+
+Use the `sticky` and `header` props on `DraggableCardList` for the common pattern of a pinned header above a draggable list inside a scrollable drawer. These props wrap the list in a [`StickyListSection`](/components/utilities/sticky-list-section) internally.
+
+<DocsPage.ComponentExample
+  client:only
+  code={`() => {
+  const [serviceCards, setServiceCards] = React.useState([
+    { id: 's1', size: 'md', gripPosition: 'outside', title: 'auth-service' },
+    { id: 's2', size: 'md', gripPosition: 'outside', title: 'api-gateway' },
+    { id: 's3', size: 'md', gripPosition: 'outside', title: 'notification-svc' },
+    { id: 's4', size: 'md', gripPosition: 'outside', title: 'billing-service' },
+    { id: 's5', size: 'md', gripPosition: 'outside', title: 'user-service' },
+    { id: 's6', size: 'md', gripPosition: 'outside', title: 'search-indexer' },
+    { id: 's7', size: 'md', gripPosition: 'outside', title: 'email-worker' },
+    { id: 's8', size: 'md', gripPosition: 'outside', title: 'config-manager' },
+  ])
+
+const [envCards, setEnvCards] = React.useState([
+{ id: 'e1', size: 'md', gripPosition: 'outside', title: 'production' },
+{ id: 'e2', size: 'md', gripPosition: 'outside', title: 'staging' },
+{ id: 'e3', size: 'md', gripPosition: 'outside', title: 'development' },
+{ id: 'e4', size: 'md', gripPosition: 'outside', title: 'qa-environment' },
+{ id: 'e5', size: 'md', gripPosition: 'outside', title: 'load-testing' },
+{ id: 'e6', size: 'md', gripPosition: 'outside', title: 'sandbox' },
+{ id: 'e7', size: 'md', gripPosition: 'outside', title: 'pre-production' },
+{ id: 'e8', size: 'md', gripPosition: 'outside', title: 'integration' },
+{ id: 'e9', size: 'md', gripPosition: 'outside', title: 'canary' },
+{ id: 'e10', size: 'md', gripPosition: 'outside', title: 'disaster-recovery' },
+])
+
+const SectionHeader = ({ label }) => (
+
+<Layout.Horizontal align="center" className="py-cn-xs w-full justify-between">
+  <Text className="text-sm font-medium" color="foreground-1">
+    {label}
+  </Text>
+  <Button variant="outline" size="sm">
+    <IconV2 name="plus" size="sm" />
+    Add {label.toLowerCase()}
+  </Button>
+</Layout.Horizontal>
+)
+
+return (
+
+<Drawer.Root>
+  <Drawer.Trigger>
+    <Button>Open Drawer</Button>
+  </Drawer.Trigger>
+  <Drawer.Content size="sm">
+    <Drawer.Header>
+      <Drawer.Title>Configure stage</Drawer.Title>
+    </Drawer.Header>
+    <Drawer.Body>
+      <Layout.Vertical gap="md">
+        <DraggableCardList
+          sticky
+          header={<SectionHeader label="Service" />}
+          cards={serviceCards}
+          setCards={setServiceCards}
+          listGap="sm"
+        />
+        <DraggableCardList
+          sticky
+          header={<SectionHeader label="Environment" />}
+          cards={envCards}
+          setCards={setEnvCards}
+          listGap="sm"
+        />
+      </Layout.Vertical>
+    </Drawer.Body>
+    <Drawer.Footer>
+      <Button>Submit</Button>
+    </Drawer.Footer>
+  </Drawer.Content>
+</Drawer.Root>
+) }`} />
+
+### Contained Mode (inside form wrappers)
+
+Use `contained` when the `DraggableCardList` is nested inside form input wrappers or other intermediate elements, but the drawer body is still the scroll container. Set `--cn-sticky-container-padding` on an ancestor to control how far the header bleeds horizontally.
+
+<DocsPage.ComponentExample
+  client:only
+  code={`() => {
+  const [serviceCards, setServiceCards] = React.useState([
+    { id: 's1', size: 'sm', gripPosition: 'outside', title: 'auth-service' },
+    { id: 's2', size: 'sm', gripPosition: 'outside', title: 'api-gateway' },
+    { id: 's3', size: 'sm', gripPosition: 'outside', title: 'notification-svc' },
+    { id: 's4', size: 'sm', gripPosition: 'outside', title: 'billing-service' },
+    { id: 's5', size: 'sm', gripPosition: 'outside', title: 'user-service' },
+    { id: 's6', size: 'sm', gripPosition: 'outside', title: 'search-indexer' },
+    { id: 's7', size: 'sm', gripPosition: 'outside', title: 'email-worker' },
+    { id: 's8', size: 'sm', gripPosition: 'outside', title: 'config-manager' },
+    { id: 's9', size: 'sm', gripPosition: 'outside', title: 'payment-processor' },
+    { id: 's10', size: 'sm', gripPosition: 'outside', title: 'cache-layer' },
+    { id: 's11', size: 'sm', gripPosition: 'outside', title: 'event-bus' },
+    { id: 's12', size: 'sm', gripPosition: 'outside', title: 'analytics-ingest' },
+  ])
+
+const [envCards, setEnvCards] = React.useState([
+{ id: 'e1', size: 'sm', gripPosition: 'outside', title: 'production' },
+{ id: 'e2', size: 'sm', gripPosition: 'outside', title: 'staging' },
+{ id: 'e3', size: 'sm', gripPosition: 'outside', title: 'development' },
+{ id: 'e4', size: 'sm', gripPosition: 'outside', title: 'qa-environment' },
+{ id: 'e5', size: 'sm', gripPosition: 'outside', title: 'load-testing' },
+{ id: 'e6', size: 'sm', gripPosition: 'outside', title: 'sandbox' },
+{ id: 'e7', size: 'sm', gripPosition: 'outside', title: 'pre-production' },
+{ id: 'e8', size: 'sm', gripPosition: 'outside', title: 'integration' },
+{ id: 'e9', size: 'sm', gripPosition: 'outside', title: 'canary' },
+{ id: 'e10', size: 'sm', gripPosition: 'outside', title: 'disaster-recovery' },
+{ id: 'e11', size: 'sm', gripPosition: 'outside', title: 'perf-testing' },
+{ id: 'e12', size: 'sm', gripPosition: 'outside', title: 'blue-green-a' },
+{ id: 'e13', size: 'sm', gripPosition: 'outside', title: 'blue-green-b' },
+{ id: 'e14', size: 'sm', gripPosition: 'outside', title: 'feature-flags' },
+])
+
+return (
+
+<Drawer.Root>
+<Drawer.Trigger>
+<Button>Open Form Drawer</Button>
+</Drawer.Trigger>
+<Drawer.Content size="sm">
+<Drawer.Header>
+<Drawer.Title>Stage configuration</Drawer.Title>
+<Drawer.Description>Schema-driven form with nested inputs</Drawer.Description>
+</Drawer.Header>
+<Drawer.Body>
+<Layout.Vertical gap="lg">
+<ControlGroup>
+<Label>Stage Name</Label>
+<Input placeholder="deploy-prod" />
+</ControlGroup>
+
+            <ControlGroup>
+              <Label>Deployment Type</Label>
+              <Input placeholder="Kubernetes" disabled value="Kubernetes" />
+            </ControlGroup>
+
+            <div style={{ '--cn-sticky-container-padding': 'calc(var(--cn-drawer-container) + var(--cn-layout-xl))' }}>
+              <DraggableCardList
+                sticky
+                contained
+                header={
+                  <Layout.Horizontal align="center" className="py-cn-xs w-full justify-between">
+                    <Text className="text-sm font-medium" color="foreground-1">Service</Text>
+                    <Button variant="outline" size="sm">
+                      <IconV2 name="plus" size="sm" />
+                      Add
+                    </Button>
+                  </Layout.Horizontal>
+                }
+                cards={serviceCards}
+                setCards={setServiceCards}
+                listGap="xs"
+              />
+            </div>
+
+            <div style={{ '--cn-sticky-container-padding': 'calc(var(--cn-drawer-container) + var(--cn-layout-xl))' }}>
+              <DraggableCardList
+                sticky
+                contained
+                header={
+                  <Layout.Horizontal align="center" className="py-cn-xs w-full justify-between">
+                    <Text className="text-sm font-medium" color="foreground-1">Environment</Text>
+                    <Button variant="outline" size="sm">
+                      <IconV2 name="plus" size="sm" />
+                      Add
+                    </Button>
+                  </Layout.Horizontal>
+                }
+                cards={envCards}
+                setCards={setEnvCards}
+                listGap="xs"
+              />
+            </div>
+
+            <ControlGroup>
+              <Label>Timeout</Label>
+              <Input placeholder="10m" />
+            </ControlGroup>
+          </Layout.Vertical>
+        </Drawer.Body>
+        <Drawer.Footer>
+          <Button variant="outline">Cancel</Button>
+          <Button>Apply</Button>
+        </Drawer.Footer>
+      </Drawer.Content>
+    </Drawer.Root>
+
+)
+}`} />
+
+<Aside type="tip">
+  The sticky headers bleed to the drawer edges using
+  `--cn-sticky-container-padding`, even though the lists are nested inside
+  `ControlGroup` and `Layout.Vertical` wrappers.
+</Aside>
+
 ## Anatomy
 
 The draggable card system consists of two main components:
@@ -358,6 +559,32 @@ A container component that manages a list of draggable cards.
       description: "Function to update the cards array when reordering occurs",
       required: true,
       value: "(newCards: CardData[]) => void",
+    },
+    {
+      name: "header",
+      description: "Content to render as the section header above the list",
+      required: false,
+      value: "ReactNode",
+    },
+    {
+      name: "sticky",
+      description:
+        "Wraps the list in a StickyListSection so the header pins on scroll. Requires header to be set.",
+      required: false,
+      value: "boolean",
+    },
+    {
+      name: "contained",
+      description:
+        "Use with sticky when nested inside form wrappers. Controls bleed distance via --cn-sticky-container-padding CSS variable on an ancestor.",
+      required: false,
+      value: "boolean",
+    },
+    {
+      name: "listGap",
+      description: "Gap between cards in the list",
+      required: false,
+      value: "'xs' | 'sm' | 'md'",
     },
   ]}
 />

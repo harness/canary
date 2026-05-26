@@ -12,47 +12,36 @@ import { Aside } from "@astrojs/starlight/components";
 <DocsPage.ComponentExample
   client:only
   code={`() => {
-  const [serviceCards, setServiceCards] = React.useState([
-    { id: 's1', size: 'md', gripPosition: 'outside', title: 'auth-service' },
-    { id: 's2', size: 'md', gripPosition: 'outside', title: 'api-gateway' },
-    { id: 's3', size: 'md', gripPosition: 'outside', title: 'notification-svc' },
-    { id: 's4', size: 'md', gripPosition: 'outside', title: 'billing-service' },
-    { id: 's5', size: 'md', gripPosition: 'outside', title: 'user-service' },
-    { id: 's6', size: 'md', gripPosition: 'outside', title: 'search-indexer' },
-    { id: 's7', size: 'md', gripPosition: 'outside', title: 'email-worker' },
-    { id: 's8', size: 'md', gripPosition: 'outside', title: 'config-manager' },
-  ])
+  const notifications = [
+    'Pipeline succeeded', 'Pipeline failed', 'Pipeline paused',
+    'Approval required', 'Deployment started', 'Deployment completed',
+    'Stage failed', 'Stage timeout', 'Delegate disconnected',
+    'Delegate reconnected', 'Freeze window active', 'Secret expired',
+    'Connector unreachable', 'License expiring', 'Audit event',
+    'Infrastructure provisioned', 'Rollback triggered',
+  ]
 
-const [envCards, setEnvCards] = React.useState([
-{ id: 'e1', size: 'md', gripPosition: 'outside', title: 'production' },
-{ id: 'e2', size: 'md', gripPosition: 'outside', title: 'staging' },
-{ id: 'e3', size: 'md', gripPosition: 'outside', title: 'development' },
-{ id: 'e4', size: 'md', gripPosition: 'outside', title: 'qa-environment' },
-{ id: 'e5', size: 'md', gripPosition: 'outside', title: 'load-testing' },
-{ id: 'e6', size: 'md', gripPosition: 'outside', title: 'sandbox' },
-{ id: 'e7', size: 'md', gripPosition: 'outside', title: 'pre-production' },
-{ id: 'e8', size: 'md', gripPosition: 'outside', title: 'integration' },
-{ id: 'e9', size: 'md', gripPosition: 'outside', title: 'canary' },
-{ id: 'e10', size: 'md', gripPosition: 'outside', title: 'disaster-recovery' },
-{ id: 'e11', size: 'md', gripPosition: 'outside', title: 'perf-testing' },
-{ id: 'e12', size: 'md', gripPosition: 'outside', title: 'blue-green-a' },
-{ id: 'e13', size: 'md', gripPosition: 'outside', title: 'blue-green-b' },
-{ id: 'e14', size: 'md', gripPosition: 'outside', title: 'feature-flags' },
-{ id: 'e15', size: 'md', gripPosition: 'outside', title: 'data-migration' },
-{ id: 'e16', size: 'md', gripPosition: 'outside', title: 'hotfix' },
-])
+const channels = [
+'team-deploys', 'oncall-alerts', 'prod-incidents',
+'staging-notifications', 'security-alerts', 'build-failures',
+'release-notes', 'infra-changes', 'cost-alerts',
+'compliance-updates', 'audit-log', 'platform-status',
+'dev-environment', 'qa-results', 'change-management',
+'incident-response',
+]
 
-const SectionHeader = ({ label }) => (
+const ListItem = ({ icon, label }) => (
 
-<Layout.Horizontal align="center" className="py-cn-xs w-full justify-between">
-  <Text className="text-sm font-medium" color="foreground-1">
-    {label}
-  </Text>
-  <Button variant="outline" size="sm">
-    <IconV2 name="plus" size="sm" />
-    Add {label.toLowerCase()}
-  </Button>
-</Layout.Horizontal>
+<Card.Root size="sm" interactive={false}>
+  <Card.Content>
+    <Layout.Horizontal align="center" gap="sm">
+      <IconV2 name={icon} size="sm" color="neutral" />
+      <Text className="text-sm" color="foreground-1">
+        {label}
+      </Text>
+    </Layout.Horizontal>
+  </Card.Content>
+</Card.Root>
 )
 
 return (
@@ -63,39 +52,56 @@ return (
   </Drawer.Trigger>
   <Drawer.Content size="sm">
     <Drawer.Header>
-      <Drawer.Title>Configure stage</Drawer.Title>
+      <Drawer.Title>Notification settings</Drawer.Title>
     </Drawer.Header>
     <Drawer.Body>
       <Layout.Vertical gap="md">
         <StickyListSection.Root>
           <StickyListSection.Header>
-            <SectionHeader label="Service" />
+            <Layout.Horizontal
+              align="center"
+              className="py-cn-xs w-full justify-between"
+            >
+              <Text className="text-sm font-medium" color="foreground-1">
+                Events
+              </Text>
+              <Text className="text-xs" color="foreground-3">
+                {notifications.length} configured
+              </Text>
+            </Layout.Horizontal>
           </StickyListSection.Header>
           <StickyListSection.Content>
-            <DraggableCardList
-              cards={serviceCards}
-              setCards={setServiceCards}
-              listGap="sm"
-            />
+            <Layout.Vertical gap="sm">
+              {notifications.map((n) => (
+                <ListItem key={n} icon="bell" label={n} />
+              ))}
+            </Layout.Vertical>
           </StickyListSection.Content>
         </StickyListSection.Root>
         <StickyListSection.Root>
           <StickyListSection.Header>
-            <SectionHeader label="Environment" />
+            <Layout.Horizontal
+              align="center"
+              className="py-cn-xs w-full justify-between"
+            >
+              <Text className="text-sm font-medium" color="foreground-1">
+                Channels
+              </Text>
+              <Text className="text-xs" color="foreground-3">
+                {channels.length} connected
+              </Text>
+            </Layout.Horizontal>
           </StickyListSection.Header>
           <StickyListSection.Content>
-            <DraggableCardList
-              cards={envCards}
-              setCards={setEnvCards}
-              listGap="sm"
-            />
+            <Layout.Vertical gap="sm">
+              {channels.map((c) => (
+                <ListItem key={c} icon="slack" label={"#" + c} />
+              ))}
+            </Layout.Vertical>
           </StickyListSection.Content>
         </StickyListSection.Root>
       </Layout.Vertical>
     </Drawer.Body>
-    <Drawer.Footer>
-      <Button>Submit</Button>
-    </Drawer.Footer>
   </Drawer.Content>
 </Drawer.Root>
 ) }`} />
@@ -106,13 +112,188 @@ return (
   over.
 </Aside>
 
-## Usage
+## Contained Mode
 
-### Compound Component (direct usage)
+Use `contained` when the `StickyListSection` is nested inside intermediate wrapper elements (form inputs, layout stacks, cards) but the **drawer body** is still the scroll container. This mode uses `--cn-sticky-container-padding` to bleed the header out to the drawer edges through the wrapper layers.
+
+<DocsPage.ComponentExample
+  client:only
+  code={`() => {
+  const permissions = [
+    { role: 'Admin', scope: 'Organization', user: 'alice@acme.io' },
+    { role: 'Developer', scope: 'Project', user: 'bob@acme.io' },
+    { role: 'Viewer', scope: 'Project', user: 'carol@acme.io' },
+    { role: 'Pipeline Executor', scope: 'Project', user: 'dave@acme.io' },
+    { role: 'Approver', scope: 'Organization', user: 'eve@acme.io' },
+    { role: 'Auditor', scope: 'Account', user: 'frank@acme.io' },
+    { role: 'Developer', scope: 'Project', user: 'grace@acme.io' },
+    { role: 'Admin', scope: 'Project', user: 'heidi@acme.io' },
+    { role: 'Viewer', scope: 'Organization', user: 'ivan@acme.io' },
+    { role: 'Pipeline Executor', scope: 'Project', user: 'judy@acme.io' },
+    { role: 'Developer', scope: 'Project', user: 'karl@acme.io' },
+    { role: 'Viewer', scope: 'Account', user: 'lisa@acme.io' },
+    { role: 'Admin', scope: 'Organization', user: 'mike@acme.io' },
+    { role: 'Approver', scope: 'Project', user: 'nancy@acme.io' },
+  ]
+
+const secrets = [
+{ name: 'DOCKER_PASSWORD', type: 'Text' },
+{ name: 'AWS_ACCESS_KEY', type: 'Text' },
+{ name: 'GCP_SA_KEY', type: 'File' },
+{ name: 'NPM_TOKEN', type: 'Text' },
+{ name: 'SIGNING_CERT', type: 'File' },
+{ name: 'SLACK_WEBHOOK', type: 'Text' },
+{ name: 'DB_PASSWORD', type: 'Text' },
+{ name: 'SSH_KEY', type: 'SSH' },
+{ name: 'TLS_CERT', type: 'File' },
+{ name: 'API_TOKEN', type: 'Text' },
+{ name: 'VAULT_TOKEN', type: 'Text' },
+{ name: 'REGISTRY_CRED', type: 'Text' },
+{ name: 'DATADOG_KEY', type: 'Text' },
+{ name: 'GITHUB_TOKEN', type: 'Text' },
+{ name: 'COSIGN_KEY', type: 'File' },
+{ name: 'JIRA_TOKEN', type: 'Text' },
+]
+
+const PermissionRow = ({ role, scope, user }) => (
+
+<Card.Root size="sm" interactive={false}>
+  <Card.Content>
+    <Layout.Horizontal align="center" className="justify-between">
+      <Layout.Vertical gap="none">
+        <Text className="text-sm font-medium" color="foreground-1">
+          {user}
+        </Text>
+        <Text className="text-xs" color="foreground-3">
+          {role}
+        </Text>
+      </Layout.Vertical>
+      <Text
+        className="rounded bg-cn-background-3 px-2 py-0.5 text-xs"
+        color="foreground-3"
+      >
+        {scope}
+      </Text>
+    </Layout.Horizontal>
+  </Card.Content>
+</Card.Root>
+)
+
+const SecretRow = ({ name, type }) => (
+
+<Card.Root size="sm" interactive={false}>
+  <Card.Content>
+    <Layout.Horizontal align="center" className="justify-between">
+      <Layout.Horizontal align="center" gap="sm">
+        <IconV2 name="lock" size="sm" color="neutral" />
+        <Text className="text-sm font-mono" color="foreground-1">
+          {name}
+        </Text>
+      </Layout.Horizontal>
+      <Text
+        className="rounded bg-cn-background-3 px-2 py-0.5 text-xs"
+        color="foreground-3"
+      >
+        {type}
+      </Text>
+    </Layout.Horizontal>
+  </Card.Content>
+</Card.Root>
+)
+
+return (
+
+<Drawer.Root>
+<Drawer.Trigger>
+<Button>Open Form Drawer</Button>
+</Drawer.Trigger>
+<Drawer.Content size="sm">
+<Drawer.Header>
+<Drawer.Title>Resource configuration</Drawer.Title>
+<Drawer.Description>Nested sections inside form wrappers</Drawer.Description>
+</Drawer.Header>
+<Drawer.Body>
+<Layout.Vertical gap="lg">
+<ControlGroup>
+<Label>Resource Name</Label>
+<Input placeholder="my-service" />
+</ControlGroup>
+
+            <ControlGroup>
+              <Label>Description</Label>
+              <Input placeholder="Production deployment service" />
+            </ControlGroup>
+
+            <div style={{ '--cn-sticky-container-padding': 'calc(var(--cn-drawer-container) + var(--cn-layout-xl))' }}>
+              <StickyListSection.Root contained>
+                <StickyListSection.Header>
+                  <Layout.Horizontal align="center" className="py-cn-xs w-full justify-between">
+                    <Text className="text-sm font-medium" color="foreground-1">Role bindings</Text>
+                    <Button variant="outline" size="sm">
+                      <IconV2 name="plus" size="sm" />
+                      Add
+                    </Button>
+                  </Layout.Horizontal>
+                </StickyListSection.Header>
+                <StickyListSection.Content>
+                  <Layout.Vertical gap="sm">
+                    {permissions.map(p => (
+                      <PermissionRow key={p.user} {...p} />
+                    ))}
+                  </Layout.Vertical>
+                </StickyListSection.Content>
+              </StickyListSection.Root>
+            </div>
+
+            <div style={{ '--cn-sticky-container-padding': 'calc(var(--cn-drawer-container) + var(--cn-layout-xl))' }}>
+              <StickyListSection.Root contained>
+                <StickyListSection.Header>
+                  <Layout.Horizontal align="center" className="py-cn-xs w-full justify-between">
+                    <Text className="text-sm font-medium" color="foreground-1">Secrets</Text>
+                    <Button variant="outline" size="sm">
+                      <IconV2 name="plus" size="sm" />
+                      Add
+                    </Button>
+                  </Layout.Horizontal>
+                </StickyListSection.Header>
+                <StickyListSection.Content>
+                  <Layout.Vertical gap="sm">
+                    {secrets.map(s => (
+                      <SecretRow key={s.name} {...s} />
+                    ))}
+                  </Layout.Vertical>
+                </StickyListSection.Content>
+              </StickyListSection.Root>
+            </div>
+
+            <ControlGroup>
+              <Label>Tags</Label>
+              <Input placeholder="env:prod, team:platform" />
+            </ControlGroup>
+          </Layout.Vertical>
+        </Drawer.Body>
+        <Drawer.Footer>
+          <Button variant="outline">Cancel</Button>
+          <Button>Save</Button>
+        </Drawer.Footer>
+      </Drawer.Content>
+    </Drawer.Root>
+
+)
+}`} />
+
+<Aside type="tip">
+  The sticky headers bleed edge-to-edge using `--cn-sticky-container-padding` to
+  account for the horizontal inset of parent form wrappers. The drawer body
+  remains the scroll container.
+</Aside>
+
+## Usage
 
 ```typescript jsx
 import { StickyListSection } from '@harnessio/ui/components'
 
+// Direct usage inside a drawer body
 <StickyListSection.Root>
   <StickyListSection.Header>
     <div>Section Title</div>
@@ -121,22 +302,26 @@ import { StickyListSection } from '@harnessio/ui/components'
     {/* Scrollable list content */}
   </StickyListSection.Content>
 </StickyListSection.Root>
+
+// Contained mode — inside form wrappers
+<div style={{ '--cn-sticky-container-padding': '...' }}>
+  <StickyListSection.Root contained>
+    <StickyListSection.Header>
+      <div>Section Title</div>
+    </StickyListSection.Header>
+    <StickyListSection.Content>
+      {/* List content */}
+    </StickyListSection.Content>
+  </StickyListSection.Root>
+</div>
 ```
 
-### DraggableCardList Convenience Props
-
-For the common case of sticky headers above a draggable card list, use the `header` and `sticky` props directly:
-
-```typescript jsx
-import { DraggableCardList } from '@harnessio/ui/components'
-
-<DraggableCardList
-  sticky
-  header={<div>Section Title</div>}
-  cards={cards}
-  setCards={setCards}
-/>
-```
+<Aside type="note">
+  `DraggableCardList` also exposes `sticky`, `header`, and `contained`
+  convenience props that wrap `StickyListSection` internally. See the [Draggable
+  Card](/components/data-display/draggable-card#sticky-headers) docs for that
+  API.
+</Aside>
 
 ## Anatomy
 
@@ -164,6 +349,13 @@ The container component that manages stuck detection via IntersectionObserver.
       description: "Header and Content sub-components",
       required: true,
       value: "ReactNode",
+    },
+    {
+      name: "contained",
+      description:
+        "Use when nested inside intermediate wrapper elements. Disables the default drawer edge-to-edge bleed, uses top: 0, and reads --cn-sticky-container-padding to control horizontal bleed distance.",
+      required: false,
+      value: "boolean",
     },
     {
       name: "className",

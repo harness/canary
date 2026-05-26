@@ -96,7 +96,8 @@ export const DraggableCardList = ({
   listGap = 'md',
   className,
   header,
-  sticky
+  sticky,
+  contained
 }: {
   cards: CardData[]
   setCards: (newCards: CardData[]) => void
@@ -104,6 +105,7 @@ export const DraggableCardList = ({
   className?: string
   header?: React.ReactNode
   sticky?: boolean
+  contained?: boolean
 }) => {
   const { handleDragEnd, getItemId } = useDragAndDrop({
     items: cards,
@@ -139,7 +141,7 @@ export const DraggableCardList = ({
 
   if (header && sticky) {
     return (
-      <StickyListSection.Root>
+      <StickyListSection.Root contained={contained}>
         <StickyListSection.Header>{header}</StickyListSection.Header>
         <StickyListSection.Content>{cardList}</StickyListSection.Content>
       </StickyListSection.Root>

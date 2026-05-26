@@ -41,6 +41,7 @@ import { PathParams } from '../../RouteDefinitions'
 import { createCommitFilterFromSHA, filenameToLanguage, normalizeGitRef } from '../../utils/git-utils'
 import { parseSpecificDiff } from './diff-utils'
 import { usePRCommonInteractions } from './hooks/usePRCommonInteractions'
+import { useSinceLastReview } from './hooks/useSinceLastReview'
 import { changedFileId, DIFF2HTML_CONFIG, normalizeGitFilePath } from './pull-request-utils'
 import { usePullRequestProviderStore } from './stores/pull-request-provider-store'
 import { PullReqReviewDecision } from './types'
@@ -458,6 +459,8 @@ export default function PullRequestChanges() {
     [pullReqCommits?.commits?.length]
   )
 
+  const sinceLastReview = useSinceLastReview({ reviewers, pullReqCommits, currentUser, pullReqMetadata })
+
   const [selectedCommits, setSelectedCommits] = useState<CommitFilterItemProps[]>(() => {
     if (commitSHA && pullReqCommits?.commits) {
       return createCommitFilterFromSHA(commitSHA, pullReqCommits.commits, defaultCommitFilter)
@@ -554,6 +557,7 @@ export default function PullRequestChanges() {
         defaultCommitFilter={defaultCommitFilter}
         selectedCommits={selectedCommits}
         setSelectedCommits={setSelectedCommits}
+        sinceLastReview={sinceLastReview}
         markViewed={handleMarkViewed}
         unmarkViewed={handleUnmarkViewed}
         activities={activities}

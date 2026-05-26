@@ -18,6 +18,7 @@ import { DraggableSidebarDivider, SIDEBAR_MIN_WIDTH } from '../../components/dra
 import { PullRequestDiffSidebar } from '../components/pull-request-diff-sidebar'
 import { CommitSuggestion, PullReqReviewDecision, TypesPullReq } from '../pull-request.types'
 import { PULL_REQUEST_DIFF_RENDERING_BLOCK_SIZE } from '../utils'
+import { SinceLastReviewData } from './components/changes/chained-commits-dropdown'
 import { getFileComments, PullRequestChanges } from './components/changes/pull-request-changes'
 import { CommitFilterItemProps, PullRequestChangesFilter } from './components/changes/pull-request-changes-filter'
 import {
@@ -49,6 +50,7 @@ interface RepoPullRequestChangesPageProps {
   defaultCommitFilter: CommitFilterItemProps
   selectedCommits: CommitFilterItemProps[]
   setSelectedCommits: React.Dispatch<React.SetStateAction<CommitFilterItemProps[]>>
+  sinceLastReview?: SinceLastReviewData
   markViewed: (filePath: string, checksumAfter: string) => void
   unmarkViewed: (filePath: string) => void
   onCopyClick?: (commentId?: number) => void
@@ -96,6 +98,7 @@ const PullRequestChangesPage: FC<RepoPullRequestChangesPageProps> = ({
   defaultCommitFilter,
   selectedCommits,
   setSelectedCommits,
+  sinceLastReview,
   markViewed,
   unmarkViewed,
   onCopyClick,
@@ -285,6 +288,7 @@ const PullRequestChangesPage: FC<RepoPullRequestChangesPageProps> = ({
             defaultCommitFilter={defaultCommitFilter}
             selectedCommits={selectedCommits}
             setSelectedCommits={setSelectedCommits}
+            sinceLastReview={sinceLastReview}
             viewedFiles={viewedFileCount}
             pullReqStats={pullReqStats}
             onCommitSuggestionsBatch={onCommitSuggestionsBatch}
@@ -307,5 +311,6 @@ const PullRequestChangesPage: FC<RepoPullRequestChangesPageProps> = ({
   )
 }
 
+export type { SinceLastReviewData }
 export { PullRequestChangesPage }
 PullRequestChangesPage.displayName = 'PullRequestChangesPage'

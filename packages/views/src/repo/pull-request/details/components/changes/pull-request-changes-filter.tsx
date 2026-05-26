@@ -23,7 +23,7 @@ import {
   getApprovalStateVariant,
   processReviewDecision
 } from '../../pull-request-utils'
-import { ChainedCommitsDropdown } from './chained-commits-dropdown'
+import { ChainedCommitsDropdown, SinceLastReviewData } from './chained-commits-dropdown'
 import * as FileViewGauge from './file-viewed-gauge'
 
 export interface CommitFilterItemProps {
@@ -47,6 +47,7 @@ export interface PullRequestChangesFilterProps {
   defaultCommitFilter: CommitFilterItemProps
   selectedCommits: CommitFilterItemProps[]
   setSelectedCommits: React.Dispatch<React.SetStateAction<CommitFilterItemProps[]>>
+  sinceLastReview?: SinceLastReviewData
   viewedFiles: number
   commitSuggestionsBatchCount: number
   onCommitSuggestionsBatch: () => void
@@ -76,6 +77,7 @@ export const PullRequestChangesFilter: React.FC<PullRequestChangesFilterProps> =
   defaultCommitFilter,
   selectedCommits,
   setSelectedCommits,
+  sinceLastReview,
   viewedFiles,
   commitSuggestionsBatchCount,
   onCommitSuggestionsBatch,
@@ -205,6 +207,7 @@ export const PullRequestChangesFilter: React.FC<PullRequestChangesFilterProps> =
             defaultCommitFilter={defaultCommitFilter}
             selectedCommits={selectedCommits}
             setSelectedCommits={setSelectedCommits}
+            sinceLastReview={sinceLastReview}
           />
         </DropdownMenu.Root>
 

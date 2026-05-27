@@ -3,6 +3,32 @@ import { CSSRuleObject } from 'tailwindcss/types/config'
 const sizes = ['sm', 'md', 'lg'] as const
 const states = ['processing', 'completed', 'paused', 'failed'] as const
 
+const colors = [
+  'gray',
+  'blue',
+  'brown',
+  'cyan',
+  'green',
+  'forest-green',
+  'indigo',
+  'lime',
+  'mint',
+  'orange',
+  'pink',
+  'purple',
+  'red',
+  'violet',
+  'yellow'
+] as const
+
+// Match Tag's theme→token remap so the public enum stays palette-named while
+// the underlying design tokens use their semantic names.
+const colorTokenMapper: Partial<Record<(typeof colors)[number], string>> = {
+  green: 'success',
+  red: 'danger',
+  yellow: 'warning'
+}
+
 const stateStyleMapper: Record<
   (typeof states)[number],
   {
@@ -85,6 +111,18 @@ function createProgressVariantStyles() {
     }
 
     combinationStyles[`&:where(.cn-progress-${state})`] = style
+  })
+
+  // The component type enforces `color` XOR `state`, so we only need to override
+  // the solid bar fill (and the indeterminate fake fill) — never the processing stripes.
+  colors.forEach(color => {
+    const token = colorTokenMapper[color] ?? color
+    const fill = `var(--cn-set-${token}-primary-bg)`
+    combinationStyles[`&:where(.cn-progress-color-${color})`] = {
+      [` .cn-progress-root::-webkit-progress-value`]: { 'background-color': fill },
+      [` .cn-progress-root::-moz-progress-bar`]: { 'background-color': fill },
+      [` .cn-progress-indeterminate-fake`]: { 'background-color': fill }
+    }
   })
 
   return combinationStyles

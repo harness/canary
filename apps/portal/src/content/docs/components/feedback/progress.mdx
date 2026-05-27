@@ -114,6 +114,58 @@ The `Progress` component supports the `state` prop to reflect the current status
 </div>`}
 />
 
+### Colors
+
+The `Progress` component supports a `color` prop that accepts a closed enum of palette themes — `gray`, `blue`, `brown`, `cyan`, `green`, `forest-green`, `indigo`, `lime`, `mint`, `orange`, `pink`, `purple`, `red`, `violet`, and `yellow` — matching the `Tag` theme set. The bar fill resolves to the corresponding design-system token (e.g. `--cn-set-blue-primary-bg`).
+
+`color` and `state` are mutually exclusive — pass one or the other, never both. When `color` is set, the bar uses the chosen theme color, while the status icon falls back to the neutral default; use `hideIcon` if you want to remove the icon entirely. `color` works with both the `default` and `indeterminate` variants.
+
+<DocsPage.ComponentExample
+  client:only
+  code={`<div className="w-[600px] grid gap-cn-md">
+
+    <div>
+      <Text variant="heading-base" className="underline mb-cn-3xs">blue:</Text>
+      <Progress
+        value={0.6}
+        color="blue"
+        label="Analytics_Report_March.csv"
+        subtitle="60%"
+      />
+    </div>
+
+    <div>
+      <Text variant="heading-base" className="underline mb-cn-3xs">purple:</Text>
+      <Progress
+        value={0.4}
+        color="purple"
+        label="Analytics_Report_March.csv"
+        subtitle="40%"
+      />
+    </div>
+
+    <div>
+      <Text variant="heading-base" className="underline mb-cn-3xs">forest-green:</Text>
+      <Progress
+        value={0.8}
+        color="forest-green"
+        label="Analytics_Report_March.csv"
+        subtitle="80%"
+      />
+    </div>
+
+    <div>
+      <Text variant="heading-base" className="underline mb-cn-3xs">indeterminate + cyan:</Text>
+      <Progress
+        variant="indeterminate"
+        color="cyan"
+        label="Loading"
+      />
+    </div>
+
+  </div>`}
+/>
+
 ### Sizes
 
 The `Progress` component supports the `size` prop to adjust the height of the progress bar. It accepts `sm`, `md`, and `lg` values. This allows customization of the component’s visual size to fit different UI contexts.
@@ -184,10 +236,18 @@ The `Progress` component supports the `size` prop to adjust the height of the pr
     {
       name: "state",
       description:
-        "Visual state of the progress. Affects styling and optional icon.",
+        "Visual state of the progress. Affects bar color, status icon, and description/subtitle colors. Mutually exclusive with 'color' — pass one or the other.",
       required: false,
       defaultValue: "'default'",
       value: "'default' | 'processing' | 'completed' | 'paused' | 'failed'",
+    },
+    {
+      name: "color",
+      description:
+        "Theme color for the bar fill, drawn from the same palette as Tag (with 'green', 'red', 'yellow' resolving to success/danger/warning tokens). Mutually exclusive with 'state'.",
+      required: false,
+      value:
+        "'gray' | 'blue' | 'brown' | 'cyan' | 'green' | 'forest-green' | 'indigo' | 'lime' | 'mint' | 'orange' | 'pink' | 'purple' | 'red' | 'violet' | 'yellow'",
     },
     {
       name: "size",

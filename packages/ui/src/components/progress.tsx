@@ -20,6 +20,23 @@ const progressVariants = cva('cn-progress', {
       completed: 'cn-progress-completed',
       paused: 'cn-progress-paused',
       failed: 'cn-progress-failed'
+    },
+    color: {
+      gray: 'cn-progress-color-gray',
+      blue: 'cn-progress-color-blue',
+      brown: 'cn-progress-color-brown',
+      cyan: 'cn-progress-color-cyan',
+      green: 'cn-progress-color-success',
+      'forest-green': 'cn-progress-color-forest-green',
+      indigo: 'cn-progress-color-indigo',
+      lime: 'cn-progress-color-lime',
+      mint: 'cn-progress-color-mint',
+      orange: 'cn-progress-color-orange',
+      pink: 'cn-progress-color-pink',
+      purple: 'cn-progress-color-purple',
+      red: 'cn-progress-color-danger',
+      violet: 'cn-progress-color-violet',
+      yellow: 'cn-progress-color-warning'
     }
   },
   defaultVariants: {
@@ -28,6 +45,9 @@ const progressVariants = cva('cn-progress', {
   }
 })
 
+type ProgressColor = NonNullable<VariantProps<typeof progressVariants>['color']>
+type ProgressState = NonNullable<VariantProps<typeof progressVariants>['state']>
+
 const getIconName = (state: VariantProps<typeof progressVariants>['state']): IconV2NamesType => {
   if (state === 'completed') return 'check-circle'
   if (state === 'paused') return 'pause'
@@ -35,28 +55,44 @@ const getIconName = (state: VariantProps<typeof progressVariants>['state']): Ico
   return 'clock'
 }
 
-interface CommonProgressProps extends HTMLAttributes<HTMLDivElement>, VariantProps<typeof progressVariants> {
+interface CommonProgressProps extends HTMLAttributes<HTMLDivElement> {
   id?: string
+  size?: VariantProps<typeof progressVariants>['size']
   label?: string
   description?: string
   subtitle?: string
   className?: string
   hideContainer?: boolean
 }
-interface DeterminateProgressProps extends CommonProgressProps {
+
+interface StateProgressProps extends CommonProgressProps {
+  /** Visual state of the progress. Mutually exclusive with `color`. */
+  state?: ProgressState
+  color?: never
+}
+
+interface ColorProgressProps extends CommonProgressProps {
+  state?: never
+  /** Theme color for the bar fill. Mutually exclusive with `state`. */
+  color: ProgressColor
+}
+
+type StateOrColorProps = StateProgressProps | ColorProgressProps
+
+interface DeterminateProgressProps {
   value: number
   hidePercentage?: boolean
   hideIcon?: boolean
   variant?: 'default'
 }
-interface IndeterminateProgressProps extends CommonProgressProps {
+interface IndeterminateProgressProps {
   value?: never
   hidePercentage?: never
   hideIcon?: never
   variant: 'indeterminate'
 }
 
-type ProgressProps = DeterminateProgressProps | IndeterminateProgressProps
+type ProgressProps = (DeterminateProgressProps | IndeterminateProgressProps) & StateOrColorProps
 
 const Progress = forwardRef<HTMLProgressElement, ProgressProps>(
   (
@@ -71,6 +107,7 @@ const Progress = forwardRef<HTMLProgressElement, ProgressProps>(
       subtitle,
       hidePercentage = false,
       value = 0,
+      color,
       className,
       hideContainer = false,
       ...props
@@ -126,7 +163,7 @@ const Progress = forwardRef<HTMLProgressElement, ProgressProps>(
     }
 
     return (
-      <div className={cn(progressVariants({ size, state }), className)} {...props}>
+      <div className={cn(progressVariants({ size, state, color }), className)} {...props}>
         {(label || !hidePercentage || !hideIcon) && (
           <label className="cn-progress-header" htmlFor={id}>
             <div className="cn-progress-header-left">

@@ -113,6 +113,46 @@ describe('Progress', () => {
     expect(hashMock).not.toHaveBeenCalled()
   })
 
+  test('applies color class when color prop is set', () => {
+    const { container } = render(<Progress label="Themed" value={0.5} color="blue" />)
+
+    const root = container.firstElementChild as HTMLElement
+    expect(root.className).toContain('cn-progress-color-blue')
+    expect(root.className).not.toContain('cn-progress-failed')
+    expect(root.className).not.toContain('cn-progress-completed')
+  })
+
+  test('remaps green/red/yellow color values to success/danger/warning class names', () => {
+    const { container: greenContainer } = render(<Progress label="Green" value={0.5} color="green" />)
+    expect((greenContainer.firstElementChild as HTMLElement).className).toContain('cn-progress-color-success')
+
+    cleanup()
+
+    const { container: redContainer } = render(<Progress label="Red" value={0.5} color="red" />)
+    expect((redContainer.firstElementChild as HTMLElement).className).toContain('cn-progress-color-danger')
+
+    cleanup()
+
+    const { container: yellowContainer } = render(<Progress label="Yellow" value={0.5} color="yellow" />)
+    expect((yellowContainer.firstElementChild as HTMLElement).className).toContain('cn-progress-color-warning')
+  })
+
+  test('applies color class on the indeterminate variant', () => {
+    const { container } = render(<Progress label="Loading" variant="indeterminate" color="purple" />)
+
+    const root = container.firstElementChild as HTMLElement
+    expect(root.className).toContain('cn-progress-color-purple')
+    expect(container.querySelector('.cn-progress-indeterminate-fake')).toBeInTheDocument()
+  })
+
+  test('rejects color and state being passed together at compile time', () => {
+    // Locks in the mutual-exclusion contract: TS must reject any Progress
+    // call site that tries to pass both `color` and `state`.
+    // @ts-expect-error - `color` and `state` are mutually exclusive in ProgressProps.
+    const invalid = <Progress label="Both" value={0.5} state="completed" color="blue" />
+    expect(invalid).toBeTruthy()
+  })
+
   test('applies size and state classes and renders correct icons', () => {
     const { container: failedContainer } = render(<Progress label="Failed" state="failed" size="lg" value={0.4} />)
 

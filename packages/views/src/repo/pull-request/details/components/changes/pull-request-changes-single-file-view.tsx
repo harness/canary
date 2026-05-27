@@ -1,5 +1,4 @@
-import { useTranslation } from '@/context'
-import { TypesUser } from '@/types'
+import { DiffModeEnum } from '@git-diff-view/react'
 import {
   CommentItem,
   CommitFilterItemProps,
@@ -8,11 +7,13 @@ import {
   PrincipalPropsType,
   TypesPullReq,
   TypesPullReqActivity
-} from '@/views'
-import { Alert } from '@components/alert'
-import { DiffModeEnum } from '@git-diff-view/react'
+} from '@views'
 import { HeaderProps, PullRequestAccordion } from '@views/repo/pull-request/components/pull-request-accordian'
 import { innerBlockName, outterBlockName } from '@views/repo/pull-request/utils'
+
+import { Alert } from '@harnessio/ui/components'
+import { useTranslation } from '@harnessio/ui/context'
+import { TypesUser } from '@harnessio/ui/types'
 
 import { getFileComments } from './pull-request-changes'
 

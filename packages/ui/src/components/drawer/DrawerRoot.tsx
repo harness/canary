@@ -4,7 +4,7 @@ import { DialogOpenContext, usePortal } from '@/context'
 import { Drawer as DrawerPrimitive } from 'vaul'
 import styleText from 'vaul/style.css?raw'
 
-import { DEFAULT_MAX_STACK_DEPTH, DrawerContext, getMaxDrawerSize, useDrawerContext } from './drawer-context'
+import { DEFAULT_MAX_STACK_DEPTH, DrawerContext, useDrawerContext } from './drawer-context'
 
 export const DrawerRoot = ({
   direction = 'right',
@@ -16,7 +16,7 @@ export const DrawerRoot = ({
 }: ComponentProps<typeof DrawerPrimitive.Root> & { maxStackDepth?: number }) => {
   const { portalContainer } = usePortal()
   const [childDrawerOpen, setChildDrawerOpen] = useState(false)
-  const [maxDescendantSize, setMaxDescendantSize] = useState<string | undefined>(undefined)
+  const [topmostDescendantSize, setTopmostDescendantSize] = useState<string | undefined>(undefined)
   const [contentSize, setContentSize] = useState<string | undefined>(undefined)
   const [openDescendantCount, setOpenDescendantCount] = useState(0)
   // track actual drawer state from Vaul (required for trigger mode)
@@ -24,7 +24,7 @@ export const DrawerRoot = ({
   const {
     isParentOpen,
     onChildOpenChange,
-    onChildSubtreeMax,
+    onTopmostSizeChange: parentOnTopmostSizeChange,
     onChildDescendantCount,
     stackDepth: parentStackDepth,
     maxStackDepth: inheritedMaxStackDepth
@@ -44,24 +44,32 @@ export const DrawerRoot = ({
   }, [portalContainer])
 
   // Callback for child drawers to notify this drawer
-  const handleChildOpenChange = useCallback((isOpen: boolean) => {
-    setChildDrawerOpen(isOpen)
-    if (!isOpen) {
-      setMaxDescendantSize(undefined)
-      setOpenDescendantCount(0)
-    }
-  }, [])
-
-  // Child reports the max size of itself + all its descendants
-  const handleChildSubtreeMax = useCallback(
-    (childMax: string | undefined) => {
-      setMaxDescendantSize(childMax)
-      // Bubble up: tell our parent the max of our own content + all descendants
-      if (nested && onChildSubtreeMax) {
-        onChildSubtreeMax(getMaxDrawerSize(contentSize, childMax))
+  const handleChildOpenChange = useCallback(
+    (isOpen: boolean) => {
+      setChildDrawerOpen(isOpen)
+      if (!isOpen) {
+        setTopmostDescendantSize(undefined)
+        setOpenDescendantCount(0)
+        if (nested && parentOnTopmostSizeChange && contentSize) {
+          parentOnTopmostSizeChange(contentSize)
+        }
+        if (nested && onChildDescendantCount) {
+          onChildDescendantCount(0)
+        }
       }
     },
-    [nested, onChildSubtreeMax, contentSize]
+    [nested, parentOnTopmostSizeChange, contentSize, onChildDescendantCount]
+  )
+
+  // Topmost (frontmost) descendant size — passed through unchanged
+  const handleTopmostSizeChange = useCallback(
+    (size: string | undefined) => {
+      setTopmostDescendantSize(size)
+      if (nested && parentOnTopmostSizeChange) {
+        parentOnTopmostSizeChange(size)
+      }
+    },
+    [nested, parentOnTopmostSizeChange]
   )
 
   const handleChildDescendantCount = useCallback(
@@ -75,34 +83,47 @@ export const DrawerRoot = ({
     [nested, onChildDescendantCount]
   )
 
-  const maxDescendantSizeRef = useRef(maxDescendantSize)
+  const contentSizeRef = useRef(contentSize)
   useEffect(() => {
-    maxDescendantSizeRef.current = maxDescendantSize
-  }, [maxDescendantSize])
+    contentSizeRef.current = contentSize
+  }, [contentSize])
+
+  // Track open state synchronously for use in callbacks during the same event
+  const isOpenRef = useRef(open ?? internalOpen)
 
   const handleContentSizeReport = useCallback(
     (size: string) => {
       setContentSize(size)
-      if (nested && onChildSubtreeMax) {
-        onChildSubtreeMax(getMaxDrawerSize(size, maxDescendantSizeRef.current))
+      contentSizeRef.current = size
+      // Propagate immediately if this drawer is open and nested — ensures the
+      // parent receives topmostDescendantSize in the same commit as hasOpenChild.
+      if (isOpenRef.current && nested && parentOnTopmostSizeChange) {
+        parentOnTopmostSizeChange(size)
       }
     },
-    [nested, onChildSubtreeMax]
+    [nested, parentOnTopmostSizeChange]
   )
 
   // Track controlled `open` prop changes and notify parent
   useEffect(() => {
-    // When controlled `open` prop changes, we need to notify parent
-    // (wrappedOnOpenChange won't be called by Vaul in this case)
-    if (open !== undefined && nested && onChildOpenChange) {
-      onChildOpenChange(open)
+    if (open !== undefined) {
+      isOpenRef.current = open
+      if (nested && onChildOpenChange) {
+        onChildOpenChange(open)
+      }
+      if (open && nested && parentOnTopmostSizeChange && contentSizeRef.current) {
+        parentOnTopmostSizeChange(contentSizeRef.current)
+      }
     }
-  }, [open, nested, onChildOpenChange])
+  }, [open, nested, onChildOpenChange, parentOnTopmostSizeChange])
 
-  // Report initial descendant count (0 = just this drawer) when opened
+  // Report descendant count when this drawer first opens (initial notification to parent)
+  const prevOpen = useRef(open ?? internalOpen)
   useEffect(() => {
     const isOpen = open ?? internalOpen
-    if (isOpen && nested && onChildDescendantCount) {
+    const justOpened = isOpen && !prevOpen.current
+    prevOpen.current = isOpen
+    if (justOpened && nested && onChildDescendantCount) {
       onChildDescendantCount(openDescendantCount)
     }
   }, [open, internalOpen, nested, onChildDescendantCount, openDescendantCount])
@@ -111,16 +132,23 @@ export const DrawerRoot = ({
   const wrappedOnOpenChange = useCallback(
     (isOpen: boolean) => {
       setInternalOpen(isOpen)
+      isOpenRef.current = isOpen
 
       // Notify parent drawer that our state changed
       if (nested && onChildOpenChange) {
         onChildOpenChange(isOpen)
       }
 
+      // Propagate topmost size when opening (same batch as onChildOpenChange so
+      // the parent receives hasOpenChild + topmostDescendantSize together)
+      if (isOpen && nested && parentOnTopmostSizeChange && contentSizeRef.current) {
+        parentOnTopmostSizeChange(contentSizeRef.current)
+      }
+
       // Call user's original callback
       onOpenChange?.(isOpen)
     },
-    [nested, onChildOpenChange, onOpenChange]
+    [nested, onChildOpenChange, parentOnTopmostSizeChange, onOpenChange]
   )
 
   const RootComponent = nested ? DrawerPrimitive.NestedRoot : DrawerPrimitive.Root
@@ -139,12 +167,11 @@ export const DrawerRoot = ({
     () => ({
       direction,
       nested,
-      // Use all three: parent state + controlled prop + trigger state
       isParentOpen: isParentOpen || open || internalOpen,
       hasOpenChild: childDrawerOpen,
       onChildOpenChange: handleChildOpenChange,
-      maxDescendantSize,
-      onChildSubtreeMax: handleChildSubtreeMax,
+      topmostDescendantSize,
+      onTopmostSizeChange: handleTopmostSizeChange,
       reportContentSize: handleContentSizeReport,
       openDescendantCount,
       onChildDescendantCount: handleChildDescendantCount,
@@ -160,8 +187,8 @@ export const DrawerRoot = ({
       internalOpen,
       childDrawerOpen,
       handleChildOpenChange,
-      maxDescendantSize,
-      handleChildSubtreeMax,
+      topmostDescendantSize,
+      handleTopmostSizeChange,
       handleContentSizeReport,
       openDescendantCount,
       handleChildDescendantCount,

@@ -1,4 +1,4 @@
-import { ComponentPropsWithoutRef, ElementRef, forwardRef, useCallback, useEffect, useRef } from 'react'
+import { ComponentPropsWithoutRef, ElementRef, forwardRef, useCallback, useLayoutEffect, useRef } from 'react'
 
 import { usePortal, useRegisterDialog } from '@/context'
 import { cn, useMergeRefs } from '@/utils'
@@ -29,12 +29,36 @@ function getDrawerTransform(dir: string, depth: number): string {
   }
 }
 
-const DRAWER_TRANSFORM_DEFAULT = 'scale(1) translate3d(0px, 0px, 0px)'
-const DRAWER_EASING = '500ms cubic-bezier(0.32, 0.72, 0, 1)'
-const DRAWER_TRANSITION = `transform ${DRAWER_EASING}, min-width ${DRAWER_EASING}`
+const DRAWER_EASING = 'cubic-bezier(0.32, 0.72, 0, 1)'
+const DRAWER_DURATION = 500
 
-const DRAWER_EXPAND_DELAY = 64
-const DRAWER_COLLAPSE_DELAY = 192
+/**
+ * Animate a single CSS property from its current visual value to a target.
+ * Reads the live computed value (including fill from any running animation),
+ * cancels the previous animation, then starts a new one.
+ * Uses fill:'both' so it holds the first keyframe during delay and last keyframe after finish.
+ */
+function animateProp(
+  el: HTMLElement,
+  prev: Animation | null,
+  prop: 'width' | 'transform',
+  to: string,
+  cancelOnFinish: boolean
+): Animation | null {
+  if (!el.animate) return null
+  const from = getComputedStyle(el)[prop]
+  if (prev) prev.cancel()
+  if (from === to) return null
+  const anim = el.animate([{ [prop]: from }, { [prop]: to }], {
+    duration: DRAWER_DURATION,
+    easing: DRAWER_EASING,
+    fill: 'both'
+  })
+  if (cancelOnFinish) {
+    anim.onfinish = () => anim.cancel()
+  }
+  return anim
+}
 
 const drawerContentVariants = cva('cn-drawer-content', {
   variants: {
@@ -85,132 +109,66 @@ export const DrawerContent = forwardRef<ElementRef<typeof DrawerPrimitive.Conten
   ) => {
     const contentRef = useRef<HTMLDivElement>(null)
     const { portalContainer } = usePortal()
-    const { direction, modal, hasOpenChild, maxDescendantSize, reportContentSize, openDescendantCount, maxStackDepth } =
-      useDrawerContext()
+    const {
+      direction,
+      modal,
+      hasOpenChild,
+      topmostDescendantSize,
+      reportContentSize,
+      openDescendantCount,
+      maxStackDepth
+    } = useDrawerContext()
     const maxVisualPush = (maxStackDepth ?? DEFAULT_MAX_STACK_DEPTH) - 1
     const clampedDescendantCount = Math.min(openDescendantCount ?? 0, maxVisualPush)
     const isCoveredByDescendant = (openDescendantCount ?? 0) > maxVisualPush
     const ref = useMergeRefs([_ref, contentRef])
 
-    // Report this drawer's size so ancestors can compute the widest in the stack
-    useEffect(() => {
+    useLayoutEffect(() => {
       if (size && reportContentSize) {
         reportContentSize(size)
       }
     }, [size, reportContentSize])
 
-    // Expand to peek behind a wider descendant drawer.
-    // The translate offset between adjacent depth levels already creates the visual peek,
-    // so min-width just needs to match the widest descendant — no additional offset needed.
     const isHorizontal = direction === 'right' || direction === 'left'
-    const peekMinWidth = (() => {
-      if (!hasOpenChild || !isHorizontal || !maxDescendantSize || !size || isCoveredByDescendant) return undefined
+
+    // Which size token should this drawer display as?
+    // Active: match the topmost descendant. Resting: use own size.
+    const targetSizeToken = (() => {
+      if (!hasOpenChild || !isHorizontal || !topmostDescendantSize || !size || isCoveredByDescendant) return undefined
       const myIdx = DRAWER_SIZE_ORDER.indexOf(size as (typeof DRAWER_SIZE_ORDER)[number])
-      const maxIdx = DRAWER_SIZE_ORDER.indexOf(maxDescendantSize as (typeof DRAWER_SIZE_ORDER)[number])
-      if (myIdx === -1 || maxIdx === -1 || myIdx >= maxIdx) return undefined
-      return `var(--cn-drawer-${maxDescendantSize})`
+      const topIdx = DRAWER_SIZE_ORDER.indexOf(topmostDescendantSize as (typeof DRAWER_SIZE_ORDER)[number])
+      if (myIdx === -1 || topIdx === -1 || myIdx === topIdx) return undefined
+      return topmostDescendantSize
     })()
 
-    // Use ref to avoid stale closures in MutationObserver
-    const hasOpenChildRef = useRef(hasOpenChild)
-    const directionRef = useRef(direction)
-    const descendantCountRef = useRef(clampedDescendantCount)
+    const targetTransform = hasOpenChild ? getDrawerTransform(direction ?? 'right', clampedDescendantCount) : undefined
 
-    useEffect(() => {
-      hasOpenChildRef.current = hasOpenChild
-      directionRef.current = direction
-      descendantCountRef.current = clampedDescendantCount
-    }, [hasOpenChild, direction, clampedDescendantCount])
+    const widthAnimRef = useRef<Animation | null>(null)
+    const transformAnimRef = useRef<Animation | null>(null)
+    const isFirstRender = useRef(true)
 
-    // Apply min-width separately from the MutationObserver to avoid infinite loops.
-    // CSS can't transition from 'auto' to a length, so we seed a concrete starting
-    // value (current width) before enabling the transition on the next frame.
-    useEffect(() => {
+    useLayoutEffect(() => {
       if (!contentRef.current) return
-      const element = contentRef.current
+      const el = contentRef.current
 
-      if (peekMinWidth) {
-        element.style.minWidth = `${element.offsetWidth}px`
-        element.style.transition = 'none'
-
-        let rafId: number
-        const expandDelay = setTimeout(() => {
-          element.style.transition = DRAWER_TRANSITION
-          rafId = requestAnimationFrame(() => {
-            element.style.minWidth = peekMinWidth
-          })
-        }, DRAWER_EXPAND_DELAY)
-
-        return () => {
-          clearTimeout(expandDelay)
-          cancelAnimationFrame(rafId)
-        }
-      } else if (element.style.minWidth) {
-        element.style.minWidth = `${element.offsetWidth}px`
-        element.style.transition = 'none'
-
-        let rafId: number
-        const collapseDelay = setTimeout(() => {
-          element.style.transition = DRAWER_TRANSITION
-          rafId = requestAnimationFrame(() => {
-            element.style.minWidth = '0px'
-          })
-        }, DRAWER_COLLAPSE_DELAY)
-
-        const onEnd = (e: TransitionEvent) => {
-          if (e.propertyName === 'min-width') {
-            element.style.minWidth = ''
-            element.removeEventListener('transitionend', onEnd)
-          }
-        }
-        element.addEventListener('transitionend', onEnd)
-
-        return () => {
-          clearTimeout(collapseDelay)
-          cancelAnimationFrame(rafId)
-          element.removeEventListener('transitionend', onEnd)
-        }
-      }
-    }, [peekMinWidth])
-
-    useEffect(() => {
-      if (!contentRef.current) return
-
-      const element = contentRef.current
-
-      const applyTransform = () => {
-        const dir = directionRef.current
-        const depth = descendantCountRef.current ?? 0
-        element.style.transform = getDrawerTransform(dir ?? 'right', depth)
-        element.style.transition = DRAWER_TRANSITION
+      if (isFirstRender.current) {
+        isFirstRender.current = false
+        return
       }
 
-      if (hasOpenChild) {
-        applyTransform()
+      // Release fill when returning to resting state so Vaul's exit animations can take over
+      const isResting = !hasOpenChild
 
-        const observer = new MutationObserver(() => {
-          applyTransform()
-        })
+      // Target width: always resolve from the CSS custom property (px value).
+      // Active state → topmost descendant's size token. Resting → own size token.
+      const widthToken = targetSizeToken ?? (size as string)
+      const toWidth = getComputedStyle(el).getPropertyValue(`--cn-drawer-${widthToken}`).trim()
+      widthAnimRef.current = animateProp(el, widthAnimRef.current, 'width', toWidth, isResting)
 
-        observer.observe(element, {
-          attributes: true,
-          attributeFilter: ['style']
-        })
-
-        return () => {
-          observer.disconnect()
-        }
-      } else {
-        const resetDelay = setTimeout(() => {
-          element.style.transition = DRAWER_TRANSITION
-          element.style.transform = DRAWER_TRANSFORM_DEFAULT
-        }, DRAWER_COLLAPSE_DELAY)
-
-        return () => {
-          clearTimeout(resetDelay)
-        }
-      }
-    }, [hasOpenChild, clampedDescendantCount])
+      // Target transform: stacked position or identity
+      const toTransform = targetTransform ?? 'scale(1) translate3d(0px, 0px, 0px)'
+      transformAnimRef.current = animateProp(el, transformAnimRef.current, 'transform', toTransform, isResting)
+    }, [targetSizeToken, targetTransform, hasOpenChild, size, direction, clampedDescendantCount])
 
     const { handleCloseAutoFocus } = useRegisterDialog()
 
@@ -248,7 +206,7 @@ export const DrawerContent = forwardRef<ElementRef<typeof DrawerPrimitive.Conten
       <DrawerPrimitive.Portal container={portalContainer}>
         {/* !!! */}
         {/* For the scroll to work when using the Drawer with modal === true in Shadow DOM, the Overlay needs to wrap the Content */}
-        {/* Here’s the issue for the scroll bug in Shadow DOM, works same for Vaul - https://github.com/radix-ui/primitives/issues/3353 */}
+        {/* Here's the issue for the scroll bug in Shadow DOM, works same for Vaul - https://github.com/radix-ui/primitives/issues/3353 */}
         {modal ? (
           <DrawerOverlay className={overlayClassName} withCustomOverlay={withCustomOverlay}>
             {Content}

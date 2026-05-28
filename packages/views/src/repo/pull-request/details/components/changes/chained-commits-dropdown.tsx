@@ -75,9 +75,7 @@ export function ChainedCommitsDropdown(props: ChainedCommitsDropdownProps) {
         <>
           <DropdownMenu.CheckboxItem
             title={<Text>Changes since your last review</Text>}
-            description={
-              status === 'no-review' ? 'No previous reviews found' : 'No new commits since last review'
-            }
+            description={status === 'no-review' ? 'No previous reviews found' : 'No new commits since last review'}
             checked={false}
             disabled
           />

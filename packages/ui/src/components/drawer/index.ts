@@ -10,7 +10,7 @@ import {
   DrawerContentVariantsSize
 } from './DrawerContent'
 import { DrawerDescription } from './DrawerDescription'
-import { DrawerDualPane } from './DrawerDualPane'
+import { DrawerDualPane, type DrawerDualPaneProps } from './DrawerDualPane'
 import { DrawerDualPaneMain } from './DrawerDualPaneMain'
 import { DrawerFooter } from './DrawerFooter'
 import { DrawerHeader, DrawerHeaderProps } from './DrawerHeader'
@@ -30,6 +30,7 @@ export type {
   DrawerContentProps,
   DrawerHeaderProps,
   DrawerHeaderV2Props,
+  DrawerDualPaneProps,
   DrawerRailProps,
   DrawerStepProps,
   DrawerStepsProps,

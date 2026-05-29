@@ -232,6 +232,63 @@ describe('Drawer dual pane layout', () => {
       expect(upcomingStep.querySelector('.cn-drawer-dual-pane-step-indicator-number')?.textContent).toBe('3')
     })
   })
+
+  test('lets Drawer.DualPane own the step state for a wizard composition', async () => {
+    const onValueChange = vi.fn()
+
+    render(
+      <Drawer.Root open>
+        <Drawer.Content>
+          <Drawer.DualPane value="configuration" onValueChange={onValueChange}>
+            <Drawer.Steps title="Create new workspace">
+              <Drawer.Step value="details" title="Details" description="Basic information" />
+              <Drawer.Step value="configuration" title="Configuration" />
+              <Drawer.Step value="review" title="Review" description="Confirm before submitting" />
+            </Drawer.Steps>
+            <Drawer.DualPaneMain>
+              <Drawer.Header>
+                <Drawer.Title>Configuration</Drawer.Title>
+              </Drawer.Header>
+              <Drawer.Body>
+                <p>Main pane content</p>
+              </Drawer.Body>
+            </Drawer.DualPaneMain>
+          </Drawer.DualPane>
+        </Drawer.Content>
+      </Drawer.Root>
+    )
+
+    await waitFor(() => {
+      expect(screen.getByRole('button', { name: 'Configuration' })).toHaveClass('cn-drawer-dual-pane-step-active')
+    })
+
+    fireEvent.click(screen.getByRole('button', { name: /Details Basic information/ }))
+
+    expect(onValueChange).toHaveBeenCalledWith('details')
+  })
+
+  test('requires a value on Drawer.Steps when Drawer.DualPane does not provide one', () => {
+    const consoleError = vi.spyOn(console, 'error').mockImplementation(() => {})
+
+    expect(() =>
+      render(
+        <Drawer.Root open>
+          <Drawer.Content>
+            <Drawer.DualPane>
+              <Drawer.Steps>
+                <Drawer.Step value="details" title="Details" />
+              </Drawer.Steps>
+              <Drawer.DualPaneMain>
+                <Drawer.Body>Main pane content</Drawer.Body>
+              </Drawer.DualPaneMain>
+            </Drawer.DualPane>
+          </Drawer.Content>
+        </Drawer.Root>
+      )
+    ).toThrow(/Drawer\.Steps requires a value prop/)
+
+    consoleError.mockRestore()
+  })
 })
 
 describe('Drawer.Rail (generic rail)', () => {

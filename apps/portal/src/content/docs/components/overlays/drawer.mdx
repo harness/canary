@@ -178,6 +178,73 @@ All parts of the `Drawer` component can be imported and composed as required.
 </Drawer.Root>
 ```
 
+## Dual-pane wizard
+
+Use `Drawer.DualPane` when a drawer needs persistent step navigation beside the working content. Pass `value` and `onValueChange` to `Drawer.DualPane` to let the two-pane composition own the wizard state, then render `Drawer.Steps` in the rail and `Drawer.DualPaneMain` for the active step content.
+
+<DocsPage.ComponentExample
+  client:only
+  code={`
+    const [step, setStep] = React.useState('details')
+
+    const stepOrder = ['details', 'rules', 'review']
+    const currentIndex = stepOrder.indexOf(step)
+    const canGoBack = currentIndex > 0
+    const canGoNext = currentIndex < stepOrder.length - 1
+
+    return (
+      <Drawer.Root>
+        <Drawer.Trigger>
+          <Button>Create flag</Button>
+        </Drawer.Trigger>
+
+        <Drawer.Content size="xl">
+          <Drawer.DualPane value={step} onValueChange={setStep}>
+            <Drawer.Steps title="Create flag">
+              <Drawer.Step value="details" title="Details" description="Name and ownership" />
+              <Drawer.Step value="rules" title="Rules" description="Targeting and rollout">
+                <Drawer.SubStep value="rules.targeting" title="Targeting" />
+                <Drawer.SubStep value="rules.rollout" title="Rollout" />
+              </Drawer.Step>
+              <Drawer.Step value="review" title="Review" description="Confirm and create" />
+            </Drawer.Steps>
+
+            <Drawer.DualPaneMain>
+              <Drawer.Header>
+                <Drawer.Title>
+                  {step === 'details' ? 'Flag details' : step === 'review' ? 'Review flag' : 'Configure rules'}
+                </Drawer.Title>
+                <Drawer.Description>
+                  The step rail stays visible while the main pane changes.
+                </Drawer.Description>
+              </Drawer.Header>
+
+              <Drawer.Body>
+                <p>Render the form controls for the active wizard step here.</p>
+              </Drawer.Body>
+
+              <Drawer.Footer>
+                <ButtonLayout.Root>
+                  <ButtonLayout.Primary>
+                    <Button disabled={!canGoNext} onClick={() => setStep(stepOrder[currentIndex + 1])}>
+                      Next
+                    </Button>
+                  </ButtonLayout.Primary>
+                  <ButtonLayout.Secondary>
+                    <Button variant="outline" disabled={!canGoBack} onClick={() => setStep(stepOrder[currentIndex - 1])}>
+                      Back
+                    </Button>
+                  </ButtonLayout.Secondary>
+                </ButtonLayout.Root>
+              </Drawer.Footer>
+            </Drawer.DualPaneMain>
+          </Drawer.DualPane>
+        </Drawer.Content>
+      </Drawer.Root>
+    )
+
+`}/>
+
 ## Nested drawers
 
 Nested drawers can be implemented by placing a `Drawer.Root` inside the parent `Drawer.Content`.

@@ -31,6 +31,10 @@ export const useDrawerDualPaneContext = () => {
   return context
 }
 
+export const useOptionalDrawerDualPaneContext = () => {
+  return useContext(DrawerDualPaneContext)
+}
+
 const ParentStepContext = createContext<string | null>(null)
 
 export const useParentStepValue = () => useContext(ParentStepContext)

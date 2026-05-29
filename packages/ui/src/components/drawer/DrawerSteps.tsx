@@ -1,10 +1,10 @@
 import { forwardRef, HTMLAttributes, ReactNode } from 'react'
 
-import { DrawerDualPaneProvider } from './drawer-dual-pane-context'
+import { DrawerDualPaneProvider, useOptionalDrawerDualPaneContext } from './drawer-dual-pane-context'
 import { DrawerRailShell } from './DrawerRailShell'
 
 export type DrawerStepsProps = Omit<HTMLAttributes<HTMLElement>, 'title'> & {
-  value: string
+  value?: string
   onValueChange?: (value: string) => void
   'aria-label'?: string
   title?: ReactNode
@@ -12,12 +12,27 @@ export type DrawerStepsProps = Omit<HTMLAttributes<HTMLElement>, 'title'> & {
 }
 
 export const DrawerSteps = forwardRef<HTMLElement, DrawerStepsProps>(
-  ({ className, value, onValueChange, children, title, 'aria-label': ariaLabel = 'Drawer steps', ...props }, ref) => (
-    <DrawerDualPaneProvider value={value} onValueChange={onValueChange}>
+  ({ className, value, onValueChange, children, title, 'aria-label': ariaLabel = 'Drawer steps', ...props }, ref) => {
+    const parentContext = useOptionalDrawerDualPaneContext()
+    const rail = (
       <DrawerRailShell ref={ref} as="nav" className={className} title={title} aria-label={ariaLabel} {...props}>
         <ol className="cn-drawer-dual-pane-steps-list">{children}</ol>
       </DrawerRailShell>
-    </DrawerDualPaneProvider>
-  )
+    )
+
+    if (value !== undefined) {
+      return (
+        <DrawerDualPaneProvider value={value} onValueChange={onValueChange}>
+          {rail}
+        </DrawerDualPaneProvider>
+      )
+    }
+
+    if (parentContext) {
+      return rail
+    }
+
+    throw new Error('Drawer.Steps requires a value prop or a parent Drawer.DualPane with a value prop')
+  }
 )
 DrawerSteps.displayName = 'DrawerSteps'

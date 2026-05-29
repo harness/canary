@@ -158,9 +158,6 @@ export interface PullRequestDataState {
 }
 
 export interface TypesPullReqActivityReaction {
-  id: number
-  activity_id: number
-  created: number
   emoji: string
   author: {
     id: number

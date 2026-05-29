@@ -67,9 +67,6 @@ export const PullRequestCommentReactions: FC<PullRequestCommentReactionsProps> =
       // Optimistic update
       if (adding) {
         const optimisticReaction: TypesPullReqActivityReaction = {
-          id: -Date.now(),
-          activity_id: commentId,
-          created: Date.now(),
           emoji,
           author: {
             id: 0,

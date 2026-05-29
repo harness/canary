@@ -672,6 +672,10 @@
     "missingReviewPermission": "Vous avez besoin de l'autorisation de révision du dépôt de code pour approuver",
     "split": "Diviser",
     "unified": "Unifié",
+    "diffViewSettings": "Paramètres d'affichage du diff",
+    "layout": "Disposition",
+    "hideWhitespace": "Masquer les changements d'espaces",
+    "hideWhitespaceDescription": "Masquer les diffs ne contenant que des espaces (par ex. fins de ligne, indentation)",
     "comments": {
       "commitSuggestion": "Commit suggestion",
       "removeSuggestion": "Remove suggestion from batch",

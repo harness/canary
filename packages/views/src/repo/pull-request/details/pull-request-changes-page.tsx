@@ -77,6 +77,12 @@ interface RepoPullRequestChangesPageProps {
   setInitiatedJumpToDiff: (initiatedJumpToDiff: boolean) => void
   refreshNeeded?: boolean
   handleManualRefresh?: () => void
+  /**
+   * When true, diff is fetched with `git diff -w` (ignore_whitespace=true).
+   * Hides whitespace-only diffs like CRLF/LF or indentation changes.
+   */
+  ignoreWhitespace?: boolean
+  setIgnoreWhitespace?: (value: boolean) => void
 }
 
 const PullRequestChangesPage: FC<RepoPullRequestChangesPageProps> = ({
@@ -125,7 +131,9 @@ const PullRequestChangesPage: FC<RepoPullRequestChangesPageProps> = ({
   diffPathQuery,
   setDiffPathQuery,
   initiatedJumpToDiff,
-  setInitiatedJumpToDiff
+  setInitiatedJumpToDiff,
+  ignoreWhitespace,
+  setIgnoreWhitespace
 }) => {
   const { diffs, pullReqStats } = usePullRequestProviderStore()
   const [sidebarWidth, setSidebarWidth] = useState(SIDEBAR_MIN_WIDTH)
@@ -306,6 +314,8 @@ const PullRequestChangesPage: FC<RepoPullRequestChangesPageProps> = ({
             goToDiff={goToDiff}
             refreshNeeded={refreshNeeded}
             handleManualRefresh={handleManualRefresh}
+            ignoreWhitespace={ignoreWhitespace}
+            setIgnoreWhitespace={setIgnoreWhitespace}
           />
           {renderContent()}
         </SandboxLayout.Content>

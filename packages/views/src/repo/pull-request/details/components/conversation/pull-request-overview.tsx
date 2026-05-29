@@ -61,6 +61,7 @@ export interface PullRequestOverviewProps
   repoId?: string
   isUpdatingPR?: boolean
   imageUrlTransform?: (url: string) => string
+  onReactionToggle?: (commentId: number, emoji: string, add: boolean) => Promise<void>
 }
 
 export const PullRequestOverview: FC<PullRequestOverviewProps> = ({
@@ -89,7 +90,8 @@ export const PullRequestOverview: FC<PullRequestOverviewProps> = ({
   toCode,
   principalProps,
   isUpdatingPR,
-  imageUrlTransform
+  imageUrlTransform,
+  onReactionToggle
 }) => {
   /**
    * Get sorted model of Data props
@@ -235,6 +237,7 @@ export const PullRequestOverview: FC<PullRequestOverviewProps> = ({
               handleDeleteComment={handleDeleteComment}
               handleUpdateComment={handleUpdateComment}
               componentViewBase={PRCommentViewBase}
+              onReactionToggle={onReactionToggle}
             />
           )
         })}

@@ -230,11 +230,28 @@ export function usePRCommonInteractions({
     [updateCommentStatus, prId, repoRef, refetchActivities, dryMerge]
   )
 
+  const handleReactionToggle = useCallback(
+    async (commentId: number, emoji: string, add: boolean) => {
+      const url = apiPath(`/api/v1/repos/${repoRef}/pullreq/${prId}/comments/${commentId}/reactions/${encodeURIComponent(emoji)}`)
+      const method = add ? 'POST' : 'DELETE'
+      const response = await fetch(url, {
+        method,
+        headers: { Accept: 'application/json' }
+      })
+      if (!response.ok) {
+        const body = await response.json().catch(() => null)
+        throw new Error(getErrorMessage(body) || `Failed to ${add ? 'add' : 'remove'} reaction`)
+      }
+    },
+    [apiPath, repoRef, prId]
+  )
+
   return {
     handleUpload,
     handleSaveComment,
     updateComment,
     deleteComment,
+    handleReactionToggle,
 
     // suggestions
     isCommitDialogOpen,

@@ -18,6 +18,7 @@ export * from './details/pull-request-conversation-page'
 
 export * from './components/pull-request-side-bar'
 export * from './details/components/conversation/pull-request-comment-box'
+export * from './details/components/conversation/pull-request-comment-reactions'
 export * from './details/components/conversation/pull-request-overview'
 export * from './details/components/conversation/pull-request-panel'
 export * from './details/components/conversation/pull-request-filters'

@@ -875,6 +875,7 @@ export default function PullRequestConversationPage() {
     handleSaveComment,
     updateComment,
     deleteComment,
+    handleReactionToggle,
     onCommitSuggestion,
     onCommitSuggestionSuccess,
     addSuggestionToBatch,
@@ -981,7 +982,8 @@ export default function PullRequestConversationPage() {
       spaceId,
       repoId,
       isUpdatingPR,
-      imageUrlTransform
+      imageUrlTransform,
+      onReactionToggle: handleReactionToggle
     }),
     [
       routes,
@@ -1003,7 +1005,8 @@ export default function PullRequestConversationPage() {
       spaceId,
       repoId,
       isUpdatingPR,
-      imageUrlTransform
+      imageUrlTransform,
+      handleReactionToggle
     ]
   )
 

@@ -157,6 +157,22 @@ export interface PullRequestDataState {
   setDiffs: (info: DiffFileEntry[] | []) => void
 }
 
+export interface TypesPullReqActivityReaction {
+  id: number
+  activity_id: number
+  created: number
+  emoji: string
+  author: {
+    id: number
+    uid: string
+    display_name: string
+    email: string
+    type: string
+    created: number
+    updated: number
+  }
+}
+
 export interface TypesPullReqActivity {
   author?: TypesPrincipalInfo
   code_comment?: TypesCodeCommentFields
@@ -173,6 +189,7 @@ export interface TypesPullReqActivity {
   parent_id?: number | null
   payload?: GeneralPayload | TypesPullReqActivity
   pullreq_id?: number
+  reactions?: TypesPullReqActivityReaction[]
   repo_id?: number
   resolved?: number | null
   resolver?: TypesPrincipalInfo

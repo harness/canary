@@ -295,7 +295,7 @@ const PullRequestRegularAndCodeCommentInternal: FC<PullRequestRegularAndCodeComm
               ) : (
                 <Fragment>
                   <ComponentViewBase parentItem={parentItem} commentItem={commentItem} />
-                  {!isCode && commentItem.id && currentUser?.uid && (
+                  {commentItem.id && currentUser?.uid && (
                     <PullRequestCommentReactions
                       reactions={commentItem.payload?.reactions}
                       commentId={commentItem.id}

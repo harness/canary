@@ -1,6 +1,6 @@
 import { FC, useCallback, useState } from 'react'
 
-import { Button, Popover } from '@harnessio/ui/components'
+import { Popover } from '@harnessio/ui/components'
 import { cn } from '@harnessio/ui/utils'
 
 import { TypesPullReqActivityReaction } from '../../pull-request-details-types'
@@ -129,11 +129,17 @@ export const PullRequestCommentReactions: FC<PullRequestCommentReactionsProps> =
       })}
 
       {onReactionToggle && (
-        <Popover
-          custom
-          hideArrow
-          align="start"
-          content={
+        <Popover.Root>
+          <Popover.Trigger asChild>
+            <button
+              type="button"
+              className="inline-flex items-center justify-center rounded-full px-cn-xs py-cn-3xs text-xs border border-cn-borders-2 bg-transparent hover:bg-cn-3 transition-colors focus:outline-none focus-visible:ring-2 focus-visible:ring-cn-focus"
+              aria-label="Add reaction"
+            >
+              😊
+            </button>
+          </Popover.Trigger>
+          <Popover.Content hideArrow custom align="start" className="p-0">
             <div className="flex flex-wrap gap-cn-3xs p-cn-xs">
               {SUPPORTED_EMOJIS.map(emoji => {
                 const emojiChar = EMOJI_MAP[emoji]
@@ -157,18 +163,8 @@ export const PullRequestCommentReactions: FC<PullRequestCommentReactionsProps> =
                 )
               })}
             </div>
-          }
-        >
-          <Button
-            size="sm"
-            variant="ghost"
-            className="rounded-full px-cn-xs py-cn-3xs text-xs border border-cn-borders-2"
-            aria-label="Add reaction"
-          >
-            <span aria-hidden="true">😊</span>
-            <span className="sr-only">Add reaction</span>
-          </Button>
-        </Popover>
+          </Popover.Content>
+        </Popover.Root>
       )}
     </div>
   )

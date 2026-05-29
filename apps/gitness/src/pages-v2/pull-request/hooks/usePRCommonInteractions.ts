@@ -234,10 +234,17 @@ export function usePRCommonInteractions({
     async (commentId: number, emoji: string, add: boolean) => {
       const url = apiPath(`/api/v1/repos/${repoRef}/pullreq/${prId}/comments/${commentId}/reactions/${encodeURIComponent(emoji)}`)
       const method = add ? 'POST' : 'DELETE'
-      const response = await fetch(url, {
-        method,
-        headers: { Accept: 'application/json' }
-      })
+      const headers: Record<string, string> = { Accept: 'application/json' }
+      const rawToken = localStorage.getItem('token')
+      if (rawToken) {
+        try {
+          const decoded = JSON.parse(decodeURIComponent(atob(rawToken)))
+          headers['Authorization'] = `Bearer ${decoded}`
+        } catch {
+          headers['Authorization'] = `Bearer ${rawToken}`
+        }
+      }
+      const response = await fetch(url, { method, headers, credentials: 'include' })
       if (!response.ok) {
         const body = await response.json().catch(() => null)
         throw new Error(getErrorMessage(body) || `Failed to ${add ? 'add' : 'remove'} reaction`)

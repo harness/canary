@@ -59,6 +59,27 @@ The `PromptInput` component is a compound component for AI chat interfaces. It i
 </div>`}
 />
 
+## With Disclaimer
+
+<DocsPage.ComponentExample
+  client:only
+  code={`
+  <div className="flex flex-col gap-cn-md w-[370px]">
+  <PromptInput.Root onSubmit={(e) => { e.preventDefault(); console.log('submitted'); }}>
+    <PromptInput.Textarea placeholder="Ask me anything..." />
+    <PromptInput.Toolbar>
+      <PromptInput.Tools>
+        <PromptInput.Button prefixIcon="plus" prefixIconProps={{ size: 'sm' }} tooltipProps={{ title: 'Add' }} />
+      </PromptInput.Tools>
+      <PromptInput.Submit />
+    </PromptInput.Toolbar>
+  </PromptInput.Root>
+  <PromptInput.Disclaimer>
+    Harness AI can make mistakes. Please double check responses.
+  </PromptInput.Disclaimer>
+</div>`}
+/>
+
 ## Usage
 
 ```typescript jsx
@@ -88,6 +109,7 @@ return (
 - **PromptInput.Tools** - Container for tool buttons
 - **PromptInput.Submit** - Submit button with streaming state support
 - **PromptInput.Button** - Icon-only `Toggle` for toolbar actions (attach, emoji, etc.)
+- **PromptInput.Disclaimer** - Optional disclaimer text displayed below the toolbar
 
 ## Keyboard Shortcuts
 

@@ -112,6 +112,14 @@ export const PromptInputButton = ({ variant = 'outline', size = 'xs', ...props }
   return <Toggle {...props} variant={variant} size={size} iconOnly />
 }
 
+export type PromptInputDisclaimerProps = HTMLAttributes<HTMLDivElement>
+
+export const PromptInputDisclaimer = ({ className, children, ...props }: PromptInputDisclaimerProps) => (
+  <div className={cn('text-cn-size-0 text-cn-4 text-center mt-cn-2xs', className)} {...props}>
+    {children}
+  </div>
+)
+
 export const PromptInput = {
   Root: PromptInputRoot,
   Tags: PromptInputTags,
@@ -119,5 +127,6 @@ export const PromptInput = {
   Toolbar: PromptInputToolbar,
   Tools: PromptInputTools,
   Submit: PromptInputSubmit,
-  Button: PromptInputButton
+  Button: PromptInputButton,
+  Disclaimer: PromptInputDisclaimer
 }

@@ -6,7 +6,6 @@ import { ChangedFilesShortInfo, DiffModeOptions, TypesCommit } from '@views'
 import { Button, CounterBadge, Dialog, DropdownMenu, IconV2, Layout, SplitButton } from '@harnessio/ui/components'
 import { useTranslation } from '@harnessio/ui/context'
 import { TypesUser } from '@harnessio/ui/types'
-import { cn } from '@harnessio/ui/utils'
 
 import {
   EnumPullReqReviewDecision,
@@ -62,6 +61,13 @@ export interface PullRequestChangesFilterProps {
   goToDiff: (fileName: string) => void
   refreshNeeded?: boolean
   handleManualRefresh?: () => void
+  /**
+   * When true, the diff is fetched with whitespace-only changes ignored
+   * (maps to `git diff -w` on the backend via `ignore_whitespace=true`).
+   * Hides CRLF/indentation-only diffs.
+   */
+  ignoreWhitespace?: boolean
+  setIgnoreWhitespace?: (value: boolean) => void
 }
 
 export const PullRequestChangesFilter: React.FC<PullRequestChangesFilterProps> = ({
@@ -87,7 +93,9 @@ export const PullRequestChangesFilter: React.FC<PullRequestChangesFilterProps> =
   diffData,
   goToDiff,
   refreshNeeded,
-  handleManualRefresh
+  handleManualRefresh,
+  ignoreWhitespace = false,
+  setIgnoreWhitespace
 }) => {
   const { t } = useTranslation()
   const [commitFilterOptions, setCommitFilterOptions] = useState([defaultCommitFilter])
@@ -212,23 +220,45 @@ export const PullRequestChangesFilter: React.FC<PullRequestChangesFilterProps> =
         </DropdownMenu.Root>
 
         <DropdownMenu.Root>
-          <DropdownMenu.Trigger className="gap-x-cn-2xs group flex items-center" asChild>
-            <Button size="sm" variant="transparent">
-              {diffMode === DiffModeEnum.Split ? t('views:pullRequests.split') : t('views:pullRequests.unified')}
-              <IconV2 name="solid-arrow-down" size="2xs" />
+          <DropdownMenu.Trigger asChild>
+            <Button
+              size="sm"
+              variant="outline"
+              iconOnly
+              tooltipProps={{ content: t('views:pullRequests.diffViewSettings', 'Diff view settings') }}
+              title={t('views:pullRequests.diffViewSettings', 'Diff view settings')}
+            >
+              <IconV2 name="settings" />
             </Button>
           </DropdownMenu.Trigger>
           <DropdownMenu.Content align="start">
-            {DiffModeOptions.map(item => (
-              <DropdownMenu.Item
-                title={item.name}
-                className={cn({
-                  'bg-cn-hover': diffMode === (item.value === 'Split' ? DiffModeEnum.Split : DiffModeEnum.Unified)
-                })}
-                key={item.value}
-                onClick={() => handleDiffModeChange(item.value)}
-              />
-            ))}
+            <DropdownMenu.Group label={t('views:pullRequests.layout', 'Layout')}>
+              {DiffModeOptions.map(item => {
+                const isSelected = diffMode === (item.value === 'Split' ? DiffModeEnum.Split : DiffModeEnum.Unified)
+                return (
+                  <DropdownMenu.CheckboxItem
+                    key={item.value}
+                    title={item.name}
+                    checked={isSelected}
+                    onCheckedChange={() => handleDiffModeChange(item.value)}
+                  />
+                )
+              })}
+            </DropdownMenu.Group>
+            {setIgnoreWhitespace && (
+              <>
+                <DropdownMenu.Separator />
+                <DropdownMenu.CheckboxItem
+                  title={t('views:pullRequests.hideWhitespace', 'Hide whitespace changes')}
+                  description={t(
+                    'views:pullRequests.hideWhitespaceDescription',
+                    'Hide whitespace-only diffs (e.g. line endings, indentation)'
+                  )}
+                  checked={ignoreWhitespace}
+                  onCheckedChange={() => setIgnoreWhitespace(!ignoreWhitespace)}
+                />
+              </>
+            )}
           </DropdownMenu.Content>
         </DropdownMenu.Root>
 

@@ -84,6 +84,12 @@ export default function PullRequestChanges() {
     [pullReqCommits?.commits]
   )
   const [diffMode, setDiffMode] = useLocalStorage<DiffModeEnum>(UserPreference.DIFF_VIEW_STYLE, DiffModeEnum.Split)
+  // Persist the "hide whitespace changes" toggle across sessions, like diffMode.
+  // Maps to `git diff -w` on the backend via `ignore_whitespace=true`.
+  const [ignoreWhitespace, setIgnoreWhitespace] = useLocalStorage<boolean>(
+    UserPreference.PULL_REQUEST_HIDE_WHITESPACE,
+    false
+  )
   const targetRef = useMemo(() => pullReqMetadata?.merge_base_sha, [pullReqMetadata?.merge_base_sha])
   const sourceRef = useMemo(() => pullReqMetadata?.source_sha, [pullReqMetadata?.source_sha])
   const prId = (pullRequestId && Number(pullRequestId)) || -1
@@ -147,13 +153,18 @@ export default function PullRequestChanges() {
       : `${normalizeGitRef(targetRef)}...${normalizeGitRef(sourceRef)}`
   }, [commitRange, targetRef, sourceRef])
   const [cachedDiff, setCachedDiff] = useAtom(changesInfoAtom)
-  const path = useMemo(() => `/api/v1/repos/${repoRef}/+/${diffApiPath}`, [repoRef, diffApiPath])
+  // Include the whitespace flag in the cache key so toggling forces a refetch
+  // instead of serving the previously cached (un-filtered) diff.
+  const path = useMemo(
+    () => `/api/v1/repos/${repoRef}/+/${diffApiPath}${ignoreWhitespace ? '?ignore_whitespace=true' : ''}`,
+    [repoRef, diffApiPath, ignoreWhitespace]
+  )
 
   const { data: { body: rawDiffData } = {}, isFetching: loadingRawDiff } = useRawDiffQuery(
     {
       repo_ref: repoRef,
       range: diffApiPath.replace('/diff', ''),
-      queryParams: {},
+      queryParams: ignoreWhitespace ? { ignore_whitespace: true } : {},
       headers: { Accept: 'text/plain' }
     },
     {
@@ -172,7 +183,11 @@ export default function PullRequestChanges() {
   })
 
   const { data: { body: PRDiffStats } = {} } = useDiffStatsQuery(
-    { queryParams: {}, repo_ref: repoRef, range: diffApiPath },
+    {
+      queryParams: ignoreWhitespace ? { ignore_whitespace: true } : {},
+      repo_ref: repoRef,
+      range: diffApiPath
+    },
     { enabled: !!repoRef && !!diffApiPath }
   )
 
@@ -216,7 +231,8 @@ export default function PullRequestChanges() {
         // @ts-expect-error : BE issue - path should be string and include_patch is a missing param
         path: path,
         include_patch: true,
-        range: 1
+        range: 1,
+        ...(ignoreWhitespace ? { ignore_whitespace: true } : {})
       },
       headers: { Accept: 'text/plain' }
     })
@@ -586,6 +602,8 @@ export default function PullRequestChanges() {
         setInitiatedJumpToDiff={setInitiatedJumpToDiff}
         refreshNeeded={refreshNeeded}
         handleManualRefresh={handleManualRefresh}
+        ignoreWhitespace={ignoreWhitespace}
+        setIgnoreWhitespace={setIgnoreWhitespace}
       />
     </>
   )

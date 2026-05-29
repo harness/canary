@@ -705,6 +705,10 @@
     "changereq": "Changes Requested",
     "split": "Split",
     "unified": "Unified",
+    "diffViewSettings": "Diff view settings",
+    "layout": "Layout",
+    "hideWhitespace": "Hide whitespace changes",
+    "hideWhitespaceDescription": "Hide whitespace-only diffs (e.g. line endings, indentation)",
     "comments": {
       "commitSuggestion": "Commit suggestion",
       "removeSuggestion": "Remove suggestion from batch",

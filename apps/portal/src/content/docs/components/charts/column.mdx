@@ -13,22 +13,14 @@ The Column chart renders one or more series as vertical bars using the
 across a small set of discrete categories or time buckets — for example usage
 over months, distribution across stages, or counts per bucket.
 
-<Aside type="note">
-  Charts come from the `@harness/dashboard-visualization` package, which is
-  published separately from `@harnessio/ui` and is not part of this portal's
-  live-example runtime. The examples below are therefore shown as code rather
-  than interactive previews. In your app, import the stylesheet once
-  (`import "@harness/dashboard-visualization/style.css"`) and wrap every chart
-  in a `PopoverServiceProvider` so tooltips and crosshairs can render.
-</Aside>
-
 ## Single series
 
 A single column series plotted against a categorical (band) X axis and a linear
 Y axis anchored at zero.
 
-```tsx
-import {
+<DocsPage.ChartExample
+  client:only
+  code={`import {
   AxisLocation,
   AxisType,
   CartesianChart,
@@ -36,14 +28,10 @@ import {
   LegendPosition,
   PopoverServiceProvider,
   ScaleType,
-  type Axis,
-  type Series,
 } from "@harness/dashboard-visualization";
 import "@harness/dashboard-visualization/style.css";
 
-type Point = { x: string; y: number };
-
-const series: Series<Point>[] = [
+const series = [
   {
     name: "latency",
     displayName: "Requests",
@@ -58,7 +46,7 @@ const series: Series<Point>[] = [
   },
 ];
 
-const xAxis: Axis = {
+const xAxis = {
   type: AxisType.X,
   location: AxisLocation.Bottom,
   scale: ScaleType.Band,
@@ -66,7 +54,7 @@ const xAxis: Axis = {
   tickLabels: true,
 };
 
-const yAxis: Axis = {
+const yAxis = {
   type: AxisType.Y,
   location: AxisLocation.Left,
   scale: ScaleType.Linear,
@@ -75,19 +63,23 @@ const yAxis: Axis = {
   min: 0,
 };
 
-<PopoverServiceProvider>
-  <CartesianChart
-    series={series}
-    xAxisOption={xAxis}
-    yAxisOption={yAxis}
-    showXAxis
-    showYAxis
-    legend={LegendPosition.TopRight}
-    enableTooltips
-    enableCrosshairs
-  />
-</PopoverServiceProvider>;
-```
+render(
+  <PopoverServiceProvider>
+    <div style={{ width: 480, height: 280 }}>
+      <CartesianChart
+        series={series}
+        xAxisOption={xAxis}
+        yAxisOption={yAxis}
+        showXAxis
+        showYAxis
+        legend={LegendPosition.TopRight}
+        enableTooltips
+        enableCrosshairs
+      />
+    </div>
+  </PopoverServiceProvider>
+);`}
+/>
 
 ## Stacked columns
 

@@ -1,3 +1,4 @@
+import ChartExample from "./chart-example.tsx";
 import ComponentExample from "./component-example";
 import ComponentExampleWithZodAndForm from "./component-example-with-form.tsx";
 import Example from "./example";
@@ -8,6 +9,7 @@ export const DocsPage = {
   Example,
   ComponentExample,
   ComponentExampleWithZodAndForm,
+  ChartExample,
   PropsTable,
   FigureGrid,
 };

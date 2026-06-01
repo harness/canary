@@ -13,14 +13,92 @@ The Dashed line is a `CartesianChart` series with a `type` of
 ideal for overlays that should read as secondary to the primary data — computed
 trendlines, baselines, targets, or percentile reference lines.
 
-<Aside type="note">
-  Charts come from the `@harness/dashboard-visualization` package, which is
-  published separately from `@harnessio/ui` and is not part of this portal's
-  live-example runtime. The examples below are shown as code rather than
-  interactive previews. In your app, import the stylesheet once
-  (`import "@harness/dashboard-visualization/style.css"`) and wrap every chart in
-  a `PopoverServiceProvider`.
-</Aside>
+## Solid line with dashed trendline
+
+A dashed series uses the same data shape as a [Line](/components/charts/line)
+series — set the series `type` to `CartesianSeriesVisualizationType.DashedLine`
+and pair it with the primary line so the overlay reads as secondary.
+
+<DocsPage.ChartExample
+  client:only
+  code={`import {
+  AxisLocation,
+  AxisType,
+  CartesianChart,
+  CartesianSeriesVisualizationType,
+  LegendPosition,
+  PopoverServiceProvider,
+  ScaleType,
+} from "@harness/dashboard-visualization";
+import "@harness/dashboard-visualization/style.css";
+
+const points = [
+  { x: "Mon", y: 32 },
+  { x: "Tue", y: 41 },
+  { x: "Wed", y: 38 },
+  { x: "Thu", y: 47 },
+  { x: "Fri", y: 53 },
+];
+
+const trend = [
+  { x: "Mon", y: 30 },
+  { x: "Tue", y: 36 },
+  { x: "Wed", y: 42 },
+  { x: "Thu", y: 48 },
+  { x: "Fri", y: 54 },
+];
+
+const series = [
+  {
+    name: "actual",
+    displayName: "Actual",
+    color: "#22c55e",
+    type: CartesianSeriesVisualizationType.Line,
+    data: points,
+  },
+  {
+    name: "trendline",
+    displayName: "Trend",
+    color: "#9ca3af",
+    type: CartesianSeriesVisualizationType.DashedLine,
+    data: trend,
+    hideTooltip: true,
+  },
+];
+
+const xAxis = {
+  type: AxisType.X,
+  location: AxisLocation.Bottom,
+  scale: ScaleType.Band,
+  gridLines: false,
+  tickLabels: true,
+};
+
+const yAxis = {
+  type: AxisType.Y,
+  location: AxisLocation.Left,
+  scale: ScaleType.Linear,
+  gridLines: true,
+  tickLabels: true,
+  min: 0,
+};
+
+render(
+  <PopoverServiceProvider>
+    <div style={{ width: 480, height: 280 }}>
+      <CartesianChart
+        series={series}
+        xAxisOption={xAxis}
+        yAxisOption={yAxis}
+        showXAxis
+        showYAxis
+        legend={LegendPosition.Bottom}
+        enableTooltips
+      />
+    </div>
+  </PopoverServiceProvider>
+);`}
+/>
 
 ## Trendline overlay
 

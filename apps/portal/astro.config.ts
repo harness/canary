@@ -25,6 +25,11 @@ export default defineConfig({
   vite: {
     // logs only errors and warnings
     logLevel: "warn",
+    ssr: {
+      // Vendored chart bundle imports `react/jsx-runtime` bare; React 17 lacks
+      // package exports for it, so let Vite resolve the package instead of Node.
+      noExternal: ["@harness/dashboard-visualization"],
+    },
   },
   prefetch: {
     prefetchAll: true,

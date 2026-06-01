@@ -1,0 +1,26 @@
+{
+  "name": "@harness/dashboard-visualization",
+  "version": "1.8.6-vendored",
+  "type": "module",
+  "main": "./dist/index.cjs",
+  "module": "./dist/index.js",
+  "types": "./dist/index.d.ts",
+  "exports": {
+    "./package.json": "./package.json",
+    "./style.css": "./dist/dashboard-visualization.css",
+    ".": {
+      "types": "./dist/index.d.ts",
+      "import": "./dist/index.js",
+      "require": "./dist/index.cjs",
+      "default": "./dist/index.js"
+    }
+  },
+  "files": ["dist"],
+  "peerDependencies": {
+    "react": "^17.0.0",
+    "react-dom": "^17.0.0",
+    "@harnessio/ui": "*",
+    "rxjs": "^6.6.7",
+    "lodash-es": "^4.17.21"
+  }
+}

@@ -12,14 +12,6 @@ it to visualize relationships and hierarchies — organization trees, service
 dependency maps, or pipeline graphs — with optional dragging, zooming, and
 auto-fit layout.
 
-<Aside type="note">
-  Charts come from the `@harness/dashboard-visualization` package, which is
-  published separately from `@harnessio/ui` and is not part of this portal's
-  live-example runtime. The examples below are shown as code rather than
-  interactive previews. In your app, import the stylesheet once
-  (`import "@harness/dashboard-visualization/style.css"`).
-</Aside>
-
 ## Renderers
 
 `TopologyChart` requires a `nodeRenderer` and an `edgeRenderer`. The library
@@ -48,54 +40,65 @@ export { nodeRenderer, edgeRenderer };
 Nodes are a flat array. Each edge references its `fromNode`/`toNode` and is
 pushed onto the `edges` array of both endpoints so the graph is connected.
 
-```tsx
-import {
+<DocsPage.ChartExample
+  client:only
+  code={`import {
+  DefaultEdgeRenderer,
+  DefaultNodeRenderer,
   TopologyChart,
-  type DefaultTopologyEdge,
-  type DefaultTopologyNode,
+  TopologyEdgeRendererService,
+  TopologyNodeRendererService,
 } from "@harness/dashboard-visualization";
 import "@harness/dashboard-visualization/style.css";
-import { edgeRenderer, nodeRenderer } from "./topology-singletons";
 
-function createNode(name: string, depth: number): DefaultTopologyNode {
+const nodeRenderer = new TopologyNodeRendererService();
+nodeRenderer.withDelegate(new DefaultNodeRenderer());
+
+const edgeRenderer = new TopologyEdgeRendererService();
+edgeRenderer.withDelegate(new DefaultEdgeRenderer());
+
+const NODE_COLORS = ["#6366f1", "#22c55e", "#f59e0b"];
+
+function createNode(name, depth) {
   return {
     nodeType: "default-node",
     name,
-    type: `Level ${depth}`,
+    type: "Level " + depth,
     color: NODE_COLORS[depth % NODE_COLORS.length],
     edges: [],
   };
 }
 
-function createEdge(
-  from: DefaultTopologyNode,
-  to: DefaultTopologyNode,
-): DefaultTopologyEdge {
-  const edge: DefaultTopologyEdge = {
-    edgeType: "default-edge",
-    fromNode: from,
-    toNode: to,
-  };
+function connect(from, to) {
+  const edge = { edgeType: "default-edge", fromNode: from, toNode: to };
   from.edges.push(edge);
   to.edges.push(edge);
-  return edge;
 }
 
 const root = createNode("Organization", 0);
 const engineering = createNode("Engineering", 1);
-createEdge(root, engineering);
-const nodes = [root, engineering];
+const platform = createNode("Platform", 2);
+const product = createNode("Product", 2);
+connect(root, engineering);
+connect(engineering, platform);
+connect(engineering, product);
 
-<TopologyChart
-  nodes={nodes}
-  nodeRenderer={nodeRenderer}
-  edgeRenderer={edgeRenderer}
-  layoutType={"vertical-graph-layout" as never}
-  draggableNodes={false}
-  zoomable
-  shouldAutoZoomToFit
-/>;
-```
+const nodes = [root, engineering, platform, product];
+
+render(
+  <div style={{ width: 480, height: 320 }}>
+    <TopologyChart
+      nodes={nodes}
+      nodeRenderer={nodeRenderer}
+      edgeRenderer={edgeRenderer}
+      layoutType="vertical-graph-layout"
+      draggableNodes={false}
+      zoomable
+      shouldAutoZoomToFit
+    />
+  </div>
+);`}
+/>
 
 ## Usage
 

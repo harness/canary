@@ -13,15 +13,6 @@ along the X axis and the categories sit on the Y axis, it is well suited to
 ranking many labelled items — for example languages by adoption, repositories by
 contribution, or teams by throughput.
 
-<Aside type="note">
-  Charts come from the `@harness/dashboard-visualization` package, which is
-  published separately from `@harnessio/ui` and is not part of this portal's
-  live-example runtime. The examples below are shown as code rather than
-  interactive previews. In your app, import the stylesheet once
-  (`import "@harness/dashboard-visualization/style.css"`) and wrap every chart in
-  a `PopoverServiceProvider`.
-</Aside>
-
 ## Horizontal bars
 
 For a horizontal bar chart, put the numeric measure on the **X** axis
@@ -29,8 +20,9 @@ For a horizontal bar chart, put the numeric measure on the **X** axis
 Each data point is an `{ x, y }` pair where `x` is the numeric value and `y` is
 the category label.
 
-```tsx
-import {
+<DocsPage.ChartExample
+  client:only
+  code={`import {
   AxisLocation,
   AxisType,
   CartesianChart,
@@ -38,12 +30,8 @@ import {
   LegendPosition,
   PopoverServiceProvider,
   ScaleType,
-  type Axis,
-  type Series,
 } from "@harness/dashboard-visualization";
 import "@harness/dashboard-visualization/style.css";
-
-type BarDatum = { x: number; y: string };
 
 const bars = [
   { label: "Python", value: 89.9, color: "#3b82f6" },
@@ -51,7 +39,7 @@ const bars = [
   { label: "Go", value: 45.0, color: "#22c55e" },
 ];
 
-const series: Series<BarDatum>[] = [
+const series = [
   {
     name: "ai-written-pct",
     displayName: "AI Written %",
@@ -63,7 +51,7 @@ const series: Series<BarDatum>[] = [
   },
 ];
 
-const xAxis: Axis = {
+const xAxis = {
   type: AxisType.X,
   location: AxisLocation.Bottom,
   scale: ScaleType.Linear,
@@ -73,7 +61,7 @@ const xAxis: Axis = {
   max: 100,
 };
 
-const yAxis: Axis = {
+const yAxis = {
   type: AxisType.Y,
   location: AxisLocation.Left,
   scale: ScaleType.Band,
@@ -83,19 +71,23 @@ const yAxis: Axis = {
   getLabel: (value) => String(value),
 };
 
-<PopoverServiceProvider>
-  <CartesianChart
-    series={series}
-    xAxisOption={xAxis}
-    yAxisOption={yAxis}
-    showXAxis
-    showYAxis
-    padding={{ top: 0, left: 0, bottom: 0, right: 16 }}
-    legend={LegendPosition.None}
-    enableTooltips
-  />
-</PopoverServiceProvider>;
-```
+render(
+  <PopoverServiceProvider>
+    <div style={{ width: 480, height: 280 }}>
+      <CartesianChart
+        series={series}
+        xAxisOption={xAxis}
+        yAxisOption={yAxis}
+        showXAxis
+        showYAxis
+        padding={{ top: 0, left: 0, bottom: 0, right: 16 }}
+        legend={LegendPosition.None}
+        enableTooltips
+      />
+    </div>
+  </PopoverServiceProvider>
+);`}
+/>
 
 ## Usage
 

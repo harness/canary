@@ -12,23 +12,15 @@ component with a series `type` of `CartesianSeriesVisualizationType.Area`. The
 filled area emphasizes magnitude and volume over time, which makes it a good fit
 for resource-utilization metrics such as CPU or memory usage.
 
-<Aside type="note">
-  Charts come from the `@harness/dashboard-visualization` package, which is
-  published separately from `@harnessio/ui` and is not part of this portal's
-  live-example runtime. The examples below are shown as code rather than
-  interactive previews. In your app, import the stylesheet once
-  (`import "@harness/dashboard-visualization/style.css"`) and wrap every chart in
-  a `PopoverServiceProvider`.
-</Aside>
-
 ## Time-series area
 
 Area charts are frequently driven by time-series data using the
 `{ timestamp, value }` point shape against a `ScaleType.Time` X axis. The
 `units` field appends a suffix to tooltip values.
 
-```tsx
-import {
+<DocsPage.ChartExample
+  client:only
+  code={`import {
   AxisLocation,
   AxisType,
   CartesianChart,
@@ -36,11 +28,8 @@ import {
   LegendPosition,
   PopoverServiceProvider,
   ScaleType,
-  type Axis,
 } from "@harness/dashboard-visualization";
 import "@harness/dashboard-visualization/style.css";
-
-type Point = { timestamp: number; value: number };
 
 const series = [
   {
@@ -51,12 +40,12 @@ const series = [
       { timestamp: 1717200000000, value: 34.2 },
       { timestamp: 1717200060000, value: 41.8 },
       { timestamp: 1717200120000, value: 38.5 },
-    ] satisfies Point[],
+    ],
     units: "%",
   },
 ];
 
-const xAxis: Axis = {
+const xAxis = {
   type: AxisType.X,
   location: AxisLocation.Bottom,
   scale: ScaleType.Time,
@@ -65,7 +54,7 @@ const xAxis: Axis = {
   gridLines: false,
 };
 
-const yAxis: Axis = {
+const yAxis = {
   type: AxisType.Y,
   location: AxisLocation.Left,
   scale: ScaleType.Linear,
@@ -75,22 +64,26 @@ const yAxis: Axis = {
   min: 0,
   max: 100,
   tickCount: 4,
-  getLabel: (value) => `${value}%`,
+  getLabel: (value) => value + "%",
 };
 
-<PopoverServiceProvider>
-  <CartesianChart
-    series={series}
-    xAxisOption={xAxis}
-    yAxisOption={yAxis}
-    showXAxis
-    showYAxis
-    legend={LegendPosition.None}
-    padding={{ right: 24 }}
-    downsampling={{ dataPointLimit: 120 }}
-  />
-</PopoverServiceProvider>;
-```
+render(
+  <PopoverServiceProvider>
+    <div style={{ width: 480, height: 280 }}>
+      <CartesianChart
+        series={series}
+        xAxisOption={xAxis}
+        yAxisOption={yAxis}
+        showXAxis
+        showYAxis
+        legend={LegendPosition.None}
+        padding={{ right: 24 }}
+        downsampling={{ dataPointLimit: 120 }}
+      />
+    </div>
+  </PopoverServiceProvider>
+);`}
+/>
 
 ## Area with a percentile overlay
 

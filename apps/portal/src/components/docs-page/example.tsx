@@ -36,6 +36,8 @@ type LiveProviderProps = ComponentProps<typeof LiveProvider>;
 export type ExampleProps = Pick<LiveProviderProps, "code" | "scope"> & {
   contentClassName?: string;
   hideCode?: boolean;
+  noInline?: boolean;
+  transformCode?: (code: string) => string;
 };
 
 const Example: FC<ExampleProps> = ({
@@ -43,6 +45,8 @@ const Example: FC<ExampleProps> = ({
   scope,
   contentClassName,
   hideCode = false,
+  noInline,
+  transformCode,
 }) => {
   // Track the full theme from localStorage (syncs with ThemeSelector)
   const [theme, setTheme] = useState<FullTheme>(() => {
@@ -128,6 +132,8 @@ const Example: FC<ExampleProps> = ({
                 code={currentCode}
                 scope={scopeWithLayout}
                 enableTypeScript
+                noInline={noInline}
+                transformCode={transformCode}
               >
                 <div
                   className={cn(

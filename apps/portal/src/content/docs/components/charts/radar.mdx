@@ -12,23 +12,15 @@ radially, producing a "spider" shape per series. Use it to compare entities
 across the same set of dimensions — evaluation scores by category, capability
 profiles, or multi-metric quality comparisons.
 
-<Aside type="note">
-  Charts come from the `@harness/dashboard-visualization` package, which is
-  published separately from `@harnessio/ui` and is not part of this portal's
-  live-example runtime. The examples below are shown as code rather than
-  interactive previews. In your app, import the stylesheet once
-  (`import "@harness/dashboard-visualization/style.css"`) and wrap every chart in
-  a `PopoverServiceProvider`.
-</Aside>
-
 ## Multi-series radar
 
 Define the `axes` once, then provide one `series` per entity. Each series'
 `data` is a list of `{ axis, value }` points whose `axis` must match an axis
 `name`.
 
-```tsx
-import {
+<DocsPage.ChartExample
+  client:only
+  code={`import {
   LegendPosition,
   PopoverServiceProvider,
   RadarChart,
@@ -70,18 +62,20 @@ const series = [
   },
 ];
 
-<PopoverServiceProvider>
-  <div style={{ height: 250 }}>
-    <RadarChart
-      axes={axes}
-      series={series}
-      levels={5}
-      legendPosition={LegendPosition.Bottom}
-      showTooltip={false}
-    />
-  </div>
-</PopoverServiceProvider>;
-```
+render(
+  <PopoverServiceProvider>
+    <div style={{ width: 480, height: 320 }}>
+      <RadarChart
+        axes={axes}
+        series={series}
+        levels={5}
+        legendPosition={LegendPosition.Bottom}
+        showTooltip={false}
+      />
+    </div>
+  </PopoverServiceProvider>
+);`}
+/>
 
 ## Usage
 

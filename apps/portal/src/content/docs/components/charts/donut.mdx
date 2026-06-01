@@ -12,22 +12,14 @@ it to show how a total breaks down into a small number of categories — adoptio
 share by tool, spend by category, or pass/fail distribution — with an optional
 value displayed in the center.
 
-<Aside type="note">
-  Charts come from the `@harness/dashboard-visualization` package, which is
-  published separately from `@harnessio/ui` and is not part of this portal's
-  live-example runtime. The examples below are shown as code rather than
-  interactive previews. In your app, import the stylesheet once
-  (`import "@harness/dashboard-visualization/style.css"`) and wrap every chart in
-  a `PopoverServiceProvider`.
-</Aside>
-
 ## Basic donut
 
 Each slice is a `{ name, value, color }` entry. The `center` config renders a
 title and value inside the ring.
 
-```tsx
-import {
+<DocsPage.ChartExample
+  client:only
+  code={`import {
   DonutChart,
   LegendPosition,
   PopoverServiceProvider,
@@ -46,15 +38,19 @@ const series = segments.map((seg) => ({
   color: seg.color,
 }));
 
-<PopoverServiceProvider>
-  <DonutChart
-    series={series}
-    center={{ title: "Active Users", value: 100 }}
-    legendPosition={LegendPosition.Right}
-    applyDefaultSorting={false}
-  />
-</PopoverServiceProvider>;
-```
+render(
+  <PopoverServiceProvider>
+    <div style={{ width: 480, height: 280 }}>
+      <DonutChart
+        series={series}
+        center={{ title: "Active Users", value: 100 }}
+        legendPosition={LegendPosition.Right}
+        applyDefaultSorting={false}
+      />
+    </div>
+  </PopoverServiceProvider>
+);`}
+/>
 
 ## Interactive donut
 

@@ -13,35 +13,29 @@ numeric, so it is the right choice for showing the relationship or distribution
 between two measures — for example regression severity versus frequency, grouped
 by category.
 
-<Aside type="note">
-  Charts come from the `@harness/dashboard-visualization` package, which is
-  published separately from `@harnessio/ui` and is not part of this portal's
-  live-example runtime. The examples below are shown as code rather than
-  interactive previews. In your app, import the stylesheet once
-  (`import "@harness/dashboard-visualization/style.css"`) and wrap every chart in
-  a `PopoverServiceProvider`.
-</Aside>
-
 ## Grouped scatter
 
 Each input group becomes its own scatter series with a distinct color and legend
 entry. Data points are `{ x, y }` pairs on two linear axes.
 
-```tsx
-import {
+<DocsPage.ChartExample
+  client:only
+  code={`import {
   AxisLocation,
   AxisType,
   CartesianChart,
   CartesianSeriesVisualizationType,
   LegendPosition,
+  PopoverServiceProvider,
   RenderingStrategy,
   ScaleType,
-  type Axis,
-  type Series,
 } from "@harness/dashboard-visualization";
 import "@harness/dashboard-visualization/style.css";
 
-type Point = { x: number; y: number };
+const groupColors = {
+  acceptable_noise: "#22c55e",
+  critical_regression: "#ef4444",
+};
 
 const seriesData = [
   {
@@ -50,24 +44,28 @@ const seriesData = [
     data: [
       { x: 1.2, y: 0.05 },
       { x: 3.4, y: 0.12 },
+      { x: 2.5, y: 0.08 },
     ],
   },
   {
     name: "critical_regression",
     displayName: "Critical Regression",
-    data: [{ x: 8.1, y: 0.91 }],
+    data: [
+      { x: 8.1, y: 0.91 },
+      { x: 7.4, y: 0.78 },
+    ],
   },
 ];
 
-const series: Series<Point>[] = seriesData.map((s) => ({
+const series = seriesData.map((s) => ({
   name: s.name,
-  displayName: s.displayName ?? s.name,
-  color: colorFor(s.name),
+  displayName: s.displayName,
+  color: groupColors[s.name],
   type: CartesianSeriesVisualizationType.Scatter,
   data: s.data,
 }));
 
-const xAxis: Axis = {
+const xAxis = {
   type: AxisType.X,
   location: AxisLocation.Bottom,
   scale: ScaleType.Linear,
@@ -76,7 +74,7 @@ const xAxis: Axis = {
   crosshair: { enable: true, snap: true },
 };
 
-const yAxis: Axis = {
+const yAxis = {
   type: AxisType.Y,
   location: AxisLocation.Left,
   scale: ScaleType.Linear,
@@ -85,20 +83,24 @@ const yAxis: Axis = {
   min: 0,
 };
 
-<PopoverServiceProvider>
-  <CartesianChart
-    series={series}
-    xAxisOption={xAxis}
-    yAxisOption={yAxis}
-    showXAxis
-    showYAxis={false}
-    legend={LegendPosition.Top}
-    strategy={RenderingStrategy.Auto}
-    enableTooltips
-    enableCrosshairs
-  />
-</PopoverServiceProvider>;
-```
+render(
+  <PopoverServiceProvider>
+    <div style={{ width: 480, height: 280 }}>
+      <CartesianChart
+        series={series}
+        xAxisOption={xAxis}
+        yAxisOption={yAxis}
+        showXAxis
+        showYAxis={false}
+        legend={LegendPosition.Top}
+        strategy={RenderingStrategy.Auto}
+        enableTooltips
+        enableCrosshairs
+      />
+    </div>
+  </PopoverServiceProvider>
+);`}
+/>
 
 ## Usage
 

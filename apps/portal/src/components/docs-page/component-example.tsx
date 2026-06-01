@@ -14,6 +14,8 @@ const ComponentExample: FC<ComponentExampleProps> = ({
   scope,
   contentClassName,
   hideCode,
+  noInline,
+  transformCode,
 }) => {
   const combinedScope = useMemo<ExampleProps["scope"]>(
     () => ({ ...components, ...contexts, ...scope, useColumnFilter }),
@@ -26,6 +28,8 @@ const ComponentExample: FC<ComponentExampleProps> = ({
       code={code}
       scope={combinedScope}
       hideCode={hideCode}
+      noInline={noInline}
+      transformCode={transformCode}
     />
   );
 };

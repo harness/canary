@@ -13,22 +13,14 @@ The Line chart connects data points with a continuous line using the
 change over time or across an ordered domain — pass rate trends, latency over
 time, or any metric where the trajectory matters.
 
-<Aside type="note">
-  Charts come from the `@harness/dashboard-visualization` package, which is
-  published separately from `@harnessio/ui` and is not part of this portal's
-  live-example runtime. The examples below are shown as code rather than
-  interactive previews. In your app, import the stylesheet once
-  (`import "@harness/dashboard-visualization/style.css"`) and wrap every chart in
-  a `PopoverServiceProvider`.
-</Aside>
-
 ## Time-series line
 
 Plot a line against a time X axis (`ScaleType.Time`) with data points whose `x`
 is an epoch-millisecond timestamp.
 
-```tsx
-import {
+<DocsPage.ChartExample
+  client:only
+  code={`import {
   AxisLocation,
   AxisType,
   CartesianChart,
@@ -36,14 +28,10 @@ import {
   LegendPosition,
   PopoverServiceProvider,
   ScaleType,
-  type Axis,
-  type Series,
 } from "@harness/dashboard-visualization";
 import "@harness/dashboard-visualization/style.css";
 
-type Point = { x: number; y: number };
-
-const series: Series<Point>[] = [
+const series = [
   {
     name: "test",
     displayName: "Test run",
@@ -57,7 +45,7 @@ const series: Series<Point>[] = [
   },
 ];
 
-const xAxis: Axis = {
+const xAxis = {
   type: AxisType.X,
   location: AxisLocation.Bottom,
   scale: ScaleType.Time,
@@ -66,7 +54,7 @@ const xAxis: Axis = {
   crosshair: { enable: true, snap: true },
 };
 
-const yAxis: Axis = {
+const yAxis = {
   type: AxisType.Y,
   location: AxisLocation.Left,
   scale: ScaleType.Linear,
@@ -76,19 +64,23 @@ const yAxis: Axis = {
   crosshair: { enable: true, snap: true },
 };
 
-<PopoverServiceProvider>
-  <CartesianChart
-    series={series}
-    xAxisOption={xAxis}
-    yAxisOption={yAxis}
-    showXAxis
-    showYAxis
-    legend={LegendPosition.Bottom}
-    enableTooltips
-    enableCrosshairs
-  />
-</PopoverServiceProvider>;
-```
+render(
+  <PopoverServiceProvider>
+    <div style={{ width: 480, height: 280 }}>
+      <CartesianChart
+        series={series}
+        xAxisOption={xAxis}
+        yAxisOption={yAxis}
+        showXAxis
+        showYAxis
+        legend={LegendPosition.Bottom}
+        enableTooltips
+        enableCrosshairs
+      />
+    </div>
+  </PopoverServiceProvider>
+);`}
+/>
 
 ## Multiple series
 

@@ -12,30 +12,21 @@ threshold ranges. Use it for one headline metric measured against a known scale 
 code coverage, health score, or utilization — where the band the value falls
 into (poor / good / excellent) matters as much as the number itself.
 
-<Aside type="note">
-  Charts come from the `@harness/dashboard-visualization` package, which is
-  published separately from `@harnessio/ui` and is not part of this portal's
-  live-example runtime. The examples below are shown as code rather than
-  interactive previews. In your app, import the stylesheet once
-  (`import "@harness/dashboard-visualization/style.css"`) and wrap every chart in
-  a `PopoverServiceProvider`.
-</Aside>
-
 ## Segmented gauge
 
 The `segmented` variant draws each threshold range as a band and highlights the
 one the current value falls into. Each `GaugeThreshold` defines a `start`/`end`
 range, a `color`, and labels.
 
-```tsx
-import {
+<DocsPage.ChartExample
+  client:only
+  code={`import {
   GaugeChart,
   PopoverServiceProvider,
-  type GaugeThreshold,
 } from "@harness/dashboard-visualization";
 import "@harness/dashboard-visualization/style.css";
 
-const thresholds: GaugeThreshold[] = [
+const thresholds = [
   { start: 0, end: 49.9, tooltipLabel: "Poor", color: "#ef4444", label: "" },
   { start: 50, end: 69.9, tooltipLabel: "Low", color: "#f59e0b", label: "" },
   { start: 70, end: 79.9, tooltipLabel: "Moderate", color: "#eab308", label: "" },
@@ -43,16 +34,20 @@ const thresholds: GaugeThreshold[] = [
   { start: 90, end: 100, tooltipLabel: "Excellent", color: "#15803d", label: "" },
 ];
 
-<PopoverServiceProvider>
-  <GaugeChart
-    variant="segmented"
-    value={73.4}
-    maxValue={100}
-    thresholds={thresholds}
-    valueFormatOptions={{ valueType: "percentage" }}
-  />
-</PopoverServiceProvider>;
-```
+render(
+  <PopoverServiceProvider>
+    <div style={{ width: 360, height: 240 }}>
+      <GaugeChart
+        variant="segmented"
+        value={73.4}
+        maxValue={100}
+        thresholds={thresholds}
+        valueFormatOptions={{ valueType: "percentage" }}
+      />
+    </div>
+  </PopoverServiceProvider>
+);`}
+/>
 
 ## Default gauge
 
@@ -60,18 +55,29 @@ The `default` variant fills a single arc from zero to the current value. A
 `defaultColor` and `defaultLabel` apply when no threshold matches, and
 `showArrow` adds a pointer.
 
-```tsx
-<PopoverServiceProvider>
-  <GaugeChart
-    variant="default"
-    value={62}
-    maxValue={100}
-    defaultLabel="Healthy"
-    defaultColor="#22c55e"
-    showArrow
-  />
-</PopoverServiceProvider>;
-```
+<DocsPage.ChartExample
+  client:only
+  code={`import {
+  GaugeChart,
+  PopoverServiceProvider,
+} from "@harness/dashboard-visualization";
+import "@harness/dashboard-visualization/style.css";
+
+render(
+  <PopoverServiceProvider>
+    <div style={{ width: 360, height: 240 }}>
+      <GaugeChart
+        variant="default"
+        value={62}
+        maxValue={100}
+        defaultLabel="Healthy"
+        defaultColor="#22c55e"
+        showArrow
+      />
+    </div>
+  </PopoverServiceProvider>
+);`}
+/>
 
 ## Usage
 

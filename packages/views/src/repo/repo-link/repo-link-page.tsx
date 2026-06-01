@@ -22,19 +22,34 @@ import {
 } from '@harnessio/ui/components'
 import { useTranslation } from '@harnessio/ui/context'
 
+export const ACCOUNT_CONNECTOR_SPEC_TYPE = 'Account'
+
 export interface ConnectorRef {
   ref: string
+  specType?: string
 }
 
-const linkRepoSchema = z.object({
-  connectorRef: z.string().min(1, { message: 'Please select a connector' }),
-  identifier: z
-    .string()
-    .min(1, { message: 'Please provide a name' })
-    .regex(/^[a-z0-9-_.]+$/i, { message: 'Name can only contain letters, numbers, dash, dot, or underscore' }),
-  description: z.string().optional(),
-  isPublic: z.boolean()
-})
+const linkRepoSchema = z
+  .object({
+    connectorRef: z.string().min(1, { message: 'Please select a connector' }),
+    connectorSpecType: z.string().optional(),
+    repoIdentifier: z.string().optional(),
+    identifier: z
+      .string()
+      .min(1, { message: 'Please provide a name' })
+      .regex(/^[a-z0-9-_.]+$/i, { message: 'Name can only contain letters, numbers, dash, dot, or underscore' }),
+    description: z.string().optional(),
+    isPublic: z.boolean()
+  })
+  .superRefine((data, ctx) => {
+    if (data.connectorSpecType === ACCOUNT_CONNECTOR_SPEC_TYPE && !data.repoIdentifier?.trim()) {
+      ctx.addIssue({
+        code: z.ZodIssueCode.custom,
+        message: 'Please select a provider repository',
+        path: ['repoIdentifier']
+      })
+    }
+  })
 
 export type RepoLinkFormFields = z.infer<typeof linkRepoSchema>
 
@@ -44,6 +59,7 @@ interface RepoLinkPageProps {
   isLoading: boolean
   isSubmitDisabled?: boolean
   connectorSelectorRenderer: (onSelect: (connector: ConnectorRef) => void) => ReactNode
+  providerRepoRenderer?: (onSelect: (repoIdentifier: string) => void) => ReactNode
   apiError?: string
 }
 
@@ -53,6 +69,7 @@ export function RepoLinkView({
   isLoading,
   isSubmitDisabled,
   connectorSelectorRenderer,
+  providerRepoRenderer,
   apiError
 }: RepoLinkPageProps) {
   const { t } = useTranslation()
@@ -62,6 +79,8 @@ export function RepoLinkView({
     mode: 'onChange',
     defaultValues: {
       connectorRef: '',
+      connectorSpecType: '',
+      repoIdentifier: '',
       identifier: '',
       description: '',
       isPublic: true
@@ -77,6 +96,7 @@ export function RepoLinkView({
   } = formMethods
 
   const isPublicValue = watch('isPublic')
+  const connectorSpecType = watch('connectorSpecType')
 
   const handleVisibilityChange = (value: string) => {
     setValue('isPublic', value === 'public', { shouldValidate: true })
@@ -103,11 +123,24 @@ export function RepoLinkView({
                 <Fieldset>
                   {connectorSelectorRenderer((connector: ConnectorRef) => {
                     setValue('connectorRef', connector.ref, { shouldValidate: true })
+                    setValue('connectorSpecType', connector.specType ?? '', { shouldValidate: true })
+                    setValue('repoIdentifier', '', { shouldValidate: true })
                   })}
                   {errors.connectorRef && (
                     <Message theme={MessageTheme.ERROR}>{errors.connectorRef.message?.toString()}</Message>
                   )}
                 </Fieldset>
+
+                {connectorSpecType === ACCOUNT_CONNECTOR_SPEC_TYPE && providerRepoRenderer && (
+                  <Fieldset>
+                    {providerRepoRenderer(repoIdentifier => {
+                      setValue('repoIdentifier', repoIdentifier, { shouldValidate: true })
+                    })}
+                    {errors.repoIdentifier && (
+                      <Message theme={MessageTheme.ERROR}>{errors.repoIdentifier.message?.toString()}</Message>
+                    )}
+                  </Fieldset>
+                )}
 
                 {/* NAME */}
                 <Fieldset>

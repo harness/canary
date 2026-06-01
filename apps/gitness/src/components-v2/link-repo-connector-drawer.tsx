@@ -44,6 +44,8 @@ export interface ConnectorSelection {
   accountIdentifier?: string
   orgIdentifier?: string
   projectIdentifier?: string
+  /** Git connector spec.type: "Account" or "Repo". */
+  specType?: string
 }
 
 export interface LinkRepoConnectorDrawerProps {
@@ -129,13 +131,16 @@ export const LinkRepoConnectorDrawer: FC<LinkRepoConnectorDrawerProps> = ({ onCo
       const connectorInfo = connector.connector
       if (!connectorInfo) return
 
+      const spec = (connectorInfo as { spec?: { type?: string } }).spec
+
       onConnectorSelect({
         identifier: connectorInfo.identifier,
         name: connectorInfo.name,
         scope: deriveScope(connectorInfo),
         accountIdentifier: connectorInfo.accountIdentifier,
         orgIdentifier: connectorInfo.orgIdentifier,
-        projectIdentifier: connectorInfo.projectIdentifier
+        projectIdentifier: connectorInfo.projectIdentifier,
+        specType: spec?.type
       })
       setSelectedLabel(connectorInfo.name)
       setIsOpen(false)

@@ -44,7 +44,8 @@ const TitleSection: FC<TitleSectionProps> = ({ title, iconName, description, act
 
   return (
     <Layout.Vertical gap="xs">
-      <Layout.Horizontal align="center">
+      {/* Fixed height prevents layout shift when actions prop is present vs absent */}
+      <Layout.Horizontal align="center" className="h-[var(--cn-btn-size-md)]">
         <Layout.Horizontal gap="xs" align="center" className="min-w-0 flex-1">
           {iconName && <IconV2 name={iconName} size="md" />}
           {titleElement}
@@ -60,19 +61,17 @@ const TitleSection: FC<TitleSectionProps> = ({ title, iconName, description, act
   )
 }
 
-const TabsSection: FC<{ items: HeaderV2TabItem[] }> = ({ items }) => {
-  return (
-    <Tabs.NavRoot>
-      <Tabs.List variant="underlined">
-        {items.map(tab => (
-          <Tabs.Trigger key={tab.value} value={tab.value} icon={tab.icon} counter={tab.counter} disabled={tab.disabled}>
-            {tab.label}
-          </Tabs.Trigger>
-        ))}
-      </Tabs.List>
-    </Tabs.NavRoot>
-  )
-}
+const TabsSection: FC<{ items: HeaderV2TabItem[] }> = ({ items }) => (
+  <Tabs.NavRoot>
+    <Tabs.List variant="underlined">
+      {items.map(tab => (
+        <Tabs.Trigger key={tab.value} value={tab.value} icon={tab.icon} counter={tab.counter} disabled={tab.disabled}>
+          {tab.label}
+        </Tabs.Trigger>
+      ))}
+    </Tabs.List>
+  </Tabs.NavRoot>
+)
 
 export const HeaderV2: FC<PageHeaderV2Props> = ({
   title,
@@ -84,18 +83,13 @@ export const HeaderV2: FC<PageHeaderV2Props> = ({
   children,
   className
 }) => {
+  const hasTabs = tabs && tabs.length > 0
   return (
-    <Layout.Vertical gap="none" className={cn('w-full', tabs ? 'mb-0' : 'mb-cn-lg', className)}>
+    <Layout.Vertical gap="md" className={cn('w-full', hasTabs ? 'mb-0' : 'mb-cn-md', className)}>
       {breadcrumbs}
-      <Layout.Vertical gap="lg" className={breadcrumbs ? 'mt-cn-xs' : undefined}>
-        <TitleSection title={title} iconName={iconName} description={description} actions={actions} />
-        {(children || tabs) && (
-          <Layout.Vertical gap="none">
-            {children}
-            {tabs && tabs.length > 0 && <TabsSection items={tabs} />}
-          </Layout.Vertical>
-        )}
-      </Layout.Vertical>
+      <TitleSection title={title} iconName={iconName} description={description} actions={actions} />
+      {children}
+      {hasTabs && <TabsSection items={tabs} />}
     </Layout.Vertical>
   )
 }

@@ -1,0 +1,257 @@
+---
+title: Area Chart
+description: Filled area chart for emphasizing magnitude over time
+beta: true
+---
+
+import { DocsPage } from "@/components/docs-page";
+import { Aside } from "@astrojs/starlight/components";
+
+The Area chart fills the region beneath a line using the `CartesianChart`
+component with a series `type` of `CartesianSeriesVisualizationType.Area`. The
+filled area emphasizes magnitude and volume over time, which makes it a good fit
+for resource-utilization metrics such as CPU or memory usage.
+
+<Aside type="note">
+  Charts come from the `@harness/dashboard-visualization` package, which is
+  published separately from `@harnessio/ui` and is not part of this portal's
+  live-example runtime. The examples below are shown as code rather than
+  interactive previews. In your app, import the stylesheet once
+  (`import "@harness/dashboard-visualization/style.css"`) and wrap every chart in
+  a `PopoverServiceProvider`.
+</Aside>
+
+## Time-series area
+
+Area charts are frequently driven by time-series data using the
+`{ timestamp, value }` point shape against a `ScaleType.Time` X axis. The
+`units` field appends a suffix to tooltip values.
+
+```tsx
+import {
+  AxisLocation,
+  AxisType,
+  CartesianChart,
+  CartesianSeriesVisualizationType,
+  LegendPosition,
+  PopoverServiceProvider,
+  ScaleType,
+  type Axis,
+} from "@harness/dashboard-visualization";
+import "@harness/dashboard-visualization/style.css";
+
+type Point = { timestamp: number; value: number };
+
+const series = [
+  {
+    name: "CPU Usage",
+    color: "#3b82f6",
+    type: CartesianSeriesVisualizationType.Area,
+    data: [
+      { timestamp: 1717200000000, value: 34.2 },
+      { timestamp: 1717200060000, value: 41.8 },
+      { timestamp: 1717200120000, value: 38.5 },
+    ] satisfies Point[],
+    units: "%",
+  },
+];
+
+const xAxis: Axis = {
+  type: AxisType.X,
+  location: AxisLocation.Bottom,
+  scale: ScaleType.Time,
+  tickLabels: true,
+  tickCount: 4,
+  gridLines: false,
+};
+
+const yAxis: Axis = {
+  type: AxisType.Y,
+  location: AxisLocation.Left,
+  scale: ScaleType.Linear,
+  size: 56,
+  tickLabels: true,
+  gridLines: true,
+  min: 0,
+  max: 100,
+  tickCount: 4,
+  getLabel: (value) => `${value}%`,
+};
+
+<PopoverServiceProvider>
+  <CartesianChart
+    series={series}
+    xAxisOption={xAxis}
+    yAxisOption={yAxis}
+    showXAxis
+    showYAxis
+    legend={LegendPosition.None}
+    padding={{ right: 24 }}
+    downsampling={{ dataPointLimit: 120 }}
+  />
+</PopoverServiceProvider>;
+```
+
+## Area with a percentile overlay
+
+Pair an area series with a [Dashed line](/components/charts/dashed-line) on the
+same axis to show a reference threshold over the filled magnitude.
+
+```tsx
+const series = [
+  {
+    name: "Memory Usage",
+    color: "#22c55e",
+    type: CartesianSeriesVisualizationType.Area,
+    data: memoryData, // { timestamp, value }[]
+    units: "%",
+  },
+  {
+    name: "90th Percentile",
+    color: "#f59e0b",
+    type: CartesianSeriesVisualizationType.DashedLine,
+    data: memoryData.map(({ timestamp }) => ({ timestamp, value: p90 })),
+    units: "%",
+  },
+];
+```
+
+## Usage
+
+```tsx
+import {
+  AxisLocation,
+  AxisType,
+  CartesianChart,
+  CartesianSeriesVisualizationType,
+  PopoverServiceProvider,
+  ScaleType,
+} from "@harness/dashboard-visualization";
+import "@harness/dashboard-visualization/style.css";
+
+// An area series is a Series whose `type` is Area. It accepts either { x, y } or
+// { timestamp, value } data points depending on the X axis scale.
+<PopoverServiceProvider>
+  <CartesianChart
+    series={[
+      {
+        name: "series-1",
+        color: "#3b82f6",
+        type: CartesianSeriesVisualizationType.Area,
+        data: [{ timestamp: 1717200000000, value: 34.2 }],
+        units: "%",
+      },
+    ]}
+    xAxisOption={{
+      type: AxisType.X,
+      location: AxisLocation.Bottom,
+      scale: ScaleType.Time,
+    }}
+    yAxisOption={{
+      type: AxisType.Y,
+      location: AxisLocation.Left,
+      scale: ScaleType.Linear,
+      min: 0,
+      max: 100,
+    }}
+  />
+</PopoverServiceProvider>;
+```
+
+## Props
+
+The Area chart uses the shared `CartesianChart` props. The fields most relevant
+to area charts are below.
+
+<DocsPage.PropsTable
+  props={[
+    {
+      name: "series",
+      description:
+        "Array of series. Each area series sets type: CartesianSeriesVisualizationType.Area.",
+      required: false,
+      value: "Series<TData>[]",
+    },
+    {
+      name: "xAxisOption",
+      description: "X-axis configuration, typically ScaleType.Time for time-series areas.",
+      required: false,
+      value: "Axis",
+    },
+    {
+      name: "yAxisOption",
+      description: "Y-axis configuration. Supports a dual Y axis for two units.",
+      required: false,
+      value: "Axis | DualYAxisType",
+    },
+    {
+      name: "padding",
+      description: "Chart padding in pixels.",
+      required: false,
+      value: "Partial<{ top; right; bottom; left }>",
+    },
+    {
+      name: "downsampling",
+      description:
+        "LTTB downsampling config. Series exceeding dataPointLimit are downsampled.",
+      required: false,
+      value: "DownsamplingConfig",
+    },
+    {
+      name: "groupId",
+      description: "Synchronize crosshairs/tooltips across charts that share the id.",
+      required: false,
+      value: "string",
+    },
+  ]}
+/>
+
+### Area `Series` fields
+
+<DocsPage.PropsTable
+  props={[
+    {
+      name: "type",
+      description: "Set to CartesianSeriesVisualizationType.Area.",
+      required: true,
+      value: "CartesianSeriesVisualizationType",
+    },
+    {
+      name: "data",
+      description: "Data points, typically { timestamp, value } for time series.",
+      required: true,
+      value: "TData[]",
+    },
+    {
+      name: "name",
+      description: "Unique series identifier.",
+      required: true,
+      value: "string",
+    },
+    {
+      name: "color",
+      description: "Fill/stroke color.",
+      required: true,
+      value: "string",
+    },
+    {
+      name: "units",
+      description: "Unit suffix appended to values in tooltips (e.g. '%', ' MB/s').",
+      required: false,
+      value: "string",
+    },
+  ]}
+/>
+
+## Guidelines
+
+<Aside type="tip">
+  Anchor the Y axis at zero so the filled area accurately represents magnitude,
+  and prefer a single area series — stacking many translucent fills quickly
+  becomes hard to read.
+</Aside>
+
+<Aside>
+  For high-resolution time series, set a `downsampling` config and use `groupId`
+  to keep linked CPU/memory charts in sync.
+</Aside>

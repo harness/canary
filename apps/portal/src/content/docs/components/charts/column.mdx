@@ -1,0 +1,349 @@
+---
+title: Column Chart
+description: Vertical bar chart for comparing values across discrete categories
+beta: true
+---
+
+import { DocsPage } from "@/components/docs-page";
+import { Aside } from "@astrojs/starlight/components";
+
+The Column chart renders one or more series as vertical bars using the
+`CartesianChart` component with a series `type` of
+`CartesianSeriesVisualizationType.Column`. Use it to compare a numeric measure
+across a small set of discrete categories or time buckets — for example usage
+over months, distribution across stages, or counts per bucket.
+
+<Aside type="note">
+  Charts come from the `@harness/dashboard-visualization` package, which is
+  published separately from `@harnessio/ui` and is not part of this portal's
+  live-example runtime. The examples below are therefore shown as code rather
+  than interactive previews. In your app, import the stylesheet once
+  (`import "@harness/dashboard-visualization/style.css"`) and wrap every chart
+  in a `PopoverServiceProvider` so tooltips and crosshairs can render.
+</Aside>
+
+## Single series
+
+A single column series plotted against a categorical (band) X axis and a linear
+Y axis anchored at zero.
+
+```tsx
+import {
+  AxisLocation,
+  AxisType,
+  CartesianChart,
+  CartesianSeriesVisualizationType,
+  LegendPosition,
+  PopoverServiceProvider,
+  ScaleType,
+  type Axis,
+  type Series,
+} from "@harness/dashboard-visualization";
+import "@harness/dashboard-visualization/style.css";
+
+type Point = { x: string; y: number };
+
+const series: Series<Point>[] = [
+  {
+    name: "latency",
+    displayName: "Requests",
+    color: "#6366f1",
+    type: CartesianSeriesVisualizationType.Column,
+    data: [
+      { x: "0-10ms", y: 42 },
+      { x: "10-20ms", y: 18 },
+      { x: "20-30ms", y: 9 },
+    ],
+    stacking: false,
+  },
+];
+
+const xAxis: Axis = {
+  type: AxisType.X,
+  location: AxisLocation.Bottom,
+  scale: ScaleType.Band,
+  gridLines: false,
+  tickLabels: true,
+};
+
+const yAxis: Axis = {
+  type: AxisType.Y,
+  location: AxisLocation.Left,
+  scale: ScaleType.Linear,
+  gridLines: false,
+  tickLabels: true,
+  min: 0,
+};
+
+<PopoverServiceProvider>
+  <CartesianChart
+    series={series}
+    xAxisOption={xAxis}
+    yAxisOption={yAxis}
+    showXAxis
+    showYAxis
+    legend={LegendPosition.TopRight}
+    enableTooltips
+    enableCrosshairs
+  />
+</PopoverServiceProvider>;
+```
+
+## Stacked columns
+
+To stack multiple series on top of one another, set `stacking: true` on **every**
+series in the stack. Series share the same band X values and accumulate on the Y
+axis.
+
+```tsx
+const series: Series<{ x: string; y: number }>[] = [
+  {
+    name: "compute",
+    displayName: "Compute",
+    color: "#6366f1",
+    type: CartesianSeriesVisualizationType.Column,
+    stacking: true,
+    data: [
+      { x: "Apr", y: 120 },
+      { x: "May", y: 90 },
+      { x: "Jun", y: 140 },
+    ],
+  },
+  {
+    name: "storage",
+    displayName: "Storage",
+    color: "#22c55e",
+    type: CartesianSeriesVisualizationType.Column,
+    stacking: true,
+    data: [
+      { x: "Apr", y: 40 },
+      { x: "May", y: 55 },
+      { x: "Jun", y: 35 },
+    ],
+  },
+];
+
+<PopoverServiceProvider>
+  <CartesianChart
+    series={series}
+    xAxisOption={xAxis}
+    yAxisOption={yAxis}
+    showXAxis
+    showYAxis
+    padding={{ top: 8, left: 0, bottom: 0, right: 16 }}
+    legend={LegendPosition.Bottom}
+    enableTooltips
+  />
+</PopoverServiceProvider>;
+```
+
+Omitting `stacking` (or setting it to `false`) on multiple series renders them
+side-by-side (grouped) across each band instead.
+
+## Per-datum styling
+
+Use `getColor` and `getTooltipTitle` on a series to vary a single column's color
+or tooltip header based on its datum — for example hiding zero-value bars.
+
+```tsx
+const series: Series<{ x: string; y: number }>[] = [
+  {
+    name: "usage",
+    displayName: "Usage",
+    color: "#3b82f6",
+    type: CartesianSeriesVisualizationType.Column,
+    data: monthlyUsage,
+    getColor: (datum) => (datum && datum.y > 0 ? "#3b82f6" : "transparent"),
+    getTooltipTitle: (datum) => datum.x,
+  },
+];
+```
+
+## Usage
+
+```tsx
+import {
+  AxisLocation,
+  AxisType,
+  CartesianChart,
+  CartesianSeriesVisualizationType,
+  LegendPosition,
+  PopoverServiceProvider,
+  ScaleType,
+} from "@harness/dashboard-visualization";
+import "@harness/dashboard-visualization/style.css";
+
+// A column series is a Series whose `type` is Column. Each data point is an
+// { x, y } pair where x is the category label and y is the numeric value.
+<PopoverServiceProvider>
+  <CartesianChart
+    series={[
+      {
+        name: "series-1",
+        color: "#6366f1",
+        type: CartesianSeriesVisualizationType.Column,
+        data: [{ x: "A", y: 10 }],
+      },
+    ]}
+    xAxisOption={{
+      type: AxisType.X,
+      location: AxisLocation.Bottom,
+      scale: ScaleType.Band,
+    }}
+    yAxisOption={{
+      type: AxisType.Y,
+      location: AxisLocation.Left,
+      scale: ScaleType.Linear,
+      min: 0,
+    }}
+    legend={LegendPosition.None}
+  />
+</PopoverServiceProvider>;
+```
+
+## Props
+
+These are the most commonly used `CartesianChart` props. The same component
+powers the Bar, Line, Dashed line, Area, and Scatter charts — only the series
+`type` differs.
+
+<DocsPage.PropsTable
+  props={[
+    {
+      name: "series",
+      description:
+        "Array of series to render. Each series sets type: CartesianSeriesVisualizationType.Column for columns.",
+      required: false,
+      value: "Series<TData>[]",
+    },
+    {
+      name: "xAxisOption",
+      description: "X-axis configuration. Use scale: ScaleType.Band for categories.",
+      required: false,
+      value: "Axis",
+    },
+    {
+      name: "yAxisOption",
+      description: "Y-axis configuration (single axis or dual-axis).",
+      required: false,
+      value: "Axis | DualYAxisType",
+    },
+    {
+      name: "showXAxis",
+      description: "Whether to render the X axis.",
+      required: false,
+      value: "boolean",
+    },
+    {
+      name: "showYAxis",
+      description: "Whether to render the Y axis.",
+      required: false,
+      value: "boolean",
+    },
+    {
+      name: "legend",
+      description: "Legend position.",
+      required: false,
+      value:
+        "LegendPosition ('bottom' | 'right' | 'top-right' | 'top-left' | 'top' | 'left' | 'auto' | 'none')",
+    },
+    {
+      name: "padding",
+      description: "Chart padding in pixels.",
+      required: false,
+      value: "Partial<{ top; right; bottom; left }>",
+    },
+    {
+      name: "enableTooltips",
+      description: "Enable hover tooltips.",
+      required: false,
+      value: "boolean",
+    },
+    {
+      name: "enableCrosshairs",
+      description: "Enable axis crosshairs that track the pointer.",
+      required: false,
+      value: "boolean",
+    },
+    {
+      name: "colorPalette",
+      description: "Custom color palette applied to series without explicit colors.",
+      required: false,
+      value: "string[]",
+    },
+    {
+      name: "onDataPointClick",
+      description: "Callback fired when a data point is clicked.",
+      required: false,
+      value: "(data: TData, series: Series<TData>) => void",
+    },
+  ]}
+/>
+
+### Column `Series` fields
+
+<DocsPage.PropsTable
+  props={[
+    {
+      name: "type",
+      description: "Visualization type. Set to CartesianSeriesVisualizationType.Column.",
+      required: true,
+      value: "CartesianSeriesVisualizationType",
+    },
+    {
+      name: "data",
+      description: "Data points. For columns each point is an { x, y } pair.",
+      required: true,
+      value: "TData[]",
+    },
+    {
+      name: "name",
+      description: "Unique series identifier.",
+      required: true,
+      value: "string",
+    },
+    {
+      name: "color",
+      description: "Base series color.",
+      required: true,
+      value: "string",
+    },
+    {
+      name: "displayName",
+      description: "Label shown in the legend and tooltip.",
+      required: false,
+      value: "string",
+    },
+    {
+      name: "stacking",
+      description: "Set true on every series in a stack to stack columns.",
+      required: false,
+      value: "boolean",
+    },
+    {
+      name: "getColor",
+      description: "Per-datum color override.",
+      required: false,
+      value: "(datum?: TData) => string",
+    },
+    {
+      name: "getTooltipTitle",
+      description: "Per-datum tooltip header override.",
+      required: false,
+      value: "(datum: TData) => string",
+    },
+  ]}
+/>
+
+## Guidelines
+
+<Aside type="tip">
+  Keep the Y axis anchored at zero (`min: 0`) for columns — truncating the
+  baseline exaggerates differences between bars.
+</Aside>
+
+<Aside>
+  Use columns for a handful of discrete categories. For dense time-series data
+  prefer the Line or Area chart, and for ranking many categories prefer the
+  horizontal Bar chart.
+</Aside>

@@ -1,0 +1,242 @@
+---
+title: Bar Chart
+description: Horizontal bar chart for ranking values across categories
+beta: true
+---
+
+import { DocsPage } from "@/components/docs-page";
+import { Aside } from "@astrojs/starlight/components";
+
+The Bar chart renders horizontal bars using the `CartesianChart` component with
+a series `type` of `CartesianSeriesVisualizationType.Bar`. Because the value runs
+along the X axis and the categories sit on the Y axis, it is well suited to
+ranking many labelled items — for example languages by adoption, repositories by
+contribution, or teams by throughput.
+
+<Aside type="note">
+  Charts come from the `@harness/dashboard-visualization` package, which is
+  published separately from `@harnessio/ui` and is not part of this portal's
+  live-example runtime. The examples below are shown as code rather than
+  interactive previews. In your app, import the stylesheet once
+  (`import "@harness/dashboard-visualization/style.css"`) and wrap every chart in
+  a `PopoverServiceProvider`.
+</Aside>
+
+## Horizontal bars
+
+For a horizontal bar chart, put the numeric measure on the **X** axis
+(`ScaleType.Linear`) and the categories on the **Y** axis (`ScaleType.Band`).
+Each data point is an `{ x, y }` pair where `x` is the numeric value and `y` is
+the category label.
+
+```tsx
+import {
+  AxisLocation,
+  AxisType,
+  CartesianChart,
+  CartesianSeriesVisualizationType,
+  LegendPosition,
+  PopoverServiceProvider,
+  ScaleType,
+  type Axis,
+  type Series,
+} from "@harness/dashboard-visualization";
+import "@harness/dashboard-visualization/style.css";
+
+type BarDatum = { x: number; y: string };
+
+const bars = [
+  { label: "Python", value: 89.9, color: "#3b82f6" },
+  { label: "TypeScript", value: 72.1, color: "#6366f1" },
+  { label: "Go", value: 45.0, color: "#22c55e" },
+];
+
+const series: Series<BarDatum>[] = [
+  {
+    name: "ai-written-pct",
+    displayName: "AI Written %",
+    color: bars[0].color,
+    type: CartesianSeriesVisualizationType.Bar,
+    getColor: (datum) =>
+      bars.find((b) => b.label === datum?.y)?.color ?? bars[0].color,
+    data: bars.map((item) => ({ x: item.value, y: item.label })),
+  },
+];
+
+const xAxis: Axis = {
+  type: AxisType.X,
+  location: AxisLocation.Bottom,
+  scale: ScaleType.Linear,
+  gridLines: true,
+  tickLabels: true,
+  min: 0,
+  max: 100,
+};
+
+const yAxis: Axis = {
+  type: AxisType.Y,
+  location: AxisLocation.Left,
+  scale: ScaleType.Band,
+  gridLines: false,
+  tickLabels: true,
+  size: 90,
+  getLabel: (value) => String(value),
+};
+
+<PopoverServiceProvider>
+  <CartesianChart
+    series={series}
+    xAxisOption={xAxis}
+    yAxisOption={yAxis}
+    showXAxis
+    showYAxis
+    padding={{ top: 0, left: 0, bottom: 0, right: 16 }}
+    legend={LegendPosition.None}
+    enableTooltips
+  />
+</PopoverServiceProvider>;
+```
+
+## Usage
+
+```tsx
+import {
+  AxisLocation,
+  AxisType,
+  CartesianChart,
+  CartesianSeriesVisualizationType,
+  PopoverServiceProvider,
+  ScaleType,
+} from "@harness/dashboard-visualization";
+import "@harness/dashboard-visualization/style.css";
+
+// A bar series is a Series whose `type` is Bar. Put the value on X (Linear) and
+// the category label on Y (Band).
+<PopoverServiceProvider>
+  <CartesianChart
+    series={[
+      {
+        name: "series-1",
+        color: "#3b82f6",
+        type: CartesianSeriesVisualizationType.Bar,
+        data: [{ x: 73.5, y: "TypeScript" }],
+      },
+    ]}
+    xAxisOption={{
+      type: AxisType.X,
+      location: AxisLocation.Bottom,
+      scale: ScaleType.Linear,
+      min: 0,
+    }}
+    yAxisOption={{
+      type: AxisType.Y,
+      location: AxisLocation.Left,
+      scale: ScaleType.Band,
+    }}
+  />
+</PopoverServiceProvider>;
+```
+
+## Props
+
+The Bar chart uses the same `CartesianChart` props as the Column chart; only the
+series `type` and the axis scale orientation differ. The key fields are below.
+
+<DocsPage.PropsTable
+  props={[
+    {
+      name: "series",
+      description:
+        "Array of series. Each bar series sets type: CartesianSeriesVisualizationType.Bar.",
+      required: false,
+      value: "Series<TData>[]",
+    },
+    {
+      name: "xAxisOption",
+      description: "X-axis configuration. Use scale: ScaleType.Linear for the value axis.",
+      required: false,
+      value: "Axis",
+    },
+    {
+      name: "yAxisOption",
+      description:
+        "Y-axis configuration. Use scale: ScaleType.Band and `size` to reserve room for category labels.",
+      required: false,
+      value: "Axis | DualYAxisType",
+    },
+    {
+      name: "legend",
+      description: "Legend position.",
+      required: false,
+      value: "LegendPosition",
+    },
+    {
+      name: "padding",
+      description: "Chart padding in pixels.",
+      required: false,
+      value: "Partial<{ top; right; bottom; left }>",
+    },
+    {
+      name: "enableTooltips",
+      description: "Enable hover tooltips.",
+      required: false,
+      value: "boolean",
+    },
+  ]}
+/>
+
+### Axis fields used for bars
+
+<DocsPage.PropsTable
+  props={[
+    {
+      name: "type",
+      description: "Axis kind: AxisType.X (value) or AxisType.Y (category).",
+      required: true,
+      value: "AxisType",
+    },
+    {
+      name: "location",
+      description: "Where to place the axis.",
+      required: true,
+      value: "AxisLocation ('left' | 'right' | 'top' | 'bottom')",
+    },
+    {
+      name: "scale",
+      description: "ScaleType.Linear for the value axis, ScaleType.Band for categories.",
+      required: false,
+      value: "ScaleType",
+    },
+    {
+      name: "size",
+      description: "Custom axis size (px). Increase the Y-axis size for long labels.",
+      required: false,
+      value: "number",
+    },
+    {
+      name: "getLabel",
+      description: "Formats each axis tick label.",
+      required: false,
+      value: "(domainValue, index) => string",
+    },
+    {
+      name: "min / max",
+      description: "Value-axis bounds. Default to the data extent when unset.",
+      required: false,
+      value: "number",
+    },
+  ]}
+/>
+
+## Guidelines
+
+<Aside type="tip">
+  Sort bars by value (descending) so the ranking reads top-to-bottom, and give
+  the category axis enough `size` to avoid truncating labels.
+</Aside>
+
+<Aside>
+  Use the horizontal Bar chart when category labels are long or when there are
+  many categories to rank. For time-based comparisons use the vertical Column
+  chart instead.
+</Aside>

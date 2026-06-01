@@ -1,0 +1,240 @@
+---
+title: Topology Chart
+description: Node-and-edge graph for visualizing relationships and hierarchies
+beta: true
+---
+
+import { DocsPage } from "@/components/docs-page";
+import { Aside } from "@astrojs/starlight/components";
+
+The `TopologyChart` renders an interactive node-and-edge graph driven by D3. Use
+it to visualize relationships and hierarchies — organization trees, service
+dependency maps, or pipeline graphs — with optional dragging, zooming, and
+auto-fit layout.
+
+<Aside type="note">
+  Charts come from the `@harness/dashboard-visualization` package, which is
+  published separately from `@harnessio/ui` and is not part of this portal's
+  live-example runtime. The examples below are shown as code rather than
+  interactive previews. In your app, import the stylesheet once
+  (`import "@harness/dashboard-visualization/style.css"`).
+</Aside>
+
+## Renderers
+
+`TopologyChart` requires a `nodeRenderer` and an `edgeRenderer`. The library
+ships default renderer delegates that you register on the renderer services,
+typically as module-level singletons so they are created once.
+
+```tsx
+import {
+  DefaultEdgeRenderer,
+  DefaultNodeRenderer,
+  TopologyEdgeRendererService,
+  TopologyNodeRendererService,
+} from "@harness/dashboard-visualization";
+
+const nodeRenderer = new TopologyNodeRendererService();
+nodeRenderer.withDelegate(new DefaultNodeRenderer());
+
+const edgeRenderer = new TopologyEdgeRendererService();
+edgeRenderer.withDelegate(new DefaultEdgeRenderer());
+
+export { nodeRenderer, edgeRenderer };
+```
+
+## Graph from nodes and edges
+
+Nodes are a flat array. Each edge references its `fromNode`/`toNode` and is
+pushed onto the `edges` array of both endpoints so the graph is connected.
+
+```tsx
+import {
+  TopologyChart,
+  type DefaultTopologyEdge,
+  type DefaultTopologyNode,
+} from "@harness/dashboard-visualization";
+import "@harness/dashboard-visualization/style.css";
+import { edgeRenderer, nodeRenderer } from "./topology-singletons";
+
+function createNode(name: string, depth: number): DefaultTopologyNode {
+  return {
+    nodeType: "default-node",
+    name,
+    type: `Level ${depth}`,
+    color: NODE_COLORS[depth % NODE_COLORS.length],
+    edges: [],
+  };
+}
+
+function createEdge(
+  from: DefaultTopologyNode,
+  to: DefaultTopologyNode,
+): DefaultTopologyEdge {
+  const edge: DefaultTopologyEdge = {
+    edgeType: "default-edge",
+    fromNode: from,
+    toNode: to,
+  };
+  from.edges.push(edge);
+  to.edges.push(edge);
+  return edge;
+}
+
+const root = createNode("Organization", 0);
+const engineering = createNode("Engineering", 1);
+createEdge(root, engineering);
+const nodes = [root, engineering];
+
+<TopologyChart
+  nodes={nodes}
+  nodeRenderer={nodeRenderer}
+  edgeRenderer={edgeRenderer}
+  layoutType={"vertical-graph-layout" as never}
+  draggableNodes={false}
+  zoomable
+  shouldAutoZoomToFit
+/>;
+```
+
+## Usage
+
+```tsx
+import { TopologyChart } from "@harness/dashboard-visualization";
+import "@harness/dashboard-visualization/style.css";
+import { edgeRenderer, nodeRenderer } from "./topology-singletons";
+
+// Provide a flat `nodes` array plus the node and edge renderer services.
+<TopologyChart
+  nodes={nodes}
+  nodeRenderer={nodeRenderer}
+  edgeRenderer={edgeRenderer}
+  draggableNodes={false}
+  zoomable
+  shouldAutoZoomToFit
+/>;
+```
+
+## Props
+
+<DocsPage.PropsTable
+  props={[
+    {
+      name: "nodes",
+      description: "Flat array of nodes. Each node carries its connected edges.",
+      required: true,
+      value: "TNode[]",
+    },
+    {
+      name: "nodeRenderer",
+      description: "Service that draws nodes (e.g. TopologyNodeRendererService with DefaultNodeRenderer).",
+      required: true,
+      value: "TopologyNodeRenderer",
+    },
+    {
+      name: "edgeRenderer",
+      description: "Service that draws edges (e.g. TopologyEdgeRendererService with DefaultEdgeRenderer).",
+      required: true,
+      value: "TopologyEdgeRenderer",
+    },
+    {
+      name: "layoutType",
+      description: "Built-in layout to apply (e.g. a vertical graph layout).",
+      required: false,
+      value: "TopologyLayoutType",
+    },
+    {
+      name: "customLayout",
+      description: "Provide a custom layout implementation instead of a built-in layoutType.",
+      required: false,
+      value: "TopologyLayout",
+    },
+    {
+      name: "draggableNodes",
+      description: "Allow nodes to be dragged.",
+      required: false,
+      value: "boolean",
+    },
+    {
+      name: "zoomable",
+      description: "Enable zoom and pan.",
+      required: false,
+      value: "boolean",
+    },
+    {
+      name: "shouldAutoZoomToFit",
+      description: "Automatically zoom so the whole graph fits the viewport.",
+      required: false,
+      value: "boolean",
+    },
+    {
+      name: "clickableNodes",
+      description: "Enable node click interactions.",
+      required: false,
+      value: "boolean",
+    },
+    {
+      name: "clickableEdges",
+      description: "Enable edge click interactions.",
+      required: false,
+      value: "boolean",
+    },
+    {
+      name: "nodeInteractionHandler",
+      description: "Handler invoked on node interactions (hover/click).",
+      required: false,
+      value: "TopologyNodeInteractionHandler",
+    },
+    {
+      name: "tooltipComponent",
+      description: "Custom component rendered as a tooltip for nodes/edges.",
+      required: false,
+      value: "ComponentType<{ data: TopologyTooltipData; onClose: () => void }>",
+    },
+  ]}
+/>
+
+### `TopologyNode` / `TopologyEdge`
+
+<DocsPage.PropsTable
+  props={[
+    {
+      name: "node.edges",
+      description: "Edges connected to the node.",
+      required: true,
+      value: "TopologyEdge[]",
+    },
+    {
+      name: "node.metadata",
+      description: "Optional arbitrary metadata for the node.",
+      required: false,
+      value: "Record<string, string | number | boolean>",
+    },
+    {
+      name: "edge.fromNode",
+      description: "Source node of the edge.",
+      required: true,
+      value: "TopologyNode",
+    },
+    {
+      name: "edge.toNode",
+      description: "Target node of the edge.",
+      required: true,
+      value: "TopologyNode",
+    },
+  ]}
+/>
+
+## Guidelines
+
+<Aside type="tip">
+  Create the node and edge renderer services once (module-level singletons)
+  rather than per render, and enable `shouldAutoZoomToFit` so graphs of varying
+  size always frame correctly on mount.
+</Aside>
+
+<Aside>
+  Unlike the other charts, the Topology graph manages its own pointer
+  interactions and does not require a `PopoverServiceProvider` wrapper. Use a
+  custom `tooltipComponent` when you need rich node details.
+</Aside>

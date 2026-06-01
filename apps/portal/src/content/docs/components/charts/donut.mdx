@@ -1,0 +1,224 @@
+---
+title: Donut Chart
+description: Donut chart for showing parts of a whole with an optional center label
+beta: true
+---
+
+import { DocsPage } from "@/components/docs-page";
+import { Aside } from "@astrojs/starlight/components";
+
+The `DonutChart` renders a donut (ring) chart with a built-in React legend. Use
+it to show how a total breaks down into a small number of categories — adoption
+share by tool, spend by category, or pass/fail distribution — with an optional
+value displayed in the center.
+
+<Aside type="note">
+  Charts come from the `@harness/dashboard-visualization` package, which is
+  published separately from `@harnessio/ui` and is not part of this portal's
+  live-example runtime. The examples below are shown as code rather than
+  interactive previews. In your app, import the stylesheet once
+  (`import "@harness/dashboard-visualization/style.css"`) and wrap every chart in
+  a `PopoverServiceProvider`.
+</Aside>
+
+## Basic donut
+
+Each slice is a `{ name, value, color }` entry. The `center` config renders a
+title and value inside the ring.
+
+```tsx
+import {
+  DonutChart,
+  LegendPosition,
+  PopoverServiceProvider,
+} from "@harness/dashboard-visualization";
+import "@harness/dashboard-visualization/style.css";
+
+const segments = [
+  { label: "Cursor", value: 42.3, color: "#6366f1" },
+  { label: "GitHub Copilot", value: 31.1, color: "#10b981" },
+  { label: "Claude Code", value: 26.6, color: "#f59e0b" },
+];
+
+const series = segments.map((seg) => ({
+  name: seg.label,
+  value: seg.value,
+  color: seg.color,
+}));
+
+<PopoverServiceProvider>
+  <DonutChart
+    series={series}
+    center={{ title: "Active Users", value: 100 }}
+    legendPosition={LegendPosition.Right}
+    applyDefaultSorting={false}
+  />
+</PopoverServiceProvider>;
+```
+
+## Interactive donut
+
+Pass `onDataClick` to respond to slice selection and `colorPalette` to let the
+chart assign colors automatically when slices omit an explicit `color`.
+
+```tsx
+<PopoverServiceProvider>
+  <DonutChart
+    series={series}
+    center={{ title: "Total", value: 240 }}
+    legendPosition={LegendPosition.Bottom}
+    colorPalette={["#6366f1", "#10b981", "#f59e0b", "#ef4444"]}
+    onDataClick={(datum) => console.log("Clicked:", datum.name)}
+  />
+</PopoverServiceProvider>;
+```
+
+## Usage
+
+```tsx
+import {
+  DonutChart,
+  LegendPosition,
+  PopoverServiceProvider,
+} from "@harness/dashboard-visualization";
+import "@harness/dashboard-visualization/style.css";
+
+// Each series entry is a slice: { name, value, color? }.
+<PopoverServiceProvider>
+  <DonutChart
+    series={[
+      { name: "Category A", value: 30, color: "#6366f1" },
+      { name: "Category B", value: 50, color: "#10b981" },
+      { name: "Category C", value: 20, color: "#f59e0b" },
+    ]}
+    center={{ title: "Total", value: 100 }}
+    legendPosition={LegendPosition.Right}
+  />
+</PopoverServiceProvider>;
+```
+
+## Props
+
+<DocsPage.PropsTable
+  props={[
+    {
+      name: "series",
+      description: "Donut slices. Each entry is { name, value, color? }.",
+      required: false,
+      value: "DonutSeries[]",
+    },
+    {
+      name: "center",
+      description: "Center text configuration ({ title, value }, extends value-format options).",
+      required: false,
+      value: "DonutCenter",
+    },
+    {
+      name: "legendPosition",
+      description: "Legend position (default: TopRight).",
+      required: false,
+      value: "LegendPosition",
+    },
+    {
+      name: "legendFontSize",
+      description: "Legend font size.",
+      required: false,
+      value: "LegendFontSize",
+    },
+    {
+      name: "formatLegendValue",
+      description: "Whether to format legend values (default: true).",
+      required: false,
+      value: "boolean",
+      defaultValue: "true",
+    },
+    {
+      name: "applyDefaultSorting",
+      description: "Whether to sort slices by value descending (default: true).",
+      required: false,
+      value: "boolean",
+      defaultValue: "true",
+    },
+    {
+      name: "displayLegendCounts",
+      description: "Whether to display legend counts (default: true).",
+      required: false,
+      value: "boolean",
+      defaultValue: "true",
+    },
+    {
+      name: "alignment",
+      description: "Alignment of the donut chart (default: Center).",
+      required: false,
+      value: "DonutAlignmentStyle",
+    },
+    {
+      name: "colorPalette",
+      description: "Custom palette used for slices without an explicit color.",
+      required: false,
+      value: "string[]",
+    },
+    {
+      name: "onDataClick",
+      description: "Callback fired when a slice is clicked.",
+      required: false,
+      value: "(datum: DonutSeries) => void",
+    },
+    {
+      name: "showTooltip",
+      description: "Whether to show a tooltip on hover (default: true).",
+      required: false,
+      value: "boolean",
+      defaultValue: "true",
+    },
+    {
+      name: "className",
+      description: "Additional CSS class for the container.",
+      required: false,
+      value: "string",
+    },
+  ]}
+/>
+
+### `DonutSeries`
+
+<DocsPage.PropsTable
+  props={[
+    {
+      name: "name",
+      description: "Slice label, shown in the legend and tooltip.",
+      required: true,
+      value: "string",
+    },
+    {
+      name: "value",
+      description: "Numeric value of the slice.",
+      required: true,
+      value: "number",
+    },
+    {
+      name: "color",
+      description: "Slice color. Falls back to colorPalette when omitted.",
+      required: false,
+      value: "string",
+    },
+    {
+      name: "disabled",
+      description: "Whether the slice is disabled.",
+      required: false,
+      value: "boolean",
+    },
+  ]}
+/>
+
+## Guidelines
+
+<Aside type="tip">
+  Use the `center` value to surface the headline number (a total or a key
+  percentage) so the chart communicates at a glance.
+</Aside>
+
+<Aside>
+  Limit a donut to a handful of slices. When you need to compare many categories
+  precisely, a [Bar](/components/charts/bar) chart is easier to read than a ring.
+</Aside>

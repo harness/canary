@@ -1,0 +1,259 @@
+---
+title: Line Chart
+description: Line chart for visualizing trends over a continuous or time axis
+beta: true
+---
+
+import { DocsPage } from "@/components/docs-page";
+import { Aside } from "@astrojs/starlight/components";
+
+The Line chart connects data points with a continuous line using the
+`CartesianChart` component with a series `type` of
+`CartesianSeriesVisualizationType.Line`. Use it to show how one or more measures
+change over time or across an ordered domain — pass rate trends, latency over
+time, or any metric where the trajectory matters.
+
+<Aside type="note">
+  Charts come from the `@harness/dashboard-visualization` package, which is
+  published separately from `@harnessio/ui` and is not part of this portal's
+  live-example runtime. The examples below are shown as code rather than
+  interactive previews. In your app, import the stylesheet once
+  (`import "@harness/dashboard-visualization/style.css"`) and wrap every chart in
+  a `PopoverServiceProvider`.
+</Aside>
+
+## Time-series line
+
+Plot a line against a time X axis (`ScaleType.Time`) with data points whose `x`
+is an epoch-millisecond timestamp.
+
+```tsx
+import {
+  AxisLocation,
+  AxisType,
+  CartesianChart,
+  CartesianSeriesVisualizationType,
+  LegendPosition,
+  PopoverServiceProvider,
+  ScaleType,
+  type Axis,
+  type Series,
+} from "@harness/dashboard-visualization";
+import "@harness/dashboard-visualization/style.css";
+
+type Point = { x: number; y: number };
+
+const series: Series<Point>[] = [
+  {
+    name: "test",
+    displayName: "Test run",
+    color: "#22c55e",
+    type: CartesianSeriesVisualizationType.Line,
+    data: [
+      { x: 1717200000000, y: 52 },
+      { x: 1717203600000, y: 48 },
+      { x: 1717207200000, y: 61 },
+    ],
+  },
+];
+
+const xAxis: Axis = {
+  type: AxisType.X,
+  location: AxisLocation.Bottom,
+  scale: ScaleType.Time,
+  tickLabels: true,
+  gridLines: false,
+  crosshair: { enable: true, snap: true },
+};
+
+const yAxis: Axis = {
+  type: AxisType.Y,
+  location: AxisLocation.Left,
+  scale: ScaleType.Linear,
+  tickLabels: true,
+  gridLines: false,
+  min: 0,
+  crosshair: { enable: true, snap: true },
+};
+
+<PopoverServiceProvider>
+  <CartesianChart
+    series={series}
+    xAxisOption={xAxis}
+    yAxisOption={yAxis}
+    showXAxis
+    showYAxis
+    legend={LegendPosition.Bottom}
+    enableTooltips
+    enableCrosshairs
+  />
+</PopoverServiceProvider>;
+```
+
+## Multiple series
+
+Render several lines by passing multiple series. Each gets its own color and
+legend entry. A categorical (band) X axis works well for evenly-spaced buckets.
+
+```tsx
+const evalColors = ["#6366f1", "#22c55e", "#f59e0b"];
+
+const series: Series<{ x: string; y: number }>[] = evalTrends.map(
+  (trend, idx) => ({
+    name: trend.evalId,
+    displayName: trend.name,
+    color: evalColors[idx % evalColors.length],
+    type: CartesianSeriesVisualizationType.Line,
+    data: trend.buckets.map((b) => ({
+      x: b.bucket.slice(0, 10),
+      y: Math.round(b.passRate),
+    })),
+  }),
+);
+
+<PopoverServiceProvider>
+  <CartesianChart
+    series={series}
+    xAxisOption={{
+      type: AxisType.X,
+      location: AxisLocation.Bottom,
+      scale: ScaleType.Band,
+      gridLines: false,
+    }}
+    yAxisOption={{
+      type: AxisType.Y,
+      location: AxisLocation.Left,
+      scale: ScaleType.Linear,
+      gridLines: true,
+      min: 0,
+      max: 100,
+    }}
+    legend={LegendPosition.Bottom}
+    enableTooltips
+    onDataPointClick={(_point, series) => console.log("clicked", series.name)}
+  />
+</PopoverServiceProvider>;
+```
+
+## Usage
+
+```tsx
+import {
+  AxisLocation,
+  AxisType,
+  CartesianChart,
+  CartesianSeriesVisualizationType,
+  PopoverServiceProvider,
+  ScaleType,
+} from "@harness/dashboard-visualization";
+import "@harness/dashboard-visualization/style.css";
+
+// A line series is a Series whose `type` is Line. Each data point is an { x, y }
+// pair; x may be a category, number, or epoch-millisecond timestamp depending on
+// the axis scale.
+<PopoverServiceProvider>
+  <CartesianChart
+    series={[
+      {
+        name: "series-1",
+        color: "#22c55e",
+        type: CartesianSeriesVisualizationType.Line,
+        data: [{ x: "2025-03-01", y: 87 }],
+      },
+    ]}
+    xAxisOption={{
+      type: AxisType.X,
+      location: AxisLocation.Bottom,
+      scale: ScaleType.Band,
+    }}
+    yAxisOption={{
+      type: AxisType.Y,
+      location: AxisLocation.Left,
+      scale: ScaleType.Linear,
+      min: 0,
+    }}
+  />
+</PopoverServiceProvider>;
+```
+
+## Props
+
+The Line chart uses the shared `CartesianChart` props. The most relevant ones
+for lines are below.
+
+<DocsPage.PropsTable
+  props={[
+    {
+      name: "series",
+      description:
+        "Array of series. Each line series sets type: CartesianSeriesVisualizationType.Line.",
+      required: false,
+      value: "Series<TData>[]",
+    },
+    {
+      name: "xAxisOption",
+      description:
+        "X-axis configuration. Use ScaleType.Time for timestamps or ScaleType.Band for buckets.",
+      required: false,
+      value: "Axis",
+    },
+    {
+      name: "yAxisOption",
+      description: "Y-axis configuration (single axis or dual-axis).",
+      required: false,
+      value: "Axis | DualYAxisType",
+    },
+    {
+      name: "legend",
+      description: "Legend position.",
+      required: false,
+      value: "LegendPosition",
+    },
+    {
+      name: "enableCrosshairs",
+      description: "Show axis crosshairs that follow the pointer; pair with axis crosshair config.",
+      required: false,
+      value: "boolean",
+    },
+    {
+      name: "enableTooltips",
+      description: "Enable hover tooltips.",
+      required: false,
+      value: "boolean",
+    },
+    {
+      name: "groupId",
+      description: "Synchronize crosshairs/tooltips across charts sharing the same id.",
+      required: false,
+      value: "string",
+    },
+    {
+      name: "downsampling",
+      description:
+        "LTTB downsampling config. Series exceeding dataPointLimit are downsampled for performance.",
+      required: false,
+      value: "DownsamplingConfig",
+    },
+    {
+      name: "onDataPointClick",
+      description: "Callback fired when a point is clicked.",
+      required: false,
+      value: "(data: TData, series: Series<TData>) => void",
+    },
+  ]}
+/>
+
+## Guidelines
+
+<Aside type="tip">
+  Set `crosshair: { enable: true, snap: true }` on both axes and
+  `enableCrosshairs` on the chart so the pointer snaps to the nearest data point
+  — this makes multi-series lines much easier to read.
+</Aside>
+
+<Aside>
+  For large time-series datasets, supply a `downsampling` config and an
+  `groupId` to keep multiple synchronized charts performant. To emphasize a
+  projected or reference trajectory, overlay a
+  [Dashed line](/components/charts/dashed-line) series.
+</Aside>

@@ -1,0 +1,209 @@
+---
+title: Scatter Chart
+description: Scatter plot for visualizing the relationship between two measures
+beta: true
+---
+
+import { DocsPage } from "@/components/docs-page";
+import { Aside } from "@astrojs/starlight/components";
+
+The Scatter chart plots individual points using the `CartesianChart` component
+with a series `type` of `CartesianSeriesVisualizationType.Scatter`. Both axes are
+numeric, so it is the right choice for showing the relationship or distribution
+between two measures — for example regression severity versus frequency, grouped
+by category.
+
+<Aside type="note">
+  Charts come from the `@harness/dashboard-visualization` package, which is
+  published separately from `@harnessio/ui` and is not part of this portal's
+  live-example runtime. The examples below are shown as code rather than
+  interactive previews. In your app, import the stylesheet once
+  (`import "@harness/dashboard-visualization/style.css"`) and wrap every chart in
+  a `PopoverServiceProvider`.
+</Aside>
+
+## Grouped scatter
+
+Each input group becomes its own scatter series with a distinct color and legend
+entry. Data points are `{ x, y }` pairs on two linear axes.
+
+```tsx
+import {
+  AxisLocation,
+  AxisType,
+  CartesianChart,
+  CartesianSeriesVisualizationType,
+  LegendPosition,
+  RenderingStrategy,
+  ScaleType,
+  type Axis,
+  type Series,
+} from "@harness/dashboard-visualization";
+import "@harness/dashboard-visualization/style.css";
+
+type Point = { x: number; y: number };
+
+const seriesData = [
+  {
+    name: "acceptable_noise",
+    displayName: "Acceptable Noise",
+    data: [
+      { x: 1.2, y: 0.05 },
+      { x: 3.4, y: 0.12 },
+    ],
+  },
+  {
+    name: "critical_regression",
+    displayName: "Critical Regression",
+    data: [{ x: 8.1, y: 0.91 }],
+  },
+];
+
+const series: Series<Point>[] = seriesData.map((s) => ({
+  name: s.name,
+  displayName: s.displayName ?? s.name,
+  color: colorFor(s.name),
+  type: CartesianSeriesVisualizationType.Scatter,
+  data: s.data,
+}));
+
+const xAxis: Axis = {
+  type: AxisType.X,
+  location: AxisLocation.Bottom,
+  scale: ScaleType.Linear,
+  gridLines: false,
+  tickLabels: true,
+  crosshair: { enable: true, snap: true },
+};
+
+const yAxis: Axis = {
+  type: AxisType.Y,
+  location: AxisLocation.Left,
+  scale: ScaleType.Linear,
+  gridLines: false,
+  tickLabels: true,
+  min: 0,
+};
+
+<PopoverServiceProvider>
+  <CartesianChart
+    series={series}
+    xAxisOption={xAxis}
+    yAxisOption={yAxis}
+    showXAxis
+    showYAxis={false}
+    legend={LegendPosition.Top}
+    strategy={RenderingStrategy.Auto}
+    enableTooltips
+    enableCrosshairs
+  />
+</PopoverServiceProvider>;
+```
+
+## Usage
+
+```tsx
+import {
+  AxisLocation,
+  AxisType,
+  CartesianChart,
+  CartesianSeriesVisualizationType,
+  PopoverServiceProvider,
+  ScaleType,
+} from "@harness/dashboard-visualization";
+import "@harness/dashboard-visualization/style.css";
+
+// A scatter series is a Series whose `type` is Scatter. Both axes are numeric
+// (ScaleType.Linear) and each data point is an { x, y } pair.
+<PopoverServiceProvider>
+  <CartesianChart
+    series={[
+      {
+        name: "series-1",
+        color: "#6366f1",
+        type: CartesianSeriesVisualizationType.Scatter,
+        data: [{ x: 1.2, y: 0.05 }],
+      },
+    ]}
+    xAxisOption={{
+      type: AxisType.X,
+      location: AxisLocation.Bottom,
+      scale: ScaleType.Linear,
+    }}
+    yAxisOption={{
+      type: AxisType.Y,
+      location: AxisLocation.Left,
+      scale: ScaleType.Linear,
+      min: 0,
+    }}
+  />
+</PopoverServiceProvider>;
+```
+
+## Props
+
+The Scatter chart uses the shared `CartesianChart` props. The fields most
+relevant to scatter plots are below.
+
+<DocsPage.PropsTable
+  props={[
+    {
+      name: "series",
+      description:
+        "Array of series. Each scatter series sets type: CartesianSeriesVisualizationType.Scatter.",
+      required: false,
+      value: "Series<TData>[]",
+    },
+    {
+      name: "xAxisOption",
+      description: "X-axis configuration, typically ScaleType.Linear.",
+      required: false,
+      value: "Axis",
+    },
+    {
+      name: "yAxisOption",
+      description: "Y-axis configuration, typically ScaleType.Linear.",
+      required: false,
+      value: "Axis | DualYAxisType",
+    },
+    {
+      name: "legend",
+      description: "Legend position; useful to label scatter groups.",
+      required: false,
+      value: "LegendPosition",
+    },
+    {
+      name: "strategy",
+      description:
+        "Rendering strategy. RenderingStrategy.Auto chooses SVG or Canvas based on point count.",
+      required: false,
+      value: "RenderingStrategy",
+    },
+    {
+      name: "enableCrosshairs",
+      description: "Show axis crosshairs; pair with per-axis crosshair config.",
+      required: false,
+      value: "boolean",
+    },
+    {
+      name: "enableTooltips",
+      description: "Enable hover tooltips.",
+      required: false,
+      value: "boolean",
+    },
+  ]}
+/>
+
+## Guidelines
+
+<Aside type="tip">
+  Group related points into separate series with distinct colors and a legend so
+  categories remain distinguishable, and use `RenderingStrategy.Auto` so dense
+  plots fall back to canvas rendering.
+</Aside>
+
+<Aside>
+  Both axes should use `ScaleType.Linear`. If one of your dimensions is
+  categorical, a [Column](/components/charts/column) or
+  [Bar](/components/charts/bar) chart is a better fit than a scatter plot.
+</Aside>

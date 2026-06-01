@@ -1,0 +1,219 @@
+---
+title: Dashed Line Chart
+description: Dashed line series for trendlines, baselines, and reference overlays
+beta: true
+---
+
+import { DocsPage } from "@/components/docs-page";
+import { Aside } from "@astrojs/starlight/components";
+
+The Dashed line is a `CartesianChart` series with a `type` of
+`CartesianSeriesVisualizationType.DashedLine`. It renders the same shape as a
+[Line](/components/charts/line) series but with a dashed stroke, which makes it
+ideal for overlays that should read as secondary to the primary data — computed
+trendlines, baselines, targets, or percentile reference lines.
+
+<Aside type="note">
+  Charts come from the `@harness/dashboard-visualization` package, which is
+  published separately from `@harnessio/ui` and is not part of this portal's
+  live-example runtime. The examples below are shown as code rather than
+  interactive previews. In your app, import the stylesheet once
+  (`import "@harness/dashboard-visualization/style.css"`) and wrap every chart in
+  a `PopoverServiceProvider`.
+</Aside>
+
+## Trendline overlay
+
+A common pattern is to append a dashed trendline series to an existing chart. A
+least-squares regression over the category totals produces the trendline points,
+which are then rendered as a dashed line with `hideTooltip: true` so it does not
+clutter hover interactions.
+
+```tsx
+import {
+  CartesianSeriesVisualizationType,
+  type Series,
+} from "@harness/dashboard-visualization";
+
+type ChartPoint = { x: string; y: number };
+
+// Build a dashed trendline series from category labels and their totals.
+function computeTrendlineSeries(
+  categories: string[],
+  totalByCategory: number[],
+  color: string,
+): Series<ChartPoint> {
+  const trendValues = linearRegressionValues(totalByCategory);
+  return {
+    name: "trendline",
+    displayName: "Trend",
+    color,
+    type: CartesianSeriesVisualizationType.DashedLine,
+    data: trendValues.map((y, i) => ({ x: categories[i], y })),
+    hideTooltip: true,
+  };
+}
+
+// Append the trendline to the existing (e.g. column) series.
+const seriesWithTrend = [
+  ...columnSeries,
+  computeTrendlineSeries(categories, totalByCategory, "#9ca3af"),
+];
+```
+
+## Baseline comparison
+
+A dashed line also reads well as a baseline plotted alongside a solid line of the
+current run. Both series share the same data-point shape; only the `type`
+differs.
+
+```tsx
+import {
+  CartesianChart,
+  CartesianSeriesVisualizationType,
+  LegendPosition,
+  PopoverServiceProvider,
+  type Series,
+} from "@harness/dashboard-visualization";
+import "@harness/dashboard-visualization/style.css";
+
+const series: Series<{ x: number; y: number }>[] = [
+  {
+    name: "baseline",
+    displayName: "Baseline",
+    color: "#6366f1",
+    type: CartesianSeriesVisualizationType.DashedLine,
+    data: baselinePoints,
+  },
+  {
+    name: "test",
+    displayName: "Current run",
+    color: "#22c55e",
+    type: CartesianSeriesVisualizationType.Line,
+    data: testPoints,
+  },
+];
+
+<PopoverServiceProvider>
+  <CartesianChart
+    series={series}
+    xAxisOption={xAxis}
+    yAxisOption={yAxis}
+    legend={LegendPosition.Bottom}
+    enableTooltips
+    enableCrosshairs
+  />
+</PopoverServiceProvider>;
+```
+
+## Percentile reference
+
+When paired with an [Area](/components/charts/area) series on a time axis, a
+dashed line communicates a fixed reference such as a 90th-percentile threshold.
+
+```tsx
+const ninetyPercentile = {
+  name: "90th Percentile",
+  color: "#f59e0b",
+  type: CartesianSeriesVisualizationType.DashedLine,
+  data: data.map(({ timestamp }) => ({ timestamp, value: p90 })),
+  units: "%",
+};
+```
+
+## Usage
+
+```tsx
+import {
+  CartesianChart,
+  CartesianSeriesVisualizationType,
+  PopoverServiceProvider,
+} from "@harness/dashboard-visualization";
+import "@harness/dashboard-visualization/style.css";
+
+// A dashed-line series is identical to a line series except for its `type`.
+<PopoverServiceProvider>
+  <CartesianChart
+    series={[
+      {
+        name: "trend",
+        displayName: "Trend",
+        color: "#9ca3af",
+        type: CartesianSeriesVisualizationType.DashedLine,
+        data: [{ x: "Mon", y: 12 }],
+        hideTooltip: true,
+      },
+    ]}
+    xAxisOption={xAxis}
+    yAxisOption={yAxis}
+  />
+</PopoverServiceProvider>;
+```
+
+## Props
+
+A dashed line is configured entirely through the series object on
+`CartesianChart`. The series fields most relevant to dashed lines are below; see
+the [Line](/components/charts/line) chart for the full set of chart-level props.
+
+<DocsPage.PropsTable
+  props={[
+    {
+      name: "type",
+      description:
+        "Set to CartesianSeriesVisualizationType.DashedLine to render a dashed stroke.",
+      required: true,
+      value: "CartesianSeriesVisualizationType",
+    },
+    {
+      name: "data",
+      description:
+        "Data points, e.g. { x, y } pairs or { timestamp, value } for time series.",
+      required: true,
+      value: "TData[]",
+    },
+    {
+      name: "name",
+      description: "Unique series identifier.",
+      required: true,
+      value: "string",
+    },
+    {
+      name: "color",
+      description: "Stroke color of the dashed line.",
+      required: true,
+      value: "string",
+    },
+    {
+      name: "displayName",
+      description: "Label shown in the legend and tooltip.",
+      required: false,
+      value: "string",
+    },
+    {
+      name: "hideTooltip",
+      description:
+        "When true, the series is excluded from tooltips. Recommended for trendlines and reference overlays.",
+      required: false,
+      value: "boolean",
+    },
+    {
+      name: "units",
+      description: "Unit suffix appended to values in tooltips (e.g. '%').",
+      required: false,
+      value: "string",
+    },
+  ]}
+/>
+
+## Guidelines
+
+<Aside type="tip">
+  Set `hideTooltip: true` on trendline and reference series so hovering surfaces
+  the real data, not the computed overlay.
+</Aside>
+
+<Aside>
+  Use a muted, neutral color (e.g. gray) for trendlines so the dashed overlay
+  stays visually subordinate to the primary series it annotates.
+</Aside>

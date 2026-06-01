@@ -1,0 +1,232 @@
+---
+title: Radar Chart
+description: Radar (spider) chart for comparing multiple dimensions across series
+beta: true
+---
+
+import { DocsPage } from "@/components/docs-page";
+import { Aside } from "@astrojs/starlight/components";
+
+The `RadarChart` plots one or more series across several shared axes arranged
+radially, producing a "spider" shape per series. Use it to compare entities
+across the same set of dimensions — evaluation scores by category, capability
+profiles, or multi-metric quality comparisons.
+
+<Aside type="note">
+  Charts come from the `@harness/dashboard-visualization` package, which is
+  published separately from `@harnessio/ui` and is not part of this portal's
+  live-example runtime. The examples below are shown as code rather than
+  interactive previews. In your app, import the stylesheet once
+  (`import "@harness/dashboard-visualization/style.css"`) and wrap every chart in
+  a `PopoverServiceProvider`.
+</Aside>
+
+## Multi-series radar
+
+Define the `axes` once, then provide one `series` per entity. Each series'
+`data` is a list of `{ axis, value }` points whose `axis` must match an axis
+`name`.
+
+```tsx
+import {
+  LegendPosition,
+  PopoverServiceProvider,
+  RadarChart,
+} from "@harness/dashboard-visualization";
+import "@harness/dashboard-visualization/style.css";
+
+const axes = [
+  { name: "Correctness" },
+  { name: "Safety" },
+  { name: "Helpfulness" },
+  { name: "Latency" },
+  { name: "Cost" },
+];
+
+const series = [
+  {
+    name: "suite-a",
+    color: "#6366f1",
+    showPoints: true,
+    data: [
+      { axis: "Correctness", value: 0.82 },
+      { axis: "Safety", value: 0.95 },
+      { axis: "Helpfulness", value: 0.7 },
+      { axis: "Latency", value: 0.6 },
+      { axis: "Cost", value: 0.75 },
+    ],
+  },
+  {
+    name: "suite-b",
+    color: "#22c55e",
+    showPoints: true,
+    data: [
+      { axis: "Correctness", value: 0.71 },
+      { axis: "Safety", value: 0.88 },
+      { axis: "Helpfulness", value: 0.82 },
+      { axis: "Latency", value: 0.5 },
+      { axis: "Cost", value: 0.65 },
+    ],
+  },
+];
+
+<PopoverServiceProvider>
+  <div style={{ height: 250 }}>
+    <RadarChart
+      axes={axes}
+      series={series}
+      levels={5}
+      legendPosition={LegendPosition.Bottom}
+      showTooltip={false}
+    />
+  </div>
+</PopoverServiceProvider>;
+```
+
+## Usage
+
+```tsx
+import {
+  LegendPosition,
+  PopoverServiceProvider,
+  RadarChart,
+} from "@harness/dashboard-visualization";
+import "@harness/dashboard-visualization/style.css";
+
+// `axes` defines the spokes; each series plots one { axis, value } point per axis.
+<PopoverServiceProvider>
+  <div style={{ height: 250 }}>
+    <RadarChart
+      axes={[{ name: "Speed" }, { name: "Reliability" }, { name: "Safety" }]}
+      series={[
+        {
+          name: "Product A",
+          color: "#ff6384",
+          showPoints: true,
+          data: [
+            { axis: "Speed", value: 80 },
+            { axis: "Reliability", value: 90 },
+            { axis: "Safety", value: 85 },
+          ],
+        },
+      ]}
+      levels={5}
+      legendPosition={LegendPosition.Bottom}
+    />
+  </div>
+</PopoverServiceProvider>;
+```
+
+## Props
+
+<DocsPage.PropsTable
+  props={[
+    {
+      name: "axes",
+      description: "Radar axis (spoke) definitions. Each is { name }.",
+      required: true,
+      value: "RadarAxis[]",
+    },
+    {
+      name: "series",
+      description: "Data series to display. Each plots one point per axis.",
+      required: true,
+      value: "RadarSeries[]",
+    },
+    {
+      name: "title",
+      description: "Optional chart title.",
+      required: false,
+      value: "string",
+    },
+    {
+      name: "levels",
+      description: "Number of concentric grid levels (default: 10).",
+      required: false,
+      value: "number",
+      defaultValue: "10",
+    },
+    {
+      name: "legendPosition",
+      description: "Legend position (default: Bottom).",
+      required: false,
+      value: "LegendPosition",
+    },
+    {
+      name: "legendHeight",
+      description: "Height of the legend section in pixels.",
+      required: false,
+      value: "number",
+    },
+    {
+      name: "showTooltip",
+      description: "Whether to show a tooltip on hover (default: true).",
+      required: false,
+      value: "boolean",
+      defaultValue: "true",
+    },
+    {
+      name: "onPointClicked",
+      description: "Callback fired when a data point is clicked.",
+      required: false,
+      value: "(event: RadarPointEvent) => void",
+    },
+    {
+      name: "onSeriesClicked",
+      description: "Callback fired when a series path/area is clicked.",
+      required: false,
+      value: "(seriesName: string) => void",
+    },
+    {
+      name: "className",
+      description: "Additional CSS class for the container.",
+      required: false,
+      value: "string",
+    },
+  ]}
+/>
+
+### `RadarSeries`
+
+<DocsPage.PropsTable
+  props={[
+    {
+      name: "name",
+      description: "Series name, shown in the legend.",
+      required: true,
+      value: "string",
+    },
+    {
+      name: "data",
+      description: "Points for the series. Each { axis, value } maps to an axis by name.",
+      required: true,
+      value: "RadarPoint[] ({ axis: string; value: number })",
+    },
+    {
+      name: "color",
+      description: "Series color.",
+      required: true,
+      value: "string",
+    },
+    {
+      name: "showPoints",
+      description: "Whether to render a marker at each axis value.",
+      required: true,
+      value: "boolean",
+    },
+  ]}
+/>
+
+## Guidelines
+
+<Aside type="tip">
+  Keep every series on the same value scale (for example all `0`–`1` or all
+  `0`–`100`) and ensure each series provides a point for every axis, otherwise
+  the shapes are not comparable.
+</Aside>
+
+<Aside>
+  Radar charts read best with three to eight axes and only a few overlaid
+  series. With many series the overlapping areas become hard to distinguish — a
+  grouped [Bar](/components/charts/bar) chart may be clearer.
+</Aside>

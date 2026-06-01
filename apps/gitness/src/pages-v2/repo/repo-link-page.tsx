@@ -1,13 +1,29 @@
 import { useCallback } from 'react'
+import { useFormContext } from 'react-hook-form'
 import { useNavigate, useParams } from 'react-router-dom'
 
 import { LinkedCreateRepositoryRequestBody, useLinkedCreateRepositoryMutation } from '@harnessio/code-service-client'
-import { RepoLinkFormFields, RepoLinkView } from '@harnessio/views'
+import { ACCOUNT_CONNECTOR_SPEC_TYPE, RepoLinkFormFields, RepoLinkView } from '@harnessio/views'
 
 import { LinkRepoConnectorDrawer, type ConnectorSelection } from '../../components-v2/link-repo-connector-drawer'
+import { LinkRepoProviderRepoSelect } from '../../components-v2/link-repo-provider-repo-select'
 import { useRoutes } from '../../framework/context/NavigationContext'
 import { useGetSpaceURLParam } from '../../framework/hooks/useGetSpaceParam'
 import { PathParams } from '../../RouteDefinitions'
+
+function ProviderRepoRendererBridge({ onSelect }: { onSelect: (repoIdentifier: string) => void }) {
+  const { watch } = useFormContext<RepoLinkFormFields>()
+  const connectorRef = watch('connectorRef')
+  const selectedRepoIdentifier = watch('repoIdentifier')
+
+  return (
+    <LinkRepoProviderRepoSelect
+      connectorRef={connectorRef}
+      selectedRepoIdentifier={selectedRepoIdentifier}
+      onSelect={onSelect}
+    />
+  )
+}
 
 export const LinkRepo = () => {
   const routes = useRoutes()
@@ -46,7 +62,10 @@ export const LinkRepo = () => {
       identifier: data.identifier,
       description: data.description || '',
       is_public: data.isPublic,
-      connector_ref: data.connectorRef
+      connector_ref: data.connectorRef,
+      ...(data.connectorSpecType === ACCOUNT_CONNECTOR_SPEC_TYPE && data.repoIdentifier
+        ? { repo_identifier: data.repoIdentifier }
+        : {})
     } as LinkedCreateRepositoryRequestBody
 
     linkRepoMutation({
@@ -68,10 +87,11 @@ export const LinkRepo = () => {
       connectorSelectorRenderer={onSelect => (
         <LinkRepoConnectorDrawer
           onConnectorSelect={connector => {
-            onSelect({ ref: buildConnectorRef(connector) })
+            onSelect({ ref: buildConnectorRef(connector), specType: connector.specType })
           }}
         />
       )}
+      providerRepoRenderer={onSelect => <ProviderRepoRendererBridge onSelect={onSelect} />}
       apiError={error?.message}
     />
   )

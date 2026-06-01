@@ -43,19 +43,22 @@ export const storeTypeConfig: Record<StoreType, StoreTypeInfo> = {
   }
 }
 
-const storeTypeOptions = Object.values(storeTypeConfig)
+const allStoreTypeOptions = Object.values(storeTypeConfig)
 
 export interface StoreTypeSelectProps {
   value: StoreType
   onChange: (value: StoreType) => void
   label?: string
   disabled?: boolean
+  /** Restrict the dropdown to only these store types. Shows all if omitted. */
+  allowedTypes?: StoreType[]
 }
 
-export function StoreTypeSelect({ value, onChange, label, disabled }: StoreTypeSelectProps): JSX.Element {
+export function StoreTypeSelect({ value, onChange, label, disabled, allowedTypes }: StoreTypeSelectProps): JSX.Element {
   const { t } = useTranslation()
   const selectedConfig = storeTypeConfig[value]
   const placeholder = t('views:repos.link.selectConnector.placeholder', 'Select connector')
+  const options = allowedTypes ? allStoreTypeOptions.filter(o => allowedTypes.includes(o.type)) : allStoreTypeOptions
 
   return (
     <Layout.Vertical gap="xs">
@@ -75,7 +78,7 @@ export function StoreTypeSelect({ value, onChange, label, disabled }: StoreTypeS
           </Button>
         </DropdownMenu.Trigger>
         <DropdownMenu.Content align="start">
-          {storeTypeOptions.map(option => (
+          {options.map(option => (
             <DropdownMenu.LogoItem
               key={option.type}
               logo={option.logo}

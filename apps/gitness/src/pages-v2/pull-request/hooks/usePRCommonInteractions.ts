@@ -232,14 +232,18 @@ export function usePRCommonInteractions({
 
   const handleReactionToggle = useCallback(
     async (commentId: number, emoji: string, add: boolean) => {
-      const url = apiPath(`/api/v1/repos/${repoRef}/pullreq/${prId}/comments/${commentId}/reactions/${encodeURIComponent(emoji)}`)
+      const url = apiPath(
+        `/api/v1/repos/${repoRef}/pullreq/${prId}/comments/${commentId}/reactions/${encodeURIComponent(emoji)}`
+      )
       const method = add ? 'POST' : 'DELETE'
       const headers: Record<string, string> = { Accept: 'application/json' }
+      // Mirror AppMFE.tsx requestInterceptor: decode the stored token and set Authorization header.
+      // credentials:'include' covers standalone (cookie auth); the header covers MFE (bearer auth).
       const rawToken = localStorage.getItem('token')
       if (rawToken) {
         try {
-          const decoded = JSON.parse(decodeURIComponent(atob(rawToken)))
-          headers['Authorization'] = `Bearer ${decoded}`
+          const token = JSON.parse(decodeURIComponent(atob(rawToken)))
+          headers['Authorization'] = `Bearer ${token}`
         } catch {
           headers['Authorization'] = `Bearer ${rawToken}`
         }

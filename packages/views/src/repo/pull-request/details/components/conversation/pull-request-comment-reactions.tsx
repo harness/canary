@@ -1,4 +1,4 @@
-import { FC, useCallback, useState } from 'react'
+import { FC, useCallback, useMemo, useState } from 'react'
 
 import { Popover } from '@harnessio/ui/components'
 import { cn } from '@harnessio/ui/utils'
@@ -6,8 +6,8 @@ import { cn } from '@harnessio/ui/utils'
 import { TypesPullReqActivityReaction } from '../../pull-request-details-types'
 
 const EMOJI_MAP: Record<string, string> = {
-  '+1': '👍',
-  '-1': '👎',
+  plusone: '👍',
+  minusone: '👎',
   smile: '😄',
   tada: '🎉',
   confused: '😕',
@@ -16,7 +16,7 @@ const EMOJI_MAP: Record<string, string> = {
   eyes: '👀'
 }
 
-const SUPPORTED_EMOJIS = ['+1', '-1', 'smile', 'tada', 'confused', 'heart', 'rocket', 'eyes']
+const SUPPORTED_EMOJIS = ['plusone', 'minusone', 'smile', 'tada', 'confused', 'heart', 'rocket', 'eyes']
 
 interface ReactionGroup {
   count: number
@@ -37,6 +37,7 @@ export const PullRequestCommentReactions: FC<PullRequestCommentReactionsProps> =
   onReactionToggle
 }) => {
   const [localReactions, setLocalReactions] = useState<TypesPullReqActivityReaction[]>(initialReactions ?? [])
+  const [pickerOpen, setPickerOpen] = useState(false)
 
   // Sync with incoming prop changes (e.g. after refetch)
   const [prevReactions, setPrevReactions] = useState(initialReactions)
@@ -45,7 +46,7 @@ export const PullRequestCommentReactions: FC<PullRequestCommentReactionsProps> =
     setLocalReactions(initialReactions ?? [])
   }
 
-  const grouped = useCallback(() => {
+  const groups = useMemo(() => {
     const map = new Map<string, ReactionGroup>()
     for (const r of localReactions) {
       const existing = map.get(r.emoji) ?? { count: 0, userReacted: false }
@@ -59,12 +60,13 @@ export const PullRequestCommentReactions: FC<PullRequestCommentReactionsProps> =
 
   const handleToggle = useCallback(
     (emoji: string) => {
-      const groups = grouped()
       const group = groups.get(emoji)
       const alreadyReacted = group?.userReacted ?? false
       const adding = !alreadyReacted
 
-      // Optimistic update
+      // Snapshot current state for rollback — captures any in-flight optimistic updates too.
+      let snapshot: TypesPullReqActivityReaction[] = []
+
       if (adding) {
         const optimisticReaction: TypesPullReqActivityReaction = {
           emoji,
@@ -78,25 +80,27 @@ export const PullRequestCommentReactions: FC<PullRequestCommentReactionsProps> =
             updated: 0
           }
         }
-        setLocalReactions(prev => [...prev, optimisticReaction])
+        setLocalReactions(prev => {
+          snapshot = prev
+          return [...prev, optimisticReaction]
+        })
       } else {
         setLocalReactions(prev => {
+          snapshot = prev
           const idx = prev.findIndex(r => r.emoji === emoji && r.author.uid === currentUserUid)
           if (idx === -1) return prev
           return [...prev.slice(0, idx), ...prev.slice(idx + 1)]
         })
       }
 
-      // Actual API call — rollback on error
+      setPickerOpen(false)
+
       onReactionToggle?.(commentId, emoji, adding)?.catch(() => {
-        // Rollback
-        setLocalReactions(initialReactions ?? [])
+        setLocalReactions(snapshot)
       })
     },
-    [grouped, commentId, currentUserUid, onReactionToggle, initialReactions]
+    [groups, commentId, currentUserUid, onReactionToggle]
   )
-
-  const groups = grouped()
 
   if (groups.size === 0 && !onReactionToggle) return null
 
@@ -126,7 +130,7 @@ export const PullRequestCommentReactions: FC<PullRequestCommentReactionsProps> =
       })}
 
       {onReactionToggle && (
-        <Popover.Root>
+        <Popover.Root open={pickerOpen} onOpenChange={setPickerOpen}>
           <Popover.Trigger asChild>
             <button
               type="button"

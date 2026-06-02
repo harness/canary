@@ -36,16 +36,16 @@ export const ViewOnlyItem = ({
       empty
     </Text>
   ) : typeof value === 'string' ? (
-    <Text key="label" color="inherit" className="break-words">
-      {value}
-    </Text>
+    value
   ) : (
     value
   )
 
+  const valueTitle = typeof value === 'string' || typeof value === 'number' ? String(value) : undefined
+
   if (itemLayout === 'vertical') {
     return (
-      <Layout.Vertical key={label} gapY="4xs">
+      <Layout.Vertical key={label} gapY="4xs" className="min-w-0">
         {isLoading ? (
           <>
             <Skeleton.Typography className="w-1/3" />
@@ -56,7 +56,7 @@ export const ViewOnlyItem = ({
             <Text color="foreground-1" variant="body-normal">
               {label}
             </Text>
-            <Text color="foreground-3" variant="body-normal" className="break-all">
+            <Text color="foreground-3" variant="body-normal" truncate title={valueTitle} className="w-full min-w-0">
               {valueNode}
             </Text>
           </>
@@ -66,7 +66,14 @@ export const ViewOnlyItem = ({
   }
 
   return (
-    <Layout.Grid key={label} flow="row" gapX="2xl" columns="minmax(0, 200px) minmax(0, 1fr)" align="start">
+    <Layout.Grid
+      key={label}
+      flow="row"
+      gapX="2xl"
+      columns="minmax(0, 200px) minmax(0, 1fr)"
+      align="start"
+      className="min-w-0"
+    >
       {isLoading ? (
         <>
           <Skeleton.Typography className="w-full" />
@@ -77,7 +84,7 @@ export const ViewOnlyItem = ({
           <Text color="foreground-3" as="dt">
             {label}
           </Text>
-          <Text color="foreground-1" as="dd">
+          <Text color="foreground-1" as="dd" truncate title={valueTitle} className="min-w-0">
             {valueNode}
           </Text>
         </>
@@ -169,7 +176,7 @@ export const ViewOnly = ({
         flow="column"
         align="start"
         gapX="lg"
-        {...wrapConditionalObjectElement({ columns: '1fr auto 1fr' }, isLayoutColumns)}
+        {...wrapConditionalObjectElement({ columns: 'minmax(0, 1fr) auto minmax(0, 1fr)' }, isLayoutColumns)}
       >
         <Layout.Grid gapY="sm" className="min-w-0">
           {leftColumnData.map(item => renderItem(item))}

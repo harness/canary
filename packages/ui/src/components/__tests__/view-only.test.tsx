@@ -172,11 +172,11 @@ describe('ViewOnly', () => {
       expect(screen.getByText('empty')).toBeInTheDocument()
     })
 
-    test('should render string value as Text component', () => {
+    test('should truncate string values with a title tooltip', () => {
       render(<ViewOnlyItem label="Name" value="John Doe" />)
       const valueText = screen.getByText('John Doe')
       expect(valueText).toBeInTheDocument()
-      expect(valueText).toHaveClass('break-words')
+      expect(valueText).toHaveAttribute('title', 'John Doe')
     })
 
     test('should render React node value as-is', () => {

@@ -1,4 +1,4 @@
-import { ButtonHTMLAttributes, FC, ReactNode } from 'react'
+import { ButtonHTMLAttributes, createContext, FC, ReactNode, useContext } from 'react'
 import type { LinkProps } from 'react-router-dom'
 
 import { cn } from '../../utils/cn'
@@ -104,25 +104,39 @@ const Header: FC<PageHeaderProps> = ({
 }
 Header.displayName = 'PageHeader'
 
+const PageScrollableContext = createContext(false)
+
+// min-h-0 on each flex ancestor overrides the implicit min-height:auto so children can shrink below content size.
+// scrollable adds overflow containment and propagates to Page.Content via context.
 const Root = ({
   children,
+  scrollable,
   mainClassName,
   contentClassName
 }: {
   children: ReactNode
+  scrollable?: boolean
   mainClassName?: string
   contentClassName?: string
 }) => {
   return (
-    <SandboxLayout.Main className={mainClassName}>
-      <SandboxLayout.Content className={contentClassName}>{children}</SandboxLayout.Content>
-    </SandboxLayout.Main>
+    <PageScrollableContext.Provider value={!!scrollable}>
+      <SandboxLayout.Main className={cn('min-h-0', { 'overflow-hidden': scrollable }, mainClassName)}>
+        <SandboxLayout.Content className={cn('min-h-0', { 'overflow-hidden': scrollable }, contentClassName)}>
+          {children}
+        </SandboxLayout.Content>
+      </SandboxLayout.Main>
+    </PageScrollableContext.Provider>
   )
 }
 
-const Content = ({ children, className }: { children: ReactNode; className?: string }) => (
-  <div className={className}>{children}</div>
-)
+// flex-1 fills available height in the parent flex column; min-h-0 allows shrinking.
+// Inherits scrollable from Page.Root via context.
+const Content = ({ children, className }: { children: ReactNode; className?: string }) => {
+  const scrollable = useContext(PageScrollableContext)
+
+  return <div className={cn('min-h-0 flex-1', { 'overflow-auto': scrollable }, className)}>{children}</div>
+}
 
 export const Page = {
   Root,

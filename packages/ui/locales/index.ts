@@ -3,10 +3,10 @@ import component_fr from './fr/component.json'
 
 export const resources = {
   en: {
-    component: component_en,
+    component: component_en
   },
 
   fr: {
-    component: component_fr,
+    component: component_fr
   }
 }

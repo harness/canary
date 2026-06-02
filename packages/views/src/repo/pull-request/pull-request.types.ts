@@ -179,10 +179,18 @@ export interface TypesPullReqStats {
   unresolved_count?: number
 }
 
+export interface PRGroupUser {
+  name?: string
+  email: string
+  uuid: string
+}
+
 export interface PRReviewer {
   reviewer: { display_name: string; id: number; email: string; type: EnumBypassListType }
   review_decision?: EnumPullReqReviewDecision
   sha?: string
+  groupUsers?: PRGroupUser[]
+  fetchGroupMembers?: () => Promise<PRGroupUser[]>
 }
 
 export interface TypesLabelPullReqAssignmentInfo {

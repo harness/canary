@@ -1,5 +1,6 @@
 import {
   EnumPullReqReviewDecision,
+  PRGroupUser,
   PRReviewer,
   PullReqReviewDecision,
   RepoRepositoryOutput,
@@ -508,8 +509,10 @@ export interface ApprovalItems {
 export type ButtonEnum = 'success' | 'muted' | 'default' | 'error' | 'warning' | null | undefined
 export type EnumPullReqReviewDecisionExtended = EnumPullReqReviewDecision | 'outdated'
 export interface ReviewerItemProps {
-  reviewer?: PRReviewer['reviewer']
-  groupUsers?: PRReviewer['reviewer'][]
+  reviewer: PRReviewer['reviewer']
+  groupUsers?: PRGroupUser[]
+  groupUsersLoading?: boolean
+  fetchGroupMembers?: () => Promise<PRGroupUser[]>
   reviewDecision?: EnumPullReqReviewDecision
   sha?: string
   sourceSHA?: string

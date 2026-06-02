@@ -510,6 +510,7 @@ export type EnumPullReqReviewDecisionExtended = EnumPullReqReviewDecision | 'out
 export interface ReviewerItemProps {
   reviewer?: PRReviewer['reviewer']
   groupUsers?: PRReviewer['reviewer'][]
+  groupUsersLoading?: boolean
   fetchGroupMembers?: () => Promise<Array<{ name?: string; email: string; uuid: string }>>
   reviewDecision?: EnumPullReqReviewDecision
   sha?: string

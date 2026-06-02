@@ -1,6 +1,6 @@
 import { forwardRef, useCallback, useRef, useState } from 'react'
 
-import { EnumBypassListType, PRReviewer, PullReqReviewDecision, ReviewerItemProps } from '@views'
+import { EnumBypassListType, PRGroupUser, PullReqReviewDecision, ReviewerItemProps } from '@views'
 import { getIcon } from '@views/repo/utils'
 
 import {
@@ -85,9 +85,9 @@ const User = ({
                   <Layout.Vertical gapY="sm" className="w-full">
                     {groupUsers?.map(user => (
                       <User
-                        key={user?.id}
-                        type={user?.type as EnumBypassListType}
-                        name={user?.display_name || ''}
+                        key={user?.uuid}
+                        type={EnumBypassListType.USER}
+                        name={user?.name || ''}
                         email={user?.email || ''}
                       />
                     ))}
@@ -115,7 +115,7 @@ const ReviewerItem = ({
   fetchGroupMembers
 }: ReviewerItemProps) => {
   const { id, type, display_name, email } = reviewer || {}
-  const [groupUsers, setGroupUsers] = useState<PRReviewer['reviewer'][]>([])
+  const [groupUsers, setGroupUsers] = useState<PRGroupUser[]>([])
   const [groupUsersLoading, setGroupUsersLoading] = useState(false)
   const hasFetchedGroupMembers = useRef(false)
 
@@ -125,16 +125,7 @@ const ReviewerItem = ({
     hasFetchedGroupMembers.current = true
     setGroupUsersLoading(true)
     fetchGroupMembers()
-      .then(members => {
-        setGroupUsers(
-          members.map(user => ({
-            display_name: user.name || '',
-            id: 0,
-            email: user.email || '',
-            type: EnumBypassListType.USER
-          }))
-        )
-      })
+      .then(setGroupUsers)
       .catch(() => {
         // Allow a retry on the next hover if the fetch failed
         hasFetchedGroupMembers.current = false

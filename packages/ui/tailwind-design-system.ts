@@ -641,6 +641,7 @@ const tailwindDesignSystem: TailwindConfig = {
     { pattern: /rounded-./ },
     { pattern: /border-./ },
     { pattern: /shadow-./ },
+    { pattern: /whitespace-./},
     // Important: used for generating max-width of SandboxLayout.Content
     { pattern: /(?:(?:max|min)-)?(?:w|h)-.*/ }
   ]

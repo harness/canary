@@ -15,6 +15,7 @@ import { cn } from '@utils/cn'
 interface StickyListSectionRootProps extends HTMLAttributes<HTMLDivElement> {
   children: ReactNode
   className?: string
+  contained?: boolean
 }
 
 interface StickyListSectionHeaderProps extends HTMLAttributes<HTMLDivElement> {
@@ -36,7 +37,7 @@ const StickyListSectionHeaderContext = createContext<StickyListSectionHeaderCont
 })
 
 const StickyListSectionRoot = forwardRef<HTMLDivElement, StickyListSectionRootProps>(
-  ({ children, className, ...props }, ref) => {
+  ({ children, className, contained, ...rest }, ref) => {
     const sentinelRef = useRef<HTMLDivElement>(null)
     const [isStuck, setIsStuck] = useState(false)
 
@@ -57,7 +58,12 @@ const StickyListSectionRoot = forwardRef<HTMLDivElement, StickyListSectionRootPr
     }, [handleIntersection])
 
     return (
-      <div ref={ref} className={cn('cn-sticky-list-section', className)} data-stuck={isStuck} {...props}>
+      <div
+        ref={ref}
+        className={cn('cn-sticky-list-section', { 'cn-sticky-list-section-contained': contained }, className)}
+        data-stuck={isStuck}
+        {...rest}
+      >
         <div ref={sentinelRef} className="cn-sticky-list-section-sentinel" aria-hidden="true" />
         <StickyListSectionHeaderContext.Provider value={{ isStuck }}>
           {children}

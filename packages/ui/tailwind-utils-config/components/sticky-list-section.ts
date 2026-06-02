@@ -29,5 +29,25 @@ export default {
     '&-content': {
       '@apply relative': ''
     }
+  },
+
+  // Contained mode: for sticky lists nested inside non-drawer containers (e.g. form inputs).
+  // Set --cn-sticky-container-padding on an ancestor to control how far the header bleeds.
+  '.cn-sticky-list-section-contained': {
+    '--cn-sticky-container': 'var(--cn-sticky-container-padding, 0px)'
+  },
+
+  '.cn-sticky-list-section-contained .cn-sticky-list-section-header': {
+    top: '0',
+    backgroundColor: 'transparent',
+    marginLeft: 'calc(-1 * var(--cn-sticky-container))',
+    marginRight: 'calc(-1 * var(--cn-sticky-container))',
+    paddingLeft: 'var(--cn-sticky-container)',
+    paddingRight: 'var(--cn-sticky-container)',
+    paddingTop: '0'
+  },
+
+  '.cn-sticky-list-section-contained .cn-sticky-list-section-header-stuck': {
+    backgroundColor: 'var(--cn-sticky-header-bg, var(--cn-bg-1))'
   }
 }

@@ -88,6 +88,8 @@ import CalendarXmark from './icons/calendar-xmark.svg'
 import Calendar from './icons/calendar.svg'
 import Canary from './icons/canary.svg'
 import Cell2x2 from './icons/cell2x2.svg'
+import ChaosExperiment from './icons/chaos-experiment.svg'
+import ChaosFault from './icons/chaos-fault.svg'
 import ChaosTestsSolid from './icons/chaos-tests-solid.svg'
 import ChaosTests from './icons/chaos-tests.svg'
 import ChatBubbleCheck from './icons/chat-bubble-check.svg'
@@ -287,6 +289,7 @@ import LineSpace from './icons/line-space.svg'
 import Link from './icons/link.svg'
 import ListSelect from './icons/list-select.svg'
 import List from './icons/list.svg'
+import LoadTest from './icons/load-test.svg'
 import Loader from './icons/loader.svg'
 import LockSlash from './icons/lock-slash.svg'
 import LockSquare from './icons/lock-square.svg'
@@ -390,6 +393,8 @@ import Repository from './icons/repository.svg'
 import Restart from './icons/restart.svg'
 import Roles from './icons/roles.svg'
 import Rolling from './icons/rolling.svg'
+import RtAction from './icons/rt-action.svg'
+import RtProbe from './icons/rt-probe.svg'
 import Ruler from './icons/ruler.svg'
 import RunTest from './icons/run-test.svg'
 import Run from './icons/run.svg'
@@ -608,6 +613,8 @@ export const IconNameMapV2 = {
   calendar: Calendar,
   canary: Canary,
   cell2x2: Cell2x2,
+  'chaos-experiment': ChaosExperiment,
+  'chaos-fault': ChaosFault,
   'chaos-tests-solid': ChaosTestsSolid,
   'chaos-tests': ChaosTests,
   'chat-bubble-check': ChatBubbleCheck,
@@ -807,6 +814,7 @@ export const IconNameMapV2 = {
   link: Link,
   'list-select': ListSelect,
   list: List,
+  'load-test': LoadTest,
   loader: Loader,
   'lock-slash': LockSlash,
   'lock-square': LockSquare,
@@ -910,6 +918,8 @@ export const IconNameMapV2 = {
   restart: Restart,
   roles: Roles,
   rolling: Rolling,
+  'rt-action': RtAction,
+  'rt-probe': RtProbe,
   ruler: Ruler,
   'run-test': RunTest,
   run: Run,

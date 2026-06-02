@@ -407,6 +407,19 @@ describe('MultiSelect', () => {
       expect(input).toBeInTheDocument()
       expect(input?.placeholder).toBe('')
     })
+
+    test('should render prefix inside the container border', () => {
+      const { container } = renderComponent({
+        prefix: <span data-testid="multiselect-prefix">prefix</span>
+      })
+
+      const multiSelectContainer = container.querySelector('.cn-multi-select-container.flex')
+      const prefix = container.querySelector('.cn-select-prefix')
+
+      expect(multiSelectContainer).toBeInTheDocument()
+      expect(prefix).toBeInTheDocument()
+      expect(prefix).toContainElement(screen.getByTestId('multiselect-prefix'))
+    })
   })
 
   describe('Ref Forwarding', () => {

@@ -21,7 +21,8 @@ export const StatsPanel: FC<StatsPanelProps> = ({ data, isLoading = false, gap =
           {isLoading ? (
             <Skeleton.Typography className="w-16" />
           ) : (
-            <Text as="div" color="foreground-1">
+            // Fixed min-h ensures consistent StatsPanel height across pages regardless of value content (text vs badge vs icon)
+            <Text as="div" color="foreground-1" className="flex min-h-[var(--cn-size-5)] items-center">
               {stat?.value ? stat.value : '-'}
             </Text>
           )}

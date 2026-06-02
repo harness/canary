@@ -1,10 +1,20 @@
 import { FC } from 'react'
 
-import { Avatar, Button, CommitCopyActions, IconV2, Layout, Skeleton, Text, TimeAgoCard } from '@harnessio/ui/components'
-import { useRouterContext, useTranslation } from '@harnessio/ui/context'
-import { getTrimmedSha } from '@harnessio/ui/utils'
 import { ICommitDetailsStore, SandboxLayout } from '@views'
 import { CommitVerificationBadge } from '@views/repo/components'
+
+import {
+  Avatar,
+  Button,
+  CommitCopyActions,
+  IconV2,
+  Layout,
+  Skeleton,
+  Text,
+  TimeAgoCard
+} from '@harnessio/ui/components'
+import { useRouterContext, useTranslation } from '@harnessio/ui/context'
+import { getTrimmedSha } from '@harnessio/ui/utils'
 
 import { CommitTitleWithPRLink } from '../components/CommitTitleWithPRLink'
 

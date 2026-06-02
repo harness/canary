@@ -2,6 +2,7 @@ import {
   ComponentPropsWithoutRef,
   forwardRef,
   KeyboardEvent,
+  ReactNode,
   Ref,
   useCallback,
   useEffect,
@@ -86,6 +87,7 @@ export interface MultiSelectProps extends CommonInputsProp {
   commandProps?: ComponentPropsWithoutRef<typeof Command.Root>
   /** Props of `CommandInput` */
   inputProps?: Omit<ComponentPropsWithoutRef<typeof CommandPrimitive.Input>, 'value' | 'placeholder' | 'disabled'>
+  prefix?: ReactNode
 }
 
 export interface MultiSelectRef {
@@ -121,7 +123,8 @@ export const MultiSelect = forwardRef<MultiSelectRef, MultiSelectProps>(
       orientation,
       tooltipProps,
       tooltipContent,
-      labelSuffix
+      labelSuffix,
+      prefix
     }: MultiSelectProps,
     ref: Ref<MultiSelectRef>
   ) => {
@@ -304,7 +307,7 @@ export const MultiSelect = forwardRef<MultiSelectRef, MultiSelectProps>(
               className={cn('h-auto overflow-visible bg-transparent', commandProps?.className)}
             >
               <div
-                className={cn(multiSelectVariants({ theme }), className)}
+                className={cn(multiSelectVariants({ theme }), prefix && 'flex items-stretch !p-0', className)}
                 onClick={() => {
                   if (disabled) return
                   inputRef?.current?.focus()
@@ -314,7 +317,23 @@ export const MultiSelect = forwardRef<MultiSelectRef, MultiSelectProps>(
                 tabIndex={-1}
                 aria-label={placeholder}
               >
-                <div className="cn-multi-select-tag-wrapper">
+                {prefix ? (
+                  <div
+                    className="cn-select-prefix h-auto self-stretch"
+                    onPointerDown={e => {
+                      e.stopPropagation()
+                    }}
+                    onKeyDown={e => {
+                      if (e.key === 'Enter' || e.key === ' ') {
+                        e.stopPropagation()
+                      }
+                    }}
+                    role="none"
+                  >
+                    {prefix}
+                  </div>
+                ) : null}
+                <div className={cn('cn-multi-select-tag-wrapper', prefix && 'flex-1 px-cn-sm py-cn-xs')}>
                   {getSelectedOptions().map(option => {
                     return (
                       <Tag

@@ -119,7 +119,9 @@ export default {
       '&-container': {
         marginTop: '-4px',
         paddingTop: '4px',
-        overflow: 'hidden',
+        // 'clip' instead of 'hidden' — clips during height animation but doesn't
+        // create a scroll container, allowing position:sticky inside accordions
+        overflow: 'clip',
 
         '&-card': {
           '&-sm': {
@@ -134,13 +136,21 @@ export default {
         },
 
         '&:where([data-state="open"])': {
-          '@apply animate-accordion-down': ''
+          // Delays overflow:visible until after height animation completes,
+          // so content is clipped during expand but can bleed (e.g. sticky headers) when open
+          animation: 'accordion-down 0.2s ease-out, accordion-overflow 0s 0.2s forwards'
         },
 
         '&:where([data-state="closed"])': {
           '@apply animate-accordion-up': ''
         }
       }
+    }
+  },
+
+  '@keyframes accordion-overflow': {
+    to: {
+      overflow: 'visible'
     }
   }
 }

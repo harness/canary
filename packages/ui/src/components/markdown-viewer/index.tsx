@@ -96,7 +96,7 @@ const MarkdownViewerLocal = ({
   variant = 'default',
   muted = false
 }: MarkdownViewerProps) => {
-  const { navigate } = useRouterContext()
+  const { navigate, location } = useRouterContext()
   const refRootHref = useMemo(() => document.getElementById('repository-ref-root')?.getAttribute('href'), [])
   const ref = useRef<HTMLDivElement>(null)
 
@@ -185,12 +185,24 @@ const MarkdownViewerLocal = ({
             document.getElementById(href.slice(1))?.scrollIntoView()
           } else {
             const newUrl = new URL(target.href)
-            navigate(newUrl.pathname)
+            // `navigate` resolves paths against the router basename, but
+            // `newUrl.pathname` is the fully-resolved browser path which already
+            // includes that basename. Strip it so the basename is not applied
+            // twice (which otherwise produces a duplicated URL).
+            const currentRelativePath = location?.pathname ?? window.location.pathname
+            const basename = window.location.pathname.endsWith(currentRelativePath)
+              ? window.location.pathname.slice(0, window.location.pathname.length - currentRelativePath.length)
+              : ''
+            const nextPath =
+              basename && newUrl.pathname.startsWith(basename)
+                ? newUrl.pathname.slice(basename.length) || '/'
+                : newUrl.pathname
+            navigate(nextPath)
           }
         }
       }
     },
-    [navigate]
+    [navigate, location?.pathname]
   )
 
   // Handle checkbox state changes

@@ -29,7 +29,7 @@ export const getRepoListFilterOptions = (
 
     const favoriteFilterOption: FilterOptionConfig<keyof RepoListFilters> = {
       defaultValue: favoriteFilterDefaultValue,
-      isDefaultValue: queryFilterValues?.favorite !== true,
+      isDefaultValue: String(queryFilterValues?.favorite) !== 'true',
       label: t('views:connectors.filterOptions.statusOption.pinned', 'Pinned'),
       value: 'favorite',
       type: FilterFieldTypes.Checkbox,

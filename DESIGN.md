@@ -511,6 +511,8 @@ Canary is the design system behind the Harness Unified UI — a B2B platform spa
 
 **Theme system.** Light is canonical. Dark, light-dimmer, and dark-dimmer ship out of the box, plus color-blindness overlays (protanopia, deuteranopia, tritanopia) and a high-contrast variant of each. Themes are switched via a class on the root; every component must read in all four base themes.
 
+**Consumers.** This file is the source of truth for token values, component anchors, and system-level patterns. Consumer-side idioms — how `platformUI` (the primary downstream app) uses the system, including `<Text>` / `<IconV2>` / `<StatusBadge>` vocabulary, form composition with `FormWrapper`, and business-component import rules — live in `platformUI/DESIGN.md`. If you're authoring a new component, change tokens here. If you're using a component, the consumer guide is the right starting point.
+
 ## Colors
 
 The color system has two layers and components only ever consume the second one.

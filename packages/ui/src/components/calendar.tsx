@@ -1,6 +1,6 @@
 import * as React from 'react'
-import { DayPicker, type DateRange } from 'react-day-picker'
 
+import { DayPicker, type DateRange } from '@daypicker/react'
 import { cn } from '@utils/cn'
 
 import { buttonVariants } from './button'
@@ -50,8 +50,12 @@ function Calendar({ className, classNames, showOutsideDays = true, ...props }: C
         ...classNames
       }}
       components={{
-        IconLeft: () => <IconV2 name="nav-arrow-left" />,
-        IconRight: () => <IconV2 name="nav-arrow-right" />
+        Chevron: props => {
+          if (props.orientation === 'left') {
+            return <IconV2 name="nav-arrow-left" />
+          }
+          return <IconV2 name="nav-arrow-right" />
+        }
       }}
       {...props}
     />

@@ -1,7 +1,7 @@
 import { useEffect, useState } from 'react'
-import { type DateRange } from 'react-day-picker'
 
 import { DropdownMenu, Calendar as UICalendar } from '@/components'
+import { type DateRange } from '@daypicker/react'
 import { cn } from '@utils/cn'
 import {
   endOfMonth,

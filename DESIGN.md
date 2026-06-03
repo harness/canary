@@ -506,8 +506,8 @@ Canary is the design system behind the Harness Unified UI — a B2B platform spa
 **Aesthetic anchors.**
 - Soft corners (2–8px on most surfaces; `rounded.full` reserved for badges, avatars, and counter pills).
 - Borders as the primary separator; backgrounds rarely shift more than one step between adjacent layers.
-- Subtle elevation. Cards are border-led; only floating surfaces (dialogs, dropdowns, popovers) take real shadows.
-- 150ms ease-in-out for state transitions; 200ms slide+fade for overlay enter/exit. No bounce, no spring.
+- Subtle elevation. Floating surfaces (dialogs, dropdowns, popovers) take real shadows.
+- 150ms ease-in-out for state transitions; 200ms slide+fade for overlay enter/exit.
 
 **Theme system.** Light is canonical. Dark, light-dimmer, and dark-dimmer ship out of the box, plus color-blindness overlays (protanopia, deuteranopia, tritanopia) and a high-contrast variant of each. Themes are switched via a class on the root; every component must read in all four base themes.
 
@@ -535,7 +535,7 @@ The color system has two layers and components only ever consume the second one.
 
 ## Typography
 
-**Families.** `Inter` for UI (`fontFamily.default`), `JetBrains Mono` for code, identifiers, and tabular data (`fontFamily.mono`). Both are variable fonts — Inter's weight axis maps the standard 100–900 ladder onto a denser numeric scale (`310`/`360`/`440`/`550` instead of Light/Regular/Medium/SemiBold) for finer control.
+**Families.** `Inter` for UI (`fontFamily.default`), `JetBrains Mono` for code. Both are variable fonts — Inter's weight axis maps the standard 100–900 ladder onto a denser numeric scale (`310`/`360`/`440`/`550` instead of Light/Regular/Medium/SemiBold) for finer control.
 
 **Size scale.** Seventeen steps (`fontSize.0`…`fontSize.16`), 0.55rem (8.8px) → 8rem (128px). The scale is consumed via the eleven semantic roles enumerated in the frontmatter — code should reach for `body-normal`, `heading-section`, `caption-strong`, etc., not raw size tokens.
 
@@ -573,7 +573,7 @@ Source: `packages/core-design-system/design-tokens/core/dimensions.json`.
 Six shadow levels (`cn-shadow-1`…`cn-shadow-6`) plus an inset variant (`cn-shadow-inner`) and a zero level (`cn-shadow-0`, transparent — used for animating into shadow). The shadow color is derived from `gray-600` at 8–13% LCH alpha, so shadows tint with the surrounding theme rather than reading as flat black.
 
 **Usage.**
-- Cards: no shadow. Bordered surface (`cn-border-2`) on `cn-bg-1`.
+- Cards: no shadow (except used in Pipelines). Bordered surface (`cn-border-2`) on `cn-bg-1`.
 - Tooltips, popovers: `cn-shadow-3`.
 - Dropdowns, menus: `cn-shadow-4`.
 - Dialogs, modals: `cn-shadow-5`.

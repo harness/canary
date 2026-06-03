@@ -78,9 +78,14 @@ const SearchInput = forwardRef<HTMLInputElement, SearchInputProps>(
       return typeof effectiveDebounce === 'number' ? effectiveDebounce : 300
     }, [effectiveDebounce])
 
+    const onChangeRef = useRef(onChange)
+    useEffect(() => {
+      onChangeRef.current = onChange
+    }, [onChange])
+
     const debouncedOnChangeRef = useRef(
       debounceFn((value: string) => {
-        onChange?.(value)
+        onChangeRef.current?.(value)
       }, effectiveDebounceDuration)
     )
 

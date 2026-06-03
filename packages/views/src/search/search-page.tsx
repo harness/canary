@@ -1,8 +1,9 @@
 import { FC, useCallback, useMemo } from 'react'
 
+import { SandboxLayout } from '@views'
+
 import { Button, Layout, SearchInput, Select, Text, Toggle } from '@harnessio/ui/components'
 import { useTranslation } from '@harnessio/ui/context'
-import { RepositoryType, SandboxLayout } from '@views'
 import { cn } from '@harnessio/ui/utils'
 
 import { SearchResultItem, SearchResultsList } from './components/search-results-list'
@@ -23,7 +24,8 @@ const languageOptions = [
   { label: 'Swift', value: 'swift' },
   { label: 'Kotlin', value: 'kotlin' },
   { label: 'Rust', value: 'rust' },
-  { label: 'Scala', value: 'scala' }
+  { label: 'Scala', value: 'scala' },
+  { label: 'Markdown', value: 'markdown' }
 ]
 
 export interface Stats {
@@ -55,9 +57,8 @@ export interface SearchPageViewProps {
   }
   stats?: Stats
   // repo filter props
-  repos?: RepositoryType[]
+  repoOptions?: { label: string; value: string }[]
   selectedRepoId?: string
-  isReposListLoading?: boolean
   onRepoSelect: (repoName: string) => void
   // language filter props
   selectedLanguage?: string
@@ -84,10 +85,9 @@ export const SearchPageView: FC<SearchPageViewProps> = ({
   useSearchResultsStore,
   stats,
   toRepoFileDetails,
-  repos,
+  repoOptions,
   selectedRepoId,
   onRecursiveToggle,
-  isReposListLoading,
   selectedLanguage,
   onLanguageSelect,
   onRepoSelect,
@@ -108,8 +108,7 @@ export const SearchPageView: FC<SearchPageViewProps> = ({
 
   const handleClearFilters = useCallback(() => {
     onClearFilters()
-    handleSearchChange('')
-  }, [onClearFilters, handleSearchChange])
+  }, [onClearFilters])
 
   const isDirtyList = useMemo(() => {
     return page !== 1 || !!searchQuery
@@ -126,7 +125,7 @@ export const SearchPageView: FC<SearchPageViewProps> = ({
         <Layout.Vertical gapY="xl" className="grow">
           <SearchInput
             inputContainerClassName="[&>.cn-input-suffix]:border-0 [&>.cn-input-suffix]:px-cn-xs"
-            defaultValue={searchQuery || ''}
+            searchValue={searchQuery || ''}
             onChange={handleSearchChange}
             placeholder={t('views:search.searchPlaceholder', 'Search anything...')}
             autoFocus
@@ -168,12 +167,12 @@ export const SearchPageView: FC<SearchPageViewProps> = ({
                   placeholder={t('views:search.scopePlaceholder', 'Select a scope')}
                 />
               ) : null}
-              {!isRepoScope && repos ? (
+              {!isRepoScope && repoOptions ? (
                 <Select
-                  isLoading={isReposListLoading}
                   onChange={value => onRepoSelect?.(value)}
                   value={selectedRepoId}
-                  options={repos.map(repo => ({ label: repo.name, value: repo.name }))}
+                  options={repoOptions}
+                  allowSearch
                   placeholder={t('views:search.repositoryPlaceholder', 'Select a repository')}
                 />
               ) : null}

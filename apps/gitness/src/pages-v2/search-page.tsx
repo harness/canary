@@ -1,15 +1,14 @@
-import { useEffect, useState } from 'react'
-import { useParams } from 'react-router-dom'
+import { useCallback, useEffect, useMemo, useState } from 'react'
+import { useParams, useSearchParams } from 'react-router-dom'
 
 import { useMutation } from '@tanstack/react-query'
 
-import { useListReposQuery } from '@harnessio/code-service-client'
 import { SearchPageView, SearchResultItem, SemanticSearchResultItem, Stats } from '@harnessio/views'
 
 import { useMFEContext } from '../framework/hooks/useMFEContext'
 import { parseAsBoolean, useQueryState } from '../framework/hooks/useQueryState'
 import { useAPIPath } from '../hooks/useAPIPath'
-import { transformRepoList } from './repo/transform-utils/repo-list-transform'
+import { deriveRepoOptionsFromResults } from './search-page-utils'
 
 interface TData {
   file_matches: SearchResultItem[]
@@ -31,6 +30,7 @@ export default function SearchPage() {
   const [searchQuery, setSearchQuery] = useQueryState('query')
   const [selectedRepoId, setSelectedRepoId] = useQueryState('repo')
   const [selectedLanguage, setSelectedLanguage] = useQueryState('language')
+  const [, setSearchParams] = useSearchParams()
   const [isRecursive, setIsRecursive] = useState<boolean>(false)
   const [regexEnabled, setRegexEnabled] = useQueryState<boolean>('regexEnabled', parseAsBoolean)
   const [semanticEnabled, setSemanticEnabled] = useQueryState<boolean>('semantic', parseAsBoolean)
@@ -42,18 +42,22 @@ export default function SearchPage() {
   const scopeRef = [scope.accountId, scope.orgIdentifier, scope.projectIdentifier].filter(Boolean).join('/')
   const repoRef = `${scopeRef}/${repoId || selectedRepoId}`
 
-  const { data: { body: repos } = {}, isLoading: isReposListLoading } = useListReposQuery(
-    {
-      queryParams: {
-        page: 1,
-        query: ''
-      },
-      space_ref: `${scopeRef}/+`
-    },
-    {
-      enabled: !repoId
-    }
+  const repoOptions = useMemo(
+    () => deriveRepoOptionsFromResults(searchResults, selectedRepoId),
+    [searchResults, selectedRepoId]
   )
+
+  const handleClearFilters = useCallback(() => {
+    setSearchParams(
+      prev => {
+        const next = new URLSearchParams(prev.toString())
+        next.delete('repo')
+        next.delete('language')
+        return next
+      },
+      { replace: true }
+    )
+  }, [setSearchParams])
 
   const {
     mutate: searchMutation,
@@ -154,6 +158,20 @@ export default function SearchPage() {
     setShowSemanticSearch(!!semanticSearchEnabled)
   }, [semanticSearchEnabled])
 
+  useEffect(() => {
+    if (searchQuery.trim() === '' && (selectedRepoId || selectedLanguage)) {
+      setSearchParams(
+        prev => {
+          const next = new URLSearchParams(prev.toString())
+          next.delete('repo')
+          next.delete('language')
+          return next
+        },
+        { replace: true }
+      )
+    }
+  }, [searchQuery, selectedRepoId, selectedLanguage, setSearchParams])
+
   return (
     <SearchPageView
       isLoading={searchLoading || semanticSearchLoading}
@@ -199,8 +217,7 @@ export default function SearchPage() {
         setSelectedLanguage(language)
       }}
       // repo filter props
-      repos={repos ? transformRepoList(repos) : undefined}
-      isReposListLoading={isReposListLoading}
+      repoOptions={repoOptions}
       selectedRepoId={selectedRepoId}
       onRepoSelect={(repoName: string) => {
         setSelectedRepoId(repoName)
@@ -208,10 +225,7 @@ export default function SearchPage() {
       onRecursiveToggle={(recursive: boolean) => {
         setIsRecursive(recursive)
       }}
-      onClearFilters={() => {
-        setSelectedRepoId(null)
-        setSelectedLanguage(null)
-      }}
+      onClearFilters={handleClearFilters}
     />
   )
 }

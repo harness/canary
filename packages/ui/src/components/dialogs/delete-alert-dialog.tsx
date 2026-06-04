@@ -77,7 +77,7 @@ export const DeleteAlertDialog: FC<DeleteAlertDialogProps> = ({
     if (type) {
       const text = t(
         'component:deleteDialog.descriptionWithType',
-        `This will permanently delete your ${type} ${replaceText} and remove all data. This action cannot be undone.`,
+        `This will permanently delete your ${type} ${replaceText}. This action cannot be undone.`,
         { type: type, identifier: replaceText }
       )
 

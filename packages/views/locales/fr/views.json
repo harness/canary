@@ -141,6 +141,8 @@
     "RequireCommentResolutionDescription": "Tous les commentaires doivent être résolus avant de pouvoir fusionner",
     "RequireStatusChecks": "Exiger le succès des vérifications de statut",
     "RequireStatusChecksDescription": "Les vérifications de statut sélectionnées doivent réussir avant de pouvoir fusionner",
+    "RequireTargetIsAncestor": "Exiger que la branche cible soit un ancêtre",
+    "RequireTargetIsAncestorDescription": "La branche cible doit être un ancêtre de la branche source avant de pouvoir fusionner la requête de tirage",
     "LimitMergeStrategies": "Limiter les stratégies de fusion",
     "LimitMergeStrategiesDescription": "Limiter les stratégies de fusion disponibles pour fusionner une requête de tirage",
     "MergeStrategy": {

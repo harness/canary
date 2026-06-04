@@ -131,6 +131,14 @@ export const getBranchRules = (t: TFunctionWithFallback): BranchRuleType[] => [
     hasSelect: true
   },
   {
+    id: BranchRuleId.REQUIRE_TARGET_IS_ANCESTOR,
+    label: t('views:repos.RequireTargetIsAncestor', 'Require target branch to be an ancestor'),
+    description: t(
+      'views:repos.RequireTargetIsAncestorDescription',
+      'Require the target branch to be an ancestor of the source branch before a pull request can be merged'
+    )
+  },
+  {
     id: BranchRuleId.MERGE,
     label: t('views:repos.LimitMergeStrategies', 'Limit merge strategies'),
     description: t(

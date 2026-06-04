@@ -156,7 +156,7 @@ export const RepoSettingsGeneralForm: FC<{
       />
 
       <MultiSelect
-        label={t('views:repos.tags', 'Tags')}
+        label={t('views:repos.resourceTags', 'Resource Tags')}
         optional
         placeholder={t('views:repos.tagsPlaceholder', 'Add tags')}
         value={tagsValue}

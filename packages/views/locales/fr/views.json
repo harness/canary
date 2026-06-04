@@ -5,6 +5,7 @@
     "pipelines": "Pipelines",
     "commits": "Commits",
     "tags": "Étiquettes",
+    "resourceTags": "Étiquettes de ressource",
     "pullRequests": "Pull requests",
     "branches": {
       "title": "Branches",

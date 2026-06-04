@@ -193,7 +193,12 @@ const tailwindDesignSystem: TailwindConfig = {
       'cn-logo-text': 'var(--cn-logo-text)',
 
       // brand text
-      'cn-brand': 'var(--cn-text-brand)',
+      'cn-brand': {
+        DEFAULT: 'var(--cn-text-brand)',
+        primary: 'var(--cn-set-brand-primary-text)',
+        secondary: 'var(--cn-set-brand-secondary-text)',
+        outline: 'var(--cn-set-brand-outline-text)'
+      },
       'cn-brand-hover': 'var(--cn-comp-link-text-hover)',
 
       // use only for icons

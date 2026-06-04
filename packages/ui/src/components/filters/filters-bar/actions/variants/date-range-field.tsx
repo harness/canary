@@ -2,7 +2,6 @@ import { useEffect, useState } from 'react'
 import { type DateRange } from 'react-day-picker'
 
 import { DropdownMenu, Calendar as UICalendar } from '@/components'
-import { cn } from '@utils/cn'
 import {
   endOfMonth,
   endOfQuarter,
@@ -268,13 +267,7 @@ const DateRangeField = ({ filter, presets, showCustomRange = true, onUpdateFilte
       onMonthChange={setMonth}
       onSelect={handleCustomRangeSelect}
       classNames={{
-        months: 'flex flex-row space-x-cn-md',
-        cell: cn(
-          'relative p-0 text-center text-cn-size-2 focus-within:relative focus-within:z-20',
-          '[&:has(>.day-range-end)]:rounded-r-cn-3 [&:has(>.day-range-start)]:rounded-l-cn-3 first:[&:has([aria-selected])]:rounded-l-cn-3 last:[&:has([aria-selected])]:rounded-r-cn-3',
-          '[&:has([aria-selected])]:bg-cn-brand-primary/10 [&:has([aria-selected].day-outside)]:bg-cn-brand-primary/5 [&:has([aria-selected].day-range-end)]:rounded-r-cn-3'
-        ),
-        day_range_middle: 'aria-selected:bg-transparent aria-selected:text-cn-1'
+        months: 'flex flex-row space-x-cn-md'
       }}
     />
   )

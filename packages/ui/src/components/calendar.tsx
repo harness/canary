@@ -31,21 +31,21 @@ function Calendar({ className, classNames, showOutsideDays = true, ...props }: C
         head_cell: 'text-cn-3 rounded-cn-3 w-8 font-normal text-cn-size-1 select-none',
         row: 'flex w-full mt-cn-xs',
         cell: cn(
-          'relative p-0 text-center text-cn-size-2 focus-within:relative focus-within:z-20 [&:has([aria-selected])]:bg-cn-3 [&:has([aria-selected].day-outside)]:bg-cn-3/50 [&:has([aria-selected].day-range-end)]:rounded-r-cn-3',
+          'relative p-0 text-center text-cn-size-2 focus-within:relative focus-within:z-20',
           props.mode === 'range'
-            ? '[&:has(>.day-range-end)]:rounded-r-cn-3 [&:has(>.day-range-start)]:rounded-l-cn-3 first:[&:has([aria-selected])]:rounded-l-cn-3 last:[&:has([aria-selected])]:rounded-r-cn-3'
+            ? '[&:has([aria-selected])]:bg-cn-brand-primary/10 [&:has([aria-selected].day-outside)]:bg-cn-brand-primary/5 [&:has([aria-selected].day-range-end)]:rounded-r-cn-3 [&:has(>.day-range-end)]:rounded-r-cn-3 [&:has(>.day-range-start)]:rounded-l-cn-3 first:[&:has([aria-selected])]:rounded-l-cn-3 last:[&:has([aria-selected])]:rounded-r-cn-3'
             : '[&:has([aria-selected])]:rounded-cn-3'
         ),
         day: cn(buttonVariants({ variant: 'ghost' }), 'h-8 w-8 p-0 font-normal aria-selected:opacity-100'),
-        day_range_start: 'day-range-start',
-        day_range_end: 'day-range-end',
+        day_range_start: 'day-range-start rounded-l-cn-3',
+        day_range_end: 'day-range-end rounded-r-cn-3',
         day_selected:
-          'bg-cn-brand text-cn-brand hover:bg-cn-brand-hover hover:text-cn-brand focus:bg-cn-brand focus:text-cn-brand',
-        day_today: 'bg-cn-3 text-cn-1',
+          'cn-calendar-day-selected !bg-cn-brand-primary hover:!bg-cn-brand-primary-hover focus-visible:!bg-cn-brand-primary-selected rounded-cn-3',
+        day_today: 'cn-calendar-day-today rounded-cn-3',
         day_outside:
           'day-outside text-cn-3 opacity-50  aria-selected:bg-cn-3/50 aria-selected:text-cn-3 aria-selected:opacity-30',
         day_disabled: 'text-cn-3 opacity-50',
-        day_range_middle: 'aria-selected:bg-cn-3 aria-selected:text-cn-1',
+        day_range_middle: 'cn-calendar-day-range-middle !bg-transparent text-cn-1! aria-selected:opacity-100',
         day_hidden: 'invisible',
         ...classNames
       }}

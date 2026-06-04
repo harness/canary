@@ -9,6 +9,7 @@ import buttonLayoutStyles from './button-layout'
 import captionStyles from './caption'
 import cardStyles from './card'
 import cardSelectStyles from './card-select'
+import calendarStyles from './calendar'
 import checkboxStyles from './checkbox'
 import dialogStyles from './dialog'
 import drawerStyles from './drawer'
@@ -64,6 +65,7 @@ export const ComponentStyles = [
   avatarStyles,
   cardStyles,
   cardSelectStyles,
+  calendarStyles,
   paginationStyles,
   progressStyles,
   drawerStyles,

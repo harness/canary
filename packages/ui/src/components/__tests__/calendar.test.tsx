@@ -121,6 +121,55 @@ describe('Calendar', () => {
       expect(screen.getByText('January 2024')).toBeInTheDocument()
     })
 
+    test('should apply brand primary styling to range start and end days', () => {
+      const range = {
+        from: new Date(2026, 5, 10),
+        to: new Date(2026, 5, 18)
+      }
+      renderComponent({ mode: 'range', selected: range, month: new Date(2026, 5, 1) })
+
+      const startDay = screen.getByRole('gridcell', { name: '10' })
+      const endDay = screen.getByRole('gridcell', { name: '18' })
+      const startClasses = startDay.className.split(/\s+/)
+
+      expect(startClasses.some(c => c.includes('bg-cn-brand-primary'))).toBe(true)
+      expect(startClasses).toContain('cn-calendar-day-selected')
+      expect(startClasses).not.toContain('cn-calendar-day-range-middle')
+      expect(startClasses).not.toContain('bg-cn-brand')
+      expect(startClasses).not.toContain('text-cn-brand')
+
+      expect(endDay.className.split(/\s+/).some(c => c.includes('bg-cn-brand-primary'))).toBe(true)
+    })
+
+    test('should apply transparent styling to range middle days', () => {
+      const range = {
+        from: new Date(2026, 5, 10),
+        to: new Date(2026, 5, 18)
+      }
+      renderComponent({ mode: 'range', selected: range, month: new Date(2026, 5, 1) })
+
+      const middleDay = screen.getByRole('gridcell', { name: '14' })
+      const middleClasses = middleDay.className.split(/\s+/)
+
+      expect(middleClasses).toContain('cn-calendar-day-range-middle')
+      expect(middleClasses).toContain('!bg-transparent')
+      expect(middleClasses.some(c => c.startsWith('text-cn-1!'))).toBe(true)
+      expect(middleClasses).not.toContain('bg-cn-brand')
+    })
+
+    test('should apply brand primary styling to single selected date', () => {
+      const selectedDate = new Date(2026, 5, 20)
+      renderComponent({ mode: 'single', selected: selectedDate, month: selectedDate })
+
+      const selectedDay = screen.getByRole('gridcell', { name: '20' })
+      const selectedClasses = selectedDay.className.split(/\s+/)
+
+      expect(selectedClasses.some(c => c.includes('bg-cn-brand-primary'))).toBe(true)
+      expect(selectedClasses).toContain('cn-calendar-day-selected')
+      expect(selectedClasses).not.toContain('bg-cn-brand')
+      expect(selectedClasses).not.toContain('text-cn-brand')
+    })
+
     test('should handle range selection', async () => {
       const handleSelect = vi.fn()
       const month = new Date(2024, 0, 1)
@@ -319,11 +368,10 @@ describe('Calendar', () => {
 
     test('should handle today date highlighting', () => {
       const today = new Date()
-      renderComponent({ month: today })
+      const { container } = renderComponent({ month: today })
 
-      // Today's date should be highlighted
-      const calendar = document.querySelector('.rdp')
-      expect(calendar).toBeTruthy()
+      const todayDay = container.querySelector('.cn-calendar-day-today')
+      expect(todayDay).toBeTruthy()
     })
 
     test('should handle week start day', () => {
@@ -607,8 +655,20 @@ describe('Calendar', () => {
       const today = new Date()
       const { container } = renderComponent({ month: today })
 
-      const calendar = container.querySelector('.rdp')
-      expect(calendar).toBeInTheDocument()
+      const todayDay = container.querySelector('.cn-calendar-day-today')
+      expect(todayDay).toBeTruthy()
+      expect(todayDay?.className.split(/\s+/)).not.toContain('bg-cn-3')
+    })
+
+    test('should use selected styling when today is selected', () => {
+      const today = new Date()
+      const { container } = renderComponent({ mode: 'single', selected: today, month: today })
+
+      const todayDay = container.querySelector('.cn-calendar-day-today')
+      const todayClasses = todayDay?.className.split(/\s+/) ?? []
+
+      expect(todayClasses).toContain('cn-calendar-day-selected')
+      expect(todayClasses.some(c => c.includes('bg-cn-brand-primary'))).toBe(true)
     })
   })
 

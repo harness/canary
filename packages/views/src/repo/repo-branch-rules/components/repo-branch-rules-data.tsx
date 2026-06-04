@@ -132,10 +132,10 @@ export const getBranchRules = (t: TFunctionWithFallback): BranchRuleType[] => [
   },
   {
     id: BranchRuleId.REQUIRE_TARGET_IS_ANCESTOR,
-    label: t('views:repos.RequireTargetIsAncestor', 'Require target branch to be an ancestor'),
+    label: t('views:repos.RequireTargetIsAncestor', 'Require branch to be up to date before merging'),
     description: t(
       'views:repos.RequireTargetIsAncestorDescription',
-      'Require the target branch to be an ancestor of the source branch before a pull request can be merged'
+      'The source branch must be up to date with the target branch before a pull request can be merged'
     )
   },
   {

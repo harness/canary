@@ -142,8 +142,8 @@
     "RequireCommentResolutionDescription": "All comments on a pull request must be resolved before it can be merged",
     "RequireStatusChecks": "Require status checks to pass",
     "RequireStatusChecksDescription": "Selected status checks must pass before a pull request can be merged",
-    "RequireTargetIsAncestor": "Require target branch to be an ancestor",
-    "RequireTargetIsAncestorDescription": "Require the target branch to be an ancestor of the source branch before a pull request can be merged",
+    "RequireTargetIsAncestor": "Require branch to be up to date before merging",
+    "RequireTargetIsAncestorDescription": "The source branch must be up to date with the target branch before a pull request can be merged",
     "LimitMergeStrategies": "Limit merge strategies",
     "LimitMergeStrategiesDescription": "Limit which merge strategies are available to merge a pull request",
     "MergeStrategy": {

@@ -4,6 +4,7 @@ import {
   Button,
   Command,
   DropdownMenu,
+  HighlightText,
   IconV2,
   Layout,
   Link,
@@ -142,7 +143,7 @@ export const BranchSelectorDropdown: FC<BranchSelectorDropdownProps> = ({
                 title={item.name}
               >
                 <div className="ml-cn-xs flex size-4 items-center">{isSelected && <IconV2 name="check" />}</div>
-                {item.name}
+                <HighlightText text={item.name} match={searchQuery} />
                 {isDefault && <Tag theme="blue" size="sm" rounded value={t('views:repos.default', 'Default')} />}
               </Command.Item>
             )

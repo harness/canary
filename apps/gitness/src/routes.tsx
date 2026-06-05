@@ -33,6 +33,7 @@ import { SettingsProfileKeysPage } from './pages-v2/profile-settings/profile-set
 import { ProjectLabelFormContainer } from './pages-v2/project/labels/project-label-form-container'
 import { ProjectLabelsList } from './pages-v2/project/labels/project-labels-list-container'
 import { ProjectGeneralSettingsPageContainer } from './pages-v2/project/project-general-settings-container'
+import { ProjectManageRepositoriesGeneralPage } from './pages-v2/project/project-manage-repositories-general-page'
 import { ImportProjectContainer } from './pages-v2/project/project-import-container'
 import { ProjectMemberListPage } from './pages-v2/project/project-member-list'
 import { ProjectRulesListContainer } from './pages-v2/project/project-rules-list-container'
@@ -823,7 +824,15 @@ export const repoRoutes: CustomRouteObject[] = [
     children: [
       {
         index: true,
-        element: <Navigate to="labels" replace />
+        element: <Navigate to="general" replace />
+      },
+      {
+        path: 'general',
+        element: <ProjectManageRepositoriesGeneralPage />,
+        handle: {
+          breadcrumb: () => <span>{Page.General}</span>,
+          pageTitle: Page.General
+        }
       },
       labelsRoute,
       rulesRoute

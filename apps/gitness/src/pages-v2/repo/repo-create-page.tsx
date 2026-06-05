@@ -58,7 +58,7 @@ export const CreateRepo = () => {
   const scopeIdentifiers = useMemo(
     () =>
       getScopeIdentifiers({
-        spaceURL,
+        spaceURL: spaceURL || '',
         accountId: scope.accountId,
         orgIdentifier: scope.orgIdentifier,
         projectIdentifier: scope.projectIdentifier

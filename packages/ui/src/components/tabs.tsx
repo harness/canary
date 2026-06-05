@@ -414,6 +414,7 @@ type TabsTriggerLinkProps = TabsTriggerExtendedProps &
   Omit<ComponentPropsWithoutRef<'a'>, keyof TabsTriggerExtendedProps | 'href'> & {
     linkProps?: Omit<NavLinkProps, 'to'>
     disabled?: boolean
+    exact?: boolean
   }
 
 export type TabsTriggerProps = TabsTriggerButtonProps | TabsTriggerLinkProps
@@ -440,7 +441,7 @@ const TabsTrigger = forwardRef<HTMLButtonElement | HTMLAnchorElement, TabsTrigge
   )
 
   if (type === 'tabsnav') {
-    const { linkProps, disabled, ..._restProps } = restProps as TabsTriggerLinkProps
+    const { linkProps, disabled, exact, ..._restProps } = restProps as TabsTriggerLinkProps
 
     const handleClick = (e: MouseEvent) => {
       if (disabled) {
@@ -453,10 +454,12 @@ const TabsTrigger = forwardRef<HTMLButtonElement | HTMLAnchorElement, TabsTrigge
 
     const versionsProps = isRouterVersion5
       ? {
+          ...(exact ? { exact: true } : {}),
           activeClassName: `cn-tabs-trigger-active ${activeClassName ?? ''}`,
           className: cn(tabsTriggerVariants({ variant }), className)
         }
       : {
+          ...(exact ? { end: true } : {}),
           className: ({ isActive }: NavLinkRenderProps) => {
             return cn(
               tabsTriggerVariants({ variant }),

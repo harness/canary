@@ -1,7 +1,5 @@
 import { useCallback, useEffect, useRef, useState } from 'react'
 
-import { useQueryClient } from '@tanstack/react-query'
-
 import {
   OpenapiCommitFilesRequest,
   TypesCommitFilesResponse,
@@ -35,6 +33,11 @@ interface CommitDialogProps {
   resourcePath: string
   payload?: string
   onSuccess: CommitDialogOnSuccess
+  /**
+   * Called after a successful create/move/delete commit so the parent can re-trigger
+   * whichever queries it owns (file tree, content, repo metadata, etc.).
+   */
+  onCommitSuccess?: () => void
   currentBranch: string
   isNew: boolean
 }
@@ -52,13 +55,13 @@ export default function GitCommitDialog({
   payload,
   sha,
   onSuccess,
+  onCommitSuccess,
   currentBranch,
   isNew
 }: CommitDialogProps) {
   const repoRef = useGetRepoRef()
   const [error, setError] = useState<UsererrorError>()
   const [disableCTA, setDisableCTA] = useState(false)
-  const queryClient = useQueryClient()
   const { violation, bypassable, bypassed, setAllStates, resetViolation } = useRuleViolationCheck()
   const { mutateAsync: commitChanges } = useCommitFilesMutation({})
   const isMountedRef = useRef(true)
@@ -120,7 +123,9 @@ export default function GitCommitDialog({
       .then(response => {
         if (!isMountedRef.current) return
         if ([GitCommitAction.MOVE, GitCommitAction.CREATE, GitCommitAction.DELETE].includes(commitAction)) {
-          queryClient.invalidateQueries(['folderContents', repoRef, gitRef])
+          // Let the parent re-trigger whichever queries it owns (file tree, content, repo
+          // metadata, path listing, ...) instead of this dialog hardcoding query keys.
+          onCommitSuccess?.()
         }
         onSuccess(response.body, commitToGitRef === CommitToGitRefOption.NEW_BRANCH, newBranchName || '', fileName)
       })

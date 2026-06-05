@@ -39,6 +39,7 @@ import { useAPIPath } from '../hooks/useAPIPath'
 import { useCodeEditorSelectionState } from '../hooks/useCodeEditorSelectionState'
 import useCodePathDetails from '../hooks/useCodePathDetails'
 import { useGitRef } from '../hooks/useGitRef'
+import { useInvalidateRepoContent } from '../hooks/useInvalidateRepoContent'
 import { useRepoBranchesStore } from '../pages-v2/repo/stores/repo-branches-store'
 import { PathParams } from '../RouteDefinitions'
 import { PageResponseHeader } from '../types'
@@ -210,6 +211,7 @@ export default function FileContentViewer({ repoContent, loading }: FileContentV
   const isGitLfsObject = repoContent?.content?.lfs_object_id !== undefined
   const repoRef = useGetRepoRef()
   const { fullGitRef, fullResourcePath } = useCodePathDetails()
+  const invalidateRepoContent = useInvalidateRepoContent()
   const downloadFile = useDownloadRawFile()
   const navigate = useNavigate()
   const apiPath = useAPIPath()
@@ -327,6 +329,7 @@ export default function FileContentViewer({ repoContent, loading }: FileContentV
         commitAction={GitCommitAction.DELETE}
         gitRef={fullGitRef || ''}
         resourcePath={fullResourcePath || ''}
+        onCommitSuccess={invalidateRepoContent}
         onSuccess={(_commitInfo, isNewBranch, newBranchName) => {
           if (!isNewBranch) {
             // Navigate to files view in the same branch after deletion

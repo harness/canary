@@ -22,6 +22,7 @@ import { useThemeStore } from '../framework/context/ThemeContext'
 import { useExitPrompt } from '../framework/hooks/useExitPrompt'
 import useCodePathDetails from '../hooks/useCodePathDetails'
 import { useGitRef } from '../hooks/useGitRef'
+import { useInvalidateRepoContent } from '../hooks/useInvalidateRepoContent'
 import { useRepoBranchesStore } from '../pages-v2/repo/stores/repo-branches-store'
 import { PathParams } from '../RouteDefinitions'
 import { decodeGitContent, FILE_SEPARATOR, filenameToLanguage, GitCommitAction, PLAIN_TEXT } from '../utils/git-utils'
@@ -38,6 +39,7 @@ export const FileEditor: FC<FileEditorProps> = ({ repoDetails, defaultBranch, lo
   const navigate = useNavigate()
   const { codeMode, fullGitRef, gitRefName, fullResourcePath } = useCodePathDetails()
   const { repoData } = useGitRef()
+  const invalidateRepoContent = useInvalidateRepoContent()
   const { repoId, spaceId } = useParams<PathParams>()
   const repoPath = `${routes.toRepoFiles({ spaceId, repoId })}/${fullGitRef}`
 
@@ -212,6 +214,7 @@ export const FileEditor: FC<FileEditorProps> = ({ repoDetails, defaultBranch, lo
         resourcePath={fileResourcePath || ''}
         payload={contentRevision.code}
         sha={repoDetails?.sha}
+        onCommitSuccess={invalidateRepoContent}
         onSuccess={(_commitInfo, isNewBranch, newBranchName) => {
           if (!isNewBranch) {
             navigate(`${routes.toRepoFiles({ spaceId, repoId })}/${fullGitRef}/~/${encodedFileResourcePath}`)

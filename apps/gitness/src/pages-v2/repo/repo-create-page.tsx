@@ -1,3 +1,4 @@
+import { useEffect, useMemo, useState } from 'react'
 import { useNavigate, useParams } from 'react-router-dom'
 
 import {
@@ -6,20 +7,111 @@ import {
   useListGitignoreQuery,
   useListLicensesQuery
 } from '@harnessio/code-service-client'
-import { FormFields, RepoCreatePage as RepoCreatePageView, tagsOptionsToRecord } from '@harnessio/views'
 
 import { useRoutes } from '../../framework/context/NavigationContext'
+import { useMFEContext } from '../../framework/hooks/useMFEContext'
 import { useGetSpaceURLParam } from '../../framework/hooks/useGetSpaceParam'
 import { PathParams } from '../../RouteDefinitions'
+import { RepoCreateFormFields, RepoCreatePageView, tagsToRecord } from './repo-create-page-view'
+
+type GeneralSettingsResponse = {
+  default_branch?: string
+}
+
+const decodeStoredToken = (encodedToken: string): string => {
+  try {
+    return JSON.parse(decodeURIComponent(atob(encodedToken)))
+  } catch {
+    return encodedToken
+  }
+}
+
+const getScopeIdentifiers = ({
+  spaceURL,
+  accountId,
+  orgIdentifier,
+  projectIdentifier
+}: {
+  spaceURL: string
+  accountId?: string
+  orgIdentifier?: string
+  projectIdentifier?: string
+}) => {
+  const [spaceAccountId, spaceOrgIdentifier, spaceProjectIdentifier] = spaceURL.split('/').filter(Boolean)
+
+  return {
+    accountIdentifier: accountId || spaceAccountId,
+    orgIdentifier: orgIdentifier || spaceOrgIdentifier,
+    projectIdentifier: projectIdentifier || spaceProjectIdentifier
+  }
+}
 
 export const CreateRepo = () => {
   const routes = useRoutes()
   const { mutate: createRepository, error, isLoading, isSuccess } = useCreateRepositoryMutation({})
   const { spaceId } = useParams<PathParams>()
   const spaceURL = useGetSpaceURLParam()
+  const { scope } = useMFEContext()
   const navigate = useNavigate()
+  const [initialDefaultBranch, setInitialDefaultBranch] = useState<string>('main')
 
-  const onSubmit = (data: FormFields) => {
+  const scopeIdentifiers = useMemo(
+    () =>
+      getScopeIdentifiers({
+        spaceURL,
+        accountId: scope.accountId,
+        orgIdentifier: scope.orgIdentifier,
+        projectIdentifier: scope.projectIdentifier
+      }),
+    [spaceURL, scope.accountId, scope.orgIdentifier, scope.projectIdentifier]
+  )
+
+  useEffect(() => {
+    const { accountIdentifier, orgIdentifier, projectIdentifier } = scopeIdentifiers
+    if (!accountIdentifier || !orgIdentifier || !projectIdentifier) return
+
+    const rawToken = localStorage.getItem('token')
+    const decodedToken = rawToken ? decodeStoredToken(rawToken) : ''
+
+    const params = new URLSearchParams({
+      accountIdentifier,
+      orgIdentifier,
+      projectIdentifier
+    })
+
+    if (scope.accountId) {
+      params.set('routingId', scope.accountId)
+    }
+
+    const headers = new Headers({
+      Accept: 'application/json'
+    })
+
+    if (decodedToken.startsWith('pat.')) {
+      headers.set('x-api-key', decodedToken)
+    } else if (decodedToken) {
+      headers.set('Authorization', `Bearer ${decodedToken}`)
+    }
+
+    fetch(`${window.apiUrl || ''}/code/api/v1/settings/general?${params.toString()}`, { headers })
+      .then(response => {
+        if (!response.ok) {
+          throw new Error(`Failed to fetch settings: ${response.status}`)
+        }
+        return response.json() as Promise<GeneralSettingsResponse>
+      })
+      .then(data => {
+        const branch = data.default_branch?.trim()
+        if (branch) {
+          setInitialDefaultBranch(branch)
+        }
+      })
+      .catch(() => {
+        // Keep fallback branch as `main` if settings request fails.
+      })
+  }, [scope.accountId, scopeIdentifiers])
+
+  const onSubmit = (data: RepoCreateFormFields) => {
     const repositoryRequest: OpenapiCreateRepositoryRequest = {
       default_branch: data.defaultBranch,
       parent_ref: spaceURL,
@@ -29,7 +121,7 @@ export const CreateRepo = () => {
       is_public: data.access === '1',
       readme: data.readme,
       identifier: data.name,
-      tags: data.tags?.length ? tagsOptionsToRecord(data.tags) : undefined
+      tags: data.tags?.length ? tagsToRecord(data.tags) : undefined
     }
 
     createRepository(
@@ -65,6 +157,7 @@ export const CreateRepo = () => {
         gitIgnoreOptions={gitIgnoreOptions}
         licenseOptions={licenseOptions}
         apiError={error?.message?.toString()}
+        initialDefaultBranch={initialDefaultBranch}
       />
     </>
   )

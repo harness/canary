@@ -36,7 +36,7 @@ const getMarkedFileElement = (result: Fuzzysort.KeyResult<FileItem>): ReactNode 
       return part
     })
 
-  return <Text className={cn(markedFileClassName, 'break-words')}>{parts}</Text>
+  return <Text className={cn(markedFileClassName, 'break-all')}>{parts}</Text>
 }
 
 interface FilteredFile {
@@ -157,7 +157,13 @@ export const SearchFiles = ({
       </div>
 
       <DropdownMenu.Content
-        className={cn('w-[800px]', contentClassName)}
+        className={cn('w-[600px] max-w-[var(--radix-dropdown-menu-content-available-width)]', contentClassName)}
+        scrollAreaProps={{
+          className: cn(
+            'cn-dropdown-menu-content',
+            'max-h-[min(560px,calc(var(--radix-dropdown-menu-content-available-height)_-_8px))]'
+          )
+        }}
         align="start"
         onOpenAutoFocus={event => event.preventDefault()}
         onCloseAutoFocus={event => event.preventDefault()}

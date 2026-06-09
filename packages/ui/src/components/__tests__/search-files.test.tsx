@@ -564,7 +564,7 @@ describe('SearchFiles', () => {
       expect(content).not.toBeNull()
     })
 
-    test('should have default width class', async () => {
+    test('should use a fixed wider width capped to the available viewport width', async () => {
       // Use userEvent directly
 
       render(
@@ -581,9 +581,42 @@ describe('SearchFiles', () => {
         expect(items.length).toBeGreaterThan(0)
       })
 
-      // Dropdown content is rendered in a portal
-      const content = document.querySelector('.w-\\[800px\\]')
+      // Dropdown content is rendered in a portal. It should use a fixed wider width and override
+      // the cn-dropdown-menu 276px max-width cap with the available viewport width so long paths
+      // wrap instead of overflowing.
+      const content = document.querySelector('.w-\\[600px\\]')
       expect(content).not.toBeNull()
+      expect(content).toHaveClass('max-w-[var(--radix-dropdown-menu-content-available-width)]')
+
+      // The previous widths must no longer be applied
+      expect(document.querySelector('.w-\\[800px\\]')).toBeNull()
+      expect(document.querySelector('.w-\\[--radix-dropdown-menu-trigger-width\\]')).toBeNull()
+
+      // The inner scroll area raises the default 360px height cap so the dropdown can grow taller,
+      // bounded by the available viewport height.
+      const scrollArea = document.querySelector('.cn-dropdown-menu-content')
+      expect(scrollArea?.className).toContain('max-h-[min(560px')
+    })
+
+    test('should render each result on multiple lines without truncation or tooltip', async () => {
+      render(
+        <TestWrapper>
+          <SearchFiles navigateToFile={mockNavigateToFile} filesList={mockFilesList} />
+        </TestWrapper>
+      )
+
+      const input = screen.getByRole('textbox')
+      await userEvent.type(input, 'helpers')
+
+      await waitFor(() => {
+        expect(screen.queryAllByRole('menuitem').length).toBeGreaterThan(0)
+      })
+
+      // Long paths wrap to multiple lines (break-all) and the full path is rendered inline,
+      // so there is no truncation and no title tooltip.
+      const wrapped = document.querySelector('.break-all')
+      expect(wrapped).not.toBeNull()
+      expect(document.querySelector('[title="src/utils/helpers.ts"]')).toBeNull()
     })
   })
 

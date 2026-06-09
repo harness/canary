@@ -75,6 +75,7 @@ import BubbleStar from './icons/bubble-star.svg'
 import BubbleUpload from './icons/bubble-upload.svg'
 import BubbleWarning from './icons/bubble-warning.svg'
 import BubbleXmark from './icons/bubble-xmark.svg'
+import Bug from './icons/bug.svg'
 import BuildsSolid from './icons/builds-solid.svg'
 import Builds from './icons/builds.svg'
 import Calculator from './icons/calculator.svg'
@@ -600,6 +601,7 @@ export const IconNameMapV2 = {
   'bubble-upload': BubbleUpload,
   'bubble-warning': BubbleWarning,
   'bubble-xmark': BubbleXmark,
+  bug: Bug,
   'builds-solid': BuildsSolid,
   builds: Builds,
   calculator: Calculator,

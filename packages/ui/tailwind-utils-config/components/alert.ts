@@ -117,7 +117,8 @@ export default {
     },
 
     '&-description': {
-      '@apply font-body-normal break-all': ''
+      '@apply font-body-normal': '',
+      wordBreak: 'break-word'
     },
 
     '&-close-button': {

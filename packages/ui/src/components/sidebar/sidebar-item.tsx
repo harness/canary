@@ -48,7 +48,6 @@ type SidebarItemActionButtonPropsType = ButtonProps & {
 interface SidebarItemCommonProps extends ComponentPropsWithoutRef<'button'> {
   title: string
   description?: string
-  tooltip?: ReactNode
   active?: boolean
   actionButtons?: SidebarItemActionButtonPropsType[]
   draggable?: boolean
@@ -524,16 +523,7 @@ export const SidebarItem = forwardRef<HTMLButtonElement | HTMLAnchorElement, Sid
         <SidebarItemTrigger ref={ref} {...itemProps} toggleSubmenu={toggleSubmenu} submenuOpen={effectiveOpen} />
       )
 
-      // Prefer explicit tooltip first
-      if (itemProps.tooltip) {
-        return (
-          <Tooltip side="right" align="center" content={itemProps.tooltip}>
-            {trigger}
-          </Tooltip>
-        )
-      }
-
-      // Fallback tooltip when collapsed
+      // Show title tooltip when collapsed
       if (state === 'collapsed') {
         return (
           <Tooltip side="right" align="center" content={itemProps.title}>

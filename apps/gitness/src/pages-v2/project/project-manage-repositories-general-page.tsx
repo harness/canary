@@ -74,7 +74,8 @@ export const ProjectManageRepositoriesGeneralPage = () => {
       }
 
       setSuccess(trimmedBranch ? 'Default branch updated.' : 'Default branch reset to inherited default.')
-    } catch {
+    } catch (error) {
+      console.error('Failed to update default branch:', error)
       setError('Failed to update default branch. Please try again.')
     } finally {
       setIsSaving(false)

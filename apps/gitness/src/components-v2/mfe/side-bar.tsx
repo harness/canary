@@ -63,7 +63,7 @@ const AppSidebar: FC<{ children: ReactNode }> = ({ children }) => {
           <Sidebar.Content>
             <Sidebar.Group>
               <Sidebar.Item title="Repositories" to="/repos" icon="repository" end />
-              <Sidebar.Item title="Manage Repositories" to="/manage-repositories" icon="settings" end />
+              <Sidebar.Item title="Manage Repositories" to="manage-repositories" icon="settings" end />
             </Sidebar.Group>
 
             <Sidebar.Separator />

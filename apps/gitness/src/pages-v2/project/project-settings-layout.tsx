@@ -20,9 +20,9 @@ export const ProjectSettingsLayout = () => {
             <Tabs.List className="px-cn-xl">
               {isManageRepositoriesPage ? (
                 <>
+                  <Tabs.Trigger value="general">{t('views:projectSettings.tabs.settings', 'Settings')}</Tabs.Trigger>
                   <Tabs.Trigger value="labels">{t('views:projectSettings.tabs.labels', 'Labels')}</Tabs.Trigger>
                   <Tabs.Trigger value="rules">{t('views:projectSettings.tabs.rules', 'Rules')}</Tabs.Trigger>
-                  <Tabs.Trigger value="general">{t('views:projectSettings.tabs.settings', 'Settings')}</Tabs.Trigger>
                 </>
               ) : (
                 <>

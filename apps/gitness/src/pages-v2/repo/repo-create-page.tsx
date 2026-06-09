@@ -68,7 +68,7 @@ export const CreateRepo = () => {
 
   useEffect(() => {
     const { accountIdentifier, orgIdentifier, projectIdentifier } = scopeIdentifiers
-    if (!accountIdentifier || !orgIdentifier || !projectIdentifier) return
+    if (!accountIdentifier) return
 
     const rawToken = localStorage.getItem('token')
     const decodedToken = rawToken ? decodeStoredToken(rawToken) : ''

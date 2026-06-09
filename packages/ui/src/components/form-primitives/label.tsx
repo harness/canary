@@ -1,6 +1,6 @@
 import { ComponentPropsWithoutRef, ElementRef, forwardRef, ReactNode } from 'react'
 
-import { IconWithTooltip, IconWithTooltipProps } from '@/components'
+import { IconWithTooltip, IconWithTooltipProps, Layout } from '@/components'
 import { NonEmptyReactNode } from '@/types'
 import * as LabelPrimitive from '@radix-ui/react-label'
 import { cn } from '@utils/cn'
@@ -36,21 +36,38 @@ const Label = forwardRef<ElementRef<typeof LabelPrimitive.Root>, LabelProps>(
       </LabelPrimitive.Root>
     )
 
-    if (tooltipContent || suffix) {
+    if (suffix) {
+      return (
+        <Layout.Horizontal align="end" justify="between" gap="xs" className={cn('cn-label-wrapper', className)}>
+          <span className="cn-label-container">
+            <LabelComponent />
+
+            {tooltipContent && (
+              <IconWithTooltip
+                {...tooltipProps}
+                className="cn-label-tooltip"
+                disabled={disabled}
+                content={tooltipContent}
+              />
+            )}
+          </span>
+
+          <Layout.Horizontal align="center">{suffix}</Layout.Horizontal>
+        </Layout.Horizontal>
+      )
+    }
+
+    if (tooltipContent) {
       return (
         <span className={cn('cn-label-container', className)}>
           <LabelComponent />
 
-          {tooltipContent && (
-            <IconWithTooltip
-              {...tooltipProps}
-              className="cn-label-tooltip"
-              disabled={disabled}
-              content={tooltipContent}
-            />
-          )}
-
-          {suffix}
+          <IconWithTooltip
+            {...tooltipProps}
+            className="cn-label-tooltip"
+            disabled={disabled}
+            content={tooltipContent}
+          />
         </span>
       )
     }

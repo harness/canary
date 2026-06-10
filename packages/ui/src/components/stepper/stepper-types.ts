@@ -18,7 +18,7 @@ export interface StepperStepProps {
   value: string
   title: ReactNode
   description?: ReactNode
-  state?: 'skipped' | 'error'
+  state?: StepState
   loading?: boolean
   blocking?: boolean
   hasSubSteps?: boolean
@@ -31,5 +31,6 @@ export interface StepperSubStepProps {
   value: string
   title: ReactNode
   description?: ReactNode
+  state?: StepState
   className?: string
 }

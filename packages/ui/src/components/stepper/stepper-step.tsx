@@ -33,7 +33,7 @@ export function StepperStep({
     ctx.registerStepMeta(value, { disabled, blocking, state, loading })
   }, [value, disabled, blocking, state, loading]) // eslint-disable-line react-hooks/exhaustive-deps
 
-  const derivedState = ctx.getStepState(value)
+  const derivedState = state || ctx.getStepState(value)
   const stepDisabled = ctx.isStepDisabled(value)
   const stepIndex = ctx.orderedSteps.indexOf(value)
   const stepNumber = stepIndex + 1
@@ -41,12 +41,13 @@ export function StepperStep({
   const isActive = derivedState === 'active'
   const isLoading = isActive && loading
 
-  // Render children if active, OR if the current value is unresolved (not known as any
+  // Render children if active, completed, OR if the current value is unresolved (not known as any
   // registered step or substep). This allows substeps to register on the first render
   // when the root value is a substep value that hasn't been registered yet.
+  // Completed steps also render children so that visited substeps remain visible.
   const isValueUnresolved =
     ctx.orderedSteps.indexOf(ctx.value) < 0 && !Array.from(ctx.subSteps.values()).some(subs => subs.includes(ctx.value))
-  const shouldRenderChildren = isActive || isValueUnresolved
+  const shouldRenderChildren = isActive || derivedState === 'completed' || derivedState === 'error' || isValueUnresolved
 
   const stateClass = `cn-stepper-step-${derivedState}`
   const loadingClass = isLoading ? 'cn-stepper-step-loading' : ''

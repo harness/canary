@@ -260,6 +260,19 @@ describe('Stepper', () => {
       expect(connectors[1]).toHaveClass('cn-stepper-connector-active')
       expect(connectors[2]).toHaveClass('cn-stepper-connector-upcoming')
     })
+
+    test('connector shows error state class', () => {
+      const { container } = render(
+        <Stepper.Root value="step2" onValueChange={vi.fn()}>
+          <Stepper.Step value="step1" title="Step 1" state="error" />
+          <Stepper.Step value="step2" title="Step 2" />
+          <Stepper.Step value="step3" title="Step 3" state="skipped" />
+        </Stepper.Root>
+      )
+      const connectors = container.querySelectorAll('.cn-stepper-connector')
+      expect(connectors[0]).toHaveClass('cn-stepper-connector-error')
+      expect(connectors[2]).toHaveClass('cn-stepper-connector-skipped')
+    })
   })
 
   describe('SubSteps', () => {
@@ -325,6 +338,46 @@ describe('Stepper', () => {
         </Stepper.Root>
       )
       expect(container.querySelector('.cn-stepper-substep-placeholder')).toBeInTheDocument()
+    })
+
+    test('substep shows explicit state classes', () => {
+      const { container } = render(
+        <Stepper.Root value="sub2" onValueChange={vi.fn()}>
+          <Stepper.Step value="step1" title="First">
+            <Stepper.SubStep value="sub1" title="Sub One" state="completed" />
+            <Stepper.SubStep value="sub2" title="Sub Two" state="active" />
+            <Stepper.SubStep value="sub3" title="Sub Three" state="error" />
+            <Stepper.SubStep value="sub4" title="Sub Four" state="upcoming" />
+          </Stepper.Step>
+        </Stepper.Root>
+      )
+      expect(container.querySelector('.cn-stepper-substep-completed')).toBeInTheDocument()
+      expect(container.querySelector('.cn-stepper-substep-active')).toBeInTheDocument()
+      expect(container.querySelector('.cn-stepper-substep-error')).toBeInTheDocument()
+      expect(container.querySelector('.cn-stepper-substep-upcoming')).toBeInTheDocument()
+    })
+
+    test('substep branch and indicator have state-specific styling', () => {
+      const { container } = render(
+        <Stepper.Root value="sub2" onValueChange={vi.fn()}>
+          <Stepper.Step value="step1" title="First">
+            <Stepper.SubStep value="sub1" title="Sub One" state="completed" />
+            <Stepper.SubStep value="sub2" title="Sub Two" state="active" />
+            <Stepper.SubStep value="sub3" title="Sub Three" state="error" />
+            <Stepper.SubStep value="sub4" title="Sub Four" state="upcoming" />
+          </Stepper.Step>
+        </Stepper.Root>
+      )
+      // Verify branch elements render within state containers
+      expect(container.querySelector('.cn-stepper-substep-completed .cn-stepper-substep-branch')).toBeInTheDocument()
+      expect(container.querySelector('.cn-stepper-substep-active .cn-stepper-substep-branch')).toBeInTheDocument()
+      expect(container.querySelector('.cn-stepper-substep-error .cn-stepper-substep-branch')).toBeInTheDocument()
+      expect(container.querySelector('.cn-stepper-substep-upcoming .cn-stepper-substep-branch')).toBeInTheDocument()
+      // Verify indicator elements render within state containers
+      expect(container.querySelector('.cn-stepper-substep-completed .cn-stepper-substep-indicator')).toBeInTheDocument()
+      expect(container.querySelector('.cn-stepper-substep-active .cn-stepper-substep-indicator')).toBeInTheDocument()
+      expect(container.querySelector('.cn-stepper-substep-error .cn-stepper-substep-indicator')).toBeInTheDocument()
+      expect(container.querySelector('.cn-stepper-substep-upcoming .cn-stepper-substep-indicator')).toBeInTheDocument()
     })
   })
 

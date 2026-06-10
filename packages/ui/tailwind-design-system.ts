@@ -637,6 +637,7 @@ const tailwindDesignSystem: TailwindConfig = {
 
     /** New design system Variants  */
     { pattern: /-cn-/ },
+    { pattern: /^cn-/ },
 
     { pattern: /rounded-./ },
     { pattern: /border-./ },

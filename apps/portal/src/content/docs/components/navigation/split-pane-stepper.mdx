@@ -1,0 +1,703 @@
+---
+title: Split Pane Stepper
+description: A full-page guided flow component with resizable split panes, card-based decision trees, and integrated stepper navigation.
+beta: true
+---
+
+import { DocsPage } from "@/components/docs-page";
+import { Aside } from "@astrojs/starlight/components";
+import { FullFlowDemo } from "@/components/split-pane-stepper-demo";
+
+The `SplitPaneStepper` is a full-page builder shell component for multi-step guided flows. It combines a left-pane stepper with a right-pane card stack that supports decision-tree navigation, drawer overlays, dynamic substeps, and back-navigation with reactivation guards.
+
+Use this component for onboarding wizards, setup flows, and any multi-step process where the user's choices determine the next card(s) to show.
+
+## Interactive Example
+
+This example demonstrates a full CI pipeline onboarding flow with connector drawers, connectivity checks, delegate installation detours, dynamic substeps during code analysis, and pipeline YAML generation.
+
+<div className="h-[1000px] border border-cn-2 rounded-lg overflow-hidden my-6">
+  <FullFlowDemo client:only="react" />
+</div>
+
+<Aside type="tip">
+  Click through the flow to see card navigation, drawer interactions, dynamic substeps, and back-navigation working together.
+</Aside>
+
+## Usage
+
+```typescript jsx
+import { SplitPaneStepper } from "@harnessio/ui/components";
+
+// Define your flow configuration
+const flow: FlowConfig = {
+  steps: [
+    { id: 'select', title: 'Select Provider', description: 'Choose VCS' },
+    { id: 'configure', title: 'Configure', description: 'Set up connection' },
+    { id: 'done', title: 'Done', description: 'All set' }
+  ],
+  cards: {
+    'provider-selection': { step: 'select', component: ProviderSelectionCard },
+    'connector-setup': { step: 'configure', component: ConnectorSetupCard },
+    'success': { step: 'done', component: SuccessCard }
+  },
+  initialCard: 'provider-selection'
+};
+
+// Render the flow
+<SplitPaneStepper.Root flow={flow}>
+  <SplitPaneStepper.Drawer id="connector" component={ConnectorDrawer} />
+</SplitPaneStepper.Root>
+```
+
+## Anatomy
+
+The Split Pane Stepper is composed of several parts:
+
+```typescript jsx
+<SplitPaneStepper.Root flow={flowConfig}>
+  {/* Optional drawer overlays */}
+  <SplitPaneStepper.Drawer id="drawer-id" component={DrawerComponent} />
+
+  {/* Cards are defined in flowConfig.cards, not as children */}
+</SplitPaneStepper.Root>
+```
+
+Cards use the `useFlowCard` hook to interact with the flow engine:
+
+```typescript jsx
+function MyCard() {
+  const { state, complete, openDrawer, setSubSteps } = useFlowCard();
+
+  return (
+    <SplitPaneStepper.InputCard title="My Card">
+      {/* Card content */}
+    </SplitPaneStepper.InputCard>
+  );
+}
+```
+
+## Flow Configuration
+
+The `FlowConfig` object defines the structure of your flow:
+
+```typescript
+interface FlowConfig {
+  steps: StepDef[];           // Stepper steps (left pane)
+  cards: Record<string, CardDef>;  // Card definitions (right pane)
+  initialCard: string;        // First card to show
+}
+
+interface StepDef {
+  id: string;
+  title: string;
+  description?: string;
+  hasSubSteps?: boolean;      // Reserve space for dynamic substeps
+}
+
+interface CardDef {
+  step: string;               // Which step this card belongs to
+  component: ComponentType;   // React component to render
+}
+```
+
+<Aside type="note">
+  Each card must be associated with a step via `step: 'step-id'`. Multiple cards can belong to the same step (e.g., for conditional flows or detours).
+</Aside>
+
+## Card Types
+
+### InputCard
+
+Use `InputCard` for cards where the user makes a choice or provides input. The card collapses to a summary when the user navigates forward.
+
+```typescript jsx
+function SelectProviderCard() {
+  const { complete } = useFlowCard();
+  const [selected, setSelected] = useState(null);
+
+  return (
+    <SplitPaneStepper.InputCard
+      title="Select Provider"
+      description="Choose your version control provider"
+      completedSummary={selected && <span>{selected}</span>}
+    >
+      {/* Your selection UI */}
+      <button onClick={() => {
+        setSelected('GitHub');
+        complete('next-card-id', { provider: 'github' });
+      }}>
+        GitHub
+      </button>
+    </SplitPaneStepper.InputCard>
+  );
+}
+```
+
+**Props:**
+- `title` — Card title
+- `description` — Optional subtitle
+- `completedSummary` — Content shown when card is collapsed (e.g., user's choice)
+- `children` — Card content
+
+### OutputCard
+
+Use `OutputCard` for automated steps that run without user input, such as API calls, connectivity checks, or analysis tasks.
+
+```typescript jsx
+function ConnectivityCheckCard() {
+  const { complete } = useFlowCard();
+
+  useEffect(() => {
+    // Run your check
+    checkConnectivity().then(() => {
+      complete('next-card-id');
+    });
+  }, []);
+
+  return (
+    <SplitPaneStepper.OutputCard
+      title="Checking Connectivity"
+      description="Verifying access to your repositories"
+    >
+      {/* Show progress, logs, or results */}
+      <div className="space-y-2">
+        <span>→ connecting...</span>
+        <span>✓ connection established</span>
+      </div>
+    </SplitPaneStepper.OutputCard>
+  );
+}
+```
+
+**Props:**
+- `title` — Card title
+- `description` — Optional subtitle
+- `children` — Card content (typically logs or progress indicators)
+
+<Aside type="tip">
+  OutputCards don't collapse — they remain visible in the stack to show the flow history.
+</Aside>
+
+## useFlowCard Hook
+
+The `useFlowCard` hook provides access to the flow engine from within a card component:
+
+```typescript
+interface UseFlowCardReturn<T = Record<string, unknown>> {
+  state: T;                    // Accumulated state from previous cards
+  complete: (nextCardId: string, newState?: Partial<T>) => void;
+  openDrawer: (drawerId: string) => Promise<DrawerResult>;
+  setSubSteps: (substeps: SubStepDef[]) => void;
+  setActiveSubStep: (substepId: string) => void;
+  completeSubStep: (substepId: string) => void;
+}
+```
+
+**Methods:**
+
+- **`complete(nextCardId, newState?)`** — Navigate to the next card and optionally update the shared state
+- **`openDrawer(drawerId)`** — Open a registered drawer and await the result
+- **`setSubSteps(substeps)`** — Register dynamic substeps for the current card's step
+- **`setActiveSubStep(id)`** — Mark a substep as active (shows loading state)
+- **`completeSubStep(id)`** — Mark a substep as completed (shows checkmark)
+
+### State Management
+
+Each card can read the accumulated state and add to it:
+
+```typescript jsx
+function MyCard() {
+  const { state, complete } = useFlowCard<{ provider?: string; repo?: string }>();
+
+  // Access previous state
+  console.log(state.provider); // 'github' (from a previous card)
+
+  // Add to state when navigating forward
+  const handleNext = () => {
+    complete('next-card', { repo: 'my-repo' });
+    // Next card will see { provider: 'github', repo: 'my-repo' }
+  };
+}
+```
+
+<Aside type="note">
+  State is shallow-merged on each `complete()` call. Use TypeScript generics to type your state for better autocomplete.
+</Aside>
+
+## Dynamic Substeps
+
+Cards can register substeps dynamically to show progress during multi-phase operations:
+
+```typescript jsx
+function CodeAnalysisCard() {
+  const { setSubSteps, setActiveSubStep, completeSubStep, complete } = useFlowCard();
+
+  useEffect(() => {
+    // Register substeps when card mounts
+    setSubSteps([
+      { id: 'detect', title: 'Detect Languages', description: 'Scan project' },
+      { id: 'deps', title: 'Scan Dependencies', description: 'Analyze packages' },
+      { id: 'tests', title: 'Test Framework', description: 'Identify test setup' }
+    ]);
+
+    // Run analysis phases
+    const runAnalysis = async () => {
+      setActiveSubStep('detect');
+      await detectLanguages();
+      completeSubStep('detect');
+
+      setActiveSubStep('deps');
+      await scanDependencies();
+      completeSubStep('deps');
+
+      setActiveSubStep('tests');
+      await findTests();
+      completeSubStep('tests');
+
+      // All done, move to next card
+      complete('next-card');
+    };
+
+    runAnalysis();
+  }, []);
+
+  return (
+    <SplitPaneStepper.OutputCard title="Code Analysis">
+      {/* Show progress logs */}
+    </SplitPaneStepper.OutputCard>
+  );
+}
+```
+
+<Aside type="tip">
+  Substeps automatically show in the left-pane stepper when the parent step is active. Use `loading`, `completed`, or `error` states to indicate progress.
+</Aside>
+
+## Drawer Integration
+
+Drawers provide modal overlays for complex interactions like authentication flows or configuration forms. Register drawers as children of `SplitPaneStepper.Root`:
+
+```typescript jsx
+<SplitPaneStepper.Root flow={flow}>
+  <SplitPaneStepper.Drawer id="connector" component={ConnectorDrawer} />
+  <SplitPaneStepper.Drawer id="delegate" component={DelegateDrawer} />
+</SplitPaneStepper.Root>
+```
+
+Open drawers from any card using the `openDrawer` method:
+
+```typescript jsx
+function ConnectorSetupCard() {
+  const { openDrawer, complete } = useFlowCard();
+
+  const handleConnect = async () => {
+    const result = await openDrawer('connector');
+
+    if (result.success && result.data) {
+      // Drawer returned data, proceed to next card
+      complete('next-card', { connectorRef: result.data.connectorRef });
+    }
+  };
+
+  return (
+    <SplitPaneStepper.InputCard title="Connect Provider">
+      <button onClick={handleConnect}>Connect</button>
+    </SplitPaneStepper.InputCard>
+  );
+}
+```
+
+**Drawer Component Interface:**
+
+```typescript
+interface DrawerComponentProps {
+  open: boolean;
+  onClose: (result: DrawerResult) => void;
+}
+
+interface DrawerResult {
+  success: boolean;
+  data?: Record<string, unknown>;
+}
+
+function ConnectorDrawer({ open, onClose }: DrawerComponentProps) {
+  const handleSubmit = () => {
+    onClose({
+      success: true,
+      data: { connectorRef: 'my-connector' }
+    });
+  };
+
+  if (!open) return null;
+
+  return (
+    <div className="fixed inset-0 z-50 ...">
+      {/* Your drawer UI */}
+    </div>
+  );
+}
+```
+
+<Aside type="note">
+  Drawers are responsible for rendering their own overlay backdrop and positioning. The component is only mounted when `open` is true.
+</Aside>
+
+## Navigation & Reactivation
+
+### Forward Navigation
+
+Call `complete(nextCardId, newState?)` to navigate to the next card. The card stack grows, and the stepper advances.
+
+### Back Navigation
+
+Users can click previous cards in the stack or previous steps in the stepper to go back. When navigating backward:
+
+1. All cards after the clicked card are removed from the stack
+2. The stepper resets to the clicked step
+3. The reactivation guard is triggered (if configured)
+
+### Reactivation Guard
+
+The reactivation guard prevents users from accidentally losing progress when navigating backward:
+
+```typescript
+// In the flow engine context (handled internally by SplitPaneStepper.Root)
+const onBeforeChange = (from: string, to: string) => {
+  const fromIdx = steps.findIndex(s => s.id === from);
+  const toIdx = steps.findIndex(s => s.id === to);
+
+  if (toIdx < fromIdx) {
+    return "Going back will reset your progress. Are you sure?";
+  }
+
+  return true; // Allow forward navigation without confirmation
+};
+```
+
+The guard returns:
+- `true` to allow navigation
+- `false` to silently block navigation
+- A `string` to show a confirmation dialog with that message
+
+<Aside type="tip">
+  The reactivation guard is built into the SplitPaneStepper and uses the browser's native `window.confirm()` for backward navigation. Customize the message by wrapping the component and intercepting the stepper's `onBeforeChange` prop (advanced usage).
+</Aside>
+
+## CardAction Component
+
+Use `CardAction` to show contextual alerts or prompts within output cards:
+
+```typescript jsx
+<SplitPaneStepper.OutputCard title="Connectivity Check">
+  <div className="space-y-4">
+    {/* Logs or results */}
+    
+    {error && (
+      <SplitPaneStepper.CardAction
+        variant="warning"
+        message="Cannot reach git provider. Your infrastructure may be behind a firewall."
+        actionLabel="Install Delegate"
+        onAction={() => openDrawer('delegate')}
+        secondaryLabel="Skip for now"
+        onSecondary={() => complete('next-card')}
+      />
+    )}
+  </div>
+</SplitPaneStepper.OutputCard>
+```
+
+**Props:**
+- `variant` — Visual style: `'info' | 'warning' | 'error' | 'success'`
+- `message` — Alert message
+- `actionLabel` — Primary action button label
+- `onAction` — Primary action handler
+- `secondaryLabel` — Optional secondary button label
+- `onSecondary` — Optional secondary action handler
+
+## API Reference
+
+### `Root`
+
+The root component that sets up the flow engine, renders the split pane layout, and manages navigation.
+
+```typescript jsx
+<SplitPaneStepper.Root
+  flow={flowConfig}         // [REQUIRED] Flow configuration
+  className="custom-class"  // [OPTIONAL] Custom class on root container
+>
+  {/* Drawer components */}
+</SplitPaneStepper.Root>
+```
+
+<DocsPage.PropsTable
+  props={[
+    {
+      name: "flow",
+      description: "Flow configuration defining steps, cards, and initial card",
+      required: true,
+      value: "FlowConfig",
+    },
+    {
+      name: "className",
+      description: "Custom class applied to the root container",
+      required: false,
+      value: "string",
+    },
+    {
+      name: "children",
+      description: "SplitPaneStepper.Drawer components for modal overlays",
+      required: false,
+      value: "ReactNode",
+    },
+  ]}
+/>
+
+### `InputCard`
+
+A card component for user input or choices. Collapses to a summary when navigated past.
+
+```typescript jsx
+<SplitPaneStepper.InputCard
+  title="Card Title"
+  description="Optional subtitle"
+  completedSummary={<span>User's choice</span>}
+>
+  {/* Card content */}
+</SplitPaneStepper.InputCard>
+```
+
+<DocsPage.PropsTable
+  props={[
+    {
+      name: "title",
+      description: "Card title displayed at the top",
+      required: true,
+      value: "string",
+    },
+    {
+      name: "description",
+      description: "Optional subtitle below the title",
+      required: false,
+      value: "string",
+    },
+    {
+      name: "completedSummary",
+      description: "Content shown when the card is collapsed (e.g., user's selection)",
+      required: false,
+      value: "ReactNode",
+    },
+    {
+      name: "children",
+      description: "Card content (form fields, buttons, etc.)",
+      required: true,
+      value: "ReactNode",
+    },
+  ]}
+/>
+
+### `OutputCard`
+
+A card component for automated tasks or results. Does not collapse.
+
+```typescript jsx
+<SplitPaneStepper.OutputCard
+  title="Task Name"
+  description="Optional subtitle"
+>
+  {/* Progress indicators, logs, or results */}
+</SplitPaneStepper.OutputCard>
+```
+
+<DocsPage.PropsTable
+  props={[
+    {
+      name: "title",
+      description: "Card title displayed at the top",
+      required: true,
+      value: "string",
+    },
+    {
+      name: "description",
+      description: "Optional subtitle below the title",
+      required: false,
+      value: "string",
+    },
+    {
+      name: "children",
+      description: "Card content (logs, progress bars, etc.)",
+      required: true,
+      value: "ReactNode",
+    },
+  ]}
+/>
+
+### `CardAction`
+
+An alert/action component for showing contextual prompts within output cards.
+
+```typescript jsx
+<SplitPaneStepper.CardAction
+  variant="warning"
+  message="Alert message"
+  actionLabel="Primary Action"
+  onAction={handlePrimary}
+  secondaryLabel="Secondary Action"
+  onSecondary={handleSecondary}
+/>
+```
+
+<DocsPage.PropsTable
+  props={[
+    {
+      name: "variant",
+      description: "Visual style of the alert",
+      required: true,
+      value: "'info' | 'warning' | 'error' | 'success'",
+    },
+    {
+      name: "message",
+      description: "Alert message text",
+      required: true,
+      value: "string",
+    },
+    {
+      name: "actionLabel",
+      description: "Label for the primary action button",
+      required: true,
+      value: "string",
+    },
+    {
+      name: "onAction",
+      description: "Handler for the primary action",
+      required: true,
+      value: "() => void",
+    },
+    {
+      name: "secondaryLabel",
+      description: "Optional label for the secondary action button",
+      required: false,
+      value: "string",
+    },
+    {
+      name: "onSecondary",
+      description: "Optional handler for the secondary action",
+      required: false,
+      value: "() => void",
+    },
+  ]}
+/>
+
+### `Drawer`
+
+Registers a drawer component that can be opened by any card.
+
+```typescript jsx
+<SplitPaneStepper.Drawer
+  id="drawer-id"
+  component={DrawerComponent}
+/>
+```
+
+<DocsPage.PropsTable
+  props={[
+    {
+      name: "id",
+      description: "Unique identifier for this drawer (used in openDrawer calls)",
+      required: true,
+      value: "string",
+    },
+    {
+      name: "component",
+      description: "React component to render when the drawer opens",
+      required: true,
+      value: "ComponentType<DrawerComponentProps>",
+    },
+  ]}
+/>
+
+### `useFlowCard`
+
+Hook for accessing the flow engine from within a card component.
+
+```typescript
+const {
+  state,
+  complete,
+  openDrawer,
+  setSubSteps,
+  setActiveSubStep,
+  completeSubStep
+} = useFlowCard<StateType>();
+```
+
+**Returns:**
+
+<DocsPage.PropsTable
+  props={[
+    {
+      name: "state",
+      description: "Accumulated state from all previous cards",
+      required: true,
+      value: "T (generic type)",
+    },
+    {
+      name: "complete",
+      description: "Navigate to the next card and optionally update state",
+      required: true,
+      value: "(nextCardId: string, newState?: Partial<T>) => void",
+    },
+    {
+      name: "openDrawer",
+      description: "Open a registered drawer and await the result",
+      required: true,
+      value: "(drawerId: string) => Promise<DrawerResult>",
+    },
+    {
+      name: "setSubSteps",
+      description: "Register dynamic substeps for the current step",
+      required: true,
+      value: "(substeps: SubStepDef[]) => void",
+    },
+    {
+      name: "setActiveSubStep",
+      description: "Mark a substep as active (shows loading state)",
+      required: true,
+      value: "(substepId: string) => void",
+    },
+    {
+      name: "completeSubStep",
+      description: "Mark a substep as completed (shows checkmark)",
+      required: true,
+      value: "(substepId: string) => void",
+    },
+  ]}
+/>
+
+## Best Practices
+
+1. **Use InputCard for Choices** — Always use `InputCard` when the user needs to make a decision or provide input. Provide a meaningful `completedSummary` to show what they chose.
+
+2. **Use OutputCard for Automation** — Use `OutputCard` for steps that run automatically (API calls, checks, analysis). Show logs or progress indicators in the card content.
+
+3. **Type Your State** — Use TypeScript generics with `useFlowCard<StateType>()` to get autocomplete for your accumulated state.
+
+4. **One Concern Per Card** — Each card should represent a single logical step. If a card is doing too much, split it into multiple cards.
+
+5. **Register Substeps Early** — Call `setSubSteps()` in a `useEffect` hook as early as possible so the stepper can allocate space for them.
+
+6. **Handle Drawer Cancellation** — Always check `result.success` after awaiting `openDrawer()`. Users can close drawers without completing them.
+
+7. **Minimize Drawer Content** — Drawers are best for focused tasks (authentication, configuration). For complex workflows, use additional cards instead.
+
+8. **Test Back Navigation** — Verify that your flow works correctly when users navigate backward. Ensure the reactivation guard message is clear and helpful.
+
+## Accessibility
+
+The Split Pane Stepper implements the following accessibility features:
+
+- **ARIA**: Uses `aria-current="step"` on the active step, `aria-label` on step buttons, and `aria-live="polite"` for step change announcements
+- **Keyboard Navigation**: Supports ArrowUp/ArrowDown, Home/End on the stepper; standard tab/focus flow on cards
+- **Reduced Motion**: Respects `prefers-reduced-motion` for card transitions and stepper animations
+- **Focus Management**: Automatically focuses the next card when navigating forward, and the clicked card when navigating backward
+- **Semantic HTML**: Uses `<nav>` for the stepper and proper heading hierarchy in cards

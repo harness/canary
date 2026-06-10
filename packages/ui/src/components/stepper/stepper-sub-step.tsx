@@ -8,22 +8,21 @@ import { cn } from '@utils/cn'
 import { useParentStep, useStepperContext } from './stepper-context'
 import { StepperSubStepProps } from './stepper-types'
 
-export function StepperSubStep({ value, title, description, className }: StepperSubStepProps) {
+export function StepperSubStep({ value, title, description, state: explicitState, className }: StepperSubStepProps) {
   const parentValue = useParentStep()
   const ctx = useStepperContext()
 
-  // Register substep on mount
+  // Register substep on mount (skip if state is externally managed)
   useEffect(() => {
+    if (explicitState) return
     const cleanup = ctx.registerSubStep(parentValue, value)
     return cleanup
-  }, [parentValue, value]) // eslint-disable-line react-hooks/exhaustive-deps
+  }, [parentValue, value, explicitState]) // eslint-disable-line react-hooks/exhaustive-deps
 
-  const derivedState = ctx.getSubStepState(parentValue, value)
+  const derivedState = explicitState ?? ctx.getSubStepState(parentValue, value)
   const isActive = derivedState === 'active'
 
-  const subs = ctx.subSteps.get(parentValue) || []
-  const subIndex = subs.indexOf(value)
-  const ordinal = `.${subIndex + 1}`
+  // Ordinal is handled via CSS counter (cn-stepper-substep-list increments)
 
   const stateClass = `cn-stepper-substep-${derivedState}`
 
@@ -45,10 +44,14 @@ export function StepperSubStep({ value, title, description, className }: Stepper
         <span className="cn-stepper-substep-indicator">
           {derivedState === 'completed' ? (
             <IconV2 name="check" size="xs" />
+          ) : derivedState === 'skipped' ? (
+            <IconV2 name="arrow-right" size="xs" />
+          ) : derivedState === 'error' ? (
+            <IconV2 name="xmark-circle" size="xs" />
           ) : derivedState === 'active' ? (
             <span className="cn-stepper-substep-dot" />
           ) : (
-            <span className="cn-stepper-substep-ordinal">{ordinal}</span>
+            <span className="cn-stepper-substep-ordinal" />
           )}
         </span>
         <span className="cn-stepper-substep-content">

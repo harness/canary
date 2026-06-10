@@ -5,7 +5,7 @@ import { StepState } from './stepper-types'
 interface StepMeta {
   disabled?: boolean
   blocking?: boolean
-  state?: 'skipped' | 'error'
+  state?: StepState
   loading?: boolean
 }
 
@@ -224,9 +224,8 @@ export function StepperProvider({
       const index = orderedSteps.indexOf(stepValue)
       const meta = stepMeta.get(stepValue)
 
-      // Explicit state overrides (preserved even when completed)
-      if (meta?.state === 'error') return 'error'
-      if (meta?.state === 'skipped') return 'skipped'
+      // Explicit state override takes precedence
+      if (meta?.state) return meta.state
 
       // Completed prop overrides all remaining states
       if (completed) return 'completed'
@@ -262,6 +261,7 @@ export function StepperProvider({
   const getSubStepState = useCallback(
     (parentValue: string, subStepValue: string): StepState => {
       const parentState = getStepState(parentValue)
+      if (parentState === 'completed') return 'completed'
       if (parentState !== 'active') return 'upcoming'
 
       const subs = subSteps.get(parentValue) || []

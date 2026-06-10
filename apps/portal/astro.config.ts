@@ -184,6 +184,7 @@ export default defineConfig({
             "components/utilities/spacer",
             "components/actions/split-button",
             "components/data-display/stacked-list",
+            "components/navigation/split-pane-stepper",
             "components/navigation/stepper",
             "components/utilities/sticky-list-section",
             "components/feedback/status-badge",

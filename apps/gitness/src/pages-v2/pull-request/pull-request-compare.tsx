@@ -25,6 +25,7 @@ import {
 import { IconV2, Layout } from '@harnessio/ui/components'
 import {
   BranchSelectorListItem,
+  BranchSelectorTab,
   CommitSelectorListItem,
   CompareFormFields,
   EnumBypassListType,
@@ -47,7 +48,7 @@ import { useMFEContext } from '../../framework/hooks/useMFEContext'
 import { useQueryState } from '../../framework/hooks/useQueryState'
 import { useAPIPath } from '../../hooks/useAPIPath.ts'
 import { PathParams } from '../../RouteDefinitions'
-import { decodeGitContent, normalizeGitRefWithUpstream } from '../../utils/git-utils'
+import { decodeGitContent, normalizeGitRef, REFS_TAGS_PREFIX } from '../../utils/git-utils'
 import { getFileExtension } from '../../utils/path-utils.ts'
 import { useGetRepoLabelAndValuesData } from '../repo/labels/hooks/use-get-repo-label-and-values-data'
 import { useRepoCommitsStore } from '../repo/stores/repo-commits-store'
@@ -60,6 +61,16 @@ interface AiPullRequestSummaryParams {
   repoMetadata: RepoRepositoryOutput
   baseRef: string
   headRef: string
+}
+
+/**
+ * Encodes a ref for the compare URL (`target...source`). Branch names stay bare (the compare
+ * page assumes a bare name is a branch), while tags carry the `refs/tags/` prefix and forks
+ * carry the `upstream:` prefix so the ref type survives a round-trip through the URL.
+ */
+const encodeCompareRef = (name: string, isUpstream: boolean, isTag: boolean): string => {
+  const base = isTag ? `${REFS_TAGS_PREFIX}${name}` : name
+  return isUpstream ? `upstream:${base}` : base
 }
 
 /**
@@ -86,13 +97,21 @@ export const CreatePullRequest = () => {
   const isUpstreamTarget = targetBranchRaw?.startsWith('upstream:') || false
   const isUpstreamSource = sourceBranchRaw?.startsWith('upstream:') || false
 
+  // Strip the `upstream:` prefix first, then detect/strip the `refs/tags/` prefix so we
+  // know whether each side is a tag and can show a clean name in the selector.
+  const targetWithoutUpstream = isUpstreamTarget ? targetBranchRaw?.replace('upstream:', '') : targetBranchRaw
+  const sourceWithoutUpstream = isUpstreamSource ? sourceBranchRaw?.replace('upstream:', '') : sourceBranchRaw
+
+  const isTagTarget = targetWithoutUpstream?.startsWith(REFS_TAGS_PREFIX) || false
+  const isTagSource = sourceWithoutUpstream?.startsWith(REFS_TAGS_PREFIX) || false
+
   const diffTargetBranch = useMemo(
-    () => (isUpstreamTarget ? targetBranchRaw?.replace('upstream:', '') : targetBranchRaw),
-    [targetBranchRaw, isUpstreamTarget]
+    () => (isTagTarget ? targetWithoutUpstream?.replace(REFS_TAGS_PREFIX, '') : targetWithoutUpstream),
+    [targetWithoutUpstream, isTagTarget]
   )
   const diffSourceBranch = useMemo(
-    () => (isUpstreamSource ? sourceBranchRaw?.replace('upstream:', '') : sourceBranchRaw),
-    [sourceBranchRaw, isUpstreamSource]
+    () => (isTagSource ? sourceWithoutUpstream?.replace(REFS_TAGS_PREFIX, '') : sourceWithoutUpstream),
+    [sourceWithoutUpstream, isTagSource]
   )
 
   const {
@@ -130,13 +149,22 @@ export const CreatePullRequest = () => {
   const targetRef = useMemo(() => selectedTargetBranch?.name, [selectedTargetBranch])
   const sourceRef = useMemo(() => selectedSourceBranch?.name, [selectedSourceBranch])
 
+  // Build a fully-qualified ref for the diff/commits APIs. Tags must keep the `refs/tags/`
+  // prefix (otherwise normalizeGitRef would treat the bare name as a `refs/heads/` branch),
+  // and the `upstream:` prefix is re-applied for fork comparisons.
+  const buildNormalizedRef = useCallback((name: string | undefined, isUpstream: boolean, isTag: boolean): string => {
+    if (!name) return ''
+    const base = isTag ? `${REFS_TAGS_PREFIX}${name}` : (normalizeGitRef(name) ?? '')
+    return isUpstream ? `upstream:${base}` : base
+  }, [])
+
   const normalizedTargetRef = useMemo(
-    () => normalizeGitRefWithUpstream(targetRef, isUpstreamTarget),
-    [targetRef, isUpstreamTarget]
+    () => buildNormalizedRef(targetRef, isUpstreamTarget, isTagTarget),
+    [buildNormalizedRef, targetRef, isUpstreamTarget, isTagTarget]
   )
   const normalizedSourceRef = useMemo(
-    () => normalizeGitRefWithUpstream(sourceRef, isUpstreamSource),
-    [sourceRef, isUpstreamSource]
+    () => buildNormalizedRef(sourceRef, isUpstreamSource, isTagSource),
+    [buildNormalizedRef, sourceRef, isUpstreamSource, isTagSource]
   )
 
   const [cachedDiff, setCachedDiff] = useAtom(changesInfoAtom)
@@ -415,7 +443,9 @@ export const CreatePullRequest = () => {
       }
     },
     {
-      enabled: !!repoRef && !!sourceRef && !!targetRef
+      // A pull request can only exist between branches, so skip this lookup when either
+      // side is a tag — otherwise the API rejects the tag name as a non-existent branch.
+      enabled: !!repoRef && !!sourceRef && !!targetRef && !isTagSource && !isTagTarget
     }
   )
 
@@ -473,38 +503,62 @@ export const CreatePullRequest = () => {
   )
 
   const handleSelectSourceBranchOrTag = useCallback(
-    (branchTagName: BranchSelectorListItem) => {
+    (branchTagName: BranchSelectorListItem, type: BranchSelectorTab) => {
       setSelectedSourceBranch(branchTagName)
 
       if (targetRef && branchTagName.name) {
+        const targetToken = encodeCompareRef(targetRef, isUpstreamTarget, isTagTarget)
+        const sourceToken = encodeCompareRef(branchTagName.name, isUpstreamSource, type === BranchSelectorTab.TAGS)
         navigate(
           routes.toPullRequestCompare({
             spaceId,
             repoId,
-            diffRefs: `${targetRef}...${branchTagName.name}`
+            diffRefs: `${targetToken}...${sourceToken}`
           }),
           { replace: true }
         )
       }
     },
-    [setSelectedSourceBranch, targetRef, sourceRef, navigate, routes, spaceId, repoId]
+    [
+      setSelectedSourceBranch,
+      targetRef,
+      isUpstreamTarget,
+      isTagTarget,
+      isUpstreamSource,
+      navigate,
+      routes,
+      spaceId,
+      repoId
+    ]
   )
 
   const handleSelectTargetBranchOrTag = useCallback(
-    (branchTagName: BranchSelectorListItem) => {
+    (branchTagName: BranchSelectorListItem, type: BranchSelectorTab) => {
       setSelectedTargetBranch(branchTagName)
       if (sourceRef && branchTagName.name) {
+        const targetToken = encodeCompareRef(branchTagName.name, isUpstreamTarget, type === BranchSelectorTab.TAGS)
+        const sourceToken = encodeCompareRef(sourceRef, isUpstreamSource, isTagSource)
         navigate(
           routes.toPullRequestCompare({
             spaceId,
             repoId,
-            diffRefs: `${branchTagName.name}...${sourceRef}`
+            diffRefs: `${targetToken}...${sourceToken}`
           }),
           { replace: true }
         )
       }
     },
-    [setSelectedTargetBranch, sourceRef, targetRef, navigate, routes, spaceId, repoId]
+    [
+      setSelectedTargetBranch,
+      sourceRef,
+      isUpstreamSource,
+      isTagSource,
+      isUpstreamTarget,
+      navigate,
+      routes,
+      spaceId,
+      repoId
+    ]
   )
 
   const handleAddReviewer = (id?: number) => {
@@ -778,17 +832,19 @@ export const CreatePullRequest = () => {
             <Layout.Horizontal gapX="3xs" align="center">
               <BranchSelectorContainer
                 className="max-w-80"
-                onSelectBranchorTag={branchTagName => handleSelectTargetBranchOrTag(branchTagName)}
+                onSelectBranchorTag={(branchTagName, type) => handleSelectTargetBranchOrTag(branchTagName, type)}
                 selectedBranch={selectedTargetBranch}
                 branchPrefix="base"
+                preSelectedTab={isTagTarget ? BranchSelectorTab.TAGS : BranchSelectorTab.BRANCHES}
               />
               <IconV2 name="arrow-left" />
               <BranchSelectorContainer
                 className="max-w-80"
-                onSelectBranchorTag={branchTagName => handleSelectSourceBranchOrTag(branchTagName)}
+                onSelectBranchorTag={(branchTagName, type) => handleSelectSourceBranchOrTag(branchTagName, type)}
                 selectedBranch={selectedSourceBranch}
                 branchPrefix="compare"
                 autoSelectDefaultBranch={false}
+                preSelectedTab={isTagSource ? BranchSelectorTab.TAGS : BranchSelectorTab.BRANCHES}
               />
             </Layout.Horizontal>
           )
@@ -797,6 +853,7 @@ export const CreatePullRequest = () => {
         toRepoFileDetails={toRepoFileDetails}
         sourceBranch={selectedSourceBranch?.name}
         targetBranch={selectedTargetBranch?.name}
+        isTagComparison={isTagTarget || isTagSource}
       />
     )
   }

@@ -596,6 +596,9 @@ describe('SearchFiles', () => {
       // bounded by the available viewport height.
       const scrollArea = document.querySelector('.cn-dropdown-menu-content')
       expect(scrollArea?.className).toContain('max-h-[min(560px')
+
+      // Item vertical padding is reduced so multi-line results sit closer together.
+      expect((content as HTMLElement).style.getPropertyValue('--cn-dropdown-item-py')).toBe('var(--cn-spacing-1)')
     })
 
     test('should render each result on multiple lines without truncation or tooltip', async () => {

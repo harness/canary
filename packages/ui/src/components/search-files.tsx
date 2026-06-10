@@ -1,4 +1,4 @@
-import { ReactNode, useCallback, useEffect, useState } from 'react'
+import { CSSProperties, ReactNode, useCallback, useEffect, useState } from 'react'
 
 import {
   DropdownMenu,
@@ -158,6 +158,8 @@ export const SearchFiles = ({
 
       <DropdownMenu.Content
         className={cn('w-[600px] max-w-[var(--radix-dropdown-menu-content-available-width)]', contentClassName)}
+        // Reduce item vertical padding so multi-line results sit closer together (inherits to items)
+        style={{ '--cn-dropdown-item-py': 'var(--cn-spacing-1)' } as CSSProperties}
         scrollAreaProps={{
           className: cn(
             'cn-dropdown-menu-content',

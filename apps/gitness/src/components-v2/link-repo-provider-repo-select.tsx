@@ -1,15 +1,6 @@
 import { FC, useCallback, useEffect, useState } from 'react'
 
-import {
-  Button,
-  Drawer,
-  IconV2,
-  Layout,
-  SearchInput,
-  Skeleton,
-  Table,
-  Text
-} from '@harnessio/ui/components'
+import { Button, Drawer, IconV2, Layout, SearchInput, Skeleton, Table, Text } from '@harnessio/ui/components'
 import { useTranslation } from '@harnessio/ui/context'
 import { useDebounceSearch } from '@harnessio/ui/hooks'
 
@@ -156,11 +147,7 @@ export const LinkRepoProviderRepoSelect: FC<LinkRepoProviderRepoSelectProps> = (
                       {repos.map(repo => {
                         const name = repo.name ?? ''
                         return (
-                          <Table.Row
-                            key={name}
-                            className="cursor-pointer"
-                            onClick={() => handleSelectRepo(repo)}
-                          >
+                          <Table.Row key={name} className="cursor-pointer" onClick={() => handleSelectRepo(repo)}>
                             <Table.Cell>
                               <Text variant="body-normal" truncate>
                                 {name}

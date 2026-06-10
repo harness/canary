@@ -28,9 +28,7 @@ export interface ListReposByConnectorParams {
   repoNameSearchTerm?: string
 }
 
-export async function listReposByConnector(
-  params: ListReposByConnectorParams
-): Promise<GitRepositoryResponseDTO[]> {
+export async function listReposByConnector(params: ListReposByConnectorParams): Promise<GitRepositoryResponseDTO[]> {
   const searchParams = new URLSearchParams({
     accountIdentifier: params.accountIdentifier,
     connectorRef: params.connectorRef,

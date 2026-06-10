@@ -13,7 +13,7 @@ import {
   SelectValueOption
 } from '@harnessio/ui/components'
 import { zodResolver } from '@hookform/resolvers/zod'
-import { z } from 'zod'
+import { z } from 'zod/v3'
 
 import { CreatePipelineDialogProps, CreatePipelineFormType } from './types'
 

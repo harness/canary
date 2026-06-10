@@ -1,7 +1,7 @@
 import { RuntimeInputConfig } from '@views/unified-pipeline-studio'
 import { evaluate } from 'cel-js'
 import { camelCase, cloneDeep, forOwn, get, isNull } from 'lodash-es'
-import * as z from 'zod'
+import * as z from 'zod/v3'
 
 import {
   IInputDefinition,

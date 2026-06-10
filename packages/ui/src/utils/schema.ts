@@ -1,4 +1,4 @@
-import { z } from 'zod'
+import { z } from 'zod/v3'
 
 // Assuming these are defined elsewhere by the user
 export const regexIdentifier = /^[a-zA-Z_][0-9a-zA-Z_]*$/

@@ -18,7 +18,7 @@ import {
 import { TFunctionWithFallback, useTranslation } from '@harnessio/ui/context'
 import { IProfileSettingsStore, ProfileSettingsErrorType } from '@views'
 import { zodResolver } from '@hookform/resolvers/zod'
-import { z } from 'zod'
+import { z } from 'zod/v3'
 
 const makeProfileSchema = (t: TFunctionWithFallback) =>
   z.object({

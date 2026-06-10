@@ -1,4 +1,4 @@
-import * as z from 'zod'
+import * as z from 'zod/v3'
 
 import type { IFormDefinition, IInputDefinition } from '../../../../src'
 import { InputConfigType, InputType } from '../../implementation/types/input-types'

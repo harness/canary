@@ -1,4 +1,4 @@
-import { z } from 'zod'
+import { z } from 'zod/v3'
 
 export const createNewUserSchema = (t: (key: string, defaultValue: string) => string) =>
   z.object({

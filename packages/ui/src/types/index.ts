@@ -1,6 +1,6 @@
 import { ReactNode } from 'react'
 
-import { z } from 'zod'
+import { z } from 'zod/v3'
 
 export * from './scope'
 export * from './execution'

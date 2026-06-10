@@ -1,5 +1,5 @@
 import { RepoBranchSettingsFormFields } from '@views'
-import { z } from 'zod'
+import { z } from 'zod/v3'
 
 import { PrincipalType, TypesUserGroupInfo } from '@harnessio/ui/types'
 

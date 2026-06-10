@@ -4,7 +4,7 @@ import { SubmitHandler, useForm } from 'react-hook-form'
 import { Alert, Button, ButtonLayout, CopyButton, Dialog, FormInput, FormWrapper, Layout, Text } from '@harnessio/ui/components'
 import { useTranslation } from '@harnessio/ui/context'
 import { zodResolver } from '@hookform/resolvers/zod'
-import { z } from 'zod'
+import { z } from 'zod/v3'
 
 import { ApiErrorType, IProfileSettingsStore, TokenFormType } from '../types'
 

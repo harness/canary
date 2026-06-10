@@ -17,7 +17,7 @@ import { TFunctionWithFallback, useRouterContext, useTheme, useTranslation } fro
 import { Floating1ColumnLayout } from '@views'
 import { zodResolver } from '@hookform/resolvers/zod'
 import { cn } from '@harnessio/ui/utils'
-import { z } from 'zod'
+import { z } from 'zod/v3'
 
 import { CreateProjectAnimatedLogo } from './create-project-animated-logo'
 

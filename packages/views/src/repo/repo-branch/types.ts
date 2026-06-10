@@ -1,4 +1,4 @@
-import { z } from 'zod'
+import { z } from 'zod/v3'
 
 import { PullRequestType } from '../pull-request/pull-request.types'
 import { BranchSelectorListItem, IBranchSelectorStore } from '../repo.types'

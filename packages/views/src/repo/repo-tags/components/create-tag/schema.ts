@@ -1,5 +1,5 @@
 import { TFunctionWithFallback } from '@harnessio/ui/context'
-import { z } from 'zod'
+import { z } from 'zod/v3'
 
 export const makeCreateTagFormSchema = (t: TFunctionWithFallback) =>
   z.object({

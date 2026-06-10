@@ -17,7 +17,7 @@ import {
 import { useTranslation } from '@harnessio/ui/context'
 import { SandboxLayout } from '@views'
 import { zodResolver } from '@hookform/resolvers/zod'
-import { z } from 'zod'
+import { z } from 'zod/v3'
 
 import { SecretCreationType, SecretDataType } from '../types'
 

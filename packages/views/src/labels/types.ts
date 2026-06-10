@@ -1,5 +1,5 @@
 import { EnumLabelColor } from '@views/repo/pull-request'
-import { z } from 'zod'
+import { z } from 'zod/v3'
 
 export enum LabelType {
   DYNAMIC = 'dynamic',

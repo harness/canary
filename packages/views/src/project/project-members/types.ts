@@ -1,6 +1,6 @@
 import { PrincipalType } from '@harnessio/ui/types'
 import { IPrincipalListStore } from '@views/account'
-import { z } from 'zod'
+import { z } from 'zod/v3'
 
 import { IMemberListStore } from '../project.types'
 import { inviteMemberFormSchema } from './components/invite-member-dialog'

@@ -46,7 +46,7 @@
     "@harnessio/forms": "workspace:*",
     "@harnessio/ui": "workspace:*",
     "@harnessio/yaml-editor": "workspace:*",
-    "@hookform/resolvers": "^3.6.0",
+    "@hookform/resolvers": "^5.4.0",
     "@tanstack/react-table": "^8.21.3",
     "cel-js": "^0.7.1",
     "class-variance-authority": "^0.7.0",
@@ -58,11 +58,11 @@
     "lodash-es": "^4.17.21",
     "monaco-editor": "^0.40.0",
     "overlayscrollbars": "^2.10.0",
-    "react-hook-form": "^7.28.0",
+    "react-hook-form": "^7.55.0",
     "react-i18next": "^15.1.1",
     "react-intersection-observer": "^9.15.1",
     "yaml": "^2.7.0",
-    "zod": "^3.23.8"
+    "zod": "^4.0.0"
   },
   "peerDependencies": {
     "@harnessio/pipeline-graph": "workspace:*",

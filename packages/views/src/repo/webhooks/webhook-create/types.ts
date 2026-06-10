@@ -1,6 +1,6 @@
 import { FieldErrors, UseFormRegister, UseFormSetValue, UseFormWatch } from 'react-hook-form'
 
-import { z } from 'zod'
+import { z } from 'zod/v3'
 
 import { createWebhookFormSchema } from './components/create-webhooks-form-schema'
 

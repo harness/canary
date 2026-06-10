@@ -24,10 +24,10 @@
     }
   },
   "dependencies": {
-    "@hookform/resolvers": "^3.6.0",
+    "@hookform/resolvers": "^5.4.0",
     "flatted": "^3.3.2",
-    "react-hook-form": "^7.28.0",
-    "zod": "^3.23.8"
+    "react-hook-form": "^7.55.0",
+    "zod": "^4.0.0"
   },
   "peerDependencies": {
     "@harnessio/ui": ">=0.3.0",

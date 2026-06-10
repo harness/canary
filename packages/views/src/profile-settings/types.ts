@@ -1,4 +1,4 @@
-import { z } from 'zod'
+import { z } from 'zod/v3'
 
 import { tokenCreateFormSchema } from './components/profile-settings-token-create-dialog'
 import { ProfileFields } from './profile-settings-general-page'

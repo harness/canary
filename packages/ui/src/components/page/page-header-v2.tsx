@@ -48,7 +48,7 @@ const TitleSection: FC<TitleSectionProps> = ({ title, iconName, description, act
       {/* Fixed height prevents layout shift when actions prop is present vs absent */}
       <Layout.Horizontal align="center" className="h-[var(--cn-btn-size-md)]">
         <Layout.Horizontal gap="xs" align="center" className="text-cn-1 min-w-0 flex-1">
-          {iconName && <IconV2 name={iconName} size="md" />}
+          {iconName && <IconV2 name={iconName} size="xl" />}
           {titleElement}
         </Layout.Horizontal>
         {actions && (

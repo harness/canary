@@ -14,8 +14,15 @@ import { PathParams } from '../../RouteDefinitions'
 function ProviderRepoRendererBridge({ onSelect }: { onSelect: (repoIdentifier: string) => void }) {
   const { watch } = useFormContext<RepoLinkFormFields>()
   const connectorRef = watch('connectorRef')
+  const selectedRepoIdentifier = watch('repoIdentifier')
 
-  return <LinkRepoProviderRepoSelect connectorRef={connectorRef} onSelect={onSelect} />
+  return (
+    <LinkRepoProviderRepoSelect
+      connectorRef={connectorRef}
+      selectedRepoIdentifier={selectedRepoIdentifier}
+      onSelect={onSelect}
+    />
+  )
 }
 
 export const LinkRepo = () => {

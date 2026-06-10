@@ -270,7 +270,9 @@
         "org": "Org"
       },
       "selectProviderRepo": {
-        "label": "Provider repository",
+        "label": "Repository on Git provider",
+        "title": "Select repository",
+        "placeholder": "Select repository",
         "description": "Select the repository on your Git provider to link (required for account-level connectors).",
         "searchPlaceholder": "Search repositories...",
         "repoColumn": "Repository",

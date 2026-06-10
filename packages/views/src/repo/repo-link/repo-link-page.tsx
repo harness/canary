@@ -3,7 +3,6 @@ import { useForm } from 'react-hook-form'
 
 import { zodResolver } from '@hookform/resolvers/zod'
 import { SandboxLayout } from '@views'
-import { isEmpty } from 'lodash-es'
 import { z } from 'zod'
 
 import {
@@ -45,7 +44,7 @@ const linkRepoSchema = z
     if (data.connectorSpecType === ACCOUNT_CONNECTOR_SPEC_TYPE && !data.repoIdentifier?.trim()) {
       ctx.addIssue({
         code: z.ZodIssueCode.custom,
-        message: 'Please select a provider repository',
+        message: 'Please select a repository on your Git provider',
         path: ['repoIdentifier']
       })
     }
@@ -76,7 +75,8 @@ export function RepoLinkView({
 
   const formMethods = useForm<RepoLinkFormFields>({
     resolver: zodResolver(linkRepoSchema),
-    mode: 'onChange',
+    mode: 'onTouched',
+    reValidateMode: 'onChange',
     defaultValues: {
       connectorRef: '',
       connectorSpecType: '',
@@ -92,6 +92,7 @@ export function RepoLinkView({
     handleSubmit,
     setValue,
     watch,
+    clearErrors,
     formState: { errors }
   } = formMethods
 
@@ -100,6 +101,14 @@ export function RepoLinkView({
 
   const handleVisibilityChange = (value: string) => {
     setValue('isPublic', value === 'public', { shouldValidate: true })
+  }
+
+  const handleProviderRepoSelect = (providerRepo: string) => {
+    setValue('repoIdentifier', providerRepo, { shouldValidate: true })
+
+    const baseName = providerRepo.split('/').filter(Boolean).pop() ?? providerRepo
+    const harnessIdentifier = baseName.replace(/[^a-z0-9-_.]/gi, '-')
+    setValue('identifier', harnessIdentifier, { shouldValidate: true })
   }
 
   return (
@@ -122,9 +131,13 @@ export function RepoLinkView({
                 {/* CONNECTOR */}
                 <Fieldset>
                   {connectorSelectorRenderer((connector: ConnectorRef) => {
-                    setValue('connectorRef', connector.ref, { shouldValidate: true })
-                    setValue('connectorSpecType', connector.specType ?? '', { shouldValidate: true })
-                    setValue('repoIdentifier', '', { shouldValidate: true })
+                    setValue('connectorRef', connector.ref, { shouldValidate: false })
+                    setValue('connectorSpecType', connector.specType ?? '', { shouldValidate: false })
+                    setValue('repoIdentifier', '', { shouldValidate: false })
+                    if (connector.specType === ACCOUNT_CONNECTOR_SPEC_TYPE) {
+                      setValue('identifier', '', { shouldValidate: false })
+                    }
+                    clearErrors(['repoIdentifier', 'identifier', 'connectorRef'])
                   })}
                   {errors.connectorRef && (
                     <Message theme={MessageTheme.ERROR}>{errors.connectorRef.message?.toString()}</Message>
@@ -133,9 +146,7 @@ export function RepoLinkView({
 
                 {connectorSpecType === ACCOUNT_CONNECTOR_SPEC_TYPE && providerRepoRenderer && (
                   <Fieldset>
-                    {providerRepoRenderer(repoIdentifier => {
-                      setValue('repoIdentifier', repoIdentifier, { shouldValidate: true })
-                    })}
+                    {providerRepoRenderer(handleProviderRepoSelect)}
                     {errors.repoIdentifier && (
                       <Message theme={MessageTheme.ERROR}>{errors.repoIdentifier.message?.toString()}</Message>
                     )}
@@ -149,7 +160,6 @@ export function RepoLinkView({
                     label={t('views:repos.createNewRepoForm.name.label', 'Name')}
                     {...register('identifier')}
                     placeholder={t('views:repos.createNewRepoForm.name.placeholder', 'Enter repository name')}
-                    autoFocus
                     wrapperClassName="w-full"
                   />
                 </Fieldset>
@@ -211,7 +221,7 @@ export function RepoLinkView({
               <Fieldset>
                 <ControlGroup>
                   <ButtonLayout horizontalAlign="start">
-                    <Button type="submit" disabled={isLoading || isSubmitDisabled || !isEmpty(errors)}>
+                    <Button type="submit" disabled={isLoading || isSubmitDisabled}>
                       {!isLoading
                         ? t('views:repos.link.linkRepository', 'Link repository')
                         : t('views:repos.link.linkingRepository', 'Linking repository...')}

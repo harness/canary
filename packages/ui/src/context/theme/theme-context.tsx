@@ -94,7 +94,7 @@ export function ThemeProvider({
   themesBaseUrl,
   themeManifest
 }: ThemeProviderProps) {
-  const { theme, setTheme, setInset, isLightTheme, isInset, isThemeLoading, setIsThemeLoading } = useThemeStore()
+  const { theme, setTheme, setInset, isLightTheme, isInset, isThemeLoading, setIsThemeLoading, isSystemTheme } = useThemeStore()
   const { loadTheme } = useThemeCSSLoader(themesBaseUrl, themeManifest)
 
   // Adapter: IThemeStore.setTheme is (theme: FullTheme) => void; Zustand setTheme takes { newTheme, isSystemTheme }.
@@ -112,6 +112,8 @@ export function ThemeProvider({
   useEffect(() => {
     const mediaQuery = mediaQueryRef.current
     const updateSystemTheme = () => {
+      if (!isSystemTheme) return
+
       const { color, contrast } = getModeColorContrastFromFullTheme(theme)
       const prefersDark = mediaQuery.matches
       const resolvedMode = prefersDark ? ModeType.Dark : ModeType.Light
@@ -123,7 +125,7 @@ export function ThemeProvider({
     return () => {
       mediaQuery.removeEventListener('change', updateSystemTheme)
     }
-  }, [])
+  }, [isSystemTheme, setTheme, theme])
 
   const applyTheme = useCallback(
     async (effectiveTheme: FullTheme, mode: ModeType, staleRef: { current: boolean }) => {

@@ -1,14 +1,14 @@
 import { FC, useCallback, useEffect, useState } from 'react'
 
+import {
+  GitRepositoryResponseDto,
+  useGetListOfReposByRefConnectorQuery
+} from '@harnessio/react-ng-manager-swagger-service-client'
 import { Button, Drawer, IconV2, Layout, SearchInput, Skeleton, Table, Text } from '@harnessio/ui/components'
 import { useTranslation } from '@harnessio/ui/context'
 import { useDebounceSearch } from '@harnessio/ui/hooks'
 
 import { useMFEContext } from '../framework/hooks/useMFEContext'
-import {
-  GitRepositoryResponseDTO,
-  useListReposByConnectorQuery
-} from '../hooks/use-list-repos-by-connector-query'
 
 export interface LinkRepoProviderRepoSelectProps {
   connectorRef: string
@@ -45,12 +45,7 @@ export const LinkRepoProviderRepoSelect: FC<LinkRepoProviderRepoSelectProps> = (
     setIsOpen(false)
   }, [connectorRef])
 
-  const {
-    data,
-    isLoading,
-    isError,
-    error
-  } = useListReposByConnectorQuery(
+  const { data, isLoading, isError, error } = useGetListOfReposByRefConnectorQuery(
     {
       queryParams: {
         accountIdentifier: accountId,
@@ -65,13 +60,13 @@ export const LinkRepoProviderRepoSelect: FC<LinkRepoProviderRepoSelectProps> = (
     { enabled: isOpen && Boolean(accountId && connectorRef) }
   )
 
-  const repos = data?.body?.data ?? []
+  const repos = data?.content?.data ?? []
   const errorMessage = isError
     ? error?.message ?? t('views:repos.link.selectProviderRepo.failedToLoad', 'Failed to load repositories')
     : null
 
   const handleSelectRepo = useCallback(
-    (repo: GitRepositoryResponseDTO) => {
+    (repo: GitRepositoryResponseDto) => {
       const name = repo.name?.trim()
       if (!name) return
 

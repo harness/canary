@@ -29,11 +29,12 @@ export interface ConnectorRef {
   specType?: string
 }
 
+// repoIdentifier is omitted for repo-scoped connectors (provider repo is implied by the connector).
+// It is required only when connectorSpecType is Account — enforced in superRefine below.
 const linkRepoSchema = z
   .object({
     connectorRef: z.string().min(1, { message: 'Please select a connector' }),
     connectorSpecType: z.string().optional(),
-    // Optional for repo-scoped connectors; required for account-level connectors via superRefine below.
     repoIdentifier: z.string().optional(),
     identifier: z
       .string()

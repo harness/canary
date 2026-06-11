@@ -2,7 +2,6 @@ import { FC, useCallback, useEffect, useMemo, useState } from 'react'
 
 import {
   ConnectorFilterProperties,
-  ConnectorInfo,
   ConnectorResponse,
   SortOrder,
   useGetConnectorListV2Mutation
@@ -22,6 +21,7 @@ import {
 import { useTranslation } from '@harnessio/ui/context'
 
 import { useMFEContext } from '../framework/hooks/useMFEContext'
+import { getGitConnectorUrlType, GitConnectorUrlType } from '../utils/git-connector-url-type'
 import { StoreType, storeTypeConfig, StoreTypeSelect } from './store-type-select'
 
 enum Scope {
@@ -45,8 +45,8 @@ export interface ConnectorSelection {
   accountIdentifier?: string
   orgIdentifier?: string
   projectIdentifier?: string
-  /** Git connector spec.type: "Account" or "Repo". */
-  specType?: string
+  /** Git connector URL scope: Account, Repo, or Project (Azure/GitLab). */
+  specType?: GitConnectorUrlType
 }
 
 export interface LinkRepoConnectorDrawerProps {
@@ -57,13 +57,6 @@ const deriveScope = (connector: { orgIdentifier?: string; projectIdentifier?: st
   if (connector.projectIdentifier) return Scope.Project
   if (connector.orgIdentifier) return Scope.Organization
   return Scope.Account
-}
-
-const getGitConnectorSpecType = (spec: ConnectorInfo['spec']): string | undefined => {
-  if ('type' in spec && typeof spec.type === 'string') {
-    return spec.type
-  }
-  return undefined
 }
 
 export const LinkRepoConnectorDrawer: FC<LinkRepoConnectorDrawerProps> = ({ onConnectorSelect }) => {
@@ -146,7 +139,7 @@ export const LinkRepoConnectorDrawer: FC<LinkRepoConnectorDrawerProps> = ({ onCo
         accountIdentifier: connectorInfo.accountIdentifier,
         orgIdentifier: connectorInfo.orgIdentifier,
         projectIdentifier: connectorInfo.projectIdentifier,
-        specType: getGitConnectorSpecType(connectorInfo.spec)
+        specType: getGitConnectorUrlType(connectorInfo)
       })
       setSelectedLabel(connectorInfo.name)
       setIsOpen(false)

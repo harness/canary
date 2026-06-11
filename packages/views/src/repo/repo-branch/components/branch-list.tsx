@@ -31,7 +31,8 @@ export const BranchesList: FC<BranchListPageProps> = ({
   toPullRequest,
   toCode,
   onDeleteBranch,
-  searchQuery
+  searchQuery,
+  isLinked = false
 }) => {
   const { t } = useTranslation()
 
@@ -209,7 +210,7 @@ export const BranchesList: FC<BranchListPageProps> = ({
                   ref={triggerRef}
                   actions={[
                     // Don't show Compare option for default branch
-                    ...(!branch?.behindAhead?.default
+                    ...(!isLinked && !branch?.behindAhead?.default
                       ? [
                           {
                             title: t('views:repos.compare', 'Compare'),

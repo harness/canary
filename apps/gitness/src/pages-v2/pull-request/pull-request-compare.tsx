@@ -88,7 +88,10 @@ export const CreatePullRequest = () => {
   const { currentUser } = useAppContext()
   const repoRef = useGetRepoRef()
 
-  const { data: { body: repoData } = {} } = useFindRepositoryQuery({ repo_ref: repoRef })
+  const { data: { body: repoData } = {}, isFetching: isRepositoryLoading } = useFindRepositoryQuery({
+    repo_ref: repoRef
+  })
+  const isLinked = !isRepositoryLoading && repoData?.repo_type === 'linked'
   const isForkRepo = !!repoData?.upstream
   const [targetBranchRaw, sourceBranchRaw] = diffRefs
     ? decodeURIComponent(diffRefs).split('...')
@@ -854,6 +857,8 @@ export const CreatePullRequest = () => {
         sourceBranch={selectedSourceBranch?.name}
         targetBranch={selectedTargetBranch?.name}
         isTagComparison={isTagTarget || isTagSource}
+        isLinked={isLinked}
+        isRepositoryLoading={isRepositoryLoading}
       />
     )
   }

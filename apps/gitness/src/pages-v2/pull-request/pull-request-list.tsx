@@ -38,7 +38,7 @@ export default function PullRequestListPage() {
   const { setPullRequests, page, setPage, pageSize, setOpenClosePullRequests, labelsQuery, prState, setPrState } =
     usePullRequestListStore()
   const { spaceId, repoId } = useParams<PathParams>()
-  const { repoData } = useGitRef()
+  const { repoData, isLoading: isRepositoryLoading } = useGitRef()
 
   /* Query and Pagination */
   const [query, setQuery] = useQueryState('query')
@@ -291,6 +291,7 @@ export default function PullRequestListPage() {
       currentUser={currentUser}
       defaultSelectedAuthor={defaultSelectedAuthor}
       repository={repoData}
+      isRepositoryLoading={isRepositoryLoading}
       setPrincipalsSearchQuery={setPrincipalsSearchQuery}
       useLabelsStore={useLabelsStore}
       usePullRequestListStore={usePullRequestListStore}

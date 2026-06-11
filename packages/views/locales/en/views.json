@@ -551,6 +551,8 @@
       "createPullRequest": "Create Pull Request"
     },
     "noPullRequestsInRepo": "Start your contribution journey by creating a new pull request.",
+    "noPullRequestsInLinkedRepo": "Pull requests are synced from the external provider. Open a pull request in the upstream repository and it will appear here.",
+    "noOpenPullRequestsLinked": "There are no open pull requests in this linked repository yet. Pull requests are synced from the external provider.",
     "noPullRequestsInProject": "There are no pull requests in this project yet.",
     "noBranches": "No branches yet",
     "createBranchDescription": "Your branches will appear here once they're created.",
@@ -674,6 +676,7 @@
     },
     "compareChanges": "Comparing changes",
     "compareChangesDescription": "Choose two branches to see what’s changed or to start a new pull request.",
+    "compareChangesLinkedDescription": "Choose two branches to see what’s changed. Pull requests are synced from the external provider and cannot be created here.",
     "compareChangesAbleToMerge": "Able to merge.",
     "compareChangesAbleToMergeDescription": "These branches can be automatically merged.",
     "compareChangesApiError": "Head branch doesn’t contain any new commits.",

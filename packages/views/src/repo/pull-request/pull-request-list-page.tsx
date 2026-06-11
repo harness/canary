@@ -55,6 +55,7 @@ const PullRequestListPage: FC<PullRequestPageProps> = ({
   isPrincipalsLoading,
   isLoading,
   repository,
+  isRepositoryLoading = false,
   searchQuery,
   setSearchQuery,
   onLabelClick,
@@ -66,6 +67,8 @@ const PullRequestListPage: FC<PullRequestPageProps> = ({
   const [showScope, setShowScope] = useState(false)
   const { Link, useSearchParams, location } = useRouterContext()
   const isProjectLevel = !repoId
+  const isLinked = !isRepositoryLoading && repository?.repo_type === 'linked'
+  const canCreatePullRequest = Boolean(repoId && !isRepositoryLoading && repository && !isLinked)
   const {
     pullRequests,
     totalItems,
@@ -294,16 +297,23 @@ const PullRequestListPage: FC<PullRequestPageProps> = ({
           title="No pull requests yet"
           description={
             repoId
-              ? [
-                  t(
-                    'views:noData.noPullRequestsInRepo',
-                    `Start your contribution journey by creating a new pull request.`
-                  )
-                ]
-              : [t('views:noData.noPullRequestsInProject', `There are no pull requests in this project yet.`)]
+              ? isRepositoryLoading
+                ? []
+                : [
+                    isLinked
+                      ? t(
+                          'views:noData.noPullRequestsInLinkedRepo',
+                          'Pull requests are synced from the external provider. Open a pull request in the upstream repository and it will appear here.'
+                        )
+                      : t(
+                          'views:noData.noPullRequestsInRepo',
+                          'Start your contribution journey by creating a new pull request.'
+                        )
+                  ]
+              : [t('views:noData.noPullRequestsInProject', 'There are no pull requests in this project yet.')]
           }
           primaryButton={
-            repoId
+            canCreatePullRequest
               ? {
                   icon: 'plus',
                   label: t('views:noData.button.createPullRequest', 'Create Pull Request'),
@@ -318,6 +328,7 @@ const PullRequestListPage: FC<PullRequestPageProps> = ({
     return (
       <PullRequestListContent
         isLoading={isLoading}
+        isRepositoryLoading={isRepositoryLoading}
         repo={repository}
         spaceId={spaceId}
         pullRequests={pullRequests || []}
@@ -452,7 +463,7 @@ const PullRequestListPage: FC<PullRequestPageProps> = ({
             </Layout.Horizontal>
             <Spacer size={6} />
 
-            {!isEmpty(prCandidateBranches) && (
+            {!isEmpty(prCandidateBranches) && canCreatePullRequest && (
               <>
                 <BranchCompareBannerList
                   prCandidateBranches={prCandidateBranches}
@@ -512,7 +523,7 @@ const PullRequestListPage: FC<PullRequestPageProps> = ({
                 {/**
                  * Creating a pull request is permitted only when inside a repository.
                  */}
-                {repoId ? (
+                {canCreatePullRequest ? (
                   <Button asChild>
                     <Link to={`${spaceId ? `/${spaceId}` : ''}/repos/${repoId}/pulls/compare/`}>
                       <IconV2 name="plus" />

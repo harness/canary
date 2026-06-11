@@ -50,7 +50,9 @@ export function RepoBranchesListPage() {
   const [deleteBranchName, setDeleteBranchName] = useState<string | null>(null)
   const [isDeleteDialogOpen, setIsDeleteDialogOpen] = useState(false)
 
-  const { data: { body: repoMetadata } = {} } = useFindRepositoryQuery({ repo_ref: repoRef })
+  const { data: { body: repoMetadata } = {}, isFetching: isRepositoryLoading } = useFindRepositoryQuery({
+    repo_ref: repoRef
+  })
 
   const { isLoading: isLoadingBranches, data: { body: branches, headers } = {} } = useListBranchesQuery({
     queryParams: {
@@ -194,6 +196,7 @@ export function RepoBranchesListPage() {
         setCreateBranchDialogOpen={setCreateBranchDialogOpen}
         searchQuery={query}
         setSearchQuery={setQuery}
+        isLinked={isRepositoryLoading || repoMetadata?.repo_type === 'linked'}
         // toBranchRules={() => routes.toRepoBranchRules({ spaceId, repoId })}
         toPullRequestCompare={({ diffRefs }: { diffRefs: string }) =>
           routes.toPullRequestCompare({ spaceId, repoId, diffRefs })

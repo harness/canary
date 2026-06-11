@@ -2,6 +2,7 @@ import { FC, useCallback, useEffect, useMemo, useState } from 'react'
 
 import {
   ConnectorFilterProperties,
+  ConnectorInfo,
   ConnectorResponse,
   SortOrder,
   useGetConnectorListV2Mutation
@@ -56,6 +57,13 @@ const deriveScope = (connector: { orgIdentifier?: string; projectIdentifier?: st
   if (connector.projectIdentifier) return Scope.Project
   if (connector.orgIdentifier) return Scope.Organization
   return Scope.Account
+}
+
+const getGitConnectorSpecType = (spec: ConnectorInfo['spec']): string | undefined => {
+  if ('type' in spec && typeof spec.type === 'string') {
+    return spec.type
+  }
+  return undefined
 }
 
 export const LinkRepoConnectorDrawer: FC<LinkRepoConnectorDrawerProps> = ({ onConnectorSelect }) => {
@@ -131,8 +139,6 @@ export const LinkRepoConnectorDrawer: FC<LinkRepoConnectorDrawerProps> = ({ onCo
       const connectorInfo = connector.connector
       if (!connectorInfo) return
 
-      const spec = (connectorInfo as { spec?: { type?: string } }).spec
-
       onConnectorSelect({
         identifier: connectorInfo.identifier,
         name: connectorInfo.name,
@@ -140,7 +146,7 @@ export const LinkRepoConnectorDrawer: FC<LinkRepoConnectorDrawerProps> = ({ onCo
         accountIdentifier: connectorInfo.accountIdentifier,
         orgIdentifier: connectorInfo.orgIdentifier,
         projectIdentifier: connectorInfo.projectIdentifier,
-        specType: spec?.type
+        specType: getGitConnectorSpecType(connectorInfo.spec)
       })
       setSelectedLabel(connectorInfo.name)
       setIsOpen(false)

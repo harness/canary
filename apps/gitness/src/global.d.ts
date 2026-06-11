@@ -26,3 +26,22 @@ declare module 'lang-map' {
   const languages: { languages: (name: string) => string[] }
   export default languages
 }
+
+declare module '@harnessio/react-ng-manager-v2-client/dist/custom-fetcher/index.js' {
+  export interface FetcherOptions<TQueryParams = never, TBody = never, THeaderParams = HeadersInit>
+    extends Omit<RequestInit, 'body' | 'headers'> {
+    url: string
+    queryParams?: TQueryParams extends never ? undefined : TQueryParams
+    body?: TBody extends never ? undefined : TBody
+    headers?: THeaderParams
+  }
+
+  interface ResponseContainer<T> {
+    body: T
+    headers: Headers
+  }
+
+  export function fetcher<TResponse = unknown, TQueryParams = never, TBody = never, THeaderParams = HeadersInit>(
+    options: FetcherOptions<TQueryParams, TBody, THeaderParams>
+  ): Promise<ResponseContainer<TResponse>>
+}

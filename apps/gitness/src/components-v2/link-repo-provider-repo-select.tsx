@@ -5,9 +5,10 @@ import { useTranslation } from '@harnessio/ui/context'
 import { useDebounceSearch } from '@harnessio/ui/hooks'
 
 import { useMFEContext } from '../framework/hooks/useMFEContext'
-import { GitRepositoryResponseDTO, listReposByConnector } from '../utils/list-repos-by-connector'
-
-export const ACCOUNT_CONNECTOR_SPEC_TYPE = 'Account'
+import {
+  GitRepositoryResponseDTO,
+  useListReposByConnectorQuery
+} from '../hooks/use-list-repos-by-connector-query'
 
 export interface LinkRepoProviderRepoSelectProps {
   connectorRef: string
@@ -28,9 +29,6 @@ export const LinkRepoProviderRepoSelect: FC<LinkRepoProviderRepoSelectProps> = (
 
   const [isOpen, setIsOpen] = useState(false)
   const [debouncedSearchTerm, setDebouncedSearchTerm] = useState('')
-  const [repos, setRepos] = useState<GitRepositoryResponseDTO[]>([])
-  const [isLoading, setIsLoading] = useState(false)
-  const [error, setError] = useState<string | null>(null)
   const [selectedLabel, setSelectedLabel] = useState('')
 
   const { handleStringSearchChange } = useDebounceSearch({
@@ -47,38 +45,30 @@ export const LinkRepoProviderRepoSelect: FC<LinkRepoProviderRepoSelectProps> = (
     setIsOpen(false)
   }, [connectorRef])
 
-  const loadRepos = useCallback(async () => {
-    if (!accountId || !connectorRef) return
-
-    setIsLoading(true)
-    setError(null)
-
-    try {
-      const data = await listReposByConnector({
+  const {
+    data,
+    isLoading,
+    isError,
+    error
+  } = useListReposByConnectorQuery(
+    {
+      queryParams: {
         accountIdentifier: accountId,
         orgIdentifier,
         projectIdentifier,
         connectorRef,
-        repoNameSearchTerm: debouncedSearchTerm || undefined
-      })
-      setRepos(data)
-    } catch (err) {
-      setRepos([])
-      setError(
-        err instanceof Error
-          ? err.message
-          : t('views:repos.link.selectProviderRepo.failedToLoad', 'Failed to load repositories')
-      )
-    } finally {
-      setIsLoading(false)
-    }
-  }, [accountId, connectorRef, debouncedSearchTerm, orgIdentifier, projectIdentifier, t])
+        repoNameSearchTerm: debouncedSearchTerm || undefined,
+        page: 0,
+        size: 50
+      }
+    },
+    { enabled: isOpen && Boolean(accountId && connectorRef) }
+  )
 
-  useEffect(() => {
-    if (isOpen && connectorRef) {
-      loadRepos()
-    }
-  }, [isOpen, connectorRef, loadRepos])
+  const repos = data?.body?.data ?? []
+  const errorMessage = isError
+    ? error?.message ?? t('views:repos.link.selectProviderRepo.failedToLoad', 'Failed to load repositories')
+    : null
 
   const handleSelectRepo = useCallback(
     (repo: GitRepositoryResponseDTO) => {
@@ -132,9 +122,9 @@ export const LinkRepoProviderRepoSelect: FC<LinkRepoProviderRepoSelectProps> = (
               <Layout.Vertical gap="none">
                 {isLoading ? (
                   <Skeleton.List linesCount={6} />
-                ) : error ? (
+                ) : errorMessage ? (
                   <Text color="danger" className="py-cn-lg text-center">
-                    {error}
+                    {errorMessage}
                   </Text>
                 ) : repos.length > 0 ? (
                   <Table.Root>

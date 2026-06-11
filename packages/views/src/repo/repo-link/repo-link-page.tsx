@@ -3,6 +3,7 @@ import { useForm } from 'react-hook-form'
 
 import { zodResolver } from '@hookform/resolvers/zod'
 import { SandboxLayout } from '@views'
+import { isEmpty } from 'lodash-es'
 import { z } from 'zod'
 
 import {
@@ -32,6 +33,7 @@ const linkRepoSchema = z
   .object({
     connectorRef: z.string().min(1, { message: 'Please select a connector' }),
     connectorSpecType: z.string().optional(),
+    // Optional for repo-scoped connectors; required for account-level connectors via superRefine below.
     repoIdentifier: z.string().optional(),
     identifier: z
       .string()
@@ -111,6 +113,20 @@ export function RepoLinkView({
     setValue('identifier', harnessIdentifier, { shouldValidate: true })
   }
 
+  const handleConnectorSelect = (connector: ConnectorRef) => {
+    const isAccountConnector = connector.specType === ACCOUNT_CONNECTOR_SPEC_TYPE
+
+    setValue('connectorRef', connector.ref, { shouldValidate: true })
+    setValue('connectorSpecType', connector.specType ?? '', { shouldValidate: false })
+    setValue('repoIdentifier', '', { shouldValidate: false })
+
+    if (isAccountConnector) {
+      setValue('identifier', '', { shouldValidate: false })
+    }
+
+    clearErrors(['repoIdentifier', 'identifier', 'connectorRef'])
+  }
+
   return (
     <SandboxLayout.Main>
       <SandboxLayout.Content className="mx-auto w-[635px]">
@@ -130,15 +146,7 @@ export function RepoLinkView({
               <Layout.Vertical gap="xl">
                 {/* CONNECTOR */}
                 <Fieldset>
-                  {connectorSelectorRenderer((connector: ConnectorRef) => {
-                    setValue('connectorRef', connector.ref, { shouldValidate: false })
-                    setValue('connectorSpecType', connector.specType ?? '', { shouldValidate: false })
-                    setValue('repoIdentifier', '', { shouldValidate: false })
-                    if (connector.specType === ACCOUNT_CONNECTOR_SPEC_TYPE) {
-                      setValue('identifier', '', { shouldValidate: false })
-                    }
-                    clearErrors(['repoIdentifier', 'identifier', 'connectorRef'])
-                  })}
+                  {connectorSelectorRenderer(handleConnectorSelect)}
                   {errors.connectorRef && (
                     <Message theme={MessageTheme.ERROR}>{errors.connectorRef.message?.toString()}</Message>
                   )}
@@ -221,7 +229,7 @@ export function RepoLinkView({
               <Fieldset>
                 <ControlGroup>
                   <ButtonLayout horizontalAlign="start">
-                    <Button type="submit" disabled={isLoading || isSubmitDisabled}>
+                    <Button type="submit" disabled={isLoading || isSubmitDisabled || !isEmpty(errors)}>
                       {!isLoading
                         ? t('views:repos.link.linkRepository', 'Link repository')
                         : t('views:repos.link.linkingRepository', 'Linking repository...')}

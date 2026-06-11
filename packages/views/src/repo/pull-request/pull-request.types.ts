@@ -94,6 +94,7 @@ export interface RepoRepositoryOutput {
   num_pulls?: number
   parent_id?: number
   path?: string
+  repo_type?: string
   size?: number
   size_updated?: number
   state?: EnumRepoState
@@ -290,6 +291,7 @@ export interface PullRequestPageProps extends Partial<RoutingProps> {
   currentUser?: Partial<PrincipalType>
   principalData?: Partial<PrincipalType>[]
   repository?: RepoRepositoryOutput
+  isRepositoryLoading?: boolean
   setPrincipalsSearchQuery?: (query: string) => void
   onFilterChange?: (filterValues: PRListFilters) => void
   isLoading?: boolean
@@ -309,6 +311,7 @@ export interface PullRequestListProps extends Partial<RoutingProps> {
   mergedPRs?: number
   closedPRs?: number
   repo?: RepoRepositoryOutput
+  isRepositoryLoading?: boolean
   spaceId?: string
   headerFilter: Array<PRState>
   setHeaderFilter: (filter: Array<PRState>) => void

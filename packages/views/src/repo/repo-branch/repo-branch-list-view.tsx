@@ -15,6 +15,7 @@ export const RepoBranchListView: FC<RepoBranchListViewProps> = ({
   searchQuery,
   setSearchQuery,
   onDeleteBranch,
+  isLinked = false,
   ...routingProps
 }) => {
   const { t } = useTranslation()
@@ -99,6 +100,7 @@ export const RepoBranchListView: FC<RepoBranchListViewProps> = ({
                 handleResetFiltersAndPages={handleResetFiltersAndPages}
                 onDeleteBranch={onDeleteBranch}
                 searchQuery={searchQuery}
+                isLinked={isLinked}
                 {...routingProps}
               />
             )}

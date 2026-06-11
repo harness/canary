@@ -127,6 +127,8 @@ export interface PullRequestComparePageProps extends Partial<RoutingProps> {
    * "create pull request" affordances, and the Changes tab is shown directly.
    */
   isTagComparison?: boolean
+  isLinked?: boolean
+  isRepositoryLoading?: boolean
 }
 
 export const PullRequestComparePage: FC<PullRequestComparePageProps> = ({
@@ -168,6 +170,8 @@ export const PullRequestComparePage: FC<PullRequestComparePageProps> = ({
   toRepoFileDetails,
   sourceBranch,
   targetBranch,
+  isLinked = false,
+  isRepositoryLoading = false,
 
   labelsList = [],
   labelsValues = {},
@@ -190,8 +194,9 @@ export const PullRequestComparePage: FC<PullRequestComparePageProps> = ({
   const { navigate } = useRouterContext()
   const { t } = useTranslation()
 
-  // Tag comparisons have no PR-creation flow, so (like an existing PR) they land on Commits.
-  const defaultTab = isTagComparison || prBranchCombinationExists ? 'commits' : 'overview'
+  const hidePullRequestCreate = isLinked || isRepositoryLoading
+  // Tag comparisons and linked repos have no PR-creation flow, so they land on Commits.
+  const defaultTab = isTagComparison || prBranchCombinationExists || hidePullRequestCreate ? 'commits' : 'overview'
   const [activeTab, setActiveTab] = useState(defaultTab)
 
   useEffect(() => {
@@ -268,10 +273,15 @@ export const PullRequestComparePage: FC<PullRequestComparePageProps> = ({
             <Layout.Vertical gapY="xs">
               <Text variant="heading-section">{t('views:pullRequests.compareChanges', 'Comparing changes')}</Text>
               <Text className="max-w-xl">
-                {t(
-                  'views:pullRequests.compareChangesDescription',
-                  'Choose two branches to see what’s changed or to start a new pull request.'
-                )}
+                {isLinked && !isRepositoryLoading
+                  ? t(
+                      'views:pullRequests.compareChangesLinkedDescription',
+                      'Choose two branches to see what’s changed. Pull requests are synced from the external provider and cannot be created here.'
+                    )
+                  : t(
+                      'views:pullRequests.compareChangesDescription',
+                      'Choose two branches to see what’s changed or to start a new pull request.'
+                    )}
               </Text>
             </Layout.Vertical>
 
@@ -327,7 +337,7 @@ export const PullRequestComparePage: FC<PullRequestComparePageProps> = ({
             </Layout.Horizontal>
           </Layout.Vertical>
 
-          {!prBranchCombinationExists && !isNoNewCommits && !isTagComparison && (
+          {!hidePullRequestCreate && !prBranchCombinationExists && !isNoNewCommits && !isTagComparison && (
             <Layout.Horizontal
               align="center"
               justify="between"
@@ -396,7 +406,7 @@ export const PullRequestComparePage: FC<PullRequestComparePageProps> = ({
                 <Layout.Vertical>
                   <Tabs.Root value={activeTab} onValueChange={val => setActiveTab(val)}>
                     <Tabs.List variant="overlined" className="-mx-cn-2xl px-cn-2xl">
-                      {!prBranchCombinationExists && !isTagComparison && (
+                      {!hidePullRequestCreate && !prBranchCombinationExists && !isTagComparison && (
                         <Tabs.Trigger value="overview" icon="info-circle">
                           {t('views:pullRequests.compareChangesTabOverview', 'Overview')}
                         </Tabs.Trigger>
@@ -408,7 +418,7 @@ export const PullRequestComparePage: FC<PullRequestComparePageProps> = ({
                         {t('views:pullRequests.compareChangesTabChanges', 'Changes')}
                       </Tabs.Trigger>
                     </Tabs.List>
-                    {!prBranchCombinationExists && !isTagComparison && (
+                    {!hidePullRequestCreate && !prBranchCombinationExists && !isTagComparison && (
                       <Tabs.Content className="pt-cn-lg" value="overview">
                         <Layout.Flex gap="xl">
                           <Layout.Horizontal className="flex-1" gap="sm">

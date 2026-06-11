@@ -20,9 +20,17 @@ type EmptyStateProps = {
   repoId?: string
   spaceId?: string
   state: PR_STATE
+  isLinked?: boolean
+  isRepositoryLoading?: boolean
 }
 
-const EmptyStateView: FC<EmptyStateProps> = ({ repoId, spaceId, state }) => {
+const EmptyStateView: FC<EmptyStateProps> = ({
+  repoId,
+  spaceId,
+  state,
+  isLinked = false,
+  isRepositoryLoading = false
+}) => {
   const { t } = useTranslation()
 
   const { title, description } = useMemo(() => {
@@ -30,12 +38,19 @@ const EmptyStateView: FC<EmptyStateProps> = ({ repoId, spaceId, state }) => {
       case PR_STATE.OPEN:
         return {
           title: t('views:noData.title.noOpenPullRequests', 'No open pull requests yet'),
-          description: [
-            t(
-              'views:noData.noOpenPullRequests',
-              `There are no open pull requests in this ${repoId ? 'repo' : 'project'} yet.`
-            )
-          ]
+          description: isRepositoryLoading
+            ? []
+            : [
+                isLinked && repoId
+                  ? t(
+                      'views:noData.noOpenPullRequestsLinked',
+                      'There are no open pull requests in this linked repository yet. Pull requests are synced from the external provider.'
+                    )
+                  : t(
+                      'views:noData.noOpenPullRequests',
+                      `There are no open pull requests in this ${repoId ? 'repo' : 'project'} yet.`
+                    )
+              ]
         }
       case PR_STATE.CLOSED:
         return {
@@ -57,7 +72,7 @@ const EmptyStateView: FC<EmptyStateProps> = ({ repoId, spaceId, state }) => {
           description: ['']
         }
     }
-  }, [state, repoId])
+  }, [state, repoId, isLinked, isRepositoryLoading, t])
 
   return (
     <NoData
@@ -65,7 +80,7 @@ const EmptyStateView: FC<EmptyStateProps> = ({ repoId, spaceId, state }) => {
       title={title}
       description={description}
       primaryButton={
-        repoId && state === PR_STATE.OPEN
+        repoId && state === PR_STATE.OPEN && !isRepositoryLoading && !isLinked
           ? {
               label: (
                 <>
@@ -88,6 +103,7 @@ export const PullRequestList: FC<PullRequestListProps> = ({
   closedPRs,
   spaceId,
   repo,
+  isRepositoryLoading = false,
   headerFilter,
   setHeaderFilter,
   onLabelClick,
@@ -156,7 +172,17 @@ export const PullRequestList: FC<PullRequestListProps> = ({
 
       {isEmptyState &&
         !isLoading &&
-        (DirtyNoDataContent ? DirtyNoDataContent : <EmptyStateView repoId={repoId} spaceId={spaceId} state={state} />)}
+        (DirtyNoDataContent ? (
+          DirtyNoDataContent
+        ) : (
+          <EmptyStateView
+            repoId={repoId}
+            spaceId={spaceId}
+            state={state}
+            isRepositoryLoading={isRepositoryLoading}
+            isLinked={!isRepositoryLoading && repo?.repo_type === 'linked'}
+          />
+        ))}
 
       {!isLoading &&
         pullRequests.map(pullRequest => (

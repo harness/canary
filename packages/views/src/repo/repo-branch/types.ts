@@ -47,6 +47,7 @@ export interface BranchListPageProps extends Partial<RoutingProps> {
   handleResetFiltersAndPages: () => void
   onDeleteBranch: (branchName: string) => void
   searchQuery: string | null
+  isLinked?: boolean
 }
 
 export interface RepoBranchListViewProps extends Partial<RoutingProps> {
@@ -56,6 +57,7 @@ export interface RepoBranchListViewProps extends Partial<RoutingProps> {
   searchQuery: string | null
   setSearchQuery: (query: string | null) => void
   onDeleteBranch: (branchName: string) => void
+  isLinked?: boolean
 }
 
 export interface CreateBranchDialogProps {

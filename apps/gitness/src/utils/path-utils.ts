@@ -1,5 +1,10 @@
 import { PathParts } from '@harnessio/ui/components'
 
+// Re-export the shared resource-path encoder so the app and the views/ui
+// packages stay on a single implementation. A previous drift between two copies
+// of this encoder caused `#`-prefixed paths to break navigation.
+export { encodeResourcePath } from '@harnessio/ui/utils'
+
 export function splitPathWithParents(fullResourcePath: string, repoPath: string) {
   const result: PathParts[] = []
 

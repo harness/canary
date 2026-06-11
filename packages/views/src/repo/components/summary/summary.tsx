@@ -2,7 +2,7 @@ import { useCallback, useEffect, useRef } from 'react'
 
 import { IconV2, Skeleton, Table, Text, TimeAgoCard } from '@harnessio/ui/components'
 import { useTranslation } from '@harnessio/ui/context'
-import { encodePath } from '@harnessio/ui/utils'
+import { encodeResourcePath } from '@harnessio/ui/utils'
 import { FileStatus, LatestFileTypes, RepoFile, SummaryItemType } from '@views'
 import { FileLastChangeBar } from '@views/repo/components'
 
@@ -130,7 +130,7 @@ export const Summary = ({
               key={file.id}
               to={
                 toRepoFileDetails?.({
-                  path: encodePath(file.path)
+                  path: encodeResourcePath(file.path)
                 }) ?? ''
               }
               data-file-id={file.id}

@@ -577,8 +577,9 @@ export default function PullRequestChanges() {
         onCommitSuggestionsBatch={onCommitSuggestionsBatch}
         onGetFullDiff={onGetFullDiff}
         toRepoFileDetails={({ path }: { path: string }) => {
-          const encodedPath = encodeURI(encodeURI(path))
-          return isMfe ? `/repos/${repoId}/${encodedPath}` : `/${spaceId}/repos/${repoId}/${encodedPath}`
+          // `path` is already resource-encoded at the source (pull-request-accordian),
+          // so pass it through without re-encoding to avoid double-encoding the segment.
+          return isMfe ? `/repos/${repoId}/${path}` : `/${spaceId}/repos/${repoId}/${path}`
         }}
         isApproving={isApproving}
         currentRefForDiff={currentRefForDiff}

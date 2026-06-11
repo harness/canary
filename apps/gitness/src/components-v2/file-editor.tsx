@@ -26,7 +26,7 @@ import { useInvalidateRepoContent } from '../hooks/useInvalidateRepoContent'
 import { useRepoBranchesStore } from '../pages-v2/repo/stores/repo-branches-store'
 import { PathParams } from '../RouteDefinitions'
 import { decodeGitContent, FILE_SEPARATOR, filenameToLanguage, GitCommitAction, PLAIN_TEXT } from '../utils/git-utils'
-import { splitPathWithParents } from '../utils/path-utils'
+import { encodeResourcePath, splitPathWithParents } from '../utils/path-utils'
 
 export interface FileEditorProps {
   repoDetails?: OpenapiGetContentOutput
@@ -58,14 +58,21 @@ export const FileEditor: FC<FileEditorProps> = ({ repoDetails, defaultBranch, lo
   const themeConfig = useMonacoTheme(theme)
   const isNew = useMemo(() => !repoDetails || repoDetails?.type === 'dir', [repoDetails])
   const [parentPath, setParentPath] = useState('')
+  // The commit API takes the path in the request body (not the URL), so it must
+  // be the raw, decoded path. `parentPath` is derived from location.pathname and
+  // is therefore double-encoded (e.g. `%2523test` for `#test`); decode it twice
+  // to recover the real path. `fileName` comes from the API and is already raw.
   const fileResourcePath = useMemo(
-    () => [(parentPath || '').trim(), (fileName || '').trim()].filter(p => !!p.trim()).join(FILE_SEPARATOR),
+    () =>
+      [decodeURIPath(decodeURIPath(parentPath || '')).trim(), (fileName || '').trim()]
+        .filter(p => !!p.trim())
+        .join(FILE_SEPARATOR),
     [parentPath, fileName]
   )
 
   const encodedFileResourcePath = useMemo(
     () =>
-      [(parentPath || '').trim(), (encodeURI(encodeURI(fileName)) || '').trim()]
+      [(parentPath || '').trim(), (encodeResourcePath(fileName) || '').trim()]
         .filter(p => !!p.trim())
         .join(FILE_SEPARATOR),
     [parentPath, fileName]

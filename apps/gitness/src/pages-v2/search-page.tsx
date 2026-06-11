@@ -8,6 +8,7 @@ import { SearchPageView, SearchResultItem, SemanticSearchResultItem, Stats } fro
 import { useMFEContext } from '../framework/hooks/useMFEContext'
 import { parseAsBoolean, useQueryState } from '../framework/hooks/useQueryState'
 import { useAPIPath } from '../hooks/useAPIPath'
+import { encodeResourcePath } from '../utils/path-utils'
 import { deriveRepoOptionsFromResults } from './search-page-utils'
 
 interface TData {
@@ -206,9 +207,9 @@ export default function SearchPage() {
       searchError={searchError?.message?.toString()}
       toRepoFileDetails={({ repoPath, filePath, branch }) =>
         repoPath && branch
-          ? `/repos/${repoPath}/files/refs/heads/${branch}/~/${filePath}?keyword=${searchQuery}`
+          ? `/repos/${repoPath}/files/refs/heads/${branch}/~/${encodeResourcePath(filePath)}?keyword=${searchQuery}`
           : // TODO: get default branch
-            `/repos/${repoRef}/files/refs/heads/main/~/${filePath}?keyword=${searchQuery}`
+            `/repos/${repoRef}/files/refs/heads/main/~/${encodeResourcePath(filePath)}?keyword=${searchQuery}`
       }
       toRepo={({ repoPath }) => `/repos/${repoPath}`}
       // language filter props

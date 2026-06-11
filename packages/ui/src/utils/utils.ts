@@ -89,6 +89,22 @@ export const encodePath = (path: string) => {
     .join('~')
 }
 
+// Encode a slash-delimited resource path for repo file/folder links so that
+// special characters in individual segments (#, ?, %, +, &, space, ...) survive
+// the round-trip to the backend.
+//
+// Each segment is double-encoded because the `content` backend URL-decodes the
+// path segment TWICE. encodeURIComponent (not encodeURI) is used because
+// encodeURI leaves `#` untouched — a name starting with `#` would then be read
+// as the URL fragment, truncating the path and breaking navigation.
+export const encodeResourcePath = (resourcePath?: string): string => {
+  if (!resourcePath) return ''
+  return resourcePath
+    .split('/')
+    .map(segment => encodeURIComponent(encodeURIComponent(segment)))
+    .join('/')
+}
+
 export const decodeURIComponentIfValid = (path: string) => {
   try {
     return decodeURIComponent(path)

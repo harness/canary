@@ -46,9 +46,15 @@ function animateProp(
   cancelOnFinish: boolean
 ): Animation | null {
   if (!el.animate) return null
+  // Read the current visual value (includes fill from running animation) for a smooth transition start
   const from = getComputedStyle(el)[prop]
-  if (prev) prev.cancel()
-  if (from === to) return null
+  if (prev) {
+    prev.cancel()
+    // After cancel the fill is gone; the element reverts to its CSS base value.
+    // We must always re-apply animation to hold the target, even if `from === to`.
+  } else if (from === to) {
+    return null
+  }
   const anim = el.animate([{ [prop]: from }, { [prop]: to }], {
     duration: DRAWER_DURATION,
     easing: DRAWER_EASING,
@@ -153,7 +159,10 @@ export const DrawerContent = forwardRef<ElementRef<typeof DrawerPrimitive.Conten
 
       if (isFirstRender.current) {
         isFirstRender.current = false
-        return
+        // Skip animation on first render only if in resting state (no child open).
+        // If a child opened before this effect could fire (e.g. due to Portal mount
+        // timing), we must animate immediately.
+        if (!hasOpenChild) return
       }
 
       // Release fill when returning to resting state so Vaul's exit animations can take over
@@ -163,6 +172,7 @@ export const DrawerContent = forwardRef<ElementRef<typeof DrawerPrimitive.Conten
       // Active state → topmost descendant's size token. Resting → own size token.
       const widthToken = targetSizeToken ?? (size as string)
       const toWidth = getComputedStyle(el).getPropertyValue(`--cn-drawer-${widthToken}`).trim()
+
       widthAnimRef.current = animateProp(el, widthAnimRef.current, 'width', toWidth, isResting)
 
       // Target transform: stacked position or identity

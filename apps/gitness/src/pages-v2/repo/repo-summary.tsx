@@ -48,6 +48,7 @@ import {
   REFS_TAGS_PREFIX
 } from '../../utils/git-utils'
 import { createImageUrlTransform } from '../../utils/path-utils'
+import { buildPathSearchList } from './transform-utils/path-transform'
 
 export default function RepoSummaryPage() {
   const routes = useRoutes()
@@ -302,10 +303,13 @@ export default function RepoSummaryPage() {
 
   const { data: filesData } = useListPathsQuery({
     repo_ref: repoRef,
-    queryParams: { git_ref: normalizeGitRef(fullGitRef || '') }
+    queryParams: { git_ref: normalizeGitRef(fullGitRef || ''), include_directories: true }
   })
 
-  const filesList = filesData?.body?.files || []
+  const filesList = useMemo(
+    () => buildPathSearchList(filesData?.body?.files, filesData?.body?.directories),
+    [filesData]
+  )
 
   const navigateToFile = useCallback(
     (filePath: string) => {

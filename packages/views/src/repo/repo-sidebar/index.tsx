@@ -1,11 +1,11 @@
 import { ReactNode } from 'react'
 
-import { Button, IconV2, Layout, ScrollArea, SearchFiles } from '@harnessio/ui/components'
+import { Button, FileItem, IconV2, Layout, ScrollArea, SearchFiles } from '@harnessio/ui/components'
 
 interface RepoSidebarProps {
   navigateToNewFile: () => void
   navigateToFile: (file: string) => void
-  filesList?: string[]
+  filesList?: FileItem[] | string[]
   children: ReactNode
   branchSelectorRenderer: ReactNode
   repoRef?: string

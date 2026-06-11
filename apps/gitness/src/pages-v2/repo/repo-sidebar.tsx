@@ -30,6 +30,7 @@ import { useGitRef } from '../../hooks/useGitRef'
 import { PathParams } from '../../RouteDefinitions'
 import { FILE_SEPARATOR, normalizeGitRef, REFS_BRANCH_PREFIX, REFS_TAGS_PREFIX } from '../../utils/git-utils'
 import { transformBranchList } from './transform-utils/branch-transform'
+import { buildPathSearchList } from './transform-utils/path-transform'
 
 /**
  * TODO: This code was migrated from V2 and needs to be refactored.
@@ -147,10 +148,13 @@ export const RepoSidebar = () => {
 
   const { data: filesData } = useListPathsQuery({
     repo_ref: repoRef,
-    queryParams: { git_ref: normalizeGitRef(fullGitRef) }
+    queryParams: { git_ref: normalizeGitRef(fullGitRef), include_directories: true }
   })
 
-  const filesList = filesData?.body?.files || []
+  const filesList = useMemo(
+    () => buildPathSearchList(filesData?.body?.files, filesData?.body?.directories),
+    [filesData]
+  )
 
   const selectBranchOrTag = useCallback(
     (branchTagName: BranchSelectorListItem, type: BranchSelectorTab) => {

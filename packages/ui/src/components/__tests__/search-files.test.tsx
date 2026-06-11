@@ -38,6 +38,15 @@ vi.mock('@/components', async importOriginal => {
   }
 })
 
+// Mock IconV2 so the rendered icon name is queryable in the DOM
+vi.mock('../icon-v2', async importOriginal => {
+  const actual = (await importOriginal()) as Record<string, unknown>
+  return {
+    ...actual,
+    IconV2: ({ name }: { name: string }) => <svg data-icon={name} />
+  }
+})
+
 // Test Wrapper with TooltipProvider
 const TestWrapper = ({ children }: { children: React.ReactNode }) => {
   return <TooltipPrimitive.Provider>{children}</TooltipPrimitive.Provider>
@@ -1100,6 +1109,29 @@ describe('SearchFiles', () => {
         const items = screen.queryAllByText(/tsx/i)
         expect(items.length).toBeGreaterThan(0)
       })
+    })
+
+    test('should render folder icon for dir items and empty-page icon for file items', async () => {
+      const mixedTypeList = [
+        { label: 'authentication', value: 'src/authentication', type: 'dir' as const },
+        { label: 'auth-helper.ts', value: 'src/auth-helper.ts', type: 'file' as const }
+      ]
+
+      render(
+        <TestWrapper>
+          <SearchFiles navigateToFile={mockNavigateToFile} filesList={mixedTypeList} />
+        </TestWrapper>
+      )
+
+      const input = screen.getByRole('textbox')
+      await userEvent.type(input, 'auth')
+
+      await waitFor(() => {
+        expect(screen.queryAllByRole('menuitem').length).toBe(2)
+      })
+
+      expect(document.querySelector('[data-icon="folder"]')).not.toBeNull()
+      expect(document.querySelector('[data-icon="empty-page"]')).not.toBeNull()
     })
   })
 

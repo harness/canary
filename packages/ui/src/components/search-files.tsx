@@ -17,6 +17,7 @@ const MAX_FILES = 50
 export interface FileItem {
   label: string
   value: string
+  type?: 'file' | 'dir'
 }
 
 /**
@@ -42,6 +43,7 @@ const getMarkedFileElement = (result: Fuzzysort.KeyResult<FileItem>): ReactNode 
 interface FilteredFile {
   label: string
   value: string
+  type: 'file' | 'dir'
   element: ReactNode
 }
 
@@ -59,9 +61,9 @@ interface SearchFilesProps {
  */
 const normalizeFileItem = (item: string | FileItem): FileItem => {
   if (typeof item === 'string') {
-    return { label: item, value: item }
+    return { label: item, value: item, type: 'file' }
   }
-  return item
+  return { ...item, type: item.type ?? 'file' }
 }
 
 export const SearchFiles = ({
@@ -113,10 +115,11 @@ export const SearchFiles = ({
 
     // Map results with highlighted matches
     const _filteredFiles: FilteredFile[] = results.map(result => {
-      const { label, value } = result.obj
+      const { label, value, type } = result.obj
       return {
         label,
         value,
+        type: type ?? 'file',
         element: getMarkedFileElement(result)
       }
     })
@@ -177,7 +180,7 @@ export const SearchFiles = ({
         }}
       >
         {filteredFiles.length ? (
-          filteredFiles?.map(({ value, element }, index) => {
+          filteredFiles?.map(({ value, element, type }, index) => {
             const { ref, onKeyDown } = getItemProps(index)
             return (
               <DropdownMenu.IconItem
@@ -189,7 +192,7 @@ export const SearchFiles = ({
                   setIsOpen(false)
                 }}
                 title={element}
-                icon="empty-page"
+                icon={type === 'dir' ? 'folder' : 'empty-page'}
               />
             )
           })

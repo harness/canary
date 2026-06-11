@@ -1,7 +1,12 @@
 export enum ModeType {
   Dark = 'dark',
   Light = 'light',
-  System = 'system'
+}
+
+export enum ThemeSelectionOptions {
+  Dark = 'dark',
+  Light = 'light',
+  System = 'system',
 }
 
 export enum ColorType {
@@ -19,13 +24,28 @@ export enum ContrastType {
 
 export type FullTheme = `${ModeType}-${ColorType}-${ContrastType}`
 
+export type ThemeZustandState = {
+  theme: FullTheme
+  isLightTheme: boolean
+  isSystemTheme: boolean
+  isInset: boolean
+  isThemeLoading: boolean
+  setTheme: ({ newTheme, isSystemTheme }: { newTheme: FullTheme, isSystemTheme: boolean }) => void
+  setInset: (isInset: boolean) => void
+  setIsThemeLoading: (loading: boolean) => void
+}
+
 export interface IThemeStore {
   theme?: FullTheme
   setTheme: (theme: FullTheme) => void
   isLightTheme: boolean
+  isInset?: boolean
+  setInset?: (isInset: boolean) => void
+  isThemeLoading?: boolean
+  setIsThemeLoading?: (loading: boolean) => void
 }
 
-export const defaultTheme = `${ModeType.Dark}-${ColorType.Standard}-${ContrastType.Standard}` as FullTheme
+export const defaultTheme = `${ModeType.Light}-${ColorType.Standard}-${ContrastType.Standard}` as FullTheme
 
 const COLOR_TO_SUFFIX: Record<ColorType, string | null> = {
   [ColorType.Standard]: null,

@@ -5,7 +5,7 @@ import ViewPreview from '@/pages/view-preview/view-preview'
 import { useThemeStore } from '@utils/theme-utils'
 
 import { TooltipProvider } from '@harnessio/ui/components'
-import { DialogProvider, ThemeProvider, TranslationProvider } from '@harnessio/ui/context'
+import { DialogProvider, ThemeContextProvider as ThemeProvider, TranslationProvider } from '@harnessio/ui/context'
 
 import AppRouterProvider from './AppRouterProvider'
 

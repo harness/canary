@@ -35,10 +35,21 @@ export enum GrayColor {
   Seventh = '#6F6D68'
 }
 
+export type ThemeZustandState = {
+  theme: FullTheme
+  isLightTheme: boolean
+  isSystemTheme: boolean
+  isInset: boolean
+  isThemeLoading: boolean
+  setTheme: ({ newTheme, isSystemTheme }: { newTheme: FullTheme, isSystemTheme: boolean }) => void
+  setInset: (isInset: boolean) => void
+  setIsThemeLoading: (loading: boolean) => void
+}
 export interface ThemeDialogProps {
   defaultTheme?: ThemeInterface
-  theme?: FullTheme
-  setTheme: (theme: FullTheme) => void
+  theme?: ThemeZustandState['theme']
+  setTheme: ThemeZustandState['setTheme']
+  isSystemTheme: ThemeZustandState['isSystemTheme']
   open: boolean
   onOpenChange: (open: boolean) => void
   children?: React.ReactNode
@@ -47,5 +58,5 @@ export interface ThemeDialogProps {
   showGrayColor?: boolean
   showAccessibilityThemeOptions?: boolean
   /** Optional loading state indicator */
-  isThemeLoading?: boolean
+  isThemeLoading?: ThemeZustandState['isThemeLoading']
 }

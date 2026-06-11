@@ -12,7 +12,7 @@ function removeAllThemeLinks(): void {
   document.querySelectorAll(SELECTOR).forEach(el => el.remove())
 }
 
-export function useThemeCSSLoader(themesBasePath: string, manifest: ThemeManifest) {
+export function useThemeCSSLoader(themesBasePath?: string, manifest?: ThemeManifest) {
   const loadTheme = useCallback(
     (theme: FullTheme): Promise<void> => {
       const cssName = getThemeCSSName(theme)
@@ -26,7 +26,7 @@ export function useThemeCSSLoader(themesBasePath: string, manifest: ThemeManifes
         return Promise.resolve()
       }
 
-      const filename = manifest[cssName]
+      const filename = manifest?.[cssName]
       if (!filename) return Promise.resolve()
 
       const href = `${themesBasePath}/${filename}`

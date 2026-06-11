@@ -1,6 +1,6 @@
 import React from 'react'
 
-import { PortalProvider, ThemeProvider } from '@/context'
+import { PortalProvider, ThemeContextProvider as ThemeProvider } from '@/context'
 import * as TooltipPrimitive from '@radix-ui/react-tooltip'
 import { render, screen, waitFor } from '@testing-library/react'
 import userEvent from '@testing-library/user-event'

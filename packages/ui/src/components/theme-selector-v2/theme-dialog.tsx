@@ -9,7 +9,7 @@ import {
   Separator,
   Text
 } from '@/components'
-import { ColorType, ContrastType, ModeType } from '@/context/theme'
+import { ColorType, ContrastType, ModeType, ThemeSelectionOptions } from '@/context/theme'
 import darkModeImage from '@/svgs/theme-dark.png'
 import lightModeImage from '@/svgs/theme-light.png'
 import { cn } from '@/utils/cn'
@@ -36,6 +36,7 @@ const colorOptions: SelectValueOption<ColorType>[] = Object.values(ColorType).ma
 const ThemeDialog: FC<ThemeDialogProps> = ({
   theme,
   setTheme,
+  isSystemTheme: isSystemThemeSelected,
   open,
   onOpenChange,
   children,
@@ -69,23 +70,29 @@ const ThemeDialog: FC<ThemeDialogProps> = ({
               Choose Dark mode for low light or Light mode for bright spaces. System follows your device settings.
             </Text>
             <div className={cn('mt-cn-md gap-cn-md grid', showSystemMode ? 'grid-cols-3' : 'grid-cols-2')}>
-              {Object.entries(ModeType).map(([key, value]) => {
-                if (!showSystemMode && value === ModeType.System) return null
-                const isSystem = value === ModeType.System
+              {Object.entries(ThemeSelectionOptions).map(([key, value]) => {
+                if (!showSystemMode && value === ThemeSelectionOptions.System) return null
+                const isSystemOption = value === ThemeSelectionOptions.System
                 return (
                   <button
                     className="flex flex-col gap-y-cn-xs focus-visible:outline-none"
                     key={key}
                     onClick={() => {
-                      setTheme(`${value}-${colorAdjustment}-${contrast}`)
+                      if (isSystemOption) {
+                        const prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches
+                        const resolvedMode = prefersDark ? ModeType.Dark : ModeType.Light
+                        setTheme({ newTheme: `${resolvedMode}-${colorAdjustment}-${contrast}`, isSystemTheme: true })
+                      } else {
+                        setTheme({ newTheme: `${value}-${colorAdjustment}-${contrast}`, isSystemTheme: false })
+                      }
                     }}
                   >
                     <div className="relative">
-                      {isSystem ? (
+                      {isSystemOption ? (
                         <div
                           className={cn(
                             'relative w-full overflow-hidden rounded-cn-3 border',
-                            mode === value ? 'border-cn-brand' : 'border-cn-3'
+                            isSystemThemeSelected ? 'border-cn-brand' : 'border-cn-3'
                           )}
                         >
                           <img src={lightModeImage} alt="" className="block h-auto w-full" />
@@ -98,24 +105,24 @@ const ThemeDialog: FC<ThemeDialogProps> = ({
                         </div>
                       ) : (
                         <img
-                          src={value === ModeType.Dark ? darkModeImage : lightModeImage}
+                          src={value === ThemeSelectionOptions.Dark ? darkModeImage : lightModeImage}
                           alt=""
                           className={cn(
                             'w-full h-auto rounded-cn-3 border',
-                            mode === value ? 'border-cn-brand' : 'border-cn-3'
+                            !isSystemThemeSelected && mode === value.toLowerCase() ? 'border-cn-brand' : 'border-cn-3'
                           )}
                         />
                       )}
-                      {mode === value && (
-                        <IconV2 className="absolute bottom-cn-xs left-cn-xs text-cn-1" name="check-circle-solid" />
+                      {(isSystemOption ? isSystemThemeSelected : !isSystemThemeSelected && mode === value.toLowerCase()) && (
+                        <IconV2 color={isSystemThemeSelected ? 'neutral' : 'inherit'} className="absolute bottom-cn-xs left-cn-xs" name="check-circle-solid" />
                       )}
-                      {!isSystem && (
+                      {!isSystemOption && (
                         <div
                           className="absolute right-[27px] top-[61px] h-2 w-9 rounded-cn-1"
                           style={{
                             backgroundColor:
                               accentColor === AccentColor.White
-                                ? value === ModeType.Light
+                                ? value === ThemeSelectionOptions.Light
                                   ? 'hsla(240, 6%, 40%, 1)'
                                   : 'hsla(240, 9%, 67%, 1)'
                                 : accentColor
@@ -148,7 +155,7 @@ const ThemeDialog: FC<ThemeDialogProps> = ({
                 <Select
                   value={contrast}
                   options={contrastOptions}
-                  onChange={(value: ContrastType) => setTheme(`${mode}-${colorAdjustment}-${value}`)}
+                  onChange={(value: ContrastType) => setTheme({ newTheme: `${mode}-${colorAdjustment}-${value}`, isSystemTheme: false })}
                   placeholder="Select"
                 />
               </div>
@@ -167,7 +174,7 @@ const ThemeDialog: FC<ThemeDialogProps> = ({
                 <Select
                   value={colorAdjustment}
                   options={colorOptions}
-                  onChange={(value: ColorType) => setTheme(`${mode}-${value}-${contrast}`)}
+                  onChange={(value: ColorType) => setTheme({ newTheme: `${mode}-${value}-${contrast}`, isSystemTheme: false })}
                   placeholder="Select"
                 />
               </div>

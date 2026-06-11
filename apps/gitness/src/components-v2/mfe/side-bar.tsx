@@ -15,7 +15,7 @@ import {
   SidebarSearch,
   ThemeDialog
 } from '@harnessio/ui/components'
-import { useTheme, useTranslation } from '@harnessio/ui/context'
+import { useTheme, useThemeStore, useTranslation } from '@harnessio/ui/context'
 
 import { useAppContext } from '../../framework/context/AppContext'
 import { useMFEContext } from '../../framework/hooks/useMFEContext'
@@ -27,6 +27,7 @@ const AppSidebar: FC<{ children: ReactNode }> = ({ children }) => {
   const [openLanguageDialog, setOpenLanguageDialog] = useState(false)
   const { t } = useTranslation()
   const { theme } = useTheme()
+  const { isSystemTheme, setTheme } = useThemeStore()
   const { routes, hooks, setMFETheme } = useMFEContext()
   const { forceLogout } = hooks?.useLogout?.() || {}
 
@@ -110,8 +111,10 @@ const AppSidebar: FC<{ children: ReactNode }> = ({ children }) => {
       </Sidebar.Provider>
       <ThemeDialog
         theme={theme}
-        setTheme={newTheme => {
-          const effectiveTheme = (newTheme ?? '').startsWith('dark') ? 'Dark' : 'Light'
+        isSystemTheme={isSystemTheme}
+        setTheme={({ newTheme, isSystemTheme: isSystem }) => {
+          setTheme({ newTheme, isSystemTheme: isSystem })
+          const effectiveTheme = newTheme.startsWith('dark') ? 'Dark' : 'Light'
           setMFETheme(effectiveTheme)
         }}
         open={openThemeDialog}

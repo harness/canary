@@ -10,7 +10,7 @@ import { DialogProvider, TranslationProvider } from '@harnessio/ui/context'
 import { ExitConfirmProvider } from './framework/context/ExitConfirmContext'
 import { defaultContext, MFEContext } from './framework/context/MFEContext'
 import { NavigationProvider } from './framework/context/NavigationContext'
-import { ThemeProvider } from './framework/context/ThemeContext'
+import { ThemeProvider } from '@harnessio/ui/context'
 import { queryClient } from './framework/queryClient'
 import i18n from './i18n/i18n'
 import { useTranslationStore } from './i18n/stores/i18n-store'
@@ -39,7 +39,7 @@ export default function App() {
   return (
     <MFEContext.Provider value={defaultContext}>
       <I18nextProvider i18n={i18n}>
-        <ThemeProvider defaultTheme="dark-std-std">
+        <ThemeProvider defaultTheme="light-std-std">
           <TranslationProvider t={t}>
             <QueryClientProvider client={queryClient}>
               <TooltipProvider>

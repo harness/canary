@@ -31,7 +31,7 @@ import { CodeEditor } from '@harnessio/yaml-editor'
 
 import GitCommitDialog from '../components-v2/git-commit-dialog'
 import { useRoutes } from '../framework/context/NavigationContext'
-import { useThemeStore } from '../framework/context/ThemeContext'
+import { useThemeStore } from '@harnessio/ui/context'
 import { useDownloadRawFile } from '../framework/hooks/useDownloadRawFile'
 import { useGetRepoRef } from '../framework/hooks/useGetRepoPath'
 import { parseAsInteger, useQueryState } from '../framework/hooks/useQueryState'

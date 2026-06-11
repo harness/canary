@@ -149,6 +149,7 @@ describe('ThemeDialog', () => {
   const defaultProps = {
     theme: `${ModeType.Dark}-${ColorType.Standard}-${ContrastType.Standard}` as const,
     setTheme: vi.fn(),
+    isSystemTheme: false,
     open: true,
     onOpenChange: vi.fn()
   }
@@ -171,7 +172,7 @@ describe('ThemeDialog', () => {
     expect(screen.queryByText('System')).not.toBeInTheDocument()
 
     fireEvent.click(screen.getByText('Light'))
-    expect(defaultProps.setTheme).toHaveBeenCalledWith('light-std-std')
+    expect(defaultProps.setTheme).toHaveBeenCalledWith({ newTheme: 'light-std-std', isSystemTheme: false })
     expect(screen.getByTestId('icon-check-circle-solid')).toBeInTheDocument()
   })
 
@@ -179,7 +180,7 @@ describe('ThemeDialog', () => {
     render(
       <ThemeDialog
         {...defaultProps}
-        theme={`${ModeType.System}-${ColorType.Standard}-${ContrastType.Low}`}
+        theme={`${ModeType.Dark}-${ColorType.Standard}-${ContrastType.Low}`}
         showSystemMode
       />
     )
@@ -204,10 +205,10 @@ describe('ThemeDialog', () => {
     )
 
     fireEvent.click(screen.getByTestId('select-option-high'))
-    expect(defaultProps.setTheme).toHaveBeenCalledWith('light-std-high')
+    expect(defaultProps.setTheme).toHaveBeenCalledWith({ newTheme: 'light-std-high', isSystemTheme: false })
 
     fireEvent.click(screen.getByTestId('select-option-pro'))
-    expect(defaultProps.setTheme).toHaveBeenCalledWith('light-pro-std')
+    expect(defaultProps.setTheme).toHaveBeenCalledWith({ newTheme: 'light-pro-std', isSystemTheme: false })
 
     const accentGrid = screen.getByText('Accent color').closest('div')!.parentElement as HTMLElement
     const accentButtonsContainer = accentGrid.querySelectorAll('div')[1] as HTMLElement

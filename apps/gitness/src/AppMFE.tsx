@@ -1,4 +1,4 @@
-import { useEffect, useRef } from 'react'
+import { useCallback, useRef } from 'react'
 import { I18nextProvider } from 'react-i18next'
 import { createBrowserRouter, RouterProvider } from 'react-router-dom'
 
@@ -8,12 +8,18 @@ import { CodeServiceAPIClient } from '@harnessio/code-service-client'
 import { NgManagerSwaggerServiceAPIClient } from '@harnessio/react-ng-manager-swagger-service-client'
 import { NGManagerServiceAPIClient } from '@harnessio/react-ng-manager-v2-client'
 import { TooltipProvider } from '@harnessio/ui/components'
-import { DialogProvider, FullTheme, PortalProvider, ThemeProvider, TranslationProvider } from '@harnessio/ui/context'
+import {
+  DialogProvider,
+  FullTheme,
+  PortalProvider,
+  ThemeContextProvider,
+  TranslationProvider,
+  useThemeStore
+} from '@harnessio/ui/context'
 
 import { ExitConfirmProvider } from './framework/context/ExitConfirmContext'
 import { MFEContext, MFEContextProps } from './framework/context/MFEContext'
 import { NavigationProvider } from './framework/context/NavigationContext'
-import { useThemeStore } from './framework/context/ThemeContext'
 import { queryClient } from './framework/queryClient'
 import i18n from './i18n/i18n'
 import { useTranslationStore } from './i18n/stores/i18n-store'
@@ -73,45 +79,49 @@ export default function AppMFE({
 
   // Apply host theme to MFE
   const { theme, setTheme } = useThemeStore()
+  const contextSetTheme = useCallback(
+    (newTheme: FullTheme) => setTheme({ newTheme, isSystemTheme: false }),
+    [setTheme]
+  )
 
   // // TODO: This is a hack to get the theme from the host and apply it to the MFE. Need to implement a proper fix.
-  useEffect(() => {
-    const element = document.querySelector('html')
+  // useEffect(() => {
+  //   const element = document.querySelector('html')
 
-    /**
-     * As we are wapping CodeV2 in MFEWrapper from PlatformUI,
-     * this is required if CodeV2 is rendered in NGUI without PlatformUI.
-     */
-    element?.classList.add(theme ?? 'light-std-std')
+  //   /**
+  //    * As we are wapping CodeV2 in MFEWrapper from PlatformUI,
+  //    * this is required if CodeV2 is rendered in NGUI without PlatformUI.
+  //    */
+  //   element?.classList.add(theme ?? 'light-std-std')
 
-    const observer = new MutationObserver(mutations => {
-      for (const mutation of mutations) {
-        if (mutation.type === 'attributes' && mutation.attributeName === 'class') {
-          const oldClasses = new Set((mutation.oldValue || '').split(/\s+/).filter(Boolean))
-          const newClasses = new Set((element?.className || '').split(/\s+/).filter(Boolean))
-          const addedClasses = [...newClasses].filter(cls => !oldClasses.has(cls))
+  //   const observer = new MutationObserver(mutations => {
+  //     for (const mutation of mutations) {
+  //       if (mutation.type === 'attributes' && mutation.attributeName === 'class') {
+  //         const oldClasses = new Set((mutation.oldValue || '').split(/\s+/).filter(Boolean))
+  //         const newClasses = new Set((element?.className || '').split(/\s+/).filter(Boolean))
+  //         const addedClasses = [...newClasses].filter(cls => !oldClasses.has(cls))
 
-          const newTheme = addedClasses.find(cls => cls.includes('light-') || cls.includes('dark-'))
+  //         const newTheme = addedClasses.find(cls => cls.includes('light-') || cls.includes('dark-'))
 
-          if (newTheme) {
-            setTheme(newTheme as FullTheme)
-          }
-        }
-      }
-    })
+  //         if (newTheme) {
+  //           setTheme({ newTheme: newTheme as FullTheme, isSystemTheme: false })
+  //         }
+  //       }
+  //     }
+  //   })
 
-    if (element) {
-      observer.observe(element, {
-        attributes: true,
-        attributeFilter: ['class'],
-        attributeOldValue: true
-      })
-    }
+  //   if (element) {
+  //     observer.observe(element, {
+  //       attributes: true,
+  //       attributeFilter: ['class'],
+  //       attributeOldValue: true
+  //     })
+  //   }
 
-    return () => {
-      observer.disconnect()
-    }
-  }, [])
+  //   return () => {
+  //     observer.disconnect()
+  //   }
+  // }, [])
 
   // Radix UI elements will be rendered inside portalContainer
   const portalRef = useRef<HTMLDivElement>(null)
@@ -138,7 +148,7 @@ export default function AppMFE({
             routes,
             routeUtils,
             hooks,
-            setMFETheme: () => {},
+            setMFETheme: () => { },
             parentLocationPath,
             onRouteChange,
             isPublicAccessEnabledOnResources,
@@ -146,9 +156,9 @@ export default function AppMFE({
           }}
         >
           <I18nextProvider i18n={i18n}>
-            <ThemeProvider
+            <ThemeContextProvider
               theme={theme ?? 'light-std-std'}
-              setTheme={setTheme}
+              setTheme={contextSetTheme}
               isLightTheme={theme?.includes('light') ?? true}
             >
               <TranslationProvider t={t}>
@@ -164,7 +174,7 @@ export default function AppMFE({
                   </TooltipProvider>
                 </QueryClientProvider>
               </TranslationProvider>
-            </ThemeProvider>
+            </ThemeContextProvider>
           </I18nextProvider>
         </MFEContext.Provider>
       </PortalProvider>

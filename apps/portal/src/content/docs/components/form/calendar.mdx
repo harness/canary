@@ -7,6 +7,13 @@ beta: true
 The `Calendar` component provides a flexible UI element for displaying a date picker. It includes several customizations for styling and functionality.
 
 import { DocsPage } from "@/components/docs-page";
+import { Aside } from "@astrojs/starlight/components";
+
+<Aside type="tip" title="When to use Calendar">
+  Use `Calendar` to pick a single date or a date range — a schedule, an expiry. For
+  filtering records by a date window in a toolbar, use `DateRangeFilter`. For a free-text
+  value, use a text input.
+</Aside>
 
 <DocsPage.ComponentExample
   client:only

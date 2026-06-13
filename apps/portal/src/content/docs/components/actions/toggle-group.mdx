@@ -7,6 +7,14 @@ beta: true
 The `ToggleGroup` component provides a set of toggle buttons that can be used to switch between different states or options. It is composed of subcomponents such as `ToggleGroup.Root` and `ToggleGroup.Item` to offer a structured and customizable interface.
 
 import { DocsPage } from "@/components/docs-page";
+import { Aside } from "@astrojs/starlight/components";
+
+<Aside type="tip" title="When to use ToggleGroup">
+  Use `ToggleGroup` for a small set of mutually-exclusive view or mode options shown
+  together — a graph/table view switch, a density control. For navigating between page
+  views, use `Tabs`. For a single in-place two-state control, use `Toggle`. For a form
+  value, use `Radio`.
+</Aside>
 
 <DocsPage.ComponentExample
   client:only

@@ -5,12 +5,19 @@ beta: true
 ---
 
 import { DocsPage } from "@/components/docs-page";
+import { Aside } from "@astrojs/starlight/components";
 
 The `Reasoning` component displays AI reasoning or thinking content in a collapsible format. It automatically tracks streaming duration and can auto-collapse when streaming completes.
 
 ## Usage
 
 The Reasoning component uses a compound pattern with `Reasoning.Root`, `Reasoning.Trigger`, and `Reasoning.Content` sub-components.
+
+<Aside type="tip" title="When to use Reasoning">
+  Use `Reasoning` to show an AI model's in-progress thinking as a collapsible, streaming
+  block, kept visibly separate from its final answer. For the answer itself, use
+  `MessageBubble`. Reasoning is the model's process, never presented as settled fact.
+</Aside>
 
 <DocsPage.ComponentExample
   client:only

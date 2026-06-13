@@ -7,6 +7,12 @@ beta: true
 The `DateRangeFilter` is a new filter field type (`FilterFieldTypes.DateRange`) in the filters system. It presents a dropdown with grouped preset date ranges (Recommended, Relative dates, Calendar months) and a "Select custom range" option. Clicking "Select custom range" reveals a two-month calendar alongside the preset list for picking an arbitrary date range.
 
 import { DocsPage } from "@/components/docs-page";
+import { Aside } from "@astrojs/starlight/components";
+
+<Aside type="tip" title="When to use DateRangeFilter">
+  Use `DateRangeFilter` to filter a list or chart by a date window — runs in the last 7
+  days, deploys this month. For picking a date as a form value, use `Calendar`.
+</Aside>
 
 <DocsPage.ComponentExample
   client:only

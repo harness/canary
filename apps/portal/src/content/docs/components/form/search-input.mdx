@@ -4,8 +4,15 @@ description: SearchInput component
 ---
 
 import { DocsPage } from "@/components/docs-page";
+import { Aside } from "@astrojs/starlight/components";
 
 Below is an example of how to implement a search input that displays the current search value using React state. The SearchInput component includes a built-in 300ms debounce to prevent excessive callbacks when typing:
+
+<Aside type="tip" title="When to use Search Input">
+  Use a search input to filter or query a list as the user types — searching pipelines,
+  repos, logs. For choosing from a known set of values, use `Select`. For general free
+  text in a form, use a text input.
+</Aside>
 
 <DocsPage.ComponentExample client:only code={`() => {
   // Using useState hook to track search value

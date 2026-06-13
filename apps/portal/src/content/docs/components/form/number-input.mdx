@@ -7,6 +7,13 @@ The `NumberInput` component is used to handle user input, providing options for 
 The component also offers options for adding icons, captions, custom content, and error text for the field.
 
 import { DocsPage } from "@/components/docs-page";
+import { Aside } from "@astrojs/starlight/components";
+
+<Aside type="tip" title="When to use NumberInput">
+  Use `NumberInput` for a numeric value with stepping and validation — a timeout, a
+  replica count, a retry limit. For free text, use a text input. For a bounded range the
+  user drags, use `Slider`.
+</Aside>
 
 <DocsPage.ComponentExample
   client:only

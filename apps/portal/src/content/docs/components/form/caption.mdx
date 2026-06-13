@@ -7,6 +7,12 @@ beta: true
 The `Caption` component renders supplementary text below form inputs. It is used to provide additional context or hints for form fields.
 
 import { DocsPage } from "@/components/docs-page";
+import { Aside } from "@astrojs/starlight/components";
+
+<Aside type="tip" title="When to use Caption">
+  Use `Caption` for helper, hint, or validation text beneath a field. For a page-level
+  message, use `Alert`. For the field's name, use `Label`.
+</Aside>
 
 <DocsPage.ComponentExample
   client:only

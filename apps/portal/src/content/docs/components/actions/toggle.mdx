@@ -7,6 +7,13 @@ beta: true
 The `Toggle` component provides a customizable button that can be toggled between two states. It supports various styling options through variants and sizes.
 
 import { DocsPage } from "@/components/docs-page";
+import { Aside } from "@astrojs/starlight/components";
+
+<Aside type="tip" title="When to use Toggle">
+  Use `Toggle` for a single button that flips between two states in place — a formatting
+  control, a show/hide on a toolbar. For an on/off *setting* that applies immediately,
+  use `Switch`. For a set of mutually-exclusive view options, use `ToggleGroup`.
+</Aside>
 
 <DocsPage.ComponentExample
   client:only

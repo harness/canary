@@ -5,12 +5,19 @@ beta: true
 ---
 
 import { DocsPage } from "@/components/docs-page";
+import { Aside } from "@astrojs/starlight/components";
 
 The `MessageBubble` component is a compound component for displaying conversational messages in AI and chat interfaces. It supports both user and assistant messages with different styling and layouts.
 
 ## Usage
 
 The MessageBubble component uses a compound pattern with `MessageBubble.Root`, `MessageBubble.Content`, and `MessageBubble.Footer` sub-components.
+
+<Aside type="tip" title="When to use MessageBubble">
+  Use `MessageBubble` for a single message in an AI assistant thread — a user or
+  assistant turn, with optional markdown and footer actions. For the input that composes
+  a message, use `PromptInput`. For a model's in-progress thinking, use `Reasoning`.
+</Aside>
 
 <DocsPage.ComponentExample
   client:only

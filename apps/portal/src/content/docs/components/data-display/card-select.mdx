@@ -7,6 +7,14 @@ beta: true
 The `CardSelect` component provides an accessible and customizable card-based selection interface. It supports both single and multiple selection modes with flexible layouts (horizontal, vertical, or grid), making it suitable for forms, settings, and decision workflows.
 
 import { DocsPage } from "@/components/docs-page";
+import { Aside } from "@astrojs/starlight/components";
+
+<Aside type="tip" title="When to use CardSelect">
+  Use `CardSelect` when the user picks one or several options and each option needs
+  more than a label — an icon, a description, a preview — like choosing a pipeline
+  template or a connector type. For a plain one-of-many choice, use `Radio`. For a
+  value from a long list, use `Select`. For a non-selectable content surface, use `Card`.
+</Aside>
 
 <DocsPage.ComponentExample
   client:only

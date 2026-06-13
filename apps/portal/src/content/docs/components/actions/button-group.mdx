@@ -8,6 +8,14 @@ The `ButtonGroup` component allows you to group multiple buttons together, eithe
 The button data is passed via the `buttonsProps` prop, which should contain an array of props for each individual button.
 
 import { DocsPage } from "@/components/docs-page";
+import { Aside } from "@astrojs/starlight/components";
+
+<Aside type="tip" title="When to use ButtonGroup">
+  Use `ButtonGroup` to join related actions into one visually-connected control — a set
+  of segmented choices, related toolbar actions. To lay out a primary plus secondary
+  button (e.g. a dialog footer), use `ButtonLayout`. For a default action with related
+  variants, use `SplitButton`.
+</Aside>
 
 <DocsPage.ComponentExample
   client:only

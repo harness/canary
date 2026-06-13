@@ -5,8 +5,15 @@ beta: true
 ---
 
 import { DocsPage } from "@/components/docs-page";
+import { Aside } from "@astrojs/starlight/components";
 
 The `PromptInput` component is a compound component for AI chat interfaces. It includes a textarea with auto-resize, keyboard shortcuts, and optional toolbar for actions.
+
+<Aside type="tip" title="When to use PromptInput">
+  Use `PromptInput` for the composer in an AI assistant surface — a textarea with tags,
+  a toolbar, and a submit. For a plain form text field, use a text input. For displaying
+  a sent message, use `MessageBubble`.
+</Aside>
 
 <DocsPage.ComponentExample
   client:only

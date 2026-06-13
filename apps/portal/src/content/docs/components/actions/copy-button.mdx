@@ -7,6 +7,13 @@ beta: true
 The `CopyButton` component provides a button that copies text to the clipboard when clicked. It includes visual feedback to indicate when the text has been copied successfully. The `name` prop can be a string or a function that returns a string, allowing for dynamic text generation.
 
 import { DocsPage } from "@/components/docs-page";
+import { Aside } from "@astrojs/starlight/components";
+
+<Aside type="tip" title="When to use CopyButton">
+  Use `CopyButton` to copy a value to the clipboard — a connector ID, a commit SHA, a
+  generated token — with built-in copied feedback. For a copyable value shown as a
+  labeled chip, use `CopyTag`. For a general action, use `Button`.
+</Aside>
 
 <DocsPage.ComponentExample
   client:only

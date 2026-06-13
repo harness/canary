@@ -7,6 +7,13 @@ beta: true
 The `ViewOnly` component displays data in a read-only format with label-value pairs. It supports single-column and responsive two-column layouts, loading states, and custom content.
 
 import { DocsPage } from "@/components/docs-page";
+import { Aside } from "@astrojs/starlight/components";
+
+<Aside type="tip" title="When to use ViewOnly">
+  Use `ViewOnly` to display read-only label-value pairs — a resource's details, a
+  run's metadata, a config summary. For editable fields, use `Form` and its inputs. For
+  columnar data across many rows, use `Table`.
+</Aside>
 
 <DocsPage.ComponentExample
   client:only

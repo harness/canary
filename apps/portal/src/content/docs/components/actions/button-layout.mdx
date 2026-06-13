@@ -7,6 +7,13 @@ beta: true
 The `ButtonLayout` component allows you to group multiple buttons together, either horizontally or vertically. It is useful for organizing related actions.
 
 import { DocsPage } from "@/components/docs-page";
+import { Aside } from "@astrojs/starlight/components";
+
+<Aside type="tip" title="When to use ButtonLayout">
+  Use `ButtonLayout` to position a primary and secondary action together with correct
+  spacing and order — a dialog or drawer footer, a form's submit row. To join segmented
+  related actions into one control, use `ButtonGroup`.
+</Aside>
 
 <DocsPage.ComponentExample
   client:only

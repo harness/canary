@@ -7,6 +7,13 @@ beta: true
 The `Label` component is a customizable label for form elements. It includes an optional required indicator and follows consistent styling across the design system.
 
 import { DocsPage } from "@/components/docs-page";
+import { Aside } from "@astrojs/starlight/components";
+
+<Aside type="tip" title="When to use Label">
+  Use `Label` to caption a form control accessibly. Most inputs accept a `label` prop
+  directly — reach for the standalone `Label` only when composing a custom control that
+  doesn't. For helper or error text, use `Caption`.
+</Aside>
 
 <DocsPage.ComponentExample
   client:only

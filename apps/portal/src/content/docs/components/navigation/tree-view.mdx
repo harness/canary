@@ -6,6 +6,13 @@ description: TreeView component for displaying hierarchical data structures
 The `TreeView` component is used to display hierarchical data in an expandable/collapsible tree structure. It supports features like selection, status indicators, execution details, and RTL/LTR text direction.
 
 import { DocsPage } from "@/components/docs-page";
+import { Aside } from "@astrojs/starlight/components";
+
+<Aside type="tip" title="When to use TreeView">
+  Use `TreeView` to display and navigate hierarchical data that isn't a filesystem — an
+  org/project/resource hierarchy, a nested config. For a file/folder tree specifically,
+  use `FileExplorer`. For a flat list of entities, use `StackedList`.
+</Aside>
 
 <DocsPage.ComponentExample
   client:only

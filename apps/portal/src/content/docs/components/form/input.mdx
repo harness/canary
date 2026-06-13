@@ -9,6 +9,14 @@ The `Input` component is used to handle user input, along with providing options
 Also provides options for adding icons, captions, and error text for the field.
 
 import { DocsPage } from "@/components/docs-page";
+import { Aside } from "@astrojs/starlight/components";
+
+<Aside type="tip" title="When to use Input">
+  `Input` is the base field most specialized inputs build on. In application forms reach
+  for the specific one — a text input for free text, `NumberInput` for numbers, a search
+  input for filtering, `Select` for known options. Use `Input` directly only when none
+  of those fit.
+</Aside>
 
 <DocsPage.ComponentExample
   client:only

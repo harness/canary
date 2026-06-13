@@ -8,6 +8,13 @@ The `Slider` component allows users to select a single value or a range by dragg
 Built on [Radix UI Slider](https://www.radix-ui.com/primitives/docs/components/slider) with custom styling.
 
 import { DocsPage } from "@/components/docs-page";
+import { Aside } from "@astrojs/starlight/components";
+
+<Aside type="tip" title="When to use Slider">
+  Use `Slider` for a bounded numeric value the user sets by dragging, where the
+  approximate position matters more than an exact figure — a threshold, an allocation.
+  When the exact number matters, use `NumberInput`.
+</Aside>
 
 <DocsPage.ComponentExample
   client:only

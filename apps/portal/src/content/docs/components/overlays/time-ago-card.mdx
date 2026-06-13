@@ -9,6 +9,12 @@ The `TimeAgoCard` component displays a timestamp in a human-readable format, suc
 import { DocsPage } from "@/components/docs-page";
 import { Aside } from "@astrojs/starlight/components";
 
+<Aside type="tip" title="When to use TimeAgoCard">
+  Use `TimeAgoCard` to show a relative timestamp ("5 minutes ago") with the exact time on
+  hover — a run's start, a last-updated marker. For a static formatted timestamp, render
+  the value directly.
+</Aside>
+
 <DocsPage.ComponentExample
   client:only
   code={`<div className="flex flex-col gap-cn-2xl">

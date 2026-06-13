@@ -6,6 +6,13 @@ description: Link component
 The `Link` component provides styled links for navigation within and outside the application. It offers two size options and distinguishes between internal and external links with appropriate visual indicator. The component ensures consistent styling while maintaining accessibility standards.
 
 import { DocsPage } from "@/components/docs-page";
+import { Aside } from "@astrojs/starlight/components";
+
+<Aside type="tip" title="When to use Link">
+  Use `Link` to navigate between pages or views, or to an external resource. To trigger
+  an action (run, save, delete), use `Button` — navigation and action are different
+  jobs. For a destination styled as a primary affordance, use `Button` with a link variant.
+</Aside>
 
 <DocsPage.ComponentExample
   client:only

@@ -14,8 +14,16 @@ There are two types of pagination:
 The `totalItems` and `pageSize` props are used to determine the total number of items and the number of items per page in the pagination. If `totalItems` and `pageSize` are provided, the component will display the page numbers along with the navigation buttons. If `totalItems` and `pageSize` are not provided, the component will only display the "Next" and "Previous" buttons.
 
 import { DocsPage } from "@/components/docs-page";
+import { Aside } from "@astrojs/starlight/components";
 
 ### Determinate Pagination (Button)
+
+<Aside type="tip" title="When to use Pagination">
+  Use `Pagination` to page through a bounded list of results — pipeline runs, audit
+  entries, search results — when the user needs to jump to a specific page. For
+  continuous scroll through an open-ended feed, prefer incremental loading. `Table`,
+  `DataTable`, and `StackedList` accept pagination props directly.
+</Aside>
 
 <DocsPage.ComponentExample
   client:only

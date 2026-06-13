@@ -11,6 +11,13 @@ The `Stepper` component provides a vertical progress indicator for multi-step wo
 
 It is composed of `Stepper.Root`, `Stepper.Step`, and `Stepper.SubStep` to offer a structured and customizable interface.
 
+<Aside type="tip" title="When to use Stepper">
+  Use `Stepper` to show progress through a defined sequence of steps — a multi-stage
+  resource-creation wizard, an onboarding flow — where the user sees where they are and
+  what's left. For steps inside a side panel, compose `Drawer.Steps`. For switching
+  between independent views, use `Tabs`.
+</Aside>
+
 <DocsPage.ComponentExample
   client:only
   code={`() => {

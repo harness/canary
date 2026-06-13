@@ -7,6 +7,13 @@ beta: true
 The `Textarea` component is used to create a multi-line text input field.
 
 import { DocsPage } from "@/components/docs-page";
+import { Aside } from "@astrojs/starlight/components";
+
+<Aside type="tip" title="When to use Textarea">
+  Use `Textarea` for multi-line free text — a description, a commit message, a YAML
+  snippet pasted by hand. For a single line, use a text input. For @-mentions, use the
+  mention textarea. For rendered markdown, use `MarkdownViewer`.
+</Aside>
 
 <DocsPage.ComponentExample
   client:only

@@ -9,6 +9,12 @@ The `StickyListSection` component provides sticky section headers that pin to th
 import { DocsPage } from "@/components/docs-page";
 import { Aside } from "@astrojs/starlight/components";
 
+<Aside type="tip" title="When to use StickyListSection">
+  Use `StickyListSection` to pin section headers to the top of a long scrolling list as
+  the user scrolls through grouped items — runs grouped by day, resources by type. For a
+  flat list with no grouping, use `StackedList` directly.
+</Aside>
+
 <DocsPage.ComponentExample
   client:only
   code={`() => {

@@ -7,6 +7,14 @@ beta: true
 The `Accordion` allows content to be hidden or displayed by clicking a trigger. Multiple items can be shown simultaneously, or restricted to a single item using the `type` prop.
 
 import { DocsPage } from "@/components/docs-page";
+import { Aside } from "@astrojs/starlight/components";
+
+<Aside type="tip" title="When to use Accordion">
+  Use `Accordion` for sections on one surface that the user expands in place, where
+  more than one can be open at once — an FAQ, a settings group, optional detail. For
+  mutually-exclusive views where only one shows at a time, use `Tabs`. If the content
+  fits without hiding, don't put it behind a disclosure at all.
+</Aside>
 
 <DocsPage.ComponentExample
   client:only

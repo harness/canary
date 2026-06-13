@@ -7,6 +7,14 @@ beta: true
 The `MultiSelect` component allows users to select multiple options from a dropdown list. It is useful for scenarios where multiple selections are needed.
 
 import { DocsPage } from "@/components/docs-page";
+import { Aside } from "@astrojs/starlight/components";
+
+<Aside type="tip" title="When to use MultiSelect">
+  Use `MultiSelect` to choose *several values* from a set — tags, labels, scopes,
+  members — shown back as removable chips. For exactly one value, use `Select`. For a
+  small fixed set where every option should be visible, use a `Checkbox` group. To
+  trigger actions, use `DropdownMenu`.
+</Aside>
 
 <DocsPage.ComponentExample
   client:only

@@ -9,6 +9,14 @@ The `StackedList` component provides a way to display entities in a vertically s
 It is composed of several subcomponents such as `StackedList.Root`, `StackedList.Header`, `StackedList.Item`, `StackedList.Field` to offer a structured and customizable interface.
 
 import { DocsPage } from "@/components/docs-page";
+import { Aside } from "@astrojs/starlight/components";
+
+<Aside type="tip" title="When to use StackedList">
+  Use `StackedList` when each row is a self-contained entity — a connector, a repo, a
+  user — with a label, supporting detail, a thumbnail, and per-item actions. For data
+  the user compares across aligned columns, use `Table` or `DataTable`. For selectable
+  rows with bulk actions, use `DataTable` with row selection.
+</Aside>
 
 <DocsPage.ComponentExample
   client:only

@@ -6,10 +6,18 @@ beta: true
 
 import { Code, Card, Aside } from "@astrojs/starlight/components";
 import { DocsPage } from "@/components/docs-page";
+import { Aside } from "@astrojs/starlight/components";
 
 `toast` is a toast component that is used to display notifications to the user. It is handled by `Toaster` component, that is added in the root of the app.
 
 To show a simple toast, use the `toast` function.
+
+<Aside type="tip" title="When to use Toast">
+  Use `Toast` to confirm a completed action that doesn't block the user — "Saved",
+  "Pipeline triggered" — often with an Undo. For a condition that's still true, use
+  `Alert`. For a decision the user must make, use `Dialog` or `AlertDialog`. Never put
+  a *required* action in a Toast — it auto-dismisses and may be missed.
+</Aside>
 
 <DocsPage.ComponentExample
   client:only

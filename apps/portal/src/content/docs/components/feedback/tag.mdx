@@ -7,6 +7,14 @@ beta: true
 The `Tag` component is used to display small, interactive elements with optional icons, reset functionality, and customizable styles.
 
 import { DocsPage } from "@/components/docs-page";
+import { Aside } from "@astrojs/starlight/components";
+
+<Aside type="tip" title="When to use Tag">
+  Use `Tag` to label descriptive metadata — a branch, an environment, a category — or
+  to show a removable applied filter. To convey run/build/deploy *state* (success,
+  failed, pending), use `StatusBadge`. For a numeric count, use `CounterBadge`. For an
+  action, use `Button`.
+</Aside>
 
 <DocsPage.ComponentExample
   client:only

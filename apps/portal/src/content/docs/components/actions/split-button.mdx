@@ -20,6 +20,13 @@ import { Aside } from "@astrojs/starlight/components";
 
 </Aside>
 
+<Aside type="tip" title="When to use SplitButton">
+  Use `SplitButton` for a default action plus closely-related variants of it — "Run" +
+  "Run with options", "Merge" + "Squash and merge". For a list of *unrelated* commands,
+  use `Button` plus `DropdownMenu`. For a single action with no alternatives, use
+  `Button`. For choosing a form value, use `Select`.
+</Aside>
+
 <DocsPage.ComponentExample
   client:only
   code={`<div className="flex flex-col gap-cn-2xl">

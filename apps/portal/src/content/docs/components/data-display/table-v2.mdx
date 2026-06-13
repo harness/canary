@@ -9,6 +9,13 @@ The `Table` component provides a way to display tabular data with various sub-co
 import { DocsPage } from "@/components/docs-page";
 import { Aside } from "@astrojs/starlight/components";
 
+<Aside type="tip" title="When to use Table">
+  Use `Table` for read-only columnar data with no interaction — a fixed summary, an
+  audit log, a detail grid. When you need sorting, row selection, filtering, pinning,
+  or expandable rows, use `DataTable` instead of building those onto `Table`. For a
+  list of heterogeneous items rather than aligned columns, use `StackedList`.
+</Aside>
+
 <DocsPage.ComponentExample
   client:only
   code={`

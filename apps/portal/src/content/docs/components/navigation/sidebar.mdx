@@ -5,10 +5,18 @@ beta: true
 ---
 
 import { DocsPage } from "@/components/docs-page";
+import { Aside } from "@astrojs/starlight/components";
 
 The `Sidebar` component provides a responsive, collapsible navigation interface for application navigation. It supports expanded and collapsed states on desktop, transforms into an off-canvas menu on mobile devices, and includes features like nested submenus, badges, tooltips, and customizable actions.
 
 It is composed of several subcomponents such as `Sidebar.Provider`, `Sidebar.Root`, `Sidebar.Trigger`, `Sidebar.Content`, `Sidebar.Header`, `Sidebar.Footer`, `Sidebar.Group`, `Sidebar.Item`, `Sidebar.MenuSubItem`, `Sidebar.Rail`, and more to offer a structured and customizable interface.
+
+<Aside type="tip" title="When to use Sidebar">
+  Use `Sidebar` for the product's top-level navigation between sections — a persistent,
+  collapsible left rail. For chrome and context across the top, use `Topbar`. For
+  where-am-I hierarchy, use `Breadcrumb`. For switching views *within* a page, use
+  `Tabs`. For a menu of actions, use `DropdownMenu`. Always mark the active item.
+</Aside>
 
 <DocsPage.ComponentExample
 client:only

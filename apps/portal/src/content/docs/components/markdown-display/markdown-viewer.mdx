@@ -7,10 +7,18 @@ beta: true
 The `MarkdownViewer` component provides a comprehensive solution for rendering markdown content with advanced features like syntax highlighting, interactive task lists, code suggestions, and customizable image handling. Perfect for displaying documentation, comments, READMEs, and code review content.
 
 import { DocsPage } from "@/components/docs-page";
+import { Aside } from "@astrojs/starlight/components";
 
 ## Basic Usage
 
 The `MarkdownViewer` renders standard markdown syntax including headings, lists, links, images, and code blocks.
+
+<Aside type="tip" title="When to use MarkdownViewer">
+  Use `MarkdownViewer` to safely render authored markdown — a README, a description,
+  release notes, a PR body — with syntax highlighting and sanitization. To compare two
+  versions, use `DiffViewer`. For a plain code snippet, use a code block. Don't use it
+  to fake editable app UI — for real input use `Form` and its inputs.
+</Aside>
 
 <DocsPage.ComponentExample
   client:only

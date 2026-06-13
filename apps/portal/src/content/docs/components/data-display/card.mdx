@@ -7,6 +7,15 @@ beta: true
 The `Card` component provides a flexible UI element for displaying content within a card layout. It supports various configurations such as sizes, orientations, and the position of the image relative to the content.
 
 import { DocsPage } from "@/components/docs-page";
+import { Aside } from "@astrojs/starlight/components";
+
+<Aside type="tip" title="When to use Card">
+  Use `Card` to group related content or actions into one discrete surface — a
+  dashboard visual, a resource summary, a media-plus-text block. For a *selectable*
+  option among several, use `CardSelect`. For a list of same-shaped entities, use
+  `StackedList`. For columnar data, use `Table`. Don't wrap every list row in a
+  Card — it costs the row density operators rely on.
+</Aside>
 
 <DocsPage.ComponentExample
   client:only

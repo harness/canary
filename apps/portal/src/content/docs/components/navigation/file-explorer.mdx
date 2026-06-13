@@ -6,6 +6,14 @@ description: FileExplorer component for displaying hierarchical file and folder 
 The `FileExplorer` component is used to display file and folder hierarchies in a collapsible/expandable structure. It supports features like active states, links, nested levels, and tooltips.
 
 import { DocsPage } from "@/components/docs-page";
+import { Aside } from "@astrojs/starlight/components";
+
+<Aside type="tip" title="When to use FileExplorer">
+  Use `FileExplorer` to browse and select from a hierarchical file/folder structure — a
+  repo tree, a config browser — with expand/collapse and an active file. For a flat list
+  of entities, use `StackedList`. For a generic non-file tree, use `TreeView`. For
+  tabular file metadata, use `DataTable`. Keep the active file clearly marked.
+</Aside>
 
 <DocsPage.ComponentExample
   client:only

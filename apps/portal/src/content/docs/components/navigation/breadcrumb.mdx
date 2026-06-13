@@ -8,6 +8,14 @@ A breadcrumbs is a list of links that help visualize the location of a page with
 a site, it allows navigation up to any of the ancestors.
 
 import { DocsPage } from "@/components/docs-page";
+import { Aside } from "@astrojs/starlight/components";
+
+<Aside type="tip" title="When to use Breadcrumb">
+  Use `Breadcrumb` to show where the user is in a hierarchy (account › org › project ›
+  pipeline) and let them jump back up a level. For top-level section navigation, use
+  `Sidebar`. For switching views of one object, use `Tabs`. For a file path with an
+  edit affordance, use `PathBreadcrumbs`. Keep the current page non-clickable.
+</Aside>
 
 <DocsPage.ComponentExample
   client:only

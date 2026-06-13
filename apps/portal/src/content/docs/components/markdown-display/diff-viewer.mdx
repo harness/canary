@@ -7,6 +7,14 @@ beta: true
 The `DiffViewer` component provides a powerful way to display file differences with syntax highlighting. It supports both Split (side-by-side) and Unified (inline) display modes, making it perfect for code review interfaces, version comparison tools, and change visualization.
 
 import { DocsPage } from "@/components/docs-page";
+import { Aside } from "@astrojs/starlight/components";
+
+<Aside type="tip" title="When to use DiffViewer">
+  Use `DiffViewer` to compare two versions of code or text — a PR diff, a config change,
+  a suggested edit. For rendering a single document, use `MarkdownViewer`. Choose Split
+  (side-by-side) for wide screens and structural changes, Unified (inline) for narrow
+  columns or small edits.
+</Aside>
 
 <DocsPage.ComponentExample
   client:only

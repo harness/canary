@@ -11,6 +11,14 @@ The `Tabs` component provides a way to organize content into multiple panels, wi
 
 It can be composed with several subcomponents such as `Tabs.Root`, `Tabs.NavRoot`, `Tabs.List`, `Tabs.Trigger`, and `Tabs.Content` to offer a structured and customizable interface.
 
+<Aside type="tip" title="When to use Tabs">
+  Use `Tabs` to switch between mutually-exclusive views of one object — a resource's
+  Overview / Config / Logs — with only one visible at a time. For sections read
+  together or expanded in place, use `Accordion`. For top-level navigation between
+  pages, use `Sidebar` (`Tabs.NavRoot` is for router-linked sub-nav only). For a
+  binary on/off, use `Switch`.
+</Aside>
+
 <DocsPage.ComponentExample
   client:only
   code={`<Tabs.Root className="grid gap-cn-sm" defaultValue="tab1">

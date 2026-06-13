@@ -4,8 +4,16 @@ description: Skeleton component for displaying loading states
 ---
 
 import { DocsPage } from "@/components/docs-page";
+import { Aside } from "@astrojs/starlight/components";
 
 The `Skeleton` component is a placeholder UI element that represents the loading state of a component. It can be used to indicate that content is being loaded or processed, providing a visual cue to users.
+
+<Aside type="tip" title="When to use Skeleton">
+  Use `Skeleton` as the first-load placeholder for content whose shape you know — a
+  table, a list, a form — so the layout doesn't jump. For an operation with a known
+  percentage, use `Progress`. For an animated text-loading sweep, use `Shimmer`. Prefer
+  a shape-matched skeleton over a bare spinner.
+</Aside>
 
 <DocsPage.ComponentExample
   client:only

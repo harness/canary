@@ -7,6 +7,14 @@ The `TextInput` component is used to handle user input, providing options for st
 Also offers options for adding icons, captions, custom content, and error text for the field.
 
 import { DocsPage } from "@/components/docs-page";
+import { Aside } from "@astrojs/starlight/components";
+
+<Aside type="tip" title="When to use Text Input">
+  Use a text input when the user types a free value — a name, a URL, a search term.
+  For choosing from known options, use `Select` or `MultiSelect`. For a boolean, use
+  `Switch` or `Checkbox`. For a date, use `Calendar`. Pair it with a label (a
+  placeholder is not a label) and show validation errors as text, not color alone.
+</Aside>
 
 <DocsPage.ComponentExample
   client:only

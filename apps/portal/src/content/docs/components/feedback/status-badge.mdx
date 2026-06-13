@@ -7,6 +7,15 @@ beta: true
 The `StatusBadge` component is used to highlight and display small pieces of information, such as status indicators or labels. It supports multiple visual variants and color themes, and is non-interactive (read-only).
 
 import { DocsPage } from "@/components/docs-page";
+import { Aside } from "@astrojs/starlight/components";
+
+<Aside type="tip" title="When to use StatusBadge">
+  Use `StatusBadge` to show the *state* of something in a small footprint — a run's
+  success or failure, a deploy's health, a PR's merged status. For descriptive
+  metadata like a branch or environment, use `Tag`. For a numeric count, use
+  `CounterBadge`. For a full in-page message, use `Alert`. Pair the badge with an icon
+  so the state reads without relying on color alone.
+</Aside>
 
 <DocsPage.ComponentExample
   client:only

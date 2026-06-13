@@ -8,6 +8,14 @@ The `Switch` component provides a toggle switch for on/off states.
 It is built on top of the Radix UI Switch primitive with additional styling.
 
 import { DocsPage } from "@/components/docs-page";
+import { Aside } from "@astrojs/starlight/components";
+
+<Aside type="tip" title="When to use Switch">
+  Use `Switch` for a single setting that takes effect *immediately* on toggle —
+  enabling a feature, muting notifications. For a choice that applies on submit, use
+  `Checkbox`. For one of several exclusive options, use `Radio` or `ToggleGroup`. Don't
+  pair a Switch with its own Save button — that contradicts its instant-apply meaning.
+</Aside>
 
 <DocsPage.ComponentExample
   client:only

@@ -5,12 +5,20 @@ beta: true
 ---
 
 import { DocsPage } from "@/components/docs-page";
+import { Aside } from "@astrojs/starlight/components";
 
 The `Button` component allows users to trigger actions, submit forms, and navigate through the application. The button component supports various combinations of variants, themes, sizes, and states.
 
 ## Default Button
 
 The default button with no specified variant or theme.
+
+<Aside type="tip" title="When to use Button">
+  Use `Button` to trigger an action. Keep one filled `primary` per view and demote the
+  rest to secondary, outline, or ghost. For navigation between pages, use `Link`. For a
+  menu of commands, use `DropdownMenu`. For a primary action with closely-related
+  variants, use `SplitButton`.
+</Aside>
 
 <DocsPage.ComponentExample
   client:only

@@ -7,6 +7,14 @@ beta: true
 The `Progress` component provides a flexible UI element for displaying progress indicators.
 
 import { DocsPage } from "@/components/docs-page";
+import { Aside } from "@astrojs/starlight/components";
+
+<Aside type="tip" title="When to use Progress">
+  Use `Progress` for an operation with a knowable completion — a file upload, a
+  multi-step job, a quota meter. For a brief load whose shape you know, use `Skeleton`.
+  For a completed-action confirmation, use `Toast`. Reserve the indeterminate variant
+  for genuinely unknown durations, and show the real fraction rather than a flattering one.
+</Aside>
 
 <DocsPage.ComponentExample
   client:only

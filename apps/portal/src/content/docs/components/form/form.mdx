@@ -18,6 +18,15 @@ The `FormInput` components generate fields with the correct:
 - Accessibility attributes
 
 import { DocsPage } from "@/components/docs-page";
+import { Aside } from "@astrojs/starlight/components";
+
+<Aside type="tip" title="When to use Form">
+  Use `Form` when more than one field submits together and needs validation — a
+  create/edit resource form, settings, a connection config (it wraps react-hook-form +
+  Zod). For a single instant-apply toggle, use `Switch` on its own. For an action with
+  no field input, use `Button`. Let `FormInput.*` bind each field rather than
+  hand-rolling state, and make sure a failed submit never looks like a success.
+</Aside>
 
 <DocsPage.ComponentExampleWithZodAndForm
   client:only

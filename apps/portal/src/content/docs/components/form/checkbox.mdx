@@ -8,6 +8,14 @@ The `Checkbox` component provides a customizable, accessible checkbox input.
 It is built on top of the Radix UI Checkbox primitive with additional styling.
 
 import { DocsPage } from "@/components/docs-page";
+import { Aside } from "@astrojs/starlight/components";
+
+<Aside type="tip" title="When to use Checkbox">
+  Use `Checkbox` for options that take effect *on submit* — accepting terms, picking
+  several non-exclusive options, a "select all" with an indeterminate state. For a
+  setting that applies *immediately*, use `Switch`. For a single mutually-exclusive
+  choice, use `Radio`. For many values from a long list, use `MultiSelect`.
+</Aside>
 
 <DocsPage.ComponentExample
   client:only

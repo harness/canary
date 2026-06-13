@@ -8,6 +8,13 @@ import { Aside } from "@astrojs/starlight/components";
 
 The `Select` component provides a dropdown interface for selecting a single value from a list of options. It supports both controlled and uncontrolled modes, async loading states, search functionality, and integrates seamlessly with form validation.
 
+<Aside type="tip" title="When to use Select">
+  Use `Select` to choose *one value* from a known set inside a form — a status, an
+  environment, an owner. For *multiple* values, use `MultiSelect`. For 2–5 visible
+  mutually-exclusive options, use `Radio`. To trigger *actions* or commands rather than
+  pick a value, use `DropdownMenu` — value-selection and actions are different jobs.
+</Aside>
+
 <DocsPage.ComponentExample
   client:only
   code={`() => {

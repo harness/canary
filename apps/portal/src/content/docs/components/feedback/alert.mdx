@@ -7,6 +7,15 @@ beta: true
 The `Alert` component provides a flexible UI element for displaying alert messages. It is composed of several subcomponents such as `Alert.Root`, `Alert.Title`, `Alert.Description`, and `Alert.Link` to offer a structured and customizable interface.
 
 import { DocsPage } from "@/components/docs-page";
+import { Aside } from "@astrojs/starlight/components";
+
+<Aside type="tip" title="When to use Alert">
+  Use `Alert` for a message that stays on the page — a failed operation with a next
+  step, a warning before the user acts, a standing info banner. For a transient
+  confirmation of something they just did, use `Toast`. For a blocking decision, use
+  `Dialog` or `AlertDialog`. For per-field validation, use the input's caption. A
+  failure shown here should hand the user a next step (retry, logs), not just a message.
+</Aside>
 
 <DocsPage.ComponentExample
   client:only

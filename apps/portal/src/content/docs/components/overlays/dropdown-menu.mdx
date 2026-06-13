@@ -13,6 +13,15 @@ It can be composed with several subcomponents such as `DropdownMenu.Root`, `Drop
 
 `DropdownMenu.Item` has such variations as `AvatarItem`, `LogoItem`, `IconItem`, `IndicatorItem`, `CheckboxItem`, and `RadioItem` to provide different types of items for different use cases.
 
+<Aside type="tip" title="When to use DropdownMenu">
+  Use `DropdownMenu` for a list of actions or commands off a button or icon — a
+  row's "⋯" menu, a bulk-actions menu, a command list. To let the user choose a
+  form value, use `Select` (one) or `MultiSelect` (many) — value-selection and
+  actions are different jobs. For a searchable value picker, use
+  `SearchableDropdown`. For rich anchored content that isn't a list, use
+  `Popover`. For a primary action plus variants of it, use `SplitButton`.
+</Aside>
+
 <DocsPage.ComponentExample
   client:only
   code={`<DropdownMenu.Root>

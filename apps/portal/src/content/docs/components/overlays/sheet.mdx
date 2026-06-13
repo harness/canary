@@ -7,6 +7,14 @@ beta: true
 The Sheet component provides a flexible UI element for displaying overlaid content, often used for dialogs or side panels. It is composed of several subcomponents such as SheetHeader, SheetFooter, SheetTitle, and SheetDescription to offer a structured and customizable interface.
 
 import { DocsPage } from "@/components/docs-page";
+import { Aside } from "@astrojs/starlight/components";
+
+<Aside type="tip" title="When to use Sheet">
+  Use `Sheet` for a simple edge-anchored panel with one job and no sub-flow — a
+  quick filter set, a compact detail peek, a narrow or compact context. For
+  multi-step, dual-pane, or nested panels, use `Drawer`. For a blocking decision,
+  use `Dialog`. For rich content anchored to a trigger, use `Popover`.
+</Aside>
 
 <DocsPage.ComponentExample
   client:only

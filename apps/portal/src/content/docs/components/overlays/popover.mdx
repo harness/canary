@@ -13,6 +13,14 @@ It can be composed with several subcomponents such as `Popover.Root`, `Popover.T
 
 The `Popover.Content` component supports built-in `title`, `description`, and `linkProps` for common popover patterns, while also allowing custom content through children.
 
+<Aside type="tip" title="When to use Popover">
+  Use `Popover` for interactive content anchored to a trigger that dismisses on
+  outside-click — a filter form, a date or color picker, a small settings cluster.
+  For plain descriptive text or a hover hint, use `Tooltip`. For a flat list of
+  actions or commands, use `DropdownMenu`. For a page-blocking task, use `Dialog`.
+  For selecting a form value, use `Select` or `MultiSelect`.
+</Aside>
+
 <DocsPage.ComponentExample
   client:only
   code={`<Popover.Root>

@@ -9,6 +9,16 @@ The `Drawer` component provides a way to display content in a panel that slides 
 It is composed of several subcomponents such as `Drawer.Root`, `Drawer.Trigger`, `Drawer.Content`, `Drawer.Header`, `Drawer.HeaderV2`, `Drawer.Tagline`, `Drawer.Title`, `Drawer.Description`, `Drawer.Body`, `Drawer.Footer`, `Drawer.DualPane`, `Drawer.Rail`, `Drawer.Steps`, `Drawer.Step`, `Drawer.SubStep`, `Drawer.DualPaneMain` and `Drawer.Close` to offer a structured and customizable interface.
 
 import { DocsPage } from "@/components/docs-page";
+import { Aside } from "@astrojs/starlight/components";
+
+<Aside type="tip" title="When to use Drawer">
+  Use `Drawer` when the user works on something while keeping the underlying
+  context visible — a row's detail/edit panel, a create/edit sub-flow, or a
+  multi-step wizard. It supports nesting and dual-pane layouts. For a short
+  blocking decision, use `Dialog`. For a destructive confirm, use `AlertDialog`.
+  For a single-purpose lightweight panel with no sub-flow, use `Sheet`. For a tiny
+  contextual menu, use `Popover` or `DropdownMenu`.
+</Aside>
 
 <DocsPage.ComponentExample
   client:only

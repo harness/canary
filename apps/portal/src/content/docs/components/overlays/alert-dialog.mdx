@@ -9,6 +9,14 @@ The `AlertDialog` component is a specialized variant of `Dialog` designed for sc
 import { DocsPage } from "@/components/docs-page";
 import { Aside } from "@astrojs/starlight/components";
 
+<Aside type="tip" title="When to use AlertDialog">
+  Use `AlertDialog` when the action can't be cheaply undone — delete, force-push,
+  rollback, revoke — and the user must explicitly accept or cancel. For a neutral
+  task or a form, use `Dialog`. For a reversible action, skip the overlay
+  entirely: act, and offer an undo via `Toast`. For a passive, non-blocking
+  warning, use `Alert`.
+</Aside>
+
 <DocsPage.ComponentExample
   client:only
   code={`

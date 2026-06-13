@@ -9,6 +9,15 @@ The `Dialog` component provides an accessible and customizable dialog overlay fo
 import { DocsPage } from "@/components/docs-page";
 import { Aside } from "@astrojs/starlight/components";
 
+<Aside type="tip" title="When to use Dialog">
+  Use `Dialog` for a focused task or decision the user should resolve before
+  returning to the page, with light-to-moderate content. For a lot of content or
+  a multi-step sub-flow, use `Drawer`. For confirming a destructive or
+  irreversible action, use `AlertDialog`. For a small hint or a list of actions,
+  use `Popover` or `DropdownMenu`. To confirm something that just happened, use a
+  `Toast`.
+</Aside>
+
 <DocsPage.ComponentExample
   client:only
   code={`<Dialog.Root>

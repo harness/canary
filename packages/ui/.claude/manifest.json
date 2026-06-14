@@ -1,0 +1,6984 @@
+{
+  "generatedFrom": "dist/components.d.ts",
+  "importPath": "@harnessio/ui/components",
+  "componentCount": 156,
+  "components": [
+    {
+      "name": "Accordion",
+      "importPath": "@harnessio/ui/components",
+      "shape": "compound",
+      "variantEnums": {},
+      "booleanProps": [],
+      "largeEnumProps": {},
+      "requiredProps": [],
+      "perBranchRequired": [],
+      "subcomponents": [
+        {
+          "name": "Root",
+          "variantEnums": {
+            "variant": [
+              "default",
+              "card"
+            ],
+            "size": [
+              "sm",
+              "md"
+            ],
+            "indicatorPosition": [
+              "right",
+              "left"
+            ],
+            "cardSize": [
+              "sm",
+              "md",
+              "lg"
+            ]
+          },
+          "booleanProps": [],
+          "largeEnumProps": {},
+          "requiredProps": [],
+          "perBranchRequired": []
+        },
+        {
+          "name": "Item",
+          "variantEnums": {},
+          "booleanProps": [],
+          "largeEnumProps": {},
+          "requiredProps": [],
+          "perBranchRequired": []
+        },
+        {
+          "name": "Trigger",
+          "variantEnums": {},
+          "booleanProps": [
+            "clickable",
+            "prefix",
+            "suffix"
+          ],
+          "largeEnumProps": {},
+          "requiredProps": [],
+          "perBranchRequired": []
+        },
+        {
+          "name": "Content",
+          "variantEnums": {},
+          "booleanProps": [],
+          "largeEnumProps": {},
+          "requiredProps": [],
+          "perBranchRequired": []
+        }
+      ]
+    },
+    {
+      "name": "Alert",
+      "importPath": "@harnessio/ui/components",
+      "shape": "compound",
+      "variantEnums": {},
+      "booleanProps": [],
+      "largeEnumProps": {},
+      "requiredProps": [],
+      "perBranchRequired": [],
+      "subcomponents": [
+        {
+          "name": "Root",
+          "variantEnums": {
+            "theme": [
+              "danger",
+              "warning",
+              "success",
+              "info"
+            ]
+          },
+          "booleanProps": [
+            "dismissible",
+            "expandable"
+          ],
+          "largeEnumProps": {},
+          "requiredProps": [],
+          "perBranchRequired": []
+        },
+        {
+          "name": "Title",
+          "variantEnums": {},
+          "booleanProps": [],
+          "largeEnumProps": {},
+          "requiredProps": [],
+          "perBranchRequired": []
+        },
+        {
+          "name": "Description",
+          "variantEnums": {},
+          "booleanProps": [],
+          "largeEnumProps": {},
+          "requiredProps": [],
+          "perBranchRequired": []
+        },
+        {
+          "name": "Link",
+          "variantEnums": {},
+          "booleanProps": [],
+          "largeEnumProps": {},
+          "requiredProps": [],
+          "perBranchRequired": []
+        }
+      ]
+    },
+    {
+      "name": "AlertDialog",
+      "importPath": "@harnessio/ui/components",
+      "shape": "compound",
+      "variantEnums": {},
+      "booleanProps": [],
+      "largeEnumProps": {},
+      "requiredProps": [],
+      "perBranchRequired": [],
+      "subcomponents": [
+        {
+          "name": "Root",
+          "variantEnums": {
+            "theme": [
+              "default",
+              "danger",
+              "warning"
+            ]
+          },
+          "booleanProps": [
+            "children",
+            "loading",
+            "open"
+          ],
+          "largeEnumProps": {},
+          "requiredProps": [
+            "children",
+            "onConfirm"
+          ],
+          "perBranchRequired": []
+        },
+        {
+          "name": "Trigger",
+          "variantEnums": {},
+          "booleanProps": [],
+          "largeEnumProps": {},
+          "requiredProps": [],
+          "perBranchRequired": []
+        },
+        {
+          "name": "Content",
+          "variantEnums": {},
+          "booleanProps": [
+            "children"
+          ],
+          "largeEnumProps": {},
+          "requiredProps": [
+            "title"
+          ],
+          "perBranchRequired": []
+        },
+        {
+          "name": "Cancel",
+          "variantEnums": {},
+          "booleanProps": [
+            "children"
+          ],
+          "largeEnumProps": {},
+          "requiredProps": [],
+          "perBranchRequired": []
+        },
+        {
+          "name": "Confirm",
+          "variantEnums": {},
+          "booleanProps": [
+            "children",
+            "disabled"
+          ],
+          "largeEnumProps": {},
+          "requiredProps": [],
+          "perBranchRequired": []
+        }
+      ]
+    },
+    {
+      "name": "AppSidebarItem",
+      "importPath": "@harnessio/ui/components",
+      "shape": "arrow",
+      "variantEnums": {},
+      "booleanProps": [
+        "active",
+        "disabled",
+        "hideMenuItems",
+        "isRecent"
+      ],
+      "largeEnumProps": {},
+      "requiredProps": [
+        "handleChangePinnedMenuItem",
+        "handleCustomNav",
+        "handleRemoveRecentMenuItem",
+        "item"
+      ],
+      "perBranchRequired": [],
+      "subcomponents": []
+    },
+    {
+      "name": "AppSidebarUser",
+      "importPath": "@harnessio/ui/components",
+      "shape": "arrow",
+      "variantEnums": {},
+      "booleanProps": [],
+      "largeEnumProps": {},
+      "requiredProps": [
+        "handleLogOut",
+        "openLanguageDialog",
+        "openThemeDialog"
+      ],
+      "perBranchRequired": [],
+      "subcomponents": []
+    },
+    {
+      "name": "Avatar",
+      "importPath": "@harnessio/ui/components",
+      "shape": "forwardRef",
+      "variantEnums": {
+        "size": [
+          "sm",
+          "md",
+          "lg",
+          "xs"
+        ]
+      },
+      "booleanProps": [
+        "isGroup",
+        "noInitials",
+        "rounded"
+      ],
+      "largeEnumProps": {
+        "icon": 518
+      },
+      "requiredProps": [],
+      "perBranchRequired": [],
+      "subcomponents": []
+    },
+    {
+      "name": "AvatarWithTooltip",
+      "importPath": "@harnessio/ui/components",
+      "shape": "forwardRef",
+      "variantEnums": {
+        "size": [
+          "sm",
+          "md",
+          "lg",
+          "xs"
+        ]
+      },
+      "booleanProps": [
+        "isGroup",
+        "noInitials",
+        "rounded"
+      ],
+      "largeEnumProps": {
+        "icon": 518
+      },
+      "requiredProps": [],
+      "perBranchRequired": [],
+      "subcomponents": []
+    },
+    {
+      "name": "BranchTag",
+      "importPath": "@harnessio/ui/components",
+      "shape": "fc",
+      "variantEnums": {
+        "theme": [
+          "blue",
+          "purple",
+          "pink",
+          "green",
+          "indigo",
+          "brown",
+          "cyan",
+          "orange",
+          "red",
+          "yellow",
+          "gray",
+          "lime",
+          "violet",
+          "forest-green",
+          "mint"
+        ],
+        "variant": [
+          "secondary",
+          "outline"
+        ],
+        "size": [
+          "sm",
+          "md"
+        ]
+      },
+      "booleanProps": [
+        "hideBranchIcon",
+        "hideCopyButton"
+      ],
+      "largeEnumProps": {},
+      "requiredProps": [
+        "branchName"
+      ],
+      "perBranchRequired": [],
+      "subcomponents": []
+    },
+    {
+      "name": "Breadcrumb",
+      "importPath": "@harnessio/ui/components",
+      "shape": "compound",
+      "variantEnums": {},
+      "booleanProps": [],
+      "largeEnumProps": {},
+      "requiredProps": [],
+      "perBranchRequired": [],
+      "subcomponents": [
+        {
+          "name": "Root",
+          "variantEnums": {
+            "size": [
+              "sm",
+              "xs"
+            ]
+          },
+          "booleanProps": [
+            "separator"
+          ],
+          "largeEnumProps": {},
+          "requiredProps": [],
+          "perBranchRequired": []
+        },
+        {
+          "name": "List",
+          "variantEnums": {},
+          "booleanProps": [],
+          "largeEnumProps": {},
+          "requiredProps": [],
+          "perBranchRequired": []
+        },
+        {
+          "name": "Item",
+          "variantEnums": {},
+          "booleanProps": [],
+          "largeEnumProps": {
+            "prefixIcon": 518
+          },
+          "requiredProps": [],
+          "perBranchRequired": []
+        },
+        {
+          "name": "Link",
+          "variantEnums": {},
+          "booleanProps": [
+            "asChild"
+          ],
+          "largeEnumProps": {
+            "prefixIcon": 518
+          },
+          "requiredProps": [],
+          "perBranchRequired": []
+        },
+        {
+          "name": "HeaderLink",
+          "variantEnums": {},
+          "booleanProps": [],
+          "largeEnumProps": {},
+          "requiredProps": [],
+          "perBranchRequired": []
+        },
+        {
+          "name": "Page",
+          "variantEnums": {},
+          "booleanProps": [],
+          "largeEnumProps": {
+            "prefixIcon": 518
+          },
+          "requiredProps": [],
+          "perBranchRequired": []
+        },
+        {
+          "name": "Copy",
+          "variantEnums": {
+            "buttonVariant": [
+              "ai",
+              "link",
+              "secondary",
+              "outline",
+              "transparent",
+              "primary",
+              "ghost"
+            ],
+            "size": [
+              "sm",
+              "md",
+              "2xs",
+              "xs",
+              "3xs"
+            ],
+            "color": [
+              "inherit",
+              "danger",
+              "warning",
+              "success",
+              "info",
+              "merged",
+              "risk",
+              "neutral"
+            ],
+            "iconSize": [
+              "sm",
+              "md",
+              "lg",
+              "xl",
+              "2xs",
+              "xs"
+            ]
+          },
+          "booleanProps": [],
+          "largeEnumProps": {},
+          "requiredProps": [
+            "name"
+          ],
+          "perBranchRequired": []
+        },
+        {
+          "name": "Separator",
+          "variantEnums": {},
+          "booleanProps": [],
+          "largeEnumProps": {},
+          "requiredProps": [],
+          "perBranchRequired": []
+        },
+        {
+          "name": "Ellipsis",
+          "variantEnums": {},
+          "booleanProps": [],
+          "largeEnumProps": {},
+          "requiredProps": [
+            "items"
+          ],
+          "perBranchRequired": []
+        },
+        {
+          "name": "RootInteractive",
+          "variantEnums": {
+            "size": [
+              "sm",
+              "xs"
+            ]
+          },
+          "booleanProps": [
+            "isRootOnly"
+          ],
+          "largeEnumProps": {},
+          "requiredProps": [],
+          "perBranchRequired": []
+        }
+      ]
+    },
+    {
+      "name": "Button",
+      "importPath": "@harnessio/ui/components",
+      "shape": "forwardRef",
+      "variantEnums": {
+        "variant": [
+          "ai",
+          "link",
+          "secondary",
+          "outline",
+          "transparent",
+          "primary",
+          "ghost"
+        ],
+        "size": [
+          "sm",
+          "md",
+          "2xs",
+          "xs",
+          "3xs"
+        ],
+        "theme": [
+          "default",
+          "danger",
+          "success"
+        ]
+      },
+      "booleanProps": [
+        "asChild",
+        "iconOnly",
+        "loading",
+        "rounded"
+      ],
+      "largeEnumProps": {},
+      "requiredProps": [],
+      "perBranchRequired": [],
+      "subcomponents": []
+    },
+    {
+      "name": "ButtonGroup",
+      "importPath": "@harnessio/ui/components",
+      "shape": "forwardRef",
+      "variantEnums": {
+        "orientation": [
+          "vertical",
+          "horizontal"
+        ],
+        "size": [
+          "sm",
+          "md",
+          "2xs",
+          "xs",
+          "3xs"
+        ]
+      },
+      "booleanProps": [
+        "iconOnly"
+      ],
+      "largeEnumProps": {},
+      "requiredProps": [
+        "buttonsProps"
+      ],
+      "perBranchRequired": [],
+      "subcomponents": []
+    },
+    {
+      "name": "ButtonLayout",
+      "importPath": "@harnessio/ui/components",
+      "shape": "arrow",
+      "variantEnums": {
+        "orientation": [
+          "vertical",
+          "horizontal"
+        ],
+        "horizontalAlign": [
+          "end",
+          "start"
+        ]
+      },
+      "booleanProps": [
+        "children"
+      ],
+      "largeEnumProps": {},
+      "requiredProps": [
+        "children"
+      ],
+      "perBranchRequired": [],
+      "subcomponents": []
+    },
+    {
+      "name": "Calendar",
+      "importPath": "@harnessio/ui/components",
+      "shape": "function",
+      "variantEnums": {},
+      "booleanProps": [],
+      "largeEnumProps": {},
+      "requiredProps": [],
+      "perBranchRequired": [],
+      "subcomponents": []
+    },
+    {
+      "name": "CalendarInputView",
+      "importPath": "@harnessio/ui/components",
+      "shape": "arrow",
+      "variantEnums": {},
+      "booleanProps": [],
+      "largeEnumProps": {},
+      "requiredProps": [
+        "setValue"
+      ],
+      "perBranchRequired": [],
+      "subcomponents": []
+    },
+    {
+      "name": "Caption",
+      "importPath": "@harnessio/ui/components",
+      "shape": "function",
+      "variantEnums": {},
+      "booleanProps": [],
+      "largeEnumProps": {},
+      "requiredProps": [],
+      "perBranchRequired": [],
+      "subcomponents": []
+    },
+    {
+      "name": "Card",
+      "importPath": "@harnessio/ui/components",
+      "shape": "compound",
+      "variantEnums": {},
+      "booleanProps": [],
+      "largeEnumProps": {},
+      "requiredProps": [],
+      "perBranchRequired": [],
+      "subcomponents": [
+        {
+          "name": "Root",
+          "variantEnums": {
+            "size": [
+              "sm",
+              "md",
+              "lg"
+            ],
+            "orientation": [
+              "vertical",
+              "horizontal"
+            ],
+            "position": [
+              "end",
+              "start"
+            ]
+          },
+          "booleanProps": [
+            "children",
+            "disabled",
+            "interactive",
+            "selected"
+          ],
+          "largeEnumProps": {},
+          "requiredProps": [
+            "children"
+          ],
+          "perBranchRequired": []
+        },
+        {
+          "name": "Title",
+          "variantEnums": {
+            "as": [
+              "h2",
+              "h3",
+              "h1",
+              "h4",
+              "h5",
+              "h6"
+            ]
+          },
+          "booleanProps": [],
+          "largeEnumProps": {},
+          "requiredProps": [],
+          "perBranchRequired": []
+        },
+        {
+          "name": "Content",
+          "variantEnums": {},
+          "booleanProps": [],
+          "largeEnumProps": {},
+          "requiredProps": [],
+          "perBranchRequired": []
+        },
+        {
+          "name": "Image",
+          "variantEnums": {},
+          "booleanProps": [],
+          "largeEnumProps": {},
+          "requiredProps": [],
+          "perBranchRequired": []
+        }
+      ]
+    },
+    {
+      "name": "CardSelect",
+      "importPath": "@harnessio/ui/components",
+      "shape": "compound",
+      "variantEnums": {},
+      "booleanProps": [],
+      "largeEnumProps": {},
+      "requiredProps": [],
+      "perBranchRequired": [],
+      "subcomponents": [
+        {
+          "name": "Root",
+          "variantEnums": {
+            "type": [
+              "single",
+              "multiple"
+            ],
+            "layout": [
+              "vertical",
+              "horizontal",
+              "grid"
+            ],
+            "gap": [
+              "sm",
+              "md",
+              "lg",
+              "xs"
+            ]
+          },
+          "booleanProps": [
+            "children",
+            "disabled"
+          ],
+          "largeEnumProps": {},
+          "requiredProps": [
+            "children",
+            "type"
+          ],
+          "perBranchRequired": []
+        },
+        {
+          "name": "Item",
+          "variantEnums": {},
+          "booleanProps": [
+            "children",
+            "disabled"
+          ],
+          "largeEnumProps": {
+            "icon": 518,
+            "logo": 137
+          },
+          "requiredProps": [
+            "children",
+            "value"
+          ],
+          "perBranchRequired": []
+        },
+        {
+          "name": "Title",
+          "variantEnums": {},
+          "booleanProps": [],
+          "largeEnumProps": {},
+          "requiredProps": [],
+          "perBranchRequired": []
+        },
+        {
+          "name": "Description",
+          "variantEnums": {},
+          "booleanProps": [],
+          "largeEnumProps": {},
+          "requiredProps": [],
+          "perBranchRequired": []
+        }
+      ]
+    },
+    {
+      "name": "Carousel",
+      "importPath": "@harnessio/ui/components",
+      "shape": "compound",
+      "variantEnums": {},
+      "booleanProps": [],
+      "largeEnumProps": {},
+      "requiredProps": [],
+      "perBranchRequired": [],
+      "subcomponents": [
+        {
+          "name": "Root",
+          "variantEnums": {
+            "orientation": [
+              "vertical",
+              "horizontal"
+            ]
+          },
+          "booleanProps": [],
+          "largeEnumProps": {},
+          "requiredProps": [],
+          "perBranchRequired": []
+        },
+        {
+          "name": "Content",
+          "variantEnums": {},
+          "booleanProps": [],
+          "largeEnumProps": {},
+          "requiredProps": [],
+          "perBranchRequired": []
+        },
+        {
+          "name": "Item",
+          "variantEnums": {},
+          "booleanProps": [],
+          "largeEnumProps": {},
+          "requiredProps": [],
+          "perBranchRequired": []
+        },
+        {
+          "name": "Previous",
+          "variantEnums": {
+            "variant": [
+              "ai",
+              "link",
+              "secondary",
+              "outline",
+              "transparent",
+              "primary",
+              "ghost"
+            ],
+            "size": [
+              "sm",
+              "md",
+              "2xs",
+              "xs",
+              "3xs"
+            ],
+            "theme": [
+              "default",
+              "danger",
+              "success"
+            ]
+          },
+          "booleanProps": [
+            "asChild",
+            "loading",
+            "rounded"
+          ],
+          "largeEnumProps": {},
+          "requiredProps": [],
+          "perBranchRequired": []
+        },
+        {
+          "name": "Next",
+          "variantEnums": {
+            "variant": [
+              "ai",
+              "link",
+              "secondary",
+              "outline",
+              "transparent",
+              "primary",
+              "ghost"
+            ],
+            "size": [
+              "sm",
+              "md",
+              "2xs",
+              "xs",
+              "3xs"
+            ],
+            "theme": [
+              "default",
+              "danger",
+              "success"
+            ]
+          },
+          "booleanProps": [
+            "asChild",
+            "loading",
+            "rounded"
+          ],
+          "largeEnumProps": {},
+          "requiredProps": [],
+          "perBranchRequired": []
+        }
+      ]
+    },
+    {
+      "name": "Chat",
+      "importPath": "@harnessio/ui/components",
+      "shape": "compound",
+      "variantEnums": {},
+      "booleanProps": [],
+      "largeEnumProps": {},
+      "requiredProps": [],
+      "perBranchRequired": [],
+      "subcomponents": [
+        {
+          "name": "Root",
+          "variantEnums": {},
+          "booleanProps": [],
+          "largeEnumProps": {},
+          "requiredProps": [],
+          "perBranchRequired": []
+        },
+        {
+          "name": "Body",
+          "variantEnums": {},
+          "booleanProps": [],
+          "largeEnumProps": {},
+          "requiredProps": [],
+          "perBranchRequired": []
+        },
+        {
+          "name": "Header",
+          "variantEnums": {},
+          "booleanProps": [],
+          "largeEnumProps": {},
+          "requiredProps": [
+            "onClose"
+          ],
+          "perBranchRequired": []
+        },
+        {
+          "name": "Footer",
+          "variantEnums": {},
+          "booleanProps": [],
+          "largeEnumProps": {},
+          "requiredProps": [],
+          "perBranchRequired": []
+        },
+        {
+          "name": "Message",
+          "variantEnums": {},
+          "booleanProps": [
+            "actions",
+            "avatar",
+            "self"
+          ],
+          "largeEnumProps": {},
+          "requiredProps": [],
+          "perBranchRequired": []
+        },
+        {
+          "name": "Typing",
+          "variantEnums": {},
+          "booleanProps": [
+            "avatar"
+          ],
+          "largeEnumProps": {},
+          "requiredProps": [],
+          "perBranchRequired": []
+        },
+        {
+          "name": "CodeBlock",
+          "variantEnums": {},
+          "booleanProps": [],
+          "largeEnumProps": {},
+          "requiredProps": [],
+          "perBranchRequired": []
+        },
+        {
+          "name": "Separator",
+          "variantEnums": {},
+          "booleanProps": [],
+          "largeEnumProps": {},
+          "requiredProps": [
+            "title"
+          ],
+          "perBranchRequired": []
+        },
+        {
+          "name": "EmptyState",
+          "variantEnums": {},
+          "booleanProps": [],
+          "largeEnumProps": {},
+          "requiredProps": [],
+          "perBranchRequired": []
+        },
+        {
+          "name": "Input",
+          "variantEnums": {},
+          "booleanProps": [
+            "disabled",
+            "sendIcon"
+          ],
+          "largeEnumProps": {},
+          "requiredProps": [],
+          "perBranchRequired": []
+        }
+      ]
+    },
+    {
+      "name": "ChatDiffViewer",
+      "importPath": "@harnessio/ui/components",
+      "shape": "arrow",
+      "variantEnums": {
+        "mode": [
+          "1",
+          "2",
+          "3",
+          "4"
+        ]
+      },
+      "booleanProps": [],
+      "largeEnumProps": {},
+      "requiredProps": [
+        "data"
+      ],
+      "perBranchRequired": [],
+      "subcomponents": []
+    },
+    {
+      "name": "ChatEmptyPreviewWrapper",
+      "importPath": "@harnessio/ui/components",
+      "shape": "fc",
+      "variantEnums": {},
+      "booleanProps": [],
+      "largeEnumProps": {},
+      "requiredProps": [],
+      "perBranchRequired": [],
+      "subcomponents": []
+    },
+    {
+      "name": "ChatPreviewWrapper",
+      "importPath": "@harnessio/ui/components",
+      "shape": "fc",
+      "variantEnums": {},
+      "booleanProps": [],
+      "largeEnumProps": {},
+      "requiredProps": [],
+      "perBranchRequired": [],
+      "subcomponents": []
+    },
+    {
+      "name": "ChatV2",
+      "importPath": "@harnessio/ui/components",
+      "shape": "arrow",
+      "variantEnums": {},
+      "booleanProps": [],
+      "largeEnumProps": {},
+      "requiredProps": [],
+      "perBranchRequired": [],
+      "subcomponents": []
+    },
+    {
+      "name": "Checkbox",
+      "importPath": "@harnessio/ui/components",
+      "shape": "forwardRef",
+      "variantEnums": {
+        "captionVariant": [
+          "body-normal",
+          "heading-hero",
+          "heading-section",
+          "heading-subsection",
+          "heading-base",
+          "heading-small",
+          "body-single-line-normal",
+          "body-single-line-light",
+          "body-strong",
+          "body-single-line-strong",
+          "body-code",
+          "body-single-line-code",
+          "caption-normal",
+          "caption-light",
+          "caption-strong",
+          "caption-code",
+          "caption-single-line-code",
+          "caption-single-line-normal",
+          "caption-single-line-light"
+        ]
+      },
+      "booleanProps": [
+        "error",
+        "showOptionalLabel",
+        "truncateLabel"
+      ],
+      "largeEnumProps": {},
+      "requiredProps": [],
+      "perBranchRequired": [],
+      "subcomponents": []
+    },
+    {
+      "name": "CollapseButton",
+      "importPath": "@harnessio/ui/components",
+      "shape": "forwardRef",
+      "variantEnums": {},
+      "booleanProps": [
+        "expandAll"
+      ],
+      "largeEnumProps": {},
+      "requiredProps": [
+        "elements"
+      ],
+      "perBranchRequired": [],
+      "subcomponents": []
+    },
+    {
+      "name": "Command",
+      "importPath": "@harnessio/ui/components",
+      "shape": "compound",
+      "variantEnums": {},
+      "booleanProps": [],
+      "largeEnumProps": {},
+      "requiredProps": [],
+      "perBranchRequired": [],
+      "subcomponents": [
+        {
+          "name": "Root",
+          "variantEnums": {},
+          "booleanProps": [
+            "asChild",
+            "children",
+            "disablePointerSelection",
+            "loop",
+            "shouldFilter",
+            "vimBindings"
+          ],
+          "largeEnumProps": {},
+          "requiredProps": [],
+          "perBranchRequired": []
+        },
+        {
+          "name": "Dialog",
+          "variantEnums": {},
+          "booleanProps": [],
+          "largeEnumProps": {},
+          "requiredProps": [],
+          "perBranchRequired": []
+        },
+        {
+          "name": "Input",
+          "variantEnums": {},
+          "booleanProps": [
+            "asChild"
+          ],
+          "largeEnumProps": {},
+          "requiredProps": [],
+          "perBranchRequired": []
+        },
+        {
+          "name": "List",
+          "variantEnums": {},
+          "booleanProps": [
+            "asChild",
+            "children"
+          ],
+          "largeEnumProps": {},
+          "requiredProps": [],
+          "perBranchRequired": []
+        },
+        {
+          "name": "Empty",
+          "variantEnums": {},
+          "booleanProps": [
+            "asChild",
+            "children"
+          ],
+          "largeEnumProps": {},
+          "requiredProps": [],
+          "perBranchRequired": []
+        },
+        {
+          "name": "Group",
+          "variantEnums": {},
+          "booleanProps": [
+            "asChild",
+            "children",
+            "forceMount",
+            "heading"
+          ],
+          "largeEnumProps": {},
+          "requiredProps": [],
+          "perBranchRequired": []
+        },
+        {
+          "name": "Item",
+          "variantEnums": {},
+          "booleanProps": [
+            "asChild",
+            "children",
+            "disabled",
+            "forceMount"
+          ],
+          "largeEnumProps": {},
+          "requiredProps": [],
+          "perBranchRequired": []
+        },
+        {
+          "name": "Shortcut",
+          "variantEnums": {},
+          "booleanProps": [],
+          "largeEnumProps": {},
+          "requiredProps": [],
+          "perBranchRequired": []
+        },
+        {
+          "name": "Separator",
+          "variantEnums": {},
+          "booleanProps": [
+            "alwaysRender",
+            "asChild"
+          ],
+          "largeEnumProps": {},
+          "requiredProps": [],
+          "perBranchRequired": []
+        },
+        {
+          "name": "Loading",
+          "variantEnums": {},
+          "booleanProps": [
+            "asChild",
+            "children"
+          ],
+          "largeEnumProps": {},
+          "requiredProps": [],
+          "perBranchRequired": []
+        }
+      ]
+    },
+    {
+      "name": "CommandPalette",
+      "importPath": "@harnessio/ui/components",
+      "shape": "compound",
+      "variantEnums": {},
+      "booleanProps": [],
+      "largeEnumProps": {},
+      "requiredProps": [],
+      "perBranchRequired": [],
+      "subcomponents": [
+        {
+          "name": "Root",
+          "variantEnums": {},
+          "booleanProps": [
+            "asChild",
+            "children",
+            "disablePointerSelection",
+            "loop",
+            "shouldFilter",
+            "vimBindings"
+          ],
+          "largeEnumProps": {},
+          "requiredProps": [],
+          "perBranchRequired": []
+        },
+        {
+          "name": "Dialog",
+          "variantEnums": {},
+          "booleanProps": [
+            "open"
+          ],
+          "largeEnumProps": {},
+          "requiredProps": [
+            "onOpenChange",
+            "open"
+          ],
+          "perBranchRequired": []
+        },
+        {
+          "name": "Dropdown",
+          "variantEnums": {},
+          "booleanProps": [
+            "open"
+          ],
+          "largeEnumProps": {},
+          "requiredProps": [
+            "onOpenChange",
+            "open"
+          ],
+          "perBranchRequired": []
+        },
+        {
+          "name": "Input",
+          "variantEnums": {},
+          "booleanProps": [
+            "asChild"
+          ],
+          "largeEnumProps": {},
+          "requiredProps": [],
+          "perBranchRequired": []
+        },
+        {
+          "name": "Empty",
+          "variantEnums": {},
+          "booleanProps": [
+            "asChild",
+            "children"
+          ],
+          "largeEnumProps": {},
+          "requiredProps": [],
+          "perBranchRequired": []
+        },
+        {
+          "name": "Group",
+          "variantEnums": {},
+          "booleanProps": [
+            "asChild",
+            "children",
+            "forceMount",
+            "heading"
+          ],
+          "largeEnumProps": {},
+          "requiredProps": [],
+          "perBranchRequired": []
+        },
+        {
+          "name": "List",
+          "variantEnums": {},
+          "booleanProps": [
+            "asChild",
+            "children"
+          ],
+          "largeEnumProps": {},
+          "requiredProps": [],
+          "perBranchRequired": []
+        },
+        {
+          "name": "Item",
+          "variantEnums": {},
+          "booleanProps": [
+            "asChild",
+            "children",
+            "disabled",
+            "forceMount"
+          ],
+          "largeEnumProps": {},
+          "requiredProps": [],
+          "perBranchRequired": []
+        },
+        {
+          "name": "Separator",
+          "variantEnums": {},
+          "booleanProps": [
+            "alwaysRender",
+            "asChild"
+          ],
+          "largeEnumProps": {},
+          "requiredProps": [],
+          "perBranchRequired": []
+        },
+        {
+          "name": "Shortcut",
+          "variantEnums": {},
+          "booleanProps": [],
+          "largeEnumProps": {},
+          "requiredProps": [],
+          "perBranchRequired": []
+        }
+      ]
+    },
+    {
+      "name": "CommitCopyActions",
+      "importPath": "@harnessio/ui/components",
+      "shape": "arrow",
+      "variantEnums": {
+        "size": [
+          "sm",
+          "md",
+          "2xs",
+          "xs",
+          "3xs"
+        ]
+      },
+      "booleanProps": [],
+      "largeEnumProps": {},
+      "requiredProps": [
+        "sha"
+      ],
+      "perBranchRequired": [],
+      "subcomponents": []
+    },
+    {
+      "name": "CommitSuggestionsDialog",
+      "importPath": "@harnessio/ui/components",
+      "shape": "fc",
+      "variantEnums": {},
+      "booleanProps": [
+        "isOpen",
+        "isSubmitting"
+      ],
+      "largeEnumProps": {},
+      "requiredProps": [
+        "isOpen",
+        "isSubmitting",
+        "onClose",
+        "onFormSubmit"
+      ],
+      "perBranchRequired": [],
+      "subcomponents": []
+    },
+    {
+      "name": "ControlGroup",
+      "importPath": "@harnessio/ui/components",
+      "shape": "arrow",
+      "variantEnums": {
+        "type": [
+          "button",
+          "input"
+        ],
+        "orientation": [
+          "vertical",
+          "horizontal"
+        ]
+      },
+      "booleanProps": [],
+      "largeEnumProps": {},
+      "requiredProps": [],
+      "perBranchRequired": [],
+      "subcomponents": []
+    },
+    {
+      "name": "CopyButton",
+      "importPath": "@harnessio/ui/components",
+      "shape": "forwardRef",
+      "variantEnums": {
+        "buttonVariant": [
+          "ai",
+          "link",
+          "secondary",
+          "outline",
+          "transparent",
+          "primary",
+          "ghost"
+        ],
+        "size": [
+          "sm",
+          "md",
+          "2xs",
+          "xs",
+          "3xs"
+        ],
+        "color": [
+          "inherit",
+          "danger",
+          "warning",
+          "success",
+          "info",
+          "merged",
+          "risk",
+          "neutral"
+        ],
+        "iconSize": [
+          "sm",
+          "md",
+          "lg",
+          "xl",
+          "2xs",
+          "xs"
+        ]
+      },
+      "booleanProps": [],
+      "largeEnumProps": {},
+      "requiredProps": [
+        "name"
+      ],
+      "perBranchRequired": [],
+      "subcomponents": []
+    },
+    {
+      "name": "CopyTag",
+      "importPath": "@harnessio/ui/components",
+      "shape": "function",
+      "variantEnums": {
+        "variant": [
+          "secondary",
+          "outline"
+        ],
+        "size": [
+          "sm",
+          "md"
+        ],
+        "theme": [
+          "blue",
+          "purple",
+          "pink",
+          "green",
+          "indigo",
+          "brown",
+          "cyan",
+          "orange",
+          "red",
+          "yellow",
+          "gray",
+          "lime",
+          "violet",
+          "forest-green",
+          "mint"
+        ]
+      },
+      "booleanProps": [
+        "disabled",
+        "enableHover",
+        "rounded"
+      ],
+      "largeEnumProps": {
+        "icon": 518
+      },
+      "requiredProps": [
+        "value"
+      ],
+      "perBranchRequired": [],
+      "subcomponents": []
+    },
+    {
+      "name": "CounterBadge",
+      "importPath": "@harnessio/ui/components",
+      "shape": "forwardRef",
+      "variantEnums": {
+        "variant": [
+          "secondary",
+          "outline"
+        ],
+        "theme": [
+          "default",
+          "danger",
+          "success",
+          "info"
+        ]
+      },
+      "booleanProps": [],
+      "largeEnumProps": {},
+      "requiredProps": [],
+      "perBranchRequired": [],
+      "subcomponents": []
+    },
+    {
+      "name": "DataTable",
+      "importPath": "@harnessio/ui/components",
+      "shape": "arrow",
+      "variantEnums": {
+        "size": [
+          "normal",
+          "relaxed",
+          "compact"
+        ],
+        "variant": [
+          "default",
+          "transparent"
+        ]
+      },
+      "booleanProps": [
+        "currentExpanded",
+        "disableHighlightOnHover",
+        "enableExpanding",
+        "enableRowSelection"
+      ],
+      "largeEnumProps": {},
+      "requiredProps": [
+        "columns",
+        "data"
+      ],
+      "perBranchRequired": [],
+      "subcomponents": []
+    },
+    {
+      "name": "DeleteAlertDialog",
+      "importPath": "@harnessio/ui/components",
+      "shape": "fc",
+      "variantEnums": {},
+      "booleanProps": [
+        "bypassable",
+        "isLoading",
+        "open",
+        "violation",
+        "withForm"
+      ],
+      "largeEnumProps": {},
+      "requiredProps": [
+        "deleteFn",
+        "onClose",
+        "open"
+      ],
+      "perBranchRequired": [],
+      "subcomponents": []
+    },
+    {
+      "name": "Dialog",
+      "importPath": "@harnessio/ui/components",
+      "shape": "compound",
+      "variantEnums": {},
+      "booleanProps": [],
+      "largeEnumProps": {},
+      "requiredProps": [],
+      "perBranchRequired": [],
+      "subcomponents": [
+        {
+          "name": "Root",
+          "variantEnums": {},
+          "booleanProps": [],
+          "largeEnumProps": {},
+          "requiredProps": [],
+          "perBranchRequired": []
+        },
+        {
+          "name": "Trigger",
+          "variantEnums": {},
+          "booleanProps": [],
+          "largeEnumProps": {},
+          "requiredProps": [],
+          "perBranchRequired": []
+        },
+        {
+          "name": "Content",
+          "variantEnums": {
+            "size": [
+              "sm",
+              "md",
+              "max",
+              "lg"
+            ]
+          },
+          "booleanProps": [
+            "hideClose"
+          ],
+          "largeEnumProps": {},
+          "requiredProps": [],
+          "perBranchRequired": []
+        },
+        {
+          "name": "Close",
+          "variantEnums": {
+            "variant": [
+              "ai",
+              "link",
+              "secondary",
+              "outline",
+              "transparent",
+              "primary",
+              "ghost"
+            ],
+            "size": [
+              "sm",
+              "md",
+              "2xs",
+              "xs",
+              "3xs"
+            ],
+            "theme": [
+              "default",
+              "danger",
+              "success"
+            ]
+          },
+          "booleanProps": [
+            "asChild",
+            "iconOnly",
+            "loading",
+            "rounded"
+          ],
+          "largeEnumProps": {},
+          "requiredProps": [],
+          "perBranchRequired": []
+        },
+        {
+          "name": "Header",
+          "variantEnums": {
+            "theme": [
+              "default",
+              "danger",
+              "warning"
+            ]
+          },
+          "booleanProps": [],
+          "largeEnumProps": {
+            "icon": 518,
+            "logo": 137
+          },
+          "requiredProps": [],
+          "perBranchRequired": []
+        },
+        {
+          "name": "Title",
+          "variantEnums": {},
+          "booleanProps": [],
+          "largeEnumProps": {},
+          "requiredProps": [],
+          "perBranchRequired": []
+        },
+        {
+          "name": "Description",
+          "variantEnums": {},
+          "booleanProps": [],
+          "largeEnumProps": {},
+          "requiredProps": [],
+          "perBranchRequired": []
+        },
+        {
+          "name": "Body",
+          "variantEnums": {},
+          "booleanProps": [
+            "children",
+            "scrollable"
+          ],
+          "largeEnumProps": {},
+          "requiredProps": [
+            "children"
+          ],
+          "perBranchRequired": []
+        },
+        {
+          "name": "Footer",
+          "variantEnums": {},
+          "booleanProps": [],
+          "largeEnumProps": {},
+          "requiredProps": [],
+          "perBranchRequired": []
+        }
+      ]
+    },
+    {
+      "name": "DiffViewer",
+      "importPath": "@harnessio/ui/components",
+      "shape": "arrow",
+      "variantEnums": {
+        "diffViewMode": [
+          "1",
+          "2",
+          "3",
+          "4"
+        ]
+      },
+      "booleanProps": [
+        "diffViewWrap"
+      ],
+      "largeEnumProps": {
+        "lang": 197
+      },
+      "requiredProps": [
+        "newCode",
+        "oldCode"
+      ],
+      "perBranchRequired": [],
+      "subcomponents": []
+    },
+    {
+      "name": "DraggableCard",
+      "importPath": "@harnessio/ui/components",
+      "shape": "arrow",
+      "variantEnums": {
+        "gripPosition": [
+          "inside",
+          "outside"
+        ],
+        "size": [
+          "sm",
+          "md",
+          "lg"
+        ],
+        "orientation": [
+          "vertical",
+          "horizontal"
+        ],
+        "position": [
+          "end",
+          "start"
+        ]
+      },
+      "booleanProps": [
+        "description",
+        "disableDragAndDrop",
+        "disabled",
+        "interactive",
+        "selected",
+        "title"
+      ],
+      "largeEnumProps": {},
+      "requiredProps": [
+        "id",
+        "title"
+      ],
+      "perBranchRequired": [],
+      "subcomponents": []
+    },
+    {
+      "name": "DraggableCardList",
+      "importPath": "@harnessio/ui/components",
+      "shape": "arrow",
+      "variantEnums": {
+        "listGap": [
+          "sm",
+          "md",
+          "none",
+          "lg",
+          "xl",
+          "2xs",
+          "xs",
+          "3xs",
+          "4xs",
+          "2xl",
+          "3xl",
+          "4xl"
+        ]
+      },
+      "booleanProps": [],
+      "largeEnumProps": {},
+      "requiredProps": [
+        "cards",
+        "setCards"
+      ],
+      "perBranchRequired": [],
+      "subcomponents": []
+    },
+    {
+      "name": "DraggableSidebarDivider",
+      "importPath": "@harnessio/ui/components",
+      "shape": "fc",
+      "variantEnums": {},
+      "booleanProps": [],
+      "largeEnumProps": {},
+      "requiredProps": [
+        "setWidth",
+        "width"
+      ],
+      "perBranchRequired": [],
+      "subcomponents": []
+    },
+    {
+      "name": "Drawer",
+      "importPath": "@harnessio/ui/components",
+      "shape": "compound",
+      "variantEnums": {},
+      "booleanProps": [],
+      "largeEnumProps": {},
+      "requiredProps": [],
+      "perBranchRequired": [],
+      "subcomponents": [
+        {
+          "name": "Root",
+          "variantEnums": {},
+          "booleanProps": [],
+          "largeEnumProps": {},
+          "requiredProps": [],
+          "perBranchRequired": []
+        },
+        {
+          "name": "Trigger",
+          "variantEnums": {},
+          "booleanProps": [],
+          "largeEnumProps": {},
+          "requiredProps": [],
+          "perBranchRequired": []
+        },
+        {
+          "name": "Content",
+          "variantEnums": {
+            "size": [
+              "sm",
+              "md",
+              "lg",
+              "xl",
+              "2xs",
+              "xs",
+              "full"
+            ]
+          },
+          "booleanProps": [
+            "forceWithOverlay"
+          ],
+          "largeEnumProps": {},
+          "requiredProps": [],
+          "perBranchRequired": []
+        },
+        {
+          "name": "Header",
+          "variantEnums": {},
+          "booleanProps": [
+            "children",
+            "hideClose"
+          ],
+          "largeEnumProps": {
+            "icon": 518,
+            "logo": 137
+          },
+          "requiredProps": [
+            "children"
+          ],
+          "perBranchRequired": [
+            [
+              "children",
+              "icon"
+            ],
+            [
+              "children",
+              "logo"
+            ],
+            [
+              "children"
+            ]
+          ]
+        },
+        {
+          "name": "Body",
+          "variantEnums": {},
+          "booleanProps": [],
+          "largeEnumProps": {},
+          "requiredProps": [],
+          "perBranchRequired": []
+        },
+        {
+          "name": "Footer",
+          "variantEnums": {},
+          "booleanProps": [],
+          "largeEnumProps": {},
+          "requiredProps": [],
+          "perBranchRequired": []
+        },
+        {
+          "name": "Title",
+          "variantEnums": {},
+          "booleanProps": [],
+          "largeEnumProps": {},
+          "requiredProps": [],
+          "perBranchRequired": []
+        },
+        {
+          "name": "Description",
+          "variantEnums": {},
+          "booleanProps": [],
+          "largeEnumProps": {},
+          "requiredProps": [],
+          "perBranchRequired": []
+        },
+        {
+          "name": "Close",
+          "variantEnums": {},
+          "booleanProps": [],
+          "largeEnumProps": {},
+          "requiredProps": [],
+          "perBranchRequired": []
+        },
+        {
+          "name": "Tagline",
+          "variantEnums": {},
+          "booleanProps": [],
+          "largeEnumProps": {},
+          "requiredProps": [],
+          "perBranchRequired": []
+        },
+        {
+          "name": "DualPane",
+          "variantEnums": {},
+          "booleanProps": [],
+          "largeEnumProps": {},
+          "requiredProps": [],
+          "perBranchRequired": []
+        },
+        {
+          "name": "Rail",
+          "variantEnums": {},
+          "booleanProps": [
+            "children",
+            "title"
+          ],
+          "largeEnumProps": {},
+          "requiredProps": [
+            "children"
+          ],
+          "perBranchRequired": []
+        },
+        {
+          "name": "Steps",
+          "variantEnums": {},
+          "booleanProps": [
+            "children",
+            "title"
+          ],
+          "largeEnumProps": {},
+          "requiredProps": [
+            "children",
+            "value"
+          ],
+          "perBranchRequired": []
+        },
+        {
+          "name": "Step",
+          "variantEnums": {},
+          "booleanProps": [
+            "children",
+            "description",
+            "title"
+          ],
+          "largeEnumProps": {},
+          "requiredProps": [
+            "title",
+            "value"
+          ],
+          "perBranchRequired": []
+        },
+        {
+          "name": "SubStep",
+          "variantEnums": {},
+          "booleanProps": [
+            "title"
+          ],
+          "largeEnumProps": {},
+          "requiredProps": [
+            "title",
+            "value"
+          ],
+          "perBranchRequired": []
+        },
+        {
+          "name": "DualPaneMain",
+          "variantEnums": {},
+          "booleanProps": [],
+          "largeEnumProps": {},
+          "requiredProps": [],
+          "perBranchRequired": []
+        }
+      ]
+    },
+    {
+      "name": "DropdownMenu",
+      "importPath": "@harnessio/ui/components",
+      "shape": "compound",
+      "variantEnums": {},
+      "booleanProps": [],
+      "largeEnumProps": {},
+      "requiredProps": [],
+      "perBranchRequired": [],
+      "subcomponents": [
+        {
+          "name": "Root",
+          "variantEnums": {},
+          "booleanProps": [],
+          "largeEnumProps": {},
+          "requiredProps": [],
+          "perBranchRequired": []
+        },
+        {
+          "name": "Trigger",
+          "variantEnums": {},
+          "booleanProps": [],
+          "largeEnumProps": {},
+          "requiredProps": [],
+          "perBranchRequired": []
+        },
+        {
+          "name": "Content",
+          "variantEnums": {},
+          "booleanProps": [
+            "isSubContent"
+          ],
+          "largeEnumProps": {},
+          "requiredProps": [],
+          "perBranchRequired": []
+        },
+        {
+          "name": "Item",
+          "variantEnums": {},
+          "booleanProps": [
+            "checkmark",
+            "children",
+            "description",
+            "label",
+            "prefix",
+            "title"
+          ],
+          "largeEnumProps": {},
+          "requiredProps": [],
+          "perBranchRequired": []
+        },
+        {
+          "name": "CheckboxItem",
+          "variantEnums": {},
+          "booleanProps": [
+            "checkmark",
+            "children",
+            "description",
+            "label",
+            "title"
+          ],
+          "largeEnumProps": {},
+          "requiredProps": [],
+          "perBranchRequired": []
+        },
+        {
+          "name": "RadioItem",
+          "variantEnums": {},
+          "booleanProps": [
+            "checkmark",
+            "description",
+            "label",
+            "title"
+          ],
+          "largeEnumProps": {},
+          "requiredProps": [],
+          "perBranchRequired": []
+        },
+        {
+          "name": "AvatarItem",
+          "variantEnums": {},
+          "booleanProps": [
+            "checkmark",
+            "children",
+            "description",
+            "isGroup",
+            "label",
+            "rounded",
+            "title"
+          ],
+          "largeEnumProps": {},
+          "requiredProps": [],
+          "perBranchRequired": []
+        },
+        {
+          "name": "LogoItem",
+          "variantEnums": {},
+          "booleanProps": [
+            "checkmark",
+            "children",
+            "description",
+            "label",
+            "title"
+          ],
+          "largeEnumProps": {
+            "logo": 137
+          },
+          "requiredProps": [
+            "logo"
+          ],
+          "perBranchRequired": []
+        },
+        {
+          "name": "IconItem",
+          "variantEnums": {
+            "iconSize": [
+              "sm",
+              "md",
+              "lg",
+              "xl",
+              "2xs",
+              "xs"
+            ]
+          },
+          "booleanProps": [
+            "checkmark",
+            "children",
+            "description",
+            "label",
+            "title"
+          ],
+          "largeEnumProps": {
+            "icon": 518
+          },
+          "requiredProps": [
+            "icon"
+          ],
+          "perBranchRequired": []
+        },
+        {
+          "name": "IndicatorItem",
+          "variantEnums": {
+            "color": [
+              "blue",
+              "purple",
+              "pink",
+              "green",
+              "indigo",
+              "brown",
+              "cyan",
+              "orange",
+              "red",
+              "yellow",
+              "gray",
+              "lime",
+              "violet",
+              "mint"
+            ]
+          },
+          "booleanProps": [
+            "checkmark",
+            "children",
+            "description",
+            "label",
+            "pulse",
+            "title"
+          ],
+          "largeEnumProps": {},
+          "requiredProps": [
+            "color"
+          ],
+          "perBranchRequired": []
+        },
+        {
+          "name": "Separator",
+          "variantEnums": {},
+          "booleanProps": [],
+          "largeEnumProps": {},
+          "requiredProps": [],
+          "perBranchRequired": []
+        },
+        {
+          "name": "Group",
+          "variantEnums": {},
+          "booleanProps": [],
+          "largeEnumProps": {},
+          "requiredProps": [],
+          "perBranchRequired": []
+        },
+        {
+          "name": "RadioGroup",
+          "variantEnums": {},
+          "booleanProps": [],
+          "largeEnumProps": {},
+          "requiredProps": [],
+          "perBranchRequired": []
+        },
+        {
+          "name": "Header",
+          "variantEnums": {},
+          "booleanProps": [],
+          "largeEnumProps": {},
+          "requiredProps": [],
+          "perBranchRequired": []
+        },
+        {
+          "name": "Footer",
+          "variantEnums": {},
+          "booleanProps": [],
+          "largeEnumProps": {},
+          "requiredProps": [],
+          "perBranchRequired": []
+        },
+        {
+          "name": "Spinner",
+          "variantEnums": {},
+          "booleanProps": [],
+          "largeEnumProps": {},
+          "requiredProps": [],
+          "perBranchRequired": []
+        },
+        {
+          "name": "NoOptions",
+          "variantEnums": {
+            "color": [
+              "disabled",
+              "inherit",
+              "danger",
+              "warning",
+              "success",
+              "merged",
+              "foreground-1",
+              "foreground-2",
+              "foreground-3",
+              "foreground-4",
+              "brand"
+            ],
+            "variant": [
+              "body-normal",
+              "heading-hero",
+              "heading-section",
+              "heading-subsection",
+              "heading-base",
+              "heading-small",
+              "body-single-line-normal",
+              "body-single-line-light",
+              "body-strong",
+              "body-single-line-strong",
+              "body-code",
+              "body-single-line-code",
+              "caption-normal",
+              "caption-light",
+              "caption-strong",
+              "caption-code",
+              "caption-single-line-code",
+              "caption-single-line-normal",
+              "caption-single-line-light"
+            ],
+            "align": [
+              "right",
+              "left",
+              "center"
+            ],
+            "lineClamp": [
+              "1",
+              "default",
+              "2",
+              "4",
+              "5",
+              "3",
+              "6"
+            ],
+            "wrap": [
+              "wrap",
+              "nowrap",
+              "balance",
+              "pretty"
+            ],
+            "as": [
+              "code",
+              "label",
+              "div",
+              "h2",
+              "h3",
+              "li",
+              "p",
+              "span",
+              "abbr",
+              "address",
+              "blockquote",
+              "caption",
+              "cite",
+              "dd",
+              "del",
+              "dt",
+              "em",
+              "figcaption",
+              "h1",
+              "h4",
+              "h5",
+              "h6",
+              "ins",
+              "kbd",
+              "legend",
+              "pre",
+              "samp",
+              "strong",
+              "time",
+              "var"
+            ]
+          },
+          "booleanProps": [
+            "asChild",
+            "truncate"
+          ],
+          "largeEnumProps": {},
+          "requiredProps": [],
+          "perBranchRequired": []
+        },
+        {
+          "name": "Slot",
+          "variantEnums": {},
+          "booleanProps": [],
+          "largeEnumProps": {},
+          "requiredProps": [],
+          "perBranchRequired": []
+        }
+      ]
+    },
+    {
+      "name": "EntityFormLayout",
+      "importPath": "@harnessio/ui/components",
+      "shape": "compound",
+      "variantEnums": {},
+      "booleanProps": [],
+      "largeEnumProps": {},
+      "requiredProps": [],
+      "perBranchRequired": [],
+      "subcomponents": [
+        {
+          "name": "Header",
+          "variantEnums": {},
+          "booleanProps": [
+            "children"
+          ],
+          "largeEnumProps": {},
+          "requiredProps": [
+            "children"
+          ],
+          "perBranchRequired": []
+        },
+        {
+          "name": "Title",
+          "variantEnums": {},
+          "booleanProps": [
+            "children"
+          ],
+          "largeEnumProps": {},
+          "requiredProps": [
+            "children"
+          ],
+          "perBranchRequired": []
+        },
+        {
+          "name": "Description",
+          "variantEnums": {},
+          "booleanProps": [
+            "children"
+          ],
+          "largeEnumProps": {},
+          "requiredProps": [
+            "children"
+          ],
+          "perBranchRequired": []
+        },
+        {
+          "name": "Form",
+          "variantEnums": {},
+          "booleanProps": [],
+          "largeEnumProps": {},
+          "requiredProps": [],
+          "perBranchRequired": []
+        },
+        {
+          "name": "Footer",
+          "variantEnums": {},
+          "booleanProps": [],
+          "largeEnumProps": {},
+          "requiredProps": [],
+          "perBranchRequired": []
+        }
+      ]
+    },
+    {
+      "name": "ExitConfirmDialog",
+      "importPath": "@harnessio/ui/components",
+      "shape": "fc",
+      "variantEnums": {},
+      "booleanProps": [
+        "isLoading",
+        "open"
+      ],
+      "largeEnumProps": {},
+      "requiredProps": [
+        "onConfirm",
+        "open"
+      ],
+      "perBranchRequired": [],
+      "subcomponents": []
+    },
+    {
+      "name": "Favorite",
+      "importPath": "@harnessio/ui/components",
+      "shape": "fc",
+      "variantEnums": {},
+      "booleanProps": [
+        "isFavorite"
+      ],
+      "largeEnumProps": {},
+      "requiredProps": [
+        "onFavoriteToggle"
+      ],
+      "perBranchRequired": [],
+      "subcomponents": []
+    },
+    {
+      "name": "Fieldset",
+      "importPath": "@harnessio/ui/components",
+      "shape": "function",
+      "variantEnums": {},
+      "booleanProps": [],
+      "largeEnumProps": {},
+      "requiredProps": [],
+      "perBranchRequired": [],
+      "subcomponents": []
+    },
+    {
+      "name": "File",
+      "importPath": "@harnessio/ui/components",
+      "shape": "forwardRef",
+      "variantEnums": {
+        "status": [
+          "pending",
+          "running",
+          "success",
+          "failure",
+          "error",
+          "skipped",
+          "killed",
+          "blocked",
+          "waiting_on_dependencies",
+          "unknown",
+          "failure_ignored",
+          "ignorefailed"
+        ]
+      },
+      "booleanProps": [
+        "fileIcon",
+        "isSelect",
+        "isSelectable"
+      ],
+      "largeEnumProps": {},
+      "requiredProps": [
+        "level",
+        "status",
+        "value"
+      ],
+      "perBranchRequired": [],
+      "subcomponents": []
+    },
+    {
+      "name": "FileEditorControlBar",
+      "importPath": "@harnessio/ui/components",
+      "shape": "fc",
+      "variantEnums": {},
+      "booleanProps": [
+        "showPreview"
+      ],
+      "largeEnumProps": {},
+      "requiredProps": [],
+      "perBranchRequired": [],
+      "subcomponents": []
+    },
+    {
+      "name": "FileToolbarActions",
+      "importPath": "@harnessio/ui/components",
+      "shape": "fc",
+      "variantEnums": {
+        "size": [
+          "sm",
+          "md",
+          "2xs",
+          "xs",
+          "3xs"
+        ]
+      },
+      "booleanProps": [
+        "showEdit"
+      ],
+      "largeEnumProps": {},
+      "requiredProps": [
+        "copyContent",
+        "onDownloadClick",
+        "onEditClick"
+      ],
+      "perBranchRequired": [],
+      "subcomponents": []
+    },
+    {
+      "name": "FileUpload",
+      "importPath": "@harnessio/ui/components",
+      "shape": "function",
+      "variantEnums": {},
+      "booleanProps": [],
+      "largeEnumProps": {},
+      "requiredProps": [
+        "onFileChange"
+      ],
+      "perBranchRequired": [],
+      "subcomponents": []
+    },
+    {
+      "name": "FileViewerControlBar",
+      "importPath": "@harnessio/ui/components",
+      "shape": "fc",
+      "variantEnums": {
+        "view": [
+          "code",
+          "preview",
+          "blame",
+          "history"
+        ],
+        "refType": [
+          "branches",
+          "tags"
+        ]
+      },
+      "booleanProps": [
+        "isGitLfsObject",
+        "isMarkdown"
+      ],
+      "largeEnumProps": {},
+      "requiredProps": [
+        "fileBytesSize",
+        "fileContent",
+        "handleDownloadFile",
+        "handleEditFile",
+        "handleOpenDeleteDialog",
+        "isMarkdown",
+        "url",
+        "view"
+      ],
+      "perBranchRequired": [],
+      "subcomponents": []
+    },
+    {
+      "name": "FilterBoxWrapper",
+      "importPath": "@harnessio/ui/components",
+      "shape": "arrow",
+      "variantEnums": {},
+      "booleanProps": [
+        "children",
+        "defaultOpen",
+        "isOpen",
+        "tooltipContent",
+        "valueLabel"
+      ],
+      "largeEnumProps": {},
+      "requiredProps": [
+        "defaultOpen",
+        "filterLabel",
+        "handleRemoveFilter",
+        "isOpen",
+        "setIsOpen"
+      ],
+      "perBranchRequired": [],
+      "subcomponents": []
+    },
+    {
+      "name": "FilterField",
+      "importPath": "@harnessio/ui/components",
+      "shape": "arrow",
+      "variantEnums": {},
+      "booleanProps": [
+        "shouldOpenFilter"
+      ],
+      "largeEnumProps": {},
+      "requiredProps": [
+        "filterOption",
+        "onChange",
+        "removeFilter",
+        "shouldOpenFilter"
+      ],
+      "perBranchRequired": [],
+      "subcomponents": []
+    },
+    {
+      "name": "FilterSelect",
+      "importPath": "@harnessio/ui/components",
+      "shape": "arrow",
+      "variantEnums": {
+        "dropdownAlign": [
+          "end",
+          "start"
+        ]
+      },
+      "booleanProps": [
+        "displayLabel"
+      ],
+      "largeEnumProps": {},
+      "requiredProps": [
+        "onChange",
+        "options"
+      ],
+      "perBranchRequired": [],
+      "subcomponents": []
+    },
+    {
+      "name": "Folder",
+      "importPath": "@harnessio/ui/components",
+      "shape": "forwardRef",
+      "variantEnums": {
+        "status": [
+          "pending",
+          "running",
+          "success",
+          "failure",
+          "error",
+          "skipped",
+          "killed",
+          "blocked",
+          "waiting_on_dependencies",
+          "unknown",
+          "failure_ignored",
+          "ignorefailed"
+        ]
+      },
+      "booleanProps": [
+        "isSelect",
+        "isSelectable"
+      ],
+      "largeEnumProps": {},
+      "requiredProps": [
+        "element",
+        "level",
+        "status"
+      ],
+      "perBranchRequired": [],
+      "subcomponents": []
+    },
+    {
+      "name": "ForkTag",
+      "importPath": "@harnessio/ui/components",
+      "shape": "fc",
+      "variantEnums": {
+        "theme": [
+          "blue",
+          "purple",
+          "pink",
+          "green",
+          "indigo",
+          "brown",
+          "cyan",
+          "orange",
+          "red",
+          "yellow",
+          "gray",
+          "lime",
+          "violet",
+          "forest-green",
+          "mint"
+        ],
+        "variant": [
+          "secondary",
+          "outline"
+        ],
+        "size": [
+          "sm",
+          "md"
+        ]
+      },
+      "booleanProps": [
+        "hideCopyButton"
+      ],
+      "largeEnumProps": {},
+      "requiredProps": [
+        "branchName",
+        "repoIdentifier",
+        "repoPath"
+      ],
+      "perBranchRequired": [],
+      "subcomponents": []
+    },
+    {
+      "name": "FormCaption",
+      "importPath": "@harnessio/ui/components",
+      "shape": "forwardRef",
+      "variantEnums": {
+        "theme": [
+          "default",
+          "danger",
+          "warning",
+          "success"
+        ],
+        "variant": [
+          "body-normal",
+          "heading-hero",
+          "heading-section",
+          "heading-subsection",
+          "heading-base",
+          "heading-small",
+          "body-single-line-normal",
+          "body-single-line-light",
+          "body-strong",
+          "body-single-line-strong",
+          "body-code",
+          "body-single-line-code",
+          "caption-normal",
+          "caption-light",
+          "caption-strong",
+          "caption-code",
+          "caption-single-line-code",
+          "caption-single-line-normal",
+          "caption-single-line-light"
+        ]
+      },
+      "booleanProps": [
+        "children",
+        "disabled"
+      ],
+      "largeEnumProps": {},
+      "requiredProps": [],
+      "perBranchRequired": [],
+      "subcomponents": []
+    },
+    {
+      "name": "FormInput",
+      "importPath": "@harnessio/ui/components",
+      "shape": "compound",
+      "variantEnums": {},
+      "booleanProps": [],
+      "largeEnumProps": {},
+      "requiredProps": [],
+      "perBranchRequired": [],
+      "subcomponents": [
+        {
+          "name": "Text",
+          "variantEnums": {},
+          "booleanProps": [],
+          "largeEnumProps": {},
+          "requiredProps": [],
+          "perBranchRequired": []
+        },
+        {
+          "name": "Textarea",
+          "variantEnums": {},
+          "booleanProps": [],
+          "largeEnumProps": {},
+          "requiredProps": [],
+          "perBranchRequired": []
+        },
+        {
+          "name": "Number",
+          "variantEnums": {},
+          "booleanProps": [],
+          "largeEnumProps": {},
+          "requiredProps": [],
+          "perBranchRequired": []
+        },
+        {
+          "name": "Radio",
+          "variantEnums": {},
+          "booleanProps": [],
+          "largeEnumProps": {},
+          "requiredProps": [],
+          "perBranchRequired": []
+        },
+        {
+          "name": "Checkbox",
+          "variantEnums": {},
+          "booleanProps": [],
+          "largeEnumProps": {},
+          "requiredProps": [],
+          "perBranchRequired": []
+        },
+        {
+          "name": "Select",
+          "variantEnums": {
+            "size": [
+              "sm",
+              "md"
+            ],
+            "theme": [
+              "default",
+              "danger",
+              "warning"
+            ],
+            "orientation": [
+              "vertical",
+              "horizontal"
+            ],
+            "contentWidth": [
+              "auto",
+              "triggerWidth"
+            ]
+          },
+          "booleanProps": [
+            "allowSearch",
+            "footer",
+            "header",
+            "isLoading",
+            "labelSuffix",
+            "optional",
+            "prefix",
+            "suffix"
+          ],
+          "largeEnumProps": {},
+          "requiredProps": [
+            "name",
+            "options"
+          ],
+          "perBranchRequired": []
+        },
+        {
+          "name": "MultiSelect",
+          "variantEnums": {},
+          "booleanProps": [],
+          "largeEnumProps": {},
+          "requiredProps": [],
+          "perBranchRequired": []
+        }
+      ]
+    },
+    {
+      "name": "FormSeparator",
+      "importPath": "@harnessio/ui/components",
+      "shape": "function",
+      "variantEnums": {},
+      "booleanProps": [
+        "dashed",
+        "dotted"
+      ],
+      "largeEnumProps": {},
+      "requiredProps": [],
+      "perBranchRequired": [],
+      "subcomponents": []
+    },
+    {
+      "name": "FormWrapper",
+      "importPath": "@harnessio/ui/components",
+      "shape": "function",
+      "variantEnums": {
+        "orientation": [
+          "vertical",
+          "horizontal"
+        ]
+      },
+      "booleanProps": [
+        "children"
+      ],
+      "largeEnumProps": {},
+      "requiredProps": [],
+      "perBranchRequired": [],
+      "subcomponents": []
+    },
+    {
+      "name": "FormWrapperContext",
+      "importPath": "@harnessio/ui/components",
+      "shape": "compound",
+      "variantEnums": {},
+      "booleanProps": [],
+      "largeEnumProps": {},
+      "requiredProps": [],
+      "perBranchRequired": [],
+      "subcomponents": [
+        {
+          "name": "Provider",
+          "variantEnums": {},
+          "booleanProps": [],
+          "largeEnumProps": {},
+          "requiredProps": [],
+          "perBranchRequired": []
+        },
+        {
+          "name": "Consumer",
+          "variantEnums": {},
+          "booleanProps": [],
+          "largeEnumProps": {},
+          "requiredProps": [],
+          "perBranchRequired": []
+        }
+      ]
+    },
+    {
+      "name": "GitCommitDialog",
+      "importPath": "@harnessio/ui/components",
+      "shape": "fc",
+      "variantEnums": {},
+      "booleanProps": [
+        "bypassable",
+        "disableCTA",
+        "isFileNameRequired",
+        "isOpen",
+        "isSubmitting",
+        "violation"
+      ],
+      "largeEnumProps": {},
+      "requiredProps": [
+        "bypassable",
+        "currentBranch",
+        "disableCTA",
+        "dryRun",
+        "isOpen",
+        "isSubmitting",
+        "onClose",
+        "onFormSubmit",
+        "setAllStates",
+        "violation"
+      ],
+      "perBranchRequired": [],
+      "subcomponents": []
+    },
+    {
+      "name": "HarnessLogo",
+      "importPath": "@harnessio/ui/components",
+      "shape": "arrow",
+      "variantEnums": {},
+      "booleanProps": [
+        "full"
+      ],
+      "largeEnumProps": {},
+      "requiredProps": [],
+      "perBranchRequired": [],
+      "subcomponents": []
+    },
+    {
+      "name": "IconV2",
+      "importPath": "@harnessio/ui/components",
+      "shape": "forwardRef",
+      "variantEnums": {
+        "color": [
+          "inherit",
+          "danger",
+          "warning",
+          "success",
+          "info",
+          "merged",
+          "risk",
+          "neutral"
+        ],
+        "size": [
+          "sm",
+          "md",
+          "lg",
+          "xl",
+          "2xs",
+          "xs"
+        ]
+      },
+      "booleanProps": [
+        "skipSize"
+      ],
+      "largeEnumProps": {
+        "name": 518,
+        "fallback": 518
+      },
+      "requiredProps": [],
+      "perBranchRequired": [
+        [
+          "name"
+        ],
+        [
+          "fallback"
+        ]
+      ],
+      "subcomponents": []
+    },
+    {
+      "name": "IconWithTooltip",
+      "importPath": "@harnessio/ui/components",
+      "shape": "arrow",
+      "variantEnums": {
+        "theme": [
+          "default",
+          "themed"
+        ]
+      },
+      "booleanProps": [
+        "content",
+        "disabled",
+        "footer",
+        "hideArrow",
+        "open"
+      ],
+      "largeEnumProps": {},
+      "requiredProps": [
+        "content"
+      ],
+      "perBranchRequired": [],
+      "subcomponents": []
+    },
+    {
+      "name": "Illustration",
+      "importPath": "@harnessio/ui/components",
+      "shape": "forwardRef",
+      "variantEnums": {},
+      "booleanProps": [
+        "themeDependent"
+      ],
+      "largeEnumProps": {
+        "name": 48
+      },
+      "requiredProps": [
+        "name"
+      ],
+      "perBranchRequired": [],
+      "subcomponents": []
+    },
+    {
+      "name": "ImageCarousel",
+      "importPath": "@harnessio/ui/components",
+      "shape": "fc",
+      "variantEnums": {},
+      "booleanProps": [
+        "isOpen"
+      ],
+      "largeEnumProps": {},
+      "requiredProps": [
+        "imgEvent",
+        "isOpen",
+        "setIsOpen"
+      ],
+      "perBranchRequired": [],
+      "subcomponents": []
+    },
+    {
+      "name": "Input",
+      "importPath": "@harnessio/ui/components",
+      "shape": "forwardRef",
+      "variantEnums": {
+        "rightElementVariant": [
+          "default",
+          "filled"
+        ],
+        "variant": [
+          "default",
+          "extended"
+        ],
+        "size": [
+          "sm",
+          "md"
+        ],
+        "theme": [
+          "default",
+          "danger",
+          "clean"
+        ]
+      },
+      "booleanProps": [
+        "caption",
+        "customContent",
+        "optional",
+        "rightElement"
+      ],
+      "largeEnumProps": {
+        "inputIconName": 518
+      },
+      "requiredProps": [],
+      "perBranchRequired": [],
+      "subcomponents": []
+    },
+    {
+      "name": "InputCaption",
+      "importPath": "@harnessio/ui/components",
+      "shape": "arrow",
+      "variantEnums": {},
+      "booleanProps": [],
+      "largeEnumProps": {},
+      "requiredProps": [],
+      "perBranchRequired": [],
+      "subcomponents": []
+    },
+    {
+      "name": "InputOTP",
+      "importPath": "@harnessio/ui/components",
+      "shape": "compound",
+      "variantEnums": {},
+      "booleanProps": [],
+      "largeEnumProps": {},
+      "requiredProps": [],
+      "perBranchRequired": [],
+      "subcomponents": [
+        {
+          "name": "Root",
+          "variantEnums": {},
+          "booleanProps": [],
+          "largeEnumProps": {},
+          "requiredProps": [],
+          "perBranchRequired": []
+        },
+        {
+          "name": "Group",
+          "variantEnums": {},
+          "booleanProps": [],
+          "largeEnumProps": {},
+          "requiredProps": [],
+          "perBranchRequired": []
+        },
+        {
+          "name": "Slot",
+          "variantEnums": {},
+          "booleanProps": [],
+          "largeEnumProps": {},
+          "requiredProps": [
+            "index"
+          ],
+          "perBranchRequired": []
+        },
+        {
+          "name": "Separator",
+          "variantEnums": {},
+          "booleanProps": [],
+          "largeEnumProps": {},
+          "requiredProps": [],
+          "perBranchRequired": []
+        }
+      ]
+    },
+    {
+      "name": "Label",
+      "importPath": "@harnessio/ui/components",
+      "shape": "forwardRef",
+      "variantEnums": {},
+      "booleanProps": [
+        "disabled",
+        "optional",
+        "suffix"
+      ],
+      "largeEnumProps": {},
+      "requiredProps": [],
+      "perBranchRequired": [],
+      "subcomponents": []
+    },
+    {
+      "name": "LanguageDialog",
+      "importPath": "@harnessio/ui/components",
+      "shape": "fc",
+      "variantEnums": {
+        "defaultLanguage": [
+          "en",
+          "fr"
+        ],
+        "language": [
+          "en",
+          "fr"
+        ]
+      },
+      "booleanProps": [
+        "children",
+        "open"
+      ],
+      "largeEnumProps": {},
+      "requiredProps": [
+        "onCancel",
+        "onChange",
+        "onOpenChange",
+        "onSave",
+        "open",
+        "supportedLanguages"
+      ],
+      "perBranchRequired": [],
+      "subcomponents": []
+    },
+    {
+      "name": "Layout",
+      "importPath": "@harnessio/ui/components",
+      "shape": "compound",
+      "variantEnums": {},
+      "booleanProps": [],
+      "largeEnumProps": {},
+      "requiredProps": [],
+      "perBranchRequired": [],
+      "subcomponents": [
+        {
+          "name": "Grid",
+          "variantEnums": {
+            "flow": [
+              "row",
+              "column",
+              "dense",
+              "row dense",
+              "column dense"
+            ],
+            "gap": [
+              "sm",
+              "md",
+              "none",
+              "lg",
+              "xl",
+              "2xs",
+              "xs",
+              "3xs",
+              "4xs",
+              "2xl",
+              "3xl",
+              "4xl"
+            ],
+            "gapX": [
+              "sm",
+              "md",
+              "none",
+              "lg",
+              "xl",
+              "2xs",
+              "xs",
+              "3xs",
+              "4xs",
+              "2xl",
+              "3xl",
+              "4xl"
+            ],
+            "gapY": [
+              "sm",
+              "md",
+              "none",
+              "lg",
+              "xl",
+              "2xs",
+              "xs",
+              "3xs",
+              "4xs",
+              "2xl",
+              "3xl",
+              "4xl"
+            ],
+            "align": [
+              "end",
+              "start",
+              "center",
+              "baseline",
+              "stretch"
+            ],
+            "justify": [
+              "end",
+              "start",
+              "center",
+              "between"
+            ]
+          },
+          "booleanProps": [
+            "children"
+          ],
+          "largeEnumProps": {},
+          "requiredProps": [],
+          "perBranchRequired": []
+        },
+        {
+          "name": "Flex",
+          "variantEnums": {
+            "gap": [
+              "sm",
+              "md",
+              "none",
+              "lg",
+              "xl",
+              "2xs",
+              "xs",
+              "3xs",
+              "4xs",
+              "2xl",
+              "3xl",
+              "4xl"
+            ],
+            "gapX": [
+              "sm",
+              "md",
+              "none",
+              "lg",
+              "xl",
+              "2xs",
+              "xs",
+              "3xs",
+              "4xs",
+              "2xl",
+              "3xl",
+              "4xl"
+            ],
+            "gapY": [
+              "sm",
+              "md",
+              "none",
+              "lg",
+              "xl",
+              "2xs",
+              "xs",
+              "3xs",
+              "4xs",
+              "2xl",
+              "3xl",
+              "4xl"
+            ],
+            "align": [
+              "end",
+              "start",
+              "center",
+              "baseline",
+              "stretch"
+            ],
+            "direction": [
+              "row",
+              "column",
+              "row-reverse",
+              "column-reverse"
+            ],
+            "wrap": [
+              "wrap",
+              "nowrap",
+              "wrap-reverse"
+            ],
+            "justify": [
+              "end",
+              "start",
+              "center",
+              "between"
+            ]
+          },
+          "booleanProps": [
+            "children",
+            "grow"
+          ],
+          "largeEnumProps": {},
+          "requiredProps": [],
+          "perBranchRequired": []
+        },
+        {
+          "name": "Horizontal",
+          "variantEnums": {
+            "align": [
+              "end",
+              "start",
+              "center",
+              "baseline",
+              "stretch"
+            ],
+            "gap": [
+              "sm",
+              "md",
+              "none",
+              "lg",
+              "xl",
+              "2xs",
+              "xs",
+              "3xs",
+              "4xs",
+              "2xl",
+              "3xl",
+              "4xl"
+            ],
+            "wrap": [
+              "wrap",
+              "nowrap",
+              "wrap-reverse"
+            ],
+            "justify": [
+              "end",
+              "start",
+              "center",
+              "between"
+            ],
+            "gapX": [
+              "sm",
+              "md",
+              "none",
+              "lg",
+              "xl",
+              "2xs",
+              "xs",
+              "3xs",
+              "4xs",
+              "2xl",
+              "3xl",
+              "4xl"
+            ],
+            "gapY": [
+              "sm",
+              "md",
+              "none",
+              "lg",
+              "xl",
+              "2xs",
+              "xs",
+              "3xs",
+              "4xs",
+              "2xl",
+              "3xl",
+              "4xl"
+            ]
+          },
+          "booleanProps": [
+            "children",
+            "grow"
+          ],
+          "largeEnumProps": {},
+          "requiredProps": [],
+          "perBranchRequired": []
+        },
+        {
+          "name": "Vertical",
+          "variantEnums": {
+            "align": [
+              "end",
+              "start",
+              "center",
+              "baseline",
+              "stretch"
+            ],
+            "gap": [
+              "sm",
+              "md",
+              "none",
+              "lg",
+              "xl",
+              "2xs",
+              "xs",
+              "3xs",
+              "4xs",
+              "2xl",
+              "3xl",
+              "4xl"
+            ],
+            "wrap": [
+              "wrap",
+              "nowrap",
+              "wrap-reverse"
+            ],
+            "justify": [
+              "end",
+              "start",
+              "center",
+              "between"
+            ],
+            "gapX": [
+              "sm",
+              "md",
+              "none",
+              "lg",
+              "xl",
+              "2xs",
+              "xs",
+              "3xs",
+              "4xs",
+              "2xl",
+              "3xl",
+              "4xl"
+            ],
+            "gapY": [
+              "sm",
+              "md",
+              "none",
+              "lg",
+              "xl",
+              "2xs",
+              "xs",
+              "3xs",
+              "4xs",
+              "2xl",
+              "3xl",
+              "4xl"
+            ]
+          },
+          "booleanProps": [
+            "children",
+            "grow"
+          ],
+          "largeEnumProps": {},
+          "requiredProps": [],
+          "perBranchRequired": []
+        }
+      ]
+    },
+    {
+      "name": "Legend",
+      "importPath": "@harnessio/ui/components",
+      "shape": "function",
+      "variantEnums": {},
+      "booleanProps": [
+        "description",
+        "title"
+      ],
+      "largeEnumProps": {},
+      "requiredProps": [
+        "title"
+      ],
+      "perBranchRequired": [],
+      "subcomponents": []
+    },
+    {
+      "name": "Link",
+      "importPath": "@harnessio/ui/components",
+      "shape": "forwardRef",
+      "variantEnums": {
+        "variant": [
+          "default",
+          "secondary"
+        ],
+        "size": [
+          "sm",
+          "md"
+        ]
+      },
+      "booleanProps": [
+        "disabled",
+        "external",
+        "noHoverUnderline",
+        "prefixIcon",
+        "suffixIcon"
+      ],
+      "largeEnumProps": {
+        "prefixIcon": 518,
+        "suffixIcon": 518
+      },
+      "requiredProps": [],
+      "perBranchRequired": [],
+      "subcomponents": []
+    },
+    {
+      "name": "LogoSymbol",
+      "importPath": "@harnessio/ui/components",
+      "shape": "forwardRef",
+      "variantEnums": {
+        "size": [
+          "sm",
+          "md",
+          "lg",
+          "xs"
+        ]
+      },
+      "booleanProps": [
+        "skipSize"
+      ],
+      "largeEnumProps": {
+        "name": 137,
+        "fallback": 137
+      },
+      "requiredProps": [],
+      "perBranchRequired": [
+        [
+          "name"
+        ],
+        [
+          "fallback"
+        ]
+      ],
+      "subcomponents": []
+    },
+    {
+      "name": "LogoV2",
+      "importPath": "@harnessio/ui/components",
+      "shape": "forwardRef",
+      "variantEnums": {
+        "size": [
+          "sm",
+          "md",
+          "lg",
+          "xs"
+        ]
+      },
+      "booleanProps": [
+        "skipSize"
+      ],
+      "largeEnumProps": {
+        "name": 137,
+        "fallback": 137
+      },
+      "requiredProps": [],
+      "perBranchRequired": [
+        [
+          "name"
+        ],
+        [
+          "fallback"
+        ]
+      ],
+      "subcomponents": []
+    },
+    {
+      "name": "ManageNavigation",
+      "importPath": "@harnessio/ui/components",
+      "shape": "arrow",
+      "variantEnums": {},
+      "booleanProps": [
+        "isSubmitting",
+        "showManageNavigation",
+        "submitted"
+      ],
+      "largeEnumProps": {},
+      "requiredProps": [
+        "isSubmitting",
+        "onClose",
+        "onSave",
+        "pinnedItems",
+        "recentItems",
+        "showManageNavigation",
+        "submitted"
+      ],
+      "perBranchRequired": [],
+      "subcomponents": []
+    },
+    {
+      "name": "MarkdownViewer",
+      "importPath": "@harnessio/ui/components",
+      "shape": "forwardRef",
+      "variantEnums": {
+        "variant": [
+          "default",
+          "sm",
+          "xs"
+        ]
+      },
+      "booleanProps": [
+        "isLoading",
+        "muted",
+        "showLineNumbers",
+        "suggestionFooter",
+        "withBorder"
+      ],
+      "largeEnumProps": {},
+      "requiredProps": [
+        "source"
+      ],
+      "perBranchRequired": [],
+      "subcomponents": []
+    },
+    {
+      "name": "MentionTextarea",
+      "importPath": "@harnessio/ui/components",
+      "shape": "forwardRef",
+      "variantEnums": {
+        "size": [
+          "sm",
+          "md"
+        ],
+        "theme": [
+          "default",
+          "danger",
+          "warning"
+        ],
+        "orientation": [
+          "vertical",
+          "horizontal"
+        ]
+      },
+      "booleanProps": [
+        "autoResize",
+        "emptyMessage",
+        "isLoading",
+        "labelSuffix",
+        "loadingContent",
+        "optional",
+        "resizable"
+      ],
+      "largeEnumProps": {},
+      "requiredProps": [
+        "items",
+        "onValueChange",
+        "value"
+      ],
+      "perBranchRequired": [],
+      "subcomponents": []
+    },
+    {
+      "name": "Message",
+      "importPath": "@harnessio/ui/components",
+      "shape": "function",
+      "variantEnums": {
+        "theme": [
+          "success",
+          "warning",
+          "error",
+          "default"
+        ]
+      },
+      "booleanProps": [],
+      "largeEnumProps": {},
+      "requiredProps": [
+        "theme"
+      ],
+      "perBranchRequired": [],
+      "subcomponents": []
+    },
+    {
+      "name": "MessageBubble",
+      "importPath": "@harnessio/ui/components",
+      "shape": "compound",
+      "variantEnums": {},
+      "booleanProps": [],
+      "largeEnumProps": {},
+      "requiredProps": [],
+      "perBranchRequired": [],
+      "subcomponents": [
+        {
+          "name": "Root",
+          "variantEnums": {},
+          "booleanProps": [
+            "children"
+          ],
+          "largeEnumProps": {},
+          "requiredProps": [
+            "children"
+          ],
+          "perBranchRequired": []
+        },
+        {
+          "name": "Content",
+          "variantEnums": {},
+          "booleanProps": [
+            "children"
+          ],
+          "largeEnumProps": {},
+          "requiredProps": [
+            "children"
+          ],
+          "perBranchRequired": []
+        },
+        {
+          "name": "Text",
+          "variantEnums": {
+            "color": [
+              "disabled",
+              "inherit",
+              "danger",
+              "warning",
+              "success",
+              "merged",
+              "foreground-1",
+              "foreground-2",
+              "foreground-3",
+              "foreground-4",
+              "brand"
+            ],
+            "variant": [
+              "body-normal",
+              "heading-hero",
+              "heading-section",
+              "heading-subsection",
+              "heading-base",
+              "heading-small",
+              "body-single-line-normal",
+              "body-single-line-light",
+              "body-strong",
+              "body-single-line-strong",
+              "body-code",
+              "body-single-line-code",
+              "caption-normal",
+              "caption-light",
+              "caption-strong",
+              "caption-code",
+              "caption-single-line-code",
+              "caption-single-line-normal",
+              "caption-single-line-light"
+            ],
+            "align": [
+              "right",
+              "left",
+              "center"
+            ],
+            "lineClamp": [
+              "1",
+              "default",
+              "2",
+              "4",
+              "5",
+              "3",
+              "6"
+            ],
+            "wrap": [
+              "wrap",
+              "nowrap",
+              "balance",
+              "pretty"
+            ],
+            "as": [
+              "code",
+              "label",
+              "div",
+              "h2",
+              "h3",
+              "li",
+              "p",
+              "span",
+              "abbr",
+              "address",
+              "blockquote",
+              "caption",
+              "cite",
+              "dd",
+              "del",
+              "dt",
+              "em",
+              "figcaption",
+              "h1",
+              "h4",
+              "h5",
+              "h6",
+              "ins",
+              "kbd",
+              "legend",
+              "pre",
+              "samp",
+              "strong",
+              "time",
+              "var"
+            ]
+          },
+          "booleanProps": [
+            "asChild",
+            "truncate"
+          ],
+          "largeEnumProps": {},
+          "requiredProps": [],
+          "perBranchRequired": []
+        },
+        {
+          "name": "Markdown",
+          "variantEnums": {
+            "variant": [
+              "default",
+              "sm",
+              "xs"
+            ]
+          },
+          "booleanProps": [
+            "isLoading",
+            "muted",
+            "showLineNumbers",
+            "suggestionFooter",
+            "withBorder"
+          ],
+          "largeEnumProps": {},
+          "requiredProps": [
+            "children"
+          ],
+          "perBranchRequired": []
+        },
+        {
+          "name": "Footer",
+          "variantEnums": {},
+          "booleanProps": [
+            "children"
+          ],
+          "largeEnumProps": {},
+          "requiredProps": [],
+          "perBranchRequired": []
+        }
+      ]
+    },
+    {
+      "name": "Meter",
+      "importPath": "@harnessio/ui/components",
+      "shape": "function",
+      "variantEnums": {},
+      "booleanProps": [],
+      "largeEnumProps": {},
+      "requiredProps": [],
+      "perBranchRequired": [],
+      "subcomponents": []
+    },
+    {
+      "name": "MoreActionsTooltip",
+      "importPath": "@harnessio/ui/components",
+      "shape": "forwardRef",
+      "variantEnums": {
+        "theme": [
+          "default",
+          "danger",
+          "success"
+        ],
+        "buttonVariant": [
+          "ai",
+          "link",
+          "secondary",
+          "outline",
+          "transparent",
+          "primary",
+          "ghost"
+        ],
+        "buttonSize": [
+          "sm",
+          "md",
+          "2xs",
+          "xs",
+          "3xs"
+        ]
+      },
+      "booleanProps": [
+        "disabled",
+        "isInTable"
+      ],
+      "largeEnumProps": {
+        "iconName": 518
+      },
+      "requiredProps": [
+        "actions"
+      ],
+      "perBranchRequired": [],
+      "subcomponents": []
+    },
+    {
+      "name": "MultiSelect",
+      "importPath": "@harnessio/ui/components",
+      "shape": "forwardRef",
+      "variantEnums": {
+        "theme": [
+          "default",
+          "danger",
+          "warning"
+        ],
+        "orientation": [
+          "vertical",
+          "horizontal"
+        ]
+      },
+      "booleanProps": [
+        "disabled",
+        "disallowCreation",
+        "isLoading",
+        "labelSuffix",
+        "optional"
+      ],
+      "largeEnumProps": {},
+      "requiredProps": [],
+      "perBranchRequired": [],
+      "subcomponents": []
+    },
+    {
+      "name": "NoData",
+      "importPath": "@harnessio/ui/components",
+      "shape": "fc",
+      "variantEnums": {},
+      "booleanProps": [
+        "children",
+        "withBorder"
+      ],
+      "largeEnumProps": {
+        "imageName": 48
+      },
+      "requiredProps": [
+        "description",
+        "title"
+      ],
+      "perBranchRequired": [],
+      "subcomponents": []
+    },
+    {
+      "name": "NoProblemsFound",
+      "importPath": "@harnessio/ui/components",
+      "shape": "function",
+      "variantEnums": {},
+      "booleanProps": [],
+      "largeEnumProps": {},
+      "requiredProps": [],
+      "perBranchRequired": [],
+      "subcomponents": []
+    },
+    {
+      "name": "NumberInput",
+      "importPath": "@harnessio/ui/components",
+      "shape": "forwardRef",
+      "variantEnums": {
+        "orientation": [
+          "vertical",
+          "horizontal"
+        ],
+        "size": [
+          "sm",
+          "md"
+        ],
+        "theme": [
+          "default",
+          "danger",
+          "warning",
+          "success"
+        ]
+      },
+      "booleanProps": [
+        "hideStepper",
+        "integerOnly",
+        "labelSuffix",
+        "leadingSuffix",
+        "optional",
+        "prefix",
+        "suffix"
+      ],
+      "largeEnumProps": {},
+      "requiredProps": [],
+      "perBranchRequired": [],
+      "subcomponents": []
+    },
+    {
+      "name": "Page",
+      "importPath": "@harnessio/ui/components",
+      "shape": "compound",
+      "variantEnums": {},
+      "booleanProps": [],
+      "largeEnumProps": {},
+      "requiredProps": [],
+      "perBranchRequired": [],
+      "subcomponents": [
+        {
+          "name": "HeaderV2",
+          "variantEnums": {},
+          "booleanProps": [],
+          "largeEnumProps": {},
+          "requiredProps": [],
+          "perBranchRequired": []
+        },
+        {
+          "name": "Root",
+          "variantEnums": {},
+          "booleanProps": [
+            "children"
+          ],
+          "largeEnumProps": {},
+          "requiredProps": [
+            "children"
+          ],
+          "perBranchRequired": []
+        },
+        {
+          "name": "Header",
+          "variantEnums": {},
+          "booleanProps": [],
+          "largeEnumProps": {},
+          "requiredProps": [],
+          "perBranchRequired": []
+        },
+        {
+          "name": "Content",
+          "variantEnums": {},
+          "booleanProps": [
+            "children"
+          ],
+          "largeEnumProps": {},
+          "requiredProps": [
+            "children"
+          ],
+          "perBranchRequired": []
+        }
+      ]
+    },
+    {
+      "name": "Pagination",
+      "importPath": "@harnessio/ui/components",
+      "shape": "function",
+      "variantEnums": {},
+      "booleanProps": [
+        "hasNext",
+        "hasPrevious",
+        "indeterminate",
+        "showPageNumbers"
+      ],
+      "largeEnumProps": {},
+      "requiredProps": [],
+      "perBranchRequired": [
+        [
+          "currentPage",
+          "goToPage",
+          "pageSize",
+          "totalItems"
+        ],
+        [
+          "currentPage",
+          "getPageLink",
+          "pageSize",
+          "totalItems"
+        ],
+        [
+          "indeterminate",
+          "onNext",
+          "onPrevious"
+        ],
+        [
+          "getNextPageLink",
+          "getPrevPageLink",
+          "indeterminate"
+        ]
+      ],
+      "subcomponents": []
+    },
+    {
+      "name": "PathBreadcrumbs",
+      "importPath": "@harnessio/ui/components",
+      "shape": "arrow",
+      "variantEnums": {},
+      "booleanProps": [
+        "isEdit",
+        "isNew"
+      ],
+      "largeEnumProps": {},
+      "requiredProps": [
+        "isEdit",
+        "isNew",
+        "items"
+      ],
+      "perBranchRequired": [],
+      "subcomponents": []
+    },
+    {
+      "name": "Popover",
+      "importPath": "@harnessio/ui/components",
+      "shape": "arrow",
+      "variantEnums": {
+        "triggerType": [
+          "click",
+          "hover"
+        ],
+        "theme": [
+          "default",
+          "themed"
+        ]
+      },
+      "booleanProps": [
+        "content",
+        "custom",
+        "hideArrow",
+        "noMaxWidth"
+      ],
+      "largeEnumProps": {},
+      "requiredProps": [
+        "content"
+      ],
+      "perBranchRequired": [],
+      "subcomponents": []
+    },
+    {
+      "name": "Problems",
+      "importPath": "@harnessio/ui/components",
+      "shape": "arrow",
+      "variantEnums": {},
+      "booleanProps": [],
+      "largeEnumProps": {},
+      "requiredProps": [
+        "onClick",
+        "problems"
+      ],
+      "perBranchRequired": [],
+      "subcomponents": []
+    },
+    {
+      "name": "Progress",
+      "importPath": "@harnessio/ui/components",
+      "shape": "forwardRef",
+      "variantEnums": {
+        "variant": [
+          "default",
+          "indeterminate"
+        ],
+        "size": [
+          "sm",
+          "md",
+          "lg"
+        ],
+        "state": [
+          "default",
+          "processing",
+          "paused",
+          "completed",
+          "failed"
+        ]
+      },
+      "booleanProps": [
+        "hideContainer",
+        "hideIcon",
+        "hidePercentage"
+      ],
+      "largeEnumProps": {},
+      "requiredProps": [],
+      "perBranchRequired": [
+        [
+          "value"
+        ],
+        [
+          "variant"
+        ]
+      ],
+      "subcomponents": []
+    },
+    {
+      "name": "PromptInput",
+      "importPath": "@harnessio/ui/components",
+      "shape": "compound",
+      "variantEnums": {},
+      "booleanProps": [],
+      "largeEnumProps": {},
+      "requiredProps": [],
+      "perBranchRequired": [],
+      "subcomponents": [
+        {
+          "name": "Root",
+          "variantEnums": {},
+          "booleanProps": [],
+          "largeEnumProps": {},
+          "requiredProps": [],
+          "perBranchRequired": []
+        },
+        {
+          "name": "Tags",
+          "variantEnums": {},
+          "booleanProps": [],
+          "largeEnumProps": {},
+          "requiredProps": [
+            "tags"
+          ],
+          "perBranchRequired": []
+        },
+        {
+          "name": "Textarea",
+          "variantEnums": {
+            "theme": [
+              "default",
+              "danger",
+              "warning"
+            ],
+            "size": [
+              "sm",
+              "md"
+            ],
+            "orientation": [
+              "vertical",
+              "horizontal"
+            ]
+          },
+          "booleanProps": [
+            "autoResize",
+            "labelSuffix",
+            "optional",
+            "resizable"
+          ],
+          "largeEnumProps": {},
+          "requiredProps": [],
+          "perBranchRequired": []
+        },
+        {
+          "name": "Toolbar",
+          "variantEnums": {},
+          "booleanProps": [],
+          "largeEnumProps": {},
+          "requiredProps": [],
+          "perBranchRequired": []
+        },
+        {
+          "name": "Tools",
+          "variantEnums": {},
+          "booleanProps": [],
+          "largeEnumProps": {},
+          "requiredProps": [],
+          "perBranchRequired": []
+        },
+        {
+          "name": "Submit",
+          "variantEnums": {
+            "variant": [
+              "ai",
+              "link",
+              "secondary",
+              "outline",
+              "transparent",
+              "primary",
+              "ghost"
+            ],
+            "size": [
+              "sm",
+              "md",
+              "2xs",
+              "xs",
+              "3xs"
+            ],
+            "theme": [
+              "default",
+              "danger",
+              "success"
+            ],
+            "status": [
+              "streaming"
+            ]
+          },
+          "booleanProps": [
+            "asChild",
+            "iconOnly",
+            "loading",
+            "rounded"
+          ],
+          "largeEnumProps": {},
+          "requiredProps": [],
+          "perBranchRequired": []
+        },
+        {
+          "name": "Button",
+          "variantEnums": {
+            "variant": [
+              "outline",
+              "transparent",
+              "ghost"
+            ],
+            "selectedVariant": [
+              "secondary",
+              "primary"
+            ],
+            "size": [
+              "sm",
+              "md",
+              "xs"
+            ]
+          },
+          "booleanProps": [
+            "defaultValue",
+            "iconOnly",
+            "rounded",
+            "selected"
+          ],
+          "largeEnumProps": {
+            "suffixIcon": 518,
+            "prefixIcon": 518
+          },
+          "requiredProps": [],
+          "perBranchRequired": []
+        }
+      ]
+    },
+    {
+      "name": "PromptInputButton",
+      "importPath": "@harnessio/ui/components",
+      "shape": "arrow",
+      "variantEnums": {
+        "variant": [
+          "outline",
+          "transparent",
+          "ghost"
+        ],
+        "selectedVariant": [
+          "secondary",
+          "primary"
+        ],
+        "size": [
+          "sm",
+          "md",
+          "xs"
+        ]
+      },
+      "booleanProps": [
+        "defaultValue",
+        "iconOnly",
+        "rounded",
+        "selected"
+      ],
+      "largeEnumProps": {
+        "suffixIcon": 518,
+        "prefixIcon": 518
+      },
+      "requiredProps": [],
+      "perBranchRequired": [],
+      "subcomponents": []
+    },
+    {
+      "name": "PromptInputRoot",
+      "importPath": "@harnessio/ui/components",
+      "shape": "arrow",
+      "variantEnums": {},
+      "booleanProps": [],
+      "largeEnumProps": {},
+      "requiredProps": [],
+      "perBranchRequired": [],
+      "subcomponents": []
+    },
+    {
+      "name": "PromptInputSubmit",
+      "importPath": "@harnessio/ui/components",
+      "shape": "arrow",
+      "variantEnums": {
+        "variant": [
+          "ai",
+          "link",
+          "secondary",
+          "outline",
+          "transparent",
+          "primary",
+          "ghost"
+        ],
+        "size": [
+          "sm",
+          "md",
+          "2xs",
+          "xs",
+          "3xs"
+        ],
+        "theme": [
+          "default",
+          "danger",
+          "success"
+        ],
+        "status": [
+          "streaming"
+        ]
+      },
+      "booleanProps": [
+        "asChild",
+        "iconOnly",
+        "loading",
+        "rounded"
+      ],
+      "largeEnumProps": {},
+      "requiredProps": [],
+      "perBranchRequired": [],
+      "subcomponents": []
+    },
+    {
+      "name": "PromptInputTags",
+      "importPath": "@harnessio/ui/components",
+      "shape": "arrow",
+      "variantEnums": {},
+      "booleanProps": [],
+      "largeEnumProps": {},
+      "requiredProps": [
+        "tags"
+      ],
+      "perBranchRequired": [],
+      "subcomponents": []
+    },
+    {
+      "name": "PromptInputTextarea",
+      "importPath": "@harnessio/ui/components",
+      "shape": "arrow",
+      "variantEnums": {
+        "theme": [
+          "default",
+          "danger",
+          "warning"
+        ],
+        "size": [
+          "sm",
+          "md"
+        ],
+        "orientation": [
+          "vertical",
+          "horizontal"
+        ]
+      },
+      "booleanProps": [
+        "autoResize",
+        "labelSuffix",
+        "optional",
+        "resizable"
+      ],
+      "largeEnumProps": {},
+      "requiredProps": [],
+      "perBranchRequired": [],
+      "subcomponents": []
+    },
+    {
+      "name": "PromptInputToolbar",
+      "importPath": "@harnessio/ui/components",
+      "shape": "arrow",
+      "variantEnums": {},
+      "booleanProps": [],
+      "largeEnumProps": {},
+      "requiredProps": [],
+      "perBranchRequired": [],
+      "subcomponents": []
+    },
+    {
+      "name": "PromptInputTools",
+      "importPath": "@harnessio/ui/components",
+      "shape": "arrow",
+      "variantEnums": {},
+      "booleanProps": [],
+      "largeEnumProps": {},
+      "requiredProps": [],
+      "perBranchRequired": [],
+      "subcomponents": []
+    },
+    {
+      "name": "Radio",
+      "importPath": "@harnessio/ui/components",
+      "shape": "compound",
+      "variantEnums": {},
+      "booleanProps": [],
+      "largeEnumProps": {},
+      "requiredProps": [],
+      "perBranchRequired": [],
+      "subcomponents": [
+        {
+          "name": "Root",
+          "variantEnums": {},
+          "booleanProps": [
+            "error",
+            "labelSuffix",
+            "optional"
+          ],
+          "largeEnumProps": {},
+          "requiredProps": [],
+          "perBranchRequired": []
+        },
+        {
+          "name": "Item",
+          "variantEnums": {},
+          "booleanProps": [],
+          "largeEnumProps": {},
+          "requiredProps": [],
+          "perBranchRequired": []
+        }
+      ]
+    },
+    {
+      "name": "Reasoning",
+      "importPath": "@harnessio/ui/components",
+      "shape": "compound",
+      "variantEnums": {},
+      "booleanProps": [],
+      "largeEnumProps": {},
+      "requiredProps": [],
+      "perBranchRequired": [],
+      "subcomponents": [
+        {
+          "name": "Root",
+          "variantEnums": {},
+          "booleanProps": [
+            "isStreaming"
+          ],
+          "largeEnumProps": {},
+          "requiredProps": [],
+          "perBranchRequired": []
+        },
+        {
+          "name": "Trigger",
+          "variantEnums": {},
+          "booleanProps": [],
+          "largeEnumProps": {},
+          "requiredProps": [],
+          "perBranchRequired": []
+        },
+        {
+          "name": "Content",
+          "variantEnums": {},
+          "booleanProps": [
+            "children"
+          ],
+          "largeEnumProps": {},
+          "requiredProps": [
+            "children"
+          ],
+          "perBranchRequired": []
+        }
+      ]
+    },
+    {
+      "name": "ResetTag",
+      "importPath": "@harnessio/ui/components",
+      "shape": "function",
+      "variantEnums": {
+        "variant": [
+          "secondary",
+          "outline"
+        ],
+        "size": [
+          "sm",
+          "md"
+        ],
+        "theme": [
+          "blue",
+          "purple",
+          "pink",
+          "green",
+          "indigo",
+          "brown",
+          "cyan",
+          "orange",
+          "red",
+          "yellow",
+          "gray",
+          "lime",
+          "violet",
+          "forest-green",
+          "mint"
+        ]
+      },
+      "booleanProps": [
+        "disabled",
+        "enableHover",
+        "rounded"
+      ],
+      "largeEnumProps": {
+        "icon": 518
+      },
+      "requiredProps": [
+        "onReset",
+        "value"
+      ],
+      "perBranchRequired": [],
+      "subcomponents": []
+    },
+    {
+      "name": "Resizable",
+      "importPath": "@harnessio/ui/components",
+      "shape": "compound",
+      "variantEnums": {},
+      "booleanProps": [],
+      "largeEnumProps": {},
+      "requiredProps": [],
+      "perBranchRequired": [],
+      "subcomponents": [
+        {
+          "name": "PanelGroup",
+          "variantEnums": {},
+          "booleanProps": [],
+          "largeEnumProps": {},
+          "requiredProps": [],
+          "perBranchRequired": []
+        },
+        {
+          "name": "Panel",
+          "variantEnums": {},
+          "booleanProps": [
+            "children",
+            "collapsible"
+          ],
+          "largeEnumProps": {
+            "tagName": 112
+          },
+          "requiredProps": [],
+          "perBranchRequired": []
+        },
+        {
+          "name": "Handle",
+          "variantEnums": {},
+          "booleanProps": [
+            "withHandle"
+          ],
+          "largeEnumProps": {},
+          "requiredProps": [],
+          "perBranchRequired": []
+        }
+      ]
+    },
+    {
+      "name": "SandboxLayout",
+      "importPath": "@harnessio/ui/components",
+      "shape": "compound",
+      "variantEnums": {},
+      "booleanProps": [],
+      "largeEnumProps": {},
+      "requiredProps": [],
+      "perBranchRequired": [],
+      "subcomponents": [
+        {
+          "name": "Root",
+          "variantEnums": {},
+          "booleanProps": [
+            "children"
+          ],
+          "largeEnumProps": {},
+          "requiredProps": [
+            "children"
+          ],
+          "perBranchRequired": []
+        },
+        {
+          "name": "LeftPanel",
+          "variantEnums": {},
+          "booleanProps": [
+            "children"
+          ],
+          "largeEnumProps": {},
+          "requiredProps": [
+            "children"
+          ],
+          "perBranchRequired": []
+        },
+        {
+          "name": "LeftSubPanel",
+          "variantEnums": {},
+          "booleanProps": [
+            "children"
+          ],
+          "largeEnumProps": {},
+          "requiredProps": [
+            "children"
+          ],
+          "perBranchRequired": []
+        },
+        {
+          "name": "Header",
+          "variantEnums": {},
+          "booleanProps": [
+            "children"
+          ],
+          "largeEnumProps": {},
+          "requiredProps": [
+            "children"
+          ],
+          "perBranchRequired": []
+        },
+        {
+          "name": "SubHeader",
+          "variantEnums": {},
+          "booleanProps": [
+            "children"
+          ],
+          "largeEnumProps": {},
+          "requiredProps": [
+            "children"
+          ],
+          "perBranchRequired": []
+        },
+        {
+          "name": "Main",
+          "variantEnums": {},
+          "booleanProps": [
+            "children",
+            "fullWidth"
+          ],
+          "largeEnumProps": {},
+          "requiredProps": [
+            "children"
+          ],
+          "perBranchRequired": []
+        },
+        {
+          "name": "Content",
+          "variantEnums": {
+            "maxWidth": [
+              "sm",
+              "md",
+              "lg",
+              "xl",
+              "2xl",
+              "3xl",
+              "4xl",
+              "5xl",
+              "6xl",
+              "7xl"
+            ]
+          },
+          "booleanProps": [
+            "children"
+          ],
+          "largeEnumProps": {},
+          "requiredProps": [
+            "children"
+          ],
+          "perBranchRequired": []
+        },
+        {
+          "name": "Columns",
+          "variantEnums": {},
+          "booleanProps": [
+            "children"
+          ],
+          "largeEnumProps": {},
+          "requiredProps": [
+            "children"
+          ],
+          "perBranchRequired": []
+        },
+        {
+          "name": "Column",
+          "variantEnums": {},
+          "booleanProps": [
+            "children"
+          ],
+          "largeEnumProps": {},
+          "requiredProps": [
+            "children"
+          ],
+          "perBranchRequired": []
+        }
+      ]
+    },
+    {
+      "name": "ScopeTag",
+      "importPath": "@harnessio/ui/components",
+      "shape": "fc",
+      "variantEnums": {
+        "scopeType": [
+          "Account",
+          "Organization",
+          "Project",
+          "Repository"
+        ],
+        "size": [
+          "sm",
+          "md"
+        ]
+      },
+      "booleanProps": [],
+      "largeEnumProps": {},
+      "requiredProps": [
+        "scopeType"
+      ],
+      "perBranchRequired": [],
+      "subcomponents": []
+    },
+    {
+      "name": "ScrollArea",
+      "importPath": "@harnessio/ui/components",
+      "shape": "forwardRef",
+      "variantEnums": {
+        "direction": [
+          "ltr",
+          "rtl"
+        ]
+      },
+      "booleanProps": [
+        "children",
+        "preserveScrollPosition"
+      ],
+      "largeEnumProps": {},
+      "requiredProps": [
+        "children"
+      ],
+      "perBranchRequired": [],
+      "subcomponents": []
+    },
+    {
+      "name": "SearchableDropdown",
+      "importPath": "@harnessio/ui/components",
+      "shape": "arrow",
+      "variantEnums": {
+        "dropdownAlign": [
+          "end",
+          "start"
+        ]
+      },
+      "booleanProps": [
+        "displayLabel",
+        "isSearchable"
+      ],
+      "largeEnumProps": {},
+      "requiredProps": [
+        "onChange",
+        "options"
+      ],
+      "perBranchRequired": [],
+      "subcomponents": []
+    },
+    {
+      "name": "SearchFiles",
+      "importPath": "@harnessio/ui/components",
+      "shape": "arrow",
+      "variantEnums": {
+        "searchInputSize": [
+          "sm",
+          "md"
+        ]
+      },
+      "booleanProps": [],
+      "largeEnumProps": {},
+      "requiredProps": [
+        "navigateToFile"
+      ],
+      "perBranchRequired": [],
+      "subcomponents": []
+    },
+    {
+      "name": "SearchInput",
+      "importPath": "@harnessio/ui/components",
+      "shape": "forwardRef",
+      "variantEnums": {
+        "size": [
+          "sm",
+          "md"
+        ],
+        "theme": [
+          "default",
+          "danger",
+          "warning",
+          "success"
+        ]
+      },
+      "booleanProps": [
+        "debounce",
+        "leadingSuffix",
+        "prefix",
+        "showPrevNextButtons",
+        "suffix"
+      ],
+      "largeEnumProps": {},
+      "requiredProps": [],
+      "perBranchRequired": [],
+      "subcomponents": []
+    },
+    {
+      "name": "SearchProvider",
+      "importPath": "@harnessio/ui/components",
+      "shape": "function",
+      "variantEnums": {},
+      "booleanProps": [
+        "children"
+      ],
+      "largeEnumProps": {},
+      "requiredProps": [
+        "children"
+      ],
+      "perBranchRequired": [],
+      "subcomponents": []
+    },
+    {
+      "name": "Select",
+      "importPath": "@harnessio/ui/components",
+      "shape": "arrow",
+      "variantEnums": {
+        "theme": [
+          "default",
+          "danger",
+          "warning"
+        ],
+        "size": [
+          "sm",
+          "md"
+        ],
+        "contentWidth": [
+          "auto",
+          "triggerWidth"
+        ],
+        "orientation": [
+          "vertical",
+          "horizontal"
+        ]
+      },
+      "booleanProps": [
+        "allowSearch",
+        "footer",
+        "header",
+        "isLoading",
+        "labelSuffix",
+        "optional",
+        "prefix",
+        "suffix"
+      ],
+      "largeEnumProps": {},
+      "requiredProps": [
+        "options"
+      ],
+      "perBranchRequired": [],
+      "subcomponents": []
+    },
+    {
+      "name": "Separator",
+      "importPath": "@harnessio/ui/components",
+      "shape": "forwardRef",
+      "variantEnums": {},
+      "booleanProps": [],
+      "largeEnumProps": {},
+      "requiredProps": [],
+      "perBranchRequired": [],
+      "subcomponents": []
+    },
+    {
+      "name": "SeveritySlider",
+      "importPath": "@harnessio/ui/components",
+      "shape": "forwardRef",
+      "variantEnums": {},
+      "booleanProps": [
+        "disabled"
+      ],
+      "largeEnumProps": {},
+      "requiredProps": [],
+      "perBranchRequired": [],
+      "subcomponents": []
+    },
+    {
+      "name": "Sheet",
+      "importPath": "@harnessio/ui/components",
+      "shape": "compound",
+      "variantEnums": {},
+      "booleanProps": [],
+      "largeEnumProps": {},
+      "requiredProps": [],
+      "perBranchRequired": [],
+      "subcomponents": [
+        {
+          "name": "Root",
+          "variantEnums": {},
+          "booleanProps": [],
+          "largeEnumProps": {},
+          "requiredProps": [],
+          "perBranchRequired": []
+        },
+        {
+          "name": "Trigger",
+          "variantEnums": {},
+          "booleanProps": [],
+          "largeEnumProps": {},
+          "requiredProps": [],
+          "perBranchRequired": []
+        },
+        {
+          "name": "Content",
+          "variantEnums": {
+            "side": [
+              "right",
+              "left",
+              "top",
+              "bottom"
+            ]
+          },
+          "booleanProps": [
+            "hideCloseButton",
+            "modal"
+          ],
+          "largeEnumProps": {},
+          "requiredProps": [],
+          "perBranchRequired": []
+        },
+        {
+          "name": "Header",
+          "variantEnums": {},
+          "booleanProps": [],
+          "largeEnumProps": {},
+          "requiredProps": [],
+          "perBranchRequired": []
+        },
+        {
+          "name": "Footer",
+          "variantEnums": {},
+          "booleanProps": [],
+          "largeEnumProps": {},
+          "requiredProps": [],
+          "perBranchRequired": []
+        },
+        {
+          "name": "Title",
+          "variantEnums": {},
+          "booleanProps": [],
+          "largeEnumProps": {},
+          "requiredProps": [],
+          "perBranchRequired": []
+        },
+        {
+          "name": "Description",
+          "variantEnums": {},
+          "booleanProps": [],
+          "largeEnumProps": {},
+          "requiredProps": [],
+          "perBranchRequired": []
+        }
+      ]
+    },
+    {
+      "name": "Shimmer",
+      "importPath": "@harnessio/ui/components",
+      "shape": "forwardRef",
+      "variantEnums": {
+        "color": [
+          "disabled",
+          "danger",
+          "warning",
+          "success",
+          "merged",
+          "foreground-1",
+          "foreground-2",
+          "foreground-3",
+          "foreground-4",
+          "brand"
+        ],
+        "variant": [
+          "body-normal",
+          "heading-hero",
+          "heading-section",
+          "heading-subsection",
+          "heading-base",
+          "heading-small",
+          "body-single-line-normal",
+          "body-single-line-light",
+          "body-strong",
+          "body-single-line-strong",
+          "body-code",
+          "body-single-line-code",
+          "caption-normal",
+          "caption-light",
+          "caption-strong",
+          "caption-code",
+          "caption-single-line-code",
+          "caption-single-line-normal",
+          "caption-single-line-light"
+        ]
+      },
+      "booleanProps": [],
+      "largeEnumProps": {},
+      "requiredProps": [
+        "children"
+      ],
+      "perBranchRequired": [],
+      "subcomponents": []
+    },
+    {
+      "name": "Shortcut",
+      "importPath": "@harnessio/ui/components",
+      "shape": "forwardRef",
+      "variantEnums": {
+        "color": [
+          "disabled",
+          "inherit",
+          "danger",
+          "warning",
+          "success",
+          "merged",
+          "foreground-1",
+          "foreground-2",
+          "foreground-3",
+          "foreground-4",
+          "brand"
+        ],
+        "variant": [
+          "body-normal",
+          "heading-hero",
+          "heading-section",
+          "heading-subsection",
+          "heading-base",
+          "heading-small",
+          "body-single-line-normal",
+          "body-single-line-light",
+          "body-strong",
+          "body-single-line-strong",
+          "body-code",
+          "body-single-line-code",
+          "caption-normal",
+          "caption-light",
+          "caption-strong",
+          "caption-code",
+          "caption-single-line-code",
+          "caption-single-line-normal",
+          "caption-single-line-light"
+        ],
+        "align": [
+          "right",
+          "left",
+          "center"
+        ],
+        "lineClamp": [
+          "1",
+          "default",
+          "2",
+          "4",
+          "5",
+          "3",
+          "6"
+        ],
+        "wrap": [
+          "wrap",
+          "nowrap",
+          "balance",
+          "pretty"
+        ],
+        "as": [
+          "code",
+          "label",
+          "div",
+          "h2",
+          "h3",
+          "li",
+          "p",
+          "span",
+          "abbr",
+          "address",
+          "blockquote",
+          "caption",
+          "cite",
+          "dd",
+          "del",
+          "dt",
+          "em",
+          "figcaption",
+          "h1",
+          "h4",
+          "h5",
+          "h6",
+          "ins",
+          "kbd",
+          "legend",
+          "pre",
+          "samp",
+          "strong",
+          "time",
+          "var"
+        ]
+      },
+      "booleanProps": [
+        "asChild",
+        "truncate"
+      ],
+      "largeEnumProps": {},
+      "requiredProps": [],
+      "perBranchRequired": [],
+      "subcomponents": []
+    },
+    {
+      "name": "Sidebar",
+      "importPath": "@harnessio/ui/components",
+      "shape": "compound",
+      "variantEnums": {},
+      "booleanProps": [],
+      "largeEnumProps": {},
+      "requiredProps": [],
+      "perBranchRequired": [],
+      "subcomponents": [
+        {
+          "name": "Root",
+          "variantEnums": {
+            "side": [
+              "right",
+              "left"
+            ]
+          },
+          "booleanProps": [],
+          "largeEnumProps": {},
+          "requiredProps": [],
+          "perBranchRequired": []
+        },
+        {
+          "name": "Content",
+          "variantEnums": {},
+          "booleanProps": [],
+          "largeEnumProps": {},
+          "requiredProps": [],
+          "perBranchRequired": []
+        },
+        {
+          "name": "Footer",
+          "variantEnums": {},
+          "booleanProps": [],
+          "largeEnumProps": {},
+          "requiredProps": [],
+          "perBranchRequired": []
+        },
+        {
+          "name": "Group",
+          "variantEnums": {},
+          "booleanProps": [],
+          "largeEnumProps": {},
+          "requiredProps": [],
+          "perBranchRequired": []
+        },
+        {
+          "name": "Header",
+          "variantEnums": {},
+          "booleanProps": [],
+          "largeEnumProps": {},
+          "requiredProps": [],
+          "perBranchRequired": []
+        },
+        {
+          "name": "Inset",
+          "variantEnums": {},
+          "booleanProps": [],
+          "largeEnumProps": {},
+          "requiredProps": [],
+          "perBranchRequired": []
+        },
+        {
+          "name": "MenuSkeleton",
+          "variantEnums": {},
+          "booleanProps": [
+            "hideIcon"
+          ],
+          "largeEnumProps": {},
+          "requiredProps": [],
+          "perBranchRequired": []
+        },
+        {
+          "name": "MenuSubItem",
+          "variantEnums": {},
+          "booleanProps": [
+            "active"
+          ],
+          "largeEnumProps": {},
+          "requiredProps": [
+            "title"
+          ],
+          "perBranchRequired": []
+        },
+        {
+          "name": "Popover",
+          "variantEnums": {
+            "theme": [
+              "default",
+              "themed"
+            ]
+          },
+          "booleanProps": [
+            "children",
+            "content",
+            "hideArrow",
+            "noMaxWidth"
+          ],
+          "largeEnumProps": {},
+          "requiredProps": [
+            "children",
+            "content"
+          ],
+          "perBranchRequired": []
+        },
+        {
+          "name": "Provider",
+          "variantEnums": {},
+          "booleanProps": [
+            "defaultOpen",
+            "open"
+          ],
+          "largeEnumProps": {},
+          "requiredProps": [],
+          "perBranchRequired": []
+        },
+        {
+          "name": "Rail",
+          "variantEnums": {},
+          "booleanProps": [
+            "animate",
+            "open"
+          ],
+          "largeEnumProps": {},
+          "requiredProps": [],
+          "perBranchRequired": []
+        },
+        {
+          "name": "Separator",
+          "variantEnums": {},
+          "booleanProps": [],
+          "largeEnumProps": {},
+          "requiredProps": [],
+          "perBranchRequired": []
+        },
+        {
+          "name": "Trigger",
+          "variantEnums": {
+            "type": [
+              "button",
+              "submit",
+              "reset"
+            ],
+            "unselectable": [
+              "off",
+              "on"
+            ],
+            "variant": [
+              "ai",
+              "link",
+              "secondary",
+              "outline",
+              "transparent",
+              "primary",
+              "ghost"
+            ],
+            "size": [
+              "sm",
+              "md",
+              "2xs",
+              "xs",
+              "3xs"
+            ],
+            "theme": [
+              "default",
+              "danger",
+              "success"
+            ]
+          },
+          "booleanProps": [
+            "asChild",
+            "children",
+            "defaultChecked",
+            "disabled",
+            "formNoValidate",
+            "loading",
+            "rounded",
+            "suppressContentEditableWarning",
+            "suppressHydrationWarning"
+          ],
+          "largeEnumProps": {},
+          "requiredProps": [],
+          "perBranchRequired": []
+        },
+        {
+          "name": "ToggleMenuButton",
+          "variantEnums": {},
+          "booleanProps": [],
+          "largeEnumProps": {},
+          "requiredProps": [],
+          "perBranchRequired": []
+        }
+      ]
+    },
+    {
+      "name": "SidebarLayout",
+      "importPath": "@harnessio/ui/components",
+      "shape": "arrow",
+      "variantEnums": {},
+      "booleanProps": [
+        "chat",
+        "mainContent",
+        "sidebar"
+      ],
+      "largeEnumProps": {},
+      "requiredProps": [
+        "chat",
+        "mainContent",
+        "sidebar"
+      ],
+      "perBranchRequired": [],
+      "subcomponents": []
+    },
+    {
+      "name": "SidebarSearch",
+      "importPath": "@harnessio/ui/components",
+      "shape": "function",
+      "variantEnums": {},
+      "booleanProps": [],
+      "largeEnumProps": {},
+      "requiredProps": [],
+      "perBranchRequired": [],
+      "subcomponents": []
+    },
+    {
+      "name": "SideNav",
+      "importPath": "@harnessio/ui/components",
+      "shape": "fc",
+      "variantEnums": {},
+      "booleanProps": [],
+      "largeEnumProps": {},
+      "requiredProps": [],
+      "perBranchRequired": [],
+      "subcomponents": []
+    },
+    {
+      "name": "SimpleSort",
+      "importPath": "@harnessio/ui/components",
+      "shape": "function",
+      "variantEnums": {},
+      "booleanProps": [],
+      "largeEnumProps": {},
+      "requiredProps": [
+        "sortOptions"
+      ],
+      "perBranchRequired": [],
+      "subcomponents": []
+    },
+    {
+      "name": "Skeleton",
+      "importPath": "@harnessio/ui/components",
+      "shape": "compound",
+      "variantEnums": {},
+      "booleanProps": [],
+      "largeEnumProps": {},
+      "requiredProps": [],
+      "perBranchRequired": [],
+      "subcomponents": [
+        {
+          "name": "Box",
+          "variantEnums": {},
+          "booleanProps": [],
+          "largeEnumProps": {},
+          "requiredProps": [],
+          "perBranchRequired": []
+        },
+        {
+          "name": "Avatar",
+          "variantEnums": {},
+          "booleanProps": [],
+          "largeEnumProps": {},
+          "requiredProps": [],
+          "perBranchRequired": []
+        },
+        {
+          "name": "List",
+          "variantEnums": {},
+          "booleanProps": [],
+          "largeEnumProps": {},
+          "requiredProps": [],
+          "perBranchRequired": []
+        },
+        {
+          "name": "Form",
+          "variantEnums": {},
+          "booleanProps": [],
+          "largeEnumProps": {},
+          "requiredProps": [],
+          "perBranchRequired": []
+        },
+        {
+          "name": "Table",
+          "variantEnums": {},
+          "booleanProps": [],
+          "largeEnumProps": {},
+          "requiredProps": [],
+          "perBranchRequired": []
+        },
+        {
+          "name": "Icon",
+          "variantEnums": {},
+          "booleanProps": [],
+          "largeEnumProps": {},
+          "requiredProps": [],
+          "perBranchRequired": []
+        },
+        {
+          "name": "Logo",
+          "variantEnums": {},
+          "booleanProps": [],
+          "largeEnumProps": {},
+          "requiredProps": [],
+          "perBranchRequired": []
+        },
+        {
+          "name": "Typography",
+          "variantEnums": {},
+          "booleanProps": [],
+          "largeEnumProps": {},
+          "requiredProps": [],
+          "perBranchRequired": []
+        }
+      ]
+    },
+    {
+      "name": "SkeletonFileExplorer",
+      "importPath": "@harnessio/ui/components",
+      "shape": "fc",
+      "variantEnums": {},
+      "booleanProps": [],
+      "largeEnumProps": {},
+      "requiredProps": [],
+      "perBranchRequired": [],
+      "subcomponents": []
+    },
+    {
+      "name": "Slider",
+      "importPath": "@harnessio/ui/components",
+      "shape": "forwardRef",
+      "variantEnums": {
+        "caption": [
+          "description",
+          "min-max"
+        ]
+      },
+      "booleanProps": [
+        "showValue"
+      ],
+      "largeEnumProps": {},
+      "requiredProps": [],
+      "perBranchRequired": [],
+      "subcomponents": []
+    },
+    {
+      "name": "Sort",
+      "importPath": "@harnessio/ui/components",
+      "shape": "compound",
+      "variantEnums": {},
+      "booleanProps": [],
+      "largeEnumProps": {},
+      "requiredProps": [],
+      "perBranchRequired": [],
+      "subcomponents": [
+        {
+          "name": "Root",
+          "variantEnums": {},
+          "booleanProps": [
+            "children"
+          ],
+          "largeEnumProps": {},
+          "requiredProps": [
+            "children",
+            "sortOptions"
+          ],
+          "perBranchRequired": []
+        },
+        {
+          "name": "Select",
+          "variantEnums": {},
+          "booleanProps": [],
+          "largeEnumProps": {},
+          "requiredProps": [],
+          "perBranchRequired": []
+        },
+        {
+          "name": "MultiSort",
+          "variantEnums": {},
+          "booleanProps": [],
+          "largeEnumProps": {},
+          "requiredProps": [],
+          "perBranchRequired": []
+        },
+        {
+          "name": "SimpleSort",
+          "variantEnums": {},
+          "booleanProps": [],
+          "largeEnumProps": {},
+          "requiredProps": [
+            "sortOptions"
+          ],
+          "perBranchRequired": []
+        }
+      ]
+    },
+    {
+      "name": "Spacer",
+      "importPath": "@harnessio/ui/components",
+      "shape": "arrow",
+      "variantEnums": {
+        "size": [
+          "1",
+          "16",
+          "2",
+          "4",
+          "5",
+          "3",
+          "6",
+          "8",
+          "10",
+          "9",
+          "7",
+          "14",
+          "20",
+          "1.5",
+          "2.5",
+          "4.5",
+          "11",
+          "12",
+          "15"
+        ]
+      },
+      "booleanProps": [],
+      "largeEnumProps": {},
+      "requiredProps": [],
+      "perBranchRequired": [],
+      "subcomponents": []
+    },
+    {
+      "name": "SplitButton",
+      "importPath": "@harnessio/ui/components",
+      "shape": "arrow",
+      "variantEnums": {
+        "variant": [
+          "ai",
+          "link",
+          "secondary",
+          "outline",
+          "transparent",
+          "primary",
+          "ghost"
+        ],
+        "theme": [
+          "default",
+          "danger",
+          "success"
+        ],
+        "size": [
+          "sm",
+          "md",
+          "xs"
+        ]
+      },
+      "booleanProps": [
+        "children",
+        "disableButton",
+        "disableDropdown",
+        "disabled",
+        "loading"
+      ],
+      "largeEnumProps": {},
+      "requiredProps": [
+        "children",
+        "handleButtonClick",
+        "handleOptionChange",
+        "options"
+      ],
+      "perBranchRequired": [],
+      "subcomponents": []
+    },
+    {
+      "name": "StackedList",
+      "importPath": "@harnessio/ui/components",
+      "shape": "compound",
+      "variantEnums": {},
+      "booleanProps": [],
+      "largeEnumProps": {},
+      "requiredProps": [],
+      "perBranchRequired": [],
+      "subcomponents": [
+        {
+          "name": "Root",
+          "variantEnums": {
+            "rounded": [
+              "top"
+            ]
+          },
+          "booleanProps": [
+            "border"
+          ],
+          "largeEnumProps": {},
+          "requiredProps": [],
+          "perBranchRequired": []
+        },
+        {
+          "name": "Header",
+          "variantEnums": {
+            "paddingX": [
+              "sm",
+              "md",
+              "lg",
+              "xl",
+              "2xs",
+              "xs",
+              "3xs",
+              "4xs",
+              "2xl",
+              "3xl",
+              "4xl",
+              "0"
+            ],
+            "paddingY": [
+              "sm",
+              "md",
+              "lg",
+              "xl",
+              "2xs",
+              "xs",
+              "3xs",
+              "4xs",
+              "2xl",
+              "3xl",
+              "4xl",
+              "0"
+            ]
+          },
+          "booleanProps": [
+            "actions",
+            "asChild",
+            "thumbnail"
+          ],
+          "largeEnumProps": {},
+          "requiredProps": [],
+          "perBranchRequired": []
+        },
+        {
+          "name": "Item",
+          "variantEnums": {
+            "paddingX": [
+              "sm",
+              "md",
+              "lg",
+              "xl",
+              "2xs",
+              "xs",
+              "3xs",
+              "4xs",
+              "2xl",
+              "3xl",
+              "4xl",
+              "0"
+            ],
+            "paddingY": [
+              "sm",
+              "md",
+              "lg",
+              "xl",
+              "2xs",
+              "xs",
+              "3xs",
+              "4xs",
+              "2xl",
+              "3xl",
+              "4xl",
+              "0"
+            ]
+          },
+          "booleanProps": [
+            "actions",
+            "asChild",
+            "disableHover",
+            "thumbnail"
+          ],
+          "largeEnumProps": {},
+          "requiredProps": [],
+          "perBranchRequired": []
+        },
+        {
+          "name": "Field",
+          "variantEnums": {
+            "titleColor": [
+              "disabled",
+              "inherit",
+              "danger",
+              "warning",
+              "success",
+              "merged",
+              "foreground-1",
+              "foreground-2",
+              "foreground-3",
+              "foreground-4",
+              "brand"
+            ]
+          },
+          "booleanProps": [
+            "description",
+            "disableTruncate",
+            "right",
+            "title"
+          ],
+          "largeEnumProps": {},
+          "requiredProps": [],
+          "perBranchRequired": []
+        }
+      ]
+    },
+    {
+      "name": "StatsPanel",
+      "importPath": "@harnessio/ui/components",
+      "shape": "fc",
+      "variantEnums": {
+        "gap": [
+          "sm",
+          "md",
+          "none",
+          "lg",
+          "xl",
+          "2xs",
+          "xs",
+          "3xs",
+          "4xs",
+          "2xl",
+          "3xl",
+          "4xl"
+        ]
+      },
+      "booleanProps": [
+        "isLoading"
+      ],
+      "largeEnumProps": {},
+      "requiredProps": [
+        "data"
+      ],
+      "perBranchRequired": [],
+      "subcomponents": []
+    },
+    {
+      "name": "StatusBadge",
+      "importPath": "@harnessio/ui/components",
+      "shape": "forwardRef",
+      "variantEnums": {
+        "size": [
+          "sm",
+          "md"
+        ],
+        "theme": [
+          "danger",
+          "warning",
+          "success",
+          "info",
+          "merged",
+          "risk",
+          "muted"
+        ],
+        "variant": [
+          "secondary",
+          "outline",
+          "status",
+          "primary",
+          "ghost"
+        ]
+      },
+      "booleanProps": [
+        "pulse"
+      ],
+      "largeEnumProps": {
+        "icon": 518
+      },
+      "requiredProps": [
+        "variant"
+      ],
+      "perBranchRequired": [
+        [
+          "variant"
+        ]
+      ],
+      "subcomponents": []
+    },
+    {
+      "name": "StudioCard",
+      "importPath": "@harnessio/ui/components",
+      "shape": "compound",
+      "variantEnums": {},
+      "booleanProps": [],
+      "largeEnumProps": {},
+      "requiredProps": [],
+      "perBranchRequired": [],
+      "subcomponents": [
+        {
+          "name": "Root",
+          "variantEnums": {
+            "theme": [
+              "default",
+              "danger",
+              "warning",
+              "success"
+            ],
+            "variant": [
+              "default",
+              "stage"
+            ],
+            "size": [
+              "sm",
+              "md",
+              "xs"
+            ]
+          },
+          "booleanProps": [
+            "execution",
+            "isGroupCard",
+            "selected"
+          ],
+          "largeEnumProps": {},
+          "requiredProps": [],
+          "perBranchRequired": []
+        },
+        {
+          "name": "Header",
+          "variantEnums": {},
+          "booleanProps": [
+            "icon"
+          ],
+          "largeEnumProps": {},
+          "requiredProps": [
+            "actions",
+            "icon",
+            "title"
+          ],
+          "perBranchRequired": []
+        },
+        {
+          "name": "Content",
+          "variantEnums": {},
+          "booleanProps": [],
+          "largeEnumProps": {},
+          "requiredProps": [],
+          "perBranchRequired": []
+        },
+        {
+          "name": "Footer",
+          "variantEnums": {
+            "size": [
+              "default",
+              "compact"
+            ]
+          },
+          "booleanProps": [
+            "invisible"
+          ],
+          "largeEnumProps": {},
+          "requiredProps": [],
+          "perBranchRequired": []
+        },
+        {
+          "name": "Status",
+          "variantEnums": {
+            "theme": [
+              "danger",
+              "warning",
+              "success",
+              "info",
+              "merged",
+              "risk",
+              "muted"
+            ],
+            "status": [
+              "warning",
+              "success",
+              "error",
+              "executing",
+              "queued"
+            ]
+          },
+          "booleanProps": [],
+          "largeEnumProps": {},
+          "requiredProps": [],
+          "perBranchRequired": []
+        },
+        {
+          "name": "Message",
+          "variantEnums": {},
+          "booleanProps": [],
+          "largeEnumProps": {},
+          "requiredProps": [],
+          "perBranchRequired": []
+        },
+        {
+          "name": "Tag",
+          "variantEnums": {},
+          "booleanProps": [],
+          "largeEnumProps": {
+            "icon": 518
+          },
+          "requiredProps": [
+            "tagText"
+          ],
+          "perBranchRequired": []
+        },
+        {
+          "name": "Button",
+          "variantEnums": {},
+          "booleanProps": [],
+          "largeEnumProps": {
+            "icon": 518
+          },
+          "requiredProps": [
+            "onClick"
+          ],
+          "perBranchRequired": []
+        },
+        {
+          "name": "ExpandButton",
+          "variantEnums": {
+            "stackDirection": [
+              "right",
+              "bottom"
+            ],
+            "variant": [
+              "default",
+              "minimal"
+            ]
+          },
+          "booleanProps": [
+            "isExpanded",
+            "loading"
+          ],
+          "largeEnumProps": {},
+          "requiredProps": [
+            "label",
+            "stepCount"
+          ],
+          "perBranchRequired": []
+        },
+        {
+          "name": "CustomActions",
+          "variantEnums": {},
+          "booleanProps": [],
+          "largeEnumProps": {},
+          "requiredProps": [],
+          "perBranchRequired": []
+        },
+        {
+          "name": "CodePreview",
+          "variantEnums": {},
+          "booleanProps": [],
+          "largeEnumProps": {},
+          "requiredProps": [],
+          "perBranchRequired": []
+        }
+      ]
+    },
+    {
+      "name": "Switch",
+      "importPath": "@harnessio/ui/components",
+      "shape": "forwardRef",
+      "variantEnums": {},
+      "booleanProps": [
+        "showOptionalLabel"
+      ],
+      "largeEnumProps": {},
+      "requiredProps": [],
+      "perBranchRequired": [],
+      "subcomponents": []
+    },
+    {
+      "name": "Table",
+      "importPath": "@harnessio/ui/components",
+      "shape": "compound",
+      "variantEnums": {},
+      "booleanProps": [],
+      "largeEnumProps": {},
+      "requiredProps": [],
+      "perBranchRequired": [],
+      "subcomponents": [
+        {
+          "name": "Root",
+          "variantEnums": {
+            "variant": [
+              "default",
+              "transparent"
+            ],
+            "size": [
+              "normal",
+              "relaxed",
+              "compact"
+            ]
+          },
+          "booleanProps": [
+            "disableHighlightOnHover"
+          ],
+          "largeEnumProps": {},
+          "requiredProps": [],
+          "perBranchRequired": []
+        },
+        {
+          "name": "Header",
+          "variantEnums": {},
+          "booleanProps": [],
+          "largeEnumProps": {},
+          "requiredProps": [],
+          "perBranchRequired": []
+        },
+        {
+          "name": "Body",
+          "variantEnums": {},
+          "booleanProps": [],
+          "largeEnumProps": {},
+          "requiredProps": [],
+          "perBranchRequired": []
+        },
+        {
+          "name": "Footer",
+          "variantEnums": {},
+          "booleanProps": [],
+          "largeEnumProps": {},
+          "requiredProps": [],
+          "perBranchRequired": []
+        },
+        {
+          "name": "Head",
+          "variantEnums": {
+            "sortDirection": [
+              "desc",
+              "asc"
+            ]
+          },
+          "booleanProps": [
+            "hideDivider",
+            "sortDirection",
+            "sortable"
+          ],
+          "largeEnumProps": {},
+          "requiredProps": [],
+          "perBranchRequired": []
+        },
+        {
+          "name": "Row",
+          "variantEnums": {},
+          "booleanProps": [
+            "children",
+            "disabled",
+            "selected"
+          ],
+          "largeEnumProps": {},
+          "requiredProps": [],
+          "perBranchRequired": []
+        },
+        {
+          "name": "Cell",
+          "variantEnums": {},
+          "booleanProps": [
+            "disableLink"
+          ],
+          "largeEnumProps": {},
+          "requiredProps": [],
+          "perBranchRequired": []
+        },
+        {
+          "name": "Caption",
+          "variantEnums": {},
+          "booleanProps": [],
+          "largeEnumProps": {},
+          "requiredProps": [],
+          "perBranchRequired": []
+        }
+      ]
+    },
+    {
+      "name": "Tabs",
+      "importPath": "@harnessio/ui/components",
+      "shape": "compound",
+      "variantEnums": {},
+      "booleanProps": [],
+      "largeEnumProps": {},
+      "requiredProps": [],
+      "perBranchRequired": [],
+      "subcomponents": [
+        {
+          "name": "Root",
+          "variantEnums": {
+            "orientation": [
+              "vertical",
+              "horizontal"
+            ]
+          },
+          "booleanProps": [
+            "children"
+          ],
+          "largeEnumProps": {},
+          "requiredProps": [
+            "children"
+          ],
+          "perBranchRequired": []
+        },
+        {
+          "name": "NavRoot",
+          "variantEnums": {
+            "orientation": [
+              "vertical",
+              "horizontal"
+            ]
+          },
+          "booleanProps": [
+            "children"
+          ],
+          "largeEnumProps": {},
+          "requiredProps": [
+            "children"
+          ],
+          "perBranchRequired": []
+        },
+        {
+          "name": "List",
+          "variantEnums": {
+            "variant": [
+              "ghost",
+              "underlined",
+              "overlined",
+              "outlined"
+            ],
+            "orientation": [
+              "vertical",
+              "horizontal"
+            ]
+          },
+          "booleanProps": [],
+          "largeEnumProps": {},
+          "requiredProps": [],
+          "perBranchRequired": []
+        },
+        {
+          "name": "Trigger",
+          "variantEnums": {},
+          "booleanProps": [
+            "children",
+            "disabled"
+          ],
+          "largeEnumProps": {
+            "icon": 518,
+            "logo": 137
+          },
+          "requiredProps": [
+            "value"
+          ],
+          "perBranchRequired": [
+            [
+              "value"
+            ]
+          ]
+        },
+        {
+          "name": "Content",
+          "variantEnums": {},
+          "booleanProps": [],
+          "largeEnumProps": {},
+          "requiredProps": [],
+          "perBranchRequired": []
+        }
+      ]
+    },
+    {
+      "name": "Tag",
+      "importPath": "@harnessio/ui/components",
+      "shape": "forwardRef",
+      "variantEnums": {
+        "variant": [
+          "secondary",
+          "outline"
+        ],
+        "size": [
+          "sm",
+          "md"
+        ],
+        "theme": [
+          "blue",
+          "purple",
+          "pink",
+          "green",
+          "indigo",
+          "brown",
+          "cyan",
+          "orange",
+          "red",
+          "yellow",
+          "gray",
+          "lime",
+          "violet",
+          "forest-green",
+          "mint"
+        ]
+      },
+      "booleanProps": [
+        "disabled",
+        "enableHover",
+        "rounded"
+      ],
+      "largeEnumProps": {
+        "icon": 518,
+        "actionIcon": 518
+      },
+      "requiredProps": [
+        "value"
+      ],
+      "perBranchRequired": [],
+      "subcomponents": []
+    },
+    {
+      "name": "Text",
+      "importPath": "@harnessio/ui/components",
+      "shape": "arrow",
+      "variantEnums": {
+        "color": [
+          "disabled",
+          "inherit",
+          "danger",
+          "warning",
+          "success",
+          "merged",
+          "foreground-1",
+          "foreground-2",
+          "foreground-3",
+          "foreground-4",
+          "brand"
+        ],
+        "variant": [
+          "body-normal",
+          "heading-hero",
+          "heading-section",
+          "heading-subsection",
+          "heading-base",
+          "heading-small",
+          "body-single-line-normal",
+          "body-single-line-light",
+          "body-strong",
+          "body-single-line-strong",
+          "body-code",
+          "body-single-line-code",
+          "caption-normal",
+          "caption-light",
+          "caption-strong",
+          "caption-code",
+          "caption-single-line-code",
+          "caption-single-line-normal",
+          "caption-single-line-light"
+        ],
+        "align": [
+          "right",
+          "left",
+          "center"
+        ],
+        "lineClamp": [
+          "1",
+          "default",
+          "2",
+          "4",
+          "5",
+          "3",
+          "6"
+        ],
+        "wrap": [
+          "wrap",
+          "nowrap",
+          "balance",
+          "pretty"
+        ],
+        "as": [
+          "code",
+          "label",
+          "div",
+          "h2",
+          "h3",
+          "li",
+          "p",
+          "span",
+          "abbr",
+          "address",
+          "blockquote",
+          "caption",
+          "cite",
+          "dd",
+          "del",
+          "dt",
+          "em",
+          "figcaption",
+          "h1",
+          "h4",
+          "h5",
+          "h6",
+          "ins",
+          "kbd",
+          "legend",
+          "pre",
+          "samp",
+          "strong",
+          "time",
+          "var"
+        ]
+      },
+      "booleanProps": [
+        "asChild",
+        "truncate"
+      ],
+      "largeEnumProps": {},
+      "requiredProps": [],
+      "perBranchRequired": [],
+      "subcomponents": []
+    },
+    {
+      "name": "Textarea",
+      "importPath": "@harnessio/ui/components",
+      "shape": "forwardRef",
+      "variantEnums": {
+        "theme": [
+          "default",
+          "danger",
+          "warning"
+        ],
+        "size": [
+          "sm",
+          "md"
+        ],
+        "orientation": [
+          "vertical",
+          "horizontal"
+        ]
+      },
+      "booleanProps": [
+        "autoResize",
+        "labelSuffix",
+        "optional",
+        "resizable"
+      ],
+      "largeEnumProps": {},
+      "requiredProps": [],
+      "perBranchRequired": [],
+      "subcomponents": []
+    },
+    {
+      "name": "TextInput",
+      "importPath": "@harnessio/ui/components",
+      "shape": "forwardRef",
+      "variantEnums": {
+        "orientation": [
+          "vertical",
+          "horizontal"
+        ],
+        "theme": [
+          "default",
+          "danger",
+          "warning",
+          "success"
+        ],
+        "size": [
+          "sm",
+          "md"
+        ]
+      },
+      "booleanProps": [
+        "labelSuffix",
+        "leadingSuffix",
+        "optional",
+        "prefix",
+        "suffix"
+      ],
+      "largeEnumProps": {},
+      "requiredProps": [],
+      "perBranchRequired": [],
+      "subcomponents": []
+    },
+    {
+      "name": "ThemeDialog",
+      "importPath": "@harnessio/ui/components",
+      "shape": "fc",
+      "variantEnums": {
+        "theme": [
+          "dark-std-std",
+          "dark-std-low",
+          "dark-std-high",
+          "dark-tri-std",
+          "dark-tri-low",
+          "dark-tri-high",
+          "dark-pro-std",
+          "dark-pro-low",
+          "dark-pro-high",
+          "dark-deu-std",
+          "dark-deu-low",
+          "dark-deu-high",
+          "light-std-std",
+          "light-std-low",
+          "light-std-high",
+          "light-tri-std",
+          "light-tri-low",
+          "light-tri-high",
+          "light-pro-std",
+          "light-pro-low",
+          "light-pro-high",
+          "light-deu-std",
+          "light-deu-low",
+          "light-deu-high",
+          "system-std-std",
+          "system-std-low",
+          "system-std-high",
+          "system-tri-std",
+          "system-tri-low",
+          "system-tri-high",
+          "system-pro-std",
+          "system-pro-low",
+          "system-pro-high",
+          "system-deu-std",
+          "system-deu-low",
+          "system-deu-high"
+        ]
+      },
+      "booleanProps": [
+        "children",
+        "isThemeLoading",
+        "open",
+        "showAccentColor",
+        "showAccessibilityThemeOptions",
+        "showGrayColor",
+        "showSystemMode"
+      ],
+      "largeEnumProps": {},
+      "requiredProps": [
+        "onOpenChange",
+        "open",
+        "setTheme"
+      ],
+      "perBranchRequired": [],
+      "subcomponents": []
+    },
+    {
+      "name": "TimeAgoCard",
+      "importPath": "@harnessio/ui/components",
+      "shape": "forwardRef",
+      "variantEnums": {},
+      "booleanProps": [
+        "live"
+      ],
+      "largeEnumProps": {},
+      "requiredProps": [],
+      "perBranchRequired": [],
+      "subcomponents": []
+    },
+    {
+      "name": "TimeAgoContent",
+      "importPath": "@harnessio/ui/components",
+      "shape": "fc",
+      "variantEnums": {},
+      "booleanProps": [],
+      "largeEnumProps": {},
+      "requiredProps": [
+        "formattedFullArray"
+      ],
+      "perBranchRequired": [],
+      "subcomponents": []
+    },
+    {
+      "name": "Toaster",
+      "importPath": "@harnessio/ui/components",
+      "shape": "function",
+      "variantEnums": {},
+      "booleanProps": [],
+      "largeEnumProps": {},
+      "requiredProps": [],
+      "perBranchRequired": [],
+      "subcomponents": []
+    },
+    {
+      "name": "Toggle",
+      "importPath": "@harnessio/ui/components",
+      "shape": "forwardRef",
+      "variantEnums": {
+        "variant": [
+          "outline",
+          "transparent",
+          "ghost"
+        ],
+        "selectedVariant": [
+          "secondary",
+          "primary"
+        ],
+        "size": [
+          "sm",
+          "md",
+          "xs"
+        ]
+      },
+      "booleanProps": [
+        "defaultValue",
+        "iconOnly",
+        "rounded",
+        "selected"
+      ],
+      "largeEnumProps": {
+        "suffixIcon": 518,
+        "prefixIcon": 518
+      },
+      "requiredProps": [],
+      "perBranchRequired": [],
+      "subcomponents": []
+    },
+    {
+      "name": "ToggleGroup",
+      "importPath": "@harnessio/ui/components",
+      "shape": "compound",
+      "variantEnums": {},
+      "booleanProps": [],
+      "largeEnumProps": {},
+      "requiredProps": [],
+      "perBranchRequired": [],
+      "subcomponents": [
+        {
+          "name": "Root",
+          "variantEnums": {
+            "type": [
+              "single",
+              "multiple"
+            ],
+            "variant": [
+              "outline",
+              "transparent",
+              "ghost"
+            ],
+            "selectedVariant": [
+              "secondary",
+              "primary"
+            ],
+            "size": [
+              "sm",
+              "md",
+              "xs"
+            ]
+          },
+          "booleanProps": [
+            "disabled",
+            "unselectable"
+          ],
+          "largeEnumProps": {},
+          "requiredProps": [],
+          "perBranchRequired": []
+        },
+        {
+          "name": "Item",
+          "variantEnums": {},
+          "booleanProps": [
+            "disabled",
+            "iconOnly"
+          ],
+          "largeEnumProps": {
+            "suffixIcon": 518,
+            "prefixIcon": 518
+          },
+          "requiredProps": [
+            "value"
+          ],
+          "perBranchRequired": [
+            [
+              "iconOnly",
+              "prefixIcon",
+              "tooltipProps",
+              "value"
+            ],
+            [
+              "value"
+            ]
+          ]
+        }
+      ]
+    },
+    {
+      "name": "Tooltip",
+      "importPath": "@harnessio/ui/components",
+      "shape": "forwardRef",
+      "variantEnums": {
+        "theme": [
+          "default",
+          "themed"
+        ]
+      },
+      "booleanProps": [
+        "children",
+        "content",
+        "footer",
+        "hideArrow",
+        "open"
+      ],
+      "largeEnumProps": {},
+      "requiredProps": [
+        "children",
+        "content"
+      ],
+      "perBranchRequired": [],
+      "subcomponents": []
+    },
+    {
+      "name": "TooltipProvider",
+      "importPath": "@harnessio/ui/components",
+      "shape": "arrow",
+      "variantEnums": {},
+      "booleanProps": [],
+      "largeEnumProps": {},
+      "requiredProps": [],
+      "perBranchRequired": [],
+      "subcomponents": []
+    },
+    {
+      "name": "Topbar",
+      "importPath": "@harnessio/ui/components",
+      "shape": "compound",
+      "variantEnums": {},
+      "booleanProps": [],
+      "largeEnumProps": {},
+      "requiredProps": [],
+      "perBranchRequired": [],
+      "subcomponents": [
+        {
+          "name": "Root",
+          "variantEnums": {},
+          "booleanProps": [
+            "children"
+          ],
+          "largeEnumProps": {},
+          "requiredProps": [
+            "children"
+          ],
+          "perBranchRequired": []
+        },
+        {
+          "name": "Left",
+          "variantEnums": {},
+          "booleanProps": [
+            "children"
+          ],
+          "largeEnumProps": {},
+          "requiredProps": [
+            "children"
+          ],
+          "perBranchRequired": []
+        },
+        {
+          "name": "Center",
+          "variantEnums": {},
+          "booleanProps": [
+            "children"
+          ],
+          "largeEnumProps": {},
+          "requiredProps": [
+            "children"
+          ],
+          "perBranchRequired": []
+        },
+        {
+          "name": "Right",
+          "variantEnums": {},
+          "booleanProps": [
+            "children"
+          ],
+          "largeEnumProps": {},
+          "requiredProps": [
+            "children"
+          ],
+          "perBranchRequired": []
+        }
+      ]
+    },
+    {
+      "name": "Tree",
+      "importPath": "@harnessio/ui/components",
+      "shape": "forwardRef",
+      "variantEnums": {},
+      "booleanProps": [
+        "closeIcon",
+        "indicator",
+        "openIcon"
+      ],
+      "largeEnumProps": {},
+      "requiredProps": [],
+      "perBranchRequired": [],
+      "subcomponents": []
+    },
+    {
+      "name": "TypingAnimation",
+      "importPath": "@harnessio/ui/components",
+      "shape": "forwardRef",
+      "variantEnums": {
+        "color": [
+          "disabled",
+          "inherit",
+          "danger",
+          "warning",
+          "success",
+          "merged",
+          "foreground-1",
+          "foreground-2",
+          "foreground-3",
+          "foreground-4",
+          "brand"
+        ],
+        "variant": [
+          "body-normal",
+          "heading-hero",
+          "heading-section",
+          "heading-subsection",
+          "heading-base",
+          "heading-small",
+          "body-single-line-normal",
+          "body-single-line-light",
+          "body-strong",
+          "body-single-line-strong",
+          "body-code",
+          "body-single-line-code",
+          "caption-normal",
+          "caption-light",
+          "caption-strong",
+          "caption-code",
+          "caption-single-line-code",
+          "caption-single-line-normal",
+          "caption-single-line-light"
+        ],
+        "align": [
+          "right",
+          "left",
+          "center"
+        ],
+        "lineClamp": [
+          "1",
+          "default",
+          "2",
+          "4",
+          "5",
+          "3",
+          "6"
+        ],
+        "wrap": [
+          "wrap",
+          "nowrap",
+          "balance",
+          "pretty"
+        ],
+        "as": [
+          "code",
+          "label",
+          "div",
+          "h2",
+          "h3",
+          "li",
+          "p",
+          "span",
+          "abbr",
+          "address",
+          "blockquote",
+          "caption",
+          "cite",
+          "dd",
+          "del",
+          "dt",
+          "em",
+          "figcaption",
+          "h1",
+          "h4",
+          "h5",
+          "h6",
+          "ins",
+          "kbd",
+          "legend",
+          "pre",
+          "samp",
+          "strong",
+          "time",
+          "var"
+        ]
+      },
+      "booleanProps": [
+        "asChild",
+        "truncate"
+      ],
+      "largeEnumProps": {},
+      "requiredProps": [
+        "text"
+      ],
+      "perBranchRequired": [],
+      "subcomponents": []
+    },
+    {
+      "name": "ViewOnly",
+      "importPath": "@harnessio/ui/components",
+      "shape": "arrow",
+      "variantEnums": {
+        "layout": [
+          "singleColumn",
+          "columns"
+        ],
+        "itemLayout": [
+          "vertical",
+          "horizontal"
+        ]
+      },
+      "booleanProps": [
+        "forceColumns",
+        "isLoading"
+      ],
+      "largeEnumProps": {},
+      "requiredProps": [
+        "data"
+      ],
+      "perBranchRequired": [],
+      "subcomponents": []
+    },
+    {
+      "name": "ViewOnlyItem",
+      "importPath": "@harnessio/ui/components",
+      "shape": "arrow",
+      "variantEnums": {
+        "itemLayout": [
+          "vertical",
+          "horizontal"
+        ]
+      },
+      "booleanProps": [
+        "isLoading",
+        "value"
+      ],
+      "largeEnumProps": {},
+      "requiredProps": [
+        "label",
+        "value"
+      ],
+      "perBranchRequired": [],
+      "subcomponents": []
+    },
+    {
+      "name": "WaterfallProgress",
+      "importPath": "@harnessio/ui/components",
+      "shape": "forwardRef",
+      "variantEnums": {
+        "theme": [
+          "danger",
+          "warning",
+          "success",
+          "info",
+          "muted"
+        ]
+      },
+      "booleanProps": [
+        "inProgress",
+        "tooltipContent"
+      ],
+      "largeEnumProps": {},
+      "requiredProps": [
+        "value"
+      ],
+      "perBranchRequired": [],
+      "subcomponents": []
+    },
+    {
+      "name": "Widgets",
+      "importPath": "@harnessio/ui/components",
+      "shape": "compound",
+      "variantEnums": {},
+      "booleanProps": [],
+      "largeEnumProps": {},
+      "requiredProps": [],
+      "perBranchRequired": [],
+      "subcomponents": [
+        {
+          "name": "Root",
+          "variantEnums": {},
+          "booleanProps": [
+            "children",
+            "isTwoColumn"
+          ],
+          "largeEnumProps": {},
+          "requiredProps": [
+            "children"
+          ],
+          "perBranchRequired": []
+        },
+        {
+          "name": "Item",
+          "variantEnums": {},
+          "booleanProps": [
+            "children",
+            "isWidgetTable"
+          ],
+          "largeEnumProps": {},
+          "requiredProps": [
+            "children"
+          ],
+          "perBranchRequired": []
+        }
+      ]
+    }
+  ]
+}

@@ -166,8 +166,8 @@ importers:
         specifier: ^1.4.0
         version: 1.4.0
       '@harnessio/code-service-client':
-        specifier: 3.12.2
-        version: 3.12.2
+        specifier: 3.12.5
+        version: 3.12.5
       '@harnessio/filters':
         specifier: workspace:*
         version: link:../../packages/filters
@@ -2835,8 +2835,8 @@ packages:
     resolution: {integrity: sha512-kjotm7XJrJ6v+7knhPaRgaT6q8F8K2jiafwYdNHLzmV0uGLuZY43FK6smNSHUPrhq5kX2slCUy+RGG/xGqmIKA==}
     engines: {node: '>=10.13.0'}
 
-  '@harnessio/code-service-client@3.12.2':
-    resolution: {integrity: sha512-vhVgFnx6VTIpmwLrUWaCZ9OPE8wPioub2NEAuCgxJsOEcFt9lUmBdcruGYfXUxnF68jEeX5tmnl8jcJNY4CeSQ==}
+  '@harnessio/code-service-client@3.12.5':
+    resolution: {integrity: sha512-9tgdc2enRY+mmnBqWyXdk14O3oV8bOeLl0rnSAUph8Vm+XiV+1qaccwskK+WtMHA5cIKP8h+iPkLBhTtK8yKMQ==}
 
   '@harnessio/core-design-system@0.0.1':
     resolution: {integrity: sha512-bxBVMG80wZJB+kybUs9cC/1B8L0kv9bu0lKgpjwVbYd6n0ypX339XsmrBNljywfZp69BK+8HOOcqWd00SNNeuw==}
@@ -12998,7 +12998,7 @@ snapshots:
     dependencies:
       is-negated-glob: 1.0.0
 
-  '@harnessio/code-service-client@3.12.2': {}
+  '@harnessio/code-service-client@3.12.5': {}
 
   '@harnessio/core-design-system@0.0.1': {}
 

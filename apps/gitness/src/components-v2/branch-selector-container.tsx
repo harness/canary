@@ -69,17 +69,22 @@ export const BranchSelectorContainer = forwardRef<HTMLButtonElement, BranchSelec
       }
     })
 
-    const { data: { body: tags } = {} } = useListTagsQuery({
-      repo_ref: repoRef,
-      queryParams: {
-        include_commit: false,
-        sort: 'date',
-        order: orderSortDate.DESC,
-        limit: 30,
-        page: 1,
-        query: branchTagQuery ?? ''
+    const { data: { body: tags } = {} } = useListTagsQuery(
+      {
+        repo_ref: repoRef,
+        queryParams: {
+          include_commit: false,
+          sort: 'date',
+          order: orderSortDate.DESC,
+          limit: 30,
+          page: 1,
+          query: branchTagQuery ?? ''
+        }
+      },
+      {
+        enabled: !isBranchOnly
       }
-    })
+    )
 
     useEffect(() => {
       // Only auto-select default branch if no branch is currently selected

@@ -358,7 +358,21 @@ function isRenderable(t: Type): boolean {
     if (/JSX|ReactElement|ReactNode|Element\b/.test(ret)) return true
   }
   const brand = (t.getSymbol() ?? t.getAliasSymbol())?.getName() ?? ''
-  return /ExoticComponent|FunctionComponent/.test(brand)
+  if (/ExoticComponent|FunctionComponent/.test(brand)) return true
+  // Non-inlined import fallback: rollup-plugin-dts usually inlines every local
+  // type into components.d.ts, but a few escape as bare relative imports whose
+  // target file isn't emitted next to the d.ts (e.g. `Sidebar.Item:
+  // SidebarItemComponent` from `./sidebar-item`, which doesn't exist). The alias
+  // then resolves to `any` with no signature and no React brand, so the checks
+  // above miss it and the subcomponent is silently dropped. An alias symbol
+  // whose name ends in `Component` is one of these unresolved component types —
+  // treat it as renderable. Narrow on purpose: it requires the `*Component`
+  // naming convention AND that no real signature/brand was found, so it can't
+  // catch resolved props (CalendarProps.ISOWeek is a real `boolean`, no alias)
+  // or other utility objects. Props stay empty downstream (alias is unresolved),
+  // which the null-props subcomponent path already handles — a name-only entry
+  // still corrects the false "invalid subcomponent" verdict.
+  return /Component$/.test(brand)
 }
 
 /**

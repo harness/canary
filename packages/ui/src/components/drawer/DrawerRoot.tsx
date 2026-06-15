@@ -1,4 +1,4 @@
-import { ComponentProps, useCallback, useEffect, useMemo, useRef, useState } from 'react'
+import { ComponentProps, useCallback, useEffect, useLayoutEffect, useMemo, useRef, useState } from 'react'
 
 import { DialogOpenContext, usePortal } from '@/context'
 import { Drawer as DrawerPrimitive } from 'vaul'
@@ -104,8 +104,11 @@ export const DrawerRoot = ({
     [nested, parentOnTopmostSizeChange]
   )
 
-  // Track controlled `open` prop changes and notify parent
-  useEffect(() => {
+  // Track controlled `open` prop changes and notify parent.
+  // Uses useLayoutEffect so that hasOpenChild + topmostDescendantSize arrive in the same
+  // synchronous commit as DrawerContent's size report — prevents a one-frame flicker where
+  // the parent sees the size change but not the open state (or vice-versa).
+  useLayoutEffect(() => {
     if (open !== undefined) {
       isOpenRef.current = open
       if (nested && onChildOpenChange) {
@@ -119,7 +122,7 @@ export const DrawerRoot = ({
 
   // Report descendant count when this drawer first opens (initial notification to parent)
   const prevOpen = useRef(open ?? internalOpen)
-  useEffect(() => {
+  useLayoutEffect(() => {
     const isOpen = open ?? internalOpen
     const justOpened = isOpen && !prevOpen.current
     prevOpen.current = isOpen

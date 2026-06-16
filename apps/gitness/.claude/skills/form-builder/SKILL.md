@@ -1,11 +1,29 @@
 ---
 name: form-builder
-description: Use when creating or modifying forms in gitness (Code V2 UI) using @harnessio/forms package - provides expert guidance on form definitions (IFormDefinition), input types, validation schemas, transformers, conditional visibility, and ensures adherence to forms package patterns and best practices
+description: ONLY for @harnessio/forms (IFormDefinition, InputFactory, transformers) in apps/gitness. Invoked via ui-builder Step 2a only. Do NOT use for react-hook-form pages — use ui-builder RHF canonical patterns instead.
 ---
 
-# Form Builder Skill
+# Form Builder
 
-You are an expert on creating forms using the `@harnessio/forms` package in gitness. Answer questions quickly and accurately, and generate type-safe, error-free form definitions based on the forms package architecture.
+> **UI Builder gate:** Read `ui-builder/SKILL.md` first. This skill applies **only** at ui-builder Step 2a (`IFormDefinition` path). If the form uses `react-hook-form` + `FormWrapper`, **stop** — use ui-builder RHF table instead.
+
+## When NOT to use (most gitness forms)
+
+Stop if the form uses:
+
+- `react-hook-form` + `zodResolver` + `FormWrapper` / `FormInput.*`
+- Any file in ui-builder **RHF canonical patterns** table
+
+Those require **ui3-form-review**, not this skill.
+
+## When to use
+
+- `IFormDefinition`, `defineForm`, `InputFactory`
+- Imports from `@harnessio/forms`
+- Pipeline studio / unified-pipeline-studio form inputs
+- Transformers, `isVisible` conditional fields in form definitions
+
+After build → ui-builder Step 3 (**ui3-form-review**).
 
 ## Reference Documentation
 
@@ -23,16 +41,11 @@ Reference this file when you need detailed technical information about the forms
 
 ## When to Use This Skill
 
-Use this skill when:
-- Creating new forms or form definitions
-- Modifying existing form definitions (IFormDefinition)
-- Questions about input types and their configurations
-- Implementing form validation with Zod schemas
-- Working with form transformers (input/output transformers)
-- Implementing conditional visibility in forms
-- Debugging form-related issues
-- Integrating forms with dialogs, pages, or other UI components
-- Questions about custom input components
+Use **only** when ui-builder Step 2a applies (see gate above).
+
+Do **not** use for generic "building a form page" — see ui-builder form decision tree.
+
+After completing work, run **ui3-form-review** (ui-builder Step 3).
 
 ## CRITICAL: Mandatory Pre-Work Before Creating Forms
 
@@ -2251,11 +2264,6 @@ const scriptFormDefinition: IFormDefinition = {
 - Review existing form definitions in gitness
 - Ask clarifying questions
 
-**This skill should be invoked:**
-- Before creating any new form
-- When modifying existing form definitions
-- When debugging form issues
-- When implementing validation or transformers
-- When working with conditional forms
+**This skill applies only via ui-builder Step 2a (`IFormDefinition`).** For react-hook-form pages, use ui-builder RHF patterns + ui3-form-review.
 
 **Type safety and correctness are not optional. They are mandatory.**

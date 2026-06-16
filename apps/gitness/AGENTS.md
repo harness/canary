@@ -36,38 +36,39 @@ pnpm typecheck        # TypeScript check
 pnpm start:webpack    # Webpack dev server (MFE mode)
 ```
 
-## UI Builder
+## UI development — mandatory skill compliance
 
-**UI Builder** is the orchestrator agent for Code V2 UI work. Invoke it when building features with AI:
+**All UI work in `apps/gitness` MUST start with `.claude/skills/ui-builder/SKILL.md`.** Agents must not implement UI without following the ui-builder routing table and Phase 4 checklist.
 
-- **Cursor subagent**: `.cursor/agents/ui-builder.md` — select **UI Builder** in the agent picker, or ask to use the UI Builder agent
-- **Skill**: `.claude/skills/ui-builder/SKILL.md` — routes to the skills below based on the task
+| Skill | When |
+|-------|------|
+| **ui-builder** | **Always first** — architecture, canonical patterns, workflow, completion report |
+| **ui-guidelines** | Every task — Tier 1–2 minimum; Tier 3 for novel components |
+| **form-builder** | **Only** `@harnessio/forms` / `IFormDefinition` (ui-builder Step 2a) |
+| **ui3-form-review** | **After any form work** — before declaring done (ui-builder Step 3) |
 
-## UI Development Skills
+Component paths: `.ui-builder-config.json`
 
-Skills live in `.claude/skills/`. UI Builder picks the relevant ones automatically:
+### Agent completion criteria (UI tasks)
 
-| Skill | When to use |
-|-------|-------------|
-| `ui-builder` | Start here — orchestrates the full UI build workflow |
-| `ui-guidelines` | Creating or modifying UI with `@harnessio/ui/components`, design tokens, component APIs |
-| `ui3-form-review` | Reviewing forms/drawers against UI 3.0 form UX guidelines |
-| `form-builder` | Building forms with `@harnessio/forms` (`IFormDefinition`, validators, transformers) |
+Before marking a UI task done, agents must:
 
-Component source paths are configured in `.ui-builder-config.json` (monorepo-relative paths into `packages/ui`).
+1. Copy a canonical pattern from ui-builder (not invent from scratch)
+2. Run typecheck on touched packages (`gitness`, `@harnessio/views` if changed)
+3. Rebuild views if using webpack MFE: `pnpm --filter @harnessio/views build`
+4. Run ui3-form-review when forms were touched
+5. Include **UI Builder compliance** section in the final response
 
 ## Import Conventions
 
 - **Base UI**: `import { Button, Text, Layout } from '@harnessio/ui/components'`
 - **Views**: `import { RepoCreatePage } from '@harnessio/views'`
 - **API**: `import { useListReposQuery } from '@harnessio/code-service-client'`
-- **Local code**: relative imports within `src/` (e.g. `../../framework/context/NavigationContext`)
+- **Local code**: relative imports within `src/`
 
-Never import base UI components from local paths — always use `@harnessio/ui/components`.
+Never import base UI components from local paths.
 
 ## Code Quality
-
-After changes:
 
 ```bash
 pnpm prettier --write <file>

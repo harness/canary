@@ -1,102 +1,75 @@
 ---
 name: ui-guidelines
-description: Use when creating or modifying UI components in gitness (Code V2 UI) - provides expert guidance on Harness UI components from @harnessio/ui/components, design tokens, form patterns, and ensures adherence to component API and Tailwind config standards
+description: Supplement to ui-builder for @harnessio/ui components. Gitness agents MUST read ui-builder first, then Tiers 1–2 here. Tier 3 deep reference for component APIs, tokens, and type verification.
 ---
 
 # UI Guidelines Skill
 
-You are an expert on Harness new UI components. Answer questions quickly and accurately based on the source files from `@harnessio/ui/components` package and the `tailwind-design-system.ts` configuration file.
+You are an expert on Harness new UI components. Answer questions quickly and accurately based on the source files from `@harnessio/ui/components` and the `tailwind-design-system.ts` configuration file.
 
-## ⚠️ START HERE: Read Configuration First
+## UI Builder fast path (read this first)
 
-**BEFORE doing ANYTHING else in this skill:**
+> **Gitness UI:** Start with `ui-builder/SKILL.md`. This skill supplements ui-builder Steps 1 and 4. Do not skip tiers to read the deep reference below.
 
-### Step 1: Read `.ui-builder-config.json`
+UI Builder **requires** Tiers 1–2 on every gitness UI task.
 
-**Location**: `apps/gitness/.ui-builder-config.json` (same directory as gitness `package.json`)
+### Tier 1 — Minimum (every UI task)
 
-Gitness ships a default config with **monorepo-relative paths** into the `canary` workspace:
+1. Read `apps/gitness/.ui-builder-config.json`
+2. Copy the **closest canonical pattern** from `ui-builder/SKILL.md` (lists, layout, forms, composites)
+3. Import only from `@harnessio/ui/components` and `@harnessio/views`
+4. Use `-cn-` Tailwind tokens; no arbitrary hex unless dynamic
+5. **Two-column layout:** `Layout.Flex gap="xl"` + fixed sidebar width — see `repo-create-issue-page.tsx` or PR compare
+6. **Composites first:** reuse `@harnessio/views` composites (`PullRequestSideBar`, `StackedList`, etc.) before raw primitives
 
-```json
-{
-  "uiComponentsSourcePath": "../../packages/ui/src/components",
-  "tailwindConfigPath": "../../packages/ui/tailwind-design-system.ts",
-  "portalPath": "../../apps/portal"
-}
-```
+### Tier 2 — Unfamiliar components (before first use in session)
 
-**Path Configuration Guide** (paths are relative to `apps/gitness/`):
-- `uiComponentsSourcePath` → `canary/packages/ui/src/components` (Button, Text, IconV2, etc.)
-- `tailwindConfigPath` → `canary/packages/ui/tailwind-design-system.ts` (design tokens)
-- `portalPath` → `canary/apps/portal` (component documentation portal)
+For each component not already used in the canonical pattern you copied:
 
-If the file is missing, create it using the template above. Resolve paths from the gitness app root.
+1. Read source: `{uiComponentsSourcePath}/<component>.tsx`
+2. Confirm valid `variant`, `theme`, `size`, icon names from source / `icon-v2/icon-name-map.ts`
+3. Cross-check a sibling file in the codebase
 
-### Step 2: Read the Configuration File
+**Trigger Tier 2:** `MultiSelect`, `StackedList`, `Tabs`, `Tag`/`LabelTag`, `NoData`, `Layout.Flex`/`Grid`, or any component not in your reference file.
 
-```typescript
-// Read .ui-builder-config.json at repository root
-const config = await readFile('.ui-builder-config.json')
-// {
-//   "uiComponentsSourcePath": "/path/to/canary/packages/ui/src/components",
-//   "tailwindConfigPath": "/path/to/canary/packages/ui/tailwind-design-system.ts",
-//   "portalPath": "/path/to/canary/apps/portal"
-// }
+### Tier 3 — Full skill (complex or novel UI)
 
-// Store these paths and use them for ALL component verification
-```
+Read sections below when:
 
-### Step 3: Verify Configuration
+- No close canonical pattern exists
+- Debugging prop/type errors
+- Deep token or component API questions
 
-After reading the config:
-1. **Verify paths exist**: Check that the directories/files at the configured paths actually exist
-2. **Test component access**: Try reading a common file like `{uiComponentsSourcePath}/text.tsx`
-3. **Report errors**: If paths are invalid, inform the user to update `.ui-builder-config.json`
+---
 
-**All component verification, type checking, and code generation MUST use paths from this config file.**
+## Configuration reference (Tier 2+)
 
-**DO NOT use hardcoded paths. ALWAYS read the config first.**
+Paths are relative to `apps/gitness/`:
 
-## CRITICAL: Configuration-Driven Component Verification
+| Key | Path |
+|-----|------|
+| `uiComponentsSourcePath` | `../../packages/ui/src/components` |
+| `tailwindConfigPath` | `../../packages/ui/tailwind-design-system.ts` |
+| `portalPath` | `../../apps/portal` |
 
-**BEFORE using any component or writing ANY UI code, you MUST:**
+If `.ui-builder-config.json` is missing, create it with those paths. Verify paths exist before recommending components.
 
-1. **Check and Read Configuration File**:
-   - Check if `.ui-builder-config.json` exists at the repository root
-   - If it doesn't exist, create it using the template from "Step 1" above
-   - Read the configuration to get:
-     - `uiComponentsSourcePath` - Absolute path to UI components source code
-     - `tailwindConfigPath` - Absolute path to Tailwind design system config
-     - `portalPath` - Absolute path to component documentation portal
+## Component verification (Tier 2+)
 
-2. **Read Component Source Code** (MANDATORY - NOT OPTIONAL):
-   - For EVERY component you use, read the actual source file from `{uiComponentsSourcePath}/[component-name].tsx` or `{uiComponentsSourcePath}/[component-name]/[component-name].tsx`
-   - Find the `cva()` call or type definition that defines the variants
-   - Extract EXACT valid values for each prop from the source code
-   - DO NOT guess or assume any prop values
-   - If a prop doesn't exist in the source, DO NOT use it
+**Before using any component not in your canonical pattern:**
 
-3. **Extract Valid Prop Values from Source**:
-   - For variant props: Read the `cva()` configuration object's `variants` key
-   - For each variant field, note ALL valid values as union type literals
-   - For default values: Check the `defaultVariants` object
-   - For union types: Extract exact string literals from the type definition
-   - For icon names: ONLY use `IconV2NamesType` type (from `icon-v2/icon-name-map.ts`)
+1. Read source from `{uiComponentsSourcePath}/<component>.tsx`
+2. Extract valid `variant`, `theme`, `size` values from `cva()` or prop types
+3. Verify icon names in `icon-v2/icon-name-map.ts`
+4. Never invent prop names or values not in source
 
-4. **Strict Type Enforcement**:
-   - NEVER invent prop names that don't exist in the component
-   - NEVER use prop values that aren't explicitly defined
-   - If you need functionality that doesn't exist, use className instead
-   - Check if prop is required vs optional (has `?` or default value)
-   - All required props MUST be provided
+**Strict rules:**
 
-5. **Double-Check Before Using**:
-   - After reading source, list out EXACT valid values for each prop
-   - Cross-reference your code against this list
-   - Ensure ZERO type mismatches
-   - If uncertain, read the source code again
+- Required props must be provided
+- No inline styles (use `-cn-` tokens)
+- Cross-check against a sibling file in the codebase
 
-**Example Workflow - Using the Text Component**:
+**Example workflow — Text component:**
 
 ```typescript
 // STEP 0: Check if .ui-builder-config.json exists
@@ -1129,10 +1102,11 @@ export const MultiFieldForm: React.FC = () => {
 - Test your recommendations
 
 **This skill should be invoked:**
-- At the START of any UI development work
-- BEFORE using any component for the first time
-- BEFORE writing any UI code
-- When debugging UI issues
-- When uncertain about component usage
+
+- Via **ui-builder** Step 1 (Tiers 2–3) on every gitness UI task
+- When debugging UI prop/type errors
+- When uncertain about component APIs (read source, do not guess)
+
+**For gitness workflow, architecture, and canonical patterns → `ui-builder/SKILL.md` first.**
 
 **Type safety is not optional. It is mandatory.**

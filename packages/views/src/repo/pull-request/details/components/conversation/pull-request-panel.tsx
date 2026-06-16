@@ -276,6 +276,7 @@ export interface PullRequestPanelProps
       | 'accordionValues'
     >,
     Partial<PullRequestRoutingProps> {
+  isLinked?: boolean
   handleRebaseBranch: () => void
   handlePrState: (state: string) => void
   handleViewUnresolvedComments: () => void
@@ -318,6 +319,7 @@ export interface PullRequestPanelProps
 
 const PullRequestPanel = ({
   className,
+  isLinked,
   pullReqCommits,
   pullReqMetadata,
   checks,
@@ -611,12 +613,14 @@ const PullRequestPanel = ({
   const bypassOverridesAutoMerge = isAutoMergeActive && !!checkboxBypass
 
   const shouldShowConfirmation =
+    !isLinked &&
     actions &&
     !pullReqMetadata?.closed &&
     (!isAutoMergeActive || bypassOverridesAutoMerge) &&
     (showActionBtn || isMerging || mergeInitiated)
 
   const baseSplitButtonVisible =
+    !isLinked &&
     actions?.length > 1 &&
     !pullReqMetadata?.closed &&
     !showActionBtn &&
@@ -637,12 +641,13 @@ const PullRequestPanel = ({
 
   const shouldShowSplitButton = baseSplitButtonVisible && !canShowAutoMergeSplitButton
 
-  const shouldShowAutoMergeConfirmation = isAutoMergeConfirm && !pullReqMetadata?.closed && !pullReqMetadata?.merged
+  const shouldShowAutoMergeConfirmation =
+    !isLinked && isAutoMergeConfirm && !pullReqMetadata?.closed && !pullReqMetadata?.merged
 
   const shouldShowDisableAutoMerge =
-    isAutoMergeActive && isOpen && !pullReqMetadata?.merged && !bypassOverridesAutoMerge
+    !isLinked && isAutoMergeActive && isOpen && !pullReqMetadata?.merged && !bypassOverridesAutoMerge
 
-  const shouldShowMoreActions = !shouldShowConfirmation && !shouldShowAutoMergeConfirmation && isOpen
+  const shouldShowMoreActions = !isLinked && !shouldShowConfirmation && !shouldShowAutoMergeConfirmation && isOpen
 
   const areRulesBypassed = pullReqMetadata?.merge_violations_bypassed
   const mergeMethod = getMergeMethodDisplay(pullReqMetadata?.merge_method as MergeStrategy)
@@ -773,7 +778,7 @@ const PullRequestPanel = ({
                       </ButtonLayout>
                     )}
 
-                    {actions?.length === 1 && (
+                    {!isLinked && actions?.length === 1 && (
                       <Button variant="primary" theme="default" onClick={actions[0].action}>
                         {actions[0].title}
                       </Button>

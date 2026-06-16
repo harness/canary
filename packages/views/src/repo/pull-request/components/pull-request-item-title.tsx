@@ -1,6 +1,6 @@
 import { FC, useMemo } from 'react'
 
-import { IconV2, Layout, ScopeTag, Separator, Tag, Text } from '@harnessio/ui/components'
+import { IconV2, Layout, ScopeTag, Separator, StatusBadge, Tag, Text } from '@harnessio/ui/components'
 import { cn } from '@harnessio/ui/utils'
 import { PullRequest, Scope } from '@views'
 import { determineScope, getScopedPath } from '@harnessio/ui/components'
@@ -21,9 +21,10 @@ export const PullRequestItemTitle: FC<PullRequestItemTitleProps> = ({
   scope,
   showScope
 }) => {
-  const { name, labels, state, is_draft: isDraft, comments, merged, repo } = pullRequest
+  const { name, labels, state, is_draft: isDraft, comments, merged, repo, pullreq_type } = pullRequest
   const { identifier: repoId, path: repoPath } = repo || {}
   const isSuccess = !!merged
+  const isLinkedPR = pullreq_type === 'linked'
   const repoScopeParams = { ...scope, repoIdentifier: repoId || '', repoPath: repoPath || '' }
   const scopeType = determineScope(repoScopeParams)
   const scopedPath = getScopedPath(repoScopeParams)
@@ -50,6 +51,11 @@ export const PullRequestItemTitle: FC<PullRequestItemTitleProps> = ({
           <Text as="span" variant="heading-base" className="break-all">
             {name}
           </Text>
+        )}
+        {isLinkedPR && (
+          <StatusBadge variant="outline" size="sm" theme="info" className="align-bottom">
+            Linked
+          </StatusBadge>
         )}
         {!!showScope && !!scopeType && (
           <>

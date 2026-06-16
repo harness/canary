@@ -194,6 +194,7 @@ export const PullRequestOverview: FC<PullRequestOverviewProps> = ({
             handleAiPullRequestSummary={handleAiPullRequestSummary}
             createdAt={pullReqMetadata?.created}
             isLast={!(activityBlocks?.length > 0)}
+            isLinked={pullReqMetadata?.pullreq_type === 'linked'}
             author={pullReqMetadata?.author?.display_name}
             prNum={`#${pullReqMetadata?.number}`}
             description={pullReqMetadata?.description}

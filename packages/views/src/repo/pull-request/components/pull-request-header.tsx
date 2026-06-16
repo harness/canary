@@ -21,6 +21,7 @@ import { PullRequestHeaderEditDialog } from './pull-request-header-edit-dialog'
 
 interface PullRequestTitleProps {
   className?: string
+  isLinked?: boolean
   data: {
     title?: string
     number?: number
@@ -47,6 +48,7 @@ interface PullRequestTitleProps {
 
 export const PullRequestHeader: React.FC<PullRequestTitleProps> = ({
   className,
+  isLinked,
   data: {
     title,
     number,
@@ -90,22 +92,29 @@ export const PullRequestHeader: React.FC<PullRequestTitleProps> = ({
           <Text as="span" variant="heading-section" color="foreground-3" className="ml-cn-xs inline-block">
             #{number}
           </Text>
-          <Dialog.Trigger>
-            <Button
-              className="group ml-cn-xs inline-flex"
-              variant="ghost"
-              iconOnly
-              aria-label="Edit"
-              onClick={() => {
-                setIsEditing(true)
-              }}
-              tooltipProps={{
-                content: 'Edit'
-              }}
-            >
-              <IconV2 name="edit-pencil" />
-            </Button>
-          </Dialog.Trigger>
+          {isLinked && (
+            <StatusBadge variant="outline" size="sm" theme="info" className="ml-cn-xs inline-flex align-middle">
+              Linked
+            </StatusBadge>
+          )}
+          {!isLinked && (
+            <Dialog.Trigger>
+              <Button
+                className="group ml-cn-xs inline-flex"
+                variant="ghost"
+                iconOnly
+                aria-label="Edit"
+                onClick={() => {
+                  setIsEditing(true)
+                }}
+                tooltipProps={{
+                  content: 'Edit'
+                }}
+              >
+                <IconV2 name="edit-pencil" />
+              </Button>
+            </Dialog.Trigger>
+          )}
         </Text>
 
         <Layout.Horizontal gap="sm" align="center">

@@ -9,6 +9,7 @@ import PullRequestTimelineItem from './pull-request-timeline-item'
 
 export interface PullRequestDescBoxProps {
   isLast: boolean
+  isLinked?: boolean
   title?: string
   author?: string
   prNum?: string
@@ -24,6 +25,7 @@ export interface PullRequestDescBoxProps {
 
 const PullRequestDescBox: FC<PullRequestDescBoxProps> = ({
   isLast,
+  isLinked,
   author,
   prNum,
   createdAt,
@@ -83,7 +85,7 @@ const PullRequestDescBox: FC<PullRequestDescBoxProps> = ({
                 <TimeAgoCard timestamp={createdAt} />
               </Layout.Horizontal>
 
-              <MoreActionsTooltip buttonSize="sm" sideOffset={4} alignOffset={0} actions={actions} />
+              {!isLinked && <MoreActionsTooltip buttonSize="sm" sideOffset={4} alignOffset={0} actions={actions} />}
             </Layout.Horizontal>
           )
         }
@@ -127,10 +129,14 @@ const PullRequestDescBox: FC<PullRequestDescBoxProps> = ({
                 <MarkdownViewer
                   markdownClassName="pr-section"
                   source={comment}
-                  onCheckboxChange={updatedDescription => {
-                    setComment(updatedDescription)
-                    handleUpdateDescription(title || '', updatedDescription)
-                  }}
+                  onCheckboxChange={
+                    isLinked
+                      ? undefined
+                      : updatedDescription => {
+                          setComment(updatedDescription)
+                          handleUpdateDescription(title || '', updatedDescription)
+                        }
+                  }
                   isLoading={isUpdatingPR}
                   imageUrlTransform={imageUrlTransform}
                 />
@@ -142,20 +148,22 @@ const PullRequestDescBox: FC<PullRequestDescBoxProps> = ({
               <Text variant="body-normal" color="foreground-3">
                 No description provided
               </Text>
-              <Button
-                onClick={e => {
-                  e.stopPropagation()
-                  setEdit(true)
-                }}
-                iconOnly
-                size="sm"
-                variant="outline"
-                tooltipProps={{
-                  content: 'Edit'
-                }}
-              >
-                <IconV2 name="edit-pencil" size="xs" />
-              </Button>
+              {!isLinked && (
+                <Button
+                  onClick={e => {
+                    e.stopPropagation()
+                    setEdit(true)
+                  }}
+                  iconOnly
+                  size="sm"
+                  variant="outline"
+                  tooltipProps={{
+                    content: 'Edit'
+                  }}
+                >
+                  <IconV2 name="edit-pencil" size="xs" />
+                </Button>
+              )}
             </Layout.Horizontal>
           )}
         </div>

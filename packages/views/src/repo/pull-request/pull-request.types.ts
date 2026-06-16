@@ -52,6 +52,7 @@ export interface PullRequestType {
   updated: number
   labels: PRListLabelType[]
   source_repo?: TypesRepositoryCore
+  pullreq_type?: EnumPullReqType
 }
 
 export type PRState = EnumPullReqState
@@ -130,6 +131,7 @@ export interface TypesPullReq {
   merged?: number | null
   merger?: Partial<PrincipalType>
   number?: number
+  pullreq_type?: EnumPullReqType
   source_branch?: string
   source_repo_id?: number | null
   source_sha?: string
@@ -145,6 +147,8 @@ export interface TypesPullReq {
   rebase_check_status?: string
   rebase_conflicts?: string[]
 }
+
+export type EnumPullReqType = '' | 'linked'
 
 export type EnumMergeMethod = 'fast-forward' | 'merge' | 'rebase' | 'squash'
 

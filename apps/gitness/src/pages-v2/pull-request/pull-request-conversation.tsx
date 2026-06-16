@@ -1045,6 +1045,7 @@ export default function PullRequestConversationPage() {
    */
   const panelProps: PullRequestPanelProps = useMemo(() => {
     return {
+      isLinked: pullReqMetadata?.pullreq_type === 'linked',
       handleRebaseBranch,
       handlePrState,
       handleViewUnresolvedComments,

@@ -35,6 +35,7 @@ export const PullRequestLayout: FC<PullRequestLayoutProps> = ({
   const { Outlet } = useRouterContext()
   const { pullRequest } = usePullRequestStore()
   const { t } = useTranslation()
+  const isLinked = pullRequest?.pullreq_type === 'linked'
 
   return (
     <SandboxLayout.Main fullWidth>
@@ -42,6 +43,7 @@ export const PullRequestLayout: FC<PullRequestLayoutProps> = ({
         {pullRequest && (
           <PullRequestHeader
             className="mb-cn-xl"
+            isLinked={isLinked}
             updateTitle={(title: string) => {
               updateTitleAndDescription(title, pullRequest.description ?? '')
             }}

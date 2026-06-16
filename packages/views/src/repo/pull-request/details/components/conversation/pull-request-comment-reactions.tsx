@@ -141,23 +141,17 @@ export const PullRequestCommentReactions: FC<PullRequestCommentReactionsProps> =
   if (groups.size === 0 && !onReactionToggle) return null
 
   return (
-    <Layout.Horizontal gap="2xs" align="center" wrap="wrap" className="mt-cn-xs">
-      {Array.from(groups.entries()).map(([emoji, { count, userReacted }]) => (
-        <ReactionChip
-          key={emoji}
-          emojiChar={REACTION_EMOJIS[emoji]?.emoji ?? emoji}
-          count={count}
-          userReacted={userReacted}
-          tooltipContent={REACTION_EMOJIS[emoji]?.label ?? emoji}
-          onClick={() => handleToggle(emoji)}
-        />
-      ))}
-
+    <Layout.Horizontal gap="2xs" align="center" wrap="wrap" className="mt-cn-md">
       {onReactionToggle && (
         <Popover.Root open={pickerOpen} onOpenChange={setPickerOpen}>
           <Popover.Trigger asChild>
-            <Button iconOnly variant="ghost" size="xs" tooltipProps={{ content: 'Add reaction' }}>
-              <IconV2 name="plus-circle" size="xs" color="neutral" />
+            <Button iconOnly variant="outline" size="sm" className="group" tooltipProps={{ content: 'Add reaction' }}>
+              <IconV2
+                name="plus-circle"
+                size="sm"
+                color="neutral"
+                className="group-hover:text-cn-brand group-focus-visible:text-cn-brand group-data-[state=open]:text-cn-brand"
+              />
             </Button>
           </Popover.Trigger>
           <Popover.Content
@@ -165,6 +159,7 @@ export const PullRequestCommentReactions: FC<PullRequestCommentReactionsProps> =
             custom
             align="start"
             className="p-0"
+            onOpenAutoFocus={event => event.preventDefault()}
             onCloseAutoFocus={event => event.preventDefault()}
           >
             <div className="flex flex-wrap gap-cn-3xs p-cn-xs">
@@ -185,6 +180,17 @@ export const PullRequestCommentReactions: FC<PullRequestCommentReactionsProps> =
           </Popover.Content>
         </Popover.Root>
       )}
+
+      {Array.from(groups.entries()).map(([emoji, { count, userReacted }]) => (
+        <ReactionChip
+          key={emoji}
+          emojiChar={REACTION_EMOJIS[emoji]?.emoji ?? emoji}
+          count={count}
+          userReacted={userReacted}
+          tooltipContent={REACTION_EMOJIS[emoji]?.label ?? emoji}
+          onClick={() => handleToggle(emoji)}
+        />
+      ))}
     </Layout.Horizontal>
   )
 }

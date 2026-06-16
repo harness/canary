@@ -16,6 +16,7 @@ import { isEmpty } from 'lodash-es'
 import {
   Button,
   ButtonLayout,
+  FileItem,
   IconV2,
   Link,
   ListActions,
@@ -65,7 +66,7 @@ export interface RepoSummaryViewProps extends Partial<RoutingProps> {
   loading: boolean
   isSSHEnabled?: boolean
   isForkEnabled?: boolean
-  filesList: string[]
+  filesList: FileItem[] | string[]
   navigateToFile: (path: string) => void
   repository?: RepoRepositoryOutput
   handleCreateToken: () => void

@@ -1,0 +1,5 @@
+{
+  "uiComponentsSourcePath": "../../packages/ui/src/components",
+  "tailwindConfigPath": "../../packages/ui/tailwind-design-system.ts",
+  "portalPath": "../../apps/portal"
+}

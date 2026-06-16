@@ -39,3 +39,7 @@ Packages with detailed agent guides:
 
 - [`packages/ai-chat-core/AGENTS.md`](packages/ai-chat-core/AGENTS.md) — AI chat runtime: stream protocol, plugins, capabilities, React hooks
 - [`packages/filters/AGENTS.md`](packages/filters/AGENTS.md) — URL-driven filter state: parsers, router integration, saved filters
+
+## App-Level Docs
+
+- [`apps/gitness/AGENTS.md`](apps/gitness/AGENTS.md) — Code V2 UI (gitness): layout, imports, **UI Builder** agent, and skills in `.claude/skills/`

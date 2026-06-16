@@ -45,7 +45,6 @@ export const LinkRepo = () => {
       parent_ref: spaceURL,
       identifier: data.identifier,
       description: data.description || '',
-      is_public: data.isPublic,
       connector_ref: data.connectorRef
     } as LinkedCreateRepositoryRequestBody
 

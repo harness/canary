@@ -17,7 +17,6 @@ import {
   Layout,
   Message,
   MessageTheme,
-  Radio,
   Text
 } from '@harnessio/ui/components'
 import { useTranslation } from '@harnessio/ui/context'
@@ -32,8 +31,7 @@ const linkRepoSchema = z.object({
     .string()
     .min(1, { message: 'Please provide a name' })
     .regex(/^[a-z0-9-_.]+$/i, { message: 'Name can only contain letters, numbers, dash, dot, or underscore' }),
-  description: z.string().optional(),
-  isPublic: z.boolean()
+  description: z.string().optional()
 })
 
 export type RepoLinkFormFields = z.infer<typeof linkRepoSchema>
@@ -63,8 +61,7 @@ export function RepoLinkView({
     defaultValues: {
       connectorRef: '',
       identifier: '',
-      description: '',
-      isPublic: true
+      description: ''
     }
   })
 
@@ -72,15 +69,8 @@ export function RepoLinkView({
     register,
     handleSubmit,
     setValue,
-    watch,
     formState: { errors }
   } = formMethods
-
-  const isPublicValue = watch('isPublic')
-
-  const handleVisibilityChange = (value: string) => {
-    setValue('isPublic', value === 'public', { shouldValidate: true })
-  }
 
   return (
     <SandboxLayout.Main>
@@ -136,43 +126,11 @@ export function RepoLinkView({
                 </Fieldset>
               </Layout.Vertical>
 
-              <div>
-                {/* VISIBILITY */}
-                <Fieldset>
-                  <ControlGroup>
-                    <Radio.Root
-                      value={isPublicValue ? 'public' : 'private'}
-                      onValueChange={handleVisibilityChange}
-                      label={t('views:repos.visibility', 'Visibility')}
-                    >
-                      <Radio.Item
-                        id="visibility-public"
-                        value="public"
-                        label={t('views:repos.public', 'Public')}
-                        caption={t(
-                          'views:repos.fork.publicCaption',
-                          'Anyone with access to Harness can clone this repo.'
-                        )}
-                      />
-                      <Radio.Item
-                        id="visibility-private"
-                        value="private"
-                        label={t('views:repos.private', 'Private')}
-                        caption={t(
-                          'views:repos.fork.privateCaption',
-                          'You can choose who can see and commit to this repository.'
-                        )}
-                      />
-                    </Radio.Root>
-                  </ControlGroup>
-                </Fieldset>
-
-                {apiError && (
-                  <Alert.Root theme="danger">
-                    <Alert.Description>{apiError}</Alert.Description>
-                  </Alert.Root>
-                )}
-              </div>
+              {apiError && (
+                <Alert.Root theme="danger">
+                  <Alert.Description>{apiError}</Alert.Description>
+                </Alert.Root>
+              )}
 
               {/* SUBMIT BUTTONS */}
               <Fieldset>

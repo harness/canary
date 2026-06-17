@@ -644,6 +644,7 @@
     "compareChangesApiError": "La branche principale ne contient pas de nouveaux commits.",
     "compareChangesCantMerge": "Fusion impossible.",
     "compareChangesCantMergeDescription": "Vous pouvez quand même créer la pull request.",
+    "compareChangesCantMergeLinkedDescription": "Vous pouvez quand même consulter les modifications ci-dessous.",
     "compareChangesDiscussChanges": "Discutez et révisez les modifications de cette comparaison avec d'autres.",
     "compareChangesDiscussChangesLink": "En savoir plus sur les pull requests.",
     "compareChangesViewPRLink": "Voir la pull request",

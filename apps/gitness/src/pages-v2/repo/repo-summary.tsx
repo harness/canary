@@ -235,13 +235,16 @@ export default function RepoSummaryPage() {
     }
   }, [MFEtokenData, tokenHash])
 
+  const isLinkedRepo = repoData?.repo_type === 'linked'
+
   const showContributeBtn = useMemo(() => {
     return (
+      !isLinkedRepo &&
       (repoData?.upstream || gitRefName !== repoData?.default_branch) &&
       !isRefACommitSHA(fullGitRef) &&
       !isRefATag(fullGitRef)
     )
-  }, [repoData?.default_branch, gitRefName, repoData?.upstream])
+  }, [isLinkedRepo, repoData?.default_branch, gitRefName, repoData?.upstream])
 
   const repoEntryPathToFileTypeMap: Map<string, OpenapiGetContentOutput['type']> = useMemo(() => {
     const entries = repoDetails?.content?.entries
@@ -395,7 +398,7 @@ export default function RepoSummaryPage() {
         loading={isLoading}
         filesList={filesList}
         navigateToFile={navigateToFile}
-        prCandidateBranches={prCandidateBranches}
+        prCandidateBranches={isLinkedRepo ? [] : prCandidateBranches}
         repository={repoData}
         handleCreateToken={handleCreateToken}
         repoEntryPathToFileTypeMap={repoEntryPathToFileTypeMap}

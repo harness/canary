@@ -1,10 +1,21 @@
 import { FC, useMemo } from 'react'
 
-import { IconV2, Layout, ScopeTag, Separator, StatusBadge, Tag, Text } from '@harnessio/ui/components'
-import { cn } from '@harnessio/ui/utils'
 import { PullRequest, Scope } from '@views'
-import { determineScope, getScopedPath } from '@harnessio/ui/components'
 import { LabelsList } from '@views/repo/pull-request/components/labels'
+
+import {
+  determineScope,
+  getScopedPath,
+  IconV2,
+  Layout,
+  ScopeTag,
+  Separator,
+  StatusBadge,
+  Tag,
+  Text
+} from '@harnessio/ui/components'
+import { useTranslation } from '@harnessio/ui/context'
+import { cn } from '@harnessio/ui/utils'
 
 import { getPrState } from '../utils'
 
@@ -21,6 +32,7 @@ export const PullRequestItemTitle: FC<PullRequestItemTitleProps> = ({
   scope,
   showScope
 }) => {
+  const { t } = useTranslation()
   const { name, labels, state, is_draft: isDraft, comments, merged, repo, pullreq_type } = pullRequest
   const { identifier: repoId, path: repoPath } = repo || {}
   const isSuccess = !!merged
@@ -54,7 +66,7 @@ export const PullRequestItemTitle: FC<PullRequestItemTitleProps> = ({
         )}
         {isLinkedPR && (
           <StatusBadge variant="outline" size="sm" theme="info" className="align-bottom">
-            Linked
+            {t('views:repos.linked', 'Linked')}
           </StatusBadge>
         )}
         {!!showScope && !!scopeType && (

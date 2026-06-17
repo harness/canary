@@ -140,11 +140,12 @@ export const RepoCode = () => {
 
   const showContributeBtn = useMemo(() => {
     return (
+      repoData?.repo_type !== 'linked' &&
       (repoData?.upstream || gitRefName !== repoData?.default_branch) &&
       !isRefACommitSHA(fullGitRef) &&
       !isRefATag(fullGitRef)
     )
-  }, [repoData?.default_branch, gitRefName, repoData?.upstream])
+  }, [repoData?.repo_type, repoData?.default_branch, gitRefName, repoData?.upstream])
 
   /**
    * Render File content view or Edit file view

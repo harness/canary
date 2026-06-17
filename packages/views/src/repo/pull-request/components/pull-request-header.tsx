@@ -1,5 +1,8 @@
 import { useCallback, useState } from 'react'
 
+import { TypesRepositoryCore } from '@views'
+import { BranchSelectorContainerProps } from '@views/repo'
+
 import {
   Avatar,
   BranchTag,
@@ -12,9 +15,8 @@ import {
   Text,
   TimeAgoCard
 } from '@harnessio/ui/components'
-import { TypesRepositoryCore } from '@views'
+import { useTranslation } from '@harnessio/ui/context'
 import { cn } from '@harnessio/ui/utils'
-import { BranchSelectorContainerProps } from '@views/repo'
 
 import { getPrState } from '../utils'
 import { PullRequestHeaderEditDialog } from './pull-request-header-edit-dialog'
@@ -71,6 +73,7 @@ export const PullRequestHeader: React.FC<PullRequestTitleProps> = ({
   branchSelectorRenderer,
   toUpstreamRepo
 }) => {
+  const { t } = useTranslation()
   const stateObject = getPrState(is_draft, merged, state)
 
   const handleSubmit = useCallback(
@@ -94,7 +97,7 @@ export const PullRequestHeader: React.FC<PullRequestTitleProps> = ({
           </Text>
           {isLinked && (
             <StatusBadge variant="outline" size="sm" theme="info" className="ml-cn-xs inline-flex align-middle">
-              Linked
+              {t('views:repos.linked', 'Linked')}
             </StatusBadge>
           )}
           {!isLinked && (

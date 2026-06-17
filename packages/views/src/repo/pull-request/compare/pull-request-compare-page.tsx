@@ -323,10 +323,15 @@ export const PullRequestComparePage: FC<PullRequestComparePageProps> = ({
                             {t('views:pullRequests.compareChangesCantMerge', 'Can’t be merged.')}
                           </Text>
                           <Text variant="body-single-line-normal">
-                            {t(
-                              'views:pullRequests.compareChangesCantMergeDescription',
-                              'You can still create the pull request.'
-                            )}
+                            {hidePullRequestCreate
+                              ? t(
+                                  'views:pullRequests.compareChangesCantMergeLinkedDescription',
+                                  'You can still review the changes below.'
+                                )
+                              : t(
+                                  'views:pullRequests.compareChangesCantMergeDescription',
+                                  'You can still create the pull request.'
+                                )}
                           </Text>
                         </>
                       )}

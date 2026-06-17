@@ -694,6 +694,7 @@
     "compareChangesApiError": "Head branch doesn’t contain any new commits.",
     "compareChangesCantMerge": "Can’t be merged.",
     "compareChangesCantMergeDescription": "You can still create the pull request.",
+    "compareChangesCantMergeLinkedDescription": "You can still review the changes below.",
     "compareChangesDiscussChanges": "Discuss and review the changes in this comparison with others.",
     "compareChangesDiscussChangesLink": "Learn about pull requests.",
     "compareChangesViewPRLink": "View pull request",

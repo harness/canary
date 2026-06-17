@@ -1,12 +1,15 @@
 import { create } from 'zustand'
 
 import { RepoRepositoryOutput, TypesPullReq } from '@harnessio/code-service-client'
-import { ColorsEnum, PRState, PullRequest } from '@harnessio/views'
+import { ColorsEnum, EnumPullReqType, PRState, PullRequest } from '@harnessio/views'
 
 import { PageResponseHeader } from '../../../types'
 
+// `pullreq_type` is returned by the API for linked repositories but is not yet
+// part of the generated `TypesPullReq` schema, so we extend it locally.
 type PullRequestInterface = TypesPullReq & {
   repo?: Pick<RepoRepositoryOutput, 'identifier' | 'path'>
+  pullreq_type?: EnumPullReqType
 }
 
 interface PullRequestListStore {
@@ -70,7 +73,7 @@ export const usePullRequestListStore = create<PullRequestListStore>(set => ({
       state: item?.state,
       updated: item?.updated ?? 0,
       source_repo: item?.source_repo,
-      pullreq_type: (item as any)?.pullreq_type,
+      pullreq_type: item?.pullreq_type,
       labels:
         item?.labels?.map(label => ({
           key: label?.key || '',

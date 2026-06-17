@@ -21,6 +21,7 @@ import {
 import { useTranslation } from '@harnessio/ui/context'
 
 import { useMFEContext } from '../framework/hooks/useMFEContext'
+import { getGitConnectorUrlType, GitConnectorUrlType } from '../utils/git-connector-url-type'
 import { StoreType, storeTypeConfig, StoreTypeSelect } from './store-type-select'
 
 enum Scope {
@@ -44,6 +45,8 @@ export interface ConnectorSelection {
   accountIdentifier?: string
   orgIdentifier?: string
   projectIdentifier?: string
+  /** Git connector URL scope: Account, Repo, or Project (Azure/GitLab). */
+  specType?: GitConnectorUrlType
 }
 
 export interface LinkRepoConnectorDrawerProps {
@@ -135,7 +138,8 @@ export const LinkRepoConnectorDrawer: FC<LinkRepoConnectorDrawerProps> = ({ onCo
         scope: deriveScope(connectorInfo),
         accountIdentifier: connectorInfo.accountIdentifier,
         orgIdentifier: connectorInfo.orgIdentifier,
-        projectIdentifier: connectorInfo.projectIdentifier
+        projectIdentifier: connectorInfo.projectIdentifier,
+        specType: getGitConnectorUrlType(connectorInfo)
       })
       setSelectedLabel(connectorInfo.name)
       setIsOpen(false)
@@ -170,7 +174,7 @@ export const LinkRepoConnectorDrawer: FC<LinkRepoConnectorDrawerProps> = ({ onCo
 
           <Drawer.Body>
             <Layout.Vertical gap="lg">
-              <StoreTypeSelect value={storeType} onChange={handleStoreTypeChange} />
+              <StoreTypeSelect value={storeType} onChange={handleStoreTypeChange} allowedTypes={[StoreType.Github]} />
 
               <Tabs.Root value={activeScope} onValueChange={handleScopeChange}>
                 <Tabs.List>
@@ -186,7 +190,7 @@ export const LinkRepoConnectorDrawer: FC<LinkRepoConnectorDrawerProps> = ({ onCo
 
               <SearchInput
                 placeholder={t('views:repos.link.selectConnector.searchPlaceholder', 'Search connectors...')}
-                value={searchTerm}
+                searchValue={searchTerm}
                 onChange={setSearchTerm}
               />
 

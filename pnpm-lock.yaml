@@ -175,8 +175,8 @@ importers:
         specifier: workspace:*
         version: link:../../packages/forms
       '@harnessio/react-ng-manager-swagger-service-client':
-        specifier: 1.7.1
-        version: 1.7.1
+        specifier: 1.22.0
+        version: 1.22.0
       '@harnessio/react-ng-manager-v2-client':
         specifier: 1.1.0
         version: 1.1.0(@tanstack/react-query@4.20.4(react-dom@17.0.2(react@17.0.2))(react@17.0.2))(react@17.0.2)(typescript@5.9.2)
@@ -2883,8 +2883,8 @@ packages:
       react: 17.0.2
       react-dom: 17.0.2
 
-  '@harnessio/react-ng-manager-swagger-service-client@1.7.1':
-    resolution: {integrity: sha512-Q8KIJuhf6SZPbDZySADpLWxkNuT0a6Bik0RavqUY1yUMxk4/xSbhqDMkbKIKHj0G/LWk3b3qF3Lc3ynsZj3S2Q==}
+  '@harnessio/react-ng-manager-swagger-service-client@1.22.0':
+    resolution: {integrity: sha512-JcrJQ/fMtMa57yz0UwFxWeUR/ZqFYOwb2r7kU26esHT9tOh1RsAFluVHpy5yFbumDayne6+c5XZIMnISFBkjQg==}
 
   '@harnessio/react-ng-manager-v2-client@1.1.0':
     resolution: {integrity: sha512-WjxLN25d88C0lYPZPZOnqldm75U0Bc7t2M2KeJNCHXAqD9BN7V8POoiJD29mkK5MHJHLCQxIPQyk/8KncNJbBg==}
@@ -4688,6 +4688,7 @@ packages:
 
   '@ungap/structured-clone@1.3.0':
     resolution: {integrity: sha512-WmoN8qaIAo7WTYWbAZuG8PYEhn5fkz7dZrqTBZ7dtt//lL2Gwms1IcnQ5yHqjDfX8Ft5j4YzDM23f87zBfDe9g==}
+    deprecated: Potential CWE-502 - Update to 1.3.1 or higher
 
   '@vitejs/plugin-react-swc@3.8.0':
     resolution: {integrity: sha512-T4sHPvS+DIqDP51ifPqa9XIRAz/kIvIi8oXcnOZZgHmMotgmmdxe/DD5tMFlt5nuIRzT0/QuiwmKlH0503Aapw==}
@@ -7155,6 +7156,7 @@ packages:
   i18next-parser@9.3.0:
     resolution: {integrity: sha512-VaQqk/6nLzTFx1MDiCZFtzZXKKyBV6Dv0cJMFM/hOt4/BWHWRgYafzYfVQRUzotwUwjqeNCprWnutzD/YAGczg==}
     engines: {node: ^18.0.0 || ^20.0.0 || ^22.0.0, npm: '>=6', yarn: '>=1'}
+    deprecated: Project is deprecated, use i18next-cli instead
     hasBin: true
 
   i18next@23.16.8:
@@ -8967,6 +8969,7 @@ packages:
   prebuild-install@7.1.3:
     resolution: {integrity: sha512-8Mf2cbV7x1cXPUILADGI3wuhfqWvtiLA1iclTDbFRZkgRQS0NqsPZphna9V+HyTEadheuPmjaJMsbzKQFOzLug==}
     engines: {node: '>=10'}
+    deprecated: No longer maintained. Please contact the author of the relevant native addon; alternatives are available.
     hasBin: true
 
   prelude-ls@1.2.1:
@@ -9835,6 +9838,7 @@ packages:
   sitemap@8.0.0:
     resolution: {integrity: sha512-+AbdxhM9kJsHtruUF39bwS/B0Fytw6Fr1o4ZAIAEqA6cke2xcoO2GleBw9Zw7nRzILVEgz7zBM5GiTJjie1G9A==}
     engines: {node: '>=14.0.0', npm: '>=6.0.0'}
+    deprecated: 'SECURITY: Multiple vulnerabilities fixed in 8.0.1 (XML injection, path traversal, command injection, protocol injection). Upgrade immediately: npm install sitemap@8.0.1'
     hasBin: true
 
   slash@2.0.0:
@@ -10695,6 +10699,7 @@ packages:
 
   uuid@8.3.2:
     resolution: {integrity: sha512-+NYs2QeMWy+GWFOEm9xnn6HCDp0l7QBD7ml8zLUmJ+93Q5NF0NocErnwkTkXVFNiX3/fpC6afS8Dhb/gz7R7eg==}
+    deprecated: uuid@10 and below is no longer supported.  For ESM codebases, update to uuid@latest.  For CommonJS codebases, use uuid@11 (but be aware this version will likely be deprecated in 2028).
     hasBin: true
 
   v8-compile-cache-lib@3.0.1:
@@ -13058,7 +13063,7 @@ snapshots:
       react: 17.0.2
       react-dom: 17.0.2(react@17.0.2)
 
-  '@harnessio/react-ng-manager-swagger-service-client@1.7.1':
+  '@harnessio/react-ng-manager-swagger-service-client@1.22.0':
     dependencies:
       pnpm: 10.27.0
 

@@ -269,6 +269,16 @@
         "scopeColumn": "Scope",
         "project": "Project",
         "org": "Org"
+      },
+      "selectProviderRepo": {
+        "label": "Repository on Git provider",
+        "title": "Select repository",
+        "placeholder": "Select repository",
+        "description": "Select the repository on your Git provider to link (required for account-level connectors).",
+        "searchPlaceholder": "Search repositories...",
+        "repoColumn": "Repository",
+        "noReposFound": "No repositories found",
+        "failedToLoad": "Failed to load repositories"
       }
     },
     "SecretScanningEnabled": "Secret scanning enabled",

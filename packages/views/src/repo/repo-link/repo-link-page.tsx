@@ -22,19 +22,36 @@ import {
 } from '@harnessio/ui/components'
 import { useTranslation } from '@harnessio/ui/context'
 
+export const ACCOUNT_CONNECTOR_SPEC_TYPE = 'Account'
+
 export interface ConnectorRef {
   ref: string
+  specType?: string
 }
 
-const linkRepoSchema = z.object({
-  connectorRef: z.string().min(1, { message: 'Please select a connector' }),
-  identifier: z
-    .string()
-    .min(1, { message: 'Please provide a name' })
-    .regex(/^[a-z0-9-_.]+$/i, { message: 'Name can only contain letters, numbers, dash, dot, or underscore' }),
-  description: z.string().optional(),
-  isPublic: z.boolean()
-})
+// repoIdentifier is omitted for repo-scoped connectors (provider repo is implied by the connector).
+// It is required only when connectorSpecType is Account — enforced in superRefine below.
+const linkRepoSchema = z
+  .object({
+    connectorRef: z.string().min(1, { message: 'Please select a connector' }),
+    connectorSpecType: z.string().optional(),
+    repoIdentifier: z.string().optional(),
+    identifier: z
+      .string()
+      .min(1, { message: 'Please provide a name' })
+      .regex(/^[a-z0-9-_.]+$/i, { message: 'Name can only contain letters, numbers, dash, dot, or underscore' }),
+    description: z.string().optional(),
+    isPublic: z.boolean()
+  })
+  .superRefine((data, ctx) => {
+    if (data.connectorSpecType === ACCOUNT_CONNECTOR_SPEC_TYPE && !data.repoIdentifier?.trim()) {
+      ctx.addIssue({
+        code: z.ZodIssueCode.custom,
+        message: 'Please select a repository on your Git provider',
+        path: ['repoIdentifier']
+      })
+    }
+  })
 
 export type RepoLinkFormFields = z.infer<typeof linkRepoSchema>
 
@@ -44,6 +61,7 @@ interface RepoLinkPageProps {
   isLoading: boolean
   isSubmitDisabled?: boolean
   connectorSelectorRenderer: (onSelect: (connector: ConnectorRef) => void) => ReactNode
+  providerRepoRenderer?: (onSelect: (repoIdentifier: string) => void) => ReactNode
   apiError?: string
 }
 
@@ -53,15 +71,19 @@ export function RepoLinkView({
   isLoading,
   isSubmitDisabled,
   connectorSelectorRenderer,
+  providerRepoRenderer,
   apiError
 }: RepoLinkPageProps) {
   const { t } = useTranslation()
 
   const formMethods = useForm<RepoLinkFormFields>({
     resolver: zodResolver(linkRepoSchema),
-    mode: 'onChange',
+    mode: 'onTouched',
+    reValidateMode: 'onChange',
     defaultValues: {
       connectorRef: '',
+      connectorSpecType: '',
+      repoIdentifier: '',
       identifier: '',
       description: '',
       isPublic: true
@@ -73,13 +95,32 @@ export function RepoLinkView({
     handleSubmit,
     setValue,
     watch,
+    clearErrors,
     formState: { errors }
   } = formMethods
 
   const isPublicValue = watch('isPublic')
+  const connectorSpecType = watch('connectorSpecType')
 
   const handleVisibilityChange = (value: string) => {
     setValue('isPublic', value === 'public', { shouldValidate: true })
+  }
+
+  const handleProviderRepoSelect = (providerRepo: string) => {
+    setValue('repoIdentifier', providerRepo, { shouldValidate: true })
+
+    const baseName = providerRepo.split('/').filter(Boolean).pop() ?? providerRepo
+    const harnessIdentifier = baseName.replace(/[^a-z0-9-_.]/gi, '-')
+    setValue('identifier', harnessIdentifier, { shouldValidate: true })
+  }
+
+  const handleConnectorSelect = (connector: ConnectorRef) => {
+    setValue('connectorRef', connector.ref, { shouldValidate: true })
+    setValue('connectorSpecType', connector.specType ?? '', { shouldValidate: false })
+    setValue('repoIdentifier', '', { shouldValidate: false })
+    setValue('identifier', '', { shouldValidate: false })
+
+    clearErrors(['repoIdentifier', 'identifier', 'connectorRef'])
   }
 
   return (
@@ -101,13 +142,20 @@ export function RepoLinkView({
               <Layout.Vertical gap="xl">
                 {/* CONNECTOR */}
                 <Fieldset>
-                  {connectorSelectorRenderer((connector: ConnectorRef) => {
-                    setValue('connectorRef', connector.ref, { shouldValidate: true })
-                  })}
+                  {connectorSelectorRenderer(handleConnectorSelect)}
                   {errors.connectorRef && (
                     <Message theme={MessageTheme.ERROR}>{errors.connectorRef.message?.toString()}</Message>
                   )}
                 </Fieldset>
+
+                {connectorSpecType === ACCOUNT_CONNECTOR_SPEC_TYPE && providerRepoRenderer && (
+                  <Fieldset>
+                    {providerRepoRenderer(handleProviderRepoSelect)}
+                    {errors.repoIdentifier && (
+                      <Message theme={MessageTheme.ERROR}>{errors.repoIdentifier.message?.toString()}</Message>
+                    )}
+                  </Fieldset>
+                )}
 
                 {/* NAME */}
                 <Fieldset>
@@ -116,7 +164,6 @@ export function RepoLinkView({
                     label={t('views:repos.createNewRepoForm.name.label', 'Name')}
                     {...register('identifier')}
                     placeholder={t('views:repos.createNewRepoForm.name.placeholder', 'Enter repository name')}
-                    autoFocus
                     wrapperClassName="w-full"
                   />
                 </Fieldset>

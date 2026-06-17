@@ -505,6 +505,7 @@ import Upload from './icons/upload.svg'
 import UserBadgeCheck from './icons/user-badge-check.svg'
 import User from './icons/user.svg'
 import Variables from './icons/variables.svg'
+import VerifiedCheck from './icons/verified-check.svg'
 import Version from './icons/version.svg'
 import VideoCall from './icons/video-call.svg'
 import ViewColumns2 from './icons/view-columns-2.svg'
@@ -1031,6 +1032,7 @@ export const IconNameMapV2 = {
   'user-badge-check': UserBadgeCheck,
   user: User,
   variables: Variables,
+  'verified-check': VerifiedCheck,
   version: Version,
   'video-call': VideoCall,
   'view-columns-2': ViewColumns2,

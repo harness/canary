@@ -61,7 +61,6 @@ export const LinkRepo = () => {
       parent_ref: spaceURL,
       identifier: data.identifier,
       description: data.description || '',
-      is_public: data.isPublic,
       connector_ref: data.connectorRef,
       ...(data.connectorSpecType === ACCOUNT_CONNECTOR_SPEC_TYPE && data.repoIdentifier
         ? { repo_identifier: data.repoIdentifier }

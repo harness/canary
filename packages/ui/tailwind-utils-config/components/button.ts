@@ -45,9 +45,9 @@ function createButtonVariantStyles() {
         }
 
         style[`&:active:not(:disabled, .cn-button-disabled), &:where(.cn-button-active), &:where([data-state=open])`] =
-          {
-            backgroundColor: selectedBg
-          }
+        {
+          backgroundColor: selectedBg
+        }
       } else {
         const themeStyleForVariant = variant === 'primary' && theme === 'default' ? 'brand' : themeStyle
 
@@ -61,23 +61,23 @@ function createButtonVariantStyles() {
         style[`&:hover:not(:disabled, .cn-button-disabled)`] =
           variant === 'outline'
             ? {
-                backgroundColor: `var(--cn-set-${themeStyleForVariant}-${variant}-bg-hover, var(--cn-set-${themeStyleForVariant}-${variant}-bg))`
-              }
+              backgroundColor: `var(--cn-set-${themeStyleForVariant}-${variant}-bg-hover, var(--cn-set-${themeStyleForVariant}-${variant}-bg))`
+            }
             : {
-                backgroundColor: `var(--cn-set-${themeStyleForVariant}-${variant}-bg-hover, var(--cn-set-${themeStyleForVariant}-${variant}-bg))`,
-                borderColor: `var(--cn-set-${themeStyleForVariant}-${variant}-bg-hover, var(--cn-set-${themeStyleForVariant}-${variant}-bg))`
-              }
+              backgroundColor: `var(--cn-set-${themeStyleForVariant}-${variant}-bg-hover, var(--cn-set-${themeStyleForVariant}-${variant}-bg))`,
+              borderColor: `var(--cn-set-${themeStyleForVariant}-${variant}-bg-hover, var(--cn-set-${themeStyleForVariant}-${variant}-bg))`
+            }
 
         // Active styles
         style[`&:active:not(:disabled, .cn-button-disabled), &:where(.cn-button-active), &:where([data-state=open])`] =
           variant === 'outline'
             ? {
-                backgroundColor: `var(--cn-set-${themeStyleForVariant}-${variant}-bg-selected, var(--cn-set-${themeStyleForVariant}-${variant}-bg))`
-              }
+              backgroundColor: `var(--cn-set-${themeStyleForVariant}-${variant}-bg-selected, var(--cn-set-${themeStyleForVariant}-${variant}-bg))`
+            }
             : {
-                backgroundColor: `var(--cn-set-${themeStyleForVariant}-${variant}-bg-selected, var(--cn-set-${themeStyleForVariant}-${variant}-bg))`,
-                borderColor: `var(--cn-set-${themeStyleForVariant}-${variant}-bg-selected, var(--cn-set-${themeStyleForVariant}-${variant}-bg))`
-              }
+              backgroundColor: `var(--cn-set-${themeStyleForVariant}-${variant}-bg-selected, var(--cn-set-${themeStyleForVariant}-${variant}-bg))`,
+              borderColor: `var(--cn-set-${themeStyleForVariant}-${variant}-bg-selected, var(--cn-set-${themeStyleForVariant}-${variant}-bg))`
+            }
 
         separatorStyles[`&:where(.cn-button-split-dropdown.cn-button-${variant}.cn-button-${theme})`] = {
           '&::before': {
@@ -188,7 +188,7 @@ export default {
 
     // Ghost style
     '&:where(.cn-button-ghost)': {
-      color: 'var(--cn-text-2)',
+      color: 'var(--cn-text-2) !important',
       '@apply border-transparent': '',
 
       '&:where(:hover:not(:disabled, .cn-button-disabled))': {

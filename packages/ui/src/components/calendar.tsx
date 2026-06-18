@@ -45,7 +45,7 @@ function Calendar({ className, classNames, showOutsideDays = true, ...props }: C
         day_outside:
           'day-outside text-cn-3 opacity-50  aria-selected:bg-cn-3/50 aria-selected:text-cn-3 aria-selected:opacity-30',
         day_disabled: 'text-cn-3 opacity-50',
-        day_range_middle: 'cn-calendar-day-range-middle !bg-transparent text-cn-1! aria-selected:opacity-100',
+        day_range_middle: 'cn-calendar-day-range-middle !bg-transparent !text-cn-1 aria-selected:opacity-100',
         day_hidden: 'invisible',
         ...classNames
       }}

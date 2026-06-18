@@ -153,7 +153,7 @@ describe('Calendar', () => {
 
       expect(middleClasses).toContain('cn-calendar-day-range-middle')
       expect(middleClasses).toContain('!bg-transparent')
-      expect(middleClasses.some(c => c.startsWith('text-cn-1!'))).toBe(true)
+      expect(middleClasses).toContain('!text-cn-1')
       expect(middleClasses).not.toContain('bg-cn-brand')
     })
 

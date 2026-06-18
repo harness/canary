@@ -31,8 +31,20 @@ export default {
     '&:last-child': {
       paddingBottom: '0',
 
-      '& .cn-stepper-connector': {
+      '&:not(:has(.cn-stepper-substep-list, .cn-stepper-substep-placeholder)) .cn-stepper-connector': {
         display: 'none'
+      },
+
+      '&:has(.cn-stepper-step-upcoming):not(:has(.cn-stepper-substep-placeholder)) .cn-stepper-connector': {
+        display: 'none'
+      },
+
+      '& .cn-stepper-connector': {
+        bottom: 'var(--cn-spacing-4-half)'
+      },
+
+      '&:has(.cn-stepper-substep-placeholder) .cn-stepper-connector': {
+        bottom: 'var(--cn-size-8)'
       }
     }
   },
@@ -149,11 +161,13 @@ export default {
     padding: '0',
     margin: '0',
     marginTop: 'var(--cn-spacing-3)',
-    paddingLeft: 'calc(var(--cn-size-5) / 2 - var(--cn-spacing-px))'
+    paddingLeft: 'calc(var(--cn-size-5) / 2 - var(--cn-spacing-px))',
+    counterReset: 'substep'
   },
 
   '.cn-stepper-substep-item': {
-    padding: 'var(--cn-spacing-1) 0'
+    padding: 'var(--cn-spacing-2) 0',
+    counterIncrement: 'substep'
   },
 
   '.cn-stepper-substep-branch': {
@@ -169,8 +183,16 @@ export default {
     background: 'var(--cn-set-brand-primary-bg)'
   },
 
+  '.cn-stepper-substep-error .cn-stepper-substep-branch': {
+    background: 'var(--cn-set-danger-primary-bg)'
+  },
+
   '.cn-stepper-substep-upcoming .cn-stepper-substep-branch': {
     background: 'var(--cn-border-2)'
+  },
+
+  '.cn-stepper-substep-skipped .cn-stepper-substep-branch': {
+    background: 'var(--cn-set-gray-secondary-bg)'
   },
 
   /* SubStep Button */
@@ -208,10 +230,20 @@ export default {
     background: 'var(--cn-set-brand-primary-bg)'
   },
 
+  '.cn-stepper-substep-error .cn-stepper-substep-indicator': {
+    background: 'var(--cn-set-danger-primary-bg)',
+    color: 'var(--cn-set-danger-primary-text)'
+  },
+
   '.cn-stepper-substep-upcoming .cn-stepper-substep-indicator': {
     background: 'var(--cn-bg-3)',
     border: 'var(--cn-spacing-px) solid var(--cn-border-2)',
     color: 'var(--cn-text-3)'
+  },
+
+  '.cn-stepper-substep-skipped .cn-stepper-substep-indicator': {
+    background: 'var(--cn-set-gray-secondary-bg)',
+    color: 'var(--cn-text-2)'
   },
 
   '.cn-stepper-substep-dot': {
@@ -225,7 +257,11 @@ export default {
     fontSize: 'var(--cn-font-size-0)',
     fontWeight: 'var(--cn-font-weight-default-normal-500)',
     lineHeight: '1',
-    color: 'var(--cn-text-3)'
+    color: 'var(--cn-text-3)',
+
+    '&::before': {
+      content: '"." counter(substep)'
+    }
   },
 
   /* SubStep Content */
@@ -245,7 +281,7 @@ export default {
     minWidth: '0'
   },
 
-  /* Placeholder — undetermined substeps indicator */
+  /* Placeholder — indeterminate substeps indicator */
   '.cn-stepper-substep-placeholder': {
     display: 'grid',
     gridTemplateColumns: 'var(--cn-spacing-4) var(--cn-size-5) 1fr',

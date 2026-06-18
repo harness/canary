@@ -37,6 +37,7 @@ import sidebarStyles from './sidebar'
 import skeletonStyles from './skeleton'
 import sliderStyles from './slider'
 import stackedListStyles from './stacked-list'
+import splitPaneStepperStyles from './split-pane-stepper'
 import stepperStyles from './stepper'
 import stickyListSectionStyles from './sticky-list-section'
 import studioCardStyles from './studio-card'
@@ -96,6 +97,7 @@ export const ComponentStyles = [
   reasoningStyles,
   shimmerStyles,
   sliderStyles,
+  splitPaneStepperStyles,
   stepperStyles,
 
   // Form styles

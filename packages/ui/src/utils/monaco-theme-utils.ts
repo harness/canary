@@ -41,7 +41,14 @@ function replaceVarsWithHex<T>(obj: T, el: HTMLElement): T {
   } else if (obj && typeof obj === 'object') {
     const result: Partial<T> = {}
     for (const key in obj) {
-      result[key] = replaceVarsWithHex((obj as any)[key], el)
+      const value = replaceVarsWithHex((obj as any)[key], el)
+      // Drop keys whose CSS variable failed to resolve to a valid color. Passing
+      // `undefined` into monaco's theme `colors`/`rules` crashes its contrast logic
+      // (`Cannot read properties of undefined (reading 'getRelativeLuminance')`).
+      // Omitting the key lets monaco fall back to its base (vs/vs-dark) default.
+      if (value !== undefined) {
+        result[key] = value
+      }
     }
     return result as T
   } else if (typeof obj === 'string' && obj.trim().startsWith('var(')) {

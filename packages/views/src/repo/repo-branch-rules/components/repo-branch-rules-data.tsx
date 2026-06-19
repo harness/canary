@@ -131,6 +131,14 @@ export const getBranchRules = (t: TFunctionWithFallback): BranchRuleType[] => [
     hasSelect: true
   },
   {
+    id: BranchRuleId.REQUIRE_TARGET_IS_ANCESTOR,
+    label: t('views:repos.RequireTargetIsAncestor', 'Require branch to be up to date before merging'),
+    description: t(
+      'views:repos.RequireTargetIsAncestorDescription',
+      'The source branch must be up to date with the target branch before a pull request can be merged'
+    )
+  },
+  {
     id: BranchRuleId.MERGE,
     label: t('views:repos.LimitMergeStrategies', 'Limit merge strategies'),
     description: t(

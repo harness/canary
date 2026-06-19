@@ -62,7 +62,8 @@ export enum BranchRuleId {
   REQUIRE_MINIMUM_DEFAULT_REVIEWER_COUNT = 'require_minimum_default_reviewer_count',
   REQUIRE_CODE_REVIEW = 'require_minimum_count',
   REQUIRE_CODE_OWNERS = 'require_code_owners',
-  AUTO_ADD_CODE_OWNERS = 'request_code_owners'
+  AUTO_ADD_CODE_OWNERS = 'request_code_owners',
+  REQUIRE_TARGET_IS_ANCESTOR = 'require_target_is_ancestor'
 }
 
 export enum PatternsButtonType {

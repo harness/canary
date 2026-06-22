@@ -14,6 +14,7 @@ import {
   findChangeReqDecisions,
   findWaitingDecisions,
   generateStatusSummary,
+  getReviewerActionErrorMessage,
   normalizeGitFilePath,
   processReviewDecision
 } from '../pull-request-utils'
@@ -345,5 +346,32 @@ describe('buildPRFilters', () => {
   it('should handle empty filterData', () => {
     const result = buildPRFilters({ filterData: {} as any })
     expect(result).toEqual({})
+  })
+})
+
+describe('getReviewerActionErrorMessage', () => {
+  it('maps a 401 on remove to a forbidden remove message', () => {
+    const result = getReviewerActionErrorMessage({ status: 401, message: 'unauthorized' }, 'remove')
+    expect(result).toBe('Forbidden: you do not have permission to remove this reviewer.')
+  })
+
+  it('maps a 403 on remove to a forbidden remove message', () => {
+    const result = getReviewerActionErrorMessage({ status: 403 }, 'remove')
+    expect(result).toBe('Forbidden: you do not have permission to remove this reviewer.')
+  })
+
+  it('maps a 401 on add to a forbidden add message', () => {
+    const result = getReviewerActionErrorMessage({ status: 401 }, 'add')
+    expect(result).toBe('Forbidden: you do not have permission to add this reviewer.')
+  })
+
+  it('returns the backend message for non-auth errors', () => {
+    const result = getReviewerActionErrorMessage({ status: 500, message: 'Something went wrong' }, 'remove')
+    expect(result).toBe('Something went wrong')
+  })
+
+  it('falls back to a default message when no status or message is present', () => {
+    expect(getReviewerActionErrorMessage({}, 'remove')).toBe('Failed to remove reviewer')
+    expect(getReviewerActionErrorMessage({}, 'add')).toBe('Failed to add reviewer')
   })
 })

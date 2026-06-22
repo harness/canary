@@ -31,6 +31,19 @@ export const processReviewDecision = (
     ? PullReqReviewDecision.outdated
     : review_decision
 
+export const getReviewerActionErrorMessage = (
+  error: { status?: number; message?: string },
+  action: 'add' | 'remove'
+): string => {
+  if (error?.status === 401 || error?.status === 403) {
+    return action === 'remove'
+      ? 'Forbidden: you do not have permission to remove this reviewer.'
+      : 'Forbidden: you do not have permission to add this reviewer.'
+  }
+
+  return error?.message || `Failed to ${action} reviewer`
+}
+
 export function generateStatusSummary(checks: TypeCheckData[]) {
   // Initialize counts for each status
   const statusCounts = {

@@ -75,6 +75,7 @@ import {
   extractInfoFromRuleViolationArr,
   findChangeReqDecisions,
   findWaitingDecisions,
+  getReviewerActionErrorMessage,
   getUnifiedDefaultReviewersState,
   processReviewDecision
 } from './pull-request-utils'
@@ -751,7 +752,7 @@ export default function PullRequestConversationPage() {
         body: { reviewer_id: id }
       })
         .then(() => refetchReviewers())
-        .catch(error => setAddReviewerError(error.message))
+        .catch(error => setAddReviewerError(getReviewerActionErrorMessage(error, 'add')))
     },
     [repoRef, prId, refetchReviewers]
   )
@@ -764,7 +765,7 @@ export default function PullRequestConversationPage() {
         body: { usergroup_id: id }
       })
         .then(() => refetchReviewers())
-        .catch(error => setAddReviewerError(error.message))
+        .catch(error => setAddReviewerError(getReviewerActionErrorMessage(error, 'add')))
     },
     [repoRef, prId, refetchReviewers]
   )
@@ -772,13 +773,13 @@ export default function PullRequestConversationPage() {
   const handleDeleteReviewer = (id: number) => {
     reviewerDeletePullReq({ repo_ref: repoRef, pullreq_number: prId, pullreq_reviewer_id: id })
       .then(() => refetchReviewers())
-      .catch(error => setRemoveReviewerError(error.message))
+      .catch(error => setRemoveReviewerError(getReviewerActionErrorMessage(error, 'remove')))
   }
 
   const handleDeleteUserGroupReviewer = (id: number) => {
     userGroupReviewerDeletePullReq({ repo_ref: repoRef, pullreq_number: prId, user_group_id: id })
       .then(() => refetchReviewers())
-      .catch(error => setRemoveReviewerError(error.message))
+      .catch(error => setRemoveReviewerError(getReviewerActionErrorMessage(error, 'remove')))
   }
 
   const handleRefetchData = useCallback(() => {

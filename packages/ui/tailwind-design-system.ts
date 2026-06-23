@@ -194,6 +194,7 @@ const tailwindDesignSystem: TailwindConfig = {
 
       // brand text
       'cn-brand': 'var(--cn-text-brand)',
+      'cn-brand-primary': 'var(--cn-set-brand-primary-text)',
       'cn-brand-hover': 'var(--cn-comp-link-text-hover)',
 
       // use only for icons
@@ -642,7 +643,7 @@ const tailwindDesignSystem: TailwindConfig = {
     { pattern: /rounded-./ },
     { pattern: /border-./ },
     { pattern: /shadow-./ },
-    { pattern: /whitespace-./},
+    { pattern: /whitespace-./ },
     // Important: used for generating max-width of SandboxLayout.Content
     { pattern: /(?:(?:max|min)-)?(?:w|h)-.*/ }
   ]

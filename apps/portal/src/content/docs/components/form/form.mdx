@@ -34,11 +34,13 @@ name: z.string().trim().min(3, "Input must be at least 3 characters"),
     // https://github.com/shadcn-ui/ui/issues/421#issuecomment-1561080201
     age: z.coerce.number().min(1, "Number must be at least 1"),
 
+    time: z.string().optional(),
+
     comment: z.string().trim().min(10, "Comment must be at least 10 characters"),
     permission: z.enum(['public', 'private'], {
       required_error: 'Please select an option.'
     }).optional(),
-    checkboxField: z.boolean().refine(val => val === true, { message: 'You must check this box' })
+    checkboxField: z.boolean().refine(val => val === true, { message: 'You must accept the terms' })
 
 });
 
@@ -51,6 +53,7 @@ resolver: zodResolver(formSchema),
 defaultValues: {
 name: "John doe",
 age: 1,
+time: "09:00",
 comment: "Lorem ipsum",
 permission: "public",
 checkboxField: false
@@ -87,6 +90,11 @@ placeholder="Enter at least 3 characters"
           {...register("age")}
         />
 
+        <FormInput.Time
+          label="Time Field"
+          {...register("time")}
+        />
+
         <FormInput.Textarea
           label="Textarea Field"
           placeholder="Enter a textarea"
@@ -99,6 +107,9 @@ placeholder="Enter at least 3 characters"
         </FormInput.Radio>
 
         <FormInput.Checkbox {...register('checkboxField')} label="Accept terms and conditions" />
+        {formMethods.formState.errors.checkboxField?.message && (
+          <FormCaption theme="danger">{formMethods.formState.errors.checkboxField.message}</FormCaption>
+        )}
 
         <Button type="submit" disabled={formMethods.formState.isSubmitting}>
           {formMethods.formState.isSubmitting ? "Submitting..." : "Submit"}
@@ -138,6 +149,7 @@ const formSchema = z.object({
   // 🚨 z.coerce.number() - Must be used for number fields
   // https://github.com/shadcn-ui/ui/issues/421#issuecomment-1561080201
   age: z.coerce.number().min(1, "Number must be at least 1"),
+  time: z.string().optional(),
   comment: z.string().trim().min(10, "Comment must be at least 10 characters"),
 });
 
@@ -170,6 +182,7 @@ function FormWithZodAndReactHookForm() {
     <FormWrapper {...formMethods} onSubmit={handleSubmit(onSubmit)} orientation="vertical">
       <FormInput.Text {...register("name")} label="Name" />
       <FormInput.Number {...register("age")} label="Age" />
+      <FormInput.Time {...register("time")} label="Meeting Time" />
       <FormInput.Textarea {...register("comment")} label="Comment" />
       <Button type="submit">Submit</Button>
     </FormWrapper>

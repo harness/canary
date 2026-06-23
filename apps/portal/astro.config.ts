@@ -195,6 +195,7 @@ export default defineConfig({
             "components/foundations/text",
             "components/form/text-input",
             "components/form/textarea",
+            "components/form/time-input",
             "components/overlays/time-ago-card",
             "components/feedback/toast",
             "components/actions/toggle",

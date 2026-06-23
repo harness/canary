@@ -47,6 +47,7 @@ import tabsStyles from './tabs'
 import tagStyles from './tag'
 import textareaStyles from './textarea'
 import timeAgoCardStyles from './time-ago-card'
+import timeInputStyles from './time-input'
 import toastStyles from './toast'
 import toggleStyles from './toggle'
 import toggleGroupStyles from './toggle-group'
@@ -109,5 +110,6 @@ export const ComponentStyles = [
   inputStyles,
   captionStyles,
   multiSelectStyles,
+  timeInputStyles,
   tableV2Styles
 ]

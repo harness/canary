@@ -614,10 +614,10 @@ export const buildPRFilters = ({
     for (const labelKey in filterData.label_by) {
       const labelValue = filterData.label_by[labelKey]
       if (labelValue) {
-        labelIds.push(labelKey)
-
         if (typeof labelValue === 'object' && labelValue.valueId) {
           valueIds.push(labelValue.valueId)
+        } else {
+          labelIds.push(labelKey)
         }
       }
     }

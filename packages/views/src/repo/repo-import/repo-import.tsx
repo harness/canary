@@ -25,7 +25,6 @@ const formSchema = z
     identifier: z.string(),
     hostUrl: z.string().optional(),
     description: z.string(),
-    pipelines: z.boolean().optional(),
     authorization: z.boolean().optional(),
     provider: z.nativeEnum(ProviderOptionsEnum, { message: 'Please select a provider' }),
     password: z.string().optional(),
@@ -112,7 +111,6 @@ export function RepoImportPage({ onFormSubmit, onFormCancel, isLoading, apiError
     resolver: zodResolver(formSchema),
     mode: 'onChange',
     defaultValues: {
-      pipelines: false,
       authorization: false,
       provider: ProviderOptionsEnum.GITHUB
     }
@@ -207,11 +205,10 @@ export function RepoImportPage({ onFormSubmit, onFormCancel, isLoading, apiError
             />
           </Fieldset>
 
-          {/* authorization - pipelines */}
+          {/* authorization */}
           <Fieldset>
             <ControlGroup className="flex flex-row gap-cn-lg">
               <FormInput.Checkbox {...register('authorization')} id="authorization" label="Requires Authorization" />
-              <FormInput.Checkbox {...register('pipelines')} id="pipelines" label="Import Pipelines" />
             </ControlGroup>
           </Fieldset>
 

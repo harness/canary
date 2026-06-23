@@ -37,6 +37,7 @@ const ruleIds = [
   BranchRuleId.REQUIRE_NO_CHANGE_REQUEST,
   BranchRuleId.COMMENTS,
   BranchRuleId.STATUS_CHECKS,
+  BranchRuleId.REQUIRE_TARGET_IS_ANCESTOR,
   BranchRuleId.MERGE,
   BranchRuleId.DELETE_BRANCH,
   PushRuleId.FILE_SIZE_LIMIT,
@@ -153,6 +154,9 @@ const extractBranchRules = (data: RepoRuleGetOkResponse): Rule[] => {
           id: check,
           key: check
         }))
+        break
+      case BranchRuleId.REQUIRE_TARGET_IS_ANCESTOR:
+        checked = pullreq?.commits?.require_target_is_ancestor || false
         break
       case BranchRuleId.MERGE:
         checked = (pullreq?.merge?.strategies_allowed?.length ?? 0) > 0
@@ -389,6 +393,9 @@ export const transformFormOutput = (formOutput: RepoBranchSettingsFormFields): R
         },
         comments: {
           require_resolve_all: rulesMap[BranchRuleId.COMMENTS]?.checked || false
+        },
+        commits: {
+          require_target_is_ancestor: rulesMap[BranchRuleId.REQUIRE_TARGET_IS_ANCESTOR]?.checked || false
         },
         merge: {
           strategies_allowed: rulesMap[BranchRuleId.MERGE]?.submenu || [],

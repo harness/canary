@@ -26,7 +26,7 @@ export const ImportRepo = () => {
       identifier: data.identifier,
       description: data.description,
       parent_ref: spaceURL,
-      pipelines: data.pipelines ? 'convert' : 'ignore',
+      pipelines: 'ignore',
       provider: {
         host: data.hostUrl ?? '',
         password: data.password,

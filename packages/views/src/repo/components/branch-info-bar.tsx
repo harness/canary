@@ -1,8 +1,9 @@
 import { FC, useMemo } from 'react'
 
+import { BranchSelectorListItem, BranchSelectorTab, easyPluralize, TypesRepositoryCore } from '@views'
+
 import { Button, IconV2, Layout, Link, Popover, Link as StyledLink, Tag, Text } from '@harnessio/ui/components'
 import { useTranslation } from '@harnessio/ui/context'
-import { BranchSelectorListItem, BranchSelectorTab, easyPluralize, TypesRepositoryCore } from '@views'
 
 interface BranchInfoBarProps {
   defaultBranchName?: string
@@ -40,11 +41,18 @@ export const BranchInfoBar: FC<BranchInfoBarProps> = ({
 
   const compareUrls = useMemo(() => {
     const baseUrl = `${spaceId ? `/${spaceId}` : ''}/repos/${repoId}/pulls/compare`
+    // Encode the ref type into the URL: a bare name is assumed to be a branch by the
+    // compare page (normalizeGitRef), so tags must carry the `refs/tags/` prefix to be
+    // resolved correctly instead of being treated as a non-existent branch.
+    const selectedRef =
+      refType === BranchSelectorTab.TAGS && selectedBranchTag?.name
+        ? `refs/tags/${selectedBranchTag.name}`
+        : selectedBranchTag?.name
     return {
-      aheadCompare: `${baseUrl}/${compareDefaultBranch}...${selectedBranchTag?.name}`,
-      behindCompare: `${baseUrl}/${selectedBranchTag?.name}...${compareDefaultBranch}`
+      aheadCompare: `${baseUrl}/${compareDefaultBranch}...${selectedRef}`,
+      behindCompare: `${baseUrl}/${selectedRef}...${compareDefaultBranch}`
     }
-  }, [spaceId, repoId, compareDefaultBranch, selectedBranchTag?.name])
+  }, [spaceId, repoId, compareDefaultBranch, selectedBranchTag?.name, refType])
 
   const defaultBranchUrl = useMemo(
     () => `${spaceId ? `/${spaceId}` : ''}/repos/${repoId}/files/${defaultBranchName}`,

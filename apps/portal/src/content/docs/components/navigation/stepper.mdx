@@ -1,0 +1,558 @@
+---
+title: Stepper
+description: A vertical stepper component for multi-step flows with substeps, state indicators, and navigation guards.
+beta: true
+---
+
+import { DocsPage } from "@/components/docs-page";
+import { Aside } from "@astrojs/starlight/components";
+
+The `Stepper` component provides a vertical progress indicator for multi-step workflows like wizards and onboarding flows. It supports dynamic substeps, multiple visual states, transition animations, navigation guards, and keyboard navigation.
+
+It is composed of `Stepper.Root`, `Stepper.Step`, and `Stepper.SubStep` to offer a structured and customizable interface.
+
+<DocsPage.ComponentExample
+  client:only
+  code={`() => {
+    const [step, setStep] = React.useState("connect");
+
+    return (
+        <div className="w-[300px]">
+            <Stepper.Root value={step} onValueChange={setStep} title="Pipeline Setup">
+                <Stepper.Step value="connect" title="Connect" description="Choose your provider" />
+                <Stepper.Step value="configure" title="Configure" description="Set up your pipeline" />
+                <Stepper.Step value="review" title="Review" description="Confirm and create" />
+            </Stepper.Root>
+        </div>
+    );
+
+}`}
+/>
+
+## Usage
+
+```typescript jsx
+import { Stepper } from "@harnessio/ui/components";
+
+//...
+
+const [currentStep, setCurrentStep] = useState("step-1");
+
+return (
+  <Stepper.Root value={currentStep} onValueChange={setCurrentStep} title="Setup">
+    <Stepper.Step value="step-1" title="First Step" description="Do something" />
+    <Stepper.Step value="step-2" title="Second Step" description="Do another thing" />
+    <Stepper.Step value="step-3" title="Final Step" description="All done" />
+  </Stepper.Root>
+)
+```
+
+## Anatomy
+
+All parts of the `Stepper` component can be imported and composed as required.
+
+```typescript jsx
+<Stepper.Root>
+  <Stepper.Step>
+    <Stepper.SubStep />
+    <Stepper.SubStep />
+  </Stepper.Step>
+  <Stepper.Step />
+</Stepper.Root>
+```
+
+## Step States
+
+Steps display different visual states based on their position relative to the active step and explicit state overrides.
+
+<DocsPage.ComponentExample
+  client:only
+  code={`() => {
+    const [step, setStep] = React.useState("active");
+
+    return (
+        <div className="w-[300px]">
+            <Stepper.Root value={step} onValueChange={setStep} title="Step States">
+                <Stepper.Step value="completed" title="Completed" description="This step is done" />
+                <Stepper.Step value="active" title="Active" description="Currently on this step" />
+                <Stepper.Step value="upcoming" title="Upcoming" description="Not yet reached" />
+                <Stepper.Step value="error-step" title="Error" description="Something went wrong" state="error" />
+            </Stepper.Root>
+        </div>
+    );
+
+}`}
+/>
+
+<Aside type="tip">
+  Step states are derived automatically based on position (completed for steps
+  before active, upcoming for steps after), but can be explicitly overridden
+  with the `state` prop to show `error` or `skipped`.
+</Aside>
+
+## Loading and Blocking
+
+Steps can show a loading spinner and optionally block forward navigation while an async operation is in progress.
+
+<DocsPage.ComponentExample
+  client:only
+  code={`() => {
+    const [step, setStep] = React.useState("checking");
+
+    return (
+        <div className="w-[300px]">
+            <Stepper.Root value={step} onValueChange={setStep} title="Connectivity Check">
+                <Stepper.Step value="provider" title="Select Provider" description="Choose VCS" />
+                <Stepper.Step
+                    value="checking"
+                    title="Checking Connection"
+                    description="Verifying access..."
+                    loading
+                    blocking
+                />
+                <Stepper.Step value="repo" title="Select Repository" description="Pick your repo" />
+            </Stepper.Root>
+        </div>
+    );
+
+}`}
+/>
+
+<Aside type="note">
+  When `blocking` is set on the active step, navigation to subsequent steps is
+  prevented. The user can still navigate backwards. Combine with `loading` to
+  show a spinner on the indicator.
+</Aside>
+
+## SubSteps
+
+Steps can contain dynamic substeps that appear when the parent step is active. SubSteps support conditional rendering based on application state.
+
+<DocsPage.ComponentExample
+  client:only
+  code={`() => {
+    const [step, setStep] = React.useState("auth");
+
+    return (
+        <div className="w-[300px]">
+            <Stepper.Root value={step} onValueChange={setStep} title="GitHub Integration">
+                <Stepper.Step value="connect" title="Connect" description="Choose provider">
+                    <Stepper.SubStep value="auth" title="Authenticate" description="OAuth with GitHub" />
+                    <Stepper.SubStep value="test" title="Test Connection" description="Verify access" />
+                </Stepper.Step>
+                <Stepper.Step value="configure" title="Configure" description="Set up pipeline" />
+                <Stepper.Step value="done" title="Done" description="All set" />
+            </Stepper.Root>
+        </div>
+    );
+
+}`}
+/>
+
+<Aside type="tip">
+  SubSteps are conditionally rendered — they only appear when their parent step
+  is active. The `value` passed to `Stepper.Root` can be either a step value or
+  a substep value.
+</Aside>
+
+## Indeterminate SubSteps
+
+When a step has `hasSubSteps` but no children are provided, a placeholder indicator with "..." is shown, signaling that substeps will be determined dynamically (e.g., after an API call resolves).
+
+<DocsPage.ComponentExample
+  client:only
+  code={`() => {
+    const [step, setStep] = React.useState("connectivity");
+
+    return (
+        <div className="w-[300px]">
+            <Stepper.Root value={step} onValueChange={setStep} title="Build pipeline setup">
+                <Stepper.Step value="vcs" title="Select Version Control" description="Description" state="completed" />
+                <Stepper.Step value="connectivity" title="Check Connectivity" description="Description" />
+                <Stepper.Step value="repo" title="Select a repository" description="Description" />
+                <Stepper.Step value="analysis" title="Code Analysis" description="Description" hasSubSteps />
+                <Stepper.Step value="generate" title="Generate Pipeline" description="Description" />
+            </Stepper.Root>
+        </div>
+    );
+
+}`}
+/>
+
+Here's an example combining real substeps (`.1`, `.2`, `.3`) on the active step with an indeterminate placeholder on a following step:
+
+<DocsPage.ComponentExample
+  client:only
+  code={`() => {
+    const [step, setStep] = React.useState("scan-deps");
+
+    return (
+        <div className="w-[300px]">
+            <Stepper.Root value={step} onValueChange={setStep} title="Build pipeline setup">
+                <Stepper.Step value="vcs" title="Select Version Control" description="Description" state="completed" />
+                <Stepper.Step value="connectivity" title="Check Connectivity" description="Description" state="completed" />
+                <Stepper.Step value="analysis" title="Code Analysis" description="Description" hasSubSteps>
+                    <Stepper.SubStep value="scan-deps" title="Scan Dependencies" description="Check for vulnerabilities" />
+                    <Stepper.SubStep value="lint" title="Run Linter" description="Static analysis" />
+                    <Stepper.SubStep value="coverage" title="Coverage Report" description="Verify thresholds" />
+                </Stepper.Step>
+                <Stepper.Step value="generate" title="Generate Pipeline" description="Description" hasSubSteps />
+            </Stepper.Root>
+        </div>
+    );
+
+}`}
+/>
+
+<Aside type="note">
+  The `hasSubSteps` prop reserves space for substeps even when none are rendered
+  yet. This is useful when substeps are loaded asynchronously or depend on a
+  previous step's outcome.
+</Aside>
+
+## Navigation Guard
+
+Use the `onBeforeChange` prop to confirm navigation (e.g., warn users about losing progress when going back).
+
+<DocsPage.ComponentExample
+  client:only
+  code={`() => {
+    const [step, setStep] = React.useState("configure");
+    const steps = ["connect", "configure", "review"];
+
+    return (
+        <div className="w-[300px]">
+            <Stepper.Root
+                value={step}
+                onValueChange={setStep}
+                title="With Guard"
+                onBeforeChange={(from, to) => {
+                    const fromIdx = steps.indexOf(from);
+                    const toIdx = steps.indexOf(to);
+                    if (toIdx < fromIdx) {
+                        return "Going back will reset your progress. Are you sure?";
+                    }
+                    return true;
+                }}
+            >
+                <Stepper.Step value="connect" title="Connect" description="Choose provider" />
+                <Stepper.Step value="configure" title="Configure" description="Set up pipeline" />
+                <Stepper.Step value="review" title="Review" description="Confirm settings" />
+            </Stepper.Root>
+        </div>
+    );
+
+}`}
+/>
+
+<Aside type="note">
+  `onBeforeChange` receives `(fromValue, toValue)` and should return: - `true`
+  to allow navigation - `false` to silently block navigation - A `string` to
+  show a confirmation dialog with that message
+</Aside>
+
+## Completed State
+
+When all steps are done, pass `completed` to show a "Complete" badge instead of the step counter.
+
+<DocsPage.ComponentExample
+  client:only
+  code={`() => {
+    const [step, setStep] = React.useState("review");
+
+    return (
+        <div className="w-[300px]">
+            <Stepper.Root value={step} onValueChange={setStep} title="All Done" completed>
+                <Stepper.Step value="connect" title="Connect" description="Provider selected" />
+                <Stepper.Step value="configure" title="Configure" description="Pipeline configured" />
+                <Stepper.Step value="review" title="Review" description="Confirmed" />
+            </Stepper.Root>
+        </div>
+    );
+
+}`}
+/>
+
+## Without Connectors
+
+Set `showConnectors={false}` to hide the vertical connector lines between steps.
+
+<DocsPage.ComponentExample
+  client:only
+  code={`() => {
+    const [step, setStep] = React.useState("first");
+
+    return (
+        <div className="w-[300px]">
+            <Stepper.Root value={step} onValueChange={setStep} title="No Connectors" showConnectors={false}>
+                <Stepper.Step value="first" title="First" description="Step one" />
+                <Stepper.Step value="second" title="Second" description="Step two" />
+                <Stepper.Step value="third" title="Third" description="Step three" />
+            </Stepper.Root>
+        </div>
+    );
+
+}`}
+/>
+
+## Skeleton Loading
+
+When no children are passed, the stepper renders a skeleton placeholder. Control the number of skeleton items with `skeletonCount`.
+
+<DocsPage.ComponentExample
+  client:only
+  code={`<div className="w-[300px]">
+    <Stepper.Root value="" onValueChange={() => {}} title="Loading..." skeletonCount={4} />
+</div>`}
+/>
+
+## API Reference
+
+### `Root`
+
+The root container that manages stepper state, provides context to children, and renders the header with title and progress counter.
+
+```typescript jsx
+<Stepper.Root
+  value={currentStep}            // active step or substep value
+  onValueChange={setStep}        // callback when step changes
+  title="Setup"                  // [OPTIONAL] displayed in the header
+  completed={false}              // [OPTIONAL] shows "Complete" instead of counter
+  showConnectors={true}          // [OPTIONAL] show connector lines between steps
+  onBeforeChange={guardFn}       // [OPTIONAL] navigation guard
+  skeletonCount={3}              // [OPTIONAL] skeleton items when no children
+  className="my-class"           // [OPTIONAL] custom class on the nav element
+>
+  {/* Step components */}
+</Stepper.Root>
+```
+
+<DocsPage.PropsTable
+  props={[
+    {
+      name: "value",
+      description: "The active step or substep value (controlled)",
+      required: true,
+      value: "string",
+    },
+    {
+      name: "onValueChange",
+      description: "Callback fired when the user navigates to a different step",
+      required: true,
+      value: "(value: string) => void",
+    },
+    {
+      name: "title",
+      description: "Title displayed in the stepper header",
+      required: false,
+      value: "string",
+    },
+    {
+      name: "completed",
+      description: "When true, shows 'Complete' instead of step counter",
+      required: false,
+      value: "boolean",
+      defaultValue: "false",
+    },
+    {
+      name: "showConnectors",
+      description: "Show vertical connector lines between steps",
+      required: false,
+      value: "boolean",
+      defaultValue: "true",
+    },
+    {
+      name: "onBeforeChange",
+      description:
+        "Navigation guard. Return true to allow, false to block, or a string to show a confirmation dialog.",
+      required: false,
+      value: "(from: string, to: string) => boolean | string",
+    },
+    {
+      name: "skeletonCount",
+      description:
+        "Number of skeleton items to show when no children are provided",
+      required: false,
+      value: "number",
+      defaultValue: "3",
+    },
+    {
+      name: "className",
+      description: "Custom class applied to the root nav element",
+      required: false,
+      value: "string",
+    },
+    {
+      name: "children",
+      description: "Stepper.Step components",
+      required: false,
+      value: "ReactNode",
+    },
+  ]}
+/>
+
+### `Step`
+
+An individual step in the stepper. Renders the indicator, title, description, connector, and optional substeps.
+
+```typescript jsx
+<Stepper.Step
+  value="connect"                // unique identifier for this step
+  title="Connect"                // step title (string or ReactNode)
+  description="Choose provider"  // [OPTIONAL] description text
+  state="error"                  // [OPTIONAL] explicit state override
+  loading={false}                // [OPTIONAL] show spinner on indicator
+  blocking={false}               // [OPTIONAL] block forward navigation
+  disabled={false}               // [OPTIONAL] prevent interaction
+  hasSubSteps={false}            // [OPTIONAL] reserve substep space
+  className="my-class"           // [OPTIONAL] custom class
+>
+  {/* Optional Stepper.SubStep children */}
+</Stepper.Step>
+```
+
+<DocsPage.PropsTable
+  props={[
+    {
+      name: "value",
+      description: "Unique identifier for this step",
+      required: true,
+      value: "string",
+    },
+    {
+      name: "title",
+      description: "Step title displayed next to the indicator",
+      required: true,
+      value: "string | ReactNode",
+    },
+    {
+      name: "description",
+      description: "Secondary text below the title",
+      required: false,
+      value: "string",
+    },
+    {
+      name: "state",
+      description: "Explicit state override (error or skipped)",
+      required: false,
+      value: "'error' | 'skipped'",
+    },
+    {
+      name: "loading",
+      description: "Show a loading spinner on the indicator when active",
+      required: false,
+      value: "boolean",
+      defaultValue: "false",
+    },
+    {
+      name: "blocking",
+      description: "When active, prevents navigation to subsequent steps",
+      required: false,
+      value: "boolean",
+      defaultValue: "false",
+    },
+    {
+      name: "disabled",
+      description: "Prevents interaction with this step",
+      required: false,
+      value: "boolean",
+      defaultValue: "false",
+    },
+    {
+      name: "hasSubSteps",
+      description:
+        "Reserve vertical space for substeps (useful when substeps load asynchronously)",
+      required: false,
+      value: "boolean",
+      defaultValue: "false",
+    },
+    {
+      name: "className",
+      description: "Custom class applied to the step button",
+      required: false,
+      value: "string",
+    },
+    {
+      name: "children",
+      description:
+        "Stepper.SubStep components (rendered when this step is active)",
+      required: false,
+      value: "ReactNode",
+    },
+  ]}
+/>
+
+### `SubStep`
+
+A substep nested within a parent step. Only rendered when the parent step is active.
+
+```typescript jsx
+<Stepper.SubStep
+  value="auth"                   // unique identifier for this substep
+  title="Authenticate"           // substep title
+  description="OAuth with GitHub" // [OPTIONAL] description text
+  state="error"                  // [OPTIONAL] explicit state override
+  disabled={false}               // [OPTIONAL] prevent interaction
+  className="my-class"           // [OPTIONAL] custom class
+/>
+```
+
+<DocsPage.PropsTable
+  props={[
+    {
+      name: "value",
+      description: "Unique identifier for this substep",
+      required: true,
+      value: "string",
+    },
+    {
+      name: "title",
+      description: "Substep title",
+      required: true,
+      value: "string | ReactNode",
+    },
+    {
+      name: "description",
+      description: "Secondary text below the title",
+      required: false,
+      value: "string",
+    },
+    {
+      name: "state",
+      description: "Explicit state override (error or skipped)",
+      required: false,
+      value: "'error' | 'skipped'",
+    },
+    {
+      name: "disabled",
+      description: "Prevents interaction with this substep",
+      required: false,
+      value: "boolean",
+      defaultValue: "false",
+    },
+    {
+      name: "className",
+      description: "Custom class applied to the substep button",
+      required: false,
+      value: "string",
+    },
+  ]}
+/>
+
+## Accessibility
+
+The stepper implements the following accessibility features:
+
+- **ARIA**: Uses `aria-current="step"` on the active step, `aria-label` on each step button with position context, and `aria-disabled` for disabled steps
+- **Live Region**: Announces step changes via `aria-live="polite"` for screen readers
+- **Keyboard Navigation**: Supports ArrowDown, ArrowUp, Home, and End keys with roving tabindex
+- **Reduced Motion**: Respects `prefers-reduced-motion` by disabling transition animations
+
+## Best Practices
+
+1. **Unique Values**: Every step and substep must have a unique `value` across the entire stepper
+2. **Controlled State**: The component is always controlled — provide both `value` and `onValueChange`
+3. **Blocking Steps**: Use `blocking` for async operations that must complete before proceeding (e.g., connectivity checks)
+4. **Navigation Guards**: Use `onBeforeChange` to warn about data loss, not to enforce linear progression
+5. **SubStep Cleanup**: When substeps unmount (e.g., provider changes), the stepper automatically falls back to the parent step value
+6. **Skeleton State**: Pass no children to show a skeleton — useful while step configuration loads asynchronously

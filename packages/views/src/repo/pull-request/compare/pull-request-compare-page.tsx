@@ -121,6 +121,12 @@ export interface PullRequestComparePageProps extends Partial<RoutingProps> {
   targetBranch?: string
   isLabelsLoading?: boolean
   isTemplateFetching?: boolean
+  /**
+   * True when either side of the comparison is a tag. A pull request can only be opened
+   * between branches, so this renders a read-only comparison: no mergeability status, no
+   * "create pull request" affordances, and the Changes tab is shown directly.
+   */
+  isTagComparison?: boolean
 }
 
 export const PullRequestComparePage: FC<PullRequestComparePageProps> = ({
@@ -174,7 +180,8 @@ export const PullRequestComparePage: FC<PullRequestComparePageProps> = ({
   branchSelectorRenderer,
   toPullRequestConversation,
   isLabelsLoading,
-  isTemplateFetching
+  isTemplateFetching,
+  isTagComparison = false
 }) => {
   const { commits: commitData } = useRepoCommitsStore()
 
@@ -183,11 +190,13 @@ export const PullRequestComparePage: FC<PullRequestComparePageProps> = ({
   const { navigate } = useRouterContext()
   const { t } = useTranslation()
 
-  const [activeTab, setActiveTab] = useState(prBranchCombinationExists ? 'commits' : 'overview')
+  // Tag comparisons have no PR-creation flow, so (like an existing PR) they land on Commits.
+  const defaultTab = isTagComparison || prBranchCombinationExists ? 'commits' : 'overview'
+  const [activeTab, setActiveTab] = useState(defaultTab)
 
   useEffect(() => {
-    setActiveTab(prBranchCombinationExists ? 'commits' : 'overview')
-  }, [prBranchCombinationExists])
+    setActiveTab(defaultTab)
+  }, [defaultTab])
 
   const formMethods = useForm<CompareFormFields>({
     resolver: zodResolver(getPullRequestFormSchema(t)),
@@ -269,7 +278,7 @@ export const PullRequestComparePage: FC<PullRequestComparePageProps> = ({
             <Layout.Horizontal align="center" gap="xs">
               {branchSelectorRenderer}
 
-              {mergeability !== undefined && !isLoading && (
+              {mergeability !== undefined && !isLoading && !isTagComparison && (
                 <Layout.Horizontal gap="3xs" align="center">
                   {mergeability === true && (
                     <>
@@ -318,7 +327,7 @@ export const PullRequestComparePage: FC<PullRequestComparePageProps> = ({
             </Layout.Horizontal>
           </Layout.Vertical>
 
-          {!prBranchCombinationExists && !isNoNewCommits && (
+          {!prBranchCombinationExists && !isNoNewCommits && !isTagComparison && (
             <Layout.Horizontal
               align="center"
               justify="between"
@@ -387,7 +396,7 @@ export const PullRequestComparePage: FC<PullRequestComparePageProps> = ({
                 <Layout.Vertical>
                   <Tabs.Root value={activeTab} onValueChange={val => setActiveTab(val)}>
                     <Tabs.List variant="overlined" className="-mx-cn-2xl px-cn-2xl">
-                      {!prBranchCombinationExists && (
+                      {!prBranchCombinationExists && !isTagComparison && (
                         <Tabs.Trigger value="overview" icon="info-circle">
                           {t('views:pullRequests.compareChangesTabOverview', 'Overview')}
                         </Tabs.Trigger>
@@ -399,7 +408,7 @@ export const PullRequestComparePage: FC<PullRequestComparePageProps> = ({
                         {t('views:pullRequests.compareChangesTabChanges', 'Changes')}
                       </Tabs.Trigger>
                     </Tabs.List>
-                    {!prBranchCombinationExists && (
+                    {!prBranchCombinationExists && !isTagComparison && (
                       <Tabs.Content className="pt-cn-lg" value="overview">
                         <Layout.Flex gap="xl">
                           <Layout.Horizontal className="flex-1" gap="sm">

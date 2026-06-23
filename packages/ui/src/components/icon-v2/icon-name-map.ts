@@ -75,6 +75,7 @@ import BubbleStar from './icons/bubble-star.svg'
 import BubbleUpload from './icons/bubble-upload.svg'
 import BubbleWarning from './icons/bubble-warning.svg'
 import BubbleXmark from './icons/bubble-xmark.svg'
+import Bug from './icons/bug.svg'
 import BuildsSolid from './icons/builds-solid.svg'
 import Builds from './icons/builds.svg'
 import Calculator from './icons/calculator.svg'
@@ -504,6 +505,7 @@ import Upload from './icons/upload.svg'
 import UserBadgeCheck from './icons/user-badge-check.svg'
 import User from './icons/user.svg'
 import Variables from './icons/variables.svg'
+import VerifiedCheck from './icons/verified-check.svg'
 import Version from './icons/version.svg'
 import VideoCall from './icons/video-call.svg'
 import ViewColumns2 from './icons/view-columns-2.svg'
@@ -600,6 +602,7 @@ export const IconNameMapV2 = {
   'bubble-upload': BubbleUpload,
   'bubble-warning': BubbleWarning,
   'bubble-xmark': BubbleXmark,
+  bug: Bug,
   'builds-solid': BuildsSolid,
   builds: Builds,
   calculator: Calculator,
@@ -1029,6 +1032,7 @@ export const IconNameMapV2 = {
   'user-badge-check': UserBadgeCheck,
   user: User,
   variables: Variables,
+  'verified-check': VerifiedCheck,
   version: Version,
   'video-call': VideoCall,
   'view-columns-2': ViewColumns2,

@@ -65,10 +65,31 @@ import { DocsPage } from "@/components/docs-page";
   </Alert.Description>
 </Alert.Root>
 
-  <Alert.Root theme="danger" expandable>
-    <Alert.Title>Alert Title</Alert.Title>
+<Alert.Root theme="danger" expandable>
+  <Alert.Title>Alert Title</Alert.Title>
+  <Alert.Description>
+    We couldn’t complete your request because it violates an Open Policy Agent
+    (OPA) rule set by your organization. Please review the applicable policies
+    or contact your administrator for clarification, then try creating the
+    feature flag again. We couldn’t complete your request because it violates an
+    Open Policy Agent (OPA) rule set by your organization. Please review the
+    applicable policies or contact your administrator for clarification, then
+    try creating the feature flag again.
+  </Alert.Description>
+</Alert.Root>
+
+<Alert.Root theme="info">
+  <Alert.Title>Long URL in description</Alert.Title>
+  <Alert.Description>
+    Pipeline failed. Check the logs at
+    https://app.harness.io/account/abc123/orgs/default/projects/myproject/pipelines/very-long-pipeline-name/executions/xYzAbCdEfGhIjKlMnOpQrStUvWxYz/logs
+  </Alert.Description>
+</Alert.Root>
+
+  <Alert.Root theme="warning">
+    <Alert.Title>Long token in description</Alert.Title>
     <Alert.Description>
-      We couldn’t complete your request because it violates an Open Policy Agent (OPA) rule set by your organization. Please review the applicable policies or contact your administrator for clarification, then try creating the feature flag again. We couldn’t complete your request because it violates an Open Policy Agent (OPA) rule set by your organization. Please review the applicable policies or contact your administrator for clarification, then try creating the feature flag again.
+      Your token: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIxMjM0NTY3ODkwIiwibmFtZSI6IkpvaG4gRG9lIiwiaWF0IjoxNTE2MjM5MDIyfQ.SflKxwRJSMeKKF2QT4fwpMeJf36POk6yJV_adQssw5c
     </Alert.Description>
   </Alert.Root>
 </div>`}

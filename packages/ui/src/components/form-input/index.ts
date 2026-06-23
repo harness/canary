@@ -1,6 +1,16 @@
 import { ForwardedRef, ReactElement } from 'react'
 
-import { Checkbox, MultiSelect, NumberInput, Radio, Select, SelectProps, Textarea, TextInput } from '@/components'
+import {
+  Checkbox,
+  MultiSelect,
+  NumberInput,
+  Radio,
+  Select,
+  SelectProps,
+  Textarea,
+  TextInput,
+  TimeInput
+} from '@/components'
 
 import { withForm, WithFormProps } from './components/form-hoc'
 
@@ -8,6 +18,7 @@ const FormInput = {
   Text: withForm(TextInput),
   Textarea: withForm(Textarea),
   Number: withForm(NumberInput),
+  Time: withForm(TimeInput),
   Radio: withForm(Radio.Root, ({ field }) => ({
     onValueChange: field.onChange
   })),

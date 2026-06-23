@@ -12,6 +12,7 @@ import { useGetRepoRef } from '../framework/hooks/useGetRepoPath'
 import useCodePathDetails from '../hooks/useCodePathDetails'
 import { PathParams } from '../RouteDefinitions'
 import { normalizeGitRef } from '../utils/git-utils'
+import { encodeResourcePath } from '../utils/path-utils'
 
 interface ExplorerProps {
   selectedBranch?: string
@@ -64,7 +65,7 @@ export default function Explorer({ selectedBranch, repoDetails, isLoading: isLoa
   const fetchFolderContents = async (folderPath: string): Promise<OpenapiContentInfo[]> => {
     try {
       const { body: response } = await getContent({
-        path: folderPath,
+        path: encodeResourcePath(folderPath),
         repo_ref: repoRef,
         queryParams: { include_commit: false, git_ref: normalizeGitRef(fullGitRef || selectedBranch) }
       })
@@ -90,7 +91,7 @@ export default function Explorer({ selectedBranch, repoDetails, isLoading: isLoa
     const sortedEntries = sortEntriesByType(entries)
     return sortedEntries.map((item, idx) => {
       const itemPath = parentPath ? `${parentPath}/${item.name}` : item.name
-      const fullPath = `${routes.toRepoFiles({ spaceId, repoId })}/${fullGitRef || selectedBranch}/~/${itemPath && encodeURI(encodeURI(itemPath))}`
+      const fullPath = `${routes.toRepoFiles({ spaceId, repoId })}/${fullGitRef || selectedBranch}/~/${encodeResourcePath(itemPath)}`
       const level = (itemPath ?? '').split('/').length - 1
 
       if (item.type === 'file') {

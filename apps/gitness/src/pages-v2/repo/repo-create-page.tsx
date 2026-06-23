@@ -68,14 +68,7 @@ export const CreateRepo = () => {
 
   useEffect(() => {
     const { accountIdentifier, orgIdentifier, projectIdentifier } = scopeIdentifiers
-
-    console.log('🔍 Repo Create - Scope Debug:', {
-      spaceURL,
-      scopeIdentifiers,
-      scopeFromContext: scope
-    })
-
-    if (!accountIdentifier) return
+    if (!accountIdentifier || !orgIdentifier || !projectIdentifier) return
 
     const rawToken = localStorage.getItem('token')
     const decodedToken = rawToken ? decodeStoredToken(rawToken) : ''
@@ -96,8 +89,6 @@ export const CreateRepo = () => {
       params.set('routingId', scope.accountId)
     }
 
-    console.log('🚀 Fetching default branch with params:', params.toString())
-
     const headers = new Headers({
       Accept: 'application/json'
     })
@@ -116,17 +107,12 @@ export const CreateRepo = () => {
         return response.json() as Promise<GeneralSettingsResponse>
       })
       .then(data => {
-        console.log('✅ Settings response:', data)
         const branch = data.default_branch?.trim()
         if (branch) {
-          console.log('✅ Setting default branch to:', branch)
           setInitialDefaultBranch(branch)
-        } else {
-          console.log('⚠️ No default_branch in response, keeping "main"')
         }
       })
-      .catch(error => {
-        console.error('❌ Failed to fetch settings:', error)
+      .catch(() => {
         // Keep fallback branch as `main` if settings request fails.
       })
   }, [scope.accountId, scopeIdentifiers])

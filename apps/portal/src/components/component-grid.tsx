@@ -10,6 +10,7 @@ import {
   Radio,
   Switch,
   Textarea,
+  TimeInput,
   SearchInput,
   StatusBadge,
   Alert,
@@ -155,6 +156,16 @@ const components: ComponentEntry[] = [
           placeholder="Write something…"
           rows={2}
         />
+      </div>
+    ),
+  },
+  {
+    name: "Time Picker",
+    category: "Form & Inputs",
+    href: "/components/form/time-input",
+    preview: (
+      <div className="w-[220px]">
+        <TimeInput label="Start time" defaultValue="09:30" />
       </div>
     ),
   },

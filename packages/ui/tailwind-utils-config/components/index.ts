@@ -37,6 +37,8 @@ import sidebarStyles from './sidebar'
 import skeletonStyles from './skeleton'
 import sliderStyles from './slider'
 import stackedListStyles from './stacked-list'
+import splitPaneStepperStyles from './split-pane-stepper'
+import stepperStyles from './stepper'
 import stickyListSectionStyles from './sticky-list-section'
 import studioCardStyles from './studio-card'
 import switchStyles from './switch'
@@ -45,6 +47,7 @@ import tabsStyles from './tabs'
 import tagStyles from './tag'
 import textareaStyles from './textarea'
 import timeAgoCardStyles from './time-ago-card'
+import timeInputStyles from './time-input'
 import toastStyles from './toast'
 import toggleStyles from './toggle'
 import toggleGroupStyles from './toggle-group'
@@ -95,6 +98,8 @@ export const ComponentStyles = [
   reasoningStyles,
   shimmerStyles,
   sliderStyles,
+  splitPaneStepperStyles,
+  stepperStyles,
 
   // Form styles
   selectStyles,
@@ -105,5 +110,6 @@ export const ComponentStyles = [
   inputStyles,
   captionStyles,
   multiSelectStyles,
+  timeInputStyles,
   tableV2Styles
 ]

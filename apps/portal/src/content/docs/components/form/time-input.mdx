@@ -1,0 +1,189 @@
+---
+title: Time Input
+description: A time input with a configurable leading icon, built on BaseInput.
+beta: true
+---
+
+The `TimeInput` component provides a styled time input field. It is built on top of `BaseInput`, using the same `cn-input-container` foundation as `TextInput` and `NumberInput`, and hides the browser's native clock indicator in favour of a configurable `IconV2` leading icon.
+
+import { DocsPage } from "@/components/docs-page";
+
+<DocsPage.ComponentExample
+  client:only
+  code={`<div className="flex flex-col gap-cn-md items-baseline min-w-[320px]">
+  <TimeInput label="Start time" id="start-time" defaultValue="09:30" />
+  <TimeInput label="End time" id="end-time" defaultValue="17:00" step={1} caption="Includes seconds" />
+  <TimeInput label="Duration" id="duration" error="Required" />
+  <TimeInput label="Disabled" id="disabled-time" defaultValue="08:00" disabled />
+</div>`}
+/>
+
+## Usage
+
+```typescript jsx
+import { TimeInput } from '@harnessio/ui/components'
+
+return (
+  <TimeInput
+    label="Start time"
+    id="start-time"
+    defaultValue="09:30"
+    caption="Select a time"
+  />
+)
+```
+
+## Icon
+
+The leading icon defaults to `clock`. Pass any `IconV2` name via the `icon` prop, or pass `undefined` to hide the icon entirely.
+
+<DocsPage.ComponentExample
+  client:only
+  code={`<div className="flex flex-col gap-cn-md items-baseline min-w-[320px]">
+  <TimeInput label="Default icon (clock)" id="icon-default" defaultValue="09:00" />
+  <TimeInput label="Custom icon (clock-solid)" id="icon-solid" icon="clock-solid" defaultValue="09:00" />
+  <TimeInput label="No icon" id="icon-none" icon={undefined} defaultValue="09:00" />
+</div>`}
+/>
+
+## Form integration
+
+`TimeInput` accepts all standard form field props via `CommonInputsProp` — `label`, `caption`, `error`, `warning`, and `optional`.
+
+<DocsPage.ComponentExample
+  client:only
+  code={`<div className="flex flex-col gap-cn-md items-baseline min-w-[320px]">
+  <TimeInput label="Required field" id="required" />
+  <TimeInput label="Optional field" id="optional-field" optional caption="Leave blank to use default" />
+  <TimeInput label="With error" id="with-error" error="Please select a valid time" />
+  <TimeInput label="With warning" id="with-warning" warning="Outside business hours" />
+  <TimeInput label="With caption" id="with-caption" caption="Use 24-hour format" />
+</div>`}
+/>
+
+## Disabled & Read-only
+
+<DocsPage.ComponentExample
+  client:only
+  code={`<div className="flex flex-col gap-cn-md items-baseline min-w-[320px]">
+  <TimeInput label="Disabled" id="disabled" defaultValue="14:30" disabled />
+  <TimeInput label="Read-only" id="readonly" defaultValue="14:30" readOnly />
+</div>`}
+/>
+
+## Controlled
+
+<DocsPage.ComponentExample
+  client:only
+  code={`() => {
+  const [time, setTime] = React.useState('09:30');
+  return (
+    <div className="flex flex-col gap-cn-md items-baseline min-w-[320px]">
+      <TimeInput
+        label="Meeting time"
+        id="controlled"
+        value={time}
+        onChange={(e) => setTime(e.target.value)}
+        caption={\`Selected: \${time}\`}
+      />
+    </div>
+  );
+}`}
+/>
+
+## API Reference
+
+<DocsPage.PropsTable
+  props={[
+    {
+      name: "icon",
+      description:
+        "Leading icon rendered inside the input. Defaults to 'clock'. Pass undefined to hide.",
+      required: "false",
+      defaultValue: "'clock'",
+      value: "IconPropsV2['name'] | undefined",
+    },
+    {
+      name: "label",
+      description: "Label displayed above the input field.",
+      required: "false",
+      defaultValue: "",
+      value: "string",
+    },
+    {
+      name: "caption",
+      description: "Helper text displayed below the input.",
+      required: "false",
+      defaultValue: "",
+      value: "string",
+    },
+    {
+      name: "error",
+      description:
+        "Error message displayed below the input. Applies danger theme to the border.",
+      required: "false",
+      defaultValue: "",
+      value: "string",
+    },
+    {
+      name: "warning",
+      description:
+        "Warning message displayed below the input. Applies warning theme to the border.",
+      required: "false",
+      defaultValue: "",
+      value: "string",
+    },
+    {
+      name: "optional",
+      description:
+        "Marks the field as optional and shows an 'optional' label beside the field label.",
+      required: "false",
+      defaultValue: "",
+      value: "boolean",
+    },
+    {
+      name: "size",
+      description: "Controls the height of the input container.",
+      required: "false",
+      defaultValue: "'md'",
+      value: "md | sm",
+    },
+    {
+      name: "step",
+      description:
+        "Granularity of the time value in seconds. Use 1 to enable seconds input.",
+      required: "false",
+      defaultValue: "",
+      value: "number",
+    },
+    {
+      name: "disabled",
+      description: "Disables the input.",
+      required: "false",
+      defaultValue: "",
+      value: "boolean",
+    },
+    {
+      name: "readOnly",
+      description: "Makes the input read-only.",
+      required: "false",
+      defaultValue: "",
+      value: "boolean",
+    },
+    {
+      name: "className",
+      description: "Additional class names applied to the inner input element.",
+      required: "false",
+      defaultValue: "",
+      value: "string",
+    },
+    {
+      name: "wrapperClassName",
+      description:
+        "Additional class names applied to the outer ControlGroup wrapper.",
+      required: "false",
+      defaultValue: "",
+      value: "string",
+    },
+  ]}
+/>

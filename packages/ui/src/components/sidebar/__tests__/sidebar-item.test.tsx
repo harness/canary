@@ -313,19 +313,14 @@ describe('SidebarItem', () => {
   })
 
   describe('Tooltip Logic', () => {
-    test('uses provided tooltip when present', () => {
-      renderComponent({ tooltip: 'Custom tooltip' })
-      expect(screen.getByTestId('tooltip')).toHaveAttribute('data-content', 'Custom tooltip')
-    })
-
-    test('uses title tooltip when collapsed state and no tooltip', () => {
+    test('uses title tooltip when collapsed state', () => {
       sidebarContext.state = 'collapsed'
-      renderComponent({ tooltip: undefined })
+      renderComponent()
       expect(screen.getByTestId('tooltip')).toHaveAttribute('data-content', 'Item title')
     })
 
-    test('renders without tooltip when expanded and no tooltip prop', () => {
-      renderComponent({ tooltip: undefined })
+    test('renders without tooltip when expanded', () => {
+      renderComponent()
       expect(screen.queryByTestId('tooltip')).toBeNull()
     })
   })

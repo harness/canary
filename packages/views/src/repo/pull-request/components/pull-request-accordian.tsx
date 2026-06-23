@@ -33,7 +33,7 @@ import {
 } from '@harnessio/ui/components'
 import { useTranslation } from '@harnessio/ui/context'
 import { TypesUser } from '@harnessio/ui/types'
-import { cn } from '@harnessio/ui/utils'
+import { cn, encodeResourcePath } from '@harnessio/ui/utils'
 
 export interface HeaderProps {
   text: string
@@ -150,7 +150,11 @@ export const LineTitle: React.FC<LineTitleProps> = ({
             <IconV2 name={useFullDiff ? 'collapse-code' : 'expand-code'} />
           </Button>
           <Link
-            to={toRepoFileDetails?.({ path: `files/${currentRefForDiff || sourceBranch}/~/${linkPath}` }) ?? ''}
+            to={
+              toRepoFileDetails?.({
+                path: `files/${currentRefForDiff || sourceBranch}/~/${encodeResourcePath(linkPath)}`
+              }) ?? ''
+            }
             className="text-cn-1 min-w-0 break-all font-medium leading-tight"
           >
             {displayText}

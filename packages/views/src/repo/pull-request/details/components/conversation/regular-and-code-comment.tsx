@@ -1,4 +1,4 @@
-import { FC, memo, useCallback, useState } from 'react'
+import { FC, Fragment, memo, useCallback, useState } from 'react'
 
 import { Avatar, CopyButton, IconV2, Layout, Link, Separator, Tag, Text, TextInput, TimeAgoCard } from '@harnessio/ui/components'
 import { useTranslation } from '@harnessio/ui/context'
@@ -13,6 +13,7 @@ import {
   removeLastPlus,
   TypesPullReqActivity
 } from '@views'
+import { PullRequestCommentReactions } from './pull-request-comment-reactions'
 import { DiffModeEnum } from '@git-diff-view/react'
 import { cn } from '@harnessio/ui/utils'
 import PullRequestDiffViewer from '@views/repo/pull-request/components/pull-request-diff-viewer'
@@ -147,6 +148,7 @@ export interface PullRequestRegularAndCodeCommentProps
     parentItem?: CommentItem<TypesPullReqActivity>
   }>
   principalProps: PrincipalPropsType
+  onReactionToggle?: (commentId: number, emoji: string, add: boolean) => Promise<void>
 }
 
 const PullRequestRegularAndCodeCommentInternal: FC<PullRequestRegularAndCodeCommentProps> = ({
@@ -157,6 +159,7 @@ const PullRequestRegularAndCodeCommentInternal: FC<PullRequestRegularAndCodeComm
   toggleConversationStatus,
   isLast,
   handleSaveComment,
+  onReactionToggle,
   onCopyClick,
   handleDeleteComment,
   handleUpdateComment,
@@ -290,7 +293,17 @@ const PullRequestRegularAndCodeCommentInternal: FC<PullRequestRegularAndCodeComm
                   setComment={text => setEditComments(prev => ({ ...prev, [componentId]: text }))}
                 />
               ) : (
-                <ComponentViewBase parentItem={parentItem} commentItem={commentItem} />
+                <Fragment>
+                  <ComponentViewBase parentItem={parentItem} commentItem={commentItem} />
+                  {commentItem.id && currentUser?.uid && (
+                    <PullRequestCommentReactions
+                      reactions={commentItem.payload?.reactions}
+                      commentId={commentItem.id}
+                      currentUserUid={currentUser.uid}
+                      onReactionToggle={onReactionToggle}
+                    />
+                  )}
+                </Fragment>
               )
             }}
             customHeaderData={{

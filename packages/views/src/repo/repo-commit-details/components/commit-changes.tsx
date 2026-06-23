@@ -2,6 +2,7 @@ import { FC, useCallback, useEffect, useMemo, useState } from 'react'
 
 import { Accordion, Button, CopyButton, Layout, Link, StackedList, StatusBadge } from '@harnessio/ui/components'
 import { useTranslation } from '@harnessio/ui/context'
+import { encodeResourcePath } from '@harnessio/ui/utils'
 import { DiffModeEnum } from '@git-diff-view/react'
 import PullRequestDiffViewer from '@views/repo/pull-request/components/pull-request-diff-viewer'
 import { useDiffConfig } from '@views/repo/pull-request/hooks/useDiffConfig'
@@ -35,7 +36,7 @@ const LineTitle: FC<
   return (
     <div className="flex w-full max-w-full items-center gap-cn-xs">
       <Link
-        to={toRepoFileDetails?.({ path: `files/${commitSHA}/~/${encodeURI(encodeURI(text))}` }) ?? ''}
+        to={toRepoFileDetails?.({ path: `files/${commitSHA}/~/${encodeResourcePath(text)}` }) ?? ''}
         variant="secondary"
         className="min-w-0 break-all"
       >

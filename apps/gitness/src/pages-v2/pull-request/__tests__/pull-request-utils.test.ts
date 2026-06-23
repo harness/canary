@@ -329,8 +329,30 @@ describe('buildPRFilters', () => {
       }
     }
     const result = buildPRFilters({ filterData: filterData as any })
-    expect(result.label_id).toEqual([101, 103, 104])
+    expect(result.label_id).toEqual([101])
     expect(result.value_id).toEqual([201, 202])
+  })
+
+  it('should send value_id only (not label_id) when a specific value is selected', () => {
+    const filterData = {
+      label_by: {
+        '103': { labelText: 'Label 3', color: 'blue', valueId: '201' }
+      }
+    }
+    const result = buildPRFilters({ filterData: filterData as any })
+    expect(result.label_id).toEqual([])
+    expect(result.value_id).toEqual([201])
+  })
+
+  it('should send label_id only when a label is selected with any value', () => {
+    const filterData = {
+      label_by: {
+        '101': { labelText: 'Label 1', color: 'red' }
+      }
+    }
+    const result = buildPRFilters({ filterData: filterData as any })
+    expect(result.label_id).toEqual([101])
+    expect(result.value_id).toEqual([])
   })
 
   it('should ignore keys not handled', () => {

@@ -1,6 +1,12 @@
 import { useCallback, useMemo, useRef, useState } from 'react'
 
-import { commentCreatePullReq, commentDeletePullReq, commentUpdatePullReq } from '@harnessio/code-service-client'
+import {
+  commentCreatePullReq,
+  commentDeletePullReq,
+  commentUpdatePullReq,
+  useCommentReactionCreatePullReqMutation,
+  useCommentReactionDeletePullReqMutation
+} from '@harnessio/code-service-client'
 import { generateAlphaNumericHash } from '@harnessio/ui/utils'
 import { CommitSuggestion, TextSelection } from '@harnessio/views'
 
@@ -25,6 +31,15 @@ export function usePRCommonInteractions({
   const apiPath = useAPIPath()
   const count = useRef(generateAlphaNumericHash(5))
   const uploadsURL = useMemo(() => `/api/v1/repos/${repoRef}/uploads`, [repoRef])
+
+  const { mutateAsync: createReaction } = useCommentReactionCreatePullReqMutation({
+    repo_ref: repoRef,
+    pullreq_number: prId
+  })
+  const { mutateAsync: deleteReaction } = useCommentReactionDeletePullReqMutation({
+    repo_ref: repoRef,
+    pullreq_number: prId
+  })
 
   const uploadImage = useCallback(
     async (
@@ -230,11 +245,32 @@ export function usePRCommonInteractions({
     [updateCommentStatus, prId, repoRef, refetchActivities, dryMerge]
   )
 
+  const handleReactionToggle = useCallback(
+    async (commentId: number, emoji: string, add: boolean) => {
+      const reactionParams = {
+        pullreq_comment_id: commentId,
+        pullreq_reaction_emoji: emoji
+      }
+
+      try {
+        if (add) {
+          await createReaction(reactionParams)
+        } else {
+          await deleteReaction(reactionParams)
+        }
+      } catch (error) {
+        throw new Error(getErrorMessage(error) || `Failed to ${add ? 'add' : 'remove'} reaction`)
+      }
+    },
+    [createReaction, deleteReaction]
+  )
+
   return {
     handleUpload,
     handleSaveComment,
     updateComment,
     deleteComment,
+    handleReactionToggle,
 
     // suggestions
     isCommitDialogOpen,

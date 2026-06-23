@@ -1758,7 +1758,7 @@
     "sidebar": {
       "bg": {
         "$type": "color",
-        "$value": "{bg.0}",
+        "$value": "{bg.2}",
         "$description": "Background color for the sidebar container. Provides foundational layer for navigation elements."
       },
       "item": {

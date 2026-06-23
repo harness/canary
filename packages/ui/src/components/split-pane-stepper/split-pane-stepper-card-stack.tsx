@@ -19,7 +19,12 @@ export function SplitPaneStepperCardStack() {
     const offsetTop = cardRect.top - containerRect.top + container.scrollTop
     const targetScroll = offsetTop - containerRect.height / 2 + cardRect.height / 2
 
-    container.scrollTo({ top: Math.max(0, targetScroll), behavior: 'smooth' })
+    // JSDOM doesn't implement scrollTo; fall back to direct scrollTop for test environments
+    if (typeof container.scrollTo === 'function') {
+      container.scrollTo({ top: Math.max(0, targetScroll), behavior: 'smooth' })
+    } else {
+      container.scrollTop = Math.max(0, targetScroll)
+    }
   }, [])
 
   useEffect(() => {

@@ -5316,6 +5316,14 @@
           "perBranchRequired": []
         },
         {
+          "name": "Item",
+          "variantEnums": {},
+          "booleanProps": [],
+          "largeEnumProps": {},
+          "requiredProps": [],
+          "perBranchRequired": []
+        },
+        {
           "name": "MenuSkeleton",
           "variantEnums": {},
           "booleanProps": [

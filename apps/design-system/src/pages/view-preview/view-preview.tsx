@@ -1,4 +1,4 @@
-import { FC, ReactNode } from 'react'
+import { createElement, FC, ReactNode } from 'react'
 
 import '@harnessio/ui/styles.css'
 
@@ -598,6 +598,33 @@ export const viewPreviews: Record<string, ViewPreviewGroup> = {
       }
     }
   }
+}
+
+/**
+ * designAI prototypes — auto-discovered, not hand-registered.
+ *
+ * Any default-exported component dropped in `subjects/prototypes/*.tsx` shows up
+ * at `/view-preview/<filename>` and in the view picker, with no edit to the
+ * `viewPreviews` object above. The slug is the filename (empty-repo.tsx ->
+ * `empty-repo`); the label is a title-cased version. This keeps generated
+ * prototypes off the shared 600-line registry — one file write, no collision.
+ */
+const prototypeModules = import.meta.glob<{ default: FC }>('../../subjects/prototypes/*.tsx', {
+  eager: true
+})
+
+const prototypeItems = Object.entries(prototypeModules).reduce<ViewPreviewGroup['items']>(
+  (acc, [path, mod]) => {
+    const slug = path.split('/').pop()?.replace(/\.tsx$/, '') ?? path
+    const label = slug.replace(/[-_]/g, ' ').replace(/\b\w/g, c => c.toUpperCase())
+    acc[slug] = { label, element: createElement(mod.default) }
+    return acc
+  },
+  {}
+)
+
+if (Object.keys(prototypeItems).length > 0) {
+  viewPreviews.prototypes = { label: 'Prototypes', items: prototypeItems }
 }
 
 const ViewPreview: FC = () => {

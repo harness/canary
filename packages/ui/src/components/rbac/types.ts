@@ -21,6 +21,7 @@ export enum ResourceType {
 export enum PermissionIdentifier {
   CODE_REPO_CREATE = 'code_repo_create',
   CODE_REPO_DELETE = 'code_repo_delete',
+  CODE_REPO_REVIEW = 'code_repo_review',
   UPDATE_SECRET = 'core_secret_edit',
   DELETE_SECRET = 'core_secret_delete'
 }

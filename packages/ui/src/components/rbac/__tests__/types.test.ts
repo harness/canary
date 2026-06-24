@@ -38,6 +38,10 @@ describe('RBAC Types', () => {
       expect(PermissionIdentifier.CODE_REPO_DELETE).toBe('code_repo_delete')
     })
 
+    test('should have CODE_REPO_REVIEW value', () => {
+      expect(PermissionIdentifier.CODE_REPO_REVIEW).toBe('code_repo_review')
+    })
+
     test('should have UPDATE_SECRET value', () => {
       expect(PermissionIdentifier.UPDATE_SECRET).toBe('core_secret_edit')
     })
@@ -47,7 +51,13 @@ describe('RBAC Types', () => {
     })
 
     test('should have all expected enum values', () => {
-      const expectedValues = ['code_repo_create', 'code_repo_delete', 'core_secret_edit', 'core_secret_delete']
+      const expectedValues = [
+        'code_repo_create',
+        'code_repo_delete',
+        'code_repo_review',
+        'core_secret_edit',
+        'core_secret_delete'
+      ]
       const actualValues = Object.values(PermissionIdentifier)
       expect(actualValues).toEqual(expect.arrayContaining(expectedValues))
       expect(actualValues.length).toBe(expectedValues.length)

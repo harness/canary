@@ -3,8 +3,17 @@ import { useEffect, useMemo, useState } from 'react'
 import { DiffModeEnum } from '@git-diff-view/react'
 import { ChangedFilesShortInfo, DiffModeOptions, TypesCommit } from '@views'
 
-import { Button, CounterBadge, Dialog, DropdownMenu, IconV2, Layout, SplitButton } from '@harnessio/ui/components'
-import { useTranslation } from '@harnessio/ui/context'
+import {
+  Button,
+  CounterBadge,
+  Dialog,
+  DropdownMenu,
+  IconV2,
+  Layout,
+  PermissionIdentifier,
+  ResourceType
+} from '@harnessio/ui/components'
+import { useComponents, useTranslation } from '@harnessio/ui/context'
 import { TypesUser } from '@harnessio/ui/types'
 import { cn } from '@harnessio/ui/utils'
 
@@ -37,6 +46,7 @@ export interface PullRequestChangesFilterProps {
   active?: string
   currentUser: TypesUser
   pullRequestMetadata?: TypesPullReq | undefined
+  repoIdentifier?: string
   reviewers?: ReviewerListPullReqOkResponse
   submitReview?: (decision: PullReqReviewDecision) => void
   refetchReviewers?: () => void
@@ -67,6 +77,7 @@ export interface PullRequestChangesFilterProps {
 export const PullRequestChangesFilter: React.FC<PullRequestChangesFilterProps> = ({
   currentUser,
   pullRequestMetadata,
+  repoIdentifier,
   reviewers,
   submitReview,
   refetchReviewers,
@@ -90,6 +101,7 @@ export const PullRequestChangesFilter: React.FC<PullRequestChangesFilterProps> =
   handleManualRefresh
 }) => {
   const { t } = useTranslation()
+  const { RbacSplitButton } = useComponents()
   const [commitFilterOptions, setCommitFilterOptions] = useState([defaultCommitFilter])
   const shouldHideReviewButton = useMemo(
     () => pullRequestMetadata?.state === 'merged' || pullRequestMetadata?.state === 'closed',
@@ -265,11 +277,21 @@ export const PullRequestChangesFilter: React.FC<PullRequestChangesFilterProps> =
             </Dialog.Trigger>
           )}
           {!shouldHideReviewButton && currentUser && (
-            <SplitButton
+            <RbacSplitButton<string>
               theme={getApprovalStateTheme(approveState)}
               disabled={isActiveUserPROwner}
               loading={isApproving}
               variant={getApprovalStateVariant(approveState)}
+              rbac={{
+                resource: { resourceType: ResourceType.CODE_REPOSITORY, resourceIdentifier: repoIdentifier },
+                permissions: [PermissionIdentifier.CODE_REPO_REVIEW]
+              }}
+              tooltip={{
+                content: t(
+                  'views:pullRequests.missingReviewPermission',
+                  'You need the Code Repository Review permission to approve'
+                )
+              }}
               handleOptionChange={selectedMethod => {
                 submitReview?.(selectedMethod as PullReqReviewDecision)
               }}
@@ -293,7 +315,7 @@ export const PullRequestChangesFilter: React.FC<PullRequestChangesFilterProps> =
               }}
             >
               {approveState === PullReqReviewDecision.approve ? approvalItems[0].title : getApprovalState(approveState)}
-            </SplitButton>
+            </RbacSplitButton>
           )}
         </Layout.Horizontal>
       </Layout.Horizontal>

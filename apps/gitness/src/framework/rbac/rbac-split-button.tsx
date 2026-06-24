@@ -1,6 +1,7 @@
 import { isUndefined } from 'lodash-es'
 
 import { RbacSplitButtonProps, rbacTooltip, Resource, SplitButton, Tooltip } from '@harnessio/ui/components'
+import { cn } from '@harnessio/ui/utils'
 
 import { useMFEContext } from '../hooks/useMFEContext'
 
@@ -10,6 +11,8 @@ export const RbacSplitButton = <T extends string>({
   dropdownRbac,
   variant,
   tooltip,
+  disabled,
+  className,
   ...rest
 }: RbacSplitButtonProps<T>) => {
   const { hooks } = useMFEContext()
@@ -47,16 +50,20 @@ export const RbacSplitButton = <T extends string>({
   const button = (
     <SplitButton<T>
       {...rest}
+      className={cn(className, { 'pointer-events-none': !hasPermission })}
       variant={variant === 'outline' ? 'outline' : undefined}
-      disabled={!hasPermission}
+      disabled={!hasPermission || disabled}
       disableButton={!hasButtonPermission}
       disableDropdown={!hasDropdownPermission}
     />
   )
 
   return !hasPermission ? (
-    <Tooltip title={tooltip?.title ?? rbacTooltip} content={tooltip?.content}>
-      {button}
+    <Tooltip title={tooltip?.title ?? (tooltip?.content ? undefined : rbacTooltip)} content={tooltip?.content}>
+      {/* eslint-disable-next-line jsx-a11y/no-noninteractive-tabindex */}
+      <span className="inline-flex" tabIndex={0}>
+        {button}
+      </span>
     </Tooltip>
   ) : (
     /*

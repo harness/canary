@@ -669,6 +669,7 @@
     "approve": "Approuver",
     "approved": "Approuvée",
     "changereq": "Changement Demandé",
+    "missingReviewPermission": "Vous avez besoin de l'autorisation de révision du dépôt de code pour approuver",
     "split": "Diviser",
     "unified": "Unifié",
     "comments": {

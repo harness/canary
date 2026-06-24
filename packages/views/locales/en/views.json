@@ -716,6 +716,7 @@
     "approve": "Approve",
     "approved": "Approved",
     "changereq": "Changes Requested",
+    "missingReviewPermission": "You need the Code Repository Review permission to approve",
     "split": "Split",
     "unified": "Unified",
     "comments": {

@@ -549,6 +549,7 @@ export default function PullRequestChanges() {
         submitReview={submitReview}
         currentUser={currentUser}
         pullReqMetadata={pullReqMetadata}
+        repoIdentifier={repoId}
         loadingRawDiff={loadingRawDiff}
         handleSaveComment={handleSaveComment}
         pullReqCommits={pullReqCommits?.commits || []}

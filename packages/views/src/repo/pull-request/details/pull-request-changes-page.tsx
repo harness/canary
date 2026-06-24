@@ -33,6 +33,7 @@ interface RepoPullRequestChangesPageProps {
   usePullRequestProviderStore: () => PullRequestDataState
   currentUser?: TypesUser
   pullReqMetadata?: TypesPullReq
+  repoIdentifier?: string
   reviewers?: ReviewerListPullReqOkResponse
   submitReview?: (decision: PullReqReviewDecision) => void
   refetchReviewers?: () => void
@@ -89,6 +90,7 @@ const PullRequestChangesPage: FC<RepoPullRequestChangesPageProps> = ({
   setDiffMode,
   isApproving,
   pullReqMetadata,
+  repoIdentifier,
   loadingRawDiff,
   handleSaveComment,
   activities,
@@ -279,6 +281,7 @@ const PullRequestChangesPage: FC<RepoPullRequestChangesPageProps> = ({
             isApproving={isApproving}
             currentUser={currentUser ?? {}}
             pullRequestMetadata={pullReqMetadata ? pullReqMetadata : undefined}
+            repoIdentifier={repoIdentifier}
             reviewers={reviewers}
             submitReview={submitReview}
             refetchReviewers={refetchReviewers}

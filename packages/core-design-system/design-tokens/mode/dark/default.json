@@ -76,12 +76,12 @@
     },
     "2": {
       "$type": "color",
-      "$value": "{gray.850}",
+      "$value": "{gray.800}",
       "$description": "Default border color for general UI elements. Provides balanced visual separation without overwhelming the interface. Optimized for readability and visual hierarchy.\n\nCommon uses: Card borders, form field outlines, table borders, content dividers, modal boundaries, section separators, default form inputs."
     },
     "3": {
       "$type": "color",
-      "$value": "{gray.900}",
+      "$value": "{gray.850}",
       "$description": "Subtle border color for minimal visual separation. Creates gentle boundaries that organize content without adding visual weight. Ideal for maintaining clean, uncluttered interfaces.\n\nCommon uses: Table row separators, grouped list items, subtle content dividers, secondary container outlines, background element borders."
     },
     "brand": {
@@ -1758,7 +1758,7 @@
     "sidebar": {
       "bg": {
         "$type": "color",
-        "$value": "{bg.2}",
+        "$value": "{bg.0}",
         "$description": "Background color for the sidebar container. Provides foundational layer for navigation elements."
       },
       "item": {

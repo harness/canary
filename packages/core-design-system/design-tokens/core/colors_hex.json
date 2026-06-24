@@ -6,7 +6,7 @@
     },
     "black": {
       "$type": "color",
-      "$value": "#0f1013"
+      "$value": "#08090d"
     }
   },
   "gray": {

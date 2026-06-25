@@ -1,5 +1,7 @@
 import { render, screen } from '@testing-library/react'
 
+import { PullRequestCommitPage } from '../pull-request-commits'
+
 const mockUseListPullReqCommitsQuery = vi.fn()
 
 // Capture the props handed to the view so we can assert that pagination inputs are derived
@@ -47,8 +49,6 @@ vi.mock('react-router-dom', () => ({
   useParams: () => ({ repoId: 'repo', spaceId: 'space', pullRequestId: '1' }),
   useLocation: () => ({ pathname: '/pr/1/commits' })
 }))
-
-import { PullRequestCommitPage } from '../pull-request-commits'
 
 const setQueryResult = ({
   headers,

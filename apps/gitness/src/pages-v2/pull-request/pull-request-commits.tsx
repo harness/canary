@@ -1,4 +1,4 @@
-import { useCallback, useEffect, useState } from 'react'
+import { useCallback, useEffect, useMemo, useState } from 'react'
 import { useLocation, useParams } from 'react-router-dom'
 
 import { useListPullReqCommitsQuery } from '@harnessio/code-service-client'
@@ -8,8 +8,8 @@ import { useRoutes } from '../../framework/context/NavigationContext'
 import { useGetRepoRef } from '../../framework/hooks/useGetRepoPath'
 import { parseAsInteger, useQueryState } from '../../framework/hooks/useQueryState'
 import { PathParams } from '../../RouteDefinitions'
+import { PageResponseHeader } from '../../types'
 import { usePullRequestCommitsStore } from './stores/pull-request-commit-store'
-import { usePullRequestProviderStore } from './stores/pull-request-provider-store'
 
 export function PullRequestCommitPage() {
   const routes = useRoutes()
@@ -22,16 +22,18 @@ export function PullRequestCommitPage() {
   const [pageSize, setPageSize] = useState(25)
   const { pathname } = useLocation()
 
-  const { pullReqMetadata } = usePullRequestProviderStore()
-  const totalCommits = pullReqMetadata?.stats?.commits ?? 0
-
   const { setCommitList, setIsFetchingCommits } = usePullRequestCommitsStore()
 
-  const { isFetching, data: { body: commits } = {} } = useListPullReqCommitsQuery({
+  const { isFetching, data: { body: commits, headers } = {} } = useListPullReqCommitsQuery({
     queryParams: { page: queryPage, limit: pageSize },
     repo_ref: repoRef,
     pullreq_number: prId
   })
+
+  // Drive pagination from the commits query's own response headers so it works regardless of
+  // whether the shared PR metadata store is hydrated (e.g. on a direct hit to this tab).
+  const xNextPage = useMemo(() => parseInt(headers?.get(PageResponseHeader.xNextPage) || ''), [headers])
+  const xPrevPage = useMemo(() => parseInt(headers?.get(PageResponseHeader.xPrevPage) || ''), [headers])
 
   useEffect(() => {
     if (commits) {
@@ -61,7 +63,8 @@ export function PullRequestCommitPage() {
       }
       usePullRequestCommitsStore={usePullRequestCommitsStore}
       currentPage={queryPage}
-      totalCommits={totalCommits}
+      xNextPage={xNextPage}
+      xPrevPage={xPrevPage}
       pageSize={pageSize}
       setPageSize={handlePageSizeChange}
     />

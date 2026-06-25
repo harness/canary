@@ -1,11 +1,9 @@
-import { FC } from 'react'
+import { FC, useCallback } from 'react'
 
 import { CommitsList, IPullRequestCommitsStore, TypesCommit } from '@views'
 
 import { NoData, Pagination, Skeleton } from '@harnessio/ui/components'
 import { useTranslation } from '@harnessio/ui/context'
-
-const getPageLink = (pageNum: number) => `?page=${pageNum}`
 
 interface RoutingProps {
   toCommitDetails?: ({ sha }: { sha: string }) => string
@@ -15,7 +13,8 @@ interface RoutingProps {
 interface RepoPullRequestCommitsViewProps extends Partial<RoutingProps> {
   usePullRequestCommitsStore: () => IPullRequestCommitsStore
   currentPage?: number
-  totalCommits?: number
+  xNextPage?: number
+  xPrevPage?: number
   pageSize?: number
   setPageSize?: (size: number) => void
 }
@@ -26,12 +25,16 @@ const PullRequestCommitsView: FC<RepoPullRequestCommitsViewProps> = ({
   toPullRequestChange,
   toCode,
   currentPage,
-  totalCommits,
+  xNextPage = 0,
+  xPrevPage = 0,
   pageSize,
   setPageSize
 }) => {
   const { commitsList, isFetchingCommits } = usePullRequestCommitsStore()
   const { t } = useTranslation()
+
+  const getPrevPageLink = useCallback(() => `?page=${xPrevPage}`, [xPrevPage])
+  const getNextPageLink = useCallback(() => `?page=${xNextPage}`, [xNextPage])
 
   if (isFetchingCommits) {
     return <Skeleton.List className="mt-cn-xl" />
@@ -49,33 +52,36 @@ const PullRequestCommitsView: FC<RepoPullRequestCommitsViewProps> = ({
       )}
 
       {!!commitsList?.length && (
-        <CommitsList
-          toCode={toCode}
-          toCommitDetails={toCommitDetails}
-          toPullRequestChange={toPullRequestChange}
-          onPRCommitListing
-          className="mt-cn-xl"
-          data={commitsList.map((item: TypesCommit) => ({
-            sha: item.sha,
-            parent_shas: item.parent_shas,
-            title: item.title,
-            message: item.message,
-            author: item.author,
-            committer: item.committer,
-            signature: item.signature
-          }))}
-        />
-      )}
+        <>
+          <CommitsList
+            toCode={toCode}
+            toCommitDetails={toCommitDetails}
+            toPullRequestChange={toPullRequestChange}
+            onPRCommitListing
+            className="mt-cn-xl"
+            data={commitsList.map((item: TypesCommit) => ({
+              sha: item.sha,
+              parent_shas: item.parent_shas,
+              title: item.title,
+              message: item.message,
+              author: item.author,
+              committer: item.committer,
+              signature: item.signature
+            }))}
+          />
 
-      {totalCommits && pageSize && currentPage ? (
-        <Pagination
-          currentPage={currentPage}
-          totalItems={totalCommits}
-          pageSize={pageSize}
-          onPageSizeChange={setPageSize}
-          getPageLink={getPageLink}
-        />
-      ) : null}
+          <Pagination
+            indeterminate
+            currentPage={currentPage}
+            hasNext={xNextPage > 0}
+            hasPrevious={xPrevPage > 0}
+            getPrevPageLink={getPrevPageLink}
+            getNextPageLink={getNextPageLink}
+            pageSize={pageSize}
+            onPageSizeChange={setPageSize}
+          />
+        </>
+      )}
     </>
   )
 }

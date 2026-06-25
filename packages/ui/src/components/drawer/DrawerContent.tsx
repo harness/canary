@@ -97,6 +97,7 @@ export type DrawerContentProps = ComponentPropsWithoutRef<typeof DrawerPrimitive
   size?: DrawerContentVariantsSize
   overlayClassName?: string
   forceWithOverlay?: boolean
+  staticStackWidth?: boolean
 }
 
 export const DrawerContent = forwardRef<ElementRef<typeof DrawerPrimitive.Content>, DrawerContentProps>(
@@ -107,6 +108,7 @@ export const DrawerContent = forwardRef<ElementRef<typeof DrawerPrimitive.Conten
       size = 'sm',
       overlayClassName,
       forceWithOverlay = false,
+      staticStackWidth = false,
       onOpenAutoFocus,
       onCloseAutoFocus: _onCloseAutoFocus,
       ...props
@@ -139,7 +141,9 @@ export const DrawerContent = forwardRef<ElementRef<typeof DrawerPrimitive.Conten
 
     // Which size token should this drawer display as?
     // Active: match the topmost descendant. Resting: use own size.
+    // staticStackWidth drawers never resize — they stay at their declared size.
     const targetSizeToken = (() => {
+      if (staticStackWidth) return undefined
       if (!hasOpenChild || !isHorizontal || !topmostDescendantSize || !size || isCoveredByDescendant) return undefined
       const myIdx = DRAWER_SIZE_ORDER.indexOf(size as (typeof DRAWER_SIZE_ORDER)[number])
       const topIdx = DRAWER_SIZE_ORDER.indexOf(topmostDescendantSize as (typeof DRAWER_SIZE_ORDER)[number])
@@ -147,7 +151,8 @@ export const DrawerContent = forwardRef<ElementRef<typeof DrawerPrimitive.Conten
       return topmostDescendantSize
     })()
 
-    const targetTransform = hasOpenChild ? getDrawerTransform(direction ?? 'right', clampedDescendantCount) : undefined
+    const targetTransform =
+      hasOpenChild && !staticStackWidth ? getDrawerTransform(direction ?? 'right', clampedDescendantCount) : undefined
 
     const widthAnimRef = useRef<Animation | null>(null)
     const transformAnimRef = useRef<Animation | null>(null)

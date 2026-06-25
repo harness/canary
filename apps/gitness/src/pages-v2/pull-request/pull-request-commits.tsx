@@ -30,8 +30,6 @@ export function PullRequestCommitPage() {
     pullreq_number: prId
   })
 
-  // Drive pagination from the commits query's own response headers so it works regardless of
-  // whether the shared PR metadata store is hydrated (e.g. on a direct hit to this tab).
   const xNextPage = useMemo(() => parseInt(headers?.get(PageResponseHeader.xNextPage) || ''), [headers])
   const xPrevPage = useMemo(() => parseInt(headers?.get(PageResponseHeader.xPrevPage) || ''), [headers])
 

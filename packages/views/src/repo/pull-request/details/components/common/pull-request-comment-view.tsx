@@ -91,7 +91,7 @@ const PRCommentView: FC<PRCommentViewProps> = ({
           ? t('views:pullRequests.comments.suggestionApplied', 'Suggestion applied')
           : t('views:pullRequests.comments.codeSuggestion', 'Code suggestion')
       }
-      suggestionFooter={!isApplied && suggestionFooter}
+      suggestionFooter={!isApplied && !!onCommitSuggestion && suggestionFooter}
     />
   )
 }

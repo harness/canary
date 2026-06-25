@@ -499,6 +499,8 @@ export default function PullRequestChanges() {
     setCommitRange(newCommitRange)
   }, [selectedCommits])
 
+  const isLinked = pullReqMetadata?.pullreq_type === 'linked'
+
   const {
     updateComment,
     deleteComment,
@@ -568,14 +570,14 @@ export default function PullRequestChanges() {
         setDiffPathQuery={(filepath?: string) => setDiffPathQuery(filepath!)}
         onCopyClick={onCopyClick}
         onCommentSaveAndStatusChange={onCommentSaveAndStatusChange}
-        onCommitSuggestion={onCommitSuggestion}
-        addSuggestionToBatch={addSuggestionToBatch}
-        suggestionsBatch={suggestionsBatch}
-        removeSuggestionFromBatch={removeSuggestionFromBatch}
+        onCommitSuggestion={isLinked ? undefined : onCommitSuggestion}
+        addSuggestionToBatch={isLinked ? undefined : addSuggestionToBatch}
+        suggestionsBatch={isLinked ? [] : suggestionsBatch}
+        removeSuggestionFromBatch={isLinked ? undefined : removeSuggestionFromBatch}
         filenameToLanguage={filenameToLanguage}
         toggleConversationStatus={toggleConversationStatus}
-        commitSuggestionsBatchCount={suggestionsBatch?.length}
-        onCommitSuggestionsBatch={onCommitSuggestionsBatch}
+        commitSuggestionsBatchCount={isLinked ? 0 : suggestionsBatch?.length}
+        onCommitSuggestionsBatch={isLinked ? undefined : onCommitSuggestionsBatch}
         onGetFullDiff={onGetFullDiff}
         toRepoFileDetails={({ path }: { path: string }) => {
           // `path` is already resource-encoded at the source (pull-request-accordian),

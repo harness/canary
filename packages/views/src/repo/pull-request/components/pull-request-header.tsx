@@ -1,8 +1,5 @@
 import { useCallback, useState } from 'react'
 
-import { TypesRepositoryCore } from '@views'
-import { BranchSelectorContainerProps } from '@views/repo'
-
 import {
   Avatar,
   BranchTag,
@@ -17,6 +14,8 @@ import {
 } from '@harnessio/ui/components'
 import { useTranslation } from '@harnessio/ui/context'
 import { cn } from '@harnessio/ui/utils'
+import { TypesRepositoryCore } from '@views'
+import { BranchSelectorContainerProps } from '@views/repo'
 
 import { getPrState } from '../utils'
 import { PullRequestHeaderEditDialog } from './pull-request-header-edit-dialog'

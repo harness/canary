@@ -57,13 +57,13 @@ interface RepoPullRequestChangesPageProps {
   onCopyClick?: (commentId?: number) => void
   onCommentSaveAndStatusChange?: (comment: string, status: string, parentId?: number) => void
   suggestionsBatch: CommitSuggestion[]
-  onCommitSuggestion: (suggestion: CommitSuggestion) => void
-  addSuggestionToBatch: (suggestion: CommitSuggestion) => void
-  removeSuggestionFromBatch: (commentId: number) => void
+  onCommitSuggestion?: (suggestion: CommitSuggestion) => void
+  addSuggestionToBatch?: (suggestion: CommitSuggestion) => void
+  removeSuggestionFromBatch?: (commentId: number) => void
   filenameToLanguage: (fileName: string) => string | undefined
   toggleConversationStatus: (status: string, parentId?: number) => void
   commitSuggestionsBatchCount: number
-  onCommitSuggestionsBatch: () => void
+  onCommitSuggestionsBatch?: () => void
   handleUpload?: HandleUploadType
   onGetFullDiff: (path?: string) => Promise<string | void>
   toRepoFileDetails?: ({ path }: { path: string }) => string

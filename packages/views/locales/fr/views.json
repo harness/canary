@@ -519,6 +519,8 @@
       "createPullRequest": "Créer une demande de tirage"
     },
     "noPullRequestsInRepo": "Commencez votre parcours de contribution en créant un brouillon de demande de tirage.",
+    "noPullRequestsInLinkedRepo": "Les pull requests sont synchronisées depuis le fournisseur externe. Ouvrez une pull request dans le dépôt en amont et elle apparaîtra ici.",
+    "noOpenPullRequestsLinked": "Il n'y a pas encore de pull requests ouvertes dans ce dépôt lié. Les pull requests sont synchronisées depuis le fournisseur externe.",
     "noPullRequestsInProject": "There are no pull requests in this project yet.",
     "noBranches": "Pas encore de branches",
     "createBranchDescription": "Vos branches apparaîtront ici une fois créées.",
@@ -639,6 +641,7 @@
     },
     "compareChanges": "Comparaison des modifications",
     "compareChangesDescription": "Choisissez deux branches pour voir les modifications ou pour créer une nouvelle pull request. Si nécessaire, vous pouvez aussi",
+    "compareChangesLinkedDescription": "Choisissez deux branches pour voir les modifications. Les pull requests sont synchronisées depuis le fournisseur externe et ne peuvent pas être créées ici.",
     "compareChangesAbleToMerge": "Fusion possible.",
     "compareChangesAbleToMergeDescription": "Ces branches peuvent être fusionnées automatiquement.",
     "compareChangesApiError": "La branche principale ne contient pas de nouveaux commits.",

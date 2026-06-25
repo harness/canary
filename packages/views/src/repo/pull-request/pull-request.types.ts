@@ -95,7 +95,7 @@ export interface RepoRepositoryOutput {
   num_pulls?: number
   parent_id?: number
   path?: string
-  repo_type?: string
+  repo_type?: EnumRepoType
   size?: number
   size_updated?: number
   state?: EnumRepoState
@@ -104,6 +104,8 @@ export interface RepoRepositoryOutput {
 }
 
 export type EnumRepoState = number | null
+
+export type EnumRepoType = '' | 'linked'
 
 export interface TypesDiffStats {
   additions?: number | null

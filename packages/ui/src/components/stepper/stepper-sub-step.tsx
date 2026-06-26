@@ -12,12 +12,11 @@ export function StepperSubStep({ value, title, description, state: explicitState
   const parentValue = useParentStep()
   const ctx = useStepperContext()
 
-  // Register substep on mount (skip if state is externally managed)
+  // Always register substep so the progress counter can resolve substep → parent step
   useEffect(() => {
-    if (explicitState) return
     const cleanup = ctx.registerSubStep(parentValue, value)
     return cleanup
-  }, [parentValue, value, explicitState]) // eslint-disable-line react-hooks/exhaustive-deps
+  }, [parentValue, value]) // eslint-disable-line react-hooks/exhaustive-deps
 
   const derivedState = explicitState ?? ctx.getSubStepState(parentValue, value)
   const isActive = derivedState === 'active'

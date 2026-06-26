@@ -43,7 +43,7 @@ export default {
     flexDirection: 'column',
     height: '100%',
     minHeight: '0',
-    padding: 'var(--cn-spacing-4)',
+    padding: 'var(--cn-spacing-6)',
     background: 'var(--cn-bg-1)',
     borderRight: 'var(--cn-spacing-px) solid var(--cn-border-3)',
     overflowY: 'auto',

@@ -77,11 +77,11 @@ export function SplitPaneStepperCard({ title, description, children, className }
         </div>
       )}
       {/* inert disables all interaction (click, focus, a11y) in terminal-state cards.
-         Interactive states (active, error) remain actionable.
+         The finished card (last card in a completed flow) stays interactive for final actions.
          Cast needed because React 18 types don't include inert yet. */}
       <div
         className="cn-split-pane-stepper-card-content"
-        {...(isTerminal ? ({ inert: '' } as React.HTMLAttributes<HTMLDivElement>) : {})}
+        {...(isTerminal && !isFinished ? ({ inert: '' } as React.HTMLAttributes<HTMLDivElement>) : {})}
       >
         {children}
       </div>

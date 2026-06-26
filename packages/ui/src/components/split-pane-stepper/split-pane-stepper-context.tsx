@@ -158,7 +158,14 @@ export function FlowEngineProvider({ flow, onComplete, children }: FlowEnginePro
 
   const complete = useCallback(
     (subStepId: string, statePatch?: Record<string, unknown>, nextSubStepId?: string) => {
-      if (terminalRef.current.has(subStepId)) return
+      // Re-entry on a terminal substep with no further destination:
+      // the card is signaling "user is done with the flow."
+      if (terminalRef.current.has(subStepId)) {
+        if (!nextSubStepId && !flow.subSteps[subStepId]?.next) {
+          onComplete?.(stateRef.current)
+        }
+        return
+      }
       terminalRef.current.add(subStepId)
 
       const resolvedNext = nextSubStepId || flow.subSteps[subStepId]?.next
@@ -178,8 +185,6 @@ export function FlowEngineProvider({ flow, onComplete, children }: FlowEnginePro
 
       if (resolvedNext) {
         setTimeout(() => scrollToCardRef.current?.(resolvedNext), 150)
-      } else {
-        onComplete?.(newState)
       }
     },
     [flow.subSteps, onComplete]

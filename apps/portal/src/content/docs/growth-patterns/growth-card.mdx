@@ -46,7 +46,8 @@ The card pairs a short headline with supporting copy and a right-aligned action 
         </div>
       </Card.Root>
     );
-  }`}
+
+}`}
 />
 
 ### Stacked
@@ -116,11 +117,14 @@ Shows queued growth messages as layered cards behind the active one. **Dismiss**
         </Card.Root>
       </div>
     );
-  }`}
+
+}`}
 />
 
 <Aside type="note">
-  Growth cards are for PLG and growth surfaces only. Use standard [`Alert`](/components/feedback/alert) or [`Card`](/components/data-display/card) patterns for general product UI.
+  Growth cards are for PLG and growth surfaces only. Use standard
+  [`Alert`](/components/feedback/alert) or
+  [`Card`](/components/data-display/card) patterns for general product UI.
 </Aside>
 
 ## Usage
@@ -264,16 +268,16 @@ if (queue.length === 0) {
 
 ## Anatomy
 
-| Element | Component | Guidance |
-| --- | --- | --- |
-| Placement | Sidebar footer | Bottom left of the navigation only — first item above alerts, support, and profile |
-| Container | `Card.Root` | Use `size="sm"`, `interactive={false}`, and `className="cn-growth-card"` for body small typography |
-| Stack wrapper | `cn-growth-card-stack` | Optional. Adds layered card outlines behind the active card |
-| Headline | `Card.Title` | One short sentence stating the value or constraint |
-| Body | `Card.Content` | Body small (`text-cn-size-3` / 12px). Apply via `cn-growth-card` on the card root |
-| Action row | `cn-growth-card-actions` | Adds spacing above the action buttons. Use `size="xs"` on all buttons |
-| Dismiss | `Button` (`variant="ghost"`, `size="xs"`) | Removes one card from the queue. In stacked mode, promotes the next message and reduces visible layers |
-| Primary action | `Button` (`variant="outline"`, `size="xs"`) | The main CTA — upgrade, explore plans, contact sales, etc. |
+| Element        | Component                                   | Guidance                                                                                               |
+| -------------- | ------------------------------------------- | ------------------------------------------------------------------------------------------------------ |
+| Placement      | Sidebar footer                              | Bottom left of the navigation only — first item above alerts, support, and profile                     |
+| Container      | `Card.Root`                                 | Use `size="sm"`, `interactive={false}`, and `className="cn-growth-card"` for body small typography     |
+| Stack wrapper  | `cn-growth-card-stack`                      | Optional. Adds layered card outlines behind the active card                                            |
+| Headline       | `Card.Title`                                | One short sentence stating the value or constraint                                                     |
+| Body           | `Card.Content`                              | Body small (`text-cn-size-3` / 12px). Apply via `cn-growth-card` on the card root                      |
+| Action row     | `cn-growth-card-actions`                    | Adds spacing above the action buttons. Use `size="xs"` on all buttons                                  |
+| Dismiss        | `Button` (`variant="ghost"`, `size="xs"`)   | Removes one card from the queue. In stacked mode, promotes the next message and reduces visible layers |
+| Primary action | `Button` (`variant="outline"`, `size="xs"`) | The main CTA — upgrade, explore plans, contact sales, etc.                                             |
 
 ## Guidelines
 

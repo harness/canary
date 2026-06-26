@@ -1,0 +1,290 @@
+---
+title: Growth Card [WIP]
+description: A compact in-app card for upgrade prompts, plan limits, and other growth-oriented calls to action
+beta: true
+---
+
+import { DocsPage } from "@/components/docs-page";
+import { Aside } from "@astrojs/starlight/components";
+
+The **Growth Card** is a composition pattern built on the [`Card`](/components/data-display/card) component. Use it for contextual upgrade prompts, plan-limit notices, and other lightweight growth messages.
+
+This pattern is only used in the **bottom left of the navigation** — at the top of the sidebar footer list, above alerts, support links, and the user profile.
+
+The card pairs a short headline with supporting copy and a right-aligned action row. Use the **stacked** variant when multiple queued messages should feel present behind the active card.
+
+### Default
+
+<DocsPage.ComponentExample
+  client:only
+  code={`() => {
+    const [visible, setVisible] = React.useState(true);
+
+    if (!visible) {
+      return (
+        <div className="flex items-center gap-cn-xs">
+          <Text color="foreground-3">Growth card dismissed — don't show the same message after dismissal</Text>
+          <Button variant="link" size="xs" onClick={() => setVisible(true)}>
+            <IconV2 name="refresh" size="xs" />
+            Refresh
+          </Button>
+        </div>
+      );
+    }
+
+    return (
+      <Card.Root size="sm" interactive={false} className="cn-growth-card w-full">
+        <Card.Title>Keep building with an upgrade</Card.Title>
+        <Card.Content>You've hit the plan limit of 1K HSUs. Upgrade to get more.</Card.Content>
+        <div className="cn-growth-card-actions flex justify-end gap-cn-xs">
+          <Button variant="ghost" size="xs" onClick={() => setVisible(false)}>
+            Dismiss
+          </Button>
+          <Button variant="outline" size="xs">
+            Upgrade
+          </Button>
+        </div>
+      </Card.Root>
+    );
+
+}`}
+/>
+
+### Stacked
+
+Shows queued growth messages as layered cards behind the active one. **Dismiss** removes a single card and reveals the next message in the queue.
+
+<DocsPage.ComponentExample
+  client:only
+  code={`() => {
+    const CARDS = [
+      {
+        title: "Keep building with an upgrade",
+        content: "You've hit the plan limit of 1K HSUs. Upgrade to get more.",
+      },
+      {
+        title: "Unlock more pipelines",
+        content: "You're on the last free pipeline slot. Upgrade to add more.",
+      },
+      {
+        title: "Invite your team",
+        content: "Collaborate faster by inviting teammates to your account.",
+      },
+    ];
+
+    const [queue, setQueue] = React.useState(CARDS);
+
+    if (queue.length === 0) {
+      return (
+        <div className="flex items-center gap-cn-xs">
+          <Text color="foreground-3">All growth cards dismissed — don't show the same message after dismissal</Text>
+          <Button variant="link" size="xs" onClick={() => setQueue(CARDS)}>
+            <IconV2 name="refresh" size="xs" />
+            Refresh
+          </Button>
+        </div>
+      );
+    }
+
+    const current = queue[0];
+    const stackCount = queue.length - 1;
+
+    const dismiss = () => setQueue((cards) => cards.slice(1));
+
+    return (
+      <div
+        className={
+          stackCount > 0 ? "cn-growth-card-stack w-full" : "w-full"
+        }
+      >
+        {stackCount >= 2 ? (
+          <div aria-hidden="true" className="cn-growth-card-stack__layer cn-growth-card-stack__layer--2" />
+        ) : null}
+        {stackCount >= 1 ? (
+          <div aria-hidden="true" className="cn-growth-card-stack__layer cn-growth-card-stack__layer--1" />
+        ) : null}
+        <Card.Root size="sm" interactive={false} className="cn-growth-card w-full">
+          <Card.Title>{current.title}</Card.Title>
+          <Card.Content>{current.content}</Card.Content>
+          <div className="cn-growth-card-actions flex justify-end gap-cn-xs">
+            <Button variant="ghost" size="xs" onClick={dismiss}>
+              Dismiss
+            </Button>
+            <Button variant="outline" size="xs">
+              Upgrade
+            </Button>
+          </div>
+        </Card.Root>
+      </div>
+    );
+
+}`}
+/>
+
+<Aside type="note">
+  Growth cards are for PLG and growth surfaces only. Use standard
+  [`Alert`](/components/feedback/alert) or
+  [`Card`](/components/data-display/card) patterns for general product UI.
+</Aside>
+
+## Usage
+
+### Default
+
+```css
+.cn-growth-card,
+.cn-growth-card-stack {
+  width: 100%;
+  max-width: 240px;
+}
+
+.cn-growth-card-actions {
+  margin-top: var(--cn-spacing-3);
+}
+
+.cn-growth-card .cn-card-content {
+  font-size: var(--cn-font-size-3);
+  line-height: 1.428;
+  letter-spacing: var(--cn-tracking-tight);
+}
+```
+
+```typescript jsx
+import { Button, Card, IconV2, Text } from "@harnessio/ui";
+
+const [visible, setVisible] = React.useState(true);
+
+if (!visible) {
+  return (
+    <div className="flex items-center gap-cn-xs">
+      <Text color="foreground-3">Growth card dismissed — don't show the same message after dismissal</Text>
+      <Button variant="link" size="xs" onClick={() => setVisible(true)}>
+        <IconV2 name="refresh" size="xs" />
+        Refresh
+      </Button>
+    </div>
+  );
+}
+
+<Card.Root size="sm" interactive={false} className="cn-growth-card">
+  <Card.Title>Keep building with an upgrade</Card.Title>
+  <Card.Content>You've hit the plan limit of 1K HSUs. Upgrade to get more.</Card.Content>
+  <div className="flex justify-end gap-cn-xs cn-growth-card-actions">
+    <Button variant="ghost" size="xs" onClick={onDismiss}>
+      Dismiss
+    </Button>
+    <Button variant="outline" size="xs" onClick={onUpgrade}>
+      Upgrade
+    </Button>
+  </div>
+</Card.Root>
+```
+
+### Stacked
+
+Maintain a queue of messages. Each dismiss removes the front card and promotes the next — reduce the visible stack layers as the queue shrinks.
+
+```css
+.cn-growth-card,
+.cn-growth-card-stack {
+  width: 100%;
+  max-width: 240px;
+}
+
+.cn-growth-card-stack {
+  position: relative;
+  padding-bottom: 10px;
+}
+
+.cn-growth-card-stack__layer {
+  position: absolute;
+  inset-inline: 0;
+  border: var(--cn-card-border) solid var(--cn-border-2);
+  border-radius: var(--cn-card-sm-radius);
+  background-color: var(--cn-bg-1);
+  pointer-events: none;
+}
+
+.cn-growth-card-stack__layer--1 {
+  top: 4px;
+  bottom: 6px;
+}
+
+.cn-growth-card-stack__layer--2 {
+  top: 8px;
+  bottom: 2px;
+}
+
+.cn-growth-card-stack > .cn-card {
+  position: relative;
+  z-index: 1;
+}
+
+.cn-growth-card .cn-card-content {
+  font-size: var(--cn-font-size-3);
+  line-height: 1.428;
+  letter-spacing: var(--cn-tracking-tight);
+}
+```
+
+```typescript jsx
+import { Button, Card, IconV2, Text } from "@harnessio/ui";
+
+const [queue, setQueue] = React.useState(cards);
+const current = queue[0];
+const stackCount = queue.length - 1;
+
+const dismiss = () => setQueue((cards) => cards.slice(1));
+
+if (queue.length === 0) {
+  return (
+    <div className="flex items-center gap-cn-xs">
+      <Text color="foreground-3">All growth cards dismissed — don't show the same message after dismissal</Text>
+      <Button variant="link" size="xs" onClick={() => setQueue(cards)}>
+        <IconV2 name="refresh" size="xs" />
+        Refresh
+      </Button>
+    </div>
+  );
+}
+
+<div className={stackCount > 0 ? "cn-growth-card-stack" : undefined}>
+  {stackCount >= 2 ? <div aria-hidden className="cn-growth-card-stack__layer cn-growth-card-stack__layer--2" /> : null}
+  {stackCount >= 1 ? <div aria-hidden className="cn-growth-card-stack__layer cn-growth-card-stack__layer--1" /> : null}
+  <Card.Root size="sm" interactive={false} className="cn-growth-card">
+    <Card.Title>{current.title}</Card.Title>
+    <Card.Content>{current.content}</Card.Content>
+    <div className="flex justify-end gap-cn-xs cn-growth-card-actions">
+      <Button variant="ghost" size="xs" onClick={dismiss}>
+        Dismiss
+      </Button>
+      <Button variant="outline" size="xs" onClick={onUpgrade}>
+        Upgrade
+      </Button>
+    </div>
+  </Card.Root>
+</div>
+```
+
+## Anatomy
+
+| Element        | Component                                   | Guidance                                                                                               |
+| -------------- | ------------------------------------------- | ------------------------------------------------------------------------------------------------------ |
+| Placement      | Sidebar footer                              | Bottom left of the navigation only — first item above alerts, support, and profile                     |
+| Container      | `Card.Root`                                 | Use `size="sm"`, `interactive={false}`, and `className="cn-growth-card"` for body small typography     |
+| Stack wrapper  | `cn-growth-card-stack`                      | Optional. Adds layered card outlines behind the active card                                            |
+| Headline       | `Card.Title`                                | One short sentence stating the value or constraint                                                     |
+| Body           | `Card.Content`                              | Body small (`text-cn-size-3` / 12px). Apply via `cn-growth-card` on the card root                      |
+| Action row     | `cn-growth-card-actions`                    | Adds spacing above the action buttons. Use `size="xs"` on all buttons                                  |
+| Dismiss        | `Button` (`variant="ghost"`, `size="xs"`)   | Removes one card from the queue. In stacked mode, promotes the next message and reduces visible layers |
+| Primary action | `Button` (`variant="outline"`, `size="xs"`) | The main CTA — upgrade, explore plans, contact sales, etc.                                             |
+
+## Guidelines
+
+- **Bottom-left navigation only.** Place the card at the top of the sidebar footer list — above alerts, support links, and the user profile.
+- **Keep copy brief.** The card should scan in one glance: headline, one supporting line, then actions.
+- **Use stacked for queues.** When multiple growth messages are queued, the stacked variant signals depth without showing every card at once.
+- **Dismiss one at a time.** In stacked mode, each dismiss removes only the front card and reveals the next queued message.
+- **Right-align actions.** Place dismiss and primary CTA in a horizontal row at the bottom-right of the card.
+- **Respect dismissal.** Persist dismiss state per message — don't show the same message after dismissal.
+- **Constrain width.** Growth cards are narrow by design — default width is `240px`, set via `cn-growth-card` / `cn-growth-card-stack`.

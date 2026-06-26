@@ -983,3 +983,48 @@ button[aria-label="Search"] {
   line-height: 1.3;
   color: var(--cn-text-1);
 }
+
+/* Growth card */
+.cn-growth-card,
+.cn-growth-card-stack {
+  width: 100%;
+  max-width: 240px;
+}
+
+/* Growth card stacked deck */
+.cn-growth-card-stack {
+  position: relative;
+  padding-bottom: 10px;
+}
+
+.cn-growth-card-stack__layer {
+  position: absolute;
+  inset-inline: 0;
+  border: var(--cn-card-border) solid var(--cn-border-2);
+  border-radius: var(--cn-card-sm-radius);
+  background-color: var(--cn-bg-1);
+  pointer-events: none;
+}
+
+.cn-growth-card-stack__layer--1 {
+  top: 4px;
+  bottom: 6px;
+}
+
+.cn-growth-card-stack__layer--2 {
+  top: 8px;
+  bottom: 2px;
+}
+
+.cn-growth-card-stack > .cn-card {
+  position: relative;
+  z-index: 1;
+}
+
+.cn-growth-card-actions {
+  margin-top: var(--cn-spacing-3);
+}
+
+.cn-growth-card .cn-card-content {
+  @apply !text-cn-size-3 leading-snug tracking-cn-tight;
+}

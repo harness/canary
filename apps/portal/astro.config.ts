@@ -207,6 +207,16 @@ export default defineConfig({
             "components/data-display/widgets",
           ],
         },
+        {
+          label: "Growth Patterns",
+          items: [
+            "growth-patterns/overview",
+            {
+              slug: "growth-patterns/growth-card",
+              label: "Growth Card [WIP]",
+            },
+          ],
+        },
       ],
       customCss: [
         "./src/tailwind.css",

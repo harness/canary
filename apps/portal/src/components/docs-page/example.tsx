@@ -35,6 +35,7 @@ type LiveProviderProps = ComponentProps<typeof LiveProvider>;
 
 export type ExampleProps = Pick<LiveProviderProps, "code" | "scope"> & {
   contentClassName?: string;
+  wrapperClassName?: string;
   hideCode?: boolean;
 };
 
@@ -42,6 +43,7 @@ const Example: FC<ExampleProps> = ({
   code,
   scope,
   contentClassName,
+  wrapperClassName,
   hideCode = false,
 }) => {
   // Track the full theme from localStorage (syncs with ThemeSelector)
@@ -123,7 +125,12 @@ const Example: FC<ExampleProps> = ({
       >
         <DialogProvider>
           <TooltipProvider>
-            <div className="bg-cn-1 not-content my-cn-3xl rounded-cn-6 overflow-hidden border">
+            <div
+              className={cn(
+                "bg-cn-1 not-content my-cn-3xl rounded-cn-6 overflow-hidden border",
+                wrapperClassName,
+              )}
+            >
               <LiveProvider
                 code={currentCode}
                 scope={scopeWithLayout}

@@ -1,0 +1,188 @@
+---
+title: Glow card animation
+description: Rotating conic-gradient border and blurred halo on hover for interactive pipeline cards
+beta: true
+---
+
+import { DocsPage } from "@/components/docs-page";
+import { Aside } from "@astrojs/starlight/components";
+
+The **glow card animation** highlights interactive surfaces on pointer hover and keyboard focus. It combines a rotating conic-gradient border with a soft blurred halo behind the card — ported from the 3.0 onboarding prototype (`onboarding.html` `.glow-card-container--pointer` hover treatment) as a compound **`GlowCard`** wrapper.
+
+Use it around pipeline step cards, onboarding tiles, or any card that should reveal a warm blue → amber sweep when the user engages with it.
+
+### Hover to activate
+
+The glow is **CSS-driven** — hover the card or tab to focus the inner surface. No props are required to toggle the effect.
+
+<DocsPage.ComponentExample
+  client:only
+  wrapperClassName="overflow-visible"
+  contentClassName="overflow-visible pt-cn-3xl"
+  code={`() => {
+    const DemoCard = ({ title, message, footer }) => (
+      <GlowCard.Root className="w-[220px]">
+        <GlowCard.Inner tabIndex={0}>
+          <Card.Root interactive={false}>
+            <div className="flex items-center gap-cn-sm">
+              <IconV2 name="harness-plugins" size="lg" />
+              <Card.Title>{title}</Card.Title>
+            </div>
+            <Card.Content>{message}</Card.Content>
+            <Card.Content className="font-body-small text-cn-text-3">{footer}</Card.Content>
+          </Card.Root>
+        </GlowCard.Inner>
+      </GlowCard.Root>
+    );
+
+    return (
+      <div className="flex flex-wrap gap-cn-lg">
+        <DemoCard title="Unit Tests" message="Hover to preview the glow" footer="pytest tests/" />
+        <DemoCard title="Build" message="Tab here for focus-visible glow" footer="npm run build" />
+      </div>
+    );
+}`}
+/>
+
+<Aside type="note">
+  `GlowCard` is a layout primitive — it does not render card chrome itself. Nest `Card` or custom content inside `GlowCard.Inner`. Set `interactive={false}` on inner `Card` so its hover border does not compete with the glow ring. On hover or focus, halo and ring rotate together via a shared `glow-card-rotate-angle` keyframe (2.2s per sweep, default **3** sweeps then stop). Set `--cn-comp-glow-card-rotation-count: infinite` for continuous rotation while engaged. Leaving hover resets the angle so the next engagement starts a fresh cycle. Add `tabIndex={0}` on `GlowCard.Inner` (or a focusable child) so keyboard users get the same glow via `:focus-visible`.
+</Aside>
+
+## How it works
+
+The effect uses a **three-layer DOM** structure (container → halo + ring → inner card):
+
+1. **`GlowCard.Root`** — positions the stack and hosts the halo and ring layers; `:hover` and `:has(.cn-glow-card-inner:focus-visible)` activate the glow.
+2. **`.cn-glow-card-halo`** — absolute blurred conic gradient behind the card (`inset: -3px`, `z-index: 0`); opacity `0` at rest, `1` on hover/focus (`0.85` in dark mode), `14px` blur, phase-locked gradient with semi-transparent palette stops.
+3. **`.cn-glow-card-ring`** — 1px padding box that paints the visible border; idle is transparent (no ring at rest), hover/focus swaps in blue → sky → white → yellow → gold conic stops (matching `onboarding.html` `.glow-card-container--hovered .glow-card-ring`).
+4. **`GlowCard.Inner`** — clips the card surface inside the ring; make it focusable for keyboard parity.
+
+The warm orange/amber arc in the halo (7 semi-transparent stops) is what gives the glow its energy — ported from `onboarding.html` hover rules, not the pipeline studio running-state treatment.
+
+## Usage
+
+```typescript jsx
+import { Card, GlowCard, IconV2 } from "@harnessio/ui/components";
+
+<GlowCard.Root>
+  <GlowCard.Inner tabIndex={0}>
+    <Card.Root interactive={false}>
+      <div className="flex items-center gap-cn-sm">
+        <IconV2 name="harness-plugins" size="lg" />
+        <Card.Title>Build</Card.Title>
+      </div>
+      <Card.Content>Hover or focus to see the glow</Card.Content>
+      <Card.Content className="font-body-small text-cn-text-3">npm run build</Card.Content>
+    </Card.Root>
+  </GlowCard.Inner>
+</GlowCard.Root>
+```
+
+### Interaction
+
+| Trigger | Halo | Ring animation | Typical use |
+| ------- | ---- | -------------- | ----------- |
+| Default | Off  | Idle at `0deg` | Resting card |
+| `:hover` | On | Rotates `--cn-comp-glow-card-rotation-count` times (default `3`) | Pointer engagement |
+| `:focus-visible` on inner | On | Same as hover | Keyboard navigation |
+
+Each hover/focus engagement runs a fresh rotation cycle. When the pointer leaves (or focus moves away), the angle resets to idle; the next engagement starts from `0deg` again. Set `--cn-comp-glow-card-rotation-count: infinite` on `.cn-glow-card` for continuous rotation while engaged.
+
+## CSS reference
+
+Styles live in `packages/ui/tailwind-utils-config/components/glow-card.ts` and compile into the design system stylesheet.
+
+```css
+/* Keyframe + registered property — packages/ui/src/styles/styles.css */
+@keyframes glow-card-rotate-angle {
+  from { --cn-comp-glow-card-angle: 0deg; }
+  to   { --cn-comp-glow-card-angle: 360deg; }
+}
+
+@property --cn-comp-glow-card-angle {
+  syntax: "<angle>";
+  inherits: true;
+  initial-value: 0deg;
+}
+
+/* Hover / focus-visible trigger */
+.cn-glow-card:hover .cn-glow-card-halo,
+.cn-glow-card:has(.cn-glow-card-inner:focus-visible) .cn-glow-card-halo {
+  opacity: var(--cn-comp-glow-card-halo-opacity-active); /* 1 light / 0.85 dark */
+  filter: blur(var(--cn-comp-glow-card-halo-blur));
+}
+.cn-glow-card:hover .cn-glow-card-ring,
+.cn-glow-card:has(.cn-glow-card-inner:focus-visible) .cn-glow-card-ring {
+  background: conic-gradient(from var(--cn-comp-glow-card-angle), ...);
+}
+```
+
+### Design tokens
+
+Component tokens use the `--cn-comp-glow-card-*` namespace on `.cn-glow-card` (or a parent). Override palette shortcuts to recolor the whole sweep, or override individual stops for fine control.
+
+| Token | Role |
+| ----- | ---- |
+| `--cn-comp-glow-card-color-blue` | Deep blue (default `#2563eb`) |
+| `--cn-comp-glow-card-color-sky` | Light blue (default `#93c5fd`) |
+| `--cn-comp-glow-card-color-orange` | Orange accent (default `#f97316`) |
+| `--cn-comp-glow-card-color-amber` | Amber (default `#f59e0b`) |
+| `--cn-comp-glow-card-color-yellow` | Yellow highlight (default `#fef08a`) |
+| `--cn-comp-glow-card-color-gold` | Gold (default `#fbbf24`) |
+| `--cn-comp-glow-card-color-white` | White peak (default `#ffffff`) |
+| `--cn-comp-glow-card-halo-alpha-1` … `7` | Halo stop mix percentages |
+| `--cn-comp-glow-card-halo-base-stop-1` … `7` | Halo conic stops (default: palette × alpha) |
+| `--cn-comp-glow-card-ring-stop-1` … `5` | Ring conic stops (default: palette at full opacity) |
+| `--cn-comp-glow-card-halo-opacity-idle` | Halo opacity at rest (default `0`) |
+| `--cn-comp-glow-card-halo-opacity-active` | Halo opacity on hover/focus (default `1`) |
+| `--cn-comp-glow-card-halo-opacity-active-dark` | Dark-mode active halo opacity (default `0.85`) |
+| `--cn-comp-glow-card-halo-blur` | Halo blur (default `14px`) |
+| `--cn-comp-glow-card-radius` | Border radius for all three layers (default: `--cn-rounded-4`) |
+| `--cn-comp-glow-card-halo-radius` | Halo corner radius (default: ring radius + `6px`) |
+| `--cn-comp-glow-card-duration` | Rotation period per sweep (default: `2.2s`) |
+| `--cn-comp-glow-card-rotation-count` | Full 360° sweeps per hover/focus (default: `3`; `infinite` for continuous) |
+| `--cn-comp-glow-card-ring-padding` | Ring border thickness (default: `1px`) |
+| `--cn-comp-glow-card-idle-ring` | Ring color when idle (default: `transparent`) |
+| `--cn-comp-glow-card-reduced-angle` | Fixed angle when motion is reduced (default: `225deg`) |
+
+```css
+/* Recolor every glow card in a section */
+.my-onboarding-grid .cn-glow-card {
+  --cn-comp-glow-card-color-blue: #7c3aed;
+  --cn-comp-glow-card-color-sky: #c4b5fd;
+  --cn-comp-glow-card-color-orange: #ec4899;
+}
+
+/* Or override a single ring stop */
+.cn-glow-card--brand {
+  --cn-comp-glow-card-ring-stop-3: var(--cn-set-brand-primary-bg);
+}
+
+/* Fewer sweeps for a subtler effect */
+.cn-glow-card--subtle {
+  --cn-comp-glow-card-rotation-count: 1;
+}
+```
+
+```typescript jsx
+/* Continuous rotation while hovered — per-instance override on GlowCard.Root */
+<GlowCard.Root style={{ '--cn-comp-glow-card-rotation-count': 'infinite' } as React.CSSProperties}>
+  <GlowCard.Inner tabIndex={0}>
+    <Card.Root interactive={false}>...</Card.Root>
+  </GlowCard.Inner>
+</GlowCard.Root>
+```
+
+### Reduced motion
+
+When `prefers-reduced-motion: reduce` is set, rotation stops and both halo and ring freeze at `--cn-comp-glow-card-reduced-angle` with the active palette still visible on hover/focus — matching the prototype bundle's accessibility fallback.
+
+## Guidelines
+
+- **Wrap, don't replace.** `GlowCard` handles border + glow only; title, body, and footer content stay in the inner `Card`.
+- **Disable card hover border.** Pass `interactive={false}` on inner `Card` — `GlowCard` owns engagement styling.
+- **Reserve for interactive cards.** The glow signals engagement on hover/focus — avoid leaving it permanently on.
+
+## Related
+
+- [`Card`](/components/data-display/card/) — general-purpose card to nest inside `GlowCard.Inner`.

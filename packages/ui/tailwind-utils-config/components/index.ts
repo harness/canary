@@ -14,6 +14,7 @@ import dialogStyles from './dialog'
 import drawerStyles from './drawer'
 import dropdownStyles from './dropdown-menu'
 import formSharedStyles from './form-shared-styles'
+import glowCardStyles from './glow-card'
 import iconsAndLogos from './icon-and-logo'
 import inputStyles from './input'
 import labelStyles from './label'
@@ -91,6 +92,7 @@ export const ComponentStyles = [
   skeletonStyles,
   stackedListStyles,
   stickyListSectionStyles,
+  glowCardStyles,
   studioCardStyles,
   treeStyles,
   meterStyles,

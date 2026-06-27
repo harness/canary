@@ -826,3 +826,39 @@ mark {
   inherits: true;
   initial-value: 0turn;
 }
+
+/* GLOW CARD */
+@keyframes glow-card-rotate-angle {
+  from {
+    --cn-comp-glow-card-angle: 0deg;
+  }
+  to {
+    --cn-comp-glow-card-angle: 360deg;
+  }
+}
+
+/* Halo dims over the final rotation while pointer remains (delay = duration × (count − 1)). */
+@keyframes glow-card-halo-fade-out {
+  from {
+    opacity: var(--cn-comp-glow-card-halo-opacity-active);
+  }
+  to {
+    opacity: var(--cn-comp-glow-card-halo-opacity-idle);
+  }
+}
+
+/* Ring border fades out in sync with halo during the final rotation. */
+@keyframes glow-card-ring-fade-out {
+  from {
+    opacity: 1;
+  }
+  to {
+    opacity: 0;
+  }
+}
+
+@property --cn-comp-glow-card-angle {
+  syntax: '<angle>';
+  inherits: true;
+  initial-value: 0deg;
+}

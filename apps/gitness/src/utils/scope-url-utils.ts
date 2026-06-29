@@ -38,7 +38,7 @@ export const getRepoUrl = ({
   scope,
   repoSubPath
 }: {
-  repo: RepositoryType
+  repo: Pick<RepositoryType, 'name' | 'path'>
   scope: Scope
   repoSubPath: string
 }): string => {

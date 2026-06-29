@@ -20,7 +20,7 @@ import { useQueryState } from '../../../framework/hooks/useQueryState'
 import usePaginationQueryStateWithStore from '../../../hooks/use-pagination-query-state-with-store'
 import { useAPIPath } from '../../../hooks/useAPIPath'
 import { PathParams } from '../../../RouteDefinitions'
-import { checkIsSameScope, getPullRequestUrl } from '../../../utils/scope-url-utils'
+import { checkIsSameScope, getPullRequestUrl, getRepoUrl } from '../../../utils/scope-url-utils'
 import { buildPRFilters } from '../../pull-request/pull-request-utils'
 import { usePullRequestListStore } from '../../pull-request/stores/pull-request-list-store'
 import { usePopulateLabelStore } from '../../repo/labels/hooks/use-populate-label-store'
@@ -246,6 +246,30 @@ export default function PullRequestListPage() {
     }
   }
 
+  const handleToBranch = ({
+    branch,
+    repoId = '',
+    repoPath = ''
+  }: {
+    branch: string
+    repoId?: string
+    repoPath?: string
+  }): string => {
+    const branchFilesPath = `${routes.toRepoFiles({ spaceId, repoId })}/${branch}`
+
+    if (!isMFE || checkIsSameScope({ scope, repoIdentifier: repoId, repoPath })) {
+      return branchFilesPath
+    }
+
+    // Cross-scope: route through the parent app so the MFE remounts in the repo's real scope
+    if (parentRoutes?.toCodeRepositoryPath && repoPath) {
+      return `${parentRoutes.toCodeRepositoryPath({ repoPath })}/files/${branch}`
+    }
+
+    // Fallback: prepend the missing org/project scope segments
+    return `${basename}${getRepoUrl({ repo: { name: repoId, path: repoPath }, scope, repoSubPath: branchFilesPath })}`
+  }
+
   // Combine principalDataList with selectedAuthors to ensure all selected authors are available
   const combinedPrincipalData = [
     ...(principalDataList || []),
@@ -286,7 +310,7 @@ export default function PullRequestListPage() {
       onClickPullRequest={handleOnClickPullRequest}
       toPullRequest={handleToPullRequest}
       scope={scope}
-      toBranch={({ branch, repoId }) => `${routes.toRepoFiles({ spaceId, repoId })}/${branch}`}
+      toBranch={handleToBranch}
     />
   )
 }

@@ -14,6 +14,7 @@ interface PullRequestItemDescriptionProps extends Pick<PullRequestPageProps, 'to
   state: EnumPullReqState
   targetBranch: string
   repoId: string
+  repoPath?: string
   sourceRepo?: PullRequestType['source_repo']
   toUpstreamRepo?: (path: string, subPath?: string) => string
 }
@@ -28,6 +29,7 @@ export const PullRequestItemDescription: FC<PullRequestItemDescriptionProps> = (
   state,
   toBranch,
   repoId,
+  repoPath,
   sourceRepo,
   toUpstreamRepo
 }) => {
@@ -36,6 +38,27 @@ export const PullRequestItemDescription: FC<PullRequestItemDescriptionProps> = (
     icon: 'git-branch',
     enableHover: true,
     theme: 'gray'
+  }
+
+  /**
+   * Cross-scope branch links resolve to an absolute parent-app URL (e.g. when a PR from a
+   * different org/project is shown in the account-wide list). Those must trigger a full
+   * navigation via a plain anchor, since the MFE router cannot resolve a parent-scope path.
+   * Same-scope links stay relative and use client-side routing.
+   */
+  const renderBranchLink = (branchName: string) => {
+    const href = toBranch?.({ branch: branchName, repoId, repoPath }) || ''
+    const tag = <Tag value={branchName} {...branchTagProps} />
+
+    return /^https?:\/\//.test(href) ? (
+      <Link noHoverUnderline external href={href}>
+        {tag}
+      </Link>
+    ) : (
+      <Link noHoverUnderline to={href}>
+        {tag}
+      </Link>
+    )
   }
 
   return (
@@ -59,9 +82,7 @@ export const PullRequestItemDescription: FC<PullRequestItemDescriptionProps> = (
 
       {sourceBranch && (
         <Layout.Horizontal align="center" gap="2xs">
-          <Link noHoverUnderline to={toBranch?.({ branch: targetBranch, repoId }) || ''}>
-            <Tag value={targetBranch} {...branchTagProps} />
-          </Link>
+          {renderBranchLink(targetBranch)}
 
           <IconV2 className="text-cn-3" name="arrow-long-left" />
 
@@ -73,9 +94,7 @@ export const PullRequestItemDescription: FC<PullRequestItemDescriptionProps> = (
               toUpstreamRepo={toUpstreamRepo}
             />
           ) : (
-            <Link noHoverUnderline to={toBranch?.({ branch: sourceBranch, repoId }) || ''}>
-              <Tag value={sourceBranch} {...branchTagProps} />
-            </Link>
+            renderBranchLink(sourceBranch)
           )}
         </Layout.Horizontal>
       )}

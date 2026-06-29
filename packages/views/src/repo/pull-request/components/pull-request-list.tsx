@@ -208,6 +208,7 @@ export const PullRequestList: FC<PullRequestListProps> = ({
                       targetBranch={pullRequest.targetBranch || ''}
                       toBranch={toBranch}
                       repoId={pullRequest.repo?.identifier || ''}
+                      repoPath={pullRequest.repo?.path || ''}
                       sourceRepo={pullRequest.source_repo}
                       toUpstreamRepo={toUpstreamRepo}
                     />

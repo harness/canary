@@ -272,7 +272,7 @@ export interface PRListLabelType {
 interface RoutingProps {
   toPullRequest: ({ prNumber, repoId, repoPath }: { prNumber: number; repoId?: string; repoPath?: string }) => string
   onClickPullRequest: ({ prNumber, repo }: { prNumber?: number; repo: Pick<RepositoryType, 'name' | 'path'> }) => void
-  toBranch: ({ branch, repoId }: { branch: string; repoId?: string }) => string
+  toBranch: ({ branch, repoId, repoPath }: { branch: string; repoId?: string; repoPath?: string }) => string
 }
 
 export interface PullRequestPageProps extends Partial<RoutingProps> {

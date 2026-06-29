@@ -146,6 +146,12 @@ function getTwClasses(n: string): string[] {
   if ((m = n.match(/^--cn-comp-shadow-data-viz-\d+-(.+)$/)))
     return [`shadow-cn-${m[1]}`, `drop-shadow-cn-${m[1]}`];
 
+  // comp: app shell rail shadows
+  if (n === "--cn-comp-shadow-nav-rail") return ["shadow-cn-nav-rail"];
+  if (n === "--cn-comp-shadow-chat-rail") return ["shadow-cn-chat-rail"];
+  if (n === "--cn-comp-shadow-chat-rail-mirror")
+    return ["shadow-cn-chat-rail-mirror"];
+
   return [];
 }
 

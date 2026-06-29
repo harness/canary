@@ -1244,6 +1244,22 @@
         }
       }
     },
+    "app-shell": {
+      "rail-shadow": {
+        "$extensions": {
+          "studio.tokens": {
+            "modify": {
+              "type": "alpha",
+              "value": "0.8",
+              "space": "lch"
+            }
+          }
+        },
+        "$type": "color",
+        "$value": "{pure.black}",
+        "$description": "Shadow color for app shell nav and chat rail elevation in dark mode (#08090d / bg.0)."
+      }
+    },
     "avatar": {
       "shadow": {
         "$extensions": {
@@ -2694,6 +2710,42 @@
           },
           "$description": "Inner shadow for AI-themed components. Adds depth to AI elements."
         }
+      },
+      "nav-rail": {
+        "$type": "boxShadow",
+        "$value": {
+          "x": "0",
+          "y": "7",
+          "blur": "8",
+          "spread": "0",
+          "color": "{comp.app-shell.rail-shadow}",
+          "type": "dropShadow"
+        },
+        "$description": "Drop shadow for app shell navigation rail. Casts toward main content."
+      },
+      "chat-rail": {
+        "$type": "boxShadow",
+        "$value": {
+          "x": "0",
+          "y": "7",
+          "blur": "8",
+          "spread": "0",
+          "color": "{comp.app-shell.rail-shadow}",
+          "type": "dropShadow"
+        },
+        "$description": "Drop shadow for app shell chat panel when chat is left of main content."
+      },
+      "chat-rail-mirror": {
+        "$type": "boxShadow",
+        "$value": {
+          "x": "0",
+          "y": "7",
+          "blur": "8",
+          "spread": "0",
+          "color": "{comp.app-shell.rail-shadow}",
+          "type": "dropShadow"
+        },
+        "$description": "Drop shadow for app shell chat panel when chat is right of main content."
       },
       "data-viz": {
         "01-blue": {

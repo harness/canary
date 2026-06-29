@@ -13,6 +13,10 @@ export interface SubStepConfig {
   description?: string
   component: ComponentType
   next?: string
+  // When true, the engine auto-completes this substep on entry — the card
+  // renders in the "finished" state immediately without consumer-side logic.
+  // The user's explicit complete() call then fires onComplete to exit the flow.
+  terminal?: boolean
 }
 
 export interface FlowConfig {

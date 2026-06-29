@@ -158,7 +158,14 @@ export function FlowEngineProvider({ flow, onComplete, children }: FlowEnginePro
 
   const complete = useCallback(
     (subStepId: string, statePatch?: Record<string, unknown>, nextSubStepId?: string) => {
-      if (terminalRef.current.has(subStepId)) return
+      // Re-entry on a terminal substep with no further destination:
+      // the card is signaling "user is done with the flow."
+      if (terminalRef.current.has(subStepId)) {
+        if (!nextSubStepId && !flow.subSteps[subStepId]?.next) {
+          onComplete?.(stateRef.current)
+        }
+        return
+      }
       terminalRef.current.add(subStepId)
 
       const resolvedNext = nextSubStepId || flow.subSteps[subStepId]?.next
@@ -171,15 +178,24 @@ export function FlowEngineProvider({ flow, onComplete, children }: FlowEnginePro
           entry.subStepId === subStepId ? { ...entry, status: 'completed' as const, stateSnapshot: newState } : entry
         )
         if (resolvedNext && !updated.find(e => e.subStepId === resolvedNext)) {
-          updated.push({ subStepId: resolvedNext, status: 'active', stateSnapshot: newState })
+          // Terminal substeps enter as completed — the card renders in "finished" state
+          // immediately without consumer-side useEffect. The user's explicit complete()
+          // re-entry then fires onComplete to exit the flow.
+          const isNextTerminal = flow.subSteps[resolvedNext]?.terminal
+          if (isNextTerminal) {
+            terminalRef.current.add(resolvedNext)
+          }
+          updated.push({
+            subStepId: resolvedNext,
+            status: isNextTerminal ? 'completed' : 'active',
+            stateSnapshot: newState
+          })
         }
         return updated
       })
 
       if (resolvedNext) {
         setTimeout(() => scrollToCardRef.current?.(resolvedNext), 150)
-      } else {
-        onComplete?.(newState)
       }
     },
     [flow.subSteps, onComplete]
@@ -206,7 +222,15 @@ export function FlowEngineProvider({ flow, onComplete, children }: FlowEnginePro
           entry.subStepId === subStepId ? { ...entry, status: 'skipped' as const } : entry
         )
         if (resolvedNext && !updated.find(e => e.subStepId === resolvedNext)) {
-          updated.push({ subStepId: resolvedNext, status: 'active', stateSnapshot: stateRef.current })
+          const isNextTerminal = flow.subSteps[resolvedNext]?.terminal
+          if (isNextTerminal) {
+            terminalRef.current.add(resolvedNext)
+          }
+          updated.push({
+            subStepId: resolvedNext,
+            status: isNextTerminal ? 'completed' : 'active',
+            stateSnapshot: stateRef.current
+          })
         }
         return updated
       })

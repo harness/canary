@@ -50,6 +50,7 @@ const Header: FC<PageHeaderProps> = ({
   actions,
   headerActions
 }) => {
+  const scrollable = usePageScrollable()
   const titleElement =
     typeof title === 'string' ? (
       <Text as="h1" variant="heading-section" truncate>
@@ -60,7 +61,17 @@ const Header: FC<PageHeaderProps> = ({
     )
 
   return (
-    <Layout.Vertical gap="md" className={cn('w-full', children ? 'mb-cn-md' : 'mb-cn-2xl')}>
+    <Layout.Vertical
+      gap="md"
+      className={cn(
+        'w-full',
+        children ? 'mb-cn-md' : 'mb-cn-2xl',
+        // In scrollable mode, Page.Root uses `display: contents` on the wrapper,
+        // so this header must own its own padding and sticky positioning.
+        scrollable &&
+          'sticky top-0 z-10 bg-cn-1 pt-[var(--cn-page-container-spacing-py)] px-[var(--cn-page-container-spacing-px)]'
+      )}
+    >
       {(!!backLink || !!headerActions) && (
         <Layout.Horizontal className="h-cn-9">
           {!!backLink && (
@@ -106,8 +117,20 @@ Header.displayName = 'PageHeader'
 
 const PageScrollableContext = createContext(false)
 
-// min-h-0 on each flex ancestor overrides the implicit min-height:auto so children can shrink below content size.
-// scrollable adds overflow containment and propagates to Page.Content via context.
+export const usePageScrollable = () => useContext(PageScrollableContext)
+
+/**
+ * When `scrollable` is true, Page.Root enables full-page scroll with a sticky header:
+ *
+ * - SandboxLayout.Main becomes the scroll container (overflow-auto).
+ * - SandboxLayout.Content uses `display: contents` to remove itself from the layout,
+ *   allowing Page.Header/Page.HeaderV2 to stick directly within the scroll container.
+ *   Without this, sticky is constrained by the Content wrapper's height.
+ * - Page.Header/HeaderV2 own top + horizontal padding and sticky positioning.
+ * - Page.Content owns horizontal + top padding, plus a bottom spacer element.
+ *   The spacer must be a block-flow child (not padding/margin) because padding and margin
+ *   on direct flex children of overflow-auto containers don't extend scroll height.
+ */
 const Root = ({
   children,
   scrollable,
@@ -121,8 +144,10 @@ const Root = ({
 }) => {
   return (
     <PageScrollableContext.Provider value={!!scrollable}>
-      <SandboxLayout.Main className={cn('min-h-0', { 'overflow-hidden': scrollable }, mainClassName)}>
-        <SandboxLayout.Content className={cn('min-h-0', { 'overflow-hidden': scrollable }, contentClassName)}>
+      <SandboxLayout.Main className={cn('min-h-0', scrollable && 'overflow-auto', mainClassName)}>
+        {/* `contents` removes this element's box so children participate directly in Main's flex layout.
+            `!p-0` overrides the padding from cn-sandbox-layout-content (applied via tailwind plugin). */}
+        <SandboxLayout.Content className={cn('min-h-0', { 'contents !p-0': scrollable }, contentClassName)}>
           {children}
         </SandboxLayout.Content>
       </SandboxLayout.Main>
@@ -130,12 +155,27 @@ const Root = ({
   )
 }
 
-// flex-1 fills available height in the parent flex column; min-h-0 allows shrinking.
-// Inherits scrollable from Page.Root via context.
 const Content = ({ children, className }: { children: ReactNode; className?: string }) => {
-  const scrollable = useContext(PageScrollableContext)
-
-  return <div className={cn('min-h-0 flex-1', { 'overflow-auto': scrollable }, className)}>{children}</div>
+  const scrollable = usePageScrollable()
+  // Canvas/fill views pass flex-1 to stretch into available space — they manage
+  // their own internal scroll and don't need page-level vertical padding or bottom spacer.
+  const isFilledContent = className?.includes('flex-1')
+  return (
+    <div
+      className={cn(
+        'min-h-0',
+        !scrollable && 'flex-1',
+        scrollable && 'cn-page-content',
+        scrollable && !isFilledContent && 'cn-page-content-pt',
+        className
+      )}
+    >
+      {children}
+      {/* Bottom spacer inside content flow. Padding/margin on direct flex children of
+          overflow-auto containers don't extend scroll height, but block-flow children do. */}
+      {scrollable && !isFilledContent && <div className="h-cn-md" />}
+    </div>
+  )
 }
 
 export const Page = {

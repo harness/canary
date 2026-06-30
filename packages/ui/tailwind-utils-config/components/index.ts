@@ -21,6 +21,7 @@ import linkStyles from './link'
 import messageBubbleStyles from './message-bubble'
 import meterStyles from './meter'
 import multiSelectStyles from './multi-select'
+import pageStyles from './page'
 import paginationStyles from './pagination'
 import popoverStyles from './popover'
 import progressStyles from './progress'
@@ -36,8 +37,8 @@ import shortcutStyle from './shortcut'
 import sidebarStyles from './sidebar'
 import skeletonStyles from './skeleton'
 import sliderStyles from './slider'
-import stackedListStyles from './stacked-list'
 import splitPaneStepperStyles from './split-pane-stepper'
+import stackedListStyles from './stacked-list'
 import stepperStyles from './stepper'
 import stickyListSectionStyles from './sticky-list-section'
 import studioCardStyles from './studio-card'
@@ -73,6 +74,7 @@ export const ComponentStyles = [
   buttonLayoutStyles,
   tabsStyles,
   dialogStyles,
+  pageStyles,
   repoLayout,
   sandboxLayout,
   scrollAreaStyles,

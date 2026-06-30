@@ -5,6 +5,7 @@ import { IconV2, type IconV2NamesType } from '../icon-v2'
 import { Layout } from '../layout'
 import { Tabs } from '../tabs'
 import { Text } from '../text'
+import { usePageScrollable } from './page'
 
 export interface HeaderV2TabItem {
   label: string
@@ -22,6 +23,7 @@ export interface PageHeaderV2Props {
   description?: string
   actions?: ReactNode
   tabs?: HeaderV2TabItem[]
+  contentTabs?: boolean
   children?: ReactNode
   className?: string
 }
@@ -62,7 +64,7 @@ const TitleSection: FC<TitleSectionProps> = ({ title, iconName, description, act
   )
 }
 
-const TabsSection: FC<{ items: HeaderV2TabItem[] }> = ({ items }) => (
+const NavTabsSection: FC<{ items: HeaderV2TabItem[] }> = ({ items }) => (
   <Tabs.NavRoot>
     <Tabs.List variant="underlined">
       {items.map(tab => (
@@ -81,6 +83,16 @@ const TabsSection: FC<{ items: HeaderV2TabItem[] }> = ({ items }) => (
   </Tabs.NavRoot>
 )
 
+const ContentTabsSection: FC<{ items: HeaderV2TabItem[] }> = ({ items }) => (
+  <Tabs.List variant="underlined">
+    {items.map(tab => (
+      <Tabs.Trigger key={tab.value} value={tab.value} icon={tab.icon} counter={tab.counter} disabled={tab.disabled}>
+        {tab.label}
+      </Tabs.Trigger>
+    ))}
+  </Tabs.List>
+)
+
 export const HeaderV2: FC<PageHeaderV2Props> = ({
   title,
   iconName,
@@ -88,16 +100,29 @@ export const HeaderV2: FC<PageHeaderV2Props> = ({
   actions,
   breadcrumbs,
   tabs,
+  contentTabs,
   children,
   className
 }) => {
+  const scrollable = usePageScrollable()
   const hasTabs = tabs && tabs.length > 0
   return (
-    <Layout.Vertical gap="md" className={cn('w-full', hasTabs ? 'mb-0' : 'mb-cn-md', className)}>
+    <Layout.Vertical
+      gap="md"
+      className={cn(
+        'w-full',
+        hasTabs ? 'mb-0' : 'mb-cn-md',
+        // In scrollable mode, Page.Root uses `display: contents` on the wrapper,
+        // so this header must own its own padding and sticky positioning.
+        scrollable && 'sticky top-0 z-10 bg-cn-1 cn-page-content cn-page-content-pt',
+        className
+      )}
+    >
       {breadcrumbs}
       <TitleSection title={title} iconName={iconName} description={description} actions={actions} />
       {children}
-      {hasTabs && <TabsSection items={tabs} />}
+      {hasTabs && contentTabs && <ContentTabsSection items={tabs} />}
+      {hasTabs && !contentTabs && <NavTabsSection items={tabs} />}
     </Layout.Vertical>
   )
 }

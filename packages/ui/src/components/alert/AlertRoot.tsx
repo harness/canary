@@ -32,13 +32,14 @@ const MAX_HEIGHT = 138
 
 export interface AlertRootProps extends PropsWithChildren<VariantProps<typeof alertVariants>> {
   className?: string
+  textWrapClassName?: string
   dismissible?: boolean
   onDismiss?: () => void
   expandable?: boolean
 }
 
 export const AlertRoot = forwardRef<HTMLDivElement, AlertRootProps>(
-  ({ className, theme, children, dismissible, onDismiss, expandable }, ref) => {
+  ({ className, textWrapClassName, theme, children, dismissible, onDismiss, expandable }, ref) => {
     const { t } = useTranslation()
     const [isVisible, setIsVisible] = useState(true)
     const [isExpanded, setIsExpanded] = useState(false)
@@ -98,7 +99,7 @@ export const AlertRoot = forwardRef<HTMLDivElement, AlertRootProps>(
 
         <IconV2 className="cn-alert-icon" name={iconName} size="md" />
 
-        <div className={cn('cn-alert-text-wrap', { 'cn-alert-text-wrap-expanded': isExpanded })}>
+        <div className={cn('cn-alert-text-wrap', { 'cn-alert-text-wrap-expanded': isExpanded }, textWrapClassName)}>
           <div
             className={cn('cn-alert-content-box', {
               'cn-alert-content-expanded': isExpanded,

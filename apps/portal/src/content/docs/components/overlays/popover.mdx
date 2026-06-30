@@ -200,7 +200,6 @@ The popover can be positioned relative to its trigger using the `side` and `alig
             side="top"
             title="Top Position"
             description="This popover appears above the trigger"
-            showArrow
         />
     </Popover.Root>
 
@@ -212,7 +211,6 @@ The popover can be positioned relative to its trigger using the `side` and `alig
             side="right"
             title="Right Position"
             description="This popover appears to the right of the trigger"
-            showArrow
         />
     </Popover.Root>
 
@@ -224,7 +222,6 @@ The popover can be positioned relative to its trigger using the `side` and `alig
             side="bottom"
             title="Bottom Position"
             description="This popover appears below the trigger"
-            showArrow
         />
     </Popover.Root>
 
@@ -236,7 +233,6 @@ The popover can be positioned relative to its trigger using the `side` and `alig
             side="left"
             title="Left Position"
             description="This popover appears to the left of the trigger"
-            showArrow
         />
     </Popover.Root>
 
@@ -554,8 +550,8 @@ The `Content` component represents the popover content with built-in support for
       value: "ReactNode",
     },
     {
-      name: "showArrow",
-      description: "Show an arrow pointing to the trigger",
+      name: "hideArrow",
+      description: "Hide the arrow pointing to the trigger",
       required: false,
       value: "boolean",
       defaultValue: "false",

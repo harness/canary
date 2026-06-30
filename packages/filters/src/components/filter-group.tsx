@@ -41,6 +41,7 @@ interface FilterGroupProps<
   multiSortConfig?: Omit<ComponentProps<typeof Sort.Root>, 'children'>
   simpleSortConfig?: ComponentProps<typeof SimpleSort>
   searchValue?: string
+  searchPlaceholder?: string
   handleInputChange: (value: string) => void
   filterOptions: FilterOptionConfig<V, CustomValue>[]
   headerAction?: ReactNode
@@ -70,6 +71,7 @@ const FilterGroupInner = <
     onFilterValueChange,
     searchValue,
     handleInputChange,
+    searchPlaceholder,
     filterOptions,
     multiSortConfig,
     simpleSortConfig,
@@ -154,7 +156,7 @@ const FilterGroupInner = <
                   ref={searchRef}
                   searchValue={searchValue || ''}
                   onChange={handleInputChange}
-                  placeholder={t('views:repos.search', 'Search')}
+                  placeholder={searchPlaceholder ?? t('views:repos.search', 'Search')}
                 />
                 {props.quickFiltersSlot}
                 {filterOptions.length > 0 && (

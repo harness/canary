@@ -108,8 +108,7 @@ export default {
 
       '&:where([aria-disabled=true])': {
         opacity: 'var(--cn-disabled-opacity)',
-        cursor: 'not-allowed',
-        pointerEvents: 'none'
+        cursor: 'not-allowed'
       },
 
       '& .cn-radio-item, & .cn-checkbox-root': {

@@ -31,14 +31,14 @@ A standalone, reusable stepper component for `@harnessio/ui` (canary) that visua
 
 ## Assumptions & Dependencies
 
-| Assumption                                                        | Risk if wrong                                                                                                                                                    |
-| ----------------------------------------------------------------- | ---------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| No current consumers of `DrawerSteps`                             | If consumers exist, we'd need migration support. Verified via codebase search — zero imports outside the component's own files.                                  |
-| `AlertDialog` API is stable                                       | Our confirmation dialog delegates entirely to AlertDialog. If its API changes, our navigation guard UX breaks. Low risk — AlertDialog is mature and widely used. |
-| `IconV2` icons (`check`, `minus`, `xmark-circle`, `loader`) exist | Build failure. Verified — all four exist in the icon set.                                                                                                        |
-| `SkeletonBase` shimmer animation works at arbitrary sizes         | Used for empty state. If it requires fixed dimensions, skeleton rows would need custom shimmer. Verified — it's flex-friendly.                                   |
-| `--cn-*` design tokens are stable across themes                   | If tokens are renamed, colors break. Low risk — these are the foundational token layer, changes would be breaking across the entire system.                      |
-| No consumers need horizontal orientation                          | If a horizontal stepper is requested soon after ship, we'd need to add it. Acceptable — vertical covers all current known use cases.                             |
+| Assumption                                                 | Risk if wrong                                                                                                                                                    |
+| ---------------------------------------------------------- | ---------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| No current consumers of `DrawerSteps`                      | If consumers exist, we'd need migration support. Verified via codebase search — zero imports outside the component's own files.                                  |
+| `AlertDialog` API is stable                                | Our confirmation dialog delegates entirely to AlertDialog. If its API changes, our navigation guard UX breaks. Low risk — AlertDialog is mature and widely used. |
+| `IconV2` icons (`check`, `minus`, `xmark`, `loader`) exist | Build failure. Verified — all four exist in the icon set.                                                                                                        |
+| `SkeletonBase` shimmer animation works at arbitrary sizes  | Used for empty state. If it requires fixed dimensions, skeleton rows would need custom shimmer. Verified — it's flex-friendly.                                   |
+| `--cn-*` design tokens are stable across themes            | If tokens are renamed, colors break. Low risk — these are the foundational token layer, changes would be breaking across the entire system.                      |
+| No consumers need horizontal orientation                   | If a horizontal stepper is requested soon after ship, we'd need to add it. Acceptable — vertical covers all current known use cases.                             |
 
 ## Location
 
@@ -143,7 +143,7 @@ const [currentStep, setCurrentStep] = useState('version-control')
 | `active`    | Value matches this step (or one of its substeps) | Yes                  | Blue filled circle + step number          |
 | `upcoming`  | Index > active AND beyond furthest-reached       | No (button disabled) | Gray bordered circle + step number        |
 | `skipped`   | `state="skipped"` prop set                       | Yes                  | Muted gray circle + check icon            |
-| `error`     | `state="error"` prop set                         | Yes                  | Red filled circle + xmark-circle icon     |
+| `error`     | `state="error"` prop set                         | Yes                  | Red bordered circle + xmark icon          |
 | `loading`   | `loading` prop is true on active step            | No (in progress)     | Blue filled circle + spinning loader icon |
 
 > **Note:** `loading` is a visual modifier on the `active` state, not a distinct `StepState` value. A loading step remains `'active'` in the type system — the `loading` prop only affects rendering (spinner icon + shimmer text).
@@ -213,20 +213,16 @@ When a step has `blocking={true}`:
 - Register with context on mount, deregister on unmount
 - Only visible when their parent step is `active`
 - If the active substep unmounts (branch changes), focus falls back to the parent step value
-- Don't affect the "Step N/M" counter (top-level steps only)
+- Don't affect the announced step position (top-level steps only)
 - Consumer owns branching logic — renders substeps conditionally based on their own state
 - Stepper sees a flat list of whatever substeps are currently mounted under a parent
 
-### Progress Counter
+### Header
 
-Header automatically displays "Step N/M" where:
-
-- N = 1-based index of the current active top-level step (substeps don't increment this)
-- M = total count of registered top-level steps
-
-Skipped steps count toward N (they're treated as completed for progress).
-
-When `completed` is true, the progress counter displays "Complete" instead of "Step N/M".
+When the optional `title` prop is provided, the stepper renders a header above the step list
+displaying that title. The header is omitted entirely when `title` is not set. There is no visible
+progress counter — the current step position is exposed only to assistive tech via the live region
+(see [Accessibility](#accessibility)).
 
 ### Completion State
 
@@ -236,7 +232,6 @@ When the `completed` prop is `true`:
 - Steps with explicit `state="error"` or `state="skipped"` retain their state
 - All steps remain navigable (user can click back to review)
 - The `value` prop is still respected for focus/keyboard navigation
-- Progress counter shows "Complete"
 
 ## Visual Design
 
@@ -248,7 +243,6 @@ Every step renders as a `<button>` — disabled when not navigable (upcoming sta
 <nav class="cn-stepper">
   <header class="cn-stepper-header">
     <span class="cn-stepper-title">Build pipeline setup</span>
-    <span class="cn-stepper-progress">Step 2/4</span>
   </header>
   <ol class="cn-stepper-list">
     <li class="cn-stepper-step-item">
@@ -330,8 +324,7 @@ Note: the vertical segment below the active substep is gray (not blue) because t
 
 When no `Stepper.Step` children are mounted:
 
-- Header renders with the title (always available from consumer)
-- Progress counter area shows a small skeleton placeholder
+- Header renders with the title when the consumer provides one
 - Step list shows `skeletonCount` (default 3) skeleton rows matching the step layout:
   - Gray circle placeholder for the indicator (20px, same position as real indicators)
   - Skeleton text line for title
@@ -453,9 +446,8 @@ CSS lives in `packages/ui/src/styles/styles.css` using `cn-stepper-*` prefix.
 Following existing convention: `cn-{component}-{element}-{state}`
 
 - `cn-stepper` — root nav
-- `cn-stepper-header` — header container
+- `cn-stepper-header` — header container (only rendered when `title` is provided)
 - `cn-stepper-title` — title text
-- `cn-stepper-progress` — "Step N/M" text
 - `cn-stepper-list` — ordered list
 - `cn-stepper-step-item` — list item wrapper
 - `cn-stepper-step` — button element
@@ -514,8 +506,6 @@ Following existing convention: `cn-{component}-{element}-{state}`
 | **Header title**                 | text color      | `text-cn-2`               | `--cn-text-2`                                                           |
 |                                  | font weight     | —                         | 550 (semibold via variable font)                                        |
 |                                  | font size       | `text-cn-size-5`          | `--cn-font-size-5` (14px)                                               |
-| **Header progress**              | text color      | `text-cn-3`               | `--cn-text-3`                                                           |
-|                                  | font size       | `text-cn-size-4`          | `--cn-font-size-4` (13px)                                               |
 | **Step number text**             | font size       | `text-cn-size-2`          | `--cn-font-size-2` (~11.5px)                                            |
 | **Connector (completed)**        | background      | `bg-cn-success-primary`   | `--cn-set-success-primary-bg`                                           |
 | **Connector (active)**           | background      | `bg-cn-brand-primary`     | `--cn-set-brand-primary-bg`                                             |
@@ -534,12 +524,12 @@ Following existing convention: `cn-{component}-{element}-{state}`
 
 ### Icons Used
 
-| Icon Name      | Context                                            |
-| -------------- | -------------------------------------------------- |
-| `check`        | Completed/skipped step/substep indicator           |
-| `minus`        | Upcoming substep indicator                         |
-| `xmark-circle` | Error step indicator                               |
-| `loader`       | Loading step indicator (with `animate-spin` class) |
+| Icon Name | Context                                            |
+| --------- | -------------------------------------------------- |
+| `check`   | Completed/skipped step/substep indicator           |
+| `minus`   | Upcoming substep indicator                         |
+| `xmark`   | Error step/substep indicator                       |
+| `loader`  | Loading step indicator (with `animate-spin` class) |
 
 ### New CSS Keyframe
 
@@ -717,8 +707,8 @@ Unit tests with React Testing Library. No visual regression tests — low mainte
 | **Keyboard navigation**    | Arrow keys move focus, skip disabled upcoming steps. Enter/Space triggers selection. Home/End jump to first/last. Roving tabindex updates.                              |
 | **Navigation guard**       | `onBeforeChange` returning `true` proceeds, `false` blocks silently, string shows dialog. Dialog confirm/cancel produce correct outcomes.                               |
 | **Blocking**               | Steps after a blocking step are disabled. User can still navigate backwards. Removing `blocking` re-enables forward navigation.                                         |
-| **Completion**             | `completed` flips active/upcoming to completed. Error/skipped states preserved. Progress counter shows "Complete".                                                      |
-| **Progress counter**       | Correct N/M at each position. Substeps don't increment N. Skipped steps count toward N.                                                                                 |
+| **Completion**             | `completed` flips active/upcoming to completed. Error/skipped states preserved.                                                                                         |
+| **Header**                 | Renders `title` when provided; header omitted entirely when `title` is absent.                                                                                          |
 | **Empty/skeleton state**   | Renders `skeletonCount` rows when no children mounted. Disappears when children mount.                                                                                  |
 | **Animation classes**      | Correct CSS classes applied on forward navigation (`cn-stepper-step-transitioning`, etc.). No animation classes on backward navigation, first mount, or reduced-motion. |
 | **Text overflow**          | Tooltip renders on truncated titles (test via aria attributes, not visual).                                                                                             |

@@ -18,6 +18,11 @@ export function StepperSubStep({ value, title, description, state: explicitState
     return cleanup
   }, [parentValue, value]) // eslint-disable-line react-hooks/exhaustive-deps
 
+  useEffect(() => {
+    if (!explicitState) return
+    return ctx.registerSubStepState(parentValue, value, explicitState)
+  }, [parentValue, value, explicitState]) // eslint-disable-line react-hooks/exhaustive-deps
+
   const derivedState = explicitState ?? ctx.getSubStepState(parentValue, value)
   const isActive = derivedState === 'active'
 
@@ -42,11 +47,11 @@ export function StepperSubStep({ value, title, description, state: explicitState
         <span className="cn-stepper-substep-branch" aria-hidden="true" />
         <span className="cn-stepper-substep-indicator">
           {derivedState === 'completed' ? (
-            <IconV2 name="check" size="xs" />
+            <IconV2 name="check" size="xs" color="success" />
           ) : derivedState === 'skipped' ? (
-            <IconV2 name="arrow-right" size="xs" />
+            <IconV2 name="arrow-right" size="xs" color="neutral" />
           ) : derivedState === 'error' ? (
-            <IconV2 name="xmark-circle" size="xs" />
+            <IconV2 name="xmark" size="xs" color="danger" />
           ) : derivedState === 'active' ? (
             <span className="cn-stepper-substep-dot" />
           ) : (
@@ -56,12 +61,24 @@ export function StepperSubStep({ value, title, description, state: explicitState
         <span className="cn-stepper-substep-content">
           {typeof title === 'string' ? (
             <Tooltip content={title} delay={400}>
-              <Text as="span" variant="body-strong" color="foreground-1" truncate className="cn-stepper-substep-title">
+              <Text
+                as="span"
+                variant="body-strong"
+                color={isActive ? 'brand' : 'foreground-1'}
+                truncate
+                className="cn-stepper-substep-title"
+              >
                 {title}
               </Text>
             </Tooltip>
           ) : (
-            <Text as="span" variant="body-strong" color="foreground-1" truncate className="cn-stepper-substep-title">
+            <Text
+              as="span"
+              variant="body-strong"
+              color={isActive ? 'brand' : 'foreground-1'}
+              truncate
+              className="cn-stepper-substep-title"
+            >
               {title}
             </Text>
           )}

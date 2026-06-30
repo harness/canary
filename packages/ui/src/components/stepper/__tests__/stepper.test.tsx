@@ -56,12 +56,12 @@ function BasicStepper({
 
 describe('Stepper', () => {
   describe('Registration', () => {
-    test('renders correct total count in progress counter', () => {
-      render(<BasicStepper value="step1" title="Setup" />)
-      expect(screen.getByText('Step 1/3')).toBeInTheDocument()
+    test('renders all registered steps', () => {
+      const { container } = render(<BasicStepper value="step1" title="Setup" />)
+      expect(container.querySelectorAll('.cn-stepper-step-item')).toHaveLength(3)
     })
 
-    test('dynamic mount/unmount updates count', () => {
+    test('dynamic mount/unmount updates rendered steps', () => {
       function DynamicStepper() {
         const [showThird, setShowThird] = React.useState(true)
         return (
@@ -78,13 +78,13 @@ describe('Stepper', () => {
         )
       }
 
-      render(<DynamicStepper />)
-      expect(screen.getByText('Step 1/3')).toBeInTheDocument()
+      const { container } = render(<DynamicStepper />)
+      expect(container.querySelectorAll('.cn-stepper-step-item')).toHaveLength(3)
 
       userEvent.click(screen.getByTestId('toggle'))
-      // After unmount, count should update
-      return screen.findByText('Step 1/2').then(el => {
-        expect(el).toBeInTheDocument()
+      // After unmount, rendered steps should update
+      return waitFor(() => {
+        expect(container.querySelectorAll('.cn-stepper-step-item')).toHaveLength(2)
       })
     })
   })
@@ -187,18 +187,6 @@ describe('Stepper', () => {
     })
   })
 
-  describe('Progress counter', () => {
-    test('shows correct N/M', () => {
-      render(<BasicStepper value="step2" title="Setup" />)
-      expect(screen.getByText('Step 2/3')).toBeInTheDocument()
-    })
-
-    test('shows "Complete" when completed prop is true', () => {
-      render(<BasicStepper value="step1" completed title="Setup" />)
-      expect(screen.getByText('Complete')).toBeInTheDocument()
-    })
-  })
-
   describe('Indicators', () => {
     test('completed step shows check icon', () => {
       render(<BasicStepper value="step2" />)
@@ -217,14 +205,14 @@ describe('Stepper', () => {
       expect(screen.getByText('3')).toBeInTheDocument()
     })
 
-    test('error step shows xmark-circle icon', () => {
+    test('error step shows xmark icon', () => {
       render(
         <Stepper.Root value="step2" onValueChange={vi.fn()}>
           <Stepper.Step value="step1" title="First" state="error" />
           <Stepper.Step value="step2" title="Second" />
         </Stepper.Root>
       )
-      expect(screen.getByTestId('icon-xmark-circle')).toBeInTheDocument()
+      expect(screen.getByTestId('icon-xmark')).toBeInTheDocument()
     })
 
     test('active loading step shows spinner', () => {
@@ -263,7 +251,7 @@ describe('Stepper', () => {
 
     test('connector shows error state class', () => {
       const { container } = render(
-        <Stepper.Root value="step2" onValueChange={vi.fn()}>
+        <Stepper.Root value="step2" onValueChange={vi.fn()} showConnectors>
           <Stepper.Step value="step1" title="Step 1" state="error" />
           <Stepper.Step value="step2" title="Step 2" />
           <Stepper.Step value="step3" title="Step 3" state="skipped" />
@@ -272,6 +260,97 @@ describe('Stepper', () => {
       const connectors = container.querySelectorAll('.cn-stepper-connector')
       expect(connectors[0]).toHaveClass('cn-stepper-connector-error')
       expect(connectors[2]).toHaveClass('cn-stepper-connector-skipped')
+    })
+
+    test('error step with mixed substeps uses partial trunk connector', () => {
+      const { container } = render(
+        <Stepper.Root value="sub4" onValueChange={vi.fn()} showConnectors>
+          <Stepper.Step value="step1" title="First" state="error">
+            <Stepper.SubStep value="sub1" title="Sub One" state="completed" />
+            <Stepper.SubStep value="sub2" title="Sub Two" state="completed" />
+            <Stepper.SubStep value="sub3" title="Sub Three" state="completed" />
+            <Stepper.SubStep value="sub4" title="Sub Four" state="error" />
+            <Stepper.SubStep value="sub5" title="Sub Five" state="upcoming" />
+          </Stepper.Step>
+          <Stepper.Step value="step2" title="Second" />
+        </Stepper.Root>
+      )
+
+      const errorStepItem = container.querySelector('.cn-stepper-step-error')?.closest('.cn-stepper-step-item')
+      const connector = errorStepItem?.querySelector('.cn-stepper-connector')
+
+      expect(connector).toHaveClass('cn-stepper-connector-error-partial')
+      expect(connector).not.toHaveClass('cn-stepper-connector-error')
+      expect(errorStepItem).toHaveStyle({
+        '--cn-stepper-trunk-green-end':
+          'calc(var(--cn-stepper-step-content-overflow, 0px) + var(--cn-spacing-3) + 2 * (var(--cn-spacing-2) * 2 + var(--cn-size-5)) + var(--cn-spacing-2) + var(--cn-size-5) / 2 - (12 / 22) * (var(--cn-size-5) / 2 + var(--cn-rounded-5)))',
+        '--cn-stepper-trunk-blue-end':
+          'calc(var(--cn-stepper-step-content-overflow, 0px) + var(--cn-spacing-3) + 3 * (var(--cn-spacing-2) * 2 + var(--cn-size-5)) + var(--cn-spacing-2) + var(--cn-size-5) / 2 - (12 / 22) * (var(--cn-size-5) / 2 + var(--cn-rounded-5)))'
+      })
+    })
+
+    test('active step with substeps uses partial trunk connector', () => {
+      const { container } = render(
+        <Stepper.Root value="sub2" onValueChange={vi.fn()} showConnectors>
+          <Stepper.Step value="step1" title="First">
+            <Stepper.SubStep value="sub1" title="Sub One" state="completed" />
+            <Stepper.SubStep value="sub2" title="Sub Two" state="active" />
+            <Stepper.SubStep value="sub3" title="Sub Three" state="upcoming" />
+          </Stepper.Step>
+          <Stepper.Step value="step2" title="Second" />
+        </Stepper.Root>
+      )
+
+      const activeStepItem = container.querySelector('.cn-stepper-step-active')?.closest('.cn-stepper-step-item')
+      const connector = activeStepItem?.querySelector('.cn-stepper-connector')
+
+      expect(connector).toHaveClass('cn-stepper-connector-active-partial')
+      expect(activeStepItem).toHaveStyle({
+        '--cn-stepper-trunk-green-end':
+          'calc(var(--cn-stepper-step-content-overflow, 0px) + var(--cn-spacing-3) + 0 * (var(--cn-spacing-2) * 2 + var(--cn-size-5)) + var(--cn-spacing-2) + var(--cn-size-5) / 2 - (12 / 22) * (var(--cn-size-5) / 2 + var(--cn-rounded-5)))',
+        '--cn-stepper-trunk-blue-end':
+          'calc(var(--cn-stepper-step-content-overflow, 0px) + var(--cn-spacing-3) + 1 * (var(--cn-spacing-2) * 2 + var(--cn-size-5)) + var(--cn-spacing-2) + var(--cn-size-5) / 2 - (12 / 22) * (var(--cn-size-5) / 2 + var(--cn-rounded-5)))'
+      })
+    })
+
+    test('active step with only first substep active uses partial trunk with no green segment', () => {
+      const { container } = render(
+        <Stepper.Root value="sub1" onValueChange={vi.fn()} showConnectors>
+          <Stepper.Step value="step1" title="First">
+            <Stepper.SubStep value="sub1" title="Sub One" state="active" />
+            <Stepper.SubStep value="sub2" title="Sub Two" state="upcoming" />
+          </Stepper.Step>
+          <Stepper.Step value="step2" title="Second" />
+        </Stepper.Root>
+      )
+
+      const activeStepItem = container.querySelector('.cn-stepper-step-active')?.closest('.cn-stepper-step-item')
+      const connector = activeStepItem?.querySelector('.cn-stepper-connector')
+
+      expect(connector).toHaveClass('cn-stepper-connector-active-partial')
+      expect(activeStepItem).toHaveStyle({
+        '--cn-stepper-trunk-green-end': '0px',
+        '--cn-stepper-trunk-blue-end':
+          'calc(var(--cn-stepper-step-content-overflow, 0px) + var(--cn-spacing-3) + 0 * (var(--cn-spacing-2) * 2 + var(--cn-size-5)) + var(--cn-spacing-2) + var(--cn-size-5) / 2 - (12 / 22) * (var(--cn-size-5) / 2 + var(--cn-rounded-5)))'
+      })
+    })
+
+    test('placeholder branch stays gray on active parent step', () => {
+      const { container } = render(
+        <Stepper.Root value="step1" onValueChange={vi.fn()}>
+          <Stepper.Step value="step1" title="First" hasSubSteps>
+            <Stepper.SubStep value="sub1" title="Sub One" state="active" />
+          </Stepper.Step>
+          <Stepper.Step value="step2" title="Second" />
+        </Stepper.Root>
+      )
+
+      expect(container.querySelector('.cn-stepper-substep-placeholder-branch')).toBeInTheDocument()
+      expect(
+        container.querySelector(
+          '.cn-stepper-step-item:has(.cn-stepper-step-active) .cn-stepper-substep-placeholder-branch'
+        )
+      ).toBeInTheDocument()
     })
   })
 
@@ -317,8 +396,8 @@ describe('Stepper', () => {
       expect(screen.getByText('Sub Two')).toBeInTheDocument()
     })
 
-    test('substeps do not affect N/M counter', () => {
-      render(
+    test('substeps do not register as top-level steps', () => {
+      const { container } = render(
         <Stepper.Root value="step1" onValueChange={vi.fn()} title="Setup">
           <Stepper.Step value="step1" title="First">
             <Stepper.SubStep value="sub1" title="Sub One" />
@@ -327,7 +406,7 @@ describe('Stepper', () => {
           <Stepper.Step value="step2" title="Second" />
         </Stepper.Root>
       )
-      expect(screen.getByText('Step 1/2')).toBeInTheDocument()
+      expect(container.querySelectorAll('.cn-stepper-step-item')).toHaveLength(2)
     })
 
     test('placeholder rendered when hasSubSteps with no children', () => {
@@ -378,6 +457,70 @@ describe('Stepper', () => {
       expect(container.querySelector('.cn-stepper-substep-active .cn-stepper-substep-indicator')).toBeInTheDocument()
       expect(container.querySelector('.cn-stepper-substep-error .cn-stepper-substep-indicator')).toBeInTheDocument()
       expect(container.querySelector('.cn-stepper-substep-upcoming .cn-stepper-substep-indicator')).toBeInTheDocument()
+    })
+
+    test('placeholder branch stays inactive when parent step is active', () => {
+      const { container } = render(
+        <Stepper.Root value="step1" onValueChange={vi.fn()} showConnectors>
+          <Stepper.Step value="step1" title="First" hasSubSteps />
+          <Stepper.Step value="step2" title="Second" />
+        </Stepper.Root>
+      )
+
+      const placeholderBranch = container.querySelector('.cn-stepper-substep-placeholder-branch')
+      expect(placeholderBranch).toBeInTheDocument()
+      expect(
+        container.querySelector(
+          '.cn-stepper-step-item:has(.cn-stepper-step-active) .cn-stepper-substep-placeholder-branch'
+        )
+      ).toBeInTheDocument()
+    })
+
+    test('active step with pending substeps uses partial connector class', () => {
+      const { container } = render(
+        <Stepper.Root value="sub1" onValueChange={vi.fn()} showConnectors>
+          <Stepper.Step value="step1" title="First" hasSubSteps>
+            <Stepper.SubStep value="sub1" title="Sub One" />
+            <Stepper.SubStep value="sub2" title="Sub Two" />
+          </Stepper.Step>
+          <Stepper.Step value="step2" title="Second" />
+        </Stepper.Root>
+      )
+
+      const connector = container.querySelector('.cn-stepper-step-active + .cn-stepper-connector')
+      expect(connector).toHaveClass('cn-stepper-connector-active-partial')
+      expect(connector).not.toHaveClass('cn-stepper-connector-active')
+
+      const stepItem = container.querySelector('.cn-stepper-step-item:has(.cn-stepper-step-active)')
+      expect(stepItem).toHaveStyle({
+        '--cn-stepper-trunk-green-end': '0px',
+        '--cn-stepper-trunk-blue-end':
+          'calc(var(--cn-stepper-step-content-overflow, 0px) + var(--cn-spacing-3) + 0 * (var(--cn-spacing-2) * 2 + var(--cn-size-5)) + var(--cn-spacing-2) + var(--cn-size-5) / 2 - (12 / 22) * (var(--cn-size-5) / 2 + var(--cn-rounded-5)))'
+      })
+    })
+
+    test('active step on last substep still uses partial connector with gray trunk below', () => {
+      const { container } = render(
+        <Stepper.Root value="sub2" onValueChange={vi.fn()} showConnectors>
+          <Stepper.Step value="step1" title="First">
+            <Stepper.SubStep value="sub1" title="Sub One" state="completed" />
+            <Stepper.SubStep value="sub2" title="Sub Two" state="active" />
+          </Stepper.Step>
+          <Stepper.Step value="step2" title="Second" />
+        </Stepper.Root>
+      )
+
+      const connector = container.querySelector('.cn-stepper-step-active + .cn-stepper-connector')
+      expect(connector).toHaveClass('cn-stepper-connector-active-partial')
+      expect(connector).not.toHaveClass('cn-stepper-connector-active')
+
+      const stepItem = container.querySelector('.cn-stepper-step-item:has(.cn-stepper-step-active)')
+      expect(stepItem).toHaveStyle({
+        '--cn-stepper-trunk-green-end':
+          'calc(var(--cn-stepper-step-content-overflow, 0px) + var(--cn-spacing-3) + 0 * (var(--cn-spacing-2) * 2 + var(--cn-size-5)) + var(--cn-spacing-2) + var(--cn-size-5) / 2 - (12 / 22) * (var(--cn-size-5) / 2 + var(--cn-rounded-5)))',
+        '--cn-stepper-trunk-blue-end':
+          'calc(var(--cn-stepper-step-content-overflow, 0px) + var(--cn-spacing-3) + 1 * (var(--cn-spacing-2) * 2 + var(--cn-size-5)) + var(--cn-spacing-2) + var(--cn-size-5) / 2 - (12 / 22) * (var(--cn-size-5) / 2 + var(--cn-rounded-5)))'
+      })
     })
   })
 
@@ -864,11 +1007,6 @@ describe('Stepper', () => {
         </Stepper.Root>
       )
       expect(container.querySelectorAll('.cn-stepper-skeleton-item')).toHaveLength(0)
-    })
-
-    test('title still renders in skeleton state', () => {
-      render(<Stepper.Root value="" onValueChange={vi.fn()} title="Setup Wizard" />)
-      expect(screen.getByText('Setup Wizard')).toBeInTheDocument()
     })
   })
 

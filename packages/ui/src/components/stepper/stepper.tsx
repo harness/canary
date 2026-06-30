@@ -8,47 +8,6 @@ import { cn } from '@utils/cn'
 import { StepperProvider, useStepperContext } from './stepper-context'
 import { StepperProps } from './stepper-types'
 
-function ProgressCounter() {
-  const { orderedSteps, completed, effectiveActiveIndex } = useStepperContextInternal()
-
-  if (completed) {
-    return (
-      <Text as="span" variant="body-normal" color="foreground-2">
-        Complete
-      </Text>
-    )
-  }
-
-  const total = orderedSteps.length
-  const current = effectiveActiveIndex + 1
-
-  return (
-    <Text as="span" variant="body-normal" color="foreground-2">
-      Step {current}/{total}
-    </Text>
-  )
-}
-
-// Internal hook that also exposes effectiveActiveIndex for the counter
-function useStepperContextInternal() {
-  const ctx = useStepperContext()
-  const activeIndex = ctx.orderedSteps.indexOf(ctx.value)
-
-  // Check if value is a substep
-  let effectiveActiveIndex = activeIndex
-  if (activeIndex < 0) {
-    for (const [parent] of ctx.subSteps.entries()) {
-      const subs = ctx.subSteps.get(parent) || []
-      if (subs.includes(ctx.value)) {
-        effectiveActiveIndex = ctx.orderedSteps.indexOf(parent)
-        break
-      }
-    }
-  }
-
-  return { ...ctx, effectiveActiveIndex }
-}
-
 function StepperList({ children }: { children: ReactNode }) {
   const { transitioning } = useStepperContext()
 
@@ -194,14 +153,13 @@ export function StepperRoot({
       completed={completed}
     >
       <nav className={cn('cn-stepper', className)} aria-label="Progress steps">
-        <header className="cn-stepper-header">
-          {title && (
+        {title && (
+          <header className="cn-stepper-header">
             <Text as="span" variant="heading-small" color="foreground-2">
               {title}
             </Text>
-          )}
-          <ProgressCounter />
-        </header>
+          </header>
+        )}
         <StepperLiveRegion />
         <StepperBody skeletonCount={skeletonCount}>{children}</StepperBody>
         <StepperConfirmDialog />

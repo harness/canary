@@ -22,6 +22,7 @@ interface StepperContextValue {
   transitioning: { sourceIndex: number; targetIndex: number } | null
   registerStep: (value: string) => () => void
   registerSubStep: (parentValue: string, subStepValue: string) => () => void
+  registerSubStepState: (parentValue: string, subStepValue: string, state: StepState) => () => void
   registerStepMeta: (value: string, meta: StepMeta) => void
   getStepState: (value: string) => StepState
   getSubStepState: (parentValue: string, subStepValue: string) => StepState
@@ -77,6 +78,7 @@ export function StepperProvider({
 }: StepperProviderProps) {
   const [orderedSteps, setOrderedSteps] = useState<string[]>([])
   const [subSteps, setSubSteps] = useState<Map<string, string[]>>(new Map())
+  const [subStepStates, setSubStepStates] = useState<Map<string, Map<string, StepState>>>(new Map())
   const [stepMeta, setStepMeta] = useState<Map<string, StepMeta>>(new Map())
   const [furthestReached, setFurthestReached] = useState(0)
 
@@ -189,6 +191,30 @@ export function StepperProvider({
     [onValueChange]
   )
 
+  const registerSubStepState = useCallback((parentValue: string, subStepValue: string, state: StepState) => {
+    setSubStepStates(prev => {
+      const next = new Map(prev)
+      const parentStates = new Map(next.get(parentValue) ?? [])
+      if (parentStates.get(subStepValue) === state) return prev
+      parentStates.set(subStepValue, state)
+      next.set(parentValue, parentStates)
+      return next
+    })
+    return () => {
+      setSubStepStates(prev => {
+        const next = new Map(prev)
+        const parentStates = new Map(next.get(parentValue) ?? [])
+        parentStates.delete(subStepValue)
+        if (parentStates.size === 0) {
+          next.delete(parentValue)
+        } else {
+          next.set(parentValue, parentStates)
+        }
+        return next
+      })
+    }
+  }, [])
+
   const registerStepMeta = useCallback((stepValue: string, meta: StepMeta) => {
     setStepMeta(prev => {
       const existing = prev.get(stepValue)
@@ -260,6 +286,9 @@ export function StepperProvider({
 
   const getSubStepState = useCallback(
     (parentValue: string, subStepValue: string): StepState => {
+      const explicitState = subStepStates.get(parentValue)?.get(subStepValue)
+      if (explicitState) return explicitState
+
       const parentState = getStepState(parentValue)
       if (parentState === 'completed') return 'completed'
       if (parentState !== 'active') return 'upcoming'
@@ -280,7 +309,7 @@ export function StepperProvider({
 
       return 'upcoming'
     },
-    [getStepState, subSteps, value]
+    [getStepState, subSteps, subStepStates, value]
   )
 
   const isStepDisabled = useCallback(
@@ -360,6 +389,7 @@ export function StepperProvider({
       transitioning,
       registerStep,
       registerSubStep,
+      registerSubStepState,
       registerStepMeta,
       getStepState,
       getSubStepState,
@@ -383,6 +413,7 @@ export function StepperProvider({
       transitioning,
       registerStep,
       registerSubStep,
+      registerSubStepState,
       registerStepMeta,
       getStepState,
       getSubStepState,

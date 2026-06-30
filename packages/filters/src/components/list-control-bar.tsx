@@ -17,6 +17,8 @@ interface FiltersBarProps<T, V = T[keyof T], CustomValue = Record<string, unknow
   setOpenedFilter: (filter: keyof T) => void
   filterOptions: FilterOptionConfig<Extract<keyof T, string>, CustomValue>[]
   selectedFiltersCnt: number
+  isAddFilterSearchable?: boolean
+  addFilterInputPlaceholder?: string
   renderSelectedFilters: (
     filterFieldRenderer: (
       filterFieldConfig: Omit<FiltersFieldProps<Extract<keyof T, string>, V, CustomValue>, 'shouldOpenFilter' | 't'>
@@ -43,7 +45,9 @@ const ListControlBar = <T extends Record<string, any>, CustomValue = Record<stri
   renderSelectedSort,
   setOpenedFilter,
   renderSelectedFilters,
-  renderFilterOptions
+  renderFilterOptions,
+  isAddFilterSearchable,
+  addFilterInputPlaceholder
 }: FiltersBarProps<T, V, CustomValue>) => {
   const { t } = useTranslation()
 
@@ -73,7 +77,8 @@ const ListControlBar = <T extends Record<string, any>, CustomValue = Record<stri
             setOpenedFilter(option.value)
           }}
           onReset={() => resetFilters()}
-          inputPlaceholder={t('component:filter.inputPlaceholder', 'Filter by...')}
+          isSearchable={isAddFilterSearchable}
+          inputPlaceholder={addFilterInputPlaceholder ?? t('component:filter.inputPlaceholder', 'Filter by...')}
           buttonLabel={t('component:filter.buttonLabel', 'Reset filters')}
           displayLabel={renderFilterSelectAddIconLabel({ displayLabel: t('component:filter.defaultLabel', 'Filter') })}
         />

@@ -37,6 +37,11 @@ vi.mock('@/components', () => ({
       )
     },
     Header: ({ children }: any) => <div data-testid="dropdown-header">{children}</div>,
+    Group: ({ children, label }: any) => (
+      <div data-testid="dropdown-group" data-label={label}>
+        {children}
+      </div>
+    ),
     Item: ({ onSelect, title, onClick }: any) => (
       <button
         data-testid="dropdown-item"
@@ -51,11 +56,11 @@ vi.mock('@/components', () => ({
     NoOptions: ({ children }: any) => <div data-testid="dropdown-no-options">{children}</div>,
     Separator: () => <div data-testid="dropdown-separator" />
   },
-  SearchInput: ({ placeholder, value, onChange }: any) => (
+  SearchInput: ({ placeholder, value, searchValue, onChange }: any) => (
     <input
       data-testid="search-input"
       placeholder={placeholder}
-      value={value}
+      value={searchValue ?? value ?? ''}
       onChange={e => onChange(e.target.value)}
     />
   )

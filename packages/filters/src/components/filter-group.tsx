@@ -45,6 +45,8 @@ interface FilterGroupProps<
   handleInputChange: (value: string) => void
   filterOptions: FilterOptionConfig<V, CustomValue>[]
   headerAction?: ReactNode
+  isAddFilterSearchable?: boolean
+  addFilterInputPlaceholder?: string
   savedFiltersConfig?: {
     savedFilterKey?: string
     savedFiltersOptions: { value: string; label: string }[]
@@ -76,7 +78,9 @@ const FilterGroupInner = <
     multiSortConfig,
     simpleSortConfig,
     savedFiltersConfig,
-    handleFilterOpen
+    handleFilterOpen,
+    isAddFilterSearchable,
+    addFilterInputPlaceholder
   } = props
 
   const { t } = useTranslation()
@@ -170,7 +174,10 @@ const FilterGroupInner = <
                             setOpenedFilter(option.value)
                           }}
                           onReset={() => resetFilters()}
-                          inputPlaceholder={t('component:filter.inputPlaceholder', 'Filter by...')}
+                          isSearchable={isAddFilterSearchable}
+                          inputPlaceholder={
+                            addFilterInputPlaceholder ?? t('component:filter.inputPlaceholder', 'Filter by...')
+                          }
                           buttonLabel={t('component:filter.buttonLabel', 'Reset filters')}
                           displayLabel={renderFilterSelectLabel({
                             selectedFilters: filterOptions.length - availableFilters.length,
@@ -201,6 +208,8 @@ const FilterGroupInner = <
           </ListActions.Root>
           <>
             <ListControlBar<T, CustomValue, T[keyof T]>
+              isAddFilterSearchable={isAddFilterSearchable}
+              addFilterInputPlaceholder={addFilterInputPlaceholder}
               renderSelectedFilters={filterFieldRenderer => (
                 <FilterHandler.Content className={'gap-x-cn-md flex items-center'}>
                   {filterOptions.map(filterOption => {

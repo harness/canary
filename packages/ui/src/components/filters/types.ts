@@ -58,6 +58,7 @@ interface FilterOptionConfigBase<Key extends string, V = undefined> {
   defaultValue?: V
   isDefaultValue?: boolean
   sticky?: boolean
+  group?: string
 }
 
 interface ComboBoxFilterOptionConfig<Key extends string = string> extends FilterOptionConfigBase<Key, ComboBoxOptions> {

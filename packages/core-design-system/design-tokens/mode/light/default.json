@@ -2588,6 +2588,28 @@
         },
         "$description": "Drop shadow for app shell chat panel when chat is right of main content."
       },
+      "pipeline-studio-page-header": {
+        "$type": "boxShadow",
+        "$value": [
+          {
+            "x": "0",
+            "y": "1",
+            "blur": "2",
+            "spread": "0",
+            "color": "rgba(15, 23, 42, 0.06)",
+            "type": "dropShadow"
+          },
+          {
+            "x": "0",
+            "y": "4",
+            "blur": "14",
+            "spread": "0",
+            "color": "rgba(15, 23, 42, 0.08)",
+            "type": "dropShadow"
+          }
+        ],
+        "$description": "Drop shadow for Pipelines Studio page header chrome. Sourced from 3dot0Vision prototype (--ds-shadow-2 light)."
+      },
       "data-viz": {
         "01-blue": {
           "$type": "boxShadow",

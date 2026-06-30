@@ -85,6 +85,14 @@ The design system maps specific shadow levels to component categories:
             App shell chat panel (right of main content)
           </td>
         </tr>
+        <tr className="cn-table-v2-row">
+          <td className="cn-table-v2-cell">
+            `shadow-cn-pipeline-studio-page-header`
+          </td>
+          <td className="cn-table-v2-cell">
+            Pipelines Studio page header chrome
+          </td>
+        </tr>
       </tbody>
     </table>
   </div>
@@ -109,6 +117,7 @@ var(--cn-shadow-inner)  /* inset */
 var(--cn-comp-shadow-nav-rail)
 var(--cn-comp-shadow-chat-rail)
 var(--cn-comp-shadow-chat-rail-mirror)
+var(--cn-comp-shadow-pipeline-studio-page-header)
 
 /* Shadow colors (for custom shadows) */
 var(--cn-shadow-color-0)
@@ -297,6 +306,29 @@ Use `shadow-cn-nav-rail` on the nav column shell and `shadow-cn-chat-rail` / `sh
     <Text variant="caption-normal" color="foreground-3">Main</Text>
   </Layout.Vertical>
 </Layout.Horizontal>`}
+/>
+
+## Pipelines Studio page header shadow
+
+Component shadow for the Pipelines Studio top header bar (breadcrumb + Studio / Executions tabs). Sourced from the 3dot0Vision prototype (`--ds-shadow-2`).
+
+Use `shadow-cn-pipeline-studio-page-header` on the header shell. Do not apply on the Pipelines list view (header is flat there).
+
+| Mode  | Value                                                                 |
+| ----- | --------------------------------------------------------------------- |
+| Light | `0 1px 2px rgba(15, 23, 42, 0.06), 0 4px 14px rgba(15, 23, 42, 0.08)` |
+| Dark  | `0 1px 2px rgba(0, 0, 0, 0.45), 0 4px 14px rgba(0, 0, 0, 0.5)`        |
+
+<DocsPage.ComponentExample
+  hideCode
+  client:only
+  code={`<Layout.Horizontal
+    className="bg-cn-1 w-full min-w-[320px] p-cn-md shadow-cn-pipeline-studio-page-header"
+    justify="center"
+    align="center"
+  >
+    <Text variant="caption-normal" color="foreground-3">Studio page header</Text>
+  </Layout.Horizontal>`}
 />
 
 ## Shadow Geometry

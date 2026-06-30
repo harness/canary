@@ -416,7 +416,8 @@ const tailwindDesignSystem: TailwindConfig = {
 
       'cn-nav-rail': 'var(--cn-comp-shadow-nav-rail)',
       'cn-chat-rail': 'var(--cn-comp-shadow-chat-rail)',
-      'cn-chat-rail-mirror': 'var(--cn-comp-shadow-chat-rail-mirror)'
+      'cn-chat-rail-mirror': 'var(--cn-comp-shadow-chat-rail-mirror)',
+      'cn-pipeline-studio-page-header': 'var(--cn-comp-shadow-pipeline-studio-page-header)'
     },
     spacing: {
       0: 'var(--cn-spacing-0)',

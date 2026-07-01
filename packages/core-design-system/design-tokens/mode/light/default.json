@@ -1249,6 +1249,31 @@
         "$type": "color",
         "$value": "{pure.black}",
         "$description": "Shadow color for app shell nav and chat rail elevation."
+      },
+      "shell-surface": {
+        "$type": "color",
+        "$value": "{bg.1}",
+        "$description": "App shell foundation surface (gutters between nav, chat, and main content)."
+      },
+      "nav-surface": {
+        "$type": "color",
+        "$value": "{bg.2}",
+        "$description": "Navigation rail surface (left column and fly-out drawers)."
+      },
+      "chat-surface": {
+        "$type": "color",
+        "$value": "{bg.2}",
+        "$description": "AI chat panel shell surface."
+      },
+      "main-content-surface": {
+        "$type": "color",
+        "$value": "{bg.1}",
+        "$description": "Primary page content surface inside the app shell."
+      },
+      "canvas-surface": {
+        "$type": "color",
+        "$value": "{bg.0}",
+        "$description": "Canvas / graph surface below or beside main content in split layouts."
       }
     },
     "avatar": {

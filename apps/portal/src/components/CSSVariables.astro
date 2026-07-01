@@ -154,6 +154,14 @@ function getTwClasses(n: string): string[] {
   if (n === "--cn-comp-shadow-pipeline-studio-page-header")
     return ["shadow-cn-pipeline-studio-page-header"];
 
+  // comp: app shell layout surfaces
+  if (n === "--cn-comp-app-shell-shell-surface") return ["cn-app-shell-bg"];
+  if (n === "--cn-comp-app-shell-nav-surface") return ["cn-nav-surface-bg"];
+  if (n === "--cn-comp-app-shell-chat-surface") return ["cn-chat-surface-bg"];
+  if (n === "--cn-comp-app-shell-main-content-surface")
+    return ["cn-main-content-surface-bg"];
+  if (n === "--cn-comp-app-shell-canvas-surface") return ["cn-canvas-surface-bg"];
+
   return [];
 }
 

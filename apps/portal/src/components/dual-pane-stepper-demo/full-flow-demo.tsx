@@ -1,6 +1,6 @@
 import {
   LogoV2,
-  SplitPaneStepper,
+  DualPaneStepper,
   TooltipProvider,
 } from "@harnessio/ui/components";
 import { fullFlow, MockConfigDrawer } from ".";
@@ -9,7 +9,7 @@ export function FullFlowDemo() {
   return (
     <div className="not-content h-full">
       <TooltipProvider>
-        <SplitPaneStepper.Root
+        <DualPaneStepper.Root
           flow={fullFlow}
           icon={<LogoV2 name="harness" size="sm" />}
           title="Create a CI pipeline"

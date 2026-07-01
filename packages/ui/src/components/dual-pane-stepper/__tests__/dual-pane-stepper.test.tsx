@@ -4,8 +4,8 @@ import { render, screen, waitFor } from '@testing-library/react'
 import userEvent from '@testing-library/user-event'
 import { describe, expect, test, vi } from 'vitest'
 
-import { SplitPaneStepper, useFlowCard } from '../index'
-import type { FlowConfig } from '../split-pane-stepper-types'
+import type { FlowConfig } from '../dual-pane-stepper-types'
+import { DualPaneStepper, useFlowCard } from '../index'
 
 // Mock react-resizable-panels
 vi.mock('react-resizable-panels', () => ({
@@ -48,27 +48,27 @@ vi.mock('@components/tooltip', () => ({
 function TestCardA() {
   const { complete } = useFlowCard()
   return (
-    <SplitPaneStepper.Card title="Card A">
+    <DualPaneStepper.Card title="Card A">
       <button onClick={() => complete({ answer: 'yes' }, 'card-b')}>Next</button>
-    </SplitPaneStepper.Card>
+    </DualPaneStepper.Card>
   )
 }
 
 function TestCardB() {
   const { state, complete } = useFlowCard()
   return (
-    <SplitPaneStepper.Card title="Card B">
+    <DualPaneStepper.Card title="Card B">
       <span>Answer: {state.answer as string}</span>
       <button onClick={() => complete({ finished: true }, 'card-c')}>Finish</button>
-    </SplitPaneStepper.Card>
+    </DualPaneStepper.Card>
   )
 }
 
 function TestCardC() {
   return (
-    <SplitPaneStepper.Card title="Card C">
+    <DualPaneStepper.Card title="Card C">
       <span>All done</span>
-    </SplitPaneStepper.Card>
+    </DualPaneStepper.Card>
   )
 }
 
@@ -86,39 +86,39 @@ const testFlow: FlowConfig = {
   initialSubStep: 'card-a'
 }
 
-describe('SplitPaneStepper', () => {
+describe('DualPaneStepper', () => {
   describe('Rendering', () => {
     test('renders initial card', () => {
-      render(<SplitPaneStepper.Root flow={testFlow} title="Test Flow" />)
+      render(<DualPaneStepper.Root flow={testFlow} title="Test Flow" />)
       expect(screen.getAllByText('Card A').length).toBeGreaterThanOrEqual(1)
     })
 
     test('renders flow title', () => {
-      render(<SplitPaneStepper.Root flow={testFlow} title="Test Flow" />)
+      render(<DualPaneStepper.Root flow={testFlow} title="Test Flow" />)
       expect(screen.getAllByText('Test Flow').length).toBeGreaterThanOrEqual(1)
     })
 
     test('renders contentSubtitle when provided', () => {
-      render(<SplitPaneStepper.Root flow={testFlow} title="Test Flow" contentSubtitle="A test subtitle" />)
+      render(<DualPaneStepper.Root flow={testFlow} title="Test Flow" contentSubtitle="A test subtitle" />)
       expect(screen.getByText('A test subtitle')).toBeInTheDocument()
     })
 
     test('renders stepper with correct steps', () => {
-      render(<SplitPaneStepper.Root flow={testFlow} title="Test Flow" />)
+      render(<DualPaneStepper.Root flow={testFlow} title="Test Flow" />)
       expect(screen.getByText('First Step')).toBeInTheDocument()
       expect(screen.getByText('Second Step')).toBeInTheDocument()
       expect(screen.getByText('Third Step')).toBeInTheDocument()
     })
 
     test('renders panel group for split pane layout', () => {
-      render(<SplitPaneStepper.Root flow={testFlow} title="Test Flow" />)
+      render(<DualPaneStepper.Root flow={testFlow} title="Test Flow" />)
       expect(screen.getByTestId('panel-group')).toBeInTheDocument()
     })
   })
 
   describe('Navigation', () => {
     test('navigates to next card on complete', async () => {
-      render(<SplitPaneStepper.Root flow={testFlow} title="Test Flow" />)
+      render(<DualPaneStepper.Root flow={testFlow} title="Test Flow" />)
       await userEvent.click(screen.getByText('Next'))
       await waitFor(() => {
         expect(screen.getAllByText('Card B').length).toBeGreaterThanOrEqual(1)
@@ -126,7 +126,7 @@ describe('SplitPaneStepper', () => {
     })
 
     test('previous cards remain visible after completion', async () => {
-      render(<SplitPaneStepper.Root flow={testFlow} title="Test Flow" />)
+      render(<DualPaneStepper.Root flow={testFlow} title="Test Flow" />)
       await userEvent.click(screen.getByText('Next'))
       await waitFor(() => {
         expect(screen.getAllByText('Card A').length).toBeGreaterThanOrEqual(1)
@@ -134,7 +134,7 @@ describe('SplitPaneStepper', () => {
     })
 
     test('navigates through multiple cards', async () => {
-      render(<SplitPaneStepper.Root flow={testFlow} title="Test Flow" />)
+      render(<DualPaneStepper.Root flow={testFlow} title="Test Flow" />)
       await userEvent.click(screen.getByText('Next'))
       await waitFor(() => {
         expect(screen.getAllByText('Card B').length).toBeGreaterThanOrEqual(1)
@@ -148,7 +148,7 @@ describe('SplitPaneStepper', () => {
 
   describe('State Management', () => {
     test('accumulates state across cards', async () => {
-      render(<SplitPaneStepper.Root flow={testFlow} title="Test Flow" />)
+      render(<DualPaneStepper.Root flow={testFlow} title="Test Flow" />)
       await userEvent.click(screen.getByText('Next'))
       await waitFor(() => {
         expect(screen.getByText('Answer: yes')).toBeInTheDocument()
@@ -158,7 +158,7 @@ describe('SplitPaneStepper', () => {
 
   describe('Stepper Integration', () => {
     test('stepper reflects active card step', () => {
-      render(<SplitPaneStepper.Root flow={testFlow} title="Test Flow" />)
+      render(<DualPaneStepper.Root flow={testFlow} title="Test Flow" />)
       const stepButtons = screen.getAllByRole('button').filter(btn => {
         const ariaLabel = btn.getAttribute('aria-label')
         return ariaLabel && ariaLabel.includes('Step')
@@ -170,7 +170,7 @@ describe('SplitPaneStepper', () => {
   describe('Callbacks', () => {
     test('calls onClose when provided', async () => {
       const onClose = vi.fn()
-      render(<SplitPaneStepper.Root flow={testFlow} title="Test Flow" onClose={onClose} />)
+      render(<DualPaneStepper.Root flow={testFlow} title="Test Flow" onClose={onClose} />)
       const closeButton = screen.getByLabelText('Close')
       await userEvent.click(closeButton)
       expect(onClose).toHaveBeenCalled()
@@ -179,7 +179,7 @@ describe('SplitPaneStepper', () => {
 
   describe('Left Pane', () => {
     test('renders custom left pane content when provided', () => {
-      render(<SplitPaneStepper.Root flow={testFlow} title="Test Flow" leftPane={<div>Custom Left</div>} />)
+      render(<DualPaneStepper.Root flow={testFlow} title="Test Flow" leftPane={<div>Custom Left</div>} />)
       expect(screen.getByText('Custom Left')).toBeInTheDocument()
     })
   })

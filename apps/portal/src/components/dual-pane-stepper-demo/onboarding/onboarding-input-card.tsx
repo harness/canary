@@ -1,5 +1,5 @@
 import type { ReactNode } from "react";
-import { SplitPaneStepper, useFlowCard } from "@harnessio/ui/components";
+import { DualPaneStepper, useFlowCard } from "@harnessio/ui/components";
 
 interface OnboardingInputCardProps {
   title: string;
@@ -18,8 +18,8 @@ export function OnboardingInputCard({
   const isCompleted = status === "completed" || status === "skipped";
 
   return (
-    <SplitPaneStepper.Card title={title} description={description}>
+    <DualPaneStepper.Card title={title} description={description}>
       {isCompleted && completedSummary ? completedSummary : children}
-    </SplitPaneStepper.Card>
+    </DualPaneStepper.Card>
   );
 }

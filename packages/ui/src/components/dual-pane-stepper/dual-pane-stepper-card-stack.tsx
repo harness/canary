@@ -1,8 +1,8 @@
 import { useCallback, useEffect, useRef } from 'react'
 
-import { CardContextProvider, useEngineContext } from './split-pane-stepper-context'
+import { CardContextProvider, useEngineContext } from '../flow-stepper/engine/engine-context'
 
-export function SplitPaneStepperCardStack() {
+export function DualPaneStepperCardStack() {
   const { flow, cardHistory, activeSubStepId, registerScrollToCard } = useEngineContext()
   const containerRef = useRef<HTMLDivElement>(null)
   const activeRef = useRef(activeSubStepId)
@@ -33,13 +33,14 @@ export function SplitPaneStepperCardStack() {
 
   useEffect(() => {
     if (activeRef.current) {
-      setTimeout(() => scrollToCard(activeRef.current), 50)
+      const timeoutId = setTimeout(() => scrollToCard(activeRef.current), 50)
+      return () => clearTimeout(timeoutId)
     }
   }, [])
 
   return (
-    <div ref={containerRef} className="cn-split-pane-stepper-card-stack">
-      <div className="cn-split-pane-stepper-card-stack-inner">
+    <div ref={containerRef} className="cn-dual-pane-stepper-card-stack">
+      <div className="cn-dual-pane-stepper-card-stack-inner">
         {cardHistory.map(entry => {
           const config = flow.subSteps[entry.subStepId]
           if (!config) return null

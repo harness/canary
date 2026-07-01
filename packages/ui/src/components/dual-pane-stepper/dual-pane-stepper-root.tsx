@@ -1,21 +1,21 @@
 import { useMemo } from 'react'
 
 import { AlertDialog } from '../alert-dialog'
+import { deriveStepperModel, FlowEngineProvider, useEngineContext } from '../flow-stepper/engine'
 import { IconV2 } from '../icon-v2'
 import { Layout } from '../layout'
 import { Resizable } from '../resizable'
 import { Stepper } from '../stepper'
 import { Text } from '../text'
-import { SplitPaneStepperCardStack } from './split-pane-stepper-card-stack'
-import { FlowEngineProvider, useEngineContext } from './split-pane-stepper-context'
-import { CardEntry, SplitPaneStepperRootProps } from './split-pane-stepper-types'
+import { DualPaneStepperCardStack } from './dual-pane-stepper-card-stack'
+import { DualPaneStepperRootProps } from './dual-pane-stepper-types'
 
 const DEFAULT_REACTIVATION_PROMPT = {
   title: 'Go back?',
   description: 'Going back to this step will discard your progress on subsequent steps. Are you sure?'
 }
 
-function SplitPaneStepperContent({
+function DualPaneStepperContent({
   title,
   icon,
   stepperTitle,
@@ -26,7 +26,7 @@ function SplitPaneStepperContent({
   leftPane,
   reactivationPrompt,
   panelSizes
-}: Omit<SplitPaneStepperRootProps, 'flow' | 'onComplete'>) {
+}: Omit<DualPaneStepperRootProps, 'flow' | 'onComplete'>) {
   const { drawerState, closeDrawer, pendingReactivation, confirmReactivation, cancelReactivation } = useEngineContext()
 
   const prompt = reactivationPrompt || DEFAULT_REACTIVATION_PROMPT
@@ -44,9 +44,9 @@ function SplitPaneStepperContent({
 
   return (
     <>
-      <Layout.Vertical gap="none" className="cn-split-pane-stepper-root">
+      <Layout.Vertical gap="none" className="cn-dual-pane-stepper-root">
         {showHeader && (
-          <Layout.Horizontal as="header" align="center" gap="sm" className="cn-split-pane-stepper-header">
+          <Layout.Horizontal as="header" align="center" gap="sm" className="cn-dual-pane-stepper-header">
             {icon}
             {title && (
               <Text as="h1" variant="heading-section" color="foreground-1" className="min-w-0 flex-1 !m-0">
@@ -55,24 +55,24 @@ function SplitPaneStepperContent({
             )}
             {!title && <div className="flex-1" />}
             {onClose && (
-              <button type="button" onClick={onClose} aria-label="Close" className="cn-split-pane-stepper-close-btn">
+              <button type="button" onClick={onClose} aria-label="Close" className="cn-dual-pane-stepper-close-btn">
                 <IconV2 name="xmark" size="sm" />
               </button>
             )}
           </Layout.Horizontal>
         )}
 
-        <Resizable.PanelGroup direction="horizontal" className="cn-split-pane-stepper-panels">
+        <Resizable.PanelGroup direction="horizontal" className="cn-dual-pane-stepper-panels">
           <Resizable.Panel defaultSize={panels.default} minSize={panels.min} maxSize={panels.max}>
-            <div className="cn-split-pane-stepper-left-pane">{leftPane || defaultLeftPane}</div>
+            <div className="cn-dual-pane-stepper-left-pane">{leftPane || defaultLeftPane}</div>
           </Resizable.Panel>
 
           <Resizable.Handle withHandle />
 
           <Resizable.Panel>
-            <div className="cn-split-pane-stepper-right-pane">
+            <div className="cn-dual-pane-stepper-right-pane">
               {(contentTitle || contentSubtitle) && (
-                <Layout.Vertical gap="2xs" className="cn-split-pane-stepper-content-header">
+                <Layout.Vertical gap="2xs" className="cn-dual-pane-stepper-content-header">
                   {contentTitle && (
                     <Text as="h2" variant="heading-subsection" color="foreground-1" className="!m-0">
                       {contentTitle}
@@ -85,7 +85,7 @@ function SplitPaneStepperContent({
                   )}
                 </Layout.Vertical>
               )}
-              <SplitPaneStepperCardStack />
+              <DualPaneStepperCardStack />
             </div>
           </Resizable.Panel>
         </Resizable.PanelGroup>
@@ -110,25 +110,11 @@ function SplitPaneStepperContent({
 
 function DefaultStepperPane({ stepperTitle }: { stepperTitle?: string }) {
   const { flow, cardHistory, activeSubStepId, predictedPath, scrollToCard } = useEngineContext()
-  const activeStepId = flow.subSteps[activeSubStepId]?.step
 
-  const visitedByStep: Record<string, CardEntry[]> = {}
-  for (const entry of cardHistory) {
-    const stepId = flow.subSteps[entry.subStepId]?.step
-    if (stepId) {
-      if (!visitedByStep[stepId]) visitedByStep[stepId] = []
-      visitedByStep[stepId].push(entry)
-    }
-  }
-
-  const predictedByStep: Record<string, string[]> = {}
-  for (const subStepId of predictedPath) {
-    const stepId = flow.subSteps[subStepId]?.step
-    if (stepId) {
-      if (!predictedByStep[stepId]) predictedByStep[stepId] = []
-      predictedByStep[stepId].push(subStepId)
-    }
-  }
+  const derivedSteps = useMemo(
+    () => deriveStepperModel(flow, cardHistory, predictedPath, activeSubStepId),
+    [flow, cardHistory, predictedPath, activeSubStepId]
+  )
 
   const handleStepperClick = (value: string) => {
     const historyEntry = cardHistory.find(e => e.subStepId === value)
@@ -144,62 +130,34 @@ function DefaultStepperPane({ stepperTitle }: { stepperTitle?: string }) {
 
   return (
     <Stepper.Root value={activeSubStepId} onValueChange={handleStepperClick} title={stepperTitle}>
-      {Object.entries(flow.steps).map(([stepId, step]) => {
-        const visited = visitedByStep[stepId] || []
-        const predicted = predictedByStep[stepId] || []
-        const isTerminalStep = !Object.values(flow.subSteps).some(s => s.step === stepId)
-        const isActiveStep = activeStepId === stepId
-        const hasBeenVisited = visited.length > 0
-
-        const showSubSteps = hasBeenVisited || isActiveStep
-        const activeHasNoNext = isActiveStep && !flow.subSteps[activeSubStepId]?.next
-        const showIndeterminate = isActiveStep && !isTerminalStep && activeHasNoNext && predicted.length === 0
-
-        const allSubStepsCompleted =
-          hasBeenVisited && visited.every(e => e.status === 'completed' || e.status === 'skipped')
-        const hasError = visited.some(e => e.status === 'error')
-        const isFlowComplete = !cardHistory.some(e => e.status === 'active')
-        const stepState = hasError
-          ? 'error'
-          : isFlowComplete && allSubStepsCompleted
-            ? 'completed'
-            : isActiveStep
-              ? 'active'
-              : allSubStepsCompleted
-                ? 'completed'
-                : 'upcoming'
+      {derivedSteps.map(derivedStep => {
+        const activeStepId = flow.subSteps[activeSubStepId]?.step
+        const isActiveStep = activeStepId === derivedStep.stepId
+        const showSubSteps = derivedStep.visited.length > 0 || isActiveStep
 
         return (
           <Stepper.Step
-            key={stepId}
-            value={stepId}
-            title={step.title}
-            description={step.description}
-            state={stepState}
-            hasSubSteps={showIndeterminate}
+            key={derivedStep.stepId}
+            value={derivedStep.stepId}
+            title={derivedStep.title}
+            description={derivedStep.description}
+            state={derivedStep.state}
+            hasSubSteps={derivedStep.showIndeterminate}
           >
             {showSubSteps &&
-              !isTerminalStep &&
-              visited.map(entry => (
+              !derivedStep.isTerminalStep &&
+              derivedStep.visited.map(v => (
                 <Stepper.SubStep
-                  key={entry.subStepId}
-                  value={entry.subStepId}
-                  title={flow.subSteps[entry.subStepId]?.title}
-                  description={flow.subSteps[entry.subStepId]?.description}
-                  state={
-                    entry.status === 'active'
-                      ? 'active'
-                      : entry.status === 'error'
-                        ? 'error'
-                        : entry.status === 'skipped'
-                          ? 'skipped'
-                          : 'completed'
-                  }
+                  key={v.subStepId}
+                  value={v.subStepId}
+                  title={flow.subSteps[v.subStepId]?.title}
+                  description={flow.subSteps[v.subStepId]?.description}
+                  state={v.state}
                 />
               ))}
             {isActiveStep &&
-              !isTerminalStep &&
-              predicted.map(subStepId => (
+              !derivedStep.isTerminalStep &&
+              derivedStep.predicted.map(subStepId => (
                 <Stepper.SubStep
                   key={subStepId}
                   value={subStepId}
@@ -215,10 +173,10 @@ function DefaultStepperPane({ stepperTitle }: { stepperTitle?: string }) {
   )
 }
 
-export function SplitPaneStepperRoot({ flow, onComplete, ...props }: SplitPaneStepperRootProps) {
+export function DualPaneStepperRoot({ flow, onComplete, ...props }: DualPaneStepperRootProps) {
   return (
     <FlowEngineProvider flow={flow} onComplete={onComplete}>
-      <SplitPaneStepperContent {...props} />
+      <DualPaneStepperContent {...props} />
     </FlowEngineProvider>
   )
 }

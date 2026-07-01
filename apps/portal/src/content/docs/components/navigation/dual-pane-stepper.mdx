@@ -1,13 +1,13 @@
 ---
-title: Split Pane Stepper
-description: A full-page guided flow component with resizable split panes, card-based decision trees, and integrated stepper navigation.
+title: Dual Pane Stepper
+description: A full-page guided flow component with resizable dual panes, card-based decision trees, and integrated stepper navigation.
 ---
 
 import { DocsPage } from "@/components/docs-page";
 import { Aside } from "@astrojs/starlight/components";
-import { FullFlowDemo } from "@/components/split-pane-stepper-demo";
+import { FullFlowDemo } from "@/components/dual-pane-stepper-demo";
 
-The `SplitPaneStepper` is a full-page builder shell component for multi-step guided flows. It combines a left-pane stepper with a right-pane card stack that supports decision-tree navigation, drawer overlays, dynamic substeps, and back-navigation with reactivation guards.
+The `DualPaneStepper` is a full-page builder shell component for multi-step guided flows. It combines a left-pane stepper with a right-pane card stack that supports decision-tree navigation, drawer overlays, dynamic substeps, and back-navigation with reactivation guards.
 
 Use this component for onboarding wizards, setup flows, and any multi-step process where the user's choices determine the next card(s) to show.
 
@@ -27,7 +27,7 @@ This example demonstrates a full CI pipeline onboarding flow with connector draw
 ## Usage
 
 ```typescript jsx
-import { SplitPaneStepper, useFlowCard } from "@harnessio/ui/components";
+import { DualPaneStepper, useFlowCard } from "@harnessio/ui/components";
 import type { FlowConfig } from "@harnessio/ui/components";
 
 const flow: FlowConfig = {
@@ -44,7 +44,7 @@ const flow: FlowConfig = {
   initialSubStep: "provider-selection",
 };
 
-<SplitPaneStepper.Root
+<DualPaneStepper.Root
   flow={flow}
   icon={<Logo />}
   title="Create a pipeline"
@@ -55,12 +55,12 @@ const flow: FlowConfig = {
 
 ## Anatomy
 
-The Split Pane Stepper uses a compound component pattern:
+The Dual Pane Stepper uses a compound component pattern:
 
 ```typescript jsx
-<SplitPaneStepper.Root flow={flowConfig} drawers={{ connector: ConnectorDrawer }}>
+<DualPaneStepper.Root flow={flowConfig} drawers={{ connector: ConnectorDrawer }}>
   {/* Cards are rendered automatically from flowConfig.subSteps */}
-</SplitPaneStepper.Root>
+</DualPaneStepper.Root>
 ```
 
 Cards use the `useFlowCard` hook to interact with the flow engine:
@@ -70,9 +70,9 @@ function MyCard() {
   const { state, status, complete, error, skip, openDrawer } = useFlowCard();
 
   return (
-    <SplitPaneStepper.Card title="My Card">
+    <DualPaneStepper.Card title="My Card">
       {/* Card content */}
-    </SplitPaneStepper.Card>
+    </DualPaneStepper.Card>
   );
 }
 ```
@@ -112,7 +112,7 @@ interface SubStepConfig {
 
 ## Cards
 
-Use `SplitPaneStepper.Card` inside your card components. The card shows a status indicator (active dot, check, error, skip), title, optional description, and content. Completed cards show a restart button on hover.
+Use `DualPaneStepper.Card` inside your card components. The card shows a status indicator (active dot, check, error, skip), title, optional description, and content. Completed cards show a restart button on hover.
 
 ```typescript jsx
 function SelectProviderCard() {
@@ -120,7 +120,7 @@ function SelectProviderCard() {
   const [selected, setSelected] = useState(null);
 
   return (
-    <SplitPaneStepper.Card
+    <DualPaneStepper.Card
       title="Select Provider"
       description="Choose your version control provider"
     >
@@ -130,7 +130,7 @@ function SelectProviderCard() {
       }}>
         GitHub
       </button>
-    </SplitPaneStepper.Card>
+    </DualPaneStepper.Card>
   );
 }
 ```
@@ -237,10 +237,10 @@ When `detect` is active, the stepper shows `deps` and `tests` as predicted upcom
 
 ## Drawer Integration
 
-Drawers provide modal overlays for complex interactions like authentication flows or configuration forms. Register drawers via the `drawers` prop on `SplitPaneStepper.Root`:
+Drawers provide modal overlays for complex interactions like authentication flows or configuration forms. Register drawers via the `drawers` prop on `DualPaneStepper.Root`:
 
 ```typescript jsx
-<SplitPaneStepper.Root
+<DualPaneStepper.Root
   flow={flow}
   drawers={{
     connector: ConnectorDrawer,
@@ -264,9 +264,9 @@ function ConnectorSetupCard() {
   };
 
   return (
-    <SplitPaneStepper.Card title="Connect Provider">
+    <DualPaneStepper.Card title="Connect Provider">
       <button onClick={handleConnect}>Connect</button>
-    </SplitPaneStepper.Card>
+    </DualPaneStepper.Card>
   );
 }
 ```
@@ -327,7 +327,7 @@ Users can click completed cards in the stack to go back. When navigating backwar
 The reactivation guard prevents users from accidentally losing progress when navigating backward. It shows a confirmation dialog with a customizable message:
 
 ```typescript jsx
-<SplitPaneStepper.Root
+<DualPaneStepper.Root
   flow={flow}
   reactivationPrompt={{
     title: "Go back?",
@@ -337,7 +337,7 @@ The reactivation guard prevents users from accidentally losing progress when nav
 ```
 
 <Aside type="tip">
-  The reactivation guard is built into the SplitPaneStepper and uses an
+  The reactivation guard is built into the DualPaneStepper and uses an
   `AlertDialog` for the confirmation. The default prompt is "Go back?" / "Going
   back to this step will discard your progress on subsequent steps. Are you
   sure?"
@@ -348,12 +348,12 @@ The reactivation guard prevents users from accidentally losing progress when nav
 Use `CardAction` to show contextual alerts or prompts within cards:
 
 ```typescript jsx
-<SplitPaneStepper.Card title="Connectivity Check">
+<DualPaneStepper.Card title="Connectivity Check">
   <div className="space-y-4">
     {/* Logs or results */}
 
     {error && (
-      <SplitPaneStepper.CardAction
+      <DualPaneStepper.CardAction
         variant="warning"
         message="Cannot reach git provider. Your infrastructure may be behind a firewall."
         actionLabel="Install Delegate"
@@ -363,7 +363,7 @@ Use `CardAction` to show contextual alerts or prompts within cards:
       />
     )}
   </div>
-</SplitPaneStepper.Card>
+</DualPaneStepper.Card>
 ```
 
 **Props:**
@@ -379,10 +379,10 @@ Use `CardAction` to show contextual alerts or prompts within cards:
 
 ### `Root`
 
-The root component that sets up the flow engine, renders the split pane layout, and manages navigation.
+The root component that sets up the flow engine, renders the dual-pane layout, and manages navigation.
 
 ```typescript jsx
-<SplitPaneStepper.Root
+<DualPaneStepper.Root
   flow={flowConfig}                          // [REQUIRED] Flow configuration
   icon={<Logo />}                            // [OPTIONAL] Element rendered before the title in header
   title="Create a pipeline"                  // [OPTIONAL] Header title (header hidden if no icon or title)
@@ -489,12 +489,12 @@ The root component that sets up the flow engine, renders the split pane layout, 
 A card displayed in the right-pane stack. Shows status indicator (active dot, check, error, skip), title, optional description, and content. Completed cards show a restart button on hover.
 
 ```typescript jsx
-<SplitPaneStepper.Card
+<DualPaneStepper.Card
   title="Card Title"
   description="Optional subtitle"
 >
   {/* Card content */}
-</SplitPaneStepper.Card>
+</DualPaneStepper.Card>
 ```
 
 <DocsPage.PropsTable
@@ -531,7 +531,7 @@ A card displayed in the right-pane stack. Shows status indicator (active dot, ch
 An alert/action component for showing contextual prompts within cards.
 
 ```typescript jsx
-<SplitPaneStepper.CardAction
+<DualPaneStepper.CardAction
   variant="warning"
   message="Alert message"
   actionLabel="Primary Action"
@@ -652,7 +652,7 @@ const { state, status, complete, error, skip, openDrawer } =
 
 ## Accessibility
 
-The Split Pane Stepper implements the following accessibility features:
+The Dual Pane Stepper implements the following accessibility features:
 
 - **ARIA**: Uses `aria-current="step"` on the active step, `aria-label` on step buttons, and `aria-live="polite"` for step change announcements
 - **Keyboard Navigation**: Supports ArrowUp/ArrowDown, Home/End on the stepper; standard tab/focus flow on cards

@@ -1,5 +1,5 @@
 import { useState, useEffect } from "react";
-import { useFlowCard, SplitPaneStepper } from "@harnessio/ui/components";
+import { useFlowCard, DualPaneStepper } from "@harnessio/ui/components";
 import {
   StaticChoice,
   DynamicChoice,
@@ -13,7 +13,7 @@ export function ChooseProviderCard() {
   const { complete } = useFlowCard();
 
   return (
-    <SplitPaneStepper.Card
+    <DualPaneStepper.Card
       title="Choose code provider"
       description="Select where your source code is hosted"
     >
@@ -46,7 +46,7 @@ export function ChooseProviderCard() {
           }
         }}
       />
-    </SplitPaneStepper.Card>
+    </DualPaneStepper.Card>
   );
 }
 
@@ -79,7 +79,7 @@ export function GithubAuthCard() {
   };
 
   return (
-    <SplitPaneStepper.Card
+    <DualPaneStepper.Card
       title="Authenticate with GitHub"
       description="Connect via OAuth or Personal Access Token"
     >
@@ -92,7 +92,7 @@ export function GithubAuthCard() {
         successMessage={succeeded ? "Authentication successful." : undefined}
         onRetry={handleOpenDrawer}
       />
-    </SplitPaneStepper.Card>
+    </DualPaneStepper.Card>
   );
 }
 
@@ -125,7 +125,7 @@ export function GheAuthCard() {
   };
 
   return (
-    <SplitPaneStepper.Card
+    <DualPaneStepper.Card
       title="Authenticate with GitHub Enterprise"
       description="Enter your GHE server URL and credentials"
     >
@@ -138,7 +138,7 @@ export function GheAuthCard() {
         successMessage={succeeded ? "Authentication successful." : undefined}
         onRetry={handleOpenDrawer}
       />
-    </SplitPaneStepper.Card>
+    </DualPaneStepper.Card>
   );
 }
 
@@ -171,7 +171,7 @@ export function GitlabAuthCard() {
   };
 
   return (
-    <SplitPaneStepper.Card
+    <DualPaneStepper.Card
       title="Authenticate with GitLab"
       description="Connect via OAuth or Personal Access Token"
     >
@@ -184,7 +184,7 @@ export function GitlabAuthCard() {
         successMessage={succeeded ? "Authentication successful." : undefined}
         onRetry={handleOpenDrawer}
       />
-    </SplitPaneStepper.Card>
+    </DualPaneStepper.Card>
   );
 }
 
@@ -217,7 +217,7 @@ export function BitbucketAuthCard() {
   };
 
   return (
-    <SplitPaneStepper.Card
+    <DualPaneStepper.Card
       title="Authenticate with Bitbucket"
       description="Connect via OAuth or App Password"
     >
@@ -230,7 +230,7 @@ export function BitbucketAuthCard() {
         successMessage={succeeded ? "Authentication successful." : undefined}
         onRetry={handleOpenDrawer}
       />
-    </SplitPaneStepper.Card>
+    </DualPaneStepper.Card>
   );
 }
 
@@ -263,7 +263,7 @@ export function AzureAuthCard() {
   };
 
   return (
-    <SplitPaneStepper.Card
+    <DualPaneStepper.Card
       title="Authenticate with Azure Repos"
       description="Enter your Azure DevOps organization and PAT"
     >
@@ -276,7 +276,7 @@ export function AzureAuthCard() {
         successMessage={succeeded ? "Authentication successful." : undefined}
         onRetry={handleOpenDrawer}
       />
-    </SplitPaneStepper.Card>
+    </DualPaneStepper.Card>
   );
 }
 
@@ -315,7 +315,7 @@ export function GitAuthCard() {
   };
 
   return (
-    <SplitPaneStepper.Card
+    <DualPaneStepper.Card
       title="Authenticate with Git"
       description="Enter your Git repository URL and credentials"
     >
@@ -328,7 +328,7 @@ export function GitAuthCard() {
         successMessage={succeeded ? "Authentication successful." : undefined}
         onRetry={handleOpenDrawer}
       />
-    </SplitPaneStepper.Card>
+    </DualPaneStepper.Card>
   );
 }
 
@@ -370,12 +370,12 @@ export function CreateSecretCard() {
   }, [status]);
 
   return (
-    <SplitPaneStepper.Card
+    <DualPaneStepper.Card
       title="Store credentials"
       description="Securely storing authentication credentials"
     >
       <LogOutput logs={logs} done={done} />
-    </SplitPaneStepper.Card>
+    </DualPaneStepper.Card>
   );
 }
 
@@ -409,7 +409,7 @@ export function CreateConnectorCard() {
   };
 
   return (
-    <SplitPaneStepper.Card
+    <DualPaneStepper.Card
       title="Create connector"
       description="Configure the connection to your provider"
     >
@@ -424,7 +424,7 @@ export function CreateConnectorCard() {
         }
         onRetry={handleOpenDrawer}
       />
-    </SplitPaneStepper.Card>
+    </DualPaneStepper.Card>
   );
 }
 
@@ -465,12 +465,12 @@ export function DelegateCheckCard() {
   }, [status]);
 
   return (
-    <SplitPaneStepper.Card
+    <DualPaneStepper.Card
       title="Checking delegate availability"
       description="Looking for available Harness Delegates"
     >
       <LogOutput logs={logs} done={done} />
-    </SplitPaneStepper.Card>
+    </DualPaneStepper.Card>
   );
 }
 
@@ -503,7 +503,7 @@ export function InstallDelegateCard() {
   };
 
   return (
-    <SplitPaneStepper.Card
+    <DualPaneStepper.Card
       title="Install a Delegate"
       description="Set up a Harness Delegate in your environment"
     >
@@ -519,7 +519,7 @@ export function InstallDelegateCard() {
         }
         onRetry={handleOpenDrawer}
       />
-    </SplitPaneStepper.Card>
+    </DualPaneStepper.Card>
   );
 }
 
@@ -561,12 +561,12 @@ export function VerifyDelegateCard() {
   }, [status]);
 
   return (
-    <SplitPaneStepper.Card
+    <DualPaneStepper.Card
       title="Waiting for delegate"
       description="Verifying delegate connectivity"
     >
       <LogOutput logs={logs} done={done} />
-    </SplitPaneStepper.Card>
+    </DualPaneStepper.Card>
   );
 }
 
@@ -608,12 +608,12 @@ export function TestConnectionCard() {
   }, [status]);
 
   return (
-    <SplitPaneStepper.Card
+    <DualPaneStepper.Card
       title="Verify connection"
       description="Testing connectivity to your code provider"
     >
       <LogOutput logs={logs} done={done} />
-    </SplitPaneStepper.Card>
+    </DualPaneStepper.Card>
   );
 }
 
@@ -622,7 +622,7 @@ export function ConnectionFailedCard() {
   const { complete } = useFlowCard();
 
   return (
-    <SplitPaneStepper.Card
+    <DualPaneStepper.Card
       title="Connection failed"
       description="Unable to connect to your code provider"
     >
@@ -648,7 +648,7 @@ export function ConnectionFailedCard() {
           </p>
         </div>
       </Summary>
-    </SplitPaneStepper.Card>
+    </DualPaneStepper.Card>
   );
 }
 
@@ -669,7 +669,7 @@ export function RepoSelectionCard() {
   const { complete, skip } = useFlowCard();
 
   return (
-    <SplitPaneStepper.Card
+    <DualPaneStepper.Card
       title="Select a repository"
       description="Pick the repo Harness should build from"
     >
@@ -688,7 +688,7 @@ export function RepoSelectionCard() {
         onSkip={() => skip()}
         skipLabel="Skip — use hello-world example"
       />
-    </SplitPaneStepper.Card>
+    </DualPaneStepper.Card>
   );
 }
 
@@ -697,7 +697,7 @@ export function ChooseInfraCard() {
   const { complete, skip } = useFlowCard();
 
   return (
-    <SplitPaneStepper.Card
+    <DualPaneStepper.Card
       title="Choose build infrastructure"
       description="Select where your builds will run"
     >
@@ -723,7 +723,7 @@ export function ChooseInfraCard() {
         onSkip={() => skip("scan-repo")}
         skipLabel="Skip — use Harness Cloud"
       />
-    </SplitPaneStepper.Card>
+    </DualPaneStepper.Card>
   );
 }
 
@@ -762,7 +762,7 @@ export function K8sConnectorCard() {
   };
 
   return (
-    <SplitPaneStepper.Card
+    <DualPaneStepper.Card
       title="Configure Kubernetes cluster"
       description="Enter your cluster endpoint and credentials"
     >
@@ -777,7 +777,7 @@ export function K8sConnectorCard() {
         }
         onRetry={handleOpenDrawer}
       />
-    </SplitPaneStepper.Card>
+    </DualPaneStepper.Card>
   );
 }
 
@@ -821,12 +821,12 @@ export function K8sTestCard() {
   }, [status]);
 
   return (
-    <SplitPaneStepper.Card
+    <DualPaneStepper.Card
       title="Testing cluster connection"
       description="Verifying Kubernetes cluster connectivity"
     >
       <LogOutput logs={logs} done={done} />
-    </SplitPaneStepper.Card>
+    </DualPaneStepper.Card>
   );
 }
 
@@ -859,7 +859,7 @@ export function DockerSetupCard() {
   };
 
   return (
-    <SplitPaneStepper.Card
+    <DualPaneStepper.Card
       title="Set up Docker runner"
       description="Install and configure the Docker build runner"
     >
@@ -874,7 +874,7 @@ export function DockerSetupCard() {
         }
         onRetry={handleOpenDrawer}
       />
-    </SplitPaneStepper.Card>
+    </DualPaneStepper.Card>
   );
 }
 
@@ -907,7 +907,7 @@ export function VmSetupCard() {
   };
 
   return (
-    <SplitPaneStepper.Card
+    <DualPaneStepper.Card
       title="Configure cloud VMs"
       description="Set up your AWS/GCP/Azure VM infrastructure"
     >
@@ -922,7 +922,7 @@ export function VmSetupCard() {
         }
         onRetry={handleOpenDrawer}
       />
-    </SplitPaneStepper.Card>
+    </DualPaneStepper.Card>
   );
 }
 
@@ -975,12 +975,12 @@ export function ScanRepoCard() {
   }, [status]);
 
   return (
-    <SplitPaneStepper.Card
+    <DualPaneStepper.Card
       title="Analyzing your repository"
       description="Scanning repository structure and generating pipeline"
     >
       <LogOutput logs={logs} done={done} />
-    </SplitPaneStepper.Card>
+    </DualPaneStepper.Card>
   );
 }
 
@@ -989,7 +989,7 @@ export function ReviewPipelineCard() {
   const { state, complete, skip } = useFlowCard();
 
   return (
-    <SplitPaneStepper.Card
+    <DualPaneStepper.Card
       title="Review pipeline configuration"
       description="Our agent will create a pipeline from your repo"
     >
@@ -1016,7 +1016,7 @@ export function ReviewPipelineCard() {
           },
         ]}
       />
-    </SplitPaneStepper.Card>
+    </DualPaneStepper.Card>
   );
 }
 
@@ -1058,12 +1058,12 @@ export function CommitPipelineCard() {
   }, [status]);
 
   return (
-    <SplitPaneStepper.Card
+    <DualPaneStepper.Card
       title="Saving pipeline"
       description="Committing pipeline configuration"
     >
       <LogOutput logs={logs} done={done} />
-    </SplitPaneStepper.Card>
+    </DualPaneStepper.Card>
   );
 }
 
@@ -1111,12 +1111,12 @@ export function TriggerBuildCard() {
   }, [status]);
 
   return (
-    <SplitPaneStepper.Card
+    <DualPaneStepper.Card
       title="Running first build"
       description="Executing your first CI build"
     >
       <LogOutput logs={logs} done={done} />
-    </SplitPaneStepper.Card>
+    </DualPaneStepper.Card>
   );
 }
 
@@ -1125,7 +1125,7 @@ export function BuildFailedCard() {
   const { complete } = useFlowCard();
 
   return (
-    <SplitPaneStepper.Card
+    <DualPaneStepper.Card
       title="Build failed"
       description="Your first build encountered an error"
     >
@@ -1151,7 +1151,7 @@ export function BuildFailedCard() {
           </p>
         </div>
       </Summary>
-    </SplitPaneStepper.Card>
+    </DualPaneStepper.Card>
   );
 }
 
@@ -1165,7 +1165,7 @@ export function OnboardingCompleteCard() {
   }, [status]);
 
   return (
-    <SplitPaneStepper.Card
+    <DualPaneStepper.Card
       title="Pipeline ready!"
       description="Your CI pipeline is configured and running"
     >
@@ -1184,7 +1184,7 @@ export function OnboardingCompleteCard() {
           },
         ]}
       />
-    </SplitPaneStepper.Card>
+    </DualPaneStepper.Card>
   );
 }
 

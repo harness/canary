@@ -2,7 +2,7 @@ import {
   Button,
   Text,
   Layout,
-  SplitPaneStepper,
+  DualPaneStepper,
 } from "@harnessio/ui/components";
 
 interface ConfigActionProps {
@@ -29,7 +29,7 @@ export function ConfigAction({
   if (successMessage) {
     return (
       <Layout.Vertical gap="md">
-        <SplitPaneStepper.CardAction
+        <DualPaneStepper.CardAction
           variant="success"
           message={successMessage}
         />
@@ -40,7 +40,7 @@ export function ConfigAction({
   if (errorState === "unrecoverable") {
     return (
       <Layout.Vertical gap="md">
-        <SplitPaneStepper.CardAction
+        <DualPaneStepper.CardAction
           variant="danger"
           message={
             errorMessage ||
@@ -56,7 +56,7 @@ export function ConfigAction({
   if (errorState === "recoverable") {
     return (
       <Layout.Vertical gap="md">
-        <SplitPaneStepper.CardAction
+        <DualPaneStepper.CardAction
           variant="warning"
           message={errorMessage || "Configuration failed. You can try again."}
           actionLabel="Retry"

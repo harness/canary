@@ -1,5 +1,5 @@
 import type { ReactNode } from "react";
-import { SplitPaneStepper } from "@harnessio/ui/components";
+import { DualPaneStepper } from "@harnessio/ui/components";
 
 interface OnboardingOutputCardProps {
   title: string;
@@ -13,8 +13,8 @@ export function OnboardingOutputCard({
   children,
 }: OnboardingOutputCardProps) {
   return (
-    <SplitPaneStepper.Card title={title} description={description}>
+    <DualPaneStepper.Card title={title} description={description}>
       {children}
-    </SplitPaneStepper.Card>
+    </DualPaneStepper.Card>
   );
 }

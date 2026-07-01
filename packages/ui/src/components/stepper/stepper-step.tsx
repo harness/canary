@@ -9,7 +9,7 @@ import { ParentStepProvider, useStepperContext } from './stepper-context'
 import { StepperStepProps } from './stepper-types'
 
 // Branch wire ::before box height = size-5/2 + rounded-5; elbow radius = rounded-5 (12px, same as
-// SplitPaneStepper step cards). Keep in sync with stepper.ts BRANCH_ELBOW_RADIUS.
+// DualPaneStepper step cards). Keep in sync with stepper.ts BRANCH_ELBOW_RADIUS.
 const BRANCH_ELBOW_RADIUS_PX = 12
 const BRANCH_MASK_VIEWBOX_HEIGHT = 22
 const BRANCH_MASK_ELBOW_Y = BRANCH_MASK_VIEWBOX_HEIGHT - BRANCH_ELBOW_RADIUS_PX
@@ -48,7 +48,7 @@ function measureTrunkSegmentEnds(stepItem: HTMLElement): { greenEnd: number; acc
 
   const connectorTop = connector.getBoundingClientRect().top
 
-  // Use rendered state classes so explicit `state` props (e.g. SplitPaneStepper) match trunk colors.
+  // Use rendered state classes so explicit `state` props (e.g. DualPaneStepper) match trunk colors.
   const completedBranches = stepItem.querySelectorAll(
     '.cn-stepper-substep-list > .cn-stepper-substep-item.cn-stepper-substep-completed .cn-stepper-substep-branch, ' +
       '.cn-stepper-substep-list > .cn-stepper-substep-item.cn-stepper-substep-skipped .cn-stepper-substep-branch'
@@ -245,6 +245,10 @@ export function StepperStep({
 
     const substepList = stepItem.querySelector('.cn-stepper-substep-list')
     if (substepList) resizeObserver.observe(substepList)
+
+    // Observe panels so trunk measurements update when card content changes height
+    const panels = stepItem.querySelectorAll('.cn-stepper-substep-panel')
+    panels.forEach(panel => resizeObserver.observe(panel))
 
     return () => resizeObserver.disconnect()
   }, [hasSubStepTrunk, subStepValues, lastCompletedSubStepIndex, accentSubStepIndex])

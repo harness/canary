@@ -33,4 +33,5 @@ export interface StepperSubStepProps {
   description?: ReactNode
   state?: StepState
   className?: string
+  children?: ReactNode
 }

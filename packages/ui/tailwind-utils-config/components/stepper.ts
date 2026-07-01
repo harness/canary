@@ -300,6 +300,8 @@ export default {
   },
 
   '.cn-stepper-substep-item': {
+    display: 'block',
+    listStyle: 'none',
     padding: 'var(--cn-spacing-2) 0',
     counterIncrement: 'substep'
   },
@@ -433,6 +435,15 @@ export default {
     marginTop: 'var(--cn-spacing-half)',
     marginLeft: 'var(--cn-spacing-4)',
     minWidth: '0'
+  },
+
+  /* SubStep Panel — container for card children rendered below substep button */
+  '.cn-stepper-substep-panel': {
+    marginLeft: 'calc(var(--cn-spacing-4) + var(--cn-size-5) + var(--cn-spacing-4))',
+    marginTop: 'var(--cn-spacing-2)',
+    paddingRight: 'var(--cn-spacing-2)',
+    minWidth: '0',
+    width: 'calc(100% - calc(var(--cn-spacing-4) + var(--cn-size-5) + var(--cn-spacing-4)) - var(--cn-spacing-2))'
   },
 
   /* Placeholder — indeterminate substeps indicator */

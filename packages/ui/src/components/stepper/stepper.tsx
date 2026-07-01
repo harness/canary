@@ -3,6 +3,7 @@ import React, { KeyboardEvent, ReactNode, useEffect, useRef, useState } from 're
 import { AlertDialog } from '@components/alert-dialog'
 import { Skeleton } from '@components/skeletons'
 import { Text } from '@components/text'
+import { TooltipProvider } from '@components/tooltip'
 import { cn } from '@utils/cn'
 
 import { StepperProvider, useStepperContext } from './stepper-context'
@@ -152,18 +153,24 @@ export function StepperRoot({
       showConnectors={showConnectors}
       completed={completed}
     >
-      <nav className={cn('cn-stepper', className)} aria-label="Progress steps">
-        {title && (
-          <header className="cn-stepper-header">
-            <Text as="span" variant="heading-small" color="foreground-2">
-              {title}
-            </Text>
-          </header>
-        )}
-        <StepperLiveRegion />
-        <StepperBody skeletonCount={skeletonCount}>{children}</StepperBody>
-        <StepperConfirmDialog />
-      </nav>
+      {/* Steps/substeps render titles inside Tooltip, which requires a Radix TooltipProvider.
+          Provide one here so the Stepper is self-sufficient in any consumer (onboarding drawers,
+          single/dual pane steppers, standalone) without each caller having to remember it.
+          Radix providers nest safely. */}
+      <TooltipProvider>
+        <nav className={cn('cn-stepper', className)} aria-label="Progress steps">
+          {title && (
+            <header className="cn-stepper-header">
+              <Text as="span" variant="heading-small" color="foreground-2">
+                {title}
+              </Text>
+            </header>
+          )}
+          <StepperLiveRegion />
+          <StepperBody skeletonCount={skeletonCount}>{children}</StepperBody>
+          <StepperConfirmDialog />
+        </nav>
+      </TooltipProvider>
     </StepperProvider>
   )
 }

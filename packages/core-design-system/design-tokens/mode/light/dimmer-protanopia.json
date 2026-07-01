@@ -1238,31 +1238,30 @@
     "app-shell": {
       "shell-surface": {
         "$type": "color",
-        "$value": "{bg.1}",
+        "$value": "{surface.shell}",
         "$description": "App shell foundation surface (gutters between nav, chat, and main content)."
       },
       "nav-surface": {
         "$type": "color",
-        "$value": "{bg.2}",
+        "$value": "{surface.nav}",
         "$description": "Navigation rail surface (left column and fly-out drawers)."
       },
       "chat-surface": {
         "$type": "color",
-        "$value": "{bg.2}",
+        "$value": "{surface.chat}",
         "$description": "AI chat panel shell surface."
       },
       "main-content-surface": {
         "$type": "color",
-        "$value": "{bg.1}",
+        "$value": "{surface.main}",
         "$description": "Primary page content surface inside the app shell."
       },
       "canvas-surface": {
         "$type": "color",
-        "$value": "{bg.0}",
+        "$value": "{surface.canvas}",
         "$description": "Canvas / graph surface below or beside main content in split layouts."
       }
     },
-
     "avatar": {
       "shadow": {
         "$extensions": {
@@ -4267,5 +4266,32 @@
       "style": "solid"
     },
     "$description": "Focus ring style for interactive elements. Provides accessible keyboard navigation indicator meeting WCAG requirements."
+  },
+  "surface": {
+    "shell": {
+      "$type": "color",
+      "$value": "{pure.white}",
+      "$description": "App shell foundation surface (gutters between nav, chat, and main content)."
+    },
+    "nav": {
+      "$type": "color",
+      "$value": "{pure.white}",
+      "$description": "Navigation rail surface (left column and fly-out drawers)."
+    },
+    "chat": {
+      "$type": "color",
+      "$value": "{pure.white}",
+      "$description": "AI chat panel shell surface."
+    },
+    "main": {
+      "$type": "color",
+      "$value": "{pure.white}",
+      "$description": "Primary page content surface inside the app shell."
+    },
+    "canvas": {
+      "$type": "color",
+      "$value": "{gray.100}",
+      "$description": "Canvas / graph surface below or beside main content in split layouts."
+    }
   }
 }

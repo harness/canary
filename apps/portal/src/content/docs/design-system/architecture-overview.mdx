@@ -93,6 +93,9 @@ Key concepts at this layer:
 
 - <span style="font-weight: 600">Neutral levels</span> — `bg.0`–`bg.3`,
   `text.1`–`text.4`, `border.1`–`border.3` for depth and hierarchy
+- <span style="font-weight: 600">Surface roles</span> — `surface.shell`,
+  `surface.nav`, `surface.chat`, `surface.main`, `surface.canvas` for unified
+  app-shell layering (aliases core primitives; independent of `bg.*`)
 - <span style="font-weight: 600">Color Sets</span> — pre-built bg + text pairs
   at three emphasis levels (primary, secondary, outline) verified for WCAG
   contrast
@@ -113,7 +116,7 @@ Key concepts at this layer:
 
 `design-tokens/components/desktop/base/*.json` — per-component overrides for 26 components (button, input, badge, card, dialog, table, tabs, toast, etc.). These reference semantic tokens and add component-specific values like internal padding or icon sizing.
 
-Mode-level **component tokens** in `design-tokens/mode/{dark,light}/` also include cross-cutting groups such as `comp.app-shell` (shell surface layers) and `comp.shadow` (rail elevation). See [App Shell](/foundations/app-shell) for the shell surface architecture.
+Mode-level **component tokens** in `design-tokens/mode/{dark,light}/` also include cross-cutting groups such as `comp.app-shell` (shell surface layers wired through `surface.*`) and `comp.shadow` (rail elevation). See [App Shell](/foundations/app-shell) for the shell surface architecture.
 
 ---
 

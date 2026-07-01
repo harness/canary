@@ -1694,6 +1694,34 @@
         }
       }
     },
+    "app-shell": {
+      "shell-surface": {
+        "$type": "color",
+        "$value": "{bg.2}",
+        "$description": "App shell foundation surface in dark mode (gutters align with nav/chat)."
+      },
+      "nav-surface": {
+        "$type": "color",
+        "$value": "{bg.2}",
+        "$description": "Navigation rail surface in dark mode."
+      },
+      "chat-surface": {
+        "$type": "color",
+        "$value": "{bg.2}",
+        "$description": "AI chat panel shell surface in dark mode."
+      },
+      "main-content-surface": {
+        "$type": "color",
+        "$value": "{bg.1}",
+        "$description": "Primary page content surface in dark mode."
+      },
+      "canvas-surface": {
+        "$type": "color",
+        "$value": "{bg.0}",
+        "$description": "Canvas / graph surface in dark mode."
+      }
+    },
+
     "avatar": {
       "shadow": {
         "$extensions": {

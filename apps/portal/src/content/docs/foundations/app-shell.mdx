@@ -1,0 +1,286 @@
+---
+title: App Shell
+description: Background surface layers for the unified app chrome — nav, chat, main content, and canvas
+---
+
+import { DocsPage } from "@/components/docs-page";
+import { Aside } from "@astrojs/starlight/components";
+import LinkCard from "@/components/LinkCard.astro";
+
+The **app shell** is the persistent chrome around product pages: navigation rail, AI chat panel, gutters, primary content, and optional canvas regions (graphs, split panes). Surface colors are defined as **component tokens** under `comp.app-shell.*` so every theme variant (24 modes) resolves the same layer roles to the correct semantic backgrounds.
+
+Use this page for **which layer gets which class**. For elevation on nav and chat panels, see [Shadows — App shell rail shadows](/foundations/shadows#app-shell-rail-shadows). For the `Sidebar` component API, see [Sidebar](/components/navigation/sidebar).
+
+## Background IA
+
+The shell stacks five surface roles. Gutters and outer wrappers use the **shell** surface; elevated columns use **nav** and **chat**; page chrome uses **main content**; deep inset areas use **canvas**.
+
+```text
+┌─────────────────────────────────────────────────────────────┐
+│  shell (gutters / outer wrapper)                            │
+│  ┌──────┬──────────┬────────────────────────┬──────────────┐ │
+│  │ nav  │  chat    │   main content         │  (optional)  │ │
+│  │      │          │                        │              │ │
+│  │      │          │   ┌──────────────────┐   │              │ │
+│  │      │          │   │ canvas (split)   │   │              │ │
+│  │      │          │   └──────────────────┘   │              │ │
+│  └──────┴──────────┴────────────────────────┴──────────────┘ │
+└─────────────────────────────────────────────────────────────┘
+```
+
+### Semantic mapping
+
+Surface tokens reference `bg.0`–`bg.2` so contrast themes (dimmer, high-contrast, color-vision variants) stay consistent without per-app logic.
+
+<div className="cn-table-v2 cn-table-v2-normal not-content">
+  <div className="cn-table-v2-container">
+    <table className="cn-table-v2-element">
+      <thead className="cn-table-v2-header">
+        <tr className="cn-table-v2-row">
+          <th className="cn-table-v2-head">Layer</th>
+          <th className="cn-table-v2-head">Light</th>
+          <th className="cn-table-v2-head">Dark</th>
+          <th className="cn-table-v2-head">Role</th>
+        </tr>
+      </thead>
+      <tbody className="cn-table-v2-body">
+        <tr className="cn-table-v2-row">
+          <td className="cn-table-v2-cell">Shell</td>
+          <td className="cn-table-v2-cell">
+            <code>bg.1</code>
+          </td>
+          <td className="cn-table-v2-cell">
+            <code>bg.2</code>
+          </td>
+          <td className="cn-table-v2-cell">
+            Foundation and gutters between nav, chat, and main
+          </td>
+        </tr>
+        <tr className="cn-table-v2-row">
+          <td className="cn-table-v2-cell">Navigation</td>
+          <td className="cn-table-v2-cell">
+            <code>bg.2</code>
+          </td>
+          <td className="cn-table-v2-cell">
+            <code>bg.2</code>
+          </td>
+          <td className="cn-table-v2-cell">
+            Nav rail column and fly-out drawers
+          </td>
+        </tr>
+        <tr className="cn-table-v2-row">
+          <td className="cn-table-v2-cell">Chat</td>
+          <td className="cn-table-v2-cell">
+            <code>bg.2</code>
+          </td>
+          <td className="cn-table-v2-cell">
+            <code>bg.2</code>
+          </td>
+          <td className="cn-table-v2-cell">AI chat panel shell</td>
+        </tr>
+        <tr className="cn-table-v2-row">
+          <td className="cn-table-v2-cell">Main content</td>
+          <td className="cn-table-v2-cell">
+            <code>bg.1</code>
+          </td>
+          <td className="cn-table-v2-cell">
+            <code>bg.1</code>
+          </td>
+          <td className="cn-table-v2-cell">Primary page surface</td>
+        </tr>
+        <tr className="cn-table-v2-row">
+          <td className="cn-table-v2-cell">Canvas</td>
+          <td className="cn-table-v2-cell">
+            <code>bg.0</code>
+          </td>
+          <td className="cn-table-v2-cell">
+            <code>bg.0</code>
+          </td>
+          <td className="cn-table-v2-cell">
+            Graph / studio canvas below or beside main content
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+</div>
+
+<Aside>
+  Semantic <code>bg.*</code> levels are documented in the [Color
+  System](/design-system/color-system#semantic-levels). App shell tokens compose
+  those levels into a fixed layout contract — do not use raw{" "}
+  <code>bg-cn-1</code> on shell layers when a surface utility exists.
+</Aside>
+
+## Utility classes
+
+Attach these classes to the DOM node that owns each region's background. Values resolve from `comp.app-shell.*` in every theme CSS file.
+
+<div className="cn-table-v2 cn-table-v2-normal not-content">
+  <div className="cn-table-v2-container">
+    <table className="cn-table-v2-element">
+      <thead className="cn-table-v2-header">
+        <tr className="cn-table-v2-row">
+          <th className="cn-table-v2-head">Class</th>
+          <th className="cn-table-v2-head">CSS variable</th>
+          <th className="cn-table-v2-head">Token</th>
+        </tr>
+      </thead>
+      <tbody className="cn-table-v2-body">
+        <tr className="cn-table-v2-row">
+          <td className="cn-table-v2-cell">
+            <code>cn-app-shell-bg</code>
+          </td>
+          <td className="cn-table-v2-cell">
+            <code>--cn-comp-app-shell-shell-surface</code>
+          </td>
+          <td className="cn-table-v2-cell">
+            <code>comp.app-shell.shell-surface</code>
+          </td>
+        </tr>
+        <tr className="cn-table-v2-row">
+          <td className="cn-table-v2-cell">
+            <code>cn-nav-surface-bg</code>
+          </td>
+          <td className="cn-table-v2-cell">
+            <code>--cn-comp-app-shell-nav-surface</code>
+          </td>
+          <td className="cn-table-v2-cell">
+            <code>comp.app-shell.nav-surface</code>
+          </td>
+        </tr>
+        <tr className="cn-table-v2-row">
+          <td className="cn-table-v2-cell">
+            <code>cn-chat-surface-bg</code>
+          </td>
+          <td className="cn-table-v2-cell">
+            <code>--cn-comp-app-shell-chat-surface</code>
+          </td>
+          <td className="cn-table-v2-cell">
+            <code>comp.app-shell.chat-surface</code>
+          </td>
+        </tr>
+        <tr className="cn-table-v2-row">
+          <td className="cn-table-v2-cell">
+            <code>cn-main-content-surface-bg</code>
+          </td>
+          <td className="cn-table-v2-cell">
+            <code>--cn-comp-app-shell-main-content-surface</code>
+          </td>
+          <td className="cn-table-v2-cell">
+            <code>comp.app-shell.main-content-surface</code>
+          </td>
+        </tr>
+        <tr className="cn-table-v2-row">
+          <td className="cn-table-v2-cell">
+            <code>cn-canvas-surface-bg</code>
+          </td>
+          <td className="cn-table-v2-cell">
+            <code>--cn-comp-app-shell-canvas-surface</code>
+          </td>
+          <td className="cn-table-v2-cell">
+            <code>comp.app-shell.canvas-surface</code>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+</div>
+
+Short aliases are also exposed on `:root` for custom CSS: `--cn-app-shell-surface`, `--cn-nav-surface`, `--cn-chat-surface`, `--cn-main-content-surface`, `--cn-canvas-surface`.
+
+<DocsPage.ComponentExample
+  hideCode
+  client:only
+  code={`<Layout.Horizontal gap="none" className="min-w-[560px] p-cn-md cn-app-shell-bg">
+  <Layout.Vertical
+    gap="xs"
+    className="cn-nav-surface-bg h-48 w-16 shrink-0 shadow-cn-nav-rail"
+    justify="center"
+    align="center"
+  >
+    <Text variant="caption-normal" color="foreground-3">Nav</Text>
+  </Layout.Vertical>
+  <Layout.Vertical
+    gap="xs"
+    className="cn-chat-surface-bg h-48 w-40 shrink-0 shadow-cn-chat-rail"
+    justify="center"
+    align="center"
+  >
+    <Text variant="caption-normal" color="foreground-3">Chat</Text>
+  </Layout.Vertical>
+  <Layout.Vertical
+    gap="xs"
+    className="cn-main-content-surface-bg h-48 flex-1"
+    justify="center"
+    align="center"
+  >
+    <Text variant="caption-normal" color="foreground-3">Main</Text>
+  </Layout.Vertical>
+</Layout.Horizontal>`}
+/>
+
+## Unified navigation rail
+
+The nav column paints on the **nav surface** wrapper. Inner `Sidebar` panels stay transparent so one surface shows through the full rail width:
+
+- `.cn-sidebar-container .cn-sidebar` — `background-color: transparent`
+- `.cn-sidebar-nav-panel` — transparent, no corner radius on the panel shell
+
+Apply `cn-nav-surface-bg` on the nav column container (not on individual sidebar items). Pair with `shadow-cn-nav-rail` on the same shell element when elevation is required.
+
+## Themed nav and chat
+
+For brand- or product-themed shells, add `cn-app-shell-themed` on the app shell root. Nav and chat surfaces can then override via optional theme hooks:
+
+- `--cn-comp-app-shell-nav-theme`
+- `--cn-comp-app-shell-chat-theme`
+
+Main content and canvas **keep** the default surface tokens — only nav and chat participate in themed mode.
+
+```html
+<div
+  class="cn-app-shell-bg cn-app-shell-themed"
+  style="--cn-comp-app-shell-nav-theme: var(--cn-set-brand-primary-bg);"
+>
+  <!-- nav + chat pick up theme; main + canvas unchanged -->
+</div>
+```
+
+## Implementation checklist
+
+1. **Shell wrapper** — `cn-app-shell-bg` on the outer layout (e.g. sidebar wrapper + gutters).
+2. **Nav column** — `cn-nav-surface-bg` + `shadow-cn-nav-rail` on the rail shell.
+3. **Chat panel** — `cn-chat-surface-bg` + `shadow-cn-chat-rail` or `shadow-cn-chat-rail-mirror` based on chat position.
+4. **Main** — `cn-main-content-surface-bg` on the primary content region.
+5. **Canvas** — `cn-canvas-surface-bg` on split/graph areas only.
+
+<Aside type="caution">
+  Do not apply rail shadows to seam overlays, resize handles, or gutter strips —
+  shadows belong on the nav/chat column shells only.
+</Aside>
+
+## Related
+
+<div className="not-content grid grid-cols-1 sm:grid-cols-2 gap-cn-xs">
+  <LinkCard
+    href="/foundations/shadows#app-shell-rail-shadows"
+    title="App shell rail shadows"
+    description="Elevation tokens for nav and chat column shells"
+  />
+  <LinkCard
+    href="/components/navigation/sidebar"
+    title="Sidebar"
+    description="Nav rail component API, states, and subcomponents"
+  />
+  <LinkCard
+    href="/foundations/variables"
+    title="Styles & Classes"
+    description="Searchable list of all CSS variables and utility mappings"
+  />
+  <LinkCard
+    href="/design-system/color-system#semantic-levels"
+    title="Semantic background levels"
+    description="How bg.0–bg.3 resolve per light/dark theme"
+  />
+</div>

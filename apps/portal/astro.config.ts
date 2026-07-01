@@ -118,6 +118,11 @@ export default defineConfig({
               attrs: { "data-icon": "half-moon" },
             },
             {
+              slug: "foundations/app-shell",
+              label: "App Shell",
+              attrs: { "data-icon": "frame-alt-empty" },
+            },
+            {
               slug: "foundations/logos",
               label: "Logos",
               attrs: { "data-icon": "star" },

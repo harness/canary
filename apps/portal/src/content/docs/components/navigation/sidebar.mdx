@@ -5,8 +5,24 @@ beta: true
 ---
 
 import { DocsPage } from "@/components/docs-page";
+import { Aside } from "@astrojs/starlight/components";
+import LinkCard from "@/components/LinkCard.astro";
 
 The `Sidebar` component provides a responsive, collapsible navigation interface for application navigation. It supports expanded and collapsed states on desktop, transforms into an off-canvas menu on mobile devices, and includes features like nested submenus, badges, tooltips, and customizable actions.
+
+<Aside>
+  In the unified app shell, nav backgrounds are owned by the column shell (
+  <code>cn-nav-surface-bg</code>), not individual sidebar panels — inner{" "}
+  <code>Sidebar</code> surfaces stay transparent. See{" "}
+  <a href="/foundations/app-shell">App Shell</a> for the full surface layer
+  model.
+</Aside>
+
+<LinkCard
+  href="/foundations/app-shell"
+  title="App Shell surfaces"
+  description="Background IA, utility classes, and nav rail transparency rules"
+/>
 
 It is composed of several subcomponents such as `Sidebar.Provider`, `Sidebar.Root`, `Sidebar.Trigger`, `Sidebar.Content`, `Sidebar.Header`, `Sidebar.Footer`, `Sidebar.Group`, `Sidebar.Item`, `Sidebar.MenuSubItem`, `Sidebar.Rail`, and more to offer a structured and customizable interface.
 

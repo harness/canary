@@ -160,7 +160,8 @@ function getTwClasses(n: string): string[] {
   if (n === "--cn-comp-app-shell-chat-surface") return ["cn-chat-surface-bg"];
   if (n === "--cn-comp-app-shell-main-content-surface")
     return ["cn-main-content-surface-bg"];
-  if (n === "--cn-comp-app-shell-canvas-surface") return ["cn-canvas-surface-bg"];
+  if (n === "--cn-comp-app-shell-canvas-surface")
+    return ["cn-canvas-surface-bg"];
 
   return [];
 }
@@ -205,6 +206,12 @@ const componentNameMap: Record<string, string> = {
 
 function deriveComponentName(varName: string): string {
   const stripped = varName.replace(/^--cn-comp-/, "").replace(/^--cn-/, "");
+  if (stripped.startsWith("app-shell")) return "App Shell";
+  if (
+    stripped.startsWith("shadow-nav-rail") ||
+    stripped.startsWith("shadow-chat-rail")
+  )
+    return "App Shell";
   const prefix = stripped.split("-")[0];
   return (
     componentNameMap[prefix] || prefix.charAt(0).toUpperCase() + prefix.slice(1)

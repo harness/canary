@@ -112,9 +112,11 @@ Surface tokens reference `bg.0`–`bg.2` so contrast themes (dimmer, high-contra
   <code>bg-cn-1</code> on shell layers when a surface utility exists.
 </Aside>
 
-## Utility classes
+## Surface tokens and platformUI utility classes
 
-Attach these classes to the DOM node that owns each region's background. Values resolve from `comp.app-shell.*` in every theme CSS file.
+Design tokens (`comp.app-shell.*`) ship in `@harnessio/ui` as `--cn-comp-app-shell-*` CSS variables in every theme. **Utility classes** (`cn-app-shell-bg`, `cn-nav-surface-bg`, etc.) are defined in **platformUI** (`apps/kitchen-sink/src/App.css`) — not in the design system package.
+
+Attach these class names to the DOM node that owns each region's background. Each class sets `background-color` from the matching token:
 
 <div className="cn-table-v2 cn-table-v2-normal not-content">
   <div className="cn-table-v2-container">
@@ -222,7 +224,7 @@ Short aliases are also exposed on `:root` for custom CSS: `--cn-app-shell-surfac
 
 ## Unified navigation rail
 
-The nav column paints on the **nav surface** wrapper. Inner `Sidebar` panels stay transparent so one surface shows through the full rail width:
+The nav column paints on the **nav surface** wrapper. Inner `Sidebar` panels stay transparent so one surface shows through the full rail width. In platformUI, transparency rules live in `App.css`:
 
 - `.cn-sidebar-container .cn-sidebar` — `background-color: transparent`
 - `.cn-sidebar-nav-panel` — transparent, no corner radius on the panel shell

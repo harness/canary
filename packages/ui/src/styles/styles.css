@@ -810,55 +810,6 @@ mark {
       left: calc(var(--cn-size-14) + var(--cn-inset-spacing)) !important;
     }
   }
-
-  /*
-   * App shell layout surfaces (Background IA).
-   * Consumers attach these classes; values resolve from comp.app-shell.* design tokens.
-   */
-  :root {
-    --cn-app-shell-surface: var(--cn-comp-app-shell-shell-surface);
-    --cn-nav-surface: var(--cn-comp-app-shell-nav-surface);
-    --cn-chat-surface: var(--cn-comp-app-shell-chat-surface);
-    --cn-main-content-surface: var(--cn-comp-app-shell-main-content-surface);
-    --cn-canvas-surface: var(--cn-comp-app-shell-canvas-surface);
-  }
-
-  .cn-sidebar-wrapper.cn-app-shell-bg,
-  .cn-app-shell-bg {
-    background-color: var(--cn-comp-app-shell-shell-surface);
-  }
-
-  .cn-nav-surface-bg {
-    background-color: var(--cn-comp-app-shell-nav-surface);
-  }
-
-  .cn-chat-surface-bg {
-    background-color: var(--cn-comp-app-shell-chat-surface);
-  }
-
-  .cn-main-content-surface-bg {
-    background-color: var(--cn-comp-app-shell-main-content-surface);
-  }
-
-  .cn-canvas-surface-bg {
-    background-color: var(--cn-comp-app-shell-canvas-surface);
-  }
-
-  /* Themed nav + chat (row 3 IA); main content and canvas stay on default tokens */
-  .cn-app-shell-themed {
-    --cn-comp-app-shell-nav-surface: var(--cn-comp-app-shell-nav-theme, var(--cn-comp-app-shell-nav-surface));
-    --cn-comp-app-shell-chat-surface: var(--cn-comp-app-shell-chat-theme, var(--cn-comp-app-shell-chat-surface));
-  }
-
-  /* Unified nav rail: parent surface shows through inner sidebar panels */
-  .cn-sidebar-container .cn-sidebar {
-    background-color: transparent !important;
-  }
-
-  .cn-sidebar-nav-panel {
-    background-color: transparent;
-    border-radius: 0;
-  }
 }
 
 /* STUDIO CARD */

@@ -29,6 +29,7 @@
     "./markdown-preview-styles.css": "./src/components/markdown-viewer/style.css",
     "./context": "./dist/context.js",
     "./types": "./dist/types.js",
+    "./yaml-output": "./dist/yaml-output.js",
     "./.claude/manifest.json": "./.claude/manifest.json"
   },
   "files": [

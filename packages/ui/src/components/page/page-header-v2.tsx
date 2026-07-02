@@ -16,6 +16,8 @@ export interface HeaderV2TabItem {
   exact?: boolean
 }
 
+type HeaderV2TabsVariant = 'underlined' | 'ghost'
+
 export interface PageHeaderV2Props {
   breadcrumbs?: ReactNode
   title: string | ReactNode
@@ -23,6 +25,8 @@ export interface PageHeaderV2Props {
   description?: string
   actions?: ReactNode
   tabs?: HeaderV2TabItem[]
+  /** `ghost` renders tabs inline in the title row; `underlined` (default) renders below. */
+  tabsVariant?: HeaderV2TabsVariant
   contentTabs?: boolean
   children?: ReactNode
   className?: string
@@ -33,9 +37,11 @@ interface TitleSectionProps {
   iconName?: IconV2NamesType
   description?: string
   actions?: ReactNode
+  /** When set, tabs render inline in the title row (ghost variant). */
+  inlineTabs?: HeaderV2TabItem[]
 }
 
-const TitleSection: FC<TitleSectionProps> = ({ title, iconName, description, actions }) => {
+const TitleSection: FC<TitleSectionProps> = ({ title, iconName, description, actions, inlineTabs }) => {
   const titleElement =
     typeof title === 'string' ? (
       <Text as="h1" variant="heading-hero" truncate>
@@ -45,18 +51,35 @@ const TitleSection: FC<TitleSectionProps> = ({ title, iconName, description, act
       title
     )
 
+  const actionsElement = actions ? (
+    <Layout.Horizontal gap="xs" align="center" className={inlineTabs ? 'shrink-0' : undefined}>
+      {actions}
+    </Layout.Horizontal>
+  ) : null
+
   return (
     <Layout.Vertical gap="xs">
       {/* Fixed height prevents layout shift when actions prop is present vs absent */}
-      <Layout.Horizontal align="center" className="h-[var(--cn-btn-size-md)]">
-        <Layout.Horizontal gap="xs" align="center" className="text-cn-1 min-w-0 flex-1">
+      <Layout.Horizontal
+        align="center"
+        justify={inlineTabs ? 'between' : undefined}
+        className={inlineTabs ? 'h-[var(--cn-btn-size-sm)]' : 'h-[var(--cn-btn-size-md)]'}
+      >
+        <Layout.Horizontal
+          gap="xs"
+          align="center"
+          className={cn('text-cn-1 min-w-0', inlineTabs ? 'shrink-0' : 'flex-1')}
+        >
           {iconName && <IconV2 name={iconName} size="xl" />}
           {titleElement}
         </Layout.Horizontal>
-        {actions && (
-          <Layout.Horizontal gap="xs" align="center">
-            {actions}
+        {inlineTabs ? (
+          <Layout.Horizontal gap="md" align="center" className="min-w-0">
+            <NavTabsSection items={inlineTabs} variant="ghost" />
+            {actionsElement}
           </Layout.Horizontal>
+        ) : (
+          actionsElement
         )}
       </Layout.Horizontal>
       {description && <Text color="foreground-3">{description}</Text>}
@@ -64,9 +87,12 @@ const TitleSection: FC<TitleSectionProps> = ({ title, iconName, description, act
   )
 }
 
-const NavTabsSection: FC<{ items: HeaderV2TabItem[] }> = ({ items }) => (
+const NavTabsSection: FC<{ items: HeaderV2TabItem[]; variant?: HeaderV2TabsVariant }> = ({
+  items,
+  variant = 'underlined'
+}) => (
   <Tabs.NavRoot>
-    <Tabs.List variant="underlined">
+    <Tabs.List variant={variant}>
       {items.map(tab => (
         <Tabs.Trigger
           key={tab.value}
@@ -100,18 +126,21 @@ export const HeaderV2: FC<PageHeaderV2Props> = ({
   actions,
   breadcrumbs,
   tabs,
+  tabsVariant = 'underlined',
   contentTabs,
   children,
   className
 }) => {
   const scrollable = usePageScrollable()
   const hasTabs = tabs && tabs.length > 0
+  const showInlineTabs = hasTabs && tabsVariant === 'ghost' && !contentTabs
+  const showSeparateTabs = hasTabs && !showInlineTabs
   return (
     <Layout.Vertical
       gap="md"
       className={cn(
         'w-full',
-        hasTabs ? 'mb-0' : 'mb-cn-md',
+        showSeparateTabs ? 'mb-0' : 'mb-cn-lg',
         // In scrollable mode, Page.Root uses `display: contents` on the wrapper,
         // so this header must own its own padding and sticky positioning.
         scrollable && 'sticky top-0 z-10 bg-cn-1 cn-page-content cn-page-content-pt',
@@ -119,10 +148,16 @@ export const HeaderV2: FC<PageHeaderV2Props> = ({
       )}
     >
       {breadcrumbs}
-      <TitleSection title={title} iconName={iconName} description={description} actions={actions} />
+      <TitleSection
+        title={title}
+        iconName={iconName}
+        description={description}
+        actions={actions}
+        inlineTabs={showInlineTabs ? tabs : undefined}
+      />
       {children}
-      {hasTabs && contentTabs && <ContentTabsSection items={tabs} />}
-      {hasTabs && !contentTabs && <NavTabsSection items={tabs} />}
+      {showSeparateTabs && contentTabs && <ContentTabsSection items={tabs} />}
+      {showSeparateTabs && !contentTabs && <NavTabsSection items={tabs} />}
     </Layout.Vertical>
   )
 }

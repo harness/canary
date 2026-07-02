@@ -47,6 +47,11 @@ interface FilterGroupProps<
   headerAction?: ReactNode
   isAddFilterSearchable?: boolean
   addFilterInputPlaceholder?: string
+  /**
+   * Hides the "Add filter" dropdown and the "Reset" control. Useful when all
+   * filters are sticky (always visible), so there is nothing to add.
+   */
+  hideAddFilter?: boolean
   savedFiltersConfig?: {
     savedFilterKey?: string
     savedFiltersOptions: { value: string; label: string }[]
@@ -80,7 +85,8 @@ const FilterGroupInner = <
     savedFiltersConfig,
     handleFilterOpen,
     isAddFilterSearchable,
-    addFilterInputPlaceholder
+    addFilterInputPlaceholder,
+    hideAddFilter
   } = props
 
   const { t } = useTranslation()
@@ -163,7 +169,7 @@ const FilterGroupInner = <
                   placeholder={searchPlaceholder ?? t('views:repos.search', 'Search')}
                 />
                 {props.quickFiltersSlot}
-                {filterOptions.length > 0 && (
+                {filterOptions.length > 0 && !hideAddFilter && (
                   <FilterHandler.Dropdown>
                     {(addFilter, availableFilters, resetFilters) => {
                       return (
@@ -210,6 +216,7 @@ const FilterGroupInner = <
             <ListControlBar<T, CustomValue, T[keyof T]>
               isAddFilterSearchable={isAddFilterSearchable}
               addFilterInputPlaceholder={addFilterInputPlaceholder}
+              hideAddFilter={hideAddFilter}
               renderSelectedFilters={filterFieldRenderer => (
                 <FilterHandler.Content className={'gap-x-cn-md flex items-center'}>
                   {filterOptions.map(filterOption => {

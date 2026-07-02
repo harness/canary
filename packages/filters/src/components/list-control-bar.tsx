@@ -19,6 +19,8 @@ interface FiltersBarProps<T, V = T[keyof T], CustomValue = Record<string, unknow
   selectedFiltersCnt: number
   isAddFilterSearchable?: boolean
   addFilterInputPlaceholder?: string
+  /** Hides the "Add filter" dropdown and the "Reset" control. */
+  hideAddFilter?: boolean
   renderSelectedFilters: (
     filterFieldRenderer: (
       filterFieldConfig: Omit<FiltersFieldProps<Extract<keyof T, string>, V, CustomValue>, 'shouldOpenFilter' | 't'>
@@ -47,7 +49,8 @@ const ListControlBar = <T extends Record<string, any>, CustomValue = Record<stri
   renderSelectedFilters,
   renderFilterOptions,
   isAddFilterSearchable,
-  addFilterInputPlaceholder
+  addFilterInputPlaceholder,
+  hideAddFilter
 }: FiltersBarProps<T, V, CustomValue>) => {
   const { t } = useTranslation()
 
@@ -99,7 +102,7 @@ const ListControlBar = <T extends Record<string, any>, CustomValue = Record<stri
       {renderSelectedSort?.()}
       {renderSelectedFilters(filtersFieldRenderer)}
 
-      {selectedFiltersCnt > 0 && (
+      {selectedFiltersCnt > 0 && !hideAddFilter && (
         <div className="flex items-center justify-between gap-x-cn-md">
           {renderFilterOptions(filterOptionsRenderer)}
         </div>

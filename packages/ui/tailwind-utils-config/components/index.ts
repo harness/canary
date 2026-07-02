@@ -38,6 +38,7 @@ import sidebarStyles from './sidebar'
 import skeletonStyles from './skeleton'
 import sliderStyles from './slider'
 import dualPaneStepperStyles from './dual-pane-stepper'
+import singlePaneStepperStyles from './single-pane-stepper'
 import flowStepperCardStyles from './flow-stepper-card'
 import stackedListStyles from './stacked-list'
 import stepperStyles from './stepper'
@@ -102,6 +103,7 @@ export const ComponentStyles = [
   shimmerStyles,
   sliderStyles,
   dualPaneStepperStyles,
+  singlePaneStepperStyles,
   flowStepperCardStyles,
   stepperStyles,
 

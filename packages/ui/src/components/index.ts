@@ -119,3 +119,10 @@ export * from './input-caption'
 export * from './mention-textarea'
 export * from './stepper'
 export * from './dual-pane-stepper'
+// useFlowCard is already re-exported via ./dual-pane-stepper above (same shared engine hook);
+// export only the single-pane-specific names here to avoid a duplicate-export error.
+export {
+  SinglePaneStepper,
+  type SinglePaneStepperRootProps,
+  type SinglePaneStepperCardProps
+} from './single-pane-stepper'

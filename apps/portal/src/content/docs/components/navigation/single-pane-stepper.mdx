@@ -1,0 +1,136 @@
+---
+title: Single Pane Stepper
+description: A single-column guided flow component with card-based navigation and integrated stepper timeline.
+---
+
+import { Aside } from "@astrojs/starlight/components";
+import { FullFlowDemo } from "@/components/single-pane-stepper-demo";
+
+The `SinglePaneStepper` is a single-column flow component for multi-step guided processes. It displays a vertical timeline on the left with collapsible cards on the right.
+
+Use this component for linear onboarding flows, setup wizards, and configuration processes where each step follows sequentially.
+
+## Interactive Example
+
+This example demonstrates a simple CI pipeline generation flow with step-based navigation.
+
+<div className="h-[1000px] border border-cn-2 rounded-lg overflow-hidden my-6">
+  <FullFlowDemo client:only="react" />
+</div>
+
+<Aside type="tip">
+  Select a language, configure the project, and complete the flow to see the
+  final state.
+</Aside>
+
+## Usage
+
+```typescript jsx
+import { SinglePaneStepper, useFlowCard } from "@harnessio/ui/components";
+import type { FlowConfig } from "@harnessio/ui/components";
+
+const flow: FlowConfig = {
+  steps: {
+    configure: { title: "Configure", description: "Set up your project" },
+    generate: { title: "Generate", description: "Create pipeline" },
+  },
+  subSteps: {
+    "choose-language": {
+      step: "configure",
+      component: LanguageCard,
+      next: "generate-pipeline",
+    },
+    "generate-pipeline": {
+      step: "generate",
+      component: GeneratePipelineCard,
+    },
+  },
+  initialSubStep: "choose-language",
+};
+
+<SinglePaneStepper.Root
+  flow={flow}
+  icon={<Logo />}
+  title="Generate CI Pipeline"
+  onComplete={(state) => console.log("Done!", state)}
+/>
+```
+
+## Anatomy
+
+The Single Pane Stepper uses a compound component pattern:
+
+```typescript jsx
+<SinglePaneStepper.Root flow={flowConfig}>
+  {/* Cards are rendered automatically from flowConfig.subSteps */}
+</SinglePaneStepper.Root>
+```
+
+Cards use the `useFlowCard` hook to interact with the flow engine:
+
+```typescript jsx
+function MyCard() {
+  const { state, status, complete, error, skip } = useFlowCard();
+
+  return (
+    <SinglePaneStepper.Card title="My Card">
+      {/* Card content */}
+    </SinglePaneStepper.Card>
+  );
+}
+```
+
+## Flow Configuration
+
+The `FlowConfig` object defines the structure of your flow. It's the same configuration format used by `DualPaneStepper`, making it easy to migrate between the two components.
+
+```typescript
+interface FlowConfig {
+  steps: Record<string, StepConfig>; // Timeline steps
+  subSteps: Record<string, SubStepConfig>; // Card definitions
+  initialSubStep: string; // First card to show
+}
+
+interface StepConfig {
+  title: string;
+  description?: string;
+}
+
+interface SubStepConfig {
+  step: string; // Which step this substep belongs to
+  title: string; // Shown in the timeline
+  component: ComponentType; // React component to render as a card
+  next?: string; // Next substep ID (optional if dynamic)
+}
+```
+
+## API Reference
+
+### SinglePaneStepper.Root
+
+| Prop         | Type                                       | Description                                    |
+| ------------ | ------------------------------------------ | ---------------------------------------------- |
+| `flow`       | `FlowConfig`                               | Flow configuration defining steps and substeps |
+| `icon`       | `ReactNode`                                | Icon displayed in the header                   |
+| `title`      | `string`                                   | Title displayed in the header                  |
+| `onComplete` | `(state: Record<string, unknown>) => void` | Callback when any card completes               |
+
+### SinglePaneStepper.Card
+
+| Prop          | Type        | Description      |
+| ------------- | ----------- | ---------------- |
+| `title`       | `string`    | Card title       |
+| `description` | `string`    | Card description |
+| `children`    | `ReactNode` | Card content     |
+
+### useFlowCard Hook
+
+Returns an object with the following properties:
+
+| Property   | Type                                                             | Description                                     |
+| ---------- | ---------------------------------------------------------------- | ----------------------------------------------- |
+| `state`    | `Record<string, unknown>`                                        | Accumulated flow state from all completed cards |
+| `status`   | `'pending' \| 'active' \| 'completed' \| 'skipped' \| 'error'`   | Current card status                             |
+| `complete` | `(data?: Record<string, unknown>, nextSubStep?: string) => void` | Mark card as complete and optionally navigate   |
+| `error`    | `() => void`                                                     | Mark card as errored                            |
+| `skip`     | `(nextSubStep?: string) => void`                                 | Skip card and optionally navigate               |

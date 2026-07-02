@@ -29,6 +29,7 @@ import { useGetRepoRef } from '../../framework/hooks/useGetRepoPath'
 import { useGitRef } from '../../hooks/useGitRef'
 import { PathParams } from '../../RouteDefinitions'
 import { FILE_SEPARATOR, normalizeGitRef, REFS_BRANCH_PREFIX, REFS_TAGS_PREFIX } from '../../utils/git-utils'
+import { encodeResourcePath } from '../../utils/path-utils'
 import { transformBranchList } from './transform-utils/branch-transform'
 import { buildPathSearchList } from './transform-utils/path-transform'
 
@@ -194,7 +195,7 @@ export const RepoSidebar = () => {
 
   const navigateToFile = useCallback(
     (filePath: string) => {
-      navigate(routes.toRepoFiles({ spaceId, repoId, '*': `${fullGitRef}/~/${filePath}` }))
+      navigate(routes.toRepoFiles({ spaceId, repoId, '*': `${fullGitRef}/~/${encodeResourcePath(filePath)}` }))
     },
     [fullGitRef, navigate, repoId]
   )

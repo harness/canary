@@ -246,17 +246,18 @@ enabling already live in the low-fidelity cell — do we close it for them?"
 - **Kitchen sink** — our existing app that runs `@harnessio/ui` inside the platformUI context — IS the bottom row. It already exists, it's free, no shared-file publish, no mapping upkeep.
 - **Cost rides along:** in-context = the agent references the real component (accurate AND cheap, one import); out-of-context = it rebuilds from pixels (off-brand AND expensive — stripping context roughly **doubled discovery cost**). Fidelity and token-efficiency are the same lever.
 - So the primary move isn't new infrastructure — it's **routing AI prototyping through kitchen-sink-in-platformUI.**
-- Confidence tag: The 2×2 is measured; "kitchen sink = the repo-access row" is the direct implication, worth a confirming run.
+- **Confirmed directly:** agents building inside kitchen sink hit **5/5 real CounterBadge with Code Connect OFF** (and 5/5 with it on). Context alone reaches fidelity; Code Connect adds nothing measurable on top.
+- Confidence tag: Measured in the actual kitchen-sink app — n=5/arm, one component, Opus 4.8. Directional and clean.
 
 **Visual:** the 2×2 with the two arrows to fidelity called out:
 ```
-                       CC OFF        CC ON
-   Figma only          0/5  ❌   ──►  5/5 ✅   ◄ Code Connect route
-                         │
-                         ▼ repo-context route (Kitchen Sink)
-   Repo access          5/5  ✅        5/5 ✅
+                        CC OFF        CC ON
+   Figma only           0/5  ❌   ──►  5/5 ✅   ◄ Code Connect route
+                          │
+                          ▼ repo-context route (Kitchen Sink)
+   Kitchen Sink / repo   5/5  ✅        5/5 ✅   ◄ measured: 5/5 without CC
 
-   Two roads to 5/5. Kitchen Sink is already built.
+   Two roads to 5/5. Kitchen Sink is already built — and confirmed 5/5.
 ```
 Speaker note: This is the measurement paying off — the free, existing fix reaches
 the same cell as the expensive one. Kitchen sink is the lead; Code Connect earns a
@@ -295,7 +296,7 @@ narrower role on the next slide.
 - **3. Keep docs factually correct (cheap, ongoing).** Wrong facts are the one doc failure that misleads agents. Stand up an **AI-legibility CI gate** (fails on phantom paths / stale variants), with the A/B harness as the regression instrument.
 - The win: the free, existing fix (kitchen sink) does the heavy lifting — we know because we measured, instead of defaulting to the expensive build.
 - Horizon (one line): *And the method — measure legibility, fix wrong facts, put the agent in real context — generalizes to any codebase. For a dev-tools company whose customers increasingly build with AI, Canary is the proving ground.*
-- Footer caveat: Evidence, not proof — small samples, mostly one model family, pilot on one component family. Gap reproduced in the trial and in real workflow; confirm with a second component family.
+- Footer caveat: Evidence, not proof — small samples, one component family, Opus 4.8. Kitchen-sink fidelity measured directly (5/5); confirm breadth with a second component family.
 
 **Visual:** Goal at top, tiered fixes by leverage:
 ```
@@ -334,14 +335,16 @@ line, open the company-wide AI-legibility conversation — but let the data lead
                               "headless" guide that ships UI
   Code Connect (badge family) Figma→code binding — live & verified            Published
   Code Connect handoff trial  2×2 ablation, 20 runs, 0/5 → 5/5 on handoff     CODE_CONNECT_TRIAL.md
+  Kitchen-sink context trial  10 runs in real app; 5/5 fidelity w/o Code      CODE_CONNECT_TRIAL.md
+                              Connect — context alone is sufficient
 ```
 Footer: Plus the reusable A/B harness and the data behind every claim —
 `CODE_CONNECT_TRIAL.md`, `AI_READINESS_FINDINGS.md`.
 
 **Open verification (before scaling):**
 - Package access is NOT the blocker — resolved: PMs can install `@harnessio/ui`; results still mixed. The differentiator is repo *context* (platformUI / kitchen sink), not the package.
-- Kitchen-sink confirmation — run the trial inside kitchen sink to confirm it lands in the 5/5 fidelity cell as the 2×2 predicts
-- Second component family — confirm the 0/5→5/5 pattern holds beyond badges
+- Kitchen-sink confirmation — DONE: 5/5 real component with Code Connect off, inside the real kitchen-sink app (see CODE_CONNECT_TRIAL.md)
+- Second component family — confirm the 0/5→5/5 and kitchen-sink 5/5 patterns hold beyond badges
 - Visual-fidelity score — measure prototype-vs-spec pixel fidelity, not just component choice
 
 ---
@@ -355,5 +358,6 @@ Footer: Plus the reusable A/B harness and the data behind every claim —
 - Switch for Code Connect arms: `get_design_context` `disableCodeConnect` flag (verified it flips the output: generic div vs. real component)
 - The in-repo/out-of-repo fidelity gap was first observed in my own prototyping workflow (platformUI = high fidelity; Figma MCP outside Canary = imitation), then reproduced as the trial's 2×2. Anecdote and measurement are the same phenomenon.
 - Access ruled out as the cause: PMs can install the package; fidelity still varies by context. Kitchen sink (runs `@harnessio/ui` in platformUI context) is the existing in-context path = the 2×2's repo-access row.
-- Caveats: small n, badge family only, mostly one model family. Directional. Next steps: confirm kitchen-sink fidelity, second component family, visual-fidelity scoring.
+- Kitchen-sink trial: 2 arms × 5 runs inside the real app; 5/5 real CounterBadge with Code Connect OFF (context alone = fidelity), 5/5 with it on.
+- Caveats: small n, badge family only, Opus 4.8. Directional. Next steps: second component family, visual-fidelity scoring.
 - Started from a commissioned external scan; independently verified and corrected it (caught 4 errors, incl. the phantom `badge.tsx` and a non-existent issue number).

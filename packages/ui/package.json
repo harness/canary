@@ -56,7 +56,9 @@
     "typecheck": "tsc -b",
     "extract": "i18next --config './i18n.config.ts'",
     "update:icons": "node scripts/icons.js",
-    "update:logos": "node scripts/logos.js"
+    "update:logos": "node scripts/logos.js",
+    "figma:check": "figma connect --config figma.config.json --dry-run",
+    "figma:publish": "figma connect publish --config figma.config.json"
   },
   "types": "./dist/index.d.ts",
   "style": "./dist/styles.css",
@@ -152,6 +154,7 @@
     "react-router-dom": ">=5"
   },
   "devDependencies": {
+    "@figma/code-connect": "^1.4.8",
     "@testing-library/jest-dom": "^6.6.3",
     "@testing-library/react": "^12.1.5",
     "@testing-library/user-event": "^13.5.0",

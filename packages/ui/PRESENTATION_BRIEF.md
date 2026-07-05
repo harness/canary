@@ -1,19 +1,21 @@
 # Presentation Brief — Canary AI-Readiness
 
 Paste this whole file into Claude / a slide generator. It's the finalized deck:
-13 slides + backup. Each slide has **content** and a **visual** spec — build the
-visual, don't just bullet the text.
+~16 slides (numbered 1, 1a, 2–9, 9a, 9b, 9c, 10–12) + a Q&A backup. Each slide has
+**content** and a **visual** spec — build the visual, don't just bullet the text.
+Slide order is the presentation order.
 
 ---
 
 ## Meta (for the generator)
 
-- **Title:** We Audited Canary for AI-Readiness. I Expected a Docs Problem. The Data Said Otherwise.
+- **Title:** Prototypes That Actually Look Like Harness. What It Takes to Get There with AI.
 - **Audience:** Exec + design/eng leadership. Mixed technical depth.
 - **Tone:** Direct, evidence-led, no hype. Confidence levels stated, not buried.
-- **Voice:** "I" for decisions and judgment (hypothesis, building the harness, the pivots, the reframe). Results stated in the work's own voice ("the data showed," "0/5 → 5/5"). "We" for the team asks. Establish authorship once on slide 1, then let substance carry it.
-- **Narrative spine:** expected X → found Y → what I did → what it proves. Keep it visible.
-- **Design:** Clean, data-forward. Neutral palette; ONE accent color, used only for key numbers and the expected-vs-found contrast. Green = correct/used-our-component, red = wrong/hand-rolled — use consistently on slides 6, 7, 9, 9a.
+- **Voice:** "I" for decisions and judgment (the goal, the observation, building the harness, the pivots, the reframe). Results stated in the work's own voice ("the data showed," "0/5 → 5/5"). "We" for the team asks. Establish authorship once on slide 1, then let substance carry it.
+- **Narrative spine:** the GOAL (PMs & designers prototype in real Harness fidelity, cheaply, without living in the codebase) → the GAP I hit (in-repo = great, out-of-repo = imitations) → what the data shows causes it → what closes it. Every slide serves that north star — keep it visible.
+- **Two payoffs, one lever:** fidelity AND token-efficiency move together. Handing an agent the real component = accurate + cheap; making it reconstruct from pixels = imitation + expensive. Don't treat cost as a separate axis; it's the co-payoff of the same fix.
+- **Design:** Clean, data-forward. Neutral palette; ONE accent color, used only for key numbers and the expected-vs-found contrast. Green = correct/used-our-component, red = wrong/hand-rolled/imitation — use consistently on slides 6, 7, 9, 9a.
 - **Visual-heavy:** every slide gets a diagram, chart, grid, or before/after. No text-only slides.
 - **Never-strip rule:** the confidence caveats on slides 4, 6, 9, 9a, 11 must survive the design pass. In an exec room they are what makes the claims credible.
 
@@ -22,22 +24,45 @@ visual, don't just bullet the text.
 ## Slide 1 — Title
 
 **Content:**
-- Title: We Audited Canary for AI-Readiness. I Expected a Docs Problem. The Data Said Otherwise.
-- Subtitle: What I set out to measure, what surprised me, and what shipped because of it.
+- Title: Prototypes That Actually Look Like Harness. What It Takes to Get There with AI.
+- Subtitle: Why PM/designer prototypes come out looking like imitations of our design system — and what closes the gap.
 - Footer: Investigation & implementation: [Your name] · [date] · Design Systems
 
-**Visual:** Full-bleed title. Optional faint background motif: a Figma frame and a
-code bracket `{ }` with an arrow between them — foreshadows the design→code thesis.
+**Visual:** Full-bleed title. Background motif: two badge mockups side by side —
+one crisp/on-brand, one slightly-off "imitation" — foreshadowing the fidelity gap.
 
 ---
 
-## Slide 2 — Why the audit
+## Slide 1a — The goal (open here)
 
 **Content:**
-- Headline: As coding agents start building with our design system, one question mattered: can they use it correctly?
+- Headline: The goal: PMs and designers prototype in real Harness fidelity — accurately, cheaply, without living in the codebase
+- Prototyping is how product decisions get made. If prototypes don't look like the real platform, they mislead — and reworking them wastes cycles
+- The dream: a designer or PM turns a Figma design into working, on-brand Harness UI with AI — no eng handoff, no repo expertise
+- The catch I hit myself: **when I prototype inside platformUI (which consumes Canary), results are great. When I use Figma MCP to build the same design outside Canary, the output looks like an imitation** — right idea, wrong execution, off-brand
+- That gap is the whole problem. This deck is: why it happens, and what closes it.
+
+**Visual:** Two-panel "same design, two workflows" comparison:
+```
+   IN-REPO (platformUI + Canary)        OUT-OF-REPO (Figma MCP, no Canary)
+   ┌───────────────────────┐            ┌───────────────────────┐
+   │  ✅ real components     │            │  ❌ imitation           │
+   │  ✅ on-brand            │            │  ❌ raw colors, off-spec │
+   │  ✅ cheap (1 import)    │            │  ❌ expensive (rebuilt)  │
+   └───────────────────────┘            └───────────────────────┘
+```
+Speaker note: This isn't a hypothetical — it's my own workflow. The rest of the
+deck shows this exact split is a measurable, fixable phenomenon, not bad luck.
+
+---
+
+## Slide 2 — So I audited what agents can actually see
+
+**Content:**
+- Headline: To find the cause, I audited how legible Canary is to an AI agent
 - Canary — 118 components, our tokens, the library our apps depend on
-- AI agents (a new hire who's never seen our code) increasingly write the UI
-- We audited five areas and scored each
+- An AI agent is a new hire who's never seen our code — what can it discover, and does it build correctly?
+- Audited five areas and scored each
 
 **Visual:** Scorecard as a 5-bar rating strip (filled squares out of 5):
 ```
@@ -74,19 +99,22 @@ Speaker note: I didn't theorize the fix — I built it, then tested whether it w
 ## Slide 4 — What the data said
 
 **Content:**
-- Headline: Agents don't read our docs. They read our code — and mostly get it right with no docs at all
-- Tested directly: same build task, with our docs vs. docs stripped
-- Either way, agents produced near-identical, mostly-correct code
-- Even the agent guide I wrote, measured head-to-head: it **halves discovery time**, but doesn't change what gets built — speed, not correctness
+- Headline: Agents read our docs — but they build from our code. When the two disagree, code wins.
+- Tested directly: same build task, with our docs vs. docs stripped. Agents *did* read the docs (logged reading them early) — the output barely changed either way
+- In one trial the agent read a stale guide, noted "this looks out of date," then overrode it with the real code and built correctly
+- Even the agent guide I wrote, measured head-to-head: it **halves discovery time** (speed), but doesn't change what gets built (correctness)
 - Confidence tag: Strong signal, not proof — 4 trials, small samples, one model family
 
 **Visual:** Split card, HYPOTHESIS (struck through) vs. FINDING:
 ```
    EXPECTED                    FOUND
-   "The fix is docs"    →      "Docs barely move
-   (struck through)            what a capable agent builds"
+   "The fix is docs"    →      "Agents read docs, but BUILD from code.
+   (struck through)            Code is the stronger signal —
+                               docs only move the output where code is silent."
 ```
-Speaker note: The guide isn't wasted — it makes agents and new hires faster. It just isn't the *correctness* lever we assumed. That's the finding.
+Speaker note: The guide isn't wasted — it's read, and it speeds orientation for
+agents and new hires. It just isn't the *correctness* lever. And this sets up the
+whole story: the imitation problem happens exactly where there's no code to read.
 
 ---
 
@@ -184,11 +212,11 @@ Speaker note: This harness is the reusable asset — returns on slide 10.
 
 ---
 
-## Slide 9a — The 2×2 (the whole insight in one grid) [DATA VISUAL]
+## Slide 9a — The 2×2 (this IS the imitation problem) [DATA VISUAL]
 
 **Content:**
-- Headline: ...but only where there's no code to read. That's the whole insight in one grid.
-- Caption: The only failure is design-handoff with no Code Connect. Give the agent the codebase and it finds the component itself — Code Connect adds nothing. Take the codebase away (a Figma frame, a designer prototyping) and Code Connect is the only thing that works.
+- Headline: The imitation gap I hit is the red cell — and it's exactly where PMs and designers live
+- Caption: Give the agent the codebase and it finds the component itself — Code Connect adds nothing (in-repo prototyping = why my platformUI results are great). Take the codebase away — a Figma frame, a designer prototyping outside the repo — and it hand-rolls an imitation. **PMs and designers are structurally in that bottom-left cell, always.** Code Connect is the fix for exactly the people the goal is about.
 
 **Visual:** 2×2 grid, green cells = used our component, red cell = hand-rolled:
 ```
@@ -201,10 +229,48 @@ Speaker note: This harness is the reusable asset — returns on slide 10.
    │ access           │   (read source)    │   CounterBadge    │
    └──────────────────┴───────────────────┴───────────────────┘
 ```
-Speaker note: Docs AND repo access both fail on the same axis — no code to read.
-Code Connect is the fix for exactly that quadrant. So its ROI is a bet on how much
-generation starts from Figma frames without repo context — not urgent for
-in-repo engineers today, decisive for design-handoff and design-scoped agents.
+Speaker note: The "redundant in-repo" cell isn't a weakness — it's the scoping
+insight. Engineers are covered; the goal is PMs and designers, and they never
+have the repo. Reframe the ask: not "bet on a maybe-future," but "the people we're
+enabling already live in the low-fidelity cell — do we close it for them?"
+
+---
+
+## Slide 9b — Fidelity AND cost move together [DATA VISUAL]
+
+**Content:**
+- Headline: The imitation path isn't just off-brand — it's expensive. The fix delivers both.
+- Reconstructing a component from pixels = wrong execution AND wasted tokens. Referencing the real component = accurate AND cheap (one import).
+- Signal from the trials: stripping context roughly **doubled discovery cost** (turns / time / $); the Code-Connect-on runs resolved in **fewer tool calls** than the off runs that had to rebuild.
+- So fidelity and token-efficiency are not a tradeoff — the same lever (hand the agent the real component vs. make it guess) delivers both.
+- Confidence tag: Directional — cost measured in the doc trials; handoff cost delta observed, not yet formally tallied per-run.
+
+**Visual:** Two bars, same task:
+```
+   IMITATION PATH (rebuild from pixels)   ▓▓▓▓▓▓▓▓  high tokens · off-brand ❌
+   REFERENCE PATH (real component)        ▓▓▓        low tokens · on-brand  ✅
+```
+
+---
+
+## Slide 9c — Fidelity needs TWO things (a lever we shouldn't miss)
+
+**Content:**
+- Headline: Knowing the right component isn't enough — the prototype also has to be able to run it
+- Fidelity out-of-repo needs both: **(1) the binding** — which component (`CounterBadge`) → Code Connect provides this; **(2) access** — can the prototype actually `import` and run `@harnessio/ui`?
+- Open question worth checking: if the package isn't trivially installable where PMs prototype, Code Connect hands them the right import and the prototype *still breaks* — so they fall back to imitation
+- We have a hint: the registry is gated (we hit install-auth failures all weekend). Part of the imitation problem may be *access*, not Figma-MCP quality
+- **Potential cheapest win of all:** make `@harnessio/ui` + a prototype starter trivially consumable outside the repo — may recover most fidelity before any Code Connect
+- Confidence tag: Hypothesis, moderate — flagged for verification, not yet tested
+
+**Visual:** Two-gate diagram to a working prototype:
+```
+   Figma design ──► [ Gate 1: which component? ]  ──► [ Gate 2: can it run it? ] ──► ✅ fidelity
+                        Code Connect                    package installable?
+                        (proven)                        (unverified — check this)
+```
+Speaker note: Don't headline Code Connect if publishing the package for
+prototyping gets us most of the way for a fraction of the effort. Verify Gate 2.
 
 ---
 
@@ -224,37 +290,33 @@ high (Figma→code binding) — showing return-per-effort, not effort.
 ## Slide 11 — Takeaway + the decision
 
 **Content:**
-- Headline: I expected a docs problem. I found a fork in the road — and made it safe to choose.
-- The evidence points to one real decision, not a to-do list: **Code Connect is decisive for design→code handoff (0/5 → 5/5), and redundant once an agent can read the repo.** So the question is strategic, not technical:
+- Headline: The imitation gap is real, measured, and fixable. The decision is how far we close it.
+- What the evidence establishes: the low-fidelity output PMs and designers get is the "no code to read" cell — and **Code Connect closes it (0/5 → 5/5)**. The people the goal is about live there permanently. This isn't a bet on a maybe-future; it's the workflow they have today.
 
-**THE FORK — Are we betting on design-first generation? (UI built from Figma, by people and agents who don't live in the repo)**
+**THE DECISION — How far do we go to make design→code prototyping produce real Harness fidelity?**
 
-- **If YES →** Code Connect is infrastructure, not a pilot. I've de-risked it: proven it works, bounded exactly where it pays off. Fund the rollout to the high-traffic component set + stand up an **AI-legibility gate** — CI that fails on wrong facts (phantom paths, stale variants), with the A/B harness as the regression instrument.
-- **If NO →** we just avoided a rollout our own data says is pointless for in-repo work. Bank the cheap wins (the fact-fixes) and move on.
-- Either answer is a win — because we measured instead of guessed.
+- **Full commitment →** Code Connect is infrastructure, not a pilot. De-risked: proven it works, bounded where it pays off. Fund the rollout to the high-traffic component set, **verify the package is consumable outside the repo** (the second fidelity gate), and stand up an **AI-legibility CI gate** that fails on wrong facts (phantom paths, stale variants), with the A/B harness as the regression instrument.
+- **Cheapest-win first →** verify the package-access gate before any rollout — if PMs can't install `@harnessio/ui`, fixing that may recover most fidelity for a fraction of the effort. Bank the fact-fixes; scope Code Connect after.
+- **Hold →** we've already banked the fact-fixes and proven the mechanism. Revisit when design-first prototyping is a bigger share of how UI gets made.
+- Every path is informed by data, not guesswork — that's the win.
 - Horizon (one line): *And the method — measure legibility, fix wrong facts, bind the handoff — generalizes to any codebase. For a dev-tools company whose customers increasingly build with AI, Canary is the proving ground.*
-- Footer caveat: Evidence, not proof — small samples, one model family, pilot on one component family. The fork is real; the exact ROI needs a second component family to confirm.
+- Footer caveat: Evidence, not proof — small samples, one model family, pilot on one component family. The gap is real and reproduced (in the trial and in my own workflow); exact ROI needs a second component family + the package-access check to confirm.
 
-**Visual:** A literal fork-in-the-road diagram — one path in, two paths out:
+**Visual:** The goal at top, three funded-depth options beneath it:
 ```
-                          ┌──────────────────────────────┐
-              YES ───────►│ Code Connect = infrastructure │
-             ╱            │ Fund rollout + AI-legibility  │
-   ┌──────────────┐       │ CI gate (harness = regression)│
-   │  THE BET:     │      └──────────────────────────────┘
-   │  design-first │
-   │  generation?  │      ┌──────────────────────────────┐
-   └──────────────┘       │ Bank the fact-fixes,          │
-              ╲   NO ────►│ skip the rollout our own data │
-                          │ says is redundant in-repo     │
-                          └──────────────────────────────┘
-
-        Either branch is a win — because we measured.
+   GOAL: PM/designer prototypes that look like real Harness — accurate & cheap
+   ────────────────────────────────────────────────────────────────────────
+     FULL          → Code Connect rollout + package access + AI-legibility CI gate
+     CHEAPEST-WIN  → verify package install first; scope Code Connect after
+     HOLD          → bank fact-fixes; revisit as design-first grows
+   ────────────────────────────────────────────────────────────────────────
+        Every path is data-informed — the gap is measured, not guessed.
 ```
-Speaker note: This is a decision only leadership can make — I've made it safe to
-make either way. Don't frame it as "approve my rollout"; frame it as "pick the
-branch, both are de-risked." If the room leans into the horizon line, that's the
-cue to open the company-wide AI-legibility conversation — but let the data lead.
+Speaker note: Frame as "how far do we go," not "approve my rollout." All three are
+legitimate and de-risked. Push the cheapest-win check (package access) as the
+honest next move regardless of appetite — it may beat Code Connect on ROI. If the
+room leans into the horizon line, open the company-wide AI-legibility conversation
+— but let the data lead.
 
 ---
 
@@ -280,14 +342,20 @@ cue to open the company-wide AI-legibility conversation — but let the data lea
 Footer: Plus the reusable A/B harness and the data behind every claim —
 `CODE_CONNECT_TRIAL.md`, `AI_READINESS_FINDINGS.md`.
 
+**Open verification (before a full commitment):**
+- Package access — can `@harnessio/ui` be installed/run where PMs prototype? (registry is gated; may be a bigger fidelity lever than Code Connect)
+- Second component family — confirm the 0/5→5/5 pattern holds beyond badges
+- Visual-fidelity score — measure prototype-vs-spec pixel fidelity, not just component choice
+
 ---
 
 ## Backup slide (Q&A only) — methodology
 
 **Content (hold in reserve, don't present):**
 - Harness: fresh headless agents, isolated git worktrees, identical prompts, on/off = the single variable
-- Doc trials: 4 trials × 6 runs = 24; badge trial baseline 1/3 → 3/3
+- Doc trials: 4 trials × 6 runs = 24; badge trial baseline 1/3 → 3/3 (Sonnet 4.6)
 - Code Connect trial: 2×2, 5 runs/arm = 20; scored by parsing the generated file, not self-report
 - Switch for Code Connect arms: `get_design_context` `disableCodeConnect` flag (verified it flips the output: generic div vs. real component)
-- Caveats: single model family (Sonnet 4.6), small n, badge family only. Directional. Next step: repeat on a second component family.
+- The in-repo/out-of-repo fidelity gap was first observed in my own prototyping workflow (platformUI = high fidelity; Figma MCP outside Canary = imitation), then reproduced as the trial's 2×2. Anecdote and measurement are the same phenomenon.
+- Caveats: small n, badge family only, mostly one model family. Directional. Next steps: package-access check, second component family, visual-fidelity scoring.
 - Started from a commissioned external scan; independently verified and corrected it (caught 4 errors, incl. the phantom `badge.tsx` and a non-existent issue number).

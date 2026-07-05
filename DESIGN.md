@@ -588,7 +588,7 @@ Six shadow levels (`cn-shadow-1`…`cn-shadow-6`) plus an inset variant (`cn-sha
 Canary leans soft, not pill-first. Buttons, inputs, cards, and dialogs all live in the 2–12px radius range. `rounded.full` (9999px) is reserved for:
 - Badges and counter pills.
 - Avatars and logo marks.
-- Status dots (the leading indicator in `Badge variant="status"`).
+- Status dots (the leading indicator in `StatusBadge variant="status"`).
 
 Mixing sharp corners (`rounded.none`) and pill corners in the same surface is non-idiomatic and reads as a regression.
 
@@ -616,7 +616,13 @@ Canary ships ~115 components across form controls, navigation, data display, fee
 
 - **Tabs** (`packages/ui/src/components/tabs.tsx`) — four list variants: `underlined` (default), `overlined`, `ghost`, `outlined`. Active indicator is the `cn-brand` underline; inactive triggers use `cn-text-3`, active use `cn-text-1`. Supports horizontal and vertical orientations.
 
-- **Badge / Tag** (`packages/ui/src/components/badge.tsx`) — variants: `primary`, `secondary`, `outline`, `status`, `ghost`. Intent themes: `success`, `info`, `warning`, `danger`, `muted`, `merged`, `risk`. The `status` variant is bordered-only with a leading colored dot — no fill. Counter badges use `rounded.full` and a smaller size.
+- **Tag** (`packages/ui/src/components/tag.tsx`) — a **category / descriptive label** chip. Base class `cn-tag`. Variants: `outline` (default), `secondary`. Sizes `md` (default), `sm`. 15 color themes (`gray` default, plus `blue`/`brown`/`cyan`/`green`/`forest-green`/`indigo`/`lime`/`mint`/`orange`/`pink`/`purple`/`red`/`violet`/`yellow`). Takes `label`/`value` (renders a split key:value chip when both are set), an optional leading `icon`, and a removable affordance via `actionIcon` + `onActionClick`. Optional `rounded` for pill corners.
+
+- **StatusBadge** (`packages/ui/src/components/status-badge/status-badge.tsx`) — a **state / status indicator**. Base class `cn-badge`. Variants: `primary` (default), `secondary`, `outline`, `ghost`, `status`. Sizes `md` (default), `sm`. Semantic themes: `muted` (default), `success`, `warning`, `danger`, `info`, `merged`, `risk`. `variant="status"` renders a leading colored dot (bordered-only, no fill) and accepts `pulse` for a live/animated indicator; non-`status` variants accept a leading `icon` instead.
+
+- **CounterBadge** (`packages/ui/src/components/counter-badge.tsx`) — a **numeric count** pill. Base classes `cn-badge cn-badge-counter` (`rounded.full`, smaller size). Variants: `outline` (default), `secondary`. Themes: `default` (muted), `info`, `success`, `danger`. The count is passed as `children`.
+
+> **Choosing between them:** category or descriptive label → `Tag`; status / state → `StatusBadge`; numeric count → `CounterBadge`. There is no generic `Badge` component — do not import or reference `badge.tsx`; it does not exist.
 
 The full component property vocabulary is `backgroundColor`, `textColor`, `typography`, `rounded`, `padding`, `size`, `height`, `width` — every one resolves through a `cn-*` CSS variable.
 

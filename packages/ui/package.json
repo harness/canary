@@ -28,14 +28,12 @@
     "./shared-style-variables.css": "./src/styles/shared-style-variables.css",
     "./markdown-preview-styles.css": "./src/components/markdown-viewer/style.css",
     "./context": "./dist/context.js",
-    "./types": "./dist/types.js",
-    "./.claude/manifest.json": "./.claude/manifest.json"
+    "./types": "./dist/types.js"
   },
   "files": [
     "dist",
     "src/shared-style-variables.css",
-    "src/components/markdown-viewer/style.css",
-    ".claude"
+    "src/components/markdown-viewer/style.css"
   ],
   "scripts": {
     "dev": "vite",

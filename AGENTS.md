@@ -37,5 +37,6 @@ pnpm clean            # Remove all dist/ and node_modules/
 
 Packages with detailed agent guides:
 
+- [`packages/ui/AGENTS.md`](packages/ui/AGENTS.md) — Component library: Radix + cva + `cn-*` tokens, compound components, badge-family boundary, migrations
 - [`packages/ai-chat-core/AGENTS.md`](packages/ai-chat-core/AGENTS.md) — AI chat runtime: stream protocol, plugins, capabilities, React hooks
 - [`packages/filters/AGENTS.md`](packages/filters/AGENTS.md) — URL-driven filter state: parsers, router integration, saved filters

@@ -41,9 +41,9 @@ export interface SplitButtonProps<T extends string> extends SplitButtonBaseProps
  * - If selectedValue exists, it will behave as a radio button
  * - Otherwise, it will function as a regular dropdown item
  *
- * Supported combinations:
- * - variant=solid with theme=primary (default)
- * - variant=surface with theme=success|danger|muted
+ * `variant` and `theme` are forwarded to the underlying Button:
+ * - variant: primary (default) | secondary | outline | ghost | link | transparent | ai
+ * - theme: default (default) | success | danger
  */
 const SplitButtonInner = forwardRef(
   <T extends string>(

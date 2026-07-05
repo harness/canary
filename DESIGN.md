@@ -402,7 +402,7 @@ components:
   button-primary:
     backgroundColor: "{colors.cn-set-brand-primary-bg}"
     textColor:       "{colors.cn-set-brand-primary-text}"
-    rounded:         "{rounded.sm}"
+    rounded:         "{rounded.md}"
     padding:         "{spacing.sm}"
     typography:      "{typography.body-strong}"
   button-primary-hover:
@@ -410,22 +410,22 @@ components:
   button-secondary:
     backgroundColor: "{colors.cn-set-brand-secondary-bg}"
     textColor:       "{colors.cn-set-brand-secondary-text}"
-    rounded:         "{rounded.sm}"
+    rounded:         "{rounded.md}"
     padding:         "{spacing.sm}"
   button-outline:
     backgroundColor: transparent
     textColor:       "{colors.cn-text-1}"
-    rounded:         "{rounded.sm}"
+    rounded:         "{rounded.md}"
     padding:         "{spacing.sm}"
   button-ghost:
     backgroundColor: transparent
     textColor:       "{colors.cn-text-1}"
-    rounded:         "{rounded.sm}"
+    rounded:         "{rounded.md}"
     padding:         "{spacing.sm}"
   input-default:
     backgroundColor: "{colors.cn-bg-1}"
     textColor:       "{colors.cn-text-2}"
-    rounded:         "{rounded.sm}"
+    rounded:         "{rounded.md}"
     padding:         "{spacing.sm}"
     typography:      "{typography.body-normal}"
   input-focus:
@@ -441,17 +441,17 @@ components:
   dialog:
     backgroundColor: "{colors.cn-bg-3}"
     textColor:       "{colors.cn-text-1}"
-    rounded:         "{rounded.lg}"
+    rounded:         "{rounded.xl}"
     padding:         "{spacing.xl}"
   dropdown:
     backgroundColor: "{colors.cn-bg-3}"
     textColor:       "{colors.cn-text-2}"
-    rounded:         "{rounded.sm}"
+    rounded:         "{rounded.lg}"
     padding:         "{spacing.2xs}"
   badge-primary:
     backgroundColor: "{colors.cn-set-brand-primary-bg}"
     textColor:       "{colors.cn-set-brand-primary-text}"
-    rounded:         "{rounded.xs}"
+    rounded:         "{rounded.md}"
     typography:      "{typography.caption-normal}"
   badge-status:
     backgroundColor: transparent
@@ -525,7 +525,7 @@ The color system has two layers and components only ever consume the second one.
 - `cn-text-1`…`cn-text-4` — four contrast levels from headings down to disabled.
 - `cn-text-{success,danger,warning,merged,brand}` — intent text.
 - `cn-border-1`…`cn-border-3` plus `cn-border-{brand,success,danger,warning}` — three neutral weights and intent borders.
-- `cn-set-{intent}-{primary|secondary|outline}-{bg,text,bg-hover,bg-selected,ring}` — the full intent matrix. Fourteen intents (brand, success, danger, warning, blue, purple, brown, cyan, indigo, lime, mint, orange, pink, violet, gray, ai), three roles, four-to-five properties each.
+- `cn-set-{intent}-{primary|secondary|outline}-{bg,text,bg-hover,bg-selected,ring}` — the full intent matrix. Sixteen intents (brand, success, danger, warning, blue, purple, brown, cyan, indigo, forest-green, mint, orange, pink, violet, gray, ai), three roles, four-to-five properties each. Note the success intent set is `cn-set-forest-green-*` — there is no `cn-set-lime-*`.
 
 **Intent assignments.**
 - **brand** → `indigo` (primary action, focus, links).
@@ -576,7 +576,7 @@ Six shadow levels (`cn-shadow-1`…`cn-shadow-6`) plus an inset variant (`cn-sha
 
 **Usage.**
 - Cards: no shadow (except used in Pipelines). Bordered surface (`cn-border-2`) on `cn-bg-1`.
-- Tooltips, popovers: `cn-shadow-3`.
+- Tooltips, popovers: `cn-shadow-4`.
 - Dropdowns, menus: `cn-shadow-4`.
 - Dialogs, modals: `cn-shadow-5`.
 - Heaviest (`cn-shadow-6`): reserved for high-emphasis floating surfaces (rare).

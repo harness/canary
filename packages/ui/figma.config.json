@@ -1,8 +1,18 @@
 {
   "codeConnect": {
-    "include": ["src/**/*.figma.tsx"],
+    "include": ["src/**/*.figma.tsx", "src/**/*.tsx"],
     "exclude": ["src/**/*.test.tsx", "dist/**"],
     "label": "React",
-    "parser": "react"
+    "parser": "react",
+    "importPaths": {
+      "src/components/*": "@harnessio/ui/components"
+    },
+    "paths": {
+      "@/*": ["src/*"],
+      "@components/*": ["src/components/*"],
+      "@utils/*": ["src/utils/*"],
+      "@hooks/*": ["src/hooks/*"],
+      "@types/*": ["src/types/*"]
+    }
   }
 }

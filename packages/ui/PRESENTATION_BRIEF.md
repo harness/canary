@@ -13,7 +13,7 @@ Slide order is the presentation order.
 - **Audience:** Exec + design/eng leadership. Mixed technical depth.
 - **Tone:** Direct, evidence-led, no hype. Confidence levels stated, not buried.
 - **Voice:** "I" for decisions and judgment (the goal, the observation, building the harness, the pivots, the reframe). Results stated in the work's own voice ("the data showed," "0/5 → 5/5"). "We" for the team asks. Establish authorship once on slide 1, then let substance carry it.
-- **Narrative spine:** the GOAL (PMs & designers prototype in real Harness fidelity, cheaply, without living in the codebase) → the GAP I hit (in-repo = great, out-of-repo = imitations) → what the data shows causes it → what closes it. Every slide serves that north star — keep it visible.
+- **Narrative spine:** the GOAL (PMs & designers turn Figma into prototypes that look like real Harness, with AI) → the GAP I hit (in-context = great, out-of-context = imitations; access is NOT the cause) → what the data shows causes it (repo context, not the package) → what closes it (route through kitchen sink, which already provides that context; Code Connect as accelerant). Every slide serves that north star — keep it visible.
 - **Two payoffs, one lever:** fidelity AND token-efficiency move together. Handing an agent the real component = accurate + cheap; making it reconstruct from pixels = imitation + expensive. Don't treat cost as a separate axis; it's the co-payoff of the same fix.
 - **Design:** Clean, data-forward. Neutral palette; ONE accent color, used only for key numbers and the expected-vs-found contrast. Green = correct/used-our-component, red = wrong/hand-rolled/imitation — use consistently on slides 6, 7, 9, 9a.
 - **Visual-heavy:** every slide gets a diagram, chart, grid, or before/after. No text-only slides.
@@ -25,7 +25,7 @@ Slide order is the presentation order.
 
 **Content:**
 - Title: Prototypes That Actually Look Like Harness. What It Takes to Get There with AI.
-- Subtitle: Why PM/designer prototypes come out looking like imitations of our design system — and what closes the gap.
+- Subtitle: Why PM/designer prototypes come out as imitations — and why the fix is mostly something we already built.
 - Footer: Investigation & implementation: [Your name] · [date] · Design Systems
 
 **Visual:** Full-bleed title. Background motif: two badge mockups side by side —
@@ -36,23 +36,25 @@ one crisp/on-brand, one slightly-off "imitation" — foreshadowing the fidelity 
 ## Slide 1a — The goal (open here)
 
 **Content:**
-- Headline: The goal: PMs and designers prototype in real Harness fidelity — accurately, cheaply, without living in the codebase
+- Headline: The goal: PMs and designers turn Figma designs into prototypes that actually look like Harness — with AI, no eng handoff
 - Prototyping is how product decisions get made. If prototypes don't look like the real platform, they mislead — and reworking them wastes cycles
-- The dream: a designer or PM turns a Figma design into working, on-brand Harness UI with AI — no eng handoff, no repo expertise
-- The catch I hit myself: **when I prototype inside platformUI (which consumes Canary), results are great. When I use Figma MCP to build the same design outside Canary, the output looks like an imitation** — right idea, wrong execution, off-brand
-- That gap is the whole problem. This deck is: why it happens, and what closes it.
+- The catch I hit myself: **prototyping inside platformUI (which consumes Canary) → results are great. The same design built with Figma MCP outside that context → an imitation** — right idea, off-brand execution
+- Not an access problem: PMs *can* install `@harnessio/ui` — results are still mixed. **The differentiator is the repo context, not the package.**
+- That gap is the whole problem. This deck: why it happens, and the cheapest way to close it.
 
 **Visual:** Two-panel "same design, two workflows" comparison:
 ```
-   IN-REPO (platformUI + Canary)        OUT-OF-REPO (Figma MCP, no Canary)
-   ┌───────────────────────┐            ┌───────────────────────┐
-   │  ✅ real components     │            │  ❌ imitation           │
-   │  ✅ on-brand            │            │  ❌ raw colors, off-spec │
-   │  ✅ cheap (1 import)    │            │  ❌ expensive (rebuilt)  │
-   └───────────────────────┘            └───────────────────────┘
+   IN platformUI CONTEXT               BARE / OUT-OF-CONTEXT
+   ┌───────────────────────┐          ┌───────────────────────┐
+   │  ✅ real components     │          │  ❌ imitation           │
+   │  ✅ on-brand tokens     │          │  ❌ off-spec, raw colors │
+   │  ✅ cheap (1 import)    │          │  ❌ expensive (rebuilt)  │
+   └───────────────────────┘          └───────────────────────┘
+   (package installed in BOTH — context is what differs)
 ```
-Speaker note: This isn't a hypothetical — it's my own workflow. The rest of the
-deck shows this exact split is a measurable, fixable phenomenon, not bad luck.
+Speaker note: This isn't hypothetical — it's my own workflow, and PMs report the
+same. The rest of the deck shows this split is measurable and fixable, and that
+the fix is mostly something we already have.
 
 ---
 
@@ -236,25 +238,29 @@ enabling already live in the low-fidelity cell — do we close it for them?"
 
 ---
 
-## Slide 9b — What real fidelity actually takes [DATA VISUAL]
+## Slide 9b — The fix we already have: prototype in repo context [DATA VISUAL]
 
 **Content:**
-- Headline: Fidelity needs two things — the right component AND the ability to run it — and both save tokens
-- **Gate 1 — the binding:** which component is this? (`CounterBadge`) → Code Connect provides it (proven, 0/5→5/5)
-- **Gate 2 — access:** can the prototype actually `import` and run `@harnessio/ui`? If not, Code Connect hands over the right import and the prototype *still breaks* → fallback to imitation. The registry is gated (we hit install failures all weekend), so this may be a real blocker — and possibly the **cheapest win of all**: make the package trivially consumable outside the repo before investing in Code Connect
-- **Cost rides along:** referencing the real component = accurate AND cheap (one import); rebuilding from pixels = off-brand AND expensive. Stripping context roughly **doubled discovery cost**; Code-Connect-on runs resolved in fewer tool calls. Fidelity and token-efficiency aren't a tradeoff — same lever.
-- Confidence tag: Gate 1 proven; Gate 2 a moderate-confidence hypothesis (flagged to verify); cost signal directional.
+- Headline: There are two ways to reach fidelity — add Code Connect, or put the prototype in repo context. We already built the second one.
+- The 2×2 has two routes from imitation (0/5) to fidelity (5/5): move *right* (add Code Connect) **or** move *down* (give the agent repo context). Repo context alone = 5/5.
+- **Kitchen sink** — our existing app that runs `@harnessio/ui` inside the platformUI context — IS the bottom row. It already exists, it's free, no shared-file publish, no mapping upkeep.
+- **Cost rides along:** in-context = the agent references the real component (accurate AND cheap, one import); out-of-context = it rebuilds from pixels (off-brand AND expensive — stripping context roughly **doubled discovery cost**). Fidelity and token-efficiency are the same lever.
+- So the primary move isn't new infrastructure — it's **routing AI prototyping through kitchen-sink-in-platformUI.**
+- Confidence tag: The 2×2 is measured; "kitchen sink = the repo-access row" is the direct implication, worth a confirming run.
 
-**Visual:** Two-gate path to fidelity, with the cost contrast beneath:
+**Visual:** the 2×2 with the two arrows to fidelity called out:
 ```
-  Figma design ─► [Gate 1: which component?] ─► [Gate 2: can it run it?] ─► ✅ real fidelity
-                     Code Connect (proven)        package installable? (verify)
+                       CC OFF        CC ON
+   Figma only          0/5  ❌   ──►  5/5 ✅   ◄ Code Connect route
+                         │
+                         ▼ repo-context route (Kitchen Sink)
+   Repo access          5/5  ✅        5/5 ✅
 
-  REBUILD from pixels   ▓▓▓▓▓▓▓▓  high tokens · off-brand ❌
-  REFERENCE real comp   ▓▓▓        low tokens · on-brand  ✅
+   Two roads to 5/5. Kitchen Sink is already built.
 ```
-Speaker note: Don't headline Code Connect if publishing the package for
-prototyping gets us most of the way for a fraction of the effort. Verify Gate 2.
+Speaker note: This is the measurement paying off — the free, existing fix reaches
+the same cell as the expensive one. Kitchen sink is the lead; Code Connect earns a
+narrower role on the next slide.
 
 ---
 
@@ -262,45 +268,51 @@ prototyping gets us most of the way for a fraction of the effort. Verify Gate 2.
 
 **Content:**
 - Headline: This is a down payment, not a one-off
-- 1. **A reusable measuring instrument** — any design-system change can be tested before we spend on it. "Does this help?" goes from argument to an afternoon.
-- 2. **It rewrites the priority list** — "write more agent docs" is the expensive default and it's low-return. "Fix wrong facts" and "bind Figma to code" are the wins.
-- 3. **The expensive part is paid** — Code Connect setup is done; scaling from 3 components to the full library is mostly mechanical.
+- 1. **A reusable measuring instrument** — any design-system change can be tested before we spend on it. "Does this help?" goes from argument to an afternoon. (It just kept us from over-investing in Code Connect when kitchen sink already reaches the same fidelity.)
+- 2. **It rewrites the priority list** — "write more agent docs" is the expensive default and it's low-return. The wins, cheapest first: **put the agent in real context (kitchen sink)**, **fix wrong facts**, **bind Figma→code (Code Connect) where context isn't available**.
+- 3. **The groundwork is paid** — Code Connect proven on the badge family; kitchen sink already exists. Scaling either is mostly mechanical.
 
-**Visual:** 3 stacked "leverage" bars — low (more docs), medium (fix wrong facts),
-high (Figma→code binding) — showing return-per-effort, not effort.
+**Visual:** return-per-effort bars, cheapest-high-value first:
+```
+   Route through Kitchen Sink   ▓▓▓▓▓▓▓▓  high return · ~free (exists)
+   Fix wrong facts              ▓▓▓▓▓     good return · cheap
+   Code Connect rollout         ▓▓▓        real return · scoped effort
+   Write more agent docs        ▓          low return · ongoing upkeep
+```
 
 ---
 
 ## Slide 11 — Takeaway + the decision
 
 **Content:**
-- Headline: The imitation gap is real, measured, and fixable. The decision is how far we close it.
-- What the evidence establishes: the low-fidelity output PMs and designers get is the "no code to read" cell — and **Code Connect closes it (0/5 → 5/5)**. The people the goal is about live there permanently. This isn't a bet on a maybe-future; it's the workflow they have today.
+- Headline: The imitation gap is real, measured, and mostly closable with what we already have.
+- What the evidence establishes: the low-fidelity output isn't an access problem — it's a *context* problem. Prototyping in the platformUI context (where the real components and usage live) reaches fidelity; bare/out-of-context doesn't. **Kitchen sink already provides that context.**
 
-**THE DECISION — How far do we go to make design→code prototyping produce real Harness fidelity?**
+**THE ASK — Make kitchen-sink-in-platformUI the default AI prototyping path, then layer accelerants.**
 
-- **Full commitment →** Code Connect is infrastructure, not a pilot. De-risked: proven it works, bounded where it pays off. Fund the rollout to the high-traffic component set, **verify the package is consumable outside the repo** (the second fidelity gate), and stand up an **AI-legibility CI gate** that fails on wrong facts (phantom paths, stale variants), with the A/B harness as the regression instrument.
-- **Cheapest-win first →** verify the package-access gate before any rollout — if PMs can't install `@harnessio/ui`, fixing that may recover most fidelity for a fraction of the effort. Bank the fact-fixes; scope Code Connect after.
-- **Hold →** we've already banked the fact-fixes and proven the mechanism. Revisit when design-first prototyping is a bigger share of how UI gets made.
-- Every path is informed by data, not guesswork — that's the win.
-- Horizon (one line): *And the method — measure legibility, fix wrong facts, bind the handoff — generalizes to any codebase. For a dev-tools company whose customers increasingly build with AI, Canary is the proving ground.*
-- Footer caveat: Evidence, not proof — small samples, one model family, pilot on one component family. The gap is real and reproduced (in the trial and in my own workflow); exact ROI needs a second component family + the package-access check to confirm.
+- **1. Route AI prototyping through kitchen sink (primary, ~free).** It already reaches the fidelity cell. Make it the sanctioned path for PMs/designers, with a short "prototype here with AI" guide. Biggest fidelity gain for the least effort.
+- **2. Code Connect as accelerant + no-repo answer (scoped).** Even in-context it speeds Figma→component handoff and nails the confusable families (badge, overlays) first-try — and it's the *only* fix for people who won't clone a repo (pure Figma Make). Pilot is proven; scope the rollout to high-traffic components.
+- **3. Keep docs factually correct (cheap, ongoing).** Wrong facts are the one doc failure that misleads agents. Stand up an **AI-legibility CI gate** (fails on phantom paths / stale variants), with the A/B harness as the regression instrument.
+- The win: the free, existing fix (kitchen sink) does the heavy lifting — we know because we measured, instead of defaulting to the expensive build.
+- Horizon (one line): *And the method — measure legibility, fix wrong facts, put the agent in real context — generalizes to any codebase. For a dev-tools company whose customers increasingly build with AI, Canary is the proving ground.*
+- Footer caveat: Evidence, not proof — small samples, mostly one model family, pilot on one component family. Gap reproduced in the trial and in real workflow; confirm with a second component family.
 
-**Visual:** The goal at top, three funded-depth options beneath it:
+**Visual:** Goal at top, tiered fixes by leverage:
 ```
-   GOAL: PM/designer prototypes that look like real Harness — accurate & cheap
-   ────────────────────────────────────────────────────────────────────────
-     FULL          → Code Connect rollout + package access + AI-legibility CI gate
-     CHEAPEST-WIN  → verify package install first; scope Code Connect after
-     HOLD          → bank fact-fixes; revisit as design-first grows
-   ────────────────────────────────────────────────────────────────────────
-        Every path is data-informed — the gap is measured, not guessed.
+   GOAL: Figma → prototypes that actually look like Harness, with AI
+   ────────────────────────────────────────────────────────────────
+   PRIMARY (free, exists)  → Route AI prototyping through Kitchen Sink
+                             (platformUI context = the fidelity cell)
+   ACCELERANT (scoped)     → Code Connect: faster handoff, first-try
+                             component pick, + the no-repo segment
+   HYGIENE (cheap/ongoing) → AI-legibility CI gate: fail on wrong facts
+   ────────────────────────────────────────────────────────────────
+     Heavy lifting from what we already built — because we measured.
 ```
-Speaker note: Frame as "how far do we go," not "approve my rollout." All three are
-legitimate and de-risked. Push the cheapest-win check (package access) as the
-honest next move regardless of appetite — it may beat Code Connect on ROI. If the
-room leans into the horizon line, open the company-wide AI-legibility conversation
-— but let the data lead.
+Speaker note: Lead with kitchen sink — the credible, cheap, already-built win.
+Code Connect is the accelerant, not the headline; be ready to say "component
+choice wasn't PMs' main gap, context was." If the room leans into the horizon
+line, open the company-wide AI-legibility conversation — but let the data lead.
 
 ---
 
@@ -326,8 +338,9 @@ room leans into the horizon line, open the company-wide AI-legibility conversati
 Footer: Plus the reusable A/B harness and the data behind every claim —
 `CODE_CONNECT_TRIAL.md`, `AI_READINESS_FINDINGS.md`.
 
-**Open verification (before a full commitment):**
-- Package access — can `@harnessio/ui` be installed/run where PMs prototype? (registry is gated; may be a bigger fidelity lever than Code Connect)
+**Open verification (before scaling):**
+- Package access is NOT the blocker — resolved: PMs can install `@harnessio/ui`; results still mixed. The differentiator is repo *context* (platformUI / kitchen sink), not the package.
+- Kitchen-sink confirmation — run the trial inside kitchen sink to confirm it lands in the 5/5 fidelity cell as the 2×2 predicts
 - Second component family — confirm the 0/5→5/5 pattern holds beyond badges
 - Visual-fidelity score — measure prototype-vs-spec pixel fidelity, not just component choice
 
@@ -341,5 +354,6 @@ Footer: Plus the reusable A/B harness and the data behind every claim —
 - Code Connect trial: 2×2, 5 runs/arm = 20; scored by parsing the generated file, not self-report
 - Switch for Code Connect arms: `get_design_context` `disableCodeConnect` flag (verified it flips the output: generic div vs. real component)
 - The in-repo/out-of-repo fidelity gap was first observed in my own prototyping workflow (platformUI = high fidelity; Figma MCP outside Canary = imitation), then reproduced as the trial's 2×2. Anecdote and measurement are the same phenomenon.
-- Caveats: small n, badge family only, mostly one model family. Directional. Next steps: package-access check, second component family, visual-fidelity scoring.
+- Access ruled out as the cause: PMs can install the package; fidelity still varies by context. Kitchen sink (runs `@harnessio/ui` in platformUI context) is the existing in-context path = the 2×2's repo-access row.
+- Caveats: small n, badge family only, mostly one model family. Directional. Next steps: confirm kitchen-sink fidelity, second component family, visual-fidelity scoring.
 - Started from a commissioned external scan; independently verified and corrected it (caught 4 errors, incl. the phantom `badge.tsx` and a non-existent issue number).

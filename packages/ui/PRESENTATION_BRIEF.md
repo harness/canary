@@ -1,7 +1,7 @@
 # Presentation Brief — Canary AI-Readiness
 
 Paste this whole file into Claude / a slide generator. It's the finalized deck:
-~16 slides (numbered 1, 1a, 2–9, 9a, 9b, 9c, 10–12) + a Q&A backup. Each slide has
+~15 slides (numbered 1, 1a, 2–9, 9a, 9b, 10–12) + a Q&A backup. Each slide has
 **content** and a **visual** spec — build the visual, don't just bullet the text.
 Slide order is the presentation order.
 
@@ -236,38 +236,22 @@ enabling already live in the low-fidelity cell — do we close it for them?"
 
 ---
 
-## Slide 9b — Fidelity AND cost move together [DATA VISUAL]
+## Slide 9b — What real fidelity actually takes [DATA VISUAL]
 
 **Content:**
-- Headline: The imitation path isn't just off-brand — it's expensive. The fix delivers both.
-- Reconstructing a component from pixels = wrong execution AND wasted tokens. Referencing the real component = accurate AND cheap (one import).
-- Signal from the trials: stripping context roughly **doubled discovery cost** (turns / time / $); the Code-Connect-on runs resolved in **fewer tool calls** than the off runs that had to rebuild.
-- So fidelity and token-efficiency are not a tradeoff — the same lever (hand the agent the real component vs. make it guess) delivers both.
-- Confidence tag: Directional — cost measured in the doc trials; handoff cost delta observed, not yet formally tallied per-run.
+- Headline: Fidelity needs two things — the right component AND the ability to run it — and both save tokens
+- **Gate 1 — the binding:** which component is this? (`CounterBadge`) → Code Connect provides it (proven, 0/5→5/5)
+- **Gate 2 — access:** can the prototype actually `import` and run `@harnessio/ui`? If not, Code Connect hands over the right import and the prototype *still breaks* → fallback to imitation. The registry is gated (we hit install failures all weekend), so this may be a real blocker — and possibly the **cheapest win of all**: make the package trivially consumable outside the repo before investing in Code Connect
+- **Cost rides along:** referencing the real component = accurate AND cheap (one import); rebuilding from pixels = off-brand AND expensive. Stripping context roughly **doubled discovery cost**; Code-Connect-on runs resolved in fewer tool calls. Fidelity and token-efficiency aren't a tradeoff — same lever.
+- Confidence tag: Gate 1 proven; Gate 2 a moderate-confidence hypothesis (flagged to verify); cost signal directional.
 
-**Visual:** Two bars, same task:
+**Visual:** Two-gate path to fidelity, with the cost contrast beneath:
 ```
-   IMITATION PATH (rebuild from pixels)   ▓▓▓▓▓▓▓▓  high tokens · off-brand ❌
-   REFERENCE PATH (real component)        ▓▓▓        low tokens · on-brand  ✅
-```
+  Figma design ─► [Gate 1: which component?] ─► [Gate 2: can it run it?] ─► ✅ real fidelity
+                     Code Connect (proven)        package installable? (verify)
 
----
-
-## Slide 9c — Fidelity needs TWO things (a lever we shouldn't miss)
-
-**Content:**
-- Headline: Knowing the right component isn't enough — the prototype also has to be able to run it
-- Fidelity out-of-repo needs both: **(1) the binding** — which component (`CounterBadge`) → Code Connect provides this; **(2) access** — can the prototype actually `import` and run `@harnessio/ui`?
-- Open question worth checking: if the package isn't trivially installable where PMs prototype, Code Connect hands them the right import and the prototype *still breaks* — so they fall back to imitation
-- We have a hint: the registry is gated (we hit install-auth failures all weekend). Part of the imitation problem may be *access*, not Figma-MCP quality
-- **Potential cheapest win of all:** make `@harnessio/ui` + a prototype starter trivially consumable outside the repo — may recover most fidelity before any Code Connect
-- Confidence tag: Hypothesis, moderate — flagged for verification, not yet tested
-
-**Visual:** Two-gate diagram to a working prototype:
-```
-   Figma design ──► [ Gate 1: which component? ]  ──► [ Gate 2: can it run it? ] ──► ✅ fidelity
-                        Code Connect                    package installable?
-                        (proven)                        (unverified — check this)
+  REBUILD from pixels   ▓▓▓▓▓▓▓▓  high tokens · off-brand ❌
+  REFERENCE real comp   ▓▓▓        low tokens · on-brand  ✅
 ```
 Speaker note: Don't headline Code Connect if publishing the package for
 prototyping gets us most of the way for a fraction of the effort. Verify Gate 2.

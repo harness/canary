@@ -17,7 +17,7 @@ figma.connect(
   'https://www.figma.com/design/AIgjIyUzcuZzuVnuoOyhQE/HDS-%7C-Components-3.0?node-id=1293-5995',
   {
     props: {
-      children: figma.string('text#1299:25'),
+      children: figma.string('text'),
       variant: figma.enum('variant', {
         primary: 'primary',
         secondary: 'secondary',

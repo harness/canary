@@ -17,7 +17,7 @@ figma.connect(
   'https://www.figma.com/design/AIgjIyUzcuZzuVnuoOyhQE/HDS-%7C-Components-3.0?node-id=1782-29559',
   {
     props: {
-      number: figma.string('number-value#7030:133'),
+      number: figma.string('number-value'),
       variant: figma.enum('variant', {
         outline: 'outline',
         secondary: 'secondary'

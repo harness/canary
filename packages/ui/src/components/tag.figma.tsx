@@ -13,7 +13,7 @@ import { Tag } from './tag'
  */
 figma.connect(Tag, 'https://www.figma.com/design/AIgjIyUzcuZzuVnuoOyhQE/HDS-%7C-Components-3.0?node-id=1444-10547', {
   props: {
-    text: figma.string('text#1444:4'),
+    text: figma.string('text'),
     variant: figma.enum('variant', {
       outline: 'outline',
       secondary: 'secondary'

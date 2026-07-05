@@ -221,18 +221,40 @@ high (Figma→code binding) — showing return-per-effort, not effort.
 
 ---
 
-## Slide 11 — Takeaway + asks
+## Slide 11 — Takeaway + the decision
 
 **Content:**
-- Headline: I expected a docs problem. It's a code-legibility problem — and I proved where the fix belongs.
-- One-liner (large): *Agents read code, not docs. So docs barely move them, and Code Connect is redundant when they can read the repo — but on the design handoff, where there's no code to read, Code Connect goes from 0 to 5 out of 5.*
-- Asks (team decisions):
-  - Keep the live Code Connect pilot up, or republish via CI on merge?
-  - Generate the design doc's token values from source (they drift by hand)
-  - Adopt the A/B harness as the gate for future AI-readiness spend
-- Footer caveat: Evidence, not proof — small samples, one model family, pilot on one component family.
+- Headline: I expected a docs problem. I found a fork in the road — and made it safe to choose.
+- The evidence points to one real decision, not a to-do list: **Code Connect is decisive for design→code handoff (0/5 → 5/5), and redundant once an agent can read the repo.** So the question is strategic, not technical:
 
-**Visual:** The one-liner set large and centered; asks as three checkbox lines below.
+**THE FORK — Are we betting on design-first generation? (UI built from Figma, by people and agents who don't live in the repo)**
+
+- **If YES →** Code Connect is infrastructure, not a pilot. I've de-risked it: proven it works, bounded exactly where it pays off. Fund the rollout to the high-traffic component set + stand up an **AI-legibility gate** — CI that fails on wrong facts (phantom paths, stale variants), with the A/B harness as the regression instrument.
+- **If NO →** we just avoided a rollout our own data says is pointless for in-repo work. Bank the cheap wins (the fact-fixes) and move on.
+- Either answer is a win — because we measured instead of guessed.
+- Horizon (one line): *And the method — measure legibility, fix wrong facts, bind the handoff — generalizes to any codebase. For a dev-tools company whose customers increasingly build with AI, Canary is the proving ground.*
+- Footer caveat: Evidence, not proof — small samples, one model family, pilot on one component family. The fork is real; the exact ROI needs a second component family to confirm.
+
+**Visual:** A literal fork-in-the-road diagram — one path in, two paths out:
+```
+                          ┌──────────────────────────────┐
+              YES ───────►│ Code Connect = infrastructure │
+             ╱            │ Fund rollout + AI-legibility  │
+   ┌──────────────┐       │ CI gate (harness = regression)│
+   │  THE BET:     │      └──────────────────────────────┘
+   │  design-first │
+   │  generation?  │      ┌──────────────────────────────┐
+   └──────────────┘       │ Bank the fact-fixes,          │
+              ╲   NO ────►│ skip the rollout our own data │
+                          │ says is redundant in-repo     │
+                          └──────────────────────────────┘
+
+        Either branch is a win — because we measured.
+```
+Speaker note: This is a decision only leadership can make — I've made it safe to
+make either way. Don't frame it as "approve my rollout"; frame it as "pick the
+branch, both are de-risked." If the room leans into the horizon line, that's the
+cue to open the company-wide AI-legibility conversation — but let the data lead.
 
 ---
 

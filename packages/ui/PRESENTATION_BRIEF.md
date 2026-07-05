@@ -1,7 +1,7 @@
 # Presentation Brief — Canary AI-Readiness
 
 Paste this whole file into Claude / a slide generator. It's the finalized deck:
-~16 slides (numbered 1, 1a, 2–9, 9a, 9b, 9c, 10–12) + a Q&A backup. Each slide has
+~15 main slides (numbered 1, 1a, 2–9, 9a, 9b, 10–12) + appendix 12a (ablation) and a Q&A backup. Each slide has
 **content** and a **visual** spec — build the visual, don't just bullet the text.
 Slide order is the presentation order.
 
@@ -247,7 +247,7 @@ enabling already live in the low-fidelity cell — do we close it for them?"
 - **Cost rides along:** in-context = the agent references the real component (accurate AND cheap, one import); out-of-context = it rebuilds from pixels (off-brand AND expensive — stripping context roughly **doubled discovery cost**). Fidelity and token-efficiency are the same lever.
 - So the primary move isn't new infrastructure — it's **routing AI prototyping through kitchen-sink-in-platformUI.**
 - **Confirmed directly:** agents building inside kitchen sink hit **5/5 real component with Code Connect OFF** (and 5/5 with it on). Context alone reaches fidelity; Code Connect adds nothing measurable on top.
-- And we know *why* it works (next slide) — so we can trust it'll hold, not just hope.
+- And we know *why* it works (ablation in appendix) — the engine is the wired-up package + tokens, not a fragile trick — so it'll hold as we scale.
 - Confidence tag: Measured in the actual kitchen-sink app — n=5/arm, Opus 4.8. Directional and clean.
 
 **Visual:** the 2×2 with the two arrows to fidelity called out:
@@ -262,37 +262,8 @@ enabling already live in the low-fidelity cell — do we close it for them?"
 ```
 Speaker note: This is the measurement paying off — the free, existing fix reaches
 the same cell as the expensive one. Kitchen sink is the lead; Code Connect earns a
-narrower role on the next slide.
-
----
-
-## Slide 9c — Why kitchen sink works (so we know it'll hold) [DATA VISUAL]
-
-**Content:**
-- Headline: We stripped kitchen sink to find what actually drives fidelity — it's the wired-up package, not a magic template library
-- We ran the same builds in a stripped copy — the package + design tokens present, but every feature/example file removed (real filesystem boundary):
-  - **Single component:** stripped 5/5 — agents recover the right component from the package's own types. Templates not required.
-  - **Full page:** stripped still built the whole idiom (Page scaffold, DataTable, empty + loading states) from **type definitions alone**. The one thing the examples added: matching *house convention* (used our `@harnessio/filters` on the list page vs. a generic search box).
-- **So the fidelity engine is portable and cheap:** it's `@harnessio/ui` + tokens correctly wired — exactly what kitchen sink provides. Examples are a thin convention layer on top, not the thing that makes it work.
-- Why this matters for the ask: routing PMs through kitchen sink isn't a fragile trick — we know the mechanism, so it'll hold as we scale it.
-- Confidence tag: 2 ablations, Opus 4.8, one component + one page type. "Templates aren't the engine" reproduced twice; convention delta is one consistent finding.
-
-**Visual:** what survives stripping:
-```
-   KITCHEN SINK              STRIPPED (no examples)      FIDELITY?
-   package + tokens + examples   package + tokens only
-   ───────────────────────────────────────────────────────────────
-   real component                ✅ recovered from types      5/5
-   full page scaffold/states     ✅ built from types          ✅
-   house convention (FilterGroup)  ✗ used generic SearchInput  ← the only gap
-   ───────────────────────────────────────────────────────────────
-   Engine = wired-up package + tokens. Examples = thin convention layer.
-```
-Speaker note: This is the honest depth — I expected the template corpus to be the
-engine; the ablation said it's the package+tokens, examples add only the last-mile
-convention. It makes the kitchen-sink ask *stronger*: cheap, portable, understood.
-The convention gap points at a cheap follow-up (make @harnessio/ui surface
-@harnessio/filters), not a template-maintenance burden.
+narrower role on the next slide. If asked "how do you know it's the context and
+not luck," go to the ablation appendix slide.
 
 ---
 
@@ -377,6 +348,32 @@ Footer: Plus the reusable A/B harness and the data behind every claim —
 - Kitchen-sink confirmation — DONE: 5/5 real component with Code Connect off, inside the real kitchen-sink app (see CODE_CONNECT_TRIAL.md)
 - Second component family — confirm the 0/5→5/5 and kitchen-sink 5/5 patterns hold beyond badges
 - Visual-fidelity score — measure prototype-vs-spec pixel fidelity, not just component choice
+
+---
+
+## Slide 12a — Appendix: why kitchen sink works (ablation) [pull up if asked]
+
+**Content:**
+- Headline: We stripped kitchen sink to find what actually drives fidelity — it's the wired-up package, not a template library
+- Ran the same builds in a stripped copy (package + design tokens present, every feature/example file removed via a real filesystem boundary):
+  - **Single component:** stripped 5/5 — agents recover the right component from the package's own types. Templates not required.
+  - **Full page:** stripped still built the whole idiom (Page scaffold, DataTable, empty + loading states) from **type definitions alone**. The one thing examples added: matching *house convention* (our `@harnessio/filters` on the list page vs. a generic search box).
+- **Takeaway:** the fidelity engine is `@harnessio/ui` + tokens correctly wired (portable, cheap, understood) — exactly what kitchen sink provides. Examples are a thin convention layer, not the thing that makes it work. So the kitchen-sink ask is robust, and the one gap points at a cheap follow-up (make `@harnessio/ui` surface `@harnessio/filters`), not a template-maintenance burden.
+- Confidence: 2 ablations, Opus 4.8, one component + one page type. "Templates aren't the engine" reproduced twice.
+
+**Visual:** what survives stripping:
+```
+   KITCHEN SINK                  STRIPPED (no examples)       FIDELITY?
+   package + tokens + examples   package + tokens only
+   ───────────────────────────────────────────────────────────────────
+   real component                ✅ recovered from types       5/5
+   full page scaffold/states     ✅ built from types           ✅
+   house convention (FilterGroup) ✗ used generic SearchInput   ← the only gap
+   ───────────────────────────────────────────────────────────────────
+   Engine = wired-up package + tokens. Examples = thin convention layer.
+```
+Speaker note: This is the depth behind slide 9b. Pull it up only if someone asks
+"how do you know it's the context, not luck" — otherwise leave it in reserve.
 
 ---
 

@@ -1,7 +1,7 @@
 # Presentation Brief — Canary AI-Readiness
 
 Paste this whole file into Claude / a slide generator. It's the finalized deck:
-~15 slides (numbered 1, 1a, 2–9, 9a, 9b, 10–12) + a Q&A backup. Each slide has
+~16 slides (numbered 1, 1a, 2–9, 9a, 9b, 9c, 10–12) + a Q&A backup. Each slide has
 **content** and a **visual** spec — build the visual, don't just bullet the text.
 Slide order is the presentation order.
 
@@ -246,8 +246,9 @@ enabling already live in the low-fidelity cell — do we close it for them?"
 - **Kitchen sink** — our existing app that runs `@harnessio/ui` inside the platformUI context — IS the bottom row. It already exists, it's free, no shared-file publish, no mapping upkeep.
 - **Cost rides along:** in-context = the agent references the real component (accurate AND cheap, one import); out-of-context = it rebuilds from pixels (off-brand AND expensive — stripping context roughly **doubled discovery cost**). Fidelity and token-efficiency are the same lever.
 - So the primary move isn't new infrastructure — it's **routing AI prototyping through kitchen-sink-in-platformUI.**
-- **Confirmed directly:** agents building inside kitchen sink hit **5/5 real CounterBadge with Code Connect OFF** (and 5/5 with it on). Context alone reaches fidelity; Code Connect adds nothing measurable on top.
-- Confidence tag: Measured in the actual kitchen-sink app — n=5/arm, one component, Opus 4.8. Directional and clean.
+- **Confirmed directly:** agents building inside kitchen sink hit **5/5 real component with Code Connect OFF** (and 5/5 with it on). Context alone reaches fidelity; Code Connect adds nothing measurable on top.
+- And we know *why* it works (next slide) — so we can trust it'll hold, not just hope.
+- Confidence tag: Measured in the actual kitchen-sink app — n=5/arm, Opus 4.8. Directional and clean.
 
 **Visual:** the 2×2 with the two arrows to fidelity called out:
 ```
@@ -262,6 +263,36 @@ enabling already live in the low-fidelity cell — do we close it for them?"
 Speaker note: This is the measurement paying off — the free, existing fix reaches
 the same cell as the expensive one. Kitchen sink is the lead; Code Connect earns a
 narrower role on the next slide.
+
+---
+
+## Slide 9c — Why kitchen sink works (so we know it'll hold) [DATA VISUAL]
+
+**Content:**
+- Headline: We stripped kitchen sink to find what actually drives fidelity — it's the wired-up package, not a magic template library
+- We ran the same builds in a stripped copy — the package + design tokens present, but every feature/example file removed (real filesystem boundary):
+  - **Single component:** stripped 5/5 — agents recover the right component from the package's own types. Templates not required.
+  - **Full page:** stripped still built the whole idiom (Page scaffold, DataTable, empty + loading states) from **type definitions alone**. The one thing the examples added: matching *house convention* (used our `@harnessio/filters` on the list page vs. a generic search box).
+- **So the fidelity engine is portable and cheap:** it's `@harnessio/ui` + tokens correctly wired — exactly what kitchen sink provides. Examples are a thin convention layer on top, not the thing that makes it work.
+- Why this matters for the ask: routing PMs through kitchen sink isn't a fragile trick — we know the mechanism, so it'll hold as we scale it.
+- Confidence tag: 2 ablations, Opus 4.8, one component + one page type. "Templates aren't the engine" reproduced twice; convention delta is one consistent finding.
+
+**Visual:** what survives stripping:
+```
+   KITCHEN SINK              STRIPPED (no examples)      FIDELITY?
+   package + tokens + examples   package + tokens only
+   ───────────────────────────────────────────────────────────────
+   real component                ✅ recovered from types      5/5
+   full page scaffold/states     ✅ built from types          ✅
+   house convention (FilterGroup)  ✗ used generic SearchInput  ← the only gap
+   ───────────────────────────────────────────────────────────────
+   Engine = wired-up package + tokens. Examples = thin convention layer.
+```
+Speaker note: This is the honest depth — I expected the template corpus to be the
+engine; the ablation said it's the package+tokens, examples add only the last-mile
+convention. It makes the kitchen-sink ask *stronger*: cheap, portable, understood.
+The convention gap points at a cheap follow-up (make @harnessio/ui surface
+@harnessio/filters), not a template-maintenance burden.
 
 ---
 
@@ -286,34 +317,34 @@ narrower role on the next slide.
 ## Slide 11 — Takeaway + the decision
 
 **Content:**
-- Headline: The imitation gap is real, measured, and mostly closable with what we already have.
-- What the evidence establishes: the low-fidelity output isn't an access problem — it's a *context* problem. Prototyping in the platformUI context (where the real components and usage live) reaches fidelity; bare/out-of-context doesn't. **Kitchen sink already provides that context.**
+- Headline: PMs can get Harness-fidelity prototypes today — by prototyping inside kitchen sink. We measured it: 5/5.
+- The one-sentence answer for a PM: **"Do your AI prototyping in kitchen sink."** Not "install the package and hope" (that's the mixed-results path) — *in the app*, where the wired-up components and tokens live. The gap was never access; it was context, and kitchen sink is the context.
+- We know it's not a fragile trick: the ablation shows the engine is the wired-up package + tokens (portable, understood), not a magic template library. So it'll hold as we scale it.
 
-**THE ASK — Make kitchen-sink-in-platformUI the default AI prototyping path, then layer accelerants.**
+**THE ASK — Make kitchen sink the sanctioned AI-prototyping path, then layer accelerants.**
 
-- **1. Route AI prototyping through kitchen sink (primary, ~free).** It already reaches the fidelity cell. Make it the sanctioned path for PMs/designers, with a short "prototype here with AI" guide. Biggest fidelity gain for the least effort.
-- **2. Code Connect as accelerant + no-repo answer (scoped).** Even in-context it speeds Figma→component handoff and nails the confusable families (badge, overlays) first-try — and it's the *only* fix for people who won't clone a repo (pure Figma Make). Pilot is proven; scope the rollout to high-traffic components.
-- **3. Keep docs factually correct (cheap, ongoing).** Wrong facts are the one doc failure that misleads agents. Stand up an **AI-legibility CI gate** (fails on phantom paths / stale variants), with the A/B harness as the regression instrument.
-- The win: the free, existing fix (kitchen sink) does the heavy lifting — we know because we measured, instead of defaulting to the expensive build.
+- **1. Route AI prototyping through kitchen sink (primary, ~free, available now).** It already reaches fidelity (measured 5/5). Sanction it + a short "prototype here with AI" guide. Biggest fidelity gain for the least effort — nothing to build.
+- **2. Code Connect as accelerant + the no-repo answer (scoped).** Speeds Figma→component handoff, first-try on confusable families, and it's the *only* fix for people who won't clone a repo (pure Figma Make). Pilot proven; scope rollout to high-traffic components.
+- **3. Keep docs factually correct (cheap, ongoing).** Wrong facts are the one doc failure that misleads agents. Stand up an **AI-legibility CI gate** (fails on phantom paths / stale variants), harness as the regression instrument.
+- The win: the fix that does the heavy lifting is free and already built — we know because we measured, instead of defaulting to the expensive build.
 - Horizon (one line): *And the method — measure legibility, fix wrong facts, put the agent in real context — generalizes to any codebase. For a dev-tools company whose customers increasingly build with AI, Canary is the proving ground.*
-- Footer caveat: Evidence, not proof — small samples, one component family, Opus 4.8. Kitchen-sink fidelity measured directly (5/5); confirm breadth with a second component family.
+- Footer caveat: Evidence, not proof — small samples, one component family + one page type, Opus 4.8. Kitchen-sink fidelity measured directly (5/5); confirm breadth with a second component family.
 
-**Visual:** Goal at top, tiered fixes by leverage:
+**Visual:** the Monday-action at top, tiered fixes by leverage:
 ```
-   GOAL: Figma → prototypes that actually look like Harness, with AI
-   ────────────────────────────────────────────────────────────────
-   PRIMARY (free, exists)  → Route AI prototyping through Kitchen Sink
-                             (platformUI context = the fidelity cell)
-   ACCELERANT (scoped)     → Code Connect: faster handoff, first-try
-                             component pick, + the no-repo segment
+   FOR PMs, TODAY:  "Do your AI prototyping in kitchen sink."  → Harness fidelity (5/5)
+   ──────────────────────────────────────────────────────────────────────
+   PRIMARY (free, exists)  → Sanction kitchen sink as the AI-prototyping path
+   ACCELERANT (scoped)     → Code Connect: faster handoff + the no-repo segment
    HYGIENE (cheap/ongoing) → AI-legibility CI gate: fail on wrong facts
-   ────────────────────────────────────────────────────────────────
+   ──────────────────────────────────────────────────────────────────────
      Heavy lifting from what we already built — because we measured.
 ```
-Speaker note: Lead with kitchen sink — the credible, cheap, already-built win.
-Code Connect is the accelerant, not the headline; be ready to say "component
-choice wasn't PMs' main gap, context was." If the room leans into the horizon
-line, open the company-wide AI-legibility conversation — but let the data lead.
+Speaker note: Lead with the Monday-action — a PM should leave able to *do*
+something ("prototype in kitchen sink"), not evaluate tooling. Code Connect is the
+accelerant, not the headline; be ready to say "component choice wasn't PMs' main
+gap, context was." If the room leans into the horizon line, open the company-wide
+AI-legibility conversation — but let the data lead.
 
 ---
 

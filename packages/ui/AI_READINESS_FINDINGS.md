@@ -81,10 +81,68 @@ null result, low-to-moderate on the positive — small n, single model family.**
    uses) and `Drawer.Steps` (superseded per `stepper/DESIGN.md`) with no
    deprecation note.
 
+## Fidelity investigation — where "looks like Harness" actually comes from
+
+Motivating problem: prototypes built with `@harnessio/ui` in the platformUI /
+kitchen-sink context look right; the same design built bare/out-of-context comes
+out as an off-brand imitation. We ran three trials (Figma node → build a
+component/page, file-parsed scoring, Opus 4.8, n=5 or 3 per arm) to find *what*
+in the context actually drives fidelity. Results narrowed the cause twice:
+
+1. **Figma-handoff, no repo (Code Connect on vs. off):** 0/5 → 5/5. With no code
+   to read, Code Connect is the only thing that routes an agent to the real
+   component; without it, every run hand-rolled a raw-hex imitation.
+
+2. **Inside kitchen sink (Code Connect on vs. off):** 5/5 either way. Repo context
+   substitutes for Code Connect — agents find the component by reading source.
+
+3. **Ablation — kitchen sink WITH vs. WITHOUT the template/feature corpus**
+   (stripped copy = package + token CSS + config, `src/features` removed via a
+   real filesystem boundary):
+   - *Single component:* stripped 5/5, corpus 3/3 → **the template corpus is NOT
+     what drives single-component fidelity. The installed package + its token
+     styles do.** Agents recover the right component from the package's own
+     `.d.ts`/source.
+   - *Full page (compose a list page):* both arms produced the full idiom —
+     `Page` scaffold, `DataTable`, `NoData` (empty + filtered), `Skeleton`
+     loading, `StatusBadge` — with zero hand-rolled layout. The package's **type
+     definitions teach page assembly** better than expected. The corpus changed
+     exactly one thing, consistently (3/3): search wiring. Corpus runs used
+     `@harnessio/filters`' `FilterGroup` (the app's real list-page pattern) and
+     mirrored the actual connectors page; stripped runs used a generic
+     `SearchInput` — correct, but not the house convention, because they never
+     discovered the separate `@harnessio/filters` package.
+
+**What this means, precisely:** fidelity for AI prototyping comes from **the
+installed package + its token CSS being present** (that's the platformUI /
+kitchen-sink sweet spot). The template corpus is not the fidelity engine — it's a
+**last-mile convention layer**: it surfaces cross-package / house conventions an
+agent can't infer from `@harnessio/ui`'s types alone (e.g. "reach for
+`@harnessio/filters` on list pages"). The `FilterGroup`-vs-`SearchInput` gap is
+arguably a **discoverability** problem as much as a convention one — a cheaper fix
+than maintaining a corpus is to make `@harnessio/ui` point at `@harnessio/filters`
+for the patterns that need it.
+
+Confidence: directional — one component + one page type, Opus 4.8, n≤5/arm.
+"Templates aren't the engine" reproduced across two ablations; the convention
+delta is one consistent finding on one page. Caveat: the composition test was
+spec-driven (no full-page Figma frame available), so it isolates corpus-vs-none,
+not Figma-handoff.
+
+Do NOT act on this yet as a corpus-investment decision — the actionable read is
+(a) keep the package trivially consumable in-context, (b) fix cross-package
+discoverability, not (c) build/curate a template library. Route AI prototyping
+through kitchen sink (it already provides the context that works).
+
+Raw data: `CODE_CONNECT_TRIAL.md` (handoff + kitchen-sink); ablation + composition
+scores in this session's trial dirs.
+
 ## The reusable asset
 
 The A/B harness. Before spending on any future AI-readiness work, we can measure
 whether it changes agent output first. Propose that as the gate for this effort.
+It just did its job twice here — deflating "the template corpus is the fidelity
+engine" before it became a costly investment.
 
 ## Heads-up for whoever publishes Code Connect next
 

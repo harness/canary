@@ -1,6 +1,6 @@
 # `@harnessio/filters` — Agent Guide
 
-URL-driven filter state management for React. Keeps filter values in sync with the URL's query string and provides a composable, headless component API — consumers bring their own UI.
+URL-driven filter state management for React. Keeps filter values in sync with the URL's query string via a composable, render-prop state API, **and** ships a set of styled filter UI components (built on `@harnessio/ui`) for the common cases. Use the headless state API (`Filters`/`Filter`) when you need custom UI; reach for the ready-made components (`FilterGroup`, `ListControlBar`, `SavedFilters`, `SaveFiltersDialog`) when you don't.
 
 ---
 
@@ -9,9 +9,10 @@ URL-driven filter state management for React. Keeps filter values in sync with t
 | Field | Value |
 |-------|-------|
 | Package name | `@harnessio/filters` |
-| Version | `0.0.4` |
+| Version | `0.2.2` |
 | License | Apache-2.0 |
 | React peer dep | `>=17.0.0 <19.0.0` |
+| UI peer dep | `@harnessio/ui >=0.3.0` (required by the shipped filter components) |
 | Router peer dep | `react-router-dom >=5.0.0 <7.0.0` |
 | Entry point | `dist/index.js` |
 
@@ -28,7 +29,7 @@ pnpm build:watch   # Watch mode
 
 ```
 src/
-├── index.ts               # Public exports
+├── index.ts               # Public exports (state API + parsers + components)
 ├── types.ts               # Core types: FilterType, FilterConfig, FilterStatus, Parser, FilterRefType
 ├── Filters.tsx            # Root provider + context + FiltersWrapper + createFilters factory
 ├── Filter.tsx             # Individual filter field (render-prop, headless)
@@ -37,7 +38,14 @@ src/
 ├── parsers.ts             # Built-in Parser implementations
 ├── router-context.tsx     # RouterContext + RouterContextProvider (router abstraction)
 ├── useRouter.ts           # Internal hook: reads location, wraps navigate for URL updates
-└── useSearchParams.ts     # Fallback hook using window.location + popstate (no router)
+├── useSearchParams.ts     # Fallback hook using window.location + popstate (no router)
+├── utils.ts               # Internal helpers
+├── debug.ts               # Debug logging helper
+└── components/            # Styled filter UI (built on @harnessio/ui), all re-exported from index.ts
+    ├── filter-group.tsx        # FilterGroup — grouped filter bar
+    ├── list-control-bar.tsx    # ListControlBar — search + filter + sort control row
+    ├── saved-filters.tsx       # SavedFilters — saved-filter selector
+    └── save-filters-dialog.tsx # SaveFiltersDialog — dialog to name/save a filter set
 ```
 
 ---
@@ -269,7 +277,7 @@ function MyPage() {
 
 ## Important Constraints
 
-- **Headless** — no styling or UI is provided. All visual components come from the consumer.
+- **Headless state, optional UI** — the state API (`Filters`/`Filter`) is headless (bring your own UI), but the package also ships styled components (`FilterGroup`, `ListControlBar`, `SavedFilters`, `SaveFiltersDialog`) built on `@harnessio/ui`. Don't hand-roll these — import them. Using them requires the `@harnessio/ui` peer dependency.
 - **React 17 compatible** — do not use React 18-only APIs.
 - **ESM only** — `"type": "module"`, no CJS build.
 - **`FilterStatus` is internal** — consumers should not need to set status directly; it is managed by the `Filters` provider.

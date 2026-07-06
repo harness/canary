@@ -30,6 +30,11 @@ export interface PageHeaderV2Props {
   contentTabs?: boolean
   children?: ReactNode
   className?: string
+  /**
+   * Applies `shadow-cn-pipeline-studio-page-header` for Pipelines/Templates studio detail headers.
+   * Do not use on list views (e.g. Pipelines list).
+   */
+  pipelineStudioPageHeaderShadow?: boolean
 }
 
 interface TitleSectionProps {
@@ -129,7 +134,8 @@ export const HeaderV2: FC<PageHeaderV2Props> = ({
   tabsVariant = 'underlined',
   contentTabs,
   children,
-  className
+  className,
+  pipelineStudioPageHeaderShadow = false
 }) => {
   const scrollable = usePageScrollable()
   const hasTabs = tabs && tabs.length > 0
@@ -140,10 +146,15 @@ export const HeaderV2: FC<PageHeaderV2Props> = ({
       gap="md"
       className={cn(
         'w-full',
-        showSeparateTabs ? 'mb-0' : 'mb-cn-lg',
+        pipelineStudioPageHeaderShadow
+          ? 'relative z-10 mb-0 border-b border-cn-2 bg-cn-1 pb-cn-lg shadow-cn-pipeline-studio-page-header'
+          : showSeparateTabs
+            ? 'mb-0'
+            : 'mb-cn-lg',
         // In scrollable mode, Page.Root uses `display: contents` on the wrapper,
         // so this header must own its own padding and sticky positioning.
-        scrollable && 'sticky top-0 z-10 bg-cn-1 cn-page-content cn-page-content-pt',
+        scrollable && 'sticky top-0 cn-page-content cn-page-content-pt',
+        scrollable && !pipelineStudioPageHeaderShadow && 'z-10 bg-cn-1',
         className
       )}
     >

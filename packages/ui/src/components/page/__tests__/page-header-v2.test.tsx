@@ -125,8 +125,8 @@ describe('HeaderV2', () => {
     expect(screen.getByRole('heading', { level: 1, name: 'Namespace Test' })).toBeInTheDocument()
   })
 
-  test('applies pipeline studio page header shadow when pipelineStudioPageHeaderShadow is set', () => {
-    const { container } = render(<HeaderV2 title="Studio Pipeline" pipelineStudioPageHeaderShadow />)
+  test('applies studio variant header shell classes', () => {
+    const { container } = render(<HeaderV2 title="Studio Pipeline" variant="studio" />)
     const header = container.firstElementChild
     expect(header).toHaveClass('shadow-cn-pipeline-studio-page-header')
     expect(header).toHaveClass('border-b')
@@ -137,7 +137,7 @@ describe('HeaderV2', () => {
     expect(header).toHaveClass('pb-cn-lg')
   })
 
-  test('does not apply pipeline studio page header shadow by default', () => {
+  test('does not apply studio variant header shell by default', () => {
     const { container } = render(<HeaderV2 title="Pipelines List" />)
     const header = container.firstElementChild
     expect(header).not.toHaveClass('shadow-cn-pipeline-studio-page-header')

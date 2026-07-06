@@ -17,6 +17,10 @@ export interface HeaderV2TabItem {
 }
 
 type HeaderV2TabsVariant = 'underlined' | 'ghost'
+type HeaderV2Variant = 'default' | 'studio'
+
+const STUDIO_HEADER_CLASS =
+  'relative z-10 mb-0 border-b border-cn-2 bg-cn-1 pb-cn-lg shadow-cn-pipeline-studio-page-header'
 
 export interface PageHeaderV2Props {
   breadcrumbs?: ReactNode
@@ -27,14 +31,11 @@ export interface PageHeaderV2Props {
   tabs?: HeaderV2TabItem[]
   /** `ghost` renders tabs inline in the title row; `underlined` (default) renders below. */
   tabsVariant?: HeaderV2TabsVariant
+  /** `studio` applies the pipeline/template studio detail header shell (shadow + seam). */
+  variant?: HeaderV2Variant
   contentTabs?: boolean
   children?: ReactNode
   className?: string
-  /**
-   * Applies `shadow-cn-pipeline-studio-page-header` for Pipelines/Templates studio detail headers.
-   * Do not use on list views (e.g. Pipelines list).
-   */
-  pipelineStudioPageHeaderShadow?: boolean
 }
 
 interface TitleSectionProps {
@@ -132,29 +133,26 @@ export const HeaderV2: FC<PageHeaderV2Props> = ({
   breadcrumbs,
   tabs,
   tabsVariant = 'underlined',
+  variant = 'default',
   contentTabs,
   children,
-  className,
-  pipelineStudioPageHeaderShadow = false
+  className
 }) => {
   const scrollable = usePageScrollable()
   const hasTabs = tabs && tabs.length > 0
   const showInlineTabs = hasTabs && tabsVariant === 'ghost' && !contentTabs
   const showSeparateTabs = hasTabs && !showInlineTabs
+  const isStudioVariant = variant === 'studio'
   return (
     <Layout.Vertical
       gap="md"
       className={cn(
         'w-full',
-        pipelineStudioPageHeaderShadow
-          ? 'relative z-10 mb-0 border-b border-cn-2 bg-cn-1 pb-cn-lg shadow-cn-pipeline-studio-page-header'
-          : showSeparateTabs
-            ? 'mb-0'
-            : 'mb-cn-lg',
+        isStudioVariant ? STUDIO_HEADER_CLASS : showSeparateTabs ? 'mb-0' : 'mb-cn-lg',
         // In scrollable mode, Page.Root uses `display: contents` on the wrapper,
         // so this header must own its own padding and sticky positioning.
         scrollable && 'sticky top-0 cn-page-content cn-page-content-pt',
-        scrollable && !pipelineStudioPageHeaderShadow && 'z-10 bg-cn-1',
+        scrollable && !isStudioVariant && 'z-10 bg-cn-1',
         className
       )}
     >

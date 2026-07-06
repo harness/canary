@@ -1599,7 +1599,7 @@
     "sidebar": {
       "bg": {
         "$type": "color",
-        "$value": "{bg.0}",
+        "$value": "{pure.white}",
         "$description": "Background color for the sidebar container. Provides foundational layer for navigation elements."
       },
       "item": {
@@ -1883,6 +1883,11 @@
       }
     },
     "ai-chat": {
+      "bg": {
+        "$type": "color",
+        "$value": "{bg.1}",
+        "$description": "Background color for the AI chat panel surface (root, header, footer). Kept distinct from bg.1 so the chat can differ per mode."
+      },
       "bubble": {
         "$type": "color",
         "$value": "linear-gradient(95deg, {gradient.sidebar.selected.from} -13.12%, {gradient.sidebar.selected.to} 84.9%)",

@@ -205,3 +205,115 @@ describe('ThreadRuntimeCore.waitForIdle', () => {
     expect(core.isRunning).toBe(false)
   })
 })
+
+describe('ThreadRuntime background tasks', () => {
+  it('reports isRunning while a background task is active and clears when stopped', () => {
+    const { adapter } = makeControllableAdapter()
+    const core = new ThreadRuntimeCore({ streamAdapter: adapter })
+    const runtime = new ThreadRuntime(core)
+
+    expect(runtime.isRunning).toBe(false)
+
+    const taskId = runtime.startBackgroundTask()
+    expect(runtime.isRunning).toBe(true)
+    expect(core.isRunning).toBe(true)
+
+    runtime.stopBackgroundTask(taskId)
+    expect(runtime.isRunning).toBe(false)
+    expect(core.isRunning).toBe(false)
+  })
+
+  it('stays running until the last background task is stopped', () => {
+    const { adapter } = makeControllableAdapter()
+    const core = new ThreadRuntimeCore({ streamAdapter: adapter })
+
+    const a = core.startBackgroundTask()
+    const b = core.startBackgroundTask()
+    expect(core.isRunning).toBe(true)
+
+    core.stopBackgroundTask(a)
+    expect(core.isRunning).toBe(true)
+
+    core.stopBackgroundTask(b)
+    expect(core.isRunning).toBe(false)
+  })
+
+  it('notifies subscribers when a task starts and stops', () => {
+    const { adapter } = makeControllableAdapter()
+    const core = new ThreadRuntimeCore({ streamAdapter: adapter })
+
+    let notifications = 0
+    core.subscribe(() => {
+      notifications++
+    })
+
+    const id = core.startBackgroundTask()
+    expect(notifications).toBe(1)
+
+    core.stopBackgroundTask(id)
+    expect(notifications).toBe(2)
+  })
+
+  it('stopBackgroundTask is a no-op for an unknown id', () => {
+    const { adapter } = makeControllableAdapter()
+    const core = new ThreadRuntimeCore({ streamAdapter: adapter })
+
+    let notifications = 0
+    core.subscribe(() => {
+      notifications++
+    })
+
+    core.stopBackgroundTask('does-not-exist')
+    expect(notifications).toBe(0)
+    expect(core.isRunning).toBe(false)
+  })
+
+  it('cancelRun cancels background tasks and invokes their onCancel callbacks', () => {
+    const { adapter } = makeControllableAdapter()
+    const core = new ThreadRuntimeCore({ streamAdapter: adapter })
+    const runtime = new ThreadRuntime(core)
+
+    const onCancel = jest.fn()
+    runtime.startBackgroundTask({ onCancel })
+    expect(runtime.isRunning).toBe(true)
+
+    runtime.cancelRun()
+
+    expect(onCancel).toHaveBeenCalledTimes(1)
+    expect(runtime.isRunning).toBe(false)
+  })
+
+  it('cancelRun aborts an in-flight run and cancels background tasks together', async () => {
+    const { adapter, runs } = makeControllableAdapter()
+    const core = new ThreadRuntimeCore({ streamAdapter: adapter })
+    const runtime = new ThreadRuntime(core)
+
+    const runPromise = runtime.sendSystemEvent({
+      event_type: 'action_completed',
+      capability_id: 'cap-run'
+    })
+    await Promise.resolve()
+    await Promise.resolve()
+    expect(runs).toHaveLength(1)
+
+    const onCancel = jest.fn()
+    runtime.startBackgroundTask({ onCancel })
+
+    runtime.cancelRun()
+    runs[0].release()
+    await runPromise
+
+    expect(onCancel).toHaveBeenCalledTimes(1)
+    expect(core.isRunning).toBe(false)
+  })
+
+  it('waitForIdle is not blocked by background tasks (only by stream runs)', async () => {
+    const { adapter } = makeControllableAdapter()
+    const core = new ThreadRuntimeCore({ streamAdapter: adapter })
+
+    core.startBackgroundTask()
+    // Background tasks make isRunning true but should not park waitForIdle,
+    // which exists to serialize stream-run dispatch.
+    await expect(core.waitForIdle()).resolves.toBeUndefined()
+  })
+})

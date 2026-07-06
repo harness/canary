@@ -110,6 +110,25 @@ export class ThreadRuntime extends BaseSubscribable {
     await this._core.startSystemEventRun(systemEvent)
   }
 
+  /**
+   * Registers a generic background task that keeps the thread reported as
+   * running for as long as it is active, even when no stream run is in
+   * flight. Use this for UI-driven async work (e.g. a card polling a status
+   * API) so the composer shows a running/stop affordance. The work is
+   * cancelled when the user presses stop (cancelRun), which invokes the
+   * provided onCancel callback. Returns an opaque id for stopBackgroundTask.
+   */
+  public startBackgroundTask(options?: { onCancel?: () => void }): string {
+    return this._core.startBackgroundTask(options)
+  }
+
+  /**
+   * Removes a previously registered background task by its id.
+   */
+  public stopBackgroundTask(id: string): void {
+    this._core.stopBackgroundTask(id)
+  }
+
   public cancelRun(): void {
     this._core.cancelRun()
   }

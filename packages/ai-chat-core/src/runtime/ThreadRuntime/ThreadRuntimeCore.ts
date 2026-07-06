@@ -29,6 +29,14 @@ export class ThreadRuntimeCore extends BaseSubscribable {
   // swallowed by the caller's try/catch.
   private _idleWaiters: Array<() => void> = []
 
+  // Generic background tasks that hold the thread in a "running" state
+  // without an active stream run. Any UI-driven async work (e.g. a card
+  // that polls a status API) can register one to keep the composer
+  // showing a running/stop affordance, and is cancelled alongside the
+  // run when the user presses stop. Keyed by an opaque task id; the
+  // optional onCancel is invoked when the task is cancelled via cancelRun.
+  private _backgroundTasks = new Map<string, { onCancel?: () => void }>()
+
   // Track current part being accumulated
   private _currentPart: {
     messageId: string
@@ -49,7 +57,7 @@ export class ThreadRuntimeCore extends BaseSubscribable {
   }
 
   public get isRunning(): boolean {
-    return this._isRunning
+    return this._isRunning || this._backgroundTasks.size > 0
   }
 
   public get isDisabled(): boolean {
@@ -130,6 +138,55 @@ export class ThreadRuntimeCore extends BaseSubscribable {
         // a single bad waiter can't block the rest.
       }
     }
+  }
+
+  /**
+   * Registers a generic background task that keeps the thread reported as
+   * running (isRunning === true) for as long as it is active, even when no
+   * stream run is in flight. Use this for UI-driven async work — e.g. a card
+   * that polls a status API — so the composer shows a running/stop
+   * affordance and the work is cancelled when the user presses stop.
+   *
+   * Returns an opaque id to pass to stopBackgroundTask. The optional onCancel
+   * callback is invoked if the task is cancelled via cancelRun (stop button).
+   */
+  public startBackgroundTask(options?: { onCancel?: () => void }): string {
+    const id = `bg-${Date.now()}-${Math.random().toString(36).slice(2)}`
+    this._backgroundTasks.set(id, { onCancel: options?.onCancel })
+    this.notifySubscribers()
+    return id
+  }
+
+  /**
+   * Removes a previously registered background task. Once the last task is
+   * removed (and no run is in flight) any idle waiters are drained so queued
+   * dispatches can proceed.
+   */
+  public stopBackgroundTask(id: string): void {
+    if (this._backgroundTasks.delete(id)) {
+      if (!this.isRunning) {
+        this.drainIdleWaiters()
+      }
+      this.notifySubscribers()
+    }
+  }
+
+  private cancelBackgroundTasks(): void {
+    if (this._backgroundTasks.size === 0) return
+    const tasks = [...this._backgroundTasks.values()]
+    this._backgroundTasks.clear()
+    for (const task of tasks) {
+      try {
+        task.onCancel?.()
+      } catch {
+        // onCancel callbacks should not throw; swallow defensively so a
+        // single bad task can't block cancelling the rest.
+      }
+    }
+    if (!this.isRunning) {
+      this.drainIdleWaiters()
+    }
+    this.notifySubscribers()
   }
 
   public async startSystemEventRun(systemEvent: SystemEvent): Promise<void> {
@@ -508,11 +565,14 @@ export class ThreadRuntimeCore extends BaseSubscribable {
   }
 
   public cancelRun(): void {
-    if (!this._isRunning || !this._abortController) {
-      return
+    // Abort an in-flight stream run if there is one. Background tasks are
+    // cancelled regardless, so pressing stop also halts UI-driven polling
+    // even when no stream run is active.
+    if (this._isRunning && this._abortController) {
+      this._abortController.abort()
     }
 
-    this._abortController.abort()
+    this.cancelBackgroundTasks()
   }
 
   public reset(messages: Message[] = []): void {

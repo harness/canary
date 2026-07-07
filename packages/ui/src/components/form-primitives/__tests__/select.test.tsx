@@ -1,4 +1,6 @@
-import { render, RenderResult, screen } from '@testing-library/react'
+import { useState } from 'react'
+
+import { fireEvent, render, RenderResult, screen } from '@testing-library/react'
 import { vi } from 'vitest'
 
 import { Select } from '../select'
@@ -93,6 +95,46 @@ describe('Select', () => {
 
       // Trigger renders with placeholder
       expect(screen.getByRole('button')).toBeInTheDocument()
+    })
+
+    test('should clear uncontrolled selected value when clearable', () => {
+      const onChange = vi.fn()
+      const onClear = vi.fn()
+      const { container } = renderComponent({
+        clearable: true,
+        defaultValue: 'opt1',
+        onChange,
+        onClear,
+        placeholder: 'Pick one'
+      })
+
+      fireEvent.click(screen.getByRole('button', { name: 'Clear selection' }))
+
+      expect(screen.getByText('Pick one')).toBeInTheDocument()
+      expect(onChange).toHaveBeenCalledWith(undefined)
+      expect(onClear).toHaveBeenCalled()
+      expect((container.querySelector('input[type="hidden"]') as HTMLInputElement).value).toBe('')
+    })
+
+    test('should clear controlled selected value when parent updates value', () => {
+      const ControlledSelect = () => {
+        const [value, setValue] = useState<string | undefined>('opt2')
+
+        return <Select clearable options={options} placeholder="Pick one" value={value} onChange={setValue} />
+      }
+
+      render(<ControlledSelect />)
+
+      fireEvent.click(screen.getByRole('button', { name: 'Clear selection' }))
+
+      expect(screen.getByText('Pick one')).toBeInTheDocument()
+      expect(screen.queryByText('Option 2')).not.toBeInTheDocument()
+    })
+
+    test('should not show clear button when clearable is false', () => {
+      renderComponent({ value: 'opt1' })
+
+      expect(screen.queryByRole('button', { name: 'Clear selection' })).not.toBeInTheDocument()
     })
   })
 

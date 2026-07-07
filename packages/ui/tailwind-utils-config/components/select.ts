@@ -72,6 +72,11 @@ export default {
       color: 'var(--cn-text-2)'
     },
 
+    '&-clear-button': {
+      flexShrink: '0',
+      color: 'var(--cn-text-2)'
+    },
+
     '&-trigger': {
       '@apply w-full flex items-center justify-between truncate select-none': '',
       padding: 'var(--cn-input-md-py) var(--cn-input-md-pr) var(--cn-input-md-py) var(--cn-input-md-pl)',

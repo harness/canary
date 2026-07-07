@@ -470,7 +470,7 @@ function SelectInner<T = string>(
               {clearable && selectedOption && !disabled ? (
                 <Button
                   asChild
-                  className="cn-select-clear-button cn-button-icon-only"
+                  className="cn-button-icon-only"
                   size="xs"
                   variant="ghost"
                   rounded

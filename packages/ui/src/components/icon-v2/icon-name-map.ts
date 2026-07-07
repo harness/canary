@@ -5,6 +5,7 @@
 
 import AccountSolid from './icons/account-solid.svg'
 import Account from './icons/account.svg'
+import AgentServices from './icons/agent-services.svg'
 import Agents from './icons/agents.svg'
 import Agile from './icons/agile.svg'
 import AiDeepResearch from './icons/ai-deep-research.svg'
@@ -55,6 +56,7 @@ import AtSign from './icons/at-sign.svg'
 import Atom from './icons/atom.svg'
 import AttachmentImage from './icons/attachment-image.svg'
 import Attachment from './icons/attachment.svg'
+import AwsBedrockAgentCore from './icons/aws-bedrock-agent-core.svg'
 import BarHorizontal from './icons/bar-horizontal.svg'
 import BarVertical from './icons/bar-vertical.svg'
 import BaseImgSolid from './icons/base-img-solid.svg'
@@ -507,6 +509,7 @@ import User from './icons/user.svg'
 import Variables from './icons/variables.svg'
 import VerifiedCheck from './icons/verified-check.svg'
 import Version from './icons/version.svg'
+import VertexAi from './icons/vertex-ai.svg'
 import VideoCall from './icons/video-call.svg'
 import ViewColumns2 from './icons/view-columns-2.svg'
 import ViewColumns3 from './icons/view-columns-3.svg'
@@ -532,6 +535,7 @@ import ZoomOut from './icons/zoom-out.svg'
 export const IconNameMapV2 = {
   'account-solid': AccountSolid,
   account: Account,
+  'agent-services': AgentServices,
   agents: Agents,
   agile: Agile,
   'ai-deep-research': AiDeepResearch,
@@ -582,6 +586,7 @@ export const IconNameMapV2 = {
   atom: Atom,
   'attachment-image': AttachmentImage,
   attachment: Attachment,
+  'aws-bedrock-agent-core': AwsBedrockAgentCore,
   'bar-horizontal': BarHorizontal,
   'bar-vertical': BarVertical,
   'base-img-solid': BaseImgSolid,
@@ -1034,6 +1039,7 @@ export const IconNameMapV2 = {
   variables: Variables,
   'verified-check': VerifiedCheck,
   version: Version,
+  'vertex-ai': VertexAi,
   'video-call': VideoCall,
   'view-columns-2': ViewColumns2,
   'view-columns-3': ViewColumns3,

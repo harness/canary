@@ -17,10 +17,16 @@ export interface HeaderV2TabItem {
 }
 
 type HeaderV2TabsVariant = 'underlined' | 'ghost'
-type HeaderV2Variant = 'default' | 'studio'
 
-const STUDIO_HEADER_CLASS =
-  'relative z-10 mb-0 border-b border-cn-2 bg-cn-1 pb-cn-lg shadow-cn-pipeline-studio-page-header'
+function getHeaderMarginClass(shadow: boolean, showSeparateTabs: boolean): string | undefined {
+  if (shadow) return undefined
+  return showSeparateTabs ? 'mb-0' : 'mb-cn-lg'
+}
+
+function getHeaderScrollableClass(shadow: boolean, scrollable: boolean): string | undefined {
+  if (!scrollable) return undefined
+  return cn('sticky top-0 cn-page-content cn-page-content-pt', !shadow && 'z-10 bg-cn-1')
+}
 
 export interface PageHeaderV2Props {
   breadcrumbs?: ReactNode
@@ -31,8 +37,8 @@ export interface PageHeaderV2Props {
   tabs?: HeaderV2TabItem[]
   /** `ghost` renders tabs inline in the title row; `underlined` (default) renders below. */
   tabsVariant?: HeaderV2TabsVariant
-  /** `studio` applies the pipeline/template studio detail header shell (shadow + seam). */
-  variant?: HeaderV2Variant
+  /** Applies `shadow-cn-pipeline-studio-page-header`. */
+  shadow?: boolean
   contentTabs?: boolean
   children?: ReactNode
   className?: string
@@ -133,7 +139,7 @@ export const HeaderV2: FC<PageHeaderV2Props> = ({
   breadcrumbs,
   tabs,
   tabsVariant = 'underlined',
-  variant = 'default',
+  shadow = false,
   contentTabs,
   children,
   className
@@ -141,18 +147,16 @@ export const HeaderV2: FC<PageHeaderV2Props> = ({
   const scrollable = usePageScrollable()
   const hasTabs = tabs && tabs.length > 0
   const showInlineTabs = hasTabs && tabsVariant === 'ghost' && !contentTabs
-  const showSeparateTabs = hasTabs && !showInlineTabs
-  const isStudioVariant = variant === 'studio'
+  const showSeparateTabs = Boolean(hasTabs && !showInlineTabs)
+
   return (
     <Layout.Vertical
       gap="md"
       className={cn(
         'w-full',
-        isStudioVariant ? STUDIO_HEADER_CLASS : showSeparateTabs ? 'mb-0' : 'mb-cn-lg',
-        // In scrollable mode, Page.Root uses `display: contents` on the wrapper,
-        // so this header must own its own padding and sticky positioning.
-        scrollable && 'sticky top-0 cn-page-content cn-page-content-pt',
-        scrollable && !isStudioVariant && 'z-10 bg-cn-1',
+        shadow && 'shadow-cn-pipeline-studio-page-header',
+        getHeaderMarginClass(shadow, showSeparateTabs),
+        getHeaderScrollableClass(shadow, scrollable),
         className
       )}
     >
@@ -165,8 +169,8 @@ export const HeaderV2: FC<PageHeaderV2Props> = ({
         inlineTabs={showInlineTabs ? tabs : undefined}
       />
       {children}
-      {showSeparateTabs && contentTabs && <ContentTabsSection items={tabs} />}
-      {showSeparateTabs && !contentTabs && <NavTabsSection items={tabs} />}
+      {showSeparateTabs && tabs && contentTabs && <ContentTabsSection items={tabs} />}
+      {showSeparateTabs && tabs && !contentTabs && <NavTabsSection items={tabs} />}
     </Layout.Vertical>
   )
 }

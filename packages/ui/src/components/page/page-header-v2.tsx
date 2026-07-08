@@ -44,7 +44,7 @@ interface TitleSectionProps {
 const TitleSection: FC<TitleSectionProps> = ({ title, iconName, description, actions, inlineTabs }) => {
   const titleElement =
     typeof title === 'string' ? (
-      <Text as="h1" variant="heading-hero" truncate>
+      <Text as="h1" variant="heading-hero" truncate title={title} className="min-w-0">
         {title}
       </Text>
     ) : (
@@ -63,18 +63,14 @@ const TitleSection: FC<TitleSectionProps> = ({ title, iconName, description, act
       <Layout.Horizontal
         align="center"
         justify={inlineTabs ? 'between' : undefined}
-        className={inlineTabs ? 'h-[var(--cn-btn-size-sm)]' : 'h-[var(--cn-btn-size-md)]'}
+        className={cn('min-w-0', inlineTabs ? 'h-[var(--cn-btn-size-sm)]' : 'h-[var(--cn-btn-size-md)]')}
       >
-        <Layout.Horizontal
-          gap="xs"
-          align="center"
-          className={cn('text-cn-1 min-w-0', inlineTabs ? 'shrink-0' : 'flex-1')}
-        >
-          {iconName && <IconV2 name={iconName} size="xl" />}
+        <Layout.Horizontal gap="xs" align="center" className="text-cn-1 min-w-0 flex-1">
+          {iconName && <IconV2 name={iconName} size="xl" className="shrink-0" />}
           {titleElement}
         </Layout.Horizontal>
         {inlineTabs ? (
-          <Layout.Horizontal gap="md" align="center" className="min-w-0">
+          <Layout.Horizontal gap="md" align="center" className="shrink-0">
             <NavTabsSection items={inlineTabs} variant="ghost" />
             {actionsElement}
           </Layout.Horizontal>

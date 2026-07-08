@@ -125,6 +125,13 @@ describe('HeaderV2', () => {
     expect(screen.getByRole('heading', { level: 1, name: 'Namespace Test' })).toBeInTheDocument()
   })
 
+  test('truncates string titles and exposes the full value via native title tooltip', () => {
+    render(<HeaderV2 title="A very long pipeline name that should truncate in the header" />)
+    const heading = screen.getByRole('heading', { level: 1 })
+    expect(heading).toHaveClass('truncate')
+    expect(heading).toHaveAttribute('title', 'A very long pipeline name that should truncate in the header')
+  })
+
   test('renders all sections together (integration)', () => {
     render(
       <HeaderV2

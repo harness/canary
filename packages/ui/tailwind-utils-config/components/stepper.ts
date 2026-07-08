@@ -210,7 +210,12 @@ export default {
     top: 'var(--cn-size-5)',
     bottom: '0',
     width: 'var(--cn-spacing-px)',
-    borderRadius: 'var(--cn-rounded-1)'
+    borderRadius: 'var(--cn-rounded-1)',
+    // The vertical trunk must sit ABOVE the substep branch elbows. The branch wires live in the
+    // substep-list, which is later in DOM than the connector, so without this they'd paint over the
+    // trunk — leaving a substep's colored elbow (e.g. a red error arc) smudged across the continuous
+    // trunk color at the junction. Lifting the trunk keeps its color unbroken where branches meet it.
+    zIndex: '1'
   },
 
   '.cn-stepper-connector-completed': {
@@ -300,6 +305,8 @@ export default {
   },
 
   '.cn-stepper-substep-item': {
+    display: 'block',
+    listStyle: 'none',
     padding: 'var(--cn-spacing-2) 0',
     counterIncrement: 'substep'
   },
@@ -433,6 +440,15 @@ export default {
     marginTop: 'var(--cn-spacing-half)',
     marginLeft: 'var(--cn-spacing-4)',
     minWidth: '0'
+  },
+
+  /* SubStep Panel — container for card children rendered below substep button */
+  '.cn-stepper-substep-panel': {
+    marginLeft: 'calc(var(--cn-spacing-4) + var(--cn-size-5) + var(--cn-spacing-4))',
+    marginTop: 'var(--cn-spacing-2)',
+    paddingRight: 'var(--cn-spacing-2)',
+    minWidth: '0',
+    width: 'calc(100% - calc(var(--cn-spacing-4) + var(--cn-size-5) + var(--cn-spacing-4)) - var(--cn-spacing-2))'
   },
 
   /* Placeholder — indeterminate substeps indicator */

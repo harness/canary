@@ -9,7 +9,7 @@ import { ParentStepProvider, useStepperContext } from './stepper-context'
 import { StepperStepProps } from './stepper-types'
 
 // Branch wire ::before box height = size-5/2 + rounded-5; elbow radius = rounded-5 (12px, same as
-// SplitPaneStepper step cards). Keep in sync with stepper.ts BRANCH_ELBOW_RADIUS.
+// DualPaneStepper step cards). Keep in sync with stepper.ts BRANCH_ELBOW_RADIUS.
 const BRANCH_ELBOW_RADIUS_PX = 12
 const BRANCH_MASK_VIEWBOX_HEIGHT = 22
 const BRANCH_MASK_ELBOW_Y = BRANCH_MASK_VIEWBOX_HEIGHT - BRANCH_ELBOW_RADIUS_PX
@@ -48,7 +48,7 @@ function measureTrunkSegmentEnds(stepItem: HTMLElement): { greenEnd: number; acc
 
   const connectorTop = connector.getBoundingClientRect().top
 
-  // Use rendered state classes so explicit `state` props (e.g. SplitPaneStepper) match trunk colors.
+  // Use rendered state classes so explicit `state` props (e.g. DualPaneStepper) match trunk colors.
   const completedBranches = stepItem.querySelectorAll(
     '.cn-stepper-substep-list > .cn-stepper-substep-item.cn-stepper-substep-completed .cn-stepper-substep-branch, ' +
       '.cn-stepper-substep-list > .cn-stepper-substep-item.cn-stepper-substep-skipped .cn-stepper-substep-branch'
@@ -88,6 +88,22 @@ function measureTrunkSegmentEnds(stepItem: HTMLElement): { greenEnd: number; acc
   }
 
   return { greenEnd, accentEnd }
+}
+
+// For a completed last step, cap the connector's height at the last completed branch elbow so the
+// trunk ends at the final substep indicator instead of running into the embedded card panel below
+// it. Returns the height in px, or null if it can't be measured.
+function measureCompletedTrunkEnd(stepItem: HTMLElement): number | null {
+  const connector = stepItem.querySelector('.cn-stepper-connector')
+  if (!connector) return null
+  const connectorTop = connector.getBoundingClientRect().top
+  const branches = stepItem.querySelectorAll(
+    '.cn-stepper-substep-list > .cn-stepper-substep-item .cn-stepper-substep-branch'
+  )
+  const lastBranch = branches[branches.length - 1]
+  if (!lastBranch) return null
+  const end = getBranchWireElbowY(lastBranch, connectorTop)
+  return end > 0 ? end : null
 }
 
 function applyTrunkSegmentVars(stepItem: HTMLElement, greenEnd: string, blueEnd: string) {
@@ -207,17 +223,55 @@ export function StepperStep({
   const hasErrorSubStepTrunk = derivedState === 'error' && errorSubStepIndex >= 0 && hasSubStepsContent
   const hasSubStepTrunk = hasActiveSubStepTrunk || hasErrorSubStepTrunk
 
+  // A step whose substeps embed content (SinglePaneStepper renders each card inside its substep row)
+  // grows tall to fit that content. The connector's CSS `bottom` is relative to the step-item, so on
+  // the LAST such step the trunk would run down past the last substep indicator into the embedded
+  // panel's height (visible overhang). When this is the last step and the flow has SETTLED on it (no
+  // further substep to advance to), we measure the last branch elbow and cap the connector height
+  // there, so the trunk ends at the final indicator regardless of panel height. Dual-pane substeps
+  // have no panel, so their offset already lands at the indicator and this is a no-op for them.
+  //
+  // Two settled cases: a fully completed last step, and a TERMINAL ERROR — the last substep errored
+  // with nothing active/predicted after it (a recoverable error, by contrast, keeps an error-partial
+  // trunk running toward its predicted next, so it must NOT be capped).
+  const isLastStep = stepIndex === ctx.orderedSteps.length - 1
+  const isTerminalError =
+    derivedState === 'error' && errorSubStepIndex === subStepValues.length - 1 && activeSubStepIndex < 0
+  const capSettledTrunk = isLastStep && subStepValues.length > 0 && (derivedState === 'completed' || isTerminalError)
+
   const accentSubStepIndex = derivedState === 'error' ? errorSubStepIndex : Math.max(activeSubStepIndex, 0)
 
-  const trunkConnectorStyle = hasSubStepTrunk
-    ? calcTrunkConnectorStyle(lastCompletedSubStepIndex, accentSubStepIndex)
-    : undefined
+  // When we cap the trunk (settled last step), the cap is authoritative — don't also apply the
+  // partial-trunk color vars, which assume a continuing trunk toward an active/predicted next.
+  const trunkConnectorStyle =
+    hasSubStepTrunk && !capSettledTrunk
+      ? calcTrunkConnectorStyle(lastCompletedSubStepIndex, accentSubStepIndex)
+      : undefined
 
   useLayoutEffect(() => {
     const stepItem = stepItemRef.current
-    if (!stepItem || !hasSubStepTrunk) return
+    if (!stepItem || (!hasSubStepTrunk && !capSettledTrunk)) return
 
     const applyTrunkMeasurements = () => {
+      // Settled last step (completed or terminal error): cap the connector height at the last branch
+      // elbow so the trunk ends at the final indicator (see capSettledTrunk).
+      if (capSettledTrunk) {
+        const contentOverflow = measureStepContentOverflow(stepItem)
+        stepItem.style.setProperty('--cn-stepper-step-content-overflow', `${contentOverflow}px`)
+        const end = measureCompletedTrunkEnd(stepItem)
+        const connector = stepItem.querySelector('.cn-stepper-connector')
+        if (connector instanceof HTMLElement) {
+          if (end != null) {
+            connector.style.height = `${end}px`
+            connector.style.bottom = 'auto'
+          } else {
+            connector.style.removeProperty('height')
+            connector.style.removeProperty('bottom')
+          }
+        }
+        return
+      }
+
       const contentOverflow = measureStepContentOverflow(stepItem)
       stepItem.style.setProperty('--cn-stepper-step-content-overflow', `${contentOverflow}px`)
 
@@ -246,8 +300,21 @@ export function StepperStep({
     const substepList = stepItem.querySelector('.cn-stepper-substep-list')
     if (substepList) resizeObserver.observe(substepList)
 
-    return () => resizeObserver.disconnect()
-  }, [hasSubStepTrunk, subStepValues, lastCompletedSubStepIndex, accentSubStepIndex])
+    // Observe panels so trunk measurements update when card content changes height
+    const panels = stepItem.querySelectorAll('.cn-stepper-substep-panel')
+    panels.forEach(panel => resizeObserver.observe(panel))
+
+    return () => {
+      resizeObserver.disconnect()
+      // Clear the inline height/bottom cap so a step leaving the completed-last-step case (e.g. a
+      // reactivation that adds steps below) reverts to the default CSS-driven connector length.
+      const connector = stepItem.querySelector('.cn-stepper-connector')
+      if (connector instanceof HTMLElement) {
+        connector.style.removeProperty('height')
+        connector.style.removeProperty('bottom')
+      }
+    }
+  }, [hasSubStepTrunk, capSettledTrunk, subStepValues, lastCompletedSubStepIndex, accentSubStepIndex])
 
   const substepPlaceholder = (
     <span className="cn-stepper-substep-placeholder" aria-hidden="true">

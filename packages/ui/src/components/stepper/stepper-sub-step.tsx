@@ -8,7 +8,14 @@ import { cn } from '@utils/cn'
 import { useParentStep, useStepperContext } from './stepper-context'
 import { StepperSubStepProps } from './stepper-types'
 
-export function StepperSubStep({ value, title, description, state: explicitState, className }: StepperSubStepProps) {
+export function StepperSubStep({
+  value,
+  title,
+  description,
+  state: explicitState,
+  className,
+  children
+}: StepperSubStepProps) {
   const parentValue = useParentStep()
   const ctx = useStepperContext()
 
@@ -89,6 +96,7 @@ export function StepperSubStep({ value, title, description, state: explicitState
           )}
         </span>
       </button>
+      {children && <div className="cn-stepper-substep-panel">{children}</div>}
     </li>
   )
 }

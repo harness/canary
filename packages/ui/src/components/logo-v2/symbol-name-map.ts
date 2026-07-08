@@ -7,6 +7,7 @@ import AiVerify from './symbols/ai-verify.svg'
 import Anchore from './symbols/anchore.svg'
 import Android from './symbols/android.svg'
 import AppDynamics from './symbols/app-dynamics.svg'
+import Apple from './symbols/apple.svg'
 import Approval from './symbols/approval.svg'
 import Aqua from './symbols/aqua.svg'
 import Argo from './symbols/argo.svg'
@@ -98,6 +99,7 @@ import Osv from './symbols/osv.svg'
 import Owasp from './symbols/owasp.svg'
 import Pagerduty from './symbols/pagerduty.svg'
 import Parallel from './symbols/parallel.svg'
+import Playwright from './symbols/playwright.svg'
 import PrismaCloud from './symbols/prisma-cloud.svg'
 import Prometheus from './symbols/prometheus.svg'
 import Prowler from './symbols/prowler.svg'
@@ -135,6 +137,7 @@ import Terragrunt from './symbols/terragrunt.svg'
 import Traceable from './symbols/traceable.svg'
 import Veracode from './symbols/veracode.svg'
 import VueJs from './symbols/vue-js.svg'
+import Windows from './symbols/windows.svg'
 import Windsurf from './symbols/windsurf.svg'
 import Wiz from './symbols/wiz.svg'
 import Yaml from './symbols/yaml.svg'
@@ -146,6 +149,7 @@ export const SymbolNameMap = {
   anchore: Anchore,
   android: Android,
   'app-dynamics': AppDynamics,
+  apple: Apple,
   approval: Approval,
   aqua: Aqua,
   argo: Argo,
@@ -237,6 +241,7 @@ export const SymbolNameMap = {
   owasp: Owasp,
   pagerduty: Pagerduty,
   parallel: Parallel,
+  playwright: Playwright,
   'prisma-cloud': PrismaCloud,
   prometheus: Prometheus,
   prowler: Prowler,
@@ -274,6 +279,7 @@ export const SymbolNameMap = {
   traceable: Traceable,
   veracode: Veracode,
   'vue-js': VueJs,
+  windows: Windows,
   windsurf: Windsurf,
   wiz: Wiz,
   yaml: Yaml,

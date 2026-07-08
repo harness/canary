@@ -7,6 +7,7 @@ import AiVerify from './logos/ai-verify.svg'
 import Anchore from './logos/anchore.svg'
 import Android from './logos/android.svg'
 import AppDynamics from './logos/app-dynamics.svg'
+import Apple from './logos/apple.svg'
 import Approval from './logos/approval.svg'
 import Aqua from './logos/aqua.svg'
 import Argo from './logos/argo.svg'
@@ -98,6 +99,7 @@ import Osv from './logos/osv.svg'
 import Owasp from './logos/owasp.svg'
 import Pagerduty from './logos/pagerduty.svg'
 import Parallel from './logos/parallel.svg'
+import Playwright from './logos/playwright.svg'
 import PrismaCloud from './logos/prisma-cloud.svg'
 import Prometheus from './logos/prometheus.svg'
 import Prowler from './logos/prowler.svg'
@@ -135,6 +137,7 @@ import Terragrunt from './logos/terragrunt.svg'
 import Traceable from './logos/traceable.svg'
 import Veracode from './logos/veracode.svg'
 import VueJs from './logos/vue-js.svg'
+import Windows from './logos/windows.svg'
 import Windsurf from './logos/windsurf.svg'
 import Wiz from './logos/wiz.svg'
 import Yaml from './logos/yaml.svg'
@@ -146,6 +149,7 @@ export const LogoNameMapV2 = {
   anchore: Anchore,
   android: Android,
   'app-dynamics': AppDynamics,
+  apple: Apple,
   approval: Approval,
   aqua: Aqua,
   argo: Argo,
@@ -237,6 +241,7 @@ export const LogoNameMapV2 = {
   owasp: Owasp,
   pagerduty: Pagerduty,
   parallel: Parallel,
+  playwright: Playwright,
   'prisma-cloud': PrismaCloud,
   prometheus: Prometheus,
   prowler: Prowler,
@@ -274,6 +279,7 @@ export const LogoNameMapV2 = {
   traceable: Traceable,
   veracode: Veracode,
   'vue-js': VueJs,
+  windows: Windows,
   windsurf: Windsurf,
   wiz: Wiz,
   yaml: Yaml,

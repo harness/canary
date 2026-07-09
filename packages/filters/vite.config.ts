@@ -7,7 +7,11 @@ import dts from 'vite-plugin-dts'
 const pkg = require('./package.json')
 
 const externalPackages = Array.from(
-  new Set([...Object.keys(pkg.devDependencies || {}), ...Object.keys(pkg.peerDependencies || {})])
+  new Set([
+    ...Object.keys(pkg.dependencies || {}),
+    ...Object.keys(pkg.devDependencies || {}),
+    ...Object.keys(pkg.peerDependencies || {})
+  ])
 )
 
 // Use a function to match subpath imports (e.g., @harnessio/ui/components)

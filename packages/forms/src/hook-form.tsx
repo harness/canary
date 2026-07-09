@@ -31,7 +31,7 @@ export function useController<TFieldValues extends FieldValues, TName extends Fi
     ...rest,
     field: {
       ...fieldRest,
-      onBlur: afterFrames(onBlur, 2, mountTimeRef.current)
+      onBlur: () => afterFrames(onBlur, 2, mountTimeRef.current)
     }
   }
 }

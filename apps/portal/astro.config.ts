@@ -146,6 +146,7 @@ export default defineConfig({
             "components/data-display/card-select",
             "components/visual/carousel",
             "components/form/checkbox",
+            "components/form/checkbox-tree",
             "components/actions/copy-button",
             "components/feedback/counter-badge",
             "components/data-display/data-table",

@@ -10,6 +10,7 @@ import captionStyles from './caption'
 import cardStyles from './card'
 import cardSelectStyles from './card-select'
 import checkboxStyles from './checkbox'
+import checkboxTreeStyles from './checkbox-tree'
 import dialogStyles from './dialog'
 import drawerStyles from './drawer'
 import dropdownStyles from './dropdown-menu'
@@ -113,6 +114,7 @@ export const ComponentStyles = [
   selectStyles,
   formSharedStyles,
   checkboxStyles,
+  checkboxTreeStyles,
   radioStyles,
   textareaStyles,
   inputStyles,

@@ -1,0 +1,282 @@
+---
+title: Checkbox Tree
+description: Hierarchical checkbox tree with Select All and cascading tri-state selection
+beta: true
+---
+
+The `CheckboxTree` component renders a hierarchical tree where every node has a checkbox. Checking a group cascades to all of its descendants, and parent groups automatically show an `indeterminate` (mixed) state when only some of their descendants are selected. It supports an optional **Select All** row and expand/collapse of groups.
+
+It is a compound component composed of `CheckboxTree.Root`, `CheckboxTree.Group`, and `CheckboxTree.Item`. Selection is controlled via `selectedIds` + `onSelectionChange` (leaf ids only); parent/child relationships are derived from JSX nesting. Enable `showCount` on the `Root` to render each group's leaf-descendant count (e.g. "Resources (16)") — it is computed automatically, with no `count` prop to maintain.
+
+import { DocsPage } from "@/components/docs-page";
+
+<DocsPage.ComponentExample
+  client:only
+  code={`() => {
+    const [selectedIds, setSelectedIds] = React.useState([]);
+
+    return (
+      <CheckboxTree.Root
+        className="w-full rounded-cn-2 border border-cn-3"
+        selectedIds={selectedIds}
+        onSelectionChange={setSelectedIds}
+        defaultExpandedIds={['resources', 'pipelines']}
+        showSelectAll
+        showCount
+      >
+        <CheckboxTree.Group id="resources" label="Resources">
+          <CheckboxTree.Group id="pipelines" label="Pipelines">
+            <CheckboxTree.Item id="audit-logs" label="Audit logs" />
+            <CheckboxTree.Item id="default-settings" label="Default settings" />
+            <CheckboxTree.Item id="notification-templates" label="Notification default template sets" />
+            <CheckboxTree.Item id="organizations" label="Organizations" />
+            <CheckboxTree.Item id="roles" label="Roles" />
+            <CheckboxTree.Item id="streaming-destination" label="Streaming Destination" />
+            <CheckboxTree.Item id="banner" label="Banner" />
+            <CheckboxTree.Item id="resource-groups" label="Resource Groups" />
+            <CheckboxTree.Item id="user-groups" label="User Groups" />
+            <CheckboxTree.Item id="service-accounts" label="Service Accounts" />
+            <CheckboxTree.Item id="notification-rules" label="Notification Rules" />
+            <CheckboxTree.Item id="oidc-id-token" label="OIDC ID Token" />
+            <CheckboxTree.Item id="users" label="Users" />
+          </CheckboxTree.Group>
+        </CheckboxTree.Group>
+      </CheckboxTree.Root>
+    );
+
+}`}
+/>
+
+## Usage
+
+```typescript jsx
+import { CheckboxTree } from '@harnessio/ui/components'
+
+const [selectedIds, setSelectedIds] = useState<string[]>([])
+
+return (
+  <CheckboxTree.Root
+    className="w-full rounded-cn-2 border border-cn-3"
+    selectedIds={selectedIds}
+    onSelectionChange={setSelectedIds}
+    defaultExpandedIds={['resources']}
+    showSelectAll
+  >
+    <CheckboxTree.Group id="resources" label="Resources">
+      <CheckboxTree.Item id="audit-logs" label="Audit logs" />
+      <CheckboxTree.Item id="roles" label="Roles" />
+    </CheckboxTree.Group>
+  </CheckboxTree.Root>
+)
+```
+
+## Deeply Nested Groups
+
+Groups can be nested to any depth. Each level indents its content, and every group reflects the aggregate state of all leaves beneath it.
+
+<DocsPage.ComponentExample
+  client:only
+  code={`() => {
+    const [selectedIds, setSelectedIds] = React.useState(['us-east-prod']);
+
+    return (
+      <CheckboxTree.Root
+        className="w-full rounded-cn-2 border border-cn-3"
+        selectedIds={selectedIds}
+        onSelectionChange={setSelectedIds}
+        defaultExpandedIds={['regions', 'us', 'eu']}
+        showSelectAll
+        showCount
+      >
+        <CheckboxTree.Group id="regions" label="Regions">
+          <CheckboxTree.Group id="us" label="United States">
+            <CheckboxTree.Item id="us-east-prod" label="us-east (prod)" />
+            <CheckboxTree.Item id="us-west-prod" label="us-west (prod)" />
+          </CheckboxTree.Group>
+          <CheckboxTree.Group id="eu" label="Europe">
+            <CheckboxTree.Item id="eu-central" label="eu-central" />
+            <CheckboxTree.Item id="eu-west" label="eu-west" />
+          </CheckboxTree.Group>
+        </CheckboxTree.Group>
+      </CheckboxTree.Root>
+    );
+
+}`}
+/>
+
+## Custom Group Icons
+
+Each group renders a `folder` icon before its label by default. Pass the `icon` prop to override it with any `IconV2` icon name.
+
+<DocsPage.ComponentExample
+  client:only
+  code={`() => {
+    const [selectedIds, setSelectedIds] = React.useState([]);
+
+    return (
+      <CheckboxTree.Root
+        className="w-full rounded-cn-2 border border-cn-3"
+        selectedIds={selectedIds}
+        onSelectionChange={setSelectedIds}
+        defaultExpandedIds={['infra', 'databases']}
+        showSelectAll
+      >
+        <CheckboxTree.Group id="infra" label="Infrastructure" icon="cloud">
+          <CheckboxTree.Group id="databases" label="Databases" icon="database">
+            <CheckboxTree.Item id="postgres" label="Postgres" />
+            <CheckboxTree.Item id="redis" label="Redis" />
+          </CheckboxTree.Group>
+        </CheckboxTree.Group>
+      </CheckboxTree.Root>
+    );
+
+}`}
+/>
+
+## Disabled Nodes
+
+Set `disabled` on the `Root` to disable the whole tree, or on an individual `Group`/`Item`.
+
+<DocsPage.ComponentExample
+  client:only
+  code={`() => {
+    const [selectedIds, setSelectedIds] = React.useState([]);
+
+    return (
+      <CheckboxTree.Root
+        className="w-full rounded-cn-2 border border-cn-3"
+        selectedIds={selectedIds}
+        onSelectionChange={setSelectedIds}
+        defaultExpandedIds={['resources']}
+        showSelectAll
+      >
+        <CheckboxTree.Group id="resources" label="Resources">
+          <CheckboxTree.Item id="audit-logs" label="Audit logs" />
+          <CheckboxTree.Item id="roles" label="Roles (read-only)" disabled />
+        </CheckboxTree.Group>
+      </CheckboxTree.Root>
+    );
+
+}`}
+/>
+
+## API Reference
+
+### CheckboxTree.Root Props
+
+<DocsPage.PropsTable
+  props={[
+    {
+      name: "selectedIds",
+      description: "Controlled list of selected leaf (Item) ids.",
+      required: true,
+      value: "string[]",
+    },
+    {
+      name: "onSelectionChange",
+      description:
+        "Called with the next list of selected leaf ids whenever the selection changes.",
+      required: true,
+      value: "(ids: string[]) => void",
+    },
+    {
+      name: "defaultExpandedIds",
+      description: "Ids of groups that should start expanded.",
+      required: false,
+      value: "string[]",
+    },
+    {
+      name: "showSelectAll",
+      description: "Render a top-level Select All row.",
+      required: false,
+      defaultValue: "false",
+      value: "boolean",
+    },
+    {
+      name: "selectAllLabel",
+      description: "Label for the Select All row.",
+      required: false,
+      defaultValue: "'Select All'",
+      value: "string",
+    },
+    {
+      name: "showCount",
+      description:
+        "Render each group's leaf-descendant count next to its label (computed automatically).",
+      required: false,
+      defaultValue: "false",
+      value: "boolean",
+    },
+    {
+      name: "disabled",
+      description: "Disable the entire tree.",
+      required: false,
+      value: "boolean",
+    },
+    {
+      name: "className",
+      description:
+        "Additional CSS classes for the tree container. The component draws no frame of its own — pass border/radius (e.g. `rounded-cn-2 border`) to frame it.",
+      required: false,
+      value: "string",
+    },
+  ]}
+/>
+
+### CheckboxTree.Group Props
+
+<DocsPage.PropsTable
+  props={[
+    {
+      name: "id",
+      description: "Unique id of the group. Used for expand state and cascade.",
+      required: true,
+      value: "string",
+    },
+    {
+      name: "label",
+      description: "Group label.",
+      required: true,
+      value: "React.ReactNode",
+    },
+    {
+      name: "disabled",
+      description: "Disable this group and its checkbox.",
+      required: false,
+      value: "boolean",
+    },
+    {
+      name: "icon",
+      description: "Icon rendered before the group label.",
+      required: false,
+      defaultValue: "'folder'",
+      value: "IconV2NamesType",
+    },
+  ]}
+/>
+
+### CheckboxTree.Item Props
+
+<DocsPage.PropsTable
+  props={[
+    {
+      name: "id",
+      description:
+        "Unique id of the leaf. This is what appears in selectedIds.",
+      required: true,
+      value: "string",
+    },
+    {
+      name: "label",
+      description: "Item label.",
+      required: true,
+      value: "React.ReactNode",
+    },
+    {
+      name: "disabled",
+      description: "Disable this item and its checkbox.",
+      required: false,
+      value: "boolean",
+    },
+  ]}
+/>

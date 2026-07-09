@@ -3528,7 +3528,7 @@
       "$value": [
         {
           "x": "0",
-          "y": "4",
+          "y": "3",
           "blur": "6",
           "spread": "-1",
           "color": "{shadow-color.3}",
@@ -3536,9 +3536,9 @@
         },
         {
           "x": "0",
-          "y": "2",
-          "blur": "4",
-          "spread": "-2",
+          "y": "0",
+          "blur": "5",
+          "spread": "-1",
           "color": "{shadow-color.3}",
           "type": "dropShadow"
         }
@@ -3550,17 +3550,17 @@
       "$value": [
         {
           "x": "0",
-          "y": "10",
+          "y": "9",
           "blur": "15",
-          "spread": "-3",
+          "spread": "-2",
           "color": "{shadow-color.4}",
           "type": "dropShadow"
         },
         {
           "x": "0",
-          "y": "4",
-          "blur": "6",
-          "spread": "-4",
+          "y": "0",
+          "blur": "8",
+          "spread": "0",
           "color": "{shadow-color.4}",
           "type": "dropShadow"
         }
@@ -3634,7 +3634,7 @@
         "studio.tokens": {
           "modify": {
             "type": "alpha",
-            "value": "0.20",
+            "value": "0.6",
             "space": "lch"
           }
         }
@@ -3648,7 +3648,7 @@
         "studio.tokens": {
           "modify": {
             "type": "alpha",
-            "value": "0.20",
+            "value": "0.6",
             "space": "lch"
           }
         }
@@ -3662,7 +3662,7 @@
         "studio.tokens": {
           "modify": {
             "type": "alpha",
-            "value": "0.15",
+            "value": "0.6",
             "space": "lch"
           }
         }
@@ -3676,7 +3676,7 @@
         "studio.tokens": {
           "modify": {
             "type": "alpha",
-            "value": "0.15",
+            "value": "0.6",
             "space": "lch"
           }
         }

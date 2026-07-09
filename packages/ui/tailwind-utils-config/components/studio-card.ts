@@ -24,7 +24,8 @@ const DimmedShadow3Style = {
 
 export default {
   '.cn-studio-card': {
-    borderRadius: 'var(--cn-rounded-4)',
+    // Step cards (base, no group/stage). Three-way radius split — see overrides below.
+    borderRadius: 'var(--cn-rounded-5)',
     border: '1px solid var(--cn-border-2)',
     backgroundColor: 'var(--cn-bg-3)',
     '@apply flex flex-col overflow-hidden shadow-cn-3 select-none': '',
@@ -43,6 +44,16 @@ export default {
       width: 'auto',
       minWidth: 'var(--cn-size-41)',
       height: 'auto'
+    },
+
+    // Group containers that are NOT stages (e.g. parallel groups)
+    '&.cn-studio-card-group:not(.cn-studio-card-stage)': {
+      borderRadius: 'var(--cn-rounded-5)'
+    },
+
+    // Stage containers: 16px
+    '&.cn-studio-card-stage': {
+      borderRadius: 'var(--cn-rounded-6)'
     },
 
     '&.cn-studio-card-sm': {

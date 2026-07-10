@@ -3196,14 +3196,14 @@
       },
       "$description": "Extra extra large shadow.\nCommon uses: This aggressive shadow is typically used sparingly in UI design, primarily for elements that need maximum visual emphasis and elevation."
     },
-    "inner": {
+    "inner-canvas": {
       "$type": "boxShadow",
       "$value": {
         "x": "0",
         "y": "0",
-        "blur": "4.5",
+        "blur": "8",
         "spread": "0",
-        "color": "{shadow-color.inner}",
+        "color": "{shadow-color.inner-canvas}",
         "type": "innerShadow"
       },
       "$description": "Inner shadow for subtle inset depth.\nCommon uses: Input fields, cards with inset appearance, contained sections."
@@ -3308,18 +3308,18 @@
       "$value": "{gray.600}",
       "$description": "Extremely deep shadow color. Provides maximum depth for highly elevated elements."
     },
-    "inner": {
+    "inner-canvas": {
       "$extensions": {
         "studio.tokens": {
           "modify": {
             "type": "alpha",
-            "value": "0.15",
+            "value": "0.1",
             "space": "lch"
           }
         }
       },
       "$type": "color",
-      "$value": "{pure.black}",
+      "$value": "{gray.800}",
       "$description": "Inner shadow color. Creates subtle inset depth for contained elements."
     }
   },

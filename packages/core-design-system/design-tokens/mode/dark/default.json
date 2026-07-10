@@ -1743,7 +1743,7 @@
       },
       "dotes": {
         "$type": "color",
-        "$value": "{gray.950}",
+        "$value": "{gray.900}",
         "$description": "Refers to the dotted pattern visible in the background of the workspace."
       },
       "stage-card": {
@@ -3205,14 +3205,14 @@
       },
       "$description": "Extra extra large shadow.\nCommon uses: This aggressive shadow is typically used sparingly in UI design, primarily for elements that need maximum visual emphasis and elevation."
     },
-    "inner": {
+    "inner-canvas": {
       "$type": "boxShadow",
       "$value": {
         "x": "0",
         "y": "0",
-        "blur": "4.5",
+        "blur": "15",
         "spread": "0",
-        "color": "{shadow-color.inner}",
+        "color": "{shadow-color.inner-canvas}",
         "type": "innerShadow"
       },
       "$description": "Inner shadow for subtle inset depth.\nCommon uses: Input fields, cards with inset appearance, contained sections."
@@ -3317,18 +3317,9 @@
       "$value": "{pure.black}",
       "$description": "Extremely deep shadow color. Provides maximum depth for highly elevated elements."
     },
-    "inner": {
-      "$extensions": {
-        "studio.tokens": {
-          "modify": {
-            "type": "alpha",
-            "value": "0.6",
-            "space": "lch"
-          }
-        }
-      },
+    "inner-canvas": {
       "$type": "color",
-      "$value": "{pure.black}",
+      "$value": "rgba(0, 0, 0, 0.95)",
       "$description": "Inner shadow color. Creates subtle inset depth for contained elements."
     }
   },

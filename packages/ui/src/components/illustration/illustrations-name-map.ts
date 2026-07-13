@@ -35,6 +35,16 @@ import NoDataTagsLight from './images/no-data-tags-light.svg'
 import NoDataTags from './images/no-data-tags.svg'
 import NoDataWebhooksLight from './images/no-data-webhooks-light.svg'
 import NoDataWebhooks from './images/no-data-webhooks.svg'
+import NoDataNotificationsLight from './images/no-data-notifications-light.svg'
+import NoDataNotifications from './images/no-data-notifications.svg'
+import NoDataPipelineLight from './images/no-data-pipeline-light.svg'
+import NoDataPipeline from './images/no-data-pipeline.svg'
+import NoDataReferenceLight from './images/no-data-reference-light.svg'
+import NoDataReference from './images/no-data-reference.svg'
+import NoDataSecretsLight from './images/no-data-secrets-light.svg'
+import NoDataSecrets from './images/no-data-secrets.svg'
+import NoDataSecurityLight from './images/no-data-security-light.svg'
+import NoDataSecurity from './images/no-data-security.svg'
 import NoSearchMagnifyingGlassLight from './images/no-search-magnifying-glass-light.svg'
 import NoSearchMagnifyingGlass from './images/no-search-magnifying-glass.svg'
 import SubMenuEllipse from './images/sub-menu-ellipse.svg'
@@ -66,6 +76,11 @@ export const IllustrationsNameMap = {
   'no-data-labels': NoDataLabels,
   'no-data-webhooks': NoDataWebhooks,
   'no-data-metrics': NoDataMetrics,
+  'no-data-notifications': NoDataNotifications,
+  'no-data-pipeline': NoDataPipeline,
+  'no-data-reference': NoDataReference,
+  'no-data-secrets': NoDataSecrets,
+  'no-data-security': NoDataSecurity,
   'no-search-magnifying-glass': NoSearchMagnifyingGlass,
   'no-delegates': NoDataDelegate,
   'harness-logo-text': HarnessLogoText,
@@ -98,6 +113,11 @@ export const IllustrationsNameMap = {
   'no-data-tags-light': NoDataTagsLight,
   'no-data-labels-light': NoDataLabelsLight,
   'no-data-webhooks-light': NoDataWebhooksLight,
+  'no-data-notifications-light': NoDataNotificationsLight,
+  'no-data-pipeline-light': NoDataPipelineLight,
+  'no-data-reference-light': NoDataReferenceLight,
+  'no-data-secrets-light': NoDataSecretsLight,
+  'no-data-security-light': NoDataSecurityLight,
   'no-delegates-light': NoDataDelegateLight,
   'no-search-magnifying-glass-light': NoSearchMagnifyingGlassLight,
   'ti-savings-card-light': TiSavingsCardLight,

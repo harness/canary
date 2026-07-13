@@ -243,6 +243,17 @@ code:not(.expressive-code code) {
           @apply text-cn-1 bg-cn-selected;
           font-weight: 500;
         }
+
+        &[aria-disabled="true"] {
+          @apply text-cn-disabled;
+          pointer-events: none;
+          cursor: not-allowed;
+
+          &:hover {
+            @apply text-cn-disabled;
+            background-color: transparent;
+          }
+        }
       }
 
       /* Render IconV2 SVGs as sidebar icons via mask-image */

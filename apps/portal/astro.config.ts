@@ -185,8 +185,6 @@ export default defineConfig({
             "components/utilities/spacer",
             "components/actions/split-button",
             "components/data-display/stacked-list",
-            "components/navigation/dual-pane-stepper",
-            "components/navigation/single-pane-stepper",
             "components/navigation/stepper",
             "components/utilities/sticky-list-section",
             "components/feedback/status-badge",
@@ -207,6 +205,26 @@ export default defineConfig({
             "components/chat/typing-animation",
             "components/data-display/view-only",
             "components/data-display/widgets",
+          ],
+        },
+        {
+          label: "PLG Patterns",
+          items: [
+            {
+              slug: "growth-patterns/overview",
+              label: "Overview",
+              attrs: { "data-icon": "light-bulb-on" },
+            },
+            "growth-patterns/single-pane-stepper",
+            {
+              slug: "growth-patterns/dual-pane-stepper",
+              label: "Dual Pane Stepper",
+              attrs: {
+                "aria-disabled": "true",
+                tabindex: -1,
+                onclick: "event.preventDefault(); return false;",
+              },
+            },
           ],
         },
       ],
@@ -233,5 +251,9 @@ export default defineConfig({
   ],
   redirects: {
     "/": "/getting-started/introduction",
+    "/components/navigation/single-pane-stepper":
+      "/growth-patterns/single-pane-stepper",
+    "/components/navigation/dual-pane-stepper":
+      "/growth-patterns/dual-pane-stepper",
   },
 });

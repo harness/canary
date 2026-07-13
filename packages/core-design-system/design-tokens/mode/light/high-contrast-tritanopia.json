@@ -1591,15 +1591,35 @@
         "$type": "color",
         "$value": "{gray.50}"
       },
-      "card-footer": {
-        "$type": "color",
-        "$value": "{comp.pipeline.bg}"
+      "card": {
+        "border": {
+          "$type": "color",
+          "$value": "{border.2}",
+          "$description": "Resting border for pipeline studio cards, footer, expand button, and stack layers. Uses border-2 in light, border-3 in dark for surface separation."
+        },
+        "bg": {
+          "$type": "color",
+          "$value": "{bg.3}",
+          "$description": "Background surface for pipeline studio cards, expand button, and stack layers."
+        },
+        "footer": {
+          "bg": {
+            "$type": "color",
+            "$value": "{comp.pipeline.card.bg}",
+            "$description": "Background for the pipeline studio card footer. Matches the card body."
+          }
+        },
+        "shadow": {
+          "$type": "boxShadow",
+          "$value": "{shadow.3}",
+          "$description": "Drop shadow for pipeline studio cards. shadow-3 in light, shadow-4 in dark."
+        }
       }
     },
     "sidebar": {
       "bg": {
         "$type": "color",
-        "$value": "{pure.white}",
+        "$value": "{bg.2}",
         "$description": "Background color for the sidebar container. Provides foundational layer for navigation elements."
       },
       "item": {

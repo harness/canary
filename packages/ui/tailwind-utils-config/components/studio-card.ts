@@ -26,9 +26,12 @@ export default {
   '.cn-studio-card': {
     // Step cards (base, no group/stage). Three-way radius split — see overrides below.
     borderRadius: 'var(--cn-rounded-5)',
-    border: '1px solid var(--cn-border-2)',
-    backgroundColor: 'var(--cn-bg-3)',
-    '@apply flex flex-col overflow-hidden shadow-cn-3 select-none': '',
+    // Pipeline card border: border-2 in light, border-3 in dark (see comp.pipeline.card.border token).
+    border: '1px solid var(--cn-comp-pipeline-card-border)',
+    backgroundColor: 'var(--cn-comp-pipeline-card-bg)',
+    // Pipeline card drop shadow: shadow-3 in light, shadow-4 in dark (see comp.pipeline.card.shadow token).
+    boxShadow: 'var(--cn-comp-pipeline-card-shadow)',
+    '@apply flex flex-col overflow-hidden select-none': '',
     transitionProperty: 'background-color, opacity',
     transitionDuration: '200ms',
     transitionTimingFunction: 'ease-in-out',
@@ -202,13 +205,13 @@ export default {
       '@apply absolute inset-y-0 right-0 w-8': '',
       content: '""',
       zIndex: '1',
-      background: `linear-gradient(to right, color-mix(in lch, var(--cn-comp-pipeline-card-footer) 0%, transparent), var(--cn-comp-pipeline-card-footer))`
+      background: `linear-gradient(to right, color-mix(in lch, var(--cn-comp-pipeline-card-footer-bg) 0%, transparent), var(--cn-comp-pipeline-card-footer-bg))`
     },
     '&::after': {
       '@apply absolute  absolute inset-x-0 bottom-0 h-8': '',
       content: '""',
       zIndex: '2',
-      background: `linear-gradient(to bottom, color-mix(in lch, var(--cn-comp-pipeline-card-footer) 0%, transparent), var(--cn-comp-pipeline-card-footer))`
+      background: `linear-gradient(to bottom, color-mix(in lch, var(--cn-comp-pipeline-card-footer-bg) 0%, transparent), var(--cn-comp-pipeline-card-footer-bg))`
     },
 
     // Allow pre tags to wrap and prevent width expansion
@@ -308,8 +311,8 @@ export default {
   // Footer Component
   '.cn-studio-card-footer': {
     minHeight: 'var(--cn-size-29)',
-    borderTop: '1px solid var(--cn-border-2)',
-    backgroundColor: 'var(--cn-comp-pipeline-card-footer)',
+    borderTop: '1px solid var(--cn-comp-pipeline-card-border)',
+    backgroundColor: 'var(--cn-comp-pipeline-card-footer-bg)',
     '@apply flex flex-col px-cn-md py-cn-md font-caption-normal': '',
 
     // Default: line-clamp-4 for regular cards
@@ -367,7 +370,9 @@ export default {
     width: '100%',
     transitionProperty: 'transform',
     transitionDuration: '100ms',
-    '@apply relative flex flex-col gap-cn-2xs shadow-cn-1 border border-cn-2 rounded-cn-3 overflow-hidden bg-cn-3': ''
+    '@apply relative flex flex-col gap-cn-2xs shadow-cn-1 rounded-cn-3 overflow-hidden': '',
+    border: '1px solid var(--cn-comp-pipeline-card-border)',
+    backgroundColor: 'var(--cn-comp-pipeline-card-bg)'
   },
 
   '.cn-studio-card-button': {
@@ -383,7 +388,7 @@ export default {
 
   '.cn-studio-card-expand-button-bottom': {
     '@apply flex items-center justify-end gap-cn-2xs py-cn-xs px-cn-md flex-1 border-t border-cn-2': '',
-    backgroundColor: 'var(--cn-comp-pipeline-card-footer)'
+    backgroundColor: 'var(--cn-comp-pipeline-card-footer-bg)'
   },
 
   // Expand Button Component
@@ -400,7 +405,9 @@ export default {
       transitionDuration: '100ms',
       transitionTimingFunction: 'ease-out',
       willChange: 'transform',
-      '@apply absolute shadow-cn-1 border border-cn-2 bg-cn-3 rounded-cn-3': '',
+      '@apply absolute shadow-cn-1 rounded-cn-3': '',
+      border: '1px solid var(--cn-comp-pipeline-card-border)',
+      backgroundColor: 'var(--cn-comp-pipeline-card-bg)',
 
       // First stack layer (closer to button)
       '&-1': {

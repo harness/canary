@@ -5,6 +5,7 @@
 
 import AccountSolid from './icons/account-solid.svg'
 import Account from './icons/account.svg'
+import AgentServices from './icons/agent-services.svg'
 import Agents from './icons/agents.svg'
 import Agile from './icons/agile.svg'
 import AiDeepResearch from './icons/ai-deep-research.svg'
@@ -357,9 +358,11 @@ import PinSlashSolid from './icons/pin-slash-solid.svg'
 import PinSlash from './icons/pin-slash.svg'
 import PinSolid from './icons/pin-solid.svg'
 import Pin from './icons/pin.svg'
+import PipelineChained from './icons/pipeline-chained.svg'
 import PipelineExecutions from './icons/pipeline-executions.svg'
 import PipelineGroup from './icons/pipeline-group.svg'
 import PipelineSolid from './icons/pipeline-solid.svg'
+import PipelineStep from './icons/pipeline-step.svg'
 import Pipeline from './icons/pipeline.svg'
 import PlaySolid from './icons/play-solid.svg'
 import Play from './icons/play.svg'
@@ -393,6 +396,7 @@ import RepositorySolid from './icons/repository-solid.svg'
 import Repository from './icons/repository.svg'
 import Restart from './icons/restart.svg'
 import Roles from './icons/roles.svg'
+import Rollback from './icons/rollback.svg'
 import Rolling from './icons/rolling.svg'
 import RtAction from './icons/rt-action.svg'
 import RtProbe from './icons/rt-probe.svg'
@@ -532,6 +536,7 @@ import ZoomOut from './icons/zoom-out.svg'
 export const IconNameMapV2 = {
   'account-solid': AccountSolid,
   account: Account,
+  'agent-services': AgentServices,
   agents: Agents,
   agile: Agile,
   'ai-deep-research': AiDeepResearch,
@@ -884,9 +889,11 @@ export const IconNameMapV2 = {
   'pin-slash': PinSlash,
   'pin-solid': PinSolid,
   pin: Pin,
+  'pipeline-chained': PipelineChained,
   'pipeline-executions': PipelineExecutions,
   'pipeline-group': PipelineGroup,
   'pipeline-solid': PipelineSolid,
+  'pipeline-step': PipelineStep,
   pipeline: Pipeline,
   'play-solid': PlaySolid,
   play: Play,
@@ -920,6 +927,7 @@ export const IconNameMapV2 = {
   repository: Repository,
   restart: Restart,
   roles: Roles,
+  rollback: Rollback,
   rolling: Rolling,
   'rt-action': RtAction,
   'rt-probe': RtProbe,

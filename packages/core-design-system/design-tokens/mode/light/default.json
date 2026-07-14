@@ -1236,6 +1236,11 @@
       }
     },
     "app-shell": {
+      "bg": {
+        "$type": "color",
+        "$value": "{bg.1}",
+        "$description": "Elevated app-shell surface for content panels (chat, main content). Unchanged in light; unifies to bg.2 in dark for separation from the shell."
+      },
       "rail-shadow": {
         "$extensions": {
           "studio.tokens": {

@@ -93,7 +93,9 @@ export default {
       display: 'flex',
       justifyContent: 'space-between',
       width: '100%',
-      height: 'var(--cn-sidebar-min-height)'
+      height: 'var(--cn-sidebar-min-height)',
+      // Shell wrapper shares the sidebar surface (bg.2 — unchanged in light, gray.950 in dark)
+      backgroundColor: 'var(--cn-comp-sidebar-bg)'
     },
 
     '&-rail': {

@@ -60,6 +60,9 @@ const tailwindDesignSystem: TailwindConfig = {
       'cn-2': 'lch(from var(--cn-bg-2) l c h / <alpha-value>)',
       'cn-3': 'lch(from var(--cn-bg-3) l c h / <alpha-value>)',
 
+      // App-shell content-panel surface (chat / main content): bg.1 in light, bg.2 in dark
+      'cn-app-shell': 'lch(from var(--cn-comp-app-shell-bg) l c h / <alpha-value>)',
+
       // Brand colors
       'cn-brand': {
         primary: 'lch(from var(--cn-set-brand-primary-bg) l c h / <alpha-value>)',

@@ -370,7 +370,12 @@ const tailwindDesignSystem: TailwindConfig = {
       },
       transparent: 'transparent',
       inherit: 'inherit',
-      current: 'currentColor'
+      current: 'currentColor',
+
+      /* pipeline studio items (buttons, cards, etc.) border color.
+      CSS variable will be renamed as --cn-comp-studio-items-border
+      */
+      'cn-studio-item': 'var(--cn-comp-pipeline-card-border)'
     },
     borderRadius: {
       DEFAULT: 'var(--cn-rounded-cn-2)',

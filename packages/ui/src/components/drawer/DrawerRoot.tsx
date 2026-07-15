@@ -1,4 +1,5 @@
 import { ComponentProps, useCallback, useEffect, useLayoutEffect, useMemo, useRef, useState } from 'react'
+import { flushSync } from 'react-dom'
 
 import { DialogOpenContext, usePortal } from '@/context'
 import { Drawer as DrawerPrimitive } from 'vaul'
@@ -46,8 +47,16 @@ export const DrawerRoot = ({
   // Callback for child drawers to notify this drawer
   const handleChildOpenChange = useCallback(
     (isOpen: boolean) => {
-      setChildDrawerOpen(isOpen)
-      if (!isOpen) {
+      if (isOpen) {
+        flushSync(() => {
+          setChildDrawerOpen(true)
+          setOpenDescendantCount(current => Math.max(current, 1))
+        })
+        if (nested && onChildDescendantCount) {
+          onChildDescendantCount(0)
+        }
+      } else {
+        setChildDrawerOpen(false)
         setTopmostDescendantSize(undefined)
         setOpenDescendantCount(0)
         if (nested && parentOnTopmostSizeChange && contentSize) {

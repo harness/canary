@@ -127,7 +127,8 @@ export const DrawerContent = forwardRef<ElementRef<typeof DrawerPrimitive.Conten
       maxStackDepth
     } = useDrawerContext()
     const maxVisualPush = (maxStackDepth ?? DEFAULT_MAX_STACK_DEPTH) - 1
-    const clampedDescendantCount = Math.min(openDescendantCount ?? 0, maxVisualPush)
+    const effectiveDescendantCount = hasOpenChild ? Math.max(openDescendantCount ?? 0, 1) : (openDescendantCount ?? 0)
+    const clampedDescendantCount = Math.min(effectiveDescendantCount, maxVisualPush)
     const isCoveredByDescendant = (openDescendantCount ?? 0) > maxVisualPush
     const ref = useMergeRefs([_ref, contentRef])
 

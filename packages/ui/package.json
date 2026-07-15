@@ -1,7 +1,7 @@
 {
   "name": "@harnessio/ui",
   "description": "Harness Canary UI component library",
-  "version": "0.5.68",
+  "version": "0.5.69",
   "private": false,
   "type": "module",
   "main": "./dist/index.js",
@@ -159,6 +159,7 @@
     "@types/lodash-es": "^4.17.12",
     "@types/node": "^22.9.0",
     "@types/react": "^17.0.3",
+    "@types/react-dom": "^17.0.3",
     "@vitejs/plugin-react-swc": "^3.8.0",
     "@vitest/coverage-istanbul": "^3.0.6",
     "@vitest/ui": "^3.0.6",

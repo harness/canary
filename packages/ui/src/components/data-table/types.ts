@@ -7,5 +7,7 @@ declare module '@tanstack/react-table' {
     headerClassName?: string
     /** When true, applies group-header styling (auto-detected when column has nested `columns`) */
     isGroupHeader?: boolean
+    /** When false, hides the column reorder handle even when table reordering is enabled */
+    enableColumnReordering?: boolean
   }
 }

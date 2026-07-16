@@ -47,6 +47,7 @@ export const tableVariants = cva('cn-table-v2', {
 export interface TableRootV2Props extends HTMLAttributes<HTMLTableElement>, VariantProps<typeof tableVariants> {
   tableClassName?: string
   disableHighlightOnHover?: boolean
+  enableStickyHeader?: boolean
   paginationProps?: PaginationProps
 }
 
@@ -58,6 +59,7 @@ const TableRoot = forwardRef<HTMLTableElement, TableRootV2Props>(
       className,
       tableClassName,
       disableHighlightOnHover = false,
+      enableStickyHeader = false,
       paginationProps: { className: paginationClassName, ...paginationProps } = {} as PaginationProps,
       ...props
     },
@@ -67,11 +69,14 @@ const TableRoot = forwardRef<HTMLTableElement, TableRootV2Props>(
       className={cn(
         'cn-table-v2-container',
         tableVariants({ size, variant }),
-        { 'cn-table-v2-highlight-hover': !disableHighlightOnHover },
+        {
+          'cn-table-v2-highlight-hover': !disableHighlightOnHover,
+          'cn-table-v2-sticky-header': enableStickyHeader
+        },
         className
       )}
     >
-      <div className="overflow-x-auto">
+      <div className={cn('overflow-x-auto', { 'flex-1 min-h-0 overflow-y-auto': enableStickyHeader })}>
         <table ref={ref} className={cn('cn-table-v2-element', tableClassName)} {...props} />
       </div>
       {paginationProps && (

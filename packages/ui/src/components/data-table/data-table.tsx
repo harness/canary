@@ -32,6 +32,11 @@ export interface DataTableProps<TData> {
   getRowClassName?: (row: Row<TData>) => string | undefined
   onRowClick?: (data: TData, index: number) => void
   disableHighlightOnHover?: boolean
+  /**
+   * Keep table header rows pinned to the top of the table's scroll container.
+   * Consumers must constrain the table height for vertical scrolling.
+   */
+  enableStickyHeader?: boolean
   className?: string
   currentSorting?: SortingState
   currentRowSelection?: RowSelectionState
@@ -124,6 +129,7 @@ export const DataTable = function DataTable<TData>({
   onRowClick,
   getRowLink,
   disableHighlightOnHover = false,
+  enableStickyHeader = false,
   className,
   currentSorting,
   currentRowSelection,
@@ -330,6 +336,7 @@ export const DataTable = function DataTable<TData>({
   )
 
   const table = useReactTable(tableOptions)
+  const headerGroups = table.getHeaderGroups()
 
   // Set the visible columns
   useEffect(() => {
@@ -361,11 +368,11 @@ export const DataTable = function DataTable<TData>({
       size={size}
       variant={variant}
       disableHighlightOnHover={disableHighlightOnHover}
+      enableStickyHeader={enableStickyHeader}
       paginationProps={paginationProps}
     >
       <Table.Header>
         {(() => {
-          const headerGroups = table.getHeaderGroups()
           const totalHeaderRows = headerGroups.length
           const hasGroupedHeaders = totalHeaderRows > 1
 

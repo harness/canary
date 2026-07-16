@@ -380,6 +380,68 @@ return (
 
 When `enableRowSelection` or `enableExpanding` is enabled, the injected columns are prepended as ungrouped leaf columns and automatically span both header rows.
 
+## Sticky Header
+
+Use `enableStickyHeader` to keep table header rows pinned while the table body scrolls. The consumer must constrain the table height, for example with a fixed-height wrapper or a height class on the table container.
+
+<DocsPage.ComponentExample
+  client:only
+  code={`() => {
+  const users = Array.from({ length: 24 }, (_, index) => ({
+    id: index + 1,
+    name: \`User \${index + 1}\`,
+    email: \`user\${index + 1}@example.com\`,
+    role: index % 3 === 0 ? 'Admin' : index % 3 === 1 ? 'Developer' : 'Designer',
+    status: index % 2 === 0 ? 'active' : 'inactive'
+  }))
+
+const columns = [
+{ accessorKey: 'name', header: 'Name', enableSorting: true },
+{
+id: 'details',
+header: 'Details',
+enableSorting: false,
+columns: [
+{ accessorKey: 'email', header: 'Email', enableSorting: true },
+{ accessorKey: 'role', header: 'Role' },
+{
+accessorKey: 'status',
+header: 'Status',
+cell: (info) => (
+<StatusBadge
+  theme={info.getValue() === "active" ? "success" : "default"}
+  size="sm"
+>
+  {info.getValue()}
+</StatusBadge>
+)
+}
+]
+}
+]
+
+return (
+<div className="h-[280px]">
+  <DataTable
+    columns={columns}
+    data={users}
+    getRowId={(row) => row.id.toString()}
+    size="compact"
+    className="h-full"
+    enableStickyHeader
+  />
+</div>
+)
+}`} />
+
+### Usage
+
+```tsx
+<div className="h-[280px]">
+  <DataTable columns={columns} data={data} className="h-full" enableStickyHeader />
+</div>
+```
+
 ## Props
 
 <DocsPage.PropsTable
@@ -448,6 +510,14 @@ When `enableRowSelection` or `enableExpanding` is enabled, the injected columns 
       description: "Disable row highlighting on hover",
       required: false,
       value: "boolean",
+    },
+    {
+      name: "enableStickyHeader",
+      description:
+        "Keep table header rows pinned to the top of the table's scroll container. Consumers must constrain the table height for vertical scrolling.",
+      required: false,
+      value: "boolean",
+      defaultValue: "false",
     },
     {
       name: "className",

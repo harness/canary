@@ -148,6 +148,62 @@ describe('DataTable', () => {
     })
   })
 
+  describe('Sticky Header', () => {
+    test('should not enable sticky header by default', () => {
+      const { container } = render(
+        <TestWrapper>
+          <DataTable data={mockData} columns={mockColumns} />
+        </TestWrapper>
+      )
+
+      expect(container.querySelector('.cn-table-v2-container')).not.toHaveClass('cn-table-v2-sticky-header')
+      expect(container.querySelector('thead th')).not.toHaveStyle({ position: 'sticky' })
+    })
+
+    test('should enable the sticky header scroll container when enableStickyHeader is true', () => {
+      const { container } = render(
+        <TestWrapper>
+          <DataTable data={mockData} columns={mockColumns} enableStickyHeader />
+        </TestWrapper>
+      )
+
+      expect(container.querySelector('.cn-table-v2-container')).toHaveClass('cn-table-v2-sticky-header')
+      expect(container.querySelector('.cn-table-v2-container > div')).toHaveClass(
+        'flex-1',
+        'min-h-0',
+        'overflow-y-auto'
+      )
+      expect(container.querySelector('thead')).toHaveClass('cn-table-v2-header')
+    })
+
+    test('should keep grouped header rows in the same sticky header section', () => {
+      const stickyGroupedColumns: ColumnDef<TestData>[] = [
+        {
+          id: 'name',
+          accessorKey: 'name',
+          header: 'Name'
+        },
+        {
+          id: 'details',
+          header: 'Details',
+          columns: [
+            { id: 'age', accessorKey: 'age', header: 'Age' },
+            { id: 'email', accessorKey: 'email', header: 'Email' }
+          ]
+        }
+      ]
+
+      const { container } = render(
+        <TestWrapper>
+          <DataTable data={mockData} columns={stickyGroupedColumns} enableStickyHeader />
+        </TestWrapper>
+      )
+
+      expect(container.querySelectorAll('thead tr')).toHaveLength(2)
+      expect(container.querySelector('thead')).toHaveClass('cn-table-v2-header')
+    })
+  })
+
   describe('Row Click Handling', () => {
     test('should call onRowClick when row is clicked', () => {
       const handleRowClick = vi.fn()

@@ -12,6 +12,15 @@ export default {
       borderRadius: 'var(--cn-table-radius)',
       borderColor: 'var(--cn-border-3)'
     },
+    '&-container.cn-table-v2-sticky-header': {
+      '@apply flex flex-col overflow-hidden': '',
+
+      '.cn-table-v2-header': {
+        position: 'sticky',
+        top: '0',
+        zIndex: '2'
+      }
+    },
 
     // Table element
     '&-element': {

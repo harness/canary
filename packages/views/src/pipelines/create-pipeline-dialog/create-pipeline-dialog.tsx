@@ -95,7 +95,7 @@ export function CreatePipelineDialog(props: CreatePipelineDialogProps) {
     >
       <Dialog.Content aria-describedby={undefined}>
         <Dialog.Header>
-          <Dialog.Title>Create Pipeline</Dialog.Title>
+          <Dialog.Title>Create pipeline</Dialog.Title>
         </Dialog.Header>
 
         <Dialog.Body>
@@ -149,7 +149,7 @@ export function CreatePipelineDialog(props: CreatePipelineDialogProps) {
               Cancel
             </Dialog.Close>
             <Button type="submit" form="create-pipline-form" disabled={isLoadingBranchNames}>
-              Create Pipeline
+              Create pipeline
             </Button>
           </ButtonLayout>
         </Dialog.Footer>

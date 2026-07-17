@@ -36,7 +36,7 @@ export const CloneRepoDialog: FC<CloneRepoDialogProps> = ({
       <Popover.Trigger asChild>
         <Button ref={triggerRef}>
           <IconV2 name="copy" size="sm" />
-          {t('views:repos.cloneRepo', 'Clone Repository')}
+          {t('views:repos.cloneRepo', 'Clone repository')}
         </Button>
       </Popover.Trigger>
       <Popover.Content

@@ -37,7 +37,7 @@ export default function SavedFilters({
       <DropdownMenu.Trigger asChild>
         <Button size="md" variant="ghost" className="min-w-0 max-w-fit flex-1">
           <IconV2 name="filter" />
-          <Text truncate>{selectedOption?.label || 'Saved Filters'}</Text>
+          <Text truncate>{selectedOption?.label || 'Saved filters'}</Text>
           <IconV2 name="nav-arrow-down" />
         </Button>
       </DropdownMenu.Trigger>

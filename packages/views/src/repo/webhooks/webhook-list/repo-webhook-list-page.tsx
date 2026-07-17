@@ -76,7 +76,7 @@ const RepoWebhookListPage: FC<RepoWebhookListPageProps> = ({
         ]}
         primaryButton={{
           icon: 'plus',
-          label: t('views:webhookData.create', 'New Webhook'),
+          label: t('views:webhookData.create', 'New webhook'),
           onClick: handleNavigate
         }}
       />
@@ -108,7 +108,7 @@ const RepoWebhookListPage: FC<RepoWebhookListPageProps> = ({
               <Button asChild>
                 <Link to="create">
                   <IconV2 name="plus" />
-                  {t('views:webhookData.create', 'New Webhook')}
+                  {t('views:webhookData.create', 'New webhook')}
                 </Link>
               </Button>
             </ListActions.Right>

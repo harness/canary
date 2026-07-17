@@ -156,14 +156,14 @@ export const RepoSettingsGeneralForm: FC<{
       />
 
       <MultiSelect
-        label={t('views:repos.resourceTags', 'Resource Tags')}
+        label={t('views:repos.resourceTags', 'Resource tags')}
         optional
         placeholder={t('views:repos.tagsPlaceholder', 'Add tags')}
         value={tagsValue}
         onChange={handleTagsChange}
       />
       <ControlGroup>
-        <Label optional>{t('views:repos.defaultBranch', 'Default Branch')}</Label>
+        <Label optional>{t('views:repos.defaultBranch', 'Default branch')}</Label>
         <BranchSelector
           ref={triggerRef}
           onSelectBranchorTag={value => {

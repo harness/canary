@@ -65,7 +65,7 @@ export const RepoTagsListView: FC<RepoTagsListViewProps> = ({
                   <Dialog.Trigger>
                     <Button onClick={openCreateTagDialog}>
                       <IconV2 name="plus" />
-                      <span>{t('views:repos.createTag', 'Create Tag')}</span>
+                      <span>{t('views:repos.createTag', 'Create tag')}</span>
                     </Button>
                   </Dialog.Trigger>
                 </ListActions.Right>

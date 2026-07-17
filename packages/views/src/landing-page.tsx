@@ -77,7 +77,7 @@ export const LandingPageView: FC<LandingPageProps> = ({ spaces, getProjectPath, 
           </DropdownMenu.Root>
 
           <Button variant="outline" asChild>
-            <Link to={toCreateProject?.() || ''}>{t('views:landingPage.createProject', 'Create Project')}</Link>
+            <Link to={toCreateProject?.() || ''}>{t('views:landingPage.createProject', 'Create project')}</Link>
           </Button>
         </ButtonLayout>
       </section>

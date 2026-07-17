@@ -86,7 +86,7 @@ const PullRequestCompareForm = forwardRef<HTMLFormElement, PullRequestFormProps>
                 preserveCommentOnSave
                 allowEmptyValue
                 isLoading={isLoading}
-                buttonTitle="Create Pull Request"
+                buttonTitle="Create pull request"
                 onSaveComment={formattedComment => {
                   if (isEmpty(errors)) {
                     onFormSubmit({ title: formMethods.getValues('title'), description: formattedComment })

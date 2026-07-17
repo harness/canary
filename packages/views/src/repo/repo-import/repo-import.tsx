@@ -255,7 +255,7 @@ export function RepoImportPage({ onFormSubmit, onFormCancel, isLoading, apiError
               <ButtonLayout horizontalAlign="start">
                 {/* TODO: Improve loading state to avoid flickering */}
                 <Button type="submit" disabled={isLoading}>
-                  {!isLoading ? 'Import Repository' : 'Importing Repository...'}
+                  {!isLoading ? 'Import repository' : 'Importing repository...'}
                 </Button>
                 <Button type="button" variant="outline" onClick={handleCancel}>
                   Cancel

@@ -57,8 +57,8 @@ export const RepoSettingsGeneralDelete: FC<{
                   ? t('views:repos.unarchiving', 'Unarchiving...')
                   : t('views:repos.archiving', 'Archiving...')
                 : archived
-                  ? t('views:repos.unarchiveRepoButton', 'Unarchive Repository')
-                  : t('views:repos.archiveRepoButton', 'Archive Repository')}
+                  ? t('views:repos.unarchiveRepoButton', 'Unarchive repository')
+                  : t('views:repos.archiveRepoButton', 'Archive repository')}
             </Button>
           </Dialog.Trigger>
         </ButtonLayout>
@@ -91,7 +91,7 @@ export const RepoSettingsGeneralDelete: FC<{
                 permissions: [PermissionIdentifier.CODE_REPO_DELETE]
               }}
             >
-              {t('views:repos.deleteRepoButton', 'Delete Repository')}
+              {t('views:repos.deleteRepoButton', 'Delete repository')}
             </RbacButton>
           </Dialog.Trigger>
         </ButtonLayout>

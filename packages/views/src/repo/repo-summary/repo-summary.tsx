@@ -254,7 +254,7 @@ export function RepoSummaryView({
                         to={`${spaceId ? `/${spaceId}` : ''}/repos/${repoId}/files/new/${gitRef || selectedBranchOrTag?.name || ''}/~/`}
                       >
                         <IconV2 name="plus" />
-                        <span className="truncate">{t('views:repos.createFile', 'Create File')}</span>
+                        <span className="truncate">{t('views:repos.createFile', 'Create file')}</span>
                       </Link>
                     </Button>
                   ) : null}

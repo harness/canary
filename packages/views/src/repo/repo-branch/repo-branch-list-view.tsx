@@ -56,7 +56,7 @@ export const RepoBranchListView: FC<RepoBranchListViewProps> = ({
         ]}
         primaryButton={{
           icon: 'plus',
-          label: t('views:repos.branches.createBranch', 'Create Branch'),
+          label: t('views:repos.branches.createBranch', 'Create branch'),
           onClick: openCreateBranchDialog
         }}
       />
@@ -85,7 +85,7 @@ export const RepoBranchListView: FC<RepoBranchListViewProps> = ({
                 <Dialog.Trigger>
                   <Button onClick={openCreateBranchDialog} size="md" variant="primary" theme="default">
                     <IconV2 name="plus" />
-                    {t('views:repos.branches.createBranch', 'Create Branch')}
+                    {t('views:repos.branches.createBranch', 'Create branch')}
                   </Button>
                 </Dialog.Trigger>
               </ListActions.Right>

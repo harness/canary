@@ -76,10 +76,10 @@ const SandboxRepoListPage: FC<RepoListPageProps> = ({
 
   const createOptions = useMemo(
     () => [
-      { value: 'new', label: t('views:repos.createRepository', 'Create Repository') },
-      { value: 'import', label: t('views:repos.importRepository', 'Import Repository') },
-      { value: 'import-multiple', label: t('views:repos.importRepositories', 'Import Repositories') },
-      ...(toLinkRepo ? [{ value: 'link', label: t('views:repos.linkRepository', 'Link Repository') }] : [])
+      { value: 'new', label: t('views:repos.createRepository', 'Create repository') },
+      { value: 'import', label: t('views:repos.importRepository', 'Import repository') },
+      { value: 'import-multiple', label: t('views:repos.importRepositories', 'Import repositories') },
+      ...(toLinkRepo ? [{ value: 'link', label: t('views:repos.linkRepository', 'Link repository') }] : [])
     ],
     [t, toLinkRepo]
   )
@@ -154,7 +154,7 @@ const SandboxRepoListPage: FC<RepoListPageProps> = ({
             }}
           >
             <IconV2 name="plus" />
-            {t('views:repos.createRepository', 'Create Repository')}
+            {t('views:repos.createRepository', 'Create repository')}
           </RbacSplitButton>
         </NoData>
       </SandboxLayout.Main>
@@ -200,7 +200,7 @@ const SandboxRepoListPage: FC<RepoListPageProps> = ({
                 }}
               >
                 <IconV2 name="plus" />
-                {t('views:repos.createRepository', 'Create Repository')}
+                {t('views:repos.createRepository', 'Create repository')}
               </RbacSplitButton>
             </Layout.Horizontal>
           }

@@ -306,7 +306,7 @@ const PullRequestListPage: FC<PullRequestPageProps> = ({
             repoId
               ? {
                   icon: 'plus',
-                  label: t('views:noData.button.createPullRequest', 'Create Pull Request'),
+                  label: t('views:noData.button.createPullRequest', 'Create pull request'),
                   to: `${spaceId ? `/${spaceId}` : ''}/repos/${repoId}/pulls/compare/`
                 }
               : undefined
@@ -501,7 +501,7 @@ const PullRequestListPage: FC<PullRequestPageProps> = ({
                       { children: 'All', ...getToggleCommonProps(PRFilterGroupTogglerOptions.All) },
                       { children: 'Created', ...getToggleCommonProps(PRFilterGroupTogglerOptions.Created) },
                       {
-                        children: 'Review Requested',
+                        children: 'Review requested',
                         ...getToggleCommonProps(PRFilterGroupTogglerOptions.ReviewRequested)
                       }
                     ]}
@@ -516,7 +516,7 @@ const PullRequestListPage: FC<PullRequestPageProps> = ({
                   <Button asChild>
                     <Link to={`${spaceId ? `/${spaceId}` : ''}/repos/${repoId}/pulls/compare/`}>
                       <IconV2 name="plus" />
-                      {t('views:repos.createPullReq', 'Create Pull Request.')}
+                      {t('views:repos.createPullReq', 'Create pull request.')}
                     </Link>
                   </Button>
                 ) : null}

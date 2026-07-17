@@ -57,12 +57,12 @@ export const PipelineStudioInternal = (): JSX.Element => {
               size="sm"
               variant="outline"
               iconOnly
-              aria-label="Edit pipeline"
+              aria-label="Configure pipeline"
               onClick={() => {
                 setEditPipelineIntention({ path: 'pipeline' })
                 setRightDrawer(RightDrawer.PipelineConfig)
               }}
-              tooltipProps={{ content: 'Edit pipeline' }}
+              tooltipProps={{ content: 'Configure pipeline' }}
             >
               <IconV2 name="edit-pencil" />
             </Button>

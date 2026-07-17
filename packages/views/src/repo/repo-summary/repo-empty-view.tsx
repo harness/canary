@@ -86,7 +86,7 @@ ${sshUrl}
             ]}
             primaryButton={{
               icon: 'plus',
-              label: t('views:repos.emptyRepoPage.noData.createFile', 'Create File'),
+              label: t('views:repos.emptyRepoPage.noData.createFile', 'Create file'),
               to: `${projName ? `/${projName}` : ''}/repos/${repoName}/files/new/${gitRef}/~/`
             }}
             className="py-cn-3xl"

@@ -180,7 +180,7 @@ export const RepoPushSettingsRulesPage: FC<RepoPushSettingsRulesPageProps> = ({
             {!isLoading
               ? presetRuleData
                 ? t('views:repos.updateRuleButton', 'Update Rule')
-                : t('views:repos.createRuleButton', 'Create Rule')
+                : t('views:repos.createRuleButton', 'Create rule')
               : presetRuleData
                 ? t('views:repos.updatingRuleButton', 'Updating Rule...')
                 : t('views:repos.creatingRuleButton', 'Creating Rule...')}

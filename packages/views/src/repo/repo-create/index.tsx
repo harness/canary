@@ -290,7 +290,7 @@ export function RepoCreatePage({
                   <ButtonLayout horizontalAlign="start">
                     {/* TODO: Improve loading state to avoid flickering */}
                     <Button type="submit" disabled={isLoading || !isEmpty(errors)}>
-                      {!isLoading ? 'Create Repository' : 'Creating Repository...'}
+                      {!isLoading ? 'Create repository' : 'Creating repository...'}
                     </Button>
                     <Button type="button" variant="secondary" onClick={onFormCancel}>
                       Cancel

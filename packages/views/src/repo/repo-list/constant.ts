@@ -25,7 +25,7 @@ export const COLUMN_OPTIONS: CheckboxOptions[] = [
   { label: 'Scope', value: RepoListColumn.SCOPE },
   { label: 'Visibility', value: RepoListColumn.VISIBILITY },
   { label: 'Language', value: RepoListColumn.LANGUAGE },
-  { label: 'Resource Tags', value: RepoListColumn.TAGS },
+  { label: 'Resource tags', value: RepoListColumn.TAGS },
   { label: 'Updated', value: RepoListColumn.UPDATED },
   { label: 'Created', value: RepoListColumn.CREATED },
   { label: 'Pull requests', value: RepoListColumn.PR }

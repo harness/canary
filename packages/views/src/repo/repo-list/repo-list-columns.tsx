@@ -151,7 +151,7 @@ export const getRepoListColumns = ({
   },
   {
     id: RepoListColumn.TAGS,
-    header: t('views:repos.resourceTags', 'Resource Tags'),
+    header: t('views:repos.resourceTags', 'Resource tags'),
     enableSorting: false,
     enableHiding: true,
     size: 230,

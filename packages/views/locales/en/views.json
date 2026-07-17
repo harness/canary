@@ -5,13 +5,13 @@
     "pipelines": "Pipelines",
     "commits": "Commits",
     "tags": "Tags",
-    "resourceTags": "Resource Tags",
+    "resourceTags": "Resource tags",
     "pullRequests": "Pull requests",
     "branches": {
       "title": "Branches",
       "commitsBehind": "commits behind",
       "commitsAhead": "commits ahead",
-      "createBranch": "Create Branch"
+      "createBranch": "Create branch"
     },
     "search": "Search",
     "settings": "Settings",
@@ -26,10 +26,10 @@
     "executions": "Executions",
     "generalTab": "General",
     "keysTab": "Keys and tokens",
-    "createTagRuleButton": "Create Tag Rule",
-    "createBranchRuleButton": "Create Branch Rule",
-    "createPushRuleButton": "Create Push Rule",
-    "createRuleButton": "Create Rule",
+    "createTagRuleButton": "Create tag rule",
+    "createBranchRuleButton": "Create branch rule",
+    "createPushRuleButton": "Create push rule",
+    "createRuleButton": "Create rule",
     "hadRecentPushes": "had recent pushes ",
     "compareAndPullRequest": "Compare & pull request",
     "dismiss": "Dismiss",
@@ -60,7 +60,7 @@
     "selectRepository": "Select repository",
     "switchRepositories": "Switch repositories",
     "forkedFrom": "Forked from",
-    "createFile": "Create File",
+    "createFile": "Create file",
     "private": "Private",
     "public": "Public",
     "archived": "Archived",
@@ -114,7 +114,7 @@
         "label": "Label by"
       }
     },
-    "createPullReq": "Create Pull Request",
+    "createPullReq": "Create pull request",
     "BlockBranchCreation": "Block branch creation",
     "BlockBranchCreationDescription": "Only allow users with bypass permission to create matching branches",
     "BlockBranchDeletion": "Block branch deletion",
@@ -247,10 +247,10 @@
     "updated": "Updated",
     "created": "Created",
     "cancelImport": "Cancel import",
-    "createRepository": "Create Repository",
-    "importRepository": "Import Repository",
-    "importRepositories": "Import Repositories",
-    "linkRepository": "Link Repository",
+    "createRepository": "Create repository",
+    "importRepository": "Import repository",
+    "importRepositories": "Import repositories",
+    "linkRepository": "Link repository",
     "link": {
       "title": "Link repository",
       "description": "Link your repository from a Git provider to Harness Code using a connector. This syncs all Git data but places the repository in a Read-Only state within Harness; write access must be manually enabled.",
@@ -298,18 +298,18 @@
     "archiveRepoDescription": "Set this repository to archived and restrict it to read-only access.",
     "unarchiving": "Unarchiving...",
     "archiving": "Archiving...",
-    "unarchiveRepoButton": "Unarchive Repository",
-    "archiveRepoButton": "Archive Repository",
+    "unarchiveRepoButton": "Unarchive repository",
+    "archiveRepoButton": "Archive repository",
     "deleteRepo": "Delete this repository",
     "deleteRepoDescription": "This will permanently delete this repository, and everything contained in it.",
-    "deleteRepoButton": "Delete Repository",
+    "deleteRepoButton": "Delete repository",
     "settingsToolTip": "Cannot change settings while loading or updating.",
     "features": "Features",
     "gitLfs": "Git LFS",
     "gitLfsDescription": "Enable Git Large File Storage (LFS) for this repository.",
     "repoNamePlaceholder": "Enter repository name",
     "repoDescriptionPlaceholder": "Enter a description of this repository...",
-    "defaultBranch": "Default Branch",
+    "defaultBranch": "Default branch",
     "publicDescription": "Anyone with access to Harness can clone this repo.",
     "privateDescription": "You can choose who can see and commit to this repository.",
     "rulesApplied": "rules applied",
@@ -336,7 +336,7 @@
     "rules": "Rules",
     "webhooks": "Webhooks",
     "rulesDescription": "Define standards and automate workflows to ensure better collaboration and control in your repository.",
-    "cloneRepo": "Clone Repository",
+    "cloneRepo": "Clone repository",
     "cloneHttps": "HTTPS",
     "cloneSsh": "SSH",
     "gitCloneUrl": "Git clone URL",
@@ -350,7 +350,7 @@
           "0": "We recommend every repository include a",
           "1": "README, LICENSE, and .gitignore."
         },
-        "createFile": "Create File"
+        "createFile": "Create file"
       },
       "cloneInstructions": {
         "title": "Please generate git credentials if it’s your first time cloning the repository",
@@ -413,7 +413,7 @@
     "commit": "Commit",
     "tagger": "Tagger",
     "creationDate": "Creation date",
-    "createTag": "Create Tag",
+    "createTag": "Create tag",
     "enableWebhookToggle": "Enable the webhook",
     "toggleDescription": "We will deliver event details when this hook is triggered",
     "urlPlaceholder": "https://example.com/harness",
@@ -529,9 +529,9 @@
     "delete": "Delete Label",
     "title": "Labels",
     "showParentLabels": "Show labels from parent scopes",
-    "createLabel": "Create Label",
-    "newLabel": "Create Label",
-    "create": "Create Labels"
+    "createLabel": "Create label",
+    "newLabel": "Create label",
+    "create": "Create labels"
   },
   "noData": {
     "noResults": "No search results",
@@ -560,7 +560,7 @@
     "noClosedPullRequests": "There are no closed pull requests in this project yet.",
     "noMergedPullRequests": "There are no merged pull requests in this project yet.",
     "button": {
-      "createPullRequest": "Create Pull Request"
+      "createPullRequest": "Create pull request"
     },
     "noPullRequestsInRepo": "Start your contribution journey by creating a new pull request.",
     "noPullRequestsInProject": "There are no pull requests in this project yet.",
@@ -571,7 +571,7 @@
     "noCommitsYet": "No commits yet",
     "noCommitsHistoryDescription": "There isn't any commit history to show here for the selected user, time range, or current page.",
     "noCommitsYetDescription": "Your commits will appear here once they're made. Start committing to see your changes reflected.",
-    "clearFilters": "Clear Filters",
+    "clearFilters": "Clear filters",
     "errorApiTitle": "Failed to load {{type}}",
     "errorApiDescription": "An error occurred while loading the data. Please try again and reload the page.",
     "noRepos": "No repositories yet",
@@ -582,7 +582,7 @@
     "noResultsDescriptionWithFilter": "No {{filterName}} rules match your search. Try adjusting your keywords or filters.",
     "noTags": "No tags yet",
     "noTagsDescription": "Your tags will appear here once they're created. Start creating tags to see your work organized.",
-    "createNewTag": "Create Tag",
+    "createNewTag": "Create tag",
     "noWebhookExecution": "No webhook executions yet",
     "noWebhookExecutionsDescription": "Your webhook executions will appear here once they're completed. Trigger your webhook to see the results.",
     "noWebhooks": "No webhooks yet",
@@ -606,10 +606,10 @@
     "noEntitiesDescription": "There are no entities yet. ",
     "noConnectors": "No connectors yet",
     "rules": "No rules yet",
-    "createTagRuleButton": "Create Tag Rule",
-    "createTagRule": "Create Tag Rule",
-    "createBranch": "Create New Branch",
-    "createConnector": "Create New Connector.",
+    "createTagRuleButton": "Create tag rule",
+    "createTagRule": "Create tag rule",
+    "createBranch": "Create new branch",
+    "createConnector": "Create new connector.",
     "noConnectorsProject": "There are no connectors in this project yet.",
     "noSecretsProject": "There are no secrets in this project yet.",
     "commit": "Commit",
@@ -617,7 +617,7 @@
     "noLabelsDescription": "Use labels to organize, prioritize, and categorize tasks efficiently."
   },
   "projectSettings": {
-    "newLabels": "Create Label",
+    "newLabels": "Create label",
     "general": {
       "mainTitle": "General settings",
       "projectNamePlaceholder": "Enter project name",
@@ -661,7 +661,7 @@
     "description": "Projects contain your repositories and pipelines. To start using Harness, select a project or create a new one.",
     "projectSelector": "Select Project",
     "noProjects": "No projects available",
-    "createProject": "Create Project"
+    "createProject": "Create project"
   },
   "pullRequests": {
     "conversation": "Conversation",
@@ -669,11 +669,11 @@
     "changes": "Changes",
     "noCommitsYet": "No commits yet",
     "noCommitDataDescription": "There are no commits yet.",
-    "compareChangesCreateTitle": "Create Pull Request",
+    "compareChangesCreateTitle": "Create pull request",
     "compareChangesCreateDescription": "Open pull request that is ready for review.",
-    "compareChangesDraftTitle": "Create Draft Pull request",
+    "compareChangesDraftTitle": "Create draft pull request",
     "compareChangesDraftDescription": "Does not request code reviews and cannot be merged.",
-    "compareChangesCreatedButton": "Pull Request Created",
+    "compareChangesCreatedButton": "Pull request created",
     "expandSidebar": "Expand Sidebar",
     "compareChangesFormTitleLabel": "Add a title",
     "compareChangesFormTitlePlaceholder": "Enter pull request title",
@@ -737,10 +737,10 @@
     "compareChangesDiffLink": "learn more about diff comparisons",
     "compareChangesFormTitle": "Add a title",
     "compareChangesFormDescription": "Add a description",
-    "compareChangesCreateButton": "Create Pull Request",
-    "compareChangesCreateButtonLoading": "Creating Pull Request...",
-    "compareChangesDraftButton": "Draft Pull Request",
-    "compareChangesDraftButtonLoading": "Drafting Pull Request...",
+    "compareChangesCreateButton": "Create pull request",
+    "compareChangesCreateButtonLoading": "Creating pull request...",
+    "compareChangesDraftButton": "Draft pull request",
+    "compareChangesDraftButtonLoading": "Drafting pull request...",
     "replyHere": "Reply here",
     "showDiff": "Show Diff",
     "deletedFileDiff": "This file was deleted.",
@@ -1017,7 +1017,7 @@
     "configuration": "Configuration",
     "references": "References",
     "activityHistory": "Activity history",
-    "createNew": "Create Connector",
+    "createNew": "Create connector",
     "errorEncountered": "Error Encountered",
     "viewDetails": "View Details",
     "id": "Connector ID",
@@ -1052,7 +1052,7 @@
     "editWebhookDescription": "This webhook triggers every time an order status is updated, sending data to the specified endpoint for real-time tracking",
     "edit": "Edit Webhook",
     "delete": "Delete Webhook",
-    "create": "New Webhook"
+    "create": "New webhook"
   },
   "search": {
     "emptyState": {
@@ -1130,7 +1130,7 @@
       "confirm": "Confirm"
     },
     "close": "Close",
-    "newUserButton": "Create User",
+    "newUserButton": "Create user",
     "usersHeader": "Users",
     "searchPlaceholder": "Search",
     "tabs": {
@@ -1195,7 +1195,7 @@
       }
     },
     "secretsTitle": "Secrets",
-    "createNew": "Create Secret",
+    "createNew": "Create secret",
     "viewDetails": "View Details",
     "edit": "Edit",
     "delete": "Delete",

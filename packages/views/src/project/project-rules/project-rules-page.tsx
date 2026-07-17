@@ -53,17 +53,17 @@ export const ProjectRulesPage: FC<ProjectRulesPageProps> = ({
     () => [
       {
         type: RuleType.TAG,
-        title: t('views:repos.createTagRuleButton', 'Create Tag Rule'),
+        title: t('views:repos.createTagRuleButton', 'Create tag rule'),
         navigateTo: toProjectTagRuleCreate
       },
       {
         type: RuleType.BRANCH,
-        title: t('views:repos.createBranchRuleButton', 'Create Branch Rule'),
+        title: t('views:repos.createBranchRuleButton', 'Create branch rule'),
         navigateTo: toProjectBranchRuleCreate
       },
       {
         type: RuleType.PUSH,
-        title: t('views:repos.createPushRuleButton', 'Create Push Rule'),
+        title: t('views:repos.createPushRuleButton', 'Create push rule'),
         navigateTo: toProjectPushRuleCreate
       }
     ],
@@ -85,7 +85,7 @@ export const ProjectRulesPage: FC<ProjectRulesPageProps> = ({
         <DropdownMenu.Trigger asChild>
           <Button>
             <IconV2 name="plus" size="sm" />
-            {t('views:repos.createRuleButton', 'Create Rule')}
+            {t('views:repos.createRuleButton', 'Create rule')}
           </Button>
         </DropdownMenu.Trigger>
         <DropdownMenu.Content>

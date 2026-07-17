@@ -143,7 +143,7 @@ export const RepoFiles: FC<RepoFilesProps> = ({
             label: (
               <>
                 <IconV2 name="plus" />
-                {t('views:repos.createFile', 'Create File')}
+                {t('views:repos.createFile', 'Create file')}
               </>
             ),
             to: `${spaceId ? `/${spaceId}` : ''}/repos/${repoId}/files/new/${gitRef}/~/`

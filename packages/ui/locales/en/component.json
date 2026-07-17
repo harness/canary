@@ -113,7 +113,7 @@
     "inputPlaceholder": "Filter by...",
     "buttonLabel": "Reset filters",
     "defaultLabel": "Filter",
-    "saveFilter": "Save Filter",
+    "saveFilter": "Save filter",
     "reset": "Reset",
     "search": {
       "placeholder": "Search"

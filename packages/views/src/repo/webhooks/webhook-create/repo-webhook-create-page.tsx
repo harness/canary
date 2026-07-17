@@ -164,7 +164,7 @@ export const RepoWebhooksCreatePage: FC<RepoWebhooksCreatePageProps> = ({
                   : t('views:repos.creatingWebhook', 'Creating Webhook...')
                 : isUpdatePage
                   ? t('views:repos.updateWebhook', 'Update Webhook')
-                  : t('views:repos.createWebhook', 'Create Webhook')}
+                  : t('views:repos.createWebhook', 'Create webhook')}
             </Button>
             <Button type="button" variant="outline" onClick={onFormCancel}>
               {t('views:repos.cancel', 'Cancel')}

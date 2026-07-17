@@ -66,7 +66,7 @@ export const RepoTagsList: FC<RepoTagsListProps> = ({
   const getTableActions = (tag: CommitTagType): ActionData[] => [
     {
       iconName: 'git-branch',
-      title: t('views:repos.tags.createBranch', 'Create Branch'),
+      title: t('views:repos.tags.createBranch', 'Create branch'),
       onClick: () => handleOpenCreateBranchDialog(tag)
     },
     {
@@ -132,7 +132,7 @@ export const RepoTagsList: FC<RepoTagsListProps> = ({
                 label: (
                   <>
                     <IconV2 name="plus" />
-                    {t('views:noData.createNewTag', 'Create Tag')}
+                    {t('views:noData.createNewTag', 'Create tag')}
                   </>
                 ),
                 onClick: onOpenCreateTagDialog,

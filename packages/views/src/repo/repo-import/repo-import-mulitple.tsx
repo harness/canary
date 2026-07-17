@@ -150,7 +150,7 @@ export function RepoImportMultiplePage({
   return (
     <SandboxLayout.Main>
       <SandboxLayout.Content key={providerValue} className="settings-form-width mx-auto">
-        <Text variant="heading-section">Import Repositories</Text>
+        <Text variant="heading-section">Import repositories</Text>
         <Spacer size={10} />
         <FormWrapper {...formMethods} onSubmit={handleSubmit(onSubmit)}>
           {/* provider */}
@@ -292,7 +292,7 @@ export function RepoImportMultiplePage({
               <ButtonLayout horizontalAlign="start">
                 {/* TODO: Improve loading state to avoid flickering */}
                 <Button type="submit" disabled={isLoading}>
-                  {!isLoading ? 'Import Repositories' : 'Importing Repositories...'}
+                  {!isLoading ? 'Import repositories' : 'Importing repositories...'}
                 </Button>
                 <Button type="button" variant="outline" onClick={handleCancel}>
                   Cancel

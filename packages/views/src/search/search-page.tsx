@@ -183,7 +183,7 @@ export const SearchPageView: FC<SearchPageViewProps> = ({
                 placeholder={'Select a language'}
               />
               <Button variant={'secondary'} onClick={handleClearFilters}>
-                Clear Filters
+                Clear filters
               </Button>
             </Layout.Horizontal>
           ) : null}

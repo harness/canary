@@ -23,7 +23,7 @@ export const NoSearchResults = ({ handleResetSearch }: NoSearchResultsProps) => 
         label: (
           <>
             <IconV2 name="trash" />
-            {t('views:noData.clearFilters', 'Clear Filters')}
+            {t('views:noData.clearFilters', 'Clear filters')}
           </>
         ),
         onClick: handleResetSearch

@@ -61,7 +61,7 @@ export const PathActionBar: FC<PathActionBarProps> = ({
           <Button asChild>
             <Link to={pathNewFile}>
               <IconV2 name="plus" />
-              {t('views:repos.createFile', 'Create File')}
+              {t('views:repos.createFile', 'Create file')}
             </Link>
           </Button>
         )}

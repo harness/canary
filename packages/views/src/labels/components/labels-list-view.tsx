@@ -78,7 +78,7 @@ export const LabelsListView: FC<LabelsListViewProps> = ({
         description={[t('views:noData.createLabel', 'Create a new label to get started.')]}
         primaryButton={{
           icon: 'plus',
-          label: t('views:projectSettings.newLabels', 'Create Label'),
+          label: t('views:projectSettings.newLabels', 'Create label'),
           to: 'create'
         }}
       />

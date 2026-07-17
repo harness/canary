@@ -31,7 +31,7 @@ export const Actions = forwardRef<HTMLInputElement, ActionProps>(({ searchQuery,
         <Dialog.Trigger>
           <Button onClick={() => handleDialogOpen(null, DialogLabels.CREATE_USER)}>
             <IconV2 name="plus" />
-            {t('views:userManagement.newUserButton', 'Create User')}
+            {t('views:userManagement.newUserButton', 'Create user')}
           </Button>
         </Dialog.Trigger>
       </ListActions.Right>

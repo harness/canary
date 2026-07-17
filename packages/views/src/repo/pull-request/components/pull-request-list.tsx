@@ -70,7 +70,7 @@ const EmptyStateView: FC<EmptyStateProps> = ({ repoId, spaceId, state }) => {
               label: (
                 <>
                   <IconV2 name="plus" />
-                  {t('views:noData.button.createPullRequest', 'Create Pull Request')}
+                  {t('views:noData.button.createPullRequest', 'Create pull request')}
                 </>
               ),
               to: `${spaceId ? `/${spaceId}` : ''}/repos/${repoId}/pulls/compare/`

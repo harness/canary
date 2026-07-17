@@ -8,6 +8,7 @@ import {
   flexRender,
   getCoreRowModel,
   getExpandedRowModel,
+  getSortedRowModel,
   OnChangeFn,
   Row,
   RowSelectionState,
@@ -34,6 +35,11 @@ export interface DataTableProps<TData> {
   disableHighlightOnHover?: boolean
   className?: string
   currentSorting?: SortingState
+  /**
+   * See {@link https://tanstack.com/table/latest/docs/api/features/sorting#manualsorting React Table docs}.
+   * Unless disabled, you must sort the data yourself (such as on the server side).
+   */
+  manualSorting?: boolean
   currentRowSelection?: RowSelectionState
   columnPinning?: ColumnPinningState
 
@@ -142,7 +148,8 @@ export const DataTable = function DataTable<TData>({
   _enableColumnResizing = false,
   getRowId,
   visibleColumns,
-  columnPinning = { left: [], right: [] }
+  columnPinning = { left: [], right: [] },
+  manualSorting = true
 }: DataTableProps<TData>) {
   const tableColumns = useMemo(() => {
     // Start with the base columns
@@ -266,9 +273,10 @@ export const DataTable = function DataTable<TData>({
       getCoreRowModel: getCoreRowModel(),
 
       getRowId: getRowId,
-      // Enable manual sorting (server-side sorting)
-      manualSorting: true,
-      // Use the external sorting change handler, we link it to the onSortingChange handler so we dont have to do shenannigans to figure out which column was clicked, and its sort state
+      // Manual (server-side) sorting
+      manualSorting,
+      getSortedRowModel: manualSorting ? undefined : getSortedRowModel(),
+      // Use the external sorting change handler, we link it to the onSortingChange handler so we don't have to do shenanigans to figure out which column was clicked, and its sort state
       //  React table gives it to us directly
       onSortingChange: externalOnSortingChange,
       // Enable row selection if specified
@@ -325,7 +333,8 @@ export const DataTable = function DataTable<TData>({
       currentRowSelection,
       initiallyExpandAllRows,
       currentExpanded,
-      columnPinning
+      columnPinning,
+      manualSorting
     ]
   )
 

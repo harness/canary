@@ -81,7 +81,7 @@
     },
     "3": {
       "$type": "color",
-      "$value": "{gray.850}",
+      "$value": "{gray.800}",
       "$description": "Subtle border color for minimal visual separation. Creates gentle boundaries that organize content without adding visual weight. Ideal for maintaining clean, uncluttered interfaces.\n\nCommon uses: Table row separators, grouped list items, subtle content dividers, secondary container outlines, background element borders."
     },
     "brand": {
@@ -1749,7 +1749,7 @@
       "card": {
         "border": {
           "$type": "color",
-          "$value": "{border.3}",
+          "$value": "{border.2}",
           "$description": "Resting border for pipeline studio cards, footer, expand button, and stack layers. Uses border-2 in light, border-3 in dark for surface separation."
         },
         "bg": {

@@ -150,7 +150,7 @@ const Calendar = ({ filter, onUpdateFilter }: CalendarProps) => {
             onUpdateFilter(value)
           }
         }}
-        initialFocus
+        autoFocus
       />
     </div>
   )

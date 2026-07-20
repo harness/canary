@@ -14,7 +14,7 @@ describe('Calendar', () => {
       const { container } = renderComponent()
 
       // Calendar is rendered
-      const calendar = container.querySelector('.rdp')
+      const calendar = container.querySelector('.rdp-root')
       expect(calendar).toBeTruthy()
     })
 
@@ -45,14 +45,14 @@ describe('Calendar', () => {
       renderComponent()
 
       // Outside days are visible
-      const calendar = document.querySelector('.rdp')
+      const calendar = document.querySelector('.rdp-root')
       expect(calendar).toBeTruthy()
     })
 
     test('should hide outside days when showOutsideDays is false', () => {
       renderComponent({ showOutsideDays: false })
 
-      const calendar = document.querySelector('.rdp')
+      const calendar = document.querySelector('.rdp-root')
       expect(calendar).toBeTruthy()
     })
   })
@@ -78,7 +78,7 @@ describe('Calendar', () => {
       renderComponent({ mode: 'single', selected: selectedDate, month: selectedDate })
 
       // Selected date has appropriate styling
-      const calendar = document.querySelector('.rdp')
+      const calendar = document.querySelector('.rdp-root')
       expect(calendar).toBeTruthy()
     })
 
@@ -208,7 +208,7 @@ describe('Calendar', () => {
 
       // Calendar renders with disabled dates configuration
       expect(screen.getByText('January 2024')).toBeInTheDocument()
-      const calendar = document.querySelector('.rdp')
+      const calendar = document.querySelector('.rdp-root')
       expect(calendar).toBeTruthy()
     })
 
@@ -219,7 +219,7 @@ describe('Calendar', () => {
 
       // Calendar renders with date constraints
       expect(screen.getByText('January 2024')).toBeInTheDocument()
-      const calendar = document.querySelector('.rdp')
+      const calendar = document.querySelector('.rdp-root')
       expect(calendar).toBeTruthy()
     })
 
@@ -230,7 +230,7 @@ describe('Calendar', () => {
 
       // Calendar renders with date constraints
       expect(screen.getByText('January 2024')).toBeInTheDocument()
-      const calendar = document.querySelector('.rdp')
+      const calendar = document.querySelector('.rdp-root')
       expect(calendar).toBeTruthy()
     })
 
@@ -244,7 +244,7 @@ describe('Calendar', () => {
 
       // Calendar renders with disabled range
       expect(screen.getByText('January 2024')).toBeInTheDocument()
-      const calendar = document.querySelector('.rdp')
+      const calendar = document.querySelector('.rdp-root')
       expect(calendar).toBeTruthy()
     })
   })
@@ -260,7 +260,7 @@ describe('Calendar', () => {
     test('should apply custom classNames to specific parts', () => {
       renderComponent({
         classNames: {
-          caption: 'custom-caption',
+          month_caption: 'custom-caption',
           day: 'custom-day'
         }
       })
@@ -322,7 +322,7 @@ describe('Calendar', () => {
       renderComponent({ month: today })
 
       // Today's date should be highlighted
-      const calendar = document.querySelector('.rdp')
+      const calendar = document.querySelector('.rdp-root')
       expect(calendar).toBeTruthy()
     })
 
@@ -336,12 +336,13 @@ describe('Calendar', () => {
     test('should render with from and to dates', () => {
       renderComponent({
         mode: 'range',
-        fromDate: new Date(2024, 0, 1),
-        toDate: new Date(2024, 11, 31)
+        startMonth: new Date(2024, 0),
+        endMonth: new Date(2024, 11),
+        hidden: [{ before: new Date(2024, 0, 1) }, { after: new Date(2024, 11, 31) }]
       })
 
       // Calendar renders with constraints
-      const calendar = document.querySelector('.rdp')
+      const calendar = document.querySelector('.rdp-root')
       expect(calendar).toBeTruthy()
     })
   })
@@ -353,7 +354,7 @@ describe('Calendar', () => {
 
       expect(screen.getByText('February 2024')).toBeInTheDocument()
       // February 2024 is a leap year - calendar should render
-      const calendar = document.querySelector('.rdp')
+      const calendar = document.querySelector('.rdp-root')
       expect(calendar).toBeTruthy()
     })
 
@@ -437,12 +438,12 @@ describe('Calendar', () => {
     test('should update when showOutsideDays changes', () => {
       const { rerender, container } = render(<Calendar month={new Date(2024, 0, 1)} showOutsideDays={true} />)
 
-      let calendar = container.querySelector('.rdp')
+      let calendar = container.querySelector('.rdp-root')
       expect(calendar).toBeInTheDocument()
 
       rerender(<Calendar month={new Date(2024, 0, 1)} showOutsideDays={false} />)
 
-      calendar = container.querySelector('.rdp')
+      calendar = container.querySelector('.rdp-root')
       expect(calendar).toBeInTheDocument()
     })
 
@@ -517,20 +518,20 @@ describe('Calendar', () => {
   })
 
   describe('Date Boundaries', () => {
-    test('should handle fromYear and toYear', () => {
+    test('should handle year boundaries', () => {
       renderComponent({
-        fromYear: 2020,
-        toYear: 2025,
+        startMonth: new Date(2020, 0),
+        endMonth: new Date(2025, 11),
         month: new Date(2024, 0, 1)
       })
 
       expect(screen.getByText('January 2024')).toBeInTheDocument()
     })
 
-    test('should handle fromMonth and toMonth', () => {
+    test('should handle month boundaries', () => {
       renderComponent({
-        fromMonth: new Date(2024, 0, 1),
-        toMonth: new Date(2024, 11, 31),
+        startMonth: new Date(2024, 0, 1),
+        endMonth: new Date(2024, 11, 31),
         month: new Date(2024, 0, 1)
       })
 
@@ -607,7 +608,7 @@ describe('Calendar', () => {
       const today = new Date()
       const { container } = renderComponent({ month: today })
 
-      const calendar = container.querySelector('.rdp')
+      const calendar = container.querySelector('.rdp-root')
       expect(calendar).toBeInTheDocument()
     })
   })
@@ -623,7 +624,7 @@ describe('Calendar', () => {
     test('should render with proper ARIA attributes', () => {
       const { container } = renderComponent({ month: new Date(2024, 0, 1) })
 
-      const calendar = container.querySelector('.rdp')
+      const calendar = container.querySelector('.rdp-root')
       expect(calendar).toBeInTheDocument()
     })
   })
@@ -632,21 +633,21 @@ describe('Calendar', () => {
     test('should apply range mode cell styling', () => {
       const { container } = renderComponent({ mode: 'range', month: new Date(2024, 0, 1) })
 
-      const calendar = container.querySelector('.rdp')
+      const calendar = container.querySelector('.rdp-root')
       expect(calendar).toBeInTheDocument()
     })
 
     test('should apply non-range mode cell styling', () => {
       const { container } = renderComponent({ mode: 'single', month: new Date(2024, 0, 1) })
 
-      const calendar = container.querySelector('.rdp')
+      const calendar = container.querySelector('.rdp-root')
       expect(calendar).toBeInTheDocument()
     })
 
     test('should apply default mode cell styling', () => {
       const { container } = renderComponent({ month: new Date(2024, 0, 1) })
 
-      const calendar = container.querySelector('.rdp')
+      const calendar = container.querySelector('.rdp-root')
       expect(calendar).toBeInTheDocument()
     })
   })
@@ -694,7 +695,7 @@ describe('Calendar', () => {
     test('should use showOutsideDays=true by default', () => {
       const { container } = render(<Calendar month={new Date(2024, 0, 1)} />)
 
-      const calendar = container.querySelector('.rdp')
+      const calendar = container.querySelector('.rdp-root')
       expect(calendar).toBeInTheDocument()
     })
   })

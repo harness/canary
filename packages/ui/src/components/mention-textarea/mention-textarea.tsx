@@ -1,5 +1,4 @@
 import { forwardRef, useCallback, useEffect, useRef, useState } from 'react'
-import { createPortal } from 'react-dom'
 
 import { Command } from '@/components/command'
 import { Textarea, TextareaProps } from '@/components/form-primitives'
@@ -7,7 +6,10 @@ import { IconV2 } from '@/components/icon-v2'
 import { usePortal } from '@/context'
 import { cn } from '@/utils/cn'
 import { getCaretCoordinates, getCurrentWord, replaceWord } from '@/utils/textarea-utils'
+import * as DropdownMenuPrimitive from '@radix-ui/react-dropdown-menu'
 import { Command as CommandPrimitive } from 'cmdk'
+
+import { getViewportShift } from './clamp-dropdown-position'
 
 export interface MentionItem {
   /** Unique identifier for the item */
@@ -43,20 +45,6 @@ export interface MentionTextareaProps extends Omit<TextareaProps, 'value' | 'onC
   loadingContent?: React.ReactNode
 }
 
-const VIEWPORT_PADDING = 8
-
-const clampDropdownPosition = (top: number, left: number, dropdown?: HTMLDivElement | null) => {
-  const dropdownWidth = dropdown?.offsetWidth ?? 208
-  const dropdownHeight = dropdown?.offsetHeight ?? 208
-  const maxLeft = window.innerWidth - dropdownWidth - VIEWPORT_PADDING
-  const maxTop = window.innerHeight - dropdownHeight - VIEWPORT_PADDING
-
-  return {
-    top: Math.max(VIEWPORT_PADDING, Math.min(top, maxTop)),
-    left: Math.max(VIEWPORT_PADDING, Math.min(left, maxLeft))
-  }
-}
-
 export const MentionTextarea = forwardRef<HTMLTextAreaElement, MentionTextareaProps>(
   (
     {
@@ -82,19 +70,23 @@ export const MentionTextarea = forwardRef<HTMLTextAreaElement, MentionTextareaPr
     const inputRef = useRef<HTMLInputElement>(null)
     const [currentTriggerWord, setCurrentTriggerWord] = useState('')
     const [dropdownOpen, setDropdownOpen] = useState(false)
-    const [dropdownPosition, setDropdownPosition] = useState({ top: 0, left: 0 })
 
     const updateDropdownPosition = useCallback(() => {
       const textarea = textareaRef.current
-      if (!textarea) return
+      const dropdown = dropdownRef.current
+      if (!textarea || !dropdown) return
 
       const caret = getCaretCoordinates(textarea, textarea.selectionEnd)
       const rect = textarea.getBoundingClientRect()
-      const adjustedTop = caret.top - textarea.scrollTop
-      const rawTop = rect.top + adjustedTop + caret.height
-      const rawLeft = rect.left + caret.left
+      const top = rect.top + caret.top - textarea.scrollTop + caret.height
+      const left = rect.left + caret.left
 
-      setDropdownPosition(clampDropdownPosition(rawTop, rawLeft, dropdownRef.current))
+      dropdown.style.top = `${top}px`
+      dropdown.style.left = `${left}px`
+
+      const { dx, dy } = getViewportShift(dropdown.getBoundingClientRect())
+      if (dx !== 0) dropdown.style.left = `${left + dx}px`
+      if (dy !== 0) dropdown.style.top = `${top + dy}px`
     }, [])
 
     const handleBlur = useCallback(() => {
@@ -159,8 +151,8 @@ export const MentionTextarea = forwardRef<HTMLTextAreaElement, MentionTextareaPr
 
           if (currentWord.startsWith(triggerChar)) {
             setCurrentTriggerWord(currentWord)
-            updateDropdownPosition()
             setDropdownOpen(true)
+            requestAnimationFrame(updateDropdownPosition)
           } else if (currentTriggerWord !== '') {
             setCurrentTriggerWord('')
             setDropdownOpen(false)
@@ -232,64 +224,32 @@ export const MentionTextarea = forwardRef<HTMLTextAreaElement, MentionTextareaPr
 
     useEffect(() => {
       const textarea = textareaRef.current
+      const dropdown = dropdownRef.current
       textarea?.addEventListener('keydown', handleKeyDown)
       textarea?.addEventListener('blur', handleBlur)
       document?.addEventListener('selectionchange', handleSelectionChange)
+      dropdown?.addEventListener('mousedown', handleMouseDown)
       return () => {
         textarea?.removeEventListener('keydown', handleKeyDown)
         textarea?.removeEventListener('blur', handleBlur)
         document?.removeEventListener('selectionchange', handleSelectionChange)
-      }
-    }, [handleBlur, handleKeyDown, handleSelectionChange])
-
-    useEffect(() => {
-      const dropdown = dropdownRef.current
-      dropdown?.addEventListener('mousedown', handleMouseDown)
-      return () => {
         dropdown?.removeEventListener('mousedown', handleMouseDown)
       }
-    }, [handleMouseDown, dropdownOpen])
+    }, [handleBlur, handleKeyDown, handleMouseDown, handleSelectionChange])
 
     useEffect(() => {
       if (!dropdownOpen) return
 
       updateDropdownPosition()
-
       const handleReposition = () => updateDropdownPosition()
-
-      window.addEventListener('resize', handleReposition)
       window.addEventListener('scroll', handleReposition, true)
+      window.addEventListener('resize', handleReposition)
 
       return () => {
-        window.removeEventListener('resize', handleReposition)
         window.removeEventListener('scroll', handleReposition, true)
+        window.removeEventListener('resize', handleReposition)
       }
     }, [dropdownOpen, updateDropdownPosition, items.length, isLoading])
-
-    useEffect(() => {
-      if (!dropdownOpen) return
-      updateDropdownPosition()
-    }, [dropdownOpen, items.length, isLoading, updateDropdownPosition])
-
-    const dropdown = (
-      <Command.Root
-        ref={dropdownRef}
-        shouldFilter={false}
-        className={cn('fixed z-[10000] h-auto min-w-52 border', {
-          hidden: !dropdownOpen
-        })}
-        style={{
-          top: dropdownPosition.top,
-          left: dropdownPosition.left
-        }}
-      >
-        <div className="hidden">
-          <CommandPrimitive.Input ref={inputRef} />
-        </div>
-
-        <Command.List scrollAreaProps={{ className: 'max-h-52' }}>{renderDropdownContent()}</Command.List>
-      </Command.Root>
-    )
 
     return (
       <div className="relative w-full">
@@ -305,7 +265,21 @@ export const MentionTextarea = forwardRef<HTMLTextAreaElement, MentionTextareaPr
           autoCorrect="off"
         />
 
-        {createPortal(dropdown, portalContainer ?? document.body)}
+        <DropdownMenuPrimitive.Portal container={portalContainer}>
+          <Command.Root
+            ref={dropdownRef}
+            shouldFilter={false}
+            className={cn('fixed z-[10000] h-auto min-w-52 border', {
+              hidden: !dropdownOpen
+            })}
+          >
+            <div className="hidden">
+              <CommandPrimitive.Input ref={inputRef} />
+            </div>
+
+            <Command.List scrollAreaProps={{ className: 'max-h-52' }}>{renderDropdownContent()}</Command.List>
+          </Command.Root>
+        </DropdownMenuPrimitive.Portal>
       </div>
     )
   }

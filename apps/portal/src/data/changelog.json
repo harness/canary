@@ -1,0 +1,162 @@
+[
+  {
+    "prNumber": 11243,
+    "title": "fix: [UUI-2072]: Drawers not stacking visually for some triggers",
+    "summary": "fix: [UUI-2072]: Drawers not stacking visually for some triggers",
+    "url": "https://harness0.harness.io/ng/account/l7B_kbSEQD2wjrM7PShm5w/all/code/orgs/PROD/projects/Harness_Commons/repos/canary/pulls/11243",
+    "mergedAt": "2026-07-15T20:27:32Z",
+    "author": "radhakrishna-dodla"
+  },
+  {
+    "prNumber": 11242,
+    "title": "chore: [UUI-2228]: App Shell and Nav bg fix",
+    "summary": "chore: [UUI-2228]: App Shell and Nav bg fix",
+    "url": "https://harness0.harness.io/ng/account/l7B_kbSEQD2wjrM7PShm5w/all/code/orgs/PROD/projects/Harness_Commons/repos/canary/pulls/11242",
+    "mergedAt": "2026-07-15T16:55:31Z",
+    "author": "kathryn-grantier"
+  },
+  {
+    "prNumber": 11238,
+    "title": "fix: [UUI-2205]: recolor app-shell to bg.2 in dark mode only",
+    "summary": "fix: [UUI-2205]: recolor app-shell to bg.2 in dark mode only",
+    "url": "https://harness0.harness.io/ng/account/l7B_kbSEQD2wjrM7PShm5w/all/code/orgs/PROD/projects/Harness_Commons/repos/canary/pulls/11238",
+    "mergedAt": "2026-07-14T22:09:50Z",
+    "author": "kathryn-grantier"
+  },
+  {
+    "prNumber": 11236,
+    "title": "feat: [UUI-2125]: Add studio items border color to tailwind design system",
+    "summary": "feat: [UUI-2125]: Add studio items border color to tailwind design system",
+    "url": "https://harness0.harness.io/ng/account/l7B_kbSEQD2wjrM7PShm5w/all/code/orgs/PROD/projects/Harness_Commons/repos/canary/pulls/11236",
+    "mergedAt": "2026-07-14T18:10:52Z",
+    "author": "pranesh-tg"
+  },
+  {
+    "prNumber": 11234,
+    "title": "feat: [UUI-2171]: Add agent-services icon",
+    "summary": "feat: [UUI-2171]: Add agent-services icon",
+    "url": "https://harness0.harness.io/ng/account/l7B_kbSEQD2wjrM7PShm5w/all/code/orgs/PROD/projects/Harness_Commons/repos/canary/pulls/11234",
+    "mergedAt": "2026-07-13T18:38:26Z",
+    "author": "aaron-palmer"
+  },
+  {
+    "prNumber": 11230,
+    "title": "feat: [UUI-2114]: Add PLG Patterns in sidebar and relocate stepper",
+    "summary": "feat: [UUI-2114]: Add PLG Patterns in sidebar and relocate stepper",
+    "url": "https://harness0.harness.io/ng/account/l7B_kbSEQD2wjrM7PShm5w/all/code/orgs/PROD/projects/Harness_Commons/repos/canary/pulls/11230",
+    "mergedAt": "2026-07-13T17:11:08Z",
+    "author": "john-weber"
+  },
+  {
+    "prNumber": 11228,
+    "title": "fix: [UUI-2081]: Pipelines Card/Group/Stage Border Colors",
+    "summary": "fix: [UUI-2081]: Pipelines Card/Group/Stage Border Colors",
+    "url": "https://harness0.harness.io/ng/account/l7B_kbSEQD2wjrM7PShm5w/all/code/orgs/PROD/projects/Harness_Commons/repos/canary/pulls/11228",
+    "mergedAt": "2026-07-13T15:00:11Z",
+    "author": "kathryn-grantier"
+  },
+  {
+    "prNumber": 11232,
+    "title": "fix: [UUI-2116]: Inner Pipelines Canvas shadow and dotes",
+    "summary": "fix: [UUI-2116]: Inner Pipelines Canvas shadow and dotes",
+    "url": "https://harness0.harness.io/ng/account/l7B_kbSEQD2wjrM7PShm5w/all/code/orgs/PROD/projects/Harness_Commons/repos/canary/pulls/11232",
+    "mergedAt": "2026-07-10T16:27:27Z",
+    "author": "kathryn-grantier"
+  },
+  {
+    "prNumber": 11231,
+    "title": "fix: [UUI-1851]: Fix page crash when clicking Save filter on list pages",
+    "summary": "fix: [UUI-1851]: Fix page crash when clicking Save filter on list pages",
+    "url": "https://harness0.harness.io/ng/account/l7B_kbSEQD2wjrM7PShm5w/all/code/orgs/PROD/projects/Harness_Commons/repos/canary/pulls/11231",
+    "mergedAt": "2026-07-09T22:49:23Z",
+    "author": "radhakrishna-dodla"
+  },
+  {
+    "prNumber": 11227,
+    "title": "fix: [UUI-2065]: studio card corner radius + shadow token updates",
+    "summary": "fix: [UUI-2065]: studio card corner radius + shadow token updates",
+    "url": "https://harness0.harness.io/ng/account/l7B_kbSEQD2wjrM7PShm5w/all/code/orgs/PROD/projects/Harness_Commons/repos/canary/pulls/11227",
+    "mergedAt": "2026-07-09T19:00:23Z",
+    "author": "kathryn-grantier"
+  },
+  {
+    "prNumber": 11225,
+    "title": "feat: [UUI-2046]: Add Nested Checkbox Component",
+    "summary": "feat: [UUI-2046]: Add Nested Checkbox Component",
+    "url": "https://harness0.harness.io/ng/account/l7B_kbSEQD2wjrM7PShm5w/all/code/orgs/PROD/projects/Harness_Commons/repos/canary/pulls/11225",
+    "mergedAt": "2026-07-09T08:59:46Z",
+    "author": "manish-sharma"
+  },
+  {
+    "prNumber": 11217,
+    "title": "feat: [UUI-1350]: add SinglePaneStepper + YamlOutput, extract shared flow-stepper engine",
+    "summary": "feat: [UUI-1350]: add SinglePaneStepper + YamlOutput, extract shared flow-stepper engine",
+    "url": "https://harness0.harness.io/ng/account/l7B_kbSEQD2wjrM7PShm5w/all/code/orgs/PROD/projects/Harness_Commons/repos/canary/pulls/11217",
+    "mergedAt": "2026-07-08T19:08:20Z",
+    "author": "jacob-bassett"
+  },
+  {
+    "prNumber": 11224,
+    "title": "fix: [UUI-2036]: Enhance TitleSection component with title tooltip for truncation",
+    "summary": "fix: [UUI-2036]: Enhance TitleSection component with title tooltip for truncation",
+    "url": "https://harness0.harness.io/ng/account/l7B_kbSEQD2wjrM7PShm5w/all/code/orgs/PROD/projects/Harness_Commons/repos/canary/pulls/11224",
+    "mergedAt": "2026-07-08T15:48:35Z",
+    "author": "radhakrishna-dodla"
+  },
+  {
+    "prNumber": 11226,
+    "title": "feat: [AI-2629]: add Playwright, Apple and Windows brand logos to LogoV2",
+    "summary": "feat: [AI-2629]: add Playwright, Apple and Windows brand logos to LogoV2",
+    "url": "https://harness0.harness.io/ng/account/l7B_kbSEQD2wjrM7PShm5w/all/code/orgs/PROD/projects/Harness_Commons/repos/canary/pulls/11226",
+    "mergedAt": "2026-07-08T11:49:38Z",
+    "author": "sarthak-dalmia"
+  },
+  {
+    "prNumber": 11218,
+    "title": "feat: [UUI-1954]: sidebar and chat background component tokens color changes.",
+    "summary": "feat: [UUI-1954]: sidebar and chat background component tokens color changes.",
+    "url": "https://harness0.harness.io/ng/account/l7B_kbSEQD2wjrM7PShm5w/all/code/orgs/PROD/projects/Harness_Commons/repos/canary/pulls/11218",
+    "mergedAt": "2026-07-06T18:16:43Z",
+    "author": "kathryn-grantier"
+  },
+  {
+    "prNumber": 11219,
+    "title": "feat: [DBOPS-2529]: add generic background-task API + pipeline_status_updated event to ai-chat-core",
+    "summary": "feat: [DBOPS-2529]: add generic background-task API + pipeline_status_updated event to ai-chat-core",
+    "url": "https://harness0.harness.io/ng/account/l7B_kbSEQD2wjrM7PShm5w/all/code/orgs/PROD/projects/Harness_Commons/repos/canary/pulls/11219",
+    "mergedAt": "2026-07-06T12:28:34Z",
+    "author": "sarthak-setia"
+  },
+  {
+    "prNumber": 11214,
+    "title": "feat: [UUI-1898]: Pipeline and Template tabs re-design",
+    "summary": "feat: [UUI-1898]: Pipeline and Template tabs re-design",
+    "url": "https://harness0.harness.io/ng/account/l7B_kbSEQD2wjrM7PShm5w/all/code/orgs/PROD/projects/Harness_Commons/repos/canary/pulls/11214",
+    "mergedAt": "2026-07-02T17:10:03Z",
+    "author": "radhakrishna-dodla"
+  },
+  {
+    "prNumber": 11216,
+    "title": "feat: [CI-21655]: Add option to disable +filter button in case all filters are sticky",
+    "summary": "feat: [CI-21655]: Add option to disable +filter button in case all filters are sticky",
+    "url": "https://harness0.harness.io/ng/account/l7B_kbSEQD2wjrM7PShm5w/all/code/orgs/PROD/projects/Harness_Commons/repos/canary/pulls/11216",
+    "mergedAt": "2026-07-02T15:46:02Z",
+    "author": "tianyi-li"
+  },
+  {
+    "prNumber": 11213,
+    "title": "fix: [CODE-5551]: hash encoding in paths fixed",
+    "summary": "fix: [CODE-5551]: hash encoding in paths fixed",
+    "url": "https://harness0.harness.io/ng/account/l7B_kbSEQD2wjrM7PShm5w/all/code/orgs/PROD/projects/Harness_Commons/repos/canary/pulls/11213",
+    "mergedAt": "2026-07-02T10:19:22Z",
+    "author": "enver-bi-evac"
+  },
+  {
+    "prNumber": 11215,
+    "title": "feat: [CI-21655]: Add option to disable +filter button in case all filters are sticky",
+    "summary": "feat: [CI-21655]: Add option to disable +filter button in case all filters are sticky",
+    "url": "https://harness0.harness.io/ng/account/l7B_kbSEQD2wjrM7PShm5w/all/code/orgs/PROD/projects/Harness_Commons/repos/canary/pulls/11215",
+    "mergedAt": "2026-07-02T00:05:32Z",
+    "author": "tianyi-li"
+  }
+]

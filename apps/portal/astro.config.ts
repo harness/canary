@@ -80,6 +80,17 @@ export default defineConfig({
           ],
         },
         {
+          label: "Change Log",
+          collapsed: false,
+          items: [
+            {
+              slug: "changelog",
+              label: "Overview",
+              attrs: { "data-icon": "clipboard-check" },
+            },
+          ],
+        },
+        {
           label: "Foundations",
           items: [
             {

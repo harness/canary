@@ -2,7 +2,18 @@ import { createContext, ReactNode, useCallback, useContext, useMemo, useState } 
 
 import { ChatContextItem, ChatContextMap, ChatContextValue } from '../../types/context'
 
-const ChatContext = createContext<ChatContextValue | undefined>(undefined)
+// Default value used whenever no ChatContextProvider is mounted (e.g. chat is disabled behind a
+// flag). Registering/removing page context becomes a silent no-op instead of throwing, so
+// usePageContext (and anything else built on useChatContext) is always safe to call.
+const noopChatContextValue: ChatContextValue = {
+  contexts: {},
+  setContext: () => undefined,
+  removeContext: () => undefined,
+  getContextData: () => ({}),
+  clearContexts: () => undefined
+}
+
+const ChatContext = createContext<ChatContextValue>(noopChatContextValue)
 
 export interface ChatContextProviderProps {
   children: ReactNode
@@ -69,9 +80,5 @@ export function ChatContextProvider({ children }: ChatContextProviderProps): JSX
 }
 
 export function useChatContext(): ChatContextValue {
-  const context = useContext(ChatContext)
-  if (!context) {
-    throw new Error('useChatContext must be used within a ChatContextProvider')
-  }
-  return context
+  return useContext(ChatContext)
 }

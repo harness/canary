@@ -3,6 +3,8 @@ title: Theming
 description: Theme matrix, CSS selectors, color vision adaptations, and build pipeline
 ---
 
+import { Aside } from "@astrojs/starlight/components";
+
 ## Theme Matrix
 
 Every theme is a combination of three dimensions:
@@ -26,7 +28,8 @@ Every theme is a combination of three dimensions:
         <tr className="cn-table-v2-row">
           <td className="cn-table-v2-cell">Contrast</td>
           <td className="cn-table-v2-cell">
-            <code>default</code>, <code>dimmer</code>,{" "}
+            <code>default</code>, <code>dimmer</code>{" "}
+            <span style="color: var(--cn-text-3)">(deprecated)</span>,{" "}
             <code>high-contrast</code>
           </td>
         </tr>
@@ -46,7 +49,7 @@ This produces <span style="font-weight: 600">24 theme variants</span>. Token JSO
 
 ```
 default.json                  → dark + default contrast + standard vision
-dimmer.json                   → dark + dimmer + standard vision
+dimmer.json                   → dark + dimmer + standard vision (deprecated, hidden from product UI)
 high-contrast.json            → dark + high-contrast + standard vision
 default-protanopia.json       → dark + default + protanopia
 dimmer-deuteranopia.json      → dark + dimmer + deuteranopia
@@ -157,15 +160,20 @@ All CSS custom properties update instantly — no JS rerender needed for color c
 
 ## Contrast Modes
 
-Three contrast levels let users tune the visual intensity of the interface. Each level shifts shade steps and alpha values uniformly — no layout or component changes needed.
+Standard and High Contrast are the user-selectable contrast levels in product UI. Each level shifts shade steps and alpha values uniformly — no layout or component changes needed.
+
+<Aside type="caution" title="Dimmer mode deprecated">
+  **Dimmer mode** (low contrast) is deprecated and hidden from product UI. The
+  token infrastructure is preserved for internal use and future contrast modes.
+  Users should select **Standard** or **High Contrast** in appearance settings.
+  Existing `*-low` theme classes (for example, `dark-std-low`) remain supported
+  in the token system; persisted `*-low` preferences are migrated to the
+  matching standard theme (for example, `dark-std-std`) on next load.
+</Aside>
 
 ### Standard <span style="color: var(--cn-text-3); font-weight: 400">(default)</span>
 
 The baseline. Optimized for typical displays in well-lit environments. Text-to-background ratios comfortably exceed WCAG AA across all semantic roles.
-
-### Low Contrast <span style="color: var(--cn-text-3); font-weight: 400">(dimmer)</span>
-
-Reduces visual intensity for low-light or eye-strain situations. Every token shifts ~1 shade step toward the background: text softens, borders lighten, interactive-state alphas decrease. In dark mode, backgrounds are additionally darkened via LCH transforms to create a deeper, less luminous base.
 
 ### High Contrast
 
@@ -180,7 +188,6 @@ Amplifies separation between foreground and background for bright environments, 
         <tr className="cn-table-v2-row">
           <th className="cn-table-v2-head">Token</th>
           <th className="cn-table-v2-head">Standard</th>
-          <th className="cn-table-v2-head">Dimmer</th>
           <th className="cn-table-v2-head">High Contrast</th>
         </tr>
       </thead>
@@ -196,15 +203,6 @@ Amplifies separation between foreground and background for bright environments, 
                 style={{ background: "var(--cn-gray-25)" }}
               ></span>{" "}
               <code>gray.25</code>
-            </span>
-          </td>
-          <td className="cn-table-v2-cell">
-            <span className="shade-label">
-              <span
-                className="shade-preview"
-                style={{ background: "var(--cn-gray-50)" }}
-              ></span>{" "}
-              <code>gray.50</code>
             </span>
           </td>
           <td className="cn-table-v2-cell">
@@ -234,15 +232,6 @@ Amplifies separation between foreground and background for bright environments, 
             <span className="shade-label">
               <span
                 className="shade-preview"
-                style={{ background: "var(--cn-gray-25)" }}
-              ></span>{" "}
-              <code>gray.25</code>
-            </span>
-          </td>
-          <td className="cn-table-v2-cell">
-            <span className="shade-label">
-              <span
-                className="shade-preview"
                 style={{ background: "var(--cn-pure-white)" }}
               ></span>{" "}
               <code>pure.white</code>
@@ -260,15 +249,6 @@ Amplifies separation between foreground and background for bright environments, 
                 style={{ background: "var(--cn-gray-25)" }}
               ></span>{" "}
               <code>gray.25</code>
-            </span>
-          </td>
-          <td className="cn-table-v2-cell">
-            <span className="shade-label">
-              <span
-                className="shade-preview"
-                style={{ background: "var(--cn-gray-50)" }}
-              ></span>{" "}
-              <code>gray.50</code>
             </span>
           </td>
           <td className="cn-table-v2-cell">
@@ -298,15 +278,6 @@ Amplifies separation between foreground and background for bright environments, 
             <span className="shade-label">
               <span
                 className="shade-preview"
-                style={{ background: "var(--cn-gray-25)" }}
-              ></span>{" "}
-              <code>gray.25</code>
-            </span>
-          </td>
-          <td className="cn-table-v2-cell">
-            <span className="shade-label">
-              <span
-                className="shade-preview"
                 style={{ background: "var(--cn-pure-white)" }}
               ></span>{" "}
               <code>pure.white</code>
@@ -324,15 +295,6 @@ Amplifies separation between foreground and background for bright environments, 
                 style={{ background: "var(--cn-pure-black)" }}
               ></span>{" "}
               <code>pure.black</code>
-            </span>
-          </td>
-          <td className="cn-table-v2-cell">
-            <span className="shade-label">
-              <span
-                className="shade-preview"
-                style={{ background: "var(--cn-gray-900)" }}
-              ></span>{" "}
-              <code>gray.900</code>
             </span>
           </td>
           <td className="cn-table-v2-cell">
@@ -362,15 +324,6 @@ Amplifies separation between foreground and background for bright environments, 
             <span className="shade-label">
               <span
                 className="shade-preview"
-                style={{ background: "var(--cn-gray-800)" }}
-              ></span>{" "}
-              <code>gray.800</code>
-            </span>
-          </td>
-          <td className="cn-table-v2-cell">
-            <span className="shade-label">
-              <span
-                className="shade-preview"
                 style={{ background: "var(--cn-gray-850)" }}
               ></span>{" "}
               <code>gray.850</code>
@@ -380,15 +333,6 @@ Amplifies separation between foreground and background for bright environments, 
         <tr className="cn-table-v2-row">
           <td className="cn-table-v2-cell">
             <code>text.3</code>
-          </td>
-          <td className="cn-table-v2-cell">
-            <span className="shade-label">
-              <span
-                className="shade-preview"
-                style={{ background: "var(--cn-gray-700)" }}
-              ></span>{" "}
-              <code>gray.700</code>
-            </span>
           </td>
           <td className="cn-table-v2-cell">
             <span className="shade-label">
@@ -426,15 +370,6 @@ Amplifies separation between foreground and background for bright environments, 
             <span className="shade-label">
               <span
                 className="shade-preview"
-                style={{ background: "var(--cn-gray-600)" }}
-              ></span>{" "}
-              <code>gray.600</code>
-            </span>
-          </td>
-          <td className="cn-table-v2-cell">
-            <span className="shade-label">
-              <span
-                className="shade-preview"
                 style={{ background: "var(--cn-gray-700)" }}
               ></span>{" "}
               <code>gray.700</code>
@@ -452,15 +387,6 @@ Amplifies separation between foreground and background for bright environments, 
                 style={{ background: "var(--cn-gray-500)" }}
               ></span>{" "}
               <code>gray.500</code>
-            </span>
-          </td>
-          <td className="cn-table-v2-cell">
-            <span className="shade-label">
-              <span
-                className="shade-preview"
-                style={{ background: "var(--cn-gray-400)" }}
-              ></span>{" "}
-              <code>gray.400</code>
             </span>
           </td>
           <td className="cn-table-v2-cell">
@@ -490,15 +416,6 @@ Amplifies separation between foreground and background for bright environments, 
             <span className="shade-label">
               <span
                 className="shade-preview"
-                style={{ background: "var(--cn-gray-150)" }}
-              ></span>{" "}
-              <code>gray.150</code>
-            </span>
-          </td>
-          <td className="cn-table-v2-cell">
-            <span className="shade-label">
-              <span
-                className="shade-preview"
                 style={{ background: "var(--cn-gray-300)" }}
               ></span>{" "}
               <code>gray.300</code>
@@ -508,15 +425,6 @@ Amplifies separation between foreground and background for bright environments, 
         <tr className="cn-table-v2-row">
           <td className="cn-table-v2-cell">
             <code>border.3</code>
-          </td>
-          <td className="cn-table-v2-cell">
-            <span className="shade-label">
-              <span
-                className="shade-preview"
-                style={{ background: "var(--cn-gray-100)" }}
-              ></span>{" "}
-              <code>gray.100</code>
-            </span>
           </td>
           <td className="cn-table-v2-cell">
             <span className="shade-label">
@@ -554,15 +462,6 @@ Amplifies separation between foreground and background for bright environments, 
             <span className="shade-label">
               <span
                 className="shade-preview"
-                style={{ background: "var(--cn-lime-400)" }}
-              ></span>{" "}
-              <code>lime.400</code>
-            </span>
-          </td>
-          <td className="cn-table-v2-cell">
-            <span className="shade-label">
-              <span
-                className="shade-preview"
                 style={{ background: "var(--cn-lime-600)" }}
               ></span>{" "}
               <code>lime.600</code>
@@ -586,15 +485,6 @@ Amplifies separation between foreground and background for bright environments, 
             <span className="shade-label">
               <span
                 className="shade-preview"
-                style={{ background: "var(--cn-red-400)" }}
-              ></span>{" "}
-              <code>red.400</code>
-            </span>
-          </td>
-          <td className="cn-table-v2-cell">
-            <span className="shade-label">
-              <span
-                className="shade-preview"
                 style={{ background: "var(--cn-red-600)" }}
               ></span>{" "}
               <code>red.600</code>
@@ -612,15 +502,6 @@ Amplifies separation between foreground and background for bright environments, 
                 style={{ background: "var(--cn-yellow-400)" }}
               ></span>{" "}
               <code>yellow.400</code>
-            </span>
-          </td>
-          <td className="cn-table-v2-cell">
-            <span className="shade-label">
-              <span
-                className="shade-preview"
-                style={{ background: "var(--cn-yellow-300)" }}
-              ></span>{" "}
-              <code>yellow.300</code>
             </span>
           </td>
           <td className="cn-table-v2-cell">
@@ -655,16 +536,6 @@ Amplifies separation between foreground and background for bright environments, 
               ></span>{" "}
               <code>gray.200</code>
             </span>{" "}
-            <span style="color: var(--cn-text-4)">alpha 0.16</span>
-          </td>
-          <td className="cn-table-v2-cell">
-            <span className="shade-label">
-              <span
-                className="shade-preview"
-                style={{ background: "var(--cn-gray-200)" }}
-              ></span>{" "}
-              <code>gray.200</code>
-            </span>{" "}
             <span style="color: var(--cn-text-4)">alpha 0.30</span>
           </td>
         </tr>
@@ -681,16 +552,6 @@ Amplifies separation between foreground and background for bright environments, 
               <code>gray.300</code>
             </span>{" "}
             <span style="color: var(--cn-text-4)">alpha 0.26</span>
-          </td>
-          <td className="cn-table-v2-cell">
-            <span className="shade-label">
-              <span
-                className="shade-preview"
-                style={{ background: "var(--cn-gray-300)" }}
-              ></span>{" "}
-              <code>gray.300</code>
-            </span>{" "}
-            <span style="color: var(--cn-text-4)">alpha 0.19</span>
           </td>
           <td className="cn-table-v2-cell">
             <span className="shade-label">
@@ -717,7 +578,6 @@ Amplifies separation between foreground and background for bright environments, 
         <tr className="cn-table-v2-row">
           <th className="cn-table-v2-head">Token</th>
           <th className="cn-table-v2-head">Standard</th>
-          <th className="cn-table-v2-head">Dimmer</th>
           <th className="cn-table-v2-head">High Contrast</th>
         </tr>
       </thead>
@@ -734,16 +594,6 @@ Amplifies separation between foreground and background for bright environments, 
               ></span>{" "}
               <code>pure.black</code>
             </span>
-          </td>
-          <td className="cn-table-v2-cell">
-            <span className="shade-label">
-              <span
-                className="shade-preview"
-                style={{ background: "var(--cn-pure-black)" }}
-              ></span>{" "}
-              <code>pure.black</code>
-            </span>{" "}
-            <span style="color: var(--cn-text-4)">darken 0.80</span>
           </td>
           <td className="cn-table-v2-cell">
             <span className="shade-label">
@@ -775,16 +625,6 @@ Amplifies separation between foreground and background for bright environments, 
                 style={{ background: "var(--cn-gray-1000)" }}
               ></span>{" "}
               <code>gray.1000</code>
-            </span>{" "}
-            <span style="color: var(--cn-text-4)">darken 0.60</span>
-          </td>
-          <td className="cn-table-v2-cell">
-            <span className="shade-label">
-              <span
-                className="shade-preview"
-                style={{ background: "var(--cn-gray-1000)" }}
-              ></span>{" "}
-              <code>gray.1000</code>
             </span>
           </td>
         </tr>
@@ -800,16 +640,6 @@ Amplifies separation between foreground and background for bright environments, 
               ></span>{" "}
               <code>gray.950</code>
             </span>
-          </td>
-          <td className="cn-table-v2-cell">
-            <span className="shade-label">
-              <span
-                className="shade-preview"
-                style={{ background: "var(--cn-gray-950)" }}
-              ></span>{" "}
-              <code>gray.950</code>
-            </span>{" "}
-            <span style="color: var(--cn-text-4)">darken 0.56</span>
           </td>
           <td className="cn-table-v2-cell">
             <span className="shade-label">
@@ -841,16 +671,6 @@ Amplifies separation between foreground and background for bright environments, 
                 style={{ background: "var(--cn-gray-950)" }}
               ></span>{" "}
               <code>gray.950</code>
-            </span>{" "}
-            <span style="color: var(--cn-text-4)">darken 0.56</span>
-          </td>
-          <td className="cn-table-v2-cell">
-            <span className="shade-label">
-              <span
-                className="shade-preview"
-                style={{ background: "var(--cn-gray-950)" }}
-              ></span>{" "}
-              <code>gray.950</code>
             </span>
           </td>
         </tr>
@@ -865,15 +685,6 @@ Amplifies separation between foreground and background for bright environments, 
                 style={{ background: "var(--cn-gray-25)" }}
               ></span>{" "}
               <code>gray.25</code>
-            </span>
-          </td>
-          <td className="cn-table-v2-cell">
-            <span className="shade-label">
-              <span
-                className="shade-preview"
-                style={{ background: "var(--cn-gray-150)" }}
-              ></span>{" "}
-              <code>gray.150</code>
             </span>
           </td>
           <td className="cn-table-v2-cell">
@@ -903,15 +714,6 @@ Amplifies separation between foreground and background for bright environments, 
             <span className="shade-label">
               <span
                 className="shade-preview"
-                style={{ background: "var(--cn-gray-300)" }}
-              ></span>{" "}
-              <code>gray.300</code>
-            </span>
-          </td>
-          <td className="cn-table-v2-cell">
-            <span className="shade-label">
-              <span
-                className="shade-preview"
                 style={{ background: "var(--cn-gray-150)" }}
               ></span>{" "}
               <code>gray.150</code>
@@ -921,15 +723,6 @@ Amplifies separation between foreground and background for bright environments, 
         <tr className="cn-table-v2-row">
           <td className="cn-table-v2-cell">
             <code>text.3</code>
-          </td>
-          <td className="cn-table-v2-cell">
-            <span className="shade-label">
-              <span
-                className="shade-preview"
-                style={{ background: "var(--cn-gray-500)" }}
-              ></span>{" "}
-              <code>gray.500</code>
-            </span>
           </td>
           <td className="cn-table-v2-cell">
             <span className="shade-label">
@@ -967,15 +760,6 @@ Amplifies separation between foreground and background for bright environments, 
             <span className="shade-label">
               <span
                 className="shade-preview"
-                style={{ background: "var(--cn-gray-600)" }}
-              ></span>{" "}
-              <code>gray.600</code>
-            </span>
-          </td>
-          <td className="cn-table-v2-cell">
-            <span className="shade-label">
-              <span
-                className="shade-preview"
                 style={{ background: "var(--cn-gray-500)" }}
               ></span>{" "}
               <code>gray.500</code>
@@ -993,15 +777,6 @@ Amplifies separation between foreground and background for bright environments, 
                 style={{ background: "var(--cn-blue-400)" }}
               ></span>{" "}
               <code>blue.400</code>
-            </span>
-          </td>
-          <td className="cn-table-v2-cell">
-            <span className="shade-label">
-              <span
-                className="shade-preview"
-                style={{ background: "var(--cn-blue-500)" }}
-              ></span>{" "}
-              <code>blue.500</code>
             </span>
           </td>
           <td className="cn-table-v2-cell">
@@ -1031,15 +806,6 @@ Amplifies separation between foreground and background for bright environments, 
             <span className="shade-label">
               <span
                 className="shade-preview"
-                style={{ background: "var(--cn-gray-800)" }}
-              ></span>{" "}
-              <code>gray.800</code>
-            </span>
-          </td>
-          <td className="cn-table-v2-cell">
-            <span className="shade-label">
-              <span
-                className="shade-preview"
                 style={{ background: "var(--cn-gray-400)" }}
               ></span>{" "}
               <code>gray.400</code>
@@ -1057,15 +823,6 @@ Amplifies separation between foreground and background for bright environments, 
                 style={{ background: "var(--cn-gray-850)" }}
               ></span>{" "}
               <code>gray.850</code>
-            </span>
-          </td>
-          <td className="cn-table-v2-cell">
-            <span className="shade-label">
-              <span
-                className="shade-preview"
-                style={{ background: "var(--cn-gray-900)" }}
-              ></span>{" "}
-              <code>gray.900</code>
             </span>
           </td>
           <td className="cn-table-v2-cell">
@@ -1095,15 +852,6 @@ Amplifies separation between foreground and background for bright environments, 
             <span className="shade-label">
               <span
                 className="shade-preview"
-                style={{ background: "var(--cn-gray-950)" }}
-              ></span>{" "}
-              <code>gray.950</code>
-            </span>
-          </td>
-          <td className="cn-table-v2-cell">
-            <span className="shade-label">
-              <span
-                className="shade-preview"
                 style={{ background: "var(--cn-gray-850)" }}
               ></span>{" "}
               <code>gray.850</code>
@@ -1121,15 +869,6 @@ Amplifies separation between foreground and background for bright environments, 
                 style={{ background: "var(--cn-forest-500)" }}
               ></span>{" "}
               <code>forest.500</code>
-            </span>
-          </td>
-          <td className="cn-table-v2-cell">
-            <span className="shade-label">
-              <span
-                className="shade-preview"
-                style={{ background: "var(--cn-forest-600)" }}
-              ></span>{" "}
-              <code>forest.600</code>
             </span>
           </td>
           <td className="cn-table-v2-cell">
@@ -1159,15 +898,6 @@ Amplifies separation between foreground and background for bright environments, 
             <span className="shade-label">
               <span
                 className="shade-preview"
-                style={{ background: "var(--cn-red-700)" }}
-              ></span>{" "}
-              <code>red.700</code>
-            </span>
-          </td>
-          <td className="cn-table-v2-cell">
-            <span className="shade-label">
-              <span
-                className="shade-preview"
                 style={{ background: "var(--cn-red-500)" }}
               ></span>{" "}
               <code>red.500</code>
@@ -1185,15 +915,6 @@ Amplifies separation between foreground and background for bright environments, 
                 style={{ background: "var(--cn-yellow-500)" }}
               ></span>{" "}
               <code>yellow.500</code>
-            </span>
-          </td>
-          <td className="cn-table-v2-cell">
-            <span className="shade-label">
-              <span
-                className="shade-preview"
-                style={{ background: "var(--cn-yellow-600)" }}
-              ></span>{" "}
-              <code>yellow.600</code>
             </span>
           </td>
           <td className="cn-table-v2-cell">
@@ -1228,16 +949,6 @@ Amplifies separation between foreground and background for bright environments, 
               ></span>{" "}
               <code>gray.850</code>
             </span>{" "}
-            <span style="color: var(--cn-text-4)">alpha 0.16</span>
-          </td>
-          <td className="cn-table-v2-cell">
-            <span className="shade-label">
-              <span
-                className="shade-preview"
-                style={{ background: "var(--cn-gray-850)" }}
-              ></span>{" "}
-              <code>gray.850</code>
-            </span>{" "}
             <span style="color: var(--cn-text-4)">alpha 0.36</span>
           </td>
         </tr>
@@ -1254,16 +965,6 @@ Amplifies separation between foreground and background for bright environments, 
               <code>gray.850</code>
             </span>{" "}
             <span style="color: var(--cn-text-4)">alpha 0.25</span>
-          </td>
-          <td className="cn-table-v2-cell">
-            <span className="shade-label">
-              <span
-                className="shade-preview"
-                style={{ background: "var(--cn-gray-850)" }}
-              ></span>{" "}
-              <code>gray.850</code>
-            </span>{" "}
-            <span style="color: var(--cn-text-4)">alpha 0.20</span>
           </td>
           <td className="cn-table-v2-cell">
             <span className="shade-label">

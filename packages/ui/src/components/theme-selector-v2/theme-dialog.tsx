@@ -42,12 +42,14 @@ const ThemeDialog: FC<ThemeDialogProps> = ({
   showSystemMode,
   showAccentColor,
   showGrayColor,
-  showAccessibilityThemeOptions = false
+  showAccessibilityThemeOptions = false,
+  hiddenContrastOptions = [ContrastType.Low]
 }) => {
   const [accentColor, setAccentColor] = useState<AccentColor>(AccentColor.Blue)
   const [grayColor, setGrayColor] = useState<GrayColor>(GrayColor.First)
 
   const { mode, color: colorAdjustment, contrast } = getModeColorContrastFromFullTheme(theme)
+  const visibleContrastOptions = contrastOptions.filter(option => !hiddenContrastOptions?.includes(option.value))
 
   /**
    * Hiding accessibility theme options till we
@@ -141,13 +143,13 @@ const ThemeDialog: FC<ThemeDialogProps> = ({
                 <div>
                   <Text variant="heading-base">Contrast</Text>
                   <Text className="mt-cn-2xs" color="foreground-3">
-                    High contrast improves readability, Low contrast reduces glare.
+                    High contrast improves readability.
                   </Text>
                 </div>
 
                 <Select
                   value={contrast}
-                  options={contrastOptions}
+                  options={visibleContrastOptions}
                   onChange={(value: ContrastType) => setTheme(`${mode}-${colorAdjustment}-${value}`)}
                   placeholder="Select"
                 />

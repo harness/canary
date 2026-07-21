@@ -4,7 +4,13 @@ import { create } from 'zustand'
 import { persist } from 'zustand/middleware'
 
 import { getModeColorContrastFromFullTheme } from '@harnessio/ui/components'
-import { FullTheme, IThemeStore, ModeType, ThemeProvider as UIThemeProvider } from '@harnessio/ui/context'
+import {
+  FullTheme,
+  IThemeStore,
+  migrateLowContrastTheme,
+  ModeType,
+  ThemeProvider as UIThemeProvider
+} from '@harnessio/ui/context'
 
 import { useIsMFE } from '../hooks/useIsMFE'
 
@@ -17,7 +23,17 @@ export const useThemeStore = create<IThemeStore>()(
     }),
     {
       name: 'canary-ui-theme',
-      version: 1,
+      version: 2,
+      migrate: (persistedState: unknown) => {
+        const state = persistedState as Partial<IThemeStore>
+        const theme = migrateLowContrastTheme(state.theme)
+
+        if (theme !== state.theme) {
+          return { ...state, theme }
+        }
+
+        return state
+      },
       partialize: state => ({
         theme: state.theme,
         isLightTheme: state.isLightTheme

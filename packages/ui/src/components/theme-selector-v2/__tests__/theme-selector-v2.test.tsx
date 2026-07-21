@@ -179,7 +179,7 @@ describe('ThemeDialog', () => {
     render(
       <ThemeDialog
         {...defaultProps}
-        theme={`${ModeType.System}-${ColorType.Standard}-${ContrastType.Low}`}
+        theme={`${ModeType.System}-${ColorType.Standard}-${ContrastType.Standard}`}
         showSystemMode
       />
     )
@@ -252,5 +252,25 @@ describe('ThemeDialog', () => {
 
     expect(screen.queryByText('Accent color')).not.toBeInTheDocument()
     expect(screen.queryByText('Gray color')).not.toBeInTheDocument()
+  })
+
+  it('hides Low contrast by default when accessibility options are enabled', () => {
+    render(<ThemeDialog {...defaultProps} showAccessibilityThemeOptions />)
+
+    const contrastSection = screen.getByText('Contrast').closest('div')!.parentElement as HTMLElement
+    const contrastSelect = contrastSection.querySelector('[data-testid="select-std"]') as HTMLElement
+
+    expect(within(contrastSelect).getByTestId('select-option-std')).toBeInTheDocument()
+    expect(within(contrastSelect).getByTestId('select-option-high')).toBeInTheDocument()
+    expect(within(contrastSelect).queryByTestId('select-option-low')).not.toBeInTheDocument()
+  })
+
+  it('allows overriding hiddenContrastOptions to show Low contrast', () => {
+    render(<ThemeDialog {...defaultProps} showAccessibilityThemeOptions hiddenContrastOptions={[]} />)
+
+    const contrastSection = screen.getByText('Contrast').closest('div')!.parentElement as HTMLElement
+    const contrastSelect = contrastSection.querySelector('[data-testid="select-std"]') as HTMLElement
+
+    expect(within(contrastSelect).getByTestId('select-option-low')).toBeInTheDocument()
   })
 })

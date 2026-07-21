@@ -46,6 +46,8 @@ export interface ThemeDialogProps {
   showAccentColor?: boolean
   showGrayColor?: boolean
   showAccessibilityThemeOptions?: boolean
+  /** Contrast levels to omit from the selector. Defaults to hiding deprecated Low/dimmer. */
+  hiddenContrastOptions?: ContrastType[]
   /** Optional loading state indicator */
   isThemeLoading?: boolean
 }

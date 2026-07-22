@@ -42,6 +42,7 @@ interface FilterGroupProps<
   simpleSortConfig?: ComponentProps<typeof SimpleSort>
   searchValue?: string
   searchPlaceholder?: string
+  hideSearch?: boolean
   handleInputChange: (value: string) => void
   filterOptions: FilterOptionConfig<V, CustomValue>[]
   headerAction?: ReactNode
@@ -79,6 +80,7 @@ const FilterGroupInner = <
     searchValue,
     handleInputChange,
     searchPlaceholder,
+    hideSearch,
     filterOptions,
     multiSortConfig,
     simpleSortConfig,
@@ -161,13 +163,15 @@ const FilterGroupInner = <
           <ListActions.Root>
             <ListActions.Left className="min-w-0">
               <Layout.Horizontal gap="xs" align={'center'} justify={'start'} className="min-w-0 flex-1">
-                <SearchInput
-                  inputContainerClassName="max-w-80 flex-1"
-                  ref={searchRef}
-                  searchValue={searchValue || ''}
-                  onChange={handleInputChange}
-                  placeholder={searchPlaceholder ?? t('views:repos.search', 'Search')}
-                />
+                {!hideSearch && (
+                  <SearchInput
+                    inputContainerClassName="max-w-80 flex-1"
+                    ref={searchRef}
+                    searchValue={searchValue || ''}
+                    onChange={handleInputChange}
+                    placeholder={searchPlaceholder ?? t('views:repos.search', 'Search')}
+                  />
+                )}
                 {props.quickFiltersSlot}
                 {filterOptions.length > 0 && !hideAddFilter && (
                   <FilterHandler.Dropdown>

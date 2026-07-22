@@ -186,11 +186,11 @@ export default {
   '.cn-studio-card-header': {
     minHeight: 'var(--cn-size-11)',
     color: 'var(--cn-text-1)',
-    '@apply flex items-center gap-cn-2xs p-cn-xs pl-cn-md w-full': '',
+    '@apply flex items-center gap-cn-2xs p-cn-xs pl-cn-md w-full min-w-0': '',
 
-    '&-title': {
-      '@apply flex-1': ''
-    }
+    '> :not(&-title)': {
+      '@apply shrink-0': ''
+    },
   },
 
   // Compact header padding for xs cards
@@ -356,8 +356,8 @@ export default {
     }
   },
 
-  // Stage footer (all sizes): exclude from intrinsic card width; fill width set by steps
-  '.cn-studio-card-group.cn-studio-card-stage > .cn-studio-card-footer': {
+  // Stage header and footer (all sizes): exclude from intrinsic card width; fill width set by steps
+  '.cn-studio-card-group.cn-studio-card-stage > .cn-studio-card-header, .cn-studio-card-group.cn-studio-card-stage > .cn-studio-card-footer': {
     width: '0',
     minWidth: '100%',
     maxWidth: '100%',

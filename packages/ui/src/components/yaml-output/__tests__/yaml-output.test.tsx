@@ -54,10 +54,19 @@ describe('YamlOutput', () => {
     expect(screen.getByRole('button', { name: 'Run' })).toBeDisabled()
   })
 
-  test('Visual toggle segment is disabled', () => {
+  test('mode toggle renders by default', () => {
     render(<YamlOutput value="a: 1" />)
-    const buttons = screen.getAllByRole('radio')
-    const visualButton = buttons.find(btn => btn.textContent?.toLowerCase().includes('visual'))
+    expect(screen.getAllByRole('radio')).toHaveLength(2)
+  })
+
+  test('mode toggle is hidden when showModeToggle is false', () => {
+    render(<YamlOutput value="a: 1" showModeToggle={false} />)
+    expect(screen.queryAllByRole('radio')).toHaveLength(0)
+  })
+
+  test('Visual segment stays disabled when the toggle is shown', () => {
+    render(<YamlOutput value="a: 1" />)
+    const visualButton = screen.getAllByRole('radio').find(btn => btn.textContent?.toLowerCase().includes('visual'))
     expect(visualButton).toBeDisabled()
   })
 })

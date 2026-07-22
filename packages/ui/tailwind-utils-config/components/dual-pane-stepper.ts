@@ -68,6 +68,8 @@ export default {
     flex: '1',
     minHeight: '0',
     scrollbarWidth: 'none',
+    containerType: 'size',
+    containerName: 'cardStack',
 
     '&::-webkit-scrollbar': {
       display: 'none'
@@ -81,10 +83,17 @@ export default {
     paddingLeft: 'var(--cn-spacing-6)',
     paddingRight: 'var(--cn-spacing-6)',
 
-    '&::before, &::after': {
+    '&::before': {
       content: "''",
       display: 'block',
-      minHeight: '35vh',
+      minHeight: '8cqh',
+      flexShrink: '0'
+    },
+
+    '&::after': {
+      content: "''",
+      display: 'block',
+      minHeight: '36vh',
       flexShrink: '0'
     }
   }

@@ -22,7 +22,8 @@ export const YamlOutput: FC<YamlOutputProps> = ({
   runLabel = 'Run',
   runDisabled,
   runLoading,
-  readOnly
+  readOnly,
+  showModeToggle = true
 }) => {
   const themeConfig = useMonacoTheme()
 
@@ -52,10 +53,12 @@ export const YamlOutput: FC<YamlOutputProps> = ({
         </Layout.Horizontal>
 
         <Layout.Horizontal align="center" gap="md">
-          <ToggleGroup.Root type="single" value="yaml" unselectable>
-            <ToggleGroup.Item value="yaml" text="YAML" />
-            <ToggleGroup.Item value="visual" text="Visual" disabled />
-          </ToggleGroup.Root>
+          {showModeToggle && (
+            <ToggleGroup.Root type="single" value="yaml" unselectable>
+              <ToggleGroup.Item value="yaml" text="YAML" />
+              <ToggleGroup.Item value="visual" text="Visual" disabled />
+            </ToggleGroup.Root>
+          )}
 
           {onRun && (
             <Button onClick={() => onRun(value)} disabled={runDisabled} loading={runLoading}>

@@ -44,6 +44,8 @@ export default {
     flex: '1',
     minHeight: '0',
     scrollbarWidth: 'none',
+    containerType: 'size',
+    containerName: 'cardStack',
 
     '&::-webkit-scrollbar': {
       display: 'none'
@@ -87,10 +89,17 @@ export default {
   '.cn-single-pane-stepper-card-stack-inner': {
     padding: 'var(--cn-spacing-6)',
 
+    '&::before': {
+      content: "''",
+      display: 'block',
+      minHeight: '8cqh',
+      flexShrink: '0'
+    },
+
     '&::after': {
       content: "''",
       display: 'block',
-      minHeight: '35vh',
+      minHeight: '36vh',
       flexShrink: '0'
     }
   }

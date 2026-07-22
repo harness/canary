@@ -13,20 +13,29 @@ const DEFAULT_REACTIVATION_PROMPT = {
   description: 'Going back to this step will discard your progress on subsequent steps. Are you sure?'
 }
 
+function resolveShowRootHeader(showRootHeader?: boolean, hideHeader?: boolean): boolean {
+  if (showRootHeader !== undefined) return showRootHeader
+  if (hideHeader !== undefined) return !hideHeader
+  return true
+}
+
 function SinglePaneStepperContent({
   title,
   icon,
   stepperTitle,
+  showStepperHeader,
   contentTitle,
   contentSubtitle,
   drawers,
   onClose,
+  showRootHeader,
+  hideHeader,
   reactivationPrompt
 }: Omit<SinglePaneStepperRootProps, 'flow' | 'onComplete'>) {
   const { drawerState, closeDrawer, pendingReactivation, confirmReactivation, cancelReactivation } = useEngineContext()
 
   const prompt = reactivationPrompt || DEFAULT_REACTIVATION_PROMPT
-  const showHeader = !!(icon || title)
+  const showHeader = resolveShowRootHeader(showRootHeader, hideHeader) && !!(icon || title || onClose)
 
   const activeDrawer = useMemo(() => {
     if (!drawerState || !drawers) return null
@@ -55,22 +64,12 @@ function SinglePaneStepperContent({
           </Layout.Horizontal>
         )}
 
-        {(contentTitle || contentSubtitle) && (
-          <Layout.Vertical gap="2xs" className="cn-single-pane-stepper-content-header">
-            {contentTitle && (
-              <Text as="h2" variant="heading-subsection" color="foreground-1" className="!m-0">
-                {contentTitle}
-              </Text>
-            )}
-            {contentSubtitle && (
-              <Text as="p" variant="body-normal" color="foreground-1" className="!m-0">
-                {contentSubtitle}
-              </Text>
-            )}
-          </Layout.Vertical>
-        )}
-
-        <SinglePaneStepperCardStack stepperTitle={stepperTitle} />
+        <SinglePaneStepperCardStack
+          stepperTitle={stepperTitle}
+          showStepperHeader={showStepperHeader}
+          contentTitle={contentTitle}
+          contentSubtitle={contentSubtitle}
+        />
       </Layout.Vertical>
 
       {activeDrawer}

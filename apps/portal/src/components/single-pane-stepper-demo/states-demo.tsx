@@ -126,16 +126,20 @@ export interface StatesDemoProps {
 }
 
 export function StatesDemo({ variant }: StatesDemoProps) {
-  const Root =
-    variant === "single" ? SinglePaneStepper.Root : DualPaneStepper.Root;
+  const isDual = variant === "dual";
+  const Root = isDual ? DualPaneStepper.Root : SinglePaneStepper.Root;
   return (
     <div className="not-content h-full">
       <TooltipProvider>
         <Root
           flow={statesFlow}
-          icon={<LogoV2 name="harness" size="sm" />}
-          title="Create a CI pipeline"
-          stepperTitle="CI Onboarding"
+          {...(isDual
+            ? {
+                icon: <LogoV2 name="harness" size="sm" />,
+                title: "Create a CI pipeline",
+                stepperTitle: "CI Onboarding",
+              }
+            : { showRootHeader: false })}
           contentTitle="Pipeline Configuration"
           contentSubtitle="Completed, skipped, and errored substeps across two steps"
           // Fully-resolved review flow: render from the top and don't chase the last card.

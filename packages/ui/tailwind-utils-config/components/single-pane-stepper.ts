@@ -2,7 +2,11 @@ export default {
   '.cn-single-pane-stepper-root': {
     display: 'flex',
     flexDirection: 'column',
+    width: '100%',
+    maxWidth: '440px',
     height: '100%',
+    flex: '1',
+    minHeight: '0',
     background: 'var(--cn-bg-0)',
     overflow: 'hidden'
   },
@@ -32,8 +36,7 @@ export default {
   },
 
   '.cn-single-pane-stepper-content-header': {
-    padding: 'var(--cn-spacing-6) var(--cn-spacing-6) 0',
-    flexShrink: '0'
+    marginBottom: 'var(--cn-spacing-6)'
   },
 
   '.cn-single-pane-stepper-card-stack': {
@@ -44,13 +47,47 @@ export default {
 
     '&::-webkit-scrollbar': {
       display: 'none'
+    },
+
+    '& .cn-flow-stepper-card': {
+      background: 'transparent',
+      border: 'none',
+      boxShadow: 'none',
+      padding: '0'
+    },
+
+    '& .cn-flow-stepper-card-active, & .cn-flow-stepper-card-error, & .cn-flow-stepper-card-finished, & .cn-flow-stepper-card-completed':
+      {
+        background: 'transparent',
+        boxShadow: 'none'
+      },
+
+    '& .cn-flow-stepper-card-content': {
+      marginTop: '0',
+      paddingLeft: '0'
+    },
+
+    '& .cn-flow-stepper-card-description': {
+      paddingLeft: '0',
+      marginTop: '0',
+      marginBottom: 'var(--cn-spacing-3)'
+    },
+
+    '& .cn-flow-stepper-card-content-only': {
+      position: 'relative'
+    },
+
+    '& .cn-flow-stepper-card-content-only .cn-flow-stepper-card-edit': {
+      position: 'absolute',
+      top: '0',
+      right: '0'
     }
   },
 
   '.cn-single-pane-stepper-card-stack-inner': {
     padding: 'var(--cn-spacing-6)',
 
-    '&::before, &::after': {
+    '&::after': {
       content: "''",
       display: 'block',
       minHeight: '35vh',

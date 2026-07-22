@@ -47,12 +47,19 @@ export function useEngineContext(): EngineContextValue {
 interface CardContextValue {
   subStepId: string
   status: CardStatus
+  /** When true, hide the card header — the stepper substep already shows title/status (single-pane). */
+  contentOnly?: boolean
 }
 
 const CardContext = createContext<CardContextValue | null>(null)
 
-export function CardContextProvider({ subStepId, status, children }: CardContextValue & { children: ReactNode }) {
-  const value = useMemo(() => ({ subStepId, status }), [subStepId, status])
+export function CardContextProvider({
+  subStepId,
+  status,
+  contentOnly,
+  children
+}: CardContextValue & { children: ReactNode }) {
+  const value = useMemo(() => ({ subStepId, status, contentOnly }), [subStepId, status, contentOnly])
   return <CardContext.Provider value={value}>{children}</CardContext.Provider>
 }
 

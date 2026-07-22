@@ -9,6 +9,8 @@ export interface StepperProps {
   onBeforeChange?: (from: string, to: string) => boolean | string
   showConnectors?: boolean
   completed?: boolean
+  /** When true, substeps with panel content show a collapse chevron (SinglePaneStepper). */
+  collapsibleSubSteps?: boolean
   skeletonCount?: number
   className?: string
   children?: ReactNode
@@ -32,6 +34,8 @@ export interface StepperSubStepProps {
   title: ReactNode
   description?: ReactNode
   state?: StepState
+  /** When true, render only the branch wire and panel — no substep label row (single-pane accordion cards). */
+  contentOnly?: boolean
   className?: string
   children?: ReactNode
 }

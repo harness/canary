@@ -1,8 +1,4 @@
-import {
-  SinglePaneStepper,
-  TooltipProvider,
-  LogoV2,
-} from "@harnessio/ui/components";
+import { SinglePaneStepper, TooltipProvider } from "@harnessio/ui/components";
 import { fullFlow, MockConfigDrawer } from "../dual-pane-stepper-demo";
 
 // Intentionally a drop-in mirror of the dual-pane demo (FullFlowDemo): same flow,
@@ -18,9 +14,7 @@ export function FullFlowDemo() {
       <TooltipProvider>
         <SinglePaneStepper.Root
           flow={fullFlow}
-          icon={<LogoV2 name="harness" size="sm" />}
-          title="Create a CI pipeline"
-          stepperTitle="CI Onboarding"
+          showRootHeader={false}
           contentTitle="Pipeline Configuration"
           contentSubtitle="Connect your code, configure infrastructure, and create your first CI pipeline"
           drawers={{ config: MockConfigDrawer }}

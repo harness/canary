@@ -6,6 +6,7 @@ import {
   ConfigAction,
   LogOutput,
   Summary,
+  useDemoLogStream,
 } from "./onboarding";
 
 // === Choose Provider Card ===
@@ -334,40 +335,18 @@ export function GitAuthCard() {
 
 // === Create Secret Card ===
 export function CreateSecretCard() {
-  const { status, complete } = useFlowCard();
-  const [logs, setLogs] = useState<string[]>([]);
-  const [done, setDone] = useState(false);
-
-  useEffect(() => {
-    if (status !== "active") return;
-    setLogs([]);
-    setDone(false);
-    let cancelled = false;
-
-    const sequence = [
+  const { complete } = useFlowCard();
+  const { logs, done } = useDemoLogStream(
+    () => [
       "→ encrypting credentials...",
       "✓ credentials encrypted",
       "→ storing in secret manager...",
       "✓ secret created",
-    ];
-    let i = 0;
-    const tick = () => {
-      if (cancelled || i >= sequence.length) {
-        if (!cancelled) {
-          setDone(true);
-          complete({ secretRef: "git-secret-123" });
-        }
-        return;
-      }
-      setLogs((prev) => [...prev, sequence[i++]]);
-      setTimeout(tick, 400);
-    };
-    tick();
-
-    return () => {
-      cancelled = true;
-    };
-  }, [status]);
+    ],
+    () => complete({ secretRef: "git-secret-123" }),
+    [],
+    { intervalMs: 400 },
+  );
 
   return (
     <DualPaneStepper.Card
@@ -430,39 +409,17 @@ export function CreateConnectorCard() {
 
 // === Delegate Check Card ===
 export function DelegateCheckCard() {
-  const { status, complete } = useFlowCard();
-  const [logs, setLogs] = useState<string[]>([]);
-  const [done, setDone] = useState(false);
-
-  useEffect(() => {
-    if (status !== "active") return;
-    setLogs([]);
-    setDone(false);
-    let cancelled = false;
-
-    const sequence = [
+  const { complete } = useFlowCard();
+  const { logs, done } = useDemoLogStream(
+    () => [
       "→ checking for available delegates...",
       "→ scanning registered delegates...",
       "✗ no delegates found",
-    ];
-    let i = 0;
-    const tick = () => {
-      if (cancelled || i >= sequence.length) {
-        if (!cancelled) {
-          setDone(true);
-          complete();
-        }
-        return;
-      }
-      setLogs((prev) => [...prev, sequence[i++]]);
-      setTimeout(tick, 500);
-    };
-    tick();
-
-    return () => {
-      cancelled = true;
-    };
-  }, [status]);
+    ],
+    () => complete(),
+    [],
+    { intervalMs: 500 },
+  );
 
   return (
     <DualPaneStepper.Card
@@ -525,40 +482,18 @@ export function InstallDelegateCard() {
 
 // === Verify Delegate Card ===
 export function VerifyDelegateCard() {
-  const { status, complete } = useFlowCard();
-  const [logs, setLogs] = useState<string[]>([]);
-  const [done, setDone] = useState(false);
-
-  useEffect(() => {
-    if (status !== "active") return;
-    setLogs([]);
-    setDone(false);
-    let cancelled = false;
-
-    const sequence = [
+  const { complete } = useFlowCard();
+  const { logs, done } = useDemoLogStream(
+    () => [
       "→ waiting for delegate to connect...",
       "→ delegate heartbeat detected",
       "✓ delegate connected",
       "✓ delegate healthy",
-    ];
-    let i = 0;
-    const tick = () => {
-      if (cancelled || i >= sequence.length) {
-        if (!cancelled) {
-          setDone(true);
-          complete();
-        }
-        return;
-      }
-      setLogs((prev) => [...prev, sequence[i++]]);
-      setTimeout(tick, 600);
-    };
-    tick();
-
-    return () => {
-      cancelled = true;
-    };
-  }, [status]);
+    ],
+    () => complete(),
+    [],
+    { intervalMs: 600 },
+  );
 
   return (
     <DualPaneStepper.Card
@@ -572,40 +507,18 @@ export function VerifyDelegateCard() {
 
 // === Test Connection Card ===
 export function TestConnectionCard() {
-  const { status, complete } = useFlowCard();
-  const [logs, setLogs] = useState<string[]>([]);
-  const [done, setDone] = useState(false);
-
-  useEffect(() => {
-    if (status !== "active") return;
-    setLogs([]);
-    setDone(false);
-    let cancelled = false;
-
-    const sequence = [
+  const { complete } = useFlowCard();
+  const { logs, done } = useDemoLogStream(
+    () => [
       "→ testing connection...",
       "✓ endpoint reachable",
       "✓ authentication valid",
       "✓ permissions verified",
-    ];
-    let i = 0;
-    const tick = () => {
-      if (cancelled || i >= sequence.length) {
-        if (!cancelled) {
-          setDone(true);
-          complete();
-        }
-        return;
-      }
-      setLogs((prev) => [...prev, sequence[i++]]);
-      setTimeout(tick, 400);
-    };
-    tick();
-
-    return () => {
-      cancelled = true;
-    };
-  }, [status]);
+    ],
+    () => complete(),
+    [],
+    { intervalMs: 400 },
+  );
 
   return (
     <DualPaneStepper.Card
@@ -783,42 +696,20 @@ export function K8sConnectorCard() {
 
 // === K8s Test Card ===
 export function K8sTestCard() {
-  const { status, complete } = useFlowCard();
-  const [logs, setLogs] = useState<string[]>([]);
-  const [done, setDone] = useState(false);
-
-  useEffect(() => {
-    if (status !== "active") return;
-    setLogs([]);
-    setDone(false);
-    let cancelled = false;
-
-    const sequence = [
+  const { complete } = useFlowCard();
+  const { logs, done } = useDemoLogStream(
+    () => [
       "→ testing cluster connection...",
       "✓ cluster reachable",
       "✓ authentication verified",
       "→ checking namespace permissions...",
       "✓ namespace access confirmed",
       "✓ cluster ready",
-    ];
-    let i = 0;
-    const tick = () => {
-      if (cancelled || i >= sequence.length) {
-        if (!cancelled) {
-          setDone(true);
-          complete();
-        }
-        return;
-      }
-      setLogs((prev) => [...prev, sequence[i++]]);
-      setTimeout(tick, 400);
-    };
-    tick();
-
-    return () => {
-      cancelled = true;
-    };
-  }, [status]);
+    ],
+    () => complete(),
+    [],
+    { intervalMs: 400 },
+  );
 
   return (
     <DualPaneStepper.Card
@@ -928,20 +819,11 @@ export function VmSetupCard() {
 
 // === Scan Repo Card ===
 export function ScanRepoCard() {
-  const { state, status, complete } = useFlowCard();
-  const [logs, setLogs] = useState<string[]>([]);
-  const [done, setDone] = useState(false);
-
-  useEffect(() => {
-    if (status !== "active") return;
-    setLogs([]);
-    setDone(false);
-    let cancelled = false;
-
-    const repoName = (state.repoName as string) || "repository";
-    const language = (state.language as string) || "TypeScript";
-
-    const sequence = [
+  const { state, complete } = useFlowCard();
+  const repoName = (state.repoName as string) || "repository";
+  const language = (state.language as string) || "TypeScript";
+  const { logs, done } = useDemoLogStream(
+    () => [
       `→ cloning ${repoName}...`,
       "✓ repository cloned",
       `→ analyzing ${language} project...`,
@@ -952,27 +834,14 @@ export function ScanRepoCard() {
       "✓ test configuration found",
       "→ generating pipeline...",
       "✓ pipeline generated",
-    ];
-    let i = 0;
-    const tick = () => {
-      if (cancelled || i >= sequence.length) {
-        if (!cancelled) {
-          setDone(true);
-          complete({
-            pipelineYaml: generatePipelineYAML(repoName, language),
-          });
-        }
-        return;
-      }
-      setLogs((prev) => [...prev, sequence[i++]]);
-      setTimeout(tick, 350);
-    };
-    tick();
-
-    return () => {
-      cancelled = true;
-    };
-  }, [status]);
+    ],
+    () =>
+      complete({
+        pipelineYaml: generatePipelineYAML(repoName, language),
+      }),
+    [repoName, language],
+    { intervalMs: 350 },
+  );
 
   return (
     <DualPaneStepper.Card
@@ -1022,40 +891,18 @@ export function ReviewPipelineCard() {
 
 // === Commit Pipeline Card ===
 export function CommitPipelineCard() {
-  const { status, complete } = useFlowCard();
-  const [logs, setLogs] = useState<string[]>([]);
-  const [done, setDone] = useState(false);
-
-  useEffect(() => {
-    if (status !== "active") return;
-    setLogs([]);
-    setDone(false);
-    let cancelled = false;
-
-    const sequence = [
+  const { complete } = useFlowCard();
+  const { logs, done } = useDemoLogStream(
+    () => [
       "→ saving pipeline configuration...",
       "✓ pipeline saved",
       "→ creating webhook...",
       "✓ webhook configured",
-    ];
-    let i = 0;
-    const tick = () => {
-      if (cancelled || i >= sequence.length) {
-        if (!cancelled) {
-          setDone(true);
-          complete();
-        }
-        return;
-      }
-      setLogs((prev) => [...prev, sequence[i++]]);
-      setTimeout(tick, 500);
-    };
-    tick();
-
-    return () => {
-      cancelled = true;
-    };
-  }, [status]);
+    ],
+    () => complete(),
+    [],
+    { intervalMs: 500 },
+  );
 
   return (
     <DualPaneStepper.Card
@@ -1069,17 +916,9 @@ export function CommitPipelineCard() {
 
 // === Trigger Build Card ===
 export function TriggerBuildCard() {
-  const { status, complete } = useFlowCard();
-  const [logs, setLogs] = useState<string[]>([]);
-  const [done, setDone] = useState(false);
-
-  useEffect(() => {
-    if (status !== "active") return;
-    setLogs([]);
-    setDone(false);
-    let cancelled = false;
-
-    const sequence = [
+  const { complete } = useFlowCard();
+  const { logs, done } = useDemoLogStream(
+    () => [
       "→ triggering first build...",
       "✓ build started",
       "→ initializing build environment...",
@@ -1090,25 +929,11 @@ export function TriggerBuildCard() {
       "✓ build completed successfully",
       "→ running tests...",
       "✓ all tests passed",
-    ];
-    let i = 0;
-    const tick = () => {
-      if (cancelled || i >= sequence.length) {
-        if (!cancelled) {
-          setDone(true);
-          complete();
-        }
-        return;
-      }
-      setLogs((prev) => [...prev, sequence[i++]]);
-      setTimeout(tick, 450);
-    };
-    tick();
-
-    return () => {
-      cancelled = true;
-    };
-  }, [status]);
+    ],
+    () => complete(),
+    [],
+    { intervalMs: 450 },
+  );
 
   return (
     <DualPaneStepper.Card

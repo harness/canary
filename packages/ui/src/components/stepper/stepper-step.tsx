@@ -194,7 +194,8 @@ export function StepperStep({
   const isTransitionSource = ctx.transitioning?.sourceIndex === stepIndex
   const isTransitionTarget = ctx.transitioning?.targetIndex === stepIndex
 
-  const showPlaceholder = hasSubSteps && derivedState !== 'completed'
+  const showPlaceholder =
+    hasSubSteps && derivedState !== 'completed' && !(ctx.collapsibleSubSteps && derivedState === 'active')
 
   const subStepValues = ctx.subSteps.get(value) ?? []
   let lastCompletedSubStepIndex = -1

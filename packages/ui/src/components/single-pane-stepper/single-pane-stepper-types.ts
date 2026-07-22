@@ -23,11 +23,22 @@ export interface SinglePaneStepperRootProps {
   icon?: ReactNode
   title?: string
   stepperTitle?: string
+  /** When true, renders stepperTitle above the timeline. Hidden by default. */
+  showStepperHeader?: boolean
   contentTitle?: string
   contentSubtitle?: string
   drawers?: Record<string, ComponentType<DrawerComponentProps>>
   onComplete?: (state: Record<string, unknown>) => void
   onClose?: () => void
+  /**
+   * Show the root header (icon, title, close button). Shown by default when header content is
+   * provided — set to false for PLG flows that use contentTitle instead.
+   */
+  showRootHeader?: boolean
+  /**
+   * @deprecated Use `showRootHeader` instead (`showRootHeader={false}` replaces `hideHeader`).
+   */
+  hideHeader?: boolean
   reactivationPrompt?: ReactivationPrompt
   // Disable auto-scrolling the active card into view (on mount and on transitions). Use for
   // completed/review flows where the timeline should render from the top and stay put.

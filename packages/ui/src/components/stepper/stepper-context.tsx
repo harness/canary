@@ -15,6 +15,7 @@ interface StepperContextValue {
   onBeforeChange?: (from: string, to: string) => boolean | string
   showConnectors: boolean
   completed: boolean
+  collapsibleSubSteps: boolean
   orderedSteps: string[]
   subSteps: Map<string, string[]>
   stepMeta: Map<string, StepMeta>
@@ -65,6 +66,7 @@ interface StepperProviderProps {
   onBeforeChange?: (from: string, to: string) => boolean | string
   showConnectors: boolean
   completed: boolean
+  collapsibleSubSteps: boolean
   children: ReactNode
 }
 
@@ -74,6 +76,7 @@ export function StepperProvider({
   onBeforeChange,
   showConnectors,
   completed,
+  collapsibleSubSteps,
   children
 }: StepperProviderProps) {
   const [orderedSteps, setOrderedSteps] = useState<string[]>([])
@@ -382,6 +385,7 @@ export function StepperProvider({
       onBeforeChange,
       showConnectors,
       completed,
+      collapsibleSubSteps,
       orderedSteps,
       subSteps,
       stepMeta,
@@ -406,6 +410,7 @@ export function StepperProvider({
       onBeforeChange,
       showConnectors,
       completed,
+      collapsibleSubSteps,
       orderedSteps,
       subSteps,
       stepMeta,

@@ -1,6 +1,7 @@
 import { ReactNode } from 'react'
 
 import { IconV2 } from '@components/icon-v2'
+import { Layout } from '@components/layout'
 import { Text } from '@components/text'
 import { cn } from '@utils/cn'
 
@@ -10,17 +11,28 @@ import { CardStatus } from './engine/engine-types'
 export interface FlowStepperCardProps {
   title: string
   description?: string
+  /** When set, renders a warning icon and message above card content (e.g. blocked preselect state). */
+  blockedMessage?: string
   children: ReactNode
   className?: string
+}
+
+function BlockedMessage({ message }: { message: string }) {
+  return (
+    <Layout.Horizontal gap="xs" align="start" className="cn-flow-stepper-card-blocked-message">
+      <IconV2 name="warning-triangle" size="sm" />
+      <Text>{message}</Text>
+    </Layout.Horizontal>
+  )
 }
 
 // State machine: active and error are interactive; completed and skipped are terminal.
 const INTERACTIVE_STATES: Set<CardStatus> = new Set(['active', 'error'])
 const TERMINAL_STATES: Set<CardStatus> = new Set(['completed', 'skipped'])
 
-export function FlowStepperCard({ title, description, children, className }: FlowStepperCardProps) {
+export function FlowStepperCard({ title, description, blockedMessage, children, className }: FlowStepperCardProps) {
   const { requestReactivation, cardHistory } = useEngineContext()
-  const { subStepId, status } = useCardStatus()
+  const { subStepId, status, contentOnly } = useCardStatus()
 
   const isTerminal = TERMINAL_STATES.has(status)
   const isLastCard = cardHistory[cardHistory.length - 1]?.subStepId === subStepId
@@ -28,19 +40,55 @@ export function FlowStepperCard({ title, description, children, className }: Flo
   const isFinished = isTerminal && isLastCard && isFlowComplete
   const showRestart = isTerminal && !isFinished
 
-  return (
-    <div
-      className={cn(
-        'cn-flow-stepper-card',
-        {
-          'cn-flow-stepper-card-active': status === 'active',
-          'cn-flow-stepper-card-finished': isFinished,
-          'cn-flow-stepper-card-completed': isTerminal && !isFinished,
-          'cn-flow-stepper-card-error': status === 'error'
-        },
-        className
-      )}
+  const cardClassName = cn(
+    'cn-flow-stepper-card',
+    {
+      'cn-flow-stepper-card-active': status === 'active',
+      'cn-flow-stepper-card-finished': isFinished,
+      'cn-flow-stepper-card-completed': isTerminal && !isFinished,
+      'cn-flow-stepper-card-error': status === 'error',
+      'cn-flow-stepper-card-content-only': contentOnly
+    },
+    className
+  )
+
+  const contentInertProps = isTerminal && !isFinished ? ({ inert: '' } as React.HTMLAttributes<HTMLDivElement>) : {}
+
+  const restartButton = showRestart ? (
+    <button
+      type="button"
+      className="cn-flow-stepper-card-edit"
+      onClick={() => requestReactivation(subStepId)}
+      aria-label="Redo this step"
     >
+      <IconV2 name="restart" size="sm" className="text-cn-2" />
+    </button>
+  ) : null
+
+  if (contentOnly) {
+    return (
+      <div className={cardClassName}>
+        {restartButton}
+        {/* inert disables all interaction (click, focus, a11y) in terminal-state cards.
+           The finished card (last card in a completed flow) stays interactive for final actions.
+           Cast needed because React 18 types don't include inert yet. */}
+        <div className="cn-flow-stepper-card-content" {...contentInertProps}>
+          {description && (
+            <div className="cn-flow-stepper-card-description">
+              <Text as="p" variant="body-normal" color="foreground-2">
+                {description}
+              </Text>
+            </div>
+          )}
+          {blockedMessage && <BlockedMessage message={blockedMessage} />}
+          {children}
+        </div>
+      </div>
+    )
+  }
+
+  return (
+    <div className={cardClassName}>
       <div className="cn-flow-stepper-card-header">
         <span className="cn-flow-stepper-card-status">
           {status === 'completed' ? (
@@ -58,16 +106,7 @@ export function FlowStepperCard({ title, description, children, className }: Flo
             {title}
           </Text>
         </div>
-        {showRestart && (
-          <button
-            type="button"
-            className="cn-flow-stepper-card-edit"
-            onClick={() => requestReactivation(subStepId)}
-            aria-label="Redo this step"
-          >
-            <IconV2 name="restart" size="sm" className="text-cn-2" />
-          </button>
-        )}
+        {restartButton}
       </div>
       {description && (
         <div className="cn-flow-stepper-card-description">
@@ -76,13 +115,8 @@ export function FlowStepperCard({ title, description, children, className }: Flo
           </Text>
         </div>
       )}
-      {/* inert disables all interaction (click, focus, a11y) in terminal-state cards.
-         The finished card (last card in a completed flow) stays interactive for final actions.
-         Cast needed because React 18 types don't include inert yet. */}
-      <div
-        className="cn-flow-stepper-card-content"
-        {...(isTerminal && !isFinished ? ({ inert: '' } as React.HTMLAttributes<HTMLDivElement>) : {})}
-      >
+      <div className="cn-flow-stepper-card-content" {...contentInertProps}>
+        {blockedMessage && <BlockedMessage message={blockedMessage} />}
         {children}
       </div>
     </div>

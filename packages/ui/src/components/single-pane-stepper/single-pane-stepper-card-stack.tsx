@@ -1,13 +1,23 @@
 import { useCallback, useEffect, useMemo, useRef } from 'react'
 
 import { CardContextProvider, deriveStepperModel, useEngineContext } from '../flow-stepper/engine'
+import { Layout } from '../layout'
 import { Stepper } from '../stepper'
+import { Text } from '../text'
 
 interface SinglePaneStepperCardStackProps {
   stepperTitle?: string
+  showStepperHeader?: boolean
+  contentTitle?: string
+  contentSubtitle?: string
 }
 
-export function SinglePaneStepperCardStack({ stepperTitle }: SinglePaneStepperCardStackProps) {
+export function SinglePaneStepperCardStack({
+  stepperTitle,
+  showStepperHeader,
+  contentTitle,
+  contentSubtitle
+}: SinglePaneStepperCardStackProps) {
   const { flow, cardHistory, activeSubStepId, predictedPath, registerScrollToCard, scrollToCard, disableAutoScroll } =
     useEngineContext()
   const containerRef = useRef<HTMLDivElement>(null)
@@ -27,7 +37,7 @@ export function SinglePaneStepperCardStack({ stepperTitle }: SinglePaneStepperCa
       const containerRect = container.getBoundingClientRect()
       const cardRect = cardEl.getBoundingClientRect()
       const offsetTop = cardRect.top - containerRect.top + container.scrollTop
-      const targetScroll = offsetTop - containerRect.height / 2 + cardRect.height / 2
+      const targetScroll = offsetTop
 
       // JSDOM doesn't implement scrollTo; fall back to direct scrollTop for test environments
       if (typeof container.scrollTo === 'function') {
@@ -55,6 +65,9 @@ export function SinglePaneStepperCardStack({ stepperTitle }: SinglePaneStepperCa
     [flow, cardHistory, predictedPath, activeSubStepId]
   )
 
+  // Progressive disclosure: only render steps that have been reached (active, completed, or error).
+  const visibleSteps = useMemo(() => derivedSteps.filter(step => step.state !== 'upcoming'), [derivedSteps])
+
   // Build map of subStepId -> card status from cardHistory for status prop
   const cardStatusMap = new Map(cardHistory.map(e => [e.subStepId, e.status]))
 
@@ -73,8 +86,28 @@ export function SinglePaneStepperCardStack({ stepperTitle }: SinglePaneStepperCa
   return (
     <div ref={containerRef} className="cn-single-pane-stepper-card-stack">
       <div className="cn-single-pane-stepper-card-stack-inner">
-        <Stepper.Root value={activeSubStepId} onValueChange={handleStepperClick} title={stepperTitle}>
-          {derivedSteps.map(derivedStep => {
+        {(contentTitle || contentSubtitle) && (
+          <Layout.Vertical gap="2xs" className="cn-single-pane-stepper-content-header">
+            {contentTitle && (
+              <Text as="h2" variant="heading-subsection" color="foreground-1" className="!m-0">
+                {contentTitle}
+              </Text>
+            )}
+            {contentSubtitle && (
+              <Text as="p" variant="body-normal" color="foreground-1" className="!m-0">
+                {contentSubtitle}
+              </Text>
+            )}
+          </Layout.Vertical>
+        )}
+
+        <Stepper.Root
+          value={activeSubStepId}
+          onValueChange={handleStepperClick}
+          title={showStepperHeader ? stepperTitle : undefined}
+          collapsibleSubSteps
+        >
+          {visibleSteps.map(derivedStep => {
             const activeStepId = flow.subSteps[activeSubStepId]?.step
             const isActiveStep = activeStepId === derivedStep.stepId
             const showSubSteps = derivedStep.visited.length > 0 || isActiveStep
@@ -86,7 +119,7 @@ export function SinglePaneStepperCardStack({ stepperTitle }: SinglePaneStepperCa
                 title={derivedStep.title}
                 description={derivedStep.description}
                 state={derivedStep.state}
-                hasSubSteps={derivedStep.showIndeterminate}
+                hasSubSteps={false}
               >
                 {showSubSteps &&
                   !derivedStep.isTerminalStep &&
@@ -104,24 +137,13 @@ export function SinglePaneStepperCardStack({ stepperTitle }: SinglePaneStepperCa
                         state={v.state}
                       >
                         <div data-card-id={v.subStepId}>
-                          <CardContextProvider subStepId={v.subStepId} status={cardStatus}>
+                          <CardContextProvider subStepId={v.subStepId} status={cardStatus} contentOnly>
                             <CardComponent />
                           </CardContextProvider>
                         </div>
                       </Stepper.SubStep>
                     )
                   })}
-                {isActiveStep &&
-                  !derivedStep.isTerminalStep &&
-                  derivedStep.predicted.map(subStepId => (
-                    <Stepper.SubStep
-                      key={subStepId}
-                      value={subStepId}
-                      title={flow.subSteps[subStepId]?.title}
-                      description={flow.subSteps[subStepId]?.description}
-                      state="upcoming"
-                    />
-                  ))}
               </Stepper.Step>
             )
           })}

@@ -219,7 +219,9 @@ export default {
   },
 
   '.cn-stepper-connector-completed': {
-    background: 'var(--cn-border-success)'
+    background: 'var(--cn-border-success)',
+    // Completed trunk must win over a later active-partial connector (same column, adjacent steps).
+    zIndex: '2'
   },
 
   '.cn-stepper-connector-active': {
@@ -230,6 +232,9 @@ export default {
   // branch, and gray below. --cn-stepper-trunk-*-end offsets are set on the step item.
   '.cn-stepper-connector-active-partial': {
     background: 'var(--cn-border-2)',
+    // Sit below completed trunks/branches so green completed segments win at junction overlaps.
+    zIndex: '0',
+    isolation: 'isolate',
 
     '&::before': {
       content: '""',
@@ -240,7 +245,7 @@ export default {
       height: 'var(--cn-stepper-trunk-green-end, 0px)',
       background: 'var(--cn-border-success)',
       borderRadius: '0',
-      zIndex: '1'
+      zIndex: '2'
     },
 
     '&::after': {
@@ -256,10 +261,19 @@ export default {
     }
   },
 
+  // SinglePaneStepper: cap the active partial trunk at the active branch — no gray line into card panels.
+  '.cn-stepper-collapsible-substeps .cn-stepper-step-item:has(.cn-stepper-step-active) .cn-stepper-connector-active-partial':
+    {
+      height: 'var(--cn-stepper-trunk-blue-end)',
+      bottom: 'auto'
+    },
+
   // Error step with substeps: trunk is green through completed branches, red to the error
   // branch, and gray below. --cn-stepper-trunk-*-end offsets are set on the step item.
   '.cn-stepper-connector-error-partial': {
     background: 'var(--cn-border-2)',
+    zIndex: '0',
+    isolation: 'isolate',
 
     '&::before': {
       content: '""',
@@ -270,7 +284,7 @@ export default {
       height: 'var(--cn-stepper-trunk-green-end, 0px)',
       background: 'var(--cn-border-success)',
       borderRadius: '0',
-      zIndex: '1'
+      zIndex: '2'
     },
 
     '&::after': {
@@ -313,6 +327,10 @@ export default {
 
   '.cn-stepper-substep-branch': substepBranchWireBase,
 
+  '.cn-stepper-substep-completed .cn-stepper-substep-branch': {
+    zIndex: '2'
+  },
+
   '.cn-stepper-substep-completed .cn-stepper-substep-branch::before': {
     borderColor: 'var(--cn-border-success)'
   },
@@ -345,6 +363,10 @@ export default {
     background: 'var(--cn-border-2)'
   },
 
+  '.cn-stepper-substep-skipped .cn-stepper-substep-branch': {
+    zIndex: '2'
+  },
+
   '.cn-stepper-substep-skipped .cn-stepper-substep-branch::before': {
     borderColor: 'var(--cn-set-gray-secondary-bg)'
   },
@@ -364,6 +386,86 @@ export default {
     padding: '0',
     cursor: 'pointer',
     textAlign: 'left'
+  },
+
+  '.cn-stepper-substep-with-collapse': {
+    width: 'auto',
+    flex: '1',
+    minWidth: '0'
+  },
+
+  '.cn-stepper-substep-header': {
+    display: 'flex',
+    alignItems: 'center',
+    width: '100%',
+    minWidth: '0'
+  },
+
+  '.cn-stepper-substep-collapse-trigger': {
+    display: 'flex',
+    alignItems: 'center',
+    justifyContent: 'center',
+    flexShrink: '0',
+    border: 'none',
+    background: 'none',
+    padding: 'var(--cn-spacing-1)',
+    marginRight: 'var(--cn-spacing-1)',
+    cursor: 'pointer',
+    color: 'var(--cn-text-3)',
+
+    '&:hover': {
+      color: 'var(--cn-text-1)'
+    },
+
+    '&:focus-visible': {
+      outline: 'var(--cn-focus)',
+      outlineOffset: 'var(--cn-outline-offset-tight)',
+      borderRadius: 'var(--cn-rounded-1)'
+    }
+  },
+
+  '.cn-stepper-substep-collapse-icon': {
+    transition: 'transform 150ms ease'
+  },
+
+  '.cn-stepper-substep-collapse-icon-open': {
+    transform: 'rotate(180deg)'
+  },
+
+  '.cn-stepper-substep-panel-collapsible': {
+    overflow: 'hidden',
+
+    '&[data-state="open"]': {
+      animation: 'cnStepperCollapsibleDown 150ms ease-out'
+    },
+
+    '&[data-state="closed"]': {
+      animation: 'cnStepperCollapsibleUp 150ms ease-out forwards',
+      height: '0',
+      opacity: '0'
+    }
+  },
+
+  '@keyframes cnStepperCollapsibleDown': {
+    from: {
+      height: '0',
+      opacity: '0'
+    },
+    to: {
+      height: 'var(--radix-collapsible-content-height)',
+      opacity: '1'
+    }
+  },
+
+  '@keyframes cnStepperCollapsibleUp': {
+    from: {
+      height: 'var(--radix-collapsible-content-height)',
+      opacity: '1'
+    },
+    to: {
+      height: '0',
+      opacity: '0'
+    }
   },
 
   /* SubStep Indicator */
@@ -449,6 +551,28 @@ export default {
     paddingRight: 'var(--cn-spacing-2)',
     minWidth: '0',
     width: 'calc(100% - calc(var(--cn-spacing-4) + var(--cn-size-5) + var(--cn-spacing-4)) - var(--cn-spacing-2))'
+  },
+
+  /* Single-pane accordion cards: branch wire only, card header owns the indicator */
+  '.cn-stepper-substep-content-only': {
+    display: 'grid',
+    gridTemplateColumns: 'var(--cn-spacing-4) 1fr',
+    alignItems: 'start',
+    padding: 'var(--cn-spacing-1) 0',
+    paddingLeft: 'calc(var(--cn-size-5) / 2 - var(--cn-spacing-px))'
+  },
+
+  '.cn-stepper-substep-content-only .cn-stepper-substep-branch': {
+    gridColumn: '1',
+    gridRow: '1'
+  },
+
+  '.cn-stepper-substep-content-only .cn-stepper-substep-panel': {
+    gridColumn: '2',
+    marginLeft: '0',
+    marginTop: '0',
+    width: '100%',
+    paddingRight: '0'
   },
 
   /* Placeholder — indeterminate substeps indicator */
@@ -596,6 +720,20 @@ export default {
       '-webkit-background-clip': 'unset',
       '-webkit-text-fill-color': 'unset',
       backgroundClip: 'unset'
+    },
+
+    '.cn-stepper-substep-panel-collapsible': {
+      animation: 'none',
+
+      '&[data-state="closed"]': {
+        height: '0',
+        opacity: '0'
+      },
+
+      '&[data-state="open"]': {
+        height: 'auto',
+        opacity: '1'
+      }
     }
   }
 }

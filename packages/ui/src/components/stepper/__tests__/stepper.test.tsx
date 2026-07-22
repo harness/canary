@@ -352,6 +352,99 @@ describe('Stepper', () => {
         )
       ).toBeInTheDocument()
     })
+
+    test('collapsibleSubSteps caps active trunk and hides indeterminate placeholder', () => {
+      const { container } = render(
+        <Stepper.Root value="sub1" onValueChange={vi.fn()} showConnectors collapsibleSubSteps>
+          <Stepper.Step value="step1" title="First" hasSubSteps>
+            <Stepper.SubStep value="sub1" title="Sub One" state="active">
+              <div className="cn-stepper-substep-panel">Panel content</div>
+            </Stepper.SubStep>
+          </Stepper.Step>
+          <Stepper.Step value="step2" title="Second" />
+        </Stepper.Root>
+      )
+
+      expect(container.querySelector('.cn-stepper-substep-placeholder')).not.toBeInTheDocument()
+      expect(container.querySelector('[data-testid="icon-more-horizontal"]')).not.toBeInTheDocument()
+      expect(container.querySelector('.cn-stepper-collapsible-substeps')).toBeInTheDocument()
+
+      const activeStepItem = container.querySelector('.cn-stepper-step-active')?.closest('.cn-stepper-step-item')
+      const connector = activeStepItem?.querySelector('.cn-stepper-connector') as HTMLElement | null
+
+      expect(connector).toHaveClass('cn-stepper-connector-active-partial')
+      expect(activeStepItem).toHaveStyle({
+        '--cn-stepper-trunk-blue-end':
+          'calc(var(--cn-stepper-step-content-overflow, 0px) + var(--cn-spacing-3) + 0 * (var(--cn-spacing-2) * 2 + var(--cn-size-5)) + var(--cn-spacing-2) + var(--cn-size-5) / 2 - (12 / 22) * (var(--cn-size-5) / 2 + var(--cn-rounded-5)))'
+      })
+    })
+
+    test('collapsible completed substep renders collapsed on mount', () => {
+      const { container } = render(
+        <Stepper.Root value="sub2" onValueChange={vi.fn()} collapsibleSubSteps>
+          <Stepper.Step value="step1" title="First" hasSubSteps>
+            <Stepper.SubStep value="sub1" title="Sub One" state="completed">
+              <div>Completed panel content</div>
+            </Stepper.SubStep>
+            <Stepper.SubStep value="sub2" title="Sub Two" state="active">
+              <div>Active panel content</div>
+            </Stepper.SubStep>
+          </Stepper.Step>
+        </Stepper.Root>
+      )
+
+      const completedItem = container.querySelector('.cn-stepper-substep-completed.cn-stepper-substep-item-collapsible')
+      const panel = completedItem?.querySelector('.cn-stepper-substep-panel-collapsible')
+      expect(panel).toHaveAttribute('data-state', 'closed')
+    })
+
+    test('collapsible substep does not nest button elements', () => {
+      const { container } = render(
+        <Stepper.Root value="sub1" onValueChange={vi.fn()} collapsibleSubSteps>
+          <Stepper.Step value="step1" title="First" hasSubSteps>
+            <Stepper.SubStep value="sub1" title="Sub One" state="active">
+              <div>Panel content</div>
+            </Stepper.SubStep>
+          </Stepper.Step>
+        </Stepper.Root>
+      )
+
+      expect(container.querySelectorAll('button button')).toHaveLength(0)
+      expect(container.querySelector('.cn-stepper-substep-header .cn-stepper-substep')?.tagName).toBe('DIV')
+      expect(container.querySelector('.cn-stepper-substep-collapse-trigger')?.tagName).toBe('SPAN')
+    })
+
+    test('collapsible substep collapses when transitioning to completed', () => {
+      const { container, rerender } = render(
+        <Stepper.Root value="sub1" onValueChange={vi.fn()} collapsibleSubSteps>
+          <Stepper.Step value="step1" title="First" hasSubSteps>
+            <Stepper.SubStep value="sub1" title="Sub One" state="active">
+              <div>Panel content</div>
+            </Stepper.SubStep>
+          </Stepper.Step>
+        </Stepper.Root>
+      )
+
+      const activePanel = container.querySelector('.cn-stepper-substep-active .cn-stepper-substep-panel-collapsible')
+      expect(activePanel).toHaveAttribute('data-state', 'open')
+
+      rerender(
+        <Stepper.Root value="sub2" onValueChange={vi.fn()} collapsibleSubSteps>
+          <Stepper.Step value="step1" title="First" hasSubSteps>
+            <Stepper.SubStep value="sub1" title="Sub One" state="completed">
+              <div>Panel content</div>
+            </Stepper.SubStep>
+            <Stepper.SubStep value="sub2" title="Sub Two" state="active">
+              <div>Active panel</div>
+            </Stepper.SubStep>
+          </Stepper.Step>
+        </Stepper.Root>
+      )
+
+      const completedItem = container.querySelector('.cn-stepper-substep-completed.cn-stepper-substep-item-collapsible')
+      const panel = completedItem?.querySelector('.cn-stepper-substep-panel-collapsible')
+      expect(panel).toHaveAttribute('data-state', 'closed')
+    })
   })
 
   describe('SubSteps', () => {

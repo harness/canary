@@ -94,6 +94,10 @@ export default {
     marginTop: 'var(--cn-spacing-1)'
   },
 
+  '.cn-flow-stepper-card-blocked-message': {
+    marginBottom: 'var(--cn-spacing-4)'
+  },
+
   '.cn-flow-stepper-card-action': {
     display: 'flex',
     alignItems: 'center',

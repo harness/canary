@@ -1,17 +1,29 @@
 ---
 title: Single Pane Stepper
-description: A single-column guided flow component with card-based navigation and integrated stepper timeline.
+description: A single-column guided flow component with an integrated stepper timeline and inline card stack.
 ---
 
+import { DocsPage } from "@/components/docs-page";
 import { Aside } from "@astrojs/starlight/components";
 import {
   FullFlowDemo,
   StatesDemo,
 } from "@/components/single-pane-stepper-demo";
 
-The `SinglePaneStepper` is a single-column flow component for multi-step guided processes. It displays a vertical timeline on the left with collapsible cards on the right.
+The `SinglePaneStepper` is a single-column flow component for multi-step guided processes. It combines a vertical stepper timeline with cards rendered inline within each substep — all in one scrollable column.
 
-Use this component for linear onboarding flows, setup wizards, and configuration processes where each step follows sequentially.
+Use this component for linear onboarding flows, setup wizards, and configuration processes where each step follows sequentially. It shares the same `FlowConfig` and `useFlowCard` API as `DualPaneStepper`, so flows can be migrated between layouts with minimal changes.
+
+<Aside type="note">
+  Header visibility uses a consistent `show*` convention: `showRootHeader`
+  (default `true`) controls the root header with icon/title/close, and
+  `showStepperHeader` (default `false`) controls the stepper timeline header
+  above the timeline. Pass `showStepperHeader` along with `stepperTitle` to
+  display the timeline header. Existing consumers that pass `stepperTitle` alone
+  (e.g. platformUI) will no longer see the timeline header until they opt in
+  with `showStepperHeader`. The legacy `hideHeader` prop remains supported as a
+  deprecated alias for `showRootHeader={false}`.
+</Aside>
 
 ## Substep States
 
@@ -26,15 +38,15 @@ load.
 
 ## Interactive Example
 
-This example demonstrates a simple CI pipeline generation flow with step-based navigation.
+This example demonstrates a full CI pipeline onboarding flow with connector drawers, connectivity checks, delegate installation detours, dynamic substeps during code analysis, and pipeline YAML generation.
 
 <div className="h-[1000px] border border-cn-2 rounded-lg overflow-hidden my-6">
   <FullFlowDemo client:only="react" />
 </div>
 
 <Aside type="tip">
-  Select a language, configure the project, and complete the flow to see the
-  final state.
+  Click through the flow to see card navigation, drawer interactions, dynamic
+  substeps, and back-navigation working together.
 </Aside>
 
 ## Usage
@@ -51,11 +63,13 @@ const flow: FlowConfig = {
   subSteps: {
     "choose-language": {
       step: "configure",
+      title: "Choose language",
       component: LanguageCard,
       next: "generate-pipeline",
     },
     "generate-pipeline": {
       step: "generate",
+      title: "Generate pipeline",
       component: GeneratePipelineCard,
     },
   },
@@ -64,8 +78,9 @@ const flow: FlowConfig = {
 
 <SinglePaneStepper.Root
   flow={flow}
-  icon={<Logo />}
-  title="Generate CI Pipeline"
+  showStepperHeader
+  stepperTitle="Setup Steps"
+  contentTitle="Pipeline Configuration"
   onComplete={(state) => console.log("Done!", state)}
 />
 ```
@@ -75,7 +90,7 @@ const flow: FlowConfig = {
 The Single Pane Stepper uses a compound component pattern:
 
 ```typescript jsx
-<SinglePaneStepper.Root flow={flowConfig}>
+<SinglePaneStepper.Root flow={flowConfig} drawers={{ config: ConfigDrawer }}>
   {/* Cards are rendered automatically from flowConfig.subSteps */}
 </SinglePaneStepper.Root>
 ```
@@ -84,7 +99,7 @@ Cards use the `useFlowCard` hook to interact with the flow engine:
 
 ```typescript jsx
 function MyCard() {
-  const { state, status, complete, error, skip } = useFlowCard();
+  const { state, status, complete, error, skip, openDrawer } = useFlowCard();
 
   return (
     <SinglePaneStepper.Card title="My Card">
@@ -96,7 +111,7 @@ function MyCard() {
 
 ## Flow Configuration
 
-The `FlowConfig` object defines the structure of your flow. It's the same configuration format used by `DualPaneStepper`, making it easy to migrate between the two components.
+The `FlowConfig` object defines the structure of your flow:
 
 ```typescript
 interface FlowConfig {
@@ -113,38 +128,444 @@ interface StepConfig {
 interface SubStepConfig {
   step: string; // Which step this substep belongs to
   title: string; // Shown in the timeline
+  description?: string; // Shown in the timeline
   component: ComponentType; // React component to render as a card
-  next?: string; // Next substep ID (optional if dynamic)
+  next?: string; // Next substep ID (for routing)
+  terminal?: boolean; // Auto-complete on entry (for summary cards)
 }
+```
+
+<Aside type="note">
+  Each substep must be associated with a step via `step: 'step-id'`. Multiple
+  substeps can belong to the same step. The `next` field defines the default
+  routing — cards advance automatically unless an explicit destination is passed
+  to `complete()` or `skip()`.
+</Aside>
+
+## Cards
+
+Use `SinglePaneStepper.Card` inside your card components. The card shows a status indicator (active dot, check, error, skip), title, optional description, and content. Completed cards show a restart button on hover.
+
+Pass `blockedMessage` to show an inline warning (warning-triangle icon + text) when the step cannot proceed — for example, when a preselect card has no valid selection. The card body owns the message; disable Continue in your card content when blocked.
+
+```typescript jsx
+function SelectProviderCard() {
+  const { complete } = useFlowCard();
+  const [selected, setSelected] = useState<string | null>(null);
+  const blockedMessage = selected ? undefined : 'Select a provider to continue';
+
+  return (
+    <SinglePaneStepper.Card
+      title="Select Provider"
+      description="Choose your version control provider"
+      blockedMessage={blockedMessage}
+    >
+      <ProviderList selected={selected} onSelect={setSelected} />
+      <Button disabled={!selected} onClick={() => complete({ provider: selected })}>
+        Continue
+      </Button>
+    </SinglePaneStepper.Card>
+  );
+}
+```
+
+## useFlowCard Hook
+
+The `useFlowCard` hook provides access to the flow engine from within a card component:
+
+```typescript
+interface FlowCardContext<TState = Record<string, unknown>> {
+  state: TState;
+  status: CardStatus; // 'active' | 'completed' | 'error' | 'skipped'
+  complete: (statePatch?: Partial<TState>, nextSubStepId?: string) => void;
+  error: (nextSubStepId?: string) => void;
+  skip: (nextSubStepId?: string) => void;
+  openDrawer: (
+    drawerId: string,
+    props?: Record<string, unknown>,
+  ) => Promise<DrawerResult>;
+}
+```
+
+**Methods:**
+
+- **`complete(statePatch?, nextSubStepId?)`** — Mark the card as completed, merge state, and advance. If `nextSubStepId` is omitted, resolves from the flow config's `next` field.
+- **`error(nextSubStepId?)`** — Mark the card as errored. Pass a `nextSubStepId` to advance while keeping the substep red in the timeline (error-and-continue).
+- **`skip(nextSubStepId?)`** — Mark the card as skipped and advance.
+- **`openDrawer(drawerId, props?)`** — Open a registered drawer and await the result.
+
+### State Management
+
+Each card can read the accumulated state and add to it:
+
+```typescript jsx
+function MyCard() {
+  const { state, complete } = useFlowCard<{
+    provider?: string;
+    repo?: string;
+  }>();
+
+  const handleNext = () => {
+    complete({ repo: "my-repo" });
+  };
+}
+```
+
+<Aside type="note">
+  State is shallow-merged on each `complete()` call. Use TypeScript generics to
+  type your state for better autocomplete.
+</Aside>
+
+## Substeps and Progressive Disclosure
+
+The stepper timeline reveals content progressively. Top-level steps only appear once reached — completed, active, and error states are visible; upcoming steps stay hidden until the flow advances to them.
+
+Within each step, only visited substeps appear in the timeline. Cards render inline beneath their substep as the user progresses. Unvisited substeps do not show as upcoming placeholders — each substep and its card appear only after the user reaches it. The `next` field in your flow config still drives default routing when cards complete, but does not preview future substeps in the timeline.
+
+## Drawer Integration
+
+Register drawers via the `drawers` prop on `SinglePaneStepper.Root` and open them from any card:
+
+```typescript jsx
+function ConnectorSetupCard() {
+  const { openDrawer, complete } = useFlowCard();
+
+  const handleConnect = async () => {
+    const result = await openDrawer('connector');
+
+    if (result.success && result.data) {
+      complete({ connectorRef: result.data.connectorRef });
+    }
+  };
+
+  return (
+    <SinglePaneStepper.Card title="Connect Provider">
+      <button onClick={handleConnect}>Connect</button>
+    </SinglePaneStepper.Card>
+  );
+}
+```
+
+<Aside type="note">
+  Always check `result.success` after awaiting `openDrawer()`. Users can close
+  drawers without completing them.
+</Aside>
+
+## Navigation & Reactivation
+
+### Forward Navigation
+
+Call `complete(statePatch?)` to navigate to the next card. The timeline advances and the card stack scrolls to center the active card.
+
+### Back Navigation
+
+Users can click completed substeps in the timeline to scroll back to earlier cards. When navigating backward to reactivate a card, the reactivation guard shows a confirmation dialog:
+
+```typescript jsx
+<SinglePaneStepper.Root
+  flow={flow}
+  reactivationPrompt={{
+    title: "Go back?",
+    description: "Going back to this step will discard your progress on subsequent steps."
+  }}
+/>
+```
+
+### Review Flows
+
+Pass `disableAutoScroll` to render a fully resolved flow from the top without chasing the last card — useful for documentation demos and review states:
+
+```typescript jsx
+<SinglePaneStepper.Root flow={flow} disableAutoScroll />
+```
+
+## CardAction Component
+
+Use `CardAction` to show contextual alerts or prompts within cards:
+
+```typescript jsx
+<SinglePaneStepper.Card title="Connectivity Check">
+  <SinglePaneStepper.CardAction
+    variant="warning"
+    message="Cannot reach git provider."
+    actionLabel="Install Delegate"
+    onAction={() => openDrawer('delegate')}
+    secondaryLabel="Skip for now"
+    onSecondary={() => skip()}
+  />
+</SinglePaneStepper.Card>
 ```
 
 ## API Reference
 
-### SinglePaneStepper.Root
+### `Root`
 
-| Prop         | Type                                       | Description                                    |
-| ------------ | ------------------------------------------ | ---------------------------------------------- |
-| `flow`       | `FlowConfig`                               | Flow configuration defining steps and substeps |
-| `icon`       | `ReactNode`                                | Icon displayed in the header                   |
-| `title`      | `string`                                   | Title displayed in the header                  |
-| `onComplete` | `(state: Record<string, unknown>) => void` | Callback when any card completes               |
+The root component that sets up the flow engine, renders the single-column layout, and manages navigation.
 
-### SinglePaneStepper.Card
+```typescript jsx
+<SinglePaneStepper.Root
+  flow={flowConfig}
+  showStepperHeader
+  stepperTitle="Setup Steps"
+  contentTitle="Configuration"
+  contentSubtitle="Follow the steps below"
+  onClose={() => {}}
+  drawers={{ connector: ConnectorDrawer }}
+  onComplete={(state) => console.log(state)}
+  reactivationPrompt={{ title: "Go back?", description: "Progress will be lost." }}
+  disableAutoScroll={false}
+/>
+```
 
-| Prop          | Type        | Description      |
-| ------------- | ----------- | ---------------- |
-| `title`       | `string`    | Card title       |
-| `description` | `string`    | Card description |
-| `children`    | `ReactNode` | Card content     |
+<DocsPage.PropsTable
+  props={[
+    {
+      name: "flow",
+      description:
+        "Flow configuration defining steps, substeps, and initial substep",
+      required: true,
+      value: "FlowConfig",
+    },
+    {
+      name: "icon",
+      description: "Optional icon displayed in the root header",
+      required: false,
+      value: "ReactNode",
+    },
+    {
+      name: "title",
+      description: "Title displayed in the root header",
+      required: false,
+      value: "string",
+    },
+    {
+      name: "stepperTitle",
+      description:
+        "Title shown above the stepper timeline when showStepperHeader is true",
+      required: false,
+      value: "string",
+    },
+    {
+      name: "showStepperHeader",
+      description:
+        "Show the stepper timeline header (stepperTitle). Hidden by default — pass stepperTitle and set this to true to opt in",
+      required: false,
+      value: "boolean",
+      defaultValue: "false",
+    },
+    {
+      name: "contentTitle",
+      description: "Heading displayed above the card stack",
+      required: false,
+      value: "string",
+    },
+    {
+      name: "contentSubtitle",
+      description: "Subtitle displayed under contentTitle",
+      required: false,
+      value: "string",
+    },
+    {
+      name: "drawers",
+      description: "Drawer components keyed by ID, opened via openDrawer(id)",
+      required: false,
+      value: "Record<string, ComponentType<DrawerComponentProps>>",
+    },
+    {
+      name: "onComplete",
+      description:
+        "Called with accumulated state when the final card completes with no next step",
+      required: false,
+      value: "(state: Record<string, unknown>) => void",
+    },
+    {
+      name: "onClose",
+      description: "Called when the close button in the root header is clicked",
+      required: false,
+      value: "() => void",
+    },
+    {
+      name: "showRootHeader",
+      description:
+        "Show the root header (icon, title, close button). Hidden when false — useful for PLG flows that use contentTitle instead",
+      required: false,
+      value: "boolean",
+      defaultValue: "true",
+    },
+    {
+      name: "hideHeader",
+      description:
+        "Deprecated alias for showRootHeader={false}. Prefer showRootHeader for new code",
+      required: false,
+      value: "boolean",
+      defaultValue: "false",
+    },
+    {
+      name: "reactivationPrompt",
+      description:
+        "Customize the confirmation dialog when going back to a previous card",
+      required: false,
+      value: "{ title: string; description: string }",
+      defaultValue:
+        '{ title: "Go back?", description: "Going back will discard progress..." }',
+    },
+    {
+      name: "disableAutoScroll",
+      description:
+        "Disable auto-scrolling to the active card — useful for review/demo flows",
+      required: false,
+      value: "boolean",
+      defaultValue: "false",
+    },
+  ]}
+/>
 
-### useFlowCard Hook
+### `Card`
 
-Returns an object with the following properties:
+A card rendered inline within a substep. Shows status indicator, title, optional description, and content.
 
-| Property   | Type                                                             | Description                                     |
-| ---------- | ---------------------------------------------------------------- | ----------------------------------------------- |
-| `state`    | `Record<string, unknown>`                                        | Accumulated flow state from all completed cards |
-| `status`   | `'pending' \| 'active' \| 'completed' \| 'skipped' \| 'error'`   | Current card status                             |
-| `complete` | `(data?: Record<string, unknown>, nextSubStep?: string) => void` | Mark card as complete and optionally navigate   |
-| `error`    | `() => void`                                                     | Mark card as errored                            |
-| `skip`     | `(nextSubStep?: string) => void`                                 | Skip card and optionally navigate               |
+<DocsPage.PropsTable
+  props={[
+    {
+      name: "title",
+      description: "Card title displayed next to the status indicator",
+      required: true,
+      value: "string",
+    },
+    {
+      name: "description",
+      description: "Optional subtitle below the title",
+      required: false,
+      value: "string",
+    },
+    {
+      name: "children",
+      description: "Card content (form fields, logs, choices, etc.)",
+      required: true,
+      value: "ReactNode",
+    },
+    {
+      name: "className",
+      description: "Custom class applied to the card container",
+      required: false,
+      value: "string",
+    },
+  ]}
+/>
+
+### `CardAction`
+
+An alert/action component for showing contextual prompts within cards.
+
+<DocsPage.PropsTable
+  props={[
+    {
+      name: "variant",
+      description: "Visual style of the alert",
+      required: true,
+      value: "'info' | 'warning' | 'danger' | 'success'",
+    },
+    {
+      name: "message",
+      description: "Alert message text",
+      required: true,
+      value: "string",
+    },
+    {
+      name: "actionLabel",
+      description: "Label for the primary action button",
+      required: false,
+      value: "string",
+    },
+    {
+      name: "onAction",
+      description: "Handler for the primary action",
+      required: false,
+      value: "() => void",
+    },
+    {
+      name: "secondaryLabel",
+      description: "Label for the secondary action button",
+      required: false,
+      value: "string",
+    },
+    {
+      name: "onSecondary",
+      description: "Handler for the secondary action",
+      required: false,
+      value: "() => void",
+    },
+  ]}
+/>
+
+### `useFlowCard`
+
+Hook for accessing the flow engine from within a card component.
+
+<DocsPage.PropsTable
+  props={[
+    {
+      name: "state",
+      description: "Accumulated state from all previous cards",
+      required: true,
+      value: "TState (generic type)",
+    },
+    {
+      name: "status",
+      description: "Current card status",
+      required: true,
+      value: "'active' | 'completed' | 'error' | 'skipped'",
+    },
+    {
+      name: "complete",
+      description:
+        "Mark as completed, merge state patch, and advance to next substep",
+      required: true,
+      value: "(statePatch?: Partial<TState>, nextSubStepId?: string) => void",
+    },
+    {
+      name: "error",
+      description:
+        "Mark the card as errored. Pass nextSubStepId for error-and-continue.",
+      required: true,
+      value: "(nextSubStepId?: string) => void",
+    },
+    {
+      name: "skip",
+      description: "Mark as skipped and advance to next substep",
+      required: true,
+      value: "(nextSubStepId?: string) => void",
+    },
+    {
+      name: "openDrawer",
+      description: "Open a registered drawer and await the result",
+      required: true,
+      value:
+        "(drawerId: string, props?: Record<string, unknown>) => Promise<DrawerResult>",
+    },
+  ]}
+/>
+
+## Best Practices
+
+1. **Type Your State** — Use TypeScript generics with `useFlowCard<StateType>()` to get autocomplete for your accumulated state.
+
+2. **One Concern Per Card** — Each card should represent a single logical step. If a card is doing too much, split it into multiple cards.
+
+3. **Use `next` for Linear Flows** — Define `next` in your flow config for the happy path. Only pass explicit `nextSubStepId` to `complete()` or `skip()` for conditional branching.
+
+4. **Handle Drawer Cancellation** — Always check `result.success` after awaiting `openDrawer()`.
+
+5. **Choose the Right Layout** — Use `SinglePaneStepper` for focused, linear flows. Use `DualPaneStepper` when users need a persistent stepper rail alongside a larger card workspace.
+
+6. **Test Back Navigation** — Verify that your flow works correctly when users navigate backward via the timeline.
+
+## Accessibility
+
+The Single Pane Stepper implements the following accessibility features:
+
+- **ARIA**: Uses `aria-current="step"` on the active step, `aria-label` on step buttons, and `aria-live="polite"` for step change announcements
+- **Keyboard Navigation**: Supports ArrowUp/ArrowDown, Home/End on the stepper; standard tab/focus flow on cards
+- **Reduced Motion**: Respects `prefers-reduced-motion` for card transitions and stepper animations
+- **Focus Management**: Scrolls the active card into view when navigating forward
+- **Semantic HTML**: Uses `<nav>` for the stepper and proper heading hierarchy in cards

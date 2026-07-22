@@ -10,5 +10,6 @@ export * from './get-shadow-active-element'
 export * from './schema'
 export * from './task'
 export * from './textarea-utils'
+export * from './query-loading'
 
 export { formatDistanceToNow } from 'date-fns'

@@ -141,6 +141,7 @@ export function StepperRoot({
   onBeforeChange,
   showConnectors = true,
   completed = false,
+  collapsibleSubSteps = false,
   skeletonCount = 3,
   className,
   children
@@ -152,13 +153,17 @@ export function StepperRoot({
       onBeforeChange={onBeforeChange}
       showConnectors={showConnectors}
       completed={completed}
+      collapsibleSubSteps={collapsibleSubSteps}
     >
       {/* Steps/substeps render titles inside Tooltip, which requires a Radix TooltipProvider.
           Provide one here so the Stepper is self-sufficient in any consumer (onboarding drawers,
           single/dual pane steppers, standalone) without each caller having to remember it.
           Radix providers nest safely. */}
       <TooltipProvider>
-        <nav className={cn('cn-stepper', className)} aria-label="Progress steps">
+        <nav
+          className={cn('cn-stepper', collapsibleSubSteps && 'cn-stepper-collapsible-substeps', className)}
+          aria-label="Progress steps"
+        >
           {title && (
             <header className="cn-stepper-header">
               <Text as="span" variant="heading-small" color="foreground-2">

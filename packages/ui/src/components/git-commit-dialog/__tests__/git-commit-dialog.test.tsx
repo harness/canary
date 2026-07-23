@@ -77,19 +77,38 @@ vi.mock('@/components', () => ({
     </form>
   ),
   FormInput: {
-    Text: React.forwardRef(function FormInputText({ id, label, placeholder, autoFocus, ...props }: any, ref: any) {
+    Text: React.forwardRef(function FormInputText(
+      { id, label, placeholder, autoFocus, optional, ...props }: any,
+      ref: any
+    ) {
       return (
         <div data-testid={`form-input-text-${id}`}>
           <label>{label}</label>
-          <input ref={ref} data-testid={`input-${id}`} placeholder={placeholder} autoFocus={autoFocus} {...props} />
+          <input
+            ref={ref}
+            data-testid={`input-${id}`}
+            placeholder={placeholder}
+            autoFocus={autoFocus}
+            data-optional={optional}
+            {...props}
+          />
         </div>
       )
     }),
-    Textarea: React.forwardRef(function FormInputTextarea({ id, label, placeholder, ...props }: any, ref: any) {
+    Textarea: React.forwardRef(function FormInputTextarea(
+      { id, label, placeholder, optional, ...props }: any,
+      ref: any
+    ) {
       return (
         <div data-testid={`form-input-textarea-${id}`}>
           <label>{label}</label>
-          <textarea ref={ref} data-testid={`textarea-${id}`} placeholder={placeholder} {...props} />
+          <textarea
+            ref={ref}
+            data-testid={`textarea-${id}`}
+            placeholder={placeholder}
+            data-optional={optional}
+            {...props}
+          />
         </div>
       )
     }),
@@ -500,6 +519,26 @@ describe('GitCommitDialog', () => {
       // The placeholder is defined in the component
       // We verify the radio item that would trigger showing this input
       expect(screen.getByTestId('radio-item-new-branch')).toBeInTheDocument()
+    })
+  })
+
+  describe('Optional field indicators', () => {
+    test('commit message input has optional prop', () => {
+      render(<GitCommitDialog {...defaultProps} />)
+      const messageInput = screen.getByTestId('input-message')
+      expect(messageInput).toHaveAttribute('data-optional', 'true')
+    })
+
+    test('extended description textarea has optional prop', () => {
+      render(<GitCommitDialog {...defaultProps} />)
+      const descriptionTextarea = screen.getByTestId('textarea-description')
+      expect(descriptionTextarea).toHaveAttribute('data-optional', 'true')
+    })
+
+    test('file name input does not have optional prop when isFileNameRequired is true', () => {
+      render(<GitCommitDialog {...defaultProps} isFileNameRequired />)
+      const fileNameInput = screen.getByTestId('input-fileName')
+      expect(fileNameInput).not.toHaveAttribute('data-optional', 'true')
     })
   })
 

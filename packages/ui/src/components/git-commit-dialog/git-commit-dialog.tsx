@@ -151,6 +151,7 @@ export const GitCommitDialog: FC<GitCommitDialogProps> = ({
               placeholder={
                 commitTitlePlaceHolder ?? t('component:commitDialog.form.commit.placeholder', 'Add a commit message')
               }
+              optional
             />
 
             <FormInput.Textarea
@@ -161,6 +162,7 @@ export const GitCommitDialog: FC<GitCommitDialogProps> = ({
                 'Add an optional extended description'
               )}
               label={t('component:commitDialog.form.description.label', 'Extended description')}
+              optional
             />
 
             <ControlGroup className="gap-cn-sm">

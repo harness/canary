@@ -58,7 +58,7 @@ export const DrawerHeader = forwardRef<HTMLDivElement, DrawerHeaderProps>(
         {(!!titleChildren.length || !!IconOrLogoComp) && (
           <div className="cn-drawer-header-top gap-cn-xs flex items-center">
             {IconOrLogoComp}
-            <div className="cn-drawer-header-title flex-1">{titleChildren}</div>
+            <div className="cn-drawer-header-title flex-1 overflow-hidden">{titleChildren}</div>
             {!hideClose && (
               <DrawerPrimitive.Close asChild>
                 <Button className="cn-drawer-close-button" variant="ghost" iconOnly ignoreIconOnlyTooltip>

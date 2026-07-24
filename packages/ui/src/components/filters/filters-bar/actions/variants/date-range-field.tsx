@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react'
-import { type DateRange } from 'react-day-picker'
+import { ClassNames, type DateRange } from 'react-day-picker'
 
 import { DropdownMenu, Calendar as UICalendar } from '@/components'
 import { cn } from '@utils/cn'
@@ -15,13 +15,15 @@ import {
   subMonths
 } from 'date-fns'
 
-import { DateRangePreset, DateRangeValue, FilterFieldConfig } from '../../../types'
+import { DateRangeCalendarProps, DateRangePreset, DateRangeValue, FilterFieldConfig } from '../../../types'
 
 interface DateRangeFieldProps {
   filter: FilterFieldConfig<DateRangeValue>
   presets?: DateRangePreset[]
   showCustomRange?: boolean
   onUpdateFilter: (filterValue?: DateRangeValue) => void
+  calendarProps?: DateRangeCalendarProps
+  calendarClassNames?: ClassNames
 }
 
 const formatRangeLabel = (from: Date, to: Date): string => {
@@ -222,7 +224,14 @@ const PresetList = ({
   </div>
 )
 
-const DateRangeField = ({ filter, presets, showCustomRange = true, onUpdateFilter }: DateRangeFieldProps) => {
+const DateRangeField = ({
+  filter,
+  presets,
+  showCustomRange = true,
+  onUpdateFilter,
+  calendarProps,
+  calendarClassNames
+}: DateRangeFieldProps) => {
   const [selectedRange, setSelectedRange] = useState<DateRange | undefined>(
     filter.value ? { from: new Date(filter.value.from), to: new Date(filter.value.to) } : undefined
   )
@@ -261,6 +270,7 @@ const DateRangeField = ({ filter, presets, showCustomRange = true, onUpdateFilte
 
   const calendarContent = (
     <UICalendar
+      {...calendarProps}
       mode="range"
       numberOfMonths={2}
       selected={selectedRange}
@@ -274,7 +284,8 @@ const DateRangeField = ({ filter, presets, showCustomRange = true, onUpdateFilte
           '[&:has(>.day-range-end)]:rounded-r-cn-3 [&:has(>.day-range-start)]:rounded-l-cn-3 first:[&:has([aria-selected])]:rounded-l-cn-3 last:[&:has([aria-selected])]:rounded-r-cn-3',
           '[&:has([aria-selected])]:bg-cn-brand-primary/10 [&:has([aria-selected].day-outside)]:bg-cn-brand-primary/5 [&:has([aria-selected].day-range-end)]:rounded-r-cn-3'
         ),
-        day_range_middle: 'aria-selected:bg-transparent aria-selected:text-cn-1'
+        day_range_middle: 'aria-selected:bg-transparent aria-selected:text-cn-1',
+        ...calendarClassNames
       }}
     />
   )

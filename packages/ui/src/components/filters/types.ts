@@ -1,7 +1,13 @@
 import { JSX, ReactNode } from 'react'
+import { ClassNames, DayPickerRangeProps } from 'react-day-picker'
 
 import { ComboBoxOptions } from '@components/filters/filters-bar/actions/variants/combo-box'
 import { MultiSelectOption, MultiSelectProps } from '@components/multi-select'
+
+export type DateRangeCalendarProps = Omit<
+  DayPickerRangeProps,
+  'mode' | 'numberOfMonths' | 'selected' | 'onSelect' | 'month' | 'onMonthChange' | 'classNames'
+>
 
 export type Parser<T> = {
   parse: (value: string) => T
@@ -125,6 +131,8 @@ interface DateRangeFilterOptionConfig<T extends string = string> extends FilterO
   filterFieldConfig?: {
     presets?: DateRangePreset[]
     showCustomRange?: boolean
+    calendarProps?: DateRangeCalendarProps
+    calendarClassNames?: ClassNames
   }
 }
 

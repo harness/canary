@@ -75,6 +75,8 @@ const FilterFieldInternal = <T extends string, V extends FilterValueTypes, Custo
           filter={dateRangeFilter}
           presets={filterOption.filterFieldConfig?.presets}
           showCustomRange={filterOption.filterFieldConfig?.showCustomRange}
+          calendarProps={filterOption.filterFieldConfig?.calendarProps}
+          calendarClassNames={filterOption.filterFieldConfig?.calendarClassNames}
           onUpdateFilter={values => {
             onUpdateFilter(values as V)
             values && setIsOpen(false)

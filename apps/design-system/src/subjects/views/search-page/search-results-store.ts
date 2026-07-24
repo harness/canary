@@ -256,7 +256,7 @@ export const searchResultsStore: SearchResultsStore = {
       end_line: 42,
       file_name: 'search-validator.ts',
       lines: [
-        'import { z } from "zod";',
+        'import { z } from "zod/v3";',
         'import type { Request, Response, NextFunction } from "express";',
         '',
         'const searchQuerySchema = z.object({',

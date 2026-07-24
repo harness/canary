@@ -4,7 +4,7 @@ import { useForm } from 'react-hook-form'
 import { CardSelect, Checkbox, ControlGroup, Layout, Message, MessageTheme, Skeleton, Text } from '@harnessio/ui/components'
 import { useTranslation } from '@harnessio/ui/context'
 import { zodResolver } from '@hookform/resolvers/zod'
-import { z } from 'zod'
+import { z } from 'zod/v3'
 
 import { ErrorTypes, VulnerabilityScanningType } from '../types'
 

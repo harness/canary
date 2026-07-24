@@ -16,7 +16,7 @@ import {
 } from '@harnessio/ui/components'
 import { SandboxLayout } from '@views'
 import { zodResolver } from '@hookform/resolvers/zod'
-import { z } from 'zod'
+import { z } from 'zod/v3'
 
 import { ProviderOptionsEnum } from './types'
 

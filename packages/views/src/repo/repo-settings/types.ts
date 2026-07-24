@@ -1,5 +1,5 @@
 import { RepoBranchSettingsFormFields } from '@views'
-import { z } from 'zod'
+import { z } from 'zod/v3'
 
 import { PrincipalType, TypesUserGroupInfo } from '@harnessio/ui/types'
 
@@ -44,7 +44,7 @@ export enum ErrorTypes {
   UPDATE_GENERAL = 'updateGeneral'
 }
 
-export type RepoUpdateData = z.infer<typeof generalSettingsFormSchema>
+export type RepoUpdateData = z.input<typeof generalSettingsFormSchema>
 export * from './components/repo-settings-general-features'
 
 export enum VulnerabilityScanningType {

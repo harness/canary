@@ -19,7 +19,7 @@ import {
 import { useTranslation } from '@harnessio/ui/context'
 import { SandboxLayout, TypesSpace } from '@views'
 import { zodResolver } from '@hookform/resolvers/zod'
-import { z } from 'zod'
+import { z } from 'zod/v3'
 
 interface ProjectSettingsGeneralPageProps {
   data?: TypesSpace

@@ -33,7 +33,7 @@ export interface RootFormProps<TFieldValues extends FieldValues = FieldValues, T
   mode: 'onBlur' | 'onChange' | 'onSubmit' | 'onTouched' | 'all' | undefined
   children:
     | JSX.Element
-    | ((props: UseFormReturn<TFieldValues, any, undefined> & { submitForm: () => void }) => JSX.Element)
+    | ((props: UseFormReturn<TFieldValues, any, TFieldValues> & { submitForm: () => void }) => JSX.Element)
   validateAfterFirstSubmit?: boolean
   /**
    * This is passed to input handlers

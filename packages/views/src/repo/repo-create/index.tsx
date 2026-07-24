@@ -4,7 +4,7 @@ import { useForm } from 'react-hook-form'
 import { zodResolver } from '@hookform/resolvers/zod'
 import { SandboxLayout } from '@views'
 import { isEmpty } from 'lodash-es'
-import { z } from 'zod'
+import { z } from 'zod/v3'
 
 import {
   Alert,
@@ -56,7 +56,7 @@ const formSchema = z.object({
     .default([])
 })
 
-export type FormFields = z.infer<typeof formSchema> // Automatically generate a type from the schema
+export type FormFields = z.input<typeof formSchema> // Automatically generate a type from the schema
 
 interface RepoCreatePageProps {
   onFormSubmit: (data: FormFields) => void

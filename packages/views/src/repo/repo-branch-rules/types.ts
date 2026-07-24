@@ -2,7 +2,7 @@ import { FieldErrors, UseFormRegister, UseFormSetValue, UseFormWatch } from 'rea
 
 import { MessageTheme } from '@harnessio/ui/components'
 import { MultiSelectOption } from '@harnessio/ui/components'
-import { z } from 'zod'
+import { z } from 'zod/v3'
 
 import { MergeStrategy } from '../pull-request/details/pull-request-details-types'
 

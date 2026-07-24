@@ -4,7 +4,7 @@ import { useForm } from 'react-hook-form'
 import { Alert, Button, ButtonLayout, Dialog, FormInput, FormWrapper } from '@/components'
 import { UsererrorError } from '@/types'
 import { zodResolver } from '@hookform/resolvers/zod'
-import { z } from 'zod'
+import { z } from 'zod/v3'
 
 export interface CommitSuggestionsFormType {
   message?: string

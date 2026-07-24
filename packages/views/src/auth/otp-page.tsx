@@ -4,7 +4,7 @@ import { Fragment } from 'react/jsx-runtime'
 
 import { Alert, Button, InputOTP, Spacer, Text } from '@harnessio/ui/components'
 import { zodResolver } from '@hookform/resolvers/zod'
-import { z } from 'zod'
+import { z } from 'zod/v3'
 
 import { Floating1ColumnLayout } from '..'
 import { Agreements } from './components/agreements'

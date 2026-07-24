@@ -5,7 +5,7 @@ import { Alert, Button, ButtonLayout, ControlGroup, Dialog, FormInput, FormWrapp
 import { TFunctionWithFallback, useTranslation } from '@harnessio/ui/context'
 import { zodResolver } from '@hookform/resolvers/zod'
 import { BranchSelectorContainerProps } from '@views/repo/components'
-import { z } from 'zod'
+import { z } from 'zod/v3'
 
 interface PullRequestHeaderEditDialogProps {
   open: boolean

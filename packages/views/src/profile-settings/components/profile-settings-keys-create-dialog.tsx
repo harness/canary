@@ -5,7 +5,7 @@ import { Alert, Button, ButtonLayout, Dialog, FormInput, FormWrapper } from '@ha
 import { useTranslation } from '@harnessio/ui/context'
 import { ApiErrorType } from '@views'
 import { zodResolver } from '@hookform/resolvers/zod'
-import { z } from 'zod'
+import { z } from 'zod/v3'
 
 type SshKeyFormType = z.infer<typeof formSchema>
 

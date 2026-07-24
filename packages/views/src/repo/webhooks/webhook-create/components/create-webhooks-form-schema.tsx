@@ -1,4 +1,4 @@
-import { z } from 'zod'
+import { z } from 'zod/v3'
 
 import { SSLVerificationEnum, TriggerEventsEnum, WebhookTriggerEnum } from '../types'
 

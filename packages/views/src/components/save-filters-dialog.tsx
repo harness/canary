@@ -5,7 +5,7 @@ import { Alert, Button, ButtonLayout, Dialog, FormInput, FormWrapper, Radio } fr
 import { useTranslation } from '@harnessio/ui/context'
 import { identifierSchema } from '@harnessio/ui/utils'
 import { zodResolver } from '@hookform/resolvers/zod'
-import { z } from 'zod'
+import { z } from 'zod/v3'
 
 interface SavedFilterError {
   errMessage: string

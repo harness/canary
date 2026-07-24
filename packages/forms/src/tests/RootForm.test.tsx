@@ -2,7 +2,7 @@ import { useForm } from 'react-hook-form'
 
 import { render, screen, waitFor } from '@testing-library/react'
 import userEvent from '@testing-library/user-event'
-import { z } from 'zod'
+import { z } from 'zod/v3'
 
 import '@testing-library/jest-dom'
 

@@ -15,7 +15,7 @@ import {
 import { SandboxLayout } from '@views'
 import { zodResolver } from '@hookform/resolvers/zod'
 import { ProviderOptionsEnum } from '@views/repo/repo-import/types'
-import { z } from 'zod'
+import { z } from 'zod/v3'
 
 const formSchema = z
   .object({

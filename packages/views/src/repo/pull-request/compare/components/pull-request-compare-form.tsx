@@ -5,7 +5,7 @@ import { Alert, FormInput, FormWrapper, Layout, Skeleton, Text } from '@harnessi
 import { useTranslation } from '@harnessio/ui/context'
 import { HandleAiPullRequestSummaryType, HandleUploadType, PrincipalPropsType, PullRequestCommentBox } from '@views'
 import { isEmpty, noop } from 'lodash-es'
-import { z } from 'zod'
+import { z } from 'zod/v3'
 
 // Define the form schema
 const formSchemaCompare = z.object({

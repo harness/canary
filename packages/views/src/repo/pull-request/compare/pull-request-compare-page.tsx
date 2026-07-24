@@ -19,7 +19,7 @@ import PullRequestCompareButton from '@views/repo/pull-request/compare/component
 import PullRequestCompareForm from '@views/repo/pull-request/compare/components/pull-request-compare-form'
 import { combineAndNormalizePrincipalsAndGroups } from '@views/repo/utils'
 import { noop } from 'lodash-es'
-import { z } from 'zod'
+import { z } from 'zod/v3'
 
 import {
   Avatar,

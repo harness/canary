@@ -19,7 +19,7 @@ import {
 import { useTranslation } from '@/context'
 import { UsererrorError, ViolationState } from '@/types'
 import { zodResolver } from '@hookform/resolvers/zod'
-import { z } from 'zod'
+import { z } from 'zod/v3'
 
 export const createGitCommitSchema = (isFileNameRequired: boolean) => {
   const fileNameSchema = isFileNameRequired ? z.string().min(1, 'File Name is required') : z.string().optional()

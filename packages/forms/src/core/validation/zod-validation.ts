@@ -1,5 +1,5 @@
 import { get, isArray, isEmpty, isObject, isUndefined, merge, set } from 'lodash-es'
-import * as zod from 'zod'
+import * as zod from 'zod/v3'
 
 import type { AnyFormValue, IFormDefinition, IGlobalValidationConfig, IInputDefinition } from '../../types/types'
 

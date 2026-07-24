@@ -2,7 +2,7 @@ import { useEffect, useState } from 'react'
 import { useForm } from 'react-hook-form'
 
 import { zodResolver } from '@hookform/resolvers/zod'
-import { z } from 'zod'
+import { z } from 'zod/v3'
 
 import { Alert, Button, ButtonLayout, Dialog, FormInput, FormWrapper, Radio } from '@harnessio/ui/components'
 import { useTranslation } from '@harnessio/ui/context'

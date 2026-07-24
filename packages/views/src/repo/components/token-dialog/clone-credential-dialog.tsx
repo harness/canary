@@ -4,7 +4,7 @@ import { useForm } from 'react-hook-form'
 import { Button, ButtonLayout, CopyButton, Dialog, TextInput } from '@harnessio/ui/components'
 import { useTranslation } from '@harnessio/ui/context'
 import { zodResolver } from '@hookform/resolvers/zod'
-import { z } from 'zod'
+import { z } from 'zod/v3'
 
 interface RoutingProps {
   navigateToManageToken?: () => void

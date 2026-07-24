@@ -3,7 +3,7 @@ import { useForm } from 'react-hook-form'
 
 import { Alert, Button, FormInput, FormWrapper, Link, Spacer, Text } from '@harnessio/ui/components'
 import { zodResolver } from '@hookform/resolvers/zod'
-import { z } from 'zod'
+import { z } from 'zod/v3'
 
 import { Floating1ColumnLayout } from '..'
 import { Agreements } from './components/agreements'

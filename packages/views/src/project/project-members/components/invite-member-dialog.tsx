@@ -7,7 +7,7 @@ import { PrincipalType } from '@harnessio/ui/types'
 import { InviteMemberDialogProps, InviteMemberFormFields } from '@views'
 import { zodResolver } from '@hookform/resolvers/zod'
 import { getRolesData } from '@views/project/project-members/constants'
-import { z } from 'zod'
+import { z } from 'zod/v3'
 
 export const inviteMemberFormSchema = z.object({
   member: z.string().min(1, { message: 'Member name is required' }),

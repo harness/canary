@@ -1,4 +1,4 @@
-import type { Schema } from 'zod'
+import type { Schema } from 'zod/v3'
 
 /** @deprecated use AnyFormValue */
 export type AnyFormikValue = any

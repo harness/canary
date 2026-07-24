@@ -4,7 +4,6 @@ import { useQueryClient } from '@tanstack/react-query'
 
 import {
   EnumMembershipRole,
-  useListPrincipalsQuery,
   useMembershipAddMutation,
   useMembershipDeleteMutation,
   useMembershipListQuery,
@@ -15,6 +14,7 @@ import { PrincipalType } from '@harnessio/ui/types'
 import { InviteMemberFormFields, MembersProps, ProjectMemberListView } from '@harnessio/views'
 
 import { useGetSpaceURLParam } from '../../framework/hooks/useGetSpaceParam'
+import { useListPrincipalsWithScope } from '../../framework/hooks/useListPrincipalsWithScope'
 import { useMFEContext } from '../../framework/hooks/useMFEContext'
 import { useQueryState } from '../../framework/hooks/useQueryState'
 import usePaginationQueryStateWithStore from '../../hooks/use-pagination-query-state-with-store'
@@ -43,7 +43,7 @@ export function ProjectMemberListPage() {
 
   const { queryPage } = usePaginationQueryStateWithStore({ page, setPage })
 
-  const { data: { body: principalData } = {} } = useListPrincipalsQuery({
+  const { data: { body: principalData } = {} } = useListPrincipalsWithScope({
     // @ts-expect-error : BE issue - not implemented
     queryParams: { page: 1, limit: 100, type: 'user', query: principalsSearchQuery, accountIdentifier: accountId }
   })
@@ -109,7 +109,7 @@ export function ProjectMemberListPage() {
   }
 
   /**
-   * - Reset principalsSearchQuery to empty state, need to trigger fetch useListPrincipalsQuery with no search state.
+   * - Reset principalsSearchQuery to trigger a principal fetch without a search value.
    * - Reset useMembershipAddMutation
    */
   useEffect(() => {

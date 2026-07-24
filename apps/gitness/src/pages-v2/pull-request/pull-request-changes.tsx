@@ -17,7 +17,6 @@ import {
   useFileViewDeletePullReqMutation,
   useFileViewListPullReqQuery,
   useGetBranchQuery,
-  useListPrincipalsQuery,
   useListPullReqActivitiesQuery,
   useRawDiffQuery,
   useReviewerListPullReqQuery
@@ -35,6 +34,7 @@ import CommitSuggestionsDialog from '../../components-v2/commit-suggestions-dial
 import { useAppContext } from '../../framework/context/AppContext'
 import { useGetRepoRef } from '../../framework/hooks/useGetRepoPath'
 import { useIsMFE } from '../../framework/hooks/useIsMFE'
+import { useListPrincipalsWithScope } from '../../framework/hooks/useListPrincipalsWithScope'
 import { useMFEContext } from '../../framework/hooks/useMFEContext'
 import { useQueryState } from '../../framework/hooks/useQueryState'
 import { PathParams } from '../../RouteDefinitions'
@@ -102,7 +102,7 @@ export default function PullRequestChanges() {
     data: { body: principals } = {},
     isLoading: isPrincipalsLoading,
     error: principalsError
-  } = useListPrincipalsQuery({
+  } = useListPrincipalsWithScope({
     // @ts-expect-error : BE issue - not implemnted
     queryParams: { page: 1, limit: 100, type: 'user', query: searchPrincipalsQuery, accountIdentifier: accountId }
   })

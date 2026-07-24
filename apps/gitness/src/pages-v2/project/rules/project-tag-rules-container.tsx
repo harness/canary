@@ -3,10 +3,8 @@ import { useNavigate, useParams } from 'react-router-dom'
 
 import {
   TypesUserGroupInfo,
-  useListPrincipalsQuery,
   useListReposQuery,
   useListStatusCheckRecentSpaceQuery,
-  useListUsergroupsQuery,
   useSpaceRuleAddMutation,
   useSpaceRuleGetQuery,
   useSpaceRuleUpdateMutation
@@ -26,6 +24,8 @@ import {
 import { useRoutes } from '../../../framework/context/NavigationContext'
 import { useGetSpaceURLParam } from '../../../framework/hooks/useGetSpaceParam'
 import { useIsMFE } from '../../../framework/hooks/useIsMFE'
+import { useListPrincipalsWithScope } from '../../../framework/hooks/useListPrincipalsWithScope'
+import { useListUsergroupsWithScope } from '../../../framework/hooks/useListUsergroupsWithScope'
 import { useMFEContext } from '../../../framework/hooks/useMFEContext'
 import { transformDataFromApi } from '../../../utils/repo-branch-rules-utils'
 import { transformFormOutput } from '../../../utils/repo-tag-rules-utils'
@@ -90,7 +90,7 @@ export const ProjectTagRulesContainer = () => {
 
   const isMFE = useIsMFE()
 
-  const { data: { body: principals } = {}, error: principalsError } = useListPrincipalsQuery({
+  const { data: { body: principals } = {}, error: principalsError } = useListPrincipalsWithScope({
     queryParams: {
       page: 1,
       limit: 100,
@@ -107,7 +107,7 @@ export const ProjectTagRulesContainer = () => {
     }
   })
 
-  const { data: { body: userGroups } = {}, error: userGroupsError } = useListUsergroupsQuery(
+  const { data: { body: userGroups } = {}, error: userGroupsError } = useListUsergroupsWithScope(
     {
       space_ref: `${spaceRef}/+`,
       queryParams: {

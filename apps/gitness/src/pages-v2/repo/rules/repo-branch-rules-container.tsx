@@ -3,9 +3,7 @@ import { useNavigate, useParams } from 'react-router-dom'
 
 import {
   TypesUserGroupInfo,
-  useListPrincipalsQuery,
   useListStatusCheckRecentQuery,
-  useListUsergroupsQuery,
   useRepoRuleAddMutation,
   useRepoRuleGetQuery,
   useRepoRuleUpdateMutation
@@ -28,6 +26,8 @@ import { useGetRepoId } from '../../../framework/hooks/useGetRepoId'
 import { useGetRepoRef } from '../../../framework/hooks/useGetRepoPath'
 import { useGetSpaceURLParam } from '../../../framework/hooks/useGetSpaceParam'
 import { useIsMFE } from '../../../framework/hooks/useIsMFE'
+import { useListPrincipalsWithScope } from '../../../framework/hooks/useListPrincipalsWithScope'
+import { useListUsergroupsWithScope } from '../../../framework/hooks/useListUsergroupsWithScope'
 import { useMFEContext } from '../../../framework/hooks/useMFEContext'
 import { PathParams } from '../../../RouteDefinitions'
 import { transformFormOutput } from '../../../utils/repo-branch-rules-utils'
@@ -96,7 +96,7 @@ export const RepoBranchRulesContainer = () => {
 
   const isMFE = useIsMFE()
 
-  const { data: { body: principals } = {}, error: principalsError } = useListPrincipalsQuery({
+  const { data: { body: principals } = {}, error: principalsError } = useListPrincipalsWithScope({
     queryParams: {
       page: 1,
       limit: 100,
@@ -113,7 +113,7 @@ export const RepoBranchRulesContainer = () => {
     }
   })
 
-  const { data: { body: userGroups } = {}, error: userGroupsError } = useListUsergroupsQuery(
+  const { data: { body: userGroups } = {}, error: userGroupsError } = useListUsergroupsWithScope(
     {
       space_ref: `${spaceURL}/+`,
       queryParams: {

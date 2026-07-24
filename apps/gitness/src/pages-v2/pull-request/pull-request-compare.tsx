@@ -18,8 +18,6 @@ import {
   useGetContentQuery,
   useGetPullReqByBranchesQuery,
   useListCommitsQuery,
-  useListPrincipalsQuery,
-  useListUsergroupsQuery,
   useRawDiffQuery
 } from '@harnessio/code-service-client'
 import { IconV2, Layout } from '@harnessio/ui/components'
@@ -44,6 +42,8 @@ import { useRoutes } from '../../framework/context/NavigationContext'
 import { useGetRepoRef } from '../../framework/hooks/useGetRepoPath'
 import { useGetSpaceURLParam } from '../../framework/hooks/useGetSpaceParam.ts'
 import { useIsMFE } from '../../framework/hooks/useIsMFE.ts'
+import { useListPrincipalsWithScope } from '../../framework/hooks/useListPrincipalsWithScope'
+import { useListUsergroupsWithScope } from '../../framework/hooks/useListUsergroupsWithScope'
 import { useMFEContext } from '../../framework/hooks/useMFEContext'
 import { useQueryState } from '../../framework/hooks/useQueryState'
 import { useAPIPath } from '../../hooks/useAPIPath.ts'
@@ -224,7 +224,7 @@ export const CreatePullRequest = () => {
     data: { body: principals } = {},
     isLoading: isPrincipalsLoading,
     error: principalsError
-  } = useListPrincipalsQuery({
+  } = useListPrincipalsWithScope({
     // @ts-expect-error : BE issue - not implemented
     queryParams: { page: 1, limit: 100, type: 'user', query: searchReviewers, accountIdentifier: accountId }
   })
@@ -233,7 +233,7 @@ export const CreatePullRequest = () => {
     data: { body: userGroups } = {},
     isLoading: isUserGroupsLoading,
     error: userGroupsError
-  } = useListUsergroupsQuery(
+  } = useListUsergroupsWithScope(
     {
       space_ref: `${spaceURL}/+`,
       queryParams: {

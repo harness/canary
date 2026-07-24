@@ -25,9 +25,7 @@ import {
   useDeletePullReqSourceBranchMutation,
   useFindGeneralSettingsQuery,
   useGetBranchQuery,
-  useListPrincipalsQuery,
   useListPullReqActivitiesQuery,
-  useListUsergroupsQuery,
   usePrAutoMergeDisableMutation,
   usePrAutoMergeEnableMutation,
   usePrAutoMergeGetQuery,
@@ -59,6 +57,8 @@ import { useRoutes } from '../../framework/context/NavigationContext'
 import { eventManager } from '../../framework/event/EventManager.ts'
 import { useGetRepoRef } from '../../framework/hooks/useGetRepoPath'
 import { useGetSpaceURLParam } from '../../framework/hooks/useGetSpaceParam.ts'
+import { useListPrincipalsWithScope } from '../../framework/hooks/useListPrincipalsWithScope'
+import { useListUsergroupsWithScope } from '../../framework/hooks/useListUsergroupsWithScope'
 import { useMFEContext } from '../../framework/hooks/useMFEContext'
 import { useQueryState } from '../../framework/hooks/useQueryState'
 import { useAPIPath } from '../../hooks/useAPIPath.ts'
@@ -273,7 +273,7 @@ export default function PullRequestConversationPage() {
     data: { body: principals } = {},
     isLoading: _isPrincipalsLoading,
     error: principalsError
-  } = useListPrincipalsQuery({
+  } = useListPrincipalsWithScope({
     // @ts-expect-error : BE issue - not implemented
     queryParams: { page: 1, limit: 100, type: 'user', query: searchPrincipalsQuery, accountIdentifier: accountId }
   })
@@ -282,7 +282,7 @@ export default function PullRequestConversationPage() {
     data: { body: userGroups } = {},
     isLoading: isUserGroupsLoading,
     error: userGroupsError
-  } = useListUsergroupsQuery(
+  } = useListUsergroupsWithScope(
     {
       space_ref: `${spaceURL}/+`,
       queryParams: {

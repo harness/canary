@@ -8,7 +8,6 @@ import {
   ListPullReqQueryQueryParams,
   TypesPrincipalInfo,
   useGetUserQuery,
-  useListPrincipalsQuery,
   useListPullReqQuery,
   usePrCandidatesQuery
 } from '@harnessio/code-service-client'
@@ -20,6 +19,7 @@ import {
 
 import { useRoutes } from '../../framework/context/NavigationContext'
 import { useGetRepoRef } from '../../framework/hooks/useGetRepoPath'
+import { useListPrincipalsWithScope } from '../../framework/hooks/useListPrincipalsWithScope'
 import { useMFEContext } from '../../framework/hooks/useMFEContext'
 import { useQueryState } from '../../framework/hooks/useQueryState'
 import usePaginationQueryStateWithStore from '../../hooks/use-pagination-query-state-with-store'
@@ -163,7 +163,7 @@ export default function PullRequestListPage() {
   const defaultSelectedAuthor = selectedAuthors[0]
   const defaultSelectedAuthorError = selectedAuthorQueries.find(q => q.error)?.error || undefined
 
-  const { data: { body: principalDataList } = {}, isFetching: fetchingPrincipalData } = useListPrincipalsQuery(
+  const { data: { body: principalDataList } = {}, isFetching: fetchingPrincipalData } = useListPrincipalsWithScope(
     {
       queryParams: {
         page: 1,

@@ -58,6 +58,7 @@ interface FilterGroupProps<
     savedFiltersOptions: { value: string; label: string }[]
     onSaveFilters: SaveFiltersDialogProps['onSubmit']
     getSavedFiltersValues: (savedFilterId: string) => Promise<T>
+    onDeleteSavedFilter?: (savedFilterId: string) => Promise<void> | void
   }
 }
 
@@ -96,7 +97,8 @@ const FilterGroupInner = <
     savedFilterKey = 'filterIdentifier',
     savedFiltersOptions,
     onSaveFilters,
-    getSavedFiltersValues
+    getSavedFiltersValues,
+    onDeleteSavedFilter
   } = savedFiltersConfig ?? {}
 
   const FilterHandler = useMemo(() => createFilters<T>(), [])
@@ -199,7 +201,11 @@ const FilterGroupInner = <
                   </FilterHandler.Dropdown>
                 )}
                 {!!savedFiltersOptions?.length && (
-                  <SavedFilters savedFilterKey={savedFilterKey} options={savedFiltersOptions} />
+                  <SavedFilters
+                    savedFilterKey={savedFilterKey}
+                    options={savedFiltersOptions}
+                    onDeleteSavedFilter={onDeleteSavedFilter}
+                  />
                 )}
               </Layout.Horizontal>
             </ListActions.Left>

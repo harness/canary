@@ -58,6 +58,10 @@ export default {
       '--tw-enter-translate-x': '8px'
     },
 
+    '&.cn-saved-filters-dropdown': {
+      '--cn-dropdown-item-py': 'var(--cn-spacing-1)'
+    },
+
     '&-container': {
       padding: 'var(--cn-dropdown-container)',
       minWidth: '0',
@@ -92,12 +96,22 @@ export default {
       minWidth: '0',
       '@apply transition-colors': '',
 
+      '& .cn-saved-filter-delete': {
+        opacity: '0',
+        flexShrink: '0',
+        transition: 'opacity 150ms ease'
+      },
+
       '&:not(:where([aria-disabled=true]))': {
         '&:where([data-highlighted]), &:where([data-state="open"])': {
           backgroundColor: 'var(--cn-state-hover)',
           outline: 'none',
           cursor: 'default'
         }
+      },
+
+      '&:where([data-highlighted]) .cn-saved-filter-delete, &:hover .cn-saved-filter-delete': {
+        opacity: '1'
       },
 
       '&-subtrigger': {

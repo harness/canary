@@ -1,6 +1,6 @@
 {
   "name": "@harnessio/filters",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "main": "dist/index.js",
   "types": "dist/index.d.ts",
   "scripts": {
@@ -30,7 +30,7 @@
     "zod": "^4.0.0"
   },
   "peerDependencies": {
-    "@harnessio/ui": ">=1.0.0",
+    "@harnessio/ui": ">=1.0.4",
     "react": ">=17.0.0 <19.0.0",
     "react-dom": ">=17.0.0 <19.0.0",
     "react-router-dom": ">=5.0.0 <7.0.0"

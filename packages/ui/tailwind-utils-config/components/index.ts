@@ -14,7 +14,10 @@ import checkboxTreeStyles from './checkbox-tree'
 import dialogStyles from './dialog'
 import drawerStyles from './drawer'
 import dropdownStyles from './dropdown-menu'
+import dualPaneStepperStyles from './dual-pane-stepper'
+import flowStepperCardStyles from './flow-stepper-card'
 import formSharedStyles from './form-shared-styles'
+import gaugeStyles from './gauge'
 import iconsAndLogos from './icon-and-logo'
 import inputStyles from './input'
 import labelStyles from './label'
@@ -36,12 +39,9 @@ import selectStyles from './select'
 import shimmerStyles from './shimmer'
 import shortcutStyle from './shortcut'
 import sidebarStyles from './sidebar'
+import singlePaneStepperStyles from './single-pane-stepper'
 import skeletonStyles from './skeleton'
 import sliderStyles from './slider'
-import dualPaneStepperStyles from './dual-pane-stepper'
-import singlePaneStepperStyles from './single-pane-stepper'
-import flowStepperCardStyles from './flow-stepper-card'
-import yamlOutputStyles from './yaml-output'
 import stackedListStyles from './stacked-list'
 import stepperStyles from './stepper'
 import stickyListSectionStyles from './sticky-list-section'
@@ -58,6 +58,7 @@ import toggleStyles from './toggle'
 import toggleGroupStyles from './toggle-group'
 import tooltipStyles from './tooltip'
 import treeStyles from './tree'
+import yamlOutputStyles from './yaml-output'
 
 export const ComponentStyles = [
   accordionStyles,
@@ -74,6 +75,7 @@ export const ComponentStyles = [
   cardSelectStyles,
   paginationStyles,
   progressStyles,
+  gaugeStyles,
   drawerStyles,
   buttonLayoutStyles,
   tabsStyles,

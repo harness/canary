@@ -11,6 +11,7 @@ import DataTableDemo from '@subjects/views/data-table-demo'
 import DataTableGroupedHeadersDemo from '@subjects/views/data-table-grouped-headers-demo'
 import DraggableCardsDemo from '@subjects/views/draggable-cards-demo'
 import ExecutionListWrapper from '@subjects/views/execution-list/execution-list'
+import GaugeDemo from '@subjects/views/gauge-demo'
 import { LabelsForm } from '@subjects/views/labels/labels-form'
 import { ProjectLabelsList } from '@subjects/views/labels/project-labels-list'
 import { RepoLabelsList } from '@subjects/views/labels/repo-labels-list'
@@ -593,6 +594,14 @@ export const viewPreviews: Record<string, ViewPreviewGroup> = {
         element: (
           <RootViewWrapper>
             <WaterfallProgressDemo />
+          </RootViewWrapper>
+        )
+      },
+      'gauge-demo': {
+        label: 'Gauge',
+        element: (
+          <RootViewWrapper>
+            <GaugeDemo />
           </RootViewWrapper>
         )
       }

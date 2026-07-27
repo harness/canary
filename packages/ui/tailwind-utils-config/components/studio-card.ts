@@ -282,17 +282,17 @@ export default {
     'background-color': 'var(--cn-set-purple-outline-bg)',
     'border-color': 'var(--cn-set-purple-outline-border)',
 
-    /**
-     * For the corner scoop effect
-     */
+    // NOT a reusable pattern — values are hand-tuned to --cn-rounded-6.
+    // Width, height, bottom offset, and gradient stops must all be
+    // recalculated together if the card's corner radius changes.
     '&::before': {
       content: '""',
       position: 'absolute',
-      bottom: '-8px',
+      bottom: 'calc(-1 * var(--cn-rounded-6))',
       right: '-1px',
-      width: '8px',
-      height: '8px',
-      background: `radial-gradient(circle at bottom left, transparent 0px, transparent 7px, var(--cn-set-purple-outline-border) 7px, var(--cn-set-purple-outline-border) 8px, var(--cn-set-purple-outline-bg) 7px)`,
+      width: 'var(--cn-rounded-6)',
+      height: 'var(--cn-rounded-6)',
+      background: `radial-gradient(circle at bottom left, transparent 0px, transparent calc(var(--cn-rounded-6) - 1px), var(--cn-set-purple-outline-border) calc(var(--cn-rounded-6) - 1px), var(--cn-set-purple-outline-border) var(--cn-rounded-6), var(--cn-set-purple-outline-bg) calc(var(--cn-rounded-6) - 1px))`,
       borderRight: '1px solid var(--cn-set-purple-outline-border)'
     }
   },

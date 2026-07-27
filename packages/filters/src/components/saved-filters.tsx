@@ -21,6 +21,14 @@ export function SavedFilters({ options, savedFilterKey, onDeleteSavedFilter }: S
   const savedFilterValue = (savedFilterKey && searchParams.get(savedFilterKey)) ?? ''
   const [selectedOption, setSelectedOption] = useState<{ value: string; label: string }>()
   const [filterToDelete, setFilterToDelete] = useState<{ value: string; label: string } | null>(null)
+  const [isDeleting, setIsDeleting] = useState(false)
+  const [deleteError, setDeleteError] = useState<{ message: string } | null>(null)
+
+  const handleCloseDeleteDialog = () => {
+    setFilterToDelete(null)
+    setDeleteError(null)
+    setIsDeleting(false)
+  }
 
   useEffect(() => {
     if (options.length > 0) {
@@ -61,6 +69,7 @@ export function SavedFilters({ options, savedFilterKey, onDeleteSavedFilter }: S
                     onClick={event => {
                       event.stopPropagation()
                       openingDeleteDialogRef.current = true
+                      setDeleteError(null)
                       setFilterToDelete(option)
                     }}
                   >
@@ -88,14 +97,27 @@ export function SavedFilters({ options, savedFilterKey, onDeleteSavedFilter }: S
           open={filterToDelete !== null}
           title={t('component:filter.delete', 'Delete Filter')}
           deleteConfirmText={t('component:entity.delete', 'Delete')}
-          onClose={() => setFilterToDelete(null)}
+          onClose={handleCloseDeleteDialog}
+          isLoading={isDeleting}
+          error={deleteError}
           deleteFn={filterId => {
-            Promise.resolve(onDeleteSavedFilter(filterId)).then(() => {
-              if (filterId === savedFilterValue) {
-                resetFilters()
-              }
-              setFilterToDelete(null)
-            })
+            setIsDeleting(true)
+            setDeleteError(null)
+            Promise.resolve(onDeleteSavedFilter(filterId))
+              .then(() => {
+                if (filterId === savedFilterValue) {
+                  resetFilters()
+                }
+                handleCloseDeleteDialog()
+              })
+              .catch(error => {
+                setDeleteError({
+                  message: error instanceof Error ? error.message : 'Failed to delete filter'
+                })
+              })
+              .finally(() => {
+                setIsDeleting(false)
+              })
           }}
           type="filter"
           identifier={filterToDelete?.value}

@@ -110,6 +110,7 @@
   },
   "filter": {
     "delete": "Delete Filter",
+    "deleteSavedFilterFailed": "Failed to delete filter",
     "inputPlaceholder": "Filter by...",
     "buttonLabel": "Reset filters",
     "defaultLabel": "Filter",

@@ -1114,17 +1114,16 @@ describe('Stepper', () => {
       expect(screen.getByText('A very long title').closest('.cn-stepper-step-title')).toBeInTheDocument()
     })
 
-    test('step title has tooltip wrapper with correct content', () => {
+    test('step title has no tooltip wrapper (removed hover tooltip)', () => {
       const { container } = render(
         <Stepper.Root value="step1" onValueChange={vi.fn()}>
           <Stepper.Step value="step1" title="A very long title" />
         </Stepper.Root>
       )
-      const tooltipWrapper = container.querySelector('[data-tooltip-content="A very long title"]')
-      expect(tooltipWrapper).toBeInTheDocument()
+      expect(container.querySelector('[data-tooltip-content]')).not.toBeInTheDocument()
     })
 
-    test('substep title has tooltip wrapper', () => {
+    test('substep title has no tooltip wrapper (removed hover tooltip)', () => {
       const { container } = render(
         <Stepper.Root value="step1" onValueChange={vi.fn()}>
           <Stepper.Step value="step1" title="First">
@@ -1132,8 +1131,7 @@ describe('Stepper', () => {
           </Stepper.Step>
         </Stepper.Root>
       )
-      const tooltipWrapper = container.querySelector('[data-tooltip-content="A long substep title"]')
-      expect(tooltipWrapper).toBeInTheDocument()
+      expect(container.querySelector('[data-tooltip-content]')).not.toBeInTheDocument()
     })
   })
 })

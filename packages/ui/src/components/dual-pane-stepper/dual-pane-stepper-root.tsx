@@ -153,6 +153,7 @@ function DefaultStepperPane({ stepperTitle }: { stepperTitle?: string }) {
                   title={flow.subSteps[v.subStepId]?.title}
                   description={flow.subSteps[v.subStepId]?.description}
                   state={v.state}
+                  visualCompleted={flow.subSteps[v.subStepId]?.visualCompleted}
                 />
               ))}
             {isActiveStep &&

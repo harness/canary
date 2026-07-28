@@ -80,9 +80,20 @@ export function deriveStepperModel(
       !activeSubStepResolved
 
     // Completion: every visited substep is resolved (completed/skipped, or an error the flow
-    // recovered past — see hasError below, which only stays true for an UNRESOLVED trailing error).
+    // recovered past — see hasError below, which only stays true for an UNRESOLVED trailing
+    // error), OR flagged visualCompleted (a terminal substep whose cardHistory status never
+    // leaves 'active' once the engine's re-entry guard has fired — see engine-context.tsx's
+    // complete()/error()/skip()). visualCompleted is a pure rendering hint; it does not change
+    // the substep's own visited.state below, only whether the STEP counts as resolved.
     const allSubStepsResolved =
-      hasBeenVisited && visited.every(e => e.status === 'completed' || e.status === 'skipped' || e.status === 'error')
+      hasBeenVisited &&
+      visited.every(
+        e =>
+          e.status === 'completed' ||
+          e.status === 'skipped' ||
+          e.status === 'error' ||
+          flow.subSteps[e.subStepId]?.visualCompleted
+      )
 
     // Error: the step is in an error state only if an errored substep is UNRESOLVED — i.e. the last
     // visited substep is the error (the flow is stopped on it, or it's a terminal error). If a later
@@ -92,18 +103,25 @@ export function deriveStepperModel(
     const lastVisited = visited[visited.length - 1]
     const hasError = lastVisited?.status === 'error'
 
-    // Flow is complete when no card is active
+    // Flow is complete when no card is active.
     const isFlowComplete = !cardHistory.some(e => e.status === 'active')
 
-    // Derive step state with the exact precedence from DefaultStepperPane:
+    // A visualCompleted substep that IS the active step's current position: isFlowComplete is
+    // globally false while it's active (see above), so without this, the ternary below would hit
+    // `isActiveStep ? 'active'` before ever reaching the allSubStepsResolved fallback — the step
+    // would render active/blue, a regression from the accidental green some flows show today.
+    const activeSubStepVisualCompleted =
+      isActiveStep && visited.some(e => e.subStepId === activeSubStepId && flow.subSteps[e.subStepId]?.visualCompleted)
+
+    // Derive step state with the precedence from DefaultStepperPane, extended for visualCompleted:
     // 1. Error takes precedence over everything
-    // 2. Flow complete + all substeps completed = completed
+    // 2. Flow complete (or the active substep is visualCompleted) + all substeps resolved = completed
     // 3. Active step = active
-    // 4. All substeps completed = completed
+    // 4. All substeps resolved = completed
     // 5. Otherwise upcoming
     const stepState: DerivedStep['state'] = hasError
       ? 'error'
-      : isFlowComplete && allSubStepsResolved
+      : (isFlowComplete || activeSubStepVisualCompleted) && allSubStepsResolved
         ? 'completed'
         : isActiveStep
           ? 'active'

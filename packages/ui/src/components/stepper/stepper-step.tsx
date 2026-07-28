@@ -2,7 +2,6 @@ import { useEffect, useLayoutEffect, useRef, type CSSProperties } from 'react'
 
 import { IconV2 } from '@components/icon-v2'
 import { Text } from '@components/text'
-import { Tooltip } from '@components/tooltip'
 import { cn } from '@utils/cn'
 
 import { ParentStepProvider, useStepperContext } from './stepper-context'
@@ -366,29 +365,15 @@ export function StepperStep({
           )}
         </span>
         <span className="cn-stepper-step-content">
-          {typeof title === 'string' ? (
-            <Tooltip content={title} delay={400}>
-              <Text
-                as="span"
-                variant="body-strong"
-                color={isStepTitleActive ? 'brand' : 'foreground-1'}
-                truncate
-                className="cn-stepper-step-title"
-              >
-                {title}
-              </Text>
-            </Tooltip>
-          ) : (
-            <Text
-              as="span"
-              variant="body-strong"
-              color={isStepTitleActive ? 'brand' : 'foreground-1'}
-              truncate
-              className="cn-stepper-step-title"
-            >
-              {title}
-            </Text>
-          )}
+          <Text
+            as="span"
+            variant="body-strong"
+            color={isStepTitleActive ? 'brand' : 'foreground-1'}
+            truncate
+            className="cn-stepper-step-title"
+          >
+            {title}
+          </Text>
           {description && (
             <Text as="span" variant="body-normal" color="foreground-3" className="cn-stepper-step-description">
               {description}

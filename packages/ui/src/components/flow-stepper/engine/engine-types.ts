@@ -11,10 +11,15 @@ export interface SubStepConfig {
   description?: string
   component: ComponentType
   next?: string
-  // When true, the engine auto-completes this substep on entry — the card
-  // renders in the "finished" state immediately without consumer-side logic.
-  // The user's explicit complete() call then fires onComplete to exit the flow.
+  // When true, complete()/error()/skip() on this substep become permanent no-ops after the
+  // first call (re-entry guard only). Does NOT affect this substep's initial rendered status —
+  // it always enters 'active' like any other substep.
   terminal?: boolean
+  // Presentation-only hint: always render this substep as finished/success (icon + color),
+  // regardless of its actual cardHistory status. Does not affect the state machine, does not
+  // affect re-entry (pair with `terminal` for that), and does not affect accordion-open
+  // behavior, which continues to reflect the real derived state.
+  visualCompleted?: boolean
 }
 
 export interface FlowConfig {

@@ -129,4 +129,33 @@ describe('deriveStepperModel', () => {
     expect(model[0].state).toBe('completed')
     expect(model[1].state).toBe('completed')
   })
+
+  test('visualCompleted active substep marks its step completed even though it is still active', () => {
+    const flowWithVisualCompleted: FlowConfig = {
+      steps: { s1: { title: 'Step 1' }, s2: { title: 'Step 2' } },
+      subSteps: {
+        x: { step: 's1', title: 'X', component: () => null, next: 'y' },
+        y: { step: 's2', title: 'Y', component: () => null, terminal: true, visualCompleted: true }
+      },
+      initialSubStep: 'x'
+    }
+    const history: CardEntry[] = [
+      { subStepId: 'x', status: 'completed', stateSnapshot: {} },
+      { subStepId: 'y', status: 'active', stateSnapshot: {} }
+    ]
+    const model = deriveStepperModel(flowWithVisualCompleted, history, [], 'y')
+    // Step s2 is completed for RENDERING purposes even though its only substep's real
+    // cardHistory status is still 'active' (terminal substeps never leave 'active' once the
+    // engine's re-entry guard has been hit — see Task 2).
+    expect(model[1].state).toBe('completed')
+    // The visited entry's OWN state is untouched — still 'active'. Display override for the
+    // substep icon/color is stepper-sub-step.tsx's job (Task 4), not this function's.
+    expect(model[1].visited).toEqual([{ subStepId: 'y', state: 'active' }])
+  })
+
+  test('active substep without visualCompleted stays active (no regression)', () => {
+    const history: CardEntry[] = [{ subStepId: 'a', status: 'active', stateSnapshot: {} }]
+    const model = deriveStepperModel(flow, history, ['b'], 'a')
+    expect(model[0].state).toBe('active')
+  })
 })

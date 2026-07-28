@@ -126,12 +126,13 @@ const [currentStep, setCurrentStep] = useState('version-control')
 
 #### `Stepper.SubStep`
 
-| Prop          | Type        | Required | Default | Description                  |
-| ------------- | ----------- | -------- | ------- | ---------------------------- |
-| `value`       | `string`    | yes      | —       | Unique substep identifier    |
-| `title`       | `ReactNode` | yes      | —       | Substep title                |
-| `description` | `ReactNode` | no       | —       | Description text below title |
-| `className`   | `string`    | no       | —       | Additional CSS class         |
+| Prop              | Type        | Required | Default | Description                                                                                                                                                                      |
+| ----------------- | ----------- | -------- | ------- | -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| `value`           | `string`    | yes      | —       | Unique substep identifier                                                                                                                                                        |
+| `title`           | `ReactNode` | yes      | —       | Substep title                                                                                                                                                                    |
+| `description`     | `ReactNode` | no       | —       | Description text below title                                                                                                                                                     |
+| `visualCompleted` | `boolean`   | no       | `false` | Presentation-only: render this substep's icon/color/title as 'completed' regardless of `state`. Does NOT affect accordion-open behavior, which always reflects the real `state`. |
+| `className`       | `string`    | no       | —       | Additional CSS class                                                                                                                                                             |
 
 ## State Management
 
@@ -341,7 +342,7 @@ When no `Stepper.Step` children are mounted:
 
 ### Text Overflow
 
-- **Titles** (step and substep): single line, truncate with ellipsis. Show full text in a tooltip on hover (400ms delay).
+- **Titles** (step and substep): single line, truncate with ellipsis via CSS `text-overflow`. No hover tooltip.
 - **Descriptions** (step and substep): wrap to multiple lines, no truncation.
 
 ### Dark Mode
@@ -711,7 +712,7 @@ Unit tests with React Testing Library. No visual regression tests — low mainte
 | **Header**                 | Renders `title` when provided; header omitted entirely when `title` is absent.                                                                                          |
 | **Empty/skeleton state**   | Renders `skeletonCount` rows when no children mounted. Disappears when children mount.                                                                                  |
 | **Animation classes**      | Correct CSS classes applied on forward navigation (`cn-stepper-step-transitioning`, etc.). No animation classes on backward navigation, first mount, or reduced-motion. |
-| **Text overflow**          | Tooltip renders on truncated titles (test via aria attributes, not visual).                                                                                             |
+| **Text overflow**          | Titles truncate via CSS; no tooltip is rendered (verified by absence of tooltip markup).                                                                                |
 
 ### What NOT to test
 

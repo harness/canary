@@ -220,16 +220,14 @@ export function FlowEngineProvider({ flow, onComplete, disableAutoScroll = false
           entry.subStepId === subStepId ? { ...entry, status: 'completed' as const, stateSnapshot: newState } : entry
         )
         if (resolvedNext && !updated.find(e => e.subStepId === resolvedNext)) {
-          // Terminal substeps enter as completed — the card renders in "finished" state
-          // immediately without consumer-side useEffect. The user's explicit complete()
-          // re-entry then fires onComplete to exit the flow.
-          const isNextTerminal = flow.subSteps[resolvedNext]?.terminal
-          if (isNextTerminal) {
+          // Terminal only blocks re-entry (added to terminalRef below); it no longer forces
+          // 'completed' status on entry — visual completion is now `visualCompleted`'s job.
+          if (flow.subSteps[resolvedNext]?.terminal) {
             terminalRef.current.add(resolvedNext)
           }
           updated.push({
             subStepId: resolvedNext,
-            status: isNextTerminal ? 'completed' : 'active',
+            status: 'active',
             stateSnapshot: newState
           })
         }
@@ -269,13 +267,12 @@ export function FlowEngineProvider({ flow, onComplete, disableAutoScroll = false
           entry.subStepId === subStepId ? { ...entry, status: 'error' as const } : entry
         )
         if (resolvedNext && !updated.find(e => e.subStepId === resolvedNext)) {
-          const isNextTerminal = flow.subSteps[resolvedNext]?.terminal
-          if (isNextTerminal) {
+          if (flow.subSteps[resolvedNext]?.terminal) {
             terminalRef.current.add(resolvedNext)
           }
           updated.push({
             subStepId: resolvedNext,
-            status: isNextTerminal ? 'completed' : 'active',
+            status: 'active',
             stateSnapshot: stateRef.current
           })
         }
@@ -301,13 +298,12 @@ export function FlowEngineProvider({ flow, onComplete, disableAutoScroll = false
           entry.subStepId === subStepId ? { ...entry, status: 'skipped' as const } : entry
         )
         if (resolvedNext && !updated.find(e => e.subStepId === resolvedNext)) {
-          const isNextTerminal = flow.subSteps[resolvedNext]?.terminal
-          if (isNextTerminal) {
+          if (flow.subSteps[resolvedNext]?.terminal) {
             terminalRef.current.add(resolvedNext)
           }
           updated.push({
             subStepId: resolvedNext,
-            status: isNextTerminal ? 'completed' : 'active',
+            status: 'active',
             stateSnapshot: stateRef.current
           })
         }

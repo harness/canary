@@ -1,4 +1,4 @@
-import { type ComponentType, type ReactNode } from 'react'
+import { type ComponentType, type CSSProperties, type ReactNode } from 'react'
 
 import {
   type DrawerComponentProps,
@@ -43,6 +43,12 @@ export interface SinglePaneStepperRootProps {
   // Disable auto-scrolling the active card into view (on mount and on transitions). Use for
   // completed/review flows where the timeline should render from the top and stay put.
   disableAutoScroll?: boolean
+  /** Override the default 440px max-width (`.cn-single-pane-stepper-root`) — merged via `cn()`,
+   *  so a utility class like `max-w-[600px]` reliably overrides the hardcoded default (Tailwind
+   *  always emits `@layer utilities` after `@layer components`). */
+  className?: string
+  /** Inline-style escape hatch alongside `className`, for consumers that need computed values. */
+  style?: CSSProperties
 }
 
 // CardAction props come from the shared FlowStepperCardAction (single source of truth).

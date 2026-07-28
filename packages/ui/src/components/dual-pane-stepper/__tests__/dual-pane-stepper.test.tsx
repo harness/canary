@@ -183,4 +183,37 @@ describe('DualPaneStepper', () => {
       expect(screen.getByText('Custom Left')).toBeInTheDocument()
     })
   })
+
+  describe('Terminal Substeps', () => {
+    test('visualCompleted terminal substep renders parent step as completed (green), not active', async () => {
+      const visualCompletedFlow: FlowConfig = {
+        steps: { 'step-1': { title: 'First' }, 'step-2': { title: 'Second' } },
+        subSteps: {
+          // TestCardA/TestCardB hard-code their transition targets ('card-b'/'card-c') rather
+          // than reading `next` from the flow config, so the substep ids here must match those
+          // literals to match this file's existing fixture convention.
+          'card-a': { step: 'step-1', title: 'A', component: TestCardA, next: 'card-b' },
+          'card-b': {
+            step: 'step-2',
+            title: 'B',
+            component: TestCardB,
+            terminal: true,
+            visualCompleted: true
+          }
+        },
+        initialSubStep: 'card-a'
+      }
+      render(<DualPaneStepper.Root flow={visualCompletedFlow} title="Test Flow" />)
+      await userEvent.click(screen.getByText('Next'))
+      await waitFor(() => {
+        // The parent step (step-2) must show the plain completed connector class, NOT the
+        // partial active-trunk class — proving stepper-step.tsx took the ordinary completed
+        // path with zero code changes there, driven entirely by derive-stepper-model.ts.
+        const connectors = document.querySelectorAll('.cn-stepper-connector')
+        const step2Connector = connectors[connectors.length - 1]
+        expect(step2Connector).toHaveClass('cn-stepper-connector-completed')
+        expect(step2Connector).not.toHaveClass('cn-stepper-connector-active-partial')
+      })
+    })
+  })
 })

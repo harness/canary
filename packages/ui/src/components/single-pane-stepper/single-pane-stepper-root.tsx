@@ -1,5 +1,7 @@
 import { useMemo } from 'react'
 
+import { cn } from '@utils/cn'
+
 import { AlertDialog } from '../alert-dialog'
 import { FlowEngineProvider, useEngineContext } from '../flow-stepper/engine'
 import { IconV2 } from '../icon-v2'
@@ -30,7 +32,9 @@ function SinglePaneStepperContent({
   onClose,
   showRootHeader,
   hideHeader,
-  reactivationPrompt
+  reactivationPrompt,
+  className,
+  style
 }: Omit<SinglePaneStepperRootProps, 'flow' | 'onComplete'>) {
   const { drawerState, closeDrawer, pendingReactivation, confirmReactivation, cancelReactivation } = useEngineContext()
 
@@ -46,7 +50,7 @@ function SinglePaneStepperContent({
 
   return (
     <>
-      <Layout.Vertical gap="none" className="cn-single-pane-stepper-root">
+      <Layout.Vertical gap="none" className={cn('cn-single-pane-stepper-root', className)} style={style}>
         {showHeader && (
           <Layout.Horizontal as="header" align="center" gap="sm" className="cn-single-pane-stepper-header">
             {icon}

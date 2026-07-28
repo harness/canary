@@ -135,6 +135,7 @@ export function SinglePaneStepperCardStack({
                         title={flow.subSteps[v.subStepId]?.title}
                         description={flow.subSteps[v.subStepId]?.description}
                         state={v.state}
+                        visualCompleted={flow.subSteps[v.subStepId]?.visualCompleted}
                       >
                         <div data-card-id={v.subStepId}>
                           <CardContextProvider subStepId={v.subStepId} status={cardStatus} contentOnly>

@@ -2,7 +2,6 @@ import { useEffect, useRef, useState, type KeyboardEvent } from 'react'
 
 import { IconV2 } from '@components/icon-v2'
 import { Text } from '@components/text'
-import { Tooltip } from '@components/tooltip'
 import * as CollapsiblePrimitive from '@radix-ui/react-collapsible'
 import { cn } from '@utils/cn'
 
@@ -18,6 +17,7 @@ export function StepperSubStep({
   title,
   description,
   state: explicitState,
+  visualCompleted = false,
   contentOnly = false,
   className,
   children
@@ -37,6 +37,11 @@ export function StepperSubStep({
   }, [parentValue, value, explicitState]) // eslint-disable-line react-hooks/exhaustive-deps
 
   const derivedState = explicitState ?? ctx.getSubStepState(parentValue, value)
+  // Display-only override: visualCompleted renders as finished regardless of the real
+  // derivedState. Accordion-open behavior below (isSubStepExpandedByDefault, and the sync
+  // effect) intentionally keeps reading derivedState, not this — that's what fixes the
+  // accordion-collapse bug for a visualCompleted substep that is genuinely still active.
+  const displayState = visualCompleted ? 'completed' : derivedState
   const isActive = derivedState === 'active'
   const isCollapsible = ctx.collapsibleSubSteps && Boolean(children)
 
@@ -56,7 +61,7 @@ export function StepperSubStep({
 
   // Ordinal is handled via CSS counter (cn-stepper-substep-list increments)
 
-  const stateClass = `cn-stepper-substep-${derivedState}`
+  const stateClass = `cn-stepper-substep-${displayState}`
 
   const handleClick = () => {
     ctx.selectSubStep(value)
@@ -77,30 +82,21 @@ export function StepperSubStep({
     event.currentTarget.click()
   }
 
-  const titleContent =
-    typeof title === 'string' ? (
-      <Tooltip content={title} delay={400}>
-        <Text
-          as="span"
-          variant="body-strong"
-          color={isActive ? 'brand' : 'foreground-1'}
-          truncate
-          className="cn-stepper-substep-title"
-        >
-          {title}
-        </Text>
-      </Tooltip>
-    ) : (
-      <Text
-        as="span"
-        variant="body-strong"
-        color={isActive ? 'brand' : 'foreground-1'}
-        truncate
-        className="cn-stepper-substep-title"
-      >
-        {title}
-      </Text>
-    )
+  // Title color mirrors the icon/stateClass split above: once visualCompleted overrides the
+  // display to 'completed', the title must not stay brand/blue while the icon shows green — it
+  // should render like any other completed substep's title. A genuinely active, non-overridden
+  // substep is unaffected.
+  const titleContent = (
+    <Text
+      as="span"
+      variant="body-strong"
+      color={isActive && displayState !== 'completed' ? 'brand' : 'foreground-1'}
+      truncate
+      className="cn-stepper-substep-title"
+    >
+      {title}
+    </Text>
+  )
 
   const substepRowClassName = cn(
     'cn-stepper-substep',
@@ -114,13 +110,13 @@ export function StepperSubStep({
     <>
       <span className="cn-stepper-substep-branch" aria-hidden="true" />
       <span className="cn-stepper-substep-indicator">
-        {derivedState === 'completed' ? (
+        {displayState === 'completed' ? (
           <IconV2 name="check" size="xs" color="success" />
-        ) : derivedState === 'skipped' ? (
+        ) : displayState === 'skipped' ? (
           <IconV2 name="arrow-right" size="xs" color="neutral" />
-        ) : derivedState === 'error' ? (
+        ) : displayState === 'error' ? (
           <IconV2 name="xmark" size="xs" color="danger" />
-        ) : derivedState === 'active' ? (
+        ) : displayState === 'active' ? (
           <span className="cn-stepper-substep-dot" />
         ) : (
           <span className="cn-stepper-substep-ordinal" />

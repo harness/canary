@@ -34,6 +34,9 @@ export interface StepperSubStepProps {
   title: ReactNode
   description?: ReactNode
   state?: StepState
+  /** Presentation-only: render this substep's icon/color as 'completed' regardless of `state`.
+   *  Does NOT affect accordion-open behavior, which always reflects the real `state`. */
+  visualCompleted?: boolean
   /** When true, render only the branch wire and panel — no substep label row (single-pane accordion cards). */
   contentOnly?: boolean
   className?: string

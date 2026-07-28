@@ -412,7 +412,7 @@ describe('Flow Engine', () => {
   })
 
   describe('Terminal Substeps', () => {
-    test('terminal substep enters as completed', async () => {
+    test('terminal substep enters as active (not auto-completed)', async () => {
       render(
         <FlowEngineProvider flow={terminalFlow}>
           <TestHarness>
@@ -422,7 +422,7 @@ describe('Flow Engine', () => {
       )
       await userEvent.click(screen.getByText('Next'))
       await waitFor(() => {
-        expect(screen.getByTestId('terminal-status')).toHaveTextContent('completed')
+        expect(screen.getByTestId('terminal-status')).toHaveTextContent('active')
       })
     })
 
@@ -437,7 +437,7 @@ describe('Flow Engine', () => {
       )
       await userEvent.click(screen.getByText('Next'))
       await waitFor(() => {
-        expect(screen.getByTestId('terminal-status')).toHaveTextContent('completed')
+        expect(screen.getByTestId('terminal-status')).toHaveTextContent('active')
       })
       await userEvent.click(screen.getByText('Done'))
       await waitFor(() => {

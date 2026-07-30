@@ -1,10 +1,11 @@
 import * as TooltipPrimitive from '@radix-ui/react-tooltip'
-import { ColumnDef } from '@tanstack/react-table'
+import { Column, ColumnDef } from '@tanstack/react-table'
 import { fireEvent, render, screen } from '@testing-library/react'
 import userEvent from '@testing-library/user-event'
 import { describe, expect, test, vi } from 'vitest'
 
 import { DataTable } from '../data-table'
+import { getCommonPinningStyles, getStickyCellStyles } from '../data-table/utils'
 
 // Test Wrapper with TooltipProvider
 const TestWrapper = ({ children }: { children: React.ReactNode }) => {
@@ -1729,5 +1730,188 @@ describe('DataTable', () => {
       expect(screen.getByText('Parent A')).toBeInTheDocument()
       expect(screen.queryByText('Child A1')).not.toBeInTheDocument()
     })
+  })
+
+  describe('Sticky Header', () => {
+    const stickyGroupedColumns: ColumnDef<TestData>[] = [
+      {
+        id: 'name',
+        accessorKey: 'name',
+        header: 'Name',
+        enableSorting: true
+      },
+      {
+        id: 'contact',
+        header: 'Contact',
+        enableSorting: false,
+        columns: [
+          {
+            id: 'age',
+            accessorKey: 'age',
+            header: 'Age',
+            enableSorting: true
+          },
+          {
+            id: 'email',
+            accessorKey: 'email',
+            header: 'Email',
+            enableSorting: false
+          }
+        ]
+      }
+    ]
+
+    test('should render the single scroll viewport and sticky container class when stickyHeader is set', () => {
+      const { container } = render(
+        <TestWrapper>
+          <DataTable data={mockData} columns={mockColumns} stickyHeader maxHeight={300} />
+        </TestWrapper>
+      )
+
+      expect(container.querySelector('.cn-table-v2-container')).toHaveClass('cn-table-v2-sticky')
+
+      const viewport = container.querySelector('.cn-table-v2-viewport')
+      expect(viewport).toBeInTheDocument()
+      expect(viewport).toHaveStyle({ maxHeight: '300px' })
+
+      // The legacy inner scroll wrapper is not rendered in sticky mode
+      expect(container.querySelector('.overflow-x-auto')).not.toBeInTheDocument()
+    })
+
+    test('should mark header cells as sticky with top offset and header z-index', () => {
+      const { container } = render(
+        <TestWrapper>
+          <DataTable data={mockData} columns={mockColumns} stickyHeader maxHeight={300} />
+        </TestWrapper>
+      )
+
+      const heads = container.querySelectorAll('thead th')
+      expect(heads.length).toBeGreaterThan(0)
+      heads.forEach(head => {
+        expect(head).toHaveAttribute('data-sticky', 'top')
+        expect(head).toHaveStyle({ position: 'sticky', top: '0px', zIndex: 4 })
+      })
+    })
+
+    test('should offset the second header row below the first in grouped-header tables', () => {
+      const { container } = render(
+        <TestWrapper>
+          <DataTable data={mockData} columns={stickyGroupedColumns} stickyHeader maxHeight={300} />
+        </TestWrapper>
+      )
+
+      const depth0Heads = container.querySelectorAll('thead tr[data-header-depth="0"] th')
+      expect(depth0Heads.length).toBeGreaterThan(0)
+      depth0Heads.forEach(head => {
+        expect(head).toHaveStyle({ position: 'sticky', top: '0px' })
+      })
+
+      const depth1Heads = container.querySelectorAll('thead tr[data-header-depth="1"] th')
+      expect(depth1Heads.length).toBeGreaterThan(0)
+      depth1Heads.forEach(head => {
+        // jsdom reports zero layout height, so the CSS variable fallback is used
+        expect(head).toHaveStyle({ position: 'sticky', top: 'var(--cn-table-header-row-h)' })
+      })
+    })
+
+    test('should layer sticky headers above pinned columns', () => {
+      render(
+        <TestWrapper>
+          <DataTable
+            data={mockData}
+            columns={mockColumns}
+            stickyHeader
+            maxHeight={300}
+            columnPinning={{ left: ['name'], right: [] }}
+          />
+        </TestWrapper>
+      )
+
+      const nameHead = screen.getByText('Name').closest('th')
+      expect(nameHead).toHaveStyle({ position: 'sticky', top: '0px', left: '0px', zIndex: 5 })
+
+      const ageHead = screen.getByText('Age').closest('th')
+      expect(ageHead).toHaveStyle({ position: 'sticky', top: '0px', zIndex: 4 })
+    })
+  })
+
+  describe('Default rendering without stickyHeader (regression)', () => {
+    test('should render the legacy structure without sticky classes or attributes', () => {
+      const { container } = render(
+        <TestWrapper>
+          <DataTable data={mockData} columns={mockColumns} />
+        </TestWrapper>
+      )
+
+      expect(container.querySelector('.cn-table-v2-container')).not.toHaveClass('cn-table-v2-sticky')
+      expect(container.querySelector('.cn-table-v2-viewport')).not.toBeInTheDocument()
+      expect(container.querySelector('.overflow-x-auto')).toBeInTheDocument()
+
+      const heads = container.querySelectorAll('thead th')
+      heads.forEach(head => {
+        expect(head).not.toHaveAttribute('data-sticky')
+        expect(head).toHaveStyle({ position: 'relative', zIndex: 0 })
+      })
+    })
+
+    test('should keep existing column pinning output unchanged', () => {
+      render(
+        <TestWrapper>
+          <DataTable data={mockData} columns={mockColumns} columnPinning={{ left: ['name'], right: [] }} />
+        </TestWrapper>
+      )
+
+      const nameHead = screen.getByText('Name').closest('th')
+      expect(nameHead).toHaveStyle({ position: 'sticky', left: '0px', zIndex: 1 })
+      expect(nameHead).not.toHaveAttribute('data-sticky')
+    })
+  })
+})
+
+describe('getStickyCellStyles', () => {
+  const createColumn = (pinned: false | 'left' | 'right' = false) =>
+    ({
+      getIsPinned: () => pinned,
+      getIsLastColumn: () => false,
+      getIsFirstColumn: () => false,
+      getStart: () => 0,
+      getAfter: () => 0
+    }) as unknown as Column<TestData>
+
+  test('should keep getCommonPinningStyles backward compatible', () => {
+    const column = createColumn()
+    expect(getCommonPinningStyles(column)).toEqual(getStickyCellStyles({ column }))
+  })
+
+  test('should return relative positioning for unpinned, non-sticky cells', () => {
+    const styles = getStickyCellStyles({ column: createColumn() })
+    expect(styles).toMatchObject({ position: 'relative', zIndex: 0 })
+    expect(styles.top).toBeUndefined()
+    expect(styles.left).toBeUndefined()
+    expect(styles.right).toBeUndefined()
+  })
+
+  test('should pin columns with sticky positioning on the horizontal axis', () => {
+    const styles = getStickyCellStyles({ column: createColumn('left') })
+    expect(styles).toMatchObject({ position: 'sticky', left: '0px', zIndex: 1 })
+    expect(styles.top).toBeUndefined()
+  })
+
+  test('should stick header cells to the top with the header z-index layer', () => {
+    const styles = getStickyCellStyles({ column: createColumn(), vertical: { edge: 'top', offset: 0 } })
+    expect(styles).toMatchObject({ position: 'sticky', top: '0px', zIndex: 4 })
+  })
+
+  test('should accept string offsets such as CSS variables', () => {
+    const styles = getStickyCellStyles({
+      column: createColumn(),
+      vertical: { edge: 'top', offset: 'var(--cn-table-header-row-h)' }
+    })
+    expect(styles.top).toBe('var(--cn-table-header-row-h)')
+  })
+
+  test('should combine header and pinned-column layers for corner cells', () => {
+    const styles = getStickyCellStyles({ column: createColumn('left'), vertical: { edge: 'top', offset: 0 } })
+    expect(styles).toMatchObject({ position: 'sticky', top: '0px', left: '0px', zIndex: 5 })
   })
 })

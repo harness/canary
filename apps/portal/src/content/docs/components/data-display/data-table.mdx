@@ -556,6 +556,20 @@ When `enableRowSelection` or `enableExpanding` is enabled, the injected columns 
       required: false,
       value: "ColumnPinningState ({ left?: string[], right?: string[] })",
     },
+    {
+      name: "stickyHeader",
+      description:
+        "Opt-in sticky headers. Renders the table inside a single scroll viewport so header cells stick to the top while the body scrolls. Offsets support up to two stacked header rows (grouped headers).",
+      required: false,
+      value: "boolean",
+    },
+    {
+      name: "maxHeight",
+      description:
+        "Maximum height of the table's scroll viewport. Only applies when stickyHeader is enabled.",
+      required: false,
+      value: "CSSProperties['maxHeight']",
+    },
   ]}
 />
 
@@ -871,6 +885,102 @@ function TableWithPinnedColumns() {
   columns requiring horizontal scrolling. For tables with few columns, pinning
   may not be necessary.
 </Aside>
+
+## Sticky Headers
+
+The `DataTable` supports opt-in sticky headers via the `stickyHeader` prop. When enabled, the table renders inside a single, well-defined scroll viewport (`maxHeight` controls its height), and the header cells stick to the top while the body scrolls — remaining fully opaque, including on sortable-header hover. Sticky headers compose with grouped (stacked) headers and with column pinning.
+
+<DocsPage.ComponentExample
+  client:only
+  code={`() => {
+  const people = Array.from({ length: 30 }, (_, i) => ({
+    id: i + 1,
+    name: \`Person \${i + 1}\`,
+    age: 24 + ((i * 7) % 30),
+    visits: 10 + ((i * 37) % 190),
+    status: ['active', 'inactive', 'pending'][i % 3],
+    profileProgress: 5 + ((i * 13) % 95)
+  }))
+
+const columns = [
+{ id: 'name', accessorKey: 'name', header: 'Name', enableSorting: true },
+{
+id: 'info',
+header: 'Info',
+enableSorting: false,
+columns: [
+{ id: 'age', accessorKey: 'age', header: 'Age', enableSorting: true },
+{ id: 'visits', accessorKey: 'visits', header: 'Visits', enableSorting: true },
+{
+id: 'status',
+accessorKey: 'status',
+header: 'Status',
+enableSorting: true,
+cell: (info) => {
+const value = String(info.getValue())
+const theme = value === 'active' ? 'success' : value === 'inactive' ? 'danger' : 'warning'
+return (
+
+<StatusBadge variant="secondary" theme={theme} size="sm">
+  {value}
+</StatusBadge>
+) } }, { id: 'profileProgress', accessorKey: 'profileProgress', header: 'Profile Progress',
+enableSorting: true } ] } ]
+
+const [tableSorting, setTableSorting] = React.useState([])
+
+const sortedData = [...people].sort((a, b) => {
+if (tableSorting.length === 0) return 0
+const sort = tableSorting[0]
+const key = sort.id
+if (a[key] < b[key]) return sort.desc ? 1 : -1
+if (a[key] > b[key]) return sort.desc ? -1 : 1
+return 0
+})
+
+return (
+
+<DataTable
+  columns={columns}
+  data={sortedData}
+  getRowId={(row) => String(row.id)}
+  stickyHeader
+  maxHeight={320}
+  currentSorting={tableSorting}
+  onSortingChange={setTableSorting}
+/>
+) }`} />
+
+### Usage
+
+```tsx
+import { DataTable } from "@harnessio/ui/components";
+
+function TableWithStickyHeader() {
+  return (
+    <DataTable
+      columns={columns}
+      data={data}
+      getRowId={(row) => row.id}
+      stickyHeader
+      maxHeight={320}
+    />
+  );
+}
+```
+
+### Key Features
+
+- **Opt-in**: with `stickyHeader` unset, the table renders exactly as before
+- **Opaque headers**: headers stay fully opaque while scrolling and on sortable-header hover — body rows never show through
+- **Grouped headers**: both stacked header rows stick; the second row offsets itself below the first (measured, with a no-JS CSS-variable fallback)
+- **Works with column pinning**: sticky header cells that are also column-pinned layer correctly above both
+
+### Guidelines
+
+- Pair `stickyHeader` with `maxHeight` so the table has a constrained scroll viewport.
+- Sticky offsets support up to two stacked header rows.
+- The scroll viewport is the table's own container — pagination stays visible below the scroll area.
 
 ## Transparent Variant
 

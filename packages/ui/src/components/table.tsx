@@ -1,6 +1,7 @@
 import {
   Children,
   cloneElement,
+  CSSProperties,
   forwardRef,
   HTMLAttributes,
   isValidElement,
@@ -48,6 +49,17 @@ export interface TableRootV2Props extends HTMLAttributes<HTMLTableElement>, Vari
   tableClassName?: string
   disableHighlightOnHover?: boolean
   paginationProps?: PaginationProps
+  /**
+   * Opt-in sticky mode. Renders a single, well-defined scroll viewport
+   * (`cn-table-v2-viewport`) so sticky-positioned cells (e.g. sticky headers)
+   * resolve against one deterministic scroll container.
+   * When unset, the DOM structure and overflow behavior are unchanged.
+   */
+  stickyHeader?: boolean
+  /**
+   * Maximum height of the scroll viewport. Only applies in sticky mode.
+   */
+  maxHeight?: CSSProperties['maxHeight']
 }
 
 const TableRoot = forwardRef<HTMLTableElement, TableRootV2Props>(
@@ -59,6 +71,8 @@ const TableRoot = forwardRef<HTMLTableElement, TableRootV2Props>(
       tableClassName,
       disableHighlightOnHover = false,
       paginationProps: { className: paginationClassName, ...paginationProps } = {} as PaginationProps,
+      stickyHeader = false,
+      maxHeight,
       ...props
     },
     ref
@@ -68,10 +82,14 @@ const TableRoot = forwardRef<HTMLTableElement, TableRootV2Props>(
         'cn-table-v2-container',
         tableVariants({ size, variant }),
         { 'cn-table-v2-highlight-hover': !disableHighlightOnHover },
+        { 'cn-table-v2-sticky': stickyHeader },
         className
       )}
     >
-      <div className="overflow-x-auto">
+      <div
+        className={cn(stickyHeader ? 'cn-table-v2-viewport' : 'overflow-x-auto')}
+        style={{ maxHeight: stickyHeader ? maxHeight : undefined }}
+      >
         <table ref={ref} className={cn('cn-table-v2-element', tableClassName)} {...props} />
       </div>
       {paginationProps && (

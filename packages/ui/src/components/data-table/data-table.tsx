@@ -1,4 +1,4 @@
-import { Fragment, useEffect, useMemo } from 'react'
+import { CSSProperties, Fragment, useEffect, useMemo, useState } from 'react'
 
 import { Button, Checkbox, IconV2, PaginationProps, Table, tableVariants } from '@/components'
 import {
@@ -22,7 +22,7 @@ import { type VariantProps } from 'class-variance-authority'
 
 import './types'
 
-import { getCommonPinningStyles } from './utils'
+import { getStickyCellStyles } from './utils'
 
 export interface DataTableProps<TData> {
   data: TData[]
@@ -118,6 +118,17 @@ export interface DataTableProps<TData> {
    * This prop is for internal development only and should not be used
    */
   _enableColumnResizing?: boolean
+  /**
+   * Opt-in sticky headers. Renders the table inside a single scroll viewport
+   * so header cells stick to the top while the body scrolls.
+   * Offsets support up to two stacked header rows (grouped headers).
+   */
+  stickyHeader?: boolean
+  /**
+   * Maximum height of the table's scroll viewport.
+   * Only applies when `stickyHeader` is enabled.
+   */
+  maxHeight?: CSSProperties['maxHeight']
 }
 
 export const DataTable = function DataTable<TData>({
@@ -149,7 +160,9 @@ export const DataTable = function DataTable<TData>({
   getRowId,
   visibleColumns,
   columnPinning = { left: [], right: [] },
-  manualSorting = true
+  manualSorting = true,
+  stickyHeader = false,
+  maxHeight
 }: DataTableProps<TData>) {
   const tableColumns = useMemo(() => {
     // Start with the base columns
@@ -360,6 +373,24 @@ export const DataTable = function DataTable<TData>({
     [columnPinning]
   )
 
+  /**
+   * Measured height of the first header row, used as the sticky `top` offset
+   * for the second header row in grouped-header tables. The CSS variable
+   * `--cn-table-header-row-h` provides a no-JS fallback until measured.
+   */
+  const [firstHeaderRowEl, setFirstHeaderRowEl] = useState<HTMLTableRowElement | null>(null)
+  const [firstHeaderRowHeight, setFirstHeaderRowHeight] = useState<number | null>(null)
+
+  useEffect(() => {
+    if (!stickyHeader || !firstHeaderRowEl) return
+
+    const height = firstHeaderRowEl.getBoundingClientRect().height
+    // Zero means the row is not laid out (hidden container) — keep the CSS variable fallback.
+    if (height <= 0) return
+
+    setFirstHeaderRowHeight(prev => (prev !== null && Math.abs(prev - height) < 0.5 ? prev : height))
+  }, [stickyHeader, firstHeaderRowEl, tableColumns, data])
+
   return (
     <Table.Root
       className={className}
@@ -371,6 +402,8 @@ export const DataTable = function DataTable<TData>({
       variant={variant}
       disableHighlightOnHover={disableHighlightOnHover}
       paginationProps={paginationProps}
+      stickyHeader={stickyHeader}
+      maxHeight={maxHeight}
     >
       <Table.Header>
         {(() => {
@@ -379,7 +412,11 @@ export const DataTable = function DataTable<TData>({
           const hasGroupedHeaders = totalHeaderRows > 1
 
           return headerGroups.map((headerGroup, rowIdx) => (
-            <Table.Row key={headerGroup.id} data-header-depth={rowIdx}>
+            <Table.Row
+              key={headerGroup.id}
+              data-header-depth={rowIdx}
+              ref={stickyHeader && rowIdx === 0 ? setFirstHeaderRowEl : undefined}
+            >
               {headerGroup.headers.map(header => {
                 const column = header.column
                 const meta = column.columnDef.meta
@@ -409,6 +446,7 @@ export const DataTable = function DataTable<TData>({
                     rowSpan={rowSpan > 1 ? rowSpan : undefined}
                     key={header.id}
                     data-header-depth={rowIdx}
+                    data-sticky={stickyHeader ? 'top' : undefined}
                     className={cn(
                       // Temporary fix to prevent text bleeding in header when it is pinned
                       { 'cn-table-v2-cell-pinned': header.column.getIsPinned() },
@@ -424,7 +462,15 @@ export const DataTable = function DataTable<TData>({
                       width: header.getSize(),
                       minWidth: column.columnDef.minSize ?? header.getSize(),
                       maxWidth: column.columnDef.maxSize ?? header.getSize(),
-                      ...getCommonPinningStyles<TData>(column)
+                      ...getStickyCellStyles<TData>({
+                        column,
+                        vertical: stickyHeader
+                          ? {
+                              edge: 'top',
+                              offset: rowIdx === 0 ? 0 : (firstHeaderRowHeight ?? 'var(--cn-table-header-row-h)')
+                            }
+                          : undefined
+                      })
                     }}
                   >
                     {flexRender(column.columnDef.header, header.getContext())}
@@ -461,7 +507,7 @@ export const DataTable = function DataTable<TData>({
                     // Temporary fix to prevent text bleeding in cell when it is pinned
                     className={cn({ 'cn-table-v2-cell-pinned': column.getIsPinned() })}
                     style={{
-                      ...getCommonPinningStyles<TData>(column),
+                      ...getStickyCellStyles<TData>({ column }),
                       width: column.getSize(),
                       minWidth: column.columnDef.minSize ?? column.getSize(),
                       maxWidth: column.columnDef.maxSize ?? column.getSize()

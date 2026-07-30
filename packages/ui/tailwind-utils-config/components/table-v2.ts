@@ -227,6 +227,60 @@ export default {
     }
   },
 
+  /**
+   * Sticky mode (opt-in via `Table.Root` `stickyHeader`).
+   * Every rule is scoped to `.cn-table-v2-sticky` so non-sticky tables
+   * compile to byte-identical CSS.
+   */
+  '.cn-table-v2-sticky': {
+    // The viewport is the single scroll container; the outer container never scrolls.
+    '&.cn-table-v2-container': {
+      overflow: 'hidden'
+    },
+
+    '.cn-table-v2-viewport': {
+      overflow: 'auto'
+    },
+
+    '.cn-table-v2-element': {
+      // No intermediate scrollport between sticky cells and the viewport.
+      overflow: 'visible',
+      // In the separated-border model, borders belong to cells and travel with
+      // sticky cells — this removes the collapsed-border "transparent gap"
+      // between stacked header rows.
+      borderCollapse: 'separate',
+      borderSpacing: '0',
+      // Fallback block-size of the first header row (incl. its border);
+      // DataTable overrides it inline with the measured height.
+      '--cn-table-header-row-h': 'calc(var(--cn-table-header-min) + var(--cn-table-border))'
+    },
+
+    // Header separators move off the (non-sticky) thead / tr boxes onto the
+    // cells, one-directional (bottom only) so the separated model draws
+    // single lines.
+    '.cn-table-v2-header': {
+      borderBottom: 'none',
+
+      'tr[data-header-depth="0"]:not(:last-child)': {
+        borderBottom: 'none'
+      }
+    },
+
+    '.cn-table-v2-head': {
+      borderBottomWidth: 'var(--cn-table-border)',
+      borderBottomStyle: 'solid',
+      borderBottomColor: 'var(--cn-border-3)'
+    },
+
+    // Sortable head hover must stay opaque when sticky: composite the
+    // translucent state token over the opaque pinned-base instead of
+    // replacing the background. Transparent variant keeps its own hover.
+    '&:not(.cn-table-v2-transparent) .cn-table-v2-head-sortable:hover': {
+      '--cn-table-pinned-overlay': 'var(--cn-state-hover)',
+      background: tablePinnedLayeredBackground
+    }
+  },
+
   '.cn-row-pin': {
     opacity: '0',
     transitionProperty: 'opacity'

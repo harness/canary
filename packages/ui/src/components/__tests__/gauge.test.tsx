@@ -2,6 +2,7 @@ import { render, screen } from '@testing-library/react'
 import { describe, expect, test } from 'vitest'
 
 import { deriveGaugeStatusLevel, formatGaugeValue, Gauge, getGaugeDescriptor } from '../gauge'
+import { Text } from '../text'
 
 describe('Gauge utilities', () => {
   test('formatGaugeValue percent', () => {
@@ -122,6 +123,12 @@ describe('Gauge', () => {
     expect(container.querySelector('.custom-gauge')).toHaveClass('cn-gauge')
   })
 
+  test('applies descriptor status color for string description', () => {
+    render(<Gauge value={15} description="Poor score" />)
+
+    expect(screen.getByText('Poor score')).toHaveClass('text-cn-danger')
+  })
+
   test('exposes meter semantics', () => {
     render(
       <Gauge
@@ -129,7 +136,7 @@ describe('Gauge', () => {
         max={100}
         aria-label="Health score"
         aria-describedby="external-desc"
-        helperText="Updated 5 minutes ago"
+        description={<Text>Updated 5 minutes ago</Text>}
       />
     )
 

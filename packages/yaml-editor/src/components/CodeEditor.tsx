@@ -61,14 +61,10 @@ export function CodeEditor<T>({
   const [editor, setEditor] = useState<monaco.editor.IStandaloneCodeEditor | undefined>()
   const monacoRef = useRef<typeof monaco>()
   const currentRevisionRef = useRef<CodeRevision>({ code: '', revisionId: 0 })
-  const editorRef = useRef<monaco.editor.IStandaloneCodeEditor | null>(null)
 
   const handleEditorDidMount = useCallback(
     (editorVal: monaco.editor.IStandaloneCodeEditor, monaco: Monaco) => {
-      editorRef.current = editorVal
       monacoRef.current = monaco
-
-      editorVal.setValue(codeRevision.code)
 
       setEditor(editorVal)
 
@@ -85,32 +81,32 @@ export function CodeEditor<T>({
 
       onMount?.(editorVal, monaco)
     },
-    [codeRevision.code, onMount]
+    [onMount]
   )
 
   useEffect(() => {
-    if (!editorRef.current) return
+    if (!editor) return
 
     if (!codeRevision.revisionId || codeRevision.revisionId > Number(currentRevisionRef.current?.revisionId)) {
-      const model = editorRef.current.getModel()
+      const model = editor.getModel()
 
       if (model) {
         // NOTE: if it's a readonly no need to create undo stop points
         if (options?.readOnly) {
-          editorRef.current?.setValue(codeRevision.code)
+          editor.setValue(codeRevision.code)
         } else {
-          editorRef.current.pushUndoStop()
-          editorRef.current.executeEdits('edit', [
+          editor.pushUndoStop()
+          editor.executeEdits('edit', [
             {
               range: model.getFullModelRange(),
               text: codeRevision.code
             }
           ])
-          editorRef.current.pushUndoStop()
+          editor.pushUndoStop()
         }
       }
     }
-  }, [codeRevision, options?.readOnly, editorRef])
+  }, [codeRevision, options?.readOnly, editor])
 
   const { theme } = useTheme({ monacoRef, themeConfig, editor, theme: themeFromProps })
 

@@ -11,6 +11,7 @@ import {
   getSortedRowModel,
   OnChangeFn,
   Row,
+  RowPinningState,
   RowSelectionState,
   SortingState,
   TableOptions,
@@ -22,7 +23,8 @@ import { type VariantProps } from 'class-variance-authority'
 
 import './types'
 
-import { getStickyCellStyles } from './utils'
+import { useSpacerHeight } from './use-spacer-height'
+import { getStickyCellStyles, type StickyCellVertical } from './utils'
 
 export interface DataTableProps<TData> {
   data: TData[]
@@ -129,6 +131,26 @@ export interface DataTableProps<TData> {
    * Only applies when `stickyHeader` is enabled.
    */
   maxHeight?: CSSProperties['maxHeight']
+  /**
+   * Opt-in row pinning state (TanStack `RowPinningState`). Only bottom-pinned
+   * rows are rendered: they appear in a `<tfoot>` whose cells stick to the
+   * bottom of the scroll viewport (`stickyHeader` is required for sticking).
+   * Pin rows by appending them to `data` and listing their `getRowId` ids in
+   * `rowPinning.bottom`. Only a single bottom-pinned row is supported — if
+   * multiple ids are passed, only the last (bottom-most) row is rendered;
+   * without accumulated offsets multiple rows would overlap at `bottom: 0`.
+   * `keepPinnedRows` is left at its default (`true`), so
+   * pinned rows survive pagination and filtering.
+   */
+  rowPinning?: RowPinningState
+  /**
+   * Callback for when row pinning changes.
+   */
+  onRowPinningChange?: OnChangeFn<RowPinningState>
+  /**
+   * Whether rows can be pinned. See TanStack `enableRowPinning`.
+   */
+  enableRowPinning?: boolean | ((row: Row<TData>) => boolean)
 }
 
 export const DataTable = function DataTable<TData>({
@@ -162,7 +184,10 @@ export const DataTable = function DataTable<TData>({
   columnPinning = { left: [], right: [] },
   manualSorting = true,
   stickyHeader = false,
-  maxHeight
+  maxHeight,
+  rowPinning,
+  onRowPinningChange: externalOnRowPinningChange,
+  enableRowPinning
 }: DataTableProps<TData>) {
   const tableColumns = useMemo(() => {
     // Start with the base columns
@@ -319,13 +344,19 @@ export const DataTable = function DataTable<TData>({
       // Enable column resizing if specified
       enableColumnResizing: _enableColumnResizing,
       columnResizeMode: 'onChange',
+      // Row pinning: controlled state when the prop is provided, uncontrolled otherwise.
+      // keepPinnedRows stays at its TanStack default (true) so pinned rows
+      // survive pagination and filtering.
+      enableRowPinning,
+      onRowPinningChange: externalOnRowPinningChange,
       // We pass the currentSorting, rowSelection, and expanded state so that react-table internally knows what state to maintain
 
       state: {
         sorting: currentSorting,
         rowSelection: currentRowSelection || {},
         expanded: currentExpanded ?? (initiallyExpandAllRows ? true : {}),
-        columnPinning
+        columnPinning,
+        ...(rowPinning !== undefined ? { rowPinning } : {})
       }
     }),
     [
@@ -347,7 +378,10 @@ export const DataTable = function DataTable<TData>({
       initiallyExpandAllRows,
       currentExpanded,
       columnPinning,
-      manualSorting
+      manualSorting,
+      rowPinning,
+      externalOnRowPinningChange,
+      enableRowPinning
     ]
   )
 
@@ -391,6 +425,68 @@ export const DataTable = function DataTable<TData>({
     setFirstHeaderRowHeight(prev => (prev !== null && Math.abs(prev - height) < 0.5 ? prev : height))
   }, [stickyHeader, firstHeaderRowEl, tableColumns, data])
 
+  const rowPinningEnabled = rowPinning !== undefined
+  // Bottom-pinned rows render in a tfoot; top pinning is accepted in state
+  // but not rendered (no use case yet). When row pinning is off, the body
+  // renders from the full row model exactly as before.
+  // Bottom pinning supports a single row: with multiple ids all rows would
+  // stick to `bottom: 0` and overlap, so only the last (bottom-most) id is
+  // rendered. Offset accumulation for multi-row stacking is a follow-up.
+  const bottomRows = rowPinningEnabled ? table.getBottomRows().slice(-1) : []
+  const hasBottomRows = bottomRows.length > 0
+  const bodyRows = rowPinningEnabled ? table.getCenterRows() : table.getRowModel().rows
+
+  const [viewportEl, setViewportEl] = useState<HTMLElement | null>(null)
+  const [spacerRowEl, setSpacerRowEl] = useState<HTMLTableRowElement | null>(null)
+  const spacerHeight = useSpacerHeight({
+    viewportEl,
+    spacerRowEl,
+    enabled: rowPinningEnabled && hasBottomRows
+  })
+
+  const renderRow = (row: Row<TData>, vertical?: StickyCellVertical) => {
+    const isPinned = !!vertical
+    return (
+      <Fragment key={row.id}>
+        <Table.Row
+          className={cn({ 'cn-table-v2-row-pinned': isPinned }, getRowClassName?.(row))}
+          data-pinned={isPinned ? 'bottom' : undefined}
+          onClick={onRowClick && !getIsRowDisabled?.(row) ? () => onRowClick(row.original, row.index) : undefined}
+          to={getRowLink && !getIsRowDisabled?.(row) ? getRowLink(row.original, row.index) : undefined}
+          selected={enableRowSelection ? row.getIsSelected() : undefined}
+          disabled={getIsRowDisabled?.(row)}
+        >
+          {row.getVisibleCells().map(cell => {
+            const column = cell.column
+            return (
+              <Table.Cell
+                key={cell.id}
+                // Temporary fix to prevent text bleeding in cell when it is pinned
+                className={cn({ 'cn-table-v2-cell-pinned': column.getIsPinned() })}
+                style={{
+                  ...getStickyCellStyles<TData>({ column, vertical }),
+                  width: column.getSize(),
+                  minWidth: column.columnDef.minSize ?? column.getSize(),
+                  maxWidth: column.columnDef.maxSize ?? column.getSize()
+                }}
+              >
+                {flexRender(cell.column.columnDef.cell, cell.getContext())}
+              </Table.Cell>
+            )
+          })}
+        </Table.Row>
+        {row.getIsExpanded() && renderSubComponent && !getSubRows && (
+          <Table.Row className="bg-cn-2">
+            <Table.Cell className="bg-transparent"></Table.Cell>
+            <Table.Cell className="bg-transparent" colSpan={row.getAllCells().length - 1}>
+              {renderSubComponent({ row })}
+            </Table.Cell>
+          </Table.Row>
+        )}
+      </Fragment>
+    )
+  }
+
   return (
     <Table.Root
       className={className}
@@ -404,6 +500,7 @@ export const DataTable = function DataTable<TData>({
       paginationProps={paginationProps}
       stickyHeader={stickyHeader}
       maxHeight={maxHeight}
+      viewportRef={stickyHeader ? setViewportEl : undefined}
     >
       <Table.Header>
         {(() => {
@@ -490,45 +587,20 @@ export const DataTable = function DataTable<TData>({
         })()}
       </Table.Header>
       <Table.Body>
-        {table.getRowModel().rows.map(row => (
-          <Fragment key={row.id}>
-            <Table.Row
-              className={getRowClassName?.(row)}
-              onClick={onRowClick && !getIsRowDisabled?.(row) ? () => onRowClick(row.original, row.index) : undefined}
-              to={getRowLink && !getIsRowDisabled?.(row) ? getRowLink(row.original, row.index) : undefined}
-              selected={enableRowSelection ? row.getIsSelected() : undefined}
-              disabled={getIsRowDisabled?.(row)}
-            >
-              {row.getVisibleCells().map(cell => {
-                const column = cell.column
-                return (
-                  <Table.Cell
-                    key={cell.id}
-                    // Temporary fix to prevent text bleeding in cell when it is pinned
-                    className={cn({ 'cn-table-v2-cell-pinned': column.getIsPinned() })}
-                    style={{
-                      ...getStickyCellStyles<TData>({ column }),
-                      width: column.getSize(),
-                      minWidth: column.columnDef.minSize ?? column.getSize(),
-                      maxWidth: column.columnDef.maxSize ?? column.getSize()
-                    }}
-                  >
-                    {flexRender(cell.column.columnDef.cell, cell.getContext())}
-                  </Table.Cell>
-                )
-              })}
-            </Table.Row>
-            {row.getIsExpanded() && renderSubComponent && !getSubRows && (
-              <Table.Row className="bg-cn-2">
-                <Table.Cell className="bg-transparent"></Table.Cell>
-                <Table.Cell className="bg-transparent" colSpan={row.getAllCells().length - 1}>
-                  {renderSubComponent({ row })}
-                </Table.Cell>
-              </Table.Row>
-            )}
-          </Fragment>
-        ))}
+        {bodyRows.map(row => renderRow(row))}
+        {rowPinningEnabled && hasBottomRows && (
+          <tr aria-hidden="true" className="cn-table-v2-row cn-table-v2-spacer-row" ref={setSpacerRowEl}>
+            <Table.Cell
+              className="cn-table-v2-spacer-cell"
+              colSpan={table.getVisibleLeafColumns().length}
+              style={{ height: spacerHeight > 0 ? spacerHeight : undefined, padding: 0 }}
+            />
+          </tr>
+        )}
       </Table.Body>
+      {rowPinningEnabled && hasBottomRows && (
+        <Table.Footer>{bottomRows.map(row => renderRow(row, { edge: 'bottom', offset: 0 }))}</Table.Footer>
+      )}
     </Table.Root>
   )
 }

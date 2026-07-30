@@ -278,6 +278,46 @@ export default {
     '&:not(.cn-table-v2-transparent) .cn-table-v2-head-sortable:hover': {
       '--cn-table-pinned-overlay': 'var(--cn-state-hover)',
       background: tablePinnedLayeredBackground
+    },
+
+    // Bottom-pinned rows (tfoot): separator lives on the cells (top border),
+    // matching the one-directional border scheme of the header. Footer cells
+    // use the header's opaque base so the pinned band reads like one surface.
+    '.cn-table-v2-footer': {
+      borderTop: 'none',
+
+      '.cn-table-v2-cell': {
+        '--cn-table-pinned-base': 'var(--cn-bg-2)',
+        backgroundColor: 'var(--cn-table-pinned-base)',
+        borderTopWidth: 'var(--cn-table-border)',
+        borderTopStyle: 'solid',
+        borderTopColor: 'var(--cn-border-3)'
+      }
+    },
+
+    // Pinned-row hover/selected compositing uses the same overlay mechanism
+    // as pinned columns, so the generic body hover must not also repaint
+    // their background.
+    '&.cn-table-v2-highlight-hover tbody > tr.cn-table-v2-row-pinned:hover > td': {
+      backgroundColor: 'var(--cn-table-pinned-base)'
+    },
+
+    // Spacer row: paints the opaque gap between the body rows and a
+    // bottom-pinned row when the table is shorter than its viewport.
+    // No borders or hover — it is a phantom row.
+    '.cn-table-v2-spacer-row': {
+      borderBottom: 'none',
+
+      '> td': {
+        '--cn-table-pinned-base': 'var(--cn-bg-1)',
+        backgroundColor: 'var(--cn-table-pinned-base)',
+        borderBottom: 'none',
+        padding: '0'
+      }
+    },
+
+    '&.cn-table-v2-highlight-hover tbody > tr.cn-table-v2-spacer-row:hover > td': {
+      backgroundColor: 'var(--cn-bg-1)'
     }
   },
 

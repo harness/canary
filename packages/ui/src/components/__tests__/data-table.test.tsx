@@ -5,6 +5,7 @@ import userEvent from '@testing-library/user-event'
 import { describe, expect, test, vi } from 'vitest'
 
 import { DataTable } from '../data-table'
+import { computeSpacerHeight } from '../data-table/use-spacer-height'
 import { getCommonPinningStyles, getStickyCellStyles } from '../data-table/utils'
 
 // Test Wrapper with TooltipProvider
@@ -1865,6 +1866,194 @@ describe('DataTable', () => {
       expect(nameHead).toHaveStyle({ position: 'sticky', left: '0px', zIndex: 1 })
       expect(nameHead).not.toHaveAttribute('data-sticky')
     })
+
+    test('should not render tfoot or spacer row when rowPinning is not set', () => {
+      const { container } = render(
+        <TestWrapper>
+          <DataTable data={mockData} columns={mockColumns} stickyHeader maxHeight={300} />
+        </TestWrapper>
+      )
+
+      expect(container.querySelector('tfoot')).not.toBeInTheDocument()
+      expect(container.querySelector('.cn-table-v2-spacer-row')).not.toBeInTheDocument()
+    })
+  })
+
+  describe('Row Pinning (bottom)', () => {
+    const dataWithTotals: TestData[] = [...mockData, { id: 'grand-total', name: 'Grand total', age: 90, email: '' }]
+
+    const renderPinnedTable = (extraProps: Record<string, unknown> = {}) =>
+      render(
+        <TestWrapper>
+          <DataTable
+            data={dataWithTotals}
+            columns={mockColumns}
+            getRowId={row => row.id}
+            rowPinning={{ bottom: ['grand-total'] }}
+            stickyHeader
+            maxHeight={300}
+            {...extraProps}
+          />
+        </TestWrapper>
+      )
+
+    test('should render the bottom-pinned row once, in a tfoot', () => {
+      const { container } = renderPinnedTable()
+
+      const tfoot = container.querySelector('tfoot')
+      expect(tfoot).toBeInTheDocument()
+      expect(tfoot).toHaveClass('cn-table-v2-footer')
+
+      expect(screen.getAllByText('Grand total')).toHaveLength(1)
+
+      const pinnedRow = screen.getByText('Grand total').closest('tr')
+      expect(pinnedRow).toHaveClass('cn-table-v2-row-pinned')
+      expect(pinnedRow).toHaveAttribute('data-pinned', 'bottom')
+      expect(tfoot).toContainElement(pinnedRow as HTMLElement)
+    })
+
+    test('should exclude the pinned row from the body rows', () => {
+      const { container } = renderPinnedTable()
+
+      const bodyRows = Array.from(container.querySelectorAll('tbody > tr:not(.cn-table-v2-spacer-row)'))
+      expect(bodyRows).toHaveLength(mockData.length)
+      expect(bodyRows.some(row => row.textContent?.includes('Grand total'))).toBe(false)
+    })
+
+    test('should stick footer cells to the bottom with the pinned-row z-index', () => {
+      renderPinnedTable()
+
+      const footerCell = screen.getByText('Grand total').closest('td')
+      expect(footerCell).toHaveStyle({ position: 'sticky', bottom: '0px', zIndex: 2 })
+    })
+
+    test('should render only the last id when more than one bottom row is pinned', () => {
+      const { container } = renderPinnedTable({
+        data: [...dataWithTotals, { id: 'grand-total-2', name: 'Grand total 2', age: 120, email: '' }],
+        rowPinning: { bottom: ['grand-total', 'grand-total-2'] }
+      })
+
+      // The bottom-most (last) id is the single rendered pinned row…
+      const footerRows = container.querySelectorAll('tfoot > tr')
+      expect(footerRows).toHaveLength(1)
+      expect(footerRows[0].textContent).toContain('Grand total 2')
+
+      // …and the clamped row does not fall back into the body either.
+      expect(screen.queryByText('Grand total')).not.toBeInTheDocument()
+    })
+
+    test('should render the corner cell above both axes when a column is also pinned', () => {
+      renderPinnedTable({ columnPinning: { right: ['email'], left: [] } })
+
+      const row = screen.getByText('Grand total').closest('tr')!
+      const cells = row.querySelectorAll('td')
+      const lastCell = cells[cells.length - 1]
+
+      expect(lastCell).toHaveStyle({ position: 'sticky', bottom: '0px', right: '0px', zIndex: 3 })
+    })
+
+    test('should render the spacer row inside the tbody', () => {
+      const { container } = renderPinnedTable()
+
+      const spacer = container.querySelector('.cn-table-v2-spacer-row')
+      expect(spacer).toBeInTheDocument()
+      expect(container.querySelector('tbody')).toContainElement(spacer as HTMLElement)
+
+      const spacerCell = spacer?.querySelector('td')
+      expect(spacerCell).toHaveAttribute('colspan', String(mockColumns.length))
+    })
+
+    test('should still render body content when nothing is pinned', () => {
+      const { container } = render(
+        <TestWrapper>
+          <DataTable
+            data={mockData}
+            columns={mockColumns}
+            getRowId={row => row.id}
+            rowPinning={{ bottom: [] }}
+            stickyHeader
+            maxHeight={300}
+          />
+        </TestWrapper>
+      )
+
+      expect(screen.getByText('John Doe')).toBeInTheDocument()
+      expect(container.querySelector('tfoot')).not.toBeInTheDocument()
+      expect(container.querySelector('.cn-table-v2-spacer-row')).not.toBeInTheDocument()
+    })
+
+    test('should keep the pinned row in the tfoot when only its data row is present (keepPinnedRows)', () => {
+      // Simulates a server-paginated page whose data excludes the totals row's
+      // original position: keepPinnedRows still surfaces it in the tfoot.
+      const { container } = render(
+        <TestWrapper>
+          <DataTable
+            data={dataWithTotals}
+            columns={mockColumns}
+            getRowId={row => row.id}
+            rowPinning={{ bottom: ['grand-total'] }}
+            stickyHeader
+            maxHeight={300}
+          />
+        </TestWrapper>
+      )
+
+      const bodyRows = Array.from(container.querySelectorAll('tbody > tr:not(.cn-table-v2-spacer-row)'))
+      expect(bodyRows).toHaveLength(mockData.length)
+      expect(container.querySelector('tfoot')).toContainElement(screen.getByText('Grand total').closest('tr'))
+    })
+
+    test('should work with pagination props — pinned row stays in the tfoot and spacer renders', () => {
+      const { container } = render(
+        <TestWrapper>
+          <DataTable
+            data={dataWithTotals}
+            columns={mockColumns}
+            getRowId={row => row.id}
+            rowPinning={{ bottom: ['grand-total'] }}
+            stickyHeader
+            maxHeight={300}
+            paginationProps={{ totalItems: 100, pageSize: 4, currentPage: 1, goToPage: vi.fn() }}
+          />
+        </TestWrapper>
+      )
+
+      // Grand total appears exactly once, in the tfoot — not in the paginated body
+      expect(screen.getAllByText('Grand total')).toHaveLength(1)
+      expect(container.querySelector('tfoot')).toContainElement(screen.getByText('Grand total').closest('tr'))
+
+      // Body excludes the totals row; spacer still renders between body and tfoot
+      const bodyRows = Array.from(container.querySelectorAll('tbody > tr:not(.cn-table-v2-spacer-row)'))
+      expect(bodyRows).toHaveLength(mockData.length)
+      expect(container.querySelector('.cn-table-v2-spacer-row')).toBeInTheDocument()
+    })
+
+    test('should layer both corners on a short table with left and right pinned columns', () => {
+      const { container } = renderPinnedTable({
+        data: [...mockData.slice(0, 2), { id: 'grand-total', name: 'Grand total', age: 90, email: '' }],
+        columnPinning: { left: ['name'], right: ['email'] }
+      })
+
+      const row = screen.getByText('Grand total').closest('tr')!
+      const cells = row.querySelectorAll('td')
+
+      expect(cells[0]).toHaveStyle({ position: 'sticky', bottom: '0px', left: '0px', zIndex: 3 })
+      expect(cells[cells.length - 1]).toHaveStyle({ position: 'sticky', bottom: '0px', right: '0px', zIndex: 3 })
+
+      // Short table still gets a spacer row between the 2 body rows and the tfoot
+      expect(container.querySelector('.cn-table-v2-spacer-row')).toBeInTheDocument()
+    })
+  })
+})
+
+describe('computeSpacerHeight', () => {
+  test('should return the surplus viewport height', () => {
+    expect(computeSpacerHeight({ viewportClientHeight: 300, contentHeight: 120 })).toBe(180)
+  })
+
+  test('should return 0 when content fills or exceeds the viewport', () => {
+    expect(computeSpacerHeight({ viewportClientHeight: 300, contentHeight: 300 })).toBe(0)
+    expect(computeSpacerHeight({ viewportClientHeight: 300, contentHeight: 450 })).toBe(0)
   })
 })
 
@@ -1913,5 +2102,16 @@ describe('getStickyCellStyles', () => {
   test('should combine header and pinned-column layers for corner cells', () => {
     const styles = getStickyCellStyles({ column: createColumn('left'), vertical: { edge: 'top', offset: 0 } })
     expect(styles).toMatchObject({ position: 'sticky', top: '0px', left: '0px', zIndex: 5 })
+  })
+
+  test('should stick bottom-pinned row cells with the pinned-row z-index layer', () => {
+    const styles = getStickyCellStyles({ column: createColumn(), vertical: { edge: 'bottom', offset: 0 } })
+    expect(styles).toMatchObject({ position: 'sticky', bottom: '0px', zIndex: 2 })
+    expect(styles.top).toBeUndefined()
+  })
+
+  test('should combine bottom-pinned row and pinned-column layers for the grand-total corner', () => {
+    const styles = getStickyCellStyles({ column: createColumn('right'), vertical: { edge: 'bottom', offset: 0 } })
+    expect(styles).toMatchObject({ position: 'sticky', bottom: '0px', right: '0px', zIndex: 3 })
   })
 })

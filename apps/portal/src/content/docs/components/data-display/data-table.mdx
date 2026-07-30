@@ -570,6 +570,25 @@ When `enableRowSelection` or `enableExpanding` is enabled, the injected columns 
       required: false,
       value: "CSSProperties['maxHeight']",
     },
+    {
+      name: "rowPinning",
+      description:
+        "Opt-in row pinning state. Bottom-pinned rows render in a tfoot whose cells stick to the bottom of the scroll viewport (stickyHeader is required for sticking). Pin rows by appending them to data and listing their getRowId ids in rowPinning.bottom.",
+      required: false,
+      value: "RowPinningState ({ top?: string[], bottom?: string[] })",
+    },
+    {
+      name: "onRowPinningChange",
+      description: "Callback for when row pinning changes",
+      required: false,
+      value: "OnChangeFn<RowPinningState>",
+    },
+    {
+      name: "enableRowPinning",
+      description: "Whether rows can be pinned. See TanStack enableRowPinning.",
+      required: false,
+      value: "boolean | ((row: Row<TData>) => boolean)",
+    },
   ]}
 />
 
@@ -981,6 +1000,92 @@ function TableWithStickyHeader() {
 - Pair `stickyHeader` with `maxHeight` so the table has a constrained scroll viewport.
 - Sticky offsets support up to two stacked header rows.
 - The scroll viewport is the table's own container — pagination stays visible below the scroll area.
+
+## Row Pinning
+
+The `DataTable` supports opt-in **bottom row pinning** via TanStack Table's `rowPinning` state — designed for grand-total rows that must stay visible at the bottom of the table. Pinned rows render in a `<tfoot>` whose cells stick to the bottom of the scroll viewport; pair with `stickyHeader` so the header and the total frame the scrolling body.
+
+To pin a total row, append it to `data` and list its `getRowId` id in `rowPinning.bottom`:
+
+<DocsPage.ComponentExample
+  client:only
+  code={`() => {
+  const sales = Array.from({ length: 18 }, (_, i) => {
+    const q1 = 120 + ((i * 41) % 380)
+    const q2 = 150 + ((i * 53) % 320)
+    return {
+      id: \`sale-\${i + 1}\`,
+      product: \`Product \${i + 1}\`,
+      q1,
+      q2,
+      total: q1 + q2
+    }
+  })
+
+const grandTotal = {
+id: 'grand-total',
+product: 'Grand total',
+q1: sales.reduce((acc, row) => acc + row.q1, 0),
+q2: sales.reduce((acc, row) => acc + row.q2, 0),
+total: sales.reduce((acc, row) => acc + row.total, 0)
+}
+
+const columns = [
+{ id: 'product', accessorKey: 'product', header: 'Product' },
+{ id: 'q1', accessorKey: 'q1', header: 'Q1' },
+{ id: 'q2', accessorKey: 'q2', header: 'Q2' },
+{ id: 'total', accessorKey: 'total', header: 'Total' }
+]
+
+return (
+
+<DataTable
+  columns={columns}
+  data={[...sales, grandTotal]}
+  getRowId={(row) => row.id}
+  stickyHeader
+  maxHeight={340}
+  rowPinning={{ bottom: ["grand-total"] }}
+  getRowClassName={(row) =>
+    row.original.id === "grand-total" ? "[&>td]:font-medium" : undefined
+  }
+/>
+) }`} />
+
+### Usage
+
+```tsx
+import { DataTable } from "@harnessio/ui/components";
+
+function TableWithGrandTotal() {
+  const grandTotal = computeTotals(data); // your own totals row
+
+  return (
+    <DataTable
+      columns={columns}
+      data={[...data, grandTotal]}
+      getRowId={(row) => row.id}
+      stickyHeader
+      maxHeight={340}
+      rowPinning={{ bottom: [grandTotal.id] }}
+    />
+  );
+}
+```
+
+### Styling ownership
+
+- **DataTable owns structure and position**: sticking, z-index layering, opaque backgrounds, the separator above the pinned band, and the spacer row for short tables. Pinned rows get a header-like band (`--cn-bg-2` + medium weight) by default.
+- **You own content and emphasis**: the totals row data itself, cell formatting, the "Grand total" label, and extra styling via `getRowClassName` or the guaranteed `cn-table-v2-row-pinned` class / `data-pinned="bottom"` attribute.
+
+### Behavior notes
+
+- **Single pinned row**: bottom pinning supports exactly one row. If multiple ids are listed in `rowPinning.bottom`, only the last (bottom-most) row renders in the footer — without accumulated offsets the rows would overlap at `bottom: 0`. Multi-row stacking is a possible follow-up.
+- **Short tables**: when the body is shorter than the viewport, whitespace opens between the last body row and the pinned row instead of the pinned row collapsing upward.
+- **Row + column pinning**: a pinned row crossing a pinned column renders a correct corner cell layered above both axes (e.g. a right-pinned `Total` column with a bottom-pinned grand total).
+- `keepPinnedRows` stays at TanStack's default (`true`), so a pinned row appears on **every page** — intended for totals, surprising for other rows.
+- If you use row selection, select-all counts a synthetic totals row unless you exclude it via `getRowCanSelect`.
+- `rowPinning.top` is accepted in state but not rendered — there is no top-pinned body row use case yet.
 
 ## Transparent Variant
 

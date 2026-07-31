@@ -1,7 +1,7 @@
 import { JSX } from 'react'
 
 import { Calendar } from './calendar'
-import { Input } from './input'
+import { TextInput } from './inputs/text-input'
 import { Popover } from './popover'
 
 export interface CalendarInputViewProps {
@@ -15,18 +15,13 @@ export const CalendarInputView = ({
   setValue,
   placeholder = 'Select date'
 }: CalendarInputViewProps): JSX.Element => {
-  const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    const inputValue = e.target.value
-    setValue(new Date(inputValue))
-  }
-
   return (
     <Popover.Root>
       <Popover.Trigger asChild>
-        <Input
+        <TextInput
           type="text"
+          readOnly
           value={value ? new Date(value).toLocaleDateString() : ''}
-          onChange={handleInputChange}
           placeholder={placeholder}
           className="cursor-pointer"
         />

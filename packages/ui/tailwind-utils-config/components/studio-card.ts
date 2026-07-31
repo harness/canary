@@ -22,6 +22,12 @@ const DimmedShadow3Style = {
     '0 4px 6px -1px lch(from var(--cn-shadow-color-3) l c h / 0.05), 0 2px 8px -2px lch(from var(--cn-shadow-color-3) l c h / 0.05)'
 }
 
+/** Cap for tags so the status badge can reserve space and truncate. */
+const StudioCardTagMaxWidth = 'var(--cn-size-28)'
+
+/** Gap between status badge and tag. */
+const StudioCardStatusTagGap = 'var(--cn-layout-2xs)'
+
 export default {
   '.cn-studio-card': {
     // Step cards (base, no group/stage). Three-way radius split — see overrides below.
@@ -190,7 +196,7 @@ export default {
 
     '> :not(&-title)': {
       '@apply shrink-0': ''
-    },
+    }
   },
 
   // Compact header padding for xs cards
@@ -278,6 +284,7 @@ export default {
   // Tag Component
   '.cn-studio-card-tag': {
     '@apply flex gap-cn-3xs p-cn-2xs border rounded-t-cn-4 top-[-28px] right-0 absolute select-none': '',
+    maxWidth: StudioCardTagMaxWidth,
     color: 'var(--cn-set-purple-outline-text)',
     'background-color': 'var(--cn-set-purple-outline-bg)',
     'border-color': 'var(--cn-set-purple-outline-border)',
@@ -305,7 +312,14 @@ export default {
   // Status Component
   '.cn-studio-card-status': {
     position: 'absolute',
-    top: '-28px'
+    top: '-28px',
+    maxWidth: '100%',
+    // Override `.cn-badge` min-width: fit-content so max-width can take effect.
+    minWidth: '0',
+
+    '.cn-studio-card:has(> .cn-studio-card-tag) > &': {
+      maxWidth: `calc(100% - ${StudioCardTagMaxWidth} - ${StudioCardStatusTagGap})`
+    }
   },
 
   // Footer Component
@@ -357,12 +371,13 @@ export default {
   },
 
   // Stage header and footer (all sizes): exclude from intrinsic card width; fill width set by steps
-  '.cn-studio-card-group.cn-studio-card-stage > .cn-studio-card-header, .cn-studio-card-group.cn-studio-card-stage > .cn-studio-card-footer': {
-    width: '0',
-    minWidth: '100%',
-    maxWidth: '100%',
-    overflow: 'hidden'
-  },
+  '.cn-studio-card-group.cn-studio-card-stage > .cn-studio-card-header, .cn-studio-card-group.cn-studio-card-stage > .cn-studio-card-footer':
+    {
+      width: '0',
+      minWidth: '100%',
+      maxWidth: '100%',
+      overflow: 'hidden'
+    },
 
   '.cn-studio-card-expand-button-main': {
     zIndex: '2',

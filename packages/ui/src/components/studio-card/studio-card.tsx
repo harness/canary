@@ -272,7 +272,7 @@ function Tag({ tagText, icon }: PropsWithChildren<{ tagText: string; icon?: Icon
   return (
     <div className="cn-studio-card-tag">
       {icon && <IconV2 name={icon} size="xs" />}
-      <Text title={tagText} color="inherit" variant="caption-single-line-normal">
+      <Text title={tagText} color="inherit" variant="caption-single-line-normal" truncate>
         {truncatedText}
       </Text>
     </div>

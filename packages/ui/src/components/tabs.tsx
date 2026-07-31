@@ -245,6 +245,23 @@ const TabsList = forwardRef<ElementRef<typeof TabsPrimitive.List>, TabsListProps
       }
     })
 
+    const reserveStrongTabWidths = useRef(() => {
+      const contentEl = contentRef.current
+      if (!contentEl) return
+
+      const triggers = contentEl.querySelectorAll<HTMLElement>('[role="tab"]')
+      triggers.forEach(trigger => {
+        trigger.style.minWidth = ''
+        const restingWidth = trigger.getBoundingClientRect().width
+
+        trigger.classList.add('cn-tabs-trigger-measure-strong')
+        const strongWidth = trigger.getBoundingClientRect().width
+        trigger.classList.remove('cn-tabs-trigger-measure-strong')
+
+        trigger.style.minWidth = `${Math.ceil(Math.max(restingWidth, strongWidth))}px`
+      })
+    })
+
     useEffect(() => {
       scrollActiveTabIntoView.current()
     }, [activeTabValue])
@@ -254,6 +271,7 @@ const TabsList = forwardRef<ElementRef<typeof TabsPrimitive.List>, TabsListProps
       const contentEl = contentRef.current
       if (!container || !contentEl) return
 
+      reserveStrongTabWidths.current()
       checkOverflow.current()
       updateFadeIndicators.current()
       scrollActiveTabIntoView.current()
@@ -280,6 +298,12 @@ const TabsList = forwardRef<ElementRef<typeof TabsPrimitive.List>, TabsListProps
           attributes: true,
           attributeFilter: ['class']
         })
+      })
+
+      void document.fonts?.ready.then(() => {
+        reserveStrongTabWidths.current()
+        checkOverflow.current()
+        updateFadeIndicators.current()
       })
 
       return () => {

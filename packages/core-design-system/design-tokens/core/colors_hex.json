@@ -6,7 +6,7 @@
     },
     "black": {
       "$type": "color",
-      "$value": "#08090d"
+      "$value": "#000000"
     }
   },
   "gray": {
@@ -53,7 +53,7 @@
       "$value": "#141923"
     },
     "1000": {
-      "$value": "#0B0E14"
+      "$value": "#100F0F"
     },
     "$type": "color"
   },

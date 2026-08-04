@@ -347,7 +347,7 @@ export default {
       minHeight: 'var(--cn-size-16)',
       '@apply px-cn-xs py-cn-xs': '',
       '& span': {
-        '@apply line-clamp-2': ''
+        '@apply line-clamp-3': ''
       }
     },
 

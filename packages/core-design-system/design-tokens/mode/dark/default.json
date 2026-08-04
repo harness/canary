@@ -1262,7 +1262,7 @@
         },
         "$type": "color",
         "$value": "{pure.black}",
-        "$description": "Shadow color for app shell nav and chat rail elevation in dark mode (#08090d / bg.0)."
+        "$description": "Shadow color for app shell nav and chat rail elevation in dark mode (#000000 / bg.0)."
       }
     },
     "avatar": {
@@ -1748,7 +1748,7 @@
       },
       "dotes": {
         "$type": "color",
-        "$value": "{gray.900}",
+        "$value": "{gray.850}",
         "$description": "Refers to the dotted pattern visible in the background of the workspace."
       },
       "stage-card": {

@@ -1589,7 +1589,7 @@
       },
       "dotes": {
         "$type": "color",
-        "$value": "{gray.100}",
+        "$value": "{gray.150}",
         "$description": "Refers to the dotted pattern visible in the background of the workspace."
       },
       "stage-card": {

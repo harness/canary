@@ -468,7 +468,7 @@ export default {
 
     '&-drawer-content, &-drawer-overlay': {
       borderLeftWidth: '1px',
-      left: 'var(--cn-size-64) !important',
+      left: 'var(--cn-sidebar-container-full-width) !important',
       '&-collapsed': {
         left: 'var(--cn-size-16) !important'
       }
@@ -536,7 +536,7 @@ export default {
   },
 
   '.cn-sidebar-nested-popover': {
-    width: 'var(--cn-size-64)',
+    width: 'var(--cn-sidebar-container-full-width)',
     height: '100vh',
     borderRadius: '0 var(--cn-popover-radius) var(--cn-popover-radius) 0',
     ...descriptionIconStretch

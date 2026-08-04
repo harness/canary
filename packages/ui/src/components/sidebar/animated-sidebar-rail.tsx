@@ -21,7 +21,7 @@ const AnimatedSideBarRail: React.FC<AnimatedSideBarRailProps> = ({ className }) 
   const { state, toggleSidebar } = useSidebar()
 
   // Left position when sidebar is expanded
-  const EXPANDED_LEFT = getCssNumber('--cn-sidebar-container-full-width', 256)
+  const EXPANDED_LEFT = getCssNumber('--cn-sidebar-container-full-width', 240)
 
   const open = state === 'expanded'
   const [hover, setHover] = useState(false)

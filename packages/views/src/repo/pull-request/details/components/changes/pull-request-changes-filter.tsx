@@ -264,7 +264,7 @@ export const PullRequestChangesFilter: React.FC<PullRequestChangesFilterProps> =
                   title={t('views:pullRequests.hideWhitespace', 'Hide whitespace changes')}
                   description={t(
                     'views:pullRequests.hideWhitespaceDescription',
-                    'Hide whitespace-only diffs (e.g. line endings, indentation)'
+                    'e.g. line endings, indentation'
                   )}
                   checked={ignoreWhitespace}
                   onCheckedChange={() => setIgnoreWhitespace(!ignoreWhitespace)}

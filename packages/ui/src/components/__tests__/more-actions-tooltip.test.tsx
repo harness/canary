@@ -292,4 +292,29 @@ describe('MoreActionsTooltip', () => {
     const button = screen.getByRole('button', { name: 'Show more actions' })
     expect(button).toBeDisabled()
   })
+
+  test('applies custom label to trigger aria-label and tooltip', () => {
+    renderComponent({ label: 'Dashboard actions' })
+
+    expect(screen.getByRole('button', { name: 'Dashboard actions' })).toBeInTheDocument()
+    expect(buttonMockCalls[0].props.tooltipProps).toMatchObject({ content: 'Dashboard actions' })
+  })
+
+  test('forwards testId to action items', () => {
+    render(
+      <MoreActionsTooltip
+        actions={[
+          { title: 'Plain', onClick: vi.fn(), testId: 'action-plain' },
+          { title: 'Icon', iconName: 'star', onClick: vi.fn(), testId: 'action-icon' },
+          { title: 'Link', to: '/link', testId: 'action-link' },
+          { title: 'Link Icon', to: '/link-icon', iconName: 'edit-pencil', testId: 'action-link-icon' }
+        ]}
+      />
+    )
+
+    expect(dropdownItemCalls[0]).toMatchObject({ 'data-testid': 'action-plain' })
+    expect(dropdownIconItemCalls[0]).toMatchObject({ 'data-testid': 'action-icon' })
+    expect(dropdownItemCalls[1]).toMatchObject({ 'data-testid': 'action-link' })
+    expect(dropdownIconItemCalls[1]).toMatchObject({ 'data-testid': 'action-link-icon' })
+  })
 })

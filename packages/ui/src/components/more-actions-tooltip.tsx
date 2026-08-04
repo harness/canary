@@ -20,6 +20,7 @@ export interface ActionData {
   isDanger?: boolean
   disabled?: boolean
   tooltip?: Pick<TooltipProps, 'title' | 'content'>
+  testId?: string
 }
 
 export interface MoreActionsTooltipProps {
@@ -33,6 +34,8 @@ export interface MoreActionsTooltipProps {
   buttonVariant?: ButtonVariants
   buttonSize?: ButtonSizes
   disabled?: boolean
+  /** Accessible name and tooltip for the trigger button. Defaults to "Show more actions". */
+  label?: string
 }
 
 /**
@@ -49,7 +52,8 @@ export const MoreActionsTooltip = forwardRef<HTMLButtonElement, MoreActionsToolt
       className,
       buttonVariant = 'ghost',
       buttonSize = 'md',
-      disabled = false
+      disabled = false,
+      label = 'Show more actions'
     },
     ref
   ) => {
@@ -77,9 +81,9 @@ export const MoreActionsTooltip = forwardRef<HTMLButtonElement, MoreActionsToolt
             variant={buttonVariant}
             iconOnly
             size={buttonSize}
-            aria-label="Show more actions"
+            aria-label={label}
             tooltipProps={{
-              content: 'Show more actions',
+              content: label,
               open: suppressTooltip ? false : undefined
             }}
           >
@@ -112,6 +116,7 @@ export const MoreActionsTooltip = forwardRef<HTMLButtonElement, MoreActionsToolt
                       </Text>
                     }
                     disabled={action.disabled}
+                    data-testid={action.testId}
                   />
                 ) : (
                   <DropdownMenu.Item
@@ -121,6 +126,7 @@ export const MoreActionsTooltip = forwardRef<HTMLButtonElement, MoreActionsToolt
                       </Text>
                     }
                     disabled={action.disabled}
+                    data-testid={action.testId}
                   />
                 )}
               </Link>
@@ -139,6 +145,7 @@ export const MoreActionsTooltip = forwardRef<HTMLButtonElement, MoreActionsToolt
                   action?.onClick?.()
                 }}
                 disabled={action.disabled}
+                data-testid={action.testId}
               />
             ) : (
               <DropdownMenu.Item
@@ -153,6 +160,7 @@ export const MoreActionsTooltip = forwardRef<HTMLButtonElement, MoreActionsToolt
                   action?.onClick?.()
                 }}
                 disabled={action.disabled}
+                data-testid={action.testId}
               />
             )
 

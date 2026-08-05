@@ -45,18 +45,16 @@ export const typographyVariantConfig = {
   'heading-small': 'font-heading-small',
   'body-normal': 'font-body-normal',
   'body-single-line-normal': 'font-body-single-line-normal',
-  'body-single-line-light': 'font-body-single-line-light',
   'body-strong': 'font-body-strong',
   'body-single-line-strong': 'font-body-single-line-strong',
   'body-code': 'font-body-code',
   'body-single-line-code': 'font-body-single-line-code',
   'caption-normal': 'font-caption-normal',
-  'caption-light': 'font-caption-light',
   'caption-strong': 'font-caption-strong',
   'caption-code': 'font-caption-code',
   'caption-single-line-code': 'font-caption-single-line-code',
   'caption-single-line-normal': 'font-caption-single-line-normal',
-  'caption-single-line-light': 'font-caption-single-line-light'
+  'caption-single-line-normal-caps': 'font-caption-single-line-normal-caps'
 }
 
 export const textVariants = cva('', {
@@ -118,7 +116,6 @@ const textVariantToElement: Record<
   'heading-base': { element: 'p', color: 'foreground-1' },
   'heading-small': { element: 'p', color: 'foreground-1' },
   'body-normal': { element: 'p', color: 'foreground-2' },
-  'body-single-line-light': { element: 'p', color: 'foreground-2' },
   'body-single-line-normal': { element: 'p', color: 'foreground-2' },
   'body-strong': { element: 'p', color: 'foreground-2' },
   'body-single-line-strong': { element: 'p', color: 'foreground-2' },
@@ -127,10 +124,9 @@ const textVariantToElement: Record<
   'caption-code': { element: 'span', color: 'foreground-2' },
   'caption-single-line-code': { element: 'span', color: 'foreground-2' },
   'caption-normal': { element: 'span', color: 'foreground-2' },
-  'caption-light': { element: 'span', color: 'foreground-2' },
   'caption-strong': { element: 'span', color: 'foreground-2' },
   'caption-single-line-normal': { element: 'span', color: 'foreground-2' },
-  'caption-single-line-light': { element: 'span', color: 'foreground-2' }
+  'caption-single-line-normal-caps': { element: 'span', color: 'foreground-2' }
 }
 
 const getTextNode = ({ as, variant = 'body-normal', asChild }: Pick<TextProps, 'as' | 'asChild' | 'variant'>) => {

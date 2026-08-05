@@ -30,7 +30,7 @@
       "$type": "typography",
       "$value": {
         "fontFamily": "{fontFamily.default}",
-        "fontWeight": "{fontWeight.default.normal.500}",
+        "fontWeight": "{fontWeight.default.normal.600}",
         "fontSize": "{fontSize.10}",
         "lineHeight": "{lineHeight.10.tight}",
         "letterSpacing": "{tracking.tight}",
@@ -42,7 +42,7 @@
       "$type": "typography",
       "$value": {
         "fontFamily": "{fontFamily.default}",
-        "fontWeight": "{fontWeight.default.normal.400}",
+        "fontWeight": "{fontWeight.default.normal.600}",
         "fontSize": "{fontSize.9}",
         "lineHeight": "{lineHeight.9.snug}",
         "letterSpacing": "{tracking.tight}",
@@ -54,7 +54,7 @@
       "$type": "typography",
       "$value": {
         "fontFamily": "{fontFamily.default}",
-        "fontWeight": "{fontWeight.default.normal.400}",
+        "fontWeight": "{fontWeight.default.normal.600}",
         "fontSize": "{fontSize.7}",
         "lineHeight": "{lineHeight.7.snug}",
         "letterSpacing": "{tracking.tight}"
@@ -65,7 +65,7 @@
       "$type": "typography",
       "$value": {
         "fontFamily": "{fontFamily.default}",
-        "fontWeight": "{fontWeight.default.normal.400}",
+        "fontWeight": "{fontWeight.default.normal.600}",
         "fontSize": "{fontSize.6}",
         "lineHeight": "{lineHeight.6.tight}",
         "letterSpacing": "{tracking.tight}"
@@ -76,7 +76,7 @@
       "$type": "typography",
       "$value": {
         "fontFamily": "{fontFamily.default}",
-        "fontWeight": "{fontWeight.default.normal.500}",
+        "fontWeight": "{fontWeight.default.normal.600}",
         "fontSize": "{fontSize.5}",
         "lineHeight": "{lineHeight.5.snug}",
         "letterSpacing": "{tracking.normal}"
@@ -126,31 +126,19 @@
       "$type": "typography",
       "$value": {
         "fontFamily": "{fontFamily.mono}",
-        "fontWeight": "{fontWeight.mono.normal.300}",
+        "fontWeight": "{fontWeight.mono.normal.400}",
         "fontSize": "0.75rem",
         "lineHeight": "{lineHeight.4.normal}",
         "letterSpacing": "{tracking.tight}"
       },
       "$description": "Monospaced typography that ensures character alignment for technical content. Maintains consistent spacing and character width to preserve code formatting while integrating harmoniously with surrounding text.\n\nCommon uses: Code snippets and examples, Terminal command instructions, File paths and system references, API endpoints."
     },
-    "light": {
-      "$type": "typography",
-      "$value": {
-        "fontFamily": "{fontFamily.default}",
-        "fontWeight": "{fontWeight.default.normal.300}",
-        "fontSize": "{fontSize.5}",
-        "lineHeight": "{lineHeight.5.snug}",
-        "letterSpacing": "{tracking.tight}",
-        "paragraphSpacing": "0.375rem"
-      },
-      "$description": "De-emphasized body text for secondary information. Uses reduced weight to create visual hierarchy while maintaining readability and size consistency with normal body text.\n\nCommon uses: Helper text, Placeholder content, Secondary descriptions, Supplementary information."
-    },
     "single-line": {
       "code": {
         "$type": "typography",
         "$value": {
           "fontFamily": "{fontFamily.mono}",
-          "fontWeight": "{fontWeight.default.normal.300}",
+          "fontWeight": "{fontWeight.mono.normal.400}",
           "fontSize": "0.75rem",
           "lineHeight": "{lineHeight.4.none}",
           "letterSpacing": "{tracking.tight}"
@@ -163,7 +151,7 @@
           "fontFamily": "{fontFamily.default}",
           "fontWeight": "{fontWeight.default.normal.400}",
           "fontSize": "{fontSize.5}",
-          "lineHeight": "{lineHeight.5.tight}",
+          "lineHeight": "{lineHeight.3.snug}",
           "letterSpacing": "{tracking.tight}"
         },
         "$description": "Component-optimized text style with zero line-height for precise vertical positioning. Designed specifically for UI elements with fixed height constraints where text must maintain consistent vertical alignment."
@@ -174,21 +162,10 @@
           "fontFamily": "{fontFamily.default}",
           "fontWeight": "{fontWeight.default.normal.500}",
           "fontSize": "{fontSize.5}",
-          "lineHeight": "{lineHeight.5.tight}",
+          "lineHeight": "{lineHeight.3.snug}",
           "letterSpacing": "{tracking.tight}"
         },
         "$description": "Emphasized component text for important interactive elements. Increases visual prominence without affecting component height. Ensures consistent vertical alignment within fixed-height UI elements."
-      },
-      "light": {
-        "$type": "typography",
-        "$value": {
-          "fontFamily": "{fontFamily.default}",
-          "fontWeight": "{fontWeight.default.normal.300}",
-          "fontSize": "{fontSize.5}",
-          "lineHeight": "{lineHeight.5.tight}",
-          "letterSpacing": "{tracking.tight}"
-        },
-        "$description": "Subtle single-line text for tertiary information in compact UI elements. Combines reduced weight with zero line-height for minimal visual presence while remaining legible."
       }
     }
   },
@@ -229,18 +206,6 @@
       },
       "$description": "Monospaced caption for inline technical references. Combines compact sizing with code-style formatting for technical annotations.\n\nCommon uses: Inline code references, Version numbers, Short file names, Technical identifiers."
     },
-    "light": {
-      "$type": "typography",
-      "$value": {
-        "fontFamily": "{fontFamily.default}",
-        "fontWeight": "{fontWeight.default.normal.300}",
-        "fontSize": "0.75rem",
-        "lineHeight": "{lineHeight.4.snug}",
-        "letterSpacing": "{tracking.normal}",
-        "paragraphSpacing": "0.375rem"
-      },
-      "$description": "Reduced-emphasis supporting text for secondary information. Creates visual hierarchy through weight reduction while maintaining size consistency with normal captions. Visually recedes while remaining accessible.\n\nCommon uses: Timestamps, Metadata displays, Copyright information, Secondary attributions, Optional information."
-    },
     "single-line": {
       "normal": {
         "$type": "typography",
@@ -257,13 +222,13 @@
         "$type": "typography",
         "$value": {
           "fontFamily": "{fontFamily.default}",
-          "fontWeight": "{fontWeight.default.normal.400}",
-          "fontSize": "0.75rem",
-          "lineHeight": "{lineHeight.4.none}",
+          "fontWeight": "{fontWeight.default.normal.600}",
+          "fontSize": "{fontSize.3}",
+          "lineHeight": "{lineHeight.1.normal}",
           "letterSpacing": "{tracking.wide}",
           "textCase": "{textCase.uppercase}"
         },
-        "$description": "Uppercase caption for categorical labels and section identifiers. Uses wide letter-spacing for improved legibility at small sizes.\n\nCommon uses: Category tags, Section labels, Status indicators, Column headers."
+        "$description": "Uppercase caption for read-only metadata input labels. Uses wide letter-spacing for improved legibility at small sizes."
       },
       "strong": {
         "$type": "typography",
@@ -280,23 +245,12 @@
         "$type": "typography",
         "$value": {
           "fontFamily": "{fontFamily.mono}",
-          "fontWeight": "{fontWeight.default.normal.500}",
+          "fontWeight": "{fontWeight.mono.normal.500}",
           "fontSize": "0.75rem",
           "lineHeight": "{lineHeight.3.none}",
           "letterSpacing": "{tracking.normal}"
         },
         "$description": "Compact monospaced caption for inline technical content. Optimized for single-line display of code snippets in space-constrained UI elements.\n\nCommon uses: Inline variable names, Short commands, Version tags, Technical badges."
-      },
-      "light": {
-        "$type": "typography",
-        "$value": {
-          "fontFamily": "{fontFamily.default}",
-          "fontWeight": "{fontWeight.default.normal.300}",
-          "fontSize": "0.75rem",
-          "lineHeight": "{lineHeight.4.none}",
-          "letterSpacing": "{tracking.normal}"
-        },
-        "$description": "Minimal-emphasis component text for auxiliary information. Combines reduced weight with zero line-height for the most visually subtle typography suitable for non-critical interface elements."
       }
     }
   },

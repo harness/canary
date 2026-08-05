@@ -373,10 +373,9 @@ describe('Text', () => {
         'body-single-line-strong',
         'body-code',
         'caption-normal',
-        'caption-light',
         'caption-strong',
         'caption-single-line-normal',
-        'caption-single-line-light'
+        'caption-single-line-normal-caps'
       ] as const
 
       variants.forEach(variant => {
@@ -602,10 +601,9 @@ describe('Text', () => {
     test('should render caption variants as span elements', () => {
       const captionVariants = [
         'caption-normal',
-        'caption-light',
         'caption-strong',
         'caption-single-line-normal',
-        'caption-single-line-light'
+        'caption-single-line-normal-caps'
       ] as const
 
       captionVariants.forEach(variant => {

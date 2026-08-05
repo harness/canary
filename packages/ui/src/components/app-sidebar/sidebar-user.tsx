@@ -34,7 +34,7 @@ export const AppSidebarUser = ({ user, openThemeDialog, openLanguageDialog, hand
               <Text variant="body-single-line-strong" color="foreground-1" truncate>
                 {userName}
               </Text>
-              <Text variant="caption-single-line-light" color="foreground-3" truncate>
+              <Text variant="caption-single-line-normal" color="foreground-3" truncate>
                 {user?.email}
               </Text>
             </Layout.Grid>

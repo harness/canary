@@ -247,7 +247,7 @@ export const PushSettingsRuleListField: FC<{
                 disabled={isDisabled}
                 label={rule.label}
                 caption={rule.description}
-                captionVariant="caption-light"
+                captionVariant="caption-normal"
               />
               {!!rule?.hasInput && isChecked && (
                 <NumberInput

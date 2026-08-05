@@ -196,6 +196,7 @@ const FiltersField = <T extends string, V extends FilterValueTypes, CustomValue 
       contentClassName={cn(
         filterOption.type === FilterFieldTypes.Calendar ? 'w-[250px]' : '',
         filterOption.type === FilterFieldTypes.DateRange ? 'w-auto min-w-[400px] max-w-none' : '',
+        filterOption.type === FilterFieldTypes.MultiTag ? 'cn-dropdown-menu-overflow-visible' : '',
         dropdownContentClassName
       )}
       handleRemoveFilter={() => removeFilter()}

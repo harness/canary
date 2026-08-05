@@ -17,9 +17,10 @@ export const MultiTagFilter = ({ filter, onUpdateFilter, filterFieldConfig }: Mu
       {...multiSelectProps}
       value={filter}
       onChange={onUpdateFilter}
-      // Free-form tags: empty options shows the creation hint; reserve space for absolute dropdown.
+      // Free-form tags: empty options shows the creation hint.
       options={options ?? []}
-      wrapperClassName={cn('pb-cn-3xl', wrapperClassName)}
+      // Match Text filter inset (mx/my).
+      wrapperClassName={cn('mx-cn-xs my-cn-2xs', wrapperClassName)}
     />
   )
 }

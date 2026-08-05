@@ -62,6 +62,15 @@ export default {
       '--cn-dropdown-item-py': 'var(--cn-spacing-1)'
     },
 
+    // Allow absolute children (e.g. MultiSelect creation hint) to paint outside the menu.
+    '&.cn-dropdown-menu-overflow-visible': {
+      overflow: 'visible',
+
+      '.cn-dropdown-menu-content, .cn-dropdown-menu-container': {
+        overflow: 'visible'
+      }
+    },
+
     '&-container': {
       padding: 'var(--cn-dropdown-container)',
       minWidth: '0',

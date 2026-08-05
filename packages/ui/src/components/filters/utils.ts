@@ -1,5 +1,6 @@
 import { ReactNode } from 'react'
 
+import type { MultiSelectOption } from '@components/multi-select'
 import { format } from 'date-fns'
 
 import { ComboBoxOptions } from './filters-bar/actions/variants/combo-box'
@@ -68,6 +69,12 @@ export const getFilterLabelValue = <
           selectedOption =>
             options?.find(option => option.value === selectedOption.value)?.label || selectedOption.value
         )
+        .join(', ')
+    }
+    case FilterFieldTypes.MultiTag: {
+      return (filter.value as MultiSelectOption[])
+        ?.map(option => String(option.id || (option.value ? `${option.key}:${option.value}` : option.key)))
+        .filter(Boolean)
         .join(', ')
     }
     case FilterFieldTypes.Text: {

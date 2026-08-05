@@ -81,6 +81,7 @@ export interface MultiSelectProps extends CommonInputsProp {
   disabled?: boolean
   className?: string
   disallowCreation?: boolean
+  creationLabel?: string
   isLoading?: boolean
   theme?: VariantProps<typeof multiSelectVariants>['theme']
   /** Props of `Command` */
@@ -110,6 +111,7 @@ export const MultiSelect = forwardRef<MultiSelectRef, MultiSelectProps>(
       disabled,
       className,
       disallowCreation = false,
+      creationLabel = 'Press Enter to create',
       isLoading = false,
       commandProps,
       inputProps,
@@ -200,7 +202,7 @@ export const MultiSelect = forwardRef<MultiSelectRef, MultiSelectProps>(
             const inputValue = input.value.trim()
             // Handle comma-separated input or single option
             const { data: csvData, metadata: csvMetadata } = csvToObject(inputValue)
-            const updatedOptions = getSelectedOptions()
+            const updatedOptions = [...getSelectedOptions()]
 
             // Process each key-value pair from the CSV object
             for (const [key, value] of Object.entries(csvData)) {
@@ -403,7 +405,7 @@ export const MultiSelect = forwardRef<MultiSelectRef, MultiSelectProps>(
                         </Command.Item>
                       ) : (
                         <Command.Item value="-" disabled>
-                          Press Enter to create
+                          {creationLabel}
                         </Command.Item>
                       )
                     ) : (

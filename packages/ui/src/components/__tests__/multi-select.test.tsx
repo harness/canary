@@ -375,6 +375,17 @@ describe('MultiSelect', () => {
         expect(screen.getByText('Press Enter to create')).toBeInTheDocument()
       })
     })
+
+    test('should show custom creationLabel when provided', async () => {
+      renderComponent({ options: [], disallowCreation: false, creationLabel: 'Press Enter to filter' })
+
+      const input = screen.getByPlaceholderText('Select items')
+      await userEvent.click(input)
+
+      await waitFor(() => {
+        expect(screen.getByText('Press Enter to filter')).toBeInTheDocument()
+      })
+    })
   })
 
   describe('Styling & Layout', () => {

@@ -49,7 +49,7 @@
 @font-face {
   font-family: 'Inter';
   font-style: normal;
-  font-weight: 100 900;
+  font-weight: 400 900;
   font-display: swap;
   src: url('../fonts/InterVariable.woff2') format('woff2-variations');
 }
@@ -57,7 +57,7 @@
 @font-face {
   font-family: 'JetBrains Mono';
   font-style: normal;
-  font-weight: 100 800;
+  font-weight: 400 800;
   font-display: swap;
   src: url('../fonts/JetBrainsMono-Variable.woff2') format('woff2-variations');
 }
@@ -157,7 +157,7 @@
 
 /* Form utilities */
 .text-form-error {
-  @apply text-cn-danger text-cn-size-2 mt-cn-xs font-light;
+  @apply text-cn-danger text-cn-size-2 mt-cn-xs font-normal;
 }
 
 .cn-graph-bg-size {

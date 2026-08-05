@@ -41,7 +41,7 @@ The design system uses two typefaces with optically adjusted weights for Inter:
           <td className="cn-table-v2-cell">
             All UI text — headings, body, captions, micro
           </td>
-          <td className="cn-table-v2-cell">310 · 360 · 440 · 550</td>
+          <td className="cn-table-v2-cell">400 · 440 · 550</td>
         </tr>
         <tr className="cn-table-v2-row">
           <td className="cn-table-v2-cell">
@@ -59,9 +59,9 @@ The design system uses two typefaces with optically adjusted weights for Inter:
 </div>
 
 <Aside type="note" title="Optical weights">
-  Inter uses variable font instances tuned for optical balance — CSS weight
-  `400` maps to **360**, `500` to **440**. The `.font-*` Tailwind classes apply
-  these values automatically.
+  Inter uses variable font instances tuned for optical balance while enforcing
+  **400 as the minimum accessible weight**. CSS weight `500` maps to **440**.
+  The `.font-*` Tailwind classes apply these values automatically.
 </Aside>
 
 ## Type Scale Reference
@@ -113,23 +113,9 @@ Headings establish the information hierarchy and provide structure to content.
               The quick brown fox
             </span>
           </td>
-          <td className="cn-table-v2-cell">24px · 360</td>
+          <td className="cn-table-v2-cell">20px / 28px · 550</td>
           <td className="cn-table-v2-cell">
             <code>font-heading-section</code>
-          </td>
-        </tr>
-        <tr className="cn-table-v2-row">
-          <td className="cn-table-v2-cell">
-            <code>heading-subsection</code>
-          </td>
-          <td className="cn-table-v2-cell">
-            <span className="font-heading-subsection text-cn-1">
-              The quick brown fox
-            </span>
-          </td>
-          <td className="cn-table-v2-cell">18px · 360</td>
-          <td className="cn-table-v2-cell">
-            <code>font-heading-subsection</code>
           </td>
         </tr>
         <tr className="cn-table-v2-row">
@@ -141,7 +127,7 @@ Headings establish the information hierarchy and provide structure to content.
               The quick brown fox
             </span>
           </td>
-          <td className="cn-table-v2-cell">16px · 360</td>
+          <td className="cn-table-v2-cell">16px · 400</td>
           <td className="cn-table-v2-cell">
             <code>font-heading-base</code>
           </td>
@@ -196,7 +182,7 @@ Body text is used for the main content.
               The quick brown fox jumps over the lazy dog.
             </span>
           </td>
-          <td className="cn-table-v2-cell">14px · 360</td>
+          <td className="cn-table-v2-cell">14px · 400</td>
           <td className="cn-table-v2-cell">
             <code>font-body-normal</code>
           </td>
@@ -213,20 +199,6 @@ Body text is used for the main content.
           <td className="cn-table-v2-cell">14px · 440</td>
           <td className="cn-table-v2-cell">
             <code>font-body-strong</code>
-          </td>
-        </tr>
-        <tr className="cn-table-v2-row">
-          <td className="cn-table-v2-cell">
-            <code>body-light</code>
-          </td>
-          <td className="cn-table-v2-cell">
-            <span className="font-body-light text-cn-2">
-              The quick brown fox jumps over the lazy dog.
-            </span>
-          </td>
-          <td className="cn-table-v2-cell">14px · 310</td>
-          <td className="cn-table-v2-cell">
-            <code>font-body-light</code>
           </td>
         </tr>
         <tr className="cn-table-v2-row">
@@ -252,7 +224,7 @@ Body text is used for the main content.
               For UI components
             </span>
           </td>
-          <td className="cn-table-v2-cell">14px · 360 · 1×</td>
+          <td className="cn-table-v2-cell">14px · 400 · 1×</td>
           <td className="cn-table-v2-cell">
             <code>font-body-single-line-normal</code>
           </td>
@@ -269,20 +241,6 @@ Body text is used for the main content.
           <td className="cn-table-v2-cell">14px · 440 · 1×</td>
           <td className="cn-table-v2-cell">
             <code>font-body-single-line-strong</code>
-          </td>
-        </tr>
-        <tr className="cn-table-v2-row">
-          <td className="cn-table-v2-cell">
-            <code>body-single-line-light</code>
-          </td>
-          <td className="cn-table-v2-cell">
-            <span className="font-body-single-line-light text-cn-2">
-              For UI components
-            </span>
-          </td>
-          <td className="cn-table-v2-cell">14px · 310 · 1×</td>
-          <td className="cn-table-v2-cell">
-            <code>font-body-single-line-light</code>
           </td>
         </tr>
         <tr className="cn-table-v2-row">
@@ -335,7 +293,7 @@ Captions are used for labels and metadata.
               Label text for UI elements
             </span>
           </td>
-          <td className="cn-table-v2-cell">12px · 360</td>
+          <td className="cn-table-v2-cell">12px · 400</td>
           <td className="cn-table-v2-cell">
             <code>font-caption-normal</code>
           </td>
@@ -352,20 +310,6 @@ Captions are used for labels and metadata.
           <td className="cn-table-v2-cell">12px · 440</td>
           <td className="cn-table-v2-cell">
             <code>font-caption-strong</code>
-          </td>
-        </tr>
-        <tr className="cn-table-v2-row">
-          <td className="cn-table-v2-cell">
-            <code>caption-light</code>
-          </td>
-          <td className="cn-table-v2-cell">
-            <span className="font-caption-light text-cn-2">
-              Label text for UI elements
-            </span>
-          </td>
-          <td className="cn-table-v2-cell">12px · 310</td>
-          <td className="cn-table-v2-cell">
-            <code>font-caption-light</code>
           </td>
         </tr>
         <tr className="cn-table-v2-row">
@@ -389,9 +333,23 @@ Captions are used for labels and metadata.
               For compact UI
             </span>
           </td>
-          <td className="cn-table-v2-cell">12px · 360 · 1×</td>
+          <td className="cn-table-v2-cell">12px · 400 · 1×</td>
           <td className="cn-table-v2-cell">
             <code>font-caption-single-line-normal</code>
+          </td>
+        </tr>
+        <tr className="cn-table-v2-row">
+          <td className="cn-table-v2-cell">
+            <code>caption-single-line-normal-caps</code>
+          </td>
+          <td className="cn-table-v2-cell">
+            <span className="font-caption-single-line-normal-caps text-cn-2">
+              Read-only metadata
+            </span>
+          </td>
+          <td className="cn-table-v2-cell">12px · 600 · uppercase</td>
+          <td className="cn-table-v2-cell">
+            <code>font-caption-single-line-normal-caps</code>
           </td>
         </tr>
         <tr className="cn-table-v2-row">
@@ -406,20 +364,6 @@ Captions are used for labels and metadata.
           <td className="cn-table-v2-cell">12px · 440 · 1×</td>
           <td className="cn-table-v2-cell">
             <code>font-caption-single-line-strong</code>
-          </td>
-        </tr>
-        <tr className="cn-table-v2-row">
-          <td className="cn-table-v2-cell">
-            <code>caption-single-line-light</code>
-          </td>
-          <td className="cn-table-v2-cell">
-            <span className="font-caption-single-line-light text-cn-2">
-              For compact UI
-            </span>
-          </td>
-          <td className="cn-table-v2-cell">12px · 310 · 1×</td>
-          <td className="cn-table-v2-cell">
-            <code>font-caption-single-line-light</code>
           </td>
         </tr>
         <tr className="cn-table-v2-row">
@@ -909,7 +853,7 @@ import { Text } from '@harnessio/ui/components'
 // Variants
 <Text variant="heading-hero">Hero</Text>
 <Text variant="body-normal">Body text</Text>
-<Text variant="caption-light">Caption</Text>
+<Text variant="caption-normal">Caption</Text>
 
 // Colors
 <Text color="foreground-1">Primary</Text>
@@ -939,7 +883,7 @@ import { Text } from '@harnessio/ui/components'
       defaultValue: "body-normal",
       required: false,
       value:
-        "'heading-hero' | 'heading-section' | 'heading-subsection' | 'heading-base' | 'heading-small' | 'body-normal' | 'body-strong' | 'body-single-line-normal' | 'body-single-line-strong' | 'body-single-line-light' | 'body-code' | 'caption-normal' | 'caption-strong' | 'caption-light' | 'caption-single-line-normal' | 'caption-single-line-light'",
+        "'heading-hero' | 'heading-section' | 'heading-subsection' | 'heading-base' | 'heading-small' | 'body-normal' | 'body-strong' | 'body-single-line-normal' | 'body-single-line-strong' | 'body-code' | 'caption-normal' | 'caption-strong' | 'caption-single-line-normal' | 'caption-single-line-normal-caps'",
     },
     {
       name: "color",

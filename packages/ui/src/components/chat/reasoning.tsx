@@ -129,20 +129,20 @@ export type ReasoningTriggerProps = ComponentPropsWithoutRef<typeof CollapsibleP
 const defaultGetThinkingMessage = (isStreaming: boolean, duration?: number): ReactNode => {
   if (isStreaming || duration === 0) {
     return (
-      <Shimmer variant={'caption-light'} color={'foreground-3'} duration={1}>
+      <Shimmer variant={'caption-normal'} color={'foreground-3'} duration={1}>
         Thinking...
       </Shimmer>
     )
   }
   if (duration === undefined) {
     return (
-      <Text variant={'caption-light'} color={'foreground-3'}>
+      <Text variant={'caption-normal'} color={'foreground-3'}>
         Thought for a few seconds
       </Text>
     )
   }
   return (
-    <Text variant={'caption-light'} color={'foreground-3'}>
+    <Text variant={'caption-normal'} color={'foreground-3'}>
       Thought for {duration} seconds
     </Text>
   )

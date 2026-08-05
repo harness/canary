@@ -216,7 +216,7 @@ export const CSSVariablesClient = ({
                 <Text variant="heading-subsection" as="h3">
                   {subcategory}
                 </Text>
-                <Text variant="body-single-line-light" color="foreground-3">
+                <Text variant="body-single-line-normal" color="foreground-3">
                   {vars.length}
                 </Text>
               </div>

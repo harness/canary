@@ -236,8 +236,8 @@ const DropdownBaseItem = ({
     {tag && <Tag {...tag} />}
 
     <div className="ml-auto flex shrink-0 items-center gap-x-cn-2xs">
-      {label && (typeof label === 'string' ? <Text variant="caption-light">{label}</Text> : label)}
-      {shortcut && <Text variant="caption-light">{shortcut}</Text>}
+      {label && (typeof label === 'string' ? <Text variant="caption-normal">{label}</Text> : label)}
+      {shortcut && <Text variant="caption-normal">{shortcut}</Text>}
       {checkmark && <IconV2 name="check" />}
       {withSubIndicator && <IconV2 name="nav-arrow-right" size="xs" />}
     </div>

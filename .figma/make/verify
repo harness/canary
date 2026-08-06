@@ -1,0 +1,24 @@
+#!/bin/bash
+set -e
+
+# Wait for the Canary Doc Site (Astro/Starlight portal) to start serving.
+# The dev step builds @harnessio/ui first, which can take a while on a cold run.
+
+HEALTHCHECK_URL='http://localhost:4321/getting-started/introduction/'
+MAX_WAIT=360 # 6 minutes — @harnessio/ui build + Astro startup
+INTERVAL=3
+ELAPSED=0
+
+echo "Waiting for the Doc Site to be ready at ${HEALTHCHECK_URL}"
+
+while [ $ELAPSED -lt $MAX_WAIT ]; do
+  if curl -sf "$HEALTHCHECK_URL" >/dev/null 2>&1; then
+    echo "Doc Site is up"
+    exit 0
+  fi
+  sleep $INTERVAL
+  ELAPSED=$((ELAPSED + INTERVAL))
+done
+
+echo "Error: Doc Site did not start within ${MAX_WAIT}s"
+exit 1

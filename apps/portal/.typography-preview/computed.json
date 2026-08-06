@@ -1,0 +1,115 @@
+{
+  "vars": {
+    "--cn-heading-hero": "550 1.75rem / 2.25rem\n    Inter, system-ui, sans-serif",
+    "--cn-heading-section": "550 1.25rem / 1.75rem\n    Inter, system-ui, sans-serif",
+    "--cn-heading-subsection": "550 1.25rem / 1.75rem\n    Inter, system-ui, sans-serif",
+    "--cn-heading-base": "550 1rem / 1.25rem\n    Inter, system-ui, sans-serif",
+    "--cn-heading-small": "550 .875rem / 1.25rem\n    Inter, system-ui, sans-serif",
+    "--cn-body-normal": "400 .875rem / 1.25rem\n    Inter, system-ui, sans-serif",
+    "--cn-body-strong": "440 .875rem / 1.25rem\n    Inter, system-ui, sans-serif",
+    "--cn-body-single-line-normal": "400 .875rem / 1rem\n    Inter, system-ui, sans-serif",
+    "--cn-body-single-line-strong": "440 .875rem / 1rem\n    Inter, system-ui, sans-serif",
+    "--cn-caption-normal": "400 0.75rem / 1.25rem Inter, system-ui, sans-serif",
+    "--cn-caption-strong": "440 0.75rem / 1.25rem Inter, system-ui, sans-serif",
+    "--cn-comp-markdown-content-paragraph": "400 1rem / 1.75rem\n    Inter, system-ui, sans-serif",
+    "--cn-comp-markdown-content-lead": "400 1.25rem / 2rem\n    Inter, system-ui, sans-serif",
+    "--cn-comp-markdown-sm-content-paragraph": "400 .875rem / 1.5rem\n    Inter, system-ui, sans-serif",
+    "--cn-comp-markdown-xs-content-paragraph": "400 .813rem / 1.25rem\n    Inter, system-ui, sans-serif"
+  },
+  "computed": {
+    "font-heading-hero": {
+      "fontSize": "28px",
+      "lineHeight": "36px",
+      "fontWeight": "550"
+    },
+    "font-heading-section": {
+      "fontSize": "20px",
+      "lineHeight": "28px",
+      "fontWeight": "550"
+    },
+    "font-heading-subsection": {
+      "fontSize": "20px",
+      "lineHeight": "28px",
+      "fontWeight": "550"
+    },
+    "font-heading-base": {
+      "fontSize": "16px",
+      "lineHeight": "20px",
+      "fontWeight": "550"
+    },
+    "font-heading-small": {
+      "fontSize": "14px",
+      "lineHeight": "20px",
+      "fontWeight": "550"
+    },
+    "font-body-normal": {
+      "fontSize": "14px",
+      "lineHeight": "20px",
+      "fontWeight": "400"
+    },
+    "font-body-strong": {
+      "fontSize": "14px",
+      "lineHeight": "20px",
+      "fontWeight": "440"
+    },
+    "font-body-single-line-normal": {
+      "fontSize": "14px",
+      "lineHeight": "16px",
+      "fontWeight": "400"
+    },
+    "font-body-single-line-strong": {
+      "fontSize": "14px",
+      "lineHeight": "16px",
+      "fontWeight": "440"
+    },
+    "font-caption-normal": {
+      "fontSize": "12px",
+      "lineHeight": "20px",
+      "fontWeight": "400"
+    },
+    "font-caption-strong": {
+      "fontSize": "12px",
+      "lineHeight": "20px",
+      "fontWeight": "440"
+    },
+    "font-caption-single-line-normal": {
+      "fontSize": "12px",
+      "lineHeight": "16px",
+      "fontWeight": "400"
+    }
+  },
+  "headings": [
+    {
+      "text": "Headings",
+      "y": 864
+    },
+    {
+      "text": "Body",
+      "y": 1342
+    },
+    {
+      "text": "Captions",
+      "y": 1904
+    },
+    {
+      "text": "Micro",
+      "y": 2532
+    },
+    {
+      "text": "Hierarchy",
+      "y": 2814
+    },
+    {
+      "text": "Semantic",
+      "y": 3107
+    },
+    {
+      "text": "Font Size Scale",
+      "y": 4863
+    },
+    {
+      "text": "Letter Spacing",
+      "y": 5323
+    }
+  ]
+}

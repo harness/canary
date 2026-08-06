@@ -1,0 +1,11 @@
+#!/bin/bash
+set -e
+
+# Install workspace dependencies for every package/app in the pnpm monorepo.
+# Runs at the start of each Make Local session.
+
+cd "$(dirname "$0")/../.."
+
+echo "Installing workspace dependencies with pnpm..."
+pnpm install --frozen-lockfile
+echo "Dependencies installed"

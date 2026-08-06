@@ -1,0 +1,5 @@
+PORT=4321
+# Canary Doc Site landing page — the page you normally open to preview changes.
+FIGMA_MAKE_URL=http://localhost:4321/getting-started/introduction/
+# Cold start builds @harnessio/ui before Astro boots; give bootstrap room.
+BOOTSTRAP_TIMEOUT=900000

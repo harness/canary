@@ -1,0 +1,15 @@
+#!/bin/bash
+set -e
+
+# Start the Canary Doc Site (the Astro/Starlight "portal" app) at localhost:4321.
+# Workflow mirrors the canary-doc-site skill: build the @harnessio/ui package
+# first so UI changes show up, then run the portal dev server.
+# Astro dev does not open a browser on its own.
+
+cd "$(dirname "$0")/../.."
+
+echo "Building @harnessio/ui..."
+pnpm --filter @harnessio/ui build
+
+echo "Starting Canary Doc Site (portal) on http://localhost:4321 ..."
+exec pnpm --filter ./apps/portal dev

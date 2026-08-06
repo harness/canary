@@ -12,8 +12,8 @@ export { useFlowCard } from '../flow-stepper/engine/engine-context'
 
 export type {
   FlowConfig,
+  StepGroupConfig,
   StepConfig,
-  SubStepConfig,
   CardStatus,
   DrawerResult,
   DrawerComponentProps,

@@ -1,15 +1,15 @@
 ---
 title: Stepper
-description: A vertical stepper component for multi-step flows with substeps, state indicators, and navigation guards.
+description: A vertical stepper component for multi-step flows with nested steps, state indicators, and navigation guards.
 beta: true
 ---
 
 import { DocsPage } from "@/components/docs-page";
 import { Aside } from "@astrojs/starlight/components";
 
-The `Stepper` component provides a vertical progress indicator for multi-step workflows like wizards and onboarding flows. It supports dynamic substeps, multiple visual states, transition animations, navigation guards, and keyboard navigation.
+The `Stepper` component provides a vertical progress indicator for multi-step workflows like wizards and onboarding flows. It supports dynamic nested steps, multiple visual states, transition animations, navigation guards, and keyboard navigation.
 
-It is composed of `Stepper.Root`, `Stepper.Step`, and `Stepper.SubStep` to offer a structured and customizable interface.
+It is composed of `Stepper.Root`, `Stepper.StepGroup`, and `Stepper.Step` to offer a structured and customizable interface.
 
 <DocsPage.ComponentExample
   client:only
@@ -49,14 +49,14 @@ return (
 
 ## Anatomy
 
-All parts of the `Stepper` component can be imported and composed as required.
+All parts of the `Stepper` component can be imported and composed as required. A `Stepper.Step` rendered directly under `Stepper.Root` is a top-level step; a `Stepper.Step` rendered inside a `Stepper.StepGroup` is a nested step.
 
 ```typescript jsx
 <Stepper.Root>
-  <Stepper.Step>
-    <Stepper.SubStep />
-    <Stepper.SubStep />
-  </Stepper.Step>
+  <Stepper.StepGroup>
+    <Stepper.Step />
+    <Stepper.Step />
+  </Stepper.StepGroup>
   <Stepper.Step />
 </Stepper.Root>
 ```
@@ -124,9 +124,9 @@ Steps can show a loading spinner and optionally block forward navigation while a
   show a spinner on the indicator.
 </Aside>
 
-## SubSteps
+## Nested Steps
 
-Steps can contain dynamic substeps that appear when the parent step is active. SubSteps support conditional rendering based on application state.
+A `Stepper.StepGroup` can contain dynamic nested steps that appear when the group is active. Nested steps support conditional rendering based on application state.
 
 <DocsPage.ComponentExample
   client:only
@@ -136,10 +136,10 @@ Steps can contain dynamic substeps that appear when the parent step is active. S
     return (
         <div className="w-[300px]">
             <Stepper.Root value={step} onValueChange={setStep} title="GitHub Integration">
-                <Stepper.Step value="connect" title="Connect" description="Choose provider">
-                    <Stepper.SubStep value="auth" title="Authenticate" description="OAuth with GitHub" />
-                    <Stepper.SubStep value="test" title="Test Connection" description="Verify access" />
-                </Stepper.Step>
+                <Stepper.StepGroup value="connect" title="Connect" description="Choose provider">
+                    <Stepper.Step value="auth" title="Authenticate" description="OAuth with GitHub" />
+                    <Stepper.Step value="test" title="Test Connection" description="Verify access" />
+                </Stepper.StepGroup>
                 <Stepper.Step value="configure" title="Configure" description="Set up pipeline" />
                 <Stepper.Step value="done" title="Done" description="All set" />
             </Stepper.Root>
@@ -150,14 +150,14 @@ Steps can contain dynamic substeps that appear when the parent step is active. S
 />
 
 <Aside type="tip">
-  SubSteps are conditionally rendered — they only appear when their parent step
-  is active. The `value` passed to `Stepper.Root` can be either a step value or
-  a substep value.
+  Nested steps are conditionally rendered — they only appear when their parent
+  step group is active. The `value` passed to `Stepper.Root` can be either a
+  step-group value or a nested-step value.
 </Aside>
 
-## Indeterminate SubSteps
+## Indeterminate Nested Steps
 
-When a step has `hasSubSteps` but no children are provided, a placeholder indicator with "..." is shown, signaling that substeps will be determined dynamically (e.g., after an API call resolves).
+When a step group has `hasNestedSteps` but no children are provided, a placeholder indicator with "..." is shown, signaling that nested steps will be determined dynamically (e.g., after an API call resolves).
 
 <DocsPage.ComponentExample
   client:only
@@ -168,9 +168,9 @@ When a step has `hasSubSteps` but no children are provided, a placeholder indica
         <div className="w-[300px]">
             <Stepper.Root value={step} onValueChange={setStep} title="Build pipeline setup">
                 <Stepper.Step value="vcs" title="Select Version Control" description="Description" state="completed" />
-                <Stepper.Step value="connectivity" title="Check Connectivity" description="Description" />
+                <Stepper.StepGroup value="connectivity" title="Check Connectivity" description="Description" />
                 <Stepper.Step value="repo" title="Select a repository" description="Description" />
-                <Stepper.Step value="analysis" title="Code Analysis" description="Description" hasSubSteps />
+                <Stepper.StepGroup value="analysis" title="Code Analysis" description="Description" hasNestedSteps />
                 <Stepper.Step value="generate" title="Generate Pipeline" description="Description" />
             </Stepper.Root>
         </div>
@@ -179,7 +179,7 @@ When a step has `hasSubSteps` but no children are provided, a placeholder indica
 }`}
 />
 
-Here's an example combining real substeps (`.1`, `.2`, `.3`) on the active step with an indeterminate placeholder on a following step:
+Here's an example combining real nested steps (`.1`, `.2`, `.3`) on the active step group with an indeterminate placeholder on a following step group:
 
 <DocsPage.ComponentExample
   client:only
@@ -191,12 +191,12 @@ Here's an example combining real substeps (`.1`, `.2`, `.3`) on the active step 
             <Stepper.Root value={step} onValueChange={setStep} title="Build pipeline setup">
                 <Stepper.Step value="vcs" title="Select Version Control" description="Description" state="completed" />
                 <Stepper.Step value="connectivity" title="Check Connectivity" description="Description" state="completed" />
-                <Stepper.Step value="analysis" title="Code Analysis" description="Description" hasSubSteps>
-                    <Stepper.SubStep value="scan-deps" title="Scan Dependencies" description="Check for vulnerabilities" />
-                    <Stepper.SubStep value="lint" title="Run Linter" description="Static analysis" />
-                    <Stepper.SubStep value="coverage" title="Coverage Report" description="Verify thresholds" />
-                </Stepper.Step>
-                <Stepper.Step value="generate" title="Generate Pipeline" description="Description" hasSubSteps />
+                <Stepper.StepGroup value="analysis" title="Code Analysis" description="Description" hasNestedSteps>
+                    <Stepper.Step value="scan-deps" title="Scan Dependencies" description="Check for vulnerabilities" />
+                    <Stepper.Step value="lint" title="Run Linter" description="Static analysis" />
+                    <Stepper.Step value="coverage" title="Coverage Report" description="Verify thresholds" />
+                </Stepper.StepGroup>
+                <Stepper.StepGroup value="generate" title="Generate Pipeline" description="Description" hasNestedSteps />
             </Stepper.Root>
         </div>
     );
@@ -205,9 +205,9 @@ Here's an example combining real substeps (`.1`, `.2`, `.3`) on the active step 
 />
 
 <Aside type="note">
-  The `hasSubSteps` prop reserves space for substeps even when none are rendered
-  yet. This is useful when substeps are loaded asynchronously or depend on a
-  previous step's outcome.
+  The `hasNestedSteps` prop reserves space for nested steps even when none are
+  rendered yet. This is useful when nested steps are loaded asynchronously or
+  depend on a previous step's outcome.
 </Aside>
 
 ## Navigation Guard
@@ -314,7 +314,7 @@ The root container that manages stepper state, provides context to children, and
 
 ```typescript jsx
 <Stepper.Root
-  value={currentStep}            // active step or substep value
+  value={currentStep}            // active step or nested-step value
   onValueChange={setStep}        // callback when step changes
   title="Setup"                  // [OPTIONAL] displayed in the header
   completed={false}              // [OPTIONAL] shows "Complete" instead of counter
@@ -323,7 +323,7 @@ The root container that manages stepper state, provides context to children, and
   skeletonCount={3}              // [OPTIONAL] skeleton items when no children
   className="my-class"           // [OPTIONAL] custom class on the nav element
 >
-  {/* Step components */}
+  {/* Step / StepGroup components */}
 </Stepper.Root>
 ```
 
@@ -331,7 +331,7 @@ The root container that manages stepper state, provides context to children, and
   props={[
     {
       name: "value",
-      description: "The active step or substep value (controlled)",
+      description: "The active step or nested-step value (controlled)",
       required: true,
       value: "string",
     },
@@ -384,38 +384,38 @@ The root container that manages stepper state, provides context to children, and
     },
     {
       name: "children",
-      description: "Stepper.Step components",
+      description: "Stepper.Step / Stepper.StepGroup components",
       required: false,
       value: "ReactNode",
     },
   ]}
 />
 
-### `Step`
+### `StepGroup`
 
-An individual step in the stepper. Renders the indicator, title, description, connector, and optional substeps.
+A step that groups nested steps. Renders the indicator, title, description, connector, and optional nested `Stepper.Step` children.
 
 ```typescript jsx
-<Stepper.Step
-  value="connect"                // unique identifier for this step
+<Stepper.StepGroup
+  value="connect"                // unique identifier for this step group
   title="Connect"                // step title (string or ReactNode)
   description="Choose provider"  // [OPTIONAL] description text
   state="error"                  // [OPTIONAL] explicit state override
   loading={false}                // [OPTIONAL] show spinner on indicator
   blocking={false}               // [OPTIONAL] block forward navigation
   disabled={false}               // [OPTIONAL] prevent interaction
-  hasSubSteps={false}            // [OPTIONAL] reserve substep space
+  hasNestedSteps={false}         // [OPTIONAL] reserve nested-step space
   className="my-class"           // [OPTIONAL] custom class
 >
-  {/* Optional Stepper.SubStep children */}
-</Stepper.Step>
+  {/* Optional Stepper.Step children (nested steps) */}
+</Stepper.StepGroup>
 ```
 
 <DocsPage.PropsTable
   props={[
     {
       name: "value",
-      description: "Unique identifier for this step",
+      description: "Unique identifier for this step group",
       required: true,
       value: "string",
     },
@@ -453,15 +453,15 @@ An individual step in the stepper. Renders the indicator, title, description, co
     },
     {
       name: "disabled",
-      description: "Prevents interaction with this step",
+      description: "Prevents interaction with this step group",
       required: false,
       value: "boolean",
       defaultValue: "false",
     },
     {
-      name: "hasSubSteps",
+      name: "hasNestedSteps",
       description:
-        "Reserve vertical space for substeps (useful when substeps load asynchronously)",
+        "Reserve vertical space for nested steps (useful when nested steps load asynchronously)",
       required: false,
       value: "boolean",
       defaultValue: "false",
@@ -475,21 +475,21 @@ An individual step in the stepper. Renders the indicator, title, description, co
     {
       name: "children",
       description:
-        "Stepper.SubStep components (rendered when this step is active)",
+        "Stepper.Step components (rendered when this step group is active)",
       required: false,
       value: "ReactNode",
     },
   ]}
 />
 
-### `SubStep`
+### `Step`
 
-A substep nested within a parent step. Only rendered when the parent step is active.
+An individual step. Rendered directly under `Stepper.Root`, it behaves as a top-level step; rendered inside a `Stepper.StepGroup`, it behaves as a nested step and is only rendered when the parent step group is active.
 
 ```typescript jsx
-<Stepper.SubStep
-  value="auth"                   // unique identifier for this substep
-  title="Authenticate"           // substep title
+<Stepper.Step
+  value="auth"                    // unique identifier for this step
+  title="Authenticate"           // step title
   description="OAuth with GitHub" // [OPTIONAL] description text
   state="error"                  // [OPTIONAL] explicit state override
   disabled={false}               // [OPTIONAL] prevent interaction
@@ -501,13 +501,13 @@ A substep nested within a parent step. Only rendered when the parent step is act
   props={[
     {
       name: "value",
-      description: "Unique identifier for this substep",
+      description: "Unique identifier for this step",
       required: true,
       value: "string",
     },
     {
       name: "title",
-      description: "Substep title",
+      description: "Step title",
       required: true,
       value: "string | ReactNode",
     },
@@ -525,14 +525,37 @@ A substep nested within a parent step. Only rendered when the parent step is act
     },
     {
       name: "disabled",
-      description: "Prevents interaction with this substep",
+      description: "Prevents interaction with this step",
       required: false,
       value: "boolean",
       defaultValue: "false",
     },
     {
+      name: "visualCompleted",
+      description:
+        "Presentation-only: renders this step's icon/color as completed regardless of the real state. Does not affect accordion-open behavior.",
+      required: false,
+      value: "boolean",
+      defaultValue: "false",
+    },
+    {
+      name: "showStepBadge",
+      description:
+        "Renders a 'Step {n}/{total}' pill badge next to the step title. Only meaningful when this Step has no parent StepGroup (top-level registration).",
+      required: false,
+      value: "boolean",
+      defaultValue: "false",
+    },
+    {
+      name: "totalStepsOverride",
+      description:
+        "Overrides the announced/displayed step total. Useful when the currently-registered step count (progressive disclosure) undercounts the flow's real total.",
+      required: false,
+      value: "number",
+    },
+    {
       name: "className",
-      description: "Custom class applied to the substep button",
+      description: "Custom class applied to the step button",
       required: false,
       value: "string",
     },
@@ -550,9 +573,9 @@ The stepper implements the following accessibility features:
 
 ## Best Practices
 
-1. **Unique Values**: Every step and substep must have a unique `value` across the entire stepper
+1. **Unique Values**: Every step and nested step must have a unique `value` across the entire stepper
 2. **Controlled State**: The component is always controlled — provide both `value` and `onValueChange`
 3. **Blocking Steps**: Use `blocking` for async operations that must complete before proceeding (e.g., connectivity checks)
 4. **Navigation Guards**: Use `onBeforeChange` to warn about data loss, not to enforce linear progression
-5. **SubStep Cleanup**: When substeps unmount (e.g., provider changes), the stepper automatically falls back to the parent step value
+5. **Nested Step Cleanup**: When nested steps unmount (e.g., provider changes), the stepper automatically falls back to the parent step-group value
 6. **Skeleton State**: Pass no children to show a skeleton — useful while step configuration loads asynchronously

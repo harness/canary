@@ -9,8 +9,8 @@ import {
   type FlowConfig,
 } from "@harnessio/ui/components";
 
-// Demo that renders every resolved substep state deterministically on load — completed, skipped, and
-// errored substeps across two steps. Each card drives itself into its target state on mount (no
+// Demo that renders every resolved step state deterministically on load — completed, skipped, and
+// errored steps across two step groups. Each card drives itself into its target state on mount (no
 // clicks, no timers), so the flow settles immediately into a fixed, fully-resolved shape. Also the
 // visual fixture for connector rendering across states (skip/error branches + terminal-trunk cap).
 
@@ -34,8 +34,8 @@ function SkipOnMount({ next }: { next?: string }) {
   return null;
 }
 
-// Errors on mount and advances to `next` (error-and-continue): the substep stays red in the timeline
-// while the flow proceeds to the recovery substep below it.
+// Errors on mount and advances to `next` (error-and-continue): the step stays red in the timeline
+// while the flow proceeds to the recovery step below it.
 function ErrorThenContinue({ next, body }: { next?: string; body: string }) {
   const { status, error } = useFlowCard();
   useEffect(() => {
@@ -69,7 +69,7 @@ const RunBuild = () => (
 const PipelineReady = () => <CompleteOnMount body="Your pipeline is ready." />;
 
 const statesFlow: FlowConfig = {
-  steps: {
+  stepGroups: {
     source: {
       title: "Connect Source Code",
       description: "Connect Harness to your code",
@@ -79,7 +79,7 @@ const statesFlow: FlowConfig = {
       description: "Run and confirm everything works",
     },
   },
-  subSteps: {
+  steps: {
     // Step 1: completed, skipped, completed
     "choose-provider": {
       step: "source",
@@ -118,7 +118,7 @@ const statesFlow: FlowConfig = {
       component: PipelineReady,
     },
   },
-  initialSubStep: "choose-provider",
+  initialStep: "choose-provider",
 };
 
 export interface StatesDemoProps {
@@ -141,7 +141,7 @@ export function StatesDemo({ variant }: StatesDemoProps) {
               }
             : { showRootHeader: false })}
           contentTitle="Pipeline Configuration"
-          contentSubtitle="Completed, skipped, and errored substeps across two steps"
+          contentSubtitle="Completed, skipped, and errored steps across two step groups"
           // Fully-resolved review flow: render from the top and don't chase the last card.
           disableAutoScroll
         />

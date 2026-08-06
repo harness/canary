@@ -7,8 +7,8 @@ import {
 } from '../flow-stepper/engine/engine-types'
 
 export type {
+  StepGroupConfig,
   StepConfig,
-  SubStepConfig,
   FlowConfig,
   CardStatus,
   CardEntry,

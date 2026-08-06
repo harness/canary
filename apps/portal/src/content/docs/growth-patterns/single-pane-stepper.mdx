@@ -10,7 +10,7 @@ import {
   StatesDemo,
 } from "@/components/single-pane-stepper-demo";
 
-The `SinglePaneStepper` is a single-column flow component for multi-step guided processes. It combines a vertical stepper timeline with cards rendered inline within each substep — all in one scrollable column.
+The `SinglePaneStepper` is a single-column flow component for multi-step guided processes. It combines a vertical stepper timeline with cards rendered inline within each step — all in one scrollable column.
 
 Use this component for linear onboarding flows, setup wizards, and configuration processes where each step follows sequentially. It shares the same `FlowConfig` and `useFlowCard` API as `DualPaneStepper`, so flows can be migrated between layouts with minimal changes.
 
@@ -25,11 +25,11 @@ Use this component for linear onboarding flows, setup wizards, and configuration
   deprecated alias for `showRootHeader={false}`.
 </Aside>
 
-## Substep States
+## Step States
 
-Substeps render distinct states in the timeline — completed (green check), skipped (arrow), and
-errored (red). A step whose failed substep is retried and completed shows as completed overall, with
-the failed substep still marked in the timeline. This example settles into a fully resolved flow on
+Steps render distinct states in the timeline — completed (green check), skipped (arrow), and
+errored (red). A step group whose failed step is retried and completed shows as completed overall, with
+the failed step still marked in the timeline. This example settles into a fully resolved flow on
 load.
 
 <div className="h-[760px] border border-cn-2 rounded-lg overflow-hidden my-6">
@@ -38,7 +38,7 @@ load.
 
 ## Interactive Example
 
-This example demonstrates a full CI pipeline onboarding flow with connector drawers, connectivity checks, delegate installation detours, dynamic substeps during code analysis, and pipeline YAML generation.
+This example demonstrates a full CI pipeline onboarding flow with connector drawers, connectivity checks, delegate installation detours, dynamic steps during code analysis, and pipeline YAML generation.
 
 <div className="h-[1000px] border border-cn-2 rounded-lg overflow-hidden my-6">
   <FullFlowDemo client:only="react" />
@@ -46,7 +46,7 @@ This example demonstrates a full CI pipeline onboarding flow with connector draw
 
 <Aside type="tip">
   Click through the flow to see card navigation, drawer interactions, dynamic
-  substeps, and back-navigation working together.
+  steps, and back-navigation working together.
 </Aside>
 
 ## Usage
@@ -56,11 +56,11 @@ import { SinglePaneStepper, useFlowCard } from "@harnessio/ui/components";
 import type { FlowConfig } from "@harnessio/ui/components";
 
 const flow: FlowConfig = {
-  steps: {
+  stepGroups: {
     configure: { title: "Configure", description: "Set up your project" },
     generate: { title: "Generate", description: "Create pipeline" },
   },
-  subSteps: {
+  steps: {
     "choose-language": {
       step: "configure",
       title: "Choose language",
@@ -73,7 +73,7 @@ const flow: FlowConfig = {
       component: GeneratePipelineCard,
     },
   },
-  initialSubStep: "choose-language",
+  initialStep: "choose-language",
 };
 
 <SinglePaneStepper.Root
@@ -91,7 +91,7 @@ The Single Pane Stepper uses a compound component pattern:
 
 ```typescript jsx
 <SinglePaneStepper.Root flow={flowConfig} drawers={{ config: ConfigDrawer }}>
-  {/* Cards are rendered automatically from flowConfig.subSteps */}
+  {/* Cards are rendered automatically from flowConfig.steps */}
 </SinglePaneStepper.Root>
 ```
 
@@ -115,31 +115,31 @@ The `FlowConfig` object defines the structure of your flow:
 
 ```typescript
 interface FlowConfig {
-  steps: Record<string, StepConfig>; // Timeline steps
-  subSteps: Record<string, SubStepConfig>; // Card definitions
-  initialSubStep: string; // First card to show
+  stepGroups?: Record<string, StepGroupConfig>; // Timeline step groups
+  steps: Record<string, StepConfig>; // Card definitions
+  initialStep: string; // First card to show
 }
 
-interface StepConfig {
+interface StepGroupConfig {
   title: string;
   description?: string;
 }
 
-interface SubStepConfig {
-  step: string; // Which step this substep belongs to
+interface StepConfig {
+  step: string; // Which step group this step belongs to
   title: string; // Shown in the timeline
   description?: string; // Shown in the timeline
   component: ComponentType; // React component to render as a card
-  next?: string; // Next substep ID (for routing)
+  next?: string; // Next step ID (for routing)
   terminal?: boolean; // Auto-complete on entry (for summary cards)
 }
 ```
 
 <Aside type="note">
-  Each substep must be associated with a step via `step: 'step-id'`. Multiple
-  substeps can belong to the same step. The `next` field defines the default
-  routing — cards advance automatically unless an explicit destination is passed
-  to `complete()` or `skip()`.
+  Each step must be associated with a step group via `step: 'group-id'`.
+  Multiple steps can belong to the same step group. The `next` field defines the
+  default routing — cards advance automatically unless an explicit destination
+  is passed to `complete()` or `skip()`.
 </Aside>
 
 ## Cards
@@ -177,9 +177,9 @@ The `useFlowCard` hook provides access to the flow engine from within a card com
 interface FlowCardContext<TState = Record<string, unknown>> {
   state: TState;
   status: CardStatus; // 'active' | 'completed' | 'error' | 'skipped'
-  complete: (statePatch?: Partial<TState>, nextSubStepId?: string) => void;
-  error: (nextSubStepId?: string) => void;
-  skip: (nextSubStepId?: string) => void;
+  complete: (statePatch?: Partial<TState>, nextStepId?: string) => void;
+  error: (nextStepId?: string) => void;
+  skip: (nextStepId?: string) => void;
   openDrawer: (
     drawerId: string,
     props?: Record<string, unknown>,
@@ -189,9 +189,9 @@ interface FlowCardContext<TState = Record<string, unknown>> {
 
 **Methods:**
 
-- **`complete(statePatch?, nextSubStepId?)`** — Mark the card as completed, merge state, and advance. If `nextSubStepId` is omitted, resolves from the flow config's `next` field.
-- **`error(nextSubStepId?)`** — Mark the card as errored. Pass a `nextSubStepId` to advance while keeping the substep red in the timeline (error-and-continue).
-- **`skip(nextSubStepId?)`** — Mark the card as skipped and advance.
+- **`complete(statePatch?, nextStepId?)`** — Mark the card as completed, merge state, and advance. If `nextStepId` is omitted, resolves from the flow config's `next` field.
+- **`error(nextStepId?)`** — Mark the card as errored. Pass a `nextStepId` to advance while keeping the step red in the timeline (error-and-continue).
+- **`skip(nextStepId?)`** — Mark the card as skipped and advance.
 - **`openDrawer(drawerId, props?)`** — Open a registered drawer and await the result.
 
 ### State Management
@@ -216,11 +216,11 @@ function MyCard() {
   type your state for better autocomplete.
 </Aside>
 
-## Substeps and Progressive Disclosure
+## Steps and Progressive Disclosure
 
-The stepper timeline reveals content progressively. Top-level steps only appear once reached — completed, active, and error states are visible; upcoming steps stay hidden until the flow advances to them.
+The stepper timeline reveals content progressively. Top-level step groups only appear once reached — completed, active, and error states are visible; upcoming step groups stay hidden until the flow advances to them.
 
-Within each step, only visited substeps appear in the timeline. Cards render inline beneath their substep as the user progresses. Unvisited substeps do not show as upcoming placeholders — each substep and its card appear only after the user reaches it. The `next` field in your flow config still drives default routing when cards complete, but does not preview future substeps in the timeline.
+Within each step group, only visited steps appear in the timeline. Cards render inline beneath their step as the user progresses. Unvisited steps do not show as upcoming placeholders — each step and its card appear only after the user reaches it. The `next` field in your flow config still drives default routing when cards complete, but does not preview future steps in the timeline.
 
 ## Drawer Integration
 
@@ -259,7 +259,7 @@ Call `complete(statePatch?)` to navigate to the next card. The timeline advances
 
 ### Back Navigation
 
-Users can click completed substeps in the timeline to scroll back to earlier cards. When navigating backward to reactivate a card, the reactivation guard shows a confirmation dialog:
+Users can click completed steps in the timeline to scroll back to earlier cards. When navigating backward to reactivate a card, the reactivation guard shows a confirmation dialog:
 
 ```typescript jsx
 <SinglePaneStepper.Root
@@ -322,7 +322,7 @@ The root component that sets up the flow engine, renders the single-column layou
     {
       name: "flow",
       description:
-        "Flow configuration defining steps, substeps, and initial substep",
+        "Flow configuration defining step groups, steps, and initial step",
       required: true,
       value: "FlowConfig",
     },
@@ -417,12 +417,28 @@ The root component that sets up the flow engine, renders the single-column layou
       value: "boolean",
       defaultValue: "false",
     },
+    {
+      name: "showStepBadge",
+      description:
+        "Renders a 'Step {n}/{total}' pill badge next to each step's title",
+      required: false,
+      value: "boolean",
+      defaultValue: "false",
+    },
+    {
+      name: "flat",
+      description:
+        "Renders each step group's steps as flat top-level Stepper.Step items (plain straight connector, no branch/StepGroup nesting) instead of the default nested/branch-connector layout",
+      required: false,
+      value: "boolean",
+      defaultValue: "false",
+    },
   ]}
 />
 
 ### `Card`
 
-A card rendered inline within a substep. Shows status indicator, title, optional description, and content.
+A card rendered inline within a step. Shows status indicator, title, optional description, and content.
 
 <DocsPage.PropsTable
   props={[
@@ -519,22 +535,22 @@ Hook for accessing the flow engine from within a card component.
     {
       name: "complete",
       description:
-        "Mark as completed, merge state patch, and advance to next substep",
+        "Mark as completed, merge state patch, and advance to next step",
       required: true,
-      value: "(statePatch?: Partial<TState>, nextSubStepId?: string) => void",
+      value: "(statePatch?: Partial<TState>, nextStepId?: string) => void",
     },
     {
       name: "error",
       description:
-        "Mark the card as errored. Pass nextSubStepId for error-and-continue.",
+        "Mark the card as errored. Pass nextStepId for error-and-continue.",
       required: true,
-      value: "(nextSubStepId?: string) => void",
+      value: "(nextStepId?: string) => void",
     },
     {
       name: "skip",
-      description: "Mark as skipped and advance to next substep",
+      description: "Mark as skipped and advance to next step",
       required: true,
-      value: "(nextSubStepId?: string) => void",
+      value: "(nextStepId?: string) => void",
     },
     {
       name: "openDrawer",
@@ -552,7 +568,7 @@ Hook for accessing the flow engine from within a card component.
 
 2. **One Concern Per Card** — Each card should represent a single logical step. If a card is doing too much, split it into multiple cards.
 
-3. **Use `next` for Linear Flows** — Define `next` in your flow config for the happy path. Only pass explicit `nextSubStepId` to `complete()` or `skip()` for conditional branching.
+3. **Use `next` for Linear Flows** — Define `next` in your flow config for the happy path. Only pass explicit `nextStepId` to `complete()` or `skip()` for conditional branching.
 
 4. **Handle Drawer Cancellation** — Always check `result.success` after awaiting `openDrawer()`.
 

@@ -91,59 +91,59 @@ function TestCardBlocked() {
 }
 
 const testFlow: FlowConfig = {
-  steps: {
+  stepGroups: {
     'step-1': { title: 'First Step', description: 'Do first thing' },
     'step-2': { title: 'Second Step', description: 'Do second thing' },
     'step-3': { title: 'Third Step', description: 'Do third thing' }
   },
-  subSteps: {
+  steps: {
     'card-a': { step: 'step-1', title: 'Card A', description: 'First card', component: TestCardA, next: 'card-b' },
     'card-b': { step: 'step-2', title: 'Card B', description: 'Second card', component: TestCardB, next: 'card-c' },
     'card-c': { step: 'step-3', title: 'Card C', description: 'Third card', component: TestCardC }
   },
-  initialSubStep: 'card-a'
+  initialStep: 'card-a'
 }
 
 const testFlowWithSkip: FlowConfig = {
-  steps: {
+  stepGroups: {
     'step-1': { title: 'First Step' },
     'step-2': { title: 'Second Step' }
   },
-  subSteps: {
+  steps: {
     'card-skip': { step: 'step-1', title: 'Card Skip', component: TestCardSkip, next: 'card-b' },
     'card-b': { step: 'step-2', title: 'Card B', component: TestCardB }
   },
-  initialSubStep: 'card-skip'
+  initialStep: 'card-skip'
 }
 
 const testFlowWithError: FlowConfig = {
-  steps: {
+  stepGroups: {
     'step-1': { title: 'First Step' }
   },
-  subSteps: {
+  steps: {
     'card-error': { step: 'step-1', title: 'Card Error', component: TestCardError }
   },
-  initialSubStep: 'card-error'
+  initialStep: 'card-error'
 }
 
 const testFlowTerminal: FlowConfig = {
-  steps: {
+  stepGroups: {
     'step-1': { title: 'Terminal Step' }
   },
-  subSteps: {
+  steps: {
     'card-terminal': { step: 'step-1', title: 'Card Terminal', component: TestCardTerminal, terminal: true }
   },
-  initialSubStep: 'card-terminal'
+  initialStep: 'card-terminal'
 }
 
 const testFlowBlocked: FlowConfig = {
-  steps: {
+  stepGroups: {
     'step-1': { title: 'First Step' }
   },
-  subSteps: {
+  steps: {
     'card-blocked': { step: 'step-1', title: 'Card Blocked', component: TestCardBlocked }
   },
-  initialSubStep: 'card-blocked'
+  initialStep: 'card-blocked'
 }
 
 describe('SinglePaneStepper', () => {
@@ -287,33 +287,33 @@ describe('SinglePaneStepper', () => {
       render(<SinglePaneStepper.Root flow={testFlowWithError} />)
       await userEvent.click(screen.getByText('Error'))
       await waitFor(() => {
-        // Error icon appears on the substep indicator (card header is hidden in single-pane)
+        // Error icon appears on the step indicator (card header is hidden in single-pane)
         const icons = screen.getAllByTestId('icon-xmark')
         expect(icons.length).toBeGreaterThanOrEqual(1)
       })
     })
   })
 
-  describe('Terminal Substeps', () => {
-    test('terminal substep auto-completes without firing onComplete until explicit re-entry', async () => {
+  describe('Terminal Steps', () => {
+    test('terminal step auto-completes without firing onComplete until explicit re-entry', async () => {
       const onComplete = vi.fn()
       render(<SinglePaneStepper.Root flow={testFlowTerminal} onComplete={onComplete} />)
       await userEvent.click(screen.getByText('Complete Terminal'))
       // Terminal completes but onComplete should not be called yet
       await waitFor(() => {
-        // Completed icon appears on the substep indicator (card header is hidden in single-pane)
+        // Completed icon appears on the step indicator (card header is hidden in single-pane)
         const icons = screen.getAllByTestId('icon-check')
         expect(icons.length).toBeGreaterThanOrEqual(1)
       })
       expect(onComplete).not.toHaveBeenCalled()
     })
 
-    test('visualCompleted terminal substep renders parent step as completed (green), not active', async () => {
+    test('visualCompleted terminal step renders parent step group as completed (green), not active', async () => {
       const visualCompletedFlow: FlowConfig = {
-        steps: { 'step-1': { title: 'First' }, 'step-2': { title: 'Second' } },
-        subSteps: {
+        stepGroups: { 'step-1': { title: 'First' }, 'step-2': { title: 'Second' } },
+        steps: {
           // TestCardA/TestCardB hard-code their transition targets ('card-b'/'card-c') rather
-          // than reading `next` from the flow config, so the substep ids here must match those
+          // than reading `next` from the flow config, so the step ids here must match those
           // literals to match this file's existing fixture convention.
           'card-a': { step: 'step-1', title: 'A', component: TestCardA, next: 'card-b' },
           'card-b': {
@@ -324,12 +324,12 @@ describe('SinglePaneStepper', () => {
             visualCompleted: true
           }
         },
-        initialSubStep: 'card-a'
+        initialStep: 'card-a'
       }
       render(<SinglePaneStepper.Root flow={visualCompletedFlow} />)
       await userEvent.click(screen.getByText('Next'))
       await waitFor(() => {
-        // The parent step (step-2) must show the plain completed connector class, NOT the
+        // The parent step group (step-2) must show the plain completed connector class, NOT the
         // partial active-trunk class — proving stepper-step.tsx took the ordinary completed
         // path with zero code changes there, driven entirely by derive-stepper-model.ts.
         const connectors = document.querySelectorAll('.cn-stepper-connector')
@@ -341,24 +341,24 @@ describe('SinglePaneStepper', () => {
   })
 
   describe('Stepper Integration', () => {
-    test('substeps and cards accumulate as user progresses', async () => {
+    test('steps and cards accumulate as user progresses', async () => {
       render(<SinglePaneStepper.Root flow={testFlow} />)
-      // Only the first step is rendered initially
+      // Only the first step group is rendered initially
       expect(screen.getByText('First Step')).toBeInTheDocument()
       expect(screen.queryByText('Second Step')).not.toBeInTheDocument()
       expect(screen.queryByText('Third Step')).not.toBeInTheDocument()
 
-      // Initially only first substep card is visible
+      // Initially only first step's card is visible
       expect(screen.getAllByText('Card A').length).toBeGreaterThanOrEqual(1)
 
-      // After navigating, second step/substep/card appears
+      // After navigating, second step group/step/card appears
       await userEvent.click(screen.getByText('Next'))
       await waitFor(() => {
         expect(screen.getByText('Second Step')).toBeInTheDocument()
         expect(screen.getAllByText('Card B').length).toBeGreaterThanOrEqual(1)
       })
 
-      // After navigating again, third step/substep/card appears
+      // After navigating again, third step group/step/card appears
       await userEvent.click(screen.getByText('Finish'))
       await waitFor(() => {
         expect(screen.getByText('Third Step')).toBeInTheDocument()
@@ -366,7 +366,7 @@ describe('SinglePaneStepper', () => {
       })
     })
 
-    test('completed steps remain visible after progressing', async () => {
+    test('completed step groups remain visible after progressing', async () => {
       render(<SinglePaneStepper.Root flow={testFlow} />)
       await userEvent.click(screen.getByText('Next'))
       await waitFor(() => {
@@ -382,7 +382,7 @@ describe('SinglePaneStepper', () => {
       })
     })
 
-    test('card content renders inside substep panel', async () => {
+    test('card content renders inside nested step panel', async () => {
       render(<SinglePaneStepper.Root flow={testFlow} />)
       // Card content should be present and the Next button should be clickable
       const nextButton = screen.getByText('Next')
@@ -403,11 +403,11 @@ describe('SinglePaneStepper', () => {
       }
 
       const waitingFlow: FlowConfig = {
-        steps: { 'step-1': { title: 'First Step' } },
-        subSteps: {
+        stepGroups: { 'step-1': { title: 'First Step' } },
+        steps: {
           'card-wait': { step: 'step-1', title: 'Waiting', component: TestCardWaiting }
         },
-        initialSubStep: 'card-wait'
+        initialStep: 'card-wait'
       }
 
       const { container } = render(<SinglePaneStepper.Root flow={waitingFlow} />)
@@ -416,9 +416,9 @@ describe('SinglePaneStepper', () => {
         expect(screen.getByText('Working...')).toBeInTheDocument()
       })
 
-      expect(container.querySelector('.cn-stepper-substep-placeholder')).not.toBeInTheDocument()
+      expect(container.querySelector('.cn-stepper-nested-step-placeholder')).not.toBeInTheDocument()
       expect(container.querySelector('[data-testid="icon-more-horizontal"]')).not.toBeInTheDocument()
-      expect(container.querySelector('.cn-stepper-collapsible-substeps')).toBeInTheDocument()
+      expect(container.querySelector('.cn-stepper-collapsible-nested-steps')).toBeInTheDocument()
 
       const activeStepItem = container.querySelector('.cn-stepper-step-active')?.closest('.cn-stepper-step-item')
       const connector = activeStepItem?.querySelector('.cn-stepper-connector')
@@ -426,24 +426,26 @@ describe('SinglePaneStepper', () => {
       expect(connector).toHaveClass('cn-stepper-connector-active-partial')
     })
 
-    test('completed substeps default collapsed and toggle via chevron', async () => {
+    test('completed nested steps default collapsed and toggle via chevron', async () => {
       const { container } = render(<SinglePaneStepper.Root flow={testFlow} />)
       await userEvent.click(screen.getByText('Next'))
       await waitFor(() => {
         expect(screen.getByText('Answer: yes')).toBeInTheDocument()
       })
 
-      const collapseTriggers = container.querySelectorAll('.cn-stepper-substep-collapse-trigger')
+      const collapseTriggers = container.querySelectorAll('.cn-stepper-nested-step-collapse-trigger')
       expect(collapseTriggers.length).toBeGreaterThanOrEqual(1)
 
-      const completedItem = container.querySelector('.cn-stepper-substep-completed.cn-stepper-substep-item-collapsible')
+      const completedItem = container.querySelector(
+        '.cn-stepper-nested-step-completed.cn-stepper-nested-step-item-collapsible'
+      )
       expect(completedItem).toBeTruthy()
 
-      const panel = completedItem?.querySelector('.cn-stepper-substep-panel-collapsible')
+      const panel = completedItem?.querySelector('.cn-stepper-nested-step-panel-collapsible')
       expect(panel).toHaveAttribute('data-state', 'closed')
 
       const completedCollapse = completedItem?.querySelector(
-        '.cn-stepper-substep-collapse-trigger'
+        '.cn-stepper-nested-step-collapse-trigger'
       ) as HTMLButtonElement
       await userEvent.click(completedCollapse)
 
@@ -458,18 +460,20 @@ describe('SinglePaneStepper', () => {
       })
     })
 
-    test('clicking substep title expands collapsed panel', async () => {
+    test('clicking nested step title expands collapsed panel', async () => {
       const { container } = render(<SinglePaneStepper.Root flow={testFlow} />)
       await userEvent.click(screen.getByText('Next'))
       await waitFor(() => {
         expect(screen.getByText('Answer: yes')).toBeInTheDocument()
       })
 
-      const completedItem = container.querySelector('.cn-stepper-substep-completed.cn-stepper-substep-item-collapsible')
-      const panel = completedItem?.querySelector('.cn-stepper-substep-panel-collapsible')
+      const completedItem = container.querySelector(
+        '.cn-stepper-nested-step-completed.cn-stepper-nested-step-item-collapsible'
+      )
+      const panel = completedItem?.querySelector('.cn-stepper-nested-step-panel-collapsible')
       expect(panel).toHaveAttribute('data-state', 'closed')
 
-      const completedTitle = completedItem?.querySelector('.cn-stepper-substep') as HTMLButtonElement
+      const completedTitle = completedItem?.querySelector('.cn-stepper-nested-step') as HTMLButtonElement
       await userEvent.click(completedTitle)
 
       await waitFor(() => {
@@ -477,7 +481,7 @@ describe('SinglePaneStepper', () => {
       })
     })
 
-    test('collapsed substeps keep card children mounted (streamed content survives expand)', async () => {
+    test('collapsed nested steps keep card children mounted (streamed content survives expand)', async () => {
       function TestCardLogs() {
         const { status, complete } = useFlowCard()
         const [logs, setLogs] = React.useState<string[]>([])
@@ -496,12 +500,12 @@ describe('SinglePaneStepper', () => {
       }
 
       const logFlow: FlowConfig = {
-        steps: { 'step-1': { title: 'Step' } },
-        subSteps: {
+        stepGroups: { 'step-1': { title: 'Step' } },
+        steps: {
           'card-logs': { step: 'step-1', title: 'Card Logs', component: TestCardLogs, next: 'card-b' },
           'card-b': { step: 'step-1', title: 'Card B', component: TestCardB }
         },
-        initialSubStep: 'card-logs'
+        initialStep: 'card-logs'
       }
 
       const { container } = render(<SinglePaneStepper.Root flow={logFlow} />)
@@ -510,11 +514,15 @@ describe('SinglePaneStepper', () => {
         expect(screen.getByTestId('log-output')).toHaveTextContent('persisted log line')
       })
 
-      const completedItem = container.querySelector('.cn-stepper-substep-completed.cn-stepper-substep-item-collapsible')
-      const panel = completedItem?.querySelector('.cn-stepper-substep-panel-collapsible')
+      const completedItem = container.querySelector(
+        '.cn-stepper-nested-step-completed.cn-stepper-nested-step-item-collapsible'
+      )
+      const panel = completedItem?.querySelector('.cn-stepper-nested-step-panel-collapsible')
       expect(panel).toHaveAttribute('data-state', 'closed')
 
-      const collapseTrigger = completedItem?.querySelector('.cn-stepper-substep-collapse-trigger') as HTMLButtonElement
+      const collapseTrigger = completedItem?.querySelector(
+        '.cn-stepper-nested-step-collapse-trigger'
+      ) as HTMLButtonElement
       await userEvent.click(collapseTrigger)
 
       await waitFor(() => {
@@ -530,11 +538,15 @@ describe('SinglePaneStepper', () => {
         expect(screen.getByText('Answer: yes')).toBeInTheDocument()
       })
 
-      const completedItem = container.querySelector('.cn-stepper-substep-completed.cn-stepper-substep-item-collapsible')
-      const panel = completedItem?.querySelector('.cn-stepper-substep-panel-collapsible')
+      const completedItem = container.querySelector(
+        '.cn-stepper-nested-step-completed.cn-stepper-nested-step-item-collapsible'
+      )
+      const panel = completedItem?.querySelector('.cn-stepper-nested-step-panel-collapsible')
       expect(panel).toHaveAttribute('data-state', 'closed')
 
-      const collapseTrigger = completedItem?.querySelector('.cn-stepper-substep-collapse-trigger') as HTMLButtonElement
+      const collapseTrigger = completedItem?.querySelector(
+        '.cn-stepper-nested-step-collapse-trigger'
+      ) as HTMLButtonElement
       await userEvent.click(collapseTrigger)
 
       await waitFor(() => {
@@ -551,7 +563,7 @@ describe('SinglePaneStepper', () => {
       })
     })
 
-    test('async streamed logs survive completion and substep collapse', async () => {
+    test('async streamed logs survive completion and nested step collapse', async () => {
       const STREAMED_LINE = '✓ endpoint reachable'
 
       function TestCardStreamingLogs() {
@@ -599,12 +611,12 @@ describe('SinglePaneStepper', () => {
       }
 
       const streamFlow: FlowConfig = {
-        steps: { 'step-1': { title: 'Step' } },
-        subSteps: {
+        stepGroups: { 'step-1': { title: 'Step' } },
+        steps: {
           'card-stream': { step: 'step-1', title: 'Card Stream', component: TestCardStreamingLogs, next: 'card-b' },
           'card-b': { step: 'step-1', title: 'Card B', component: TestCardB }
         },
-        initialSubStep: 'card-stream'
+        initialStep: 'card-stream'
       }
 
       const { container } = render(<SinglePaneStepper.Root flow={streamFlow} />)
@@ -614,11 +626,15 @@ describe('SinglePaneStepper', () => {
         expect(screen.getByTestId('log-cursor')).toHaveTextContent('hidden')
       })
 
-      const completedItem = container.querySelector('.cn-stepper-substep-completed.cn-stepper-substep-item-collapsible')
-      const panel = completedItem?.querySelector('.cn-stepper-substep-panel-collapsible')
+      const completedItem = container.querySelector(
+        '.cn-stepper-nested-step-completed.cn-stepper-nested-step-item-collapsible'
+      )
+      const panel = completedItem?.querySelector('.cn-stepper-nested-step-panel-collapsible')
       expect(panel).toHaveAttribute('data-state', 'closed')
 
-      const collapseTrigger = completedItem?.querySelector('.cn-stepper-substep-collapse-trigger') as HTMLButtonElement
+      const collapseTrigger = completedItem?.querySelector(
+        '.cn-stepper-nested-step-collapse-trigger'
+      ) as HTMLButtonElement
       await userEvent.click(collapseTrigger)
 
       await waitFor(() => {
@@ -626,6 +642,156 @@ describe('SinglePaneStepper', () => {
         expect(screen.getByTestId('log-output')).toHaveTextContent(STREAMED_LINE)
         expect(screen.getByTestId('log-cursor')).toHaveTextContent('hidden')
       })
+    })
+  })
+
+  describe('Flat Mode', () => {
+    test('renders steps as top-level Stepper.Step items, not nested inside a StepGroup', async () => {
+      const { container } = render(<SinglePaneStepper.Root flow={testFlow} flat />)
+
+      // No StepGroup wrapper: steps must NOT get the nested branch-connector class.
+      expect(container.querySelector('.cn-stepper-nested-step-item')).not.toBeInTheDocument()
+
+      // Each visited step instead renders with the top-level (straight-connector) class, the
+      // same one StepGroup itself uses for its own <li> — proving the step registered directly
+      // into ctx.orderedSteps via TopLevelStep, with no ParentStepProvider involved.
+      expect(container.querySelectorAll('.cn-stepper-step-item').length).toBeGreaterThanOrEqual(1)
+      expect(screen.getAllByText('Card A').length).toBeGreaterThanOrEqual(1)
+
+      await userEvent.click(screen.getByText('Next'))
+      await waitFor(() => {
+        expect(screen.getAllByText('Card B').length).toBeGreaterThanOrEqual(1)
+      })
+
+      // Still flat after navigating: two top-level items, still no nested-step-item nesting.
+      expect(container.querySelector('.cn-stepper-nested-step-item')).not.toBeInTheDocument()
+      expect(container.querySelectorAll('.cn-stepper-step-item').length).toBe(2)
+    })
+
+    test('showStepBadge renders the "Step n/total" badge on the flat top-level step', () => {
+      const { container } = render(<SinglePaneStepper.Root flow={testFlow} flat showStepBadge />)
+
+      const badge = container.querySelector('.cn-stepper-step-badge')
+      expect(badge).toBeInTheDocument()
+      // testFlow has 3 total steps; totalStepsOverride reports the flow's real count, not just
+      // the 1 step mounted so far under progressive disclosure.
+      expect(badge).toHaveTextContent('Step 1/3')
+    })
+
+    test('default (non-flat) mode keeps steps nested inside a StepGroup', () => {
+      const { container } = render(<SinglePaneStepper.Root flow={testFlow} />)
+
+      expect(container.querySelector('.cn-stepper-nested-step-item')).toBeInTheDocument()
+    })
+  })
+
+  describe('Step Badge Totals (Branching Flows)', () => {
+    // Mirrors a real branching flow (e.g. the portal demo's mutually-exclusive auth-provider
+    // steps): 'github-auth', 'gitlab-auth', and 'bitbucket-auth' all share the SAME step group
+    // ('auth') and all converge on the shared 'connect-repo' step, but a run only ever walks ONE of
+    // them. flow.steps has 5 entries total, but the actual path for this run ('start' ->
+    // 'github-auth' -> 'connect-repo') is only 3 steps — the two unchosen sibling auth steps must
+    // NOT inflate the badge's denominator.
+    const branchingStepsFlow: FlowConfig = {
+      stepGroups: { start: { title: 'Start' }, auth: { title: 'Auth' }, connect: { title: 'Connect' } },
+      steps: {
+        start: { step: 'start', title: 'Start', component: () => null, next: 'github-auth' },
+        'github-auth': { step: 'auth', title: 'GitHub', component: () => null, next: 'connect-repo' },
+        'gitlab-auth': { step: 'auth', title: 'GitLab', component: () => null, next: 'connect-repo' },
+        'bitbucket-auth': { step: 'auth', title: 'Bitbucket', component: () => null, next: 'connect-repo' },
+        'connect-repo': { step: 'connect', title: 'Connect', component: () => null }
+      },
+      initialStep: 'start'
+    }
+
+    test("flat mode: badge total counts only the active path's steps, not every mutually-exclusive sibling step", () => {
+      const { container } = render(<SinglePaneStepper.Root flow={branchingStepsFlow} flat showStepBadge />)
+
+      const badge = container.querySelector('.cn-stepper-step-badge')
+      expect(badge).toBeInTheDocument()
+      // Correct total: 'start' (visited) + 'github-auth' + 'connect-repo' (predicted along the
+      // active branch) = 3. The old, buggy Object.keys(flow.steps).length would report 5 (it also
+      // counts the never-visited 'gitlab-auth'/'bitbucket-auth' siblings), which could never reach
+      // n/n for this run.
+      expect(badge).toHaveTextContent('Step 1/3')
+    })
+
+    // Mirrors a flow where entire step GROUPS (not just steps within one group) are mutually
+    // exclusive — e.g. two different infra-setup routes, each with its own dedicated step group,
+    // where a run only ever walks one of the routes' groups.
+    const branchingGroupsFlow: FlowConfig = {
+      stepGroups: {
+        start: { title: 'Start' },
+        'provider-a': { title: 'Provider A' },
+        'provider-b': { title: 'Provider B' },
+        connect: { title: 'Connect' },
+        done: { title: 'Done' }
+      },
+      steps: {
+        start: { step: 'start', title: 'Start', component: () => null, next: 'a-step' },
+        'a-step': { step: 'provider-a', title: 'A Step', component: () => null, next: 'connect-repo' },
+        'b-step': { step: 'provider-b', title: 'B Step', component: () => null, next: 'connect-repo' },
+        'connect-repo': { step: 'connect', title: 'Connect', component: () => null, next: 'finish' },
+        finish: { step: 'done', title: 'Finish', component: () => null }
+      },
+      initialStep: 'start'
+    }
+
+    test("non-flat mode: badge total counts only the active path's step GROUPS, not every mutually-exclusive sibling group", () => {
+      const { container } = render(<SinglePaneStepper.Root flow={branchingGroupsFlow} showStepBadge />)
+
+      const badge = container.querySelector('.cn-stepper-step-badge')
+      expect(badge).toBeInTheDocument()
+      // Correct total: 'start' (visited) + 'provider-a', 'connect', 'done' (predicted groups along
+      // the active branch) = 4 distinct groups. The old, buggy
+      // Object.keys(flow.stepGroups ?? {}).length would report 5 (it also counts 'provider-b', the
+      // unchosen sibling group never reached on this run).
+      expect(badge).toHaveTextContent('Step 1/4')
+    })
+
+    test('linear flow (no branching): total is unchanged — same count as before the fix', () => {
+      // testFlow (defined at module scope) is a simple 3-step linear flow, same fixture as the
+      // existing Flat Mode badge test above. Asserting it here too, alongside the non-flat mode,
+      // proves no regression on the common (non-branching) case in BOTH render modes.
+      const { container: flatContainer } = render(<SinglePaneStepper.Root flow={testFlow} flat showStepBadge />)
+      expect(flatContainer.querySelector('.cn-stepper-step-badge')).toHaveTextContent('Step 1/3')
+
+      const { container: nonFlatContainer } = render(<SinglePaneStepper.Root flow={testFlow} showStepBadge />)
+      expect(nonFlatContainer.querySelector('.cn-stepper-step-badge')).toHaveTextContent('Step 1/3')
+    })
+
+    // Mirrors the real portal-demo bug: a step like 'choose-provider' or 'choose-infra' declares NO
+    // static `next` at all because its card picks the next step dynamically at runtime via
+    // complete(statePatch, nextStepId). Before the fix, fullPredictedPath was `[]` for such a step,
+    // so the badge collapsed to "Step 1/1" even though more steps (landing-a/landing-b's step group)
+    // genuinely follow. The fix must fall back to the flow-wide count instead of collapsing.
+    const dynamicChoiceFlow: FlowConfig = {
+      stepGroups: { choice: { title: 'Choice' }, next: { title: 'Next' } },
+      steps: {
+        pick: { step: 'choice', title: 'Pick', component: () => null }, // no static next — dynamic
+        'landing-a': { step: 'next', title: 'Landing A', component: () => null },
+        'landing-b': { step: 'next', title: 'Landing B', component: () => null }
+      },
+      initialStep: 'pick'
+    }
+
+    test('flat mode: badge total falls back to the full flow.steps count (not collapsed to 1) when the active step has no static next', () => {
+      const { container } = render(<SinglePaneStepper.Root flow={dynamicChoiceFlow} flat showStepBadge />)
+
+      const badge = container.querySelector('.cn-stepper-step-badge')
+      expect(badge).toBeInTheDocument()
+      // Object.keys(dynamicChoiceFlow.steps).length === 3 ('pick', 'landing-a', 'landing-b'). The
+      // pre-fix behavior would show "Step 1/1" (cardHistory.length + empty fullPredictedPath).
+      expect(badge).toHaveTextContent('Step 1/3')
+    })
+
+    test('non-flat mode: badge total falls back to the full flow.stepGroups count (not collapsed to 1) when the active step has no static next', () => {
+      const { container } = render(<SinglePaneStepper.Root flow={dynamicChoiceFlow} showStepBadge />)
+
+      const badge = container.querySelector('.cn-stepper-step-badge')
+      expect(badge).toBeInTheDocument()
+      // Object.keys(dynamicChoiceFlow.stepGroups).length === 2 ('choice', 'next').
+      expect(badge).toHaveTextContent('Step 1/2')
     })
   })
 
@@ -641,7 +807,7 @@ describe('SinglePaneStepper', () => {
     test('renders blocked message in standard card mode (non-contentOnly)', () => {
       render(
         <FlowEngineProvider flow={testFlowBlocked}>
-          <CardContextProvider subStepId="card-blocked" status="active">
+          <CardContextProvider stepId="card-blocked" status="active">
             <FlowStepperCard title="Card Blocked" blockedMessage="Select an option to continue">
               <button>Continue</button>
             </FlowStepperCard>

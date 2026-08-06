@@ -3,18 +3,18 @@ import { useCallback, useEffect, useRef } from 'react'
 import { CardContextProvider, useEngineContext } from '../flow-stepper/engine/engine-context'
 
 export function DualPaneStepperCardStack() {
-  const { flow, cardHistory, activeSubStepId, registerScrollToCard, disableAutoScroll } = useEngineContext()
+  const { flow, cardHistory, activeStepId, registerScrollToCard, disableAutoScroll } = useEngineContext()
   const containerRef = useRef<HTMLDivElement>(null)
-  const activeRef = useRef(activeSubStepId)
-  activeRef.current = activeSubStepId
+  const activeRef = useRef(activeStepId)
+  activeRef.current = activeStepId
 
   const scrollToCard = useCallback(
-    (subStepId: string) => {
+    (stepId: string) => {
       // Consumers can disable programmatic scroll of the right pane (completed/review flows).
       if (disableAutoScroll) return
       const container = containerRef.current
       if (!container) return
-      const cardEl = container.querySelector(`[data-card-id="${subStepId}"]`) as HTMLElement | null
+      const cardEl = container.querySelector(`[data-card-id="${stepId}"]`) as HTMLElement | null
       if (!cardEl) return
 
       const containerRect = container.getBoundingClientRect()
@@ -47,12 +47,12 @@ export function DualPaneStepperCardStack() {
     <div ref={containerRef} className="cn-dual-pane-stepper-card-stack">
       <div className="cn-dual-pane-stepper-card-stack-inner">
         {cardHistory.map(entry => {
-          const config = flow.subSteps[entry.subStepId]
+          const config = flow.steps[entry.stepId]
           if (!config) return null
           const CardComponent = config.component
           return (
-            <div key={entry.subStepId} data-card-id={entry.subStepId}>
-              <CardContextProvider subStepId={entry.subStepId} status={entry.status}>
+            <div key={entry.stepId} data-card-id={entry.stepId}>
+              <CardContextProvider stepId={entry.stepId} status={entry.status}>
                 <CardComponent />
               </CardContextProvider>
             </div>

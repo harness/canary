@@ -87,6 +87,9 @@
     "external-tickets": "Tickets externes",
     "administration": "Administration"
   },
+  "cardSelect": {
+    "comingSoon": "Coming Soon"
+  },
   "dialog": {
     "noDescription": "No description available"
   },

@@ -5,7 +5,7 @@
 The platform has multiple multi-step workflows (onboarding wizards, pipeline setup, connector configuration) that need a consistent progress visualization. Today:
 
 - **The existing stepper (`DrawerSteps`/`DrawerStep`/`DrawerSubStep`) is tightly coupled to the dual-pane drawer** — it can't be used in standalone contexts like full-page wizards or inline card flows.
-- **No dynamic substep support** — workflows where user choices reveal additional steps (e.g., selecting GitHub vs GitLab shows different authentication substeps) require manual orchestration outside the component.
+- **No dynamic nested-step support** — workflows where user choices reveal additional steps (e.g., selecting GitHub vs GitLab shows different authentication nested steps) require manual orchestration outside the component.
 - **No loading, error, or blocking states** — consumers resort to ad-hoc UI treatments that differ across the product.
 - **No accessibility** — missing keyboard navigation, ARIA attributes, and screen reader announcements.
 - **No current consumers** — the drawer stepper was built speculatively and never adopted, so we can replace it without migration.
@@ -21,11 +21,11 @@ A standalone, reusable stepper component for `@harnessio/ui` (canary) that visua
 | Decision                                 | Choice                                                      | Why                                                                                                                                                                                |
 | ---------------------------------------- | ----------------------------------------------------------- | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
 | Controlled-only (no internal state)      | `value` + `onValueChange` required                          | Consumer owns navigation logic; avoids hidden state bugs. Matches pattern of other canary components (Tabs, Accordion).                                                            |
-| Compound component pattern               | `Stepper.Root` / `.Step` / `.SubStep`                       | Enables conditional rendering for branching (consumer uses standard React `{condition && <SubStep />}`). Config-object approach would require a custom DSL for dynamic branches.   |
-| Registration pattern (mount/unmount)     | Steps register via `useEffect`                              | Supports dynamic substeps without consumer needing to imperatively add/remove from a list. Stepper always reflects what's actually rendered.                                       |
+| Compound component pattern               | `Stepper.Root` / `.StepGroup` / `.Step`                     | Enables conditional rendering for branching (consumer uses standard React `{condition && <Step />}`). Config-object approach would require a custom DSL for dynamic branches.      |
+| Registration pattern (mount/unmount)     | Steps register via `useEffect`                              | Supports dynamic nested steps without consumer needing to imperatively add/remove from a list. Stepper always reflects what's actually rendered.                                   |
 | CSS-only transition animations           | `transition-delay` chaining, no JS orchestration            | Browser compositor schedules the full timeline atomically — avoids frame-gap stutters from `onTransitionEnd` JS handoffs. Animation is fire-and-forget (no mid-flow abort needed). |
 | Context hook kept internal               | `useStepperContext` not exported                            | Preserves freedom to restructure internals (split context, switch to store) without breaking consumers. Can open later if use case emerges.                                        |
-| Single linear list                       | Branching via conditional render, not a graph/state-machine | Avoids routing complexity. From the user's perspective, the path is always linear — they see a flat list of steps/substeps representing their specific branch.                     |
+| Single linear list                       | Branching via conditional render, not a graph/state-machine | Avoids routing complexity. From the user's perspective, the path is always linear — they see a flat list of steps/nested steps representing their specific branch.                 |
 | `blocking` separate from `state="error"` | Two independent props                                       | Not all errors block progress (e.g., non-critical warning), and not all blocks are errors (e.g., "must complete this step before proceeding"). Orthogonal concerns stay separate.  |
 | Forward animate, backward snap           | Transitions only on forward progression                     | Forward animation creates the "flow" feeling. Backward is a correction — animating it feels sluggish and fights user intent.                                                       |
 
@@ -66,21 +66,21 @@ const [currentStep, setCurrentStep] = useState('version-control')
     title="Select Version Control"
     description="Choose your VCS provider"
   />
-  <Stepper.Step
+  <Stepper.StepGroup
     value="connectivity"
     title="Check Connectivity"
     description="Verify access to your repo"
   >
     {provider === 'github' && (
       <>
-        <Stepper.SubStep value="conn.oauth" title="Authenticate" description="OAuth with GitHub" />
-        <Stepper.SubStep value="conn.test" title="Test Connection" description="Ping repository endpoint" />
+        <Stepper.Step value="conn.oauth" title="Authenticate" description="OAuth with GitHub" />
+        <Stepper.Step value="conn.test" title="Test Connection" description="Ping repository endpoint" />
       </>
     )}
     {provider === 'gitlab' && (
-      <Stepper.SubStep value="conn.token" title="Enter Access Token" description="Paste your PAT" />
+      <Stepper.Step value="conn.token" title="Enter Access Token" description="Paste your PAT" />
     )}
-  </Stepper.Step>
+  </Stepper.StepGroup>
   <Stepper.Step
     value="repository"
     title="Select a repository"
@@ -94,13 +94,15 @@ const [currentStep, setCurrentStep] = useState('version-control')
 </Stepper.Root>
 ```
 
+> **StepGroup is optional.** A `Stepper.Step` rendered directly under `Stepper.Root` (no `Stepper.StepGroup` wrapper) self-registers as a top-level step and renders with a plain straight vertical connector — no branch arm. Use `Stepper.StepGroup` only when a step needs nested steps; a flat list of ungrouped `Stepper.Step`s (as in the example above) is a fully supported, first-class layout, not a degraded case.
+
 ### Props
 
 #### `Stepper.Root`
 
 | Prop             | Type                                              | Required | Default | Description                                                                                            |
 | ---------------- | ------------------------------------------------- | -------- | ------- | ------------------------------------------------------------------------------------------------------ |
-| `value`          | `string`                                          | yes      | —       | Current active step or substep value                                                                   |
+| `value`          | `string`                                          | yes      | —       | Current active step or nested step value                                                               |
 | `onValueChange`  | `(value: string) => void`                         | yes      | —       | Callback when step changes                                                                             |
 | `title`          | `ReactNode`                                       | no       | —       | Header title (e.g., "Build pipeline setup")                                                            |
 | `onBeforeChange` | `(from: string, to: string) => boolean \| string` | no       | —       | Navigation guard. Return `true` to allow, `false` to block, string to show confirmation dialog         |
@@ -109,43 +111,54 @@ const [currentStep, setCurrentStep] = useState('version-control')
 | `skeletonCount`  | `number`                                          | no       | `3`     | Number of skeleton step rows to show when no Step children are mounted                                 |
 | `className`      | `string`                                          | no       | —       | Additional CSS class                                                                                   |
 
+#### `Stepper.StepGroup`
+
+| Prop             | Type                   | Required | Default | Description                                                                                           |
+| ---------------- | ---------------------- | -------- | ------- | ----------------------------------------------------------------------------------------------------- |
+| `value`          | `string`               | yes      | —       | Unique step identifier                                                                                |
+| `title`          | `ReactNode`            | yes      | —       | Step title                                                                                            |
+| `description`    | `ReactNode`            | no       | —       | Description text below title                                                                          |
+| `state`          | `'skipped' \| 'error'` | no       | —       | Override step state (skipped = completed without action, error = step failed)                         |
+| `loading`        | `boolean`              | no       | `false` | Show spinner in place of the step indicator icon (for async work)                                     |
+| `blocking`       | `boolean`              | no       | `false` | Prevents navigation to any step after this one (use with `state="error"` for blocking errors)         |
+| `hasNestedSteps` | `boolean`              | no       | `false` | Show placeholder branch when group has no mounted Step children (hints that nested steps will appear) |
+| `disabled`       | `boolean`              | no       | `false` | Explicitly disable this step (non-navigable regardless of state)                                      |
+| `showStepBadge`  | `boolean`              | no       | `false` | Render a "Step n/total" pill badge next to the title                                                  |
+| `className`      | `string`               | no       | —       | Additional CSS class                                                                                  |
+| `children`       | `ReactNode`            | no       | —       | Nested Step components                                                                                |
+
 #### `Stepper.Step`
 
-| Prop          | Type                   | Required | Default | Description                                                                                         |
-| ------------- | ---------------------- | -------- | ------- | --------------------------------------------------------------------------------------------------- |
-| `value`       | `string`               | yes      | —       | Unique step identifier                                                                              |
-| `title`       | `ReactNode`            | yes      | —       | Step title                                                                                          |
-| `description` | `ReactNode`            | no       | —       | Description text below title                                                                        |
-| `state`       | `'skipped' \| 'error'` | no       | —       | Override step state (skipped = completed without action, error = step failed)                       |
-| `loading`     | `boolean`              | no       | `false` | Show spinner in place of the step indicator icon (for async work)                                   |
-| `blocking`    | `boolean`              | no       | `false` | Prevents navigation to any step after this one (use with `state="error"` for blocking errors)       |
-| `hasSubSteps` | `boolean`              | no       | `false` | Show placeholder branch when step has no mounted SubStep children (hints that substeps will appear) |
-| `disabled`    | `boolean`              | no       | `false` | Explicitly disable this step (non-navigable regardless of state)                                    |
-| `className`   | `string`               | no       | —       | Additional CSS class                                                                                |
-| `children`    | `ReactNode`            | no       | —       | SubStep components                                                                                  |
+`Stepper.Step` is dual-mode, depending on whether it has an ancestor `Stepper.StepGroup`:
 
-#### `Stepper.SubStep`
+- **Top-level** (no `Stepper.StepGroup` ancestor — rendered directly under `Stepper.Root`): self-registers as an ordered top-level step and renders a plain straight vertical connector, identical in markup/behavior to a childless `Stepper.StepGroup`.
+- **Nested** (has a `Stepper.StepGroup` ancestor): registers under the parent group and renders the branch-arm connector off the parent's trunk.
 
-| Prop              | Type        | Required | Default | Description                                                                                                                                                                      |
-| ----------------- | ----------- | -------- | ------- | -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| `value`           | `string`    | yes      | —       | Unique substep identifier                                                                                                                                                        |
-| `title`           | `ReactNode` | yes      | —       | Substep title                                                                                                                                                                    |
-| `description`     | `ReactNode` | no       | —       | Description text below title                                                                                                                                                     |
-| `visualCompleted` | `boolean`   | no       | `false` | Presentation-only: render this substep's icon/color/title as 'completed' regardless of `state`. Does NOT affect accordion-open behavior, which always reflects the real `state`. |
-| `className`       | `string`    | no       | —       | Additional CSS class                                                                                                                                                             |
+| Prop              | Type        | Required | Default | Description                                                                                                                                                                                 |
+| ----------------- | ----------- | -------- | ------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| `value`           | `string`    | yes      | —       | Unique step identifier                                                                                                                                                                      |
+| `title`           | `ReactNode` | yes      | —       | Step title                                                                                                                                                                                  |
+| `description`     | `ReactNode` | no       | —       | Description text below title                                                                                                                                                                |
+| `state`           | `StepState` | no       | —       | Override step state                                                                                                                                                                         |
+| `visualCompleted` | `boolean`   | no       | `false` | Presentation-only: render this step's icon/color/title as 'completed' regardless of `state`. Does NOT affect accordion-open behavior (nested mode), which always reflects the real `state`. |
+| `disabled`        | `boolean`   | no       | `false` | Force-disable this step's button. Only meaningful when top-level — a nested Step's disabled-ness is entirely derived from its parent group's state.                                         |
+| `contentOnly`     | `boolean`   | no       | `false` | Nested mode only: render only the branch wire + panel content, no button row (used by single-pane accordion cards, whose header owns the indicator)                                         |
+| `showStepBadge`   | `boolean`   | no       | `false` | Top-level mode only: render a "Step n/total" pill badge next to the title                                                                                                                   |
+| `className`       | `string`    | no       | —       | Additional CSS class                                                                                                                                                                        |
+| `children`        | `ReactNode` | no       | —       | Panel content rendered below the step row                                                                                                                                                   |
 
 ## State Management
 
 ### Step States
 
-| State       | When                                             | Navigable            | Icon                                      |
-| ----------- | ------------------------------------------------ | -------------------- | ----------------------------------------- |
-| `completed` | Index < active, or within furthest-reached       | Yes                  | Green filled circle + check icon          |
-| `active`    | Value matches this step (or one of its substeps) | Yes                  | Blue filled circle + step number          |
-| `upcoming`  | Index > active AND beyond furthest-reached       | No (button disabled) | Gray bordered circle + step number        |
-| `skipped`   | `state="skipped"` prop set                       | Yes                  | Muted gray circle + check icon            |
-| `error`     | `state="error"` prop set                         | Yes                  | Red bordered circle + xmark icon          |
-| `loading`   | `loading` prop is true on active step            | No (in progress)     | Blue filled circle + spinning loader icon |
+| State       | When                                                 | Navigable            | Icon                                      |
+| ----------- | ---------------------------------------------------- | -------------------- | ----------------------------------------- |
+| `completed` | Index < active, or within furthest-reached           | Yes                  | Green filled circle + check icon          |
+| `active`    | Value matches this step (or one of its nested steps) | Yes                  | Blue filled circle + step number          |
+| `upcoming`  | Index > active AND beyond furthest-reached           | No (button disabled) | Gray bordered circle + step number        |
+| `skipped`   | `state="skipped"` prop set                           | Yes                  | Muted gray circle + check icon            |
+| `error`     | `state="error"` prop set                             | Yes                  | Red bordered circle + xmark icon          |
+| `loading`   | `loading` prop is true on active step                | No (in progress)     | Blue filled circle + spinning loader icon |
 
 > **Note:** `loading` is a visual modifier on the `active` state, not a distinct `StepState` value. A loading step remains `'active'` in the type system — the `loading` prop only affects rendering (spinner icon + shimmer text).
 
@@ -175,14 +188,14 @@ type StepperContextType = {
   onValueChange: (value: string) => void
   onBeforeChange?: (from: string, to: string) => boolean | string
   registerStep: (value: string) => () => void
-  registerSubStep: (parentValue: string, subStepValue: string) => () => void
+  registerNestedStep: (parentValue: string, nestedStepValue: string) => () => void
   getStepState: (stepValue: string) => StepState
-  getSubStepState: (parentValue: string, subStepValue: string) => StepState
+  getNestedStepState: (parentValue: string, nestedStepValue: string) => StepState
   getStepIndex: (stepValue: string) => number
   totalSteps: number
   currentStepNumber: number
   selectStep: (stepValue: string) => void
-  selectSubStep: (subStepValue: string) => void
+  selectNestedStep: (nestedStepValue: string) => void
   showConnectors: boolean
 }
 ```
@@ -209,14 +222,14 @@ When a step has `blocking={true}`:
 - The user CAN still navigate backwards to previously completed steps
 - Typically used with `state="error"` but can be used independently (e.g., a step that requires explicit completion before proceeding)
 
-### SubStep Behavior
+### Nested Step Behavior
 
 - Register with context on mount, deregister on unmount
-- Only visible when their parent step is `active`
-- If the active substep unmounts (branch changes), focus falls back to the parent step value
+- Only visible when their parent `Stepper.StepGroup` is `active`
+- If the active nested Step unmounts (branch changes), focus falls back to the parent group's value
 - Don't affect the announced step position (top-level steps only)
-- Consumer owns branching logic — renders substeps conditionally based on their own state
-- Stepper sees a flat list of whatever substeps are currently mounted under a parent
+- Consumer owns branching logic — renders nested Steps conditionally based on their own state
+- Stepper sees a flat list of whatever nested Steps are currently mounted under a group
 
 ### Header
 
@@ -263,19 +276,19 @@ Every step renders as a `<button>` — disabled when not navigable (upcoming sta
 
 ### Connector Layout
 
-Single continuous vertical line on the left, with horizontal arms branching to each substep:
+Single continuous vertical line on the left, with horizontal arms branching to each nested step:
 
 - **Main vertical connector**: runs between step indicators in the left column. Color = previous step's state.
-- **Horizontal substep arms**: branch from the main vertical line to each substep indicator. Color = parent step's state (blue when active).
+- **Horizontal nested-step arms**: branch from the main vertical line to each nested step indicator. Color = parent step's state (blue when active).
 - **No gaps**: connectors touch icons directly in all directions. The indicator icon and connector are in the same flex column.
 - **First step**: no connector above it.
 - **Last step**: no connector below it.
-- **SubStep placeholder**: when `hasSubSteps` is true and no SubStep children are mounted, render a single horizontal arm + small empty gray-bordered circle. Disappears once actual SubStep children mount.
+- **Nested-step placeholder**: when `hasNestedSteps` is true and no nested Step children are mounted, render a single horizontal arm + small empty gray-bordered circle. Disappears once actual nested Step children mount.
 
 ### Indicator Sizing
 
 - Parent steps: 20px diameter circle
-- Substeps: 14px diameter circle
+- Nested steps: 14px diameter circle
 
 ### Connector Coloring
 
@@ -291,16 +304,16 @@ The connector below a step takes the color of that step's state:
 | skipped          | light gray      | `--cn-border-2`               |
 | error            | red             | `--cn-set-danger-primary-bg`  |
 
-**SubStep connectors (vertical segments + horizontal arms):**
+**Nested-step connectors (vertical segments + horizontal arms):**
 
-Coloring fills progressively as substeps are visited:
+Coloring fills progressively as nested steps are visited:
 
-| Element                        | Color rule           | Example                                                                     |
-| ------------------------------ | -------------------- | --------------------------------------------------------------------------- |
-| Horizontal arm to substep      | That substep's state | Arm → completed substep = green, arm → active = blue, arm → upcoming = gray |
-| Vertical segment below substep | That substep's state | Below completed substep = green, below active = blue, below upcoming = gray |
+| Element                            | Color rule               | Example                                                                         |
+| ---------------------------------- | ------------------------ | ------------------------------------------------------------------------------- |
+| Horizontal arm to nested step      | That nested step's state | Arm → completed nested step = green, arm → active = blue, arm → upcoming = gray |
+| Vertical segment below nested step | That nested step's state | Below completed nested step = green, below active = blue, below upcoming = gray |
 
-Visual example with substeps A(completed), B(active), C(upcoming):
+Visual example with nested steps A(completed), B(active), C(upcoming):
 
 ```
 ├── ● A (completed)     ← arm is green (A is completed)
@@ -310,16 +323,16 @@ Visual example with substeps A(completed), B(active), C(upcoming):
 ├── ○ C (upcoming)      ← arm is gray (C is upcoming)
 ```
 
-Note: the vertical segment below the active substep is gray (not blue) because the next substep hasn't been reached yet. The coloring represents "progress made" — only segments leading TO a visited substep are colored.
+Note: the vertical segment below the active nested step is gray (not blue) because the next nested step hasn't been reached yet. The coloring represents "progress made" — only segments leading TO a visited nested step are colored.
 
-### SubStep Indicators
+### Nested Step Indicators
 
-| State       | Visual                                                                                           |
-| ----------- | ------------------------------------------------------------------------------------------------ |
-| completed   | Green filled circle + check icon                                                                 |
-| active      | Blue filled circle + white dot center                                                            |
-| upcoming    | Gray bordered circle + minus icon                                                                |
-| placeholder | Gray bordered circle, empty (no icon) — shown when `hasSubSteps` is true but no children mounted |
+| State       | Visual                                                                                              |
+| ----------- | --------------------------------------------------------------------------------------------------- |
+| completed   | Green filled circle + check icon                                                                    |
+| active      | Blue filled circle + white dot center                                                               |
+| upcoming    | Gray bordered circle + minus icon                                                                   |
+| placeholder | Gray bordered circle, empty (no icon) — shown when `hasNestedSteps` is true but no children mounted |
 
 ### Empty / Loading State
 
@@ -342,8 +355,8 @@ When no `Stepper.Step` children are mounted:
 
 ### Text Overflow
 
-- **Titles** (step and substep): single line, truncate with ellipsis via CSS `text-overflow`. No hover tooltip.
-- **Descriptions** (step and substep): wrap to multiple lines, no truncation.
+- **Titles** (step and nested step): single line, truncate with ellipsis via CSS `text-overflow`. No hover tooltip.
+- **Descriptions** (step and nested step): wrap to multiple lines, no truncation.
 
 ### Dark Mode
 
@@ -351,8 +364,8 @@ All colors use `--cn-*` design tokens which resolve correctly in both light and 
 
 ### Alignment
 
-- Substep icons sit flush-left with the parent step's text content
-- Horizontal arms span the full distance from the vertical line center to the substep icon (no gaps)
+- Nested-step icons sit flush-left with the parent step's text content
+- Horizontal arms span the full distance from the vertical line center to the nested-step icon (no gaps)
 
 ### Reference Rendering
 
@@ -380,7 +393,7 @@ The approved visual design (from brainstorming v11):
 │  3  Select a repository                         │
 │  │   Pick the repo to build                     │
 │  │                                              │
-│  ├── ○ (placeholder, hasSubSteps=true)          │
+│  ├── ○ (placeholder, hasNestedSteps=true)       │
 │  │                                              │
 │  4  Generate Pipeline                           │
 │      Create your CI config                      │
@@ -390,25 +403,25 @@ Legend:
   ✓  = completed (green filled circle + check icon)
   ②  = active (blue filled circle + step number)
   3  = upcoming (gray bordered circle + step number)
-  ●  = substep completed (small green) / active (small blue + white dot)
-  ○  = substep upcoming (small gray bordered + minus icon)
+  ●  = nested step completed (small green) / active (small blue + white dot)
+  ○  = nested step upcoming (small gray bordered + minus icon)
 
 Connector coloring (shown with annotations):
-  │ (green) = vertical below a completed step/substep
+  │ (green) = vertical below a completed step/nested step
   │ (blue)  = vertical below the active parent step
-  │ (gray)  = vertical below active substep or upcoming step/substep
-  ├── (green) = horizontal arm to a completed substep
-  ├── (blue)  = horizontal arm to the active substep
-  ├── (gray)  = horizontal arm to an upcoming substep
+  │ (gray)  = vertical below active nested step or upcoming step/nested step
+  ├── (green) = horizontal arm to a completed nested step
+  ├── (blue)  = horizontal arm to the active nested step
+  ├── (gray)  = horizontal arm to an upcoming nested step
 ```
 
 Layout structure (flexbox):
 
 - Each step row is a flex container with two children:
   1. **Left column** (20px wide): indicator icon on top, vertical connector grows to fill remaining height. No gap between them.
-  2. **Right column** (flex: 1): text content + substeps. Uses `padding-left: 14px` to create the gap that horizontal arms span.
-- Substep horizontal arms use `position: absolute; left: -24px; width: 24px` to span from the vertical line center (10px into the 20px column + 14px padding = 24px total) to the substep icon.
-- Substep icons (14px) align flush-left with parent step text.
+  2. **Right column** (flex: 1): text content + nested steps. Uses `padding-left: 14px` to create the gap that horizontal arms span.
+- Nested-step horizontal arms use `position: absolute; left: -24px; width: 24px` to span from the vertical line center (10px into the 20px column + 14px padding = 24px total) to the nested-step icon.
+- Nested-step icons (14px) align flush-left with parent step text.
 
 ## Confirmation Dialog
 
@@ -432,12 +445,13 @@ Uses the existing `AlertDialog` component:
 packages/ui/src/components/stepper/
 ├── index.ts
 ├── stepper.tsx
+├── stepper-group.tsx
 ├── stepper-step.tsx
-├── stepper-sub-step.tsx
 ├── stepper-context.tsx
 ├── stepper-types.ts
 └── __tests__/
-    └── stepper.test.tsx
+    ├── stepper.test.tsx
+    └── stepper-step-visual-completed.test.tsx
 ```
 
 CSS lives in `packages/ui/src/styles/styles.css` using `cn-stepper-*` prefix.
@@ -458,17 +472,20 @@ Following existing convention: `cn-{component}-{element}-{state}`
 - `cn-stepper-step-content` — title + description wrapper
 - `cn-stepper-step-title` — step title
 - `cn-stepper-step-description` — step description
+- `cn-stepper-step-badge` — "Step n/total" pill (opt-in via `showStepBadge`)
+- `cn-stepper-step-panel` — panel wrapper for a top-level Step's children
 - `cn-stepper-connector` — vertical connector line
 - `cn-stepper-connector-completed` / `-active` / `-upcoming` — connector color variants
-- `cn-stepper-substep-list` — substep ordered list
-- `cn-stepper-substep-item` — substep list item
-- `cn-stepper-substep` — substep button
-- `cn-stepper-substep-completed` / `-active` / `-upcoming` — substep state variants
-- `cn-stepper-substep-branch` — horizontal arm connector
-- `cn-stepper-substep-indicator` — substep icon circle
-- `cn-stepper-substep-title` — substep title
-- `cn-stepper-substep-description` — substep description
-- `cn-stepper-substep-placeholder` — placeholder circle (shown when `hasSubSteps` with no children)
+- `cn-stepper-nested-step-list` — nested step ordered list (rendered inside a `Stepper.StepGroup`)
+- `cn-stepper-nested-step-item` — nested step list item
+- `cn-stepper-nested-step` — nested step button (nested `Stepper.Step`)
+- `cn-stepper-nested-step-completed` / `-active` / `-upcoming` — nested step state variants
+- `cn-stepper-nested-step-branch` — horizontal arm connector
+- `cn-stepper-nested-step-indicator` — nested step icon circle
+- `cn-stepper-nested-step-title` — nested step title
+- `cn-stepper-nested-step-description` — nested step description
+- `cn-stepper-nested-step-panel` — panel wrapper for a nested Step's children
+- `cn-stepper-nested-step-placeholder` — placeholder circle (shown when `hasNestedSteps` with no children)
 
 ## Existing Code & Token Reuse
 
@@ -477,59 +494,59 @@ Following existing convention: `cn-{component}-{element}-{state}`
 | Component     | Import Path                 | Usage                                                   |
 | ------------- | --------------------------- | ------------------------------------------------------- |
 | `AlertDialog` | `@/components/alert-dialog` | Built-in confirmation dialog for destructive navigation |
-| `IconV2`      | `@/components/icon-v2`      | Step/substep indicator icons (`check`, `minus`)         |
+| `IconV2`      | `@/components/icon-v2`      | Step/nested-step indicator icons (`check`, `minus`)     |
 | `cn()`        | `@/utils/cn`                | Class merging (clsx + tailwind-merge)                   |
 
 ### Design Tokens by Element
 
-| Stepper Element                  | Property        | Tailwind Class            | CSS Variable                                                            |
-| -------------------------------- | --------------- | ------------------------- | ----------------------------------------------------------------------- |
-| **Step indicator (completed)**   | background      | `bg-cn-success-primary`   | `--cn-set-success-primary-bg`                                           |
-|                                  | text/icon color | `text-cn-success-primary` | `--cn-set-success-primary-text` (white)                                 |
-| **Step indicator (active)**      | background      | `bg-cn-brand-primary`     | `--cn-set-brand-primary-bg`                                             |
-|                                  | text color      | `text-cn-brand-primary`   | `--cn-set-brand-primary-text` (white)                                   |
-| **Step indicator (upcoming)**    | background      | `bg-cn-0`                 | `--cn-bg-0` (transparent/base)                                          |
-|                                  | border          | `border-cn-2`             | `--cn-border-2`                                                         |
-|                                  | text color      | `text-cn-3`               | `--cn-text-3`                                                           |
-| **Step indicator (skipped)**     | background      | `bg-cn-gray-primary`      | `--cn-set-gray-primary-bg`                                              |
-|                                  | text/icon color | `text-cn-3`               | `--cn-text-3`                                                           |
-| **Step indicator (error)**       | background      | `bg-cn-danger-primary`    | `--cn-set-danger-primary-bg`                                            |
-|                                  | text/icon color | `text-cn-danger-primary`  | `--cn-set-danger-primary-text` (white)                                  |
-| **Step indicator (loading)**     | background      | `bg-cn-brand-primary`     | `--cn-set-brand-primary-bg` (same as active)                            |
-|                                  | icon            | —                         | `<IconV2 name="loader" size="xs" className="animate-spin" />`           |
-|                                  | icon color      | `text-cn-brand-primary`   | `--cn-set-brand-primary-text` (white)                                   |
-|                                  | title/desc text | `cn-shimmer`              | Gradient shimmer sweep across text (4s linear infinite, blue highlight) |
-| **Step title**                   | text color      | `text-cn-1`               | `--cn-text-1`                                                           |
-|                                  | font size       | `text-cn-size-5`          | `--cn-font-size-5` (14px)                                               |
-|                                  | font weight     | —                         | 440 (medium via variable font)                                          |
-| **Step description**             | text color      | `text-cn-3`               | `--cn-text-3`                                                           |
-|                                  | font size       | `text-cn-size-4`          | `--cn-font-size-4` (13px)                                               |
-| **Header title**                 | text color      | `text-cn-2`               | `--cn-text-2`                                                           |
-|                                  | font weight     | —                         | 550 (semibold via variable font)                                        |
-|                                  | font size       | `text-cn-size-5`          | `--cn-font-size-5` (14px)                                               |
-| **Step number text**             | font size       | `text-cn-size-2`          | `--cn-font-size-2` (~11.5px)                                            |
-| **Connector (completed)**        | background      | `bg-cn-success-primary`   | `--cn-set-success-primary-bg`                                           |
-| **Connector (active)**           | background      | `bg-cn-brand-primary`     | `--cn-set-brand-primary-bg`                                             |
-| **Connector (upcoming/skipped)** | background      | `bg-cn-separator`         | `--cn-border-2`                                                         |
-| **Connector (error)**            | background      | `bg-cn-danger-primary`    | `--cn-set-danger-primary-bg`                                            |
-| **Indicator circle (parent)**    | size            | `size-5`                  | 20px                                                                    |
-|                                  | border-radius   | `rounded-cn-full`         | `--cn-rounded-full` (9999px)                                            |
-| **Indicator circle (substep)**   | size            | `size-3.5`                | 14px                                                                    |
-|                                  | border-radius   | `rounded-cn-full`         | `--cn-rounded-full` (9999px)                                            |
-| **Placeholder circle**           | size            | `size-3.5`                | 14px                                                                    |
-|                                  | border          | `border-cn-2`             | `--cn-border-2`                                                         |
-|                                  | background      | `bg-cn-0`                 | `--cn-bg-0` (transparent/base)                                          |
-|                                  | border-radius   | `rounded-cn-full`         | `--cn-rounded-full` (9999px)                                            |
-| **Step gap (icon→text)**         | padding-left    | `pl-3.5`                  | 14px                                                                    |
-| **Connector line**               | width           | —                         | 2px                                                                     |
+| Stepper Element                    | Property        | Tailwind Class            | CSS Variable                                                            |
+| ---------------------------------- | --------------- | ------------------------- | ----------------------------------------------------------------------- |
+| **Step indicator (completed)**     | background      | `bg-cn-success-primary`   | `--cn-set-success-primary-bg`                                           |
+|                                    | text/icon color | `text-cn-success-primary` | `--cn-set-success-primary-text` (white)                                 |
+| **Step indicator (active)**        | background      | `bg-cn-brand-primary`     | `--cn-set-brand-primary-bg`                                             |
+|                                    | text color      | `text-cn-brand-primary`   | `--cn-set-brand-primary-text` (white)                                   |
+| **Step indicator (upcoming)**      | background      | `bg-cn-0`                 | `--cn-bg-0` (transparent/base)                                          |
+|                                    | border          | `border-cn-2`             | `--cn-border-2`                                                         |
+|                                    | text color      | `text-cn-3`               | `--cn-text-3`                                                           |
+| **Step indicator (skipped)**       | background      | `bg-cn-gray-primary`      | `--cn-set-gray-primary-bg`                                              |
+|                                    | text/icon color | `text-cn-3`               | `--cn-text-3`                                                           |
+| **Step indicator (error)**         | background      | `bg-cn-danger-primary`    | `--cn-set-danger-primary-bg`                                            |
+|                                    | text/icon color | `text-cn-danger-primary`  | `--cn-set-danger-primary-text` (white)                                  |
+| **Step indicator (loading)**       | background      | `bg-cn-brand-primary`     | `--cn-set-brand-primary-bg` (same as active)                            |
+|                                    | icon            | —                         | `<IconV2 name="loader" size="xs" className="animate-spin" />`           |
+|                                    | icon color      | `text-cn-brand-primary`   | `--cn-set-brand-primary-text` (white)                                   |
+|                                    | title/desc text | `cn-shimmer`              | Gradient shimmer sweep across text (4s linear infinite, blue highlight) |
+| **Step title**                     | text color      | `text-cn-1`               | `--cn-text-1`                                                           |
+|                                    | font size       | `text-cn-size-5`          | `--cn-font-size-5` (14px)                                               |
+|                                    | font weight     | —                         | 440 (medium via variable font)                                          |
+| **Step description**               | text color      | `text-cn-3`               | `--cn-text-3`                                                           |
+|                                    | font size       | `text-cn-size-4`          | `--cn-font-size-4` (13px)                                               |
+| **Header title**                   | text color      | `text-cn-2`               | `--cn-text-2`                                                           |
+|                                    | font weight     | —                         | 550 (semibold via variable font)                                        |
+|                                    | font size       | `text-cn-size-5`          | `--cn-font-size-5` (14px)                                               |
+| **Step number text**               | font size       | `text-cn-size-2`          | `--cn-font-size-2` (~11.5px)                                            |
+| **Connector (completed)**          | background      | `bg-cn-success-primary`   | `--cn-set-success-primary-bg`                                           |
+| **Connector (active)**             | background      | `bg-cn-brand-primary`     | `--cn-set-brand-primary-bg`                                             |
+| **Connector (upcoming/skipped)**   | background      | `bg-cn-separator`         | `--cn-border-2`                                                         |
+| **Connector (error)**              | background      | `bg-cn-danger-primary`    | `--cn-set-danger-primary-bg`                                            |
+| **Indicator circle (parent)**      | size            | `size-5`                  | 20px                                                                    |
+|                                    | border-radius   | `rounded-cn-full`         | `--cn-rounded-full` (9999px)                                            |
+| **Indicator circle (nested step)** | size            | `size-3.5`                | 14px                                                                    |
+|                                    | border-radius   | `rounded-cn-full`         | `--cn-rounded-full` (9999px)                                            |
+| **Placeholder circle**             | size            | `size-3.5`                | 14px                                                                    |
+|                                    | border          | `border-cn-2`             | `--cn-border-2`                                                         |
+|                                    | background      | `bg-cn-0`                 | `--cn-bg-0` (transparent/base)                                          |
+|                                    | border-radius   | `rounded-cn-full`         | `--cn-rounded-full` (9999px)                                            |
+| **Step gap (icon→text)**           | padding-left    | `pl-3.5`                  | 14px                                                                    |
+| **Connector line**                 | width           | —                         | 2px                                                                     |
 
 ### Icons Used
 
 | Icon Name | Context                                            |
 | --------- | -------------------------------------------------- |
-| `check`   | Completed/skipped step/substep indicator           |
-| `minus`   | Upcoming substep indicator                         |
-| `xmark`   | Error step/substep indicator                       |
+| `check`   | Completed/skipped step/nested-step indicator       |
+| `minus`   | Upcoming nested-step indicator                     |
+| `xmark`   | Error step/nested-step indicator                   |
 | `loader`  | Loading step indicator (with `animate-spin` class) |
 
 ### New CSS Keyframe
@@ -588,8 +605,8 @@ Uses the roving tabindex pattern:
 | Key           | Behavior                                                                                                      |
 | ------------- | ------------------------------------------------------------------------------------------------------------- |
 | Tab           | Moves focus into the stepper (lands on the active step, or first navigable step). Next Tab exits the stepper. |
-| Arrow Down    | Moves focus to the next navigable step/substep (skips disabled upcoming steps)                                |
-| Arrow Up      | Moves focus to the previous navigable step/substep                                                            |
+| Arrow Down    | Moves focus to the next navigable step/nested step (skips disabled upcoming steps)                            |
+| Arrow Up      | Moves focus to the previous navigable step/nested step                                                        |
 | Enter / Space | Selects the focused step (triggers `onBeforeChange` guard if present)                                         |
 | Home          | Moves focus to the first navigable step                                                                       |
 | End           | Moves focus to the last navigable step                                                                        |
@@ -605,20 +622,20 @@ Only one step is in the tab order at a time (`tabindex="0"`). All other steps ha
 | Active step button   | `aria-current`  | `"step"`                                              |
 | Upcoming step button | `aria-disabled` | `"true"` (plus native `disabled` attribute)           |
 | Step button          | `aria-label`    | `"Step {n} of {total}: {title}"` (for screen readers) |
-| SubStep button       | `aria-label`    | `"{title}"`                                           |
+| Nested Step button   | `aria-label`    | `"{title}"`                                           |
 
 ### Live Announcements
 
 A visually hidden `aria-live="polite"` region announces step changes:
 
 - On step change: `"Step {n} of {total}: {title}"`
-- On substep change: `"{substep title}"`
+- On nested step change: `"{nested step title}"`
 - On confirmation dialog open: handled by AlertDialog's built-in accessibility
 
 ### Focus Management
 
 - When `onValueChange` fires (step changes programmatically), focus moves to the new active step
-- When a substep unmounts and the active value falls back to the parent, focus moves to the parent step button
+- When a nested step unmounts and the active value falls back to the parent, focus moves to the parent step button
 - Confirmation dialog traps focus while open (handled by AlertDialog)
 
 ## Step Transition Animations
@@ -653,13 +670,13 @@ When the user navigates backwards (clicking a previously completed step):
 
 Rationale: backward navigation is a user correction — they want to get back quickly. Animating it would feel sluggish and fight the user's intent.
 
-### Substep Transitions
+### Nested Step Transitions
 
-When advancing between substeps within the same parent step:
+When advancing between nested steps within the same parent step:
 
-- Same 3-phase sequential pattern applies (substep indicator → horizontal arm or vertical segment → next substep indicator)
+- Same 3-phase sequential pattern applies (nested-step indicator → horizontal arm or vertical segment → next nested-step indicator)
 - Durations are slightly shorter: 100ms / 200ms / 100ms (~400ms total) since the distance is smaller
-- Backward substep navigation is also instant
+- Backward nested-step navigation is also instant
 
 ### Skipping Animations
 
@@ -680,13 +697,13 @@ Transitions are skipped (instant state change) when:
 
 ### Exported (public API)
 
-| Export                | Kind                                                         | Purpose                                                               |
-| --------------------- | ------------------------------------------------------------ | --------------------------------------------------------------------- |
-| `Stepper`             | Namespace (with `.Root`, `.Step`, `.SubStep` static members) | The compound component                                                |
-| `StepperProps`        | Type                                                         | Root component props                                                  |
-| `StepperStepProps`    | Type                                                         | Step component props                                                  |
-| `StepperSubStepProps` | Type                                                         | SubStep component props                                               |
-| `StepState`           | Type                                                         | `'completed' \| 'active' \| 'upcoming' \| 'skipped' \| 'error'` union |
+| Export              | Kind                                                           | Purpose                                                               |
+| ------------------- | -------------------------------------------------------------- | --------------------------------------------------------------------- |
+| `Stepper`           | Namespace (with `.Root`, `.StepGroup`, `.Step` static members) | The compound component                                                |
+| `StepperProps`      | Type                                                           | Root component props                                                  |
+| `StepperGroupProps` | Type                                                           | StepGroup component props                                             |
+| `StepperStepProps`  | Type                                                           | Step component props (dual-mode: top-level or nested)                 |
+| `StepState`         | Type                                                           | `'completed' \| 'active' \| 'upcoming' \| 'skipped' \| 'error'` union |
 
 ### Internal (not exported)
 
@@ -704,7 +721,7 @@ Unit tests with React Testing Library. No visual regression tests — low mainte
 | Area                       | What to test                                                                                                                                                            |
 | -------------------------- | ----------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
 | **State derivation**       | Steps render correct state based on position relative to active/furthest-reached. Error/skipped props override. Completion prop flips remaining steps.                  |
-| **Registration lifecycle** | Dynamic substeps mount/unmount correctly. Counts update. Active substep unmount falls back to parent value.                                                             |
+| **Registration lifecycle** | Dynamic nested steps mount/unmount correctly. Counts update. Active nested step unmount falls back to parent value.                                                     |
 | **Keyboard navigation**    | Arrow keys move focus, skip disabled upcoming steps. Enter/Space triggers selection. Home/End jump to first/last. Roving tabindex updates.                              |
 | **Navigation guard**       | `onBeforeChange` returning `true` proceeds, `false` blocks silently, string shows dialog. Dialog confirm/cancel produce correct outcomes.                               |
 | **Blocking**               | Steps after a blocking step are disabled. User can still navigate backwards. Removing `blocking` re-enables forward navigation.                                         |

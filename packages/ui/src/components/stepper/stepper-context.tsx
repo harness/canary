@@ -7,6 +7,11 @@ interface StepMeta {
   blocking?: boolean
   state?: StepState
   loading?: boolean
+  // Flat-mode top-level steps can override the announced/displayed total (see stepper-step.tsx's
+  // TopLevelStep) when orderedSteps.length (progressively-disclosed, currently-mounted steps) undercounts
+  // the flow's real step count. Registered here so StepperLiveRegion can read the active step's own
+  // override and keep the screen-reader announcement in sync with the visible "Step n/total" badge.
+  totalStepsOverride?: number
 }
 
 interface StepperContextValue {
@@ -15,21 +20,21 @@ interface StepperContextValue {
   onBeforeChange?: (from: string, to: string) => boolean | string
   showConnectors: boolean
   completed: boolean
-  collapsibleSubSteps: boolean
+  collapsibleNestedSteps: boolean
   orderedSteps: string[]
-  subSteps: Map<string, string[]>
+  nestedSteps: Map<string, string[]>
   stepMeta: Map<string, StepMeta>
   furthestReached: number
   transitioning: { sourceIndex: number; targetIndex: number } | null
   registerStep: (value: string) => () => void
-  registerSubStep: (parentValue: string, subStepValue: string) => () => void
-  registerSubStepState: (parentValue: string, subStepValue: string, state: StepState) => () => void
+  registerNestedStep: (parentValue: string, nestedStepValue: string) => () => void
+  registerNestedStepState: (parentValue: string, nestedStepValue: string, state: StepState) => () => void
   registerStepMeta: (value: string, meta: StepMeta) => void
   getStepState: (value: string) => StepState
-  getSubStepState: (parentValue: string, subStepValue: string) => StepState
+  getNestedStepState: (parentValue: string, nestedStepValue: string) => StepState
   isStepDisabled: (value: string) => boolean
   selectStep: (stepValue: string) => void
-  selectSubStep: (subStepValue: string) => void
+  selectNestedStep: (nestedStepValue: string) => void
   pendingNavigation: { to: string; message: string } | null
   confirmNavigation: () => void
   cancelNavigation: () => void
@@ -45,19 +50,18 @@ export function useStepperContext(): StepperContextValue {
   return context
 }
 
-// Parent step context for substeps
+// Parent step context for nested steps
 const ParentStepContext = createContext<string | null>(null)
 
 export function ParentStepProvider({ value, children }: { value: string; children: ReactNode }) {
   return <ParentStepContext.Provider value={value}>{children}</ParentStepContext.Provider>
 }
 
-export function useParentStep(): string {
-  const parentValue = useContext(ParentStepContext)
-  if (!parentValue) {
-    throw new Error('useParentStep must be used within a ParentStepProvider')
-  }
-  return parentValue
+// Returns null when there's no ancestor ParentStepProvider — this is a valid, non-error state. A
+// Step rendered directly under Stepper.Root (no StepGroup wrapper) has no parent, and callers use
+// the null return to switch to top-level registration/rendering instead of throwing.
+export function useParentStep(): string | null {
+  return useContext(ParentStepContext)
 }
 
 interface StepperProviderProps {
@@ -66,7 +70,7 @@ interface StepperProviderProps {
   onBeforeChange?: (from: string, to: string) => boolean | string
   showConnectors: boolean
   completed: boolean
-  collapsibleSubSteps: boolean
+  collapsibleNestedSteps: boolean
   children: ReactNode
 }
 
@@ -76,38 +80,38 @@ export function StepperProvider({
   onBeforeChange,
   showConnectors,
   completed,
-  collapsibleSubSteps,
+  collapsibleNestedSteps,
   children
 }: StepperProviderProps) {
   const [orderedSteps, setOrderedSteps] = useState<string[]>([])
-  const [subSteps, setSubSteps] = useState<Map<string, string[]>>(new Map())
-  const [subStepStates, setSubStepStates] = useState<Map<string, Map<string, StepState>>>(new Map())
+  const [nestedSteps, setNestedSteps] = useState<Map<string, string[]>>(new Map())
+  const [nestedStepStates, setNestedStepStates] = useState<Map<string, Map<string, StepState>>>(new Map())
   const [stepMeta, setStepMeta] = useState<Map<string, StepMeta>>(new Map())
   const [furthestReached, setFurthestReached] = useState(0)
 
-  // Track active substep for unmount fallback
-  const activeSubStepRef = useRef<{ parent: string; value: string } | null>(null)
+  // Track active nested step for unmount fallback
+  const activeNestedStepRef = useRef<{ parent: string; value: string } | null>(null)
 
   // Update furthest reached when value changes
   const activeIndex = orderedSteps.indexOf(value)
 
-  // Check if value is a substep value
-  const activeParentFromSubStep = useMemo(() => {
-    for (const [parent, subs] of subSteps.entries()) {
+  // Check if value is a nested step value
+  const activeParentFromNestedStep = useMemo(() => {
+    for (const [parent, subs] of nestedSteps.entries()) {
       if (subs.includes(value)) {
         return parent
       }
     }
     return null
-  }, [subSteps, value])
+  }, [nestedSteps, value])
 
   const effectiveActiveIndex = useMemo(() => {
     if (activeIndex >= 0) return activeIndex
-    if (activeParentFromSubStep) {
-      return orderedSteps.indexOf(activeParentFromSubStep)
+    if (activeParentFromNestedStep) {
+      return orderedSteps.indexOf(activeParentFromNestedStep)
     }
     return -1
-  }, [activeIndex, activeParentFromSubStep, orderedSteps])
+  }, [activeIndex, activeParentFromNestedStep, orderedSteps])
 
   useEffect(() => {
     if (effectiveActiveIndex > furthestReached) {
@@ -138,14 +142,14 @@ export function StepperProvider({
     }
   }, [effectiveActiveIndex])
 
-  // Track active substep for unmount detection
+  // Track active nested step for unmount detection
   useEffect(() => {
-    if (activeParentFromSubStep) {
-      activeSubStepRef.current = { parent: activeParentFromSubStep, value }
+    if (activeParentFromNestedStep) {
+      activeNestedStepRef.current = { parent: activeParentFromNestedStep, value }
     } else {
-      activeSubStepRef.current = null
+      activeNestedStepRef.current = null
     }
-  }, [activeParentFromSubStep, value])
+  }, [activeParentFromNestedStep, value])
 
   const registerStep = useCallback((stepValue: string) => {
     setOrderedSteps(prev => {
@@ -162,22 +166,22 @@ export function StepperProvider({
     }
   }, [])
 
-  const registerSubStep = useCallback(
-    (parentValue: string, subStepValue: string) => {
-      setSubSteps(prev => {
+  const registerNestedStep = useCallback(
+    (parentValue: string, nestedStepValue: string) => {
+      setNestedSteps(prev => {
         const next = new Map(prev)
         const existing = next.get(parentValue) || []
-        if (existing.includes(subStepValue)) return prev
-        next.set(parentValue, [...existing, subStepValue])
+        if (existing.includes(nestedStepValue)) return prev
+        next.set(parentValue, [...existing, nestedStepValue])
         return next
       })
       return () => {
-        setSubSteps(prev => {
+        setNestedSteps(prev => {
           const next = new Map(prev)
           const existing = next.get(parentValue) || []
           next.set(
             parentValue,
-            existing.filter(v => v !== subStepValue)
+            existing.filter(v => v !== nestedStepValue)
           )
           if (next.get(parentValue)?.length === 0) {
             next.delete(parentValue)
@@ -185,8 +189,11 @@ export function StepperProvider({
           return next
         })
 
-        // If the unmounting substep was the active one, fall back to parent
-        if (activeSubStepRef.current?.value === subStepValue && activeSubStepRef.current?.parent === parentValue) {
+        // If the unmounting nested step was the active one, fall back to parent
+        if (
+          activeNestedStepRef.current?.value === nestedStepValue &&
+          activeNestedStepRef.current?.parent === parentValue
+        ) {
           onValueChange(parentValue)
         }
       }
@@ -194,20 +201,20 @@ export function StepperProvider({
     [onValueChange]
   )
 
-  const registerSubStepState = useCallback((parentValue: string, subStepValue: string, state: StepState) => {
-    setSubStepStates(prev => {
+  const registerNestedStepState = useCallback((parentValue: string, nestedStepValue: string, state: StepState) => {
+    setNestedStepStates(prev => {
       const next = new Map(prev)
       const parentStates = new Map(next.get(parentValue) ?? [])
-      if (parentStates.get(subStepValue) === state) return prev
-      parentStates.set(subStepValue, state)
+      if (parentStates.get(nestedStepValue) === state) return prev
+      parentStates.set(nestedStepValue, state)
       next.set(parentValue, parentStates)
       return next
     })
     return () => {
-      setSubStepStates(prev => {
+      setNestedStepStates(prev => {
         const next = new Map(prev)
         const parentStates = new Map(next.get(parentValue) ?? [])
-        parentStates.delete(subStepValue)
+        parentStates.delete(nestedStepValue)
         if (parentStates.size === 0) {
           next.delete(parentValue)
         } else {
@@ -227,7 +234,8 @@ export function StepperProvider({
         existing.disabled === meta.disabled &&
         existing.blocking === meta.blocking &&
         existing.state === meta.state &&
-        existing.loading === meta.loading
+        existing.loading === meta.loading &&
+        existing.totalStepsOverride === meta.totalStepsOverride
       ) {
         return prev
       }
@@ -259,8 +267,8 @@ export function StepperProvider({
       // Completed prop overrides all remaining states
       if (completed) return 'completed'
 
-      // Active check: direct match or substep of this step is active
-      const isActive = value === stepValue || activeParentFromSubStep === stepValue
+      // Active check: direct match or nested step of this step is active
+      const isActive = value === stepValue || activeParentFromNestedStep === stepValue
 
       if (isActive) return 'active'
 
@@ -280,39 +288,39 @@ export function StepperProvider({
       stepMeta,
       completed,
       value,
-      activeParentFromSubStep,
+      activeParentFromNestedStep,
       effectiveActiveIndex,
       firstBlockingIndex,
       furthestReached
     ]
   )
 
-  const getSubStepState = useCallback(
-    (parentValue: string, subStepValue: string): StepState => {
-      const explicitState = subStepStates.get(parentValue)?.get(subStepValue)
+  const getNestedStepState = useCallback(
+    (parentValue: string, nestedStepValue: string): StepState => {
+      const explicitState = nestedStepStates.get(parentValue)?.get(nestedStepValue)
       if (explicitState) return explicitState
 
       const parentState = getStepState(parentValue)
       if (parentState === 'completed') return 'completed'
       if (parentState !== 'active') return 'upcoming'
 
-      const subs = subSteps.get(parentValue) || []
-      const subIndex = subs.indexOf(subStepValue)
+      const subs = nestedSteps.get(parentValue) || []
+      const subIndex = subs.indexOf(nestedStepValue)
 
-      // If value matches this substep exactly
-      if (value === subStepValue) return 'active'
+      // If value matches this nested step exactly
+      if (value === nestedStepValue) return 'active'
 
-      // If value is a different substep of same parent, determine relative position
+      // If value is a different nested step of same parent, determine relative position
       const activeSubIndex = subs.indexOf(value)
       if (activeSubIndex >= 0 && subIndex < activeSubIndex) return 'completed'
 
-      // If value matches parent directly (no substep selected) - first substep active
+      // If value matches parent directly (no nested step selected) - first nested step active
       if (value === parentValue && subIndex === 0) return 'active'
       if (value === parentValue && subIndex > 0) return 'upcoming'
 
       return 'upcoming'
     },
-    [getStepState, subSteps, subStepStates, value]
+    [getStepState, nestedSteps, nestedStepStates, value]
   )
 
   const isStepDisabled = useCallback(
@@ -352,17 +360,17 @@ export function StepperProvider({
     [isStepDisabled, onBeforeChange, value, onValueChange]
   )
 
-  const selectSubStep = useCallback(
-    (subStepValue: string) => {
+  const selectNestedStep = useCallback(
+    (nestedStepValue: string) => {
       if (onBeforeChange) {
-        const result = onBeforeChange(value, subStepValue)
+        const result = onBeforeChange(value, nestedStepValue)
         if (result === false) return
         if (typeof result === 'string') {
-          setPendingNavigation({ to: subStepValue, message: result })
+          setPendingNavigation({ to: nestedStepValue, message: result })
           return
         }
       }
-      onValueChange(subStepValue)
+      onValueChange(nestedStepValue)
     },
     [onBeforeChange, value, onValueChange]
   )
@@ -385,21 +393,21 @@ export function StepperProvider({
       onBeforeChange,
       showConnectors,
       completed,
-      collapsibleSubSteps,
+      collapsibleNestedSteps,
       orderedSteps,
-      subSteps,
+      nestedSteps,
       stepMeta,
       furthestReached,
       transitioning,
       registerStep,
-      registerSubStep,
-      registerSubStepState,
+      registerNestedStep,
+      registerNestedStepState,
       registerStepMeta,
       getStepState,
-      getSubStepState,
+      getNestedStepState,
       isStepDisabled,
       selectStep,
-      selectSubStep,
+      selectNestedStep,
       pendingNavigation,
       confirmNavigation,
       cancelNavigation
@@ -410,21 +418,21 @@ export function StepperProvider({
       onBeforeChange,
       showConnectors,
       completed,
-      collapsibleSubSteps,
+      collapsibleNestedSteps,
       orderedSteps,
-      subSteps,
+      nestedSteps,
       stepMeta,
       furthestReached,
       transitioning,
       registerStep,
-      registerSubStep,
-      registerSubStepState,
+      registerNestedStep,
+      registerNestedStepState,
       registerStepMeta,
       getStepState,
-      getSubStepState,
+      getNestedStepState,
       isStepDisabled,
       selectStep,
-      selectSubStep,
+      selectNestedStep,
       pendingNavigation,
       confirmNavigation,
       cancelNavigation

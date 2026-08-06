@@ -14,20 +14,20 @@ interface EngineContextValue {
   flow: FlowConfig
   state: Record<string, unknown>
   cardHistory: CardEntry[]
-  activeSubStepId: string
+  activeStepId: string
   predictedPath: string[]
   drawerState: DrawerState | null
   pendingReactivation: string | null
-  complete: (subStepId: string, statePatch?: Record<string, unknown>, nextSubStepId?: string) => void
-  error: (subStepId: string, nextSubStepId?: string) => void
-  skip: (subStepId: string, nextSubStepId?: string) => void
+  complete: (stepId: string, statePatch?: Record<string, unknown>, nextStepId?: string) => void
+  error: (stepId: string, nextStepId?: string) => void
+  skip: (stepId: string, nextStepId?: string) => void
   openDrawer: (id: string, props?: Record<string, unknown>) => Promise<DrawerResult>
   closeDrawer: (result: DrawerResult) => void
-  requestReactivation: (subStepId: string) => void
+  requestReactivation: (stepId: string) => void
   confirmReactivation: () => void
   cancelReactivation: () => void
-  scrollToCard: (subStepId: string) => void
-  registerScrollToCard: (fn: (subStepId: string) => void) => void
+  scrollToCard: (stepId: string) => void
+  registerScrollToCard: (fn: (stepId: string) => void) => void
   disableAutoScroll: boolean
 }
 
@@ -45,21 +45,21 @@ export function useEngineContext(): EngineContextValue {
 // === Card Context (per-card wrapper) ===
 
 interface CardContextValue {
-  subStepId: string
+  stepId: string
   status: CardStatus
-  /** When true, hide the card header — the stepper substep already shows title/status (single-pane). */
+  /** When true, hide the card header — the stepper step already shows title/status (single-pane). */
   contentOnly?: boolean
 }
 
 const CardContext = createContext<CardContextValue | null>(null)
 
 export function CardContextProvider({
-  subStepId,
+  stepId,
   status,
   contentOnly,
   children
 }: CardContextValue & { children: ReactNode }) {
-  const value = useMemo(() => ({ subStepId, status, contentOnly }), [subStepId, status, contentOnly])
+  const value = useMemo(() => ({ stepId, status, contentOnly }), [stepId, status, contentOnly])
   return <CardContext.Provider value={value}>{children}</CardContext.Provider>
 }
 
@@ -76,27 +76,27 @@ export function useCardStatus(): CardContextValue {
 
 export function useFlowCard<TState = Record<string, unknown>>(): FlowCardContext<TState> {
   const engine = useEngineContext()
-  const { subStepId, status } = useCardStatus()
-  const subStepIdRef = useRef(subStepId)
-  subStepIdRef.current = subStepId
+  const { stepId, status } = useCardStatus()
+  const stepIdRef = useRef(stepId)
+  stepIdRef.current = stepId
 
   const complete = useCallback(
-    (statePatch?: Partial<TState>, nextSubStepId?: string) => {
-      engine.complete(subStepIdRef.current, statePatch as Record<string, unknown>, nextSubStepId)
+    (statePatch?: Partial<TState>, nextStepId?: string) => {
+      engine.complete(stepIdRef.current, statePatch as Record<string, unknown>, nextStepId)
     },
     [engine.complete]
   )
 
   const error = useCallback(
-    (nextSubStepId?: string) => {
-      engine.error(subStepIdRef.current, nextSubStepId)
+    (nextStepId?: string) => {
+      engine.error(stepIdRef.current, nextStepId)
     },
     [engine.error]
   )
 
   const skip = useCallback(
-    (nextSubStepId?: string) => {
-      engine.skip(subStepIdRef.current, nextSubStepId)
+    (nextStepId?: string) => {
+      engine.skip(stepIdRef.current, nextStepId)
     },
     [engine.skip]
   )
@@ -128,41 +128,41 @@ interface FlowEngineProviderProps {
 export function FlowEngineProvider({ flow, onComplete, disableAutoScroll = false, children }: FlowEngineProviderProps) {
   const [state, setState] = useState<Record<string, unknown>>({})
   const [cardHistory, setCardHistory] = useState<CardEntry[]>([
-    { subStepId: flow.initialSubStep, status: 'active', stateSnapshot: {} }
+    { stepId: flow.initialStep, status: 'active', stateSnapshot: {} }
   ])
   const [drawerState, setDrawerState] = useState<DrawerState | null>(null)
   const [pendingReactivation, setPendingReactivation] = useState<string | null>(null)
-  const scrollToCardRef = useRef<((subStepId: string) => void) | null>(null)
+  const scrollToCardRef = useRef<((stepId: string) => void) | null>(null)
   const stateRef = useRef(state)
   stateRef.current = state
   const cardHistoryRef = useRef(cardHistory)
   cardHistoryRef.current = cardHistory
   const pendingReactivationRef = useRef(pendingReactivation)
   pendingReactivationRef.current = pendingReactivation
-  // Tracks substeps that have reached a terminal state (completed/skipped).
+  // Tracks steps that have reached a terminal state (completed/skipped).
   // Prevents duplicate transitions from React strict mode or async races.
   const terminalRef = useRef<Set<string>>(new Set())
 
-  // Derived: active substep
-  const activeSubStepId = useMemo(() => {
+  // Derived: active step
+  const activeStepId = useMemo(() => {
     const active = cardHistory.find(e => e.status === 'active')
-    if (active) return active.subStepId
+    if (active) return active.stepId
     // Flow complete — use last card in history
-    return cardHistory[cardHistory.length - 1]?.subStepId || flow.initialSubStep
-  }, [cardHistory, flow.initialSubStep])
+    return cardHistory[cardHistory.length - 1]?.stepId || flow.initialStep
+  }, [cardHistory, flow.initialStep])
 
-  // Derived: predicted happy path (within active step only)
+  // Derived: predicted happy path (within the active step's step group only)
   const predictedPath = useMemo(() => {
-    const activeStep = flow.subSteps[activeSubStepId]?.step
+    const activeStepGroupId = flow.steps[activeStepId]?.step
     const predicted: string[] = []
-    let current = flow.subSteps[activeSubStepId]?.next
-    const visited = new Set(cardHistory.map(e => e.subStepId))
-    while (current && flow.subSteps[current] && !visited.has(current) && flow.subSteps[current].step === activeStep) {
+    let current = flow.steps[activeStepId]?.next
+    const visited = new Set(cardHistory.map(e => e.stepId))
+    while (current && flow.steps[current] && !visited.has(current) && flow.steps[current].step === activeStepGroupId) {
       predicted.push(current)
-      current = flow.subSteps[current].next
+      current = flow.steps[current].next
     }
     return predicted
-  }, [activeSubStepId, cardHistory, flow.subSteps])
+  }, [activeStepId, cardHistory, flow.steps])
 
   // === Actions ===
   //
@@ -176,57 +176,57 @@ export function FlowEngineProvider({ flow, onComplete, disableAutoScroll = false
   //
   // Terminal states (completed, skipped) reject all further transitions.
 
-  // Resolve the next substep for a transition and validate it exists. A dynamic `nextSubStepId`
+  // Resolve the next step for a transition and validate it exists. A dynamic `nextStepId`
   // (passed to complete()/skip()) is only known at call time, so it escapes any static config
   // check — a typo'd or stale target would otherwise push a phantom cardHistory entry that renders
   // a blank card and silently dead-ends the flow. Here we surface it as a console error and treat
   // it as "no next", so the misconfiguration is loud during development instead of a mystery blank
   // step. A resolved static `next` is trusted (it was declared in the flow config).
-  const resolveNextSubStep = useCallback(
-    (subStepId: string, nextSubStepId: string | undefined, op: 'complete' | 'skip' | 'error'): string | undefined => {
-      const resolvedNext = nextSubStepId || flow.subSteps[subStepId]?.next
-      if (resolvedNext && !flow.subSteps[resolvedNext]) {
+  const resolveNextStep = useCallback(
+    (stepId: string, nextStepId: string | undefined, op: 'complete' | 'skip' | 'error'): string | undefined => {
+      const resolvedNext = nextStepId || flow.steps[stepId]?.next
+      if (resolvedNext && !flow.steps[resolvedNext]) {
         // eslint-disable-next-line no-console
         console.error(
-          `[flow-stepper] ${op}() from "${subStepId}" targeted unknown substep "${resolvedNext}". ` +
-            `Check the flow config and the nextSubStepId passed to ${op}(). Ignoring the transition.`
+          `[flow-stepper] ${op}() from "${stepId}" targeted unknown step "${resolvedNext}". ` +
+            `Check the flow config and the nextStepId passed to ${op}(). Ignoring the transition.`
         )
         return undefined
       }
       return resolvedNext
     },
-    [flow.subSteps]
+    [flow.steps]
   )
 
   const complete = useCallback(
-    (subStepId: string, statePatch?: Record<string, unknown>, nextSubStepId?: string) => {
-      // Re-entry on a terminal substep with no further destination:
+    (stepId: string, statePatch?: Record<string, unknown>, nextStepId?: string) => {
+      // Re-entry on a terminal step with no further destination:
       // the card is signaling "user is done with the flow."
-      if (terminalRef.current.has(subStepId)) {
-        if (!nextSubStepId && !flow.subSteps[subStepId]?.next) {
+      if (terminalRef.current.has(stepId)) {
+        if (!nextStepId && !flow.steps[stepId]?.next) {
           onComplete?.(stateRef.current)
         }
         return
       }
-      terminalRef.current.add(subStepId)
+      terminalRef.current.add(stepId)
 
-      const resolvedNext = resolveNextSubStep(subStepId, nextSubStepId, 'complete')
+      const resolvedNext = resolveNextStep(stepId, nextStepId, 'complete')
       const currentState = stateRef.current
       const newState = statePatch ? { ...currentState, ...statePatch } : currentState
       if (statePatch) setState(newState)
 
       setCardHistory(prev => {
         const updated = prev.map(entry =>
-          entry.subStepId === subStepId ? { ...entry, status: 'completed' as const, stateSnapshot: newState } : entry
+          entry.stepId === stepId ? { ...entry, status: 'completed' as const, stateSnapshot: newState } : entry
         )
-        if (resolvedNext && !updated.find(e => e.subStepId === resolvedNext)) {
+        if (resolvedNext && !updated.find(e => e.stepId === resolvedNext)) {
           // Terminal only blocks re-entry (added to terminalRef below); it no longer forces
           // 'completed' status on entry — visual completion is now `visualCompleted`'s job.
-          if (flow.subSteps[resolvedNext]?.terminal) {
+          if (flow.steps[resolvedNext]?.terminal) {
             terminalRef.current.add(resolvedNext)
           }
           updated.push({
-            subStepId: resolvedNext,
+            stepId: resolvedNext,
             status: 'active',
             stateSnapshot: newState
           })
@@ -238,40 +238,38 @@ export function FlowEngineProvider({ flow, onComplete, disableAutoScroll = false
         setTimeout(() => scrollToCardRef.current?.(resolvedNext), 150)
       }
     },
-    [flow.subSteps, onComplete, resolveNextSubStep]
+    [flow.steps, onComplete, resolveNextStep]
   )
 
   const error = useCallback(
-    (subStepId: string, nextSubStepId?: string) => {
+    (stepId: string, nextStepId?: string) => {
       // Only interactive states (active, error) can transition to error.
       // Terminal states (completed, skipped) are locked.
-      if (terminalRef.current.has(subStepId)) return
+      if (terminalRef.current.has(stepId)) return
 
-      // Without a next target this is a plain error: mark the substep red and leave it as the
+      // Without a next target this is a plain error: mark the step red and leave it as the
       // active/error position (recoverable — the card can retry, which re-enters and transitions).
-      if (!nextSubStepId) {
+      if (!nextStepId) {
         setCardHistory(prev =>
-          prev.map(entry => (entry.subStepId === subStepId ? { ...entry, status: 'error' as const } : entry))
+          prev.map(entry => (entry.stepId === stepId ? { ...entry, status: 'error' as const } : entry))
         )
         return
       }
 
-      // Error-and-continue: the substep failed but the flow proceeds to `nextSubStepId`. The errored
-      // substep is locked (terminal) so it stays red in history while the flow advances — mirrors a
+      // Error-and-continue: the step failed but the flow proceeds to `nextStepId`. The errored
+      // step is locked (terminal) so it stays red in history while the flow advances — mirrors a
       // real "step failed, moved on" path. Structure matches skip(), with `error` status instead.
-      terminalRef.current.add(subStepId)
-      const resolvedNext = resolveNextSubStep(subStepId, nextSubStepId, 'error')
+      terminalRef.current.add(stepId)
+      const resolvedNext = resolveNextStep(stepId, nextStepId, 'error')
 
       setCardHistory(prev => {
-        const updated = prev.map(entry =>
-          entry.subStepId === subStepId ? { ...entry, status: 'error' as const } : entry
-        )
-        if (resolvedNext && !updated.find(e => e.subStepId === resolvedNext)) {
-          if (flow.subSteps[resolvedNext]?.terminal) {
+        const updated = prev.map(entry => (entry.stepId === stepId ? { ...entry, status: 'error' as const } : entry))
+        if (resolvedNext && !updated.find(e => e.stepId === resolvedNext)) {
+          if (flow.steps[resolvedNext]?.terminal) {
             terminalRef.current.add(resolvedNext)
           }
           updated.push({
-            subStepId: resolvedNext,
+            stepId: resolvedNext,
             status: 'active',
             stateSnapshot: stateRef.current
           })
@@ -283,26 +281,24 @@ export function FlowEngineProvider({ flow, onComplete, disableAutoScroll = false
         setTimeout(() => scrollToCardRef.current?.(resolvedNext), 150)
       }
     },
-    [flow.subSteps, resolveNextSubStep]
+    [flow.steps, resolveNextStep]
   )
 
   const skip = useCallback(
-    (subStepId: string, nextSubStepId?: string) => {
-      if (terminalRef.current.has(subStepId)) return
-      terminalRef.current.add(subStepId)
+    (stepId: string, nextStepId?: string) => {
+      if (terminalRef.current.has(stepId)) return
+      terminalRef.current.add(stepId)
 
-      const resolvedNext = resolveNextSubStep(subStepId, nextSubStepId, 'skip')
+      const resolvedNext = resolveNextStep(stepId, nextStepId, 'skip')
 
       setCardHistory(prev => {
-        const updated = prev.map(entry =>
-          entry.subStepId === subStepId ? { ...entry, status: 'skipped' as const } : entry
-        )
-        if (resolvedNext && !updated.find(e => e.subStepId === resolvedNext)) {
-          if (flow.subSteps[resolvedNext]?.terminal) {
+        const updated = prev.map(entry => (entry.stepId === stepId ? { ...entry, status: 'skipped' as const } : entry))
+        if (resolvedNext && !updated.find(e => e.stepId === resolvedNext)) {
+          if (flow.steps[resolvedNext]?.terminal) {
             terminalRef.current.add(resolvedNext)
           }
           updated.push({
-            subStepId: resolvedNext,
+            stepId: resolvedNext,
             status: 'active',
             stateSnapshot: stateRef.current
           })
@@ -314,7 +310,7 @@ export function FlowEngineProvider({ flow, onComplete, disableAutoScroll = false
         setTimeout(() => scrollToCardRef.current?.(resolvedNext), 150)
       }
     },
-    [flow.subSteps, resolveNextSubStep]
+    [flow.steps, resolveNextStep]
   )
 
   const openDrawer = useCallback((id: string, props?: Record<string, unknown>): Promise<DrawerResult> => {
@@ -340,15 +336,15 @@ export function FlowEngineProvider({ flow, onComplete, disableAutoScroll = false
     setDrawerState(null)
   }, [])
 
-  const requestReactivation = useCallback((subStepId: string) => {
-    setPendingReactivation(subStepId)
+  const requestReactivation = useCallback((stepId: string) => {
+    setPendingReactivation(stepId)
   }, [])
 
   const confirmReactivation = useCallback(() => {
     const target = pendingReactivationRef.current
     if (!target) return
     const history = cardHistoryRef.current
-    const targetIndex = history.findIndex(e => e.subStepId === target)
+    const targetIndex = history.findIndex(e => e.stepId === target)
     if (targetIndex < 0) return
 
     const prevSnapshot = targetIndex > 0 ? history[targetIndex - 1].stateSnapshot : {}
@@ -360,7 +356,7 @@ export function FlowEngineProvider({ flow, onComplete, disableAutoScroll = false
     })
 
     for (const entry of history.slice(targetIndex)) {
-      terminalRef.current.delete(entry.subStepId)
+      terminalRef.current.delete(entry.stepId)
     }
     setPendingReactivation(null)
 
@@ -371,11 +367,11 @@ export function FlowEngineProvider({ flow, onComplete, disableAutoScroll = false
     setPendingReactivation(null)
   }, [])
 
-  const scrollToCard = useCallback((subStepId: string) => {
-    scrollToCardRef.current?.(subStepId)
+  const scrollToCard = useCallback((stepId: string) => {
+    scrollToCardRef.current?.(stepId)
   }, [])
 
-  const registerScrollToCard = useCallback((fn: (subStepId: string) => void) => {
+  const registerScrollToCard = useCallback((fn: (stepId: string) => void) => {
     scrollToCardRef.current = fn
   }, [])
 
@@ -386,7 +382,7 @@ export function FlowEngineProvider({ flow, onComplete, disableAutoScroll = false
       flow,
       state,
       cardHistory,
-      activeSubStepId,
+      activeStepId,
       predictedPath,
       drawerState,
       pendingReactivation,
@@ -406,7 +402,7 @@ export function FlowEngineProvider({ flow, onComplete, disableAutoScroll = false
       flow,
       state,
       cardHistory,
-      activeSubStepId,
+      activeStepId,
       predictedPath,
       drawerState,
       pendingReactivation,

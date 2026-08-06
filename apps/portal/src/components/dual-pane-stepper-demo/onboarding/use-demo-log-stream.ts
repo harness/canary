@@ -10,7 +10,7 @@ interface UseDemoLogStreamOptions {
 /**
  * Streams demo log lines while a card is active. Once the card leaves the active
  * state, the full sequence is shown synchronously from props — not from streaming
- * state — so logs survive substep collapse and card remounts in SinglePaneStepper.
+ * state — so logs survive nested step collapse and card remounts in SinglePaneStepper.
  */
 export function useDemoLogStream(
   getSequence: () => string[],

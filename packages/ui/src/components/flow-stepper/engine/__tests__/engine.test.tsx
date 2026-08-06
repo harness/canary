@@ -35,11 +35,11 @@ function CardStack() {
   return (
     <div data-testid="card-stack">
       {cardHistory.map(entry => {
-        const CardComponent = flow.subSteps[entry.subStepId]?.component
+        const CardComponent = flow.steps[entry.stepId]?.component
         if (!CardComponent) return null
         return (
-          <CardContextProvider key={entry.subStepId} subStepId={entry.subStepId} status={entry.status}>
-            <div data-testid={`card-${entry.subStepId}`} data-status={entry.status}>
+          <CardContextProvider key={entry.stepId} stepId={entry.stepId} status={entry.status}>
+            <div data-testid={`card-${entry.stepId}`} data-status={entry.status}>
               <CardComponent />
             </div>
           </CardContextProvider>
@@ -186,8 +186,8 @@ function DrawerComponent() {
   )
 }
 
-// Card that completes to a substep id that does not exist in the flow config — exercises the
-// unknown-nextSubStepId guard.
+// Card that completes to a step id that does not exist in the flow config — exercises the
+// unknown-nextStepId guard.
 function BadRouteCard() {
   const { complete } = useFlowCard()
   return (
@@ -243,95 +243,95 @@ function ReactivationDialog() {
 
 // Test flow configs
 const testFlow: FlowConfig = {
-  steps: {
+  stepGroups: {
     'step-1': { title: 'First Step', description: 'Do first thing' },
     'step-2': { title: 'Second Step', description: 'Do second thing' },
     'step-3': { title: 'Third Step', description: 'Do third thing' }
   },
-  subSteps: {
+  steps: {
     'card-a': { step: 'step-1', title: 'Card A', description: 'First card', component: TestCardA, next: 'card-b' },
     'card-b': { step: 'step-2', title: 'Card B', description: 'Second card', component: TestCardB, next: 'card-c' },
     'card-c': { step: 'step-3', title: 'Card C', description: 'Third card', component: TestCardC }
   },
-  initialSubStep: 'card-a'
+  initialStep: 'card-a'
 }
 
 const terminalFlow: FlowConfig = {
-  steps: {
+  stepGroups: {
     'step-1': { title: 'First Step' },
     'step-2': { title: 'Second Step' }
   },
-  subSteps: {
+  steps: {
     'terminal-a': { step: 'step-1', title: 'Terminal A', component: TerminalCardA, next: 'terminal-b' },
     'terminal-b': { step: 'step-2', title: 'Terminal B', component: TerminalCardB, terminal: true }
   },
-  initialSubStep: 'terminal-a'
+  initialStep: 'terminal-a'
 }
 
 const skipFlow: FlowConfig = {
-  steps: {
+  stepGroups: {
     'step-1': { title: 'First Step' },
     'step-2': { title: 'Second Step' }
   },
-  subSteps: {
+  steps: {
     'skip-a': { step: 'step-1', title: 'Skip A', component: SkipCardA, next: 'skip-b' },
     'skip-b': { step: 'step-2', title: 'Skip B', component: SkipCardB }
   },
-  initialSubStep: 'skip-a'
+  initialStep: 'skip-a'
 }
 
 const errorFlow: FlowConfig = {
-  steps: {
+  stepGroups: {
     'step-1': { title: 'First Step' }
   },
-  subSteps: {
+  steps: {
     'error-a': { step: 'step-1', title: 'Error A', component: ErrorCardA }
   },
-  initialSubStep: 'error-a'
+  initialStep: 'error-a'
 }
 
 const errorRecoveryFlow: FlowConfig = {
-  steps: {
+  stepGroups: {
     'step-1': { title: 'First Step' }
   },
-  subSteps: {
+  steps: {
     'error-recovery': { step: 'step-1', title: 'Error Recovery', component: ErrorRecoveryCard }
   },
-  initialSubStep: 'error-recovery'
+  initialStep: 'error-recovery'
 }
 
 const drawerFlow: FlowConfig = {
-  steps: {
+  stepGroups: {
     'step-1': { title: 'First Step' }
   },
-  subSteps: {
+  steps: {
     'drawer-a': { step: 'step-1', title: 'Drawer A', component: DrawerCardA }
   },
-  initialSubStep: 'drawer-a'
+  initialStep: 'drawer-a'
 }
 
 const badRouteFlow: FlowConfig = {
-  steps: {
+  stepGroups: {
     'step-1': { title: 'First Step' }
   },
-  subSteps: {
+  steps: {
     'bad-route': { step: 'step-1', title: 'Bad Route', component: BadRouteCard }
   },
-  initialSubStep: 'bad-route'
+  initialStep: 'bad-route'
 }
 
 const reactivateFlow: FlowConfig = {
-  steps: {
+  stepGroups: {
     'step-1': { title: 'First Step' },
     'step-2': { title: 'Second Step' },
     'step-3': { title: 'Third Step' }
   },
-  subSteps: {
+  steps: {
     'reactivate-a': { step: 'step-1', title: 'Reactivate A', component: ReactivateCardA, next: 'reactivate-b' },
     'reactivate-b': { step: 'step-2', title: 'Reactivate B', component: ReactivateCardB, next: 'reactivate-c' },
     'reactivate-c': { step: 'step-3', title: 'Reactivate C', component: ReactivateCardC }
   },
-  initialSubStep: 'reactivate-a'
+  initialStep: 'reactivate-a'
 }
 
 describe('Flow Engine', () => {
@@ -411,8 +411,8 @@ describe('Flow Engine', () => {
     })
   })
 
-  describe('Terminal Substeps', () => {
-    test('terminal substep enters as active (not auto-completed)', async () => {
+  describe('Terminal Steps', () => {
+    test('terminal step enters as active (not auto-completed)', async () => {
       render(
         <FlowEngineProvider flow={terminalFlow}>
           <TestHarness>
@@ -426,7 +426,7 @@ describe('Flow Engine', () => {
       })
     })
 
-    test('terminal substep calls onComplete on user action', async () => {
+    test('terminal step calls onComplete on user action', async () => {
       const onComplete = vi.fn()
       render(
         <FlowEngineProvider flow={terminalFlow} onComplete={onComplete}>
@@ -505,7 +505,7 @@ describe('Flow Engine', () => {
       })
     })
 
-    test('error-and-continue: errored substep stays red in history while the flow advances', async () => {
+    test('error-and-continue: errored step stays red in history while the flow advances', async () => {
       function ErrorContinueHarness() {
         const { error } = useEngineContext()
         useEffect(() => {
@@ -600,7 +600,7 @@ describe('Flow Engine', () => {
   })
 
   describe('Invalid transitions', () => {
-    test('complete() to an unknown substep is ignored and logs an error (no phantom card)', async () => {
+    test('complete() to an unknown step is ignored and logs an error (no phantom card)', async () => {
       const consoleError = vi.spyOn(console, 'error').mockImplementation(() => {})
       render(
         <FlowEngineProvider flow={badRouteFlow}>
@@ -619,7 +619,7 @@ describe('Flow Engine', () => {
       })
       // No card was pushed for the unknown target — the stack still holds only the origin card.
       // (The origin card carries a data-status; the card-stack container does not, so filtering by
-      // it counts only real substep cards, excluding the wrapping container.)
+      // it counts only real step cards, excluding the wrapping container.)
       expect(screen.queryByTestId('card-does-not-exist')).not.toBeInTheDocument()
       const renderedCards = screen.getAllByTestId(/^card-/).filter(el => el.hasAttribute('data-status'))
       expect(renderedCards).toHaveLength(1)

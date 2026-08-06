@@ -21,35 +21,35 @@ vi.mock('@components/tooltip', () => ({
   withTooltip: (Component: React.ComponentType<any>) => Component
 }))
 
-describe('StepperSubStep visualCompleted', () => {
+describe('StepperStep visualCompleted', () => {
   test('renders completed icon/class when visualCompleted, even though state is active', () => {
     render(
       <Stepper.Root value="sub1" onValueChange={vi.fn()}>
-        <Stepper.Step value="step1" title="Step 1">
-          <Stepper.SubStep value="sub1" title="Sub 1" state="active" visualCompleted />
-        </Stepper.Step>
+        <Stepper.StepGroup value="step1" title="Step 1">
+          <Stepper.Step value="sub1" title="Sub 1" state="active" visualCompleted />
+        </Stepper.StepGroup>
       </Stepper.Root>
     )
     expect(screen.getByTestId('icon-check')).toBeInTheDocument()
-    expect(document.querySelector('.cn-stepper-substep-completed')).toBeInTheDocument()
+    expect(document.querySelector('.cn-stepper-nested-step-completed')).toBeInTheDocument()
     // Title must not stay brand/blue once visualCompleted overrides display to 'completed' —
     // the whole row (icon + title) should read as uniformly finished.
-    const title = document.querySelector('.cn-stepper-substep-title')
+    const title = document.querySelector('.cn-stepper-nested-step-title')
     expect(title).not.toHaveClass('text-cn-brand')
     expect(title).toHaveClass('text-cn-1')
   })
 
-  test('accordion still defaults open for an active visualCompleted substep (real state wins)', () => {
+  test('accordion still defaults open for an active visualCompleted nested step (real state wins)', () => {
     render(
-      <Stepper.Root value="sub1" onValueChange={vi.fn()} collapsibleSubSteps>
-        <Stepper.Step value="step1" title="Step 1">
-          <Stepper.SubStep value="sub1" title="Sub 1" state="active" visualCompleted>
+      <Stepper.Root value="sub1" onValueChange={vi.fn()} collapsibleNestedSteps>
+        <Stepper.StepGroup value="step1" title="Step 1">
+          <Stepper.Step value="sub1" title="Sub 1" state="active" visualCompleted>
             <div data-testid="panel-content">Panel</div>
-          </Stepper.SubStep>
-        </Stepper.Step>
+          </Stepper.Step>
+        </Stepper.StepGroup>
       </Stepper.Root>
     )
-    // Collapsible substep panel content is kept mounted (forceMount) but visually expanded via
+    // Collapsible nested step panel content is kept mounted (forceMount) but visually expanded via
     // the Radix Collapsible's open state — assert via the expand trigger's aria-expanded.
     expect(screen.getByRole('button', { name: /collapse step content/i })).toHaveAttribute('aria-expanded', 'true')
   })
@@ -57,15 +57,15 @@ describe('StepperSubStep visualCompleted', () => {
   test('without visualCompleted, active state renders the active dot (no regression)', () => {
     render(
       <Stepper.Root value="sub1" onValueChange={vi.fn()}>
-        <Stepper.Step value="step1" title="Step 1">
-          <Stepper.SubStep value="sub1" title="Sub 1" state="active" />
-        </Stepper.Step>
+        <Stepper.StepGroup value="step1" title="Step 1">
+          <Stepper.Step value="sub1" title="Sub 1" state="active" />
+        </Stepper.StepGroup>
       </Stepper.Root>
     )
-    expect(document.querySelector('.cn-stepper-substep-dot')).toBeInTheDocument()
-    expect(document.querySelector('.cn-stepper-substep-completed')).not.toBeInTheDocument()
+    expect(document.querySelector('.cn-stepper-nested-step-dot')).toBeInTheDocument()
+    expect(document.querySelector('.cn-stepper-nested-step-completed')).not.toBeInTheDocument()
     // Genuinely active (no visualCompleted override) still renders the brand/blue title — unchanged.
-    const title = document.querySelector('.cn-stepper-substep-title')
+    const title = document.querySelector('.cn-stepper-nested-step-title')
     expect(title).toHaveClass('text-cn-brand')
   })
 })

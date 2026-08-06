@@ -1,10 +1,12 @@
 import { createContext, forwardRef, HTMLAttributes, ReactNode, useContext, useState } from 'react'
 
+import { useTranslation } from '@/context'
 import { cn } from '@utils/cn'
 import { cva, type VariantProps } from 'class-variance-authority'
 
 import { IconV2, IconV2NamesType } from './icon-v2'
 import { LogoV2, LogoV2NamesType } from './logo-v2'
+import { StatusBadge } from './status-badge/status-badge'
 
 type CardSelectType = 'single' | 'multiple'
 
@@ -26,6 +28,10 @@ interface CardSelectItemProps extends HTMLAttributes<HTMLInputElement> {
   icon?: IconV2NamesType
   logo?: LogoV2NamesType
   disabled?: boolean
+  /** Renders a selected-state glow ring in addition to the standard checked border. */
+  glow?: boolean
+  /** Forces disabled + renders a "Coming Soon" badge (see status-badge.tsx theme="info"). Overrides `disabled`. */
+  comingSoon?: boolean
   children: ReactNode
 }
 
@@ -137,9 +143,23 @@ function CardSelectRoot<T extends CardSelectType>({
 }
 
 const CardSelectItem = forwardRef<HTMLLabelElement, CardSelectItemProps>(
-  ({ className, value, icon, logo, disabled: itemDisabled = false, children, ...props }, ref) => {
+  (
+    {
+      className,
+      value,
+      icon,
+      logo,
+      disabled: itemDisabled = false,
+      glow = false,
+      comingSoon = false,
+      children,
+      ...props
+    },
+    ref
+  ) => {
     const { type, name, currentValue, disabled: groupDisabled, onValueChange } = useCardSelect()
-    const isDisabled = itemDisabled || groupDisabled
+    const { t } = useTranslation()
+    const isDisabled = itemDisabled || groupDisabled || comingSoon
     const checked = isChecked(value, currentValue)
 
     return (
@@ -154,6 +174,8 @@ const CardSelectItem = forwardRef<HTMLLabelElement, CardSelectItemProps>(
         )}
         data-state={checked ? 'checked' : undefined}
         data-disabled={isDisabled ? '' : undefined}
+        data-coming-soon={comingSoon ? '' : undefined}
+        data-glow={glow && checked ? '' : undefined}
         aria-checked={checked}
         aria-disabled={isDisabled}
         tabIndex={isDisabled ? -1 : 0}
@@ -173,7 +195,12 @@ const CardSelectItem = forwardRef<HTMLLabelElement, CardSelectItemProps>(
             {logo && !icon && <LogoV2 size="md" name={logo} className="cn-card-select-logo" />}
             <div className="cn-card-select-content-container">{children}</div>
           </div>
-          {checked && <IconV2 size="md" name="check" className="cn-card-select-check" />}
+          {comingSoon && (
+            <StatusBadge variant="secondary" theme="info" size="sm" className="cn-card-select-coming-soon-badge">
+              {t('component:cardSelect.comingSoon', 'Coming Soon')}
+            </StatusBadge>
+          )}
+          {checked && !comingSoon && <IconV2 size="md" name="check" className="cn-card-select-check" />}
         </div>
         <input
           type={type === 'multiple' ? 'checkbox' : 'radio'}

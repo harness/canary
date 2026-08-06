@@ -5,7 +5,7 @@ const BRANCH_ELBOW_RADIUS = 'var(--cn-rounded-5)'
 
 const indicatorBrandGlow = '0 0 20px color-mix(in srgb, var(--cn-border-brand) 30%, transparent)'
 
-const substepBranchWireBase = {
+const nestedStepBranchWireBase = {
   position: 'relative',
   width: 'var(--cn-spacing-4)',
   height: 'var(--cn-size-5)',
@@ -75,11 +75,11 @@ export default {
     '&:last-child': {
       paddingBottom: '0',
 
-      '&:not(:has(.cn-stepper-substep-list, .cn-stepper-substep-placeholder)) .cn-stepper-connector': {
+      '&:not(:has(.cn-stepper-nested-step-list, .cn-stepper-nested-step-placeholder)) .cn-stepper-connector': {
         display: 'none'
       },
 
-      '&:has(.cn-stepper-step-upcoming):not(:has(.cn-stepper-substep-placeholder)) .cn-stepper-connector': {
+      '&:has(.cn-stepper-step-upcoming):not(:has(.cn-stepper-nested-step-placeholder)) .cn-stepper-connector': {
         display: 'none'
       },
 
@@ -89,7 +89,7 @@ export default {
 
       // Stop the trunk where the elbow's rounded corner begins (radius above the branch arm)
       // so the vertical line doesn't poke past the bend on the last step.
-      '&:has(.cn-stepper-substep-placeholder) .cn-stepper-connector': {
+      '&:has(.cn-stepper-nested-step-placeholder) .cn-stepper-connector': {
         bottom: 'calc(var(--cn-size-8) + var(--cn-rounded-5))'
       }
     }
@@ -197,10 +197,114 @@ export default {
     minWidth: '0'
   },
 
+  // Wraps title + badge as ONE grid item (see StepperStep's showStepBadge branch). `.cn-stepper-step`
+  // is a 2-column grid and `.cn-stepper-step-content` is display:contents, so title/description are
+  // auto-placed directly into that grid — a plain badge sibling would auto-flow onto its own row
+  // instead of sitting beside the title. This flex row keeps title+badge in the title's single cell.
+  '.cn-stepper-step-title-row': {
+    display: 'flex',
+    alignItems: 'center',
+    gap: 'var(--cn-spacing-2)',
+    minWidth: '0'
+  },
+
   '.cn-stepper-step-description': {
     gridColumn: '2',
     marginTop: 'var(--cn-spacing-half)',
     minWidth: '0'
+  },
+
+  // Step badge — opt-in "Step n/m" pill shown next to the step title (StepperStep `showStepBadge`).
+  // Values match the CDv2 prototype (pq-step-badge): neutral surface-2 background, subtle border,
+  // muted text — a de-emphasized progress indicator, not a status/theme tag.
+  '.cn-stepper-step-badge': {
+    display: 'inline-flex',
+    alignItems: 'center',
+    flexShrink: '0',
+    // Vertical padding matches --cn-spacing-half (2px) exactly.
+    padding: 'var(--cn-spacing-half) var(--cn-spacing-2)',
+    borderRadius: 'var(--cn-rounded-full)',
+    border: 'var(--cn-spacing-px) solid var(--cn-border-2)',
+    background: 'var(--cn-bg-2)',
+    color: 'var(--cn-text-3)',
+    // No --cn-font-size-* token matches 11px exactly (closest are --cn-font-size-1 at ~10.26px and
+    // --cn-font-size-2 at ~11.5px) and no --cn-line-height-* token matches 1.35, so these two stay
+    // hardcoded rather than snapping to a visually-different token.
+    fontSize: '11px',
+    fontWeight: 'var(--cn-font-weight-default-normal-500)',
+    lineHeight: '1.35'
+  },
+
+  // Active row's badge gets a brand-tinted recolor to match the prototype's active-state badge (base/default case above already matches the prototype's neutral state)
+  '.cn-stepper-step-active .cn-stepper-step-badge': {
+    borderColor: 'var(--cn-border-brand)',
+    background: 'var(--cn-set-brand-outline-bg)',
+    color: 'var(--cn-text-brand)'
+  },
+
+  // Step Panel — container for arbitrary content rendered below a top-level Step (no StepGroup
+  // ancestor). Mirrors `.cn-stepper-nested-step-panel`'s indent-under-the-title pattern, but without
+  // a branch segment to account for (top-level Steps have no elbow wire) — just the indicator
+  // column (--cn-size-5) plus its gap (--cn-spacing-4) so panel content lines up under the title text.
+  '.cn-stepper-step-panel': {
+    marginLeft: 'calc(var(--cn-size-5) + var(--cn-spacing-4))',
+    marginTop: 'var(--cn-spacing-2)',
+    minWidth: '0'
+  },
+
+  // Step-level collapse wrapper/trigger/icon/panel — parallel to the .cn-stepper-nested-step-collapse-*
+  // classes below, kept independent (not shared) since TopLevelStep's layout differs structurally
+  // from NestedStep's nested-step grid layout, matching this file's existing step/nested-step CSS split.
+  '.cn-stepper-step-header': {
+    display: 'flex',
+    alignItems: 'center',
+    width: '100%',
+    minWidth: '0'
+  },
+
+  '.cn-stepper-step-collapse-trigger': {
+    display: 'flex',
+    alignItems: 'center',
+    justifyContent: 'center',
+    flexShrink: '0',
+    border: 'none',
+    background: 'none',
+    padding: 'var(--cn-spacing-1)',
+    marginRight: 'var(--cn-spacing-1)',
+    cursor: 'pointer',
+    color: 'var(--cn-text-3)',
+
+    '&:hover': {
+      color: 'var(--cn-text-1)'
+    },
+
+    '&:focus-visible': {
+      outline: 'var(--cn-focus)',
+      outlineOffset: 'var(--cn-outline-offset-tight)',
+      borderRadius: 'var(--cn-rounded-1)'
+    }
+  },
+
+  '.cn-stepper-step-collapse-icon': {
+    transition: 'transform 150ms ease'
+  },
+
+  '.cn-stepper-step-collapse-icon-open': {
+    transform: 'rotate(180deg)'
+  },
+
+  '.cn-stepper-step-panel-collapsible': {
+    overflow: 'hidden',
+
+    '&[data-state="open"]': {
+      animation: 'cnStepperCollapsibleDown 150ms ease-out'
+    },
+
+    '&[data-state="closed"]': {
+      animation: 'cnStepperCollapsibleUp 150ms ease-out forwards',
+      height: '0',
+      opacity: '0'
+    }
   },
 
   /* Connectors */
@@ -211,10 +315,11 @@ export default {
     bottom: '0',
     width: 'var(--cn-spacing-px)',
     borderRadius: 'var(--cn-rounded-1)',
-    // The vertical trunk must sit ABOVE the substep branch elbows. The branch wires live in the
-    // substep-list, which is later in DOM than the connector, so without this they'd paint over the
-    // trunk — leaving a substep's colored elbow (e.g. a red error arc) smudged across the continuous
-    // trunk color at the junction. Lifting the trunk keeps its color unbroken where branches meet it.
+    // The vertical trunk must sit ABOVE the nested-step branch elbows. The branch wires live in the
+    // nested-step-list, which is later in DOM than the connector, so without this they'd paint over
+    // the trunk — leaving a nested step's colored elbow (e.g. a red error arc) smudged across the
+    // continuous trunk color at the junction. Lifting the trunk keeps its color unbroken where
+    // branches meet it.
     zIndex: '1'
   },
 
@@ -228,7 +333,7 @@ export default {
     background: 'var(--cn-border-brand)'
   },
 
-  // Active step with substeps: trunk is green through completed branches, blue to the active
+  // Active step with nested steps: trunk is green through completed branches, blue to the active
   // branch, and gray below. --cn-stepper-trunk-*-end offsets are set on the step item.
   '.cn-stepper-connector-active-partial': {
     background: 'var(--cn-border-2)',
@@ -262,13 +367,13 @@ export default {
   },
 
   // SinglePaneStepper: cap the active partial trunk at the active branch — no gray line into card panels.
-  '.cn-stepper-collapsible-substeps .cn-stepper-step-item:has(.cn-stepper-step-active) .cn-stepper-connector-active-partial':
+  '.cn-stepper-collapsible-nested-steps .cn-stepper-step-item:has(.cn-stepper-step-active) .cn-stepper-connector-active-partial':
     {
       height: 'var(--cn-stepper-trunk-blue-end)',
       bottom: 'auto'
     },
 
-  // Error step with substeps: trunk is green through completed branches, red to the error
+  // Error step with nested steps: trunk is green through completed branches, red to the error
   // branch, and gray below. --cn-stepper-trunk-*-end offsets are set on the step item.
   '.cn-stepper-connector-error-partial': {
     background: 'var(--cn-border-2)',
@@ -308,75 +413,75 @@ export default {
     background: 'var(--cn-border-danger)'
   },
 
-  /* SubStep List */
-  '.cn-stepper-substep-list': {
+  /* Nested Step List */
+  '.cn-stepper-nested-step-list': {
     listStyle: 'none',
     padding: '0',
     margin: '0',
     marginTop: 'var(--cn-spacing-3)',
     paddingLeft: 'calc(var(--cn-size-5) / 2 - var(--cn-spacing-px))',
-    counterReset: 'substep'
+    counterReset: 'nestedstep'
   },
 
-  '.cn-stepper-substep-item': {
+  '.cn-stepper-nested-step-item': {
     display: 'block',
     listStyle: 'none',
     padding: 'var(--cn-spacing-2) 0',
-    counterIncrement: 'substep'
+    counterIncrement: 'nestedstep'
   },
 
-  '.cn-stepper-substep-branch': substepBranchWireBase,
+  '.cn-stepper-nested-step-branch': nestedStepBranchWireBase,
 
-  '.cn-stepper-substep-completed .cn-stepper-substep-branch': {
+  '.cn-stepper-nested-step-completed .cn-stepper-nested-step-branch': {
     zIndex: '2'
   },
 
-  '.cn-stepper-substep-completed .cn-stepper-substep-branch::before': {
+  '.cn-stepper-nested-step-completed .cn-stepper-nested-step-branch::before': {
     borderColor: 'var(--cn-border-success)'
   },
 
-  '.cn-stepper-substep-completed .cn-stepper-substep-branch::after': {
+  '.cn-stepper-nested-step-completed .cn-stepper-nested-step-branch::after': {
     background: 'var(--cn-border-success)'
   },
 
-  '.cn-stepper-substep-active .cn-stepper-substep-branch::before': {
+  '.cn-stepper-nested-step-active .cn-stepper-nested-step-branch::before': {
     borderColor: 'var(--cn-border-brand)'
   },
 
-  '.cn-stepper-substep-active .cn-stepper-substep-branch::after': {
+  '.cn-stepper-nested-step-active .cn-stepper-nested-step-branch::after': {
     background: 'var(--cn-border-brand)'
   },
 
-  '.cn-stepper-substep-error .cn-stepper-substep-branch::before': {
+  '.cn-stepper-nested-step-error .cn-stepper-nested-step-branch::before': {
     borderColor: 'var(--cn-border-danger)'
   },
 
-  '.cn-stepper-substep-error .cn-stepper-substep-branch::after': {
+  '.cn-stepper-nested-step-error .cn-stepper-nested-step-branch::after': {
     background: 'var(--cn-border-danger)'
   },
 
-  '.cn-stepper-substep-upcoming .cn-stepper-substep-branch::before': {
+  '.cn-stepper-nested-step-upcoming .cn-stepper-nested-step-branch::before': {
     borderColor: 'var(--cn-border-2)'
   },
 
-  '.cn-stepper-substep-upcoming .cn-stepper-substep-branch::after': {
+  '.cn-stepper-nested-step-upcoming .cn-stepper-nested-step-branch::after': {
     background: 'var(--cn-border-2)'
   },
 
-  '.cn-stepper-substep-skipped .cn-stepper-substep-branch': {
+  '.cn-stepper-nested-step-skipped .cn-stepper-nested-step-branch': {
     zIndex: '2'
   },
 
-  '.cn-stepper-substep-skipped .cn-stepper-substep-branch::before': {
+  '.cn-stepper-nested-step-skipped .cn-stepper-nested-step-branch::before': {
     borderColor: 'var(--cn-set-gray-secondary-bg)'
   },
 
-  '.cn-stepper-substep-skipped .cn-stepper-substep-branch::after': {
+  '.cn-stepper-nested-step-skipped .cn-stepper-nested-step-branch::after': {
     background: 'var(--cn-set-gray-secondary-bg)'
   },
 
-  /* SubStep Button */
-  '.cn-stepper-substep': {
+  /* Nested Step Button */
+  '.cn-stepper-nested-step': {
     display: 'grid',
     gridTemplateColumns: 'var(--cn-spacing-4) var(--cn-size-5) 1fr',
     alignItems: 'center',
@@ -388,20 +493,20 @@ export default {
     textAlign: 'left'
   },
 
-  '.cn-stepper-substep-with-collapse': {
+  '.cn-stepper-nested-step-with-collapse': {
     width: 'auto',
     flex: '1',
     minWidth: '0'
   },
 
-  '.cn-stepper-substep-header': {
+  '.cn-stepper-nested-step-header': {
     display: 'flex',
     alignItems: 'center',
     width: '100%',
     minWidth: '0'
   },
 
-  '.cn-stepper-substep-collapse-trigger': {
+  '.cn-stepper-nested-step-collapse-trigger': {
     display: 'flex',
     alignItems: 'center',
     justifyContent: 'center',
@@ -424,15 +529,15 @@ export default {
     }
   },
 
-  '.cn-stepper-substep-collapse-icon': {
+  '.cn-stepper-nested-step-collapse-icon': {
     transition: 'transform 150ms ease'
   },
 
-  '.cn-stepper-substep-collapse-icon-open': {
+  '.cn-stepper-nested-step-collapse-icon-open': {
     transform: 'rotate(180deg)'
   },
 
-  '.cn-stepper-substep-panel-collapsible': {
+  '.cn-stepper-nested-step-panel-collapsible': {
     overflow: 'hidden',
 
     '&[data-state="open"]': {
@@ -468,8 +573,8 @@ export default {
     }
   },
 
-  /* SubStep Indicator */
-  '.cn-stepper-substep-indicator': {
+  /* Nested Step Indicator */
+  '.cn-stepper-nested-step-indicator': {
     display: 'flex',
     alignItems: 'center',
     justifyContent: 'center',
@@ -483,69 +588,69 @@ export default {
     border: 'var(--cn-spacing-px) solid transparent'
   },
 
-  '.cn-stepper-substep-completed .cn-stepper-substep-indicator': {
+  '.cn-stepper-nested-step-completed .cn-stepper-nested-step-indicator': {
     background: 'var(--cn-set-success-outline-bg)',
     borderColor: 'var(--cn-set-success-outline-text)',
     color: 'var(--cn-set-success-outline-text)'
   },
 
-  '.cn-stepper-substep-active .cn-stepper-substep-indicator': {
+  '.cn-stepper-nested-step-active .cn-stepper-nested-step-indicator': {
     borderColor: 'var(--cn-border-brand)',
     boxShadow: indicatorBrandGlow
   },
 
-  '.cn-stepper-substep-error .cn-stepper-substep-indicator': {
+  '.cn-stepper-nested-step-error .cn-stepper-nested-step-indicator': {
     borderColor: 'var(--cn-icon-danger)',
     color: 'var(--cn-set-danger-outline-text)'
   },
 
-  '.cn-stepper-substep-upcoming .cn-stepper-substep-indicator': {
+  '.cn-stepper-nested-step-upcoming .cn-stepper-nested-step-indicator': {
     borderColor: 'var(--cn-border-2)',
     color: 'var(--cn-text-3)'
   },
 
-  '.cn-stepper-substep-skipped .cn-stepper-substep-indicator': {
+  '.cn-stepper-nested-step-skipped .cn-stepper-nested-step-indicator': {
     borderColor: 'var(--cn-set-gray-outline-border)',
     color: 'var(--cn-text-2)'
   },
 
-  '.cn-stepper-substep-dot': {
+  '.cn-stepper-nested-step-dot': {
     width: 'var(--cn-spacing-1-half)',
     height: 'var(--cn-spacing-1-half)',
     borderRadius: 'var(--cn-rounded-full)',
     background: 'var(--cn-text-brand)'
   },
 
-  '.cn-stepper-substep-ordinal': {
+  '.cn-stepper-nested-step-ordinal': {
     fontSize: 'var(--cn-font-size-0)',
     fontWeight: 'var(--cn-font-weight-default-normal-500)',
     lineHeight: '1',
     color: 'var(--cn-text-3)',
 
     '&::before': {
-      content: '"." counter(substep)'
+      content: '"." counter(nestedstep)'
     }
   },
 
-  /* SubStep Content */
-  '.cn-stepper-substep-content': {
+  /* Nested Step Content */
+  '.cn-stepper-nested-step-content': {
     display: 'contents'
   },
 
-  '.cn-stepper-substep-title': {
+  '.cn-stepper-nested-step-title': {
     minWidth: '0',
     marginLeft: 'var(--cn-spacing-4)'
   },
 
-  '.cn-stepper-substep-description': {
+  '.cn-stepper-nested-step-description': {
     gridColumn: '3',
     marginTop: 'var(--cn-spacing-half)',
     marginLeft: 'var(--cn-spacing-4)',
     minWidth: '0'
   },
 
-  /* SubStep Panel — container for card children rendered below substep button */
-  '.cn-stepper-substep-panel': {
+  /* Nested Step Panel — container for card children rendered below nested-step button */
+  '.cn-stepper-nested-step-panel': {
     marginLeft: 'calc(var(--cn-spacing-4) + var(--cn-size-5) + var(--cn-spacing-4))',
     marginTop: 'var(--cn-spacing-2)',
     paddingRight: 'var(--cn-spacing-2)',
@@ -554,7 +659,7 @@ export default {
   },
 
   /* Single-pane accordion cards: branch wire only, card header owns the indicator */
-  '.cn-stepper-substep-content-only': {
+  '.cn-stepper-nested-step-content-only': {
     display: 'grid',
     gridTemplateColumns: 'var(--cn-spacing-4) 1fr',
     alignItems: 'start',
@@ -562,12 +667,12 @@ export default {
     paddingLeft: 'calc(var(--cn-size-5) / 2 - var(--cn-spacing-px))'
   },
 
-  '.cn-stepper-substep-content-only .cn-stepper-substep-branch': {
+  '.cn-stepper-nested-step-content-only .cn-stepper-nested-step-branch': {
     gridColumn: '1',
     gridRow: '1'
   },
 
-  '.cn-stepper-substep-content-only .cn-stepper-substep-panel': {
+  '.cn-stepper-nested-step-content-only .cn-stepper-nested-step-panel': {
     gridColumn: '2',
     marginLeft: '0',
     marginTop: '0',
@@ -575,8 +680,8 @@ export default {
     paddingRight: '0'
   },
 
-  /* Placeholder — indeterminate substeps indicator */
-  '.cn-stepper-substep-placeholder': {
+  /* Placeholder — indeterminate nested-steps indicator */
+  '.cn-stepper-nested-step-placeholder': {
     display: 'grid',
     gridTemplateColumns: 'var(--cn-spacing-4) var(--cn-size-5) 1fr',
     alignItems: 'center',
@@ -585,24 +690,24 @@ export default {
     paddingLeft: 'calc(var(--cn-size-5) / 2 - var(--cn-spacing-px))'
   },
 
-  '.cn-stepper-substep-item .cn-stepper-substep-placeholder': {
+  '.cn-stepper-nested-step-item .cn-stepper-nested-step-placeholder': {
     marginTop: '0',
     paddingLeft: '0',
     padding: '0'
   },
 
-  '.cn-stepper-substep-placeholder-branch': substepBranchWireBase,
+  '.cn-stepper-nested-step-placeholder-branch': nestedStepBranchWireBase,
 
-  // Placeholder always represents unreached substeps — keep inactive regardless of parent step state.
-  '.cn-stepper-substep-placeholder-branch::before': {
+  // Placeholder always represents unreached nested steps — keep inactive regardless of parent step state.
+  '.cn-stepper-nested-step-placeholder-branch::before': {
     borderColor: 'var(--cn-border-2)'
   },
 
-  '.cn-stepper-substep-placeholder-branch::after': {
+  '.cn-stepper-nested-step-placeholder-branch::after': {
     background: 'var(--cn-border-2)'
   },
 
-  '.cn-stepper-substep-placeholder-indicator': {
+  '.cn-stepper-nested-step-placeholder-indicator': {
     display: 'flex',
     alignItems: 'center',
     justifyContent: 'center',
@@ -615,7 +720,7 @@ export default {
     boxSizing: 'border-box'
   },
 
-  '.cn-stepper-substep-placeholder-spacer': {
+  '.cn-stepper-nested-step-placeholder-spacer': {
     display: 'flex',
     flexDirection: 'column',
     marginLeft: 'var(--cn-spacing-2)'
@@ -722,7 +827,7 @@ export default {
       backgroundClip: 'unset'
     },
 
-    '.cn-stepper-substep-panel-collapsible': {
+    '.cn-stepper-step-panel-collapsible, .cn-stepper-nested-step-panel-collapsible': {
       animation: 'none',
 
       '&[data-state="closed"]': {

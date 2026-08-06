@@ -1,21 +1,21 @@
 import { type ComponentType } from 'react'
 
-export interface StepConfig {
+export interface StepGroupConfig {
   title: string
   description?: string
 }
 
-export interface SubStepConfig {
+export interface StepConfig {
   step: string
   title: string
   description?: string
   component: ComponentType
   next?: string
-  // When true, complete()/error()/skip() on this substep become permanent no-ops after the
-  // first call (re-entry guard only). Does NOT affect this substep's initial rendered status —
-  // it always enters 'active' like any other substep.
+  // When true, complete()/error()/skip() on this step become permanent no-ops after the
+  // first call (re-entry guard only). Does NOT affect this step's initial rendered status —
+  // it always enters 'active' like any other step.
   terminal?: boolean
-  // Presentation-only hint: always render this substep as finished/success (icon + color),
+  // Presentation-only hint: always render this step as finished/success (icon + color),
   // regardless of its actual cardHistory status. Does not affect the state machine, does not
   // affect re-entry (pair with `terminal` for that), and does not affect accordion-open
   // behavior, which continues to reflect the real derived state.
@@ -23,15 +23,17 @@ export interface SubStepConfig {
 }
 
 export interface FlowConfig {
+  // Every real flow groups its steps under at least one StepGroup — see derive-stepper-model.ts's
+  // dev-mode warning for the runtime safety net if a caller passes an empty object anyway.
+  stepGroups: Record<string, StepGroupConfig>
   steps: Record<string, StepConfig>
-  subSteps: Record<string, SubStepConfig>
-  initialSubStep: string
+  initialStep: string
 }
 
 export type CardStatus = 'active' | 'completed' | 'error' | 'skipped'
 
 export interface CardEntry {
-  subStepId: string
+  stepId: string
   status: CardStatus
   stateSnapshot: Record<string, unknown>
 }
@@ -72,15 +74,15 @@ export interface DrawerComponentProps {
 export interface FlowCardContext<TState = Record<string, unknown>> {
   state: TState
   status: CardStatus
-  complete: (statePatch?: Partial<TState>, nextSubStepId?: string) => void
-  // Mark this substep errored. With no argument the error is recoverable (stays the active position).
-  // With a nextSubStepId, the substep is locked red in history and the flow advances (error-and-
-  // continue); pass a substep whose `terminal: true` (or which has no further next) to end in error.
-  // NOTE: a step summarizes as "recovered/completed" (green) only when the recovery substep is in
-  // the SAME step. If the error continues into a different step, the errored step stays red — its
-  // last substep is the error. (Recovery is scoped per-step by design.)
-  error: (nextSubStepId?: string) => void
-  skip: (nextSubStepId?: string) => void
+  complete: (statePatch?: Partial<TState>, nextStepId?: string) => void
+  // Mark this step errored. With no argument the error is recoverable (stays the active position).
+  // With a nextStepId, the step is locked red in history and the flow advances (error-and-
+  // continue); pass a step whose `terminal: true` (or which has no further next) to end in error.
+  // NOTE: a step group summarizes as "recovered/completed" (green) only when the recovery step is in
+  // the SAME step group. If the error continues into a different step group, the errored step group
+  // stays red — its last step is the error. (Recovery is scoped per-step-group by design.)
+  error: (nextStepId?: string) => void
+  skip: (nextStepId?: string) => void
   openDrawer: (drawerId: string, props?: Record<string, unknown>) => Promise<DrawerResult>
 }
 

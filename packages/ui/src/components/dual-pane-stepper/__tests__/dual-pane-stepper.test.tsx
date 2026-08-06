@@ -73,17 +73,17 @@ function TestCardC() {
 }
 
 const testFlow: FlowConfig = {
-  steps: {
+  stepGroups: {
     'step-1': { title: 'First Step', description: 'Do first thing' },
     'step-2': { title: 'Second Step', description: 'Do second thing' },
     'step-3': { title: 'Third Step', description: 'Do third thing' }
   },
-  subSteps: {
+  steps: {
     'card-a': { step: 'step-1', title: 'Card A', description: 'First card', component: TestCardA, next: 'card-b' },
     'card-b': { step: 'step-2', title: 'Card B', description: 'Second card', component: TestCardB, next: 'card-c' },
     'card-c': { step: 'step-3', title: 'Card C', description: 'Third card', component: TestCardC }
   },
-  initialSubStep: 'card-a'
+  initialStep: 'card-a'
 }
 
 describe('DualPaneStepper', () => {
@@ -184,13 +184,13 @@ describe('DualPaneStepper', () => {
     })
   })
 
-  describe('Terminal Substeps', () => {
-    test('visualCompleted terminal substep renders parent step as completed (green), not active', async () => {
+  describe('Terminal Steps', () => {
+    test('visualCompleted terminal step renders parent step group as completed (green), not active', async () => {
       const visualCompletedFlow: FlowConfig = {
-        steps: { 'step-1': { title: 'First' }, 'step-2': { title: 'Second' } },
-        subSteps: {
+        stepGroups: { 'step-1': { title: 'First' }, 'step-2': { title: 'Second' } },
+        steps: {
           // TestCardA/TestCardB hard-code their transition targets ('card-b'/'card-c') rather
-          // than reading `next` from the flow config, so the substep ids here must match those
+          // than reading `next` from the flow config, so the step ids here must match those
           // literals to match this file's existing fixture convention.
           'card-a': { step: 'step-1', title: 'A', component: TestCardA, next: 'card-b' },
           'card-b': {
@@ -201,7 +201,7 @@ describe('DualPaneStepper', () => {
             visualCompleted: true
           }
         },
-        initialSubStep: 'card-a'
+        initialStep: 'card-a'
       }
       render(<DualPaneStepper.Root flow={visualCompletedFlow} title="Test Flow" />)
       await userEvent.click(screen.getByText('Next'))

@@ -109,65 +109,65 @@ function DualPaneStepperContent({
 }
 
 function DefaultStepperPane({ stepperTitle }: { stepperTitle?: string }) {
-  const { flow, cardHistory, activeSubStepId, predictedPath, scrollToCard } = useEngineContext()
+  const { flow, cardHistory, activeStepId, predictedPath, scrollToCard } = useEngineContext()
 
   const derivedSteps = useMemo(
-    () => deriveStepperModel(flow, cardHistory, predictedPath, activeSubStepId),
-    [flow, cardHistory, predictedPath, activeSubStepId]
+    () => deriveStepperModel(flow, cardHistory, predictedPath, activeStepId),
+    [flow, cardHistory, predictedPath, activeStepId]
   )
 
   const handleStepperClick = (value: string) => {
-    const historyEntry = cardHistory.find(e => e.subStepId === value)
+    const historyEntry = cardHistory.find(e => e.stepId === value)
     if (historyEntry) {
-      scrollToCard(historyEntry.subStepId)
+      scrollToCard(historyEntry.stepId)
       return
     }
-    const firstInStep = cardHistory.find(e => flow.subSteps[e.subStepId]?.step === value)
-    if (firstInStep) {
-      scrollToCard(firstInStep.subStepId)
+    const firstInStepGroup = cardHistory.find(e => flow.steps[e.stepId]?.step === value)
+    if (firstInStepGroup) {
+      scrollToCard(firstInStepGroup.stepId)
     }
   }
 
   return (
-    <Stepper.Root value={activeSubStepId} onValueChange={handleStepperClick} title={stepperTitle}>
+    <Stepper.Root value={activeStepId} onValueChange={handleStepperClick} title={stepperTitle}>
       {derivedSteps.map(derivedStep => {
-        const activeStepId = flow.subSteps[activeSubStepId]?.step
-        const isActiveStep = activeStepId === derivedStep.stepId
-        const showSubSteps = derivedStep.visited.length > 0 || isActiveStep
+        const activeStepGroupId = flow.steps[activeStepId]?.step
+        const isActiveStepGroup = activeStepGroupId === derivedStep.stepGroupId
+        const showSteps = derivedStep.visited.length > 0 || isActiveStepGroup
 
         return (
-          <Stepper.Step
-            key={derivedStep.stepId}
-            value={derivedStep.stepId}
+          <Stepper.StepGroup
+            key={derivedStep.stepGroupId}
+            value={derivedStep.stepGroupId}
             title={derivedStep.title}
             description={derivedStep.description}
             state={derivedStep.state}
-            hasSubSteps={derivedStep.showIndeterminate}
+            hasNestedSteps={derivedStep.showIndeterminate}
           >
-            {showSubSteps &&
-              !derivedStep.isTerminalStep &&
+            {showSteps &&
+              !derivedStep.isTerminalStepGroup &&
               derivedStep.visited.map(v => (
-                <Stepper.SubStep
-                  key={v.subStepId}
-                  value={v.subStepId}
-                  title={flow.subSteps[v.subStepId]?.title}
-                  description={flow.subSteps[v.subStepId]?.description}
+                <Stepper.Step
+                  key={v.stepId}
+                  value={v.stepId}
+                  title={flow.steps[v.stepId]?.title}
+                  description={flow.steps[v.stepId]?.description}
                   state={v.state}
-                  visualCompleted={flow.subSteps[v.subStepId]?.visualCompleted}
+                  visualCompleted={flow.steps[v.stepId]?.visualCompleted}
                 />
               ))}
-            {isActiveStep &&
-              !derivedStep.isTerminalStep &&
-              derivedStep.predicted.map(subStepId => (
-                <Stepper.SubStep
-                  key={subStepId}
-                  value={subStepId}
-                  title={flow.subSteps[subStepId]?.title}
-                  description={flow.subSteps[subStepId]?.description}
+            {isActiveStepGroup &&
+              !derivedStep.isTerminalStepGroup &&
+              derivedStep.predicted.map(stepId => (
+                <Stepper.Step
+                  key={stepId}
+                  value={stepId}
+                  title={flow.steps[stepId]?.title}
+                  description={flow.steps[stepId]?.description}
                   state="upcoming"
                 />
               ))}
-          </Stepper.Step>
+          </Stepper.StepGroup>
         )
       })}
     </Stepper.Root>

@@ -1,11 +1,12 @@
 import { StepperRoot } from './stepper'
+import { StepperGroup } from './stepper-group'
 import { StepperStep } from './stepper-step'
-import { StepperSubStep } from './stepper-sub-step'
 
 export const Stepper = {
   Root: StepperRoot,
-  Step: StepperStep,
-  SubStep: StepperSubStep
+  StepGroup: StepperGroup,
+  Step: StepperStep
 }
 
-export type { StepperProps, StepperStepProps, StepperSubStepProps, StepState } from './stepper-types'
+export { ParentStepProvider } from './stepper-context'
+export type { StepperGroupProps, StepperProps, StepperStepProps, StepState } from './stepper-types'

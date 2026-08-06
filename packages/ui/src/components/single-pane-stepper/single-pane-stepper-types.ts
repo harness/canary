@@ -7,8 +7,8 @@ import {
 } from '../flow-stepper/engine/engine-types'
 
 export type {
+  StepGroupConfig,
   StepConfig,
-  SubStepConfig,
   FlowConfig,
   CardStatus,
   CardEntry,
@@ -43,6 +43,14 @@ export interface SinglePaneStepperRootProps {
   // Disable auto-scrolling the active card into view (on mount and on transitions). Use for
   // completed/review flows where the timeline should render from the top and stay put.
   disableAutoScroll?: boolean
+  /** When true, renders a "Step {n}/{total}" pill badge next to each step's title. Default false —
+   *  purely opt-in, no rendering change for existing consumers that don't pass it. */
+  showStepBadge?: boolean
+  /** When true, renders each step group's steps as flat top-level `Stepper.Step` items (plain
+   *  straight connector, no branch/StepGroup nesting) instead of the default `Stepper.StepGroup`-
+   *  wrapped nested layout. Default false — purely opt-in, no rendering change for existing
+   *  consumers that don't pass it. */
+  flat?: boolean
   /** Override the default 440px max-width (`.cn-single-pane-stepper-root`) — merged via `cn()`,
    *  so a utility class like `max-w-[600px]` reliably overrides the hardcoded default (Tailwind
    *  always emits `@layer utilities` after `@layer components`). */

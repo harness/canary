@@ -49,6 +49,19 @@ export default {
       background: 'var(--cn-set-brand-outline-bg)'
     },
 
+    // 3px ring width / 20% color-mix are magic numbers with no exact token match (--cn-spacing
+    // jumps 2px -> 4px; no matching --cn-* alpha token convention is used elsewhere in this file).
+    // This is the same literal pattern used for studio-card.ts's selected-state rings
+    // (`0 0 0 3px color-mix(in srgb, var(--cn-border-*) 20%, transparent)`), so it's kept as-is to
+    // match that established (if untokenized) house convention rather than diverging from it.
+    '&:where([data-glow])': {
+      boxShadow: '0 0 0 3px color-mix(in srgb, var(--cn-border-brand) 20%, transparent)'
+    },
+
+    '.cn-card-select-coming-soon-badge': {
+      flexShrink: '0'
+    },
+
     '.cn-card-select-content': {
       '@apply flex items-center justify-between flex-1 min-w-0': ''
     },

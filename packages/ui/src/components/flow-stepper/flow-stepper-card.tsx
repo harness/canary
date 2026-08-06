@@ -32,10 +32,10 @@ const TERMINAL_STATES: Set<CardStatus> = new Set(['completed', 'skipped'])
 
 export function FlowStepperCard({ title, description, blockedMessage, children, className }: FlowStepperCardProps) {
   const { requestReactivation, cardHistory } = useEngineContext()
-  const { subStepId, status, contentOnly } = useCardStatus()
+  const { stepId, status, contentOnly } = useCardStatus()
 
   const isTerminal = TERMINAL_STATES.has(status)
-  const isLastCard = cardHistory[cardHistory.length - 1]?.subStepId === subStepId
+  const isLastCard = cardHistory[cardHistory.length - 1]?.stepId === stepId
   const isFlowComplete = !cardHistory.some(e => INTERACTIVE_STATES.has(e.status))
   const isFinished = isTerminal && isLastCard && isFlowComplete
   const showRestart = isTerminal && !isFinished
@@ -58,7 +58,7 @@ export function FlowStepperCard({ title, description, blockedMessage, children, 
     <button
       type="button"
       className="cn-flow-stepper-card-edit"
-      onClick={() => requestReactivation(subStepId)}
+      onClick={() => requestReactivation(stepId)}
       aria-label="Redo this step"
     >
       <IconV2 name="restart" size="sm" className="text-cn-2" />

@@ -59,7 +59,7 @@ function StepperList({ children }: { children: ReactNode }) {
 
 function StepperLiveRegion() {
   const ctx = useStepperContext()
-  const { orderedSteps, value } = ctx
+  const { orderedSteps, value, stepMeta } = ctx
   const [announcement, setAnnouncement] = useState('')
   const isFirstRender = useRef(true)
   const prevValueRef = useRef(value)
@@ -74,12 +74,18 @@ function StepperLiveRegion() {
 
     const stepIndex = orderedSteps.indexOf(value)
     if (stepIndex >= 0) {
-      setAnnouncement(`Step ${stepIndex + 1} of ${orderedSteps.length}`)
+      // Prefer the active step's own totalStepsOverride (flat-mode "Step n/total" badge, see
+      // stepper-step.tsx's TopLevelStep) over orderedSteps.length, which only counts steps mounted
+      // so far under progressive disclosure and can undercount the flow's real total — keeping the
+      // announcement in sync with the visible badge.
+      const totalStepsOverride = stepMeta.get(value)?.totalStepsOverride
+      const total = totalStepsOverride ?? orderedSteps.length
+      setAnnouncement(`Step ${stepIndex + 1} of ${total}`)
     } else {
-      // It's a substep value — just announce it
+      // It's a nested step value — just announce it
       setAnnouncement(value)
     }
-  }, [value, orderedSteps])
+  }, [value, orderedSteps, stepMeta])
 
   return (
     <span className="sr-only" aria-live="polite" aria-atomic="true">
@@ -141,7 +147,7 @@ export function StepperRoot({
   onBeforeChange,
   showConnectors = true,
   completed = false,
-  collapsibleSubSteps = false,
+  collapsibleNestedSteps = false,
   skeletonCount = 3,
   className,
   children
@@ -153,14 +159,14 @@ export function StepperRoot({
       onBeforeChange={onBeforeChange}
       showConnectors={showConnectors}
       completed={completed}
-      collapsibleSubSteps={collapsibleSubSteps}
+      collapsibleNestedSteps={collapsibleNestedSteps}
     >
       {/* TooltipProvider wraps the whole stepper as a general safety net for any Tooltip a
-          consumer might render inside step/substep content (e.g. card bodies) — Radix
+          consumer might render inside step/nested-step content (e.g. card bodies) — Radix
           providers nest safely, so this is a no-op if the consumer already has its own. */}
       <TooltipProvider>
         <nav
-          className={cn('cn-stepper', collapsibleSubSteps && 'cn-stepper-collapsible-substeps', className)}
+          className={cn('cn-stepper', collapsibleNestedSteps && 'cn-stepper-collapsible-nested-steps', className)}
           aria-label="Progress steps"
         >
           {title && (

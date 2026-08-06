@@ -29,7 +29,7 @@ import {
 } from "./mock-cards";
 
 export const fullFlow: FlowConfig = {
-  steps: {
+  stepGroups: {
     source: {
       title: "Connect Source Code",
       description: "Connect Harness to your code",
@@ -51,7 +51,8 @@ export const fullFlow: FlowConfig = {
       description: "Run and confirm everything works",
     },
   },
-  subSteps: {
+
+  steps: {
     "choose-provider": {
       step: "source",
       title: "Choose code provider",
@@ -206,5 +207,5 @@ export const fullFlow: FlowConfig = {
       component: OnboardingCompleteCard,
     },
   },
-  initialSubStep: "choose-provider",
+  initialStep: "choose-provider",
 };

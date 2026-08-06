@@ -17,7 +17,7 @@ Welcome to the Harness Canary monorepo! This repository contains multiple projec
 
 Before getting started with this repository, ensure you have the following prerequisites:
 
-**Node.js**: You'll need `Node` version `18.20.4` or newer.
+**Node.js**: You'll need `Node` version `20` or newer (Node 18 reached end-of-life in April 2025; `package.json` currently allows `>=18.17.1`, but an active LTS release is recommended).
 We use `pnpm` to manage this monorepo. To install `pnpm`, visit the [pnpm installation page](https://pnpm.io/installation).
 
 ## Installation

@@ -7,8 +7,6 @@ import { DocsPage } from "@/components/docs-page";
 import { Text } from "@harnessio/ui/components";
 import { Aside } from "@astrojs/starlight/components";
 
-Consistency in typography helps users navigate content with ease. Always use hierarchy to guide attention and improve readability.
-
 Our typography system is built around a set of predefined text styles that provide consistent visual hierarchy and readability across the application. The `Text` component is the primary way to implement these typographic styles.
 
 ## Font Families
@@ -719,19 +717,79 @@ Limit text display with truncation or line clamping.
 
 ### Font Size Scale
 
-Individual font size tokens are available via `text-cn-size-{n}` classes. These set only font-size — for complete text styles, prefer the composite `.font-*` classes above. Note: `text-cn-size-7` (18px) is reserved for markdown rendering and is blocked in UI code by lint — use `heading-section` (20px) or `heading-base` (16px) instead.
+The general-purpose type ramp. These `text-cn-size-{n}` classes set **only** font-size — for complete text styles (size + weight + line-height + letter-spacing) prefer the composite `.font-*` roles above. Note there is no 12px raw size token; 12px is available only through the `caption` / `body-small` / `body-code` roles.
 
 <div className="cn-table-v2 cn-table-v2-normal not-content">
   <div className="cn-table-v2-container">
     <table className="cn-table-v2-element">
       <thead className="cn-table-v2-header">
         <tr className="cn-table-v2-row">
-          <th className="cn-table-v2-head">Class</th>
-          <th className="cn-table-v2-head">Size</th>
-          <th className="cn-table-v2-head">Class</th>
-          <th className="cn-table-v2-head">Size</th>
-          <th className="cn-table-v2-head">Class</th>
-          <th className="cn-table-v2-head">Size</th>
+          <th className="cn-table-v2-head" style={{ width: "180px" }}>
+            Class
+          </th>
+          <th className="cn-table-v2-head" style={{ width: "90px" }}>
+            Size
+          </th>
+          <th className="cn-table-v2-head">Powers</th>
+        </tr>
+      </thead>
+      <tbody className="cn-table-v2-body">
+        <tr className="cn-table-v2-row">
+          <td className="cn-table-v2-cell">
+            <code>text-cn-size-10</code>
+          </td>
+          <td className="cn-table-v2-cell">28px</td>
+          <td className="cn-table-v2-cell">heading-hero</td>
+        </tr>
+        <tr className="cn-table-v2-row">
+          <td className="cn-table-v2-cell">
+            <code>text-cn-size-9</code>
+          </td>
+          <td className="cn-table-v2-cell">24px</td>
+          <td className="cn-table-v2-cell">—</td>
+        </tr>
+        <tr className="cn-table-v2-row">
+          <td className="cn-table-v2-cell">
+            <code>text-cn-size-8</code>
+          </td>
+          <td className="cn-table-v2-cell">20px</td>
+          <td className="cn-table-v2-cell">heading-section</td>
+        </tr>
+        <tr className="cn-table-v2-row">
+          <td className="cn-table-v2-cell">
+            <code>text-cn-size-6</code>
+          </td>
+          <td className="cn-table-v2-cell">16px</td>
+          <td className="cn-table-v2-cell">heading-base</td>
+        </tr>
+        <tr className="cn-table-v2-row">
+          <td className="cn-table-v2-cell">
+            <code>text-cn-size-5</code>
+          </td>
+          <td className="cn-table-v2-cell">14px</td>
+          <td className="cn-table-v2-cell">body-normal, heading-small</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+</div>
+
+### Special-Purpose Sizes
+
+Off-ramp sizes reserved for specific contexts — not for general UI text. `text-cn-size-7` is blocked in UI code by lint; the legacy sizes exist only until Platform UI migrates.
+
+<div className="cn-table-v2 cn-table-v2-normal not-content">
+  <div className="cn-table-v2-container">
+    <table className="cn-table-v2-element">
+      <thead className="cn-table-v2-header">
+        <tr className="cn-table-v2-row">
+          <th className="cn-table-v2-head" style={{ width: "180px" }}>
+            Class
+          </th>
+          <th className="cn-table-v2-head" style={{ width: "90px" }}>
+            Size
+          </th>
+          <th className="cn-table-v2-head">Use case</th>
         </tr>
       </thead>
       <tbody className="cn-table-v2-body">
@@ -740,66 +798,58 @@ Individual font size tokens are available via `text-cn-size-{n}` classes. These 
             <code>text-cn-size-0</code>
           </td>
           <td className="cn-table-v2-cell">8.8px</td>
-          <td className="cn-table-v2-cell">
-            <code>text-cn-size-6</code>
-          </td>
-          <td className="cn-table-v2-cell">16px</td>
-          <td className="cn-table-v2-cell">
-            <code>text-cn-size-11</code>
-          </td>
-          <td className="cn-table-v2-cell">36px</td>
-        </tr>
-        <tr className="cn-table-v2-row">
-          <td className="cn-table-v2-cell">
-            <code>text-cn-size-1</code>
-          </td>
-          <td className="cn-table-v2-cell">10.25px</td>
-          <td className="cn-table-v2-cell">
-            <code>text-cn-size-7</code>
-          </td>
-          <td className="cn-table-v2-cell">18px</td>
-          <td className="cn-table-v2-cell">
-            <code>text-cn-size-12</code>
-          </td>
-          <td className="cn-table-v2-cell">48px</td>
+          <td className="cn-table-v2-cell">Avatar (xs) / fallback</td>
         </tr>
         <tr className="cn-table-v2-row">
           <td className="cn-table-v2-cell">
             <code>text-cn-size-2</code>
           </td>
           <td className="cn-table-v2-cell">11.5px</td>
+          <td className="cn-table-v2-cell">Avatar (sm / md)</td>
+        </tr>
+        <tr className="cn-table-v2-row">
           <td className="cn-table-v2-cell">
-            <code>text-cn-size-8</code>
+            <code>text-cn-size-1</code>
           </td>
-          <td className="cn-table-v2-cell">20px</td>
+          <td className="cn-table-v2-cell">10.25px</td>
+          <td className="cn-table-v2-cell">Charts</td>
+        </tr>
+        <tr className="cn-table-v2-row">
           <td className="cn-table-v2-cell">
             <code>text-cn-size-15</code>
           </td>
           <td className="cn-table-v2-cell">96px</td>
+          <td className="cn-table-v2-cell">Charts</td>
+        </tr>
+        <tr className="cn-table-v2-row">
+          <td className="cn-table-v2-cell">
+            <code>text-cn-size-7</code>
+          </td>
+          <td className="cn-table-v2-cell">18px</td>
+          <td className="cn-table-v2-cell">
+            Markdown only — blocked in UI (use heading-section / heading-base)
+          </td>
         </tr>
         <tr className="cn-table-v2-row">
           <td className="cn-table-v2-cell">
             <code>text-cn-size-3</code>
           </td>
           <td className="cn-table-v2-cell">12.6px</td>
-          <td className="cn-table-v2-cell">
-            <code>text-cn-size-9</code>
-          </td>
-          <td className="cn-table-v2-cell">24px</td>
-          <td className="cn-table-v2-cell"></td>
-          <td className="cn-table-v2-cell"></td>
+          <td className="cn-table-v2-cell">Legacy Platform UI (temporary)</td>
         </tr>
         <tr className="cn-table-v2-row">
           <td className="cn-table-v2-cell">
-            <code>text-cn-size-5</code>
+            <code>text-cn-size-11</code>
           </td>
-          <td className="cn-table-v2-cell">14px</td>
+          <td className="cn-table-v2-cell">36px</td>
+          <td className="cn-table-v2-cell">Legacy Platform UI (temporary)</td>
+        </tr>
+        <tr className="cn-table-v2-row">
           <td className="cn-table-v2-cell">
-            <code>text-cn-size-10</code>
+            <code>text-cn-size-12</code>
           </td>
-          <td className="cn-table-v2-cell">28px</td>
-          <td className="cn-table-v2-cell"></td>
-          <td className="cn-table-v2-cell"></td>
+          <td className="cn-table-v2-cell">48px</td>
+          <td className="cn-table-v2-cell">Legacy Platform UI (temporary)</td>
         </tr>
       </tbody>
     </table>
@@ -824,7 +874,7 @@ Individual font size tokens are available via `text-cn-size-{n}` classes. These 
             <code>tracking-cn-tighter</code>
           </td>
           <td className="cn-table-v2-cell">-0.05em</td>
-          <td className="cn-table-v2-cell">Very tight, display text</td>
+          <td className="cn-table-v2-cell">Legacy — Platform UI only (temporary)</td>
         </tr>
         <tr className="cn-table-v2-row">
           <td className="cn-table-v2-cell">

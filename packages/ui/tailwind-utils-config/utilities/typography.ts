@@ -80,11 +80,6 @@ export const typography = {
       font: 'var(--cn-caption-single-line-normal)',
       letterSpacing: 'var(--cn-tracking-normal)'
     },
-    '&-caption-single-line-normal-caps': {
-      font: 'var(--cn-caption-single-line-normal-caps)',
-      letterSpacing: 'var(--cn-tracking-wide)',
-      textTransform: 'uppercase'
-    },
     '&-caption-single-line-strong': {
       font: 'var(--cn-caption-single-line-strong)',
       letterSpacing: 'var(--cn-tracking-normal)'

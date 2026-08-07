@@ -61,16 +61,16 @@
     "1": {
       "$type": "color",
       "$value": "{gray.150}",
-      "$description": "Highest contrast color for text and icons in important content. Creates maximum readability and emphasis for key information.\n\nCommon uses: Headings, labels, emphasized text."
+      "$description": "Default text color for primary content and headings. Highest-contrast foreground for maximum readability.\n\nCommon uses: Headings, body text, primary content, default icons."
     },
     "2": {
       "$type": "color",
       "$value": "{gray.300}",
-      "$description": "Primary color for text and icons in general content. Provides optimal readability for extended reading while reducing visual strain.\n\nCommon uses: Body text, primary content, default icons, form inputs."
+      "$description": "Reduced-emphasis color for labels and secondary information. One step down from the default text color to establish hierarchy.\n\nCommon uses: Labels, secondary information, metadata, supporting text."
     },
     "3": {
       "$type": "color",
-      "$value": "{gray.500}",
+      "$value": "{text.4}",
       "$description": "Reduced emphasis color for text and icons in secondary information. Creates visual hierarchy through lower contrast.\n\nCommon uses: Supporting text, metadata, secondary information, placeholders."
     },
     "4": {

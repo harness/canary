@@ -24,22 +24,22 @@
   "text": {
     "1": {
       "$type": "color",
-      "$value": "{gray.25}",
-      "$description": "Highest contrast color for text and icons in important content. Creates maximum readability and emphasis for key information.\n\nCommon uses: Headings, labels, emphasized text."
+      "$value": "{pure.white}",
+      "$description": "Default text color for primary content and headings. Highest-contrast foreground for maximum readability.\n\nCommon uses: Headings, body text, primary content, default icons."
     },
     "2": {
       "$type": "color",
-      "$value": "{gray.200}",
-      "$description": "Primary color for text and icons in general content. Provides optimal readability for extended reading while reducing visual strain.\n\nCommon uses: Body text, primary content, default icons, form inputs."
+      "$value": "{gray.400}",
+      "$description": "Reduced-emphasis color for labels and secondary information. One step down from the default text color to establish hierarchy.\n\nCommon uses: Labels, secondary information, metadata, supporting text."
     },
     "3": {
       "$type": "color",
-      "$value": "{gray.500}",
+      "$value": "{text.4}",
       "$description": "Reduced emphasis color for text and icons in secondary information. Creates visual hierarchy through lower contrast.\n\nCommon uses: Supporting text, metadata, secondary information, placeholders."
     },
     "4": {
       "$type": "color",
-      "$value": "{gray.600}",
+      "$value": "{gray.700}",
       "$description": "Lowest emphasis text color for unavailable options. Creates visual differentiation between interactive and non-interactive elements.\n\nCommon uses: Disabled buttons, inactive form elements, unavailable options, placeholders."
     },
     "success": {

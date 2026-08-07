@@ -1043,6 +1043,8 @@ button[aria-label="Search"] {
   --cn-caption-single-line-code: var(--cn-font-weight-mono-normal-500) 0.75rem / 1rem var(--cn-font-family-mono);
   --cn-caption-single-line-normal-caps: var(--cn-font-weight-default-normal-600) var(--cn-font-size-3) / 1rem
     var(--cn-font-family-default);
+  --cn-micro-single-line-normal-caps: var(--cn-font-weight-default-normal-600) 0.6875rem / 0.75rem
+    var(--cn-font-family-default);
   --cn-micro-normal: var(--cn-font-weight-default-normal-500) 0.6875rem / 1rem var(--cn-font-family-default);
 
   /* Compact component labels. */

@@ -594,6 +594,20 @@
         "letterSpacing": "{tracking.wider}"
       },
       "$description": "The smallest service text (labels, signatures, technical information)"
+    },
+    "single-line": {
+      "normal-caps": {
+        "$type": "typography",
+        "$value": {
+          "fontFamily": "{fontFamily.default}",
+          "fontWeight": "{fontWeight.default.normal.600}",
+          "fontSize": "0.6875rem",
+          "lineHeight": "0.75rem",
+          "letterSpacing": "{tracking.wide}",
+          "textCase": "{textCase.uppercase}"
+        },
+        "$description": "Uppercase micro label for dense metadata rows (11px / 12px). Use for compact stats labels such as Status, Started, and Duration."
+      }
     }
   },
   "shell": {

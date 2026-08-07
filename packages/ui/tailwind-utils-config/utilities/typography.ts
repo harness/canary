@@ -85,6 +85,11 @@ export const typography = {
     '&-micro-normal': {
       font: 'var(--cn-micro-normal)',
       letterSpacing: 'var(--cn-tracking-wider)'
+    },
+    '&-micro-single-line-normal-caps': {
+      font: 'var(--cn-micro-single-line-normal-caps)',
+      letterSpacing: 'var(--cn-tracking-wide)',
+      textTransform: 'uppercase'
     }
   }
 }

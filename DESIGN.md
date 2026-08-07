@@ -553,7 +553,9 @@ The color system has two layers and components only ever consume the second one.
 
 **Line heights.** Absolute ×4 short scale (`12` / `16` / `20` / `24` / `28` / `32` / `36` / `40`…`96`). Prefer semantic styles over raw LH tokens. Legacy `lineHeight.7.tight` (`--cn-line-height-7-tight`) is retained for Platform UI until that consumer migrates.
 
-**Tracking.** Product API: `tight` / `normal` / `wide`. Legacy `tighter` remains temporarily for Platform UI (`tracking-cn-tighter`).
+**Tracking.** Product API: `tight` / `normal` / `wide`. Legacy `tighter` remains temporarily for Platform UI (`tracking-cn-tighter`). All `body-*` roles use `normal` (letter-spacing 0) **except** `body-code` and `*-single-line-code`, which keep `tight` (−0.02em) for monospace alignment. Headings use `tight`; caps roles use `wide`.
+
+**Component type aliases.** These roles are aliases of a core role (single source of truth — change the core role and they follow): `dialog-title` → `heading-section`; `link-default` → `body-normal`; `link-sm` → `body-small`.
 
 **Defaults.**
 - Body copy: `body-normal` (14px / 400 / LH 20).

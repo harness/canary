@@ -22,11 +22,11 @@ export const typography = {
     },
     '&-body-normal': {
       font: 'var(--cn-body-normal)',
-      letterSpacing: 'var(--cn-tracking-tight)'
+      letterSpacing: 'var(--cn-tracking-normal)'
     },
     '&-body-strong': {
       font: 'var(--cn-body-strong)',
-      letterSpacing: 'var(--cn-tracking-tight)'
+      letterSpacing: 'var(--cn-tracking-normal)'
     },
     '&-body-small': {
       font: 'var(--cn-body-small)',
@@ -61,18 +61,20 @@ export const typography = {
       letterSpacing: 'var(--cn-tracking-normal)'
     },
     '&-link-default': {
-      font: 'var(--cn-comp-link-default)'
+      font: 'var(--cn-comp-link-default)',
+      letterSpacing: 'var(--cn-tracking-normal)'
     },
     '&-link-sm': {
-      font: 'var(--cn-comp-link-sm)'
+      font: 'var(--cn-comp-link-sm)',
+      letterSpacing: 'var(--cn-tracking-normal)'
     },
     '&-body-single-line-strong': {
       font: 'var(--cn-body-single-line-strong)',
-      letterSpacing: 'var(--cn-tracking-tight)'
+      letterSpacing: 'var(--cn-tracking-normal)'
     },
     '&-body-single-line-normal': {
       font: 'var(--cn-body-single-line-normal)',
-      letterSpacing: 'var(--cn-tracking-tight)'
+      letterSpacing: 'var(--cn-tracking-normal)'
     },
     '&-caption-single-line-normal': {
       font: 'var(--cn-caption-single-line-normal)',
@@ -88,7 +90,8 @@ export const typography = {
       letterSpacing: 'var(--cn-tracking-normal)'
     },
     '&-dialog-title': {
-      font: 'var(--cn-comp-dialog-title)'
+      font: 'var(--cn-comp-dialog-title)',
+      letterSpacing: 'var(--cn-tracking-tight)'
     },
     '&-micro-normal': {
       font: 'var(--cn-micro-normal)',

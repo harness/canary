@@ -28,6 +28,10 @@ export const typography = {
       font: 'var(--cn-body-strong)',
       letterSpacing: 'var(--cn-tracking-tight)'
     },
+    '&-body-small': {
+      font: 'var(--cn-body-small)',
+      letterSpacing: 'var(--cn-tracking-tight)'
+    },
     '&-body-code': {
       font: 'var(--cn-body-code)',
       letterSpacing: 'var(--cn-tracking-tight)'

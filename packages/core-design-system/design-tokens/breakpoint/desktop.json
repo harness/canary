@@ -109,6 +109,18 @@
       },
       "$description": "Emphasized body text that creates focal points within content flow. Uses increased weight rather than size to maintain vertical rhythm and paragraph cohesion while drawing attention to key information.\n\nCommon uses: Important warnings or notices, Key points in explanatory text, First sentences in important paragraphs, Feature highlights."
     },
+    "small": {
+      "$type": "typography",
+      "$value": {
+        "fontFamily": "{fontFamily.default}",
+        "fontWeight": "{fontWeight.default.normal.400}",
+        "fontSize": "0.75rem",
+        "lineHeight": "{lineHeight.20}",
+        "letterSpacing": "{tracking.tight}",
+        "paragraphSpacing": "0.375rem"
+      },
+      "$description": "Reduced-size reading typography (12px) for secondary or space-constrained prose. Shares the body family's weight (400), tracking, and generous line height with body-normal — one step smaller — so multi-line text stays comfortable to read. Distinct from caption, which is tighter (LH 16) and reserved for labels and metadata.\n\nCommon uses: Helper and descriptive sentences, secondary explanatory copy, dense list content, legal/consent text."
+    },
     "code": {
       "$type": "typography",
       "$value": {

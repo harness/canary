@@ -1,5 +1,5 @@
 body {
-  @apply text-cn-2 text-cn-size-6 overscroll-none tracking-cn-normal font-body-normal !important;
+  @apply text-cn-1 text-cn-size-6 overscroll-none tracking-cn-normal font-body-normal !important;
   @apply !leading-7 !text-cn-size-6;
 }
 
@@ -34,7 +34,7 @@ main {
 }
 
 .sl-container :is(li):not(:where(.not-content *, .right-sidebar-panel *)) {
-  @apply text-cn-2 leading-relaxed;
+  @apply text-cn-1 leading-relaxed;
 }
 
 .sl-container :is(ul ul):not(:where(.not-content *, .right-sidebar-panel *)),

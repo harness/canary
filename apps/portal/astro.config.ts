@@ -241,9 +241,8 @@ export default defineConfig({
       ],
       customCss: [
         "./src/tailwind.css",
-        "@harnessio/ui/styles.css",
-        // Portal styles last so local preview overrides (styles.css EOF) win over token CSS.
         "./src/styles.css",
+        "@harnessio/ui/styles.css",
       ],
       components: {
         Head: "./src/components/layout/Head.astro",

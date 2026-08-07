@@ -287,11 +287,9 @@ colors:
 # TYPOGRAPHY
 # =============================================================================
 # Inter for UI, JetBrains Mono for code. Both font families enforce 400 as the
-# minimum accessible weight. Inter retains denser 440/550 optical weights for
-# medium and semibold emphasis.
-# 11 semantic roles below; the underlying 17-step `cn-size-*` scale and the
-# six lineHeight multipliers (none 1.14 → loose 1.75) are documented in
-# design-tokens/core/typography.json.
+# minimum accessible weight. Inter product ladder is 400 / 600→550 optical / 700.
+# 11 semantic roles below; the underlying size scale and absolute ×4 lineHeights
+# are documented in design-tokens/core/typography.json.
 # =============================================================================
 typography:
   heading-hero:
@@ -537,20 +535,20 @@ The color system has two layers and components only ever consume the second one.
 
 ## Typography
 
-**Families.** `Inter` for UI (`fontFamily.default`), `JetBrains Mono` for code. Both are variable fonts with 400 as the minimum accessible weight. Inter retains denser `440`/`550` optical weights for medium and semibold emphasis.
+**Families.** `Inter` for UI (`fontFamily.default`), `JetBrains Mono` for code. Both are variable fonts with 400 as the minimum accessible weight. Inter product weights: **400** regular, **600→550** optical semibold/strong, **700** bold.
 
-**Size scale.** Seventeen steps (`fontSize.0`…`fontSize.16`), 0.55rem (8.8px) → 8rem (128px). The scale is consumed via the eleven semantic roles enumerated in the frontmatter — code should reach for `body-normal`, `heading-section`, `caption-strong`, etc., not raw size tokens.
+**Size scale.** Product ramp centers on semantic roles (`body-normal`, `heading-section`, `caption-strong`, etc.). Avatar initials keep specialized sizes (8.8 / 11.5 / 14).
 
-**Line heights.** Six multipliers — `none` (1.14), `tight` (1.25), `snug` (1.428), `normal` (1.5), `relaxed` (1.625), `loose` (1.75) — composed against each font size. Use `none`/`tight` for display, `snug`/`normal` for body.
+**Line heights.** Absolute ×4 scale (`16` / `20` / `28` / `36`, plus `fixed.12`/`fixed.16` during dual-write). Prefer semantic styles over raw LH tokens.
 
-**Tracking.** Six steps from `tighter` (-0.05em) for display down through `normal` (0em) up to `widest` (0.1em) for all-caps labels.
+**Tracking.** Product API: `tight` / `normal` / `wide` (legacy `tighter` / `wider` / `widest` remapped toward these).
 
 **Defaults.**
-- Body copy: `body-normal` (14px / 400 weight / 1.428 line-height).
-- UI labels: `body-strong` (14px / 440).
-- Section headings: `heading-base` (16px / 400) or `heading-subsection` (18px / 400).
+- Body copy: `body-normal` (14px / 400 / LH 20).
+- UI labels: `body-strong` (14px / 550).
+- Section headings: `heading-section` (20px / 550 / LH 28); `heading-subsection` soft-aliases to the same.
 - Code/identifiers: `body-code` (12px / JetBrains Mono 400).
-- Eyebrow / metadata: `label-caps` (11.5px / uppercase / 0.1em tracked).
+- Caps / micro: `caption-single-line-normal-caps` (12px) and `micro-single-line-normal-caps` (11px).
 
 Two weights per surface is the practical ceiling — mixing more than that reads as noise.
 

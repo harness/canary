@@ -101,7 +101,7 @@ export const textVariants = cva('', {
   },
   defaultVariants: {
     variant: 'body-normal',
-    color: 'foreground-2',
+    color: 'foreground-1',
     truncate: false
   }
 })
@@ -117,14 +117,14 @@ const textVariantToElement: Record<
   'heading-subsection': { element: 'p', color: 'foreground-1' },
   'heading-base': { element: 'p', color: 'foreground-1' },
   'heading-small': { element: 'p', color: 'foreground-1' },
-  'body-normal': { element: 'p', color: 'foreground-2' },
-  'body-small': { element: 'p', color: 'foreground-2' },
-  'body-small-strong': { element: 'p', color: 'foreground-2' },
-  'body-single-line-normal': { element: 'p', color: 'foreground-2' },
-  'body-strong': { element: 'p', color: 'foreground-2' },
-  'body-single-line-strong': { element: 'p', color: 'foreground-2' },
-  'body-code': { element: 'pre', color: 'foreground-2' },
-  'body-single-line-code': { element: 'pre', color: 'foreground-2' },
+  'body-normal': { element: 'p', color: 'foreground-1' },
+  'body-small': { element: 'p', color: 'foreground-1' },
+  'body-small-strong': { element: 'p', color: 'foreground-1' },
+  'body-single-line-normal': { element: 'p', color: 'foreground-1' },
+  'body-strong': { element: 'p', color: 'foreground-1' },
+  'body-single-line-strong': { element: 'p', color: 'foreground-1' },
+  'body-code': { element: 'pre', color: 'foreground-1' },
+  'body-single-line-code': { element: 'pre', color: 'foreground-1' },
   'caption-code': { element: 'span', color: 'foreground-2' },
   'caption-single-line-code': { element: 'span', color: 'foreground-2' },
   'caption-normal': { element: 'span', color: 'foreground-2' },

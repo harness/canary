@@ -29,10 +29,10 @@ describe('Text', () => {
       expect(text).toBeInTheDocument()
     })
 
-    test('should apply default foreground-2 color', () => {
+    test('should apply default foreground-1 color', () => {
       const { container } = renderComponent()
 
-      const text = container.querySelector('.text-cn-2')
+      const text = container.querySelector('.text-cn-1')
       expect(text).toBeInTheDocument()
     })
   })
@@ -515,10 +515,10 @@ describe('Text', () => {
       expect(text).toBeInTheDocument()
     })
 
-    test('should default color to foreground-2', () => {
+    test('should default color to foreground-1', () => {
       const { container } = render(<Text>Text</Text>)
 
-      const text = container.querySelector('.text-cn-2')
+      const text = container.querySelector('.text-cn-1')
       expect(text).toBeInTheDocument()
     })
 

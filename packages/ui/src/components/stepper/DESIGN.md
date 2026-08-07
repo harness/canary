@@ -503,7 +503,7 @@ Following existing convention: `cn-{component}-{element}-{state}`
 |                                  | font size       | `text-cn-size-5`          | `--cn-font-size-5` (14px)                                               |
 |                                  | font weight     | —                         | 440 (medium via variable font)                                          |
 | **Step description**             | text color      | `text-cn-3`               | `--cn-text-3`                                                           |
-|                                  | font size       | `text-cn-size-4`          | `--cn-font-size-4` (13px)                                               |
+|                                  | font size       | `text-cn-size-5`          | `--cn-font-size-5` (14px)                                               |
 | **Header title**                 | text color      | `text-cn-2`               | `--cn-text-2`                                                           |
 |                                  | font weight     | —                         | 550 (semibold via variable font)                                        |
 |                                  | font size       | `text-cn-size-5`          | `--cn-font-size-5` (14px)                                               |

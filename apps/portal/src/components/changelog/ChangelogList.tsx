@@ -175,7 +175,7 @@ export default function ChangelogList() {
         .changelog-empty p {
           margin: 0;
           color: var(--cn-text-2);
-          font-size: var(--cn-font-size-4, 0.875rem);
+          font-size: 0.75rem;
         }
 
         .changelog-empty-hint {

@@ -57,7 +57,7 @@ code:not(.expressive-code code) {
 
 /* Table text — match cn-table-v2 component */
 .cn-table-v2-head {
-  font-size: var(--cn-font-size-4, 0.8125rem) !important;
+  font-size: 0.75rem !important;
   line-height: var(--cn-line-height-4, 1.125rem) !important;
   font-weight: 400 !important;
 }
@@ -68,7 +68,7 @@ code:not(.expressive-code code) {
 }
 
 .cn-table-v2-cell code {
-  font-size: var(--cn-font-size-4) !important;
+  font-size: 0.75rem !important;
 }
 
 .shade-preview {
@@ -695,7 +695,7 @@ button[aria-label="Search"] {
 
 .pagination-links a > span > .link-title {
   display: block !important;
-  font-size: var(--cn-font-size-4) !important;
+  font-size: 0.75rem !important;
   font-weight: 500 !important;
   color: var(--cn-text-1) !important;
   line-height: 1.3 !important;

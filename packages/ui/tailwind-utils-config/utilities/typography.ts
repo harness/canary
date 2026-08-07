@@ -84,7 +84,7 @@ export const typography = {
     },
     '&-micro-normal': {
       font: 'var(--cn-micro-normal)',
-      letterSpacing: 'var(--cn-tracking-wider)'
+      letterSpacing: 'var(--cn-tracking-wide)'
     },
     '&-micro-single-line-normal-caps': {
       font: 'var(--cn-micro-single-line-normal-caps)',

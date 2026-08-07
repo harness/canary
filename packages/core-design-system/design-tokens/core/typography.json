@@ -722,6 +722,44 @@
         "$type": "lineHeights",
         "$value": "{fontSize.16}*{lineHeight.multiplier.loose}"
       }
+    },
+    "fixed": {
+      "$description": "Absolute ×4 line-heights. Keys 12 and 16 live here during dual-write because matrix parents occupy lineHeight.12 and lineHeight.16. After matrix removal, flatten those keys to top-level absolute tokens.",
+      "12": {
+        "$type": "lineHeights",
+        "$value": "0.75rem",
+        "$description": "12px absolute"
+      },
+      "16": {
+        "$type": "lineHeights",
+        "$value": "1rem",
+        "$description": "16px absolute"
+      }
+    },
+    "20": {
+      "$type": "lineHeights",
+      "$value": "1.25rem",
+      "$description": "20px absolute"
+    },
+    "24": {
+      "$type": "lineHeights",
+      "$value": "1.5rem",
+      "$description": "24px absolute"
+    },
+    "28": {
+      "$type": "lineHeights",
+      "$value": "1.75rem",
+      "$description": "28px absolute"
+    },
+    "32": {
+      "$type": "lineHeights",
+      "$value": "2rem",
+      "$description": "32px absolute"
+    },
+    "36": {
+      "$type": "lineHeights",
+      "$value": "2.25rem",
+      "$description": "36px absolute"
     }
   }
 }

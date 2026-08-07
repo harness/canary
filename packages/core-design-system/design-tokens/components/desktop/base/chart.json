@@ -22,7 +22,10 @@
       "strokeStyle": {
         "$type": "strokeStyle",
         "$value": {
-          "dashArray": [6, 6],
+          "dashArray": [
+            6,
+            6
+          ],
           "lineCap": "butt"
         },
         "$description": "Stroke style for dashed background grid lines"
@@ -99,7 +102,10 @@
         "strokeStyle": {
           "$type": "strokeStyle",
           "$value": {
-            "dashArray": [2, 2],
+            "dashArray": [
+              2,
+              2
+            ],
             "lineCap": "butt"
           },
           "$description": "Stroke style for dashed lines"
@@ -139,7 +145,7 @@
         "$type": "typography",
         "$value": {
           "fontFamily": "{fontFamily.mono}",
-          "fontWeight": "{fontWeight.mono.normal.500}",
+          "fontWeight": "{fontWeight.mono.normal.700}",
           "fontSize": "{fontSize.1}",
           "lineHeight": "{lineHeight.1.none}",
           "letterSpacing": "{tracking.normal}"
@@ -253,7 +259,7 @@
             "fontWeight": "{fontWeight.default.normal.600}",
             "fontSize": "{fontSize.15}",
             "lineHeight": "{lineHeight.15.none}",
-            "letterSpacing": "{tracking.tighter}"
+            "letterSpacing": "{tracking.tight}"
           },
           "$description": "Typography for large donut center value"
         }
@@ -296,7 +302,7 @@
           "$type": "typography",
           "$value": {
             "fontFamily": "{fontFamily.default}",
-            "fontWeight": "{fontWeight.default.normal.500}",
+            "fontWeight": "{fontWeight.default.normal.600}",
             "fontSize": "{fontSize.10}",
             "lineHeight": "{lineHeight.10.none}",
             "letterSpacing": "{tracking.tight}"
@@ -307,7 +313,7 @@
           "$type": "typography",
           "$value": {
             "fontFamily": "{fontFamily.default}",
-            "fontWeight": "{fontWeight.default.normal.500}",
+            "fontWeight": "{fontWeight.default.normal.600}",
             "fontSize": "{fontSize.6}",
             "lineHeight": "{lineHeight.6.none}",
             "letterSpacing": "{tracking.normal}"

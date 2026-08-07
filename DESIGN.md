@@ -329,6 +329,11 @@ typography:
     fontSize: 0.875rem
     fontWeight: 400
     lineHeight: 1.428
+  body-small:
+    fontFamily: Inter
+    fontSize: 0.75rem
+    fontWeight: 400
+    lineHeight: 1.667
   body-code:
     fontFamily: JetBrains Mono
     fontSize: 0.813rem
@@ -545,10 +550,18 @@ The color system has two layers and components only ever consume the second one.
 
 **Defaults.**
 - Body copy: `body-normal` (14px / 400 / LH 20).
+- Small body copy: `body-small` (12px / 400 / LH 20) — see the body-small vs. caption rule below.
 - UI labels: `body-strong` (14px / 550).
 - Section headings: `heading-section` (20px / 550 / LH 28); `heading-subsection` soft-aliases to the same.
 - Code/identifiers: `body-code` (12px / JetBrains Mono 400).
 - Caps / micro: `caption-single-line-normal-caps` (12px) and `micro-single-line-normal-caps` (11px).
+
+**`body-small` vs. `caption` (both render at 12px — pick by intent, not by size).**
+`body-small` and `caption` share a 12px cap height, so the choice is semantic:
+- **Use `body-small`** for *prose the user reads* — full sentences and multi-line copy that happens to sit at a smaller size. Helper/description text under a control, consent and legal text, empty-state explanations, secondary paragraphs. It carries the body family's looser LH 20 for comfortable reading.
+- **Use `caption`** for *labels, metadata, and chrome* — short, non-sentence fragments that annotate something else. Table column headers, badge/tag/tooltip text, timestamps and counts, form-field labels, breadcrumb segments, sidebar group titles. Tighter LH 16 keeps these compact.
+- **Rule of thumb:** if it's a sentence you'd read left-to-right, it's `body-small`; if it's a tag on another element, it's `caption`. When a string is a full sentence *and* purely supplementary (a hint), prefer `body-small`.
+- **Micro (11px)** is for the smallest chrome only (dense caps labels, keyboard-shortcut glyphs) — never for prose.
 
 Two weights per surface is the practical ceiling — mixing more than that reads as noise.
 

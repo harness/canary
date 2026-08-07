@@ -334,6 +334,13 @@ typography:
     fontSize: 0.75rem
     fontWeight: 400
     lineHeight: 1.667
+    letterSpacing: 0em
+  body-small-strong:
+    fontFamily: Inter
+    fontSize: 0.75rem
+    fontWeight: 600
+    lineHeight: 1.667
+    letterSpacing: 0em
   body-code:
     fontFamily: JetBrains Mono
     fontSize: 0.813rem
@@ -542,7 +549,7 @@ The color system has two layers and components only ever consume the second one.
 
 **Families.** `Inter` for UI (`fontFamily.default`), `JetBrains Mono` for code. Both are variable fonts with 400 as the minimum accessible weight. Inter product weights: **400** regular, **600→550** optical semibold/strong, **700** bold.
 
-**Size scale.** Product ramp centers on semantic roles (`body-normal`, `heading-section`, `caption-strong`, etc.). Absolute size tokens keep Avatar specialized sizes (`fontSize.0` / `.2`) and charts (`.1` / `.15`). Legacy display sizes `fontSize.11` / `.12` and fractional `.3` remain temporarily because Platform UI still uses `text-cn-size-11` / `-12` / `-3`.
+**Size scale.** Product ramp centers on semantic roles (`body-normal`, `heading-section`, `caption-strong`, etc.). Absolute size tokens keep Avatar specialized sizes (`fontSize.0` / `.2`) and charts (`.1` / `.15`). Legacy display sizes `fontSize.11` / `.12` and fractional `.3` remain temporarily because Platform UI still uses `text-cn-size-11` / `-12` / `-3`. `fontSize.7` (18px / `text-cn-size-7`) is reserved for markdown rendering only — an ESLint rule (`eslint/rules.js`) blocks it in UI code and points to `heading-section` (20px) or `heading-base` (16px).
 
 **Line heights.** Absolute ×4 short scale (`12` / `16` / `20` / `24` / `28` / `32` / `36` / `40`…`96`). Prefer semantic styles over raw LH tokens. Legacy `lineHeight.7.tight` (`--cn-line-height-7-tight`) is retained for Platform UI until that consumer migrates.
 
@@ -550,7 +557,7 @@ The color system has two layers and components only ever consume the second one.
 
 **Defaults.**
 - Body copy: `body-normal` (14px / 400 / LH 20).
-- Small body copy: `body-small` (12px / 400 / LH 20) — see the body-small vs. caption rule below.
+- Small body copy: `body-small` (12px / 400 / LH 20 / letter-spacing 0); emphasis via `body-small-strong` (12px / 600 / letter-spacing 0). See the body-small vs. caption rule below.
 - UI labels: `body-strong` (14px / 550).
 - Section headings: `heading-section` (20px / 550 / LH 28); `heading-subsection` soft-aliases to the same.
 - Code/identifiers: `body-code` (12px / JetBrains Mono 400).

@@ -30,7 +30,11 @@ export const typography = {
     },
     '&-body-small': {
       font: 'var(--cn-body-small)',
-      letterSpacing: 'var(--cn-tracking-tight)'
+      letterSpacing: 'var(--cn-tracking-normal)'
+    },
+    '&-body-small-strong': {
+      font: 'var(--cn-body-small-strong)',
+      letterSpacing: 'var(--cn-tracking-normal)'
     },
     '&-body-code': {
       font: 'var(--cn-body-code)',

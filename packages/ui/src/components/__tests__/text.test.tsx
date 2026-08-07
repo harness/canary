@@ -375,7 +375,8 @@ describe('Text', () => {
         'caption-normal',
         'caption-strong',
         'caption-single-line-normal',
-        'caption-single-line-normal-caps'
+        'caption-single-line-normal-caps',
+        'micro-single-line-normal-caps'
       ] as const
 
       variants.forEach(variant => {
@@ -603,7 +604,8 @@ describe('Text', () => {
         'caption-normal',
         'caption-strong',
         'caption-single-line-normal',
-        'caption-single-line-normal-caps'
+        'caption-single-line-normal-caps',
+        'micro-single-line-normal-caps'
       ] as const
 
       captionVariants.forEach(variant => {

@@ -54,7 +54,8 @@ export const typographyVariantConfig = {
   'caption-code': 'font-caption-code',
   'caption-single-line-code': 'font-caption-single-line-code',
   'caption-single-line-normal': 'font-caption-single-line-normal',
-  'caption-single-line-normal-caps': 'font-caption-single-line-normal-caps'
+  'caption-single-line-normal-caps': 'font-caption-single-line-normal-caps',
+  'micro-single-line-normal-caps': 'font-micro-single-line-normal-caps'
 }
 
 export const textVariants = cva('', {
@@ -126,7 +127,8 @@ const textVariantToElement: Record<
   'caption-normal': { element: 'span', color: 'foreground-2' },
   'caption-strong': { element: 'span', color: 'foreground-2' },
   'caption-single-line-normal': { element: 'span', color: 'foreground-2' },
-  'caption-single-line-normal-caps': { element: 'span', color: 'foreground-2' }
+  'caption-single-line-normal-caps': { element: 'span', color: 'foreground-2' },
+  'micro-single-line-normal-caps': { element: 'span', color: 'foreground-2' }
 }
 
 const getTextNode = ({ as, variant = 'body-normal', asChild }: Pick<TextProps, 'as' | 'asChild' | 'variant'>) => {

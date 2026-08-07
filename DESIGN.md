@@ -253,7 +253,7 @@ colors:
 
   # Text — three contrast levels + intent (text-3 combined into text-4)
   cn-text-1:         "{colors.pure-black}"   # default — headings & primary content
-  cn-text-2:         "{colors.gray-700}"     # labels & secondary info
+  cn-text-2:         "{colors.gray-800}"     # labels & secondary info
   cn-text-3:         "{colors.gray-500}"     # disabled, placeholders
   cn-text-4:         "{cn-text-3}"           # DEPRECATED alias of text-3 (lint-blocked)
   cn-text-success:   "{colors.lime-700}"

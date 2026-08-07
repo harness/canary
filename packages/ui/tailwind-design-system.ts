@@ -24,7 +24,6 @@ const fontSizeMap = {
   'cn-size-1': 'var(--cn-font-size-1)',
   'cn-size-2': 'var(--cn-font-size-2)',
   'cn-size-3': 'var(--cn-font-size-3)',
-  'cn-size-4': 'var(--cn-font-size-4)',
   'cn-size-5': 'var(--cn-font-size-5)',
   'cn-size-6': 'var(--cn-font-size-6)',
   'cn-size-7': 'var(--cn-font-size-7)',
@@ -33,10 +32,7 @@ const fontSizeMap = {
   'cn-size-10': 'var(--cn-font-size-10)',
   'cn-size-11': 'var(--cn-font-size-11)',
   'cn-size-12': 'var(--cn-font-size-12)',
-  'cn-size-13': 'var(--cn-font-size-13)',
-  'cn-size-14': 'var(--cn-font-size-14)',
-  'cn-size-15': 'var(--cn-font-size-15)',
-  'cn-size-16': 'var(--cn-font-size-16)'
+  'cn-size-15': 'var(--cn-font-size-15)'
 }
 const tailwindDesignSystem: TailwindConfig = {
   darkMode: ['class'],
@@ -452,9 +448,7 @@ const tailwindDesignSystem: TailwindConfig = {
       'cn-tighter': 'var(--cn-tracking-tighter)',
       'cn-tight': 'var(--cn-tracking-tight)',
       'cn-normal': 'var(--cn-tracking-normal)',
-      'cn-wide': 'var(--cn-tracking-wide)',
-      'cn-wider': 'var(--cn-tracking-wider)',
-      'cn-widest': 'var(--cn-tracking-widest)'
+      'cn-wide': 'var(--cn-tracking-wide)'
     },
     extend: {
       backgroundImage: {

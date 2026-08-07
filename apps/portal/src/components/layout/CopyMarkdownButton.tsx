@@ -16,7 +16,7 @@ export function CopyMarkdownButton() {
   return (
     <button
       onClick={handleCopy}
-      className="inline-flex items-center gap-cn-3xs px-cn-sm py-cn-3xs text-cn-size-4 text-cn-3 bg-cn-2 border border-cn-3/50 rounded-cn-3 hover:bg-cn-3 hover:text-cn-1 transition-all duration-150 cursor-pointer"
+      className="inline-flex items-center gap-cn-3xs px-cn-sm py-cn-3xs text-xs text-cn-3 bg-cn-2 border border-cn-3/50 rounded-cn-3 hover:bg-cn-3 hover:text-cn-1 transition-all duration-150 cursor-pointer"
     >
       <svg
         width="14"

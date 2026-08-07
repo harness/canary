@@ -67,7 +67,7 @@ export function FeedbackButtons() {
   };
 
   return (
-    <div className="flex items-center gap-cn-sm text-cn-size-4 text-cn-3">
+    <div className="flex items-center gap-cn-sm text-xs text-cn-3">
       <span>Was this page helpful?</span>
       <Button
         onClick={() => handleVote("helpful")}

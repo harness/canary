@@ -537,11 +537,11 @@ The color system has two layers and components only ever consume the second one.
 
 **Families.** `Inter` for UI (`fontFamily.default`), `JetBrains Mono` for code. Both are variable fonts with 400 as the minimum accessible weight. Inter product weights: **400** regular, **600→550** optical semibold/strong, **700** bold.
 
-**Size scale.** Product ramp centers on semantic roles (`body-normal`, `heading-section`, `caption-strong`, etc.). Avatar initials keep specialized sizes (8.8 / 11.5 / 14).
+**Size scale.** Product ramp centers on semantic roles (`body-normal`, `heading-section`, `caption-strong`, etc.). Absolute size tokens keep Avatar specialized sizes (`fontSize.0` / `.2`) and charts (`.1` / `.15`). Legacy display sizes `fontSize.11` / `.12` and fractional `.3` remain temporarily because Platform UI still uses `text-cn-size-11` / `-12` / `-3`.
 
-**Line heights.** Absolute ×4 scale (`16` / `20` / `28` / `36`, plus `fixed.12`/`fixed.16` during dual-write). Prefer semantic styles over raw LH tokens.
+**Line heights.** Absolute ×4 short scale (`12` / `16` / `20` / `24` / `28` / `32` / `36` / `40`…`96`). Prefer semantic styles over raw LH tokens. Legacy `lineHeight.7.tight` (`--cn-line-height-7-tight`) is retained for Platform UI until that consumer migrates.
 
-**Tracking.** Product API: `tight` / `normal` / `wide` (legacy `tighter` / `wider` / `widest` remapped toward these).
+**Tracking.** Product API: `tight` / `normal` / `wide`. Legacy `tighter` remains temporarily for Platform UI (`tracking-cn-tighter`).
 
 **Defaults.**
 - Body copy: `body-normal` (14px / 400 / LH 20).

@@ -623,7 +623,7 @@ export default {
 
   '.cn-stepper-nested-step-ordinal': {
     fontSize: 'var(--cn-font-size-0)',
-    fontWeight: 'var(--cn-font-weight-default-normal-500)',
+    fontWeight: 'var(--cn-font-weight-default-normal-600)',
     lineHeight: '1',
     color: 'var(--cn-text-3)',
 

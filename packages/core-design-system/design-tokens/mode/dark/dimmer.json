@@ -70,13 +70,13 @@
     },
     "3": {
       "$type": "color",
-      "$value": "{text.4}",
-      "$description": "Reduced emphasis color for text and icons in secondary information. Creates visual hierarchy through lower contrast.\n\nCommon uses: Supporting text, metadata, secondary information, placeholders."
+      "$value": "{gray.600}",
+      "$description": "Lowest-emphasis text color — the disabled / placeholder color and third (final) step of the text scale.\n\nCommon uses: Disabled controls, placeholder text, hints, inactive or unavailable options."
     },
     "4": {
       "$type": "color",
-      "$value": "{gray.600}",
-      "$description": "Lowest emphasis text color for unavailable options. Creates visual differentiation between interactive and non-interactive elements.\n\nCommon uses: Disabled buttons, inactive form elements, unavailable options, placeholders."
+      "$value": "{text.3}",
+      "$description": "DEPRECATED \u2014 alias of {text.3}. Use text-3 for disabled/placeholder text. Retained only for backward compatibility; blocked for new use by lint."
     },
     "success": {
       "$type": "color",

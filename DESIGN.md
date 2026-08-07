@@ -254,8 +254,8 @@ colors:
   # Text — three contrast levels + intent (text-3 combined into text-4)
   cn-text-1:         "{colors.pure-black}"   # default — headings & primary content
   cn-text-2:         "{colors.gray-700}"     # labels & secondary info
-  cn-text-3:         "{cn-text-4}"           # alias of text-4 (disabled/placeholders)
-  cn-text-4:         "{colors.gray-500}"     # disabled, placeholders
+  cn-text-3:         "{colors.gray-500}"     # disabled, placeholders
+  cn-text-4:         "{cn-text-3}"           # DEPRECATED alias of text-3 (lint-blocked)
   cn-text-success:   "{colors.lime-700}"
   cn-text-danger:    "{colors.red-700}"
   cn-text-warning:   "{colors.yellow-700}"
@@ -488,8 +488,8 @@ themes:
     cn-bg-3:           "{colors.gray-950}"
     cn-text-1:         "{colors.pure-white}"
     cn-text-2:         "{colors.gray-400}"
-    cn-text-3:         "{cn-text-4}"
-    cn-text-4:         "{colors.gray-700}"
+    cn-text-3:         "{colors.gray-700}"
+    cn-text-4:         "{cn-text-3}"
     cn-text-brand:     "{colors.blue-400}"
     cn-border-1:       "{colors.gray-500}"
     cn-border-2:       "{colors.gray-850}"
@@ -532,7 +532,7 @@ The color system has two layers and components only ever consume the second one.
 **Layer 2 — Semantic aliases.** The `cn-*` namespace. Components reference these and only these. Light-theme assignments live in `design-tokens/mode/light/default.json`; dark in `design-tokens/mode/dark/default.json`. The aliases break down into:
 
 - `cn-bg-0`…`cn-bg-3` — four elevation layers from page chrome up to floating surface.
-- `cn-text-1`…`cn-text-4` — three distinct contrast levels: `text-1` (default — headings & primary content), `text-2` (labels & secondary info), and `text-3` = `text-4` (combined disabled/placeholder color). `text-3` is retained as an alias of `text-4`.
+- `cn-text-1`…`cn-text-3` — three contrast levels: `text-1` (default — headings & primary content), `text-2` (labels & secondary info), `text-3` (disabled / placeholder). `text-4` is a **deprecated** alias of `text-3`, retained for backward compatibility and blocked for new use by lint (`eslint/rules.js`).
 - `cn-text-{success,danger,warning,merged,brand}` — intent text.
 - `cn-border-1`…`cn-border-3` plus `cn-border-{brand,success,danger,warning}` — three neutral weights and intent borders.
 - `cn-set-{intent}-{primary|secondary|outline}-{bg,text,bg-hover,bg-selected,ring}` — the full intent matrix. Fourteen intents (brand, success, danger, warning, blue, purple, brown, cyan, indigo, lime, mint, orange, pink, violet, gray, ai), three roles, four-to-five properties each.

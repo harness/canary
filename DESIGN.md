@@ -563,7 +563,7 @@ The color system has two layers and components only ever consume the second one.
 - UI labels: `body-strong` (14px / 550).
 - Section headings: `heading-section` (20px / 550 / LH 28); `heading-subsection` soft-aliases to the same.
 - Code/identifiers: `body-code` (12px / JetBrains Mono 400).
-- Caps / micro: `caption-single-line-normal-caps` (12px) and `micro-single-line-normal-caps` (11px).
+- Caps / micro: `micro-single-line-normal-caps` (11px) is the only all-caps role.
 
 **`body-small` vs. `caption` (both render at 12px — pick by intent, not by size).**
 `body-small` and `caption` share a 12px cap height, so the choice is semantic:

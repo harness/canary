@@ -46,7 +46,32 @@ function getClassNameRules() {
     }
   ]
 
-  return [...deprecatedCnRules, ...restrictedSizeRules]
+  // text-4 / foreground-4 is deprecated: text-3 and text-4 were combined into a
+  // single disabled/placeholder color. text-3 is canonical; text-4 is a
+  // temporary alias. New code must use text-3 / foreground-3.
+  const deprecatedText4Message =
+    "'foreground-4' / 'text-cn-4' is deprecated — text-3 and text-4 were combined. Use 'foreground-3' / 'text-cn-3' (the disabled / placeholder color) instead."
+
+  const deprecatedText4Rules = [
+    {
+      selector: `JSXAttribute[name.name='className'][value.value=/\\btext-cn-4\\b/]`,
+      message: deprecatedText4Message
+    },
+    {
+      selector: `CallExpression[callee.name='cva'] > Literal[value=/\\btext-cn-4\\b/]`,
+      message: deprecatedText4Message
+    },
+    {
+      selector: `CallExpression[callee.name='cn'] > Literal[value=/\\btext-cn-4\\b/]`,
+      message: deprecatedText4Message
+    },
+    {
+      selector: `JSXAttribute[name.name='color'][value.value='foreground-4']`,
+      message: deprecatedText4Message
+    }
+  ]
+
+  return [...deprecatedCnRules, ...restrictedSizeRules, ...deprecatedText4Rules]
 }
 
 module.exports = {

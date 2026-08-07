@@ -41,7 +41,7 @@ The design system uses two typefaces with optically adjusted weights for Inter:
           <td className="cn-table-v2-cell">
             All UI text — headings, body, captions, micro
           </td>
-          <td className="cn-table-v2-cell">400 · 440 · 550</td>
+          <td className="cn-table-v2-cell">400 · 550 · 700</td>
         </tr>
         <tr className="cn-table-v2-row">
           <td className="cn-table-v2-cell">
@@ -51,7 +51,7 @@ The design system uses two typefaces with optically adjusted weights for Inter:
           <td className="cn-table-v2-cell">
             Code snippets, technical content, file paths
           </td>
-          <td className="cn-table-v2-cell">Light · Regular · Medium</td>
+          <td className="cn-table-v2-cell">400 · 700 (Regular · Bold)</td>
         </tr>
       </tbody>
     </table>
@@ -60,8 +60,11 @@ The design system uses two typefaces with optically adjusted weights for Inter:
 
 <Aside type="note" title="Optical weights">
   Inter uses variable font instances tuned for optical balance while enforcing
-  **400 as the minimum accessible weight**. CSS weight `500` maps to **440**.
-  The `.font-*` Tailwind classes apply these values automatically.
+  **400 as the minimum accessible weight**. The "strong" / heading weight renders
+  at an optically tuned **550** (not a flat 600), which keeps semibold text from
+  reading too heavy on macOS while staying distinct on Windows. The three exposed
+  weights are **400 · 550 · 700**. The `.font-*` Tailwind classes apply these
+  values automatically.
 </Aside>
 
 ## Type Scale Reference
@@ -99,7 +102,7 @@ Headings establish the information hierarchy and provide structure to content.
               The quick brown fox
             </span>
           </td>
-          <td className="cn-table-v2-cell">28px · 440</td>
+          <td className="cn-table-v2-cell">28px / 36px · 550</td>
           <td className="cn-table-v2-cell">
             <code>font-heading-hero</code>
           </td>
@@ -127,7 +130,7 @@ Headings establish the information hierarchy and provide structure to content.
               The quick brown fox
             </span>
           </td>
-          <td className="cn-table-v2-cell">16px · 400</td>
+          <td className="cn-table-v2-cell">16px / 20px · 550</td>
           <td className="cn-table-v2-cell">
             <code>font-heading-base</code>
           </td>
@@ -141,7 +144,7 @@ Headings establish the information hierarchy and provide structure to content.
               The quick brown fox
             </span>
           </td>
-          <td className="cn-table-v2-cell">14px · 440</td>
+          <td className="cn-table-v2-cell">14px / 20px · 550</td>
           <td className="cn-table-v2-cell">
             <code>font-heading-small</code>
           </td>
@@ -153,7 +156,7 @@ Headings establish the information hierarchy and provide structure to content.
 
 ### Body
 
-Body text is used for the main content.
+Body text is used for the main content. Use `body-small` (and its `body-small-strong` companion) for smaller secondary prose — helper text, descriptions, consent/legal copy. For labels and metadata, reach for a caption instead (see the Captions section). All body roles use letter-spacing 0 except the code variants, which keep −0.02em for monospace alignment.
 
 <div className="cn-table-v2 cn-table-v2-normal not-content">
   <div className="cn-table-v2-container">
@@ -189,6 +192,34 @@ Body text is used for the main content.
         </tr>
         <tr className="cn-table-v2-row">
           <td className="cn-table-v2-cell">
+            <code>body-small</code>
+          </td>
+          <td className="cn-table-v2-cell">
+            <span className="font-body-small text-cn-2">
+              The quick brown fox jumps over the lazy dog.
+            </span>
+          </td>
+          <td className="cn-table-v2-cell">12px / 20px · 400</td>
+          <td className="cn-table-v2-cell">
+            <code>font-body-small</code>
+          </td>
+        </tr>
+        <tr className="cn-table-v2-row">
+          <td className="cn-table-v2-cell">
+            <code>body-small-strong</code>
+          </td>
+          <td className="cn-table-v2-cell">
+            <span className="font-body-small-strong text-cn-2">
+              The quick brown fox jumps over the lazy dog.
+            </span>
+          </td>
+          <td className="cn-table-v2-cell">12px / 20px · 550</td>
+          <td className="cn-table-v2-cell">
+            <code>font-body-small-strong</code>
+          </td>
+        </tr>
+        <tr className="cn-table-v2-row">
+          <td className="cn-table-v2-cell">
             <code>body-strong</code>
           </td>
           <td className="cn-table-v2-cell">
@@ -196,7 +227,7 @@ Body text is used for the main content.
               The quick brown fox jumps over the lazy dog.
             </span>
           </td>
-          <td className="cn-table-v2-cell">14px · 440</td>
+          <td className="cn-table-v2-cell">14px · 550</td>
           <td className="cn-table-v2-cell">
             <code>font-body-strong</code>
           </td>
@@ -238,7 +269,7 @@ Body text is used for the main content.
               For UI components
             </span>
           </td>
-          <td className="cn-table-v2-cell">14px · 440 · 1×</td>
+          <td className="cn-table-v2-cell">14px · 550 · 1×</td>
           <td className="cn-table-v2-cell">
             <code>font-body-single-line-strong</code>
           </td>
@@ -307,7 +338,7 @@ Captions are used for labels and metadata.
               Label text for UI elements
             </span>
           </td>
-          <td className="cn-table-v2-cell">12px · 440</td>
+          <td className="cn-table-v2-cell">12px · 550</td>
           <td className="cn-table-v2-cell">
             <code>font-caption-strong</code>
           </td>
@@ -347,7 +378,7 @@ Captions are used for labels and metadata.
               Read-only metadata
             </span>
           </td>
-          <td className="cn-table-v2-cell">12px · 600 · uppercase</td>
+          <td className="cn-table-v2-cell">12px · 550 · uppercase</td>
           <td className="cn-table-v2-cell">
             <code>font-caption-single-line-normal-caps</code>
           </td>
@@ -361,7 +392,7 @@ Captions are used for labels and metadata.
               For compact UI
             </span>
           </td>
-          <td className="cn-table-v2-cell">12px · 440 · 1×</td>
+          <td className="cn-table-v2-cell">12px · 550 · 1×</td>
           <td className="cn-table-v2-cell">
             <code>font-caption-single-line-strong</code>
           </td>
@@ -414,7 +445,7 @@ Captions are used for labels and metadata.
               Labels, signatures, technical info
             </span>
           </td>
-          <td className="cn-table-v2-cell">11px · 440</td>
+          <td className="cn-table-v2-cell">11px · 550</td>
           <td className="cn-table-v2-cell">
             <code>font-micro-normal</code>
           </td>
@@ -437,6 +468,12 @@ Captions are used for labels and metadata.
     </table>
   </div>
 </div>
+
+<Aside type="note" title="Component type aliases">
+  A few component roles are aliases of a core role, kept in lockstep as a single
+  source of truth: `dialog-title` → `heading-section`, `link-default` →
+  `body-normal`, `link-sm` → `body-small`.
+</Aside>
 
 ## Text Colors
 
@@ -696,7 +733,7 @@ Limit text display with truncation or line clamping.
 
 ### Font Size Scale
 
-Individual font size tokens are available via `text-cn-size-{n}` classes. These set only font-size — for complete text styles, prefer the composite `.font-*` classes above.
+Individual font size tokens are available via `text-cn-size-{n}` classes. These set only font-size — for complete text styles, prefer the composite `.font-*` classes above. Note: `text-cn-size-7` (18px) is reserved for markdown rendering and is blocked in UI code by lint — use `heading-section` (20px) or `heading-base` (16px) instead.
 
 <div className="cn-table-v2 cn-table-v2-normal not-content">
   <div className="cn-table-v2-container">
@@ -808,14 +845,14 @@ Individual font size tokens are available via `text-cn-size-{n}` classes. These 
             <code>tracking-cn-tight</code>
           </td>
           <td className="cn-table-v2-cell">-0.02em</td>
-          <td className="cn-table-v2-cell">Headings</td>
+          <td className="cn-table-v2-cell">Headings and code (mono)</td>
         </tr>
         <tr className="cn-table-v2-row">
           <td className="cn-table-v2-cell">
             <code>tracking-cn-normal</code>
           </td>
           <td className="cn-table-v2-cell">0em</td>
-          <td className="cn-table-v2-cell">Default body text</td>
+          <td className="cn-table-v2-cell">Body text (default) and captions</td>
         </tr>
         <tr className="cn-table-v2-row">
           <td className="cn-table-v2-cell">
@@ -867,7 +904,7 @@ import { Text } from '@harnessio/ui/components'
       defaultValue: "body-normal",
       required: false,
       value:
-        "'heading-hero' | 'heading-section' | 'heading-subsection' | 'heading-base' | 'heading-small' | 'body-normal' | 'body-strong' | 'body-single-line-normal' | 'body-single-line-strong' | 'body-code' | 'caption-normal' | 'caption-strong' | 'caption-single-line-normal' | 'caption-single-line-normal-caps' | 'micro-single-line-normal-caps'",
+        "'heading-hero' | 'heading-section' | 'heading-subsection' | 'heading-base' | 'heading-small' | 'body-normal' | 'body-small' | 'body-small-strong' | 'body-strong' | 'body-single-line-normal' | 'body-single-line-strong' | 'body-code' | 'caption-normal' | 'caption-strong' | 'caption-single-line-normal' | 'caption-single-line-normal-caps' | 'micro-single-line-normal-caps'",
     },
     {
       name: "color",

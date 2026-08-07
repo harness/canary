@@ -145,12 +145,12 @@
         "$type": "typography",
         "$value": {
           "fontFamily": "{fontFamily.mono}",
-          "fontWeight": "{fontWeight.mono.normal.700}",
+          "fontWeight": "500",
           "fontSize": "{fontSize.1}",
           "lineHeight": "{lineHeight.12}",
           "letterSpacing": "{tracking.normal}"
         },
-        "$description": "Typography for chart legend text"
+        "$description": "Typography for chart legend text. NOTE: fontWeight hard-coded to 500 (Medium) — data-viz needs a Medium weight that the general type program no longer exposes. Temporary until dedicated data-viz weight variables exist."
       },
       "marker": {
         "size": {

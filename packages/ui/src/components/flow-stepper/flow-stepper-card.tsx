@@ -67,8 +67,12 @@ export function FlowStepperCard({ title, description, blockedMessage, children, 
 
   if (contentOnly) {
     return (
+      // Content + restart button are flex siblings (not restart-then-content stacked in block flow)
+      // so the button reserves real horizontal space beside the content instead of needing an
+      // absolutely-positioned overlay — see .cn-flow-stepper-card-content-only in
+      // flow-stepper-card.ts. Content renders first so it's the flex-grow item on the left and the
+      // button (flexShrink: 0) settles at the top-right, still in normal flow.
       <div className={cardClassName}>
-        {restartButton}
         {/* inert disables all interaction (click, focus, a11y) in terminal-state cards.
            The finished card (last card in a completed flow) stays interactive for final actions.
            Cast needed because React 18 types don't include inert yet. */}
@@ -83,6 +87,7 @@ export function FlowStepperCard({ title, description, blockedMessage, children, 
           {blockedMessage && <BlockedMessage message={blockedMessage} />}
           {children}
         </div>
+        {restartButton}
       </div>
     )
   }

@@ -73,17 +73,14 @@ export default {
       paddingLeft: '0',
       marginTop: '0',
       marginBottom: 'var(--cn-spacing-3)'
-    },
-
-    '& .cn-flow-stepper-card-content-only': {
-      position: 'relative'
-    },
-
-    '& .cn-flow-stepper-card-content-only .cn-flow-stepper-card-edit': {
-      position: 'absolute',
-      top: '0',
-      right: '0'
     }
+
+    // The base .cn-flow-stepper-card-content-only rule (flow-stepper-card.ts) already lays the
+    // restart button out as a flex sibling of the content, reserving its own space — no
+    // single-pane-specific override needed. This used to absolutely-position the button over the
+    // content (position: relative + position: absolute/top:0/right:0), which reserved no layout
+    // space and let the button overlap content when the stepper-step header above it wrapped onto
+    // multiple lines.
   },
 
   '.cn-single-pane-stepper-card-stack-inner': {

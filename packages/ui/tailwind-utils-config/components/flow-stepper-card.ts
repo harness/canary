@@ -79,9 +79,38 @@ export default {
     opacity: '1'
   },
 
+  // Content-only cards (single-pane stepper: the stepper step itself renders the title/status, this
+  // card renders only its body) lay the restart button out as a real flex sibling of the content
+  // instead of overlaying it — so the button reserves its own space and content never needs to
+  // "clear" a disconnected fixed offset. Replaces a prior absolute-positioned overlay (see
+  // single-pane-stepper.ts history) that had no reserved space and could overlap the content.
+  '.cn-flow-stepper-card-content-only': {
+    display: 'flex',
+    alignItems: 'flex-start',
+    gap: 'var(--cn-spacing-3)'
+  },
+
+  // Content-only mode nests this card directly under a Stepper.Step whose collapse chevron
+  // (.cn-stepper-step-collapse-trigger in stepper.ts) sits above it, right-aligned in the same
+  // width-bounded row. That trigger's icon center sits var(--cn-spacing-1) marginRight +
+  // var(--cn-spacing-1) padding + half its (xs) icon width in from the row's right edge. This
+  // button has no internal padding (its icon fills the box exactly) and used to sit flush against
+  // that same right edge, so its icon center was ~2x closer to the edge than the chevron's —
+  // visibly offset. var(--cn-spacing-2) marginRight is the closest existing token that brings the
+  // two icons' horizontal centers into (near-exact, sub-pixel-token) alignment without introducing
+  // a raw pixel value; it does not affect the default (non-content-only) header restart button used
+  // by DualPaneStepper, which has no adjacent chevron to align to.
+  '.cn-flow-stepper-card-content-only .cn-flow-stepper-card-edit': {
+    marginRight: 'var(--cn-spacing-2)'
+  },
+
   '.cn-flow-stepper-card-content': {
     marginTop: 'var(--cn-spacing-6)',
     paddingLeft: 'calc(var(--cn-size-4) + var(--cn-spacing-3))',
+    // Only takes effect inside the flex-row layout above (.cn-flow-stepper-card-content-only); a
+    // no-op in the default vertical (non-content-only) layout, which isn't a flex container.
+    flex: '1',
+    minWidth: '0',
 
     '&[inert]': {
       opacity: '0.6',

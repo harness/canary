@@ -97,19 +97,6 @@
       },
       "$description": "Core reading typography optimized for extended content consumption. Balances character density, line height, and spacing to reduce eye fatigue across different screen sizes and reading environments.\n\nCommon uses: Main content, Product descriptions."
     },
-    "normal-line-through": {
-      "$type": "typography",
-      "$value": {
-        "fontFamily": "{fontFamily.default}",
-        "fontWeight": "{fontWeight.default.normal.400}",
-        "fontSize": "{fontSize.5}",
-        "lineHeight": "{lineHeight.5.snug}",
-        "letterSpacing": "{tracking.tight}",
-        "paragraphSpacing": "0.375rem",
-        "textDecoration": "{textDecoration.line-through}"
-      },
-      "$description": "Strikethrough text for indicating removed, completed, or deprecated content. Maintains body typography properties while clearly signaling the content is no longer active.\n\nCommon uses: Completed tasks, Deleted content in diffs, Deprecated features, Price reductions."
-    },
     "strong": {
       "$type": "typography",
       "$value": {
@@ -314,18 +301,6 @@
         },
         "$description": "Interactive text treatments that provide consistent affordances across the interface. Maintains typographic harmony with surrounding content while clearly signaling clickable elements through subtle decoration changes.\n\nCommon uses: In-paragraph text links, Navigation menu items, Action links in content, \"Learn more\" expansions, Related content links."
       },
-      "default-underline": {
-        "$type": "typography",
-        "$value": {
-          "fontFamily": "{fontFamily.default}",
-          "fontWeight": "{fontWeight.default.normal.400}",
-          "fontSize": "{fontSize.5}",
-          "lineHeight": "{lineHeight.5.snug}",
-          "letterSpacing": "{tracking.tight}",
-          "textDecoration": "{textDecoration.underline}"
-        },
-        "$description": "Underlined link style for hover and focus states. Provides clear visual feedback for interactive text while maintaining typographic consistency with surrounding content.\n\nCommon uses: Hovered in-paragraph links, Focused navigation items, Active action links."
-      },
       "sm": {
         "$type": "typography",
         "$value": {
@@ -337,18 +312,6 @@
           "textDecoration": "{textDecoration.none}"
         },
         "$description": "Small size link. Interactive text treatments that provide consistent affordances across the interface. Maintains typographic harmony with surrounding content while clearly signaling clickable elements through subtle decoration changes.\n\nCommon uses: In-paragraph text links, Navigation menu items, Action links in content, \"Learn more\" expansions, Related content links."
-      },
-      "sm-underline": {
-        "$type": "typography",
-        "$value": {
-          "fontFamily": "{fontFamily.default}",
-          "fontWeight": "{fontWeight.default.normal.500}",
-          "fontSize": "{fontSize.4}",
-          "lineHeight": "{lineHeight.4.snug}",
-          "letterSpacing": "{tracking.normal}",
-          "textDecoration": "{textDecoration.underline}"
-        },
-        "$description": "Small underlined link for hover and focus states. Provides clear visual feedback for compact interactive text elements.\n\nCommon uses: Hovered caption links, Focused metadata links, Active footer links."
       }
     },
     "dialog": {
@@ -401,18 +364,6 @@
         }
       },
       "content": {
-        "lead": {
-          "$type": "typography",
-          "$value": {
-            "fontFamily": "{fontFamily.default}",
-            "fontWeight": "{fontWeight.default.normal.400}",
-            "fontSize": "{fontSize.8}",
-            "lineHeight": "{lineHeight.8.normal}",
-            "letterSpacing": "{tracking.tight}",
-            "paragraphSpacing": "{fontSize.8}"
-          },
-          "$description": "Introductory paragraph with increased size for document openings. Sets context and summarizes key information.\n\nCommon uses: Article introductions, Executive summaries, Feature overviews, Tutorial introductions."
-        },
         "paragraph": {
           "$type": "typography",
           "$value": {

@@ -1,4 +1,4 @@
-import { JSX, useCallback, useState } from 'react'
+import { JSX, useCallback, useEffect, useState } from 'react'
 
 import { AnyFormValue, InputProps, useController } from '@harnessio/forms'
 import { ControlGroup, Layout, TextInput } from '@harnessio/ui/components'
@@ -48,9 +48,24 @@ export function InputWrapper({
   })
 
   // TODO: remove this after all inputs are migrated
-  const [inputValueTypeLocal_Tmp, setInputValueTypeLocal_Tmp] = useState(
-    isOnlyFixed ? 'fixed' : getInputValueType(field.value)
-  )
+  const [inputValueTypeLocal_Tmp, setInputValueTypeLocal_Tmp] = useState(() => {
+    const currentValueType = getInputValueType(field.value)
+
+    return isOnlyFixed && currentValueType === 'fixed' ? 'fixed' : currentValueType
+  })
+
+  useEffect(() => {
+    if (field.value === '' && inputValueTypeLocal_Tmp !== 'fixed') {
+      return
+    }
+
+    const currentValueType = getInputValueType(field.value)
+    const nextInputValueType = isOnlyFixed && currentValueType === 'fixed' ? 'fixed' : currentValueType
+
+    if (nextInputValueType !== inputValueTypeLocal_Tmp) {
+      setInputValueTypeLocal_Tmp(nextInputValueType)
+    }
+  }, [field.value, inputValueTypeLocal_Tmp, isOnlyFixed])
   if (!inputValueType) {
     inputValueType = inputValueTypeLocal_Tmp
     setInputValueType = setInputValueTypeLocal_Tmp

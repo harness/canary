@@ -6,7 +6,8 @@ import {
   InputComponent,
   RenderInputs,
   useController,
-  useFieldArray
+  useFieldArray,
+  useFormContext
 } from '@harnessio/forms'
 import { Button, IconV2 } from '@harnessio/ui/components'
 
@@ -33,10 +34,9 @@ export function canAddNewValues(currentLength: number, limit?: number): boolean 
   return currentLength < limit
 }
 
-function ListFormInputInternal(props: ListFormInputProps): JSX.Element {
+function FixedListInput(props: Pick<ListFormInputProps, 'path' | 'input' | 'factory' | 'readonly' | 'disabled'>) {
   const { path, input, factory, readonly, disabled } = props
-  const { label, inputConfig } = input
-
+  const { inputConfig } = input
   const isGrid = inputConfig?.layout === 'grid'
   const addBtnLabel = inputConfig?.addBtnLabel || 'Add'
   // const len = inputConfig?.inputs.length
@@ -49,6 +49,15 @@ function ListFormInputInternal(props: ListFormInputProps): JSX.Element {
   if (inputConfig?.gridTemplateColumns) {
     rowStyle.gridTemplateColumns = inputConfig.gridTemplateColumns
   }
+
+  const { watch, setValue } = useFormContext()
+  const fieldValue = watch(path)
+
+  useEffect(() => {
+    if (!Array.isArray(fieldValue)) {
+      setValue(path, [], { shouldDirty: true })
+    }
+  }, [fieldValue, path, setValue])
 
   const { fields, append, remove } = useFieldArray({
     name: path
@@ -90,23 +99,95 @@ function ListFormInputInternal(props: ListFormInputProps): JSX.Element {
         return retInput
       })
     },
-    []
+    [field.value, isGrid]
   )
-
-  const { inputValueType, setInputValueType, onlyFixedValueAllowed } = useMultiTypeValue({
-    value: field.value,
-    changeValue: field.onChange,
-    allowedValueTypes: input.inputConfig?.allowedValueTypes,
-    defaultValue: input.default
-  })
-
-  const optionalLabelVisible = useIsOptionalLabelVisible(input)
 
   useEffect(() => {
     if (inputConfig?.addOneOnInit) {
       append({})
     }
-  }, [inputConfig?.addOneOnInit])
+  }, [append, inputConfig?.addOneOnInit])
+
+  return (
+    <Controller
+      name={path}
+      render={() => (
+        <div>
+          <div>
+            {isGrid && fields.length > 0 && (
+              <div className={`${rowClass} mb-cn-xs`} style={labelsRowStyle}>
+                {inputConfig?.inputs.map(rowInput => (
+                  <InputLabel
+                    key={rowInput.label}
+                    label={rowInput.label}
+                    showOptional={isOptionalLabelVisible(rowInput as any)} // TODO
+                  />
+                ))}
+              </div>
+            )}
+            <div className="space-y-cn-md flex flex-col">
+              {fields.map((_item, idx) => (
+                <div key={_item.id} className={rowClass} style={rowStyle}>
+                  {inputConfig?.inputs && (
+                    <>
+                      {getChildInputs(
+                        inputConfig?.inputs as any, // TODO
+                        path,
+                        idx,
+                        inputConfig?.overrideInputProps,
+                        inputConfig?.overrideLabel
+                      ).map((childInput, childIdx) => (
+                        <div key={childIdx} className="min-w-0 overflow-hidden">
+                          <RenderInputs items={[childInput]} factory={factory} />
+                        </div>
+                      ))}
+                    </>
+                  )}
+                  {!inputConfig?.hideDelete && (
+                    <Button
+                      iconOnly
+                      onClick={() => {
+                        remove(idx)
+                      }}
+                      disabled={readonly || disabled}
+                      tooltipProps={{ content: 'Remove' }}
+                      variant="ghost"
+                    >
+                      <IconV2 name="trash" />
+                    </Button>
+                  )}
+                </div>
+              ))}
+            </div>
+          </div>
+          {canAddNewValues(fields.length, inputConfig?.fieldsCountLimit) && !inputConfig?.hideAdd && (
+            <Button size="sm" onClick={() => append({})} className="mt-cn-xs" disabled={readonly || disabled}>
+              {addBtnLabel}
+            </Button>
+          )}
+        </div>
+      )}
+    />
+  )
+}
+
+function ListFormInputInternal(props: ListFormInputProps): JSX.Element {
+  const { path, input } = props
+  const { label } = input
+
+  const { field } = useController({
+    name: path
+  })
+
+  const { inputValueType, setInputValueType, onlyFixedValueAllowed } = useMultiTypeValue({
+    value: field.value,
+    changeValue: field.onChange,
+    allowedValueTypes: input.inputConfig?.allowedValueTypes,
+    defaultValue: input.default,
+    defaultEmptyValue: []
+  })
+
+  const optionalLabelVisible = useIsOptionalLabelVisible(input)
 
   return (
     <InputWrapper {...props} inputValueType={inputValueType} setInputValueType={setInputValueType} placement="label">
@@ -125,65 +206,7 @@ function ListFormInputInternal(props: ListFormInputProps): JSX.Element {
         }
       />
       {/* TODO: do we need Controller ? */}
-      <Controller
-        name={path}
-        render={() => (
-          <div>
-            <div>
-              {isGrid && fields.length > 0 && (
-                <div className={`${rowClass} mb-cn-xs`} style={labelsRowStyle}>
-                  {inputConfig?.inputs.map(rowInput => (
-                    <InputLabel
-                      key={rowInput.label}
-                      label={rowInput.label}
-                      showOptional={isOptionalLabelVisible(rowInput as any)} // TODO
-                    />
-                  ))}
-                </div>
-              )}
-              <div className="space-y-cn-md flex flex-col">
-                {fields.map((_item, idx) => (
-                  <div key={_item.id} className={rowClass} style={rowStyle}>
-                    {inputConfig?.inputs && (
-                      <>
-                        {getChildInputs(
-                          inputConfig?.inputs as any, // TODO
-                          path,
-                          idx,
-                          inputConfig?.overrideInputProps,
-                          inputConfig?.overrideLabel
-                        ).map((childInput, childIdx) => (
-                          <div key={childIdx} className="min-w-0 overflow-hidden">
-                            <RenderInputs items={[childInput]} factory={factory} />
-                          </div>
-                        ))}
-                      </>
-                    )}
-                    {!inputConfig?.hideDelete && (
-                      <Button
-                        iconOnly
-                        onClick={() => {
-                          remove(idx)
-                        }}
-                        disabled={readonly || disabled}
-                        tooltipProps={{ content: 'Remove' }}
-                        variant="ghost"
-                      >
-                        <IconV2 name="trash" />
-                      </Button>
-                    )}
-                  </div>
-                ))}
-              </div>
-            </div>
-            {canAddNewValues(fields.length, inputConfig?.fieldsCountLimit) && !inputConfig?.hideAdd && (
-              <Button size="sm" onClick={() => append({})} className="mt-cn-xs" disabled={readonly || disabled}>
-                {addBtnLabel}
-              </Button>
-            )}
-          </div>
-        )}
-      />
+      <FixedListInput {...props} />
     </InputWrapper>
   )
 }

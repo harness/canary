@@ -1,12 +1,16 @@
-import { useRef, useState } from 'react'
+import { useEffect, useRef, useState } from 'react'
 
+import { AnyFormValue, InputProps, isValidFixedShape, useController } from '@harnessio/forms'
 import { Input } from '@harnessio/ui/components'
-
-import { AnyFormValue, InputProps, useController } from '@harnessio/forms'
 
 import { InputCaption, InputLabel } from '.'
 import { InputValueType, RuntimeInputConfig } from '../types/types'
-import { constructRuntimeInputValue, extractRuntimeInputName, getInputValueType } from '../utils/input-value-utils'
+import {
+  constructRuntimeInputValue,
+  extractRuntimeInputName,
+  getInputValueType,
+  getRuntimeExpressionType
+} from '../utils/input-value-utils'
 import InputValueTypeSelection from './InputValueTypeSelector'
 
 export interface InputWrapperProps extends InputProps<AnyFormValue, RuntimeInputConfig> {
@@ -36,15 +40,24 @@ export function InputWrapper({
     name: path
   })
 
-  const [inputValueType, setInputValueType] = useState(isOnlyFixed ? 'fixed' : getInputValueType(field.value))
+  const [inputValueType, setInputValueType] = useState(() => {
+    const currentValueType = getInputValueType(field.value)
 
-  // TODO
-  // useEffect(() => {
-  //   const newInputValueType = getInputValueType(field.value)
-  //   if (newInputValueType !== inputValueType) {
-  //     setInputValueType(newInputValueType)
-  //   }
-  // }, [field.value])
+    return isOnlyFixed && currentValueType === 'fixed' ? 'fixed' : currentValueType
+  })
+
+  useEffect(() => {
+    if (field.value === '' && inputValueType !== 'fixed') {
+      return
+    }
+
+    const currentValueType = getInputValueType(field.value)
+    const nextInputValueType = isOnlyFixed && currentValueType === 'fixed' ? 'fixed' : currentValueType
+
+    if (nextInputValueType !== inputValueType) {
+      setInputValueType(nextInputValueType)
+    }
+  }, [field.value, inputValueType, isOnlyFixed])
 
   const cachedFixedValue = useRef(
     typeof field.value !== 'undefined' && getInputValueType(field.value) === 'fixed' && preserveFixedValue
@@ -56,34 +69,39 @@ export function InputWrapper({
     switch (inputValueType) {
       case 'fixed':
         return children
-      case 'runtime':
+      case 'runtime': {
+        const runtimeExpressionType = getRuntimeExpressionType(field.value)
+        const runtimePrefix = runtimeExpressionType === 'cel' ? '${{inputs.' : '<+inputs.'
+        const runtimeSuffix = runtimeExpressionType === 'cel' ? '}}' : '>'
+
         return (
           <>
             <InputLabel label={label} required={required} />
-            <div className="flex grow items-center gap-cn-3xs">
-              {'<+inputs.'}
+            <div className="gap-cn-3xs flex grow items-center">
+              {runtimePrefix}
               <Input
                 wrapperClassName="flex-grow"
                 autoFocus={true}
                 placeholder={placeholder}
                 value={extractRuntimeInputName(field.value)}
                 onChange={evt => {
-                  const newValue = constructRuntimeInputValue(evt.currentTarget.value)
+                  const newValue = constructRuntimeInputValue(evt.currentTarget.value, runtimeExpressionType)
                   field.onChange(newValue)
                 }}
                 disabled={readonly}
                 tabIndex={0}
               />
-              {'>'}
+              {runtimeSuffix}
             </div>
             <InputCaption error={fieldState?.error?.message} />
           </>
         )
+      }
       case 'expression':
         return (
           <>
             <InputLabel label={label} required={required} />
-            <div className="flex grow items-center gap-cn-3xs">
+            <div className="gap-cn-3xs flex grow items-center">
               &#931;{' '}
               <Input
                 wrapperClassName="flex-grow"
@@ -101,8 +119,8 @@ export function InputWrapper({
   }
 
   return (
-    <div className={'flex items-end gap-cn-md'}>
-      <div className={'flex grow flex-col gap-cn-xs'}>{renderContent()}</div>
+    <div className={'gap-cn-md flex items-end'}>
+      <div className={'gap-cn-xs flex grow flex-col'}>{renderContent()}</div>
       {!isOnlyFixed && (
         <InputValueTypeSelection
           inputValueType={inputValueType}
@@ -114,9 +132,16 @@ export function InputWrapper({
             if (newInputValueType === 'fixed') {
               // NOTE: change to fixed value
               // restore from cache
-              if (typeof cachedFixedValue.current !== 'undefined') {
+              if (
+                typeof cachedFixedValue.current !== 'undefined' &&
+                isValidFixedShape(cachedFixedValue.current, defaultEmptyValue)
+              ) {
                 field.onChange(cachedFixedValue.current)
-              } else if (typeof input.default !== 'undefined' && typeof getInputValueType(input.default)) {
+              } else if (
+                typeof input.default !== 'undefined' &&
+                getInputValueType(input.default) === 'fixed' &&
+                isValidFixedShape(input.default, defaultEmptyValue)
+              ) {
                 field.onChange(input.default)
               } else {
                 field.onChange(defaultEmptyValue)

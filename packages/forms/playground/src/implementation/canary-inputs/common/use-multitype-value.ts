@@ -1,9 +1,10 @@
-import { useRef, useState } from 'react'
+import { useEffect, useRef, useState } from 'react'
 
-import { AnyFormValue } from '@harnessio/forms'
+
 
 import { InputValueType, RuntimeInputConfig } from '../../types/types'
 import { getInputValueType, isOnlyFixedValueAllowed } from './utils/input-value-utils'
+import { AnyFormValue, isValidFixedShape } from '../../../../../src'
 
 type CacheType = {
   fixed?: undefined
@@ -21,16 +22,35 @@ function initializeValueCache(value: AnyFormValue) {
   return cachedValues
 }
 
+function getValueForInputValueType(
+  cache: CacheType,
+  toInputValueType: InputValueType,
+  defaultEmptyValue?: AnyFormValue
+): AnyFormValue {
+  const cached = cache[toInputValueType]
+
+  if (toInputValueType === 'fixed') {
+    if (cached !== undefined && getInputValueType(cached) === 'fixed' && isValidFixedShape(cached, defaultEmptyValue)) {
+      return cached
+    }
+
+    return defaultEmptyValue ?? ''
+  }
+
+  return cached ?? ''
+}
+
 function updateCacheAndFormValue(
   cacheRef: React.RefObject<CacheType | undefined>,
   fromInputValueType: InputValueType,
   toInputValueType: InputValueType,
   value: AnyFormValue,
-  changeValue: (value: AnyFormValue) => void
+  changeValue: (value: AnyFormValue) => void,
+  defaultEmptyValue?: AnyFormValue
 ) {
   if (cacheRef.current) {
     cacheRef.current[fromInputValueType] = value
-    changeValue?.(cacheRef.current?.[toInputValueType] ?? '') // TODO: add default/defaultEmpty
+    changeValue?.(getValueForInputValueType(cacheRef.current, toInputValueType, defaultEmptyValue))
   }
 }
 
@@ -43,7 +63,7 @@ export function useMultiTypeValue(props: {
   defaultEmptyValue?: AnyFormValue
   defaultValue?: AnyFormValue
 }) {
-  const { allowedValueTypes, value, changeValue, cacheMultiTypeValues = true } = props
+  const { allowedValueTypes, value, changeValue, cacheMultiTypeValues = true, defaultEmptyValue } = props
 
   const valueRef = useRef(value)
   valueRef.current = value
@@ -59,6 +79,19 @@ export function useMultiTypeValue(props: {
 
   const [inputValueType, setInputValueTypeLocal] = useState(initialValueType)
 
+  useEffect(() => {
+    if (value === '' && inputValueType !== 'fixed') {
+      return
+    }
+
+    const currentValueType = getInputValueType(value)
+    const nextInputValueType = onlyFixedValueAllowed && currentValueType === 'fixed' ? 'fixed' : currentValueType
+
+    if (nextInputValueType !== inputValueType) {
+      setInputValueTypeLocal(nextInputValueType)
+    }
+  }, [inputValueType, onlyFixedValueAllowed, value])
+
   const setInputValueType = (newInputValueType: InputValueType) => {
     // if same do nothing
     if (inputValueType === newInputValueType) {
@@ -67,7 +100,18 @@ export function useMultiTypeValue(props: {
 
     // if cache enabled
     if (cacheMultiTypeValues) {
-      updateCacheAndFormValue(cachedFixedValueRef, inputValueType, newInputValueType, value, changeValue)
+      updateCacheAndFormValue(
+        cachedFixedValueRef,
+        inputValueType,
+        newInputValueType,
+        value,
+        changeValue,
+        defaultEmptyValue
+      )
+    } else if (newInputValueType === 'fixed') {
+      changeValue(defaultEmptyValue ?? '')
+    } else {
+      changeValue('')
     }
 
     setInputValueTypeLocal(newInputValueType)

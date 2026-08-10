@@ -1,7 +1,9 @@
 import {
   RUNTIME_INPUT,
+  constructRuntimeInputValue,
   extractRuntimeInputName,
   getInputValueType,
+  getRuntimeExpressionType,
   isExpressionValue,
   isLegacyRuntimeValue,
   isRuntimeValue,
@@ -59,5 +61,22 @@ describe('runtime-value-utils', () => {
     expect(extractRuntimeInputName('${{ inputs.foo }}')).toBe('foo')
     expect(extractRuntimeInputName('<+inputs.foo>')).toBe('foo')
     expect(extractRuntimeInputName(RUNTIME_INPUT)).toBe(RUNTIME_INPUT)
+  })
+
+  it.each([
+    ['${{inputs.foo}}', 'cel'],
+    ['${{ inputs.foo }}', 'cel'],
+    ['<+inputs.foo>', 'jexl'],
+    ['<+input>', 'jexl'],
+    [undefined, 'cel']
+  ])('getRuntimeExpressionType(%j) → %s', (value, expected) => {
+    expect(getRuntimeExpressionType(value)).toBe(expected)
+  })
+
+  it('preserves expression family when constructing runtime input values', () => {
+    expect(constructRuntimeInputValue('foo', 'cel')).toBe('${{inputs.foo}}')
+    expect(constructRuntimeInputValue('foo', 'jexl')).toBe('<+inputs.foo>')
+    expect(constructRuntimeInputValue('bar', getRuntimeExpressionType('${{inputs.bar}}'))).toBe('${{inputs.bar}}')
+    expect(constructRuntimeInputValue('bar', getRuntimeExpressionType('<+inputs.bar>'))).toBe('<+inputs.bar>')
   })
 })

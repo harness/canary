@@ -1,7 +1,4 @@
-import { useCallback } from 'react'
-
-import { Button } from '@harnessio/ui/components'
-import { IconV2 } from '@harnessio/ui/components'
+import { useCallback, useEffect } from 'react'
 
 import {
   AnyFormValue,
@@ -13,11 +10,13 @@ import {
   useFieldArray,
   useFormContext
 } from '@harnessio/forms'
+import { Button, IconV2 } from '@harnessio/ui/components'
 
 import { InputCaption } from './common/InputCaption'
 import { InputLabel } from './common/InputLabel'
 import { InputWrapper } from './common/InputWrapper'
 import { RuntimeInputConfig } from './types/types'
+import { getInputValueType } from './utils/input-value-utils'
 
 export type UIInputWithConfigsForArray = Omit<IInputDefinition, 'path'>
 
@@ -30,17 +29,27 @@ export type ArrayFormInputDefinition = IInputDefinition<ArrayFormInputConfig, An
 
 type ArrayFormInputProps = InputProps<AnyFormValue, ArrayFormInputConfig>
 
-function ArrayFormInputInternal(props: ArrayFormInputProps): JSX.Element {
+function getAppendDefaultValue(input: ArrayFormInputProps['input']): AnyFormValue {
+  return typeof input.default !== 'undefined' && getInputValueType(input.default) === 'fixed'
+    ? input.default
+    : undefined
+}
+
+function FixedArrayInput(props: Pick<ArrayFormInputProps, 'path' | 'input' | 'factory' | 'readonly'>): JSX.Element {
   const { readonly, path, input, factory } = props
-  const { label, required, inputConfig, description } = input
+  const { inputConfig } = input
+  const { watch, setValue } = useFormContext()
+  const fieldValue = watch(path)
+
+  useEffect(() => {
+    if (!Array.isArray(fieldValue)) {
+      setValue(path, [], { shouldDirty: true })
+    }
+  }, [fieldValue, path, setValue])
 
   const { fields, append, remove } = useFieldArray({
     name: path
   })
-
-  const { getFieldState, formState } = useFormContext()
-  const fieldState = getFieldState(path, formState)
-  const { error } = fieldState
 
   const getChildInputs = useCallback(
     (rowInput: UIInputWithConfigsForArray, parentPath: string, idx: number): IInputDefinition[] => {
@@ -56,43 +65,55 @@ function ArrayFormInputInternal(props: ArrayFormInputProps): JSX.Element {
   )
 
   return (
+    <Controller
+      name={path}
+      render={() => (
+        <div className="flex flex-col">
+          <div>
+            {fields.map((item, idx) => (
+              <div key={item.id} className="space-x-cn-xs flex items-end">
+                {inputConfig?.input && (
+                  <RenderInputs items={getChildInputs(inputConfig?.input, path, idx)} factory={factory} />
+                )}
+                <div>
+                  <Button
+                    iconOnly
+                    className="mt-cn-xs"
+                    onClick={() => {
+                      remove(idx)
+                    }}
+                    disabled={readonly}
+                    tooltipProps={{ content: 'Remove' }}
+                  >
+                    <IconV2 name="trash" />
+                  </Button>
+                </div>
+              </div>
+            ))}
+          </div>
+          <div>
+            <Button size="sm" onClick={() => append(getAppendDefaultValue(input))} className="mt-cn-xs">
+              Add
+            </Button>
+          </div>
+        </div>
+      )}
+    />
+  )
+}
+
+function ArrayFormInputInternal(props: ArrayFormInputProps): JSX.Element {
+  const { path, input } = props
+  const { label, required, description } = input
+
+  const { getFieldState, formState } = useFormContext()
+  const fieldState = getFieldState(path, formState)
+  const { error } = fieldState
+
+  return (
     <InputWrapper {...props} defaultEmptyValue={[]}>
       <InputLabel label={label} required={required} />
-      {/* TODO: do we need Controller ? */}
-      <Controller
-        name={path}
-        render={() => (
-          <div className="flex flex-col">
-            <div>
-              {fields.map((item, idx) => (
-                <div key={item.id} className="flex items-end space-x-cn-xs">
-                  {inputConfig?.input && (
-                    <RenderInputs items={getChildInputs(inputConfig?.input, path, idx)} factory={factory} />
-                  )}
-                  <div>
-                    <Button
-                      iconOnly
-                      className="mt-cn-xs"
-                      onClick={() => {
-                        remove(idx)
-                      }}
-                      disabled={readonly}
-                      tooltipProps={{ content: 'Remove' }}
-                    >
-                      <IconV2 name="trash" />
-                    </Button>
-                  </div>
-                </div>
-              ))}
-            </div>
-            <div>
-              <Button size="sm" onClick={() => append(input.default ?? undefined)} className="mt-cn-xs">
-                Add
-              </Button>
-            </div>
-          </div>
-        )}
-      />
+      <FixedArrayInput {...props} />
       <InputCaption error={error?.message} caption={description} />
     </InputWrapper>
   )

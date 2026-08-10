@@ -2,16 +2,21 @@ import {
   constructRuntimeInputValue as constructRuntimeInputValueBase,
   extractRuntimeInputName,
   getInputValueType,
+  getRuntimeExpressionType,
   isExpressionValue,
-  isRuntimeValue
+  isRuntimeValue,
+  type RuntimeExpressionType
 } from '@harnessio/forms'
 
-export { extractRuntimeInputName, getInputValueType, isExpressionValue, isRuntimeValue }
+export {
+  extractRuntimeInputName,
+  getInputValueType,
+  getRuntimeExpressionType,
+  isExpressionValue,
+  isRuntimeValue,
+  type RuntimeExpressionType
+}
 
-/**
- * Views runtime UI still uses the jexl-shaped `<+inputs.NAME>` editor.
- * Prefer CEL (`${{inputs.NAME}}`) via `@harnessio/forms` when building new surfaces.
- */
-export function constructRuntimeInputValue(value?: string) {
-  return constructRuntimeInputValueBase(value, 'jexl')
+export function constructRuntimeInputValue(value?: string, expressionType?: RuntimeExpressionType) {
+  return constructRuntimeInputValueBase(value, expressionType ?? getRuntimeExpressionType(value))
 }

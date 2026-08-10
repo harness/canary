@@ -7,7 +7,12 @@ import { CommonFormInputConfig, InputValueType } from '../../types/types'
 import { InputLabel } from './input-label'
 import { MultiTypeSelectButton } from './multi-type-select-button'
 import { useIsOptionalLabelVisible } from './utils/form-utils'
-import { constructRuntimeInputValue, extractRuntimeInputName, RUNTIME_INPUT } from './utils/input-value-utils'
+import {
+  constructRuntimeInputValue,
+  extractRuntimeInputName,
+  getRuntimeExpressionType,
+  RUNTIME_INPUT
+} from './utils/input-value-utils'
 
 export interface RuntimeInputProps {
   value?: string
@@ -57,7 +62,7 @@ function RuntimeInput(props: RuntimeInputProps): JSX.Element | null {
         optional={!required}
         value={extractRuntimeInputName(value)}
         onChange={value => {
-          onInputChange?.(constructRuntimeInputValue(value))
+          onInputChange?.(constructRuntimeInputValue(value, getRuntimeExpressionType(localValue)))
         }}
         contentWidth="triggerWidth"
         options={[{ label: RUNTIME_INPUT, value: RUNTIME_INPUT }]}

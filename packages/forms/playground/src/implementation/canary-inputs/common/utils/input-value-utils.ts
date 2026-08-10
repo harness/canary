@@ -1,6 +1,22 @@
 import { InputValueType } from '../../../types/types'
 
+export type RuntimeExpressionType = 'cel' | 'jexl'
+
 export const RUNTIME_INPUT = '<+input>'
+
+export function getRuntimeExpressionType(value?: string): RuntimeExpressionType {
+  if (typeof value === 'undefined') {
+    return 'cel'
+  }
+
+  const trimmed = value.trim()
+
+  if (trimmed.startsWith('${{') && trimmed.endsWith('}}')) {
+    return 'cel'
+  }
+
+  return 'jexl'
+}
 
 export function isLegacyRuntimeValue(value: unknown) {
   // TODO: improve using regex
@@ -61,7 +77,10 @@ export function extractRuntimeInputName(value?: string) {
   return trimmed
 }
 
-export function constructRuntimeInputValue(value?: string, expressionType: 'cel' | 'jexl' = 'cel') {
+export function constructRuntimeInputValue(
+  value?: string,
+  expressionType: RuntimeExpressionType = getRuntimeExpressionType(value)
+) {
   if (value === RUNTIME_INPUT) {
     return value
   }

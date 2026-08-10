@@ -2,6 +2,7 @@ import { get, isArray, isEmpty, isObject, isUndefined, merge, set } from 'lodash
 import * as zod from 'zod/v3'
 
 import type { AnyFormValue, IFormDefinition, IGlobalValidationConfig, IInputDefinition } from '../../types/types'
+import { isUnresolvedValue } from '../../utils/runtime-value-utils'
 
 const REQUIRED_MESSAGE = 'Required field'
 
@@ -219,6 +220,10 @@ function createStringSchemaWithGlobalValidation(
   })
 }
 
+function shouldSkipValidation(value: unknown, input: IInputDefinition, options?: IGetValidationSchemaOptions): boolean {
+  return (options?.validationConfig?.skipValidationFor ?? isUnresolvedValue)(value, input)
+}
+
 function createSchemaForArray(
   innerSchema:
     | {
@@ -272,7 +277,12 @@ function getSchemaForPrimitive(
         }
       }
 
-      //3. Input validation
+      // 3. Runtime inputs and expressions stay strings until execution, so there is nothing to check
+      if (shouldSkipValidation(value, input, options)) {
+        return
+      }
+
+      // 4. Input validation
       const schemaInternal = getSchema(schema, values)
       if (schemaInternal) {
         const schemaResponse = await schemaInternal.safeParseAsync(value)
@@ -330,7 +340,12 @@ function getSchemaForArray(
         }
       }
 
-      // 3. Prevent more validation if value is not an array
+      // 3. Runtime inputs and expressions stay strings until execution, so there is nothing to check
+      if (shouldSkipValidation(value, input, options)) {
+        return
+      }
+
+      // 4. Prevent more validation if value is not an array
       if (!isArray(value)) {
         ctx.addIssue({
           code: zod.ZodIssueCode.custom,
@@ -339,7 +354,7 @@ function getSchemaForArray(
         return zod.NEVER
       }
 
-      // 4. Input validation
+      // 5. Input validation
       const schemaInternal = getSchema(schema, values)
       if (schemaInternal) {
         const schemaResult = await schemaInternal.safeParseAsync(value)

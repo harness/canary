@@ -74,7 +74,7 @@ function ListFormInputInternal(props: ListFormInputProps): JSX.Element {
   )
 
   return (
-    <InputWrapper {...props}>
+    <InputWrapper {...props} defaultEmptyValue={[]}>
       <InputLabel label={label} required={required} />
       {/* TODO: do we need Controller ? */}
       <Controller

@@ -56,7 +56,7 @@ function ArrayFormInputInternal(props: ArrayFormInputProps): JSX.Element {
   )
 
   return (
-    <InputWrapper {...props}>
+    <InputWrapper {...props} defaultEmptyValue={[]}>
       <InputLabel label={label} required={required} />
       {/* TODO: do we need Controller ? */}
       <Controller

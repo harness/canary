@@ -188,6 +188,14 @@ export interface IGlobalValidationConfig<T extends string = string> {
    * if return continue=true, validation continues, otherwise it return valid state (if there is no error preset)
    */
   globalValidation?: <T, K>(value: T, input: IInputDefinition, metadata: K) => { continue?: boolean; error?: string }
+  /**
+   * Values matching this predicate skip type and schema validation.
+   *
+   * Defaults to `isUnresolvedValue`, which matches runtime inputs (`<+input>`, `${{inputs.foo}}`)
+   * and expressions. Those are strings until the pipeline runs, so they cannot be checked against
+   * the declared input type. Pass `() => false` to validate them like any other value.
+   */
+  skipValidationFor?: (value: unknown, input: IInputDefinition) => boolean
 }
 
 export type IInputDefinitionForArrayInputs<T = unknown> = Omit<IInputDefinition<T>, 'path'> & {

@@ -71,7 +71,7 @@ export function RootForm<TFieldValues extends FieldValues = FieldValues, TContex
     resolver,
     defaultValues,
     shouldFocusError,
-    // validateAfterFirstSubmit,
+    validateAfterFirstSubmit = true,
     onValuesChange,
     onValidationChange,
     onSubmit,
@@ -88,7 +88,7 @@ export function RootForm<TFieldValues extends FieldValues = FieldValues, TContex
 
   const methods = useForm<TFieldValues>({
     mode,
-    reValidateMode: 'onChange',
+    reValidateMode: validateAfterFirstSubmit ? 'onChange' : 'onSubmit',
     defaultValues,
     shouldFocusError,
     resolver
@@ -158,7 +158,7 @@ export function RootForm<TFieldValues extends FieldValues = FieldValues, TContex
       onValuesChangeRef.current?.({ ...(values as any) })
 
       // NOTE: required for validating dependent fields
-      if (submittedRef.current === true) {
+      if (validateAfterFirstSubmit && submittedRef.current === true) {
         // trigger validation on value change
         isValidatingRef.current = true
         methods.trigger().finally(() => {
@@ -170,7 +170,7 @@ export function RootForm<TFieldValues extends FieldValues = FieldValues, TContex
     return () => {
       subscription.unsubscribe()
     }
-  }, [methods])
+  }, [methods, validateAfterFirstSubmit])
 
   const skipInitialValidationChangeRef = useRef(true)
   useEffect(() => {

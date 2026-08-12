@@ -52,13 +52,13 @@ The published Button family currently contains 12 component sets:
 - Variant availability is not a full matrix: link appears only in md and sm Text; transparent is absent from most Rounded sets and all IconOnlyRounded sets.
 - The ❌ prefix denotes a deprecated component. All Rounded Button treatments are deprecated; rounded text is unsupported, and the Figma sets and code prop remain temporarily for migration.
 - Code Connect includes a `-` theme mapping in every Button file, while Figma currently exposes that option only on md and sm Text.
+- Button is approved for actions, including action toolbars and controls that start or advance onboarding in place. Link is required for routes, URLs, files, and other destinations. Canary does not currently provide an approved button-styled Link pattern.
 
-The inventory entry is now `mapped`. The Button draft still needs four manual design-system decisions before it should leave `draft`:
+The inventory entry is now `mapped`. The Button draft still needs three manual design-system decisions before it should leave `draft`:
 
 1. Decide whether 2xs and 3xs should be added to Figma or remain an intentional code-only capability.
 2. Approve a variant-by-size-by-shape support matrix, treating every Rounded combination as deprecated.
 3. Decide whether Figma needs a focus preview.
-4. Decide whether Button officially supports navigation.
 
 Do not advance the contract to `piloting` or `stable` until the remaining policy decisions are recorded. The verified identity is sufficient for the inventory's `mapped` status, but it does not make every current Figma/code difference compliant.
 

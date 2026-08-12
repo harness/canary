@@ -6,7 +6,9 @@ beta: true
 
 import { DocsPage } from "@/components/docs-page";
 
-The `Button` component allows users to trigger actions, submit forms, and navigate through the application. The button component supports various combinations of variants, themes, sizes, and states.
+The `Button` component triggers actions such as submitting, saving, deleting, opening a dialog, or starting and advancing a workflow. Use `Link` when the interaction navigates to a route, URL, file, or other destination. Ordinary navigation should not use Button, even when the control is visually prominent.
+
+The label does not determine the semantic component. For example, use Button when “Get Started” begins or advances an onboarding flow in place. Use Link when “Get Started” navigates to an onboarding destination.
 
 ## Default Button
 
@@ -350,14 +352,14 @@ AI variant buttons are used specifically for AI-related actions.
 </div>`}
 />
 
-## Link Button
+## Link-style Button
 
-Link buttons appear as text links and don't accept theme props.
+The `link` variant makes an action look like inline text. It is still a Button and must trigger an action; it does not provide link semantics and should not be used for ordinary navigation. Use the `Link` component for destinations. Link-style buttons don't accept theme props.
 
 <DocsPage.ComponentExample
   client:only
   code={`<div className="flex flex-col items-start min-w-[600px] gap-cn-2xl">
-  <Button variant="link">Link Button</Button>
+  <Button variant="link">Show details</Button>
 
 <hr />
 
@@ -581,8 +583,8 @@ import { Button } from '@harnessio/ui/components'
 // AI button (a special variant for AI-related actions)
 <Button variant="ai">AI Button</Button>
 
-// Link button (note: doesn't accept theme prop)
-<Button variant="link">Link Button</Button>
+// Link-style action (still a Button; does not navigate)
+<Button variant="link" onClick={showDetails}>Show details</Button>
 
 // Transparent button (note: doesn't accept theme prop)
 <Button variant="transparent">Transparent Button</Button>
@@ -680,7 +682,8 @@ This ensures type safety and provides proper development-time feedback on invali
     },
     {
       name: "asChild",
-      description: "Passes the component styling to a child element.",
+      description:
+        "Passes Button behavior and styling to a child for approved action-trigger composition. Do not use asChild to make Button perform ordinary navigation; use Link for destinations.",
       required: false,
       value: "boolean",
       defaultValue: "false",

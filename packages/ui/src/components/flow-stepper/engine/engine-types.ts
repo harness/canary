@@ -5,30 +5,45 @@ export interface StepGroupConfig {
   description?: string
 }
 
-export interface StepConfig {
-  step: string
+interface BaseStepConfig {
   title: string
   description?: string
   component: ComponentType
   next?: string
-  // When true, complete()/error()/skip() on this step become permanent no-ops after the
-  // first call (re-entry guard only). Does NOT affect this step's initial rendered status —
+  // When true, complete()/error()/skip() on this step become permanent no-ops after
+  // the first call (re-entry guard only). Does NOT affect the step's initial rendered status —
   // it always enters 'active' like any other step.
   terminal?: boolean
   // Presentation-only hint: always render this step as finished/success (icon + color),
-  // regardless of its actual cardHistory status. Does not affect the state machine, does not
-  // affect re-entry (pair with `terminal` for that), and does not affect accordion-open
-  // behavior, which continues to reflect the real derived state.
+  // regardless of actual cardHistory status. Does not affect the state machine, does not
+  // affect re-entry (pair with `terminal` for that), does not affect accordion-open
+  // behavior, and continues to reflect the real derived state.
   visualCompleted?: boolean
 }
 
-export interface FlowConfig {
-  // Every real flow groups its steps under at least one StepGroup — see derive-stepper-model.ts's
-  // dev-mode warning for the runtime safety net if a caller passes an empty object anyway.
+export interface GroupedStepConfig extends BaseStepConfig {
+  step: string
+}
+
+export interface FlatStepConfig extends BaseStepConfig {
+  step?: undefined
+}
+
+export type StepConfig = GroupedStepConfig | FlatStepConfig
+
+export interface GroupedFlowConfig {
   stepGroups: Record<string, StepGroupConfig>
-  steps: Record<string, StepConfig>
+  steps: Record<string, GroupedStepConfig>
   initialStep: string
 }
+
+export interface FlatFlowConfig {
+  stepGroups?: undefined
+  steps: Record<string, FlatStepConfig>
+  initialStep: string
+}
+
+export type FlowConfig = GroupedFlowConfig | FlatFlowConfig
 
 export type CardStatus = 'active' | 'completed' | 'error' | 'skipped'
 

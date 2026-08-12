@@ -283,6 +283,20 @@ describe('SidebarItem', () => {
       expect(preventDefault).toHaveBeenCalled()
       expect(actionClick).toHaveBeenCalled()
     })
+
+    test('does not render action buttons when collapsed', () => {
+      sidebarContext.state = 'collapsed'
+      renderComponent({
+        actionButtons: [
+          {
+            iconName: 'pin',
+            onClick: vi.fn()
+          }
+        ]
+      })
+
+      expect(screen.queryByTestId('layout-horizontal')).toBeNull()
+    })
   })
 
   describe('Dropdowns & Action Menu', () => {
@@ -351,6 +365,23 @@ describe('SidebarItem', () => {
       renderComponent({ children: submenuChild, defaultSubmenuOpen: false })
       const menuItemButton = screen.getByRole('menuitem')
       await userEvent.click(menuItemButton)
+      const grids = screen.getAllByTestId('layout-grid')
+      const submenuGrid = grids[grids.length - 1]
+      expect(submenuGrid).toHaveAttribute('data-state', 'open')
+    })
+
+    test('expands sidebar and opens submenu when clicked while collapsed', async () => {
+      sidebarContext.state = 'collapsed'
+      const { rerender } = renderComponent({ children: submenuChild, defaultSubmenuOpen: false })
+
+      await userEvent.click(screen.getByRole('menuitem'))
+
+      expect(sidebarContext.setOpen).toHaveBeenCalledWith(true)
+
+      // Simulate sidebar finishing expand (setOpen from context is mocked)
+      sidebarContext.state = 'expanded'
+      rerender(<SidebarItem {...({ ...baseProps, children: submenuChild, defaultSubmenuOpen: false } as any)} />)
+
       const grids = screen.getAllByTestId('layout-grid')
       const submenuGrid = grids[grids.length - 1]
       expect(submenuGrid).toHaveAttribute('data-state', 'open')

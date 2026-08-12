@@ -1,4 +1,14 @@
-import { ComponentPropsWithoutRef, forwardRef, ReactNode, Ref, useCallback, useEffect, useMemo, useState } from 'react'
+import {
+  ComponentPropsWithoutRef,
+  forwardRef,
+  ReactNode,
+  Ref,
+  useCallback,
+  useEffect,
+  useMemo,
+  useRef,
+  useState
+} from 'react'
 
 import {
   Avatar,
@@ -204,7 +214,9 @@ const SidebarItemTrigger = forwardRef<HTMLButtonElement | HTMLAnchorElement, Sid
     const withDescription = !!description
     const withActionMenu = state === 'expanded' && !!actionMenuItems && actionMenuItems.length > 0
     const withDropdownMenu = !!dropdownMenuContent
-    const withActionButtons = !!actionButtons
+    // Pin/action buttons must not render while collapsed — they overlay the icon grid area
+    // (see collapsedSidebarStyles) and would intercept clicks meant to navigate or expand.
+    const withActionButtons = state === 'expanded' && !!actionButtons && actionButtons.length > 0
     const withRightElement = withActionMenu || withDropdownMenu || !!badge || withSubmenu || withRightIndicator
     const withDragHandle = !!draggable
 
@@ -251,7 +263,7 @@ const SidebarItemTrigger = forwardRef<HTMLButtonElement | HTMLAnchorElement, Sid
           })}
         </Layout.Horizontal>
       )
-    }, [actionButtons])
+    }, [actionButtons, withActionButtons])
 
     const renderContent = () => (
       <Layout.Grid
@@ -484,7 +496,7 @@ SidebarItemTrigger.displayName = 'SidebarItemTrigger'
 
 export const SidebarItem = forwardRef<HTMLButtonElement | HTMLAnchorElement, SidebarItemProps>(
   ({ subMenuOpen, defaultSubmenuOpen, onSubmenuChange, ...props }, ref) => {
-    const { state } = useSidebar()
+    const { state, setOpen: setSidebarOpen } = useSidebar()
 
     const collapsedSubmenuActive = state === 'collapsed' && !!props.children && hasActiveSubmenuChild(props.children)
 
@@ -508,12 +520,30 @@ export const SidebarItem = forwardRef<HTMLButtonElement | HTMLAnchorElement, Sid
       [isControlled, onSubmenuChange]
     )
 
-    const toggleSubmenu = useCallback(() => setOpen(!effectiveOpen), [setOpen, effectiveOpen])
+    // When clicked while collapsed, expand first; open submenu after sidebar state flips to expanded.
+    const pendingSubmenuOpenRef = useRef(false)
 
-    // Close automatically if sidebar collapses
+    const toggleSubmenu = useCallback(() => {
+      if (state === 'collapsed') {
+        pendingSubmenuOpenRef.current = true
+        setSidebarOpen(true)
+        return
+      }
+      setOpen(!effectiveOpen)
+    }, [state, setSidebarOpen, setOpen, effectiveOpen])
+
+    // Close automatically if sidebar collapses; apply pending open after expand.
     useEffect(() => {
-      if (state === 'collapsed' && effectiveOpen) {
-        setOpen(false)
+      if (state === 'collapsed') {
+        if (effectiveOpen) {
+          setOpen(false)
+        }
+        return
+      }
+
+      if (pendingSubmenuOpenRef.current) {
+        pendingSubmenuOpenRef.current = false
+        setOpen(true)
       }
     }, [state, effectiveOpen, setOpen])
 

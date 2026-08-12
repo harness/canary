@@ -1,5 +1,389 @@
 [
   {
+    "prNumber": 11304,
+    "title": "fix: [UUI-3086]: BranchTag renders dead space beside truncated tag",
+    "summary": "fix: [UUI-3086]: BranchTag renders dead space beside truncated tag",
+    "url": "https://harness0.harness.io/ng/account/l7B_kbSEQD2wjrM7PShm5w/all/code/orgs/PROD/projects/Harness_Commons/repos/canary/pulls/11304",
+    "mergedAt": "2026-08-11T11:19:09Z",
+    "author": "harish-viswanathan"
+  },
+  {
+    "prNumber": 11301,
+    "title": "feat: [CCM-35130]: MultiSelect - support literal tag creation for values containing colons",
+    "summary": "feat: [CCM-35130]: MultiSelect - support literal tag creation for values containing colons",
+    "url": "https://harness0.harness.io/ng/account/l7B_kbSEQD2wjrM7PShm5w/all/code/orgs/PROD/projects/Harness_Commons/repos/canary/pulls/11301",
+    "mergedAt": "2026-08-11T07:00:03Z",
+    "author": "fardeen-kamal"
+  },
+  {
+    "prNumber": 11300,
+    "title": "chore: [UUI-3038]: Removal of unused tokens",
+    "summary": "chore: [UUI-3038]: Removal of unused tokens",
+    "url": "https://harness0.harness.io/ng/account/l7B_kbSEQD2wjrM7PShm5w/all/code/orgs/PROD/projects/Harness_Commons/repos/canary/pulls/11300",
+    "mergedAt": "2026-08-10T19:59:00Z",
+    "author": "kathryn-grantier"
+  },
+  {
+    "prNumber": 11297,
+    "title": "fix: [UUI-2986]: add allowed values to pipeline input types",
+    "summary": "fix: [UUI-2986]: add allowed values to pipeline input types",
+    "url": "https://harness0.harness.io/ng/account/l7B_kbSEQD2wjrM7PShm5w/all/code/orgs/PROD/projects/Harness_Commons/repos/canary/pulls/11297",
+    "mergedAt": "2026-08-10T16:52:47Z",
+    "author": "sayantan-mondal"
+  },
+  {
+    "prNumber": 11294,
+    "title": "feat: [UUI-2252]: Remove Reset filters menu item and secondary + Filter button",
+    "summary": "feat: [UUI-2252]: Remove Reset filters menu item and secondary + Filter button",
+    "url": "https://harness0.harness.io/ng/account/l7B_kbSEQD2wjrM7PShm5w/all/code/orgs/PROD/projects/Harness_Commons/repos/canary/pulls/11294",
+    "mergedAt": "2026-08-06T07:22:55Z",
+    "author": "radhakrishna-dodla"
+  },
+  {
+    "prNumber": 11290,
+    "title": "fix: [UUI-1350]: CardSelect glow/badge + flat-mode stepper parity",
+    "summary": "fix: [UUI-1350]: CardSelect glow/badge + flat-mode stepper parity",
+    "url": "https://harness0.harness.io/ng/account/l7B_kbSEQD2wjrM7PShm5w/all/code/orgs/PROD/projects/Harness_Commons/repos/canary/pulls/11290",
+    "mergedAt": "2026-08-06T05:32:10Z",
+    "author": "jacob-bassett"
+  },
+  {
+    "prNumber": 11293,
+    "title": "feat: [UUI-2885]: MultiTag filter dropdown overflow and spacing",
+    "summary": "feat: [UUI-2885]: MultiTag filter dropdown overflow and spacing",
+    "url": "https://harness0.harness.io/ng/account/l7B_kbSEQD2wjrM7PShm5w/all/code/orgs/PROD/projects/Harness_Commons/repos/canary/pulls/11293",
+    "mergedAt": "2026-08-05T23:08:01Z",
+    "author": "radhakrishna-dodla"
+  },
+  {
+    "prNumber": 11288,
+    "title": "feat: [AIPLAT-1234]: Auto closing the reasoning component as soon as the streaming completes",
+    "summary": "feat: [AIPLAT-1234]: Auto closing the reasoning component as soon as the streaming completes",
+    "url": "https://harness0.harness.io/ng/account/l7B_kbSEQD2wjrM7PShm5w/all/code/orgs/PROD/projects/Harness_Commons/repos/canary/pulls/11288",
+    "mergedAt": "2026-08-05T13:03:46Z",
+    "author": "avinash-madhwani"
+  },
+  {
+    "prNumber": 11292,
+    "title": "feat: [UUI-2885]: Enable Enter-to-apply for MultiTag filters",
+    "summary": "feat: [UUI-2885]: Enable Enter-to-apply for MultiTag filters",
+    "url": "https://harness0.harness.io/ng/account/l7B_kbSEQD2wjrM7PShm5w/all/code/orgs/PROD/projects/Harness_Commons/repos/canary/pulls/11292",
+    "mergedAt": "2026-08-05T06:25:12Z",
+    "author": "radhakrishna-dodla"
+  },
+  {
+    "prNumber": 11291,
+    "title": "chore: [UUI-2868]: bump @harnessio/ui package version to 1.0.12",
+    "summary": "chore: [UUI-2868]: bump @harnessio/ui package version to 1.0.12",
+    "url": "https://harness0.harness.io/ng/account/l7B_kbSEQD2wjrM7PShm5w/all/code/orgs/PROD/projects/Harness_Commons/repos/canary/pulls/11291",
+    "mergedAt": "2026-08-04T22:39:17Z",
+    "author": "divyansh-batham"
+  },
+  {
+    "prNumber": 11289,
+    "title": "chore: [UUI-2884]: bump @harnessio/ui package version to 1.0.11",
+    "summary": "chore: [UUI-2884]: bump @harnessio/ui package version to 1.0.11",
+    "url": "https://harness0.harness.io/ng/account/l7B_kbSEQD2wjrM7PShm5w/all/code/orgs/PROD/projects/Harness_Commons/repos/canary/pulls/11289",
+    "mergedAt": "2026-08-04T17:49:48Z",
+    "author": "jared-hawkins"
+  },
+  {
+    "prNumber": 11287,
+    "title": "feat: [UUI-2868]: Add label, testId support to MoreActionsTooltip",
+    "summary": "feat: [UUI-2868]: Add label, testId support to MoreActionsTooltip",
+    "url": "https://harness0.harness.io/ng/account/l7B_kbSEQD2wjrM7PShm5w/all/code/orgs/PROD/projects/Harness_Commons/repos/canary/pulls/11287",
+    "mergedAt": "2026-08-04T17:10:07Z",
+    "author": "divyansh-batham"
+  },
+  {
+    "prNumber": 11285,
+    "title": "fix: [UUI-2856]: Pipelines: Dotes grid update",
+    "summary": "fix: [UUI-2856]: Pipelines: Dotes grid update",
+    "url": "https://harness0.harness.io/ng/account/l7B_kbSEQD2wjrM7PShm5w/all/code/orgs/PROD/projects/Harness_Commons/repos/canary/pulls/11285",
+    "mergedAt": "2026-08-04T17:02:53Z",
+    "author": "kathryn-grantier"
+  },
+  {
+    "prNumber": 11235,
+    "title": "feat: [UUI-2191]: Update empty state illustrations",
+    "summary": "feat: [UUI-2191]: Update empty state illustrations",
+    "url": "https://harness0.harness.io/ng/account/l7B_kbSEQD2wjrM7PShm5w/all/code/orgs/PROD/projects/Harness_Commons/repos/canary/pulls/11235",
+    "mergedAt": "2026-08-04T15:23:58Z",
+    "author": "aaron-palmer"
+  },
+  {
+    "prNumber": 11284,
+    "title": "fix: [UUI-2832]: shrink sidebar container width",
+    "summary": "fix: [UUI-2832]: shrink sidebar container width",
+    "url": "https://harness0.harness.io/ng/account/l7B_kbSEQD2wjrM7PShm5w/all/code/orgs/PROD/projects/Harness_Commons/repos/canary/pulls/11284",
+    "mergedAt": "2026-08-04T11:08:45Z",
+    "author": "igor-bogdanovski"
+  },
+  {
+    "prNumber": 11273,
+    "title": "feat: [UUI-2857]: Add Figma Code Connect pilot",
+    "summary": "feat: [UUI-2857]: Add Figma Code Connect pilot",
+    "url": "https://harness0.harness.io/ng/account/l7B_kbSEQD2wjrM7PShm5w/all/code/orgs/PROD/projects/Harness_Commons/repos/canary/pulls/11273",
+    "mergedAt": "2026-08-03T21:55:17Z",
+    "author": "jared-hawkins"
+  },
+  {
+    "prNumber": 11280,
+    "title": "fix: [UUI-2788]: Tab component color and typography update",
+    "summary": "fix: [UUI-2788]: Tab component color and typography update",
+    "url": "https://harness0.harness.io/ng/account/l7B_kbSEQD2wjrM7PShm5w/all/code/orgs/PROD/projects/Harness_Commons/repos/canary/pulls/11280",
+    "mergedAt": "2026-07-31T15:37:34Z",
+    "author": "kathryn-grantier"
+  },
+  {
+    "prNumber": 11283,
+    "title": "feat: [UUI-1848]: Fix calendar component UI",
+    "summary": "feat: [UUI-1848]: Fix calendar component UI",
+    "url": "https://harness0.harness.io/ng/account/l7B_kbSEQD2wjrM7PShm5w/all/code/orgs/PROD/projects/Harness_Commons/repos/canary/pulls/11283",
+    "mergedAt": "2026-07-31T15:34:33Z",
+    "author": "pranesh-tg"
+  },
+  {
+    "prNumber": 11282,
+    "title": "fix: [UUI-1584]: Overlapping badges in step cards",
+    "summary": "fix: [UUI-1584]: Overlapping badges in step cards",
+    "url": "https://harness0.harness.io/ng/account/l7B_kbSEQD2wjrM7PShm5w/all/code/orgs/PROD/projects/Harness_Commons/repos/canary/pulls/11282",
+    "mergedAt": "2026-07-31T07:13:47Z",
+    "author": "radhakrishna-dodla"
+  },
+  {
+    "prNumber": 11281,
+    "title": "fix:[UUI-2248]: Fix for  very long tag text cut off in Tags column",
+    "summary": "fix:[UUI-2248]: Fix for  very long tag text cut off in Tags column",
+    "url": "https://harness0.harness.io/ng/account/l7B_kbSEQD2wjrM7PShm5w/all/code/orgs/PROD/projects/Harness_Commons/repos/canary/pulls/11281",
+    "mergedAt": "2026-07-30T21:23:10Z",
+    "author": "radhakrishna-dodla"
+  },
+  {
+    "prNumber": 11277,
+    "title": "feat: [UUI-2741]: data table bottom row pinning",
+    "summary": "feat: [UUI-2741]: data table bottom row pinning",
+    "url": "https://harness0.harness.io/ng/account/l7B_kbSEQD2wjrM7PShm5w/all/code/orgs/PROD/projects/Harness_Commons/repos/canary/pulls/11277",
+    "mergedAt": "2026-07-30T13:14:11Z",
+    "author": "sandeep-sharma"
+  },
+  {
+    "prNumber": 11276,
+    "title": "feat: [UUI-2570]: add optional sticky header for data table",
+    "summary": "feat: [UUI-2570]: add optional sticky header for data table",
+    "url": "https://harness0.harness.io/ng/account/l7B_kbSEQD2wjrM7PShm5w/all/code/orgs/PROD/projects/Harness_Commons/repos/canary/pulls/11276",
+    "mergedAt": "2026-07-30T11:55:25Z",
+    "author": "sandeep-sharma"
+  },
+  {
+    "prNumber": 11279,
+    "title": "feat: [CCM-34394]: support custom Gauge description content",
+    "summary": "feat: [CCM-34394]: support custom Gauge description content",
+    "url": "https://harness0.harness.io/ng/account/l7B_kbSEQD2wjrM7PShm5w/all/code/orgs/PROD/projects/Harness_Commons/repos/canary/pulls/11279",
+    "mergedAt": "2026-07-30T10:44:32Z",
+    "author": "fardeen-kamal"
+  },
+  {
+    "prNumber": 11278,
+    "title": "fix: [UUI-2756]: Fix blank Code Editor on first open",
+    "summary": "fix: [UUI-2756]: Fix blank Code Editor on first open",
+    "url": "https://harness0.harness.io/ng/account/l7B_kbSEQD2wjrM7PShm5w/all/code/orgs/PROD/projects/Harness_Commons/repos/canary/pulls/11278",
+    "mergedAt": "2026-07-30T07:52:51Z",
+    "author": "harish-viswanathan"
+  },
+  {
+    "prNumber": 11274,
+    "title": "fix: [UUI-1350]: bump ui package version",
+    "summary": "fix: [UUI-1350]: bump ui package version",
+    "url": "https://harness0.harness.io/ng/account/l7B_kbSEQD2wjrM7PShm5w/all/code/orgs/PROD/projects/Harness_Commons/repos/canary/pulls/11274",
+    "mergedAt": "2026-07-28T23:37:45Z",
+    "author": "jacob-bassett"
+  },
+  {
+    "prNumber": 11269,
+    "title": "fix: [UUI-1350]: split terminal/visualCompleted, remove hover tooltip, add stepper maxwidth override",
+    "summary": "fix: [UUI-1350]: split terminal/visualCompleted, remove hover tooltip, add stepper maxwidth override",
+    "url": "https://harness0.harness.io/ng/account/l7B_kbSEQD2wjrM7PShm5w/all/code/orgs/PROD/projects/Harness_Commons/repos/canary/pulls/11269",
+    "mergedAt": "2026-07-28T21:19:21Z",
+    "author": "jacob-bassett"
+  },
+  {
+    "prNumber": 11271,
+    "title": "chore: add katie as design reviewer",
+    "summary": "chore: add katie as design reviewer",
+    "url": "https://harness0.harness.io/ng/account/l7B_kbSEQD2wjrM7PShm5w/all/code/orgs/PROD/projects/Harness_Commons/repos/canary/pulls/11271",
+    "mergedAt": "2026-07-28T16:35:33Z",
+    "author": "abhinav-rastogi"
+  },
+  {
+    "prNumber": 11270,
+    "title": "feat: [UUI-2250]: add delete saved filters support in ui and filters",
+    "summary": "feat: [UUI-2250]: add delete saved filters support in ui and filters",
+    "url": "https://harness0.harness.io/ng/account/l7B_kbSEQD2wjrM7PShm5w/all/code/orgs/PROD/projects/Harness_Commons/repos/canary/pulls/11270",
+    "mergedAt": "2026-07-28T14:47:58Z",
+    "author": "radhakrishna-dodla"
+  },
+  {
+    "prNumber": 11246,
+    "title": "fix: [UUI-2279]: Scale studio card tag scoop to match stage card corner radius",
+    "summary": "fix: [UUI-2279]: Scale studio card tag scoop to match stage card corner radius",
+    "url": "https://harness0.harness.io/ng/account/l7B_kbSEQD2wjrM7PShm5w/all/code/orgs/PROD/projects/Harness_Commons/repos/canary/pulls/11246",
+    "mergedAt": "2026-07-27T16:19:38Z",
+    "author": "kathryn-grantier"
+  },
+  {
+    "prNumber": 11266,
+    "title": "feat: [CCM-34715]: add gauge component for ccm budget listing page",
+    "summary": "feat: [CCM-34715]: add gauge component for ccm budget listing page",
+    "url": "https://harness0.harness.io/ng/account/l7B_kbSEQD2wjrM7PShm5w/all/code/orgs/PROD/projects/Harness_Commons/repos/canary/pulls/11266",
+    "mergedAt": "2026-07-27T05:58:06Z",
+    "author": "fardeen-kamal"
+  },
+  {
+    "prNumber": 11267,
+    "title": "feat: [UUI-2577]: add announcement icon and update icon map",
+    "summary": "feat: [UUI-2577]: add announcement icon and update icon map",
+    "url": "https://harness0.harness.io/ng/account/l7B_kbSEQD2wjrM7PShm5w/all/code/orgs/PROD/projects/Harness_Commons/repos/canary/pulls/11267",
+    "mergedAt": "2026-07-24T16:20:39Z",
+    "author": "igor-bogdanovski"
+  },
+  {
+    "prNumber": 11264,
+    "title": "fix: [UUI-2296]: Fix drawer header title overflow scroll issue",
+    "summary": "fix: [UUI-2296]: Fix drawer header title overflow scroll issue",
+    "url": "https://harness0.harness.io/ng/account/l7B_kbSEQD2wjrM7PShm5w/all/code/orgs/PROD/projects/Harness_Commons/repos/canary/pulls/11264",
+    "mergedAt": "2026-07-24T15:52:58Z",
+    "author": "pranesh-tg"
+  },
+  {
+    "prNumber": 11263,
+    "title": "chore: [UUI-2242]: add support for custom calendar props in FilterField",
+    "summary": "chore: [UUI-2242]: add support for custom calendar props in FilterField",
+    "url": "https://harness0.harness.io/ng/account/l7B_kbSEQD2wjrM7PShm5w/all/code/orgs/PROD/projects/Harness_Commons/repos/canary/pulls/11263",
+    "mergedAt": "2026-07-24T12:14:56Z",
+    "author": "yash-rathore"
+  },
+  {
+    "prNumber": 11166,
+    "title": "fix: [UUI-2575]: Bumping zod version while staying backward compatible",
+    "summary": "fix: [UUI-2575]: Bumping zod version while staying backward compatible",
+    "url": "https://harness0.harness.io/ng/account/l7B_kbSEQD2wjrM7PShm5w/all/code/orgs/PROD/projects/Harness_Commons/repos/canary/pulls/11166",
+    "mergedAt": "2026-07-24T08:03:58Z",
+    "author": "anand-prakash-tiwary"
+  },
+  {
+    "prNumber": 11265,
+    "title": "fix: [CODE-5552]: Use scoped principal listing APIs",
+    "summary": "fix: [CODE-5552]: Use scoped principal listing APIs",
+    "url": "https://harness0.harness.io/ng/account/l7B_kbSEQD2wjrM7PShm5w/all/code/orgs/PROD/projects/Harness_Commons/repos/canary/pulls/11265",
+    "mergedAt": "2026-07-24T05:06:48Z",
+    "author": "harish-viswanathan"
+  },
+  {
+    "prNumber": 11261,
+    "title": "fix: [CODE-5858]: remove required asterisk from optional commit dialog fields",
+    "summary": "fix: [CODE-5858]: remove required asterisk from optional commit dialog fields",
+    "url": "https://harness0.harness.io/ng/account/l7B_kbSEQD2wjrM7PShm5w/all/code/orgs/PROD/projects/Harness_Commons/repos/canary/pulls/11261",
+    "mergedAt": "2026-07-23T05:19:54Z",
+    "author": "codepulse"
+  },
+  {
+    "prNumber": 11262,
+    "title": "feat: [UUI-1350]: YAML panel header toggle + top-third stepper anchor",
+    "summary": "feat: [UUI-1350]: YAML panel header toggle + top-third stepper anchor",
+    "url": "https://harness0.harness.io/ng/account/l7B_kbSEQD2wjrM7PShm5w/all/code/orgs/PROD/projects/Harness_Commons/repos/canary/pulls/11262",
+    "mergedAt": "2026-07-22T21:43:49Z",
+    "author": "jacob-bassett"
+  },
+  {
+    "prNumber": 11239,
+    "title": "feat: [UUI-1928]: refine SinglePaneStepper for PLG flows",
+    "summary": "feat: [UUI-1928]: refine SinglePaneStepper for PLG flows",
+    "url": "https://harness0.harness.io/ng/account/l7B_kbSEQD2wjrM7PShm5w/all/code/orgs/PROD/projects/Harness_Commons/repos/canary/pulls/11239",
+    "mergedAt": "2026-07-22T20:47:10Z",
+    "author": "john-weber"
+  },
+  {
+    "prNumber": 11260,
+    "title": "fix: [UUI-2334]: bumped ui package version",
+    "summary": "fix: [UUI-2334]: bumped ui package version",
+    "url": "https://harness0.harness.io/ng/account/l7B_kbSEQD2wjrM7PShm5w/all/code/orgs/PROD/projects/Harness_Commons/repos/canary/pulls/11260",
+    "mergedAt": "2026-07-22T05:42:36Z",
+    "author": "yash-rathore"
+  },
+  {
+    "prNumber": 11258,
+    "title": "fix: [UUI-1721]: Fix studio card title increasing stage card width",
+    "summary": "fix: [UUI-1721]: Fix studio card title increasing stage card width",
+    "url": "https://harness0.harness.io/ng/account/l7B_kbSEQD2wjrM7PShm5w/all/code/orgs/PROD/projects/Harness_Commons/repos/canary/pulls/11258",
+    "mergedAt": "2026-07-22T04:36:06Z",
+    "author": "pranesh-tg"
+  },
+  {
+    "prNumber": 11257,
+    "title": "fix: [UUI-2334]: added prop to disable search input in filter-group",
+    "summary": "fix: [UUI-2334]: added prop to disable search input in filter-group",
+    "url": "https://harness0.harness.io/ng/account/l7B_kbSEQD2wjrM7PShm5w/all/code/orgs/PROD/projects/Harness_Commons/repos/canary/pulls/11257",
+    "mergedAt": "2026-07-22T04:04:33Z",
+    "author": "yash-rathore"
+  },
+  {
+    "prNumber": 11252,
+    "title": "feat: [UUI-2209]: Disable Dimmer Theme",
+    "summary": "feat: [UUI-2209]: Disable Dimmer Theme",
+    "url": "https://harness0.harness.io/ng/account/l7B_kbSEQD2wjrM7PShm5w/all/code/orgs/PROD/projects/Harness_Commons/repos/canary/pulls/11252",
+    "mergedAt": "2026-07-21T22:39:02Z",
+    "author": "kathryn-grantier"
+  },
+  {
+    "prNumber": 11249,
+    "title": "feat: [UUI-2375]: Add Change Log section to design system docs",
+    "summary": "feat: [UUI-2375]: Add Change Log section to design system docs",
+    "url": "https://harness0.harness.io/ng/account/l7B_kbSEQD2wjrM7PShm5w/all/code/orgs/PROD/projects/Harness_Commons/repos/canary/pulls/11249",
+    "mergedAt": "2026-07-21T19:24:17Z",
+    "author": "kathryn-grantier"
+  },
+  {
+    "prNumber": 11256,
+    "title": "feat: [AIPLAT-1151]: Avoid throwing context errors. Added noops instead",
+    "summary": "feat: [AIPLAT-1151]: Avoid throwing context errors. Added noops instead",
+    "url": "https://harness0.harness.io/ng/account/l7B_kbSEQD2wjrM7PShm5w/all/code/orgs/PROD/projects/Harness_Commons/repos/canary/pulls/11256",
+    "mergedAt": "2026-07-21T10:13:43Z",
+    "author": "avinash-madhwani"
+  },
+  {
+    "prNumber": 11250,
+    "title": "fix: [UUI-2405]: Enable font antialiasing in dark mode",
+    "summary": "fix: [UUI-2405]: Enable font antialiasing in dark mode",
+    "url": "https://harness0.harness.io/ng/account/l7B_kbSEQD2wjrM7PShm5w/all/code/orgs/PROD/projects/Harness_Commons/repos/canary/pulls/11250",
+    "mergedAt": "2026-07-20T19:19:00Z",
+    "author": "kathryn-grantier"
+  },
+  {
+    "prNumber": 11251,
+    "title": "fix: [UUI-2406]: High contrast modes broken in Appearance settings",
+    "summary": "fix: [UUI-2406]: High contrast modes broken in Appearance settings",
+    "url": "https://harness0.harness.io/ng/account/l7B_kbSEQD2wjrM7PShm5w/all/code/orgs/PROD/projects/Harness_Commons/repos/canary/pulls/11251",
+    "mergedAt": "2026-07-20T19:18:53Z",
+    "author": "kathryn-grantier"
+  },
+  {
+    "prNumber": 11247,
+    "title": "feat: [IR-3236]: Allow disabling manualSorting in <DataTable />",
+    "summary": "feat: [IR-3236]: Allow disabling manualSorting in <DataTable />",
+    "url": "https://harness0.harness.io/ng/account/l7B_kbSEQD2wjrM7PShm5w/all/code/orgs/PROD/projects/Harness_Commons/repos/canary/pulls/11247",
+    "mergedAt": "2026-07-17T20:22:17Z",
+    "author": "nicholas-lanam"
+  },
+  {
+    "prNumber": 11248,
+    "title": "feat: [UUI-2242]: Apply sentence case to buttons and labels",
+    "summary": "feat: [UUI-2242]: Apply sentence case to buttons and labels",
+    "url": "https://harness0.harness.io/ng/account/l7B_kbSEQD2wjrM7PShm5w/all/code/orgs/PROD/projects/Harness_Commons/repos/canary/pulls/11248",
+    "mergedAt": "2026-07-17T15:51:17Z",
+    "author": "radhakrishna-dodla"
+  },
+  {
     "prNumber": 11243,
     "title": "fix: [UUI-2072]: Drawers not stacking visually for some triggers",
     "summary": "fix: [UUI-2072]: Drawers not stacking visually for some triggers",
@@ -94,69 +478,5 @@
     "url": "https://harness0.harness.io/ng/account/l7B_kbSEQD2wjrM7PShm5w/all/code/orgs/PROD/projects/Harness_Commons/repos/canary/pulls/11217",
     "mergedAt": "2026-07-08T19:08:20Z",
     "author": "jacob-bassett"
-  },
-  {
-    "prNumber": 11224,
-    "title": "fix: [UUI-2036]: Enhance TitleSection component with title tooltip for truncation",
-    "summary": "fix: [UUI-2036]: Enhance TitleSection component with title tooltip for truncation",
-    "url": "https://harness0.harness.io/ng/account/l7B_kbSEQD2wjrM7PShm5w/all/code/orgs/PROD/projects/Harness_Commons/repos/canary/pulls/11224",
-    "mergedAt": "2026-07-08T15:48:35Z",
-    "author": "radhakrishna-dodla"
-  },
-  {
-    "prNumber": 11226,
-    "title": "feat: [AI-2629]: add Playwright, Apple and Windows brand logos to LogoV2",
-    "summary": "feat: [AI-2629]: add Playwright, Apple and Windows brand logos to LogoV2",
-    "url": "https://harness0.harness.io/ng/account/l7B_kbSEQD2wjrM7PShm5w/all/code/orgs/PROD/projects/Harness_Commons/repos/canary/pulls/11226",
-    "mergedAt": "2026-07-08T11:49:38Z",
-    "author": "sarthak-dalmia"
-  },
-  {
-    "prNumber": 11218,
-    "title": "feat: [UUI-1954]: sidebar and chat background component tokens color changes.",
-    "summary": "feat: [UUI-1954]: sidebar and chat background component tokens color changes.",
-    "url": "https://harness0.harness.io/ng/account/l7B_kbSEQD2wjrM7PShm5w/all/code/orgs/PROD/projects/Harness_Commons/repos/canary/pulls/11218",
-    "mergedAt": "2026-07-06T18:16:43Z",
-    "author": "kathryn-grantier"
-  },
-  {
-    "prNumber": 11219,
-    "title": "feat: [DBOPS-2529]: add generic background-task API + pipeline_status_updated event to ai-chat-core",
-    "summary": "feat: [DBOPS-2529]: add generic background-task API + pipeline_status_updated event to ai-chat-core",
-    "url": "https://harness0.harness.io/ng/account/l7B_kbSEQD2wjrM7PShm5w/all/code/orgs/PROD/projects/Harness_Commons/repos/canary/pulls/11219",
-    "mergedAt": "2026-07-06T12:28:34Z",
-    "author": "sarthak-setia"
-  },
-  {
-    "prNumber": 11214,
-    "title": "feat: [UUI-1898]: Pipeline and Template tabs re-design",
-    "summary": "feat: [UUI-1898]: Pipeline and Template tabs re-design",
-    "url": "https://harness0.harness.io/ng/account/l7B_kbSEQD2wjrM7PShm5w/all/code/orgs/PROD/projects/Harness_Commons/repos/canary/pulls/11214",
-    "mergedAt": "2026-07-02T17:10:03Z",
-    "author": "radhakrishna-dodla"
-  },
-  {
-    "prNumber": 11216,
-    "title": "feat: [CI-21655]: Add option to disable +filter button in case all filters are sticky",
-    "summary": "feat: [CI-21655]: Add option to disable +filter button in case all filters are sticky",
-    "url": "https://harness0.harness.io/ng/account/l7B_kbSEQD2wjrM7PShm5w/all/code/orgs/PROD/projects/Harness_Commons/repos/canary/pulls/11216",
-    "mergedAt": "2026-07-02T15:46:02Z",
-    "author": "tianyi-li"
-  },
-  {
-    "prNumber": 11213,
-    "title": "fix: [CODE-5551]: hash encoding in paths fixed",
-    "summary": "fix: [CODE-5551]: hash encoding in paths fixed",
-    "url": "https://harness0.harness.io/ng/account/l7B_kbSEQD2wjrM7PShm5w/all/code/orgs/PROD/projects/Harness_Commons/repos/canary/pulls/11213",
-    "mergedAt": "2026-07-02T10:19:22Z",
-    "author": "enver-bi-evac"
-  },
-  {
-    "prNumber": 11215,
-    "title": "feat: [CI-21655]: Add option to disable +filter button in case all filters are sticky",
-    "summary": "feat: [CI-21655]: Add option to disable +filter button in case all filters are sticky",
-    "url": "https://harness0.harness.io/ng/account/l7B_kbSEQD2wjrM7PShm5w/all/code/orgs/PROD/projects/Harness_Commons/repos/canary/pulls/11215",
-    "mergedAt": "2026-07-02T00:05:32Z",
-    "author": "tianyi-li"
   }
 ]

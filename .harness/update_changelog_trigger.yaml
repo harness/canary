@@ -1,0 +1,23 @@
+trigger:
+  name: Update changelog on PR merge
+  identifier: update_changelog_on_merge
+  enabled: true
+  orgIdentifier: PROD
+  projectIdentifier: Harness_Commons
+  pipelineIdentifier: update_changelog
+  source:
+    type: Webhook
+    spec:
+      # Native Harness Code repo webhook — no external connector needed.
+      type: Harness
+      spec:
+        type: PullRequest
+        spec:
+          repoName: canary
+          actions:
+            - Merge
+          payloadConditions:
+            # Only PRs merged into main.
+            - key: targetBranch
+              operator: Equals
+              value: main

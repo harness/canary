@@ -61,6 +61,74 @@ export interface DerivedStep {
   predicted: string[] // upcoming step ids within the active step group
 }
 
+interface BucketStateInput {
+  /** All cardHistory entries belonging to this bucket (a step group's visited steps). */
+  entries: CardEntry[]
+  isActiveBucket: boolean
+  activeStepId: string
+  isFlowComplete: boolean
+  visualCompletedFor: (stepId: string) => boolean
+}
+
+/**
+ * Shared error/flow-complete/active/upcoming precedence rule, extracted from the step-group state
+ * derivation in deriveStepperModel below so a bucket that degenerates to a single step (the future
+ * flat-mode case) can reuse the identical precedence logic without duplicating it.
+ *
+ * Precedence:
+ * 1. Error takes precedence over everything.
+ * 2. Flow complete (or the active step is visualCompleted) + all entries resolved = completed.
+ * 3. Active bucket = active.
+ * 4. All entries resolved = completed.
+ * 5. Otherwise upcoming.
+ */
+function deriveBucketState({
+  entries,
+  isActiveBucket,
+  activeStepId,
+  isFlowComplete,
+  visualCompletedFor
+}: BucketStateInput): 'completed' | 'active' | 'error' | 'upcoming' {
+  const hasBeenVisited = entries.length > 0
+
+  // Completion: every visited entry is resolved (completed/skipped, or an error the flow
+  // recovered past — see hasError below, which only stays true for an UNRESOLVED trailing
+  // error), OR flagged visualCompleted (a terminal step whose cardHistory status never
+  // leaves 'active' once the engine's re-entry guard has fired — see engine-context.tsx's
+  // complete()/error()/skip()). visualCompleted is a pure rendering hint; it does not change
+  // the step's own visited.state, only whether the BUCKET counts as resolved.
+  const allResolved =
+    hasBeenVisited &&
+    entries.every(
+      e => e.status === 'completed' || e.status === 'skipped' || e.status === 'error' || visualCompletedFor(e.stepId)
+    )
+
+  // Error: the bucket is in an error state only if an errored entry is UNRESOLVED — i.e. the
+  // last visited entry is the error (the flow is stopped on it, or it's a terminal error). If a
+  // later entry follows the error (error-and-continue recovered past it), the bucket is NOT in
+  // error; its state comes from the recovered entries below. This keeps "errored then recovered"
+  // green rather than marking the whole bucket red for a failure the flow moved past.
+  const lastVisited = entries[entries.length - 1]
+  const hasError = lastVisited?.status === 'error'
+
+  // A visualCompleted step that IS the active bucket's current position: isFlowComplete is
+  // globally false while it's active, so without this, the ternary below would hit
+  // `isActiveBucket ? 'active'` before ever reaching the allResolved fallback — the bucket
+  // would render active/blue, a regression from the accidental green some flows show today.
+  const activeVisualCompleted =
+    isActiveBucket && entries.some(e => e.stepId === activeStepId && visualCompletedFor(e.stepId))
+
+  return hasError
+    ? 'error'
+    : (isFlowComplete || activeVisualCompleted) && allResolved
+      ? 'completed'
+      : isActiveBucket
+        ? 'active'
+        : allResolved
+          ? 'completed'
+          : 'upcoming'
+}
+
 /**
  * Derives the per-step-group state model from the flow config, card history, predicted path, and active step.
  * This is a pure function that extracts the logic originally embedded in DefaultStepperPane.
@@ -101,7 +169,7 @@ export function deriveStepperModel(
     }
   }
 
-  if (process.env.NODE_ENV === 'development' && Object.keys(flow.stepGroups ?? {}).length === 0) {
+  if (process.env.NODE_ENV === 'development' && flow.stepGroups && Object.keys(flow.stepGroups).length === 0) {
     console.warn(
       'FlowConfig.stepGroups is empty — the stepper will render no steps. Did you forget to define stepGroups?'
     )
@@ -115,7 +183,6 @@ export function deriveStepperModel(
     const isTerminalStepGroup = !Object.values(flow.steps).some(s => s.step === stepGroupId)
 
     const isActiveStepGroup = activeStepGroupId === stepGroupId
-    const hasBeenVisited = visited.length > 0
 
     // showIndeterminate: active step group with no next step and no predicted steps — i.e. "waiting,
     // more may come" (renders the "..." placeholder). An errored step with no next is NOT waiting;
@@ -134,55 +201,18 @@ export function deriveStepperModel(
       !activeStepErrored &&
       !activeStepResolved
 
-    // Completion: every visited step is resolved (completed/skipped, or an error the flow
-    // recovered past — see hasError below, which only stays true for an UNRESOLVED trailing
-    // error), OR flagged visualCompleted (a terminal step whose cardHistory status never
-    // leaves 'active' once the engine's re-entry guard has fired — see engine-context.tsx's
-    // complete()/error()/skip()). visualCompleted is a pure rendering hint; it does not change
-    // the step's own visited.state below, only whether the STEP GROUP counts as resolved.
-    const allStepsResolved =
-      hasBeenVisited &&
-      visited.every(
-        e =>
-          e.status === 'completed' ||
-          e.status === 'skipped' ||
-          e.status === 'error' ||
-          flow.steps[e.stepId]?.visualCompleted
-      )
-
-    // Error: the step group is in an error state only if an errored step is UNRESOLVED — i.e. the
-    // last visited step is the error (the flow is stopped on it, or it's a terminal error). If a
-    // later step follows the error (error-and-continue recovered past it), the step group is NOT in
-    // error; its state comes from the recovered steps below. This keeps "errored then recovered"
-    // green rather than marking the whole step group red for a failure the flow moved past.
-    const lastVisited = visited[visited.length - 1]
-    const hasError = lastVisited?.status === 'error'
-
     // Flow is complete when no card is active.
     const isFlowComplete = !cardHistory.some(e => e.status === 'active')
 
-    // A visualCompleted step that IS the active step group's current position: isFlowComplete is
-    // globally false while it's active (see above), so without this, the ternary below would hit
-    // `isActiveStepGroup ? 'active'` before ever reaching the allStepsResolved fallback — the step
-    // group would render active/blue, a regression from the accidental green some flows show today.
-    const activeStepVisualCompleted =
-      isActiveStepGroup && visited.some(e => e.stepId === activeStepId && flow.steps[e.stepId]?.visualCompleted)
-
-    // Derive step group state with the precedence from DefaultStepperPane, extended for visualCompleted:
-    // 1. Error takes precedence over everything
-    // 2. Flow complete (or the active step is visualCompleted) + all steps resolved = completed
-    // 3. Active step group = active
-    // 4. All steps resolved = completed
-    // 5. Otherwise upcoming
-    const stepGroupState: DerivedStep['state'] = hasError
-      ? 'error'
-      : (isFlowComplete || activeStepVisualCompleted) && allStepsResolved
-        ? 'completed'
-        : isActiveStepGroup
-          ? 'active'
-          : allStepsResolved
-            ? 'completed'
-            : 'upcoming'
+    // Step-group state derivation delegates to the shared bucket precedence rule (error / flow-
+    // complete / active / upcoming) — see deriveBucketState above for the full rationale.
+    const stepGroupState = deriveBucketState({
+      entries: visited,
+      isActiveBucket: isActiveStepGroup,
+      activeStepId,
+      isFlowComplete,
+      visualCompletedFor: stepId => Boolean(flow.steps[stepId]?.visualCompleted)
+    })
 
     return {
       stepGroupId,

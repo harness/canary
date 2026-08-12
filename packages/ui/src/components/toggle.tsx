@@ -40,7 +40,9 @@ export const toggleVariants = cva('cn-toggle', {
 type ToggleVariant = VariantProps<typeof toggleVariants>['variant']
 type TypeSelectedVariant = 'primary' | 'secondary'
 
-type TogglePropsBase = Pick<ButtonProps, 'rounded' | 'disabled' | 'className'> & {
+type TogglePropsBase = Pick<ButtonProps, 'disabled' | 'className'> & {
+  /** @deprecated Rounded Toggle treatments rely on deprecated rounded Button styling. Remove this prop. */
+  rounded?: boolean
   variant?: ToggleVariant
   selectedVariant?: TypeSelectedVariant
   onChange?: (selected: boolean) => void

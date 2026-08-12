@@ -2,9 +2,12 @@ import { FC, useEffect, useState } from 'react'
 import { useForm } from 'react-hook-form'
 import type { LinkProps } from 'react-router-dom'
 
+import { zodResolver } from '@hookform/resolvers/zod'
+import { Floating1ColumnLayout } from '@views'
+import { z } from 'zod/v3'
+
 import {
   Button,
-  ControlGroup,
   Fieldset,
   FormInput,
   FormWrapper,
@@ -13,11 +16,8 @@ import {
   LinkProps as StyledLinkProps,
   Text
 } from '@harnessio/ui/components'
-import { TFunctionWithFallback, useRouterContext, useTheme, useTranslation } from '@harnessio/ui/context'
-import { Floating1ColumnLayout } from '@views'
-import { zodResolver } from '@hookform/resolvers/zod'
+import { TFunctionWithFallback, useTheme, useTranslation } from '@harnessio/ui/context'
 import { cn } from '@harnessio/ui/utils'
-import { z } from 'zod/v3'
 
 import { CreateProjectAnimatedLogo } from './create-project-animated-logo'
 
@@ -72,7 +72,6 @@ export type CreateProjectFields = z.infer<ReturnType<typeof createProjectSchema>
 export const CreateProjectPage: FC<CreateProjectPageProps> = props => {
   const { error, isLoading, backLinkProps, importProjectLinkProps, onFormSubmit } = props
   const { isLightTheme } = useTheme()
-  const { Link } = useRouterContext()
 
   const isAdditional = getIsAdditionalProjectPage(props)
   const isFirst = getIsFirstProjectPage(props)
@@ -168,8 +167,8 @@ export const CreateProjectPage: FC<CreateProjectPageProps> = props => {
             />
           </Fieldset>
 
-          <ControlGroup type="button">
-            <Button className="mt-cn-sm w-full" rounded type="submit" loading={isLoading} disabled={hasError}>
+          <div className="gap-cn-xs flex flex-col">
+            <Button className="mt-cn-sm w-full" type="submit" loading={isLoading} disabled={hasError}>
               {isLoading
                 ? t('views:createProject.create.projectCreation', 'Creating project...')
                 : t('views:createProject.create.createProject', 'Create project')}
@@ -183,11 +182,10 @@ export const CreateProjectPage: FC<CreateProjectPageProps> = props => {
               <div className="w-[145px] shrink border-t border-cn-3" />
             </div>
 
-            {/* TODO: Update the variant of this button to outline once the component supports this style. */}
-            <Button asChild className="mt-cn-sm w-full" rounded variant="outline">
-              <Link to={importProjectLinkProps.to}>{t('views:createProject.importProject', 'Import project')}</Link>
-            </Button>
-          </ControlGroup>
+            <StyledLink className="mt-cn-sm self-center" to={importProjectLinkProps.to}>
+              {t('views:createProject.importProject', 'Import project')}
+            </StyledLink>
+          </div>
         </FormWrapper>
 
         {isFirst && (

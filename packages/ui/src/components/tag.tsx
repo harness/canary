@@ -140,7 +140,6 @@ const Tag = forwardRef<HTMLDivElement, TagProps>(
           <Button
             iconOnly
             disabled={disabled}
-            rounded={rounded}
             className="cn-tag-action-icon-button"
             variant="transparent"
             size={size === 'sm' ? '3xs' : '2xs'}

@@ -1,8 +1,6 @@
-import { Button } from '@harnessio/ui/components'
-import { IconV2 } from '@harnessio/ui/components'
-import { cn } from '@harnessio/ui/utils'
-
 import { ParallelContainerConfigType, SerialContainerConfigType } from '@harnessio/pipeline-graph'
+import { Button, IconV2 } from '@harnessio/ui/components'
+import { cn } from '@harnessio/ui/utils'
 
 import { ExecutionStatus } from './components/execution-status'
 import { FloatingAddButton } from './components/floating-add-button'
@@ -68,7 +66,6 @@ export function StageNode(props: StageNodeProps) {
 
       {!collapsed && isEmpty && (
         <Button
-          rounded
           className="p-cn-sm self-center"
           variant="outline"
           onMouseDown={e => e.stopPropagation()}

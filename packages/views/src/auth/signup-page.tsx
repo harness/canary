@@ -1,9 +1,10 @@
 import { useEffect, useState } from 'react'
 import { useForm } from 'react-hook-form'
 
-import { Alert, Button, FormInput, FormWrapper, Link, Spacer, Text } from '@harnessio/ui/components'
 import { zodResolver } from '@hookform/resolvers/zod'
 import { z } from 'zod/v3'
+
+import { Alert, Button, FormInput, FormWrapper, Link, Spacer, Text } from '@harnessio/ui/components'
 
 import { Floating1ColumnLayout } from '..'
 import { Agreements } from './components/agreements'
@@ -118,7 +119,7 @@ export function SignUpPage({ isLoading, handleSignUp, error }: SignUpPageProps) 
                 <Alert.Title>{serverError}</Alert.Title>
               </Alert.Root>
             )}
-            <Button className="mt-cn-3xl w-full" rounded type="submit" loading={isLoading}>
+            <Button className="mt-cn-3xl w-full" type="submit" loading={isLoading}>
               {isLoading ? 'Signing up...' : 'Sign up'}
             </Button>
           </FormWrapper>

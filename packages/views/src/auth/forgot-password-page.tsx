@@ -1,9 +1,10 @@
 import { useEffect, useState } from 'react'
 import { SubmitHandler, useForm } from 'react-hook-form'
 
-import { Alert, Button, FormInput, FormWrapper, Link, Spacer, Text } from '@harnessio/ui/components'
 import { zodResolver } from '@hookform/resolvers/zod'
 import { z } from 'zod/v3'
+
+import { Alert, Button, FormInput, FormWrapper, Link, Spacer, Text } from '@harnessio/ui/components'
 
 import { Floating1ColumnLayout } from '..'
 import { Agreements } from './components/agreements'
@@ -99,7 +100,7 @@ export function ForgotPasswordPage({ isLoading, onSubmit, error }: ForgotPasswor
               {...register('email', { onChange: handleInputChange })}
               autoFocus
             />
-            <Button className="mt-cn-3xl w-full" variant="outline" rounded type="submit" loading={isLoading}>
+            <Button className="mt-cn-3xl w-full" variant="outline" type="submit" loading={isLoading}>
               {isLoading ? 'Sending...' : 'Send'}
             </Button>
           </FormWrapper>

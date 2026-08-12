@@ -1,9 +1,7 @@
 import { CSSProperties } from 'react'
 
-import { Button } from '@harnessio/ui/components'
-import { IconV2 } from '@harnessio/ui/components'
-
 import { ParallelContainerConfigType, SerialContainerConfigType } from '@harnessio/pipeline-graph'
+import { Button, IconV2 } from '@harnessio/ui/components'
 
 const CONTAINER_WIDTH = '40'
 const CONTAINER_HEIGHT = '40'
@@ -57,7 +55,6 @@ export function FloatingAddButton(props: FloatingAddButtonProp) {
     <div className="group absolute flex size-full items-center justify-center" style={style}>
       <Button
         iconOnly
-        rounded
         className="hidden self-center p-0 group-hover:flex"
         style={{
           alignSelf: 'center',

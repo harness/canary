@@ -27,7 +27,6 @@ return (
       size="sm"
       variant="outline"
       selectedVariant="primary"
-      rounded
       tooltipProps={{
         content: <p>This is a tooltip</p>
       }}
@@ -119,14 +118,14 @@ The `Toggle` component accepts a `size` prop to control its overall dimensions. 
 `}
 />
 
-## Rounded
+## Deprecated: Rounded Toggle
 
-The `Toggle` component accepts a `rounded` prop. When provided, the underlying button will have fully rounded corners.
+The `rounded` prop is deprecated because it relies on the deprecated rounded Button treatment. Do not use it for new work. Remove `rounded` from existing Toggles to use the supported standard shape.
 
 <DocsPage.ComponentExample
   client:only
   code={`
-    <Toggle text="Rounded" rounded />
+    <Toggle text="Standard shape" />
 `}
 />
 
@@ -203,7 +202,8 @@ The `Toggle` component is a button that can be toggled on and off.
     },
     {
       name: "rounded",
-      description: "Whether the toggle is rounded.",
+      description:
+        "Deprecated. Remove this prop to migrate Toggle to the supported standard Button shape.",
       required: false,
       defaultValue: "false",
       value: "boolean",
